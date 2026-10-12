@@ -1,0 +1,8 @@
+{
+  "reviewer": "root author, direct view of all three original PNGs",
+  "shadowReportSha256": "a515045045c15bbda43f83a95174a4298098f46961ed48d6c238fdd483a0e0a4",
+  "shadowCaptureSha256": "b55ab25a86631c65932f62999ff715138969df52be82d6251045b6ca4e573fa8",
+  "fineLineRemains": true,
+  "observation": "The broad tree/bench shadows disappear when floor receiveShadow is false, but the fine discontinuous line across the right hill remains (approximately x710..1008, y568..648 in the 1280x900 capture), including its intersection with the green slope. Restoring receiveShadow returns broad shadows. This narrows away floor-received shadow as the sole cause; geometry/normals/material are not yet distinguished.",
+  "limitations": "Actors continue moving. Physical state, camera, lights, geometry, and canonical walking topology match; raw image pixels are not expected to be identical."
+}

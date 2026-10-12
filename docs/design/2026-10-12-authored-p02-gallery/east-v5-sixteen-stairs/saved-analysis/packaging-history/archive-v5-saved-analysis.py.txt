@@ -1,0 +1,80 @@
+from pathlib import Path
+from datetime import datetime, timezone
+import hashlib,gzip,json
+S=Path('/private/tmp/sansu-p02-gallery-source-study/east-v5-saved-analysis')
+P=Path('/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-p02-gallery/east-v5-sixteen-stairs')
+D=P/'saved-analysis'
+assert D.exists() and not (D/'archive-proof.json').exists(), 'resume own partial archive only'
+sha=lambda b:hashlib.sha256(b).hexdigest()
+protected=[P/'archive-proof.json',P/'east-v5-threequarter-view/archive-proof.json']
+protected_before={str(p):sha(p.read_bytes())for p in protected}
+oldproof=json.loads(protected[0].read_text());oldmap={x['source']:x for x in oldproof['files']}
+files=sorted(p for p in S.rglob('*')if p.is_file());assert len(files)==14
+source_bytes={p:p.read_bytes()for p in files}
+expected={}
+for n,bk,ak in [('boundary-report.json','inputShaBefore','inputShaAfter'),('contact-report.json','inputsBefore','inputsAfter'),('support-local-volume.json','inputsBefore','inputsAfter')]:
+ r=json.loads(source_bytes[S/n]);assert r[bk]==r[ak]
+ for path,h in r[bk].items():
+  assert path not in expected or expected[path]==h;expected[path]=h
+r=json.loads(source_bytes[S/'source-boundary-loss.json']);assert r['beforeSHA']==r['afterSHA'];expected[r['input']]=r['beforeSHA']
+input_before={p:sha(Path(p).read_bytes())for p in expected};assert input_before==expected
+readme=P/'README.md';readme_before=readme.read_bytes();D.mkdir(exist_ok=True)
+rows=[];newmap={}
+for p,b in source_bytes.items():
+ rel=p.relative_to(S);name=str(rel)
+ if p.suffix in ['.py','.md']:name+='.txt'
+ compress=len(b)>1024*1024 and p.suffix in ['.json','.txt']
+ if compress:name+='.gz'
+ out=D/name;out.parent.mkdir(parents=True,exist_ok=True)
+ stored=gzip.compress(b,mtime=0)if compress else b
+ if out.exists():assert out.read_bytes()==stored, 'existing partial differs'
+ else:
+  with out.open('xb')as f:f.write(stored)
+ decoded=gzip.decompress(out.read_bytes())if compress else out.read_bytes();assert decoded==b
+ row={'source':str(p),'destination':name,'sourceBytes':len(b),'destinationBytes':len(stored),'sourceBeforeSHA256':sha(b),'sourceAfterSHA256':sha(p.read_bytes()),'destinationSHA256':sha(stored),'decodedSHA256':sha(decoded),'compression':'gzip'if compress else None}
+ assert row['sourceBeforeSHA256']==row['sourceAfterSHA256']==row['decodedSHA256'];rows.append(row);newmap[str(p)]={'destination':'saved-analysis/'+name,'decodedSHA256':sha(decoded),'compression':'gzip'if compress else None}
+input_rows=[]
+for path,h in expected.items():
+ rec=newmap.get(path,oldmap.get(path));assert rec is not None,path
+ target=P/rec['destination'];stored=target.read_bytes();decoded=gzip.decompress(stored)if target.suffix=='.gz'else stored
+ assert sha(decoded)==h,(path,rec['destination'])
+ input_rows.append({'source':path,'expectedSHA256':h,'currentSourceSHA256':sha(Path(path).read_bytes()),'durableRelativeToV5':rec['destination'],'durableDecodedSHA256':sha(decoded)})
+index='''# v5 保存値の限定解析
+
+保存済み Float32 geometry と guard 記録の分類です。**source visual / runtime HOLD**。実 9 rig の踏段 pose、両足別高さ、蹴上げ越え、脚と胴体の連続性は未実装・未検証です。geometry / epsilon / 接触相手 / route を変更していません。追加 Blender・camera・app 検証は行っていません。
+
+- [限定結論の原文](README.md.txt)
+- [端線・実 GLB 三角形の照合](boundary-report.json)
+- [全接触分類の生記録 gzip](contact-report.json.gz)
+- [支持の局所内包](support-local-volume.json)
+- [double / Float32 外周の差分](source-boundary-loss.json)
+- [実行環境](analysis-runtime.json)
+- [入力の現存 SHA と既存 durable 原記録の対応](input-identity.json)
+- [14 原ファイルの保存証拠](archive-proof.json)
+
+端線に沿う cm 単位の未被覆長と、境界からの距離を分けています。threshold の照会差と、可視 skin の39片/約5.94e−8m²の実微小欠けも別に保全しました。motion305件は riser167 / end-cap13 / 支持4 / 終端 guard121。支持4の当たる局所部は隣段の閉体内、終端134件は宣言利用点95°より先にあります。これらを除外せず、riser167を実踏段動作の主要未解決項目として残します。
+
+コード・原 README は `.txt` の byte 同一 snapshot。1MiB超の JSON は lossless gzip で保存し、展開 SHA を照合しました。復元・再実行時は原絶対入力パスと `input-identity.json` の durable 対応を使います。封印入力を変更して再実行する許可ではありません。
+'''
+(D/'README.md').write_text(index)
+(D/'input-identity.json').write_text(json.dumps({'status':'CURRENT_INPUTS_MATCH_RECORDED_BEFORE_AFTER_AND_DURABLE_DECODED_BYTES','files':input_rows},indent=2)+'\n')
+(D/'history').mkdir();(D/'history/v5-README-before.md.txt').write_bytes(readme_before)
+text=readme_before.decode()
+text=text.replace('保守的envelopeと実body侵入の分類は未完了です。','初回build時点では保守的envelopeと実body侵入の分類は未完了でした。保存値からの限定分類は末尾の追加記録を参照してください。')
+text=text.replace('端線丸めによる照会の外れか実面の欠けかは未分類です。','初回build時点では端線丸めによる照会の外れか実面の欠けかは未分類でした。現在の限定分類は末尾に追加し、元の未被覆検査/HOLDは保持しています。')
+text+='''
+## 保存値による限定分類（追加記録）
+
+[解析の入口と生証拠](saved-analysis/README.md)を追加保存しました。threshold の cm 単位の区間は端線に沿う長さで、実 Float32 外周からの距離とは異なります。可視面再三角形化に残る微小欠けも別に保存し、許容差や元の HOLD を変更していません。motion305件を riser167 / 終端end-cap13 / 支持4 / 終端guard121 に分類。支持の当たる局所部は隣段の閉体内、終端側134件は宣言利用点95°より先です。接触を除外したものではなく、riser167と実9rigの踏段pose・二足接地・脚と胴体の連続性は未解決です。元source/geometry/route、appを変更せず、追加Blenderやカメラを実行していません。
+'''
+assert readme.read_bytes()==readme_before,'concurrent v5 README change'
+readme.write_text(text)
+readme_proof={'beforeSHA256':sha(readme_before),'beforeSnapshot':'history/v5-README-before.md.txt','afterSHA256':sha(readme.read_bytes()),'change':'Historical pending wording clarified; limited saved-analysis link appended. Parent README and root review untouched.'}
+(D/'readme-update-proof.json').write_text(json.dumps(readme_proof,indent=2)+'\n')
+source_after={str(p):sha(p.read_bytes())for p in files};assert all(source_after[str(p)]==sha(b)for p,b in source_bytes.items())
+input_after={p:sha(Path(p).read_bytes())for p in expected};assert input_before==input_after==expected
+protected_after={str(p):sha(p.read_bytes())for p in protected};assert protected_after==protected_before
+proof={'createdUTC':datetime.now(timezone.utc).isoformat(),'status':'SOURCE_BEFORE_AFTER_AND_DESTINATION_DECODED_BYTES_IDENTICAL','sourceRoot':str(S),'destinationRoot':str(D),'files':rows,'fileCount':len(rows),'sourceBytes':sum(r['sourceBytes']for r in rows),'destinationBytes':sum(r['destinationBytes']for r in rows),'inputCount':len(expected),'inputSHA256Before':input_before,'inputSHA256After':input_after,'existingArchiveProofBefore':protected_before,'existingArchiveProofAfter':protected_after,'newGeneratedFiles':['README.md','input-identity.json','readme-update-proof.json','history/v5-README-before.md.txt'],'noExistingRawOverwrites':True,'packagingFirstFailure':'Existing archive compression marker was descriptive; gzip was not decoded by first comparison. Corrected dispatch uses actual .gz path; matching decoded SHA confirmed. Partial copied bytes retained without overwriting.','v5ReadmeUpdate':readme_proof,'appOrGeometryChanges':False,'newBlenderOrCamera':False}
+(D/'archive-proof.json').write_text(json.dumps(proof,indent=2)+'\n')
+result={'directory':str(D),'archiveProofSHA256':sha((D/'archive-proof.json').read_bytes()),'fileCount':len(rows),'inputCount':len(expected),'sourceBytes':proof['sourceBytes'],'destinationBytes':proof['destinationBytes'],'readmeAfterSHA256':readme_proof['afterSHA256'],'allUnchanged':True}
+Path('/private/tmp/sansu-p02-gallery-source-study/archive-v5-saved-analysis-result.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps(result,indent=2))

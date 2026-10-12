@@ -116,7 +116,7 @@ export async function run(page, output) {
         await page.reload(); await ready(page);
         await phase('initial-identity');
         const metadata = await page.locator('[data-growing-world]').evaluate(node => ({ ...node.dataset }));
-        assert.equal(metadata.artCandidate, 'native05-authored-whole-preflight-v1'); assert.equal(metadata.nativeGrowingArt, 'true');
+        assert.equal(metadata.artCandidate, 'native05-authored-flower-garden-v3'); assert.equal(metadata.nativeGrowingArt, 'true');
         assert(metadata.nativeKitSha256 && metadata.authoredCoastSource); assert.equal(metadata.worldDefinition, world.id);
         const baseline = await read(page), protectedState = invariant(baseline);
         report.initialSceneCounters = await sceneCounters(page);

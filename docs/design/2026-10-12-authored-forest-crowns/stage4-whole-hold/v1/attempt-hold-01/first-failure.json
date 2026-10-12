@@ -1,0 +1,10 @@
+{
+  "phase": "deform-fixed27-original31-lamina70",
+  "error": "Hold('Unclassified world error: hard stop')",
+  "traceback": "Traceback (most recent call last):\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/hold-shape-diagnostic-v1/build-source.py\", line 189, in <module>\n    obj,row,copies=make_leaf_candidate(original,entry,raw,function,BI,g,sync_contract,\n                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        lambda:snapshot(guarded,mats),emitter,PROPOSAL['guards']['maxVertexWorldDisplacement'])\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/hold-shape-diagnostic-v1/leaf_adapter.py\", line 172, in make_leaf_candidate\n    baseline = clone('baseline', positions, old_flags, source_payload,\n                     original.matrix_world.copy(), source_world)\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/hold-shape-diagnostic-v1/leaf_adapter.py\", line 166, in clone\n    require(gate['diagnosticContinuationAllowed'], 'Unclassified world error: hard stop')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/hold-shape-diagnostic-v1/rules.py\", line 20, in require\n    raise Hold(message)\nrules.Hold: Unclassified world error: hard stop\n",
+  "completedChangedRoles": 69,
+  "diagnosticRoleAssemblyComplete": false,
+  "all101DeformationsComplete": false,
+  "primaryJointCount": 0,
+  "derivedBoughCount": 0
+}

@@ -1,0 +1,58 @@
+{
+  "status": "BUILD_AND_ONE_WHOLE_RENDER_COMPLETED_SOURCE_HOLD",
+  "build": {
+    "exit": 0,
+    "ownedBlender": {
+      "64992": {
+        "pid": 64992,
+        "firstObservedUTC": "2026-10-12T07:12:53.863461+00:00",
+        "command": "/Applications/Blender.app/Contents/MacOS/Blender -b --threads 2 --python-exit-code 1 --python build-coarse.py -- build --scheduled --out runs/01-coarse-build",
+        "peakObservedRSSBytes": 1067827200,
+        "lastObservedUTC": "2026-10-12T07:13:08.170827+00:00"
+      }
+    },
+    "elapsedSeconds": 15.517189792,
+    "ownedPidAndGroupGone": true,
+    "inputUnchanged": true,
+    "scene": "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/study.blend",
+    "sceneSHA": "d90bc6bd35f041d2431acf8a48ecb7dc541d5d03d35baaf244086fad38bcc666"
+  },
+  "whole": {
+    "exit": 0,
+    "ownedBlender": {
+      "66075": {
+        "pid": 66075,
+        "firstObservedUTC": "2026-10-12T07:16:40.995936+00:00",
+        "command": "/Applications/Blender.app/Contents/MacOS/Blender -b --threads 2 --python-exit-code 1 --python render-coarse.py -- --scheduled --source /private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/study.blend --out runs/01-whole --view whole",
+        "peakObservedRSSBytes": 2520154112,
+        "lastObservedUTC": "2026-10-12T07:16:52.933845+00:00"
+      }
+    },
+    "elapsedSeconds": 13.467570417000001,
+    "ownedPidAndGroupGone": true,
+    "inputsUnchanged": true,
+    "png": "/private/tmp/sansu-p02-gallery-source-study/east-v5-shape-view/runs/01-whole/coarse-real-stair-HOLD-whole.png",
+    "pngSHA": "659ddc73eefedea0784730b771187c75b35db5c22758f51ea2b2f925a8ee0521",
+    "renderManifestSHA": "aed2971540219e79ca4bb7e0e7bf41082812df67a957716ff8e28d0d9a47e011",
+    "pathShadowOnlyDifference": "growing-reachable-paths true to false; not old v4 condition"
+  },
+  "rawHoldReasons": [
+    "SOURCE_COARSE_ART_AND_RUNTIME_HOLD",
+    "per-foot stance/swing, actual riser clearance and leg-body continuity unimplemented",
+    "assembled supports are sampled end-cap proofs, not whole curved solid self-intersection proof",
+    "current full-width entry/joint mismatch; see located current-entry-joints, no center-only acceptance",
+    "exposed-skin Float32 lineage HOLD; inspect exact records",
+    "neutral reserved/motion-band contacts retained; conservative band vs actual skin classification pending, no exclusions",
+    "current entrance/flat joints mismatch; no automatic height adoption"
+  ],
+  "coverageCorrection": {
+    "originalGroundWidthMissing": 0,
+    "visibleThresholdMaxMissingWidth": 0.035064680850426626,
+    "visibleThresholdTotalMissingWidth": 0.25729029084107213,
+    "widthCause": "NOT_CLASSIFIED; do not infer from small height residual",
+    "raw": "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build-coverage-followup.json"
+  },
+  "noRetry": true,
+  "noEntryRender": true,
+  "sourceOrAppAdopted": false
+}

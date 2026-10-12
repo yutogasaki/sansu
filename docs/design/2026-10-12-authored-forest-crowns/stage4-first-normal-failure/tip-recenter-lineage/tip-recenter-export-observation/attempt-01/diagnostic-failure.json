@@ -1,0 +1,5 @@
+{
+  "phase": "six-incident-sharp-tip-recenter:standalone-glb-roundtrip",
+  "error": "AssertionError()",
+  "traceback": "Traceback (most recent call last):\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/tip-recenter-export-observation/probe.py\", line 212, in <module>\n    first=export_only(obj,OUT/(name+'-first.glb'),expected,source_material)\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/tip-recenter-export-observation/probe.py\", line 111, in export_only\n    assert native.fixed_digest(obj)==digest and sharp(obj.data)==flags\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+}

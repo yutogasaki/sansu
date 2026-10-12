@@ -1,0 +1,15 @@
+
+ RUN  v2.1.9 /private/tmp/sansu-next-m1-code
+
+stderr | src/components/island/growing/native/nativeAuthoredShoulder.test.ts
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/native/nativeAuthoredShoulder.test.ts (6 tests) 6860ms
+   ✓ conditional authored shoulder component delivery > keeps root contact after normal/PBR/floor-ID/material splitting and triangle reordering, but rejects changed physical support 2880ms
+   ✓ conditional authored shoulder component delivery > omits closed soil when the extension is absent or its top union was cut, while leaving the domain floor untouched 2154ms
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  09:53:38
+   Duration  7.55s (transform 285ms, setup 0ms, collect 412ms, tests 6.86s, environment 0ms, prepare 26ms)
+

@@ -1,0 +1,59 @@
+{
+  "candidate": "forest-crown-stage3-u-court-v0",
+  "status": "HOLD coarse source view; not actual app",
+  "image": "HOLD-source-whole.png",
+  "sha256": "ac24191d8aa3603ea9e80ba56b2285a617cb906596b4390260d0f5648d0b400b",
+  "shapeManifestSHA": "1fe45f63731b6141e36ac88ba05ddaa883b2998db3936812395dd613097159b4",
+  "cameraReferenceSHA": "070ca145b6b32563d0ebc3032cf82684b0bf32f9ead881fb8551231ab920d3ea",
+  "cameraMatrix": [
+    [
+      0.7912848591804504,
+      -0.35705915093421936,
+      0.49636366963386536,
+      20.050125122070312
+    ],
+    [
+      0.6114475131034851,
+      0.4620763659477234,
+      -0.6423528790473938,
+      -13.088081359863281
+    ],
+    [
+      6.696541987594173e-08,
+      0.8117845058441162,
+      0.5839570760726929,
+      17.236913681030273
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "settings": {
+    "samples": 16,
+    "threads": 2,
+    "engine": "Cycles CPU",
+    "resolution": [
+      1280,
+      925
+    ],
+    "viewTransform": "AgX"
+  },
+  "compatibilityFix": {
+    "object": "growing-reachable-paths",
+    "property": "visible_shadow",
+    "duringRender": false,
+    "restored": true,
+    "reason": "match actual Three castShadow=false; root source-only A/B confirmed dotted-row shadow contribution"
+  },
+  "comparisonBaseline": "../stage2/path-shadow-diagnostic/attempt-01/FAILED-HOLD-source-whole.png",
+  "comparisonBaselineSHA": "253be71d04a80c5650db98311c155083efb7e5f3cf6a53667374be2e2a19aee1",
+  "meshesMaterialsUnchanged": true,
+  "sceneSaved": false,
+  "elapsedSeconds": 16.37697095796466,
+  "limitations": "Primary junctions may be unresolved; leaf70 and exact seams/clearance and actor routes untested; source lighting/ocean differ and no residents",
+  "runtimeIntegrated": false,
+  "independentObservers": 0
+}

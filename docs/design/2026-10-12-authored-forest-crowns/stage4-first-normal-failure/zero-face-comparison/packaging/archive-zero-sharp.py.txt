@@ -1,0 +1,75 @@
+"""Archive two completed probes separately; exact decoded bytes, no source writes."""
+from pathlib import Path
+from datetime import datetime, timezone
+import gzip
+import hashlib
+import json
+
+SOURCE = Path(__file__).resolve().parent
+ROOT = Path('/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/stage4-first-normal-failure')
+sha = lambda value: hashlib.sha256(value).hexdigest()
+for name in ['zero-face-comparison', 'sharp-fan-comparison']:
+    base = SOURCE / name
+    dest = ROOT / name
+    assert not dest.exists(), 'Existing durable records must not be overwritten'
+    selected = sorted(path for path in base.rglob('*') if path.is_file() and '__pycache__' not in path.parts)
+    assert all(path.suffix not in ['.pyc', '.log'] for path in selected)
+    selected.append(Path(__file__).resolve())
+    before = {str(path): sha(path.read_bytes()) for path in selected}
+    records = []
+    dest.mkdir()
+    for source in selected:
+        data = source.read_bytes()
+        relative = source.relative_to(base) if source != Path(__file__).resolve() else Path('packaging/archive-zero-sharp.py')
+        target = Path(str(relative) + '.txt') if source.suffix in ['.py', '.md'] else relative
+        encoding = 'raw'
+        stored = data
+        if source.suffix == '.json' and len(data) >= 65536:
+            target = Path(str(target) + '.gz')
+            encoding = 'gzip'
+            stored = gzip.compress(data, compresslevel=9, mtime=0)
+            assert stored == gzip.compress(data, compresslevel=9, mtime=0)
+        path = dest / target
+        path.parent.mkdir(parents=True, exist_ok=True)
+        assert not path.exists()
+        path.write_bytes(stored)
+        decoded = gzip.decompress(path.read_bytes()) if encoding == 'gzip' else path.read_bytes()
+        assert decoded == data
+        row = {'source': str(source), 'target': str(target), 'sourceBytes': len(data), 'storedBytes': len(stored),
+               'sourceSha256': sha(data), 'storedSha256': sha(stored), 'decodedSha256': sha(decoded), 'encoding': encoding}
+        if source.suffix == '.gz':
+            row['originalGzipRetainedByteIdentical'] = True
+            row['originalExpandedSHA'] = sha(gzip.decompress(data))
+        records.append(row)
+    after = {str(path): sha(path.read_bytes()) for path in selected}
+    assert before == after
+    proof = {'createdAtUtc': datetime.now(timezone.utc).isoformat(), 'scope': name + ' completed diagnostic only; no correction adopted',
+        'compressionRule': 'Only uncompressed JSON >=65536 bytes is gzip level9/mtime0. Existing gzip stays byte-identical. Historical Markdown/Python gets .txt suffix without content changes.',
+        'sourceBefore': before, 'sourceAfter': after, 'allSourceBeforeAfterIdentical': True,
+        'files': records, 'fileCount': len(records), 'allDecodedBytesIdentical': True,
+        'allOriginalGzipBytesIdentical': True, 'sourceBytes': sum(r['sourceBytes'] for r in records),
+        'storedBytes': sum(r['storedBytes'] for r in records),
+        'unexecutedNextPreparationIncluded': False}
+    (dest / 'archive-proof.json').write_text(json.dumps(proof, indent=2) + '\n')
+    result_target = next(record['target'] for record in records if record['source'] == str(base / 'attempt-01/result.json'))
+    if name == 'zero-face-comparison':
+        finding = 'Removing only the four exact-zero input faces reduced source NORMAL error, but six corners still differed by .012402 before and .011552 after the original field. Passing the original local .002 guard did not prove preservation of source shading. No correction was adopted.'
+    else:
+        finding = 'Sharp flags on vertex38’s six incident edges reduced input source NORMAL error below .002, also confirmed in the standalone input GLB. The unchanged original field then failed its .002 guard (.628806 targeted / .650464 all-sharp). No deformed GLB was emitted, and no correction was adopted.'
+    readme = f'''# Completed {name} diagnostic
+
+This archive retains completed source-only diagnostic evidence. Stage4 remains HOLD; it is not a full build, render, actor test, or runtime acceptance.
+
+{finding}
+
+- [Machine result]({result_target})
+- [Execution and resource record](execution-01/result.json)
+- [Postflight input/code parity and owned-process exit](execution-01/postflight.json)
+- [Exact decoded-byte archive proof](archive-proof.json)
+- [Historical preparation README, exact original bytes](README.md.txt)
+
+The copied readiness still says prepared/not-executed because its exact historical bytes are preserved; the execution record is the subsequent outcome. Historical Python and Markdown have `.txt` suffixes so archive packaging does not reinterpret old relative links. Existing gzip files are copied byte-identically; newly compressed large JSON uses deterministic gzip. Every source SHA before/after equals its decoded destination SHA. The next preassignment-basis preparation is excluded. Original sources and other agents’ files were not edited.
+'''
+    (dest / 'README.md').write_text(readme)
+    print(json.dumps({'destination': str(dest), 'fileCount': len(records),
+                      'archiveProofSHA': sha((dest / 'archive-proof.json').read_bytes())}), flush=True)

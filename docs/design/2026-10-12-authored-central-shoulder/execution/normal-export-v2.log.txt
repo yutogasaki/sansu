@@ -1,0 +1,52 @@
+{
+  "scope": "Source delivery correction only; geometry audit reusable because only two soil-top NORMAL accessors differ. Editable Blender custom split normals retain their measured quantization; exact raw normals are in geometry-profile.",
+  "profileSha256": "7b4772489932b225d7b31ced5bd53c6835a47e8e63c71eeb43d7b59af1523d3b"
+}
+[
+  {
+    "input": "central-shoulder-components.glb",
+    "inputSha256": "24f32eed46efe18cd3411220771b2b4f5266449278f00499c0917550f1a7d998",
+    "output": "central-shoulder-components-normal-v2.glb",
+    "outputSha256": "c79e2cd7a228b24ff526e6d78913f6a07880e35dec1532d4c278dd7cbf10411e",
+    "normalAccessorsRestored": [
+      {
+        "normalAccessor": 1,
+        "vertices": 1014,
+        "material": "ground / fresh soft meadow.001"
+      },
+      {
+        "normalAccessor": 4,
+        "vertices": 2796,
+        "material": "hill / silvery meadow"
+      }
+    ],
+    "changedBytes": 21223,
+    "allChangesInsideSelectedNormalValues": true,
+    "jsonChunkIncludingMaterialNodeTransformSha256": "5721ea382c921dd78401d7363f03a4938381cb921c08009390db0572d502bf40",
+    "jsonChunkUnchanged": true,
+    "positionsIndicesMaterialsNodeTransformsUnchanged": true
+  },
+  {
+    "input": "central-shoulder-source.glb",
+    "inputSha256": "16ff4e1a1b31a4dcb676dbc6283ec368902f08bfba2a895a436a93845a4907b8",
+    "output": "central-shoulder-source-normal-v2.glb",
+    "outputSha256": "cd86121c32072053960e927866f9442b7168e281df9d8c46cf9807ce691b2ff9",
+    "normalAccessorsRestored": [
+      {
+        "normalAccessor": 1,
+        "vertices": 1014,
+        "material": "ground / fresh soft meadow.001"
+      },
+      {
+        "normalAccessor": 4,
+        "vertices": 2796,
+        "material": "hill / silvery meadow"
+      }
+    ],
+    "changedBytes": 21223,
+    "allChangesInsideSelectedNormalValues": true,
+    "jsonChunkIncludingMaterialNodeTransformSha256": "d77de579c99a99bb0cdb016280cd9020a9730e2011a292672862b06461ee24b6",
+    "jsonChunkUnchanged": true,
+    "positionsIndicesMaterialsNodeTransformsUnchanged": true
+  }
+]

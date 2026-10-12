@@ -1,0 +1,216 @@
+{
+  "status": "PREPARED_NOT_EXECUTED_WAITING_ROOT_REVIEW",
+  "candidate": "p02-native-east-bough-coarse-v2",
+  "workingDirectory": "/private/tmp/sansu-p02-gallery-source-study/east-v2",
+  "buildCommand": [
+    "python3",
+    "supervise.py",
+    "--scheduled",
+    "--seconds",
+    "180",
+    "--rss-mib",
+    "2560",
+    "--log",
+    "runs/01-coarse-build.log.txt",
+    "--",
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "build-coarse.py",
+    "--",
+    "build",
+    "--scheduled",
+    "--out",
+    "runs/01-coarse-build"
+  ],
+  "files": {
+    "README.md": {
+      "sha256": "fd5afa2016811934d8fd891384fd3d95c3f0a248a0d8b7099e3f706ad770a6d9",
+      "bytes": 7638
+    },
+    "build-coarse.py": {
+      "sha256": "1e2e47bfc434512e720ceb35f6fc41c5d7411d887adc1d5384878c6a3d50464d",
+      "bytes": 27110
+    },
+    "check-preparation.py": {
+      "sha256": "49db96f1fd16749398b9c42c465750175d6fde5dc1f9020c00079b269380474b",
+      "bytes": 3607
+    },
+    "donor_reference.py": {
+      "sha256": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+      "bytes": 3333
+    },
+    "entry_geometry.py": {
+      "sha256": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+      "bytes": 7937
+    },
+    "history/pre-bough-underside-fix/build-coarse.py.txt": {
+      "sha256": "a727924af88355c09c8ebea6d7983c52a8381e2bd9e604e6f5b3ad25c9470af0",
+      "bytes": 27114
+    },
+    "history/pre-bough-underside-fix/check-preparation.py.txt": {
+      "sha256": "54871b19314a8cf49d102af23831e2d171c6a832db2b9d160d4676c2dcb078cc",
+      "bytes": 3469
+    },
+    "history/pre-bough-underside-fix/note.md": {
+      "sha256": "0c944f2a875beb06d94300a610ee6552b8aedb8a60f4e405c97137e3e994ddf5",
+      "bytes": 397
+    },
+    "history/pre-bough-underside-fix/preparation.json": {
+      "sha256": "682ce696d0649a296a45279bcd40d9ff1b4c56a77f87ae17f667f016dede39be",
+      "bytes": 6839
+    },
+    "history/pre-bough-underside-fix/static-final.log.txt": {
+      "sha256": "0c22092d6827dad3360dc0c1d2c686f9b8709909be04d98a5fd748f52dc53de4",
+      "bytes": 830
+    },
+    "history/pre-intersection-weld/check-preparation.py.txt": {
+      "sha256": "54871b19314a8cf49d102af23831e2d171c6a832db2b9d160d4676c2dcb078cc",
+      "bytes": 3469
+    },
+    "history/pre-intersection-weld/note.md": {
+      "sha256": "1201e0855ed3192f9faed3654cb66b82bce7cc214c51f2cdd8e7653bcfc735dc",
+      "bytes": 417
+    },
+    "history/pre-intersection-weld/static-first.log.txt": {
+      "sha256": "85b80569d1c7584e9bfee16cdbd89341effcd4b88857e97a2c0c269b1a38210f",
+      "bytes": 718
+    },
+    "history/pre-intersection-weld/terrain_connector.py.txt": {
+      "sha256": "b328db3b124bd44eadc9a8f13dd0f2790cfb226c655a63a78876c2061ec50df4",
+      "bytes": 3478
+    },
+    "render-source.py": {
+      "sha256": "d1635d4fb6e0dfcf6f2423310e5bdedba1cf29d2381a50bcaf11c830e197f1f6",
+      "bytes": 4746
+    },
+    "static-bough-fix.log.txt": {
+      "sha256": "45c442f3dc9973dc8c006cf6ceeffe0702217ea788cbb247f59536351ba1fd41",
+      "bytes": 872
+    },
+    "static-final.log.txt": {
+      "sha256": "0c22092d6827dad3360dc0c1d2c686f9b8709909be04d98a5fd748f52dc53de4",
+      "bytes": 830
+    },
+    "static-first.log.txt": {
+      "sha256": "85b80569d1c7584e9bfee16cdbd89341effcd4b88857e97a2c0c269b1a38210f",
+      "bytes": 718
+    },
+    "static-second.log.txt": {
+      "sha256": "0c22092d6827dad3360dc0c1d2c686f9b8709909be04d98a5fd748f52dc53de4",
+      "bytes": 830
+    },
+    "study.json": {
+      "sha256": "8146d52abdb8b9ef37b7e350f077fec8428382b6ea3fc9409913a50a116cd713",
+      "bytes": 13811
+    },
+    "supervise.py": {
+      "sha256": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+      "bytes": 1920
+    },
+    "terrain_connector.py": {
+      "sha256": "66b8610845a8511fdc58e2298b6ad027cbbd4a29cae688230ae0a2cce378287e",
+      "bytes": 4264
+    }
+  },
+  "sourceInputs": {
+    "context": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/extraction-attempt02/fixed-c1-context.glb",
+      "sha256": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+      "bytes": 19623452
+    },
+    "leftTrees": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/extraction-attempt02/role-separated-originals.glb",
+      "sha256": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+      "bytes": 843044
+    },
+    "contextManifest": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/extraction-attempt02/manifest.json",
+      "sha256": "3c3fcd13bf4867946a0f393769f852cb938286329dfa2e11dac3afe74796bda2",
+      "bytes": 170092
+    },
+    "forestStudy": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/study.json",
+      "sha256": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+      "bytes": 482322
+    },
+    "sourceBlend": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.blend",
+      "sha256": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+      "bytes": 6585301
+    },
+    "sourceGlb": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.glb",
+      "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "bytes": 34930176
+    },
+    "benchmark": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island-render.png",
+      "sha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "bytes": 2579296
+    },
+    "envelope": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-whole-massing/raw/actor-envelope-identity.json",
+      "sha256": "444beab3c5b078799e974424e225e0a2e6742d6b99ad7e94be5edb54088af1db",
+      "bytes": 5969
+    }
+  },
+  "basis": {
+    "eastV1Measurement": {
+      "path": "/private/tmp/sansu-p02-gallery-source-study/east-v1/runs/01-east-survey/measurement.json",
+      "sha256": "be452b8297a17246ebaa376edffef35de2b5821c554717ed53cfb9d04c022e21"
+    },
+    "classifiedEastV1": {
+      "path": "/private/tmp/sansu-p02-gallery-source-study/east-v1-analysis/report.json",
+      "sha256": "6b7386fce94325a37d17df782617c4fb1f08172a6c9bf013ac57a431c391f088"
+    },
+    "singleProposalProbe": {
+      "path": "/private/tmp/sansu-p02-gallery-source-study/east-v1-analysis/design-probe.json",
+      "sha256": "43ec18d642cfd4ba7d20f511a7ab06889144c4daeb6d794ac29594eb7e414c73"
+    }
+  },
+  "staticChecks": {
+    "status": "STATIC_SYNTHETIC_ONLY_PASS",
+    "checks": {
+      "pythonAST": true,
+      "sealedV1FilesUnchanged": true,
+      "eightSourceInputsUnchanged": true,
+      "reviewedMeasurementAndProbeUnchanged": true,
+      "ownerTransformEnvelopeFixed": true,
+      "widthHeadEpsilonNotRelaxed": true,
+      "donorTransformBlockByteIdentical": true,
+      "restoredLeftObstaclesRemain": true,
+      "boughEndDoesNotPierceWalkTop": true,
+      "noRenderInBuild": true,
+      "statusAlwaysHold": true,
+      "syntheticClosedFloor": true,
+      "syntheticNoBuriedTop": true,
+      "syntheticActualThresholdRange": true,
+      "syntheticRejectsTargetBelowGround": true,
+      "terminalRailPlaneHasNominalReserve": true
+    },
+    "sourceBuildExecuted": false,
+    "syntheticVertices": 12,
+    "syntheticFaces": 20,
+    "pending": "Blender boolean topology, exact seams after Float32, source guards, support and views"
+  },
+  "limits": {
+    "processes": 1,
+    "cpuThreads": 2,
+    "rssMiB": 2560,
+    "buildSeconds": 180,
+    "viewSeconds": 240,
+    "noAutomaticRender": true,
+    "noAutomaticRetry": true
+  },
+  "outputVerdictAlways": "HOLD_SOURCE_COARSE_ONLY",
+  "supersedesBeforeExecution": {
+    "preparationSha256": "682ce696d0649a296a45279bcd40d9ff1b4c56a77f87ae17f667f016dede39be",
+    "reason": "bough end at slab underside prevents .0165 potential walk-top penetration",
+    "history": "history/pre-bough-underside-fix/"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "status": "OFFLINE_OPERAND_TOPOLOGY_ONLY",
+  "operands": {
+    "terrainThreshold": {
+      "vertices": 422,
+      "triangles": 840,
+      "edgeValences": {
+        "2": 1260
+      },
+      "sameDirectionDoubleEdges": 0,
+      "duplicateFaces": 0,
+      "nearZeroAreaTriangles": [],
+      "signedVolume": 0.02504345819091166
+    },
+    "alignedOpening": {
+      "vertices": 140,
+      "triangles": 276,
+      "edgeValences": {
+        "2": 414
+      },
+      "sameDirectionDoubleEdges": 0,
+      "duplicateFaces": 0,
+      "nearZeroAreaTriangles": [],
+      "signedVolume": 0.028683203244731934
+    },
+    "eastBranchGallery": {
+      "vertices": 1560,
+      "triangles": 3116,
+      "edgeValences": {
+        "2": 4674
+      },
+      "sameDirectionDoubleEdges": 0,
+      "duplicateFaces": 0,
+      "nearZeroAreaTriangles": [],
+      "signedVolume": 0.20569172630888036
+    },
+    "nativeInteriorOriginalGLBExactPositionWeld": {
+      "vertices": 96,
+      "triangles": 188,
+      "edgeValences": {
+        "2": 282
+      },
+      "sameDirectionDoubleEdges": 0,
+      "duplicateFaces": 0,
+      "nearZeroAreaTriangles": [],
+      "signedVolume": 0.3308168571717788
+    }
+  },
+  "sourceRawSha256": "e44d250ca5440d0f5aae661d321bde8de7c031296939b820eeb8f9d400c2b53d",
+  "failureUnion": {
+    "nonmanifoldEdgesAfterExistingEpsilonWeld": 6745,
+    "connectedComponents": 1,
+    "epsilon": 1e-07,
+    "originalSourceMeshesNotOperands": true
+  },
+  "limits": [
+    "Saved Boolean result only available in failed-scene.blend; no Blender run or repair",
+    "Positive volume and edge counts do not rule out ribbon self intersections or Boolean coplanar sensitivity"
+  ]
+}

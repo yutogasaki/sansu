@@ -1,0 +1,55 @@
+"""Lightweight syntax/predicate checks only, no Blender or geometry cohort run."""
+import ast
+import hashlib
+import json
+import subprocess
+import sys
+from pathlib import Path
+HERE=Path(__file__).resolve().parent
+OLD=HERE.parent/'normal-generalization-prep'
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+out=HERE/'static-check.json'
+assert not out.exists(),'Preserve static result'
+ready=json.loads((OLD/'readiness.json').read_text())
+before={str(OLD/n):sha(OLD/n) for n in ready['files']}
+assert {n:before[str(OLD/n)] for n in ready['files']}==ready['files']
+syntax=[]
+for p in sorted(HERE.glob('*.py')):
+ ast.parse(p.read_text(),filename=str(p));syntax.append(p.name)
+def function(path,name):
+ tree=ast.parse(path.read_text())
+ return ast.dump(next(x for x in tree.body if isinstance(x,(ast.FunctionDef,ast.AsyncFunctionDef)) and x.name==name),include_attributes=False)
+comparisons={
+ 'float64FieldNormalTransportUnchanged':function(OLD/'leaf_adapter.py','_evaluate64')==function(HERE/'leaf_adapter.py','_evaluate64'),
+ 'original31MethodByteIdentical':sha(OLD/'original_method_oracle.py')==sha(HERE/'original_method_oracle.py'),
+ 'representationRulesByteIdentical':sha(OLD/'rules.py')==sha(HERE/'rules.py'),
+ 'sourceClassificationByteIdentical':sha(OLD/'source-classification.json')==sha(HERE/'source-classification.json'),
+ 'primaryJunctionFunctionUnchanged':function(OLD/'build-source.py','connect')==function(HERE/'build-source.py','connect'),
+}
+v2=HERE.parent/'hold-shape-diagnostic-v2'
+for name in ('original_method_oracle.py','rules.py','bundle_io.py','bundle_export.py','run-once.py','source-classification.json'):
+ comparisons['v2ByteIdentical:'+name]=sha(v2/name)==sha(HERE/name)
+comparisons['acceptanceDecisionUnchanged']=function(v2/'precision_gate.py','decision')==function(HERE/'precision_gate.py','decision')
+main=next(x for x in ast.parse((HERE/'build-source.py').read_text()).body if isinstance(x,ast.Try))
+calls_in_main=[x for x in ast.walk(main) if isinstance(x,ast.Call)]
+early=next(x for x in calls_in_main if ast.unparse(x.func)=='save_hold_assembly' and ast.literal_eval(x.args[0])=='complete128-HOLD')
+joints=[x for x in calls_in_main if ast.unparse(x.func)=='connect']
+comparisons['complete128SavedBeforeAnyJointCall']=all(early.lineno<x.lineno for x in joints)
+assert all(comparisons.values())
+# There must be no export/reimport/roundtrip function in the diagnostic builder.
+s=ast.parse((HERE/'build-source.py').read_text())
+calls=[ast.unparse(n.func) for n in ast.walk(s) if isinstance(n,ast.Call)]
+assert 'bundle_export.export' not in calls
+assert calls.count('bpy.ops.import_scene.gltf')==2 # fixed original context + role source only
+assert 'save_assembly_and_roundtrip' not in calls
+result=subprocess.run([sys.executable,'-B','-m','unittest','test_precision_gate.py','-v'],cwd=HERE,capture_output=True,text=True)
+(HERE/'static-check.log.txt').write_text(result.stdout+result.stderr)
+after={p:sha(Path(p)) for p in before}
+assert before==after
+record={'python':sys.version,'syntaxParsed':syntax,'unchangedChecks':comparisons,
+ 'predicateTestExitCode':result.returncode,'purePredicateTests':14,'noBlenderOrGeometryCohortExecuted':True,
+ 'noExportOrReimportCallInBuilder':True,'ordinaryPreparationBefore':before,'ordinaryPreparationAfter':after,
+ 'staticLogSha256':sha(HERE/'static-check.log.txt')}
+out.write_text(json.dumps(record,indent=2)+'\n')
+print(json.dumps({k:v for k,v in record.items() if k not in ('ordinaryPreparationBefore','ordinaryPreparationAfter','python')}))
+raise SystemExit(result.returncode)

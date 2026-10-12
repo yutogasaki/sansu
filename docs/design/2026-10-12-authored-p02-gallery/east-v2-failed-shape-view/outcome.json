@@ -1,0 +1,79 @@
+{
+  "status": "SOURCE_VIEW_ATTEMPTS_COMPLETED_HOLD_NO_GEOMETRY_ADOPTION",
+  "runs": [
+    {
+      "attempt": "01-whole",
+      "ownedBlenderPid": 39505,
+      "launchRequestedUtc": "2026-10-12T05:21:56.127543+00:00",
+      "firstObservedUtc": "2026-10-12T05:21:56.430799+00:00",
+      "lastObservedUtc": "2026-10-12T05:21:58.131118+00:00",
+      "supervisorExitObservedUtc": "2026-10-12T05:21:58.391389+00:00",
+      "exitCode": 1,
+      "elapsedSeconds": 2.0597875,
+      "blenderOuterPeakObservedRssBytes": 403324928,
+      "supervisorTreePeakObservedRssBytes": 399081472,
+      "allInputsUnchanged": true,
+      "logSha256": "6763f528f7c81744f32df638735c96085b00a8681dbc178f8ee0d008560d3bde",
+      "failure": "Existing Background node looked up by localized display name; stopped before render. Preserved original failed code and preparation."
+    },
+    {
+      "attempt": "02-whole",
+      "ownedBlenderPid": 39851,
+      "launchRequestedUtc": "2026-10-12T05:23:39.537394+00:00",
+      "firstObservedUtc": "2026-10-12T05:23:39.835670+00:00",
+      "lastObservedUtc": "2026-10-12T05:23:51.825672+00:00",
+      "supervisorExitObservedUtc": "2026-10-12T05:23:52.076343+00:00",
+      "exitCode": 0,
+      "elapsedSeconds": 12.367332833,
+      "blenderOuterPeakObservedRssBytes": 2513371136,
+      "supervisorTreePeakObservedRssBytes": 2511732736,
+      "allInputsUnchanged": true,
+      "logSha256": "03176731c223bdba0414ac406d9d7208953091e38621907595a7c18860e9a843",
+      "image": "failed-floor-only-HOLD-whole.png",
+      "imageSha256": "aaf8fc6498f78ef69e8b0031d80615a03f2ef82dd4d28001ed33439fb2623b8b",
+      "renderManifestSha256": "f3c046cce043ad7021d5628cdff8e0dfcb5fc2535222d03bd4410744ced33083",
+      "viewport": [
+        1280,
+        925
+      ],
+      "allMeshIdentitiesUnchanged": true,
+      "meshCount": 446,
+      "status": "INCOMPLETE_FLOOR_ONLY_TOPOLOGY_INVALID_HOLD"
+    },
+    {
+      "attempt": "03-entry",
+      "ownedBlenderPid": 40801,
+      "launchRequestedUtc": "2026-10-12T05:28:08.890585+00:00",
+      "firstObservedUtc": "2026-10-12T05:28:09.192947+00:00",
+      "lastObservedUtc": "2026-10-12T05:28:27.302752+00:00",
+      "supervisorExitObservedUtc": "2026-10-12T05:28:27.553037+00:00",
+      "exitCode": 0,
+      "elapsedSeconds": 18.515801,
+      "blenderOuterPeakObservedRssBytes": 2512797696,
+      "supervisorTreePeakObservedRssBytes": 2512732160,
+      "allInputsUnchanged": true,
+      "logSha256": "956c8779cc909ce58d98d943b012d4cf78843d3be045e73ebf6a84315bb076ad",
+      "image": "failed-floor-only-HOLD-entry-section.png",
+      "imageSha256": "b1da9ad3072a83a1a35831cdf9d1844e49681455feef7f3664ec94e5f2e9d277",
+      "renderManifestSha256": "013a383461ca9079d632958fd2c4129535bba431a6a1aed38e442cced23e1ccc",
+      "viewport": [
+        1280,
+        925
+      ],
+      "allMeshIdentitiesUnchanged": true,
+      "meshCount": 446,
+      "status": "INCOMPLETE_FLOOR_ONLY_TOPOLOGY_INVALID_HOLD"
+    }
+  ],
+  "recordMeaning": "UTC child entries are observations, not exact spawn/exit. External observedChildren also catches short-lived supervisor ps calls; owned Blender PIDs are explicitly identified here.",
+  "modelUnchanged": true,
+  "modelSourceSha256": "e61a390ef10e77ef40de77972454050b19e469b725ea8ebbec7b43e35b199746",
+  "pending": [
+    "Topology-invalid floor union",
+    "No new boughs or rails",
+    "Walking/clearance support not accepted",
+    "Source view differs from runtime lighting/materials and is not app acceptance"
+  ],
+  "noManifoldAdoption": true,
+  "sourceSlotReleased": true
+}

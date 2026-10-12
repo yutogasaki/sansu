@@ -1,0 +1,111 @@
+"""Prepare attempt 02 only; never launches the driver or browser."""
+from pathlib import Path
+import hashlib, json, difflib
+from datetime import datetime, timezone
+
+HERE = Path(__file__).resolve().parent
+OLD = HERE.parent / 'roi-face-normal-prepared'
+sha = lambda b: hashlib.sha256(b).hexdigest()
+
+def put(name, content):
+    with (HERE / name).open('xb') as f:
+        f.write(content.encode() if isinstance(content, str) else content)
+
+old = (OLD / 'diagnose-roi-face-normal.mjs').read_text()
+assert sha(old.encode()) == 'f94d8ce0d306fc5c04228cfb63dcd81c47fdd7a533b697edc98fe24ec6fc3415'
+new = old
+
+def replace(before, after):
+    global new
+    assert new.count(before) == 1, before[:100]
+    new = new.replace(before, after)
+
+replace('const walkingTopology = walking => { const value = structuredClone(walking); delete value.poses; return value; };', '''const walkingTopology = walking => { const value = structuredClone(walking); delete value.poses; return value; };
+// JSON turns -0 into 0. Only the persisted projection comparison uses this equivalence.
+const projectionCanonical = values => values.map(value => Object.is(value, -0) ? 0 : value);
+const rawNumberEvidence = values => ({ numericValues: values,
+    numberTokens: values.map(value => Object.is(value, -0) ? '-0' : String(value)),
+    negativeZeroIndices: values.flatMap((value, index) => Object.is(value, -0) ? [index] : []) });
+const projectionEvidence = (actual, expected) => {
+    const canonicalActual = projectionCanonical(actual), canonicalExpected = projectionCanonical(expected);
+    return { rule: 'Only Object.is(value, -0) becomes 0; no tolerance or other numeric conversion',
+        rawActual: rawNumberEvidence(actual), rawExpected: rawNumberEvidence(expected),
+        canonicalActual, canonicalExpected,
+        rawMismatchIndices: actual.flatMap((value, index) => Object.is(value, expected[index]) ? [] : [index]),
+        canonicalMismatchIndices: canonicalActual.flatMap((value, index) => Object.is(value, canonicalExpected[index]) ? [] : [index]),
+        sameLength: actual.length === expected.length,
+        canonicalExactEqual: actual.length === expected.length && canonicalActual.every((value, index) => Object.is(value, canonicalExpected[index])) };
+};''')
+replace("startedAt: new Date().toISOString(), captures: [], errors: [],", """startedAt: new Date().toISOString(), captures: [], errors: [], preAssertObservations: [],
+    consoleErrors: [], failedResponses: [], failedRequests: [],
+    errorPolicy: 'All page errors, console errors, HTTP >=400 responses and request failures are fatal. No favicon or 404 exclusions. Shader errors remain fatal.',""")
+replace("const targetPath = path.join(externalRoot, 'target.json');", """const pendingResponseEvidence = new Set();
+const drainResponseEvidence = async () => {
+    while (pendingResponseEvidence.size) await Promise.all([...pendingResponseEvidence]);
+};
+const targetPath = path.join(externalRoot, 'target.json');""")
+replace("    page.on('pageerror', error => report.errors.push({ kind: 'pageerror', error: error.stack ?? String(error) }));\n    page.on('console', message => { if (message.type() === 'error') report.errors.push({ kind: 'console-error', text: message.text() }); });", """    page.on('pageerror', error => report.errors.push({ kind: 'pageerror', atUtc: new Date().toISOString(), error: error.stack ?? String(error) }));
+    page.on('console', message => {
+        if (message.type() !== 'error') return;
+        const record = { kind: 'console-error', atUtc: new Date().toISOString(), text: message.text(), location: message.location() };
+        report.consoleErrors.push(record); report.errors.push(record);
+    });
+    page.on('requestfailed', request => {
+        const record = { kind: 'request-failed', atUtc: new Date().toISOString(), url: request.url(),
+            method: request.method(), resourceType: request.resourceType(), failure: request.failure() };
+        report.failedRequests.push(record); report.errors.push(record);
+    });
+    page.on('response', response => {
+        if (response.status() < 400) return;
+        const request = response.request();
+        const record = { kind: 'http-error-response', atUtc: new Date().toISOString(), url: response.url(),
+            status: response.status(), statusText: response.statusText(), method: request.method(),
+            resourceType: request.resourceType(), contentType: response.headers()['content-type'] ?? null,
+            fromServiceWorker: response.fromServiceWorker(), bodyPrefixCharacterLimit: 1024 };
+        // Record status immediately, even if response body retrieval later fails.
+        report.failedResponses.push(record); report.errors.push(record);
+        const task = (async () => {
+            try { const body = await response.text(); record.bodyFirstChars = body.slice(0, 1024); record.bodyCharacters = body.length; }
+            catch (error) { record.bodyReadError = error.stack ?? String(error); }
+        })();
+        pendingResponseEvidence.add(task);
+        void task.then(() => pendingResponseEvidence.delete(task));
+    });""")
+replace("        const observed = await page.evaluate(() => window.__sansuFloorDiagnostic.observe());\n        assert.equal(observed.app.buildRevision", """        const observed = await page.evaluate(() => window.__sansuFloorDiagnostic.observe());
+        // Persist the raw observation and lossless signed-zero evidence BEFORE any following assertion.
+        const preAssert = { stage, atUtc: new Date().toISOString(), observed,
+            rawCameraMatrices: { matrixWorld: rawNumberEvidence(observed.camera.matrixWorld),
+                projectionMatrix: rawNumberEvidence(observed.camera.projectionMatrix) },
+            projectionComparison: projectionEvidence(observed.camera.projectionMatrix, target.camera.projectionMatrix) };
+        report.preAssertObservations.push(preAssert);
+        await writeJson(`${stage}-pre-assert.json`, preAssert);
+        assert.equal(observed.app.buildRevision""")
+replace("            assert.deepEqual(observed.camera.projectionMatrix, target.camera.projectionMatrix, 'Projection differs from static target');", """            assert.deepEqual(preAssert.projectionComparison.canonicalActual, preAssert.projectionComparison.canonicalExpected,
+                'Projection differs from static target after signed-zero-only canonicalization');""")
+replace("    assert.deepEqual(report.errors, []);\n    report.diagnosticCompleted = true;", """    await drainResponseEvidence();
+    await writeJson('network-errors-before-completion.json', { consoleErrors: report.consoleErrors,
+        failedResponses: report.failedResponses, failedRequests: report.failedRequests, errors: report.errors });
+    assert.deepEqual(report.errors, []);
+    report.diagnosticCompleted = true;""")
+replace("    try { await browser?.close(); }", """    // Keep listeners active through cleanup/close, then drain body evidence even on the first failure.
+    await drainResponseEvidence();
+    try { await browser?.close(); }""")
+replace("    try {\n        if (expectedSource)", """    await drainResponseEvidence();
+    await writeJson('network-errors-final.json', { consoleErrors: report.consoleErrors,
+        failedResponses: report.failedResponses, failedRequests: report.failedRequests, errors: report.errors });
+    if (report.errors.length) { report.diagnosticCompleted = false; process.exitCode = 1; }
+    try {
+        if (expectedSource)""")
+put('diagnose-roi-face-normal.mjs', new)
+put('target.json', (OLD / 'target.json').read_bytes())
+put('check-prepared.mjs', (OLD / 'check-prepared.mjs').read_bytes())
+wrapper = (OLD / 'run-once.py').read_text().replace("HERE / 'execution-01'", "HERE / 'execution-02'").replace("HERE / 'actual-01'", "HERE / 'actual-02'")
+wrapper = wrapper.replace('f94d8ce0d306fc5c04228cfb63dcd81c47fdd7a533b697edc98fe24ec6fc3415', sha(new.encode()))
+put('run-once.py', wrapper)
+put('attempt-01-to-02.diff', ''.join(difflib.unified_diff(old.splitlines(True), new.splitlines(True), fromfile='attempt-01/diagnose-roi-face-normal.mjs', tofile='attempt-02/diagnose-roi-face-normal.mjs')))
+put('preparation-origin.json', json.dumps({'preparedAtUtc': datetime.now(timezone.utc).isoformat(), 'attempt': 2,
+    'sourceDriver': str(OLD / 'diagnose-roi-face-normal.mjs'), 'sourceDriverSha256': sha(old.encode()),
+    'firstRawFailureReportSha256': sha((OLD / 'actual-01/report.json').read_bytes()),
+    'firstTerminalSummarySha256': sha((OLD / 'execution-01/terminal-summary.json').read_bytes()),
+    'driverSha256': sha(new.encode()), 'wrapperSha256': sha(wrapper.encode()), 'executionStarted': False,
+    'scope': 'Harness-only signed-zero comparison and failure evidence. No numeric tolerance, geometry or shader intervention changes.'}, indent=2)+'\n')

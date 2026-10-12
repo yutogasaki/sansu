@@ -1,0 +1,13 @@
+# c5 l14 move failure classification
+
+The fixed-c5 replay confirms a driver expectation failure: after its selected `l14 (2,-4) → (3,-4)` move, `galleryOwners=0` is correct under the current eligibility rules. It is not evidence of an origin or loader wiring defect.
+
+Before the move, the actual objectLayer contains the shared tree for `P02:p3` (`cluster`, `grown`, l10/l11/l12/l13). Its authored origin is `[3.5, 1.49033759075, -8.5]`, exactly matching the manifest; a direct gallery factory call accepts it. After the move, the same four unmoved mature owners remain, but their place is `P01:l10`, `seeded`, with zero reached entrances and no attached bench l25 or home p3. `P02:p3` and the shared tree are absent. `derivePlaces` only creates P02 when a tree home attaches; its attachment search uses reached walking cells. This explains the eligibility loss. Exact graph choke-edge isolation was not separately performed.
+
+The moved frame revision `authored-world:daaac2cd75f83c59` equals the actual browser failure metadata. The actual forest replacements are l28/l15/l29, also matching the failure. The driver selected the nearest `canPlace` destination but then required gallery count 1 without deriving whether P02 survived (`rough-runtime.mjs:67–69`). Its 180-second wait cannot succeed for this state.
+
+The ordinary domain does derive different places from placement, age, attachments and reachability. The delivered stage4 forest and gallery are narrower: forest replacement requires fixed owner/cell/age/kit/source transform; gallery requires its fixed four owners/cells, P02:p3 cluster and matching origin. Moving l14 therefore removes that authored forest replacement, and this move also invalidates the gallery place. This fixture-specific authored appearance is not yet a general system that reconstructs the same forest/gallery design for arbitrary growth and edits.
+
+Scope: one fixed-c5 move, actual domain and objectLayer, no browser rerun, no app/candidate edit. The latest pre-move capture differs from whole-day only in `applied` intent history, not physical state. All 120 recorded inputs remained unchanged. The original runtime FAIL remains unchanged; store/restore and later UI steps were not reached. This does not resolve the separate gallery-entry obstruction issue or establish walking/art/M1 acceptance.
+
+Evidence: [classification.json](classification.json), [result.json](result.json), [move selection](move-selection.json), [successful script](diagnose.mjs), [successful log](execution-03.log.txt), and [input hashes](input-hashes-before.json). Initial narrow diagnostic-harness failures are retained in execution-01/02 logs and the corresponding script copies.

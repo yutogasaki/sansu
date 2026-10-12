@@ -1,0 +1,28 @@
+{
+  "ownedPid": 28406,
+  "ownedProcessGroupGone": true,
+  "sourceWindowUtc": [
+    "2026-10-12T04:33:15.632401+00:00",
+    "2026-10-12T04:33:34.919181+00:00"
+  ],
+  "runtimeOverlap": "This exact source interval may overlap root-owned functional regressions as authorized; intersect with root runtime logs for exact overlap. Not performance evidence.",
+  "runtimeDeadlineOrPauseModified": false,
+  "runtimeProcessesTouched": false,
+  "status": "HOLD coarse source, not contact acceptance",
+  "all101DeformationsComplete": true,
+  "originalFixed23AndAdditionalSpire4Preserved": true,
+  "contextMeshAssertions": 314,
+  "primaryJointMeasurementCount": 31,
+  "primaryJointStatuses": {
+    "derived-closed-bough-approximate-endpoint-measurements": 10,
+    "measured-overlap-under-inherited-tolerances": 21
+  },
+  "firstFailurePhase": null,
+  "noFirstFailureFile": true,
+  "derivedBoughs": 10,
+  "sourceInputShaBeforeAfterEqual": true,
+  "codeAndReadinessShaBeforeAfterEqual": true,
+  "shapeManifestSha256": "1fe45f63731b6141e36ac88ba05ddaa883b2998db3936812395dd613097159b4",
+  "peakSampledRssBytes": 689963008,
+  "leaf70AndActorGate": "not executed"
+}

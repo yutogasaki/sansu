@@ -1,0 +1,21 @@
+"""Read the saved failed result only; private bmesh copies, no save/build/render."""
+from pathlib import Path
+import argparse,hashlib,json,sys,collections,math,time
+p=argparse.ArgumentParser();p.add_argument('--scheduled',action='store_true');p.add_argument('--out',type=Path,required=True);a=p.parse_args(sys.argv[sys.argv.index('--')+1:]);assert a.scheduled and not a.out.exists();a.out.mkdir(parents=True)
+import bpy,bmesh
+from mathutils import Matrix
+source=Path('/private/tmp/sansu-p02-gallery-source-study/east-v2/runs/01-coarse-build/failed-scene.blend');sha=lambda f:hashlib.sha256(f.read_bytes()).hexdigest();before=sha(source);assert before=='e61a390ef10e77ef40de77972454050b19e469b725ea8ebbec7b43e35b199746';assert Path(bpy.data.filepath)==source
+BI=Matrix(((1,0,0,0),(0,0,1,0),(0,-1,0,0),(0,0,0,1)));start=time.monotonic()
+def stats(bm,matrix):
+ bm.verts.ensure_lookup_table();bm.edges.ensure_lookup_table();bm.faces.ensure_lookup_table();bm.normal_update()
+ coords=[tuple(v.co) for v in bm.verts];counts=collections.Counter(coords);faces=collections.Counter(tuple(sorted(tuple(v.co) for v in f.verts)) for f in bm.faces);bad=[e for e in bm.edges if not e.is_manifold];spatial=collections.Counter();witness=[]
+ for e in bad:
+  pts=[matrix@v.co for v in e.verts];mid=(pts[0]+pts[1])*.5;spatial[(math.floor(mid.x*4)/4,math.floor(mid.y*4)/4,math.floor(mid.z*4)/4,len(e.link_faces))]+=1
+  if len(witness)<24:witness.append({'points':[list(p) for p in pts],'linkedFaces':len(e.link_faces),'length':e.calc_length()})
+ return {'verts':len(bm.verts),'edges':len(bm.edges),'faces':len(bm.faces),'edgeValence':dict(collections.Counter(len(e.link_faces) for e in bm.edges)),'nonmanifoldEdges':len(bad),'noncontiguousManifoldEdges':sum(e.is_manifold and not e.is_contiguous for e in bm.edges),'exactCoincidentExtraVertices':sum(n-1 for n in counts.values() if n>1),'exactCoordinateDuplicateFaces':sum(n-1 for n in faces.values() if n>1),'zeroAreaFaces':sum(f.calc_area()==0 for f in bm.faces),'signedVolume':bm.calc_volume(signed=True),'largestQuarterMeterDefectBins':[{'x':k[0],'y':k[1],'z':k[2],'faceValence':k[3],'edges':n} for k,n in spatial.most_common(24)],'firstBadEdges':witness}
+rows=[]
+for obj in bpy.data.objects:
+ if obj.type!='MESH' or not obj.name.startswith('construction-solid/'):continue
+ bm=bmesh.new();bm.from_mesh(obj.data);matrix=BI@obj.matrix_world;original=stats(bm,matrix);bmesh.ops.remove_doubles(bm,verts=list(bm.verts),dist=1e-7);welded=stats(bm,matrix);bm.free();rows.append({'name':obj.name,'matrixWorld':[[x for x in row] for row in obj.matrix_world],'raw':original,'privateCopyAfterExistingEpsilonWeld':welded})
+assert rows,'Saved construction result absent';after=sha(source);assert before==after
+out={'status':'READ_ONLY_FAILED_BOOLEAN_DIAGNOSTIC','sourceBefore':before,'sourceAfter':after,'objects':rows,'seconds':time.monotonic()-start,'geometrySavedOrModified':False,'limits':['No Boolean reapplication or input changes','Read-only topology establishes defect category, not repair or runtime acceptance']};(a.out/'report.json').write_text(json.dumps(out,indent=2)+'\n');print(json.dumps({'objects':[(r['name'],r['raw']['nonmanifoldEdges'],r['privateCopyAfterExistingEpsilonWeld']['nonmanifoldEdges']) for r in rows],'unchanged':before==after}))

@@ -1,0 +1,1274 @@
+{
+  "candidate": "forest-crown-stage3-u-court-v0",
+  "status": "HOLD-source-coarse-shape",
+  "sourceOnly": true,
+  "allDeformationsComplete": true,
+  "originalFixedRoleCount": 23,
+  "additionalRetainedSpireTiers": 4,
+  "changedOriginalRoles": 101,
+  "originalRoleCount": 128,
+  "fixedDigests": {
+    "role-l14-2740": "85a7d29e8e12c8f3bf2b4def7e12093d94ab83b2cadb0dcd26cc469b6f063fab",
+    "role-l14-2741": "0d0976dee5ec523e778c408ec6af3dc698c389fabf9bf54580b9fa350af4cdb5",
+    "role-l14-2742": "afc39262084ecfb9ee2dbde6e92eff3e68368fba674c94d4ee3278f81174ea99",
+    "role-l14-2743": "9cc715b81f12450e49f0cad65f258b95b43dd886528e3e9003d75f1e1d206baf",
+    "role-l14-2744": "64c2dc227fd993cfe066dfce05c9ab1364f0c27faf0ec2bf7694378b49be1492",
+    "role-l14-2745": "f7a02f0ad29fa89f58fcebefb0cc6bdfcd6ea7986ce7e076c77282cfdb87fee6",
+    "role-l14-2746": "a907079156238c84264894c676f58b86fc2390173f7fe60109c356b80eb62d47",
+    "role-l14-2747": "26ddc4a113069d9be87f5bb43c5aceb2885248a33b25f0277b3f8f5b5254279a",
+    "role-l15-2599": "3c7a87fa141d99b73bdec371f261ceeaf675b80e0f5b0a2d995b9faadd6de2bf",
+    "role-l15-2600": "ad7aedb92b12c517e8c5c0d3ffcc90490d04415787af960088b184787471a49b",
+    "role-l15-2601": "b65f8cf595a098fcdd52fe9e1a453968330daf47b36b29e351a272fbea601c2c",
+    "role-l15-2602": "f39490e86e90ec31bba2dc5829fa8e7843e841ded355d3d8f25a1b4a1901a932",
+    "role-l15-2603": "5c769420dfe24311e74ba33b4c24b4ab508edf46673e5b784cbda12875a25f4b",
+    "role-l15-2604": "d439b9224b438aa4292dae536019cd41127f19bb75abadde1d1ed2d30fa1e54c",
+    "role-l15-2608": "ea83853a45ab40fd35b1572cd2ab541f2aac82f268c647be2d7d56844d9cde04",
+    "role-l28-2692": "a52801a10a97496ab1d39144fb642620cfe261b8b1b97171052bc95fd4917a16",
+    "role-l29-2599": "ca7c6f9ed2999ef8cd996bb2df09576889db52ddf809044fc3a2a292a342b9d9",
+    "role-l29-2600": "15d18aa0689dffb5f55a593cd533281ae9b7ebd86e1e673ddad44bd7773f5ee5",
+    "role-l29-2601": "1143555c427d23add0d65eda158c8c3bf415dd1735d7b4698baeb4638aa4db9e",
+    "role-l29-2602": "c58d18c06f44cf5fce34ffe5409c7ea74124bd36e85453071cbb05fcd054618e",
+    "role-l29-2603": "4ce9e583462e1e4b5f188d81655f388c0be7983dcffd106e3ed807e921ba54f3",
+    "role-l29-2604": "073fccf6710ee90d6f845e46f5b92bbee7ab2db4501d29de88d96ec818cc977a",
+    "role-l29-2608": "b895f6f7ae5c7f0b6d964aea2cda3d623bdc167fbe7d843e98f846f39b1f953c"
+  },
+  "retainedSpireDigests": {
+    "role-l28-2693": "57d6c7875d2beacc3deb1b2ab8dd6d736286e5c1f5af9137451929dfc57e671b",
+    "role-l28-2694": "835151a34e1d17b2eb32783872495a66d286e31d3c77f4d5410eb5e82328c7f3",
+    "role-l28-2695": "a9707f57c795b99b0cf5937996b75f96956646fd28374749d2188e76cf38d706",
+    "role-l28-2696": "25043f2059b1ffe1790623413782bf0a531da5e7a7733d20953010193724ec20"
+  },
+  "unchangedContextMeshes": 314,
+  "jointMeasurements": [
+    {
+      "left": "role-l14-2743",
+      "right": "role-l14-2234",
+      "ownerId": "l14",
+      "leftGuess": [
+        2.4679999351501465,
+        3.0542500019073486,
+        -4.0
+      ],
+      "rightGuess": [
+        2.842604160308838,
+        3.428922414779663,
+        -4.432614326477051
+      ],
+      "ballRadiusWorld": 0.025429949999999996,
+      "status": "derived-closed-bough-approximate-endpoint-measurements",
+      "clearanceApproximate": true,
+      "measurement": {
+        "name": "stage3-junction-01-l14",
+        "ownerId": "l14",
+        "generated": true,
+        "spanWorld": 0.6840050468174982,
+        "start": [
+          2.4679999351501465,
+          3.0542500019073486,
+          -4.0
+        ],
+        "end": [
+          2.842604160308838,
+          3.428922414779663,
+          -4.432614326477051
+        ],
+        "radiusWorld": 0.04238325,
+        "endpointBallRadiusWorld": 0.063574875,
+        "endpointSurfaceClearanceWorld": [
+          0.09988880157470703,
+          0.3915903568267822
+        ],
+        "fullCapDisksInsideEndpointBalls": true,
+        "closure": {
+          "name": "stage3-junction-01-l14",
+          "triangles": 308,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "material": "sculpted tree wood.003",
+        "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+      }
+    },
+    {
+      "left": "role-l14-2743",
+      "right": "role-l14-2235",
+      "ownerId": "l14",
+      "leftGuess": [
+        2.4679999351501465,
+        3.0542500019073486,
+        -4.0
+      ],
+      "rightGuess": [
+        2.3664090633392334,
+        3.3325369358062744,
+        -4.683567047119141
+      ],
+      "ballRadiusWorld": 0.025429949999999996,
+      "status": "derived-closed-bough-approximate-endpoint-measurements",
+      "clearanceApproximate": true,
+      "measurement": {
+        "name": "stage3-junction-02-l14",
+        "ownerId": "l14",
+        "generated": true,
+        "spanWorld": 0.7450021658746308,
+        "start": [
+          2.4679999351501465,
+          3.0542500019073486,
+          -4.0
+        ],
+        "end": [
+          2.3664090633392334,
+          3.3325369358062744,
+          -4.683567047119141
+        ],
+        "radiusWorld": 0.04238325,
+        "endpointBallRadiusWorld": 0.063574875,
+        "endpointSurfaceClearanceWorld": [
+          0.09988880157470703,
+          0.3284366726875305
+        ],
+        "fullCapDisksInsideEndpointBalls": true,
+        "closure": {
+          "name": "stage3-junction-02-l14",
+          "triangles": 308,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "material": "sculpted tree wood.003",
+        "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+      }
+    },
+    {
+      "left": "role-l14-2743",
+      "right": "role-l14-2236",
+      "ownerId": "l14",
+      "leftGuess": [
+        2.4679999351501465,
+        3.0542500019073486,
+        -4.0
+      ],
+      "rightGuess": [
+        3.3809585571289062,
+        3.362504720687866,
+        -4.268974304199219
+      ],
+      "ballRadiusWorld": 0.025429949999999996,
+      "status": "derived-closed-bough-approximate-endpoint-measurements",
+      "clearanceApproximate": true,
+      "measurement": {
+        "name": "stage3-junction-03-l14",
+        "ownerId": "l14",
+        "generated": true,
+        "spanWorld": 1.0004307184373795,
+        "start": [
+          2.4679999351501465,
+          3.0542500019073486,
+          -4.0
+        ],
+        "end": [
+          3.3809585571289062,
+          3.362504720687866,
+          -4.268974304199219
+        ],
+        "radiusWorld": 0.04238325,
+        "endpointBallRadiusWorld": 0.063574875,
+        "endpointSurfaceClearanceWorld": [
+          0.09988880157470703,
+          0.3363035023212433
+        ],
+        "fullCapDisksInsideEndpointBalls": true,
+        "closure": {
+          "name": "stage3-junction-03-l14",
+          "triangles": 308,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "material": "sculpted tree wood.003",
+        "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+      }
+    },
+    {
+      "left": "role-l14-2743",
+      "right": "role-l14-2237",
+      "ownerId": "l14",
+      "leftGuess": [
+        2.4679999351501465,
+        3.0542500019073486,
+        -4.0
+      ],
+      "rightGuess": [
+        2.8928377628326416,
+        3.4109723567962646,
+        -4.8074445724487305
+      ],
+      "ballRadiusWorld": 0.025429949999999996,
+      "status": "derived-closed-bough-approximate-endpoint-measurements",
+      "clearanceApproximate": true,
+      "measurement": {
+        "name": "stage3-junction-04-l14",
+        "ownerId": "l14",
+        "generated": true,
+        "spanWorld": 0.97964522743589,
+        "start": [
+          2.4679999351501465,
+          3.0542500019073486,
+          -4.0
+        ],
+        "end": [
+          2.8928377628326416,
+          3.4109723567962646,
+          -4.8074445724487305
+        ],
+        "radiusWorld": 0.04238325,
+        "endpointBallRadiusWorld": 0.063574875,
+        "endpointSurfaceClearanceWorld": [
+          0.09988880157470703,
+          0.3548944592475891
+        ],
+        "fullCapDisksInsideEndpointBalls": true,
+        "closure": {
+          "name": "stage3-junction-04-l14",
+          "triangles": 308,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "material": "sculpted tree wood.003",
+        "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+      }
+    },
+    {
+      "left": "role-l14-2743",
+      "right": "role-l14-2238",
+      "ownerId": "l14",
+      "leftGuess": [
+        2.4679999351501465,
+        3.0542500019073486,
+        -4.0
+      ],
+      "rightGuess": [
+        2.8275601863861084,
+        3.289170503616333,
+        -4.058675765991211
+      ],
+      "ballRadiusWorld": 0.025429949999999996,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          2.4943504333496094,
+          3.0777692794799805,
+          -4.000896453857422
+        ],
+        "radiusWorld": 0.025429949999999996,
+        "actualSurfaceClearances": [
+          0.0798008069396019,
+          0.05199189484119415
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l15-2608",
+      "right": "role-l15-2605",
+      "ownerId": "l15",
+      "leftGuess": [
+        1.6994733810424805,
+        1.4391698837280273,
+        -3.0572659969329834
+      ],
+      "rightGuess": [
+        1.6994733810424805,
+        1.4391698837280273,
+        -3.0572659969329834
+      ],
+      "ballRadiusWorld": 0.007665840000000001,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          1.6994733810424805,
+          1.4391698837280273,
+          -3.0572659969329834
+        ],
+        "radiusWorld": 0.007665840000000001,
+        "actualSurfaceClearances": [
+          0.030539266765117645,
+          0.018435141071677208
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l15-2605",
+      "right": "role-l15-2596",
+      "ownerId": "l15",
+      "leftGuess": [
+        2.319999933242798,
+        2.75,
+        -3.9000000953674316
+      ],
+      "rightGuess": [
+        2.319999933242798,
+        2.75,
+        -3.9000000953674316
+      ],
+      "ballRadiusWorld": 0.0009199008000000001,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          2.319999933242798,
+          2.7481601238250732,
+          -3.9000000953674316
+        ],
+        "radiusWorld": 0.0009199008000000001,
+        "actualSurfaceClearances": [
+          0.0015397280221804976,
+          0.34169068932533264
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l15-2608",
+      "right": "role-l15-2606",
+      "ownerId": "l15",
+      "leftGuess": [
+        1.6994733810424805,
+        1.4391698837280273,
+        -3.0572659969329834
+      ],
+      "rightGuess": [
+        1.6994733810424805,
+        1.4391698837280273,
+        -3.0572659969329834
+      ],
+      "ballRadiusWorld": 0.007665840000000001,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          1.6994733810424805,
+          1.4391698837280273,
+          -3.0572659969329834
+        ],
+        "radiusWorld": 0.007665840000000001,
+        "actualSurfaceClearances": [
+          0.030539266765117645,
+          0.01890413649380207
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l15-2606",
+      "right": "role-l15-2597",
+      "ownerId": "l15",
+      "leftGuess": [
+        1.4800000190734863,
+        2.4200000762939453,
+        -3.319999933242798
+      ],
+      "rightGuess": [
+        1.4800000190734863,
+        2.4200000762939453,
+        -3.319999933242798
+      ],
+      "ballRadiusWorld": 0.0009199008000000001,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          1.4781602621078491,
+          2.4200000762939453,
+          -3.319999933242798
+        ],
+        "radiusWorld": 0.0009199008000000001,
+        "actualSurfaceClearances": [
+          0.0009646723046898842,
+          0.342324823141098
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l15-2608",
+      "right": "role-l15-2607",
+      "ownerId": "l15",
+      "leftGuess": [
+        1.6994733810424805,
+        1.4391698837280273,
+        -3.0572659969329834
+      ],
+      "rightGuess": [
+        1.6994733810424805,
+        1.4391698837280273,
+        -3.0572659969329834
+      ],
+      "ballRadiusWorld": 0.007665840000000001,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          1.6994733810424805,
+          1.4391698837280273,
+          -3.0572659969329834
+        ],
+        "radiusWorld": 0.007665840000000001,
+        "actualSurfaceClearances": [
+          0.030539266765117645,
+          0.01959976553916931
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l15-2607",
+      "right": "role-l15-2598",
+      "ownerId": "l15",
+      "leftGuess": [
+        1.940000057220459,
+        2.4800000190734863,
+        -2.6600000858306885
+      ],
+      "rightGuess": [
+        1.940000057220459,
+        2.4800000190734863,
+        -2.6600000858306885
+      ],
+      "ballRadiusWorld": 0.0009199008000000001,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          1.9381603002548218,
+          2.4800000190734863,
+          -2.6600000858306885
+        ],
+        "radiusWorld": 0.0009199008000000001,
+        "actualSurfaceClearances": [
+          0.0009874190436676145,
+          0.34128057956695557
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l29-2608",
+      "right": "role-l29-2605",
+      "ownerId": "l29",
+      "leftGuess": [
+        3.7688255310058594,
+        1.1645729541778564,
+        -3.044050931930542
+      ],
+      "rightGuess": [
+        3.7688255310058594,
+        1.1645729541778564,
+        -3.044050931930542
+      ],
+      "ballRadiusWorld": 0.0058968,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          3.7688255310058594,
+          1.1645729541778564,
+          -3.044050931930542
+        ],
+        "radiusWorld": 0.0058968,
+        "actualSurfaceClearances": [
+          0.02349172532558441,
+          0.01418119017034769
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l29-2605",
+      "right": "role-l29-2596",
+      "ownerId": "l29",
+      "leftGuess": [
+        3.700000047683716,
+        2.5,
+        -4.0
+      ],
+      "rightGuess": [
+        3.700000047683716,
+        2.5,
+        -4.0
+      ],
+      "ballRadiusWorld": 0.000707616,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          3.700000047683716,
+          2.498584747314453,
+          -4.0
+        ],
+        "radiusWorld": 0.000707616,
+        "actualSurfaceClearances": [
+          0.0011844801483675838,
+          0.2628389000892639
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l29-2608",
+      "right": "role-l29-2606",
+      "ownerId": "l29",
+      "leftGuess": [
+        3.7688255310058594,
+        1.1645729541778564,
+        -3.044050931930542
+      ],
+      "rightGuess": [
+        3.7688255310058594,
+        1.1645729541778564,
+        -3.044050931930542
+      ],
+      "ballRadiusWorld": 0.0058968,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          3.7688255310058594,
+          1.1645729541778564,
+          -3.044050931930542
+        ],
+        "radiusWorld": 0.0058968,
+        "actualSurfaceClearances": [
+          0.02349172532558441,
+          0.01454130932688713
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l29-2606",
+      "right": "role-l29-2597",
+      "ownerId": "l29",
+      "leftGuess": [
+        3.0299999713897705,
+        2.450000047683716,
+        -3.549999952316284
+      ],
+      "rightGuess": [
+        3.0299999713897705,
+        2.450000047683716,
+        -3.549999952316284
+      ],
+      "ballRadiusWorld": 0.000707616,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          3.0299999713897705,
+          2.448584794998169,
+          -3.549999952316284
+        ],
+        "radiusWorld": 0.000707616,
+        "actualSurfaceClearances": [
+          0.001184424152597785,
+          0.2622004449367523
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l29-2608",
+      "right": "role-l29-2607",
+      "ownerId": "l29",
+      "leftGuess": [
+        3.7688255310058594,
+        1.1645729541778564,
+        -3.044050931930542
+      ],
+      "rightGuess": [
+        3.7688255310058594,
+        1.1645729541778564,
+        -3.044050931930542
+      ],
+      "ballRadiusWorld": 0.0058968,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          3.7688255310058594,
+          1.1645729541778564,
+          -3.044050931930542
+        ],
+        "radiusWorld": 0.0058968,
+        "actualSurfaceClearances": [
+          0.02349172532558441,
+          0.015076998621225357
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l29-2607",
+      "right": "role-l29-2598",
+      "ownerId": "l29",
+      "leftGuess": [
+        4.28000020980835,
+        2.200000047683716,
+        -3.0999999046325684
+      ],
+      "rightGuess": [
+        4.28000020980835,
+        2.200000047683716,
+        -3.0999999046325684
+      ],
+      "ballRadiusWorld": 0.000707616,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          4.28000020980835,
+          2.198584794998169,
+          -3.0999999046325684
+        ],
+        "radiusWorld": 0.000707616,
+        "actualSurfaceClearances": [
+          0.0011845396365970373,
+          0.26122617721557617
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l14-2234",
+      "right": "role-l14-2220",
+      "ownerId": "l14",
+      "leftGuess": [
+        3.636542320251465,
+        3.3457436561584473,
+        -4.119377613067627
+      ],
+      "rightGuess": [
+        3.636542320251465,
+        3.3407435417175293,
+        -4.119377613067627
+      ],
+      "ballRadiusWorld": 0.00097929,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          3.636542320251465,
+          3.3407435417175293,
+          -4.119377613067627
+        ],
+        "radiusWorld": 0.00097929,
+        "actualSurfaceClearances": [
+          0.015633465722203255,
+          0.004963217303156853
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l14-2234",
+      "right": "role-l14-2221",
+      "ownerId": "l14",
+      "leftGuess": [
+        3.644263744354248,
+        3.3579676151275635,
+        -4.367234706878662
+      ],
+      "rightGuess": [
+        3.644263744354248,
+        3.3529675006866455,
+        -4.367234706878662
+      ],
+      "ballRadiusWorld": 0.00097929,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          3.644263744354248,
+          3.3529675006866455,
+          -4.367234706878662
+        ],
+        "radiusWorld": 0.00097929,
+        "actualSurfaceClearances": [
+          0.02983449213206768,
+          0.004945568274706602
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l14-2237",
+      "right": "role-l14-2222",
+      "ownerId": "l14",
+      "leftGuess": [
+        3.493046522140503,
+        3.370621919631958,
+        -4.629410743713379
+      ],
+      "rightGuess": [
+        3.493046522140503,
+        3.36562180519104,
+        -4.629410743713379
+      ],
+      "ballRadiusWorld": 0.00097929,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          3.493046522140503,
+          3.36562180519104,
+          -4.629410743713379
+        ],
+        "radiusWorld": 0.00097929,
+        "actualSurfaceClearances": [
+          0.0034987288527190685,
+          0.004882702603936195
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l14-2234",
+      "right": "role-l14-2223",
+      "ownerId": "l14",
+      "leftGuess": [
+        3.2115437984466553,
+        3.3797149658203125,
+        -4.852685928344727
+      ],
+      "rightGuess": [
+        3.2115437984466553,
+        3.3747148513793945,
+        -4.852685928344727
+      ],
+      "ballRadiusWorld": 0.00097929,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          3.2115437984466553,
+          3.3747148513793945,
+          -4.852685928344727
+        ],
+        "radiusWorld": 0.00097929,
+        "actualSurfaceClearances": [
+          0.03923685476183891,
+          0.004910232499241829
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l14-2234",
+      "right": "role-l14-2224",
+      "ownerId": "l14",
+      "leftGuess": [
+        2.855778217315674,
+        3.380126953125,
+        -4.9905266761779785
+      ],
+      "rightGuess": [
+        2.855778217315674,
+        3.375126838684082,
+        -4.9905266761779785
+      ],
+      "ballRadiusWorld": 0.00097929,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          2.855778217315674,
+          3.375126838684082,
+          -4.9905266761779785
+        ],
+        "radiusWorld": 0.00097929,
+        "actualSurfaceClearances": [
+          0.02809697948396206,
+          0.004876785445958376
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l14-2234",
+      "right": "role-l14-2225",
+      "ownerId": "l14",
+      "leftGuess": [
+        2.4958841800689697,
+        3.3713550567626953,
+        -5.015152931213379
+      ],
+      "rightGuess": [
+        2.4958841800689697,
+        3.3663549423217773,
+        -5.015152931213379
+      ],
+      "ballRadiusWorld": 0.00097929,
+      "status": "derived-closed-bough-approximate-endpoint-measurements",
+      "clearanceApproximate": true,
+      "measurement": {
+        "name": "stage3-junction-23-l14",
+        "ownerId": "l14",
+        "generated": true,
+        "spanWorld": 0.017987231239700863,
+        "start": [
+          2.4958770275115967,
+          3.376370668411255,
+          -5.0002121925354
+        ],
+        "end": [
+          2.4958841800689697,
+          3.3663549423217773,
+          -5.015152931213379
+        ],
+        "radiusWorld": 0.0016321500000000002,
+        "endpointBallRadiusWorld": 0.002448225,
+        "endpointSurfaceClearanceWorld": [
+          0.003672251710668206,
+          0.004839113913476467
+        ],
+        "fullCapDisksInsideEndpointBalls": true,
+        "closure": {
+          "name": "stage3-junction-23-l14",
+          "triangles": 308,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "material": "willow / cool shade leaves.001",
+        "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+      }
+    },
+    {
+      "left": "role-l14-2237",
+      "right": "role-l14-2226",
+      "ownerId": "l14",
+      "leftGuess": [
+        2.203005075454712,
+        3.358274459838867,
+        -4.9237141609191895
+      ],
+      "rightGuess": [
+        2.203005075454712,
+        3.353274345397949,
+        -4.9237141609191895
+      ],
+      "ballRadiusWorld": 0.00097929,
+      "status": "derived-closed-bough-approximate-endpoint-measurements",
+      "clearanceApproximate": true,
+      "measurement": {
+        "name": "stage3-junction-24-l14",
+        "ownerId": "l14",
+        "generated": true,
+        "spanWorld": 0.02070167849041102,
+        "start": [
+          2.2220354080200195,
+          3.361412763595581,
+          -4.923299312591553
+        ],
+        "end": [
+          2.203005075454712,
+          3.353274345397949,
+          -4.9237141609191895
+        ],
+        "radiusWorld": 0.0016321500000000002,
+        "endpointBallRadiusWorld": 0.002448225,
+        "endpointSurfaceClearanceWorld": [
+          0.003672277322039008,
+          0.00490809278562665
+        ],
+        "fullCapDisksInsideEndpointBalls": true,
+        "closure": {
+          "name": "stage3-junction-24-l14",
+          "triangles": 308,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "material": "willow / cool shade leaves.001",
+        "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+      }
+    },
+    {
+      "left": "role-l14-2234",
+      "right": "role-l14-2227",
+      "ownerId": "l14",
+      "leftGuess": [
+        2.036618709564209,
+        3.3460021018981934,
+        -4.736341953277588
+      ],
+      "rightGuess": [
+        2.036618709564209,
+        3.3410019874572754,
+        -4.736341953277588
+      ],
+      "ballRadiusWorld": 0.00097929,
+      "status": "derived-closed-bough-approximate-endpoint-measurements",
+      "clearanceApproximate": true,
+      "measurement": {
+        "name": "stage3-junction-25-l14",
+        "ownerId": "l14",
+        "generated": true,
+        "spanWorld": 0.006545875176459272,
+        "start": [
+          2.0390071868896484,
+          3.347092390060425,
+          -4.73656702041626
+        ],
+        "end": [
+          2.036618709564209,
+          3.3410019874572754,
+          -4.736341953277588
+        ],
+        "radiusWorld": 0.0016321500000000002,
+        "endpointBallRadiusWorld": 0.002448225,
+        "endpointSurfaceClearanceWorld": [
+          0.0036721958313137293,
+          0.004942631348967552
+        ],
+        "fullCapDisksInsideEndpointBalls": true,
+        "closure": {
+          "name": "stage3-junction-25-l14",
+          "triangles": 308,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "material": "willow / cool shade leaves.001",
+        "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+      }
+    },
+    {
+      "left": "role-l14-2234",
+      "right": "role-l14-2228",
+      "ownerId": "l14",
+      "leftGuess": [
+        2.0322983264923096,
+        3.336353063583374,
+        -4.490400791168213
+      ],
+      "rightGuess": [
+        2.0322983264923096,
+        3.331352949142456,
+        -4.490400791168213
+      ],
+      "ballRadiusWorld": 0.00097929,
+      "status": "derived-closed-bough-approximate-endpoint-measurements",
+      "clearanceApproximate": true,
+      "measurement": {
+        "name": "stage3-junction-26-l14",
+        "ownerId": "l14",
+        "generated": true,
+        "spanWorld": 0.026420119311900737,
+        "start": [
+          2.053454637527466,
+          3.3471567630767822,
+          -4.4895806312561035
+        ],
+        "end": [
+          2.0322983264923096,
+          3.331352949142456,
+          -4.490400791168213
+        ],
+        "radiusWorld": 0.0016321500000000002,
+        "endpointBallRadiusWorld": 0.002448225,
+        "endpointSurfaceClearanceWorld": [
+          0.003672428894788027,
+          0.004974353592842817
+        ],
+        "fullCapDisksInsideEndpointBalls": true,
+        "closure": {
+          "name": "stage3-junction-26-l14",
+          "triangles": 308,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "material": "willow / cool shade leaves.001",
+        "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+      }
+    },
+    {
+      "left": "role-l14-2235",
+      "right": "role-l14-2229",
+      "ownerId": "l14",
+      "leftGuess": [
+        2.192117929458618,
+        3.328824281692505,
+        -4.233451843261719
+      ],
+      "rightGuess": [
+        2.192117929458618,
+        3.323824167251587,
+        -4.233451843261719
+      ],
+      "ballRadiusWorld": 0.00097929,
+      "status": "derived-closed-bough-approximate-endpoint-measurements",
+      "clearanceApproximate": true,
+      "measurement": {
+        "name": "stage3-junction-27-l14",
+        "ownerId": "l14",
+        "generated": true,
+        "spanWorld": 0.030604618773133665,
+        "start": [
+          2.2069296836853027,
+          3.3258259296417236,
+          -4.260158538818359
+        ],
+        "end": [
+          2.192117929458618,
+          3.323824167251587,
+          -4.233451843261719
+        ],
+        "radiusWorld": 0.0016321500000000002,
+        "endpointBallRadiusWorld": 0.002448225,
+        "endpointSurfaceClearanceWorld": [
+          0.0036724593956023455,
+          0.004974703770130873
+        ],
+        "fullCapDisksInsideEndpointBalls": true,
+        "closure": {
+          "name": "stage3-junction-27-l14",
+          "triangles": 308,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "material": "willow / cool shade leaves.001",
+        "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+      }
+    },
+    {
+      "left": "role-l14-2234",
+      "right": "role-l14-2230",
+      "ownerId": "l14",
+      "leftGuess": [
+        2.480940341949463,
+        3.323559284210205,
+        -4.01487398147583
+      ],
+      "rightGuess": [
+        2.480940341949463,
+        3.318559169769287,
+        -4.01487398147583
+      ],
+      "ballRadiusWorld": 0.00097929,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          2.480940341949463,
+          3.318559169769287,
+          -4.01487398147583
+        ],
+        "radiusWorld": 0.00097929,
+        "actualSurfaceClearances": [
+          0.003242251928895712,
+          0.004969432950019836
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l14-2234",
+      "right": "role-l14-2231",
+      "ownerId": "l14",
+      "leftGuess": [
+        2.836721897125244,
+        3.3224315643310547,
+        -3.8772780895233154
+      ],
+      "rightGuess": [
+        2.836721897125244,
+        3.3174314498901367,
+        -3.8772780895233154
+      ],
+      "ballRadiusWorld": 0.00097929,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          2.836721897125244,
+          3.3174314498901367,
+          -3.8772780895233154
+        ],
+        "radiusWorld": 0.00097929,
+        "actualSurfaceClearances": [
+          0.013529368676245213,
+          0.004982298240065575
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l14-2236",
+      "right": "role-l14-2232",
+      "ownerId": "l14",
+      "leftGuess": [
+        3.1895625591278076,
+        3.3266494274139404,
+        -3.8483524322509766
+      ],
+      "rightGuess": [
+        3.1895625591278076,
+        3.3216493129730225,
+        -3.8483524322509766
+      ],
+      "ballRadiusWorld": 0.00097929,
+      "status": "measured-overlap-under-inherited-tolerances",
+      "clearanceApproximate": true,
+      "overlap": {
+        "center": [
+          3.1895625591278076,
+          3.3216493129730225,
+          -3.8483524322509766
+        ],
+        "radiusWorld": 0.00097929,
+        "actualSurfaceClearances": [
+          0.03567897900938988,
+          0.004958702251315117
+        ],
+        "searchCandidates": 77
+      }
+    },
+    {
+      "left": "role-l14-2234",
+      "right": "role-l14-2233",
+      "ownerId": "l14",
+      "leftGuess": [
+        3.4740021228790283,
+        3.3350412845611572,
+        -3.9345123767852783
+      ],
+      "rightGuess": [
+        3.4740021228790283,
+        3.3300411701202393,
+        -3.9345123767852783
+      ],
+      "ballRadiusWorld": 0.00097929,
+      "status": "derived-closed-bough-approximate-endpoint-measurements",
+      "clearanceApproximate": true,
+      "measurement": {
+        "name": "stage3-junction-31-l14",
+        "ownerId": "l14",
+        "generated": true,
+        "spanWorld": 0.03411050419422575,
+        "start": [
+          3.4532999992370605,
+          3.3471713066101074,
+          -3.955524444580078
+        ],
+        "end": [
+          3.4740021228790283,
+          3.3300411701202393,
+          -3.9345123767852783
+        ],
+        "radiusWorld": 0.0016321500000000002,
+        "endpointBallRadiusWorld": 0.002448225,
+        "endpointSurfaceClearanceWorld": [
+          0.0036724957171827555,
+          0.004935021046549082
+        ],
+        "fullCapDisksInsideEndpointBalls": true,
+        "closure": {
+          "name": "stage3-junction-31-l14",
+          "triangles": 308,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "material": "willow / cool shade leaves.001",
+        "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+      }
+    }
+  ],
+  "derivedBoughCount": 10,
+  "leaf70Baseline": "not run",
+  "actorGate": "not run",
+  "clearanceGate": "approximate inherited weld/nearest, not certified",
+  "inputsBefore": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.glb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.blend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island-render.png": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/authored-shoulder-reference-mature.json": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/docs/design/2026-10-11-native-owned-island/kit-manifest.json": "0653ef4cd09a34102235e92726f77db772391b66d27e01da8175b8a6fd7eea8e",
+    "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/report.json": "5479ebcf1d1ed27f4b2efcc6e5b5fb5772d9d9af6d522756b40d8b13d233e382",
+    "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/fixed35-desktop-whole-day.png": "070ca145b6b32563d0ebc3032cf82684b0bf32f9ead881fb8551231ab920d3ea",
+    "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/fixed35-desktop-hill-close-day.png": "7ee7d70f87758e2d45dcc8f5f26cd4bad1c427df15d8de7e666bd77de34c7caf",
+    "/private/tmp/sansu-forest-role-inventory/inventory.json": "3abc8b69e2a94e269b81c55901513571e03c5cd9911e31af7d6902d44eb881e1",
+    "/private/tmp/sansu-forest-role-inventory/anchors.json": "eba0ec0934c882658a0cda5cf366a2ddd321e01a16ee14db7e59b8ccb31ceeb4",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/native05-world-source-shading.json.gz": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/authored-shoulder-profile.json.gz": "82f8cd9ad83f4ffef7995d42087eb7d0f388b759a4b55526c10fe1c0ab1e34eb",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/native-shoulder-manifest.json": "0ffd6f38fbcbe5ea5a3a0b46b3d2dcd9784df6d775082fe4138056df7e22ee9b",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/docs/design/2026-10-12-authored-cove-entrance/cove-delivery-manifest.json": "90dd4291dee8e498deac9908f1890b5afbf71b07bac3181bc72b0109d6453873",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/package-lock.json": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+    "/private/tmp/sansu-authored-forest-crown-study/study.json": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+    "/private/tmp/sansu-authored-forest-crown-study/extraction-attempt02/fixed-c1-context.glb": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+    "/private/tmp/sansu-authored-forest-crown-study/extraction-attempt02/role-separated-originals.glb": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+    "/private/tmp/sansu-authored-forest-crown-study/extraction-attempt02/bindings.json": "ea37659462f0b84df651131d60b47cba04c9f588aa4981d74d6c74bf8a229d16",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/build-shape.py": "f3917c34c8386404aaa85ef1187711896a9a6410b7d6faf2e82191df6ecc499a",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/run-once.py": "6b09e5e3808fa9fa5b3eee292d6bfd95829273c2407b2e2b3b515bd89bc0ff63",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/fields.py": "359fca42b7d7e20d2fee134f8e9e910ba39f6c855fe0e6816c2ce962aac49394",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/render-whole.py": "1b3c875abb12a2c03300f69c6d52d446dccf0ee2a2b80979f0e1993e1e58d530",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/joints.py": "c99059a0af65cdd62b741911537dc26f605051d22e57207d452d7f5e12ca8db1",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/source_checks.py": "8af619dabe604ae5831b7c50dc061840e95fa31814678f857a8cf6af1dc0a9df",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/junctions.py": "3ed8dd1fef7dac55e447ea82ec420c60ad7fe3e60a72375a6f21ea151d197b67",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/source_helpers.py": "8c06d2c318cccf0c9ef4031347dd73d80363cc13acae899c3ccc0eddcce88b27",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/volume_adapter.py": "f79f9ebdd7a764a7f0957a93163f5172164f062940991ac83ecc51401c5b7c27",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/ray_query64.py": "e5b6c22a0781049f8ffbf33d6166064b79b34dcdbca6fe6d348f760af109b3b3",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/proposal.json": "8d049e290ef41a11cc7cf15ce55203da4af79ab78d03b6e59cc45372d9443d8d",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/readiness.json": "cd8077546024dd624d7dfcc8ae7774b9b0ad916fab5245fee7576e9d43ff8891"
+  },
+  "inputsAfter": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.glb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.blend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island-render.png": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/authored-shoulder-reference-mature.json": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/docs/design/2026-10-11-native-owned-island/kit-manifest.json": "0653ef4cd09a34102235e92726f77db772391b66d27e01da8175b8a6fd7eea8e",
+    "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/report.json": "5479ebcf1d1ed27f4b2efcc6e5b5fb5772d9d9af6d522756b40d8b13d233e382",
+    "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/fixed35-desktop-whole-day.png": "070ca145b6b32563d0ebc3032cf82684b0bf32f9ead881fb8551231ab920d3ea",
+    "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/fixed35-desktop-hill-close-day.png": "7ee7d70f87758e2d45dcc8f5f26cd4bad1c427df15d8de7e666bd77de34c7caf",
+    "/private/tmp/sansu-forest-role-inventory/inventory.json": "3abc8b69e2a94e269b81c55901513571e03c5cd9911e31af7d6902d44eb881e1",
+    "/private/tmp/sansu-forest-role-inventory/anchors.json": "eba0ec0934c882658a0cda5cf366a2ddd321e01a16ee14db7e59b8ccb31ceeb4",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/native05-world-source-shading.json.gz": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/authored-shoulder-profile.json.gz": "82f8cd9ad83f4ffef7995d42087eb7d0f388b759a4b55526c10fe1c0ab1e34eb",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/native-shoulder-manifest.json": "0ffd6f38fbcbe5ea5a3a0b46b3d2dcd9784df6d775082fe4138056df7e22ee9b",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/docs/design/2026-10-12-authored-cove-entrance/cove-delivery-manifest.json": "90dd4291dee8e498deac9908f1890b5afbf71b07bac3181bc72b0109d6453873",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/package-lock.json": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+    "/private/tmp/sansu-authored-forest-crown-study/study.json": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+    "/private/tmp/sansu-authored-forest-crown-study/extraction-attempt02/fixed-c1-context.glb": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+    "/private/tmp/sansu-authored-forest-crown-study/extraction-attempt02/role-separated-originals.glb": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+    "/private/tmp/sansu-authored-forest-crown-study/extraction-attempt02/bindings.json": "ea37659462f0b84df651131d60b47cba04c9f588aa4981d74d6c74bf8a229d16",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/build-shape.py": "f3917c34c8386404aaa85ef1187711896a9a6410b7d6faf2e82191df6ecc499a",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/run-once.py": "6b09e5e3808fa9fa5b3eee292d6bfd95829273c2407b2e2b3b515bd89bc0ff63",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/fields.py": "359fca42b7d7e20d2fee134f8e9e910ba39f6c855fe0e6816c2ce962aac49394",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/render-whole.py": "1b3c875abb12a2c03300f69c6d52d446dccf0ee2a2b80979f0e1993e1e58d530",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/joints.py": "c99059a0af65cdd62b741911537dc26f605051d22e57207d452d7f5e12ca8db1",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/source_checks.py": "8af619dabe604ae5831b7c50dc061840e95fa31814678f857a8cf6af1dc0a9df",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/junctions.py": "3ed8dd1fef7dac55e447ea82ec420c60ad7fe3e60a72375a6f21ea151d197b67",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/source_helpers.py": "8c06d2c318cccf0c9ef4031347dd73d80363cc13acae899c3ccc0eddcce88b27",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/volume_adapter.py": "f79f9ebdd7a764a7f0957a93163f5172164f062940991ac83ecc51401c5b7c27",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/ray_query64.py": "e5b6c22a0781049f8ffbf33d6166064b79b34dcdbca6fe6d348f760af109b3b3",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/proposal.json": "8d049e290ef41a11cc7cf15ce55203da4af79ab78d03b6e59cc45372d9443d8d",
+    "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/readiness.json": "cd8077546024dd624d7dfcc8ae7774b9b0ad916fab5245fee7576e9d43ff8891"
+  },
+  "files": {
+    "HOLD-shape.blend": "9cc5ceb102726eaabc9d7dc7e8b9a5cbb56e7f75af87b0efb7b7c93ecd887ebd",
+    "HOLD-shape.glb": "97cb39200ddef15aa3535b6dd35accc00c7e0e56ee617dd8e52ea7bdc6ef164f",
+    "owned-crown-components.glb": "f0b5f5887df70eade566dc7fbc44681da574710a150bc46704f238cdff3116a0",
+    "deformations.json": "635a2265c3791235f3de5dbd57c17a77b5d1ec1b3260d0e2ecc9f52d33df928f"
+  },
+  "elapsedSeconds": 18.45048337499611,
+  "runtimeIntegrated": false,
+  "independentObservers": 0
+}

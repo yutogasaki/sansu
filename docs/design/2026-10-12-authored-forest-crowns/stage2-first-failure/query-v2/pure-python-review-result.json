@@ -1,0 +1,209 @@
+{
+  "complete": true,
+  "checks": [
+    {
+      "name": "translated cube (0.0, 0.0, 0.0)/(0.13, 0.19, 0.23)",
+      "status": "matched",
+      "actual": true
+    },
+    {
+      "name": "translated cube (0.0, 0.0, 0.0)/(-0.71, 0.42, -0.23)",
+      "status": "matched",
+      "actual": true
+    },
+    {
+      "name": "translated cube (0.0, 0.0, 0.0)/(1.3, 0.2, 0.1)",
+      "status": "matched",
+      "actual": false
+    },
+    {
+      "name": "translated cube (0.0, 0.0, 0.0)/(-0.5, -1.2, 0.1)",
+      "status": "matched",
+      "actual": false
+    },
+    {
+      "name": "translated cube (3.0, -4.0, 2.0)/(0.13, 0.19, 0.23)",
+      "status": "matched",
+      "actual": true
+    },
+    {
+      "name": "translated cube (3.0, -4.0, 2.0)/(-0.71, 0.42, -0.23)",
+      "status": "matched",
+      "actual": true
+    },
+    {
+      "name": "translated cube (3.0, -4.0, 2.0)/(1.3, 0.2, 0.1)",
+      "status": "matched",
+      "actual": false
+    },
+    {
+      "name": "translated cube (3.0, -4.0, 2.0)/(-0.5, -1.2, 0.1)",
+      "status": "matched",
+      "actual": false
+    },
+    {
+      "name": "translated cube (1000000.0, -1000000.0, 1000000.0)/(0.13, 0.19, 0.23)",
+      "status": "matched",
+      "actual": true
+    },
+    {
+      "name": "translated cube (1000000.0, -1000000.0, 1000000.0)/(-0.71, 0.42, -0.23)",
+      "status": "matched",
+      "actual": true
+    },
+    {
+      "name": "translated cube (1000000.0, -1000000.0, 1000000.0)/(1.3, 0.2, 0.1)",
+      "status": "matched",
+      "actual": false
+    },
+    {
+      "name": "translated cube (1000000.0, -1000000.0, 1000000.0)/(-0.5, -1.2, 0.1)",
+      "status": "matched",
+      "actual": false
+    },
+    {
+      "name": "closed cavity outside within bounds",
+      "status": "matched",
+      "actual": false
+    },
+    {
+      "name": "closed shell interior",
+      "status": "matched",
+      "actual": true
+    },
+    {
+      "name": "thin closed shell 1e-08 cavity two crossings",
+      "status": "matched",
+      "actual": 2
+    },
+    {
+      "name": "thin closed shell 1e-08 actual inside",
+      "status": "matched",
+      "actual": true
+    },
+    {
+      "name": "thin closed shell 1e-06 cavity two crossings",
+      "status": "matched",
+      "actual": 2
+    },
+    {
+      "name": "thin closed shell 1e-06 actual inside",
+      "status": "matched",
+      "actual": true
+    },
+    {
+      "name": "face diagonal exact crossing",
+      "status": "expected-HOLD",
+      "message": "Edge/vertex intersection ambiguity: edge-test triangle 10"
+    },
+    {
+      "name": "vertex exact crossing",
+      "status": "expected-HOLD",
+      "message": "Edge/vertex intersection ambiguity: edge-test triangle 2"
+    },
+    {
+      "name": "ray coplanar with face",
+      "status": "expected-HOLD",
+      "message": "Parallel/coplanar/degenerate ray ambiguity: edge-test triangle 6"
+    },
+    {
+      "name": "surface start",
+      "status": "expected-HOLD",
+      "message": "Ray endpoint ambiguity: edge-test triangle 11"
+    },
+    {
+      "name": "coincident separate faces not silently merged",
+      "status": "expected-HOLD",
+      "message": "Duplicate/near-coincident intersection ambiguity: duplicate"
+    },
+    {
+      "name": "one binary64 ULP face separation holds",
+      "status": "expected-HOLD",
+      "message": "Duplicate/near-coincident intersection ambiguity: unresolved-thin"
+    },
+    {
+      "name": "collinear triangle on ray holds",
+      "status": "expected-HOLD",
+      "message": "Parallel/coplanar/degenerate ray ambiguity: degenerate triangle 0"
+    },
+    {
+      "name": "126 intersections unchanged cap",
+      "status": "matched",
+      "actual": 126
+    },
+    {
+      "name": "128 intersections unchanged cap",
+      "status": "expected-HOLD",
+      "message": "Ray parity exceeded bounded intersections: limit"
+    },
+    {
+      "name": "127 intersections accepted unchanged cap",
+      "status": "matched",
+      "actual": 127
+    },
+    {
+      "name": "oversized cube actual f32 direction 0 HOLD",
+      "status": "expected-HOLD",
+      "message": "Bounded ray cannot provably exit mesh AABB before 100"
+    },
+    {
+      "name": "oversized cube actual f32 direction 1 HOLD",
+      "status": "expected-HOLD",
+      "message": "Bounded ray cannot provably exit mesh AABB before 100"
+    },
+    {
+      "name": "outside-origin first hit beyond cutoff HOLD",
+      "status": "expected-HOLD",
+      "message": "Bounded ray cannot provably exit mesh AABB before 100"
+    },
+    {
+      "name": "outside-origin exit beyond cutoff HOLD",
+      "status": "expected-HOLD",
+      "message": "Bounded ray cannot provably exit mesh AABB before 100"
+    },
+    {
+      "name": "outside-origin forward miss safe",
+      "status": "matched",
+      "actual": 0
+    },
+    {
+      "name": "outside-origin behind-only safe",
+      "status": "matched",
+      "actual": 0
+    },
+    {
+      "name": "actual direction magnitude controls exit",
+      "status": "expected-HOLD",
+      "message": "Bounded ray cannot provably exit mesh AABB before 100"
+    },
+    {
+      "name": "observed legacy float32 zero progress",
+      "status": "matched",
+      "actual": [
+        2.498983383178711,
+        3.1637325286865234,
+        -3.9433975219726562
+      ]
+    }
+  ],
+  "count": 36,
+  "scope": "analytic pure-Python fixtures; original Blender query not rerun",
+  "directions": [
+    [
+      0.810893177986145,
+      0.300841361284256,
+      0.5019428730010986
+    ],
+    [
+      0.24380448460578918,
+      0.8614999651908875,
+      0.44539549946784973
+    ]
+  ],
+  "directionsSource": "../ray-debug/attempt-01/trace.json calls 0 and 2",
+  "files": {
+    "ray_query64.py": "e5b6c22a0781049f8ffbf33d6166064b79b34dcdbca6fe6d348f760af109b3b3",
+    "volume_adapter.py": "f79f9ebdd7a764a7f0957a93163f5172164f062940991ac83ecc51401c5b7c27",
+    "test_query64.py": "f0b19db948543013619e202b08da1f4c4320731d87ded38626d1b7e1a07c2614"
+  }
+}

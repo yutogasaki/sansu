@@ -1,0 +1,75 @@
+"""Read-only real sixteen-step coarse source view; full source/coarse/runtime HOLD, no model alteration."""
+import argparse, hashlib, json, math, sys, time, struct
+from pathlib import Path
+HERE=Path(__file__).resolve().parent
+p=argparse.ArgumentParser();p.add_argument('--scheduled',action='store_true');p.add_argument('--source',type=Path,required=True);p.add_argument('--out',type=Path,required=True);p.add_argument('--view',choices=['whole'],required=True)
+a=p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
+assert a.scheduled,'Parent must schedule CPU/render window';assert not a.out.exists(),'Preserve previous output';a.out.mkdir(parents=True)
+import bpy
+from mathutils import Matrix,Vector
+sha=lambda f:hashlib.sha256(Path(f).read_bytes()).hexdigest()
+prepared=json.loads((HERE/'preparation.json').read_text());assert sha(__file__)==prepared['scriptSha256']
+inputs_before={k:sha(v) for k,v in prepared['inputPaths'].items()};assert inputs_before==prepared['inputSha256']
+S=json.loads(Path(prepared['inputPaths']['study']).read_text());source_hash=sha(a.source)
+assert a.source.resolve()==Path(prepared['inputPaths']['sourceScene']).resolve()
+bpy.ops.wm.open_mainfile(filepath=str(a.source));scene=bpy.context.scene;bpy.context.view_layer.update()
+def mesh_identity():
+    out={}
+    for obj in bpy.data.objects:
+        if obj.type!='MESH':continue
+        h=hashlib.sha256()
+        for row in obj.matrix_world:h.update(struct.pack('<4d',*row))
+        for v in obj.data.vertices:h.update(struct.pack('<3f',*v.co))
+        for polygon in obj.data.polygons:
+            h.update(struct.pack('<I',len(polygon.vertices)))
+            for index in polygon.vertices:h.update(struct.pack('<I',index))
+        h.update(json.dumps({'hideRender':obj.hide_render,'hideViewport':obj.hide_viewport,'materials':[m.name if m else None for m in obj.data.materials]},sort_keys=True).encode());out[obj.name]=h.hexdigest()
+    return out
+def material_identity():
+    def scalar(value):
+        if isinstance(value,(str,int,float,bool)) or value is None:return value
+        try:return [scalar(x) for x in value]
+        except TypeError:return str(value)
+    result={}
+    for material in bpy.data.materials:
+        nodes=[];links=[]
+        if material.use_nodes:
+            for node in material.node_tree.nodes:
+                nodes.append({'name':node.name,'type':node.bl_idname,'inputs':{str(i)+':'+s.name:scalar(s.default_value) for i,s in enumerate(node.inputs) if hasattr(s,'default_value')}})
+            links=[(l.from_node.name,l.from_socket.name,l.to_node.name,l.to_socket.name) for l in material.node_tree.links]
+        result[material.name]={'diffuseColor':list(material.diffuse_color),'useNodes':material.use_nodes,'nodes':nodes,'links':links}
+    return result
+meshes_before=mesh_identity();materials_before=material_identity()
+qa=json.loads(Path(prepared['inputPaths']['qa']).read_text());topology=json.loads(Path(prepared['inputPaths']['topology']).read_text());parity=json.loads(Path(prepared['inputPaths']['treadParity']).read_text())
+assert len(topology)==5 and all(x['badEdges']==x['duplicateCoordinateFaces']==x['zeroAreaFaces']==0 and x['components']==1 and x['signedVolume']>0 for x in topology)
+assert parity['raw']==parity['visible']==1280 and parity['float32CoordinatesExact'] and not parity['hiddenRamp']
+assert 'walk-top/real-sixteen-stairs' in meshes_before
+geometry_state={'realSteps':16,'visibleRealTreadTriangles':1280,'boughMeshes':sum(n.startswith('solid-bough/') for n in meshes_before),'railMeshes':sum(n.startswith('solid-rail/') for n in meshes_before),'railPostMeshes':sum(n.startswith('solid-rail-post/') for n in meshes_before),'closedComponents':topology,'coarseHoldReasons':qa['holdReasons'],'neutralReservedBoxHits':len(qa['reservedBoxHits']),'neutralMotionBandHits':len(qa['actualMotionBandHits']),'continuousStepMotionAccepted':False}
+assert geometry_state['boughMeshes']==6 and geometry_state['railMeshes']==3 and geometry_state['railPostMeshes']==20
+B=Matrix(((1,0,0,0),(0,0,-1,0),(0,1,0,0),(0,0,0,1)))
+def mat(v):return Matrix(tuple(tuple(v[column*4+row] for column in range(4)) for row in range(4)))
+scene.world=bpy.data.worlds.new('Forest reference source lighting');scene.world.use_nodes=True
+backgrounds=[node for node in scene.world.node_tree.nodes if node.bl_idname=='ShaderNodeBackground'];assert len(backgrounds)==1,'Expected one existing Background type; no lighting fallback'
+bg=backgrounds[0];bg.inputs['Color'].default_value=(.055,.20,.26,1);bg.inputs['Strength'].default_value=.7
+for name,location,energy,size in [('key',(2,-6,17),1800,10),('fill',(15,1,11),1000,12)]:
+    d=bpy.data.lights.new(name,'AREA');d.energy=energy;d.shape='DISK';d.size=size;o=bpy.data.objects.new(name,d);scene.collection.objects.link(o);o.location=location;o.rotation_euler=(Vector((5,4,1))-o.location).to_track_quat('-Z','Y').to_euler()
+ref=S['camera'];c=ref['camera'];data=bpy.data.cameras.new('SOURCE '+a.view);data.type='ORTHO';data.ortho_scale=2/c['projectionMatrix'][0]
+cam=bpy.data.objects.new(data.name,data);scene.collection.objects.link(cam)
+actual=Matrix.Translation(Vector((c['center'],0,2)))@mat(c['matrixWorld']);derived=None
+if a.view=='whole':cam.matrix_world=B@actual
+elif a.view=='rotated':
+    target=Vector((7.0026560305,1,-4.0));rotation=Matrix.Translation(target)@Matrix.Rotation(math.radians(35),4,'Y')@Matrix.Translation(-target)
+    cam.matrix_world=B@rotation@actual;derived={'rotationDegrees':35,'authoredPivot':list(target),'notAnActualRotatedRuntimeCamera':True}
+else:
+    origin=Vector((3.5,2.55,-4.45));target=Vector((3.5,2.2,-8.45));cam.location=B@origin;cam.rotation_euler=(B@target-cam.location).to_track_quat('-Z','Y').to_euler();data.ortho_scale=4.7;data.clip_start=.1
+    derived={'authoredCamera':list(origin),'authoredTarget':list(target),'nearClip':data.clip_start,'sectionMethod':'front opening / threshold close view; no near-plane removal of the ground entrance; geometry unchanged'}
+scene.camera=cam;scene.render.engine='CYCLES';scene.cycles.device='CPU';scene.cycles.samples=16;scene.cycles.use_denoising=True
+scene.render.threads_mode='FIXED';scene.render.threads=2
+scene.render.resolution_x=1280;scene.render.resolution_y=round(1280*c['projectionMatrix'][0]/c['projectionMatrix'][5]);scene.render.resolution_percentage=100
+scene.render.image_settings.file_format='PNG';output=a.out/('coarse-real-stair-HOLD-'+a.view+'.png');scene.render.filepath=str(output);start=time.monotonic();bpy.ops.render.render(write_still=True)
+assert sha(a.source)==source_hash
+meshes_after=mesh_identity();assert meshes_before==meshes_after,'Render altered actual mesh/matrix/material/visibility identity'
+materials_after=material_identity();assert materials_before==materials_after,'Render changed source material values'
+inputs_after={k:sha(v) for k,v in prepared['inputPaths'].items()};assert inputs_before==inputs_after
+report={'candidate':S['candidate'],'view':a.view,'evidenceType':'offline source render','reference':'fixed authored-shoulder-c1 35 owners; exact original four left trees restored','referenceCameraImage':ref['file'],'referenceCameraSha256':ref['sha256'],'cameraDerived':derived,'cameraMatrixWorldBlender':[list(row) for row in cam.matrix_world],'sourceBlendBefore':source_hash,'sourceBlendAfter':sha(a.source),'scriptSha256':sha(__file__),'output':output.name,'sha256':sha(output),'seconds':time.monotonic()-start,'viewport':[scene.render.resolution_x,scene.render.resolution_y],'engine':'Cycles CPU, 2 threads, 16 samples','runtimeIntegrated':False,'artAccepted':False,'independentObservers':0,'status':'REAL_SIXTEEN_STAIR_COARSE_HOLD','geometryState':geometry_state,'inputShaBefore':inputs_before,'inputShaAfter':inputs_after,'meshIdentityBefore':meshes_before,'meshIdentityAfter':meshes_after,'materialIdentityBefore':materials_before,'materialIdentityAfter':materials_after,'limitations':['no residents','Blender lights/material/transmission/ocean/ripple differ','source view is not current c2 runtime','five direct closed components with one exposed top skin; retained Float32 seam/lineage HOLD, no cleanup','new six supports and rails are present; sampled end caps do not prove arbitrary curved solid union','static foot footprint support is separate from unimplemented rising/planting, leg-body continuity and riser clearance','entry close view retains the original hollow opening and full ground threshold; no geometric section cut']}
+(a.out/'render-manifest.json').write_text(json.dumps(report,indent=2)+'\n')

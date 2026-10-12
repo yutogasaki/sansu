@@ -1,0 +1,275 @@
+--- a/docs/product/island-world-contract.md
++++ b/docs/product/island-world-contract.md
+@@ -68,6 +68,8 @@
+ 
+ 所有物への接近候補は、同じ確定worldの既存walk地点と明示辺から選ぶ。最初の論理footprintの外側が実幹に塞がれていても、既存の近傍範囲内で安全な候補を探索する。候補を探すために危険な点の先を調べることは、その点を通れるようにする操作ではない。実支持・衝突・HOMEからの到達が揃う候補だけを、検査表示と実際の目的地・着席・利用・退出で共用する。安全な候補がなければ不成立を残し、実座面やgallery／水際の専用入口を近い地面へ置き換えない。利用targetのない木への接近で架空の利用receiptを作らない。
+ 
++床に描く道も、同じ確定worldで住人の実形状と木・花・殻の障害物を照合した後の歩行集合と接近候補を使う。描画のために判定をやり直したり、住人が通れない辺を未制限の地図から復活させたりしない。移動・収納・再接続でworldと所有物を更新したときは、住人と道を同じ状態へ同期する。利用履歴だけの保存では道を作り直さず、配置予告を確定した通行判定へ混ぜない。道は実床の上の表示であり、中心線の到達性から舗装幅全体の支持や通行を保証したとは扱わない。
++
+ ### 中央肩の明示診断地区
+ 
+ [中央肩のsource](../design/2026-10-12-authored-central-shoulder/README.md)は、M1の全景制作に限る追加地形である。元73配置権と全支持域を保持し、実支持を造った2地点と17歩行点を明示する。追加地区は苗の所有や成熟とは独立した地形として保持し、木の移動・収納で土地を消さない。通常の地区取得・価格・本人保存は追加せず、合成worldであることを診断UIに示す。
+--- a/src/components/island/growing/growingLife.ts
++++ b/src/components/island/growing/growingLife.ts
+@@ -104,6 +104,7 @@
+         }
+         if (this.flowerGuard && this.world) this.ownerApproaches = authoredOwnerApproaches(
+             [...state.plots, ...state.landmarks], this.world, this.walkable, this.homePaths);
++        if (layout.authored) layer.updatePaths({ state, layout, walkable: this.walkable, ownerApproaches: this.ownerApproaches });
+         for (const id of this.walkers.keys()) {
+             const walker = this.walkers.get(id)!, villager = villagers.get(id);
+             if (walker.placeTarget) {
+--- a/src/components/island/growing/objectLayer.ts
++++ b/src/components/island/growing/objectLayer.ts
+@@ -20,7 +20,7 @@
+ import { derivePlaces } from '../../../domain/growingIsland/places';
+ import { derivePlaceRelations } from '../../../domain/growingIsland/placeRelations';
+ import { buildPlaceGeometry } from './placeGeometry';
+-import { buildPlacePaths } from './placePaths';
++import { buildPlacePaths, type PlacePathAccess } from './placePaths';
+ import type { NativeGrowingKit } from './native/nativeGrowingKit';
+ import type { NativeAuthoredFlower } from './native/nativeAuthoredFlower';
+ import type { NativeAuthoredCove } from './native/nativeAuthoredCove';
+@@ -29,6 +29,7 @@
+ import { curveGroundGeometry } from './curvedGeometry';
+ import type { IslandWorld } from '../../../domain/growingIsland/worldDefinition';
+ import { cloneGrowingPreviewMaterial } from './growingShaderWarmup';
++import { growingSceneStateKey } from './growingSceneInputs';
+ 
+ export interface Ghost { kind: SeedKind | LandmarkKind; seed: boolean; cell?: Cell; valid: boolean; style: PlotStyle; allowed: Cell[]; keepsake?: string; color?: FlowerColor; ownerId?: string; prospectiveOwnerId?: string }
+ 
+@@ -220,7 +221,11 @@
+             root.add(extension); attached.add(ownerId); shoulderRoots.push({ tree, extension, ownerId });
+         }
+     }
+-    root.add(buildPlacePaths(state, layout, visiblePlaces));
++    // Source exporters also use this layer without GrowingLife. Keep their
++    // initial paths; live authored scenes replace them synchronously after the
++    // actual actor/structure guard resolves the committed walking set.
++    let paths = buildPlacePaths(state, layout, visiblePlaces); root.add(paths);
++    const pathStateKey = layout.authored ? growingSceneStateKey(state) : undefined;
+     if (state.bridge) {
+         const bridge = buildBridge(m), anchor = bridgeAnchor(state);
+         curveGroundGeometry(bridge, layout, anchor); add('bridge', bridge, anchor);
+@@ -245,6 +250,11 @@
+     const previews: T.Object3D[] = [];
+     const hiddenStructures: { object: T.Object3D; visible: boolean }[] = [];
+     let disposed = false;
++    const updatePaths = (snapshot: PlacePathAccess & { state: GrowingState; layout: SceneLayout }) => {
++        if (disposed || !layout.authored || snapshot.layout !== layout || growingSceneStateKey(snapshot.state) !== pathStateKey) return;
++        const next = buildPlacePaths(state, layout, visiblePlaces, snapshot);
++        disposeRoots([paths]); paths = next; root.add(paths);
++    };
+     const clearPreview = () => {
+         disposeRoots(previews); previews.length = 0; glows.length = 0;
+         for (const saved of hiddenStructures) {
+@@ -355,7 +365,7 @@
+     };
+     updatePreview(ghost, selectedId, hints);
+     return {
+-        root, objects, buds, seats, swingPivots, fingerTargets, arrivalBoat, visitorBoat, nextBoat, glows, flag, places, relations, placeRoot, updatePreview,
++        root, objects, buds, seats, swingPivots, fingerTargets, arrivalBoat, visitorBoat, nextBoat, glows, flag, places, relations, placeRoot, updatePreview, updatePaths,
+         dispose() {
+             if (disposed) return;
+             disposed = true;
+--- a/src/components/island/growing/placePaths.test.ts
++++ b/src/components/island/growing/placePaths.test.ts
+@@ -1,6 +1,9 @@
+ import { describe, expect, it } from 'vitest';
+ import { newIsland } from '../../../domain/growingIsland/island';
+-import { HOME_CELL, key, neighbors, walkableCells } from '../../../domain/growingIsland/space';
++import { HOME_CELL, approachCells, key, neighbors, reachableFromHome, walkableCells } from '../../../domain/growingIsland/space';
++import { authoredAccessWorld } from '../../../domain/growingIsland/authoredWorldAccess.fixture';
++import type { DerivedPlace } from '../../../domain/growingIsland/placeTypes';
++import { authoredOwnerApproaches } from './authoredFlowerObstructions';
+ import { sceneLayout } from './sceneLayout';
+ import { buildPlacePaths, placePathEdges } from './placePaths';
+ 
+@@ -44,3 +47,36 @@
+         path.geometry.dispose(); (path.material as import('three').Material).dispose();
+     });
+ });
++
++describe('committed authored path access', () => {
++    it('reaches the same fallback owner approach after the ordinary approach ring is rejected', () => {
++        const state = newIsland('guarded-owner-path', 0), { world } = authoredAccessWorld(), cell = { x: 4, z: -2 };
++        state.landmarks = [];
++        state.plots = [{ id: 'home', kind: 'home', cell, stage: 2, plantedAt: 0, growth: 0, origin: 'seed', paid: 40 }];
++        const open = walkableCells(state, world);
++        for (const at of approachCells(cell, world)) open.delete(key(at));
++        const ownerApproaches = authoredOwnerApproaches(state.plots, world, open, reachableFromHome(state, open, world));
++        const fallback = ownerApproaches.get(key(cell))!;
++        expect(fallback.length).toBeGreaterThan(0);
++        expect(fallback.every(at => !approachCells(cell, world).some(before => key(before) === key(at)))).toBe(true);
++        expect(placePathEdges(state, [], world, { walkable: open, ownerApproaches: new Map() })).toEqual([]);
++        const edges = placePathEdges(state, [], world, { walkable: open, ownerApproaches });
++        expect(edges.length).toBeGreaterThan(0);
++        expect(edges.flat().every(at => open.has(key(at)))).toBe(true);
++        expect(fallback.some(at => edges.flat().some(end => key(end) === key(at)))).toBe(true);
++        expect(placePathEdges(state, [], world, { walkable: open, ownerApproaches: new Map([[key(cell), []]]) })).toEqual([]);
++    });
++
++    it('does not relocate a designated place entrance to an owner fallback or revive a rejected HOME', () => {
++        const state = newIsland('guarded-place-entry', 0), { world } = authoredAccessWorld(), entrance = { x: 4, z: -2 }, fallback = { x: 4, z: -1 };
++        state.landmarks = []; state.plots = [];
++        const place: DerivedPlace = { id: 'place', ruleId: 'P02', family: 'grove', anchorId: 'tree', memberIds: ['tree'], mainIds: ['tree'],
++            variant: 'test', stage: 'grown', footprint: [], entrances: [entrance], walkSurface: [], waterRefs: [], shadeRefs: [], useTargets: [], revision: 'test', missing: [] };
++        const open = walkableCells(state, world), ownerApproaches = new Map([[key(entrance), [fallback]]]);
++        expect(placePathEdges(state, [place], world, { walkable: open, ownerApproaches }).flat()).toContainEqual(entrance);
++        open.delete(key(entrance));
++        expect(placePathEdges(state, [place], world, { walkable: open, ownerApproaches })).toEqual([]);
++        open.add(key(entrance)); open.delete(key(HOME_CELL));
++        expect(placePathEdges(state, [place], world, { walkable: open, ownerApproaches })).toEqual([]);
++    });
++});
+--- a/src/components/island/growing/placePaths.ts
++++ b/src/components/island/growing/placePaths.ts
+@@ -5,17 +5,25 @@
+ import type { SceneLayout } from './sceneLayout';
+ import type { IslandWorld } from '../../../domain/growingIsland/worldDefinition';
+ 
++/** The committed actor/structure check owns these decisions. Drawing consumes
++ * its result without evaluating obstacles again or changing navigation. */
++export interface PlacePathAccess {
++    walkable: ReadonlySet<string>;
++    ownerApproaches: ReadonlyMap<string, readonly Cell[]>;
++}
++
+ /** A shared path grows between real reachable doorsteps and place entrances. It
+  * is an inlay on the existing floor; it grants no new navigation or ownership. */
+-export function placePathEdges(state: GrowingState, places: readonly DerivedPlace[], world?: IslandWorld): [Cell, Cell][] {
+-    const open = walkableCells(state, world), network = new Map<string, Cell>([[key(HOME_CELL), HOME_CELL]]);
++export function placePathEdges(state: GrowingState, places: readonly DerivedPlace[], world?: IslandWorld, access?: PlacePathAccess): [Cell, Cell][] {
++    const committed = world ? access : undefined;
++    const open = committed?.walkable ?? walkableCells(state, world), network = new Map<string, Cell>([[key(HOME_CELL), HOME_CELL]]);
+     if (world && !open.has(key(HOME_CELL))) return [];
+     // Compiled authored sites already have a real dry floor. The open set grants
+     // this graph access; checking those same nodes against the triangles again
+     // changes no route and repeats the expensive floor query for every neighbour.
+     const supported = (cell: Cell) => (world ? true : onLand(state, cell)) && open.has(key(cell));
+     const targets: Cell[][] = state.plots.filter(plot => plot.kind === 'home' && plot.stage >= 2 && plot.cell)
+-        .map(plot => approachCells(plot.cell!, world).filter(supported));
++        .map(plot => (committed?.ownerApproaches.get(key(plot.cell!)) ?? approachCells(plot.cell!, world)).filter(supported));
+     targets.push(...places.filter(place => place.stage === 'grown' || place.stage === 'lived')
+         .map(place => place.entrances.filter(supported)));
+     targets.sort((a, b) => Math.min(...a.map(cell => Math.abs(cell.x - HOME_CELL.x) + Math.abs(cell.z - HOME_CELL.z)))
+@@ -43,8 +51,8 @@
+     return [...edges.values()];
+ }
+ 
+-export function buildPlacePaths(state: GrowingState, layout: SceneLayout, places: readonly DerivedPlace[]) {
+-    const world = layout.authored ? layout.world : undefined, edges = placePathEdges(state, places, world);
++export function buildPlacePaths(state: GrowingState, layout: SceneLayout, places: readonly DerivedPlace[], access?: PlacePathAccess) {
++    const world = layout.authored ? layout.world : undefined, edges = placePathEdges(state, places, world, access);
+     const water = new Set(state.landmarks.filter(item => item.kind === 'water-channel' && item.cell).map(item => key(item.cell!)));
+     const vertices: number[] = [], indices: number[] = [];
+     // Adjacent triangles reuse immutable vertices. Cache both dry support and
+--- a/src/components/island/growing/placePathsSupport.test.ts
++++ b/src/components/island/growing/placePathsSupport.test.ts
+@@ -56,6 +56,8 @@
+         // Recorded before query caching: every position, index, normal and edge.
+         expect(fingerprint(path)).toEqual({ hash: 'bb509feaaef02bc7edfea0ddba91779f941a948bd5e8ea918be97cec702b1238', vertices: 312, indices: 864,
+             edgeHash: '78d0c3b81d64f6b527318e82bd677ba691540c67bd07a09a6b8a40455a77eae2', edges: 7 });
++        const withAuthoredAccess = buildPlacePaths(state, sceneLayout(state), [], { walkable: new Set(), ownerApproaches: new Map() });
++        expect(fingerprint(withAuthoredAccess)).toEqual(fingerprint(path)); release(withAuthoredAccess);
+         expect(state).toEqual(before); release(path);
+     });
+     it('keeps all authored quarter-route costs, mesh resolution and buffers identical', () => {
+--- a/src/components/island/growing/placePathsSync.test.ts
++++ b/src/components/island/growing/placePathsSync.test.ts
+@@ -0,0 +1,95 @@
++import { describe, expect, it, vi } from 'vitest';
++import * as T from 'three';
++import { newIsland } from '../../../domain/growingIsland/island';
++import { HOME_CELL, key, walkableCells } from '../../../domain/growingIsland/space';
++import type { Cell } from '../../../domain/growingIsland/types';
++import { authoredAccessWorld } from '../../../domain/growingIsland/authoredWorldAccess.fixture';
++import { makePokomokoRig } from '../three/islandCharacters';
++import { IslandMaterials } from '../three/primitives';
++import { wrapPokomoko } from './actors';
++import { GrowingLife } from './growingLife';
++import { buildObjectLayer, type ObjectLayer } from './objectLayer';
++import { sceneLayout } from './sceneLayout';
++
++const pathOf = (layer: ObjectLayer) => layer.root.getObjectByName('growing-reachable-paths') as T.Mesh<T.BufferGeometry, T.Material>;
++const edgesOf = (layer: ObjectLayer) => pathOf(layer).userData.groundPathEdges as [Cell, Cell][];
++const edgeKey = (edge: [Cell, Cell]) => edge.map(key).sort().join('|');
++function fixture(authored = true) {
++    const state = newIsland('path-life-parity', 0), { world } = authoredAccessWorld();
++    state.landmarks = []; state.plots = [{ id: 'home', kind: 'home', cell: authored ? { x: 4, z: -2 } : { x: 4, z: 3 },
++        stage: 2, plantedAt: 0, growth: 0, origin: 'seed', paid: 40 }];
++    const m = new IslandMaterials('moon-garden'), layout = sceneLayout(state, false, authored ? world : undefined), layer = buildObjectLayer(m, state, layout);
++    const rig = makePokomokoRig(m), life = new GrowingLife(m, wrapPokomoko(rig.hero, rig.heroBody, rig.heroFeet));
++    return { state, world, m, layout, layer, life, dispose: () => { life.dispose(); layer.dispose(); m.dispose(); } };
++}
++
++describe('paths follow committed life access', () => {
++    it('removes physically rejected edges, preserves committed paths through previews/receipts, and restores after obstruction removal/reset', () => {
++        const f = fixture(), original = edgesOf(f.layer).map(edgeKey), originalPath = pathOf(f.layer);
++        const originalGeometryDispose = vi.spyOn(originalPath.geometry, 'dispose'), originalMaterialDispose = vi.spyOn(originalPath.material, 'dispose');
++        const edge = edgesOf(f.layer).find(([a]) => Math.hypot(a.x - HOME_CELL.x, a.z - HOME_CELL.z) > 2)!;
++        const obstacle = new T.Mesh(new T.BoxGeometry(.03, .8, .03), new T.MeshBasicMaterial());
++        obstacle.name = 'authored-cove-shell'; obstacle.userData.ownMaterial = true;
++        obstacle.position.copy(f.layout.point({ x: (edge[0].x + edge[1].x) / 2, z: (edge[0].z + edge[1].z) / 2 }, .3));
++        f.layer.root.add(obstacle);
++        try {
++            f.life.sync(f.state, f.layout, f.layer);
++            const proof = f.life.walkingObstructionProof()!, rejected = new Set(proof.excludedCells.map(key));
++            expect(rejected.size).toBeGreaterThan(0); expect(proof.blockedEdges + proof.blockedPoints).toBeGreaterThan(0);
++            const guarded = edgesOf(f.layer).map(edgeKey), guardedPath = pathOf(f.layer);
++            expect(guarded.length).toBeGreaterThan(0); expect(guarded).not.toEqual(original);
++            expect(edgesOf(f.layer).flat().some(at => rejected.has(key(at)))).toBe(false);
++            expect(originalGeometryDispose).toHaveBeenCalledTimes(1); expect(originalMaterialDispose).toHaveBeenCalledTimes(1);
++            expect(originalPath.parent).toBeNull();
++            f.layer.updatePreview({ kind: 'home', seed: true, cell: { x: -1, z: -2 }, ownerId: 'home', valid: true, style: 'plain', allowed: [] });
++            expect(pathOf(f.layer)).toBe(guardedPath); expect(edgesOf(f.layer).map(edgeKey)).toEqual(guarded);
++            f.layer.updatePreview();
++            const receipt = { ...f.state, applied: [...f.state.applied, 'receipt'] };
++            f.life.adoptState(receipt); expect(pathOf(f.layer)).toBe(guardedPath);
++            f.life.sync(receipt, f.layout, f.layer); expect(edgesOf(f.layer).map(edgeKey)).toEqual(guarded);
++            obstacle.removeFromParent(); obstacle.geometry.dispose(); obstacle.material.dispose();
++            f.life.sync(receipt, f.layout, f.layer);
++            expect(f.life.walkingObstructionProof()).toBeUndefined(); expect(edgesOf(f.layer).map(edgeKey)).toEqual(original);
++            expect(f.layer.root.getObjectsByProperty('name', 'growing-reachable-paths')).toHaveLength(1);
++        } finally { f.dispose(); }
++    });
++
++    it('binds each update to the current layer state/layout and disposes replacements once', () => {
++        const f = fixture(), base = pathOf(f.layer), disposeBase = vi.spyOn(base.geometry, 'dispose');
++        const access = { walkable: new Set<string>(), ownerApproaches: new Map<string, Cell[]>() };
++        try {
++            f.layer.updatePaths({ ...access, state: f.state, layout: sceneLayout(f.state, false, f.world) });
++            expect(pathOf(f.layer)).toBe(base);
++            const removed = { ...f.state, plots: [] };
++            f.layer.updatePaths({ ...access, state: removed, layout: f.layout }); expect(pathOf(f.layer)).toBe(base);
++            f.layer.updatePaths({ ...access, state: f.state, layout: f.layout });
++            const empty = pathOf(f.layer), disposeEmpty = vi.spyOn(empty.geometry, 'dispose'), materialEmpty = vi.spyOn(empty.material, 'dispose');
++            expect(empty).not.toBe(base); expect(edgesOf(f.layer)).toEqual([]); expect(disposeBase).toHaveBeenCalledTimes(1);
++            f.layer.dispose(); f.layer.dispose();
++            f.layer.updatePaths({ ...access, state: f.state, layout: f.layout });
++            expect(disposeBase).toHaveBeenCalledTimes(1); expect(disposeEmpty).toHaveBeenCalledTimes(1); expect(materialEmpty).toHaveBeenCalledTimes(1);
++            expect(f.layer.root.getObjectByName('growing-reachable-paths')).toBe(empty);
++        } finally { f.dispose(); }
++    });
++
++    it('uses the edited/removal layer inputs and never updates legacy path resources', () => {
++        const f = fixture(), original = edgesOf(f.layer).map(edgeKey);
++        try {
++            for (const plots of [[{ ...f.state.plots[0], cell: { x: -1, z: 3 } }], []]) {
++                const state = { ...f.state, plots }, layout = sceneLayout(state, false, f.world), layer = buildObjectLayer(f.m, state, layout);
++                try {
++                    f.life.sync(state, layout, layer);
++                    expect(edgesOf(layer).map(edgeKey)).not.toEqual(original);
++                    if (!plots.length) expect(edgesOf(layer)).toEqual([]);
++                    expect(edgesOf(layer).flat().every(at => walkableCells(state, f.world).has(key(at)))).toBe(true);
++                } finally { layer.dispose(); }
++            }
++        } finally { f.dispose(); }
++        const legacy = fixture(false), before = pathOf(legacy.layer), release = vi.spyOn(before.geometry, 'dispose');
++        try {
++            legacy.life.sync(legacy.state, legacy.layout, legacy.layer);
++            legacy.layer.updatePaths({ state: legacy.state, layout: legacy.layout, walkable: new Set(), ownerApproaches: new Map() });
++            expect(pathOf(legacy.layer)).toBe(before); expect(release).not.toHaveBeenCalled();
++        } finally { legacy.dispose(); }
++    });
++});

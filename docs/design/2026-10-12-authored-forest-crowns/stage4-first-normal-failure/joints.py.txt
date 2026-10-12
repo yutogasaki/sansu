@@ -1,0 +1,172 @@
+"""Actual triangle-volume joints for stage2, executed only by Blender builder.
+
+A positive clearance ball in both closed mesh volumes proves a volumetric
+connection locally. It is stronger than an AABB overlap or a ray endpoint.
+Finding no ball is a bounded search failure, not proof that no overlap exists.
+Generated bough cap disks fit strictly inside endpoint balls. This does not
+certify collision-free routes, self-intersection freedom, or a Boolean union.
+"""
+import math
+from collections import Counter
+import bpy
+from mathutils import Vector
+from mathutils.bvhtree import BVHTree
+
+
+class Volume:
+    def __init__(self, obj, blender_to_world):
+        self.obj = obj
+        transform = blender_to_world @ obj.matrix_world
+        self.points = [transform @ vertex.co for vertex in obj.data.vertices]
+        obj.data.calc_loop_triangles()
+        self.triangles = [tuple(t.vertices) for t in obj.data.loop_triangles]
+        self.low = Vector(tuple(min(p[i] for p in self.points) for i in range(3)))
+        self.high = Vector(tuple(max(p[i] for p in self.points) for i in range(3)))
+        self.tree = BVHTree.FromPolygons(self.points, self.triangles, all_triangles=True)
+        # Exported normal/UV seams duplicate vertices. Position-only weld is
+        # confined to this query, never written back to the original source.
+        welded = [tuple(round(float(v), 7) for v in point) for point in self.points]
+        edge_counts, directions = Counter(), Counter()
+        degenerate = 0
+        for triangle in self.triangles:
+            keys = [welded[index] for index in triangle]
+            if len(set(keys)) < 3:
+                degenerate += 1
+                continue
+            for a, b in zip(keys, keys[1:] + keys[:1]):
+                edge = tuple(sorted((a, b)))
+                edge_counts[edge] += 1
+                directions[edge] += 1 if a < b else -1
+        bad = sum(count != 2 or directions[edge] != 0 for edge, count in edge_counts.items())
+        self.closure = {'name': obj.name, 'triangles': len(self.triangles),
+                        'positionWeldDecimalsWorld': 7, 'badEdges': bad,
+                        'collapsedSeamTriangles': degenerate}
+        if bad:
+            raise ValueError(f'Actual volume is not closed/oriented: {self.closure}')
+
+    def inside(self, point):
+        if any(point[i] <= self.low[i] or point[i] >= self.high[i] for i in range(3)):
+            return False
+        answers = []
+        for raw in [(1, .371, .619), (.283, 1, .517)]:
+            direction = Vector(raw).normalized()
+            origin, count = point.copy(), 0
+            for _ in range(128):
+                hit, _, _, _ = self.tree.ray_cast(origin, direction, 100)
+                if hit is None:
+                    break
+                count += 1
+                origin = hit + direction * 1e-7
+            else:
+                raise ValueError(f'Ray parity exceeded bounded intersections: {self.obj.name}')
+            answers.append(count % 2 == 1)
+        if answers[0] != answers[1]:
+            raise ValueError(f'Ambiguous actual-volume ray parity: {self.obj.name}')
+        return answers[0]
+
+    def clearance(self, point):
+        if not self.inside(point):
+            return -1.0
+        _, _, _, distance = self.tree.find_nearest(point)
+        return float(distance) if distance is not None else -1.0
+
+    def interior_ball(self, guess, radius, max_search=.18):
+        guess = Vector(guess)
+        seeds = [guess]
+        nearest, normal, _, _ = self.tree.find_nearest(guess)
+        if nearest is not None:
+            seeds.extend([nearest - normal * radius * 1.5, nearest + normal * radius * 1.5])
+        for offset in [radius * 1.5, radius * 3, .01, .025, .05, .09, .15]:
+            for axis in range(3):
+                for sign in [-1, 1]:
+                    point = guess.copy(); point[axis] += sign * offset; seeds.append(point)
+        for point in seeds:
+            if (point - guess).length <= max_search and self.clearance(point) >= radius:
+                return point
+        raise ValueError(f'No actual interior ball r={radius} near {list(guess)} in {self.obj.name}')
+
+
+def overlap_ball(left, right, guesses, radius):
+    candidates = [Vector(g) for g in guesses]
+    low = Vector(tuple(max(left.low[i], right.low[i]) for i in range(3)))
+    high = Vector(tuple(min(left.high[i], right.high[i]) for i in range(3)))
+    if any(high[i] <= low[i] for i in range(3)):
+        return None
+    for x in [.2, .5, .8]:
+        for y in [.2, .5, .8]:
+            for z in [.2, .5, .8]:
+                candidates.append(Vector(tuple(low[i] + (high[i] - low[i]) * t
+                                               for i, t in enumerate((x, y, z)))))
+    for guess in guesses:
+        for offset in [radius * 2, .01, .025, .05]:
+            for axis in range(3):
+                for sign in [-1, 1]:
+                    point = Vector(guess); point[axis] += sign * offset; candidates.append(point)
+    for point in candidates:
+        a = left.clearance(point)
+        if a >= radius:
+            b = right.clearance(point)
+            if b >= radius:
+                return {'center': list(point), 'radiusWorld': radius,
+                        'actualSurfaceClearances': [a, b], 'searchCandidates': len(candidates)}
+    return None
+
+
+def frame(tangent):
+    tangent = tangent.normalized()
+    up = Vector((0, 1, 0)) if abs(tangent.y) < .95 else Vector((1, 0, 0))
+    side = tangent.cross(up).normalized()
+    return side, tangent.cross(side).normalized()
+
+
+def connector(left, right, left_guess, right_guess, radius, max_span, name,
+              owner_id, material, collection, world_to_blender, source_sha):
+    ball_radius = radius * 1.5
+    start = left.interior_ball(left_guess, ball_radius)
+    end = right.interior_ball(right_guess, ball_radius)
+    span = (end - start).length
+    if not .002 < span <= max_span:
+        raise ValueError(f'Connector span outside authored bounds: {name} {span}')
+    delta = end - start
+    arch = min(.10, span * .16)
+    b = start + delta / 3 + Vector((0, arch, 0))
+    c = start + delta * 2 / 3 + Vector((0, arch, 0))
+    def point(t):
+        return start * (1 - t) ** 3 + b * (3 * t * (1 - t) ** 2) + c * (3 * t * t * (1 - t)) + end * t ** 3
+    points, faces = [], []
+    segments, sides = 12, 12
+    for i in range(segments + 1):
+        t = i / segments
+        tangent = point(min(1, t + .001)) - point(max(0, t - .001))
+        side, across = frame(tangent)
+        # Slight natural taper; closed source bough, not a substitute crown.
+        r = radius * (1 - .22 * t)
+        for j in range(sides):
+            angle = math.tau * j / sides
+            points.append(point(t) + side * (math.cos(angle) * r)
+                          + across * (math.sin(angle) * r * .9))
+    for i in range(segments):
+        for j in range(sides):
+            k = (j + 1) % sides
+            faces.append((i * sides + j, i * sides + k, (i + 1) * sides + k, (i + 1) * sides + j))
+    faces.extend([tuple(reversed(range(sides))), tuple(segments * sides + j for j in range(sides))])
+    # Every cap vertex, edge and triangle lies inside its endpoint ball.
+    assert max((p - start).length for p in points[:sides]) < ball_radius
+    assert max((p - end).length for p in points[-sides:]) < ball_radius
+    mesh = bpy.data.meshes.new(name)
+    mesh.from_pydata([tuple(world_to_blender @ p) for p in points], [], faces)
+    mesh.update(); mesh.materials.append(material)
+    for polygon in mesh.polygons:
+        polygon.use_smooth = len(polygon.vertices) == 4
+    obj = bpy.data.objects.new(name, mesh); collection.objects.link(obj)
+    for key, value in {'ownerId': owner_id, 'forestRole': 'derived-native-junction',
+                       'sourceSha256': source_sha, 'jointLeft': left.obj.name, 'jointRight': right.obj.name,
+                       'sameOwnerOnly': True, 'runtimeIntegrated': False}.items():
+        obj[key] = value
+    volume = Volume(obj, world_to_blender.inverted())
+    return obj, {'name': name, 'ownerId': owner_id, 'generated': True, 'spanWorld': span,
+                 'start': list(start), 'end': list(end), 'radiusWorld': radius,
+                 'endpointBallRadiusWorld': ball_radius,
+                 'endpointSurfaceClearanceWorld': [left.clearance(start), right.clearance(end)],
+                 'fullCapDisksInsideEndpointBalls': True, 'closure': volume.closure,
+                 'material': material.name, 'sourceSha256': source_sha}

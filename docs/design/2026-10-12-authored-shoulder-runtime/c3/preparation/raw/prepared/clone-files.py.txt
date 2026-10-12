@@ -1,0 +1,28 @@
+"""macOS clonefile(2) only: no data-copy/hard-link fallback."""
+from pathlib import Path
+import ctypes, hashlib, json, os, stat
+
+BASE=Path('/private/tmp/sansu-authored-shoulder-c3')
+SOURCE=Path('/private/tmp/sansu-authored-shoulder-c2/candidate')
+DEST=BASE/'candidate'
+expected=json.loads(Path('/private/tmp/sansu-authored-shoulder-c2/snapshot.json').read_text())['files']
+lib=ctypes.CDLL('/usr/lib/libSystem.B.dylib',use_errno=True)
+clone=lib.clonefile;clone.argtypes=[ctypes.c_char_p,ctypes.c_char_p,ctypes.c_int];clone.restype=ctypes.c_int
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+files={};original={}
+for name in sorted(expected):
+ relative=Path(name)
+ assert not relative.is_absolute() and '..' not in relative.parts
+ source=SOURCE/relative;dest=DEST/relative
+ assert stat.S_ISREG(source.lstat().st_mode) and not dest.exists()
+ value=sha(source);assert value==expected[name],name
+ dest.parent.mkdir(parents=True,exist_ok=True)
+ if clone(os.fsencode(source),os.fsencode(dest),0)!=0:
+  code=ctypes.get_errno();raise OSError(code,os.strerror(code),name)
+ assert source.stat().st_ino!=dest.stat().st_ino,name
+ copied=sha(dest);assert copied==value,name
+ files[name]=copied;original[name]=value
+ if len(files)%5000==0:print(json.dumps({'nativeClonedFiles':len(files)}),flush=True)
+with (BASE/'native-clone-files.json').open('x') as f:
+ f.write(json.dumps({'files':files,'originalFiles':original,'method':'direct clonefile(2) through libSystem; error on unsupported filesystem, never fallback','fileCount':len(files)},indent=2)+'\n')
+print(json.dumps({'nativeClonedFiles':len(files),'pass':True}),flush=True)

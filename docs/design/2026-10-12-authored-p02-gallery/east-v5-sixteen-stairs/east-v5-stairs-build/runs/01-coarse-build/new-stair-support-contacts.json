@@ -1,0 +1,6432 @@
+[
+  {
+    "kind": "ground-root",
+    "groundCenter": [
+      4.070846080780029,
+      1.608757734298706,
+      -7.810674667358398
+    ],
+    "deckCenter": [
+      4.211721897125244,
+      1.8331339359283447,
+      -7.865471839904785
+    ],
+    "oldDeckCenter": [
+      4.211722094037893,
+      1.6838891978509043,
+      -7.86547204961695
+    ],
+    "change": "deck endpoint follows actual new underside + .015; terminal segment vertical; old contacts not reused as PASS",
+    "groundCap": {
+      "projectedArea": 0.004861587657387645,
+      "coveredArea": 0.004861587657391198,
+      "uncoveredArea": -3.552713678800501e-15,
+      "minimumAboveActualFloor": -0.11802361522617133,
+      "maximumAboveActualFloor": -0.02227207332451253,
+      "positiveConnectionCapSurfaceArea": 0.0,
+      "pieces": [
+        {
+          "capTriangle": 0,
+          "floorTriangle": 56956,
+          "projectedArea": 0.00011752303450585089,
+          "aboveActualFloorRange": [
+            -0.10824392598077015,
+            -0.08694176630780026
+          ]
+        },
+        {
+          "capTriangle": 0,
+          "floorTriangle": 56957,
+          "projectedArea": 5.743442029526591e-06,
+          "aboveActualFloorRange": [
+            -0.08003508114675717,
+            -0.07331769270037802
+          ]
+        },
+        {
+          "capTriangle": 0,
+          "floorTriangle": 56958,
+          "projectedArea": 8.018840903822877e-05,
+          "aboveActualFloorRange": [
+            -0.1004448177397339,
+            -0.07662355774068108
+          ]
+        },
+        {
+          "capTriangle": 0,
+          "floorTriangle": 57053,
+          "projectedArea": 0.00010042547649113942,
+          "aboveActualFloorRange": [
+            -0.11272077648036882,
+            -0.09472395594291427
+          ]
+        },
+        {
+          "capTriangle": 0,
+          "floorTriangle": 57069,
+          "projectedArea": 4.452187044812206e-05,
+          "aboveActualFloorRange": [
+            -0.11567771882437006,
+            -0.10473075819349442
+          ]
+        },
+        {
+          "capTriangle": 0,
+          "floorTriangle": 57071,
+          "projectedArea": 7.574820831024454e-06,
+          "aboveActualFloorRange": [
+            -0.11802361522617133,
+            -0.11265999681136707
+          ]
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 56956,
+          "projectedArea": 8.133693027723155e-05,
+          "aboveActualFloorRange": [
+            -0.09472395594291427,
+            -0.07916548734328943
+          ]
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 56957,
+          "projectedArea": 3.3863404844680645e-06,
+          "aboveActualFloorRange": [
+            -0.07662355774068108,
+            -0.07331769270037802
+          ]
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 56958,
+          "projectedArea": 4.6102024597871605e-05,
+          "aboveActualFloorRange": [
+            -0.08694176630780004,
+            -0.07461216182086972
+          ]
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 57053,
+          "projectedArea": 0.00014035030890191535,
+          "aboveActualFloorRange": [
+            -0.10473075819349442,
+            -0.08220261090161207
+          ]
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 57065,
+          "projectedArea": 1.7031385297627821e-06,
+          "aboveActualFloorRange": [
+            -0.10258465078516998,
+            -0.10059813203447288
+          ]
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 57068,
+          "projectedArea": 0.0001445218159066286,
+          "aboveActualFloorRange": [
+            -0.11528736221891522,
+            -0.09364636682040683
+          ]
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 57069,
+          "projectedArea": 0.0001713272195260629,
+          "aboveActualFloorRange": [
+            -0.11265999681136685,
+            -0.08650171035901755
+          ]
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 57071,
+          "projectedArea": 0.00021419698831515177,
+          "aboveActualFloorRange": [
+            -0.11802361522617133,
+            -0.08959534181282747
+          ]
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 57076,
+          "projectedArea": 5.6496628722868536e-05,
+          "aboveActualFloorRange": [
+            -0.10842134145413374,
+            -0.09678917766156592
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 56956,
+          "projectedArea": 7.154900873018732e-05,
+          "aboveActualFloorRange": [
+            -0.08220261090161185,
+            -0.07129415779334214
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 56957,
+          "projectedArea": 2.9501066158843514e-06,
+          "aboveActualFloorRange": [
+            -0.0746121618208695,
+            -0.07285985658526606
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 56958,
+          "projectedArea": 3.947305360263442e-05,
+          "aboveActualFloorRange": [
+            -0.07916548734328921,
+            -0.07249931078794192
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 57053,
+          "projectedArea": 0.00011848905881528538,
+          "aboveActualFloorRange": [
+            -0.08650171035901755,
+            -0.07087494981752318
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 57065,
+          "projectedArea": 0.0001451951592752465,
+          "aboveActualFloorRange": [
+            -0.10119584767185996,
+            -0.06575923761338176
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 57068,
+          "projectedArea": 0.00024247124072829251,
+          "aboveActualFloorRange": [
+            -0.09678917766156592,
+            -0.06748062494436047
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 57069,
+          "projectedArea": 0.00015303790497434022,
+          "aboveActualFloorRange": [
+            -0.08959534181282747,
+            -0.0695016651168161
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 57071,
+          "projectedArea": 0.0001895598743359983,
+          "aboveActualFloorRange": [
+            -0.09364636682040706,
+            -0.06903252118703174
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 57076,
+          "projectedArea": 0.0002526699730083237,
+          "aboveActualFloorRange": [
+            -0.10059813203447288,
+            -0.06697049942104405
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 56956,
+          "projectedArea": 8.760562611165312e-05,
+          "aboveActualFloorRange": [
+            -0.0724993107879417,
+            -0.0580658405207366
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 56957,
+          "projectedArea": 3.577491771267205e-06,
+          "aboveActualFloorRange": [
+            -0.07331769270037802,
+            -0.07073489446401338
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 56958,
+          "projectedArea": 4.702697057190619e-05,
+          "aboveActualFloorRange": [
+            -0.07285985658526606,
+            -0.06454755355588437
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 57053,
+          "projectedArea": 0.0001390812633896843,
+          "aboveActualFloorRange": [
+            -0.07129415779334192,
+            -0.05223454854506482
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 57065,
+          "projectedArea": 5.029497871156252e-05,
+          "aboveActualFloorRange": [
+            -0.06697049942104405,
+            -0.05204447579082738
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 57068,
+          "projectedArea": 0.00030215996366678155,
+          "aboveActualFloorRange": [
+            -0.06903252118703174,
+            -0.03317419193867521
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 57069,
+          "projectedArea": 0.00019019034830414228,
+          "aboveActualFloorRange": [
+            -0.07087494981752318,
+            -0.04513471799988933
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 57071,
+          "projectedArea": 0.00021847737501801134,
+          "aboveActualFloorRange": [
+            -0.0695016651168161,
+            -0.03967186415280555
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 57076,
+          "projectedArea": 0.00017697985050979526,
+          "aboveActualFloorRange": [
+            -0.06748062494436025,
+            -0.036210382749563896
+          ]
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 56956,
+          "projectedArea": 0.0001636632943728955,
+          "aboveActualFloorRange": [
+            -0.06454755355588437,
+            -0.033705485406431146
+          ]
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 56957,
+          "projectedArea": 6.58813717180351e-06,
+          "aboveActualFloorRange": [
+            -0.07331769270037802,
+            -0.06682171110957813
+          ]
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 56958,
+          "projectedArea": 8.42696349288019e-05,
+          "aboveActualFloorRange": [
+            -0.07073489446401338,
+            -0.05027073801678039
+          ]
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 57053,
+          "projectedArea": 0.00023901973497686413,
+          "aboveActualFloorRange": [
+            -0.0580658405207366,
+            -0.02227207332451253
+          ]
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 57068,
+          "projectedArea": 3.837702878506377e-05,
+          "aboveActualFloorRange": [
+            -0.039671864152805325,
+            -0.03025597079013731
+          ]
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 57069,
+          "projectedArea": 0.00021807321814648617,
+          "aboveActualFloorRange": [
+            -0.052234548545064374,
+            -0.02320311845163925
+          ]
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 57071,
+          "projectedArea": 0.00010943449974654129,
+          "aboveActualFloorRange": [
+            -0.04513471799988933,
+            -0.02662678416697406
+          ]
+        },
+        {
+          "capTriangle": 5,
+          "floorTriangle": 56956,
+          "projectedArea": 0.00010577715555193379,
+          "aboveActualFloorRange": [
+            -0.050270738016780614,
+            -0.026486235974130246
+          ]
+        },
+        {
+          "capTriangle": 5,
+          "floorTriangle": 56957,
+          "projectedArea": 3.268585106219746e-05,
+          "aboveActualFloorRange": [
+            -0.07331769270037802,
+            -0.047406921327693086
+          ]
+        },
+        {
+          "capTriangle": 5,
+          "floorTriangle": 56958,
+          "projectedArea": 0.00019515823349713912,
+          "aboveActualFloorRange": [
+            -0.06682171110957835,
+            -0.03331654733046774
+          ]
+        },
+        {
+          "capTriangle": 5,
+          "floorTriangle": 57053,
+          "projectedArea": 2.235317240462109e-05,
+          "aboveActualFloorRange": [
+            -0.03370548540643137,
+            -0.02227207332451253
+          ]
+        }
+      ]
+    },
+    "actualNewDeckCap": {
+      "projectedCapArea": 0.008555957792850677,
+      "coveredTopArea": 0.008555957792857782,
+      "positiveInsideActualVolumeArea": 0.005684516026008168,
+      "pieces": [
+        {
+          "capTriangle": 0,
+          "topTriangle": 168,
+          "bottomTriangle": 368,
+          "area": 1.2750806000383363e-05,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.04445005890673981,
+            0.04979680503638595
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 169,
+          "bottomTriangle": 369,
+          "area": 1.4400431830097205e-05,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.04280912876129106,
+            0.044681782105942425
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 176,
+          "bottomTriangle": 376,
+          "area": 8.239610718163703e-05,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.034497065332202315,
+            0.042809128761291726
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 177,
+          "bottomTriangle": 377,
+          "area": 2.584758737000925e-05,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.03354954719543457,
+            0.03516168570166234
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 184,
+          "bottomTriangle": 384,
+          "area": 0.00015189079409339001,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.024695336178049976,
+            0.03354954719543479
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 185,
+          "bottomTriangle": 385,
+          "area": 2.545250374907937e-05,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.02427911758422807,
+            0.025661735283095455
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 192,
+          "bottomTriangle": 392,
+          "area": 0.00014155254310210807,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.01549753537233367,
+            0.024279117584228738
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 193,
+          "bottomTriangle": 393,
+          "area": 1.672085683068758e-05,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.014999985694885032,
+            0.016182854791365164
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 200,
+          "bottomTriangle": 400,
+          "area": 9.22514015400111e-05,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.006312264596875838,
+            0.014999985694885698
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 201,
+          "bottomTriangle": 401,
+          "area": 9.505925952169036e-06,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.005714178085326926,
+            0.006725901800840761
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 208,
+          "bottomTriangle": 408,
+          "area": 4.5339910244024395e-05,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            -0.0028584596094098913,
+            0.0057141780853273705
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 209,
+          "bottomTriangle": 409,
+          "area": 3.159728734658529e-06,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            -0.0035762786865234375,
+            -0.0027082693083582132
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 216,
+          "bottomTriangle": 416,
+          "area": 5.230292956071025e-06,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            -0.00805070359625315,
+            -0.0035762786865232155
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 168,
+          "bottomTriangle": 368,
+          "area": 0.0002190360997822438,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.044681782105942425,
+            0.050447489537049695
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 169,
+          "bottomTriangle": 369,
+          "area": 0.00019475304288008033,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.042809128761291504,
+            0.0470156369583663
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 176,
+          "bottomTriangle": 376,
+          "area": 0.00027491098262544256,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.03516168570166256,
+            0.042809128761291504
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 177,
+          "bottomTriangle": 377,
+          "area": 0.00012595410378679617,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.033549547195434126,
+            0.0369842325944536
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 184,
+          "bottomTriangle": 384,
+          "area": 0.00022141502540762303,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.025661735283095455,
+            0.03354954719543479
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 185,
+          "bottomTriangle": 385,
+          "area": 7.633381986238419e-05,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.024279117584228738,
+            0.027019032617148664
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 192,
+          "bottomTriangle": 385,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.024279117584228738,
+            0.024279117584228738
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 192,
+          "bottomTriangle": 392,
+          "area": 0.00016555878814372704,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.016182854791365164,
+            0.024279117584228738
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 193,
+          "bottomTriangle": 393,
+          "area": 4.1724570252199555e-05,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.014999985694885254,
+            0.017116185189997468
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 200,
+          "bottomTriangle": 400,
+          "area": 0.0001092801669955179,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.006725901800840761,
+            0.014999985694885476
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 201,
+          "bottomTriangle": 401,
+          "area": 1.873872973590096e-05,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.0057141780853271484,
+            0.007272247149474165
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 208,
+          "bottomTriangle": 408,
+          "area": 5.403613506871352e-05,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            -0.002708269308357991,
+            0.0057141780853273705
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 208,
+          "bottomTriangle": 409,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            -0.0026205841524622464,
+            -0.0025158491051420206
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 209,
+          "bottomTriangle": 409,
+          "area": 4.6174983872049324e-06,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            -0.0035762786865236595,
+            -0.0025158491051420206
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 216,
+          "bottomTriangle": 416,
+          "area": 6.131595704061965e-06,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            -0.00805070359625315,
+            -0.0035762786865232155
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 168,
+          "bottomTriangle": 368,
+          "area": 1.663580470534498e-05,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.04701563695836608,
+            0.050447489537049695
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 169,
+          "bottomTriangle": 369,
+          "area": 0.00012800612006813594,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.042809128761291504,
+            0.0474866537836498
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 176,
+          "bottomTriangle": 376,
+          "area": 0.0001798414131002346,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.036984232594453825,
+            0.042809128761291504
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 177,
+          "bottomTriangle": 377,
+          "area": 0.0003553765306456569,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.033549547195434126,
+            0.039062655882261765
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 184,
+          "bottomTriangle": 384,
+          "area": 0.00032459105321436255,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.027019032617148664,
+            0.03354954719543479
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 185,
+          "bottomTriangle": 385,
+          "area": 0.00033541114104096437,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.024279117584228516,
+            0.03025126867367911
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 192,
+          "bottomTriangle": 392,
+          "area": 0.0002727289193664717,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.01711618518999769,
+            0.024279117584228516
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 193,
+          "bottomTriangle": 393,
+          "area": 0.00015858824162862106,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.014999985694885254,
+            0.019211040524377276
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 200,
+          "bottomTriangle": 400,
+          "area": 0.0001905176738397074,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.007272247149474609,
+            0.014999985694885254
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 201,
+          "bottomTriangle": 401,
+          "area": 5.90403796394412e-05,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.005714178085326926,
+            0.008431949846215314
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 208,
+          "bottomTriangle": 408,
+          "area": 9.66103699866494e-05,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            -0.0025158491051420206,
+            0.0057141780853275925
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 209,
+          "bottomTriangle": 409,
+          "area": 1.091620706716867e-05,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            -0.0035762786865238816,
+            -0.002128437877134237
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 216,
+          "bottomTriangle": 416,
+          "area": 1.0725593917015885e-05,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            -0.00805070359625315,
+            -0.0035762786865229934
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 184,
+          "bottomTriangle": 384,
+          "area": 6.115215533952778e-06,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.030251268673679332,
+            0.03239235082945591
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 185,
+          "bottomTriangle": 385,
+          "area": 0.0001651125826569455,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.02427911758422807,
+            0.03056238748854878
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 192,
+          "bottomTriangle": 392,
+          "area": 0.00014556810797117237,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.019211040524377054,
+            0.024279117584228738
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 193,
+          "bottomTriangle": 393,
+          "area": 0.00039932866203784556,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.014999985694885254,
+            0.021374762752878418
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 200,
+          "bottomTriangle": 400,
+          "area": 0.00031036131744954787,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.008431949846215314,
+            0.014999985694885254
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 201,
+          "bottomTriangle": 401,
+          "area": 0.0005451999257424234,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            0.005714178085326926,
+            0.012204545580925874
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 208,
+          "bottomTriangle": 401,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.0057141780853271484,
+            0.0057141780853273705
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 208,
+          "bottomTriangle": 408,
+          "area": 0.0004046155318029321,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            -0.002128437877134459,
+            0.0057141780853275925
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 209,
+          "bottomTriangle": 408,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            -0.002032428319791446,
+            0.0007838520289171758
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 209,
+          "bottomTriangle": 409,
+          "area": 0.00011834537202304318,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            -0.0035762786865236595,
+            0.0007838520289160655
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 216,
+          "bottomTriangle": 416,
+          "area": 4.4342732987701083e-05,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            -0.00805070359625315,
+            -0.0035762786865229934
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 201,
+          "bottomTriangle": 401,
+          "area": 1.975724089220421e-06,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.0057141780853271484,
+            0.0062220563615351665
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 208,
+          "bottomTriangle": 408,
+          "area": 6.964292614597412e-05,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.0007838520289169537,
+            0.0057141780853275925
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 208,
+          "bottomTriangle": 409,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            0.0007838520289162876,
+            0.0018538576227591363
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 209,
+          "bottomTriangle": 409,
+          "area": 0.0004255907402637149,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            -0.0035762786865234375,
+            0.002840640559301999
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 216,
+          "bottomTriangle": 416,
+          "area": 0.0004944813711311724,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            -0.01103232592486414,
+            -0.0035762786865236595
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 217,
+          "bottomTriangle": 417,
+          "area": 0.0003901182306158546,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            -0.012869954109191895,
+            -0.007031902421772651
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 224,
+          "bottomTriangle": 424,
+          "area": 0.0001241155481750411,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            -0.017321662849574704,
+            -0.012869954109191895
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 225,
+          "bottomTriangle": 424,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            -0.017321662849574704,
+            -0.016845443400385296
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 225,
+          "bottomTriangle": 425,
+          "area": 6.566018228681969e-06,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            -0.017844422781866376,
+            -0.01684544340038574
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 216,
+          "bottomTriangle": 416,
+          "area": 2.6437544516255684e-05,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            -0.011698800970028511,
+            -0.00805070359625315
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 217,
+          "bottomTriangle": 417,
+          "area": 5.771303559853891e-05,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            -0.012869954109192117,
+            -0.011032325924863917
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 224,
+          "bottomTriangle": 424,
+          "area": 0.0002782157532514873,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            -0.020033656312183012,
+            -0.012869954109191895
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 225,
+          "bottomTriangle": 425,
+          "area": 0.00022364850243761225,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            -0.022165060043335183,
+            -0.017321662849574704
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 225,
+          "bottomTriangle": 432,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611594
+          ],
+          "aboveActualUndersideRange": [
+            -0.02216506004333496,
+            -0.02216506004333474
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 232,
+          "bottomTriangle": 432,
+          "area": 3.222462826713013e-05,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            -0.02418635727354501,
+            -0.02216506004333496
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 233,
+          "bottomTriangle": 432,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.09502756595611572,
+            0.09502756595611572
+          ],
+          "aboveActualUndersideRange": [
+            -0.02418635727354501,
+            -0.02401448403105011
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 233,
+          "bottomTriangle": 433,
+          "area": 8.14486679345805e-06,
+          "insideTopRange": [
+            0.0950275659561155,
+            0.09502756595611617
+          ],
+          "aboveActualUndersideRange": [
+            -0.025027513504028764,
+            -0.024014484031050554
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 240,
+          "bottomTriangle": 440,
+          "area": 1.1455870918553046e-07,
+          "insideTopRange": [
+            0.1772780418395996,
+            0.1772780418395996
+          ],
+          "aboveActualUndersideRange": [
+            -0.02521722154371009,
+            -0.0250275135040281
+          ],
+          "strictPositivePatch": false
+        }
+      ],
+      "usesActualBottomTriangles": true,
+      "arbitraryCurveVolumeUnionProof": false
+    },
+    "topology": {
+      "object": "solid-bough/same-owner-ground-root",
+      "vertices": 64,
+      "faces": 58,
+      "badEdges": 0,
+      "components": 1,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "signedVolume": 0.0022694160646639736,
+      "selfIntersectionProvenAbsent": false
+    }
+  },
+  {
+    "kind": "native-trunk-bough",
+    "oldSourceTarget": [
+      4.029465198516846,
+      1.7511038780212402,
+      -8.220808982849121
+    ],
+    "newDeckContact": [
+      4.5968499183654785,
+      2.0011348724365234,
+      -7.921623229980469
+    ],
+    "actualHit": [
+      4.029465198516846,
+      1.7511039972305298,
+      -8.220808982849121
+    ],
+    "actualTriangle": 27,
+    "distance": 0.6884422302246094,
+    "maximumSpan": 1.35,
+    "sourceContactIsNewMeasurement": true,
+    "actualDeckCap": {
+      "projectedCapArea": 0.008555957792850677,
+      "coveredTopArea": 0.008555957792857782,
+      "positiveInsideActualVolumeArea": 0.0066137765131344395,
+      "pieces": [
+        {
+          "capTriangle": 0,
+          "topTriangle": 347,
+          "bottomTriangle": 547,
+          "area": 4.882251310789343e-06,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.024450063705444336,
+            0.026613145372636815
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 354,
+          "bottomTriangle": 554,
+          "area": 1.721885618977126e-05,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.02152520560589677,
+            0.02445006370544478
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 355,
+          "bottomTriangle": 555,
+          "area": 0.0001102841778468644,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595259,
+            0.021771066665333683
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 362,
+          "bottomTriangle": 562,
+          "area": 6.0590631051127275e-05,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561568
+          ],
+          "aboveActualUndersideRange": [
+            0.011955648239070138,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 363,
+          "bottomTriangle": 563,
+          "area": 0.0002322140044554999,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.0055495500564572975,
+            0.012681871547018941
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 370,
+          "bottomTriangle": 570,
+          "area": 6.071419345943241e-05,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.0029412005629876337,
+            0.0055495500564575195
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 371,
+          "bottomTriangle": 571,
+          "area": 0.00012948755991359917,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.0039005279541015625,
+            0.0036156735454790923
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 378,
+          "bottomTriangle": 578,
+          "area": 8.210991992996242e-06,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.005524429507489881,
+            -0.0039005279541015625
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 379,
+          "bottomTriangle": 579,
+          "area": 2.8962233571405704e-06,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.006892944568704262,
+            -0.005426860127655253
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 339,
+          "bottomTriangle": 539,
+          "area": 5.781597593923493e-05,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.03390026092529297,
+            0.03826586885444283
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 346,
+          "bottomTriangle": 546,
+          "area": 3.830266954807371e-05,
+          "insideTopRange": [
+            0.09152746200561479,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.031948650521850475,
+            0.03390026092529297
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 347,
+          "bottomTriangle": 547,
+          "area": 0.0004408831681921299,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561568
+          ],
+          "aboveActualUndersideRange": [
+            0.024450063705443892,
+            0.0329148707843081
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 354,
+          "bottomTriangle": 554,
+          "area": 0.0001035686659207613,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561568
+          ],
+          "aboveActualUndersideRange": [
+            0.021771066665333905,
+            0.024450063705444336
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 355,
+          "bottomTriangle": 555,
+          "area": 0.0003958083926356437,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595259,
+            0.02331532250342727
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 362,
+          "bottomTriangle": 562,
+          "area": 6.727616151636084e-05,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561568
+          ],
+          "aboveActualUndersideRange": [
+            0.012681871547018941,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 363,
+          "bottomTriangle": 563,
+          "area": 0.0002557701516217037,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.0055495500564572975,
+            0.01373891084867962
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 370,
+          "bottomTriangle": 570,
+          "area": 3.433740245739614e-05,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.0036156735454790923,
+            0.0055495500564575195
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 371,
+          "bottomTriangle": 571,
+          "area": 0.00011041975750814004,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.0039005279541015625,
+            0.004185245269820337
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 378,
+          "bottomTriangle": 578,
+          "area": 5.89928422911612e-06,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.005426860127655253,
+            -0.0039005279541015625
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 379,
+          "bottomTriangle": 579,
+          "area": 2.408929077546418e-06,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.006892944568704262,
+            -0.005345706954201557
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 339,
+          "bottomTriangle": 539,
+          "area": 0.00014247036695280713,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.03390026092529297,
+            0.03826586885444283
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 340,
+          "bottomTriangle": 540,
+          "area": 0.00011423829644030548,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.03390026092529297,
+            0.0374182409402084
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 341,
+          "bottomTriangle": 541,
+          "area": 4.781712178569819e-05,
+          "insideTopRange": [
+            0.09152746200561479,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.03390026092529297,
+            0.03545128146116627
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 346,
+          "bottomTriangle": 546,
+          "area": 1.6104887230028453e-05,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.0329148707843081,
+            0.03390026092529297
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 347,
+          "bottomTriangle": 547,
+          "area": 0.000363153006222916,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561568
+          ],
+          "aboveActualUndersideRange": [
+            0.024450063705443892,
+            0.03390026092529297
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 348,
+          "bottomTriangle": 548,
+          "area": 0.00037491953813528767,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.024450063705444336,
+            0.03390026092529297
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 349,
+          "bottomTriangle": 549,
+          "area": 1.1312716015510205e-05,
+          "insideTopRange": [
+            0.09152746200561479,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.024450063705444114,
+            0.025203030805716287
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 354,
+          "bottomTriangle": 554,
+          "area": 2.1401851878266598e-05,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561568
+          ],
+          "aboveActualUndersideRange": [
+            0.023315322503427494,
+            0.024450063705444558
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 355,
+          "bottomTriangle": 555,
+          "area": 0.00040762823743278886,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595481,
+            0.024450063705444336
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 356,
+          "bottomTriangle": 556,
+          "area": 0.00012575627588873317,
+          "insideTopRange": [
+            0.09152746200561479,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595703,
+            0.024450063705444336
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 362,
+          "bottomTriangle": 562,
+          "area": 2.6482048951947945e-05,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.013738910848679842,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 363,
+          "bottomTriangle": 563,
+          "area": 0.000324782477711949,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.0055495500564572975,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 370,
+          "bottomTriangle": 570,
+          "area": 2.3414122171772078e-05,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.004185245269820337,
+            0.0055495500564575195
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 371,
+          "bottomTriangle": 571,
+          "area": 0.00013079236629920388,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.0039005279541015625,
+            0.004854507088783988
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 378,
+          "bottomTriangle": 578,
+          "area": 5.927698801144743e-06,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.005345706954202001,
+            -0.0039005279541015625
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 379,
+          "bottomTriangle": 579,
+          "area": 2.7884363085206587e-06,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.006892944568704262,
+            -0.005251768756823427
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 340,
+          "bottomTriangle": 540,
+          "area": 2.106230674314702e-07,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561568
+          ],
+          "aboveActualUndersideRange": [
+            0.03545128146116627,
+            0.035719922888989064
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 341,
+          "bottomTriangle": 541,
+          "area": 1.4114951660815223e-05,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.03390026092529297,
+            0.03549536490211458
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 348,
+          "bottomTriangle": 548,
+          "area": 0.0003220913188251018,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.025203030805716065,
+            0.03390026092529297
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 349,
+          "bottomTriangle": 549,
+          "area": 0.00014281415375805295,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.024450063705443892,
+            0.02696155884895801
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 356,
+          "bottomTriangle": 556,
+          "area": 0.0007568831905935269,
+          "insideTopRange": [
+            0.09152746200561479,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595703,
+            0.024450063705444336
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 357,
+          "bottomTriangle": 557,
+          "area": 0.00010130225563997897,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561568
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595703,
+            0.017386770460058543
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 363,
+          "bottomTriangle": 563,
+          "area": 0.00011946697322429145,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.0055495500564572975,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 364,
+          "bottomTriangle": 564,
+          "area": 0.00042837059767464325,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.0055495500564575195,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 365,
+          "bottomTriangle": 565,
+          "area": 4.562979928124378e-06,
+          "insideTopRange": [
+            0.09152746200561479,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.0055495500564575195,
+            0.006054180754087701
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 365,
+          "bottomTriangle": 572,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.09152746200561479,
+            0.09152746200561568
+          ],
+          "aboveActualUndersideRange": [
+            0.0055495500564572975,
+            0.005549550056457742
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 370,
+          "bottomTriangle": 570,
+          "area": 7.652974499450238e-06,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.004854507088783766,
+            0.0055495500564572975
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 371,
+          "bottomTriangle": 571,
+          "area": 0.00020708230897881208,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.0039005279541015625,
+            0.0055495500564575195
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 372,
+          "bottomTriangle": 572,
+          "area": 2.135384186985334e-05,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561568
+          ],
+          "aboveActualUndersideRange": [
+            0.0028833455691466003,
+            0.0055495500564575195
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 378,
+          "bottomTriangle": 571,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.0039005279541020066,
+            -0.0039005279541015625
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 378,
+          "bottomTriangle": 578,
+          "area": 8.295907967692528e-06,
+          "insideTopRange": [
+            0.09152746200561479,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.005251768756823871,
+            -0.0039005279541015625
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 379,
+          "bottomTriangle": 579,
+          "area": 4.787370542658209e-06,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.006892944568704262,
+            -0.005090489491410999
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 356,
+          "bottomTriangle": 556,
+          "area": 4.708393800356703e-05,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.017386770460058765,
+            0.021725734963361498
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 357,
+          "bottomTriangle": 556,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.01738677046005832,
+            0.0180612703202927
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 357,
+          "bottomTriangle": 557,
+          "area": 9.99120093183592e-05,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561568
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595259,
+            0.0180612703202927
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 364,
+          "bottomTriangle": 564,
+          "area": 0.00048726232778051326,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561568
+          ],
+          "aboveActualUndersideRange": [
+            0.006054180754087923,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 365,
+          "bottomTriangle": 564,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.006054180754087701,
+            0.00848989647598053
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 365,
+          "bottomTriangle": 565,
+          "area": 0.00018154672831371954,
+          "insideTopRange": [
+            0.09152746200561479,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            0.0055495500564572975,
+            0.008489896475980307
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 365,
+          "bottomTriangle": 572,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.09152746200561479,
+            0.09152746200561568
+          ],
+          "aboveActualUndersideRange": [
+            0.0055495500564572975,
+            0.005549550056457742
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 371,
+          "bottomTriangle": 571,
+          "area": 0.00012861213278370087,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.0039005279541015625,
+            0.0028833455691466003
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 372,
+          "bottomTriangle": 572,
+          "area": 0.0005322404187921848,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561568
+          ],
+          "aboveActualUndersideRange": [
+            -0.002940605710251898,
+            0.005549550056457964
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 378,
+          "bottomTriangle": 578,
+          "area": 1.718150472385105e-05,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561568
+          ],
+          "aboveActualUndersideRange": [
+            -0.005090489491410999,
+            -0.0039005279541015625
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 379,
+          "bottomTriangle": 579,
+          "area": 1.8651498916000264e-05,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.006892944568704262,
+            -0.004462148732019333
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 371,
+          "bottomTriangle": 571,
+          "area": 6.9116428100812755e-06,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.0039005279541015625,
+            -0.002940605710251898
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 372,
+          "bottomTriangle": 572,
+          "area": 0.000246471538780213,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.0039005279541015625,
+            0.004127926327500031
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 373,
+          "bottomTriangle": 573,
+          "area": 6.81926896817231e-05,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.0039005279541015625,
+            -0.0019569690605090173
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 378,
+          "bottomTriangle": 571,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.0039005279541015625,
+            -0.0039005279541015625
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 378,
+          "bottomTriangle": 578,
+          "area": 3.5217287503996886e-06,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.004462148732018889,
+            -0.0039005279541015625
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 379,
+          "bottomTriangle": 579,
+          "area": 0.00011305505617542622,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.007329565073316502,
+            -0.0039005279541015625
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 380,
+          "bottomTriangle": 580,
+          "area": 0.00018834623337227185,
+          "insideTopRange": [
+            0.09152746200561523,
+            0.09152746200561523
+          ],
+          "aboveActualUndersideRange": [
+            -0.007770651575067067,
+            -0.0039005279541015625
+          ],
+          "strictPositivePatch": false
+        }
+      ],
+      "usesActualBottomTriangles": true,
+      "arbitraryCurveVolumeUnionProof": false
+    },
+    "topology": {
+      "object": "solid-bough/native-contact-1",
+      "vertices": 144,
+      "faces": 138,
+      "badEdges": 0,
+      "components": 1,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "signedVolume": 0.006248079081259285,
+      "selfIntersectionProvenAbsent": false
+    }
+  },
+  {
+    "kind": "native-trunk-bough",
+    "oldSourceTarget": [
+      3.9791672229766846,
+      2.128777027130127,
+      -8.525797843933105
+    ],
+    "newDeckContact": [
+      4.73820686340332,
+      2.2940924167633057,
+      -8.56666374206543
+    ],
+    "actualHit": [
+      3.9791669845581055,
+      2.128777027130127,
+      -8.525797843933105
+    ],
+    "actualTriangle": 82,
+    "distance": 0.7779079079627991,
+    "maximumSpan": 1.35,
+    "sourceContactIsNewMeasurement": true,
+    "actualDeckCap": {
+      "projectedCapArea": 0.008555994882044615,
+      "coveredTopArea": 0.008555994882044615,
+      "positiveInsideActualVolumeArea": 0.006575993668555213,
+      "pieces": [
+        {
+          "capTriangle": 0,
+          "topTriangle": 642,
+          "bottomTriangle": 842,
+          "area": 3.225217859892382e-06,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.01185275354299442,
+            0.01351209405706566
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 643,
+          "bottomTriangle": 843,
+          "area": 9.852138041921421e-05,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.005549907684325728,
+            0.0119620413841095
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 650,
+          "bottomTriangle": 850,
+          "area": 5.6148261116106823e-05,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.0029739726926263366,
+            0.005549907684326616
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 651,
+          "bottomTriangle": 851,
+          "area": 0.00033301291017906465,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            -0.003900289535522905,
+            0.003746998883588759
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 658,
+          "bottomTriangle": 858,
+          "area": 4.169736108750044e-05,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            -0.005320706324487112,
+            -0.003900289535522017
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 659,
+          "bottomTriangle": 859,
+          "area": 8.928697743115777e-05,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            -0.008437023044150394,
+            -0.0044090175251620956
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 660,
+          "bottomTriangle": 860,
+          "area": 4.602940808950962e-06,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            -0.00901552272408912,
+            -0.007480044105879102
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 619,
+          "bottomTriangle": 819,
+          "area": 9.819649770292926e-05,
+          "insideTopRange": [
+            0.04532122611999467,
+            0.04532122611999512
+          ],
+          "aboveActualUndersideRange": [
+            0.024678707122802734,
+            0.03142235301488583
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 626,
+          "bottomTriangle": 826,
+          "area": 1.4443677116560139e-06,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            0.024612697848428233,
+            0.024678707122802734
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 627,
+          "bottomTriangle": 827,
+          "area": 5.09498396539243e-06,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            0.024450302124022993,
+            0.02463105203902982
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 634,
+          "bottomTriangle": 834,
+          "area": 7.054455094746004e-05,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.02158877397578296,
+            0.024450302124023438
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 635,
+          "bottomTriangle": 835,
+          "area": 0.0003858458093191075,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.015000104904174805,
+            0.022591229110414
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 642,
+          "bottomTriangle": 842,
+          "area": 0.00013908787471450523,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.0119620413841095,
+            0.015000104904175249
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 643,
+          "bottomTriangle": 843,
+          "area": 0.0004500892149827962,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.005549907684326172,
+            0.013696423022432569
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 650,
+          "bottomTriangle": 850,
+          "area": 5.2869625644547114e-05,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.003746998883588759,
+            0.005549907684326616
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 651,
+          "bottomTriangle": 851,
+          "area": 0.00026351292447657215,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            -0.003900289535522905,
+            0.004828967436956155
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 658,
+          "bottomTriangle": 858,
+          "area": 4.752191195223077e-06,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            -0.0044090175251620956,
+            -0.003900289535522017
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 659,
+          "bottomTriangle": 859,
+          "area": 3.169892633181348e-05,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            -0.007480044105878658,
+            -0.0040103525455208455
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 660,
+          "bottomTriangle": 860,
+          "area": 9.35743233654307e-06,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            -0.00901552272408912,
+            -0.005534577926439965
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 611,
+          "bottomTriangle": 811,
+          "area": 0.00016282285472968283,
+          "insideTopRange": [
+            0.04532122611999467,
+            0.04532122611999512
+          ],
+          "aboveActualUndersideRange": [
+            0.03390073776245073,
+            0.03910604907347537
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 618,
+          "bottomTriangle": 818,
+          "area": 6.501554209137339e-05,
+          "insideTopRange": [
+            0.04532122611999512,
+            0.04532122611999556
+          ],
+          "aboveActualUndersideRange": [
+            0.031638730740007226,
+            0.03390073776245117
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 618,
+          "bottomTriangle": 819,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.04532122611999512,
+            0.04532122611999556
+          ],
+          "aboveActualUndersideRange": [
+            0.03163873074000767,
+            0.03381055888015938
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 619,
+          "bottomTriangle": 819,
+          "area": 0.0006615401591609782,
+          "insideTopRange": [
+            0.04532122611999512,
+            0.04532122611999512
+          ],
+          "aboveActualUndersideRange": [
+            0.024678707122802734,
+            0.03381055888015938
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 626,
+          "bottomTriangle": 826,
+          "area": 1.578670417501371e-06,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            0.02463105203902982,
+            0.02467870712280229
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 627,
+          "bottomTriangle": 827,
+          "area": 1.5027748837326271e-05,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.024450302124023438,
+            0.02467729862803436
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 634,
+          "bottomTriangle": 834,
+          "area": 6.126286907104372e-05,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.022591229110414,
+            0.024450302124023438
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 635,
+          "bottomTriangle": 835,
+          "area": 0.0005309667630228887,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.015000104904174805,
+            0.02439316871158148
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 642,
+          "bottomTriangle": 842,
+          "area": 3.022699908683535e-05,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.013696423022432569,
+            0.015000104904174805
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 643,
+          "bottomTriangle": 843,
+          "area": 0.000358161952824787,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.005549907684326172,
+            0.015000104904174805
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 644,
+          "bottomTriangle": 844,
+          "area": 1.4416368781411393e-05,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.005549907684326172,
+            0.015000104904174805
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 645,
+          "bottomTriangle": 845,
+          "area": 1.3733064818666207e-07,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            0.005549907684326172,
+            0.0056288917023112894
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 650,
+          "bottomTriangle": 850,
+          "area": 9.265123118495922e-06,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.004828967436956155,
+            0.005549907684326616
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 651,
+          "bottomTriangle": 851,
+          "area": 0.00015129367120536585,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            -0.003900289535522905,
+            0.005549907684326172
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 652,
+          "bottomTriangle": 852,
+          "area": 4.706405912457967e-05,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            -0.003900289535522461,
+            0.005549907684326616
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 653,
+          "bottomTriangle": 853,
+          "area": 7.122847769380769e-07,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            -0.003900289535522461,
+            -0.0037206446669708626
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 658,
+          "bottomTriangle": 858,
+          "area": 2.164802062054605e-07,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            -0.0040103525455208455,
+            -0.003900289535522461
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 659,
+          "bottomTriangle": 859,
+          "area": 3.4740877374872525e-06,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            -0.005534577926439965,
+            -0.003900289535522461
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 660,
+          "bottomTriangle": 860,
+          "area": 2.5825027961445812e-05,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            -0.00901552272408912,
+            -0.003900289535522461
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 611,
+          "bottomTriangle": 811,
+          "area": 1.8803083811747e-05,
+          "insideTopRange": [
+            0.04532122611999467,
+            0.04532122611999512
+          ],
+          "aboveActualUndersideRange": [
+            0.03390073776245117,
+            0.03910604907347537
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 612,
+          "bottomTriangle": 812,
+          "area": 0.00011515790025740102,
+          "insideTopRange": [
+            0.04532122611999512,
+            0.04532122611999512
+          ],
+          "aboveActualUndersideRange": [
+            0.03390073776245117,
+            0.03881424483784013
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 613,
+          "bottomTriangle": 813,
+          "area": 4.4526831935343125e-05,
+          "insideTopRange": [
+            0.04532122611999512,
+            0.04532122611999512
+          ],
+          "aboveActualUndersideRange": [
+            0.03390073776245117,
+            0.035114249678620535
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 618,
+          "bottomTriangle": 818,
+          "area": 1.4063069997405364e-07,
+          "insideTopRange": [
+            0.04532122611999512,
+            0.04532122611999556
+          ],
+          "aboveActualUndersideRange": [
+            0.03381055888015938,
+            0.03390073776245117
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 619,
+          "bottomTriangle": 819,
+          "area": 2.6737980839186548e-05,
+          "insideTopRange": [
+            0.04532122611999512,
+            0.04532122611999512
+          ],
+          "aboveActualUndersideRange": [
+            0.024678707122802734,
+            0.03390073776245117
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 620,
+          "bottomTriangle": 813,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.04532122611999512,
+            0.04532122611999512
+          ],
+          "aboveActualUndersideRange": [
+            0.03390073776245117,
+            0.033900737762451616
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 620,
+          "bottomTriangle": 820,
+          "area": 0.0006475345478058614,
+          "insideTopRange": [
+            0.04532122611999512,
+            0.04532122611999512
+          ],
+          "aboveActualUndersideRange": [
+            0.024678707122802734,
+            0.033900737762451616
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 621,
+          "bottomTriangle": 821,
+          "area": 7.318951232448967e-05,
+          "insideTopRange": [
+            0.04532122611999467,
+            0.04532122611999556
+          ],
+          "aboveActualUndersideRange": [
+            0.02467870712280229,
+            0.026541966929136684
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 626,
+          "bottomTriangle": 826,
+          "area": 1.3786269903448556e-09,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            0.024677298628034805,
+            0.02467870712280229
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 626,
+          "bottomTriangle": 827,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            0.024677895846247022,
+            0.024678707122802734
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 627,
+          "bottomTriangle": 827,
+          "area": 5.08668737353446e-07,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.024450302124023438,
+            0.024678707122802734
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 628,
+          "bottomTriangle": 828,
+          "area": 1.4338255237333897e-05,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.024450302124023438,
+            0.024678707122802734
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 629,
+          "bottomTriangle": 829,
+          "area": 1.690658510966614e-06,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.024450302124022993,
+            0.0244936102744715
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 634,
+          "bottomTriangle": 834,
+          "area": 5.519922652297282e-08,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.024393168711581037,
+            0.024450302124023438
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 635,
+          "bottomTriangle": 835,
+          "area": 1.0428065802869924e-05,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.015000104904174805,
+            0.024450302124023438
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 636,
+          "bottomTriangle": 836,
+          "area": 0.0005329698089866497,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.015000104904174805,
+            0.024450302124023438
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 637,
+          "bottomTriangle": 837,
+          "area": 4.009013326111699e-05,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.015000104904174805,
+            0.0163948848671156
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 644,
+          "bottomTriangle": 844,
+          "area": 0.0003711532736261347,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.0056288917023112894,
+            0.015000104904174805
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 645,
+          "bottomTriangle": 845,
+          "area": 1.7476400930860336e-05,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.005549907684326172,
+            0.006472978001014429
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 652,
+          "bottomTriangle": 852,
+          "area": 0.00019265716995420235,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            -0.0037206446669708626,
+            0.005549907684326616
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 653,
+          "bottomTriangle": 853,
+          "area": 4.127047215973789e-06,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            -0.003900289535522461,
+            -0.003417188816589256
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 660,
+          "bottomTriangle": 860,
+          "area": 2.7421445025765934e-05,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            -0.00901552272408912,
+            -0.003900289535522461
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 620,
+          "bottomTriangle": 820,
+          "area": 6.572426601891834e-05,
+          "insideTopRange": [
+            0.04532122611999512,
+            0.04532122611999512
+          ],
+          "aboveActualUndersideRange": [
+            0.026541966929136684,
+            0.03237025484870859
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 621,
+          "bottomTriangle": 821,
+          "area": 7.143136232912184e-05,
+          "insideTopRange": [
+            0.04532122611999467,
+            0.04532122611999512
+          ],
+          "aboveActualUndersideRange": [
+            0.024678707122802734,
+            0.027142003547955706
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 628,
+          "bottomTriangle": 828,
+          "area": 6.054741866989843e-06,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.0244936102744715,
+            0.024678707122802734
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 629,
+          "bottomTriangle": 829,
+          "area": 2.1661353990509724e-06,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            0.024450302124022993,
+            0.024515613999107178
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 636,
+          "bottomTriangle": 836,
+          "area": 0.00036551709573018343,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            0.0163948848671156,
+            0.02445030212402388
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 637,
+          "bottomTriangle": 837,
+          "area": 0.00017920637712620646,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.015000104904174805,
+            0.018105448694064386
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 644,
+          "bottomTriangle": 837,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.015000104904174805,
+            0.015000104904175249
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 644,
+          "bottomTriangle": 844,
+          "area": 0.0004508159289215996,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.006472978001014873,
+            0.015000104904174805
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 645,
+          "bottomTriangle": 844,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.007206620371581707,
+            0.007770733862144219
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 645,
+          "bottomTriangle": 845,
+          "area": 7.560745828172344e-05,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.005549907684326172,
+            0.007770733862144663
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 652,
+          "bottomTriangle": 852,
+          "area": 0.0002483708092704262,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            -0.003417188816589256,
+            0.005549907684326616
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 653,
+          "bottomTriangle": 853,
+          "area": 1.198335633390002e-05,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            -0.003900289535522461,
+            -0.002959335982934075
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 660,
+          "bottomTriangle": 853,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            -0.003900289535522461,
+            -0.003900289535522017
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 660,
+          "bottomTriangle": 860,
+          "area": 3.5616868053978123e-05,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            -0.00901552272408912,
+            -0.003900289535522461
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 637,
+          "bottomTriangle": 837,
+          "area": 2.383989517795726e-06,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.01500010490417436,
+            0.016148056243656228
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 644,
+          "bottomTriangle": 837,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.015000104904174805,
+            0.015000104904175249
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 644,
+          "bottomTriangle": 844,
+          "area": 9.282329904181097e-05,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.007770733862144219,
+            0.015000104904174805
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 645,
+          "bottomTriangle": 844,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.007770733862144219,
+            0.008427640090289845
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 645,
+          "bottomTriangle": 845,
+          "area": 7.797051749847128e-05,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.005549907684326172,
+            0.008427640090289845
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 645,
+          "bottomTriangle": 852,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            0.005549907684325728,
+            0.005549907684326172
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 652,
+          "bottomTriangle": 852,
+          "area": 0.00032142357578024416,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            -0.002959335982934519,
+            0.005549907684326172
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 652,
+          "bottomTriangle": 853,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.1275718212127681,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            -0.002959335982934075,
+            -0.0016906888290062483
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 653,
+          "bottomTriangle": 853,
+          "area": 5.848286020437854e-05,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            -0.003900289535522461,
+            -0.0016906888290066924
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 660,
+          "bottomTriangle": 853,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.12757182121276855
+          ],
+          "aboveActualUndersideRange": [
+            -0.003900289535522461,
+            -0.003900289535522017
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 660,
+          "bottomTriangle": 860,
+          "area": 7.341080683787027e-05,
+          "insideTopRange": [
+            0.12757182121276855,
+            0.127571821212769
+          ],
+          "aboveActualUndersideRange": [
+            -0.00901552272408912,
+            -0.003900289535522461
+          ],
+          "strictPositivePatch": false
+        }
+      ],
+      "usesActualBottomTriangles": true,
+      "arbitraryCurveVolumeUnionProof": false
+    },
+    "topology": {
+      "object": "solid-bough/native-contact-2",
+      "vertices": 152,
+      "faces": 146,
+      "badEdges": 0,
+      "components": 1,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "signedVolume": 0.007111296437150787,
+      "selfIntersectionProvenAbsent": false
+    }
+  },
+  {
+    "kind": "native-trunk-bough",
+    "oldSourceTarget": [
+      3.7873685359954834,
+      2.517704486846924,
+      -8.699755668640137
+    ],
+    "newDeckContact": [
+      4.491337776184082,
+      2.5955607891082764,
+      -9.189098358154297
+    ],
+    "actualHit": [
+      3.7873685359954834,
+      2.517704486846924,
+      -8.699755668640137
+    ],
+    "actualTriangle": 218,
+    "distance": 0.8608662486076355,
+    "maximumSpan": 1.35,
+    "sourceContactIsNewMeasurement": true,
+    "actualDeckCap": {
+      "projectedCapArea": 0.008555994882044615,
+      "coveredTopArea": 0.008555994882030404,
+      "positiveInsideActualVolumeArea": 0.00681713410488527,
+      "pieces": [
+        {
+          "capTriangle": 0,
+          "topTriangle": 931,
+          "bottomTriangle": 1131,
+          "area": 5.766825040609547e-06,
+          "insideTopRange": [
+            0.07285475730895952,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            -0.0028548240661621094,
+            -0.0022244654566603295
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 932,
+          "bottomTriangle": 1132,
+          "area": 8.158442602379523e-05,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            -0.0028548240661621094,
+            0.0005925249521494536
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 933,
+          "bottomTriangle": 1132,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            -0.0028548240661621094,
+            -0.0008285528736449166
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 933,
+          "bottomTriangle": 1133,
+          "area": 8.617953107048493e-05,
+          "insideTopRange": [
+            0.07285475730895952,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            -0.0028548240661621094,
+            -0.0008285528736453607
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 938,
+          "bottomTriangle": 1138,
+          "area": 3.661045973046839e-07,
+          "insideTopRange": [
+            0.1551053524017334,
+            0.15510535240173384
+          ],
+          "aboveActualUndersideRange": [
+            -0.0029099755045263187,
+            -0.0028548240661616653
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 939,
+          "bottomTriangle": 1139,
+          "area": 3.3206447422884366e-05,
+          "insideTopRange": [
+            0.15510535240173295,
+            0.1551053524017334
+          ],
+          "aboveActualUndersideRange": [
+            -0.003889322280883789,
+            -0.0028548240661621094
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 940,
+          "bottomTriangle": 1140,
+          "area": 5.9747770723816984e-05,
+          "insideTopRange": [
+            0.1551053524017334,
+            0.15510535240173384
+          ],
+          "aboveActualUndersideRange": [
+            -0.003889322280883789,
+            -0.0028548240661621094
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 941,
+          "bottomTriangle": 1141,
+          "area": 6.240698485981966e-06,
+          "insideTopRange": [
+            0.1551053524017334,
+            0.1551053524017334
+          ],
+          "aboveActualUndersideRange": [
+            -0.003889322280884233,
+            -0.0037202133532736603
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 946,
+          "bottomTriangle": 1146,
+          "area": 3.8128209915555544e-05,
+          "insideTopRange": [
+            0.15510535240173295,
+            0.1551053524017334
+          ],
+          "aboveActualUndersideRange": [
+            -0.005632824497598499,
+            -0.003889322280883789
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 947,
+          "bottomTriangle": 1147,
+          "area": 0.00013585698995655093,
+          "insideTopRange": [
+            0.1551053524017334,
+            0.1551053524017334
+          ],
+          "aboveActualUndersideRange": [
+            -0.007927025286300182,
+            -0.003889322280883789
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 948,
+          "bottomTriangle": 1148,
+          "area": 0.00017941804566135033,
+          "insideTopRange": [
+            0.1551053524017334,
+            0.1551053524017334
+          ],
+          "aboveActualUndersideRange": [
+            -0.008725699862058178,
+            -0.003889322280883789
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 923,
+          "bottomTriangle": 1123,
+          "area": 0.0003099443815379743,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.0055603981018061965,
+            0.011517280602976854
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 930,
+          "bottomTriangle": 1130,
+          "area": 9.018428952245472e-05,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.0728547573089604
+          ],
+          "aboveActualUndersideRange": [
+            0.0032276482599211676,
+            0.005560398101807085
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 931,
+          "bottomTriangle": 1131,
+          "area": 0.0006671791499250901,
+          "insideTopRange": [
+            0.07285475730895952,
+            0.0728547573089604
+          ],
+          "aboveActualUndersideRange": [
+            -0.0028548240661621094,
+            0.005516956386402594
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 932,
+          "bottomTriangle": 1132,
+          "area": 0.0003836844430225028,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            -0.0022244654566598854,
+            0.005437711171786486
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 938,
+          "bottomTriangle": 1138,
+          "area": 6.388745884322589e-06,
+          "insideTopRange": [
+            0.1551053524017334,
+            0.15510535240173384
+          ],
+          "aboveActualUndersideRange": [
+            -0.003083775313238224,
+            -0.0028548240661616653
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 939,
+          "bottomTriangle": 1139,
+          "area": 4.0050300579963505e-05,
+          "insideTopRange": [
+            0.15510535240173295,
+            0.1551053524017334
+          ],
+          "aboveActualUndersideRange": [
+            -0.003889322280883345,
+            -0.0029099755045263187
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 946,
+          "bottomTriangle": 1146,
+          "area": 1.5063088842026673e-05,
+          "insideTopRange": [
+            0.15510535240173295,
+            0.1551053524017334
+          ],
+          "aboveActualUndersideRange": [
+            -0.005216598043865872,
+            -0.003889322280883789
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 907,
+          "bottomTriangle": 1107,
+          "area": 0.0001597945492051167,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.024426937103271484,
+            0.03086473889241903
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 914,
+          "bottomTriangle": 1114,
+          "area": 8.039183306962627e-05,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.021583854413722126,
+            0.024426937103271484
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 915,
+          "bottomTriangle": 1114,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.021583854413722126,
+            0.02271989463283086
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 915,
+          "bottomTriangle": 1115,
+          "area": 0.0006741396869998084,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595703,
+            0.023098574705866515
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 922,
+          "bottomTriangle": 1122,
+          "area": 0.00013886498762971655,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.011790155463275553,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 923,
+          "bottomTriangle": 1123,
+          "area": 0.0006114327875046399,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.005560398101806641,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 924,
+          "bottomTriangle": 1124,
+          "area": 0.000249624098110246,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.005560398101806641,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 925,
+          "bottomTriangle": 1125,
+          "area": 5.7055917107362575e-05,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.0055603981018061965,
+            0.006928267057357385
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 930,
+          "bottomTriangle": 1130,
+          "area": 3.9969833665054466e-08,
+          "insideTopRange": [
+            0.07285475730895952,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.005516956386403482,
+            0.005560398101807085
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 931,
+          "bottomTriangle": 1131,
+          "area": 1.1559015078432822e-07,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.0728547573089604
+          ],
+          "aboveActualUndersideRange": [
+            0.0054377111717855975,
+            0.005560398101806641
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 932,
+          "bottomTriangle": 1132,
+          "area": 0.00016754857319156713,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.0005925249521494536,
+            0.005560398101806641
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 899,
+          "bottomTriangle": 1099,
+          "area": 0.00018952268245797654,
+          "insideTopRange": [
+            0.07285475730895952,
+            0.0728547573089604
+          ],
+          "aboveActualUndersideRange": [
+            0.033838748931884766,
+            0.03911803034142736
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 900,
+          "bottomTriangle": 1099,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.033838748931884766,
+            0.036075127643453886
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 900,
+          "bottomTriangle": 1100,
+          "area": 5.141242763073706e-06,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.033838748931884766,
+            0.036075127643453
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 901,
+          "bottomTriangle": 1101,
+          "area": 3.843278690851548e-07,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.033838748931884766,
+            0.03395710798019058
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 906,
+          "bottomTriangle": 1099,
+          "area": 7.105427357601002e-15,
+          "insideTopRange": [
+            0.07285475730895952,
+            0.0728547573089604
+          ],
+          "aboveActualUndersideRange": [
+            0.033838748931884766,
+            0.03383874893188521
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 906,
+          "bottomTriangle": 1106,
+          "area": 5.3864034057937715e-05,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.0728547573089604
+          ],
+          "aboveActualUndersideRange": [
+            0.03159449774276357,
+            0.03383874893188521
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 907,
+          "bottomTriangle": 1107,
+          "area": 0.0006529033569613318,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.024426937103271484,
+            0.033838748931884766
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 908,
+          "bottomTriangle": 1108,
+          "area": 0.00014457005665846623,
+          "insideTopRange": [
+            0.07285475730895952,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.024426937103271484,
+            0.033838748931884766
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 909,
+          "bottomTriangle": 1109,
+          "area": 1.2435471195004766e-05,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.02442693710327104,
+            0.02510083878990832
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 914,
+          "bottomTriangle": 1114,
+          "area": 2.679190711063484e-05,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.023098574705866515,
+            0.024426937103271484
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 915,
+          "bottomTriangle": 1115,
+          "area": 0.00024240834850530746,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595703,
+            0.024426937103271484
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 916,
+          "bottomTriangle": 1116,
+          "area": 0.00035129005327405594,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595703,
+            0.024426937103271484
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 917,
+          "bottomTriangle": 1117,
+          "area": 4.5789415899832875e-05,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595259,
+            0.01629417416266321
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 924,
+          "bottomTriangle": 1124,
+          "area": 0.0003159191476527212,
+          "insideTopRange": [
+            0.07285475730895952,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.006928267057357385,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 925,
+          "bottomTriangle": 1125,
+          "area": 5.010847329600665e-05,
+          "insideTopRange": [
+            0.07285475730895952,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.005560398101806641,
+            0.00754180776887825
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 932,
+          "bottomTriangle": 1132,
+          "area": 4.787947511530888e-05,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.0728547573089604
+          ],
+          "aboveActualUndersideRange": [
+            0.0005925249521494536,
+            0.005560398101806641
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 899,
+          "bottomTriangle": 1099,
+          "area": 8.550194529277633e-06,
+          "insideTopRange": [
+            0.07285475730895952,
+            0.0728547573089604
+          ],
+          "aboveActualUndersideRange": [
+            0.036075127643453886,
+            0.03911803034142736
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 900,
+          "bottomTriangle": 1100,
+          "area": 0.00010049413427282161,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.033957107980191026,
+            0.03861844816898197
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 901,
+          "bottomTriangle": 1101,
+          "area": 4.771314462459486e-05,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.03383874893188432,
+            0.034976605498926006
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 908,
+          "bottomTriangle": 1108,
+          "area": 0.000536376292135543,
+          "insideTopRange": [
+            0.07285475730895952,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.02510083878990832,
+            0.033838748931884766
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 909,
+          "bottomTriangle": 1109,
+          "area": 0.00010700723482415242,
+          "insideTopRange": [
+            0.07285475730895952,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.02442693710327104,
+            0.026591664147973315
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 916,
+          "bottomTriangle": 1116,
+          "area": 0.0003658200807343803,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.01629417416266321,
+            0.024426937103271484
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 917,
+          "bottomTriangle": 1117,
+          "area": 8.521821625606663e-05,
+          "insideTopRange": [
+            0.07285475730895952,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595259,
+            0.017269862953914306
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 924,
+          "bottomTriangle": 1124,
+          "area": 0.00019017762918949188,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.007541807768878694,
+            0.014999866485595259
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 925,
+          "bottomTriangle": 1125,
+          "area": 4.2223907982474884e-05,
+          "insideTopRange": [
+            0.07285475730895952,
+            0.0728547573089604
+          ],
+          "aboveActualUndersideRange": [
+            0.005560398101806641,
+            0.007987227193920532
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 932,
+          "bottomTriangle": 1132,
+          "area": 2.891356475842599e-05,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.0005925249521494536,
+            0.005560398101806641
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 908,
+          "bottomTriangle": 1108,
+          "area": 3.6170440722571584e-05,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.0728547573089604
+          ],
+          "aboveActualUndersideRange": [
+            0.026591664147973315,
+            0.03250988507452712
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 909,
+          "bottomTriangle": 1109,
+          "area": 4.8692140186545885e-05,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.02442693710327104,
+            0.02690489672951557
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 916,
+          "bottomTriangle": 1116,
+          "area": 0.0001810722064590209,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.017269862953914306,
+            0.024426937103271484
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 917,
+          "bottomTriangle": 1117,
+          "area": 0.00012145639023586341,
+          "insideTopRange": [
+            0.07285475730895952,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595259,
+            0.018124589538285107
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 924,
+          "bottomTriangle": 1124,
+          "area": 0.00016637581722989125,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.007987227193920976,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 925,
+          "bottomTriangle": 1125,
+          "area": 4.711180969962925e-05,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.0728547573089604
+          ],
+          "aboveActualUndersideRange": [
+            0.0055603981018061965,
+            0.008442605868064668
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 932,
+          "bottomTriangle": 1132,
+          "area": 2.561624435060139e-05,
+          "insideTopRange": [
+            0.07285475730895996,
+            0.07285475730895996
+          ],
+          "aboveActualUndersideRange": [
+            0.0005925249521494536,
+            0.005560398101806641
+          ],
+          "strictPositivePatch": true
+        }
+      ],
+      "usesActualBottomTriangles": true,
+      "arbitraryCurveVolumeUnionProof": false
+    },
+    "topology": {
+      "object": "solid-bough/native-contact-3",
+      "vertices": 168,
+      "faces": 162,
+      "badEdges": 0,
+      "components": 1,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "signedVolume": 0.007927700915068277,
+      "selfIntersectionProvenAbsent": false
+    }
+  },
+  {
+    "kind": "native-trunk-bough",
+    "oldSourceTarget": [
+      3.68135666847229,
+      2.774484872817993,
+      -8.859575271606445
+    ],
+    "newDeckContact": [
+      3.9321577548980713,
+      2.8557934761047363,
+      -9.35683822631836
+    ],
+    "actualHit": [
+      3.68135666847229,
+      2.774484872817993,
+      -8.859575271606445
+    ],
+    "actualTriangle": 289,
+    "distance": 0.562834620475769,
+    "maximumSpan": 1.35,
+    "sourceContactIsNewMeasurement": true,
+    "actualDeckCap": {
+      "projectedCapArea": 0.008556013426641584,
+      "coveredTopArea": 0.00855601342664869,
+      "positiveInsideActualVolumeArea": 0.006436550724458812,
+      "pieces": [
+        {
+          "capTriangle": 0,
+          "topTriangle": 1180,
+          "bottomTriangle": 1380,
+          "area": 2.7348218161193927e-06,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.01203313325572486,
+            0.013330882798655352
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 1181,
+          "bottomTriangle": 1381,
+          "area": 9.430569395618704e-06,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.010626554489135742,
+            0.012087527804057085
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 1188,
+          "bottomTriangle": 1388,
+          "area": 3.197183808367754e-05,
+          "insideTopRange": [
+            0.1416239738464351,
+            0.14162397384643555
+          ],
+          "aboveActualUndersideRange": [
+            0.008120929275202027,
+            0.010626554489135742
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 1189,
+          "bottomTriangle": 1389,
+          "area": 1.772356987927992e-05,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.141623973846436
+          ],
+          "aboveActualUndersideRange": [
+            0.007250547409057617,
+            0.008287708963346407
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 1196,
+          "bottomTriangle": 1396,
+          "area": 0.00018924939163156296,
+          "insideTopRange": [
+            0.1416239738464351,
+            0.14162397384643644
+          ],
+          "aboveActualUndersideRange": [
+            0.0006456614157586138,
+            0.007250547409057617
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 1197,
+          "bottomTriangle": 1397,
+          "area": 6.391980191011726e-05,
+          "insideTopRange": [
+            0.1416239738464351,
+            0.141623973846436
+          ],
+          "aboveActualUndersideRange": [
+            -0.00038433074951171875,
+            0.0015965955338281823
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 1197,
+          "bottomTriangle": 1404,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.1416239738464351,
+            0.141623973846436
+          ],
+          "aboveActualUndersideRange": [
+            -0.00038433074951216284,
+            -0.00038433074951171875
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 1203,
+          "bottomTriangle": 1403,
+          "area": 4.946356746415859e-07,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.14162397384643555
+          ],
+          "aboveActualUndersideRange": [
+            -0.007906675338745117,
+            -0.007504797369609406
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 1204,
+          "bottomTriangle": 1404,
+          "area": 0.00030355577645480025,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.141623973846436
+          ],
+          "aboveActualUndersideRange": [
+            -0.007906675338745117,
+            -0.00038433074951171875
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 1205,
+          "bottomTriangle": 1405,
+          "area": 1.0958204619271328e-06,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.141623973846436
+          ],
+          "aboveActualUndersideRange": [
+            -0.007906675338745117,
+            -0.007641736519690134
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 1210,
+          "bottomTriangle": 1410,
+          "area": 7.752015918072175e-08,
+          "insideTopRange": [
+            0.1416239738464351,
+            0.14162397384643555
+          ],
+          "aboveActualUndersideRange": [
+            -0.007964553501453864,
+            -0.007906675338745117
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 1211,
+          "bottomTriangle": 1411,
+          "area": 3.84113748452819e-06,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.14162397384643555
+          ],
+          "aboveActualUndersideRange": [
+            -0.009008613901187346,
+            -0.007906675338745117
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 1212,
+          "bottomTriangle": 1412,
+          "area": 2.3982455417126403e-06,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.141623973846436
+          ],
+          "aboveActualUndersideRange": [
+            -0.008449777626310606,
+            -0.007906675338745117
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1180,
+          "bottomTriangle": 1380,
+          "area": 9.17045449355669e-06,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.011850736462013067,
+            0.013330882798655352
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1180,
+          "bottomTriangle": 1381,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.011850736462013067,
+            0.01203313325572486
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1181,
+          "bottomTriangle": 1381,
+          "area": 2.519539637546586e-05,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.010626554489135742,
+            0.01203313325572486
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1188,
+          "bottomTriangle": 1388,
+          "area": 0.00010781980482121867,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.141623973846436
+          ],
+          "aboveActualUndersideRange": [
+            0.007583657686232037,
+            0.010626554489136186
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1189,
+          "bottomTriangle": 1388,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.14162397384643555
+          ],
+          "aboveActualUndersideRange": [
+            0.007583657686231593,
+            0.008120929275202471
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1189,
+          "bottomTriangle": 1389,
+          "area": 3.2955441753301784e-05,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.14162397384643555
+          ],
+          "aboveActualUndersideRange": [
+            0.007250547409057617,
+            0.008120929275202027
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1195,
+          "bottomTriangle": 1395,
+          "area": 0.000253918599433689,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.14162397384643555
+          ],
+          "aboveActualUndersideRange": [
+            -0.00038433074951171875,
+            0.005275144505322071
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1196,
+          "bottomTriangle": 1396,
+          "area": 0.0004513495808353696,
+          "insideTopRange": [
+            0.1416239738464351,
+            0.14162397384643644
+          ],
+          "aboveActualUndersideRange": [
+            -0.00038433074951171875,
+            0.007250547409057617
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1197,
+          "bottomTriangle": 1397,
+          "area": 2.1388994227322655e-05,
+          "insideTopRange": [
+            0.1416239738464351,
+            0.141623973846436
+          ],
+          "aboveActualUndersideRange": [
+            -0.00038433074951171875,
+            0.0006456614157586138
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1197,
+          "bottomTriangle": 1404,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.1416239738464351,
+            0.141623973846436
+          ],
+          "aboveActualUndersideRange": [
+            -0.00038433074951216284,
+            -0.00038433074951171875
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1202,
+          "bottomTriangle": 1395,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.1416239738464351,
+            0.141623973846436
+          ],
+          "aboveActualUndersideRange": [
+            -0.00038433074951216284,
+            -0.00038433074951171875
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1202,
+          "bottomTriangle": 1402,
+          "area": 8.487087867337095e-05,
+          "insideTopRange": [
+            0.1416239738464351,
+            0.141623973846436
+          ],
+          "aboveActualUndersideRange": [
+            -0.002036077778545753,
+            -0.00038433074951171875
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1203,
+          "bottomTriangle": 1403,
+          "area": 0.0003616144613403094,
+          "insideTopRange": [
+            0.1416239738464351,
+            0.141623973846436
+          ],
+          "aboveActualUndersideRange": [
+            -0.007906675338745561,
+            -0.00038433074951171875
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1204,
+          "bottomTriangle": 1404,
+          "area": 0.00015404717684219804,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.14162397384643555
+          ],
+          "aboveActualUndersideRange": [
+            -0.007504797369609406,
+            -0.00038433074951171875
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1210,
+          "bottomTriangle": 1410,
+          "area": 3.775851165954691e-06,
+          "insideTopRange": [
+            0.1416239738464351,
+            0.141623973846436
+          ],
+          "aboveActualUndersideRange": [
+            -0.008249590176079735,
+            -0.007906675338745117
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1211,
+          "bottomTriangle": 1410,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.1416239738464351,
+            0.14162397384643555
+          ],
+          "aboveActualUndersideRange": [
+            -0.008249590176079735,
+            -0.007964553501453864
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1211,
+          "bottomTriangle": 1411,
+          "area": 6.398952049124773e-06,
+          "insideTopRange": [
+            0.1416239738464351,
+            0.14162397384643555
+          ],
+          "aboveActualUndersideRange": [
+            -0.009008613901187346,
+            -0.007964553501453864
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 1171,
+          "bottomTriangle": 1371,
+          "area": 0.0001020334996404415,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595703,
+            0.016668793699902373
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 1178,
+          "bottomTriangle": 1378,
+          "area": 8.931746295814946e-05,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.013565488038667528,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 1179,
+          "bottomTriangle": 1379,
+          "area": 0.00043022754291044407,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.010626554489135742,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 1180,
+          "bottomTriangle": 1380,
+          "area": 0.00033526498747349365,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.010626554489135742,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 1180,
+          "bottomTriangle": 1381,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.010626554489135742,
+            0.011850736462013511
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 1181,
+          "bottomTriangle": 1381,
+          "area": 5.013541452214554e-05,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.010626554489135742,
+            0.011850736462013067
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 1186,
+          "bottomTriangle": 1386,
+          "area": 6.08749891455318e-05,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.141623973846436
+          ],
+          "aboveActualUndersideRange": [
+            0.009583657060590944,
+            0.010626554489135742
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 1187,
+          "bottomTriangle": 1387,
+          "area": 0.0003171782930593281,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.14162397384643555
+          ],
+          "aboveActualUndersideRange": [
+            0.007250547409057617,
+            0.010626554489135742
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 1188,
+          "bottomTriangle": 1388,
+          "area": 0.00018777643764522622,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.141623973846436
+          ],
+          "aboveActualUndersideRange": [
+            0.007250547409057617,
+            0.010626554489136186
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 1189,
+          "bottomTriangle": 1388,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.14162397384643555
+          ],
+          "aboveActualUndersideRange": [
+            0.007250547409057617,
+            0.007583657686232037
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 1189,
+          "bottomTriangle": 1389,
+          "area": 5.052494458368528e-06,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.14162397384643555
+          ],
+          "aboveActualUndersideRange": [
+            0.007250547409057617,
+            0.007583657686231149
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 1194,
+          "bottomTriangle": 1394,
+          "area": 0.0001239024380303988,
+          "insideTopRange": [
+            0.1416239738464351,
+            0.14162397384643555
+          ],
+          "aboveActualUndersideRange": [
+            0.005059014178872445,
+            0.007250547409057617
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 1195,
+          "bottomTriangle": 1395,
+          "area": 0.00040579457936829044,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.14162397384643555
+          ],
+          "aboveActualUndersideRange": [
+            -0.00038433074951171875,
+            0.007250547409057617
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 1196,
+          "bottomTriangle": 1396,
+          "area": 3.0529163009163085e-05,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.14162397384643555
+          ],
+          "aboveActualUndersideRange": [
+            0.005275144505322071,
+            0.007250547409057617
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 1202,
+          "bottomTriangle": 1402,
+          "area": 9.20690592209894e-07,
+          "insideTopRange": [
+            0.14162397384643555,
+            0.141623973846436
+          ],
+          "aboveActualUndersideRange": [
+            -0.0006887159126529596,
+            -0.00038433074951171875
+          ],
+          "strictPositivePatch": false
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 1155,
+          "bottomTriangle": 1355,
+          "area": 3.678423544073439e-05,
+          "insideTopRange": [
+            0.05937361717224077,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.030843734741210938,
+            0.033222661986180846
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 1162,
+          "bottomTriangle": 1362,
+          "area": 5.982264267601067e-05,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.028794949901713718,
+            0.030843734741210938
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 1163,
+          "bottomTriangle": 1362,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.028794949901713718,
+            0.029382746906934987
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 1163,
+          "bottomTriangle": 1363,
+          "area": 0.000567214464165744,
+          "insideTopRange": [
+            0.05937361717224077,
+            0.059373617172241655
+          ],
+          "aboveActualUndersideRange": [
+            0.022864341735839844,
+            0.029814410332644314
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 1163,
+          "bottomTriangle": 1370,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.05937361717224077,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.022864341735839844,
+            0.022864341735839844
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 1164,
+          "bottomTriangle": 1364,
+          "area": 2.5260767507973014e-05,
+          "insideTopRange": [
+            0.05937361717224077,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.022864341735839844,
+            0.02530620438122355
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 1165,
+          "bottomTriangle": 1365,
+          "area": 5.881805048346678e-06,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.059373617172241655
+          ],
+          "aboveActualUndersideRange": [
+            0.0228643417358394,
+            0.023316575387424265
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 1170,
+          "bottomTriangle": 1370,
+          "area": 0.0001356902118523351,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.02037427440342343,
+            0.022864341735839844
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 1171,
+          "bottomTriangle": 1371,
+          "area": 0.0006944564600388503,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595703,
+            0.022864341735839844
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 1172,
+          "bottomTriangle": 1372,
+          "area": 0.0004218279368473077,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595703,
+            0.022864341735839844
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 1173,
+          "bottomTriangle": 1373,
+          "area": 0.00010216522336747857,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595703,
+            0.01689374224036566
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 1180,
+          "bottomTriangle": 1380,
+          "area": 8.990424586485801e-05,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.013330882798655352,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1149,
+          "bottomTriangle": 1349,
+          "area": 1.0087814672488093e-07,
+          "insideTopRange": [
+            0.05937361717224077,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.03893709182739258,
+            0.039031713059129114
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1149,
+          "bottomTriangle": 1356,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.05937361717224077,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.03893709182739258,
+            0.03893709182739258
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1155,
+          "bottomTriangle": 1355,
+          "area": 0.0003824305908395331,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.030843734741210938,
+            0.03847470573058409
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1156,
+          "bottomTriangle": 1356,
+          "area": 0.00019986127368554207,
+          "insideTopRange": [
+            0.05937361717224077,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.030843734741210938,
+            0.03893709182739258
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1157,
+          "bottomTriangle": 1357,
+          "area": 2.1848871799790004e-05,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.059373617172241655
+          ],
+          "aboveActualUndersideRange": [
+            0.030843734741210493,
+            0.031764001690909094
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1162,
+          "bottomTriangle": 1362,
+          "area": 2.904890278188077e-05,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.029814410332644314,
+            0.030843734741210938
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1163,
+          "bottomTriangle": 1363,
+          "area": 0.0001303862787942478,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.059373617172241655
+          ],
+          "aboveActualUndersideRange": [
+            0.02530620438122355,
+            0.030843734741210938
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1163,
+          "bottomTriangle": 1364,
+          "area": 3.552713678800501e-15,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.059373617172241655
+          ],
+          "aboveActualUndersideRange": [
+            0.025306204381223107,
+            0.030843734741210938
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1164,
+          "bottomTriangle": 1364,
+          "area": 0.0004173315552584711,
+          "insideTopRange": [
+            0.05937361717224077,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.023316575387424265,
+            0.03084373474121138
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1165,
+          "bottomTriangle": 1365,
+          "area": 6.217285045906351e-05,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.059373617172241655
+          ],
+          "aboveActualUndersideRange": [
+            0.0228643417358394,
+            0.0244922473256457
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1172,
+          "bottomTriangle": 1372,
+          "area": 0.00022728074819866606,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.01689374224036566,
+            0.022864341735839844
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1173,
+          "bottomTriangle": 1373,
+          "area": 3.379257178437456e-05,
+          "insideTopRange": [
+            0.05937361717224077,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595259,
+            0.017308308046362075
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1180,
+          "bottomTriangle": 1380,
+          "area": 8.251070269693628e-06,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.013330882798655352,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 1149,
+          "bottomTriangle": 1349,
+          "area": 2.88160713068919e-08,
+          "insideTopRange": [
+            0.05937361717224077,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.03893709182739258,
+            0.039031713059129114
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 1156,
+          "bottomTriangle": 1356,
+          "area": 0.00013757148141735343,
+          "insideTopRange": [
+            0.05937361717224077,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.03176400169090954,
+            0.03893709182739258
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 1157,
+          "bottomTriangle": 1357,
+          "area": 6.021990997950866e-05,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.059373617172241655
+          ],
+          "aboveActualUndersideRange": [
+            0.030843734741210493,
+            0.0325271150628601
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 1164,
+          "bottomTriangle": 1364,
+          "area": 0.00024367343687359266,
+          "insideTopRange": [
+            0.05937361717224077,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.024492247325645256,
+            0.03084373474121138
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 1165,
+          "bottomTriangle": 1365,
+          "area": 5.835832171996458e-05,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.059373617172241655
+          ],
+          "aboveActualUndersideRange": [
+            0.0228643417358394,
+            0.025148357468925298
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 1172,
+          "bottomTriangle": 1372,
+          "area": 0.00010329769832395641,
+          "insideTopRange": [
+            0.05937361717224121,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.017308308046362075,
+            0.022864341735839844
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 1173,
+          "bottomTriangle": 1373,
+          "area": 1.9464688012504894e-05,
+          "insideTopRange": [
+            0.05937361717224077,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.014999866485595703,
+            0.017538483205865596
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 1180,
+          "bottomTriangle": 1380,
+          "area": 3.878776102084203e-06,
+          "insideTopRange": [
+            0.05937361717224077,
+            0.05937361717224121
+          ],
+          "aboveActualUndersideRange": [
+            0.013330882798655352,
+            0.014999866485595703
+          ],
+          "strictPositivePatch": true
+        }
+      ],
+      "usesActualBottomTriangles": true,
+      "arbitraryCurveVolumeUnionProof": false
+    },
+    "topology": {
+      "object": "solid-bough/native-contact-4",
+      "vertices": 120,
+      "faces": 114,
+      "badEdges": 0,
+      "components": 1,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "signedVolume": 0.005424502906080717,
+      "selfIntersectionProvenAbsent": false
+    }
+  },
+  {
+    "kind": "native-trunk-bough",
+    "oldSourceTarget": [
+      3.2523181438446045,
+      2.8917593955993652,
+      -9.031155586242676
+    ],
+    "newDeckContact": [
+      3.113726854324341,
+      2.9856934547424316,
+      -9.328365325927734
+    ],
+    "actualHit": [
+      3.2523181438446045,
+      2.8917593955993652,
+      -9.031155586242676
+    ],
+    "actualTriangle": 313,
+    "distance": 0.3411230444908142,
+    "maximumSpan": 1.35,
+    "sourceContactIsNewMeasurement": true,
+    "actualDeckCap": {
+      "projectedCapArea": 0.008556013426641584,
+      "coveredTopArea": 0.00427800496648878,
+      "positiveInsideActualVolumeArea": 0.004278004966490556,
+      "pieces": [
+        {
+          "capTriangle": 0,
+          "topTriangle": 1636,
+          "bottomTriangle": 1636,
+          "area": 2.927398688790106e-05,
+          "insideTopRange": [
+            0.053480944836435285,
+            0.05435944385221125
+          ],
+          "aboveActualUndersideRange": [
+            0.015640489390586598,
+            0.016518988406362567
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 0,
+          "topTriangle": 1637,
+          "bottomTriangle": 1637,
+          "area": 8.084409655673142e-05,
+          "insideTopRange": [
+            0.054287530428889674,
+            0.05499982833862349
+          ],
+          "aboveActualUndersideRange": [
+            0.015000104904174805,
+            0.01571240281390862
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1636,
+          "bottomTriangle": 1636,
+          "area": 5.1087147914685715e-05,
+          "insideTopRange": [
+            0.053480944836435285,
+            0.05448494270238191
+          ],
+          "aboveActualUndersideRange": [
+            0.015514990540415496,
+            0.016518988406362567
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 1,
+          "topTriangle": 1637,
+          "bottomTriangle": 1637,
+          "area": 9.813037668138236e-05,
+          "insideTopRange": [
+            0.05435944385221125,
+            0.05499982833862349
+          ],
+          "aboveActualUndersideRange": [
+            0.015000104904174805,
+            0.015640489390586154
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 1636,
+          "bottomTriangle": 1636,
+          "area": 0.0002095958538461673,
+          "insideTopRange": [
+            0.053480944836435285,
+            0.05499982833862305
+          ],
+          "aboveActualUndersideRange": [
+            0.015000104904174805,
+            0.016518988406362567
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 2,
+          "topTriangle": 1637,
+          "bottomTriangle": 1637,
+          "area": 0.00012218890677928584,
+          "insideTopRange": [
+            0.05448494270238147,
+            0.05499982833862305
+          ],
+          "aboveActualUndersideRange": [
+            0.015000104904174805,
+            0.015514990540415496
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 1635,
+          "bottomTriangle": 1635,
+          "area": 0.0010189292183486742,
+          "insideTopRange": [
+            0.053511946477687644,
+            0.05499982833862305
+          ],
+          "aboveActualUndersideRange": [
+            0.015000104904174805,
+            0.016487986765110207
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 1635,
+          "bottomTriangle": 1636,
+          "area": 1.7763568394002505e-15,
+          "insideTopRange": [
+            0.053511946477687644,
+            0.05499982833862305
+          ],
+          "aboveActualUndersideRange": [
+            0.015000104904174805,
+            0.016487986765110207
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 3,
+          "topTriangle": 1636,
+          "bottomTriangle": 1636,
+          "area": 0.0005289566589610217,
+          "insideTopRange": [
+            0.053480944836435285,
+            0.05499982833862305
+          ],
+          "aboveActualUndersideRange": [
+            0.015000104904174805,
+            0.016518988406362567
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1627,
+          "bottomTriangle": 1627,
+          "area": 0.00048625539741564694,
+          "insideTopRange": [
+            0.051692599081760715,
+            0.05274534225463867
+          ],
+          "aboveActualUndersideRange": [
+            0.01725459098815918,
+            0.018307334161036692
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1628,
+          "bottomTriangle": 1628,
+          "area": 7.631026855925427e-05,
+          "insideTopRange": [
+            0.05218933652222324,
+            0.05274534225463867
+          ],
+          "aboveActualUndersideRange": [
+            0.01725459098815918,
+            0.017810596720575056
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1629,
+          "bottomTriangle": 1629,
+          "area": 4.3934483533902835e-05,
+          "insideTopRange": [
+            0.05257245509929387,
+            0.05274534225463867
+          ],
+          "aboveActualUndersideRange": [
+            0.01725459098815918,
+            0.017427478143504427
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1634,
+          "bottomTriangle": 1634,
+          "area": 0.00015995312581473797,
+          "insideTopRange": [
+            0.05274534225463867,
+            0.05342289478521778
+          ],
+          "aboveActualUndersideRange": [
+            0.016577038457580073,
+            0.01725459098815918
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1635,
+          "bottomTriangle": 1635,
+          "area": 0.00034700281258892574,
+          "insideTopRange": [
+            0.05274534225463867,
+            0.053670308277091294
+          ],
+          "aboveActualUndersideRange": [
+            0.016329624965706557,
+            0.01725459098815918
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1635,
+          "bottomTriangle": 1636,
+          "area": 1.7763568394002505e-15,
+          "insideTopRange": [
+            0.05274534225463867,
+            0.053511946477687644
+          ],
+          "aboveActualUndersideRange": [
+            0.016487986765110207,
+            0.01725459098815918
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 4,
+          "topTriangle": 1636,
+          "bottomTriangle": 1636,
+          "area": 0.0003990495041037434,
+          "insideTopRange": [
+            0.05274534225463867,
+            0.0535119464776872
+          ],
+          "aboveActualUndersideRange": [
+            0.016487986765110207,
+            0.017254590988159624
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 1627,
+          "bottomTriangle": 1627,
+          "area": 9.803347235148863e-05,
+          "insideTopRange": [
+            0.05168195005965215,
+            0.052189336522222796
+          ],
+          "aboveActualUndersideRange": [
+            0.017810596720575056,
+            0.018317983183146147
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 1628,
+          "bottomTriangle": 1628,
+          "area": 0.0003455392253801648,
+          "insideTopRange": [
+            0.051681950059651705,
+            0.05257245509929387
+          ],
+          "aboveActualUndersideRange": [
+            0.017427478143504427,
+            0.018317983183145703
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 1629,
+          "bottomTriangle": 1629,
+          "area": 0.00010398129725075478,
+          "insideTopRange": [
+            0.05238691771999404,
+            0.05274534225463867
+          ],
+          "aboveActualUndersideRange": [
+            0.01725459098815918,
+            0.01761301552280381
+          ],
+          "strictPositivePatch": true
+        },
+        {
+          "capTriangle": 5,
+          "topTriangle": 1636,
+          "bottomTriangle": 1636,
+          "area": 7.893913351253445e-05,
+          "insideTopRange": [
+            0.05274534225463867,
+            0.053480944836435285
+          ],
+          "aboveActualUndersideRange": [
+            0.016518988406362567,
+            0.017254590988159624
+          ],
+          "strictPositivePatch": true
+        }
+      ],
+      "usesActualBottomTriangles": true,
+      "arbitraryCurveVolumeUnionProof": false
+    },
+    "topology": {
+      "object": "solid-bough/native-contact-5",
+      "vertices": 88,
+      "faces": 82,
+      "badEdges": 0,
+      "components": 1,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "signedVolume": 0.003593480019146363,
+      "selfIntersectionProvenAbsent": false
+    }
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "diagnosticCompleted": false,
+  "visualAcceptance": "not-assessed",
+  "mode": "roi-face-normal",
+  "captures": 0,
+  "restoration": {
+    "complete": true,
+    "originalMaterialIdentity": true,
+    "hookRestored": true,
+    "clonesDisposed": 0,
+    "matches": 4
+  },
+  "error": "AssertionError [ERR_ASSERTION]: Projection differs from static target\n+ actual - expected\n... Skipped lines\n\n  [\n    0.22183415890809055,\n    0,\n    0,\n    0,\n...\n    0,\n+   -0,\n+   -0,\n-   0,\n-   0,\n    -1.002002002002002,\n    1\n  ]\n\n    at capture (file:///private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-prepared/diagnose-roi-face-normal.mjs:381:20)\n    at async file:///private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-prepared/diagnose-roi-face-normal.mjs:419:5",
+  "report": "/private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-prepared/actual-01/report.json"
+}

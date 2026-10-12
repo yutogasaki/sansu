@@ -1,0 +1,7 @@
+{
+  "scope": "Interrupted full capture before first screenshot; no completed report, no acceptance evidence",
+  "exitCode": 130,
+  "reason": "Full core tests and headless 3D capture were launched concurrently; loading remained pending. Corrected by exclusive sequential execution. No application source changed.",
+  "appBuild": "authored-flower-shape-c3",
+  "target": "http://127.0.0.1:5352/prototypes/place-qa/authored.html?water=wide&reference=preflight32"
+}

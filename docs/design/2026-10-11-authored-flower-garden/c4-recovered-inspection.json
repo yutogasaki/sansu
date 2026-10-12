@@ -1,0 +1,52 @@
+{
+  "scope": "Historical c4 prior to foliage change; raw wrapper failure preserved. Does not certify current source.",
+  "runtime": "runtime-c4/report.json",
+  "core": "core-c4/report.json",
+  "stages": [
+    {
+      "stage": "01-baseline27-editing",
+      "actual": "regressions-c4/01-baseline27-editing/actual/report.json",
+      "actualSha256": "aca7576fe3aeeba6d86a3cfde864cc52d0e4e92772b00dd747a1bceb65b718ef",
+      "actualPass": true,
+      "exitCode": 0,
+      "wrapperPass": true,
+      "wrapperError": null,
+      "historicalCoreInputMatch": true,
+      "sourceFixed": true
+    },
+    {
+      "stage": "02-wide27-water",
+      "actual": "regressions-c4/02-wide27-water/actual/report.json",
+      "actualSha256": "8d56cec1b619b83bb3455614efda4a88ea652e90dadcabd3634b405ff1e8ec9a",
+      "actualPass": true,
+      "exitCode": 0,
+      "wrapperPass": false,
+      "wrapperError": "AttributeError(\"'str' object has no attribute 'get'\")",
+      "historicalCoreInputMatch": true,
+      "sourceFixed": true
+    },
+    {
+      "stage": "03-ordinary-growing-balance",
+      "actual": "regressions-c4/03-ordinary-growing-balance/actual/report.json",
+      "actualSha256": "cf6cc897dd68063b4cefc537a67bf74a227d178cc27b3c9cb856a5c958ede93b",
+      "actualPass": true,
+      "exitCode": 0,
+      "wrapperPass": true,
+      "wrapperError": null,
+      "historicalCoreInputMatch": true,
+      "sourceFixed": true
+    },
+    {
+      "stage": "04-classic-smoke",
+      "actual": "regressions-c4/04-classic-smoke/diagnostics/smoke-report.json",
+      "actualSha256": "709a9973f4f9447985573d1db582a71fd88a54b40fdc073288b9ca829a804cae",
+      "actualPass": true,
+      "exitCode": 0,
+      "wrapperPass": true,
+      "wrapperError": null,
+      "historicalCoreInputMatch": true,
+      "sourceFixed": true
+    }
+  ],
+  "correction": "Water steps are successful string labels; original collector raised AttributeError while reading them as dictionaries."
+}

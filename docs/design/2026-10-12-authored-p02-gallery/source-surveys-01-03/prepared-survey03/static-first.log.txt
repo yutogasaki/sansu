@@ -1,0 +1,20 @@
+{
+  "status": "STATIC_PREPARATION_ONLY",
+  "passed": 9,
+  "checks": [
+    "original GLB local/node/world correspondence: Grove / hollow dwelling floor",
+    "original GLB local/node/world correspondence: Grove / continuous bough gallery",
+    "original GLB local/node/world correspondence: Grove / gallery grown support",
+    "original GLB local/node/world correspondence: Grove / great root house trunk",
+    "lost source floor object translation is rejected before route generation",
+    "omitted and double-applied source transforms cannot match authored bounds",
+    "unchanged .45/pivot/owner transform matches pre-fix independent GLB reference",
+    "all shape/entry choices and existing numeric/HOLD rules are byte-identical",
+    "Blender-style destination replacement cannot mutate immutable source name identities"
+  ],
+  "sourceGlbSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+  "unchangedEpsilon": 1e-07,
+  "BlenderExecuted": false,
+  "correctedSourceGeometryMeasured": false,
+  "actualDonorParity": "PENDING scheduled measure"
+}

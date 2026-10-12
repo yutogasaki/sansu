@@ -11,7 +11,7 @@ assert(process.env.SANSU_AUTHORED_WHOLE_OUTPUT, 'Specify a fresh SANSU_AUTHORED_
 const output = process.env.SANSU_AUTHORED_WHOLE_OUTPUT;
 const url = process.env.SANSU_AUTHORED_WHOLE_URL || 'http://127.0.0.1:5350/prototypes/place-qa/authored.html?water=wide&grow=1';
 const expectedBuild = process.env.SANSU_AUTHORED_WHOLE_BUILD || 'authored-whole-preflight-c1';
-const candidate = 'native05-authored-whole-preflight-v1';
+const candidate = 'native05-authored-flower-garden-v3';
 await fs.mkdir(output, { recursive: false });
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
 const jsonHash = value => sha(JSON.stringify(value));

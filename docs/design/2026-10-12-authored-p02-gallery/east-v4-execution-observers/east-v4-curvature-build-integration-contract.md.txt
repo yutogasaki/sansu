@@ -1,0 +1,11 @@
+# Deferred owner-use integration boundary
+
+This addendum does not change the sealed v4 source builder or authorize app work. It records root's read-only runtime findings for the later integration.
+
+Current `placeTerrain.ts` supplies an empty gallery route when a world is specified. Current world floor sampling and `site.support` choose the highest covering surface without an explicit floor ID. Therefore the new elevated floor must not be appended to the ordinary ground floor set and allowed to replace existing ground/site support. The app is unchanged; the source build is independent of that missing runtime contract.
+
+The sealed builder emits a separate `owner-use-profile.json`: role `owner-use`, exact P02 place/four-owner binding, baked authored Y-up coordinates and original transform provenance, explicit top vertices/indices, explicit continuous XYZ route with a floor ID, the actual ground entrance, and the gallery use region. The profile and each constructed walking mesh carry `defaultGroundExcluded: true`. Structural roots/rails/bough undersides are not walking floors. This flag is a required future consumer contract, not a claim that current runtime enforces it.
+
+Later implementation must give this owner-use upper floor an explicit role/ID within the same world definition, resolve its route against those same rendered triangles, and preserve an explicit Y for each PlacePoint. `layout.floorPoint` can consume that Y. Existing default ground height, ground hit testing, owned sites/anchors, all prior 75 rights and existing support queries must remain unchanged when the owner-use floor is present. An actual entrance transition must connect ground to the explicit upper route, with no highest-top hopping, ground snap, or synthetic arrival receipt. The new layer must not become ground for unrelated owners or placement.
+
+Required later tests: same-XZ ground and gallery queries resolve by intended role; default ground/site support remains byte/value equivalent; upper-route height and rendered top agree; doorway/return continuity uses the actual entrance; source owner binding controls availability/removal without deleting ground rights; actor band and head clearance use both ground-level obstructions and the actual gallery solids. Source-only output cannot pass these runtime tests on its own.

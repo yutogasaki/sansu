@@ -1,0 +1,90 @@
+{
+  "status": "COMPLETED",
+  "command": [
+    "python3",
+    "../east-v2/supervise.py",
+    "--scheduled",
+    "--seconds",
+    "240",
+    "--rss-mib",
+    "2560",
+    "--log",
+    "runs/03-entry.log.txt",
+    "--",
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "render-failed-type-node.py",
+    "--",
+    "--scheduled",
+    "--source",
+    "../east-v2/runs/01-coarse-build/failed-scene.blend",
+    "--out",
+    "runs/03-entry",
+    "--view",
+    "entry-section"
+  ],
+  "cwd": "/private/tmp/sansu-p02-gallery-source-study/east-v2-failed-shape-view",
+  "launchRequestedUtc": "2026-10-12T05:28:08.890585+00:00",
+  "timestampMeaning": "supervisor launch bracket; child times are observations not exact spawn/exit",
+  "observedChildren": {
+    "40801": {
+      "firstObservedUtc": "2026-10-12T05:28:09.192947+00:00",
+      "parentPid": 40799,
+      "peakObservedRssBytes": 2512797696,
+      "lastObservedUtc": "2026-10-12T05:28:27.302752+00:00"
+    },
+    "40852": {
+      "firstObservedUtc": "2026-10-12T05:28:16.136676+00:00",
+      "parentPid": 40799,
+      "peakObservedRssBytes": 2670592,
+      "lastObservedUtc": "2026-10-12T05:28:16.136715+00:00"
+    },
+    "40898": {
+      "firstObservedUtc": "2026-10-12T05:28:22.293292+00:00",
+      "parentPid": 40799,
+      "peakObservedRssBytes": 2916352,
+      "lastObservedUtc": "2026-10-12T05:28:22.293332+00:00"
+    },
+    "40923": {
+      "firstObservedUtc": "2026-10-12T05:28:25.365373+00:00",
+      "parentPid": 40799,
+      "peakObservedRssBytes": 2113536,
+      "lastObservedUtc": "2026-10-12T05:28:25.365425+00:00"
+    }
+  },
+  "before": {
+    "failedScene": "e61a390ef10e77ef40de77972454050b19e469b725ea8ebbec7b43e35b199746",
+    "study": "7ff0cd080569eb92928cbe7d974fa4348ff89e597d7c98f5ecff471fdc105cec",
+    "originalRenderCode": "d1635d4fb6e0dfcf6f2423310e5bdedba1cf29d2381a50bcaf11c830e197f1f6",
+    "supervisor": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "closedFloorQA": "6d6d98206d86a953b3299aefbf289f6b987aa5f5f25eae6aca339b8122e6e12d",
+    "originalFailedRenderer": "ed901f090fb420d6a4f847af1b4203c28ea6362c555511bb95e9a531f071fc76",
+    "originalPreparation": "c6d8e6f357cc2ae5699e9faa47efc88d1c4c40f5865884b1fde08710c2da16ef",
+    "script": "6b5a4a9280a1323d4c665c888dc0243800b932ad0db63a0a2890bc8b86cd1ec2",
+    "preparation": "4d829bb9cdc661b5363632ea55a3896e1ca10ad14ff20993e9731c7a2de53853",
+    "entryCommand": "0497b4d1b4f1c6c0c41bd341ed6fb8f9c3ec9c5294f83e5e0f72410badaf2543"
+  },
+  "supervisorPid": 40799,
+  "supervisorPopenReturnedUtc": "2026-10-12T05:28:08.892411+00:00",
+  "supervisorExitCode": 0,
+  "supervisorExitObservedUtc": "2026-10-12T05:28:27.553037+00:00",
+  "elapsedSeconds": 18.662352207999998,
+  "after": {
+    "failedScene": "e61a390ef10e77ef40de77972454050b19e469b725ea8ebbec7b43e35b199746",
+    "study": "7ff0cd080569eb92928cbe7d974fa4348ff89e597d7c98f5ecff471fdc105cec",
+    "originalRenderCode": "d1635d4fb6e0dfcf6f2423310e5bdedba1cf29d2381a50bcaf11c830e197f1f6",
+    "supervisor": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "closedFloorQA": "6d6d98206d86a953b3299aefbf289f6b987aa5f5f25eae6aca339b8122e6e12d",
+    "originalFailedRenderer": "ed901f090fb420d6a4f847af1b4203c28ea6362c555511bb95e9a531f071fc76",
+    "originalPreparation": "c6d8e6f357cc2ae5699e9faa47efc88d1c4c40f5865884b1fde08710c2da16ef",
+    "script": "6b5a4a9280a1323d4c665c888dc0243800b932ad0db63a0a2890bc8b86cd1ec2",
+    "preparation": "4d829bb9cdc661b5363632ea55a3896e1ca10ad14ff20993e9731c7a2de53853",
+    "entryCommand": "0497b4d1b4f1c6c0c41bd341ed6fb8f9c3ec9c5294f83e5e0f72410badaf2543"
+  },
+  "inputsUnchanged": true
+}

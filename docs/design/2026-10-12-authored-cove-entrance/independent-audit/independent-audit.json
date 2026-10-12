@@ -1,0 +1,181 @@
+{
+  "scope": "Independent source/definition audit, no browser, no full mixed-obstruction runtime or app acceptance",
+  "candidate": "native05-authored-cove-corner-v3",
+  "hashes": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/cove-corner-v3.glb": "f08ada4907c76a617e2c22090049b9b2880dde2d75fa11ad61f6e76c7eec7146",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/cove-corner-with-apron-v3.glb": "81b1ff0bf9d050d5c78d40d21ee4a664d8e7088feacd082f6c91c5e86a235a6c",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/shared-apron-world-patch-v1.json": "66294123a26f6e4ecb8af2e530aee7e59370d3495bf3c9e4447376ce4fc6c3bc",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.glb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.blend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island-render.png": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6"
+  },
+  "sourceHashes": {
+    "src/domain/growingIsland/authoredWaterGeometry.ts": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+    "src/domain/growingIsland/authoredWorldAccess.ts": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+    "src/domain/growingIsland/worldDefinition.ts": "c230e8fb354a43792d22814d6eaf82cd7adf0110d517250d1399be84b00ba7ea",
+    "src/domain/growingIsland/authoredWaterCarving.ts": "6ae51dfb1c3278471b928b54e3d170adefe7dbb4452f1360d7cfbfb52bf83c88",
+    "src/domain/islandLife/economyRules.ts": "2feb596641a89a83ff6fb7cd915548f3bcf9a8212ddafa75ddc05910e4091272",
+    "src/domain/islandLife/model.ts": "c373f5a532347d3f030420f40774a85e8a9434b095cb763138a34b45cd925ea3",
+    "src/domain/islandLife/decorations.ts": "5cfbccce407f289411af0f7317fa15ad96eea8f6abfb52b79a89203f4195ecb1",
+    "src/domain/islandLife/footprint.ts": "756e569dff83698e12dc6401fb96be06a23b950b003df4b1af21b8a1aa38916b",
+    "src/domain/islandLife/landRules.ts": "db73f083a1e73dbfa280401898a406afe9a8294d51d7aaaa5cf57140942dd774",
+    "src/domain/islandLife/walkingSpace.ts": "5143cdea48aa648b4b2b34f8920168d61b0ea0ed4034b3890e0a76a1c7b85827",
+    "src/domain/islandLife/space.ts": "699f197c86b4e7142b20a1790a6adefd3287445848c708990dc9c5c1423fff55",
+    "src/domain/islandLife/waterChannels.ts": "b98fef9f0eea7ed48e79890826689db3cbc0cd4a763c8d43eae95254a146f988",
+    "src/domain/growingIsland/rules.ts": "0a4e0289c595318443683fcbcf330d397b532f433d3faa993900fc986a8e6727",
+    "src/domain/growingIsland/types.ts": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+    "src/domain/growingIsland/space.ts": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+    "src/domain/growingIsland/environment.ts": "e965f2cd29601e5ee10f5b6dd9861a937e6c4b6ce3f71c35ad9c330109ab97f5",
+    "src/domain/growingIsland/authoredWaterContour.ts": "bffd4d8b78e12c06a9433b16992b5ca7cc9e44aaf21c4a571d2dff9dc53d6352",
+    "src/domain/growingIsland/authoredWaterRim.ts": "4e54cd274658531dcf70d66c2038347aaa8c80a83c4eefd764c0e9e65bf8409f",
+    "src/domain/growingIsland/nativeWaterBridgeProfile.json": "7ad19971180d7d572045d0bc620ca6559cdb165fd55c0e14c4e2e5a681f6fe13",
+    "src/domain/growingIsland/authoredWaterBridge.ts": "65594e5eb508d5dad13bd0693d213a66731caa9b60b9d419eefcf3c5983f60cf",
+    "src/domain/growingIsland/nativeWaterSource.json": "e0f652839690f2143279fbbfb60829912802de9bf008ac7d7f3232bf6fb3f306",
+    "src/domain/growingIsland/authoredWaterWorld.ts": "bece348b05568cb8b2e5a2634c809681bb70c6f9267adc5c72b6b97da88b4805",
+    "src/domain/growingIsland/authoredWaterFrame.ts": "6a8e19e2f63f84669ea7fb847955b10bc8dd1b64c555625fc886ec6a730ea7d7",
+    "src/domain/growingIsland/placeTerrain.ts": "b79248f1bf23a324b152d9e36310aeabcaa8a30abeae58b535f8c40f9cc7d28d",
+    "src/domain/growingIsland/landscape.ts": "c4238f02498719722449772456001e457a0d02b2f82e7b389eae99d3021b6c96",
+    "src/domain/growingIsland/legacyWorldDefinition.ts": "511879416f7aab4667d02d2d1554c2b5ad2e555a950b8340ee2e35f996662dc9",
+    "src/components/island/growing/actorScale.ts": "6120e10eae06f3ea61b7e798a1c214c814df563a63a8e1677d897e185e93f57f",
+    "src/components/island/growing/sceneLayout.ts": "fed4b288f70baa5890b28cd1d7303baebbc97d0e904ddef694e367325e29996a",
+    "src/components/island/growing/authoredFlowerObstructions.ts": "13ee0af2972b468489aebe2dca64f1c53e88c5fd96301a513d66d6bd9b43972d"
+  },
+  "manifestHashesAgree": true,
+  "apron": {
+    "parts": 2,
+    "triangles": 1328,
+    "topTriangles": 331,
+    "expectedTopTriangles": 331,
+    "triangleParity": true,
+    "maxVertexError": 4.251159422060467e-7,
+    "unit": "world units",
+    "upwardTopTriangles": 330,
+    "nonUpwardTopTriangles": [
+      {
+        "area": 6.708259521872109e-10,
+        "points": [
+          [
+            6.493144674301147,
+            -0.008999988317489632,
+            -0.5392968559265139
+          ],
+          [
+            6.4869888973236085,
+            -0.008999988317489632,
+            -0.5479817414283754
+          ],
+          [
+            6.485558528900146,
+            -0.008999988317489632,
+            -0.5499999964237214
+          ]
+        ]
+      }
+    ]
+  },
+  "houses": {
+    "method": "AABB hierarchy and full triangle SAT including coplanar axes, tolerance 1e-8 world",
+    "testedPairs": 89,
+    "intersections": []
+  },
+  "combinedPreservesShell": true,
+  "transform": {
+    "source_gltf_pivot": [
+      13.9,
+      0.89,
+      1.2
+    ],
+    "authored_position": [
+      8,
+      0.0475,
+      0.5
+    ],
+    "scale": [
+      0.45,
+      0.45,
+      0.45
+    ],
+    "yaw": 0,
+    "blender_to_gltf": "(X,Z,-Y)",
+    "renderer_from_authored": "subtract layout.center from X and 2 from Z; Y unchanged"
+  },
+  "base": {
+    "floorsUnchanged": true,
+    "anchorFloorsUnchanged": true,
+    "oldSitesUnchanged": true,
+    "oldEdgesUnchanged": true,
+    "grantsBefore": 73,
+    "grantsAfter": 73,
+    "addedRefs": 13,
+    "addedEdges": 15
+  },
+  "water": {
+    "revision": "authored-water-v2:3c5f4ee9f492cc25:eb41954202b1926a",
+    "owners": [
+      "l22",
+      "l21",
+      "l20",
+      "l23",
+      "l24"
+    ],
+    "floorsUnchanged": true,
+    "anchorFloorsUnchanged": true,
+    "oldSitesUnchanged": true,
+    "oldEdgesUnchanged": true,
+    "grantsBefore": 73,
+    "grantsAfter": 73,
+    "addedRefs": 13,
+    "addedEdges": 15
+  },
+  "baseObstruction": {
+    "triangles": 79384,
+    "excluded": 37,
+    "access": [
+      {
+        "id": "p6",
+        "reachable": 2,
+        "clearToOwner": 2
+      },
+      {
+        "id": "p7",
+        "reachable": 7,
+        "clearToOwner": 4
+      },
+      {
+        "id": "p9",
+        "reachable": 6,
+        "clearToOwner": 5
+      }
+    ]
+  },
+  "waterObstruction": {
+    "triangles": 79384,
+    "excluded": 37,
+    "access": [
+      {
+        "id": "p6",
+        "reachable": 2,
+        "clearToOwner": 2
+      },
+      {
+        "id": "p7",
+        "reachable": 7,
+        "clearToOwner": 4
+      },
+      {
+        "id": "p9",
+        "reachable": 6,
+        "clearToOwner": 5
+      }
+    ]
+  },
+  "finalHashes": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/cove-corner-v3.glb": "f08ada4907c76a617e2c22090049b9b2880dde2d75fa11ad61f6e76c7eec7146",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/cove-corner-with-apron-v3.glb": "81b1ff0bf9d050d5c78d40d21ee4a664d8e7088feacd082f6c91c5e86a235a6c",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/shared-apron-world-patch-v1.json": "66294123a26f6e4ecb8af2e530aee7e59370d3495bf3c9e4447376ce4fc6c3bc",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.glb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.blend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island-render.png": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6"
+  },
+  "inputHashesUnchanged": true
+}

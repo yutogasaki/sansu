@@ -1,0 +1,42 @@
+{
+  "schema": "sansu-water-support-real-input-parity-v1",
+  "repo": "/private/tmp/sansu-authored-shoulder-c2/candidate",
+  "scenario": "source32",
+  "node": "v24.18.0",
+  "synthetic": true,
+  "notPerformanceEvidence": true,
+  "inputFiles": [
+    {
+      "path": "/private/tmp/sansu-authored-shoulder-c2/candidate/prototypes/place-qa/authored-flower-reference-mature.json",
+      "sha256": "a6371602364a531130fb2a99e927958648ff1c57c2cc5a0966c315538ecbf533"
+    },
+    {
+      "path": "/private/tmp/sansu-authored-shoulder-c2/candidate/prototypes/place-qa/native05-world-source-shading.json.gz",
+      "sha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921"
+    }
+  ],
+  "inputStateSha256": "0593897ea073f817fbdee7f445491ccde12b9e2c083542aa19d320454c40cd2a",
+  "baseDefinitionSha256": "127d802c5f658fcb33c9b7b1b3fac97b27ecb777c7f3efb523460a3405bc7440",
+  "owners": 32,
+  "bridgeCount": 1,
+  "bridges": [
+    {
+      "ownerId": "l24",
+      "restoredEdgeIds": [
+        "[\"[\\\"native05-inlet-core\\\",\\\"6.75,-8\\\"]\",\"[\\\"native05-inlet-core\\\",\\\"7,-8\\\"]\"]",
+        "[\"[\\\"native05-inlet-core\\\",\\\"6.75,-7.75\\\"]\",\"[\\\"native05-inlet-core\\\",\\\"6.75,-8\\\"]\"]",
+        "[\"[\\\"native05-inlet-core\\\",\\\"7,-8\\\"]\",\"[\\\"native05-inlet-core\\\",\\\"7.25,-8\\\"]\"]",
+        "[\"[\\\"native05-inlet-core\\\",\\\"7,-7.75\\\"]\",\"[\\\"native05-inlet-core\\\",\\\"7,-8\\\"]\"]",
+        "[\"[\\\"native05-inlet-core\\\",\\\"7.25,-7.75\\\"]\",\"[\\\"native05-inlet-core\\\",\\\"7.25,-8\\\"]\"]"
+      ]
+    }
+  ],
+  "sites": 2063,
+  "sourceWalkEdges": 3774,
+  "output": {
+    "definitionSha256": "1dee1abdd52272b2d21f13b2c891e0dc5314dc5500adbf7d62b15d3685cdf5a6",
+    "planSha256": "8e7b237aeb65dd799485e6fa9c594c305a880e6f393bf880a6d367c28ef5625e",
+    "siteQuerySha256": "e1c9b9a594a536307e3efd5b5336b9b04b65e5f89a759d6dae60181502900cbd",
+    "sourceWalkQuerySha256": "6af0048779e87aa39c149cca009538c330fe19364c06a63f207b2e8180783cb5"
+  }
+}

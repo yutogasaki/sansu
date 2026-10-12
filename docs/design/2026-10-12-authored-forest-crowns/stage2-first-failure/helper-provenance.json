@@ -1,0 +1,19 @@
+{
+  "source": "../build-variants.py",
+  "sourceSha256": "4cd0419b79e844036ff114de3c8ece9fb974541effba143d80f73bff99fa4ca8",
+  "helperSha256": "9f369d576e5cca7cd53c362b5dd8b59051e8b98600f6c2c7583862c5224806d9",
+  "functions": {
+    "mat": "1e693e40138c91cfe5033b2a4a95dd4821cd883330b6ed493564a08e23f7ff02",
+    "smooth": "3f011405778194eb1572fe8bdbbf9cb59fddc9a4f6b5488624dd775e8a470c22",
+    "fixed_digest": "71f93ee1c9ff6712bc9d3e8e60f62752fb60807c73d4291062138516d7fd0b8b",
+    "world_matrix": "dcc65774c3701bd0c71a98e75e13723b6b97b6d372bc6a31b5113891382499df",
+    "source_anchor": "bbc2fd8f50ded780e913df0815db0c805d84c874e345e57c982285d60293ab52",
+    "jacobian": "0646e47b6f5f028859fd9c0e8cfb89c48e673dd62cc4f499bf3e943d0b9af8fe",
+    "deform_object": "13e288349d529d24459b6331e683d13363e5d72376b79d01b7744c2076d92491",
+    "world_bvh": "88ac65cd06763bf1c8d64208852d6e2c9371a9cc366e9ec032aa7f2e6e59077b",
+    "inside_closed": "608064681b1a6351ba8049a9f4bdf0409b39dd878f62f1d3cdd9981f1dcc6fa5",
+    "bezier": "129b65b454a4298308d30c757c1d2eda540ea64c2779a0994234be287e9e7667",
+    "add_views": "55b00257b040b3b0a933032b4efe41bf86be5ae521d62419cef9fdd83f36e3e8"
+  },
+  "method": "Copy named AST function source ranges only. Original generation loop and imports/side effects not executed."
+}

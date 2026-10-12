@@ -1,0 +1,8 @@
+/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature/check-offline.py:21: RuntimeWarning: invalid value encountered in divide
+  normals=np.cross(T[:,1]-T[:,0],T[:,2]-T[:,0]);unit=normals/np.linalg.norm(normals,axis=1)[:,None]
+Traceback (most recent call last):
+  File "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature/check-offline.py", line 29, in <module>
+    v,f,closure=closed_solid(plan,.07);v=np.array(v);f=np.array(f);solid=v[f];edges=collections.Counter(tuple(sorted((int(a),int(b)))) for face in f for a,b in zip(face,np.roll(face,-1)))
+  File "/private/tmp/sansu-p02-gallery-source-study/east-v3-manifold/terrain_connector.py", line 56, in closed_solid
+    q=[remap[i] for i in face];assert len(set(q))==3,'Float32 collapsed new top triangle; source must remain HOLD';faces.append(q)
+AssertionError: Float32 collapsed new top triangle; source must remain HOLD

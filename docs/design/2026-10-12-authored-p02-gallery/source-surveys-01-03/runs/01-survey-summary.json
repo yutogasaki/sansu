@@ -1,0 +1,506 @@
+{
+  "status": "BOUNDED_SOURCE_SURVEY_ONLY",
+  "selectedIndex": null,
+  "interiorTopY": -0.18958623707294464,
+  "galleryStartY": 2.734410285949707,
+  "rampRise": 2.9239965230226517,
+  "rampHorizontalRun": 2.8749063438850593,
+  "maximumSampledRampSlope": 1.5255795415286393,
+  "openingSurvey": [
+    {
+      "sectionZ": -0.4187504053115845,
+      "widths": [
+        {
+          "heightAboveFloor": 0.08,
+          "leftContact": null,
+          "rightContact": null,
+          "clearRayWidth": null
+        },
+        {
+          "heightAboveFloor": 0.28,
+          "leftContact": null,
+          "rightContact": null,
+          "clearRayWidth": null
+        },
+        {
+          "heightAboveFloor": 0.590092887975358,
+          "leftContact": null,
+          "rightContact": null,
+          "clearRayWidth": null
+        }
+      ],
+      "headContact": null,
+      "headClearance": null,
+      "insideVolumeProof": "PENDING"
+    },
+    {
+      "sectionZ": -0.5687504053115845,
+      "widths": [
+        {
+          "heightAboveFloor": 0.08,
+          "leftContact": null,
+          "rightContact": null,
+          "clearRayWidth": null
+        },
+        {
+          "heightAboveFloor": 0.28,
+          "leftContact": null,
+          "rightContact": null,
+          "clearRayWidth": null
+        },
+        {
+          "heightAboveFloor": 0.590092887975358,
+          "leftContact": null,
+          "rightContact": null,
+          "clearRayWidth": null
+        }
+      ],
+      "headContact": null,
+      "headClearance": null,
+      "insideVolumeProof": "PENDING"
+    },
+    {
+      "sectionZ": -0.8500003814697266,
+      "widths": [
+        {
+          "heightAboveFloor": 0.08,
+          "leftContact": null,
+          "rightContact": null,
+          "clearRayWidth": null
+        },
+        {
+          "heightAboveFloor": 0.28,
+          "leftContact": null,
+          "rightContact": null,
+          "clearRayWidth": null
+        },
+        {
+          "heightAboveFloor": 0.590092887975358,
+          "leftContact": null,
+          "rightContact": null,
+          "clearRayWidth": null
+        }
+      ],
+      "headContact": null,
+      "headClearance": null,
+      "insideVolumeProof": "PENDING"
+    }
+  ],
+  "candidates": [
+    {
+      "index": 0,
+      "entry": [
+        3.0,
+        1.5630645751953125,
+        -7.25
+      ],
+      "status": "HOLD",
+      "holdReasons": [
+        "ramp:full-width-flat-ground-seam",
+        "interiorSpur:full-width-flat-ground-seam",
+        "ramp:buried-or-coplanar-top",
+        "interiorSpur:buried-or-coplanar-top",
+        "nativeInterior:buried-or-coplanar-top",
+        "sampled-body-intersection"
+      ],
+      "error": null,
+      "collisionSamples": 144,
+      "nativeInteriorWidthSamples": [
+        {
+          "point": [
+            5.375930309295654,
+            -0.18958623707294464,
+            -0.8500003814697266
+          ],
+          "supported": true
+        },
+        {
+          "point": [
+            5.517965316772461,
+            -0.18958623707294464,
+            -0.8500003814697266
+          ],
+          "supported": true
+        },
+        {
+          "point": [
+            5.659999847412109,
+            -0.18958623707294464,
+            -0.8500003814697266
+          ],
+          "supported": true
+        },
+        {
+          "point": [
+            5.802034378051758,
+            -0.18958623707294464,
+            -0.8500003814697266
+          ],
+          "supported": true
+        },
+        {
+          "point": [
+            5.9440693855285645,
+            -0.18958623707294464,
+            -0.8500003814697266
+          ],
+          "supported": true
+        }
+      ],
+      "seams": {
+        "ramp": {
+          "gapRange": [
+            -0.006655413074197147,
+            0.030746338345437385
+          ],
+          "supportedFullWidth": true,
+          "flatLandingMatchesGround": false,
+          "uncovered": [],
+          "discontinuities": []
+        },
+        "interiorSpur": {
+          "gapRange": [
+            -0.03996321098712041,
+            0.044698085568381174
+          ],
+          "supportedFullWidth": true,
+          "flatLandingMatchesGround": false,
+          "uncovered": [],
+          "discontinuities": []
+        }
+      },
+      "groundRelations": {
+        "ramp": {
+          "minGap": -1.8514252206636646,
+          "maxGap": 1.7569576722085283,
+          "buriedPolygons": 8506,
+          "coplanarTopArea": 0.0,
+          "clear": false
+        },
+        "interiorSpur": {
+          "minGap": -0.18058624677360058,
+          "maxGap": 1.0087941525492492,
+          "buriedPolygons": 3786,
+          "coplanarTopArea": 0.0,
+          "clear": false
+        },
+        "nativeInterior": {
+          "minGap": -0.20308624021708965,
+          "maxGap": -0.18058624677360058,
+          "buriedPolygons": 1571,
+          "coplanarTopArea": 0.0,
+          "clear": false
+        }
+      },
+      "slopes": {
+        "groundToRamp": {
+          "horizontalRun": 0.9506894111851544,
+          "signedRise": -1.7526508122682571,
+          "maximumAbsoluteSlope": 1.8435687094927349,
+          "verticalSegments": 0
+        },
+        "groundToInterior": {
+          "horizontalRun": 7.7621141963117335,
+          "signedRise": -1.7526508122682571,
+          "maximumAbsoluteSlope": 0.2390826397784428,
+          "verticalSegments": 0
+        },
+        "rampArc": {
+          "horizontalRun": 2.8746796401836505,
+          "signedRise": 2.9239965230226517,
+          "maximumAbsoluteSlope": 1.5255795415286393,
+          "verticalSegments": 0
+        },
+        "shortGallery": {
+          "horizontalRun": 0.5061053543267338,
+          "signedRise": 0.0,
+          "maximumAbsoluteSlope": 0.0,
+          "verticalSegments": 0
+        },
+        "fullJourney": {
+          "horizontalRun": 24.187177204190878,
+          "signedRise": 0.0,
+          "maximumAbsoluteSlope": 1.8435687094927349,
+          "verticalSegments": 0
+        }
+      }
+    },
+    {
+      "index": 1,
+      "entry": [
+        3.75,
+        1.6333465576171875,
+        -7.25
+      ],
+      "status": "HOLD",
+      "holdReasons": [
+        "ramp:full-width-flat-ground-seam",
+        "interiorSpur:full-width-flat-ground-seam",
+        "ramp:buried-or-coplanar-top",
+        "interiorSpur:buried-or-coplanar-top",
+        "nativeInterior:buried-or-coplanar-top",
+        "sampled-body-intersection"
+      ],
+      "error": null,
+      "collisionSamples": 153,
+      "nativeInteriorWidthSamples": [
+        {
+          "point": [
+            5.375930309295654,
+            -0.18958623707294464,
+            -0.8500003814697266
+          ],
+          "supported": true
+        },
+        {
+          "point": [
+            5.517965316772461,
+            -0.18958623707294464,
+            -0.8500003814697266
+          ],
+          "supported": true
+        },
+        {
+          "point": [
+            5.659999847412109,
+            -0.18958623707294464,
+            -0.8500003814697266
+          ],
+          "supported": true
+        },
+        {
+          "point": [
+            5.802034378051758,
+            -0.18958623707294464,
+            -0.8500003814697266
+          ],
+          "supported": true
+        },
+        {
+          "point": [
+            5.9440693855285645,
+            -0.18958623707294464,
+            -0.8500003814697266
+          ],
+          "supported": true
+        }
+      ],
+      "seams": {
+        "ramp": {
+          "gapRange": [
+            -0.001604461886609121,
+            0.01763036452131539
+          ],
+          "supportedFullWidth": true,
+          "flatLandingMatchesGround": false,
+          "uncovered": [],
+          "discontinuities": []
+        },
+        "interiorSpur": {
+          "gapRange": [
+            -0.029956872796022882,
+            0.030175907910964472
+          ],
+          "supportedFullWidth": true,
+          "flatLandingMatchesGround": false,
+          "uncovered": [],
+          "discontinuities": []
+        }
+      },
+      "groundRelations": {
+        "ramp": {
+          "minGap": -1.8533561704025294,
+          "maxGap": 1.7569576722085283,
+          "buriedPolygons": 7050,
+          "coplanarTopArea": 0.0,
+          "clear": false
+        },
+        "interiorSpur": {
+          "minGap": -0.18058624677360058,
+          "maxGap": 1.0485397254671562,
+          "buriedPolygons": 3261,
+          "coplanarTopArea": 0.0,
+          "clear": false
+        },
+        "nativeInterior": {
+          "minGap": -0.20308624021708965,
+          "maxGap": -0.18058624677360058,
+          "buriedPolygons": 1571,
+          "coplanarTopArea": 0.0,
+          "clear": false
+        }
+      },
+      "slopes": {
+        "groundToRamp": {
+          "horizontalRun": 0.25395854365922016,
+          "signedRise": -1.8229327946901321,
+          "maximumAbsoluteSlope": 7.178641281864505,
+          "verticalSegments": 0
+        },
+        "groundToInterior": {
+          "horizontalRun": 7.524491156562574,
+          "signedRise": -1.8229327946901321,
+          "maximumAbsoluteSlope": 0.2569982586197207,
+          "verticalSegments": 0
+        },
+        "rampArc": {
+          "horizontalRun": 2.8746796401836505,
+          "signedRise": 2.9239965230226517,
+          "maximumAbsoluteSlope": 1.5255795415286393,
+          "verticalSegments": 0
+        },
+        "shortGallery": {
+          "horizontalRun": 0.5061053543267338,
+          "signedRise": 0.0,
+          "maximumAbsoluteSlope": 0.0,
+          "verticalSegments": 0
+        },
+        "fullJourney": {
+          "horizontalRun": 22.318469389644502,
+          "signedRise": 0.0,
+          "maximumAbsoluteSlope": 7.178641281864505,
+          "verticalSegments": 0
+        }
+      }
+    },
+    {
+      "index": 2,
+      "entry": [
+        4.0,
+        1.6509284973144531,
+        -7.25
+      ],
+      "status": "HOLD",
+      "holdReasons": [
+        "ramp:full-width-flat-ground-seam",
+        "interiorSpur:full-width-flat-ground-seam",
+        "ramp:buried-or-coplanar-top",
+        "interiorSpur:buried-or-coplanar-top",
+        "nativeInterior:buried-or-coplanar-top",
+        "sampled-body-intersection"
+      ],
+      "error": null,
+      "collisionSamples": 149,
+      "nativeInteriorWidthSamples": [
+        {
+          "point": [
+            5.375930309295654,
+            -0.18958623707294464,
+            -0.8500003814697266
+          ],
+          "supported": true
+        },
+        {
+          "point": [
+            5.517965316772461,
+            -0.18958623707294464,
+            -0.8500003814697266
+          ],
+          "supported": true
+        },
+        {
+          "point": [
+            5.659999847412109,
+            -0.18958623707294464,
+            -0.8500003814697266
+          ],
+          "supported": true
+        },
+        {
+          "point": [
+            5.802034378051758,
+            -0.18958623707294464,
+            -0.8500003814697266
+          ],
+          "supported": true
+        },
+        {
+          "point": [
+            5.9440693855285645,
+            -0.18958623707294464,
+            -0.8500003814697266
+          ],
+          "supported": true
+        }
+      ],
+      "seams": {
+        "ramp": {
+          "gapRange": [
+            -0.03292027384088447,
+            0.03390690098880178
+          ],
+          "supportedFullWidth": true,
+          "flatLandingMatchesGround": false,
+          "uncovered": [],
+          "discontinuities": []
+        },
+        "interiorSpur": {
+          "gapRange": [
+            -0.03040605043339073,
+            0.029963698283053564
+          ],
+          "supportedFullWidth": true,
+          "flatLandingMatchesGround": false,
+          "uncovered": [],
+          "discontinuities": []
+        }
+      },
+      "groundRelations": {
+        "ramp": {
+          "minGap": -1.8538220159468386,
+          "maxGap": 1.7569576722085283,
+          "buriedPolygons": 5318,
+          "coplanarTopArea": 0.0,
+          "clear": false
+        },
+        "interiorSpur": {
+          "minGap": -0.18058624677360058,
+          "maxGap": 1.057573328945306,
+          "buriedPolygons": 3557,
+          "coplanarTopArea": 0.0,
+          "clear": false
+        },
+        "nativeInterior": {
+          "minGap": -0.20308624021708965,
+          "maxGap": -0.18058624677360058,
+          "buriedPolygons": 1571,
+          "coplanarTopArea": 0.0,
+          "clear": false
+        }
+      },
+      "slopes": {
+        "groundToRamp": {
+          "horizontalRun": 0.18634145287423598,
+          "signedRise": -1.8405147343873978,
+          "maximumAbsoluteSlope": 9.877779159740532,
+          "verticalSegments": 0
+        },
+        "groundToInterior": {
+          "horizontalRun": 7.461297665846852,
+          "signedRise": -1.8405147343873978,
+          "maximumAbsoluteSlope": 0.26181061311662124,
+          "verticalSegments": 0
+        },
+        "rampArc": {
+          "horizontalRun": 2.8746796401836505,
+          "signedRise": 2.9239965230226517,
+          "maximumAbsoluteSlope": 1.5255795415286393,
+          "verticalSegments": 0
+        },
+        "shortGallery": {
+          "horizontalRun": 0.5061053543267338,
+          "signedRise": 0.0,
+          "maximumAbsoluteSlope": 0.0,
+          "verticalSegments": 0
+        },
+        "fullJourney": {
+          "horizontalRun": 22.05684822664656,
+          "signedRise": 0.0,
+          "maximumAbsoluteSlope": 9.877779159740532,
+          "verticalSegments": 0
+        }
+      }
+    }
+  ],
+  "measurementSha256": "d171fc2de6b751ef706bd40c1fbb9788cd6ff8836354efba442ef0b0226afbe1"
+}

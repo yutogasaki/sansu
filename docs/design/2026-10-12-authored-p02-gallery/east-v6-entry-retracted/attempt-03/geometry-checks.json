@@ -1,0 +1,44 @@
+{
+  "sourceOnly": true,
+  "checks": {
+    "terrain-threshold": {
+      "triangles": 680,
+      "zeroArea": 0,
+      "signedVolume": 0.021280007233613656,
+      "badEdges": 0
+    },
+    "front-junction": {
+      "triangles": 128,
+      "zeroArea": 0,
+      "signedVolume": 0.022374540792808168,
+      "badEdges": 0
+    },
+    "real-sixteen-stairs": {
+      "triangles": 4854,
+      "zeroArea": 0,
+      "signedVolume": 0.2697671488530766,
+      "badEdges": 10,
+      "closedSubsolids": 2,
+      "subsolidBadEdges": [
+        0,
+        0
+      ],
+      "booleanUnionManifold": "NOT CLAIMED"
+    }
+  },
+  "changedNodes": [
+    "solid-body/front-junction",
+    "solid-body/real-sixteen-stairs",
+    "solid-body/terrain-threshold",
+    "walk-top/front-junction",
+    "walk-top/real-sixteen-stairs",
+    "walk-top/terrain-threshold"
+  ],
+  "fixedNodes": 33,
+  "fixedNodePrimitiveBytes": true,
+  "materialJsonUnchanged": true,
+  "ownerAndTransformUnchanged": true,
+  "galleryTraversalEnabled": false,
+  "fullWorldReachability": "NOT RUN",
+  "art": "HOLD"
+}

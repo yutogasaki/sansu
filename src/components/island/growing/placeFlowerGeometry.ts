@@ -6,6 +6,10 @@ import { key, occupant, approachCells, walkableCells } from '../../../domain/gro
 import type { SceneLayout } from './sceneLayout';
 import { placeLeafGeometry } from './placeLeafGeometry';
 import type { NativeGrowingKit } from './native/nativeGrowingKit';
+import type { NativeAuthoredFlower } from './native/nativeAuthoredFlower';
+import flowerProfile from '../../../../docs/design/2026-10-11-authored-flower-garden/native-flower-support-profile.json';
+import { BLOOM_HOURS } from '../../../domain/growingIsland/environment';
+import { placeConnected } from '../../../domain/growingIsland/places';
 
 const PETALS = ['#e9a0c7', '#ae9de1', '#91cbd8', '#f1ca90'];
 const TINTS: Record<string, string> = { red: '#e69bbf', pink: '#efafcc', yellow: '#efd09b', orange: '#edb29a', blue: '#99bddf',
@@ -51,8 +55,68 @@ function petal(g: GardenGeometry, center: T.Vector3, length: number, angle: numb
     return mesh;
 }
 
+/** The authored garden has one native crown, supported by its real mature
+ * members. The low landmark flowers remain visible with their actual colours and
+ * ages. Source support is visual sculpture, never another navigation floor. */
+function authoredFlower(g: GardenGeometry, state: GrowingState, layout: SceneLayout, place: DerivedPlace,
+    native: NativeGrowingKit, flowerSupport: NativeAuthoredFlower) {
+    const owners = place.mainIds.map(id => state.landmarks.find(owner => owner.id === id && owner.kind === 'flower' && owner.cell))
+        .filter((owner): owner is NonNullable<typeof owner> => Boolean(owner?.cell && layout.world.owns(owner.cell) && layout.world.floorAt(owner.cell)));
+    if (!owners.length) return;
+    const mature = owners.filter(owner => owner.growth >= BLOOM_HOURS);
+    const points = mature.map(owner => layout.point(owner.cell!, 0));
+    const center = (points.length ? points : owners.map(owner => layout.point(owner.cell!, 0)))
+        .reduce((sum, point) => sum.add(point), new T.Vector3()).multiplyScalar(1 / Math.max(1, points.length || owners.length));
+    // The original crown stays uniformly scaled. Its width is not stretched to
+    // the full length of a lane; native branches meet this one rounded mass.
+    const crownScale = .45, description = native.manifest.parts['flower-crown'];
+    const halfX = (description.max[0] - description.min[0]) * crownScale / 2;
+    const halfZ = (description.max[2] - description.min[2]) * crownScale / 2;
+    let maxGround = Math.max(center.y, ...points.map(point => point.y));
+    for (let z = -halfZ; z <= halfZ; z += .18) for (let x = -halfX; x <= halfX; x += .18) {
+        const logical = layout.logicalAt({ x: center.x + x, z: center.z + z });
+        const floor = layout.world.floorAt(logical); if (floor) maxGround = Math.max(maxGround, floor.point.y);
+    }
+    const actorClearance = layout.actorVisualScale * 1.166671391 + .14;
+    const sourceCrownHeight = (flowerProfile.crown.sourcePivot[1] - flowerProfile.pivot[1]) * flowerProfile.scale;
+    const crownBase = new T.Vector3(center.x, maxGround + Math.max(sourceCrownHeight, actorClearance), center.z);
+    const open = walkableCells(state, layout.world), links: [string, string][] = [];
+    for (let i = 0; i < mature.length; i++) for (let j = i + 1; j < mature.length; j++) {
+        if (placeConnected(mature[i].cell!, mature[j].cell!, open, layout.world)) links.push([mature[i].id, mature[j].id]);
+    }
+    const connectedIds = new Set<string>();
+    if (mature.length) connectedIds.add(mature[0].id);
+    let grew = true;
+    while (grew) {
+        grew = false;
+        for (const [a, b] of links) if (connectedIds.has(a) !== connectedIds.has(b)) {
+            connectedIds.add(a); connectedIds.add(b); grew = true;
+        }
+    }
+    const joined = mature.length >= 4 && connectedIds.size === mature.length && (place.stage === 'grown' || place.stage === 'lived');
+    const support = flowerSupport.build({ owners: owners.map(owner => ({ id: owner.id, point: layout.point(owner.cell!, 0), growth: owner.growth, color: owner.color })),
+        crownBase, crownScale, connected: joined, links,
+        seats: place.useTargets.filter(target => target.kind === 'seat' && layout.world.owns(target.cell) && layout.world.floorAt(target.cell))
+            .map(target => ({ id: target.id, point: layout.point(target.cell, 0) })) });
+    g.root.add(support);
+    g.root.userData.authoredFlowerArt = joined ? 'native-source-shared-crown' : 'owned-growing-stocks';
+    g.root.userData.authoredFlowerOwnerIds = owners.map(owner => owner.id);
+    g.root.userData.authoredFlowerCrownCount = joined ? 1 : 0;
+    g.root.userData.authoredFlowerFloor = 'existing-ground';
+    if (!joined) return;
+    const crown = native.instance('flower-crown'); crown.name = 'authored-flower-main-crown';
+    crown.position.copy(crownBase); crown.scale.setScalar(crownScale);
+    crown.userData.ownerIds = mature.map(owner => owner.id); crown.userData.visualOnly = true;
+    crown.userData.actorClearance = actorClearance; crown.userData.sourceScale = crownScale; crown.userData.sourceCrownHeight = sourceCrownHeight;
+    crown.traverse(object => { object.userData.ownerIds = [...crown.userData.ownerIds]; object.userData.visualOnly = true; });
+    g.root.add(crown);
+    // Keep the actual ground and the existing route. A full footprint made of
+    // white quarter-cell panels is not a garden surface or a new support layer.
+}
+
 /** Same four plants grow one supported flower room; no extra owned flowers or floor. */
-export function buildPlaceFlowerRoof(g: GardenGeometry, state: GrowingState, layout: SceneLayout, place: DerivedPlace, native?: NativeGrowingKit) {
+export function buildPlaceFlowerRoof(g: GardenGeometry, state: GrowingState, layout: SceneLayout, place: DerivedPlace, native?: NativeGrowingKit, flowerSupport?: NativeAuthoredFlower) {
+    if (layout.authored && native && flowerSupport) { authoredFlower(g, state, layout, place, native, flowerSupport); return; }
     const owners = place.mainIds.map(id => state.landmarks.find(owner => owner.id === id && owner.kind === 'flower' && owner.cell))
         .filter((owner): owner is NonNullable<typeof owner> => Boolean(owner));
     if (!owners.length) return;

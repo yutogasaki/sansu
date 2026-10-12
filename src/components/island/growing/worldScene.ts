@@ -17,11 +17,15 @@ import { nativeGrowingLighting } from './native/nativeGrowingLighting';
 import { curveGroundGeometry } from './curvedGeometry';
 import type { IslandWorld as CompiledWorld } from '../../../domain/growingIsland/worldDefinition';
 import { buildAuthoredGrowingGround, buildAuthoredGrowingSea, type AuthoredCoastSkin } from './native/authoredGrowingGround';
-import { authoredWaterFrame } from '../../../domain/growingIsland/authoredWaterFrame';
+import { authoredWorldFrame } from '../../../domain/growingIsland/authoredWorldFrame';
 import type { AuthoredWaterBridgeSkin } from './native/authoredWaterBridgeArt';
+import type { AuthoredShoulderProfile } from '../../../domain/growingIsland/authoredShoulderWorld';
+import type { NativeAuthoredShoulder } from './native/nativeAuthoredShoulder';
+import type { AuthoredGrowthTerrainCatalog } from '../../../domain/growingIsland/authoredGrowthTerrain';
 
 /** Lights, sea, garden ground, Pokomoko's cottage and the living layer, shared by one world. */
-export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowingKit, authored?: CompiledWorld, coast?: AuthoredCoastSkin, waterAssembly = false, bridgeSkin?: AuthoredWaterBridgeSkin) {
+export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowingKit, authored?: CompiledWorld, coast?: AuthoredCoastSkin, waterAssembly = false, bridgeSkin?: AuthoredWaterBridgeSkin, coveAssembly = false, shoulder?: AuthoredShoulderProfile, shoulderArt?: NativeAuthoredShoulder, growthTerrain?: AuthoredGrowthTerrainCatalog) {
+    const options = { water: waterAssembly, cove: coveAssembly, ...(shoulder ? { shoulder } : {}), ...(growthTerrain ? { growthTerrain } : {}) };
     const scene = new T.Scene();
     const hemi = new T.HemisphereLight('#fff7ea', '#63806c', 1.15); scene.add(hemi);
     const sun = new T.DirectionalLight('#fff4e0', 2.3); sun.castShadow = true;
@@ -38,9 +42,13 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
     const nativeCottage = native?.cottage(authored ? .45 : undefined);
     const lighting = native ? nativeGrowingLighting(scene, renderer, hemi, sun) : undefined;
     let ground: ReturnType<typeof buildGardenGround> | ReturnType<typeof buildAuthoredGrowingSea> | undefined, groundKey = '';
-    let terrain: ReturnType<typeof buildPlaceGround> | undefined;
+    let terrain: ReturnType<typeof buildPlaceGround> | ReturnType<typeof buildAuthoredGrowingGround> | undefined;
     let previewTerrain: ReturnType<typeof buildAuthoredGrowingGround> | undefined, previewKey = '';
     let time: GardenTime = 'day';
+    const addShoulderSoil = (ground: ReturnType<typeof buildAuthoredGrowingGround>, layout: SceneLayout) => {
+        const soil = shoulderArt?.instanceSoil(layout);
+        if (soil) ground.root.add(soil);
+    };
     const nativeSeaTime = () => {
         if (!native || !ground) return;
         const sea = ground.root.getObjectByName('life-sea') as T.Mesh<T.PlaneGeometry, T.ShaderMaterial>;
@@ -56,6 +64,7 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
         if (layout.authored) {
             ground = buildAuthoredGrowingSea(layout);
             terrain = buildAuthoredGrowingGround(layout, coast, bridgeSkin);
+            addShoulderSoil(terrain, layout);
         } else {
             ground = buildGardenGround({ bounds: layout.bounds, moisture: cell => soilAt(state, cell), shelterTree: !native && layout.artMargin <= 1.1, heightAt: layout.heightAt }, layout.point);
             curveGroundGeometry(ground.root.getObjectByName('garden-ground-details')!, layout);
@@ -104,14 +113,16 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
     return {
         scene, m, life, hemi, sun,
         hasWaterPreview: () => Boolean(previewTerrain),
+        shoulderSoil: () => terrain?.root.getObjectByName('authored-shoulder-soil'),
         showWaterPreview(future?: GrowingState) {
-            if (!authored || !waterAssembly || !future) { clearPreview(); return undefined; }
-            const frame = authoredWaterFrame(future, authored);
-            if (frame.world.definition.revision === groundKey.slice(authored.id.length + 1)) { clearPreview(); return undefined; }
-            if (previewKey === frame.plan.revision) return previewKey;
+            if (!authored || !(waterAssembly || coveAssembly || shoulder || growthTerrain) || !future) { clearPreview(); return undefined; }
+            const frame = authoredWorldFrame(future, authored, options);
+            if (`${frame.world.id}:${frame.revision}` === groundKey) { clearPreview(); return undefined; }
+            if (previewKey === frame.revision) return previewKey;
             clearPreview();
-            const layout = sceneLayout(future, Boolean(native), frame.world, frame.plan, authored);
-            previewTerrain = buildAuthoredGrowingGround(layout, coast, bridgeSkin); previewKey = frame.plan.revision;
+            const layout = sceneLayout(future, Boolean(native), frame.world, frame.waterPlan, authored, { options, covePlan: frame.covePlan, revision: frame.revision });
+            previewTerrain = buildAuthoredGrowingGround(layout, coast, bridgeSkin); previewKey = frame.revision;
+            addShoulderSoil(previewTerrain, layout);
             scene.add(previewTerrain.root); if (terrain) terrain.root.visible = false;
             // A prospective floor is a static editing view. Live visitors retain
             // their committed routes and receipts and return unchanged on cancel.
@@ -121,8 +132,9 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
         groundAt(ray: T.Raycaster) { return terrain ? ray.intersectObject(terrain.floor, false)[0]?.point : undefined; },
         layout: (state: GrowingState) => {
             clearPreview();
-            const frame = authored && waterAssembly ? authoredWaterFrame(state, authored) : undefined;
-            const layout = sceneLayout(state, Boolean(native), frame?.world ?? authored, frame?.plan, authored); layout.nativeArt = Boolean(native); setGround(state, layout);
+            const frame = authored && (waterAssembly || coveAssembly || shoulder || growthTerrain) ? authoredWorldFrame(state, authored, options) : undefined;
+            const layout = sceneLayout(state, Boolean(native), frame?.world ?? authored, frame?.waterPlan, authored,
+                frame ? { options, covePlan: frame.covePlan, revision: frame.revision } : undefined); layout.nativeArt = Boolean(native); setGround(state, layout);
             // ObjectLayer is attached immediately after layout(). Resolve it lazily
             // so this new frame contains the newly built owners and derived rooms.
             layout.cameraObjects = () => [previewTerrain?.root ?? terrain?.root, nativeCottage ?? cottage.root,

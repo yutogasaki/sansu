@@ -1,0 +1,48 @@
+Python AST PASS prepare.py
+Python AST PASS run-once.py
+$ node --check /private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-attempt-02/diagnose-roi-face-normal.mjs
+exit=0
+$ node /private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-attempt-02/check-prepared.mjs
+{
+  "pass": true,
+  "threeRevision": "185",
+  "scope": "Static shader-string preparation only. No browser, renderer, GPU/GLSL compile, source mutation, or diagnostic execution.",
+  "driverSha256": "08989783cc4e4ab90d2384be54acd38dc23e5084012ed0010d9e234a9242e6eb",
+  "targetSha256": "d7ecf37dfdce5eec6b7d331a1faf6afa446a34c9ef01e5581ea9f4a0f0f9d819",
+  "vertexShaderSha256": "a5d2dfe044cce1ce21f7d644da4ee6e507fdda8e243372f41962e5a3dd714d65",
+  "fragmentShaderSha256": "ffd859bf22117923e4d4b1359c94ec7ef5aa0de2b285213d07f069db83cd7fe0",
+  "overrideFields": [
+    "normal",
+    "nonPerturbedNormal"
+  ],
+  "roiMask": "runtime-world AABB only",
+  "derivatives": "Computed outside control-flow; original geometryRoughness derivative source retained outside ROI",
+  "markersMatched": true
+}
+exit=0
+$ python3 /private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-attempt-02/run-once.py
+{
+  "prepared": true,
+  "executionStarted": false,
+  "command": [
+    "node",
+    "/private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-attempt-02/diagnose-roi-face-normal.mjs",
+    "--start",
+    "--output",
+    "/private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-attempt-02/actual-02"
+  ],
+  "seconds": 900,
+  "processTreeRssBytes": 4294967296,
+  "rssSampleSeconds": 0.5,
+  "expectedCaptures": [
+    "shadow-off",
+    "roi-face-normal",
+    "restored-shadow-off"
+  ],
+  "sourceCount": 6460,
+  "installedDependencyCount": 6,
+  "freshOutput": "/private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-attempt-02/actual-02",
+  "server": "Root-owned 5359, never signalled",
+  "scope": "Causal diagnosis only; no product performance, art acceptance or source mutation"
+}
+exit=0

@@ -1,0 +1,43 @@
+{
+  "reviewedAtUtc": "2026-10-12T08:00:19.716176+00:00",
+  "reviewer": "root implementing author",
+  "candidate": "forest-stage4-organic-boughs-hold-diagnostic-v4",
+  "evidenceType": "Blender source whole render; not actual app",
+  "context": "Fixed c1 shoulder35 owner-only static source; P02 v5 staircase absent; not latest c4 app",
+  "actualAppTarget": null,
+  "buildRevision": null,
+  "deliveryFlag": null,
+  "frame": "authored-world:66d51261fb72ffdf",
+  "images": [
+    {
+      "path": "../2026-10-10-island-final-3d/whole-island-render.png",
+      "sha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6"
+    },
+    {
+      "path": "stage3-u-court/attempt-01/HOLD-source-whole.png",
+      "sha256": "ac24191d8aa3603ea9e80ba56b2285a617cb906596b4390260d0f5648d0b400b"
+    },
+    {
+      "path": "stage4-whole-hold/v4/whole-view-v1/attempt-view-01/HOLD-source-whole.png",
+      "sha256": "6b3b71e990366dfdb76fddc3a74e81f470c99a651eaa834c1b421aff4c0eee05"
+    }
+  ],
+  "geometryScope": {
+    "originalRoles": 128,
+    "derivedMainBoughs": 6,
+    "fixedContextMeshes": 314
+  },
+  "verdicts": {
+    "sourceVisual": "HOLD",
+    "silentComprehensionSafety": "UNTESTED; independent observers N=0",
+    "runtime": "NOT_INTEGRATED",
+    "strictGeometry": "HOLD; 13 parent-recomposition precision records retained; full roundtrip not accepted"
+  },
+  "findings": [
+    "Crown mass is fuller and the long isolated pale branches are less dominant than in stage3.",
+    "The left forest still reads as one large rear hat above two separate pale foreground pads. It does not enclose the house and bench court through overlapping trunk/crown layers as native05 does.",
+    "Curved boughs have weak whole-view impact and straight brown diagonal lines remain visible. More small leaves or normal-precision changes will not resolve the composition.",
+    "The whole island also retains a broad bare hill and thin angular paths. Source rendering has no real resident use or app UI evidence."
+  ],
+  "nextDecision": "Recompose the main crown masses in three materially different arrangements with the same owners, grounded trunks, material lineage and entry clearance. Compare a low overlapping arch, staggered foreground/background layers, and thicker sides around a bright central court. Do not add owners or decorative props; do not continue numerical cleanup before judging the new whole shape."
+}

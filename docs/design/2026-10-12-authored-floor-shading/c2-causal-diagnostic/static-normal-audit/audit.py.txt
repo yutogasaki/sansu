@@ -1,0 +1,40 @@
+from pathlib import Path
+from collections import defaultdict,Counter
+import gzip,json,math,hashlib,time
+B=Path('/private/tmp/sansu-authored-shoulder-c2/candidate');D=Path('/private/tmp/sansu-floor-shading-diagnostic-c2/static-normal-audit')
+source=B/'prototypes/place-qa/native05-world-source-shading.json.gz';world=json.loads(gzip.decompress(source.read_bytes()));cap=json.loads(Path('/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/baseline-capture.json').read_text());camera=cap['observed']['camera'];m=camera['matrixWorld'];proj=camera['projectionMatrix'];floors=[f for d in world['districts'] for f in d['floors']]
+pts=[v['point'] for f in floors for v in f['vertices']];center=(min(p['x'] for p in pts)+max(p['x'] for p in pts))/2
+# Static base-floor projection uses the unchanged orthographic camera and screenshot canvas 1010x730 at (0,111).
+def project(p):
+ q=[p['x']-center-m[12],p['y']-m[13],p['z']-2-m[14]];view=[sum(m[c*4+i]*q[i] for i in range(3)) for c in range(3)]
+ return [(view[0]*proj[0]+1)*505,111+(1-view[1]*proj[5])*365]
+def pointkey(p):return tuple(round(p[k],9) for k in ['x','y','z'])
+def nv(v):
+ n=[v['normal'][k] for k in ['x','y','z']];l=math.sqrt(sum(x*x for x in n));return tuple(x/l for x in n)
+def angle(a,b):return math.degrees(math.acos(max(-1,min(1,sum(x*y for x,y in zip(a,b))))))
+vertices=defaultdict(list);edges=defaultdict(list);triangles=defaultdict(list)
+for fi,f in enumerate(floors):
+ for vi in set(f['indices']):
+  v=f['vertices'][vi];vertices[pointkey(v['point'])].append((fi,vi,nv(v)))
+ for ti in range(0,len(f['indices']),3):
+  ids=f['indices'][ti:ti+3];keys=[pointkey(f['vertices'][i]['point']) for i in ids]
+  triangles[tuple(sorted(keys))].append((fi,ti//3))
+  for a,b in [(0,1),(1,2),(2,0)]:
+   k=tuple(sorted([keys[a],keys[b]]));edges[k].append((fi,ti//3,{keys[a]:nv(f['vertices'][ids[a]]),keys[b]:nv(f['vertices'][ids[b]])}))
+vertexGaps=[]
+for key,items in vertices.items():
+ if len(items)<2:continue
+ maxa=max(angle(a[2],b[2]) for a in items for b in items)
+ if maxa>.01:
+  p=dict(zip(['x','y','z'],key));pixel=project(p)
+  vertexGaps.append({'point':p,'pixel':pixel,'angleDegrees':maxa,'floors':sorted(set(floors[i[0]]['id'] for i in items)),'roi':650<pixel[0]<1010 and 500<pixel[1]<710})
+edgeGaps=[]
+for key,items in edges.items():
+ if len(items)<2:continue
+ maxa=max(angle(a[2][p],b[2][p]) for a in items for b in items for p in key)
+ if maxa>.01:
+  pixels=[project(dict(zip(['x','y','z'],p))) for p in key];roi=any(650<p[0]<1010 and 500<p[1]<710 for p in pixels)
+  edgeGaps.append({'points':key,'pixels':pixels,'angleDegrees':maxa,'faces':[(floors[x[0]]['id'],x[1]) for x in items],'roi':roi})
+report={'source':str(source),'sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'scope':'Static source-shading payload, not recomposed runtime normal buffer. Exact same-position shared edges only; does not establish no T-junctions, overlap, or geometry gaps. Projection uses static base bounds center; no fresh browser or compilation.','center':center,'floors':[{'id':f['id'],'triangles':len(f['indices'])//3,'vertices':len(f['vertices']),'material':f.get('material')} for f in floors],'positionGroups':len(vertices),'duplicatePositionGroups':sum(len(v)>1 for v in vertices.values()),'vertexNormalGapCountAbovePoint01Deg':len(vertexGaps),'sharedEdges':sum(len(v)>1 for v in edges.values()),'edgeNormalGapCountAbovePoint01Deg':len(edgeGaps),'nonManifoldExactEdges':sum(len(v)>2 for v in edges.values()),'duplicatePhysicalTriangleCount':sum(len(v)>1 for v in triangles.values()),'maxVertexGapDeg':max([v['angleDegrees'] for v in vertexGaps],default=0),'roiVertexGaps':sorted([v for v in vertexGaps if v['roi']],key=lambda v:-v['angleDegrees'])[:50],'roiEdgeGaps':sorted([v for v in edgeGaps if v['roi']],key=lambda v:-v['angleDegrees'])[:50]}
+(D/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+print(json.dumps({k:report[k] for k in ['center','positionGroups','duplicatePositionGroups','vertexNormalGapCountAbovePoint01Deg','sharedEdges','edgeNormalGapCountAbovePoint01Deg','nonManifoldExactEdges','duplicatePhysicalTriangleCount','maxVertexGapDeg']}));print('roi vertex/edge',len(report['roiVertexGaps']),len(report['roiEdgeGaps']));print('first roi',json.dumps(report['roiEdgeGaps'][:3]))

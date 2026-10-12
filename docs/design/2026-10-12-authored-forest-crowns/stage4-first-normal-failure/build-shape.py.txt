@@ -1,0 +1,190 @@
+"""Source coarse organic-bough assembly. Always HOLD, never a runtime accepted kit."""
+import os
+assert os.environ.get('SANSU_FOREST_STAGE4_APPROVED')=='1','Await source window'
+import bpy
+import gc
+import hashlib
+import json
+import sys
+import time
+import traceback
+from pathlib import Path
+from mathutils import Matrix,Vector
+
+HERE=Path(__file__).resolve().parent
+BASE=HERE.parent
+sys.path.insert(0,str(HERE));sys.dont_write_bytecode=True
+import fields
+import deform
+import source_helpers as native
+import source_checks as checks
+import joints
+import junctions
+from volume_adapter import Volume64
+
+OUT=HERE/'attempt-01';assert not OUT.exists(),'Preserve first stage4 result';OUT.mkdir()
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+PROPOSAL=json.loads((HERE/'proposal.json').read_text())
+STUDY=json.loads((BASE/'study.json').read_text())
+EXTRACT=BASE/'extraction-attempt02'
+B=Matrix(((1,0,0,0),(0,0,-1,0),(0,1,0,0),(0,0,0,1)));BI=B.inverted()
+native.B=B;native.BI=BI;native.STUDY=STUDY
+native.BINDINGS=json.loads((EXTRACT/'bindings.json').read_text())['bindings']
+START=time.monotonic();PHASE='inputs';INPUTS={};JOINTS=[];CREATED=[];VOLUMES={};DEFORMED=False
+
+def save(name,data):
+    (OUT/name).write_text(json.dumps(data,indent=2)+'\n')
+def volume(obj):
+    if obj.name not in VOLUMES:VOLUMES[obj.name]=Volume64(obj,BI)
+    return VOLUMES[obj.name]
+def role(owner,kind,ordinal=0):
+    found=[o for o in ROLES if o['ownerId']==owner and o['forestRole']==kind and o['forestOrdinal']==ordinal]
+    assert len(found)==1,(owner,kind,ordinal);return found[0]
+def mapped(owner,kind,ordinal,point):
+    return Vector(fields.field_for_role(owner,kind,ordinal,PROPOSAL)(point))
+def connect(left_obj,right_obj,left_guess,right_guess,radius,max_span,style=None,donor_obj=None):
+    assert left_obj['ownerId']==right_obj['ownerId']
+    left,right=volume(left_obj),volume(right_obj)
+    row={'left':left_obj.name,'right':right_obj.name,'ownerId':left_obj['ownerId'],
+         'leftGuess':list(left_guess),'rightGuess':list(right_guess),'ballRadiusWorld':radius*.6,
+         'status':'unresolved','clearanceApproximate':True}
+    JOINTS.append(row)
+    try:
+        overlap=joints.overlap_ball(left,right,[left_guess,right_guess],radius*.6)
+        if overlap:
+            row.update(status='measured-overlap-under-inherited-tolerances',overlap=overlap)
+        else:
+            assert style in ('willow-main','willow-stem'),'Birch source contact unresolved; repair forbidden'
+            assert len(CREATED)<PROPOSAL['guards']['maximumDerivedBoughs'],'Derived-bough cap reached'
+            assert sum(o.get('boughStyle')==style for o in CREATED)<PROPOSAL['guards']['maximumWillowMainBoughs' if style=='willow-main' else 'maximumWillowStemBoughs'],'Per-kind bough cap reached'
+            assert donor_obj is not None
+            donor=volume(donor_obj)
+            material=donor_obj.data.materials[0]
+            obj,measurement=junctions.connector(left,right,left_guess,right_guess,radius,max_span,
+                  f"stage4-junction-{len(JOINTS):02d}-{left_obj['ownerId']}",left_obj['ownerId'],material,
+                  JOINT_COLLECTION,B,STUDY['sourceSha256'],donor,style,PROPOSAL['owners']['l14']['derivedBoughControls'])
+            obj['boughStyle']=style
+            CREATED.append(obj)
+            row.update(status='derived-closed-bough-approximate-endpoint-measurements',measurement=measurement)
+    except BaseException as error:
+        row['error']=repr(error)
+        incomplete=[o for o in JOINT_COLLECTION.objects if o.type=='MESH' and o not in CREATED]
+        CREATED.extend(incomplete)
+        row['failedCreatedObjects']=[o.name for o in incomplete]
+        raise
+    finally:save('primary-junctions.json',JOINTS)
+
+def parity():
+    assert fixed_before=={o.name:native.fixed_digest(o) for o in FIXED}
+    assert retained_before=={o.name:native.fixed_digest(o) for o in RETAINED}
+    assert context_before=={o.name:native.fixed_digest(o) for o in CONTEXT if o.type=='MESH'}
+    assert topology_before=={o.name:[list(p.vertices) for p in o.data.polygons] for o in ROLES}
+    assert material_before=={m.name:checks.material_digest(m) for m in MATERIALS}
+    assert slots_before=={o.name:[m.name for m in o.data.materials] for o in ROLES}
+    assert INPUTS=={name:sha(Path(name)) for name in INPUTS}
+
+try:
+    frozen=json.loads((EXTRACT/'manifest.json').read_text())
+    for name,digest in frozen['files'].items():assert sha(EXTRACT/name)==digest
+    assert sha(BASE/'study.json')==PROPOSAL['sourceStudySha256']
+    assert sha(EXTRACT/'bindings.json')==PROPOSAL['bindingsSha256']
+    for path,record in STUDY['inputs'].items():
+        assert sha(Path(path))==record['sha256'];INPUTS[path]=record['sha256']
+    for p in [BASE/'study.json',EXTRACT/'fixed-c1-context.glb',EXTRACT/'role-separated-originals.glb',
+              EXTRACT/'bindings.json',*HERE.glob('*.py'),HERE/'proposal.json',HERE/'readiness.json']:
+        INPUTS[str(p)]=sha(p)
+    save('inputs-before.json',INPUTS)
+    expected_roles=checks.exported_roles(checks.glb_json(EXTRACT/'role-separated-originals.glb'))
+    assert len(expected_roles)==128
+    PHASE='import-original-fixed-extraction'
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    bpy.ops.import_scene.gltf(filepath=str(EXTRACT/'fixed-c1-context.glb'));CONTEXT=set(bpy.data.objects)
+    bpy.ops.import_scene.gltf(filepath=str(EXTRACT/'role-separated-originals.glb'))
+    ROLES=[o for o in bpy.data.objects if o not in CONTEXT and o.type=='MESH'];assert len(ROLES)==128
+    FIXED=[o for o in ROLES if o['forestFixed']];assert len(FIXED)==23
+    RETAINED=[o for o in ROLES if o['ownerId']=='l28' and o['forestRole']=='crown-tier'];assert len(RETAINED)==4
+    fixed_before={o.name:native.fixed_digest(o) for o in FIXED}
+    retained_before={o.name:native.fixed_digest(o) for o in RETAINED}
+    context_before={o.name:native.fixed_digest(o) for o in CONTEXT if o.type=='MESH'}
+    topology_before={o.name:[list(p.vertices) for p in o.data.polygons] for o in ROLES}
+    MATERIALS=set(bpy.data.materials)
+    material_before={m.name:checks.material_digest(m) for m in MATERIALS}
+    slots_before={o.name:[m.name for m in o.data.materials] for o in ROLES}
+    PHASE='deform-101-original-roles';changes=[]
+    for obj in ROLES:
+        if obj in FIXED or obj in RETAINED:continue
+        function=fields.field_for_role(obj['ownerId'],obj['forestRole'],obj['forestOrdinal'],PROPOSAL)
+        obj.data=obj.data.copy()
+        pin=PROPOSAL['owners'][obj['ownerId']].get('branchRootPin')
+        pin_height=pin['anchorWorld'][1]+pin['fixedBandWorld'] if pin else None
+        row=deform.apply(obj,lambda p,function=function:Vector(function(tuple(p))),BI,pin_height)
+        changes.append(row)
+        normals=[n.vector for n in obj.data.corner_normals]
+        assert normals and all(abs(n.length-1)<.002 for n in normals),'Non-unit deformed custom normal'
+        row['normalMethod']='original split normals mapped by inverse-transpose field Jacobian'
+        row['normalLengthMaxError']=max(abs(n.length-1) for n in normals)
+        assert row['maxWorldDisplacement']<=PROPOSAL['guards']['maxVertexWorldDisplacement'],row
+        assert row['minimumSampledJacobianDeterminant']>=PROPOSAL['guards']['minimumSampledJacobianDeterminant'],row
+    assert len(changes)==101;DEFORMED=True;save('deformations.json',changes);parity()
+    hero_meshes={child for o in CONTEXT if o.get('nativePart')=='fan-crown' for child in [o,*o.children_recursive] if child.type=='MESH'}
+    assert hero_meshes
+    hero_top=max((o.matrix_world@v.co).z for o in hero_meshes for v in o.data.vertices)
+    crown_top=max((o.matrix_world@v.co).z for o in ROLES for v in o.data.vertices)
+    assert crown_top+PROPOSAL['guards']['highestHeroClearanceWorld']<hero_top
+    JOINT_COLLECTION=bpy.data.collections.new('stage4 / same-owner visible boughs')
+    bpy.context.scene.collection.children.link(JOINT_COLLECTION)
+    PHASE='five-willow-trunk-lobes'
+    trunk=role('l14','trunk')
+    trunk_guess=Vector(PROPOSAL['owners']['l14']['fixedTipCore']['anchorWorld'])-Vector((0,.12,0))
+    for ordinal,hint in enumerate(PROPOSAL['owners']['l14']['lobeHints']):
+        connect(trunk,role('l14','crown-lobe',ordinal),trunk_guess,
+                mapped('l14','crown-lobe',ordinal,hint['anchorWorld']),
+                PROPOSAL['owners']['l14']['derivedBoughControls']['radiusWorld'],PROPOSAL['owners']['l14']['derivedBoughControls']['maximumSpanWorld'],'willow-main',trunk)
+    PHASE='twelve-birch-trunk-branch-crown-junctions'
+    for owner in ['l15','l29']:
+        root=Vector(PROPOSAL['owners'][owner]['branchRootPin']['anchorWorld'])
+        scale=STUDY['owners'][owner]['expectedUniformScale']
+        for ordinal,hint in enumerate(PROPOSAL['owners'][owner]['branchCrownPairs']):
+            branch=role(owner,'main-branch',ordinal);at=root+Vector((0,.04*scale,0))
+            connect(role(owner,'trunk'),branch,at,at,.078*scale*.28,.35)
+            tip=mapped(owner,'main-branch',ordinal,hint['anchorWorld'])
+            connect(branch,role(owner,'crown-lobe',ordinal),tip,tip,.078*scale*.12*.28,.12)
+    PHASE='fourteen-willow-stem-roots'
+    for family in STUDY['anchors']['willow']['hangingFamilies']:
+        ordinal=family['k'];stem=role('l14','hanging-stem',ordinal)
+        at=mapped('l14','hanging-stem',ordinal,native.world_matrix('l14')@Vector(family['scriptStemStartGltf']))
+        lobe=min([role('l14','crown-lobe',j) for j in range(5)],key=lambda o:volume(o).tree.find_nearest(at)[3])
+        connect(lobe,stem,at,at-Vector((0,.005,0)),PROPOSAL['derivedBoughContract']['shortStemRadiusWorld'],PROPOSAL['derivedBoughContract']['shortStemMaximumSpanWorld'],'willow-stem',stem)
+    PHASE='save-coarse-source-hold';parity()
+except BaseException as error:
+    save('first-failure.json',{'phase':PHASE,'error':repr(error),'traceback':traceback.format_exc(),
+          'allDeformationsComplete':DEFORMED,'sourceOnly':True,'jointCount':len(JOINTS),'generatedBoughCount':len(CREATED)})
+finally:
+    VOLUMES.clear();gc.collect()
+    if DEFORMED:
+        parity()
+        scene=bpy.context.scene;scene['candidate']=PROPOSAL['candidate'];scene['status']='HOLD-source-coarse-shape'
+        scene['allDeformationsComplete']=True
+        bpy.ops.wm.save_as_mainfile(filepath=str(OUT/'HOLD-shape.blend'))
+        bpy.ops.export_scene.gltf(filepath=str(OUT/'HOLD-shape.glb'),export_format='GLB',export_extras=True,export_cameras=False,export_lights=False)
+        bpy.ops.object.select_all(action='DESELECT')
+        for obj in [*ROLES,*CREATED]:
+            obj.select_set(True);parent=obj.parent
+            while parent is not None:parent.select_set(True);parent=parent.parent
+        bpy.ops.export_scene.gltf(filepath=str(OUT/'owned-crown-components.glb'),export_format='GLB',export_extras=True,use_selection=True)
+        actual=checks.exported_roles(checks.glb_json(OUT/'owned-crown-components.glb'))
+        assert actual.keys()==expected_roles.keys()
+        assert all(checks.close_values(expected_roles[key],actual[key]) for key in expected_roles)
+        save('shape-manifest.json',{'candidate':PROPOSAL['candidate'],'status':'HOLD-source-coarse-shape',
+             'sourceOnly':True,'allDeformationsComplete':True,'originalFixedRoleCount':23,'additionalRetainedSpireTiers':4,
+             'changedOriginalRoles':101,'originalRoleCount':128,'fixedDigests':fixed_before,'retainedSpireDigests':retained_before,
+             'unchangedContextMeshes':len(context_before),'jointMeasurements':JOINTS,'derivedBoughCount':len(CREATED),
+             'leaf70Baseline':'not run','actorGate':'not run','clearanceGate':'approximate inherited weld/nearest, not certified',
+             'derivedBoughContract':PROPOSAL['derivedBoughContract'],'materialNormalContract':PROPOSAL['materialContract'],
+             'firstFailurePhase':json.loads((OUT/'first-failure.json').read_text())['phase'] if (OUT/'first-failure.json').exists() else None,
+             'inputsBefore':INPUTS,'inputsAfter':{name:sha(Path(name)) for name in INPUTS},
+             'files':{name:sha(OUT/name) for name in ['HOLD-shape.blend','HOLD-shape.glb','owned-crown-components.glb','deformations.json']},
+             'elapsedSeconds':time.monotonic()-START,'runtimeIntegrated':False,'independentObservers':0})
+    else:
+        if bpy.data.objects:bpy.ops.wm.save_as_mainfile(filepath=str(OUT/'FAILED-incomplete-shape.blend'))
+        raise SystemExit('First failure before complete deformation; no whole view permitted')

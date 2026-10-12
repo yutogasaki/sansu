@@ -1,0 +1,88 @@
+{
+  "changeType": "Growing world pure-domain compile reuse; only three source/test files changed",
+  "preparationStatus": "SEALED_PREFLIGHT_PASS_CORE_NOT_STARTED",
+  "completed": [
+    {
+      "check": "exact source delta and snapshot copy",
+      "files": 20775,
+      "delta": [
+        "src/domain/growingIsland/authoredWaterBridge.test.ts",
+        "src/domain/growingIsland/authoredWaterBridge.ts",
+        "src/domain/growingIsland/authoredWaterWorld.ts"
+      ],
+      "pass": true
+    },
+    {
+      "check": "core input closure",
+      "inputs": 6460,
+      "pass": true
+    },
+    {
+      "check": "installed projection dependency hashes",
+      "inputs": 6,
+      "pass": true
+    },
+    {
+      "check": "static imports",
+      "drivers": 8,
+      "domainInputs": 90,
+      "pass": true
+    },
+    {
+      "check": "actual read-only shoulder input collector coverage",
+      "inputs": 2127,
+      "pass": true
+    }
+  ],
+  "priorFocusedEvidence": {
+    "path": "docs/design/2026-10-12-authored-water-support-reuse/focused-checks.json",
+    "sha256": "cc05aae782000b73566c0bfbb9f745a2ac639386201e9961a3bc02e9e28aa423",
+    "files": 2,
+    "tests": 30,
+    "targetEslint": "PASS",
+    "typecheck": "PASS",
+    "provenance": "Root recorded tool return values; no saved raw stdout and not a c3 rerun."
+  },
+  "pending": [
+    {
+      "check": "c3 integration core",
+      "command": [
+        "python3",
+        "/private/tmp/sansu-authored-shoulder-c3/prepared/core.py",
+        "--start"
+      ],
+      "underlyingCommand": "npm run verify:core",
+      "packageExpansion": "docs:check -> check:current-ui-entry -> lint -> typecheck -> test:run -> build (including assets:check)",
+      "environment": {
+        "SANSU_BUILD_REVISION": "authored-shoulder-c3",
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_NATIVE_GROWING_ART": "false"
+      },
+      "outerDeadlineSeconds": 7200,
+      "expectedTestCount": null,
+      "authorization": "Pending separate parent start",
+      "requires": "snapshot plus closure and installed hashes stable before/after"
+    },
+    {
+      "check": "normal-false build boundary",
+      "after": "core terminal PASS",
+      "status": "not started"
+    },
+    {
+      "check": "affected real water/shoulder editing",
+      "after": "core terminal PASS and identified candidate server",
+      "status": "not started; parent selects explicit run scope"
+    },
+    {
+      "check": "all-eight regression",
+      "status": "not scheduled or automatically restarted; c2 all-eight belongs only to c2"
+    }
+  ],
+  "notClaimed": [
+    "performance improvement",
+    "visual acceptance",
+    "M1 acceptance",
+    "PWA/release/product acceptance"
+  ],
+  "firstPreparationFailure": "Node COPYFILE_FICLONE_FORCE ENOSYS before any file copied; preserved independently. Authorized direct clonefile attempt02 succeeded."
+}

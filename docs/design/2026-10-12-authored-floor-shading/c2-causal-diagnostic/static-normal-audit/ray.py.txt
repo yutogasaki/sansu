@@ -1,0 +1,25 @@
+exec(open('/private/tmp/sansu-floor-shading-diagnostic-c2/static-normal-audit/audit.py').read().split('vertices=defaultdict')[0])
+samples=[(727,y) for y in [613,614,614.5,615,615.5,616,617]]+[(887,y) for y in [568,569,570,571,572,573,574]]+[(933,y) for y in [584,585,586,587,588,589,590]]
+hits={p:[] for p in samples}
+for fi,f in enumerate(floors):
+ v=f['vertices'];px=[project(q['point']) for q in v]
+ for k in range(0,len(f['indices']),3):
+  ids=f['indices'][k:k+3];p=[px[i] for i in ids];minx=min(q[0] for q in p);maxx=max(q[0] for q in p);miny=min(q[1] for q in p);maxy=max(q[1] for q in p)
+  near=[s for s in samples if minx-1e-6<=s[0]<=maxx+1e-6 and miny-1e-6<=s[1]<=maxy+1e-6]
+  if not near:continue
+  a,b,c=p;den=(b[1]-c[1])*(a[0]-c[0])+(c[0]-b[0])*(a[1]-c[1])
+  if abs(den)<1e-12:continue
+  for sample in near:
+   x,y=sample;l0=((b[1]-c[1])*(x-c[0])+(c[0]-b[0])*(y-c[1]))/den;l1=((c[1]-a[1])*(x-c[0])+(a[0]-c[0])*(y-c[1]))/den;l2=1-l0-l1
+   if min(l0,l1,l2)<-1e-7:continue
+   weights=[l0,l1,l2];point=[sum(v[i]['point'][axis]*l for i,l in zip(ids,weights)) for axis in ['x','y','z']]
+   normal=[sum(nv(v[i])[axis]*l for i,l in zip(ids,weights)) for axis in range(3)];mag=math.sqrt(sum(x*x for x in normal));normal=[x/mag for x in normal]
+   q=[point[0]-center-m[12],point[1]-m[13],point[2]-2-m[14]];depth=sum(q[i]*m[8+i] for i in range(3))
+   hits[sample].append({'floor':f['id'],'triangle':k//3,'vertices':ids,'barycentric':weights,'point':point,'normal':normal,'depth':depth})
+out=[]
+for sample,records in hits.items():
+ records.sort(key=lambda h:-h['depth']);a=records[0] if records else None;b=records[1] if len(records)>1 else None
+ out.append({'pixel':sample,'hitCount':len(records),'front':a,'secondDepthDelta':a['depth']-b['depth'] if b else None,'second':b})
+(D/'ray-report.json').write_text(json.dumps({'scope':'Orthographic ray against static base source floor only; excludes objects/coast and composed additions; existing actual camera, no browser/compile.','samples':out},indent=2)+'\n')
+for row in out:
+ a=row['front'];print(row['pixel'],'hits',row['hitCount'],'tri',a and (a['floor'][-2:],a['triangle']),'n',a and [round(x,4) for x in a['normal']],'y',a and round(a['point'][1],6),'depthDelta',row['secondDepthDelta'])

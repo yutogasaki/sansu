@@ -1,0 +1,87 @@
+{
+  "revision": "authored-shoulder-c2",
+  "candidate": "/private/tmp/sansu-authored-shoulder-c2/candidate",
+  "preparedAt": "2026-10-12T02:39:32.287622+00:00",
+  "preflightPass": true,
+  "coreStarted": true,
+  "browserStarted": false,
+  "serverStarted": false,
+  "sourceInputCount": 6460,
+  "actualDriverInputCount": 2127,
+  "installedDependencyCount": 6,
+  "snapshotFileCount": 20775,
+  "snapshotAndSourceImmutableAfterCollection": true,
+  "firstFailurePolicy": "Stop and preserve original raw result; no automatic repair/retry/candidate copy",
+  "evidence": {
+    "closure/inputs.json": {
+      "path": "/private/tmp/sansu-authored-shoulder-c2/closure/inputs.json",
+      "sha256": "142a3d1b21d5f49167d914c96d72e580913c702b2c820cd8e54bc918293b89fd"
+    },
+    "closure/plan.json": {
+      "path": "/private/tmp/sansu-authored-shoulder-c2/closure/plan.json",
+      "sha256": "3856d7effb4be762f28d4137d59cbcb03be9c1249778e42369055f78ef8e40ea"
+    },
+    "closure/installed-dependencies.json": {
+      "path": "/private/tmp/sansu-authored-shoulder-c2/closure/installed-dependencies.json",
+      "sha256": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0"
+    },
+    "closure/installed-dependencies-proof.json": {
+      "path": "/private/tmp/sansu-authored-shoulder-c2/closure/installed-dependencies-proof.json",
+      "sha256": "c68b4a827315bf3f02431d27ef5daf6a6d55209241f9d5f85a16f38f85b2e05a"
+    },
+    "snapshot.json": {
+      "path": "/private/tmp/sansu-authored-shoulder-c2/snapshot.json",
+      "sha256": "59e4fe1d4c6662073b156a304a1ae471c0bef0c9187e6bfde93b49e694494879"
+    },
+    "closure/import-audit.json": {
+      "path": "/private/tmp/sansu-authored-shoulder-c2/closure/import-audit.json",
+      "sha256": "457b2e587b73eb568c7af940808b6dbaf14b2ab3625bff9c106bbbd137dec7f6"
+    },
+    "closure/driver-input-audit.json": {
+      "path": "/private/tmp/sansu-authored-shoulder-c2/closure/driver-input-audit.json",
+      "sha256": "9ada786733df50de0cfd05820e97c56ef021e19bdcbc8f50cb2c7df5936410b2"
+    },
+    "closure/c1-runtime-delta.json": {
+      "path": "/private/tmp/sansu-authored-shoulder-c2/closure/c1-runtime-delta.json",
+      "sha256": "55c7712d674d41535ae0b5b92c1946804bd49be421b8c993b1eeaf117ad1ffe8"
+    }
+  },
+  "runners": {
+    "check-driver-imports.mjs": "74f17976bd655f794b2c2c2774221019576afdfb6d83d28bf7cda0ad0218ce27",
+    "check-harness-inputs.mjs": "5c91b75642e68857106f928e59c7b52f087c5b2770962bb8903bae2c8ed9b1f9",
+    "closure.py": "6b6902465e3f581a5150be95acac5dc4e440174123c48116b6612162c6e87595",
+    "collect-installed-dependencies.mjs": "85d0377a22ae5f11053b1b3737524f508717cda70436efb621ffed40dbd21375",
+    "core.py": "a3f4d8854fe714ede83d8552366b100ce8de7aca4f5ffd2482163e9a7ec113a3",
+    "regressions.py": "c7b14ec8107ae17b6cb9e4afda1b935b4cc0dcb84b466af86e25430ac64f19ca",
+    "snapshot.mjs": "ffa7d75e1f693c6674294fb2818f0ff42bef468712dac19a7e2ca445bb0b338a"
+  },
+  "coreExpectedScope": "normal island=true/native=false verify:core; counts read from real terminal log, never hardcoded",
+  "runtimeDeltaAgainstC1": [
+    {
+      "file": "src/domain/growingIsland/worldDefinition.test.ts",
+      "c1": "8d4f6d66d0c4078f3dc77c5911ecfb9e84e508137a15b035971dc68c9787b581",
+      "c2": "a52da8cd4aad28bd4fee91a18681c044ff7cbc945d8f18b79f75c01103c90aa9"
+    },
+    {
+      "file": "src/domain/growingIsland/worldDefinition.ts",
+      "c1": "8e88855dd180624f1c2b32437e6d1b93cc66e978f2fc9c741d5f004e8ba45db7",
+      "c2": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338"
+    },
+    {
+      "file": "tools/e2e-authored-shoulder.mjs",
+      "c1": "c31ad10110bc641e3edffb12de36075ee2eb23885241c807203e8f4bf764f29d",
+      "c2": "2fbbf7bd3d86e807a2673649924ee0d6aace213e2a57b5efeed091b2614f5f17"
+    }
+  ],
+  "coreExecSession": 29199,
+  "coreStartedObservedAt": "2026-10-12T02:39:48.874367+00:00",
+  "coreTerminal": true,
+  "corePass": true,
+  "coreExitCode": 0,
+  "coreReportSha256": "13da5d82d61987bb8303339aca07ee9cbcf0ea68a5d575115f921e511289e3af",
+  "coreTerminalSummarySha256": "6ceb8caa203816841d3072657aa214d94ce49bbbba784127d502fba93126c549",
+  "testFilesPassed": 610,
+  "testsPassed": 5297,
+  "sourceFixed": true,
+  "installedDependenciesFixed": true
+}

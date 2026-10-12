@@ -1,0 +1,27 @@
+{
+  "target": "/private/tmp/sansu-authored-cove-c1/candidate",
+  "revision": "authored-cove-c1",
+  "visualCandidate": "native05-authored-cove-corner-v3",
+  "corePass": false,
+  "coreFailureClassification": "Evidence packaging: two Markdown links point to ignored *.log files absent from clean file inventory. No lint/typecheck/unit/build ran in this core attempt.",
+  "shapePass": true,
+  "shapeCaptures": 2,
+  "shapeOnly": true,
+  "fullRuntimePerformed": false,
+  "coreInputCount": 2068,
+  "driverInputCount": 1961,
+  "driverSubsetOfCore": true,
+  "sourceClosureUnchanged": true,
+  "snapshotSha256": "a0d597847b058c52c8279ada57ac5aba2767baaf74012686dd341ca4c31e16dd",
+  "archiveSha256": "f4a491de74842e146610e89c462a2e34fc00ab863623a48d3e66519896ae94e2",
+  "files": {
+    "shape-execution.log.txt": "744ae00b065f3408aa0ee9ac0c52e802bf61d7830834111e0733f3d7fe535152",
+    "input-sources.tar.gz": "f4a491de74842e146610e89c462a2e34fc00ab863623a48d3e66519896ae94e2",
+    "shape/desktop-mature-whole-day.png": "7b27573fd8e41b83bb4e19885e14d1c0a2db425b3003e737d496a8d666b8841c",
+    "shape/report.json": "db43ef5db48eb0369ba542e5c1e53b1e4eac0401330ef2913ac0bcf569fb9192",
+    "shape/progress.json": "95377a15309d20e918245150475d129848dbf1a0c46bca1735d0380d4d8fccd3",
+    "shape/desktop-cove-close-day.png": "85df02b0cc415b210eaef7f01b3efdd24f9faa8171500082cdc1073361dd9963",
+    "core-first-failure/report.json": "80f4e82f2c866377f3ec706dc6f0ff979477f517cdf2d8e48e617715bbd8a8af",
+    "core-first-failure/execution.log.txt": "0f59890da2914e199f2767e48642bcc61a7a4a9d1cf9371b783f5c7fe5e8f7d5"
+  }
+}

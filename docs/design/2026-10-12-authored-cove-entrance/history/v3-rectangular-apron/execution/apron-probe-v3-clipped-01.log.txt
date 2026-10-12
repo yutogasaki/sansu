@@ -1,0 +1,12 @@
+file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/probe-cove-with-apron.mjs:137
+ for(const triangle of dryTriangles){if(triangle.every(p=>p.x<x0)||triangle.every(p=>p.x>x1)||triangle.every(p=>p.z<z0)||triangle.every(p=>p.z>z1))continue;uncovered=uncovered.flatMap(poly=>api.subtractPolygon(poly,triangle)).filter(poly=>Math.abs(api.polygonArea(poly))>1e-10);if(!uncovered.length)break;if(uncovered.length>10000)throw Error('Support polygon fragmentation limit');}
+                                                                                                                                                                                                                                                                                                                                                 ^
+
+Error: Support polygon fragmentation limit
+    at fullWidthSupport (file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/probe-cove-with-apron.mjs:137:338)
+    at file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/probe-cove-with-apron.mjs:193:740
+    at Array.map (<anonymous>)
+    at file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/probe-cove-with-apron.mjs:193:691
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.18.0

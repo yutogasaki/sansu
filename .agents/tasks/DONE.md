@@ -1,5 +1,13 @@
 # Shared Done Index
 
+- 2026-10-12: [元海岸の成長ラフをレビューへ引継ぎ](../../docs/design/2026-10-12-core-growth-review/README.md)。利用者指示で一時停止。原本比較3枚と限定検証を保存。統合1件FAIL、c10 core・実UI未実行、美術HOLD。実装と包括ゴールは未完。
+
+- 2026-10-12: [同じ4木の分岐・接続c9](../../docs/design/2026-10-12-growth-variation-runtime/README.md)。一本／二枝／周回を実移動で作り、収納／復元・9画面・固定core620/5,373 PASS。将来造成範囲の予約を追加。完了は一地区の機構と限定診断で、三つの全島・美術・本人保存の包括ゴールは継続。詳細: `docs/done/2026-10.md`。
+
+- 2026-10-12: [配置と成熟で岸が育つ初期実装c8](../../docs/design/2026-10-12-growth-terrain-runtime/README.md)。同じ木2本の三配置から2地形と位置差、実収納／復元・回転・小画面9画面、core619/5,349がPASS。別の住人1体歩行／収納後退避もPASS。限定実装と診断単位を記録し、全島の多様性・美術HOLD・本人保存・独立観察N=0・包括ゴールは継続。詳細: `docs/done/2026-10.md`。
+
+- 2026-10-12: [水庭の検証済み支持床を再利用](../../docs/design/2026-10-12-authored-water-support-reuse/README.md)。固定c3 core5,302、実27／32／35入力の世界・支持一致、水庭14画面／6操作・classic32 PASS。内部変更単位を完了。速度未計測、美術HOLD・N=0・M1／包括ゴールは継続。詳細: `docs/done/2026-10.md`。
+
 - 2026-10-11: [全島の尺度・購入・成熟preflight](../../docs/design/2026-10-11-authored-whole-preflight/README.md)。actor `.45`・実高さfocus・原本樹種/成長を修正。27→32所有物/家8軒を実購入・診断18hで確認、core5,199/編集/水庭/normal学習保存/classic32 PASS。美術31/60 HOLD・N=0・性能未達・M1/包括ゴールは継続。次はP05の全景制作。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-11: [M1水底と岸の制作基盤](../../docs/design/2026-10-11-authored-water-world/README.md)。固定anchorと現在の支持を分離し、実水面/水底/岸/流れと編集予告・収納/復元を接続。27所有物・73権利を保持。水庭の美術・全島M1・保存/配布・実機と独立理解は継続。詳細: `docs/done/2026-10.md`。

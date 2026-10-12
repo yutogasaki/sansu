@@ -1,0 +1,349 @@
+{
+  "scope": "Necessary bounds only; no authored surface has been made. Grade caps .6/1/2/4 are explicit diagnostic design assumptions, not a new runtime rule. A closed retaining bank could satisfy support with steeper local grade, so an empty interval rejects a gentle transition at that cap, not every conceivable geometry.",
+  "sectionInputSha256": "3f4b66d93e1bcdb55229c53b6d25c4d5405d467c5e9712028a509f3b49c2e961",
+  "fixedBoundaryNecessaryConditions": [
+    {
+      "cell": [
+        7,
+        -7
+      ],
+      "proposedHeight": 1.4,
+      "originalCenter": 1.302812811,
+      "preservedBoundarySamples": [
+        {
+          "edge": "north",
+          "cell": [
+            6.54,
+            -7.5
+          ],
+          "height": 1.496520016,
+          "probe": [
+            6.54,
+            -7.46
+          ],
+          "distance": 0.04
+        },
+        {
+          "edge": "north",
+          "cell": [
+            7,
+            -7.5
+          ],
+          "height": 1.549450414,
+          "probe": [
+            7,
+            -7.46
+          ],
+          "distance": 0.04
+        },
+        {
+          "edge": "north",
+          "cell": [
+            7.46,
+            -7.5
+          ],
+          "height": 1.967217349,
+          "probe": [
+            7.46,
+            -7.46
+          ],
+          "distance": 0.04
+        },
+        {
+          "edge": "west",
+          "cell": [
+            6.5,
+            -7.46
+          ],
+          "height": 1.447327658,
+          "probe": [
+            6.54,
+            -7.46
+          ],
+          "distance": 0.04
+        },
+        {
+          "edge": "west",
+          "cell": [
+            6.5,
+            -7
+          ],
+          "height": 1.206125876,
+          "probe": [
+            6.54,
+            -7
+          ],
+          "distance": 0.04
+        },
+        {
+          "edge": "west",
+          "cell": [
+            6.5,
+            -6.54
+          ],
+          "height": 1.206998047,
+          "probe": [
+            6.54,
+            -6.54
+          ],
+          "distance": 0.04
+        }
+      ],
+      "minimumGradeNeededForAnySupportedHeight": 2.5136434124999996,
+      "minimumGradeNeededForProposedHeight": 7.180433725000001,
+      "necessaryHeightIntervals": [
+        {
+          "diagnosticMaxGrade": 0.6,
+          "minCenter": 1.663217349,
+          "maxCenter": 1.510125876,
+          "necessaryIntervalNonempty": false
+        },
+        {
+          "diagnosticMaxGrade": 1,
+          "minCenter": 1.647217349,
+          "maxCenter": 1.526125876,
+          "necessaryIntervalNonempty": false
+        },
+        {
+          "diagnosticMaxGrade": 2,
+          "minCenter": 1.607217349,
+          "maxCenter": 1.566125876,
+          "necessaryIntervalNonempty": false
+        },
+        {
+          "diagnosticMaxGrade": 4,
+          "minCenter": 1.527217349,
+          "maxCenter": 1.646125876,
+          "necessaryIntervalNonempty": true
+        }
+      ]
+    },
+    {
+      "cell": [
+        8,
+        -7
+      ],
+      "proposedHeight": 1.65,
+      "originalCenter": 2.038106826,
+      "preservedBoundarySamples": [
+        {
+          "edge": "north",
+          "cell": [
+            7.54,
+            -7.5
+          ],
+          "height": 2.030211821,
+          "probe": [
+            7.54,
+            -7.46
+          ],
+          "distance": 0.04
+        },
+        {
+          "edge": "north",
+          "cell": [
+            8,
+            -7.5
+          ],
+          "height": 2.189633216,
+          "probe": [
+            8,
+            -7.46
+          ],
+          "distance": 0.04
+        },
+        {
+          "edge": "north",
+          "cell": [
+            8.46,
+            -7.5
+          ],
+          "height": 2.119748832,
+          "probe": [
+            8.46,
+            -7.46
+          ],
+          "distance": 0.04
+        }
+      ],
+      "minimumGradeNeededForAnySupportedHeight": 0,
+      "minimumGradeNeededForProposedHeight": 6.4908303999999974,
+      "necessaryHeightIntervals": [
+        {
+          "diagnosticMaxGrade": 0.6,
+          "minCenter": 1.8856332159999998,
+          "maxCenter": 2.3342118210000002,
+          "necessaryIntervalNonempty": true
+        },
+        {
+          "diagnosticMaxGrade": 1,
+          "minCenter": 1.8696332159999998,
+          "maxCenter": 2.3502118210000003,
+          "necessaryIntervalNonempty": true
+        },
+        {
+          "diagnosticMaxGrade": 2,
+          "minCenter": 1.8296332159999997,
+          "maxCenter": 2.3902118210000003,
+          "necessaryIntervalNonempty": true
+        },
+        {
+          "diagnosticMaxGrade": 4,
+          "minCenter": 1.7496332159999997,
+          "maxCenter": 2.4702118210000004,
+          "necessaryIntervalNonempty": true
+        }
+      ]
+    },
+    {
+      "cell": [
+        9,
+        -7
+      ],
+      "proposedHeight": 1.6,
+      "originalCenter": 1.760667313,
+      "preservedBoundarySamples": [
+        {
+          "edge": "north",
+          "cell": [
+            8.54,
+            -7.5
+          ],
+          "height": 2.107029954,
+          "probe": [
+            8.54,
+            -7.46
+          ],
+          "distance": 0.04
+        },
+        {
+          "edge": "north",
+          "cell": [
+            9,
+            -7.5
+          ],
+          "height": 1.883600206,
+          "probe": [
+            9,
+            -7.46
+          ],
+          "distance": 0.04
+        },
+        {
+          "edge": "north",
+          "cell": [
+            9.46,
+            -7.5
+          ],
+          "height": 1.62251152,
+          "probe": [
+            9.46,
+            -7.46
+          ],
+          "distance": 0.04
+        },
+        {
+          "edge": "east",
+          "cell": [
+            9.5,
+            -7.46
+          ],
+          "height": 1.617379628,
+          "probe": [
+            9.46,
+            -7.46
+          ],
+          "distance": 0.04
+        },
+        {
+          "edge": "east",
+          "cell": [
+            9.5,
+            -7
+          ],
+          "height": 1.619727504,
+          "probe": [
+            9.46,
+            -7
+          ],
+          "distance": 0.04
+        },
+        {
+          "edge": "east",
+          "cell": [
+            9.5,
+            -6.54
+          ],
+          "height": 1.573207282,
+          "probe": [
+            9.46,
+            -6.54
+          ],
+          "distance": 0.04
+        }
+      ],
+      "minimumGradeNeededForAnySupportedHeight": 0,
+      "minimumGradeNeededForProposedHeight": 5.675748850000001,
+      "necessaryHeightIntervals": [
+        {
+          "diagnosticMaxGrade": 0.6,
+          "minCenter": 1.803029954,
+          "maxCenter": 1.877207282,
+          "necessaryIntervalNonempty": true
+        },
+        {
+          "diagnosticMaxGrade": 1,
+          "minCenter": 1.787029954,
+          "maxCenter": 1.893207282,
+          "necessaryIntervalNonempty": true
+        },
+        {
+          "diagnosticMaxGrade": 2,
+          "minCenter": 1.747029954,
+          "maxCenter": 1.9332072820000001,
+          "necessaryIntervalNonempty": true
+        },
+        {
+          "diagnosticMaxGrade": 4,
+          "minCenter": 1.6670299540000002,
+          "maxCenter": 2.0132072819999998,
+          "necessaryIntervalNonempty": true
+        }
+      ]
+    }
+  ],
+  "changedTrianglesByFloor": {
+    "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]": 2320
+  },
+  "cutProjectedAreaByFloor": {
+    "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]": 4.799999999999997
+  },
+  "cutTrianglesAlsoTouchingCoveHashEnvelope": [],
+  "visibleStrip": {
+    "centerZ": -6.25,
+    "widths": [
+      {
+        "width": 0.7,
+        "north": -6.6,
+        "south": -5.9,
+        "pastCoreSouthBy": 0
+      },
+      {
+        "width": 0.75,
+        "north": -6.625,
+        "south": -5.875,
+        "pastCoreSouthBy": 0.025000000000000355
+      },
+      {
+        "width": 0.8,
+        "north": -6.65,
+        "south": -5.85,
+        "pastCoreSouthBy": 0.05000000000000071
+      }
+    ],
+    "ownerFront": -6.54,
+    "actorClearanceRadius": 0.28406937059140586,
+    "centerDistanceFromOwnerFront": 0.29,
+    "clearanceRemainingBeyondNormalOwnerFootprint": 0.005930629408594124
+  }
+}

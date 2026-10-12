@@ -1,0 +1,436 @@
+{
+  "scope": "Source GLB vs catalog exact local arrays plus welded composed-solid closure; not runtime walking or visual acceptance",
+  "parts": {
+    "baseline": {
+      "sha256": "0739b6e78e87be7444f6b2b48e32be6425b2f41a7344e3da6c1ddd5c3dafbb9a",
+      "topParity": [
+        {
+          "name": "baseline/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1248
+        }
+      ],
+      "allSurfacePositionsAndIndicesExact": true,
+      "triangles": 3776,
+      "zeroAreaTriangles": 0,
+      "closedOrientedEdgeFailures": 0,
+      "firstEdgeFailures": [],
+      "signedVolume": 18.829668741142598,
+      "closed": true
+    },
+    "parallel": {
+      "sha256": "b76a3ed96a021b60ef8cd56924452ee74ef24fe1be1b74061b476dcbf0885e54",
+      "topParity": [
+        {
+          "name": "baseline/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1248
+        },
+        {
+          "name": "parallel-south/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1120
+        }
+      ],
+      "allSurfacePositionsAndIndicesExact": true,
+      "triangles": 7432,
+      "zeroAreaTriangles": 0,
+      "closedOrientedEdgeFailures": 0,
+      "firstEdgeFailures": [],
+      "signedVolume": 27.12494341553472,
+      "closed": true
+    },
+    "seaward": {
+      "sha256": "00fe9ebaf333357a7ad925ff7e69efc1d74132ca4fc13bfd2806dfbf2efdb646",
+      "topParity": [
+        {
+          "name": "baseline/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1248
+        },
+        {
+          "name": "seaward-south/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1760
+        }
+      ],
+      "allSurfacePositionsAndIndicesExact": true,
+      "triangles": 9572,
+      "zeroAreaTriangles": 0,
+      "closedOrientedEdgeFailures": 76,
+      "firstEdgeFailures": [
+        {
+          "edge": [
+            [
+              3.0,
+              0.22374999523162842,
+              -2.0
+            ],
+            [
+              3.0,
+              0.34375,
+              -2.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": -1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              -0.65625,
+              -2.0
+            ],
+            [
+              3.0,
+              0.22374999523162842,
+              -2.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": -1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              0.22374999523162842,
+              0.0
+            ],
+            [
+              3.0,
+              0.34375,
+              0.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": 1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              -0.65625,
+              0.0
+            ],
+            [
+              3.0,
+              0.22374999523162842,
+              0.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": 1
+        }
+      ],
+      "signedVolume": 26.02036850121088,
+      "closed": false
+    },
+    "single": {
+      "sha256": "a00a44c5385e198f0cf1fbd6bf7f45ca7dbde40ddfe783fb60231cf030c36681",
+      "topParity": [
+        {
+          "name": "baseline/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1248
+        },
+        {
+          "name": "seaward-south/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1760
+        }
+      ],
+      "allSurfacePositionsAndIndicesExact": true,
+      "triangles": 9572,
+      "zeroAreaTriangles": 0,
+      "closedOrientedEdgeFailures": 76,
+      "firstEdgeFailures": [
+        {
+          "edge": [
+            [
+              3.0,
+              0.22374999523162842,
+              -2.0
+            ],
+            [
+              3.0,
+              0.34375,
+              -2.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": -1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              -0.65625,
+              -2.0
+            ],
+            [
+              3.0,
+              0.22374999523162842,
+              -2.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": -1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              0.22374999523162842,
+              0.0
+            ],
+            [
+              3.0,
+              0.34375,
+              0.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": 1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              -0.65625,
+              0.0
+            ],
+            [
+              3.0,
+              0.22374999523162842,
+              0.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": 1
+        }
+      ],
+      "signedVolume": 26.02036850121088,
+      "closed": false
+    },
+    "split": {
+      "sha256": "68e245dda212bdfc5c8370798731e47e319eb72298b51689fd79a04f8042fc2f",
+      "topParity": [
+        {
+          "name": "baseline/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1248
+        },
+        {
+          "name": "seaward-south/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1760
+        },
+        {
+          "name": "seaward-north/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1760
+        }
+      ],
+      "allSurfacePositionsAndIndicesExact": true,
+      "triangles": 15368,
+      "zeroAreaTriangles": 0,
+      "closedOrientedEdgeFailures": 148,
+      "firstEdgeFailures": [
+        {
+          "edge": [
+            [
+              3.0,
+              0.22374999523162842,
+              -2.0
+            ],
+            [
+              3.0,
+              0.34375,
+              -2.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": -1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              -0.65625,
+              -2.0
+            ],
+            [
+              3.0,
+              0.22374999523162842,
+              -2.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": -1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              0.22374999523162842,
+              2.0
+            ],
+            [
+              3.0,
+              0.34375,
+              2.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": 1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              -0.65625,
+              2.0
+            ],
+            [
+              3.0,
+              0.22374999523162842,
+              2.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": 1
+        }
+      ],
+      "signedVolume": 33.21106826127951,
+      "closed": false
+    },
+    "loop": {
+      "sha256": "eb88b84c8eb13728b58b041c01ea1608e5083173b34e897af18d07c77d388fa2",
+      "topParity": [
+        {
+          "name": "baseline/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1248
+        },
+        {
+          "name": "seaward-south/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1760
+        },
+        {
+          "name": "seaward-north/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1760
+        },
+        {
+          "name": "connection/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 256
+        }
+      ],
+      "allSurfacePositionsAndIndicesExact": true,
+      "triangles": 15656,
+      "zeroAreaTriangles": 0,
+      "closedOrientedEdgeFailures": 148,
+      "firstEdgeFailures": [
+        {
+          "edge": [
+            [
+              3.0,
+              0.22374999523162842,
+              -2.0
+            ],
+            [
+              3.0,
+              0.34375,
+              -2.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": -1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              -0.65625,
+              -2.0
+            ],
+            [
+              3.0,
+              0.22374999523162842,
+              -2.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": -1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              0.22374999523162842,
+              2.0
+            ],
+            [
+              3.0,
+              0.34375,
+              2.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": 1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              -0.65625,
+              2.0
+            ],
+            [
+              3.0,
+              0.22374999523162842,
+              2.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": 1
+        }
+      ],
+      "signedVolume": 33.851665229575644,
+      "closed": false
+    }
+  },
+  "pass": false
+}

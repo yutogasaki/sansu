@@ -1,0 +1,114 @@
+{
+  "status": "HOLD_FIRST_MANIFOLD_BUILD_STOPPED_NO_RETRY",
+  "ownedBlenderPid": 42067,
+  "ownedPidVerifiedAbsent": true,
+  "execution": {
+    "firstObservedUtc": "2026-10-12T05:33:47.746933+00:00",
+    "lastObservedUtc": "2026-10-12T05:33:57.541435+00:00",
+    "supervisorExitObservedUtc": "2026-10-12T05:33:57.792392+00:00",
+    "peakObservedRssBytes": 744800256,
+    "exitCode": 1,
+    "timestampsObservedNotExactChildSpawnOrExit": true,
+    "codeSourceBeforeAfterMatch": true,
+    "sealedFileCount": 10
+  },
+  "allFiveRawInputChecksClear": true,
+  "allFourRawUnionChecksClear": true,
+  "closureDoesNotProveSelfIntersectionAbsent": true,
+  "failure": {
+    "stage": "build",
+    "error": "AssertionError('No native trunk contact in the bounded branch span; no substitute support')",
+    "elapsedSeconds": 8.091133499983698,
+    "runtimeIntegrated": false
+  },
+  "firstSupport": [
+    {
+      "sourceObject": "Grove / great root house trunk",
+      "sourceHit": null,
+      "sourceTriangle": null,
+      "deckContact": [
+        4.199265480041504,
+        1.639064073562622,
+        -7.4759745597839355
+      ],
+      "maximumSpan": 1.35,
+      "sourcePenetration": 0.015,
+      "status": "CONTACT_SAMPLED_NOT_VOLUME_PROOF"
+    }
+  ],
+  "groundRelation": {
+    "minGap": -0.06779787323917397,
+    "maxGap": 1.9682514199958059,
+    "overlapArea": 4.067469637855579,
+    "buriedPolygons": 69,
+    "coplanarTopArea": 0.0,
+    "clear": false,
+    "epsilon": 1e-07
+  },
+  "notReached": [
+    "new boughs",
+    "rails",
+    "composed entrance seam audit",
+    "full route/actor box diagnostics",
+    "final exports",
+    "render"
+  ],
+  "files": {
+    "alignedOpening-closure-input.json": {
+      "sha256": "98dc7949b2d0de917f00766965dbbc3cb9d8b2a18df51c0a81f6be7dfb9f36cb",
+      "bytes": 219
+    },
+    "built-floor-ground-relation.json": {
+      "sha256": "dd5dea7f9d930dcb1871814906dbb9938e08af862956fedae64bab7c8cc2185e",
+      "bytes": 42991
+    },
+    "closed-floor-union.json": {
+      "sha256": "bcd8bdc01f848eea4d2b31a8188fe4e9147ae04abc38f153d3b1409052d93bc1",
+      "bytes": 143
+    },
+    "donor-authored-parity.json": {
+      "sha256": "260090547b1fab9ef2151056f4089791381f4c00da2fe585ed63c0297e431874",
+      "bytes": 22237
+    },
+    "donor-source-parity.json": {
+      "sha256": "5a5fe4100ed45b64d2eb3e6ab41654f9c2c6f63bc1c684c34cd2010382ccf917",
+      "bytes": 26545
+    },
+    "eastBranchGallery-closure-input.json": {
+      "sha256": "0332e9a6fe8cb4a330cd76ad4c7f0b7b16fca897f4271c40fea6cc2d47e6e250",
+      "bytes": 223
+    },
+    "failed-scene.blend": {
+      "sha256": "40e05c76c4d5b92c00af3cef6736a3151c6b0808fa07505bedef049aea7d255c",
+      "bytes": 12484809
+    },
+    "first-failure.json": {
+      "sha256": "82793e4a1e652675b78521e2dd1704f23b996f051753b203f3307039c837ec6a",
+      "bytes": 198
+    },
+    "gallery-local-top-probes.json": {
+      "sha256": "6c8566ff0203ef63f3cd8183861af935d8f13df041c3f8588fc74d5e3c0999b1",
+      "bytes": 5241
+    },
+    "manifold-union-topology.json": {
+      "sha256": "295c53d1102baf8fb8ce4d9ad27b222073e60c6c520af261848500e7e890cb82",
+      "bytes": 7183
+    },
+    "obstacle-identities.json": {
+      "sha256": "f530071acc276e7dd7dd73d9d69da3e1fb36bf5afa36c6fab8c232ce4474c189",
+      "bytes": 190132
+    },
+    "planned-floor-tops.json": {
+      "sha256": "e44d250ca5440d0f5aae661d321bde8de7c031296939b820eeb8f9d400c2b53d",
+      "bytes": 270264
+    },
+    "same-owner-bough-contacts.json": {
+      "sha256": "5a7bf053f39cacbeaab603fd7249a7e5a4df0c8f77e02ec72848f2a598146767",
+      "bytes": 327
+    },
+    "terrainThreshold-closure-input.json": {
+      "sha256": "e2f21ce4cc8ae56cc014291fe64df8508d71ef0ea3e2ea64ae59c453277701e9",
+      "bytes": 240
+    }
+  }
+}

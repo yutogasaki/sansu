@@ -1,0 +1,77 @@
+{
+  "scope": "Source GLB vs catalog exact local arrays plus welded composed-solid closure; not runtime walking or visual acceptance",
+  "parts": {
+    "baseline": {
+      "sha256": "7efd2c20d369958df39728c03ba68c9dc2a5f7060575b9ea721280661a801421",
+      "topParity": [
+        {
+          "name": "baseline/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1248
+        }
+      ],
+      "allSurfacePositionsAndIndicesExact": true,
+      "triangles": 3776,
+      "zeroAreaTriangles": 0,
+      "closedOrientedEdgeFailures": 0,
+      "firstEdgeFailures": [],
+      "signedVolume": 18.829668741142598,
+      "closed": true
+    },
+    "parallel": {
+      "sha256": "8ce75b606aa49b0d7a3f6b27d1617a5e09693e8678dc20182a079c7f3cad5b85",
+      "topParity": [
+        {
+          "name": "baseline/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1248
+        },
+        {
+          "name": "parallel/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1120
+        }
+      ],
+      "allSurfacePositionsAndIndicesExact": true,
+      "triangles": 7432,
+      "zeroAreaTriangles": 0,
+      "closedOrientedEdgeFailures": 0,
+      "firstEdgeFailures": [],
+      "signedVolume": 27.12494341553472,
+      "closed": true
+    },
+    "seaward": {
+      "sha256": "01900c4b8aa0d6d5002063e5740e4bd39c5c18ca3270b070454ced7efa7226a7",
+      "topParity": [
+        {
+          "name": "baseline/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1248
+        },
+        {
+          "name": "seaward/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1120
+        }
+      ],
+      "allSurfacePositionsAndIndicesExact": true,
+      "triangles": 7476,
+      "zeroAreaTriangles": 0,
+      "closedOrientedEdgeFailures": 0,
+      "firstEdgeFailures": [],
+      "signedVolume": 29.532566407628384,
+      "closed": true
+    }
+  },
+  "pass": true
+}

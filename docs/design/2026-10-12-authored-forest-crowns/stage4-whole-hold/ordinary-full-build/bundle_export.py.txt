@@ -1,0 +1,56 @@
+"""Temporary selected hierarchy; authoring objects remain exact, no repair."""
+from contextlib import contextmanager
+import bpy
+
+
+def ancestors(objects):
+    selected=set(objects)
+    for obj in list(selected):
+        parent=obj.parent
+        while parent is not None:selected.add(parent);parent=parent.parent
+    return selected
+
+
+@contextmanager
+def isolated_bundle(selected,save,snapshot):
+    scene=bpy.context.window.scene;old_objects=list(bpy.data.objects);old_meshes=set(bpy.data.meshes);old_materials=set(bpy.data.materials)
+    before=snapshot();save('authoring-before-export.json.gz',before)
+    temporary=bpy.data.scenes.new('DISPOSABLE FOREST EXPORT');copies={}
+    try:
+        for source in ancestors(selected):
+            copy=source.copy();copy.name='EXPORT / '+source.name
+            if source.type=='MESH':copy.data=source.data.copy()
+            temporary.collection.objects.link(copy);copies[source]=copy
+        for source,copy in copies.items():
+            copy.parent=copies.get(source.parent)
+            copy.matrix_parent_inverse=source.matrix_parent_inverse.copy()
+            copy.matrix_basis=source.matrix_basis.copy()
+        bpy.context.window.scene=temporary;bpy.context.view_layer.update()
+        save('copy-scope.json',{'sourceObjects':len(copies),'sourceMeshes':sum(o.type=='MESH' for o in copies),
+             'sourceMeshNames':sorted(o.name for o in copies if o.type=='MESH'),
+             'copyMeshNames':sorted(o.name for o in copies.values() if o.type=='MESH')})
+        assert snapshot()==before,'Original state changed at temporary scene entry'
+        yield copies
+    finally:
+        bpy.context.window.scene=scene
+        after=snapshot();save('authoring-after-export.json.gz',after)
+        for obj in list(bpy.data.objects):
+            if obj not in old_objects:bpy.data.objects.remove(obj,do_unlink=True)
+        bpy.data.scenes.remove(temporary)
+        for mesh in list(bpy.data.meshes):
+            if mesh not in old_meshes and mesh.users==0:bpy.data.meshes.remove(mesh)
+        for mat in list(bpy.data.materials):
+            if mat not in old_materials and mat.users==0:bpy.data.materials.remove(mat)
+        final=snapshot();save('authoring-export-parity.json',{'beforeEqualsAfter':before==after,
+              'beforeEqualsAfterCleanup':before==final,'repairOrRestoreOriginals':False})
+        assert before==after==final,'Original state changed through export; no repair attempted'
+
+
+def export(path,objects=None):
+    if objects is not None:
+        bpy.ops.object.select_all(action='DESELECT')
+        for o in ancestors(objects):o.select_set(True)
+    bpy.ops.export_scene.gltf(filepath=str(path),export_format='GLB',use_active_scene=True,
+        use_selection=objects is not None,export_normals=True,export_apply=False,export_yup=True,
+        export_extras=True,export_animations=False,export_cameras=False,export_lights=False,
+        export_materials='EXPORT')

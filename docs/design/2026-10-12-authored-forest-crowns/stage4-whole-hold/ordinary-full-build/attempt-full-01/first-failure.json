@@ -1,0 +1,9 @@
+{
+  "phase": "deform-fixed27-original31-lamina70",
+  "error": "Hold('Unchanged world error bound failed')",
+  "traceback": "Traceback (most recent call last):\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-generalization-prep/build-source.py\", line 221, in <module>\n    obj,row,copies=make_leaf_candidate(original,entry,raw,function,BI,g,sync_contract,\n                   ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        lambda:snapshot(guarded,mats),emitter,PROPOSAL['guards']['maxVertexWorldDisplacement'])\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-generalization-prep/leaf_adapter.py\", line 186, in make_leaf_candidate\n    candidate = clone('candidate', representation['local32'], sharp_rule['flags'], desired,\n                      blender_to_world.inverted() @ Matrix(compensated), profile['targets64'])\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-generalization-prep/leaf_adapter.py\", line 157, in clone\n    require(max(errors)<=WORLD_LIMIT, 'Unchanged world error bound failed')\n    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-generalization-prep/rules.py\", line 20, in require\n    raise Hold(message)\nrules.Hold: Unchanged world error bound failed\n",
+  "completedChangedRoles": 49,
+  "all101DeformationsComplete": false,
+  "primaryJointCount": 0,
+  "derivedBoughCount": 0
+}

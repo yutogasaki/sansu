@@ -1,0 +1,26 @@
+[
+  {
+    "command": [
+      "npx",
+      "vitest",
+      "run",
+      "src/components/island/growing/authoredFlowerObstructions.test.ts",
+      "src/components/island/growing/native/nativeAuthoredFlower.test.ts",
+      "src/components/island/growing/authoredFlowerLife.test.ts",
+      "src/components/island/growing/placeFlowerGeometry.test.ts",
+      "src/components/island/growing/growingLife.test.ts",
+      "src/components/island/growing/growingLifeScale.test.ts"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 8.386302947998047
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "exitCode": 0,
+    "elapsedSeconds": 2.3451948165893555
+  }
+]

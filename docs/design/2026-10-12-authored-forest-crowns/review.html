@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>森林冠3案と採用原本の比較</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#243245;background:#f2f4f7}body{max-width:1500px;margin:auto;padding:24px}h1{font-size:24px;margin:8px 0}p{line-height:1.7}a{color:#315d98}.notice{padding:16px 20px;background:#fff;border-left:4px solid #798da8}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin:24px 0}.candidates{grid-template-columns:repeat(3,minmax(0,1fr))}figure{margin:0;background:white;border:1px solid #dce2e9;border-radius:8px;overflow:hidden}figure img{display:block;width:100%;height:auto}figcaption{padding:16px;line-height:1.65}strong{display:block;margin-bottom:5px}small{display:block;color:#5e6c7c;overflow-wrap:anywhere}button{font:inherit;padding:8px 14px;border:1px solid #c7d1df;background:#fff;border-radius:6px;cursor:pointer}body.large .candidates{grid-template-columns:1fr}body.large .candidates figure{max-width:1280px;margin:auto}@media(max-width:800px){.grid,.candidates{grid-template-columns:1fr}body{padding:14px}}
+</style>
+<h1>森林冠3案と採用原本の比較</h1>
+<p><small>c1 actual visual candidate: native05-central-shoulder-sw-v3-source-v1+source-shading-v1<br>Observed Growing renderer flags: growingFeatureEnabled=true / nativeGrowingArt=true / authoredShoulderEnabled=true / authoredCoveEnabled=true<br>Launch flags: VITE_ISLAND_ENABLED=true / VITE_NATIVE_GROWING_ART=false（明示DEV候補でnative素材を読み込む）。<a href="../2026-10-12-authored-shoulder-runtime/c1/shape-after-first-oom/actual/report.json">保存した実画面の記録</a></small></p>
+<p class="notice"><b>全3案HOLD。本体への採用ではありません。</b> b1は次の粗形の方向のみ。3案は1280×925のsource renderで、c1の実cameraに対応するUI外の画角です。光・海・透過が異なり、住人は含みません。道の黒い点はexport差。画像リンクは未加工の原ファイルです。独立観察N=0。<a href="review.md">作者比較</a> · <a href="README.md">制作と証拠</a></p>
+<div class="grid">
+<figure><a href="../2026-10-10-island-final-3d/whole-island-render.png"><img src="../2026-10-10-island-final-3d/whole-island-render.png" alt="採用したnative-05全島の完成像"></a><figcaption><strong>採用native-05</strong>色・形・空間の基準。配置数や自由anchorをそのまま現在の所有へ転写しない。</figcaption></figure>
+<figure><a href="../2026-10-12-authored-shoulder-runtime/c1/shape-after-first-oom/actual/fixed35-desktop-whole-day.png"><img src="../2026-10-12-authored-shoulder-runtime/c1/shape-after-first-oom/actual/fixed35-desktop-whole-day.png" alt="固定c1の実アプリ全景、35所有物"></a><figcaption><strong>c1実全景・限定診断</strong>1280×900。35所有物／8軒／75権利。取得・成熟・編集を含む全旅程の成功ではない。<small>Build: authored-shoulder-c1<br>Version: authored-shoulder-c1:3fd164b9-6f32-4502-9ca5-dde6c5c1cbd7<br>DEV: 127.0.0.1:5358/prototypes/place-qa/authored.html?water=wide&amp;cove=corner&amp;shoulder=central&amp;ground=source&amp;reference=shoulder35（保存画像。旧serverは停止）</small></figcaption></figure>
+</div>
+<button type="button" onclick="document.body.classList.toggle('large');this.textContent=document.body.classList.contains('large')?'3案を並べる':'各案を大きく見る'">各案を大きく見る</button>
+<div class="grid candidates">
+<figure><a href="variants/forest-crown-b1-low-wide-v0/source-whole.png"><img src="variants/forest-crown-b1-low-wide-v0/source-whole.png" alt="b1 低く広い三段冠のsource全景"></a><figcaption><strong>b1・低く広い三段冠</strong>家の背後の横面は最も強い。右の低い冠が離れ、薄い段が並ぶ。次の粗形の方向。<small>forest-crown-b1-low-wide-v0</small></figcaption></figure>
+<figure><a href="variants/forest-crown-b2-rising-v0/source-whole.png"><img src="variants/forest-crown-b2-rising-v0/source-whole.png" alt="b2 斜め上がる冠のsource全景"></a><figcaption><strong>b2・斜め上がる冠</strong>高低差はあるが中央が開き、個体の縦長さが残る。<small>forest-crown-b2-rising-v0</small></figcaption></figure>
+<figure><a href="variants/forest-crown-b3-open-crescent-v0/source-whole.png"><img src="variants/forest-crown-b3-open-crescent-v0/source-whole.png" alt="b3 開いた三日月冠のsource全景"></a><figcaption><strong>b3・開いた三日月冠</strong>開口が森の入口より冠の切れ目に見える。内側の空間が不足。<small>forest-crown-b3-open-crescent-v0</small></figcaption></figure>
+</div>
+<p>次は上・中・下の葉を非対称に重ね、幹下の明るい入口を残す。幹・根・所有と主景を固定し、支えと通路を同時に検査する。</p>
+</html>

@@ -1,0 +1,140 @@
+{
+  "scope": "first failed pair only; no full stage2 execution",
+  "inputsBefore": {
+    "attempt-01/failed-stage.blend": "7010856b68de220ceb13781ff12f8c82b6c6aae9b9c575c748688043b98f3ccc",
+    "joints.py": "c99059a0af65cdd62b741911537dc26f605051d22e57207d452d7f5e12ca8db1",
+    "fields.py": "237497e6a48782ff2285f9fdb51a9fe6783c27f7c7c98b29924f154180838fd2",
+    "proposal.json": "98fc19102edfb3fe2a3aa89840ebd31fabfdd0ac3d7ee691dfe494808a56b5a4",
+    "stage1_support.py": "9f369d576e5cca7cd53c362b5dd8b59051e8b98600f6c2c7583862c5224806d9"
+  },
+  "inputsAfter": {
+    "attempt-01/failed-stage.blend": "7010856b68de220ceb13781ff12f8c82b6c6aae9b9c575c748688043b98f3ccc",
+    "joints.py": "c99059a0af65cdd62b741911537dc26f605051d22e57207d452d7f5e12ca8db1",
+    "fields.py": "237497e6a48782ff2285f9fdb51a9fe6783c27f7c7c98b29924f154180838fd2",
+    "proposal.json": "98fc19102edfb3fe2a3aa89840ebd31fabfdd0ac3d7ee691dfe494808a56b5a4",
+    "stage1_support.py": "9f369d576e5cca7cd53c362b5dd8b59051e8b98600f6c2c7583862c5224806d9"
+  },
+  "objectDigestsBefore": {
+    "role-l14-2743": "9cc715b81f12450e49f0cad65f258b95b43dd886528e3e9003d75f1e1d206baf",
+    "role-l14-2234": "75740f05dab88e014e2be1fd46c65f5dc9af926b6672bc55cede3edaa9b64e0a"
+  },
+  "objectDigestsAfter": {
+    "role-l14-2743": "9cc715b81f12450e49f0cad65f258b95b43dd886528e3e9003d75f1e1d206baf",
+    "role-l14-2234": "75740f05dab88e014e2be1fd46c65f5dc9af926b6672bc55cede3edaa9b64e0a"
+  },
+  "records": [
+    {
+      "variant": "original",
+      "closure": [
+        {
+          "name": "role-l14-2743",
+          "triangles": 736,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        {
+          "name": "role-l14-2234",
+          "triangles": 1216,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        }
+      ],
+      "triangleCounts": [
+        736,
+        1216
+      ],
+      "diagonals": [
+        3.2243574102934596,
+        3.0499769706325663
+      ],
+      "errorType": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2743",
+      "traceback": "Traceback (most recent call last):\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage2/query-v2/compare-failed-query.py\", line 65, in <module>\n    row['returned']=joints.overlap_ball(left,right,[guess,target],radius)\n                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage2/joints.py\", line 106, in overlap_ball\n    a = left.clearance(point)\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage2/joints.py\", line 68, in clearance\n    if not self.inside(point):\n           ~~~~~~~~~~~^^^^^^^\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage2/joints.py\", line 61, in inside\n    raise ValueError(f'Ray parity exceeded bounded intersections: {self.obj.name}')\nValueError: Ray parity exceeded bounded intersections: role-l14-2743\n",
+      "elapsedSeconds": 0.007099792128428817
+    },
+    {
+      "variant": "candidate64",
+      "closure": [
+        {
+          "name": "role-l14-2743",
+          "triangles": 736,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        {
+          "name": "role-l14-2234",
+          "triangles": 1216,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        }
+      ],
+      "triangleCounts": [
+        736,
+        1216
+      ],
+      "diagonals": [
+        3.2243574102934596,
+        3.0499769706325663
+      ],
+      "returned": {
+        "center": [
+          2.4679999351501465,
+          3.0542500019073486,
+          -4.0
+        ],
+        "radiusWorld": 0.025429949999999996,
+        "actualSurfaceClearances": [
+          0.09988880157470703,
+          0.1608559787273407
+        ],
+        "searchCandidates": 77
+      },
+      "elapsedSeconds": 0.02495091687887907
+    }
+  ],
+  "boundInputsBefore": {
+    "README.md": "57454309d380c6d41394007f06c567c6d7f353d57a3c15456b28e802430b0362",
+    "compare-failed-query.py": "e989acfec28288318926c5b3e398149aa452b6c5b87599d180885025f1466ee9",
+    "provenance-tests.json": "4aacb1e8e70d274ebc0c70e788e3d45702fb1021203ecbb699b55fe7d3d66dd2",
+    "provenance-tests.log.txt": "8a72aafc5a2e540067776951aad8bf43005b9e5f58f653e65bdccbb9d354204d",
+    "provenance.py": "cb9226b364c568ef759a1e16b98b9a62bb4199219d971a97bbb2434ffd3139e6",
+    "pure-python-first.log.txt": "ef1ef0ea4ba0032ed999bbb6d8ab866199c34c9d82c170e43c4ef6f0dbc2a9f2",
+    "pure-python-result.json": "38894ed39a52ff46a0b773ca907b7596cff1cd89365556e4a12a3d94ed41f122",
+    "pure-python-review-result.json": "c5696c65a8184605cc5f9b3a05f82635fd9b9c149d23a40c0fa15add96e4fb1c",
+    "pure-python-review.log.txt": "d6eb342de1c3ca9dabd7a7b8eee3899656bbf20074b40b3d5ead01e1067063da",
+    "ray_query64.py": "e5b6c22a0781049f8ffbf33d6166064b79b34dcdbca6fe6d348f760af109b3b3",
+    "run-once.py": "a7a1f44710721c562a27941320708c67da364f16e340edf783fbff471e621710",
+    "test_provenance.py": "56f05e2814fa3500054894af43eb70ae4b5a38df4b6222982f2a94b5a3ba2e5c",
+    "test_query64.py": "f0b19db948543013619e202b08da1f4c4320731d87ded38626d1b7e1a07c2614",
+    "volume_adapter.py": "f79f9ebdd7a764a7f0957a93163f5172164f062940991ac83ecc51401c5b7c27",
+    "readiness.json": "6ab1c96d34bb964c3b5df7060066c63866b0781a9e2c541fa51bb70d59f1efbb",
+    "readiness.sha256": "518f0b2718e0a8eb8ed5af4cb3c5ccef806b795047fc98db6cf1c9cdc06e6655"
+  },
+  "boundInputsAfter": {
+    "README.md": "57454309d380c6d41394007f06c567c6d7f353d57a3c15456b28e802430b0362",
+    "compare-failed-query.py": "e989acfec28288318926c5b3e398149aa452b6c5b87599d180885025f1466ee9",
+    "provenance-tests.json": "4aacb1e8e70d274ebc0c70e788e3d45702fb1021203ecbb699b55fe7d3d66dd2",
+    "provenance-tests.log.txt": "8a72aafc5a2e540067776951aad8bf43005b9e5f58f653e65bdccbb9d354204d",
+    "provenance.py": "cb9226b364c568ef759a1e16b98b9a62bb4199219d971a97bbb2434ffd3139e6",
+    "pure-python-first.log.txt": "ef1ef0ea4ba0032ed999bbb6d8ab866199c34c9d82c170e43c4ef6f0dbc2a9f2",
+    "pure-python-result.json": "38894ed39a52ff46a0b773ca907b7596cff1cd89365556e4a12a3d94ed41f122",
+    "pure-python-review-result.json": "c5696c65a8184605cc5f9b3a05f82635fd9b9c149d23a40c0fa15add96e4fb1c",
+    "pure-python-review.log.txt": "d6eb342de1c3ca9dabd7a7b8eee3899656bbf20074b40b3d5ead01e1067063da",
+    "ray_query64.py": "e5b6c22a0781049f8ffbf33d6166064b79b34dcdbca6fe6d348f760af109b3b3",
+    "run-once.py": "a7a1f44710721c562a27941320708c67da364f16e340edf783fbff471e621710",
+    "test_provenance.py": "56f05e2814fa3500054894af43eb70ae4b5a38df4b6222982f2a94b5a3ba2e5c",
+    "test_query64.py": "f0b19db948543013619e202b08da1f4c4320731d87ded38626d1b7e1a07c2614",
+    "volume_adapter.py": "f79f9ebdd7a764a7f0957a93163f5172164f062940991ac83ecc51401c5b7c27",
+    "readiness.json": "6ab1c96d34bb964c3b5df7060066c63866b0781a9e2c541fa51bb70d59f1efbb",
+    "readiness.sha256": "518f0b2718e0a8eb8ed5af4cb3c5ccef806b795047fc98db6cf1c9cdc06e6655"
+  },
+  "clearanceLimit": "Inherited float32 BVH distance is approximate, not a certified lower bound; 7-decimal welded closure is not exact seam closure",
+  "sourceOnly": true,
+  "geometryAcceptance": false,
+  "runtimeIntegrated": false,
+  "independentObservers": 0
+}

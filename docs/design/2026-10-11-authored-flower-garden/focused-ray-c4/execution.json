@@ -1,0 +1,71 @@
+{
+  "command": [
+    "node",
+    "tools/e2e-authored-flower.mjs"
+  ],
+  "environmentOverrides": {
+    "SANSU_AUTHORED_FLOWER_OUTPUT": "/private/tmp/sansu-authored-flower-ray-c12",
+    "SANSU_AUTHORED_FLOWER_BUILD": "authored-flower-lifecycle-c4",
+    "SANSU_AUTHORED_FLOWER_RAY_ONLY": "1",
+    "SANSU_AUTHORED_FLOWER_SHAPE_ONLY": "0",
+    "SANSU_AUTHORED_FLOWER_URL": "http://127.0.0.1:5352/prototypes/place-qa/authored.html?water=wide&reference=preflight32"
+  },
+  "scope": "Focused actual canvas selection of four owned source flower stocks only; no core/regression/full browser run",
+  "executionLog": "/private/tmp/sansu-authored-flower-ray-c12.execution.log.txt",
+  "sourceInputCountExpected": 1884,
+  "startedAtUnixSeconds": 1791735388.615691,
+  "exitCode": 0,
+  "sessionId": 82266,
+  "finishedAtUnixSeconds": 1791735713.4347289,
+  "sessionCompleted": true,
+  "browserClosedByToolFinally": true,
+  "result": {
+    "pass": true,
+    "expectedBuild": "authored-flower-lifecycle-c4",
+    "target": "http://127.0.0.1:5352/prototypes/place-qa/authored.html?water=wide&reference=preflight32",
+    "shapeOnly": false,
+    "rayOnly": true,
+    "sourceClosureUnchanged": true,
+    "initialInputHash": "8f2db75ad9d31ccd94e8a5273078024ff09ba062d9a490cd0f03ad35a3b950f8",
+    "finalInputHash": "8f2db75ad9d31ccd94e8a5273078024ff09ba062d9a490cd0f03ad35a3b950f8",
+    "error": null,
+    "errors": [],
+    "initialInputCount": 1884,
+    "finalInputCount": 1884,
+    "inputMapsEqual": true,
+    "canvasSelectionCount": 4,
+    "captures": [
+      {
+        "file": "desktop-mature-whole-day.png",
+        "build": "authored-flower-lifecycle-c4"
+      }
+    ],
+    "timings": [
+      {
+        "name": "load-mature-32",
+        "success": true,
+        "elapsedMs": 22396.517792
+      },
+      {
+        "name": "canvas-select-l31",
+        "success": true,
+        "elapsedMs": 31711.625083000006
+      },
+      {
+        "name": "canvas-select-l17",
+        "success": true,
+        "elapsedMs": 71950.479792
+      },
+      {
+        "name": "canvas-select-l18",
+        "success": true,
+        "elapsedMs": 72169.353375
+      },
+      {
+        "name": "canvas-select-l19",
+        "success": true,
+        "elapsedMs": 71720.45654200003
+      }
+    ]
+  }
+}

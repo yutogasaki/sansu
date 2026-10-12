@@ -1,0 +1,116 @@
+--- c1/closure.py
++++ c2/closure.py
+@@ -134,7 +134,7 @@
+         'hashesSha256': hashlib.sha256(json.dumps(hashes, sort_keys=True, separators=(',', ':')).encode()).hexdigest(),
+         'excludedFutureEvidence': sorted(OUTPUT_SEGMENTS),
+         'newRuntimeEvidenceMustStayOutside': [COVE, *NEW_SOURCES],
+-        'revision': 'authored-shoulder-c1',
++        'revision': 'authored-shoulder-c2',
+     }
+     return hashes, {name: sorted(reasons[name]) for name in sorted(reasons)}, summary, sorted(driver)
+ 
+@@ -143,10 +143,10 @@
+     parser = argparse.ArgumentParser(description='Read-only source closure preparation; never runs checks or copies a candidate.')
+     parser.add_argument('--start', action='store_true', help='Collect only after the parent freezes live source; never copy or verify')
+     parser.add_argument('--repo', default='/Users/yutogasaki/Projects/sansu')
+-    parser.add_argument('--out', default='/private/tmp/sansu-authored-shoulder-c1/closure')
++    parser.add_argument('--out', default='/private/tmp/sansu-authored-shoulder-c2/closure')
+     args = parser.parse_args()
+     if not args.start:
+-        print(json.dumps({'prepared': True, 'executionStarted': False, 'inventoryCollected': False, 'revision': 'authored-shoulder-c1', 'baselineReport': str(BASELINE_REPORT), 'newSourceBundles': NEW_SOURCES})); return
++        print(json.dumps({'prepared': True, 'executionStarted': False, 'inventoryCollected': False, 'revision': 'authored-shoulder-c2', 'baselineReport': str(BASELINE_REPORT), 'newSourceBundles': NEW_SOURCES})); return
+     repo, out = Path(args.repo).resolve(), Path(args.out).resolve()
+     if out == repo or repo in out.parents: raise RuntimeError('Preparation output must be outside source tree')
+     assert not any((out / name).exists() for name in ('inputs.json', 'inputs.txt', 'reasons.json', 'driver-inputs.txt', 'plan.json')), 'Refuse to overwrite previous closure evidence'
+--- c1/collect-installed-dependencies.mjs
++++ c2/collect-installed-dependencies.mjs
+@@ -60,7 +60,7 @@
+ }
+ if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+     const repo = process.env.SANSU_CLOSURE_REPO ?? '/Users/yutogasaki/Projects/sansu';
+-    const out = process.env.SANSU_CLOSURE_OUT ?? '/private/tmp/sansu-authored-shoulder-c1/closure';
++    const out = process.env.SANSU_CLOSURE_OUT ?? '/private/tmp/sansu-authored-shoulder-c2/closure';
+     if (!process.argv.includes('--start')) console.log(JSON.stringify({ prepared: true, executionStarted: false, repo, out }));
+     else {
+         await fs.mkdir(out, { recursive: true });
+--- c1/snapshot.mjs
++++ c2/snapshot.mjs
+@@ -4,7 +4,7 @@
+ import path from 'node:path';
+ import { createHash } from 'node:crypto';
+ const source = '/Users/yutogasaki/Projects/sansu';
+-const output = '/private/tmp/sansu-authored-shoulder-c1';
++const output = '/private/tmp/sansu-authored-shoulder-c2';
+ const dest = path.join(output, 'candidate');
+ const closurePath = path.join(output, 'closure/inputs.json');
+ const installedPath = path.join(output, 'closure/installed-dependencies.json');
+--- c1/check-driver-imports.mjs
++++ c2/check-driver-imports.mjs
+@@ -4,8 +4,8 @@
+ import { createHash } from 'node:crypto';
+ import { createRequire } from 'node:module';
+ import { collectProjection } from './collect-installed-dependencies.mjs';
+-const repo = process.env.SANSU_CLOSURE_REPO ?? '/private/tmp/sansu-authored-shoulder-c1/candidate';
+-const out = process.env.SANSU_CLOSURE_OUT ?? '/private/tmp/sansu-authored-shoulder-c1/closure';
++const repo = process.env.SANSU_CLOSURE_REPO ?? '/private/tmp/sansu-authored-shoulder-c2/candidate';
++const out = process.env.SANSU_CLOSURE_OUT ?? '/private/tmp/sansu-authored-shoulder-c2/closure';
+ const drivers = ['tools/e2e-authored-floor-shading.mjs', 'tools/e2e-authored-shoulder.mjs', 'tools/e2e-authored-island-editing.mjs',
+     'tools/e2e-authored-water.mjs', 'tools/e2e-authored-flower.mjs', 'tools/e2e-authored-cove.mjs', 'tools/e2e-growing-balance.mjs', 'tools/e2e-smoke.mjs'];
+ const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+--- c1/check-harness-inputs.mjs
++++ c2/check-harness-inputs.mjs
+@@ -3,8 +3,8 @@
+ import fs from 'node:fs/promises';
+ import path from 'node:path';
+ import { createHash } from 'node:crypto';
+-const repo = '/private/tmp/sansu-authored-shoulder-c1/candidate';
+-const out = '/private/tmp/sansu-authored-shoulder-c1/closure';
++const repo = '/private/tmp/sansu-authored-shoulder-c2/candidate';
++const out = '/private/tmp/sansu-authored-shoulder-c2/closure';
+ const sha = value => createHash('sha256').update(value).digest('hex');
+ if (!process.argv.includes('--start')) console.log(JSON.stringify({ prepared: true, executionStarted: false, repo, out }));
+ else {
+--- c1/core.py
++++ c2/core.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Prepared shoulder c1 core runner. Does not collect source or execute without --start."""
++"""Prepared shoulder c2 core runner. Does not collect source or execute without --start."""
+ from pathlib import Path
+ import argparse
+ import hashlib
+@@ -9,13 +9,13 @@
+ import signal
+ import time
+ 
+-BASE = Path('/private/tmp/sansu-authored-shoulder-c1')
++BASE = Path('/private/tmp/sansu-authored-shoulder-c2')
+ REPO = BASE / 'candidate'
+ CLOSURE = BASE / 'closure/inputs.json'
+ INSTALLED = BASE / 'closure/installed-dependencies.json'
+ SNAPSHOT = BASE / 'snapshot.json'
+ OUTPUT = BASE / 'core'
+-REVISION = 'authored-shoulder-c1'
++REVISION = 'authored-shoulder-c2'
+ DEADLINE = 7200
+ 
+ 
+--- c1/regressions.py
++++ c2/regressions.py
+@@ -11,13 +11,13 @@
+ import time
+ from pathlib import Path
+ 
+-ROOT = Path('/private/tmp/sansu-authored-shoulder-c1')
++ROOT = Path('/private/tmp/sansu-authored-shoulder-c2')
+ REPO = ROOT / 'candidate'
+ CORE = ROOT / 'core/report.json'
+ SNAPSHOT = ROOT / 'snapshot.json'
+ OUTPUT = ROOT / 'regressions'
+-REVISION = 'authored-shoulder-c1'
+-BASE = 'http://127.0.0.1:5358'
++REVISION = 'authored-shoulder-c2'
++BASE = 'http://127.0.0.1:5359'
+ 
+ 
+ def write_json(path, data):

@@ -1,0 +1,108 @@
+"""Unexecuted stage-2 source deformation proposal; no scene or file side effects.
+
+All coordinates are authored Y-up metres. The caller must exclude fixed roles,
+keep original source matrices, and transform split normals by the inverse
+transpose of the numerical Jacobian. This module does not certify mesh joins,
+closed boughs, clearance, support, or artwork acceptance.
+"""
+import math
+
+
+def add(a, b):
+    return tuple(x + y for x, y in zip(a, b))
+
+
+def sub(a, b):
+    return tuple(x - y for x, y in zip(a, b))
+
+
+def mul(a, scale):
+    return tuple(x * scale for x in a)
+
+
+def length(a):
+    return math.sqrt(sum(x * x for x in a))
+
+
+def smooth(value):
+    value = max(0.0, min(1.0, value))
+    return value * value * (3.0 - 2.0 * value)
+
+
+def local_hint(point, item):
+    delta = sub(point, item['anchorWorld'])
+    return tuple(delta[i] * (item['stretch'][i] - 1.0)
+                 + item['shiftWorld'][i] for i in range(3))
+
+
+def willow_field(point, owner):
+    """One smooth field for ALL 89 canopy/stem/leaf nodes, not loose lobes.
+
+    Five unequal hints create a rear ridge, inner shoulder and lower return.
+    A common spatial field preserves coincident original contact coordinates;
+    it is not proof that the original contacts or the deformed field are sound.
+    The fixed core protects the existing tip region; actual trunk/lobe volume
+    tests must still request a real closed bough if overlap is lost elsewhere.
+    """
+    weighted = [0.0, 0.0, 0.0]
+    total = 0.0
+    for item in owner['lobeHints']:
+        delta = sub(point, item['anchorWorld'])
+        width = item['influenceRadiusXZWorld']
+        weight = math.exp(-(delta[0] ** 2 + delta[2] ** 2) / (width * width))
+        hint = local_hint(point, item)
+        total += weight
+        for i in range(3):
+            weighted[i] += weight * hint[i]
+    if total < 1e-12:
+        raise ValueError('Point is outside the authored willow influence domain')
+    core = owner['fixedTipCore']
+    radial = length(sub(point, core['anchorWorld']))
+    weight = smooth((radial - core['radiusWorld']) / core['falloffWorld'])
+    return add(point, tuple(value / total * weight for value in weighted))
+
+
+def birch_pair_field(point, owner, ordinal):
+    """Same field for one ORIGINAL branch and its ORIGINAL crown, j=0..2.
+
+    The common lower pin band leaves their starts in the original coordinates.
+    Each distal branch/crown pair gets its own height and reach. This avoids
+    duplicating a crown, moving a leaf alone, or flattening all three together.
+    """
+    item = owner['branchCrownPairs'][ordinal]
+    pin = owner['branchRootPin']
+    weight = smooth((point[1] - pin['anchorWorld'][1] - pin['fixedBandWorld'])
+                    / pin['transitionWorld'])
+    return add(point, mul(local_hint(point, item), weight))
+
+
+def spire_tier_field(point, owner, ordinal):
+    """Keep tier height and central trunk contact; reshape only outer foliage."""
+    item = owner['tiers'][ordinal]
+    center = item['anchorWorld']
+    delta = sub(point, center)
+    radius = math.hypot(delta[0], delta[2])
+    weight = smooth((radius - owner['fixedAxisRadiusWorld'])
+                    / owner['axisFalloffWorld'])
+    return add(point, mul(local_hint(point, item), weight))
+
+
+def jacobian_columns(field, point, epsilon=1e-5):
+    columns = []
+    for axis in range(3):
+        offset = tuple(epsilon if i == axis else 0.0 for i in range(3))
+        columns.append(mul(sub(field(add(point, offset)), field(sub(point, offset))),
+                           0.5 / epsilon))
+    return tuple(columns)
+
+
+def field_for_role(owner_id, role, ordinal, proposal):
+    """Return a pure coordinate function. Fixed roles are intentionally rejected."""
+    owner = proposal['owners'][owner_id]
+    if owner_id == 'l14' and role in ('crown-lobe', 'hanging-stem', 'hanging-leaf'):
+        return lambda point: willow_field(point, owner)
+    if owner_id in ('l15', 'l29') and role in ('crown-lobe', 'main-branch'):
+        return lambda point: birch_pair_field(point, owner, ordinal)
+    if owner_id == 'l28' and role == 'crown-tier':
+        return lambda point: spire_tier_field(point, owner, ordinal)
+    raise ValueError(f'Fixed or unknown role must not be deformed: {owner_id}/{role}/{ordinal}')

@@ -1,0 +1,160 @@
+{
+  "scope": "Numerical candidate v2, source-preserving feasibility only. Projection distance is not a 3D triangle intersection or beauty pass. Swept floor coverage proves XZ dry support, not acceptable walking animation/slope. Cap within support footprint is a local numerical design, not authored source asset.",
+  "inputs": {
+    "/private/tmp/sansu-whole-massing-c-terrain/v2/leaf-source-triangles.json": "1aedc3a22c67b055a9329297138714e19e81b5ca73fbff8f6ea950dd960ff8cf",
+    "/private/tmp/sansu-whole-massing-c-terrain/v2/candidate-world.json.gz": "3be0fb01176808378bfe3ecf37a4c9273b9be94d5854a0e7c4e61d0f5a2b2cd2",
+    "/private/tmp/sansu-whole-massing-c-terrain/sections.json": "3f4b66d93e1bcdb55229c53b6d25c4d5405d467c5e9712028a509f3b49c2e961",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/native05-world.json.gz": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08"
+  },
+  "leaves": [
+    {
+      "part": "willow",
+      "triangles": 16720,
+      "min": [
+        5.553810988915382,
+        2.475398390602356,
+        -7.689585873534719
+      ],
+      "max": [
+        7.250927076955489,
+        3.8637742997746,
+        -6.3443991224323915
+      ]
+    },
+    {
+      "part": "birch",
+      "triangles": 3648,
+      "min": [
+        7.251350988300697,
+        3.2868729945242405,
+        -7.570649457337189
+      ],
+      "max": [
+        8.748649011699303,
+        3.845772998708486,
+        -6.429350542662811
+      ]
+    },
+    {
+      "part": "spire",
+      "triangles": 768,
+      "min": [
+        8.424327564239501,
+        2.530542947649956,
+        -7.575672435760498
+      ],
+      "max": [
+        9.575672435760499,
+        4.11994286954403,
+        -6.424327564239502
+      ]
+    }
+  ],
+  "leafProjectionPairs": [
+    {
+      "parts": [
+        "willow",
+        "birch"
+      ],
+      "topXZ": {
+        "distance": 0.02821898008173713,
+        "overlapArea": 0.0,
+        "closestPoints": [
+          [
+            7.233207103902225,
+            -7.258714260144118
+          ],
+          [
+            7.260605572915173,
+            -7.26546960858813
+          ]
+        ]
+      },
+      "frontXY": {
+        "distance": 0.009677878100646712,
+        "overlapArea": 0.0,
+        "closestPoints": [
+          [
+            7.247104677537102,
+            3.5210887902492938
+          ],
+          [
+            7.2566572196642705,
+            3.522641292564801
+          ]
+        ]
+      }
+    },
+    {
+      "parts": [
+        "birch",
+        "spire"
+      ],
+      "topXZ": {
+        "distance": 0.0,
+        "overlapArea": 0.10059667911142836,
+        "closestPoints": [
+          [
+            8.434708184762208,
+            -6.832391400262973
+          ],
+          [
+            8.434708184762208,
+            -6.832391400262973
+          ]
+        ]
+      },
+      "frontXY": {
+        "distance": 0.0,
+        "overlapArea": 0.0013720112804178086,
+        "closestPoints": [
+          [
+            8.745951589515935,
+            3.5852212026749983
+          ],
+          [
+            8.745951589515935,
+            3.5852212026749983
+          ]
+        ]
+      }
+    }
+  ],
+  "floor": {
+    "newSumArea": 4.7999999999999945,
+    "newUnionArea": 4.799999999999997,
+    "newInternalOverlapArea": -2.6645352591003757e-15,
+    "missingCRegionArea": 0.0,
+    "outsideCRegionArea": 0.0,
+    "newVsRetainedSourceFloorOverlap": 0.0,
+    "sharedBoundaryVertices": 718,
+    "boundaryNoSourceHit": 0,
+    "maxBoundaryHeightError": 6.661338147750939e-16,
+    "routeCenterline": [
+      [
+        5.25,
+        -6.5
+      ],
+      [
+        5.25,
+        -6.25
+      ],
+      [
+        10.0,
+        -6.25
+      ]
+    ],
+    "actorClearanceHalfWidth": 0.28406937059140586,
+    "sweptArea": 3.1634753351468516,
+    "uncoveredSweptArea": 0.0
+  },
+  "oldGrants": 73,
+  "oldGrantWholeFootprintsOverlappingC": [],
+  "finalInputs": {
+    "/private/tmp/sansu-whole-massing-c-terrain/v2/leaf-source-triangles.json": "1aedc3a22c67b055a9329297138714e19e81b5ca73fbff8f6ea950dd960ff8cf",
+    "/private/tmp/sansu-whole-massing-c-terrain/v2/candidate-world.json.gz": "3be0fb01176808378bfe3ecf37a4c9273b9be94d5854a0e7c4e61d0f5a2b2cd2",
+    "/private/tmp/sansu-whole-massing-c-terrain/sections.json": "3f4b66d93e1bcdb55229c53b6d25c4d5405d467c5e9712028a509f3b49c2e961",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/native05-world.json.gz": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08"
+  },
+  "inputsUnchanged": true
+}

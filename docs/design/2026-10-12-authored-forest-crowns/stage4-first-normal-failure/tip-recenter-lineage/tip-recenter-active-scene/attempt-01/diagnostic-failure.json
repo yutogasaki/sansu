@@ -1,0 +1,5 @@
+{
+  "phase": "six-incident-sharp-tip-recenter:standalone-glb-roundtrip",
+  "error": "AssertionError('HOLD: original scene changed; no repair attempted')",
+  "traceback": "Traceback (most recent call last):\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/tip-recenter-active-scene/probe.py\", line 232, in <module>\n    with isolated_export_scene(obj,save,native,checks) as export_obj:\n         ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Applications/Blender.app/Contents/Resources/5.2/python/lib/python3.13/contextlib.py\", line 148, in __exit__\n    next(self.gen)\n    ~~~~^^^^^^^^^^\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/tip-recenter-active-scene/export_isolation.py\", line 73, in isolated_export_scene\n    assert before == after == final, 'HOLD: original scene changed; no repair attempted'\n           ^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: HOLD: original scene changed; no repair attempted\n"
+}

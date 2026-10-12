@@ -1,0 +1,212 @@
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
+import { gunzipSync } from 'node:zlib';
+import * as T from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import manifest from '../../../../../docs/design/2026-10-12-authored-cove-entrance/cove-delivery-manifest.json';
+import nativeManifest from '../../../../../docs/design/2026-10-11-native-owned-island/kit-manifest.json';
+import { authoredWorldFrame } from '../../../../domain/growingIsland/authoredWorldFrame';
+import { withNative05WaterCarvingScope } from '../../../../domain/growingIsland/authoredWaterCarving';
+import { applyIntent, canPlace } from '../../../../domain/growingIsland/commands';
+import { derivePlaces } from '../../../../domain/growingIsland/places';
+import { HOME_CELL, approachCells, key, landCells, reachableFromHome, walkableCells } from '../../../../domain/growingIsland/space';
+import type { GrowingState } from '../../../../domain/growingIsland/types';
+import { compileWorldDefinition, type IslandWorld } from '../../../../domain/growingIsland/worldDefinition';
+import { makePokomokoRig } from '../../three/islandCharacters';
+import { IslandMaterials } from '../../three/primitives';
+import { setActorVisualScale } from '../actorScale';
+import { disposeActor, makeVillagerActor, wrapPokomoko } from '../actors';
+import { authoredOwnerApproaches, authoredFlowerWalkSet, measureAuthoredWalkingEnvelope } from '../authoredFlowerObstructions';
+import { buildObjectLayer, previewGrowingState, type Ghost } from '../objectLayer';
+import { sceneLayout } from '../sceneLayout';
+import { createWorldScene } from '../worldScene';
+import { buildAuthoredGrowingGround } from './authoredGrowingGround';
+import { makeNativeAuthoredCove, type NativeAuthoredCove } from './nativeAuthoredCove';
+import { makeNativeAuthoredFlower, type NativeAuthoredFlower, type NativeAuthoredFlowerSkin } from './nativeAuthoredFlower';
+import { makeNativeGrowingKit, type NativeGrowingKit } from './nativeGrowingKit';
+
+const options = { water: true, cove: true };
+const sha = (value: Uint8Array) => createHash('sha256').update(value).digest('hex');
+const meshes = (root: T.Object3D) => { const result: T.Mesh[] = []; root.traverse(node => { if (node instanceof T.Mesh) result.push(node); }); return result; };
+let base: IslandWorld, state: GrowingState, epoch: number, kit: NativeGrowingKit, cove: NativeAuthoredCove, flowers: NativeAuthoredFlower;
+beforeAll(async () => {
+    base = withNative05WaterCarvingScope(compileWorldDefinition(JSON.parse(gunzipSync(readFileSync('prototypes/place-qa/native05-world.json.gz')).toString())));
+    const fixture = JSON.parse(readFileSync('prototypes/place-qa/authored-flower-reference-mature.json', 'utf8'));
+    state = fixture.state; epoch = fixture.epoch;
+    const compressed = readFileSync(manifest.artifact.path.slice(1)), bytes = gunzipSync(compressed);
+    expect(sha(compressed)).toBe(manifest.artifact.sha256); expect(sha(bytes)).toBe(manifest.source.sha256);
+    const source = (await new GLTFLoader().parseAsync(Uint8Array.from(bytes).buffer, '')).scene;
+    source.userData.sourceId = manifest.source.id; source.userData.sourceSha256 = sha(bytes);
+    cove = makeNativeAuthoredCove(source, manifest);
+    const native = gunzipSync(readFileSync('docs/design/2026-10-11-native-owned-island/native05-owned-kit.glb.gz'));
+    kit = makeNativeGrowingKit((await new GLTFLoader().parseAsync(Uint8Array.from(native).buffer, '')).scene, nativeManifest);
+    flowers = makeNativeAuthoredFlower(JSON.parse(gunzipSync(readFileSync('prototypes/place-qa/native-flower-support.json.gz')).toString()) as NativeAuthoredFlowerSkin);
+}, 20000);
+afterAll(() => { cove?.dispose(); flowers?.dispose(); kit?.dispose(); });
+
+function setup(current = state, mixed = false) {
+    const frame = authoredWorldFrame(current, base, options);
+    const layout = sceneLayout(current, false, frame.world, frame.waterPlan, base, { options, covePlan: frame.covePlan, revision: frame.revision });
+    const m = new IslandMaterials('moon-garden');
+    const layer = buildObjectLayer(m, current, layout, undefined, undefined, [], kit, mixed ? flowers : undefined, cove);
+    layer.root.updateMatrixWorld(true);
+    return { frame, layout, m, layer, dispose() { layer.dispose(); m.dispose(); } };
+}
+
+describe('actual authored P04 cove runtime composition', () => {
+    it('renders the shared apron exactly once from the evaluated world and preserves all acquired owners and ground', () => {
+        const saved = structuredClone(state), f = setup(), upstream = authoredWorldFrame(state, base, { water: true, cove: false });
+        const terrain = buildAuthoredGrowingGround(f.layout);
+        try {
+            expect(f.frame.covePlan!.assemblies).toHaveLength(1);
+            const shell = f.layer.placeRoot.getObjectByName('authored-cove-shell')!;
+            expect(shell.userData.objectId).toBe('p9'); expect(shell.userData.sourceSha256).toBe(manifest.source.sha256);
+            expect(meshes(shell).reduce((sum, mesh) => sum + mesh.geometry.index!.count / 3, 0)).toBe(79384);
+            expect(meshes(shell).some(mesh => /apron|bank|floor/i.test(mesh.name))).toBe(false);
+            expect(f.frame.world.floors.slice(0, upstream.world.floors.length)).toEqual(upstream.world.floors);
+            expect(landCells(state, f.frame.world)).toEqual(landCells(state, upstream.world));
+            expect(landCells(state, f.frame.world)).toHaveLength(73);
+            expect(f.layer.objects.size).toBe(32);
+            const rendered = terrain.floor.geometry, floors = f.frame.world.floors.filter(floor => floor.kind === 'ground' || floor.kind === 'deck');
+            expect(rendered.index!.count).toBe(floors.reduce((sum, floor) => sum + floor.indices.length, 0));
+            const apron = floors.find(floor => !upstream.world.floors.some(old => old.id === floor.id))!;
+            expect(apron).toBeDefined();
+            const offset = floors.slice(0, floors.indexOf(apron)).reduce((sum, floor) => sum + floor.vertices.length, 0);
+            const positions = rendered.getAttribute('position');
+            for (const [index, vertex] of apron.vertices.entries()) {
+                expect(new T.Vector3().fromBufferAttribute(positions, offset + index).distanceTo(
+                    new T.Vector3(vertex.point.x - f.layout.center, vertex.point.y, vertex.point.z - 2))).toBeLessThan(1e-6);
+            }
+            terrain.root.updateMatrixWorld(true);
+            const added = f.frame.world.sites.filter(site => !upstream.world.sites.some(old => key(old.cell) === key(site.cell)) && site.floorId === apron.id);
+            expect(added.length).toBeGreaterThan(0);
+            for (const site of added) {
+                const floor = f.frame.world.floorAt(site.cell)!;
+                const ray = new T.Raycaster(f.layout.point(site.cell, 2), new T.Vector3(0, -1, 0));
+                const hits = ray.intersectObject(terrain.floor);
+                expect(hits.filter(hit => Math.abs(hit.point.y - floor.point.y) < 1e-6)).toHaveLength(1);
+            }
+            expect(state).toEqual(saved);
+        } finally { terrain.dispose(); f.dispose(); }
+    });
+
+    it.each([false, true])('guards actual cove triangles and all owner approaches with mixed flowers=%s', mixed => {
+        const f = setup(state, mixed), rig = makePokomokoRig(f.m), hero = wrapPokomoko(rig.hero, rig.heroBody, rig.heroFeet);
+        setActorVisualScale(hero, .45);
+        const actors = [hero, ...state.villagers.map(villager => makeVillagerActor(f.m, villager, .45))];
+        try {
+            const physical = authoredFlowerWalkSet(walkableCells(state, f.frame.world), f.frame.world, f.layout, f.layer.root, measureAuthoredWalkingEnvelope(actors));
+            expect(physical.proof.coveCount).toBe(1); expect(physical.proof.stockCount).toBe(mixed ? 4 : 0);
+            expect(physical.proof.obstructionRootCount).toBeGreaterThan(0);
+            expect(physical.proof.triangles).toBeGreaterThanOrEqual(79384);
+            expect(physical.proof.groveCount).toBe(5);
+            if (!mixed) expect(physical.proof.triangles).toBe(175136);
+            expect(physical.proof.blockedPoints).toBeGreaterThan(0); expect(physical.proof.blockedEdges).toBeGreaterThan(0);
+            const reached = reachableFromHome(state, physical.walkable, f.frame.world);
+            const owners = [...state.plots, ...state.landmarks], entries = authoredOwnerApproaches(owners, f.frame.world, physical.walkable, reached);
+            expect(owners.filter(owner => owner.cell && !entries.get(key(owner.cell))?.length).map(owner => owner.id)).toEqual([]);
+            const play = state.plots.find(owner => owner.id === 'p9')!;
+            const approach = approachCells(play.cell!, f.frame.world).find(cell => reached.has(key(cell)))!;
+            const route = f.frame.world.route(HOME_CELL, approach, physical.walkable)!;
+            expect(route.length).toBeGreaterThan(3);
+            for (let i = 1; i < route.length; i++) expect(physical.clearGroundPath(route[i - 1], route[i])).toBe(true);
+            expect(physical.clearGroundPath(approach, play.cell!)).toBe(true);
+        } finally { actors.forEach(disposeActor); f.dispose(); }
+    });
+
+    it.each(['p9', 'l32'])('removes and restores shell and apron through real storage of required owner %s', id => {
+        const initial = setup(), owner = [...state.plots, ...state.landmarks].find(value => value.id === id)!;
+        const stored = applyIntent(state, { id: `cove-store-${id}`, command: { type: 'store', id } }, epoch, initial.frame.world).state;
+        const missing = setup(stored);
+        try {
+            expect([...stored.plots, ...stored.landmarks].find(value => value.id === id)?.cell).toBeUndefined();
+            expect(missing.frame.covePlan!.assemblies).toEqual([]);
+            expect(missing.layer.placeRoot.getObjectByName('authored-cove-shell')).toBeUndefined();
+            expect(missing.layer.placeRoot.getObjectByName('place-native-shell')).toBeUndefined();
+            expect(missing.layer.placeRoot.getObjectByName('place-translucent-shell')).toBeUndefined();
+            expect(missing.frame.world.floors).toEqual(authoredWorldFrame(stored, base, { water: true, cove: false }).world.floors);
+            const restored = applyIntent(stored, { id: `cove-restore-${id}`, command: { type: 'unstore', id, cell: owner.cell! } }, epoch, missing.frame.world).state;
+            const joined = setup(restored);
+            try {
+                expect(joined.frame.covePlan).toEqual(initial.frame.covePlan);
+                expect(joined.frame.world.floors).toEqual(initial.frame.world.floors);
+                expect(joined.layer.placeRoot.getObjectByName('authored-cove-shell')!.matrixWorld.elements).toEqual(initial.layer.placeRoot.getObjectByName('authored-cove-shell')!.matrixWorld.elements);
+                expect(restored.plots).toEqual(state.plots); expect(restored.landmarks).toEqual(state.landmarks);
+                expect(restored.nature).toEqual(state.nature); expect(restored.town).toEqual(state.town);
+            } finally { joined.dispose(); }
+        } finally { missing.dispose(); initial.dispose(); }
+    });
+
+    it('preserves occupied-home storage protection and removes/restores the cove through permitted home movement', () => {
+        const initial = setup(), saved = structuredClone(state), cell = { x: 12, z: -9 };
+        try {
+            expect(() => applyIntent(state, { id: 'cove-occupied-home-store', command: { type: 'store', id: 'p6' } }, epoch, initial.frame.world)).toThrow('だれかが すんでいるよ。');
+            expect(state).toEqual(saved); expect(canPlace(state, cell, 'p6', initial.frame.world)).toBe(true);
+            const moved = applyIntent(state, { id: 'cove-home-move', command: { type: 'move', id: 'p6', cell } }, epoch, initial.frame.world).state;
+            const absent = setup(moved);
+            try {
+                expect(absent.frame.covePlan!.assemblies).toEqual([]);
+                expect(absent.layer.placeRoot.getObjectByName('authored-cove-shell')).toBeUndefined();
+                expect(absent.layer.placeRoot.getObjectByName('place-native-shell')).toBeUndefined();
+                expect(absent.frame.world.floors).toEqual(authoredWorldFrame(moved, base, { water: true, cove: false }).world.floors);
+                const restored = applyIntent(moved, { id: 'cove-home-reconnect', command: { type: 'move', id: 'p6', cell: { x: 7, z: -1 } } }, epoch, absent.frame.world).state;
+                const joined = setup(restored);
+                try {
+                    expect(joined.frame.covePlan).toEqual(initial.frame.covePlan);
+                    expect(joined.frame.world.floors).toEqual(initial.frame.world.floors);
+                    expect(restored.plots).toEqual(state.plots); expect(restored.villagers).toEqual(state.villagers);
+                } finally { joined.dispose(); }
+            } finally { absent.dispose(); }
+        } finally { initial.dispose(); }
+    });
+
+    it('previews the confirmed loss of shell and apron while cancel restores the same committed resources and pointer support', () => {
+        const f = setup(), scene = createWorldScene({} as T.WebGLRenderer, undefined, base, undefined, true, undefined, true);
+        const committed = scene.layout(state), world = committed.world, saved = structuredClone(state);
+        scene.life.sync(state, committed, f.layer); scene.life.tick(0, 0, false, false);
+        const actors = scene.life.objects(), actorPositions = actors.map(actor => actor.position.toArray()), proof = scene.life.walkingObstructionProof();
+        const shell = f.layer.placeRoot.getObjectByName('authored-cove-shell')!;
+        const resources = meshes(shell).map(mesh => [mesh, mesh.geometry, mesh.material]), owners = [...f.layer.objects];
+        const cell = { x: 12, z: -9 }, ghost: Ghost = { ownerId: 'p9', kind: 'play', seed: true, style: 'plain', cell, valid: true, allowed: [cell] };
+        expect(canPlace(state, cell, 'p9', world)).toBe(true);
+        const future = previewGrowingState(state, ghost)!, predicted = authoredWorldFrame(future, base, options);
+        const sample = { x: 9.65, z: 1.7 }, ray = new T.Raycaster(committed.point(sample, 2), new T.Vector3(0, -1, 0));
+        scene.scene.updateMatrixWorld(true); const support = scene.groundAt(ray)!.clone();
+        const terrain = scene.scene.getObjectByName('authored-shared-terrain')!;
+        try {
+            f.layer.updatePreview(ghost); scene.showWaterPreview(future);
+            expect(shell.visible).toBe(false); expect(predicted.covePlan!.assemblies).toEqual([]);
+            expect(f.layer.root.getObjectsByProperty('name', 'authored-cove-shell')).toEqual([shell]);
+            expect(terrain.visible).toBe(false); expect(scene.life.root.visible).toBe(false);
+            expect(scene.groundAt(ray)!.toArray()).toEqual(support.toArray());
+            expect(committed.world).toBe(world); expect(f.layer.objects).toEqual(new Map(owners));
+            expect(scene.life.objects()).toEqual(actors); expect(actors.map(actor => actor.position.toArray())).toEqual(actorPositions);
+            expect(scene.life.walkingObstructionProof()).toEqual(proof);
+            expect(derivePlaces(state, world)).toEqual(f.layer.places);
+            f.layer.updatePreview(); scene.showWaterPreview();
+            expect(shell.visible).toBe(true); expect(terrain.visible).toBe(true); expect(scene.life.root.visible).toBe(true);
+            expect(meshes(shell).map(mesh => [mesh, mesh.geometry, mesh.material])).toEqual(resources);
+            const confirmed = applyIntent(state, { id: 'cove-preview-confirm', command: { type: 'move', id: 'p9', cell } }, epoch, world).state;
+            const actual = authoredWorldFrame(confirmed, base, options);
+            expect(actual.covePlan).toEqual(predicted.covePlan); expect(actual.world.floors).toEqual(predicted.world.floors);
+            // Rejoining the actual play owner predicts the same rigid source
+            // transform and apron that confirmation subsequently installs.
+            const separated = setup(confirmed), back: Ghost = { ...ghost, cell: { x: 8, z: 0 }, allowed: [{ x: 8, z: 0 }] };
+            try {
+                separated.layer.updatePreview(back);
+                const returnState = previewGrowingState(confirmed, back)!, returnFrame = authoredWorldFrame(returnState, base, options);
+                const previewShell = separated.layer.root.getObjectByName('authored-cove-shell')!;
+                expect(previewShell).toBeDefined(); separated.layer.root.updateMatrixWorld(true);
+                expect(previewShell.matrixWorld.elements).toEqual(shell.matrixWorld.elements);
+                const restored = applyIntent(confirmed, { id: 'cove-preview-return', command: { type: 'move', id: 'p9', cell: back.cell! } }, epoch, actual.world).state;
+                const restoredFrame = authoredWorldFrame(restored, base, options);
+                expect(restoredFrame.covePlan).toEqual(returnFrame.covePlan);
+                expect(restoredFrame.world.floors).toEqual(returnFrame.world.floors);
+                separated.layer.updatePreview();
+                expect(separated.layer.root.getObjectByName('authored-cove-shell')).toBeUndefined();
+            } finally { separated.dispose(); }
+            expect(state).toEqual(saved);
+        } finally { scene.dispose(); f.dispose(); }
+    });
+});

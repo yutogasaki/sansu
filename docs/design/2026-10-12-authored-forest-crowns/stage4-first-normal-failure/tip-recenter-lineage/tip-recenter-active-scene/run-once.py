@@ -1,0 +1,53 @@
+"""One bounded diagnostic, never launches the stage4 build or render."""
+import os
+assert os.environ.get('SANSU_FOREST_TIP_RECENTER_APPROVED')=='1','Await diagnostic window'
+import hashlib
+import json
+import signal
+import subprocess
+import time
+from datetime import datetime,timezone
+from pathlib import Path
+HERE=Path(__file__).resolve().parent
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+def snapshot():
+    assert sha(HERE/'readiness.json')==(HERE/'readiness.sha256').read_text().strip()
+    ready=json.loads((HERE/'readiness.json').read_text())
+    actual={name:sha(HERE/name) for name in ready['files']};assert actual==ready['files']
+    external={name:sha(Path(name)) for name in ready['externalInputs']};assert external==ready['externalInputs']
+    return {'scripts':actual,'external':external,'readinessSHA':sha(HERE/'readiness.json')}
+before=snapshot();OUT=HERE/'execution-01';assert not OUT.exists(),'No retry';OUT.mkdir()
+command=['/Applications/Blender.app/Contents/MacOS/Blender','-b','--threads','2','--python-exit-code','1','--python',str(HERE/'probe.py')]
+started=datetime.now(timezone.utc).isoformat();start=time.monotonic();peak=0;stop=None
+with (OUT/'execution.log.txt').open('xb') as log:
+    process=subprocess.Popen(command,stdout=log,stderr=subprocess.STDOUT,start_new_session=True,
+        env=dict(os.environ,OMP_NUM_THREADS='2',OPENBLAS_NUM_THREADS='1'))
+    launch={'startedAtUtc':started,'ownedPid':process.pid,'ownedPgid':process.pid,
+        'readinessSHA':before['readinessSHA'],'effectiveThreads':2,'command':command}
+    (OUT/'launch.json').write_text(json.dumps(launch,indent=2)+'\n')
+    print(json.dumps(launch),flush=True)
+    try:
+        while process.poll() is None:
+            rss=subprocess.run(['ps','-o','rss=','-p',str(process.pid)],capture_output=True,text=True,check=False).stdout.strip()
+            if rss:peak=max(peak,int(rss)*1024)
+            if peak>2*1024**3:stop='observed RSS 2GiB limit';break
+            if time.monotonic()-start>60:stop='wall 60s limit';break
+            time.sleep(.25)
+    finally:
+        if process.poll() is None:
+            os.killpg(process.pid,signal.SIGTERM)
+            try:process.wait(timeout=10)
+            except subprocess.TimeoutExpired:os.killpg(process.pid,signal.SIGKILL);process.wait()
+code=(125 if 'RSS' in stop else 124) if stop else process.returncode
+binding_error=None;after=None
+try:after=snapshot();assert before==after
+except Exception as error:binding_error=repr(error);code=126
+result={'command':command,'startedAtUtc':started,'finishedAtUtc':datetime.now(timezone.utc).isoformat(),
+ 'elapsedSeconds':time.monotonic()-start,'exitCode':code,'ownedPid':process.pid,'ownedProcessExited':process.poll() is not None,
+ 'effectiveThreads':2,'peakObservedRssBytes':peak,'rssSampleSeconds':.25,'rssLimitBytes':2*1024**3,'timeoutSeconds':60,
+ 'stopReason':stop,'boundBefore':before,'boundAfter':after,'bindingError':binding_error,
+ 'runtimeOverlap':'Parent-owned diagnostics may overlap by explicit permission; compare UTC logs. No deadlines/pause changes, not performance evidence.',
+ 'scope':'single leaf float64/tip-recenter representation probe; stage4 remains HOLD'}
+(OUT/'result.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps({key: result[key] for key in ['startedAtUtc','finishedAtUtc','elapsedSeconds','exitCode','ownedPid','ownedProcessExited','effectiveThreads','peakObservedRssBytes','stopReason','bindingError']}),flush=True)
+raise SystemExit(code)

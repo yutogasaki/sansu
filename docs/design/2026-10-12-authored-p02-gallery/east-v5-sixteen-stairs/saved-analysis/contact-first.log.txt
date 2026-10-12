@@ -1,0 +1,468 @@
+{
+  "counts": {
+    "boxStationRows": 37,
+    "motionStationRows": 24,
+    "motionTriangleSampleIncidences": 305,
+    "boxTriangleSampleIncidences": 2871,
+    "boxSavedExamples": 222
+  },
+  "motionPerObject": {
+    "solid-body/real-sixteen-stairs": {
+      "rows": 180,
+      "sampleIndices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        33,
+        34,
+        35,
+        36
+      ],
+      "uniqueTriangleIds": [
+        72009,
+        72010,
+        72011,
+        72014,
+        72015,
+        72016,
+        72017,
+        72018,
+        72019,
+        72020,
+        72021,
+        72022,
+        72023,
+        72024,
+        72025,
+        72026,
+        72027,
+        72028,
+        72029,
+        72030,
+        72031,
+        72032,
+        72033,
+        72034,
+        72035,
+        72036,
+        72037,
+        72038,
+        72039,
+        72040,
+        72041,
+        72042,
+        72043,
+        72044,
+        72045,
+        72046,
+        72047,
+        72048,
+        72049,
+        72050,
+        72051,
+        72052,
+        72053,
+        72054,
+        72055,
+        72056,
+        72057,
+        72058,
+        72059,
+        72060,
+        72061,
+        72062,
+        72063,
+        72064,
+        72065,
+        72066,
+        72067,
+        72068,
+        72069,
+        72070,
+        72071,
+        72072,
+        72073,
+        72074,
+        72075,
+        72076,
+        72077,
+        72078,
+        72079,
+        72080,
+        72081,
+        72082,
+        72083,
+        72084,
+        72085,
+        72086,
+        72087,
+        72088,
+        72089,
+        72090,
+        72091,
+        72092,
+        72093,
+        72094,
+        72095,
+        72096,
+        72097,
+        72098,
+        72099,
+        72100,
+        72101,
+        72102,
+        72103,
+        72104,
+        72105,
+        72106,
+        72107,
+        72108,
+        72109,
+        72110,
+        72111,
+        72112,
+        72113,
+        72114,
+        72115,
+        72116,
+        72117,
+        72118,
+        72119,
+        72120,
+        72121,
+        72122,
+        72123,
+        72124,
+        72125,
+        72127,
+        72128,
+        72129,
+        72130,
+        72131,
+        72132,
+        72133,
+        72144,
+        72145,
+        72146,
+        72147
+      ],
+      "roles": {
+        "riser": 167,
+        "end-cap": 13
+      },
+      "minimumYRelativeToContact": -0.08225059509277344,
+      "maximumYRelativeToContact": 0.08225059509277344,
+      "bandCounts": {
+        "2": 120,
+        "4": 121,
+        "3": 119,
+        "5": 105,
+        "6": 105,
+        "1": 60
+      },
+      "beforeOrAtUse": 167,
+      "afterUse": 13,
+      "stages": [
+        {
+          "kind": "tread",
+          "index": 0,
+          "afterDeclaredUse": false
+        },
+        {
+          "kind": "tread",
+          "index": 1,
+          "afterDeclaredUse": false
+        },
+        {
+          "kind": "tread",
+          "index": 2,
+          "afterDeclaredUse": false
+        },
+        {
+          "kind": "tread",
+          "index": 3,
+          "afterDeclaredUse": false
+        },
+        {
+          "kind": "tread",
+          "index": 4,
+          "afterDeclaredUse": false
+        },
+        {
+          "kind": "tread",
+          "index": 5,
+          "afterDeclaredUse": false
+        },
+        {
+          "kind": "tread",
+          "index": 6,
+          "afterDeclaredUse": false
+        },
+        {
+          "kind": "tread",
+          "index": 7,
+          "afterDeclaredUse": false
+        },
+        {
+          "kind": "tread",
+          "index": 8,
+          "afterDeclaredUse": false
+        },
+        {
+          "kind": "tread",
+          "index": 9,
+          "afterDeclaredUse": false
+        },
+        {
+          "kind": "tread",
+          "index": 10,
+          "afterDeclaredUse": false
+        },
+        {
+          "kind": "tread",
+          "index": 11,
+          "afterDeclaredUse": false
+        },
+        {
+          "kind": "tread",
+          "index": 12,
+          "afterDeclaredUse": false
+        },
+        {
+          "kind": "tread",
+          "index": 13,
+          "afterDeclaredUse": false
+        },
+        {
+          "kind": "tread",
+          "index": 14,
+          "afterDeclaredUse": false
+        },
+        {
+          "kind": "tread",
+          "index": 15,
+          "afterDeclaredUse": false
+        },
+        {
+          "kind": "gallery",
+          "degrees": 109,
+          "afterDeclaredUse": true,
+          "declaredUseDegrees": 95
+        },
+        {
+          "kind": "gallery",
+          "degrees": 111,
+          "afterDeclaredUse": true,
+          "declaredUseDegrees": 95
+        },
+        {
+          "kind": "gallery",
+          "degrees": 113,
+          "afterDeclaredUse": true,
+          "declaredUseDegrees": 95
+        },
+        {
+          "kind": "gallery",
+          "degrees": 115,
+          "afterDeclaredUse": true,
+          "declaredUseDegrees": 95
+        }
+      ],
+      "uniqueTriangleCount": 126,
+      "owner": {
+        "placeId": "P02:p3",
+        "ownerIds": [
+          "l10",
+          "l11",
+          "l12",
+          "l13"
+        ],
+        "basis": "constructed component metadata in same builder"
+      }
+    },
+    "solid-bough/native-contact-4": {
+      "rows": 4,
+      "sampleIndices": [
+        13
+      ],
+      "uniqueTriangleIds": [
+        73614,
+        73615,
+        73617,
+        73629
+      ],
+      "roles": {
+        "new-owned-support": 4
+      },
+      "minimumYRelativeToContact": -0.017122983932495117,
+      "maximumYRelativeToContact": 0.022876977920532227,
+      "bandCounts": {
+        "3": 4
+      },
+      "beforeOrAtUse": 4,
+      "afterUse": 0,
+      "stages": [
+        {
+          "kind": "tread",
+          "index": 13,
+          "afterDeclaredUse": false
+        }
+      ],
+      "uniqueTriangleCount": 4,
+      "owner": {
+        "placeId": "P02:p3",
+        "ownerIds": [
+          "l10",
+          "l11",
+          "l12",
+          "l13"
+        ],
+        "basis": "constructed component metadata in same builder"
+      }
+    },
+    "solid-rail/visible-terminal-guard": {
+      "rows": 121,
+      "sampleIndices": [
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36
+      ],
+      "uniqueTriangleIds": [
+        75540,
+        75541,
+        75542,
+        75543,
+        75544,
+        75545,
+        75546,
+        75547,
+        75548,
+        75549,
+        75550,
+        75551,
+        75552,
+        75553,
+        75554,
+        75555
+      ],
+      "roles": {
+        "gallery-terminal-guard": 121
+      },
+      "minimumYRelativeToContact": 0.3059999942779541,
+      "maximumYRelativeToContact": 0.3489992618560791,
+      "bandCounts": {
+        "6": 120,
+        "3": 56,
+        "0": 56
+      },
+      "beforeOrAtUse": 0,
+      "afterUse": 121,
+      "stages": [
+        {
+          "kind": "gallery",
+          "degrees": 101,
+          "afterDeclaredUse": true,
+          "declaredUseDegrees": 95
+        },
+        {
+          "kind": "gallery",
+          "degrees": 103,
+          "afterDeclaredUse": true,
+          "declaredUseDegrees": 95
+        },
+        {
+          "kind": "gallery",
+          "degrees": 105,
+          "afterDeclaredUse": true,
+          "declaredUseDegrees": 95
+        },
+        {
+          "kind": "gallery",
+          "degrees": 107,
+          "afterDeclaredUse": true,
+          "declaredUseDegrees": 95
+        },
+        {
+          "kind": "gallery",
+          "degrees": 109,
+          "afterDeclaredUse": true,
+          "declaredUseDegrees": 95
+        },
+        {
+          "kind": "gallery",
+          "degrees": 111,
+          "afterDeclaredUse": true,
+          "declaredUseDegrees": 95
+        },
+        {
+          "kind": "gallery",
+          "degrees": 113,
+          "afterDeclaredUse": true,
+          "declaredUseDegrees": 95
+        },
+        {
+          "kind": "gallery",
+          "degrees": 115,
+          "afterDeclaredUse": true,
+          "declaredUseDegrees": 95
+        }
+      ],
+      "uniqueTriangleCount": 16,
+      "owner": {
+        "placeId": "P02:p3",
+        "ownerIds": [
+          "l10",
+          "l11",
+          "l12",
+          "l13"
+        ],
+        "basis": "constructed component metadata in same builder"
+      }
+    }
+  },
+  "boxOnlyObjects": [
+    "solid-bough/same-owner-ground-root",
+    "solid-rail/stair-edge-1",
+    "solid-rail/stair-edge--1",
+    "solid-rail-post/-1/0",
+    "solid-bough/native-contact-1",
+    "solid-rail-post/-1/2",
+    "solid-rail-post/1/2",
+    "solid-rail-post/-1/4",
+    "solid-rail-post/1/4",
+    "solid-bough/native-contact-2",
+    "solid-rail-post/1/6",
+    "solid-bough/native-contact-3",
+    "solid-rail-post/-1/8",
+    "solid-rail-post/-1/10",
+    "solid-rail-post/1/10",
+    "solid-rail-post/-1/12",
+    "solid-rail-post/1/12",
+    "solid-rail-post/-1/14",
+    "solid-rail-post/-1/16",
+    "solid-rail-post/1/16",
+    "solid-rail-post/1/36",
+    "solid-rail-post/-1/36"
+  ],
+  "allOwnersNewP02": true,
+  "unmatchedStairMotionFaces": 0,
+  "seconds": 0.014031667000000005
+}

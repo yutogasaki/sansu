@@ -1,0 +1,19 @@
+{
+  "checkedAt": "2026-10-12T02:03:57.240799+00:00",
+  "ownedDriverPid": 89811,
+  "ownedProcessGroupId": 89811,
+  "matchingOwnedProcesses": [],
+  "cleanupRequired": false,
+  "action": "none; no owned driver/process-group processes remain",
+  "rootOwnedServerPid": 87576,
+  "rootOwnedServerObserved": [
+    {
+      "pid": 87576,
+      "ppid": 33232,
+      "pgid": 87576,
+      "command": "node ./node_modules/.bin/vite --host 127.0.0.1 --port 5358 --strictPort"
+    }
+  ],
+  "serverAction": "none; retained root-owned server",
+  "scope": "Read-only OS process inventory for exact driver PID/process-group identity. No unrelated process terminated."
+}

@@ -1,0 +1,27 @@
+{
+  "command": [
+    "node",
+    "/private/tmp/sansu-floor-shading-diagnostic-c2/diagnose-floor.mjs",
+    "--start",
+    "--mode",
+    "shadow-off",
+    "--output",
+    "/private/tmp/sansu-floor-shading-diagnostic-c2/shadow-off-01"
+  ],
+  "startedAtUtc": "2026-10-12T04:48:34.158941+00:00",
+  "finishedAtUtc": "2026-10-12T04:49:21.872321+00:00",
+  "elapsedSeconds": 47.713390792,
+  "ownedPid": 31833,
+  "ownedProcessGroup": 31833,
+  "exitCode": 0,
+  "stopReason": null,
+  "peakObservedProcessTreeRssBytes": 3093315584,
+  "rssSampleSeconds": 0.5,
+  "limits": {
+    "seconds": 900,
+    "processTreeRssBytes": 4294967296
+  },
+  "driverBeforeSha256": "befd9cf6f7aeb91a2b27e27c96c416d19954fb24cd5303e3cc753619451d6fc1",
+  "driverAfterSha256": "befd9cf6f7aeb91a2b27e27c96c416d19954fb24cd5303e3cc753619451d6fc1",
+  "scope": "Actual renderer causal diagnosis only; no performance, art acceptance or source mutation"
+}

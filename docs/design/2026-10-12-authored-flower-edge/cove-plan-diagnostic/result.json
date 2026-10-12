@@ -1,0 +1,1153 @@
+{
+  "scope": "Bounded numerical planning only; no browser, runtime edits, player save, or acceptance claim",
+  "inputIdentity": {
+    "fixture": "native05-authored-flower-reference-v1",
+    "world": "native05-authored-world-m0-v2",
+    "sourceSha": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "actorEnvelopeCapture": "desktop-mature-whole-day.png",
+    "actorEnvelopeBuild": "authored-flower-edge-c5",
+    "actorEnvelopeAppTarget": "http://127.0.0.1:5353/prototypes/place-qa/authored.html?water=wide&reference=preflight32",
+    "displayedWorldRevision": "authored-water-v2:3c5f4ee9f492cc25:eb41954202b1926a",
+    "waterOwners": [
+      "l22",
+      "l21",
+      "l20",
+      "l23",
+      "l24"
+    ],
+    "localScope": "Base world only; c5 water composition cuts only northern l20–l24. l32 is individual-bodies and does not carve this P04 area."
+  },
+  "method": {
+    "sourcePivot": [
+      13.9,
+      0.89,
+      1.2
+    ],
+    "coordinates": "authored world; renderer subtracts layout.center from x and 2 from z",
+    "actualOwnerScale": {
+      "homeCap": [
+        0.45,
+        0.5625,
+        0.45
+      ],
+      "actors": 0.45
+    },
+    "footSupport": "Every original footing vertex sampled against current dry triangulation. Lower band is a proximity/contact probe, not full load-bearing or triangle-interior proof.",
+    "houseContact": "Source triangle edge intersection against actual p6/p7 cap-home triangles; no unrelated proxy roof.",
+    "navigation": "Existing exact source-triangle obstruction kernel + recorded real rig motion bands; in-memory flower-name wrapper explicitly includes shell+footings. Final code must generalize eligible obstruction roots.",
+    "visibility": "Default-camera-direction rays from sampled actual home mesh vertices, treating translucent shell as geometric occluder; not rendered visual acceptance."
+  },
+  "sourceParts": [
+    {
+      "name": "Harbor / continuous translucent shell hall",
+      "vertices": 3458,
+      "triangles": 6784
+    },
+    {
+      "name": "Harbor / continuous translucent shell hall",
+      "vertices": 906,
+      "triangles": 1680
+    },
+    {
+      "name": "Harbor / curved shell structural rib",
+      "vertices": 3199,
+      "triangles": 5776
+    },
+    {
+      "name": "Harbor / curved shell structural rib.001",
+      "vertices": 3199,
+      "triangles": 5776
+    },
+    {
+      "name": "Harbor / curved shell structural rib.002",
+      "vertices": 3199,
+      "triangles": 5776
+    },
+    {
+      "name": "Harbor / curved shell structural rib.003",
+      "vertices": 3199,
+      "triangles": 5776
+    },
+    {
+      "name": "Harbor / curved shell structural rib.004",
+      "vertices": 3199,
+      "triangles": 5776
+    },
+    {
+      "name": "Harbor / curved shell structural rib.005",
+      "vertices": 3199,
+      "triangles": 5776
+    },
+    {
+      "name": "Harbor / curved shell structural rib.006",
+      "vertices": 3199,
+      "triangles": 5776
+    },
+    {
+      "name": "Harbor / shell grown footing",
+      "vertices": 295,
+      "triangles": 496
+    },
+    {
+      "name": "Harbor / shell grown footing.001",
+      "vertices": 295,
+      "triangles": 496
+    },
+    {
+      "name": "Harbor / shell longitudinal seam",
+      "vertices": 1087,
+      "triangles": 1936
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.001",
+      "vertices": 1087,
+      "triangles": 1936
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.002",
+      "vertices": 1087,
+      "triangles": 1936
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.003",
+      "vertices": 1087,
+      "triangles": 1936
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.004",
+      "vertices": 1087,
+      "triangles": 1936
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.005",
+      "vertices": 1087,
+      "triangles": 1936
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.006",
+      "vertices": 1087,
+      "triangles": 1936
+    }
+  ],
+  "actorEnvelope": {
+    "radius": 0.24406937059140585,
+    "height": 0.5500928879753579,
+    "bands": [
+      {
+        "radius": 0.09134999737143516,
+        "minY": 0.20385103985494077,
+        "maxY": 0.5500928879753579
+      },
+      {
+        "radius": 0.1353778402505187,
+        "minY": 0.018073202984005398,
+        "maxY": 0.12266860259311367
+      },
+      {
+        "radius": 0.11740714544627996,
+        "minY": -0.013389719108070908,
+        "maxY": 0.10058152468518997
+      },
+      {
+        "radius": 0.2238622310757637,
+        "minY": 0.022500694926418825,
+        "maxY": 0.32194834489438806
+      },
+      {
+        "radius": 0.11572916628891829,
+        "minY": -0.0190976441475757,
+        "maxY": 0.09264667927451685
+      },
+      {
+        "radius": 0.24406937059140585,
+        "minY": 0.08157946600510133,
+        "maxY": 0.2593961556396356
+      },
+      {
+        "radius": 0.21917178645545318,
+        "minY": 0.03156508037188276,
+        "maxY": 0.4915557144776604
+      },
+      {
+        "radius": 0.08661284906887425,
+        "minY": 0.01597534732239344,
+        "maxY": 0.2971977641282517
+      }
+    ],
+    "source": {
+      "actorIds": [
+        "pokomoko",
+        "authored-friend-0",
+        "authored-friend-1",
+        "authored-friend-2",
+        "authored-friend-3",
+        "authored-friend-4",
+        "authored-friend-5",
+        "authored-friend-6",
+        "authored-friend-7"
+      ],
+      "visualScales": [
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ]
+      ],
+      "meshes": 117,
+      "vertices": 99868,
+      "footSwing": 0.5,
+      "armSwing": 0.6,
+      "walkBob": 0.015750000000000004,
+      "method": "indexed-source-motion-intervals"
+    }
+  },
+  "p9Floor": {
+    "cell": {
+      "x": 8,
+      "z": 0
+    },
+    "point": {
+      "x": 8,
+      "y": 0.025666217,
+      "z": 0
+    },
+    "floorId": "[\"native05-inlet-core\",\"Water town / shared frontage court:0\"]",
+    "triangle": 89377
+  },
+  "results": [
+    {
+      "candidate": {
+        "id": "A",
+        "x": 8,
+        "z": 0.5,
+        "y": 0.0475,
+        "scale": 0.45,
+        "degrees": 0
+      },
+      "roofBounds": {
+        "min": [
+          6.917929763793945,
+          0.03508911740779876,
+          -0.3136000180244446
+        ],
+        "max": [
+          9.082070751190185,
+          1.5909784049987794,
+          1.2416000223159789
+        ]
+      },
+      "floorSupport": [
+        {
+          "name": "Harbor / shell grown footing",
+          "vertexCount": 295,
+          "unsupportedVertices": 0,
+          "lowerBandSourceY": 0.91,
+          "lowerBandCount": 112,
+          "lowerBandFloorOffsets": [
+            -0.004780284868011485,
+            0.0654999749796295
+          ],
+          "lowerBandWithin25mm": 52
+        },
+        {
+          "name": "Harbor / shell grown footing.001",
+          "vertexCount": 295,
+          "unsupportedVertices": 0,
+          "lowerBandSourceY": 0.91,
+          "lowerBandCount": 110,
+          "lowerBandFloorOffsets": [
+            -0.004780284868011485,
+            0.0642928468124771
+          ],
+          "lowerBandWithin25mm": 64
+        }
+      ],
+      "houseTriangleIntersections": {},
+      "navigation": {
+        "previous": 1506,
+        "after": 1467,
+        "excluded": 39,
+        "shellTriangles": 63440,
+        "owners": [
+          {
+            "id": "p6",
+            "previous": [
+              {
+                "x": 7,
+                "z": -0.25
+              },
+              {
+                "x": 7.25,
+                "z": -0.25
+              }
+            ],
+            "after": [],
+            "usable": []
+          },
+          {
+            "id": "p7",
+            "previous": [
+              {
+                "x": 9,
+                "z": -0.25
+              },
+              {
+                "x": 9.75,
+                "z": -1
+              },
+              {
+                "x": 8.75,
+                "z": -0.25
+              },
+              {
+                "x": 9.25,
+                "z": -0.25
+              },
+              {
+                "x": 9.75,
+                "z": -0.75
+              },
+              {
+                "x": 9.75,
+                "z": -1.25
+              },
+              {
+                "x": 9.5,
+                "z": -0.25
+              },
+              {
+                "x": 9.75,
+                "z": -0.5
+              },
+              {
+                "x": 9.5,
+                "z": -1.75
+              }
+            ],
+            "after": [
+              {
+                "x": 9.75,
+                "z": -1
+              },
+              {
+                "x": 9.25,
+                "z": -0.25
+              },
+              {
+                "x": 9.75,
+                "z": -0.75
+              },
+              {
+                "x": 9.75,
+                "z": -1.25
+              },
+              {
+                "x": 9.5,
+                "z": -0.25
+              },
+              {
+                "x": 9.75,
+                "z": -0.5
+              },
+              {
+                "x": 9.5,
+                "z": -1.75
+              }
+            ],
+            "usable": [
+              {
+                "x": 9.75,
+                "z": -1
+              },
+              {
+                "x": 9.75,
+                "z": -0.75
+              },
+              {
+                "x": 9.75,
+                "z": -1.25
+              },
+              {
+                "x": 9.5,
+                "z": -1.75
+              }
+            ]
+          },
+          {
+            "id": "p9",
+            "previous": [
+              {
+                "x": 8,
+                "z": 0.75
+              },
+              {
+                "x": 7.25,
+                "z": 0
+              },
+              {
+                "x": 8.75,
+                "z": 0
+              },
+              {
+                "x": 7.75,
+                "z": 0.75
+              },
+              {
+                "x": 8.25,
+                "z": 0.75
+              },
+              {
+                "x": 7.25,
+                "z": 0.25
+              },
+              {
+                "x": 8.75,
+                "z": 0.25
+              },
+              {
+                "x": 7.25,
+                "z": -0.25
+              },
+              {
+                "x": 8.75,
+                "z": -0.25
+              },
+              {
+                "x": 7.5,
+                "z": 0.75
+              },
+              {
+                "x": 8.5,
+                "z": 0.75
+              },
+              {
+                "x": 7.25,
+                "z": 0.5
+              },
+              {
+                "x": 8.75,
+                "z": 0.5
+              }
+            ],
+            "after": [],
+            "usable": []
+          }
+        ],
+        "front": [
+          {
+            "x": 8,
+            "z": 0.75,
+            "clear": true,
+            "reached": false,
+            "toPlayClear": true
+          },
+          {
+            "x": 8,
+            "z": 1,
+            "clear": true,
+            "reached": false,
+            "toPlayClear": true
+          },
+          {
+            "x": 8,
+            "z": 1.25,
+            "clear": true,
+            "reached": false,
+            "toPlayClear": true
+          }
+        ]
+      },
+      "visibility": [
+        {
+          "ownerId": "p6",
+          "name": "Hill / blue terrace home / arched entry frame",
+          "occluded": 16,
+          "vertices": 43
+        },
+        {
+          "ownerId": "p6",
+          "name": "Hill / blue terrace home / broad scalloped cap roof",
+          "occluded": 0,
+          "vertices": 45
+        },
+        {
+          "ownerId": "p6",
+          "name": "Hill / blue terrace home / cobalt entry",
+          "occluded": 3,
+          "vertices": 41
+        },
+        {
+          "ownerId": "p7",
+          "name": "Hill / blue terrace home / arched entry frame",
+          "occluded": 0,
+          "vertices": 43
+        },
+        {
+          "ownerId": "p7",
+          "name": "Hill / blue terrace home / broad scalloped cap roof",
+          "occluded": 0,
+          "vertices": 45
+        },
+        {
+          "ownerId": "p7",
+          "name": "Hill / blue terrace home / cobalt entry",
+          "occluded": 0,
+          "vertices": 41
+        }
+      ],
+      "decision": "REJECT: current source sidewalls isolate p6 and p9 in existing graph; geometry fit does not prove usable place"
+    },
+    {
+      "candidate": {
+        "id": "B",
+        "x": 8,
+        "z": 0.4,
+        "y": 0.0475,
+        "scale": 0.45,
+        "degrees": -15
+      },
+      "roofBounds": {
+        "min": [
+          6.768332718686049,
+          0.03508911740779876,
+          -0.5984557580317981
+        ],
+        "max": [
+          9.02652848554499,
+          1.5909784049987794,
+          1.3888670421669678
+        ]
+      },
+      "floorSupport": [
+        {
+          "name": "Harbor / shell grown footing",
+          "vertexCount": 295,
+          "unsupportedVertices": 0,
+          "lowerBandSourceY": 0.91,
+          "lowerBandCount": 112,
+          "lowerBandFloorOffsets": [
+            -0.004780284868011485,
+            0.0654999749796295
+          ],
+          "lowerBandWithin25mm": 52
+        },
+        {
+          "name": "Harbor / shell grown footing.001",
+          "vertexCount": 295,
+          "unsupportedVertices": 0,
+          "lowerBandSourceY": 0.91,
+          "lowerBandCount": 110,
+          "lowerBandFloorOffsets": [
+            -0.004780284868011485,
+            0.0642928468124771
+          ],
+          "lowerBandWithin25mm": 57
+        }
+      ],
+      "houseTriangleIntersections": {},
+      "navigation": {
+        "previous": 1506,
+        "after": 1474,
+        "excluded": 32,
+        "shellTriangles": 63440,
+        "owners": [
+          {
+            "id": "p6",
+            "previous": [
+              {
+                "x": 7,
+                "z": -0.25
+              },
+              {
+                "x": 7.25,
+                "z": -0.25
+              }
+            ],
+            "after": [],
+            "usable": []
+          },
+          {
+            "id": "p7",
+            "previous": [
+              {
+                "x": 9,
+                "z": -0.25
+              },
+              {
+                "x": 9.75,
+                "z": -1
+              },
+              {
+                "x": 8.75,
+                "z": -0.25
+              },
+              {
+                "x": 9.25,
+                "z": -0.25
+              },
+              {
+                "x": 9.75,
+                "z": -0.75
+              },
+              {
+                "x": 9.75,
+                "z": -1.25
+              },
+              {
+                "x": 9.5,
+                "z": -0.25
+              },
+              {
+                "x": 9.75,
+                "z": -0.5
+              },
+              {
+                "x": 9.5,
+                "z": -1.75
+              }
+            ],
+            "after": [
+              {
+                "x": 9.75,
+                "z": -1
+              },
+              {
+                "x": 9.75,
+                "z": -0.75
+              },
+              {
+                "x": 9.75,
+                "z": -1.25
+              },
+              {
+                "x": 9.5,
+                "z": -0.25
+              },
+              {
+                "x": 9.75,
+                "z": -0.5
+              },
+              {
+                "x": 9.5,
+                "z": -1.75
+              }
+            ],
+            "usable": [
+              {
+                "x": 9.75,
+                "z": -1
+              },
+              {
+                "x": 9.75,
+                "z": -0.75
+              },
+              {
+                "x": 9.75,
+                "z": -1.25
+              },
+              {
+                "x": 9.75,
+                "z": -0.5
+              },
+              {
+                "x": 9.5,
+                "z": -1.75
+              }
+            ]
+          },
+          {
+            "id": "p9",
+            "previous": [
+              {
+                "x": 8,
+                "z": 0.75
+              },
+              {
+                "x": 7.25,
+                "z": 0
+              },
+              {
+                "x": 8.75,
+                "z": 0
+              },
+              {
+                "x": 7.75,
+                "z": 0.75
+              },
+              {
+                "x": 8.25,
+                "z": 0.75
+              },
+              {
+                "x": 7.25,
+                "z": 0.25
+              },
+              {
+                "x": 8.75,
+                "z": 0.25
+              },
+              {
+                "x": 7.25,
+                "z": -0.25
+              },
+              {
+                "x": 8.75,
+                "z": -0.25
+              },
+              {
+                "x": 7.5,
+                "z": 0.75
+              },
+              {
+                "x": 8.5,
+                "z": 0.75
+              },
+              {
+                "x": 7.25,
+                "z": 0.5
+              },
+              {
+                "x": 8.75,
+                "z": 0.5
+              }
+            ],
+            "after": [],
+            "usable": []
+          }
+        ],
+        "front": [
+          {
+            "x": 8,
+            "z": 0.75,
+            "clear": true,
+            "reached": false,
+            "toPlayClear": true
+          },
+          {
+            "x": 8,
+            "z": 1,
+            "clear": true,
+            "reached": false,
+            "toPlayClear": true
+          },
+          {
+            "x": 8,
+            "z": 1.25,
+            "clear": true,
+            "reached": false,
+            "toPlayClear": true
+          }
+        ]
+      },
+      "visibility": [
+        {
+          "ownerId": "p6",
+          "name": "Hill / blue terrace home / arched entry frame",
+          "occluded": 19,
+          "vertices": 43
+        },
+        {
+          "ownerId": "p6",
+          "name": "Hill / blue terrace home / broad scalloped cap roof",
+          "occluded": 0,
+          "vertices": 45
+        },
+        {
+          "ownerId": "p6",
+          "name": "Hill / blue terrace home / cobalt entry",
+          "occluded": 3,
+          "vertices": 41
+        },
+        {
+          "ownerId": "p7",
+          "name": "Hill / blue terrace home / arched entry frame",
+          "occluded": 0,
+          "vertices": 43
+        },
+        {
+          "ownerId": "p7",
+          "name": "Hill / blue terrace home / broad scalloped cap roof",
+          "occluded": 0,
+          "vertices": 45
+        },
+        {
+          "ownerId": "p7",
+          "name": "Hill / blue terrace home / cobalt entry",
+          "occluded": 0,
+          "vertices": 41
+        }
+      ],
+      "decision": "REJECT: current source sidewalls isolate p6 and p9 in existing graph; geometry fit does not prove usable place"
+    },
+    {
+      "candidate": {
+        "id": "C",
+        "x": 8,
+        "z": 0.5,
+        "y": 0.0475,
+        "scale": 0.4,
+        "degrees": 0
+      },
+      "roofBounds": {
+        "min": [
+          7.038159790039062,
+          0.03646810436248779,
+          -0.22320001602172856
+        ],
+        "max": [
+          8.961840667724609,
+          1.4194808044433596,
+          1.1592000198364258
+        ]
+      },
+      "floorSupport": [
+        {
+          "name": "Harbor / shell grown footing",
+          "vertexCount": 295,
+          "unsupportedVertices": 0,
+          "lowerBandSourceY": 0.91,
+          "lowerBandCount": 112,
+          "lowerBandFloorOffsets": [
+            0.0020286345617675713,
+            0.06449997664855957
+          ],
+          "lowerBandWithin25mm": 46
+        },
+        {
+          "name": "Harbor / shell grown footing.001",
+          "vertexCount": 295,
+          "unsupportedVertices": 0,
+          "lowerBandSourceY": 0.91,
+          "lowerBandCount": 110,
+          "lowerBandFloorOffsets": [
+            -0.0025377128643798933,
+            0.06342697383331299
+          ],
+          "lowerBandWithin25mm": 61
+        }
+      ],
+      "houseTriangleIntersections": {},
+      "navigation": {
+        "previous": 1506,
+        "after": 1479,
+        "excluded": 27,
+        "shellTriangles": 63440,
+        "owners": [
+          {
+            "id": "p6",
+            "previous": [
+              {
+                "x": 7,
+                "z": -0.25
+              },
+              {
+                "x": 7.25,
+                "z": -0.25
+              }
+            ],
+            "after": [],
+            "usable": []
+          },
+          {
+            "id": "p7",
+            "previous": [
+              {
+                "x": 9,
+                "z": -0.25
+              },
+              {
+                "x": 9.75,
+                "z": -1
+              },
+              {
+                "x": 8.75,
+                "z": -0.25
+              },
+              {
+                "x": 9.25,
+                "z": -0.25
+              },
+              {
+                "x": 9.75,
+                "z": -0.75
+              },
+              {
+                "x": 9.75,
+                "z": -1.25
+              },
+              {
+                "x": 9.5,
+                "z": -0.25
+              },
+              {
+                "x": 9.75,
+                "z": -0.5
+              },
+              {
+                "x": 9.5,
+                "z": -1.75
+              }
+            ],
+            "after": [
+              {
+                "x": 9.75,
+                "z": -1
+              },
+              {
+                "x": 9.25,
+                "z": -0.25
+              },
+              {
+                "x": 9.75,
+                "z": -0.75
+              },
+              {
+                "x": 9.75,
+                "z": -1.25
+              },
+              {
+                "x": 9.5,
+                "z": -0.25
+              },
+              {
+                "x": 9.75,
+                "z": -0.5
+              },
+              {
+                "x": 9.5,
+                "z": -1.75
+              }
+            ],
+            "usable": [
+              {
+                "x": 9.75,
+                "z": -1
+              },
+              {
+                "x": 9.75,
+                "z": -0.75
+              },
+              {
+                "x": 9.75,
+                "z": -1.25
+              },
+              {
+                "x": 9.75,
+                "z": -0.5
+              },
+              {
+                "x": 9.5,
+                "z": -1.75
+              }
+            ]
+          },
+          {
+            "id": "p9",
+            "previous": [
+              {
+                "x": 8,
+                "z": 0.75
+              },
+              {
+                "x": 7.25,
+                "z": 0
+              },
+              {
+                "x": 8.75,
+                "z": 0
+              },
+              {
+                "x": 7.75,
+                "z": 0.75
+              },
+              {
+                "x": 8.25,
+                "z": 0.75
+              },
+              {
+                "x": 7.25,
+                "z": 0.25
+              },
+              {
+                "x": 8.75,
+                "z": 0.25
+              },
+              {
+                "x": 7.25,
+                "z": -0.25
+              },
+              {
+                "x": 8.75,
+                "z": -0.25
+              },
+              {
+                "x": 7.5,
+                "z": 0.75
+              },
+              {
+                "x": 8.5,
+                "z": 0.75
+              },
+              {
+                "x": 7.25,
+                "z": 0.5
+              },
+              {
+                "x": 8.75,
+                "z": 0.5
+              }
+            ],
+            "after": [],
+            "usable": []
+          }
+        ],
+        "front": [
+          {
+            "x": 8,
+            "z": 0.75,
+            "clear": true,
+            "reached": false,
+            "toPlayClear": true
+          },
+          {
+            "x": 8,
+            "z": 1,
+            "clear": true,
+            "reached": false,
+            "toPlayClear": true
+          },
+          {
+            "x": 8,
+            "z": 1.25,
+            "clear": true,
+            "reached": false,
+            "toPlayClear": true
+          }
+        ]
+      },
+      "visibility": [
+        {
+          "ownerId": "p6",
+          "name": "Hill / blue terrace home / arched entry frame",
+          "occluded": 7,
+          "vertices": 43
+        },
+        {
+          "ownerId": "p6",
+          "name": "Hill / blue terrace home / broad scalloped cap roof",
+          "occluded": 0,
+          "vertices": 45
+        },
+        {
+          "ownerId": "p6",
+          "name": "Hill / blue terrace home / cobalt entry",
+          "occluded": 2,
+          "vertices": 41
+        },
+        {
+          "ownerId": "p7",
+          "name": "Hill / blue terrace home / arched entry frame",
+          "occluded": 0,
+          "vertices": 43
+        },
+        {
+          "ownerId": "p7",
+          "name": "Hill / blue terrace home / broad scalloped cap roof",
+          "occluded": 0,
+          "vertices": 45
+        },
+        {
+          "ownerId": "p7",
+          "name": "Hill / blue terrace home / cobalt entry",
+          "occluded": 0,
+          "vertices": 41
+        }
+      ],
+      "decision": "REJECT: current source sidewalls isolate p6 and p9 in existing graph; geometry fit does not prove usable place"
+    }
+  ],
+  "inputs": {
+    "docs/design/2026-10-10-island-final-3d/whole-island.glb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "docs/design/2026-10-11-native-owned-island/kit-manifest.json": "0653ef4cd09a34102235e92726f77db772391b66d27e01da8175b8a6fd7eea8e",
+    "prototypes/place-qa/native05-world.json.gz": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+    "prototypes/place-qa/authored-flower-reference-mature.json": "a6371602364a531130fb2a99e927958648ff1c57c2cc5a0966c315538ecbf533",
+    "/private/tmp/sansu-flower-edge-c5/shape/report.json": "5cdce825cb38bb8fa36589a3071d61374fafa047642236ad7d194f62e3d5619c",
+    "/private/tmp/sansu-flower-edge-c5/shape/desktop-mature-whole-day.png": "a46b5e5e3df5079a4ad6249417a964aef7a0748ed09aa8c5ebd7539c871fa753",
+    "docs/design/2026-10-10-island-final-3d/whole-island-render.png": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+    "src/domain/growingIsland/authoredWaterGeometry.ts": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+    "src/domain/growingIsland/authoredWorldAccess.ts": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+    "src/domain/growingIsland/worldDefinition.ts": "c230e8fb354a43792d22814d6eaf82cd7adf0110d517250d1399be84b00ba7ea",
+    "src/domain/islandLife/footprint.ts": "756e569dff83698e12dc6401fb96be06a23b950b003df4b1af21b8a1aa38916b",
+    "src/domain/growingIsland/types.ts": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+    "src/domain/growingIsland/space.ts": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+    "src/domain/growingIsland/placeTerrain.ts": "b79248f1bf23a324b152d9e36310aeabcaa8a30abeae58b535f8c40f9cc7d28d",
+    "src/domain/growingIsland/landscape.ts": "c4238f02498719722449772456001e457a0d02b2f82e7b389eae99d3021b6c96",
+    "src/domain/growingIsland/legacyWorldDefinition.ts": "511879416f7aab4667d02d2d1554c2b5ad2e555a950b8340ee2e35f996662dc9",
+    "src/components/island/growing/actorScale.ts": "6120e10eae06f3ea61b7e798a1c214c814df563a63a8e1677d897e185e93f57f",
+    "src/components/island/growing/sceneLayout.ts": "fed4b288f70baa5890b28cd1d7303baebbc97d0e904ddef694e367325e29996a",
+    "src/components/island/growing/authoredFlowerObstructions.ts": "13ee0af2972b468489aebe2dca64f1c53e88c5fd96301a513d66d6bd9b43972d"
+  },
+  "finalInputs": {
+    "docs/design/2026-10-10-island-final-3d/whole-island.glb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "docs/design/2026-10-11-native-owned-island/kit-manifest.json": "0653ef4cd09a34102235e92726f77db772391b66d27e01da8175b8a6fd7eea8e",
+    "prototypes/place-qa/native05-world.json.gz": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+    "prototypes/place-qa/authored-flower-reference-mature.json": "a6371602364a531130fb2a99e927958648ff1c57c2cc5a0966c315538ecbf533",
+    "/private/tmp/sansu-flower-edge-c5/shape/report.json": "5cdce825cb38bb8fa36589a3071d61374fafa047642236ad7d194f62e3d5619c",
+    "/private/tmp/sansu-flower-edge-c5/shape/desktop-mature-whole-day.png": "a46b5e5e3df5079a4ad6249417a964aef7a0748ed09aa8c5ebd7539c871fa753",
+    "docs/design/2026-10-10-island-final-3d/whole-island-render.png": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+    "src/domain/growingIsland/authoredWaterGeometry.ts": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+    "src/domain/growingIsland/authoredWorldAccess.ts": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+    "src/domain/growingIsland/worldDefinition.ts": "c230e8fb354a43792d22814d6eaf82cd7adf0110d517250d1399be84b00ba7ea",
+    "src/domain/islandLife/footprint.ts": "756e569dff83698e12dc6401fb96be06a23b950b003df4b1af21b8a1aa38916b",
+    "src/domain/growingIsland/types.ts": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+    "src/domain/growingIsland/space.ts": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+    "src/domain/growingIsland/placeTerrain.ts": "b79248f1bf23a324b152d9e36310aeabcaa8a30abeae58b535f8c40f9cc7d28d",
+    "src/domain/growingIsland/landscape.ts": "c4238f02498719722449772456001e457a0d02b2f82e7b389eae99d3021b6c96",
+    "src/domain/growingIsland/legacyWorldDefinition.ts": "511879416f7aab4667d02d2d1554c2b5ad2e555a950b8340ee2e35f996662dc9",
+    "src/components/island/growing/actorScale.ts": "6120e10eae06f3ea61b7e798a1c214c814df563a63a8e1677d897e185e93f57f",
+    "src/components/island/growing/sceneLayout.ts": "fed4b288f70baa5890b28cd1d7303baebbc97d0e904ddef694e367325e29996a",
+    "src/components/island/growing/authoredFlowerObstructions.ts": "13ee0af2972b468489aebe2dca64f1c53e88c5fd96301a513d66d6bd9b43972d"
+  },
+  "inputHashesUnchanged": true,
+  "conclusion": "No tested common rigid/uniform transform simultaneously proves grounded source architecture, preserved home entrances and reachable p9. Need authored entrance/side opening or a shared dry approach outside/around the footings, represented in the same world; do not float the roof or ignore low sidewalls."
+}

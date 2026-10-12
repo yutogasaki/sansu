@@ -1,0 +1,19 @@
+{
+  "ownedPid": 60545,
+  "ownedProcessGroup": 60545,
+  "startedAtUtc": "2026-10-12T06:53:23.949509+00:00",
+  "command": [
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-generalization-prep/build-source.py"
+  ],
+  "threads": 2,
+  "rssLimitBytes": 3221225472,
+  "timeoutSeconds": 300,
+  "readinessSha256": "1143cb66ef750975b44db36dfbe4a37a0f5f6417a51317c54ff1361d30133a8d"
+}

@@ -1,0 +1,48 @@
+{
+  "recordedAt": "2026-10-12T02:45:09.250875+00:00",
+  "revision": "authored-shoulder-c2",
+  "coreExecSession": 29199,
+  "terminalExitCode": 0,
+  "pass": true,
+  "testFilesPassed": 610,
+  "testsPassed": 5297,
+  "testDurationRaw": "228.02s (transform 13.47s, setup 0ms, collect 195.85s, tests 1684.71s, environment 87ms, prepare 27.83s)",
+  "coreElapsedSeconds": 264.9542191028595,
+  "sourceInputCount": 6460,
+  "installedDependencyCount": 6,
+  "initialClosureFinalMapsEqual": true,
+  "initialManifestFinalDependenciesEqual": true,
+  "sourceFixed": true,
+  "installedDependenciesFixed": true,
+  "environmentOverrides": {
+    "SANSU_BUILD_REVISION": "authored-shoulder-c2",
+    "VITE_ISLAND_ENABLED": "true",
+    "VITE_NATIVE_GROWING_ART": "false"
+  },
+  "stageChecks": {
+    "docs": true,
+    "lintReachedTypecheck": true,
+    "typecheckReachedTests": true,
+    "buildAndAssets": true
+  },
+  "assetBudgetLines": [
+    "- PWA precache: 145 unique files, 8.50 MiB / 12.00 MiB",
+    "- Explore artwork: 27 production files, 2.97 MiB / 8.00 MiB",
+    "- Production-input contract: docs/design only; absent from public and precache"
+  ],
+  "lintSummary": [
+    "\u2716 3 problems (0 errors, 3 warnings)"
+  ],
+  "evidence": {
+    "core/report.json": "13da5d82d61987bb8303339aca07ee9cbcf0ea68a5d575115f921e511289e3af",
+    "core/execution.log.txt": "934a8c2e09f0c387ca369bea55d096d8359f17e9baa50c891e0f8e5c4b80601a",
+    "core-runner-execution.log.txt": "e215d8ff7caf2bb76811d25503a897e01ed26d403223f8b1294fe0fb7c8b7803",
+    "snapshot.json": "59e4fe1d4c6662073b156a304a1ae471c0bef0c9187e6bfde93b49e694494879",
+    "closure/inputs.json": "142a3d1b21d5f49167d914c96d72e580913c702b2c820cd8e54bc918293b89fd",
+    "closure/installed-dependencies.json": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+    "prepared/core.py": "a3f4d8854fe714ede83d8552366b100ce8de7aca4f5ffd2482163e9a7ec113a3"
+  },
+  "browserStarted": false,
+  "serverStarted": false,
+  "scope": "Terminal normal-delivery core result only. Candidate source stayed fixed; no browser/visual/full-journey acceptance."
+}

@@ -1,0 +1,31 @@
+"""Syntax and input sealing only; never launches Blender."""
+import ast
+import hashlib
+import json
+from pathlib import Path
+HERE=Path(__file__).resolve().parent;STAGE=HERE.parent;BASE=STAGE.parent
+PASSED=STAGE/'normal-debug/tip-recenter-evaluated-baseline'
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+assert not (HERE/'readiness.json').exists(),'Preserve this preparation seal'
+syntax=[]
+for p in sorted(HERE.glob('*.py')):
+    ast.parse(p.read_text(),filename=str(p));syntax.append(p.name)
+external=dict(json.loads((PASSED/'readiness.json').read_text())['externalInputs'])
+paths=[*STAGE.glob('*.py'),STAGE/'proposal.json',STAGE/'readiness.json',
+       *[PASSED/n for n in ['geometry.py','sync_contract.py','exact_fingerprint.py','readiness.json','terminal-summary.json']],
+       BASE/'study.json',BASE/'extraction-attempt02/role-separated-originals.glb',
+       BASE/'extraction-attempt02/fixed-c1-context.glb',BASE/'extraction-attempt02/bindings.json']
+for p in paths:external[str(p)]=sha(p)
+assert all(sha(Path(p))==digest for p,digest in external.items()),'An original input changed'
+files={p.name:sha(p) for p in sorted(HERE.iterdir()) if p.is_file() and p.suffix in ('.py','.json','.md')}
+record={'scope':'one full stage4 source build only; no automatic render/retry',
+        'files':files,'externalInputs':external,'syntaxParsed':syntax,
+        'command':'SANSU_FOREST_REPRESENTATION_BUILD_APPROVED=1 python3 '+str(HERE/'run-once.py'),
+        'threads':2,'rssLimitBytes':3*1024**3,'wallSeconds':300,
+        'normalScope':{'changed101':'raw source accessor inverse-transpose','fixed27':'unchanged imported baseline'},
+        'originalSourceSha256':'10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae',
+        'firstFailureNeverPromotedToSuccess':True,'wholeView':'separate root decision after this build',
+        'blenderExecuted':False}
+(HERE/'readiness.json').write_text(json.dumps(record,indent=2)+'\n')
+digest=sha(HERE/'readiness.json');(HERE/'readiness.sha256').write_text(digest+'\n')
+print(json.dumps({'readinessSha256':digest,'localFiles':len(files),'externalInputs':len(external),'syntaxFiles':len(syntax)}))

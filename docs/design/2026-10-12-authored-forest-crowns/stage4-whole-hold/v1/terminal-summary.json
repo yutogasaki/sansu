@@ -1,0 +1,62 @@
+{
+  "status": "HOLD, stopped as sealed; no retry/render",
+  "pid": 66420,
+  "startedAtUtc": "2026-10-12T07:18:01.740187+00:00",
+  "finishedAtUtc": "2026-10-12T07:18:23.119352+00:00",
+  "exitCode": 1,
+  "ownedProcessExited": true,
+  "ownedProcessGroupGone": true,
+  "elapsedSeconds": 21.378961667000002,
+  "peakSampledRssBytes": 868188160,
+  "boundInputs": 254,
+  "inputsExact": true,
+  "changedRepresentationsConstructed": 69,
+  "breakdown": {
+    "originalMethod": 19,
+    "lamina": 50
+  },
+  "precisionHoldCount": 3,
+  "precisionHoldNodes": [
+    2269,
+    2271,
+    2273
+  ],
+  "firstFailure": {
+    "owner": "l14",
+    "sourceNode": 2289,
+    "leafOrdinal": 50,
+    "phase": "fresh-source-normal-baseline",
+    "beforeWorldMax": 0.0,
+    "afterWorldMax": 1.0115243642614567e-06,
+    "qualification": {
+      "finiteInputs": true,
+      "finalCandidateOnly": false,
+      "beforeWorldWithinUnchangedBound": true,
+      "linearExactlyUnchanged": true,
+      "localAndParentExactlyUnchanged": true,
+      "affineHomogeneousRowUnchanged": true,
+      "evaluatedEqualsFloat32ParentProduct": true,
+      "translationActuallyChanged": true
+    },
+    "translationDeltaBlender": [
+      9.5367431640625e-07,
+      -2.384185791015625e-07,
+      -2.384185791015625e-07
+    ],
+    "cause": "Same verified translation-only Float32 parent recomposition; baseline excluded from sealed candidate-only exception",
+    "normalOrLocalFaceFailureObserved": false
+  },
+  "original442AndMaterialsExact": true,
+  "assembly128Reached": false,
+  "primaryJoints": 0,
+  "roundtrip": "NOT RUN",
+  "nextAction": "Await root decision; no automatic retry or view of incomplete scene",
+  "files": {
+    "execution-hold-01/result.json": "a854cadc69f58724224eba304c9e395d34854f788ae3ffc858f84be10bb8c185",
+    "attempt-hold-01/shape-manifest.json": "da64641ca0c1028800f0d7eb811c9215efbc56849e22d9045e45b8b7ba07534b",
+    "attempt-hold-01/first-failure.json": "235627b226f699fd39ef0e859ed2c308e13535bcfa733213b5da55ba5d729889",
+    "attempt-hold-01/precision-holds.json": "7904be95bff37fbcd0b7ae81f10a0ce8b75dab9a240c3e5a261212f16326a0d5",
+    "attempt-hold-01/FAILED-incomplete-diagnostic.blend": "12ce6ae059678983de2cb27346e3e80b72d469171c01d5a5bff92cba613c306d",
+    "attempt-hold-01/roles/l14:2289/baseline-evaluation.json.gz": "a5d134888ba467961dbcb9ff96ae1cbdf2973005efa123a05801cb0a19a35446"
+  }
+}

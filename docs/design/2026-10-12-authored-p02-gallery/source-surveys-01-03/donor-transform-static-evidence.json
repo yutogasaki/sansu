@@ -1,0 +1,197 @@
+{
+  "status": "STATIC_GLTF_JSON_TRANSFORM_EVIDENCE_ONLY",
+  "sourceGlbSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+  "studySha256": "258376c7a16aed0aa4645e7b08b95f4392057309c4996d629e4542cb13f4ecc9",
+  "donors": [
+    {
+      "name": "Grove / hollow dwelling floor",
+      "gltfNode": 2216,
+      "parent": null,
+      "gltfTranslation": [
+        -4.900000095367432,
+        4.157769680023193,
+        -16.68000030517578
+      ],
+      "positionAccessorBounds": {
+        "min": [
+          -0.6899999976158142,
+          -0.05999999865889549,
+          -1.024999976158142
+        ],
+        "max": [
+          0.6899999976158142,
+          0.05999999865889549,
+          1.024999976158142
+        ]
+      },
+      "sourceWorldBounds": {
+        "min": [
+          -5.590000092983246,
+          4.097769681364298,
+          -17.705000281333923
+        ],
+        "max": [
+          -4.210000097751617,
+          4.217769678682089,
+          -15.65500032901764
+        ]
+      },
+      "expectedAuthoredBounds": {
+        "min": [
+          3.1444999581575392,
+          1.6274100334082455,
+          -8.817250126600266
+        ],
+        "max": [
+          3.765499956011772,
+          1.6814100322012515,
+          -7.894750148057938
+        ]
+      },
+      "method": "JSON accessor min/max plus sole node translation, then exact frozen uniform .45 source-to-authored transform; no vertex evaluation"
+    },
+    {
+      "name": "Grove / continuous bough gallery",
+      "gltfNode": 2136,
+      "parent": null,
+      "gltfTranslation": [
+        0,
+        0,
+        0
+      ],
+      "positionAccessorBounds": {
+        "min": [
+          -6.781111240386963,
+          6.43817663192749,
+          -19.030019760131836
+        ],
+        "max": [
+          -2.770111560821533,
+          7.317769527435303,
+          -14.970563888549805
+        ]
+      },
+      "sourceWorldBounds": {
+        "min": [
+          -6.781111240386963,
+          6.43817663192749,
+          -19.030019760131836
+        ],
+        "max": [
+          -2.770111560821533,
+          7.317769527435303,
+          -14.970563888549805
+        ]
+      },
+      "expectedAuthoredBounds": {
+        "min": [
+          2.6084999418258668,
+          2.6805931611616822,
+          -9.413508892059326
+        ],
+        "max": [
+          4.41344979763031,
+          3.076409964140198,
+          -7.5867537498474125
+        ]
+      },
+      "method": "JSON accessor min/max plus sole node translation, then exact frozen uniform .45 source-to-authored transform; no vertex evaluation"
+    },
+    {
+      "name": "Grove / gallery grown support",
+      "gltfNode": 2167,
+      "parent": null,
+      "gltfTranslation": [
+        0,
+        0,
+        0
+      ],
+      "positionAccessorBounds": {
+        "min": [
+          -6.7986836433410645,
+          5.260884761810303,
+          -16.8006591796875
+        ],
+        "max": [
+          -6.021933555603027,
+          7.172945022583008,
+          -16.528610229492188
+        ]
+      },
+      "sourceWorldBounds": {
+        "min": [
+          -6.7986836433410645,
+          5.260884761810303,
+          -16.8006591796875
+        ],
+        "max": [
+          -6.021933555603027,
+          7.172945022583008,
+          -16.528610229492188
+        ]
+      },
+      "expectedAuthoredBounds": {
+        "min": [
+          2.600592360496521,
+          2.150811819608948,
+          -8.410296630859374
+        ],
+        "max": [
+          2.950129899978638,
+          3.0112389369566652,
+          -8.287874603271485
+        ]
+      },
+      "method": "JSON accessor min/max plus sole node translation, then exact frozen uniform .45 source-to-authored transform; no vertex evaluation"
+    },
+    {
+      "name": "Grove / great root house trunk",
+      "gltfNode": 2182,
+      "parent": null,
+      "gltfTranslation": [
+        0,
+        0,
+        0
+      ],
+      "positionAccessorBounds": {
+        "min": [
+          -6.45044469833374,
+          3.7931642532348633,
+          -18.34861946105957
+        ],
+        "max": [
+          -3.4216668605804443,
+          11.221381187438965,
+          -15.651379585266113
+        ]
+      },
+      "sourceWorldBounds": {
+        "min": [
+          -6.45044469833374,
+          3.7931642532348633,
+          -18.34861946105957
+        ],
+        "max": [
+          -3.4216668605804443,
+          11.221381187438965,
+          -15.651379585266113
+        ]
+      },
+      "expectedAuthoredBounds": {
+        "min": [
+          2.7572998857498168,
+          1.49033759075,
+          -9.106878757476807
+        ],
+        "max": [
+          4.1202499127388,
+          4.833035211141846,
+          -7.893120813369751
+        ]
+      },
+      "method": "JSON accessor min/max plus sole node translation, then exact frozen uniform .45 source-to-authored transform; no vertex evaluation"
+    }
+  ],
+  "BlenderReexecuted": false,
+  "originalSurveyUnmodified": true
+}

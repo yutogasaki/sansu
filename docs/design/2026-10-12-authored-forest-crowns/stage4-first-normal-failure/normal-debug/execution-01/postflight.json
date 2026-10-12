@@ -1,0 +1,152 @@
+{
+  "recordedAtUtc": "2026-10-12T05:03:31.259091+00:00",
+  "scope": "completed first-role diagnostic, source remains HOLD",
+  "ownedPid": 34262,
+  "groupMembers": [],
+  "processExited": true,
+  "startedAtUtc": "2026-10-12T04:59:09.434615+00:00",
+  "finishedAtUtc": "2026-10-12T04:59:12.864590+00:00",
+  "elapsedSeconds": 3.4298634999999997,
+  "peakSampledRssBytes": 494698496,
+  "sampleSeconds": 0.25,
+  "exitCode": 0,
+  "failing": {
+    "name": "role-l14-2239",
+    "ownerId": "l14",
+    "role": "hanging-leaf",
+    "sourceNodeIndex": 2239,
+    "ordinal": 0
+  },
+  "completedCount": 19,
+  "residual": 0.11765023964224385,
+  "cacheObservationsIdentical": true,
+  "pristineRepeat": {
+    "error": "AssertionError('Unexpected custom-normal encoding residual: 0.11765023964224385')",
+    "residual": 0.11765023964224385,
+    "positionMaxL2AgainstFirst": 0.0,
+    "expectedMaxL2AgainstFirst": 0.0,
+    "storedMaxL2AgainstFirst": 0.0
+  },
+  "rawAccessorCorrespondence": {
+    "status": "EXACT-CORRESPONDENCE-CONFIRMED",
+    "coordinateMap": "GLTF local (x,y,z) -> Blender local (x,-z,y)",
+    "sourceAndExtractedPositionNormalIndicesEqual": true,
+    "positionMaxL2": 0.0,
+    "loopVertexIndicesExact": true,
+    "vertices": 78,
+    "corners": 456,
+    "triangles": 152,
+    "sourceNormalLengthRange": [
+      0.9999999406627769,
+      1.0000001033468284
+    ],
+    "importedCornerNormalLengthRange": [
+      0.8177572696762492,
+      1.000000114454166
+    ],
+    "sourceToImportedNormalMaxL2": 0.5755355483534538,
+    "sourceToImportedNormalsOver002": 17,
+    "exactZeroAreaPolygonIndices": [
+      0,
+      2,
+      98,
+      100
+    ],
+    "zeroThreshold": 0,
+    "nearZeroFacesNotRemovedOrClassified": true,
+    "failingVertexFan": [
+      {
+        "polygon": 0,
+        "vertices": [
+          0,
+          1,
+          4
+        ],
+        "inputArea": 0.0,
+        "deformedArea": 0.0,
+        "smooth": true
+      },
+      {
+        "polygon": 1,
+        "vertices": [
+          0,
+          4,
+          3
+        ],
+        "inputArea": 0.0015800523661777283,
+        "deformedArea": 0.0032427628439698594,
+        "smooth": true
+      },
+      {
+        "polygon": 96,
+        "vertices": [
+          0,
+          3,
+          42
+        ],
+        "inputArea": 0.0006163996407262273,
+        "deformedArea": 0.000943971293740694,
+        "smooth": true
+      },
+      {
+        "polygon": 97,
+        "vertices": [
+          0,
+          42,
+          39
+        ],
+        "inputArea": 0.0006081895987977482,
+        "deformedArea": 0.0009323629217858089,
+        "smooth": true
+      },
+      {
+        "polygon": 98,
+        "vertices": [
+          1,
+          0,
+          39
+        ],
+        "inputArea": 0.0,
+        "deformedArea": 0.0,
+        "smooth": true
+      }
+    ],
+    "failingVertex0SourceNormalBlenderLocal": [
+      -0.6400629878044128,
+      0.2541853189468384,
+      0.7250580787658691
+    ],
+    "failingVertex0ImportedNormal": [
+      -0.2777269184589386,
+      -0.19254665076732635,
+      0.7446613311767578
+    ],
+    "failingVertex0SourceImportL2": 0.5755355483534538,
+    "finding": "Input NORMAL changed during Blender import/readback at this exact source-index mapping; this precedes deformation. The later expected-to-stored loss persists through all tested updates. Zero-area faces share the failing fan, but causality has not been tested.",
+    "noBlenderSemanticsClaim": true,
+    "noGeometryOrNormalChanges": true,
+    "inputs": {
+      "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/attempt-01/failing-role-raw.json.gz": "e2820d44f4270b1e8346c00c313048f7bf1e7ce1c03f9452c438942b0d153dc0",
+      "/private/tmp/sansu-authored-forest-crown-study/extraction-attempt02/role-separated-originals.glb": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+      "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.glb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+    },
+    "files": {
+      "sourceRoleAccessorData": "source-role-accessors.json.gz"
+    }
+  },
+  "boundBeforeAfterIdentical": true,
+  "nextScope": "Prepare zero-area-face diagnostic only; no Blender run, normal correction, guard change or stage4 rebuild yet",
+  "files": {
+    "attempt-01/clone-final-stored-normals.json.gz": "5ef4fd90b552e2ade5d218054f2333f375e9be694999632dae0592900c0a334b",
+    "attempt-01/completed-before-failure.json": "c9dbb709f4bfefcbfffea3ddd89d09588f454499d5117d880c71b1376aeb55c6",
+    "attempt-01/failing-role-raw.json.gz": "e2820d44f4270b1e8346c00c313048f7bf1e7ce1c03f9452c438942b0d153dc0",
+    "attempt-01/input-parity.json": "5e16149eaba7a941a1e5e609ba6e2f26ca947fb46c5bca95330944df04f9b5e5",
+    "attempt-01/raw-correspondence.json": "63083ee6732e0767d18d5cc734bee8c4003957ab6b49ac09f62317d09cf7facf",
+    "attempt-01/result.json": "183892e8f7928a544f0829c8bb594041e5bc0550cb14c5b799defab4cd0fdbc6",
+    "attempt-01/role-order.json": "c4575e9979c65b039a259de59e224feb478a35d286715e9527e847be89e44403",
+    "attempt-01/source-role-accessors.json.gz": "30f6a737860e89c644fdd2fcafa365f15bf6bb95afe01af17225a7ef5e3bdc61",
+    "execution-01/result.json": "abeaadb656691c82c2b07405fda47c41e8a01eeb999d9eac439434199a5b070a",
+    "execution-01/execution.log.txt": "11229aaf81cf72aff4642c2dbd949e4fa2fb81336c5f30f7233abab805bb5a3a",
+    "analyze-raw.py": "1053ab784d3dfb9a69e96878fcc86627ed48736b7988d6853efea05b75ac265c"
+  }
+}

@@ -1,0 +1,29 @@
+test_before_world_failure_stays_hard_stop (test_precision_gate.PrecisionGateTest.test_before_world_failure_stays_hard_stop) ... ok
+test_each_parent_local_change_stays_hard_stop (test_precision_gate.PrecisionGateTest.test_each_parent_local_change_stays_hard_stop) ... ok
+test_first_failure_and_diagnostic_completion_are_not_acceptance (test_precision_gate.PrecisionGateTest.test_first_failure_and_diagnostic_completion_are_not_acceptance) ... ok
+test_linear_only_parent_recomposition_is_diagnostic_only (test_precision_gate.PrecisionGateTest.test_linear_only_parent_recomposition_is_diagnostic_only) ... ok
+test_nan_empty_mismatched_counts_stay_hard_stop (test_precision_gate.PrecisionGateTest.test_nan_empty_mismatched_counts_stay_hard_stop) ... ok
+test_no_translation_or_nonaffine_stays_hard_stop (test_precision_gate.PrecisionGateTest.test_no_translation_or_nonaffine_stays_hard_stop) ... ok
+test_qualified_continuation_does_not_pass_strict_gate (test_precision_gate.PrecisionGateTest.test_qualified_continuation_does_not_pass_strict_gate) ... ok
+test_saved_first_failure_qualifies_with_all_78_recorded_errors (test_precision_gate.PrecisionGateTest.test_saved_first_failure_qualifies_with_all_78_recorded_errors) ... ok
+test_saved_v1_baseline_failure_qualifies_without_changing_error (test_precision_gate.PrecisionGateTest.test_saved_v1_baseline_failure_qualifies_without_changing_error) ... ok
+test_saved_v2_linear_failure_qualifies_without_changing_error (test_precision_gate.PrecisionGateTest.test_saved_v2_linear_failure_qualifies_without_changing_error) ... ok
+test_three_recorded_clone_labels_follow_same_classification (test_precision_gate.PrecisionGateTest.test_three_recorded_clone_labels_follow_same_classification) ... ok
+test_unverified_recomposition_stays_hard_stop (test_precision_gate.PrecisionGateTest.test_unverified_recomposition_stays_hard_stop) ... ok
+test_verified_linear_change_is_recorded_hold_not_acceptance (test_precision_gate.PrecisionGateTest.test_verified_linear_change_is_recorded_hold_not_acceptance) ... ok
+test_within_bound_has_no_precision_hold (test_precision_gate.PrecisionGateTest.test_within_bound_has_no_precision_hold) ... ok
+test_changed_original_identity_rejected (test_scope_gate.ScopeTest.test_changed_original_identity_rejected) ... ok
+test_copy_cannot_replace_original_under_same_identity (test_scope_gate.ScopeTest.test_copy_cannot_replace_original_under_same_identity) ... ok
+test_derived_owner_or_role_mismatch_rejected (test_scope_gate.ScopeTest.test_derived_owner_or_role_mismatch_rejected) ... ok
+test_duplicate_original_identity_rejected (test_scope_gate.ScopeTest.test_duplicate_original_identity_rejected) ... ok
+test_exact_original128_plus_recorded6_context314 (test_scope_gate.ScopeTest.test_exact_original128_plus_recorded6_context314) ... ok
+test_extra_unrecorded_derived_is_not_ignored (test_scope_gate.ScopeTest.test_extra_unrecorded_derived_is_not_ignored) ... ok
+test_missing_or_extra_context_rejected (test_scope_gate.ScopeTest.test_missing_or_extra_context_rejected) ... ok
+test_missing_recorded_bough_rejected (test_scope_gate.ScopeTest.test_missing_recorded_bough_rejected) ... ok
+test_prejoint_original128_context314_is_distinct_valid_scope (test_scope_gate.ScopeTest.test_prejoint_original128_context314_is_distinct_valid_scope) ... ok
+test_unknown_tag_on_context_is_not_ignored (test_scope_gate.ScopeTest.test_unknown_tag_on_context_is_not_ignored) ... ok
+
+----------------------------------------------------------------------
+Ran 24 tests in 0.008s
+
+OK

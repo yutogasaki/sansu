@@ -1,0 +1,807 @@
+{
+  "archiveIntegrityPass": true,
+  "regressionPass": false,
+  "completedPassCount": 4,
+  "failedIncompleteCount": 1,
+  "createdAtUnixSeconds": 1791765302.217283,
+  "sourceDirectory": "/private/tmp/sansu-authored-cove-c4/regressions",
+  "destinationDirectory": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-runtime/c4/regressions",
+  "revision": "authored-cove-c4",
+  "runnerTerminal": {
+    "execSession": 71587,
+    "observedExitCode": 1,
+    "flowerPid": 68908,
+    "flowerProcessObservedExited": true
+  },
+  "runnerScript": {
+    "path": "/private/tmp/sansu-authored-cove-c4-prep/regressions.py",
+    "sha256": "7f4832d9cf6dfc664c3c548d408c2fc91f2fd6504c2a5964942aa748e86e0606"
+  },
+  "core": {
+    "path": "/private/tmp/sansu-authored-cove-c4/core/report.json",
+    "sha256": "b1c98da6515fa927651cfe241df3ed0871e3b8a1072dd4acaf83f6af973b3994",
+    "inputCount": 2137,
+    "pass": true
+  },
+  "snapshot": {
+    "path": "/private/tmp/sansu-authored-cove-c4/snapshot.json",
+    "sha256": "555fd26d832c74536005d58f2bd947a9c439965841dabae35e3cb40ffdc811fe",
+    "changedDuringCopy": []
+  },
+  "sourceChecks": {
+    "fixedCandidateAll2137Match": true,
+    "coreBeforeAfter": true,
+    "snapshotSubset": true,
+    "outerBeforeAfter": true,
+    "everyStageBeforeAfter": true,
+    "postArchiveCandidate": true,
+    "currentRepositoryMatches": false,
+    "currentRepositoryDifferences": [
+      {
+        "file": "docs/ai/verification_matrix.md",
+        "core": "e343b1b2c0c423e967ae39c3de522ced593d590a97634fd1cb8d24ee8734d46a",
+        "current": "679d11a4ca231d86e5b6519f0a7926a953624bc7b42c6b366da6e65c26266762"
+      }
+    ],
+    "postArchiveRepositoryDifferences": [
+      {
+        "file": "docs/ai/verification_matrix.md",
+        "core": "e343b1b2c0c423e967ae39c3de522ced593d590a97634fd1cb8d24ee8734d46a",
+        "current": "679d11a4ca231d86e5b6519f0a7926a953624bc7b42c6b366da6e65c26266762"
+      }
+    ]
+  },
+  "stagesStrictlySequential": true,
+  "firstFailure": {
+    "name": "05-authored-flower-full-cove-off",
+    "phase": "outer-command-timeout",
+    "limitSeconds": 900,
+    "operation": "rotate-whole",
+    "firstMeaningfulCause": "The external runner reached its configured command deadline and terminated its own process group.",
+    "rawErrorInterpretation": "The raw scrollIntoViewIfNeeded browser-closed error occurred during the outer timeout termination. The raw does not establish a pre-timeout application assertion failure or successful completion."
+  },
+  "stages": [
+    {
+      "name": "01-baseline27-editing",
+      "pass": true,
+      "exitCode": 0,
+      "failurePhase": null,
+      "timeoutSeconds": 600,
+      "rawReport": "01-baseline27-editing/actual/report.json",
+      "rawReportSha256": "1b4e4e657da945036ea69285c49aa0255726beba11c86893413fe60fed6298bb",
+      "command": [
+        "node",
+        "tools/e2e-authored-island-editing.mjs"
+      ],
+      "commandPid": 64973,
+      "candidateCwd": "/private/tmp/sansu-authored-cove-c4/candidate",
+      "environmentOverrides": {
+        "SANSU_AUTHORED_EDIT_URL": "http://127.0.0.1:5357/prototypes/place-qa/authored.html",
+        "SANSU_AUTHORED_EDIT_OUTPUT": "/private/tmp/sansu-authored-cove-c4/regressions/01-baseline27-editing/actual",
+        "SANSU_AUTHORED_EDIT_HEADED": "0"
+      },
+      "commonEnvironment": {
+        "SANSU_BUILD_REVISION": "authored-cove-c4",
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_NATIVE_GROWING_ART": "false"
+      },
+      "startedAtUnixSeconds": 1791763086.12352,
+      "finishedAtUnixSeconds": 1791763481.30234,
+      "processGroupCleanup": "runner-owned process group already exited",
+      "all2137BeforeAfterMatchCore": true,
+      "scenarioCount": 0,
+      "stepCount": 6,
+      "captureCount": 7,
+      "rawInputSubset": {
+        "count": 1581,
+        "initialSubsetMatches": true,
+        "finalInputsPresent": true,
+        "beforeAfterEqual": true,
+        "pass": true,
+        "limitation": null
+      },
+      "runtimeBuildStatus": "CAPTURE_METADATA_MATCH",
+      "runtimeBuildMatches": true,
+      "runtimeBuilds": [
+        "authored-cove-c4"
+      ]
+    },
+    {
+      "name": "02-wide27-water",
+      "pass": true,
+      "exitCode": 0,
+      "failurePhase": null,
+      "timeoutSeconds": 600,
+      "rawReport": "02-wide27-water/actual/report.json",
+      "rawReportSha256": "683af6460ba7695e0bedcaec1289018f4790dcebc051f6c67d735cf80011ebc8",
+      "command": [
+        "node",
+        "tools/e2e-authored-water.mjs"
+      ],
+      "commandPid": 66209,
+      "candidateCwd": "/private/tmp/sansu-authored-cove-c4/candidate",
+      "environmentOverrides": {
+        "SANSU_AUTHORED_WATER_URL": "http://127.0.0.1:5357/prototypes/place-qa/authored.html?water=wide",
+        "SANSU_AUTHORED_WATER_OUTPUT": "/private/tmp/sansu-authored-cove-c4/regressions/02-wide27-water/actual"
+      },
+      "commonEnvironment": {
+        "SANSU_BUILD_REVISION": "authored-cove-c4",
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_NATIVE_GROWING_ART": "false"
+      },
+      "startedAtUnixSeconds": 1791763481.307111,
+      "finishedAtUnixSeconds": 1791763853.48541,
+      "processGroupCleanup": "runner-owned process group already exited",
+      "all2137BeforeAfterMatchCore": true,
+      "scenarioCount": 0,
+      "stepCount": 6,
+      "captureCount": 14,
+      "rawInputSubset": {
+        "count": 1585,
+        "initialSubsetMatches": true,
+        "finalInputsPresent": true,
+        "beforeAfterEqual": true,
+        "pass": true,
+        "limitation": null
+      },
+      "runtimeBuildStatus": "CAPTURE_METADATA_MATCH",
+      "runtimeBuildMatches": true,
+      "runtimeBuilds": [
+        "authored-cove-c4"
+      ]
+    },
+    {
+      "name": "03-ordinary-growing-balance",
+      "pass": true,
+      "exitCode": 0,
+      "failurePhase": null,
+      "timeoutSeconds": 900,
+      "rawReport": "03-ordinary-growing-balance/actual/report.json",
+      "rawReportSha256": "4739bd5e2e8f1badf103f281636b0fd0cd27b30dcad747f80cb0c1fc88112e95",
+      "command": [
+        "node",
+        "tools/e2e-growing-balance.mjs"
+      ],
+      "commandPid": 67434,
+      "candidateCwd": "/private/tmp/sansu-authored-cove-c4/candidate",
+      "environmentOverrides": {
+        "SANSU_GROWING_URL": "http://127.0.0.1:5357",
+        "SANSU_GROWING_OUTPUT": "/private/tmp/sansu-authored-cove-c4/regressions/03-ordinary-growing-balance/actual"
+      },
+      "commonEnvironment": {
+        "SANSU_BUILD_REVISION": "authored-cove-c4",
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_NATIVE_GROWING_ART": "false"
+      },
+      "startedAtUnixSeconds": 1791763853.488965,
+      "finishedAtUnixSeconds": 1791764087.720692,
+      "processGroupCleanup": "runner-owned process group already exited",
+      "all2137BeforeAfterMatchCore": true,
+      "scenarioCount": 8,
+      "stepCount": 0,
+      "captureCount": 22,
+      "rawInputSubset": {
+        "count": 1580,
+        "initialSubsetMatches": true,
+        "finalInputsPresent": true,
+        "beforeAfterEqual": true,
+        "pass": true,
+        "limitation": null
+      },
+      "runtimeBuildStatus": "CAPTURE_METADATA_MATCH",
+      "runtimeBuildMatches": true,
+      "runtimeBuilds": [
+        "authored-cove-c4"
+      ]
+    },
+    {
+      "name": "04-classic-smoke",
+      "pass": true,
+      "exitCode": 0,
+      "failurePhase": null,
+      "timeoutSeconds": 2700,
+      "rawReport": "04-classic-smoke/diagnostics/smoke-report.json",
+      "rawReportSha256": "d1f38e85676d3151abf73b741a2fdf8bfa9ea7661334ac5ba87f2e5222a7c662",
+      "command": [
+        "npm",
+        "run",
+        "e2e:smoke"
+      ],
+      "commandPid": 68382,
+      "candidateCwd": "/private/tmp/sansu-authored-cove-c4/candidate",
+      "environmentOverrides": {
+        "VITE_ISLAND_ENABLED": "false",
+        "VITE_NATIVE_GROWING_ART": "false",
+        "VITE_EXPLORE_EXPERIENCE": "classic-v1",
+        "SANSU_E2E_DIAGNOSTIC_DIR": "/private/tmp/sansu-authored-cove-c4/regressions/04-classic-smoke/diagnostics",
+        "SANSU_E2E_CAPTURE_DIR": "/private/tmp/sansu-authored-cove-c4/regressions/04-classic-smoke/captures"
+      },
+      "commonEnvironment": {
+        "SANSU_BUILD_REVISION": "authored-cove-c4",
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_NATIVE_GROWING_ART": "false"
+      },
+      "startedAtUnixSeconds": 1791764087.724571,
+      "finishedAtUnixSeconds": 1791764232.081873,
+      "processGroupCleanup": "runner-owned process group already exited",
+      "all2137BeforeAfterMatchCore": true,
+      "scenarioCount": 32,
+      "stepCount": 0,
+      "captureCount": 0,
+      "rawInputSubset": {
+        "count": 1,
+        "pass": true,
+        "scope": "Raw exposes harness hash only; complete source closure verified by outer runner."
+      },
+      "runtimeBuildStatus": "BUILD_VALUE_NOT_OBTAINED",
+      "runtimeBuildMatches": null,
+      "target": "http://127.0.0.1:4173",
+      "ownServerEvidence": [
+        "Starting dev server on http://127.0.0.1:4173...",
+        "Dev server ready on http://127.0.0.1:4173."
+      ]
+    },
+    {
+      "name": "05-authored-flower-full-cove-off",
+      "pass": false,
+      "exitCode": 1,
+      "failurePhase": "outer-command-timeout",
+      "timeoutSeconds": 900,
+      "rawReport": "05-authored-flower-full-cove-off/actual/report.json",
+      "rawReportSha256": "c2a62d6d8e0fb694924c117c2dfbd03eaa1a6ff4e8af1b8866d4b83482cc9060",
+      "command": [
+        "node",
+        "tools/e2e-authored-flower.mjs"
+      ],
+      "commandPid": 68908,
+      "candidateCwd": "/private/tmp/sansu-authored-cove-c4/candidate",
+      "environmentOverrides": {
+        "SANSU_AUTHORED_FLOWER_URL": "http://127.0.0.1:5357/prototypes/place-qa/authored.html?water=wide&reference=preflight32&cove=false",
+        "SANSU_AUTHORED_FLOWER_OUTPUT": "/private/tmp/sansu-authored-cove-c4/regressions/05-authored-flower-full-cove-off/actual",
+        "SANSU_AUTHORED_FLOWER_BUILD": "authored-cove-c4",
+        "SANSU_AUTHORED_FLOWER_SHAPE_ONLY": "0",
+        "SANSU_AUTHORED_FLOWER_RAY_ONLY": "0"
+      },
+      "commonEnvironment": {
+        "SANSU_BUILD_REVISION": "authored-cove-c4",
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_NATIVE_GROWING_ART": "false"
+      },
+      "startedAtUnixSeconds": 1791764232.086528,
+      "finishedAtUnixSeconds": 1791765132.681511,
+      "processGroupCleanup": "runner-owned process group already exited",
+      "all2137BeforeAfterMatchCore": true,
+      "scenarioCount": 0,
+      "stepCount": 0,
+      "captureCount": 4,
+      "rawInputSubset": {
+        "count": 1899,
+        "initialSubsetMatches": true,
+        "finalInputsPresent": false,
+        "beforeAfterEqual": false,
+        "pass": false,
+        "limitation": "Driver finalInputs absent after outer timeout; missing final values are not observed byte drift."
+      },
+      "runtimeBuildStatus": "CAPTURE_METADATA_MATCH",
+      "runtimeBuildMatches": true,
+      "runtimeBuilds": [
+        "authored-cove-c4"
+      ],
+      "rawError": "locator.scrollIntoViewIfNeeded: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - attempting scroll into view action\u001b[22m\n\u001b[2m    - waiting for element to be stable\u001b[22m\n\n    at whole (/private/tmp/sansu-authored-cove-c4/candidate/tools/e2e-authored-flower.mjs:85:55)\n    at async file:///private/tmp/sansu-authored-cove-c4/candidate/tools/e2e-authored-flower.mjs:174:47\n    at async timed (/private/tmp/sansu-authored-cove-c4/candidate/tools/e2e-authored-flower.mjs:58:11)\n    at async file:///private/tmp/sansu-authored-cove-c4/candidate/tools/e2e-authored-flower.mjs:174:5",
+      "canvasSelectionCount": 4,
+      "editCount": 4,
+      "selectionCount": 6,
+      "coveDisabledInAvailableCaptures": true,
+      "referenceStages": [
+        "mature"
+      ],
+      "sourceClosureUnchangedRecorded": false,
+      "uncompleted": [
+        "rotate-whole completion",
+        "rotated whole/close captures",
+        "tablet whole/close",
+        "phone whole/close",
+        "young load and whole/close",
+        "driver final input check"
+      ]
+    }
+  ],
+  "rawArchive": {
+    "fileCount": 121,
+    "bytes": 29335088,
+    "sourceBeforeEqualsSourceAfterEqualsCopy": true,
+    "files": {
+      "01-baseline27-editing/actual/desktop-move-preview.png": {
+        "sha256": "5c62d350dee13eb010d7b4d3fe9b3f0a2a1cee81c79bf183e753bc6bea840699",
+        "bytes": 493892
+      },
+      "01-baseline27-editing/actual/desktop-reconnected.png": {
+        "sha256": "363b937c92f3db4742f7b92b334636f906964d77321113abd657bec1ad9c03d7",
+        "bytes": 473553
+      },
+      "01-baseline27-editing/actual/desktop-split.png": {
+        "sha256": "7ecd50302a20955ef727574b11e34a6b957758abf286fdea04a1818a182c4e12",
+        "bytes": 481042
+      },
+      "01-baseline27-editing/actual/desktop-tree-close.png": {
+        "sha256": "4cc9e063693d9f5ee679774f0090599bce3f71e1fd2e3e0e508ac37320c5bdd8",
+        "bytes": 439844
+      },
+      "01-baseline27-editing/actual/desktop-whole.png": {
+        "sha256": "50b9e0b238f7a02c62da3ed87199c50dc78bbe658083b74485bd98ca8cb5fa10",
+        "bytes": 472745
+      },
+      "01-baseline27-editing/actual/phone-whole.png": {
+        "sha256": "facb66e18a9d6d00ff1393776f07947ba7f2e1a02ac9c20a9ec08de2b83abf67",
+        "bytes": 185663
+      },
+      "01-baseline27-editing/actual/progress.json": {
+        "sha256": "b4ad536bf7a46145efd4aab0bf6ddb6f0fc4680f07121cd25bd05a4bb8632a45",
+        "bytes": 55
+      },
+      "01-baseline27-editing/actual/report.json": {
+        "sha256": "1b4e4e657da945036ea69285c49aa0255726beba11c86893413fe60fed6298bb",
+        "bytes": 598048
+      },
+      "01-baseline27-editing/actual/tablet-dusk-whole.png": {
+        "sha256": "29b86409f0a6e22d7d08933399245bff227bcff2482ba7df2b406b5371e3a1e0",
+        "bytes": 297212
+      },
+      "01-baseline27-editing/execution.log.txt": {
+        "sha256": "6ee236b7e2e2ca19bd251724ce6dc9eb80975d43e2574f30b45226f804770d39",
+        "bytes": 808
+      },
+      "01-baseline27-editing/report.json": {
+        "sha256": "881930098618a43677f916a3af599506420f2ccaee9682896ea2bd0e7781e919",
+        "bytes": 515995
+      },
+      "02-wide27-water/actual/desktop-dusk-whole.png": {
+        "sha256": "fd1b6e69c31d1c3f7e692c7ad2f2b741b7938b44683e971c104936b500ec3295",
+        "bytes": 416363
+      },
+      "02-wide27-water/actual/desktop-rotated-whole.png": {
+        "sha256": "126556ff059aa23b7209eed995d5ba0f5549dab85a0b78ba5f71740bbfa23200",
+        "bytes": 421222
+      },
+      "02-wide27-water/actual/desktop-whole.png": {
+        "sha256": "57f6dbe825cfa4fd777b4253e79bbd32e59692ff5fb5baec8df059616b4b5f3c",
+        "bytes": 450672
+      },
+      "02-wide27-water/actual/move-preview.png": {
+        "sha256": "4712712568a23ff3b1785c9248f2042c159347e1c8d6053e35277d151179ab79",
+        "bytes": 462518
+      },
+      "02-wide27-water/actual/moved-split.png": {
+        "sha256": "6d4553a943fc01c4fda11b367fa2f8e5f99b11e51e1b39d4042884c98a05167e",
+        "bytes": 447050
+      },
+      "02-wide27-water/actual/phone-whole.png": {
+        "sha256": "9192d5575a296688ec4748511710c590550e78723ebd569dce867fa972368f51",
+        "bytes": 181281
+      },
+      "02-wide27-water/actual/preview-cancelled.png": {
+        "sha256": "61682601b22c0f94dd67495ee55b149e1c8c2b3d643ce306b4be7962b3f0c8f3",
+        "bytes": 450597
+      },
+      "02-wide27-water/actual/progress.json": {
+        "sha256": "dc952d3c7f634c915800cf1c7d4665418dcecf16e8659f5dba74efb8e253943f",
+        "bytes": 18
+      },
+      "02-wide27-water/actual/reconnect-preview.png": {
+        "sha256": "91d1b41d0b2a1a456271f344c7fc9a9fadfd0ee215fa6f647c04b3146e1d59ea",
+        "bytes": 457889
+      },
+      "02-wide27-water/actual/reconnected.png": {
+        "sha256": "46b62c4f807fa590438a576eef0d5898979131da45263a4db453b01cf3228a41",
+        "bytes": 452586
+      },
+      "02-wide27-water/actual/report.json": {
+        "sha256": "683af6460ba7695e0bedcaec1289018f4790dcebc051f6c67d735cf80011ebc8",
+        "bytes": 1782866
+      },
+      "02-wide27-water/actual/stored-dry-ground.png": {
+        "sha256": "3f6143f26bd3ba562850f6f836286280e9b536100af7470c66dc31b82df7fe93",
+        "bytes": 448930
+      },
+      "02-wide27-water/actual/tablet-whole.png": {
+        "sha256": "a26986887c5272570e6e08a9742dbb9721d7376a92d66a13f4f93c927efc0cfa",
+        "bytes": 316119
+      },
+      "02-wide27-water/actual/water-bridge-close.png": {
+        "sha256": "724dbde88e8a6745fe97bcc8e6d4b16d16a0a6777362bcae0935fd3f75a10f93",
+        "bytes": 418464
+      },
+      "02-wide27-water/actual/water-close.png": {
+        "sha256": "f22446f5cf63495e713dc0593d64174133e77fc2157363a645b7351b022af35d",
+        "bytes": 385173
+      },
+      "02-wide27-water/actual/water-dusk-close.png": {
+        "sha256": "260fb10bc7177978685cc40be2f70693987ffae148ae6f86527f03ad796d2b43",
+        "bytes": 362311
+      },
+      "02-wide27-water/execution.log.txt": {
+        "sha256": "e32b6cf9a11d49df9093183337863cafcac71b469efba523e10417cec648347a",
+        "bytes": 636
+      },
+      "02-wide27-water/report.json": {
+        "sha256": "042fb8978baf599e8d25f1468d8153741ca6804f4045b250d7406b771085d932",
+        "bytes": 515664
+      },
+      "03-ordinary-growing-balance/actual/390-district-placement.png": {
+        "sha256": "49a5f44f06d963d5f1742973500368f68d344c36232a7469bf135d9fbbd061bc",
+        "bytes": 227845
+      },
+      "03-ordinary-growing-balance/actual/390-district-saved.png": {
+        "sha256": "2aa6706de6ba8b582b6323cc88a83bd1ab9450c3fbf395eb988f152ab39182e1",
+        "bytes": 227921
+      },
+      "03-ordinary-growing-balance/actual/390-districts.png": {
+        "sha256": "170ddcbb1ffab8c66523e5d908db00fbba260e834554bde57151739ce41e2f31",
+        "bytes": 242930
+      },
+      "03-ordinary-growing-balance/actual/390-first-home.png": {
+        "sha256": "0d41b5ba5593951949509fc8305e4fe257d846549e924e807bd929b41b8844ff",
+        "bytes": 201533
+      },
+      "03-ordinary-growing-balance/actual/390-indoor-friend-focus.png": {
+        "sha256": "2880c38c99fee6f7f375d79a1f6c0f64d4ffdc918fee3ab8011f3f7c701549f2",
+        "bytes": 130804
+      },
+      "03-ordinary-growing-balance/actual/390-initial.png": {
+        "sha256": "804acd883bfa47c104a68ba60d7bf73d3f11e44552f565948d8d5ea464123b9e",
+        "bytes": 172135
+      },
+      "03-ordinary-growing-balance/actual/390-learning-keepsake.png": {
+        "sha256": "e7990d8134d9ec9f93d8fcb1afe89f467c66540b1cffa3fa4b05fca5bce9fb5f",
+        "bytes": 151461
+      },
+      "03-ordinary-growing-balance/actual/390-learning.png": {
+        "sha256": "8bf659972bfae2a48c0ae26bf98b737592607701612a37402927c4868a0f6434",
+        "bytes": 68675
+      },
+      "03-ordinary-growing-balance/actual/390-placement.png": {
+        "sha256": "bc662b9c694e835d731ff64930c440b9894bfe6322a4a10ed5d2231a246b1247",
+        "bytes": 177271
+      },
+      "03-ordinary-growing-balance/actual/390-saved.png": {
+        "sha256": "2d59f33b36e1b54609784afd3d57599128694125828dcbd3b07881120e2b0c14",
+        "bytes": 175163
+      },
+      "03-ordinary-growing-balance/actual/390-ten-answers-home-shortfall.png": {
+        "sha256": "68346c3147eb0292927f4434f34fdd98c53ee452ee8d18be5e087bfd33e2e61e",
+        "bytes": 180996
+      },
+      "03-ordinary-growing-balance/actual/768-district-placement.png": {
+        "sha256": "6ce9b8e0b6f3c4334656761efe8afeaac0bf4d9d16920ca0f7464b267edc30f0",
+        "bytes": 404823
+      },
+      "03-ordinary-growing-balance/actual/768-district-saved.png": {
+        "sha256": "672b5fc7a3186ce52a895efe5ca32c5cc5ed2f88bac840907f3fa3c6f9ac4591",
+        "bytes": 402733
+      },
+      "03-ordinary-growing-balance/actual/768-districts.png": {
+        "sha256": "86f15a2f9d81c4e3996005438d981e724ca56e24fc3f9e5ccaf85e0f3cf46e3e",
+        "bytes": 459871
+      },
+      "03-ordinary-growing-balance/actual/768-first-home.png": {
+        "sha256": "53a135b1af07f13ce62d7284a76d76fbb846e4a24dbdd0e66848c9fd3e540a0b",
+        "bytes": 382216
+      },
+      "03-ordinary-growing-balance/actual/768-indoor-friend-focus.png": {
+        "sha256": "fad4a5af618cf2d06e138e60f54cabab72303b6d34967939fa5d835817f8bc0a",
+        "bytes": 227831
+      },
+      "03-ordinary-growing-balance/actual/768-initial.png": {
+        "sha256": "3eea5a1f47c94d4f8e28b3b84c90354539d02b66a60e4392adad183829a2afeb",
+        "bytes": 308307
+      },
+      "03-ordinary-growing-balance/actual/768-learning-keepsake.png": {
+        "sha256": "97e4cfa87ca5400e5a26a11ff8df4d33a1a11f6ccb5e1e14a4ff1e6846f4871d",
+        "bytes": 274006
+      },
+      "03-ordinary-growing-balance/actual/768-learning.png": {
+        "sha256": "6757f891eafa3dcc5b4a2f9f6582c6477892f820e1729b7cb94033cc3d2e9a1b",
+        "bytes": 89150
+      },
+      "03-ordinary-growing-balance/actual/768-placement.png": {
+        "sha256": "751103ac4efeca3dc9ca8684fd8a536b3bae78a97ba9b439fc518149f43640eb",
+        "bytes": 311628
+      },
+      "03-ordinary-growing-balance/actual/768-saved.png": {
+        "sha256": "104cbdd3d98fe08d8186940f0e4d78cbf5472d48bda7356349e3a2300a7d1cbe",
+        "bytes": 318989
+      },
+      "03-ordinary-growing-balance/actual/768-ten-answers-home-shortfall.png": {
+        "sha256": "fc6da4298c2cddf22372385ba2bd69b9531265ace10665277d6120c56e20dee2",
+        "bytes": 317525
+      },
+      "03-ordinary-growing-balance/actual/report.json": {
+        "sha256": "4739bd5e2e8f1badf103f281636b0fd0cd27b30dcad747f80cb0c1fc88112e95",
+        "bytes": 442475
+      },
+      "03-ordinary-growing-balance/execution.log.txt": {
+        "sha256": "df9b921bf3b3149eb3bf5c1ab5ac9a304913d427f5991edd4ba95751d36f66a3",
+        "bytes": 442476
+      },
+      "03-ordinary-growing-balance/report.json": {
+        "sha256": "1af66b27fa08c615c0e8e9124279304f771899aa30151cdd10a00b6cda31903b",
+        "bytes": 527587
+      },
+      "04-classic-smoke/captures/1024x1366/light-bridge-correct.jpg": {
+        "sha256": "129470a8d24301300b42985a4a6e9d43d979747a329d499a267d856e783a64ed",
+        "bytes": 121876
+      },
+      "04-classic-smoke/captures/1024x1366/light-bridge-idle.jpg": {
+        "sha256": "83886e2b58862d0377f9abad0e10c3ecc3486a60636c83f9db3bfa8ec250e5cb",
+        "bytes": 129441
+      },
+      "04-classic-smoke/captures/1024x1366/root-tangle-correct.jpg": {
+        "sha256": "63e9e899c61b493358fe5fb5e76a1ff187a6b414b5bf0d2f8e60778236fb99f7",
+        "bytes": 162754
+      },
+      "04-classic-smoke/captures/1024x1366/root-tangle-idle.jpg": {
+        "sha256": "5d276086e4857549e83c28778e66db847a536c8f390d48f2374b36df00a49941",
+        "bytes": 156201
+      },
+      "04-classic-smoke/captures/1024x1366/root-tangle-observation.jpg": {
+        "sha256": "0948e28d618d38db3b6d385b88cd82850978998d539e7f1136c0075fc8485b6a",
+        "bytes": 116913
+      },
+      "04-classic-smoke/captures/1024x1366/root-tangle-return.jpg": {
+        "sha256": "ba2703157beba653bf4e8ce80b8ec7fb1b0efdc3687ea83775066dca451ad378",
+        "bytes": 65085
+      },
+      "04-classic-smoke/captures/1024x768/light-bridge-correct.jpg": {
+        "sha256": "6d938591c60d90e1b90b35f71946136a485fbeab0ef4fda99ffe8bfa2f8c8fcf",
+        "bytes": 63833
+      },
+      "04-classic-smoke/captures/1024x768/light-bridge-idle.jpg": {
+        "sha256": "55e8b7a96d7546e917c9953da104edeca529dfa3d27a35a877c40757bc7eaf72",
+        "bytes": 68332
+      },
+      "04-classic-smoke/captures/1024x768/root-tangle-correct.jpg": {
+        "sha256": "433cefdaae8eff26f19a54711299ebe591a60ca9b7f8f7a0614283f17e14ae3a",
+        "bytes": 70289
+      },
+      "04-classic-smoke/captures/1024x768/root-tangle-idle.jpg": {
+        "sha256": "399733fd4c3b717511c5ffc4d9a5b8b14b887f77999653947aa2e9c6b52b76bb",
+        "bytes": 74122
+      },
+      "04-classic-smoke/captures/1024x768/root-tangle-observation.jpg": {
+        "sha256": "faf1e21503956be810ceb2afeff8258a3b673fe85758891cc6d8fdf5e527a7c4",
+        "bytes": 89959
+      },
+      "04-classic-smoke/captures/1024x768/root-tangle-return.jpg": {
+        "sha256": "2b9be407ff201e6c612a23784cc6273e16174c93b44c30721ed309a9004d518a",
+        "bytes": 104327
+      },
+      "04-classic-smoke/captures/1080x1920/light-bridge-correct.jpg": {
+        "sha256": "1c40fab63b95d2dfc4bbf76705ba4f74bc4fa9a5b514c0cba8ca4aae90d9af5a",
+        "bytes": 134774
+      },
+      "04-classic-smoke/captures/1080x1920/light-bridge-idle.jpg": {
+        "sha256": "ee9ec3697c677533dcc08eb486bcf92d55bfc24cbc5e0e0c5553ee9d1c6657da",
+        "bytes": 143541
+      },
+      "04-classic-smoke/captures/1080x1920/root-tangle-correct.jpg": {
+        "sha256": "515e50e248e03be3b7081f43e9037750c5605e582428a80ab7c4dd4a453c633e",
+        "bytes": 177724
+      },
+      "04-classic-smoke/captures/1080x1920/root-tangle-idle.jpg": {
+        "sha256": "04f6a1bf6962e9cd3654674996c2b17c213ce740789afa843a4e738a68c9d472",
+        "bytes": 171362
+      },
+      "04-classic-smoke/captures/1080x1920/root-tangle-observation.jpg": {
+        "sha256": "82376402c167ba0c0a5a4ae4fa0e573712aafc4c8e1d367cb217d53274861d2e",
+        "bytes": 122891
+      },
+      "04-classic-smoke/captures/1080x1920/root-tangle-return.jpg": {
+        "sha256": "6b1a66fa3eb04094ac6ee12f170b66698039356a9ad389d1f875dd7d0e4dc537",
+        "bytes": 74638
+      },
+      "04-classic-smoke/captures/390x844/light-bridge-correct.jpg": {
+        "sha256": "7710ea88f32a95ef33259e8a00a782ff33f0b57cb7ad55d0308a12b7ecaad2cc",
+        "bytes": 41005
+      },
+      "04-classic-smoke/captures/390x844/light-bridge-idle.jpg": {
+        "sha256": "e78c5d344824a942f26e25640516c5a921c893f38ce5a77269f014f5855ccfe8",
+        "bytes": 41316
+      },
+      "04-classic-smoke/captures/390x844/root-tangle-correct.jpg": {
+        "sha256": "42e2b4fd3cc04ec94da2010e955e65d8c9a0f4a838e3a17da2ed37d27d32d84e",
+        "bytes": 51756
+      },
+      "04-classic-smoke/captures/390x844/root-tangle-first-retry-correct.jpg": {
+        "sha256": "be184f8d9f387d22bfdd39c515209f60b18fc8a6e67a48f85adc3ef54c774d1f",
+        "bytes": 42698
+      },
+      "04-classic-smoke/captures/390x844/root-tangle-first-retry-idle.jpg": {
+        "sha256": "4fb0372878df37166564b111813d37b8cdf85f42d9a5c4c10aa000c8f4239b10",
+        "bytes": 45616
+      },
+      "04-classic-smoke/captures/390x844/root-tangle-first-retry-observation.jpg": {
+        "sha256": "53035d571d3623071718cb7f6e83265f788863d2a0dfbbe1d686164e3f05303c",
+        "bytes": 55420
+      },
+      "04-classic-smoke/captures/390x844/root-tangle-first-retry-return.jpg": {
+        "sha256": "58be1af5cc491f02a4ad1327ad5e43d79260378d0732d4a53071a834f30a5438",
+        "bytes": 82987
+      },
+      "04-classic-smoke/captures/390x844/root-tangle-idle.jpg": {
+        "sha256": "6d83709c9544c397b5a9b8ba4d09555b26e60f6500f1344c4d0e09df6f8b5ddd",
+        "bytes": 47504
+      },
+      "04-classic-smoke/captures/390x844/root-tangle-observation.jpg": {
+        "sha256": "53035d571d3623071718cb7f6e83265f788863d2a0dfbbe1d686164e3f05303c",
+        "bytes": 55420
+      },
+      "04-classic-smoke/captures/390x844/root-tangle-return.jpg": {
+        "sha256": "a13ea347753ea3b87991c2be192d8a501de9b5b0df25773038abd4dfbefff535",
+        "bytes": 36943
+      },
+      "04-classic-smoke/captures/768x1024/light-bridge-correct.jpg": {
+        "sha256": "1237fed1d19aeffbe5a61b59803c35081c0ec667af37436885e7639c97c7e021",
+        "bytes": 91001
+      },
+      "04-classic-smoke/captures/768x1024/light-bridge-idle.jpg": {
+        "sha256": "8316bfdb3283a6b7c7641c54fd40d6d8ce90881dc20f14bf1bb31681b10cca84",
+        "bytes": 91145
+      },
+      "04-classic-smoke/captures/768x1024/root-tangle-correct.jpg": {
+        "sha256": "ce7644344de02a3a3ceb3f7f4d2a44c241b301f0db82fd72ac39fb41c410f7b6",
+        "bytes": 115233
+      },
+      "04-classic-smoke/captures/768x1024/root-tangle-idle.jpg": {
+        "sha256": "1f698bd83f73ffa9ae3b9911e7a3abd6cbdbc1f4a49a8f3ddaf643d14f385c90",
+        "bytes": 107973
+      },
+      "04-classic-smoke/captures/768x1024/root-tangle-observation.jpg": {
+        "sha256": "2d045492efd6f0bfbc0c56cdc6a670c7dbe5ddffd722ceddd3d5659b044a9b80",
+        "bytes": 108991
+      },
+      "04-classic-smoke/captures/768x1024/root-tangle-return.jpg": {
+        "sha256": "c7619456d017b859dc3085755bb75a0c68736a2cfdd4cc1d16849b8b5f7daab4",
+        "bytes": 118474
+      },
+      "04-classic-smoke/diagnostics/observation-01b6074a-c82a-4bc5-87f2-0f05e3d1fcb9.json": {
+        "sha256": "1c37317c4a9f95a80cf44760bbbb0a75e5ef14d18c8bfc86038f5b92c11cfd83",
+        "bytes": 100640
+      },
+      "04-classic-smoke/diagnostics/observation-07c5a181-b16a-4897-b3ce-c184002aed47.json": {
+        "sha256": "8bfae95512f0188e0307f3a9ee25fe954e8826f7a7f454c8940cca5af7cf6c21",
+        "bytes": 80430
+      },
+      "04-classic-smoke/diagnostics/observation-0dc09e8b-f849-4f08-8e2c-a549b8f6017b.json": {
+        "sha256": "13884567fc596e400393336f8fd427f7c75197d90667a5fc1ecfc48bb2b8fec0",
+        "bytes": 28336
+      },
+      "04-classic-smoke/diagnostics/observation-1ef8284b-c562-4bfa-b090-cab3f4e73d7d.json": {
+        "sha256": "d3ad0531d44c762b7269f7aab16d46570bbdd62971f6adf1a0e6175246cfc20c",
+        "bytes": 104515
+      },
+      "04-classic-smoke/diagnostics/observation-2abc4fb6-716e-4f1b-85e2-1ba5fa747332.json": {
+        "sha256": "175d56e258225f2cab5e92c3aa9b8f941f8b62ccf3f37ae4baa5a0f71a2cfe37",
+        "bytes": 28821
+      },
+      "04-classic-smoke/diagnostics/observation-3862e804-d9de-491d-b8f0-c487766fc1d2.json": {
+        "sha256": "b8b2af625c05cb8f1ee05a109c0a878ff6478b656a9e520fd50460ea8d41b187",
+        "bytes": 79302
+      },
+      "04-classic-smoke/diagnostics/observation-4e55ded9-aa56-4321-a376-a7344f3f0fb7.json": {
+        "sha256": "04456bdc24f9ad17d81931ffe45d258a81d5da0625f4d43028bba0ab7516ae40",
+        "bytes": 89523
+      },
+      "04-classic-smoke/diagnostics/observation-53829149-d210-4d0e-b708-6e1803e6f4a2.json": {
+        "sha256": "f8cd14ffc989016faeb96a1585bfc46d89c58870df84a2f5b50e667a5898a419",
+        "bytes": 100570
+      },
+      "04-classic-smoke/diagnostics/observation-5dfefbf7-78df-4d49-a195-1a8f1e891735.json": {
+        "sha256": "7f88d9a2071a7e6d1809fc2454380a2239a336c8a67a42dadc04c2b2610f377e",
+        "bytes": 28324
+      },
+      "04-classic-smoke/diagnostics/observation-7628f044-6a75-4b1e-9d8c-9cd1543989c0.json": {
+        "sha256": "1553b0b98c97d351610ae4cd0be6b161804bb39fa4a09a0fb94f7caa6e2bed19",
+        "bytes": 75681
+      },
+      "04-classic-smoke/diagnostics/observation-83b07f12-96ce-436e-9d8f-21fecab47277.json": {
+        "sha256": "decdd935b28f7267ca50327da00b1bb395d0905266d757d8150bbd899c86ba93",
+        "bytes": 100516
+      },
+      "04-classic-smoke/diagnostics/observation-9ef720da-6685-45c5-be99-c666aed81e77.json": {
+        "sha256": "71b1a1b27265a658824d8e0d10dce38bec624b3c778b7dfcd3105513f37ca9e6",
+        "bytes": 75560
+      },
+      "04-classic-smoke/diagnostics/observation-b639f8e3-faa2-4c21-99bd-442f3ffbae21.json": {
+        "sha256": "b70c5651378ca93d2873b8c4cf1c6d5fc7938e462269559d68c3faf5b132ee1e",
+        "bytes": 104355
+      },
+      "04-classic-smoke/diagnostics/observation-cd695451-c91f-4c3f-9c42-b833b0e83872.json": {
+        "sha256": "91b99fdb2c6d9259d8a5fe92e62f0fd52d2bb16b5dc8d36badc69b26a3a20e9e",
+        "bytes": 77470
+      },
+      "04-classic-smoke/diagnostics/observation-f666adf5-5d41-44d3-8b4b-3e596751c378.json": {
+        "sha256": "20fb2b5934b77706a7daf81666416bc52ccecd435b5f2293e212befb37fdbfe2",
+        "bytes": 27908
+      },
+      "04-classic-smoke/diagnostics/observation-fd7d8f17-dfe3-44f1-a498-144dffc1f7c6.json": {
+        "sha256": "40b5c3eca4e1f4b349aa315879924d8af7464018d91512dbc8649d0eb68274b1",
+        "bytes": 13302
+      },
+      "04-classic-smoke/diagnostics/smoke-report.json": {
+        "sha256": "d1f38e85676d3151abf73b741a2fdf8bfa9ea7661334ac5ba87f2e5222a7c662",
+        "bytes": 7476
+      },
+      "04-classic-smoke/execution.log.txt": {
+        "sha256": "6af9e5460d7bd3b6befd599dc8c00f088c624069ed23b96bc989ff1ed7d8c176",
+        "bytes": 2810
+      },
+      "04-classic-smoke/report.json": {
+        "sha256": "868840100c07f3a119349a6ded666fe7b23dfe181fc07bafa4592439f5f08fa4",
+        "bytes": 517916
+      },
+      "04-classic-smoke/served-App.tsx.txt": {
+        "sha256": "720e939742ba0620e7126a03e1de53ee28ab02904e1e21ccdcd562d9f4264885",
+        "bytes": 57243
+      },
+      "04-classic-smoke/served-vite-client.txt": {
+        "sha256": "82e891da9e4cc3e49b4fe52d10a16f3a8e1f0d03ba66ea51ba2358914f0522ff",
+        "bytes": 179164
+      },
+      "04-classic-smoke/supplemental-build-initial-parser.json": {
+        "sha256": "aa0ba4542a9f149f50287ce8562e6ab40d3ea91273310e022bb3f5b85f4d5c59",
+        "bytes": 509
+      },
+      "04-classic-smoke/supplemental-build-observation.json": {
+        "sha256": "1648dc6de1182b398444626c1fee02fa423e790c1504d33ab5b0beb9295fe80f",
+        "bytes": 1610
+      },
+      "05-authored-flower-full-cove-off/actual/desktop-flower-close-day.png": {
+        "sha256": "b3992f496d3a9b5cc83d693a1491567bd93786d2383d7ff24d1f07a2f4801539",
+        "bytes": 539723
+      },
+      "05-authored-flower-full-cove-off/actual/desktop-flower-reconnected-whole-day.png": {
+        "sha256": "bccdaa896e4827d21901e83e8fcce1e35ce690099c3f52e6745047d640b18aa3",
+        "bytes": 476527
+      },
+      "05-authored-flower-full-cove-off/actual/desktop-flower-split-whole-day.png": {
+        "sha256": "abfc3ac9a2df948c0468cae97c4283bea51f067ed90d7d43e02c077f2c541474",
+        "bytes": 465999
+      },
+      "05-authored-flower-full-cove-off/actual/desktop-mature-whole-day.png": {
+        "sha256": "81bc7a5584503ce132a030ba8b010dfcba0f0e30f4772847b7f3311306a104a0",
+        "bytes": 490236
+      },
+      "05-authored-flower-full-cove-off/actual/report.json": {
+        "sha256": "c2a62d6d8e0fb694924c117c2dfbd03eaa1a6ff4e8af1b8866d4b83482cc9060",
+        "bytes": 708847
+      },
+      "05-authored-flower-full-cove-off/execution.log.txt": {
+        "sha256": "45b2b18128badd348defeb0a06a337f9d71104a3f34d3c9ec6195f238d3c00ea",
+        "bytes": 1231
+      },
+      "05-authored-flower-full-cove-off/report.json": {
+        "sha256": "aa967efc5c6960f40633f7159908256f52b7788f8565e4191615bf22ff4b9911",
+        "bytes": 1069219
+      },
+      "archive-first-failure.py": {
+        "sha256": "438ff99eceb1efff71618c766bdac40725e0233dbc2284ff3b63527b81d932b7",
+        "bytes": 14745
+      },
+      "archive-regressions.py": {
+        "sha256": "0ad487746ca1ab8ab17cc7ce593bea652ad3874aae6c44b281d68f7d707c3ab0",
+        "bytes": 14988
+      },
+      "report.json": {
+        "sha256": "457644b35c28c70711102162b20a5e0fbeea83e34d4154d516a1b63d3946525c",
+        "bytes": 1694481
+      }
+    }
+  },
+  "limits": [
+    "Five-regression PASS is not claimed; flower remains incomplete.",
+    "Classic actual screen build value not obtained.",
+    "Diagnostic timing values do not establish product performance acceptance.",
+    "No retries or new browser execution during archive.",
+    "No new acquisition, natural growth, personal-save, physical touch-device, independent art/understanding or complete M1 acceptance."
+  ]
+}

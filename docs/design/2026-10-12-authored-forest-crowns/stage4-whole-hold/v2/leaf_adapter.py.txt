@@ -1,0 +1,225 @@
+"""Unexecuted Blender adapter draft for the classified lamina cohort ONLY.
+
+No import, builder, render or export entry point. Caller supplies the sealed
+single-leaf Float64 geometry and sync modules, immutable-scene snapshot and an
+evidence writer. Original objects remain present and unchanged. Selection of
+exactly one copy per owner bundle belongs to a later builder revision.
+"""
+import hashlib
+import math
+import struct
+from precision_gate import classify as classify_precision
+from rules import (Hold, require, method_for_role, retain_exact_nonzero,
+                   derive_incident_sharp, normal_residuals, choose_representation,
+                   exact_zero_faces, NORMAL_LIMIT, WORLD_LIMIT)
+
+
+def _vecs(values):
+    return [list(v) for v in values]
+
+
+def _accessor_hash(values, code):
+    return hashlib.sha256(b''.join(struct.pack('<'+code*len(row), *row)
+                                  for row in values)).hexdigest()
+
+
+def _flags(mesh):
+    return {tuple(sorted(e.vertices)): bool(e.use_edge_sharp) for e in mesh.edges}
+
+
+def _matrix_state(obj):
+    return {'world': _vecs(obj.matrix_world), 'basis': _vecs(obj.matrix_basis),
+            'parentInverse': _vecs(obj.matrix_parent_inverse),
+            'parentWorld': _vecs(obj.parent.matrix_world) if obj.parent else None}
+
+
+def _evaluate64(positions, normals, transform, field, g):
+    # Same arithmetic and epsilon as the passed one-leaf profile. No Blender
+    # Vector or Matrix occurs between original Float32 input and final cast.
+    affine = [row[:3] for row in transform[:3]]
+    normal_world, normal_local = g.transpose(g.inverse(affine)), g.transpose(affine)
+    inv = g.inverse(transform)
+    world = [g.point(transform, p) for p in positions]
+    targets = [list(field(tuple(p))) for p in world]
+    local = [g.point(inv, p) for p in targets]
+    desired, jacobians, transports = [], [], []
+    epsilon = 1e-5
+    for p, normal in zip(world, normals):
+        columns = []
+        for axis in range(3):
+            lo, hi = list(p), list(p)
+            lo[axis] -= epsilon
+            hi[axis] += epsilon
+            a, b = field(tuple(lo)), field(tuple(hi))
+            columns.append([(y-x)/(2*epsilon) for x, y in zip(a, b)])
+        j = g.transpose(columns)
+        determinant = g.determinant(j)
+        require(math.isfinite(determinant) and determinant >= .2,
+                'Unchanged sampled Jacobian guard failed')
+        transport = g.multiply(g.multiply(normal_local, g.transpose(g.inverse(j))), normal_world)
+        desired.append(g.normalize(g.vector(transport, normal)))
+        jacobians.append(j)
+        transports.append(transport)
+    return {'world64': world, 'targets64': targets, 'local64': local,
+            'desiredNormalsByVertex64': desired, 'jacobians64': jacobians,
+            'normalTransports64': transports,
+            'minimumJacobianDeterminant': min(g.determinant(j) for j in jacobians),
+            'maximumWorldDisplacement': max(math.dist(a,b) for a,b in zip(world,targets)),
+            'finiteDifferenceEpsilonUnchanged': epsilon}
+
+
+def make_leaf_candidate(original, inventory_row, raw, field, blender_to_world,
+                        geometry64, sync_contract, original_snapshot, emit,
+                        maximum_displacement):
+    """Return a new leaf and scalar/lineage report, or HOLD with raw first failure.
+
+    raw: GLB accessor rows positions/normals/indices and indexComponentCode
+    ('B'/'H'/'I'); these are bound by the per-role inventory. emit writes a fresh
+    role directory. original_snapshot covers this source mesh, its ancestors
+    and materials at each clone; the builder additionally guards all442 originals
+    before/after the complete phase and on first failure. No repair/restore.
+    """
+    import bpy
+    from mathutils import Matrix
+
+    require(method_for_role(inventory_row) == 'candidate-data-derived-lamina-representation',
+            'Adapter called for fixed/original-method role')
+    require(original.get('ownerId') == inventory_row['ownerId']
+            and original.get('sourceNodeIndex') == inventory_row['sourceNodeIndex']
+            and original.get('forestRole') == inventory_row['role'], 'Source identity mismatch')
+    part = inventory_row['primitives'][0]
+    require(_accessor_hash(raw['positions'], 'f') == part['positionSHA'], 'POSITION accessor mismatch')
+    require(_accessor_hash(raw['normals'], 'f') == part['normalSHA'], 'NORMAL accessor mismatch')
+    require(_accessor_hash([[i] for i in raw['indices']], raw['indexComponentCode']) == part['indexSHA'],
+            'Index accessor mismatch')
+    mesh = original.data
+    source_state = original_snapshot()
+    positions = [[p[0], -p[2], p[1]] for p in raw['positions']]
+    normals = [[n[0], -n[2], n[1]] for n in raw['normals']]
+    require(_vecs(v.co for v in mesh.vertices) == positions, 'Imported POSITION mapping differs')
+    require([loop.vertex_index for loop in mesh.loops] == raw['indices'], 'Imported corner mapping differs')
+    faces = [raw['indices'][i:i+3] for i in range(0,len(raw['indices']),3)]
+    require([list(p.vertices) for p in mesh.polygons] == faces, 'Imported polygon order differs')
+    lineage = retain_exact_nonzero(positions, faces, part['exactZeroSourceFaceIds'])
+    edges = [list(e.vertices) for e in mesh.edges]
+    old_flags = [bool(e.use_edge_sharp) for e in mesh.edges]
+    old_flag_map = _flags(mesh)
+    source_corners = [raw['indices'][i] for i in lineage['sourceCornerIds']]
+    source_payload = [normals[i] for i in source_corners]
+    transform = _vecs(blender_to_world @ original.matrix_world)
+    phase = 'fresh-source-normal-baseline'
+    copies = []
+    evaluation_reports = []
+
+    def clone(label, coords, flags, payload, matrix, expected_world):
+        obj = original.copy()
+        obj.name = 'LAMINA REPRESENTATION / '+original.name+' / '+label
+        obj.data = bpy.data.meshes.new(obj.name)
+        obj.data.from_pydata(coords, edges, lineage['faces'])
+        obj.data.update()
+        for mat in mesh.materials:
+            obj.data.materials.append(mat)
+        for polygon, source_face in zip(obj.data.polygons, lineage['sourceFaceIds']):
+            polygon.use_smooth = mesh.polygons[source_face].use_smooth
+            polygon.material_index = mesh.polygons[source_face].material_index
+        requested_flags = {tuple(sorted(e)): bool(flag) for e,flag in zip(edges,flags)}
+        for edge in obj.data.edges:
+            edge.use_edge_sharp = requested_flags[tuple(sorted(edge.vertices))]
+        bpy.context.scene.collection.objects.link(obj)
+        copies.append(obj)
+        obj.matrix_world = matrix
+        require(obj.parent == original.parent, 'Parent changed')
+        obj.data.normals_split_custom_set(payload)
+        before = _matrix_state(obj)
+        shape_before = {'positions': _vecs(v.co for v in obj.data.vertices),
+                        'normals': _vecs(n.vector for n in obj.data.corner_normals),
+                        'flags': _flags(obj.data)}
+        # Construction synchronization only, BEFORE any authoring baseline.
+        bpy.context.view_layer.update()
+        after = _matrix_state(obj)
+        predicted = sync_contract.parent_product32(after['parentWorld'], after['parentInverse'], after['basis'])
+        before_worlds = [geometry64.point(_vecs(blender_to_world @ Matrix(before['world'])), p) for p in coords]
+        before_errors = [math.dist(a,b) for a,b in zip(before_worlds,expected_world)]
+        worlds = [geometry64.point(_vecs(blender_to_world @ obj.matrix_world), p) for p in coords]
+        errors = [math.dist(a,b) for a,b in zip(worlds,expected_world)]
+        gate = classify_precision(label, before, after, predicted, before_errors, errors)
+        gate.update(sourceNodeIndex=inventory_row['sourceNodeIndex'], ownerId=inventory_row['ownerId'], label=label)
+        evaluation_reports.append(gate)
+        observed = {'beforeWorlds': before_worlds, 'precisionClassification': gate, 'before': before, 'after': after, 'predictedParentFloat32World': predicted,
+                    'worlds': worlds, 'expectedWorlds': expected_world, 'worldErrors': errors,
+                    'maxWorldError': max(errors), 'originalSceneExact': original_snapshot()==source_state,
+                    'originalSourceFaceMap': lineage['sourceFaceIds'],
+                    'sourceCornerMap': lineage['sourceCornerIds'],
+                    'requestedSharpEdges': {','.join(map(str,k)):v for k,v in requested_flags.items()},
+                    'storedNormals': _vecs(n.vector for n in obj.data.corner_normals)}
+        emit(label+'-evaluation.json', observed)
+        require(observed['originalSceneExact'], 'Original scene changed while constructing derived leaf')
+        require(all(before[k]==after[k] for k in ('basis','parentInverse','parentWorld')),
+                'Construction evaluation changed local/parent transform')
+        require(predicted == after['world'], 'Evaluated world differs from Float32 parent composition')
+        require(shape_before == {'positions': _vecs(v.co for v in obj.data.vertices),
+                                 'normals': _vecs(n.vector for n in obj.data.corner_normals),
+                                 'flags': _flags(obj.data)}, 'Construction evaluation changed mesh')
+        require(_flags(obj.data)==requested_flags, 'Custom normal assignment changed requested sharp flags')
+        # The bound is still 1e-6 and its false result remains visible. Only the
+        # explicitly qualified parent-translation case may finish a HOLD shape.
+        require(gate['diagnosticContinuationAllowed'], 'Unclassified world error: hard stop')
+        require([list(p.vertices) for p in obj.data.polygons]==lineage['faces'], 'Derived retained topology differs')
+        return obj
+
+    try:
+        source_world = [geometry64.point(transform, p) for p in positions]
+        baseline = clone('baseline', positions, old_flags, source_payload,
+                         original.matrix_world.copy(), source_world)
+        sharp_rule = derive_incident_sharp(source_corners, source_payload,
+                       _vecs(n.vector for n in baseline.data.corner_normals), edges, old_flags)
+        emit('sharp-rule.json', sharp_rule)
+        phase = 'data-derived-sharp-source-oracle'
+        source_clone = clone('source-oracle', positions, sharp_rule['flags'], source_payload,
+                             original.matrix_world.copy(), source_world)
+        source_oracle = normal_residuals(_vecs(n.vector for n in source_clone.data.corner_normals), source_payload)
+        emit('source-oracle.json', source_oracle)
+        require(source_oracle['maxL2']<=NORMAL_LIMIT, 'Data-derived sharp source oracle failed; no fallback')
+        phase = 'float64-field-and-representation'
+        profile = _evaluate64(positions, normals, transform, field, geometry64)
+        require(profile['maximumWorldDisplacement']<=maximum_displacement, 'Original displacement guard failed')
+        representation = choose_representation(profile['local64'], lineage['faces'])
+        translation = [[float(i==j) for j in range(4)] for i in range(4)]
+        for i in range(3):
+            translation[i][3] = representation['center64'][i]
+        compensated = geometry64.multiply(transform, translation)
+        emit('float64-profile.json', profile)
+        emit('representation.json', representation)
+        desired = [profile['desiredNormalsByVertex64'][i] for i in source_corners]
+        phase = 'deformed-source-oracle'
+        candidate = clone('candidate', representation['local32'], sharp_rule['flags'], desired,
+                          blender_to_world.inverted() @ Matrix(compensated), profile['targets64'])
+        final_oracle = normal_residuals(_vecs(n.vector for n in candidate.data.corner_normals), desired)
+        emit('desired-source-oracle.json', final_oracle)
+        require(final_oracle['maxL2']<=NORMAL_LIMIT, 'Desired source NORMAL guard failed')
+        require(not exact_zero_faces(representation['local32'], lineage['faces']), 'Retained local face collapsed')
+        require(original_snapshot()==source_state and _flags(mesh)==old_flag_map, 'Original source changed')
+        report = {'sourceNodeIndex': inventory_row['sourceNodeIndex'], 'ownerId': inventory_row['ownerId'],
+                  'sourceAccessorDigests': {k:part[k] for k in ('positionSHA','normalSHA','indexSHA')},
+                  'sourceFaceMap': lineage['sourceFaceIds'],
+                  'excludedExactZeroSourceFaces': lineage['excludedExactZeroSourceFaceIds'],
+                  'sourceNormalOracle': source_oracle, 'desiredSourceNormalOracle': final_oracle,
+                  'sharpRule': sharp_rule, 'recenter': {k:v for k,v in representation.items() if k!='local32'},
+                  'desiredNormalsByRetainedCorner': desired,
+                  'worldTargetsByVertex': profile['targets64'],
+                  'originalSceneExact': True, 'originalOwnerParentUnchanged': True,
+                  'worldEvaluations': evaluation_reports,
+                  'precisionHolds': [r for r in evaluation_reports if r['precisionHold']],
+                  'strictWorldGeometryGate': all(r['strictWorldGeometryGate'] for r in evaluation_reports),
+                  'standaloneRoundtrip': 'NOT RUN — HOLD shape diagnostic only',
+                  'worldFloat32PositiveFaceSurvival': 'NOT GUARANTEED; record separately in later export checks',
+                  'cohortStatus': 'diagnostic representation only; not strict geometry acceptance'}
+        emit('candidate-before-export.json', report)
+        # Copies remain available for first-failure diagnosis. Caller must retain
+        # candidate alone for delivery and must not export baseline/oracle copies.
+        return candidate, report, copies
+    except BaseException as error:
+        emit('first-failure.json', {'phase':phase, 'error':repr(error),
+             'sourceNodeIndex':inventory_row['sourceNodeIndex'], 'copyNames':[o.name for o in copies],
+             'originalSceneExact':original_snapshot()==source_state})
+        raise

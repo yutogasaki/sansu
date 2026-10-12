@@ -1,0 +1,623 @@
+{
+  "status": "BOUNDED_SOURCE_FOOT_PROJECTION_DIAGNOSTIC_NOT_STAIR_MOTION_PASS",
+  "startUtc": "2026-10-12T06:44:42.365Z",
+  "endUtc": "2026-10-12T06:44:42.714Z",
+  "pid": 59014,
+  "inputsBefore": {
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-prep/runs/02-feet/actual-feet.json": "6fddaf75ffea4cc246a10655d1839b3e1b4986a9f40427097d7f7f751cbe1122",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature/planned-floor-v4-stations-once.json": "2968d018782cea82afa443bbbffc111eb0ead51a3d5f5f2e8be2814354fee3ca",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-prep/compare-stairs.mjs": "61eeefae954bdf48a71706b1e586beb6ef557f95949f17533de938fb98b9a600"
+  },
+  "inputsAfter": {
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-prep/runs/02-feet/actual-feet.json": "6fddaf75ffea4cc246a10655d1839b3e1b4986a9f40427097d7f7f751cbe1122",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature/planned-floor-v4-stations-once.json": "2968d018782cea82afa443bbbffc111eb0ead51a3d5f5f2e8be2814354fee3ca",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-prep/compare-stairs.mjs": "61eeefae954bdf48a71706b1e586beb6ef557f95949f17533de938fb98b9a600"
+  },
+  "resourceUsage": {
+    "userCPUTime": 544891,
+    "systemCPUTime": 22885,
+    "maxRSS": 145984,
+    "sharedMemorySize": 0,
+    "unsharedDataSize": 0,
+    "unsharedStackSize": 0,
+    "minorPageFault": 9732,
+    "majorPageFault": 95,
+    "swappedOut": 0,
+    "fsRead": 0,
+    "fsWrite": 0,
+    "ipcSent": 0,
+    "ipcReceived": 0,
+    "signalsCount": 0,
+    "voluntaryContextSwitches": 1,
+    "involuntaryContextSwitches": 1085
+  },
+  "length": 3.0025634136177324,
+  "totalRise": 1.316007375717163,
+  "frame": "authored Y up; actual left/right foot offsets retained; actor root offset by mean neutral forward pivot so pair is centered on shared contact station",
+  "rounding": "All generated mesh vertices Float32 once; footprint source remains actual rig double matrices",
+  "numericAreaRoundoff": 1e-12,
+  "geometricThresholdChange": false,
+  "candidates": [
+    {
+      "n": 16,
+      "riserHeight": 0.08225046098232269,
+      "averageCenterlineRun": 0.18766021335110827,
+      "topology": {
+        "vertices": 2550,
+        "triangles": 5096,
+        "badEdges": 0,
+        "zeroArea": 0,
+        "duplicateTriangles": 0,
+        "components": 1,
+        "unusedVertices": 0,
+        "signedVolume": 0.2614977583966151,
+        "walkingNormalYFailures": 0
+      },
+      "neutral": {
+        "checks": 576,
+        "failed": 0,
+        "minMargin": 0.015941620525242995,
+        "maxUncoveredArea": 3.469446951953614e-18
+      },
+      "currentGallerySamples": {
+        "checks": 5184,
+        "failed": 0,
+        "minMargin": 0.015941620525242995,
+        "maxUncoveredArea": 5.204170427930421e-18,
+        "meaning": "Plan projection only; sampled current swing is not a valid stair pose nor a proof of continuous riser clearance"
+      },
+      "worst": [
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-4",
+          "direction": -1,
+          "phase": "current-gallery-sample-3",
+          "footIndex": 1,
+          "footHullArea": 0.009946330374730436,
+          "uncoveredArea": 5.204170427930421e-18,
+          "minimumBoundaryDistance": 0.028747797051880904,
+          "covered": true,
+          "rootXZ": [
+            4.606804368065303,
+            -7.9401248336139565
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-4",
+          "direction": -1,
+          "phase": "current-gallery-sample-5",
+          "footIndex": 1,
+          "footHullArea": 0.009946330374730436,
+          "uncoveredArea": 5.204170427930421e-18,
+          "minimumBoundaryDistance": 0.028747797051880904,
+          "covered": true,
+          "rootXZ": [
+            4.606804368065303,
+            -7.9401248336139565
+          ]
+        },
+        {
+          "actor": "authored-friend-0",
+          "species": "rabbit",
+          "tread": "tread-9",
+          "direction": -1,
+          "phase": "current-gallery-sample-3",
+          "footIndex": 1,
+          "footHullArea": 0.007723476237953601,
+          "uncoveredArea": 5.204170427930421e-18,
+          "minimumBoundaryDistance": 0.03366355311716063,
+          "covered": true,
+          "rootXZ": [
+            4.687532830771926,
+            -8.858860115648477
+          ]
+        },
+        {
+          "actor": "authored-friend-0",
+          "species": "rabbit",
+          "tread": "tread-9",
+          "direction": -1,
+          "phase": "current-gallery-sample-5",
+          "footIndex": 1,
+          "footHullArea": 0.007723476237953601,
+          "uncoveredArea": 5.204170427930421e-18,
+          "minimumBoundaryDistance": 0.03366355311716063,
+          "covered": true,
+          "rootXZ": [
+            4.687532830771926,
+            -8.858860115648477
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-1",
+          "direction": -1,
+          "phase": "current-gallery-sample-0",
+          "footIndex": 1,
+          "footHullArea": 0.00886213661443764,
+          "uncoveredArea": 5.204170427930421e-18,
+          "minimumBoundaryDistance": 0.037654346685094264,
+          "covered": true,
+          "rootXZ": [
+            4.199308197595512,
+            -7.576147818027132
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-1",
+          "direction": -1,
+          "phase": "current-gallery-sample-8",
+          "footIndex": 1,
+          "footHullArea": 0.00886213661443764,
+          "uncoveredArea": 5.204170427930421e-18,
+          "minimumBoundaryDistance": 0.037654346685094264,
+          "covered": true,
+          "rootXZ": [
+            4.199308197595512,
+            -7.576147818027132
+          ]
+        },
+        {
+          "actor": "authored-friend-0",
+          "species": "rabbit",
+          "tread": "tread-0",
+          "direction": -1,
+          "phase": "current-gallery-sample-1",
+          "footIndex": 0,
+          "footHullArea": 0.007343908615433963,
+          "uncoveredArea": 4.336808689942018e-18,
+          "minimumBoundaryDistance": 0.027924236109518163,
+          "covered": true,
+          "rootXZ": [
+            4.022065886520643,
+            -7.538620480286574
+          ]
+        },
+        {
+          "actor": "authored-friend-0",
+          "species": "rabbit",
+          "tread": "tread-0",
+          "direction": -1,
+          "phase": "current-gallery-sample-7",
+          "footIndex": 0,
+          "footHullArea": 0.007343908615433963,
+          "uncoveredArea": 4.336808689942018e-18,
+          "minimumBoundaryDistance": 0.027924236109518163,
+          "covered": true,
+          "rootXZ": [
+            4.022065886520643,
+            -7.538620480286574
+          ]
+        },
+        {
+          "actor": "authored-friend-0",
+          "species": "rabbit",
+          "tread": "tread-14",
+          "direction": -1,
+          "phase": "current-gallery-sample-2",
+          "footIndex": 1,
+          "footHullArea": 0.007542218967957531,
+          "uncoveredArea": 4.336808689942018e-18,
+          "minimumBoundaryDistance": 0.03207529259046281,
+          "covered": true,
+          "rootXZ": [
+            3.978116076501354,
+            -9.353844793434284
+          ]
+        },
+        {
+          "actor": "authored-friend-0",
+          "species": "rabbit",
+          "tread": "tread-14",
+          "direction": -1,
+          "phase": "current-gallery-sample-6",
+          "footIndex": 1,
+          "footHullArea": 0.007542218967957531,
+          "uncoveredArea": 4.336808689942018e-18,
+          "minimumBoundaryDistance": 0.03207529259046281,
+          "covered": true,
+          "rootXZ": [
+            3.978116076501354,
+            -9.353844793434284
+          ]
+        },
+        {
+          "actor": "authored-friend-0",
+          "species": "rabbit",
+          "tread": "tread-6",
+          "direction": 1,
+          "phase": "current-gallery-sample-2",
+          "footIndex": 0,
+          "footHullArea": 0.007542218967957512,
+          "uncoveredArea": 4.336808689942018e-18,
+          "minimumBoundaryDistance": 0.035162234902110005,
+          "covered": true,
+          "rootXZ": [
+            4.710252173271178,
+            -8.227448147503278
+          ]
+        },
+        {
+          "actor": "authored-friend-0",
+          "species": "rabbit",
+          "tread": "tread-6",
+          "direction": 1,
+          "phase": "current-gallery-sample-6",
+          "footIndex": 0,
+          "footHullArea": 0.007542218967957512,
+          "uncoveredArea": 4.336808689942018e-18,
+          "minimumBoundaryDistance": 0.035162234902110005,
+          "covered": true,
+          "rootXZ": [
+            4.710252173271178,
+            -8.227448147503278
+          ]
+        },
+        {
+          "actor": "authored-friend-0",
+          "species": "rabbit",
+          "tread": "tread-6",
+          "direction": 1,
+          "phase": "current-gallery-sample-0",
+          "footIndex": 0,
+          "footHullArea": 0.007075097485740012,
+          "uncoveredArea": 4.336808689942018e-18,
+          "minimumBoundaryDistance": 0.03887608951306672,
+          "covered": true,
+          "rootXZ": [
+            4.710252173271178,
+            -8.227448147503278
+          ]
+        },
+        {
+          "actor": "authored-friend-0",
+          "species": "rabbit",
+          "tread": "tread-6",
+          "direction": 1,
+          "phase": "current-gallery-sample-8",
+          "footIndex": 0,
+          "footHullArea": 0.007075097485740012,
+          "uncoveredArea": 4.336808689942018e-18,
+          "minimumBoundaryDistance": 0.03887608951306672,
+          "covered": true,
+          "rootXZ": [
+            4.710252173271178,
+            -8.227448147503278
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-11",
+          "direction": 1,
+          "phase": "current-gallery-sample-2",
+          "footIndex": 1,
+          "footHullArea": 0.009712906378247612,
+          "uncoveredArea": 3.469446951953614e-18,
+          "minimumBoundaryDistance": 0.018053906577176378,
+          "covered": true,
+          "rootXZ": [
+            4.55330279052715,
+            -9.131580588336444
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-11",
+          "direction": 1,
+          "phase": "current-gallery-sample-6",
+          "footIndex": 1,
+          "footHullArea": 0.009712906378247612,
+          "uncoveredArea": 3.469446951953614e-18,
+          "minimumBoundaryDistance": 0.018053906577176378,
+          "covered": true,
+          "rootXZ": [
+            4.55330279052715,
+            -9.131580588336444
+          ]
+        }
+      ]
+    },
+    {
+      "n": 18,
+      "riserHeight": 0.07311152087317573,
+      "averageCenterlineRun": 0.16680907853431848,
+      "topology": {
+        "vertices": 2584,
+        "triangles": 5164,
+        "badEdges": 0,
+        "zeroArea": 0,
+        "duplicateTriangles": 0,
+        "components": 1,
+        "unusedVertices": 0,
+        "signedVolume": 0.252718502806848,
+        "walkingNormalYFailures": 0
+      },
+      "neutral": {
+        "checks": 648,
+        "failed": 0,
+        "minMargin": 0.005739746638736423,
+        "maxUncoveredArea": 3.469446951953614e-18
+      },
+      "currentGallerySamples": {
+        "checks": 5832,
+        "failed": 0,
+        "minMargin": 0.005739746638736423,
+        "maxUncoveredArea": 8.673617379884035e-18,
+        "meaning": "Plan projection only; sampled current swing is not a valid stair pose nor a proof of continuous riser clearance"
+      },
+      "worst": [
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-11",
+          "direction": -1,
+          "phase": "current-gallery-sample-3",
+          "footIndex": 1,
+          "footHullArea": 0.009946330374730427,
+          "uncoveredArea": 8.673617379884035e-18,
+          "minimumBoundaryDistance": 0.017911869799138676,
+          "covered": true,
+          "rootXZ": [
+            4.643559401431289,
+            -8.980378479162978
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-11",
+          "direction": -1,
+          "phase": "current-gallery-sample-5",
+          "footIndex": 1,
+          "footHullArea": 0.009946330374730427,
+          "uncoveredArea": 8.673617379884035e-18,
+          "minimumBoundaryDistance": 0.017911869799138676,
+          "covered": true,
+          "rootXZ": [
+            4.643559401431289,
+            -8.980378479162978
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-7",
+          "direction": 1,
+          "phase": "current-gallery-sample-2",
+          "footIndex": 1,
+          "footHullArea": 0.009712906378247675,
+          "uncoveredArea": 6.938893903907228e-18,
+          "minimumBoundaryDistance": 0.013170151008709123,
+          "covered": true,
+          "rootXZ": [
+            4.717751334927276,
+            -8.264276785723421
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-7",
+          "direction": 1,
+          "phase": "current-gallery-sample-6",
+          "footIndex": 1,
+          "footHullArea": 0.009712906378247675,
+          "uncoveredArea": 6.938893903907228e-18,
+          "minimumBoundaryDistance": 0.013170151008709123,
+          "covered": true,
+          "rootXZ": [
+            4.717751334927276,
+            -8.264276785723421
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-5",
+          "direction": 1,
+          "phase": "current-gallery-sample-0",
+          "footIndex": 1,
+          "footHullArea": 0.008862136614437664,
+          "uncoveredArea": 6.938893903907228e-18,
+          "minimumBoundaryDistance": 0.018824585255980786,
+          "covered": true,
+          "rootXZ": [
+            4.611306433707009,
+            -7.949048330521888
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-5",
+          "direction": 1,
+          "phase": "current-gallery-sample-8",
+          "footIndex": 1,
+          "footHullArea": 0.008862136614437664,
+          "uncoveredArea": 6.938893903907228e-18,
+          "minimumBoundaryDistance": 0.018824585255980786,
+          "covered": true,
+          "rootXZ": [
+            4.611306433707009,
+            -7.949048330521888
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-12",
+          "direction": 1,
+          "phase": "current-gallery-sample-3",
+          "footIndex": 1,
+          "footHullArea": 0.009946330374730363,
+          "uncoveredArea": 5.204170427930421e-18,
+          "minimumBoundaryDistance": 0.006270260205875757,
+          "covered": true,
+          "rootXZ": [
+            4.597705515476642,
+            -9.07357715789118
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-12",
+          "direction": 1,
+          "phase": "current-gallery-sample-5",
+          "footIndex": 1,
+          "footHullArea": 0.009946330374730363,
+          "uncoveredArea": 5.204170427930421e-18,
+          "minimumBoundaryDistance": 0.006270260205875757,
+          "covered": true,
+          "rootXZ": [
+            4.597705515476642,
+            -9.07357715789118
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-14",
+          "direction": -1,
+          "phase": "current-gallery-sample-2",
+          "footIndex": 0,
+          "footHullArea": 0.009712906378247725,
+          "uncoveredArea": 5.204170427930421e-18,
+          "minimumBoundaryDistance": 0.0110752871204606,
+          "covered": true,
+          "rootXZ": [
+            4.281502959263666,
+            -9.301117714157872
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-14",
+          "direction": -1,
+          "phase": "current-gallery-sample-6",
+          "footIndex": 0,
+          "footHullArea": 0.009712906378247725,
+          "uncoveredArea": 5.204170427930421e-18,
+          "minimumBoundaryDistance": 0.0110752871204606,
+          "covered": true,
+          "rootXZ": [
+            4.281502959263666,
+            -9.301117714157872
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-11",
+          "direction": 1,
+          "phase": "current-gallery-sample-3",
+          "footIndex": 1,
+          "footHullArea": 0.009946330374730427,
+          "uncoveredArea": 5.204170427930421e-18,
+          "minimumBoundaryDistance": 0.011263119788575342,
+          "covered": true,
+          "rootXZ": [
+            4.666475707910851,
+            -8.921694214684885
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-11",
+          "direction": 1,
+          "phase": "current-gallery-sample-5",
+          "footIndex": 1,
+          "footHullArea": 0.009946330374730427,
+          "uncoveredArea": 5.204170427930421e-18,
+          "minimumBoundaryDistance": 0.011263119788575342,
+          "covered": true,
+          "rootXZ": [
+            4.666475707910851,
+            -8.921694214684885
+          ]
+        },
+        {
+          "actor": "authored-friend-0",
+          "species": "rabbit",
+          "tread": "tread-2",
+          "direction": -1,
+          "phase": "current-gallery-sample-3",
+          "footIndex": 0,
+          "footHullArea": 0.007723476237953545,
+          "uncoveredArea": 5.204170427930421e-18,
+          "minimumBoundaryDistance": 0.013474973153581938,
+          "covered": true,
+          "rootXZ": [
+            4.3294849560474225,
+            -7.632246932828569
+          ]
+        },
+        {
+          "actor": "authored-friend-0",
+          "species": "rabbit",
+          "tread": "tread-2",
+          "direction": -1,
+          "phase": "current-gallery-sample-5",
+          "footIndex": 0,
+          "footHullArea": 0.007723476237953545,
+          "uncoveredArea": 5.204170427930421e-18,
+          "minimumBoundaryDistance": 0.013474973153581938,
+          "covered": true,
+          "rootXZ": [
+            4.3294849560474225,
+            -7.632246932828569
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-7",
+          "direction": -1,
+          "phase": "current-gallery-sample-2",
+          "footIndex": 1,
+          "footHullArea": 0.009712906378247675,
+          "uncoveredArea": 5.204170427930421e-18,
+          "minimumBoundaryDistance": 0.019521667185313365,
+          "covered": true,
+          "rootXZ": [
+            4.7281495079744245,
+            -8.32641274952283
+          ]
+        },
+        {
+          "actor": "authored-friend-1",
+          "species": "otter",
+          "tread": "tread-7",
+          "direction": -1,
+          "phase": "current-gallery-sample-6",
+          "footIndex": 1,
+          "footHullArea": 0.009712906378247675,
+          "uncoveredArea": 5.204170427930421e-18,
+          "minimumBoundaryDistance": 0.019521667185313365,
+          "covered": true,
+          "rootXZ": [
+            4.7281495079744245,
+            -8.32641274952283
+          ]
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "No Blender build",
+    "No source/body/door/head collision yet",
+    "No physical step pose or planted/swing trajectory",
+    "No per-tread continuous stance/swing proof",
+    "No actual app or root-use acceptance"
+  ]
+}

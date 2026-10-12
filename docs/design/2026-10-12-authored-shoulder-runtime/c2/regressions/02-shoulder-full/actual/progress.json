@@ -1,0 +1,73 @@
+{
+  "phase": "fixed35:tablet-whole-close",
+  "steps": [
+    "setup:compile-read-only-domain-projection",
+    "acquisition:load",
+    "acquisition:purchase-l33",
+    "acquisition:purchase-l34",
+    "acquisition:purchase-l35",
+    "acquisition:explicit-diagnostic-18h",
+    "fixed35:load",
+    "fixed35:desktop-whole-and-close",
+    "fixed35:l34-cancel-move-store-restore",
+    "fixed35:desktop-rotated",
+    "fixed35:phone-whole-close"
+  ],
+  "timings": [
+    {
+      "name": "setup:compile-read-only-domain-projection",
+      "elapsedMs": 922.8270839999999,
+      "success": true
+    },
+    {
+      "name": "acquisition:load",
+      "elapsedMs": 24942.956416,
+      "success": true
+    },
+    {
+      "name": "acquisition:purchase-l33",
+      "elapsedMs": 281282.491417,
+      "success": true
+    },
+    {
+      "name": "acquisition:purchase-l34",
+      "elapsedMs": 293756.449125,
+      "success": true
+    },
+    {
+      "name": "acquisition:purchase-l35",
+      "elapsedMs": 292350.36904200003,
+      "success": true
+    },
+    {
+      "name": "acquisition:explicit-diagnostic-18h",
+      "elapsedMs": 183675.30799999996,
+      "success": true
+    },
+    {
+      "name": "fixed35:load",
+      "elapsedMs": 25093.88933299994,
+      "success": true
+    },
+    {
+      "name": "fixed35:desktop-whole-and-close",
+      "elapsedMs": 129746.90637500002,
+      "success": true
+    },
+    {
+      "name": "fixed35:l34-cancel-move-store-restore",
+      "elapsedMs": 1002987.1402499999,
+      "success": true
+    },
+    {
+      "name": "fixed35:desktop-rotated",
+      "elapsedMs": 195893.966333,
+      "success": true
+    },
+    {
+      "name": "fixed35:phone-whole-close",
+      "elapsedMs": 130431.84908399964,
+      "success": true
+    }
+  ]
+}

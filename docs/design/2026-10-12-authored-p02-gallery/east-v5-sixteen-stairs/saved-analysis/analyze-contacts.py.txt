@@ -1,0 +1,57 @@
+"""Classify stored contact records. Does not rerun guards or alter inputs."""
+from pathlib import Path
+import json,hashlib,math,time,signal
+from collections import Counter,defaultdict
+B=Path('/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build');R=B/'runs/01-coarse-build';O=Path(__file__).resolve().parent
+paths=[R/'coarse-qa.json',R/'obstacle-identities.json',R/'owner-use-profile.json',B/'study.json',B/'sealed-input/stairs-16-closed.json',B/'build_checks.py',B/'build-coarse.py'];sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();before={str(p):sha(p)for p in paths};q=json.loads(paths[0].read_text());ident=json.loads(paths[1].read_text());profile=json.loads(paths[2].read_text());study=json.loads(paths[3].read_text());stair=json.loads(paths[4].read_text());start=time.monotonic();signal.alarm(30)
+key=lambda tri:tuple(sorted(tuple(p)for p in tri));lookup=defaultdict(list)
+for i,(f,role)in enumerate(zip(stair['faces'],stair['roles'])):lookup[key([stair['vertices'][j]for j in f])].append({'sourceFace':i,'role':role})
+def category(n):
+ if n=='solid-body/real-sixteen-stairs':return 'actual-stair-structure'
+ if n.startswith('solid-bough/'):return 'new-owned-support'
+ if n=='solid-rail/visible-terminal-guard':return 'gallery-terminal-guard'
+ if n.startswith('solid-rail'):return 'new-owned-rail-or-post'
+ return 'original-'+('leaf'if any(k in n.lower()for k in ['leaf','leaves','foliage'])else 'trunk'if any(k in n.lower()for k in ['trunk','wood'])else 'other')
+def owner(n):
+ if n.startswith('solid-'):return {'placeId':profile['placeId'],'ownerIds':profile['ownerIds'],'basis':'constructed component metadata in same builder'}
+ return {'chain':ident.get(n),'basis':'saved actual original object ancestor identity','unresolved':n not in ident}
+def stage(si):return {'kind':'tread','index':si,'afterDeclaredUse':False}if si<16 else{'kind':'gallery','degrees':75+2*(si-16),'afterDeclaredUse':75+2*(si-16)>95,'declaredUseDegrees':95}
+def polygon_at_band(tri,ymin,ymax):
+ poly=tri
+ for y,lower in [(ymin,True),(ymax,False)]:
+  out=[]
+  for a,b in zip(poly,poly[1:]+poly[:1]):
+   ia=a[1]>=y if lower else a[1]<=y;ib=b[1]>=y if lower else b[1]<=y
+   if ia:out.append(a)
+   if ia!=ib:
+    u=(y-a[1])/(b[1]-a[1]);out.append([a[k]+(b[k]-a[k])*u for k in range(3)])
+  poly=out
+ return poly
+def projected_distance(poly,p):
+ if not poly:return None
+ values=[];positive=negative=False;area=0
+ for a,b in zip(poly,poly[1:]+poly[:1]):
+  dx,dz=b[0]-a[0],b[2]-a[2];cr=dx*(p[2]-a[2])-dz*(p[0]-a[0]);positive|=cr>1e-8;negative|=cr<-1e-8;den=dx*dx+dz*dz;t=max(0,min(1,((p[0]-a[0])*dx+(p[2]-a[2])*dz)/den))if den else 0;v=[a[0]+t*dx,a[2]+t*dz];values.append((math.hypot(v[0]-p[0],v[1]-p[2]),v));area+=a[0]*b[2]-b[0]*a[2]
+ if abs(area)>1e-8 and not(positive and negative):return {'distance':0.,'xz':[p[0],p[2]],'insideProjectedPolygon':True}
+ d,v=min(values);return {'distance':d,'xz':v,'insideProjectedPolygon':False}
+def role(tri,n):return lookup.get(key(tri),[])if n=='solid-body/real-sixteen-stairs'else[]
+rows=[];stats=defaultdict(lambda:{'rows':0,'sampleIndices':set(),'uniqueTriangleIds':set(),'roles':Counter(),'minimumYRelativeToContact':math.inf,'maximumYRelativeToContact':-math.inf,'bandCounts':Counter(),'beforeOrAtUse':0,'afterUse':0})
+for row in q['actualMotionBandHits']:
+ at=row['point'];si=row['sample']
+ for c in row['contacts']:
+  n=c['object'];tri=c['vertices'];ys=[v[1]-at[1]for v in tri];match=role(tri,n);bands=[]
+  for bi in c['motionBands']:
+   band=study['envelope']['bands'][bi];poly=polygon_at_band(tri,at[1]+band['minY']-1e-8,at[1]+band['maxY']+1e-8);dist=projected_distance(poly,at);bands.append({'index':bi,'sourceBand':band,'clippedPolygon':poly,'nearestProjected':dist,'radialOverlap':None if dist is None else band['radius']-dist['distance'],'triangleHeightOverlapRelativeToContact':[max(min(ys),band['minY']),min(max(ys),band['maxY'])]})
+  z={'sample':si,'stage':stage(si),'point':at,'object':n,'owner':owner(n),'category':category(n),'triangleId':c['triangle'],'actualTriangle':tri,'sourceFaceMatches':match,'minYRelativeToContact':min(ys),'maxYRelativeToContact':max(ys),'surfaceRelation':'entirely-at-or-below-contact-plane'if max(ys)<=0 else'entirely-above-contact-plane'if min(ys)>0 else'straddles-contact-plane','bands':bands,'actualRigSkinCollisionProven':False};rows.append(z)
+  st=stats[n];st['rows']+=1;st['sampleIndices'].add(si);st['uniqueTriangleIds'].add(c['triangle']);st['roles'].update([x['role']for x in match]or[category(n)]);st['minimumYRelativeToContact']=min(st['minimumYRelativeToContact'],min(ys));st['maximumYRelativeToContact']=max(st['maximumYRelativeToContact'],max(ys));st['bandCounts'].update(c['motionBands']);st['afterUse'if stage(si)['afterDeclaredUse']else'beforeOrAtUse']+=1
+summary={n:{**st,'sampleIndices':sorted(st['sampleIndices']),'stages':[stage(x)for x in sorted(st['sampleIndices'])],'uniqueTriangleCount':len(st['uniqueTriangleIds']),'uniqueTriangleIds':sorted(st['uniqueTriangleIds']),'roles':dict(st['roles']),'bandCounts':dict(st['bandCounts']),'owner':owner(n)}for n,st in stats.items()}
+box_objects=defaultdict(lambda:{'triangleSampleIncidences':0,'sampleIndices':[],'savedExampleCount':0});box_examples=[]
+for row in q['reservedBoxHits']:
+ for n,count in row['objects'].items():st=box_objects[n];st['triangleSampleIncidences']+=count;st['sampleIndices'].append(row['sample'])
+ for e in row['examples']:
+  n=e['object'];box_objects[n]['savedExampleCount']+=1;box_examples.append({'sample':row['sample'],'object':n,'category':category(n),'sourceFaceMatches':role(e['triangle'],n),'actualTriangle':e['triangle'],'heightRelativeToContact':[min(v[1]for v in e['triangle'])-row['point'][1],max(v[1]for v in e['triangle'])-row['point'][1]]})
+box_summary={n:{**x,'category':category(n),'owner':owner(n),'alsoHasMotionBandContacts':n in stats}for n,x in box_objects.items()}
+raw={'status':'STORED_GUARD_CONTACT_CLASSIFICATION_NOT_ACTUAL_STEP_ACCEPTANCE','inputsBefore':before,'counts':{'boxStationRows':len(q['reservedBoxHits']),'motionStationRows':len(q['actualMotionBandHits']),'motionTriangleSampleIncidences':len(rows),'boxTriangleSampleIncidences':sum(x['triangleSampleIncidences']for x in box_objects.values()),'boxSavedExamples':len(box_examples)},'motionPerObject':summary,'boxPerObject':box_summary,'motionContacts':rows,'boxExamples':box_examples,'limits':['Axis-aligned reserved box has .284069m halfwidth; corner distance .401735m, while motion bands have maximum radius .244069m and separate heights. They are different envelopes.','Source bands are pooled indexed-source-motion intervals from9 fixed rigs; band index is not a new actual actor pose/skin intersection.','Stations are tread paired-foot contact centers, not individual rig root positions corrected for neutral foot pivot offsets used in the foot-hull study.','Raw neutral route includes all gallery75..115, but declared use is95 and terminal guard115. Post-use contacts are retained, not excluded.','Box raw saved six examples per station only; all object incidence counts retained but complete box face classification cannot be reconstructed from examples alone.','No triangle exclusions, EPS changes, route/geometry edit, or Blender execution.'],'seconds':time.monotonic()-start}
+raw['inputsAfter']={str(p):sha(p)for p in paths};assert raw['inputsAfter']==before
+(O/'contact-report.json').write_text(json.dumps(raw,indent=2)+'\n');signal.alarm(0)
+print(json.dumps({'counts':raw['counts'],'motionPerObject':summary,'boxOnlyObjects':[n for n in box_objects if n not in stats],'allOwnersNewP02':all(n.startswith('solid-')for n in set(stats)|set(box_objects)),'unmatchedStairMotionFaces':sum(not x['sourceFaceMatches']for x in rows if x['object']=='solid-body/real-sixteen-stairs'),'seconds':raw['seconds']},indent=2))

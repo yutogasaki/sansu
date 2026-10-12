@@ -1,0 +1,72 @@
+{
+  "status": "HOLD_FIRST_BUILD_FAILED_NO_RETRY_NO_RENDER",
+  "sourceSlotFree": true,
+  "ownedChildPid": 36250,
+  "ownedPidVerifiedAbsent": true,
+  "launchRequestedUtc": "2026-10-12T05:07:39.310609+00:00",
+  "firstChildObservedUtc": "2026-10-12T05:07:39.608568+00:00",
+  "supervisorExitObservedUtc": "2026-10-12T05:07:47.603994+00:00",
+  "timestampsNotExactBlenderSpawnOrExit": true,
+  "execution": {
+    "command": [
+      "/Applications/Blender.app/Contents/MacOS/Blender",
+      "-b",
+      "--threads",
+      "2",
+      "--python-exit-code",
+      "1",
+      "--python",
+      "build-coarse.py",
+      "--",
+      "build",
+      "--scheduled",
+      "--out",
+      "runs/01-coarse-build"
+    ],
+    "exitCode": 1,
+    "stop": null,
+    "peakSampledRssBytes": 848461824,
+    "elapsedSeconds": 8.235756875,
+    "limits": {
+      "seconds": 180,
+      "rssMiB": 2560
+    },
+    "sourceOnly": true
+  },
+  "allSealedInputsUnchanged": true,
+  "failure": {
+    "stage": "build",
+    "error": "AssertionError('Coarse floor is not one closed solid; preserve failed scene without repair')",
+    "elapsedSeconds": 6.76213370799087,
+    "runtimeIntegrated": false
+  },
+  "closure": {
+    "nonmanifoldEdgesAfterExistingEpsilonWeld": 6745,
+    "connectedComponents": 1,
+    "epsilon": 1e-07,
+    "originalSourceMeshesNotOperands": true
+  },
+  "notReached": [
+    "new bough and rail assembly",
+    "doorway composed-floor audit",
+    "full route/guard QA",
+    "study.glb or normal study.blend",
+    "renders"
+  ],
+  "rawFiles": {
+    "01-coarse-build/alignedOpening-closure-input.json": "98dc7949b2d0de917f00766965dbbc3cb9d8b2a18df51c0a81f6be7dfb9f36cb",
+    "01-coarse-build/closed-floor-union.json": "6d6d98206d86a953b3299aefbf289f6b987aa5f5f25eae6aca339b8122e6e12d",
+    "01-coarse-build/donor-authored-parity.json": "260090547b1fab9ef2151056f4089791381f4c00da2fe585ed63c0297e431874",
+    "01-coarse-build/donor-source-parity.json": "5a5fe4100ed45b64d2eb3e6ab41654f9c2c6f63bc1c684c34cd2010382ccf917",
+    "01-coarse-build/eastBranchGallery-closure-input.json": "0332e9a6fe8cb4a330cd76ad4c7f0b7b16fca897f4271c40fea6cc2d47e6e250",
+    "01-coarse-build/failed-scene.blend": "e61a390ef10e77ef40de77972454050b19e469b725ea8ebbec7b43e35b199746",
+    "01-coarse-build/first-failure.json": "52c9d1adfb053f32313f6621b92a920aca897c5b4b864c7f9c20c3c409c5496a",
+    "01-coarse-build/gallery-local-top-probes.json": "6c8566ff0203ef63f3cd8183861af935d8f13df041c3f8588fc74d5e3c0999b1",
+    "01-coarse-build/obstacle-identities.json": "f530071acc276e7dd7dd73d9d69da3e1fb36bf5afa36c6fab8c232ce4474c189",
+    "01-coarse-build/planned-floor-tops.json": "e44d250ca5440d0f5aae661d321bde8de7c031296939b820eeb8f9d400c2b53d",
+    "01-coarse-build/terrainThreshold-closure-input.json": "e2f21ce4cc8ae56cc014291fe64df8508d71ef0ea3e2ea64ae59c453277701e9",
+    "01-coarse-build-external-process.json": "66141e262e5a860a004c0cb441b468d7ecacce443d8e660c76d33b828c14c28d",
+    "01-coarse-build.log.txt": "6d843cc9306805075715db53fd41c8fcaf89c78b031fb08295fcaca78c11145f",
+    "01-coarse-build.log.txt.json": "22c9d32ca776e6333fe39f5ab4b4c2405e3fe20a61981918401e519e9fba34be"
+  }
+}

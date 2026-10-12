@@ -1,0 +1,803 @@
+{
+  "candidate": "forest-crown-b1-layered-v1-proposal",
+  "status": "STATIC-PROPOSAL-NOT-GENERATED",
+  "baseDirection": "forest-crown-b1-low-wide-v0; all stage1 candidates HOLD",
+  "coordinates": "Authored Y-up metres. Source node matrices, native pivot, owner matrix and age stay exact.",
+  "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+  "sourceStudySha256": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+  "bindingsSha256": "ea37659462f0b84df651131d60b47cba04c9f588aa4981d74d6c74bf8a229d16",
+  "sourceRoleInventorySha256": "3abc8b69e2a94e269b81c55901513571e03c5cd9911e31af7d6902d44eb881e1",
+  "originalMaterialSpecsByIndex": {
+    "28": {
+      "doubleSided": true,
+      "name": "willow / cool shade leaves",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.11697066575288773,
+          0.3915724754333496,
+          0.3277781009674072,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.7200000286102295
+      }
+    },
+    "32": {
+      "doubleSided": true,
+      "name": "willow / pale blue jade leaves",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.14126329123973846,
+          0.4793201684951782,
+          0.4019777774810791,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.6700000166893005
+      }
+    },
+    "7": {
+      "doubleSided": true,
+      "name": "willow / fresh mint tips",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.3277781009674072,
+          0.5906188488006592,
+          0.2581828534603119,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.699999988079071
+      }
+    },
+    "34": {
+      "doubleSided": true,
+      "name": "silver birch / pale gold leaves",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.672443151473999,
+          0.7083757519721985,
+          0.35153260827064514,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.7799999713897705
+      }
+    },
+    "35": {
+      "doubleSided": true,
+      "name": "silver birch / bark markings",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.2462013214826584,
+          0.2917706370353699,
+          0.35640013217926025,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.7799999713897705
+      }
+    },
+    "36": {
+      "doubleSided": true,
+      "name": "silver birch / porcelain bark",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.8713670969009399,
+          0.8069522380828857,
+          0.838798999786377,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.7799999713897705
+      }
+    },
+    "6": {
+      "doubleSided": true,
+      "name": "sculpted tree wood",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.423267662525177,
+          0.19120168685913086,
+          0.08865558356046677,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.7799999713897705
+      }
+    },
+    "37": {
+      "doubleSided": true,
+      "name": "spire grove / bright jade foliage",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.2462013214826584,
+          0.5711248517036438,
+          0.47353148460388184,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.7799999713897705
+      }
+    },
+    "38": {
+      "doubleSided": true,
+      "name": "spire grove / blue teal foliage",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.12743768095970154,
+          0.3915724754333496,
+          0.4125426113605499,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.7799999713897705
+      }
+    },
+    "5": {
+      "doubleSided": true,
+      "name": "young branches",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.5088813304901123,
+          0.28744083642959595,
+          0.15592646598815918,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.7799999713897705
+      }
+    }
+  },
+  "fixedFrameRevision": "authored-world:66d51261fb72ffdf",
+  "owners": {
+    "l14": {
+      "record": {
+        "id": "l14",
+        "kind": "sapling",
+        "cell": {
+          "x": 2,
+          "z": -4
+        },
+        "growth": 18,
+        "maturedAt": 0
+      },
+      "species": "willow",
+      "sourcePivot": [
+        -8,
+        1.24,
+        -2.7
+      ],
+      "sourceToAuthoredMatrix": [
+        0.5850000000000001,
+        0,
+        0,
+        0,
+        0,
+        0.5850000000000001,
+        0,
+        0,
+        0,
+        0,
+        0.5850000000000001,
+        0,
+        6.680000000000001,
+        -0.47615001100000004,
+        -2.4204999999999997,
+        1
+      ],
+      "authoredTreeMatrixWorld": [
+        0.5850000000000001,
+        0,
+        0,
+        0,
+        0,
+        0.5850000000000001,
+        0,
+        0,
+        0,
+        0,
+        0.5850000000000001,
+        0,
+        2,
+        0.249249989,
+        -4,
+        1
+      ],
+      "fixedNodes": [
+        2740,
+        2741,
+        2742,
+        2743,
+        2744,
+        2745,
+        2746,
+        2747
+      ],
+      "field": "one smooth spatial field shared by all 89 non-fixed source roles",
+      "fixedTipCore": {
+        "anchorWorld": [
+          2.468,
+          3.1742499890000007,
+          -4.0
+        ],
+        "radiusWorld": 0.07,
+        "falloffWorld": 0.3
+      },
+      "lobeHints": [
+        {
+          "ordinal": 0,
+          "sourceCrownNode": 2234,
+          "anchorWorld": [
+            2.4680001115798955,
+            3.2395360885292668,
+            -4.000000027894973
+          ],
+          "stretch": [
+            1.35,
+            1.18,
+            1.32
+          ],
+          "shiftWorld": [
+            0.1,
+            0.12,
+            -0.12
+          ],
+          "purpose": "central full-bodied roof",
+          "influenceRadiusXZWorld": 0.52
+        },
+        {
+          "ordinal": 1,
+          "sourceCrownNode": 2235,
+          "anchorWorld": [
+            1.9783551740646361,
+            3.141606877866425,
+            -4.065285982370376
+          ],
+          "stretch": [
+            1.2,
+            1.15,
+            1.1
+          ],
+          "shiftWorld": [
+            -0.12,
+            -0.02,
+            -0.16
+          ],
+          "purpose": "west return; keep underpass distinct",
+          "influenceRadiusXZWorld": 0.52
+        },
+        {
+          "ordinal": 2,
+          "sourceCrownNode": 2236,
+          "anchorWorld": [
+            2.984847390651703,
+            3.1742498551041263,
+            -4.043523997545242
+          ],
+          "stretch": [
+            1.45,
+            1.08,
+            1.35
+          ],
+          "shiftWorld": [
+            0.3,
+            0.12,
+            -0.15
+          ],
+          "purpose": "inner east shoulder above birch middle layer",
+          "influenceRadiusXZWorld": 0.52
+        },
+        {
+          "ordinal": 3,
+          "sourceCrownNode": 2237,
+          "anchorWorld": [
+            2.386392529010773,
+            3.201452475610413,
+            -4.36451355266571
+          ],
+          "stretch": [
+            1.26,
+            1.2,
+            1.38
+          ],
+          "shiftWorld": [
+            0.0,
+            0.38,
+            -0.45
+          ],
+          "purpose": "rear upper ridge toward hero/court; not a bridge to it",
+          "influenceRadiusXZWorld": 0.52
+        },
+        {
+          "ordinal": 4,
+          "sourceCrownNode": 2238,
+          "anchorWorld": [
+            2.5768100357055665,
+            3.1198448930412908,
+            -3.646367495536804
+          ],
+          "stretch": [
+            1.45,
+            0.98,
+            1.18
+          ],
+          "shiftWorld": [
+            0.25,
+            -0.13,
+            0.16
+          ],
+          "purpose": "lower front return and drooping edge",
+          "influenceRadiusXZWorld": 0.52
+        }
+      ]
+    },
+    "l15": {
+      "record": {
+        "id": "l15",
+        "kind": "sapling",
+        "cell": {
+          "x": 2,
+          "z": -3
+        },
+        "growth": 18,
+        "maturedAt": 0
+      },
+      "species": "birch",
+      "sourcePivot": [
+        -6.986279184897697,
+        3.1776039600372314,
+        -10.80210926532267
+      ],
+      "sourceToAuthoredMatrix": [
+        0.5850000000000001,
+        0,
+        0,
+        0,
+        0,
+        0.5850000000000001,
+        0,
+        0,
+        0,
+        0,
+        0.5850000000000001,
+        0,
+        6.086973323165153,
+        -1.6096483276217808,
+        3.3192339202137626,
+        1
+      ],
+      "authoredTreeMatrixWorld": [
+        0.5850000000000001,
+        0,
+        0,
+        0,
+        0,
+        0.5850000000000001,
+        0,
+        0,
+        0,
+        0,
+        0.5850000000000001,
+        0,
+        2,
+        0.249249989,
+        -3,
+        1
+      ],
+      "fixedNodes": [
+        2599,
+        2600,
+        2601,
+        2602,
+        2603,
+        2604,
+        2608
+      ],
+      "branchRootPin": {
+        "anchorWorld": [
+          1.6994733231651526,
+          1.4157698846012727,
+          -3.0572660797862383
+        ],
+        "fixedBandWorld": 0.08775000000000001,
+        "transitionWorld": 0.4680000000000001,
+        "status": "Recipe root; actual source trunk/branch contact remains to be checked"
+      },
+      "branchCrownPairs": [
+        {
+          "ordinal": 0,
+          "sourceCrownNode": 2596,
+          "anchorWorld": [
+            2.380570670901511,
+            2.3634698846012725,
+            -3.169637411001143
+          ],
+          "stretch": [
+            1.35,
+            1.2,
+            1.35
+          ],
+          "shiftWorld": [
+            0.4,
+            0.58,
+            -0.25
+          ],
+          "purpose": "upper east bough: join the visible leaf mass beneath willow",
+          "sourceBranchNode": 2605,
+          "sameFieldForBranchAndCrown": true
+        },
+        {
+          "ordinal": 1,
+          "sourceCrownNode": 2597,
+          "anchorWorld": [
+            1.588372942744467,
+            2.3634698846012725,
+            -3.314111059072432
+          ],
+          "stretch": [
+            1.16,
+            1.08,
+            1.13
+          ],
+          "shiftWorld": [
+            -0.05,
+            0.05,
+            -0.12
+          ],
+          "purpose": "west middle shelf: soft edge beside spire",
+          "sourceBranchNode": 2606,
+          "sameFieldForBranchAndCrown": true
+        },
+        {
+          "ordinal": 2,
+          "sourceCrownNode": 2598,
+          "anchorWorld": [
+            1.8348208516227942,
+            2.3634698846012725,
+            -2.685560310247359
+          ],
+          "stretch": [
+            1.24,
+            1.1,
+            1.04
+          ],
+          "shiftWorld": [
+            0.12,
+            -0.06,
+            0.1
+          ],
+          "purpose": "lower southern eave, leaving bright foreground court",
+          "sourceBranchNode": 2607,
+          "sameFieldForBranchAndCrown": true
+        }
+      ]
+    },
+    "l28": {
+      "record": {
+        "id": "l28",
+        "kind": "sapling",
+        "cell": {
+          "x": 1,
+          "z": -4
+        },
+        "growth": 18,
+        "maturedAt": 234
+      },
+      "species": "spire",
+      "sourcePivot": [
+        -11.300000190734863,
+        0.9632976651191711,
+        -9.300000190734863
+      ],
+      "sourceToAuthoredMatrix": [
+        0.45,
+        0,
+        0,
+        0,
+        0,
+        0.45,
+        0,
+        0,
+        0,
+        0,
+        0.45,
+        0,
+        6.085000085830688,
+        -0.402483939303627,
+        0.18500008583068883,
+        1
+      ],
+      "authoredTreeMatrixWorld": [
+        0.45,
+        0,
+        0,
+        0,
+        0,
+        0.45,
+        0,
+        0,
+        0,
+        0,
+        0.45,
+        0,
+        1,
+        0.03100001,
+        -4,
+        1
+      ],
+      "fixedNodes": [
+        2692
+      ],
+      "fixedAxisRadiusWorld": 0.08,
+      "axisFalloffWorld": 0.2,
+      "tiers": [
+        {
+          "ordinal": 0,
+          "sourceNode": 2693,
+          "anchorWorld": [
+            1.0,
+            1.0010429211719132,
+            -4.0
+          ],
+          "stretch": [
+            1.05,
+            1,
+            1.08
+          ],
+          "shiftWorld": [
+            0,
+            0,
+            0
+          ],
+          "heightAndAxisPreserved": true
+        },
+        {
+          "ordinal": 1,
+          "sourceNode": 2694,
+          "anchorWorld": [
+            1.0,
+            1.3178429194552994,
+            -4.0
+          ],
+          "stretch": [
+            1.2,
+            1,
+            1.28
+          ],
+          "shiftWorld": [
+            0,
+            0,
+            0
+          ],
+          "heightAndAxisPreserved": true
+        },
+        {
+          "ordinal": 2,
+          "sourceNode": 2695,
+          "anchorWorld": [
+            1.0000002145767208,
+            1.6346429177386859,
+            -4.0
+          ],
+          "stretch": [
+            1.25,
+            1,
+            1.15
+          ],
+          "shiftWorld": [
+            0,
+            0,
+            0
+          ],
+          "heightAndAxisPreserved": true
+        },
+        {
+          "ordinal": 3,
+          "sourceNode": 2696,
+          "anchorWorld": [
+            1.0000002145767208,
+            1.9514428623778914,
+            -3.9999997854232783
+          ],
+          "stretch": [
+            1.06,
+            1,
+            1.05
+          ],
+          "shiftWorld": [
+            0,
+            0,
+            0
+          ],
+          "heightAndAxisPreserved": true
+        }
+      ]
+    },
+    "l29": {
+      "record": {
+        "id": "l29",
+        "kind": "sapling",
+        "cell": {
+          "x": 4,
+          "z": -3
+        },
+        "growth": 18,
+        "maturedAt": 234
+      },
+      "species": "birch",
+      "sourcePivot": [
+        -6.986279184897697,
+        3.1776039600372314,
+        -10.80210926532267
+      ],
+      "sourceToAuthoredMatrix": [
+        0.45,
+        0,
+        0,
+        0,
+        0,
+        0.45,
+        0,
+        0,
+        0,
+        0,
+        0.45,
+        0,
+        7.143825633203964,
+        -1.1806717930167543,
+        1.8609491693952016,
+        1
+      ],
+      "authoredTreeMatrixWorld": [
+        0.45,
+        0,
+        0,
+        0,
+        0,
+        0.45,
+        0,
+        0,
+        0,
+        0,
+        0.45,
+        0,
+        4,
+        0.249249989,
+        -3,
+        1
+      ],
+      "fixedNodes": [
+        2599,
+        2600,
+        2601,
+        2602,
+        2603,
+        2604,
+        2608
+      ],
+      "branchRootPin": {
+        "anchorWorld": [
+          3.7688256332039636,
+          1.1465729856163636,
+          -3.0440508306047986
+        ],
+        "fixedBandWorld": 0.0675,
+        "transitionWorld": 0.36000000000000004,
+        "status": "Recipe root; actual source trunk/branch contact remains to be checked"
+      },
+      "branchCrownPairs": [
+        {
+          "ordinal": 0,
+          "sourceCrownNode": 2596,
+          "anchorWorld": [
+            4.29274666992424,
+            1.8755729856163637,
+            -3.1304903161547255
+          ],
+          "stretch": [
+            1.2,
+            1.15,
+            1.16
+          ],
+          "shiftWorld": [
+            -0.05,
+            0.23,
+            -0.1
+          ],
+          "purpose": "outer eastern return; do not make a new tower",
+          "sourceBranchNode": 2605,
+          "sameFieldForBranchAndCrown": true
+        },
+        {
+          "ordinal": 1,
+          "sourceCrownNode": 2597,
+          "anchorWorld": [
+            3.683363802111129,
+            1.8755729856163637,
+            -3.2416238915941786
+          ],
+          "stretch": [
+            1.65,
+            1.24,
+            1.45
+          ],
+          "shiftWorld": [
+            -0.45,
+            0.67,
+            -0.27
+          ],
+          "purpose": "inward rising branch/crown: middle bridge in leaf silhouette",
+          "sourceBranchNode": 2606,
+          "sameFieldForBranchAndCrown": true
+        },
+        {
+          "ordinal": 2,
+          "sourceCrownNode": 2598,
+          "anchorWorld": [
+            3.8729391166329186,
+            1.8755729856163637,
+            -2.758123315574891
+          ],
+          "stretch": [
+            1.17,
+            1.12,
+            1.05
+          ],
+          "shiftWorld": [
+            -0.12,
+            0.16,
+            -0.02
+          ],
+          "purpose": "small front crown raised away from bench court",
+          "sourceBranchNode": 2607,
+          "sameFieldForBranchAndCrown": true
+        }
+      ]
+    }
+  },
+  "authorGuardsNotProductInvariants": {
+    "maxVertexWorldDisplacement": 1.35,
+    "warnVertexWorldDisplacement": 0.9,
+    "highestHeroClearanceWorld": 0.4,
+    "minimumSampledJacobianDeterminant": 0.15,
+    "allRequireActualVertexChecks": true
+  },
+  "execution": {
+    "geometryGenerated": false,
+    "rendered": false,
+    "runtimeIntegrated": false,
+    "independentObservers": 0,
+    "physicalStatus": "NOT-RUN",
+    "artStatus": "NOT-REVIEWED"
+  },
+  "materialContract": {
+    "preserveOriginalMaterialSlotsAndValues": true,
+    "allowPaletteOverride": false,
+    "allowTextureMockOrOmission": false,
+    "originalSelectedTextureReferences": 0,
+    "willowBoughMaterial": "actual original l14 trunk material; no fresh color",
+    "birchRepairMaterial": "actual original white branching crown material",
+    "normals": "Original split normals transformed by inverse-transpose Jacobian. New boughs get authored normals; fixed 23 nodes unchanged."
+  },
+  "jointGate": {
+    "trunkLobeTests": "All 5 willow lobes against actual retained trunk, plus every hanging-family start against actual crown; no center/AABB contact claim.",
+    "birchTests": "All 6 actual branch-root contacts and 6 branch-tip/crown contacts; retained recipe anchors alone cannot pass.",
+    "repair": "If needed, closed tapered curved wood anchored into actual same-owner source surfaces, sufficient full end-section overlap, no cross-owner structural join.",
+    "stop": "Preserve first failed candidate; no detached leaf, hidden floating bough, or unsupported endpoint."
+  },
+  "openings": [
+    {
+      "id": "front-court",
+      "intent": "Bright opening beneath the l15/l29 inner crown seam, viewed toward existing bench l30 at (4,-2).",
+      "worldAnchorGrant": null,
+      "existingRouteAndActorBand": "PENDING; reuse actual existing c1 graph and exact actor envelope"
+    },
+    {
+      "id": "west-perimeter",
+      "intent": "Narrower side opening at the l28/l14 outer perimeter, distinct in silhouette and direction from the front court.",
+      "worldAnchorGrant": null,
+      "existingRouteAndActorBand": "PENDING; do not invent dry floor or a nav ref"
+    }
+  ]
+}

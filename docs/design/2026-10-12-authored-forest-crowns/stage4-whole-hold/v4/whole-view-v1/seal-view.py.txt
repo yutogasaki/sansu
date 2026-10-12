@@ -1,0 +1,38 @@
+"""Static input seal; never launches Blender."""
+import ast
+import hashlib
+import json
+from pathlib import Path
+HERE=Path(__file__).resolve().parent;BUILD=HERE.parent;STAGE=BUILD.parent;BASE=STAGE.parent
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+assert not (HERE/'readiness.json').exists()
+syntax=[]
+for p in HERE.glob('*.py'):ast.parse(p.read_text(),filename=str(p));syntax.append(p.name)
+ready=json.loads((BUILD/'readiness.json').read_text())
+inputs=dict(ready['externalInputs'])
+inputs.update({str(BUILD/n):digest for n,digest in ready['files'].items()})
+source=BUILD/'attempt-hold-01'
+for p in [BUILD/'readiness.json',BUILD/'execution-hold-01/result.json',
+ source/'shape-manifest.json',source/'HOLD-diagnostic-assembly-after-joints.blend',
+ source/'HOLD-diagnostic-assembly-after-joints-scope.json',
+ source/'HOLD-diagnostic-assembly-after-joints-scope-classification.json',
+ source/'HOLD-diagnostic-assembly-after-joints-source-parity-after-save.json',
+ STAGE/'render-whole.py',STAGE/'source_helpers.py',STAGE/'source_checks.py',BASE/'study.json']:
+ inputs[str(p)]=sha(p)
+assert all(sha(Path(p))==digest for p,digest in inputs.items())
+manifest=json.loads((source/'shape-manifest.json').read_text())
+assert manifest['diagnosticProcessCompleted'] and manifest['firstFailure'] is None
+assert not manifest['strictWorldGeometryGate'] and not manifest['roundtripAll128Passed']
+files={p.name:sha(p) for p in HERE.iterdir() if p.is_file()}
+r={'scope':'one complete HOLD grove source view only; no geometry/contact/runtime/performance acceptance',
+ 'files':files,'externalInputs':inputs,'syntaxParsed':syntax,
+ 'command':'SANSU_FOREST_HOLD_VIEW_APPROVED=1 python3 '+str(HERE/'run-once.py'),
+ 'threads':2,'rssLimitBytes':3*1024**3,'wallSeconds':60,'samples':16,'width':1280,
+ 'sourceBlend':str(source/'HOLD-diagnostic-assembly-after-joints.blend'),
+ 'sourceSha256':sha(source/'HOLD-diagnostic-assembly-after-joints.blend'),
+ 'cameraAndMaterials':'same stage3/stage4 helper; no change',
+ 'onlyRendererCompatibilitySetting':'growing-reachable-paths.visible_shadow=false during render, then restore',
+ 'strictWorldGeometryGate':False,'roundtrip':'NOT RUN','independentObservers':0,'blenderExecuted':False}
+(HERE/'readiness.json').write_text(json.dumps(r,indent=2)+'\n')
+d=sha(HERE/'readiness.json');(HERE/'readiness.sha256').write_text(d+'\n')
+print(json.dumps({'readinessSha256':d,'files':len(files),'externalInputs':len(inputs),'command':r['command']}))

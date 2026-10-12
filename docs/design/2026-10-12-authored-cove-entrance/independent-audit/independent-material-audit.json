@@ -1,0 +1,49 @@
+{
+  "allShellMaterialDefinitionsIdentical": true,
+  "shellMaterials": [
+    {
+      "name": "harbor / blue porcelain shell footing"
+    },
+    {
+      "name": "harbor / translucent pearl shell",
+      "transmission": 0.7200000286102295
+    },
+    {
+      "name": "harbor / translucent violet shell panels",
+      "transmission": 0.6899999976158142
+    },
+    {
+      "name": "harbor / coral shell ribs"
+    }
+  ],
+  "apronMaterials": [
+    {
+      "doubleSided": true,
+      "name": "P04 candidate / shared court ground #ccc9d4",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.6038273572921753,
+          0.5840784311294556,
+          0.6583748459815979,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.800000011920929
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "P04 candidate / shared court bank #bbb8c7",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.4969329833984375,
+          0.4793201684951782,
+          0.5711248517036438,
+          1
+        ],
+        "metallicFactor": 0,
+        "roughnessFactor": 0.800000011920929
+      }
+    }
+  ]
+}

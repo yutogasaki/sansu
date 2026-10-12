@@ -1,0 +1,740 @@
+{
+  "createdAt": "2026-10-12T04:22:56.104166+00:00",
+  "scope": "P02 source surveys 01/02/03, including invalid-transform first result and loading-boundary exception. Final measurement has correct donor parity; all three shape proposals remain HOLD. No model built or rendered.",
+  "files": [
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/README.md",
+      "target": "README.md.txt",
+      "originalBytes": 12275,
+      "storedBytes": 12275,
+      "originalSha256": "02ee156b8988e03227d9a1181e67139cff76960a9e489fee006dccd956430bce",
+      "storedSha256": "02ee156b8988e03227d9a1181e67139cff76960a9e489fee006dccd956430bce",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/check-donor-reference.py",
+      "target": "check-donor-reference.py.txt",
+      "originalBytes": 3164,
+      "storedBytes": 3164,
+      "originalSha256": "f42c23086021971b60d25767f5a34ad328847773c130595023323e4f011000ec",
+      "storedSha256": "f42c23086021971b60d25767f5a34ad328847773c130595023323e4f011000ec",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/donor-transform-static-evidence.json",
+      "target": "donor-transform-static-evidence.json",
+      "originalBytes": 4940,
+      "storedBytes": 4940,
+      "originalSha256": "454f627b50ab42ff9c69daf4aff684d549811dbebffb3e8f2e06f0cb5905f50f",
+      "storedSha256": "454f627b50ab42ff9c69daf4aff684d549811dbebffb3e8f2e06f0cb5905f50f",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/donor-transform-static-review.md",
+      "target": "donor-transform-static-review.md.txt",
+      "originalBytes": 4928,
+      "storedBytes": 4928,
+      "originalSha256": "45943df06b009e47385a1487a5906e5529dc337cdeb8a0226658de894d6ccfab",
+      "storedSha256": "45943df06b009e47385a1487a5906e5529dc337cdeb8a0226658de894d6ccfab",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/donor_reference.py",
+      "target": "donor_reference.py.txt",
+      "originalBytes": 3333,
+      "storedBytes": 3333,
+      "originalSha256": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+      "storedSha256": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/entry_geometry.py",
+      "target": "entry_geometry.py.txt",
+      "originalBytes": 7937,
+      "storedBytes": 7937,
+      "originalSha256": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+      "storedSha256": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-donor-matrix-fix/archive-proof.json",
+      "target": "history/pre-donor-matrix-fix/archive-proof.json",
+      "originalBytes": 7403,
+      "storedBytes": 7403,
+      "originalSha256": "f0f15b4838ce4e0b52323d177fd86fe649a6d797a15181dc1779d212d4356b75",
+      "storedSha256": "f0f15b4838ce4e0b52323d177fd86fe649a6d797a15181dc1779d212d4356b75",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-donor-matrix-fix/donor-transform-static-evidence.json",
+      "target": "history/pre-donor-matrix-fix/donor-transform-static-evidence.json",
+      "originalBytes": 4940,
+      "storedBytes": 4940,
+      "originalSha256": "454f627b50ab42ff9c69daf4aff684d549811dbebffb3e8f2e06f0cb5905f50f",
+      "storedSha256": "454f627b50ab42ff9c69daf4aff684d549811dbebffb3e8f2e06f0cb5905f50f",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-donor-matrix-fix/donor-transform-static-review.md",
+      "target": "history/pre-donor-matrix-fix/donor-transform-static-review.md.txt",
+      "originalBytes": 4928,
+      "storedBytes": 4928,
+      "originalSha256": "45943df06b009e47385a1487a5906e5529dc337cdeb8a0226658de894d6ccfab",
+      "storedSha256": "45943df06b009e47385a1487a5906e5529dc337cdeb8a0226658de894d6ccfab",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-donor-matrix-fix/entry_geometry.py",
+      "target": "history/pre-donor-matrix-fix/entry_geometry.py.txt",
+      "originalBytes": 7937,
+      "storedBytes": 7937,
+      "originalSha256": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+      "storedSha256": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-donor-matrix-fix/preparation-manifest.json",
+      "target": "history/pre-donor-matrix-fix/preparation-manifest.json",
+      "originalBytes": 4592,
+      "storedBytes": 4592,
+      "originalSha256": "c8ed9703a8a982c7f91e6373b9d40514c1faa0d2f4466d23470edc513f55cbc4",
+      "storedSha256": "c8ed9703a8a982c7f91e6373b9d40514c1faa0d2f4466d23470edc513f55cbc4",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-donor-matrix-fix/readiness.json",
+      "target": "history/pre-donor-matrix-fix/readiness.json",
+      "originalBytes": 2068,
+      "storedBytes": 2068,
+      "originalSha256": "ce76c703463a9c0e6042e1b9c33119653733c52ad8a40057b48a55c18b8921f5",
+      "storedSha256": "ce76c703463a9c0e6042e1b9c33119653733c52ad8a40057b48a55c18b8921f5",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-donor-matrix-fix/source-study.py",
+      "target": "history/pre-donor-matrix-fix/source-study.py.txt",
+      "originalBytes": 24524,
+      "storedBytes": 24524,
+      "originalSha256": "3d6e6b1248ee86d2d225d04bb2f7120eb91d760fbd096203bced169d0473d175",
+      "storedSha256": "3d6e6b1248ee86d2d225d04bb2f7120eb91d760fbd096203bced169d0473d175",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-donor-matrix-fix/study.json",
+      "target": "history/pre-donor-matrix-fix/study.json",
+      "originalBytes": 11855,
+      "storedBytes": 11855,
+      "originalSha256": "258376c7a16aed0aa4645e7b08b95f4392057309c4996d629e4542cb13f4ecc9",
+      "storedSha256": "258376c7a16aed0aa4645e7b08b95f4392057309c4996d629e4542cb13f4ecc9",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-donor-name-fix/archive-proof.json",
+      "target": "history/pre-donor-name-fix/archive-proof.json",
+      "originalBytes": 5212,
+      "storedBytes": 5212,
+      "originalSha256": "9f67a5f43e01e8092887cd58709a523b6fd19adeda57c7fc9ffa3e3b0983f747",
+      "storedSha256": "9f67a5f43e01e8092887cd58709a523b6fd19adeda57c7fc9ffa3e3b0983f747",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-donor-name-fix/check-donor-reference.py",
+      "target": "history/pre-donor-name-fix/check-donor-reference.py.txt",
+      "originalBytes": 2707,
+      "storedBytes": 2707,
+      "originalSha256": "64d4b0bc75e3d18a365a0f431227cb412ce938e283fa5bbf7e69d2ec4292ab99",
+      "storedSha256": "64d4b0bc75e3d18a365a0f431227cb412ce938e283fa5bbf7e69d2ec4292ab99",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-donor-name-fix/donor_reference.py",
+      "target": "history/pre-donor-name-fix/donor_reference.py.txt",
+      "originalBytes": 3333,
+      "storedBytes": 3333,
+      "originalSha256": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+      "storedSha256": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-donor-name-fix/prepared-survey02/README.md",
+      "target": "history/pre-donor-name-fix/prepared-survey02/README.md.txt",
+      "originalBytes": 2585,
+      "storedBytes": 2585,
+      "originalSha256": "9fe865d6100ddc046881a01e13fa96b56157983f886764fc340f3a6b6ba43740",
+      "storedSha256": "9fe865d6100ddc046881a01e13fa96b56157983f886764fc340f3a6b6ba43740",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-donor-name-fix/prepared-survey02/manifest.json",
+      "target": "history/pre-donor-name-fix/prepared-survey02/manifest.json",
+      "originalBytes": 3196,
+      "storedBytes": 3196,
+      "originalSha256": "4ce1f2de89af1370ecdc79506ef8064455c808c0de6c9484f2790e69080361ea",
+      "storedSha256": "4ce1f2de89af1370ecdc79506ef8064455c808c0de6c9484f2790e69080361ea",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-donor-name-fix/prepared-survey02/readiness.json",
+      "target": "history/pre-donor-name-fix/prepared-survey02/readiness.json",
+      "originalBytes": 2320,
+      "storedBytes": 2320,
+      "originalSha256": "063eb98dac2662bffab86dc56fa0dff16f6d6bfcbc7eedaf7d2a1c0efc83a714",
+      "storedSha256": "063eb98dac2662bffab86dc56fa0dff16f6d6bfcbc7eedaf7d2a1c0efc83a714",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-donor-name-fix/prepared-survey02/static-first.log.txt",
+      "target": "history/pre-donor-name-fix/prepared-survey02/static-first.log.txt",
+      "originalBytes": 981,
+      "storedBytes": 981,
+      "originalSha256": "a20ef6801be8d655cb8ecb7189eb3087618a834405d5e5806c9cbd8a7b7924d2",
+      "storedSha256": "a20ef6801be8d655cb8ecb7189eb3087618a834405d5e5806c9cbd8a7b7924d2",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-donor-name-fix/source-study.py",
+      "target": "history/pre-donor-name-fix/source-study.py.txt",
+      "originalBytes": 29006,
+      "storedBytes": 29006,
+      "originalSha256": "221884209c52f0bd7ddd074be85e0bdb504cddda06bc6cec08edc08879526a58",
+      "storedSha256": "221884209c52f0bd7ddd074be85e0bdb504cddda06bc6cec08edc08879526a58",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-ground-join-review/README.md",
+      "target": "history/pre-ground-join-review/README.md.txt",
+      "originalBytes": 9409,
+      "storedBytes": 9409,
+      "originalSha256": "28209661f8de48cc33ca1450c54506343d5c0a5241eb72069649b702da318b22",
+      "storedSha256": "28209661f8de48cc33ca1450c54506343d5c0a5241eb72069649b702da318b22",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-ground-join-review/archive-proof.json",
+      "target": "history/pre-ground-join-review/archive-proof.json",
+      "originalBytes": 1361,
+      "storedBytes": 1361,
+      "originalSha256": "308b4186d37d62b6a9e65b1f84b1b7a560b33aa4a997434b61691ed344109ddb",
+      "storedSha256": "308b4186d37d62b6a9e65b1f84b1b7a560b33aa4a997434b61691ed344109ddb",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-ground-join-review/preparation-manifest.json",
+      "target": "history/pre-ground-join-review/preparation-manifest.json",
+      "originalBytes": 1459,
+      "storedBytes": 1459,
+      "originalSha256": "b349fda332fcd8291051b638f1b736616bff89be52d33ca7c6d7fbe346b3e089",
+      "storedSha256": "b349fda332fcd8291051b638f1b736616bff89be52d33ca7c6d7fbe346b3e089",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-ground-join-review/readiness.json",
+      "target": "history/pre-ground-join-review/readiness.json",
+      "originalBytes": 1484,
+      "storedBytes": 1484,
+      "originalSha256": "b046712681a2de0f9d41b573b637fadbd2c752a7cf11611e3402e858dbf30efa",
+      "storedSha256": "b046712681a2de0f9d41b573b637fadbd2c752a7cf11611e3402e858dbf30efa",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/pre-ground-join-review/source-study.py",
+      "target": "history/pre-ground-join-review/source-study.py.txt",
+      "originalBytes": 20327,
+      "storedBytes": 20327,
+      "originalSha256": "d70e733def05a6493ebf9f062b595ce21fbbab828e06b5f8f845d47eae87da90",
+      "storedSha256": "d70e733def05a6493ebf9f062b595ce21fbbab828e06b5f8f845d47eae87da90",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/unexecuted-adaptive-draft/archive-proof.json",
+      "target": "history/unexecuted-adaptive-draft/archive-proof.json",
+      "originalBytes": 2332,
+      "storedBytes": 2332,
+      "originalSha256": "3631e13db28e9caeefc2ed6fac4081b06d74795fd97bcbae4b5d7868bfc62d0b",
+      "storedSha256": "3631e13db28e9caeefc2ed6fac4081b06d74795fd97bcbae4b5d7868bfc62d0b",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/unexecuted-adaptive-draft/entry_geometry.py",
+      "target": "history/unexecuted-adaptive-draft/entry_geometry.py.txt",
+      "originalBytes": 7809,
+      "storedBytes": 7809,
+      "originalSha256": "11c7358b5117df7f692829082387b870496a100d910621038dc26c3dddfb3015",
+      "storedSha256": "11c7358b5117df7f692829082387b870496a100d910621038dc26c3dddfb3015",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/unexecuted-adaptive-draft/source-study.py",
+      "target": "history/unexecuted-adaptive-draft/source-study.py.txt",
+      "originalBytes": 23239,
+      "storedBytes": 23239,
+      "originalSha256": "60547c1b061abe06e344b50df4cc49c3b3c44ffb1a06374b432adf83f873e973",
+      "storedSha256": "60547c1b061abe06e344b50df4cc49c3b3c44ffb1a06374b432adf83f873e973",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/unexecuted-adaptive-draft/static-checks-first.log.txt",
+      "target": "history/unexecuted-adaptive-draft/static-checks-first.log.txt",
+      "originalBytes": 793,
+      "storedBytes": 793,
+      "originalSha256": "787bd952480feb24c8e4548585f736bd61daeb075c86a447fdc7c6d82d9577ba",
+      "storedSha256": "787bd952480feb24c8e4548585f736bd61daeb075c86a447fdc7c6d82d9577ba",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/history/unexecuted-adaptive-draft/static-checks.py",
+      "target": "history/unexecuted-adaptive-draft/static-checks.py.txt",
+      "originalBytes": 2698,
+      "storedBytes": 2698,
+      "originalSha256": "dadd43b7b0c7e63507050ce6e74dcf963f317f4bbfa60c2d4f0a602dcc5df8d0",
+      "storedSha256": "dadd43b7b0c7e63507050ce6e74dcf963f317f4bbfa60c2d4f0a602dcc5df8d0",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/preparation-manifest.json",
+      "target": "preparation-manifest.json",
+      "originalBytes": 4592,
+      "storedBytes": 4592,
+      "originalSha256": "c8ed9703a8a982c7f91e6373b9d40514c1faa0d2f4466d23470edc513f55cbc4",
+      "storedSha256": "c8ed9703a8a982c7f91e6373b9d40514c1faa0d2f4466d23470edc513f55cbc4",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/prepared-survey02/README.md",
+      "target": "prepared-survey02/README.md.txt",
+      "originalBytes": 2585,
+      "storedBytes": 2585,
+      "originalSha256": "9fe865d6100ddc046881a01e13fa96b56157983f886764fc340f3a6b6ba43740",
+      "storedSha256": "9fe865d6100ddc046881a01e13fa96b56157983f886764fc340f3a6b6ba43740",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/prepared-survey02/manifest.json",
+      "target": "prepared-survey02/manifest.json",
+      "originalBytes": 3196,
+      "storedBytes": 3196,
+      "originalSha256": "4ce1f2de89af1370ecdc79506ef8064455c808c0de6c9484f2790e69080361ea",
+      "storedSha256": "4ce1f2de89af1370ecdc79506ef8064455c808c0de6c9484f2790e69080361ea",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/prepared-survey02/readiness.json",
+      "target": "prepared-survey02/readiness.json",
+      "originalBytes": 2320,
+      "storedBytes": 2320,
+      "originalSha256": "063eb98dac2662bffab86dc56fa0dff16f6d6bfcbc7eedaf7d2a1c0efc83a714",
+      "storedSha256": "063eb98dac2662bffab86dc56fa0dff16f6d6bfcbc7eedaf7d2a1c0efc83a714",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/prepared-survey02/static-first.log.txt",
+      "target": "prepared-survey02/static-first.log.txt",
+      "originalBytes": 981,
+      "storedBytes": 981,
+      "originalSha256": "a20ef6801be8d655cb8ecb7189eb3087618a834405d5e5806c9cbd8a7b7924d2",
+      "storedSha256": "a20ef6801be8d655cb8ecb7189eb3087618a834405d5e5806c9cbd8a7b7924d2",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/prepared-survey03/manifest.json",
+      "target": "prepared-survey03/manifest.json",
+      "originalBytes": 2915,
+      "storedBytes": 2915,
+      "originalSha256": "b0f0da4c36ff4369a0caef2c0d44f225658c1912959d0379749f036a792e78cd",
+      "storedSha256": "b0f0da4c36ff4369a0caef2c0d44f225658c1912959d0379749f036a792e78cd",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/prepared-survey03/readiness.json",
+      "target": "prepared-survey03/readiness.json",
+      "originalBytes": 2320,
+      "storedBytes": 2320,
+      "originalSha256": "b5b4a3aa5fb26eedceec39acf7b6a5d23b07c04be9b72486b0d1218544287f6d",
+      "storedSha256": "b5b4a3aa5fb26eedceec39acf7b6a5d23b07c04be9b72486b0d1218544287f6d",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/prepared-survey03/static-first.log.txt",
+      "target": "prepared-survey03/static-first.log.txt",
+      "originalBytes": 1073,
+      "storedBytes": 1073,
+      "originalSha256": "0b5bea78a8b4ea74ece0d85897727ec9ff800e6e471fd838c21b3306f66287c3",
+      "storedSha256": "0b5bea78a8b4ea74ece0d85897727ec9ff800e6e471fd838c21b3306f66287c3",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/readiness.json",
+      "target": "readiness.json",
+      "originalBytes": 2068,
+      "storedBytes": 2068,
+      "originalSha256": "ce76c703463a9c0e6042e1b9c33119653733c52ad8a40057b48a55c18b8921f5",
+      "storedSha256": "ce76c703463a9c0e6042e1b9c33119653733c52ad8a40057b48a55c18b8921f5",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/01-survey/candidate-0.json",
+      "target": "runs/01-survey/candidate-0.json.gz",
+      "originalBytes": 10719990,
+      "storedBytes": 960305,
+      "originalSha256": "1ac1568a4072510990f3a089f681fd2b9edb399a284a1e3899e34ed27ddea237",
+      "storedSha256": "1c93ebdf910e8eba8d2bfaec9b07573352883207ee806d612e53ba702ba57d6b",
+      "encoding": "gzip; exact original bytes verified after decompression"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/01-survey/candidate-1.json",
+      "target": "runs/01-survey/candidate-1.json.gz",
+      "originalBytes": 9233324,
+      "storedBytes": 825006,
+      "originalSha256": "4f2d65b8bd951c922295e8b8c214581ab46b4987a72c5afbd9e133731790753c",
+      "storedSha256": "e971ba44e57042d25f6516c40eb5e855c0bac5df9f52d5f2268a047d357bd9d0",
+      "encoding": "gzip; exact original bytes verified after decompression"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/01-survey/candidate-2.json",
+      "target": "runs/01-survey/candidate-2.json.gz",
+      "originalBytes": 8135931,
+      "storedBytes": 705859,
+      "originalSha256": "0d32ae8665a6672e665947fd111e5744fcd48ef632468854aede94a310975564",
+      "storedSha256": "e78359da58dd262b24d19feb3b6146d16279c0277064a2cf64faaf2897ba8f5e",
+      "encoding": "gzip; exact original bytes verified after decompression"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/01-survey/candidates-partial.json",
+      "target": "runs/01-survey/candidates-partial.json.gz",
+      "originalBytes": 32684650,
+      "storedBytes": 2543521,
+      "originalSha256": "47a7f5b04797c2fee2c78d667f68c722a5b8868b96ae03d12f724c0f1b33786c",
+      "storedSha256": "3cb2f8d0cb8a05c0a4a120c14f3c464d3ac2df8cb96a6853aca81c4b75d98565",
+      "encoding": "gzip; exact original bytes verified after decompression"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/01-survey/execution.json",
+      "target": "runs/01-survey/execution.json",
+      "originalBytes": 1516,
+      "storedBytes": 1516,
+      "originalSha256": "9c490e88a0495879563634db1907ed2fdd46c165a44969f97f2ab7746834afbb",
+      "storedSha256": "9c490e88a0495879563634db1907ed2fdd46c165a44969f97f2ab7746834afbb",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/01-survey/measurement.json",
+      "target": "runs/01-survey/measurement.json.gz",
+      "originalBytes": 32687547,
+      "storedBytes": 2544293,
+      "originalSha256": "d171fc2de6b751ef706bd40c1fbb9788cd6ff8836354efba442ef0b0226afbe1",
+      "storedSha256": "98f94d0babfa10e3dad99485411e840da87f22372dd726ed6fdc73a284a969be",
+      "encoding": "gzip; exact original bytes verified after decompression"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/01-survey-handoff.json",
+      "target": "runs/01-survey-handoff.json",
+      "originalBytes": 5548,
+      "storedBytes": 5548,
+      "originalSha256": "6c9c1f40aa05ccca0233dca614e441a5e936d64df4a16ce5d60b0d1b07e2f40f",
+      "storedSha256": "6c9c1f40aa05ccca0233dca614e441a5e936d64df4a16ce5d60b0d1b07e2f40f",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/01-survey-handoff.md",
+      "target": "runs/01-survey-handoff.md.txt",
+      "originalBytes": 2745,
+      "storedBytes": 2745,
+      "originalSha256": "2dfac6b19bd28ca58e2fec84dbef4bfd5fea514fa520c44ca89920102451f6aa",
+      "storedSha256": "2dfac6b19bd28ca58e2fec84dbef4bfd5fea514fa520c44ca89920102451f6aa",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/01-survey-observation.json",
+      "target": "runs/01-survey-observation.json",
+      "originalBytes": 2786,
+      "storedBytes": 2786,
+      "originalSha256": "04a62bcc8bac63f054e4a3cf368b41cc9499e4c33c5329320bae26dd2d98502d",
+      "storedSha256": "04a62bcc8bac63f054e4a3cf368b41cc9499e4c33c5329320bae26dd2d98502d",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/01-survey-summary.json",
+      "target": "runs/01-survey-summary.json",
+      "originalBytes": 13528,
+      "storedBytes": 13528,
+      "originalSha256": "add77f34dc860fb0e7d880b66d05be47374dd32c7db3f586598a97e6f16cf545",
+      "storedSha256": "add77f34dc860fb0e7d880b66d05be47374dd32c7db3f586598a97e6f16cf545",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/01-survey-supervisor-output.log.txt",
+      "target": "runs/01-survey-supervisor-output.log.txt",
+      "originalBytes": 340,
+      "storedBytes": 340,
+      "originalSha256": "fb61aa7701d3f89afdb67b7183c045a2f2261192dbff57b659d78c01803f33b6",
+      "storedSha256": "fb61aa7701d3f89afdb67b7183c045a2f2261192dbff57b659d78c01803f33b6",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/01-survey.log.txt",
+      "target": "runs/01-survey.log.txt",
+      "originalBytes": 18601,
+      "storedBytes": 18601,
+      "originalSha256": "576b157990fb72814256db839bf742a4326e9c9b04d9a3f914b6b27f7aac5b8d",
+      "storedSha256": "576b157990fb72814256db839bf742a4326e9c9b04d9a3f914b6b27f7aac5b8d",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/01-survey.log.txt.json",
+      "target": "runs/01-survey.log.txt.json",
+      "originalBytes": 416,
+      "storedBytes": 416,
+      "originalSha256": "b1faef52b0ad82dd4d01cc5a54a0ce2b8801f5cd0db2cc00e7c48ee721437bd2",
+      "storedSha256": "b1faef52b0ad82dd4d01cc5a54a0ce2b8801f5cd0db2cc00e7c48ee721437bd2",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/02-survey/first-failure.json",
+      "target": "runs/02-survey/first-failure.json",
+      "originalBytes": 170,
+      "storedBytes": 170,
+      "originalSha256": "b7edc3e81a39793a69da8aa6a0ce22913293a037d8602c4e50fa710f4fb37f74",
+      "storedSha256": "b7edc3e81a39793a69da8aa6a0ce22913293a037d8602c4e50fa710f4fb37f74",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/02-survey-handoff.json",
+      "target": "runs/02-survey-handoff.json",
+      "originalBytes": 3095,
+      "storedBytes": 3095,
+      "originalSha256": "d853cdd5c3c38e05615b7bad1b94b3fbfd3904d90b33b6d9ae4a9cecad631065",
+      "storedSha256": "d853cdd5c3c38e05615b7bad1b94b3fbfd3904d90b33b6d9ae4a9cecad631065",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/02-survey-handoff.md",
+      "target": "runs/02-survey-handoff.md.txt",
+      "originalBytes": 2358,
+      "storedBytes": 2358,
+      "originalSha256": "24ae7194cf26ecefe5301a51060834f1b61192dc76fc68defb97dd3a9f0d3c57",
+      "storedSha256": "24ae7194cf26ecefe5301a51060834f1b61192dc76fc68defb97dd3a9f0d3c57",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/02-survey-observation.json",
+      "target": "runs/02-survey-observation.json",
+      "originalBytes": 4065,
+      "storedBytes": 4065,
+      "originalSha256": "569ad758ac068bdb9ddbff5aa653e8d6765f6b76b02e1b742a328b80bc4cdc49",
+      "storedSha256": "569ad758ac068bdb9ddbff5aa653e8d6765f6b76b02e1b742a328b80bc4cdc49",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/02-survey-supervisor-output.log.txt",
+      "target": "runs/02-survey-supervisor-output.log.txt",
+      "originalBytes": 338,
+      "storedBytes": 338,
+      "originalSha256": "cdcad32e32799528a3da697a78baabda61413c18efea8a44715487c8d695e788",
+      "storedSha256": "cdcad32e32799528a3da697a78baabda61413c18efea8a44715487c8d695e788",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/02-survey.log.txt",
+      "target": "runs/02-survey.log.txt",
+      "originalBytes": 19114,
+      "storedBytes": 19114,
+      "originalSha256": "c0081c49e609b9750881faa5e3d622ca46e8477f70562ce1907832d13986aa70",
+      "storedSha256": "c0081c49e609b9750881faa5e3d622ca46e8477f70562ce1907832d13986aa70",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/02-survey.log.txt.json",
+      "target": "runs/02-survey.log.txt.json",
+      "originalBytes": 414,
+      "storedBytes": 414,
+      "originalSha256": "3d6650ecf3294d3547233176052e52d921f0c99e8ad11e0dd86bc548b93a9a79",
+      "storedSha256": "3d6650ecf3294d3547233176052e52d921f0c99e8ad11e0dd86bc548b93a9a79",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/03-survey/candidate-0.json",
+      "target": "runs/03-survey/candidate-0.json.gz",
+      "originalBytes": 876378,
+      "storedBytes": 87807,
+      "originalSha256": "0a14b9fc0b83233cfa8f1e6b524b966c60ff0a22679debcaa72102c677350f1b",
+      "storedSha256": "2d18d20a4e9f72e269f464091db320901cd499a66a6685c6f993fcf12e0d65a0",
+      "encoding": "gzip; exact original bytes verified after decompression"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/03-survey/candidate-1.json",
+      "target": "runs/03-survey/candidate-1.json.gz",
+      "originalBytes": 423638,
+      "storedBytes": 50012,
+      "originalSha256": "8f3406b4767d9b44c425d7388980aa11cf8daa707601c532c28f7142fd9195bf",
+      "storedSha256": "2ec148dbda8039cc6fe3fc86aa3f1e9c8ff555b86cfd95691599c498e8bd6a89",
+      "encoding": "gzip; exact original bytes verified after decompression"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/03-survey/candidate-2.json",
+      "target": "runs/03-survey/candidate-2.json.gz",
+      "originalBytes": 547792,
+      "storedBytes": 60020,
+      "originalSha256": "bd0e10d4248fe9ccc6d6a4542d8619663378dfcf451cef7b1eecb2283b91c065",
+      "storedSha256": "73b9b7aa672d63cc0a291f83e4923278cac7075996a0ebb717e3685a171f9d42",
+      "encoding": "gzip; exact original bytes verified after decompression"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/03-survey/candidates-partial.json",
+      "target": "runs/03-survey/candidates-partial.json.gz",
+      "originalBytes": 2185971,
+      "storedBytes": 204969,
+      "originalSha256": "e367cb7af48e6f29b7c00d54d5069556be701b087a4f9704cc5e4cfa6d9e8b69",
+      "storedSha256": "6f388d61a817a8a344039dd9806d7bbff668bd3ace4391b3a2b0532d0d132a01",
+      "encoding": "gzip; exact original bytes verified after decompression"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/03-survey/donor-authored-parity.json",
+      "target": "runs/03-survey/donor-authored-parity.json",
+      "originalBytes": 22237,
+      "storedBytes": 22237,
+      "originalSha256": "260090547b1fab9ef2151056f4089791381f4c00da2fe585ed63c0297e431874",
+      "storedSha256": "260090547b1fab9ef2151056f4089791381f4c00da2fe585ed63c0297e431874",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/03-survey/donor-source-parity.json",
+      "target": "runs/03-survey/donor-source-parity.json",
+      "originalBytes": 26545,
+      "storedBytes": 26545,
+      "originalSha256": "5a5fe4100ed45b64d2eb3e6ab41654f9c2c6f63bc1c684c34cd2010382ccf917",
+      "storedSha256": "5a5fe4100ed45b64d2eb3e6ab41654f9c2c6f63bc1c684c34cd2010382ccf917",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/03-survey/execution.json",
+      "target": "runs/03-survey/execution.json",
+      "originalBytes": 1514,
+      "storedBytes": 1514,
+      "originalSha256": "7091eb51482546dc5ca2c525f4d8818adb4a2977a9b05669e7c0d4ba56f1f59b",
+      "storedSha256": "7091eb51482546dc5ca2c525f4d8818adb4a2977a9b05669e7c0d4ba56f1f59b",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/03-survey/measurement.json",
+      "target": "runs/03-survey/measurement.json.gz",
+      "originalBytes": 2190266,
+      "storedBytes": 205966,
+      "originalSha256": "252f75dce85a7ebd73100c322f960cda8e1c29bc95f6103b30ac1a708965e6c0",
+      "storedSha256": "02d0e5d6d5fc0b72986a4f98f0e2d64b50ce3a1542bb291cd138527ab871e1ea",
+      "encoding": "gzip; exact original bytes verified after decompression"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/03-survey-handoff.json",
+      "target": "runs/03-survey-handoff.json",
+      "originalBytes": 19441,
+      "storedBytes": 19441,
+      "originalSha256": "e55c04f5e51d893d26dfaa65d3635d50f3de215c55dd41d56361cd16d9c1e272",
+      "storedSha256": "e55c04f5e51d893d26dfaa65d3635d50f3de215c55dd41d56361cd16d9c1e272",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/03-survey-handoff.md",
+      "target": "runs/03-survey-handoff.md.txt",
+      "originalBytes": 3575,
+      "storedBytes": 3575,
+      "originalSha256": "18df1d6ec9a0da51e34e9e2e78936dce3699e4f220b2ac90d843249d37c70dfc",
+      "storedSha256": "18df1d6ec9a0da51e34e9e2e78936dce3699e4f220b2ac90d843249d37c70dfc",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/03-survey-observation.json",
+      "target": "runs/03-survey-observation.json",
+      "originalBytes": 4094,
+      "storedBytes": 4094,
+      "originalSha256": "2463fd18d7615070dbf4c4440773d3b03c2c98e6f21fe68e89b128d3a42794e2",
+      "storedSha256": "2463fd18d7615070dbf4c4440773d3b03c2c98e6f21fe68e89b128d3a42794e2",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/03-survey-supervisor-output.log.txt",
+      "target": "runs/03-survey-supervisor-output.log.txt",
+      "originalBytes": 371,
+      "storedBytes": 371,
+      "originalSha256": "a4b356410fc0d89ca6ed426af6a04e9e4d7ecaf23aa76a397c6ad9fd41797425",
+      "storedSha256": "a4b356410fc0d89ca6ed426af6a04e9e4d7ecaf23aa76a397c6ad9fd41797425",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/03-survey.log.txt",
+      "target": "runs/03-survey.log.txt",
+      "originalBytes": 18601,
+      "storedBytes": 18601,
+      "originalSha256": "a5c8d6ffb1388a4f5b9a60abab8825e1ea6d19ab2fd7eed67d76f556dceaa449",
+      "storedSha256": "a5c8d6ffb1388a4f5b9a60abab8825e1ea6d19ab2fd7eed67d76f556dceaa449",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/runs/03-survey.log.txt.json",
+      "target": "runs/03-survey.log.txt.json",
+      "originalBytes": 455,
+      "storedBytes": 455,
+      "originalSha256": "7c4d5f777caf62661b785b8af4a0ca516cd3320647eb9fc76a3e1733ebbe0b08",
+      "storedSha256": "7c4d5f777caf62661b785b8af4a0ca516cd3320647eb9fc76a3e1733ebbe0b08",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/source-study.py",
+      "target": "source-study.py.txt",
+      "originalBytes": 29203,
+      "storedBytes": 29203,
+      "originalSha256": "d0c32c205d8e89443d3920ae7e67f5fa372b508340e18bbc5479105f249ae5a5",
+      "storedSha256": "d0c32c205d8e89443d3920ae7e67f5fa372b508340e18bbc5479105f249ae5a5",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/static-checks-final.log.txt",
+      "target": "static-checks-final.log.txt",
+      "originalBytes": 854,
+      "storedBytes": 854,
+      "originalSha256": "8378ad04ac390f7ba16e9ce1d79b98254ecea44252816326b805eba08304d56c",
+      "storedSha256": "8378ad04ac390f7ba16e9ce1d79b98254ecea44252816326b805eba08304d56c",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/static-checks-first.log.txt",
+      "target": "static-checks-first.log.txt",
+      "originalBytes": 793,
+      "storedBytes": 793,
+      "originalSha256": "787bd952480feb24c8e4548585f736bd61daeb075c86a447fdc7c6d82d9577ba",
+      "storedSha256": "787bd952480feb24c8e4548585f736bd61daeb075c86a447fdc7c6d82d9577ba",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/static-checks.py",
+      "target": "static-checks.py.txt",
+      "originalBytes": 3192,
+      "storedBytes": 3192,
+      "originalSha256": "6bc2c01351dfa6d0c63078450ad65fd91400634e317c5d28c93109f24ebc0127",
+      "storedSha256": "6bc2c01351dfa6d0c63078450ad65fd91400634e317c5d28c93109f24ebc0127",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/study.json",
+      "target": "study.json",
+      "originalBytes": 11855,
+      "storedBytes": 11855,
+      "originalSha256": "258376c7a16aed0aa4645e7b08b95f4392057309c4996d629e4542cb13f4ecc9",
+      "storedSha256": "258376c7a16aed0aa4645e7b08b95f4392057309c4996d629e4542cb13f4ecc9",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    },
+    {
+      "source": "/private/tmp/sansu-p02-gallery-source-study/supervise.py",
+      "target": "supervise.py.txt",
+      "originalBytes": 1920,
+      "storedBytes": 1920,
+      "originalSha256": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+      "storedSha256": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+      "encoding": "original bytes; historical .py/.md filename appends .txt"
+    }
+  ],
+  "fileCount": 81,
+  "originalBytes": 100152296,
+  "storedBytes": 8654567,
+  "restoredBytesAllIdentical": true,
+  "excludedDuplicateRawHistory": "Historical duplicate runs/ copies are already represented by original runs/ files; history manifests and old scripts are retained."
+}

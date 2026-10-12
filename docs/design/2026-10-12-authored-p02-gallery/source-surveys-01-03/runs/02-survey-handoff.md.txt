@@ -1,0 +1,19 @@
+# P02 run02 — measurement implementation failure, stopped
+
+The prepared survey was executed **once**. It stopped before all-donor parity and before any entrance candidate measurement. No source design conclusion is available from run02. There was no retry, source change, build or render.
+
+- UTC window: **2026-10-12T04:05:23.946310+00:00 → 2026-10-12T04:05:30.508849+00:00**.
+- Owned Blender PID **22348**, supervisor **22346**, CPU 2.
+- Supervisor elapsed **6.200600583 s**, sampled peak **723,714,048 bytes**; outer observer sampled peak **694,829,056 bytes**. Different sampling instants explain the difference. Limits were 180 seconds / 2560 MiB.
+- Blender/supervisor returned **0**, but the Python traceback and `02-survey/first-failure.json` prove execution failure. Process exit alone is not an acceptance signal.
+- Eight fixed inputs, six prepared code/config files and the prepared manifest all have identical before/after SHA. The original run01 artifacts were independently rehashed unchanged.
+
+## Failure classification
+
+The script passed the `donor_names` list directly to `bpy.data.libraries.load`'s destination. After load, the list held Blender Object entries. `read_references(..., donor_names)` consequently attempted string matching with an Object, then raised `TypeError: can only concatenate str (not "Object") to str` at donor_reference.py:50 / source-study.py:165.
+
+This is a Python/Blender data-loading boundary defect in the measurement script. It is separate from run01's original-floor translation loss and provides no evidence that the source shape is infeasible. The corrected matrix lifecycle was not reached and remains unverified. No candidate results were generated; do not label them as measured geometric HOLDs.
+
+The minimum future repair is to preserve donor names as an immutable tuple and pass `list(names)` to Blender, keeping reference lookup and source pairing on the tuple. A small fixture should simulate replacement of the destination list entries with Object-like sentinels. This proposal was **not implemented** after this failed run, and no extra survey was run.
+
+Raw log, first-failure, observer record and supervisor report are retained. `02-survey-handoff.json` contains artifact SHA/bytes and the separate run01/run02 classifications. Other functional regression processes were not changed or stopped.

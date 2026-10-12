@@ -1,0 +1,431 @@
+{
+  "inputs": {
+    "docs/design/2026-10-10-island-final-3d/whole-island.glb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "docs/design/2026-10-12-authored-central-shoulder/input/selected-v3-handoff.json.gz": "a5e947cf22a7a2ad02272902f5836da464f0f89630001eea4be95583103efdb8",
+    "docs/design/2026-10-12-authored-central-shoulder/input/compiled-floors.json": "807768c0dfe1cf923d37f3dc015572184d858685a356c9dc2008340f86fe395c",
+    "docs/design/2026-10-12-authored-central-shoulder/input/native-trunk-bases.json": "431efb8e316628eccf1bf5010c9669df8712fc6d2b622f524c6fced61ef58139",
+    "prototypes/place-qa/native05-world.json.gz": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08"
+  },
+  "closedSoil": {
+    "topTriangles": 6615,
+    "topUniqueFloat32Vertices": 3797,
+    "outsideBoundaryEdges": 977,
+    "internalBoundaryEdges": 0,
+    "collapsedTriangles": 0,
+    "nonmanifoldEdges": 0,
+    "sideTriangles": 1954,
+    "bottomTriangles": 6615,
+    "bottomY": -0.30899999029934405,
+    "minThickness": 0.3,
+    "topFloat32MaxAbsError": 4.7673486314181446e-07,
+    "boundaryNormalDifferenceMaxL2": 1.2301777521997068e-11,
+    "float32OrientationSlivers": []
+  },
+  "retainedFloorNormals": [
+    {
+      "id": "[\"native05-inlet-core\",\"Flowers / open sky gathering court:0\"]",
+      "sourceNormalsDirect": 427,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+      "sourceNormalsDirect": 1186,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+      "sourceNormalsDirect": 1186,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Grove / sheltered open room:0\"]",
+      "sourceNormalsDirect": 427,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Harbor / shared waterfront court:0\"]",
+      "sourceNormalsDirect": 427,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "sourceNormalsDirect": 20327,
+      "sourceNormalsInterpolated": 4077,
+      "sourceMaterial": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "sourceNormalsDirect": 15972,
+      "sourceNormalsInterpolated": 44126,
+      "sourceMaterial": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+      "sourceNormalsDirect": 9374,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Village / shared sunny court:0\"]",
+      "sourceNormalsDirect": 427,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Water town / shared frontage court:0\"]",
+      "sourceNormalsDirect": 427,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:pool-bed:l22\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:pool-bed:l20\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:pool-bed:l21\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A9\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A7\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A8\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A9\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A0\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A1\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A2\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A3\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A4\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A5\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A6\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A7\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A8\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A9\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A2\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A3\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A4\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A5\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A0\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A1\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A3\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A4\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A5\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A6\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A2\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A1\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A3\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A5\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A4\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A6\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A8\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A7\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A7\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A8\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A0\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A6\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A0\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A1\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A2\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:bridge:l24\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    },
+    {
+      "id": "[\"native05-cove-corner-shared-apron-v1\",\"shared-apron\"]",
+      "sourceNormalsDirect": 0,
+      "sourceNormalsInterpolated": 0,
+      "sourceMaterial": false
+    }
+  ],
+  "rootContinuations": [
+    {
+      "ownerId": "l33",
+      "closed": true,
+      "nonmanifoldEdges": 0,
+      "contourVertices": 10,
+      "triangles": 36,
+      "bounds": [
+        [
+          5.731341402053833,
+          1.2000000039999998,
+          -7.26943717956543
+        ],
+        [
+          6.2686586017608645,
+          1.2808616161346436,
+          -6.73056282043457
+        ]
+      ],
+      "insideOwnerHalf46": true,
+      "uncoveredDryFloorArea": 0.0,
+      "lowestFloorOverFullFootprint": 1.2060000039999998,
+      "bottomY": 1.2000000039999998,
+      "minimumFullFootprintEmbed": 0.006,
+      "topCapCopiedFromOriginal": true,
+      "originalTreeUnchanged": true
+    },
+    {
+      "ownerId": "l34",
+      "closed": true,
+      "nonmanifoldEdges": 0,
+      "contourVertices": 10,
+      "triangles": 36,
+      "bounds": [
+        [
+          6.680050079345703,
+          1.557199926719666,
+          -6.137650358200073
+        ],
+        [
+          6.857601463317871,
+          1.6376460790634155,
+          -5.950450536727906
+        ]
+      ],
+      "insideOwnerHalf46": true,
+      "uncoveredDryFloorArea": 0.0,
+      "lowestFloorOverFullFootprint": 1.563199926719666,
+      "bottomY": 1.557199926719666,
+      "minimumFullFootprintEmbed": 0.006,
+      "topCapCopiedFromOriginal": true,
+      "originalTreeUnchanged": true
+    },
+    {
+      "ownerId": "l35",
+      "closed": true,
+      "nonmanifoldEdges": 0,
+      "contourVertices": 10,
+      "triangles": 36,
+      "bounds": [
+        [
+          7.905454145431518,
+          1.5791650239753723,
+          -6.099449920654297
+        ],
+        [
+          8.094545370101928,
+          1.6600857973098755,
+          -5.900550079345703
+        ]
+      ],
+      "insideOwnerHalf46": true,
+      "uncoveredDryFloorArea": 0.0,
+      "lowestFloorOverFullFootprint": 1.5851650239753723,
+      "bottomY": 1.5791650239753723,
+      "minimumFullFootprintEmbed": 0.006,
+      "topCapCopiedFromOriginal": true,
+      "originalTreeUnchanged": true
+    }
+  ],
+  "sourceUnchanged": true
+}

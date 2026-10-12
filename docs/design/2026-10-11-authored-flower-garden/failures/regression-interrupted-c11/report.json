@@ -1,0 +1,100 @@
+{
+  "coreReport": "/private/tmp/sansu-authored-flower-core-c9/report.json",
+  "coreReportSha256": "6143c61748605dc7fec64b1e3f885601839e43189f56001414ce4cb9bf04555c",
+  "coreInputCount": 1895,
+  "startedAtUnixSeconds": 1791734921.98738,
+  "pass": false,
+  "stages": [
+    {
+      "name": "01-baseline27-editing",
+      "pass": false,
+      "exitCode": 1,
+      "coreInputsMatch": true,
+      "sourceFixed": true,
+      "failurePhase": "tree-choice",
+      "error": "page.waitForFunction: Target page, context or browser has been closed\n    at ready (/Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:32:16)\n    at async full (/Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:97:101)\n    at async run (/Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:188:66)\n    at async file:///Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:206:36",
+      "toolReportInspection": {
+        "pass": false,
+        "failurePhase": "tree-choice",
+        "error": "page.waitForFunction: Target page, context or browser has been closed\n    at ready (/Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:32:16)\n    at async full (/Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:97:101)\n    at async run (/Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:188:66)\n    at async file:///Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:206:36",
+        "scenarioCount": 0,
+        "failedScenarios": [],
+        "stepsPassed": 6,
+        "captureCount": 5,
+        "target": "http://127.0.0.1:5352/prototypes/place-qa/authored.html",
+        "lastCompletedScenario": null,
+        "lastCapture": {
+          "file": "desktop-reconnected.png",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "url": "http://127.0.0.1:5352/prototypes/place-qa/authored.html",
+          "build": "authored-flower-shape-c3"
+        }
+      },
+      "report": "/private/tmp/sansu-authored-flower-regressions-c11/01-baseline27-editing/report.json",
+      "classifiedFailure": {
+        "phase": "phone-whole-after-desktop-restoration",
+        "category": "interrupted-by-root-before-required-source-fix",
+        "appReached": true,
+        "completedDesktopSteps": 6,
+        "capturedDesktopViews": 5,
+        "sourceComparisonAtStop": "all1895-c9-inputs-identical",
+        "runnerOwnedProcessGroup": 37247,
+        "processGroupState": "absent",
+        "stoppedSession": 4622,
+        "sessionExitCode": 1,
+        "remainingStagesNotRun": true,
+        "atUnixSeconds": 1791735311.2365801
+      }
+    }
+  ],
+  "firstFailure": {
+    "name": "01-baseline27-editing",
+    "pass": false,
+    "exitCode": 1,
+    "coreInputsMatch": true,
+    "sourceFixed": true,
+    "failurePhase": "tree-choice",
+    "error": "page.waitForFunction: Target page, context or browser has been closed\n    at ready (/Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:32:16)\n    at async full (/Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:97:101)\n    at async run (/Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:188:66)\n    at async file:///Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:206:36",
+    "toolReportInspection": {
+      "pass": false,
+      "failurePhase": "tree-choice",
+      "error": "page.waitForFunction: Target page, context or browser has been closed\n    at ready (/Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:32:16)\n    at async full (/Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:97:101)\n    at async run (/Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:188:66)\n    at async file:///Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:206:36",
+      "scenarioCount": 0,
+      "failedScenarios": [],
+      "stepsPassed": 6,
+      "captureCount": 5,
+      "target": "http://127.0.0.1:5352/prototypes/place-qa/authored.html",
+      "lastCompletedScenario": null,
+      "lastCapture": {
+        "file": "desktop-reconnected.png",
+        "viewport": {
+          "width": 1280,
+          "height": 900
+        },
+        "url": "http://127.0.0.1:5352/prototypes/place-qa/authored.html",
+        "build": "authored-flower-shape-c3"
+      }
+    },
+    "report": "/private/tmp/sansu-authored-flower-regressions-c11/01-baseline27-editing/report.json",
+    "classifiedFailure": {
+      "phase": "phone-whole-after-desktop-restoration",
+      "category": "interrupted-by-root-before-required-source-fix",
+      "appReached": true,
+      "completedDesktopSteps": 6,
+      "capturedDesktopViews": 5,
+      "sourceComparisonAtStop": "all1895-c9-inputs-identical",
+      "runnerOwnedProcessGroup": 37247,
+      "processGroupState": "absent",
+      "stoppedSession": 4622,
+      "sessionExitCode": 1,
+      "remainingStagesNotRun": true,
+      "atUnixSeconds": 1791735311.2365801
+    }
+  },
+  "scope": "Sequential baseline27, wide27water, ordinaryGrowing, isolated flag-off classic; no user servers 8230/5198, player profile or independent art acceptance",
+  "finishedAtUnixSeconds": 1791735269.2564118,
+  "interrupted": true
+}

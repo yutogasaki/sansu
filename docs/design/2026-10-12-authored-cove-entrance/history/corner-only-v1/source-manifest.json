@@ -1,0 +1,212 @@
+{
+  "candidate": "native05-authored-cove-corner-v1",
+  "scope": "editable source only; not app acceptance",
+  "original_hashes": {
+    "whole-island.blend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "whole-island.glb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "whole-island-render.png": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+    "varied-world.py": "9090dbd0923437d449309bc95ffb27a00ec673e3252ca9f98849e8ce53611c22",
+    "build-final-scene.py": "007cb5dbaee09aa8f235641409729a71409910c9f24c03f139258af47b135234"
+  },
+  "original_inputs_unchanged": true,
+  "source_transform": {
+    "pivot_gltf": [
+      13.9,
+      0.89,
+      1.2
+    ],
+    "position": [
+      8,
+      0.0475,
+      0.5
+    ],
+    "uniform_scale": 0.45,
+    "yaw": 0
+  },
+  "opening": {
+    "cut_width": 0.7,
+    "cut_spring_world_y": 0.455666217,
+    "cut_apex_world_y": 0.805666217,
+    "center_world_z": -0.25,
+    "front_world_z": 0.09999999999999998,
+    "rim_world_radius": 0.026,
+    "requested_initial_clear": [
+      0.64,
+      0.72
+    ]
+  },
+  "construction": {
+    "shell_thickness_source": 0.043,
+    "boolean": "EXACT solid difference; manifold closed reveal",
+    "continuous_frame_points": 65,
+    "curves_editable_in_blend": true,
+    "original_skin_materials_preserved": true
+  },
+  "geometry_qa": [
+    {
+      "name": "Harbor / continuous entrance runner jamb rear arch",
+      "vertices": 7710,
+      "polygons": 7696,
+      "boundary_edges": 40,
+      "nonmanifold_edges": 40,
+      "materials": [
+        "harbor / blue porcelain shell footing"
+      ]
+    },
+    {
+      "name": "Harbor / corner structural rib joined to rim",
+      "vertices": 3630,
+      "polygons": 3616,
+      "boundary_edges": 40,
+      "nonmanifold_edges": 40,
+      "materials": [
+        "harbor / coral shell ribs"
+      ]
+    },
+    {
+      "name": "Harbor / longitudinal seam joined to corner rim 5",
+      "vertices": 2190,
+      "polygons": 2176,
+      "boundary_edges": 40,
+      "nonmanifold_edges": 40,
+      "materials": [
+        "harbor / blue porcelain shell footing"
+      ]
+    },
+    {
+      "name": "Harbor / longitudinal seam joined to corner rim 6",
+      "vertices": 2190,
+      "polygons": 2176,
+      "boundary_edges": 40,
+      "nonmanifold_edges": 40,
+      "materials": [
+        "harbor / blue porcelain shell footing"
+      ]
+    },
+    {
+      "name": "Harbor / continuous translucent shell hall",
+      "vertices": 4146,
+      "polygons": 4077,
+      "boundary_edges": 0,
+      "nonmanifold_edges": 0,
+      "materials": [
+        "harbor / translucent pearl shell",
+        "harbor / translucent violet shell panels"
+      ]
+    },
+    {
+      "name": "Harbor / curved shell structural rib",
+      "vertices": 2910,
+      "polygons": 2896,
+      "boundary_edges": 40,
+      "nonmanifold_edges": 40,
+      "materials": [
+        "harbor / coral shell ribs"
+      ]
+    },
+    {
+      "name": "Harbor / curved shell structural rib.001",
+      "vertices": 2910,
+      "polygons": 2896,
+      "boundary_edges": 40,
+      "nonmanifold_edges": 40,
+      "materials": [
+        "harbor / coral shell ribs"
+      ]
+    },
+    {
+      "name": "Harbor / curved shell structural rib.002",
+      "vertices": 2910,
+      "polygons": 2896,
+      "boundary_edges": 40,
+      "nonmanifold_edges": 40,
+      "materials": [
+        "harbor / coral shell ribs"
+      ]
+    },
+    {
+      "name": "Harbor / curved shell structural rib.003",
+      "vertices": 2910,
+      "polygons": 2896,
+      "boundary_edges": 40,
+      "nonmanifold_edges": 40,
+      "materials": [
+        "harbor / coral shell ribs"
+      ]
+    },
+    {
+      "name": "Harbor / curved shell structural rib.004",
+      "vertices": 2910,
+      "polygons": 2896,
+      "boundary_edges": 40,
+      "nonmanifold_edges": 40,
+      "materials": [
+        "harbor / coral shell ribs"
+      ]
+    },
+    {
+      "name": "Harbor / shell longitudinal seam",
+      "vertices": 990,
+      "polygons": 976,
+      "boundary_edges": 40,
+      "nonmanifold_edges": 40,
+      "materials": [
+        "harbor / blue porcelain shell footing"
+      ]
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.001",
+      "vertices": 990,
+      "polygons": 976,
+      "boundary_edges": 40,
+      "nonmanifold_edges": 40,
+      "materials": [
+        "harbor / blue porcelain shell footing"
+      ]
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.002",
+      "vertices": 990,
+      "polygons": 976,
+      "boundary_edges": 40,
+      "nonmanifold_edges": 40,
+      "materials": [
+        "harbor / blue porcelain shell footing"
+      ]
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.003",
+      "vertices": 990,
+      "polygons": 976,
+      "boundary_edges": 40,
+      "nonmanifold_edges": 40,
+      "materials": [
+        "harbor / blue porcelain shell footing"
+      ]
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.004",
+      "vertices": 990,
+      "polygons": 976,
+      "boundary_edges": 40,
+      "nonmanifold_edges": 40,
+      "materials": [
+        "harbor / blue porcelain shell footing"
+      ]
+    },
+    {
+      "name": "Harbor / shell grown footing.001",
+      "vertices": 270,
+      "polygons": 256,
+      "boundary_edges": 40,
+      "nonmanifold_edges": 40,
+      "materials": [
+        "harbor / blue porcelain shell footing"
+      ]
+    }
+  ],
+  "outputs": {
+    "cove-corner-v1.blend": "d8778e549fd4ff5d5cf09a34230ed313da5ccee40a228ae277086ee1a89d966a",
+    "cove-corner-v1.glb": "896a852db4a71bda0564a20b042389e62b09e01f7f79681c2a88fd0c3b419d65"
+  }
+}

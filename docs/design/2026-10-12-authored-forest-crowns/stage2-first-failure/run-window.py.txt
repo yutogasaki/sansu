@@ -1,0 +1,54 @@
+"""Scheduled serial Blender window; does not launch anything without explicit env."""
+import os
+import json
+import subprocess
+import time
+import signal
+from datetime import datetime, timezone
+from pathlib import Path
+
+assert os.environ.get('SANSU_FOREST_STAGE2_APPROVED') == '1', 'Await parent execution window'
+HERE = Path(__file__).resolve().parent
+OUT = HERE / 'execution-attempt-01'
+assert not OUT.exists() and not (HERE / 'attempt-01').exists(), 'Preserve first source, log and failure'
+OUT.mkdir()
+BLENDER = '/Applications/Blender.app/Contents/MacOS/Blender'
+stages = [('build-stage2.py', 300), ('render-one-whole.py', 120)]
+for name, timeout in stages:
+    started_at_utc = datetime.now(timezone.utc).isoformat()
+    start = time.monotonic()
+    command = [BLENDER, '-b', '--threads', '2', '--python-exit-code', '1', '--python', str(HERE / name)]
+    peak_rss, stop_reason = 0, None
+    environment = dict(os.environ, OMP_NUM_THREADS='2', OPENBLAS_NUM_THREADS='1')
+    with (OUT / (name + '.log.txt')).open('xb') as log:
+        process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT,
+                                   env=environment, start_new_session=True)
+        try:
+            while process.poll() is None:
+                rss = subprocess.run(['ps', '-o', 'rss=', '-p', str(process.pid)],
+                                     capture_output=True, text=True, check=False).stdout.strip()
+                if rss:
+                    peak_rss = max(peak_rss, int(rss) * 1024)
+                if peak_rss > 3 * 1024 ** 3:
+                    stop_reason = 'observed RSS exceeded 3 GiB'; break
+                if time.monotonic() - start > timeout:
+                    stop_reason = 'stage wall timeout'; break
+                time.sleep(1)
+        finally:
+            if process.poll() is None:
+                os.killpg(process.pid, signal.SIGTERM)
+                try: process.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    os.killpg(process.pid, signal.SIGKILL); process.wait()
+    code = (125 if 'RSS' in stop_reason else 124) if stop_reason else process.returncode
+    record = {'script': name, 'command': command, 'timeoutSeconds': timeout,
+              'startedAtUtc': started_at_utc, 'finishedAtUtc': datetime.now(timezone.utc).isoformat(),
+              'effectiveThreads': 2,
+              'elapsedSeconds': time.monotonic() - start, 'exitCode': code,
+              'ownedPid': process.pid, 'peakObservedRssBytes': peak_rss,
+              'stopReason': stop_reason, 'rssGuardBytes': 3 * 1024 ** 3,
+              'scope': 'source only; no Node re-extraction or browser'}
+    (OUT / (name + '.result.json')).write_text(json.dumps(record, indent=2) + '\n')
+    print(json.dumps(record), flush=True)
+    if code:
+        raise SystemExit(code)

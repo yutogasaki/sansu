@@ -1,0 +1,174 @@
+{
+  "scope": "Author source/definition verification adapted from reviewed kernel, no browser, no full mixed-obstruction runtime or app acceptance",
+  "candidate": "native05-authored-cove-shore-v4",
+  "manifestHashesAgree": true,
+  "apron": {
+    "parts": 2,
+    "triangles": 2388,
+    "topTriangles": 596,
+    "expectedTopTriangles": 596,
+    "triangleParity": true,
+    "maxVertexError": 4.251159422060467e-7,
+    "unit": "world units",
+    "upwardTopTriangles": 593,
+    "nonUpwardTopTriangles": [
+      {
+        "area": 1.0519057550928499e-7,
+        "points": [
+          [
+            6.161675567626953,
+            -0.008999988317489632,
+            -0.9173270726203919
+          ],
+          [
+            6.16328875541687,
+            -0.008999988317489632,
+            -0.913500794172287
+          ],
+          [
+            6.594345922470093,
+            -0.008999988317489632,
+            0.10904297888278963
+          ]
+        ]
+      },
+      {
+        "area": 2.047977153158819e-9,
+        "points": [
+          [
+            6.602076692581177,
+            -0.008999988317489632,
+            -0.360442733168602
+          ],
+          [
+            6.598284263610839,
+            -0.008999988317489632,
+            -0.3699869984388351
+          ],
+          [
+            6.590699834823608,
+            -0.008999988317489632,
+            -0.3890755289793014
+          ]
+        ]
+      },
+      {
+        "area": 4.238552868060519e-18,
+        "points": [
+          [
+            6.590699834823608,
+            -0.008999988317489632,
+            -0.3890755289793014
+          ],
+          [
+            6.586907405853271,
+            -0.008999988317489632,
+            -0.39861979424953464
+          ],
+          [
+            6.583114976882935,
+            -0.008999988317489632,
+            -0.40816405951976786
+          ]
+        ]
+      }
+    ]
+  },
+  "houses": {
+    "method": "AABB hierarchy and full triangle SAT including coplanar axes, tolerance 1e-8 world",
+    "testedPairs": 89,
+    "intersections": []
+  },
+  "combinedPreservesShell": true,
+  "transform": {
+    "source_gltf_pivot": [
+      13.9,
+      0.89,
+      1.2
+    ],
+    "authored_position": [
+      8,
+      0.0475,
+      0.5
+    ],
+    "scale": [
+      0.45,
+      0.45,
+      0.45
+    ],
+    "yaw": 0,
+    "blender_to_gltf": "(X,Z,-Y)",
+    "renderer_from_authored": "subtract layout.center from X and 2 from Z; Y unchanged"
+  },
+  "base": {
+    "floorsUnchanged": true,
+    "anchorFloorsUnchanged": true,
+    "oldSitesUnchanged": true,
+    "oldEdgesUnchanged": true,
+    "grantsBefore": 73,
+    "grantsAfter": 73,
+    "addedRefs": 13,
+    "addedEdges": 15
+  },
+  "water": {
+    "revision": "authored-water-v2:3c5f4ee9f492cc25:eb41954202b1926a",
+    "owners": [
+      "l22",
+      "l21",
+      "l20",
+      "l23",
+      "l24"
+    ],
+    "floorsUnchanged": true,
+    "anchorFloorsUnchanged": true,
+    "oldSitesUnchanged": true,
+    "oldEdgesUnchanged": true,
+    "grantsBefore": 73,
+    "grantsAfter": 73,
+    "addedRefs": 13,
+    "addedEdges": 15
+  },
+  "baseObstruction": {
+    "triangles": 79384,
+    "excluded": 37,
+    "access": [
+      {
+        "id": "p6",
+        "reachable": 2,
+        "clearToOwner": 2
+      },
+      {
+        "id": "p7",
+        "reachable": 7,
+        "clearToOwner": 4
+      },
+      {
+        "id": "p9",
+        "reachable": 6,
+        "clearToOwner": 5
+      }
+    ]
+  },
+  "waterObstruction": {
+    "triangles": 79384,
+    "excluded": 37,
+    "access": [
+      {
+        "id": "p6",
+        "reachable": 2,
+        "clearToOwner": 2
+      },
+      {
+        "id": "p7",
+        "reachable": 7,
+        "clearToOwner": 4
+      },
+      {
+        "id": "p9",
+        "reachable": 6,
+        "clearToOwner": 5
+      }
+    ]
+  },
+  "inputHashesUnchanged": true
+}

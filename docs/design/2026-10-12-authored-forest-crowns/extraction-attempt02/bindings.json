@@ -1,0 +1,4470 @@
+{
+  "frameRevision": "authored-world:66d51261fb72ffdf",
+  "rendererToAuthored": [
+    7.0026560305,
+    0,
+    2
+  ],
+  "bindings": {
+    "l14": {
+      "record": {
+        "id": "l14",
+        "kind": "sapling",
+        "cell": {
+          "x": 2,
+          "z": -4
+        },
+        "growth": 18,
+        "maturedAt": 0
+      },
+      "species": "willow",
+      "age": "big",
+      "sourcePivot": [
+        -8,
+        1.24,
+        -2.7
+      ],
+      "sourceScale": 0.45,
+      "ageScale": 1.3,
+      "authoredTreeMatrixWorld": [
+        0.5850000000000001,
+        0,
+        0,
+        0,
+        0,
+        0.5850000000000001,
+        0,
+        0,
+        0,
+        0,
+        0.5850000000000001,
+        0,
+        2,
+        0.249249989,
+        -4,
+        1
+      ],
+      "sourceToAuthoredMatrix": [
+        0.5850000000000001,
+        0,
+        0,
+        0,
+        0,
+        0.5850000000000001,
+        0,
+        0,
+        0,
+        0,
+        0.5850000000000001,
+        0,
+        6.680000000000001,
+        -0.47615001100000004,
+        -2.4204999999999997,
+        1
+      ],
+      "parts": [
+        {
+          "objectName": "role-l14-2220",
+          "sourceNodeIndex": 2220,
+          "sourceName": "Grove / living willow 1 / hanging leaf stem",
+          "role": "hanging-stem",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "f93e23c160c88e134610c2034da00e3509f2a2d428780347d40542bee799bfee",
+            "normal": "224548380a2c184d496d77732c327df785f4746c796fb59a7af79f1524cc138c",
+            "index": "5af0210296b831c98ba005a733a54df2d06faaa8c784065c2218be809388827d"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2221",
+          "sourceNodeIndex": 2221,
+          "sourceName": "Grove / living willow 1 / hanging leaf stem.001",
+          "role": "hanging-stem",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "91f15b3949b672a65b06e2405e5540d8b55da35f6884baa08355f72d2dae4b00",
+            "normal": "05097835dd9063af2a4e0e06dca8151155dcdfcd8b90528f8acf7f1a164fc47a",
+            "index": "3569e56fddfe99d5983943446780a49c02923e371c3420d419d2a03dac4e7c37"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2222",
+          "sourceNodeIndex": 2222,
+          "sourceName": "Grove / living willow 1 / hanging leaf stem.002",
+          "role": "hanging-stem",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "f6d00866fb2d03717a6b4506207e8f957d29dfacae73007f81d0993aa46ec0a4",
+            "normal": "75b91f11ad6a903826faef50d82d138330b39b964ef3a5470349a84e57695a03",
+            "index": "2234c58e89d45b96ff3493e2ab761a57762387a2dfcc491e608aef0447ad8073"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2223",
+          "sourceNodeIndex": 2223,
+          "sourceName": "Grove / living willow 1 / hanging leaf stem.003",
+          "role": "hanging-stem",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "0f55af516f6d35ae01cf8e5573e17b68de0cc86a790fa3686dfd0d04e4f8a796",
+            "normal": "35d79c043987a4772523633ee7455621ce54ade517fc01897824561cfa4d7a0c",
+            "index": "5af0210296b831c98ba005a733a54df2d06faaa8c784065c2218be809388827d"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2224",
+          "sourceNodeIndex": 2224,
+          "sourceName": "Grove / living willow 1 / hanging leaf stem.004",
+          "role": "hanging-stem",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "52a4ee4c80e4a1a94cd47b012f9c9bbd332d7515966bd2c342c435574e8d601b",
+            "normal": "1274486c75903551166e085c27db7147d3bd1df2b419093af335fdccbf14dc81",
+            "index": "5af0210296b831c98ba005a733a54df2d06faaa8c784065c2218be809388827d"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2225",
+          "sourceNodeIndex": 2225,
+          "sourceName": "Grove / living willow 1 / hanging leaf stem.005",
+          "role": "hanging-stem",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "b0ff26c5712195dc0bd9bb7762a70477ddd4b37bd07a82d3127aa1faf6a26569",
+            "normal": "fb4768c567e1c40202768d0979d6a913f4b75ab3eb6e9eefc9fddaf96f9f5107",
+            "index": "d350ed7c3127d2d319f888f32ce2c8c664db803f0cff7c26587317d474031271"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2226",
+          "sourceNodeIndex": 2226,
+          "sourceName": "Grove / living willow 1 / hanging leaf stem.006",
+          "role": "hanging-stem",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "e3afade48cdb04b140d18ea25301aa10de2a45b8076f611b663433cb15d67b38",
+            "normal": "557a2b31b41b8c84585e214a28796384abd7d5b25e28cc088efcd45aa783b01c",
+            "index": "5af0210296b831c98ba005a733a54df2d06faaa8c784065c2218be809388827d"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2227",
+          "sourceNodeIndex": 2227,
+          "sourceName": "Grove / living willow 1 / hanging leaf stem.007",
+          "role": "hanging-stem",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "a8687a8c76dab9090ce05ba80c1b5cd7148ebec26b1992d77a8d13691646a11b",
+            "normal": "b337808416c9cb77a2d46b2cc3740cbb1a3b29cccf8d33c014da67311777248d",
+            "index": "5af0210296b831c98ba005a733a54df2d06faaa8c784065c2218be809388827d"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2228",
+          "sourceNodeIndex": 2228,
+          "sourceName": "Grove / living willow 1 / hanging leaf stem.008",
+          "role": "hanging-stem",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "63f6702156e8caf4883cee76eef2e506d9ba0148e035f4ab14a15cd3f4025721",
+            "normal": "11ad6c267586e3b789f3491ec4002c7eef2ceb160b35b528ffa22907e0b19921",
+            "index": "2659a4667ffa83d4edb5c45cc10bd5adafe85449a0ff3f8819fb09c2e833487a"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2229",
+          "sourceNodeIndex": 2229,
+          "sourceName": "Grove / living willow 1 / hanging leaf stem.009",
+          "role": "hanging-stem",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "b9d3bdac0a546025df26eb9946b693ac723ba7af75ecd60eddb115e641ba2fe9",
+            "normal": "22b2f1aa0b055e52c24468c55466f96fb121a92446eb035701449e2bea3a3763",
+            "index": "b2d0a688b2512f7741260fa91448c44c24105b7fec1150b0ec90404105bfa9a9"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2230",
+          "sourceNodeIndex": 2230,
+          "sourceName": "Grove / living willow 1 / hanging leaf stem.010",
+          "role": "hanging-stem",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "ed50f9ac932b411fbcdf06d25ad60911e4827b0e0cb77cd4a79de98090537c5c",
+            "normal": "168ad2906810e5c7f67511c66675f5a7da9f774a4fe17e34290bc426b0ed184f",
+            "index": "15a359e842bd7445ed8ceaa51be4f8b218c791186515287f012ef69e1b5ad0ba"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2231",
+          "sourceNodeIndex": 2231,
+          "sourceName": "Grove / living willow 1 / hanging leaf stem.011",
+          "role": "hanging-stem",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "287abb25c181cf1085ae0e93c5bd3bde49865c9662d2867da538045724d5dab3",
+            "normal": "a9a7d8448f76bc5d121b5b71cc87d85888ac5312006d7ab94dc7c370f574145b",
+            "index": "5af0210296b831c98ba005a733a54df2d06faaa8c784065c2218be809388827d"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2232",
+          "sourceNodeIndex": 2232,
+          "sourceName": "Grove / living willow 1 / hanging leaf stem.012",
+          "role": "hanging-stem",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "bd819906e7fadb1d540833af38bfd3bb8476bf9e0fe6f7068697cabbe321072f",
+            "normal": "ef60c2bb4e3720e4109570e00e4803b4ba7cd6b70f1500762c040155eb46819c",
+            "index": "2dd26475e41d9582675002c43da272c877fb190ac7ef79e82102f7c993948fed"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2233",
+          "sourceNodeIndex": 2233,
+          "sourceName": "Grove / living willow 1 / hanging leaf stem.013",
+          "role": "hanging-stem",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "8c0cf6d6c1ba048a9b9fb227a18b1ce225f0f1252e2da8fe0b4fdb181c60a5b9",
+            "normal": "42f1ed81743e3ea369a7840f668c5b6a3d2276ccb7633be16bf0325f346e6f62",
+            "index": "0d48134c607d6c4fc927113dc7b598c71242de6fd345d95adff7048617d4750b"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2234",
+          "sourceNodeIndex": 2234,
+          "sourceName": "Grove / living willow 1 / lobed canopy",
+          "role": "crown-lobe",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1.3949999809265137,
+            0,
+            0,
+            0,
+            0,
+            0.6789000034332275,
+            0,
+            0,
+            0,
+            0,
+            0.9764999747276306,
+            0,
+            -7.199999809265137,
+            6.351600170135498,
+            -2.700000047683716,
+            1
+          ],
+          "geometry": {
+            "position": "e1727dcbdcdc9ba0dffc2687346e5a8ba02a0e09742efbaa71eafa3463dea812",
+            "normal": "45519725048d56725f469d8145329427fafc958d01e1cf7d632df2d35df27715",
+            "index": "c5ae9bdb70d2a240e9bcc9565e067eb566a13d4cca66550e2a664b4ca17cf1e4"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2235",
+          "sourceNodeIndex": 2235,
+          "sourceName": "Grove / living willow 1 / lobed canopy.001",
+          "role": "crown-lobe",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.98580002784729,
+            0,
+            0,
+            0,
+            0,
+            0.5766000151634216,
+            0,
+            0,
+            0,
+            0,
+            0.7997999787330627,
+            0,
+            -8.036999702453613,
+            6.184199810028076,
+            -2.8115999698638916,
+            1
+          ],
+          "geometry": {
+            "position": "63a35288d7ee22fb603a5f7e11dc5bde8c82a0d5ed9163b83e2f73dfc3cd02dd",
+            "normal": "d5e2fd325c64dc65d1a3ba9ff5b084fc543dbac6723e3b98430b578af1001c3c",
+            "index": "c5ae9bdb70d2a240e9bcc9565e067eb566a13d4cca66550e2a664b4ca17cf1e4"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2236",
+          "sourceNodeIndex": 2236,
+          "sourceName": "Grove / living willow 1 / lobed canopy.002",
+          "role": "crown-lobe",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1.041599988937378,
+            0,
+            0,
+            0,
+            0,
+            0.5952000021934509,
+            0,
+            0,
+            0,
+            0,
+            0.8370000123977661,
+            0,
+            -6.316500186920166,
+            6.239999771118164,
+            -2.774399995803833,
+            1
+          ],
+          "geometry": {
+            "position": "e37011ea773c9c813109a002459577de4c0b40452654dbb68241526aacc5b7b8",
+            "normal": "5a28332644365e38d03e6b872c41a972852c0a4021f3ee9fc1150d3379d0b3e7",
+            "index": "c5ae9bdb70d2a240e9bcc9565e067eb566a13d4cca66550e2a664b4ca17cf1e4"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2237",
+          "sourceNodeIndex": 2237,
+          "sourceName": "Grove / living willow 1 / lobed canopy.003",
+          "role": "crown-lobe",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1.041599988937378,
+            0,
+            0,
+            0,
+            0,
+            0.6323999762535095,
+            0,
+            0,
+            0,
+            0,
+            0.8463000059127808,
+            0,
+            -7.3394999504089355,
+            6.286499977111816,
+            -3.3231000900268555,
+            1
+          ],
+          "geometry": {
+            "position": "980f252a859836643a9ba9741015e24100bc49c71bab2b7fcb105b569962a874",
+            "normal": "9f2369bdc95eeb599795aae94ecd8b6eecc87576f073390eca93bb16fb54a150",
+            "index": "c5ae9bdb70d2a240e9bcc9565e067eb566a13d4cca66550e2a664b4ca17cf1e4"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2238",
+          "sourceNodeIndex": 2238,
+          "sourceName": "Grove / living willow 1 / lobed canopy.004",
+          "role": "crown-lobe",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1.0694999694824219,
+            0,
+            0,
+            0,
+            0,
+            0.5486999750137329,
+            0,
+            0,
+            0,
+            0,
+            0.7533000111579895,
+            0,
+            -7.013999938964844,
+            6.146999835968018,
+            -2.0954999923706055,
+            1
+          ],
+          "geometry": {
+            "position": "c796cc7093dfa08ca39f0c3e247ff3ded99b5d1c50e649eeaac45993a2d70848",
+            "normal": "db455ce9cc794f37c2e42fca064a5fc3c29a7d27924758d4f8db068a5c6af3b1",
+            "index": "c5ae9bdb70d2a240e9bcc9565e067eb566a13d4cca66550e2a664b4ca17cf1e4"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2239",
+          "sourceNodeIndex": 2239,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.6967067690716746,
+            0,
+            0.7173560552914182,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.7173560552914182,
+            0,
+            0.6967067690716746,
+            0,
+            -5.851500034332275,
+            6.187327861785889,
+            -2.700000047683716,
+            1
+          ],
+          "geometry": {
+            "position": "dac452d956fd9eb832e4376b50de095f9b4ef1fc8e2fb105f1a817abfda31326",
+            "normal": "45606c65df43a7e96a3e73b16135b7ea507cc924698fac1a2e4afbd236f5f579",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2240",
+          "sourceNodeIndex": 2240,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.001",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.6967067690716746,
+            0,
+            -0.7173560552914182,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.7173560552914182,
+            0,
+            0.6967067690716746,
+            0,
+            -5.851500034332275,
+            5.836180210113525,
+            -2.700000047683716,
+            1
+          ],
+          "geometry": {
+            "position": "dac452d956fd9eb832e4376b50de095f9b4ef1fc8e2fb105f1a817abfda31326",
+            "normal": "45606c65df43a7e96a3e73b16135b7ea507cc924698fac1a2e4afbd236f5f579",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2241",
+          "sourceNodeIndex": 2241,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.002",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.6967067690716746,
+            0,
+            0.7173560552914182,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.7173560552914182,
+            0,
+            0.6967067690716746,
+            0,
+            -5.851500034332275,
+            5.485032081604004,
+            -2.700000047683716,
+            1
+          ],
+          "geometry": {
+            "position": "dac452d956fd9eb832e4376b50de095f9b4ef1fc8e2fb105f1a817abfda31326",
+            "normal": "45606c65df43a7e96a3e73b16135b7ea507cc924698fac1a2e4afbd236f5f579",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2242",
+          "sourceNodeIndex": 2242,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.003",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.6967067690716746,
+            0,
+            -0.7173560552914182,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.7173560552914182,
+            0,
+            0.6967067690716746,
+            0,
+            -5.851500034332275,
+            5.133884429931641,
+            -2.700000047683716,
+            1
+          ],
+          "geometry": {
+            "position": "dac452d956fd9eb832e4376b50de095f9b4ef1fc8e2fb105f1a817abfda31326",
+            "normal": "45606c65df43a7e96a3e73b16135b7ea507cc924698fac1a2e4afbd236f5f579",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2243",
+          "sourceNodeIndex": 2243,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.004",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.6967067690716746,
+            0,
+            0.7173560552914182,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.7173560552914182,
+            0,
+            0.6967067690716746,
+            0,
+            -5.851500034332275,
+            4.782736778259277,
+            -2.700000047683716,
+            1
+          ],
+          "geometry": {
+            "position": "dac452d956fd9eb832e4376b50de095f9b4ef1fc8e2fb105f1a817abfda31326",
+            "normal": "45606c65df43a7e96a3e73b16135b7ea507cc924698fac1a2e4afbd236f5f579",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2244",
+          "sourceNodeIndex": 2244,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.005",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.9389602004962523,
+            0,
+            0.3440257926443486,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.3440257926443486,
+            0,
+            0.9389602004962523,
+            0,
+            -5.985043525695801,
+            6.190155506134033,
+            -3.0954415798187256,
+            1
+          ],
+          "geometry": {
+            "position": "4e7569a7b0ffe6cf2de8aee9124892f6f3db5b5ecdff6b639087a3dec5838f19",
+            "normal": "2a2fd48fbe13f7017994b9dd93065a9909c0f922eb51ac6c19ea06d51b2d7d2e",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2245",
+          "sourceNodeIndex": 2245,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.006",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.3164619119087817,
+            0,
+            -0.9486052241461778,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.9486052241461778,
+            0,
+            0.3164619119087817,
+            0,
+            -5.985043525695801,
+            5.857859134674072,
+            -3.0954415798187256,
+            1
+          ],
+          "geometry": {
+            "position": "4e7569a7b0ffe6cf2de8aee9124892f6f3db5b5ecdff6b639087a3dec5838f19",
+            "normal": "2a2fd48fbe13f7017994b9dd93065a9909c0f922eb51ac6c19ea06d51b2d7d2e",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2246",
+          "sourceNodeIndex": 2246,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.007",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.9389602004962523,
+            0,
+            0.3440257926443486,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.3440257926443486,
+            0,
+            0.9389602004962523,
+            0,
+            -5.985043525695801,
+            5.525562763214111,
+            -3.0954415798187256,
+            1
+          ],
+          "geometry": {
+            "position": "4e7569a7b0ffe6cf2de8aee9124892f6f3db5b5ecdff6b639087a3dec5838f19",
+            "normal": "2a2fd48fbe13f7017994b9dd93065a9909c0f922eb51ac6c19ea06d51b2d7d2e",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2247",
+          "sourceNodeIndex": 2247,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.008",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.3164619119087817,
+            0,
+            -0.9486052241461778,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.9486052241461778,
+            0,
+            0.3164619119087817,
+            0,
+            -5.985043525695801,
+            5.19326639175415,
+            -3.0954415798187256,
+            1
+          ],
+          "geometry": {
+            "position": "4e7569a7b0ffe6cf2de8aee9124892f6f3db5b5ecdff6b639087a3dec5838f19",
+            "normal": "2a2fd48fbe13f7017994b9dd93065a9909c0f922eb51ac6c19ea06d51b2d7d2e",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2248",
+          "sourceNodeIndex": 2248,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.009",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.9389602004962523,
+            0,
+            0.3440257926443486,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.3440257926443486,
+            0,
+            0.9389602004962523,
+            0,
+            -5.985043525695801,
+            4.860970497131348,
+            -3.0954415798187256,
+            1
+          ],
+          "geometry": {
+            "position": "4e7569a7b0ffe6cf2de8aee9124892f6f3db5b5ecdff6b639087a3dec5838f19",
+            "normal": "2a2fd48fbe13f7017994b9dd93065a9909c0f922eb51ac6c19ea06d51b2d7d2e",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2249",
+          "sourceNodeIndex": 2249,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.010",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.995241103551501,
+            0,
+            -0.09744303960378353,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.09744303960378353,
+            0,
+            0.995241103551501,
+            0,
+            -6.35922384262085,
+            6.203503131866455,
+            -3.4125611782073975,
+            1
+          ],
+          "geometry": {
+            "position": "ac3dea63f38a5008f4893a6f286146a40373099a82ecacd733be10a79396e69f",
+            "normal": "6f3371b7a65920f647f3fb6538ba1f5b30a43c2d66260262bef58a8e95acd6b7",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2250",
+          "sourceNodeIndex": 2250,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.011",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.12646192091307995,
+            0,
+            -0.9919715421064268,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.9919715421064268,
+            0,
+            -0.12646192091307995,
+            0,
+            -6.35922384262085,
+            5.9601898193359375,
+            -3.4125611782073975,
+            1
+          ],
+          "geometry": {
+            "position": "ac3dea63f38a5008f4893a6f286146a40373099a82ecacd733be10a79396e69f",
+            "normal": "6f3371b7a65920f647f3fb6538ba1f5b30a43c2d66260262bef58a8e95acd6b7",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2251",
+          "sourceNodeIndex": 2251,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.012",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.995241103551501,
+            0,
+            -0.09744303960378353,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.09744303960378353,
+            0,
+            0.995241103551501,
+            0,
+            -6.35922384262085,
+            5.716876029968262,
+            -3.4125611782073975,
+            1
+          ],
+          "geometry": {
+            "position": "ac3dea63f38a5008f4893a6f286146a40373099a82ecacd733be10a79396e69f",
+            "normal": "6f3371b7a65920f647f3fb6538ba1f5b30a43c2d66260262bef58a8e95acd6b7",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2252",
+          "sourceNodeIndex": 2252,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.013",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.12646192091307995,
+            0,
+            -0.9919715421064268,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.9919715421064268,
+            0,
+            -0.12646192091307995,
+            0,
+            -6.35922384262085,
+            5.473562717437744,
+            -3.4125611782073975,
+            1
+          ],
+          "geometry": {
+            "position": "ac3dea63f38a5008f4893a6f286146a40373099a82ecacd733be10a79396e69f",
+            "normal": "6f3371b7a65920f647f3fb6538ba1f5b30a43c2d66260262bef58a8e95acd6b7",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2253",
+          "sourceNodeIndex": 2253,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.014",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.995241103551501,
+            0,
+            -0.09744303960378353,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.09744303960378353,
+            0,
+            0.995241103551501,
+            0,
+            -6.35922384262085,
+            5.230249404907227,
+            -3.4125611782073975,
+            1
+          ],
+          "geometry": {
+            "position": "ac3dea63f38a5008f4893a6f286146a40373099a82ecacd733be10a79396e69f",
+            "normal": "6f3371b7a65920f647f3fb6538ba1f5b30a43c2d66260262bef58a8e95acd6b7",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2254",
+          "sourceNodeIndex": 2254,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.015",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.8544023069490532,
+            0,
+            -0.5196120697617808,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.5196120697617808,
+            0,
+            0.8544023069490532,
+            0,
+            -6.899930477142334,
+            6.191898822784424,
+            -3.5885493755340576,
+            1
+          ],
+          "geometry": {
+            "position": "679dbf5049eadb1c582378c41ae3316439b2c78c98e988b622d7ba0fb635748e",
+            "normal": "e5e00baf278165ade9a73f9c9fc1389fc0a102100a68bfcce33701fef387bc6e",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2255",
+          "sourceNodeIndex": 2255,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.016",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.5443386886761417,
+            0,
+            -0.838865565333581,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.838865565333581,
+            0,
+            -0.5443386886761417,
+            0,
+            -6.899930477142334,
+            5.871224880218506,
+            -3.5885493755340576,
+            1
+          ],
+          "geometry": {
+            "position": "679dbf5049eadb1c582378c41ae3316439b2c78c98e988b622d7ba0fb635748e",
+            "normal": "e5e00baf278165ade9a73f9c9fc1389fc0a102100a68bfcce33701fef387bc6e",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2256",
+          "sourceNodeIndex": 2256,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.017",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.8544023069490532,
+            0,
+            -0.5196120697617808,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.5196120697617808,
+            0,
+            0.8544023069490532,
+            0,
+            -6.899930477142334,
+            5.550550937652588,
+            -3.5885493755340576,
+            1
+          ],
+          "geometry": {
+            "position": "679dbf5049eadb1c582378c41ae3316439b2c78c98e988b622d7ba0fb635748e",
+            "normal": "e5e00baf278165ade9a73f9c9fc1389fc0a102100a68bfcce33701fef387bc6e",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2257",
+          "sourceNodeIndex": 2257,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.018",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.5443386886761417,
+            0,
+            -0.838865565333581,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.838865565333581,
+            0,
+            -0.5443386886761417,
+            0,
+            -6.899930477142334,
+            5.22987699508667,
+            -3.5885493755340576,
+            1
+          ],
+          "geometry": {
+            "position": "679dbf5049eadb1c582378c41ae3316439b2c78c98e988b622d7ba0fb635748e",
+            "normal": "e5e00baf278165ade9a73f9c9fc1389fc0a102100a68bfcce33701fef387bc6e",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2258",
+          "sourceNodeIndex": 2258,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.019",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.8544023069490532,
+            0,
+            -0.5196120697617808,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.5196120697617808,
+            0,
+            0.8544023069490532,
+            0,
+            -6.899930477142334,
+            4.909203052520752,
+            -3.5885493755340576,
+            1
+          ],
+          "geometry": {
+            "position": "679dbf5049eadb1c582378c41ae3316439b2c78c98e988b622d7ba0fb635748e",
+            "normal": "e5e00baf278165ade9a73f9c9fc1389fc0a102100a68bfcce33701fef387bc6e",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2259",
+          "sourceNodeIndex": 2259,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.020",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.5443386597368356,
+            0,
+            -0.838865565333581,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.838865565333581,
+            0,
+            0.5443386597368356,
+            0,
+            -7.500069618225098,
+            6.2011919021606445,
+            -3.5885493755340576,
+            1
+          ],
+          "geometry": {
+            "position": "44885a14553bfc7299d88669a04359645934a5a80f6c110f6626bcb972be58bb",
+            "normal": "b500c06459dac5c8f6f840f1ef0734cb5e27ad14830f7571ae6e9d7bf0a468d1",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2260",
+          "sourceNodeIndex": 2260,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.021",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.854402342402814,
+            0,
+            -0.5196120697617808,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.5196120697617808,
+            0,
+            -0.854402342402814,
+            0,
+            -7.500069618225098,
+            5.9424729347229,
+            -3.5885493755340576,
+            1
+          ],
+          "geometry": {
+            "position": "44885a14553bfc7299d88669a04359645934a5a80f6c110f6626bcb972be58bb",
+            "normal": "b500c06459dac5c8f6f840f1ef0734cb5e27ad14830f7571ae6e9d7bf0a468d1",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2261",
+          "sourceNodeIndex": 2261,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.022",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.5443386597368356,
+            0,
+            -0.838865565333581,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.838865565333581,
+            0,
+            0.5443386597368356,
+            0,
+            -7.500069618225098,
+            5.683753490447998,
+            -3.5885493755340576,
+            1
+          ],
+          "geometry": {
+            "position": "44885a14553bfc7299d88669a04359645934a5a80f6c110f6626bcb972be58bb",
+            "normal": "b500c06459dac5c8f6f840f1ef0734cb5e27ad14830f7571ae6e9d7bf0a468d1",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2262",
+          "sourceNodeIndex": 2262,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.023",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.854402342402814,
+            0,
+            -0.5196120697617808,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.5196120697617808,
+            0,
+            -0.854402342402814,
+            0,
+            -7.500069618225098,
+            5.425034046173096,
+            -3.5885493755340576,
+            1
+          ],
+          "geometry": {
+            "position": "44885a14553bfc7299d88669a04359645934a5a80f6c110f6626bcb972be58bb",
+            "normal": "b500c06459dac5c8f6f840f1ef0734cb5e27ad14830f7571ae6e9d7bf0a468d1",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2263",
+          "sourceNodeIndex": 2263,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.024",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.5443386597368356,
+            0,
+            -0.838865565333581,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.838865565333581,
+            0,
+            0.5443386597368356,
+            0,
+            -7.500069618225098,
+            5.166314601898193,
+            -3.5885493755340576,
+            1
+          ],
+          "geometry": {
+            "position": "44885a14553bfc7299d88669a04359645934a5a80f6c110f6626bcb972be58bb",
+            "normal": "b500c06459dac5c8f6f840f1ef0734cb5e27ad14830f7571ae6e9d7bf0a468d1",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2264",
+          "sourceNodeIndex": 2264,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.025",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.1264617808373032,
+            0,
+            -0.9919716208900695,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.9919716208900695,
+            0,
+            0.1264617808373032,
+            0,
+            -8.040776252746582,
+            6.209941864013672,
+            -3.4125611782073975,
+            1
+          ],
+          "geometry": {
+            "position": "be87f8ff426a05631603f74d43eb2ff6ebf66af71d879d1bb8a3a38b987c95f2",
+            "normal": "df81df078b3a8814e909e52db796d1be2c36b278d58265f124c8c257e7ea5e11",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2265",
+          "sourceNodeIndex": 2265,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.026",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.9952411383566186,
+            0,
+            -0.09744312146260725,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.09744312146260725,
+            0,
+            -0.9952411383566186,
+            0,
+            -8.040776252746582,
+            6.009555339813232,
+            -3.4125611782073975,
+            1
+          ],
+          "geometry": {
+            "position": "be87f8ff426a05631603f74d43eb2ff6ebf66af71d879d1bb8a3a38b987c95f2",
+            "normal": "df81df078b3a8814e909e52db796d1be2c36b278d58265f124c8c257e7ea5e11",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2266",
+          "sourceNodeIndex": 2266,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.027",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.1264617808373032,
+            0,
+            -0.9919716208900695,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.9919716208900695,
+            0,
+            0.1264617808373032,
+            0,
+            -8.040776252746582,
+            5.809168338775635,
+            -3.4125611782073975,
+            1
+          ],
+          "geometry": {
+            "position": "be87f8ff426a05631603f74d43eb2ff6ebf66af71d879d1bb8a3a38b987c95f2",
+            "normal": "df81df078b3a8814e909e52db796d1be2c36b278d58265f124c8c257e7ea5e11",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2267",
+          "sourceNodeIndex": 2267,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.028",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.9952411383566186,
+            0,
+            -0.09744312146260725,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.09744312146260725,
+            0,
+            -0.9952411383566186,
+            0,
+            -8.040776252746582,
+            5.608781814575195,
+            -3.4125611782073975,
+            1
+          ],
+          "geometry": {
+            "position": "be87f8ff426a05631603f74d43eb2ff6ebf66af71d879d1bb8a3a38b987c95f2",
+            "normal": "df81df078b3a8814e909e52db796d1be2c36b278d58265f124c8c257e7ea5e11",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2268",
+          "sourceNodeIndex": 2268,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.029",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.1264617808373032,
+            0,
+            -0.9919716208900695,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.9919716208900695,
+            0,
+            0.1264617808373032,
+            0,
+            -8.040776252746582,
+            5.408394813537598,
+            -3.4125611782073975,
+            1
+          ],
+          "geometry": {
+            "position": "be87f8ff426a05631603f74d43eb2ff6ebf66af71d879d1bb8a3a38b987c95f2",
+            "normal": "df81df078b3a8814e909e52db796d1be2c36b278d58265f124c8c257e7ea5e11",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2269",
+          "sourceNodeIndex": 2269,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.030",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.31646212431071064,
+            0,
+            -0.9486054872695675,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.9486054872695675,
+            0,
+            -0.31646212431071064,
+            0,
+            -8.414956092834473,
+            6.203998565673828,
+            -3.0954415798187256,
+            1
+          ],
+          "geometry": {
+            "position": "fcd00ae8a8ebe41adc7b4ad236d210a1cbc3402e7c8563b39cf9e524c4684733",
+            "normal": "158406ce4bf1d0bb5dd8e3409e175e67a8be4fdda1d02d1357d2c2610ad050fb",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2270",
+          "sourceNodeIndex": 2270,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.031",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.9389602680019564,
+            0,
+            0.3440258806763996,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.3440258806763996,
+            0,
+            -0.9389602680019564,
+            0,
+            -8.414956092834473,
+            5.963989734649658,
+            -3.0954415798187256,
+            1
+          ],
+          "geometry": {
+            "position": "fcd00ae8a8ebe41adc7b4ad236d210a1cbc3402e7c8563b39cf9e524c4684733",
+            "normal": "158406ce4bf1d0bb5dd8e3409e175e67a8be4fdda1d02d1357d2c2610ad050fb",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2271",
+          "sourceNodeIndex": 2271,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.032",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.31646212431071064,
+            0,
+            -0.9486054872695675,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.9486054872695675,
+            0,
+            -0.31646212431071064,
+            0,
+            -8.414956092834473,
+            5.72398042678833,
+            -3.0954415798187256,
+            1
+          ],
+          "geometry": {
+            "position": "fcd00ae8a8ebe41adc7b4ad236d210a1cbc3402e7c8563b39cf9e524c4684733",
+            "normal": "158406ce4bf1d0bb5dd8e3409e175e67a8be4fdda1d02d1357d2c2610ad050fb",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2272",
+          "sourceNodeIndex": 2272,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.033",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.9389602680019564,
+            0,
+            0.3440258806763996,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.3440258806763996,
+            0,
+            -0.9389602680019564,
+            0,
+            -8.414956092834473,
+            5.48397159576416,
+            -3.0954415798187256,
+            1
+          ],
+          "geometry": {
+            "position": "fcd00ae8a8ebe41adc7b4ad236d210a1cbc3402e7c8563b39cf9e524c4684733",
+            "normal": "158406ce4bf1d0bb5dd8e3409e175e67a8be4fdda1d02d1357d2c2610ad050fb",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2273",
+          "sourceNodeIndex": 2273,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.034",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.31646212431071064,
+            0,
+            -0.9486054872695675,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.9486054872695675,
+            0,
+            -0.31646212431071064,
+            0,
+            -8.414956092834473,
+            5.243962287902832,
+            -3.0954415798187256,
+            1
+          ],
+          "geometry": {
+            "position": "fcd00ae8a8ebe41adc7b4ad236d210a1cbc3402e7c8563b39cf9e524c4684733",
+            "normal": "158406ce4bf1d0bb5dd8e3409e175e67a8be4fdda1d02d1357d2c2610ad050fb",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2274",
+          "sourceNodeIndex": 2274,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.035",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.6967066554224246,
+            0,
+            -0.7173561186681638,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.7173561186681638,
+            0,
+            -0.6967066554224246,
+            0,
+            -8.548500061035156,
+            6.200579643249512,
+            -2.700000047683716,
+            1
+          ],
+          "geometry": {
+            "position": "d88022f6d73a441557f3b76f6c0503f57d9620bfa2ce7cd8264947b8bf970a3c",
+            "normal": "28ef335e2dd3dc6d2811c1af681fd87ac9b29524222218a750d73bba4c9d9849",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2275",
+          "sourceNodeIndex": 2275,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.036",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.6967066554224246,
+            0,
+            0.7173561186681638,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.7173561186681638,
+            0,
+            -0.6967066554224246,
+            0,
+            -8.548500061035156,
+            5.937775611877441,
+            -2.700000047683716,
+            1
+          ],
+          "geometry": {
+            "position": "d88022f6d73a441557f3b76f6c0503f57d9620bfa2ce7cd8264947b8bf970a3c",
+            "normal": "28ef335e2dd3dc6d2811c1af681fd87ac9b29524222218a750d73bba4c9d9849",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2276",
+          "sourceNodeIndex": 2276,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.037",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.6967066554224246,
+            0,
+            -0.7173561186681638,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.7173561186681638,
+            0,
+            -0.6967066554224246,
+            0,
+            -8.548500061035156,
+            5.674972057342529,
+            -2.700000047683716,
+            1
+          ],
+          "geometry": {
+            "position": "d88022f6d73a441557f3b76f6c0503f57d9620bfa2ce7cd8264947b8bf970a3c",
+            "normal": "28ef335e2dd3dc6d2811c1af681fd87ac9b29524222218a750d73bba4c9d9849",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2277",
+          "sourceNodeIndex": 2277,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.038",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.6967066554224246,
+            0,
+            0.7173561186681638,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.7173561186681638,
+            0,
+            -0.6967066554224246,
+            0,
+            -8.548500061035156,
+            5.412168502807617,
+            -2.700000047683716,
+            1
+          ],
+          "geometry": {
+            "position": "d88022f6d73a441557f3b76f6c0503f57d9620bfa2ce7cd8264947b8bf970a3c",
+            "normal": "28ef335e2dd3dc6d2811c1af681fd87ac9b29524222218a750d73bba4c9d9849",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2278",
+          "sourceNodeIndex": 2278,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.039",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.6967066554224246,
+            0,
+            -0.7173561186681638,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.7173561186681638,
+            0,
+            -0.6967066554224246,
+            0,
+            -8.548500061035156,
+            5.149364471435547,
+            -2.700000047683716,
+            1
+          ],
+          "geometry": {
+            "position": "d88022f6d73a441557f3b76f6c0503f57d9620bfa2ce7cd8264947b8bf970a3c",
+            "normal": "28ef335e2dd3dc6d2811c1af681fd87ac9b29524222218a750d73bba4c9d9849",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2279",
+          "sourceNodeIndex": 2279,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.040",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.9389602680019564,
+            0,
+            -0.34402573395631464,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.34402573395631464,
+            0,
+            -0.9389602680019564,
+            0,
+            -8.414956092834473,
+            6.189152717590332,
+            -2.304558277130127,
+            1
+          ],
+          "geometry": {
+            "position": "264b9ac213ff495206fb40d5c39560d561cf65d2b88d5c3aee5d9f91bf021faa",
+            "normal": "ac60ebf75a84f2a661958085e392a6d31582a88f680eccae01e5911a8bc2db6d",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2280",
+          "sourceNodeIndex": 2280,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.041",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.31646173744588424,
+            0,
+            0.9486053478876144,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.9486053478876144,
+            0,
+            -0.31646173744588424,
+            0,
+            -8.414956092834473,
+            5.8501715660095215,
+            -2.304558277130127,
+            1
+          ],
+          "geometry": {
+            "position": "264b9ac213ff495206fb40d5c39560d561cf65d2b88d5c3aee5d9f91bf021faa",
+            "normal": "ac60ebf75a84f2a661958085e392a6d31582a88f680eccae01e5911a8bc2db6d",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2281",
+          "sourceNodeIndex": 2281,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.042",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.9389602680019564,
+            0,
+            -0.34402573395631464,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.34402573395631464,
+            0,
+            -0.9389602680019564,
+            0,
+            -8.414956092834473,
+            5.511190414428711,
+            -2.304558277130127,
+            1
+          ],
+          "geometry": {
+            "position": "264b9ac213ff495206fb40d5c39560d561cf65d2b88d5c3aee5d9f91bf021faa",
+            "normal": "ac60ebf75a84f2a661958085e392a6d31582a88f680eccae01e5911a8bc2db6d",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2282",
+          "sourceNodeIndex": 2282,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.043",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.31646173744588424,
+            0,
+            0.9486053478876144,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.9486053478876144,
+            0,
+            -0.31646173744588424,
+            0,
+            -8.414956092834473,
+            5.1722092628479,
+            -2.304558277130127,
+            1
+          ],
+          "geometry": {
+            "position": "264b9ac213ff495206fb40d5c39560d561cf65d2b88d5c3aee5d9f91bf021faa",
+            "normal": "ac60ebf75a84f2a661958085e392a6d31582a88f680eccae01e5911a8bc2db6d",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2283",
+          "sourceNodeIndex": 2283,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.044",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.9389602680019564,
+            0,
+            -0.34402573395631464,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.34402573395631464,
+            0,
+            -0.9389602680019564,
+            0,
+            -8.414956092834473,
+            4.83322811126709,
+            -2.304558277130127,
+            1
+          ],
+          "geometry": {
+            "position": "264b9ac213ff495206fb40d5c39560d561cf65d2b88d5c3aee5d9f91bf021faa",
+            "normal": "ac60ebf75a84f2a661958085e392a6d31582a88f680eccae01e5911a8bc2db6d",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2284",
+          "sourceNodeIndex": 2284,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.045",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.9952411383566186,
+            0,
+            0.09744306192891727,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.09744306192891727,
+            0,
+            -0.9952411383566186,
+            0,
+            -8.040776252746582,
+            6.192317008972168,
+            -1.9874387979507446,
+            1
+          ],
+          "geometry": {
+            "position": "1af8035659fa3271aff60f96a28ec7fa7e62406c4015e933252ea8e08530c78d",
+            "normal": "5629022faca07e7ece88c493bac7fb8531c8a91d3a6e4582d08ee542cb7c9a47",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2285",
+          "sourceNodeIndex": 2285,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.046",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.1264617808373032,
+            0,
+            0.9919715421064268,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.9919715421064268,
+            0,
+            0.1264617808373032,
+            0,
+            -8.040776252746582,
+            5.874429702758789,
+            -1.9874387979507446,
+            1
+          ],
+          "geometry": {
+            "position": "1af8035659fa3271aff60f96a28ec7fa7e62406c4015e933252ea8e08530c78d",
+            "normal": "5629022faca07e7ece88c493bac7fb8531c8a91d3a6e4582d08ee542cb7c9a47",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2286",
+          "sourceNodeIndex": 2286,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.047",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.9952411383566186,
+            0,
+            0.09744306192891727,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.09744306192891727,
+            0,
+            -0.9952411383566186,
+            0,
+            -8.040776252746582,
+            5.55654239654541,
+            -1.9874387979507446,
+            1
+          ],
+          "geometry": {
+            "position": "1af8035659fa3271aff60f96a28ec7fa7e62406c4015e933252ea8e08530c78d",
+            "normal": "5629022faca07e7ece88c493bac7fb8531c8a91d3a6e4582d08ee542cb7c9a47",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2287",
+          "sourceNodeIndex": 2287,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.048",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.1264617808373032,
+            0,
+            0.9919715421064268,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.9919715421064268,
+            0,
+            0.1264617808373032,
+            0,
+            -8.040776252746582,
+            5.238655090332031,
+            -1.9874387979507446,
+            1
+          ],
+          "geometry": {
+            "position": "1af8035659fa3271aff60f96a28ec7fa7e62406c4015e933252ea8e08530c78d",
+            "normal": "5629022faca07e7ece88c493bac7fb8531c8a91d3a6e4582d08ee542cb7c9a47",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2288",
+          "sourceNodeIndex": 2288,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.049",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.9952411383566186,
+            0,
+            0.09744306192891727,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.09744306192891727,
+            0,
+            -0.9952411383566186,
+            0,
+            -8.040776252746582,
+            4.920767784118652,
+            -1.9874387979507446,
+            1
+          ],
+          "geometry": {
+            "position": "1af8035659fa3271aff60f96a28ec7fa7e62406c4015e933252ea8e08530c78d",
+            "normal": "5629022faca07e7ece88c493bac7fb8531c8a91d3a6e4582d08ee542cb7c9a47",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2289",
+          "sourceNodeIndex": 2289,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.050",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.854402342402814,
+            0,
+            0.5196120697617808,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.5196120697617808,
+            0,
+            -0.854402342402814,
+            0,
+            -7.500069618225098,
+            6.197540760040283,
+            -1.811450719833374,
+            1
+          ],
+          "geometry": {
+            "position": "c9b1a2f147d4c96e807550b0dfaaafe3c3f8232b25eb2fdec7c5558e8550eb30",
+            "normal": "4a03ebcca7b2d948f6a5eb575481fa7e16b95db0398371ea17711b259745cacf",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2290",
+          "sourceNodeIndex": 2290,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.051",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.5443387166373483,
+            0,
+            0.8388655129570921,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.8388655129570921,
+            0,
+            0.5443387166373483,
+            0,
+            -7.500069618225098,
+            5.914480686187744,
+            -1.811450719833374,
+            1
+          ],
+          "geometry": {
+            "position": "c9b1a2f147d4c96e807550b0dfaaafe3c3f8232b25eb2fdec7c5558e8550eb30",
+            "normal": "4a03ebcca7b2d948f6a5eb575481fa7e16b95db0398371ea17711b259745cacf",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2291",
+          "sourceNodeIndex": 2291,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.052",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.854402342402814,
+            0,
+            0.5196120697617808,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.5196120697617808,
+            0,
+            -0.854402342402814,
+            0,
+            -7.500069618225098,
+            5.631420135498047,
+            -1.811450719833374,
+            1
+          ],
+          "geometry": {
+            "position": "c9b1a2f147d4c96e807550b0dfaaafe3c3f8232b25eb2fdec7c5558e8550eb30",
+            "normal": "4a03ebcca7b2d948f6a5eb575481fa7e16b95db0398371ea17711b259745cacf",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2292",
+          "sourceNodeIndex": 2292,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.053",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.5443387166373483,
+            0,
+            0.8388655129570921,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.8388655129570921,
+            0,
+            0.5443387166373483,
+            0,
+            -7.500069618225098,
+            5.34835958480835,
+            -1.811450719833374,
+            1
+          ],
+          "geometry": {
+            "position": "c9b1a2f147d4c96e807550b0dfaaafe3c3f8232b25eb2fdec7c5558e8550eb30",
+            "normal": "4a03ebcca7b2d948f6a5eb575481fa7e16b95db0398371ea17711b259745cacf",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2293",
+          "sourceNodeIndex": 2293,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.054",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.854402342402814,
+            0,
+            0.5196120697617808,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.5196120697617808,
+            0,
+            -0.854402342402814,
+            0,
+            -7.500069618225098,
+            5.0652995109558105,
+            -1.811450719833374,
+            1
+          ],
+          "geometry": {
+            "position": "c9b1a2f147d4c96e807550b0dfaaafe3c3f8232b25eb2fdec7c5558e8550eb30",
+            "normal": "4a03ebcca7b2d948f6a5eb575481fa7e16b95db0398371ea17711b259745cacf",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2294",
+          "sourceNodeIndex": 2294,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.055",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.5443386886761417,
+            0,
+            0.8388655129570921,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.8388655129570921,
+            0,
+            -0.5443386886761417,
+            0,
+            -6.899930477142334,
+            6.190338611602783,
+            -1.811450719833374,
+            1
+          ],
+          "geometry": {
+            "position": "d2aa1f5f4f5ea328f702b6d9f35cf8a3e5cc2d34a83fe04323fde740c923f661",
+            "normal": "48cbee8df2baf351b4fb3833bcc0d380572d36a26aaf8c56712f08203d347500",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2295",
+          "sourceNodeIndex": 2295,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.056",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.8544021461281588,
+            0,
+            0.5196123888963626,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.5196123888963626,
+            0,
+            0.8544021461281588,
+            0,
+            -6.899930477142334,
+            5.859261989593506,
+            -1.811450719833374,
+            1
+          ],
+          "geometry": {
+            "position": "d2aa1f5f4f5ea328f702b6d9f35cf8a3e5cc2d34a83fe04323fde740c923f661",
+            "normal": "48cbee8df2baf351b4fb3833bcc0d380572d36a26aaf8c56712f08203d347500",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2296",
+          "sourceNodeIndex": 2296,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.057",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.5443386886761417,
+            0,
+            0.8388655129570921,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.8388655129570921,
+            0,
+            -0.5443386886761417,
+            0,
+            -6.899930477142334,
+            5.528185844421387,
+            -1.811450719833374,
+            1
+          ],
+          "geometry": {
+            "position": "d2aa1f5f4f5ea328f702b6d9f35cf8a3e5cc2d34a83fe04323fde740c923f661",
+            "normal": "48cbee8df2baf351b4fb3833bcc0d380572d36a26aaf8c56712f08203d347500",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2297",
+          "sourceNodeIndex": 2297,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.058",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.8544021461281588,
+            0,
+            0.5196123888963626,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.5196123888963626,
+            0,
+            0.8544021461281588,
+            0,
+            -6.899930477142334,
+            5.197109222412109,
+            -1.811450719833374,
+            1
+          ],
+          "geometry": {
+            "position": "d2aa1f5f4f5ea328f702b6d9f35cf8a3e5cc2d34a83fe04323fde740c923f661",
+            "normal": "48cbee8df2baf351b4fb3833bcc0d380572d36a26aaf8c56712f08203d347500",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2298",
+          "sourceNodeIndex": 2298,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.059",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.5443386886761417,
+            0,
+            0.8388655129570921,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.8388655129570921,
+            0,
+            -0.5443386886761417,
+            0,
+            -6.899930477142334,
+            4.86603307723999,
+            -1.811450719833374,
+            1
+          ],
+          "geometry": {
+            "position": "d2aa1f5f4f5ea328f702b6d9f35cf8a3e5cc2d34a83fe04323fde740c923f661",
+            "normal": "48cbee8df2baf351b4fb3833bcc0d380572d36a26aaf8c56712f08203d347500",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2299",
+          "sourceNodeIndex": 2299,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.060",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.12646192091307995,
+            0,
+            0.9919715421064268,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.9919715421064268,
+            0,
+            -0.12646192091307995,
+            0,
+            -6.35922384262085,
+            6.200852870941162,
+            -1.9874387979507446,
+            1
+          ],
+          "geometry": {
+            "position": "632bc4557beda815700066f9c796ac4bf2986a5f57d52d0185a5b9c85370ad25",
+            "normal": "4ae9ac69fc768df1cabab0899311f8627d3f12bb58917319a2f2d8b7f4052066",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2300",
+          "sourceNodeIndex": 2300,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.061",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.9952411042783734,
+            0,
+            0.09744303216207229,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.09744303216207229,
+            0,
+            0.9952411042783734,
+            0,
+            -6.35922384262085,
+            5.939872741699219,
+            -1.9874387979507446,
+            1
+          ],
+          "geometry": {
+            "position": "632bc4557beda815700066f9c796ac4bf2986a5f57d52d0185a5b9c85370ad25",
+            "normal": "4ae9ac69fc768df1cabab0899311f8627d3f12bb58917319a2f2d8b7f4052066",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2301",
+          "sourceNodeIndex": 2301,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.062",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.12646192091307995,
+            0,
+            0.9919715421064268,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.9919715421064268,
+            0,
+            -0.12646192091307995,
+            0,
+            -6.35922384262085,
+            5.678892135620117,
+            -1.9874387979507446,
+            1
+          ],
+          "geometry": {
+            "position": "632bc4557beda815700066f9c796ac4bf2986a5f57d52d0185a5b9c85370ad25",
+            "normal": "4ae9ac69fc768df1cabab0899311f8627d3f12bb58917319a2f2d8b7f4052066",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2302",
+          "sourceNodeIndex": 2302,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.063",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.9952411042783734,
+            0,
+            0.09744303216207229,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.09744303216207229,
+            0,
+            0.9952411042783734,
+            0,
+            -6.35922384262085,
+            5.417912006378174,
+            -1.9874387979507446,
+            1
+          ],
+          "geometry": {
+            "position": "632bc4557beda815700066f9c796ac4bf2986a5f57d52d0185a5b9c85370ad25",
+            "normal": "4ae9ac69fc768df1cabab0899311f8627d3f12bb58917319a2f2d8b7f4052066",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2303",
+          "sourceNodeIndex": 2303,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.064",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            -0.12646192091307995,
+            0,
+            0.9919715421064268,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.9919715421064268,
+            0,
+            -0.12646192091307995,
+            0,
+            -6.35922384262085,
+            5.156931400299072,
+            -1.9874387979507446,
+            1
+          ],
+          "geometry": {
+            "position": "632bc4557beda815700066f9c796ac4bf2986a5f57d52d0185a5b9c85370ad25",
+            "normal": "4ae9ac69fc768df1cabab0899311f8627d3f12bb58917319a2f2d8b7f4052066",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2304",
+          "sourceNodeIndex": 2304,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.065",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.31646163314490394,
+            0,
+            0.9486053478876144,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.9486053478876144,
+            0,
+            0.31646163314490394,
+            0,
+            -5.985043525695801,
+            6.204524993896484,
+            -2.304558277130127,
+            1
+          ],
+          "geometry": {
+            "position": "ea51e3900da8a08239f1a11cdc9ab1aaff981c60d312b53881f76f36eab9c36a",
+            "normal": "feacad7f85bfdce0822050896ef521c8571dffb4a20363bdbb6e20d45d9b0cc2",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2305",
+          "sourceNodeIndex": 2305,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.066",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.9389601276059376,
+            0,
+            -0.3440259772266572,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.3440259772266572,
+            0,
+            0.9389601276059376,
+            0,
+            -5.985043525695801,
+            5.9680256843566895,
+            -2.304558277130127,
+            1
+          ],
+          "geometry": {
+            "position": "ea51e3900da8a08239f1a11cdc9ab1aaff981c60d312b53881f76f36eab9c36a",
+            "normal": "feacad7f85bfdce0822050896ef521c8571dffb4a20363bdbb6e20d45d9b0cc2",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2306",
+          "sourceNodeIndex": 2306,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.067",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.31646163314490394,
+            0,
+            0.9486053478876144,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.9486053478876144,
+            0,
+            0.31646163314490394,
+            0,
+            -5.985043525695801,
+            5.7315263748168945,
+            -2.304558277130127,
+            1
+          ],
+          "geometry": {
+            "position": "ea51e3900da8a08239f1a11cdc9ab1aaff981c60d312b53881f76f36eab9c36a",
+            "normal": "feacad7f85bfdce0822050896ef521c8571dffb4a20363bdbb6e20d45d9b0cc2",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / pale blue jade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2307",
+          "sourceNodeIndex": 2307,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.068",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.9389601276059376,
+            0,
+            -0.3440259772266572,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0.3440259772266572,
+            0,
+            0.9389601276059376,
+            0,
+            -5.985043525695801,
+            5.4950270652771,
+            -2.304558277130127,
+            1
+          ],
+          "geometry": {
+            "position": "ea51e3900da8a08239f1a11cdc9ab1aaff981c60d312b53881f76f36eab9c36a",
+            "normal": "feacad7f85bfdce0822050896ef521c8571dffb4a20363bdbb6e20d45d9b0cc2",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / fresh mint tips"
+          ]
+        },
+        {
+          "objectName": "role-l14-2308",
+          "sourceNodeIndex": 2308,
+          "sourceName": "Grove / living willow 1 / tapered hanging leaf.069",
+          "role": "hanging-leaf",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.31646163314490394,
+            0,
+            0.9486053478876144,
+            0,
+            0,
+            1,
+            0,
+            0,
+            -0.9486053478876144,
+            0,
+            0.31646163314490394,
+            0,
+            -5.985043525695801,
+            5.258527755737305,
+            -2.304558277130127,
+            1
+          ],
+          "geometry": {
+            "position": "ea51e3900da8a08239f1a11cdc9ab1aaff981c60d312b53881f76f36eab9c36a",
+            "normal": "feacad7f85bfdce0822050896ef521c8571dffb4a20363bdbb6e20d45d9b0cc2",
+            "index": "b96e418aabb6f3143ae380756fa24f650236bf9c49e56018a4cc7be135ee1c58"
+          },
+          "materials": [
+            "willow / cool shade leaves"
+          ]
+        },
+        {
+          "objectName": "role-l14-2740",
+          "sourceNodeIndex": 2740,
+          "sourceName": "Grove tree 1 / flowing bark ridge",
+          "role": "bark-ridge",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "a72620aff2a6bd694a53adcd87706cb7eaf2972ce58abd30f4b1fdefaac55f19",
+            "normal": "19e55f275bcd5efdf7024d7071add05dd362f0570675db3104bdbcf2c72f1a90",
+            "index": "adb6c324c445ec7612da4d9c488fd80f97bc6b112bd5a6beb0a3067f9ea63695"
+          },
+          "materials": [
+            "young branches"
+          ]
+        },
+        {
+          "objectName": "role-l14-2741",
+          "sourceNodeIndex": 2741,
+          "sourceName": "Grove tree 1 / flowing bark ridge.001",
+          "role": "bark-ridge",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "069a90e0761178c0719230152973f034a5f5be1b00f8db78ab0cd50f8bf496fb",
+            "normal": "1af558774ae59f84d52c751ab83a596a03cd1b3fb8c87e1d6c160c43a49179cd",
+            "index": "c30655113370ab37c4b424ab66e761d4e1a12a0519885f37d4b495d7be166967"
+          },
+          "materials": [
+            "young branches"
+          ]
+        },
+        {
+          "objectName": "role-l14-2742",
+          "sourceNodeIndex": 2742,
+          "sourceName": "Grove tree 1 / flowing bark ridge.002",
+          "role": "bark-ridge",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "120a9bf8aa1b829a4afb6a8d0919b8a29e137bb5a28ed749ad135b2df97a092e",
+            "normal": "accf6caa39cd2a3fa17d4ecbac84831adfea813b6e57173ecabb0d519f6be4fc",
+            "index": "568ed0dc81869889c9c4f191b1fb8f1cac7c6e25b9647fbfe19d8f038d52f625"
+          },
+          "materials": [
+            "young branches"
+          ]
+        },
+        {
+          "objectName": "role-l14-2743",
+          "sourceNodeIndex": 2743,
+          "sourceName": "Grove tree 1 / planted trunk",
+          "role": "trunk",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "5e043cfe3a74e00bbc850ac5d9ba85c10a9895e3a2b9eea7ee65cf698bf21d7b",
+            "normal": "d87c157c01cbb7ba932debecfa119461fb4dab369f59bd74e1b60e1aee9661de",
+            "index": "82f660e7a2ca76ad5a7213a5e342e282104a589ade8ec68401a284044960c3d3"
+          },
+          "materials": [
+            "sculpted tree wood"
+          ]
+        },
+        {
+          "objectName": "role-l14-2744",
+          "sourceNodeIndex": 2744,
+          "sourceName": "Grove tree 1 / soft grounding root",
+          "role": "ground-root",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "3787537f4e0d979d134f8c1bfe90156b927dbcbe56cc745c281c12ea4af4dfe7",
+            "normal": "7994374bf16dbc63efddf5c8fe04dcb0134b3f630a509f2678affeb2559a2321",
+            "index": "ffcf6c7880db6f45541ec9cad30bb60e475c033c3925ee1f2bfce3aea958894f"
+          },
+          "materials": [
+            "sculpted tree wood"
+          ]
+        },
+        {
+          "objectName": "role-l14-2745",
+          "sourceNodeIndex": 2745,
+          "sourceName": "Grove tree 1 / soft grounding root.001",
+          "role": "ground-root",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "2b88ae0498e0cd69b85083c26bc8e4d6ae0023ac33e5f4a6676b4e971648cbb2",
+            "normal": "2e1f7f2ffdbd760da4214ec23e86f5445ca4914c117a70ed7a12a931f8f3f3c8",
+            "index": "ffcf6c7880db6f45541ec9cad30bb60e475c033c3925ee1f2bfce3aea958894f"
+          },
+          "materials": [
+            "sculpted tree wood"
+          ]
+        },
+        {
+          "objectName": "role-l14-2746",
+          "sourceNodeIndex": 2746,
+          "sourceName": "Grove tree 1 / soft grounding root.002",
+          "role": "ground-root",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "0a64125deffd9481f1c2e37051b1672fc8ee0e6b76e337f4f0de2a9ee23266c1",
+            "normal": "6c90b87cccf4b733a8a3d3d426e5b1e8e0bd1c3a87a074c3fb1c755b68f0e2c5",
+            "index": "274ad3503301530e9f648be2129a954d26d89318a7276cfa6636d6a816a7b20c"
+          },
+          "materials": [
+            "sculpted tree wood"
+          ]
+        },
+        {
+          "objectName": "role-l14-2747",
+          "sourceNodeIndex": 2747,
+          "sourceName": "Grove tree 1 / soft grounding root.003",
+          "role": "ground-root",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "f362acbc324db2c12e2aa4b1978fd9e9fadbb8ee079229f16c452edb3c425fc8",
+            "normal": "084e2562aa4a1b92a4f906d0cd172d2e84df36ec21d698bf69f88a7743a05330",
+            "index": "274ad3503301530e9f648be2129a954d26d89318a7276cfa6636d6a816a7b20c"
+          },
+          "materials": [
+            "sculpted tree wood"
+          ]
+        }
+      ]
+    },
+    "l15": {
+      "record": {
+        "id": "l15",
+        "kind": "sapling",
+        "cell": {
+          "x": 2,
+          "z": -3
+        },
+        "growth": 18,
+        "maturedAt": 0
+      },
+      "species": "birch",
+      "age": "big",
+      "sourcePivot": [
+        -6.986279184897697,
+        3.1776039600372314,
+        -10.80210926532267
+      ],
+      "sourceScale": 0.45,
+      "ageScale": 1.3,
+      "authoredTreeMatrixWorld": [
+        0.5850000000000001,
+        0,
+        0,
+        0,
+        0,
+        0.5850000000000001,
+        0,
+        0,
+        0,
+        0,
+        0.5850000000000001,
+        0,
+        2,
+        0.249249989,
+        -3,
+        1
+      ],
+      "sourceToAuthoredMatrix": [
+        0.5850000000000001,
+        0,
+        0,
+        0,
+        0,
+        0.5850000000000001,
+        0,
+        0,
+        0,
+        0,
+        0.5850000000000001,
+        0,
+        6.086973323165153,
+        -1.6096483276217808,
+        3.3192339202137626,
+        1
+      ],
+      "parts": [
+        {
+          "objectName": "role-l15-2596",
+          "sourceNodeIndex": 2596,
+          "sourceName": "Grove / silver birch 0 / airy golden crown",
+          "role": "crown-lobe",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.9800000190734863,
+            0,
+            0,
+            0,
+            0,
+            0.6000000238418579,
+            0,
+            0,
+            0,
+            0,
+            0.699999988079071,
+            0,
+            -6.335731029510498,
+            6.79165506362915,
+            -11.092087745666504,
+            1
+          ],
+          "geometry": {
+            "position": "0d1398fce74307f2c445df171160136f27343fa8de36e2c2aff662a7aa1dcd63",
+            "normal": "b85da2939e8504e4c99a0df46cc6e00841514c2ab931488fd84adf21d78ccbc7",
+            "index": "394ec7e45d4bfc3bd9212268621bbc14befdadbbb8457ef363fc3d0d6efcf326"
+          },
+          "materials": [
+            "silver birch / pale gold leaves"
+          ]
+        },
+        {
+          "objectName": "role-l15-2597",
+          "sourceNodeIndex": 2597,
+          "sourceName": "Grove / silver birch 0 / airy golden crown.001",
+          "role": "crown-lobe",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.9800000190734863,
+            0,
+            0,
+            0,
+            0,
+            0.6000000238418579,
+            0,
+            0,
+            0,
+            0,
+            0.699999988079071,
+            0,
+            -7.689915180206299,
+            6.79165506362915,
+            -11.339051246643066,
+            1
+          ],
+          "geometry": {
+            "position": "d2e0221decbbc18d245f1a8525ec287e3468fdaf27dd026a9b3676f4dfe2eff2",
+            "normal": "2c72ec0971d2865a274148632c0be70671520d96e172304d5cb30aff747ff356",
+            "index": "394ec7e45d4bfc3bd9212268621bbc14befdadbbb8457ef363fc3d0d6efcf326"
+          },
+          "materials": [
+            "silver birch / pale gold leaves"
+          ]
+        },
+        {
+          "objectName": "role-l15-2598",
+          "sourceNodeIndex": 2598,
+          "sourceName": "Grove / silver birch 0 / airy golden crown.002",
+          "role": "crown-lobe",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.9800000190734863,
+            0,
+            0,
+            0,
+            0,
+            0.6000000238418579,
+            0,
+            0,
+            0,
+            0,
+            0.699999988079071,
+            0,
+            -7.268636703491211,
+            6.79165506362915,
+            -10.264605522155762,
+            1
+          ],
+          "geometry": {
+            "position": "8d04bc48f76879d5c518849feb5c08e01be5a9a239aba2b91d36946c3b921a29",
+            "normal": "81b3eaa826bb5001b8f2a7ccca7dc11e2a1915896ed39a26710420ae2b46aa66",
+            "index": "394ec7e45d4bfc3bd9212268621bbc14befdadbbb8457ef363fc3d0d6efcf326"
+          },
+          "materials": [
+            "silver birch / pale gold leaves"
+          ]
+        },
+        {
+          "objectName": "role-l15-2599",
+          "sourceNodeIndex": 2599,
+          "sourceName": "Grove / silver birch 0 / horizontal bark mark",
+          "role": "bark-mark",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "5c5ebd94a541c4977c2cb2e2b20a9549bf5b7df62c78de0bf9d78c2e91971755",
+            "normal": "c4d8453df65afc8c128c828cdcfc0eecd3c5db31a5326d264a5e083f6ebb7f79",
+            "index": "ffcf6c7880db6f45541ec9cad30bb60e475c033c3925ee1f2bfce3aea958894f"
+          },
+          "materials": [
+            "silver birch / bark markings"
+          ]
+        },
+        {
+          "objectName": "role-l15-2600",
+          "sourceNodeIndex": 2600,
+          "sourceName": "Grove / silver birch 0 / horizontal bark mark.001",
+          "role": "bark-mark",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "079ef7a6f997a80ca379252cceb3ee54939689d8ea0bd855b2c0bf8b4519cb5a",
+            "normal": "b1fd48e4cb87968b315e4642c6ea684738700db77df0e514016de77d506a802d",
+            "index": "ffcf6c7880db6f45541ec9cad30bb60e475c033c3925ee1f2bfce3aea958894f"
+          },
+          "materials": [
+            "silver birch / bark markings"
+          ]
+        },
+        {
+          "objectName": "role-l15-2601",
+          "sourceNodeIndex": 2601,
+          "sourceName": "Grove / silver birch 0 / horizontal bark mark.002",
+          "role": "bark-mark",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "bebaae4e079b9edae4b3115300e93252087f09e412800e57a244828ce1ce33f2",
+            "normal": "aea631d3f4148de16915c3cd874513ec2462f78b163086ded822b669334a335a",
+            "index": "ffcf6c7880db6f45541ec9cad30bb60e475c033c3925ee1f2bfce3aea958894f"
+          },
+          "materials": [
+            "silver birch / bark markings"
+          ]
+        },
+        {
+          "objectName": "role-l15-2602",
+          "sourceNodeIndex": 2602,
+          "sourceName": "Grove / silver birch 0 / horizontal bark mark.003",
+          "role": "bark-mark",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "4da83936c3a529c2cc69dce1b9190258a48321769e123ad27a2e2b8c65324d2d",
+            "normal": "6a105c1ab964ea8089f783ce21f46ea8def2c6c4a40ff1f380b329f051ada2c4",
+            "index": "ffcf6c7880db6f45541ec9cad30bb60e475c033c3925ee1f2bfce3aea958894f"
+          },
+          "materials": [
+            "silver birch / bark markings"
+          ]
+        },
+        {
+          "objectName": "role-l15-2603",
+          "sourceNodeIndex": 2603,
+          "sourceName": "Grove / silver birch 0 / horizontal bark mark.004",
+          "role": "bark-mark",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "f9be442141433e0a0672ce9a9ca520025e5126c081555ff7c67cd7d564ab177a",
+            "normal": "6759e3731e3c35769c09a1db74f110f30911100fccbd5b85badc5368818e1970",
+            "index": "ffcf6c7880db6f45541ec9cad30bb60e475c033c3925ee1f2bfce3aea958894f"
+          },
+          "materials": [
+            "silver birch / bark markings"
+          ]
+        },
+        {
+          "objectName": "role-l15-2604",
+          "sourceNodeIndex": 2604,
+          "sourceName": "Grove / silver birch 0 / horizontal bark mark.005",
+          "role": "bark-mark",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "245d3f678552190e5a9d7e4fd2509ffb23a0fd558490310acb7a5f626c7421d4",
+            "normal": "a897f27f74f13ca50e98a7e4e83514e6ce258faa5f25529400b0ecdbe770c1e0",
+            "index": "ffcf6c7880db6f45541ec9cad30bb60e475c033c3925ee1f2bfce3aea958894f"
+          },
+          "materials": [
+            "silver birch / bark markings"
+          ]
+        },
+        {
+          "objectName": "role-l15-2605",
+          "sourceNodeIndex": 2605,
+          "sourceName": "Grove / silver birch 0 / white branching crown",
+          "role": "main-branch",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "d7525927eb7186efd875d405a8489d251bf3c940d2d58d7e9a0f62394c28975b",
+            "normal": "94b41e048b3b1ab0d54ab4936a664b4e85965729ffd54e1432c5a8aa362b0574",
+            "index": "274ad3503301530e9f648be2129a954d26d89318a7276cfa6636d6a816a7b20c"
+          },
+          "materials": [
+            "silver birch / porcelain bark"
+          ]
+        },
+        {
+          "objectName": "role-l15-2606",
+          "sourceNodeIndex": 2606,
+          "sourceName": "Grove / silver birch 0 / white branching crown.001",
+          "role": "main-branch",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "b22ea4a498ac61bb1ba4fe6be0fea6ca7070443c8bafd7aa48138a9e2ca6eff9",
+            "normal": "d4e9e62ee51371a637748cd76af005ce9fe6d8c7a96fecf7ad9a6520c842dd0f",
+            "index": "c30655113370ab37c4b424ab66e761d4e1a12a0519885f37d4b495d7be166967"
+          },
+          "materials": [
+            "silver birch / porcelain bark"
+          ]
+        },
+        {
+          "objectName": "role-l15-2607",
+          "sourceNodeIndex": 2607,
+          "sourceName": "Grove / silver birch 0 / white branching crown.002",
+          "role": "main-branch",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "128421d61bc1a898b3550d44a087fb99ded83bf637d7853bafdb1fe7c952daf8",
+            "normal": "f8ae03ffbe74c25d8acd70cb4c0ef5061a5480d99d0d2f9ce872272d528bbdcd",
+            "index": "5211fbecd855372d1201d9208e2e41adcb6d8607be7b7b7610513af8f6ebef33"
+          },
+          "materials": [
+            "silver birch / porcelain bark"
+          ]
+        },
+        {
+          "objectName": "role-l15-2608",
+          "sourceNodeIndex": 2608,
+          "sourceName": "Grove / silver birch 0 / white planted trunk",
+          "role": "trunk",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "0a60932e4aead9d3d4d8cb94829123ccec644b4f1378372418adcc28439e1146",
+            "normal": "5b953a39b490122cc459e91badc02bcecd52e5af9fd2cf522476617567fd63d2",
+            "index": "5af0210296b831c98ba005a733a54df2d06faaa8c784065c2218be809388827d"
+          },
+          "materials": [
+            "silver birch / porcelain bark"
+          ]
+        }
+      ]
+    },
+    "l28": {
+      "record": {
+        "id": "l28",
+        "kind": "sapling",
+        "cell": {
+          "x": 1,
+          "z": -4
+        },
+        "growth": 18,
+        "maturedAt": 234
+      },
+      "species": "spire",
+      "age": "mature",
+      "sourcePivot": [
+        -11.300000190734863,
+        0.9632976651191711,
+        -9.300000190734863
+      ],
+      "sourceScale": 0.45,
+      "ageScale": 1,
+      "authoredTreeMatrixWorld": [
+        0.45,
+        0,
+        0,
+        0,
+        0,
+        0.45,
+        0,
+        0,
+        0,
+        0,
+        0.45,
+        0,
+        1,
+        0.03100001,
+        -4,
+        1
+      ],
+      "sourceToAuthoredMatrix": [
+        0.45,
+        0,
+        0,
+        0,
+        0,
+        0.45,
+        0,
+        0,
+        0,
+        0,
+        0.45,
+        0,
+        6.085000085830688,
+        -0.402483939303627,
+        0.18500008583068883,
+        1
+      ],
+      "parts": [
+        {
+          "objectName": "role-l28-2692",
+          "sourceNodeIndex": 2692,
+          "sourceName": "Grove / spire tree 0 / slender grown trunk",
+          "role": "trunk",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "20cf64d1fca2ca82bcc323076f05dc3df6778ec33401965d390488581eb710ce",
+            "normal": "533a9f54283321a8c371e4e746128a67c7948144300c925cb2d290514bcfca44",
+            "index": "5af0210296b831c98ba005a733a54df2d06faaa8c784065c2218be809388827d"
+          },
+          "materials": [
+            "sculpted tree wood"
+          ]
+        },
+        {
+          "objectName": "role-l28-2693",
+          "sourceNodeIndex": 2693,
+          "sourceName": "Grove / spire tree 0 / swept foliage tier",
+          "role": "crown-tier",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "c33cabdfebb6f132557d8233f036c8480491fc8a8d66a0b1800417420095de53",
+            "normal": "1c9f080a0fd8bff3d44dfbf41063a5f40890faa7e6ab8cba9d06f06a680dd384",
+            "index": "8b07f3ef878d8aaaa14226b0e25706742d2464ef5829a275df70ee1796ef5aae"
+          },
+          "materials": [
+            "spire grove / bright jade foliage"
+          ]
+        },
+        {
+          "objectName": "role-l28-2694",
+          "sourceNodeIndex": 2694,
+          "sourceName": "Grove / spire tree 0 / swept foliage tier.001",
+          "role": "crown-tier",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "fd1936bda2a55f91b084fc3f49b1a4fe9ebe0e0fc7f2f1cea9b0a44858fead8f",
+            "normal": "6ca2b98dfba5c66ac29826ff6a24b13e424910ec2754c47c23c2479c1a4c1ae8",
+            "index": "8b07f3ef878d8aaaa14226b0e25706742d2464ef5829a275df70ee1796ef5aae"
+          },
+          "materials": [
+            "spire grove / blue teal foliage"
+          ]
+        },
+        {
+          "objectName": "role-l28-2695",
+          "sourceNodeIndex": 2695,
+          "sourceName": "Grove / spire tree 0 / swept foliage tier.002",
+          "role": "crown-tier",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "89c1b73eb7ae67870dbb98058b0dc47bbe7a816f347c0b7b1d0655c5a3596a9e",
+            "normal": "1ef20c80234d559cda1f837ae3903a1439dd8d318d8a863a7ffd9cb2b4efb233",
+            "index": "8b07f3ef878d8aaaa14226b0e25706742d2464ef5829a275df70ee1796ef5aae"
+          },
+          "materials": [
+            "spire grove / bright jade foliage"
+          ]
+        },
+        {
+          "objectName": "role-l28-2696",
+          "sourceNodeIndex": 2696,
+          "sourceName": "Grove / spire tree 0 / swept foliage tier.003",
+          "role": "crown-tier",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "3a29afb4f96630e04a49dcd4c7c638dd6012ca946c6882864d2db83170dab236",
+            "normal": "f223690c2cc71c8b4ceaec40e7509d861bfc6b0e1efba3464e6bf672b1e88939",
+            "index": "8b07f3ef878d8aaaa14226b0e25706742d2464ef5829a275df70ee1796ef5aae"
+          },
+          "materials": [
+            "spire grove / blue teal foliage"
+          ]
+        }
+      ]
+    },
+    "l29": {
+      "record": {
+        "id": "l29",
+        "kind": "sapling",
+        "cell": {
+          "x": 4,
+          "z": -3
+        },
+        "growth": 18,
+        "maturedAt": 234
+      },
+      "species": "birch",
+      "age": "mature",
+      "sourcePivot": [
+        -6.986279184897697,
+        3.1776039600372314,
+        -10.80210926532267
+      ],
+      "sourceScale": 0.45,
+      "ageScale": 1,
+      "authoredTreeMatrixWorld": [
+        0.45,
+        0,
+        0,
+        0,
+        0,
+        0.45,
+        0,
+        0,
+        0,
+        0,
+        0.45,
+        0,
+        4,
+        0.249249989,
+        -3,
+        1
+      ],
+      "sourceToAuthoredMatrix": [
+        0.45,
+        0,
+        0,
+        0,
+        0,
+        0.45,
+        0,
+        0,
+        0,
+        0,
+        0.45,
+        0,
+        7.143825633203964,
+        -1.1806717930167543,
+        1.8609491693952016,
+        1
+      ],
+      "parts": [
+        {
+          "objectName": "role-l29-2596",
+          "sourceNodeIndex": 2596,
+          "sourceName": "Grove / silver birch 0 / airy golden crown",
+          "role": "crown-lobe",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.9800000190734863,
+            0,
+            0,
+            0,
+            0,
+            0.6000000238418579,
+            0,
+            0,
+            0,
+            0,
+            0.699999988079071,
+            0,
+            -6.335731029510498,
+            6.79165506362915,
+            -11.092087745666504,
+            1
+          ],
+          "geometry": {
+            "position": "0d1398fce74307f2c445df171160136f27343fa8de36e2c2aff662a7aa1dcd63",
+            "normal": "b85da2939e8504e4c99a0df46cc6e00841514c2ab931488fd84adf21d78ccbc7",
+            "index": "394ec7e45d4bfc3bd9212268621bbc14befdadbbb8457ef363fc3d0d6efcf326"
+          },
+          "materials": [
+            "silver birch / pale gold leaves"
+          ]
+        },
+        {
+          "objectName": "role-l29-2597",
+          "sourceNodeIndex": 2597,
+          "sourceName": "Grove / silver birch 0 / airy golden crown.001",
+          "role": "crown-lobe",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.9800000190734863,
+            0,
+            0,
+            0,
+            0,
+            0.6000000238418579,
+            0,
+            0,
+            0,
+            0,
+            0.699999988079071,
+            0,
+            -7.689915180206299,
+            6.79165506362915,
+            -11.339051246643066,
+            1
+          ],
+          "geometry": {
+            "position": "d2e0221decbbc18d245f1a8525ec287e3468fdaf27dd026a9b3676f4dfe2eff2",
+            "normal": "2c72ec0971d2865a274148632c0be70671520d96e172304d5cb30aff747ff356",
+            "index": "394ec7e45d4bfc3bd9212268621bbc14befdadbbb8457ef363fc3d0d6efcf326"
+          },
+          "materials": [
+            "silver birch / pale gold leaves"
+          ]
+        },
+        {
+          "objectName": "role-l29-2598",
+          "sourceNodeIndex": 2598,
+          "sourceName": "Grove / silver birch 0 / airy golden crown.002",
+          "role": "crown-lobe",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            0.9800000190734863,
+            0,
+            0,
+            0,
+            0,
+            0.6000000238418579,
+            0,
+            0,
+            0,
+            0,
+            0.699999988079071,
+            0,
+            -7.268636703491211,
+            6.79165506362915,
+            -10.264605522155762,
+            1
+          ],
+          "geometry": {
+            "position": "8d04bc48f76879d5c518849feb5c08e01be5a9a239aba2b91d36946c3b921a29",
+            "normal": "81b3eaa826bb5001b8f2a7ccca7dc11e2a1915896ed39a26710420ae2b46aa66",
+            "index": "394ec7e45d4bfc3bd9212268621bbc14befdadbbb8457ef363fc3d0d6efcf326"
+          },
+          "materials": [
+            "silver birch / pale gold leaves"
+          ]
+        },
+        {
+          "objectName": "role-l29-2599",
+          "sourceNodeIndex": 2599,
+          "sourceName": "Grove / silver birch 0 / horizontal bark mark",
+          "role": "bark-mark",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "5c5ebd94a541c4977c2cb2e2b20a9549bf5b7df62c78de0bf9d78c2e91971755",
+            "normal": "c4d8453df65afc8c128c828cdcfc0eecd3c5db31a5326d264a5e083f6ebb7f79",
+            "index": "ffcf6c7880db6f45541ec9cad30bb60e475c033c3925ee1f2bfce3aea958894f"
+          },
+          "materials": [
+            "silver birch / bark markings"
+          ]
+        },
+        {
+          "objectName": "role-l29-2600",
+          "sourceNodeIndex": 2600,
+          "sourceName": "Grove / silver birch 0 / horizontal bark mark.001",
+          "role": "bark-mark",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "079ef7a6f997a80ca379252cceb3ee54939689d8ea0bd855b2c0bf8b4519cb5a",
+            "normal": "b1fd48e4cb87968b315e4642c6ea684738700db77df0e514016de77d506a802d",
+            "index": "ffcf6c7880db6f45541ec9cad30bb60e475c033c3925ee1f2bfce3aea958894f"
+          },
+          "materials": [
+            "silver birch / bark markings"
+          ]
+        },
+        {
+          "objectName": "role-l29-2601",
+          "sourceNodeIndex": 2601,
+          "sourceName": "Grove / silver birch 0 / horizontal bark mark.002",
+          "role": "bark-mark",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "bebaae4e079b9edae4b3115300e93252087f09e412800e57a244828ce1ce33f2",
+            "normal": "aea631d3f4148de16915c3cd874513ec2462f78b163086ded822b669334a335a",
+            "index": "ffcf6c7880db6f45541ec9cad30bb60e475c033c3925ee1f2bfce3aea958894f"
+          },
+          "materials": [
+            "silver birch / bark markings"
+          ]
+        },
+        {
+          "objectName": "role-l29-2602",
+          "sourceNodeIndex": 2602,
+          "sourceName": "Grove / silver birch 0 / horizontal bark mark.003",
+          "role": "bark-mark",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "4da83936c3a529c2cc69dce1b9190258a48321769e123ad27a2e2b8c65324d2d",
+            "normal": "6a105c1ab964ea8089f783ce21f46ea8def2c6c4a40ff1f380b329f051ada2c4",
+            "index": "ffcf6c7880db6f45541ec9cad30bb60e475c033c3925ee1f2bfce3aea958894f"
+          },
+          "materials": [
+            "silver birch / bark markings"
+          ]
+        },
+        {
+          "objectName": "role-l29-2603",
+          "sourceNodeIndex": 2603,
+          "sourceName": "Grove / silver birch 0 / horizontal bark mark.004",
+          "role": "bark-mark",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "f9be442141433e0a0672ce9a9ca520025e5126c081555ff7c67cd7d564ab177a",
+            "normal": "6759e3731e3c35769c09a1db74f110f30911100fccbd5b85badc5368818e1970",
+            "index": "ffcf6c7880db6f45541ec9cad30bb60e475c033c3925ee1f2bfce3aea958894f"
+          },
+          "materials": [
+            "silver birch / bark markings"
+          ]
+        },
+        {
+          "objectName": "role-l29-2604",
+          "sourceNodeIndex": 2604,
+          "sourceName": "Grove / silver birch 0 / horizontal bark mark.005",
+          "role": "bark-mark",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "245d3f678552190e5a9d7e4fd2509ffb23a0fd558490310acb7a5f626c7421d4",
+            "normal": "a897f27f74f13ca50e98a7e4e83514e6ce258faa5f25529400b0ecdbe770c1e0",
+            "index": "ffcf6c7880db6f45541ec9cad30bb60e475c033c3925ee1f2bfce3aea958894f"
+          },
+          "materials": [
+            "silver birch / bark markings"
+          ]
+        },
+        {
+          "objectName": "role-l29-2605",
+          "sourceNodeIndex": 2605,
+          "sourceName": "Grove / silver birch 0 / white branching crown",
+          "role": "main-branch",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "d7525927eb7186efd875d405a8489d251bf3c940d2d58d7e9a0f62394c28975b",
+            "normal": "94b41e048b3b1ab0d54ab4936a664b4e85965729ffd54e1432c5a8aa362b0574",
+            "index": "274ad3503301530e9f648be2129a954d26d89318a7276cfa6636d6a816a7b20c"
+          },
+          "materials": [
+            "silver birch / porcelain bark"
+          ]
+        },
+        {
+          "objectName": "role-l29-2606",
+          "sourceNodeIndex": 2606,
+          "sourceName": "Grove / silver birch 0 / white branching crown.001",
+          "role": "main-branch",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "b22ea4a498ac61bb1ba4fe6be0fea6ca7070443c8bafd7aa48138a9e2ca6eff9",
+            "normal": "d4e9e62ee51371a637748cd76af005ce9fe6d8c7a96fecf7ad9a6520c842dd0f",
+            "index": "c30655113370ab37c4b424ab66e761d4e1a12a0519885f37d4b495d7be166967"
+          },
+          "materials": [
+            "silver birch / porcelain bark"
+          ]
+        },
+        {
+          "objectName": "role-l29-2607",
+          "sourceNodeIndex": 2607,
+          "sourceName": "Grove / silver birch 0 / white branching crown.002",
+          "role": "main-branch",
+          "fixed": false,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "128421d61bc1a898b3550d44a087fb99ded83bf637d7853bafdb1fe7c952daf8",
+            "normal": "f8ae03ffbe74c25d8acd70cb4c0ef5061a5480d99d0d2f9ce872272d528bbdcd",
+            "index": "5211fbecd855372d1201d9208e2e41adcb6d8607be7b7b7610513af8f6ebef33"
+          },
+          "materials": [
+            "silver birch / porcelain bark"
+          ]
+        },
+        {
+          "objectName": "role-l29-2608",
+          "sourceNodeIndex": 2608,
+          "sourceName": "Grove / silver birch 0 / white planted trunk",
+          "role": "trunk",
+          "fixed": true,
+          "sourceMatrixWorld": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            1
+          ],
+          "geometry": {
+            "position": "0a60932e4aead9d3d4d8cb94829123ccec644b4f1378372418adcc28439e1146",
+            "normal": "5b953a39b490122cc459e91badc02bcecd52e5af9fd2cf522476617567fd63d2",
+            "index": "5af0210296b831c98ba005a733a54df2d06faaa8c784065c2218be809388827d"
+          },
+          "materials": [
+            "silver birch / porcelain bark"
+          ]
+        }
+      ]
+    }
+  }
+}

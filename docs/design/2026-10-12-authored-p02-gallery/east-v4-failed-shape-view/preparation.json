@@ -1,0 +1,120 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "cwd": "/private/tmp/sansu-p02-gallery-source-study/east-v4-failed-shape-view",
+  "commands": {
+    "whole": [
+      "python3",
+      "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/supervise.py",
+      "--scheduled",
+      "--seconds",
+      "60",
+      "--rss-mib",
+      "2560",
+      "--log",
+      "runs/01-whole.log.txt",
+      "--",
+      "/Applications/Blender.app/Contents/MacOS/Blender",
+      "-b",
+      "--threads",
+      "2",
+      "--python-exit-code",
+      "1",
+      "--python",
+      "render-failed.py",
+      "--",
+      "--scheduled",
+      "--source",
+      "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/failed-scene.blend",
+      "--out",
+      "runs/01-whole",
+      "--view",
+      "whole"
+    ],
+    "entry-section": [
+      "python3",
+      "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/supervise.py",
+      "--scheduled",
+      "--seconds",
+      "60",
+      "--rss-mib",
+      "2560",
+      "--log",
+      "runs/02-entry.log.txt",
+      "--",
+      "/Applications/Blender.app/Contents/MacOS/Blender",
+      "-b",
+      "--threads",
+      "2",
+      "--python-exit-code",
+      "1",
+      "--python",
+      "render-failed.py",
+      "--",
+      "--scheduled",
+      "--source",
+      "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/failed-scene.blend",
+      "--out",
+      "runs/02-entry",
+      "--view",
+      "entry-section"
+    ]
+  },
+  "scriptSha256": "6889d86f29ac383bc210ed04e711f171c260480189b1b534ae80b4eb4acae42e",
+  "inputPaths": {
+    "failedScene": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/failed-scene.blend",
+    "study": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/study.json",
+    "buildPreparation": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/preparation.json",
+    "lineage": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/boolean-surface-lineage.json",
+    "topology": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/manifold-union-topology.json",
+    "originalRenderer": "/private/tmp/sansu-p02-gallery-source-study/east-v2-failed-shape-view/render-failed-type-node.py",
+    "supervisor": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/supervise.py"
+  },
+  "inputSha256": {
+    "failedScene": "4452f3ca5351ef38977cedece0116ab72cc135732f40ea51a65d0d6262b330f9",
+    "study": "fc9b054f95375363c88e317299ad6a45a0d8b28d674e44daefa8d2e4634e1812",
+    "buildPreparation": "312bbc4224ac6ccf9fb3af1c3d4159b50c16ea6ba170309f3569b739cd3a89a0",
+    "lineage": "3f4807859c32c37e498356484c88fad637c80f6ce87e404393f6b0672fd987d3",
+    "topology": "0b83230ef546e23b9cec046a17571e4a43378b1f261d7ded1c3f8eb92b4e31c5",
+    "originalRenderer": "6b5a4a9280a1323d4c665c888dc0243800b932ad0db63a0a2890bc8b86cd1ec2",
+    "supervisor": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb"
+  },
+  "staticChecks": {
+    "AST": true,
+    "cameraLightingEngineBlockByteIdenticalToPassedV2TypeNodeHelper": true,
+    "localeSafeExistingBackgroundTypeLookup": true,
+    "noSaveOrGeometryModifierOperation": true,
+    "fullMaterialValuesBeforeAfterAdded": true
+  },
+  "resourceLimits": {
+    "threads": 2,
+    "secondsPerView": 60,
+    "rssMiB": 2560,
+    "samples": 16,
+    "width": 1280
+  },
+  "outputLabel": "INCOMPLETE_FLOOR_ONLY_LINEAGE_HOLD",
+  "appOrRuntimeAcceptance": false,
+  "camera": {
+    "whole": "same exact fixed35 c1 source camera",
+    "entryAuthoredOrigin": [
+      3.5,
+      2.55,
+      -4.45
+    ],
+    "entryAuthoredTarget": [
+      3.5,
+      2.2,
+      -8.45
+    ],
+    "entryOrtho": 4.7,
+    "near": 0.1
+  },
+  "noModelRepair": true,
+  "pendingSourceGeometry": [
+    "new boughs",
+    "ground root",
+    "rails",
+    "actor route tests"
+  ],
+  "executionMetadata": "One process at a time, external owned PID/observed UTC/RSS record. No scene save."
+}

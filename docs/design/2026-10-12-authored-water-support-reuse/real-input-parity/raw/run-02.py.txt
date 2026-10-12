@@ -1,0 +1,47 @@
+from pathlib import Path
+import json, hashlib, subprocess, time, os, signal, datetime
+P=Path('/private/tmp/sansu-water-support-real-input-parity-c2-c3')
+O=P/'actual-02';O.mkdir(exist_ok=False)
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+prep=json.loads((P/'prepared.json').read_text())
+inputs={k:v for version in prep['versions'].values() for k,v in version['inputs'].items()}
+for version in ['c2','c3']:
+ b=Path('/private/tmp/sansu-authored-shoulder-'+version+'/candidate/prototypes/place-qa')
+ for name in ['authored-water-fixture.json','authored-flower-reference-mature.json','authored-shoulder-reference-mature.json','native05-world.json.gz','native05-world-source-shading.json.gz','authored-shoulder-profile.json.gz']:
+  inputs[str(b/name)]=sha(b/name)
+inputs[str(P/'run-02.py')]=sha(P/'run-02.py');inputs[str(P/'prepared.json')]=sha(P/'prepared.json')
+report={'startedAtUtc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'scope':'functional comparison; may overlap core and source work, not performance','timeoutPerRunSeconds':180,'rssLimitBytes':2684354560,'sourceBefore':inputs,'runs':[],'pass':False}
+write=lambda:(O/'report.json').write_text(json.dumps(report,indent=2)+'\n')
+write()
+try:
+ assert all(sha(k)==v for k,v in inputs.items())
+ for scenario in ['shoulder35']:
+  for version in ['c2','c3']:
+   label=version+'-'+scenario;log=O/(label+'.log.txt');output=O/(label+'.json');start=time.monotonic()
+   rec={'label':label,'startUtc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'peakRssBytes':0};report['runs'].append(rec)
+   with log.open('w') as stream:
+    proc=subprocess.Popen(['node',str(P/(version+'.mjs')),scenario,str(output)],stdout=stream,stderr=subprocess.STDOUT,start_new_session=True)
+    rec['pid']=proc.pid;rec['pgid']=proc.pid;write()
+    while proc.poll() is None:
+     result=subprocess.run(['ps','-o','rss=','-p',str(proc.pid)],capture_output=True,text=True)
+     rss=max([int(x)*1024 for x in result.stdout.split()] or [0]);rec['peakRssBytes']=max(rec['peakRssBytes'],rss)
+     if time.monotonic()-start>180 or rss>2684354560:
+      rec['terminatedFor']='timeout' if time.monotonic()-start>180 else 'rss';os.killpg(proc.pid,signal.SIGTERM)
+      try:proc.wait(timeout=5)
+      except subprocess.TimeoutExpired:os.killpg(proc.pid,signal.SIGKILL);proc.wait()
+      break
+     time.sleep(.25)
+   rec['exitCode']=proc.returncode;rec['elapsedSeconds']=time.monotonic()-start;rec['logSha256']=sha(log)
+   if output.exists():rec['outputSha256']=sha(output)
+   write();print(json.dumps(rec),flush=True)
+   assert proc.returncode==0,label+' failed'
+  a=json.loads((O/('c2-'+scenario+'.json')).read_text());b=json.loads((O/('c3-'+scenario+'.json')).read_text())
+  for field in ['inputStateSha256','baseDefinitionSha256','owners','bridgeCount','bridges','sites','sourceWalkEdges','output']:
+   assert a[field]==b[field],scenario+':'+field+' mismatch'
+  assert a['bridgeCount']>0,scenario+' did not exercise adopted bridge'
+ report['pass']=True
+except Exception as exc:report['firstFailure']=repr(exc)
+finally:
+ report['sourceAfter']={k:sha(k) for k in inputs};report['sourceFixed']=report['sourceBefore']==report['sourceAfter'];report['pass']=report['pass'] and report['sourceFixed'];report['finishedAtUtc']=datetime.datetime.now(datetime.timezone.utc).isoformat();write()
+print(json.dumps({'pass':report['pass'],'sourceFixed':report['sourceFixed'],'firstFailure':report.get('firstFailure')}),flush=True)
+raise SystemExit(0 if report['pass'] else 1)

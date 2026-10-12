@@ -4,13 +4,20 @@ export interface WorldPoint { x: number; y: number; z: number }
 export type WorldPassage = 'walk' | 'join' | 'water';
 
 /** Logical coordinates and the actual floor share one triangulation. */
-export interface WorldFloorVertex { cell: Cell; point: WorldPoint }
+export interface WorldFloorVertex {
+    cell: Cell;
+    point: WorldPoint;
+    /** Source shading only; never used as a support-plane normal. */
+    normal?: WorldPoint;
+}
 export interface WorldFloor {
     id: string;
     kind: 'ground' | 'deck' | 'water';
     vertices: readonly WorldFloorVertex[];
     indices: readonly number[];
     color: string;
+    /** Omitted attributes retain the existing common-floor material. */
+    material?: { roughness: number; metalness: number; doubleSided: boolean };
 }
 export interface WorldSite {
     id: string;

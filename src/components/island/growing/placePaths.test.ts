@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { newIsland } from '../../../domain/growingIsland/island';
-import { HOME_CELL, key, neighbors, walkableCells } from '../../../domain/growingIsland/space';
+import { HOME_CELL, approachCells, key, neighbors, reachableFromHome, walkableCells } from '../../../domain/growingIsland/space';
+import { authoredAccessWorld } from '../../../domain/growingIsland/authoredWorldAccess.fixture';
+import type { DerivedPlace } from '../../../domain/growingIsland/placeTypes';
+import { authoredOwnerApproaches } from './authoredFlowerObstructions';
 import { sceneLayout } from './sceneLayout';
 import { buildPlacePaths, placePathEdges } from './placePaths';
 
@@ -42,5 +45,38 @@ describe('reachable garden paths', () => {
         }
         expect(path.userData.ownMaterial).toBe(true);
         path.geometry.dispose(); (path.material as import('three').Material).dispose();
+    });
+});
+
+describe('committed authored path access', () => {
+    it('reaches the same fallback owner approach after the ordinary approach ring is rejected', () => {
+        const state = newIsland('guarded-owner-path', 0), { world } = authoredAccessWorld(), cell = { x: 4, z: -2 };
+        state.landmarks = [];
+        state.plots = [{ id: 'home', kind: 'home', cell, stage: 2, plantedAt: 0, growth: 0, origin: 'seed', paid: 40 }];
+        const open = walkableCells(state, world);
+        for (const at of approachCells(cell, world)) open.delete(key(at));
+        const ownerApproaches = authoredOwnerApproaches(state.plots, world, open, reachableFromHome(state, open, world));
+        const fallback = ownerApproaches.get(key(cell))!;
+        expect(fallback.length).toBeGreaterThan(0);
+        expect(fallback.every(at => !approachCells(cell, world).some(before => key(before) === key(at)))).toBe(true);
+        expect(placePathEdges(state, [], world, { walkable: open, ownerApproaches: new Map() })).toEqual([]);
+        const edges = placePathEdges(state, [], world, { walkable: open, ownerApproaches });
+        expect(edges.length).toBeGreaterThan(0);
+        expect(edges.flat().every(at => open.has(key(at)))).toBe(true);
+        expect(fallback.some(at => edges.flat().some(end => key(end) === key(at)))).toBe(true);
+        expect(placePathEdges(state, [], world, { walkable: open, ownerApproaches: new Map([[key(cell), []]]) })).toEqual([]);
+    });
+
+    it('does not relocate a designated place entrance to an owner fallback or revive a rejected HOME', () => {
+        const state = newIsland('guarded-place-entry', 0), { world } = authoredAccessWorld(), entrance = { x: 4, z: -2 }, fallback = { x: 4, z: -1 };
+        state.landmarks = []; state.plots = [];
+        const place: DerivedPlace = { id: 'place', ruleId: 'P02', family: 'grove', anchorId: 'tree', memberIds: ['tree'], mainIds: ['tree'],
+            variant: 'test', stage: 'grown', footprint: [], entrances: [entrance], walkSurface: [], waterRefs: [], shadeRefs: [], useTargets: [], revision: 'test', missing: [] };
+        const open = walkableCells(state, world), ownerApproaches = new Map([[key(entrance), [fallback]]]);
+        expect(placePathEdges(state, [place], world, { walkable: open, ownerApproaches }).flat()).toContainEqual(entrance);
+        open.delete(key(entrance));
+        expect(placePathEdges(state, [place], world, { walkable: open, ownerApproaches })).toEqual([]);
+        open.add(key(entrance)); open.delete(key(HOME_CELL));
+        expect(placePathEdges(state, [place], world, { walkable: open, ownerApproaches })).toEqual([]);
     });
 });

@@ -1,0 +1,1177 @@
+{
+  "derivedFrom": "report.json.gz and runtime-execution.json; not a new runtime execution",
+  "pass": true,
+  "sourceFixed": true,
+  "sourceInputCount": 25612,
+  "initialFinalAndCoreInputsEqual": true,
+  "errors": [],
+  "errorsScope": "pageerror events registered by the driver; not all console/network diagnostics",
+  "phase": "rotate-and-small-screens",
+  "target": "http://127.0.0.1:5365/prototypes/place-qa/authored.html?art=whole&terrain=grove",
+  "revision": "growth-terrain-c8",
+  "candidate": "native05-growth-terrain-rough-v1",
+  "scope": "Same two normally purchased DEV saplings: young, mature, rearranged, stored and restored on one acquired diagnostic shore; real canvas pointers",
+  "excludes": [
+    "personal land purchase/save",
+    "offline/update",
+    "natural time observation",
+    "actor traversal/use",
+    "art acceptance",
+    "performance acceptance"
+  ],
+  "execution": {
+    "startedAt": 1791801728.1560352,
+    "revision": "growth-terrain-c8",
+    "command": "node tools/e2e-authored-growth-terrain.mjs",
+    "timeoutSeconds": 5400,
+    "pid": 52095,
+    "exitCode": 0,
+    "finishedAt": 1791802914.892564,
+    "startedUtc": "2026-10-12T10:42:08.156035+00:00",
+    "finishedUtc": "2026-10-12T11:01:54.892564+00:00",
+    "elapsedSeconds": 1186.7365288734436
+  },
+  "captureConditions": {
+    "headless": true,
+    "browser": "Playwright Chromium",
+    "reducedMotion": "reduce",
+    "screenshotScale": "css",
+    "fullPage": false,
+    "cropping": "Original viewport screenshots after canvas scrollIntoViewIfNeeded; no archive crop or pixel editing",
+    "camera": "Auto framing varies by resulting world bounds; rotated and responsive captures use different matrices. See each capture camera.",
+    "serviceWorker": "Not measured by this driver; offline/update excluded.",
+    "renderBackend": "Observed SwiftShader software WebGL; not physical-device performance"
+  },
+  "steps": [
+    {
+      "name": "load",
+      "elapsedMs": 37489
+    },
+    {
+      "name": "acquire-diagnostic-shore",
+      "elapsedMs": 131765
+    },
+    {
+      "name": "purchase-two-saplings",
+      "elapsedMs": 276631
+    },
+    {
+      "name": "mature-through-existing-clock",
+      "elapsedMs": 90514
+    },
+    {
+      "name": "same-owners-seaward",
+      "elapsedMs": 169046
+    },
+    {
+      "name": "same-owners-shifted",
+      "elapsedMs": 170860
+    },
+    {
+      "name": "restore-parallel",
+      "elapsedMs": 169676
+    },
+    {
+      "name": "rotate-and-small-screens",
+      "elapsedMs": 123644
+    }
+  ],
+  "captures": [
+    {
+      "name": "low-shore",
+      "file": "low-shore.png",
+      "sha256": "93a77ab8da2c7dd55102a138a96f797e520ad6fe63eca44781bb9924f9aa2b8a",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "host": {
+        "authoredIsland": "true",
+        "buildRevision": "growth-terrain-c8",
+        "appVersion": "growth-terrain-c8:364d600a-2b2c-4446-be58-4b7391114ecb",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "groundShading": "source",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "worldId": "native05-authored-world-m0-v2",
+        "worldRevision": "authored-world:6bf682035414f60d",
+        "growthDiagnostic": "true",
+        "districtsEnabled": "true",
+        "districtCandidate": "native05-district-shapes-rough-v1+native05-growth-terrain-rough-v1",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v1"
+      },
+      "districtGrants": [
+        {
+          "id": "diagnostic-district-1",
+          "templateId": "native05-growing-shore-v1",
+          "parent": {
+            "districtId": "native05-inlet-core",
+            "portId": "east-entry"
+          },
+          "entryPortId": "west-entry",
+          "turn": 0,
+          "logicalOrigin": {
+            "x": 16,
+            "z": -4
+          },
+          "worldOrigin": {
+            "x": 16,
+            "y": 0,
+            "z": -4
+          }
+        }
+      ],
+      "growthTerrainPlan": {
+        "revision": "growth-terrain:787dc0e81ccafddc",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "9efb5888f3c2d9b94414792f91afbc18c4bf31b9bbe2b2ebf2def70b8380bf1d",
+        "assemblies": []
+      },
+      "camera": {
+        "matrixWorld": [
+          0.7912850013921671,
+          8.326672684688674e-17,
+          -0.6114475010757655,
+          0,
+          -0.35705914772988967,
+          0.8117844741035438,
+          -0.4620765441210339,
+          0,
+          0.4963635881027163,
+          0.5839571624737837,
+          0.6423528787211623,
+          0,
+          12.904639209437061,
+          18.186607155533203,
+          11.727465207501318,
+          1
+        ],
+        "projectionMatrix": [
+          0.09116002305935336,
+          0,
+          0,
+          0,
+          0,
+          0.1285026831077632,
+          0,
+          0,
+          0,
+          0,
+          -0.02002002002002002,
+          0,
+          0,
+          0,
+          -1.002002002002002,
+          1
+        ],
+        "center": 9.3,
+        "curved": false
+      },
+      "owners": 35,
+      "twoTrees": [],
+      "natureHours": 252,
+      "drops": 9170
+    },
+    {
+      "name": "young",
+      "file": "young.png",
+      "sha256": "5b12ca609cf16487bfbf285fc6562b1e259a0afe281d7d2e7a8f19664fd802c3",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "host": {
+        "authoredIsland": "true",
+        "buildRevision": "growth-terrain-c8",
+        "appVersion": "growth-terrain-c8:364d600a-2b2c-4446-be58-4b7391114ecb",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "groundShading": "source",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "worldId": "native05-authored-world-m0-v2",
+        "worldRevision": "authored-world:cb285b866f62c49e",
+        "growthDiagnostic": "true",
+        "districtsEnabled": "true",
+        "districtCandidate": "native05-district-shapes-rough-v1+native05-growth-terrain-rough-v1",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v1"
+      },
+      "districtGrants": [
+        {
+          "id": "diagnostic-district-1",
+          "templateId": "native05-growing-shore-v1",
+          "parent": {
+            "districtId": "native05-inlet-core",
+            "portId": "east-entry"
+          },
+          "entryPortId": "west-entry",
+          "turn": 0,
+          "logicalOrigin": {
+            "x": 16,
+            "z": -4
+          },
+          "worldOrigin": {
+            "x": 16,
+            "y": 0,
+            "z": -4
+          }
+        }
+      ],
+      "growthTerrainPlan": {
+        "revision": "growth-terrain:787dc0e81ccafddc",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "9efb5888f3c2d9b94414792f91afbc18c4bf31b9bbe2b2ebf2def70b8380bf1d",
+        "assemblies": []
+      },
+      "camera": {
+        "matrixWorld": [
+          0.7912850013921671,
+          8.326672684688674e-17,
+          -0.6114475010757655,
+          0,
+          -0.35705914772988967,
+          0.8117844741035438,
+          -0.4620765441210339,
+          0,
+          0.4963635881027163,
+          0.5839571624737837,
+          0.6423528787211623,
+          0,
+          12.904639209437061,
+          18.186607155533203,
+          11.727465207501318,
+          1
+        ],
+        "projectionMatrix": [
+          0.09116002305935336,
+          0,
+          0,
+          0,
+          0,
+          0.1285026831077632,
+          0,
+          0,
+          0,
+          0,
+          -0.02002002002002002,
+          0,
+          0,
+          0,
+          -1.002002002002002,
+          1
+        ],
+        "center": 9.3,
+        "curved": false
+      },
+      "owners": 37,
+      "twoTrees": [
+        {
+          "id": "l36",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -5
+          },
+          "growth": 0
+        },
+        {
+          "id": "l37",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -4
+          },
+          "growth": 0
+        }
+      ],
+      "natureHours": 252,
+      "drops": 9130
+    },
+    {
+      "name": "parallel",
+      "file": "parallel.png",
+      "sha256": "793193082d594744568920cba76c3c5e41623887f02a85a44d5a7814427cd74d",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "host": {
+        "authoredIsland": "true",
+        "buildRevision": "growth-terrain-c8",
+        "appVersion": "growth-terrain-c8:364d600a-2b2c-4446-be58-4b7391114ecb",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "groundShading": "source",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "worldId": "native05-authored-world-m0-v2",
+        "worldRevision": "authored-world:5c44b5968b0966f6",
+        "growthDiagnostic": "true",
+        "districtsEnabled": "true",
+        "districtCandidate": "native05-district-shapes-rough-v1+native05-growth-terrain-rough-v1",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v1"
+      },
+      "districtGrants": [
+        {
+          "id": "diagnostic-district-1",
+          "templateId": "native05-growing-shore-v1",
+          "parent": {
+            "districtId": "native05-inlet-core",
+            "portId": "east-entry"
+          },
+          "entryPortId": "west-entry",
+          "turn": 0,
+          "logicalOrigin": {
+            "x": 16,
+            "z": -4
+          },
+          "worldOrigin": {
+            "x": 16,
+            "y": 0,
+            "z": -4
+          }
+        }
+      ],
+      "growthTerrainPlan": {
+        "revision": "growth-terrain:cf60a2408bcccbde",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "9efb5888f3c2d9b94414792f91afbc18c4bf31b9bbe2b2ebf2def70b8380bf1d",
+        "assemblies": [
+          {
+            "id": "diagnostic-district-1:growth-terrain",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37"
+            ],
+            "socketId": "south",
+            "shape": "parallel"
+          }
+        ]
+      },
+      "camera": {
+        "matrixWorld": [
+          0.7912850013921671,
+          0,
+          -0.6114475010757653,
+          0,
+          -0.3570591477298898,
+          0.8117844741035436,
+          -0.462076544121034,
+          0,
+          0.4963635881027161,
+          0.5839571624737838,
+          0.6423528787211622,
+          0,
+          14.317037284330613,
+          18.937571190118042,
+          12.023134085672389,
+          1
+        ],
+        "projectionMatrix": [
+          0.08580942564988284,
+          0,
+          0,
+          0,
+          0,
+          0.12096027471128062,
+          0,
+          0,
+          0,
+          0,
+          -0.02002002002002002,
+          0,
+          0,
+          0,
+          -1.002002002002002,
+          1
+        ],
+        "center": 9.3,
+        "curved": false
+      },
+      "owners": 37,
+      "twoTrees": [
+        {
+          "id": "l36",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -5
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l37",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        }
+      ],
+      "natureHours": 270,
+      "drops": 9130
+    },
+    {
+      "name": "seaward",
+      "file": "seaward.png",
+      "sha256": "f530a6f31e94c7859f78f5e40603d3dfc1c0dd79b9755193f6914a9cb2c7065e",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "host": {
+        "authoredIsland": "true",
+        "buildRevision": "growth-terrain-c8",
+        "appVersion": "growth-terrain-c8:364d600a-2b2c-4446-be58-4b7391114ecb",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "groundShading": "source",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "worldId": "native05-authored-world-m0-v2",
+        "worldRevision": "authored-world:a2852a0b8be0c11b",
+        "growthDiagnostic": "true",
+        "districtsEnabled": "true",
+        "districtCandidate": "native05-district-shapes-rough-v1+native05-growth-terrain-rough-v1",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v1"
+      },
+      "districtGrants": [
+        {
+          "id": "diagnostic-district-1",
+          "templateId": "native05-growing-shore-v1",
+          "parent": {
+            "districtId": "native05-inlet-core",
+            "portId": "east-entry"
+          },
+          "entryPortId": "west-entry",
+          "turn": 0,
+          "logicalOrigin": {
+            "x": 16,
+            "z": -4
+          },
+          "worldOrigin": {
+            "x": 16,
+            "y": 0,
+            "z": -4
+          }
+        }
+      ],
+      "growthTerrainPlan": {
+        "revision": "growth-terrain:7878b4c23154aefe",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "9efb5888f3c2d9b94414792f91afbc18c4bf31b9bbe2b2ebf2def70b8380bf1d",
+        "assemblies": [
+          {
+            "id": "diagnostic-district-1:growth-terrain",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37"
+            ],
+            "socketId": "south",
+            "shape": "seaward"
+          }
+        ]
+      },
+      "camera": {
+        "matrixWorld": [
+          0.791285001392167,
+          -2.7755575615628914e-17,
+          -0.6114475010757654,
+          0,
+          -0.3570591477298899,
+          0.8117844741035436,
+          -0.4620765441210338,
+          0,
+          0.49636358810271614,
+          0.5839571624737837,
+          0.6423528787211621,
+          0,
+          15.465503441276368,
+          19.584251135432808,
+          12.540203570028657,
+          1
+        ],
+        "projectionMatrix": [
+          0.08122038882631574,
+          0,
+          0,
+          0,
+          0,
+          0.11449139147805953,
+          0,
+          0,
+          0,
+          0,
+          -0.02002002002002002,
+          0,
+          0,
+          0,
+          -1.002002002002002,
+          1
+        ],
+        "center": 9.3,
+        "curved": false
+      },
+      "owners": 37,
+      "twoTrees": [
+        {
+          "id": "l36",
+          "kind": "sapling",
+          "cell": {
+            "x": 17,
+            "z": -5
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l37",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -5
+          },
+          "growth": 18,
+          "maturedAt": 270
+        }
+      ],
+      "natureHours": 270,
+      "drops": 9130
+    },
+    {
+      "name": "shifted",
+      "file": "shifted.png",
+      "sha256": "f22a4a4bfe343001bcdf5aeb149ca2b5536a5e0bc421c8d62e407095b6fb97f6",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "host": {
+        "authoredIsland": "true",
+        "buildRevision": "growth-terrain-c8",
+        "appVersion": "growth-terrain-c8:364d600a-2b2c-4446-be58-4b7391114ecb",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "groundShading": "source",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "worldId": "native05-authored-world-m0-v2",
+        "worldRevision": "authored-world:05e3090d2db6cf4b",
+        "growthDiagnostic": "true",
+        "districtsEnabled": "true",
+        "districtCandidate": "native05-district-shapes-rough-v1+native05-growth-terrain-rough-v1",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v1"
+      },
+      "districtGrants": [
+        {
+          "id": "diagnostic-district-1",
+          "templateId": "native05-growing-shore-v1",
+          "parent": {
+            "districtId": "native05-inlet-core",
+            "portId": "east-entry"
+          },
+          "entryPortId": "west-entry",
+          "turn": 0,
+          "logicalOrigin": {
+            "x": 16,
+            "z": -4
+          },
+          "worldOrigin": {
+            "x": 16,
+            "y": 0,
+            "z": -4
+          }
+        }
+      ],
+      "growthTerrainPlan": {
+        "revision": "growth-terrain:cf5d05024b78fbb4",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "9efb5888f3c2d9b94414792f91afbc18c4bf31b9bbe2b2ebf2def70b8380bf1d",
+        "assemblies": [
+          {
+            "id": "diagnostic-district-1:growth-terrain",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37"
+            ],
+            "socketId": "north",
+            "shape": "parallel"
+          }
+        ]
+      },
+      "camera": {
+        "matrixWorld": [
+          0.7912850013921671,
+          0,
+          -0.6114475010757654,
+          0,
+          -0.35705914772988984,
+          0.8117844741035436,
+          -0.46207654412103394,
+          0,
+          0.4963635881027162,
+          0.5839571624737838,
+          0.6423528787211621,
+          0,
+          14.083835035596914,
+          18.663215603372514,
+          12.721342940252306,
+          1
+        ],
+        "projectionMatrix": [
+          0.08516077381674382,
+          0,
+          0,
+          0,
+          0,
+          0.12004591007902442,
+          0,
+          0,
+          0,
+          0,
+          -0.02002002002002002,
+          0,
+          0,
+          0,
+          -1.002002002002002,
+          1
+        ],
+        "center": 9.3,
+        "curved": false
+      },
+      "owners": 37,
+      "twoTrees": [
+        {
+          "id": "l36",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l37",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -3
+          },
+          "growth": 18,
+          "maturedAt": 270
+        }
+      ],
+      "natureHours": 270,
+      "drops": 9130
+    },
+    {
+      "name": "parallel-restored",
+      "file": "parallel-restored.png",
+      "sha256": "af155e51ec338eef74863ee855aced3624724a22f76a95eb99317cd56afb429f",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "host": {
+        "authoredIsland": "true",
+        "buildRevision": "growth-terrain-c8",
+        "appVersion": "growth-terrain-c8:364d600a-2b2c-4446-be58-4b7391114ecb",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "groundShading": "source",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "worldId": "native05-authored-world-m0-v2",
+        "worldRevision": "authored-world:5c44b5968b0966f6",
+        "growthDiagnostic": "true",
+        "districtsEnabled": "true",
+        "districtCandidate": "native05-district-shapes-rough-v1+native05-growth-terrain-rough-v1",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v1"
+      },
+      "districtGrants": [
+        {
+          "id": "diagnostic-district-1",
+          "templateId": "native05-growing-shore-v1",
+          "parent": {
+            "districtId": "native05-inlet-core",
+            "portId": "east-entry"
+          },
+          "entryPortId": "west-entry",
+          "turn": 0,
+          "logicalOrigin": {
+            "x": 16,
+            "z": -4
+          },
+          "worldOrigin": {
+            "x": 16,
+            "y": 0,
+            "z": -4
+          }
+        }
+      ],
+      "growthTerrainPlan": {
+        "revision": "growth-terrain:cf60a2408bcccbde",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "9efb5888f3c2d9b94414792f91afbc18c4bf31b9bbe2b2ebf2def70b8380bf1d",
+        "assemblies": [
+          {
+            "id": "diagnostic-district-1:growth-terrain",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37"
+            ],
+            "socketId": "south",
+            "shape": "parallel"
+          }
+        ]
+      },
+      "camera": {
+        "matrixWorld": [
+          0.7912850013921671,
+          0,
+          -0.6114475010757653,
+          0,
+          -0.3570591477298898,
+          0.8117844741035436,
+          -0.462076544121034,
+          0,
+          0.4963635881027161,
+          0.5839571624737838,
+          0.6423528787211622,
+          0,
+          14.317037284330613,
+          18.937571190118042,
+          12.023134085672389,
+          1
+        ],
+        "projectionMatrix": [
+          0.08580942564988284,
+          0,
+          0,
+          0,
+          0,
+          0.12096027471128062,
+          0,
+          0,
+          0,
+          0,
+          -0.02002002002002002,
+          0,
+          0,
+          0,
+          -1.002002002002002,
+          1
+        ],
+        "center": 9.3,
+        "curved": false
+      },
+      "owners": 37,
+      "twoTrees": [
+        {
+          "id": "l36",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -5
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l37",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        }
+      ],
+      "natureHours": 270,
+      "drops": 9130
+    },
+    {
+      "name": "rotated",
+      "file": "rotated.png",
+      "sha256": "e1ef7f4f11aef85d4b0377203d21bda08c68a07367aff757a509494e684304da",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "host": {
+        "authoredIsland": "true",
+        "buildRevision": "growth-terrain-c8",
+        "appVersion": "growth-terrain-c8:364d600a-2b2c-4446-be58-4b7391114ecb",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "groundShading": "source",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "worldId": "native05-authored-world-m0-v2",
+        "worldRevision": "authored-world:5c44b5968b0966f6",
+        "growthDiagnostic": "true",
+        "districtsEnabled": "true",
+        "districtCandidate": "native05-district-shapes-rough-v1+native05-growth-terrain-rough-v1",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v1"
+      },
+      "districtGrants": [
+        {
+          "id": "diagnostic-district-1",
+          "templateId": "native05-growing-shore-v1",
+          "parent": {
+            "districtId": "native05-inlet-core",
+            "portId": "east-entry"
+          },
+          "entryPortId": "west-entry",
+          "turn": 0,
+          "logicalOrigin": {
+            "x": 16,
+            "z": -4
+          },
+          "worldOrigin": {
+            "x": 16,
+            "y": 0,
+            "z": -4
+          }
+        }
+      ],
+      "growthTerrainPlan": {
+        "revision": "growth-terrain:cf60a2408bcccbde",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "9efb5888f3c2d9b94414792f91afbc18c4bf31b9bbe2b2ebf2def70b8380bf1d",
+        "assemblies": [
+          {
+            "id": "diagnostic-district-1:growth-terrain",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37"
+            ],
+            "socketId": "south",
+            "shape": "parallel"
+          }
+        ]
+      },
+      "camera": {
+        "matrixWorld": [
+          0.37954916230133906,
+          -5.551115123125783e-17,
+          -0.925171569708209,
+          0,
+          -0.5402605646482221,
+          0.8117844741035437,
+          -0.2216404518367916,
+          0,
+          0.7510399161711285,
+          0.5839571624737837,
+          0.308112117115233,
+          0,
+          19.917361923058248,
+          16.99859339164947,
+          3.436968967767804,
+          1
+        ],
+        "projectionMatrix": [
+          0.07988674428398572,
+          0,
+          0,
+          0,
+          0,
+          0.11261143471357024,
+          0,
+          0,
+          0,
+          0,
+          -0.02002002002002002,
+          0,
+          0,
+          0,
+          -1.002002002002002,
+          1
+        ],
+        "center": 9.3,
+        "curved": false
+      },
+      "owners": 37,
+      "twoTrees": [
+        {
+          "id": "l36",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -5
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l37",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        }
+      ],
+      "natureHours": 270,
+      "drops": 9130
+    },
+    {
+      "name": "phone",
+      "file": "phone.png",
+      "sha256": "a9de6fcbdffa3fef57edef15dcf4c5cf7ca71ad32d590c06bd1247275723c19e",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "host": {
+        "authoredIsland": "true",
+        "buildRevision": "growth-terrain-c8",
+        "appVersion": "growth-terrain-c8:364d600a-2b2c-4446-be58-4b7391114ecb",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "groundShading": "source",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "worldId": "native05-authored-world-m0-v2",
+        "worldRevision": "authored-world:5c44b5968b0966f6",
+        "growthDiagnostic": "true",
+        "districtsEnabled": "true",
+        "districtCandidate": "native05-district-shapes-rough-v1+native05-growth-terrain-rough-v1",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v1"
+      },
+      "districtGrants": [
+        {
+          "id": "diagnostic-district-1",
+          "templateId": "native05-growing-shore-v1",
+          "parent": {
+            "districtId": "native05-inlet-core",
+            "portId": "east-entry"
+          },
+          "entryPortId": "west-entry",
+          "turn": 0,
+          "logicalOrigin": {
+            "x": 16,
+            "z": -4
+          },
+          "worldOrigin": {
+            "x": 16,
+            "y": 0,
+            "z": -4
+          }
+        }
+      ],
+      "growthTerrainPlan": {
+        "revision": "growth-terrain:cf60a2408bcccbde",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "9efb5888f3c2d9b94414792f91afbc18c4bf31b9bbe2b2ebf2def70b8380bf1d",
+        "assemblies": [
+          {
+            "id": "diagnostic-district-1:growth-terrain",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37"
+            ],
+            "socketId": "south",
+            "shape": "parallel"
+          }
+        ]
+      },
+      "camera": {
+        "matrixWorld": [
+          0.37954916230133906,
+          -5.551115123125783e-17,
+          -0.925171569708209,
+          0,
+          -0.5402605646482221,
+          0.8117844741035437,
+          -0.2216404518367916,
+          0,
+          0.7510399161711285,
+          0.5839571624737837,
+          0.308112117115233,
+          0,
+          29.19967455626659,
+          24.215883484720656,
+          7.245012902002093,
+          1
+        ],
+        "projectionMatrix": [
+          0.10991008525485445,
+          0,
+          0,
+          0,
+          0,
+          0.07467758405817636,
+          0,
+          0,
+          0,
+          0,
+          -0.01818673537861272,
+          0,
+          0,
+          0,
+          -1.0018186735378611,
+          1
+        ],
+        "center": 9.3,
+        "curved": false
+      },
+      "owners": 37,
+      "twoTrees": [
+        {
+          "id": "l36",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -5
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l37",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        }
+      ],
+      "natureHours": 270,
+      "drops": 9130
+    },
+    {
+      "name": "tablet",
+      "file": "tablet.png",
+      "sha256": "b68a9f544abd36b762a627ea2bb5394c2fa353e7d7f29c05762ad9a24a00e2ec",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "host": {
+        "authoredIsland": "true",
+        "buildRevision": "growth-terrain-c8",
+        "appVersion": "growth-terrain-c8:364d600a-2b2c-4446-be58-4b7391114ecb",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "groundShading": "source",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "worldId": "native05-authored-world-m0-v2",
+        "worldRevision": "authored-world:5c44b5968b0966f6",
+        "growthDiagnostic": "true",
+        "districtsEnabled": "true",
+        "districtCandidate": "native05-district-shapes-rough-v1+native05-growth-terrain-rough-v1",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v1"
+      },
+      "districtGrants": [
+        {
+          "id": "diagnostic-district-1",
+          "templateId": "native05-growing-shore-v1",
+          "parent": {
+            "districtId": "native05-inlet-core",
+            "portId": "east-entry"
+          },
+          "entryPortId": "west-entry",
+          "turn": 0,
+          "logicalOrigin": {
+            "x": 16,
+            "z": -4
+          },
+          "worldOrigin": {
+            "x": 16,
+            "y": 0,
+            "z": -4
+          }
+        }
+      ],
+      "growthTerrainPlan": {
+        "revision": "growth-terrain:cf60a2408bcccbde",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "9efb5888f3c2d9b94414792f91afbc18c4bf31b9bbe2b2ebf2def70b8380bf1d",
+        "assemblies": [
+          {
+            "id": "diagnostic-district-1:growth-terrain",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37"
+            ],
+            "socketId": "south",
+            "shape": "parallel"
+          }
+        ]
+      },
+      "camera": {
+        "matrixWorld": [
+          0.3795491623013387,
+          0,
+          -0.9251715697082094,
+          0,
+          -0.5402605646482224,
+          0.8117844741035436,
+          -0.22164045183679149,
+          0,
+          0.7510399161711286,
+          0.5839571624737838,
+          0.3081121171152328,
+          0,
+          33.75045747810205,
+          27.754260373684396,
+          9.111959425599487,
+          1
+        ],
+        "projectionMatrix": [
+          0.10991008525485445,
+          0,
+          0,
+          0,
+          0,
+          0.06409276634299474,
+          0,
+          0,
+          0,
+          0,
+          -0.015606931806713157,
+          0,
+          0,
+          0,
+          -1.0015606931806713,
+          1
+        ],
+        "center": 9.3,
+        "curved": false
+      },
+      "owners": 37,
+      "twoTrees": [
+        {
+          "id": "l36",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -5
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l37",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        }
+      ],
+      "natureHours": 270,
+      "drops": 9130
+    }
+  ],
+  "gates": {
+    "journey": "PASS within scope",
+    "overallRuntime": "PARTIAL",
+    "art": "HOLD",
+    "independentObservers": 0
+  },
+  "shapeScope": "Two mature variants (parallel/seaward), three configurations of the same two trees, two socket positions. Not three completed whole-island compositions."
+}

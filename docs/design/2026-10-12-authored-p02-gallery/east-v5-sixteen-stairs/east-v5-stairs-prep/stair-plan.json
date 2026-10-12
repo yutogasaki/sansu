@@ -1,0 +1,103 @@
+{
+  "candidate": "p02-native-east-real-stair-v5-design",
+  "status": "DESIGN_ONLY_NOT_GEOMETRY_OR_MOTION_PASS",
+  "basis": {
+    "path": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature/planned-floor-v4-stations-once.json",
+    "sha256": "2968d018782cea82afa443bbbffc111eb0ead51a3d5f5f2e8be2814354fee3ca"
+  },
+  "fixed": {
+    "width": 0.64,
+    "nominalRailInnerWidth": 0.612,
+    "reservedBodyWidth": 0.5681387411828117,
+    "bodyUpperEnvelope": 0.5500928879753579,
+    "primaryEndpoints": {
+      "joint": [
+        3.4549999237060547,
+        1.6814100742340088,
+        -7.574749946594238
+      ],
+      "galleryStart": [
+        3.736560607223704,
+        2.997417449951172,
+        -9.382856205228208
+      ],
+      "galleryEnd": [
+        3.1137269087690007,
+        3.0406932830810547,
+        -9.328365317351498
+      ]
+    },
+    "ownerIds": [
+      "l10",
+      "l11",
+      "l12",
+      "l13"
+    ],
+    "originalSourceOrGroundChange": false,
+    "nativeHouseDoorTrunkCrownFixed": true
+  },
+  "knownCentreline": {
+    "rangeDegrees": [
+      -68,
+      75
+    ],
+    "sampleRows": 146,
+    "horizontalPolylineLength": 3.0025634136177324,
+    "rise": 1.316007375717163,
+    "source": "read existing rows, no new world or geometry compilation"
+  },
+  "boundedCandidates": [
+    {
+      "steps": 16,
+      "preference": "main",
+      "riserHeight": 0.08225046098232269,
+      "averageCentrelineRun": 0.18766021335110827,
+      "spacing": "equal horizontal distance, not original smoothstep height",
+      "note": "Not minimum inside-foot run and not a step ability limit"
+    },
+    {
+      "steps": 18,
+      "preference": "comparison",
+      "riserHeight": 0.07311152087317573,
+      "averageCentrelineRun": 0.16680907853431848,
+      "spacing": "equal horizontal distance, not original smoothstep height",
+      "note": "Not minimum inside-foot run and not a step ability limit"
+    }
+  ],
+  "topologyProposal": {
+    "walkingRoles": [
+      "horizontal-tread",
+      "low-landing",
+      "native-height-gallery"
+    ],
+    "nonWalkingRoles": [
+      "riser",
+      "side-cheek",
+      "visible-underside",
+      "rail",
+      "same-owner-structural-bough"
+    ],
+    "construction": "shared tread/riser vertices, direct closed body; no Boolean dependency and no hidden ramp",
+    "underside": "continuous visible structural surface below each tread by at least .07; not naive .07 stepped-top copy"
+  },
+  "footChecksPending": [
+    "actual indexed left/right foot projections on candidate tread polygons at route-specific heading",
+    "same-tread neutral planted poses, ascent and return",
+    "explicit alternating planted/swing trajectory and riser clearance",
+    "actual source body/head/door and support/rail collisions after changed heights",
+    "landing turn support, no global-radius substitution"
+  ],
+  "runtimePending": [
+    "owner-use explicit role/ID and same triangles in visible geometry/query",
+    "preserve default ground/site support and receipt > .8 height delta",
+    "revision owner/source/shape and safe exit through old entrance on removal",
+    "retain prior use history"
+  ],
+  "excluded": [
+    "Blender build",
+    "render",
+    "app/source edits",
+    "numeric candidate search",
+    "automatic acceptance of 16 or 18 steps"
+  ]
+}

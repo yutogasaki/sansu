@@ -1,0 +1,19 @@
+00:00.475  blend            | Read blend: "/private/tmp/sansu-authored-forest-crown-study/stage2/attempt-01/failed-stage.blend"
+Traceback (most recent call last):
+  File "/private/tmp/sansu-authored-forest-crown-study/stage2/failed-shape-view/render-failed-whole.py", line 54, in <module>
+    native.add_views()
+    ~~~~~~~~~~~~~~~~^^
+  File "/private/tmp/sansu-authored-forest-crown-study/stage2/stage1_support.py", line 105, in add_views
+    background = scene.world.node_tree.nodes.get('Background'); background.inputs['Color'].default_value = (.055, .20, .26, 1); background.inputs['Strength'].default_value = .7
+                                                                ^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'inputs'
+BlenderMCP: cannot start server in background mode (blender -b) - commands would never execute
+BlenderMCP: run Blender with a GUI, or use a virtual display: xvfb-run -a blender
+BlenderMCP addon registered
+
+Error: script failed, file: '/private/tmp/sansu-authored-forest-crown-study/stage2/failed-shape-view/render-failed-whole.py', exiting.
+BlenderMCP server stopped
+BlenderMCP addon unregistered
+Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 01:35:57)
+
+Blender quit

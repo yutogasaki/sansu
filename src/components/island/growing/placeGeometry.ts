@@ -13,6 +13,8 @@ import { buildPlaceRootRoom, ROOT_ROOM_ACTOR_HEIGHT } from './placeRootRoomGeome
 import { disposeGeometry } from '../three/primitives';
 import { walkableCells } from '../../../domain/growingIsland/space';
 import type { NativeGrowingKit } from './native/nativeGrowingKit';
+import type { NativeAuthoredFlower } from './native/nativeAuthoredFlower';
+import type { NativeAuthoredCove } from './native/nativeAuthoredCove';
 import { buildNativePlaceGrove } from './native/nativePlaceGrove';
 import { cloneGrowingPreviewMaterial } from './growingShaderWarmup';
 
@@ -296,7 +298,7 @@ function buildGallery(g: GardenGeometry, state: GrowingState, layout: SceneLayou
 
 
 /** Derived structures contain no purchased objects and consume no game random draw. */
-export function buildPlaceGeometry(state: GrowingState, layout: SceneLayout, places: readonly DerivedPlace[], relations: readonly PlaceRelation[] = [], preview = false, native?: NativeGrowingKit) {
+export function buildPlaceGeometry(state: GrowingState, layout: SceneLayout, places: readonly DerivedPlace[], relations: readonly PlaceRelation[] = [], preview = false, native?: NativeGrowingKit, flowerSupport?: NativeAuthoredFlower, cove?: NativeAuthoredCove) {
     const root = new T.Group(); root.name = preview ? 'growing-place-preview' : 'growing-derived-places';
     root.userData.artCandidate = native ? 'native05-owned-runtime-v1' : 'native-05-place-runtime-v3';
     for (const place of places) {
@@ -305,9 +307,19 @@ export function buildPlaceGeometry(state: GrowingState, layout: SceneLayout, pla
         g.root.userData.placeId = place.id; g.root.userData.placeRevision = place.revision; g.root.userData.placeRule = place.ruleId;
         if (place.family === 'grove' && native) buildNativePlaceGrove(g, state, layout, place, native, room => buildGallery(g, state, layout, place, room));
         else if (place.family === 'grove') grove(g, state, layout, place);
-        else if (place.family === 'flowers') buildPlaceFlowerRoof(g, state, layout, place, native);
+        else if (place.family === 'flowers') buildPlaceFlowerRoof(g, state, layout, place, native, flowerSupport);
         else if (place.family === 'spring') buildPlaceSpring(g, state, layout, place, places);
-        else if (place.family === 'community') buildPlaceShell(g, state, layout, place, native);
+        else if (place.family === 'community') {
+            if (layout.authoredFrameOptions?.cove) {
+                const assembly = layout.authoredCovePlan?.assemblies.find(item => item.placeId === place.id && item.placeRevision === place.revision);
+                if (assembly) {
+                    if (!cove) throw Error('Authored cove plan has no source model');
+                    g.root.add(cove.instance(assembly, layout));
+                }
+                // An inapplicable source profile has no shell or apron. It must
+                // not quietly turn back into the previous enlarged high roof.
+            } else buildPlaceShell(g, state, layout, place, native);
+        }
         // Batch opaque components per place. Floor metadata is reassigned afterwards
         // and remains raycastable; owner selection resolves to this place's anchor.
         for (const child of [...g.root.children]) if (child instanceof T.Group && !child.userData.nativePart) g.batch(child);

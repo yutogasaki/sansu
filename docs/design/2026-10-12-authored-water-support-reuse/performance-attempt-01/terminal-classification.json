@@ -1,0 +1,18 @@
+{
+  "recordedAtUtc": "2026-10-12T06:24:07.026593+00:00",
+  "execSession": 39317,
+  "execExitCode": 1,
+  "workersStarted": 0,
+  "noSignalsSent": true,
+  "firstFailureClassification": "Preflight rejected by sealed process-presence rules; no application or performance result",
+  "limitsOfEvidence": [
+    "One process sample only; delta CPU fields default to zero because no prior sample exists, so zero is not a measured idle interval.",
+    "128 browser/helper classifications include GUI browsers and OS helpers; no assertion that 128 independent active browser tasks existed.",
+    "Root Vite child esbuild service PIDs6706/47166 were classified as build processes by presence; their parent roots were allowed.",
+    "No timing sample exists, and this cannot support speed/RSS improvement.",
+    "Do not retry, alter thresholds or relabel this attempt without a separately sealed protocol and authorization."
+  ],
+  "rootAndUserProcessesAfterExit": " 6704 33232  6704   0.0  76112 node\n 6706  6704  6704   0.0  36672 /Users/yutogasaki/Projects/sansu/node_modules/@esbuild/darwin-arm64/bin/esbuild\n13395     1 13395   1.9  26464 /Applications/Blender.app/Contents/MacOS/Blender\n47164 33232 47164   0.0 254352 node\n47166 47164 47164   0.0 575712 /Users/yutogasaki/Projects/sansu/node_modules/@esbuild/darwin-arm64/bin/esbuild\n",
+  "rawReportSha256": "4a5c81cd82ca7be0840e23f0d4f489ee5bb45c459340dc8b6ef8352d4858475e",
+  "rawHostLogSha256": "112a65b51a2e41f8a87c6feb5f706c943abee0b95375b9832bd46a62846dbad5"
+}

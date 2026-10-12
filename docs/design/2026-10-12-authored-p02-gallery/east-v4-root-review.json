@@ -1,0 +1,68 @@
+{
+  "dateUtc": "2026-10-12",
+  "reviewer": "root implementing author",
+  "candidate": "p02-east-v4 failed-floor-only",
+  "evidenceType": "Blender source render, not actual app",
+  "actualAppTarget": null,
+  "buildRevision": null,
+  "deliveryFlag": null,
+  "independentObservers": 0,
+  "verdicts": {
+    "sourceVisual": "HOLD",
+    "silentComprehensionSafety": "UNTESTED N=0",
+    "runtime": "NOT_INTEGRATED"
+  },
+  "findings": [
+    "The eastern entrance and ascent are visible, but the steep smooth outer band reads as a slide rather than the benchmark wooden staircase and inhabited gallery.",
+    "The absent supporting boughs and rails leave an unsupported appearance. The build stopped before those stages.",
+    "The inner passage remains dark and visually constrained. Actor passage has not been verified.",
+    "The entry-left black cut and whole-view dark dots cannot be attributed to v4 geometry alone; source, camera and shadow effects remain confounded."
+  ],
+  "technicalEvidence": {
+    "cleanInputSolids": 5,
+    "cleanUnionStages": 4,
+    "positiveVolume": true,
+    "stoppedAt": "output upper/lower surface lineage",
+    "lineageFailures": {
+      "upperTriangles": 15,
+      "lowerTriangles": 10,
+      "inverseDirectionMicroSlivers": 3
+    },
+    "supportsRailsActorChecksReached": false,
+    "buildArchive": "east-v4-curvature-build/archive-proof.json",
+    "renderArchive": "east-v4-failed-shape-view/archive-proof.json"
+  },
+  "decision": "After v2 and v4 visual comparisons, change the construction method to actual stairs with shared tread/riser vertices. The same visible tread surfaces must support actual feet and the use route; no hidden ramp with cosmetic steps.",
+  "nextConstraints": [
+    "Keep the four owner IDs, original trunk/fan, house/door, main endpoints and 0.64 width.",
+    "Determine step count and spacing from actual left/right foot geometry, heading and walking phases. The old 0.114833 figure was a smoothstep centerline run, not an inner-edge measurement; it does not establish that 18 steps are impossible.",
+    "Use explicit use-floor IDs and 3D routes when integrated. Preserve default ground/site support and existing owner rights."
+  ],
+  "images": [
+    {
+      "path": "../2026-10-10-island-final-3d/whole-island-render.png",
+      "label": "採用native-05・構図と回廊の参照",
+      "sha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6"
+    },
+    {
+      "path": "east-v2-failed-shape-view/runs/02-whole/failed-floor-only-HOLD-whole.png",
+      "label": "東案v2・全景（床のみ／位相不正）",
+      "sha256": "aaf8fc6498f78ef69e8b0031d80615a03f2ef82dd4d28001ed33439fb2623b8b"
+    },
+    {
+      "path": "east-v2-failed-shape-view/runs/03-entry/failed-floor-only-HOLD-entry-section.png",
+      "label": "東案v2・入口近景（床のみ／位相不正）",
+      "sha256": "b1da9ad3072a83a1a35831cdf9d1844e49681455feef7f3664ec94e5f2e9d277"
+    },
+    {
+      "path": "east-v4-failed-shape-view/runs/01-whole/failed-floor-only-HOLD-whole.png",
+      "label": "east v4 whole, failed floor only",
+      "sha256": "6ee3a8b39d7a523562373f062aa60447f08de7c1c69a1c891167db3920aafe92"
+    },
+    {
+      "path": "east-v4-failed-shape-view/runs/02-entry/failed-floor-only-HOLD-entry-section.png",
+      "label": "east v4 entry, failed floor only",
+      "sha256": "50ad2efe2c5ca9b1517bb037af9bdf2b6b87a5d9a4c064a397cf3ebf53210eb9"
+    }
+  ]
+}

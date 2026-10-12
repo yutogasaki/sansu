@@ -1,0 +1,10 @@
+{
+  "firstAttempt": "npm run dev -- --host 127.0.0.1 --port 5356 --strictPort",
+  "result": "Nested npm dev:island script ignored forwarded flags and started its configured 5198 port. No automated browser journey started on that target.",
+  "ownedPid": 52766,
+  "cwdConfirmed": "/private/tmp/sansu-authored-cove-c3/candidate",
+  "cleanup": "SIGTERM only to the verified newly started Vite PID; parent exited 143",
+  "correctedCommand": "SANSU_BUILD_REVISION=authored-cove-c3 VITE_ISLAND_ENABLED=true VITE_NATIVE_GROWING_ART=false ./node_modules/.bin/vite --host 127.0.0.1 --port 5356 --strictPort",
+  "target": "http://127.0.0.1:5356",
+  "sourceChanges": []
+}

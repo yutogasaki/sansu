@@ -1,0 +1,496 @@
+{
+  "createdAt": "2026-10-12T02:47:51.165073+00:00",
+  "sourceRoot": "/private/tmp/sansu-authored-shoulder-c2",
+  "destinationRoot": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-shoulder-runtime/c2",
+  "scope": "Immutable completed c2 core/closure/snapshot/installed-dependency/build-boundary raw evidence only. No candidate copy or other-agent prepared/regression files.",
+  "sourceBefore": {
+    "core/execution.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/core/execution.log.txt",
+      "sha256": "934a8c2e09f0c387ca369bea55d096d8359f17e9baa50c891e0f8e5c4b80601a",
+      "bytes": 149670
+    },
+    "core/report.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/core/report.json",
+      "sha256": "13da5d82d61987bb8303339aca07ee9cbcf0ea68a5d575115f921e511289e3af",
+      "bytes": 1743714
+    },
+    "core/terminal-summary.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/core/terminal-summary.json",
+      "sha256": "6ceb8caa203816841d3072657aa214d94ce49bbbba784127d502fba93126c549",
+      "bytes": 2091
+    },
+    "closure/c1-runtime-delta.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/c1-runtime-delta.json",
+      "sha256": "55c7712d674d41535ae0b5b92c1946804bd49be421b8c993b1eeaf117ad1ffe8",
+      "bytes": 1185
+    },
+    "closure/driver-input-audit.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/driver-input-audit.json",
+      "sha256": "9ada786733df50de0cfd05820e97c56ef021e19bdcbc8f50cb2c7df5936410b2",
+      "bytes": 481
+    },
+    "closure/driver-inputs.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/driver-inputs.txt",
+      "sha256": "1a6b282f715652440b5075e0aded8ab96fb3878f10af12143c409d87f7b239ab",
+      "bytes": 91040
+    },
+    "closure/import-audit.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/import-audit.json",
+      "sha256": "457b2e587b73eb568c7af940808b6dbaf14b2ab3625bff9c106bbbd137dec7f6",
+      "bytes": 8497
+    },
+    "closure/inputs.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/inputs.json",
+      "sha256": "142a3d1b21d5f49167d914c96d72e580913c702b2c820cd8e54bc918293b89fd",
+      "bytes": 857523
+    },
+    "closure/inputs.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/inputs.txt",
+      "sha256": "da932de9af82fb339856dbfbda11d2b2bba5d59b5e5a4fb1f3cf825e3a53f903",
+      "bytes": 385940
+    },
+    "closure/installed-dependencies-proof.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/installed-dependencies-proof.json",
+      "sha256": "c68b4a827315bf3f02431d27ef5daf6a6d55209241f9d5f85a16f38f85b2e05a",
+      "bytes": 1149
+    },
+    "closure/installed-dependencies.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/installed-dependencies.json",
+      "sha256": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+      "bytes": 736
+    },
+    "closure/plan.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/plan.json",
+      "sha256": "3856d7effb4be762f28d4137d59cbcb03be9c1249778e42369055f78ef8e40ea",
+      "bytes": 1842
+    },
+    "closure/projection-local-inputs.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/projection-local-inputs.json",
+      "sha256": "0d66e330cf123510c3ea26bf05a9bc65892dfd94f95967a59bc1c33fa5dc6628",
+      "bytes": 10565
+    },
+    "closure/projection-metafile.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/projection-metafile.json",
+      "sha256": "f394f977ead1800f444d48d3526dcc5dd4faf8ff077b1ad156657fc50880663f",
+      "bytes": 67174
+    },
+    "closure/reasons.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/reasons.json",
+      "sha256": "7e260d6a683021a1a9a95a1f222e00791223cd0cfca57cdc3e53ae289546b5cd",
+      "bytes": 1743284
+    },
+    "closure/shoulder-driver-inputs.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/shoulder-driver-inputs.json",
+      "sha256": "f9da0a6e73315b6009dca287af6ec4278f8aa0daf5d2a6b0d80ee008f981cb15",
+      "bytes": 250297
+    },
+    "build-boundary/asset-budget.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/build-boundary/asset-budget.log.txt",
+      "sha256": "b5982d14985281a3f10a55d961dd566394fd3bf495301e985ee4419c62b360cc",
+      "bytes": 212
+    },
+    "build-boundary/dist-files.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/build-boundary/dist-files.json",
+      "sha256": "e264b8eb9b2275fd21a3f4353f912c88443b86688c83b518fa8adfe3fec1b8b4",
+      "bytes": 24870
+    },
+    "build-boundary/input-hashes.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/build-boundary/input-hashes.json",
+      "sha256": "142a3d1b21d5f49167d914c96d72e580913c702b2c820cd8e54bc918293b89fd",
+      "bytes": 857523
+    },
+    "build-boundary/inspect-build.mjs": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/build-boundary/inspect-build.mjs",
+      "sha256": "f4467af5b7976338089f4861b5b87708752fed5d13c283c80bb7019929634454",
+      "bytes": 15461
+    },
+    "build-boundary/inspection-notes.md": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/build-boundary/inspection-notes.md",
+      "sha256": "e00c47752320208c1c426f3ee0039383533b9bcbdfb169a27f159fa41f64ce25",
+      "bytes": 2274
+    },
+    "build-boundary/report.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/build-boundary/report.json",
+      "sha256": "148fa265281025d0878834d92050fc125f49f85ee4291b8666f49f603c85fc1b",
+      "bytes": 29539
+    },
+    "snapshot/snapshot.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/snapshot.json",
+      "sha256": "59e4fe1d4c6662073b156a304a1ae471c0bef0c9187e6bfde93b49e694494879",
+      "bytes": 3299872
+    },
+    "snapshot/execution.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/snapshot-execution.log.txt",
+      "sha256": "c57fde6ff518472368c2863d2569dd92f19a4e1edd47f6fe7d8c3579633f575b",
+      "bytes": 122
+    },
+    "closure/closure-execution.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure-execution.log.txt",
+      "sha256": "3856d7effb4be762f28d4137d59cbcb03be9c1249778e42369055f78ef8e40ea",
+      "bytes": 1842
+    },
+    "closure/static-imports-execution.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/static-imports-execution.log.txt",
+      "sha256": "3bcc239d30a789b767185e5920c8e2473719053112e50ad9bcc54682ea8b8de9",
+      "bytes": 44
+    },
+    "closure/driver-inputs-execution.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/driver-inputs-execution.log.txt",
+      "sha256": "e4396eea23d351f7ed2e31bd65280899f87575105fe0cd42029f2b8a34b340a8",
+      "bytes": 440
+    },
+    "core/runner-execution.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/core-runner-execution.log.txt",
+      "sha256": "e215d8ff7caf2bb76811d25503a897e01ed26d403223f8b1294fe0fb7c8b7803",
+      "bytes": 123
+    },
+    "core/execution-handoff.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/execution-handoff.json",
+      "sha256": "bddf0eeef36295a57fef701ee26b0a42a3e679e1c76a4f7024386ce5c46ca013",
+      "bytes": 4230
+    },
+    "installed-dependencies/execution.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/installed-dependencies-execution.log.txt",
+      "sha256": "fa195e0d3fb4e13f24195a843ed5dd4ea5f322b3ea0930fa5240aaf9271f0389",
+      "bytes": 1045
+    },
+    "installed-dependencies/installed-dependencies.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/installed-dependencies.json",
+      "sha256": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+      "bytes": 736
+    },
+    "installed-dependencies/installed-dependencies-proof.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/installed-dependencies-proof.json",
+      "sha256": "c68b4a827315bf3f02431d27ef5daf6a6d55209241f9d5f85a16f38f85b2e05a",
+      "bytes": 1149
+    },
+    "build-boundary/execution.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/build-boundary-prepared/execution.log.txt",
+      "sha256": "6f710aa78cc589b9b477cff37c76e551dfdef4e4fadf14a82e9318ba35c20a0b",
+      "bytes": 320
+    }
+  },
+  "sourceAfter": {
+    "core/execution.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/core/execution.log.txt",
+      "sha256": "934a8c2e09f0c387ca369bea55d096d8359f17e9baa50c891e0f8e5c4b80601a",
+      "bytes": 149670
+    },
+    "core/report.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/core/report.json",
+      "sha256": "13da5d82d61987bb8303339aca07ee9cbcf0ea68a5d575115f921e511289e3af",
+      "bytes": 1743714
+    },
+    "core/terminal-summary.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/core/terminal-summary.json",
+      "sha256": "6ceb8caa203816841d3072657aa214d94ce49bbbba784127d502fba93126c549",
+      "bytes": 2091
+    },
+    "closure/c1-runtime-delta.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/c1-runtime-delta.json",
+      "sha256": "55c7712d674d41535ae0b5b92c1946804bd49be421b8c993b1eeaf117ad1ffe8",
+      "bytes": 1185
+    },
+    "closure/driver-input-audit.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/driver-input-audit.json",
+      "sha256": "9ada786733df50de0cfd05820e97c56ef021e19bdcbc8f50cb2c7df5936410b2",
+      "bytes": 481
+    },
+    "closure/driver-inputs.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/driver-inputs.txt",
+      "sha256": "1a6b282f715652440b5075e0aded8ab96fb3878f10af12143c409d87f7b239ab",
+      "bytes": 91040
+    },
+    "closure/import-audit.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/import-audit.json",
+      "sha256": "457b2e587b73eb568c7af940808b6dbaf14b2ab3625bff9c106bbbd137dec7f6",
+      "bytes": 8497
+    },
+    "closure/inputs.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/inputs.json",
+      "sha256": "142a3d1b21d5f49167d914c96d72e580913c702b2c820cd8e54bc918293b89fd",
+      "bytes": 857523
+    },
+    "closure/inputs.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/inputs.txt",
+      "sha256": "da932de9af82fb339856dbfbda11d2b2bba5d59b5e5a4fb1f3cf825e3a53f903",
+      "bytes": 385940
+    },
+    "closure/installed-dependencies-proof.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/installed-dependencies-proof.json",
+      "sha256": "c68b4a827315bf3f02431d27ef5daf6a6d55209241f9d5f85a16f38f85b2e05a",
+      "bytes": 1149
+    },
+    "closure/installed-dependencies.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/installed-dependencies.json",
+      "sha256": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+      "bytes": 736
+    },
+    "closure/plan.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/plan.json",
+      "sha256": "3856d7effb4be762f28d4137d59cbcb03be9c1249778e42369055f78ef8e40ea",
+      "bytes": 1842
+    },
+    "closure/projection-local-inputs.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/projection-local-inputs.json",
+      "sha256": "0d66e330cf123510c3ea26bf05a9bc65892dfd94f95967a59bc1c33fa5dc6628",
+      "bytes": 10565
+    },
+    "closure/projection-metafile.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/projection-metafile.json",
+      "sha256": "f394f977ead1800f444d48d3526dcc5dd4faf8ff077b1ad156657fc50880663f",
+      "bytes": 67174
+    },
+    "closure/reasons.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/reasons.json",
+      "sha256": "7e260d6a683021a1a9a95a1f222e00791223cd0cfca57cdc3e53ae289546b5cd",
+      "bytes": 1743284
+    },
+    "closure/shoulder-driver-inputs.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/shoulder-driver-inputs.json",
+      "sha256": "f9da0a6e73315b6009dca287af6ec4278f8aa0daf5d2a6b0d80ee008f981cb15",
+      "bytes": 250297
+    },
+    "build-boundary/asset-budget.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/build-boundary/asset-budget.log.txt",
+      "sha256": "b5982d14985281a3f10a55d961dd566394fd3bf495301e985ee4419c62b360cc",
+      "bytes": 212
+    },
+    "build-boundary/dist-files.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/build-boundary/dist-files.json",
+      "sha256": "e264b8eb9b2275fd21a3f4353f912c88443b86688c83b518fa8adfe3fec1b8b4",
+      "bytes": 24870
+    },
+    "build-boundary/input-hashes.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/build-boundary/input-hashes.json",
+      "sha256": "142a3d1b21d5f49167d914c96d72e580913c702b2c820cd8e54bc918293b89fd",
+      "bytes": 857523
+    },
+    "build-boundary/inspect-build.mjs": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/build-boundary/inspect-build.mjs",
+      "sha256": "f4467af5b7976338089f4861b5b87708752fed5d13c283c80bb7019929634454",
+      "bytes": 15461
+    },
+    "build-boundary/inspection-notes.md": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/build-boundary/inspection-notes.md",
+      "sha256": "e00c47752320208c1c426f3ee0039383533b9bcbdfb169a27f159fa41f64ce25",
+      "bytes": 2274
+    },
+    "build-boundary/report.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/build-boundary/report.json",
+      "sha256": "148fa265281025d0878834d92050fc125f49f85ee4291b8666f49f603c85fc1b",
+      "bytes": 29539
+    },
+    "snapshot/snapshot.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/snapshot.json",
+      "sha256": "59e4fe1d4c6662073b156a304a1ae471c0bef0c9187e6bfde93b49e694494879",
+      "bytes": 3299872
+    },
+    "snapshot/execution.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/snapshot-execution.log.txt",
+      "sha256": "c57fde6ff518472368c2863d2569dd92f19a4e1edd47f6fe7d8c3579633f575b",
+      "bytes": 122
+    },
+    "closure/closure-execution.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure-execution.log.txt",
+      "sha256": "3856d7effb4be762f28d4137d59cbcb03be9c1249778e42369055f78ef8e40ea",
+      "bytes": 1842
+    },
+    "closure/static-imports-execution.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/static-imports-execution.log.txt",
+      "sha256": "3bcc239d30a789b767185e5920c8e2473719053112e50ad9bcc54682ea8b8de9",
+      "bytes": 44
+    },
+    "closure/driver-inputs-execution.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/driver-inputs-execution.log.txt",
+      "sha256": "e4396eea23d351f7ed2e31bd65280899f87575105fe0cd42029f2b8a34b340a8",
+      "bytes": 440
+    },
+    "core/runner-execution.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/core-runner-execution.log.txt",
+      "sha256": "e215d8ff7caf2bb76811d25503a897e01ed26d403223f8b1294fe0fb7c8b7803",
+      "bytes": 123
+    },
+    "core/execution-handoff.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/execution-handoff.json",
+      "sha256": "bddf0eeef36295a57fef701ee26b0a42a3e679e1c76a4f7024386ce5c46ca013",
+      "bytes": 4230
+    },
+    "installed-dependencies/execution.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/installed-dependencies-execution.log.txt",
+      "sha256": "fa195e0d3fb4e13f24195a843ed5dd4ea5f322b3ea0930fa5240aaf9271f0389",
+      "bytes": 1045
+    },
+    "installed-dependencies/installed-dependencies.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/installed-dependencies.json",
+      "sha256": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+      "bytes": 736
+    },
+    "installed-dependencies/installed-dependencies-proof.json": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/closure/installed-dependencies-proof.json",
+      "sha256": "c68b4a827315bf3f02431d27ef5daf6a6d55209241f9d5f85a16f38f85b2e05a",
+      "bytes": 1149
+    },
+    "build-boundary/execution.log.txt": {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/build-boundary-prepared/execution.log.txt",
+      "sha256": "6f710aa78cc589b9b477cff37c76e551dfdef4e4fadf14a82e9318ba35c20a0b",
+      "bytes": 320
+    }
+  },
+  "destinationFiles": {
+    "core/execution.log.txt": {
+      "sha256": "934a8c2e09f0c387ca369bea55d096d8359f17e9baa50c891e0f8e5c4b80601a",
+      "bytes": 149670
+    },
+    "core/report.json": {
+      "sha256": "13da5d82d61987bb8303339aca07ee9cbcf0ea68a5d575115f921e511289e3af",
+      "bytes": 1743714
+    },
+    "core/terminal-summary.json": {
+      "sha256": "6ceb8caa203816841d3072657aa214d94ce49bbbba784127d502fba93126c549",
+      "bytes": 2091
+    },
+    "closure/c1-runtime-delta.json": {
+      "sha256": "55c7712d674d41535ae0b5b92c1946804bd49be421b8c993b1eeaf117ad1ffe8",
+      "bytes": 1185
+    },
+    "closure/driver-input-audit.json": {
+      "sha256": "9ada786733df50de0cfd05820e97c56ef021e19bdcbc8f50cb2c7df5936410b2",
+      "bytes": 481
+    },
+    "closure/driver-inputs.txt": {
+      "sha256": "1a6b282f715652440b5075e0aded8ab96fb3878f10af12143c409d87f7b239ab",
+      "bytes": 91040
+    },
+    "closure/import-audit.json": {
+      "sha256": "457b2e587b73eb568c7af940808b6dbaf14b2ab3625bff9c106bbbd137dec7f6",
+      "bytes": 8497
+    },
+    "closure/inputs.json": {
+      "sha256": "142a3d1b21d5f49167d914c96d72e580913c702b2c820cd8e54bc918293b89fd",
+      "bytes": 857523
+    },
+    "closure/inputs.txt": {
+      "sha256": "da932de9af82fb339856dbfbda11d2b2bba5d59b5e5a4fb1f3cf825e3a53f903",
+      "bytes": 385940
+    },
+    "closure/installed-dependencies-proof.json": {
+      "sha256": "c68b4a827315bf3f02431d27ef5daf6a6d55209241f9d5f85a16f38f85b2e05a",
+      "bytes": 1149
+    },
+    "closure/installed-dependencies.json": {
+      "sha256": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+      "bytes": 736
+    },
+    "closure/plan.json": {
+      "sha256": "3856d7effb4be762f28d4137d59cbcb03be9c1249778e42369055f78ef8e40ea",
+      "bytes": 1842
+    },
+    "closure/projection-local-inputs.json": {
+      "sha256": "0d66e330cf123510c3ea26bf05a9bc65892dfd94f95967a59bc1c33fa5dc6628",
+      "bytes": 10565
+    },
+    "closure/projection-metafile.json": {
+      "sha256": "f394f977ead1800f444d48d3526dcc5dd4faf8ff077b1ad156657fc50880663f",
+      "bytes": 67174
+    },
+    "closure/reasons.json": {
+      "sha256": "7e260d6a683021a1a9a95a1f222e00791223cd0cfca57cdc3e53ae289546b5cd",
+      "bytes": 1743284
+    },
+    "closure/shoulder-driver-inputs.json": {
+      "sha256": "f9da0a6e73315b6009dca287af6ec4278f8aa0daf5d2a6b0d80ee008f981cb15",
+      "bytes": 250297
+    },
+    "build-boundary/asset-budget.log.txt": {
+      "sha256": "b5982d14985281a3f10a55d961dd566394fd3bf495301e985ee4419c62b360cc",
+      "bytes": 212
+    },
+    "build-boundary/dist-files.json": {
+      "sha256": "e264b8eb9b2275fd21a3f4353f912c88443b86688c83b518fa8adfe3fec1b8b4",
+      "bytes": 24870
+    },
+    "build-boundary/input-hashes.json": {
+      "sha256": "142a3d1b21d5f49167d914c96d72e580913c702b2c820cd8e54bc918293b89fd",
+      "bytes": 857523
+    },
+    "build-boundary/inspect-build.mjs": {
+      "sha256": "f4467af5b7976338089f4861b5b87708752fed5d13c283c80bb7019929634454",
+      "bytes": 15461
+    },
+    "build-boundary/inspection-notes.md": {
+      "sha256": "e00c47752320208c1c426f3ee0039383533b9bcbdfb169a27f159fa41f64ce25",
+      "bytes": 2274
+    },
+    "build-boundary/report.json": {
+      "sha256": "148fa265281025d0878834d92050fc125f49f85ee4291b8666f49f603c85fc1b",
+      "bytes": 29539
+    },
+    "snapshot/snapshot.json": {
+      "sha256": "59e4fe1d4c6662073b156a304a1ae471c0bef0c9187e6bfde93b49e694494879",
+      "bytes": 3299872
+    },
+    "snapshot/execution.log.txt": {
+      "sha256": "c57fde6ff518472368c2863d2569dd92f19a4e1edd47f6fe7d8c3579633f575b",
+      "bytes": 122
+    },
+    "closure/closure-execution.log.txt": {
+      "sha256": "3856d7effb4be762f28d4137d59cbcb03be9c1249778e42369055f78ef8e40ea",
+      "bytes": 1842
+    },
+    "closure/static-imports-execution.log.txt": {
+      "sha256": "3bcc239d30a789b767185e5920c8e2473719053112e50ad9bcc54682ea8b8de9",
+      "bytes": 44
+    },
+    "closure/driver-inputs-execution.log.txt": {
+      "sha256": "e4396eea23d351f7ed2e31bd65280899f87575105fe0cd42029f2b8a34b340a8",
+      "bytes": 440
+    },
+    "core/runner-execution.log.txt": {
+      "sha256": "e215d8ff7caf2bb76811d25503a897e01ed26d403223f8b1294fe0fb7c8b7803",
+      "bytes": 123
+    },
+    "core/execution-handoff.json": {
+      "sha256": "bddf0eeef36295a57fef701ee26b0a42a3e679e1c76a4f7024386ce5c46ca013",
+      "bytes": 4230
+    },
+    "installed-dependencies/execution.log.txt": {
+      "sha256": "fa195e0d3fb4e13f24195a843ed5dd4ea5f322b3ea0930fa5240aaf9271f0389",
+      "bytes": 1045
+    },
+    "installed-dependencies/installed-dependencies.json": {
+      "sha256": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+      "bytes": 736
+    },
+    "installed-dependencies/installed-dependencies-proof.json": {
+      "sha256": "c68b4a827315bf3f02431d27ef5daf6a6d55209241f9d5f85a16f38f85b2e05a",
+      "bytes": 1149
+    },
+    "build-boundary/execution.log.txt": {
+      "sha256": "6f710aa78cc589b9b477cff37c76e551dfdef4e4fadf14a82e9318ba35c20a0b",
+      "bytes": 320
+    }
+  },
+  "byteIdentical": true,
+  "fileCount": 33,
+  "totalBytes": 9554990,
+  "originalScriptsBefore": {
+    "/private/tmp/sansu-authored-shoulder-c1/prepared/inspect-build.mjs": "f12a13af2742ef66844d887f29d402cb810217a8b0fd2eebf47b06c012ec9c07",
+    "/private/tmp/sansu-authored-shoulder-c2/build-boundary-prepared/inspect-build.mjs": "f4467af5b7976338089f4861b5b87708752fed5d13c283c80bb7019929634454"
+  },
+  "originalScriptsAfter": {
+    "/private/tmp/sansu-authored-shoulder-c1/prepared/inspect-build.mjs": "f12a13af2742ef66844d887f29d402cb810217a8b0fd2eebf47b06c012ec9c07",
+    "/private/tmp/sansu-authored-shoulder-c2/build-boundary-prepared/inspect-build.mjs": "f4467af5b7976338089f4861b5b87708752fed5d13c283c80bb7019929634454"
+  },
+  "notPresentAtArchive": [
+    "server-identity",
+    "startup"
+  ],
+  "excluded": [
+    "candidate",
+    "prepared",
+    "regressions",
+    "root README/documents"
+  ],
+  "note": "Proof is generated after copying and is not self-hashed. Source path mappings preserve exact bytes; some top-level raw inputs are grouped into named subdirectories."
+}

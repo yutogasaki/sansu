@@ -1,0 +1,63 @@
+{
+  "sha256": "f3a409266b1057ad348bcf759b9c878564028d3c463c8e01c5b0f151d128638e",
+  "top": {
+    "triangles": 1520,
+    "minimumNormalY": 0.35306845973462836,
+    "nonpositiveNormalY": 0,
+    "pairThreshold": 1e-12,
+    "sameThresholdAsPreviousDiagnostic": true,
+    "projectionArea": 2.6099809792877307
+  },
+  "overlapPairs": 0,
+  "solid": {
+    "topFaces": 1520,
+    "boundaryEdges": 388,
+    "float32UniqueTopVertices": 955,
+    "rawTopVertices": 955,
+    "sourceTopTrianglesRetained": true,
+    "intersectionWeldEpsilon": 1e-07,
+    "maximumIntersectionWeldDistance": 0.0,
+    "badEdges": 0,
+    "edgeValences": {
+      "2": 5724
+    },
+    "signedVolume": 0.18269866703884144,
+    "expectedAreaTimesThickness": 0.18269866855014116,
+    "volumeDelta": -1.5112997242550108e-09,
+    "float32TopNonpositiveY": 0,
+    "float32BottomNonnegativeY": 0,
+    "verticalColumnUniqueTopFromProjectionProof": true
+  },
+  "width": [
+    0.6399999999999983,
+    0.6400000000000017
+  ],
+  "endpoints": {
+    "joint": 0.0,
+    "galleryStart": 0.0,
+    "galleryEnd": 0.0
+  },
+  "curvature": {
+    "maximumAbsoluteCurvature": 2.476891056353531,
+    "halfWidth": 0.32,
+    "sampledMinimumOffsetScale": 0.20739486196687007,
+    "samplingNotAnalyticBound": true
+  },
+  "groundMin": 0.013206272365879679,
+  "groundBuried": 0,
+  "joinMismatch": [
+    {
+      "other": "terrainThreshold",
+      "count": 0,
+      "max": 6.661338147750939e-16
+    },
+    {
+      "other": "alignedOpening",
+      "count": 0,
+      "max": 6.661338147750939e-16
+    }
+  ],
+  "collisionRows": 0,
+  "collisionNames": {},
+  "seconds": 7.021222666
+}

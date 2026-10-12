@@ -1,0 +1,28 @@
+"""Prepare c3 static audits/core from frozen c2; no execution in this script."""
+from pathlib import Path
+import json, hashlib, difflib
+
+HERE = Path(__file__).resolve().parent
+OLD = Path('/private/tmp/sansu-authored-shoulder-c2/prepared')
+names = ['closure.py', 'collect-installed-dependencies.mjs', 'check-driver-imports.mjs', 'check-harness-inputs.mjs', 'core.py']
+records, patches = [], []
+sha = lambda b: hashlib.sha256(b).hexdigest()
+for name in names:
+    before = (OLD/name).read_text()
+    after = before.replace('/private/tmp/sansu-authored-shoulder-c2', '/private/tmp/sansu-authored-shoulder-c3').replace('authored-shoulder-c2', 'authored-shoulder-c3')
+    if name == 'closure.py':
+        after = after.replace("Path('/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-runtime/c4/core/report.json')", "Path('/private/tmp/sansu-authored-shoulder-c2/core/report.json')")
+        after = after.replace('durable c4 verified closure', 'fixed c2 verified closure')
+        after = after.replace("default='/Users/yutogasaki/Projects/sansu'", "default='/private/tmp/sansu-authored-shoulder-c3/candidate'")
+    if name == 'collect-installed-dependencies.mjs':
+        after = after.replace("?? '/Users/yutogasaki/Projects/sansu'", "?? '/private/tmp/sansu-authored-shoulder-c3/candidate'")
+    if name == 'core.py':
+        after = after.replace('Prepared shoulder c2 core runner.', 'Prepared shoulder c3 core runner.')
+        marker = "        assert snapshot['dest'] == str(REPO) and snapshot['changedDuringCopy'] == [], 'Snapshot is not fixed'"
+        assert after.count(marker) == 1
+        after = after.replace(marker, marker+"\n        assert snapshot['sourceDeltaExactlyThree'] is True and snapshot['copyProofFixed'] is True, 'c3 exact three-file provenance required'\n        report['sourceDeltaPaths'] = snapshot['sourceDeltaPaths']")
+    with (HERE/name).open('x') as f:f.write(after)
+    records.append({'file':name,'from':str(OLD/name),'beforeSha256':sha(before.encode()),'afterSha256':sha(after.encode())})
+    patches.extend(difflib.unified_diff(before.splitlines(True),after.splitlines(True),fromfile='c2/'+name,tofile='c3/'+name))
+with (HERE/'c2-to-c3-runners.diff').open('x') as f:f.writelines(patches)
+with (HERE/'adaptation.json').open('x') as f:f.write(json.dumps({'scope':'Five adapted preparation/core scripts. No copied c2 result relabelled as c3 and no regression runner is authorized.', 'files':records},indent=2)+'\n')

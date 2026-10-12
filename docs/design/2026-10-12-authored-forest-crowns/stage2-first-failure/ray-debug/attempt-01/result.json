@@ -1,0 +1,112 @@
+{
+  "finishedAtUtc": "2026-10-12T03:57:55.055692+00:00",
+  "scope": "first trunk query only",
+  "rawFailureReproduced": true,
+  "tracedFailureReproduced": true,
+  "kernelMethodsUnmodified": true,
+  "inputsUnchanged": true,
+  "objectDigestsBefore": {
+    "role-l14-2743": "9cc715b81f12450e49f0cad65f258b95b43dd886528e3e9003d75f1e1d206baf",
+    "role-l14-2234": "75740f05dab88e014e2be1fd46c65f5dc9af926b6672bc55cede3edaa9b64e0a"
+  },
+  "objectDigestsAfter": {
+    "role-l14-2743": "9cc715b81f12450e49f0cad65f258b95b43dd886528e3e9003d75f1e1d206baf",
+    "role-l14-2234": "75740f05dab88e014e2be1fd46c65f5dc9af926b6672bc55cede3edaa9b64e0a"
+  },
+  "objectsUnchanged": true,
+  "queryCount": 1,
+  "rayCount": 130,
+  "zeroAdvanceCount": 129,
+  "firstZeroAdvance": {
+    "queryIndex": 0,
+    "call": 0,
+    "origin": [
+      2.4679999351501465,
+      3.0542500019073486,
+      -4.0
+    ],
+    "direction": [
+      0.810893177986145,
+      0.300841361284256,
+      0.5019428730010986
+    ],
+    "maxDistance": 100,
+    "hit": [
+      2.5571773052215576,
+      3.0873348712921143,
+      -3.9447991847991943
+    ],
+    "normal": [
+      0.8677016496658325,
+      -0.1264355480670929,
+      0.48073670268058777
+    ],
+    "triangle": 721,
+    "distance": 0.10997412353754044,
+    "nextOrigin": [
+      2.5571773052215576,
+      3.0873348712921143,
+      -3.9447991847991943
+    ],
+    "advanceFromHit": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "advanceFromHitLength": 0.0,
+    "originToNext": [
+      0.08917737007141113,
+      0.033084869384765625,
+      0.055200815200805664
+    ],
+    "doubleIntendedNext": [
+      2.5571773863108755,
+      3.0873349013762503,
+      -3.944799134604907
+    ],
+    "doubleIntendedDelta": [
+      8.10893177986145e-08,
+      3.00841361284256e-08,
+      5.019428730010986e-08
+    ],
+    "hitFloat32": [
+      {
+        "bitsHex": "4023a8cb",
+        "ulpUp": 2.384185791015625e-07,
+        "ulpDown": 2.384185791015625e-07
+      },
+      {
+        "bitsHex": "404596e5",
+        "ulpUp": 2.384185791015625e-07,
+        "ulpDown": 2.384185791015625e-07
+      },
+      {
+        "bitsHex": "c07c7797",
+        "ulpUp": 2.384185791015625e-07,
+        "ulpDown": 2.384185791015625e-07
+      }
+    ],
+    "nextFloat32": [
+      {
+        "bitsHex": "4023a8cb",
+        "ulpUp": 2.384185791015625e-07,
+        "ulpDown": 2.384185791015625e-07
+      },
+      {
+        "bitsHex": "404596e5",
+        "ulpUp": 2.384185791015625e-07,
+        "ulpDown": 2.384185791015625e-07
+      },
+      {
+        "bitsHex": "c07c7797",
+        "ulpUp": 2.384185791015625e-07,
+        "ulpDown": 2.384185791015625e-07
+      }
+    ]
+  },
+  "repeatedHits": 127,
+  "recordedNextOriginMatchesActualNextCalls": true,
+  "noGeometryAcceptance": true,
+  "noKernelFix": true,
+  "noRender": true
+}

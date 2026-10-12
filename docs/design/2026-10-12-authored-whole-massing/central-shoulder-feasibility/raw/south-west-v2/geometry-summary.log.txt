@@ -1,0 +1,432 @@
+{
+  "scope": "TMP numerical curved terrain feasibility only. New2 grant supports are real triangles in this diagnostic world, not implemented source/app. Full-width coverage proves projected dry floor, not gait/animation/art acceptance. Topology filters degenerate clip fans at world compiler threshold; retained area logged.",
+  "inputs": {
+    "/private/tmp/sansu-whole-massing-c-terrain/south-west-v2/candidate-proof.json": "a4419d9993c4297f92c1538b19a6894330eb8e5efe0403505e0fdcb2ca1e63a8",
+    "/private/tmp/sansu-whole-massing-c-terrain/south-west-v2/candidate-world.json.gz": "4ff740c5055e1dcd27ddefb26da8925b6aeaa125162ee2414f4fab19778aa74d",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/native05-world.json.gz": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08"
+  },
+  "floor": {
+    "boundaryArea": 5.0030166674878185,
+    "newSumArea": 5.003016667487799,
+    "newUnionArea": 5.003016667487818,
+    "newInternalOverlapArea": -1.865174681370263e-14,
+    "missingRegionArea": 0.0,
+    "outsideRegionArea": 0.0,
+    "newVsRetainedSourceFloorOverlap": 6.093035617854313e-17,
+    "sharedBoundaryVertices": 998,
+    "boundaryNoSourceHit": 0,
+    "maxBoundaryHeightError": 3.747002708109903e-15,
+    "clipSlivers": {
+      "area": 3.552713678800501e-15,
+      "count": 4
+    },
+    "routeCenterline": [
+      [
+        6.0,
+        -5.25
+      ],
+      [
+        9.0,
+        -5.25
+      ]
+    ],
+    "actorClearanceHalfWidth": 0.28406937059140586,
+    "sweptArea": 2.027197852781227,
+    "uncoveredSweptArea": 1.8680853794530985e-17
+  },
+  "oldGrants": 73,
+  "oldGrantWholeFootprintsOverlappingC": [],
+  "profiles": [
+    {
+      "x": 6,
+      "section": [
+        {
+          "z": -7,
+          "original": 1.2075696813347556,
+          "candidate": 1.2075696813347556
+        },
+        {
+          "z": -6.75,
+          "original": 1.2172506802819278,
+          "candidate": 1.2172506802819278
+        },
+        {
+          "z": -6.46,
+          "original": 1.2388570802767436,
+          "candidate": 1.2388570802767436
+        },
+        {
+          "z": -6.25,
+          "original": 1.2271908592390126,
+          "candidate": 1.2271908592390126
+        },
+        {
+          "z": -6,
+          "original": 1.2221624352980822,
+          "candidate": 1.2221624352980829
+        },
+        {
+          "z": -5.75,
+          "original": 1.0326940788293026,
+          "candidate": 1.032694078829302
+        },
+        {
+          "z": -5.54,
+          "original": 0.6528600417711434,
+          "candidate": 0.6528600417711434
+        },
+        {
+          "z": -5.25,
+          "original": 0.21159111149598503,
+          "candidate": 0.21159111149598503
+        },
+        {
+          "z": -5,
+          "original": 0.022034493822509518,
+          "candidate": 0.022034493822509518
+        },
+        {
+          "z": -4.9,
+          "original": 0.011754525166225716,
+          "candidate": 0.011754525166225716
+        }
+      ]
+    },
+    {
+      "x": 6.5,
+      "section": [
+        {
+          "z": -7,
+          "original": 1.2061258764744571,
+          "candidate": 1.2061258764744571
+        },
+        {
+          "z": -6.75,
+          "original": 1.2060000039999998,
+          "candidate": 1.2060000040000003
+        },
+        {
+          "z": -6.46,
+          "original": 1.2230324550444065,
+          "candidate": 1.530428482113591
+        },
+        {
+          "z": -6.25,
+          "original": 1.426400510065396,
+          "candidate": 1.604677859703109
+        },
+        {
+          "z": -6,
+          "original": 1.573991731706478,
+          "candidate": 1.5679186657015374
+        },
+        {
+          "z": -5.75,
+          "original": 1.1599451809677717,
+          "candidate": 1.4626202238402874
+        },
+        {
+          "z": -5.54,
+          "original": 0.7381962046952277,
+          "candidate": 1.3375597486202566
+        },
+        {
+          "z": -5.25,
+          "original": 0.24124829898805228,
+          "candidate": 0.33545726797582964
+        },
+        {
+          "z": -5,
+          "original": 0.012259521263889727,
+          "candidate": 0.012259521263889727
+        },
+        {
+          "z": -4.9,
+          "original": -0.00912729706804242,
+          "candidate": -0.00912729706804242
+        }
+      ]
+    },
+    {
+      "x": 7,
+      "section": [
+        {
+          "z": -7,
+          "original": 1.3028128113618438,
+          "candidate": 1.3251937686214679
+        },
+        {
+          "z": -6.75,
+          "original": 1.3207677146752803,
+          "candidate": 1.5234124797677753
+        },
+        {
+          "z": -6.46,
+          "original": 1.5422535369829204,
+          "candidate": 1.723
+        },
+        {
+          "z": -6.25,
+          "original": 1.7340867304929297,
+          "candidate": 1.6600000000000001
+        },
+        {
+          "z": -6,
+          "original": 1.6291669744212625,
+          "candidate": 1.5850000000000002
+        },
+        {
+          "z": -5.75,
+          "original": 1.1948102757002075,
+          "candidate": 1.5100000000000002
+        },
+        {
+          "z": -5.54,
+          "original": 0.7615937378336367,
+          "candidate": 1.4470000000000003
+        },
+        {
+          "z": -5.25,
+          "original": 0.24907059991673003,
+          "candidate": 0.7727072409029695
+        },
+        {
+          "z": -5,
+          "original": 0.013352380734333728,
+          "candidate": 0.06223855499827856
+        },
+        {
+          "z": -4.9,
+          "original": -0.008964365643305968,
+          "candidate": -0.008964365643305966
+        }
+      ]
+    },
+    {
+      "x": 7.5,
+      "section": [
+        {
+          "z": -7,
+          "original": 1.9746992308029823,
+          "candidate": 1.9632516596709118
+        },
+        {
+          "z": -6.75,
+          "original": 1.9375475373880167,
+          "candidate": 1.8761182191054369
+        },
+        {
+          "z": -6.46,
+          "original": 1.9269528202987194,
+          "candidate": 1.738
+        },
+        {
+          "z": -6.25,
+          "original": 1.8498349598582957,
+          "candidate": 1.675
+        },
+        {
+          "z": -6,
+          "original": 1.6605047757685194,
+          "candidate": 1.6
+        },
+        {
+          "z": -5.75,
+          "original": 1.2166585017017757,
+          "candidate": 1.5250000000000001
+        },
+        {
+          "z": -5.54,
+          "original": 0.7746338908695032,
+          "candidate": 1.4620000000000002
+        },
+        {
+          "z": -5.25,
+          "original": 0.253757665047132,
+          "candidate": 0.8646987271881194
+        },
+        {
+          "z": -5,
+          "original": 0.014041858753491183,
+          "candidate": 0.21068498089429827
+        },
+        {
+          "z": -4.9,
+          "original": -0.008948915067416173,
+          "candidate": -0.00894891506741617
+        }
+      ]
+    },
+    {
+      "x": 8,
+      "section": [
+        {
+          "z": -7,
+          "original": 2.0381068257642614,
+          "candidate": 2.028491707603811
+        },
+        {
+          "z": -6.75,
+          "original": 1.917736818262897,
+          "candidate": 1.8789823824643923
+        },
+        {
+          "z": -6.46,
+          "original": 1.8312996645789825,
+          "candidate": 1.753
+        },
+        {
+          "z": -6.25,
+          "original": 1.790757492729739,
+          "candidate": 1.69
+        },
+        {
+          "z": -6,
+          "original": 1.6348740217252704,
+          "candidate": 1.615
+        },
+        {
+          "z": -5.75,
+          "original": 1.1992654538043055,
+          "candidate": 1.54
+        },
+        {
+          "z": -5.54,
+          "original": 0.7643294804208752,
+          "candidate": 1.477
+        },
+        {
+          "z": -5.25,
+          "original": 0.24961130515659885,
+          "candidate": 0.8181708022070449
+        },
+        {
+          "z": -5,
+          "original": 0.013423267619824715,
+          "candidate": 0.11507346172959132
+        },
+        {
+          "z": -4.9,
+          "original": -0.008956402273078687,
+          "candidate": -0.008956402273078687
+        }
+      ]
+    },
+    {
+      "x": 8.5,
+      "section": [
+        {
+          "z": -7,
+          "original": 1.9110691444403685,
+          "candidate": 1.9110691444403685
+        },
+        {
+          "z": -6.75,
+          "original": 1.7444731006716112,
+          "candidate": 1.7689115845165644
+        },
+        {
+          "z": -6.46,
+          "original": 1.726952487166991,
+          "candidate": 1.759427968645644
+        },
+        {
+          "z": -6.25,
+          "original": 1.7310361343769671,
+          "candidate": 1.7011413231776311
+        },
+        {
+          "z": -6,
+          "original": 1.6253641581125997,
+          "candidate": 1.6294047780653698
+        },
+        {
+          "z": -5.75,
+          "original": 1.306351798432793,
+          "candidate": 1.5525138582879818
+        },
+        {
+          "z": -5.54,
+          "original": 0.8082776260004094,
+          "candidate": 1.4367665578016433
+        },
+        {
+          "z": -5.25,
+          "original": 0.24004290501685877,
+          "candidate": 0.4816572975686756
+        },
+        {
+          "z": -5,
+          "original": 0.012858040330170212,
+          "candidate": 0.012858040330170212
+        },
+        {
+          "z": -4.9,
+          "original": -0.008949230605049461,
+          "candidate": -0.008949230605049461
+        }
+      ]
+    },
+    {
+      "x": 9,
+      "section": [
+        {
+          "z": -7,
+          "original": 1.760667313084007,
+          "candidate": 1.760667313084007
+        },
+        {
+          "z": -6.75,
+          "original": 1.6881687054962093,
+          "candidate": 1.6881687054962096
+        },
+        {
+          "z": -6.46,
+          "original": 1.6744488404292057,
+          "candidate": 1.6744488404292053
+        },
+        {
+          "z": -6.25,
+          "original": 1.6707644651408524,
+          "candidate": 1.670266058939759
+        },
+        {
+          "z": -6,
+          "original": 1.6387225484773142,
+          "candidate": 1.639463621814799
+        },
+        {
+          "z": -5.75,
+          "original": 1.5363398968637538,
+          "candidate": 1.5402371341372785
+        },
+        {
+          "z": -5.54,
+          "original": 0.9001319960459723,
+          "candidate": 0.9001319960459727
+        },
+        {
+          "z": -5.25,
+          "original": 0.2234482230321383,
+          "candidate": 0.2234482230321388
+        },
+        {
+          "z": -5,
+          "original": 0.011273019314099453,
+          "candidate": 0.011273019314099453
+        },
+        {
+          "z": -4.9,
+          "original": -0.008965438772260017,
+          "candidate": -0.008965438772260017
+        }
+      ]
+    }
+  ],
+  "finalInputs": {
+    "/private/tmp/sansu-whole-massing-c-terrain/south-west-v2/candidate-proof.json": "a4419d9993c4297f92c1538b19a6894330eb8e5efe0403505e0fdcb2ca1e63a8",
+    "/private/tmp/sansu-whole-massing-c-terrain/south-west-v2/candidate-world.json.gz": "4ff740c5055e1dcd27ddefb26da8925b6aeaa125162ee2414f4fab19778aa74d",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/native05-world.json.gz": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08"
+  },
+  "inputsUnchanged": true
+}

@@ -1,0 +1,51 @@
+import copy
+import unittest
+from scope_gate import inspect
+
+
+def fixture(derived=6):
+    roles={'l14:'+str(i):'source-'+str(i) for i in range(128)}
+    created={'bough-'+str(i):'l14' for i in range(derived)}
+    context={'context-'+str(i) for i in range(314)}
+    records=[{'token':token,'owner':'l14','sourceNode':int(key.split(':')[1]),'role':'native-role'} for key,token in roles.items()]
+    records += [{'token':token,'owner':owner,'sourceNode':None,'role':'derived-native-junction'} for token,owner in created.items()]
+    records += [{'token':token,'owner':None,'sourceNode':None,'role':None} for token in context]
+    return records,roles,created,context
+
+
+class ScopeTest(unittest.TestCase):
+    def test_exact_original128_plus_recorded6_context314(self):
+        r=inspect(*fixture());self.assertTrue(r['passed']);self.assertEqual(r['actualDerivedCount'],6)
+
+    def test_prejoint_original128_context314_is_distinct_valid_scope(self):
+        r=inspect(*fixture(0));self.assertTrue(r['passed']);self.assertEqual(r['actualDerivedCount'],0)
+
+    def test_unknown_tag_on_context_is_not_ignored(self):
+        a=fixture();a[0][-1]['role']='unknown-role';self.assertFalse(inspect(*a)['passed'])
+
+    def test_extra_unrecorded_derived_is_not_ignored(self):
+        a=fixture();a[0].append({'token':'unrecorded','owner':'l14','sourceNode':None,'role':'derived-native-junction'})
+        self.assertFalse(inspect(*a)['passed'])
+
+    def test_missing_recorded_bough_rejected(self):
+        a=fixture();a[0][:]=[r for r in a[0] if r['token']!='bough-2'];self.assertFalse(inspect(*a)['passed'])
+
+    def test_changed_original_identity_rejected(self):
+        a=fixture();a[0][0]['sourceNode']=10000;self.assertFalse(inspect(*a)['passed'])
+
+    def test_duplicate_original_identity_rejected(self):
+        a=fixture();a[0][0]['sourceNode']=1;self.assertFalse(inspect(*a)['passed'])
+
+    def test_derived_owner_or_role_mismatch_rejected(self):
+        for field,value in [('owner','unowned'),('role','unknown')]:
+            a=fixture();next(r for r in a[0] if r['token']=='bough-0')[field]=value
+            self.assertFalse(inspect(*a)['passed'])
+
+    def test_copy_cannot_replace_original_under_same_identity(self):
+        a=fixture();a[0][0]['token']='diagnostic-copy';self.assertFalse(inspect(*a)['passed'])
+
+    def test_missing_or_extra_context_rejected(self):
+        a=fixture();a[0].pop();self.assertFalse(inspect(*a)['passed'])
+
+
+if __name__=='__main__':unittest.main(verbosity=2)

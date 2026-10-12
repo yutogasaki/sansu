@@ -1,0 +1,22 @@
+import fs from 'node:fs';import {createHash} from 'node:crypto';import {createRequire} from 'node:module';import {gunzipSync} from 'node:zlib';
+const repo='/Users/yutogasaki/Projects/sansu',out='/private/tmp/sansu-authored-cove-v4-independent',require=createRequire(`${repo}/package.json`),{build}=require('esbuild');
+const sha=p=>createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+const bundled=await build({stdin:{contents:`
+export {compileWorldDefinition} from './src/domain/growingIsland/worldDefinition.ts';
+export {withNative05WaterCarvingScope} from './src/domain/growingIsland/authoredWaterCarving.ts';
+export {authoredWorldFrame} from './src/domain/growingIsland/authoredWorldFrame.ts';
+export {authoredCoveGroundRevision,AUTHORED_COVE_SOURCE_PROFILE} from './src/domain/growingIsland/authoredCoveWorld.ts';
+`,resolveDir:repo,loader:'ts'},write:false,bundle:true,packages:'external',format:'cjs',platform:'node',metafile:true,logLevel:'silent'});
+const inputPaths=[...Object.keys(bundled.metafile.inputs).filter(p=>p!=='<stdin>'), 'prototypes/place-qa/native05-world.json.gz','prototypes/place-qa/authored-flower-reference-mature.json'];
+const initialInputs=Object.fromEntries(inputPaths.map(p=>[p,sha(`${repo}/${p}`)]));
+const mod={exports:{}};new Function('require','module','exports',bundled.outputFiles[0].text)(require,mod,mod.exports);const api=mod.exports;
+const base=api.withNative05WaterCarvingScope(api.compileWorldDefinition(JSON.parse(gunzipSync(fs.readFileSync(`${repo}/prototypes/place-qa/native05-world.json.gz`)))));
+const state=JSON.parse(fs.readFileSync(`${repo}/prototypes/place-qa/authored-flower-reference-mature.json`)).state;
+const bounds={min:{x:5,z:-3.5},max:{x:11,z:3.5}},water=api.authoredWorldFrame(state,base,{water:true,cove:false}).world;
+const revisions={base:api.authoredCoveGroundRevision(base,bounds),water:api.authoredCoveGroundRevision(water,bounds)};
+const profile={...structuredClone(api.AUTHORED_COVE_SOURCE_PROFILE),revision:'native05-cove-fixed-water-homes-shore-v4',localGround:{...bounds,revision:revisions.base},clearCourt:structuredClone(bounds)};
+const assemblies=(s,p,w)=>api.authoredWorldFrame(s,base,{water:w,cove:true},p).covePlan?.assemblies.length;
+const changed=structuredClone(state);changed.plots.push({...structuredClone(state.plots.find(p=>p.kind==='play')),id:'independent-near-owner',cell:{x:10.7,z:3.1}});
+const results=[false,true].map(water=>({water,currentFixture:assemblies(state,profile,water),nearOwnerNewBounds:assemblies(changed,profile,water),nearOwnerOldBounds:assemblies(changed,api.AUTHORED_COVE_SOURCE_PROFILE,water)}));
+const report={scope:'Read-only proposed expanded eligibility profile, no app mutation',bounds,revisions,results,initialInputs,finalInputs:Object.fromEntries(inputPaths.map(p=>[p,sha(`${repo}/${p}`)])),inputHashesUnchanged:inputPaths.every(p=>sha(`${repo}/${p}`)===initialInputs[p])};
+fs.writeFileSync(`${out}/bounds-audit.json`,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({...report,initialInputs:undefined,finalInputs:undefined},null,2));

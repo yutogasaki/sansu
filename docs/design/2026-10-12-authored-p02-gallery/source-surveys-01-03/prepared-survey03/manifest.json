@@ -1,0 +1,82 @@
+{
+  "status": "PREPARED_AND_AUTHORIZED_ONCE",
+  "command": [
+    "python3",
+    "supervise.py",
+    "--scheduled",
+    "--seconds",
+    "180",
+    "--rss-mib",
+    "2560",
+    "--log",
+    "runs/03-survey.log.txt",
+    "--",
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "source-study.py",
+    "--",
+    "measure",
+    "--scheduled",
+    "--out",
+    "runs/03-survey"
+  ],
+  "workingDirectory": "/private/tmp/sansu-p02-gallery-source-study",
+  "inputSha256": {
+    "context": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+    "leftTrees": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+    "contextManifest": "3c3fcd13bf4867946a0f393769f852cb938286329dfa2e11dac3afe74796bda2",
+    "forestStudy": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+    "sourceBlend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "sourceGlb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "benchmark": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+    "envelope": "444beab3c5b078799e974424e225e0a2e6742d6b99ad7e94be5edb54088af1db"
+  },
+  "files": {
+    "source-study.py": {
+      "sha256": "d0c32c205d8e89443d3920ae7e67f5fa372b508340e18bbc5479105f249ae5a5",
+      "bytes": 29203
+    },
+    "entry_geometry.py": {
+      "sha256": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+      "bytes": 7937
+    },
+    "donor_reference.py": {
+      "sha256": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+      "bytes": 3333
+    },
+    "check-donor-reference.py": {
+      "sha256": "f42c23086021971b60d25767f5a34ad328847773c130595023323e4f011000ec",
+      "bytes": 3164
+    },
+    "supervise.py": {
+      "sha256": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+      "bytes": 1920
+    },
+    "study.json": {
+      "sha256": "258376c7a16aed0aa4645e7b08b95f4392057309c4996d629e4542cb13f4ecc9",
+      "bytes": 11855
+    }
+  },
+  "changesFromRun02": [
+    "donor_names is immutable tuple; bpy destination gets a fresh list; post-load str/equality assert",
+    "static fixture simulates destination-list Object replacement",
+    "--python-exit-code 1 added so Python exception cannot be mistaken for exit0 success"
+  ],
+  "unchanged": [
+    "8 source inputs",
+    "geometry/design/entry candidates",
+    "EPS and all landing/HOLD gates",
+    "all donor transform/bounds checks",
+    "CPU2/180seconds/2560MiB",
+    "no build/render"
+  ],
+  "staticArithmeticCasesPassed": 9,
+  "staticLogSha256": "0b5bea78a8b4ea74ece0d85897727ec9ff800e6e471fd838c21b3306f66287c3",
+  "historyProofSha256": "9f67a5f43e01e8092887cd58709a523b6fd19adeda57c7fc9ffa3e3b0983f747",
+  "executionPolicy": "one invocation, stop on exception/parity failure; no automatic retries"
+}

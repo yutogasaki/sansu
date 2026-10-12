@@ -1,0 +1,72 @@
+{
+  "scope": "Author-side source export audit, not browser/render or independent review.",
+  "inputs": {
+    "geometry-profile.json.gz": "7b4772489932b225d7b31ced5bd53c6835a47e8e63c71eeb43d7b59af1523d3b",
+    "central-shoulder-components-normal-v2.glb": "c79e2cd7a228b24ff526e6d78913f6a07880e35dec1532d4c278dd7cbf10411e",
+    "central-shoulder-source-normal-v2.glb": "cd86121c32072053960e927866f9442b7168e281df9d8c46cf9807ce691b2ff9",
+    "source-context.glb": "22ad846e8c1fcfcdc9fd30a65b7398520c63b5fd5d54c60791c1342fa00f8059",
+    "selected-v3-handoff.json.gz": "a5e947cf22a7a2ad02272902f5836da464f0f89630001eea4be95583103efdb8"
+  },
+  "results": [
+    {
+      "name": "Central shoulder / continuous closed supporting soil",
+      "triangles": 15184,
+      "orientedTriangleMultisetExactFloat32": true,
+      "signedVolume": 9.015421019577628,
+      "topMaterials": [
+        {
+          "material": 0,
+          "triangles": 1722,
+          "rawPBRAndDoubleSidedExact": true
+        },
+        {
+          "material": 1,
+          "triangles": 4893,
+          "rawPBRAndDoubleSidedExact": true
+        }
+      ],
+      "maxNormalL2ErrorAfterProfileRestore": 4.3841199311342295e-08,
+      "normalLimit": 0.0002,
+      "normalNote": "Raw profile NORMAL accessors restored in v2. Editable Blender retains its custom split normal quantization (first-export max L2 0.0045255068); the reproducible restore script corrects exported top normals without touching geometry or materials."
+    },
+    {
+      "ownerId": "l33",
+      "triangles": 36,
+      "orientedTriangleMultisetExactFloat32": true,
+      "signedVolume": 0.009991655932920201,
+      "sourceMaterialPBRExact": true,
+      "sourceTreeCount": 1,
+      "treeTrianglesBefore": 27872,
+      "treeTrianglesAfter": 27872,
+      "maxCapVertexDistanceToOriginalContext": 2.1011308147299895e-07,
+      "maxCapVertexDistanceToFinalSourceTree": 2.1260898098983225e-07
+    },
+    {
+      "ownerId": "l34",
+      "triangles": 36,
+      "orientedTriangleMultisetExactFloat32": true,
+      "signedVolume": 0.0018310309307530612,
+      "sourceMaterialPBRExact": true,
+      "sourceTreeCount": 1,
+      "treeTrianglesBefore": 8608,
+      "treeTrianglesAfter": 8608,
+      "maxCapVertexDistanceToOriginalContext": 2.889809757107984e-07,
+      "maxCapVertexDistanceToFinalSourceTree": 2.86904248769654e-07
+    },
+    {
+      "ownerId": "l35",
+      "triangles": 36,
+      "orientedTriangleMultisetExactFloat32": true,
+      "signedVolume": 0.0021908427133880983,
+      "sourceMaterialPBRExact": true,
+      "sourceTreeCount": 1,
+      "treeTrianglesBefore": 1264,
+      "treeTrianglesAfter": 1264,
+      "maxCapVertexDistanceToOriginalContext": 3.469809543960709e-07,
+      "maxCapVertexDistanceToFinalSourceTree": 3.41875748333648e-07
+    }
+  ],
+  "fullSourceSingleSoilNode": true,
+  "removedOldCommonFloorMesh": true,
+  "fixedInputs": true
+}

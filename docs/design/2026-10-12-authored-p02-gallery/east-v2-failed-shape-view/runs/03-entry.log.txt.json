@@ -1,0 +1,29 @@
+{
+  "command": [
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "render-failed-type-node.py",
+    "--",
+    "--scheduled",
+    "--source",
+    "../east-v2/runs/01-coarse-build/failed-scene.blend",
+    "--out",
+    "runs/03-entry",
+    "--view",
+    "entry-section"
+  ],
+  "exitCode": 0,
+  "stop": null,
+  "peakSampledRssBytes": 2512732160,
+  "elapsedSeconds": 18.515801,
+  "limits": {
+    "seconds": 240,
+    "rssMiB": 2560
+  },
+  "sourceOnly": true
+}

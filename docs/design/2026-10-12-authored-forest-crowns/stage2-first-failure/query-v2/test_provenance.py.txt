@@ -1,0 +1,46 @@
+"""Pure read-only-verifier tests in disposable fixtures; launches nothing."""
+import json
+import tempfile
+from pathlib import Path
+from provenance import REQUIRED,digest,verify_readiness
+
+HERE=Path(__file__).resolve().parent
+OUT=HERE/'provenance-tests.json'
+assert not OUT.exists(),'Preserve first result'
+rows=[]
+with tempfile.TemporaryDirectory(dir=HERE,prefix='seal-fixture-') as folder:
+    root=Path(folder)
+    def setup():
+        for name in REQUIRED:
+            (root/name).write_text('# dummy data, never executed\n')
+        doc={'status':'READY-NOT-BLENDER-EXECUTED','files':{name:digest(root/name) for name in REQUIRED}}
+        (root/'readiness.json').write_text(json.dumps(doc))
+        (root/'readiness.sha256').write_text(digest(root/'readiness.json')+'\n')
+        return doc
+    setup()
+    before=verify_readiness(root)
+    assert REQUIRED|{'readiness.json','readiness.sha256'}==before.keys()
+    rows.append('all modules, adapter, comparison, runner, readiness and seal bound')
+    assert before==verify_readiness(root)
+    rows.append('unchanged pre/post exact match')
+    def rejects(name,mutate,expected):
+        setup();mutate()
+        try:
+            verify_readiness(root)
+        except ValueError as error:
+            assert expected in str(error),(name,error)
+            rows.append(name)
+            return
+        raise AssertionError('Failed to reject '+name)
+    rejects('module mutation',lambda:(root/'ray_query64.py').write_text('# changed\n'),'SHA mismatch')
+    rejects('adapter mutation',lambda:(root/'volume_adapter.py').write_text('# changed\n'),'SHA mismatch')
+    rejects('comparison mutation',lambda:(root/'compare-failed-query.py').write_text('# changed\n'),'SHA mismatch')
+    rejects('readiness mutation',lambda:(root/'readiness.json').write_text('{}'),'seal mismatch')
+    rejects('seal mutation',lambda:(root/'readiness.sha256').write_text('0'*64),'seal mismatch')
+    def omit_module():
+        doc=json.loads((root/'readiness.json').read_text());del doc['files']['volume_adapter.py']
+        (root/'readiness.json').write_text(json.dumps(doc))
+        (root/'readiness.sha256').write_text(digest(root/'readiness.json'))
+    rejects('required module omitted even with reseal',omit_module,'omitted')
+OUT.write_text(json.dumps({'complete':True,'checks':rows,'count':len(rows),'blenderLaunched':False},indent=2)+'\n')
+print(json.dumps({'checks':len(rows),'complete':True}))

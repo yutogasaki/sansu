@@ -1,0 +1,98 @@
+{
+  "status": "HOLD / cause narrowed to child matrix translation only; no retry",
+  "componentComparison": {
+    "fixedDigestEqual": false,
+    "sharpFlagsEqual": true,
+    "componentsEqual": {
+      "positions": true,
+      "loopVertexIndices": true,
+      "cornerNormals": true,
+      "matrixWorld": false,
+      "sharpFlags": true,
+      "materials": true,
+      "polygonVertices": true,
+      "polygonSmooth": true,
+      "parent": true
+    },
+    "before": {
+      "positions": "f5f96e28fa5f3b48a44d9679516de65b44d16eeeab9fd2a1dd78de298b1f74f3",
+      "loopVertexIndices": "089457d60d5af66aa1e5ea61c15bc3600dc6b3d41a39ef816a7cc3bcc3123d67",
+      "cornerNormals": "9178c8b5c655074ef8b1fc009e1e9842f6ca9c57ccba92bf0867ef47a8d662a1",
+      "matrixWorld": "e505c6f685c9e1901fd98ffde3ce71f5edb67a11c93f530926015a0b456f7ff3",
+      "sharpFlags": "e55bd8f3c86e2c725770d99898e59ccf5a41a84ab8630a78c92af6fe222364c8",
+      "materials": "670c3188da89ed417b9e7ea97688aa0b058422309c80a2a9361a2d20b677e613",
+      "polygonVertices": "cb86086289984f8564f6ce2c8c9652b936d9fc268dfcdd7561b4791e14a23d3e",
+      "polygonSmooth": "1cc68dcc7be595946564c2cc636c24b20fdce7462a8cd85a388a16ffbdee7d69",
+      "parent": "64cea66144cade3fb210b6e865b5c613a9d7fd7caf06c10c20f2a7092f419a0d"
+    },
+    "after": {
+      "positions": "f5f96e28fa5f3b48a44d9679516de65b44d16eeeab9fd2a1dd78de298b1f74f3",
+      "loopVertexIndices": "089457d60d5af66aa1e5ea61c15bc3600dc6b3d41a39ef816a7cc3bcc3123d67",
+      "cornerNormals": "9178c8b5c655074ef8b1fc009e1e9842f6ca9c57ccba92bf0867ef47a8d662a1",
+      "matrixWorld": "233451d166e0f3a5ad2c5dedcdf67cecbb8b04daf922924b2ccbfce74c62593f",
+      "sharpFlags": "e55bd8f3c86e2c725770d99898e59ccf5a41a84ab8630a78c92af6fe222364c8",
+      "materials": "670c3188da89ed417b9e7ea97688aa0b058422309c80a2a9361a2d20b677e613",
+      "polygonVertices": "cb86086289984f8564f6ce2c8c9652b936d9fc268dfcdd7561b4791e14a23d3e",
+      "polygonSmooth": "1cc68dcc7be595946564c2cc636c24b20fdce7462a8cd85a388a16ffbdee7d69",
+      "parent": "64cea66144cade3fb210b6e865b5c613a9d7fd7caf06c10c20f2a7092f419a0d"
+    },
+    "assertUnchanged": "native.fixed_digest(obj)==digest and sharp(obj.data)==flags"
+  },
+  "translationDeltaBlender": [
+    4.76837158203125e-07,
+    0.0,
+    -2.384185791015625e-07
+  ],
+  "preExportOracle": {
+    "inputSourceNormalOracle": {
+      "maxL2": 0.0004999450002029757,
+      "over002": 0,
+      "failedCorners": []
+    },
+    "desiredSourceNormalOracle": {
+      "maxL2": 0.0005938049877916296,
+      "over002": 0,
+      "failedCorners": []
+    },
+    "nonzeroLocalRetainedTriangles": 148,
+    "zeroAfterFloat32WorldCastSourceFaces": [
+      45,
+      47,
+      146,
+      150
+    ],
+    "maxWorldError": 2.6586953651373967e-07,
+    "ownerParentUnchanged": true
+  },
+  "firstGLB": {
+    "sha256": "bac282f8402e41935af01ddaaf7c0d8c2d6f8a666690e483a9e7b28789bd8af1",
+    "byteIdenticalToFirstProbe": true
+  },
+  "unreached": [
+    "reimport",
+    "second export",
+    "all-sharp",
+    "final original442 in-memory parity"
+  ],
+  "execution": {
+    "ownedPid": 47597,
+    "startedAtUtc": "2026-10-12T05:47:58.621961+00:00",
+    "finishedAtUtc": "2026-10-12T05:48:05.501849+00:00",
+    "elapsedSeconds": 6.879650167,
+    "exitCode": 1,
+    "peakObservedRssBytes": 598556672,
+    "ownedProcessExited": true
+  },
+  "all98BindingsUnchanged": true,
+  "ownedProcessGroupMembers": [],
+  "staticExporterEvidence": {
+    "source": "/Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/blender/exp/export.py",
+    "lines": [
+      29,
+      48
+    ],
+    "finding": "Exporter save calls scene.frame_set(0), then frame_set(original_frame) when gltf_current_frame false. Operator default export_current_frame is false; probe did not override it.",
+    "inferenceOnly": "A deferred parent/child transform evaluation is plausible; the matrix-only change is measured but the precise internal recomputation mechanism was not instrumented."
+  },
+  "sourceCorrectionAdopted": false
+}

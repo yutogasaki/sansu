@@ -1,0 +1,59 @@
+// Prepared only. Explicit --start follows live-copy freeze and closure collection.
+import { execFileSync } from 'node:child_process';
+import { constants, promises as fs } from 'node:fs';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+const source = '/Users/yutogasaki/Projects/sansu';
+const output = '/private/tmp/sansu-authored-shoulder-c2';
+const dest = path.join(output, 'candidate');
+const closurePath = path.join(output, 'closure/inputs.json');
+const installedPath = path.join(output, 'closure/installed-dependencies.json');
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+if (!process.argv.includes('--start')) {
+    console.log(JSON.stringify({ prepared: true, executionStarted: false, source, dest, closurePath }));
+} else {
+    const expected = JSON.parse(await fs.readFile(closurePath, 'utf8'));
+    if (Object.keys(expected).some(name => name.split('/').includes('node_modules'))) throw Error('Installed dependencies cannot enter local source/copy closure');
+    const installed = JSON.parse(await fs.readFile(installedPath, 'utf8'));
+    if (!installed['node_modules/.package-lock.json'] || Object.keys(installed).length < 2) throw Error('Real projection dependency inventory is required');
+    const readInstalled = async () => Object.fromEntries(await Promise.all(Object.keys(installed).sort().map(async name => {
+        if (!name.startsWith('node_modules/') || name.split('/').includes('..')) throw Error(`Invalid installed input: ${name}`);
+        return [name, sha(await fs.readFile(path.join(source, name)))];
+    })));
+    const initialInstalledDependencies = await readInstalled();
+    if (JSON.stringify(initialInstalledDependencies) !== JSON.stringify(installed)) throw Error('Installed dependencies differ before snapshot');
+    const installedProof = JSON.parse(await fs.readFile(path.join(output, 'closure/installed-dependencies-proof.json'), 'utf8'));
+    if (installedProof.driverSha256 !== expected[installedProof.driver]) throw Error('Dependency projection driver differs from frozen closure');
+    const names = [...new Set([...execFileSync('git', ['ls-files', '-z', '--cached', '--others', '--exclude-standard'], { cwd: source, maxBuffer: 64 * 1024 * 1024 })
+        .toString().split('\0').filter(Boolean), ...Object.keys(expected)])]
+        .filter(name => !name.split('/').some(part => /^\.env(?:\.|$)/.test(part) || part === 'node_modules')).sort();
+    if (!Object.keys(expected).length) throw Error('Frozen closure is required');
+    await fs.mkdir(dest, { recursive: false });
+    const hashes = {};
+    for (const name of names) {
+        const from = path.join(source, name), to = path.join(dest, name);
+        const stat = await fs.stat(from).catch(() => undefined);
+        if (!stat?.isFile()) { if (expected[name]) throw Error(`Missing closure input: ${name}`); continue; }
+        await fs.mkdir(path.dirname(to), { recursive: true });
+        await fs.copyFile(from, to, constants.COPYFILE_FICLONE);
+        hashes[name] = sha(await fs.readFile(to));
+    }
+    await fs.symlink(path.join(source, 'node_modules'), path.join(dest, 'node_modules'), 'dir');
+    const changed = [];
+    for (const [name, value] of Object.entries(hashes)) {
+        const current = await fs.readFile(path.join(source, name)).catch(() => undefined);
+        if (!current || sha(current) !== value) changed.push(name);
+    }
+    const closureDifferences = Object.keys(expected).filter(name => hashes[name] !== expected[name]);
+    const finalInstalledDependencies = await readInstalled();
+    const installedDependenciesFixed = JSON.stringify(initialInstalledDependencies) === JSON.stringify(finalInstalledDependencies);
+    const report = { source, dest, installedDependenciesManifestSha256: sha(await fs.readFile(installedPath)),
+        initialInstalledDependencies, finalInstalledDependencies, installedDependenciesFixed, createdAt: new Date().toISOString(), files: hashes, changedDuringCopy: changed,
+        closurePath, closureSha256: sha(await fs.readFile(closurePath)), closureDifferences,
+        runnerSha256: sha(await fs.readFile(new URL(import.meta.url))),
+        nodeModules: { sharedPath: path.join(source, 'node_modules'), identityBasis: 'Actual shoulder projection metafile module bytes plus installed .package-lock; separate from copied source closure',
+            installedLockSha256: await fs.readFile(path.join(source, 'node_modules/.package-lock.json')).then(sha).catch(() => null) } };
+    await fs.writeFile(path.join(output, 'snapshot.json'), JSON.stringify(report, null, 2) + '\n', { flag: 'wx' });
+    console.log(JSON.stringify({ dest, files: names.length, changedDuringCopy: changed, closureDifferences }));
+    if (changed.length || closureDifferences.length || !installedDependenciesFixed) process.exitCode = 1;
+}

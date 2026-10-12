@@ -1,0 +1,59 @@
+"""Pure saved-data/accessor analysis, no Blender or scene execution."""
+import gzip,hashlib,json,math,struct
+from pathlib import Path
+HERE=Path(__file__).resolve().parent;BASE=HERE.parent.parent
+OUT=HERE/'attempt-01';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+r=json.loads(gzip.decompress((OUT/'failing-role-raw.json.gz').read_bytes()))
+
+def read(path,node_select):
+ b=path.read_bytes();n=struct.unpack_from('<I',b,12)[0];j=json.loads(b[20:20+n]);start=20+n
+ size=struct.unpack_from('<I',b,start)[0];blob=b[start+8:start+8+size]
+ node=next(x for i,x in enumerate(j['nodes']) if node_select(i,x));prim=j['meshes'][node['mesh']]['primitives'][0]
+ def values(aid):
+  a=j['accessors'][aid];v=j['bufferViews'][a['bufferView']];k={'VEC3':3,'SCALAR':1}[a['type']];f={5126:'f',5123:'H',5125:'I'}[a['componentType']]
+  size=struct.calcsize(f)*k;step=v.get('byteStride',size);off=v.get('byteOffset',0)+a.get('byteOffset',0)
+  return [list(struct.unpack_from('<'+f*k,blob,off+i*step)) for i in range(a['count'])]
+ return {'positions':values(prim['attributes']['POSITION']),'normals':values(prim['attributes']['NORMAL']),
+         'indices':[x[0] for x in values(prim['indices'])],'nodeName':node.get('name'),
+         'accessors':{k:j['accessors'][a] for k,a in prim['attributes'].items()},'sourceSha256':sha(path),'path':str(path)}
+
+def delta(a,b):return [x-y for x,y in zip(a,b)]
+def cross(a,b):return [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]]
+def length(v):return math.sqrt(sum(x*x for x in v))
+def B(v):return [v[0],-v[2],v[1]]
+def area(positions,vs):
+ a,b,c=[positions[i] for i in vs];return length(cross(delta(b,a),delta(c,a)))*.5
+
+role=read(BASE/'extraction-attempt02/role-separated-originals.glb',lambda i,n:n.get('extras',{}).get('ownerId')=='l14' and n.get('extras',{}).get('sourceNodeIndex')==2239)
+source=read(Path('/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.glb'),lambda i,n:i==2239)
+assert all(role[k]==source[k] for k in ['positions','normals','indices'])
+positions=[B(v) for v in role['positions']];normals=[B(v) for v in role['normals']]
+assert len(positions)==len(r['inputLocalPositions'])
+position_error=max(length(delta(a,b)) for a,b in zip(positions,r['inputLocalPositions']))
+assert position_error==0
+assert role['indices']==[l['vertex'] for l in r['loops']]
+expected_source=[normals[l['vertex']] for l in r['loops']]
+normal_errors=[length(delta(a,b)) for a,b in zip(expected_source,r['inputCornerNormals'])]
+zero=[p['loops'][0]//3 for p in r['polygons'] if area(r['inputLocalPositions'],p['vertices'])==0]
+fan=[]
+for i,p in enumerate(r['polygons']):
+ if 0 in p['vertices']:
+  fan.append({'polygon':i,'vertices':p['vertices'],'inputArea':area(r['inputLocalPositions'],p['vertices']),
+              'deformedArea':area(r['deformedLocalPositions'],p['vertices']),'smooth':p['smooth']})
+source_lengths=[length(n) for n in normals];input_lengths=[length(n) for n in r['inputCornerNormals']]
+result={'status':'EXACT-CORRESPONDENCE-CONFIRMED','coordinateMap':'GLTF local (x,y,z) -> Blender local (x,-z,y)',
+ 'sourceAndExtractedPositionNormalIndicesEqual':True,'positionMaxL2':position_error,'loopVertexIndicesExact':True,
+ 'vertices':len(positions),'corners':len(r['loops']),'triangles':len(r['polygons']),
+ 'sourceNormalLengthRange':[min(source_lengths),max(source_lengths)],'importedCornerNormalLengthRange':[min(input_lengths),max(input_lengths)],
+ 'sourceToImportedNormalMaxL2':max(normal_errors),'sourceToImportedNormalsOver002':sum(e>.002 for e in normal_errors),
+ 'exactZeroAreaPolygonIndices':zero,'zeroThreshold':0,'nearZeroFacesNotRemovedOrClassified':True,
+ 'failingVertexFan':fan,'failingVertex0SourceNormalBlenderLocal':normals[0],
+ 'failingVertex0ImportedNormal':r['inputCornerNormals'][0],
+ 'failingVertex0SourceImportL2':normal_errors[0],
+ 'finding':'Input NORMAL changed during Blender import/readback at this exact source-index mapping; this precedes deformation. The later expected-to-stored loss persists through all tested updates. Zero-area faces share the failing fan, but causality has not been tested.',
+ 'noBlenderSemanticsClaim':True,'noGeometryOrNormalChanges':True,
+ 'inputs':{str(OUT/'failing-role-raw.json.gz'):sha(OUT/'failing-role-raw.json.gz'),role['path']:role['sourceSha256'],source['path']:source['sourceSha256']},
+ 'files':{'sourceRoleAccessorData':'source-role-accessors.json.gz'}}
+(OUT/'source-role-accessors.json.gz').write_bytes(gzip.compress((json.dumps({'original':source,'extracted':role,'sourceNormalsByImportedLoop':expected_source},indent=2)+'\n').encode(),mtime=0))
+(OUT/'raw-correspondence.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps(result,indent=2))

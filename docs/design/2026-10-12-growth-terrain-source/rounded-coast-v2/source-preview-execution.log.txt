@@ -1,0 +1,37 @@
+/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/build-source-preview.py:13: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  scene.world=bpy.data.worlds.new('Source preview daylight'); scene.world.use_nodes=True
+20:23:33 | INFO: Data are loaded, start creating Blender stuff
+20:23:33 | INFO: Blender create Mesh node baseline/top
+20:23:33 | INFO: Blender create Mesh node baseline/rounded-coast
+20:23:33 | INFO: Blender create Mesh node baseline/bank-south-seam
+20:23:33 | INFO: Blender create Mesh node baseline/bank-north-seam
+20:23:33 | INFO: Blender create Mesh node baseline/soil-bottom
+20:23:33 | INFO: glTF import finished in 0.01s
+20:23:33 | INFO: Data are loaded, start creating Blender stuff
+20:23:33 | INFO: Blender create Mesh node baseline/top
+20:23:33 | INFO: Blender create Mesh node baseline/rounded-coast
+20:23:33 | INFO: Blender create Mesh node baseline/bank-north-seam
+20:23:33 | INFO: Blender create Mesh node baseline/soil-bottom
+20:23:33 | INFO: Blender create Mesh node parallel/top
+20:23:33 | INFO: Blender create Mesh node parallel/rounded-coast
+20:23:33 | INFO: Blender create Mesh node parallel/soil-bottom
+20:23:33 | INFO: glTF import finished in 0.01s
+20:23:33 | INFO: Data are loaded, start creating Blender stuff
+20:23:33 | INFO: Blender create Mesh node baseline/top
+20:23:33 | INFO: Blender create Mesh node baseline/rounded-coast
+20:23:33 | INFO: Blender create Mesh node baseline/bank-north-seam
+20:23:33 | INFO: Blender create Mesh node baseline/soil-bottom
+20:23:33 | INFO: Blender create Mesh node seaward/top
+20:23:33 | INFO: Blender create Mesh node seaward/rounded-coast
+20:23:33 | INFO: Blender create Mesh node seaward/soil-bottom
+20:23:33 | INFO: glTF import finished in 0.01s
+/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/build-source-preview.py:29: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat=bpy.data.materials.new('Preview ocean context');mat.diffuse_color=(.075,.31,.39,1);mat.use_nodes=True
+00:08.626  render           | Saved: '/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/baseline-source.png'
+00:16.908  render           | Saved: '/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/parallel-source.png'
+00:25.391  render           | Saved: '/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/seaward-source.png'
+Info: Saved as "growth-terrain-family.blend"
+{"status": "SOURCE_PREVIEWS_COMPLETE", "blender": "5.2.1 LTS", "threads": 2, "samples": 16, "images": ["baseline-source.png", "parallel-source.png", "seaward-source.png"]}
+Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 01:35:57)
+
+Blender quit

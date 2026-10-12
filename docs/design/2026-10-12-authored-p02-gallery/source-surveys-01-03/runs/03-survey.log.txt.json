@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "source-study.py",
+    "--",
+    "measure",
+    "--scheduled",
+    "--out",
+    "runs/03-survey"
+  ],
+  "exitCode": 0,
+  "stop": null,
+  "peakSampledRssBytes": 732119040,
+  "elapsedSeconds": 8.237206082999998,
+  "limits": {
+    "seconds": 180,
+    "rssMiB": 2560
+  },
+  "sourceOnly": true
+}

@@ -1,0 +1,309 @@
+#!/usr/bin/env python3
+"""Sequential fixed-source regression evidence. No execution without --start."""
+import argparse
+import hashlib
+import json
+import os
+import signal
+import socket
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+ROOT = Path('/private/tmp/sansu-authored-shoulder-c3')
+REPO = ROOT / 'candidate'
+CORE = ROOT / 'core/report.json'
+SNAPSHOT = ROOT / 'snapshot.json'
+OUTPUT = ROOT / 'affected-regressions'
+REVISION = 'authored-shoulder-c3'
+BASE = 'http://127.0.0.1:5360'
+
+
+def write_json(path, data):
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n')
+
+
+def sha(path):
+    try:
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    except FileNotFoundError:
+        return None
+
+
+def sources(expected):
+    return {name: sha(REPO / name) for name in expected}
+
+
+def differences(expected, actual):
+    return [{'file': name, 'core': value, 'actual': actual.get(name)}
+            for name, value in expected.items() if actual.get(name) != value]
+
+
+def read_json(path):
+    if not path.is_file():
+        return None
+    try:
+        return json.loads(path.read_text())
+    except (ValueError, OSError) as error:
+        return {'readError': str(error)}
+
+
+def occupied_ports():
+    result = []
+    for port in [4173, 4174, 4175]:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as connection:
+            connection.settimeout(0.2)
+            if connection.connect_ex(('127.0.0.1', port)) == 0:
+                result.append(port)
+    return result
+
+
+def plan():
+    return [
+        {'name':'01-wide27-water', 'command':['node','tools/e2e-authored-water.mjs'],
+         'environmentOverrides':{'SANSU_AUTHORED_WATER_URL':BASE+'/prototypes/place-qa/authored.html?water=wide&ground=legacy',
+                                 'SANSU_AUTHORED_WATER_OUTPUT':str(OUTPUT/'01-wide27-water/actual')},
+         'scope':'Unchanged full 27-owner/73-right wide water pointer editing, 14 captures, no shoulder/cove',
+         'requiredServerConfiguration':{'url':BASE,'revision':REVISION,'VITE_ISLAND_ENABLED':'true','VITE_NATIVE_GROWING_ART':'false'},
+         'reportRelative':'actual/report.json','timeoutSeconds':600,'deadlineScope':'Owned process termination only; not performance acceptance'},
+        {'name':'02-classic-smoke','command':['npm','run','e2e:smoke'],
+         'environmentOverrides':{'VITE_ISLAND_ENABLED':'false','VITE_NATIVE_GROWING_ART':'false','VITE_EXPLORE_EXPERIENCE':'classic-v1',
+            'SANSU_E2E_DIAGNOSTIC_DIR':str(OUTPUT/'02-classic-smoke/diagnostics'),'SANSU_E2E_CAPTURE_DIR':str(OUTPUT/'02-classic-smoke/captures')},
+         'scope':'Unchanged full classic smoke on isolated owned server; no reuse',
+         'requiredServerConfiguration':{'ownServer':True,'portCandidates':[4173,4174,4175],'VITE_ISLAND_ENABLED':'false','VITE_NATIVE_GROWING_ART':'false'},
+         'reportRelative':'diagnostics/smoke-report.json','timeoutSeconds':2700,'deadlineScope':'Owned process termination only; not performance acceptance'}]
+
+
+def clean_group(pid):
+    """Only descendants of this freshly spawned, isolated process group."""
+    try:
+        os.killpg(pid, signal.SIGTERM)
+        return 'SIGTERM sent to this runner-owned process group'
+    except ProcessLookupError:
+        return 'runner-owned process group already exited'
+
+
+def inspect_result(item, actual, log, expected):
+    if not actual or 'readError' in actual:
+        return {'pass':False,'failurePhase':'missing-or-unreadable-tool-report','error':'Original driver report unavailable'}
+    scenarios=actual.get('scenarios',[])
+    failures=[x for x in scenarios if x.get('pass') is False]
+    error=actual.get('error') or (actual.get('firstFailure') or {}).get('error') or (failures[0].get('error') if failures else None)
+    checks={'driverPass':actual.get('pass') is True,'noRuntimeErrors':not actual.get('errors'),'noScenarioFailure':not failures,'noError':not error}
+    result={'pass':False,'failurePhase':actual.get('phase'),'error':error,'scenarioCount':len(scenarios),
+            'captureCount':len(actual.get('captures',[])),'checks':checks}
+    if item['name']=='02-classic-smoke':
+        checks['noServerReuse']='All smoke-test ports are occupied; reusing ' not in log
+        checks['harnessMatchesCore']=actual.get('harnessHash')==expected['tools/e2e-smoke.mjs']
+        result['rawInputSubset']={'scope':'Classic exposes its harness hash; wrapper verifies complete source/dependency closure before/after','count':1,'pass':checks['harnessMatchesCore']}
+    else:
+        initial,final=actual.get('initialInputs'),actual.get('finalInputs')
+        missing=sorted(set(initial or {})-set(expected))
+        different=[n for n,v in (initial or {}).items() if expected.get(n)!=v or (final or {}).get(n)!=v]
+        checks['rawInputSubset']=bool(initial) and initial==final and not missing and not different
+        result['rawInputSubset']={'count':len(initial or {}),'missing':missing,'different':different,'beforeAfterEqual':initial==final,'pass':checks['rawInputSubset']}
+        captures=actual.get('captures',[])
+        expectedFiles=['desktop-whole.png','water-close.png','water-bridge-close.png','stored-dry-ground.png','reconnect-preview.png',
+                       'reconnected.png','move-preview.png','preview-cancelled.png','moved-split.png','desktop-dusk-whole.png',
+                       'water-dusk-close.png','desktop-rotated-whole.png','phone-whole.png','tablet-whole.png']
+        checks['fourteenOrderedCaptures']=[x.get('file') for x in captures]==expectedFiles
+        checks['sameBuild']=bool(captures) and all(x.get('build')==REVISION for x in captures)
+        checks['sameTarget']=bool(captures) and all(x.get('url')==item['environmentOverrides']['SANSU_AUTHORED_WATER_URL'] for x in captures)
+        checks['noCoveOrShoulder']=bool(captures) and all(x.get('metadata',{}).get('authoredCoveEnabled')=='false'
+          and x.get('metadata',{}).get('authoredShoulderEnabled')=='false' for x in captures)
+        checks['captureFilesExist']=bool(captures) and all((OUTPUT/item['name']/'actual'/x.get('file','')).is_file() for x in captures)
+        checks['sixCompletedSteps']=actual.get('steps')==[
+          'actual water mesh selects its owner','actual source bridge board selects its supplying owner','store restores dry original floor',
+          'confirmation uses same water revision as preview','cancel restores committed world without changing owner fields','split and reconnect retain all 27 owner IDs']
+        referencePath=Path('/private/tmp/sansu-authored-shoulder-c2/regressions/04-wide27-water/actual/report.json')
+        baseline=read_json(referencePath)
+        assert baseline and baseline.get('pass') is True, 'Prior c2 water reference must remain an actual PASS'
+        baselineByFile={x['file']:x for x in baseline['captures']}
+        comparisons=[]
+        for capture in captures:
+            name=capture.get('file'); old=baselineByFile.get(name)
+            plan=json.loads(capture.get('metadata',{}).get('authoredWater','null'))
+            prior=json.loads(old['metadata']['authoredWater']) if old else None
+            comparisons.append({'capture':name,'planMatchesC2':plan==prior,'bridgeCount':len(plan.get('bridges',[])) if plan else None,
+                'bridges':plan.get('bridges') if plan else None,'runtimeBridgeSourceId':capture.get('metadata',{}).get('authoredWaterBridgeId'),
+                'worldRevision':capture.get('metadata',{}).get('worldRevision')})
+        checks['allWaterPlansEqualC2']=len(comparisons)==14 and all(x['planMatchesC2'] for x in comparisons)
+        checks['initialBridgeAndEdges']=bool(comparisons) and comparisons[0]['bridgeCount']==1 and bool(comparisons[0]['bridges'][0]['restoredEdgeIds'])
+        result['bridgeAndRestoredEdgeEvidence']={'baselineReport':str(referencePath),'baselineReportSha256':sha(referencePath),'captures':comparisons,
+            'scope':'Exact renderer water-plan equality with c2 includes all bridge and restoredEdgeIds fields. Per-edge physical query checks remain domain-test evidence; no invented browser route claim.'}
+    result['pass']=all(checks.values())
+    result['failurePhase']=None if result['pass'] else result['failurePhase'] or 'contract-inspection'
+    result['error']=error or (None if result['pass'] else ', '.join(k for k,v in checks.items() if not v))
+    return result
+
+
+def run_stage(item, expected, installed_expected):
+    directory = OUTPUT / item['name']
+    directory.mkdir(exist_ok=False)
+    report = {**item, 'startedAtUnixSeconds': time.time(), 'initialSources': sources(expected),
+              'coreReport': str(CORE), 'coreReportSha256': sha(CORE), 'coreInputCount': len(expected),
+              'initialInstalledDependencies': sources(installed_expected),
+              'snapshot': str(SNAPSHOT), 'snapshotSha256': sha(SNAPSHOT), 'candidate': str(REPO), 'revision': REVISION,
+              'pass': False, 'exitCode': None, 'executionLog': 'execution.log.txt'}
+    report['coreInputsMatch'] = report['initialSources'] == expected
+    report['initialSourceDifferences'] = differences(expected, report['initialSources'])
+    write_json(directory / 'report.json', report)
+    process = None
+    try:
+        if report['initialInstalledDependencies'] != installed_expected:
+            report['failurePhase'] = 'installed-dependencies-before-command'
+            report['error'] = 'Frozen installed dependency bytes changed; command was not started'
+            return report
+        if not report['coreInputsMatch']:
+            report['failurePhase'] = 'core-inputs-before-command'
+            report['error'] = 'Frozen core input bytes changed; command was not started'
+            return report
+        env = os.environ.copy()
+        # Full regression scope must never inherit a narrowing selector or a
+        # previous task's evidence directory. Only explicit overrides survive.
+        removed = [key for key in env if key.startswith('SANSU_FLOOR_SHADING_') or key.startswith('SANSU_E2E_') or key.startswith('SANSU_AUTHORED_')
+                   or key.startswith('SANSU_GROWING_') or key.startswith('SANSU_VISUAL_AUDIT_') or key in {'SANSU_RAPID_LOOP_BENCHMARK_RUNS', 'SANSU_WRITE_VISUAL_AUDIT'}]
+        for key in removed:
+            env.pop(key, None)
+        report['removedInheritedTaskEnvironmentNames'] = sorted(removed)
+        env.update({'SANSU_BUILD_REVISION': REVISION, 'VITE_ISLAND_ENABLED': 'true', 'VITE_NATIVE_GROWING_ART': 'false'})
+        env.update(item['environmentOverrides'])
+        if item['name'] == '02-classic-smoke':
+            ports = occupied_ports()
+            report['occupiedCandidatePortsBeforeStart'] = ports
+            if len(ports) == 3:
+                report['failurePhase'] = 'classic-server-isolation-before-command'
+                report['error'] = 'All classic candidate ports are occupied; refusing server reuse'
+                return report
+        with (directory / 'execution.log.txt').open('w') as log:
+            process = subprocess.Popen(item['command'], cwd=REPO, env=env, stdout=log,
+                                       stderr=subprocess.STDOUT, start_new_session=True)
+            report['processId'] = process.pid
+            write_json(directory / 'report.json', report)
+            try:
+                report['exitCode'] = process.wait(timeout=item['timeoutSeconds'])
+            except subprocess.TimeoutExpired:
+                report['timeout'] = True
+                report['failurePhase'] = 'outer-command-timeout'
+                clean_group(process.pid)
+                try:
+                    process.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    os.killpg(process.pid, signal.SIGKILL)
+                    process.wait()
+                report['exitCode'] = process.returncode
+        text = (directory / 'execution.log.txt').read_text(errors='replace')
+        actual = read_json(directory / item['reportRelative'])
+        progress = read_json(directory / 'actual/progress.json')
+        report['toolProgress'] = progress
+        report['toolReportInspection'] = inspect_result(item, actual, text, expected)
+        report['logTail'] = text[-12000:]
+        if not report['toolReportInspection']['pass'] and not report['toolReportInspection']['failurePhase'] and progress:
+            report['toolReportInspection']['failurePhase'] = progress.get('phase')
+        if not report.get('timeout'):
+            report['failurePhase'] = report['toolReportInspection']['failurePhase']
+            report['error'] = report['toolReportInspection']['error']
+        if report.get('timeout') or actual is None:
+            report['lastToolPhase'] = (progress or {}).get('phase')
+        if report['exitCode'] != 0 and not report.get('failurePhase'):
+            report['failurePhase'] = 'command-exit'
+        if item['name'] == '02-classic-smoke':
+            report['dedicatedServerEvidence'] = [line for line in text.splitlines()
+                                                 if 'Starting dev server on ' in line or 'Dev server ready on ' in line]
+            if not report['dedicatedServerEvidence']:
+                report['failurePhase'] = 'classic-server-isolation-evidence'
+                report['error'] = 'No owned isolated dev server startup was recorded'
+                report['toolReportInspection']['pass'] = False
+        report['pass'] = report['exitCode'] == 0 and report['toolReportInspection']['pass']
+        return report
+    except Exception as error:
+        report['failurePhase'] = report.get('failurePhase') or 'outer-runner-error'
+        report['error'] = repr(error)
+        return report
+    finally:
+        if process:
+            report['processGroupCleanup'] = clean_group(process.pid)
+        report['finalInstalledDependencies'] = sources(installed_expected)
+        report['installedDependenciesFixed'] = report['initialInstalledDependencies'] == installed_expected == report['finalInstalledDependencies']
+        if not report['installedDependenciesFixed']:
+            report['pass'] = False
+            report['priorFailurePhase'] = report.get('failurePhase')
+            report['failurePhase'] = 'installed-dependencies-after-command'
+        report['finalSources'] = sources(expected)
+        report['sourceFixed'] = report['finalSources'] == expected
+        report['finalSourceDifferences'] = differences(expected, report['finalSources'])
+        if not report['sourceFixed']:
+            report['pass'] = False
+            report['priorFailurePhase'] = report.get('failurePhase')
+            report['failurePhase'] = 'core-inputs-after-command'
+        report['finishedAtUnixSeconds'] = time.time()
+        write_json(directory / 'report.json', report)
+
+
+def main():
+    global OUTPUT, BASE
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--start', action='store_true', help='Execute only after explicit parent START authorization')
+    parser.add_argument('--server-origin', default=BASE, help='Root-owned c3 DEV origin; must match server-identity.json')
+    parser.add_argument('--output-root', type=Path, default=OUTPUT, help='Fresh evidence root outside the repository')
+    args = parser.parse_args()
+    OUTPUT = args.output_root.resolve()
+    BASE = args.server_origin.rstrip('/')
+    assert REPO not in OUTPUT.parents and OUTPUT != REPO, 'Evidence must stay outside the fixed candidate'
+    core = read_json(CORE)
+    if not args.start:
+        print(json.dumps({'prepared': True, 'executionStarted': False, 'core': str(CORE),
+                          'coreStatus': 'ready' if core and core.get('pass') is True else 'awaiting completed PASS report',
+                          'coreInputCount': len((core or {}).get('initialInputs', {})),
+                          'candidate': str(REPO), 'revision': REVISION,
+                          'output': str(OUTPUT), 'plan': plan()}, ensure_ascii=False, indent=2))
+        return 0
+    assert core and core.get('pass') is True and core.get('sourceFixed') is True and core.get('exitCode') == 0, 'Fixed candidate core PASS is required'
+    assert core.get('target') == str(REPO) and core.get('revision') == REVISION, 'Core must identify this fixed candidate'
+    installed_expected = core.get('initialInstalledDependencies')
+    assert installed_expected and installed_expected == core.get('finalInstalledDependencies') and core.get('installedDependenciesFixed') is True, 'Core installed dependency proof is required'
+    expected = core['initialInputs']
+    assert expected and expected == core['finalInputs'], 'Core before/after input hashes must match'
+    snapshot = read_json(SNAPSHOT)
+    assert snapshot and snapshot.get('dest') == str(REPO) and snapshot.get('changedDuringCopy') == [], 'Snapshot must identify an unchanged fixed candidate'
+    assert all(snapshot['files'].get(name) == value for name, value in expected.items()), 'Core inputs differ from fixed snapshot'
+    from urllib.parse import urlparse
+    server=read_json(ROOT/'server-identity.json'); origin=urlparse(BASE)
+    assert origin.hostname=='127.0.0.1' and origin.scheme=='http' and not origin.path and origin.port, 'Explicit local root-owned origin required'
+    assert server and server.get('cwd')==str(REPO) and server.get('revision')==REVISION and server.get('httpStatus')==200, 'Root server identity must match c3'
+    assert server.get('port')==origin.port and server.get('deliveryFlags')=={'VITE_ISLAND_ENABLED':'true','VITE_NATIVE_GROWING_ART':'false'}
+    observedCwd=subprocess.run(['lsof','-a','-p',str(server['pid']),'-d','cwd','-Fn'],capture_output=True,text=True,check=True).stdout
+    assert '\nn'+str(REPO)+'\n' in '\n'+observedCwd, 'Live server PID must still have exact candidate cwd'
+    OUTPUT.mkdir(exist_ok=False)
+    summary = {'coreReport': str(CORE), 'coreReportSha256': sha(CORE), 'coreInputCount': len(expected),
+              'initialInstalledDependencies': sources(installed_expected),
+               'candidate': str(REPO), 'revision': REVISION, 'snapshotSha256': sha(SNAPSHOT),
+               'startedAtUnixSeconds': time.time(), 'initialSources': sources(expected), 'runnerSha256': sha(Path(__file__)), 'pass': False, 'stages': [], 'firstFailure': None,
+               'scope': 'Affected-only c3 wide27water plus isolated classic; not c3 all-eight, shoulder acquisition, art, performance or M1 acceptance',
+               'serverIdentity':server,'serverIdentitySha256':sha(ROOT/'server-identity.json'),'observedServerCwdAtStart':observedCwd}
+    write_json(OUTPUT / 'report.json', summary)
+    for item in plan():
+        print(json.dumps({'starting': item['name'], 'command': item['command']}, ensure_ascii=False), flush=True)
+        report = run_stage(item, expected, installed_expected)
+        compact = {key: report.get(key) for key in ['name', 'pass', 'exitCode', 'coreInputsMatch', 'sourceFixed', 'failurePhase', 'error', 'toolReportInspection']}
+        compact['report'] = str(OUTPUT / item['name'] / 'report.json')
+        summary['stages'].append(compact)
+        print(json.dumps(compact, ensure_ascii=False), flush=True)
+        if not report['pass']:
+            summary['firstFailure'] = compact
+            break
+        write_json(OUTPUT / 'report.json', summary)
+    summary['finalInstalledDependencies'] = sources(installed_expected)
+    summary['installedDependenciesFixed'] = summary['initialInstalledDependencies'] == installed_expected == summary['finalInstalledDependencies']
+    summary['finalSources'] = sources(expected)
+    summary['sourceFixed'] = summary['initialSources'] == expected == summary['finalSources']
+    summary['pass'] = len(summary['stages']) == len(plan()) and all(stage['pass'] for stage in summary['stages']) and summary['sourceFixed'] and summary['installedDependenciesFixed']
+    summary['finishedAtUnixSeconds'] = time.time()
+    write_json(OUTPUT / 'report.json', summary)
+    print(json.dumps({'pass': summary['pass'], 'stagesRun': len(summary['stages']), 'report': str(OUTPUT / 'report.json')}, ensure_ascii=False), flush=True)
+    return 0 if summary['pass'] else 1
+
+
+if __name__ == '__main__':
+    sys.exit(main())

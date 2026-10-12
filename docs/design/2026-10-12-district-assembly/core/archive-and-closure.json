@@ -1,0 +1,431 @@
+{
+  "version": 1,
+  "recordedUtc": "2026-10-12T09:54:02.228734+00:00",
+  "verification": {
+    "revision": "district-assembly-c7",
+    "target": "/private/tmp/sansu-districts-c7/candidate",
+    "command": "npm run verify:core",
+    "pid": 30349,
+    "pass": true,
+    "exitCode": 0,
+    "sourceFixed": true,
+    "fixedInputCount": 6588,
+    "startedUtc": "2026-10-12T09:43:56.364840+00:00",
+    "finishedUtc": "2026-10-12T09:51:59.611221+00:00",
+    "elapsedSeconds": 483.2463810443878,
+    "testFilesPassed": 617,
+    "testsPassed": 5337,
+    "vitestDurationSeconds": 431.46
+  },
+  "archive": [
+    {
+      "source": "/private/tmp/sansu-districts-c7/core/report.json",
+      "destination": "core/report.json.gz",
+      "sourceBytes": 1779412,
+      "storedBytes": 621329,
+      "encoding": "gzip mtime=0",
+      "sourceBeforeSha256": "a4338e627e4e505cade1028b5498d290404dd6f908dbd663e56f8d50c271a64a",
+      "sourceAfterSha256": "a4338e627e4e505cade1028b5498d290404dd6f908dbd663e56f8d50c271a64a",
+      "storedSha256": "7057e39613f9caa4aa4ed9d7c46256e015711679ae1894126c64224719f4c2f8",
+      "decodedSha256": "a4338e627e4e505cade1028b5498d290404dd6f908dbd663e56f8d50c271a64a"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/core/execution.log.txt",
+      "destination": "core/execution.log.txt",
+      "sourceBytes": 159643,
+      "storedBytes": 159643,
+      "encoding": "identity",
+      "sourceBeforeSha256": "34c8804a64d2a449934eb1da442041c862bd58692171b2a1bd2bfe0da9489403",
+      "sourceAfterSha256": "34c8804a64d2a449934eb1da442041c862bd58692171b2a1bd2bfe0da9489403",
+      "storedSha256": "34c8804a64d2a449934eb1da442041c862bd58692171b2a1bd2bfe0da9489403",
+      "decodedSha256": "34c8804a64d2a449934eb1da442041c862bd58692171b2a1bd2bfe0da9489403"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/overlay.json",
+      "destination": "core/overlay.json",
+      "sourceBytes": 20869,
+      "storedBytes": 20869,
+      "encoding": "identity",
+      "sourceBeforeSha256": "0622a354398489b39978225eacadec7e9ae518f7ff9217eef1b7af889bc4be09",
+      "sourceAfterSha256": "0622a354398489b39978225eacadec7e9ae518f7ff9217eef1b7af889bc4be09",
+      "storedSha256": "0622a354398489b39978225eacadec7e9ae518f7ff9217eef1b7af889bc4be09",
+      "decodedSha256": "0622a354398489b39978225eacadec7e9ae518f7ff9217eef1b7af889bc4be09"
+    }
+  ],
+  "currentRelevantClosure": {
+    "scope": "Source/delivery paths in frozen overlay plus archived source/input paths and relevant package/configuration files; not a claim that all current repository documentation equals core inputs.",
+    "count": 45,
+    "allMatch": true,
+    "files": [
+      {
+        "path": "package-lock.json",
+        "coreInitialSha256": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+        "coreFinalSha256": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+        "frozenCandidateSha256": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+        "currentSourceSha256": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+        "match": true
+      },
+      {
+        "path": "package.json",
+        "coreInitialSha256": "25e546df94c00864ac013b74100634eb4825071536946087267c77892fbc4451",
+        "coreFinalSha256": "25e546df94c00864ac013b74100634eb4825071536946087267c77892fbc4451",
+        "frozenCandidateSha256": "25e546df94c00864ac013b74100634eb4825071536946087267c77892fbc4451",
+        "currentSourceSha256": "25e546df94c00864ac013b74100634eb4825071536946087267c77892fbc4451",
+        "match": true
+      },
+      {
+        "path": "prototypes/place-qa/authored-district-kit-manifest.json",
+        "coreInitialSha256": "4f805bf2aad7dcfe7c605d33e8a06d6d9cd5de0defc57d30db8380f045cd2ce7",
+        "coreFinalSha256": "4f805bf2aad7dcfe7c605d33e8a06d6d9cd5de0defc57d30db8380f045cd2ce7",
+        "frozenCandidateSha256": "4f805bf2aad7dcfe7c605d33e8a06d6d9cd5de0defc57d30db8380f045cd2ce7",
+        "currentSourceSha256": "4f805bf2aad7dcfe7c605d33e8a06d6d9cd5de0defc57d30db8380f045cd2ce7",
+        "match": true
+      },
+      {
+        "path": "prototypes/place-qa/authored-district-kit.json.gz",
+        "coreInitialSha256": "5ec00efb522247797fd8f269174901b2fba888cdd64c9c0bcd730db083c3a38f",
+        "coreFinalSha256": "5ec00efb522247797fd8f269174901b2fba888cdd64c9c0bcd730db083c3a38f",
+        "frozenCandidateSha256": "5ec00efb522247797fd8f269174901b2fba888cdd64c9c0bcd730db083c3a38f",
+        "currentSourceSha256": "5ec00efb522247797fd8f269174901b2fba888cdd64c9c0bcd730db083c3a38f",
+        "match": true
+      },
+      {
+        "path": "prototypes/place-qa/authored-shoulder-reference-mature.json",
+        "coreInitialSha256": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+        "coreFinalSha256": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+        "frozenCandidateSha256": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+        "currentSourceSha256": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+        "match": true
+      },
+      {
+        "path": "prototypes/place-qa/native-forest-stage4-manifest.json",
+        "coreInitialSha256": "39a192c6d641364b5abb9a1748b18ab87e7c71f04965d1aa78c7dd500d61b74a",
+        "coreFinalSha256": "39a192c6d641364b5abb9a1748b18ab87e7c71f04965d1aa78c7dd500d61b74a",
+        "frozenCandidateSha256": "39a192c6d641364b5abb9a1748b18ab87e7c71f04965d1aa78c7dd500d61b74a",
+        "currentSourceSha256": "39a192c6d641364b5abb9a1748b18ab87e7c71f04965d1aa78c7dd500d61b74a",
+        "match": true
+      },
+      {
+        "path": "prototypes/place-qa/native-forest-stage4-source-proof.json.gz",
+        "coreInitialSha256": "e4ff1a40471fc01b03fcba0db724c7e39d58fd50cd1a4cef1c1480836424b54b",
+        "coreFinalSha256": "e4ff1a40471fc01b03fcba0db724c7e39d58fd50cd1a4cef1c1480836424b54b",
+        "frozenCandidateSha256": "e4ff1a40471fc01b03fcba0db724c7e39d58fd50cd1a4cef1c1480836424b54b",
+        "currentSourceSha256": "e4ff1a40471fc01b03fcba0db724c7e39d58fd50cd1a4cef1c1480836424b54b",
+        "match": true
+      },
+      {
+        "path": "prototypes/place-qa/native-forest-stage4.glb.gz",
+        "coreInitialSha256": "7a0b7f85a5179df294a7958e77a7a96847468a7037ec4f92a5e8be6cf2f19058",
+        "coreFinalSha256": "7a0b7f85a5179df294a7958e77a7a96847468a7037ec4f92a5e8be6cf2f19058",
+        "frozenCandidateSha256": "7a0b7f85a5179df294a7958e77a7a96847468a7037ec4f92a5e8be6cf2f19058",
+        "currentSourceSha256": "7a0b7f85a5179df294a7958e77a7a96847468a7037ec4f92a5e8be6cf2f19058",
+        "match": true
+      },
+      {
+        "path": "prototypes/place-qa/native-gallery-v5-manifest.json",
+        "coreInitialSha256": "a9cacd89b1b28cc0dac2fb70425cd4755d9543cbf7beda2649b36b55ee11f21c",
+        "coreFinalSha256": "a9cacd89b1b28cc0dac2fb70425cd4755d9543cbf7beda2649b36b55ee11f21c",
+        "frozenCandidateSha256": "a9cacd89b1b28cc0dac2fb70425cd4755d9543cbf7beda2649b36b55ee11f21c",
+        "currentSourceSha256": "a9cacd89b1b28cc0dac2fb70425cd4755d9543cbf7beda2649b36b55ee11f21c",
+        "match": true
+      },
+      {
+        "path": "prototypes/place-qa/native-gallery-v5.glb.gz",
+        "coreInitialSha256": "e5cdf3424ab1132fcc1b22d0ea8aa89ae520b0f3137ab252898efd781c842ac6",
+        "coreFinalSha256": "e5cdf3424ab1132fcc1b22d0ea8aa89ae520b0f3137ab252898efd781c842ac6",
+        "frozenCandidateSha256": "e5cdf3424ab1132fcc1b22d0ea8aa89ae520b0f3137ab252898efd781c842ac6",
+        "currentSourceSha256": "e5cdf3424ab1132fcc1b22d0ea8aa89ae520b0f3137ab252898efd781c842ac6",
+        "match": true
+      },
+      {
+        "path": "prototypes/place-qa/native05-world-source-shading.json.gz",
+        "coreInitialSha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+        "coreFinalSha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+        "frozenCandidateSha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+        "currentSourceSha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+        "match": true
+      },
+      {
+        "path": "src/components/island/growing/GrowingWorld.tsx",
+        "coreInitialSha256": "5fd4a9ad8774ef77bd997151358e70e3513750d73a913dc143973c5d66f995ba",
+        "coreFinalSha256": "5fd4a9ad8774ef77bd997151358e70e3513750d73a913dc143973c5d66f995ba",
+        "frozenCandidateSha256": "5fd4a9ad8774ef77bd997151358e70e3513750d73a913dc143973c5d66f995ba",
+        "currentSourceSha256": "5fd4a9ad8774ef77bd997151358e70e3513750d73a913dc143973c5d66f995ba",
+        "match": true
+      },
+      {
+        "path": "src/components/island/growing/authoredFlowerObstructions.ts",
+        "coreInitialSha256": "a0885823d682766e5e92a7b47164f965beb3b4fc54a157cdfe8d2d51688a651b",
+        "coreFinalSha256": "a0885823d682766e5e92a7b47164f965beb3b4fc54a157cdfe8d2d51688a651b",
+        "frozenCandidateSha256": "a0885823d682766e5e92a7b47164f965beb3b4fc54a157cdfe8d2d51688a651b",
+        "currentSourceSha256": "a0885823d682766e5e92a7b47164f965beb3b4fc54a157cdfe8d2d51688a651b",
+        "match": true
+      },
+      {
+        "path": "src/components/island/growing/authoredWholeArt.test.ts",
+        "coreInitialSha256": "853bac908cb62f5dbfd076bd6328ac1a3ad74bbe75155c75d2a280857a8290af",
+        "coreFinalSha256": "853bac908cb62f5dbfd076bd6328ac1a3ad74bbe75155c75d2a280857a8290af",
+        "frozenCandidateSha256": "853bac908cb62f5dbfd076bd6328ac1a3ad74bbe75155c75d2a280857a8290af",
+        "currentSourceSha256": "853bac908cb62f5dbfd076bd6328ac1a3ad74bbe75155c75d2a280857a8290af",
+        "match": true
+      },
+      {
+        "path": "src/components/island/growing/authoredWholeArt.ts",
+        "coreInitialSha256": "f926f80e5fd891ea0240cedfdf63a67f273692334c18fa0e7bca7d81034e7e4f",
+        "coreFinalSha256": "f926f80e5fd891ea0240cedfdf63a67f273692334c18fa0e7bca7d81034e7e4f",
+        "frozenCandidateSha256": "f926f80e5fd891ea0240cedfdf63a67f273692334c18fa0e7bca7d81034e7e4f",
+        "currentSourceSha256": "f926f80e5fd891ea0240cedfdf63a67f273692334c18fa0e7bca7d81034e7e4f",
+        "match": true
+      },
+      {
+        "path": "src/components/island/growing/native/authoredGrowingAssets.ts",
+        "coreInitialSha256": "b2f9267617019d51d4152c1148293c6eb077437eb7893715fa9c46df28b5f9c0",
+        "coreFinalSha256": "b2f9267617019d51d4152c1148293c6eb077437eb7893715fa9c46df28b5f9c0",
+        "frozenCandidateSha256": "b2f9267617019d51d4152c1148293c6eb077437eb7893715fa9c46df28b5f9c0",
+        "currentSourceSha256": "b2f9267617019d51d4152c1148293c6eb077437eb7893715fa9c46df28b5f9c0",
+        "match": true
+      },
+      {
+        "path": "src/components/island/growing/native/authoredGrowingGround.ts",
+        "coreInitialSha256": "98f92585ea60c361c440c602f77208ee978cedbf662c21c28927956adb4db32f",
+        "coreFinalSha256": "98f92585ea60c361c440c602f77208ee978cedbf662c21c28927956adb4db32f",
+        "frozenCandidateSha256": "98f92585ea60c361c440c602f77208ee978cedbf662c21c28927956adb4db32f",
+        "currentSourceSha256": "98f92585ea60c361c440c602f77208ee978cedbf662c21c28927956adb4db32f",
+        "match": true
+      },
+      {
+        "path": "src/components/island/growing/native/authoredWaterIntegration.test.ts",
+        "coreInitialSha256": "48af1562835e6aa9c5f780fdc551b53c758de3c78047c8303792502c647d9ebe",
+        "coreFinalSha256": "48af1562835e6aa9c5f780fdc551b53c758de3c78047c8303792502c647d9ebe",
+        "frozenCandidateSha256": "48af1562835e6aa9c5f780fdc551b53c758de3c78047c8303792502c647d9ebe",
+        "currentSourceSha256": "48af1562835e6aa9c5f780fdc551b53c758de3c78047c8303792502c647d9ebe",
+        "match": true
+      },
+      {
+        "path": "src/components/island/growing/native/authoredWholeIntegration.test.ts",
+        "coreInitialSha256": "9d7b9bc5cec78886f967d904729aa401ebe0e4d011c07d3704d853c06ebd2467",
+        "coreFinalSha256": "9d7b9bc5cec78886f967d904729aa401ebe0e4d011c07d3704d853c06ebd2467",
+        "frozenCandidateSha256": "9d7b9bc5cec78886f967d904729aa401ebe0e4d011c07d3704d853c06ebd2467",
+        "currentSourceSha256": "9d7b9bc5cec78886f967d904729aa401ebe0e4d011c07d3704d853c06ebd2467",
+        "match": true
+      },
+      {
+        "path": "src/components/island/growing/native/nativeAuthoredForest.ts",
+        "coreInitialSha256": "5568dd892c03d92b4f7b8e5e1e872581c9b04fa37d6fa982fe750495d5b92116",
+        "coreFinalSha256": "5568dd892c03d92b4f7b8e5e1e872581c9b04fa37d6fa982fe750495d5b92116",
+        "frozenCandidateSha256": "5568dd892c03d92b4f7b8e5e1e872581c9b04fa37d6fa982fe750495d5b92116",
+        "currentSourceSha256": "5568dd892c03d92b4f7b8e5e1e872581c9b04fa37d6fa982fe750495d5b92116",
+        "match": true
+      },
+      {
+        "path": "src/components/island/growing/native/nativeAuthoredForestDelivery.test.ts",
+        "coreInitialSha256": "55f13dde9736a65f4eaf689cec27b68d4f918d62ffe602fdecab22b2760d2039",
+        "coreFinalSha256": "55f13dde9736a65f4eaf689cec27b68d4f918d62ffe602fdecab22b2760d2039",
+        "frozenCandidateSha256": "55f13dde9736a65f4eaf689cec27b68d4f918d62ffe602fdecab22b2760d2039",
+        "currentSourceSha256": "55f13dde9736a65f4eaf689cec27b68d4f918d62ffe602fdecab22b2760d2039",
+        "match": true
+      },
+      {
+        "path": "src/components/island/growing/native/nativeAuthoredGallery.test.ts",
+        "coreInitialSha256": "4649c1393f6def800f744778c5906c9524accef4a270a19d503855c2b95fcefc",
+        "coreFinalSha256": "4649c1393f6def800f744778c5906c9524accef4a270a19d503855c2b95fcefc",
+        "frozenCandidateSha256": "4649c1393f6def800f744778c5906c9524accef4a270a19d503855c2b95fcefc",
+        "currentSourceSha256": "4649c1393f6def800f744778c5906c9524accef4a270a19d503855c2b95fcefc",
+        "match": true
+      },
+      {
+        "path": "src/components/island/growing/native/nativeAuthoredGallery.ts",
+        "coreInitialSha256": "2bc96105a692689ad9c6c3b57ded0110e9780e95f13507832b736100ce7f844b",
+        "coreFinalSha256": "2bc96105a692689ad9c6c3b57ded0110e9780e95f13507832b736100ce7f844b",
+        "frozenCandidateSha256": "2bc96105a692689ad9c6c3b57ded0110e9780e95f13507832b736100ce7f844b",
+        "currentSourceSha256": "2bc96105a692689ad9c6c3b57ded0110e9780e95f13507832b736100ce7f844b",
+        "match": true
+      },
+      {
+        "path": "src/components/island/growing/objectLayer.ts",
+        "coreInitialSha256": "898a1ee9f99e3fa6c1cfa6542b03a3cd3be1987f01858acaef12eb9993981ed3",
+        "coreFinalSha256": "898a1ee9f99e3fa6c1cfa6542b03a3cd3be1987f01858acaef12eb9993981ed3",
+        "frozenCandidateSha256": "898a1ee9f99e3fa6c1cfa6542b03a3cd3be1987f01858acaef12eb9993981ed3",
+        "currentSourceSha256": "898a1ee9f99e3fa6c1cfa6542b03a3cd3be1987f01858acaef12eb9993981ed3",
+        "match": true
+      },
+      {
+        "path": "src/domain/growingIsland/authoredDistrictKit.test.ts",
+        "coreInitialSha256": "d35b8f419abd049d390095ece730e3709ad88afb688b1f824846117cc426fb98",
+        "coreFinalSha256": "d35b8f419abd049d390095ece730e3709ad88afb688b1f824846117cc426fb98",
+        "frozenCandidateSha256": "d35b8f419abd049d390095ece730e3709ad88afb688b1f824846117cc426fb98",
+        "currentSourceSha256": "d35b8f419abd049d390095ece730e3709ad88afb688b1f824846117cc426fb98",
+        "match": true
+      },
+      {
+        "path": "src/domain/growingIsland/authoredDistrictWorld.test.ts",
+        "coreInitialSha256": "62c7945a9a020cdce98e64b43984e55c8fbe6883aa5b6c72b7fcc041a464c1e4",
+        "coreFinalSha256": "62c7945a9a020cdce98e64b43984e55c8fbe6883aa5b6c72b7fcc041a464c1e4",
+        "frozenCandidateSha256": "62c7945a9a020cdce98e64b43984e55c8fbe6883aa5b6c72b7fcc041a464c1e4",
+        "currentSourceSha256": "62c7945a9a020cdce98e64b43984e55c8fbe6883aa5b6c72b7fcc041a464c1e4",
+        "match": true
+      },
+      {
+        "path": "src/domain/growingIsland/authoredDistrictWorld.ts",
+        "coreInitialSha256": "49ddc14789f0b66a1905718ebcb2b4cd74b14fbf91bbe1960090853e5f58d8e6",
+        "coreFinalSha256": "49ddc14789f0b66a1905718ebcb2b4cd74b14fbf91bbe1960090853e5f58d8e6",
+        "frozenCandidateSha256": "49ddc14789f0b66a1905718ebcb2b4cd74b14fbf91bbe1960090853e5f58d8e6",
+        "currentSourceSha256": "49ddc14789f0b66a1905718ebcb2b4cd74b14fbf91bbe1960090853e5f58d8e6",
+        "match": true
+      },
+      {
+        "path": "src/domain/growingIsland/authoredWaterFrame.ts",
+        "coreInitialSha256": "cc6b27705a314719dadae0127cc44a6279e478cfb07a123e11e6f2ffa9aaacc3",
+        "coreFinalSha256": "cc6b27705a314719dadae0127cc44a6279e478cfb07a123e11e6f2ffa9aaacc3",
+        "frozenCandidateSha256": "cc6b27705a314719dadae0127cc44a6279e478cfb07a123e11e6f2ffa9aaacc3",
+        "currentSourceSha256": "cc6b27705a314719dadae0127cc44a6279e478cfb07a123e11e6f2ffa9aaacc3",
+        "match": true
+      },
+      {
+        "path": "src/domain/growingIsland/authoredWaterGeometry.ts",
+        "coreInitialSha256": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+        "coreFinalSha256": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+        "frozenCandidateSha256": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+        "currentSourceSha256": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+        "match": true
+      },
+      {
+        "path": "src/domain/growingIsland/authoredWorldAccess.ts",
+        "coreInitialSha256": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+        "coreFinalSha256": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+        "frozenCandidateSha256": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+        "currentSourceSha256": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+        "match": true
+      },
+      {
+        "path": "src/domain/growingIsland/authoredWorldFrame.test.ts",
+        "coreInitialSha256": "be9398306d031c594a75d0bf1f4fe516bc6f1d3f12992d4f74a5ca35f0c9814d",
+        "coreFinalSha256": "be9398306d031c594a75d0bf1f4fe516bc6f1d3f12992d4f74a5ca35f0c9814d",
+        "frozenCandidateSha256": "be9398306d031c594a75d0bf1f4fe516bc6f1d3f12992d4f74a5ca35f0c9814d",
+        "currentSourceSha256": "be9398306d031c594a75d0bf1f4fe516bc6f1d3f12992d4f74a5ca35f0c9814d",
+        "match": true
+      },
+      {
+        "path": "src/domain/growingIsland/authoredWorldFrame.ts",
+        "coreInitialSha256": "826c3a24eac8217f38da53d3829c91eb1a8fee3ff5d2bfbffe2f957ce0e3d45c",
+        "coreFinalSha256": "826c3a24eac8217f38da53d3829c91eb1a8fee3ff5d2bfbffe2f957ce0e3d45c",
+        "frozenCandidateSha256": "826c3a24eac8217f38da53d3829c91eb1a8fee3ff5d2bfbffe2f957ce0e3d45c",
+        "currentSourceSha256": "826c3a24eac8217f38da53d3829c91eb1a8fee3ff5d2bfbffe2f957ce0e3d45c",
+        "match": true
+      },
+      {
+        "path": "src/domain/growingIsland/space.ts",
+        "coreInitialSha256": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+        "coreFinalSha256": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+        "frozenCandidateSha256": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+        "currentSourceSha256": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+        "match": true
+      },
+      {
+        "path": "src/domain/growingIsland/types.ts",
+        "coreInitialSha256": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+        "coreFinalSha256": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+        "frozenCandidateSha256": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+        "currentSourceSha256": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+        "match": true
+      },
+      {
+        "path": "src/domain/growingIsland/worldDefinition.ts",
+        "coreInitialSha256": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+        "coreFinalSha256": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+        "frozenCandidateSha256": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+        "currentSourceSha256": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+        "match": true
+      },
+      {
+        "path": "src/domain/growingIsland/worldTypes.ts",
+        "coreInitialSha256": "d573184d5f78c77faa6a7c2811057f899356801e803df7df01ccb63073fd306f",
+        "coreFinalSha256": "d573184d5f78c77faa6a7c2811057f899356801e803df7df01ccb63073fd306f",
+        "frozenCandidateSha256": "d573184d5f78c77faa6a7c2811057f899356801e803df7df01ccb63073fd306f",
+        "currentSourceSha256": "d573184d5f78c77faa6a7c2811057f899356801e803df7df01ccb63073fd306f",
+        "match": true
+      },
+      {
+        "path": "src/prototypes/placeQa/authored.tsx",
+        "coreInitialSha256": "f4620d879d9a39d7bdb6abf4ed91d62417101c4abebc177677bdb92f733cbdc5",
+        "coreFinalSha256": "f4620d879d9a39d7bdb6abf4ed91d62417101c4abebc177677bdb92f733cbdc5",
+        "frozenCandidateSha256": "f4620d879d9a39d7bdb6abf4ed91d62417101c4abebc177677bdb92f733cbdc5",
+        "currentSourceSha256": "f4620d879d9a39d7bdb6abf4ed91d62417101c4abebc177677bdb92f733cbdc5",
+        "match": true
+      },
+      {
+        "path": "src/prototypes/placeQa/authoredDistrictControls.tsx",
+        "coreInitialSha256": "5004b18cac83e0aa6c3d7eec18fbbcab3f8767d174888a6a30cf343aac87c75c",
+        "coreFinalSha256": "5004b18cac83e0aa6c3d7eec18fbbcab3f8767d174888a6a30cf343aac87c75c",
+        "frozenCandidateSha256": "5004b18cac83e0aa6c3d7eec18fbbcab3f8767d174888a6a30cf343aac87c75c",
+        "currentSourceSha256": "5004b18cac83e0aa6c3d7eec18fbbcab3f8767d174888a6a30cf343aac87c75c",
+        "match": true
+      },
+      {
+        "path": "tools/build-authored-district-kit.mjs",
+        "coreInitialSha256": "20a3d5904ac991488f92fab778b78504d09c7678491d31c7fb621ae97b693572",
+        "coreFinalSha256": "20a3d5904ac991488f92fab778b78504d09c7678491d31c7fb621ae97b693572",
+        "frozenCandidateSha256": "20a3d5904ac991488f92fab778b78504d09c7678491d31c7fb621ae97b693572",
+        "currentSourceSha256": "20a3d5904ac991488f92fab778b78504d09c7678491d31c7fb621ae97b693572",
+        "match": true
+      },
+      {
+        "path": "tools/build-authored-forest-kit.py",
+        "coreInitialSha256": "d71cb4ddc8d2b40068a42cd59f1de3b529e264b36bb259264f4a3d16409d5382",
+        "coreFinalSha256": "d71cb4ddc8d2b40068a42cd59f1de3b529e264b36bb259264f4a3d16409d5382",
+        "frozenCandidateSha256": "d71cb4ddc8d2b40068a42cd59f1de3b529e264b36bb259264f4a3d16409d5382",
+        "currentSourceSha256": "d71cb4ddc8d2b40068a42cd59f1de3b529e264b36bb259264f4a3d16409d5382",
+        "match": true
+      },
+      {
+        "path": "tools/build-authored-gallery-kit.mjs",
+        "coreInitialSha256": "edde4c374505b5f233f4438ca0f18d530de2c9234f8ad61e2f0642d3da7db46f",
+        "coreFinalSha256": "edde4c374505b5f233f4438ca0f18d530de2c9234f8ad61e2f0642d3da7db46f",
+        "frozenCandidateSha256": "edde4c374505b5f233f4438ca0f18d530de2c9234f8ad61e2f0642d3da7db46f",
+        "currentSourceSha256": "edde4c374505b5f233f4438ca0f18d530de2c9234f8ad61e2f0642d3da7db46f",
+        "match": true
+      },
+      {
+        "path": "tsconfig.app.json",
+        "coreInitialSha256": "2a72792ef92b9fa0e1f5873450d98f0b3584d0ffe924af131d71c5a74b736e47",
+        "coreFinalSha256": "2a72792ef92b9fa0e1f5873450d98f0b3584d0ffe924af131d71c5a74b736e47",
+        "frozenCandidateSha256": "2a72792ef92b9fa0e1f5873450d98f0b3584d0ffe924af131d71c5a74b736e47",
+        "currentSourceSha256": "2a72792ef92b9fa0e1f5873450d98f0b3584d0ffe924af131d71c5a74b736e47",
+        "match": true
+      },
+      {
+        "path": "tsconfig.json",
+        "coreInitialSha256": "9ecd7170825f3ba28faa0014d7ef13ca0e891a3fc580debf65011d5b9aab5ee7",
+        "coreFinalSha256": "9ecd7170825f3ba28faa0014d7ef13ca0e891a3fc580debf65011d5b9aab5ee7",
+        "frozenCandidateSha256": "9ecd7170825f3ba28faa0014d7ef13ca0e891a3fc580debf65011d5b9aab5ee7",
+        "currentSourceSha256": "9ecd7170825f3ba28faa0014d7ef13ca0e891a3fc580debf65011d5b9aab5ee7",
+        "match": true
+      },
+      {
+        "path": "tsconfig.node.json",
+        "coreInitialSha256": "4763294d68f0e8f192cb6361489868c7063580e87cd228d2f645458b7ecd08b8",
+        "coreFinalSha256": "4763294d68f0e8f192cb6361489868c7063580e87cd228d2f645458b7ecd08b8",
+        "frozenCandidateSha256": "4763294d68f0e8f192cb6361489868c7063580e87cd228d2f645458b7ecd08b8",
+        "currentSourceSha256": "4763294d68f0e8f192cb6361489868c7063580e87cd228d2f645458b7ecd08b8",
+        "match": true
+      },
+      {
+        "path": "vite.config.ts",
+        "coreInitialSha256": "b7770b439a8fae24d14a19d609a06bc331ccbd85445355da4d4ee42f73a3075a",
+        "coreFinalSha256": "b7770b439a8fae24d14a19d609a06bc331ccbd85445355da4d4ee42f73a3075a",
+        "frozenCandidateSha256": "b7770b439a8fae24d14a19d609a06bc331ccbd85445355da4d4ee42f73a3075a",
+        "currentSourceSha256": "b7770b439a8fae24d14a19d609a06bc331ccbd85445355da4d4ee42f73a3075a",
+        "match": true
+      }
+    ]
+  },
+  "previousReadme": {
+    "path": "core/README-before-core.md.txt",
+    "sha256": "35b6f0bc60ebe055f25ee38600b42b93dbf1b1d2291102e7e4a8a62e477fceed",
+    "supersededClaim": "Original README incorrectly called frozen candidate the domain proof execution origin. Proof ran from main repository; input/code byte identity, not directory identity, links it to core candidate."
+  },
+  "excluded": [
+    "Incomplete runtime/browser evidence"
+  ],
+  "newVerificationRun": false
+}

@@ -1,0 +1,225 @@
+{
+  "layout": "north-chain",
+  "started": "2026-10-12T09:44:04.269Z",
+  "pass": true,
+  "code": {
+    "composer": "49ddc14789f0b66a1905718ebcb2b4cd74b14fbf91bbe1960090853e5f58d8e6",
+    "compiler": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338"
+  },
+  "inputs": {
+    "base": {
+      "path": "prototypes/place-qa/native05-world-source-shading.json.gz",
+      "sha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+      "definitionSha256": "49293ee8c9ee717d2fc930ccc42b1226e393ed62e0210c38a28540b4f8b46589",
+      "revision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df"
+    },
+    "catalog": {
+      "path": "prototypes/place-qa/authored-district-kit.json.gz",
+      "sha256": "5ec00efb522247797fd8f269174901b2fba888cdd64c9c0bcd730db083c3a38f",
+      "candidate": "native05-district-shapes-rough-v1"
+    },
+    "source": {
+      "artifact": "docs/design/2026-10-10-island-final-3d/whole-island.glb",
+      "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+    },
+    "state": {
+      "path": "prototypes/place-qa/authored-shoulder-reference-mature.json",
+      "artifactSha256": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+      "stateSha256": "9cbb5f2860e11d7f88200b4f47d91f21581fb98c78a5443f8fd4d2a11b424422",
+      "ownerLedgerSha256": "fcd5049db8e1f33cbbbc303eef7fb74bf443d8e9daa4fc07b1c352378a665ef5",
+      "counts": {
+        "plots": 9,
+        "landmarks": 26,
+        "keepsakes": 0,
+        "villagers": 8
+      }
+    }
+  },
+  "priorRetained": {
+    "sites": 2333,
+    "floors": 12
+  },
+  "first": {
+    "grant": {
+      "id": "shore-1",
+      "templateId": "native05-harbor-lowland-v1",
+      "parent": {
+        "districtId": "native05-inlet-core",
+        "portId": "north-entry"
+      },
+      "entryPortId": "east-entry",
+      "turn": 1,
+      "logicalOrigin": {
+        "x": 9,
+        "z": -19
+      },
+      "worldOrigin": {
+        "x": 9,
+        "y": 0,
+        "z": -19
+      }
+    },
+    "revision": "districts:8b8216ff",
+    "bounds": {
+      "min": {
+        "x": -0.65,
+        "y": -0.128250011,
+        "z": -18.987291765
+      },
+      "max": {
+        "x": 14.655312061,
+        "y": 2.21640713,
+        "z": 2.460312457
+      }
+    },
+    "placement": 80,
+    "retained": {
+      "sites": 2063,
+      "floors": 10
+    }
+  },
+  "grants": [
+    {
+      "id": "shore-1",
+      "templateId": "native05-harbor-lowland-v1",
+      "parent": {
+        "districtId": "native05-inlet-core",
+        "portId": "north-entry"
+      },
+      "entryPortId": "east-entry",
+      "turn": 1,
+      "logicalOrigin": {
+        "x": 9,
+        "z": -19
+      },
+      "worldOrigin": {
+        "x": 9,
+        "y": 0,
+        "z": -19
+      }
+    },
+    {
+      "id": "hill-1",
+      "templateId": "native05-northern-hill-v1",
+      "parent": {
+        "districtId": "shore-1",
+        "portId": "west-entry"
+      },
+      "entryPortId": "south-entry",
+      "turn": 0,
+      "logicalOrigin": {
+        "x": 6,
+        "z": -25
+      },
+      "worldOrigin": {
+        "x": 6,
+        "y": 0,
+        "z": -25
+      }
+    }
+  ],
+  "ledgerSha256": "e9324f70307ef94fe70bdef953d9b11ab5b3aea5e0fe5d9415266be1b1ceb3dd",
+  "final": {
+    "revision": "districts:40418a88",
+    "definitionSha256": "64876e06e5d7ba56439fdccf10f710ab4d31645542e3b023c35b6e6be0618437",
+    "bounds": {
+      "min": {
+        "x": -0.65,
+        "y": -0.128250011,
+        "z": -24.93
+      },
+      "max": {
+        "x": 20.75,
+        "y": 2.21640713,
+        "z": 2.460312457
+      }
+    },
+    "placements": 106,
+    "addedPlacements": 33,
+    "sites": 3231,
+    "reachableSitesFromHome": 3231,
+    "reachableAddedPlacements": 33,
+    "districts": [
+      {
+        "id": "native05-inlet-core",
+        "templateId": "native05-inlet-core-v1",
+        "turn": 0,
+        "logicalOrigin": {
+          "x": 0,
+          "z": 0
+        },
+        "worldOrigin": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "placement": 73
+      },
+      {
+        "id": "shore-1",
+        "templateId": "native05-harbor-lowland-v1",
+        "turn": 1,
+        "logicalOrigin": {
+          "x": 9,
+          "z": -19
+        },
+        "worldOrigin": {
+          "x": 9,
+          "y": 0,
+          "z": -19
+        },
+        "placement": 7
+      },
+      {
+        "id": "shore-1:entry",
+        "templateId": "native05-district-entry-v1",
+        "turn": 0,
+        "logicalOrigin": {
+          "x": 0,
+          "z": 0
+        },
+        "worldOrigin": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "placement": 0
+      },
+      {
+        "id": "hill-1",
+        "templateId": "native05-northern-hill-v1",
+        "turn": 0,
+        "logicalOrigin": {
+          "x": 6,
+          "z": -25
+        },
+        "worldOrigin": {
+          "x": 6,
+          "y": 0,
+          "z": -25
+        },
+        "placement": 26
+      },
+      {
+        "id": "hill-1:entry",
+        "templateId": "native05-district-entry-v1",
+        "turn": 0,
+        "logicalOrigin": {
+          "x": 0,
+          "z": 0
+        },
+        "worldOrigin": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "placement": 0
+      }
+    ],
+    "baseUnmodified": true,
+    "stateUnmodified": true,
+    "ownerLedgerUnmodified": true
+  },
+  "scope": "Pure domain graph with actual native05 terrain assets; no owner obstruction, renderer, browser or visual-quality claim.",
+  "elapsedMs": 6537
+}

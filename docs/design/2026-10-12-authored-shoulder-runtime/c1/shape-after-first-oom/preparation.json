@@ -1,0 +1,74 @@
+{
+  "preparedAt": "2026-10-12T02:09:34.879883+00:00",
+  "runnerSha256": "1fa185634a17386a83f251732b87f513b32532c02824f9ed72d684a3a98b48c1",
+  "syntaxPass": true,
+  "staticContractPass": true,
+  "frozenMetadataPass": true,
+  "browserOrDriverExecuted": false,
+  "outputExists": false,
+  "plan": {
+    "prepared": true,
+    "executionStarted": false,
+    "candidate": "/private/tmp/sansu-authored-shoulder-c1/candidate",
+    "revision": "authored-shoulder-c1",
+    "command": [
+      "node",
+      "tools/e2e-authored-shoulder.mjs"
+    ],
+    "output": "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom",
+    "actualOutput": "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual",
+    "core": "/private/tmp/sansu-authored-shoulder-c1/core/report.json",
+    "expectedLocalInputCount": 6398,
+    "expectedInstalledDependencyCount": 6,
+    "expectedDriverInputCount": 2127,
+    "timeoutSeconds": 900,
+    "deadlineScope": "Outer child-process termination only; not a performance pass",
+    "environmentOverrides": {
+      "SANSU_BUILD_REVISION": "authored-shoulder-c1",
+      "VITE_ISLAND_ENABLED": "true",
+      "VITE_NATIVE_GROWING_ART": "false",
+      "SANSU_AUTHORED_SHOULDER_OUTPUT": "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual",
+      "SANSU_AUTHORED_SHOULDER_URL": "http://127.0.0.1:5358/prototypes/place-qa/authored.html?water=wide&cove=corner&shoulder=central&ground=source",
+      "SANSU_AUTHORED_SHOULDER_BUILD": "authored-shoulder-c1",
+      "SANSU_AUTHORED_SHOULDER_CORE_REPORT": "/private/tmp/sansu-authored-shoulder-c1/core/report.json",
+      "SANSU_AUTHORED_SHOULDER_SHAPE_ONLY": "1",
+      "SANSU_AUTHORED_SHOULDER_TIMEOUT_MS": "180000"
+    },
+    "diagnosticOnly": true,
+    "fullJourneyAccepted": false,
+    "scope": "Independent fixed-35 desktop whole/close shape diagnosis after the first full-run Node OOM. Acquisition and editing are skipped. This cannot replace the failed full journey or establish art, child acceptance, performance, mobile, acquisition, edit, or whole-M1 acceptance.",
+    "requiresParentStart": true,
+    "contract": {
+      "driverSha256": "c31ad10110bc641e3edffb12de36075ee2eb23885241c807203e8f4bf764f29d",
+      "shapeOnlySkipsAcquisition": true,
+      "shapeOnlySkipsEditsRotationPhoneTablet": true,
+      "fixedReference": "shoulder35",
+      "growthDiagnostic": false,
+      "expectedCaptures": [
+        "fixed35-desktop-whole-day.png",
+        "fixed35-desktop-hill-close-day.png"
+      ],
+      "sourceLineEvidence": {
+        "shapeFlag": 16,
+        "fixedReference": [
+          362,
+          386
+        ],
+        "skipAcquisition": 463
+      },
+      "boundary": "Selection of l34 changes camera focus for the close view; no placement command or acquisition is run."
+    }
+  },
+  "frozenEvidenceSha256": {
+    "core": "14b5eaacdd32329234c61fb1879248b9694fcb980d225e6f785f0dacb258a2be",
+    "snapshot": "c162db0673a712c6829c974b0344073a39e8a95b1feb120285f6a6d3a456a022",
+    "driverInputs": "ef5dda1290bd589a92822de7ba8ae138d2bf9de87faeaff9a8a925b4a8cb24fe",
+    "driverInputAudit": "f6185fa95ae147d15e4b94587d1a8cf9ff26cf84cde18612c6aea8e8b4f7d892",
+    "installedManifest": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+    "serverIdentity": "37ebcf5d589ac91313213ba787eda82e90f3af26fda9c6cc0cb55264ba0c9ad5",
+    "firstRegression": "7e10e6441ec7ca625958776499f0bb5ed51cbacd1cadb06a0161e621c557b363",
+    "firstFailureLog": "66123f59c71a7b09a803fa541036f5fa0db7b5976e1a455ca1e41e654ea342b0",
+    "driver": "c31ad10110bc641e3edffb12de36075ee2eb23885241c807203e8f4bf764f29d"
+  },
+  "verificationScope": "Only Python AST/import of outer runner, known frozen driver text, and existing core/snapshot/collector manifests. No driver, browser, domain projection, memory profiling, or core/build execution."
+}

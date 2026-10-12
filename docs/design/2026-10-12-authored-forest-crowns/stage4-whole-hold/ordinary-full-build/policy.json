@@ -1,0 +1,80 @@
+{
+  "revision": "lamina-normal-representation-policy-v1-preparation",
+  "status": "Prepared for one full bounded source build; no Blender execution yet",
+  "originalSourceIdentity": "extraction-attempt02/role-separated-originals.glb",
+  "originalSourceSha256": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+  "classificationFile": "source-classification.json",
+  "classificationSha256": "47b7ffe36b0a473f85acf9a402b2561492827f02326f25158f4b984cd9319b00",
+  "dispatch": {
+    "fixed27": "unchanged exact digest, including existing exact-zero faces",
+    "originalGuardPassed19": "unchanged original deformation method plus independent raw-source NORMAL oracle; no implicit repair if that oracle fails",
+    "otherBranchAndCrown12": "unchanged original deformation method plus independent raw-source NORMAL oracle; not preclassified as successful",
+    "hangingLeaf70": "candidate representation path, only exact classified accessor identities; 1 validated, 69 unvalidated"
+  },
+  "rawNormal": "raw source accessor is authoritative; imported or geometric normals are never substituted",
+  "topology": {
+    "sourceUnchanged": true,
+    "derivedRevisionRequired": true,
+    "removalRule": "only exact rational cross product zero, with source face IDs matching the sealed inventory",
+    "positiveAreaThreshold": null,
+    "nearZeroRemovalAllowed": false,
+    "preserveVerticesAndRetainedFaceOrder": true,
+    "preserveOriginalEdgesAndMaterialAssignments": true,
+    "notOriginalTopologyParity": true
+  },
+  "sharpRule": {
+    "baseline": "fresh exact-zero-pruned clone at original coordinates; original edge/smooth flags; literal raw source NORMAL",
+    "select": "vertices of corners whose source NORMAL readback L2 exceeds 0.002",
+    "flags": "original sharp flags OR all original edges incident to those vertices",
+    "iterations": 1,
+    "postAssignmentFlagsMustMatch": true,
+    "allSharpFallback": false,
+    "hardcodedVertexOrEdgeNumbers": false,
+    "failedSecondInputOracle": "HOLD, preserve first failure"
+  },
+  "recenterRule": {
+    "arithmetic": "unchanged authored field with Float64 points/Jacobian/inverse until final local Float32 cast",
+    "jacobianEpsilon": 1e-05,
+    "minimumSampledDeterminant": 0.2,
+    "trigger": "retained exact-nonzero Float64 local faces become exact-zero at old-pivot Float32 cast",
+    "eligible": "one exact Float32 collision group accounts for every collapsed face",
+    "center": "existing local Float64 target vertex minimizing maximum squared distance within collision group, then sum squared distance, then source vertex ID",
+    "multipleGroupsOrUnsupportedCollapse": "HOLD, no alternate center, scale or topology fallback",
+    "localTranslationOnly": true,
+    "ownerAndParentMatricesFixed": true,
+    "normalTransportIncludesOriginalAffine": true,
+    "mustRetainAllPositiveLocalFaces": true,
+    "worldFloat32FaceNondegeneracyClaim": false
+  },
+  "guards": {
+    "inputAndDesiredSourceNormalMaxL2": 0.002,
+    "worldVertexErrorMax": 1e-06,
+    "fixedRolesContextParentsMaterialsExact": true,
+    "wholeSourceShaBeforeAfterExact": true,
+    "originalDisplacementAndHeroAndPinGuards": "unchanged from stage4",
+    "normalGuardPassingAloneIsContactOrArtPass": false
+  },
+  "construction": {
+    "evaluateNewCloneOnceBeforeBaseline": true,
+    "saveBeforeAfterMatrixWorldBasisParentInverseParentWorld": true,
+    "assertFloat32ParentCompositionAndUnchangedOriginalScene": true,
+    "repairOrRestoreOriginalScene": false
+  },
+  "exportContractForNextIntegration": {
+    "temporaryExportCopyOnly": true,
+    "useActiveScene": true,
+    "assertExpectedNameMeshTriangleScopeBeforeFurtherImport": true,
+    "roundtrip": "source NORMAL -> Blender -> GLB -> reimport -> GLB, same 0.002 and 0.000001 bounds",
+    "material": "same source PBR/extensions, no textures dropped or material names disguised",
+    "authoringSceneBeforeAfterExact": true,
+    "futureDeliveryBoundary": "full per-owner tree bundle: unchanged fixed roles plus changed roles once, original owner/pivot/root proof retained",
+    "implementedInThisDraft": true
+  },
+  "notAuthorizedOrClaimed": [
+    "No automatic render or retry; one full build only under sealed runner",
+    "No 70-leaf or 101-role successful result",
+    "No stage4 coarse shape/view, seam70, actor, source art adoption or runtime acceptance",
+    "No original/source/app/fixed-candidate edits",
+    "No observer results; N=0"
+  ]
+}

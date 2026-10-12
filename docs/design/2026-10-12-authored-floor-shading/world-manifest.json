@@ -1,0 +1,131 @@
+{
+  "candidate": "native05-authored-world-m0-v2",
+  "stage": "M0-foundation",
+  "source": {
+    "artifact": "docs/design/2026-10-10-island-final-3d/whole-island.glb",
+    "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+  },
+  "transform": {
+    "scale": 0.45,
+    "origin": {
+      "x": 5.65,
+      "z": -1.03,
+      "y": -0.36450000000000005
+    }
+  },
+  "artifact": {
+    "file": "native05-world.json.gz",
+    "bytes": 2276640,
+    "sha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+    "expandedBytes": 10478254,
+    "expandedSha256": "49293ee8c9ee717d2fc930ccc42b1226e393ed62e0210c38a28540b4f8b46589"
+  },
+  "inputs": {
+    "package-lock.json": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+    "src/domain/growingIsland/authoredWaterGeometry.ts": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+    "src/domain/growingIsland/authoredWorldAccess.ts": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+    "src/domain/growingIsland/worldDefinition.ts": "8e88855dd180624f1c2b32437e6d1b93cc66e978f2fc9c741d5f004e8ba45db7",
+    "src/domain/growingIsland/worldTypes.ts": "d573184d5f78c77faa6a7c2811057f899356801e803df7df01ccb63073fd306f",
+    "tools/build-authored-island-world.mjs": "f2118d254d9d6b42169f490f2bcc90626cfa7daee149a84cb7a9d048e3c1f2d6"
+  },
+  "extraction": [
+    {
+      "name": "Flowers / open sky gathering court",
+      "primitive": 0,
+      "material": "path / light sandstone",
+      "sourceTriangles": 704,
+      "floorTriangles": 352,
+      "vertices": 427
+    },
+    {
+      "name": "Garden / rounded flower terrace",
+      "primitive": 0,
+      "material": "ground / fresh soft meadow",
+      "sourceTriangles": 1956,
+      "floorTriangles": 880,
+      "vertices": 1186
+    },
+    {
+      "name": "Grove / rounded living terrace",
+      "primitive": 0,
+      "material": "ground / higher garden",
+      "sourceTriangles": 1956,
+      "floorTriangles": 880,
+      "vertices": 1186
+    },
+    {
+      "name": "Grove / sheltered open room",
+      "primitive": 0,
+      "material": "path / light sandstone",
+      "sourceTriangles": 704,
+      "floorTriangles": 352,
+      "vertices": 427
+    },
+    {
+      "name": "Harbor / shared waterfront court",
+      "primitive": 0,
+      "material": "path / light sandstone",
+      "sourceTriangles": 704,
+      "floorTriangles": 352,
+      "vertices": 427
+    },
+    {
+      "name": "Island / continuous sculpted mature terrain",
+      "primitive": 0,
+      "material": "ground / fresh soft meadow",
+      "sourceTriangles": 38007,
+      "floorTriangles": 38007,
+      "vertices": 20327
+    },
+    {
+      "name": "Island / continuous sculpted mature terrain",
+      "primitive": 1,
+      "material": "hill / silvery meadow",
+      "sourceTriangles": 30988,
+      "floorTriangles": 30988,
+      "vertices": 15972
+    },
+    {
+      "name": "Island / continuous sculpted mature terrain",
+      "primitive": 2,
+      "material": "harbor / light seaside meadow",
+      "sourceTriangles": 16973,
+      "floorTriangles": 16973,
+      "vertices": 9374
+    },
+    {
+      "name": "Village / shared sunny court",
+      "primitive": 0,
+      "material": "path / light sandstone",
+      "sourceTriangles": 704,
+      "floorTriangles": 352,
+      "vertices": 427
+    },
+    {
+      "name": "Water town / shared frontage court",
+      "primitive": 0,
+      "material": "path / light sandstone",
+      "sourceTriangles": 704,
+      "floorTriangles": 352,
+      "vertices": 427
+    }
+  ],
+  "sites": 73,
+  "walkingPoints": 1990,
+  "reachableFromHome": 73,
+  "isolatedSites": [],
+  "edges": 3865,
+  "bounds": {
+    "min": {
+      "x": -0.65,
+      "y": -0.128250011,
+      "z": -10.93
+    },
+    "max": {
+      "x": 14.655312061,
+      "y": 2.21640713,
+      "z": 2.460312457
+    }
+  },
+  "scope": "Actual native05 floor triangles and explicit diagnostic placement sites. No owner save, gameplay integration, art acceptance, earned acquisition or release claim."
+}

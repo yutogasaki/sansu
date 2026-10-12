@@ -1,0 +1,165 @@
+{
+  "atUtc": "2026-10-12T06:29:13.602147+00:00",
+  "benchmarkStarted": false,
+  "astAndBundleSyntaxPass": true,
+  "sourceAndDependencyHashesMatchCores": true,
+  "actualImportCounts": {
+    "c2": 24,
+    "c3": 24
+  },
+  "classifierCases": [
+    {
+      "case": "background Blender",
+      "expected": "other-blender",
+      "actual": "other-blender"
+    },
+    {
+      "case": "headless",
+      "expected": "background-test-browser",
+      "actual": "background-test-browser"
+    },
+    {
+      "case": "Vitest",
+      "expected": "other-test-build-or-vite",
+      "actual": "other-test-build-or-vite"
+    },
+    {
+      "case": "browser driver",
+      "expected": "other-test-build-or-vite",
+      "actual": "other-test-build-or-vite"
+    },
+    {
+      "case": "other benchmark worker (own descendants excluded before classification)",
+      "expected": "other-test-build-or-vite",
+      "actual": "other-test-build-or-vite"
+    },
+    {
+      "case": "existing Firefox GUI",
+      "presenceRejected": false,
+      "activityMonitored": true
+    },
+    {
+      "case": "existing Safari OS helper",
+      "presenceRejected": false,
+      "activityMonitored": true
+    },
+    {
+      "case": "existing Chrome renderer",
+      "presenceRejected": false,
+      "activityMonitored": true
+    },
+    {
+      "case": "Vite esbuild actual ancestor only",
+      "descendantActivityMonitored": true,
+      "unrelatedServiceExempted": false
+    },
+    {
+      "case": "CPU baseline/threshold",
+      "firstDelta": null,
+      "firstDeltaIsNotIdle": true,
+      "measuredZeroPermitted": true,
+      "threshold": 10,
+      "aboveThresholdRejected": true
+    }
+  ],
+  "originalSealUnchanged": true,
+  "workerBundleAndSourceUnchanged": true,
+  "schedule": [
+    {
+      "block": 0,
+      "scenario": "wide27",
+      "version": "c2"
+    },
+    {
+      "block": 0,
+      "scenario": "wide27",
+      "version": "c3"
+    },
+    {
+      "block": 0,
+      "scenario": "source32",
+      "version": "c3"
+    },
+    {
+      "block": 0,
+      "scenario": "source32",
+      "version": "c2"
+    },
+    {
+      "block": 0,
+      "scenario": "shoulder35",
+      "version": "c2"
+    },
+    {
+      "block": 0,
+      "scenario": "shoulder35",
+      "version": "c3"
+    },
+    {
+      "block": 1,
+      "scenario": "source32",
+      "version": "c2"
+    },
+    {
+      "block": 1,
+      "scenario": "source32",
+      "version": "c3"
+    },
+    {
+      "block": 1,
+      "scenario": "shoulder35",
+      "version": "c3"
+    },
+    {
+      "block": 1,
+      "scenario": "shoulder35",
+      "version": "c2"
+    },
+    {
+      "block": 1,
+      "scenario": "wide27",
+      "version": "c3"
+    },
+    {
+      "block": 1,
+      "scenario": "wide27",
+      "version": "c2"
+    },
+    {
+      "block": 2,
+      "scenario": "shoulder35",
+      "version": "c2"
+    },
+    {
+      "block": 2,
+      "scenario": "shoulder35",
+      "version": "c3"
+    },
+    {
+      "block": 2,
+      "scenario": "wide27",
+      "version": "c2"
+    },
+    {
+      "block": 2,
+      "scenario": "wide27",
+      "version": "c3"
+    },
+    {
+      "block": 2,
+      "scenario": "source32",
+      "version": "c3"
+    },
+    {
+      "block": 2,
+      "scenario": "source32",
+      "version": "c2"
+    }
+  ],
+  "alternatingWithinScenario": true,
+  "limits": {
+    "wholeSeconds": 2700,
+    "workerSeconds": 180,
+    "rssBytes": 4294967296
+  }
+}

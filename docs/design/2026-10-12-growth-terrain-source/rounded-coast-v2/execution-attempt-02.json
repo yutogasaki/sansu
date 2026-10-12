@@ -1,0 +1,37 @@
+[
+  {
+    "phase": "build",
+    "command": [
+      "node",
+      "tools/build-authored-growth-terrain-kit.mjs",
+      "--draft"
+    ],
+    "startUtc": "2026-10-12T11:21:42.158353+00:00",
+    "finishedUtc": "2026-10-12T11:21:43.086962+00:00",
+    "elapsedSeconds": 0.928634792,
+    "exitCode": 0
+  },
+  {
+    "phase": "source-check",
+    "command": [
+      "node",
+      "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/check-source.mjs",
+      "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/source-check-attempt-02.json"
+    ],
+    "startUtc": "2026-10-12T11:21:43.087033+00:00",
+    "finishedUtc": "2026-10-12T11:21:44.353057+00:00",
+    "elapsedSeconds": 1.2660472499999997,
+    "exitCode": 0
+  },
+  {
+    "phase": "glb-audit",
+    "command": [
+      "python3",
+      "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/audit-source-glb.py"
+    ],
+    "startUtc": "2026-10-12T11:21:44.353127+00:00",
+    "finishedUtc": "2026-10-12T11:21:44.502961+00:00",
+    "elapsedSeconds": 0.14985954199999973,
+    "exitCode": 0
+  }
+]

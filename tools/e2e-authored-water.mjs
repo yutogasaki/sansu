@@ -48,7 +48,7 @@ try {
     await phase('load'); await timed('initial-load', async () => { await page.goto(process.env.SANSU_AUTHORED_WATER_URL || 'http://127.0.0.1:5344/prototypes/place-qa/authored.html?water=wide'); await ready(); });
     const baseline = await read(), initial = d.authoredWaterFrame(baseline, base), expected = protectedState(baseline), firstMeta = await metadata();
     report.initialState = baseline;
-    assert.equal(firstMeta.artCandidate, 'native05-authored-whole-preflight-v1'); assert.equal(firstMeta.nativeGrowingArt, 'true');
+    assert.equal(firstMeta.artCandidate, 'native05-authored-flower-garden-v3'); assert.equal(firstMeta.nativeGrowingArt, 'true');
     assert.equal(firstMeta.worldRevision, initial.plan.revision); assert.deepEqual(JSON.parse(firstMeta.authoredWater), initial.plan);
     assert.equal(initial.plan.pools.length, 3); assert.equal(initial.plan.streams.length, 4); await capture('desktop-whole');
     assert.equal(initial.plan.bridges.length, 1); assert.equal(firstMeta.authoredWaterBridgeId, 'native05-forest-garden-bridge');

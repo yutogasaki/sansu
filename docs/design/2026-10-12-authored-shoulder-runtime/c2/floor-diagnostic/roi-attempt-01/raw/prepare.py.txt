@@ -1,0 +1,130 @@
+from pathlib import Path
+import json,hashlib
+D=Path(__file__).resolve().parent
+BASE=Path('/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/executed-driver.mjs')
+s=BASE.read_text()
+def replace(old,new):
+ global s
+ assert s.count(old)==1,(old[:100],s.count(old))
+ s=s.replace(old,new)
+replace("start: { type: 'boolean', default: false }, mode: { type: 'string', default: 'shadow-off' },\n    output: { type: 'string' }, 'shadow-report': { type: 'string' }, 'line-review': { type: 'string' },", "start: { type: 'boolean', default: false }, output: { type: 'string' },")
+replace("assert(['shadow-off', 'unlit'].includes(args.mode), 'Mode must be shadow-off or unlit');", "args.mode = 'roi-face-normal';")
+replace("'unlit additionally requires a successful shadow-off report and recorded visual review that the fine line remains'", "'Matched actual target mesh/index/position/normal proof before local shader intervention'")
+replace("let browser, page, expectedSource, expectedInstalled, dependencyRoots, executable, beforeDependency, harnessBefore;", "let browser, page, expectedSource, expectedInstalled, dependencyRoots, executable, beforeDependency, harnessBefore, targetBefore;\nconst targetPath = path.join(externalRoot, 'target.json');\nconst target = await readJson(targetPath);")
+start=s.index("    if (args.mode === 'unlit') {")
+end=s.index("    report.sourceBefore",start)
+s=s[:start]+'''    const priorPath = '/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/report.json';
+    const prior = await readJson(priorPath);
+    assert.equal((await stamp(priorPath)).sha256, target.priorReportSha256, 'Prior causal report changed');
+    assert(prior.diagnosticCompleted && prior.restoration?.complete && prior.sourceFixed && prior.installedFixed);
+    assert.deepEqual(prior.expectedIdentity, expectedIdentity);
+    assert.deepEqual(prior.sourceAfter, expectedSource); assert.deepEqual(prior.installedAfter, expectedInstalled);
+    report.priorProbe = await stamp(priorPath); report.targetSpec = target;
+    targetBefore = await stamp(targetPath); report.targetSpecBefore = targetBefore;
+    await fs.copyFile(targetPath, path.join(output, 'target.json'), constants.COPYFILE_EXCL);
+'''+s[end:]
+replace("report.hookInstall = await page.evaluate(async moduleUrl => {", "report.hookInstall = await page.evaluate(async ({ moduleUrl, target }) => {")
+replace("floor: undefined, original: undefined, clones: [], cloneDisposed: 0, stage: 'baseline', drawStage: undefined };", "floor: undefined, original: undefined, clones: [], cloneDisposed: 0, stage: 'baseline', drawStage: undefined,\n            targetProof: undefined, shaderRecords: [] };\n        const close = (actual, expected, label) => { if (!Number.isFinite(actual) || Math.abs(actual - expected) > 0.000001) throw Error(`Target ${label} differs: ${actual} vs ${expected}`); };\n        const verifyTarget = floor => {\n            const g = floor.geometry, p = g.getAttribute('position'), n = g.getAttribute('normal');\n            if (!g.index || !p || !n || floor.isInstancedMesh || floor.isSkinnedMesh || g.morphAttributes.position?.length) throw Error('Unsupported floor target geometry');\n            floor.updateMatrixWorld(true);\n            const identity = new T.Matrix4().elements; floor.matrixWorld.elements.forEach((x, i) => close(x, identity[i], `matrixWorld[${i}]`));\n            const triangles = target.triangles.map(t => {\n                const indices = t.expectedRendererGlobalVertexIndices.map((wanted, i) => {\n                    const actual = g.index.getX(t.expectedRendererIndexOffset + i);\n                    if (actual !== wanted) throw Error('Actual renderer target index differs'); return actual;\n                });\n                const group = g.groups.find(group => t.expectedRendererIndexOffset >= group.start && t.expectedRendererIndexOffset + 3 <= group.start + group.count);\n                if (!group || group.materialIndex !== target.materialIndex) throw Error('Target triangle material group differs');\n                const vertices = indices.map((index, i) => {\n                    const point = new T.Vector3().fromBufferAttribute(p, index), normal = new T.Vector3().fromBufferAttribute(n, index);\n                    const source = t.vertices[i]; const expected = [source.point.x - target.layoutCenter, source.point.y, source.point.z - 2];\n                    point.toArray().forEach((x, k) => close(x, expected[k], `position ${index}:${k}`));\n                    normal.toArray().forEach((x, k) => close(x, [source.normal.x, source.normal.y, source.normal.z][k], `normal ${index}:${k}`));\n                    const world = point.clone().applyMatrix4(floor.matrixWorld);\n                    return { index, point: point.toArray(), world: world.toArray(), normal: normal.toArray(), projectedNdc: world.clone().project(d.camera).toArray() };\n                });\n                return { sourceTriangle: t.sourceTriangle, indexOffset: t.expectedRendererIndexOffset, indices, group: { ...group }, vertices };\n            });\n            return { matched: true, tolerance: 0.000001, triangles, roi: target.roi, materialIndex: target.materialIndex };\n        };")
+replace("d.matches++; d.drawStage = d.stage;", "if (!d.targetProof) { try { d.targetProof = verifyTarget(floor); } catch (error) { d.failure = String(error); return; } }\n            d.matches++; d.drawStage = d.stage;")
+replace("roughness: m.roughness, metalness: m.metalness, toneMapped: m.toneMapped }));", "roughness: m.roughness, metalness: m.metalness, toneMapped: m.toneMapped, flatShading: m.flatShading,\n            emissive: m.emissive?.toArray(), emissiveIntensity: m.emissiveIntensity, envMapIntensity: m.envMapIntensity }));")
+replace("stage: d.stage, drawStage: d.drawStage }),", "stage: d.stage, drawStage: d.drawStage, shaderCompileCount: d.shaderRecords.length }),")
+start=s.index("                else if (stage === 'unlit') {")
+end=s.index("                d.stage = stage;",start)
+s=s[:start]+'''                else if (stage === 'roi-face-normal') {
+                    if (d.stage !== 'shadow-off' || !d.targetProof?.matched) throw Error('ROI requires matched shadow-off baseline');
+                    const source = Array.isArray(d.original.material) ? d.original.material : [d.original.material];
+                    const original = source[target.materialIndex];
+                    if (!(original instanceof T.MeshStandardMaterial) || original.isMeshPhysicalMaterial || !original.vertexColors
+                        || original.map || original.normalMap || original.bumpMap || original.alphaMap || original.displacementMap
+                        || original.alphaTest !== 0 || original.stencilWrite || original.clippingPlanes?.length || original.flatShading
+                        || original.onBeforeCompile !== T.Material.prototype.onBeforeCompile)
+                        throw Error('Unsupported original target material');
+                    const clone = original.clone(); d.clones.push(clone);
+                    clone.customProgramCacheKey = () => `sansu-local-face-normal-v1:${JSON.stringify(target.roi)}`;
+                    clone.onBeforeCompile = shader => {
+                        const vertexMarker = '#include <project_vertex>', normalMarker = '#include <normal_fragment_begin>';
+                        const lightingMarker = '#include <lights_physical_fragment>';
+                        const once = (text, marker) => { if (text.split(marker).length !== 2) throw Error(`Unsupported shader marker ${marker}`); };
+                        once(shader.vertexShader, vertexMarker); once(shader.fragmentShader, normalMarker); once(shader.fragmentShader, lightingMarker);
+                        const normalChunk = T.ShaderChunk.normal_fragment_begin;
+                        if (!normalChunk.includes('vec3 nonPerturbedNormal = normal;')) throw Error('Missing normal field declaration');
+                        const lightingChunk = T.ShaderChunk.lights_physical_fragment;
+                        const derivative = 'vec3 dxy = max( abs( dFdx( nonPerturbedNormal ) ), abs( dFdy( nonPerturbedNormal ) ) );';
+                        once(lightingChunk, derivative);
+                        shader.uniforms.sansuRoiMin = { value: new T.Vector3(...target.roi.runtimeWorld.min) };
+                        shader.uniforms.sansuRoiMax = { value: new T.Vector3(...target.roi.runtimeWorld.max) };
+                        const declaration = 'varying vec3 vSansuRoiWorld;\\n';
+                        shader.vertexShader = declaration + shader.vertexShader.replace(vertexMarker,
+                            `${vertexMarker}\\nvSansuRoiWorld = (modelMatrix * vec4(transformed, 1.0)).xyz;`);
+                        const override = `
+// Diagnostic only: all derivative evaluation is outside conditional control flow.
+// The mask changes the lighting normal field solely within the fixed world-space ROI.
+float sansuRoiMask = float(all(greaterThanEqual(vSansuRoiWorld, sansuRoiMin)) && all(lessThanEqual(vSansuRoiWorld, sansuRoiMax)));
+vec3 sansuSourceNormalDxy = max(abs(dFdx(nonPerturbedNormal)), abs(dFdy(nonPerturbedNormal)));
+vec3 sansuFaceNormal = normalize(cross(dFdx(vViewPosition), dFdy(vViewPosition)));
+vec3 sansuFaceNormalDxy = max(abs(dFdx(sansuFaceNormal)), abs(dFdy(sansuFaceNormal)));
+if (sansuRoiMask > 0.5) {
+    normal = sansuFaceNormal;
+    nonPerturbedNormal = sansuFaceNormal;
+}
+`;
+                        shader.fragmentShader = declaration + 'uniform vec3 sansuRoiMin;\\nuniform vec3 sansuRoiMax;\\n' + shader.fragmentShader
+                            .replace(normalMarker, `${normalMarker}\\n${override}`)
+                            .replace(lightingMarker, lightingChunk.replace(derivative,
+                                'vec3 dxy = sansuSourceNormalDxy; if (sansuRoiMask > 0.5) { dxy = sansuFaceNormalDxy; }'));
+                        // Both derivative fields are computed before selecting one: fragments outside
+                        // the ROI retain the original geometryRoughness too, including at the boundary.
+                        d.shaderRecords.push({ materialUuid: clone.uuid, originalMaterialUuid: original.uuid,
+                            roi: target.roi, vertexShader: shader.vertexShader, fragmentShader: shader.fragmentShader,
+                            normalChunk, lightingChunk, treatment: 'normal and nonPerturbedNormal both overridden inside ROI; original normal and original derivative roughness outside ROI' });
+                    };
+                    const next = [...source]; next[target.materialIndex] = clone;
+                    d.floor.material = Array.isArray(d.original.material) ? next : next[0];
+                    clone.needsUpdate = true;
+                } else if (stage === 'restored-shadow-off') {
+                    restore(); d.floor.receiveShadow = false; d.stage = stage; return;
+                } else throw Error('Unsupported stage');
+'''+s[end:]
+replace("return { hook: { calls: d.calls, matches: d.matches, stage: d.stage, drawStage: d.drawStage,", "return { targetProof: d.targetProof, shaderCompileCount: d.shaderRecords.length,\n                    hook: { calls: d.calls, matches: d.matches, stage: d.stage, drawStage: d.drawStage,")
+replace("            cleanup() {", "            shaderEvidence: () => d.shaderRecords.map(record => ({ ...record })),\n            cleanup() {")
+replace("    }, String(threeUrl));", "    }, { moduleUrl: String(threeUrl), target });")
+replace("if (stage !== 'baseline') await page.evaluate(value => window.__sansuFloorDiagnostic.setStage(value), stage);", "await page.evaluate(value => window.__sansuFloorDiagnostic.setStage(value), stage);")
+replace("return s.matches >= beforeDraw + 2 && s.drawStage === stage;", "return s.matches >= beforeDraw + 2 && s.drawStage === stage && (stage !== 'roi-face-normal' || s.shaderCompileCount >= 1);")
+replace("assert.equal(observed.floor.receiveShadow, stage === 'baseline' || stage === 'restored' ? observed.floor.originalReceiveShadow : false);\n        if (stage === 'baseline') {", "assert.equal(observed.floor.receiveShadow, false);\n        assert(observed.targetProof?.matched, 'Actual mesh/index target was not verified');\n        if (stage === 'shadow-off') {")
+replace("baseline = observed; assert.equal(observed.floor.originalReceiveShadow, true);", "baseline = observed;\n            for (const key of ['position','normal','color','index']) assert.deepEqual(observed.floor[key], target.floorAttributes[key], `Prior actual floor ${key} changed`);\n            assert.deepEqual(observed.floor.groups, target.floorGroups, 'Prior actual floor groups changed');\n            assert.deepEqual(observed.camera.matrixWorld, target.camera.matrixWorld, 'Camera matrix differs from static target');\n            assert.deepEqual(observed.camera.projectionMatrix, target.camera.projectionMatrix, 'Projection differs from static target');\n            assert.equal(observed.floor.originalReceiveShadow, true);")
+start=s.index("        if (stage === 'unlit') {")
+end=s.index("        const file =",start)
+s=s[:start]+'''        if (stage === 'roi-face-normal') {
+            assert.equal(observed.floor.materialCount, baseline.floor.materialCount);
+            assert.equal(observed.floor.diagnosticClonesActive, 1);
+            assert(observed.shaderCompileCount >= 1);
+            for (let i = 0; i < observed.floor.materials.length; i++) {
+                const original = baseline.floor.materials[i], current = observed.floor.materials[i];
+                assert.equal(current.type, 'MeshStandardMaterial'); assert.equal(current.flatShading, false);
+                if (i === target.materialIndex) {
+                    assert.notEqual(current.uuid, original.uuid);
+                    const withoutUuid = m => Object.fromEntries(Object.entries(m).filter(([key]) => key !== 'uuid'));
+                    assert.deepEqual(withoutUuid(current), withoutUuid(original), 'ROI clone changed material properties');
+                } else assert.deepEqual(current, original, 'Non-target material changed');
+            }
+        } else {
+            assert.deepEqual(observed.floor.materials, baseline.floor.materials);
+            assert(observed.floor.originalMaterialRestored);
+            if (stage === 'restored-shadow-off') {
+                assert.equal(observed.floor.diagnosticClonesActive, 0); assert.equal(observed.floor.diagnosticClonesDisposed, 1);
+            }
+        }
+'''+s[end:]
+replace("await capture('baseline'); await capture('shadow-off');\n    if (args.mode === 'unlit') await capture('unlit');\n    await capture('restored');", "await capture('shadow-off'); await capture('roi-face-normal');\n    report.shaderEvidence = await page.evaluate(() => window.__sansuFloorDiagnostic.shaderEvidence());\n    assert(report.shaderEvidence.length >= 1);\n    await writeJson('shader-evidence.json', report.shaderEvidence);\n    await capture('restored-shadow-off');")
+replace("assert.equal(report.restoration.clonesDisposed, args.mode === 'unlit' ? baseline.floor.materialCount : 0);", "assert.equal(report.restoration.clonesDisposed, 1);")
+replace("report.externalHarnessAfter = await stamp(self);", "report.targetSpecAfter = await stamp(targetPath);\n        if (targetBefore) assert.deepEqual(report.targetSpecAfter, targetBefore);\n        report.externalHarnessAfter = await stamp(self);")
+replace("schema: 'sansu-external-floor-seam-diagnostic-v1'", "schema: 'sansu-external-floor-local-normal-diagnostic-v1'")
+# Capture shader/compiler failures explicitly, without accepting a blank or fallback material.
+replace("page.on('pageerror', error => report.errors.push({ kind: 'pageerror', error: error.stack ?? String(error) }));", "page.on('pageerror', error => report.errors.push({ kind: 'pageerror', error: error.stack ?? String(error) }));\n    page.on('console', message => { if (message.type() === 'error') report.errors.push({ kind: 'console-error', text: message.text() }); });")
+(D/'diagnose-roi-face-normal.mjs').write_text(s)
+static=Path('/private/tmp/sansu-floor-shading-diagnostic-c2/static-normal-audit/candidate-cause.json');audit=json.loads(static.read_text());basecap=json.loads(Path('/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/baseline-capture.json').read_text())['observed'];center=7.0026560305
+roimin=[5.08,.52,-4.885];roimax=[5.46,.66,-4.82]
+target={'schema':'sansu-fixed-c2-local-ridge-target-v1','materialIndex':0,'layoutCenter':center,'triangles':audit['triangles'],'roi':{'authoredWorld':{'min':roimin,'max':roimax},'runtimeWorld':{'min':[roimin[0]-center,roimin[1],roimin[2]-2],'max':[roimax[0]-center,roimax[1],roimax[2]-2]},'scope':'Small first ridge segment near screenshot (727,615); runtimeWorld is authoredWorld translated by (-layoutCenter,0,-2). No override outside this box.'},'floorAttributes':{k:basecap['floor'][k] for k in ['position','normal','color','index']},'floorGroups':basecap['floor']['groups'],'camera':{k:basecap['camera'][k] for k in ['matrixWorld','projectionMatrix']},'priorReportSha256':hashlib.sha256(Path('/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/report.json').read_bytes()).hexdigest(),'staticAuditSha256':hashlib.sha256(static.read_bytes()).hexdigest()}
+(D/'target.json').write_text(json.dumps(target,indent=2)+'\n')
+(D/'preparation-origin.json').write_text(json.dumps({'baseDriver':str(BASE),'baseDriverSha256':hashlib.sha256(BASE.read_bytes()).hexdigest(),'staticAudit':str(static),'staticAuditSha256':target['staticAuditSha256'],'noExecution':True},indent=2)+'\n')
+print('Prepared',D/'diagnose-roi-face-normal.mjs')

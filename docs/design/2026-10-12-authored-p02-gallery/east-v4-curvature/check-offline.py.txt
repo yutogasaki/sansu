@@ -1,0 +1,64 @@
+"""One bounded pure-Python candidate check; no Blender/runtime/world compiler."""
+from pathlib import Path
+import json,hashlib,math,sys,collections,time
+import numpy as np
+from shapely.geometry import Polygon
+from shapely.strtree import STRtree
+P=Path(__file__).resolve().parent;R=P.parent/'east-v3-manifold/runs/01-coarse-build';V=P.parent/'east-v3-manifold'
+sys.path.insert(0,str(V));from terrain_connector import closed_solid
+from entry_geometry import Terrain,slope_report,EPS
+from curved_ribbon import make_plan
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+started=time.monotonic();S=json.loads((V/'study.json').read_text());old=json.loads((R/'planned-floor-tops.json').read_text());M=json.loads(Path(S['basis']['eastV1Measurement']['path']).read_text());joint=M['candidates'][0]['frontBoughJunction']
+probes=json.loads((R/'gallery-local-top-probes.json').read_text());gallery=[]
+cx,_,cz=S['transform']['authoredOrigin']
+for p in probes:
+    a=math.radians(p['degrees']);gallery.append([cx+.914*math.cos(a),p['hit'][1],cz-.914*math.sin(a)])
+inputs={**{k:v['path'] for k,v in S['inputs'].items()},'oldPlans':str(R/'planned-floor-tops.json'),'galleryProbes':str(R/'gallery-local-top-probes.json'),'study':str(V/'study.json'),'script':__file__,'generator':str(P/'curved_ribbon.py')}
+before={k:sha(v) for k,v in inputs.items()}
+plan=make_plan(joint,gallery);out=P/'planned-floor-v4-stations-once.json';assert not out.exists();out.write_text(json.dumps(plan,indent=2)+'\n')
+verts=np.array(plan['topVertices']);indices=np.array(plan['topFaces']);T=verts[indices]
+normals=np.cross(T[:,1]-T[:,0],T[:,2]-T[:,0]);unit=normals/np.linalg.norm(normals,axis=1)[:,None]
+polys=[Polygon(t[:,[0,2]]) for t in T];tree=STRtree(polys);overlap=[]
+for i,p in enumerate(polys):
+    for j in tree.query(p):
+        j=int(j)
+        if j<=i:continue
+        a=p.intersection(polys[j]).area
+        if a>1e-12:overlap.append({'a':i,'b':j,'area':a})
+v,f,closure=closed_solid(plan,.07);v=np.array(v);f=np.array(f);solid=v[f];edges=collections.Counter(tuple(sorted((int(a),int(b)))) for face in f for a,b in zip(face,np.roll(face,-1)))
+volume=float(np.sum(np.einsum('ij,ij->i',solid[:,0],np.cross(solid[:,1],solid[:,2])))/6)
+area=sum(p.area for p in polys);top_count=len(plan['topFaces']);topn=np.cross(solid[:top_count,1]-solid[:top_count,0],solid[:top_count,2]-solid[:top_count,0]);botn=np.cross(solid[top_count:2*top_count,1]-solid[top_count:2*top_count,0],solid[top_count:2*top_count,2]-solid[top_count:2*top_count,0])
+source=P.parent/'east-v1-analysis/analyze.py';text=source.read_text();E={'__file__':str(source),'__name__':'readonly'};exec(compile(text[:text.index("c=M['candidates'][0]")],str(source),'exec'),E)
+terrain=Terrain(E['F'].tolist());ground=terrain.relation(T.tolist())
+center=[r['center'] for r in plan['rows']];collision=[]
+for i,p in enumerate(center):
+    _,box=E['box_tri'](p,S['design']['clearWidth']/2,.012,S['envelope']['height']+S['design']['headReserve'])
+    a=np.array(p);ids=np.flatnonzero((E['HI'][:,0]>=a[0]-S['envelope']['radius'])&(E['LO'][:,0]<=a[0]+S['envelope']['radius'])&(E['HI'][:,2]>=a[2]-S['envelope']['radius'])&(E['LO'][:,2]<=a[2]+S['envelope']['radius'])&(E['HI'][:,1]>=a[1]+min(b['minY'] for b in S['envelope']['bands']))&(E['LO'][:,1]<=a[1]+S['envelope']['height']))
+    band=[int(k) for k in ids if any(E['band_hit'](a,b,E['T'][k]) for b in S['envelope']['bands'])]
+    if len(box) or band:
+        def names(ids):return dict(collections.Counter(E['objects'][int(E['OID'][k])]['name'] for k in ids))
+        collision.append({'row':i,'point':p,'degrees':plan['rows'][i]['degrees'],'role':plan['rows'][i]['role'],'reservedBox':names(box),'actualConservativeMotionBands':names(band),'boxTriangleIds':list(map(int,box)),'bandTriangleIds':band})
+full_rows=np.array(plan['topVertices']).reshape(-1,5,3);widths=np.linalg.norm(full_rows[:,-1]-full_rows[:,0],axis=1)
+# Verify intended union overlaps with retained floor pieces are at one top
+# height, independently of a later Boolean solver. Equal-height overlaps are
+# deliberate junctions, not a self-crossing ribbon.
+from entry_geometry import plane_y
+joins=[]
+for name,p in old.items():
+    if name=='eastBranchGallery':continue
+    other=np.array(p['topVertices'])[np.array(p['topFaces'])];bad=[];pairs=0;max_delta=0.
+    for j,t in enumerate(other):
+        poly=Polygon(t[:,[0,2]])
+        for i in tree.query(poly):
+            i=int(i);part=poly.intersection(polys[i])
+            if part.area<=1e-12:continue
+            pairs+=1
+            for x,z in part.exterior.coords:
+                a=[x,0,z];delta=abs(plane_y(a,T[i])-plane_y(a,t));max_delta=max(max_delta,delta)
+                if delta>EPS:bad.append({'branchFace':i,'otherFace':j,'pointXZ':[x,z],'heightDelta':delta})
+    joins.append({'other':name,'overlapPairs':pairs,'maximumTopHeightDifference':max_delta,'mismatch':bad})
+report={'status':'HOLD_PREPARATION_ONLY','candidate':'p02-east-v4-curvature','inputHashesBefore':before,'inputHashesAfter':{k:sha(v) for k,v in inputs.items()},'planSha256':sha(out),'primaryEndpointDistances':{'joint':math.dist(center[0],joint),'galleryStart':min(math.dist(c,gallery[0]) for c in center),'galleryEnd':math.dist(center[-1],gallery[-1])},'widthRange':[float(widths.min()),float(widths.max())],'top':{'triangles':len(T),'minimumNormalY':float(unit[:,1].min()),'nonpositiveNormalY':int(np.sum(unit[:,1]<=0)),'positiveAreaOverlapPairs':overlap,'pairThreshold':1e-12,'sameThresholdAsPreviousDiagnostic':True,'projectionArea':area},'curvature':{'maximumAbsoluteCurvature':max(abs(r['curvature']) for r in plan['rows']),'halfWidth':.32,'sampledMinimumOffsetScale':min(1-.32*abs(r['curvature']) for r in plan['rows']),'samplingNotAnalyticBound':True},'solid':{**closure,'badEdges':sum(n!=2 for n in edges.values()),'edgeValences':dict(collections.Counter(edges.values())),'signedVolume':volume,'expectedAreaTimesThickness':area*.07,'volumeDelta':volume-area*.07,'float32TopNonpositiveY':int(np.sum(topn[:,1]<=0)),'float32BottomNonnegativeY':int(np.sum(botn[:,1]>=0)),'verticalColumnUniqueTopFromProjectionProof':not overlap},'groundRelation':ground,'existingJunctionTopParity':joins,'pathSlope':slope_report(center),'fixedSourceCollisionRows':collision,'fixedSourceObjects':E['objects'],'limits':['No Blender, unions, generated support/rail or runtime validation executed.','Sampled curvature is reported; exact triangulated top overlap/normal and thickness checks cover this mesh.','Motion bands are actual saved rig conservative cylinders, not exact animated skin.','Old actors/trees/house/ground unchanged; no obstacle exclusions.','Ground/threshold/native interior input meshes stay fixed.'], 'seconds':time.monotonic()-started}
+assert report['inputHashesBefore']==report['inputHashesAfter']
+f=P/'offline-result.json';assert not f.exists();f.write_text(json.dumps(report,indent=2)+'\n')
+print(json.dumps({'sha256':sha(f),'top':{k:v for k,v in report['top'].items() if k!='positiveAreaOverlapPairs'},'overlapPairs':len(overlap),'solid':report['solid'],'width':report['widthRange'],'endpoints':report['primaryEndpointDistances'],'curvature':report['curvature'],'groundMin':ground['minGap'],'groundBuried':len(ground['buriedPolygons']),'joinMismatch':[{'other':j['other'],'count':len(j['mismatch']),'max':j['maximumTopHeightDifference']} for j in joins],'collisionRows':len(collision),'collisionNames':dict(collections.Counter(n for row in collision for n in row['actualConservativeMotionBands'])),'seconds':report['seconds']},indent=2))

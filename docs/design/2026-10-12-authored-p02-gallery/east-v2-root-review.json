@@ -1,0 +1,36 @@
+{
+  "dateUtc": "2026-10-12T05:35:58.338526+00:00",
+  "reviewer": "root implementing author",
+  "candidate": "p02-east-v2 failed-floor-only",
+  "evidenceType": "Blender source render, not actual app",
+  "independentObservers": 0,
+  "verdicts": {
+    "sourceVisual": "HOLD",
+    "silentComprehensionSafety": "UNTESTED N=0",
+    "runtime": "NOT_INTEGRATED"
+  },
+  "findings": [
+    "Entrance and an eastern rising route are identifiable.",
+    "The smooth wide band rises steeply and reads as unsupported; planned boughs and rails do not exist in this failed scene.",
+    "Black missing-looking floor patches remain at the entrance; invalid topology must be repaired.",
+    "Compared with native05, staircase articulation and supported inhabited gallery are not yet present."
+  ],
+  "next": "First generate the same valid floor union and actual supporting boughs/rails, then compare whole and entry again. A stepped alternative must use real tread/riser support, never invisible ramp plus cosmetic steps.",
+  "images": [
+    {
+      "path": "../2026-10-10-island-final-3d/whole-island-render.png",
+      "label": "採用native-05・構図と回廊の参照",
+      "sha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6"
+    },
+    {
+      "path": "east-v2-failed-shape-view/runs/02-whole/failed-floor-only-HOLD-whole.png",
+      "label": "東案v2・全景（床のみ／位相不正）",
+      "sha256": "aaf8fc6498f78ef69e8b0031d80615a03f2ef82dd4d28001ed33439fb2623b8b"
+    },
+    {
+      "path": "east-v2-failed-shape-view/runs/03-entry/failed-floor-only-HOLD-entry-section.png",
+      "label": "東案v2・入口近景（床のみ／位相不正）",
+      "sha256": "b1da9ad3072a83a1a35831cdf9d1844e49681455feef7f3664ec94e5f2e9d277"
+    }
+  ]
+}

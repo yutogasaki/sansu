@@ -1,0 +1,15 @@
+file:///private/tmp/sansu-authored-cove-v4-independent/audit.mjs:86
+const linearHex=hex=>{const value=parseInt(hex.slice(1),16);return [16,8,0].map(shift=>{const v=((value>>shift)&255)/255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4;});};
+                                               ^
+
+TypeError: Cannot read properties of undefined (reading 'slice')
+    at linearHex (file:///private/tmp/sansu-authored-cove-v4-independent/audit.mjs:86:48)
+    at file:///private/tmp/sansu-authored-cove-v4-independent/audit.mjs:95:149
+    at Array.every (<anonymous>)
+    at file:///private/tmp/sansu-authored-cove-v4-independent/audit.mjs:95:125
+    at Array.every (<anonymous>)
+    at colorMatches (file:///private/tmp/sansu-authored-cove-v4-independent/audit.mjs:95:57)
+    at file:///private/tmp/sansu-authored-cove-v4-independent/audit.mjs:114:755
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.18.0

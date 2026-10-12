@@ -1,0 +1,54 @@
+{
+  "status": "preflights passed; full core running, no browser/server started by this worker",
+  "recordedAtUnixSeconds": 1791768230.32573,
+  "coreExecSession": 25735,
+  "coreProcessId": 83724,
+  "revision": "authored-shoulder-c1",
+  "files": {
+    "README.md": "50e8a82a2dce510bb8ec3ab2dad4c7e416c476d902d64047d8ba81644bb57db9",
+    "closure.py": "90db806c2e015dc3d724bb057e9cfcb19b06a9bba9f696d774b23327943ebbbf",
+    "snapshot.mjs": "2effc4f08353496ec2a2b171a3573476bc1360b927c1ee6e8f4c009cd9f2a3c4",
+    "collect-installed-dependencies.mjs": "c95d9c15aa27333b8d414df6256a78552145c38b074f76d2dd28cd53e4afbdf7",
+    "check-driver-imports.mjs": "5388ba2b74ee697f35acdcf76b9d8d231f5038c0b7909ef36649b9d290907e3a",
+    "check-harness-inputs.mjs": "9a2b8646f5f95ea9bfa0dc410d96f65beb223dc3bf1b7b25787ac89357d3d4c2",
+    "core.py": "ebb0ddfc88cd98854a56c170a293ca7a54cd6fdda1ac96ec12b513fd989462e9",
+    "regressions.py": "deffbce627f91546e83a4fbbbf24745162613a15efa76478e84ead275f40b333"
+  },
+  "localClosureCount": 6398,
+  "installedDependencyCount": 6,
+  "actualShoulderDriverInputCount": 2127,
+  "snapshotFiles": 20634,
+  "snapshotSha256": "c162db0673a712c6829c974b0344073a39e8a95b1feb120285f6a6d3a456a022",
+  "sourceChangedDuringCopy": [],
+  "closureDifferences": [],
+  "staticAuditPass": true,
+  "actualDriverInputAuditPass": true,
+  "firstStaticFailure": "closure/import-audit-first-failure.json",
+  "firstFailureScope": "Audit-only interpretation of browser root imports; application and fixed snapshot unchanged",
+  "testsResult": "Not yet terminal; do not claim core PASS",
+  "preparationRecord": "prepared/preparation.json describes the initial preparation; this execution handoff supersedes its pending-driver state",
+  "runnerOnlyCorrections": [
+    {
+      "evidence": "prepared/runner-cove-contract-fix/report.json",
+      "scope": "Runner-only contract repair before any regression browser starts",
+      "cause": "Shoulder-only fields accidentally inserted into cove block by an overly broad preparation string replacement",
+      "beforeSha256": "e7f1e1e24d675128bb38e1dce9a9a8570a384da8ff62442ce0c4e8c208760add",
+      "afterSha256": "deffbce627f91546e83a4fbbbf24745162613a15efa76478e84ead275f40b333",
+      "changes": [
+        "Cove requires 10 captures, preview/move/store/restore edit sequence, one successful p6-to-p9 canvas selection; no shoulder scopes/dependency/raw paid-acquisition fields",
+        "Preserve shoulder firstFailure.error in generic failure reporting"
+      ],
+      "candidateAppOrDriverModified": false,
+      "browserStarted": false,
+      "coreReportSha256": "14b5eaacdd32329234c61fb1879248b9694fcb980d225e6f785f0dacb258a2be",
+      "snapshotSha256": "c162db0673a712c6829c974b0344073a39e8a95b1feb120285f6a6d3a456a022"
+    }
+  ],
+  "regressionFirstExecution": {
+    "report": "/private/tmp/sansu-authored-shoulder-c1/prepared/regression-first-terminal.json",
+    "sha256": "d8ed94c7b5e10b807764504394d6524bef6e1513ba8b38719ee9b517ac91458d",
+    "pass": false,
+    "classification": "driver-node-v8-heap-out-of-memory",
+    "runnerExitCode": 1
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "authorizedPreparationSHA": "4e5807d506483eb2680d2f4a1889a6ef1d26b93b7efcd2ecfd3ec0a250a438a7",
+  "outerScriptSHA": "098cbb52c64d724d3422ac63104da33d8ca3de5d351d495810aa18a433dcb07d",
+  "view": "entry-section",
+  "evidenceType": "unrepaired failed source shape, HOLD, supports and rails absent",
+  "command": [
+    "python3",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/supervise.py",
+    "--scheduled",
+    "--seconds",
+    "60",
+    "--rss-mib",
+    "2560",
+    "--log",
+    "runs/02-entry.log.txt",
+    "--",
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "render-failed.py",
+    "--",
+    "--scheduled",
+    "--source",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/failed-scene.blend",
+    "--out",
+    "runs/02-entry",
+    "--view",
+    "entry-section"
+  ],
+  "launchRequestedUTC": "2026-10-12T06:20:34.627221+00:00",
+  "ownedBlender": {
+    "54263": {
+      "pid": 54263,
+      "firstObservedUTC": "2026-10-12T06:20:34.969767+00:00",
+      "command": "/Applications/Blender.app/Contents/MacOS/Blender -b --threads 2 --python-exit-code 1 --python render-failed.py -- --scheduled --source /private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/failed-scene.blend --out runs/02-entry --view entry-section",
+      "peakObservedRSSBytes": 2512093184,
+      "lastObservedUTC": "2026-10-12T06:20:52.856275+00:00"
+    }
+  },
+  "timestampSemantics": "Popen return and ps observation UTC, not exact child launch/exit timestamps",
+  "limitsFromSealedSupervisor": {
+    "threads": 2,
+    "secondsPerView": 60,
+    "rssMiB": 2560,
+    "samples": 16,
+    "width": 1280
+  },
+  "supervisorPID": 54261,
+  "supervisorPopenReturnedUTC": "2026-10-12T06:20:34.629290+00:00",
+  "supervisorExitCode": 0,
+  "supervisorExitObservedUTC": "2026-10-12T06:20:53.419611+00:00",
+  "outerElapsedSeconds": 18.792404834,
+  "ownedBlenderRemaining": [],
+  "inputHashesBefore": {
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/failed-scene.blend": "4452f3ca5351ef38977cedece0116ab72cc135732f40ea51a65d0d6262b330f9",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/study.json": "fc9b054f95375363c88e317299ad6a45a0d8b28d674e44daefa8d2e4634e1812",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/preparation.json": "312bbc4224ac6ccf9fb3af1c3d4159b50c16ea6ba170309f3569b739cd3a89a0",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/boolean-surface-lineage.json": "3f4807859c32c37e498356484c88fad637c80f6ce87e404393f6b0672fd987d3",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/manifold-union-topology.json": "0b83230ef546e23b9cec046a17571e4a43378b1f261d7ded1c3f8eb92b4e31c5",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v2-failed-shape-view/render-failed-type-node.py": "6b5a4a9280a1323d4c665c888dc0243800b932ad0db63a0a2890bc8b86cd1ec2",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/supervise.py": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-failed-shape-view/render-failed.py": "6889d86f29ac383bc210ed04e711f171c260480189b1b534ae80b4eb4acae42e",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-failed-shape-view/preparation.json": "4e5807d506483eb2680d2f4a1889a6ef1d26b93b7efcd2ecfd3ec0a250a438a7"
+  },
+  "inputHashesAfter": {
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/failed-scene.blend": "4452f3ca5351ef38977cedece0116ab72cc135732f40ea51a65d0d6262b330f9",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/study.json": "fc9b054f95375363c88e317299ad6a45a0d8b28d674e44daefa8d2e4634e1812",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/preparation.json": "312bbc4224ac6ccf9fb3af1c3d4159b50c16ea6ba170309f3569b739cd3a89a0",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/boolean-surface-lineage.json": "3f4807859c32c37e498356484c88fad637c80f6ce87e404393f6b0672fd987d3",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/manifold-union-topology.json": "0b83230ef546e23b9cec046a17571e4a43378b1f261d7ded1c3f8eb92b4e31c5",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v2-failed-shape-view/render-failed-type-node.py": "6b5a4a9280a1323d4c665c888dc0243800b932ad0db63a0a2890bc8b86cd1ec2",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/supervise.py": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-failed-shape-view/render-failed.py": "6889d86f29ac383bc210ed04e711f171c260480189b1b534ae80b4eb4acae42e",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-failed-shape-view/preparation.json": "4e5807d506483eb2680d2f4a1889a6ef1d26b93b7efcd2ecfd3ec0a250a438a7"
+  },
+  "allInputsUnchanged": true,
+  "supervisorReport": {
+    "command": [
+      "/Applications/Blender.app/Contents/MacOS/Blender",
+      "-b",
+      "--threads",
+      "2",
+      "--python-exit-code",
+      "1",
+      "--python",
+      "render-failed.py",
+      "--",
+      "--scheduled",
+      "--source",
+      "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/failed-scene.blend",
+      "--out",
+      "runs/02-entry",
+      "--view",
+      "entry-section"
+    ],
+    "exitCode": 0,
+    "stop": null,
+    "peakSampledRssBytes": 2510454784,
+    "elapsedSeconds": 18.507058292,
+    "limits": {
+      "seconds": 60,
+      "rssMiB": 2560
+    },
+    "sourceOnly": true
+  }
+}

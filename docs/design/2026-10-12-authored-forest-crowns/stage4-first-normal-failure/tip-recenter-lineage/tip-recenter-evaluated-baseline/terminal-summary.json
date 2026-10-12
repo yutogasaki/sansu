@@ -1,0 +1,68 @@
+{
+  "status": "PASS \u2014 single-leaf numeric representation/roundtrip diagnostic only",
+  "allOriginalMeshesUnchanged": 442,
+  "ownerRootTransformsUnchanged": true,
+  "variant": {
+    "inputSourceNormalOracle": {
+      "maxL2": 0.0004999450002029757,
+      "over002": 0,
+      "failedCorners": []
+    },
+    "desiredSourceNormalOracle": {
+      "maxL2": 0.0005938049877916296,
+      "over002": 0,
+      "failedCorners": []
+    },
+    "nonzeroLocalRetainedTriangles": 148,
+    "zeroAfterFloat32WorldCastSourceFaces": [
+      45,
+      47,
+      146,
+      150
+    ],
+    "maxWorldError": 7.358872118398891e-07
+  },
+  "roundtrip": {
+    "passed": true,
+    "first": {
+      "normalMaxL2": 0.0006251781302261338,
+      "worldMax": 7.608781644124296e-07,
+      "exactTriangles": true,
+      "materialPBRAndExtensionsPreserved": true
+    },
+    "reimport": {
+      "normalMaxL2": 0.0005985943689896425,
+      "worldMax": 7.535946909982361e-07,
+      "exactTriangles": true,
+      "zeroLocalTriangles": []
+    },
+    "second": {
+      "normalMaxL2": 0.0006251781302261338,
+      "worldMax": 7.608781644124296e-07,
+      "exactTriangles": true,
+      "materialPBRAndExtensionsPreserved": true
+    }
+  },
+  "originalSceneExact": {
+    "equal": true,
+    "guardedObjects": 552,
+    "guardedMeshes": 444,
+    "guardedMaterials": 199,
+    "changedObjects": [],
+    "changedMaterials": [],
+    "sceneEqual": true,
+    "originalStateRestoredByAssignment": false
+  },
+  "external199PlusScriptsExact": true,
+  "execution": {
+    "startedAtUtc": "2026-10-12T06:11:04.064496+00:00",
+    "finishedAtUtc": "2026-10-12T06:11:28.251803+00:00",
+    "ownedPid": 52306,
+    "elapsedSeconds": 24.187166291999997,
+    "peakObservedRssBytes": 630128640,
+    "exitCode": 0
+  },
+  "ownedPidAndGroupAbsentVerified": true,
+  "sourceOrRuntimeAdoption": false,
+  "fullStage4Executed": false
+}

@@ -1,0 +1,63 @@
+"""Saved failed leaf only: Float64 arithmetic, no Blender or geometry writes."""
+import gzip,hashlib,importlib.util,json,math,sys
+from pathlib import Path
+HERE=Path(__file__).resolve().parent;PREP=HERE.parent;STAGE=PREP.parent
+sys.path.insert(0,str(PREP));import rules
+def load(name,path):
+ s=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
+g=load('geometry',STAGE/'normal-debug/tip-recenter-evaluated-baseline/geometry.py');sys.modules['geometry']=g
+sync=load('sync_contract',STAGE/'normal-debug/tip-recenter-evaluated-baseline/sync_contract.py')
+files={}
+def read(path):
+ data=path.read_bytes();files[str(path)]=hashlib.sha256(data).hexdigest();return json.loads(gzip.decompress(data) if path.suffix=='.gz' else data)
+role=PREP/'attempt-full-01/roles/l14:2269'
+e=read(role/'candidate-evaluation.json.gz');base=read(role/'baseline-evaluation.json.gz')
+p=read(role/'float64-profile.json.gz');r=read(role/'representation.json.gz')
+inv=read(PREP/'source-classification.json')
+source=read(STAGE/'normal-debug/attempt-01/source-role-accessors.json.gz')['extracted']
+rows={x['sourceNodeIndex']:x for x in inv['roles'] if x['ownerId']=='l14'}
+assert rows[2239]['primitives'][0]['indexSHA']==rows[2269]['primitives'][0]['indexSHA']
+keep=e['originalSourceFaceMap'];faces=[source['indices'][3*i:3*i+3] for i in keep]
+B=[[1.,0,0,0],[0,0,-1.,0],[0,1.,0,0],[0,0,0,1.]];BI=g.inverse(B)
+source_a=g.multiply(BI,base['before']['world'])
+t=[[float(i==j) for j in range(4)] for i in range(4)]
+for i in range(3):t[i][3]=r['center64'][i]
+ideal=g.multiply(source_a,t);coords=r['local32'];targets=p['targets64']
+def observe(matrix,points):
+ world=[g.point(matrix,v) for v in points];errors=[math.dist(a,b) for a,b in zip(world,targets)]
+ return {'maxWorldError':max(errors),'minWorldError':min(errors),'verticesOver1e6':sum(x>1e-6 for x in errors),
+  'nonzeroLocalTriangles':len(faces)-len(rules.exact_zero_faces(points,faces)),
+  'worldErrors':errors,'worldPositions':world}
+stage1=observe(ideal,coords)
+stage2=observe(g.multiply(BI,e['before']['world']),coords)
+stage3=observe(g.multiply(BI,e['after']['world']),coords)
+# (a) Only a saved input clone basis is available. It passed through the source
+# matrix_world setter already; do not claim it is the uncaptured original RNA basis.
+a_basis=g.multiply(base['before']['basis'],t);a_basis32=[[g.f32(x) for x in row] for row in a_basis]
+a_world=sync.parent_product32(base['after']['parentWorld'],base['after']['parentInverse'],a_basis32)
+a_affine=g.multiply(BI,a_world);a=observe(a_affine,coords)
+a['basisEvidence']='saved input-clone basis, not independently captured original matrix_basis; provisional (a) only'
+a['basis32']=a_basis32;a['predictedMatrixWorld']=a_world
+# (b) Keep the measured evaluated affine exactly; re-express unchanged targets.
+actual=g.multiply(BI,e['after']['world']);actual_inverse=g.inverse(actual)
+b_local64=[g.point(actual_inverse,v) for v in targets];b32=[[g.f32(x) for x in v] for v in b_local64]
+b=observe(actual,b32);b['changedPositionsByRepresentationOnly']=True
+b['zeroLocalSourceFaceIds']=[keep[i] for i in rules.exact_zero_faces(b32,faces)]
+for report,affine in [(a,a_affine),(b,actual)]:
+ transport=g.multiply(g.transpose([row[:3] for row in affine[:3]]),g.transpose(g.inverse([row[:3] for row in source_a[:3]])))
+ normals=[g.normalize(g.vector(transport,n)) for n in p['desiredNormalsByVertex64']]
+ report['requiredLocalNormalTransportMaxDifference']=max(math.dist(x,y) for x,y in zip(normals,p['desiredNormalsByVertex64']))
+ report['newBlenderNormalReadback']='NOT RUN; cannot prove fan encoding from saved arithmetic'
+desired=[p['desiredNormalsByVertex64'][source['indices'][i]] for i in e['sourceCornerMap']]
+original_normals=rules.normal_residuals(e['storedNormals'],desired)
+out={'scope':'one saved failing leaf only, no source/build changes or Blender execution',
+ 'sourceNodeIndex':2269,'leafOrdinal':rows[2269]['ordinal'],
+ 'stages':{'target64_to_local32_storage':stage1,'plus_float32_world_assignment':stage2,'plus_parent_reevaluation':stage3},
+ 'parentTranslationDeltaBlender':[e['after']['world'][i][3]-e['before']['world'][i][3] for i in range(3)],
+ 'storedFailedLeafNormalMaxL2':original_normals['maxL2'],'storedFailedLeafNormalCornersOver002':len(original_normals['failedCorners']),
+ 'alternatives':{'a_local_basis_then_center':a,'b_reexpress_in_evaluated_affine':b},
+ 'inputsBefore':files,'inputsAfter':{p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in files},
+ 'normalBoundUnchanged':.002,'worldBoundUnchanged':1e-6,'noAutomaticFixOrRetry':True}
+path=HERE/'result.json';assert not path.exists();path.write_text(json.dumps(out,indent=2)+'\n')
+print(json.dumps({k:v for k,v in out.items() if k not in ['inputsBefore','inputsAfter','stages','alternatives']}))
+for name,row in {**out['stages'],**out['alternatives']}.items():print(name,{k:v for k,v in row.items() if k not in ['worldErrors','worldPositions','basis32','predictedMatrixWorld']})

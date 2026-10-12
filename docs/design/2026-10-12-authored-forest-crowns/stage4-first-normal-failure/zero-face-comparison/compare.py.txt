@@ -1,0 +1,119 @@
+"""First leaf only: isolate exact-zero face effect from raw NORMAL restoration.
+
+No fixed roles changed, no source writes, no geometric/normal recalculation,
+no broad cleanup. Original stage4 field and .002 guarded apply are imported.
+"""
+import os
+assert os.environ.get('SANSU_FOREST_ZERO_FACE_APPROVED')=='1','Await diagnostic window'
+import bpy
+import gzip
+import hashlib
+import json
+import sys
+import traceback
+from pathlib import Path
+from mathutils import Matrix,Vector
+HERE=Path(__file__).resolve().parent;DEBUG=HERE.parent;STAGE=DEBUG.parent;BASE=STAGE.parent
+sys.dont_write_bytecode=True;sys.path.insert(0,str(STAGE))
+import deform
+import fields
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+OUT=HERE/'attempt-01';assert not OUT.exists(),'No retry';OUT.mkdir()
+BOUND=json.loads((HERE/'readiness.json').read_text())['externalInputs']
+assert {p:sha(Path(p)) for p in BOUND}==BOUND
+P=json.loads((STAGE/'proposal.json').read_text())
+PRIOR=json.loads(gzip.decompress((DEBUG/'attempt-01/failing-role-raw.json.gz').read_bytes()))
+RAW=json.loads(gzip.decompress((DEBUG/'attempt-01/source-role-accessors.json.gz').read_bytes()))
+SOURCE=RAW['extracted']; B=Matrix(((1,0,0,0),(0,0,-1,0),(0,1,0,0),(0,0,0,1)));BI=B.inverted()
+
+def save(name,v):
+ data=(json.dumps(v,indent=2,allow_nan=False)+'\n').encode()
+ (OUT/name).write_bytes(gzip.compress(data,mtime=0) if name.endswith('.gz') else data)
+def vecs(vs):return [list(v) for v in vs]
+def cross(a,b):return (a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0])
+def sub(a,b):return tuple(x-y for x,y in zip(a,b))
+def zero_triangle(vs):
+ a,b,c=vs;return cross(sub(b,a),sub(c,a))==(0.,0.,0.)
+def stats(actual,expected):
+ assert len(actual)==len(expected)
+ errors=[(Vector(a)-Vector(b)).length for a,b in zip(actual,expected)]
+ return {'maxL2':max(errors),'over002':sum(e>.002 for e in errors),'corners':len(errors)}
+def sharp(mesh):return {','.join(map(str,sorted(e.vertices))):bool(e.use_edge_sharp) for e in mesh.edges}
+
+try:
+ bpy.ops.wm.read_factory_settings(use_empty=True)
+ bpy.ops.import_scene.gltf(filepath=str(BASE/'extraction-attempt02/fixed-c1-context.glb'));context=set(bpy.data.objects)
+ bpy.ops.import_scene.gltf(filepath=str(BASE/'extraction-attempt02/role-separated-originals.glb'))
+ original=next(o for o in bpy.data.objects if o not in context and o.type=='MESH' and o.get('ownerId')=='l14' and o.get('sourceNodeIndex')==2239)
+ mesh=original.data;positions=[v.co.copy() for v in mesh.vertices];faces=[tuple(p.vertices) for p in mesh.polygons]
+ edges=[tuple(e.vertices) for e in mesh.edges];source_normals=[B.to_3x3()@Vector(n) for n in SOURCE['normals']]
+ assert vecs(positions)==PRIOR['inputLocalPositions']
+ assert [l.vertex_index for l in mesh.loops]==SOURCE['indices']
+ assert stats(vecs([n.vector for n in mesh.corner_normals]),PRIOR['inputCornerNormals'])['maxL2']==0
+ assert len(mesh.uv_layers)==0 and len(mesh.color_attributes)==0,'Preserve any unexpected source attributes before proceeding'
+ zero=[i for i,f in enumerate(faces) if zero_triangle([tuple(positions[v]) for v in f])]
+ assert zero==[0,2,98,100],'Unexpected exact-zero set; no tolerance adjustment'
+ keep=[i for i in range(len(faces)) if i not in zero]
+ payload=[source_normals[l.vertex_index] for l in mesh.loops]
+ original_sharp=sharp(mesh);records=[];raws=[]
+ function=fields.field_for_role('l14','hanging-leaf',0,P);field=lambda v:Vector(function(tuple(v)))
+ def original_copy(name):
+  obj=original.copy();obj.data=mesh.copy();obj.name=name;bpy.context.scene.collection.objects.link(obj);assert obj.matrix_world==original.matrix_world
+  return obj
+ variants=[('imported-baseline',original_copy('NORMAL ZERO / imported baseline'),list(range(len(faces))),False),
+           ('raw-normal-original-faces',original_copy('NORMAL ZERO / raw normals original faces'),list(range(len(faces))),True)]
+ cleaned=original.copy();cleaned.data=bpy.data.meshes.new('NORMAL ZERO / only exact-zero faces removed');cleaned.name='NORMAL ZERO / raw normals minus zero faces'
+ cleaned.data.from_pydata(vecs(positions),edges,[faces[i] for i in keep]);cleaned.data.update()
+ for material in mesh.materials:cleaned.data.materials.append(material)
+ for polygon,source_face in zip(cleaned.data.polygons,keep):
+  polygon.use_smooth=mesh.polygons[source_face].use_smooth;polygon.material_index=mesh.polygons[source_face].material_index
+ for edge in cleaned.data.edges:edge.use_edge_sharp=original_sharp[','.join(map(str,sorted(edge.vertices)))]
+ bpy.context.scene.collection.objects.link(cleaned);assert cleaned.matrix_world==original.matrix_world
+ assert vecs([v.co for v in cleaned.data.vertices])==vecs(positions)
+ assert [tuple(p.vertices) for p in cleaned.data.polygons]==[faces[i] for i in keep]
+ assert sharp(cleaned.data)==original_sharp
+ assert sorted(tuple(sorted(e.vertices)) for e in cleaned.data.edges)==sorted(tuple(sorted(e)) for e in edges)
+ variants.append(('raw-normal-zero-faces-removed',cleaned,keep,True))
+ for name,obj,source_faces,restore_raw in variants:
+  m=obj.data;source_loops=[li for i in source_faces for li in mesh.polygons[i].loop_indices]
+  provided=[payload[i] for i in source_loops];sharp_before=sharp(m)
+  if restore_raw:m.normals_split_custom_set(provided)
+  imported=[n.vector.copy() for n in m.corner_normals]
+  before={'sourceNormalReadback':stats(imported,provided),'sharpBeforeRawAssignment':sharp_before,'sharpAfterRawAssignment':sharp(m),
+          'vertexPositionsUnchanged':vecs([v.co for v in m.vertices])==vecs(positions),'sourceFaceIndices':source_faces}
+  state={}
+  def profile(frame,event,arg):
+   if event=='return' and frame.f_code.co_name=='apply' and Path(frame.f_code.co_filename).resolve()==(STAGE/'deform.py').resolve():state.update(frame.f_locals)
+  sys.setprofile(profile)
+  method_error=None;method_return=None
+  try:method_return=deform.apply(obj,field,BI,None)
+  except Exception as error:method_error=repr(error)
+  finally:sys.setprofile(None)
+  assert all(k in state for k in ['expected','actual','matrices','old_normals','residual']),'Failure before normal comparison; retain raw and stop'
+  desired=[(state['matrices'][loop.vertex_index]@normal).normalized() for loop,normal in zip(m.loops,provided)]
+  actual=[n.vector.copy() for n in m.corner_normals]
+  record={'variant':name,'originalMethodError':method_error,'originalMethodReturn':method_return,
+          'originalGuard':.002,'methodExpectedStored':stats(actual,state['expected']),
+          'sourceNormalDesiredStored':stats(actual,desired),'before':before,
+          'removedExactZeroFaces':zero if name.endswith('removed') else [],'remainingTriangles':len(m.polygons),
+          'positionCount':len(m.vertices),'sourceNormalRecalculated':False,'providedNormals':'literal original GLB NORMAL mapped by unchanged vertex indices'}
+  records.append(record)
+  raws.append({'variant':name,'sourceLoopIndices':source_loops,'providedSourceNormals':vecs(provided),'readbackBeforeField':vecs(imported),
+    'expectedByOriginalMethod':vecs(state['expected']),'desiredFromRawSourceNormalsSameJ':vecs(desired),
+    'storedAfterField':vecs(actual),'positionsAfterField':vecs([v.co for v in m.vertices]),
+    'originalInputNormalsSeenByMethod':vecs(state['old_normals'])})
+  save('variants-so-far.json',records)
+ assert all(v['positionsAfterField']==raws[0]['positionsAfterField'] for v in raws),'Face removal changed deformed positions'
+ save('comparison-raw.json.gz',raws)
+ result={'status':'DIAGNOSTIC ONLY; not a source correction or stage4 rebuild','variants':records,
+   'removedFaceRule':'float64 cross product of original float32 positions equals exactly (0,0,0); no epsilon',
+   'exactZeroFaces':zero,'allPositionsAndDeformedPositionsIdentical':True,'fixedRolesTouched':False,
+   'originalStage4DeformSHA':sha(STAGE/'deform.py'),'originalFieldSHA':sha(STAGE/'fields.py'),
+   'caution':'Imported baseline differs in source-normal payload; compare the two raw-normal variants to isolate zero-face removal. Blender may alter internal sharp flags during the same normal setter; recorded explicitly.',
+   'geometrySaved':False,'normalRecalculationOperator':False,'sourceGuardRelaxed':False,'runtimeAcceptance':False}
+ save('result.json',result)
+ print(json.dumps({'status':result['status'],'variants':[{'name':v['variant'],'inputSourceError':v['before']['sourceNormalReadback']['maxL2'],'methodError':v['originalMethodError'],'storedSourceError':v['sourceNormalDesiredStored']['maxL2']} for v in records]}),flush=True)
+except BaseException as error:
+ save('diagnostic-failure.json',{'error':repr(error),'traceback':traceback.format_exc()});raise
+finally:
+ after={p:sha(Path(p)) for p in BOUND};save('input-parity.json',{'before':BOUND,'after':after,'equal':BOUND==after});assert BOUND==after

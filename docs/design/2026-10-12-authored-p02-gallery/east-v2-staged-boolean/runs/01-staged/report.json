@@ -1,0 +1,3379 @@
+{
+  "status": "COMPLETED_READ_ONLY_DIAGNOSTIC_NO_ADOPTION",
+  "sourceBefore": {
+    "failedScene": "e61a390ef10e77ef40de77972454050b19e469b725ea8ebbec7b43e35b199746",
+    "rawPlans": "e44d250ca5440d0f5aae661d321bde8de7c031296939b820eeb8f9d400c2b53d",
+    "study": "7ff0cd080569eb92928cbe7d974fa4348ff89e597d7c98f5ecff471fdc105cec",
+    "helper": "47a00db51d9826ca56a717db06feb48930dfbe77f3fcf301783ad1d90ea0b18d",
+    "geometryHelper": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+    "originalBuildCode": "22c059b1cf7c08bd1a80519b5720c3b71d9e800571e23f4ee96964ad43db9037",
+    "statsCode": "b34bf5963b7f7bacc486d6f4eb7bdc06324c2c44281d10337e63681ad7d108f3",
+    "supervisor": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "measurement": "be452b8297a17246ebaa376edffef35de2b5821c554717ed53cfb9d04c022e21",
+    "context": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+    "leftTrees": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+    "contextManifest": "3c3fcd13bf4867946a0f393769f852cb938286329dfa2e11dac3afe74796bda2",
+    "forestStudy": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+    "sourceBlend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "sourceGlb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "benchmark": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+    "envelope": "444beab3c5b078799e974424e225e0a2e6742d6b99ad7e94be5edb54088af1db"
+  },
+  "originalBodyIndex": 2,
+  "operandOrder": [
+    "diagnostic/terrainThreshold",
+    "diagnostic/alignedOpening",
+    "diagnostic/visible-front-branch-junction",
+    "diagnostic/unchanged-native-interior"
+  ],
+  "initialOperands": {
+    "diagnostic/terrainThreshold": {
+      "verts": 422,
+      "edges": 1260,
+      "faces": 840,
+      "edgeValence": {
+        "2": 1260
+      },
+      "nonmanifoldEdges": 0,
+      "noncontiguousManifoldEdges": 0,
+      "exactCoincidentExtraVertices": 0,
+      "exactCoordinateDuplicateFaces": 0,
+      "zeroAreaFaces": 0,
+      "signedVolume": 0.025043476956363428,
+      "largestQuarterMeterDefectBins": [],
+      "firstBadEdges": []
+    },
+    "diagnostic/alignedOpening": {
+      "verts": 140,
+      "edges": 414,
+      "faces": 276,
+      "edgeValence": {
+        "2": 414
+      },
+      "nonmanifoldEdges": 0,
+      "noncontiguousManifoldEdges": 0,
+      "exactCoincidentExtraVertices": 0,
+      "exactCoordinateDuplicateFaces": 0,
+      "zeroAreaFaces": 0,
+      "signedVolume": 0.028683224737501466,
+      "largestQuarterMeterDefectBins": [],
+      "firstBadEdges": []
+    },
+    "diagnostic/eastBranchGallery": {
+      "verts": 1560,
+      "edges": 4674,
+      "faces": 3116,
+      "edgeValence": {
+        "2": 4674
+      },
+      "nonmanifoldEdges": 0,
+      "noncontiguousManifoldEdges": 0,
+      "exactCoincidentExtraVertices": 0,
+      "exactCoordinateDuplicateFaces": 0,
+      "zeroAreaFaces": 0,
+      "signedVolume": 0.205691656844351,
+      "largestQuarterMeterDefectBins": [],
+      "firstBadEdges": []
+    },
+    "diagnostic/visible-front-branch-junction": {
+      "verts": 66,
+      "edges": 192,
+      "faces": 128,
+      "edgeValence": {
+        "2": 192
+      },
+      "nonmanifoldEdges": 0,
+      "noncontiguousManifoldEdges": 0,
+      "exactCoincidentExtraVertices": 0,
+      "exactCoordinateDuplicateFaces": 0,
+      "zeroAreaFaces": 0,
+      "signedVolume": 0.022374539501163068,
+      "largestQuarterMeterDefectBins": [],
+      "firstBadEdges": []
+    },
+    "diagnostic/unchanged-native-interior": {
+      "verts": 96,
+      "edges": 282,
+      "faces": 188,
+      "edgeValence": {
+        "2": 282
+      },
+      "nonmanifoldEdges": 0,
+      "noncontiguousManifoldEdges": 0,
+      "exactCoincidentExtraVertices": 0,
+      "exactCoordinateDuplicateFaces": 0,
+      "zeroAreaFaces": 0,
+      "signedVolume": 0.03014564713898074,
+      "largestQuarterMeterDefectBins": [],
+      "firstBadEdges": []
+    }
+  },
+  "steps": [
+    {
+      "operandIndex": 0,
+      "operandName": "diagnostic/terrainThreshold",
+      "beforeBody": {
+        "verts": 1560,
+        "edges": 4674,
+        "faces": 3116,
+        "edgeValence": {
+          "2": 4674
+        },
+        "nonmanifoldEdges": 0,
+        "noncontiguousManifoldEdges": 0,
+        "exactCoincidentExtraVertices": 0,
+        "exactCoordinateDuplicateFaces": 0,
+        "zeroAreaFaces": 0,
+        "signedVolume": 0.205691656844351,
+        "largestQuarterMeterDefectBins": [],
+        "firstBadEdges": []
+      },
+      "operand": {
+        "verts": 422,
+        "edges": 1260,
+        "faces": 840,
+        "edgeValence": {
+          "2": 1260
+        },
+        "nonmanifoldEdges": 0,
+        "noncontiguousManifoldEdges": 0,
+        "exactCoincidentExtraVertices": 0,
+        "exactCoordinateDuplicateFaces": 0,
+        "zeroAreaFaces": 0,
+        "signedVolume": 0.025043476956363428,
+        "largestQuarterMeterDefectBins": [],
+        "firstBadEdges": []
+      },
+      "horizontalCoplanarity": {
+        "scope": "horizontal triangle planes within existing EPS only; not a self-intersection proof",
+        "bodyHorizontalTriangles": 304,
+        "operandHorizontalTriangles": 312,
+        "testedBBoxPairs": 1242,
+        "positiveOverlapPairs": 804,
+        "pairAreaSumNotUnionArea": 0.1165603429897093,
+        "examples": [
+          {
+            "bodyTriangle": 4,
+            "operandTriangle": 152,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 5.883684773522191e-05
+          },
+          {
+            "bodyTriangle": 4,
+            "operandTriangle": 153,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 4.5827001176945714e-05
+          },
+          {
+            "bodyTriangle": 4,
+            "operandTriangle": 156,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 9.143393580046677e-07
+          },
+          {
+            "bodyTriangle": 4,
+            "operandTriangle": 157,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 4.326879255422966e-05
+          },
+          {
+            "bodyTriangle": 4,
+            "operandTriangle": 160,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 1.5070236372594081e-05
+          },
+          {
+            "bodyTriangle": 4,
+            "operandTriangle": 161,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 0.0005565957125632792
+          },
+          {
+            "bodyTriangle": 4,
+            "operandTriangle": 162,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 3.810154279193512e-05
+          },
+          {
+            "bodyTriangle": 4,
+            "operandTriangle": 163,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 0.0008168016046408155
+          }
+        ],
+        "boundedAt20000Pairs": false
+      },
+      "context": {
+        "activeObject": "diagnostic/eastBranchGallery",
+        "actualBody": "diagnostic/eastBranchGallery",
+        "operand": "diagnostic/terrainThreshold",
+        "bodyIsOperand": false,
+        "bodyDataIsOperandData": false,
+        "solver": "EXACT",
+        "operation": "UNION"
+      },
+      "operatorResult": [
+        "FINISHED"
+      ],
+      "after": {
+        "verts": 2710,
+        "edges": 7312,
+        "faces": 4604,
+        "edgeValence": {
+          "2": 7312
+        },
+        "nonmanifoldEdges": 0,
+        "noncontiguousManifoldEdges": 0,
+        "exactCoincidentExtraVertices": 3,
+        "exactCoordinateDuplicateFaces": 0,
+        "zeroAreaFaces": 1,
+        "signedVolume": 0.226655518753109,
+        "largestQuarterMeterDefectBins": [],
+        "firstBadEdges": []
+      }
+    },
+    {
+      "operandIndex": 1,
+      "operandName": "diagnostic/alignedOpening",
+      "beforeBody": {
+        "verts": 2710,
+        "edges": 7312,
+        "faces": 4604,
+        "edgeValence": {
+          "2": 7312
+        },
+        "nonmanifoldEdges": 0,
+        "noncontiguousManifoldEdges": 0,
+        "exactCoincidentExtraVertices": 3,
+        "exactCoordinateDuplicateFaces": 0,
+        "zeroAreaFaces": 1,
+        "signedVolume": 0.226655518753109,
+        "largestQuarterMeterDefectBins": [],
+        "firstBadEdges": []
+      },
+      "operand": {
+        "verts": 140,
+        "edges": 414,
+        "faces": 276,
+        "edgeValence": {
+          "2": 414
+        },
+        "nonmanifoldEdges": 0,
+        "noncontiguousManifoldEdges": 0,
+        "exactCoincidentExtraVertices": 0,
+        "exactCoordinateDuplicateFaces": 0,
+        "zeroAreaFaces": 0,
+        "signedVolume": 0.028683224737501466,
+        "largestQuarterMeterDefectBins": [],
+        "firstBadEdges": []
+      },
+      "horizontalCoplanarity": {
+        "scope": "horizontal triangle planes within existing EPS only; not a self-intersection proof",
+        "bodyHorizontalTriangles": 2144,
+        "operandHorizontalTriangles": 208,
+        "testedBBoxPairs": 914,
+        "positiveOverlapPairs": 646,
+        "pairAreaSumNotUnionArea": 0.23901129396122833,
+        "examples": [
+          {
+            "bodyTriangle": 0,
+            "operandTriangle": 21,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 3.5027638212170586e-07
+          },
+          {
+            "bodyTriangle": 0,
+            "operandTriangle": 28,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 0.00013081270643233722
+          },
+          {
+            "bodyTriangle": 0,
+            "operandTriangle": 29,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 0.00037657769460075485
+          },
+          {
+            "bodyTriangle": 0,
+            "operandTriangle": 36,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 0.0003809808863941555
+          },
+          {
+            "bodyTriangle": 0,
+            "operandTriangle": 37,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 0.001089247321504061
+          },
+          {
+            "bodyTriangle": 0,
+            "operandTriangle": 44,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 0.0003423988555031343
+          },
+          {
+            "bodyTriangle": 0,
+            "operandTriangle": 45,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 0.0012837933305878124
+          },
+          {
+            "bodyTriangle": 0,
+            "operandTriangle": 46,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 0.00010744495499714901
+          }
+        ],
+        "boundedAt20000Pairs": false
+      },
+      "context": {
+        "activeObject": "diagnostic/eastBranchGallery",
+        "actualBody": "diagnostic/eastBranchGallery",
+        "operand": "diagnostic/alignedOpening",
+        "bodyIsOperand": false,
+        "bodyDataIsOperandData": false,
+        "solver": "EXACT",
+        "operation": "UNION"
+      },
+      "operatorResult": [
+        "FINISHED"
+      ],
+      "after": {
+        "verts": 3412,
+        "edges": 8756,
+        "faces": 5986,
+        "edgeValence": {
+          "3": 254,
+          "4": 1076,
+          "2": 7426
+        },
+        "nonmanifoldEdges": 1330,
+        "noncontiguousManifoldEdges": 0,
+        "exactCoincidentExtraVertices": 0,
+        "exactCoordinateDuplicateFaces": 640,
+        "zeroAreaFaces": 0,
+        "signedVolume": 0.24976180881882984,
+        "largestQuarterMeterDefectBins": [
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 352
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 278
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 4,
+            "edges": 136
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 136
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 4,
+            "edges": 84
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 3,
+            "edges": 74
+          },
+          {
+            "x": 3.75,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 56
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 3,
+            "edges": 54
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 3,
+            "edges": 30
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 3,
+            "edges": 28
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 4,
+            "edges": 28
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 3,
+            "edges": 22
+          },
+          {
+            "x": 3.75,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 3,
+            "edges": 22
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 3,
+            "edges": 18
+          },
+          {
+            "x": 3.75,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 3,
+            "edges": 6
+          },
+          {
+            "x": 3.75,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 4,
+            "edges": 6
+          }
+        ],
+        "firstBadEdges": [
+          {
+            "points": [
+              [
+                3.58400821685791,
+                1.6814100742340088,
+                -7.867592811584473
+              ],
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.853939533233643
+              ]
+            ],
+            "linkedFaces": 3,
+            "length": 0.03386595845222473
+          },
+          {
+            "points": [
+              [
+                3.58400821685791,
+                1.6814100742340088,
+                -7.867592811584473
+              ],
+              [
+                3.569634199142456,
+                1.6814100742340088,
+                -7.834964275360107
+              ]
+            ],
+            "linkedFaces": 3,
+            "length": 0.03565436601638794
+          },
+          {
+            "points": [
+              [
+                3.569634199142456,
+                1.6814100742340088,
+                -7.834964275360107
+              ],
+              [
+                3.605546712875366,
+                1.6814100742340088,
+                -7.823909759521484
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.03757540509104729
+          },
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.835197925567627
+              ],
+              [
+                3.605546712875366,
+                1.6814100742340088,
+                -7.823909759521484
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.014723705127835274
+          },
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.853939533233643
+              ],
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.835197925567627
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.018741607666015625
+          },
+          {
+            "points": [
+              [
+                3.5195040702819824,
+                1.6814100742340088,
+                -7.7211713790893555
+              ],
+              [
+                3.5200893878936768,
+                1.6814100742340088,
+                -7.722499847412109
+              ]
+            ],
+            "linkedFaces": 3,
+            "length": 0.001451697200536728
+          },
+          {
+            "points": [
+              [
+                3.5195040702819824,
+                1.6814100742340088,
+                -7.7211713790893555
+              ],
+              [
+                3.5206165313720703,
+                1.6814100742340088,
+                -7.722499847412109
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.0017327428795397282
+          },
+          {
+            "points": [
+              [
+                3.6264657974243164,
+                1.6814100742340088,
+                -7.848888397216797
+              ],
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.835197925567627
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.017857583239674568
+          },
+          {
+            "points": [
+              [
+                3.6264657974243164,
+                1.6814100742340088,
+                -7.848888397216797
+              ],
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.853939533233643
+              ]
+            ],
+            "linkedFaces": 3,
+            "length": 0.012529096566140652
+          },
+          {
+            "points": [
+              [
+                3.5314226150512695,
+                1.6814100742340088,
+                -7.748226165771484
+              ],
+              [
+                3.539961099624634,
+                1.6814100742340088,
+                -7.745597839355469
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.008933858014643192
+          },
+          {
+            "points": [
+              [
+                3.5206165313720703,
+                1.6814100742340088,
+                -7.722499847412109
+              ],
+              [
+                3.539961099624634,
+                1.6814100742340088,
+                -7.745597839355469
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.03012854978442192
+          },
+          {
+            "points": [
+              [
+                3.5314226150512695,
+                1.6814100742340088,
+                -7.748226165771484
+              ],
+              [
+                3.541785955429077,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 3,
+            "length": 0.02570541575551033
+          },
+          {
+            "points": [
+              [
+                3.5505282878875732,
+                1.6814100742340088,
+                -7.791594982147217
+              ],
+              [
+                3.57275390625,
+                1.6814100742340088,
+                -7.784753799438477
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.023254675790667534
+          },
+          {
+            "points": [
+              [
+                3.5505282878875732,
+                1.6814100742340088,
+                -7.791594982147217
+              ],
+              [
+                3.541785955429077,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 3,
+            "length": 0.021685311570763588
+          },
+          {
+            "points": [
+              [
+                3.57275390625,
+                1.6814100742340088,
+                -7.784753799438477
+              ],
+              [
+                3.60310959815979,
+                1.6814100742340088,
+                -7.821000099182129
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.04727856069803238
+          },
+          {
+            "points": [
+              [
+                3.60310959815979,
+                1.6814100742340088,
+                -7.821000099182129
+              ],
+              [
+                3.605546712875366,
+                1.6814100742340088,
+                -7.823909759521484
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.003795477794483304
+          },
+          {
+            "points": [
+              [
+                3.569634199142456,
+                1.6814100742340088,
+                -7.834964275360107
+              ],
+              [
+                3.5634822845458984,
+                1.6814100742340088,
+                -7.821000099182129
+              ]
+            ],
+            "linkedFaces": 3,
+            "length": 0.01525923516601324
+          },
+          {
+            "points": [
+              [
+                3.6264657974243164,
+                1.6814100742340088,
+                -7.848888397216797
+              ],
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.822861194610596
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.0284408088773489
+          },
+          {
+            "points": [
+              [
+                3.5195040702819824,
+                1.6814100742340088,
+                -7.7211713790893555
+              ],
+              [
+                3.561962366104126,
+                1.6814100742340088,
+                -7.70246696472168
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.04639571160078049
+          },
+          {
+            "points": [
+              [
+                3.5760669708251953,
+                1.6814100742340088,
+                -7.7344841957092285
+              ],
+              [
+                3.539961099624634,
+                1.6814100742340088,
+                -7.745597839355469
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.037777598947286606
+          },
+          {
+            "points": [
+              [
+                3.5760669708251953,
+                1.6814100742340088,
+                -7.7344841957092285
+              ],
+              [
+                3.5924837589263916,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.040721602737903595
+          },
+          {
+            "points": [
+              [
+                3.5924837589263916,
+                1.6814100742340088,
+                -7.771749973297119
+              ],
+              [
+                3.5618631839752197,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.030620574951171875
+          },
+          {
+            "points": [
+              [
+                3.5924837589263916,
+                1.6814100742340088,
+                -7.771749973297119
+              ],
+              [
+                3.59517240524292,
+                1.6814100742340088,
+                -7.777853012084961
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.006669025402516127
+          },
+          {
+            "points": [
+              [
+                3.6142780780792236,
+                1.6814100742340088,
+                -7.821222305297852
+              ],
+              [
+                3.605546712875366,
+                1.6814100742340088,
+                -7.823909759521484
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.009135598316788673
+          }
+        ]
+      },
+      "availableSolvers": [
+        "FLOAT",
+        "EXACT",
+        "MANIFOLD"
+      ],
+      "separateManifoldSamePreOperationOperands": {
+        "context": {
+          "activeObject": "diagnostic/eastBranchGallery.001",
+          "actualBody": "diagnostic/eastBranchGallery.001",
+          "operand": "diagnostic/alignedOpening.001",
+          "bodyIsOperand": false,
+          "bodyDataIsOperandData": false,
+          "solver": "MANIFOLD",
+          "operation": "UNION"
+        },
+        "operatorResult": [
+          "FINISHED"
+        ],
+        "after": {
+          "verts": 2934,
+          "edges": 7669,
+          "faces": 4737,
+          "edgeValence": {
+            "2": 7669
+          },
+          "nonmanifoldEdges": 0,
+          "noncontiguousManifoldEdges": 0,
+          "exactCoincidentExtraVertices": 0,
+          "exactCoordinateDuplicateFaces": 0,
+          "zeroAreaFaces": 0,
+          "signedVolume": 0.24697334173871227,
+          "largestQuarterMeterDefectBins": [],
+          "firstBadEdges": []
+        },
+        "adopted": false
+      }
+    },
+    {
+      "operandIndex": 2,
+      "operandName": "diagnostic/visible-front-branch-junction",
+      "beforeBody": {
+        "verts": 3412,
+        "edges": 8756,
+        "faces": 5986,
+        "edgeValence": {
+          "3": 254,
+          "4": 1076,
+          "2": 7426
+        },
+        "nonmanifoldEdges": 1330,
+        "noncontiguousManifoldEdges": 0,
+        "exactCoincidentExtraVertices": 0,
+        "exactCoordinateDuplicateFaces": 640,
+        "zeroAreaFaces": 0,
+        "signedVolume": 0.24976180881882984,
+        "largestQuarterMeterDefectBins": [
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 352
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 278
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 4,
+            "edges": 136
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 136
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 4,
+            "edges": 84
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 3,
+            "edges": 74
+          },
+          {
+            "x": 3.75,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 56
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 3,
+            "edges": 54
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 3,
+            "edges": 30
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 3,
+            "edges": 28
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 4,
+            "edges": 28
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 3,
+            "edges": 22
+          },
+          {
+            "x": 3.75,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 3,
+            "edges": 22
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 3,
+            "edges": 18
+          },
+          {
+            "x": 3.75,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 3,
+            "edges": 6
+          },
+          {
+            "x": 3.75,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 4,
+            "edges": 6
+          }
+        ],
+        "firstBadEdges": [
+          {
+            "points": [
+              [
+                3.58400821685791,
+                1.6814100742340088,
+                -7.867592811584473
+              ],
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.853939533233643
+              ]
+            ],
+            "linkedFaces": 3,
+            "length": 0.03386595845222473
+          },
+          {
+            "points": [
+              [
+                3.58400821685791,
+                1.6814100742340088,
+                -7.867592811584473
+              ],
+              [
+                3.569634199142456,
+                1.6814100742340088,
+                -7.834964275360107
+              ]
+            ],
+            "linkedFaces": 3,
+            "length": 0.03565436601638794
+          },
+          {
+            "points": [
+              [
+                3.569634199142456,
+                1.6814100742340088,
+                -7.834964275360107
+              ],
+              [
+                3.605546712875366,
+                1.6814100742340088,
+                -7.823909759521484
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.03757540509104729
+          },
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.835197925567627
+              ],
+              [
+                3.605546712875366,
+                1.6814100742340088,
+                -7.823909759521484
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.014723705127835274
+          },
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.853939533233643
+              ],
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.835197925567627
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.018741607666015625
+          },
+          {
+            "points": [
+              [
+                3.5195040702819824,
+                1.6814100742340088,
+                -7.7211713790893555
+              ],
+              [
+                3.5200893878936768,
+                1.6814100742340088,
+                -7.722499847412109
+              ]
+            ],
+            "linkedFaces": 3,
+            "length": 0.001451697200536728
+          },
+          {
+            "points": [
+              [
+                3.5195040702819824,
+                1.6814100742340088,
+                -7.7211713790893555
+              ],
+              [
+                3.5206165313720703,
+                1.6814100742340088,
+                -7.722499847412109
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.0017327428795397282
+          },
+          {
+            "points": [
+              [
+                3.6264657974243164,
+                1.6814100742340088,
+                -7.848888397216797
+              ],
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.835197925567627
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.017857583239674568
+          },
+          {
+            "points": [
+              [
+                3.6264657974243164,
+                1.6814100742340088,
+                -7.848888397216797
+              ],
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.853939533233643
+              ]
+            ],
+            "linkedFaces": 3,
+            "length": 0.012529096566140652
+          },
+          {
+            "points": [
+              [
+                3.5314226150512695,
+                1.6814100742340088,
+                -7.748226165771484
+              ],
+              [
+                3.539961099624634,
+                1.6814100742340088,
+                -7.745597839355469
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.008933858014643192
+          },
+          {
+            "points": [
+              [
+                3.5206165313720703,
+                1.6814100742340088,
+                -7.722499847412109
+              ],
+              [
+                3.539961099624634,
+                1.6814100742340088,
+                -7.745597839355469
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.03012854978442192
+          },
+          {
+            "points": [
+              [
+                3.5314226150512695,
+                1.6814100742340088,
+                -7.748226165771484
+              ],
+              [
+                3.541785955429077,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 3,
+            "length": 0.02570541575551033
+          },
+          {
+            "points": [
+              [
+                3.5505282878875732,
+                1.6814100742340088,
+                -7.791594982147217
+              ],
+              [
+                3.57275390625,
+                1.6814100742340088,
+                -7.784753799438477
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.023254675790667534
+          },
+          {
+            "points": [
+              [
+                3.5505282878875732,
+                1.6814100742340088,
+                -7.791594982147217
+              ],
+              [
+                3.541785955429077,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 3,
+            "length": 0.021685311570763588
+          },
+          {
+            "points": [
+              [
+                3.57275390625,
+                1.6814100742340088,
+                -7.784753799438477
+              ],
+              [
+                3.60310959815979,
+                1.6814100742340088,
+                -7.821000099182129
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.04727856069803238
+          },
+          {
+            "points": [
+              [
+                3.60310959815979,
+                1.6814100742340088,
+                -7.821000099182129
+              ],
+              [
+                3.605546712875366,
+                1.6814100742340088,
+                -7.823909759521484
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.003795477794483304
+          },
+          {
+            "points": [
+              [
+                3.569634199142456,
+                1.6814100742340088,
+                -7.834964275360107
+              ],
+              [
+                3.5634822845458984,
+                1.6814100742340088,
+                -7.821000099182129
+              ]
+            ],
+            "linkedFaces": 3,
+            "length": 0.01525923516601324
+          },
+          {
+            "points": [
+              [
+                3.6264657974243164,
+                1.6814100742340088,
+                -7.848888397216797
+              ],
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.822861194610596
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.0284408088773489
+          },
+          {
+            "points": [
+              [
+                3.5195040702819824,
+                1.6814100742340088,
+                -7.7211713790893555
+              ],
+              [
+                3.561962366104126,
+                1.6814100742340088,
+                -7.70246696472168
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.04639571160078049
+          },
+          {
+            "points": [
+              [
+                3.5760669708251953,
+                1.6814100742340088,
+                -7.7344841957092285
+              ],
+              [
+                3.539961099624634,
+                1.6814100742340088,
+                -7.745597839355469
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.037777598947286606
+          },
+          {
+            "points": [
+              [
+                3.5760669708251953,
+                1.6814100742340088,
+                -7.7344841957092285
+              ],
+              [
+                3.5924837589263916,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.040721602737903595
+          },
+          {
+            "points": [
+              [
+                3.5924837589263916,
+                1.6814100742340088,
+                -7.771749973297119
+              ],
+              [
+                3.5618631839752197,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.030620574951171875
+          },
+          {
+            "points": [
+              [
+                3.5924837589263916,
+                1.6814100742340088,
+                -7.771749973297119
+              ],
+              [
+                3.59517240524292,
+                1.6814100742340088,
+                -7.777853012084961
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.006669025402516127
+          },
+          {
+            "points": [
+              [
+                3.6142780780792236,
+                1.6814100742340088,
+                -7.821222305297852
+              ],
+              [
+                3.605546712875366,
+                1.6814100742340088,
+                -7.823909759521484
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.009135598316788673
+          }
+        ]
+      },
+      "operand": {
+        "verts": 66,
+        "edges": 192,
+        "faces": 128,
+        "edgeValence": {
+          "2": 192
+        },
+        "nonmanifoldEdges": 0,
+        "noncontiguousManifoldEdges": 0,
+        "exactCoincidentExtraVertices": 0,
+        "exactCoordinateDuplicateFaces": 0,
+        "zeroAreaFaces": 0,
+        "signedVolume": 0.022374539501163068,
+        "largestQuarterMeterDefectBins": [],
+        "firstBadEdges": []
+      },
+      "horizontalCoplanarity": {
+        "scope": "horizontal triangle planes within existing EPS only; not a self-intersection proof",
+        "bodyHorizontalTriangles": 4698,
+        "operandHorizontalTriangles": 64,
+        "testedBBoxPairs": 18948,
+        "positiveOverlapPairs": 7157,
+        "pairAreaSumNotUnionArea": 0.8535980541555581,
+        "examples": [
+          {
+            "bodyTriangle": 0,
+            "operandTriangle": 26,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 0.0005436124751341254
+          },
+          {
+            "bodyTriangle": 1,
+            "operandTriangle": 26,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 0.0002549440179109297
+          },
+          {
+            "bodyTriangle": 2,
+            "operandTriangle": 26,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 0.0004182586276044731
+          },
+          {
+            "bodyTriangle": 3,
+            "operandTriangle": 26,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 3.501467062960728e-07
+          },
+          {
+            "bodyTriangle": 4,
+            "operandTriangle": 26,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 6.619295463750063e-05
+          },
+          {
+            "bodyTriangle": 5,
+            "operandTriangle": 26,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 6.780730473110452e-06
+          },
+          {
+            "bodyTriangle": 6,
+            "operandTriangle": 26,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 0.00012403284381434787
+          },
+          {
+            "bodyTriangle": 7,
+            "operandTriangle": 26,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 0.0002625311850579237
+          }
+        ],
+        "boundedAt20000Pairs": false
+      },
+      "context": {
+        "activeObject": "diagnostic/eastBranchGallery",
+        "actualBody": "diagnostic/eastBranchGallery",
+        "operand": "diagnostic/visible-front-branch-junction",
+        "bodyIsOperand": false,
+        "bodyDataIsOperandData": false,
+        "solver": "EXACT",
+        "operation": "UNION"
+      },
+      "operatorResult": [
+        "FINISHED"
+      ],
+      "after": {
+        "verts": 5294,
+        "edges": 12543,
+        "faces": 11491,
+        "edgeValence": {
+          "5": 260,
+          "6": 1792,
+          "4": 4152,
+          "3": 363,
+          "2": 5937,
+          "1": 39
+        },
+        "nonmanifoldEdges": 6606,
+        "noncontiguousManifoldEdges": 0,
+        "exactCoincidentExtraVertices": 0,
+        "exactCoordinateDuplicateFaces": 4252,
+        "zeroAreaFaces": 0,
+        "signedVolume": 0.25703815117005924,
+        "largestQuarterMeterDefectBins": [
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 4,
+            "edges": 1652
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 4,
+            "edges": 1004
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 848
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 6,
+            "edges": 686
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 6,
+            "edges": 586
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 6,
+            "edges": 188
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 6,
+            "edges": 154
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 138
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 4,
+            "edges": 131
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 116
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 6,
+            "edges": 106
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 4,
+            "edges": 97
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 3,
+            "edges": 96
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 5,
+            "edges": 84
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 4,
+            "edges": 78
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 3,
+            "edges": 54
+          },
+          {
+            "x": 3.75,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 52
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 3,
+            "edges": 52
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 3,
+            "edges": 46
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 6,
+            "edges": 46
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 5,
+            "edges": 34
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 5,
+            "edges": 33
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 5,
+            "edges": 32
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 3,
+            "edges": 31
+          }
+        ],
+        "firstBadEdges": [
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.850325107574463
+              ],
+              [
+                3.5837578773498535,
+                1.6814100742340088,
+                -7.8670244216918945
+              ]
+            ],
+            "linkedFaces": 5,
+            "length": 0.0354251004755497
+          },
+          {
+            "points": [
+              [
+                3.569634199142456,
+                1.6814100742340088,
+                -7.834964275360107
+              ],
+              [
+                3.5837578773498535,
+                1.6814100742340088,
+                -7.8670244216918945
+              ]
+            ],
+            "linkedFaces": 5,
+            "length": 0.03503328561782837
+          },
+          {
+            "points": [
+              [
+                3.569634199142456,
+                1.6814100742340088,
+                -7.834964275360107
+              ],
+              [
+                3.605546712875366,
+                1.6814100742340088,
+                -7.823909759521484
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.03757540509104729
+          },
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.835197925567627
+              ],
+              [
+                3.605546712875366,
+                1.6814100742340088,
+                -7.823909759521484
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.014723705127835274
+          },
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.835197925567627
+              ],
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.850325107574463
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.015127182006835938
+          },
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.853939533233643
+              ],
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.850325107574463
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.0036144256591796875
+          },
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.835197925567627
+              ],
+              [
+                3.623751401901245,
+                1.6814100742340088,
+                -7.84564733505249
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.013630004599690437
+          },
+          {
+            "points": [
+              [
+                3.5314226150512695,
+                1.6814100742340088,
+                -7.748226165771484
+              ],
+              [
+                3.539961099624634,
+                1.6814100742340088,
+                -7.745597839355469
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.008933858014643192
+          },
+          {
+            "points": [
+              [
+                3.5206165313720703,
+                1.6814100742340088,
+                -7.722499847412109
+              ],
+              [
+                3.539961099624634,
+                1.6814100742340088,
+                -7.745597839355469
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.03012854978442192
+          },
+          {
+            "points": [
+              [
+                3.5314226150512695,
+                1.6814100742340088,
+                -7.748226165771484
+              ],
+              [
+                3.541785955429077,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 5,
+            "length": 0.02570541575551033
+          },
+          {
+            "points": [
+              [
+                3.5505282878875732,
+                1.6814100742340088,
+                -7.791594982147217
+              ],
+              [
+                3.57275390625,
+                1.6814100742340088,
+                -7.784753799438477
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.023254675790667534
+          },
+          {
+            "points": [
+              [
+                3.5505282878875732,
+                1.6814100742340088,
+                -7.791594982147217
+              ],
+              [
+                3.541785955429077,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 5,
+            "length": 0.021685311570763588
+          },
+          {
+            "points": [
+              [
+                3.57275390625,
+                1.6814100742340088,
+                -7.784753799438477
+              ],
+              [
+                3.60310959815979,
+                1.6814100742340088,
+                -7.821000099182129
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.04727856069803238
+          },
+          {
+            "points": [
+              [
+                3.60310959815979,
+                1.6814100742340088,
+                -7.821000099182129
+              ],
+              [
+                3.605546712875366,
+                1.6814100742340088,
+                -7.823909759521484
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.003795477794483304
+          },
+          {
+            "points": [
+              [
+                3.569634199142456,
+                1.6814100742340088,
+                -7.834964275360107
+              ],
+              [
+                3.5634822845458984,
+                1.6814100742340088,
+                -7.821000099182129
+              ]
+            ],
+            "linkedFaces": 5,
+            "length": 0.01525923516601324
+          },
+          {
+            "points": [
+              [
+                3.561962366104126,
+                1.6814100742340088,
+                -7.70246696472168
+              ],
+              [
+                3.545255422592163,
+                1.6814100742340088,
+                -7.709826946258545
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.01825626753270626
+          },
+          {
+            "points": [
+              [
+                3.561962366104126,
+                1.6814100742340088,
+                -7.70246696472168
+              ],
+              [
+                3.5707874298095703,
+                1.6814100742340088,
+                -7.722499847412109
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.02189059369266033
+          },
+          {
+            "points": [
+              [
+                3.545255422592163,
+                1.6814100742340088,
+                -7.709826946258545
+              ],
+              [
+                3.5537233352661133,
+                1.6814100742340088,
+                -7.722499847412109
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.015241652727127075
+          },
+          {
+            "points": [
+              [
+                3.5206165313720703,
+                1.6814100742340088,
+                -7.722499847412109
+              ],
+              [
+                3.5537233352661133,
+                1.6814100742340088,
+                -7.722499847412109
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.03310680389404297
+          },
+          {
+            "points": [
+              [
+                3.5760669708251953,
+                1.6814100742340088,
+                -7.7344841957092285
+              ],
+              [
+                3.564176559448242,
+                1.6814100742340088,
+                -7.738144397735596
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.012441019527614117
+          },
+          {
+            "points": [
+              [
+                3.5537233352661133,
+                1.6814100742340088,
+                -7.722499847412109
+              ],
+              [
+                3.564176559448242,
+                1.6814100742340088,
+                -7.738144397735596
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.01881546899676323
+          },
+          {
+            "points": [
+              [
+                3.5866310596466064,
+                1.6814100742340088,
+                -7.771749973297119
+              ],
+              [
+                3.564176559448242,
+                1.6814100742340088,
+                -7.738144397735596
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.04041706770658493
+          },
+          {
+            "points": [
+              [
+                3.5760669708251953,
+                1.6814100742340088,
+                -7.7344841957092285
+              ],
+              [
+                3.5924837589263916,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.040721602737903595
+          },
+          {
+            "points": [
+              [
+                3.5924837589263916,
+                1.6814100742340088,
+                -7.771749973297119
+              ],
+              [
+                3.5866310596466064,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.005852699279785156
+          }
+        ]
+      }
+    },
+    {
+      "operandIndex": 3,
+      "operandName": "diagnostic/unchanged-native-interior",
+      "beforeBody": {
+        "verts": 5294,
+        "edges": 12543,
+        "faces": 11491,
+        "edgeValence": {
+          "5": 260,
+          "6": 1792,
+          "4": 4152,
+          "3": 363,
+          "2": 5937,
+          "1": 39
+        },
+        "nonmanifoldEdges": 6606,
+        "noncontiguousManifoldEdges": 0,
+        "exactCoincidentExtraVertices": 0,
+        "exactCoordinateDuplicateFaces": 4252,
+        "zeroAreaFaces": 0,
+        "signedVolume": 0.25703815117005924,
+        "largestQuarterMeterDefectBins": [
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 4,
+            "edges": 1652
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 4,
+            "edges": 1004
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 848
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 6,
+            "edges": 686
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 6,
+            "edges": 586
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 6,
+            "edges": 188
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 6,
+            "edges": 154
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 138
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 4,
+            "edges": 131
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 116
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 6,
+            "edges": 106
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 4,
+            "edges": 97
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 3,
+            "edges": 96
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 5,
+            "edges": 84
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 4,
+            "edges": 78
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 3,
+            "edges": 54
+          },
+          {
+            "x": 3.75,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 52
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 3,
+            "edges": 52
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 3,
+            "edges": 46
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 6,
+            "edges": 46
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 5,
+            "edges": 34
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 5,
+            "edges": 33
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 5,
+            "edges": 32
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 3,
+            "edges": 31
+          }
+        ],
+        "firstBadEdges": [
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.850325107574463
+              ],
+              [
+                3.5837578773498535,
+                1.6814100742340088,
+                -7.8670244216918945
+              ]
+            ],
+            "linkedFaces": 5,
+            "length": 0.0354251004755497
+          },
+          {
+            "points": [
+              [
+                3.569634199142456,
+                1.6814100742340088,
+                -7.834964275360107
+              ],
+              [
+                3.5837578773498535,
+                1.6814100742340088,
+                -7.8670244216918945
+              ]
+            ],
+            "linkedFaces": 5,
+            "length": 0.03503328561782837
+          },
+          {
+            "points": [
+              [
+                3.569634199142456,
+                1.6814100742340088,
+                -7.834964275360107
+              ],
+              [
+                3.605546712875366,
+                1.6814100742340088,
+                -7.823909759521484
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.03757540509104729
+          },
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.835197925567627
+              ],
+              [
+                3.605546712875366,
+                1.6814100742340088,
+                -7.823909759521484
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.014723705127835274
+          },
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.835197925567627
+              ],
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.850325107574463
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.015127182006835938
+          },
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.853939533233643
+              ],
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.850325107574463
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.0036144256591796875
+          },
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.835197925567627
+              ],
+              [
+                3.623751401901245,
+                1.6814100742340088,
+                -7.84564733505249
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.013630004599690437
+          },
+          {
+            "points": [
+              [
+                3.5314226150512695,
+                1.6814100742340088,
+                -7.748226165771484
+              ],
+              [
+                3.539961099624634,
+                1.6814100742340088,
+                -7.745597839355469
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.008933858014643192
+          },
+          {
+            "points": [
+              [
+                3.5206165313720703,
+                1.6814100742340088,
+                -7.722499847412109
+              ],
+              [
+                3.539961099624634,
+                1.6814100742340088,
+                -7.745597839355469
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.03012854978442192
+          },
+          {
+            "points": [
+              [
+                3.5314226150512695,
+                1.6814100742340088,
+                -7.748226165771484
+              ],
+              [
+                3.541785955429077,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 5,
+            "length": 0.02570541575551033
+          },
+          {
+            "points": [
+              [
+                3.5505282878875732,
+                1.6814100742340088,
+                -7.791594982147217
+              ],
+              [
+                3.57275390625,
+                1.6814100742340088,
+                -7.784753799438477
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.023254675790667534
+          },
+          {
+            "points": [
+              [
+                3.5505282878875732,
+                1.6814100742340088,
+                -7.791594982147217
+              ],
+              [
+                3.541785955429077,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 5,
+            "length": 0.021685311570763588
+          },
+          {
+            "points": [
+              [
+                3.57275390625,
+                1.6814100742340088,
+                -7.784753799438477
+              ],
+              [
+                3.60310959815979,
+                1.6814100742340088,
+                -7.821000099182129
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.04727856069803238
+          },
+          {
+            "points": [
+              [
+                3.60310959815979,
+                1.6814100742340088,
+                -7.821000099182129
+              ],
+              [
+                3.605546712875366,
+                1.6814100742340088,
+                -7.823909759521484
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.003795477794483304
+          },
+          {
+            "points": [
+              [
+                3.569634199142456,
+                1.6814100742340088,
+                -7.834964275360107
+              ],
+              [
+                3.5634822845458984,
+                1.6814100742340088,
+                -7.821000099182129
+              ]
+            ],
+            "linkedFaces": 5,
+            "length": 0.01525923516601324
+          },
+          {
+            "points": [
+              [
+                3.561962366104126,
+                1.6814100742340088,
+                -7.70246696472168
+              ],
+              [
+                3.545255422592163,
+                1.6814100742340088,
+                -7.709826946258545
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.01825626753270626
+          },
+          {
+            "points": [
+              [
+                3.561962366104126,
+                1.6814100742340088,
+                -7.70246696472168
+              ],
+              [
+                3.5707874298095703,
+                1.6814100742340088,
+                -7.722499847412109
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.02189059369266033
+          },
+          {
+            "points": [
+              [
+                3.545255422592163,
+                1.6814100742340088,
+                -7.709826946258545
+              ],
+              [
+                3.5537233352661133,
+                1.6814100742340088,
+                -7.722499847412109
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.015241652727127075
+          },
+          {
+            "points": [
+              [
+                3.5206165313720703,
+                1.6814100742340088,
+                -7.722499847412109
+              ],
+              [
+                3.5537233352661133,
+                1.6814100742340088,
+                -7.722499847412109
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.03310680389404297
+          },
+          {
+            "points": [
+              [
+                3.5760669708251953,
+                1.6814100742340088,
+                -7.7344841957092285
+              ],
+              [
+                3.564176559448242,
+                1.6814100742340088,
+                -7.738144397735596
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.012441019527614117
+          },
+          {
+            "points": [
+              [
+                3.5537233352661133,
+                1.6814100742340088,
+                -7.722499847412109
+              ],
+              [
+                3.564176559448242,
+                1.6814100742340088,
+                -7.738144397735596
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.01881546899676323
+          },
+          {
+            "points": [
+              [
+                3.5866310596466064,
+                1.6814100742340088,
+                -7.771749973297119
+              ],
+              [
+                3.564176559448242,
+                1.6814100742340088,
+                -7.738144397735596
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.04041706770658493
+          },
+          {
+            "points": [
+              [
+                3.5760669708251953,
+                1.6814100742340088,
+                -7.7344841957092285
+              ],
+              [
+                3.5924837589263916,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.040721602737903595
+          },
+          {
+            "points": [
+              [
+                3.5924837589263916,
+                1.6814100742340088,
+                -7.771749973297119
+              ],
+              [
+                3.5866310596466064,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.005852699279785156
+          }
+        ]
+      },
+      "operand": {
+        "verts": 96,
+        "edges": 282,
+        "faces": 188,
+        "edgeValence": {
+          "2": 282
+        },
+        "nonmanifoldEdges": 0,
+        "noncontiguousManifoldEdges": 0,
+        "exactCoincidentExtraVertices": 0,
+        "exactCoordinateDuplicateFaces": 0,
+        "zeroAreaFaces": 0,
+        "signedVolume": 0.03014564713898074,
+        "largestQuarterMeterDefectBins": [],
+        "firstBadEdges": []
+      },
+      "horizontalCoplanarity": {
+        "scope": "horizontal triangle planes within existing EPS only; not a self-intersection proof",
+        "bodyHorizontalTriangles": 15432,
+        "operandHorizontalTriangles": 4,
+        "testedBBoxPairs": 122,
+        "positiveOverlapPairs": 75,
+        "pairAreaSumNotUnionArea": 0.1715035120923858,
+        "examples": [
+          {
+            "bodyTriangle": 11306,
+            "operandTriangle": 182,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 1.6604179879919911e-06
+          },
+          {
+            "bodyTriangle": 11306,
+            "operandTriangle": 183,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 0.0002862424612342096
+          },
+          {
+            "bodyTriangle": 11307,
+            "operandTriangle": 183,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 2.300957966383521e-07
+          },
+          {
+            "bodyTriangle": 11308,
+            "operandTriangle": 183,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 1.9145450611546266e-06
+          },
+          {
+            "bodyTriangle": 11309,
+            "operandTriangle": 183,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 6.053924710869296e-06
+          },
+          {
+            "bodyTriangle": 11310,
+            "operandTriangle": 183,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 1.9164966502671632e-08
+          },
+          {
+            "bodyTriangle": 11316,
+            "operandTriangle": 183,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 0.00034352628165201793
+          },
+          {
+            "bodyTriangle": 11317,
+            "operandTriangle": 183,
+            "y": 1.6814100742340088,
+            "deltaY": 0.0,
+            "areaXZ": 8.134720905772497e-06
+          }
+        ],
+        "boundedAt20000Pairs": false
+      },
+      "context": {
+        "activeObject": "diagnostic/eastBranchGallery",
+        "actualBody": "diagnostic/eastBranchGallery",
+        "operand": "diagnostic/unchanged-native-interior",
+        "bodyIsOperand": false,
+        "bodyDataIsOperandData": false,
+        "solver": "EXACT",
+        "operation": "UNION"
+      },
+      "operatorResult": [
+        "FINISHED"
+      ],
+      "after": {
+        "verts": 5428,
+        "edges": 12834,
+        "faces": 11718,
+        "edgeValence": {
+          "6": 1792,
+          "5": 260,
+          "4": 4253,
+          "3": 401,
+          "2": 6089,
+          "1": 39
+        },
+        "nonmanifoldEdges": 6745,
+        "noncontiguousManifoldEdges": 0,
+        "exactCoincidentExtraVertices": 0,
+        "exactCoordinateDuplicateFaces": 4322,
+        "zeroAreaFaces": 0,
+        "signedVolume": 0.3728904868840318,
+        "largestQuarterMeterDefectBins": [
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 4,
+            "edges": 1652
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 4,
+            "edges": 1004
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 848
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 6,
+            "edges": 686
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 6,
+            "edges": 586
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 6,
+            "edges": 188
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 6,
+            "edges": 154
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 4,
+            "edges": 144
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 138
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 116
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 4,
+            "edges": 109
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 6,
+            "edges": 106
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 3,
+            "edges": 96
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 5,
+            "edges": 84
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 4,
+            "edges": 78
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 3,
+            "edges": 54
+          },
+          {
+            "x": 3.75,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 4,
+            "edges": 52
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 3,
+            "edges": 52
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.5,
+            "faceValence": 3,
+            "edges": 46
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 6,
+            "edges": 46
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 4,
+            "edges": 40
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -8.25,
+            "faceValence": 4,
+            "edges": 35
+          },
+          {
+            "x": 3.5,
+            "y": 1.5,
+            "z": -7.75,
+            "faceValence": 5,
+            "edges": 34
+          },
+          {
+            "x": 3.25,
+            "y": 1.5,
+            "z": -8.0,
+            "faceValence": 3,
+            "edges": 34
+          }
+        ],
+        "firstBadEdges": [
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.835197925567627
+              ],
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.850325107574463
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.015127182006835938
+          },
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.850325107574463
+              ],
+              [
+                3.5837578773498535,
+                1.6814100742340088,
+                -7.8670244216918945
+              ]
+            ],
+            "linkedFaces": 5,
+            "length": 0.0354251004755497
+          },
+          {
+            "points": [
+              [
+                3.569634199142456,
+                1.6814100742340088,
+                -7.834964275360107
+              ],
+              [
+                3.5837578773498535,
+                1.6814100742340088,
+                -7.8670244216918945
+              ]
+            ],
+            "linkedFaces": 5,
+            "length": 0.03503328561782837
+          },
+          {
+            "points": [
+              [
+                3.569634199142456,
+                1.6814100742340088,
+                -7.834964275360107
+              ],
+              [
+                3.605546712875366,
+                1.6814100742340088,
+                -7.823909759521484
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.03757540509104729
+          },
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.835197925567627
+              ],
+              [
+                3.605546712875366,
+                1.6814100742340088,
+                -7.823909759521484
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.014723705127835274
+          },
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.853939533233643
+              ],
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.850325107574463
+              ]
+            ],
+            "linkedFaces": 4,
+            "length": 0.0036144256591796875
+          },
+          {
+            "points": [
+              [
+                3.615000009536743,
+                1.6814100742340088,
+                -7.835197925567627
+              ],
+              [
+                3.623751401901245,
+                1.6814100742340088,
+                -7.84564733505249
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.013630004599690437
+          },
+          {
+            "points": [
+              [
+                3.5314226150512695,
+                1.6814100742340088,
+                -7.748226165771484
+              ],
+              [
+                3.539961099624634,
+                1.6814100742340088,
+                -7.745597839355469
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.008933858014643192
+          },
+          {
+            "points": [
+              [
+                3.5206165313720703,
+                1.6814100742340088,
+                -7.722499847412109
+              ],
+              [
+                3.539961099624634,
+                1.6814100742340088,
+                -7.745597839355469
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.03012854978442192
+          },
+          {
+            "points": [
+              [
+                3.5314226150512695,
+                1.6814100742340088,
+                -7.748226165771484
+              ],
+              [
+                3.541785955429077,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 5,
+            "length": 0.02570541575551033
+          },
+          {
+            "points": [
+              [
+                3.5505282878875732,
+                1.6814100742340088,
+                -7.791594982147217
+              ],
+              [
+                3.57275390625,
+                1.6814100742340088,
+                -7.784753799438477
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.023254675790667534
+          },
+          {
+            "points": [
+              [
+                3.5505282878875732,
+                1.6814100742340088,
+                -7.791594982147217
+              ],
+              [
+                3.541785955429077,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 5,
+            "length": 0.021685311570763588
+          },
+          {
+            "points": [
+              [
+                3.57275390625,
+                1.6814100742340088,
+                -7.784753799438477
+              ],
+              [
+                3.60310959815979,
+                1.6814100742340088,
+                -7.821000099182129
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.04727856069803238
+          },
+          {
+            "points": [
+              [
+                3.60310959815979,
+                1.6814100742340088,
+                -7.821000099182129
+              ],
+              [
+                3.605546712875366,
+                1.6814100742340088,
+                -7.823909759521484
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.003795477794483304
+          },
+          {
+            "points": [
+              [
+                3.569634199142456,
+                1.6814100742340088,
+                -7.834964275360107
+              ],
+              [
+                3.5634822845458984,
+                1.6814100742340088,
+                -7.821000099182129
+              ]
+            ],
+            "linkedFaces": 5,
+            "length": 0.01525923516601324
+          },
+          {
+            "points": [
+              [
+                3.561962366104126,
+                1.6814100742340088,
+                -7.70246696472168
+              ],
+              [
+                3.545255422592163,
+                1.6814100742340088,
+                -7.709826946258545
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.01825626753270626
+          },
+          {
+            "points": [
+              [
+                3.561962366104126,
+                1.6814100742340088,
+                -7.70246696472168
+              ],
+              [
+                3.5707874298095703,
+                1.6814100742340088,
+                -7.722499847412109
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.02189059369266033
+          },
+          {
+            "points": [
+              [
+                3.545255422592163,
+                1.6814100742340088,
+                -7.709826946258545
+              ],
+              [
+                3.5537233352661133,
+                1.6814100742340088,
+                -7.722499847412109
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.015241652727127075
+          },
+          {
+            "points": [
+              [
+                3.5206165313720703,
+                1.6814100742340088,
+                -7.722499847412109
+              ],
+              [
+                3.5537233352661133,
+                1.6814100742340088,
+                -7.722499847412109
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.03310680389404297
+          },
+          {
+            "points": [
+              [
+                3.5760669708251953,
+                1.6814100742340088,
+                -7.7344841957092285
+              ],
+              [
+                3.564176559448242,
+                1.6814100742340088,
+                -7.738144397735596
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.012441019527614117
+          },
+          {
+            "points": [
+              [
+                3.5537233352661133,
+                1.6814100742340088,
+                -7.722499847412109
+              ],
+              [
+                3.564176559448242,
+                1.6814100742340088,
+                -7.738144397735596
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.01881546899676323
+          },
+          {
+            "points": [
+              [
+                3.5866310596466064,
+                1.6814100742340088,
+                -7.771749973297119
+              ],
+              [
+                3.564176559448242,
+                1.6814100742340088,
+                -7.738144397735596
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.04041706770658493
+          },
+          {
+            "points": [
+              [
+                3.5760669708251953,
+                1.6814100742340088,
+                -7.7344841957092285
+              ],
+              [
+                3.5924837589263916,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.040721602737903595
+          },
+          {
+            "points": [
+              [
+                3.5924837589263916,
+                1.6814100742340088,
+                -7.771749973297119
+              ],
+              [
+                3.5866310596466064,
+                1.6814100742340088,
+                -7.771749973297119
+              ]
+            ],
+            "linkedFaces": 6,
+            "length": 0.005852699279785156
+          }
+        ]
+      }
+    }
+  ],
+  "firstDuplicateGeneration": {
+    "operandIndex": 1,
+    "operandName": "diagnostic/alignedOpening",
+    "before": 0,
+    "after": 640
+  },
+  "selfIntersectionNotProvenAbsent": true,
+  "noOriginalObjectOperand": true,
+  "sourceAfter": {
+    "failedScene": "e61a390ef10e77ef40de77972454050b19e469b725ea8ebbec7b43e35b199746",
+    "rawPlans": "e44d250ca5440d0f5aae661d321bde8de7c031296939b820eeb8f9d400c2b53d",
+    "study": "7ff0cd080569eb92928cbe7d974fa4348ff89e597d7c98f5ecff471fdc105cec",
+    "helper": "47a00db51d9826ca56a717db06feb48930dfbe77f3fcf301783ad1d90ea0b18d",
+    "geometryHelper": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+    "originalBuildCode": "22c059b1cf7c08bd1a80519b5720c3b71d9e800571e23f4ee96964ad43db9037",
+    "statsCode": "b34bf5963b7f7bacc486d6f4eb7bdc06324c2c44281d10337e63681ad7d108f3",
+    "supervisor": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "measurement": "be452b8297a17246ebaa376edffef35de2b5821c554717ed53cfb9d04c022e21",
+    "context": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+    "leftTrees": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+    "contextManifest": "3c3fcd13bf4867946a0f393769f852cb938286329dfa2e11dac3afe74796bda2",
+    "forestStudy": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+    "sourceBlend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "sourceGlb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "benchmark": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+    "envelope": "444beab3c5b078799e974424e225e0a2e6742d6b99ad7e94be5edb54088af1db"
+  },
+  "seconds": 3.8996544159017503,
+  "noOriginalSceneSaveOrRender": true
+}

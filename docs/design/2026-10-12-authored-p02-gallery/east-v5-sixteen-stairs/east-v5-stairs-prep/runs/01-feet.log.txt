@@ -1,0 +1,19 @@
+node:fs:561
+  return binding.open(
+                 ^
+
+Error: ENOENT: no such file or directory, open '/private/tmp/sansu-authored-shoulder-c1/candidate/<define:import.meta.env>'
+    at Object.openSync (node:fs:561:18)
+    at Object.readFileSync (node:fs:445:35)
+    at hash (file:///private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-prep/extract-feet.mjs:11:53)
+    at file:///private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-prep/extract-feet.mjs:77:50
+    at Array.map (<anonymous>)
+    at file:///private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-prep/extract-feet.mjs:77:40
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/private/tmp/sansu-authored-shoulder-c1/candidate/<define:import.meta.env>'
+}
+
+Node.js v24.18.0

@@ -1,0 +1,54 @@
+{
+  "recordedAt": "2026-10-12T02:02:55.415757+00:00",
+  "runnerSession": 31745,
+  "runnerExitCode": 1,
+  "runnerSha256": "deffbce627f91546e83a4fbbbf24745162613a15efa76478e84ead275f40b333",
+  "result": "FAIL",
+  "classification": "driver-node-v8-heap-out-of-memory",
+  "observedFatalMessage": "FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory",
+  "driverExitCode": -6,
+  "outerFailurePhase": "missing-tool-report",
+  "lastToolPhase": "acquisition:explicit-diagnostic-18h",
+  "stageElapsedSeconds": 1159.6362149715424,
+  "outerDeadlineSeconds": 3600,
+  "outerTimeout": false,
+  "completedStages": [
+    {
+      "name": "01-floor-shading-ab",
+      "pass": true
+    },
+    {
+      "name": "02-shoulder-full",
+      "pass": false
+    }
+  ],
+  "notExecutedStageNames": [
+    "03-baseline27-editing",
+    "04-wide27-water",
+    "05-authored-flower-full-cove-off",
+    "06-authored-cove-full",
+    "07-ordinary-growing-balance",
+    "08-classic-smoke"
+  ],
+  "localInputCount": 6398,
+  "localInputsStable": true,
+  "installedDependencyCount": 6,
+  "installedDependenciesStable": true,
+  "sourceFixed": true,
+  "installedDependenciesFixed": true,
+  "processGroupCleanup": "runner-owned process group already exited",
+  "captureFiles": [
+    "acquisition-initial-32-whole.png",
+    "acquisition-l33-young-preview.png",
+    "acquisition-l34-young-preview.png",
+    "acquisition-l35-young-preview.png",
+    "acquisition-young-35-whole.png"
+  ],
+  "evidence": {
+    "regressions/report.json": "7e10e6441ec7ca625958776499f0bb5ed51cbacd1cadb06a0161e621c557b363",
+    "regressions/02-shoulder-full/report.json": "cb97af7cd20d7f333d067207074d43df11b371479edd15433706b51e974f428d",
+    "regressions/02-shoulder-full/execution.log.txt": "66123f59c71a7b09a803fa541036f5fa0db7b5976e1a455ca1e41e654ea342b0",
+    "regressions-runner-execution.log.txt": "e7471dd65d02d04e6638a66a63966da7980dbee131636aa06f73429a2abf3163"
+  },
+  "scope": "First run preserved. No retry or source/candidate/driver changes; Vite server remains root-owned. Browser wait timeout and overall performance are not established by this Node OOM."
+}

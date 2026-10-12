@@ -1,0 +1,74 @@
+--- c2/inspect-build.mjs
++++ c3/inspect-build.mjs
+@@ -1,4 +1,4 @@
+-// Preparation only. --start is authorized separately after frozen c2 core PASS.
++// Preparation only. --start is authorized separately after frozen c3 core PASS.
+ import assert from 'node:assert/strict';
+ import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+ import path from 'node:path';
+@@ -7,10 +7,10 @@
+ import { gunzipSync } from 'node:zlib';
+ import { spawnSync } from 'node:child_process';
+ 
+-const base = '/private/tmp/sansu-authored-shoulder-c2', candidate = path.join(base, 'candidate');
++const base = '/private/tmp/sansu-authored-shoulder-c3', candidate = path.join(base, 'candidate');
+ const dist = path.join(candidate, 'dist'), output = path.join(base, 'build-boundary');
+-const revision = 'authored-shoulder-c2';
+-const baselinePath = 'docs/design/2026-10-12-authored-shoulder-runtime/c1/core/report.json';
++const revision = 'authored-shoulder-c3';
++const baselinePath = '/private/tmp/sansu-authored-shoulder-c2/core/report.json';
+ const sourceRoot = 'docs/design/2026-10-12-authored-central-shoulder';
+ const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+ const hashFile = async file => sha(await readFile(file));
+@@ -34,7 +34,7 @@
+ 
+ if (!process.argv.includes('--start')) {
+     console.log(json({ prepared: true, executionStarted: false, inventoryCollected: false, candidate, dist, output,
+-        requires: 'Terminal frozen c2 core PASS and separate root authorization; inherited c1 input names plus actual final closure',
++        requires: 'Terminal frozen c3 core PASS and separate root authorization; inherited c2 input names plus actual final closure',
+         scope: 'One read-only dist/precache/asset-budget inspection; no browser, build or core invocation' }));
+ } else {
+     await mkdir(output); // Refuse overwriting either failed or completed evidence.
+@@ -44,11 +44,18 @@
+         scope: 'Normal native=false production payload inspection after core. Named JS, metadata and inline JSON are separately inventoried; this does not claim all authored/native code or data is absent.' };
+     try {
+         const corePath = path.join(base, 'core/report.json'), snapshotPath = path.join(base, 'snapshot.json'), closurePath = path.join(base, 'closure/inputs.json');
+-        const [core, snapshot, closure, baseline] = await Promise.all([readJSON(corePath), readJSON(snapshotPath), readJSON(closurePath), readJSON(path.join(candidate, baselinePath))]);
++        const [core, snapshot, closure, baseline] = await Promise.all([readJSON(corePath), readJSON(snapshotPath), readJSON(closurePath), readJSON(baselinePath)]);
+         assert(core.pass === true && core.phase === 'complete' && core.exitCode === 0 && core.sourceFixed === true, 'Requires terminal core PASS');
+         assert.equal(core.target, candidate); assert.equal(core.revision, revision);
++        assert(core.installedDependenciesFixed === true);
++        const installedPath = path.join(base, 'closure/installed-dependencies.json'), installed = await readJSON(installedPath);
++        assert.deepEqual(core.initialInstalledDependencies, installed); assert.deepEqual(core.finalInstalledDependencies, installed);
++        const installedBefore = {};
++        for (const name of Object.keys(installed)) installedBefore[name] = await hashFile(path.join(candidate, name));
++        assert.deepEqual(installedBefore, installed);
++
+         assert.equal(snapshot.dest, candidate); assert.deepEqual(snapshot.changedDuringCopy, []); assert.deepEqual(snapshot.closureDifferences, []);
+-        assert(baseline.pass === true && baseline.sourceFixed === true, 'Durable c1 baseline must be a fixed PASS');
++        assert(baseline.pass === true && baseline.sourceFixed === true, 'Fixed c2 baseline must be a fixed PASS');
+         assert.deepEqual(baseline.initialInputs, baseline.finalInputs);
+         assert.deepEqual(core.initialInputs, closure); assert.deepEqual(core.finalInputs, closure);
+         assert.equal(core.closureSha256, await hashFile(closurePath)); assert.equal(snapshot.closureSha256, core.closureSha256);
+@@ -68,7 +75,7 @@
+             newInputNames: Object.keys(closure).filter(file => !inherited.has(file)), differences: inputDifferences,
+             comparedTo: ['core.initialInputs', 'core.finalInputs', 'snapshot.files', 'closure/inputs.json', 'current candidate'],
+             coreReportSha256: await hashFile(corePath), closureSha256: await hashFile(closurePath), snapshotSha256: await hashFile(snapshotPath),
+-            inheritedBaselineReport: baselinePath, inheritedBaselineSha256: await hashFile(path.join(candidate, baselinePath)) };
++            inheritedBaselineReport: baselinePath, inheritedBaselineSha256: await hashFile(baselinePath) };
+         const { ASSET_BUDGETS, extractPrecacheUrls } = await import(pathToFileURL(path.join(candidate, 'tools/asset-policy.mjs')).href);
+         const files = await inventory(dist), version = await readJSON(path.join(dist, 'version.json'));
+         const precache = extractPrecacheUrls(await readFile(path.join(dist, 'sw.js'), 'utf8'));
+@@ -134,6 +141,12 @@
+         const finalInputs = {};
+         for (const file of Object.keys(closure)) finalInputs[file] = await hashFile(path.join(candidate, file));
+         const sourceFixed = Object.entries(closure).every(([file, digest]) => finalInputs[file] === digest);
++        const installedAfter = {};
++        for (const name of Object.keys(installed)) installedAfter[name] = await hashFile(path.join(candidate, name));
++        assert.deepEqual(installedAfter, installedBefore); assert.deepEqual(installedAfter, installed);
++        report.installedDependencies = { count: Object.keys(installed).length, before: installedBefore, after: installedAfter, fixed: true,
++            manifestSha256: await hashFile(installedPath) };
++
+         const flagsPass = version.revision === revision && version.island?.enabled === true
+             && version.island?.nativeOwnedArt?.enabled === false && version.island?.nativeArtStudy?.enabled === false;
+         await writeFile(path.join(output, 'input-hashes.json'), json(closure), { flag: 'wx' });

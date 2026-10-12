@@ -1,0 +1,19 @@
+{
+  "phase": "fixed35:desktop-whole-and-close",
+  "steps": [
+    "setup:compile-read-only-domain-projection",
+    "fixed35:load"
+  ],
+  "timings": [
+    {
+      "name": "setup:compile-read-only-domain-projection",
+      "elapsedMs": 955.580083,
+      "success": true
+    },
+    {
+      "name": "fixed35:load",
+      "elapsedMs": 25568.237709,
+      "success": true
+    }
+  ]
+}

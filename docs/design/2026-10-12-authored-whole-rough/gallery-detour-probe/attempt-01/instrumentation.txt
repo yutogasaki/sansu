@@ -1,0 +1,17 @@
+
+export function diagnosticContacts(world, layout, root, envelope, edges) {
+ const index = obstructionIndex(root), floors = floorIndex(world);
+ return edges.map(edge => {
+  const ground = pathGroundBox(edge.from, edge.to, layout, floors), hits = [];
+  for (const [bandId, band] of envelope.bands.entries()) {
+   const box = bandBox(ground, band);
+   for (const item of query(index, box)) if (item.box.intersectsBox(box) && box.intersectsTriangle(item.triangle) && hits.length < 24) {
+    const lineage = []; for (let node = item.node; node; node = node.parent) {
+     lineage.push({name: node.name, role: node.userData.sourceGalleryNode ?? node.userData.forestDeliveryId, ownerId: node.userData.ownerId}); if (node === root) break;
+    }
+    hits.push({bandId, lineage, triangle: [item.triangle.a.toArray(), item.triangle.b.toArray(), item.triangle.c.toArray()]});
+   }
+  }
+  return {...edge, hits};
+ });
+}

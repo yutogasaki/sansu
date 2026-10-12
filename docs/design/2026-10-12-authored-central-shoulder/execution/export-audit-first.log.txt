@@ -1,0 +1,16 @@
+/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/audit-export.py:26: RuntimeWarning: divide by zero encountered in matmul
+  pos=self.acc(p['attributes']['POSITION']);points=np.column_stack([pos,np.ones(len(pos))])@m.T;indices=self.acc(p['indices']).reshape(-1,3)
+/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/audit-export.py:26: RuntimeWarning: overflow encountered in matmul
+  pos=self.acc(p['attributes']['POSITION']);points=np.column_stack([pos,np.ones(len(pos))])@m.T;indices=self.acc(p['indices']).reshape(-1,3)
+/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/audit-export.py:26: RuntimeWarning: invalid value encountered in matmul
+  pos=self.acc(p['attributes']['POSITION']);points=np.column_stack([pos,np.ones(len(pos))])@m.T;indices=self.acc(p['indices']).reshape(-1,3)
+/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/audit-export.py:27: RuntimeWarning: divide by zero encountered in matmul
+  normal=self.acc(p['attributes']['NORMAL'])@np.linalg.inv(m[:3,:3]);normal/=np.linalg.norm(normal,axis=1)[:,None]
+/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/audit-export.py:27: RuntimeWarning: overflow encountered in matmul
+  normal=self.acc(p['attributes']['NORMAL'])@np.linalg.inv(m[:3,:3]);normal/=np.linalg.norm(normal,axis=1)[:,None]
+/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/audit-export.py:27: RuntimeWarning: invalid value encountered in matmul
+  normal=self.acc(p['attributes']['NORMAL'])@np.linalg.inv(m[:3,:3]);normal/=np.linalg.norm(normal,axis=1)[:,None]
+Traceback (most recent call last):
+  File "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/audit-export.py", line 57, in <module>
+    assert max(normal_errors)<2e-4,max(normal_errors)
+AssertionError: 0.004525506827500875

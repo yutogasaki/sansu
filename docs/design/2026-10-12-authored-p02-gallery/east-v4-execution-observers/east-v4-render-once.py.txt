@@ -1,0 +1,40 @@
+"""Root-authorized single view of failed source; external observation only."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,subprocess,time,sys
+P=Path('/private/tmp/sansu-p02-gallery-source-study/east-v4-failed-shape-view');M=P/'preparation.json';expected='4e5807d506483eb2680d2f4a1889a6ef1d26b93b7efcd2ecfd3ec0a250a438a7'
+view=sys.argv[1];assert view in ['whole','entry-section'];tag={'whole':'01-whole','entry-section':'02-entry'}[view]
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest();utc=lambda:datetime.now(timezone.utc).isoformat()
+assert sha(M)==expected,'Authorized seal changed';m=json.loads(M.read_text());paths={p:m['inputSha256'][k] for k,p in m['inputPaths'].items()};paths[str(P/'render-failed.py')]=m['scriptSha256'];paths[str(M)]=expected;command=m['commands'][view]
+before={p:sha(p) for p in paths};assert before==paths,'Preflight hash mismatch'
+def table():
+    text=subprocess.check_output(['ps','-axo','pid=,ppid=,rss=,command='],text=True);rows=[]
+    for line in text.splitlines():
+        x=line.strip().split(None,3)
+        if len(x)==4:
+            try:rows.append((int(x[0]),int(x[1]),int(x[2])*1024,x[3]))
+            except ValueError:pass
+    return rows
+binary='/Applications/Blender.app/Contents/MacOS/Blender'
+blender_processes=[r for r in table() if r[3].startswith(binary)]
+existing=[r for r in blender_processes if '-b' in r[3].split() or '--background' in r[3].split()];assert not existing,'Another background Blender process is active; do not overlap'
+runs=P/'runs';runs.mkdir(exist_ok=True)
+prefix=runs/tag
+for name in [tag,tag+'.log.txt',tag+'.log.txt.json',tag+'-external-process.json',tag+'-supervisor-output.log.txt',tag+'-preflight.json']:
+    assert not (runs/name).exists(),'Fresh attempt required: '+name
+preflight={'utc':utc(),'authorizedPreparationSHA':expected,'outerScriptSHA':sha(__file__),'inputHashes':before,'noExistingBackgroundBlender':True,'untouchedPreexistingBlenderProcesses':blender_processes,'command':command,'cwd':str(P)};(runs/(tag+'-preflight.json')).write_text(json.dumps(preflight,indent=2)+'\n')
+record={'authorizedPreparationSHA':expected,'outerScriptSHA':sha(__file__),'view':view,'evidenceType':'unrepaired failed source shape, HOLD, supports and rails absent','command':command,'launchRequestedUTC':utc(),'ownedBlender':{},'timestampSemantics':'Popen return and ps observation UTC, not exact child launch/exit timestamps','limitsFromSealedSupervisor':m['resourceLimits']};start=time.monotonic()
+with (runs/(tag+'-supervisor-output.log.txt')).open('xb') as log:
+    proc=subprocess.Popen(command,cwd=P,stdout=log,stderr=subprocess.STDOUT);record['supervisorPID']=proc.pid;record['supervisorPopenReturnedUTC']=utc()
+    while proc.poll() is None:
+        rows=table();ids={proc.pid}
+        for _ in range(5):ids.update(pid for pid,ppid,rss,cmd in rows if ppid in ids)
+        for pid,ppid,rss,cmd in rows:
+            if pid in ids and cmd.startswith(binary):
+                key=str(pid);now=utc();item=record['ownedBlender'].setdefault(key,{'pid':pid,'firstObservedUTC':now,'command':cmd,'peakObservedRSSBytes':0});item['lastObservedUTC']=now;item['peakObservedRSSBytes']=max(item['peakObservedRSSBytes'],rss)
+        (runs/(tag+'-external-process.json')).write_text(json.dumps(record,indent=2)+'\n');time.sleep(.25)
+    record['supervisorExitCode']=proc.wait();record['supervisorExitObservedUTC']=utc();record['outerElapsedSeconds']=time.monotonic()-start
+rows=table();live={r[0] for r in rows};record['ownedBlenderRemaining']=[int(pid) for pid in record['ownedBlender'] if int(pid) in live];record['inputHashesBefore']=before;record['inputHashesAfter']={p:sha(p) for p in paths};record['allInputsUnchanged']=record['inputHashesAfter']==before
+supervisor=runs/(tag+'.log.txt.json');record['supervisorReport']=json.loads(supervisor.read_text()) if supervisor.exists() else None
+(runs/(tag+'-external-process.json')).write_text(json.dumps(record,indent=2)+'\n')
+print(json.dumps({k:v for k,v in record.items() if k not in ['inputHashesBefore','inputHashesAfter']},indent=2));assert record['allInputsUnchanged'] and not record['ownedBlenderRemaining'];sys.exit(record['supervisorExitCode'])

@@ -1,0 +1,58 @@
+{
+  "scope": "Exact copy of the completed read-only c4 build-boundary outputs. Core excerpt preserves selected raw log lines byte for byte; it is not the full core log.",
+  "core": {
+    "pass": true,
+    "phase": "complete",
+    "exitCode": 0,
+    "sourceFixed": true,
+    "revision": "authored-cove-c4",
+    "testFiles": 606,
+    "tests": 5265,
+    "reportSha256": "b1c98da6515fa927651cfe241df3ed0871e3b8a1072dd4acaf83f6af973b3994",
+    "executionLogSha256": "c62a6bc51e5cacf5f889653d8e5a322f18555a9edf6970a276ea39feb9a3dfca",
+    "excerptSourceLines": [
+      1617,
+      1618,
+      1620,
+      1803,
+      1804,
+      1805,
+      1806
+    ]
+  },
+  "rawCopyBytesPreserved": true,
+  "files": {
+    "inspect-build.mjs": {
+      "bytes": 9782,
+      "sha256": "c288c0567e46f1c077c5978b2792043a2aa4b01f1741981c4d02b8a904909d6c"
+    },
+    "report.json": {
+      "bytes": 12494,
+      "sha256": "cef3ba05c77ac784f0c9fe8a4dc6b61cae656557e1581d6f8ba5367d1769dbcf"
+    },
+    "execution.log.txt": {
+      "bytes": 1669,
+      "sha256": "120a41c86358016acf511bfa15c3c1e2af4b477ea2cdd04a9b45d9b0ab682762"
+    },
+    "asset-budget.log.txt": {
+      "bytes": 212,
+      "sha256": "48d49adb828f0a598e0f80427bd8876ac779e17058520bd5cd1af751bd445609"
+    },
+    "input-hashes.json": {
+      "bytes": 251863,
+      "sha256": "4713b3082b343d847e2156cd370e5da5d6a9bbd5b76aaa3dae49cc42b72f6ee3"
+    },
+    "dist-files.json": {
+      "bytes": 24870,
+      "sha256": "5a2a2bb5ee137a30c1cfa40d095afb4c5ab22869059405b07eb8988a8b55d371"
+    },
+    "core-summary-excerpt.log.txt": {
+      "bytes": 392,
+      "sha256": "366e8e6c24971a62a15c79d6ac4b3c4d56848d54d068b6bf84d3e72bcc890720"
+    },
+    "archive-boundary.py": {
+      "bytes": 5516,
+      "sha256": "bfd988911f33ef5f05da0475741ccdeee03f30a8700ede695d67c08544b41d07"
+    }
+  }
+}

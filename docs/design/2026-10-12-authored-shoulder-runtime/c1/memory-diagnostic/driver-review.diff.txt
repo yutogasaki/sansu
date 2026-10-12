@@ -1,0 +1,21 @@
+--- c1/tools/e2e-authored-shoulder.mjs
++++ live/tools/e2e-authored-shoulder.mjs
+@@ -90,14 +90,10 @@
+ const metadata = () => page.locator('[data-growing-world]').evaluate(node => ({ ...node.dataset }));
+ const state = async () => JSON.parse((await hostMeta()).authoredState);
+ const history = async () => JSON.parse((await hostMeta()).authoredDiagnosticHistory);
+-// Cache only the immutable Node projection; every browser assertion still reads
+-// current telemetry. Receipts/milestones do not alter geometry or ownership.
+-const projectedFrames = new Map();
+-const frame = value => {
+-    const cacheKey = JSON.stringify(canonical(value));
+-    if (!projectedFrames.has(cacheKey)) projectedFrames.set(cacheKey, domain.authoredWorldFrame(value, base, { water: true, cove: true, shoulder }));
+-    return projectedFrames.get(cacheKey);
+-};
++// The domain already bounds immutable projections to three recent states. An
++// outer cache would retain evicted worlds throughout this multi-state journey.
++// Every browser assertion still reads current telemetry independently.
++const frame = value => domain.authoredWorldFrame(value, base, { water: true, cove: true, shoulder });
+ const paint = () => page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+ const ready = async () => {
+     await page.waitForFunction(() => !document.querySelector('.authored-status')

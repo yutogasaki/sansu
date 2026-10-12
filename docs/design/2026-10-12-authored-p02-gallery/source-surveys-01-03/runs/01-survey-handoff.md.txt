@@ -1,0 +1,24 @@
+# P02 single survey handoff
+
+Executed once under the existing source concurrency window. All three candidates are raw HOLD; no candidate selected. Blender exited 0 because it completed the diagnostic, not because the design passed. No build, render, automatic adaptation or retry occurred. No other process was stopped or changed.
+
+- Supervisor window: **2026-10-12T03:51:33.580133+00:00 → 2026-10-12T03:51:49.406751+00:00**.
+- Owned Blender PID **19411**, parent supervisor **19409**; CPU 2.
+- Supervisor elapsed **15.447743208 s**, sampled peak **1,004,486,656 B**; outer observer peak **1,007,091,712 B**. Limits: 180 s / 2560 MiB. These are overlapping-run observations, not performance acceptance.
+- All eight frozen source input SHA values remained identical before/after.
+
+## Important measurement limitation
+
+The native interior was reported at centre **(5.6599998474, -0.1895862371, -0.8500003815)**, outside the fixed P02 authored origin **(3.5, 1.49033759075, -8.5)**. Its XZ nearly equals the source-pivot subtraction translation itself. This is strong evidence of an incorrect loaded donor transform; copying `matrix_world` before the linked source object has been evaluated is a hypothesis to verify, not a proven cause. All doorway rays were null. Do not use the raw interior/gallery heights, connector/spur grades or collision counts as valid dimensions or claim the native gallery is infeasible from them. The original raw remains unchanged.
+
+The context-ground entry heights and fixed ramp-entry transverse sections remain separable observations: entry coordinates and fixed ramp-start XZ do not depend on the invalid donor height. All three have full .64-width source ground coverage but a horizontal seam has both burial and a positive gap:
+
+| Entry XZ | Context ground Y | Flat-seam gap range (new minus existing ground) |
+|---|---:|---:|
+| (3.0, -7.25) | 1.563064575 | -0.006655413 … 0.030746338 |
+| (3.75, -7.25) | 1.633346558 | -0.001604462 … 0.017630365 |
+| (4.0, -7.25) | 1.650928497 | -0.032920274 … 0.033906901 |
+
+The interior-spur section orientation also uses the suspect donor position, so it is not an accepted measurement. For a later corrected survey, first record original donor matrices and evaluated bounds, assert the floor lies in the actual P02 assembly, then rerun only after separately scheduled. Do not alter floor geometry or tolerances to mask this failure.
+
+Raw candidates, partial record, measurement and execution identity are in `01-survey/`; `01-survey.log.txt` is the untouched Blender log. `01-survey-handoff.json` stores the compact interpretation plus artifact SHA/bytes. Preparation README/readiness are historical pre-execution records; they have not been overwritten by this run.

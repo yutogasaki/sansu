@@ -1,0 +1,100 @@
+{
+  "status": "HOLD; new non-translation-only numerical case stopped as sealed",
+  "pid": 67780,
+  "startedAtUtc": "2026-10-12T07:22:31.934085+00:00",
+  "finishedAtUtc": "2026-10-12T07:22:53.826145+00:00",
+  "exitCode": 1,
+  "ownedProcessExited": true,
+  "ownedProcessGroupGone": true,
+  "psOwnedPidOutput": "",
+  "elapsedSeconds": 21.891851041,
+  "peakSampledRssBytes": 866123776,
+  "boundInputCount": 279,
+  "inputParity": true,
+  "changedRepresentations": 70,
+  "completedOriginalMethodRoles": 19,
+  "completedLeafRepresentations": 51,
+  "precisionHoldsByCloneLabel": {
+    "candidate": 3,
+    "baseline": 1,
+    "source-oracle": 1
+  },
+  "firstFailure": {
+    "owner": "l14",
+    "sourceNode": 2290,
+    "leafOrdinal": 51,
+    "label": "baseline",
+    "phase": "fresh-source-normal-baseline",
+    "classification": {
+      "strictWorldGeometryGate": false,
+      "worldToleranceUnchanged": 1e-06,
+      "diagnosticContinuationAllowed": false,
+      "precisionHold": false,
+      "reason": "unclassified world failure: hard stop",
+      "qualification": {
+        "finiteInputs": true,
+        "diagnosticCloneKindAllowed": true,
+        "beforeWorldWithinUnchangedBound": true,
+        "linearExactlyUnchanged": false,
+        "localAndParentExactlyUnchanged": true,
+        "affineHomogeneousRowUnchanged": true,
+        "evaluatedEqualsFloat32ParentProduct": true,
+        "translationActuallyChanged": true
+      },
+      "translationDeltaBlender": [
+        9.5367431640625e-07,
+        -2.384185791015625e-07,
+        0.0
+      ],
+      "beforeMaxWorldError": 0.0,
+      "afterMaxWorldError": 1.0028618414361853e-06,
+      "sourceNodeIndex": 2290,
+      "ownerId": "l14",
+      "label": "baseline"
+    },
+    "worldMatrixChangedComponents": [
+      {
+        "row": 0,
+        "column": 0,
+        "before": 0.3184381425380707,
+        "after": 0.3184380531311035,
+        "delta": -8.940696716308594e-08
+      },
+      {
+        "row": 0,
+        "column": 3,
+        "before": 2.292459487915039,
+        "after": 2.2924604415893555,
+        "delta": 9.5367431640625e-07
+      },
+      {
+        "row": 1,
+        "column": 1,
+        "before": 0.3184381425380707,
+        "after": 0.3184380531311035,
+        "delta": -8.940696716308594e-08
+      },
+      {
+        "row": 1,
+        "column": 3,
+        "before": 3.480198621749878,
+        "after": 3.480198383331299,
+        "delta": -2.384185791015625e-07
+      }
+    ],
+    "normalOrLocalFaceFailureObserved": false
+  },
+  "original442AndMaterialsExact": true,
+  "assembly128Reached": false,
+  "primaryJoints": 0,
+  "roundtrip": "NOT RUN",
+  "retryOrRenderStarted": false,
+  "files": {
+    "execution-hold-01/result.json": "ff530f6440b16ab81bb5a2a2b1bc9c53fabf7b5a6f4a3b138c6ea345b227d7ad",
+    "attempt-hold-01/shape-manifest.json": "687589a20359bf9dc08cee56c57446ea60fcd9c0af726a9d6837160c297a8d6f",
+    "attempt-hold-01/first-failure.json": "8e1ca5f95f06644e7a362a3ecd4fdbbc1c1434a3296f61df46d0c80d633a5e1c",
+    "attempt-hold-01/precision-holds.json": "1d530b3103de218cfd48791205b0c30094f6126096fe38de760486e4177cf304",
+    "attempt-hold-01/FAILED-incomplete-diagnostic.blend": "6b19215f29a4421ef4f585c0985a579884938fac60bd7d600bbdc51383bbc477",
+    "attempt-hold-01/roles/l14:2290/baseline-evaluation.json.gz": "408c920130401a2e4423a70d9b65ff5a3b5b99d244434ebe7df51d3109a9786a"
+  }
+}

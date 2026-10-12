@@ -1,0 +1,87 @@
+{
+  "stage": "single prepared corrected measure invocation",
+  "command": [
+    "python3",
+    "supervise.py",
+    "--scheduled",
+    "--seconds",
+    "180",
+    "--rss-mib",
+    "2560",
+    "--log",
+    "runs/02-survey.log.txt",
+    "--",
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python",
+    "source-study.py",
+    "--",
+    "measure",
+    "--scheduled",
+    "--out",
+    "runs/02-survey"
+  ],
+  "startUtc": "2026-10-12T04:05:23.946310+00:00",
+  "endUtc": "2026-10-12T04:05:30.508849+00:00",
+  "timingMeaning": "supervisor process launch and observed exit; Blender observed timestamps separately",
+  "supervisorPid": 22346,
+  "ownedBlenderProcesses": [
+    {
+      "pid": 22348,
+      "parentPid": 22346,
+      "firstObservedUtc": "2026-10-12T04:05:24.534846+00:00",
+      "command": "/Applications/Blender.app/Contents/MacOS/Blender",
+      "lastObservedUtc": "2026-10-12T04:05:29.451808+00:00",
+      "peakObservedRssBytes": 694829056
+    }
+  ],
+  "supervisorExitCode": 0,
+  "preparedManifest": {
+    "path": "/private/tmp/sansu-p02-gallery-source-study/prepared-survey02/manifest.json",
+    "shaBefore": "4ce1f2de89af1370ecdc79506ef8064455c808c0de6c9484f2790e69080361ea",
+    "shaAfter": "4ce1f2de89af1370ecdc79506ef8064455c808c0de6c9484f2790e69080361ea"
+  },
+  "inputShaBefore": {
+    "context": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+    "leftTrees": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+    "contextManifest": "3c3fcd13bf4867946a0f393769f852cb938286329dfa2e11dac3afe74796bda2",
+    "forestStudy": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+    "sourceBlend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "sourceGlb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "benchmark": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+    "envelope": "444beab3c5b078799e974424e225e0a2e6742d6b99ad7e94be5edb54088af1db"
+  },
+  "inputShaAfter": {
+    "context": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+    "leftTrees": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+    "contextManifest": "3c3fcd13bf4867946a0f393769f852cb938286329dfa2e11dac3afe74796bda2",
+    "forestStudy": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+    "sourceBlend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "sourceGlb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "benchmark": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+    "envelope": "444beab3c5b078799e974424e225e0a2e6742d6b99ad7e94be5edb54088af1db"
+  },
+  "inputsUnchanged": true,
+  "scriptShaBefore": {
+    "source-study.py": "221884209c52f0bd7ddd074be85e0bdb504cddda06bc6cec08edc08879526a58",
+    "entry_geometry.py": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+    "donor_reference.py": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+    "check-donor-reference.py": "64d4b0bc75e3d18a365a0f431227cb412ce938e283fa5bbf7e69d2ec4292ab99",
+    "supervise.py": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "study.json": "258376c7a16aed0aa4645e7b08b95f4392057309c4996d629e4542cb13f4ecc9"
+  },
+  "scriptShaAfter": {
+    "source-study.py": "221884209c52f0bd7ddd074be85e0bdb504cddda06bc6cec08edc08879526a58",
+    "entry_geometry.py": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+    "donor_reference.py": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+    "check-donor-reference.py": "64d4b0bc75e3d18a365a0f431227cb412ce938e283fa5bbf7e69d2ec4292ab99",
+    "supervise.py": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "study.json": "258376c7a16aed0aa4645e7b08b95f4392057309c4996d629e4542cb13f4ecc9"
+  },
+  "scriptsUnchanged": true,
+  "automaticRetry": false,
+  "buildOrRenderExecuted": false,
+  "otherProcessesStoppedOrChanged": false
+}

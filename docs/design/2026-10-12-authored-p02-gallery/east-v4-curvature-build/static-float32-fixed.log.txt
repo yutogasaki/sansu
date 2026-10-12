@@ -1,0 +1,51 @@
+{
+  "status": "STATIC_ONLY_PASS_NOT_BUILD",
+  "checks": {
+    "allPythonAST": true,
+    "originalV3BuilderImmutable": true,
+    "originalV4PreparationImmutable": true,
+    "allOriginalInputs": true,
+    "allBasisInputs": true,
+    "allCopiedSealedInputs": true,
+    "actorWidthHeadHeightDoorOwnerTransformUnchanged": true,
+    "donorTransformBlockUnchanged": true,
+    "helpersAndSupervisorUnchanged": true,
+    "noRendererOrRetry": true,
+    "sameFiveOperandOrder": true,
+    "allUnionHardGuards": true,
+    "noUnionRepair": true,
+    "sameSealedFloorAndRoute": true,
+    "actualRootAndAllObstacleBands": true,
+    "sealedPlanGuards": true,
+    "actualConstructedFloat32BoundarySameEPS": true,
+    "upwardBottomRejected": true,
+    "newGeometryMotionBandIncluded": true,
+    "heightAndSpanGuardsUnchanged": true
+  },
+  "sealedPlanCheck": {
+    "status": "EXACT_SEALED_INPUT_CHECK_ONLY",
+    "topTriangles": 1520,
+    "rows": 191,
+    "minimumTopNormalYRaw": 0.0007398452824830647,
+    "widthRange": [
+      0.6399999999999983,
+      0.6400000000000017
+    ],
+    "sameEndpointWidthHeightOwnerDoorRules": true,
+    "positiveAreaOverlapProof": "sealed offline-result over these exact arrays; recomputation belongs static check",
+    "rootRole": "inner-edge ground-bearing, explicit .08 earth to .16 deck",
+    "noRuntimeAcceptance": true
+  },
+  "pending": [
+    "No Blender execution",
+    "MANIFOLD actual operands/steps, role lineage, Float32 native hit equality",
+    "Actual constructed roots/boughs/rails and full route body contacts",
+    "Coarse whole/rotated/entry source images",
+    "Runtime owner-use integration and continuous motion support"
+  ],
+  "resourceLimits": {
+    "cpuThreads": 2,
+    "seconds": 180,
+    "rssMiB": 2560
+  }
+}

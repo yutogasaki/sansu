@@ -1,0 +1,65 @@
+{
+  "recordedAtUtc": "2026-10-12T03:58:54.174802+00:00",
+  "status": "FIRST-QUERY-NUMERICAL-FAILURE-REPRODUCED-CANDIDATE-HOLD",
+  "files": {
+    "README.md": {
+      "bytes": 1878,
+      "sha256": "8be8d3a377877a8d262d0266d00a30f1b38e599e7e5082d7b9b01ed8074901f6"
+    },
+    "attempt-01/inputs-after.json": {
+      "bytes": 450,
+      "sha256": "1ba3007233f5dd8641a75ddc3bfc50f28d9cf8b617b383ed0c806538ab413ba0"
+    },
+    "attempt-01/inputs-before.json": {
+      "bytes": 450,
+      "sha256": "1ba3007233f5dd8641a75ddc3bfc50f28d9cf8b617b383ed0c806538ab413ba0"
+    },
+    "attempt-01/query-input.json": {
+      "bytes": 1735,
+      "sha256": "7330ac1c390e684c20e772f44c2fb3e327632763115937c660dbcfd7a29b03d2"
+    },
+    "attempt-01/raw-outcome.json": {
+      "bytes": 1002,
+      "sha256": "f69d0bb6a9e220ba20f1339d7bb057a059065992e140c9b7735b0da503ef1ed7"
+    },
+    "attempt-01/result.json": {
+      "bytes": 2788,
+      "sha256": "836e2f80da0d276d912b5d1486ba87543b1096cfc21757e3752ed065641df17d"
+    },
+    "attempt-01/trace.json": {
+      "bytes": 272903,
+      "sha256": "284739b99cca76b8e5aaa5cd64a8b3046b4edcd406e7d69f2edfec54feb0884e"
+    },
+    "debug-first-ray.py": {
+      "bytes": 7891,
+      "sha256": "7a47800c38e5407b567e9a939cd7fcd3393cba7c218a7ac76bc6a73537974dab"
+    },
+    "execution-attempt-01/execution.log.txt": {
+      "bytes": 3686,
+      "sha256": "67a196b14f74be11b61357640abbb24943c50866750f9affc49700d0b281a533"
+    },
+    "execution-attempt-01/result.json": {
+      "bytes": 598,
+      "sha256": "cfc11e9b6d2ec93b20fce7376a0c9c8828310e7746fc7e344f3b691044e21406"
+    },
+    "result-note.md": {
+      "bytes": 2760,
+      "sha256": "33f6cac3682ff8258b49e735b989a26c263f7a305499bff3eb41ae58aecde4e5"
+    },
+    "run-once.py": {
+      "bytes": 2340,
+      "sha256": "9bec5964b97af9232968676db6af19b37ff7272ff81b3953f774d7c50d6da68d"
+    },
+    "static-check.json": {
+      "bytes": 443,
+      "sha256": "f58726f06bd8fd62ae2417a1c78c90c272deaf39a265648da576cd66458d3aa2"
+    }
+  },
+  "ownedProcessGroupGone": true,
+  "ownedPid": 20577,
+  "geometryAcceptance": false,
+  "kernelModified": false,
+  "automaticRetry": false,
+  "sourceOnly": true,
+  "independentObservers": 0
+}

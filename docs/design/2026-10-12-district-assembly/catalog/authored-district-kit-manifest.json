@@ -1,0 +1,216 @@
+{
+  "version": 1,
+  "candidate": "native05-district-shapes-rough-v1",
+  "source": {
+    "artifact": "docs/design/2026-10-10-island-final-3d/whole-island.glb",
+    "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+  },
+  "artifact": {
+    "path": "/prototypes/place-qa/authored-district-kit.json.gz",
+    "sha256": "5ec00efb522247797fd8f269174901b2fba888cdd64c9c0bcd730db083c3a38f",
+    "expandedSha256": "dc36401494345c9a202109b4c530413f7ffe1b832df86e16cbccd5082b5832e9",
+    "expandedBytes": 8213082,
+    "gzipBytes": 2088641
+  },
+  "base": {
+    "artifact": "prototypes/place-qa/native05-world-source-shading.json.gz",
+    "sha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+    "ports": [
+      {
+        "id": "east-entry",
+        "districtId": "native05-inlet-core",
+        "siteId": "14,-4",
+        "facing": 0,
+        "cell": {
+          "x": 14,
+          "z": -4
+        }
+      },
+      {
+        "id": "north-entry",
+        "districtId": "native05-inlet-core",
+        "siteId": "7,-10",
+        "facing": 3,
+        "cell": {
+          "x": 7,
+          "z": -10
+        }
+      }
+    ]
+  },
+  "templates": [
+    {
+      "id": "native05-harbor-lowland-v1",
+      "sourceNode": "Island / continuous sculpted mature terrain",
+      "sourcePrimitive": 2,
+      "sourceMaterial": "harbor / light seaside meadow",
+      "transform": {
+        "scale": 0.45,
+        "authoredOrigin": {
+          "x": 5.65,
+          "y": -0.3645,
+          "z": -1.03
+        },
+        "localOrigin": {
+          "x": 10,
+          "y": 0,
+          "z": -6
+        }
+      },
+      "sourceTriangles": 16973,
+      "sourceNormalsAndIndices": "preserved",
+      "authoredClosure": {
+        "boundaryEdges": 1773,
+        "sideTriangles": 3546,
+        "bottomTriangles": 16973,
+        "bottomY": -0.738,
+        "material": "shore / pale sand",
+        "sourceBoundaryPinches": [
+          {
+            "point": {
+              "x": 0.900885487,
+              "y": 0.463434945,
+              "z": 0.476672907
+            },
+            "boundaryDegree": 4
+          }
+        ],
+        "manifold": false,
+        "normals": "runtime computed, not original source normals"
+      },
+      "placementSites": 7,
+      "walkingSites": 253,
+      "edges": 447,
+      "ports": [
+        {
+          "id": "west-entry",
+          "siteId": "1,2",
+          "facing": 2,
+          "cell": {
+            "x": 1,
+            "z": 2
+          },
+          "point": {
+            "x": 1,
+            "y": 0.121922646,
+            "z": 2
+          }
+        },
+        {
+          "id": "east-entry",
+          "siteId": "4,2",
+          "facing": 0,
+          "cell": {
+            "x": 4,
+            "z": 2
+          },
+          "point": {
+            "x": 4,
+            "y": 0.50623444,
+            "z": 2
+          }
+        }
+      ],
+      "bounds": {
+        "min": {
+          "x": 0.012708235,
+          "y": -0.008635827,
+          "z": 0.462525864
+        },
+        "max": {
+          "x": 4.655312061,
+          "y": 0.771866665,
+          "z": 8.006353731
+        }
+      }
+    },
+    {
+      "id": "native05-northern-hill-v1",
+      "sourceNode": "Island / continuous sculpted mature terrain",
+      "sourcePrimitive": 1,
+      "sourceMaterial": "hill / silvery meadow",
+      "transform": {
+        "scale": 0.45,
+        "authoredOrigin": {
+          "x": 5.65,
+          "y": -0.3645,
+          "z": -1.03
+        },
+        "localOrigin": {
+          "x": -1,
+          "y": 0,
+          "z": -11
+        }
+      },
+      "sourceTriangles": 30988,
+      "sourceNormalsAndIndices": "preserved",
+      "authoredClosure": {
+        "boundaryEdges": 954,
+        "sideTriangles": 1908,
+        "bottomTriangles": 30988,
+        "bottomY": -0.738,
+        "material": "ridge / light stratified stone",
+        "sourceBoundaryPinches": [],
+        "manifold": true,
+        "normals": "runtime computed, not original source normals"
+      },
+      "placementSites": 26,
+      "walkingSites": 892,
+      "edges": 1698,
+      "ports": [
+        {
+          "id": "south-entry",
+          "siteId": "1,5",
+          "facing": 1,
+          "cell": {
+            "x": 1,
+            "z": 5
+          },
+          "point": {
+            "x": 1,
+            "y": 0.465535448,
+            "z": 5
+          }
+        },
+        {
+          "id": "north-entry",
+          "siteId": "8,1",
+          "facing": 3,
+          "cell": {
+            "x": 8,
+            "z": 1
+          },
+          "point": {
+            "x": 8,
+            "y": 1.842040716,
+            "z": 1
+          }
+        }
+      ],
+      "bounds": {
+        "min": {
+          "x": 0.40414114,
+          "y": 0.122337566,
+          "z": 0.07
+        },
+        "max": {
+          "x": 14.75,
+          "y": 2.21640713,
+          "z": 5.479563684
+        }
+      }
+    }
+  ],
+  "status": {
+    "visual": "HOLD",
+    "rough": true,
+    "acquisition": "diagnostic only",
+    "independentObservers": 0
+  },
+  "limitations": [
+    "Top triangles retain the original source material-region boundary, including its straight interior cuts.",
+    "Sides and bottom are newly authored closure from the real top boundary; original whole-island coast is not duplicated.",
+    "Harbor retains one source boundary pinch: two bank side fans meet on a vertical line. There are no open edges, but this closure is not a manifold solid.",
+    "Closure normals are computed by the existing bank renderer. Port connectors and render/guard review belong to the composer integration."
+  ]
+}

@@ -1,0 +1,494 @@
+{
+  "scope": "Actual GrowingLife.sync in four visual variants; no motion sweep, no geometry/guard threshold change. Temporary export only adds triangle mesh identity.",
+  "candidate": "/private/tmp/sansu-authored-whole-c5/candidate",
+  "worldRevision": "authored-cove:b9c853b15f0b4d15",
+  "completed": true,
+  "inputsUnchanged": true,
+  "rows": [
+    {
+      "name": "baseline",
+      "walkable": 1357,
+      "reachable": 1315,
+      "ownersReachable": 35,
+      "excluded": 113,
+      "blockedPoints": 69,
+      "blockedEdges": 34,
+      "poses": {
+        "checked": 9,
+        "evacuations": 0,
+        "unplaced": 0
+      }
+    },
+    {
+      "name": "forest-only",
+      "walkable": 1357,
+      "reachable": 1315,
+      "ownersReachable": 35,
+      "excluded": 113,
+      "blockedPoints": 69,
+      "blockedEdges": 34,
+      "poses": {
+        "checked": 9,
+        "evacuations": 0,
+        "unplaced": 0
+      }
+    },
+    {
+      "name": "gallery-only",
+      "walkable": 1324,
+      "reachable": 415,
+      "ownersReachable": 13,
+      "excluded": 146,
+      "blockedPoints": 91,
+      "blockedEdges": 41,
+      "poses": {
+        "checked": 9,
+        "evacuations": 0,
+        "unplaced": 0
+      }
+    },
+    {
+      "name": "both",
+      "walkable": 1324,
+      "reachable": 415,
+      "ownersReachable": 13,
+      "excluded": 146,
+      "blockedPoints": 91,
+      "blockedEdges": 41,
+      "poses": {
+        "checked": 9,
+        "evacuations": 0,
+        "unplaced": 0
+      }
+    }
+  ],
+  "forestMatchesBaseline": {
+    "walkable": true,
+    "reached": true
+  },
+  "bothMatchesGallery": {
+    "walkable": true,
+    "reached": true
+  },
+  "newlyExcludedByGallery": [
+    "4.75,-8.25",
+    "5,-8.25",
+    "5.25,-8.25",
+    "4.75,-8",
+    "5,-8",
+    "5.25,-8",
+    "5.5,-8",
+    "4.75,-7.75",
+    "5,-7.75",
+    "5.25,-7.75",
+    "4.75,-7.5",
+    "2.75,-7.25",
+    "3,-7.25",
+    "3.25,-7.25",
+    "3.5,-7.25",
+    "3.75,-7.25",
+    "4,-7.25",
+    "4.25,-7.25",
+    "4.5,-7.25",
+    "4.75,-7.25",
+    "3,-7",
+    "3.25,-7",
+    "3.5,-7",
+    "3.75,-7",
+    "4,-7",
+    "4.25,-7",
+    "4.5,-7",
+    "2.75,-6.75",
+    "3,-6.75",
+    "3.25,-6.75",
+    "4.25,-6.75",
+    "3,-6.5",
+    "3.25,-6.5"
+  ],
+  "firstMissingConnections": [
+    {
+      "owner": "p5",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 9,
+        "z": -8.25
+      }
+    },
+    {
+      "owner": "p6",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 7,
+        "z": -0.25
+      }
+    },
+    {
+      "owner": "p7",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 9.75,
+        "z": -1
+      }
+    },
+    {
+      "owner": "p8",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 12,
+        "z": 0.75
+      }
+    },
+    {
+      "owner": "p9",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 8,
+        "z": 0.75
+      }
+    },
+    {
+      "owner": "l11",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 4,
+        "z": -9.75
+      }
+    },
+    {
+      "owner": "l13",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 4,
+        "z": -7.25
+      }
+    },
+    {
+      "owner": "l16",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 6,
+        "z": -10
+      }
+    },
+    {
+      "owner": "l17",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 8.5,
+        "z": -3.25
+      }
+    },
+    {
+      "owner": "l18",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 10,
+        "z": -4.75
+      }
+    },
+    {
+      "owner": "l19",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 11,
+        "z": -3.25
+      }
+    },
+    {
+      "owner": "l20",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 4.75,
+        "z": -10
+      }
+    },
+    {
+      "owner": "l21",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 4.75,
+        "z": -10
+      }
+    },
+    {
+      "owner": "l22",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 7.5,
+        "z": -10
+      }
+    },
+    {
+      "owner": "l23",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 7.5,
+        "z": -10
+      }
+    },
+    {
+      "owner": "l24",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 7,
+        "z": -8
+      }
+    },
+    {
+      "owner": "l26",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 10,
+        "z": -7.25
+      }
+    },
+    {
+      "owner": "l27",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 12,
+        "z": -3.25
+      }
+    },
+    {
+      "owner": "l31",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 7.5,
+        "z": -3.25
+      }
+    },
+    {
+      "owner": "l32",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 8.75,
+        "z": -2
+      }
+    },
+    {
+      "owner": "l34",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 7.25,
+        "z": -5.25
+      }
+    },
+    {
+      "owner": "l35",
+      "firstMissingIndex": 44,
+      "from": {
+        "x": 3.5,
+        "z": -6.75
+      },
+      "to": {
+        "x": 3.5,
+        "z": -7
+      },
+      "baselineApproach": {
+        "x": 8,
+        "z": -5.25
+      }
+    }
+  ],
+  "lostOwners": [
+    "p5",
+    "p6",
+    "p7",
+    "p8",
+    "p9",
+    "l11",
+    "l13",
+    "l16",
+    "l17",
+    "l18",
+    "l19",
+    "l20",
+    "l21",
+    "l22",
+    "l23",
+    "l24",
+    "l26",
+    "l27",
+    "l31",
+    "l32",
+    "l34",
+    "l35"
+  ],
+  "reportSha256": "35eea4b420ffeb34e4769e0c2719763eedeff22e87a919137e1754b2b384984e",
+  "files": {
+    "diagnose.mjs": "28c7a3b73513770d15280f1073b442d575b436449c271569ad86a9dcb53b0c0a",
+    "exports.ts": "deafa281ac6e21226da90fef64b902ac14481c2f0bd52f9f1f70f0233ac78776",
+    "diagnostic-instrumentation.txt": "cf5e10704ef13463529b6568a0d23e35b63e036d8cdb6768c9970028f0d04bea",
+    "first-run.log.txt": "23b413f50b63d80155928e3dfc0eef134c620519d3401af4fe90bef61c2394ad"
+  },
+  "limitation": "Single sync per variant with actual current actors; no motion sweep, no source/art acceptance. Contact examples capped at 24 per edge. Existing floor and all guard thresholds unchanged. No shared source edit."
+}

@@ -1,0 +1,123 @@
+"""Exact stage1 helper definitions; configured by stage2 builder. No execution entrypoint."""
+import bpy
+import hashlib
+import math
+import struct
+from mathutils import Matrix, Vector
+from mathutils.bvhtree import BVHTree
+
+def mat(values): return Matrix(tuple(tuple(values[column * 4 + row] for column in range(4)) for row in range(4)))
+
+
+def smooth(t):
+    t = max(0.0, min(1.0, t))
+    return t * t * (3 - 2 * t)
+
+
+def fixed_digest(obj):
+    h = hashlib.sha256()
+    for vertex in obj.data.vertices: h.update(struct.pack('<3f', *vertex.co))
+    for loop in obj.data.loops: h.update(struct.pack('<I', loop.vertex_index))
+    for normal in obj.data.corner_normals: h.update(struct.pack('<3f', *normal.vector))
+    for row in obj.matrix_world: h.update(struct.pack('<4d', *row))
+    return h.hexdigest()
+
+
+def world_matrix(owner_id): return mat(BINDINGS[owner_id]['sourceToAuthoredMatrix'])
+
+
+def source_anchor(owner_id):
+    species = STUDY['owners'][owner_id]['species']
+    if species == 'willow':
+        return Vector(STUDY['anchors']['willow']['crownRecipeCenterGltf'])
+    if species == 'birch':
+        # Exactly the source recipe root of its three branches; not node origin.
+        tip = STUDY['anchors']['birch']['crownOriginAndRecipeBranchTipAnchors'][0]['originGltf']
+        return Vector((-7.5, tip[1] - 3.6 * .45, -10.9))
+    return Vector((-11.3, STUDY['owners'][owner_id]['pivotSourceGltf'][1], -9.3))
+
+
+def jacobian(field, point):
+    epsilon = 1e-5
+    columns = []
+    for axis in range(3):
+        offset = Vector((0, 0, 0)); offset[axis] = epsilon
+        columns.append((field(point + offset) - field(point - offset)) / (2 * epsilon))
+    return Matrix(tuple(tuple(columns[column][row] for column in range(3)) for row in range(3)))
+
+
+def deform_object(obj, field):
+    # Preserve source topology and source split normals transformed by the field.
+    local_to_world = BI @ obj.matrix_world
+    inverse = local_to_world.inverted()
+    normals_to_world = local_to_world.to_3x3().inverted().transposed()
+    normals_to_local = local_to_world.to_3x3().transposed()
+    old_corner_normals = [normal.vector.copy() for normal in obj.data.corner_normals]
+    transforms = []; maximum = 0; min_determinant = float('inf')
+    for vertex in obj.data.vertices:
+        point = local_to_world @ vertex.co
+        target = field(point)
+        derivative = jacobian(field, point)
+        determinant = derivative.determinant()
+        assert determinant > .15, f'Folded field at {obj.name}: {determinant}'
+        min_determinant = min(min_determinant, determinant)
+        transforms.append(normals_to_local @ derivative.inverted().transposed() @ normals_to_world)
+        maximum = max(maximum, (target - point).length)
+        vertex.co = inverse @ target
+    obj.data.update()
+    normals = [(transforms[loop.vertex_index] @ normal).normalized() for loop, normal in zip(obj.data.loops, old_corner_normals)]
+    obj.data.normals_split_custom_set(normals)
+    return {'name': obj.name, 'ownerId': obj['ownerId'], 'role': obj['forestRole'],
+            'maxWorldDisplacement': maximum, 'minimumSampledJacobianDeterminant': min_determinant,
+            'vertices': len(obj.data.vertices), 'polygons': len(obj.data.polygons)}
+
+
+def world_bvh(obj):
+    matrix = BI @ obj.matrix_world
+    vertices = [matrix @ vertex.co for vertex in obj.data.vertices]
+    return BVHTree.FromPolygons(vertices, [list(poly.vertices) for poly in obj.data.polygons], all_triangles=False), vertices
+
+
+def inside_closed(tree, point):
+    # Two non-axis rays reject ambiguous parity instead of silently assuming
+    # that a bounding-box/recipe center lies inside a real source volume.
+    answers = []
+    for raw in [(1, .371, .619), (.283, 1, .517)]:
+        direction = Vector(raw).normalized(); origin = point.copy(); count = 0
+        for _ in range(128):
+            hit, _, _, _ = tree.ray_cast(origin, direction, 100)
+            if hit is None: break
+            count += 1; origin = hit + direction * 1e-5
+        else: raise AssertionError('Ambiguous source volume parity')
+        answers.append(count % 2 == 1)
+    assert answers[0] == answers[1], 'Source volume ray parity disagrees; inspect the mesh before joining'
+    return answers[0]
+
+
+def bezier(a, b, c, d, t): return a * (1 - t) ** 3 + b * (3 * (1 - t) ** 2 * t) + c * (3 * (1 - t) * t * t) + d * t ** 3
+
+
+def add_views():
+    scene = bpy.context.scene
+    scene.render.engine = 'CYCLES'; scene.cycles.samples = 24; scene.cycles.device = 'CPU'; scene.cycles.use_denoising = True
+    scene.world = bpy.data.worlds.new('Study source environment')
+    scene.world.use_nodes = True
+    background = scene.world.node_tree.nodes.get('Background'); background.inputs['Color'].default_value = (.055, .20, .26, 1); background.inputs['Strength'].default_value = .7
+    for name, location, energy, size in [('key', (2, -6, 17), 1800, 10), ('fill', (15, 1, 11), 1000, 12)]:
+        data = bpy.data.lights.new(name, 'AREA'); data.energy = energy; data.shape = 'DISK'; data.size = size
+        obj = bpy.data.objects.new(name, data); scene.collection.objects.link(obj); obj.location = location
+        obj.rotation_euler = (Vector((5, 4, 1)) - obj.location).to_track_quat('-Z', 'Y').to_euler()
+    for item in STUDY['evidence']:
+        camera = item['camera']; data = bpy.data.cameras.new(item['file']); data.type = 'ORTHO'
+        data.ortho_scale = 2 / camera['projectionMatrix'][0]
+        obj = bpy.data.objects.new('SOURCE camera ' + item['file'], data); scene.collection.objects.link(obj)
+        translate = Matrix.Translation(Vector((camera['center'], 0, 2)))
+        obj.matrix_world = B @ translate @ mat(camera['matrixWorld'])
+        obj['evidenceSha256'] = item['sha256']; obj['sourceOnly'] = True
+        if 'whole' in item['file']:
+            scene.camera = obj
+            scene.render.resolution_x = 1280
+            scene.render.resolution_y = round(1280 * camera['projectionMatrix'][0] / camera['projectionMatrix'][5])
+    scene.render.resolution_percentage = 100
+    scene['runtimeIntegrated'] = False; scene['independentObservers'] = 0
+    scene['renderLimitations'] = 'Owner layer only/no residents; Blender lighting/transmission/ocean differ; ripple line roundtrip differs; no runtime or art acceptance'

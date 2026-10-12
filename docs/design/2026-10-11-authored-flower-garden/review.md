@@ -1,0 +1,9 @@
+# source reviewと最終修正
+
+2026-10-12、実装担当とは別のread-only reviewerが、owner選択・床・旧描画／利用・住人の退避／復帰・材質の解放を確認した。browserやcoreをこのreviewerは実行していない。
+
+具体的な指摘は一件。`GrowingWorld`の花factory用dynamic importを待っている間にhostを閉じると、componentのrelease後に材質を生成し、その後でdisposerを登録していた。生成前へ `if (released) return` を追加した。解放ライフサイクルの欠落であり、GPUにuploadされたメモリの漏れは実証していない。
+
+元のowner IDとcellは読取りだけで、native batchingから除いた株とplace traversalが既存の選択anchorを保持する。通行検査は元のwalk setのコピーを絞り、worldの床とgrantを変更しない。legacyではground判定がtrueで元の配置と利用fallbackを保つ。拒否した新しい利用姿勢はreceiptを発行せず、到達点が空なら同じactorを非表示に保ち、範囲の復旧時に戻す。これらに追加の具体的な回帰は見つからなかった。
+
+指摘時点のsource固定回帰c11は停止し、専用process groupの終了を確認してからsourceを修正した。[中断の記録](failures/README.md)は合格に数えない。修正後のfocused、core、実browser回帰を別出力へ保存し、最終sourceを照合する。条件分岐を写すだけのテストは追加せず、既存の実rig／利用／geometry解放検査と、本体の実host切替旅程で確認する。

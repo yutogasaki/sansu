@@ -1,0 +1,64 @@
+"""Classify the saved Float32 parent-recomposition error; never relax 1e-6.
+
+This is an art-diagnostic continuation permission, not a geometry acceptance
+predicate. Baseline, source-oracle and final hanging-leaf candidate may each receive that
+permission under the same conditions; their labels and errors stay separate.
+"""
+import math
+
+WORLD_LIMIT = 1e-6
+
+
+def classify(label, before, after, predicted, before_errors, after_errors):
+    finite = bool(before_errors) and len(before_errors) == len(after_errors)
+    finite = finite and all(math.isfinite(e) and e >= 0 for e in [*before_errors, *after_errors])
+    finite = finite and all(math.isfinite(v) for state in (before, after)
+                            for key in ('world', 'basis', 'parentInverse', 'parentWorld')
+                            if state[key] is not None for row in state[key] for v in row)
+    same_parent = all(before[k] == after[k] for k in ('basis', 'parentInverse', 'parentWorld'))
+    same_linear = all(before['world'][i][j] == after['world'][i][j]
+                      for i in range(3) for j in range(3))
+    same_homogeneous = before['world'][3] == after['world'][3] == [0., 0., 0., 1.]
+    translation = [after['world'][i][3] - before['world'][i][3] for i in range(3)]
+    linear_delta = [[after['world'][i][j] - before['world'][i][j] for j in range(3)] for i in range(3)]
+    strict = finite and max(after_errors) <= WORLD_LIMIT
+    checks = {'finiteInputs': finite,
+              'diagnosticCloneKindAllowed': label in ('baseline', 'source-oracle', 'candidate'),
+              'beforeWorldWithinUnchangedBound': finite and max(before_errors) <= WORLD_LIMIT,
+              'localAndParentExactlyUnchanged': same_parent,
+              'affineHomogeneousRowUnchanged': same_homogeneous,
+              'evaluatedEqualsFloat32ParentProduct': predicted == after['world'],
+              'worldMatrixActuallyChanged': before['world'] != after['world']}
+    precision_hold = not strict and all(checks.values())
+    return {'strictWorldGeometryGate': strict, 'worldToleranceUnchanged': WORLD_LIMIT,
+            'diagnosticContinuationAllowed': strict or precision_hold,
+            'precisionHold': precision_hold,
+            'reason': ('within unchanged bound' if strict else
+                       'verified parent Float32 recomposition; strict world gate remains false'
+                       if precision_hold else 'unclassified world failure: hard stop'),
+            'precisionHoldKind': (('translation-only' if same_linear else 'linear-recomposition') if precision_hold else None),
+            'linearExactlyUnchanged': same_linear,
+            'linearDeltaBlender': linear_delta,
+            'maximumLinearComponentDifference': max(abs(v) for row in linear_delta for v in row),
+            'linearDifferenceZeroRequiredForDiagnosticContinuation': False,
+            'qualification': checks, 'translationDeltaBlender': translation,
+            'beforeWorldErrors': before_errors, 'afterWorldErrors': after_errors,
+            'beforeMaxWorldError': max(before_errors, default=0.),
+            'afterMaxWorldError': max(after_errors, default=0.)}
+
+
+def decision(assembled, immutable, first_failure, precision_holds):
+    # This builder cannot issue an accepted geometry/contact/roundtrip result,
+    # including when no leaf happens to need diagnostic continuation.
+    return {'status': 'HOLD-source-shape-diagnostic',
+            'diagnosticAssemblySaved': bool(assembled),
+            'strictWorldGeometryGate': False,
+            'all101DeformationsComplete': False,
+            'roundtripAll128Passed': False,
+            'roundtripStatus': 'NOT RUN in this shape-only diagnostic',
+            'precisionHoldCount': len(precision_holds),
+            'normalGeometryAccepted': False, 'terminalSuccess': False,
+            'wholeViewEligibleForRootDecision': False,
+            'failedShapeOnly': bool(assembled and immutable),
+            'rootDecisionRequired': True,
+            'diagnosticProcessCompleted': bool(assembled and immutable and first_failure is None)}

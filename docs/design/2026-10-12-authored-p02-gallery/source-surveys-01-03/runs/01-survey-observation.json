@@ -1,0 +1,69 @@
+{
+  "stage": "single prepared measure invocation",
+  "command": [
+    "python3",
+    "supervise.py",
+    "--scheduled",
+    "--seconds",
+    "180",
+    "--rss-mib",
+    "2560",
+    "--log",
+    "runs/01-survey.log.txt",
+    "--",
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python",
+    "source-study.py",
+    "--",
+    "measure",
+    "--scheduled",
+    "--out",
+    "runs/01-survey"
+  ],
+  "startUtc": "2026-10-12T03:51:33.580133+00:00",
+  "endUtc": "2026-10-12T03:51:49.406751+00:00",
+  "timingMeaning": "supervisor process launch and observed exit; Blender observed timestamps separately",
+  "supervisorPid": 19409,
+  "ownedBlenderProcesses": [
+    {
+      "pid": 19411,
+      "parentPid": 19409,
+      "firstObservedUtc": "2026-10-12T03:51:34.168586+00:00",
+      "command": "/Applications/Blender.app/Contents/MacOS/Blender",
+      "lastObservedUtc": "2026-10-12T03:51:48.357394+00:00",
+      "peakObservedRssBytes": 1007091712
+    }
+  ],
+  "supervisorExitCode": 0,
+  "sourceConcurrencyWindow": {
+    "path": "/private/tmp/sansu-authored-shoulder-c2/source-concurrency-window.json",
+    "sha256": "3a7cf41b9325debca389141c7f63ef1064c9fff2c36687ea8edb9afa033c7984"
+  },
+  "inputShaBefore": {
+    "context": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+    "leftTrees": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+    "contextManifest": "3c3fcd13bf4867946a0f393769f852cb938286329dfa2e11dac3afe74796bda2",
+    "forestStudy": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+    "sourceBlend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "sourceGlb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "benchmark": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+    "envelope": "444beab3c5b078799e974424e225e0a2e6742d6b99ad7e94be5edb54088af1db"
+  },
+  "inputShaAfter": {
+    "context": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+    "leftTrees": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+    "contextManifest": "3c3fcd13bf4867946a0f393769f852cb938286329dfa2e11dac3afe74796bda2",
+    "forestStudy": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+    "sourceBlend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "sourceGlb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "benchmark": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+    "envelope": "444beab3c5b078799e974424e225e0a2e6742d6b99ad7e94be5edb54088af1db"
+  },
+  "inputsUnchanged": true,
+  "automaticRetry": false,
+  "buildOrRenderExecuted": false,
+  "otherProcessesStoppedOrChanged": false
+}

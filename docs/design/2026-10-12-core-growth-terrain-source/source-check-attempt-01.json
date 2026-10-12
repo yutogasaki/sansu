@@ -1,0 +1,144 @@
+{
+  "scope": "Source/domain diagnostic only; synthetic four owner cells, no UI commands or actor-obstruction acceptance",
+  "pass": true,
+  "cases": {
+    "north": {
+      "plan": {
+        "revision": "growth-terrain:9645f8e22cd7ac6e",
+        "upstreamRevision": "1152b0c13291a433",
+        "catalogRevision": "a85c8555f05c8d4ce455dbe88a2d931d7c3d362944360e88585d3895539719ed",
+        "assemblies": [
+          {
+            "id": "native05-inlet-core:growth-terrain:north",
+            "districtId": "native05-inlet-core",
+            "ownerIds": [
+              "source-0",
+              "source-1",
+              "source-2",
+              "source-3"
+            ],
+            "socketId": "north",
+            "shape": "seaward"
+          }
+        ],
+        "connections": []
+      },
+      "addedSites": 59,
+      "reachedAdded": 59,
+      "rights": 73,
+      "outerRoute": false,
+      "bounds": {
+        "min": {
+          "x": -0.65,
+          "y": -0.128250011,
+          "z": -10.93
+        },
+        "max": {
+          "x": 17.932042941888188,
+          "y": 2.21640713,
+          "z": 2.460312457
+        }
+      }
+    },
+    "east": {
+      "plan": {
+        "revision": "growth-terrain:bddc369a7961401e",
+        "upstreamRevision": "1152b0c13291a433",
+        "catalogRevision": "a85c8555f05c8d4ce455dbe88a2d931d7c3d362944360e88585d3895539719ed",
+        "assemblies": [
+          {
+            "id": "native05-inlet-core:growth-terrain:east",
+            "districtId": "native05-inlet-core",
+            "ownerIds": [
+              "source-0",
+              "source-1",
+              "source-2",
+              "source-3"
+            ],
+            "socketId": "east",
+            "shape": "seaward"
+          }
+        ],
+        "connections": []
+      },
+      "addedSites": 85,
+      "reachedAdded": 85,
+      "rights": 73,
+      "outerRoute": false,
+      "bounds": {
+        "min": {
+          "x": -0.65,
+          "y": -0.128250011,
+          "z": -10.93
+        },
+        "max": {
+          "x": 18.69473167872496,
+          "y": 2.21640713,
+          "z": 2.460312457
+        }
+      }
+    },
+    "loop": {
+      "plan": {
+        "revision": "growth-terrain:91209e3aed0ec8fe",
+        "upstreamRevision": "1152b0c13291a433",
+        "catalogRevision": "a85c8555f05c8d4ce455dbe88a2d931d7c3d362944360e88585d3895539719ed",
+        "assemblies": [
+          {
+            "id": "native05-inlet-core:growth-terrain:east",
+            "districtId": "native05-inlet-core",
+            "ownerIds": [
+              "source-0",
+              "source-1",
+              "source-2",
+              "source-3"
+            ],
+            "socketId": "east",
+            "shape": "seaward"
+          },
+          {
+            "id": "native05-inlet-core:growth-terrain:north",
+            "districtId": "native05-inlet-core",
+            "ownerIds": [
+              "source-0",
+              "source-1",
+              "source-2",
+              "source-3"
+            ],
+            "socketId": "north",
+            "shape": "seaward"
+          }
+        ],
+        "connections": [
+          {
+            "id": "native05-inlet-core:growth-connection:northeast-outer-shore",
+            "districtId": "native05-inlet-core",
+            "connectionId": "northeast-outer-shore",
+            "ownerIds": [
+              "source-0",
+              "source-1",
+              "source-2",
+              "source-3"
+            ]
+          }
+        ]
+      },
+      "addedSites": 187,
+      "reachedAdded": 187,
+      "rights": 73,
+      "outerRoute": true,
+      "bounds": {
+        "min": {
+          "x": -0.65,
+          "y": -0.128250011,
+          "z": -10.93
+        },
+        "max": {
+          "x": 18.69473167872496,
+          "y": 2.21640713,
+          "z": 2.460312457
+        }
+      }
+    }
+  }
+}

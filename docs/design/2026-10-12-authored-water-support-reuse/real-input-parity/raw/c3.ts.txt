@@ -1,0 +1,28 @@
+import fs from 'node:fs';
+import zlib from 'node:zlib';
+import crypto from 'node:crypto';
+import { compileWorldDefinition, isWorldWalkEdgeSupported } from "/private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/worldDefinition.ts";
+import { composeAuthoredWaterWorld } from "/private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterWorld.ts";
+import { composeAuthoredShoulderWorld } from "/private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredShoulderWorld.ts";
+import { withNative05WaterCarvingScope } from "/private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterCarving.ts";
+const repo="/private/tmp/sansu-authored-shoulder-c3/candidate";
+const scenario=process.argv[2];
+const fixtures={wide27:'authored-water-fixture.json',source32:'authored-flower-reference-mature.json',shoulder35:'authored-shoulder-reference-mature.json'};
+if(!(scenario in fixtures)) throw Error('Unknown scenario');
+const hash=(value)=>crypto.createHash('sha256').update(typeof value==='string'||Buffer.isBuffer(value)?value:JSON.stringify(value)).digest('hex');
+const files=[];
+function read(name,gzip=false){const path=repo+'/prototypes/place-qa/'+name;const bytes=fs.readFileSync(path);files.push({path,sha256:hash(bytes)});return JSON.parse((gzip?zlib.gunzipSync(bytes):bytes).toString());}
+const fixture=read(fixtures[scenario]);
+const definition=read(scenario==='wide27'?'native05-world.json.gz':'native05-world-source-shading.json.gz',true);
+if(fixture.worldId!==definition.id||fixture.synthetic!==true)throw Error('Fixture/world mismatch');
+let base=withNative05WaterCarvingScope(compileWorldDefinition(definition));
+if(scenario==='shoulder35')base=composeAuthoredShoulderWorld(base,read('authored-shoulder-profile.json.gz',true));
+const stateBefore=hash(fixture.state),baseBefore=hash(base.definition);
+const result=composeAuthoredWaterWorld(fixture.state,base);
+const siteMap=new Map(result.world.sites.map(site=>[JSON.stringify([site.ref.districtId,site.ref.siteId]),site.cell]));
+const queries=result.world.sites.map(site=>({ref:site.ref,floor:result.world.floorAt(site.cell),anchor:result.world.anchorAt(site.cell)}));
+const sourceWalk=base.definition.edges.filter(edge=>edge.allows.includes('walk')).map(edge=>({edge,supported:isWorldWalkEdgeSupported(result.world,siteMap.get(JSON.stringify([edge.from.districtId,edge.from.siteId])),siteMap.get(JSON.stringify([edge.to.districtId,edge.to.siteId])))}));
+if(stateBefore!==hash(fixture.state)||baseBefore!==hash(base.definition))throw Error('Input mutation');
+const report={schema:'sansu-water-support-real-input-parity-v1',repo,scenario,node:process.version,synthetic:true,notPerformanceEvidence:true,inputFiles:files,inputStateSha256:stateBefore,baseDefinitionSha256:baseBefore,owners:['plots','landmarks','keepsakes'].reduce((n,k)=>n+fixture.state[k].length,0),bridgeCount:result.plan.bridges.length,bridges:result.plan.bridges.map(b=>({ownerId:b.ownerId,restoredEdgeIds:b.restoredEdgeIds})),sites:queries.length,sourceWalkEdges:sourceWalk.length,output:{definitionSha256:hash(result.world.definition),planSha256:hash(result.plan),siteQuerySha256:hash(queries),sourceWalkQuerySha256:hash(sourceWalk)}};
+fs.writeFileSync(process.argv[3],JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify({scenario,owners:report.owners,bridges:report.bridgeCount,sites:queries.length,sourceWalkEdges:sourceWalk.length,output:report.output}));

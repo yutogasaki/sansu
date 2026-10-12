@@ -1,0 +1,75 @@
+{
+  "status": "Source build and one whole view completed; art/strict geometry/contact/runtime remain HOLD",
+  "candidate": "forest-crown-organic-boughs-stage4-HOLD-parent-recomposition-scope-v4",
+  "build": {
+    "ownedPid": 74004,
+    "startedAtUtc": "2026-10-12T07:39:57.040053+00:00",
+    "finishedAtUtc": "2026-10-12T07:41:00.704734+00:00",
+    "elapsedSeconds": 63.664278791,
+    "exitCode": 0,
+    "peakObservedRssBytes": 1091567616,
+    "ownedProcessExited": true,
+    "ownedProcessGroupGone": true,
+    "inputCount": 333,
+    "inputsUnchanged": true
+  },
+  "view": {
+    "ownedPid": 75353,
+    "startedAtUtc": "2026-10-12T07:43:26.758475+00:00",
+    "finishedAtUtc": "2026-10-12T07:43:40.661898+00:00",
+    "elapsedSeconds": 13.903265082999999,
+    "exitCode": 0,
+    "peakObservedRssBytes": 2526314496,
+    "ownedProcessExited": true,
+    "ownedProcessGroupGone": true,
+    "inputCount": 344,
+    "inputsUnchanged": true
+  },
+  "sourceRoles": 128,
+  "derivedBoughs": 6,
+  "fixedContextMeshes": 314,
+  "activeSceneMeshCount": 448,
+  "original442AndMaterialsUnchanged": true,
+  "unknownForestRoleOrMissingObjectCount": 0,
+  "preJoint128SavedSeparately": true,
+  "normalRoundtripAll101StrictPass": false,
+  "precisionHolds": {
+    "count": 13,
+    "byLabel": {
+      "candidate": 3,
+      "baseline": 5,
+      "source-oracle": 5
+    },
+    "byKind": {
+      "translation-only": 9,
+      "linear-recomposition": 4
+    }
+  },
+  "primaryMeasurements": 31,
+  "certifiedContactPass": false,
+  "geometryMaterialRenderRawParity": true,
+  "onlyRenderCompatibilityChange": {
+    "object": "growing-reachable-paths",
+    "property": "visible_shadow",
+    "duringRender": false,
+    "restored": true,
+    "reason": "match actual Three castShadow=false; root source-only A/B confirmed dotted-row shadow contribution"
+  },
+  "sourceSavedByRenderer": false,
+  "runtimeIntegrated": false,
+  "independentObservers": 0,
+  "performanceEvidence": false,
+  "comparison": "Author viewed same-camera corrected stage2 and approved native05. Crown grouping improved from spindly stage3, but grove still reads as separate large leaf caps rather than layered enclosing forest. Art HOLD; no further edits/renders or precision diagnostics.",
+  "files": {
+    "attempt-hold-01/complete128-HOLD.blend": "d38a2c8dcb0b0b88889675b4427d0384713c17019b2f943fbec478a114f939ce",
+    "attempt-hold-01/HOLD-diagnostic-assembly-after-joints.blend": "bcaa5329e2db91398adbf1a56a66ebe2bd9df278d5bc3fafee0b870b356b1d66",
+    "attempt-hold-01/HOLD-diagnostic-assembly-after-joints-scope-classification.json": "683d178e47d726e84cec8e85e6349a240dd71117fffe0ec020def6c0dbde4c41",
+    "attempt-hold-01/shape-manifest.json": "7902b6f4a7b6470c23527016043f682a440a0c7051c7bb7c97f1dc705f4e9ae4",
+    "execution-hold-01/result.json": "7ece90a02eec470fd711d702f223f89b7ad2a43a2b20c38e549ca4dcf480e488",
+    "whole-view-v1/attempt-view-01/HOLD-source-whole.png": "6b3b71e990366dfdb76fddc3a74e81f470c99a651eaa834c1b421aff4c0eee05",
+    "whole-view-v1/attempt-view-01/render-manifest.json": "aab5fa4b9856d7c8a80e43b476b533a7d57bf126a52d78a265e8dc6d6516872d",
+    "whole-view-v1/attempt-view-01/geometry-material-before.json": "957f1a8f187ce21ca16200b0c9363fffe26429762f20f3fc6b0d5870021619fd",
+    "whole-view-v1/attempt-view-01/geometry-material-after.json": "957f1a8f187ce21ca16200b0c9363fffe26429762f20f3fc6b0d5870021619fd",
+    "whole-view-v1/execution-view-01/result.json": "3fbee48ba24c7a2bd8dbded8f8dfc0d700887bac183aefaf7777a3a113e77746"
+  }
+}

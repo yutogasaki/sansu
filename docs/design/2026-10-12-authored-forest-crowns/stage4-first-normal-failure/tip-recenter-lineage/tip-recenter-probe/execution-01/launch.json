@@ -1,0 +1,17 @@
+{
+  "startedAtUtc": "2026-10-12T05:43:23.834234+00:00",
+  "ownedPid": 46573,
+  "ownedPgid": 46573,
+  "readinessSHA": "878f5c2063f9427612fbe95b9e531c1197d85f5140cd381d6d918470c502d82a",
+  "effectiveThreads": 2,
+  "command": [
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/tip-recenter-probe/probe.py"
+  ]
+}

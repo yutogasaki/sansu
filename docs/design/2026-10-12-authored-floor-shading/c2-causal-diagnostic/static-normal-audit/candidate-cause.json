@@ -1,0 +1,181 @@
+{
+  "scope": "Candidate cause at one screenshot fine-line segment, not a proven full-line cause. Expected renderer offsets must be validated against actual captured renderer buffers before intervention.",
+  "inputSha256": {
+    "src/components/island/growing/native/authoredGrowingGround.ts": "98f92585ea60c361c440c602f77208ee978cedbf662c21c28927956adb4db32f",
+    "src/domain/growingIsland/worldDefinition.ts": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+    "src/domain/growingIsland/authoredWaterWorld.ts": "7640bd96ac4eb6797f46862f1b9a223d575f3bc9b51ae05f41351865cce2e486",
+    "src/components/island/growing/sceneLayout.ts": "57aa76da0cd4ed93a00c077b0020db94fc6bb2de8913363e3ff91c9b8c39144d",
+    "tools/build-authored-island-world.mjs": "f2118d254d9d6b42169f490f2bcc90626cfa7daee149a84cb7a9d048e3c1f2d6",
+    "prototypes/place-qa/native05-world-source-shading.json.gz": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+    "node_modules/three/src/renderers/shaders/ShaderChunk/normal_vertex.glsl.js": "dc2bb76df6c6829d909b155f0936793c26b097394e0d43911eb51a3279696c9b",
+    "node_modules/three/src/renderers/shaders/ShaderChunk/normal_fragment_begin.glsl.js": "528bc133122cd63341c01e568b69a12034bfd6efb8ff031bb3d13e4bb09cbe2b",
+    "node_modules/three/src/renderers/shaders/ShaderChunk/lights_physical_fragment.glsl.js": "7dbd1c6b069716d31016ed4456424cd94ce381a9302dc8306166f72c71015c95"
+  },
+  "candidate": "At pixel ~727,615 the closest source-floor triangle is front-facing geometrically but its interpolated smooth shading normal points away from the camera. A steep source ridge produces self-occlusion/lighting-normal mismatch without a split-normal seam at shared vertices.",
+  "triangles": [
+    {
+      "floor": "Island / continuous sculpted mature terrain:0",
+      "sourceTriangle": 36705,
+      "sourceVertexIndices": [
+        19456,
+        20205,
+        19457
+      ],
+      "expectedRendererIndexOffset": 118563,
+      "expectedRendererGlobalVertexIndices": [
+        23109,
+        23858,
+        23110
+      ],
+      "vertices": [
+        {
+          "cell": {
+            "x": 5.431822789,
+            "z": -4.858346109
+          },
+          "point": {
+            "x": 5.431822789,
+            "y": 0.621000026,
+            "z": -4.858346109
+          },
+          "normal": {
+            "x": 0.2623949944972992,
+            "y": 0.940682053565979,
+            "z": -0.2150959074497223
+          }
+        },
+        {
+          "cell": {
+            "x": 5.125295007,
+            "z": -4.858901863
+          },
+          "point": {
+            "x": 5.125295007,
+            "y": 0.567419897,
+            "z": -4.858901863
+          },
+          "normal": {
+            "x": -0.616280198097229,
+            "y": 0.6913778185844421,
+            "z": -0.37708789110183716
+          }
+        },
+        {
+          "cell": {
+            "x": 5.128775924,
+            "z": -4.854654961
+          },
+          "point": {
+            "x": 5.128775924,
+            "y": 0.572651706,
+            "z": -4.854654961
+          },
+          "normal": {
+            "x": -0.6154077053070068,
+            "y": 0.7137088775634766,
+            "z": -0.3345041871070862
+          }
+        }
+      ],
+      "faceNormal": [
+        -0.11602757308228091,
+        0.6713771401519888,
+        -0.7319770064462221
+      ],
+      "faceViewDot": 0.07938316581584742
+    },
+    {
+      "floor": "Island / continuous sculpted mature terrain:0",
+      "sourceTriangle": 36710,
+      "sourceVertexIndices": [
+        20205,
+        19465,
+        19615
+      ],
+      "expectedRendererIndexOffset": 118578,
+      "expectedRendererGlobalVertexIndices": [
+        23858,
+        23118,
+        23268
+      ],
+      "vertices": [
+        {
+          "cell": {
+            "x": 5.125295007,
+            "z": -4.858901863
+          },
+          "point": {
+            "x": 5.125295007,
+            "y": 0.567419897,
+            "z": -4.858901863
+          },
+          "normal": {
+            "x": -0.616280198097229,
+            "y": 0.6913778185844421,
+            "z": -0.37708789110183716
+          }
+        },
+        {
+          "cell": {
+            "x": 5.12181409,
+            "z": -4.863148766
+          },
+          "point": {
+            "x": 5.12181409,
+            "y": 0.561739944,
+            "z": -4.863148766
+          },
+          "normal": {
+            "x": -0.614696741104126,
+            "y": 0.6678964495658875,
+            "z": -0.4195977449417114
+          }
+        },
+        {
+          "cell": {
+            "x": 4.818767226,
+            "z": -4.859457188
+          },
+          "point": {
+            "x": 4.818767226,
+            "y": -0.009024828,
+            "z": -4.859457188
+          },
+          "normal": {
+            "x": -0.4303896427154541,
+            "y": 0.8314799666404724,
+            "z": 0.3512915372848511
+          }
+        }
+      ],
+      "faceNormal": [
+        -0.878938149146178,
+        0.467288444662067,
+        0.09544233578867108
+      ],
+      "faceViewDot": -0.3578342595104337
+    }
+  ],
+  "probePixel": [
+    727,
+    615
+  ],
+  "interpolatedNormal": [
+    -0.611,
+    0.6972,
+    -0.3749
+  ],
+  "shadingNormalViewDot": -0.1672740379985722,
+  "physicalFaceViewDot": 0.07938316581584742,
+  "sourceAreaUnchangedByWaterCut": {
+    "lineWorldZ": [
+      -4.915,
+      -4.8
+    ],
+    "waterCentersZ": [
+      -9,
+      -8
+    ]
+  },
+  "nextCausalTest": "On the actual floor, confirm the listed triangle coordinates/index offsets first. Keep MeshStandardMaterial/PBR, vertex colors, light, shadow-off state, camera, geometry buffers and world state fixed. In a small ROI around this source ridge use a temporary fragment shader geometric normal (cross derivatives of vViewPosition) instead of interpolated vNormal, then restore. Capture before/after at the same view. This isolates the local smooth-normal term without disabling lighting or changing supporting geometry. Do not generalize to a repair or global smoothing."
+}

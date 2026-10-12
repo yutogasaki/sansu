@@ -1,0 +1,90 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "cwd": "/private/tmp/sansu-p02-gallery-source-study/east-v5-shape-view",
+  "commands": {
+    "whole": [
+      "python3",
+      "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/supervise.py",
+      "--scheduled",
+      "--seconds",
+      "60",
+      "--rss-mib",
+      "2560",
+      "--log",
+      "runs/01-whole.log.txt",
+      "--",
+      "/Applications/Blender.app/Contents/MacOS/Blender",
+      "-b",
+      "--threads",
+      "2",
+      "--python-exit-code",
+      "1",
+      "--python",
+      "render-coarse.py",
+      "--",
+      "--scheduled",
+      "--source",
+      "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/study.blend",
+      "--out",
+      "runs/01-whole",
+      "--view",
+      "whole"
+    ]
+  },
+  "scriptSha256": "f977df0427b45dbe43a9265f770ab4ceb80c8997a9811453a4c1be49ee6fc5a2",
+  "readmeSHA256": "66b848ca23ca7d239a175f969383cdbb0404b58c7204e4e2c2eebea68f74eb42",
+  "inputPaths": {
+    "sourceScene": "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/study.blend",
+    "study": "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/study.json",
+    "buildPreparation": "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/preparation.json",
+    "qa": "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/coarse-qa.json",
+    "topology": "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/direct-components-topology.json",
+    "treadParity": "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/tread-visible-parity.json",
+    "supportContacts": "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/new-stair-support-contacts.json",
+    "entryJoints": "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/current-entry-joints.json",
+    "lineage": "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/exposed-surface-lineage.json",
+    "originalRenderer": "/private/tmp/sansu-p02-gallery-source-study/east-v4-failed-shape-view/render-failed.py",
+    "supervisor": "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/supervise.py"
+  },
+  "inputSha256": {
+    "sourceScene": "d90bc6bd35f041d2431acf8a48ecb7dc541d5d03d35baaf244086fad38bcc666",
+    "study": "ee868c08b484953386ab271a624c70ab5ddd4e8f89cae8919d398f04f7dec32e",
+    "buildPreparation": "2925ad7ec636aa3cb1f8f9713d5d5be09d5c81d7d75a1a102afde87b8ca9b770",
+    "qa": "8d948621bb2fde90c0692231b5fd8fc4310920dbb58a70738a17f1752fbcd509",
+    "topology": "19d0e91f5e93a30d3544c43408c3a360b13494f206721406b46a510d0ad9c2f5",
+    "treadParity": "3465e1b5336e48dc973cda8baf519beb6877001c64ada2729064df591a724aec",
+    "supportContacts": "6dd9709e6bc60db5050696ecbe7e77029d20d3fa9988131c0b32af4be29975f1",
+    "entryJoints": "c196c27ab50a675f85b1fc0d6bd4cc404921ea998e0eb440004adc1bcf674663",
+    "lineage": "06e6f97c8379efa7694208681b8303d326db9889959f060b89947325e6bf65bb",
+    "originalRenderer": "6889d86f29ac383bc210ed04e711f171c260480189b1b534ae80b4eb4acae42e",
+    "supervisor": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb"
+  },
+  "staticChecks": {
+    "AST": true,
+    "lightingCameraEngineResolutionBlockByteIdenticalToPassedV4": true,
+    "existingBackgroundTypeLookup": true,
+    "noSaveModifierMeshOperation": true,
+    "fullMaterialMeshIdentityBeforeAfter": true,
+    "scope": "PREPARATION_ONLY_NOT_RENDER",
+    "onlyExactPathShadowOverride": true,
+    "allOtherShadowFlagsBeforeAfter": true
+  },
+  "resourceLimits": {
+    "threads": 2,
+    "seconds": 60,
+    "rssMiB": 2560,
+    "samples": 16,
+    "width": 1280
+  },
+  "outputLabel": "REAL_SIXTEEN_STAIR_COARSE_HOLD",
+  "noModelRepair": true,
+  "appOrRuntimeAcceptance": false,
+  "camera": "same exact fixed35 c1 whole source camera; lighting/camera block byte-identical",
+  "executionMetadata": "External observer records owned PID and observed UTC/RSS; source supervisor is immutable.",
+  "pathShadowCompatibility": {
+    "exactObject": "growing-reachable-paths",
+    "visible_shadow": false,
+    "onlyNonGeometryChangeBeyondPriorLightingCamera": "record before/after all mesh shadow flags",
+    "oldV4NotClaimedFalse": true
+  }
+}

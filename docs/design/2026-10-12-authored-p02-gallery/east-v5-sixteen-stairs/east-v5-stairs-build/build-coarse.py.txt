@@ -1,0 +1,425 @@
+"""Scheduled Blender-only bounded source study. No app modules or world compiler.
+Eastern coarse source build preparation. Raw HOLD remains; rendering is a separate scheduled command. Every invocation requires a new output directory.
+"""
+import argparse, hashlib, json, math, struct, sys, time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0,str(HERE))
+from entry_geometry import Terrain, ribbon_plan, solid_geometry, slope_report, EPS
+from terrain_connector import terrain_connector,closed_solid
+from donor_reference import read_references, bounds, transform_point, transform_bounds, compare_bounds, compare_matrix
+from build_checks import motion_band_contacts, root_cap_contacts
+from surface_assembly import exposed_tops,cap_in_actual_volume,box,intersects,compare_sections
+from entry_geometry import clip,polygon_area
+args = argparse.ArgumentParser()
+args.add_argument('stage', choices=['build'])
+args.add_argument('--scheduled', action='store_true')
+args.add_argument('--out', type=Path, required=True)
+opt = args.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
+assert opt.scheduled, 'Execution window must be scheduled by the parent task'
+assert not opt.out.exists(), 'Preserve all first failures; choose a fresh output directory'
+opt.out.mkdir(parents=True)
+import bpy
+from mathutils import Matrix, Vector
+from mathutils.bvhtree import BVHTree
+
+S = json.loads((HERE / 'study.json').read_text()); D = S['design']; TR = S['transform']
+sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+B = Matrix(((1,0,0,0),(0,0,-1,0),(0,1,0,0),(0,0,0,1))); BI = B.inverted()
+A = Matrix.Translation(Vector(TR['authoredOrigin'])) @ Matrix.Diagonal((TR['scale'],)*3+(1,)) @ Matrix.Translation(-Vector(TR['sourceGltfPivot']))
+started = time.monotonic()
+def dump(name, value): (opt.out / name).write_text(json.dumps(value, indent=2) + '\n')
+def verify_inputs():
+    got = {k:sha(v['path']) for k,v in S['inputs'].items()}
+    assert all(got[k] == v['sha256'] for k,v in S['inputs'].items()), 'Frozen source input changed'
+    for key,item in S['basis'].items():
+        assert sha(item['path'])==item['sha256'],'Frozen measured design basis changed: '+key
+    for key,item in {**S['v4Inputs'],**S['v5Inputs']}.items():
+        assert sha(HERE/item['path'])==item['sha256'],'Frozen v4 geometry/evidence changed: '+key
+    return got
+
+def verify_code():
+    manifest=json.loads((HERE/'preparation.json').read_text())
+    got={name:sha(HERE/name) for name in ['build-coarse.py','build_checks.py','study.json','entry_geometry.py','terrain_connector.py','donor_reference.py','surface_assembly.py','supervise.py']}
+    assert all(value==manifest['files'][name]['sha256'] for name,value in got.items()),'Prepared measurement code/config drifted'
+    return got
+
+def digest(obj):
+    h = hashlib.sha256()
+    for row in obj.matrix_world: h.update(struct.pack('<4d', *row))
+    if obj.type == 'MESH':
+        for v in obj.data.vertices: h.update(struct.pack('<3f', *v.co))
+        for loop in obj.data.loops: h.update(struct.pack('<I', loop.vertex_index))
+        for n in obj.data.corner_normals: h.update(struct.pack('<3f', *n.vector))
+        for m in obj.data.materials: h.update((m.name if m else '').encode())
+    return h.hexdigest()
+
+def vertices_faces(obj):
+    deps = bpy.context.evaluated_depsgraph_get(); ev = obj.evaluated_get(deps); mesh = ev.to_mesh()
+    try:
+        mesh.calc_loop_triangles(); matrix = BI @ ev.matrix_world
+        return [matrix @ v.co for v in mesh.vertices], [tuple(t.vertices) for t in mesh.loop_triangles]
+    finally: ev.to_mesh_clear()
+
+def matrix_rows(matrix): return [list(row) for row in matrix]
+
+def donor_snapshot(obj, reference, expected_matrix_gltf):
+    """Pair an evaluated mesh with its own evaluated matrix, never a stale pose."""
+    deps=bpy.context.evaluated_depsgraph_get();ev=obj.evaluated_get(deps);mesh=ev.to_mesh()
+    source_matrix=ev.matrix_world.copy()
+    try:
+        mesh.calc_loop_triangles()
+        local=[list(vertex.co) for vertex in mesh.vertices]
+        local_gltf=[transform_point(matrix_rows(BI),p) for p in local]
+        actual_world=[transform_point(matrix_rows(BI @ source_matrix),p) for p in local]
+        local_check=compare_bounds(bounds(local_gltf),reference['localBoundsGltf'],EPS)
+        matrix_check=compare_matrix(matrix_rows(BI @ source_matrix @ B),expected_matrix_gltf,EPS)
+        world_check=compare_bounds(bounds(actual_world),transform_bounds(expected_matrix_gltf,reference['localBoundsGltf']),EPS)
+        h=hashlib.sha256()
+        for point in local:
+            h.update(struct.pack('<3f',*point))
+        for triangle in mesh.loop_triangles:
+            h.update(struct.pack('<3I',*triangle.vertices))
+        record={'name':obj.name,'referenceName':reference['name'],'gltfNode':reference['gltfNode'],
+                'parent':obj.parent.name if obj.parent else None,'constraints':[c.type for c in obj.constraints],
+                'matrixBasis':matrix_rows(obj.matrix_basis),'matrixWorld':matrix_rows(obj.matrix_world),
+                'matrixParentInverse':matrix_rows(obj.matrix_parent_inverse),'evaluatedMatrixWorld':matrix_rows(source_matrix),
+                'evaluatedVertices':len(local),'evaluatedTriangles':len(mesh.loop_triangles),'localGeometrySha256':h.hexdigest(),
+                'localBoundsCheck':local_check,'sourceOrAuthoredMatrixCheck':matrix_check,'worldBoundsCheck':world_check,
+                'matches':not obj.parent and not obj.constraints and local_check['matches'] and matrix_check['matches'] and world_check['matches'],
+                'arithmetic':'bounds evaluated in double precision from captured Float32 mesh/matrix; unchanged EPS 1e-7'}
+        return record,source_matrix
+    finally: ev.to_mesh_clear()
+
+def tree(objects, local=False, provenance=False):
+    vertices, faces, sources = [], [], []
+    for obj in objects:
+        if obj.type != 'MESH': continue
+        if local:
+            corners = [BI @ obj.matrix_world @ Vector(p) for p in obj.bound_box]
+            if max(p.x for p in corners)<1.6 or min(p.x for p in corners)>5.4 or max(p.z for p in corners)<-10.8 or min(p.z for p in corners)>-6.8: continue
+        vs, fs = vertices_faces(obj); base=len(vertices); vertices.extend(vs)
+        for face in fs:
+            if local:
+                pts=[vs[i] for i in face]
+                if max(p.x for p in pts)<1.6 or min(p.x for p in pts)>5.4 or max(p.z for p in pts)<-10.8 or min(p.z for p in pts)>-6.8: continue
+            faces.append(tuple(base+i for i in face))
+            if provenance:sources.append({'object':obj.name,'triangle':[list(vs[i]) for i in face]})
+    assert faces, 'Missing real source geometry'
+    result=(BVHTree.FromPolygons(vertices, faces, all_triangles=True), len(faces))
+    return (*result,sources) if provenance else result
+
+def ground_at(x,z):
+    hit, normal, _, _ = floor_tree.ray_cast(Vector((x,20,z)), Vector((0,-1,0)), 40)
+    assert hit is not None and normal.y > .1, f'No actual dry floor at {x},{z}'
+    return hit
+
+def box_tree(center, radius, height):
+    # Conservative full-width sample, not an exact moving-rig acceptance proof.
+    x,y,z=center
+    vs=[(x+dx*radius,y+dy,z+dz*radius) for dy in (.012,height) for dz in (-1,1) for dx in (-1,1)]
+    fs=[(0,1,3,2),(4,6,7,5),(0,4,5,1),(2,3,7,6),(0,2,6,4),(1,5,7,3)]
+    return BVHTree.FromPolygons(vs, fs)
+
+def resample(points):
+    out=[points[0].copy()]
+    for a,b in zip(points,points[1:]):
+        count=max(1,math.ceil((b-a).length/D['probeStep']))
+        out.extend(a.lerp(b,i/count) for i in range(1,count+1))
+    return out
+
+def new_mesh(name, verts, faces, material, role):
+    mesh=bpy.data.meshes.new(name);mesh.from_pydata([tuple(B @ p) for p in verts],[],faces);mesh.update();mesh.materials.append(material)
+    obj=bpy.data.objects.new(name,mesh);assembly.objects.link(obj)
+    obj['ownerIds']=S['place']['ownerIds'];obj['placeId']=S['place']['id'];obj['useFloorRole']=role
+    obj['candidate']=S['candidate'];obj['sourceSha256']=S['inputs']['sourceGlb']['sha256'];obj['runtimeIntegrated']=False
+    return obj
+
+def ribbon(plan, name):
+    assert plan['ready'] and plan['entrySection']['flatLandingMatchesGround'],'Unchanged flat landing does not meet original ground across its full width'
+    vertices,faces=solid_geometry(plan,D['thickness'])
+    return new_mesh('construction-solid/'+name,[Vector(p) for p in vertices],faces,wood,'construction')
+
+def tube(name, points, radius):
+    sides=8;v=[];f=[]
+    for i,p in enumerate(points):
+        tangent=(points[min(i+1,len(points)-1)]-points[max(i-1,0)]).normalized();side=tangent.cross(Vector((0,1,0)))
+        if side.length<.001:side=tangent.cross(Vector((1,0,0)))
+        side.normalize();across=tangent.cross(side).normalized()
+        for j in range(sides):v.append(p+radius*(math.cos(j*math.tau/sides)*side+math.sin(j*math.tau/sides)*across))
+    for i in range(len(points)-1):
+        for j in range(sides):f.append((i*sides+j,i*sides+(j+1)%sides,(i+1)*sides+(j+1)%sides,(i+1)*sides+j))
+    f += [tuple(reversed(range(sides))),tuple((len(points)-1)*sides+j for j in range(sides))]
+    return new_mesh(name,v,f,bark,'structure')
+
+phase='source-parity'
+try:
+    inputs_before=verify_inputs();code_before=verify_code();bpy.ops.wm.read_factory_settings(use_empty=True)
+    bpy.ops.import_scene.gltf(filepath=S['inputs']['context']['path']);context=list(bpy.data.objects)
+    bpy.ops.import_scene.gltf(filepath=S['inputs']['leftTrees']['path']);left=[o for o in bpy.data.objects if o not in context]
+    left_meshes=[o for o in left if o.type=='MESH'];assert len(left_meshes)==128, 'Restore all original role trees exactly once'
+    fixed=[o for o in [*context,*left] if o.type=='MESH'];fixed_before={o.name:digest(o) for o in fixed}
+    hero=next(o for o in context if o.name=='place-native-shared-tree');assert list(hero['ownerIds'])==S['place']['ownerIds']
+    assert ((BI @ hero.matrix_world).translation-Vector(TR['authoredOrigin'])).length<1e-10, 'Actual owner transform changed'
+    floors=[o for o in context if o.name.startswith('authored-evaluated-floor')];floor_tree,floor_tris=tree(floors)
+    ground_triangles=[]
+    for obj in floors:
+        if obj.type!='MESH':continue
+        vs,fs=vertices_faces(obj)
+        ground_triangles.extend([[list(vs[i]) for i in face] for face in fs])
+    terrain=Terrain(ground_triangles)
+    trunk_root=next(o for o in context if o.get('nativePart')=='hollow-trunk');trunks=[o for o in [trunk_root,*trunk_root.children_recursive] if o.type=='MESH']
+    trunk_tree,trunk_tris=tree(trunks)
+    obstacles=[o for o in [*context,*left] if o.type=='MESH' and o not in floors and not o.get('placementHitOnly') and not o.hide_render]
+    obstacle_tree,obstacle_tris,obstacle_sources=tree(obstacles,local=True,provenance=True)
+    def identity(obj):
+        chain=[]
+        while obj is not None:
+            chain.append({'name':obj.name,'properties':{k:obj.get(k) for k in ['objectId','ownerId','placeId','nativePart'] if k in obj}});obj=obj.parent
+        return list(reversed(chain))
+    dump('obstacle-identities.json',{o.name:identity(o) for o in obstacles})
+    donor_names=(D['sourceFloorName'],D['sourceGalleryName'],D['sourceBarkDonorName'],'Grove / great root house trunk')
+    donor_names_before=tuple(donor_names)
+    with bpy.data.libraries.load(S['inputs']['sourceBlend']['path'],link=False) as (src,dst):
+        assert all(n in src.objects for n in donor_names);dst.objects=list(donor_names)
+    donors=dst.objects
+    assert donor_names==donor_names_before and all(isinstance(name,str) for name in donor_names),'Blender load changed original donor-name identity'
+    references=read_references(S['inputs']['sourceGlb']['path'],donor_names)
+    before_link=[{'referenceName':name,'matrixBasis':matrix_rows(o.matrix_basis),'matrixWorld':matrix_rows(o.matrix_world),
+                  'parent':o.parent.name if o.parent else None} for name,o in zip(donor_names,donors)]
+    for o in donors:bpy.context.scene.collection.objects.link(o)
+    bpy.context.view_layer.update()
+    source_checks=[];source_matrices=[]
+    for name,o in zip(donor_names,donors):
+        check,matrix=donor_snapshot(o,references[name],references[name]['sourceWorldMatrixGltf'])
+        source_checks.append(check);source_matrices.append(matrix)
+    dump('donor-source-parity.json',{'status':'MATCH' if all(c['matches'] for c in source_checks) else 'HOLD',
+         'referenceGlbSha256':inputs_before['sourceGlb'],'beforeLink':before_link,'references':references,'donors':source_checks,'epsilon':EPS})
+    assert all(c['matches'] for c in source_checks),'Donor source matrix/bounds differ from immutable GLB; no route generation'
+    target_matrices=[B @ A @ BI @ matrix for matrix in source_matrices]
+    for o,matrix in zip(donors,target_matrices):o.matrix_world=matrix
+    bpy.context.view_layer.update()
+    authored_checks=[]
+    for name,o,target,source_check in zip(donor_names,donors,target_matrices,source_checks):
+        check,_=donor_snapshot(o,references[name],matrix_rows(BI @ target @ B))
+        check['sourceLocalGeometryUnchanged']=check['localGeometrySha256']==source_check['localGeometrySha256']
+        check['matches']=check['matches'] and check['sourceLocalGeometryUnchanged']
+        check['expectedFromSourceWorldBounds']=transform_bounds(matrix_rows(A),references[name]['sourceWorldBoundsGltf'])
+        authored_checks.append(check)
+    dump('donor-authored-parity.json',{'status':'MATCH' if all(c['matches'] for c in authored_checks) else 'HOLD',
+         'transform':TR,'authoredMatrixAppliedOnce':matrix_rows(A),'donors':authored_checks,'epsilon':EPS})
+    assert all(c['matches'] for c in authored_checks),'Donor authored matrix/bounds changed or transform was lost/doubled; no route generation'
+    interior,old_gallery,bark_donor,original_trunk_probe=donors
+    source_support_tree,_=tree([original_trunk_probe]);wood=old_gallery.data.materials[0];bark=bark_donor.data.materials[0]
+    iv,iff=vertices_faces(interior);interior_top=max(p.y for p in iv);native_gallery_tree,_=tree([old_gallery])
+    measured=json.loads(Path(S['basis']['eastV1Measurement']['path']).read_text());old=measured['candidates'][0]
+    assert abs(interior_top-measured['interiorTopY'])<=EPS,'Source interior height changed'
+    cx,_,cz=TR['authoredOrigin'];joint=Vector(old['frontBoughJunction']);arrival=Vector(old['arrival']);front=Vector(old['nativeFront']);entry=Vector((S['place']['groundEntryCandidates'][0][0],0,S['place']['groundEntryCandidates'][0][1]));entry.y=terrain.top_y(entry);assert entry.y is not None
+    gallery=[];gallery_probes=[]
+    count=int((D['visibleGalleryEndDegrees']-D['rampEndDegrees'])/2)
+    for i in range(count+1):
+        deg=D['rampEndDegrees']+(D['visibleGalleryEndDegrees']-D['rampEndDegrees'])*i/count;a=math.radians(deg);r=D['sourceGalleryGuideRadius']
+        at=Vector((cx+r*math.cos(a),20,cz-r*math.sin(a)));hit,normal,index,_=native_gallery_tree.ray_cast(at,Vector((0,-1,0)),40)
+        gallery_probes.append({'degrees':deg,'hit':list(hit) if hit is not None else None,'normal':list(normal) if normal is not None else None,'triangle':index});dump('gallery-local-top-probes.json',gallery_probes)
+        assert hit is not None and normal.y>.95,'Actual native gallery missing; no fallback height'
+        r=D['shortGalleryCenterRadius'];gallery.append(Vector((cx+r*math.cos(a),hit.y,cz-r*math.sin(a))))
+    gallery_y=gallery[0].y;assert abs(gallery_y-measured['galleryStartY'])<=EPS
+    stair=json.loads((HERE/'sealed-input/stairs-16-closed.json').read_text())
+    assert stair['n']==16 and stair['stats']['badEdges']==0 and stair['stats']['components']==1
+    old_branch=json.loads((HERE/'sealed-input/planned-floor-v4-stations-once.json').read_text())
+    for actual,expected in [(joint,old_branch['primaryEndpoints']['joint']),(gallery[0],old_branch['primaryEndpoints']['galleryStart']),(gallery[-1],old_branch['primaryEndpoints']['galleryEnd'])]:
+        fp=lambda p:list(struct.unpack('<3f',struct.pack('<3f',*p)))
+        assert math.dist(fp(actual),fp(expected))<=EPS,'Original primary endpoint changed'
+    for obj in donors:obj.hide_render=True;obj.hide_set(True)
+    connector=terrain_connector(terrain,list(entry),list(joint),D['structuralWidth'],interior_top,D['connectorPlateauDistance'])
+    opening=ribbon_plan(resample([joint,arrival]),D['structuralWidth'],terrain)
+    prior=json.loads((HERE/'sealed-input/planned-floor-tops.json').read_text())
+    for name,current in [('terrainThreshold',connector),('alignedOpening',opening)]:
+        assert current['topFaces']==prior[name]['topFaces']
+        assert all(math.dist(a,b)<=EPS for a,b in zip(current['topVertices'],prior[name]['topVertices']))
+    assembly=bpy.data.collections.new('P02 same-owner real sixteen-step coarse');bpy.context.scene.collection.children.link(assembly)
+    phase='direct-closed-components'
+    components=[]
+    for name,plan in [('terrain-threshold',connector),('aligned-opening',opening)]:
+        vv,ff,qa=closed_solid(plan,D['thickness']);o=new_mesh('construction-solid/'+name,[Vector(p)for p in vv],ff,wood,'closed-construction');components.append((name,o,None));dump(name+'-input.json',{'plan':plan,'closure':qa})
+    step_body=new_mesh('construction-solid/real-sixteen-stairs',[Vector(p)for p in stair['vertices']],stair['faces'],wood,'closed-construction')
+    components.append(('real-sixteen-stairs',step_body,stair['roles']))
+    disk_vertices=[joint.copy()]+[joint+Vector((D['junctionDiscRadius']*math.cos(i*math.tau/32),0,D['junctionDiscRadius']*math.sin(i*math.tau/32)))for i in range(32)]
+    disk_faces=[[0,(i+1)%32+1,i+1]for i in range(32)];dv,df,dq=closed_solid({'topVertices':[list(p)for p in disk_vertices],'topFaces':disk_faces},D['thickness'])
+    disk=new_mesh('construction-solid/front-junction',[Vector(p)for p in dv],df,wood,'closed-construction');components.append(('front-junction',disk,None))
+    native=new_mesh('construction-solid/unchanged-native-interior',iv,iff,interior.data.materials[0],'closed-construction');components.append(('native-interior',native,None))
+    import bmesh
+    from collections import Counter
+    def raw_topology(obj):
+        bm=bmesh.new();bm.from_mesh(obj.data);keys=Counter(tuple(sorted(tuple(v.co)for v in f.verts))for f in bm.faces)
+        remaining=set(bm.verts);count=0
+        while remaining:
+            count+=1;queue=[remaining.pop()]
+            while queue:
+                for edge in queue.pop().link_edges:
+                    for vertex in edge.verts:
+                        if vertex in remaining:remaining.remove(vertex);queue.append(vertex)
+        r={'object':obj.name,'vertices':len(bm.verts),'faces':len(bm.faces),'badEdges':sum(not e.is_manifold for e in bm.edges),'components':count,'duplicateCoordinateFaces':sum(v-1 for v in keys.values()if v>1),'zeroAreaFaces':sum(f.calc_area()==0 for f in bm.faces),'signedVolume':bm.calc_volume(signed=True),'selfIntersectionProvenAbsent':False};bm.free();return r
+    def require_closed(r):assert r['badEdges']==0 and r['components']==1 and r['duplicateCoordinateFaces']==0 and r['zeroAreaFaces']==0 and r['signedVolume']>0,'Direct constructed component is not a positive closed solid'
+    topology=[];parts=[];others={};closed_hashes={};priority={'native-interior':0,'aligned-opening':1,'real-sixteen-stairs':2,'front-junction':3,'terrain-threshold':4}
+    for name,obj,roles in components:
+        qa=raw_topology(obj);topology.append(qa);dump('direct-components-topology.json',topology);require_closed(qa)
+        vv,ff=vertices_faces(obj);closed_hashes[name]=digest(obj)
+        if name=='real-sixteen-stairs':
+            assert [list(v)for v in vv]==stair['vertices'] and [list(f)for f in ff]==stair['faces'],'Constructed step arrays changed'
+        upward=[];other=[]
+        for fi,f in enumerate(ff):
+            tri=[list(vv[i])for i in f];normal=(vv[f[1]]-vv[f[0]]).cross(vv[f[2]]-vv[f[0]])
+            role=roles[fi] if roles else name
+            is_walk=role.startswith('tread-')or role in ['low-landing','source-gallery'] if roles else normal.length and normal.normalized().y>.1
+            if is_walk:upward.append({'triangle':tri,'role':role,'sourceFace':fi})
+            else:other.append(f)
+        parts.append({'id':name,'priority':priority[name],'triangles':upward});others[name]=(vv,other,obj.data.materials[0])
+    # Positive-area XZ overlap plus an interior vertical overlap witness ties
+    # each closed entry piece to the same actual stair assembly. This is a
+    # constructive joint witness, not a blanket self-intersection certificate.
+    component_bvhs={name:tree([obj])[0]for name,obj,_ in components};joints=[];links={name:set()for name,_,_ in components}
+    for ai,a_part in enumerate(parts):
+        for b_part in parts[ai+1:]:
+            witness=None
+            for ar in a_part['triangles']:
+                if witness:break
+                for br in b_part['triangles']:
+                    if not intersects(box(ar['triangle']),box(br['triangle'])):continue
+                    poly=clip(list(ar['triangle']),br['triangle']);area=polygon_area(poly)if len(poly)>=3 else 0
+                    if area<=EPS:continue
+                    center=Vector(tuple(sum(p[k]for p in poly)/len(poly)for k in range(3)));intervals=[]
+                    for name in [a_part['id'],b_part['id']]:
+                        tt=component_bvhs[name];up=tt.ray_cast(Vector((center.x,20,center.z)),Vector((0,-1,0)),40)[0];down=tt.ray_cast(Vector((center.x,-20,center.z)),Vector((0,1,0)),40)[0]
+                        if up is not None and down is not None:intervals.append([down.y,up.y])
+                    if len(intervals)!=2:continue
+                    depth=min(t[1]for t in intervals)-max(t[0]for t in intervals)
+                    if depth>EPS:
+                        witness={'parts':[a_part['id'],b_part['id']],'sourceFaces':[ar['sourceFace'],br['sourceFace']],'intersectionPolygon':poly,'projectedArea':area,'interiorSample':list(center),'actualClosedVerticalIntervals':intervals,'positiveOverlapDepth':depth};break
+            if witness:joints.append(witness);links[a_part['id']].add(b_part['id']);links[b_part['id']].add(a_part['id'])
+    reached={parts[0]['id']};frontier=list(reached)
+    while frontier:
+        for name in links[frontier.pop()]:
+            if name not in reached:reached.add(name);frontier.append(name)
+    dump('closed-component-joints.json',{'witnesses':joints,'connectedParts':sorted(reached),'allPartsConnectedByPositiveWitness':len(reached)==len(parts),'epsilon':EPS,'wholeIntersectionVolumeNotProven':True})
+    assembly_joint_hold=len(reached)!=len(parts)
+    phase='exposed-component-top-skin'
+    exposed,exposure=exposed_tops(parts);dump('exposed-surface-lineage.json',exposure)
+    visible=[];walks=[];floor_records=[]
+    for name,obj,roles in components:
+        vv,ff,mat=others[name];structural=new_mesh('solid-body/'+name,vv,ff,mat,'structure');visible.append(structural)
+        top=exposed[name];wv=[];wf=[]
+        for record in top:
+            base=len(wv);wv.extend(Vector(p)for p in record['triangle']);wf.append([base,base+1,base+2])
+        walk=new_mesh('walk-top/'+name,wv,wf,mat,'owner-use');walk['defaultGroundExcluded']=True;walks.append(walk);visible.append(walk)
+        for role in sorted({r['role']for r in top}):
+            triangles=[r['triangle']for r in top if r['role']==role];floor_records.append({'id':S['place']['id']+':'+role,'component':name,'role':'owner-use','surfaceKind':role,'triangles':triangles,'renderMesh':walk.name})
+        obj.hide_render=True;obj.hide_set(True)
+    assert all(digest(o)==closed_hashes[n]for n,o,_ in components),'Closed input changed during exposed-skin extraction'
+    tread_raw=[[stair['vertices'][i]for i in f]for f,r in zip(stair['faces'],stair['roles'])if r.startswith('tread-')]
+    tread_exposed=[r['triangle']for r in exposed['real-sixteen-stairs']if r['role'].startswith('tread-')]
+    assert tread_exposed==tread_raw,'Real walking tread faces were clipped, hidden or altered'
+    dump('tread-visible-parity.json',{'status':'SAME_ACTUAL_TRIANGLES','raw':len(tread_raw),'visible':len(tread_exposed),'float32CoordinatesExact':True,'hiddenRamp':False})
+    built_top=[r['triangle']for top in exposed.values()for r in top];built_terrain=Terrain(built_top);ground_relation=terrain.relation(built_top);dump('built-floor-ground-relation.json',ground_relation)
+    sv,sf=vertices_faces(step_body);step_top=Terrain(tread_raw+[[list(sv[i])for i in f]for f,r in zip(sf,stair['roles'])if r in ['low-landing','source-gallery']]);step_bottom=Terrain([[list(sv[i])for i in f]for f,r in zip(sf,stair['roles'])if r=='underside'])
+    def inside_deck(x,z):
+        p=[x,0,z];top=step_top.top_y(p);bottom=step_bottom.top_y(p)
+        assert top is not None and bottom is not None and top>bottom
+        return top,bottom
+    phase='same-owner-stair-supports'
+    root_old=json.loads((HERE/'sealed-input/support-edge-proposal.json').read_text());low_old=root_old['firstSupport'];low_x,_,low_z=low_old['deckStation'];top_y,bottom_y=inside_deck(low_x,low_z)
+    dest=Vector((low_x,bottom_y+.015,low_z));start=Vector(low_old['path'][0]);mid=(start+dest)/2-Vector((0,.06,0));before_cap=dest-Vector((0,.08,0))
+    low_root=tube('solid-bough/same-owner-ground-root',resample([start,mid,before_cap,dest]),D['boughRadius']);require_closed(raw_topology(low_root));rv,rf=vertices_faces(low_root)
+    ground_cap=root_cap_contacts([list(p)for p in rv],terrain,step_top,D['thickness'])['caps']['ground'];deck_cap=cap_in_actual_volume([list(p)for p in rv[-8:]],terrain,step_top,step_bottom)
+    support_records=[{'kind':'ground-root','groundCenter':list(start),'deckCenter':list(dest),'oldDeckCenter':low_old['path'][-1],'change':'deck endpoint follows actual new underside + .015; terminal segment vertical; old contacts not reused as PASS','groundCap':ground_cap,'actualNewDeckCap':deck_cap,'topology':raw_topology(low_root)}]
+    if ground_cap['maximumAboveActualFloor'] is None or ground_cap['maximumAboveActualFloor']>=0 or abs(ground_cap['uncoveredArea'])>EPS or deck_cap['positiveInsideActualVolumeArea']<=0:
+        support_records[-1]['hold']='actual cap support incomplete; no tolerance change'
+    for i,old_site in enumerate(root_old['higherFiveNativeTrunkSupportRays']):
+        x,_,z=old_site['deckContact'];top_y,bottom_y=inside_deck(x,z);dest=Vector((x,bottom_y+.015,z));old_hit=Vector(old_site['sourceHit'][0]['point']);direction=(old_hit-dest).normalized()
+        hit,normal,index,distance=source_support_tree.ray_cast(dest,direction,D['maximumBoughSpan']);rec={'kind':'native-trunk-bough','oldSourceTarget':list(old_hit),'newDeckContact':list(dest),'actualHit':list(hit)if hit else None,'actualTriangle':index,'distance':distance,'maximumSpan':D['maximumBoughSpan'],'sourceContactIsNewMeasurement':True};support_records.append(rec);dump('new-stair-support-contacts.json',support_records)
+        if hit is None:rec['hold']='no actual trunk hit within unchanged span';continue
+        start=hit+direction*.015;mid=(start+dest)/2-Vector((0,.08,0));near=dest-Vector((0,.08,0));obj=tube('solid-bough/native-contact-'+str(i+1),resample([start,mid,near,dest]),D['boughRadius']);require_closed(raw_topology(obj));vs,fs=vertices_faces(obj);cap=cap_in_actual_volume([list(p)for p in vs[-8:]],terrain,step_top,step_bottom);rec['actualDeckCap']=cap;rec['topology']=raw_topology(obj)
+        if cap['positiveInsideActualVolumeArea']<=0:rec['hold']='no positive end-cap patch inside actual stair volume'
+    dump('new-stair-support-contacts.json',support_records)
+    # A sloping handrail is visible structure, never an alternative walking floor.
+    # At each step contact it is .32 above that real tread; posts enter that tread.
+    phase='stair-rails'
+    rail_rows=[]
+    for t in stair['treads']:rail_rows.append({'center':[t['center'][0],t['topY'],t['center'][2]],'side':t['side'],'floorId':S['place']['id']+':'+t['id']})
+    rail_rows.extend({'center':r['center'],'side':r['side'],'floorId':S['place']['id']+':source-gallery'}for r in stair['rows']if r['degrees']>=75)
+    edges=[]
+    for sign in [-1,1]:
+        edge=[Vector(r['center'])+Vector(r['side'])*sign*.32+Vector((0,D['railHeight'],0))for r in rail_rows];edges.append(edge);rail=tube('solid-rail/stair-edge-'+str(sign),edge,D['railRadius']);require_closed(raw_topology(rail))
+        for i in [*range(0,16,2),16,len(edge)-1]:
+            post=tube('solid-rail-post/'+str(sign)+'/'+str(i),[edge[i]-Vector((0,D['railHeight']+.015,0)),edge[i]],D['railRadius']);require_closed(raw_topology(post))
+    rail=tube('solid-rail/visible-terminal-guard',[edges[0][-1],edges[1][-1]],D['railRadius']);require_closed(raw_topology(rail));dump('stair-rail-attachment-sites.json',rail_rows)
+    # Current entrance and joints are measured anew; old rejected middle-entry
+    # 4.8cm mismatch is history only and is not inherited as a v5 result.
+    phase='entry-sections-and-standing-stations'
+    connector_top=Terrain([[connector['topVertices'][i]for i in f]for f in connector['topFaces']]);connector_points=resample([entry,joint]);seam_samples=[]
+    for p in connector_points:
+        y=connector_top.top_y(p);assert y is not None;p.y=y;actual=built_terrain.top_y(p);seam_samples.append({'role':'current-west-connector','point':list(p),'planned':y,'visibleTop':actual,'delta':None if actual is None else actual-y})
+    for name,p in [('joint',joint),('native-front',front),('arrival',arrival),('stair-first-boundary',Vector(stair['rows'][next(i for i,r in enumerate(stair['rows'])if r['degrees']==-68)]['center'])),('gallery-joint',gallery[0])]:
+        actual=built_terrain.top_y(p);seam_samples.append({'role':name,'point':list(p),'planned':p.y,'visibleTop':actual,'delta':None if actual is None else actual-p.y,'intentionalRiserEdge':name=='stair-first-boundary'})
+    a,b=connector['thresholdEndpoints'];original_section=terrain.section(a,b,entry.y);visible_section=built_terrain.section(a,b,entry.y)
+    section_records=[]
+    def section_record(name,center,side,half_width,planned_y):
+        aa=center-side*half_width;bb=center+side*half_width
+        section_records.append({'name':name,'center':list(center),'halfWidth':half_width,'plannedY':planned_y,'endpoints':[list(aa),list(bb)],'originalGround':terrain.section(aa,bb,planned_y),'actualVisibleOwnerTop':built_terrain.section(aa,bb,planned_y)})
+    heading=joint-entry;heading.y=0;heading.normalize();side=Vector((-heading.z,0,heading.x));plateau=entry+heading*D['connectorPlateauDistance'];plateau.y=interior_top
+    section_record('west-plateau-break',plateau,side,.32,interior_top)
+    opening_heading=arrival-joint;opening_heading.y=0;opening_heading.normalize();opening_side=Vector((-opening_heading.z,0,opening_heading.x))
+    section_record('opening-front-joint',joint,opening_side,.32,interior_top)
+    section_record('native-arrival-actor-width',arrival,opening_side,D['clearWidth']/2,arrival.y)
+    upper_row=next(r for r in stair['rows']if r['degrees']==75)
+    section_record('last-tread-to-native-height-gallery',gallery[0],Vector(upper_row['side']),.32,gallery[0].y)
+    threshold_comparison=compare_sections(original_section,visible_section)
+    width_holds=[]
+    if not threshold_comparison['supportedFullWidth'] or not threshold_comparison['sameHeightAcrossWidth']:width_holds.append({'section':'west-threshold-to-original-ground','comparison':threshold_comparison})
+    for record in section_records:
+        actual=record['actualVisibleOwnerTop'];gap=actual['flatLandingGapRange']
+        if not actual['supportedFullWidth'] or gap is None or max(abs(v)for v in gap)>EPS:width_holds.append({'section':record['name'],'actualVisibleOwnerTop':actual,'plannedY':record['plannedY']})
+    dump('current-entry-joints.json',{'thresholdComparison':threshold_comparison,'fullWidthHolds':width_holds,'currentEntry':list(entry),'thresholdEndpoints':[a,b],'plateauDistance':D['connectorPlateauDistance'],'thresholdOriginal':original_section,'thresholdVisible':visible_section,'currentCrossSections':section_records,'samples':seam_samples,'old48mm':'rejected middle entry (3.75,-7.25), historical only; no current gap copied from history','intentionalStairRisers':'exact vertical faces in direct mesh; no flat continuous ramp implied','noHighestTopRouteAdoption':True})
+    # These are contact stations on named real treads, NOT a linearly
+    # interpolated floor route across risers. Explicit per-foot stepping is pending.
+    contacts=[{'point':[t['center'][0],t['topY'],t['center'][2]],'floorId':S['place']['id']+':'+t['id'],'kind':'paired-foot-contact-centre','tread':t['id']}for t in stair['treads']]
+    step_edges=[{'from':S['place']['id']+(':low-landing'if i==0 else ':tread-'+str(i-1)),'to':p['floorId'],'riser':(p['point'][1]-(interior_top if i==0 else contacts[i-1]['point'][1])),'riserStation':stair['cuts'][i],'movement':'PER_FOOT_STAIR_TRANSITION_REQUIRED_NOT_IMPLEMENTED'}for i,p in enumerate(contacts)]
+    neutral_route=[Vector(p['point'])for p in contacts]+gallery
+    structure=[o for o in assembly.objects if o.type=='MESH' and o not in walks and not o.name.startswith('construction-solid/')]
+    all_obstacles,obstacle_count,provenance=tree([*obstacles,*structure],local=True,provenance=True)
+    motion=motion_band_contacts([list(p)for p in neutral_route],provenance,S['envelope']);boxhits=[]
+    for i,p in enumerate(neutral_route):
+        overlap=all_obstacles.overlap(box_tree(p,D['clearWidth']/2,S['envelope']['height']+D['headReserve']))
+        if overlap:
+            ids=sorted({a for a,b in overlap});names=Counter(provenance[x]['object']for x in ids);boxhits.append({'sample':i,'point':list(p),'objects':dict(names),'examples':[provenance[x]for x in ids[:6]]})
+    holds=['SOURCE_COARSE_ART_AND_RUNTIME_HOLD','per-foot stance/swing, actual riser clearance and leg-body continuity unimplemented','assembled supports are sampled end-cap proofs, not whole curved solid self-intersection proof']
+    if width_holds:holds.append('current full-width entry/joint mismatch; see located current-entry-joints, no center-only acceptance')
+    if assembly_joint_hold:holds.append('closed entry components do not all have positive connection witnesses')
+    if exposure['holds']:holds.append('exposed-skin Float32 lineage HOLD; inspect exact records')
+    if any(r.get('hold')for r in support_records):holds.append('new support contact HOLD')
+    if motion or boxhits:holds.append('neutral reserved/motion-band contacts retained; conservative band vs actual skin classification pending, no exclusions')
+    if not ground_relation['clear']:holds.append('current floor/ground relation HOLD, see current coordinates')
+    if any(s['delta'] is None or abs(s['delta'])>EPS for s in seam_samples if not s.get('intentionalRiserEdge')):holds.append('current entrance/flat joints mismatch; no automatic height adoption')
+    dump('coarse-qa.json',{'status':'HOLD','holdReasons':holds,'selectedSteps':16,'realTreads':True,'directClosedStair':stair['stats'],'neutralContactStations':contacts,'reservedBoxHits':boxhits,'actualMotionBandHits':motion,'stepMotionAcceptance':False,'inputBodyRadiusNotFootSupport':True,'sourceTrunkGroundOwnerPreserved':True,'newSupports':support_records,'scope':'whole/entry shape first, not app or route adoption'})
+    dump('owner-use-profile.json',{'status':'HOLD_SOURCE_ONLY','role':'owner-use','defaultGroundExcluded':True,'placeId':S['place']['id'],'ownerIds':S['place']['ownerIds'],'coordinateSpace':'authored Y-up physical XYZ','sourceTransformProvenance':TR,'floors':floor_records,'entry':list(entry),'entryJointSamples':seam_samples,'contactStations':contacts,'stepTransitions':step_edges,'linearRampRoute':None,'sameVisibleTreadTriangles':True,'runtimeIntegrated':False,'sourceShapeIdentity':S['v5Inputs']['stairs-16-closed.json']['sha256'],'useRegion':{'point':list(gallery[round((D['galleryUseDegrees']-75)/2)]),'floorId':S['place']['id']+':source-gallery'},'defaultGroundReceiptInvariant':'heightAt remains ground; usage requires elevated point-ground > .8; not implemented here'})
+    phase='preservation-export'
+    fixed_after={o.name:digest(o)for o in fixed};assert fixed_after==fixed_before
+    for o in donors:bpy.data.objects.remove(o,do_unlink=True)
+    bpy.context.scene['candidate']=S['candidate'];bpy.context.scene['status']='HOLD_REAL_STAIR_COARSE_SOURCE';bpy.context.scene['runtimeIntegrated']=False
+    bpy.ops.wm.save_as_mainfile(filepath=str(opt.out/'study.blend'))
+    bpy.ops.object.select_all(action='DESELECT')
+    for o in bpy.data.objects:
+        if not o.name.startswith('construction-solid/') and not o.hide_get():o.select_set(True)
+    bpy.ops.export_scene.gltf(filepath=str(opt.out/'study.glb'),export_format='GLB',use_selection=True,export_extras=True,export_cameras=False,export_lights=False)
+    bpy.ops.object.select_all(action='DESELECT')
+    for o in assembly.objects:
+        if not o.name.startswith('construction-solid/'):o.select_set(True)
+    bpy.ops.export_scene.gltf(filepath=str(opt.out/'owner-use-components.glb'),export_format='GLB',use_selection=True,export_extras=True)
+    dump('manifest.json',{'candidate':S['candidate'],'status':'HOLD_COARSE_SOURCE_FOR_WHOLE_AND_ENTRY_REVIEW','inputsBefore':inputs_before,'inputsAfter':verify_inputs(),'codeBefore':code_before,'codeAfter':verify_code(),'fixedMeshHashesBefore':fixed_before,'fixedMeshHashesAfter':fixed_after,'leftOriginalMeshesRestored':len(left_meshes),'runtimeIntegrated':False,'artAccepted':False,'files':{f:sha(opt.out/f)for f in ['study.blend','study.glb','owner-use-components.glb','owner-use-profile.json','coarse-qa.json']}})
+    dump('execution.json',{'stage':opt.stage,'seconds':time.monotonic()-started,'inputsBefore':inputs_before,'inputsAfter':verify_inputs(),'runtimeIntegrated':False})
+except Exception as error:
+    dump('first-failure.json',{'stage':opt.stage,'phase':phase,'error':repr(error),'elapsedSeconds':time.monotonic()-started,'runtimeIntegrated':False})
+    try:bpy.ops.wm.save_as_mainfile(filepath=str(opt.out/'failed-scene.blend'))
+    except Exception as e:dump('failed-scene-save-error.json',{'error':repr(e)})
+    raise

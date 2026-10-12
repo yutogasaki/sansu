@@ -1,0 +1,16 @@
+{
+  "status": "CORRECTED_EXTRACTION_PREPARED_NOT_RUN",
+  "firstFailurePreserved": "runs/01-feet.log.txt",
+  "classification": "esbuild virtual define metadata treated as filesystem input; failed before rig construction",
+  "previousScriptSha256": "97e7568a98298014006406843fb46fe436b6373c8a43ddfcc70d94fcd4eeae8d",
+  "scriptPath": "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-prep/extract-feet-v2.mjs",
+  "scriptSha256": "73ff707c317f0879482074ae8766b01e927a8ed07aa4372fee59de7f86d77678",
+  "change": "Only explicit virtual metafile entries are recorded by kind/content SHA separately; all actual source files retain filesystem SHA. Unknown virtual entry fails closed. No actor/shape/scale/fixture edits.",
+  "proposedOutput": "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-prep/runs/02-feet",
+  "limits": {
+    "seconds": 30,
+    "processTreeRssMiB": 768,
+    "nodeHeapMiB": 512,
+    "GOMAXPROCS": 2
+  }
+}

@@ -1,0 +1,66 @@
+"""Light static follow-up: path node/material JSON plus two actual triangles only."""
+from pathlib import Path
+import hashlib
+import json
+import struct
+
+HERE = Path(__file__).resolve().parent
+BASE = HERE.parent
+sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def inspect(path):
+    data = path.read_bytes()
+    length = struct.unpack_from('<I', data, 12)[0]
+    doc = json.loads(data[20:20 + length])
+    binary = 20 + length + 8
+    def accessor(index, item):
+        record = doc['accessors'][index]
+        view = doc['bufferViews'][record['bufferView']]
+        component = {5126: ('f', 4), 5125: ('I', 4), 5123: ('H', 2)}[record['componentType']]
+        count = {'SCALAR': 1, 'VEC3': 3, 'VEC4': 4}[record['type']]
+        offset = binary + view.get('byteOffset', 0) + record.get('byteOffset', 0)
+        offset += item * view.get('byteStride', component[1] * count)
+        return list(struct.unpack_from('<' + component[0] * count, data, offset))
+    found = [node for node in doc['nodes'] if node.get('name') == 'growing-reachable-paths']
+    assert len(found) == 1
+    node = found[0]; mesh = doc['meshes'][node['mesh']]
+    result = {'path': str(path), 'sha256': sha(path), 'node': {k: v for k, v in node.items() if k != 'extras'},
+              'groundPathEdges': len(node.get('extras', {}).get('groundPathEdges', [])),
+              'nodeInstanced': 'EXT_mesh_gpu_instancing' in node.get('extensions', {}),
+              'sceneGpuInstancingNodeCount': sum('EXT_mesh_gpu_instancing' in n.get('extensions', {}) for n in doc['nodes']),
+              'primitives': []}
+    for primitive in mesh['primitives']:
+        index_count = doc['accessors'][primitive['indices']]['count']
+        samples = []
+        for start in [0, index_count - 3]:
+            indices = [int(accessor(primitive['indices'], start + i)[0]) for i in range(3)]
+            positions = [accessor(primitive['attributes']['POSITION'], i) for i in indices]
+            a, b, c = positions; ab = [b[i] - a[i] for i in range(3)]; ac = [c[i] - a[i] for i in range(3)]
+            cross_y = ab[2] * ac[0] - ab[0] * ac[2]
+            samples.append({'indexOffset': start, 'indices': indices, 'positions': positions,
+                            'geometricCrossYLocal': cross_y,
+                            'normals': [accessor(primitive['attributes']['NORMAL'], i) for i in indices]})
+        result['primitives'].append({'mode': primitive.get('mode', 4), 'indices': index_count,
+                                     'vertices': doc['accessors'][primitive['attributes']['POSITION']]['count'],
+                                     'material': doc['materials'][primitive['material']], 'samples': samples})
+    return result
+
+
+paths = [BASE / 'extraction-attempt02/fixed-c1-context.glb',
+         BASE / 'variants/forest-crown-b1-low-wide-v0/study.glb']
+before = {str(path): sha(path) for path in paths}
+report = {'scope': 'Read-only JSON/material plus first/last path triangle; no projection or Blender',
+          'inputsBefore': before, 'files': [inspect(path) for path in paths],
+          'facts': ['The named path node is an ordinary Mesh, not an instanced node.',
+                    'Runtime source offsets all ribbons and discs by .008; double-sided material has polygonOffset -1/-1; castShadow remains false.',
+                    'glTF path material/node do not encode Three polygonOffset or castShadow flags.',
+                    'Water ripple line omission is separate and is not the demonstrated cause of path dots.'],
+          'hypothesis': 'Coplanar ribbon/disc overlap with opposite winding, combined with Blender shadow-casting defaults and missing polygonOffset, may contribute to black circles. Not pixel-cause proof.',
+          'nextDiagnosticNotRun': 'After reference comparison and separate authorization, same-frame path-only visible_shadow=false could test one part of this hypothesis.',
+          'imageOrMaterialModified': False}
+report['inputsAfter'] = {str(path): sha(path) for path in paths}; assert report['inputsBefore'] == report['inputsAfter']
+out = HERE / 'black-path-static.json'; assert not out.exists()
+out.write_text(json.dumps(report, indent=2) + '\n')
+print(json.dumps({'reportSha256': sha(out), 'pathInstanced': [d['nodeInstanced'] for d in report['files']],
+                  'sampleCrossY': [[s['geometricCrossYLocal'] for s in d['primitives'][0]['samples']] for d in report['files']]}))

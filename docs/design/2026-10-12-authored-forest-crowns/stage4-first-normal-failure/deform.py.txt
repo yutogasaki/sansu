@@ -1,0 +1,39 @@
+"""Original mesh deformation with exact local data retention inside pin band."""
+import math
+from mathutils import Vector
+import source_helpers as native
+
+
+def apply(obj,field,blender_to_world,pin_height=None):
+    transform=blender_to_world@obj.matrix_world; inverse=transform.inverted()
+    normal_world=transform.to_3x3().inverted().transposed()
+    normal_local=transform.to_3x3().transposed()
+    old_normals=[n.vector.copy() for n in obj.data.corner_normals]
+    old_positions=[v.co.copy() for v in obj.data.vertices]
+    matrices=[];pinned=set();maximum=0.;minimum=float('inf')
+    for v in obj.data.vertices:
+        point=transform@v.co;target=field(point)
+        if pin_height is not None and point.y<=pin_height:
+            assert target==point,'Pinned field must be exact identity'
+            pinned.add(v.index);matrices.append(None);minimum=min(minimum,1.);continue
+        derivative=native.jacobian(field,point);det=derivative.determinant()
+        assert math.isfinite(det) and det>=.2,f'Folded or poorly conditioned field: {obj.name} {det}'
+        minimum=min(minimum,det);maximum=max(maximum,(target-point).length)
+        matrices.append(normal_local@derivative.inverted().transposed()@normal_world)
+        v.co=inverse@target
+    obj.data.update()
+    expected=[normal if loop.vertex_index in pinned else (matrices[loop.vertex_index]@normal).normalized()
+              for loop,normal in zip(obj.data.loops,old_normals)]
+    obj.data.normals_split_custom_set(expected)
+    assert all(obj.data.vertices[i].co==old_positions[i] for i in pinned)
+    actual=[n.vector.copy() for n in obj.data.corner_normals]
+    # Blender encodes split normals. Record angular/vector residual; not byte equality
+    # for the deformed roles. The 27 untouched roles remain exact digest equality.
+    residual=max((a-b).length for a,b in zip(actual,expected))
+    assert residual<=.002,f'Unexpected custom-normal encoding residual: {residual}'
+    return {'name':obj.name,'ownerId':obj['ownerId'],'role':obj['forestRole'],
+        'maxWorldDisplacement':maximum,'minimumSampledJacobianDeterminant':minimum,
+        'vertices':len(obj.data.vertices),'polygons':len(obj.data.polygons),
+        'exactLocalPinnedVertices':len(pinned),'pinnedBandMaxLocalPositionDifference':0.,
+        'normalInverseTransposeResidualMaxL2':residual,
+        'normalContract':'original split normal inverse-transpose, original expected normal inside identity pin band; Blender encoding tolerance .002'}

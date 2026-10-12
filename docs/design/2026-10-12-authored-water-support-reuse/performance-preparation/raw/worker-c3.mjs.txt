@@ -1,0 +1,2154 @@
+// ../../../../private/tmp/sansu-water-support-perf-c2-c3/prepared/worker-c3.ts
+import fs from "node:fs";
+import zlib from "node:zlib";
+import crypto from "node:crypto";
+import assert from "node:assert/strict";
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterGeometry.ts
+var polygonArea = (polygon) => polygon.reduce((sum, point, i) => {
+  const next = polygon[(i + 1) % polygon.length];
+  return sum + point.x * next.z - next.x * point.z;
+}, 0) / 2;
+var polygonHasArea = (polygon) => polygon.length >= 3 && Math.abs(polygonArea(polygon)) > 1e-12;
+var cross = (a, b, point) => (b.x - a.x) * (point.z - a.z) - (b.z - a.z) * (point.x - a.x);
+var polygonBounds = (polygon) => ({
+  minX: Math.min(...polygon.map((p) => p.x)),
+  maxX: Math.max(...polygon.map((p) => p.x)),
+  minZ: Math.min(...polygon.map((p) => p.z)),
+  maxZ: Math.max(...polygon.map((p) => p.z))
+});
+var polygonBoxesOverlap = (a, b) => a.minX <= b.maxX && a.maxX >= b.minX && a.minZ <= b.maxZ && a.maxZ >= b.minZ;
+function clipPolygon(polygon, distance3) {
+  const result = [];
+  for (let i = 0; i < polygon.length; i++) {
+    const a = polygon[i], b = polygon[(i + 1) % polygon.length], da = distance3(a), db = distance3(b);
+    if (da >= 0) result.push(a);
+    if (da >= 0 !== db >= 0) {
+      const t = da / (da - db);
+      result.push({ x: a.x + (b.x - a.x) * t, z: a.z + (b.z - a.z) * t });
+    }
+  }
+  return result;
+}
+function intersectPolygons(polygon, convex) {
+  let result = [...polygon];
+  const orientation = Math.sign(polygonArea(convex));
+  for (let i = 0; i < convex.length && polygonHasArea(result); i++) {
+    const a = convex[i], b = convex[(i + 1) % convex.length];
+    result = clipPolygon(result, (p) => orientation * cross(a, b, p));
+  }
+  return result;
+}
+function subtractPolygon(polygon, convex) {
+  const result = [], orientation = Math.sign(polygonArea(convex));
+  let inside = [...polygon];
+  for (let i = 0; i < convex.length && polygonHasArea(inside); i++) {
+    const a = convex[i], b = convex[(i + 1) % convex.length], distance3 = (p) => orientation * cross(a, b, p);
+    const outside = clipPolygon(inside, (p) => -distance3(p));
+    if (polygonHasArea(outside)) result.push(outside);
+    inside = clipPolygon(inside, distance3);
+  }
+  return result;
+}
+function triangulateWaterPolygon(input) {
+  if (input.length < 3 || input.some((p) => !Number.isFinite(p.x) || !Number.isFinite(p.z))) return;
+  let points = input.filter((p, i) => Math.hypot(p.x - input[(i + input.length - 1) % input.length].x, p.z - input[(i + input.length - 1) % input.length].z) > 1e-10);
+  for (let i = points.length - 1; i >= 0 && points.length >= 3; i--) {
+    if (Math.abs(cross(points[(i + points.length - 1) % points.length], points[(i + 1) % points.length], points[i])) <= 1e-12) points.splice(i, 1);
+  }
+  if (!polygonHasArea(points)) return;
+  const onSegment = (a, b, p) => Math.abs(cross(a, b, p)) <= 1e-12 && p.x >= Math.min(a.x, b.x) - 1e-12 && p.x <= Math.max(a.x, b.x) + 1e-12 && p.z >= Math.min(a.z, b.z) - 1e-12 && p.z <= Math.max(a.z, b.z) + 1e-12;
+  for (let i = 0; i < points.length; i++) for (let j = i + 1; j < points.length; j++) {
+    if (j === i + 1 || i === 0 && j === points.length - 1) continue;
+    const a = points[i], b = points[(i + 1) % points.length], c = points[j], d = points[(j + 1) % points.length];
+    if (cross(a, b, c) * cross(a, b, d) < 0 && cross(c, d, a) * cross(c, d, b) < 0 || onSegment(a, b, c) || onSegment(a, b, d) || onSegment(c, d, a) || onSegment(c, d, b)) return;
+  }
+  const result = [], orientation = Math.sign(polygonArea(points));
+  points = [...points];
+  while (points.length > 3) {
+    const ear = points.findIndex((b, i) => {
+      const a = points[(i + points.length - 1) % points.length], c = points[(i + 1) % points.length];
+      return orientation * cross(a, b, c) > 1e-12 && !points.some((p, j) => j !== i && j !== (i + points.length - 1) % points.length && j !== (i + 1) % points.length && orientation * cross(a, b, p) >= -1e-12 && orientation * cross(b, c, p) >= -1e-12 && orientation * cross(c, a, p) >= -1e-12);
+    });
+    if (ear < 0) return;
+    result.push([points[(ear + points.length - 1) % points.length], points[ear], points[(ear + 1) % points.length]]);
+    points.splice(ear, 1);
+  }
+  result.push(points);
+  return result;
+}
+function mapTrianglePoint(point, from, to) {
+  const [a, b, c] = from, determinant = (b.z - c.z) * (a.x - c.x) + (c.x - b.x) * (a.z - c.z);
+  const u = ((b.z - c.z) * (point.x - c.x) + (c.x - b.x) * (point.z - c.z)) / determinant;
+  const v = ((c.z - a.z) * (point.x - c.x) + (a.x - c.x) * (point.z - c.z)) / determinant;
+  return { x: to[0].x * u + to[1].x * v + to[2].x * (1 - u - v), z: to[0].z * u + to[1].z * v + to[2].z * (1 - u - v) };
+}
+var protectionRectangle = (cell, half2) => [
+  { x: cell.x - half2, z: cell.z - half2 },
+  { x: cell.x + half2, z: cell.z - half2 },
+  { x: cell.x + half2, z: cell.z + half2 },
+  { x: cell.x - half2, z: cell.z + half2 }
+];
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWorldAccess.ts
+var AUTHORED_OWNER_HALF_EXTENT = 0.46;
+var AUTHORED_WALK_HALF_WIDTH = 0.12;
+var clearance = AUTHORED_OWNER_HALF_EXTENT + AUTHORED_WALK_HALF_WIDTH;
+var cellKey = (cell) => `${cell.x},${cell.z}`;
+var shoreIndexes = /* @__PURE__ */ new WeakMap();
+var walkKeys = /* @__PURE__ */ new WeakMap();
+var SHORE_DISTANCE = 0.65;
+var MAX_SHORE_ANSWERS = 16384;
+function shoreIndex(floors) {
+  const existing = shoreIndexes.get(floors);
+  if (existing) return existing;
+  const index = { buckets: /* @__PURE__ */ new Map(), waterBuckets: /* @__PURE__ */ new Map(), waterFloors: /* @__PURE__ */ new Map(), footAnswers: /* @__PURE__ */ new Map(), waterDistances: /* @__PURE__ */ new Map() };
+  let order = 0;
+  for (const floor of floors) {
+    if (floor.kind === "water") index.waterFloors.set(floor.id, polygonBounds(floor.vertices.map((vertex) => vertex.point)));
+    for (let i = 0; i < floor.indices.length; i += 3) {
+      const points = floor.indices.slice(i, i + 3).map((id) => floor.vertices[id].point), box = polygonBounds(points);
+      const triangle = { floorId: floor.id, water: floor.kind === "water", points, box, order: order++ };
+      for (let z = Math.floor(box.minZ); z <= Math.floor(box.maxZ); z++) for (let x = Math.floor(box.minX); x <= Math.floor(box.maxX); x++) {
+        const id = cellKey({ x, z }), list = index.buckets.get(id) ?? [];
+        list.push(triangle);
+        index.buckets.set(id, list);
+        if (triangle.water) {
+          const water = index.waterBuckets.get(id) ?? [];
+          water.push(triangle);
+          index.waterBuckets.set(id, water);
+        }
+      }
+    }
+  }
+  shoreIndexes.set(floors, index);
+  return index;
+}
+function shoreTriangles(buckets, point, radius) {
+  const triangles = /* @__PURE__ */ new Set();
+  for (let z = Math.floor(point.z - radius); z <= Math.floor(point.z + radius); z++) for (let x = Math.floor(point.x - radius); x <= Math.floor(point.x + radius); x++)
+    for (const triangle of buckets.get(cellKey({ x, z })) ?? []) if (triangle.box.minX <= point.x + radius && triangle.box.maxX >= point.x - radius && triangle.box.minZ <= point.z + radius && triangle.box.maxZ >= point.z - radius) triangles.add(triangle);
+  return [...triangles];
+}
+function waterDistance(point, triangle) {
+  const crosses = triangle.points.map((a, i) => {
+    const b = triangle.points[(i + 1) % triangle.points.length];
+    return (b.x - a.x) * (point.z - a.z) - (b.z - a.z) * (point.x - a.x);
+  });
+  if (crosses.every((value) => value >= -1e-12) || crosses.every((value) => value <= 1e-12)) return 0;
+  return Math.min(...triangle.points.map((a, i) => {
+    const b = triangle.points[(i + 1) % triangle.points.length], dx = b.x - a.x, dz = b.z - a.z;
+    const t = Math.max(0, Math.min(1, ((point.x - a.x) * dx + (point.z - a.z) * dz) / (dx * dx + dz * dz)));
+    return Math.hypot(point.x - a.x - dx * t, point.z - a.z - dz * t);
+  }));
+}
+function shoreHeight(triangle, point) {
+  return mapTrianglePoint(point, triangle.points, triangle.points.map((p) => ({ x: p.y, z: 0 }))).x;
+}
+function hasWalkRef(world, cell) {
+  if (!Object.isFrozen(world.walkSites)) return world.walkSites.some((site) => cellKey(site.cell) === cellKey(cell));
+  let keys = walkKeys.get(world.walkSites);
+  if (!keys) {
+    keys = new Set(world.walkSites.map((site) => cellKey(site.cell)));
+    walkKeys.set(world.walkSites, keys);
+  }
+  return keys.has(cellKey(cell));
+}
+function distancesAt(index, point) {
+  const id = cellKey(point), existing = index.waterDistances.get(id);
+  if (existing) return existing;
+  const distances = /* @__PURE__ */ new Map();
+  for (const triangle of shoreTriangles(index.waterBuckets, point, SHORE_DISTANCE)) {
+    const distance3 = waterDistance(point, triangle), previous = distances.get(triangle.floorId) ?? Infinity;
+    distances.set(triangle.floorId, Math.min(previous, distance3));
+  }
+  if (index.waterDistances.size >= MAX_SHORE_ANSWERS) index.waterDistances.clear();
+  index.waterDistances.set(id, distances);
+  return distances;
+}
+function subtractShoreCover(polygon, cover, orientation) {
+  for (let i = 0; i < cover.length; i++) {
+    const a = cover[i], b = cover[(i + 1) % cover.length];
+    let inside = true, outside = true;
+    for (const p of polygon) {
+      const distance3 = orientation * ((b.x - a.x) * (p.z - a.z) - (b.z - a.z) * (p.x - a.x));
+      inside &&= distance3 > 0;
+      outside &&= distance3 < 0;
+      if (!inside && !outside) break;
+    }
+    if (inside) continue;
+    if (outside) return [polygon];
+    return subtractPolygon(polygon, cover);
+  }
+  return [];
+}
+function footSupported(index, point) {
+  const id = `${point.x},${point.y},${point.z}`, existing = index.footAnswers.get(id);
+  if (existing !== void 0) return existing;
+  const square = protectionRectangle(point, AUTHORED_WALK_HALF_WIDTH);
+  const triangles = shoreTriangles(index.buckets, point, AUTHORED_WALK_HALF_WIDTH);
+  const minX = Math.floor(point.x - SHORE_DISTANCE), minZ = Math.floor(point.z - SHORE_DISTANCE);
+  triangles.sort((a, b) => Math.max(minZ, Math.floor(a.box.minZ)) - Math.max(minZ, Math.floor(b.box.minZ)) || Math.max(minX, Math.floor(a.box.minX)) - Math.max(minX, Math.floor(b.box.minX)) || a.order - b.order);
+  const overlaps3 = [];
+  let answer = true;
+  for (const triangle of triangles) {
+    const overlap = intersectPolygons(square, triangle.points);
+    if (!polygonHasArea(overlap)) continue;
+    if (triangle.water || polygonHasArea(clipPolygon(overlap, (p) => shoreHeight(triangle, p) - point.y - 0.25 - 1e-7))) {
+      answer = false;
+      break;
+    }
+    overlaps3.push({ triangle, overlap });
+  }
+  if (answer) {
+    let uncovered = [square];
+    for (const { triangle, overlap } of overlaps3) {
+      let cover = clipPolygon(overlap, (p) => shoreHeight(triangle, p) - point.y + 0.25 + 1e-7);
+      cover = clipPolygon(cover, (p) => point.y + 0.25 + 1e-7 - shoreHeight(triangle, p));
+      if (polygonHasArea(cover)) {
+        const orientation = Math.sign(polygonArea(cover));
+        uncovered = uncovered.flatMap((piece) => subtractShoreCover(piece, cover, orientation));
+      }
+      if (!uncovered.length) break;
+    }
+    answer = !uncovered.length;
+  }
+  if (index.footAnswers.size >= MAX_SHORE_ANSWERS) index.footAnswers.clear();
+  index.footAnswers.set(id, answer);
+  return answer;
+}
+function isAuthoredShoreEntrySupported(world, cell, waterFloorIds) {
+  if (!hasWalkRef(world, cell)) return false;
+  const support = world.floorAt(cell), original = world.anchorFloorAt(cell);
+  if (!support || !original || Math.hypot(support.point.x - original.point.x, support.point.z - original.point.z) > 1e-5 || Math.abs(support.point.y - original.point.y) > 0.28) return false;
+  const index = shoreIndex(world.floors);
+  if (!waterFloorIds.length || waterFloorIds.some((id) => !index.waterFloors.has(id))) return false;
+  const distances = distancesAt(index, support.point);
+  const distance3 = Math.min(...waterFloorIds.map((id) => distances.get(id) ?? Infinity));
+  return distance3 > AUTHORED_WALK_HALF_WIDTH * Math.SQRT2 && distance3 <= SHORE_DISTANCE && footSupported(index, support.point);
+}
+function findAuthoredShoreEntries(world, waterFloorIds) {
+  const index = shoreIndex(world.floors), bounds2 = waterFloorIds.flatMap((id) => {
+    const box = index.waterFloors.get(id);
+    return box ? [box] : [];
+  });
+  if (!bounds2.length) return [];
+  return world.walkSites.filter((site) => bounds2.some((box) => site.support.point.x >= box.minX - SHORE_DISTANCE && site.support.point.x <= box.maxX + SHORE_DISTANCE && site.support.point.z >= box.minZ - SHORE_DISTANCE && site.support.point.z <= box.maxZ + SHORE_DISTANCE) && isAuthoredShoreEntrySupported(world, site.cell, waterFloorIds)).sort((a, b) => a.cell.z - b.cell.z || a.cell.x - b.cell.x).map((site) => ({ ...site.ref }));
+}
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/worldDefinition.ts
+var EPSILON = 1e-7;
+var stable = (value) => Math.round(value * 1e9) / 1e9 || 0;
+var cellKey2 = (cell) => `${cell.x},${cell.z}`;
+var refKey = (ref) => JSON.stringify([ref.districtId, ref.siteId]);
+var floorKey = (districtId, floorId2) => JSON.stringify([districtId, floorId2]);
+var turn = (x, z, count) => count === 1 ? { x: -z, z: x } : count === 2 ? { x: -x, z: -z } : count === 3 ? { x: z, z: -x } : { x, z };
+function requireWorld(valid, message) {
+  if (!valid) throw new Error(`Invalid island world: ${message}`);
+}
+function freeze(value) {
+  if (value && typeof value === "object" && !Object.isFrozen(value)) {
+    Object.values(value).forEach(freeze);
+    Object.freeze(value);
+  }
+  return value;
+}
+var FINE_DIVISIONS = 16;
+var FINE_THRESHOLD = 64;
+var fineCell = (value) => Math.max(0, Math.min(FINE_DIVISIONS - 1, Math.floor(value * FINE_DIVISIONS)));
+function barycentric(at, a, b, c) {
+  const determinant = (b.z - c.z) * (a.x - c.x) + (c.x - b.x) * (a.z - c.z);
+  if (Math.abs(determinant) <= 1e-12) return void 0;
+  const u = ((b.z - c.z) * (at.x - c.x) + (c.x - b.x) * (at.z - c.z)) / determinant;
+  const v = ((c.z - a.z) * (at.x - c.x) + (a.x - c.x) * (at.z - c.z)) / determinant;
+  const w = 1 - u - v;
+  return u >= -EPSILON && v >= -EPSILON && w >= -EPSILON ? [u, v, w] : void 0;
+}
+var interpolate = (points, weights) => ({
+  x: stable(points.reduce((value, point, i) => value + point.x * weights[i], 0)),
+  y: stable(points.reduce((value, point, i) => value + point.y * weights[i], 0)),
+  z: stable(points.reduce((value, point, i) => value + point.z * weights[i], 0))
+});
+function walkEdgeError(from, to, floorAt) {
+  if (!from?.support || !to?.support) return "walk edge endpoint has no actual dry floor";
+  const dx = to.cell.x - from.cell.x, dz = to.cell.z - from.cell.z, length = Math.hypot(dx, dz);
+  if (!(length > 0 && length <= 256)) return "walk edge length";
+  const steps = Math.max(8, Math.ceil(length * 8));
+  const physicalStep = Math.hypot(to.support.point.x - from.support.point.x, to.support.point.z - from.support.point.z) / steps * 2 + 0.15;
+  let previous;
+  for (let i = 0; i <= steps; i++) {
+    for (const side of [-0.12, 0, 0.12]) {
+      const cell = { x: from.cell.x + dx * i / steps - dz / length * side, z: from.cell.z + dz * i / steps + dx / length * side };
+      const floor = floorAt(cell);
+      if (!floor) return "walk edge crosses missing floor or water";
+      if (side !== 0) continue;
+      if (previous) {
+        if (Math.abs(floor.point.y - previous.y) > 0.25) return "walk edge has an unsupported vertical step";
+        if (Math.hypot(floor.point.x - previous.x, floor.point.z - previous.z) > physicalStep) return "walk edge crosses separated physical floors";
+      }
+      const endpoint = i === 0 ? from.support : i === steps ? to.support : void 0;
+      if (endpoint && Math.hypot(floor.point.x - endpoint.point.x, floor.point.y - endpoint.point.y, floor.point.z - endpoint.point.z) >= 0.025)
+        return "walk endpoint differs from its site floor";
+      previous = floor.point;
+    }
+  }
+}
+function compileWorldDefinition(input) {
+  requireWorld(input.version === 1 && typeof input.id === "string" && input.id.length > 0, "unknown version or missing ID");
+  requireWorld(input.revision === void 0 || typeof input.revision === "string" && input.revision.length > 0, "geometry revision");
+  requireWorld(Array.isArray(input.districts) && Array.isArray(input.edges), "districts or edges");
+  if (input.source) requireWorld(input.source.artifact && /^[a-f0-9]{64}$/.test(input.source.sha256), "source identity");
+  const definition2 = structuredClone(input);
+  const triangles = [], anchorTriangles = [], originalTriangles = [];
+  const floors = [], anchorFloors = [], sites = [], surfaces = [];
+  const districtIds = /* @__PURE__ */ new Set(), allFloors = /* @__PURE__ */ new Set(), allAnchorFloors = /* @__PURE__ */ new Set(), allSurfaces = /* @__PURE__ */ new Set();
+  const refs = /* @__PURE__ */ new Map(), cells = /* @__PURE__ */ new Map();
+  const finite = (point) => Number.isFinite(point.x) && Number.isFinite(point.z) && (!("y" in point) || Number.isFinite(point.y));
+  const unit = (value) => Number.isFinite(value) && value >= 0 && value <= 1;
+  const logicalPoint = (district, cell) => {
+    const p = turn(cell.x, cell.z, district.turn);
+    return { x: p.x + district.logicalOrigin.x, z: p.z + district.logicalOrigin.z };
+  };
+  const worldPoint2 = (district, point) => {
+    const p = turn(point.x, point.z, district.turn);
+    return { x: p.x + district.worldOrigin.x, y: point.y + district.worldOrigin.y, z: p.z + district.worldOrigin.z };
+  };
+  for (const district of definition2.districts) {
+    requireWorld(district.id && !districtIds.has(district.id), "duplicate district");
+    districtIds.add(district.id);
+    requireWorld(finite(district.logicalOrigin) && Number.isInteger(district.logicalOrigin.x) && Number.isInteger(district.logicalOrigin.z) && finite(district.worldOrigin) && Number.isFinite(district.worldOrigin.y) && [0, 1, 2, 3].includes(district.turn), "district origin or turn");
+    requireWorld(district.waterCarvingScopes === void 0 || Array.isArray(district.waterCarvingScopes), "water carving scopes");
+    const scopeIds = /* @__PURE__ */ new Set(), originals = district.anchorFloors?.length ? district.anchorFloors : district.floors;
+    for (const scope of district.waterCarvingScopes ?? []) {
+      requireWorld(typeof scope.id === "string" && scope.id.length && !scopeIds.has(scope.id), "duplicate or missing water carving scope");
+      scopeIds.add(scope.id);
+      requireWorld(Array.isArray(scope.floorIds) && scope.floorIds.length && new Set(scope.floorIds).size === scope.floorIds.length && scope.floorIds.every((id) => originals.some((floor) => floor.id === id && floor.kind === "ground")), "water carving original ground");
+      requireWorld(Array.isArray(scope.envelope) && triangulateWaterPolygon(scope.envelope), "water carving envelope");
+      const orientation = Math.sign(polygonArea(scope.envelope));
+      requireWorld(scope.envelope.every((a, i) => {
+        const b = scope.envelope[(i + 1) % scope.envelope.length], c = scope.envelope[(i + 2) % scope.envelope.length];
+        return orientation * ((b.x - a.x) * (c.z - b.z) - (b.z - a.z) * (c.x - b.x)) >= -1e-12;
+      }), "water carving envelope must be convex");
+    }
+    const compileFloor = (floor, anchor) => {
+      const id = floorKey(district.id, floor.id);
+      const ids = anchor ? allAnchorFloors : allFloors;
+      requireWorld(floor.id && !ids.has(id), "duplicate floor");
+      ids.add(id);
+      requireWorld(["ground", "deck", "water"].includes(floor.kind) && floor.indices.length > 0 && floor.indices.length % 3 === 0, "floor kind or indices");
+      requireWorld(/^#[a-fA-F0-9]{6}$/.test(floor.color), "floor color");
+      if (floor.material !== void 0) requireWorld(floor.material && unit(floor.material.roughness) && unit(floor.material.metalness) && typeof floor.material.doubleSided === "boolean", "floor material");
+      const vertices = floor.vertices.map((vertex) => {
+        requireWorld(finite(vertex.cell) && finite(vertex.point) && Number.isFinite(vertex.point.y), "non-finite floor vertex");
+        const normal = vertex.normal;
+        if (normal !== void 0) requireWorld(normal && finite(normal) && Number.isFinite(normal.y) && Math.hypot(normal.x, normal.y, normal.z) > 1e-12, "floor normal");
+        const rotated = normal ? turn(normal.x, normal.z, district.turn) : void 0;
+        return {
+          cell: logicalPoint(district, vertex.cell),
+          point: worldPoint2(district, vertex.point),
+          ...normal && rotated ? { normal: { x: rotated.x, y: normal.y, z: rotated.z } } : {}
+        };
+      });
+      for (const index of floor.indices) requireWorld(Number.isInteger(index) && index >= 0 && index < vertices.length, "floor index out of range");
+      for (let i = 0; i < floor.indices.length; i += 3) {
+        const v = floor.indices.slice(i, i + 3).map((index) => vertices[index]);
+        const area4 = (points2) => Math.abs((points2[1].x - points2[0].x) * (points2[2].z - points2[0].z) - (points2[2].x - points2[0].x) * (points2[1].z - points2[0].z));
+        requireWorld(area4(v.map((vertex) => vertex.cell)) > 1e-12 && area4(v.map((vertex) => vertex.point)) > 1e-12, "collapsed floor triangle");
+        const triangle = {
+          floorId: id,
+          kind: floor.kind,
+          cells: v.map((vertex) => vertex.cell),
+          points: v.map((vertex) => vertex.point)
+        };
+        (anchor ? anchorTriangles : triangles).push(triangle);
+        if (anchor || !district.anchorFloors?.length) originalTriangles.push(triangle);
+      }
+      (anchor ? anchorFloors : floors).push({
+        id,
+        kind: floor.kind,
+        color: floor.color,
+        vertices,
+        indices: [...floor.indices],
+        ...floor.material ? { material: { ...floor.material } } : {}
+      });
+    };
+    for (const floor of district.floors) compileFloor(floor, false);
+    for (const floor of district.anchorFloors ?? []) compileFloor(floor, true);
+    for (const surface of district.surfaces ?? []) {
+      const id = floorKey(district.id, surface.id);
+      requireWorld(surface.id && !allSurfaces.has(id), "duplicate surface");
+      allSurfaces.add(id);
+      requireWorld(["bank", "flow"].includes(surface.kind) && Array.isArray(surface.vertices) && Array.isArray(surface.indices) && surface.indices.length > 0 && surface.indices.length % 3 === 0, "surface kind or indices");
+      const material = surface.material;
+      requireWorld(material && /^#[a-fA-F0-9]{6}$/.test(material.color) && unit(material.roughness) && unit(material.metalness) && (material.opacity === void 0 || unit(material.opacity)), "surface material");
+      const vertices = surface.vertices.map((point) => {
+        requireWorld(finite(point) && Number.isFinite(point.y), "non-finite surface vertex");
+        return worldPoint2(district, point);
+      });
+      for (const index of surface.indices) requireWorld(Number.isInteger(index) && index >= 0 && index < vertices.length, "surface index out of range");
+      for (let i = 0; i < surface.indices.length; i += 3) {
+        const [a, b, c] = surface.indices.slice(i, i + 3).map((index) => vertices[index]);
+        const u = { x: b.x - a.x, y: b.y - a.y, z: b.z - a.z }, v = { x: c.x - a.x, y: c.y - a.y, z: c.z - a.z };
+        requireWorld(Math.hypot(u.y * v.z - u.z * v.y, u.z * v.x - u.x * v.z, u.x * v.y - u.y * v.x) > 1e-12, "collapsed surface triangle");
+      }
+      surfaces.push({ id, kind: surface.kind, vertices, indices: [...surface.indices], material: { ...material } });
+    }
+  }
+  const bins = (triangleList, physical) => {
+    const buckets = /* @__PURE__ */ new Map();
+    const bounds3 = triangleList.map((triangle) => {
+      const points2 = physical ? triangle.points : triangle.cells;
+      const minX = Math.min(...points2.map((p) => p.x)), maxX = Math.max(...points2.map((p) => p.x));
+      const minZ = Math.min(...points2.map((p) => p.z)), maxZ = Math.max(...points2.map((p) => p.z));
+      const pad = (min, max) => EPSILON * (1 + 2 * (max - min)) + Number.EPSILON * Math.max(1, Math.abs(min), Math.abs(max)) * 8;
+      const area4 = Math.abs((points2[1].x - points2[0].x) * (points2[2].z - points2[0].z) - (points2[2].x - points2[0].x) * (points2[1].z - points2[0].z));
+      const broad = area4 <= Math.max(maxX - minX, maxZ - minZ) ** 2 * 1e-8;
+      return { minX, maxX, minZ, maxZ, padX: pad(minX, maxX), padZ: pad(minZ, maxZ), broad };
+    });
+    bounds3.forEach((box, index) => {
+      const x0 = Math.floor(box.minX), x1 = Math.floor(box.maxX);
+      const z0 = Math.floor(box.minZ), z1 = Math.floor(box.maxZ);
+      requireWorld((x1 - x0 + 1) * (z1 - z0 + 1) <= 1e5, "floor triangle spans an excessive search area");
+      for (let z = z0; z <= z1; z++) for (let x = x0; x <= x1; x++) {
+        const id = cellKey2({ x, z }), bucket = buckets.get(id) ?? { indices: [] };
+        bucket.indices.push(index);
+        buckets.set(id, bucket);
+      }
+    });
+    for (const [id, bucket] of buckets) {
+      if (bucket.indices.length <= FINE_THRESHOLD) continue;
+      const [x, z] = id.split(",").map(Number);
+      const ranges = bucket.indices.map((index) => {
+        const box = bounds3[index];
+        return {
+          index,
+          x0: box.broad ? 0 : fineCell(box.minX - box.padX - x),
+          x1: box.broad ? FINE_DIVISIONS - 1 : fineCell(box.maxX + box.padX - x),
+          z0: box.broad ? 0 : fineCell(box.minZ - box.padZ - z),
+          z1: box.broad ? FINE_DIVISIONS - 1 : fineCell(box.maxZ + box.padZ - z)
+        };
+      });
+      if (ranges.reduce((count, box) => count + (box.x1 - box.x0 + 1) * (box.z1 - box.z0 + 1), 0) >= bucket.indices.length * FINE_DIVISIONS ** 2 / 4) continue;
+      const fine = /* @__PURE__ */ new Map();
+      for (const { index, x0, x1, z0, z1 } of ranges) {
+        for (let fz = z0; fz <= z1; fz++) for (let fx = x0; fx <= x1; fx++) {
+          const cell = fz * FINE_DIVISIONS + fx, list = fine.get(cell) ?? [];
+          list.push(index);
+          fine.set(cell, list);
+        }
+      }
+      bucket.fine = fine;
+    }
+    return buckets;
+  };
+  const createSampler = (triangleList, physicalQueries) => {
+    const logicalBins = bins(triangleList, false);
+    const sharedCoordinates = physicalQueries && triangleList.every((triangle) => triangle.cells.every((cell, i) => cell.x === triangle.points[i].x && cell.z === triangle.points[i].z));
+    const physicalBins = physicalQueries && !sharedCoordinates ? bins(triangleList, true) : logicalBins;
+    return (at, physical, floorId2, y, raw = false) => {
+      if (!finite(at)) return void 0;
+      let best;
+      const water = [];
+      const buckets = physical ? physicalBins : logicalBins;
+      const candidates = /* @__PURE__ */ new Set();
+      const seenBuckets = /* @__PURE__ */ new Set();
+      for (const dx of [0, -EPSILON, EPSILON]) for (const dz of [0, -EPSILON, EPSILON]) {
+        const x = Math.floor(at.x + dx), z = Math.floor(at.z + dz), id = cellKey2({ x, z });
+        if (seenBuckets.has(id)) continue;
+        seenBuckets.add(id);
+        const bucket = buckets.get(id);
+        if (!bucket) continue;
+        const list = bucket.fine ? bucket.fine.get(fineCell(at.z - z) * FINE_DIVISIONS + fineCell(at.x - x)) : bucket.indices;
+        for (const index of list ?? []) candidates.add(index);
+      }
+      for (const index of candidates) {
+        const triangle = triangleList[index];
+        if (floorId2 && triangle.floorId !== floorId2 && (raw || triangle.kind !== "water")) continue;
+        const weights = barycentric(at, ...physical ? triangle.points : triangle.cells);
+        if (!weights) continue;
+        const point = interpolate(triangle.points, weights);
+        if (triangle.kind === "water" && !raw) {
+          water.push(point);
+          continue;
+        }
+        const cell = { x: stable(triangle.cells.reduce((value, p, i) => value + p.x * weights[i], 0)), z: stable(triangle.cells.reduce((value, p, i) => value + p.z * weights[i], 0)) };
+        if (!best || (y === void 0 ? point.y > best.point.y + EPSILON : Math.abs(point.y - y) < Math.abs(best.point.y - y) - EPSILON))
+          best = { cell, point, floorId: triangle.floorId, triangle: index };
+      }
+      if (!raw && best && water.some((point) => Math.hypot(point.x - best.point.x, point.z - best.point.z) < 1e-5 && point.y > best.point.y + EPSILON)) return void 0;
+      return best;
+    };
+  };
+  const sample = createSampler(triangles, true), sampleAnchor = createSampler(anchorTriangles, false);
+  const sampleOriginal = originalTriangles.length === anchorTriangles.length ? sampleAnchor : !anchorTriangles.length ? sample : createSampler(originalTriangles, false);
+  for (const district of definition2.districts) {
+    for (const site of district.sites) {
+      const ref = { districtId: district.id, siteId: site.id }, id = refKey(ref), cell = logicalPoint(district, site.cell), floorId2 = floorKey(district.id, site.floorId);
+      requireWorld(site.id && !refs.has(id) && !cells.has(cellKey2(cell)), "duplicate site ID or logical cell");
+      requireWorld(typeof site.placement === "boolean" && finite(site.cell) && (!site.placement || Number.isInteger(site.cell.x) && Number.isInteger(site.cell.z)), "site cell or placement right");
+      const anchored = site.anchorPoint !== void 0;
+      requireWorld((anchored ? allAnchorFloors : allFloors).has(floorId2), "site refers to an unknown floor");
+      const anchor = anchored ? sampleAnchor(cell, false, floorId2, void 0, true) : sample(cell, false, floorId2);
+      requireWorld(anchor, anchored ? "site anchor has no original floor" : "site has no actual dry floor");
+      if (anchored) {
+        requireWorld(finite(site.anchorPoint) && Number.isFinite(site.anchorPoint.y), "non-finite site anchor");
+        const point = worldPoint2(district, site.anchorPoint);
+        requireWorld(Math.hypot(point.x - anchor.point.x, point.y - anchor.point.y, point.z - anchor.point.z) <= 1e-6, "site anchor differs from its original floor");
+      }
+      const support = sample(cell, false);
+      const compiled = { ref, cell, point: anchor.point, floorId: floorId2, placement: site.placement, ...support ? { support } : {} };
+      refs.set(id, compiled);
+      cells.set(cellKey2(cell), compiled);
+      sites.push(compiled);
+    }
+    const ports = /* @__PURE__ */ new Set();
+    for (const port of district.ports) {
+      requireWorld(port.id && !ports.has(port.id) && refs.has(refKey({ districtId: district.id, siteId: port.siteId })), "port ID or site");
+      ports.add(port.id);
+    }
+  }
+  const graphs = Object.fromEntries(["walk", "join", "water"].map((kind) => [kind, /* @__PURE__ */ new Map()]));
+  const edgeIds = /* @__PURE__ */ new Set();
+  for (const edge of definition2.edges) {
+    const a = refKey(edge.from), b = refKey(edge.to), edgeId = JSON.stringify([a, b].sort());
+    requireWorld(a !== b && refs.has(a) && refs.has(b) && !edgeIds.has(edgeId), "duplicate edge or unknown endpoint");
+    edgeIds.add(edgeId);
+    requireWorld(edge.allows.length > 0 && new Set(edge.allows).size === edge.allows.length && edge.allows.every((kind) => ["walk", "join", "water"].includes(kind)), "edge passage rights");
+    if (edge.allows.includes("walk")) {
+      const error = walkEdgeError(refs.get(a), refs.get(b), (cell) => sample(cell, false));
+      requireWorld(!error, error);
+    }
+    for (const kind of edge.allows) {
+      const graph = graphs[kind];
+      for (const [from, to] of [[a, b], [b, a]]) {
+        const next = graph.get(from) ?? /* @__PURE__ */ new Set();
+        next.add(to);
+        graph.set(from, next);
+      }
+    }
+  }
+  const neighbors = (cell, passage = "walk") => {
+    const site = cells.get(cellKey2(cell));
+    if (!site) return [];
+    return [...graphs[passage].get(refKey(site.ref)) ?? []].map((id) => ({ ...refs.get(id).cell }));
+  };
+  const owns = (cell) => cells.get(cellKey2(cell))?.placement === true;
+  const floorKinds = new Map(floors.map((floor) => [floor.id, floor.kind]));
+  const walkSites = sites.filter((site) => site.support), shoreApproaches = /* @__PURE__ */ new Map();
+  const shoreGeometry = { floors, walkSites, floorAt: (cell) => sample(cell, false), anchorFloorAt: (cell) => sampleOriginal(cell, false) };
+  for (const district of definition2.districts) {
+    requireWorld(district.shoreAccess === void 0 || Array.isArray(district.shoreAccess), "shore access");
+    for (const access of district.shoreAccess ?? []) {
+      const owner = refs.get(refKey({ districtId: district.id, siteId: access.ownerSiteId }));
+      requireWorld(owner?.placement && !shoreApproaches.has(cellKey2(owner.cell)), "shore owner");
+      requireWorld(Array.isArray(access.waterFloorIds) && access.waterFloorIds.length && new Set(access.waterFloorIds).size === access.waterFloorIds.length, "shore water floors");
+      const waterIds = access.waterFloorIds.map((id) => floorKey(district.id, id));
+      requireWorld(waterIds.every((id) => floorKinds.get(id) === "water") && waterIds.some((id) => {
+        const water = sample(owner.cell, false, id, void 0, true);
+        return water && Math.hypot(water.point.x - owner.point.x, water.point.z - owner.point.z) < 1e-5;
+      }), "shore water does not cover its original owner");
+      requireWorld(Array.isArray(access.entrySiteIds) && new Set(access.entrySiteIds).size === access.entrySiteIds.length, "shore entries");
+      const entries = access.entrySiteIds.map((id) => refs.get(refKey({ districtId: district.id, siteId: id })));
+      requireWorld(entries.every((entry) => entry && isAuthoredShoreEntrySupported(shoreGeometry, entry.cell, waterIds)), "shore entry has no actual bank support");
+      shoreApproaches.set(cellKey2(owner.cell), entries.map((entry) => ({ ...entry.cell })));
+    }
+  }
+  const siteAt = (point) => {
+    const floor = sample(point, true, void 0, point.y);
+    if (!floor || Math.abs(floor.point.y - point.y) > 0.025) return void 0;
+    const site = cells.get(cellKey2({ x: Math.round(floor.cell.x), z: Math.round(floor.cell.z) }));
+    return site?.placement && site.support && JSON.parse(floor.floorId)[0] === site.ref.districtId && floorKinds.get(floor.floorId) === floorKinds.get(site.support.floorId) ? site : void 0;
+  };
+  const route = (from, to, open, passage = "walk") => {
+    if (!cells.has(cellKey2(from)) || !cells.has(cellKey2(to)) || !open.has(cellKey2(from)) || !open.has(cellKey2(to))) return void 0;
+    if (passage === "walk" && (!cells.get(cellKey2(from))?.support || !cells.get(cellKey2(to))?.support)) return void 0;
+    const queue = [from], previous = /* @__PURE__ */ new Map([[cellKey2(from), void 0]]);
+    for (let i = 0; i < queue.length; i++) {
+      const cell = queue[i];
+      if (cellKey2(cell) === cellKey2(to)) {
+        const result = [];
+        let at = cell;
+        while (at) {
+          result.unshift({ ...at });
+          at = previous.get(cellKey2(at));
+        }
+        return result;
+      }
+      for (const next of neighbors(cell, passage)) if (open.has(cellKey2(next)) && !previous.has(cellKey2(next))) {
+        previous.set(cellKey2(next), cell);
+        queue.push(next);
+      }
+    }
+  };
+  const points = floors.filter((floor) => floor.kind !== "water").flatMap((floor) => floor.vertices.map((v) => v.point));
+  requireWorld(points.length > 0, "world has no dry floor");
+  const bounds2 = points.reduce((box, point) => ({
+    min: { x: Math.min(box.min.x, point.x), y: Math.min(box.min.y, point.y), z: Math.min(box.min.z, point.z) },
+    max: { x: Math.max(box.max.x, point.x), y: Math.max(box.max.y, point.y), z: Math.max(box.max.z, point.z) }
+  }), { min: { ...points[0] }, max: { ...points[0] } });
+  const isWalkEdgeSupported = (from, to) => !walkEdgeError(cells.get(cellKey2(from)), cells.get(cellKey2(to)), (cell) => sample(cell, false));
+  return Object.freeze({
+    id: definition2.id,
+    revision: definition2.revision,
+    definition: freeze(definition2),
+    floors: freeze(floors),
+    anchorFloors: freeze(anchorFloors),
+    surfaces: freeze(surfaces),
+    sites: freeze(sites),
+    walkSites: freeze(walkSites),
+    bounds: freeze(bounds2),
+    owns,
+    neighbors,
+    route,
+    siteAt,
+    isWalkEdgeSupported,
+    shoreApproachCells: (cell) => shoreApproaches.get(cellKey2(cell))?.map((entry) => ({ ...entry })),
+    anchorAt: (cell) => {
+      const point = cells.get(cellKey2(cell))?.point;
+      return point ? { ...point } : void 0;
+    },
+    anchorFloorAt: (cell) => sampleOriginal(cell, false),
+    sampleFloorAt: (cell, floorId2) => allFloors.has(floorId2) ? sample(cell, false, floorId2, void 0, true) : void 0,
+    floorAt: (cell, floorId2) => sample(cell, false, floorId2),
+    logicalAt: (point) => sample(point, true, void 0, point.y)?.cell
+  });
+}
+function isWorldWalkEdgeSupported(world, from, to) {
+  return world.isWalkEdgeSupported(from, to);
+}
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/economyRules.ts
+var HOUR_MS = 36e5;
+var GROWTH_WINDOW_MS = 24 * HOUR_MS;
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/model.ts
+var HOUR = 36e5;
+var LIFE_RULES = {
+  dropsPerProblem: 2,
+  dailyGoal: 6,
+  activityMs: HOUR / 2,
+  expansionPrice: 12,
+  maxItems: 30,
+  budHours: 2,
+  bloomHours: 6,
+  stylePrice: 4
+};
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/space.ts
+var cellKey3 = (p) => `${p.x},${p.z}`;
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/waterChannels.ts
+var distance = (a, b) => Math.abs(a.x - b.x) + Math.abs(a.z - b.z);
+var MAX_CHANNEL_STEPS = 8;
+var directions = [{ x: 0, z: -1, bit: 1 }, { x: 1, z: 0, bit: 2 }, { x: 0, z: 1, bit: 4 }, { x: -1, z: 0, bit: 8 }];
+var waterNeighbors = (state, cell) => (state.neighbors?.(cell) ?? directions.map(({ x, z }) => ({ x: cell.x + x, z: cell.z + z }))).filter((next) => Number.isInteger(cell.x) && Number.isInteger(cell.z) && Number.isInteger(next.x) && Number.isInteger(next.z) && distance(cell, next) === 1);
+function connectedWaterChannels(state) {
+  const channels = new Map(state.items.filter((item) => item.kind === "water-channel" && item.cell).map((item) => [cellKey3(item.cell), item]));
+  const bowls = state.items.filter((item) => item.kind === "water-bowl" && item.cell);
+  const reached = /* @__PURE__ */ new Set();
+  let frontier = [...channels.entries()].filter(([key5, item]) => {
+    if (!item.cell || !bowls.some((bowl) => waterNeighbors(state, bowl.cell).some((next) => cellKey3(next) === key5))) return false;
+    reached.add(key5);
+    return true;
+  }).map(([key5]) => key5);
+  for (let step = 1; step < MAX_CHANNEL_STEPS && frontier.length; step++) {
+    const next = [];
+    for (const key5 of frontier) {
+      const item = channels.get(key5);
+      for (const nextCell of waterNeighbors(state, item.cell)) {
+        const neighbor = cellKey3(nextCell);
+        if (channels.has(neighbor) && !reached.has(neighbor)) {
+          reached.add(neighbor);
+          next.push(neighbor);
+        }
+      }
+    }
+    frontier = next;
+  }
+  return reached;
+}
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/rules.ts
+var RULES = {
+  dropsPerCompletion: 2,
+  townHoursPerCompletion: 2,
+  buildHours: 6,
+  dawnHour: 6,
+  /** Homes stay small so each new friend usually needs a new seed: the core loop. */
+  homeCapacity: [0, 1, 1, 2, 2],
+  /** Town hours after building, comfort average and island level for each home stage. */
+  homeGrowth: [
+    void 0,
+    { hours: 24, comfort: 1, level: 2 },
+    { hours: 48, comfort: 2, level: 4 },
+    { hours: 96, comfort: 3, level: 6 }
+  ],
+  /** Pokomoko's basket feeds the first two friends; farms feed the rest. */
+  baseFood: 2,
+  basePlay: 2,
+  /** The next boat docks this many town hours after the previous friend arrived. */
+  boatBaseHours: 48,
+  boatHoursPerVillager: 2,
+  likeRadius: 3,
+  quietRadius: 2,
+  styleRadius: 2,
+  genkiLevels: [0, 3, 8, 15, 25, 40, 60, 85, 115, 150],
+  characterShare: 0.3,
+  characterMinimum: 6,
+  favoredWeight: 3,
+  rareBase: 0.05,
+  rareBonus: 0.1,
+  rareRichness: 40,
+  natureHourCap: 24 * 7,
+  soilBase: 0.2,
+  soilHalfLife: 3,
+  spreadEvery: 12,
+  spreadChance: 0.5,
+  spreadMoisture: 0.35,
+  wildShare: 0.4,
+  bigTreeHours: 24 * 7,
+  lordTreeHours: 24 * 30,
+  appliedMemory: 500,
+  /** Completion ids kept for de-duplication; older ones collapse into a time floor. */
+  learnedMemory: 3e3
+};
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/types.ts
+var OWN_LANDMARKS = ["lighthouse", "bandstand", "slide", "trampoline", "fountain", "bakery", "postbox"];
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/space.ts
+var HOME_CELL = { x: 2, z: 1 };
+var HOUSE_CELLS = [{ x: 2, z: 0 }, { x: 3, z: 0 }, HOME_CELL];
+function landBounds2({ land }) {
+  const sides = [land.expanded, ...land.extra];
+  const west = sides.includes("west"), east = sides.includes("east");
+  const districts = land.districts ?? [];
+  return {
+    minX: (land.capes.includes("west") ? -6 : west ? -3 : 0) - 3 * districts.filter((s) => s === "west").length,
+    maxX: (land.capes.includes("east") ? 11 : east ? 8 : 5) + 3 * districts.filter((s) => s === "east").length,
+    depth: (sides.includes("south") ? 8 : 5) + 3 * districts.filter((s) => s === "south").length
+  };
+}
+function onLand(state, cell, world) {
+  if (world) return world.owns(cell);
+  const { minX, maxX, depth } = landBounds2(state);
+  return Number.isInteger(cell.x) && Number.isInteger(cell.z) && cell.x >= minX && cell.x <= maxX && cell.z >= 0 && cell.z < depth;
+}
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/environment.ts
+function waterLayout(state, world) {
+  return {
+    items: state.landmarks.filter((l) => !OWN_LANDMARKS.includes(l.kind) && l.cell && (!world || onLand(state, l.cell, world))).map((l) => ({ kind: l.kind, cell: l.cell, growth: l.growth })),
+    ...world ? { neighbors: (cell) => world.neighbors(cell, "water") } : {}
+  };
+}
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterCarving.ts
+var indexes = /* @__PURE__ */ new WeakMap();
+var key2 = (x, z) => `${x},${z}`;
+var compiledId = (districtId, floorId2) => JSON.stringify([districtId, floorId2]);
+var turn2 = (cell, count) => count === 1 ? { x: -cell.z, z: cell.x } : count === 2 ? { x: -cell.x, z: -cell.z } : count === 3 ? { x: cell.z, z: -cell.x } : { ...cell };
+function logicalEnvelope(district, envelope) {
+  return envelope.map((cell) => {
+    const p = turn2(cell, district.turn);
+    return { x: p.x + district.logicalOrigin.x, z: p.z + district.logicalOrigin.z };
+  });
+}
+function withNative05WaterCarvingScope(base2) {
+  if (base2.id !== "native05-authored-world-m0-v2" || base2.definition.source?.sha256 !== "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d")
+    throw new Error("Native05 water carving requires the fixed original world");
+  const districtId = "native05-inlet-core", floorId2 = "Island / continuous sculpted mature terrain:1";
+  const original = base2.definition.districts.find((district) => district.id === districtId);
+  if (!original || !(original.anchorFloors ?? original.floors).some((floor) => floor.id === floorId2 && floor.kind === "ground"))
+    throw new Error("Native05 water carving requires the original hill ground");
+  const definition2 = structuredClone(base2.definition);
+  definition2.districts = definition2.districts.map((district) => district.id === districtId ? { ...district, waterCarvingScopes: [{
+    id: "native05-hill-water-v1",
+    floorIds: [floorId2],
+    envelope: [
+      { x: 4.4, z: -10.5 },
+      { x: 8.6, z: -10.5 },
+      { x: 8.6, z: -7.4 },
+      { x: 4.4, z: -7.4 }
+    ]
+  }] } : district);
+  return compileWorldDefinition(definition2);
+}
+function authoredWaterCarvingFloorIds(base2, districtId) {
+  const scopes = base2.definition.districts.find((district) => district.id === districtId)?.waterCarvingScopes;
+  return scopes?.length ? [...new Set(scopes.flatMap((scope) => scope.floorIds.map((id) => compiledId(districtId, id))))] : void 0;
+}
+function sourceIndex(base2, districtId) {
+  let districts = indexes.get(base2);
+  if (!districts) {
+    districts = /* @__PURE__ */ new Map();
+    indexes.set(base2, districts);
+  }
+  const existing = districts.get(districtId);
+  if (existing) return existing;
+  const buckets = /* @__PURE__ */ new Map(), district = base2.definition.districts.find((district2) => district2.id === districtId);
+  const index = { buckets, identity: true };
+  if (!district) return index;
+  const sourceFloors = district.anchorFloors?.length ? base2.anchorFloors : base2.floors;
+  const scopes = district.waterCarvingScopes;
+  const strictRectangles = base2.sites.filter((site) => site.placement && site.ref.districtId === districtId).map((site) => protectionRectangle(site.cell, 0.5));
+  for (const floor of sourceFloors) {
+    if (floor.kind !== "ground" || JSON.parse(floor.id)[0] !== districtId) continue;
+    const regions = scopes?.length ? scopes.filter((scope) => scope.floorIds.some((id) => compiledId(districtId, id) === floor.id)).map((scope) => logicalEnvelope(district, scope.envelope)) : strictRectangles;
+    if (!regions.length) continue;
+    index.identity &&= floor.vertices.every((vertex) => vertex.cell.x === vertex.point.x && vertex.cell.z === vertex.point.z);
+    const regionBoxes = regions.map(polygonBounds);
+    for (let i = 0; i < floor.indices.length; i += 3) {
+      const vertices = floor.indices.slice(i, i + 3).map((id) => floor.vertices[id]), cells = vertices.map((vertex) => vertex.cell), points = vertices.map((vertex) => vertex.point);
+      const logicalBox = polygonBounds(cells);
+      for (let r = 0; r < regions.length; r++) {
+        if (!polygonBoxesOverlap(logicalBox, regionBoxes[r])) continue;
+        const logical = intersectPolygons(cells, regions[r]);
+        if (!polygonHasArea(logical)) continue;
+        const polygon = logical.map((cell) => mapTrianglePoint(cell, cells, points)), box = polygonBounds(polygon);
+        const cover = { cells, points, polygon, box, logicalBox };
+        for (let z = Math.floor(box.minZ); z <= Math.floor(box.maxZ); z++) for (let x = Math.floor(box.minX); x <= Math.floor(box.maxX); x++) {
+          const id = key2(x, z), list = buckets.get(id) ?? [];
+          list.push(cover);
+          buckets.set(id, list);
+        }
+      }
+    }
+  }
+  districts.set(districtId, index);
+  return index;
+}
+function candidatesIn(index, box) {
+  const candidates = /* @__PURE__ */ new Set();
+  for (let z = Math.floor(box.minZ); z <= Math.floor(box.maxZ); z++) for (let x = Math.floor(box.minX); x <= Math.floor(box.maxX); x++)
+    for (const source of index.buckets.get(key2(x, z)) ?? []) if (polygonBoxesOverlap(box, source.box)) candidates.add(source);
+  return candidates;
+}
+function isAuthoredWaterCarvingSafe(base2, districtId, outline, protections2) {
+  if (outline.some((point) => !Number.isFinite(point.y)) || protections2.some((p) => !Number.isFinite(p.cell.x) || !Number.isFinite(p.cell.z) || !Number.isFinite(p.half) || p.half <= 0)) return false;
+  const triangles = triangulateWaterPolygon(outline);
+  if (!triangles) return false;
+  if (triangles.some((triangle) => {
+    const box = polygonBounds(triangle);
+    return ![box.minX, box.maxX, box.minZ, box.maxZ].every((value) => Number.isSafeInteger(Math.floor(value))) || (Math.floor(box.maxX) - Math.floor(box.minX) + 1) * (Math.floor(box.maxZ) - Math.floor(box.minZ) + 1) > 1e5;
+  })) return false;
+  const index = sourceIndex(base2, districtId), protectedRegions = protections2.map((p) => ({ polygon: protectionRectangle(p.cell, p.half), box: polygonBounds(protectionRectangle(p.cell, p.half)) }));
+  if (index.identity) {
+    for (const triangle of triangles) {
+      const box = polygonBounds(triangle);
+      for (const protection of protectedRegions) {
+        if (!polygonBoxesOverlap(box, protection.box)) continue;
+        const joint = {
+          minX: Math.max(box.minX, protection.box.minX),
+          maxX: Math.min(box.maxX, protection.box.maxX),
+          minZ: Math.max(box.minZ, protection.box.minZ),
+          maxZ: Math.min(box.maxZ, protection.box.maxZ)
+        };
+        for (const source of candidatesIn(index, joint)) {
+          if (!polygonBoxesOverlap(source.logicalBox, protection.box)) continue;
+          const overlap = intersectPolygons(triangle, source.polygon);
+          if (!polygonHasArea(overlap)) continue;
+          const logical = overlap.map((point) => mapTrianglePoint(point, source.points, source.cells));
+          if (polygonHasArea(intersectPolygons(logical, protection.polygon))) return false;
+        }
+      }
+    }
+  }
+  for (const triangle of triangles) {
+    const box = polygonBounds(triangle);
+    let uncovered = [{ polygon: triangle, box }];
+    for (const source of candidatesIn(index, box)) {
+      if (index.identity && !uncovered.some((piece) => polygonBoxesOverlap(piece.box, source.box))) continue;
+      const overlap = intersectPolygons(triangle, source.polygon);
+      if (!polygonHasArea(overlap)) continue;
+      if (!index.identity) {
+        const logical = overlap.map((point) => mapTrianglePoint(point, source.points, source.cells));
+        if (protectedRegions.some((p) => polygonBoxesOverlap(source.logicalBox, p.box) && polygonHasArea(intersectPolygons(logical, p.polygon)))) return false;
+      }
+      uncovered = uncovered.flatMap((piece) => polygonBoxesOverlap(piece.box, source.box) ? subtractPolygon(piece.polygon, source.polygon).map((polygon) => ({ polygon, box: polygonBounds(polygon) })) : [piece]);
+      if (index.identity && !uncovered.length) break;
+    }
+    if (uncovered.length) return false;
+  }
+  return true;
+}
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterContour.ts
+var EPS = 1e-9;
+var cross2 = (a, b, c) => (b.x - a.x) * (c.z - a.z) - (b.z - a.z) * (c.x - a.x);
+var same = (a, b) => Math.abs(a.x - b.x) < EPS && Math.abs(a.z - b.z) < EPS;
+var outlineArea = (outline) => outline.reduce((sum, p, i) => {
+  const q = outline[(i + 1) % outline.length];
+  return sum + p.x * q.z - p.z * q.x;
+}, 0) / 2;
+function pointInWaterOutline(point, outline) {
+  let inside = false;
+  for (let i = 0, j = outline.length - 1; i < outline.length; j = i++) {
+    const a = outline[j], b = outline[i], length = Math.hypot(b.x - a.x, b.z - a.z);
+    if (length > EPS && Math.abs(cross2(a, b, point)) <= EPS * length && point.x >= Math.min(a.x, b.x) - EPS && point.x <= Math.max(a.x, b.x) + EPS && point.z >= Math.min(a.z, b.z) - EPS && point.z <= Math.max(a.z, b.z) + EPS) return true;
+    if (a.z > point.z !== b.z > point.z && point.x < (b.x - a.x) * (point.z - a.z) / (b.z - a.z) + a.x) inside = !inside;
+  }
+  return inside;
+}
+var isConvex = (p) => p.every((a, i) => cross2(a, p[(i + 1) % p.length], p[(i + 2) % p.length]) >= -EPS);
+function decomposeWaterOutline(outline) {
+  if (outline.length < 3 || outline.length > 128 || !outline.every((p) => [p.x, p.y, p.z].every(Number.isFinite))) return [];
+  const vertices = [...outlineArea(outline) < 0 ? [...outline].reverse() : outline];
+  const pieces = [];
+  while (vertices.length > 3) {
+    let clipped = false;
+    for (let i = 0; i < vertices.length; i++) {
+      const a = vertices[(i + vertices.length - 1) % vertices.length], b = vertices[i], c = vertices[(i + 1) % vertices.length];
+      if (cross2(a, b, c) <= EPS) continue;
+      if (vertices.some((p) => p !== a && p !== b && p !== c && cross2(a, b, p) >= -EPS && cross2(b, c, p) >= -EPS && cross2(c, a, p) >= -EPS)) continue;
+      pieces.push([a, b, c]);
+      vertices.splice(i, 1);
+      clipped = true;
+      break;
+    }
+    if (!clipped) return [];
+  }
+  if (outlineArea(vertices) <= EPS) return [];
+  pieces.push(vertices);
+  for (let changed = true; changed; ) {
+    changed = false;
+    merge: for (let a = 0; a < pieces.length; a++) for (let b = a + 1; b < pieces.length; b++) {
+      const left = pieces[a], right = pieces[b];
+      for (let i = 0; i < left.length; i++) for (let j = 0; j < right.length; j++) {
+        if (!same(left[i], right[(j + 1) % right.length]) || !same(left[(i + 1) % left.length], right[j])) continue;
+        const joined = [
+          ...Array.from({ length: left.length }, (_, k) => left[(i + 1 + k) % left.length]),
+          ...Array.from({ length: right.length - 2 }, (_, k) => right[(j + 2 + k) % right.length])
+        ];
+        if (!isConvex(joined)) continue;
+        pieces[a] = joined;
+        pieces.splice(b, 1);
+        changed = true;
+        break merge;
+      }
+    }
+  }
+  return pieces;
+}
+function waterRayExit(origin, dx, dz, outline) {
+  if (!pointInWaterOutline(origin, outline)) return;
+  let nearest = Infinity;
+  for (let i = 0; i < outline.length; i++) {
+    const a = outline[i], b = outline[(i + 1) % outline.length], ex = b.x - a.x, ez = b.z - a.z;
+    const determinant = dx * ez - dz * ex;
+    if (Math.abs(determinant) < EPS) continue;
+    const ax = a.x - origin.x, az = a.z - origin.z, t = (ax * ez - az * ex) / determinant, u = (ax * dz - az * dx) / determinant;
+    if (t >= -EPS && u >= -EPS && u <= 1 + EPS) nearest = Math.min(nearest, t);
+  }
+  return Number.isFinite(nearest) ? nearest : void 0;
+}
+function waterSegmentIntervals(a, b, outline) {
+  const dx = b.x - a.x, dz = b.z - a.z, values = [0, 1];
+  for (let i = 0; i < outline.length; i++) {
+    const p = outline[i], q = outline[(i + 1) % outline.length], ex = q.x - p.x, ez = q.z - p.z, det = dx * ez - dz * ex;
+    if (Math.abs(det) < EPS) continue;
+    const px = p.x - a.x, pz = p.z - a.z, t = (px * ez - pz * ex) / det, u = (px * dz - pz * dx) / det;
+    if (t > EPS && t < 1 - EPS && u >= -EPS && u <= 1 + EPS) values.push(t);
+  }
+  values.sort((x, y) => x - y);
+  return values.slice(1).flatMap((end, i) => {
+    const start = values[i], t = (start + end) / 2;
+    return end - start > EPS && pointInWaterOutline({ x: a.x + dx * t, y: a.y, z: a.z + dz * t }, outline) ? [[start, end]] : [];
+  });
+}
+function subtractWaterConvexPieces(polygon, pieces) {
+  let remaining = [[...polygon]];
+  const box = (points) => ({
+    minX: Math.min(...points.map((p) => p.x)),
+    maxX: Math.max(...points.map((p) => p.x)),
+    minZ: Math.min(...points.map((p) => p.z)),
+    maxZ: Math.max(...points.map((p) => p.z))
+  });
+  const sourceBox = box(polygon);
+  for (const piece of pieces) {
+    const cutBox = box(piece);
+    if (sourceBox.maxX < cutBox.minX - EPS || sourceBox.minX > cutBox.maxX + EPS || sourceBox.maxZ < cutBox.minZ - EPS || sourceBox.minZ > cutBox.maxZ + EPS) continue;
+    remaining = remaining.flatMap((input) => {
+      let inside = input;
+      const outside = [];
+      for (let i = 0; i < piece.length && inside.length; i++) {
+        const a = piece[i], b = piece[(i + 1) % piece.length];
+        const split = (keepInside) => {
+          const result = [];
+          for (let j = 0; j < inside.length; j++) {
+            const p = inside[j], q = inside[(j + 1) % inside.length], dp = cross2(a, b, p), dq = cross2(a, b, q);
+            const keepP = keepInside ? dp >= -EPS : dp <= EPS, keepQ = keepInside ? dq >= -EPS : dq <= EPS;
+            if (keepP) result.push(p);
+            if (keepP !== keepQ && Math.abs(dp - dq) > EPS) {
+              const t = Math.max(0, Math.min(1, dp / (dp - dq)));
+              result.push({ x: p.x + (q.x - p.x) * t, y: p.y + (q.y - p.y) * t, z: p.z + (q.z - p.z) * t });
+            }
+          }
+          const clean2 = result.filter((point, index) => !same(point, result[(index + result.length - 1) % result.length]));
+          return clean2.length >= 3 && Math.abs(outlineArea(clean2)) > 1e-12 ? clean2 : [];
+        };
+        const removed = split(false);
+        if (removed.length) outside.push(removed);
+        inside = split(true);
+      }
+      return outside;
+    });
+  }
+  return remaining;
+}
+function adaptWaterContour(source, center, along, across, yaw, negativeAlong = along, negativeAcross = across) {
+  const maxX = Math.max(...source.map((p) => p.x)), minX = -Math.min(...source.map((p) => p.x)), maxZ = Math.max(...source.map((p) => p.z)), minZ = -Math.min(...source.map((p) => p.z));
+  const outline = source.map((p) => {
+    const x = p.x * (p.x < 0 ? negativeAlong / minX : along / maxX), z = p.z * (p.z < 0 ? negativeAcross / minZ : across / maxZ);
+    return {
+      x: center.x + x * Math.cos(yaw) - z * Math.sin(yaw),
+      y: center.y,
+      z: center.z + x * Math.sin(yaw) + z * Math.cos(yaw)
+    };
+  });
+  return outlineArea(outline) < 0 ? outline.reverse() : outline;
+}
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterRim.ts
+function scaledWaterOutline(outline, center, scale) {
+  return outline.map((p) => ({ x: center.x + (p.x - center.x) * scale, y: p.y, z: center.z + (p.z - center.z) * scale }));
+}
+function buildWaterRim({ id, outline, center, waterY, rings, groundAt, mouths, body, lip }) {
+  const rows = rings.map((ring, row) => scaledWaterOutline(outline, center, ring.scale).map((p) => {
+    const y = row === 0 ? groundAt(p) : waterY + ring.height;
+    return y === void 0 ? void 0 : { ...p, y };
+  }));
+  if (rows.some((row) => row.some((point) => !point))) return;
+  const mouthPieces = mouths.flatMap(decomposeWaterOutline);
+  const result = [];
+  for (let band = 0; band + 1 < rows.length; band++) {
+    const vertices = [], indices = [];
+    for (let i = 0; i < outline.length; i++) {
+      const next = (i + 1) % outline.length;
+      const quad = [rows[band][i], rows[band][next], rows[band + 1][next], rows[band + 1][i]];
+      for (const triangle of [[quad[0], quad[1], quad[2]], [quad[0], quad[2], quad[3]]]) {
+        for (const polygon of subtractWaterConvexPieces(triangle, mouthPieces)) {
+          const offset = vertices.length;
+          vertices.push(...polygon);
+          for (let vertex = 1; vertex + 1 < polygon.length; vertex++) indices.push(offset, offset + vertex, offset + vertex + 1);
+        }
+      }
+    }
+    if (indices.length) result.push({
+      id: `${id}:${band}`,
+      kind: "bank",
+      vertices,
+      indices,
+      material: { ...band === 1 ? lip : body, metalness: 0 }
+    });
+  }
+  return result;
+}
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/nativeWaterBridgeProfile.json
+var nativeWaterBridgeProfile_default = { version: 1, source: { artifact: "docs/design/2026-10-10-island-final-3d/whole-island.glb", sha256: "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d", id: "native05-forest-garden-bridge" }, scale: 0.45, span: 1.49329318, width: 0.44100001, archHeight: 0.126, deckBaseY: 0.02281418, deckRows: [{ x: -0.74664659, y: 0.02281418 }, { x: -0.72189325, y: 0.02281418 }, { x: -0.63709272, y: 0.04597338 }, { x: -0.55210455, y: 0.06835518 }, { x: -0.46693438, y: 0.0891909 }, { x: -0.38159269, y: 0.10776066 }, { x: -0.29980389, y: 0.12280462 }, { x: -0.21424523, y: 0.13515493 }, { x: -0.12858882, y: 0.14363851 }, { x: -0.04287008, y: 0.14795665 }, { x: 0.04287008, y: 0.14795665 }, { x: 0.12858881, y: 0.14363851 }, { x: 0.21424522, y: 0.13515493 }, { x: 0.29980391, y: 0.12280462 }, { x: 0.38159267, y: 0.10776066 }, { x: 0.46693441, y: 0.0891909 }, { x: 0.55210458, y: 0.06835517 }, { x: 0.63709272, y: 0.04597338 }, { x: 0.72189326, y: 0.02281418 }, { x: 0.74664659, y: 0.02281418 }], bounds: { min: [-0.75771431, -0.07620783, -0.22049992], max: [0.75771431, 0.46973076, 0.22050009] }, material: { name: "house / honey wood", color: "#b98b62", roughness: 0.77999997, metalness: 0 }, counts: { parts: 33, vertices: 9465, triangles: 8568 }, artifact: { path: "/prototypes/place-qa/native-water-bridge.json.gz", sha256: "b5bf0ea46ac72b0604a741a4d2058f83ec09b17592895691d991ea18b4731168", expandedSha256: "ec89fbae2f29ea5ba2f3d548f11e711c8ff3ff2b1800362405aac453f5091353", bytes: 736430, gzipBytes: 90731 } };
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterBridge.ts
+var EPS2 = 1e-9;
+var key3 = (cell) => `${cell.x},${cell.z}`;
+var refKey2 = (ref) => JSON.stringify([ref.districtId, ref.siteId]);
+var edgeKey = (edge) => JSON.stringify([refKey2(edge.from), refKey2(edge.to)].sort());
+var round = (n) => Math.round(n * 1e9) / 1e9 || 0;
+var cross3 = (a, b, p) => (b.x - a.x) * (p.z - a.z) - (b.z - a.z) * (p.x - a.x);
+var area = (polygon) => polygon.reduce((sum, p, i) => {
+  const q = polygon[(i + 1) % polygon.length];
+  return sum + p.point.x * q.point.z - p.point.z * q.point.x;
+}, 0) / 2;
+var turn3 = (x, z, n) => n === 1 ? { x: -z, z: x } : n === 2 ? { x: -x, z: -z } : n === 3 ? { x: z, z: -x } : { x, z };
+function localPoint(district, p) {
+  const xy = turn3(p.x - district.worldOrigin.x, p.z - district.worldOrigin.z, (4 - district.turn) % 4);
+  return { x: round(xy.x), y: round(p.y - district.worldOrigin.y), z: round(xy.z) };
+}
+function worldPoint(district, p) {
+  const xy = turn3(p.x, p.z, district.turn);
+  return { x: xy.x + district.worldOrigin.x, y: p.y + district.worldOrigin.y, z: xy.z + district.worldOrigin.z };
+}
+function intersect(polygon, outline) {
+  let out = [...polygon];
+  for (let i = 0; i < outline.length && out.length; i++) {
+    const a = outline[i], b = outline[(i + 1) % outline.length], input = out;
+    out = [];
+    for (let j = 0; j < input.length; j++) {
+      const p = input[j], q = input[(j + 1) % input.length], dp = cross3(a, b, p.point), dq = cross3(a, b, q.point);
+      if (dp >= -EPS2) out.push(p);
+      if (dp >= -EPS2 !== dq >= -EPS2 && Math.abs(dp - dq) > EPS2) {
+        const t = Math.max(0, Math.min(1, dp / (dp - dq)));
+        out.push({
+          cell: { x: round(p.cell.x + (q.cell.x - p.cell.x) * t), z: round(p.cell.z + (q.cell.z - p.cell.z) * t) },
+          point: { x: round(p.point.x + (q.point.x - p.point.x) * t), y: round(p.point.y + (q.point.y - p.point.y) * t), z: round(p.point.z + (q.point.z - p.point.z) * t) }
+        });
+      }
+    }
+    out = out.filter((p, j) => Math.hypot(
+      p.point.x - out[(j + out.length - 1) % out.length].point.x,
+      p.point.z - out[(j + out.length - 1) % out.length].point.z
+    ) > 1e-8);
+    if (out.length < 3 || Math.abs(area(out)) < 1e-12) return [];
+  }
+  return out;
+}
+function overlaps(a, b) {
+  return a.some((p) => pointInWaterOutline(p, b)) || b.some((p) => pointInWaterOutline(p, a)) || a.some((p, i) => waterSegmentIntervals(p, a[(i + 1) % a.length], b).some(([from, to]) => to - from > EPS2));
+}
+function protections(state, waterOwners) {
+  const out = HOUSE_CELLS.map((cell) => ({ cell, half: AUTHORED_OWNER_HALF_EXTENT + AUTHORED_WALK_HALF_WIDTH }));
+  for (const owner of [...state.plots, ...state.landmarks, ...state.keepsakes]) {
+    if (!owner.cell || waterOwners.has(owner.id)) continue;
+    out.push({ cell: owner.cell, half: AUTHORED_OWNER_HALF_EXTENT + AUTHORED_WALK_HALF_WIDTH });
+    if ("kind" in owner && owner.kind === "home") out.push({ cell: { x: owner.cell.x, z: owner.cell.z + 0.75 }, half: 0.18 });
+  }
+  return out;
+}
+function footBand(base2, from, to) {
+  const dx = to.x - from.x, dz = to.z - from.z, length = Math.hypot(dx, dz), steps = Math.max(8, Math.ceil(length * 8)), points = [];
+  for (let i = 0; i <= steps; i++) for (const side of [-AUTHORED_WALK_HALF_WIDTH, 0, AUTHORED_WALK_HALF_WIDTH]) {
+    const cell = { x: from.x + dx * i / steps - dz / length * side, z: from.z + dz * i / steps + dx / length * side };
+    const floor = base2.anchorFloorAt(cell);
+    if (!floor) return;
+    points.push(floor.point);
+  }
+  return points;
+}
+function bandIntersects(points, outline) {
+  return points.some((p, i) => pointInWaterOutline(p, outline) || i % 3 < 2 && waterSegmentIntervals(p, points[i + 1], outline).length > 0 || i + 3 < points.length && waterSegmentIntervals(p, points[i + 3], outline).length > 0);
+}
+function authoredBridgeHeightAt(plan, localX) {
+  const sourceX = localX * nativeWaterBridgeProfile_default.span / plan.span, rows = nativeWaterBridgeProfile_default.deckRows;
+  const index = rows.findIndex((row) => row.x >= sourceX - EPS2), b = rows[index < 0 ? rows.length - 1 : index], a = rows[Math.max(0, (index < 0 ? rows.length - 1 : index) - 1)];
+  const t = a === b ? 0 : Math.max(0, Math.min(1, (sourceX - a.x) / (b.x - a.x)));
+  return plan.deckY + (a.y + (b.y - a.y) * t - nativeWaterBridgeProfile_default.deckBaseY) * plan.archHeight / nativeWaterBridgeProfile_default.archHeight;
+}
+function rectangle(center, across, flow, minX, maxX, minZ, maxZ) {
+  return [[minX, minZ], [maxX, minZ], [maxX, maxZ], [minX, maxZ]].map(([x, z]) => ({ x: center.x + across.x * x + flow.x * z, y: center.y, z: center.z + across.z * x + flow.z * z }));
+}
+function makeDeck(base2, district, plan, across, flow) {
+  const vertices = [], indices = [], allowed = authoredWaterCarvingFloorIds(base2, district.id);
+  const box = { minX: Math.min(...plan.outline.map((p) => p.x)), maxX: Math.max(...plan.outline.map((p) => p.x)), minZ: Math.min(...plan.outline.map((p) => p.z)), maxZ: Math.max(...plan.outline.map((p) => p.z)) };
+  const strips = nativeWaterBridgeProfile_default.deckRows.slice(1).map((row, i) => rectangle(
+    plan.center,
+    across,
+    flow,
+    nativeWaterBridgeProfile_default.deckRows[i].x * plan.span / nativeWaterBridgeProfile_default.span,
+    row.x * plan.span / nativeWaterBridgeProfile_default.span,
+    -plan.width / 2,
+    plan.width / 2
+  ));
+  for (const floor of district.floors) {
+    if (floor.kind !== "ground" || allowed && !allowed.includes(JSON.stringify([district.id, floor.id]))) continue;
+    for (let i = 0; i < floor.indices.length; i += 3) {
+      const triangle = floor.indices.slice(i, i + 3).map((index) => ({ cell: floor.vertices[index].cell, point: worldPoint(district, floor.vertices[index].point) }));
+      if (triangle.every((v) => v.point.x < box.minX) || triangle.every((v) => v.point.x > box.maxX) || triangle.every((v) => v.point.z < box.minZ) || triangle.every((v) => v.point.z > box.maxZ)) continue;
+      const clipped = intersect(triangle, plan.outline);
+      if (!clipped.length) continue;
+      for (const strip of strips) {
+        const polygon = intersect(clipped, strip);
+        if (!polygon.length) continue;
+        const offset = vertices.length;
+        vertices.push(...polygon.map((vertex) => ({ cell: { ...vertex.cell }, point: localPoint(district, {
+          ...vertex.point,
+          y: authoredBridgeHeightAt(plan, (vertex.point.x - plan.center.x) * across.x + (vertex.point.z - plan.center.z) * across.z)
+        }) })));
+        for (let j = 1; j + 1 < polygon.length; j++) indices.push(
+          offset,
+          offset + (area(polygon) > 0 ? j + 1 : j),
+          offset + (area(polygon) > 0 ? j : j + 1)
+        );
+      }
+    }
+  }
+  return indices.length ? { id: JSON.parse(plan.deckFloorId)[1], kind: "deck", color: nativeWaterBridgeProfile_default.material.color, vertices, indices } : void 0;
+}
+function waterClearance(world, ids, center, across, flow, span, width, archHeight) {
+  let minimumDeckY = -Infinity;
+  const strips = nativeWaterBridgeProfile_default.deckRows.slice(1).map((row, i) => rectangle(
+    center,
+    across,
+    flow,
+    nativeWaterBridgeProfile_default.deckRows[i].x * span / nativeWaterBridgeProfile_default.span,
+    row.x * span / nativeWaterBridgeProfile_default.span,
+    -width / 2,
+    width / 2
+  ));
+  for (const floor of world.floors.filter((floor2) => floor2.kind === "water" && ids.includes(floor2.id))) for (let i = 0; i < floor.indices.length; i += 3) {
+    const triangle = floor.indices.slice(i, i + 3).map((index) => floor.vertices[index]);
+    for (const strip of strips) for (const vertex of intersect(triangle, strip)) {
+      const localX = (vertex.point.x - center.x) * across.x + (vertex.point.z - center.z) * across.z;
+      minimumDeckY = Math.max(minimumDeckY, vertex.point.y + 0.018 - authoredBridgeHeightAt({ span, archHeight, deckY: 0 }, localX));
+    }
+  }
+  return Number.isFinite(minimumDeckY) ? minimumDeckY : void 0;
+}
+function dryLanding(world, outline, bedIds) {
+  const box = { minX: Math.min(...outline.map((p) => p.x)), maxX: Math.max(...outline.map((p) => p.x)), minZ: Math.min(...outline.map((p) => p.z)), maxZ: Math.max(...outline.map((p) => p.z)) };
+  let uncovered = [[...outline]];
+  const points = [];
+  for (const floor of world.floors) {
+    if (floor.kind === "deck" || bedIds.has(floor.id)) continue;
+    for (let i = 0; i < floor.indices.length; i += 3) {
+      const triangle = floor.indices.slice(i, i + 3).map((index) => floor.vertices[index]);
+      if (triangle.every((v) => v.point.x < box.minX) || triangle.every((v) => v.point.x > box.maxX) || triangle.every((v) => v.point.z < box.minZ) || triangle.every((v) => v.point.z > box.maxZ)) continue;
+      const clipped = intersect(triangle, outline);
+      if (!clipped.length) continue;
+      if (floor.kind === "water") return;
+      points.push(...clipped.map((v) => v.point));
+      const stencil = clipped.map((v) => v.point);
+      if (outlineArea(stencil) < 0) stencil.reverse();
+      uncovered = uncovered.flatMap((piece) => subtractWaterConvexPieces(piece, [stencil]));
+    }
+  }
+  return uncovered.reduce((sum, p) => sum + Math.abs(outlineArea(p)), 0) < 1e-9 && points.length ? points : void 0;
+}
+function composeAuthoredWaterBridges(state, base2, cutWorld, water) {
+  let definition2 = structuredClone(cutWorld.definition), current = cutWorld;
+  const bridges = [], sites = new Map(base2.sites.map((site) => [refKey2(site.ref), site]));
+  const protectedOwners = protections(state, new Set(water.ownerIds));
+  const bedIds = /* @__PURE__ */ new Set([...water.pools.map((pool) => pool.bedFloorId), ...water.streams.flatMap((stream) => stream.bedFloorIds)]);
+  for (const owner of state.landmarks.filter((owner2) => owner2.cell && owner2.kind === "water-channel" && water.ownerIds.includes(owner2.id)).sort((a, b) => a.id.localeCompare(b.id))) {
+    const links = water.streams.filter((stream2) => stream2.ownerIds.includes(owner.id));
+    if (links.length !== 1) continue;
+    const anchor = base2.anchorAt(owner.cell), site = base2.sites.find((site2) => key3(site2.cell) === key3(owner.cell)), stream = links[0];
+    if (!site) continue;
+    const other = Math.hypot(stream.from.x - anchor.x, stream.from.z - anchor.z) < Math.hypot(stream.to.x - anchor.x, stream.to.z - anchor.z) ? stream.to : stream.from;
+    const length = Math.hypot(anchor.x - other.x, anchor.z - other.z);
+    if (length < 0.05) continue;
+    const flow = { x: (anchor.x - other.x) / length, z: (anchor.z - other.z) / length }, across = { x: flow.z, z: -flow.x };
+    const project = (p) => ({ x: (p.x - anchor.x) * across.x + (p.z - anchor.z) * across.z, z: (p.x - anchor.x) * flow.x + (p.z - anchor.z) * flow.z });
+    const candidates = [];
+    for (const edge of base2.definition.edges) {
+      if (!edge.allows.includes("walk") || edge.from.districtId !== site.ref.districtId || edge.to.districtId !== site.ref.districtId) continue;
+      const a = sites.get(refKey2(edge.from)), b = sites.get(refKey2(edge.to));
+      const mid = project({ x: (a.point.x + b.point.x) / 2, y: 0, z: (a.point.z + b.point.z) / 2 });
+      if (Math.abs(mid.x) > nativeWaterBridgeProfile_default.span / 2 || mid.z < -0.13 || mid.z > 0.28 || isWorldWalkEdgeSupported(current, a.cell, b.cell)) continue;
+      const points2 = footBand(base2, a.cell, b.cell);
+      if (!points2) continue;
+      if (!bandIntersects(points2, stream.outline)) continue;
+      if (points2.some((p) => {
+        const q = project(p);
+        return q.z < -0.16 || q.z > 0.41 || Math.abs(q.x) > nativeWaterBridgeProfile_default.span / 2;
+      })) continue;
+      candidates.push({ edge, points: points2 });
+    }
+    if (!candidates.length) continue;
+    const points = candidates.flatMap((candidate) => candidate.points).map(project), minX = Math.min(...points.map((p) => p.x)) - 0.01, maxX = Math.max(...points.map((p) => p.x)) + 0.01, minZ = Math.min(...points.map((p) => p.z)) - 0.01, maxZ = Math.max(...points.map((p) => p.z)) + 0.01;
+    const span = Math.max(nativeWaterBridgeProfile_default.span * 0.4, maxX - minX), width = Math.max(nativeWaterBridgeProfile_default.width, maxZ - minZ);
+    if (span > nativeWaterBridgeProfile_default.span + EPS2 || width > nativeWaterBridgeProfile_default.width * 1.4) continue;
+    const cx = (minX + maxX) / 2, cz = (minZ + maxZ) / 2, center = { x: anchor.x + across.x * cx + flow.x * cz, y: 0, z: anchor.z + across.z * cx + flow.z * cz };
+    const outline = rectangle(center, across, flow, -span / 2, span / 2, -width / 2, width / 2), footprint = rectangle(
+      center,
+      across,
+      flow,
+      nativeWaterBridgeProfile_default.bounds.min[0] * span / nativeWaterBridgeProfile_default.span,
+      nativeWaterBridgeProfile_default.bounds.max[0] * span / nativeWaterBridgeProfile_default.span,
+      nativeWaterBridgeProfile_default.bounds.min[2] * width / nativeWaterBridgeProfile_default.width,
+      nativeWaterBridgeProfile_default.bounds.max[2] * width / nativeWaterBridgeProfile_default.width
+    );
+    if (!isAuthoredWaterCarvingSafe(base2, site.ref.districtId, footprint, protectedOwners) || water.pools.some((pool) => overlaps(outline, pool.outline)) || water.grottos.some((grotto) => overlaps(footprint, grotto.footprint))) continue;
+    const landings = [-1, 1].map((side) => dryLanding(current, rectangle(
+      center,
+      across,
+      flow,
+      side * span / 2 - 0.015,
+      side * span / 2 + 0.015,
+      -width / 2,
+      width / 2
+    ), bedIds));
+    if (landings.some((landing) => !landing)) continue;
+    const landingPoints = landings.flatMap((landing) => landing);
+    if (Math.max(...landingPoints.map((p) => p.y)) - Math.min(...landingPoints.map((p) => p.y)) > 0.12) continue;
+    const archHeight = nativeWaterBridgeProfile_default.archHeight * span / nativeWaterBridgeProfile_default.span;
+    const clearDeckY = waterClearance(current, stream.waterFloorIds, center, across, flow, span, width, archHeight);
+    if (clearDeckY === void 0) continue;
+    const deckY = Math.max(Math.max(...landingPoints.map((p) => p.y)) + 6e-3, clearDeckY);
+    if (deckY - Math.min(...landingPoints.map((p) => p.y)) > 0.12) continue;
+    const localId2 = `authored-water:bridge:${encodeURIComponent(owner.id)}`;
+    const plan = {
+      ownerId: owner.id,
+      districtId: site.ref.districtId,
+      deckFloorId: JSON.stringify([site.ref.districtId, localId2]),
+      sourceId: nativeWaterBridgeProfile_default.source.id,
+      sourceSHA: nativeWaterBridgeProfile_default.source.sha256,
+      center: { ...center, y: round(deckY) },
+      yaw: Math.atan2(flow.x, flow.z),
+      span: round(span),
+      width: round(width),
+      deckY: round(deckY),
+      archHeight: round(archHeight),
+      outline,
+      footprint,
+      landingPoints,
+      restoredEdgeIds: []
+    };
+    const district = base2.definition.districts.find((district2) => district2.id === site.ref.districtId), deck = makeDeck(base2, district, plan, across, flow);
+    if (!deck) continue;
+    const next = { ...definition2, districts: definition2.districts.map((district2) => district2.id === site.ref.districtId ? { ...district2, floors: [...district2.floors, deck] } : district2) };
+    const supported = compileWorldDefinition(next);
+    if (candidates.some(({ edge }) => !isWorldWalkEdgeSupported(supported, sites.get(refKey2(edge.from)).cell, sites.get(refKey2(edge.to)).cell))) continue;
+    plan.restoredEdgeIds = candidates.map(({ edge }) => edgeKey(edge));
+    definition2 = next;
+    current = supported;
+    bridges.push(plan);
+  }
+  return { definition: definition2, bridges, supportWorld: current };
+}
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/nativeWaterSource.json
+var nativeWaterSource_default = { version: 1, source: { artifact: "docs/design/2026-10-10-island-final-3d/whole-island.glb", sha256: "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d" }, scale: 0.45, pools: [{ role: "upper", outline: [{ x: 0.61480136, z: 0 }, { x: 0.61775286, z: -0.05185461 }, { x: 0.61266267, z: -0.10364914 }, { x: 0.59892118, z: -0.15397425 }, { x: 0.57668653, z: -0.20138712 }, { x: 0.54691765, z: -0.24469213 }, { x: 0.51123719, z: -0.28319664 }, { x: 0.47164736, z: -0.31686201 }, { x: 0.43016646, z: -0.3463191 }, { x: 0.38846519, z: -0.37271633 }, { x: 0.34759068, z: -0.39744844 }, { x: 0.30783691, z: -0.4218132 }, { x: 0.26878867, z: -0.44668093 }, { x: 0.22952414, z: -0.47226105 }, { x: 0.18891892, z: -0.49800768 }, { x: 0.14597611, z: -0.52270374 }, { x: 0.10010197, z: -0.54469013 }, { x: 0.05126388, z: -0.56219358 }, { x: 0, z: -0.57366228 }, { x: -0.0527097, z: -0.5780508 }, { x: -0.10566745, z: -0.57497463 }, { x: -0.15770745, z: -0.564711 }, { x: -0.20790585, z: -0.54805899 }, { x: -0.25569187, z: -0.52610264 }, { x: -0.30083978, z: -0.49994488 }, { x: -0.34335161, z: -0.47047749 }, { x: -0.38327458, z: -0.43825064 }, { x: -0.4205163, z: -0.40346775 }, { x: -0.45471897, z: -0.36608591 }, { x: -0.48523779, z: -0.32599268 }, { x: -0.51123708, z: -0.28319664 }, { x: -0.53188108, z: -0.23796473 }, { x: -0.54656811, z: -0.19086943 }, { x: -0.55513841, z: -0.14271841 }, { x: -0.55799153, z: -0.09440002 }, { x: -0.55606999, z: -0.0466773 }, { x: -0.55069871, z: 0 }, { x: -0.54331212, z: 0.04560699 }, { x: -0.53513074, z: 0.09053335 }, { x: -0.52686524, z: 0.13545027 }, { x: -0.51852518, z: 0.181077 }, { x: -0.509384, z: 0.22790022 }, { x: -0.4981155, z: 0.2759285 }, { x: -0.48307432, z: 0.32453957 }, { x: -0.46265842, z: 0.37247858 }, { x: -0.43566778, z: 0.41800575 }, { x: -0.4015783, z: 0.45918045 }, { x: -0.36066656, z: 0.49420366 }, { x: -0.31396136, z: 0.52175188 }, { x: -0.26303737, z: 0.54121742 }, { x: -0.20970562, z: 0.55280371 }, { x: -0.15567756, z: 0.55744286 }, { x: -0.10228508, z: 0.55657082 }, { x: -0.0503161, z: 0.5518012 }, { x: 0, z: 0.54458799 }, { x: 0.04887028, z: 0.53594398 }, { x: 0.0967196, z: 0.52628632 }, { x: 0.143946, z: 0.5154356 }, { x: 0.19071858, z: 0.5027524 }, { x: 0.23686974, z: 0.48737583 }, { x: 0.28191025, z: 0.46848793 }, { x: 0.32515175, z: 0.44553938 }, { x: 0.36589429, z: 0.41837826 }, { x: 0.40361667, z: 0.38725433 }, { x: 0.4381058, z: 0.35271177 }, { x: 0.469484, z: 0.31540976 }, { x: 0.49811561, z: 0.2759285 }, { x: 0.52442057, z: 0.23462763 }, { x: 0.54864371, z: 0.1915947 }, { x: 0.57064812, z: 0.1467061 }, { x: 0.58980188, z: 0.09978247 }, { x: 0.60499499, z: 0.0507843 }], radiusX: 0.61775286, radiusZ: 0.5780508 }, { role: "middle", outline: [{ x: 0.68957437, z: 0 }, { x: 0.69288486, z: -0.04601254 }, { x: 0.68717562, z: -0.09197059 }, { x: 0.671763, z: -0.13662572 }, { x: 0.64682404, z: -0.17869563 }, { x: 0.61343472, z: -0.21712203 }, { x: 0.57341455, z: -0.25128779 }, { x: 0.52900983, z: -0.28115945 }, { x: 0.48248391, z: -0.30729747 }, { x: 0.43571091, z: -0.33072066 }, { x: 0.3898652, z: -0.35266585 }, { x: 0.34527637, z: -0.37428489 }, { x: 0.30147911, z: -0.3963511 }, { x: 0.25743928, z: -0.41904902 }, { x: 0.21189548, z: -0.44189458 }, { x: 0.16372987, z: -0.46380715 }, { x: 0.11227641, z: -0.48331733 }, { x: 0.05749862, z: -0.49884753 }, { x: 0, z: -0.50902448 }, { x: -0.0591205, z: -0.51291862 }, { x: -0.11851888, z: -0.5101892 }, { x: -0.17688814, z: -0.50108171 }, { x: -0.23319168, z: -0.48630595 }, { x: -0.28678957, z: -0.4668241 }, { x: -0.33742844, z: -0.44361377 }, { x: -0.3851106, z: -0.41746631 }, { x: -0.42988907, z: -0.38887095 }, { x: -0.47166023, z: -0.3580071 }, { x: -0.51002263, z: -0.32483697 }, { x: -0.5442532, z: -0.28926101 }, { x: -0.57341455, z: -0.25128779 }, { x: -0.59656937, z: -0.21115251 }, { x: -0.61304263, z: -0.16936326 }, { x: -0.62265524, z: -0.1266376 }, { x: -0.62585544, z: -0.08376346 }, { x: -0.62370018, z: -0.04141803 }, { x: -0.61767561, z: 0 }, { x: -0.6093907, z: 0.04046788 }, { x: -0.60021427, z: 0.08033152 }, { x: -0.59094354, z: 0.12018785 }, { x: -0.58158912, z: 0.16067376 }, { x: -0.57133616, z: 0.20222096 }, { x: -0.55869711, z: 0.24483762 }, { x: -0.54182666, z: 0.2879714 }, { x: -0.51892773, z: 0.33050866 }, { x: -0.48865444, z: 0.37090616 }, { x: -0.45041891, z: 0.40744171 }, { x: -0.40453141, z: 0.43851843 }, { x: -0.35214588, z: 0.46296215 }, { x: -0.29502851, z: 0.48023515 }, { x: -0.23521031, z: 0.49051595 }, { x: -0.17461138, z: 0.49463239 }, { x: -0.11472516, z: 0.49385819 }, { x: -0.05643572, z: 0.48962631 }, { x: 0, z: 0.48322549 }, { x: 0.05481384, z: 0.47555523 }, { x: 0.10848269, z: 0.46698589 }, { x: 0.161453, z: 0.45735784 }, { x: 0.21391411, z: 0.44610372 }, { x: 0.26567817, z: 0.43245964 }, { x: 0.31619661, z: 0.41569991 }, { x: 0.36469717, z: 0.39533744 }, { x: 0.41039504, z: 0.37123661 }, { x: 0.45270517, z: 0.3436193 }, { x: 0.49138895, z: 0.31296873 }, { x: 0.52658329, z: 0.27986984 }, { x: 0.55869716, z: 0.24483762 }, { x: 0.58820146, z: 0.20819049 }, { x: 0.61537052, z: 0.17000613 }, { x: 0.64005135, z: 0.13017554 }, { x: 0.66153456, z: 0.08853865 }, { x: 0.67857538, z: 0.04506197 }], radiusX: 0.69288486, radiusZ: 0.51291862 }, { role: "lower", outline: [{ x: 0.73942315, z: 0 }, { x: 0.74297289, z: -0.04345651 }, { x: 0.73685102, z: -0.08686109 }, { x: 0.72032421, z: -0.12903528 }, { x: 0.69358237, z: -0.16876845 }, { x: 0.65777939, z: -0.20505939 }, { x: 0.6148663, z: -0.237327 }, { x: 0.56725151, z: -0.26553998 }, { x: 0.5173622, z: -0.29022532 }, { x: 0.46720801, z: -0.31234732 }, { x: 0.41804821, z: -0.33307328 }, { x: 0.37023612, z: -0.35349154 }, { x: 0.32327279, z: -0.37433209 }, { x: 0.27604928, z: -0.39576831 }, { x: 0.22721322, z: -0.41734486 }, { x: 0.17556568, z: -0.43804078 }, { x: 0.12039275, z: -0.45646648 }, { x: 0.06165516, z: -0.47113409 }, { x: 0, z: -0.48074541 }, { x: -0.06339425, z: -0.48442369 }, { x: -0.12708658, z: -0.48184576 }, { x: -0.18967528, z: -0.47324424 }, { x: -0.25004898, z: -0.45928946 }, { x: -0.30752134, z: -0.4408895 }, { x: -0.36182088, z: -0.41896834 }, { x: -0.41294992, z: -0.39427357 }, { x: -0.4609654, z: -0.36726694 }, { x: -0.50575614, z: -0.33811798 }, { x: -0.54689177, z: -0.30679064 }, { x: -0.58359685, z: -0.27319136 }, { x: -0.61486623, z: -0.237327 }, { x: -0.63969489, z: -0.19942203 }, { x: -0.657359, z: -0.1599545 }, { x: -0.66766647, z: -0.11960249 }, { x: -0.671098, z: -0.07911015 }, { x: -0.66878698, z: -0.03911734 }, { x: -0.66232686, z: 0 }, { x: -0.65344306, z: 0.03821955 }, { x: -0.64360328, z: 0.07586875 }, { x: -0.63366234, z: 0.11351066 }, { x: -0.62363173, z: 0.15174694 }, { x: -0.61263761, z: 0.19098659 }, { x: -0.59908486, z: 0.2312356 }, { x: -0.58099486, z: 0.27197299 }, { x: -0.55644059, z: 0.3121469 }, { x: -0.5239789, z: 0.35030036 }, { x: -0.48297932, z: 0.38480601 }, { x: -0.43377465, z: 0.41415625 }, { x: -0.37760224, z: 0.43724213 }, { x: -0.31635587, z: 0.45355511 }, { x: -0.25221352, z: 0.4632647 }, { x: -0.18723391, z: 0.46715283 }, { x: -0.12301855, z: 0.46642156 }, { x: -0.06051541, z: 0.46242485 }, { x: 0, z: 0.4563798 }, { x: 0.05877635, z: 0.44913568 }, { x: 0.11632475, z: 0.44104228 }, { x: 0.17312433, z: 0.43194895 }, { x: 0.22937777, z: 0.4213201 }, { x: 0.28488383, z: 0.40843391 }, { x: 0.3390541, z: 0.39260545 }, { x: 0.39106084, z: 0.37337422 }, { x: 0.44006212, z: 0.35061235 }, { x: 0.48543083, z: 0.32452927 }, { x: 0.52691098, z: 0.29558158 }, { x: 0.56464955, z: 0.26432161 }, { x: 0.59908493, z: 0.2312356 }, { x: 0.63072201, z: 0.19662437 }, { x: 0.65985509, z: 0.16056132 }, { x: 0.68632002, z: 0.12294345 }, { x: 0.70935623, z: 0.08361969 }, { x: 0.72762894, z: 0.04255872 }], radiusX: 0.74297289, radiusZ: 0.48442369 }], rim: { rings: [{ scale: 1.2, height: -0.2295 }, { scale: 1.13142857, height: 0.04275 }, { scale: 1.00571429, height: 0.0315 }, { scale: 0.94857143, height: -0.108 }], body: { color: "#8295ba", roughness: 0.56 }, lip: { color: "#ad9bc9", roughness: 0.43000001 } }, water: { deepColor: "#287ca6", shoreColor: "#69c9cd" }, grotto: { pivot: { x: 4.35, y: 5.26, z: -19.18 }, primitives: [{ vertices: [{ x: 0.37554012, y: 0.11675623, z: 0.16200014 }, { x: 0.32246757, y: 0.16584431, z: 0.16200014 }, { x: 0.29910832, y: 0.21107643, z: 0.16200014 }, { x: 0.23505352, y: 0.2748628, z: 0.16200014 }, { x: 0.15609701, y: 0.34483369, z: 0.16200014 }, { x: 0.08640571, y: 0.40548809, z: 0.16200014 }, { x: -4e-8, y: 0.35596228, z: 0.16200014 }, { x: -0.08159456, y: 0.32664531, z: 0.16200014 }, { x: -0.16859748, y: 0.35115555, z: 0.16200014 }, { x: -0.22459685, y: 0.31283966, z: 0.16200014 }, { x: -0.29405587, y: 0.24405001, z: 0.16200014 }, { x: -0.34533649, y: 0.13834694, z: 0.16200014 }, { x: -0.34886488, y: 0.06057382, z: 0.16200014 }, { x: -0.38457764, y: 0.02148181, z: 0.16200014 }, { x: -0.38457764, y: 0.02148181, z: 0.16200014 }, { x: 0.61200002, y: 1e-7, z: 0.16200014 }, { x: 0.61534291, y: 0.1714896, z: 0.16200014 }, { x: 0.61534291, y: 0.1714896, z: 0.16200014 }, { x: 0.61534291, y: 0.1714896, z: 0.16200014 }, { x: 0.52838054, y: 0.26500686, z: 0.16200014 }, { x: 0.52838054, y: 0.26500686, z: 0.16200014 }, { x: 0.52838054, y: 0.26500686, z: 0.16200014 }, { x: 0.4901052, y: 0.36339136, z: 0.16200014 }, { x: 0.4901052, y: 0.36339136, z: 0.16200014 }, { x: 0.4901052, y: 0.36339136, z: 0.16200014 }, { x: 0.38514779, y: 0.46307512, z: 0.16200014 }, { x: 0.38514779, y: 0.46307512, z: 0.16200014 }, { x: 0.38514779, y: 0.46307512, z: 0.16200014 }, { x: 0.25577326, y: 0.55181397, z: 0.16200014 }, { x: 0.25577326, y: 0.55181397, z: 0.16200014 }, { x: 0.25577326, y: 0.55181397, z: 0.16200014 }, { x: 0.14158047, y: 0.64722443, z: 0.16200014 }, { x: 0.14158047, y: 0.64722443, z: 0.16200014 }, { x: 0.14158047, y: 0.64722443, z: 0.16200014 }, { x: -4e-8, y: 0.59063519, z: 0.16200014 }, { x: -4e-8, y: 0.59063519, z: 0.16200014 }, { x: -4e-8, y: 0.59063519, z: 0.16200014 }, { x: -0.13369722, y: 0.55492168, z: 0.16200014 }, { x: -0.13369722, y: 0.55492168, z: 0.16200014 }, { x: -0.13369722, y: 0.55492168, z: 0.16200014 }, { x: -0.2762562, y: 0.57471102, z: 0.16200014 }, { x: -0.2762562, y: 0.57471102, z: 0.16200014 }, { x: -0.2762562, y: 0.57471102, z: 0.16200014 }, { x: -0.36801403, y: 0.4926792, z: 0.16200014 }, { x: -0.36801403, y: 0.4926792, z: 0.16200014 }, { x: -0.36801403, y: 0.4926792, z: 0.16200014 }, { x: -0.48182649, y: 0.39379195, z: 0.16200014 }, { x: -0.48182649, y: 0.39379195, z: 0.16200014 }, { x: -0.48182649, y: 0.39379195, z: 0.16200014 }, { x: -0.56585259, y: 0.24454182, z: 0.16200014 }, { x: -0.56585259, y: 0.24454182, z: 0.16200014 }, { x: -0.56585259, y: 0.24454182, z: 0.16200014 }, { x: -0.57163404, y: 0.11141949, z: 0.16200014 }, { x: -0.57163404, y: 0.11141949, z: 0.16200014 }, { x: -0.57163404, y: 0.11141949, z: 0.16200014 }, { x: -0.63015136, y: 0.02148181, z: 0.16200014 }, { x: -0.63015136, y: 0.02148181, z: 0.16200014 }, { x: -0.63015136, y: 0.02148181, z: 0.16200014 }, { x: 0.37349992, y: 1e-7, z: -0.27899966 }, { x: 0.37554012, y: 0.11675623, z: -0.27899966 }, { x: 0.32246757, y: 0.16584431, z: -0.27899966 }, { x: 0.29910832, y: 0.21107643, z: -0.27899966 }, { x: 0.23505352, y: 0.2748628, z: -0.27899966 }, { x: 0.15609701, y: 0.34483369, z: -0.27899966 }, { x: 0.08640571, y: 0.40548809, z: -0.27899966 }, { x: -4e-8, y: 0.35596228, z: -0.27899966 }, { x: -0.08159456, y: 0.32664531, z: -0.27899966 }, { x: -0.16859748, y: 0.35115555, z: -0.27899966 }, { x: -0.22459685, y: 0.31283966, z: -0.27899966 }, { x: -0.29405587, y: 0.24405001, z: -0.27899966 }, { x: -0.34533649, y: 0.13834694, z: -0.27899966 }, { x: -0.34886488, y: 0.06057382, z: -0.27899966 }, { x: -0.38457764, y: 0.02148181, z: -0.27899966 }, { x: -0.38457764, y: 0.02148181, z: -0.27899966 }, { x: 0.61200002, y: 1e-7, z: -0.27899966 }, { x: 0.61200002, y: 1e-7, z: -0.27899966 }, { x: 0.61534291, y: 0.1714896, z: -0.27899966 }, { x: 0.61534291, y: 0.1714896, z: -0.27899966 }, { x: 0.61534291, y: 0.1714896, z: -0.27899966 }, { x: 0.52838054, y: 0.26500686, z: -0.27899966 }, { x: 0.52838054, y: 0.26500686, z: -0.27899966 }, { x: 0.52838054, y: 0.26500686, z: -0.27899966 }, { x: 0.4901052, y: 0.36339136, z: -0.27899966 }, { x: 0.4901052, y: 0.36339136, z: -0.27899966 }, { x: 0.4901052, y: 0.36339136, z: -0.27899966 }, { x: 0.38514779, y: 0.46307512, z: -0.27899966 }, { x: 0.38514779, y: 0.46307512, z: -0.27899966 }, { x: 0.38514779, y: 0.46307512, z: -0.27899966 }, { x: 0.25577326, y: 0.55181397, z: -0.27899966 }, { x: 0.25577326, y: 0.55181397, z: -0.27899966 }, { x: 0.25577326, y: 0.55181397, z: -0.27899966 }, { x: 0.14158047, y: 0.64722443, z: -0.27899966 }, { x: 0.14158047, y: 0.64722443, z: -0.27899966 }, { x: 0.14158047, y: 0.64722443, z: -0.27899966 }, { x: -4e-8, y: 0.59063519, z: -0.27899966 }, { x: -4e-8, y: 0.59063519, z: -0.27899966 }, { x: -4e-8, y: 0.59063519, z: -0.27899966 }, { x: -0.13369722, y: 0.55492168, z: -0.27899966 }, { x: -0.13369722, y: 0.55492168, z: -0.27899966 }, { x: -0.13369722, y: 0.55492168, z: -0.27899966 }, { x: -0.2762562, y: 0.57471102, z: -0.27899966 }, { x: -0.2762562, y: 0.57471102, z: -0.27899966 }, { x: -0.2762562, y: 0.57471102, z: -0.27899966 }, { x: -0.36801403, y: 0.4926792, z: -0.27899966 }, { x: -0.36801403, y: 0.4926792, z: -0.27899966 }, { x: -0.36801403, y: 0.4926792, z: -0.27899966 }, { x: -0.48182649, y: 0.39379195, z: -0.27899966 }, { x: -0.48182649, y: 0.39379195, z: -0.27899966 }, { x: -0.48182649, y: 0.39379195, z: -0.27899966 }, { x: -0.56585259, y: 0.24454182, z: -0.27899966 }, { x: -0.56585259, y: 0.24454182, z: -0.27899966 }, { x: -0.56585259, y: 0.24454182, z: -0.27899966 }, { x: -0.57163404, y: 0.11141949, z: -0.27899966 }, { x: -0.57163404, y: 0.11141949, z: -0.27899966 }, { x: -0.57163404, y: 0.11141949, z: -0.27899966 }, { x: -0.63015136, y: 0.02148181, z: -0.27899966 }, { x: -0.63015136, y: 0.02148181, z: -0.27899966 }, { x: -0.63015136, y: 0.02148181, z: -0.27899966 }], indices: [58, 74, 76, 58, 76, 59, 15, 18, 78, 15, 78, 75, 0, 1, 19, 0, 19, 16, 59, 76, 79, 59, 79, 60, 17, 20, 80, 17, 80, 77, 60, 79, 82, 60, 82, 61, 21, 24, 84, 21, 84, 81, 2, 3, 25, 2, 25, 22, 61, 82, 85, 61, 85, 62, 23, 27, 87, 23, 87, 83, 62, 85, 88, 62, 88, 63, 26, 29, 89, 26, 89, 86, 4, 5, 31, 4, 31, 28, 63, 88, 91, 63, 91, 64, 30, 33, 93, 30, 93, 90, 64, 91, 94, 64, 94, 65, 32, 36, 96, 32, 96, 92, 6, 7, 37, 6, 37, 34, 65, 94, 97, 65, 97, 66, 35, 38, 98, 35, 98, 95, 66, 97, 100, 66, 100, 67, 39, 42, 102, 39, 102, 99, 8, 9, 43, 8, 43, 40, 67, 100, 103, 67, 103, 68, 41, 45, 105, 41, 105, 101, 68, 103, 106, 68, 106, 69, 44, 47, 107, 44, 107, 104, 10, 11, 49, 10, 49, 46, 69, 106, 109, 69, 109, 70, 48, 50, 110, 48, 110, 108, 70, 109, 112, 70, 112, 71, 51, 54, 114, 51, 114, 111, 12, 13, 55, 12, 55, 52, 71, 112, 115, 71, 115, 72, 53, 57, 117, 53, 117, 113, 14, 73, 116, 14, 116, 56], material: { color: "#8b78af", roughness: 0.36000001, metalness: 0 } }, { vertices: [{ x: 0.37349992, y: 1e-7, z: 0.16200014 }, { x: 0.37554012, y: 0.11675623, z: 0.16200014 }, { x: 0.37554012, y: 0.11675623, z: 0.16200014 }, { x: 0.32246757, y: 0.16584431, z: 0.16200014 }, { x: 0.32246757, y: 0.16584431, z: 0.16200014 }, { x: 0.29910832, y: 0.21107643, z: 0.16200014 }, { x: 0.29910832, y: 0.21107643, z: 0.16200014 }, { x: 0.23505352, y: 0.2748628, z: 0.16200014 }, { x: 0.23505352, y: 0.2748628, z: 0.16200014 }, { x: 0.15609701, y: 0.34483369, z: 0.16200014 }, { x: 0.15609701, y: 0.34483369, z: 0.16200014 }, { x: 0.08640571, y: 0.40548809, z: 0.16200014 }, { x: 0.08640571, y: 0.40548809, z: 0.16200014 }, { x: -4e-8, y: 0.35596228, z: 0.16200014 }, { x: -4e-8, y: 0.35596228, z: 0.16200014 }, { x: -0.08159456, y: 0.32664531, z: 0.16200014 }, { x: -0.08159456, y: 0.32664531, z: 0.16200014 }, { x: -0.16859748, y: 0.35115555, z: 0.16200014 }, { x: -0.16859748, y: 0.35115555, z: 0.16200014 }, { x: -0.22459685, y: 0.31283966, z: 0.16200014 }, { x: -0.22459685, y: 0.31283966, z: 0.16200014 }, { x: -0.29405587, y: 0.24405001, z: 0.16200014 }, { x: -0.29405587, y: 0.24405001, z: 0.16200014 }, { x: -0.34533649, y: 0.13834694, z: 0.16200014 }, { x: -0.34533649, y: 0.13834694, z: 0.16200014 }, { x: -0.34886488, y: 0.06057382, z: 0.16200014 }, { x: -0.34886488, y: 0.06057382, z: 0.16200014 }, { x: -0.38457764, y: 0.02148181, z: 0.16200014 }, { x: 0.37349992, y: 1e-7, z: -0.27899966 }, { x: 0.37554012, y: 0.11675623, z: -0.27899966 }, { x: 0.37554012, y: 0.11675623, z: -0.27899966 }, { x: 0.32246757, y: 0.16584431, z: -0.27899966 }, { x: 0.32246757, y: 0.16584431, z: -0.27899966 }, { x: 0.29910832, y: 0.21107643, z: -0.27899966 }, { x: 0.29910832, y: 0.21107643, z: -0.27899966 }, { x: 0.23505352, y: 0.2748628, z: -0.27899966 }, { x: 0.23505352, y: 0.2748628, z: -0.27899966 }, { x: 0.15609701, y: 0.34483369, z: -0.27899966 }, { x: 0.15609701, y: 0.34483369, z: -0.27899966 }, { x: 0.08640571, y: 0.40548809, z: -0.27899966 }, { x: 0.08640571, y: 0.40548809, z: -0.27899966 }, { x: -4e-8, y: 0.35596228, z: -0.27899966 }, { x: -4e-8, y: 0.35596228, z: -0.27899966 }, { x: -0.08159456, y: 0.32664531, z: -0.27899966 }, { x: -0.08159456, y: 0.32664531, z: -0.27899966 }, { x: -0.16859748, y: 0.35115555, z: -0.27899966 }, { x: -0.16859748, y: 0.35115555, z: -0.27899966 }, { x: -0.22459685, y: 0.31283966, z: -0.27899966 }, { x: -0.22459685, y: 0.31283966, z: -0.27899966 }, { x: -0.29405587, y: 0.24405001, z: -0.27899966 }, { x: -0.29405587, y: 0.24405001, z: -0.27899966 }, { x: -0.34533649, y: 0.13834694, z: -0.27899966 }, { x: -0.34533649, y: 0.13834694, z: -0.27899966 }, { x: -0.34886488, y: 0.06057382, z: -0.27899966 }, { x: -0.34886488, y: 0.06057382, z: -0.27899966 }, { x: -0.38457764, y: 0.02148181, z: -0.27899966 }], indices: [0, 28, 30, 0, 30, 2, 1, 29, 31, 1, 31, 3, 4, 32, 34, 4, 34, 6, 5, 33, 36, 5, 36, 8, 7, 35, 38, 7, 38, 10, 9, 37, 39, 9, 39, 11, 12, 40, 42, 12, 42, 14, 13, 41, 44, 13, 44, 16, 15, 43, 45, 15, 45, 17, 18, 46, 47, 18, 47, 19, 20, 48, 49, 20, 49, 21, 22, 50, 51, 22, 51, 23, 24, 52, 54, 24, 54, 26, 25, 53, 55, 25, 55, 27], material: { color: "#6eabbf", roughness: 0.23999999, metalness: 0 } }, { vertices: [{ x: 0.37349992, y: 1e-7, z: 0.16200014 }, { x: 0.37349992, y: 1e-7, z: 0.16200014 }, { x: 0.37554012, y: 0.11675623, z: 0.16200014 }, { x: 0.32246757, y: 0.16584431, z: 0.16200014 }, { x: 0.29910832, y: 0.21107643, z: 0.16200014 }, { x: 0.23505352, y: 0.2748628, z: 0.16200014 }, { x: 0.15609701, y: 0.34483369, z: 0.16200014 }, { x: 0.08640571, y: 0.40548809, z: 0.16200014 }, { x: -4e-8, y: 0.35596228, z: 0.16200014 }, { x: -0.08159456, y: 0.32664531, z: 0.16200014 }, { x: -0.16859748, y: 0.35115555, z: 0.16200014 }, { x: -0.22459685, y: 0.31283966, z: 0.16200014 }, { x: -0.29405587, y: 0.24405001, z: 0.16200014 }, { x: -0.34533649, y: 0.13834694, z: 0.16200014 }, { x: -0.34886488, y: 0.06057382, z: 0.16200014 }, { x: 0.61200002, y: 1e-7, z: 0.16200014 }, { x: 0.61200002, y: 1e-7, z: 0.16200014 }, { x: 0.61534291, y: 0.1714896, z: 0.16200014 }, { x: 0.52838054, y: 0.26500686, z: 0.16200014 }, { x: 0.4901052, y: 0.36339136, z: 0.16200014 }, { x: 0.38514779, y: 0.46307512, z: 0.16200014 }, { x: 0.25577326, y: 0.55181397, z: 0.16200014 }, { x: 0.14158047, y: 0.64722443, z: 0.16200014 }, { x: -4e-8, y: 0.59063519, z: 0.16200014 }, { x: -0.13369722, y: 0.55492168, z: 0.16200014 }, { x: -0.2762562, y: 0.57471102, z: 0.16200014 }, { x: -0.36801403, y: 0.4926792, z: 0.16200014 }, { x: -0.48182649, y: 0.39379195, z: 0.16200014 }, { x: -0.56585259, y: 0.24454182, z: 0.16200014 }, { x: -0.57163404, y: 0.11141949, z: 0.16200014 }, { x: 0.37349992, y: 1e-7, z: -0.27899966 }, { x: 0.61200002, y: 1e-7, z: -0.27899966 }], indices: [0, 2, 17, 0, 17, 15, 3, 4, 19, 3, 19, 18, 5, 6, 21, 5, 21, 20, 7, 8, 23, 7, 23, 22, 9, 10, 25, 9, 25, 24, 11, 12, 27, 11, 27, 26, 13, 14, 29, 13, 29, 28, 1, 16, 31, 1, 31, 30], material: { color: "#b69abd", roughness: 0.5, metalness: 0 } }] } };
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterWorld.ts
+var EPS3 = 1e-9;
+var SURFACE_RISE = 0.025;
+var DEPTH = 0.18;
+var WATER_COLORS = ["#287ca6", "#287ca6", "#287ca6"];
+var BED_COLORS = ["#667e96", "#727e9c", "#647f8d"];
+var key4 = (cell) => `${cell.x},${cell.z}`;
+var waterNeighbors2 = (base2, cell) => base2.neighbors(cell, "water").filter((next) => Number.isInteger(cell.x) && Number.isInteger(cell.z) && Number.isInteger(next.x) && Number.isInteger(next.z) && Math.abs(cell.x - next.x) + Math.abs(cell.z - next.z) === 1);
+var round2 = (value) => Math.round(value * 1e9) / 1e9 || 0;
+var horizontal = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);
+var cross4 = (a, b, p) => (b.x - a.x) * (p.z - a.z) - (b.z - a.z) * (p.x - a.x);
+var area2 = (polygon) => polygon.reduce((sum, vertex, i) => {
+  const next = polygon[(i + 1) % polygon.length];
+  return sum + vertex.point.x * next.point.z - vertex.point.z * next.point.x;
+}, 0) / 2;
+var turn4 = (x, z, count) => count === 1 ? { x: -z, z: x } : count === 2 ? { x: -x, z: -z } : count === 3 ? { x: z, z: -x } : { x, z };
+var pointToLocal = (district, point) => {
+  const p = turn4(point.x - district.worldOrigin.x, point.z - district.worldOrigin.z, (4 - district.turn) % 4);
+  return { x: round2(p.x), y: round2(point.y - district.worldOrigin.y), z: round2(p.z) };
+};
+var pointToWorld = (district, point) => {
+  const p = turn4(point.x, point.z, district.turn);
+  return { x: p.x + district.worldOrigin.x, y: point.y + district.worldOrigin.y, z: p.z + district.worldOrigin.z };
+};
+var cellToWorld = (district, cell) => {
+  const p = turn4(cell.x, cell.z, district.turn);
+  return { x: p.x + district.logicalOrigin.x, z: p.z + district.logicalOrigin.z };
+};
+var floorId = (districtId, local) => JSON.stringify([districtId, local]);
+var localId = (kind, id) => `authored-water:${kind}:${encodeURIComponent(id)}`;
+var refKey3 = (ref) => JSON.stringify([ref.districtId, ref.siteId]);
+function freeze2(value) {
+  if (value && typeof value === "object" && !Object.isFrozen(value)) {
+    Object.values(value).forEach(freeze2);
+    Object.freeze(value);
+  }
+  return value;
+}
+function fingerprint(text) {
+  let a = 2166136261, b = 2246822507;
+  for (let i = 0; i < text.length; i++) {
+    a = Math.imul(a ^ text.charCodeAt(i), 16777619);
+    b = Math.imul(b ^ text.charCodeAt(i), 3266489909);
+  }
+  return `${(a >>> 0).toString(16).padStart(8, "0")}${(b >>> 0).toString(16).padStart(8, "0")}`;
+}
+function clean(polygon) {
+  const out = polygon.filter((vertex, i) => horizontal(vertex.point, polygon[(i + polygon.length - 1) % polygon.length].point) > 1e-8);
+  return out.length >= 3 && Math.abs(area2(out)) > 1e-10 ? out : [];
+}
+function interpolate2(a, b, t) {
+  return {
+    cell: { x: round2(a.cell.x + (b.cell.x - a.cell.x) * t), z: round2(a.cell.z + (b.cell.z - a.cell.z) * t) },
+    point: {
+      x: round2(a.point.x + (b.point.x - a.point.x) * t),
+      y: round2(a.point.y + (b.point.y - a.point.y) * t),
+      z: round2(a.point.z + (b.point.z - a.point.z) * t)
+    },
+    // Keep the linear source field through repeated cuts. Normalizing each
+    // intermediate split would change later barycentric interpolation.
+    ...a.normal && b.normal ? { normal: {
+      x: a.normal.x + (b.normal.x - a.normal.x) * t,
+      y: a.normal.y + (b.normal.y - a.normal.y) * t,
+      z: a.normal.z + (b.normal.z - a.normal.z) * t
+    } } : {}
+  };
+}
+function halfPlane(polygon, a, b, inside) {
+  const out = [];
+  for (let i = 0; i < polygon.length; i++) {
+    const p = polygon[i], q = polygon[(i + 1) % polygon.length];
+    const dp = cross4(a, b, p.point), dq = cross4(a, b, q.point);
+    const keepP = inside ? dp >= -EPS3 : dp <= EPS3, keepQ = inside ? dq >= -EPS3 : dq <= EPS3;
+    if (keepP) out.push(p);
+    if (keepP !== keepQ && Math.abs(dp - dq) > EPS3) out.push(interpolate2(p, q, Math.max(0, Math.min(1, dp / (dp - dq)))));
+  }
+  return clean(out);
+}
+function subtract(polygon, outline) {
+  const outside = [];
+  let inside = [...polygon];
+  for (let i = 0; i < outline.length && inside.length; i++) {
+    const a = outline[i], b = outline[(i + 1) % outline.length];
+    const piece = halfPlane(inside, a, b, false);
+    if (piece.length) outside.push(piece);
+    inside = halfPlane(inside, a, b, true);
+  }
+  return { outside, inside };
+}
+function append(floor, polygon, up = false) {
+  if (!polygon.length) return;
+  const offset = floor.vertices.length;
+  floor.vertices.push(...polygon);
+  const reverse = up && area2(polygon) > 0;
+  for (let i = 1; i + 1 < polygon.length; i++) {
+    const a = polygon[0].cell, b = polygon[i].cell, c = polygon[i + 1].cell;
+    if (Math.abs((b.x - a.x) * (c.z - a.z) - (b.z - a.z) * (c.x - a.x)) <= 1e-12) continue;
+    floor.indices.push(offset, offset + (reverse ? i + 1 : i), offset + (reverse ? i : i + 1));
+  }
+}
+function protectedCells(state, excluded) {
+  const half2 = AUTHORED_OWNER_HALF_EXTENT + AUTHORED_WALK_HALF_WIDTH;
+  const out = HOUSE_CELLS.map((cell) => ({ cell, half: half2 }));
+  for (const item of [...state.plots, ...state.landmarks, ...state.keepsakes]) {
+    if (!item.cell || excluded.has(item.id)) continue;
+    out.push({ cell: item.cell, half: half2 });
+    if ("kind" in item && item.kind === "home") out.push({ cell: { x: item.cell.x, z: item.cell.z + 0.75 }, half: 0.18 });
+  }
+  return out;
+}
+function safeOutline(base2, outline, protections2, districtId) {
+  const candidates = districtId ? [districtId] : base2.definition.districts.map((district) => district.id);
+  return candidates.some((id) => isAuthoredWaterCarvingSafe(base2, id, outline, protections2));
+}
+function poolFor(owner, index, bowls, base2, protections2) {
+  const site = base2.sites.find((site2) => key4(site2.cell) === key4(owner.cell));
+  const center = base2.anchorAt(owner.cell) ?? base2.floorAt(owner.cell)?.point;
+  if (!site?.placement || !center) return;
+  const source = nativeWaterSource_default.pools[index % nativeWaterSource_default.pools.length];
+  const neighbors = bowls.filter((bowl) => bowl.id !== owner.id).map((bowl) => base2.anchorAt(bowl.cell)).filter(Boolean).sort((a, b) => horizontal(center, a) - horizontal(center, b));
+  const nearest = neighbors[0], yaw = nearest ? Math.atan2(nearest.z - center.z, nearest.x - center.x) : 0;
+  const requested = [source.radiusX, source.radiusZ, source.radiusX, source.radiusZ];
+  const axes = requested.map((value) => Math.min(value, 0.24));
+  const outerScale = nativeWaterSource_default.rim.rings[0].scale;
+  const shape = () => adaptWaterContour(source.outline, center, axes[0], axes[1], yaw, axes[2], axes[3]);
+  const valid = (outline2) => {
+    const outer = scaledWaterOutline(outline2, center, outerScale);
+    if (outer.some((p) => neighbors.some((other) => {
+      const d = horizontal(center, other), projection = ((p.x - center.x) * (other.x - center.x) + (p.z - center.z) * (other.z - center.z)) / d;
+      return projection > d / 2 - 0.025;
+    }))) return false;
+    return safeOutline(base2, outer, protections2, site.ref.districtId);
+  };
+  if (!valid(shape()) || !decomposeWaterOutline(shape()).length) return;
+  for (const axis of [1, 3, 0, 2]) {
+    while (axes[axis] + 0.02 <= requested[axis] + EPS3) {
+      axes[axis] += 0.02;
+      if (!valid(shape())) {
+        axes[axis] -= 0.02;
+        break;
+      }
+    }
+  }
+  const outline = shape(), waterY = round2(center.y + SURFACE_RISE), bedY = round2(waterY - DEPTH);
+  return {
+    ownerId: owner.id,
+    ownerIds: [owner.id],
+    districtId: site.ref.districtId,
+    center: { ...center },
+    radius: round2(Math.max(...axes)),
+    axes: axes.map(round2),
+    sourceRole: source.role,
+    waterY,
+    bedY,
+    outline,
+    outerOutline: scaledWaterOutline(outline, center, outerScale),
+    waterFloorId: floorId(site.ref.districtId, localId("pool-water", owner.id)),
+    bedFloorId: floorId(site.ref.districtId, localId("pool-bed", owner.id)),
+    color: WATER_COLORS[index % 3],
+    bedColor: BED_COLORS[index % 3]
+  };
+}
+function poolMouthDistance(pool, dx, dz, width) {
+  if (!pool) return 0;
+  let distance3 = Infinity;
+  for (const side of [-width, width]) {
+    const origin = { x: pool.center.x + dz * side, y: pool.center.y, z: pool.center.z - dx * side };
+    const exit = waterRayExit(origin, dx, dz, pool.outline);
+    if (exit === void 0) return;
+    distance3 = Math.min(distance3, exit);
+  }
+  return Number.isFinite(distance3) && distance3 > 0.025 ? distance3 - 0.025 : void 0;
+}
+function intersectionPoints(a, b) {
+  return [
+    ...a.filter((p) => pointInWaterOutline(p, b)),
+    ...b.filter((p) => pointInWaterOutline(p, a)),
+    ...a.flatMap((p, i) => waterSegmentIntervals(p, a[(i + 1) % a.length], b).flatMap((interval) => interval.map((t) => ({
+      x: p.x + (a[(i + 1) % a.length].x - p.x) * t,
+      y: p.y,
+      z: p.z + (a[(i + 1) % a.length].z - p.z) * t
+    }))))
+  ];
+}
+function streamFor(a, b, pools, base2, protections2, adjoining = []) {
+  const a0 = base2.anchorAt(a.cell), b0 = base2.anchorAt(b.cell);
+  if (!a0 || !b0) return;
+  const length = horizontal(a0, b0);
+  if (length <= 0.05) return;
+  const dx = (b0.x - a0.x) / length, dz = (b0.z - a0.z) / length;
+  const aPool = pools.find((pool) => pool.ownerId === a.id), bPool = pools.find((pool) => pool.ownerId === b.id);
+  const width = 0.135, fromTrim = poolMouthDistance(aPool, dx, dz, width), toTrim = poolMouthDistance(bPool, -dx, -dz, width);
+  if (fromTrim === void 0 || toTrim === void 0) return;
+  const from = { x: a0.x + dx * fromTrim, y: a0.y + SURFACE_RISE, z: a0.z + dz * fromTrim };
+  const to = { x: b0.x - dx * toTrim, y: b0.y + SURFACE_RISE, z: b0.z - dz * toTrim };
+  if (horizontal(from, to) <= 0.05) return;
+  const seed = Array.from({ length: 9 }, (_, i) => {
+    const t = i / 8, bend = 0.035 * Math.sin(Math.PI * t);
+    return {
+      x: from.x + (to.x - from.x) * t + dz * bend,
+      y: from.y,
+      z: from.z + (to.z - from.z) * t - dx * bend
+    };
+  });
+  const seedOutline = [
+    ...seed.map((p) => ({ ...p, x: p.x + dz * width, z: p.z - dx * width })),
+    ...[...seed].reverse().map((p) => ({ ...p, x: p.x - dz * width, z: p.z + dx * width }))
+  ];
+  const vx = to.x - from.x, vz = to.z - from.z, squared = vx * vx + vz * vz;
+  const projection = (p) => ((p.x - from.x) * vx + (p.z - from.z) * vz) / squared;
+  const id = JSON.stringify([a.id, b.id].sort());
+  const junctionPoints = (ownerId) => adjoining.filter((other) => other.id !== id && other.ownerIds.includes(ownerId)).flatMap((other) => intersectionPoints(seedOutline, other.outline));
+  const startPoints = [...aPool?.outline ?? [], ...junctionPoints(a.id)], endPoints = [...bPool?.outline ?? [], ...junctionPoints(b.id)];
+  const dropStart = Math.max(0, Math.min(1, Math.max(0, ...startPoints.map(projection))));
+  const dropEnd = Math.max(0, Math.min(1, Math.min(1, ...endPoints.map(projection))));
+  if (dropEnd - dropStart < 1e-6 && Math.abs(from.y - to.y) > EPS3) return;
+  const knots = [...new Set([...seed.map((_, i) => i / 8), dropStart, dropEnd].map(round2))].sort((a2, b2) => a2 - b2);
+  const centerline = knots.map((t) => {
+    const i = Math.min(7, Math.floor(t * 8)), u = t * 8 - i;
+    const fall = dropEnd - dropStart > EPS3 ? smoothFall(Math.max(0, Math.min(1, (t - dropStart) / (dropEnd - dropStart)))) : 0;
+    return {
+      x: seed[i].x + (seed[i + 1].x - seed[i].x) * u,
+      y: from.y + (to.y - from.y) * fall,
+      z: seed[i].z + (seed[i + 1].z - seed[i].z) * u
+    };
+  });
+  const left = centerline.map((p) => ({ ...p, x: p.x + dz * width, z: p.z - dx * width }));
+  const right = centerline.map((p) => ({ ...p, x: p.x - dz * width, z: p.z + dx * width }));
+  const outline = [...left, ...[...right].reverse()];
+  const ownerDistricts = new Set([a, b].map((owner) => base2.sites.find((site) => key4(site.cell) === key4(owner.cell))?.ref.districtId));
+  if (ownerDistricts.size !== 1 || ownerDistricts.has(void 0)) return;
+  const districtIds = base2.definition.districts.filter((district) => ownerDistricts.has(district.id) && isAuthoredWaterCarvingSafe(base2, district.id, outline, protections2)).map((district) => district.id);
+  if (!districtIds.length) return;
+  const stream = {
+    id,
+    ownerIds: [a.id, b.id],
+    from,
+    to,
+    outline,
+    centerline,
+    width: width * 2,
+    waterFloorIds: [],
+    bedFloorIds: [],
+    falling: Math.abs(from.y - to.y) > 0.06
+  };
+  const common = { districtIds, ownerIds: [...stream.ownerIds], color: "#50b5ca", bedColor: "#667e96", stream };
+  return centerline.slice(1).map((end, i) => ({
+    ...common,
+    id: `stream:${id}:${i}`,
+    outline: [left[i], left[i + 1], right[i + 1], right[i]],
+    heightAt: (point) => {
+      const t = Math.max(0, Math.min(1, (projection(point) - knots[i]) / (knots[i + 1] - knots[i])));
+      return round2(centerline[i].y + (end.y - centerline[i].y) * t);
+    }
+  }));
+}
+var smoothFall = (t) => t * t * (3 - 2 * t);
+function bounds(outline) {
+  return {
+    minX: Math.min(...outline.map((p) => p.x)),
+    maxX: Math.max(...outline.map((p) => p.x)),
+    minZ: Math.min(...outline.map((p) => p.z)),
+    maxZ: Math.max(...outline.map((p) => p.z))
+  };
+}
+var overlaps2 = (a, b) => a.minX <= b.maxX + EPS3 && a.maxX + EPS3 >= b.minX && a.minZ <= b.maxZ + EPS3 && a.maxZ + EPS3 >= b.minZ;
+function floorIntersectsOutline(floor, district, outline) {
+  const box = bounds(outline), pieces = decomposeWaterOutline(outline), vertices = floor.vertices.map((vertex) => ({ ...vertex, point: pointToWorld(district, vertex.point) }));
+  for (let i = 0; i < floor.indices.length; i += 3) {
+    const triangle = floor.indices.slice(i, i + 3).map((index) => vertices[index]);
+    if (overlaps2(bounds(triangle.map((vertex) => vertex.point)), box) && pieces.some((piece) => subtract(triangle, piece).inside.length)) return true;
+  }
+  return false;
+}
+function bankIntervals(a, b, outlines) {
+  let intervals = [[0, 1]];
+  for (const outline of outlines) for (const [min, max] of waterSegmentIntervals(a, b, outline)) {
+    intervals = intervals.flatMap(([lo, hi]) => max <= lo || min >= hi ? [[lo, hi]] : [...lo < min ? [[lo, min]] : [], ...max < hi ? [[max, hi]] : []]);
+  }
+  return intervals;
+}
+function bankFor(cut, district, base2, others) {
+  if (cut.pool) {
+    const surfaces = buildWaterRim({
+      id: localId("bank", cut.id),
+      outline: cut.pool.outline,
+      center: cut.pool.center,
+      waterY: cut.pool.waterY,
+      rings: nativeWaterSource_default.rim.rings,
+      groundAt: (p) => {
+        const cell = base2.logicalAt(p);
+        return cell ? base2.floorAt(cell)?.point.y : void 0;
+      },
+      mouths: others.filter((other) => other !== cut).map((other) => other.outline),
+      body: nativeWaterSource_default.rim.body,
+      lip: nativeWaterSource_default.rim.lip
+    });
+    return (surfaces ?? []).map((surface) => ({ ...surface, vertices: surface.vertices.map((p) => pointToLocal(district, p)) }));
+  }
+  const vertices = [], indices = [];
+  for (let i = 0; i < cut.outline.length; i++) {
+    const a0 = cut.outline[i], b0 = cut.outline[(i + 1) % cut.outline.length];
+    const top = (p) => {
+      const cell = base2.logicalAt(p), y = cell ? base2.floorAt(cell)?.point.y : void 0;
+      return pointToLocal(district, { ...p, y: Math.max(y ?? cut.heightAt(p), cut.heightAt(p) + 0.035) });
+    };
+    for (const [from, to] of bankIntervals(a0, b0, others.filter((other) => other !== cut).map((other) => other.outline))) {
+      const at = (t) => ({ x: a0.x + (b0.x - a0.x) * t, y: a0.y + (b0.y - a0.y) * t, z: a0.z + (b0.z - a0.z) * t });
+      const a = at(from), b = at(to), offset = vertices.length;
+      if (horizontal(a, b) <= 1e-9) continue;
+      vertices.push(top(a), top(b), pointToLocal(district, { ...b, y: cut.heightAt(b) - DEPTH }), pointToLocal(district, { ...a, y: cut.heightAt(a) - DEPTH }));
+      indices.push(offset, offset + 1, offset + 2, offset, offset + 2, offset + 3);
+    }
+  }
+  if (!indices.length) return [];
+  return [{ id: localId("bank", cut.id), kind: "bank", vertices, indices, material: { color: nativeWaterSource_default.rim.body.color, roughness: 0.56, metalness: 0 } }];
+}
+function flowFor(cut, district) {
+  if (!cut.stream?.falling) return;
+  const stream = cut.stream, length = horizontal(stream.from, stream.to), dx = (stream.to.x - stream.from.x) / length, dz = (stream.to.z - stream.from.z) / length, width = stream.width / 2;
+  const vertices = stream.centerline.flatMap((p) => [
+    { x: p.x + dz * width, y: p.y + 2e-3, z: p.z - dx * width },
+    { x: p.x - dz * width, y: p.y + 2e-3, z: p.z + dx * width }
+  ].map((p2) => pointToLocal(district, p2)));
+  const indices = stream.centerline.slice(1).flatMap((_, i) => [i * 2, i * 2 + 2, i * 2 + 3, i * 2, i * 2 + 3, i * 2 + 1]);
+  return {
+    id: localId("flow", stream.id),
+    kind: "flow",
+    vertices,
+    indices,
+    material: { color: "#50b5ca", roughness: 0.16, metalness: 0, opacity: 0.82 }
+  };
+}
+function grottoFor(pool, streams, base2, protections2) {
+  const link = streams.find((stream) => stream.ownerIds.includes(pool.ownerId));
+  if (!link) return;
+  const target = horizontal(link.from, pool.center) < horizontal(link.to, pool.center) ? link.to : link.from;
+  const length = horizontal(target, pool.center), dx = (target.x - pool.center.x) / length, dz = (target.z - pool.center.z) / length;
+  const yaw = Math.atan2(-dx, dz), sourceVertices = nativeWaterSource_default.grotto.primitives.flatMap((part) => part.vertices);
+  for (const scale of [1, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6]) {
+    const pivot = { x: pool.center.x - dx * 0.07, y: pool.bedY - 0.025, z: pool.center.z - dz * 0.07 };
+    const transform = (p) => ({
+      x: pivot.x + scale * (p.x * Math.cos(yaw) - p.z * Math.sin(yaw)),
+      y: pivot.y + p.y * scale,
+      z: pivot.z + scale * (p.x * Math.sin(yaw) + p.z * Math.cos(yaw))
+    });
+    const vertices = sourceVertices.map(transform), box = bounds(vertices);
+    const footprint = [
+      { x: box.minX, y: pivot.y, z: box.minZ },
+      { x: box.maxX, y: pivot.y, z: box.minZ },
+      { x: box.maxX, y: pivot.y, z: box.maxZ },
+      { x: box.minX, y: pivot.y, z: box.maxZ }
+    ];
+    if (!safeOutline(base2, footprint, protections2, pool.districtId) || sourceVertices.filter((p) => p.y < 0.035).some((p) => !pointInWaterOutline(transform(p), pool.outline))) continue;
+    const surfaces = nativeWaterSource_default.grotto.primitives.map((part, i) => ({
+      id: localId("grotto", `${pool.ownerId}:${i}`),
+      kind: "bank",
+      vertices: part.vertices.map(transform),
+      indices: part.indices,
+      material: part.material
+    }));
+    return { plan: {
+      ownerId: pool.ownerId,
+      pivot,
+      yaw,
+      scale,
+      footprint,
+      surfaceIds: surfaces.map((surface) => floorId(pool.districtId, surface.id))
+    }, surfaces };
+  }
+}
+function composeAuthoredWaterWorld(state, base2) {
+  const supplied = connectedWaterChannels(waterLayout(state, base2));
+  const owners = state.landmarks.filter((owner) => !!owner.cell && base2.owns(owner.cell) && (owner.kind === "water-bowl" || owner.kind === "water-channel" && supplied.has(key4(owner.cell)))).sort((a, b) => a.id.localeCompare(b.id));
+  const byCell = new Map(owners.map((owner) => [key4(owner.cell), owner]));
+  const groups = [], pools = [], cuts = [], streams = [];
+  const seen = /* @__PURE__ */ new Set();
+  for (const owner of owners) {
+    if (seen.has(owner.id)) continue;
+    const members = [owner];
+    seen.add(owner.id);
+    for (let i = 0; i < members.length; i++) for (const cell of waterNeighbors2(base2, members[i].cell)) {
+      const other = byCell.get(key4(cell));
+      if (!other || seen.has(other.id)) continue;
+      seen.add(other.id);
+      members.push(other);
+    }
+    members.sort((a, b) => a.id.localeCompare(b.id));
+    const bowls = members.filter((member) => member.kind === "water-bowl").sort((a, b) => (base2.anchorAt(b.cell)?.y ?? 0) - (base2.anchorAt(a.cell)?.y ?? 0) || a.id.localeCompare(b.id)), channels = members.filter((member) => member.kind === "water-channel");
+    const group = {
+      id: `water-group:${JSON.stringify(members.map((member) => member.id))}`,
+      ownerIds: members.map((member) => member.id),
+      bowlIds: bowls.map((bowl) => bowl.id),
+      channelIds: channels.map((channel) => channel.id),
+      cut: false,
+      reason: "individual-bodies"
+    };
+    groups.push(group);
+    if (bowls.length < 3 || channels.length < 2) continue;
+    const protections2 = protectedCells(state, new Set(group.ownerIds));
+    const nextPools = bowls.map((bowl, i) => poolFor(bowl, i, bowls, base2, protections2));
+    if (nextPools.some((pool) => !pool)) {
+      group.reason = "insufficient-clearance";
+      continue;
+    }
+    const edgeIds = /* @__PURE__ */ new Set(), links = [];
+    for (const member of members) for (const cell of waterNeighbors2(base2, member.cell)) {
+      const other = byCell.get(key4(cell));
+      if (!other || !group.ownerIds.includes(other.id)) continue;
+      const id = JSON.stringify([member.id, other.id].sort());
+      if (edgeIds.has(id)) continue;
+      edgeIds.add(id);
+      links.push([member, other]);
+    }
+    const initialStreams = links.map(([a, b]) => streamFor(a, b, nextPools, base2, protections2));
+    const adjoining = initialStreams.filter((cut) => !!cut).map((cut) => cut[0].stream);
+    const nextStreams = initialStreams.some((stream) => !stream) ? initialStreams : links.map(([a, b]) => streamFor(a, b, nextPools, base2, protections2, adjoining));
+    if (nextStreams.some((stream) => !stream)) {
+      group.reason = "insufficient-clearance";
+      continue;
+    }
+    group.cut = true;
+    delete group.reason;
+    for (const pool of nextPools) {
+      pools.push(pool);
+      cuts.push({
+        id: `pool:${pool.ownerId}`,
+        outline: pool.outline,
+        outerOutline: pool.outerOutline,
+        districtIds: [pool.districtId],
+        color: pool.color,
+        bedColor: pool.bedColor,
+        ownerIds: [pool.ownerId],
+        heightAt: () => pool.waterY,
+        pool
+      });
+    }
+    for (const nextCuts of nextStreams) {
+      cuts.push(...nextCuts);
+      streams.push(nextCuts[0].stream);
+    }
+  }
+  const grottoCandidates = groups.filter((group) => group.cut).flatMap((group) => {
+    const upper = pools.find((pool) => group.bowlIds.includes(pool.ownerId));
+    const result = upper && grottoFor(upper, streams, base2, protectedCells(state, new Set(group.ownerIds)));
+    return result ? [{ districtId: upper.districtId, ...result }] : [];
+  });
+  const revision = `authored-water-v2:${fingerprint(JSON.stringify({
+    base: [base2.id, base2.definition.revision, base2.definition.source],
+    profile: nativeWaterSource_default,
+    scopes: base2.definition.districts.map((district) => [district.id, district.waterCarvingScopes]),
+    water: owners.map((owner) => [owner.id, owner.kind, owner.cell, owner.growth]),
+    obstacles: protectedCells(state, /* @__PURE__ */ new Set()).map((p) => [p.cell, p.half]),
+    pools: pools.map((pool) => [pool.ownerId, pool.axes, pool.outline, pool.outerOutline]),
+    streams: streams.map((stream) => [stream.id, stream.outline, stream.centerline]),
+    grottos: grottoCandidates.map((grotto) => grotto.plan)
+  }))}`;
+  const plan = { revision, ownerIds: [...new Set(cuts.flatMap((cut) => cut.ownerIds))], groups, pools, streams, grottos: grottoCandidates.map((grotto) => grotto.plan), bridges: [] };
+  const actualCuts = [];
+  let definition2 = structuredClone(base2.definition);
+  definition2.revision = revision;
+  definition2.districts = definition2.districts.map((district) => {
+    const worldCuts = cuts.filter((cut) => cut.districtIds.includes(district.id));
+    const localCuts = worldCuts.map((cut) => {
+      const outline = cut.outline.map((p) => pointToLocal(district, p)), outerOutline = (cut.outerOutline ?? cut.outline).map((p) => pointToLocal(district, p));
+      return { cut, pieces: decomposeWaterOutline(outline), outerPieces: decomposeWaterOutline(outerOutline), box: bounds(outerOutline) };
+    });
+    const additions = /* @__PURE__ */ new Map();
+    const floors = district.floors.flatMap((floor) => {
+      const allowedFloors = authoredWaterCarvingFloorIds(base2, district.id);
+      if (floor.kind !== "ground" || !localCuts.length || allowedFloors && !allowedFloors.includes(floorId(district.id, floor.id))) return [floor];
+      const vertices = [...floor.vertices], indices = [];
+      for (let i = 0; i < floor.indices.length; i += 3) {
+        const sourceIndices = floor.indices.slice(i, i + 3), triangle = sourceIndices.map((index) => floor.vertices[index]);
+        const box = bounds(triangle.map((v) => v.point)), applicable = localCuts.filter((cut) => overlaps2(box, cut.box));
+        if (!applicable.length) {
+          indices.push(...sourceIndices);
+          continue;
+        }
+        let remaining = [triangle], changed = false;
+        for (const { outerPieces } of applicable) for (const outline of outerPieces) {
+          const next = [];
+          for (const polygon of remaining) {
+            const pieces = subtract(polygon, outline);
+            changed ||= !!pieces.inside.length;
+            next.push(...pieces.inside.length ? pieces.outside : [polygon]);
+          }
+          remaining = next;
+        }
+        if (!changed) indices.push(...sourceIndices);
+        else for (const polygon of remaining) append({ vertices, indices }, polygon);
+        let wetRemaining = [triangle];
+        for (const { cut, pieces: wetPieces } of applicable) for (const outline of wetPieces) {
+          const next = [];
+          for (const polygon of wetRemaining) {
+            const pieces = subtract(polygon, outline);
+            if (!pieces.inside.length) {
+              next.push(polygon);
+              continue;
+            }
+            next.push(...pieces.outside);
+            let addition = additions.get(cut);
+            if (!addition) {
+              const waterLocalId = cut.pool ? localId("pool-water", cut.pool.ownerId) : localId("stream-water", cut.id);
+              const bedLocalId = cut.pool ? localId("pool-bed", cut.pool.ownerId) : localId("stream-bed", cut.id);
+              addition = {
+                water: { id: waterLocalId, kind: "water", color: cut.color, vertices: [], indices: [] },
+                bed: { id: bedLocalId, kind: "ground", color: cut.bedColor, vertices: [], indices: [] }
+              };
+              additions.set(cut, addition);
+            }
+            const wet = pieces.inside.map((vertex) => ({ cell: { ...vertex.cell }, point: {
+              ...vertex.point,
+              y: round2(cut.heightAt(pointToWorld(district, vertex.point)) - district.worldOrigin.y)
+            } }));
+            append(addition.water, wet, true);
+            append(addition.bed, wet.map((vertex) => ({ cell: { ...vertex.cell }, point: { ...vertex.point, y: round2(vertex.point.y - DEPTH) } })), true);
+          }
+          wetRemaining = next;
+        }
+      }
+      return indices.length ? [{ ...floor, vertices, indices }] : [];
+    });
+    const surfaces = [...district.surfaces ?? [], ...grottoCandidates.filter((grotto) => grotto.districtId === district.id).flatMap((grotto) => grotto.surfaces.map((surface) => ({ ...surface, vertices: surface.vertices.map((p) => pointToLocal(district, p)) })))];
+    for (const [cut, addition] of additions) {
+      if (!addition.water.indices.length || !addition.bed.indices.length) continue;
+      floors.push(addition.water, addition.bed);
+      actualCuts.push({ cut, district, ...addition });
+      if (cut.stream) {
+        cut.stream.waterFloorIds.push(floorId(district.id, addition.water.id));
+        cut.stream.bedFloorIds.push(floorId(district.id, addition.bed.id));
+      }
+      surfaces.push(...bankFor(cut, district, base2, worldCuts));
+      const flow = flowFor(cut, district);
+      if (flow && !surfaces.some((surface) => surface.id === flow.id)) surfaces.push(flow);
+    }
+    return {
+      ...district,
+      floors,
+      surfaces,
+      anchorFloors: district.anchorFloors ?? district.floors,
+      sites: district.sites.map((site) => ({ ...site, anchorPoint: pointToLocal(district, base2.anchorAt(cellToWorld(district, site.cell))) }))
+    };
+  });
+  for (const stream of streams) {
+    const group = groups.find((group2) => group2.cut && stream.ownerIds.every((id) => group2.ownerIds.includes(id)));
+    const waterIds = new Set(stream.waterFloorIds), bedIds = new Set(stream.bedFloorIds);
+    for (const actual of actualCuts) {
+      if (!actual.cut.ownerIds.every((id) => group.ownerIds.includes(id)) || !floorIntersectsOutline(actual.water, actual.district, stream.outline)) continue;
+      waterIds.add(floorId(actual.district.id, actual.water.id));
+      bedIds.add(floorId(actual.district.id, actual.bed.id));
+    }
+    stream.waterFloorIds = [...waterIds];
+    stream.bedFloorIds = [...bedIds];
+  }
+  const sourceEdges = definition2.edges;
+  definition2.edges = sourceEdges.map((edge) => ({ ...edge, allows: edge.allows.filter((kind) => kind !== "walk") })).filter((edge) => edge.allows.length);
+  const cutWorld = compileWorldDefinition(definition2), bridgeComposition = composeAuthoredWaterBridges(state, base2, cutWorld, plan);
+  definition2 = bridgeComposition.definition;
+  plan.bridges = bridgeComposition.bridges;
+  const supportWorld = bridgeComposition.supportWorld, refs = new Map(supportWorld.sites.map((site) => [refKey3(site.ref), site.cell]));
+  definition2.edges = sourceEdges.map((edge) => ({ ...edge, allows: edge.allows.filter((kind) => kind !== "walk" || isWorldWalkEdgeSupported(supportWorld, refs.get(refKey3(edge.from)), refs.get(refKey3(edge.to)))) })).filter((edge) => edge.allows.length);
+  const dryWorld = compileWorldDefinition(definition2);
+  definition2.districts = definition2.districts.map((district) => ({ ...district, shoreAccess: owners.filter((owner) => plan.ownerIds.includes(owner.id)).map((owner) => {
+    const site = dryWorld.sites.find((site2) => site2.ref.districtId === district.id && key4(site2.cell) === key4(owner.cell));
+    if (!site) return void 0;
+    const waterFloorIds = [.../* @__PURE__ */ new Set([
+      ...pools.filter((pool) => pool.ownerIds.includes(owner.id)).map((pool) => pool.waterFloorId),
+      ...streams.filter((stream) => stream.ownerIds.includes(owner.id)).flatMap((stream) => stream.waterFloorIds)
+    ])];
+    return { ownerSiteId: site.ref.siteId, waterFloorIds: waterFloorIds.filter((id) => JSON.parse(id)[0] === district.id).map((id) => JSON.parse(id)[1]), entrySiteIds: findAuthoredShoreEntries(dryWorld, waterFloorIds).filter((ref) => ref.districtId === district.id).map((ref) => ref.siteId) };
+  }).filter((access) => !!access) }));
+  const finalRevision = `${revision}:${fingerprint(JSON.stringify({ bridgeProfile: nativeWaterBridgeProfile_default, bridges: plan.bridges, shore: definition2.districts.map((district) => [district.id, district.shoreAccess]) }))}`;
+  definition2.revision = finalRevision;
+  plan.revision = finalRevision;
+  return { world: compileWorldDefinition(definition2), plan: freeze2(plan) };
+}
+
+// ../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredShoulderWorld.ts
+var AUTHORED_SHOULDER_CANDIDATE = "native05-central-shoulder-sw-v3-source-v1";
+var AUTHORED_SHOULDER_COMPONENT_SHA = "c79e2cd7a228b24ff526e6d78913f6a07880e35dec1532d4c278dd7cbf10411e";
+var BASE_SHA = "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d";
+var GEOMETRY_SHA = "7b4772489932b225d7b31ced5bd53c6835a47e8e63c71eeb43d7b59af1523d3b";
+var DISTRICT = "diagnostic-central-shoulder-c-feasibility";
+var fail = (message) => {
+  throw new Error(`Authored shoulder: ${message}`);
+};
+var refKey4 = (ref) => JSON.stringify([ref.districtId, ref.siteId]);
+var physicalVertex = ({ cell, point }) => ({ cell, point });
+var physicalFloor = (floor) => ({ id: floor.id, kind: floor.kind, vertices: floor.vertices.map(physicalVertex), indices: floor.indices });
+function fingerprint2(value) {
+  const text = JSON.stringify(value);
+  let a = 2166136261, b = 2246822507;
+  for (let i = 0; i < text.length; i++) {
+    a = Math.imul(a ^ text.charCodeAt(i), 16777619);
+    b = Math.imul(b ^ text.charCodeAt(i), 3266489909);
+  }
+  return (a >>> 0).toString(16).padStart(8, "0") + (b >>> 0).toString(16).padStart(8, "0");
+}
+function authoredShoulderGroundRevision(world, bounds2) {
+  const triangles = [];
+  for (const floor of world.floors) for (let i = 0; i < floor.indices.length; i += 3) {
+    const vertices = floor.indices.slice(i, i + 3).map((index) => floor.vertices[index]), points = vertices.map((vertex) => vertex.point);
+    if (Math.max(...points.map((p) => p.x)) < bounds2.min.x || Math.min(...points.map((p) => p.x)) > bounds2.max.x || Math.max(...points.map((p) => p.z)) < bounds2.min.z || Math.min(...points.map((p) => p.z)) > bounds2.max.z) continue;
+    triangles.push([floor.id, floor.kind, vertices.map(physicalVertex)]);
+  }
+  return fingerprint2(triangles);
+}
+function authoredShoulderProfilePhysicalRevision(profile) {
+  return fingerprint2({
+    candidate: profile.candidate,
+    source: profile.source,
+    localGround: profile.localGround,
+    boundary: profile.boundary,
+    sourceDistrictId: profile.sourceDistrictId,
+    clipFloorIds: profile.clipFloorIds,
+    transferSiteIds: profile.transferSiteIds,
+    district: { ...profile.district, floors: profile.district.floors.map(physicalFloor) },
+    edges: profile.edges,
+    triangleLineage: profile.triangleLineage
+  });
+}
+function area3(poly) {
+  return poly.length < 3 ? 0 : Math.abs(poly.reduce((sum, p, i) => {
+    const q = poly[(i + 1) % poly.length];
+    return sum + p.cell.x * q.cell.z - q.cell.x * p.cell.z;
+  }, 0)) / 2;
+}
+var lerp = (a, b, t) => a + (b - a) * t;
+var lerpPoint = (a, b, t) => ({ x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t), z: lerp(a.z, b.z, t) });
+function half(poly, distance3) {
+  const result = [];
+  for (let i = 0; i < poly.length; i++) {
+    const p = poly[i], q = poly[(i + 1) % poly.length], d = distance3(p.cell), e = distance3(q.cell);
+    if (d >= -1e-12) result.push(p);
+    if (d >= 0 !== e >= 0) {
+      const t = d / (d - e);
+      result.push({
+        cell: { x: lerp(p.cell.x, q.cell.x, t), z: lerp(p.cell.z, q.cell.z, t) },
+        point: lerpPoint(p.point, q.point, t),
+        // Keep linear source interpolation through successive clips;
+        // normalizing at each cut changes the original shading field.
+        ...p.normal && q.normal ? { normal: lerpPoint(p.normal, q.normal, t) } : {}
+      });
+    }
+  }
+  return area3(result) > 1e-12 ? result : [];
+}
+function carve(poly, boundary) {
+  let inside = [...poly];
+  const outside = [];
+  for (let i = 0; i < boundary.length; i++) {
+    const p = boundary[i], q = boundary[(i + 1) % boundary.length];
+    const distance3 = (c) => (q.x - p.x) * (c.z - p.z) - (q.z - p.z) * (c.x - p.x);
+    const remainder = half(inside, (cell) => -distance3(cell));
+    if (remainder.length) outside.push(remainder);
+    inside = half(inside, distance3);
+    if (!inside.length) break;
+  }
+  return { inside, outside };
+}
+function clipFloor(floor, boundary) {
+  const vertices = [...floor.vertices], indices = [];
+  for (let i = 0; i < floor.indices.length; i += 3) {
+    const sourceIndices = floor.indices.slice(i, i + 3), result = carve(sourceIndices.map((index) => floor.vertices[index]), boundary);
+    if (!result.inside.length) {
+      indices.push(...sourceIndices);
+      continue;
+    }
+    for (const poly of result.outside) {
+      const offset = vertices.length;
+      vertices.push(...poly);
+      for (let j = 1; j + 1 < poly.length; j++) {
+        if (area3([poly[0], poly[j], poly[j + 1]]) * 2 > 10001e-16) indices.push(offset, offset + j, offset + j + 1);
+      }
+    }
+  }
+  return { ...floor, vertices, indices };
+}
+function checkProfile(profile) {
+  if (profile.version !== 1 || profile.candidate !== AUTHORED_SHOULDER_CANDIDATE || profile.source.baseSha256 !== BASE_SHA || profile.source.componentSha256 !== AUTHORED_SHOULDER_COMPONENT_SHA || profile.source.geometryProfileSha256 !== GEOMETRY_SHA) fail("source identity differs");
+  if (profile.physicalRevision !== authoredShoulderProfilePhysicalRevision(profile)) fail("physical profile differs");
+  const district = profile.district;
+  if (district.id !== DISTRICT || district.turn !== 0 || district.logicalOrigin.x !== 0 || district.logicalOrigin.z !== 0 || Object.values(district.worldOrigin).some((value) => value !== 0) || district.floors.length !== 2 || district.floors.some((floor) => floor.kind !== "ground") || district.sites.length !== 19 || district.sites.filter((site) => site.placement).length !== 2 || profile.transferSiteIds.length !== 2 || profile.edges.length !== 36 || profile.edges.filter((edge) => edge.allows.length === 1 && edge.allows[0] === "walk").length !== 35)
+    fail("diagnostic extension contract differs");
+}
+function composeAuthoredShoulderWorld(upstream, profile) {
+  checkProfile(profile);
+  if (upstream.definition.districts.some((district) => district.id === DISTRICT || district.id.startsWith("native05-cove-")))
+    fail("requires immutable terrain without shoulder or cove");
+  if (upstream.definition.source?.sha256 !== profile.source.baseSha256 || authoredShoulderGroundRevision(upstream, profile.localGround) !== profile.localGround.revision) fail("upstream physical locality differs");
+  const source = upstream.definition.districts.find((district) => district.id === profile.sourceDistrictId) ?? fail("source district frame differs");
+  if (source.turn !== 0 || source.logicalOrigin.x !== 0 || source.logicalOrigin.z !== 0 || Object.values(source.worldOrigin).some((value) => value !== 0) || profile.clipFloorIds.some((id) => !source.floors.some((floor) => floor.id === id))) fail("source district frame differs");
+  const transfer = new Set(profile.transferSiteIds);
+  for (const id of transfer) {
+    const old = source.sites.find((site) => site.id === id), next = profile.district.sites.find((site) => site.id === id);
+    if (!old || old.placement || !next?.placement || old.cell.x !== next.cell.x || old.cell.z !== next.cell.z) fail("new land must replace the audited walk-only site");
+  }
+  for (const site of upstream.sites.filter((site2) => site2.placement)) {
+    const { x, z } = site.cell;
+    const square = [[x - 0.46, z - 0.46], [x + 0.46, z - 0.46], [x + 0.46, z + 0.46], [x - 0.46, z + 0.46]].map(([x2, z2]) => ({ cell: { x: x2, z: z2 }, point: { x: x2, y: 0, z: z2 } }));
+    if (area3(carve(square, profile.boundary).inside) > 1e-12) fail("replacement intersects an acquired footprint");
+  }
+  const definition2 = structuredClone(upstream.definition);
+  definition2.districts = definition2.districts.map((district) => district.id !== source.id ? district : {
+    ...district,
+    floors: district.floors.map((floor) => profile.clipFloorIds.includes(floor.id) ? clipFloor(floor, profile.boundary) : floor),
+    anchorFloors: district.anchorFloors ?? district.floors,
+    sites: district.sites.filter((site) => !transfer.has(site.id)).map((site) => ({
+      ...site,
+      anchorPoint: site.anchorPoint ?? upstream.anchorAt(site.cell)
+    }))
+  });
+  definition2.districts = [...definition2.districts, structuredClone(profile.district)];
+  const mapRef = (ref) => ref.districtId === source.id && transfer.has(ref.siteId) ? { districtId: DISTRICT, siteId: ref.siteId } : ref;
+  const oldEdges = definition2.edges.map((edge) => ({ ...edge, from: mapRef(edge.from), to: mapRef(edge.to) }));
+  definition2.edges = oldEdges.map((edge) => ({ ...edge, allows: edge.allows.filter((passage) => passage !== "walk") })).filter((edge) => edge.allows.length);
+  definition2.revision = `authored-shoulder:${profile.physicalRevision}`;
+  const support = compileWorldDefinition(definition2), cells = new Map(support.sites.map((site) => [refKey4(site.ref), site.cell]));
+  definition2.edges = oldEdges.map((edge) => ({ ...edge, allows: edge.allows.filter((passage) => passage !== "walk" || support.isWalkEdgeSupported(cells.get(refKey4(edge.from)), cells.get(refKey4(edge.to)))) })).filter((edge) => edge.allows.length);
+  definition2.edges = [...definition2.edges, ...structuredClone(profile.edges)];
+  definition2.revision = `authored-shoulder:${profile.physicalRevision}:${fingerprint2({ ...definition2, revision: void 0 })}`;
+  const world = compileWorldDefinition(definition2);
+  for (const site of upstream.sites.filter((site2) => site2.placement)) {
+    if (JSON.stringify(world.anchorAt(site.cell)) !== JSON.stringify(site.point)) fail("acquired anchor changed");
+    for (const dx of [-0.46, 0, 0.46]) for (const dz of [-0.46, 0, 0.46]) {
+      const cell = { x: site.cell.x + dx, z: site.cell.z + dz };
+      if (JSON.stringify(world.floorAt(cell)?.point) !== JSON.stringify(upstream.floorAt(cell)?.point)) fail("acquired support changed");
+    }
+  }
+  return world;
+}
+
+// ../../../../private/tmp/sansu-water-support-perf-c2-c3/prepared/worker-c3.ts
+var repo = "/private/tmp/sansu-authored-shoulder-c3/candidate";
+var [scenario, output, expectedPath] = process.argv.slice(2);
+var fixtures = { wide27: "authored-water-fixture.json", source32: "authored-flower-reference-mature.json", shoulder35: "authored-shoulder-reference-mature.json" };
+assert(scenario in fixtures);
+assert.equal(typeof globalThis.gc, "function", "Identical --expose-gc flag is required");
+assert(!fs.existsSync(output), "Fresh output only");
+var hash = (value) => crypto.createHash("sha256").update(typeof value === "string" || Buffer.isBuffer(value) ? value : JSON.stringify(value)).digest("hex");
+var expected = JSON.parse(fs.readFileSync(expectedPath, "utf8"));
+var inputs = [];
+function read(name, gzip = false) {
+  const file = `${repo}/prototypes/place-qa/${name}`, bytes = fs.readFileSync(file);
+  inputs.push({ path: file, sha256: hash(bytes) });
+  return JSON.parse((gzip ? zlib.gunzipSync(bytes) : bytes).toString());
+}
+var fixture = read(fixtures[scenario]);
+var definition = read(scenario === "wide27" ? "native05-world.json.gz" : "native05-world-source-shading.json.gz", true);
+assert(fixture.synthetic === true && fixture.worldId === definition.id);
+var base = withNative05WaterCarvingScope(compileWorldDefinition(definition));
+definition = void 0;
+if (scenario === "shoulder35") base = composeAuthoredShoulderWorld(base, read("authored-shoulder-profile.json.gz", true));
+var stateBefore = hash(fixture.state);
+var baseBefore = hash(base.definition);
+assert.equal(stateBefore, expected.inputStateSha256);
+assert.equal(baseBefore, expected.baseDefinitionSha256);
+assert.equal(expected.bridgeCount, 1);
+assert.equal(expected.bridges[0].ownerId, "l24");
+var seenWorlds = /* @__PURE__ */ new WeakSet();
+var seenPlans = /* @__PURE__ */ new WeakSet();
+var report = {
+  schema: "sansu-water-support-local-microbenchmark-v1",
+  repo,
+  scenario,
+  node: process.version,
+  execArgv: process.execArgv,
+  pid: process.pid,
+  scope: "Uninstrumented warmed pure composeAuthoredWaterWorld only; not UI/cold-start/frame/device performance",
+  inputs,
+  inputStateSha256: stateBefore,
+  baseDefinitionSha256: baseBefore,
+  expectedPath,
+  expectedSha256: hash(fs.readFileSync(expectedPath)),
+  warmups: 2,
+  measuredIterations: 2,
+  forcedGcOutsideTiming: true,
+  samples: [],
+  pass: false
+};
+var write = () => fs.writeFileSync(output, JSON.stringify(report, null, 2) + "\n");
+write();
+function iteration(index) {
+  globalThis.gc();
+  globalThis.gc();
+  const phase = index < 2 ? "warmup" : "measured";
+  console.log(JSON.stringify({ event: "compose-start", phase, index, utc: (/* @__PURE__ */ new Date()).toISOString(), rssBytes: process.memoryUsage().rss }));
+  const memoryBefore = process.memoryUsage(), cpuBefore = process.cpuUsage();
+  const startedAtUtc = (/* @__PURE__ */ new Date()).toISOString();
+  const start = process.hrtime.bigint();
+  const result = composeAuthoredWaterWorld(fixture.state, base);
+  const elapsedNanoseconds = process.hrtime.bigint() - start;
+  const cpu = process.cpuUsage(cpuBefore), memoryAfter = process.memoryUsage();
+  const finishedAtUtc = (/* @__PURE__ */ new Date()).toISOString();
+  console.log(JSON.stringify({ event: "compose-end", phase, index, utc: finishedAtUtc }));
+  assert(result.world !== base && !seenWorlds.has(result.world) && !seenPlans.has(result.plan));
+  seenWorlds.add(result.world);
+  seenPlans.add(result.plan);
+  assert.equal(result.plan.bridges.length, 1);
+  assert.deepEqual(result.plan.bridges.map((bridge) => ({ ownerId: bridge.ownerId, restoredEdgeIds: bridge.restoredEdgeIds })), expected.bridges);
+  const siteMap = new Map(result.world.sites.map((site) => [JSON.stringify([site.ref.districtId, site.ref.siteId]), site.cell]));
+  const queries = result.world.sites.map((site) => ({ ref: site.ref, floor: result.world.floorAt(site.cell), anchor: result.world.anchorAt(site.cell) }));
+  const sourceWalk = base.definition.edges.filter((edge) => edge.allows.includes("walk")).map((edge) => ({ edge, supported: isWorldWalkEdgeSupported(
+    result.world,
+    siteMap.get(JSON.stringify([edge.from.districtId, edge.from.siteId])),
+    siteMap.get(JSON.stringify([edge.to.districtId, edge.to.siteId]))
+  ) }));
+  const actual = { definitionSha256: hash(result.world.definition), planSha256: hash(result.plan), siteQuerySha256: hash(queries), sourceWalkQuerySha256: hash(sourceWalk) };
+  assert.deepEqual(actual, expected.output);
+  assert.equal(hash(fixture.state), stateBefore);
+  assert.equal(hash(base.definition), baseBefore);
+  assert.equal(queries.length, expected.sites);
+  assert.equal(sourceWalk.length, expected.sourceWalkEdges);
+  return {
+    index,
+    phase,
+    startedAtUtc,
+    finishedAtUtc,
+    elapsedNanoseconds: elapsedNanoseconds.toString(),
+    elapsedMs: Number(elapsedNanoseconds) / 1e6,
+    cpuUserMicroseconds: cpu.user,
+    cpuSystemMicroseconds: cpu.system,
+    memoryBefore,
+    memoryAfter,
+    cumulativeProcessMaxRssKiB: process.resourceUsage().maxRSS,
+    freshWorld: true,
+    freshPlan: true,
+    baseNotReturned: true,
+    bridgeCount: 1,
+    acceptedOwnerId: "l24",
+    restoredEdgeIds: expected.bridges[0].restoredEdgeIds,
+    resultHashes: actual,
+    inputUnchanged: true,
+    functionalMatch: true
+  };
+}
+try {
+  for (let index = 0; index < 4; index++) {
+    report.samples.push(iteration(index));
+    write();
+  }
+  report.pass = true;
+} catch (error) {
+  report.firstFailure = { name: error.name, message: error.message, stack: error.stack };
+  process.exitCode = 1;
+} finally {
+  report.finishedAtUtc = (/* @__PURE__ */ new Date()).toISOString();
+  report.finalResourceUsage = process.resourceUsage();
+  write();
+}
+console.log(JSON.stringify({ event: "worker-finished", pass: report.pass, scenario, sampleCount: report.samples.length }));
+//# sourceMappingURL=worker-c3.mjs.map

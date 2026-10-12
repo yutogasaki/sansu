@@ -1,0 +1,34 @@
+{
+  "preparedAtUtc": "2026-10-12T05:45:30.202809+00:00",
+  "executionStarted": false,
+  "browserStarted": false,
+  "serverStarted": false,
+  "coreReportSha256": "50526df495d9122cb2e248e888a8e91c2b00841953a75966432f785b11231b77",
+  "snapshotSha256": "e585e81b2ae462ff673883bde384d7511c167582250ed4cb13c5dc1e46444451",
+  "sourceCount": 6460,
+  "installedCount": 6,
+  "corePass": true,
+  "stages": [
+    "01-wide27-water",
+    "02-classic-smoke"
+  ],
+  "runnerSha256": "56b994bac430381ac194fbacb9f706ea8f0428d0cf47a6550066ba05d78ba824",
+  "contractCheckSha256": "6b6ff0ebe0e69af31d8f9befc5cef9423f84ca129a29e0ce0d93e8cb35b53a48",
+  "files": {
+    "README.md": "d1bbb4b4fc7fde769114159c1cfec19c134aeeb2e625f05ce26b35fee6052c43",
+    "adaptation.json": "215dc6e83f90e362fee9aa18edffe0b35ea9ac90e777ff16908733c6666438e5",
+    "affected-regressions.py": "56b994bac430381ac194fbacb9f706ea8f0428d0cf47a6550066ba05d78ba824",
+    "c2-to-c3-affected.diff": "697b8a2e4ff5730c4232dc92e33f3bf897ad7788f57a906f2ba369b576e1a52a",
+    "contract-check.json": "6b6ff0ebe0e69af31d8f9befc5cef9423f84ca129a29e0ce0d93e8cb35b53a48",
+    "plan.json": "d84de956a33205020660a1189be3ce272a381209de19a564b034b70653659149",
+    "prepare.py": "4e8fd5c1c5ab9154caa02384dc6d43d4988fd2fa14ac431a39b91a477469c2f3"
+  },
+  "commandAfterParentAuthorization": [
+    "python3",
+    "/private/tmp/sansu-authored-shoulder-c3/runtime-prepared/affected-regressions.py",
+    "--server-origin",
+    "http://127.0.0.1:5360",
+    "--start"
+  ],
+  "remaining": "Root server identity and explicit start authorization; no c3 runtime result yet."
+}

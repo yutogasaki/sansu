@@ -1,0 +1,224 @@
+{
+  "result": "Read-only c2 failure diagnosis confirmed a legal main-route blockage; requested alternate (12,-9) preserves actual guarded access; focused regression PASS.",
+  "scope": "Exact c2 initial and failure states; one same-world occupancy control; one explicitly requested alternate target. No state search, browser, core or production build. Only the owned life test and this evidence directory changed.",
+  "originalFailure": {
+    "phase": "commit-distant-p9",
+    "p9From": {
+      "x": 8,
+      "z": 0
+    },
+    "p9To": {
+      "x": 4,
+      "z": -4
+    },
+    "legalPlacement": true,
+    "unreachableOwners": 24,
+    "rootCause": "The harness assumed canPlace implied every owner remains approachable; the legal play placement removes 19 walkable refs at an existing main-route neck.",
+    "cutPoint": {
+      "x": 3.5,
+      "z": -4.5
+    },
+    "homeSideNeighbor": {
+      "x": 3.25,
+      "z": -4.5
+    },
+    "farSideNeighbor": {
+      "x": 3.5,
+      "z": -4.75
+    },
+    "sourceClosureUnchanged": true
+  },
+  "floorControl": {
+    "waterComposedFloorsIdentical": true,
+    "changedRetainedFloors": [],
+    "onlyRemovedFloor": "native05-cove-corner-shared-apron-v1/shared-apron",
+    "baselineOccupancyOnFailedWorldReached": 1477,
+    "baselineOccupancyOnFailedWorldUnreachable": [],
+    "l20Throughl23DryFloorFalseAlreadyPresentInPassingBaseline": true
+  },
+  "physicalReproduction": {
+    "source": "physical-report.json",
+    "inputCount": 103,
+    "inputsMatchBrowserInitialAndFinal": true,
+    "actualRigEnvelopeExactlyMatchesBrowser": true,
+    "baselineAndFailedAllComparedProofFieldsAndAccessMatch": true,
+    "states": [
+      {
+        "name": "baseline",
+        "p9": {
+          "x": 8,
+          "z": 0
+        },
+        "stockCount": 4,
+        "coveCount": 1,
+        "triangles": 115808,
+        "walkable": 1410,
+        "reached": 1386,
+        "unreachable": [],
+        "checkedOwnerRoutes": 32,
+        "allRoutesUseActualNeighborsAndClearGround": true
+      },
+      {
+        "name": "failed",
+        "p9": {
+          "x": 4,
+          "z": -4
+        },
+        "stockCount": 4,
+        "coveCount": 0,
+        "triangles": 27648,
+        "walkable": 1438,
+        "reached": 181,
+        "unreachable": [
+          "p3",
+          "p5",
+          "p6",
+          "p7",
+          "p8",
+          "l10",
+          "l11",
+          "l12",
+          "l13",
+          "l16",
+          "l17",
+          "l18",
+          "l19",
+          "l20",
+          "l21",
+          "l22",
+          "l23",
+          "l24",
+          "l25",
+          "l26",
+          "l27",
+          "l28",
+          "l31",
+          "l32"
+        ],
+        "checkedOwnerRoutes": 8,
+        "allRoutesUseActualNeighborsAndClearGround": true
+      },
+      {
+        "name": "alternate-12--9",
+        "p9": {
+          "x": 12,
+          "z": -9
+        },
+        "stockCount": 4,
+        "coveCount": 0,
+        "triangles": 36424,
+        "walkable": 1432,
+        "reached": 1417,
+        "unreachable": [],
+        "checkedOwnerRoutes": 32,
+        "allRoutesUseActualNeighborsAndClearGround": true
+      }
+    ]
+  },
+  "focusedVerification": {
+    "commands": [
+      {
+        "command": [
+          "node",
+          "node_modules/vitest/vitest.mjs",
+          "run",
+          "src/components/island/growing/authoredCoveLife.test.ts"
+        ],
+        "exitCode": 0,
+        "log": "targeted-life.log.txt",
+        "logSha256": "4be5f49cdc7bf33d89c2a53ec3fd06159ec0fbbcc6e14d80f88163b70014e5a8"
+      },
+      {
+        "command": [
+          "node",
+          "node_modules/eslint/bin/eslint.js",
+          "src/components/island/growing/authoredCoveLife.test.ts"
+        ],
+        "exitCode": 0,
+        "log": "targeted-eslint.log.txt",
+        "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "inputCount": 285,
+    "changedDuringRun": [],
+    "pass": true,
+    "testSha256": "27cd7b4575e74d66b1386184c83a579b86708bdeb64ce027632b9a17211adab4",
+    "testFiles": 1,
+    "tests": 8,
+    "durationSeconds": 56.39,
+    "manifestMethod": "Retained 284-file focused-v4 recursive import/newURL/config/raw-asset closure plus eslint.config.js. Exact byte SHA-256 before and after this single life+eslint run.",
+    "comparedToC2Candidate": {
+      "count": 285,
+      "differences": [
+        {
+          "file": "src/components/island/growing/authoredCoveLife.test.ts",
+          "testedSha256": "27cd7b4575e74d66b1386184c83a579b86708bdeb64ce027632b9a17211adab4",
+          "candidateSha256": "1045c73742f03487cd7aa0fe437eb2eb135611928c584dea52647a41ba05875f",
+          "matches": false
+        }
+      ]
+    }
+  },
+  "archive": {
+    "domain.mjs": {
+      "bytes": 5924,
+      "sha256": "d04becffc53fc00422a195920a6f953ba60b1a0618e22780a81fbdbfe8ef815a"
+    },
+    "domain.log.txt": {
+      "bytes": 5660,
+      "sha256": "6130d70edd7c9971ba8775ba6244a6f7b0b50c6fe576efe44212f25b7e9a41bf"
+    },
+    "domain-report.json": {
+      "bytes": 101103,
+      "sha256": "6a5035d060937c97d15692acdeb3879f10cf5266edbd0e8ef2cb8d236fea35e7"
+    },
+    "physical.mjs": {
+      "bytes": 8630,
+      "sha256": "33f3972a36c9d5405a431ab3e2b29d0be483370e8f71f6311a15da0b6a579dd2"
+    },
+    "physical.log.txt": {
+      "bytes": 3008,
+      "sha256": "8465cb5b122be40cbfa31710a1acdb8808c9c4383756b15d386084fa83b97e10"
+    },
+    "physical-report.json": {
+      "bytes": 174720,
+      "sha256": "46475fa2d07d9a640901cb7542a5f592d40933b91f0f2fb2b1ecd885ca127d2a"
+    },
+    "exact-browser-input.json": {
+      "bytes": 182839,
+      "sha256": "f5dbce33c02e501f10aaa23b396f7768de58621d5ab9c3e6c27275fad0b0c4b3"
+    },
+    "verify-targeted.py": {
+      "bytes": 1868,
+      "sha256": "d5647175ad90dfc60c630fec8d3a0da441b55a3985df580add1cf361a21cbfa7"
+    },
+    "targeted-life.log.txt": {
+      "bytes": 1697,
+      "sha256": "4be5f49cdc7bf33d89c2a53ec3fd06159ec0fbbcc6e14d80f88163b70014e5a8"
+    },
+    "targeted-eslint.log.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "targeted-execution.log.txt": {
+      "bytes": 1148,
+      "sha256": "aca80a005399ac164f65bf0bdae78031196ec0721f750c7a627eabcee03a017d"
+    },
+    "targeted-inputs-before.json": {
+      "bytes": 33041,
+      "sha256": "fd68fe51b65a778769fa353223776613a03c106e3840ebd84c2cf63bbabb8e5d"
+    },
+    "targeted-inputs-after.json": {
+      "bytes": 33041,
+      "sha256": "d18264418e456d72910b85b53a54942c1456185362a458c56fb3cf7a242e45c6"
+    },
+    "targeted-verification.json": {
+      "bytes": 808,
+      "sha256": "833e07b3b037d404354fd33544964c1f97840f66867c796e862581ca8a826c22"
+    },
+    "archive-diagnosis.py": {
+      "bytes": 7728,
+      "sha256": "5f5b5c43fb22c763d033949440d25e3a931615f001e4794c4cb9dfc1fee095a0"
+    }
+  }
+}

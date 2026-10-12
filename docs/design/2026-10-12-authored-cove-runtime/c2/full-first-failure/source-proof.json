@@ -1,0 +1,222 @@
+{
+  "schema": "sansu-authored-cove-first-failure-source-proof-v1",
+  "status": "FAIL",
+  "scope": "Partial full-cove first-failure archive only. No full PASS, regression PASS, art acceptance or completion claim.",
+  "archivedAtUnixSeconds": 1791759513.107965,
+  "target": "http://127.0.0.1:5355/prototypes/place-qa/authored.html?water=wide&reference=preflight32&cove=corner",
+  "expectedBuild": "authored-cove-c2",
+  "candidate": "native05-authored-cove-shore-v4",
+  "firstFailurePhase": "commit-distant-p9",
+  "firstMeaningfulError": "AssertionError [ERR_ASSERTION]: All current owner approaches must remain reachable",
+  "fullDriverPid": 44513,
+  "fullDriverTerminated": true,
+  "regressionsStarted": false,
+  "completedCaptures": 2,
+  "canvasSelections": 1,
+  "editsRecorded": 1,
+  "unreachableCount": 24,
+  "unreachableOwners": [
+    {
+      "id": "p3",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "p5",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "p6",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "p7",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "p8",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "l10",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "l11",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "l12",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "l13",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "l16",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "l17",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "l18",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "l19",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "l20",
+      "dryFloor": false,
+      "reachable": false
+    },
+    {
+      "id": "l21",
+      "dryFloor": false,
+      "reachable": false
+    },
+    {
+      "id": "l22",
+      "dryFloor": false,
+      "reachable": false
+    },
+    {
+      "id": "l23",
+      "dryFloor": false,
+      "reachable": false
+    },
+    {
+      "id": "l24",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "l25",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "l26",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "l27",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "l28",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "l31",
+      "dryFloor": true,
+      "reachable": false
+    },
+    {
+      "id": "l32",
+      "dryFloor": true,
+      "reachable": false
+    }
+  ],
+  "dryFloorFalseOwners": [
+    {
+      "id": "l20",
+      "dryFloor": false,
+      "reachable": false
+    },
+    {
+      "id": "l21",
+      "dryFloor": false,
+      "reachable": false
+    },
+    {
+      "id": "l22",
+      "dryFloor": false,
+      "reachable": false
+    },
+    {
+      "id": "l23",
+      "dryFloor": false,
+      "reachable": false
+    }
+  ],
+  "obstructionAtFailure": {
+    "stockCount": 4,
+    "coveCount": 0,
+    "triangles": 27648,
+    "blockedEdges": 24,
+    "excludedRefs": 65
+  },
+  "sourceIntegrity": {
+    "status": "PASS",
+    "coreReport": "/private/tmp/sansu-authored-cove-c2/core/report.json",
+    "coreReportSha256": "825ee4d44404cc8c29412b9c12b24b1cab8b37e2dcb0681c1c982ba2bb925217",
+    "snapshotSha256": "5eecfc05c92420b3f7fc2b8923ef6fa371637ca0e3c30f43d8ac77931f294a36",
+    "coreInputCount": 2137,
+    "fullInputCount": 2012,
+    "fullBeforeAfterEqual": true,
+    "sourceClosureUnchanged": true,
+    "missingFromCore": [],
+    "differencesFromCore": [],
+    "candidateChangesFromCoreAtArchive": []
+  },
+  "bytePreservation": {
+    "sourceDirectory": "/private/tmp/sansu-authored-cove-c2/full",
+    "archiveDirectory": "/private/tmp/sansu-authored-cove-c2/full-first-failure",
+    "sourceBeforeHashes": {
+      "desktop-cove-close-day.png": "cbb8615fa36199128326a652aab535fb06949f6b06716830ea6373666b7f67ce",
+      "desktop-mature-whole-day.png": "ab36dc839205c959da430b10062aff2264ddbda870bbc32173e22cdd0874a7e9",
+      "desktop-p9-move-preview.png": "f61c5a1c3995c0be6af09ff8d770483b839d5bef49ef7310a524dbe6c55e7e8d",
+      "first-failure.png": "a686db5a9ad8be987ba68f570484eb7b07c20c9d7c2a6681d0a56c44937590dd",
+      "progress.json": "f646fa5a4468a81f6a5627d596d12d33723b8e6458e0b67d8ff011192deafa63",
+      "report.json": "c3847023b59b4a41a63f70924f3d7d77cfd694c1e4b37b1704d6d2e7bbbf76c1"
+    },
+    "archiveHashes": {
+      "desktop-cove-close-day.png": "cbb8615fa36199128326a652aab535fb06949f6b06716830ea6373666b7f67ce",
+      "desktop-mature-whole-day.png": "ab36dc839205c959da430b10062aff2264ddbda870bbc32173e22cdd0874a7e9",
+      "desktop-p9-move-preview.png": "f61c5a1c3995c0be6af09ff8d770483b839d5bef49ef7310a524dbe6c55e7e8d",
+      "first-failure.png": "a686db5a9ad8be987ba68f570484eb7b07c20c9d7c2a6681d0a56c44937590dd",
+      "progress.json": "f646fa5a4468a81f6a5627d596d12d33723b8e6458e0b67d8ff011192deafa63",
+      "report.json": "c3847023b59b4a41a63f70924f3d7d77cfd694c1e4b37b1704d6d2e7bbbf76c1"
+    },
+    "sourceAfterHashes": {
+      "desktop-cove-close-day.png": "cbb8615fa36199128326a652aab535fb06949f6b06716830ea6373666b7f67ce",
+      "desktop-mature-whole-day.png": "ab36dc839205c959da430b10062aff2264ddbda870bbc32173e22cdd0874a7e9",
+      "desktop-p9-move-preview.png": "f61c5a1c3995c0be6af09ff8d770483b839d5bef49ef7310a524dbe6c55e7e8d",
+      "first-failure.png": "a686db5a9ad8be987ba68f570484eb7b07c20c9d7c2a6681d0a56c44937590dd",
+      "progress.json": "f646fa5a4468a81f6a5627d596d12d33723b8e6458e0b67d8ff011192deafa63",
+      "report.json": "c3847023b59b4a41a63f70924f3d7d77cfd694c1e4b37b1704d6d2e7bbbf76c1"
+    },
+    "identical": true,
+    "executionLog": {
+      "source": "/private/tmp/sansu-authored-cove-c2/full-execution.log",
+      "durableCopy": "/private/tmp/sansu-authored-cove-c2/full-execution.log.txt",
+      "archiveCopy": "/private/tmp/sansu-authored-cove-c2/full-first-failure/full-execution.log.txt",
+      "sha256": "9726e0c14d4ce734271106a509afed7fd7de1959fc342c72df875c5029decd13"
+    }
+  },
+  "notes": [
+    "Raw report, first-failure screenshot, completed screenshots and progress are preserved unchanged.",
+    "source-proof.json is additive archive metadata and is excluded from its own byte-preservation manifest.",
+    "No application, candidate source, driver, or runtime inputs were edited. No regression runner was started."
+  ]
+}

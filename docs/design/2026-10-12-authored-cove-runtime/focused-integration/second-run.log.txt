@@ -1,0 +1,51 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+stderr | src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > walks from the shared entrance to p9, earns one use and exits safely with mixed flowers=false
+THREE.Material: parameter 'map' has value of undefined.
+
+ × src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > walks from the shared entrance to p9, earns one use and exits safely with mixed flowers=false 10725ms
+   → the actor reaches inside the native shell from the apron: expected false to be true // Object.is equality
+ × src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > walks from the shared entrance to p9, earns one use and exits safely with mixed flowers=true 548ms
+   → the actor reaches inside the native shell from the apron: expected false to be true // Object.is equality
+ ✓ src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > keeps the cove-only release and final-pose guard active when there are zero flower stocks 500ms
+ ✓ src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > returns an occupant of removed apron to real supported ground and restores owners with mixed flowers=false 11068ms
+ ✓ src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > returns an occupant of removed apron to real supported ground and restores owners with mixed flowers=true 1384ms
+stderr | src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > renders the shared apron exactly once from the evaluated world and preserves all acquired owners and ground
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > renders the shared apron exactly once from the evaluated world and preserves all acquired owners and ground 11039ms
+ ✓ src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > guards actual cove triangles and all owner approaches with mixed flowers=false 501ms
+ ✓ src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > guards actual cove triangles and all owner approaches with mixed flowers=true 371ms
+ ✓ src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > removes and restores shell and apron through real storage of required owner p9 9793ms
+ ✓ src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > removes and restores shell and apron through real storage of required owner l32 9277ms
+ ✓ src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > preserves occupied-home storage protection and removes/restores the cove through permitted home movement 9404ms
+ ✓ src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > previews the confirmed loss of shell and apron while cancel restores the same committed resources and pointer support 9778ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > walks from the shared entrance to p9, earns one use and exits safely with mixed flowers=false
+ FAIL  src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > walks from the shared entrance to p9, earns one use and exits safely with mixed flowers=true
+AssertionError: the actor reaches inside the native shell from the apron: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/components/island/growing/authoredCoveLife.test.ts:122:111
+    120|             expect(checkedEdges.size).toBeGreaterThan(2);
+    121|             expect(visited.some(at => !base.floorAt(at) && f.world.flo…
+    122|             expect(visited.some(at => at.z < .5), 'the actor reaches i…
+       |                                                                                                               ^
+    123|             expect(f.life.takePlaceUses().filter(receipt => receipt.ac…
+    124|             f.life.tick(now + 800, 16, false, false); f.checkPose();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  2 failed | 10 passed (12)
+   Start at  07:10:59
+   Duration  51.86s (transform 372ms, setup 0ms, collect 896ms, tests 76.30s, environment 0ms, prepare 64ms)
+

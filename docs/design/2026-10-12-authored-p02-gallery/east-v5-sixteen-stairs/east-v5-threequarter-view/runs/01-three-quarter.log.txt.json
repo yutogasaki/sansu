@@ -1,0 +1,29 @@
+{
+  "command": [
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "render-coarse.py",
+    "--",
+    "--scheduled",
+    "--source",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/study.blend",
+    "--out",
+    "runs/01-three-quarter",
+    "--view",
+    "three-quarter"
+  ],
+  "exitCode": 0,
+  "stop": null,
+  "peakSampledRssBytes": 2518859776,
+  "elapsedSeconds": 20.626387708,
+  "limits": {
+    "seconds": 60,
+    "rssMiB": 2560
+  },
+  "sourceOnly": true
+}

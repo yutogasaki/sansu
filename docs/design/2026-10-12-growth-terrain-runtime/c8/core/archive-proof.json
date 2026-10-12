@@ -1,0 +1,48 @@
+{
+  "revision": "growth-terrain-c8",
+  "scope": "Immutable c8 candidate, full core; runtime separate",
+  "files": [
+    {
+      "source": "core/report.json",
+      "archive": "report.json.gz",
+      "originalSha256": "9f0b382de74ded96f86b922739ae9858c46df9779edb9bc54cc1cc08f85f9fe6",
+      "archiveSha256": "34d25f284ace7a91ccb850db5b847c842fe6157db42f5bb22912aa340bc6b26a"
+    },
+    {
+      "source": "core/execution.log.txt",
+      "archive": "execution.log.txt",
+      "originalSha256": "f34a49bbb5892ec03fddf3ce9892d9311ba68021a5ddc52e4198cec17144218e",
+      "archiveSha256": "f34a49bbb5892ec03fddf3ce9892d9311ba68021a5ddc52e4198cec17144218e"
+    },
+    {
+      "source": "inputs.json",
+      "archive": "inputs.json.gz",
+      "originalSha256": "53512e53fbe9c75012e98c52d92be7c8337e10cc13c494a8169ce93390b3c3f5",
+      "archiveSha256": "df2fb580a9b0c9097128e96bcf33f67c62d377d93184146c39e4ffc348e941ec"
+    },
+    {
+      "source": "snapshot.json",
+      "archive": "snapshot.json.gz",
+      "originalSha256": "52d2a78e9e9d4125a3dd72d0e29c0f7956caf6b7c5953203cdd8faf410f9116b",
+      "archiveSha256": "1333976f26623bfd1e4276e34ef4a2cb3c636c5023c30170b56a67db265f54ff"
+    },
+    {
+      "source": "prepare.py",
+      "archive": "prepare.py",
+      "originalSha256": "1e62037b937e04410f12198777f8e69fb84f23567ee3dddf013ab58969e72547",
+      "archiveSha256": "1e62037b937e04410f12198777f8e69fb84f23567ee3dddf013ab58969e72547"
+    },
+    {
+      "source": "core.py",
+      "archive": "core.py",
+      "originalSha256": "5c512c9043ddb777a9853fc1a11384e88ad8c6b327cae0aa210cbac5d54939d1",
+      "archiveSha256": "5c512c9043ddb777a9853fc1a11384e88ad8c6b327cae0aa210cbac5d54939d1"
+    }
+  ],
+  "sourceDelta": {
+    "files": 104,
+    "sha256": "0e2d414a1a67caf60b54d1cd31d4b785c48e3527bcfad30094b93515b475bb49",
+    "base": "/private/tmp/sansu-districts-c7/candidate",
+    "baseCoreReportSha256": "a4338e627e4e505cade1028b5498d290404dd6f908dbd663e56f8d50c271a64a"
+  }
+}

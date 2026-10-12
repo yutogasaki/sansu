@@ -1,0 +1,240 @@
+{
+  "revision": "authored-cove-c4",
+  "candidate": "native05-authored-cove-shore-v4",
+  "shellSourceId": "native05-authored-cove-corner-v3",
+  "target": "http://127.0.0.1:5357/prototypes/place-qa/authored.html?water=wide&reference=preflight32&cove=corner",
+  "corePass": true,
+  "fullPass": true,
+  "coreInputCount": 2137,
+  "driverInputCount": 2012,
+  "driverExactCoreSubset": true,
+  "snapshotSha256": "555fd26d832c74536005d58f2bd947a9c439965841dabae35e3cb40ffdc811fe",
+  "captureCount": 10,
+  "canvasSelectionCount": 1,
+  "editCount": 4,
+  "regressions": "separately recorded; no result inferred here",
+  "scope": "Actual DEV fixed synthetic reference: whole/close/rotated/phone/tablet views, real owner/canvas selection, move preview/cancel/commit/store/restore",
+  "excludes": [
+    "Fresh acquisition",
+    "Personal save",
+    "Natural growth",
+    "Performance acceptance",
+    "Full body-width support proof",
+    "Actual facility use",
+    "Touch hardware",
+    "Independent art or child acceptance",
+    "Whole-M1 completion"
+  ],
+  "files": [
+    {
+      "file": "core/execution.log.txt",
+      "sha256": "c62a6bc51e5cacf5f889653d8e5a322f18555a9edf6970a276ea39feb9a3dfca",
+      "bytes": 145867,
+      "source": "/private/tmp/sansu-authored-cove-c4/core/execution.log"
+    },
+    {
+      "file": "core/report.json",
+      "sha256": "b1c98da6515fa927651cfe241df3ed0871e3b8a1072dd4acaf83f6af973b3994",
+      "bytes": 512774,
+      "source": "/private/tmp/sansu-authored-cove-c4/core/report.json"
+    },
+    {
+      "file": "closure/domain-inputs.txt",
+      "sha256": "53ed920c9e1afd51d934cdecbac2b6aaadafc631895129ea0f648c0915a07425",
+      "bytes": 1863,
+      "source": "/private/tmp/sansu-authored-cove-c4/closure/domain-inputs.txt"
+    },
+    {
+      "file": "closure/driver-inputs.json",
+      "sha256": "38e741dfaba71756a693ee6c14b06d42cac81bd839e0ffdf43ef000097783e52",
+      "bytes": 236578,
+      "source": "/private/tmp/sansu-authored-cove-c4/closure/driver-inputs.json"
+    },
+    {
+      "file": "closure/driver-inputs.txt",
+      "sha256": "8a0a1943b0ad731309088c8e8ab43bc399864f95b0a60685a60d586301336931",
+      "bytes": 89699,
+      "source": "/private/tmp/sansu-authored-cove-c4/closure/driver-inputs.txt"
+    },
+    {
+      "file": "closure/import-audit.json",
+      "sha256": "55e09c62fe8dedfe91cdd2362852330e180a16b240a94e4e32db2f9f0c882e97",
+      "bytes": 308,
+      "source": "/private/tmp/sansu-authored-cove-c4/closure/import-audit.json"
+    },
+    {
+      "file": "closure/inputs.json",
+      "sha256": "4713b3082b343d847e2156cd370e5da5d6a9bbd5b76aaa3dae49cc42b72f6ee3",
+      "bytes": 251863,
+      "source": "/private/tmp/sansu-authored-cove-c4/closure/inputs.json"
+    },
+    {
+      "file": "closure/inputs.txt",
+      "sha256": "d82ee43322fe93313b4825bf39b352d913924354a4c5a21d5b73968d421e07ab",
+      "bytes": 95859,
+      "source": "/private/tmp/sansu-authored-cove-c4/closure/inputs.txt"
+    },
+    {
+      "file": "closure/plan.json",
+      "sha256": "d0c3b7b932aeda946d6674b8889745e55f6e0380622e3cced165c3dd1d63a0f6",
+      "bytes": 1549,
+      "source": "/private/tmp/sansu-authored-cove-c4/closure/plan.json"
+    },
+    {
+      "file": "closure/reasons.json",
+      "sha256": "0f0c54022d0fa882f68037248becc06f3ad8727bba5eacde5a42c1f1bc917f61",
+      "bytes": 802105,
+      "source": "/private/tmp/sansu-authored-cove-c4/closure/reasons.json"
+    },
+    {
+      "file": "full/desktop-cove-close-day.png",
+      "sha256": "98846bcf18e18d53b34b80193c2e33db086064a96084ebde85e365286e67a091",
+      "bytes": 424897,
+      "source": "/private/tmp/sansu-authored-cove-c4/full/desktop-cove-close-day.png"
+    },
+    {
+      "file": "full/desktop-mature-whole-day.png",
+      "sha256": "5f30661722d319d14a877b92e2af50e85c7a4e3a29b3df64c50250460486b222",
+      "bytes": 481794,
+      "source": "/private/tmp/sansu-authored-cove-c4/full/desktop-mature-whole-day.png"
+    },
+    {
+      "file": "full/desktop-p9-move-preview.png",
+      "sha256": "04256c9b0205f42eb065ce3defd1e517df5f59c33eeb1e9722c013e47c84cb99",
+      "bytes": 477935,
+      "source": "/private/tmp/sansu-authored-cove-c4/full/desktop-p9-move-preview.png"
+    },
+    {
+      "file": "full/desktop-p9-moved-whole-day.png",
+      "sha256": "ab3a7241690c5bbafe822b888ed600b83162fe4371524318a09f481d22053263",
+      "bytes": 469677,
+      "source": "/private/tmp/sansu-authored-cove-c4/full/desktop-p9-moved-whole-day.png"
+    },
+    {
+      "file": "full/desktop-p9-restored-whole-day.png",
+      "sha256": "9283b90d08751debeea664d83f26b753f93863a19178ac0eb1d6230229b52c0d",
+      "bytes": 481792,
+      "source": "/private/tmp/sansu-authored-cove-c4/full/desktop-p9-restored-whole-day.png"
+    },
+    {
+      "file": "full/desktop-rotated-cove-close-day.png",
+      "sha256": "2fc441be5314c8ce6894e5bdfccfd66f3f7f0966d3508d10654e66ed4497da35",
+      "bytes": 382702,
+      "source": "/private/tmp/sansu-authored-cove-c4/full/desktop-rotated-cove-close-day.png"
+    },
+    {
+      "file": "full/desktop-rotated-whole-day.png",
+      "sha256": "4c889407d4c80d1002b03c180b9e575361bdeb7b250976331f143ed52826c9c6",
+      "bytes": 452510,
+      "source": "/private/tmp/sansu-authored-cove-c4/full/desktop-rotated-whole-day.png"
+    },
+    {
+      "file": "full/phone-cove-close-day.png",
+      "sha256": "1caf8b7ae25605be8d2cd717a22328699f6b0dae87d0af3ec9711eb7b9634e4b",
+      "bytes": 177727,
+      "source": "/private/tmp/sansu-authored-cove-c4/full/phone-cove-close-day.png"
+    },
+    {
+      "file": "full/phone-whole-day.png",
+      "sha256": "05a681f5a74cca3b2c7c3adc8c21b7e7f932815785713fa752b997a4224542db",
+      "bytes": 190063,
+      "source": "/private/tmp/sansu-authored-cove-c4/full/phone-whole-day.png"
+    },
+    {
+      "file": "full/progress.json",
+      "sha256": "5fb572736de75a8b8ef2bb2f6e2827456c9240df9d23b70d25dbd452145ac5f6",
+      "bytes": 25,
+      "source": "/private/tmp/sansu-authored-cove-c4/full/progress.json"
+    },
+    {
+      "file": "full/report.json",
+      "sha256": "59d72929c409b455921afbe854f854588c5861ce6f6ec418c144eea53d557530",
+      "bytes": 2038112,
+      "source": "/private/tmp/sansu-authored-cove-c4/full/report.json"
+    },
+    {
+      "file": "full/tablet-cove-close-day.png",
+      "sha256": "3c95b27c42343cdd1f32e8a0009db930897364f548dd0b49cc666ec201e8a92e",
+      "bytes": 313968,
+      "source": "/private/tmp/sansu-authored-cove-c4/full/tablet-cove-close-day.png"
+    },
+    {
+      "file": "full/tablet-whole-day.png",
+      "sha256": "ee9cf384f64885b2ad65f3b69fe7719645e0e8147dd6385fdca32ca044e03406",
+      "bytes": 315876,
+      "source": "/private/tmp/sansu-authored-cove-c4/full/tablet-whole-day.png"
+    },
+    {
+      "file": "snapshot-first-copy/reason.txt",
+      "sha256": "f09754adc0a03a0e1594ece0f3673d15d6174ecf7063cec4f5ab1760bdc0a438",
+      "bytes": 182,
+      "source": "/private/tmp/sansu-authored-cove-c4/snapshot-first-copy/reason.txt"
+    },
+    {
+      "file": "snapshot-first-copy/runtime-README.before.md.txt",
+      "sha256": "5930d876666482d7bf7672df808f3356436de473a81f429d5b08c259e41c3c12",
+      "bytes": 4336,
+      "source": "/private/tmp/sansu-authored-cove-c4/snapshot-first-copy/runtime-README.before.md"
+    },
+    {
+      "file": "snapshot-first-copy/snapshot.json",
+      "sha256": "ea4dc0cd74b5e545b0fca946e9eff9b24425b1bee46e85b6713fcf01e0f0e13a",
+      "bytes": 3184750,
+      "source": "/private/tmp/sansu-authored-cove-c4/snapshot-first-copy/snapshot.json"
+    },
+    {
+      "file": "snapshot.json",
+      "sha256": "555fd26d832c74536005d58f2bd947a9c439965841dabae35e3cb40ffdc811fe",
+      "bytes": 3184686,
+      "source": "/private/tmp/sansu-authored-cove-c4/snapshot.json"
+    },
+    {
+      "file": "snapshot.mjs",
+      "sha256": "b6fa6127374b60200a8e843d2c830adf4b4ef702e79d84b63f77891feb706fc6",
+      "bytes": 1509,
+      "source": "/private/tmp/sansu-authored-cove-c4/snapshot.mjs"
+    },
+    {
+      "file": "server-startup-note.json",
+      "sha256": "165f7209f9d84644bff315c308820617ce3d61f7757a65df308c88d2850dc854",
+      "bytes": 475,
+      "source": "/private/tmp/sansu-authored-cove-c4/server-startup-note.json"
+    },
+    {
+      "file": "full-execution.log.txt",
+      "sha256": "eeceeebcab61d1a0fb8cc2670b0d5a9145f1408fe497c4e0d04a406bbeaa5c6e",
+      "bytes": 733,
+      "source": "/private/tmp/sansu-authored-cove-c4/full-execution.log"
+    },
+    {
+      "file": "archive-core-full.py",
+      "sha256": "5da50a352af1ab47e0c433c5450b9f1bb12e5734f9f5756ca84028a848c7d57a",
+      "bytes": 2925,
+      "source": "/private/tmp/sansu-authored-cove-c4/archive-core-full.py"
+    },
+    {
+      "file": "runners/closure.py",
+      "sha256": "3c5a483713e7bdb2654ff3886fcbf02a9d3b17680a4830b63817eb66197a1c54",
+      "bytes": 7524,
+      "source": "/private/tmp/sansu-authored-cove-c4-prep/closure.py"
+    },
+    {
+      "file": "runners/core.py",
+      "sha256": "cec7561c33cc13d69fdd38929885fd96b7336db8db1267fd3d9e0a9fd8d62889",
+      "bytes": 3475,
+      "source": "/private/tmp/sansu-authored-cove-c4-prep/core.py"
+    },
+    {
+      "file": "runners/check-driver-imports.mjs",
+      "sha256": "403a0912b471e32c4e1a9275cb6ba78f07c6c4cd67fcbc3e89812348cafa81ed",
+      "bytes": 3342,
+      "source": "/private/tmp/sansu-authored-cove-c4-prep/check-driver-imports.mjs"
+    },
+    {
+      "file": "runners/regressions.py",
+      "sha256": "7f4832d9cf6dfc664c3c548d408c2fc91f2fd6504c2a5964942aa748e86e0606",
+      "bytes": 21338,
+      "source": "/private/tmp/sansu-authored-cove-c4-prep/regressions.py"
+    }
+  ]
+}

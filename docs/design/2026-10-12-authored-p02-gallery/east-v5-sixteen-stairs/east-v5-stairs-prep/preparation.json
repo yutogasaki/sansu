@@ -1,0 +1,34 @@
+{
+  "status": "PREPARED_FOOT_EXTRACTION_AND_STAIR_DESIGN_ONLY_NOT_EXECUTED",
+  "createdUtc": "2026-10-12T06:35:26.012941+00:00",
+  "files": {
+    "README.md": {
+      "sha256": "88aaf6ae281556a87fb2c349f16aa03264ceb2920b0b4f78f61598f577fe281a",
+      "bytes": 7063
+    },
+    "stair-plan.json": {
+      "sha256": "01ba7f95ee91829ef1ebd7aa1406485d4bdceed9eb75fa08cf64f3f3e1a88d33",
+      "bytes": 3291
+    },
+    "quiet-handoff.md": {
+      "sha256": "b9e5a4bb547cea6c2f1dc4d9b43b220feff4abea4c011776281eb9374363c270",
+      "bytes": 1831
+    },
+    "extract-feet.mjs": {
+      "sha256": "97e7568a98298014006406843fb46fe436b6373c8a43ddfcc70d94fcd4eeae8d",
+      "bytes": 6466
+    }
+  },
+  "staticChecks": {
+    "nodeCheck": "PASS; extract-feet.mjs syntax only",
+    "actualRigExtraction": "NOT_RUN",
+    "newTreadGeometry": "NOT_BUILT",
+    "Blender": "NOT_RUN",
+    "appOrSourceChanged": false
+  },
+  "proposedFirstWindow": {
+    "scope": "nine actual rig feet only; fresh output; external bound 30sec/768MiB; GOMAXPROCS2; node heap512MiB",
+    "futureTreadDiagnostic": "not yet written or executed"
+  },
+  "authorization": "Preparation only; wait for root window before extraction or geometry"
+}

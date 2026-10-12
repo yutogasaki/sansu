@@ -1,0 +1,151 @@
+{
+  "coreReport": "/private/tmp/sansu-flower-edge-c6/core/report.json",
+  "coreReportSha256": "95a6aa67da6a33bbabb2c046f92f6fac28c03dc1e424edbca5632b79269583e3",
+  "coreInputCount": 1987,
+  "candidate": "/private/tmp/sansu-flower-edge-c6/candidate",
+  "revision": "authored-flower-edge-c6",
+  "snapshotSha256": "ec74a47ba4c8efcc0ddf3855f0b8280f2f514f7fd2ea0366a18154479be0d5af",
+  "startedAtUnixSeconds": 1791754214.289035,
+  "pass": true,
+  "stages": [
+    {
+      "name": "01-baseline27-editing",
+      "pass": true,
+      "exitCode": 0,
+      "coreInputsMatch": true,
+      "sourceFixed": true,
+      "failurePhase": null,
+      "error": null,
+      "toolReportInspection": {
+        "pass": true,
+        "failurePhase": null,
+        "error": null,
+        "scenarioCount": 0,
+        "stepCount": 6,
+        "failedSteps": [],
+        "runtimeErrors": [],
+        "failedScenarios": [],
+        "stepsPassed": 6,
+        "captureCount": 7,
+        "target": "http://127.0.0.1:5353/prototypes/place-qa/authored.html",
+        "lastCompletedScenario": null,
+        "lastCapture": {
+          "file": "tablet-dusk-whole.png",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "url": "http://127.0.0.1:5353/prototypes/place-qa/authored.html",
+          "build": "authored-flower-edge-c6"
+        },
+        "runtimeBuilds": [
+          "authored-flower-edge-c6"
+        ],
+        "runtimeBuildMatches": true
+      },
+      "report": "/private/tmp/sansu-flower-edge-c6/regressions/01-baseline27-editing/report.json"
+    },
+    {
+      "name": "02-wide27-water",
+      "pass": true,
+      "exitCode": 0,
+      "coreInputsMatch": true,
+      "sourceFixed": true,
+      "failurePhase": null,
+      "error": null,
+      "toolReportInspection": {
+        "pass": true,
+        "failurePhase": null,
+        "error": null,
+        "scenarioCount": 0,
+        "stepCount": 6,
+        "failedSteps": [],
+        "runtimeErrors": [],
+        "failedScenarios": [],
+        "stepsPassed": 6,
+        "captureCount": 14,
+        "target": null,
+        "lastCompletedScenario": null,
+        "lastCapture": {
+          "file": "tablet-whole.png",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "url": "http://127.0.0.1:5353/prototypes/place-qa/authored.html?water=wide",
+          "build": "authored-flower-edge-c6"
+        },
+        "runtimeBuilds": [
+          "authored-flower-edge-c6"
+        ],
+        "runtimeBuildMatches": true
+      },
+      "report": "/private/tmp/sansu-flower-edge-c6/regressions/02-wide27-water/report.json"
+    },
+    {
+      "name": "03-ordinary-growing-balance",
+      "pass": true,
+      "exitCode": 0,
+      "coreInputsMatch": true,
+      "sourceFixed": true,
+      "failurePhase": null,
+      "error": null,
+      "toolReportInspection": {
+        "pass": true,
+        "failurePhase": null,
+        "error": null,
+        "scenarioCount": 8,
+        "stepCount": 0,
+        "failedSteps": [],
+        "runtimeErrors": [],
+        "failedScenarios": [],
+        "stepsPassed": 0,
+        "captureCount": 22,
+        "target": "http://127.0.0.1:5353",
+        "lastCompletedScenario": "explicit-thirteen-residents-select-indoor-home-preserve-save-resume-learning",
+        "lastCapture": {
+          "file": "768-indoor-friend-focus.png",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "url": "http://127.0.0.1:5353/#/island",
+          "build": null
+        },
+        "runtimeBuilds": [
+          "authored-flower-edge-c6"
+        ],
+        "runtimeBuildMatches": true
+      },
+      "report": "/private/tmp/sansu-flower-edge-c6/regressions/03-ordinary-growing-balance/report.json"
+    },
+    {
+      "name": "04-classic-smoke",
+      "pass": true,
+      "exitCode": 0,
+      "coreInputsMatch": true,
+      "sourceFixed": true,
+      "failurePhase": null,
+      "error": null,
+      "toolReportInspection": {
+        "pass": true,
+        "failurePhase": null,
+        "error": null,
+        "scenarioCount": 32,
+        "stepCount": 0,
+        "failedSteps": [],
+        "runtimeErrors": [],
+        "failedScenarios": [],
+        "stepsPassed": 0,
+        "captureCount": 0,
+        "target": "http://127.0.0.1:4173",
+        "lastCompletedScenario": "opens /parents directly without arithmetic",
+        "lastCapture": null
+      },
+      "report": "/private/tmp/sansu-flower-edge-c6/regressions/04-classic-smoke/report.json"
+    }
+  ],
+  "firstFailure": null,
+  "scope": "Sequential baseline27, wide27water, ordinaryGrowing, isolated flag-off classic; no user servers 8230/5198, player profile or independent art acceptance",
+  "finishedAtUnixSeconds": 1791755582.8377411
+}

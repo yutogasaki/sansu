@@ -1,0 +1,41 @@
+{
+  "pass": true,
+  "scope": "Pure outer-inspector contract checks using saved c2 raw reports and explicitly synthetic c3 labels. No new browser, server, driver, network or core invocation; not c3 runtime evidence.",
+  "cases": [
+    {
+      "case": "synthetic c3 labels over saved c2 complete report",
+      "pass": true
+    },
+    {
+      "case": "wrong build",
+      "rejected": true,
+      "reason": "sameBuild"
+    },
+    {
+      "case": "missing capture",
+      "rejected": true,
+      "reason": "fourteenOrderedCaptures, allWaterPlansEqualC2"
+    },
+    {
+      "case": "changed source",
+      "rejected": true,
+      "reason": "rawInputSubset"
+    },
+    {
+      "case": "missing restored edges",
+      "rejected": true,
+      "reason": "allWaterPlansEqualC2, initialBridgeAndEdges"
+    },
+    {
+      "case": "saved classic valid report",
+      "pass": true
+    },
+    {
+      "case": "classic reused server",
+      "rejected": true
+    }
+  ],
+  "runnerSha256": "56b994bac430381ac194fbacb9f706ea8f0428d0cf47a6550066ba05d78ba824",
+  "coreStartedHere": false,
+  "browserStarted": false
+}

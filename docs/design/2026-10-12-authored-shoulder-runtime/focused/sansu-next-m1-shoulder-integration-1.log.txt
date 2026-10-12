@@ -1,0 +1,52 @@
+
+ RUN  v2.1.9 /private/tmp/sansu-next-m1-code
+
+stderr | src/components/island/growing/native/authoredShoulderIntegration.test.ts > actual authored shoulder source-to-runtime integration > draws the two source top materials once, attaches all three roots, and keeps closed soil out of pointer support
+THREE.Material: parameter 'map' has value of undefined.
+
+ ❯ src/components/island/growing/native/authoredShoulderIntegration.test.ts (4 tests | 2 failed) 33390ms
+   × actual authored shoulder source-to-runtime integration > draws the two source top materials once, attaches all three roots, and keeps closed soil out of pointer support 15133ms
+     → expected 0.039999961853967925 to be less than 0.000001
+   ✓ actual authored shoulder source-to-runtime integration > indexes the actual 108 root triangles and retains supported guarded home routes for every one of the 35 owners 1231ms
+   × actual authored shoulder source-to-runtime integration > uses real move/store/restore commands to detach one owner root without removing land, then reconnects the same source 201ms
+     → expected false to be true // Object.is equality
+   ✓ actual authored shoulder source-to-runtime integration > keeps committed root physics through an initial ghost/life sync, and cancels to the identical resources and floor 15731ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/island/growing/native/authoredShoulderIntegration.test.ts > actual authored shoulder source-to-runtime integration > draws the two source top materials once, attaches all three roots, and keeps closed soil out of pointer support
+AssertionError: expected 0.039999961853967925 to be less than 0.000001
+ ❯ src/components/island/growing/native/authoredShoulderIntegration.test.ts:110:73
+    108|             const cell = { x: 7, z: -6 }, ray = new T.Raycaster(layout…
+    109|             expect(ray.intersectObject(soil, true)).toEqual([]);
+    110|             expect(scene.groundAt(ray)!.distanceTo(layout.point(cell))…
+       |                                                                         ^
+    111|             expect(f.layer.objects.size).toBe(35); expect(landCells(st…
+    112|             const oldOwners = [...baseline.plots, ...baseline.landmark…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/components/island/growing/native/authoredShoulderIntegration.test.ts > actual authored shoulder source-to-runtime integration > uses real move/store/restore commands to detach one owner root without removing land, then reconnects the same source
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/components/island/growing/native/authoredShoulderIntegration.test.ts:157:84
+    155|         let current = state;
+    156|         try {
+    157|             expect(canPlace(state, destination, original.id, initial.f…
+       |                                                                                    ^
+    158|             const commands = [
+    159|                 { type: 'move', id: original.id, cell: destination },
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 2 passed (4)
+   Start at  09:58:34
+   Duration  34.20s (transform 349ms, setup 0ms, collect 504ms, tests 33.39s, environment 0ms, prepare 26ms)
+

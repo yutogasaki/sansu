@@ -1,0 +1,43 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const here = path.dirname(fileURLToPath(import.meta.url));
+const source = await readFile(path.join(here, 'diagnose-roi-face-normal.mjs'), 'utf8');
+const begin = source.indexOf('const projectionCanonical =');
+const end = source.indexOf('\n\nawait fs.mkdir(output', begin);
+assert(begin >= 0 && end > begin);
+const body = source.slice(begin, end);
+const { projectionCanonical, rawNumberEvidence, projectionEvidence } = new Function(`${body}\nreturn { projectionCanonical, rawNumberEvidence, projectionEvidence };`)();
+const target = JSON.parse(await readFile(path.join(here, 'target.json'), 'utf8'));
+const expected = target.camera.projectionMatrix;
+const actual = [...expected]; actual[12] = -0; actual[13] = -0;
+assert.equal(expected[12], 0); assert.equal(expected[13], 0);
+assert.throws(() => assert.deepEqual(actual, expected));
+const proof = projectionEvidence(actual, expected);
+assert.deepEqual(proof.rawMismatchIndices, [12, 13]);
+assert.deepEqual(proof.rawActual.negativeZeroIndices, [12, 13]);
+assert.equal(proof.rawActual.numberTokens[12], '-0');
+assert.deepEqual(proof.canonicalActual, proof.canonicalExpected);
+assert.equal(proof.canonicalExactEqual, true);
+const different = [...actual]; different[12] = Number.MIN_VALUE;
+assert.equal(projectionEvidence(different, expected).canonicalExactEqual, false);
+assert.throws(() => assert.deepEqual(projectionCanonical(different), projectionCanonical(expected)));
+assert.equal(projectionEvidence(actual.slice(0, -1), expected).canonicalExactEqual, false);
+assert.equal(Object.is(actual[12], -0), true, 'Raw array mutated');
+assert.equal(rawNumberEvidence([-0, 0, 1e-300]).numberTokens[2], '1e-300');
+const captureStart = source.indexOf('const capture = async stage =>');
+const persist = source.indexOf('await writeJson(`${stage}-pre-assert.json`, preAssert);', captureStart);
+const firstAssert = source.indexOf('assert.', captureStart);
+assert(persist > captureStart && persist < firstAssert, 'Raw proof must be written before first capture assertion');
+const originalCheck = JSON.parse(await readFile(path.join(here, '../roi-face-normal-prepared/static-check.json'), 'utf8'));
+const currentCheck = JSON.parse(await readFile(path.join(here, 'static-check.json'), 'utf8'));
+for (const key of ['targetSha256', 'vertexShaderSha256', 'fragmentShaderSha256']) assert.equal(currentCheck[key], originalCheck[key], key);
+const result = { pass: true, scope: 'Pure helper and source-order checks only; constructed signed-zero fixture, not a saved runtime observation.',
+    driverSha256: createHash('sha256').update(source).digest('hex'), signedZeroExample: proof,
+    nonZeroDifferenceRejected: true, lengthMismatchRejected: true, rawArrayUnchanged: true,
+    evidencePersistedBeforeFirstCaptureAssert: true, targetAndExpandedShaderBytesSameAsAttempt01: true,
+    browserStarted: false, gpuCompileVerified: false };
+await writeFile(path.join(here, 'comparison-check.json'), `${JSON.stringify(result, null, 2)}\n`, { flag: 'wx' });
+console.log(JSON.stringify({ pass: result.pass, scope: result.scope, driverSha256: result.driverSha256 }));

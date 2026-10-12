@@ -1,0 +1,83 @@
+
+ RUN  v2.1.9 /private/tmp/sansu-next-m1-code
+
+stderr | src/components/island/growing/authoredFlowerObstructions.test.ts > actual walking source envelope > includes actual indexed clothing, hats, ears, tail, soles and continuous walking angles with bob, while excluding sparkles
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/authoredFlowerObstructions.test.ts (15 tests) 684ms
+   ✓ actual walking source envelope > includes actual indexed clothing, hats, ears, tail, soles and continuous walking angles with bob, while excluding sparkles 381ms
+ ✓ src/domain/growingIsland/authoredWaterWorld.test.ts (19 tests) 6622ms
+   ✓ pure authored water geometry composition > interpolates the original shading field through cuts without changing support or copying grass normals to new beds 723ms
+   ✓ pure authored water geometry composition > retains only actually dry foot-band edges while leaving joining/water grants unchanged 306ms
+   ✓ pure authored water geometry composition > resolves the existing cut floors at L/T junctions without duplicating water or creating support 316ms
+   ✓ pure authored water geometry composition > keeps pool mouths and the whole shared junction level before the actual falling strips 311ms
+   ✓ pure authored water geometry composition > starts from the original ground on store/split and restores the same revision and geometry 620ms
+   ✓ pure authored water geometry composition > derives the terminal bridge from the same cut world and removes it with its supplying owner 603ms
+   ✓ pure authored water geometry composition > does not remove existing pools when a fourth bowl and a third fed channel join 394ms
+   ✓ pure authored water geometry composition > does not cut a distant trench for a nonadjacent explicit water grant 557ms
+   ✓ pure authored water geometry composition > reduces a pool around another owner and its doorstep without changing acquired rights 539ms
+   ✓ pure authored water geometry composition > adapts only the connection axis between nearby bowls while retaining wide transverse wings 322ms
+stderr | src/components/island/growing/authoredGroveLife.test.ts > actual authored grove life with the same physical owner entries > includes every visible native grove and finds l14 beyond its blocked first ring without altering owners, rigs or floor
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/authoredGroveLife.test.ts (5 tests) 51152ms
+   ✓ actual authored grove life with the same physical owner entries > includes every visible native grove and finds l14 beyond its blocked first ring without altering owners, rigs or floor 10813ms
+   ✓ actual authored grove life with the same physical owner entries > walks to l14 and leaves through normal life ticks without inventing a tree seat or use receipt 1055ms
+   ✓ actual authored grove life with the same physical owner entries > uses the real grove bench via its resolved entry, produces a valid receipt, and exits on that same safe graph 864ms
+   ✓ actual authored grove life with the same physical owner entries > retains a failed destination when a legal placement disconnects every safe local entry 11053ms
+   ✓ actual authored grove life with the same physical owner entries > rebuilds tree guards and entry maps on real move, store and restore, and excludes preview shapes 26394ms
+stderr | src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > keeps every placed owner approachable through a safe p9 move, storage and return
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/authoredCoveLife.test.ts (8 tests) 62419ms
+   ✓ actual authored P04 cove life > keeps every placed owner approachable through a safe p9 move, storage and return 32359ms
+   ✓ actual authored P04 cove life > distinguishes a legal play placement blocking the existing main route from lost shared floor 12027ms
+   ✓ actual authored P04 cove life > retains committed shell obstruction when the initial layer starts with a disappearance preview, including after cancel 681ms
+   ✓ actual authored P04 cove life > walks from the shared entrance to p9, earns one use and exits safely with mixed flowers=false 825ms
+   ✓ actual authored P04 cove life > walks from the shared entrance to p9, earns one use and exits safely with mixed flowers=true 853ms
+   ✓ actual authored P04 cove life > keeps the cove-only release and final-pose guard active when there are zero flower stocks 792ms
+   ✓ actual authored P04 cove life > returns an occupant of removed apron to real supported ground and restores owners with mixed flowers=false 12434ms
+   ✓ actual authored P04 cove life > returns an occupant of removed apron to real supported ground and restores owners with mixed flowers=true 1513ms
+stderr | src/components/island/growing/authoredFlowerLife.test.ts > actual authored P05 flower life > excludes every owned stock centre but preserves an actual safe walk, bench use receipt and exit
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/authoredFlowerLife.test.ts (5 tests) 8308ms
+   ✓ actual authored P05 flower life > excludes every owned stock centre but preserves an actual safe walk, bench use receipt and exit 910ms
+   ✓ actual authored P05 flower life > lands release and gesture cancellation safely from all four occupied stock centres without a false use 518ms
+   ✓ actual authored P05 flower life > keeps the same seated resident safe through split, store and reconnect, then safely leaves a removed bench 2170ms
+   ✓ actual authored P05 flower life > relocates an existing ground occupant when its stored flower reconnects, and completes safe hand-placed bench play 3386ms
+   ✓ actual authored P05 flower life > keeps an unplaced resident hidden across ticks with no source walking refs and recovers the same actor when refs return 660ms
+ ✓ src/domain/growingIsland/worldDefinition.test.ts (19 tests) 148ms
+ ✓ src/domain/growingIsland/authoredCoveWorld.test.ts (7 tests) 17601ms
+   ✓ authored cove source applicability > keeps the audited physical court when only its source shading changes 1348ms
+   ✓ authored cove source applicability > uses the real 32-owner P04 roles and play target on both original and water-composed terrain 637ms
+   ✓ authored cove source applicability > restricts only this source profile when mature P04 roles have an unaudited physical model or position 1242ms
+   ✓ authored cove source applicability > rejects new local owners and changed local ground while allowing a remote edit 1451ms
+   ✓ authored cove source applicability > rejects unaudited ground and owners beyond the former rectangle at the bowed shore 841ms
+   ✓ authored cove additive world patch > preserves every upstream floor, anchor, owner grant and edge, adds 13 walk-only refs, and keeps final P04 identity 2487ms
+   ✓ authored cove additive world patch > rejects identity bootstrap and cannot compose from its own already-composed floor 545ms
+ ✓ src/domain/growingIsland/authoredWorldFrame.test.ts (5 tests) 27209ms
+   ✓ one-way authored world frames > shares the water frame unchanged, supports cove-only and disabled modes, and exposes final place revisions 10140ms
+   ✓ one-way authored world frames > removes every dependent floor/ref/edge on real home, play and supply edits and restores the exact frame revision 2014ms
+   ✓ one-way authored world frames > removes and restores a cove on the current water-composed world without losing upstream water 9938ms
+   ✓ one-way authored world frames > keys the bounded cache by unopened and derivation inputs while ignoring receipts and signs profile/source/patch changes 2619ms
+   ✓ one-way authored world frames > fails closed on absent references, extra placement rights and changed original support 1639ms
+stderr | src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > renders the shared apron exactly once from the evaluated world and preserves all acquired owners and ground
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/native/authoredCoveIntegration.test.ts (7 tests) 51825ms
+   ✓ actual authored P04 cove runtime composition > renders the shared apron exactly once from the evaluated world and preserves all acquired owners and ground 10518ms
+   ✓ actual authored P04 cove runtime composition > guards actual cove triangles and all owner approaches with mixed flowers=false 507ms
+   ✓ actual authored P04 cove runtime composition > guards actual cove triangles and all owner approaches with mixed flowers=true 371ms
+   ✓ actual authored P04 cove runtime composition > removes and restores shell and apron through real storage of required owner p9 9306ms
+   ✓ actual authored P04 cove runtime composition > removes and restores shell and apron through real storage of required owner l32 9453ms
+   ✓ actual authored P04 cove runtime composition > preserves occupied-home storage protection and removes/restores the cove through permitted home movement 9631ms
+   ✓ actual authored P04 cove runtime composition > previews the confirmed loss of shell and apron while cancel restores the same committed resources and pointer support 11087ms
+ ✓ src/components/island/growing/native/authoredGrowingGround.test.ts (4 tests) 662ms
+   ✓ authored ground does not fill the authored inlet > keeps the shipped coast skin tied to the original source and actual floor world, with no static owners 650ms
+
+ Test Files  10 passed (10)
+      Tests  94 passed (94)
+   Start at  09:34:13
+   Duration  116.97s (transform 511ms, setup 0ms, collect 1.24s, tests 226.63s, environment 1ms, prepare 241ms)
+

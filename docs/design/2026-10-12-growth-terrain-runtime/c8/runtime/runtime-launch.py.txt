@@ -1,0 +1,14 @@
+from pathlib import Path
+import os,json,subprocess,signal,time
+out=Path('/private/tmp/sansu-growth-terrain-c8');candidate=out/'candidate'
+env=os.environ.copy();env.update(SANSU_GROWTH_TERRAIN_OUTPUT=str(out/'runtime'),SANSU_GROWTH_TERRAIN_BUILD='growth-terrain-c8',SANSU_GROWTH_TERRAIN_CORE_REPORT=str(out/'core/report.json'),SANSU_GROWTH_TERRAIN_URL='http://127.0.0.1:5365/prototypes/place-qa/authored.html?art=whole&terrain=grove')
+report={'startedAt':time.time(),'revision':'growth-terrain-c8','command':'node tools/e2e-authored-growth-terrain.mjs','timeoutSeconds':5400}
+with (out/'runtime-execution.log.txt').open('x') as log:
+ proc=subprocess.Popen(['node','tools/e2e-authored-growth-terrain.mjs'],cwd=candidate,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+ report['pid']=proc.pid;(out/'runtime-execution.json').write_text(json.dumps(report,indent=2))
+ print(json.dumps({'started':True,'pid':proc.pid}),flush=True)
+ try:report['exitCode']=proc.wait(timeout=5400)
+ except subprocess.TimeoutExpired:
+  os.killpg(proc.pid,signal.SIGTERM);report['timeout']=True;report['exitCode']=proc.wait(timeout=15)
+report['finishedAt']=time.time();(out/'runtime-execution.json').write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report),flush=True)
+raise SystemExit(report['exitCode'])

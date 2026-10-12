@@ -1,0 +1,36 @@
+--- /private/tmp/sansu-floor-shading-diagnostic/diagnose-floor.mjs
++++ /private/tmp/sansu-floor-shading-diagnostic-c2/diagnose-floor.mjs
+@@ -9,7 +9,7 @@
+ import { parseArgs } from 'node:util';
+ 
+ const self = fileURLToPath(import.meta.url);
+-const runRoot = '/private/tmp/sansu-authored-shoulder-c1';
++const runRoot = '/private/tmp/sansu-authored-shoulder-c2';
+ const candidate = `${runRoot}/candidate`;
+ const { values: args } = parseArgs({ options: {
+     start: { type: 'boolean', default: false }, mode: { type: 'string', default: 'shadow-off' },
+@@ -73,12 +73,12 @@
+     const corePath = `${runRoot}/core/report.json`, regressionPath = `${runRoot}/regressions/report.json`;
+     const core = await readJson(corePath), regressions = await readJson(regressionPath);
+     assert(core.pass && core.sourceFixed && core.installedDependenciesFixed && core.exitCode === 0, 'Fixed core is not complete PASS');
+-    assert.equal(core.target, candidate); assert.equal(core.revision, 'authored-shoulder-c1');
++    assert.equal(core.target, candidate); assert.equal(core.revision, 'authored-shoulder-c2');
+     assert(regressions.pass && regressions.finishedAtUnixSeconds && regressions.sourceFixed && regressions.installedDependenciesFixed,
+-        'All c1 regressions must finish first');
++        'All c2 regressions must finish first');
+     assert.equal(regressions.stages.length, 8); assert(regressions.stages.every(stage => stage.pass));
+     expectedSource = core.initialInputs; expectedInstalled = core.initialInstalledDependencies;
+-    assert(expectedSource && Object.keys(expectedSource).length === 6398, 'Unexpected c1 source closure');
++    assert(expectedSource && Object.keys(expectedSource).length === 6460, 'Unexpected c2 source closure');
+     assert(expectedInstalled && Object.keys(expectedInstalled).length === 6, 'Unexpected installed source closure');
+     assert.equal(regressions.candidate, candidate); assert.equal(regressions.revision, core.revision);
+     assert.equal(regressions.coreReportSha256, (await stamp(corePath)).sha256);
+@@ -91,7 +91,7 @@
+     const reference = ab.captures.find(c => c.file === '1280-hill-close-source.png');
+     assert(reference, 'Missing source hill-close identity');
+     const url = new URL(reference.url);
+-    assert.equal(url.origin, 'http://127.0.0.1:5358');
++    assert.equal(url.origin, 'http://127.0.0.1:5359');
+     assert.equal(url.pathname, '/prototypes/place-qa/authored.html');
+     assert.equal(url.searchParams.get('ground'), 'source'); assert.equal(url.searchParams.get('shoulder'), null);
+     assert.equal(url.searchParams.get('water'), 'wide'); assert.equal(url.searchParams.get('cove'), 'corner');

@@ -1,0 +1,36 @@
+{
+  "scope": "NORMAL-v2 independent byte-range audit; all original geometry/guard conclusions carry only because every non-top-NORMAL byte is unchanged. No rendered seam/app acceptance.",
+  "comparisons": [
+    {
+      "old": "central-shoulder-components.glb",
+      "new": "central-shoulder-components-normal-v2.glb",
+      "oldSha256": "24f32eed46efe18cd3411220771b2b4f5266449278f00499c0917550f1a7d998",
+      "newSha256": "c79e2cd7a228b24ff526e6d78913f6a07880e35dec1532d4c278dd7cbf10411e",
+      "sameLength": true,
+      "identicalJsonChunk": true,
+      "changedBytes": 21223,
+      "changesOutsideTopNormal": 0,
+      "normalAccessorIds": [
+        1,
+        4
+      ]
+    },
+    {
+      "old": "central-shoulder-source.glb",
+      "new": "central-shoulder-source-normal-v2.glb",
+      "oldSha256": "16ff4e1a1b31a4dcb676dbc6283ec368902f08bfba2a895a436a93845a4907b8",
+      "newSha256": "cd86121c32072053960e927866f9442b7168e281df9d8c46cf9807ce691b2ff9",
+      "sameLength": true,
+      "identicalJsonChunk": true,
+      "changedBytes": 21223,
+      "changesOutsideTopNormal": 0,
+      "normalAccessorIds": [
+        1,
+        4
+      ]
+    }
+  ],
+  "profileNormalSamples": 3810,
+  "maxUnitNormalDeltaVsProfile": 4.3841199311342295e-08,
+  "profileSha256": "7b4772489932b225d7b31ced5bd53c6835a47e8e63c71eeb43d7b59af1523d3b"
+}

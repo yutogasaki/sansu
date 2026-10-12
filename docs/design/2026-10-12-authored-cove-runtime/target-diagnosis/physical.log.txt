@@ -1,0 +1,112 @@
+THREE.Material: parameter 'map' has value of undefined.
+{"name":"baseline","p9":{"x":8,"z":0},"cove":1,"triangles":115808,"stockCount":4,"walkable":1410,"reached":1386,"unreachable":[],"routeCount":32,"routeFailures":[]}
+{"name":"failed","p9":{"x":4,"z":-4},"cove":0,"triangles":27648,"stockCount":4,"walkable":1438,"reached":181,"unreachable":["p3","p5","p6","p7","p8","l10","l11","l12","l13","l16","l17","l18","l19","l20","l21","l22","l23","l24","l25","l26","l27","l28","l31","l32"],"routeCount":8,"routeFailures":[]}
+{"name":"alternate-12--9","p9":{"x":12,"z":-9},"cove":0,"triangles":36424,"stockCount":4,"walkable":1432,"reached":1417,"unreachable":[],"routeCount":32,"routeFailures":[]}
+{
+  "envelopeExactMatch": true,
+  "comparisons": [
+    {
+      "name": "baseline",
+      "proofFields": [
+        {
+          "field": "stockCount",
+          "expected": 4,
+          "actual": 4,
+          "matches": true
+        },
+        {
+          "field": "coveCount",
+          "expected": 1,
+          "actual": 1,
+          "matches": true
+        },
+        {
+          "field": "obstructionRootCount",
+          "expected": 7,
+          "actual": 7,
+          "matches": true
+        },
+        {
+          "field": "triangles",
+          "expected": 115808,
+          "actual": 115808,
+          "matches": true
+        },
+        {
+          "field": "blockedPoints",
+          "expected": 66,
+          "actual": 66,
+          "matches": true
+        },
+        {
+          "field": "blockedEdges",
+          "expected": 29,
+          "actual": 29,
+          "matches": true
+        },
+        {
+          "field": "excludedRefs",
+          "expected": 102,
+          "actual": 102,
+          "matches": true
+        }
+      ],
+      "walkableMatches": true,
+      "reachedMatches": true,
+      "unreachableMatches": true
+    },
+    {
+      "name": "failed",
+      "proofFields": [
+        {
+          "field": "stockCount",
+          "expected": 4,
+          "actual": 4,
+          "matches": true
+        },
+        {
+          "field": "coveCount",
+          "expected": 0,
+          "actual": 0,
+          "matches": true
+        },
+        {
+          "field": "obstructionRootCount",
+          "expected": 4,
+          "actual": 4,
+          "matches": true
+        },
+        {
+          "field": "triangles",
+          "expected": 27648,
+          "actual": 27648,
+          "matches": true
+        },
+        {
+          "field": "blockedPoints",
+          "expected": 37,
+          "actual": 37,
+          "matches": true
+        },
+        {
+          "field": "blockedEdges",
+          "expected": 24,
+          "actual": 24,
+          "matches": true
+        },
+        {
+          "field": "excludedRefs",
+          "expected": 65,
+          "actual": 65,
+          "matches": true
+        }
+      ],
+      "walkableMatches": true,
+      "reachedMatches": true,
+      "unreachableMatches": true
+    }
+  ],
+  "inputCount": 103,
+  "allInputsMatchBrowser": true,
+  "inputMismatches": []
+}

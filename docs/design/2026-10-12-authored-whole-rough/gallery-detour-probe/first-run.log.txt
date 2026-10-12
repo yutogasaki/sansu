@@ -1,0 +1,7 @@
+compile-shared-world
+add-two-diagnostic-sites-and-three-edges
+load-original-models
+THREE.Material: parameter 'map' has value of undefined.
+single-life-sync-all-original-obstacles
+continuous-one-actor-motion
+{"status":"FAIL","elapsedMs":14517.901667,"failure":"Actual foot geometry penetrates the original terrain on the candidate detour","inputsUnchanged":true,"motionSamples":1}

@@ -1,0 +1,62 @@
+{
+  "schema": "sansu-independent-cove-v4-summary-v1",
+  "status": "PASS",
+  "scope": "Independent source/floor/domain applicability verification only. No browser, core suite, screenshot, art approval, or complete actor pose/lifecycle claim.",
+  "candidate": "native05-authored-cove-shore-v4",
+  "shellSourceId": "native05-authored-cove-corner-v3",
+  "shellSha256": "f08ada4907c76a617e2c22090049b9b2880dde2d75fa11ad61f6e76c7eec7146",
+  "checks": {
+    "author_freeze_and_manifest_hashes": true,
+    "shell_identity_and_combined_material_geometry": true,
+    "actual_glb_closed_and_finite": true,
+    "floor_bank_triangle_parity": true,
+    "floor_bank_material_colors": true,
+    "actual_domain_independent_patch_parity": true,
+    "one_assembly_each_world": true,
+    "old_floors_sites_grants_support": true,
+    "local_profile_covers_source_and_actor_sweeps": true,
+    "local_ground_fingerprint_and_near_owner_rejection": true,
+    "valid_nonoverlapping_patch": true,
+    "full_width_all_edges_supported": true,
+    "actual_socket_bottom_contact": true,
+    "seam_height_below_one_millimeter": true,
+    "float32_slivers_below_vertex_serialization_uncertainty": true,
+    "source_hashes_unchanged_during_run": true,
+    "source_hashes_still_match_at_closeout": true
+  },
+  "failures": [],
+  "inputCount": 64,
+  "closeoutInputChanges": [],
+  "actorEnvelope": {
+    "actors": 9,
+    "meshes": 117,
+    "indexedVertices": 99868,
+    "radius": 0.24406937059140585,
+    "sweepHalfWidth": 0.28406937059140586
+  },
+  "knownNumericalLimits": {
+    "nonUpwardSourceGlbSlivers": [
+      {
+        "area": 1.0519057550928499e-07,
+        "minimumAltitude": 1.8887918123272132e-07,
+        "longestSide": 1.1138398083129961
+      },
+      {
+        "area": 2.047977153158819e-09,
+        "minimumAltitude": 1.3294140080654088e-07,
+        "longestSide": 0.030810223763763075
+      },
+      {
+        "area": 4.238552868060519e-18,
+        "minimumAltitude": 4.1270694104642824e-16,
+        "longestSide": 0.020540254822531297
+      }
+    ],
+    "interpretation": "Three retained, nearly collinear triangles reverse or collapse under Float32 serialization; their minimum altitudes are below the measured source vertex serialization error. Both materials are double-sided; all triangle IDs and closed mesh edges remain. Recorded explicitly, not silently deleted or an art gate.",
+    "maxFullWidthPlanarGapArea": 4.3133129806609846e-14,
+    "maxSocketNonContactArea": 5.449132356276365e-17,
+    "maxSeamHeightDelta": 0.0005452929999999988
+  },
+  "resolvedFinding": "Root widened localGround and clearCourt from the old z=2.25 boundary to min(5,-3.5), max(11,3.5), revision b854fd9d1de0c4d9. Pre-fix evidence and custom-profile near-owner rejection remain preserved.",
+  "firstAttempt": "Audit harness initially used bank.color rather than bank.material.color. It failed before producing a result. The raw harness error and initial hashes are retained; the harness was repaired and rerun. No application/source failure is attributed to that error."
+}

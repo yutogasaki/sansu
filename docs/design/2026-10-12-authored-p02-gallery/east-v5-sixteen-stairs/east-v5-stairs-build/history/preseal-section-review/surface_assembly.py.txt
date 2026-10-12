@@ -1,0 +1,97 @@
+"""Exposed upper skin of connected closed timber parts, not a hidden walk plane.
+
+No source component is changed. Same-plane faces use deterministic priority;
+higher physical top occludes lower top only for the rendered skin. Planned
+contact/entry heights are separately compared and never adopt a higher top.
+"""
+import math,struct
+from entry_geometry import EPS,polygon_area,plane_y,cross,clip,Terrain
+
+def split(poly,a,b):
+    inside=[];outside=[]
+    for p,q in zip(poly,poly[1:]+poly[:1]):
+        dp=cross(a,b,p);dq=cross(a,b,q);ip=dp>=0;iq=dq>=0
+        (inside if ip else outside).append(p)
+        if ip!=iq:
+            t=dp/(dp-dq);v=[p[k]+(q[k]-p[k])*t for k in range(3)];inside.append(v);outside.append(v)
+    return inside,outside
+
+def subtract(poly,cut):
+    if sum(a[0]*b[2]-b[0]*a[2]for a,b in zip(cut,cut[1:]+cut[:1]))<0:cut=list(reversed(cut))
+    remaining=poly;pieces=[]
+    for a,b in zip(cut,cut[1:]+cut[:1]):
+        if len(remaining)<3:break
+        remaining,outside=split(remaining,a,b)
+        if len(outside)>=3 and polygon_area(outside)>0:pieces.append(outside)
+    return pieces
+
+def clip_above(poly,reference):
+    result=[]
+    for a,b in zip(poly,poly[1:]+poly[:1]):
+        da=a[1]-plane_y(a,reference);db=b[1]-plane_y(b,reference);ia=da>=0;ib=db>=0
+        if ia:result.append(a)
+        if ia!=ib:
+            t=da/(da-db);result.append([a[k]+(b[k]-a[k])*t for k in range(3)])
+    return result
+
+def box(t):return (min(p[0]for p in t),max(p[0]for p in t),min(p[2]for p in t),max(p[2]for p in t))
+def intersects(a,b):return a[0]<b[1]and a[1]>b[0]and a[2]<b[3]and a[3]>b[2]
+def exposed_tops(parts):
+    # Each part = {id,priority,triangles:[{triangle,role,sourceFace}]}. Raw
+    # full closed component remains in the .blend for provenance, hidden only.
+    records=[]
+    for part in parts:
+        for face in part['triangles']:
+            records.append({**face,'part':part['id'],'priority':part['priority'],'bounds':box(face['triangle'])})
+    outputs={p['id']:[]for p in parts};lineage=[];holds=[]
+    for fi,source in enumerate(records):
+        tri=source['triangle'];fragments=[tri];removed=0.
+        for other in records:
+            if other['part']==source['part'] or not intersects(source['bounds'],other['bounds']):continue
+            delta=[p[1]-plane_y(p,tri)for p in other['triangle']]
+            if max(delta)<-EPS:continue
+            coincident=max(abs(x)for x in delta)<=EPS
+            if coincident and other['priority']>source['priority']:continue
+            cutter=other['triangle'] if coincident else clip_above(other['triangle'],tri)
+            if len(cutter)<3 or polygon_area(cutter)==0:continue
+            next_frag=[]
+            for fragment in fragments:next_frag.extend(subtract(fragment,cutter))
+            fragments=next_frag
+            if not fragments:break
+        original=polygon_area(tri);kept=0.
+        for fragment in fragments:
+            for i in range(1,len(fragment)-1):
+                raw=[fragment[0],fragment[i],fragment[i+1]];area=polygon_area(raw)
+                if area==0:continue
+                fp=[list(struct.unpack('<3f',struct.pack('<3f',*p)))for p in raw]
+                if cross(*fp)>0:fp.reverse()
+                actual=polygon_area(fp)
+                rec={'sourcePart':source['part'],'sourceFace':source['sourceFace'],'role':source['role'],'inputTriangle':tri,'fragmentBeforeFloat32':raw,'fragmentFloat32':fp,'areaBeforeFloat32':area,'areaAfterFloat32':actual,'planeError':max(abs(p[1]-plane_y(p,tri))for p in fp)}
+                lineage.append(rec);kept+=area
+                if actual==0:
+                    holds.append({'kind':'Float32-collapsed-exposed-fragment','lineage':len(lineage)-1,'areaBefore':area});continue
+                if rec['planeError']>EPS:holds.append({'kind':'Float32-exposed-plane-error','lineage':len(lineage)-1,'error':rec['planeError']})
+                outputs[source['part']].append({'triangle':fp,'role':source['role'],'sourceFace':source['sourceFace'],'lineage':len(lineage)-1})
+        if kept>original+EPS:holds.append({'kind':'exposure-area-increased','part':source['part'],'sourceFace':source['sourceFace'],'before':original,'after':kept})
+    return outputs,{'method':'priority only for same-plane component overlap; physical higher top clips lower visible skin, planned route unchanged','epsilon':EPS,'sourceTopTriangles':len(records),'visibleTopTriangles':sum(map(len,outputs.values())),'lineage':lineage,'holds':holds,'closedComponentGeometryUnchanged':True,'stairTreadsAreActualVisibleSupport':True}
+
+def cap_in_actual_volume(cap,ground,top,bottom):
+    # Final cap has a vertical tangent: constant Y, actual horizontal footprint.
+    # The bottom is the measured visible sloping underside, never top-.07.
+    ground_records=[];deck_records=[];covered=positive=0.
+    for i in range(1,len(cap)-1):
+        ct=[cap[0],cap[i],cap[i+1]]
+        for ti in top.nearby(ct):
+            tt=top.triangles[ti];tp=clip(ct,tt)
+            if len(tp)<3 or polygon_area(tp)==0:continue
+            covered+=polygon_area(tp)
+            for bi in bottom.nearby(tp):
+                bt=bottom.triangles[bi];poly=clip(tp,bt)
+                if len(poly)<3 or polygon_area(poly)==0:continue
+                area=polygon_area(poly);up=[plane_y(p,tt)-p[1]for p in poly];low=[p[1]-plane_y(p,bt)for p in poly]
+                # Record a conservative positive patch only if every polygon
+                # corner is strictly inside both actual planes.
+                strict=min(up)>0 and min(low)>0
+                if strict:positive+=area
+                deck_records.append({'capTriangle':i-1,'topTriangle':ti,'bottomTriangle':bi,'area':area,'insideTopRange':[min(up),max(up)],'aboveActualUndersideRange':[min(low),max(low)],'strictPositivePatch':strict})
+    return {'projectedCapArea':polygon_area(cap),'coveredTopArea':covered,'positiveInsideActualVolumeArea':positive,'pieces':deck_records,'usesActualBottomTriangles':True,'arbitraryCurveVolumeUnionProof':False}

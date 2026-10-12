@@ -1,0 +1,123 @@
+{
+  "scope": "Independent actual components GLB plus immutable selected v3 world/source audit. No app/visual acceptance. Float32 top precision and source-normal interpolation are separate from exact double world floor.",
+  "inputs": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/central-shoulder-components.glb": "24f32eed46efe18cd3411220771b2b4f5266449278f00499c0917550f1a7d998",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/geometry-profile.json.gz": "7b4772489932b225d7b31ced5bd53c6835a47e8e63c71eeb43d7b59af1523d3b",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/input/native-trunk-bases.json": "431efb8e316628eccf1bf5010c9669df8712fc6d2b622f524c6fced61ef58139",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-whole-massing/central-shoulder-feasibility/raw/south-west-v3/candidate-world.json.gz": "b2d0bdbe3c9be24deb52cb1e0d10c11e7b27bfb3464501d46249b176287ef1cc",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-whole-massing/central-shoulder-feasibility/raw/south-west-v3/candidate-state.json": "a286b06b513e3661aebb6387c7e09a66fd8d0f0329da0bbfe7b2d901736f6ee9",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-whole-massing/central-shoulder-feasibility/raw/south-west-v3/assembly-extract.json": "feb55d314e9c197da78acdbbcd56012157bad00ecba8f628a0084d2e8ced27ee",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-whole-massing/central-shoulder-feasibility/raw/south-west-v3/candidate-proof.json": "26fdf12119e32675508424e787afc94a9eb45de40ce7a81d5f35ea399bd55854",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/native05-world.json.gz": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/authored-flower-reference-mature.json": "a6371602364a531130fb2a99e927958648ff1c57c2cc5a0966c315538ecbf533",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.glb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+  },
+  "soil": {
+    "topology": {
+      "triangles": 15184,
+      "positionWeldVertices": 7594,
+      "nonTwoIncidentEdges": 0,
+      "orientationMismatchedEdges": 0,
+      "signedVolume": 9.015421019577628
+    },
+    "topExactFloat32TriangleMultisetParity": true,
+    "topMaterialWrongTriangles": 0,
+    "float32VsExactMaxAbsError": 4.7673486314181446e-07,
+    "float32TopMissingExactRegionArea": 4.46111533126404e-07,
+    "float32TopOutsideExactRegionArea": 4.490059156520602e-07,
+    "float32TopVsRetainedFloorOverlap": 3.270900007742528e-07,
+    "sourceBoundaryNormalSamples": 979,
+    "maxSourceBoundaryNormalErrorL2": 0.0001259721400881961,
+    "maxNormalLengthError": 2.220446049250313e-16,
+    "downwardTopNormals": 0,
+    "minimumTopY": -0.008999990299344063,
+    "bottomY": -0.3089999854564667
+  },
+  "roots": [
+    {
+      "id": "l33",
+      "topology": {
+        "triangles": 36,
+        "positionWeldVertices": 20,
+        "nonTwoIncidentEdges": 0,
+        "orientationMismatchedEdges": 0,
+        "signedVolume": 0.009991655932920201
+      },
+      "actualSourceCapMissingTriangles": 0,
+      "bindingMatchesActualOwner": true,
+      "materialMatchesOriginalTrunk": true,
+      "insideOwnerHalf46": true,
+      "uncoveredDryFloorArea": 0.0,
+      "minEmbedOverFullProjectedFoot": 0.0059999563162840275,
+      "maxEmbedOverFullProjectedFoot": 0.04587875875498448,
+      "bottomY": 1.2000000476837158
+    },
+    {
+      "id": "l34",
+      "topology": {
+        "triangles": 36,
+        "positionWeldVertices": 20,
+        "nonTwoIncidentEdges": 0,
+        "orientationMismatchedEdges": 0,
+        "signedVolume": 0.0018310309307530612
+      },
+      "actualSourceCapMissingTriangles": 0,
+      "bindingMatchesActualOwner": true,
+      "materialMatchesOriginalTrunk": true,
+      "insideOwnerHalf46": true,
+      "uncoveredDryFloorArea": 0.0,
+      "minEmbedOverFullProjectedFoot": 0.0059999370574952415,
+      "maxEmbedOverFullProjectedFoot": 0.062159957885742134,
+      "bottomY": 1.5571999549865723
+    },
+    {
+      "id": "l35",
+      "topology": {
+        "triangles": 36,
+        "positionWeldVertices": 20,
+        "nonTwoIncidentEdges": 0,
+        "orientationMismatchedEdges": 0,
+        "signedVolume": 0.0021908427133880983
+      },
+      "actualSourceCapMissingTriangles": 0,
+      "bindingMatchesActualOwner": true,
+      "materialMatchesOriginalTrunk": true,
+      "insideOwnerHalf46": true,
+      "uncoveredDryFloorArea": 0.0,
+      "minEmbedOverFullProjectedFoot": 0.005999984741210884,
+      "maxEmbedOverFullProjectedFoot": 0.06567005157470707,
+      "bottomY": 1.579164981842041
+    }
+  ],
+  "preservation": {
+    "oldOwnerRecords": 32,
+    "oldOwnerRecordsIdentical": true,
+    "newOwnerRecords": 35,
+    "oldGrantCount": 73,
+    "newGrantCount": 75,
+    "oldGrantFullFootprintIntersections": [],
+    "frontBandClearanceHalfWidth": 0.28406937059140586,
+    "frontBandSweptArea": 2.027197852781227,
+    "frontBandCoveredIntersectionArea": 2.0271978527812267,
+    "frontBandUncoveredDryFloorArea": 2.3722940005411765e-17
+  },
+  "limitations": [
+    "Topology checks positional weld, not self-intersection of every buried triangle pair.",
+    "Soil side/bottom are new closed source decisions; burial below native body has not been proven by a full original volume Boolean.",
+    "Root cap equality proves exact copied contact contour within Float32; smooth visual seam needs rendered review.",
+    "No source-only result promotes app, acquisition, interaction or whole art acceptance."
+  ],
+  "finalInputs": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/central-shoulder-components.glb": "24f32eed46efe18cd3411220771b2b4f5266449278f00499c0917550f1a7d998",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/geometry-profile.json.gz": "7b4772489932b225d7b31ced5bd53c6835a47e8e63c71eeb43d7b59af1523d3b",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/input/native-trunk-bases.json": "431efb8e316628eccf1bf5010c9669df8712fc6d2b622f524c6fced61ef58139",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-whole-massing/central-shoulder-feasibility/raw/south-west-v3/candidate-world.json.gz": "b2d0bdbe3c9be24deb52cb1e0d10c11e7b27bfb3464501d46249b176287ef1cc",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-whole-massing/central-shoulder-feasibility/raw/south-west-v3/candidate-state.json": "a286b06b513e3661aebb6387c7e09a66fd8d0f0329da0bbfe7b2d901736f6ee9",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-whole-massing/central-shoulder-feasibility/raw/south-west-v3/assembly-extract.json": "feb55d314e9c197da78acdbbcd56012157bad00ecba8f628a0084d2e8ced27ee",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-whole-massing/central-shoulder-feasibility/raw/south-west-v3/candidate-proof.json": "26fdf12119e32675508424e787afc94a9eb45de40ce7a81d5f35ea399bd55854",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/native05-world.json.gz": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/authored-flower-reference-mature.json": "a6371602364a531130fb2a99e927958648ff1c57c2cc5a0966c315538ecbf533",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.glb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+  },
+  "inputsUnchanged": true
+}

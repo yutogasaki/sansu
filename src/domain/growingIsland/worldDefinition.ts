@@ -49,9 +49,10 @@ export interface CompiledWorldSurface {
 export interface CompiledWorldFloor {
     id: string;
     kind: WorldFloor['kind'];
-    vertices: readonly { cell: Cell; point: WorldPoint }[];
+    vertices: WorldFloor['vertices'];
     indices: readonly number[];
     color: string;
+    material?: WorldFloor['material'];
 }
 
 /** The same barycentric coordinates drive floor height, world position and inverse hit. */
@@ -110,6 +111,7 @@ export function compileWorldDefinition(input: WorldDefinition) {
     const refs = new Map<string, CompiledWorldSite>(), cells = new Map<string, CompiledWorldSite>();
     const finite = (point: Cell | WorldPoint) => Number.isFinite(point.x) && Number.isFinite(point.z)
         && (!('y' in point) || Number.isFinite(point.y));
+    const unit = (value: number) => Number.isFinite(value) && value >= 0 && value <= 1;
     const logicalPoint = (district: WorldDistrict, cell: Cell): Cell => {
         const p = turn(cell.x, cell.z, district.turn);
         return { x: p.x + district.logicalOrigin.x, z: p.z + district.logicalOrigin.z };
@@ -141,9 +143,16 @@ export function compileWorldDefinition(input: WorldDefinition) {
             requireWorld(floor.id && !ids.has(id), 'duplicate floor'); ids.add(id);
             requireWorld(['ground', 'deck', 'water'].includes(floor.kind) && floor.indices.length > 0 && floor.indices.length % 3 === 0, 'floor kind or indices');
             requireWorld(/^#[a-fA-F0-9]{6}$/.test(floor.color), 'floor color');
+            if (floor.material !== undefined) requireWorld(floor.material && unit(floor.material.roughness) && unit(floor.material.metalness)
+                && typeof floor.material.doubleSided === 'boolean', 'floor material');
             const vertices = floor.vertices.map(vertex => {
                 requireWorld(finite(vertex.cell) && finite(vertex.point) && Number.isFinite(vertex.point.y), 'non-finite floor vertex');
-                return { cell: logicalPoint(district, vertex.cell), point: worldPoint(district, vertex.point) };
+                const normal = vertex.normal;
+                if (normal !== undefined) requireWorld(normal && finite(normal) && Number.isFinite(normal.y)
+                    && Math.hypot(normal.x, normal.y, normal.z) > 1e-12, 'floor normal');
+                const rotated = normal ? turn(normal.x, normal.z, district.turn) : undefined;
+                return { cell: logicalPoint(district, vertex.cell), point: worldPoint(district, vertex.point),
+                    ...(normal && rotated ? { normal: { x: rotated.x, y: normal.y, z: rotated.z } } : {}) };
             });
             for (const index of floor.indices) requireWorld(Number.isInteger(index) && index >= 0 && index < vertices.length, 'floor index out of range');
             for (let i = 0; i < floor.indices.length; i += 3) {
@@ -156,7 +165,8 @@ export function compileWorldDefinition(input: WorldDefinition) {
                 (anchor ? anchorTriangles : triangles).push(triangle);
                 if (anchor || !district.anchorFloors?.length) originalTriangles.push(triangle);
             }
-            (anchor ? anchorFloors : floors).push({ id, kind: floor.kind, color: floor.color, vertices, indices: [...floor.indices] });
+            (anchor ? anchorFloors : floors).push({ id, kind: floor.kind, color: floor.color, vertices, indices: [...floor.indices],
+                ...(floor.material ? { material: { ...floor.material } } : {}) });
         };
         for (const floor of district.floors) compileFloor(floor, false);
         for (const floor of district.anchorFloors ?? []) compileFloor(floor, true);
@@ -166,7 +176,6 @@ export function compileWorldDefinition(input: WorldDefinition) {
             requireWorld(['bank', 'flow'].includes(surface.kind) && Array.isArray(surface.vertices) && Array.isArray(surface.indices)
                 && surface.indices.length > 0 && surface.indices.length % 3 === 0, 'surface kind or indices');
             const material = surface.material;
-            const unit = (value: number) => Number.isFinite(value) && value >= 0 && value <= 1;
             requireWorld(material && /^#[a-fA-F0-9]{6}$/.test(material.color) && unit(material.roughness) && unit(material.metalness)
                 && (material.opacity === undefined || unit(material.opacity)), 'surface material');
             const vertices = surface.vertices.map(point => { requireWorld(finite(point) && Number.isFinite(point.y), 'non-finite surface vertex'); return worldPoint(district, point); });
@@ -232,7 +241,12 @@ export function compileWorldDefinition(input: WorldDefinition) {
         return buckets;
     };
     const createSampler = (triangleList: readonly Triangle[], physicalQueries: boolean) => {
-        const logicalBins = bins(triangleList, false), physicalBins = physicalQueries ? bins(triangleList, true) : logicalBins;
+        const logicalBins = bins(triangleList, false);
+        // Exact XZ identity makes both ordered search indices identical. Check
+        // every indexed vertex; mapped districts still need their own index.
+        const sharedCoordinates = physicalQueries && triangleList.every(triangle => triangle.cells.every((cell, i) =>
+            cell.x === triangle.points[i].x && cell.z === triangle.points[i].z));
+        const physicalBins = physicalQueries && !sharedCoordinates ? bins(triangleList, true) : logicalBins;
         return (at: Cell, physical: boolean, floorId?: string, y?: number, raw = false): WorldFloorSample | undefined => {
             if (!finite(at)) return undefined;
             let best: WorldFloorSample | undefined;

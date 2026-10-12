@@ -1,0 +1,316 @@
+{
+  "pass": true,
+  "scope": "Read-only inspection after terminal core PASS. Native art false; actual source art payload absence is distinct from shipped JS adapters/metadata. No browser, build or core run was started here.",
+  "candidate": "/private/tmp/sansu-authored-cove-c3/candidate",
+  "version": {
+    "version": "authored-cove-c3:88c84472-9943-440d-8089-8134589e08df",
+    "revision": "authored-cove-c3",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "flagsPass": true,
+  "inputs": {
+    "count": 2137,
+    "comparedTo": [
+      "core.initialInputs",
+      "core.finalInputs",
+      "snapshot.files",
+      "current candidate"
+    ],
+    "differences": [],
+    "sha256": "b9bd886acbf9906698507532ac927fbd9ff95da5c94e1383253694e2d7b463b1",
+    "coreReportSha256": "fb9c46d364ee3a3b3a14ca1a12358727dc0245330653668e2475c42c416a4ea5",
+    "coreClosureSha256": "b9bd886acbf9906698507532ac927fbd9ff95da5c94e1383253694e2d7b463b1",
+    "snapshotSha256": "f3fe7b909e8c7aa71023889161eec3e448c6d2aecba58436fbe37ca144cdc910"
+  },
+  "output": {
+    "files": 171,
+    "bytes": 24547855,
+    "inventorySha256": "a72c0ce80c977b74cdb91f85103bd744632e99d5f4829d9ecf57f8daf5253dc2",
+    "unchangedDuringReadOnlyChecks": true
+  },
+  "precache": {
+    "count": 145,
+    "bytes": 8896755,
+    "maxBytes": 12582912,
+    "missing": [],
+    "urls": [
+      "index.html",
+      "fonts/NotoSansJP.woff2",
+      "assets/zen-maru-gothic-black-DnteofP1.woff2",
+      "assets/wonderPaint-CvDALTKC.js",
+      "assets/utils-B-dksMZM.js",
+      "assets/syncProjection.worker-C3bgaeDg.js",
+      "assets/sharedRendererCache-adAs7Med.js",
+      "assets/runtime-PRI8wXI5.js",
+      "assets/room-BpO0kRPF.js",
+      "assets/repository-TyG9atL3.js",
+      "assets/repository-SQPQO3so.js",
+      "assets/repository-Dzvud2Hm.js",
+      "assets/react-DcHpdqMy.js",
+      "assets/progressRepository-Dx8cfOTy.js",
+      "assets/pdf-l0sNRNKZ.js",
+      "assets/nativeAuthoredFlower-BnMtufvH.js",
+      "assets/motion-iLBaTeAD.js",
+      "assets/menuMiniatures-OYWFU1zJ.js",
+      "assets/lifeMigration.worker-DHjS3IcF.js",
+      "assets/learningKeepsakes-Dh8LY25y.js",
+      "assets/islandCharacters-CG451f6z.js",
+      "assets/index-Cksqt2JE.js",
+      "assets/index-BpfA-MzC.css",
+      "assets/icons-B9gKEo9H.js",
+      "assets/guideMemoryPictures-eSST3Ep_.js",
+      "assets/growing-CpK_Ensa.css",
+      "assets/growing-CWpzG4fw.js",
+      "assets/friendRig-D9QwXPyl.js",
+      "assets/flowerGeometry-CEBOecV1.js",
+      "assets/dela-gothic-one-tzEOUe9y.woff2",
+      "assets/data-CYRvWfdS.js",
+      "assets/charts-B2Phfr4C.js",
+      "assets/authoredGrowingAssets-DFvrLLpN.js",
+      "assets/audio-DwtSHwBT.js",
+      "assets/_native-owned-art-disabled-BiOygDaT.js",
+      "assets/Stats-Dbi260P-.css",
+      "assets/Stats-BCWF_ElZ.js",
+      "assets/RoundedBoxGeometry-qgve1i4V.js",
+      "assets/PokomokoLearningActor-jGl290oM.js",
+      "assets/NotoSansJP-C_ziqpoc.woff2",
+      "assets/Learn-_2FySwD6.js",
+      "assets/IslandWorkshop-KxE1cutE.css",
+      "assets/IslandWorkshop-B1oi3Ssc.js",
+      "assets/IslandWorkReplay-Bw3NfbaT.js",
+      "assets/IslandWelcome-DZ1C9DD0.js",
+      "assets/IslandWelcome-BzcVxNGV.css",
+      "assets/IslandStage-DPdoB737.css",
+      "assets/IslandStage-AqGMhwos.js",
+      "assets/IslandSharedMemories-DDj0bvlE.js",
+      "assets/IslandSharedMemories-CxXlpls3.css",
+      "assets/IslandRewardGoal-DToONE8h.js",
+      "assets/IslandRewardGoal-DH87ewoC.css",
+      "assets/IslandPhotos-Dz-XgAxv.css",
+      "assets/IslandPhotos-C1UE-0IU.js",
+      "assets/IslandOnboarding-Djs50bw8.js",
+      "assets/IslandFurniture-DyPBDuyy.js",
+      "assets/IslandFurniture-7NZ9dhCz.css",
+      "assets/IslandExpression-BWEZFAqE.js",
+      "assets/IslandExpression-BAzaKUz5.css",
+      "assets/IslandExperiencePanel-p6bYU9k0.js",
+      "assets/IslandExperiencePanel-Cn-0xXmE.css",
+      "assets/IslandDiscoveryGuide-DpYKYTkf.css",
+      "assets/IslandDiscoveryGuide-BlrwHWyr.js",
+      "assets/IslandCustomization-BKdIHMdQ.css",
+      "assets/IslandCustomization-7sBiEYpS.js",
+      "assets/IslandAlbum-D2eBvF5L.js",
+      "assets/Island-aEXqzwx6.css",
+      "assets/Island-Nx3R2F6t.js",
+      "assets/Island-DvxA8B-1.css",
+      "assets/Island-D9zZHgZC.js",
+      "assets/GrowingWorld-BnApTeM8.js",
+      "assets/GrowingIsland-d_2h-gUw.css",
+      "assets/GrowingIsland-COxu6N-v.js",
+      "assets/GrowingHouseGuide-G-FAViaK.js",
+      "assets/Explore-Cf2kRLCb.js",
+      "assets/Explore-C0qQ-HMA.css",
+      "assets/pokomoko-learning-poses-B-Jfr41M.webp",
+      "icons/icon-192.png",
+      "icons/icon-512.png",
+      "ikimono/0-1.webp",
+      "ikimono/0-2.webp",
+      "ikimono/0-3.webp",
+      "ikimono/1-1.webp",
+      "ikimono/1-2.webp",
+      "ikimono/1-3.webp",
+      "ikimono/2-1.webp",
+      "ikimono/2-2.webp",
+      "ikimono/2-3.webp",
+      "ikimono/3-1.webp",
+      "ikimono/3-2.webp",
+      "ikimono/3-3.webp",
+      "ikimono/4-1.webp",
+      "ikimono/4-2.webp",
+      "ikimono/4-3.webp",
+      "ikimono/5-1.webp",
+      "ikimono/5-2.webp",
+      "ikimono/5-3.webp",
+      "ikimono/6-1.webp",
+      "ikimono/6-2.webp",
+      "ikimono/6-3.webp",
+      "ikimono/7-1.webp",
+      "ikimono/7-2.webp",
+      "ikimono/7-3.webp",
+      "ikimono/8-1.webp",
+      "ikimono/8-2.webp",
+      "ikimono/8-3.webp",
+      "ikimono/9-1.webp",
+      "ikimono/9-2.webp",
+      "ikimono/9-3.webp",
+      "sounds/bgm_menu.mp3",
+      "sounds/bgm_study.mp3",
+      "sounds/clear.mp3",
+      "sounds/correct.mp3",
+      "sounds/incorrect.mp3",
+      "sounds/level_up.mp3",
+      "sounds/start.mp3",
+      "sounds/step.mp3",
+      "sounds/tap.mp3",
+      "assets/explore/firefly-flower/scene-dew-trail-stumble-bloom-pokko-v5.webp",
+      "assets/explore/firefly-flower/scene-light-path-stumble-bloom-pokko-v5.webp",
+      "assets/explore/firefly-flower/scene-ringing-petals-stumble-bloom-pokko-v5.webp",
+      "assets/explore/firefly-flower/scene-waiting-stumble-bloom-pokko-v5.webp",
+      "assets/explore/firefly-flower/scene-warm-bud-stumble-bloom-pokko-v5.webp",
+      "assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.webp",
+      "assets/explore/light-bridge/scene-crossed-leaf-carry-bloom-pokko-v7.webp",
+      "assets/explore/light-bridge/scene-idle-leaf-carry-bloom-pokko-v7.webp",
+      "assets/explore/opening-root-pull-v1/payoff.webp",
+      "assets/explore/opening-root-pull-v1/pull-one.webp",
+      "assets/explore/opening-root-pull-v1/pull-two.webp",
+      "assets/explore/opening-root-pull-v1/ready.webp",
+      "assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-one.webp",
+      "assets/explore/opening-snap-root-carry-bloom-v3/scene-dig-two.webp",
+      "assets/explore/opening-snap-root-carry-bloom-v3/scene-popped.webp",
+      "assets/explore/opening-snap-root-carry-bloom-v3/scene-ready.webp",
+      "assets/explore/opening-root-pull-v2/payoff-dirt-hat.webp",
+      "assets/explore/opening-root-pull-v2/payoff-leaf-hat.webp",
+      "assets/explore/opening-root-pull-v2/pull-one.webp",
+      "assets/explore/opening-root-pull-v2/pull-two.webp",
+      "assets/explore/opening-root-pull-v2/ready.webp",
+      "assets/explore/rapid-trail/scene-run-pop-v1.webp",
+      "assets/explore/root-tangle/scene-crossed-carry-bloom-pokko-v7.webp",
+      "assets/explore/root-tangle/scene-open-carry-bloom-pokko-v7.webp",
+      "assets/explore/root-tangle/scene-tangled-carry-bloom-pokko-v7.webp",
+      "assets/explore/route-choice/scene-fork-three-dew-path-pokko-v2.webp",
+      "assets/explore/route-choice/scene-fork-two-dew-path-pokko-v2.webp"
+    ]
+  },
+  "payloadBoundary": {
+    "actualArtPayloads": [],
+    "renamedPayloadMatches": [],
+    "comparedSourcePayloadHashes": 23,
+    "embeddedPayloadMatches": [],
+    "namedCodeChunks": [
+      {
+        "file": "assets/_native-owned-art-disabled-BiOygDaT.js",
+        "bytes": 55,
+        "sha256": "18bb61573fafb98bc9007fb11db2e8df0e3be7e0726ec21f5d154b858f96d356"
+      },
+      {
+        "file": "assets/authoredGrowingAssets-DFvrLLpN.js",
+        "bytes": 469,
+        "sha256": "62f591b5121c85c53b98e4092670117cbda91f41a57994ce89329685bc290536"
+      },
+      {
+        "file": "assets/nativeAuthoredFlower-BnMtufvH.js",
+        "bytes": 8482,
+        "sha256": "21f2e8270d8ad77fafa63ea6735420f7924e05ecad25ef84ba05e312d2c47be6"
+      }
+    ],
+    "textMatches": [
+      {
+        "file": "assets/GrowingWorld-BnApTeM8.js",
+        "bytes": 415779,
+        "matches": [
+          {
+            "token": "cove-corner-v3.glb",
+            "occurrences": 2
+          },
+          {
+            "token": "native05-authored-cove",
+            "occurrences": 3
+          }
+        ]
+      },
+      {
+        "file": "assets/authoredGrowingAssets-DFvrLLpN.js",
+        "bytes": 469,
+        "matches": [
+          {
+            "token": "Authored cove diagnostic requires development",
+            "occurrences": 1
+          }
+        ]
+      }
+    ],
+    "inlineCoveDefinitions": [
+      {
+        "file": "assets/GrowingWorld-BnApTeM8.js",
+        "bytes": 415779,
+        "exactSerializedDistrictPresent": true,
+        "serializedDistrictCharacters": 147435,
+        "districtSha256": "ef7c526096b066095123b99e9e3b8ea8f0ef73ed40fa98b69030e465e7cd97dc",
+        "floorCount": 1,
+        "vertices": 598,
+        "triangles": 596,
+        "districtSites": 9,
+        "sourcePatchEdgeCount": 15,
+        "interpretation": "Actual shared-apron district geometry and walk-site data remains inline in JS. This is more than descriptive names, but is separate from absent native GLB/gzip/Blender art payloads."
+      }
+    ],
+    "loaderChecks": [
+      {
+        "file": "assets/authoredGrowingAssets-DFvrLLpN.js",
+        "type": "DEV diagnostic throws",
+        "source": "async function r(o){throw Error(\"Authored coast diagnostic requires development\")}async function e(o){throw Error(\"Authored water bridge diagnostic requires development\")}async function t(o){throw Error(\"Authored flower support diagnostic requires development\")}async function n(o){throw Error(\"Authored cove diagnostic requires development\")}export{r as loadAuthoredCoastSkin,n as loadAuthoredCove,t as loadAuthoredFlowerSupportSkin,e as loadAuthoredWaterBridgeSkin};\n",
+        "hasFetch": false,
+        "hasCoveThrow": true
+      },
+      {
+        "file": "assets/_native-owned-art-disabled-BiOygDaT.js",
+        "type": "native disabled no-op",
+        "source": "async function n(){}export{n as loadNativeGrowingKit};\n",
+        "hasFetch": false,
+        "hasCoveThrow": false
+      }
+    ],
+    "distinction": "The named authored/native JS chunks, loader behavior, source metadata, and exact inline shared-apron district matches are inventoried above; their actual byte sizes are recorded, not inferred from names. They are distinct from absent native GLB/gzip/Blender source files. This result does not claim all authored code/data was tree-shaken or absent."
+  },
+  "officialAssetBudget": {
+    "command": "node tools/check-asset-budget.mjs",
+    "exitCode": 0,
+    "log": "asset-budget.log.txt",
+    "logSha256": "48d49adb828f0a598e0f80427bd8876ac779e17058520bd5cd1af751bd445609"
+  },
+  "anchors": {
+    "version.json": {
+      "bytes": 719,
+      "sha256": "d56d88b6697fa1c3647cbafed024a2572ed1b5f7a1dd419c1c88c4892a39431e"
+    },
+    "index.html": {
+      "bytes": 3894,
+      "sha256": "6743c10d562fba8492262271c192438870316998dba7a611cf188adc68e8f564"
+    },
+    "sw.js": {
+      "bytes": 11542,
+      "sha256": "5e330b8b525d6e345bbf959d52b0af01d67487a910303a0e76756a1ef79d443e"
+    }
+  },
+  "inspectionScriptSha256": "9cac575fa0386e8fcff1d227c9c6b971c11f51acc06ac30512fa2db8ed057964"
+}

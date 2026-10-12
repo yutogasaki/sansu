@@ -1,0 +1,67 @@
+{
+  "status": "COMPLETED_DIAGNOSTIC_NO_ADOPTION",
+  "execution": {
+    "ownedChildPid": 38361,
+    "ownedPidVerifiedAbsent": true,
+    "firstObservedUtc": "2026-10-12T05:17:14.074918+00:00",
+    "lastObservedUtc": "2026-10-12T05:17:19.925741+00:00",
+    "supervisorExitObservedUtc": "2026-10-12T05:17:20.178981+00:00",
+    "peakObservedRssBytes": 526090240,
+    "timestampsAreObservedNotExactBlenderSpawnOrExit": true,
+    "inputCodeBeforeAfterMatch": true
+  },
+  "firstDegeneration": {
+    "index": 0,
+    "operand": "terrainThreshold",
+    "zeroAreaFaces": 1,
+    "nonmanifoldEdges": 0,
+    "duplicateFaces": 0
+  },
+  "firstDuplicateGeneration": {
+    "operandIndex": 1,
+    "operandName": "diagnostic/alignedOpening",
+    "before": 0,
+    "after": 640
+  },
+  "stages": [
+    {
+      "index": 0,
+      "operand": "diagnostic/terrainThreshold",
+      "nonmanifoldEdges": 0,
+      "duplicateFaces": 0,
+      "zeroAreaFaces": 1
+    },
+    {
+      "index": 1,
+      "operand": "diagnostic/alignedOpening",
+      "nonmanifoldEdges": 1330,
+      "duplicateFaces": 640,
+      "zeroAreaFaces": 0
+    },
+    {
+      "index": 2,
+      "operand": "diagnostic/visible-front-branch-junction",
+      "nonmanifoldEdges": 6606,
+      "duplicateFaces": 4252,
+      "zeroAreaFaces": 0
+    },
+    {
+      "index": 3,
+      "operand": "diagnostic/unchanged-native-interior",
+      "nonmanifoldEdges": 6745,
+      "duplicateFaces": 4322,
+      "zeroAreaFaces": 0
+    }
+  ],
+  "separateManifoldComparison": {
+    "index": 1,
+    "samePreOperationOperands": true,
+    "nonmanifoldEdges": 0,
+    "duplicateFaces": 0,
+    "zeroAreaFaces": 0,
+    "adopted": false,
+    "notProofOfFullUnionOrWalkSupport": true
+  },
+  "interpretation": "Exact context identities and FINISHED recorded at every step; final topology counts match original failure. Coplanar overlap coincides with duplication but underlying solver degeneracy/self-intersection cause not fully proven. No epsilon change, deletion repair, full candidate rebuild, or render.",
+  "next": "Whole/entry visual review of recorded failed floor before choosing further repair."
+}

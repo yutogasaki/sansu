@@ -1,0 +1,103 @@
+{
+  "purpose": "Preserve run02 failure and prepared code before immutable-name repair",
+  "files": [
+    {
+      "path": "source-study.py",
+      "sourceBeforeSha256": "221884209c52f0bd7ddd074be85e0bdb504cddda06bc6cec08edc08879526a58",
+      "sourceAfterSha256": "221884209c52f0bd7ddd074be85e0bdb504cddda06bc6cec08edc08879526a58",
+      "destinationSha256": "221884209c52f0bd7ddd074be85e0bdb504cddda06bc6cec08edc08879526a58",
+      "bytes": 29006
+    },
+    {
+      "path": "donor_reference.py",
+      "sourceBeforeSha256": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+      "sourceAfterSha256": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+      "destinationSha256": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+      "bytes": 3333
+    },
+    {
+      "path": "check-donor-reference.py",
+      "sourceBeforeSha256": "64d4b0bc75e3d18a365a0f431227cb412ce938e283fa5bbf7e69d2ec4292ab99",
+      "sourceAfterSha256": "64d4b0bc75e3d18a365a0f431227cb412ce938e283fa5bbf7e69d2ec4292ab99",
+      "destinationSha256": "64d4b0bc75e3d18a365a0f431227cb412ce938e283fa5bbf7e69d2ec4292ab99",
+      "bytes": 2707
+    },
+    {
+      "path": "prepared-survey02/README.md",
+      "sourceBeforeSha256": "9fe865d6100ddc046881a01e13fa96b56157983f886764fc340f3a6b6ba43740",
+      "sourceAfterSha256": "9fe865d6100ddc046881a01e13fa96b56157983f886764fc340f3a6b6ba43740",
+      "destinationSha256": "9fe865d6100ddc046881a01e13fa96b56157983f886764fc340f3a6b6ba43740",
+      "bytes": 2585
+    },
+    {
+      "path": "prepared-survey02/readiness.json",
+      "sourceBeforeSha256": "063eb98dac2662bffab86dc56fa0dff16f6d6bfcbc7eedaf7d2a1c0efc83a714",
+      "sourceAfterSha256": "063eb98dac2662bffab86dc56fa0dff16f6d6bfcbc7eedaf7d2a1c0efc83a714",
+      "destinationSha256": "063eb98dac2662bffab86dc56fa0dff16f6d6bfcbc7eedaf7d2a1c0efc83a714",
+      "bytes": 2320
+    },
+    {
+      "path": "prepared-survey02/manifest.json",
+      "sourceBeforeSha256": "4ce1f2de89af1370ecdc79506ef8064455c808c0de6c9484f2790e69080361ea",
+      "sourceAfterSha256": "4ce1f2de89af1370ecdc79506ef8064455c808c0de6c9484f2790e69080361ea",
+      "destinationSha256": "4ce1f2de89af1370ecdc79506ef8064455c808c0de6c9484f2790e69080361ea",
+      "bytes": 3196
+    },
+    {
+      "path": "prepared-survey02/static-first.log.txt",
+      "sourceBeforeSha256": "a20ef6801be8d655cb8ecb7189eb3087618a834405d5e5806c9cbd8a7b7924d2",
+      "sourceAfterSha256": "a20ef6801be8d655cb8ecb7189eb3087618a834405d5e5806c9cbd8a7b7924d2",
+      "destinationSha256": "a20ef6801be8d655cb8ecb7189eb3087618a834405d5e5806c9cbd8a7b7924d2",
+      "bytes": 981
+    },
+    {
+      "path": "runs/02-survey-observation.json",
+      "sourceBeforeSha256": "569ad758ac068bdb9ddbff5aa653e8d6765f6b76b02e1b742a328b80bc4cdc49",
+      "sourceAfterSha256": "569ad758ac068bdb9ddbff5aa653e8d6765f6b76b02e1b742a328b80bc4cdc49",
+      "destinationSha256": "569ad758ac068bdb9ddbff5aa653e8d6765f6b76b02e1b742a328b80bc4cdc49",
+      "bytes": 4065
+    },
+    {
+      "path": "runs/02-survey-supervisor-output.log.txt",
+      "sourceBeforeSha256": "cdcad32e32799528a3da697a78baabda61413c18efea8a44715487c8d695e788",
+      "sourceAfterSha256": "cdcad32e32799528a3da697a78baabda61413c18efea8a44715487c8d695e788",
+      "destinationSha256": "cdcad32e32799528a3da697a78baabda61413c18efea8a44715487c8d695e788",
+      "bytes": 338
+    },
+    {
+      "path": "runs/02-survey.log.txt.json",
+      "sourceBeforeSha256": "3d6650ecf3294d3547233176052e52d921f0c99e8ad11e0dd86bc548b93a9a79",
+      "sourceAfterSha256": "3d6650ecf3294d3547233176052e52d921f0c99e8ad11e0dd86bc548b93a9a79",
+      "destinationSha256": "3d6650ecf3294d3547233176052e52d921f0c99e8ad11e0dd86bc548b93a9a79",
+      "bytes": 414
+    },
+    {
+      "path": "runs/02-survey.log.txt",
+      "sourceBeforeSha256": "c0081c49e609b9750881faa5e3d622ca46e8477f70562ce1907832d13986aa70",
+      "sourceAfterSha256": "c0081c49e609b9750881faa5e3d622ca46e8477f70562ce1907832d13986aa70",
+      "destinationSha256": "c0081c49e609b9750881faa5e3d622ca46e8477f70562ce1907832d13986aa70",
+      "bytes": 19114
+    },
+    {
+      "path": "runs/02-survey-handoff.md",
+      "sourceBeforeSha256": "24ae7194cf26ecefe5301a51060834f1b61192dc76fc68defb97dd3a9f0d3c57",
+      "sourceAfterSha256": "24ae7194cf26ecefe5301a51060834f1b61192dc76fc68defb97dd3a9f0d3c57",
+      "destinationSha256": "24ae7194cf26ecefe5301a51060834f1b61192dc76fc68defb97dd3a9f0d3c57",
+      "bytes": 2358
+    },
+    {
+      "path": "runs/02-survey-handoff.json",
+      "sourceBeforeSha256": "d853cdd5c3c38e05615b7bad1b94b3fbfd3904d90b33b6d9ae4a9cecad631065",
+      "sourceAfterSha256": "d853cdd5c3c38e05615b7bad1b94b3fbfd3904d90b33b6d9ae4a9cecad631065",
+      "destinationSha256": "d853cdd5c3c38e05615b7bad1b94b3fbfd3904d90b33b6d9ae4a9cecad631065",
+      "bytes": 3095
+    },
+    {
+      "path": "runs/02-survey/first-failure.json",
+      "sourceBeforeSha256": "b7edc3e81a39793a69da8aa6a0ce22913293a037d8602c4e50fa710f4fb37f74",
+      "sourceAfterSha256": "b7edc3e81a39793a69da8aa6a0ce22913293a037d8602c4e50fa710f4fb37f74",
+      "destinationSha256": "b7edc3e81a39793a69da8aa6a0ce22913293a037d8602c4e50fa710f4fb37f74",
+      "bytes": 170
+    }
+  ]
+}

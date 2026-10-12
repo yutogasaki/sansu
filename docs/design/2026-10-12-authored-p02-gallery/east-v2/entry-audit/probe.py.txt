@@ -1,0 +1,26 @@
+"""One original west entrance and a .20m rise/plateau; no build or optimizer."""
+from pathlib import Path
+import json,sys,math,hashlib
+P=Path(__file__).resolve().parent;root=P.parents[1];source=root/'east-v1-analysis/analyze.py';s=source.read_text();E={'__file__':str(source),'__name__':'readonly'};exec(compile(s[:s.index("c=M['candidates'][0]")],str(source),'exec'),E)
+np=E['np'];M=E['M'];S=E['S'];sys.path.insert(0,str(P.parent));from entry_geometry import Terrain,ribbon_plan,clip,polygon_area,plane_y,slope_report,EPS
+terrain=Terrain(E['F'].tolist());top=M['interiorTopY'];old=M['candidates'][0];joint=np.array(old['frontBoughJunction']);arrival=np.array(old['arrival']);cx,_,cz=S['transform']['authoredOrigin'];width=.64
+ramp0=np.array([cx+1.24*math.cos(math.radians(-68)),top,cz-1.24*math.sin(math.radians(-68))])
+flat=[]
+for name,points in [('opening',[joint,arrival]),('branch',[joint,ramp0])]:
+ plan=ribbon_plan([list(p) for p in points],width,terrain)
+ for f in plan['topFaces']:flat.append((name,[plan['topVertices'][i] for i in f]))
+for i in range(32):flat.append(('junction',[list(joint),list(joint+np.array([.32*math.cos(i*math.tau/32),0,.32*math.sin(i*math.tau/32)])),list(joint+np.array([.32*math.cos((i+1)*math.tau/32),0,.32*math.sin((i+1)*math.tau/32)]))]))
+rows=[]
+for name,x in [('rejected-middle',3.75),('selected-west',3.)]:
+ entry=np.array([x,0,-7.25]);entry[1]=terrain.top_y(entry);d=joint-entry;run=math.hypot(d[0],d[2]);t=np.array([d[0]/run,0,d[2]/run]);side=np.array([-t[2],0,t[0]]);a=entry-side*.32;b=entry+side*.32;quad=[list(a),list(b),list(joint+side*.32),list(joint-side*.32)];overlaps=[]
+ for component,tri in flat:
+  poly=clip(quad,tri)
+  if len(poly)<3 or polygon_area(poly)<=1e-12:continue
+  overlaps.append({'component':component,'area':polygon_area(poly),'distanceRange':[float(min((np.array(p)-entry)@t for p in poly)),float(max((np.array(p)-entry)@t for p in poly))]})
+ threshold=Terrain([tri for _,tri in flat]).section(list(a),list(b),float(entry[1]));connector=[];hits=[]
+ for i in range(21):
+  p=entry+(joint-entry)*i/20;g=terrain.top_y(p);p[1]=g+(top-g)*min(1,(i/20*run)/.20);connector.append(list(p));_,ids=E['box_tri'](p,S['design']['clearWidth']/2,.012,S['envelope']['height']+.04)
+  if len(ids):hits.append({'sample':i,'point':list(p),'objects':sorted(set(int(E['OID'][k]) for k in ids))})
+ rows.append({'candidate':name,'entry':list(entry),'run':run,'plateauDistance':.20,'firstFlatOverlapDistance':min(v['distanceRange'][0] for v in overlaps),'flatOverlapPieces':overlaps,'thresholdFlatCoverage':threshold,'originalGroundThreshold':terrain.section(list(a),list(b),float(entry[1])),'entryToNativeHeight':top-entry[1],'centreSlopes':slope_report(connector),'rawReservedBoxHits':hits})
+report={'status':'BOUNDED_NUMERIC_PREBUILD_HOLD','rows':rows,'objects':E['objects'],'unchangedNativeY':top,'limits':['Only actual ground and planned flat footprint overlap checked; Boolean and new structure pending','Box margin is not actual animated body collision','No acceptance inferred from centre samples'],'inputs':{k:v['sha256'] for k,v in S['inputs'].items()}}
+out=P/'result.json';assert not out.exists();out.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({'sha':hashlib.sha256(out.read_bytes()).hexdigest(),'candidates':[{'name':r['candidate'],'entry':r['entry'],'firstOverlap':r['firstFlatOverlapDistance'],'fullGround':r['originalGroundThreshold']['supportedFullWidth'],'maxGrade':r['centreSlopes']['maximumAbsoluteSlope'],'rawHits':len(r['rawReservedBoxHits'])} for r in rows]}))

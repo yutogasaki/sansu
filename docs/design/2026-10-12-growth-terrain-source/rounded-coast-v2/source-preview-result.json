@@ -1,0 +1,26 @@
+{
+  "startedUtc": "2026-10-12T11:23:32.333086+00:00",
+  "finishedUtc": "2026-10-12T11:23:58.232400+00:00",
+  "pid": 62262,
+  "exitCode": 0,
+  "elapsedSeconds": 25.89917225,
+  "peakSampledRssBytes": 1965719552,
+  "effectiveThreads": 2,
+  "limitReason": null,
+  "sourceBefore": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/build-source-preview.py": "d50577dc411e565d7a75b3e2451ec7455b3bd33ebd43dd791f2d6377a9d69fed",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/source-manifest.json": "d97ec4c6e90cf78204c1c68d7acb571b5bec8ec0a9c8311ba0be03f8683fe989",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/baseline-source.glb": "7efd2c20d369958df39728c03ba68c9dc2a5f7060575b9ea721280661a801421",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/parallel-source.glb": "8ce75b606aa49b0d7a3f6b27d1617a5e09693e8678dc20182a079c7f3cad5b85",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/seaward-source.glb": "01900c4b8aa0d6d5002063e5740e4bd39c5c18ca3270b070454ced7efa7226a7"
+  },
+  "sourceAfter": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/build-source-preview.py": "d50577dc411e565d7a75b3e2451ec7455b3bd33ebd43dd791f2d6377a9d69fed",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/source-manifest.json": "d97ec4c6e90cf78204c1c68d7acb571b5bec8ec0a9c8311ba0be03f8683fe989",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/baseline-source.glb": "7efd2c20d369958df39728c03ba68c9dc2a5f7060575b9ea721280661a801421",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/parallel-source.glb": "8ce75b606aa49b0d7a3f6b27d1617a5e09693e8678dc20182a079c7f3cad5b85",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/seaward-source.glb": "01900c4b8aa0d6d5002063e5740e4bd39c5c18ca3270b070454ced7efa7226a7"
+  },
+  "inputsUnchanged": true,
+  "evidence": "Source-only static comparison; not performance evidence or app acceptance"
+}

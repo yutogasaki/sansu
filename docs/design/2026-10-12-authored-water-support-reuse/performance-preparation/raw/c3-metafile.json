@@ -1,0 +1,488 @@
+{
+  "inputs": {
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterGeometry.ts": {
+      "bytes": 5451,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWorldAccess.ts": {
+      "bytes": 14497,
+      "imports": [
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterGeometry.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterGeometry"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/worldDefinition.ts": {
+      "bytes": 29593,
+      "imports": [
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWorldAccess.ts",
+          "kind": "import-statement",
+          "original": "./authoredWorldAccess"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterGeometry.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterGeometry"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/economyRules.ts": {
+      "bytes": 3512,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/model.ts": {
+      "bytes": 9588,
+      "imports": [
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/economyRules.ts",
+          "kind": "import-statement",
+          "original": "./economyRules"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/decorations.ts": {
+      "bytes": 216,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/footprint.ts": {
+      "bytes": 720,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/landRules.ts": {
+      "bytes": 2863,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/walkingSpace.ts": {
+      "bytes": 7357,
+      "imports": [
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/footprint.ts",
+          "kind": "import-statement",
+          "original": "./footprint"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/landRules.ts",
+          "kind": "import-statement",
+          "original": "./landRules"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/model.ts",
+          "kind": "import-statement",
+          "original": "./model"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/space.ts": {
+      "bytes": 6843,
+      "imports": [
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/decorations.ts",
+          "kind": "import-statement",
+          "original": "./decorations"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/walkingSpace.ts",
+          "kind": "import-statement",
+          "original": "./walkingSpace"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/footprint.ts",
+          "kind": "import-statement",
+          "original": "./footprint"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/landRules.ts",
+          "kind": "import-statement",
+          "original": "./landRules"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/model.ts",
+          "kind": "import-statement",
+          "original": "./model"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/waterChannels.ts": {
+      "bytes": 3941,
+      "imports": [
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/model.ts",
+          "kind": "import-statement",
+          "original": "./model"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/rules.ts": {
+      "bytes": 6080,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/types.ts": {
+      "bytes": 9935,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/space.ts": {
+      "bytes": 7835,
+      "imports": [
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/footprint.ts",
+          "kind": "import-statement",
+          "original": "../islandLife/footprint"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/types.ts",
+          "kind": "import-statement",
+          "original": "./types"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWorldAccess.ts",
+          "kind": "import-statement",
+          "original": "./authoredWorldAccess"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/environment.ts": {
+      "bytes": 6303,
+      "imports": [
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/model.ts",
+          "kind": "import-statement",
+          "original": "../islandLife/model"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/waterChannels.ts",
+          "kind": "import-statement",
+          "original": "../islandLife/waterChannels"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/rules.ts",
+          "kind": "import-statement",
+          "original": "./rules"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/types.ts",
+          "kind": "import-statement",
+          "original": "./types"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterCarving.ts": {
+      "bytes": 10093,
+      "imports": [
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/worldDefinition.ts",
+          "kind": "import-statement",
+          "original": "./worldDefinition"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterGeometry.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterGeometry"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterContour.ts": {
+      "bytes": 8472,
+      "imports": [],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterRim.ts": {
+      "bytes": 2487,
+      "imports": [
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterContour.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterContour"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/nativeWaterBridgeProfile.json": {
+      "bytes": 1471,
+      "imports": []
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterBridge.ts": {
+      "bytes": 19104,
+      "imports": [
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterCarving.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterCarving"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterContour.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterContour"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/nativeWaterBridgeProfile.json",
+          "kind": "import-statement",
+          "original": "./nativeWaterBridgeProfile.json"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWorldAccess.ts",
+          "kind": "import-statement",
+          "original": "./authoredWorldAccess"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/worldDefinition.ts",
+          "kind": "import-statement",
+          "original": "./worldDefinition"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/nativeWaterSource.json": {
+      "bytes": 18730,
+      "imports": []
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterWorld.ts": {
+      "bytes": 40195,
+      "imports": [
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/waterChannels.ts",
+          "kind": "import-statement",
+          "original": "../islandLife/waterChannels"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWorldAccess.ts",
+          "kind": "import-statement",
+          "original": "./authoredWorldAccess"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "./environment"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterCarving.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterCarving"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterContour.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterContour"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterRim.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterRim"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterBridge.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterBridge"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/nativeWaterSource.json",
+          "kind": "import-statement",
+          "original": "./nativeWaterSource.json"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/nativeWaterBridgeProfile.json",
+          "kind": "import-statement",
+          "original": "./nativeWaterBridgeProfile.json"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/worldDefinition.ts",
+          "kind": "import-statement",
+          "original": "./worldDefinition"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredShoulderWorld.ts": {
+      "bytes": 12614,
+      "imports": [
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/worldDefinition.ts",
+          "kind": "import-statement",
+          "original": "./worldDefinition"
+        }
+      ],
+      "format": "esm"
+    },
+    "../../../../private/tmp/sansu-water-support-perf-c2-c3/prepared/worker-c3.ts": {
+      "bytes": 6473,
+      "imports": [
+        {
+          "path": "node:fs",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:zlib",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/worldDefinition.ts",
+          "kind": "import-statement",
+          "original": "/private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/worldDefinition.ts"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterWorld.ts",
+          "kind": "import-statement",
+          "original": "/private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterWorld.ts"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredShoulderWorld.ts",
+          "kind": "import-statement",
+          "original": "/private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredShoulderWorld.ts"
+        },
+        {
+          "path": "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterCarving.ts",
+          "kind": "import-statement",
+          "original": "/private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterCarving.ts"
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "../../../../private/tmp/sansu-water-support-perf-c2-c3/prepared/worker-c3.mjs.map": {
+      "imports": [],
+      "exports": [],
+      "inputs": {},
+      "bytes": 349833
+    },
+    "../../../../private/tmp/sansu-water-support-perf-c2-c3/prepared/worker-c3.mjs": {
+      "imports": [
+        {
+          "path": "node:fs",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:zlib",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:crypto",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "node:assert/strict",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "exports": [],
+      "entryPoint": "../../../../private/tmp/sansu-water-support-perf-c2-c3/prepared/worker-c3.ts",
+      "inputs": {
+        "../../../../private/tmp/sansu-water-support-perf-c2-c3/prepared/worker-c3.ts": {
+          "bytesInOutput": 5900
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterGeometry.ts": {
+          "bytesInOutput": 4677
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWorldAccess.ts": {
+          "bytesInOutput": 7787
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/worldDefinition.ts": {
+          "bytesInOutput": 23964
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/economyRules.ts": {
+          "bytesInOutput": 57
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/model.ts": {
+          "bytesInOutput": 187
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/space.ts": {
+          "bytesInOutput": 39
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/islandLife/waterChannels.ts": {
+          "bytesInOutput": 1567
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/rules.ts": {
+          "bytesInOutput": 1262
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/types.ts": {
+          "bytesInOutput": 105
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/space.ts": {
+          "bytesInOutput": 890
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/environment.ts": {
+          "bytesInOutput": 323
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterCarving.ts": {
+          "bytesInOutput": 7628
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterContour.ts": {
+          "bytesInOutput": 6727
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterRim.ts": {
+          "bytesInOutput": 1531
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/nativeWaterBridgeProfile.json": {
+          "bytesInOutput": 1560
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterBridge.ts": {
+          "bytesInOutput": 15613
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/nativeWaterSource.json": {
+          "bytesInOutput": 19974
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterWorld.ts": {
+          "bytesInOutput": 30943
+        },
+        "../../../../private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredShoulderWorld.ts": {
+          "bytesInOutput": 9661
+        }
+      },
+      "bytes": 142644
+    }
+  }
+}

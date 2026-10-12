@@ -1,0 +1,1000 @@
+{
+  "scope": "Read-only native geometry screen, no browser. Trees intentionally added to diagnostic obstruction index via eligible name; current runtime does not yet index grove roots. Not live app/visual acceptance.",
+  "inputs": {
+    "src/domain/growingIsland/authoredWaterGeometry.ts": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+    "src/domain/growingIsland/authoredWorldAccess.ts": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+    "src/domain/growingIsland/worldDefinition.ts": "c230e8fb354a43792d22814d6eaf82cd7adf0110d517250d1399be84b00ba7ea",
+    "src/domain/growingIsland/authoredWaterCarving.ts": "6ae51dfb1c3278471b928b54e3d170adefe7dbb4452f1360d7cfbfb52bf83c88",
+    "src/domain/islandLife/economyRules.ts": "2feb596641a89a83ff6fb7cd915548f3bcf9a8212ddafa75ddc05910e4091272",
+    "src/domain/islandLife/model.ts": "c373f5a532347d3f030420f40774a85e8a9434b095cb763138a34b45cd925ea3",
+    "src/domain/islandLife/decorations.ts": "5cfbccce407f289411af0f7317fa15ad96eea8f6abfb52b79a89203f4195ecb1",
+    "src/domain/islandLife/footprint.ts": "756e569dff83698e12dc6401fb96be06a23b950b003df4b1af21b8a1aa38916b",
+    "src/domain/islandLife/landRules.ts": "db73f083a1e73dbfa280401898a406afe9a8294d51d7aaaa5cf57140942dd774",
+    "src/domain/islandLife/walkingSpace.ts": "5143cdea48aa648b4b2b34f8920168d61b0ea0ed4034b3890e0a76a1c7b85827",
+    "src/domain/islandLife/space.ts": "699f197c86b4e7142b20a1790a6adefd3287445848c708990dc9c5c1423fff55",
+    "src/domain/islandLife/waterChannels.ts": "b98fef9f0eea7ed48e79890826689db3cbc0cd4a763c8d43eae95254a146f988",
+    "src/domain/growingIsland/rules.ts": "0a4e0289c595318443683fcbcf330d397b532f433d3faa993900fc986a8e6727",
+    "src/domain/growingIsland/types.ts": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+    "src/domain/growingIsland/space.ts": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+    "src/domain/growingIsland/environment.ts": "e965f2cd29601e5ee10f5b6dd9861a937e6c4b6ce3f71c35ad9c330109ab97f5",
+    "src/domain/growingIsland/authoredWaterContour.ts": "bffd4d8b78e12c06a9433b16992b5ca7cc9e44aaf21c4a571d2dff9dc53d6352",
+    "src/domain/growingIsland/authoredWaterRim.ts": "4e54cd274658531dcf70d66c2038347aaa8c80a83c4eefd764c0e9e65bf8409f",
+    "src/domain/growingIsland/nativeWaterBridgeProfile.json": "7ad19971180d7d572045d0bc620ca6559cdb165fd55c0e14c4e2e5a681f6fe13",
+    "src/domain/growingIsland/authoredWaterBridge.ts": "65594e5eb508d5dad13bd0693d213a66731caa9b60b9d419eefcf3c5983f60cf",
+    "src/domain/growingIsland/nativeWaterSource.json": "e0f652839690f2143279fbbfb60829912802de9bf008ac7d7f3232bf6fb3f306",
+    "src/domain/growingIsland/authoredWaterWorld.ts": "bece348b05568cb8b2e5a2634c809681bb70c6f9267adc5c72b6b97da88b4805",
+    "src/domain/growingIsland/authoredWaterFrame.ts": "6a8e19e2f63f84669ea7fb847955b10bc8dd1b64c555625fc886ec6a730ea7d7",
+    "docs/design/2026-10-12-authored-cove-entrance/source-manifest.json": "c52169062d71aa4e19ad82c2103440a76c3fb071db9b7b286066827aa6aacf1c",
+    "docs/design/2026-10-12-authored-cove-entrance/shared-apron-world-patch-v1.json": "7a5cc9edd5282f7471f8257e4ee83212cbf93f3f30ba269bb102d91bc11dc969",
+    "src/domain/growingIsland/authoredCoveWorld.ts": "b773f24672e5badc5259594ae5bdc378daedc861577f245d66ccdfdeb38b8781",
+    "src/domain/natureTown/random.ts": "45919ef8e7eb46920e60fe20b7992b96621fb9c1f889c81ddcce8d12496cbce9",
+    "src/domain/growingIsland/random.ts": "2d3e35f0f26da88acc2228454193fda88b759ac9f58ce8cc96d96b2234c01175",
+    "src/domain/growingIsland/flowers.ts": "74c38a6ae4239e97831e2707a4a8f75ab0e0b39f113038bc65626d6c424b561d",
+    "src/domain/growingIsland/nature.ts": "73a7a4b2d18bfaf84b7ec0b724e07e7ec13088a36eae31b54313d597949be733",
+    "docs/product/island-place-goals.json": "c4714aae51b3b0504ee23e999276518541aa13a0c80b05768d82112f172f4424",
+    "src/domain/growingIsland/placeCatalog.ts": "af31b65939c6c58fd4471ef55de8bab4f2a792287caebd648bb7de37282bbb47",
+    "src/domain/growingIsland/placeTerrain.ts": "b79248f1bf23a324b152d9e36310aeabcaa8a30abeae58b535f8c40f9cc7d28d",
+    "src/domain/growingIsland/places.ts": "25a712391722d414b7d88dadb7ff1e7637aeee80a4397093d2c886bca8755b2a",
+    "src/domain/growingIsland/authoredWorldFrame.ts": "dfe9b76bec5eda6cb5c3fae58fea76925e562496205894f327bd398d4c941c7e",
+    "src/domain/growingIsland/landscape.ts": "c4238f02498719722449772456001e457a0d02b2f82e7b389eae99d3021b6c96",
+    "src/domain/growingIsland/legacyWorldDefinition.ts": "511879416f7aab4667d02d2d1554c2b5ad2e555a950b8340ee2e35f996662dc9",
+    "src/components/island/growing/actorScale.ts": "6120e10eae06f3ea61b7e798a1c214c814df563a63a8e1677d897e185e93f57f",
+    "src/components/island/growing/sceneLayout.ts": "57aa76da0cd4ed93a00c077b0020db94fc6bb2de8913363e3ff91c9b8c39144d",
+    "src/components/island/three/worldPalette.ts": "00ad2759a32e5664ab88d4bde483fa261d54401ce37228368763a41b4c8b24e6",
+    "src/components/island/three/residentFabric.ts": "94aac1f3650bb7ffe82f395519370e91664d173efa868c97b95b943144ea0f87",
+    "src/components/island/three/primitives.ts": "024f55cd70eeb753dccc5610613221c29e3fddae05385b2403ee53d85dce1e24",
+    "src/components/island/three/garden/staticRaycast.ts": "64cd1be538743b11d12bc136a244312019ba7fd26f933cf5317f6e4e94107bb1",
+    "src/components/island/three/garden/geometry.ts": "b2a84d837adc4a946a5a3f5370f9663216fa71299bf65032b249c5f95fb6b51c",
+    "src/components/island/growing/treeSilhouettes.ts": "922fa3a9cf29193a35043afb7748b5ad88f511c77a174ace4cbfb5d513cadbe6",
+    "src/components/island/life/decorationGeometry.ts": "1ecc1ed682e99984b4c418c3c518a4d2baa3fff116acb557f7b049f3b3e6998e",
+    "src/components/island/life/facilityGeometry.ts": "ae8bdf3daff929d7c9a8afbd307e6f95c9fc20a2cfea945a5d8dbf11f75c1609",
+    "src/components/island/life/sandboxGeometry.ts": "c999bca5b86c632bd52deb363fd275f340ad8105638a4044c18fcf722cf5de5f",
+    "src/components/island/life/windArchGeometry.ts": "372151e1016966733d8e86f3a706974ff4144f03ef793279a40f17909f892de3",
+    "src/components/island/life/itemGeometry.ts": "20cb203e078574d8afac357808565e2c1daca756f7257ec9bdcc88d0f8ceac86",
+    "src/domain/growingIsland/placeTypes.ts": "38bc1f892b3f36a8103aec06af671bf00121b346c92fe354c4c63ef50ed0debf",
+    "src/domain/growingIsland/placeGoals.ts": "a13068b746555998680b5cf2a77bfe7d11308ce1880f595ad13d7c0aa3af7fe6",
+    "src/domain/growingIsland/guidance.ts": "5dac8f98ca616ed23a756989b78d2d9372a993d958ad94b4746cff82d092188a",
+    "src/domain/growingIsland/community.ts": "878c1dbc8a73f2e45e1c7960201fceaf4c272d57f1a9e803d6fbc2162ff668c6",
+    "src/domain/growingIsland/room.ts": "f1cfb631a26122546043ec3859926faba565e148802f498bd01fb346fa66d576",
+    "src/domain/growingIsland/names.ts": "56c4b4015d07f65733b373431ef6316a3ec908f6461929f5af10f4f0d6f078fc",
+    "src/domain/growingIsland/pier.ts": "67a3e80f4d49bd8d8109992a7f9c12e88588ec5a86959c669f02d326c83c1bef",
+    "src/domain/growingIsland/town.ts": "68b955dba55b4ca4447d90358e913eb6e1b1808141e12416dea32b1e47061fa1",
+    "src/domain/growingIsland/authoredPlacementSupport.ts": "e26fadea87bc473299da8e0ad5e791cd25745ea6e9ae199eb28161b0647018a4",
+    "src/domain/growingIsland/commands.ts": "bc594586848e9645751e7ad13305d1422d32f5551603246ea757d3efabd94ae7",
+    "src/domain/growingIsland/island.ts": "b8a2d70d356b5bc783df3fc678e4e3a51ae361f14c04ce140c1430479604b1e1",
+    "src/domain/growingIsland/gifts.ts": "e4eab4fb70124d1228d6491ae129a26dd741d9fefbd1e754c7eca87ab36ff329",
+    "src/domain/growingIsland/moments.ts": "9d5bf24aa2c63031764c324261e4db98d28387a49a930952eaac46d828a3d87a",
+    "src/domain/growingIsland/index.ts": "dd40bd7caa1428a1c351d4e661f691e7e605aa8070faa313a9d48e61696d3cb2",
+    "src/components/island/growing/plotParts.ts": "dcd1ce1f3f4b98439f5063f45e21286998d69163e56834dc1a319da7fd2614de",
+    "src/components/island/growing/wonderPaint.ts": "ad55bf214601e1565d2e19405b312862f4aba4100c2885290b472b2d3dc0c40e",
+    "src/components/island/growing/fieldGeometry.ts": "733315eb60d43a3f5de0724ca3218382921f837bdfb8b9c747c04c99d1382934",
+    "src/components/island/growing/ownLandmarks.ts": "834dc4822479d05b88b83f50ab11b10f26b573b0325ba4ecbc169add56863704",
+    "src/components/island/growing/homeSurfaceGeometry.ts": "51c11987dfa71d6c8a6bfb95b9e5c6a9444be1512c219581424b6448f2636f55",
+    "src/components/island/growing/homeGeometry.ts": "32b4d71332082a780fa0ca41bcd30a9862e60a911f04e20a6e85f07d8f0a4f78",
+    "src/components/island/growing/plotGeometry.ts": "87819d84f27a4716651c72899de665fbc19c3ec3145cc2314794a720ffe61aaa",
+    "src/components/island/growing/keepsakeGeometry.ts": "8d1efdbefb29064de4eb4aa0e774e2436d39ef59f5c6927214d659006e86249f",
+    "src/components/island/growing/flowerGeometry.ts": "652b97d16a02b23b09f5fe7c810641bd411f800dd4b372d129dc88744eebda26",
+    "src/components/island/growing/pierGeometry.ts": "37d259dcb9cccc258c3e0f5af1212e0186d5d6dd7e2137f9051de156a0aefaea",
+    "src/components/island/growing/bridgeGeometry.ts": "d68dac9de9a970762a6fbc9cc691a66c254719cb4f2c96da247145e8f3f76b6a",
+    "src/domain/growingIsland/placeRelations.ts": "70f261a0db7aa279a75307fd7adbb77bd0f77188209d3d88beacdfe6f1b53f09",
+    "src/components/island/growing/placeLeafGeometry.ts": "9b8c9c24331a1ecaf9a2586470ef3d05f8de6c02695882cfe1fc99c5cd680b7c",
+    "src/components/island/growing/placePaths.ts": "8e3622686e4ff2a94ac28c33e0d0cd90fc743e3e81cce514603182091c22178c",
+    "src/components/island/growing/placePondGeometry.ts": "2c18ff613d2f3e4c95a3ba38f5deb5bdcecdad25ac0fc6ccbb9d640427e03a85",
+    "src/components/island/growing/placeSpringGeometry.ts": "2bcf8d43515180bd6327d461a9885adf7f7914f9b8af6faa6d55304b7aa22f47",
+    "src/components/island/growing/placeShellGeometry.ts": "5bb7b7d1099b4ea9c0bf84c5ddc079e8c6e0fa0ccf9b7580f5887b37c359da46",
+    "docs/design/2026-10-11-authored-flower-garden/native-flower-support-profile.json": "6dc9e5bf1aff2dc257851424408818e5166cd5caf5cf5cdc40961cfb5552bbe8",
+    "src/components/island/growing/placeFlowerGeometry.ts": "f908235024c30fab9ba880b9336a5b209aac31e33299e0aa1ba2df9905a610b9",
+    "src/components/island/growing/placeRootRoomGeometry.ts": "00e3b449e389d4022609f55635d9487df990a7cb35d52dd533b182f6ec3adb0d",
+    "src/components/island/growing/native/nativePlaceGrove.ts": "b1d77d999a78f84f0f1a09f6117927a39629c3e803501e3898b1939ef368cfd9",
+    "src/components/island/growing/growingShaderWarmup.ts": "31b9fc740dc6368d693fedf32a87e30671d03dfbfab75d26ff2668950292ef6d",
+    "src/components/island/growing/placeGeometry.ts": "5dbae4462dea227f8047288223254627d999669f5b66bd6c1599cfff19de48eb",
+    "src/components/island/growing/curvedGeometry.ts": "a1fd17cccbf2b82c32da733f6d4b5001de89e9d9ac2cdd96284de286048538da",
+    "src/components/island/growing/objectLayer.ts": "fb67823156a4da834a6ff70f6a1d0f61eb802ea93074a75e4bf943e69752814f",
+    "src/components/island/growing/native/nativeGrowingKit.ts": "9b303133edd83ce2c86372fa5eeb959c51d4e7ea7915d6ef93f39b9a4d18bab9",
+    "src/components/island/growing/native/nativeAuthoredFlower.ts": "7f4293feecf0ca9c6bb08b87c9f8133cda4d917df28412fff55f9ec1324335f8",
+    "src/components/island/growing/native/nativeAuthoredCove.ts": "fab23c5545e3c6df5cacaa4390455dd389ee12cef62be3bf534055a23c1f2b2e",
+    "src/components/island/growing/authoredFlowerObstructions.ts": "c50f5991a89ce14c7f0d63868b21399c0ac3fc13f0965e2d498772a4fe047487",
+    "prototypes/place-qa/authored-flower-reference-mature.json": "a6371602364a531130fb2a99e927958648ff1c57c2cc5a0966c315538ecbf533",
+    "prototypes/place-qa/native05-world.json.gz": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+    "docs/design/2026-10-11-native-owned-island/native05-owned-kit.glb.gz": "79b8ae671444bf0c4869bd8e185f8d5ac140a1d7ee3e5709c5d39e4a6735e615",
+    "prototypes/place-qa/native-flower-support.json.gz": "9548583ed4a8f80b064381cf2ab922accb5dfdbc82f332f61498c4268e863836",
+    "/prototypes/place-qa/native-cove-corner.glb.gz": "7e8aeee0a7d1b821f9977f483436dec3d8beb1f19f6c352d2c51f00285c0bb87",
+    "/private/tmp/sansu-authored-cove-c1/shape/report.json": "db43ef5db48eb0369ba542e5c1e53b1e4eac0401330ef2913ac0bcf569fb9192",
+    "/private/tmp/sansu-whole-massing-c-terrain/south-west-v2/candidate-state.json": "a286b06b513e3661aebb6387c7e09a66fd8d0f0329da0bbfe7b2d901736f6ee9",
+    "/private/tmp/sansu-whole-massing-c-terrain/south-west-v2/candidate-world.json.gz": "4ff740c5055e1dcd27ddefb26da8925b6aeaa125162ee2414f4fab19778aa74d",
+    "/private/tmp/sansu-whole-massing-c-terrain/south-west-v2/candidate-frame-plans.json": "648e998352875e39feea160f12eb2d3af8a3529d38fcc40772b274be14be5f9e"
+  },
+  "envelope": {
+    "radius": 0.24406937059140585,
+    "height": 0.5500928879753579,
+    "bands": [
+      {
+        "radius": 0.09134999737143516,
+        "minY": 0.20385103985494077,
+        "maxY": 0.5500928879753579
+      },
+      {
+        "radius": 0.1353778402505187,
+        "minY": 0.018073202984005398,
+        "maxY": 0.12266860259311367
+      },
+      {
+        "radius": 0.11740714544627996,
+        "minY": -0.013389719108070908,
+        "maxY": 0.10058152468518997
+      },
+      {
+        "radius": 0.2238622310757637,
+        "minY": 0.022500694926418825,
+        "maxY": 0.32194834489438806
+      },
+      {
+        "radius": 0.11572916628891829,
+        "minY": -0.0190976441475757,
+        "maxY": 0.09264667927451685
+      },
+      {
+        "radius": 0.24406937059140585,
+        "minY": 0.08157946600510133,
+        "maxY": 0.2593961556396356
+      },
+      {
+        "radius": 0.21917178645545318,
+        "minY": 0.03156508037188276,
+        "maxY": 0.4915557144776604
+      },
+      {
+        "radius": 0.08661284906887425,
+        "minY": 0.01597534732239344,
+        "maxY": 0.2971977641282517
+      }
+    ],
+    "source": {
+      "actorIds": [
+        "pokomoko",
+        "authored-friend-0",
+        "authored-friend-1",
+        "authored-friend-2",
+        "authored-friend-3",
+        "authored-friend-4",
+        "authored-friend-5",
+        "authored-friend-6",
+        "authored-friend-7"
+      ],
+      "visualScales": [
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ]
+      ],
+      "meshes": 117,
+      "vertices": 99868,
+      "footSwing": 0.5,
+      "armSwing": 0.6,
+      "walkBob": 0.015750000000000004,
+      "method": "indexed-source-motion-intervals"
+    }
+  },
+  "results": [
+    {
+      "id": "baseline",
+      "frontBandProof": [
+        {
+          "cell": {
+            "x": 6,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 6.25,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 6.5,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 6.75,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 7,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 7.25,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 7.5,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 7.75,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 8,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 8.25,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 8.5,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 8.75,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 9,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": null
+        }
+      ],
+      "giantBounds": {
+        "min": [
+          -5.368091201627319,
+          1.49033759075,
+          -12.413321399688721
+        ],
+        "max": [
+          -1.6372212885261228,
+          5.077506761129639,
+          -8.77599277496338
+        ]
+      },
+      "worldRevision": "authored-cove:213e45e94bb5b88b",
+      "diagnosticTreeRoots": 13,
+      "triangles": 211560,
+      "excludedRefs": 108,
+      "reached": 1380,
+      "access": [
+        {
+          "id": "p1",
+          "approaches": 13,
+          "clearToOwner": 13
+        },
+        {
+          "id": "p2",
+          "approaches": 14,
+          "clearToOwner": 14
+        },
+        {
+          "id": "p3",
+          "approaches": 9,
+          "clearToOwner": 9
+        },
+        {
+          "id": "p4",
+          "approaches": 5,
+          "clearToOwner": 5
+        },
+        {
+          "id": "p5",
+          "approaches": 13,
+          "clearToOwner": 13
+        },
+        {
+          "id": "p6",
+          "approaches": 2,
+          "clearToOwner": 2
+        },
+        {
+          "id": "p7",
+          "approaches": 7,
+          "clearToOwner": 4
+        },
+        {
+          "id": "p8",
+          "approaches": 18,
+          "clearToOwner": 18
+        },
+        {
+          "id": "p9",
+          "approaches": 6,
+          "clearToOwner": 5
+        },
+        {
+          "id": "l10",
+          "approaches": 7,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l11",
+          "approaches": 5,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l12",
+          "approaches": 4,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l13",
+          "approaches": 9,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l14",
+          "approaches": 0,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l15",
+          "approaches": 9,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l16",
+          "approaches": 8,
+          "clearToOwner": 8
+        },
+        {
+          "id": "l17",
+          "approaches": 2,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l18",
+          "approaches": 6,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l19",
+          "approaches": 11,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l20",
+          "approaches": 32,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l21",
+          "approaches": 34,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l22",
+          "approaches": 21,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l23",
+          "approaches": 41,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l24",
+          "approaches": 18,
+          "clearToOwner": 18
+        },
+        {
+          "id": "l25",
+          "approaches": 14,
+          "clearToOwner": 14
+        },
+        {
+          "id": "l26",
+          "approaches": 18,
+          "clearToOwner": 18
+        },
+        {
+          "id": "l27",
+          "approaches": 17,
+          "clearToOwner": 15
+        },
+        {
+          "id": "l28",
+          "approaches": 10,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l29",
+          "approaches": 10,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l30",
+          "approaches": 5,
+          "clearToOwner": 5
+        },
+        {
+          "id": "l31",
+          "approaches": 3,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l32",
+          "approaches": 11,
+          "clearToOwner": 11
+        }
+      ],
+      "trees": []
+    },
+    {
+      "id": "numeric-C",
+      "frontBandProof": [
+        {
+          "cell": {
+            "x": 6,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 6.25,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 6.5,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 6.75,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 7,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 7.25,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 7.5,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 7.75,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 8,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 8.25,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 8.5,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 8.75,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": true
+        },
+        {
+          "cell": {
+            "x": 9,
+            "z": -5.25
+          },
+          "open": true,
+          "reached": true,
+          "nextClear": null
+        }
+      ],
+      "giantBounds": {
+        "min": [
+          -5.368091201627319,
+          1.49033759075,
+          -12.413321399688721
+        ],
+        "max": [
+          -1.6372212885261228,
+          5.077506761129639,
+          -8.77599277496338
+        ]
+      },
+      "worldRevision": "authored-cove:8b73d946670cc8c2",
+      "diagnosticTreeRoots": 16,
+      "triangles": 249304,
+      "excludedRefs": 113,
+      "reached": 1315,
+      "access": [
+        {
+          "id": "p1",
+          "approaches": 13,
+          "clearToOwner": 13
+        },
+        {
+          "id": "p2",
+          "approaches": 14,
+          "clearToOwner": 14
+        },
+        {
+          "id": "p3",
+          "approaches": 9,
+          "clearToOwner": 9
+        },
+        {
+          "id": "p4",
+          "approaches": 5,
+          "clearToOwner": 5
+        },
+        {
+          "id": "p5",
+          "approaches": 13,
+          "clearToOwner": 13
+        },
+        {
+          "id": "p6",
+          "approaches": 2,
+          "clearToOwner": 2
+        },
+        {
+          "id": "p7",
+          "approaches": 7,
+          "clearToOwner": 4
+        },
+        {
+          "id": "p8",
+          "approaches": 18,
+          "clearToOwner": 18
+        },
+        {
+          "id": "p9",
+          "approaches": 6,
+          "clearToOwner": 5
+        },
+        {
+          "id": "l10",
+          "approaches": 7,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l11",
+          "approaches": 5,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l12",
+          "approaches": 4,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l13",
+          "approaches": 9,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l14",
+          "approaches": 0,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l15",
+          "approaches": 9,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l16",
+          "approaches": 8,
+          "clearToOwner": 8
+        },
+        {
+          "id": "l17",
+          "approaches": 2,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l18",
+          "approaches": 6,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l19",
+          "approaches": 11,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l20",
+          "approaches": 32,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l21",
+          "approaches": 34,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l22",
+          "approaches": 21,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l23",
+          "approaches": 40,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l24",
+          "approaches": 17,
+          "clearToOwner": 17
+        },
+        {
+          "id": "l25",
+          "approaches": 14,
+          "clearToOwner": 14
+        },
+        {
+          "id": "l26",
+          "approaches": 18,
+          "clearToOwner": 18
+        },
+        {
+          "id": "l27",
+          "approaches": 17,
+          "clearToOwner": 15
+        },
+        {
+          "id": "l28",
+          "approaches": 10,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l29",
+          "approaches": 10,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l30",
+          "approaches": 5,
+          "clearToOwner": 5
+        },
+        {
+          "id": "l31",
+          "approaches": 3,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l32",
+          "approaches": 11,
+          "clearToOwner": 11
+        },
+        {
+          "id": "l33",
+          "approaches": 4,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l34",
+          "approaches": 0,
+          "clearToOwner": 0
+        },
+        {
+          "id": "l35",
+          "approaches": 4,
+          "clearToOwner": 0
+        }
+      ],
+      "trees": [
+        {
+          "id": "l33",
+          "cell": {
+            "x": 6,
+            "z": -7
+          },
+          "min": [
+            5.553810882568359,
+            1.214277784194833,
+            -7.689585745334625
+          ],
+          "max": [
+            7.250927138328552,
+            3.8637744673006598,
+            -6.34439907670021
+          ],
+          "houseAabbOverlaps": []
+        },
+        {
+          "id": "l34",
+          "cell": {
+            "x": 7,
+            "z": -6
+          },
+          "min": [
+            6.251351100206375,
+            1.625,
+            -6.570649409294129
+          ],
+          "max": [
+            7.748649007081985,
+            3.5307730197906495,
+            -5.429350590705871
+          ],
+          "houseAabbOverlaps": []
+        },
+        {
+          "id": "l35",
+          "cell": {
+            "x": 8,
+            "z": -6
+          },
+          "min": [
+            7.424327564239502,
+            1.655,
+            -6.575672435760499
+          ],
+          "max": [
+            8.575672435760499,
+            3.894942789077759,
+            -5.424327564239502
+          ],
+          "houseAabbOverlaps": []
+        }
+      ]
+    }
+  ],
+  "finalInputs": {
+    "src/domain/growingIsland/authoredWaterGeometry.ts": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+    "src/domain/growingIsland/authoredWorldAccess.ts": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+    "src/domain/growingIsland/worldDefinition.ts": "c230e8fb354a43792d22814d6eaf82cd7adf0110d517250d1399be84b00ba7ea",
+    "src/domain/growingIsland/authoredWaterCarving.ts": "6ae51dfb1c3278471b928b54e3d170adefe7dbb4452f1360d7cfbfb52bf83c88",
+    "src/domain/islandLife/economyRules.ts": "2feb596641a89a83ff6fb7cd915548f3bcf9a8212ddafa75ddc05910e4091272",
+    "src/domain/islandLife/model.ts": "c373f5a532347d3f030420f40774a85e8a9434b095cb763138a34b45cd925ea3",
+    "src/domain/islandLife/decorations.ts": "5cfbccce407f289411af0f7317fa15ad96eea8f6abfb52b79a89203f4195ecb1",
+    "src/domain/islandLife/footprint.ts": "756e569dff83698e12dc6401fb96be06a23b950b003df4b1af21b8a1aa38916b",
+    "src/domain/islandLife/landRules.ts": "db73f083a1e73dbfa280401898a406afe9a8294d51d7aaaa5cf57140942dd774",
+    "src/domain/islandLife/walkingSpace.ts": "5143cdea48aa648b4b2b34f8920168d61b0ea0ed4034b3890e0a76a1c7b85827",
+    "src/domain/islandLife/space.ts": "699f197c86b4e7142b20a1790a6adefd3287445848c708990dc9c5c1423fff55",
+    "src/domain/islandLife/waterChannels.ts": "b98fef9f0eea7ed48e79890826689db3cbc0cd4a763c8d43eae95254a146f988",
+    "src/domain/growingIsland/rules.ts": "0a4e0289c595318443683fcbcf330d397b532f433d3faa993900fc986a8e6727",
+    "src/domain/growingIsland/types.ts": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+    "src/domain/growingIsland/space.ts": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+    "src/domain/growingIsland/environment.ts": "e965f2cd29601e5ee10f5b6dd9861a937e6c4b6ce3f71c35ad9c330109ab97f5",
+    "src/domain/growingIsland/authoredWaterContour.ts": "bffd4d8b78e12c06a9433b16992b5ca7cc9e44aaf21c4a571d2dff9dc53d6352",
+    "src/domain/growingIsland/authoredWaterRim.ts": "4e54cd274658531dcf70d66c2038347aaa8c80a83c4eefd764c0e9e65bf8409f",
+    "src/domain/growingIsland/nativeWaterBridgeProfile.json": "7ad19971180d7d572045d0bc620ca6559cdb165fd55c0e14c4e2e5a681f6fe13",
+    "src/domain/growingIsland/authoredWaterBridge.ts": "65594e5eb508d5dad13bd0693d213a66731caa9b60b9d419eefcf3c5983f60cf",
+    "src/domain/growingIsland/nativeWaterSource.json": "e0f652839690f2143279fbbfb60829912802de9bf008ac7d7f3232bf6fb3f306",
+    "src/domain/growingIsland/authoredWaterWorld.ts": "bece348b05568cb8b2e5a2634c809681bb70c6f9267adc5c72b6b97da88b4805",
+    "src/domain/growingIsland/authoredWaterFrame.ts": "6a8e19e2f63f84669ea7fb847955b10bc8dd1b64c555625fc886ec6a730ea7d7",
+    "docs/design/2026-10-12-authored-cove-entrance/source-manifest.json": "c52169062d71aa4e19ad82c2103440a76c3fb071db9b7b286066827aa6aacf1c",
+    "docs/design/2026-10-12-authored-cove-entrance/shared-apron-world-patch-v1.json": "7a5cc9edd5282f7471f8257e4ee83212cbf93f3f30ba269bb102d91bc11dc969",
+    "src/domain/growingIsland/authoredCoveWorld.ts": "b773f24672e5badc5259594ae5bdc378daedc861577f245d66ccdfdeb38b8781",
+    "src/domain/natureTown/random.ts": "45919ef8e7eb46920e60fe20b7992b96621fb9c1f889c81ddcce8d12496cbce9",
+    "src/domain/growingIsland/random.ts": "2d3e35f0f26da88acc2228454193fda88b759ac9f58ce8cc96d96b2234c01175",
+    "src/domain/growingIsland/flowers.ts": "74c38a6ae4239e97831e2707a4a8f75ab0e0b39f113038bc65626d6c424b561d",
+    "src/domain/growingIsland/nature.ts": "73a7a4b2d18bfaf84b7ec0b724e07e7ec13088a36eae31b54313d597949be733",
+    "docs/product/island-place-goals.json": "c4714aae51b3b0504ee23e999276518541aa13a0c80b05768d82112f172f4424",
+    "src/domain/growingIsland/placeCatalog.ts": "af31b65939c6c58fd4471ef55de8bab4f2a792287caebd648bb7de37282bbb47",
+    "src/domain/growingIsland/placeTerrain.ts": "b79248f1bf23a324b152d9e36310aeabcaa8a30abeae58b535f8c40f9cc7d28d",
+    "src/domain/growingIsland/places.ts": "25a712391722d414b7d88dadb7ff1e7637aeee80a4397093d2c886bca8755b2a",
+    "src/domain/growingIsland/authoredWorldFrame.ts": "dfe9b76bec5eda6cb5c3fae58fea76925e562496205894f327bd398d4c941c7e",
+    "src/domain/growingIsland/landscape.ts": "c4238f02498719722449772456001e457a0d02b2f82e7b389eae99d3021b6c96",
+    "src/domain/growingIsland/legacyWorldDefinition.ts": "511879416f7aab4667d02d2d1554c2b5ad2e555a950b8340ee2e35f996662dc9",
+    "src/components/island/growing/actorScale.ts": "6120e10eae06f3ea61b7e798a1c214c814df563a63a8e1677d897e185e93f57f",
+    "src/components/island/growing/sceneLayout.ts": "57aa76da0cd4ed93a00c077b0020db94fc6bb2de8913363e3ff91c9b8c39144d",
+    "src/components/island/three/worldPalette.ts": "00ad2759a32e5664ab88d4bde483fa261d54401ce37228368763a41b4c8b24e6",
+    "src/components/island/three/residentFabric.ts": "94aac1f3650bb7ffe82f395519370e91664d173efa868c97b95b943144ea0f87",
+    "src/components/island/three/primitives.ts": "024f55cd70eeb753dccc5610613221c29e3fddae05385b2403ee53d85dce1e24",
+    "src/components/island/three/garden/staticRaycast.ts": "64cd1be538743b11d12bc136a244312019ba7fd26f933cf5317f6e4e94107bb1",
+    "src/components/island/three/garden/geometry.ts": "b2a84d837adc4a946a5a3f5370f9663216fa71299bf65032b249c5f95fb6b51c",
+    "src/components/island/growing/treeSilhouettes.ts": "922fa3a9cf29193a35043afb7748b5ad88f511c77a174ace4cbfb5d513cadbe6",
+    "src/components/island/life/decorationGeometry.ts": "1ecc1ed682e99984b4c418c3c518a4d2baa3fff116acb557f7b049f3b3e6998e",
+    "src/components/island/life/facilityGeometry.ts": "ae8bdf3daff929d7c9a8afbd307e6f95c9fc20a2cfea945a5d8dbf11f75c1609",
+    "src/components/island/life/sandboxGeometry.ts": "c999bca5b86c632bd52deb363fd275f340ad8105638a4044c18fcf722cf5de5f",
+    "src/components/island/life/windArchGeometry.ts": "372151e1016966733d8e86f3a706974ff4144f03ef793279a40f17909f892de3",
+    "src/components/island/life/itemGeometry.ts": "20cb203e078574d8afac357808565e2c1daca756f7257ec9bdcc88d0f8ceac86",
+    "src/domain/growingIsland/placeTypes.ts": "38bc1f892b3f36a8103aec06af671bf00121b346c92fe354c4c63ef50ed0debf",
+    "src/domain/growingIsland/placeGoals.ts": "a13068b746555998680b5cf2a77bfe7d11308ce1880f595ad13d7c0aa3af7fe6",
+    "src/domain/growingIsland/guidance.ts": "5dac8f98ca616ed23a756989b78d2d9372a993d958ad94b4746cff82d092188a",
+    "src/domain/growingIsland/community.ts": "878c1dbc8a73f2e45e1c7960201fceaf4c272d57f1a9e803d6fbc2162ff668c6",
+    "src/domain/growingIsland/room.ts": "f1cfb631a26122546043ec3859926faba565e148802f498bd01fb346fa66d576",
+    "src/domain/growingIsland/names.ts": "56c4b4015d07f65733b373431ef6316a3ec908f6461929f5af10f4f0d6f078fc",
+    "src/domain/growingIsland/pier.ts": "67a3e80f4d49bd8d8109992a7f9c12e88588ec5a86959c669f02d326c83c1bef",
+    "src/domain/growingIsland/town.ts": "68b955dba55b4ca4447d90358e913eb6e1b1808141e12416dea32b1e47061fa1",
+    "src/domain/growingIsland/authoredPlacementSupport.ts": "e26fadea87bc473299da8e0ad5e791cd25745ea6e9ae199eb28161b0647018a4",
+    "src/domain/growingIsland/commands.ts": "bc594586848e9645751e7ad13305d1422d32f5551603246ea757d3efabd94ae7",
+    "src/domain/growingIsland/island.ts": "b8a2d70d356b5bc783df3fc678e4e3a51ae361f14c04ce140c1430479604b1e1",
+    "src/domain/growingIsland/gifts.ts": "e4eab4fb70124d1228d6491ae129a26dd741d9fefbd1e754c7eca87ab36ff329",
+    "src/domain/growingIsland/moments.ts": "9d5bf24aa2c63031764c324261e4db98d28387a49a930952eaac46d828a3d87a",
+    "src/domain/growingIsland/index.ts": "dd40bd7caa1428a1c351d4e661f691e7e605aa8070faa313a9d48e61696d3cb2",
+    "src/components/island/growing/plotParts.ts": "dcd1ce1f3f4b98439f5063f45e21286998d69163e56834dc1a319da7fd2614de",
+    "src/components/island/growing/wonderPaint.ts": "ad55bf214601e1565d2e19405b312862f4aba4100c2885290b472b2d3dc0c40e",
+    "src/components/island/growing/fieldGeometry.ts": "733315eb60d43a3f5de0724ca3218382921f837bdfb8b9c747c04c99d1382934",
+    "src/components/island/growing/ownLandmarks.ts": "834dc4822479d05b88b83f50ab11b10f26b573b0325ba4ecbc169add56863704",
+    "src/components/island/growing/homeSurfaceGeometry.ts": "51c11987dfa71d6c8a6bfb95b9e5c6a9444be1512c219581424b6448f2636f55",
+    "src/components/island/growing/homeGeometry.ts": "32b4d71332082a780fa0ca41bcd30a9862e60a911f04e20a6e85f07d8f0a4f78",
+    "src/components/island/growing/plotGeometry.ts": "87819d84f27a4716651c72899de665fbc19c3ec3145cc2314794a720ffe61aaa",
+    "src/components/island/growing/keepsakeGeometry.ts": "8d1efdbefb29064de4eb4aa0e774e2436d39ef59f5c6927214d659006e86249f",
+    "src/components/island/growing/flowerGeometry.ts": "652b97d16a02b23b09f5fe7c810641bd411f800dd4b372d129dc88744eebda26",
+    "src/components/island/growing/pierGeometry.ts": "37d259dcb9cccc258c3e0f5af1212e0186d5d6dd7e2137f9051de156a0aefaea",
+    "src/components/island/growing/bridgeGeometry.ts": "d68dac9de9a970762a6fbc9cc691a66c254719cb4f2c96da247145e8f3f76b6a",
+    "src/domain/growingIsland/placeRelations.ts": "70f261a0db7aa279a75307fd7adbb77bd0f77188209d3d88beacdfe6f1b53f09",
+    "src/components/island/growing/placeLeafGeometry.ts": "9b8c9c24331a1ecaf9a2586470ef3d05f8de6c02695882cfe1fc99c5cd680b7c",
+    "src/components/island/growing/placePaths.ts": "8e3622686e4ff2a94ac28c33e0d0cd90fc743e3e81cce514603182091c22178c",
+    "src/components/island/growing/placePondGeometry.ts": "2c18ff613d2f3e4c95a3ba38f5deb5bdcecdad25ac0fc6ccbb9d640427e03a85",
+    "src/components/island/growing/placeSpringGeometry.ts": "2bcf8d43515180bd6327d461a9885adf7f7914f9b8af6faa6d55304b7aa22f47",
+    "src/components/island/growing/placeShellGeometry.ts": "5bb7b7d1099b4ea9c0bf84c5ddc079e8c6e0fa0ccf9b7580f5887b37c359da46",
+    "docs/design/2026-10-11-authored-flower-garden/native-flower-support-profile.json": "6dc9e5bf1aff2dc257851424408818e5166cd5caf5cf5cdc40961cfb5552bbe8",
+    "src/components/island/growing/placeFlowerGeometry.ts": "f908235024c30fab9ba880b9336a5b209aac31e33299e0aa1ba2df9905a610b9",
+    "src/components/island/growing/placeRootRoomGeometry.ts": "00e3b449e389d4022609f55635d9487df990a7cb35d52dd533b182f6ec3adb0d",
+    "src/components/island/growing/native/nativePlaceGrove.ts": "b1d77d999a78f84f0f1a09f6117927a39629c3e803501e3898b1939ef368cfd9",
+    "src/components/island/growing/growingShaderWarmup.ts": "31b9fc740dc6368d693fedf32a87e30671d03dfbfab75d26ff2668950292ef6d",
+    "src/components/island/growing/placeGeometry.ts": "5dbae4462dea227f8047288223254627d999669f5b66bd6c1599cfff19de48eb",
+    "src/components/island/growing/curvedGeometry.ts": "a1fd17cccbf2b82c32da733f6d4b5001de89e9d9ac2cdd96284de286048538da",
+    "src/components/island/growing/objectLayer.ts": "fb67823156a4da834a6ff70f6a1d0f61eb802ea93074a75e4bf943e69752814f",
+    "src/components/island/growing/native/nativeGrowingKit.ts": "9b303133edd83ce2c86372fa5eeb959c51d4e7ea7915d6ef93f39b9a4d18bab9",
+    "src/components/island/growing/native/nativeAuthoredFlower.ts": "7f4293feecf0ca9c6bb08b87c9f8133cda4d917df28412fff55f9ec1324335f8",
+    "src/components/island/growing/native/nativeAuthoredCove.ts": "fab23c5545e3c6df5cacaa4390455dd389ee12cef62be3bf534055a23c1f2b2e",
+    "src/components/island/growing/authoredFlowerObstructions.ts": "c50f5991a89ce14c7f0d63868b21399c0ac3fc13f0965e2d498772a4fe047487",
+    "prototypes/place-qa/authored-flower-reference-mature.json": "a6371602364a531130fb2a99e927958648ff1c57c2cc5a0966c315538ecbf533",
+    "prototypes/place-qa/native05-world.json.gz": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+    "docs/design/2026-10-11-native-owned-island/native05-owned-kit.glb.gz": "79b8ae671444bf0c4869bd8e185f8d5ac140a1d7ee3e5709c5d39e4a6735e615",
+    "prototypes/place-qa/native-flower-support.json.gz": "9548583ed4a8f80b064381cf2ab922accb5dfdbc82f332f61498c4268e863836",
+    "/prototypes/place-qa/native-cove-corner.glb.gz": "7e8aeee0a7d1b821f9977f483436dec3d8beb1f19f6c352d2c51f00285c0bb87",
+    "/private/tmp/sansu-authored-cove-c1/shape/report.json": "db43ef5db48eb0369ba542e5c1e53b1e4eac0401330ef2913ac0bcf569fb9192",
+    "/private/tmp/sansu-whole-massing-c-terrain/south-west-v2/candidate-state.json": "a286b06b513e3661aebb6387c7e09a66fd8d0f0329da0bbfe7b2d901736f6ee9",
+    "/private/tmp/sansu-whole-massing-c-terrain/south-west-v2/candidate-world.json.gz": "4ff740c5055e1dcd27ddefb26da8925b6aeaa125162ee2414f4fab19778aa74d",
+    "/private/tmp/sansu-whole-massing-c-terrain/south-west-v2/candidate-frame-plans.json": "648e998352875e39feea160f12eb2d3af8a3529d38fcc40772b274be14be5f9e"
+  },
+  "inputsUnchanged": true
+}

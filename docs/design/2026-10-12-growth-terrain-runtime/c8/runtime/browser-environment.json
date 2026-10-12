@@ -1,0 +1,7 @@
+{
+  "observedAt": 1791801996.6595578,
+  "source": "ps snapshot of this harness GPU child; instantaneous, not peak or device benchmark",
+  "process": "  PID  PPID ELAPSED  %CPU    RSS COMMAND\n52124 52120   04:20 762.3 463456 /Users/yutogasaki/Library/Caches/ms-playwright/chromium_headless_shell-1208/chrome-headless-shell-mac-arm64/chrome-headless-shell --type=gpu-process --no-sandbox --disable-breakpad --headless --use-angle=swiftshader-webgl --enable-unsafe-swiftshader --gpu-preferences=SAAAAAAAAAAgAAAEAAAAAAAAAAAAAGAAAwAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --use-gl=angle --shared-files --field-trial-handle=1718379636,r,3377997055722218120,14071045159072527920,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,RenderDocument,ThirdPartyStoragePartitioning,Translate --variations-seed-version --trace-process-track-uuid=3190708988185955192\n",
+  "observedAngle": "swiftshader-webgl",
+  "implication": "Do not equate headless software-WebGL timings with physical-device performance."
+}

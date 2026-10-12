@@ -1,0 +1,169 @@
+{
+  "scope": "Exact planar low-floor audit and seam-vertex height checks; not all rendered or runtime acceptance",
+  "library": {
+    "shapely": "2.0.7",
+    "geos": "3.11.4"
+  },
+  "apron": {
+    "valid": true,
+    "geometryType": "Polygon",
+    "triangles": 331,
+    "area": 2.471875235544728,
+    "triangleAreaSum": 2.4718752355447244,
+    "selfOverlapArea": -3.552713678800501e-15,
+    "boundaryFillDifferenceArea": 0.0,
+    "overlapWithOriginalArea": 2.1425029013611393e-12,
+    "overlapWithWaterComposedArea": 2.1425029013611393e-12,
+    "originalTouchBoundaryLength": 4.600923096500587,
+    "originalBoundaryDistance": 0.0,
+    "seamVerticesChecked": 329,
+    "maximumSeamVertexHeightDelta": 1.4160110994818412e-05
+  },
+  "socketSupport": {
+    "method": "Each actual GLB downward socket triangle intersected with actual water-composed dry-floor triangles; affine depth extrema at every intersection polygon vertex. Bound includes all overlapping low dry floors.",
+    "triangles": 192,
+    "maxUncoveredTriangleArea": 3.503667083022688e-17,
+    "totalProjectedTriangleArea": 0.31249721297106725,
+    "maximumNotBuriedAtLeast3mmTriangleArea": 0.00021296395344336992,
+    "maximumNotContactTriangleArea": 5.449132356276365e-17,
+    "largestContactGap": {
+      "name": "Harbor / continuous grounded runner socket right",
+      "area": 0.0018074806405559058,
+      "uncoveredArea": 6.0747085394710285e-18,
+      "notBuriedAtLeast3mmArea": 5.449132356276365e-17,
+      "notContactArea": 5.449132356276365e-17,
+      "gapPoint": [
+        8.831067106067717,
+        -0.20811445912880694
+      ],
+      "points": [
+        [
+          8.774165172576904,
+          0.01906857800483703,
+          -0.16093927562236787
+        ],
+        [
+          8.767479820251465,
+          0.019096258401870722,
+          -0.19610110461711883
+        ],
+        [
+          8.866724128723144,
+          0.01646085393428802,
+          -0.21485103309154507
+        ]
+      ],
+      "depthMin": -0.02809624840187072,
+      "depthMax": 0.006255469467241273
+    },
+    "minimumDepth": -0.02809624840187072,
+    "maximumDepth": 0.007694934305840715,
+    "highestFloorVertexSamples": {
+      "count": 7972,
+      "minimum": {
+        "name": "Harbor / continuous grounded runner socket right",
+        "x": 8.884451196722118,
+        "z": 0.4285582944749528,
+        "bottom": -0.012018088643133985,
+        "ground": -0.00899999,
+        "depth": 0.0030180986431339856
+      },
+      "maximum": {
+        "name": "Harbor / continuous grounded runner socket right",
+        "x": 8.96471113,
+        "z": 0.346401194,
+        "bottom": -0.003459786305840715,
+        "ground": 0.004235148,
+        "depth": 0.007694934305840715
+      }
+    }
+  },
+  "sweep": {
+    "halfWidth": 0.28406937059140586,
+    "edgeCount": 15,
+    "baseWithoutPatch": {
+      "triangles": 8305,
+      "gapAreas": [
+        0.18832093088629592,
+        0.43407834264823714,
+        0.4673973730471876,
+        0.3634567575099861,
+        0.3288340367497557,
+        0.26566017314358503,
+        0.30692188882529237,
+        0.4614991303675719,
+        0.5580728473923762,
+        0.5521082998048877,
+        0.37672957832223974,
+        0.26450516980119854,
+        0.331969769912312,
+        0.19473593663156835,
+        0.1360312222806266
+      ],
+      "maxGap": 0.5580728473923762
+    },
+    "waterWithoutPatch": {
+      "triangles": 8305,
+      "gapAreas": [
+        0.18832093088629592,
+        0.43407834264823714,
+        0.4673973730471876,
+        0.3634567575099861,
+        0.3288340367497557,
+        0.26566017314358503,
+        0.30692188882529237,
+        0.4614991303675719,
+        0.5580728473923762,
+        0.5521082998048877,
+        0.37672957832223974,
+        0.26450516980119854,
+        0.331969769912312,
+        0.19473593663156835,
+        0.1360312222806266
+      ],
+      "maxGap": 0.5580728473923762
+    },
+    "baseWithPatch": {
+      "triangles": 8636,
+      "gapAreas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxGap": 0.0
+    },
+    "waterWithPatch": {
+      "triangles": 8636,
+      "gapAreas": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "maxGap": 0.0
+    }
+  }
+}

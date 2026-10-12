@@ -1,0 +1,849 @@
+{
+  "scope": "Exact c3 browser baseline and stored failure state. Pure actual-command/preview/frame computations only; no browser, core or build run.",
+  "sourceReportSha256": "cb3309eb792c40274e599381e32e342091a446259eafb7ba3d0acf759654c9a5",
+  "sourceClosureUnchanged": true,
+  "initialInputHash": "9f5a33a470533165dfb4f175a4f022d7088109f3ffa651e04d0ba2af886a266d",
+  "finalInputHash": "9f5a33a470533165dfb4f175a4f022d7088109f3ffa651e04d0ba2af886a266d",
+  "browser": {
+    "error": "page.waitForFunction: Timeout 90000ms exceeded.\n    at preview (/private/tmp/sansu-authored-cove-c3/candidate/tools/e2e-authored-cove.mjs:223:16)\n    at edits (/private/tmp/sansu-authored-cove-c3/candidate/tools/e2e-authored-cove.mjs:289:29)\n    at async file:///private/tmp/sansu-authored-cove-c3/candidate/tools/e2e-authored-cove.mjs:328:9",
+    "phase": "store-p9",
+    "worldRevision": "authored-world:063fdbf4bf1fb7e6",
+    "previewWorldRevision": "authored-world:72a57599a43ddca5",
+    "preview": {
+      "worldRevision": "authored-world:72a57599a43ddca5",
+      "committed": [],
+      "prospective": [
+        {
+          "placeId": "P04:p6",
+          "sourceSha256": "f08ada4907c76a617e2c22090049b9b2880dde2d75fa11ad61f6e76c7eec7146",
+          "visible": true
+        }
+      ]
+    }
+  },
+  "states": {
+    "baseline": {
+      "revision": "authored-world:72a57599a43ddca5",
+      "coveRevision": "authored-cove:213e45e94bb5b88b",
+      "waterRevision": "authored-water-v2:3c5f4ee9f492cc25:eb41954202b1926a",
+      "assemblies": 1,
+      "p9Keys": [
+        "id",
+        "kind",
+        "cell",
+        "plantedAt",
+        "stage",
+        "growth",
+        "origin",
+        "paid",
+        "style",
+        "builtAt",
+        "stagedAt"
+      ],
+      "p9OwnCell": true,
+      "p9Cell": {
+        "x": 8,
+        "z": 0
+      },
+      "canonicalSortedSha256": "e735164f876aeef239f2a082779f2fa0909797b12f74ed2fbf8d8d9e71fa4ae4"
+    },
+    "moved": {
+      "revision": "authored-world:972af660a422ab64",
+      "coveRevision": "authored-cove:9f93a7cf2ae41f35",
+      "waterRevision": "authored-water-v2:95974d4a3e0fc33a:eb41954202b1926a",
+      "assemblies": 0,
+      "p9Keys": [
+        "id",
+        "kind",
+        "cell",
+        "plantedAt",
+        "stage",
+        "growth",
+        "origin",
+        "paid",
+        "style",
+        "builtAt",
+        "stagedAt"
+      ],
+      "p9OwnCell": true,
+      "p9Cell": {
+        "x": 12,
+        "z": -9
+      },
+      "canonicalSortedSha256": "6f631e16a3a66d08daf1301a512baa2f6beddea5270768acad15b30a95ade964"
+    },
+    "storedMemory": {
+      "revision": "authored-world:063fdbf4bf1fb7e6",
+      "coveRevision": "authored-cove:3f1554c5586bc5e3",
+      "waterRevision": "authored-water-v2:21ae5c119512d131:eb41954202b1926a",
+      "assemblies": 0,
+      "p9Keys": [
+        "id",
+        "kind",
+        "cell",
+        "plantedAt",
+        "stage",
+        "growth",
+        "origin",
+        "paid",
+        "style",
+        "builtAt",
+        "stagedAt"
+      ],
+      "p9OwnCell": true,
+      "p9Cell": null,
+      "canonicalSortedSha256": "4ad2245603a333d918eebe53c570ad581fd2e088de6b6c48713570b48276c7aa"
+    },
+    "driverJSONRestored": {
+      "revision": "authored-world:aa54694380b082d1",
+      "coveRevision": "authored-cove:ee1c2d5f145198a7",
+      "waterRevision": "authored-water-v2:3c5f4ee9f492cc25:eb41954202b1926a",
+      "assemblies": 1,
+      "p9Keys": [
+        "id",
+        "kind",
+        "plantedAt",
+        "stage",
+        "growth",
+        "origin",
+        "paid",
+        "style",
+        "builtAt",
+        "stagedAt",
+        "cell"
+      ],
+      "p9OwnCell": true,
+      "p9Cell": {
+        "x": 8,
+        "z": 0
+      },
+      "canonicalSortedSha256": "e735164f876aeef239f2a082779f2fa0909797b12f74ed2fbf8d8d9e71fa4ae4"
+    },
+    "UIRestored": {
+      "revision": "authored-world:72a57599a43ddca5",
+      "coveRevision": "authored-cove:213e45e94bb5b88b",
+      "waterRevision": "authored-water-v2:3c5f4ee9f492cc25:eb41954202b1926a",
+      "assemblies": 1,
+      "p9Keys": [
+        "id",
+        "kind",
+        "cell",
+        "plantedAt",
+        "stage",
+        "growth",
+        "origin",
+        "paid",
+        "style",
+        "builtAt",
+        "stagedAt"
+      ],
+      "p9OwnCell": true,
+      "p9Cell": {
+        "x": 8,
+        "z": 0
+      },
+      "canonicalSortedSha256": "e735164f876aeef239f2a082779f2fa0909797b12f74ed2fbf8d8d9e71fa4ae4"
+    },
+    "previewHelperFromJSON": {
+      "revision": "authored-world:aa54694380b082d1",
+      "coveRevision": "authored-cove:ee1c2d5f145198a7",
+      "waterRevision": "authored-water-v2:3c5f4ee9f492cc25:eb41954202b1926a",
+      "assemblies": 1,
+      "p9Keys": [
+        "id",
+        "kind",
+        "plantedAt",
+        "stage",
+        "growth",
+        "origin",
+        "paid",
+        "style",
+        "builtAt",
+        "stagedAt",
+        "cell"
+      ],
+      "p9OwnCell": true,
+      "p9Cell": {
+        "x": 8,
+        "z": 0
+      },
+      "canonicalSortedSha256": "e735164f876aeef239f2a082779f2fa0909797b12f74ed2fbf8d8d9e71fa4ae4"
+    },
+    "actualUnstore": {
+      "revision": "authored-world:72a57599a43ddca5",
+      "coveRevision": "authored-cove:213e45e94bb5b88b",
+      "waterRevision": "authored-water-v2:3c5f4ee9f492cc25:eb41954202b1926a",
+      "assemblies": 1,
+      "p9Keys": [
+        "id",
+        "kind",
+        "cell",
+        "plantedAt",
+        "stage",
+        "growth",
+        "origin",
+        "paid",
+        "style",
+        "builtAt",
+        "stagedAt"
+      ],
+      "p9OwnCell": true,
+      "p9Cell": {
+        "x": 8,
+        "z": 0
+      },
+      "canonicalSortedSha256": "e735164f876aeef239f2a082779f2fa0909797b12f74ed2fbf8d8d9e71fa4ae4"
+    }
+  },
+  "comparisons": {
+    "storedMemorySerializesExactlyAsFailure": true,
+    "storedMemoryJSONValueEqualsFailure": true,
+    "driverVsUIAllStateValuesEqual": true,
+    "driverVsUIValueDifferentFields": [],
+    "driverVsUIStringifiedStateEqual": false,
+    "driverVsUIWaterPlansEqual": true,
+    "driverVsUIAssembliesEqual": true,
+    "driverVsUIFloorsEqual": true,
+    "driverVsUISitesEqual": true,
+    "driverVsUIRevisionEqual": false,
+    "uiRevisionMatchesActualMetadata": true,
+    "driverRevisionMatchesActualMetadata": false,
+    "uiMatchesBaselineCanonical": true,
+    "actualUnstoreCanonicalMatchesBaseline": true,
+    "actualUnstoreRevisionMatchesInitial": true
+  },
+  "inputCount": 90,
+  "inputHashes": [
+    {
+      "file": "docs/design/2026-10-11-authored-flower-garden/native-flower-support-profile.json",
+      "sha256": "6dc9e5bf1aff2dc257851424408818e5166cd5caf5cf5cdc40961cfb5552bbe8",
+      "browserInitial": "6dc9e5bf1aff2dc257851424408818e5166cd5caf5cf5cdc40961cfb5552bbe8",
+      "browserFinal": "6dc9e5bf1aff2dc257851424408818e5166cd5caf5cf5cdc40961cfb5552bbe8",
+      "matches": true
+    },
+    {
+      "file": "docs/design/2026-10-12-authored-cove-entrance/shared-apron-world-patch-v1.json",
+      "sha256": "7a5cc9edd5282f7471f8257e4ee83212cbf93f3f30ba269bb102d91bc11dc969",
+      "browserInitial": "7a5cc9edd5282f7471f8257e4ee83212cbf93f3f30ba269bb102d91bc11dc969",
+      "browserFinal": "7a5cc9edd5282f7471f8257e4ee83212cbf93f3f30ba269bb102d91bc11dc969",
+      "matches": true
+    },
+    {
+      "file": "docs/design/2026-10-12-authored-cove-entrance/source-manifest.json",
+      "sha256": "c52169062d71aa4e19ad82c2103440a76c3fb071db9b7b286066827aa6aacf1c",
+      "browserInitial": "c52169062d71aa4e19ad82c2103440a76c3fb071db9b7b286066827aa6aacf1c",
+      "browserFinal": "c52169062d71aa4e19ad82c2103440a76c3fb071db9b7b286066827aa6aacf1c",
+      "matches": true
+    },
+    {
+      "file": "docs/product/island-place-goals.json",
+      "sha256": "c4714aae51b3b0504ee23e999276518541aa13a0c80b05768d82112f172f4424",
+      "browserInitial": "c4714aae51b3b0504ee23e999276518541aa13a0c80b05768d82112f172f4424",
+      "browserFinal": "c4714aae51b3b0504ee23e999276518541aa13a0c80b05768d82112f172f4424",
+      "matches": true
+    },
+    {
+      "file": "prototypes/place-qa/native05-world.json.gz",
+      "sha256": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+      "browserInitial": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+      "browserFinal": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/actorScale.ts",
+      "sha256": "6120e10eae06f3ea61b7e798a1c214c814df563a63a8e1677d897e185e93f57f",
+      "browserInitial": "6120e10eae06f3ea61b7e798a1c214c814df563a63a8e1677d897e185e93f57f",
+      "browserFinal": "6120e10eae06f3ea61b7e798a1c214c814df563a63a8e1677d897e185e93f57f",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/bridgeGeometry.ts",
+      "sha256": "d68dac9de9a970762a6fbc9cc691a66c254719cb4f2c96da247145e8f3f76b6a",
+      "browserInitial": "d68dac9de9a970762a6fbc9cc691a66c254719cb4f2c96da247145e8f3f76b6a",
+      "browserFinal": "d68dac9de9a970762a6fbc9cc691a66c254719cb4f2c96da247145e8f3f76b6a",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/curvedGeometry.ts",
+      "sha256": "a1fd17cccbf2b82c32da733f6d4b5001de89e9d9ac2cdd96284de286048538da",
+      "browserInitial": "a1fd17cccbf2b82c32da733f6d4b5001de89e9d9ac2cdd96284de286048538da",
+      "browserFinal": "a1fd17cccbf2b82c32da733f6d4b5001de89e9d9ac2cdd96284de286048538da",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/fieldGeometry.ts",
+      "sha256": "733315eb60d43a3f5de0724ca3218382921f837bdfb8b9c747c04c99d1382934",
+      "browserInitial": "733315eb60d43a3f5de0724ca3218382921f837bdfb8b9c747c04c99d1382934",
+      "browserFinal": "733315eb60d43a3f5de0724ca3218382921f837bdfb8b9c747c04c99d1382934",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/flowerGeometry.ts",
+      "sha256": "652b97d16a02b23b09f5fe7c810641bd411f800dd4b372d129dc88744eebda26",
+      "browserInitial": "652b97d16a02b23b09f5fe7c810641bd411f800dd4b372d129dc88744eebda26",
+      "browserFinal": "652b97d16a02b23b09f5fe7c810641bd411f800dd4b372d129dc88744eebda26",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/growingShaderWarmup.ts",
+      "sha256": "31b9fc740dc6368d693fedf32a87e30671d03dfbfab75d26ff2668950292ef6d",
+      "browserInitial": "31b9fc740dc6368d693fedf32a87e30671d03dfbfab75d26ff2668950292ef6d",
+      "browserFinal": "31b9fc740dc6368d693fedf32a87e30671d03dfbfab75d26ff2668950292ef6d",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/homeGeometry.ts",
+      "sha256": "32b4d71332082a780fa0ca41bcd30a9862e60a911f04e20a6e85f07d8f0a4f78",
+      "browserInitial": "32b4d71332082a780fa0ca41bcd30a9862e60a911f04e20a6e85f07d8f0a4f78",
+      "browserFinal": "32b4d71332082a780fa0ca41bcd30a9862e60a911f04e20a6e85f07d8f0a4f78",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/homeSurfaceGeometry.ts",
+      "sha256": "51c11987dfa71d6c8a6bfb95b9e5c6a9444be1512c219581424b6448f2636f55",
+      "browserInitial": "51c11987dfa71d6c8a6bfb95b9e5c6a9444be1512c219581424b6448f2636f55",
+      "browserFinal": "51c11987dfa71d6c8a6bfb95b9e5c6a9444be1512c219581424b6448f2636f55",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/keepsakeGeometry.ts",
+      "sha256": "8d1efdbefb29064de4eb4aa0e774e2436d39ef59f5c6927214d659006e86249f",
+      "browserInitial": "8d1efdbefb29064de4eb4aa0e774e2436d39ef59f5c6927214d659006e86249f",
+      "browserFinal": "8d1efdbefb29064de4eb4aa0e774e2436d39ef59f5c6927214d659006e86249f",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/native/nativePlaceGrove.ts",
+      "sha256": "b1d77d999a78f84f0f1a09f6117927a39629c3e803501e3898b1939ef368cfd9",
+      "browserInitial": "b1d77d999a78f84f0f1a09f6117927a39629c3e803501e3898b1939ef368cfd9",
+      "browserFinal": "b1d77d999a78f84f0f1a09f6117927a39629c3e803501e3898b1939ef368cfd9",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/objectLayer.ts",
+      "sha256": "fb67823156a4da834a6ff70f6a1d0f61eb802ea93074a75e4bf943e69752814f",
+      "browserInitial": "fb67823156a4da834a6ff70f6a1d0f61eb802ea93074a75e4bf943e69752814f",
+      "browserFinal": "fb67823156a4da834a6ff70f6a1d0f61eb802ea93074a75e4bf943e69752814f",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/ownLandmarks.ts",
+      "sha256": "834dc4822479d05b88b83f50ab11b10f26b573b0325ba4ecbc169add56863704",
+      "browserInitial": "834dc4822479d05b88b83f50ab11b10f26b573b0325ba4ecbc169add56863704",
+      "browserFinal": "834dc4822479d05b88b83f50ab11b10f26b573b0325ba4ecbc169add56863704",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/pierGeometry.ts",
+      "sha256": "37d259dcb9cccc258c3e0f5af1212e0186d5d6dd7e2137f9051de156a0aefaea",
+      "browserInitial": "37d259dcb9cccc258c3e0f5af1212e0186d5d6dd7e2137f9051de156a0aefaea",
+      "browserFinal": "37d259dcb9cccc258c3e0f5af1212e0186d5d6dd7e2137f9051de156a0aefaea",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/placeFlowerGeometry.ts",
+      "sha256": "f908235024c30fab9ba880b9336a5b209aac31e33299e0aa1ba2df9905a610b9",
+      "browserInitial": "f908235024c30fab9ba880b9336a5b209aac31e33299e0aa1ba2df9905a610b9",
+      "browserFinal": "f908235024c30fab9ba880b9336a5b209aac31e33299e0aa1ba2df9905a610b9",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/placeGeometry.ts",
+      "sha256": "5dbae4462dea227f8047288223254627d999669f5b66bd6c1599cfff19de48eb",
+      "browserInitial": "5dbae4462dea227f8047288223254627d999669f5b66bd6c1599cfff19de48eb",
+      "browserFinal": "5dbae4462dea227f8047288223254627d999669f5b66bd6c1599cfff19de48eb",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/placeLeafGeometry.ts",
+      "sha256": "9b8c9c24331a1ecaf9a2586470ef3d05f8de6c02695882cfe1fc99c5cd680b7c",
+      "browserInitial": "9b8c9c24331a1ecaf9a2586470ef3d05f8de6c02695882cfe1fc99c5cd680b7c",
+      "browserFinal": "9b8c9c24331a1ecaf9a2586470ef3d05f8de6c02695882cfe1fc99c5cd680b7c",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/placePaths.ts",
+      "sha256": "8e3622686e4ff2a94ac28c33e0d0cd90fc743e3e81cce514603182091c22178c",
+      "browserInitial": "8e3622686e4ff2a94ac28c33e0d0cd90fc743e3e81cce514603182091c22178c",
+      "browserFinal": "8e3622686e4ff2a94ac28c33e0d0cd90fc743e3e81cce514603182091c22178c",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/placePondGeometry.ts",
+      "sha256": "2c18ff613d2f3e4c95a3ba38f5deb5bdcecdad25ac0fc6ccbb9d640427e03a85",
+      "browserInitial": "2c18ff613d2f3e4c95a3ba38f5deb5bdcecdad25ac0fc6ccbb9d640427e03a85",
+      "browserFinal": "2c18ff613d2f3e4c95a3ba38f5deb5bdcecdad25ac0fc6ccbb9d640427e03a85",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/placeRootRoomGeometry.ts",
+      "sha256": "00e3b449e389d4022609f55635d9487df990a7cb35d52dd533b182f6ec3adb0d",
+      "browserInitial": "00e3b449e389d4022609f55635d9487df990a7cb35d52dd533b182f6ec3adb0d",
+      "browserFinal": "00e3b449e389d4022609f55635d9487df990a7cb35d52dd533b182f6ec3adb0d",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/placeShellGeometry.ts",
+      "sha256": "5bb7b7d1099b4ea9c0bf84c5ddc079e8c6e0fa0ccf9b7580f5887b37c359da46",
+      "browserInitial": "5bb7b7d1099b4ea9c0bf84c5ddc079e8c6e0fa0ccf9b7580f5887b37c359da46",
+      "browserFinal": "5bb7b7d1099b4ea9c0bf84c5ddc079e8c6e0fa0ccf9b7580f5887b37c359da46",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/placeSpringGeometry.ts",
+      "sha256": "2bcf8d43515180bd6327d461a9885adf7f7914f9b8af6faa6d55304b7aa22f47",
+      "browserInitial": "2bcf8d43515180bd6327d461a9885adf7f7914f9b8af6faa6d55304b7aa22f47",
+      "browserFinal": "2bcf8d43515180bd6327d461a9885adf7f7914f9b8af6faa6d55304b7aa22f47",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/plotGeometry.ts",
+      "sha256": "87819d84f27a4716651c72899de665fbc19c3ec3145cc2314794a720ffe61aaa",
+      "browserInitial": "87819d84f27a4716651c72899de665fbc19c3ec3145cc2314794a720ffe61aaa",
+      "browserFinal": "87819d84f27a4716651c72899de665fbc19c3ec3145cc2314794a720ffe61aaa",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/plotParts.ts",
+      "sha256": "dcd1ce1f3f4b98439f5063f45e21286998d69163e56834dc1a319da7fd2614de",
+      "browserInitial": "dcd1ce1f3f4b98439f5063f45e21286998d69163e56834dc1a319da7fd2614de",
+      "browserFinal": "dcd1ce1f3f4b98439f5063f45e21286998d69163e56834dc1a319da7fd2614de",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/sceneLayout.ts",
+      "sha256": "57aa76da0cd4ed93a00c077b0020db94fc6bb2de8913363e3ff91c9b8c39144d",
+      "browserInitial": "57aa76da0cd4ed93a00c077b0020db94fc6bb2de8913363e3ff91c9b8c39144d",
+      "browserFinal": "57aa76da0cd4ed93a00c077b0020db94fc6bb2de8913363e3ff91c9b8c39144d",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/treeSilhouettes.ts",
+      "sha256": "922fa3a9cf29193a35043afb7748b5ad88f511c77a174ace4cbfb5d513cadbe6",
+      "browserInitial": "922fa3a9cf29193a35043afb7748b5ad88f511c77a174ace4cbfb5d513cadbe6",
+      "browserFinal": "922fa3a9cf29193a35043afb7748b5ad88f511c77a174ace4cbfb5d513cadbe6",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/growing/wonderPaint.ts",
+      "sha256": "ad55bf214601e1565d2e19405b312862f4aba4100c2885290b472b2d3dc0c40e",
+      "browserInitial": "ad55bf214601e1565d2e19405b312862f4aba4100c2885290b472b2d3dc0c40e",
+      "browserFinal": "ad55bf214601e1565d2e19405b312862f4aba4100c2885290b472b2d3dc0c40e",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/life/decorationGeometry.ts",
+      "sha256": "1ecc1ed682e99984b4c418c3c518a4d2baa3fff116acb557f7b049f3b3e6998e",
+      "browserInitial": "1ecc1ed682e99984b4c418c3c518a4d2baa3fff116acb557f7b049f3b3e6998e",
+      "browserFinal": "1ecc1ed682e99984b4c418c3c518a4d2baa3fff116acb557f7b049f3b3e6998e",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/life/facilityGeometry.ts",
+      "sha256": "ae8bdf3daff929d7c9a8afbd307e6f95c9fc20a2cfea945a5d8dbf11f75c1609",
+      "browserInitial": "ae8bdf3daff929d7c9a8afbd307e6f95c9fc20a2cfea945a5d8dbf11f75c1609",
+      "browserFinal": "ae8bdf3daff929d7c9a8afbd307e6f95c9fc20a2cfea945a5d8dbf11f75c1609",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/life/itemGeometry.ts",
+      "sha256": "20cb203e078574d8afac357808565e2c1daca756f7257ec9bdcc88d0f8ceac86",
+      "browserInitial": "20cb203e078574d8afac357808565e2c1daca756f7257ec9bdcc88d0f8ceac86",
+      "browserFinal": "20cb203e078574d8afac357808565e2c1daca756f7257ec9bdcc88d0f8ceac86",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/life/sandboxGeometry.ts",
+      "sha256": "c999bca5b86c632bd52deb363fd275f340ad8105638a4044c18fcf722cf5de5f",
+      "browserInitial": "c999bca5b86c632bd52deb363fd275f340ad8105638a4044c18fcf722cf5de5f",
+      "browserFinal": "c999bca5b86c632bd52deb363fd275f340ad8105638a4044c18fcf722cf5de5f",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/life/windArchGeometry.ts",
+      "sha256": "372151e1016966733d8e86f3a706974ff4144f03ef793279a40f17909f892de3",
+      "browserInitial": "372151e1016966733d8e86f3a706974ff4144f03ef793279a40f17909f892de3",
+      "browserFinal": "372151e1016966733d8e86f3a706974ff4144f03ef793279a40f17909f892de3",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/three/garden/geometry.ts",
+      "sha256": "b2a84d837adc4a946a5a3f5370f9663216fa71299bf65032b249c5f95fb6b51c",
+      "browserInitial": "b2a84d837adc4a946a5a3f5370f9663216fa71299bf65032b249c5f95fb6b51c",
+      "browserFinal": "b2a84d837adc4a946a5a3f5370f9663216fa71299bf65032b249c5f95fb6b51c",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/three/garden/staticRaycast.ts",
+      "sha256": "64cd1be538743b11d12bc136a244312019ba7fd26f933cf5317f6e4e94107bb1",
+      "browserInitial": "64cd1be538743b11d12bc136a244312019ba7fd26f933cf5317f6e4e94107bb1",
+      "browserFinal": "64cd1be538743b11d12bc136a244312019ba7fd26f933cf5317f6e4e94107bb1",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/three/primitives.ts",
+      "sha256": "024f55cd70eeb753dccc5610613221c29e3fddae05385b2403ee53d85dce1e24",
+      "browserInitial": "024f55cd70eeb753dccc5610613221c29e3fddae05385b2403ee53d85dce1e24",
+      "browserFinal": "024f55cd70eeb753dccc5610613221c29e3fddae05385b2403ee53d85dce1e24",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/three/residentFabric.ts",
+      "sha256": "94aac1f3650bb7ffe82f395519370e91664d173efa868c97b95b943144ea0f87",
+      "browserInitial": "94aac1f3650bb7ffe82f395519370e91664d173efa868c97b95b943144ea0f87",
+      "browserFinal": "94aac1f3650bb7ffe82f395519370e91664d173efa868c97b95b943144ea0f87",
+      "matches": true
+    },
+    {
+      "file": "src/components/island/three/worldPalette.ts",
+      "sha256": "00ad2759a32e5664ab88d4bde483fa261d54401ce37228368763a41b4c8b24e6",
+      "browserInitial": "00ad2759a32e5664ab88d4bde483fa261d54401ce37228368763a41b4c8b24e6",
+      "browserFinal": "00ad2759a32e5664ab88d4bde483fa261d54401ce37228368763a41b4c8b24e6",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/authoredCoveWorld.ts",
+      "sha256": "b773f24672e5badc5259594ae5bdc378daedc861577f245d66ccdfdeb38b8781",
+      "browserInitial": "b773f24672e5badc5259594ae5bdc378daedc861577f245d66ccdfdeb38b8781",
+      "browserFinal": "b773f24672e5badc5259594ae5bdc378daedc861577f245d66ccdfdeb38b8781",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/authoredPlacementSupport.ts",
+      "sha256": "e26fadea87bc473299da8e0ad5e791cd25745ea6e9ae199eb28161b0647018a4",
+      "browserInitial": "e26fadea87bc473299da8e0ad5e791cd25745ea6e9ae199eb28161b0647018a4",
+      "browserFinal": "e26fadea87bc473299da8e0ad5e791cd25745ea6e9ae199eb28161b0647018a4",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWaterBridge.ts",
+      "sha256": "65594e5eb508d5dad13bd0693d213a66731caa9b60b9d419eefcf3c5983f60cf",
+      "browserInitial": "65594e5eb508d5dad13bd0693d213a66731caa9b60b9d419eefcf3c5983f60cf",
+      "browserFinal": "65594e5eb508d5dad13bd0693d213a66731caa9b60b9d419eefcf3c5983f60cf",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWaterCarving.ts",
+      "sha256": "6ae51dfb1c3278471b928b54e3d170adefe7dbb4452f1360d7cfbfb52bf83c88",
+      "browserInitial": "6ae51dfb1c3278471b928b54e3d170adefe7dbb4452f1360d7cfbfb52bf83c88",
+      "browserFinal": "6ae51dfb1c3278471b928b54e3d170adefe7dbb4452f1360d7cfbfb52bf83c88",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWaterContour.ts",
+      "sha256": "bffd4d8b78e12c06a9433b16992b5ca7cc9e44aaf21c4a571d2dff9dc53d6352",
+      "browserInitial": "bffd4d8b78e12c06a9433b16992b5ca7cc9e44aaf21c4a571d2dff9dc53d6352",
+      "browserFinal": "bffd4d8b78e12c06a9433b16992b5ca7cc9e44aaf21c4a571d2dff9dc53d6352",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWaterFrame.ts",
+      "sha256": "6a8e19e2f63f84669ea7fb847955b10bc8dd1b64c555625fc886ec6a730ea7d7",
+      "browserInitial": "6a8e19e2f63f84669ea7fb847955b10bc8dd1b64c555625fc886ec6a730ea7d7",
+      "browserFinal": "6a8e19e2f63f84669ea7fb847955b10bc8dd1b64c555625fc886ec6a730ea7d7",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWaterGeometry.ts",
+      "sha256": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+      "browserInitial": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+      "browserFinal": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWaterRim.ts",
+      "sha256": "4e54cd274658531dcf70d66c2038347aaa8c80a83c4eefd764c0e9e65bf8409f",
+      "browserInitial": "4e54cd274658531dcf70d66c2038347aaa8c80a83c4eefd764c0e9e65bf8409f",
+      "browserFinal": "4e54cd274658531dcf70d66c2038347aaa8c80a83c4eefd764c0e9e65bf8409f",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWaterWorld.ts",
+      "sha256": "bece348b05568cb8b2e5a2634c809681bb70c6f9267adc5c72b6b97da88b4805",
+      "browserInitial": "bece348b05568cb8b2e5a2634c809681bb70c6f9267adc5c72b6b97da88b4805",
+      "browserFinal": "bece348b05568cb8b2e5a2634c809681bb70c6f9267adc5c72b6b97da88b4805",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWorldAccess.ts",
+      "sha256": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+      "browserInitial": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+      "browserFinal": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWorldFrame.ts",
+      "sha256": "dfe9b76bec5eda6cb5c3fae58fea76925e562496205894f327bd398d4c941c7e",
+      "browserInitial": "dfe9b76bec5eda6cb5c3fae58fea76925e562496205894f327bd398d4c941c7e",
+      "browserFinal": "dfe9b76bec5eda6cb5c3fae58fea76925e562496205894f327bd398d4c941c7e",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/commands.ts",
+      "sha256": "bc594586848e9645751e7ad13305d1422d32f5551603246ea757d3efabd94ae7",
+      "browserInitial": "bc594586848e9645751e7ad13305d1422d32f5551603246ea757d3efabd94ae7",
+      "browserFinal": "bc594586848e9645751e7ad13305d1422d32f5551603246ea757d3efabd94ae7",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/community.ts",
+      "sha256": "878c1dbc8a73f2e45e1c7960201fceaf4c272d57f1a9e803d6fbc2162ff668c6",
+      "browserInitial": "878c1dbc8a73f2e45e1c7960201fceaf4c272d57f1a9e803d6fbc2162ff668c6",
+      "browserFinal": "878c1dbc8a73f2e45e1c7960201fceaf4c272d57f1a9e803d6fbc2162ff668c6",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/environment.ts",
+      "sha256": "e965f2cd29601e5ee10f5b6dd9861a937e6c4b6ce3f71c35ad9c330109ab97f5",
+      "browserInitial": "e965f2cd29601e5ee10f5b6dd9861a937e6c4b6ce3f71c35ad9c330109ab97f5",
+      "browserFinal": "e965f2cd29601e5ee10f5b6dd9861a937e6c4b6ce3f71c35ad9c330109ab97f5",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/flowers.ts",
+      "sha256": "74c38a6ae4239e97831e2707a4a8f75ab0e0b39f113038bc65626d6c424b561d",
+      "browserInitial": "74c38a6ae4239e97831e2707a4a8f75ab0e0b39f113038bc65626d6c424b561d",
+      "browserFinal": "74c38a6ae4239e97831e2707a4a8f75ab0e0b39f113038bc65626d6c424b561d",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/gifts.ts",
+      "sha256": "e4eab4fb70124d1228d6491ae129a26dd741d9fefbd1e754c7eca87ab36ff329",
+      "browserInitial": "e4eab4fb70124d1228d6491ae129a26dd741d9fefbd1e754c7eca87ab36ff329",
+      "browserFinal": "e4eab4fb70124d1228d6491ae129a26dd741d9fefbd1e754c7eca87ab36ff329",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/guidance.ts",
+      "sha256": "5dac8f98ca616ed23a756989b78d2d9372a993d958ad94b4746cff82d092188a",
+      "browserInitial": "5dac8f98ca616ed23a756989b78d2d9372a993d958ad94b4746cff82d092188a",
+      "browserFinal": "5dac8f98ca616ed23a756989b78d2d9372a993d958ad94b4746cff82d092188a",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/index.ts",
+      "sha256": "dd40bd7caa1428a1c351d4e661f691e7e605aa8070faa313a9d48e61696d3cb2",
+      "browserInitial": "dd40bd7caa1428a1c351d4e661f691e7e605aa8070faa313a9d48e61696d3cb2",
+      "browserFinal": "dd40bd7caa1428a1c351d4e661f691e7e605aa8070faa313a9d48e61696d3cb2",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/island.ts",
+      "sha256": "b8a2d70d356b5bc783df3fc678e4e3a51ae361f14c04ce140c1430479604b1e1",
+      "browserInitial": "b8a2d70d356b5bc783df3fc678e4e3a51ae361f14c04ce140c1430479604b1e1",
+      "browserFinal": "b8a2d70d356b5bc783df3fc678e4e3a51ae361f14c04ce140c1430479604b1e1",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/landscape.ts",
+      "sha256": "c4238f02498719722449772456001e457a0d02b2f82e7b389eae99d3021b6c96",
+      "browserInitial": "c4238f02498719722449772456001e457a0d02b2f82e7b389eae99d3021b6c96",
+      "browserFinal": "c4238f02498719722449772456001e457a0d02b2f82e7b389eae99d3021b6c96",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/legacyWorldDefinition.ts",
+      "sha256": "511879416f7aab4667d02d2d1554c2b5ad2e555a950b8340ee2e35f996662dc9",
+      "browserInitial": "511879416f7aab4667d02d2d1554c2b5ad2e555a950b8340ee2e35f996662dc9",
+      "browserFinal": "511879416f7aab4667d02d2d1554c2b5ad2e555a950b8340ee2e35f996662dc9",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/moments.ts",
+      "sha256": "9d5bf24aa2c63031764c324261e4db98d28387a49a930952eaac46d828a3d87a",
+      "browserInitial": "9d5bf24aa2c63031764c324261e4db98d28387a49a930952eaac46d828a3d87a",
+      "browserFinal": "9d5bf24aa2c63031764c324261e4db98d28387a49a930952eaac46d828a3d87a",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/names.ts",
+      "sha256": "56c4b4015d07f65733b373431ef6316a3ec908f6461929f5af10f4f0d6f078fc",
+      "browserInitial": "56c4b4015d07f65733b373431ef6316a3ec908f6461929f5af10f4f0d6f078fc",
+      "browserFinal": "56c4b4015d07f65733b373431ef6316a3ec908f6461929f5af10f4f0d6f078fc",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/nativeWaterBridgeProfile.json",
+      "sha256": "7ad19971180d7d572045d0bc620ca6559cdb165fd55c0e14c4e2e5a681f6fe13",
+      "browserInitial": "7ad19971180d7d572045d0bc620ca6559cdb165fd55c0e14c4e2e5a681f6fe13",
+      "browserFinal": "7ad19971180d7d572045d0bc620ca6559cdb165fd55c0e14c4e2e5a681f6fe13",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/nativeWaterSource.json",
+      "sha256": "e0f652839690f2143279fbbfb60829912802de9bf008ac7d7f3232bf6fb3f306",
+      "browserInitial": "e0f652839690f2143279fbbfb60829912802de9bf008ac7d7f3232bf6fb3f306",
+      "browserFinal": "e0f652839690f2143279fbbfb60829912802de9bf008ac7d7f3232bf6fb3f306",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/nature.ts",
+      "sha256": "73a7a4b2d18bfaf84b7ec0b724e07e7ec13088a36eae31b54313d597949be733",
+      "browserInitial": "73a7a4b2d18bfaf84b7ec0b724e07e7ec13088a36eae31b54313d597949be733",
+      "browserFinal": "73a7a4b2d18bfaf84b7ec0b724e07e7ec13088a36eae31b54313d597949be733",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/pier.ts",
+      "sha256": "67a3e80f4d49bd8d8109992a7f9c12e88588ec5a86959c669f02d326c83c1bef",
+      "browserInitial": "67a3e80f4d49bd8d8109992a7f9c12e88588ec5a86959c669f02d326c83c1bef",
+      "browserFinal": "67a3e80f4d49bd8d8109992a7f9c12e88588ec5a86959c669f02d326c83c1bef",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/placeCatalog.ts",
+      "sha256": "af31b65939c6c58fd4471ef55de8bab4f2a792287caebd648bb7de37282bbb47",
+      "browserInitial": "af31b65939c6c58fd4471ef55de8bab4f2a792287caebd648bb7de37282bbb47",
+      "browserFinal": "af31b65939c6c58fd4471ef55de8bab4f2a792287caebd648bb7de37282bbb47",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/placeGoals.ts",
+      "sha256": "a13068b746555998680b5cf2a77bfe7d11308ce1880f595ad13d7c0aa3af7fe6",
+      "browserInitial": "a13068b746555998680b5cf2a77bfe7d11308ce1880f595ad13d7c0aa3af7fe6",
+      "browserFinal": "a13068b746555998680b5cf2a77bfe7d11308ce1880f595ad13d7c0aa3af7fe6",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/placeRelations.ts",
+      "sha256": "70f261a0db7aa279a75307fd7adbb77bd0f77188209d3d88beacdfe6f1b53f09",
+      "browserInitial": "70f261a0db7aa279a75307fd7adbb77bd0f77188209d3d88beacdfe6f1b53f09",
+      "browserFinal": "70f261a0db7aa279a75307fd7adbb77bd0f77188209d3d88beacdfe6f1b53f09",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/placeTerrain.ts",
+      "sha256": "b79248f1bf23a324b152d9e36310aeabcaa8a30abeae58b535f8c40f9cc7d28d",
+      "browserInitial": "b79248f1bf23a324b152d9e36310aeabcaa8a30abeae58b535f8c40f9cc7d28d",
+      "browserFinal": "b79248f1bf23a324b152d9e36310aeabcaa8a30abeae58b535f8c40f9cc7d28d",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/placeTypes.ts",
+      "sha256": "38bc1f892b3f36a8103aec06af671bf00121b346c92fe354c4c63ef50ed0debf",
+      "browserInitial": "38bc1f892b3f36a8103aec06af671bf00121b346c92fe354c4c63ef50ed0debf",
+      "browserFinal": "38bc1f892b3f36a8103aec06af671bf00121b346c92fe354c4c63ef50ed0debf",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/places.ts",
+      "sha256": "25a712391722d414b7d88dadb7ff1e7637aeee80a4397093d2c886bca8755b2a",
+      "browserInitial": "25a712391722d414b7d88dadb7ff1e7637aeee80a4397093d2c886bca8755b2a",
+      "browserFinal": "25a712391722d414b7d88dadb7ff1e7637aeee80a4397093d2c886bca8755b2a",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/random.ts",
+      "sha256": "2d3e35f0f26da88acc2228454193fda88b759ac9f58ce8cc96d96b2234c01175",
+      "browserInitial": "2d3e35f0f26da88acc2228454193fda88b759ac9f58ce8cc96d96b2234c01175",
+      "browserFinal": "2d3e35f0f26da88acc2228454193fda88b759ac9f58ce8cc96d96b2234c01175",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/room.ts",
+      "sha256": "f1cfb631a26122546043ec3859926faba565e148802f498bd01fb346fa66d576",
+      "browserInitial": "f1cfb631a26122546043ec3859926faba565e148802f498bd01fb346fa66d576",
+      "browserFinal": "f1cfb631a26122546043ec3859926faba565e148802f498bd01fb346fa66d576",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/rules.ts",
+      "sha256": "0a4e0289c595318443683fcbcf330d397b532f433d3faa993900fc986a8e6727",
+      "browserInitial": "0a4e0289c595318443683fcbcf330d397b532f433d3faa993900fc986a8e6727",
+      "browserFinal": "0a4e0289c595318443683fcbcf330d397b532f433d3faa993900fc986a8e6727",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/space.ts",
+      "sha256": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+      "browserInitial": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+      "browserFinal": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/town.ts",
+      "sha256": "68b955dba55b4ca4447d90358e913eb6e1b1808141e12416dea32b1e47061fa1",
+      "browserInitial": "68b955dba55b4ca4447d90358e913eb6e1b1808141e12416dea32b1e47061fa1",
+      "browserFinal": "68b955dba55b4ca4447d90358e913eb6e1b1808141e12416dea32b1e47061fa1",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/types.ts",
+      "sha256": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+      "browserInitial": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+      "browserFinal": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+      "matches": true
+    },
+    {
+      "file": "src/domain/growingIsland/worldDefinition.ts",
+      "sha256": "c230e8fb354a43792d22814d6eaf82cd7adf0110d517250d1399be84b00ba7ea",
+      "browserInitial": "c230e8fb354a43792d22814d6eaf82cd7adf0110d517250d1399be84b00ba7ea",
+      "browserFinal": "c230e8fb354a43792d22814d6eaf82cd7adf0110d517250d1399be84b00ba7ea",
+      "matches": true
+    },
+    {
+      "file": "src/domain/islandLife/decorations.ts",
+      "sha256": "5cfbccce407f289411af0f7317fa15ad96eea8f6abfb52b79a89203f4195ecb1",
+      "browserInitial": "5cfbccce407f289411af0f7317fa15ad96eea8f6abfb52b79a89203f4195ecb1",
+      "browserFinal": "5cfbccce407f289411af0f7317fa15ad96eea8f6abfb52b79a89203f4195ecb1",
+      "matches": true
+    },
+    {
+      "file": "src/domain/islandLife/economyRules.ts",
+      "sha256": "2feb596641a89a83ff6fb7cd915548f3bcf9a8212ddafa75ddc05910e4091272",
+      "browserInitial": "2feb596641a89a83ff6fb7cd915548f3bcf9a8212ddafa75ddc05910e4091272",
+      "browserFinal": "2feb596641a89a83ff6fb7cd915548f3bcf9a8212ddafa75ddc05910e4091272",
+      "matches": true
+    },
+    {
+      "file": "src/domain/islandLife/footprint.ts",
+      "sha256": "756e569dff83698e12dc6401fb96be06a23b950b003df4b1af21b8a1aa38916b",
+      "browserInitial": "756e569dff83698e12dc6401fb96be06a23b950b003df4b1af21b8a1aa38916b",
+      "browserFinal": "756e569dff83698e12dc6401fb96be06a23b950b003df4b1af21b8a1aa38916b",
+      "matches": true
+    },
+    {
+      "file": "src/domain/islandLife/landRules.ts",
+      "sha256": "db73f083a1e73dbfa280401898a406afe9a8294d51d7aaaa5cf57140942dd774",
+      "browserInitial": "db73f083a1e73dbfa280401898a406afe9a8294d51d7aaaa5cf57140942dd774",
+      "browserFinal": "db73f083a1e73dbfa280401898a406afe9a8294d51d7aaaa5cf57140942dd774",
+      "matches": true
+    },
+    {
+      "file": "src/domain/islandLife/model.ts",
+      "sha256": "c373f5a532347d3f030420f40774a85e8a9434b095cb763138a34b45cd925ea3",
+      "browserInitial": "c373f5a532347d3f030420f40774a85e8a9434b095cb763138a34b45cd925ea3",
+      "browserFinal": "c373f5a532347d3f030420f40774a85e8a9434b095cb763138a34b45cd925ea3",
+      "matches": true
+    },
+    {
+      "file": "src/domain/islandLife/space.ts",
+      "sha256": "699f197c86b4e7142b20a1790a6adefd3287445848c708990dc9c5c1423fff55",
+      "browserInitial": "699f197c86b4e7142b20a1790a6adefd3287445848c708990dc9c5c1423fff55",
+      "browserFinal": "699f197c86b4e7142b20a1790a6adefd3287445848c708990dc9c5c1423fff55",
+      "matches": true
+    },
+    {
+      "file": "src/domain/islandLife/walkingSpace.ts",
+      "sha256": "5143cdea48aa648b4b2b34f8920168d61b0ea0ed4034b3890e0a76a1c7b85827",
+      "browserInitial": "5143cdea48aa648b4b2b34f8920168d61b0ea0ed4034b3890e0a76a1c7b85827",
+      "browserFinal": "5143cdea48aa648b4b2b34f8920168d61b0ea0ed4034b3890e0a76a1c7b85827",
+      "matches": true
+    },
+    {
+      "file": "src/domain/islandLife/waterChannels.ts",
+      "sha256": "b98fef9f0eea7ed48e79890826689db3cbc0cd4a763c8d43eae95254a146f988",
+      "browserInitial": "b98fef9f0eea7ed48e79890826689db3cbc0cd4a763c8d43eae95254a146f988",
+      "browserFinal": "b98fef9f0eea7ed48e79890826689db3cbc0cd4a763c8d43eae95254a146f988",
+      "matches": true
+    },
+    {
+      "file": "src/domain/natureTown/random.ts",
+      "sha256": "45919ef8e7eb46920e60fe20b7992b96621fb9c1f889c81ddcce8d12496cbce9",
+      "browserInitial": "45919ef8e7eb46920e60fe20b7992b96621fb9c1f889c81ddcce8d12496cbce9",
+      "browserFinal": "45919ef8e7eb46920e60fe20b7992b96621fb9c1f889c81ddcce8d12496cbce9",
+      "matches": true
+    }
+  ],
+  "allInputsMatchBrowser": true
+}

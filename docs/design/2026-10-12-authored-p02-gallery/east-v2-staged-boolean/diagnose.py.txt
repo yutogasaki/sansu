@@ -1,0 +1,74 @@
+"""Temporary exact-shape operands, original Boolean order; no scene save/render."""
+from pathlib import Path
+import argparse,json,hashlib,sys,math,time,collections,struct
+P=Path(__file__).resolve().parent;V=P.parent/'east-v2';Q=P.parent/'east-v2-topology-diagnostic';sys.path.insert(0,str(V))
+p=argparse.ArgumentParser();p.add_argument('--scheduled',action='store_true');p.add_argument('--out',type=Path,required=True);a=p.parse_args(sys.argv[sys.argv.index('--')+1:]);assert a.scheduled and not a.out.exists();a.out.mkdir(parents=True)
+import bpy,bmesh
+from mathutils import Matrix,Vector
+from terrain_connector import closed_solid
+from entry_geometry import clip,polygon_area,EPS
+sha=lambda f:hashlib.sha256(Path(f).read_bytes()).hexdigest();manifest=json.loads((P/'preparation.json').read_text());before={name:sha(path) for name,path in manifest['inputPaths'].items()};assert before==manifest['inputSha256'];assert sha(__file__)==manifest['scriptSha256'];assert Path(bpy.data.filepath)==Path(manifest['inputPaths']['failedScene'])
+S=json.loads((V/'study.json').read_text());D=S['design'];B=Matrix(((1,0,0,0),(0,0,-1,0),(0,1,0,0),(0,0,0,1)));BI=B.inverted();start=time.monotonic()
+# Same read-only statistics as the completed diagnostic, operating private bmesh.
+s=(Q/'inspect-failed.py').read_text();exec(compile(s[s.index('def stats('):s.index('rows=[]')],str(Q/'inspect-failed.py'),'exec'))
+def object_stats(o):
+ bm=bmesh.new();bm.from_mesh(o.data);result=stats(bm,BI@o.matrix_world);bm.free();return result
+def vvff(obj):
+ ev=obj.evaluated_get(bpy.context.evaluated_depsgraph_get());mesh=ev.to_mesh()
+ try:
+  mesh.calc_loop_triangles();matrix=BI@ev.matrix_world;return [matrix@v.co for v in mesh.vertices],[tuple(t.vertices) for t in mesh.loop_triangles]
+ finally:ev.to_mesh_clear()
+def new(name,v,f):
+ mesh=bpy.data.meshes.new('diagnostic/'+name);mesh.from_pydata([tuple(B@Vector(p)) for p in v],[],f);mesh.update();mesh.materials.append(wood);obj=bpy.data.objects.new('diagnostic/'+name,mesh);collection.objects.link(obj);return obj
+def horizontal_tris(o):
+ o.data.calc_loop_triangles();rows=[]
+ for ti,t in enumerate(o.data.loop_triangles):
+  points=[list(BI@o.matrix_world@o.data.vertices[i].co) for i in t.vertices]
+  if max(p[1] for p in points)-min(p[1] for p in points)>EPS:continue
+  rows.append((ti,points,sum(p[1] for p in points)/3,min(p[0] for p in points),max(p[0] for p in points),min(p[2] for p in points),max(p[2] for p in points)))
+ return rows
+def coplanarity(o,p):
+ left=horizontal_tris(o);right=horizontal_tris(p);tests=0;positive=0;area=0.;examples=[];limited=False
+ for i,t,y,x0,x1,z0,z1 in left:
+  for j,u,h,q0,q1,w0,w1 in right:
+   if abs(y-h)>EPS or min(x1,q1)<=max(x0,q0) or min(z1,w1)<=max(z0,w0):continue
+   tests+=1
+   if tests>20000:limited=True;break
+   poly=clip(t,u);size=polygon_area(poly) if len(poly)>=3 else 0.
+   if size>1e-12:
+    positive+=1;area+=size
+    if len(examples)<8:examples.append({'bodyTriangle':i,'operandTriangle':j,'y':y,'deltaY':h-y,'areaXZ':size})
+  if limited:break
+ return {'scope':'horizontal triangle planes within existing EPS only; not a self-intersection proof','bodyHorizontalTriangles':len(left),'operandHorizontalTriangles':len(right),'testedBBoxPairs':tests,'positiveOverlapPairs':positive,'pairAreaSumNotUnionArea':area,'examples':examples,'boundedAt20000Pairs':limited}
+def apply(body,operand,solver):
+ bpy.context.view_layer.objects.active=body;mod=body.modifiers.new('same-owner continuous timber floor','BOOLEAN');mod.operation='UNION';mod.solver=solver;mod.object=operand
+ context={'activeObject':bpy.context.view_layer.objects.active.name,'actualBody':body.name,'operand':operand.name,'bodyIsOperand':body.as_pointer()==operand.as_pointer(),'bodyDataIsOperandData':body.data.as_pointer()==operand.data.as_pointer(),'solver':mod.solver,'operation':mod.operation}
+ assert not context['bodyIsOperand'] and not context['bodyDataIsOperandData'];result=bpy.ops.object.modifier_apply(modifier=mod.name);return {'context':context,'operatorResult':sorted(result),'after':object_stats(body)}
+def dump(result): (a.out/'report.json').write_text(json.dumps(result,indent=2)+'\n')
+collection=bpy.data.collections.new('temporary staged Boolean diagnostics');bpy.context.scene.collection.children.link(collection)
+wood=bpy.data.objects[D['sourceGalleryName']].data.materials[0]
+plans=json.loads((V/'runs/01-coarse-build/planned-floor-tops.json').read_text());solids=[]
+for name,plan in plans.items():
+ v,f,_=closed_solid(plan,D['thickness']);solids.append(new(name,v,f))
+measured=json.loads(Path(S['basis']['eastV1Measurement']['path']).read_text());joint=Vector(measured['candidates'][0]['frontBoughJunction'])
+disk=[joint.copy()]+[joint+Vector((D['junctionDiscRadius']*math.cos(i*math.tau/32),0,D['junctionDiscRadius']*math.sin(i*math.tau/32))) for i in range(32)];disk_faces=[[0,(i+1)%32+1,i+1] for i in range(32)];v,f,_=closed_solid({'topVertices':[list(p) for p in disk],'topFaces':disk_faces},D['thickness']);solids.append(new('visible-front-branch-junction',v,f))
+interior=bpy.data.objects.get(D['sourceFloorName']);assert interior is not None;v,f=vvff(interior);assert len(v)==96 and len(f)==188;native_copy=new('unchanged-native-interior',v,f);native_copy.data.materials[0]=interior.data.materials[0];solids.append(native_copy)
+body=solids[2];operands=[o for o in solids if o is not body];report={'status':'RUNNING_DIAGNOSTIC_ONLY','sourceBefore':before,'originalBodyIndex':2,'operandOrder':[o.name for o in operands],'initialOperands':{o.name:object_stats(o) for o in solids},'steps':[],'firstDuplicateGeneration':None,'selfIntersectionNotProvenAbsent':True,'noOriginalObjectOperand':True};dump(report)
+comparison_done=False
+for index,operand in enumerate(operands):
+ # Private copies preserve the exact pre-operation operand data for a separate
+ # solver comparison only when the previous exact result is still closed.
+ pre=object_stats(body);op=object_stats(operand);copybody=body.copy();copybody.data=body.data.copy();copyoperand=operand.copy();copyoperand.data=operand.data.copy()
+ record={'operandIndex':index,'operandName':operand.name,'beforeBody':pre,'operand':op,'horizontalCoplanarity':coplanarity(body,operand)}
+ record.update(apply(body,operand,'EXACT'));report['steps'].append(record)
+ duplicated=record['after']['exactCoordinateDuplicateFaces']>pre['exactCoordinateDuplicateFaces']
+ if duplicated and report['firstDuplicateGeneration'] is None:report['firstDuplicateGeneration']={'operandIndex':index,'operandName':operand.name,'before':pre['exactCoordinateDuplicateFaces'],'after':record['after']['exactCoordinateDuplicateFaces']}
+ if duplicated and not comparison_done and pre['nonmanifoldEdges']==0 and op['nonmanifoldEdges']==0:
+  probe=body.modifiers.new('enum inspection only','BOOLEAN');available=[x.identifier for x in probe.bl_rna.properties['solver'].enum_items];body.modifiers.remove(probe);record['availableSolvers']=available
+  if 'MANIFOLD' in available:
+   collection.objects.link(copybody);collection.objects.link(copyoperand);comparison_done=True;record['separateManifoldSamePreOperationOperands']=apply(copybody,copyoperand,'MANIFOLD');record['separateManifoldSamePreOperationOperands']['adopted']=False
+  else:record['separateManifoldSamePreOperationOperands']={'available':False,'adopted':False}
+ if copybody.name in bpy.data.objects:bpy.data.objects.remove(copybody,do_unlink=True)
+ if copyoperand.name in bpy.data.objects:bpy.data.objects.remove(copyoperand,do_unlink=True)
+ bpy.data.objects.remove(operand,do_unlink=True);dump(report)
+report.update(status='COMPLETED_READ_ONLY_DIAGNOSTIC_NO_ADOPTION',sourceAfter={name:sha(path) for name,path in manifest['inputPaths'].items()},seconds=time.monotonic()-start,noOriginalSceneSaveOrRender=True);assert report['sourceBefore']==report['sourceAfter'];dump(report);print(json.dumps({'firstDuplicateGeneration':report['firstDuplicateGeneration'],'steps':len(report['steps']),'seconds':report['seconds']}))

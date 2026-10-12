@@ -1,0 +1,6 @@
+{
+  "phase": "stdin Python source parsing",
+  "outcome": "Non-UTF-8 SyntaxError before execution; no page or README was written",
+  "fix": "ASCII-escaped JSON payload decoded as UTF-8 for output",
+  "appOrSourceGeometryChanged": false
+}

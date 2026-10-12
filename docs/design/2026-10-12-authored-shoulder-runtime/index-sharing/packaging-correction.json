@@ -1,0 +1,110 @@
+{
+  "scope": "Packaging correction only: no app/source/diagnostic-result changes. Archive proof remains historical and immutable.",
+  "createdAt": "2026-10-12T02:35:17.090778+00:00",
+  "archive": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-shoulder-runtime/index-sharing",
+  "originalProof": {
+    "path": "archive-proof.json",
+    "beforeSha256": "9655655426f49d99b7379aa1eea92907c46301e50e553d3a2ac16c9158917374",
+    "afterSha256": "9655655426f49d99b7379aa1eea92907c46301e50e553d3a2ac16c9158917374",
+    "historicalPathNames": true
+  },
+  "renames": [
+    {
+      "oldRelativePath": "worldDefinition.before.ts",
+      "newRelativePath": "worldDefinition.before.ts.txt",
+      "beforeSha256": "8e88855dd180624f1c2b32437e6d1b93cc66e978f2fc9c741d5f004e8ba45db7",
+      "afterSha256": "8e88855dd180624f1c2b32437e6d1b93cc66e978f2fc9c741d5f004e8ba45db7",
+      "bytes": 29199,
+      "rawPath": "/private/tmp/sansu-world-index-sharing/worldDefinition.before.ts",
+      "rawBeforeSha256": "8e88855dd180624f1c2b32437e6d1b93cc66e978f2fc9c741d5f004e8ba45db7",
+      "rawAfterSha256": "8e88855dd180624f1c2b32437e6d1b93cc66e978f2fc9c741d5f004e8ba45db7"
+    },
+    {
+      "oldRelativePath": "worldDefinition.before.test.ts",
+      "newRelativePath": "worldDefinition.before.test.ts.txt",
+      "beforeSha256": "8d4f6d66d0c4078f3dc77c5911ecfb9e84e508137a15b035971dc68c9787b581",
+      "afterSha256": "8d4f6d66d0c4078f3dc77c5911ecfb9e84e508137a15b035971dc68c9787b581",
+      "bytes": 14965,
+      "rawPath": "/private/tmp/sansu-world-index-sharing/worldDefinition.before.test.ts",
+      "rawBeforeSha256": "8d4f6d66d0c4078f3dc77c5911ecfb9e84e508137a15b035971dc68c9787b581",
+      "rawAfterSha256": "8d4f6d66d0c4078f3dc77c5911ecfb9e84e508137a15b035971dc68c9787b581"
+    },
+    {
+      "oldRelativePath": "worldDefinition.after.ts",
+      "newRelativePath": "worldDefinition.after.ts.txt",
+      "beforeSha256": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+      "afterSha256": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+      "bytes": 29593,
+      "rawPath": "/private/tmp/sansu-world-index-sharing/worldDefinition.after.ts",
+      "rawBeforeSha256": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+      "rawAfterSha256": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338"
+    },
+    {
+      "oldRelativePath": "worldDefinition.after.test.ts",
+      "newRelativePath": "worldDefinition.after.test.ts.txt",
+      "beforeSha256": "a52da8cd4aad28bd4fee91a18681c044ff7cbc945d8f18b79f75c01103c90aa9",
+      "afterSha256": "a52da8cd4aad28bd4fee91a18681c044ff7cbc945d8f18b79f75c01103c90aa9",
+      "bytes": 16255,
+      "rawPath": "/private/tmp/sansu-world-index-sharing/worldDefinition.after.test.ts",
+      "rawBeforeSha256": "a52da8cd4aad28bd4fee91a18681c044ff7cbc945d8f18b79f75c01103c90aa9",
+      "rawAfterSha256": "a52da8cd4aad28bd4fee91a18681c044ff7cbc945d8f18b79f75c01103c90aa9"
+    }
+  ],
+  "readme": {
+    "path": "README.md",
+    "beforeSha256": "6fccd9439d3337ef4174542ab2746e35671934ea6493743de52f5ba50aba696d",
+    "afterSha256": "b86e462ad2d039952adf7ea25518408429ee235a404ddba399a32f5856696333",
+    "preservedBeforePath": "README.before-packaging.md.txt",
+    "preservedBeforeSha256": "6fccd9439d3337ef4174542ab2746e35671934ea6493743de52f5ba50aba696d"
+  },
+  "unchangedArchiveFilesVerified": 18,
+  "initialCheckFailure": {
+    "log": "packaging-docscheck-first.log.txt",
+    "cause": "README link was checked before packaging-correction.json was written. Packaging order corrected; initial raw failure preserved."
+  },
+  "diffCheckNote": "git diff --no-index --check returned 1 with empty output because no-index implies exit-code for changed files; it reported no whitespace errors. A standard git diff --check follows as a separate check.",
+  "verification": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "docs:check"
+      ],
+      "exitCode": 0,
+      "log": "packaging-docscheck-second.log.txt"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "packaging-diffcheck-second.log.txt"
+    }
+  ],
+  "verificationLogs": {
+    "packaging-docscheck-first.log.txt": {
+      "sourceSha256": "e5c384918fa9a62baf080b08c389a4e9c6bfac76c72407fd0f175f8f61aca3d2",
+      "destinationSha256": "e5c384918fa9a62baf080b08c389a4e9c6bfac76c72407fd0f175f8f61aca3d2",
+      "bytes": 1345
+    },
+    "packaging-diffcheck-first.log.txt": {
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destinationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "packaging-docscheck-second.log.txt": {
+      "sourceSha256": "653a4d85c405c81754be6c4c4cfb6caa10d3e6573f5a91d341ebb97c33d4f47d",
+      "destinationSha256": "653a4d85c405c81754be6c4c4cfb6caa10d3e6573f5a91d341ebb97c33d4f47d",
+      "bytes": 1233
+    },
+    "packaging-diffcheck-second.log.txt": {
+      "sourceSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "destinationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  },
+  "noTypeScriptDiscoveryFiles": true,
+  "readmeLocalLinksValid": true
+}

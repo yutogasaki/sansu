@@ -1,0 +1,17 @@
+{
+  "startedAtUtc": "2026-10-12T05:19:46.498473+00:00",
+  "ownedPid": 38954,
+  "ownedPgid": 38954,
+  "readinessSHA": "ba18f6d8bf42bc3bdb538c018e1fde7cc36ec6b7199a8a693cc0410e5a2c2565",
+  "effectiveThreads": 2,
+  "command": [
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/sharp-fan-comparison/compare.py"
+  ]
+}

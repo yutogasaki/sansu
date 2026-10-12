@@ -1,0 +1,29 @@
+{
+  "revision": "authored-shoulder-c1",
+  "target": "/private/tmp/sansu-authored-shoulder-c1/candidate",
+  "pass": true,
+  "exitCode": 0,
+  "phase": "complete",
+  "sourceFixed": true,
+  "installedDependenciesFixed": true,
+  "localInputCount": 6398,
+  "localBeforeAfterExact": true,
+  "installedInputCount": 6,
+  "installedBeforeAfterExact": true,
+  "elapsedSeconds": 283.048,
+  "rawSummaryLines": [
+    " Test Files  610 passed (610)",
+    "      Tests  5296 passed (5296)",
+    "   Duration  239.45s (transform 13.36s, setup 0ms, collect 199.61s, tests 1762.84s, environment 80ms, prepare 27.25s)",
+    "PASS assets:check",
+    "- PWA precache: 145 unique files, 8.50 MiB / 12.00 MiB",
+    "- Explore artwork: 27 production files, 2.97 MiB / 8.00 MiB"
+  ],
+  "rawLogSha256": "57e545702656c92f30a2aaa237efc25a60c38d78dbb346b2140ba0c4a84ca470",
+  "coreReportSha256": "14b5eaacdd32329234c61fb1879248b9694fcb980d225e6f785f0dacb258a2be",
+  "installedManifestSha256": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+  "coreRunnerSha256": "ebb0ddfc88cd98854a56c170a293ca7a54cd6fdda1ac96ec12b513fd989462e9",
+  "runnerStillSame": true,
+  "scope": "Full core terminal result, normal native=false build; no browser/server or art/performance acceptance",
+  "firstStaticAuditFailurePreserved": "closure/import-audit-first-failure.json"
+}

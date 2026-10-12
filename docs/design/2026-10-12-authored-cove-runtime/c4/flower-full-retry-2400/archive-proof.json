@@ -1,0 +1,173 @@
+{
+  "archiveIntegrityPass": true,
+  "regressionPass": true,
+  "createdAtUnixSeconds": 1791766954.3022861,
+  "revision": "authored-cove-c4",
+  "sourceDirectory": "/private/tmp/sansu-authored-cove-c4/flower-full-retry-2400",
+  "destinationDirectory": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-runtime/c4/flower-full-retry-2400/raw",
+  "observedRunnerExitCode": 0,
+  "firstAttempt": {
+    "report": "/private/tmp/sansu-authored-cove-c4/regressions/05-authored-flower-full-cove-off/report.json",
+    "sha256": "aa967efc5c6960f40633f7159908256f52b7788f8565e4191615bf22ff4b9911",
+    "durable": "../regressions/05-authored-flower-full-cove-off/report.json",
+    "result": "outer-command-timeout at 900 seconds"
+  },
+  "outerLimitChangeOnly": {
+    "originalSeconds": 900,
+    "retrySeconds": 2400,
+    "driverSha256": "acffc6dce33d5366d88cd0e8ea5c77699c48260919562b7b55262d33b3cdb912",
+    "coreDriverSha256": "acffc6dce33d5366d88cd0e8ea5c77699c48260919562b7b55262d33b3cdb912"
+  },
+  "sourceChecks": {
+    "inputCount": 2137,
+    "fixedCandidateMatches": true,
+    "postArchiveCandidateMatches": true,
+    "beforeAfterFixed": true,
+    "coreReportSha256": "b1c98da6515fa927651cfe241df3ed0871e3b8a1072dd4acaf83f6af973b3994",
+    "snapshotSha256": "555fd26d832c74536005d58f2bd947a9c439965841dabae35e3cb40ffdc811fe",
+    "rawInitialInputCount": 1899,
+    "rawInitialSubsetMatches": true,
+    "rawFinalInputsPresent": true,
+    "rawBeforeAfterEqual": true
+  },
+  "currentWorkingRepository": {
+    "informationalOnly": true,
+    "differences": [
+      {
+        "file": "docs/ai/verification_matrix.md",
+        "core": "e343b1b2c0c423e967ae39c3de522ced593d590a97634fd1cb8d24ee8734d46a",
+        "current": "3a252f4c72b73d1fd648950317909a21c73245b63e5c950072497071cfdbf4a1"
+      }
+    ],
+    "matchesFixedCandidate": false
+  },
+  "failurePhase": null,
+  "error": null,
+  "inspection": {
+    "pass": true,
+    "checks": {
+      "rawPass": true,
+      "noRawErrors": true,
+      "fullScope": true,
+      "expectedBuild": true,
+      "sourceClosureUnchanged": true,
+      "rawInitialSubsetMatches": true,
+      "rawBeforeAfterEqual": true,
+      "twelveCaptures": true,
+      "fourCanvasSelections": true,
+      "fourEdits": true,
+      "allCaptureBuildsMatch": true,
+      "coveDisabledThroughout": true,
+      "flowerCandidateThroughout": true,
+      "matureAndYoung": true,
+      "captureFilesExist": true
+    },
+    "failedChecks": [],
+    "rawError": null,
+    "captureCount": 12,
+    "canvasSelectionCount": 4,
+    "editCount": 4,
+    "runtimeBuilds": [
+      "authored-cove-c4"
+    ],
+    "rawInputCount": 1899,
+    "finalInputsPresent": true,
+    "rawInitialDifferences": [],
+    "rawInputsMissingFromCore": [],
+    "referenceStages": [
+      "mature",
+      "young"
+    ]
+  },
+  "rawArchive": {
+    "fileCount": 20,
+    "bytes": 7344172,
+    "sourceBeforeEqualsSourceAfterEqualsCopy": true,
+    "files": {
+      "README.md": {
+        "sha256": "eba05d82dadeaa184bd8e239de3c6c64dbaadab93859e1693c10ad8a257a1459",
+        "bytes": 1430
+      },
+      "actual/390-flower-close-day.png": {
+        "sha256": "24e54b05152d3b71ad8d4a23a5e03cf6d128f87314dbe5002ce6df1b432d21a2",
+        "bytes": 202651
+      },
+      "actual/390-mature-whole-day.png": {
+        "sha256": "a52b2d03eba4d18f56b55909f596a7d84092d16c6b15e2222617aa3d92db051c",
+        "bytes": 179410
+      },
+      "actual/768-flower-close-day.png": {
+        "sha256": "5579db28f5948e57b072b6dcf534f36ae172908238b53e21937a79f4338f11a0",
+        "bytes": 352150
+      },
+      "actual/768-mature-whole-day.png": {
+        "sha256": "b7b5b93e4fa1dfec7e98a79006d3e8028d8ebc23feeb28b3d6e9e4f8a526cc9c",
+        "bytes": 319281
+      },
+      "actual/desktop-flower-close-day.png": {
+        "sha256": "34e07c1ec032883746ef81e99786bdc83e2ec6d256b8512c5b0f415dc84f878d",
+        "bytes": 539074
+      },
+      "actual/desktop-flower-reconnected-whole-day.png": {
+        "sha256": "f0c343c9d5688731925d036b87554a797d8563bac151eaddbb5612bf60391ecf",
+        "bytes": 476992
+      },
+      "actual/desktop-flower-split-whole-day.png": {
+        "sha256": "0820ed3a5e31906cb989718a794185d1aa3bad3484f05e808642189de7fc13ab",
+        "bytes": 465210
+      },
+      "actual/desktop-mature-whole-day.png": {
+        "sha256": "cde3c7b8e635d098cbf4b27bb864da5dda6839272abc394fe0cc2a57194d2226",
+        "bytes": 490032
+      },
+      "actual/desktop-rotated-flower-close-day.png": {
+        "sha256": "34baeb98e5dcd55b93bf7a79066961cda1856466644f321562e5e351353f8790",
+        "bytes": 515163
+      },
+      "actual/desktop-rotated-whole-day.png": {
+        "sha256": "65a34044d52d89bae92a785b9370601dddae2bfc3a743a7723cb0e87ec9d6db4",
+        "bytes": 452111
+      },
+      "actual/desktop-young-flower-close-day.png": {
+        "sha256": "9c5d7074a8a95b6ec1f72cdeecdce8b99e02aee071293d227722907a955cff36",
+        "bytes": 463520
+      },
+      "actual/desktop-young-whole-day.png": {
+        "sha256": "7b7e4481263ae3daca939d32114650b545754cc2221f26defd3bfaf326585c47",
+        "bytes": 474685
+      },
+      "actual/report.json": {
+        "sha256": "2e6a87610377e9a27f966efc1130e02aca779fd30af1aa9cf0829e363294e954",
+        "bytes": 1878232
+      },
+      "archive.py": {
+        "sha256": "f20aa3e39dbce48d87ed5e34b7697df81def2c3798540f61554f038c324b80e6",
+        "bytes": 7753
+      },
+      "execution-started.json": {
+        "sha256": "76bd120f0dbce33b9522fd58b30f0c936130207c665727885adc98f5013dc794",
+        "bytes": 63
+      },
+      "execution.log.txt": {
+        "sha256": "d5d5afa2bc5b656c0c8c8db56f15e4257009657f4ce4eedb82b3dd4997fccd38",
+        "bytes": 807
+      },
+      "prepared.json": {
+        "sha256": "4768384396ce97cbfa7603b775b87ec09c2b901c04944d9276215883909fcab7",
+        "bytes": 495
+      },
+      "report.json": {
+        "sha256": "262a776d3e3f58b691a1076d7faa9d5d6dfac149e8cf2de24b48a591d8e7384e",
+        "bytes": 515515
+      },
+      "runner.py": {
+        "sha256": "3d432e155cdca2a8457b67f2283307d0251dfb4ff8a86d633855a9ea4016ead0",
+        "bytes": 9598
+      }
+    }
+  },
+  "limitations": [
+    "Independent retry; original 900-second failure remains retained and is not relabeled.",
+    "No product performance, fresh acquisition, personal-save, physical touch hardware, independent art or full M1 acceptance is inferred."
+  ]
+}

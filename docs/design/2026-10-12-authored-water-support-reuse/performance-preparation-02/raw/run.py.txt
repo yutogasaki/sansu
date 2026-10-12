@@ -1,0 +1,285 @@
+from pathlib import Path
+from datetime import datetime, timezone
+import argparse
+import hashlib
+import json
+import os
+import re
+import signal
+import statistics
+import subprocess
+import sys
+import time
+
+ROOT = Path('/private/tmp/sansu-water-support-perf-c2-c3')
+PREP = ROOT / 'prepared-02'
+SCENARIOS = ['wide27', 'source32', 'shoulder35']
+TOTAL_SECONDS, WORKER_SECONDS, RSS_BYTES = 2700, 180, 4 * 1024 ** 3
+sha = lambda path: hashlib.sha256(Path(path).read_bytes()).hexdigest()
+utc = lambda: datetime.now(timezone.utc).isoformat()
+
+def schedule():
+    result = []
+    for block in range(3):
+        for offset in range(3):
+            scenario = SCENARIOS[(block + offset) % 3]
+            for version in (['c2', 'c3'] if (block + SCENARIOS.index(scenario)) % 2 == 0 else ['c3', 'c2']):
+                result.append({'block': block, 'scenario': scenario, 'version': version})
+    return result
+
+def ps_rows():
+    # Arguments are used transiently for classification, never archived wholesale.
+    raw = subprocess.run(['ps', '-axo', 'pid=,ppid=,pgid=,pcpu=,rss=,time=,comm='], capture_output=True, text=True, check=True).stdout
+    args_raw = subprocess.run(['ps', '-axo', 'pid=,args='], capture_output=True, text=True, check=True).stdout
+    arguments = {int(parts[0]): parts[1] for line in args_raw.splitlines() if len(parts := line.split(None, 1)) == 2}
+    rows = []
+    for line in raw.splitlines():
+        values = line.split(None, 6)
+        if len(values) == 7:
+            cpu_parts = values[5].split(':')
+            cpu_seconds = sum(float(part) * 60 ** index for index, part in enumerate(reversed(cpu_parts)))
+            rows.append({'pid': int(values[0]), 'ppid': int(values[1]), 'pgid': int(values[2]), 'reportedCpu': float(values[3]), 'cpuSeconds': cpu_seconds, 'rss': int(values[4]) * 1024, 'comm': values[6], 'args': arguments.get(int(values[0]), '')})
+    return rows
+
+def forbidden_reason(row):
+    executable = Path(row['comm']).name.lower()
+    command = row['args'].lower()
+    if 'blender' in executable:
+        return 'other-blender'
+    # Background test engines are prohibited; existing GUI browsers/helpers are
+    # activity-monitored separately rather than rejected merely for existing.
+    if re.search(r'headless[-_]shell|playwright', executable) or re.search(r'(?:^|\s)--headless(?:[=\s]|$)', command):
+        return 'background-test-browser'
+    if re.search(r'node|python|npm|npx|bun|deno|vitest|jest|esbuild', executable):
+        if re.search(r'(?:^|[/\s])(?:blender|vitest|jest|pytest|playwright|esbuild)(?:[/\s]|$)|e2e[-:]|verify:|(?:npm|pnpm|yarn)\s+(?:run\s+)?(?:test|build)|[/\s]tools/(?:build|e2e|check)-|[/\s](?:core|regressions|affected-regressions)\.py|(?:^|[/\s])vite(?:[/\s]|$)|sansu-water-support-perf[^\s]*/(?:prepared[^/]*/)?(?:run\.py|worker-c[23]\.mjs)', command):
+            return 'other-test-build-or-vite'
+    return None
+
+def gui_browser(row):
+    executable = Path(row['comm']).name.lower()
+    return bool(re.search(r'chrome|chromium|firefox|safari|webkitwebprocess', executable)
+                or re.search(r'/applications/(google chrome|firefox|safari|microsoft edge)', row['args'].lower()))
+
+def vite_child_service(row, by_pid, allowed):
+    if Path(row['comm']).name.lower() != 'esbuild':
+        return False
+    seen = set()
+    parent = row['ppid']
+    while parent and parent not in seen:
+        seen.add(parent)
+        record = allowed.get(str(parent))
+        if record and record['kind'] in ['root-c2-vite', 'root-c3-vite']:
+            return True
+        parent = by_pid[parent]['ppid'] if parent in by_pid else 0
+    return False
+
+def cpu_delta(cpu_seconds, previous, observed_at):
+    if previous is None:
+        return None
+    return max(0, 100 * (cpu_seconds - previous[0]) / (observed_at - previous[1]))
+
+def exceeds_activity_limit(cpu):
+    return cpu is not None and cpu > 10
+
+def stop_owned(proc):
+    if proc is None:
+        return 'no worker started'
+    try:
+        os.killpg(proc.pid, 0)
+    except ProcessLookupError:
+        return 'owned group already exited'
+    os.killpg(proc.pid, signal.SIGTERM)
+    try:
+        proc.wait(timeout=5)
+    except subprocess.TimeoutExpired:
+        os.killpg(proc.pid, signal.SIGKILL)
+        proc.wait(timeout=5)
+    return 'owned group terminated'
+
+def metric(values):
+    return {'n': len(values), 'median': statistics.median(values), 'minimum': min(values), 'maximum': max(values), 'values': values}
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--start', action='store_true')
+    args = parser.parse_args()
+    if not args.start:
+        print(json.dumps({'prepared': True, 'executionStarted': False, 'schedule': schedule(), 'totalSeconds': TOTAL_SECONDS, 'workerSeconds': WORKER_SECONDS, 'rssBytes': RSS_BYTES}))
+        return 0
+    # Parent authorization for a quiet window is required in addition to this explicit flag.
+    seal = json.loads((PREP / 'seal.json').read_text())
+    assert all(sha(path) == expected for path, expected in seal['files'].items()), 'Prepared input/script changed'
+    inputs = json.loads((PREP / 'inputs.json').read_text())
+    all_inputs = {**inputs['fullSources'], **inputs['installedDependencies'], **seal['files']}
+    for version in inputs['versions'].values():
+        all_inputs.update(version['actualImports'])
+    all_inputs[inputs['runtime']['nodeRealPath']] = inputs['runtime']['nodeSha256']
+    all_inputs[str(PREP / 'seal.json')] = sha(PREP / 'seal.json')
+    before = {path: sha(path) for path in all_inputs}
+    assert before == all_inputs, 'Source/runtime prehash changed'
+    output = ROOT / 'actual-02'
+    output.mkdir(exist_ok=False)
+    report = {'schema': 'sansu-water-support-local-performance-run-v1', 'startedAtUtc': utc(), 'scope': 'Warmed pure domain composition, not individual compile self-time or UI/device/P95 performance',
+              'preparationSealSha256': sha(PREP / 'seal.json'), 'totalSeconds': TOTAL_SECONDS, 'workerSeconds': WORKER_SECONDS, 'rssLimitBytes': RSS_BYTES,
+              'warmupsPerWorker': 2, 'measurementsPerWorker': 2, 'independentProcessesPerScenarioVersion': 3,
+              'schedule': schedule(), 'initialInputs': before, 'runs': [], 'pass': False, 'performanceValid': False,
+              'host': {'platform': sys.platform, 'os': subprocess.run(['uname', '-a'], capture_output=True, text=True, check=True).stdout.strip(),
+                       'cpuCount': os.cpu_count(), 'physicalMemoryBytes': int(subprocess.run(['sysctl', '-n', 'hw.memsize'], capture_output=True, text=True, check=True).stdout),
+                       'initialVmStat': subprocess.run(['vm_stat'], capture_output=True, text=True, check=True).stdout},
+              'concurrencyPolicy': 'Reject sampled background Blender/test/build/benchmark and headless test browsers. GUI browsers/OS helpers, user GUI Blender PID13395, root Vite and its esbuild children are monitored by cumulative CPU delta: >10% of one core rejects. Initial missing deltas are null, never zero/idle. Ten preflight observations require at least three consecutive complete activity baselines. Also reject external summed CPU >100% for three consecutive samples. ps sampling cannot exclude subsecond activity.'}
+    write = lambda: (output / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
+    write()
+    allowed = {str(item['pid']): item for item in seal['idleProcesses']}
+    high_cpu_count = 0
+    complete_guard_baseline_count = 0
+    previous_cpu = {}
+    proc = None
+    started = time.monotonic()
+    host_log = (output / 'host-observations.jsonl').open('x')
+
+    def observe(phase, worker=None):
+        nonlocal high_cpu_count, previous_cpu, complete_guard_baseline_count
+        rows = ps_rows()
+        observed_at = time.monotonic()
+        for row in rows:
+            previous = previous_cpu.get(row['pid'])
+            row['cpu'] = cpu_delta(row['cpuSeconds'], previous, observed_at)
+        previous_cpu = {row['pid']: (row['cpuSeconds'], observed_at) for row in rows}
+        by_pid = {row['pid']: row for row in rows}
+        own = {os.getpid()}
+        if worker is not None:
+            own.add(worker.pid)
+        for _ in range(len(rows)):
+            more = {row['pid'] for row in rows if row['ppid'] in own or worker is not None and row['pgid'] == worker.pid}
+            if more <= own:
+                break
+            own |= more
+        external = [row for row in rows if row['pid'] not in own]
+        forbidden, activity_checks = [], []
+        for row in external:
+            server = allowed.get(str(row['pid']))
+            if server is not None:
+                assert row['comm'] == server['comm'] and row['ppid'] == server['ppid'], 'Allowed idle PID identity changed'
+                if 'command' in server:
+                    assert row['args'] == server['command'], 'Allowed Vite command changed'
+                kind = server['kind']
+            elif vite_child_service(row, by_pid, allowed):
+                kind = 'root-vite-esbuild-service'
+            else:
+                reason = forbidden_reason(row)
+                if reason:
+                    forbidden.append({'pid': row['pid'], 'name': Path(row['comm']).name, 'reason': reason, 'cpu': row['cpu']})
+                    continue
+                kind = 'gui-browser-or-os-helper' if gui_browser(row) else None
+            if kind:
+                activity_checks.append({'pid': row['pid'], 'ppid': row['ppid'], 'name': Path(row['comm']).name, 'kind': kind, 'cpu': row['cpu'],
+                                        'cpuBaselineAvailable': row['cpu'] is not None, 'reportedCpu': row['reportedCpu'], 'rssBytes': row['rss']})
+                if exceeds_activity_limit(row['cpu']):
+                    forbidden.append({'pid': row['pid'], 'name': Path(row['comm']).name, 'reason': 'activity-monitored-process-exceeded-10-percent', 'cpu': row['cpu']})
+        missing_activity = [item['pid'] for item in activity_checks if not item['cpuBaselineAvailable']]
+        complete_guard_baseline_count = complete_guard_baseline_count + 1 if not missing_activity else 0
+        external_cpu = sum(row['cpu'] for row in external if row['cpu'] is not None)
+        high_cpu_count = high_cpu_count + 1 if external_cpu > 100 else 0
+        sample = {'utc': utc(), 'phase': phase, 'loadAverage': os.getloadavg(), 'externalCpuPercentSum': external_cpu,
+                  'forbidden': forbidden, 'activityChecks': activity_checks, 'missingActivityBaselines': missing_activity,
+                  'completeGuardBaselineConsecutiveSamples': complete_guard_baseline_count,
+                  'externalCpuBaselinesMissingCount': sum(row['cpu'] is None for row in external),
+                  'topExternal': [{'pid': row['pid'], 'name': Path(row['comm']).name, 'cpu': row['cpu'], 'rssBytes': row['rss']} for row in sorted(external, key=lambda x: x['cpu'] if x['cpu'] is not None else -1, reverse=True)[:10]],
+                  'ownedRssBytes': sum(row['rss'] for row in rows if worker is not None and row['pgid'] == worker.pid)}
+        host_log.write(json.dumps(sample) + '\n'); host_log.flush()
+        if forbidden or high_cpu_count >= 3:
+            raise RuntimeError('Performance rejected for host concurrency: ' + json.dumps({'forbidden': forbidden, 'highCpuConsecutiveSamples': high_cpu_count}))
+        if time.monotonic() - started > TOTAL_SECONDS:
+            raise RuntimeError('Total 2700-second deadline')
+        return sample
+
+    try:
+        # This pre-window is deliberately observed, not an unrecorded delay.
+        for _ in range(10):
+            observe('quiet-window-preflight'); time.sleep(1)
+        assert complete_guard_baseline_count >= 3, 'Quiet preflight lacks three complete activity-baseline samples'
+        for index, item in enumerate(schedule()):
+            label = f"{index + 1:02d}-block{item['block']}-{item['scenario']}-{item['version']}"
+            data = inputs['versions'][item['version']]
+            result = output / (label + '.json')
+            log = output / (label + '.log.txt')
+            command = [inputs['runtime']['node'], '--expose-gc', data['bundle'], item['scenario'], str(result), data['fixtures'][item['scenario']]['expectedPath']]
+            env = os.environ.copy()
+            removed = {key: '<value omitted>' for key in list(env) if key == 'UV_THREADPOOL_SIZE' or key.startswith(('NODE_', 'SANSU_', 'VITE_'))}
+            for key in removed:
+                env.pop(key)
+            record = {**item, 'label': label, 'command': command, 'removedInheritedEnvironmentNames': list(removed), 'startedAtUtc': utc(), 'peakSampledRssBytes': 0}
+            report['runs'].append(record)
+            observe('before-' + label)
+            with log.open('x') as stream:
+                worker_start = time.monotonic()
+                proc = subprocess.Popen(command, stdout=stream, stderr=subprocess.STDOUT, start_new_session=True, env=env, cwd=data['repo'])
+                record['pid'] = proc.pid; write()
+                print(json.dumps({'starting': label, 'pid': proc.pid, 'utc': record['startedAtUtc']}), flush=True)
+                while proc.poll() is None:
+                    sample = observe(label, proc)
+                    record['peakSampledRssBytes'] = max(record['peakSampledRssBytes'], sample['ownedRssBytes'])
+                    if sample['ownedRssBytes'] > RSS_BYTES:
+                        raise RuntimeError(label + ': sampled owned RSS exceeded 4 GiB')
+                    if time.monotonic() - worker_start > WORKER_SECONDS:
+                        raise RuntimeError(label + ': 180-second worker deadline')
+                    time.sleep(1)
+                record['exitCode'] = proc.returncode
+                record['elapsedSeconds'] = time.monotonic() - worker_start
+                record['finishedAtUtc'] = utc()
+                record['cleanup'] = stop_owned(proc); proc = None
+            record['logSha256'] = sha(log)
+            assert record['exitCode'] == 0 and result.exists(), label + ': worker failed'
+            raw = json.loads(result.read_text())
+            assert raw['node'] == inputs['runtime']['version'] and raw['execArgv'] == ['--expose-gc']
+            assert raw['pass'] and len(raw['samples']) == 4 and all(s['functionalMatch'] and s['freshWorld'] and s['freshPlan'] for s in raw['samples'])
+            assert raw['finalResourceUsage']['maxRSS'] * 1024 <= RSS_BYTES, label + ': cumulative process peak exceeded 4 GiB'
+            assert len([s for s in raw['samples'] if s['phase'] == 'measured']) == 2
+            record['resultSha256'] = sha(result)
+            record['samples'] = [s for s in raw['samples'] if s['phase'] == 'measured']
+            write()
+        analysis = {}
+        for scenario in SCENARIOS:
+            sides = {}
+            for version in ['c2', 'c3']:
+                samples = [sample for run in report['runs'] if run['scenario'] == scenario and run['version'] == version for sample in run['samples']]
+                assert len(samples) == 6
+                sides[version] = {'localElapsedMs': metric([s['elapsedMs'] for s in samples]), 'cpuMs': metric([(s['cpuUserMicroseconds'] + s['cpuSystemMicroseconds']) / 1000 for s in samples]),
+                                  'rssBeforeBytes': metric([s['memoryBefore']['rss'] for s in samples]), 'rssAfterBytes': metric([s['memoryAfter']['rss'] for s in samples])}
+            paired = []
+            for block in range(3):
+                runs = {run['version']: run for run in report['runs'] if run['scenario'] == scenario and run['block'] == block}
+                medians = {v: statistics.median(s['elapsedMs'] for s in run['samples']) for v, run in runs.items()}
+                paired.append({'block': block, 'c2Ms': medians['c2'], 'c3Ms': medians['c3'], 'c3MinusC2Ms': medians['c3'] - medians['c2'], 'c3OverC2': medians['c3'] / medians['c2']})
+            analysis[scenario] = {'versions': sides, 'pairedProcessMedians': paired}
+        report['analysis'] = analysis
+        report['performanceValid'] = True
+        report['pass'] = True
+    except BaseException as error:
+        report['firstFailure'] = {'type': type(error).__name__, 'message': str(error), 'utc': utc()}
+        report['cleanupAfterFailure'] = stop_owned(proc)
+        if proc is not None and report['runs']:
+            failed = report['runs'][-1]
+            failed['exitCode'] = proc.returncode
+            failed['finishedAtUtc'] = utc()
+            for suffix, key in [('.log.txt', 'logSha256'), ('.json', 'resultSha256')]:
+                path = output / (failed['label'] + suffix)
+                if path.exists():
+                    failed[key] = sha(path)
+        report['pass'] = False; report['performanceValid'] = False
+    finally:
+        host_log.close()
+        report['finalInputs'] = {path: sha(path) for path in all_inputs}
+        report['inputsFixed'] = report['initialInputs'] == report['finalInputs']
+        report['pass'] = report['pass'] and report['inputsFixed']
+        report['performanceValid'] = report['performanceValid'] and report['inputsFixed']
+        report['finishedAtUtc'] = utc()
+        report['elapsedSeconds'] = time.monotonic() - started
+        report['host']['finalVmStat'] = subprocess.run(['vm_stat'], capture_output=True, text=True, check=True).stdout
+        report['hostObservationsSha256'] = sha(output / 'host-observations.jsonl')
+        write()
+    print(json.dumps({'pass': report['pass'], 'performanceValid': report['performanceValid'], 'inputsFixed': report['inputsFixed'], 'firstFailure': report.get('firstFailure'), 'report': str(output / 'report.json')}), flush=True)
+    return 0 if report['pass'] else 1
+
+if __name__ == '__main__':
+    sys.exit(main())

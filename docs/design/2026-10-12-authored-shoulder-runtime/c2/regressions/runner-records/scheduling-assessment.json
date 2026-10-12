@@ -1,0 +1,33 @@
+{
+  "recordedAt": "2026-10-12T03:14:58.501918+00:00",
+  "requestedSupervisorPid": 6930,
+  "currentChildPidFromStageReport": 8055,
+  "requestedChildPid": 8055,
+  "processObservation": " 6930  6929  6929 S    22:54 /Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python /private/tmp/sansu-authored-shoulder-c2/prepared/regressions.py --start\n 8055  6930  8055 Ss   16:53 node tools/e2e-authored-shoulder.mjs\n",
+  "stageStartedAtUnixSeconds": 1791773884.644428,
+  "deadlineSeconds": 3600,
+  "currentStageElapsedSeconds": 1013.8577280044556,
+  "pythonWaitImplementationFile": "/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/subprocess.py",
+  "pythonWaitMethodSha256": "773f67be387e442975136954e06b0113780c904d6075cb6957d5cfa7d3ad5fbd",
+  "timeoutImplementationEvidence": [
+    "        def _wait(self, timeout):",
+    "            if timeout is not None:",
+    "                endtime = _time() + timeout",
+    "                # Enter a busy loop if we have a timeout.  This busy loop was",
+    "                    if self._waitpid_lock.acquire(False):",
+    "                            self._waitpid_lock.release()",
+    "                    remaining = self._remaining_time(endtime)",
+    "                    if remaining <= 0:",
+    "                        raise TimeoutExpired(self.args, timeout)",
+    "                    delay = min(delay * 2, remaining, .05)",
+    "                    time.sleep(delay)",
+    "                    with self._waitpid_lock:",
+    "                        # Check the pid and loop as waitpid has been known to"
+  ],
+  "decision": "Do not SIGSTOP supervisor",
+  "reason": "The supervisor itself enforces the child timeout with a monotonic polling loop. Stopping it prevents the existing 3600-second deadline from being enforced until resumed. No independent watchdog in the prepared runner preserves that deadline. The requested safety condition therefore rules out pausing this supervisor.",
+  "signalsSent": [],
+  "deliberatePauseSeconds": 0,
+  "candidateRunnerChanged": false,
+  "scope": "Read-only scheduling assessment; preserve uninterrupted original full-run proof."
+}

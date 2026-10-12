@@ -1,0 +1,84 @@
+// Bounded pure Node source geometry and actual-foot comparison; no world, GPU or Blender.
+import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';
+const B='/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-prep';
+const feetPath=path.join(B,'runs/02-feet/actual-feet.json');
+const basisPath='/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature/planned-floor-v4-stations-once.json';
+const out=process.argv[2];if(!out||fs.existsSync(out))throw Error('Fresh output required');
+const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+const paths=[feetPath,basisPath,process.argv[1]],before=Object.fromEntries(paths.map(p=>[p,hash(p)]));
+const start=new Date().toISOString(),deadline=Date.now()+25000;
+const basis=JSON.parse(fs.readFileSync(basisPath)),actors=JSON.parse(fs.readFileSync(feetPath)).actors;
+const lowerY=basis.primaryEndpoints.joint[1],upperY=basis.primaryEndpoints.galleryStart[1],rise=upperY-lowerY;
+const asc=basis.rows.filter(r=>r.degrees>=-68&&r.degrees<=75);let L=0;
+const ar=asc.map((r,i)=>{if(i)L+=Math.hypot(r.center[0]-asc[i-1].center[0],r.center[2]-asc[i-1].center[2]);return {...r,s:L};});
+function rowAt(s){
+ if(s===0)return {...ar[0],s};if(s===L)return {...ar.at(-1),s};
+ let j=1;while(ar[j].s<s)j++;const a=ar[j-1],b=ar[j],t=(s-a.s)/(b.s-a.s);
+ const side=a.side.map((v,k)=>v+(b.side[k]-v)*t);const len=Math.hypot(side[0],side[2]);side[0]/=len;side[2]/=len;
+ return {s,degrees:a.degrees+(b.degrees-a.degrees)*t,center:a.center.map((v,k)=>v+(b.center[k]-v)*t),side,role:'explicit-distance-cut'};
+}
+function xy(row,u){return [row.center[0]+row.side[0]*u,row.center[2]+row.side[2]*u];}
+const area=p=>Math.abs(p.reduce((n,a,i)=>{const b=p[(i+1)%p.length];return n+a[0]*b[1]-a[1]*b[0];},0)/2);
+function signedArea(p){return p.reduce((n,a,i)=>{const b=p[(i+1)%p.length];return n+a[0]*b[1]-a[1]*b[0];},0)/2;}
+const cross=(a,b,c)=>(b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);
+function hull(points){const q=points.map(p=>[p[0],p[2]]).sort((a,b)=>a[0]-b[0]||a[1]-b[1]);const p=q.filter((v,i)=>!i||v[0]!==q[i-1][0]||v[1]!==q[i-1][1]);let a=[],b=[];for(const v of p){while(a.length>1&&cross(a.at(-2),a.at(-1),v)<=0)a.pop();a.push(v);}for(const v of [...p].reverse()){while(b.length>1&&cross(b.at(-2),b.at(-1),v)<=0)b.pop();b.push(v);}return [...a.slice(0,-1),...b.slice(0,-1)];}
+function clip(poly,tri){let p=poly;const c=signedArea(tri)<0?[...tri].reverse():tri;for(let i=0;i<3&&p.length;i++){const a=c[i],b=c[(i+1)%3],q=[];for(let j=0;j<p.length;j++){const x=p[j],y=p[(j+1)%p.length],dx=cross(a,b,x),dy=cross(a,b,y);if(dx>=0)q.push(x);if((dx>=0)!==(dy>=0)){const t=dx/(dx-dy);q.push([x[0]+(y[0]-x[0])*t,x[1]+(y[1]-x[1])*t]);}}p=q;}return p;}
+function lineDistance(p,a,b){const dx=b[0]-a[0],dz=b[1]-a[1],len=dx*dx+dz*dz;const t=Math.max(0,Math.min(1,((p[0]-a[0])*dx+(p[1]-a[1])*dz)/len));return Math.hypot(p[0]-a[0]-t*dx,p[1]-a[1]-t*dz);}
+function meshFor(n){
+ const cuts=Array.from({length:n+1},(_,i)=>i===n?L:i*L/n);let rows=[...basis.rows.filter(r=>r.degrees< -68).map(r=>({...r,s:-1})),...ar,...cuts.slice(1,-1).map(rowAt),...basis.rows.filter(r=>r.degrees>75).map(r=>({...r,s:L+1}))];rows.sort((a,b)=>a.degrees-b.degrees);
+ const vertices=[],faces=[],roles=[],cache=new Map(),columns=basis.columns;
+ const V=(row,col,y)=>{const key=`${row}:${col}:${y}`;if(cache.has(key))return cache.get(key);const p=xy(rows[row],columns[col]*.64),i=vertices.length;vertices.push([Math.fround(p[0]),Math.fround(y),Math.fround(p[1])]);cache.set(key,i);return i;};
+ const add=(f,role)=>{faces.push(f);roles.push(role);};
+ const intervals=[];
+ for(let i=0;i<rows.length-1;i++){
+  const a=rows[i],b=rows[i+1];let ya,yb,id;
+  if(b.degrees<=-68){ya=yb=lowerY;id='low-landing';}
+  else if(a.degrees>=75){ya=a.center[1];yb=b.center[1];id='source-gallery';}
+  else{const mid=(a.s+b.s)/2,k=Math.min(n-1,Math.floor(mid/L*n));ya=yb=k===n-1?upperY:lowerY+(k+1)*rise/n;id=`tread-${k}`;}
+  intervals.push({i,ya,yb,id});
+ }
+ const topAt=rows.map((_,i)=>[...(i?[intervals[i-1].yb]:[]),...(i<intervals.length?[intervals[i].ya]:[])].filter((y,k,a)=>!k||y!==a[k-1]));
+ const bottom=rows.map(r=>r.degrees<=-68?lowerY-.07:r.degrees>=75?r.center[1]-.07:lowerY+rise*r.s/L-.07);
+ for(const seg of intervals){const {i,ya,yb,id}=seg;for(let c=0;c<4;c++){
+  const a=V(i,c,ya),b=V(i,c+1,ya),d=V(i+1,c,yb),e=V(i+1,c+1,yb);add([a,b,d],id);add([b,e,d],id);
+  const aa=V(i,c,bottom[i]),bb=V(i,c+1,bottom[i]),dd=V(i+1,c,bottom[i+1]),ee=V(i+1,c+1,bottom[i+1]);add([aa,dd,bb],'underside');add([bb,dd,ee],'underside');
+ }
+ for(const c of [0,4]){
+  const left=[bottom[i],...topAt[i].filter(y=>y<=ya)].filter((y,k,a)=>!k||y!==a[k-1]);
+  const right=[bottom[i+1],...topAt[i+1].filter(y=>y<=yb)].filter((y,k,a)=>!k||y!==a[k-1]);
+  let poly=[...left.map(y=>V(i,c,y)),...right.reverse().map(y=>V(i+1,c,y))];if(c===4)poly.reverse();
+  const center=[0,0,0];for(const j of poly)for(let k=0;k<3;k++)center[k]+=vertices[j][k]/poly.length;const q=vertices.length;vertices.push(center.map(Math.fround));for(let k=0;k<poly.length;k++)add([q,poly[k],poly[(k+1)%poly.length]],'side-cheek');
+ }
+ }
+ for(let i=1;i<rows.length-1;i++)if(topAt[i].length===2){const[lo,hi]=topAt[i];for(let c=0;c<4;c++){const a=V(i,c,lo),b=V(i,c+1,lo),d=V(i,c,hi),e=V(i,c+1,hi);add([a,b,d],'riser');add([b,e,d],'riser');}}
+ for(const i of [0,rows.length-1])for(let c=0;c<4;c++){let f1=[V(i,c,bottom[i]),V(i,c+1,bottom[i]),V(i,c,topAt[i][0])],f2=[V(i,c+1,bottom[i]),V(i,c+1,topAt[i][0]),V(i,c,topAt[i][0])];if(i) {f1.reverse();f2.reverse();}add(f1,'end-cap');add(f2,'end-cap');}
+ const edge=new Map(),dups=new Set(),uf=Array.from({length:vertices.length},(_,i)=>i);let zero=0,duplicate=0,volume=0,topBad=0,unused=0;const find=i=>{while(uf[i]!==i){uf[i]=uf[uf[i]];i=uf[i];}return i;};
+ for(let k=0;k<faces.length;k++){const f=faces[k],p=f.map(i=>vertices[i]);const u=p[1].map((v,i)=>v-p[0][i]),v=p[2].map((v,i)=>v-p[0][i]);const cr=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]];if(Math.hypot(...cr)<=1e-15)zero++;if((roles[k].startsWith('tread')||['low-landing','source-gallery'].includes(roles[k]))&&cr[1]<=0)topBad++;
+ volume+=(p[0][0]*(p[1][1]*p[2][2]-p[1][2]*p[2][1])+p[0][1]*(p[1][2]*p[2][0]-p[1][0]*p[2][2])+p[0][2]*(p[1][0]*p[2][1]-p[1][1]*p[2][0]))/6;
+ const key=[...f].sort((a,b)=>a-b).join(',');if(dups.has(key))duplicate++;dups.add(key);
+ for(let j=0;j<3;j++){const a=f[j],b=f[(j+1)%3],key=a<b?`${a},${b}`:`${b},${a}`;edge.set(key,(edge.get(key)||0)+1);uf[find(a)]=find(b);}
+ }
+ const used=new Set(faces.flat());unused=vertices.length-used.size;const stats={vertices:vertices.length,triangles:faces.length,badEdges:[...edge.values()].filter(n=>n!==2).length,zeroArea:zero,duplicateTriangles:duplicate,components:new Set([...used].map(find)).size,unusedVertices:unused,signedVolume:volume,walkingNormalYFailures:topBad};
+ const treads=cuts.slice(0,-1).map((s,j)=>{const end=cuts[j+1],r=rowAt((s+end)/2),triangles=faces.flatMap((f,k)=>roles[k]===`tread-${j}`?[f.map(i=>vertices[i])]:[]);const segmentRows=rows.filter(r=>r.s>=s-1e-12&&r.s<=end+1e-12&&r.degrees>=-68&&r.degrees<=75);const boundary=[...segmentRows.map(r=>xy(r,-.32)),...segmentRows.map(r=>xy(r,.32)).reverse()];return {id:`tread-${j}`,s0:s,s1:end,center:r.center,side:r.side,topY:Math.fround(j===n-1?upperY:lowerY+(j+1)*rise/n),triangles,boundary};});
+ return {n,rows,vertices,faces,roles,stats,treads,cuts};
+}
+function localFootHulls(actor){const neutral=actor.feet.map(f=>({footIndex:f.footIndex,verticesRoot:f.meshes.flatMap(m=>m.verticesRoot)}));return [{phase:'neutral-flat',feet:neutral},...actor.gallerySwingSamples.map((r,i)=>({phase:`current-gallery-sample-${i}`,swing:r.swing,feet:r.feet}))].map(p=>({...p,feet:p.feet.map(f=>({...f,hull:hull(f.verticesRoot)}))}));}
+fs.mkdirSync(out,{recursive:false});const candidates=[];
+for(const n of [16,18]){
+ const mesh=meshFor(n);fs.writeFileSync(path.join(out,`stairs-${n}-closed.json`),JSON.stringify({...mesh,roleContract:'Only tread/low-landing/source-gallery triangles are walking floors; underside is visible structural geometry, never support query',status:'SOURCE_NUMERIC_SHAPE_NOT_BLENDER_OR_RUNTIME'},null,2)+'\n');
+ if(mesh.stats.badEdges||mesh.stats.zeroArea||mesh.stats.duplicateTriangles||mesh.stats.components!==1||mesh.stats.walkingNormalYFailures||mesh.stats.signedVolume<=0)throw Error('Direct stair topology failed '+JSON.stringify(mesh.stats));
+ const records=[];for(const actor of actors){const meanZ=actor.feet.reduce((s,f)=>s+f.pivotRoot[2],0)/actor.feet.length;const poses=localFootHulls(actor);
+ for(const tread of mesh.treads)for(const direction of [1,-1]){
+  const forward=[tread.side[2]*direction,-tread.side[0]*direction],right=[forward[1],-forward[0]],root=[tread.center[0]-forward[0]*meanZ,tread.center[2]-forward[1]*meanZ];
+  // Translate near the station for robust small-area intersection arithmetic.
+  const tris=tread.triangles.map(t=>t.map(p=>[p[0]-tread.center[0],p[2]-tread.center[2]]));
+  const boundary=tread.boundary.map(p=>[p[0]-tread.center[0],p[1]-tread.center[2]]);
+  for(const pose of poses)for(const foot of pose.feet){if(Date.now()>deadline)throw Error('25 sec internal deadline');const poly=foot.hull.map(p=>[root[0]+right[0]*p[0]+forward[0]*p[1]-tread.center[0],root[1]+right[1]*p[0]+forward[1]*p[1]-tread.center[2]]);const total=area(poly),covered=tris.reduce((sum,tri)=>sum+area(clip(poly,tri)),0),uncovered=Math.max(0,total-covered);let margin=Infinity;for(const p of poly)for(let j=0;j<boundary.length;j++)margin=Math.min(margin,lineDistance(p,boundary[j],boundary[(j+1)%boundary.length]));if(uncovered>1e-12)margin=-margin;
+ records.push({actor:actor.id,species:actor.species,tread:tread.id,direction,phase:pose.phase,footIndex:foot.footIndex,footHullArea:total,uncoveredArea:uncovered,minimumBoundaryDistance:margin,covered:uncovered<=1e-12,rootXZ:root});}
+ }}
+ const neutral=records.filter(r=>r.phase==='neutral-flat'),samples=records.filter(r=>r.phase!=='neutral-flat');const summary={n,riserHeight:rise/n,averageCenterlineRun:L/n,topology:mesh.stats,neutral:{checks:neutral.length,failed:neutral.filter(r=>!r.covered).length,minMargin:Math.min(...neutral.map(r=>r.minimumBoundaryDistance)),maxUncoveredArea:Math.max(...neutral.map(r=>r.uncoveredArea))},currentGallerySamples:{checks:samples.length,failed:samples.filter(r=>!r.covered).length,minMargin:Math.min(...samples.map(r=>r.minimumBoundaryDistance)),maxUncoveredArea:Math.max(...samples.map(r=>r.uncoveredArea)),meaning:'Plan projection only; sampled current swing is not a valid stair pose nor a proof of continuous riser clearance'},worst:records.toSorted((a,b)=>b.uncoveredArea-a.uncoveredArea||a.minimumBoundaryDistance-b.minimumBoundaryDistance).slice(0,16)};
+ fs.writeFileSync(path.join(out,`feet-${n}-records.json`),JSON.stringify(records,null,2)+'\n');candidates.push(summary);
+}
+const after=Object.fromEntries(paths.map(p=>[p,hash(p)]));if(JSON.stringify(before)!==JSON.stringify(after))throw Error('input changed');
+const report={status:'BOUNDED_SOURCE_FOOT_PROJECTION_DIAGNOSTIC_NOT_STAIR_MOTION_PASS',startUtc:start,endUtc:new Date().toISOString(),pid:process.pid,inputsBefore:before,inputsAfter:after,resourceUsage:process.resourceUsage(),length:L,totalRise:rise,frame:'authored Y up; actual left/right foot offsets retained; actor root offset by mean neutral forward pivot so pair is centered on shared contact station',rounding:'All generated mesh vertices Float32 once; footprint source remains actual rig double matrices',numericAreaRoundoff:1e-12,geometricThresholdChange:false,candidates,limitations:['No Blender build','No source/body/door/head collision yet','No physical step pose or planted/swing trajectory','No per-tread continuous stance/swing proof','No actual app or root-use acceptance']};
+fs.writeFileSync(path.join(out,'report.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(candidates.map(({worst,...x})=>x),null,2));

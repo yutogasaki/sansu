@@ -1,0 +1,69 @@
+{
+  "status": "HOLD; first isolated export failed; no retry",
+  "firstFailure": "GLB contains 2 scenes / 131 mesh nodes rather than1 leaf",
+  "secondaryFailure": "Authoring-scene exact guard changed the input/tip diagnostic objects; no restoration attempted",
+  "runnerTerminal": "sampled RSS exceeded2GiB, exit125; ownedPID48643/PGID absent after process",
+  "execution": {
+    "startedAtUtc": "2026-10-12T05:53:32.686685+00:00",
+    "finishedAtUtc": "2026-10-12T05:54:00.156048+00:00",
+    "elapsedSeconds": 27.469261499999998,
+    "ownedPid": 48643,
+    "exitCode": 125,
+    "peakObservedRssBytes": 2161360896,
+    "stopReason": "observed RSS 2GiB limit"
+  },
+  "bindings121Unchanged": true,
+  "original442MeshesPreservedByChangeList": true,
+  "authoringSceneParity": {
+    "equal": false,
+    "guardedObjects": 552,
+    "guardedMeshes": 444,
+    "guardedMaterials": 199,
+    "changedObjects": [
+      "TIP RECENTER DIAGNOSTIC / six-incident-sharp-input",
+      "TIP RECENTER DIAGNOSTIC / six-incident-sharp-tip-recenter"
+    ],
+    "changedMaterials": [],
+    "sceneEqual": true,
+    "originalStateRestoredByAssignment": false
+  },
+  "disposableCopyComponentParity": {
+    "positions": true,
+    "loopVertexIndices": true,
+    "cornerNormals": true,
+    "matrixWorld": true,
+    "sharpFlags": true,
+    "materials": true,
+    "polygonVertices": true,
+    "polygonSmooth": true,
+    "parent": true
+  },
+  "preExportOracleUnchangedFromObservation": {
+    "sha256": "5f2c420b6f6c707915319bc62399e6c06876dd9ef0766542bfc6f7801bb3647b",
+    "rawInputMaxL2": 0.0004999450002029757,
+    "desiredMaxL2": 0.0005938049877916296,
+    "localNonzeroTriangles": 148,
+    "maxWorldError": 2.6586953651373967e-07
+  },
+  "unreached": [
+    "GLB readback oracle completion",
+    "reimport",
+    "second export"
+  ],
+  "staticPrimaryExporterFinding": {
+    "operatorFile": "/Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/__init__.py:648",
+    "default": "use_active_scene=False",
+    "gatherFile": "/Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/blender/exp/gather.py:28",
+    "branch": "scenes_to_export=bpy.data.scenes",
+    "treeFile": "/Applications/Blender.app/Contents/Resources/5.2/scripts/addons_core/io_scene_gltf2/blender/exp/tree.py:139",
+    "effect": "construct sets bpy.context.window.scene=blender_scene for each gathered scene",
+    "probe": "did not set use_active_scene"
+  },
+  "snapshotSizeFinding": "Each authoring-scene JSON expands to107,555,459\u2013460 bytes because all fixed-mesh sharp edges are retained as raw arrays. Repeated raw snapshots are diagnostic overhead; peak cause not sampled per allocation.",
+  "nextMinimalProposalOnly": [
+    "Explicit use_active_scene=True for temporary export scene; retains guard",
+    "Stream/hash fixed-original sharp arrays rather than retain every raw list; retain exact all-object component digests and raw diagnostic leaf state; do not weaken equality"
+  ],
+  "sourceCorrectionAdopted": false,
+  "newExecutionAuthorized": false
+}

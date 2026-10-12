@@ -1,0 +1,57 @@
+{
+  "scope": "Exact clipped source/composed triangle footprint ranges; competing floors separated. No new geometry/placement authorization.",
+  "inputSha256": "3f4b66d93e1bcdb55229c53b6d25c4d5405d467c5e9712028a509f3b49c2e961",
+  "results": [
+    {
+      "cell": [
+        7,
+        -6
+      ],
+      "sourceFullFootprintByFloor": {
+        "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]": {
+          "min": 0.7400866635554406,
+          "max": 1.911707834962217,
+          "span": 1.1716211714067764,
+          "possibleCenterWithoutRetopology": [
+            1.631707834962217,
+            1.0200866635554406
+          ]
+        }
+      }
+    },
+    {
+      "cell": [
+        8,
+        -6
+      ],
+      "sourceFullFootprintByFloor": {
+        "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]": {
+          "min": 0.7594576650413466,
+          "max": 1.9383405968840737,
+          "span": 1.1788829318427272,
+          "possibleCenterWithoutRetopology": [
+            1.6583405968840736,
+            1.0394576650413465
+          ]
+        }
+      }
+    },
+    {
+      "cell": [
+        9,
+        -6
+      ],
+      "sourceFullFootprintByFloor": {
+        "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]": {
+          "min": 0.7756709660920253,
+          "max": 1.7286203546206702,
+          "span": 0.9529493885286449,
+          "possibleCenterWithoutRetopology": [
+            1.4486203546206702,
+            1.0556709660920254
+          ]
+        }
+      }
+    }
+  ]
+}

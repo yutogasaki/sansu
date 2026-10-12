@@ -1,0 +1,44 @@
+import unittest
+from bundle_io import compare
+from completion import classify
+
+
+def tri(positions=None,normal=None):
+    return {'positions':positions or [[0.,0.,0.],[1.,0.,0.],[0.,1.,0.]],
+            'normals':[normal or [0.,0.,1.]]*3}
+
+
+class BundleTest(unittest.TestCase):
+    def test_same_geometry_and_normals(self):
+        self.assertTrue(compare([tri()],[tri()])['passed'])
+
+    def test_cyclic_is_allowed_but_reverse_is_not(self):
+        t=tri();cyclic={'positions':t['positions'][1:]+t['positions'][:1], 'normals':t['normals']}
+        reverse={'positions':list(reversed(t['positions'])),'normals':t['normals']}
+        self.assertTrue(compare([cyclic],[t])['passed'])
+        self.assertFalse(compare([reverse],[t])['passed'])
+
+    def test_normal_guard_does_not_ignore_bad_corner(self):
+        self.assertFalse(compare([tri(normal=[.01,0.,1.])],[tri()])['passed'])
+
+    def test_duplicate_zero_faces_retained(self):
+        t=tri(positions=[[0.,0.,0.]]*3)
+        self.assertTrue(compare([t]*12,[t]*12)['passed'])
+        self.assertFalse(compare([t]*11,[t]*12)['passed'])
+
+    def test_primary_failure_cannot_be_terminal_success_or_normal_view(self):
+        result=classify(True,True,{'phase':'five-willow-trunk-lobes'})
+        self.assertFalse(result['terminalSuccess'])
+        self.assertFalse(result['wholeViewEligibleForRootDecision'])
+        self.assertTrue(result['normalGeometryCompleteButFailedShape'])
+        self.assertTrue(result['failedShapeViewRequiresSeparateRootAuthorization'])
+
+    def test_normal_failure_cannot_be_view_eligible(self):
+        self.assertFalse(classify(False,False,{'phase':'deformation'})['terminalSuccess'])
+
+    def test_complete_without_failure_can_be_source_view_eligible(self):
+        self.assertTrue(classify(True,True,None)['terminalSuccess'])
+        self.assertFalse(classify(True,False,None)['terminalSuccess'])
+
+
+if __name__=='__main__':unittest.main()

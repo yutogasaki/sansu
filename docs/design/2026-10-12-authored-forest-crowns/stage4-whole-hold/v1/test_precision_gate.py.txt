@@ -1,0 +1,92 @@
+"""Pure classifier tests, including the saved first failure; no Blender import."""
+import copy
+import gzip
+import json
+import unittest
+from pathlib import Path
+from precision_gate import classify, decision
+
+
+def state():
+    m=[[float(i==j) for j in range(4)] for i in range(4)]
+    return {'world':copy.deepcopy(m),'basis':copy.deepcopy(m),
+            'parentInverse':copy.deepcopy(m),'parentWorld':copy.deepcopy(m)}
+
+
+class PrecisionGateTest(unittest.TestCase):
+    def values(self):
+        before=state();after=copy.deepcopy(before)
+        after['world'][0][3]=2**-20
+        return before,after,copy.deepcopy(after['world']),[1e-7]*78,[1.1e-6]*78
+
+    def test_qualified_continuation_does_not_pass_strict_gate(self):
+        result=classify('candidate',*self.values())
+        self.assertTrue(result['diagnosticContinuationAllowed'])
+        self.assertTrue(result['precisionHold'])
+        self.assertFalse(result['strictWorldGeometryGate'])
+        self.assertEqual(result['worldToleranceUnchanged'],1e-6)
+
+    def test_within_bound_has_no_precision_hold(self):
+        args=self.values();args=(*args[:4],[1e-6]*78)
+        result=classify('candidate',*args)
+        self.assertTrue(result['strictWorldGeometryGate'])
+        self.assertFalse(result['precisionHold'])
+
+    def test_before_world_failure_stays_hard_stop(self):
+        args=self.values();args=(*args[:3],[1.000001e-6]*78,args[4])
+        self.assertFalse(classify('candidate',*args)['diagnosticContinuationAllowed'])
+
+    def test_linear_change_stays_hard_stop(self):
+        args=self.values();args[1]['world'][0][0]+=1e-12;args[2][0][0]+=1e-12
+        self.assertFalse(classify('candidate',*args)['diagnosticContinuationAllowed'])
+
+    def test_each_parent_local_change_stays_hard_stop(self):
+        for key in ('basis','parentInverse','parentWorld'):
+            args=self.values();args[1][key][0][3]+=1e-12
+            self.assertFalse(classify('candidate',*args)['diagnosticContinuationAllowed'],key)
+
+    def test_unverified_recomposition_stays_hard_stop(self):
+        args=self.values();args[2][0][3]+=1e-12
+        self.assertFalse(classify('candidate',*args)['diagnosticContinuationAllowed'])
+
+    def test_source_baseline_and_oracle_cannot_continue(self):
+        for label in ('baseline','source-oracle'):
+            self.assertFalse(classify(label,*self.values())['diagnosticContinuationAllowed'])
+
+    def test_nan_empty_mismatched_counts_stay_hard_stop(self):
+        for a,b in (([],[]),([1e-7],[1.1e-6,1.2e-6]),([float('nan')],[1.1e-6])):
+            args=self.values();result=classify('candidate',*args[:3],a,b)
+            self.assertFalse(result['diagnosticContinuationAllowed'])
+
+    def test_no_translation_or_nonaffine_stays_hard_stop(self):
+        args=self.values();args[1]['world']=copy.deepcopy(args[0]['world']);args[2][:]=copy.deepcopy(args[0]['world'])
+        self.assertFalse(classify('candidate',*args)['diagnosticContinuationAllowed'])
+        args=self.values();args[1]['world'][3][0]=1e-12;args[2][3][0]=1e-12
+        self.assertFalse(classify('candidate',*args)['diagnosticContinuationAllowed'])
+
+    def test_first_failure_and_diagnostic_completion_are_not_acceptance(self):
+        for assembled in (False,True):
+            for immutable in (False,True):
+                for failure in (None,{'phase':'primary-junction'}):
+                    d=decision(assembled,immutable,failure,[{'precisionHold':True}])
+                    self.assertFalse(d['terminalSuccess'])
+                    self.assertFalse(d['strictWorldGeometryGate'])
+                    self.assertFalse(d['all101DeformationsComplete'])
+                    self.assertFalse(d['roundtripAll128Passed'])
+                    self.assertFalse(d['wholeViewEligibleForRootDecision'])
+                    self.assertEqual(d['diagnosticProcessCompleted'],assembled and immutable and failure is None)
+
+    def test_saved_first_failure_qualifies_with_all_78_recorded_errors(self):
+        old=Path(__file__).parent.parent/'normal-generalization-prep'
+        e=json.loads(gzip.decompress((old/'attempt-full-01/roles/l14:2269/candidate-evaluation.json.gz').read_bytes()))
+        analysis=json.loads((old/'post-build-world-analysis/result.json').read_text())
+        errors=analysis['stages']['plus_float32_world_assignment']['worldErrors']
+        result=classify('candidate',e['before'],e['after'],e['predictedParentFloat32World'],errors,e['worldErrors'])
+        self.assertTrue(result['precisionHold'])
+        self.assertEqual(len(result['beforeWorldErrors']),78)
+        self.assertEqual(len(result['afterWorldErrors']),78)
+        self.assertLess(result['beforeMaxWorldError'],1e-6)
+        self.assertGreater(result['afterMaxWorldError'],1e-6)
+
+
+if __name__=='__main__':unittest.main(verbosity=2)

@@ -1,0 +1,15 @@
+{
+  "complete": true,
+  "checks": [
+    "all modules, adapter, comparison, runner, readiness and seal bound",
+    "unchanged pre/post exact match",
+    "module mutation",
+    "adapter mutation",
+    "comparison mutation",
+    "readiness mutation",
+    "seal mutation",
+    "required module omitted even with reseal"
+  ],
+  "count": 8,
+  "blenderLaunched": false
+}

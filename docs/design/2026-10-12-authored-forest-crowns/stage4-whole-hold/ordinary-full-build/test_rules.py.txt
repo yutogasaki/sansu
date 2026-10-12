@@ -1,0 +1,71 @@
+"""Pure fixtures; no Blender, source scene import or deformation cohort."""
+import unittest
+from rules import (Hold, choose_representation, derive_incident_sharp,
+                   exact_zero_faces, retain_exact_nonzero, normal_residuals)
+
+
+class RulesTest(unittest.TestCase):
+    def test_only_exact_zero_removed(self):
+        p = [[0.,0.,0.], [1.,0.,0.], [2.,0.,0.], [1.,2**-120,0.]]
+        faces = [[0,1,2], [0,1,3]]
+        self.assertEqual(exact_zero_faces(p, faces), [0])
+        out = retain_exact_nonzero(p, faces, [0])
+        self.assertEqual(out['sourceFaceIds'], [1])
+        self.assertEqual(out['sourceCornerIds'], [3,4,5])
+        self.assertEqual(out['faces'], [[0,1,3]])
+
+    def test_wrong_inventory_holds(self):
+        with self.assertRaises(Hold):
+            retain_exact_nonzero([[0.,0.,0.], [1.,0.,0.], [2.,0.,0.]], [[0,1,2]], [])
+
+    def test_sharp_is_data_derived_and_preserves_old(self):
+        expected = [[0.,0.,1.]]*3
+        actual = [[0.,0.,1.], [0.,.1,1.], [0.,0.,1.]]
+        out = derive_incident_sharp([4,9,7], expected, actual,
+                                   [[4,9],[9,7],[4,7],[20,21]], [False,False,False,True])
+        self.assertEqual(out['sourceVertexIds'], [9])
+        self.assertEqual(out['flags'], [True,True,False,True])
+        self.assertEqual(out['newSharpCount'], 2)
+
+    def test_sharp_no_failure_has_no_new_edges(self):
+        n = [[0.,0.,1.]]*3
+        out = derive_incident_sharp([0,1,2], n, n, [[0,1],[1,2],[0,2]], [False,True,False])
+        self.assertEqual(out['flags'], [False,True,False])
+
+    def test_normal_guard_not_relaxed(self):
+        self.assertEqual(normal_residuals([[0.,0.,0.]], [[.002,0.,0.]])['failedCorners'], [])
+        self.assertEqual(normal_residuals([[0.,0.,0.]], [[.00200001,0.,0.]])['failedCorners'], [0])
+
+    def test_no_collapse_keeps_original_pivot(self):
+        out = choose_representation([[0.,0.,0.], [1.,0.,0.], [0.,1.,0.]], [[0,1,2]])
+        self.assertFalse(out['recentered'])
+
+    def test_existing_vertex_center_not_hardcoded(self):
+        # All three collide at old-pivot F32; each retained area is positive.
+        p = [[1.,1.,0.], [1.+2**-30,1.,0.], [1.,1.+2**-30,0.]]
+        out = choose_representation(p, [[0,1,2]])
+        self.assertTrue(out['recentered'])
+        self.assertEqual(out['centerVertexId'], 0)
+        self.assertEqual(exact_zero_faces(out['local32'], [[0,1,2]]), [])
+        perm = [p[1],p[2],p[0]]
+        perm_out = choose_representation(perm, [[2,0,1]])
+        self.assertEqual(perm_out['centerVertexId'], 2)
+        self.assertEqual(out['center64'], perm_out['center64'])
+
+    def test_multiple_collision_groups_hold(self):
+        p = [[1.,1.,0.], [1.+2**-30,1.,0.], [1.,1.+2**-30,0.],
+             [2.,2.,0.], [2.+2**-29,2.,0.], [2.,2.+2**-29,0.]]
+        with self.assertRaises(Hold):
+            choose_representation(p, [[0,1,2], [3,4,5]])
+
+    def test_zero_authored_target_holds(self):
+        with self.assertRaises(Hold):
+            choose_representation([[0.,0.,0.], [1.,0.,0.], [2.,0.,0.]], [[0,1,2]])
+
+    def test_nonfinite_holds(self):
+        with self.assertRaises(Hold):
+            choose_representation([[0.,0.,0.], [float('nan'),0.,0.], [2.,0.,0.]], [[0,1,2]])
+
+
+if __name__ == '__main__':
+    unittest.main()

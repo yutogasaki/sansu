@@ -1,0 +1,72 @@
+"""Static raw GLB accessor classification. No Blender, deformation or geometry edits."""
+from pathlib import Path
+import collections,hashlib,json,math,struct
+
+HERE=Path(__file__).resolve().parent;STAGE=HERE.parent;BASE=STAGE.parent
+SOURCE=BASE/'extraction-attempt02/role-separated-originals.glb'
+blob=SOURCE.read_bytes();n=struct.unpack_from('<I',blob,12)[0];doc=json.loads(blob[20:20+n])
+binary=blob[28+n:];assert struct.unpack_from('<I',blob,24+n)[0]==0x004e4942
+sha=lambda x:hashlib.sha256(x).hexdigest()
+def accessor(index):
+    a=doc['accessors'][index];v=doc['bufferViews'][a['bufferView']]
+    assert 'sparse' not in a and not a.get('normalized',False)
+    typ={'SCALAR':1,'VEC3':3}[a['type']];code={5121:'B',5123:'H',5125:'I',5126:'f'}[a['componentType']]
+    fmt='<'+code*typ;size=struct.calcsize(fmt);offset=v.get('byteOffset',0)+a.get('byteOffset',0);stride=v.get('byteStride',size)
+    rows=[struct.unpack_from(fmt,binary,offset+i*stride) for i in range(a['count'])]
+    return rows,sha(b''.join(struct.pack(fmt,*r) for r in rows))
+
+def exact_zero(positions,faces):
+    # Float32 source values are exact dyadic rationals. Shared binary denominator
+    # permits exact integer cross products without a geometric epsilon.
+    ratios=[[float(x).as_integer_ratio() for x in p] for p in positions]
+    den=max(q for p in ratios for _,q in p)
+    points=[[n*(den//q) for n,q in p] for p in ratios]
+    zero=[];areas=[]
+    for fi,face in enumerate(faces):
+        a,b,c=[points[i] for i in face];u=[y-x for x,y in zip(a,b)];v=[y-x for x,y in zip(a,c)]
+        cross=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]]
+        if cross==[0,0,0]:zero.append(fi)
+        else:areas.append(math.sqrt(sum((x/(den*den))**2 for x in cross))/2)
+    return zero,min(areas,default=None)
+
+completed=STAGE/'normal-debug/attempt-01/completed-before-failure.json'
+passed={r['name']:r for r in json.loads(completed.read_text())}
+rows=[]
+for ni,node in enumerate(doc['nodes']):
+    if 'mesh' not in node:continue
+    extra=node['extras'];fixed=extra['forestFixed'] or (extra['ownerId']=='l28' and extra['forestRole']=='crown-tier')
+    primitives=doc['meshes'][node['mesh']]['primitives'];parts=[]
+    for primitive in primitives:
+        positions,psha=accessor(primitive['attributes']['POSITION']);normals,nsha=accessor(primitive['attributes']['NORMAL']);indices,isha=accessor(primitive['indices'])
+        assert primitive.get('mode',4)==4
+        flat=[r[0] for r in indices];faces=[flat[i:i+3] for i in range(0,len(flat),3)]
+        zero,minarea=exact_zero(positions,faces)
+        clusters=collections.defaultdict(list)
+        for i,p in enumerate(positions):clusters[p].append(i)
+        unequal_normals=[ids for ids in clusters.values() if len({normals[i] for i in ids})>1]
+        parts.append({'vertices':len(positions),'triangles':len(faces),'exactZeroSourceFaceIds':zero,
+            'retainedNonzeroTriangles':len(faces)-len(zero),'minimumPositiveLocalArea':minarea,
+            'positionSHA':psha,'normalSHA':nsha,'indexSHA':isha,'material':primitive['material'],
+            'normalUnitMaxError':max(abs(math.sqrt(sum(x*x for x in n))-1) for n in normals),
+            'coincidentPositionGroupsWithDistinctRawNormals':unequal_normals,
+            'classificationUsesPositiveAreaThreshold':False})
+    stage_name=f"role-{extra['ownerId']}-{extra['sourceNodeIndex']}"
+    similar=extra['forestRole']=='hanging-leaf' and len(parts)==1 and parts[0]['vertices']==78 and parts[0]['triangles']==152 and parts[0]['exactZeroSourceFaceIds']==[0,2,98,100]
+    observed=extra['ownerId']=='l14' and extra['sourceNodeIndex']==2239
+    category=('fixed-no-change' if fixed else 'existing-guard-passed-retain' if stage_name in passed else 'single-leaf-validated' if observed else 'same-source-lamina-topology-unvalidated' if similar else 'retain-existing-method-unvalidated')
+    rows.append({'extractedNode':ni,'sourceName':extra['sourceName'],'ownerId':extra['ownerId'],
+        'sourceNodeIndex':extra['sourceNodeIndex'],'role':extra['forestRole'],'ordinal':extra['forestOrdinal'],
+        'fixed':fixed,'classification':category,'observedOriginalGuardPassed':stage_name in passed,
+        'sourceImportNormalReadbackKnown':observed,'sameLaminaTopologyAsValidatedLeaf':similar,
+        'matrixOrTRS':{k:node[k] for k in ['matrix','translation','rotation','scale'] if k in node},
+        'primitives':parts})
+assert len(rows)==128 and sum(r['fixed'] for r in rows)==27 and len(passed)==19
+result={'scope':'Static raw accessor inventory only; no new Blender roles evaluated',
+    'inputs':{str(SOURCE):sha(blob),str(completed):sha(completed.read_bytes())},
+    'counts':dict(collections.Counter(r['classification'] for r in rows)),
+    'fixed':27,'changed':101,'existingPassedRetained':19,
+    'sourceNormalsAuthoritative':True,'zeroDefinition':'exact dyadic-rational cross product equals zero; no epsilon',
+    'notInferred':['Same topology does not prove same imported-normal encoding failure.','No sharp edge numbers or recenter vertex is generalized from node2239.','Minimum positive area is descriptive; no positive-area removal threshold.'],
+    'roles':rows}
+out=HERE/'source-classification.json';assert not out.exists();out.write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps({'counts':result['counts'],'sha256':sha(out.read_bytes()),'originalSourceSHAAfter':sha(SOURCE.read_bytes())}))

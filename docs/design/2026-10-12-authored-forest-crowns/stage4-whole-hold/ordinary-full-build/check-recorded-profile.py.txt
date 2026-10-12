@@ -1,0 +1,59 @@
+"""Prepared one-leaf Float64 adapter arithmetic replay. No Blender.
+
+Run separately after root releases the performance quiet window. Does not
+evaluate the cohort or authorize its Blender storage/roundtrip.
+"""
+import gzip
+import hashlib
+import importlib.util
+import json
+import math
+from pathlib import Path
+from leaf_adapter import _evaluate64
+
+HERE = Path(__file__).resolve().parent
+STAGE = HERE.parent
+DEBUG = STAGE/'normal-debug'
+PATHS = {
+    'raw': DEBUG/'attempt-01/failing-role-raw.json.gz',
+    'source': DEBUG/'attempt-01/source-role-accessors.json.gz',
+    'profile': DEBUG/'tip-recenter-evaluated-baseline/attempt-01/float64-profile.json.gz',
+    'geometry': DEBUG/'tip-recenter-evaluated-baseline/geometry.py',
+    'fields': STAGE/'fields.py', 'proposal': STAGE/'proposal.json',
+    'adapter': HERE/'leaf_adapter.py',
+}
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+before = {str(p):sha(p) for p in PATHS.values()}
+def read(path):
+    data = path.read_bytes()
+    return json.loads(gzip.decompress(data) if path.suffix=='.gz' else data)
+def load(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+raw = read(PATHS['raw'])
+source = read(PATHS['source'])['extracted']
+prior = read(PATHS['profile'])
+geometry = load('sealed_geometry64', PATHS['geometry'])
+fields = load('sealed_stage4_fields', PATHS['fields'])
+proposal = read(PATHS['proposal'])
+normals = [[n[0],-n[2],n[1]] for n in source['normals']]
+identity = raw['identity']
+field = fields.field_for_role(identity['ownerId'], identity['role'], identity['ordinal'], proposal)
+actual = _evaluate64(raw['inputLocalPositions'], normals, raw['localToWorld'], field, geometry)
+keys = ['world64','targets64','local64','desiredNormalsByVertex64','jacobians64','normalTransports64',
+        'minimumJacobianDeterminant','finiteDifferenceEpsilonUnchanged']
+equal = {key:actual[key]==prior[key] for key in keys}
+result = {'scope':'Only the saved first-leaf Float64 field/transport arithmetic; no Blender/cohort',
+          'inputsBefore':before,'inputsAfter':{str(p):sha(p) for p in PATHS.values()},
+          'sourceIdentity':identity,'sameComponents':equal,
+          'desiredNormalMaxL2':max(math.dist(a,b) for a,b in zip(actual['desiredNormalsByVertex64'],prior['desiredNormalsByVertex64'])),
+          'worldTargetMaxDifference':max(math.dist(a,b) for a,b in zip(actual['targets64'],prior['targets64'])),
+          'passed':all(equal.values())}
+result['passed'] = result['passed'] and result['inputsBefore']==result['inputsAfter']
+out = HERE/'recorded-leaf-profile-check.json'
+assert not out.exists(), 'Preserve first pure profile replay'
+out.write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps(result,indent=2))
+assert result['passed']

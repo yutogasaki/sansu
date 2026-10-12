@@ -1,0 +1,114 @@
+{
+  "recordedAt": "2026-10-12T02:18:12.899633+00:00",
+  "scope": "Byte-identical independent shape-only diagnosis; first full-run failure retained without overwrite. Raw absolute paths are preserved.",
+  "fileCount": 9,
+  "totalBytes": 4536503,
+  "files": [
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/fixed35-desktop-hill-close-day.png",
+      "destination": "actual/fixed35-desktop-hill-close-day.png",
+      "bytes": 547519,
+      "sourceSha256Before": "7ee7d70f87758e2d45dcc8f5f26cd4bad1c427df15d8de7e666bd77de34c7caf",
+      "sourceSha256After": "7ee7d70f87758e2d45dcc8f5f26cd4bad1c427df15d8de7e666bd77de34c7caf",
+      "destinationSha256": "7ee7d70f87758e2d45dcc8f5f26cd4bad1c427df15d8de7e666bd77de34c7caf",
+      "identical": true
+    },
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/fixed35-desktop-whole-day.png",
+      "destination": "actual/fixed35-desktop-whole-day.png",
+      "bytes": 489608,
+      "sourceSha256Before": "070ca145b6b32563d0ebc3032cf82684b0bf32f9ead881fb8551231ab920d3ea",
+      "sourceSha256After": "070ca145b6b32563d0ebc3032cf82684b0bf32f9ead881fb8551231ab920d3ea",
+      "destinationSha256": "070ca145b6b32563d0ebc3032cf82684b0bf32f9ead881fb8551231ab920d3ea",
+      "identical": true
+    },
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/progress.json",
+      "destination": "actual/progress.json",
+      "bytes": 376,
+      "sourceSha256Before": "a8e081cc2833cbef3005bcd4e5882f337b8d5a1c03258123867e0ed148f03f74",
+      "sourceSha256After": "a8e081cc2833cbef3005bcd4e5882f337b8d5a1c03258123867e0ed148f03f74",
+      "destinationSha256": "a8e081cc2833cbef3005bcd4e5882f337b8d5a1c03258123867e0ed148f03f74",
+      "identical": true
+    },
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/report.json",
+      "destination": "actual/report.json",
+      "bytes": 1494352,
+      "sourceSha256Before": "5479ebcf1d1ed27f4b2efcc6e5b5fb5772d9d9af6d522756b40d8b13d233e382",
+      "sourceSha256After": "5479ebcf1d1ed27f4b2efcc6e5b5fb5772d9d9af6d522756b40d8b13d233e382",
+      "destinationSha256": "5479ebcf1d1ed27f4b2efcc6e5b5fb5772d9d9af6d522756b40d8b13d233e382",
+      "identical": true
+    },
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/execution.log.txt",
+      "destination": "execution.log.txt",
+      "bytes": 427,
+      "sourceSha256Before": "12369b7aa8ddcc528ba1bd676c08bd690ce8c6aa4ff462e53dcdc3c7e4c6f493",
+      "sourceSha256After": "12369b7aa8ddcc528ba1bd676c08bd690ce8c6aa4ff462e53dcdc3c7e4c6f493",
+      "destinationSha256": "12369b7aa8ddcc528ba1bd676c08bd690ce8c6aa4ff462e53dcdc3c7e4c6f493",
+      "identical": true
+    },
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/report.json",
+      "destination": "report.json",
+      "bytes": 1983404,
+      "sourceSha256Before": "4f2f817e2cf2e7c026c5a9436ce6ff8fa88baa8309139e6e7504dde6fc033d1c",
+      "sourceSha256After": "4f2f817e2cf2e7c026c5a9436ce6ff8fa88baa8309139e6e7504dde6fc033d1c",
+      "destinationSha256": "4f2f817e2cf2e7c026c5a9436ce6ff8fa88baa8309139e6e7504dde6fc033d1c",
+      "identical": true
+    },
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom-runner-execution.log.txt",
+      "destination": "runner-execution.log.txt",
+      "bytes": 163,
+      "sourceSha256Before": "c8155a30696836f765811943d782b9ac25b50bdbe0d64dcc92446681899cb548",
+      "sourceSha256After": "c8155a30696836f765811943d782b9ac25b50bdbe0d64dcc92446681899cb548",
+      "destinationSha256": "c8155a30696836f765811943d782b9ac25b50bdbe0d64dcc92446681899cb548",
+      "identical": true
+    },
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c1/prepared/shape-after-oom-runner.py",
+      "destination": "runner.py",
+      "bytes": 16820,
+      "sourceSha256Before": "1fa185634a17386a83f251732b87f513b32532c02824f9ed72d684a3a98b48c1",
+      "sourceSha256After": "1fa185634a17386a83f251732b87f513b32532c02824f9ed72d684a3a98b48c1",
+      "destinationSha256": "1fa185634a17386a83f251732b87f513b32532c02824f9ed72d684a3a98b48c1",
+      "identical": true
+    },
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c1/prepared/shape-after-oom-preparation.json",
+      "destination": "preparation.json",
+      "bytes": 3834,
+      "sourceSha256Before": "2314bcb7f6a9018a46a9d99ec17eed8da58c67f9fd6dd2d706d00db2c04fb82d",
+      "sourceSha256After": "2314bcb7f6a9018a46a9d99ec17eed8da58c67f9fd6dd2d706d00db2c04fb82d",
+      "destinationSha256": "2314bcb7f6a9018a46a9d99ec17eed8da58c67f9fd6dd2d706d00db2c04fb82d",
+      "identical": true
+    }
+  ],
+  "allBytesIdentical": true,
+  "protectedFirstFailure": {
+    "relativePath": "../regressions/02-shoulder-full",
+    "before": {
+      "actual/acquisition-initial-32-whole.png": "ebf012b021dbd39623c47aac84f1b55fd21009f29e9e6d46473006e8a77e9e63",
+      "actual/acquisition-l33-young-preview.png": "7e2c5026a9dce967357af8cce63378f28edbac2251328680c9e3c0e0703508a5",
+      "actual/acquisition-l34-young-preview.png": "b5ced3902e31a3472a5138fdcca4d45243e45934afeb6083e3d2aa04ba966c31",
+      "actual/acquisition-l35-young-preview.png": "d645a927b21a0521f71e93bd2ace1d4f0dd67fe6f3e167b584bb2fa63a5ea363",
+      "actual/acquisition-young-35-whole.png": "7c3bce37dfc7dbd66668b0c24170d62f91dc5ee07bf3fce95a7842abcf495694",
+      "actual/progress.json": "4539d6f6c7fd69d61f15bff9967b983a906e43f254eea93316254bdbb43c56fd",
+      "execution.log.txt": "66123f59c71a7b09a803fa541036f5fa0db7b5976e1a455ca1e41e654ea342b0",
+      "report.json": "cb97af7cd20d7f333d067207074d43df11b371479edd15433706b51e974f428d"
+    },
+    "after": {
+      "actual/acquisition-initial-32-whole.png": "ebf012b021dbd39623c47aac84f1b55fd21009f29e9e6d46473006e8a77e9e63",
+      "actual/acquisition-l33-young-preview.png": "7e2c5026a9dce967357af8cce63378f28edbac2251328680c9e3c0e0703508a5",
+      "actual/acquisition-l34-young-preview.png": "b5ced3902e31a3472a5138fdcca4d45243e45934afeb6083e3d2aa04ba966c31",
+      "actual/acquisition-l35-young-preview.png": "d645a927b21a0521f71e93bd2ace1d4f0dd67fe6f3e167b584bb2fa63a5ea363",
+      "actual/acquisition-young-35-whole.png": "7c3bce37dfc7dbd66668b0c24170d62f91dc5ee07bf3fce95a7842abcf495694",
+      "actual/progress.json": "4539d6f6c7fd69d61f15bff9967b983a906e43f254eea93316254bdbb43c56fd",
+      "execution.log.txt": "66123f59c71a7b09a803fa541036f5fa0db7b5976e1a455ca1e41e654ea342b0",
+      "report.json": "cb97af7cd20d7f333d067207074d43df11b371479edd15433706b51e974f428d"
+    },
+    "unchanged": true
+  }
+}

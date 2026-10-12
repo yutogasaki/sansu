@@ -1,0 +1,29 @@
+{
+  "commands": [
+    {
+      "command": [
+        "node",
+        "node_modules/vitest/vitest.mjs",
+        "run",
+        "src/components/island/growing/authoredCoveLife.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "targeted-life.log.txt",
+      "logSha256": "4be5f49cdc7bf33d89c2a53ec3fd06159ec0fbbcc6e14d80f88163b70014e5a8"
+    },
+    {
+      "command": [
+        "node",
+        "node_modules/eslint/bin/eslint.js",
+        "src/components/island/growing/authoredCoveLife.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "targeted-eslint.log.txt",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "inputCount": 285,
+  "changedDuringRun": [],
+  "pass": true,
+  "testSha256": "27cd7b4575e74d66b1386184c83a579b86708bdeb64ce027632b9a17211adab4"
+}

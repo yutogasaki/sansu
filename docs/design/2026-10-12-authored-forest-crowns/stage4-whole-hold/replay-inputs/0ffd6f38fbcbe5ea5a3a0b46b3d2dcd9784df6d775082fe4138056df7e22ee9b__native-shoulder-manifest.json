@@ -1,0 +1,193 @@
+{
+  "version": 1,
+  "source": {
+    "id": "native05-central-shoulder-sw-v3-source-v1",
+    "sha256": "c79e2cd7a228b24ff526e6d78913f6a07880e35dec1532d4c278dd7cbf10411e",
+    "artifact": "docs/design/2026-10-12-authored-central-shoulder/central-shoulder-components-normal-v2.glb"
+  },
+  "artifact": {
+    "path": "/prototypes/place-qa/native-shoulder-components.glb.gz",
+    "sha256": "67348e1cd7f945d6670684d6dff6a352e49a689f5d0c27bfe71a1891223dbf3f",
+    "expandedSha256": "e11c890267e41bc01c7627996dc5bcc432515567bbb0d9486c2002dcfc876e1e",
+    "expandedBytes": 262764,
+    "gzipBytes": 88954
+  },
+  "extension": {
+    "worldId": "native05-authored-world-m0-v2",
+    "districtId": "diagnostic-central-shoulder-c-feasibility",
+    "topFingerprint": "6615:cb4d4afe98d3465c",
+    "topTriangles": 6615
+  },
+  "soil": {
+    "node": "Central shoulder / continuous closed supporting soil",
+    "triangles": 8569
+  },
+  "roots": [
+    {
+      "node": "l33 / source-contour planted root continuation",
+      "ownerId": "l33",
+      "triangles": 36,
+      "binding": {
+        "cell": {
+          "x": 6,
+          "z": -7
+        },
+        "sourcePart": "willow",
+        "sourcePivot": [
+          -8,
+          1.24,
+          -2.7
+        ],
+        "sourceId": "native05-owned-kit-v1",
+        "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "kitExpandedSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "kitGzipSha256": "79b8ae671444bf0c4869bd8e185f8d5ac140a1d7ee3e5709c5d39e4a6735e615",
+        "authoredMatrixWorld": [
+          0.45,
+          0,
+          0,
+          0,
+          0,
+          0.45,
+          0,
+          0,
+          0,
+          0,
+          0.45,
+          0,
+          6,
+          1.247569681,
+          -7,
+          1
+        ],
+        "floorWorldId": "native05-authored-world-m0-v2",
+        "localFloor": {
+          "minX": 5.731341402053833,
+          "maxX": 6.2686586017608645,
+          "minZ": -7.26943717956543,
+          "maxZ": -6.73056282043457,
+          "fingerprint": "475:5fcec11d9db52545"
+        }
+      }
+    },
+    {
+      "node": "l34 / source-contour planted root continuation",
+      "ownerId": "l34",
+      "triangles": 36,
+      "binding": {
+        "cell": {
+          "x": 7,
+          "z": -6
+        },
+        "sourcePart": "birch",
+        "sourcePivot": [
+          -6.986279184897697,
+          3.1776039600372314,
+          -10.80210926532267
+        ],
+        "sourceId": "native05-owned-kit-v1",
+        "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "kitExpandedSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "kitGzipSha256": "79b8ae671444bf0c4869bd8e185f8d5ac140a1d7ee3e5709c5d39e4a6735e615",
+        "authoredMatrixWorld": [
+          0.45,
+          0,
+          0,
+          0,
+          0,
+          0.45,
+          0,
+          0,
+          0,
+          0,
+          0.45,
+          0,
+          7,
+          1.625,
+          -6,
+          1
+        ],
+        "floorWorldId": "native05-authored-world-m0-v2",
+        "localFloor": {
+          "minX": 6.680050079345703,
+          "maxX": 6.857601463317871,
+          "minZ": -6.137650358200073,
+          "maxZ": -5.950450536727906,
+          "fingerprint": "133:fb8b4520409d4336"
+        }
+      }
+    },
+    {
+      "node": "l35 / source-contour planted root continuation",
+      "ownerId": "l35",
+      "triangles": 36,
+      "binding": {
+        "cell": {
+          "x": 8,
+          "z": -6
+        },
+        "sourcePart": "spire",
+        "sourcePivot": [
+          -11.300000190734863,
+          0.9632976651191711,
+          -9.300000190734863
+        ],
+        "sourceId": "native05-owned-kit-v1",
+        "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "kitExpandedSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "kitGzipSha256": "79b8ae671444bf0c4869bd8e185f8d5ac140a1d7ee3e5709c5d39e4a6735e615",
+        "authoredMatrixWorld": [
+          0.45,
+          0,
+          0,
+          0,
+          0,
+          0.45,
+          0,
+          0,
+          0,
+          0,
+          0.45,
+          0,
+          8,
+          1.655,
+          -6,
+          1
+        ],
+        "floorWorldId": "native05-authored-world-m0-v2",
+        "localFloor": {
+          "minX": 7.905454145431518,
+          "maxX": 8.094545370101928,
+          "minZ": -6.099449920654297,
+          "maxZ": -5.900550079345703,
+          "fingerprint": "89:807ec16b6679481f"
+        }
+      }
+    }
+  ],
+  "counts": {
+    "nodes": 4,
+    "primitives": 4,
+    "triangles": 8677,
+    "materials": 3
+  },
+  "excluded": {
+    "topPrimitives": [
+      0,
+      1
+    ],
+    "topTriangles": 6615,
+    "reason": "Common world floors render and hit the top once. Only source primitive 2 closes the soil."
+  },
+  "limits": [
+    "Soil is omitted when water carving or another change alters the source shoulder top union.",
+    "Roots require unchanged actual tree/source identity/full matrix/cell and local physical floor; timestamps are not geometry.",
+    "No new owner, floor, placement or walk grant; no full-source/background model."
+  ],
+  "inputs": {
+    "scene-manifest.json": "ec93e4169ad7cb6e19de2f707360e2db8cc47b9837198518988f240a04335157",
+    "root-continuations-manifest.json": "8221c008d25d1f926dcc21aeabbb0c00066abe62dafbc3f56b90e7b65c514901",
+    "geometry-profile.json.gz": "7b4772489932b225d7b31ced5bd53c6835a47e8e63c71eeb43d7b59af1523d3b",
+    "input/candidate-world.json.gz": "b2d0bdbe3c9be24deb52cb1e0d10c11e7b27bfb3464501d46249b176287ef1cc"
+  }
+}

@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+"""Build a source-linked contact sheet from a completed c2 shoulder report.
+
+Reads original PNGs without altering them. This does not assess visual quality
+or turn one shoulder diagnostic journey into full product acceptance.
+"""
+import argparse
+import hashlib
+import html
+import json
+import os
+from pathlib import Path
+
+
+def digest(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--report', type=Path, required=True)
+    parser.add_argument('--benchmark', type=Path, required=True)
+    parser.add_argument('--out', type=Path, required=True)
+    args = parser.parse_args()
+    source = args.report.resolve()
+    raw = json.loads(source.read_text())
+    assert raw.get('pass') is True and not raw.get('firstFailure'), 'Completed PASS report required'
+    assert raw.get('sourceClosureUnchanged') is True
+    assert raw.get('installedDependenciesUnchanged') is True
+    captures = raw['captures']
+    assert len(captures) == 20, 'Full acquisition + fixed35 journey required'
+    assert {item['scope'] for item in captures} == {'acquisition', 'fixed35'}
+    versions = {item['appVersion'] for item in captures}
+    assert len(versions) == 1 and next(iter(versions)).startswith('authored-shoulder-c2:')
+    assert {item['build'] for item in captures} == {'authored-shoulder-c2'}
+    assert len({item['file'] for item in captures}) == len(captures)
+    output = args.out.resolve()
+    assert not output.exists(), 'Never overwrite a prior review sheet'
+    benchmark = args.benchmark.resolve()
+    assert benchmark.is_file()
+    rows, records = [], []
+    for item in captures:
+        path = source.parent / item['file']
+        assert path.is_file() and digest(path) == item['sha256'], item['file']
+        host, meta = item['host'], item['metadata']
+        assert host['buildRevision'] == item['build'] and host['appVersion'] == item['appVersion']
+        assert host['visualCandidate'] == raw['hostCandidate']
+        assert meta['authoredShoulderEnabled'] == 'true' and meta['authoredCoveEnabled'] == 'true'
+        assert meta['nativeGrowingArt'] == 'true', 'Authored diagnostic effective renderer flag'
+        e = lambda value: html.escape(str(value))
+        href = e(Path(os.path.relpath(path, output)).as_posix())
+        view = item['viewport']
+        title = item['file'].removesuffix('.png')
+        rows.append(f'<figure data-scope="{e(item["scope"])}"><a href="{href}" target="_blank"><img loading="lazy" src="{href}" alt="{e(title)}"></a><figcaption><strong>{e(title)}</strong><br>{view["width"]} x {view["height"]} / reduced motion: {e(item["reducedMotion"])}<details><summary>Evidence identity</summary><p>{e(item["url"])}<br>{e(item["appVersion"])}<br>{e(host["visualCandidate"])}<br>PNG SHA256: {e(item["sha256"])}</p></details></figcaption></figure>')
+        records.append({key: item[key] for key in ['file', 'sha256', 'scope', 'url', 'viewport', 'reducedMotion', 'build', 'appVersion']})
+    output.mkdir(parents=True)
+    proof = {'report': str(source), 'reportSha256': digest(source), 'images': records,
+             'benchmark': {'path': str(benchmark), 'sha256': digest(benchmark), 'evidenceType': 'Approved source art, not app screenshot'},
+             'imageHandling': 'Original PNG bytes, linked without edits or retouching',
+             'scope': 'C2 shoulder acquisition, diagnostic maturity and fixed35 editing only',
+             'visualGate': 'HOLD; root review pending for completed set',
+             'independentObservers': 0,
+             'delivery': 'Local DEV prototype, Island=true / production native=false; authored diagnostic renderer native=true'}
+    (output / 'source-record.json').write_text(json.dumps(proof, indent=2) + '\n')
+    content = '''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>C2 shoulder diagnostic contact sheet</title><style>body{margin:0;background:#f5f6f8;color:#25313d;font:16px/1.5 system-ui}main{max-width:1500px;margin:auto;padding:24px}h1{font-size:25px}p{max-width:1000px}nav{display:flex;gap:8px;margin:20px 0}button{border:1px solid #bbc7d2;background:white;border-radius:6px;padding:8px 16px;cursor:pointer}button[aria-pressed=true]{background:#dceafb}section{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:20px}figure{margin:0;background:white;border:1px solid #d9dfe5}img{display:block;width:100%;height:auto}figcaption{padding:14px;overflow-wrap:anywhere}details{font-size:12px}figure[hidden]{display:none}</style><main><h1>C2 shoulder: actual diagnostic journey</h1><p>20 original browser captures. Local DEV prototype using the app renderer. Acquisition of three saplings and explicit 18-hour diagnostic maturity are followed by a separate fixed35 editing journey. This is not ordinary land acquisition, personal-save integration, a full child-facing product flow, or a performance benchmark.</p><p><strong>Visual gate: HOLD. Independent observers: N=0.</strong> Functional assertions do not establish art approval. Production native flag remains false; this authored diagnostic renders native art explicitly. Click each original image to inspect it at full size.</p><nav><button aria-pressed="true" data-filter="all">All 20</button><button aria-pressed="false" data-filter="acquisition">Acquisition</button><button aria-pressed="false" data-filter="fixed35">Fixed35 edits and views</button></nav><section>'''
+    content += '\n'.join(rows)
+    whole = source.parent / 'fixed35-desktop-whole-day.png'
+    benchmark_href = html.escape(Path(os.path.relpath(benchmark, output)).as_posix())
+    whole_href = html.escape(Path(os.path.relpath(whole, output)).as_posix())
+    content += f'</section><h2>Approved source and actual c2 whole</h2><p>The source art and runtime use different ownership counts, lighting and framing. This is an art comparison, not a pixel-parity assertion. The source image is not counted among the 20 actual captures.</p><section><figure><a href="{benchmark_href}" target="_blank"><img src="{benchmark_href}" alt="Approved native05 source whole"></a><figcaption>Approved native05 source whole</figcaption></figure><figure><a href="{whole_href}" target="_blank"><img src="{whole_href}" alt="Actual c2 fixed35 whole"></a><figcaption>Actual c2 fixed35 whole / 8 homes / 35 owners</figcaption></figure>'
+    content += '''</section><script>document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-filter]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));document.querySelectorAll('figure[data-scope]').forEach(f=>f.hidden=b.dataset.filter!=='all'&&f.dataset.scope!==b.dataset.filter)})</script></main></html>'''
+    (output / 'index.html').write_text(content)
+    assert digest(source) == proof['reportSha256'], 'Source report changed while reading'
+    print(json.dumps({'output': str(output), 'captures': len(captures), 'sourceRecordSha256': digest(output / 'source-record.json')}))
+
+
+if __name__ == '__main__':
+    main()

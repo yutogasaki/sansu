@@ -1,0 +1,28 @@
+"""Classify only saved four support-band contacts against actual stair solid."""
+from pathlib import Path
+import json,hashlib,sys
+from shapely.geometry import MultiPoint,Polygon
+from shapely.ops import unary_union
+B=Path('/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build');O=Path(__file__).resolve().parent;sys.path.insert(0,str(B));from entry_geometry import clip,plane_y,Terrain
+paths=[O/'contact-report.json',B/'sealed-input/stairs-16-closed.json',B/'entry_geometry.py'];sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();before={str(p):sha(p)for p in paths};q=json.loads(paths[0].read_text());s=json.loads(paths[1].read_text());groups={role:[]for role in ['top','bottom']};toproles=[]
+for f,r in zip(s['faces'],s['roles']):
+ t=[s['vertices'][i]for i in f]
+ if r.startswith('tread-')or r in ['low-landing','source-gallery']:groups['top'].append(t);toproles.append(r)
+ if r=='underside':groups['bottom'].append(t)
+terrain={k:Terrain(v)for k,v in groups.items()};unions={k:unary_union([Polygon([(v[0],v[2])for v in t])for t in tr.triangles])for k,tr in terrain.items()};rows=[]
+for contact in q['motionContacts']:
+ if contact['object']!='solid-bough/native-contact-4':continue
+ for band in contact['bands']:
+  poly=band['clippedPolygon'];projected=MultiPoint([(v[0],v[2])for v in poly]).convex_hull;pieces={};coverage={k:projected.difference(u).is_empty for k,u in unions.items()}
+  for role,tr in terrain.items():
+   rec=[]
+   for ti in tr.nearby(poly):
+    part=clip(list(poly),tr.triangles[ti])
+    if not part:continue
+    diff=[plane_y(v,tr.triangles[ti])-v[1] if role=='top' else v[1]-plane_y(v,tr.triangles[ti])for v in part]
+    rec.append({'triangle':ti,'sourceRole':toproles[ti]if role=='top'else'underside','clippedPolygon':part,'positiveInsideGap':[min(diff),max(diff)]})
+   pieces[role]=rec
+  result={'sample':contact['sample'],'sourceTriangle':contact['triangleId'],'band':band['index'],'projectedGeometry':projected.geom_type,'projectionFullyInsideActualStepTopAndBottomDomains':coverage,'pieces':pieces,'wholeContactPortionInsideStairSolid':all(coverage.values()) and all(v and min(r['positiveInsideGap'][0]for r in v)>0 for v in pieces.values())}
+  rows.append(result)
+r={'status':'SAVED_BAND_PORTION_LOCAL_SOLID_CLASSIFICATION','sourceTriangleCount':4,'results':rows,'allContactingPortionsInsideExistingStairSolid':all(x['wholeContactPortionInsideStairSolid']for x in rows),'meaning':'The saved band-intersecting portion of bough4 is internal to the neighboring higher step volume; no claim that entire bough or actual rig is collision-free. Riser/band contacts remain in raw results.','geometryOrGuardsChanged':False,'inputsBefore':before,'inputsAfter':{str(p):sha(p)for p in paths}};assert r['inputsBefore']==r['inputsAfter'];(O/'support-local-volume.json').write_text(json.dumps(r,indent=2)+'\n')
+print(json.dumps({'allInside':r['allContactingPortionsInsideExistingStairSolid'],'rows':[{'triangle':x['sourceTriangle'],'band':x['band'],'projectedGeometry':x['projectedGeometry'],'inside':x['wholeContactPortionInsideStairSolid'],'topRoles':sorted({z['sourceRole']for z in x['pieces']['top']}),'topGap':min(z['positiveInsideGap'][0]for z in x['pieces']['top']),'bottomGap':min(z['positiveInsideGap'][0]for z in x['pieces']['bottom'])}for x in rows]},indent=2))

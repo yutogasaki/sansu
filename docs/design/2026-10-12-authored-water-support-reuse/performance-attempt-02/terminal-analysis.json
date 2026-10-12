@@ -1,0 +1,38 @@
+{
+  "atUtc": "2026-10-12T06:38:15.506777+00:00",
+  "execSession": 34239,
+  "execExitCode": 1,
+  "workersStarted": 0,
+  "measurementCount": 0,
+  "performanceUnmeasured": true,
+  "noAutomaticThirdPreparationOrRetry": true,
+  "noSignalsToUserOrServer": true,
+  "cleanup": "No benchmark worker/process group was created; supervisor terminal exit1 consumed",
+  "inputPathsFixed": 12960,
+  "rawReportSha256": "1ebf466efdb5db7ba8ba669d86dd038a8b95e6e98aa7ee586c13fc63487b0d9a",
+  "firstObservationIsUnassessed": true,
+  "usableCpuObservations": [
+    {
+      "utc": "2026-10-12T06:35:32.151853+00:00",
+      "externalSumPercentOfOneCore": 155.53843833724022
+    },
+    {
+      "utc": "2026-10-12T06:35:33.269227+00:00",
+      "externalSumPercentOfOneCore": 123.55145985642885
+    },
+    {
+      "utc": "2026-10-12T06:35:34.373760+00:00",
+      "externalSumPercentOfOneCore": 155.6468062700332
+    }
+  ],
+  "activityThresholdExceeded": [
+    {
+      "pid": 956,
+      "name": "Firefox GPU Helper",
+      "reason": "activity-monitored-process-exceeded-10-percent",
+      "cpu": 10.859079507504228
+    }
+  ],
+  "rootAndUserProcessPresenceAtTerminal": " 6704 33232  6704   0.0  76544 node\n 6706  6704  6704   0.0  36816 /Users/yutogasaki/Projects/sansu/node_modules/@esbuild/darwin-arm64/bin/esbuild\n13395     1 13395   2.5  26592 /Applications/Blender.app/Contents/MacOS/Blender\n47164 33232 47164   0.0 254368 node\n47166 47164 47164   0.0 575712 /Users/yutogasaki/Projects/sansu/node_modules/@esbuild/darwin-arm64/bin/esbuild\n",
+  "scope": "Rejected preflight only. No c2/c3 speed comparison; functional regression PASS remains separate. Existing user GUI/background activity exceeded predeclared isolation thresholds, not an application failure."
+}

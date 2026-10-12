@@ -1,0 +1,15 @@
+from pathlib import Path
+import json,hashlib,shutil
+B=Path('/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build');O=B.parent/'east-v4-curvature-build';P=B.parent/'east-v5-stairs-prep'
+for n in ['entry_geometry.py','terrain_connector.py','donor_reference.py','build_checks.py','supervise.py']:
+ assert not (B/n).exists();shutil.copyfile(O/n,B/n)
+for p in (O/'sealed-input').iterdir():
+ if p.is_file():shutil.copyfile(p,B/'sealed-input'/p.name)
+for src,name in [(P/'runs/03-stair-comparison/stairs-16-closed.json','stairs-16-closed.json'),(P/'runs/03-stair-comparison/report.json','feet-comparison-report.json')]:shutil.copyfile(src,B/'sealed-input'/name)
+s=json.loads((O/'study.json').read_text());s['candidate']='p02-native-east-real-stair-v5-sixteen';s['status']='PREPARED_NOT_EXECUTED';s['v5Inputs']={n:{'path':'sealed-input/'+n,'sha256':hashlib.sha256((B/'sealed-input'/n).read_bytes()).hexdigest()}for n in ['stairs-16-closed.json','feet-comparison-report.json']};s['v5ChangeScope']={'stairs':16,'riserHeight':1.316007375717163/16,'heightLaw':'horizontal equal-distance treads, real vertical risers; not smoothstep ramp','directClosedStairNoBoolean':True,'otherClosedEntryPartsPreserved':True,'sourceAndOwnerUnchanged':True,'bodyAndFootMotionAcceptance':False,'oldMiddleEntry48mmMismatch':'historical rejected (3.75,-7.25), not assigned to current west entry'}
+(B/'study.json').write_text(json.dumps(s,indent=2)+'\n')
+old=(O/'build-coarse.py').read_text();prefix=old[:old.index('    # The prepared corrected surface')]
+prefix=prefix.replace('from build_checks import assert_sealed_plan, surface_lineage, motion_band_contacts, root_cap_contacts','from build_checks import motion_band_contacts, root_cap_contacts\nfrom surface_assembly import exposed_tops,cap_in_actual_volume')
+prefix=prefix.replace("for key,item in S['v4Inputs'].items():", "for key,item in {**S['v4Inputs'],**S['v5Inputs']}.items():")
+prefix=prefix.replace("'donor_reference.py','supervise.py']", "'donor_reference.py','surface_assembly.py','supervise.py']")
+(B/'build-coarse.py').write_text(prefix)

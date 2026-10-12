@@ -130,7 +130,14 @@ function clean(polygon: WorldFloorVertex[]): WorldFloorVertex[] {
 function interpolate(a: WorldFloorVertex, b: WorldFloorVertex, t: number): WorldFloorVertex {
     return { cell: { x: round(a.cell.x + (b.cell.x - a.cell.x) * t), z: round(a.cell.z + (b.cell.z - a.cell.z) * t) },
         point: { x: round(a.point.x + (b.point.x - a.point.x) * t), y: round(a.point.y + (b.point.y - a.point.y) * t),
-            z: round(a.point.z + (b.point.z - a.point.z) * t) } };
+            z: round(a.point.z + (b.point.z - a.point.z) * t) },
+        // Keep the linear source field through repeated cuts. Normalizing each
+        // intermediate split would change later barycentric interpolation.
+        ...(a.normal && b.normal ? { normal: {
+            x: a.normal.x + (b.normal.x - a.normal.x) * t,
+            y: a.normal.y + (b.normal.y - a.normal.y) * t,
+            z: a.normal.z + (b.normal.z - a.normal.z) * t,
+        } } : {}) };
 }
 /** Split a convex polygon against one directed edge, preserving the source
  * triangle's barycentric mapping for every inserted logical/physical vertex. */
@@ -538,7 +545,7 @@ export function composeAuthoredWaterWorld(state: GrowingState, base: IslandWorld
     definition.edges = sourceEdges.map(edge => ({ ...edge, allows: edge.allows.filter(kind => kind !== 'walk') })).filter(edge => edge.allows.length);
     const cutWorld = compileWorldDefinition(definition), bridgeComposition = composeAuthoredWaterBridges(state, base, cutWorld, plan);
     definition = bridgeComposition.definition; plan.bridges = bridgeComposition.bridges;
-    const supportWorld = plan.bridges.length ? compileWorldDefinition(definition) : cutWorld, refs = new Map(supportWorld.sites.map(site => [refKey(site.ref), site.cell]));
+    const supportWorld = bridgeComposition.supportWorld, refs = new Map(supportWorld.sites.map(site => [refKey(site.ref), site.cell]));
     definition.edges = sourceEdges.map(edge => ({ ...edge, allows: edge.allows.filter(kind => kind !== 'walk'
         || isWorldWalkEdgeSupported(supportWorld, refs.get(refKey(edge.from))!, refs.get(refKey(edge.to))!)) })).filter(edge => edge.allows.length);
     const dryWorld = compileWorldDefinition(definition);

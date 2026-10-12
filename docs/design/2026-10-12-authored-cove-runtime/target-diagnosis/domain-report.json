@@ -1,0 +1,3259 @@
+{
+  "scope": "Only the exact c2 baseline and failed move (4,-4), plus same-world baseline occupancy control. No placement search.",
+  "sourceClosureUnchanged": true,
+  "target": {
+    "x": 4,
+    "z": -4
+  },
+  "canPlace": true,
+  "baseline": {
+    "walkable": 1512,
+    "reached": 1490,
+    "unreachable": [],
+    "floorCount": 96,
+    "floors": [
+      {
+        "id": "[\"native05-inlet-core\",\"Flowers / open sky gathering court:0\"]",
+        "hash": "67ccbc81a27fd775cfa4b33f954f782f8aa6eca7c47fae16cb17617453773b71"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+        "hash": "925d6bd9d76d1922fbb0d3437cbd3a76c0e4b649d7ff878fedfcd70343666524"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+        "hash": "eca5d6bd75d8786c791308474729e7139e471db6f1bd1f23045c8b4e2a442f6d"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Grove / sheltered open room:0\"]",
+        "hash": "1585e2f6909ed9011d9c8ef3917724ce34f8086f2970f8c20b0d46d6e709fae5"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Harbor / shared waterfront court:0\"]",
+        "hash": "7971cf242e49feb1a0956b3d426abf761e18d3d69f61594fc0b83d35de98a14b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "hash": "13d9c88c73f3fcb84f44f1c7e8831503b61608773c6ddbbc6c7ad36f123e0bf5"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "hash": "cb33b049d9090a1f33a202eb0183915691d53d6f93b43545d773069ae98ee606"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+        "hash": "e55c267affd7eff38961f42e30161c3fe788c9e0b2c5704ed4f1503e6a0ad545"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Village / shared sunny court:0\"]",
+        "hash": "d77353897026fd7006810cf428e2786d019cce55b2bec0e920e7e6ecc181c150"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Water town / shared frontage court:0\"]",
+        "hash": "6c59a09a349cb302ff65275d72b008829c78cb75e63dd5ff9d528cc4519e06ab"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-water:l22\"]",
+        "hash": "a3604be56ebf4a0fe1d544e86e752a5d283d49cd8ed3c7373b8bed7fe7e44a52"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-bed:l22\"]",
+        "hash": "ec7bcc2f02025982618acd603f94811dffb263de6925f38b793ab5020c979179"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-water:l20\"]",
+        "hash": "86fee9c297faa0f535f540865c1badb6824ced2ad84a8fbe59f46a335598774c"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-bed:l20\"]",
+        "hash": "90abd710877da36d1a1d753e3853147f8abf9556e10e2e06fde90706536dc123"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-water:l21\"]",
+        "hash": "d4e4c823c796b10d44e5439df41195088b46895c5d23da32de43ca9209901df5"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-bed:l21\"]",
+        "hash": "9f89051516acede1f731f5ff0821585567d2487a054f20203a57b452dd17ed22"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A9\"]",
+        "hash": "949449cb155ed05a547283d42051bfc2979dd0095a875b718131ee7c02cb2025"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A9\"]",
+        "hash": "6bc88239b776c1334f218c20c97d57d60b2f1129b7db6e658a3edcfe58262267"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A7\"]",
+        "hash": "a4b54cc973c2a46b1d57b060a79561d1be8695f383c909863239739211e2fba3"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A7\"]",
+        "hash": "703b40c06e81ba50cb7a0911a4f9c741742563634cdb750fb5491360ab18ec8a"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A8\"]",
+        "hash": "8bb465ef8fb22efc49f4b8fb2eefd1ad29041ad913b577c23fcf7f2233c4a01b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A8\"]",
+        "hash": "2170cb56629ce19de5b6877b14824e8315d50c697b1094d5cc0a4345e7125239"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A9\"]",
+        "hash": "5b1738842261b45dbb831bce5da1c5d38397545bf612710a4818eb85bcefd399"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A9\"]",
+        "hash": "abc77281294e825a4403db1eb386d9ca011db0d4d4b0bbbbf861b716b8b327af"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A0\"]",
+        "hash": "409ccc340e077766d744047536638be515756194064d611182ce43bcb661f835"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A0\"]",
+        "hash": "d61923071b2e462297ccd428ad888e7381693be570294a71a4c4ecf79b8aa367"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A1\"]",
+        "hash": "47db39e8785f12cdaf4a6eeb7c297f7fb16253e79d3c7a8e90ba3ec8ac84c585"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A1\"]",
+        "hash": "ed842d87e043fa282604983f8d9043c3fe5c3c8e30e51e26dfb927af9cbf05cf"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A2\"]",
+        "hash": "a5fb8ac40aefd0646415136cf98f10c87f2f8ee8fa575536b6d85d8b37eb7997"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A2\"]",
+        "hash": "a7c6926aa591ee31b6e5f434477079e98ba1855a78294612ec4d6370fb45a4d1"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A3\"]",
+        "hash": "6c9af6fc044f50cf4d22df0d280fe709b3c87a61ea9a661feb3fd1ac7ce82d78"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A3\"]",
+        "hash": "44720949214ebef1da346671d0d872f0b644075bdf0daee6e2c2248d20f9a914"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A4\"]",
+        "hash": "fbc7c905d4e557c635e38849836546c33450e9648c5a11b4176cbdaaf84963c7"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A4\"]",
+        "hash": "4b809fc3f96f1a037ba1ce199264cfac16570a95dd31990793d4b8026dbe68b4"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A5\"]",
+        "hash": "55e18283431dbc2658b9355a5e6b6f63c559fe90208a19bad677547a24b9d977"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A5\"]",
+        "hash": "2aa26e1742fd82a5160c74b2ad169f688783a70b3215fb2e11f54ea51a28233a"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A6\"]",
+        "hash": "3938b915a764a5a1a739d898ee38ae2ee674a6271cb8d0be49dec623410c3501"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A6\"]",
+        "hash": "d06764f51a19206ec4448c0cfd3d0418b014372934b5960f6b631e005a16b26a"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A7\"]",
+        "hash": "fef3161bc19c4b6e133eeaee038fd3659cd839463fbabbdbda52d7f411897186"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A7\"]",
+        "hash": "b5528fe22d612f85c1209fc653f4a8152b27cb6dfda8016ea93369ee14625825"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A8\"]",
+        "hash": "dc016c22911445847795e18b864a0f4e3a01671668d92639cb9145504aa4de6b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A8\"]",
+        "hash": "44ea85a64d961f54192f0cf085fb6b83d693b3cc57b8ca32e7d1b222799a9aee"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A9\"]",
+        "hash": "33f3efba6e24d6e789a02765da93fcceb684ecb9dbf41ab15ce2c988422b1e3c"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A9\"]",
+        "hash": "23ff25b4d588bfaf8f40bc69739980d7d93c30e1675baf7c05ff245593d01433"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A2\"]",
+        "hash": "898311078a17b9d94e32476311070345b9ee9af740db184b6af92f1eb63d01c6"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A2\"]",
+        "hash": "1de058fcb555a372366de8fbab18183e75ee4a799eeea09ba1ed89d5c32c53aa"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A3\"]",
+        "hash": "18b5029006e384973b6309e6952666db633771ca30cdf02728e52c6403fbbb20"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A3\"]",
+        "hash": "6b23a2ef495dce521108fd6e9a8996953dd2a975ccfe094f22427cde998b82a1"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A4\"]",
+        "hash": "1fa10fa2e810af63f70245e31b62bacab8629a7c148753cc1039f85f3c16610d"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A4\"]",
+        "hash": "82047768d180e06492f19ff993d8636db747bffffb73e8a3f02fcd82adb798fc"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A5\"]",
+        "hash": "6da0e8ca3766fbef1e886adc9a1ca9c62fe52640d5714ce68b0ada120506217b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A5\"]",
+        "hash": "f9d2828e9992e5d3bca6a63c2b8ee2208eb51e248ec5b52c55a73d1f4420e3cb"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A0\"]",
+        "hash": "a9465bdabf314555a4172cb8e13a46a7f85568a6a9ac3b6b388361e11d217beb"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A0\"]",
+        "hash": "eb1b41343e27bacf871b8306184e8c6990ab46e4268a63310e437430f63b7d58"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A1\"]",
+        "hash": "e28adb417641e0532346d19d381f545720f1c11188a50dea564e94a992fb712e"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A1\"]",
+        "hash": "999f27e801a8fd7255f377d5c00e0692440bd478b71a05572b89a6bd7c58e2ee"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A3\"]",
+        "hash": "419a16ae6d0200cb9fc5291b015af17c7d464b868e2308f2cc299ef168051eea"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A3\"]",
+        "hash": "9e8a2a5db721f1060f50de36f83a1fb5475af5c657ff68fad68b207b19b99404"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A4\"]",
+        "hash": "87dd6639be3f07a6f49d57c6c578b5a2b22079d3c605665b7eb64126b46aa9e7"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A4\"]",
+        "hash": "24d2563fdbbee0fdd290b32b20d11eb842ccae09d63a798d4786b60e0d3d6543"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A5\"]",
+        "hash": "b0dbaf7a71c3535d16df1c342e3c073760235864089bf395f757b80f8fd3c537"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A5\"]",
+        "hash": "f8e808f5819c90a811d8f97689ad62ec68474154f5de9218549b106c91652ae8"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A6\"]",
+        "hash": "00309bb22e435075657c5943b348aa02f814e5e169928693b06e43088484a679"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A6\"]",
+        "hash": "e0a1443d869553a95b1786dd628e5d63f107e3a924543952b4ce01c940e43e22"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A2\"]",
+        "hash": "d99554fd932d9d9b3320dcf4fcf9196301429a877d9a8e7d6411de1c0252041f"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A2\"]",
+        "hash": "b93cf2a85d5c87e94e616c1130c5031d06e29defbc316148129e309104c3f8a1"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A1\"]",
+        "hash": "28e3b1b59df2b00999d515deebf2850b1019b88002d387bb08e39e3d20f2e73b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A1\"]",
+        "hash": "949e4be8ed87c2bf33bc425830e2b06f210761578369140d76b1c87f64f09351"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A3\"]",
+        "hash": "68baca37db5efd5f26b2e24fe40c0cf79965af86e1f64df2834741cd6fb210f7"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A3\"]",
+        "hash": "12b4e3e2042b2161180d521169d9e3d24802ba8205bf12aa5320b17901cbac32"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A5\"]",
+        "hash": "3812a328e69993d24c4ba28caf422ffeec78a4f77d118357fc2658ab3582e0ea"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A5\"]",
+        "hash": "68d7fc638cbd3e8080f16e6a6236d460317d50a424190be35bc8f953cf126950"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A4\"]",
+        "hash": "4fb00a311c8223379bec8506493ede3fddcd495d4569a8391c935f945f90d418"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A4\"]",
+        "hash": "9d785b66626076230c1f806fdd7162bce73adc8164200c90ee0390535d2e1fe5"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A6\"]",
+        "hash": "a812a20a7321729a58f0e26628b288bfd1813a001032e6b78184293316181b4f"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A6\"]",
+        "hash": "76d243c4aa03235201ef18cea799c113ad7f5e5ed92a1d78ce8e974b30e2bb49"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A8\"]",
+        "hash": "c484e89040afc888da34616fa64409c0462fa2727249c01fa61b2a62c930819a"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A8\"]",
+        "hash": "619605b6801eba4628cfb308678cbb1b80226a10b79a1ed7b20511fa16d3b6ba"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A7\"]",
+        "hash": "60c0e09bb3c8dc90f81438e51b4373175f0b859a5c81b0d3301c5f7187279703"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A7\"]",
+        "hash": "abf1ee89eac26b7c52c84d236bdf9f894854436b06a255b810050eed3e87753c"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A7\"]",
+        "hash": "a6cba1c604b6d8d60c55f3b4b5becdfd3a70b314f0a375be3d96ead83e2ddfaf"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A7\"]",
+        "hash": "1882c40251e3fb9479a0562c7a316f0eb0ac53b86188bf82e60e622f12161a99"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A8\"]",
+        "hash": "7da0150fca5cb2edd75e67748924c36a82c28f930d85c8fcbe2dfc357ce57cae"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A8\"]",
+        "hash": "9a2bf3d910ac5d43b12f8e5e84a27cb1005748338d9bbd9e782f7e2d1b1ffd2c"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A0\"]",
+        "hash": "8342cf0c0a880edd2fa0a503b20fcbd0ab7a5b7402324f2f515ea051e42fdd5b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A0\"]",
+        "hash": "df5d8f5e5b9c47c61cea9dc9ce2375e35388b973eaa522760e8d2f3488539581"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A6\"]",
+        "hash": "ff659a315468a1f5fb44a56a12e66b83848e7b6ccead5a2ec40b022ae02a35e0"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A6\"]",
+        "hash": "be791cce918d27729415fba2d28518c3913d30e32979be9c0d119e5ba43e6998"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A0\"]",
+        "hash": "7aca7e177a90617d935099b11ef438c1b13311ce7ed3c538d5a68a17c7cfdbde"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A0\"]",
+        "hash": "4dbf0c4dccb5c76bb56e836fdc23cafb915f57f4cd2c2d317f21b39d3f44ef4a"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A1\"]",
+        "hash": "97ce8df4c4b87581a05c641e7b51d16c21e93375683b0ada46fde1348960bdf0"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A1\"]",
+        "hash": "77ef16302591aba3c8946bf702b7295e9024e71660fb773186e516d88dd24db4"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A2\"]",
+        "hash": "5534d31fc828d8fa0fad40b07e039801348a3907b878de4dd647cde31f4067d9"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A2\"]",
+        "hash": "93f5b18225b9bf93ab1f8410559d7308e0d7da7375cc9a666f50b84784068aea"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:bridge:l24\"]",
+        "hash": "db3b5fe9834a9bebb1f4aab42b38aa49319aeb48a5b12a0ffef206108e3b676c"
+      },
+      {
+        "id": "[\"native05-cove-corner-shared-apron-v1\",\"shared-apron\"]",
+        "hash": "00e741c4232fbfc5c81fedca1fc8c6ae84d48fb2e32586662b194cb4229ea692"
+      }
+    ],
+    "dryFalse": [
+      "l20",
+      "l21",
+      "l22",
+      "l23"
+    ]
+  },
+  "failed": {
+    "walkable": 1503,
+    "reached": 181,
+    "unreachable": [
+      {
+        "id": "p3",
+        "cell": {
+          "x": 2,
+          "z": -8
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "p5",
+        "cell": {
+          "x": 9,
+          "z": -9
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "p6",
+        "cell": {
+          "x": 7,
+          "z": -1
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "p7",
+        "cell": {
+          "x": 9,
+          "z": -1
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "p8",
+        "cell": {
+          "x": 12,
+          "z": 0
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l10",
+        "cell": {
+          "x": 3,
+          "z": -9
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l11",
+        "cell": {
+          "x": 4,
+          "z": -9
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l12",
+        "cell": {
+          "x": 3,
+          "z": -8
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l13",
+        "cell": {
+          "x": 4,
+          "z": -8
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l16",
+        "cell": {
+          "x": 6,
+          "z": -10
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l17",
+        "cell": {
+          "x": 9,
+          "z": -4
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l18",
+        "cell": {
+          "x": 10,
+          "z": -4
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l19",
+        "cell": {
+          "x": 11,
+          "z": -4
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l20",
+        "cell": {
+          "x": 5,
+          "z": -9
+        },
+        "dryFloor": false,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l21",
+        "cell": {
+          "x": 6,
+          "z": -9
+        },
+        "dryFloor": false,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l22",
+        "cell": {
+          "x": 8,
+          "z": -9
+        },
+        "dryFloor": false,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l23",
+        "cell": {
+          "x": 7,
+          "z": -9
+        },
+        "dryFloor": false,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l24",
+        "cell": {
+          "x": 7,
+          "z": -8
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l25",
+        "cell": {
+          "x": 2,
+          "z": -7
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l26",
+        "cell": {
+          "x": 10,
+          "z": -8
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l27",
+        "cell": {
+          "x": 12,
+          "z": -4
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l28",
+        "cell": {
+          "x": 1,
+          "z": -4
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l31",
+        "cell": {
+          "x": 8,
+          "z": -4
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      },
+      {
+        "id": "l32",
+        "cell": {
+          "x": 8,
+          "z": -2
+        },
+        "dryFloor": true,
+        "reachable": false,
+        "approaches": []
+      }
+    ],
+    "floorCount": 95,
+    "floors": [
+      {
+        "id": "[\"native05-inlet-core\",\"Flowers / open sky gathering court:0\"]",
+        "hash": "67ccbc81a27fd775cfa4b33f954f782f8aa6eca7c47fae16cb17617453773b71"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+        "hash": "925d6bd9d76d1922fbb0d3437cbd3a76c0e4b649d7ff878fedfcd70343666524"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+        "hash": "eca5d6bd75d8786c791308474729e7139e471db6f1bd1f23045c8b4e2a442f6d"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Grove / sheltered open room:0\"]",
+        "hash": "1585e2f6909ed9011d9c8ef3917724ce34f8086f2970f8c20b0d46d6e709fae5"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Harbor / shared waterfront court:0\"]",
+        "hash": "7971cf242e49feb1a0956b3d426abf761e18d3d69f61594fc0b83d35de98a14b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "hash": "13d9c88c73f3fcb84f44f1c7e8831503b61608773c6ddbbc6c7ad36f123e0bf5"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "hash": "cb33b049d9090a1f33a202eb0183915691d53d6f93b43545d773069ae98ee606"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+        "hash": "e55c267affd7eff38961f42e30161c3fe788c9e0b2c5704ed4f1503e6a0ad545"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Village / shared sunny court:0\"]",
+        "hash": "d77353897026fd7006810cf428e2786d019cce55b2bec0e920e7e6ecc181c150"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Water town / shared frontage court:0\"]",
+        "hash": "6c59a09a349cb302ff65275d72b008829c78cb75e63dd5ff9d528cc4519e06ab"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-water:l22\"]",
+        "hash": "a3604be56ebf4a0fe1d544e86e752a5d283d49cd8ed3c7373b8bed7fe7e44a52"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-bed:l22\"]",
+        "hash": "ec7bcc2f02025982618acd603f94811dffb263de6925f38b793ab5020c979179"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-water:l20\"]",
+        "hash": "86fee9c297faa0f535f540865c1badb6824ced2ad84a8fbe59f46a335598774c"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-bed:l20\"]",
+        "hash": "90abd710877da36d1a1d753e3853147f8abf9556e10e2e06fde90706536dc123"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-water:l21\"]",
+        "hash": "d4e4c823c796b10d44e5439df41195088b46895c5d23da32de43ca9209901df5"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-bed:l21\"]",
+        "hash": "9f89051516acede1f731f5ff0821585567d2487a054f20203a57b452dd17ed22"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A9\"]",
+        "hash": "949449cb155ed05a547283d42051bfc2979dd0095a875b718131ee7c02cb2025"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A9\"]",
+        "hash": "6bc88239b776c1334f218c20c97d57d60b2f1129b7db6e658a3edcfe58262267"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A7\"]",
+        "hash": "a4b54cc973c2a46b1d57b060a79561d1be8695f383c909863239739211e2fba3"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A7\"]",
+        "hash": "703b40c06e81ba50cb7a0911a4f9c741742563634cdb750fb5491360ab18ec8a"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A8\"]",
+        "hash": "8bb465ef8fb22efc49f4b8fb2eefd1ad29041ad913b577c23fcf7f2233c4a01b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A8\"]",
+        "hash": "2170cb56629ce19de5b6877b14824e8315d50c697b1094d5cc0a4345e7125239"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A9\"]",
+        "hash": "5b1738842261b45dbb831bce5da1c5d38397545bf612710a4818eb85bcefd399"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A9\"]",
+        "hash": "abc77281294e825a4403db1eb386d9ca011db0d4d4b0bbbbf861b716b8b327af"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A0\"]",
+        "hash": "409ccc340e077766d744047536638be515756194064d611182ce43bcb661f835"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A0\"]",
+        "hash": "d61923071b2e462297ccd428ad888e7381693be570294a71a4c4ecf79b8aa367"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A1\"]",
+        "hash": "47db39e8785f12cdaf4a6eeb7c297f7fb16253e79d3c7a8e90ba3ec8ac84c585"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A1\"]",
+        "hash": "ed842d87e043fa282604983f8d9043c3fe5c3c8e30e51e26dfb927af9cbf05cf"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A2\"]",
+        "hash": "a5fb8ac40aefd0646415136cf98f10c87f2f8ee8fa575536b6d85d8b37eb7997"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A2\"]",
+        "hash": "a7c6926aa591ee31b6e5f434477079e98ba1855a78294612ec4d6370fb45a4d1"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A3\"]",
+        "hash": "6c9af6fc044f50cf4d22df0d280fe709b3c87a61ea9a661feb3fd1ac7ce82d78"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A3\"]",
+        "hash": "44720949214ebef1da346671d0d872f0b644075bdf0daee6e2c2248d20f9a914"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A4\"]",
+        "hash": "fbc7c905d4e557c635e38849836546c33450e9648c5a11b4176cbdaaf84963c7"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A4\"]",
+        "hash": "4b809fc3f96f1a037ba1ce199264cfac16570a95dd31990793d4b8026dbe68b4"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A5\"]",
+        "hash": "55e18283431dbc2658b9355a5e6b6f63c559fe90208a19bad677547a24b9d977"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A5\"]",
+        "hash": "2aa26e1742fd82a5160c74b2ad169f688783a70b3215fb2e11f54ea51a28233a"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A6\"]",
+        "hash": "3938b915a764a5a1a739d898ee38ae2ee674a6271cb8d0be49dec623410c3501"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A6\"]",
+        "hash": "d06764f51a19206ec4448c0cfd3d0418b014372934b5960f6b631e005a16b26a"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A7\"]",
+        "hash": "fef3161bc19c4b6e133eeaee038fd3659cd839463fbabbdbda52d7f411897186"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A7\"]",
+        "hash": "b5528fe22d612f85c1209fc653f4a8152b27cb6dfda8016ea93369ee14625825"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A8\"]",
+        "hash": "dc016c22911445847795e18b864a0f4e3a01671668d92639cb9145504aa4de6b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A8\"]",
+        "hash": "44ea85a64d961f54192f0cf085fb6b83d693b3cc57b8ca32e7d1b222799a9aee"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A9\"]",
+        "hash": "33f3efba6e24d6e789a02765da93fcceb684ecb9dbf41ab15ce2c988422b1e3c"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A9\"]",
+        "hash": "23ff25b4d588bfaf8f40bc69739980d7d93c30e1675baf7c05ff245593d01433"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A2\"]",
+        "hash": "898311078a17b9d94e32476311070345b9ee9af740db184b6af92f1eb63d01c6"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A2\"]",
+        "hash": "1de058fcb555a372366de8fbab18183e75ee4a799eeea09ba1ed89d5c32c53aa"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A3\"]",
+        "hash": "18b5029006e384973b6309e6952666db633771ca30cdf02728e52c6403fbbb20"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A3\"]",
+        "hash": "6b23a2ef495dce521108fd6e9a8996953dd2a975ccfe094f22427cde998b82a1"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A4\"]",
+        "hash": "1fa10fa2e810af63f70245e31b62bacab8629a7c148753cc1039f85f3c16610d"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A4\"]",
+        "hash": "82047768d180e06492f19ff993d8636db747bffffb73e8a3f02fcd82adb798fc"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A5\"]",
+        "hash": "6da0e8ca3766fbef1e886adc9a1ca9c62fe52640d5714ce68b0ada120506217b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A5\"]",
+        "hash": "f9d2828e9992e5d3bca6a63c2b8ee2208eb51e248ec5b52c55a73d1f4420e3cb"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A0\"]",
+        "hash": "a9465bdabf314555a4172cb8e13a46a7f85568a6a9ac3b6b388361e11d217beb"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A0\"]",
+        "hash": "eb1b41343e27bacf871b8306184e8c6990ab46e4268a63310e437430f63b7d58"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A1\"]",
+        "hash": "e28adb417641e0532346d19d381f545720f1c11188a50dea564e94a992fb712e"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A1\"]",
+        "hash": "999f27e801a8fd7255f377d5c00e0692440bd478b71a05572b89a6bd7c58e2ee"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A3\"]",
+        "hash": "419a16ae6d0200cb9fc5291b015af17c7d464b868e2308f2cc299ef168051eea"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A3\"]",
+        "hash": "9e8a2a5db721f1060f50de36f83a1fb5475af5c657ff68fad68b207b19b99404"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A4\"]",
+        "hash": "87dd6639be3f07a6f49d57c6c578b5a2b22079d3c605665b7eb64126b46aa9e7"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A4\"]",
+        "hash": "24d2563fdbbee0fdd290b32b20d11eb842ccae09d63a798d4786b60e0d3d6543"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A5\"]",
+        "hash": "b0dbaf7a71c3535d16df1c342e3c073760235864089bf395f757b80f8fd3c537"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A5\"]",
+        "hash": "f8e808f5819c90a811d8f97689ad62ec68474154f5de9218549b106c91652ae8"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A6\"]",
+        "hash": "00309bb22e435075657c5943b348aa02f814e5e169928693b06e43088484a679"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A6\"]",
+        "hash": "e0a1443d869553a95b1786dd628e5d63f107e3a924543952b4ce01c940e43e22"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A2\"]",
+        "hash": "d99554fd932d9d9b3320dcf4fcf9196301429a877d9a8e7d6411de1c0252041f"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A2\"]",
+        "hash": "b93cf2a85d5c87e94e616c1130c5031d06e29defbc316148129e309104c3f8a1"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A1\"]",
+        "hash": "28e3b1b59df2b00999d515deebf2850b1019b88002d387bb08e39e3d20f2e73b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A1\"]",
+        "hash": "949e4be8ed87c2bf33bc425830e2b06f210761578369140d76b1c87f64f09351"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A3\"]",
+        "hash": "68baca37db5efd5f26b2e24fe40c0cf79965af86e1f64df2834741cd6fb210f7"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A3\"]",
+        "hash": "12b4e3e2042b2161180d521169d9e3d24802ba8205bf12aa5320b17901cbac32"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A5\"]",
+        "hash": "3812a328e69993d24c4ba28caf422ffeec78a4f77d118357fc2658ab3582e0ea"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A5\"]",
+        "hash": "68d7fc638cbd3e8080f16e6a6236d460317d50a424190be35bc8f953cf126950"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A4\"]",
+        "hash": "4fb00a311c8223379bec8506493ede3fddcd495d4569a8391c935f945f90d418"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A4\"]",
+        "hash": "9d785b66626076230c1f806fdd7162bce73adc8164200c90ee0390535d2e1fe5"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A6\"]",
+        "hash": "a812a20a7321729a58f0e26628b288bfd1813a001032e6b78184293316181b4f"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A6\"]",
+        "hash": "76d243c4aa03235201ef18cea799c113ad7f5e5ed92a1d78ce8e974b30e2bb49"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A8\"]",
+        "hash": "c484e89040afc888da34616fa64409c0462fa2727249c01fa61b2a62c930819a"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A8\"]",
+        "hash": "619605b6801eba4628cfb308678cbb1b80226a10b79a1ed7b20511fa16d3b6ba"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A7\"]",
+        "hash": "60c0e09bb3c8dc90f81438e51b4373175f0b859a5c81b0d3301c5f7187279703"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A7\"]",
+        "hash": "abf1ee89eac26b7c52c84d236bdf9f894854436b06a255b810050eed3e87753c"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A7\"]",
+        "hash": "a6cba1c604b6d8d60c55f3b4b5becdfd3a70b314f0a375be3d96ead83e2ddfaf"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A7\"]",
+        "hash": "1882c40251e3fb9479a0562c7a316f0eb0ac53b86188bf82e60e622f12161a99"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A8\"]",
+        "hash": "7da0150fca5cb2edd75e67748924c36a82c28f930d85c8fcbe2dfc357ce57cae"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A8\"]",
+        "hash": "9a2bf3d910ac5d43b12f8e5e84a27cb1005748338d9bbd9e782f7e2d1b1ffd2c"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A0\"]",
+        "hash": "8342cf0c0a880edd2fa0a503b20fcbd0ab7a5b7402324f2f515ea051e42fdd5b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A0\"]",
+        "hash": "df5d8f5e5b9c47c61cea9dc9ce2375e35388b973eaa522760e8d2f3488539581"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A6\"]",
+        "hash": "ff659a315468a1f5fb44a56a12e66b83848e7b6ccead5a2ec40b022ae02a35e0"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A6\"]",
+        "hash": "be791cce918d27729415fba2d28518c3913d30e32979be9c0d119e5ba43e6998"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A0\"]",
+        "hash": "7aca7e177a90617d935099b11ef438c1b13311ce7ed3c538d5a68a17c7cfdbde"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A0\"]",
+        "hash": "4dbf0c4dccb5c76bb56e836fdc23cafb915f57f4cd2c2d317f21b39d3f44ef4a"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A1\"]",
+        "hash": "97ce8df4c4b87581a05c641e7b51d16c21e93375683b0ada46fde1348960bdf0"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A1\"]",
+        "hash": "77ef16302591aba3c8946bf702b7295e9024e71660fb773186e516d88dd24db4"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A2\"]",
+        "hash": "5534d31fc828d8fa0fad40b07e039801348a3907b878de4dd647cde31f4067d9"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A2\"]",
+        "hash": "93f5b18225b9bf93ab1f8410559d7308e0d7da7375cc9a666f50b84784068aea"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:bridge:l24\"]",
+        "hash": "db3b5fe9834a9bebb1f4aab42b38aa49319aeb48a5b12a0ffef206108e3b676c"
+      }
+    ],
+    "dryFalse": [
+      "l20",
+      "l21",
+      "l22",
+      "l23"
+    ]
+  },
+  "baselineOccupancyOnFailedWorld": {
+    "walkable": 1499,
+    "reached": 1477,
+    "unreachable": [],
+    "floorCount": 95,
+    "floors": [
+      {
+        "id": "[\"native05-inlet-core\",\"Flowers / open sky gathering court:0\"]",
+        "hash": "67ccbc81a27fd775cfa4b33f954f782f8aa6eca7c47fae16cb17617453773b71"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+        "hash": "925d6bd9d76d1922fbb0d3437cbd3a76c0e4b649d7ff878fedfcd70343666524"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+        "hash": "eca5d6bd75d8786c791308474729e7139e471db6f1bd1f23045c8b4e2a442f6d"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Grove / sheltered open room:0\"]",
+        "hash": "1585e2f6909ed9011d9c8ef3917724ce34f8086f2970f8c20b0d46d6e709fae5"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Harbor / shared waterfront court:0\"]",
+        "hash": "7971cf242e49feb1a0956b3d426abf761e18d3d69f61594fc0b83d35de98a14b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "hash": "13d9c88c73f3fcb84f44f1c7e8831503b61608773c6ddbbc6c7ad36f123e0bf5"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "hash": "cb33b049d9090a1f33a202eb0183915691d53d6f93b43545d773069ae98ee606"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+        "hash": "e55c267affd7eff38961f42e30161c3fe788c9e0b2c5704ed4f1503e6a0ad545"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Village / shared sunny court:0\"]",
+        "hash": "d77353897026fd7006810cf428e2786d019cce55b2bec0e920e7e6ecc181c150"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"Water town / shared frontage court:0\"]",
+        "hash": "6c59a09a349cb302ff65275d72b008829c78cb75e63dd5ff9d528cc4519e06ab"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-water:l22\"]",
+        "hash": "a3604be56ebf4a0fe1d544e86e752a5d283d49cd8ed3c7373b8bed7fe7e44a52"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-bed:l22\"]",
+        "hash": "ec7bcc2f02025982618acd603f94811dffb263de6925f38b793ab5020c979179"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-water:l20\"]",
+        "hash": "86fee9c297faa0f535f540865c1badb6824ced2ad84a8fbe59f46a335598774c"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-bed:l20\"]",
+        "hash": "90abd710877da36d1a1d753e3853147f8abf9556e10e2e06fde90706536dc123"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-water:l21\"]",
+        "hash": "d4e4c823c796b10d44e5439df41195088b46895c5d23da32de43ca9209901df5"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:pool-bed:l21\"]",
+        "hash": "9f89051516acede1f731f5ff0821585567d2487a054f20203a57b452dd17ed22"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A9\"]",
+        "hash": "949449cb155ed05a547283d42051bfc2979dd0095a875b718131ee7c02cb2025"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A9\"]",
+        "hash": "6bc88239b776c1334f218c20c97d57d60b2f1129b7db6e658a3edcfe58262267"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A7\"]",
+        "hash": "a4b54cc973c2a46b1d57b060a79561d1be8695f383c909863239739211e2fba3"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A7\"]",
+        "hash": "703b40c06e81ba50cb7a0911a4f9c741742563634cdb750fb5491360ab18ec8a"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A8\"]",
+        "hash": "8bb465ef8fb22efc49f4b8fb2eefd1ad29041ad913b577c23fcf7f2233c4a01b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A8\"]",
+        "hash": "2170cb56629ce19de5b6877b14824e8315d50c697b1094d5cc0a4345e7125239"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A9\"]",
+        "hash": "5b1738842261b45dbb831bce5da1c5d38397545bf612710a4818eb85bcefd399"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A9\"]",
+        "hash": "abc77281294e825a4403db1eb386d9ca011db0d4d4b0bbbbf861b716b8b327af"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A0\"]",
+        "hash": "409ccc340e077766d744047536638be515756194064d611182ce43bcb661f835"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A0\"]",
+        "hash": "d61923071b2e462297ccd428ad888e7381693be570294a71a4c4ecf79b8aa367"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A1\"]",
+        "hash": "47db39e8785f12cdaf4a6eeb7c297f7fb16253e79d3c7a8e90ba3ec8ac84c585"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A1\"]",
+        "hash": "ed842d87e043fa282604983f8d9043c3fe5c3c8e30e51e26dfb927af9cbf05cf"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A2\"]",
+        "hash": "a5fb8ac40aefd0646415136cf98f10c87f2f8ee8fa575536b6d85d8b37eb7997"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A2\"]",
+        "hash": "a7c6926aa591ee31b6e5f434477079e98ba1855a78294612ec4d6370fb45a4d1"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A3\"]",
+        "hash": "6c9af6fc044f50cf4d22df0d280fe709b3c87a61ea9a661feb3fd1ac7ce82d78"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A3\"]",
+        "hash": "44720949214ebef1da346671d0d872f0b644075bdf0daee6e2c2248d20f9a914"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A4\"]",
+        "hash": "fbc7c905d4e557c635e38849836546c33450e9648c5a11b4176cbdaaf84963c7"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A4\"]",
+        "hash": "4b809fc3f96f1a037ba1ce199264cfac16570a95dd31990793d4b8026dbe68b4"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A5\"]",
+        "hash": "55e18283431dbc2658b9355a5e6b6f63c559fe90208a19bad677547a24b9d977"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A5\"]",
+        "hash": "2aa26e1742fd82a5160c74b2ad169f688783a70b3215fb2e11f54ea51a28233a"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A6\"]",
+        "hash": "3938b915a764a5a1a739d898ee38ae2ee674a6271cb8d0be49dec623410c3501"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A6\"]",
+        "hash": "d06764f51a19206ec4448c0cfd3d0418b014372934b5960f6b631e005a16b26a"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A7\"]",
+        "hash": "fef3161bc19c4b6e133eeaee038fd3659cd839463fbabbdbda52d7f411897186"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A7\"]",
+        "hash": "b5528fe22d612f85c1209fc653f4a8152b27cb6dfda8016ea93369ee14625825"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A8\"]",
+        "hash": "dc016c22911445847795e18b864a0f4e3a01671668d92639cb9145504aa4de6b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A8\"]",
+        "hash": "44ea85a64d961f54192f0cf085fb6b83d693b3cc57b8ca32e7d1b222799a9aee"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A9\"]",
+        "hash": "33f3efba6e24d6e789a02765da93fcceb684ecb9dbf41ab15ce2c988422b1e3c"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A9\"]",
+        "hash": "23ff25b4d588bfaf8f40bc69739980d7d93c30e1675baf7c05ff245593d01433"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A2\"]",
+        "hash": "898311078a17b9d94e32476311070345b9ee9af740db184b6af92f1eb63d01c6"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A2\"]",
+        "hash": "1de058fcb555a372366de8fbab18183e75ee4a799eeea09ba1ed89d5c32c53aa"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A3\"]",
+        "hash": "18b5029006e384973b6309e6952666db633771ca30cdf02728e52c6403fbbb20"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A3\"]",
+        "hash": "6b23a2ef495dce521108fd6e9a8996953dd2a975ccfe094f22427cde998b82a1"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A4\"]",
+        "hash": "1fa10fa2e810af63f70245e31b62bacab8629a7c148753cc1039f85f3c16610d"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A4\"]",
+        "hash": "82047768d180e06492f19ff993d8636db747bffffb73e8a3f02fcd82adb798fc"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A5\"]",
+        "hash": "6da0e8ca3766fbef1e886adc9a1ca9c62fe52640d5714ce68b0ada120506217b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A5\"]",
+        "hash": "f9d2828e9992e5d3bca6a63c2b8ee2208eb51e248ec5b52c55a73d1f4420e3cb"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A0\"]",
+        "hash": "a9465bdabf314555a4172cb8e13a46a7f85568a6a9ac3b6b388361e11d217beb"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A0\"]",
+        "hash": "eb1b41343e27bacf871b8306184e8c6990ab46e4268a63310e437430f63b7d58"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A1\"]",
+        "hash": "e28adb417641e0532346d19d381f545720f1c11188a50dea564e94a992fb712e"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A1\"]",
+        "hash": "999f27e801a8fd7255f377d5c00e0692440bd478b71a05572b89a6bd7c58e2ee"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A3\"]",
+        "hash": "419a16ae6d0200cb9fc5291b015af17c7d464b868e2308f2cc299ef168051eea"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A3\"]",
+        "hash": "9e8a2a5db721f1060f50de36f83a1fb5475af5c657ff68fad68b207b19b99404"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A4\"]",
+        "hash": "87dd6639be3f07a6f49d57c6c578b5a2b22079d3c605665b7eb64126b46aa9e7"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A4\"]",
+        "hash": "24d2563fdbbee0fdd290b32b20d11eb842ccae09d63a798d4786b60e0d3d6543"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A5\"]",
+        "hash": "b0dbaf7a71c3535d16df1c342e3c073760235864089bf395f757b80f8fd3c537"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A5\"]",
+        "hash": "f8e808f5819c90a811d8f97689ad62ec68474154f5de9218549b106c91652ae8"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A6\"]",
+        "hash": "00309bb22e435075657c5943b348aa02f814e5e169928693b06e43088484a679"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A6\"]",
+        "hash": "e0a1443d869553a95b1786dd628e5d63f107e3a924543952b4ce01c940e43e22"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A2\"]",
+        "hash": "d99554fd932d9d9b3320dcf4fcf9196301429a877d9a8e7d6411de1c0252041f"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A2\"]",
+        "hash": "b93cf2a85d5c87e94e616c1130c5031d06e29defbc316148129e309104c3f8a1"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A1\"]",
+        "hash": "28e3b1b59df2b00999d515deebf2850b1019b88002d387bb08e39e3d20f2e73b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A1\"]",
+        "hash": "949e4be8ed87c2bf33bc425830e2b06f210761578369140d76b1c87f64f09351"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A3\"]",
+        "hash": "68baca37db5efd5f26b2e24fe40c0cf79965af86e1f64df2834741cd6fb210f7"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A3\"]",
+        "hash": "12b4e3e2042b2161180d521169d9e3d24802ba8205bf12aa5320b17901cbac32"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A5\"]",
+        "hash": "3812a328e69993d24c4ba28caf422ffeec78a4f77d118357fc2658ab3582e0ea"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A5\"]",
+        "hash": "68d7fc638cbd3e8080f16e6a6236d460317d50a424190be35bc8f953cf126950"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A4\"]",
+        "hash": "4fb00a311c8223379bec8506493ede3fddcd495d4569a8391c935f945f90d418"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A4\"]",
+        "hash": "9d785b66626076230c1f806fdd7162bce73adc8164200c90ee0390535d2e1fe5"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A6\"]",
+        "hash": "a812a20a7321729a58f0e26628b288bfd1813a001032e6b78184293316181b4f"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A6\"]",
+        "hash": "76d243c4aa03235201ef18cea799c113ad7f5e5ed92a1d78ce8e974b30e2bb49"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A8\"]",
+        "hash": "c484e89040afc888da34616fa64409c0462fa2727249c01fa61b2a62c930819a"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A8\"]",
+        "hash": "619605b6801eba4628cfb308678cbb1b80226a10b79a1ed7b20511fa16d3b6ba"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A7\"]",
+        "hash": "60c0e09bb3c8dc90f81438e51b4373175f0b859a5c81b0d3301c5f7187279703"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A7\"]",
+        "hash": "abf1ee89eac26b7c52c84d236bdf9f894854436b06a255b810050eed3e87753c"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A7\"]",
+        "hash": "a6cba1c604b6d8d60c55f3b4b5becdfd3a70b314f0a375be3d96ead83e2ddfaf"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A7\"]",
+        "hash": "1882c40251e3fb9479a0562c7a316f0eb0ac53b86188bf82e60e622f12161a99"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A8\"]",
+        "hash": "7da0150fca5cb2edd75e67748924c36a82c28f930d85c8fcbe2dfc357ce57cae"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A8\"]",
+        "hash": "9a2bf3d910ac5d43b12f8e5e84a27cb1005748338d9bbd9e782f7e2d1b1ffd2c"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A0\"]",
+        "hash": "8342cf0c0a880edd2fa0a503b20fcbd0ab7a5b7402324f2f515ea051e42fdd5b"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A0\"]",
+        "hash": "df5d8f5e5b9c47c61cea9dc9ce2375e35388b973eaa522760e8d2f3488539581"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A6\"]",
+        "hash": "ff659a315468a1f5fb44a56a12e66b83848e7b6ccead5a2ec40b022ae02a35e0"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A6\"]",
+        "hash": "be791cce918d27729415fba2d28518c3913d30e32979be9c0d119e5ba43e6998"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A0\"]",
+        "hash": "7aca7e177a90617d935099b11ef438c1b13311ce7ed3c538d5a68a17c7cfdbde"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A0\"]",
+        "hash": "4dbf0c4dccb5c76bb56e836fdc23cafb915f57f4cd2c2d317f21b39d3f44ef4a"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A1\"]",
+        "hash": "97ce8df4c4b87581a05c641e7b51d16c21e93375683b0ada46fde1348960bdf0"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A1\"]",
+        "hash": "77ef16302591aba3c8946bf702b7295e9024e71660fb773186e516d88dd24db4"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-water:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A2\"]",
+        "hash": "5534d31fc828d8fa0fad40b07e039801348a3907b878de4dd647cde31f4067d9"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A2\"]",
+        "hash": "93f5b18225b9bf93ab1f8410559d7308e0d7da7375cc9a666f50b84784068aea"
+      },
+      {
+        "id": "[\"native05-inlet-core\",\"authored-water:bridge:l24\"]",
+        "hash": "db3b5fe9834a9bebb1f4aab42b38aa49319aeb48a5b12a0ffef206108e3b676c"
+      }
+    ],
+    "dryFalse": [
+      "l20",
+      "l21",
+      "l22",
+      "l23"
+    ]
+  },
+  "upstreamWaterFloorsIdentical": true,
+  "removedFloorIds": [
+    "[\"native05-cove-corner-shared-apron-v1\",\"shared-apron\"]"
+  ],
+  "changedRetainedFloors": [],
+  "addedWalkable": [
+    "7.75,-0.5",
+    "8,-0.5",
+    "8.25,-0.5",
+    "7.5,-0.25",
+    "7.75,-0.25",
+    "8,-0.25",
+    "8.25,-0.25",
+    "8.5,-0.25",
+    "7.5,0",
+    "7.75,0",
+    "8,0",
+    "8.25,0",
+    "8.5,0",
+    "7.5,0.25",
+    "7.75,0.25",
+    "8,0.25",
+    "8.25,0.25",
+    "8.5,0.25",
+    "7.5,0.5",
+    "7.75,0.5",
+    "8,0.5",
+    "8.25,0.5",
+    "8.5,0.5"
+  ],
+  "removedWalkable": [
+    "3.5,-4.5",
+    "3.75,-4.5",
+    "4,-4.5",
+    "4.5,-4.5",
+    "3.5,-4.25",
+    "3.75,-4.25",
+    "4,-4.25",
+    "4.25,-4.25",
+    "4.5,-4.25",
+    "3.5,-4",
+    "3.75,-4",
+    "4,-4",
+    "4.25,-4",
+    "4.5,-4",
+    "3.5,-3.75",
+    "3.75,-3.75",
+    "4,-3.75",
+    "4.25,-3.75",
+    "4.5,-3.75"
+  ],
+  "blockingBoundary": [
+    {
+      "key": "3.5,-4.5",
+      "neighbors": [
+        "3.5,-4.75",
+        "3.25,-4.5",
+        "3.75,-4.5",
+        "3.5,-4.25"
+      ],
+      "reachableNeighbors": [
+        "3.25,-4.5"
+      ],
+      "disconnectedNeighbors": [
+        "3.5,-4.75"
+      ]
+    },
+    {
+      "key": "3.75,-4.5",
+      "neighbors": [
+        "3.5,-4.5",
+        "4,-4.5",
+        "3.75,-4.25"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4,-4.5",
+      "neighbors": [
+        "4,-4.75",
+        "3.75,-4.5",
+        "4,-4.25"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": [
+        "4,-4.75"
+      ]
+    },
+    {
+      "key": "4.5,-4.5",
+      "neighbors": [
+        "4.5,-4.75",
+        "4.75,-4.5",
+        "4.5,-4.25"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": [
+        "4.5,-4.75",
+        "4.75,-4.5"
+      ]
+    },
+    {
+      "key": "3.5,-4.25",
+      "neighbors": [
+        "3.5,-4.5",
+        "3.25,-4.25",
+        "3.75,-4.25",
+        "3.5,-4"
+      ],
+      "reachableNeighbors": [
+        "3.25,-4.25"
+      ],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "3.75,-4.25",
+      "neighbors": [
+        "3.75,-4.5",
+        "3.5,-4.25",
+        "4,-4.25",
+        "3.75,-4"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4,-4.25",
+      "neighbors": [
+        "4,-4.5",
+        "3.75,-4.25",
+        "4.25,-4.25",
+        "4,-4"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4.25,-4.25",
+      "neighbors": [
+        "4,-4.25",
+        "4.5,-4.25",
+        "4.25,-4"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4.5,-4.25",
+      "neighbors": [
+        "4.5,-4.5",
+        "4.25,-4.25",
+        "4.5,-4"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "3.5,-4",
+      "neighbors": [
+        "3.5,-4.25",
+        "3.25,-4",
+        "3.75,-4",
+        "3.5,-3.75"
+      ],
+      "reachableNeighbors": [
+        "3.25,-4"
+      ],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "3.75,-4",
+      "neighbors": [
+        "3.75,-4.25",
+        "3.5,-4",
+        "4,-4",
+        "3.75,-3.75"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4,-4",
+      "neighbors": [
+        "4,-4.25",
+        "3.75,-4",
+        "4.25,-4",
+        "4,-3.75"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4.25,-4",
+      "neighbors": [
+        "4.25,-4.25",
+        "4,-4",
+        "4.5,-4",
+        "4.25,-3.75"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4.5,-4",
+      "neighbors": [
+        "4.5,-4.25",
+        "4.25,-4",
+        "4.5,-3.75"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "3.5,-3.75",
+      "neighbors": [
+        "3.5,-4",
+        "3.25,-3.75",
+        "3.75,-3.75",
+        "3.5,-3.5"
+      ],
+      "reachableNeighbors": [
+        "3.25,-3.75"
+      ],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "3.75,-3.75",
+      "neighbors": [
+        "3.75,-4",
+        "3.5,-3.75",
+        "4,-3.75",
+        "3.75,-3.5"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4,-3.75",
+      "neighbors": [
+        "4,-4",
+        "3.75,-3.75",
+        "4.25,-3.75",
+        "4,-3.5"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4.25,-3.75",
+      "neighbors": [
+        "4.25,-4",
+        "4,-3.75",
+        "4.5,-3.75",
+        "4.25,-3.5"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4.5,-3.75",
+      "neighbors": [
+        "4.5,-4",
+        "4.25,-3.75",
+        "4.5,-3.5"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    }
+  ],
+  "representativeRoute": {
+    "owner": "p3",
+    "destination": {
+      "x": 1.25,
+      "z": -8
+    },
+    "route": [
+      {
+        "x": 2,
+        "z": 1
+      },
+      {
+        "x": 2,
+        "z": 0.75
+      },
+      {
+        "x": 1.75,
+        "z": 0.75
+      },
+      {
+        "x": 1.5,
+        "z": 0.75
+      },
+      {
+        "x": 1.25,
+        "z": 0.75
+      },
+      {
+        "x": 1.25,
+        "z": 0.5
+      },
+      {
+        "x": 1.25,
+        "z": 0.25
+      },
+      {
+        "x": 1.25,
+        "z": 0
+      },
+      {
+        "x": 1.25,
+        "z": -0.25
+      },
+      {
+        "x": 1.25,
+        "z": -0.5
+      },
+      {
+        "x": 1.25,
+        "z": -0.75
+      },
+      {
+        "x": 1.25,
+        "z": -1
+      },
+      {
+        "x": 1.5,
+        "z": -1
+      },
+      {
+        "x": 1.75,
+        "z": -1
+      },
+      {
+        "x": 2,
+        "z": -1
+      },
+      {
+        "x": 2,
+        "z": -1.25
+      },
+      {
+        "x": 2,
+        "z": -1.5
+      },
+      {
+        "x": 2,
+        "z": -1.75
+      },
+      {
+        "x": 2,
+        "z": -2
+      },
+      {
+        "x": 2,
+        "z": -2.25
+      },
+      {
+        "x": 2.25,
+        "z": -2.25
+      },
+      {
+        "x": 2.5,
+        "z": -2.25
+      },
+      {
+        "x": 2.75,
+        "z": -2.25
+      },
+      {
+        "x": 2.75,
+        "z": -2.5
+      },
+      {
+        "x": 2.75,
+        "z": -2.75
+      },
+      {
+        "x": 2.75,
+        "z": -3
+      },
+      {
+        "x": 2.75,
+        "z": -3.25
+      },
+      {
+        "x": 2.75,
+        "z": -3.5
+      },
+      {
+        "x": 2.75,
+        "z": -3.75
+      },
+      {
+        "x": 2.75,
+        "z": -4
+      },
+      {
+        "x": 2.75,
+        "z": -4.25
+      },
+      {
+        "x": 3,
+        "z": -4.25
+      },
+      {
+        "x": 3,
+        "z": -4.5
+      },
+      {
+        "x": 3.25,
+        "z": -4.5
+      },
+      {
+        "x": 3.5,
+        "z": -4.5
+      },
+      {
+        "x": 3.5,
+        "z": -4.75
+      },
+      {
+        "x": 3.5,
+        "z": -5
+      },
+      {
+        "x": 3.5,
+        "z": -5.25
+      },
+      {
+        "x": 3.5,
+        "z": -5.5
+      },
+      {
+        "x": 3.5,
+        "z": -5.75
+      },
+      {
+        "x": 3.5,
+        "z": -6
+      },
+      {
+        "x": 3.5,
+        "z": -6.25
+      },
+      {
+        "x": 3.25,
+        "z": -6.25
+      },
+      {
+        "x": 3,
+        "z": -6.25
+      },
+      {
+        "x": 2.75,
+        "z": -6.25
+      },
+      {
+        "x": 2.5,
+        "z": -6.25
+      },
+      {
+        "x": 2.25,
+        "z": -6.25
+      },
+      {
+        "x": 2,
+        "z": -6.25
+      },
+      {
+        "x": 1.75,
+        "z": -6.25
+      },
+      {
+        "x": 1.5,
+        "z": -6.25
+      },
+      {
+        "x": 1.25,
+        "z": -6.25
+      },
+      {
+        "x": 1.25,
+        "z": -6.5
+      },
+      {
+        "x": 1.25,
+        "z": -6.75
+      },
+      {
+        "x": 1.25,
+        "z": -7
+      },
+      {
+        "x": 1.25,
+        "z": -7.25
+      },
+      {
+        "x": 1.25,
+        "z": -7.5
+      },
+      {
+        "x": 1.25,
+        "z": -7.75
+      },
+      {
+        "x": 1.25,
+        "z": -8
+      }
+    ],
+    "blockedRoutePoints": [
+      {
+        "x": 3.5,
+        "z": -4.5
+      }
+    ]
+  },
+  "browser": {
+    "before": {
+      "stockCount": 4,
+      "coveCount": 1,
+      "obstructionRootCount": 7,
+      "triangles": 115808,
+      "checkedPoints": 90,
+      "blockedPoints": 66,
+      "checkedEdges": 170,
+      "blockedEdges": 29,
+      "excludedRefs": 102,
+      "excludedCells": [
+        {
+          "x": 8.5,
+          "z": -4.5
+        },
+        {
+          "x": 10.5,
+          "z": -4.5
+        },
+        {
+          "x": 10.75,
+          "z": -4.5
+        },
+        {
+          "x": 7.75,
+          "z": -4.25
+        },
+        {
+          "x": 8,
+          "z": -4.25
+        },
+        {
+          "x": 8.25,
+          "z": -4.25
+        },
+        {
+          "x": 8.5,
+          "z": -4.25
+        },
+        {
+          "x": 8.75,
+          "z": -4.25
+        },
+        {
+          "x": 9,
+          "z": -4.25
+        },
+        {
+          "x": 9.25,
+          "z": -4.25
+        },
+        {
+          "x": 10,
+          "z": -4.25
+        },
+        {
+          "x": 10.25,
+          "z": -4.25
+        },
+        {
+          "x": 10.75,
+          "z": -4.25
+        },
+        {
+          "x": 11,
+          "z": -4.25
+        },
+        {
+          "x": 11.25,
+          "z": -4.25
+        },
+        {
+          "x": 7.5,
+          "z": -4
+        },
+        {
+          "x": 7.75,
+          "z": -4
+        },
+        {
+          "x": 8,
+          "z": -4
+        },
+        {
+          "x": 8.25,
+          "z": -4
+        },
+        {
+          "x": 8.5,
+          "z": -4
+        },
+        {
+          "x": 8.75,
+          "z": -4
+        },
+        {
+          "x": 9,
+          "z": -4
+        },
+        {
+          "x": 9.25,
+          "z": -4
+        },
+        {
+          "x": 9.5,
+          "z": -4
+        },
+        {
+          "x": 10,
+          "z": -4
+        },
+        {
+          "x": 10.25,
+          "z": -4
+        },
+        {
+          "x": 10.5,
+          "z": -4
+        },
+        {
+          "x": 10.75,
+          "z": -4
+        },
+        {
+          "x": 11,
+          "z": -4
+        },
+        {
+          "x": 11.25,
+          "z": -4
+        },
+        {
+          "x": 7.25,
+          "z": -3.75
+        },
+        {
+          "x": 7.5,
+          "z": -3.75
+        },
+        {
+          "x": 7.75,
+          "z": -3.75
+        },
+        {
+          "x": 8,
+          "z": -3.75
+        },
+        {
+          "x": 8.25,
+          "z": -3.75
+        },
+        {
+          "x": 8.5,
+          "z": -3.75
+        },
+        {
+          "x": 8.75,
+          "z": -3.75
+        },
+        {
+          "x": 9,
+          "z": -3.75
+        },
+        {
+          "x": 9.25,
+          "z": -3.75
+        },
+        {
+          "x": 9.5,
+          "z": -3.75
+        },
+        {
+          "x": 10.25,
+          "z": -3.75
+        },
+        {
+          "x": 10.5,
+          "z": -3.75
+        },
+        {
+          "x": 10.75,
+          "z": -3.75
+        },
+        {
+          "x": 11,
+          "z": -3.75
+        },
+        {
+          "x": 11.25,
+          "z": -3.75
+        },
+        {
+          "x": 7.5,
+          "z": -3.5
+        },
+        {
+          "x": 7.75,
+          "z": -3.5
+        },
+        {
+          "x": 8,
+          "z": -3.5
+        },
+        {
+          "x": 8.25,
+          "z": -3.5
+        },
+        {
+          "x": 8.5,
+          "z": -3.5
+        },
+        {
+          "x": 8.75,
+          "z": -3.5
+        },
+        {
+          "x": 9,
+          "z": -3.5
+        },
+        {
+          "x": 9.25,
+          "z": -3.5
+        },
+        {
+          "x": 9.5,
+          "z": -3.5
+        },
+        {
+          "x": 9.75,
+          "z": -3.5
+        },
+        {
+          "x": 10.5,
+          "z": -3.5
+        },
+        {
+          "x": 10.75,
+          "z": -3.5
+        },
+        {
+          "x": 11,
+          "z": -3.5
+        },
+        {
+          "x": 7.75,
+          "z": -3.25
+        },
+        {
+          "x": 8,
+          "z": -3.25
+        },
+        {
+          "x": 8.25,
+          "z": -3.25
+        },
+        {
+          "x": 8.75,
+          "z": -3.25
+        },
+        {
+          "x": 9,
+          "z": -3.25
+        },
+        {
+          "x": 9.25,
+          "z": -3.25
+        },
+        {
+          "x": 10.75,
+          "z": -3.25
+        },
+        {
+          "x": 8.75,
+          "z": -0.25
+        },
+        {
+          "x": 9,
+          "z": -0.25
+        },
+        {
+          "x": 7,
+          "z": 0
+        },
+        {
+          "x": 7.25,
+          "z": 0
+        },
+        {
+          "x": 8.75,
+          "z": 0
+        },
+        {
+          "x": 9,
+          "z": 0
+        },
+        {
+          "x": 9.25,
+          "z": 0
+        },
+        {
+          "x": 7,
+          "z": 0.25
+        },
+        {
+          "x": 7.25,
+          "z": 0.25
+        },
+        {
+          "x": 8.75,
+          "z": 0.25
+        },
+        {
+          "x": 9,
+          "z": 0.25
+        },
+        {
+          "x": 9.25,
+          "z": 0.25
+        },
+        {
+          "x": 9.5,
+          "z": 0.25
+        },
+        {
+          "x": 6.75,
+          "z": 0.5
+        },
+        {
+          "x": 7,
+          "z": 0.5
+        },
+        {
+          "x": 7.25,
+          "z": 0.5
+        },
+        {
+          "x": 8.75,
+          "z": 0.5
+        },
+        {
+          "x": 9,
+          "z": 0.5
+        },
+        {
+          "x": 9.25,
+          "z": 0.5
+        },
+        {
+          "x": 6.75,
+          "z": 0.75
+        },
+        {
+          "x": 7,
+          "z": 0.75
+        },
+        {
+          "x": 7.25,
+          "z": 0.75
+        },
+        {
+          "x": 8.75,
+          "z": 0.75
+        },
+        {
+          "x": 9,
+          "z": 0.75
+        },
+        {
+          "x": 9.25,
+          "z": 0.75
+        },
+        {
+          "x": 7,
+          "z": 1
+        },
+        {
+          "x": 7.25,
+          "z": 1
+        },
+        {
+          "x": 8.75,
+          "z": 1
+        },
+        {
+          "x": 9,
+          "z": 1
+        },
+        {
+          "x": 9.25,
+          "z": 1
+        },
+        {
+          "x": 7.25,
+          "z": 1.25
+        },
+        {
+          "x": 7.5,
+          "z": 1.25
+        },
+        {
+          "x": 8.5,
+          "z": 1.25
+        },
+        {
+          "x": 8.75,
+          "z": 1.25
+        },
+        {
+          "x": 9,
+          "z": 1.25
+        },
+        {
+          "x": 9.25,
+          "z": 1.25
+        },
+        {
+          "x": 8.75,
+          "z": 1.5
+        }
+      ],
+      "envelope": {
+        "radius": 0.24406937059140585,
+        "height": 0.5500928879753579,
+        "bands": [
+          {
+            "radius": 0.09134999737143516,
+            "minY": 0.20385103985494077,
+            "maxY": 0.5500928879753579
+          },
+          {
+            "radius": 0.1353778402505187,
+            "minY": 0.018073202984005398,
+            "maxY": 0.12266860259311367
+          },
+          {
+            "radius": 0.11740714544627996,
+            "minY": -0.013389719108070908,
+            "maxY": 0.10058152468518997
+          },
+          {
+            "radius": 0.2238622310757637,
+            "minY": 0.022500694926418825,
+            "maxY": 0.32194834489438806
+          },
+          {
+            "radius": 0.11572916628891829,
+            "minY": -0.0190976441475757,
+            "maxY": 0.09264667927451685
+          },
+          {
+            "radius": 0.24406937059140585,
+            "minY": 0.08157946600510133,
+            "maxY": 0.2593961556396356
+          },
+          {
+            "radius": 0.21917178645545318,
+            "minY": 0.03156508037188276,
+            "maxY": 0.4915557144776604
+          },
+          {
+            "radius": 0.08661284906887425,
+            "minY": 0.01597534732239344,
+            "maxY": 0.2971977641282517
+          }
+        ],
+        "source": {
+          "actorIds": [
+            "pokomoko",
+            "authored-friend-0",
+            "authored-friend-1",
+            "authored-friend-2",
+            "authored-friend-3",
+            "authored-friend-4",
+            "authored-friend-5",
+            "authored-friend-6",
+            "authored-friend-7"
+          ],
+          "visualScales": [
+            [
+              0.45,
+              0.45,
+              0.45
+            ],
+            [
+              0.45,
+              0.45,
+              0.45
+            ],
+            [
+              0.45,
+              0.45,
+              0.45
+            ],
+            [
+              0.45,
+              0.45,
+              0.45
+            ],
+            [
+              0.45,
+              0.45,
+              0.45
+            ],
+            [
+              0.45,
+              0.45,
+              0.45
+            ],
+            [
+              0.45,
+              0.45,
+              0.45
+            ],
+            [
+              0.45,
+              0.45,
+              0.45
+            ],
+            [
+              0.45,
+              0.45,
+              0.45
+            ]
+          ],
+          "meshes": 117,
+          "vertices": 99868,
+          "footSwing": 0.5,
+          "armSwing": 0.6,
+          "walkBob": 0.015750000000000004,
+          "method": "indexed-source-motion-intervals"
+        }
+      },
+      "poses": {
+        "checked": 9,
+        "evacuations": 0,
+        "unplaced": 0
+      },
+      "walkableCount": 1410,
+      "reachableCount": 1386,
+      "ownerAccess": [
+        {
+          "id": "p1",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "p2",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "p3",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "p4",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "p5",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "p6",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "p7",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "p8",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "p9",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l10",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l11",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l12",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l13",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l14",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l15",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l16",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l17",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l18",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l19",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l20",
+          "dryFloor": false,
+          "reachable": true
+        },
+        {
+          "id": "l21",
+          "dryFloor": false,
+          "reachable": true
+        },
+        {
+          "id": "l22",
+          "dryFloor": false,
+          "reachable": true
+        },
+        {
+          "id": "l23",
+          "dryFloor": false,
+          "reachable": true
+        },
+        {
+          "id": "l24",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l25",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l26",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l27",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l28",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l29",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l30",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l31",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l32",
+          "dryFloor": true,
+          "reachable": true
+        }
+      ]
+    },
+    "after": {
+      "stockCount": 4,
+      "coveCount": 0,
+      "obstructionRootCount": 4,
+      "triangles": 27648,
+      "checkedPoints": 57,
+      "blockedPoints": 37,
+      "checkedEdges": 77,
+      "blockedEdges": 24,
+      "excludedRefs": 65,
+      "excludedCells": [
+        {
+          "x": 8.5,
+          "z": -4.5
+        },
+        {
+          "x": 10.5,
+          "z": -4.5
+        },
+        {
+          "x": 10.75,
+          "z": -4.5
+        },
+        {
+          "x": 7.75,
+          "z": -4.25
+        },
+        {
+          "x": 8,
+          "z": -4.25
+        },
+        {
+          "x": 8.25,
+          "z": -4.25
+        },
+        {
+          "x": 8.5,
+          "z": -4.25
+        },
+        {
+          "x": 8.75,
+          "z": -4.25
+        },
+        {
+          "x": 9,
+          "z": -4.25
+        },
+        {
+          "x": 9.25,
+          "z": -4.25
+        },
+        {
+          "x": 10,
+          "z": -4.25
+        },
+        {
+          "x": 10.25,
+          "z": -4.25
+        },
+        {
+          "x": 10.75,
+          "z": -4.25
+        },
+        {
+          "x": 11,
+          "z": -4.25
+        },
+        {
+          "x": 11.25,
+          "z": -4.25
+        },
+        {
+          "x": 7.5,
+          "z": -4
+        },
+        {
+          "x": 7.75,
+          "z": -4
+        },
+        {
+          "x": 8,
+          "z": -4
+        },
+        {
+          "x": 8.25,
+          "z": -4
+        },
+        {
+          "x": 8.5,
+          "z": -4
+        },
+        {
+          "x": 8.75,
+          "z": -4
+        },
+        {
+          "x": 9,
+          "z": -4
+        },
+        {
+          "x": 9.25,
+          "z": -4
+        },
+        {
+          "x": 9.5,
+          "z": -4
+        },
+        {
+          "x": 10,
+          "z": -4
+        },
+        {
+          "x": 10.25,
+          "z": -4
+        },
+        {
+          "x": 10.5,
+          "z": -4
+        },
+        {
+          "x": 10.75,
+          "z": -4
+        },
+        {
+          "x": 11,
+          "z": -4
+        },
+        {
+          "x": 11.25,
+          "z": -4
+        },
+        {
+          "x": 7.25,
+          "z": -3.75
+        },
+        {
+          "x": 7.5,
+          "z": -3.75
+        },
+        {
+          "x": 7.75,
+          "z": -3.75
+        },
+        {
+          "x": 8,
+          "z": -3.75
+        },
+        {
+          "x": 8.25,
+          "z": -3.75
+        },
+        {
+          "x": 8.5,
+          "z": -3.75
+        },
+        {
+          "x": 8.75,
+          "z": -3.75
+        },
+        {
+          "x": 9,
+          "z": -3.75
+        },
+        {
+          "x": 9.25,
+          "z": -3.75
+        },
+        {
+          "x": 9.5,
+          "z": -3.75
+        },
+        {
+          "x": 10.25,
+          "z": -3.75
+        },
+        {
+          "x": 10.5,
+          "z": -3.75
+        },
+        {
+          "x": 10.75,
+          "z": -3.75
+        },
+        {
+          "x": 11,
+          "z": -3.75
+        },
+        {
+          "x": 11.25,
+          "z": -3.75
+        },
+        {
+          "x": 7.5,
+          "z": -3.5
+        },
+        {
+          "x": 7.75,
+          "z": -3.5
+        },
+        {
+          "x": 8,
+          "z": -3.5
+        },
+        {
+          "x": 8.25,
+          "z": -3.5
+        },
+        {
+          "x": 8.5,
+          "z": -3.5
+        },
+        {
+          "x": 8.75,
+          "z": -3.5
+        },
+        {
+          "x": 9,
+          "z": -3.5
+        },
+        {
+          "x": 9.25,
+          "z": -3.5
+        },
+        {
+          "x": 9.5,
+          "z": -3.5
+        },
+        {
+          "x": 9.75,
+          "z": -3.5
+        },
+        {
+          "x": 10.5,
+          "z": -3.5
+        },
+        {
+          "x": 10.75,
+          "z": -3.5
+        },
+        {
+          "x": 11,
+          "z": -3.5
+        },
+        {
+          "x": 7.75,
+          "z": -3.25
+        },
+        {
+          "x": 8,
+          "z": -3.25
+        },
+        {
+          "x": 8.25,
+          "z": -3.25
+        },
+        {
+          "x": 8.75,
+          "z": -3.25
+        },
+        {
+          "x": 9,
+          "z": -3.25
+        },
+        {
+          "x": 9.25,
+          "z": -3.25
+        },
+        {
+          "x": 10.75,
+          "z": -3.25
+        }
+      ],
+      "envelope": {
+        "radius": 0.24406937059140585,
+        "height": 0.5500928879753579,
+        "bands": [
+          {
+            "radius": 0.09134999737143516,
+            "minY": 0.20385103985494077,
+            "maxY": 0.5500928879753579
+          },
+          {
+            "radius": 0.1353778402505187,
+            "minY": 0.018073202984005398,
+            "maxY": 0.12266860259311367
+          },
+          {
+            "radius": 0.11740714544627996,
+            "minY": -0.013389719108070908,
+            "maxY": 0.10058152468518997
+          },
+          {
+            "radius": 0.2238622310757637,
+            "minY": 0.022500694926418825,
+            "maxY": 0.32194834489438806
+          },
+          {
+            "radius": 0.11572916628891829,
+            "minY": -0.0190976441475757,
+            "maxY": 0.09264667927451685
+          },
+          {
+            "radius": 0.24406937059140585,
+            "minY": 0.08157946600510133,
+            "maxY": 0.2593961556396356
+          },
+          {
+            "radius": 0.21917178645545318,
+            "minY": 0.03156508037188276,
+            "maxY": 0.4915557144776604
+          },
+          {
+            "radius": 0.08661284906887425,
+            "minY": 0.01597534732239344,
+            "maxY": 0.2971977641282517
+          }
+        ],
+        "source": {
+          "actorIds": [
+            "pokomoko",
+            "authored-friend-0",
+            "authored-friend-1",
+            "authored-friend-2",
+            "authored-friend-3",
+            "authored-friend-4",
+            "authored-friend-5",
+            "authored-friend-6",
+            "authored-friend-7"
+          ],
+          "visualScales": [
+            [
+              0.45,
+              0.45,
+              0.45
+            ],
+            [
+              0.45,
+              0.45,
+              0.45
+            ],
+            [
+              0.45,
+              0.45,
+              0.45
+            ],
+            [
+              0.45,
+              0.45,
+              0.45
+            ],
+            [
+              0.45,
+              0.45,
+              0.45
+            ],
+            [
+              0.45,
+              0.45,
+              0.45
+            ],
+            [
+              0.45,
+              0.45,
+              0.45
+            ],
+            [
+              0.45,
+              0.45,
+              0.45
+            ],
+            [
+              0.45,
+              0.45,
+              0.45
+            ]
+          ],
+          "meshes": 117,
+          "vertices": 99868,
+          "footSwing": 0.5,
+          "armSwing": 0.6,
+          "walkBob": 0.015750000000000004,
+          "method": "indexed-source-motion-intervals"
+        }
+      },
+      "poses": {
+        "checked": 9,
+        "evacuations": 0,
+        "unplaced": 0
+      },
+      "walkableCount": 1438,
+      "reachableCount": 181,
+      "ownerAccess": [
+        {
+          "id": "p1",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "p2",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "p3",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "p4",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "p5",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "p6",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "p7",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "p8",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "p9",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l10",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "l11",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "l12",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "l13",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "l14",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l15",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l16",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "l17",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "l18",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "l19",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "l20",
+          "dryFloor": false,
+          "reachable": false
+        },
+        {
+          "id": "l21",
+          "dryFloor": false,
+          "reachable": false
+        },
+        {
+          "id": "l22",
+          "dryFloor": false,
+          "reachable": false
+        },
+        {
+          "id": "l23",
+          "dryFloor": false,
+          "reachable": false
+        },
+        {
+          "id": "l24",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "l25",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "l26",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "l27",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "l28",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "l29",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l30",
+          "dryFloor": true,
+          "reachable": true
+        },
+        {
+          "id": "l31",
+          "dryFloor": true,
+          "reachable": false
+        },
+        {
+          "id": "l32",
+          "dryFloor": true,
+          "reachable": false
+        }
+      ]
+    },
+    "waterMetadataInitiallyPresent": true
+  },
+  "moduleInputs": [
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/islandLife/economyRules.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/islandLife/model.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/islandLife/decorations.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/islandLife/footprint.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/islandLife/landRules.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/islandLife/walkingSpace.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/islandLife/space.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/islandLife/waterChannels.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/authoredWaterGeometry.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/authoredWorldAccess.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/rules.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/types.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/space.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/environment.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/worldDefinition.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/authoredWaterCarving.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/authoredWaterContour.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/authoredWaterRim.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/nativeWaterBridgeProfile.json",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/authoredWaterBridge.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/nativeWaterSource.json",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/authoredWaterWorld.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/authoredWaterFrame.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/docs/design/2026-10-12-authored-cove-entrance/source-manifest.json",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/docs/design/2026-10-12-authored-cove-entrance/shared-apron-world-patch-v1.json",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/authoredCoveWorld.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/natureTown/random.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/random.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/flowers.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/nature.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/docs/product/island-place-goals.json",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/placeCatalog.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/placeTerrain.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/places.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/authoredWorldFrame.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/guidance.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/community.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/room.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/placeTypes.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/placeGoals.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/names.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/pier.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/town.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/authoredPlacementSupport.ts",
+    "../../../../private/tmp/sansu-authored-cove-c2/candidate/src/domain/growingIsland/commands.ts"
+  ]
+}

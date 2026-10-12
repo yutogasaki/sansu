@@ -1,0 +1,41 @@
+{
+  "visualStatus": "HOLD",
+  "reviewer": "root author, not independent observer",
+  "independentObservers": 0,
+  "evidenceType": "Source composition review, not runtime score",
+  "reviewedViews": [
+    {
+      "title": "採用native-05原本",
+      "relativePath": "../2026-10-10-island-final-3d/whole-island-render.png",
+      "sha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "note": "Source benchmark。所有数・lighting・cropは診断と異なる。"
+    },
+    {
+      "title": "現在のc2本体",
+      "relativePath": "../2026-10-12-authored-shoulder-runtime/c2/regressions/02-shoulder-full/actual/fixed35-desktop-whole-day.png",
+      "sha256": "38ad25f0cd22cb55e1783df4f3f7d54341197e4d1f96f01eadfa13473081171b",
+      "note": "Actual DEV app / authored-shoulder-c2 / 固定35所有物・8軒。"
+    },
+    {
+      "title": "前段b1",
+      "relativePath": "variants/forest-crown-b1-low-wide-v0/source-whole.png",
+      "sha256": "f12760bbf244bc18461cb41de866b5c108e80536bdd4cc780122e571567ec2eb",
+      "note": "Source・HOLD。旧c1 context、同じ4所有幹。"
+    },
+    {
+      "title": "層を変えたstage2",
+      "relativePath": "stage2-first-failure/failed-shape-view-v2/attempt-01/FAILED-HOLD-source-whole.png",
+      "sha256": "fb888e3d9c79d2f64015fc6d9a1e8ff01b24acb60be43d7ff3e18d3e9d478e90",
+      "note": "FAILED/HOLD shape診断。保存された失敗時の形を、補修せず描画。"
+    },
+    {
+      "title": "道の影を本体に揃えたstage2",
+      "relativePath": "stage2-first-failure/path-shadow-diagnostic/attempt-01/FAILED-HOLD-source-whole.png",
+      "sha256": "253be71d04a80c5650db98311c155083efb7e5f3cf6a53667374be2e2a19aee1",
+      "note": "同じ形・材質・camera。growing-reachable-pathsのshadowだけをfalseにした原因診断。繰り返す黒い点の大部分が消えた。美術HOLDは変わらない。"
+    }
+  ],
+  "decision": "作者の構図判定はHOLD。左冠の上下差と葉量は増えたが、大きな葉塊が並ぶ印象が強く、家の背後を包む奥行きと明るい入口には届いていない。次は同じ元幹を起点に、庭の奥と左右を囲い、前を開けた浅いU字を設計する。",
+  "jointGate": "First source build failed numerically; separately rendered shape is not joint PASS.",
+  "runtimeIntegration": false
+}

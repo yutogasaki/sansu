@@ -1,0 +1,62 @@
+{
+  "preparedAt": "2026-10-12T03:42:05.342413+00:00",
+  "status": "READY-SCRIPTS-NOT-EXECUTED",
+  "files": {
+    "README.md": "258f060a6307db315c76afb23b51169d3e02917913fd83ea2e0a203d836f9dd2",
+    "baseline-static-check.json": "1f2efcf68a2a8f75ef0dfb9b6472d2f6d615445c0f98bbb6983272b5e8a81bca",
+    "black-path-static.json": "c97dc283387391fd8f1b7fbcd9a6685eb71186aca93f88dfec6a2bb1a4b834aa",
+    "brief.md": "dca46cd4b6405f0897ced5cd78c95e547974ced0df0ef6d57c741d9bfe803989",
+    "build-stage2.py": "7198fac3b3ed9cb082a9814b66be55c05c71380a76f4ce4e9775380d4d6efbe0",
+    "fields.py": "237497e6a48782ff2285f9fdb51a9fe6783c27f7c7c98b29924f154180838fd2",
+    "helper-provenance.json": "30639796f38b3820a09318a403c83dab56aa3a6c6f36e5e7e650de506dc17a7e",
+    "inspect-path-json.py": "8d7791e12ec2b897719c24c85915712c09477ba5e871d8d3168e9b6287161a10",
+    "joints.py": "c99059a0af65cdd62b741911537dc26f605051d22e57207d452d7f5e12ca8db1",
+    "prepare-plan.py": "0a62703f183bcacdfa723e78a03ad028dd76763d0c5825bcd429baf8446d8408",
+    "proposal.json": "98fc19102edfb3fe2a3aa89840ebd31fabfdd0ac3d7ee691dfe494808a56b5a4",
+    "readiness.json": "0d633f20b92225775676ae17b2fcb6b2b8e7e53e94c54f380a54ce9784f053b2",
+    "render-one-whole.py": "603c866675506857ab89e38adecabb4532066a85d57421f89c378a27b6012973",
+    "run-window.py": "1c83538e15b745568be477855bdf0cfa677d115f834893d8c3b583fae0be5e5a",
+    "stage1_support.py": "9f369d576e5cca7cd53c362b5dd8b59051e8b98600f6c2c7583862c5224806d9",
+    "thread2-static-check.json": "98d8a5c0af689dc24c5be28c3efbdf63ecb5f39d177df3f5bfef89e0e8bc57f7"
+  },
+  "checks": {
+    "pythonAstParsed": 8,
+    "reviewedStaticFilesUnchanged": 4,
+    "originalStage1FilesUnchanged": 54,
+    "originalInputHashesUnchanged": 15,
+    "helperSourceRangesUnchanged": true,
+    "localLinksMissing": [],
+    "geometryAndExecutionDirsAbsent": true,
+    "leafBaselinePairCount": 70,
+    "kernelAndGeneratedConditionsUnchanged": true,
+    "baselineCacheClearedBeforeDeformation": true
+  },
+  "resources": {
+    "maxSequentialProcesses": 1,
+    "blenderThreads": 2,
+    "gpu": false,
+    "samples": 16,
+    "renderWidth": 1280,
+    "buildWallSeconds": 300,
+    "renderWallSeconds": 120,
+    "observedRssStopBytes": 3221225472,
+    "rssSamplingSeconds": 1,
+    "hardMemoryAllocationLimit": false,
+    "estimate": "1-3 minutes total, unmeasured; timeout bound 7 minutes plus termination grace",
+    "ompThreads": 2,
+    "openblasThreads": 1,
+    "stageUtcTimestamps": true
+  },
+  "scope": {
+    "sourceOnly": true,
+    "blenderExecuted": false,
+    "nodeProjectionExecuted": false,
+    "runtimeIntegrated": false,
+    "independentObservers": 0
+  },
+  "risk": "Actual source closure, leaf attachment or Jacobian checks may hold the first attempt before render; preserve failed-stage.blend and first-failure.json rather than weakening geometry gates.",
+  "previousReadiness": "history/pre-baseline/build-ready.json",
+  "baselineStaticCheck": "baseline-static-check.json",
+  "previous4ThreadReadiness": "history/pre-2-thread/build-ready.json",
+  "threadConfigurationStaticCheck": "thread2-static-check.json"
+}

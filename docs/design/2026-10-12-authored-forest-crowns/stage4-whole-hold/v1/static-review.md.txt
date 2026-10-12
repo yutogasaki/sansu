@@ -1,0 +1,7 @@
+# Narrow static code review
+
+Reviewer: `/root/cove_entrance_art/hold_gate_review` (explorer). Reviewed `precision_gate.py`, `leaf_adapter.py`, and `build-source.py` only. No edits, execution, Blender or tests.
+
+> No blocking issues in the three reviewed boundaries. The exception is candidate-only with recorded errors; assembly enforces 128 unique roles without baseline/oracle duplicates; terminal acceptance flags remain false. Raw normal, local-face, parent/material, and original-scene checks remain hard stops.
+
+This is code-path review, not execution evidence, an art judgment, or an independent child observation (N=0).

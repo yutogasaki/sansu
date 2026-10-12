@@ -1,0 +1,34 @@
+{
+  "recordedAt": "2026-10-12T09:27:40.746020+00:00",
+  "scope": "General forest factory and its delivery test, plus the two composed-frame cache modules; snapshots are source observations, not an extra test run",
+  "files": [
+    {
+      "path": "src/components/island/growing/native/nativeAuthoredForest.ts",
+      "currentSha256": "5568dd892c03d92b4f7b8e5e1e872581c9b04fa37d6fa982fe750495d5b92116",
+      "c6CoreSha256": "5568dd892c03d92b4f7b8e5e1e872581c9b04fa37d6fa982fe750495d5b92116",
+      "sameAsC6Core": true,
+      "cache1RecordedSha256": null
+    },
+    {
+      "path": "src/components/island/growing/native/nativeAuthoredForestDelivery.test.ts",
+      "currentSha256": "55f13dde9736a65f4eaf689cec27b68d4f918d62ffe602fdecab22b2760d2039",
+      "c6CoreSha256": "55f13dde9736a65f4eaf689cec27b68d4f918d62ffe602fdecab22b2760d2039",
+      "sameAsC6Core": true,
+      "cache1RecordedSha256": null
+    },
+    {
+      "path": "src/domain/growingIsland/authoredWorldFrame.ts",
+      "currentSha256": "826c3a24eac8217f38da53d3829c91eb1a8fee3ff5d2bfbffe2f957ce0e3d45c",
+      "c6CoreSha256": "a9f9e49efd9e8d4a07379d27d5c914f7bec6949035be51bea90b35ac335e75e8",
+      "sameAsC6Core": false,
+      "cache1RecordedSha256": "826c3a24eac8217f38da53d3829c91eb1a8fee3ff5d2bfbffe2f957ce0e3d45c"
+    },
+    {
+      "path": "src/domain/growingIsland/authoredWaterFrame.ts",
+      "currentSha256": "cc6b27705a314719dadae0127cc44a6279e478cfb07a123e11e6f2ffa9aaacc3",
+      "c6CoreSha256": "6a8e19e2f63f84669ea7fb847955b10bc8dd1b64c555625fc886ec6a730ea7d7",
+      "sameAsC6Core": false,
+      "cache1RecordedSha256": "cc6b27705a314719dadae0127cc44a6279e478cfb07a123e11e6f2ffa9aaacc3"
+    }
+  ]
+}

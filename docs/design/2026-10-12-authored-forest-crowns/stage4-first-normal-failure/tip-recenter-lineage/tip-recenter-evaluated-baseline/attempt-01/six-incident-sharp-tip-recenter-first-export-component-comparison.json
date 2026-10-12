@@ -1,0 +1,38 @@
+{
+  "fixedDigestEqual": true,
+  "sharpFlagsEqual": true,
+  "componentsEqual": {
+    "positions": true,
+    "loopVertexIndices": true,
+    "cornerNormals": true,
+    "matrixWorld": true,
+    "sharpFlags": true,
+    "materials": true,
+    "polygonVertices": true,
+    "polygonSmooth": true,
+    "parent": true
+  },
+  "before": {
+    "positions": "f5f96e28fa5f3b48a44d9679516de65b44d16eeeab9fd2a1dd78de298b1f74f3",
+    "loopVertexIndices": "089457d60d5af66aa1e5ea61c15bc3600dc6b3d41a39ef816a7cc3bcc3123d67",
+    "cornerNormals": "9178c8b5c655074ef8b1fc009e1e9842f6ca9c57ccba92bf0867ef47a8d662a1",
+    "matrixWorld": "0d3ecd6f69f7833186487ad5903f2d00e7ec6581ce4bbd41588eee595e8cc73e",
+    "sharpFlags": "e55bd8f3c86e2c725770d99898e59ccf5a41a84ab8630a78c92af6fe222364c8",
+    "materials": "670c3188da89ed417b9e7ea97688aa0b058422309c80a2a9361a2d20b677e613",
+    "polygonVertices": "cb86086289984f8564f6ce2c8c9652b936d9fc268dfcdd7561b4791e14a23d3e",
+    "polygonSmooth": "1cc68dcc7be595946564c2cc636c24b20fdce7462a8cd85a388a16ffbdee7d69",
+    "parent": "b5327b09bac311359a67d181f519c74260b6f4007775ca6ebe731018dc116b6b"
+  },
+  "after": {
+    "positions": "f5f96e28fa5f3b48a44d9679516de65b44d16eeeab9fd2a1dd78de298b1f74f3",
+    "loopVertexIndices": "089457d60d5af66aa1e5ea61c15bc3600dc6b3d41a39ef816a7cc3bcc3123d67",
+    "cornerNormals": "9178c8b5c655074ef8b1fc009e1e9842f6ca9c57ccba92bf0867ef47a8d662a1",
+    "matrixWorld": "0d3ecd6f69f7833186487ad5903f2d00e7ec6581ce4bbd41588eee595e8cc73e",
+    "sharpFlags": "e55bd8f3c86e2c725770d99898e59ccf5a41a84ab8630a78c92af6fe222364c8",
+    "materials": "670c3188da89ed417b9e7ea97688aa0b058422309c80a2a9361a2d20b677e613",
+    "polygonVertices": "cb86086289984f8564f6ce2c8c9652b936d9fc268dfcdd7561b4791e14a23d3e",
+    "polygonSmooth": "1cc68dcc7be595946564c2cc636c24b20fdce7462a8cd85a388a16ffbdee7d69",
+    "parent": "b5327b09bac311359a67d181f519c74260b6f4007775ca6ebe731018dc116b6b"
+  },
+  "guard": "disposable copy: all components except matrix exact; original scene/object/parent exact guarded separately; emitted world <=1e-6"
+}

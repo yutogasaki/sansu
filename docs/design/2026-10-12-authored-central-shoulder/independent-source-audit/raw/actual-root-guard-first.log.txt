@@ -1,0 +1,20 @@
+node:fs:561
+  return binding.open(
+                 ^
+
+Error: ENOENT: no such file or directory, open '/prototypes/place-qa/native-cove-corner.glb.gz'
+    at Object.openSync (node:fs:561:18)
+    at Object.readFileSync (node:fs:445:35)
+    at read (file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/independent-source-audit/actual-root-guard.mjs:6:18)
+    at sha (file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/independent-source-audit/actual-root-guard.mjs:6:148)
+    at file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/independent-source-audit/actual-root-guard.mjs:24:50
+    at Array.map (<anonymous>)
+    at file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/independent-source-audit/actual-root-guard.mjs:24:40
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/prototypes/place-qa/native-cove-corner.glb.gz'
+}
+
+Node.js v24.18.0

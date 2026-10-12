@@ -1,0 +1,19 @@
+{
+  "preparedAtUtc": "2026-10-12T04:11:30.713377+00:00",
+  "firstFailure": "/private/tmp/sansu-authored-forest-crown-study/stage2/failed-shape-view/attempt-01/first-render-failure.json",
+  "firstFailureSha256": "de7559f38b90de6002f26a301891ccaf3ad7000da558f3df375dada2508ee492",
+  "change": "Look up existing world background by ShaderNodeBackground type, independent of localized node name. No geometry/material or camera/light values changed.",
+  "files": {
+    "run-once.py": "873f32e70965b197c8f5081a4ff2b7cf531d5d3d196caa8c3d01753bbfde3eba",
+    "stage1_support_locale_safe.py": "8c06d2c318cccf0c9ef4031347dd73d80363cc13acae899c3ccc0eddcce88b27",
+    "render-failed-whole.py": "19878efe02900e509119a579d76c54f56bbe9b5970b91836f4b363e810cc4bc2"
+  },
+  "originalHelperSha256": "9f369d576e5cca7cd53c362b5dd8b59051e8b98600f6c2c7583862c5224806d9",
+  "failedBlendSha256": "7010856b68de220ceb13781ff12f8c82b6c6aae9b9c575c748688043b98f3ccc",
+  "pythonAST": "PASS",
+  "limits": {
+    "threads": 2,
+    "wallSeconds": 120,
+    "observedRSSBytes": 3221225472
+  }
+}

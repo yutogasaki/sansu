@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/private/tmp/sansu-p02-gallery-source-study/east-v2/check-preparation.py", line 37, in <module>
+    assert all(checks.values()),checks
+AssertionError: {'pythonAST': True, 'sealedV1FilesUnchanged': True, 'eightSourceInputsUnchanged': True, 'reviewedMeasurementAndProbeUnchanged': True, 'ownerTransformEnvelopeFixed': True, 'widthHeadEpsilonNotRelaxed': True, 'donorTransformBlockByteIdentical': True, 'restoredLeftObstaclesRemain': True, 'noRenderInBuild': True, 'statusAlwaysHold': True, 'syntheticClosedFloor': False, 'syntheticNoBuriedTop': True, 'syntheticActualThresholdRange': True, 'syntheticRejectsTargetBelowGround': True, 'terminalRailPlaneHasNominalReserve': True}

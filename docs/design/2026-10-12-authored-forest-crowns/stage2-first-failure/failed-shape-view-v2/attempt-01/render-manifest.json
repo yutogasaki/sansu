@@ -1,0 +1,2292 @@
+{
+  "candidate": "forest-crown-b1-layered-v1-FAILED-HOLD-shape-diagnostic",
+  "status": "FAILED-HOLD SHAPE DIAGNOSTIC",
+  "evidenceType": "offline source image; NOT actual app; NOT a passed joint candidate",
+  "inputsBefore": {
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/attempt-01/failed-stage.blend": "7010856b68de220ceb13781ff12f8c82b6c6aae9b9c575c748688043b98f3ccc",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/failed-shape-view-v2/stage1_support_locale_safe.py": "8c06d2c318cccf0c9ef4031347dd73d80363cc13acae899c3ccc0eddcce88b27",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/stage1_support.py": "9f369d576e5cca7cd53c362b5dd8b59051e8b98600f6c2c7583862c5224806d9",
+    "/private/tmp/sansu-authored-forest-crown-study/study.json": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/attempt-01/first-failure.json": "7b75784860ec3442609deca521684e4874f8fc9aaa392c2dc121431d6fb2e22b",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/attempt-01/deformations.json": "ab3e457f51479fc1f84b86d225f75ba5e33fad109a24b15388cb3ad01d6af6d1",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/failed-shape-view-v2/render-failed-whole.py": "19878efe02900e509119a579d76c54f56bbe9b5970b91836f4b363e810cc4bc2"
+  },
+  "inputsAfter": {
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/attempt-01/failed-stage.blend": "7010856b68de220ceb13781ff12f8c82b6c6aae9b9c575c748688043b98f3ccc",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/failed-shape-view-v2/stage1_support_locale_safe.py": "8c06d2c318cccf0c9ef4031347dd73d80363cc13acae899c3ccc0eddcce88b27",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/stage1_support.py": "9f369d576e5cca7cd53c362b5dd8b59051e8b98600f6c2c7583862c5224806d9",
+    "/private/tmp/sansu-authored-forest-crown-study/study.json": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/attempt-01/first-failure.json": "7b75784860ec3442609deca521684e4874f8fc9aaa392c2dc121431d6fb2e22b",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/attempt-01/deformations.json": "ab3e457f51479fc1f84b86d225f75ba5e33fad109a24b15388cb3ad01d6af6d1",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/failed-shape-view-v2/render-failed-whole.py": "19878efe02900e509119a579d76c54f56bbe9b5970b91836f4b363e810cc4bc2"
+  },
+  "image": "FAILED-HOLD-source-whole.png",
+  "imageSha256": "fb888e3d9c79d2f64015fc6d9a1e8ff01b24acb60be43d7ff3e18d3e9d478e90",
+  "meshDigestsBefore": {
+    "authored-bank": "705f79372fe32456b1dec1a96623bdbd4207400b9ffc4dec7af44ebb899c437a",
+    "authored-bank.001": "9e0bfe933ff5737a3b6a2ded3f51197c96644fc2e5dec9efdfcbacda7eec155d",
+    "authored-bank.002": "fd130542e56badbbc8fb183a7227c0b86230a83bbb01e726580029d05f94b44a",
+    "authored-bank.003": "99d220e7282989c6e347ca812897fba26972c1bcc89b1d5d4a3896092175947c",
+    "authored-bank.004": "ed098daafbf100be71efa41add0fbbb146ea29eb184ca5286d23ff5a155cb1cd",
+    "authored-bank.005": "a3f999641c983d93f45463a27a6a4303ba696bf1bdcf081129a7d560ad0a73b3",
+    "authored-bank.006": "c5a6e109c6d922faf2e3afb6bd7defcc6df8bb0054fbfbd03284f8ca8204e4aa",
+    "authored-bank.007": "869f5e4b7f26271f0fc158cc168a1e06a12f3c48bfafcae14a12852c6994bfbd",
+    "authored-bank.008": "347b7a02f616bbe4c4aa3f7854bf52d03afba6d1d72826b38a78283db468ca90",
+    "authored-bank.009": "254be68455bab8d3eefeee640827c17739beeb943c2634c63226507b4710aa59",
+    "authored-bank.010": "1672c65542e03a3a566cc9d32ed4ce6d8d2d4e5dc2dd6da587e6bd1897d60ffb",
+    "authored-bank.011": "3326a48a2dc878988d8a4e6182131da866fd7b2db60e5cf5be45f8c096b53da3",
+    "authored-bank.012": "10b2bb2bf9e132c96a46f3171dadf582e87498fdcdc500bd49655c8d45370cd3",
+    "authored-bank.013": "061519ff93baca8b2b1eba5386b39fcc11694bad93c7ec8f870003a70872bd9f",
+    "authored-bank.014": "de4bd325159fd99b538ebeda75ab03f29d53465e94547366cfa52dfaafb5b70a",
+    "authored-bank.015": "f7e2fce7d777f6869f50565e548d58e71693da55bfbd7c3a7c8216d8875d7f4a",
+    "authored-bank.016": "33ac44c9e606504d5a722d82842bb7bbf5ba867d84fa978d7184e6fd4e331d3b",
+    "authored-bank.017": "ecfe9f4e4622aa76230f6906cf21391911fbbdbd5df5a704c96e84c0bf018b79",
+    "authored-bank.018": "110f414347cd1872c789e5dba865236c1b0fa930a59b80b529b2217d6b8ba504",
+    "authored-bank.019": "8a1683dc1f7dc8b4616d20856335041fab7260e3f5b81b1077f3fada4829d95b",
+    "authored-bank.020": "5be5eff1040a3d33c5d2244a9103d701cd7842d330179598b6e765570433a103",
+    "authored-bank.021": "89674da35d354840c6a7201b3005e9540541d8720c3a9a2eb20f567fbfdfa627",
+    "authored-bank.022": "9c53856c9274256bc710dcc5dcf502c086131255653e45aee0893e8f648c5d85",
+    "authored-bank.023": "2b6738a9e63d678837c1b9201ff823206c63165bbfdd3774d040d31cb1a8f310",
+    "authored-bank.024": "b1f5dfe5b3f2c8853396ad47dae71c0d7f840ffeb11e1e94f5265145650e144e",
+    "authored-bank.025": "d1ababa1ffa7d9094eb8ce60a76b8c23c9b392469431951fa89cb9e7c025d476",
+    "authored-bank.026": "e553017cceb169558d7c3ea4e273f1ad7225f75aaedd60fc895a4500899a16c5",
+    "authored-bank.027": "43cdd96f6a035efa98bf439de8dbb448e83010bbb2cfff5a7cf1154530d2c928",
+    "authored-bank.028": "50588467c7dfbd4d64a4d2b9e028e47192eaf77e048c4c8807bafa326d1d65f7",
+    "authored-bank.029": "e6e1425df0e5794ac38ddbaaddbf1a5ff33535c71c5705531d1912dd0c03c9ac",
+    "authored-bank.030": "41689471dab7de04559803f9f78190dd2ec19d5b350cca1c2016144d63e8dc5a",
+    "authored-bank.031": "368bea06fa974d569cd3fabd556eafee1accf52773922f06822c4304af41521d",
+    "authored-bank.032": "7b2b50f34ffa20b634687f510380fd76e6d9487d129994f4aa1c67f68dd31c88",
+    "authored-bank.033": "200698c54c5d3f0b6968d1521b7162f83aa29d5f73aa7d93132dcf0f5baa6fee",
+    "authored-bank.034": "64fc9cdb3a0cadc3a58e770e1a3452ac45afe1ae91dc3a122a12057af9f57f18",
+    "authored-bank.035": "e2a81660dffe293a4b7e78d6cad5a99310c2d6e26f02fc99c3b7bc674f1a4178",
+    "authored-bank.036": "66be7af1d62e0d63da11d2ae3d5f1d8df7839edc8eb89b48948c2ec4f0d8f6f2",
+    "authored-bank.037": "ca43f211a2eb991e9d45bd2ef955f7929ab396e933228e60fe72d074fb492d1d",
+    "authored-bank.038": "70768146cfc6b26e1efeff1b082d1ce84fb601cb7827a2d6fdf22afb0af4c9e1",
+    "authored-bank.039": "299a53775195733f88b39295688026f1987a6262cb389ad62b9e33cdd196c98e",
+    "authored-bank.040": "684c8a4cb894f685b323de4b1f25bda3707e7b8808dbd2a0f4f8c06809497a5c",
+    "authored-bank.041": "381c8ebb84ac7cf3b974d808b49c537364cb4dae25f555f0210f3b0a19b4fea1",
+    "authored-bank.042": "824ab1dc001649d9b378addde0671a0bfd047ab613f00221d0461c6d573c3a99",
+    "authored-bank.043": "20c394cf9a5eca54e1866fd3196acefc2db399b916d7dfce199187fb47025e4a",
+    "authored-bank.044": "e12232b75d96927a0587dd22dc78e7c31967a35faa94e3d20e818f22f0c398ef",
+    "authored-bank.045": "d4a48dd74a581ed674942cf202a92f65c56fef50f870400209494282f3ca14f3",
+    "authored-bank.046": "fd0d23e3fde5a49bdf6d2392116ef6b6193b35690ceb9e7207cb5cec4c43c5cd",
+    "authored-bank.047": "4bff74b3adcb4efad9e77c3edfa9ae25209fcac2e53897b8db4bc840f7fe9a02",
+    "authored-bank.048": "0173ea666c8eadb0ba98639f06d95a76a27268e521adeb7b920b0271a478762a",
+    "authored-bank.049": "93d0373b5cf6637773eab5e4a0e209b1a464737dc0a727956c0551f89e2099e7",
+    "authored-bank.050": "73cdb3df9da76aa83216103636c85fe002e34a2519c399cbb497951d6903cc6f",
+    "authored-bank.051": "7aa5e53e4da53707c1be1396cd78b916b6c21d37f499423386e9ab7a852057c2",
+    "authored-evaluated-floor": "09fed74ce89e6e3ab9ddb9fd9cfaad44888920fa647db8b78df8b07da57b4190",
+    "authored-flow": "4dd547ccbe4a4b974414748112c4849b3f04b289440a8834effee1af8953dadc",
+    "authored-flow.001": "9677612710cc1384ecff72d1bad43e6654832e2a08f7657606496859a76668cd",
+    "authored-flow.002": "5ae6684f388699838f1f75b6e5acf9f396645f2e8aea6b85d5416dfda272452b",
+    "authored-flower-high-support": "c78c6ec7aa80ce16a0e0e7bf91e4b813e4166109e8d25b7349ca9771edfaf711",
+    "authored-flower-high-support.001": "9883e61d78fb1567d9473555515b46ecac21c8badd00c969d2eafb91dd2b7722",
+    "authored-flower-seat-foliage": "6dd63e2a47a672fcd7caed345b0a54b536c38d292ba2de4b4e70b229a79da1ee",
+    "authored-flower-seat-foliage.001": "57ec75dcd20bf2e97aeb0c6a9fa44a6a935587bc3315c0bcb323e7275958509b",
+    "authored-flower-stock": "27ce7104347b9abe4a888d9c3ceca781fdf109f380c6a7a38444d2efab09520d",
+    "authored-flower-stock.001": "1a405ca6575d66d621b224fedfd2df455b24581d2d1600795ad1997e17346486",
+    "authored-flower-stock.002": "1c04622c658dfab99b531d58348b100b1de060a450a37b826320a409a75bb56a",
+    "authored-flower-stock.003": "ccddae5057a821e21b1ef6b7c32b2c8d47d623088732035419f5075e3de7c097",
+    "authored-flower-stock.004": "8509643ac7bf72bfadd01a7bf78f21dcfd7ef04cafe95304453d54b665027bba",
+    "authored-flower-stock.005": "d5ae96c2e10e076315c4d239829a189a628b3f8a9490fd5e0e3efb1e7b0ab438",
+    "authored-flower-stock.006": "b0085f505c126006a76dc248029009632b4ebd774a8295f022e2e7e04a9028e3",
+    "authored-flower-stock.007": "153db38c2b706d23f3f12e1f79b3688222663e3ca14ab72d798e057ef15ad968",
+    "authored-flower-stock.008": "5259d44263a3c0eb99f4ff4b578d74cd14b5a1df7db90c9703c3a056fa97ff76",
+    "authored-flower-stock.009": "14ae9231b7b583d40de51b4c4877b70a50be971a9dc7a121fb58d084c4e96379",
+    "authored-flower-stock.010": "8cb5cf0f2ac53fb855baa7daa1d06fc2ee96ba318b5bac591d86a3a994b15240",
+    "authored-flower-stock.011": "0a6f0380e577154d48e9f7fa4476d907d7618ddbc697b6a74c591a556a4bc619",
+    "authored-flower-tip-foliage": "f6f0b55ded2573fb86db71c2c587379d28252ca60bc03f78580d7edfcd47d9a1",
+    "authored-flower-tip-foliage.001": "6704262a90691c14d677f2665ba7132e7856c47d618ff8a770a616df8b4e082b",
+    "authored-flower-tip-foliage.002": "377f8a59e455100c7e56190377f8f4b025d993a2b5a08f328c5250d442bcb1a8",
+    "authored-flower-tip-foliage.003": "95626f7e80136c718a4e25ddb2b5f7c5c2ffae4aa72914fcc5af0ca4c338bd88",
+    "authored-flower-top-foliage": "6d00ff97ccd6bb5fdadeffd44506b70387d8d0f423bf1d9aaa979443b016297c",
+    "authored-flower-top-foliage.001": "9bde9a8e5c7330adeacc2e0d053c9848584126fad7e56478a764752ac507951d",
+    "authored-flower-top-foliage.002": "ab232c478f527375ca71d78fd5aa3aef8f4f1a735d0faf9ee522b6d67935f70c",
+    "authored-flower-top-foliage.003": "bafaf158e505d792a7b5ac4895a0f4ef0c1067cd9d86c97ea57c3372c50ba880",
+    "authored-water-bridge": "d816b3403418fcc0562b0b53958f0524ad0c22470b78e867aabb67476f64d8c4",
+    "authored-water-bridge.001": "8c7f7a0c9bade88540fbe78399e556dd1390e8295a5c60b19e3fef82181a58bf",
+    "authored-water-floor": "ac3fc1cd9aa1d64e6cefa462d004e397944774560107dc56b206f3e5b911999d",
+    "authored-water-floor.001": "51ae6b004517f40cab7451d5d5a7ba4e320cb0f1ab445189cfbd5b2b5757de16",
+    "authored-water-floor.002": "09a57c47c3f9947f7bc2361df8cbf2c6d171999d0dc37040e49648f2d55b63cf",
+    "authored-water-floor.003": "52a4209c655a771dbcde708ca2e392b19b2e04a2cb878dbab219dfffaacea0a3",
+    "authored-water-floor.004": "212ff02070d69b38a6ab2fe2670e8c90ef0b2e99fd6b60bb448a14244a1c3506",
+    "authored-water-floor.005": "31585628d584b25659877601f6db77d51a731e244b28d9139e6754b242a372c9",
+    "authored-water-floor.006": "2af89b9cd864734f438eee4f23f099602ef9cc93dc6cd8d6c86833a6e9f020f7",
+    "authored-water-floor.007": "10ce95ad660eecd856239475c23023a7cb67a2ddfa0201cb53c842911ade8b62",
+    "authored-water-floor.008": "e8ee0e8888baded3572fd016ac7e96b8ba7583ce5e7e3ac0514a3f047e40d4f7",
+    "authored-water-floor.009": "a7509f22501a3b49376eb4808f66f31ab8bd5ffe632be68ffdf57c2eb9031f60",
+    "authored-water-floor.010": "802fa7a8f0c51fc02e78e215b80ec96c7f7d0bddcf82313fdbcaa4293f6dbeaa",
+    "authored-water-floor.011": "080863e7f2381207a54fed7f9c6d23be1ab9ef51da064427cc3ce5fa8c0384ab",
+    "authored-water-floor.012": "ec0a1cd633ed38b24b81aa8f4aa81521de3ac8ef4b46dc230107520eb68b8127",
+    "authored-water-floor.013": "bcfe88efb26e6f23e9a2aed35bab2b2b6b6b39c3b67735cdd89361ba176e1edf",
+    "authored-water-floor.014": "7f74e185dd28dda2385a4cda893b0f66b23c7f678537aa8957e60a790ffb161e",
+    "authored-water-floor.015": "7026a5fbd7d357741c32de410e759fbc54a4eff17c23e20aec69ceed3d9a5ce3",
+    "authored-water-floor.016": "3c2b5107b155e414775d8de5f14708a0a832fa662b76f22ea0aa709b019baabe",
+    "authored-water-floor.017": "48b3ca7c9c7891436502b80e100689b43356bf2bcc4342fb2097c576c51f29b0",
+    "authored-water-floor.018": "296b469842408f55d0c00a673c30ea3077c80470df37e714e357e27dc14d9409",
+    "authored-water-floor.019": "2effe38ae74b3e73cdd2ec4272b3263a1eb85c63ceefe72da2b4a8921edd2c70",
+    "authored-water-floor.020": "c1623153b3b2559cbfd8185f53e8ac0db8397da17e1ef6397275cf95ed45f4c8",
+    "authored-water-floor.021": "4c56ff1d18ce14755731a05d5cac6bba378f99cddfd3b56ea53d0c20cc02694d",
+    "authored-water-floor.022": "1c078081f0d51e819d624dac0f5ec75f56a729ed3916ce6687c9d6f3f6a73bbd",
+    "authored-water-floor.023": "608500d499aa602bc79050720d7b35b2f6f32b0290c3ed7881f7e28245e5cde3",
+    "authored-water-floor.024": "d98a3f2a2d3c6e89196c42fe35086f37f40d312a6a5fc54baba7cc5c08ebd104",
+    "authored-water-floor.025": "64c712d0361a086a4cb91c533806fbab8c0ae2cfd28cb1160bf171b5ee57a19b",
+    "authored-water-floor.026": "64a62d13ff975dd4ae14a10a5541cc8f133f3e022e82fb2fec07b7d8a05d4764",
+    "authored-water-floor.027": "e641897fe13d3e94170aa85d433bc6fa2533d669e03621bfcd79684670b8718f",
+    "authored-water-floor.028": "b42534ea34f60fbebb79868a16c203d599c6e658b64981c6e18006a90151b6c1",
+    "authored-water-floor.029": "4f1ea4c01af3083bdb0b3e10788df6f5e59d852bfe1208e99a60f27c21c21e12",
+    "authored-water-floor.030": "381489c44fff7739db028a2f75047940e92e406eefe171f3584fd6389e8c6b74",
+    "authored-water-floor.031": "27e8e6efee9a5f87b256b5ec7894896e840d66547a34769fed25eb8317236aad",
+    "authored-water-floor.032": "34d2a8f0660fd0dfd0c1a2f33a014d66272d0295e21b8038f51cfd1c5f7d2b2f",
+    "authored-water-floor.033": "f2b3b002627bf1bd538a9a877f84cba966ad287e0c0d2bd32c24bfb2fe5e26cf",
+    "authored-water-floor.034": "621bf1041ac8487c076aef129dae7b86878c2924c8ab094a0fcc180e1ac82b0f",
+    "authored-water-floor.035": "3efe2bf06534254a14a61ad0ba21095eca7931bf4f7a7cb8a6a039b537646574",
+    "authored-water-floor.036": "cefa1e197877297c9df671e6ce0bcef06494a0328e03e325c66fffbdb81a6e8e",
+    "authored-water-floor.037": "a49a2ee7a6d7c7173fd294f2d3378fe0bb83b9f5d78e90f757aeb8a3e1f8ab8a",
+    "authored-water-floor.038": "60e85ff9fe475e7fcacc14057f46c5de9a4528479ab97b4ece8f75b401e63831",
+    "authored-water-floor.039": "4ea66428a8ce3dce6b8c91c79827ee126dc9a483055d9fec78356e59506a55bd",
+    "authored-water-floor.040": "24e51410d5f48a32c5abb736ecb73786c05abbb1eff7adafd839fc1eceae5a95",
+    "authored-water-floor.041": "4d810c23305e538cc4333b3035faf6b07b1a206aa0ceda03690133dd55ca3e82",
+    "authored-water-ripples": "3d10b0ffb16553da682c7ef821d4aacac57c2ff3b44d0d3aca8b1cad8b865cfa",
+    "authored-water-ripples.001": "fd4dde8883a2743d413b2b851e7c82b0c1e01d2cbbda2425c4db0034c676d466",
+    "authored-water-ripples.002": "827afbe321fd3afb801d769156046aac37ddafd90933af9feecda689a1c8373a",
+    "Central_shoulder__continuous_closed_supporting_soil": "613b9cc1bd8438b6d9923970f962ebe2c5c79ae7e53a81dae9a5e5c7a9709ef3",
+    "Coast / continuous layered shore:0": "cacf04dc3b5845958bd8e1c836a14f37c73c2b017858a4489795dea6a736af1e",
+    "Coast / continuous layered shore:1": "3102b7a23c39df9a91aff4fa927a3388991e5e10f6d7670c433b3ef67d831938",
+    "Coast / continuous layered shore:2": "ccdf8c13fdef94d22c6945205ce922108055668a12a7b6427d1e9989e7f90763",
+    "Flowers / open sky gathering court:0": "0b43c7eb6d0327b3e2683c5e2c0af1078ca05671283bc8692c3b79658cb8d50c",
+    "flowers / porcelain lower petals": "5f31d900eb6792e00abe663994470272ce33ca54426d5715c10d19f30001d98d",
+    "flowers / soft lilac petals": "caba1e683dd1e3090db33d093d5738bc7350026304a5dbd5731a93b511065bb8",
+    "flowers / warm pink upper petals": "5e9095e3204dba325e982a938dd0a83c762f36ad355caade2750c9de252ca791",
+    "Garden / rounded flower terrace:0": "4b6f17563b2d51e2892428b2f45766067c32df9439ee90b6c3e9847a280a08e4",
+    "grove / blue silver leaf tips": "c3d7ebbf9a5f1801028f917def4beb0b551bba2d63c0926cec7dca38b93dfbb5",
+    "grove / blue silver leaf tips.001": "5e5503dba6277722e377eef664451a2312c29487f48c2c5f132a0001af5b98b7",
+    "grove / blue silver leaf tips.002": "668d82fb5ea886755a3a8ea9122a8c0c9b4ccafb757e9e4ef041555227c09921",
+    "grove / blue silver leaf tips.003": "a702d592f0678dbf1c9fed0e28a7ab14ae368038b799950ebe39c0e067598eed",
+    "grove / living violet and jade lamina": "7a0ea50e3b4f2678779a47e058b41c6ac7cbf27f1fc4f27b9e4128eb36f182ad",
+    "grove / pale raised leaf veins": "ac2a3a7d0ce4fd468fdeb1bdbc0503124f83423f3f76d5b9cdda74be0024f2c5",
+    "grove / pale raised leaf veins.001": "5b77535422625c3205303b3039c6597544f6d8337c4a0106f516a6893956281e",
+    "grove / pale raised leaf veins.002": "657f87215585133128586fd6749f767db26b672a8f46e8e92249d872f4d3f950",
+    "Grove / rounded living terrace:0": "c9608fb3159b581633d62c5723d3b9ba3dfd27c85bb56b0f06ae16c4281e3aec",
+    "Grove / sheltered open room:0": "539524177d4b49b27c7bb8e279ffc67fbe8790018b2e27fb73a55af87508789b",
+    "growing-flag-cloth": "f7ddc1693f9bf9a9d28fb67bd32dfe26013c431338dab218307e3d96e90540b4",
+    "growing-reachable-paths": "10401ad433baf66ce2833fdf36d78aa63bd50b1752eb715a5482488874b77954",
+    "Harbor / shared waterfront court:0": "0751a189b150f7ea22def87f425e9cb31fb0b17032795131799b5cb9aca74da5",
+    "Harbor__continuous_entrance_runner_jamb_rear_arch": "3df9f712a57cc5cc00a671fc6566b81048e68e395350729ac2161927498d662b",
+    "Harbor__continuous_grounded_runner_socket_left": "9589b63003854a49bcada4304ef643e8dc770c678b06a80324b7745c150e3986",
+    "Harbor__continuous_grounded_runner_socket_right": "0b89a41ed3c668a71474723c14847397abc223a8c0cd61b6f260de9d6406fed5",
+    "Harbor__continuous_translucent_shell_hall_1": "c183927b0070dcff885bbacc22789037e6073dec095a0411a6bcfe3293c5922d",
+    "Harbor__continuous_translucent_shell_hall_2": "43fd875b7e42b5d930cff975771491145b7591186d230c9b2d32c78e7b1fd660",
+    "Harbor__corner_structural_rib_joined_to_rim": "4222ae6ae16b7fbaba533fcd6898267b17f37415b21db9152721a36a56101284",
+    "Harbor__curved_shell_structural_rib": "39928e98a30eb207782dcf4d832cda920894b98577fdb5cd74b0c0c5cb693528",
+    "Harbor__curved_shell_structural_rib001": "5cbedac755d2047d74557404b8380fbee0b3d99f1d8d1ebc12313c793ed52b5d",
+    "Harbor__curved_shell_structural_rib002": "411d7f11ddaec41cf373ef66f297b6b8e68f705ecf59f1504615f51d2be6c394",
+    "Harbor__curved_shell_structural_rib003": "c20d4e721b01c058250194a3fa9c1b6535dc631bf0ff119f2e3632b523a12822",
+    "Harbor__curved_shell_structural_rib004": "ac0af49bc51c5f4986781eafc2a190ceb13f0fe085d7a65d7ed21f64c3e879cf",
+    "Harbor__longitudinal_seam_joined_to_corner_rim_5": "966712a1c5595c9327f0f698a944675a686ef96c931b6dad152f809b3f1a2075",
+    "Harbor__longitudinal_seam_joined_to_corner_rim_6": "1632f53e80290c2ae290cbb5d395d1e269789b60413196413598c88dedda3c8a",
+    "Harbor__shell_grown_footing001": "41d54392ec3b437987b55eb97a5934655041ae14faf40613435474f8c25d31d9",
+    "Harbor__shell_longitudinal_seam": "d2f36b342facb734f7230285e237f49f1bf5496d98b1caf0f47f02c94590a123",
+    "Harbor__shell_longitudinal_seam001": "9cb75ce547c204cde2f1ae303e08e3bf0db3089ced561e3118e5bee436a82b36",
+    "Harbor__shell_longitudinal_seam002": "83a4bdc0dbe958d7b47ed7b421c5a7b7d9183a840b2daf7f0974211062408781",
+    "Harbor__shell_longitudinal_seam003": "7e0a861daa94d8f6e7ea71efd452e321100cd3039448736c6310ea06f2937376",
+    "Harbor__shell_longitudinal_seam004": "9f0e9d73382456b021d4daa80f96c0da4c05ea28e497d5b58c824906dff5fbe8",
+    "home / curled jade leaf roof": "c4a74c74246791b057cbaf91ac146df2ab3564c032535020d368ad71e249284b",
+    "home / curled jade leaf roof.001": "e59099903aadc98f3a44947ff6ce0b5c9529f6b9bd5a90cbf0d851608c237039",
+    "home / scalloped blue cap": "f5a0846682a1dc9bb3a7be041c52590bdfef8844af08a00941b54f30fc79b02d",
+    "home / scalloped blue cap.001": "4182144e67719a34fc4f71e9449666b5db04182c573b5937ffbb4b6542cc61a7",
+    "house / cobalt door": "8b17184a73285059adc61f5ecd6e34920c127398c71f7eeb381b334d82a33ec8",
+    "house / cobalt door.001": "9278fb0a8eca0a5603398e1272d427159aa2b4eeaaa479df608ffda6464dcadf",
+    "house / cobalt door.002": "21d8f5da7d279aeca021ab201b952c274b3c4218cdd84f514a753795a1051d7f",
+    "house / cobalt door.003": "c6c4dfca2ab77f6ea82e558019ba5129c513ce2dffecd491de329abc61de4eba",
+    "house / cobalt door.004": "c882fe56a3949e34cab89f8514adc55fed5af482bd65f366be4fa40fe64765b9",
+    "house / cobalt door.005": "7213ca289c0b7af7ab119ce31ce91fa991f8ea36f7c3957f05d84d69c14dc197",
+    "house / cobalt door.006": "4b9c7aca7401d96be30305416f62498c79f84f8d06b423bc793682ec149c8c21",
+    "house / cobalt door.007": "5699654b063dde09b831cd37c609d8ad6babd076fbb0b5c39cad5ba651652c90",
+    "house / cobalt door.008": "90430c02848f86b9fcb432ff0a5899c37fc57a1a80f42e4f8a01c5d84a7ee166",
+    "house / honey wood": "e9161f3aff0c26518be219224aa174733aea450b4502552b862ef7900ff872f3",
+    "house / honey wood.001": "d7718b333b84b01fef2ffe29e05ca319d668b07850f3d61a8b30dc4be17b812e",
+    "house / honey wood.002": "64df446d1874f0bb28a94e3ac97d9161065471eb339df90738e691019af7849b",
+    "house / honey wood.003": "933ef590351782a576019ba81b29e2c6cd0bc1003dda78e7d04c735ee83e8721",
+    "house / honey wood.004": "102881098f24903338cba6c106677d2d7d15f383b8d39f2ec60ad4fb2892a45c",
+    "house / honey wood.005": "585a95bb48ced5d9665668633500f17e9f74551e2725477ff29e383159bec775",
+    "house / honey wood.006": "bb6fa6297ecc5eb1b8db299705b23bab127a86e67f32aa80cf3b1d4831c05be1",
+    "house / honey wood.007": "b4cd42b69daf5ee2098a1819bddf8c0e7a691a16d23f2543733ac14f20b2457c",
+    "house / honey wood.008": "87523cb7e54a2c1545f1ceae535cc23c88fca3c3b8d5f3a104928dca6a7cde0f",
+    "house / porcelain plaster": "cf1923658623f6b1a2b18feaa912310a7811c5ab933eeb19f5cda40fc0165a42",
+    "house / porcelain plaster.001": "6fb59ce3a964d910bae2e2e1373da1ea6a893d293ea219247a8cd953e3d3b402",
+    "house / porcelain plaster.002": "255144923fcd0a3e102037a7bc88350455d026d81d561474a42c31b587746074",
+    "house / porcelain plaster.003": "200069bd927e3fb502044a9938ffc5e9dd1074c569083ba1a0db58b766d8e508",
+    "house / porcelain plaster.004": "480bf46b6d1cb4706ed540aebd35081c87741d940207e91eb87929219461392b",
+    "house / porcelain plaster.005": "62393debdc4b744e2ff3a3945fa070029fab4f536f59d9fa86d53b8031b61524",
+    "house / porcelain plaster.006": "ac8d16c7abf4feb615faf401edeed369f7a53d41960468a1eb410ebfe0f84fe4",
+    "house / porcelain plaster.007": "711a37110b88e94f113d169f34d0fe1375ad4292d6f7670a43f14b89be6ddb83",
+    "house / shadow plaster": "05da713503b7ffcb9ca31d15a8a2f14d08f99478cfd879a363760b0da6073bb0",
+    "house / shadow plaster.001": "040ebed7636fe3d0f1814df97a9f76996d870e914cdfad134b730801a03ffca2",
+    "house / shadow plaster.002": "b278e7b62543f2a124f5b4620f460ed6fa9f937d5933015e89c49acf00dd2223",
+    "house / shadow plaster.003": "a6056250fbff9f90c9163fb9ca3ccdf2d323369151cf9b63229c5823f2a133ba",
+    "house / warm yellow roof": "bd4c3c572823753fbacf2c604c225afabe1fee5763f10136498a43d5839bf5fc",
+    "house / warm yellow roof.001": "8d4b8c804912da7757c5a9d2719b8c8440d9437f15bc640295aaa34b67165338",
+    "house / warm yellow roof.002": "a2ffed08d88315c50fa6b856a384dccafb38046d05d33b6e744fafd824428279",
+    "house / warm yellow roof.003": "faecb649e2a2138b865fb34141ff42e587d2fbbeb5b654c24b049e5fe718a825",
+    "house / warm yellow roof.004": "d3a527bed883b7c352f03797c4f5476bdfcdf25889552d240b24692a1ceeabd3",
+    "l33__source-contour_planted_root_continuation": "d7ddc4ce7e4f3ad611e8f2b8e075254ee52492ba57626b0d43c098ee165ae4fc",
+    "l34__source-contour_planted_root_continuation": "f8c313d581d48dcfb0e4b2699eecd934c9e91e5223c020d816be9b04631799f5",
+    "l35__source-contour_planted_root_continuation": "fbcc20debb5037ee705ee91ae8a29f584ff0f7ed4fc76b3610f88bb9e30a2270",
+    "life-bench-seat": "f27e8d0f6542dab11d6e5d27a936498fceb37925ae39d013eeabd0c7f43f103c",
+    "life-bench-seat.001": "a1ba73e47b1185faecf2f04408b7459721b925306636a351de586c3ec93259bd",
+    "life-bench-seat.002": "005561382e6ac281e56faec4b55936fcf9f331f0b0517d1d5654ef41b8046b19",
+    "life-bench-seat.003": "387cba44c33d3412b5d6987a7bb8e1205d387deac0cbea4210cfa02976e4985a",
+    "life-bowl-water": "d5dd337d412f9b4c1ee9bfd33c3af5cbbf76bbd26b90eb4121e702cbcdddaed4",
+    "Mesh_0": "1ce91dadf16720d1aed7b4cc9c31c6f0f93c4ca1d9cd5a13d5216b680e00f14a",
+    "Mesh_1": "7210e93a35eb028a8eb325e9fd4d10fbaf5ff540ddd24d6774107f01e48b00ca",
+    "Mesh_10": "bb5981dfbf6e44d53c10538595d7c0b7a7b9b305c1af1ba483308246fc4e7f4e",
+    "Mesh_11": "b1ab7cfad79ed7e9f8e7f40d7bcb6b20a9f36f2b963d082ba30004f6c8b3171b",
+    "Mesh_12": "d4a6db5b2981110512736643eb10bbb9d495201364ed77a7471605320b6a7141",
+    "Mesh_13": "ba47c51f98698bf9e62ace3393e1e22fd3fca500b858f0474143ef571c705b48",
+    "Mesh_14": "10b625a70baabdb9abfb0e6f878bdabefcfa3d169f100d11785c94d06a8c6e08",
+    "Mesh_144": "4d30977d9a1543d54885e2480116fefd5084c10d7af1b4ec3549fb24e92e8dda",
+    "Mesh_149": "d35aa7bc212d78754c39a79174c3803f733c4664709dbe4bbb921fc9e1744cb3",
+    "Mesh_15": "3e02b9726b5e638d5aad894c84bb454826f1563ccef7a6fa54d18ac684699e38",
+    "Mesh_150": "702694384999f730ae7fe02b7574269640b283e7408d80c0b1fce1db73c84fe6",
+    "Mesh_151": "1ac87f2f141a73f5adc71041d28e505d8d84d1f40fc605f299f8446702ac97f7",
+    "Mesh_152": "6934a8a188792bb6ac772db4b2dcaee7363d9ac32202fac30702d80c00626709",
+    "Mesh_153": "c5626a93b8b1db12ab439a431e0ac92832f753dccd1b627dcfbc0e9d14aba3a5",
+    "Mesh_154": "7a2087829605961a888a0a6f5ffe7b2b42a0a621ec3c2c31d0976be2a43dd09b",
+    "Mesh_155": "9d586b95be6b24b9ad7724f936fb6ada2abae36087b3d69d0313f29f1759a6e6",
+    "Mesh_156": "bae0f8c99c382faa31facadd1de031c626963726e2e53306d6f4180977e2d287",
+    "Mesh_157": "fd7d212ba74838e8c6fb12d081dd3aed8121857024cb0130f7c8b99a4c5bcb1d",
+    "Mesh_158": "ffffd4fced4693324916328cd57f68d346ab4d7e3bed8f1a11a96c7769106aa4",
+    "Mesh_159": "d3650c84da915d90238f7930c90721edc7103bc57e7bff81d149a48c8bc69a39",
+    "Mesh_160": "3c84e5af418c0619ae669e8727fc77b1f2599a5c2e1054ce5913b9bb6eed3286",
+    "Mesh_161": "6e74fdaa72d897ae096292869ce63bdfebd5b76efbb652c7666cb3c18543ace2",
+    "Mesh_163": "87ef7d664b83f774c2f05ddd0dc404fb0a1110f59f996eea1b9bad22aa19af61",
+    "Mesh_164": "e0479898966e1b45f31ef2ccf696cf57d2d7527618a1530e8d28cfc26433e30f",
+    "Mesh_165": "45a60683d81e71d238ebc035938b973338f24c2b46b2150cd0c56235f9e5aaa4",
+    "Mesh_166": "d7a46bf30361e3d67c3123cd497ed245972bc1ebf9ce8322b9fb35df77d2a0d5",
+    "Mesh_167": "b718a27fde48aa77054472cebf2d16603efad782b652e2b7352991e8d1793d34",
+    "Mesh_17": "90d77b194d69241bcc17a1e149d32e08c5ca1548adbdb5695341484f13c6ff76",
+    "Mesh_18": "eef5430e6681dae8fefa67d27a02ae2d7a55cd9902108c61578be40e98ec99ee",
+    "Mesh_19": "21089f245df3bbffa28087a87ef1a73ed9d808cb86d940b008a240b0efd30504",
+    "Mesh_2": "431a9c19704b411d2bbb73924b18653dd1234d0cc41c2885b5cb915b480ff422",
+    "Mesh_21": "ddf02444afc61273461e47b0cb8e97d5207d0524b20385516c0ba64760be629d",
+    "Mesh_22": "961c70bc9e8884f69d1d357e7308bc84113614f2e0222c3808ba04d557257486",
+    "Mesh_23": "60d039cb479fd8ba55c739892c381b73aeda2b842c3e5e2a5afed4bd42b13703",
+    "Mesh_25": "096eabb29e18a2db6205aae4947a409b6ca4f1fb1a9db5f810981120db22a174",
+    "Mesh_26": "a6ca7460454c0f338de96546eaef0ba51403225b0a2028d3da3e92dec1eec089",
+    "Mesh_27": "5bde2bff320cf189e300866d1752969865156d1bac1947587b6369d662d9b4fc",
+    "Mesh_29": "f94826559b9a68287d19180f7c1604fa11a0a430ec93e7f138ac00d5795a08d6",
+    "Mesh_3": "d8da73af3f9079c3500e8759f0c0a4a16c29998c24fd7c2e0e10abee810d2f42",
+    "Mesh_30": "f78ac30f4a962f8842f5e7dc1f64e398c936f54837fcfd477c008409f23c5424",
+    "Mesh_31": "4ddbadf3c47854d1caea9a828362e93fa94df52e9b3164d87058e50cb00533da",
+    "Mesh_32": "82ce076f279d3511792e1a5e0dc889191edab74cc3ac23b3beff77b6fc364b4c",
+    "Mesh_33": "5bf8545de9864531f0ee9f7abb28a4408b99efef45ef66410c761bda71a5af73",
+    "Mesh_34": "42f64f5ad1cedce159a98db8944ec9e5bcc3877e03cc98833675f08b76d58762",
+    "Mesh_35": "48b733a0d9ff34070be7a379d333bb62b98247cd8eeb7f952aabb8854c465b9d",
+    "Mesh_36": "64446e4ce7e2642edac81b9d5a4816faa22744ac7905336db4667ade9eec9894",
+    "Mesh_38": "bc75c18a860dbbdc71050c881b89bd0dc392f2ffd0f16180afa153e169ac70fc",
+    "Mesh_4": "30e8b1b0c33d56f2646f6e5938d04b67b13181db0c955fb1777447c5898a01df",
+    "Mesh_5": "82ce965ccfa165ac0520424c51664cbd4cc71dfabed462590c939b9ad7e83db6",
+    "Mesh_6": "7bd58d4715da1a76f5e283fc1bc5f4664e8e49dd497c4d6896f0e7be2aa8075b",
+    "Mesh_7": "b34d01235a6373284e83a9f0e46b75b20853091aab53ab04f918967943b46621",
+    "Mesh_8": "732a82cfaa54af113e26b04be2251e0a97a756e4a12776dd7ca259fcdf83715c",
+    "Mesh_80": "ef08a11b2c6f583a6db1a0da817d7e4733cc02ce61699e16ed7722912bd77aec",
+    "Mesh_81": "6a5d2debecd9ec29a67fbbeb36247efc9c2c9a6848b1483bf12912a3fb45829f",
+    "Mesh_82": "e1a47ff97439ef560277795009e6e79e01a9aa53fda0bf8953865fb1f9d25f8c",
+    "Mesh_83": "ac3bfb83d57427ab577e37fad851775ed22110f06c9d196125fa2c0003c0a124",
+    "Mesh_84": "aa59940077557b924422a5a719b759a7de7154c6e8cb8362a360a8457beba212",
+    "Mesh_85": "2943736ac2cebf122bfefbaa23f6c7deb12e966487a2a024e3baeaa308dffc90",
+    "Mesh_86": "dd989ce1c6db434daeb0983d0dc1ab454a0fb4a9a58680b4420fb81e8ebc0698",
+    "Mesh_87": "e96efa946f7dd378cba3f7f1139fc6e2069b832dc56d49efc1cfa80d042232ce",
+    "Mesh_88": "70f8a9ee6b499f805bc8f588a29e6c0ae12f9adb68c253f28d5571000c380d18",
+    "Mesh_9": "f406b807eeec58e3452aa04543fd4c9de7f060dd1cdfbf8865b6d4270987d13b",
+    "Mesh_96": "0f121829e17255e226a50a32a6d7dd66595e7c5571c11ffc59e9c55c2a231a50",
+    "path / light sandstone": "2419590f66d95c2e4437945696a1751818b45fc6ac4b61337dafab97da77f8b0",
+    "path / light sandstone.001": "56a1400c0eadb9c4e7afcf577507d9fad2542e1a34874e7ee6bb09bf5233158c",
+    "path / light sandstone.002": "d4821fc34e901cc3cd82823ebac3e023a430701dd2257f0efa5412dbb9d9736d",
+    "path / light sandstone.003": "187d14a28a07f5e34054ab9d5da3e2d513ef7bc681e3bdd765faf2ab83af0d20",
+    "path / light sandstone.004": "e7569207e3e833a58675e07bb32bfbe76656e5a8748dfa7dec5c0dc155d01826",
+    "path / light sandstone.005": "4b6f1392d3b84e73c937874d6a2879baaab69cf74a144b5db0c8ebd714c01219",
+    "path / light sandstone.006": "2c6d6de7d5514373761322e04916a475ff4e580e5e0619abdb6cf7516b0d376c",
+    "path / light sandstone.007": "9da033d935d24b1fb9e74aabe1c87c7926ad2c32944681b4d555bd97ccfcd10f",
+    "path / warm stone variation": "8074c210f31aabd9a0223b2a53f2b023bb7ac6539bc03423fb7d275f086644af",
+    "path / warm stone variation.001": "5d6b9bb96f46a4688917a299eae7cba67abf203ae5bd65acde8eb1f56d2194b2",
+    "path / warm stone variation.002": "4160856e556c42348c7bcc5ab0c670e243169c24fe035689236a0b10cee0391e",
+    "path / warm stone variation.003": "42e7f8e8fab32c723b02070789a09e373cd622c02dae8424989b741cb8f82309",
+    "role-l14-2220": "b0044c8bb7092e6dbe785ab32bacec6f971e63edf7e7cd0997e958e1f7ee2d67",
+    "role-l14-2221": "c9636a58b50452f875d1308a0538692ca66c33c8a8ca9ee06c14f5101c71bbc3",
+    "role-l14-2222": "2562f7262e0d7138349bae9ffe201d4a40c9d768bbf886cd1c9a8c5185cbaa12",
+    "role-l14-2223": "f14847b1f5d6e66c11da3fe3e5641a5dc10f554d61da742bb0e1120c075d7438",
+    "role-l14-2224": "d0754fb7b2d678b1ecd65dbca484fffa0ceaba71fed3ed94d9bf5fe3048ea793",
+    "role-l14-2225": "e49f63568085ba56f09aab2e5bac0971bd2dcdb4d564cbe1d5c7d07eed90a2e0",
+    "role-l14-2226": "8f62632a00f0638d1b01079accb208fed40d529b1845169e2435e1b6a064f070",
+    "role-l14-2227": "b8efd6b8f2ffe0b512ba22305472cb9449a5e1caeba12c3a6604cbae82f58d36",
+    "role-l14-2228": "f5adbfe992654fd4e071f53c22df1c39dae09d967d16287e77ee30b452d3c815",
+    "role-l14-2229": "1f1a69b30129018b174ca310025e67df6d0cc2d61697fe7ba4b1f6298320d65f",
+    "role-l14-2230": "0c98fe3b4b38185cb74f5ba9fa8796dc743b2fea13628bce0a83cf7a333760bb",
+    "role-l14-2231": "618701f6e5ea71895be615f03ac752410a9e016ce10029bb81c1ccb1e156e2d1",
+    "role-l14-2232": "07400090c961b802a8abd6978e7654b177632776a83be8265f30e3430fa35223",
+    "role-l14-2233": "1f2b14d8a934868ae4500113b0a68ad0e9ff33d52c74faa38cd69cd36d4c9582",
+    "role-l14-2234": "75740f05dab88e014e2be1fd46c65f5dc9af926b6672bc55cede3edaa9b64e0a",
+    "role-l14-2235": "9c976bc12eb001bc62a8a0f70d7d35e205ec2ba24e10a46d2730ae637c218bab",
+    "role-l14-2236": "659683a082a685fbb70e1fda23c43156c05f65f414122fb7fcaab5e2dd3af967",
+    "role-l14-2237": "56e7dbdd2b455d38c83766c8363599091ef2a11c3e9a241cc46be94bbbe151f4",
+    "role-l14-2238": "2515a349b8105bfa609083906f21564aceb26ec4428299320eea0d213367d632",
+    "role-l14-2239": "533f622998d6c4924d03b031f185be9db88487780dea8a7493fe24ac166203d5",
+    "role-l14-2240": "a8b6258503524db16b6c784f0b0e0c241dbd5480bc3eedc8893077fe0b3e0981",
+    "role-l14-2241": "6b7dba4ef003cdfea8223ebe6cb87cd582ce9a6ed72810dc051f72502cad6a88",
+    "role-l14-2242": "c1702d31ac1eda3a126553ed6fbff6ee25700b2aa819558ab4fba3985105eabf",
+    "role-l14-2243": "f425ad9365eab38f972e67ceb9263a51865aa5cf16ea71f0931e6030cd2f5ac0",
+    "role-l14-2244": "19f83af93f8240a7f9cac1d5c7dd20aac6a4dff438663135f71609626f31af04",
+    "role-l14-2245": "a5ff13f8a6d3aeabd6f1424c0cf78efa3d2d294473957b9a73017b7de9851edb",
+    "role-l14-2246": "12d3a32c5a66f4a7d8ccf239d554a51d0dc1dfcfb8f0140ffca0db3d009808de",
+    "role-l14-2247": "fa0b51a89c950e7842f73ebd24e34ce95af36ff8c885b1a9fdb589ca9d2819c5",
+    "role-l14-2248": "c4f5d27fdfc11952c5583acd2872569f1a3c4d2a85308370254c03b7f388ee8a",
+    "role-l14-2249": "f5d0d682f91388107281dda142b9f098ffad62e0244b9d57462e76c978e93bbe",
+    "role-l14-2250": "89eb2257ab126716b738d169e06e798934119af14898cad50fb07ca3d887a3d4",
+    "role-l14-2251": "1b36223307e220207a0c90246c528d3639c01fbfb72c9b07bb2266dc814e0ecb",
+    "role-l14-2252": "700037ec9bb4828c56eb424ecabf9b42685376b30da23dc33c2da95a132d61ed",
+    "role-l14-2253": "0d7a57c1b4d2e5cd9893eab30351ecba5aacfdd719a6326e45aa6325073c1fe1",
+    "role-l14-2254": "de9ff6bc56400607fc35d8abe647deab37ecb159d7130433621dc5f217a35b11",
+    "role-l14-2255": "6c70b57c42f80cca233e9ad5514c0260f50bc74124808779f0858f57af29604d",
+    "role-l14-2256": "fd09935d572445765798bb7d80b1a9f64121e99d671508ee53c7c50e481e1307",
+    "role-l14-2257": "2aa165fa73df8d297763cab2a6937e93b62b68301145e0f79814e3deb3f8894f",
+    "role-l14-2258": "5c31d712c10d3c380aecfdfd7ae753b6a0e7ef78a68122f1837e247c9a69425d",
+    "role-l14-2259": "2b7f12ff0a1b4bbaa3f023edf229e28bdb21fa59e305cfca24c4334704c93c13",
+    "role-l14-2260": "6df60804f14e1a618fbf819886b5afd129747a33de333b9d21f70d8d8c76a7b0",
+    "role-l14-2261": "f9a98178dfb2944ef0e12dd68eeb218c484c71ecd0a02bb5d7f5dd307a03ed3c",
+    "role-l14-2262": "dc38d32c19db92dadfc000ca6b171064a744e2af33ef1165733e2add945309ba",
+    "role-l14-2263": "3645aeb79cacae2f9cb1d8a998a1e02fd9cf51196f23b86ab2d29aa125c245aa",
+    "role-l14-2264": "5d214bd7296cf4954922f36169c52571b5bcc92c344af11252da5ec2af931ca0",
+    "role-l14-2265": "ddb09a210c80be0ef643807a5e3ff56f528f03131b9b62a513f2ec24f6a0b234",
+    "role-l14-2266": "1efbd7e6ab56f046dca2f7142dc55e0e3c2355b0cde9436cd48acbe0dea9a217",
+    "role-l14-2267": "9ee199b2981bbd6e69b25540a90e0e6bc54c44b9f4d115478ffb1f2df282ef25",
+    "role-l14-2268": "9d96059ab7bb69923e1e62f2f19ef16b8e7c622539ce0175391ff47b53743117",
+    "role-l14-2269": "4c6460e52e819d9c633566b23ae3ae59c5409eb628384207dea4b76ea696756f",
+    "role-l14-2270": "0f961b56fc742da904d9a3a58ad7d7b1382b4565bab3873a0befb43d3b7bb8c4",
+    "role-l14-2271": "ed3ca0912f48476d236919dcfa74c3575d5da942f273950ae5b4ad8239b7db90",
+    "role-l14-2272": "f3a0cd84056fce16f5cb075ae222bb3e8c5d1f6da2408f32a3372a0a161fc6a4",
+    "role-l14-2273": "58f20cfa6718f24b27d28ccf9daaa6988a3a740b744c78f31c9d17e180e78388",
+    "role-l14-2274": "b0d40ec2b44b744f6afeda584e51321272e7dd918da55ab5f15f78d73d612f77",
+    "role-l14-2275": "eb4eeefe541622749b8c4da092e1c90cc3f6437d5f911d0038962c12163cab47",
+    "role-l14-2276": "8692f72172b340fdded20c272177c2b98ea413bf5f3cef018185c688d9947e8a",
+    "role-l14-2277": "1ab499a7d112a1f41c845c453e4f0f4feca17af0a15d6eaa474f80ec49965898",
+    "role-l14-2278": "7fca66bfc8cd82bea4b5ade9a4789146bcfb8b0a5225b98619cd7bbd7e9d0002",
+    "role-l14-2279": "9515ff6f0017ea9cd96650b3cb89d057819998c49a0c76d3df76611fc8e447fa",
+    "role-l14-2280": "73cbff826115d941588bab40e10bdc4895a99b039c206a40c62f3ed37590643c",
+    "role-l14-2281": "906066966aa5752db3e619b4a21b67cb814690ff494e09c4a15ce0456c4044fc",
+    "role-l14-2282": "4b820fcbce2a0df3b2ce3b22c708cfe54bdd959795273d48fee0a8cd9b45ea78",
+    "role-l14-2283": "773fff31711ad384b53567046aecae32d9fb120f6bbb3b949afb154336bb79ec",
+    "role-l14-2284": "db2bcba1c6af7caf583fc13193992d3678e109f09cfe67897c4675e9c515d86c",
+    "role-l14-2285": "1c37da769f0eb7b5739f6852b0a98b13e8628d02a6f563fb6d8c4c2238db2d17",
+    "role-l14-2286": "b6a40c043b01244a25808e3420a5acfab042f805e75354876f9bebae947b2e90",
+    "role-l14-2287": "f38155935afa80b720be388bf20e61a418f67238295fd47764e2718971a41e39",
+    "role-l14-2288": "25eab65a5e3bae498dfdfa9d18e3063f6b673fc7ce1fcea70ddfcf5ccc0da013",
+    "role-l14-2289": "574d3b635765a9cb291be4146241d598beb8f02a0738b0b314855acdb3130e5a",
+    "role-l14-2290": "31031e9bd1ef735183df610c2b058ce313a8ca425f54273b555f299c9603537a",
+    "role-l14-2291": "886dcd931de41ca36af5a879bbc702486843bc4c116fd7b6dec7e03444f785cf",
+    "role-l14-2292": "2b56000a509414003ce67c433e09eeb6b78660d2a745dbc50755d989ac1b7e19",
+    "role-l14-2293": "24a02493b066ffe2f353052b30a974f58c42f41513cee82c7a6c0ff9da1e6875",
+    "role-l14-2294": "05388714a4e4092205e7f2942d951df843671c6009163298d1d25f84ef4a5cb8",
+    "role-l14-2295": "473cc339456a03a121797cf4cdff1dd5b2dd648a82e2b4371ae66150e07b3f48",
+    "role-l14-2296": "d5688a8456a7df505b05d66139b926e9b3f1d8d7e3b20bf06b446696643a1abb",
+    "role-l14-2297": "595b7f30529c8aaff40bb378423f669a3a48bc5de5bff2a8659ba596bc4ab708",
+    "role-l14-2298": "45581cf91cd5efb0bfaa5cc4a06093aa8cb71898a6441684729ac238e39f3e39",
+    "role-l14-2299": "14c5971d21de97c6200edda346aca4b1c64cea2d04bea9952a812e261b034db4",
+    "role-l14-2300": "a93caece96b6e7a5fc9c08512dfd9e0fcb84ad5c5230b2f9bd4f44d5b66529e1",
+    "role-l14-2301": "59e8d1be0be2d45f93643b16651346140ee92d3ce6949f0ef45cbf50bc38c801",
+    "role-l14-2302": "2e42974946cb7cbb2cdeb00de2571c42c9b6a3a37a680a76e157ec4c643d36f6",
+    "role-l14-2303": "288c334d93026c7357c54c4b30256335612b964382a9fe0ab144e7df050b7e96",
+    "role-l14-2304": "d612ee994d1cee6797d2d81cb987cf7a295ce36f07a1dac09ae4931fa4cb90cb",
+    "role-l14-2305": "d8b4f5ffef6637c8d1ab8a8764d45adadb9a79164f39aca7bfdc2f2f26f663e6",
+    "role-l14-2306": "084f9e5db1052a41aad8217792c713c96972608c283580a69c8c21d7a5f0e0c4",
+    "role-l14-2307": "4af25a0532ff7a9a9c5f6999a62b2e8564650b4ce5a74aba8713afea0b7ec503",
+    "role-l14-2308": "682373919922fad6ac8fa77c1a31721e73fb7090d00b1c25116c8bd340dc6c90",
+    "role-l14-2740": "85a7d29e8e12c8f3bf2b4def7e12093d94ab83b2cadb0dcd26cc469b6f063fab",
+    "role-l14-2741": "0d0976dee5ec523e778c408ec6af3dc698c389fabf9bf54580b9fa350af4cdb5",
+    "role-l14-2742": "afc39262084ecfb9ee2dbde6e92eff3e68368fba674c94d4ee3278f81174ea99",
+    "role-l14-2743": "9cc715b81f12450e49f0cad65f258b95b43dd886528e3e9003d75f1e1d206baf",
+    "role-l14-2744": "64c2dc227fd993cfe066dfce05c9ab1364f0c27faf0ec2bf7694378b49be1492",
+    "role-l14-2745": "f7a02f0ad29fa89f58fcebefb0cc6bdfcd6ea7986ce7e076c77282cfdb87fee6",
+    "role-l14-2746": "a907079156238c84264894c676f58b86fc2390173f7fe60109c356b80eb62d47",
+    "role-l14-2747": "26ddc4a113069d9be87f5bb43c5aceb2885248a33b25f0277b3f8f5b5254279a",
+    "role-l15-2596": "b3b211ea3682a93c86db96cf27b29b713e16b56d6d2628424146dc397dd836da",
+    "role-l15-2597": "1c6d3471a2bbfad97dc65613e6fa498a33b946aafa248139b5871e15beb502f0",
+    "role-l15-2598": "206be51379ba0c307d70d9004fe6bca30456b93be1aa5d04238989aad4a84406",
+    "role-l15-2599": "3c7a87fa141d99b73bdec371f261ceeaf675b80e0f5b0a2d995b9faadd6de2bf",
+    "role-l15-2600": "ad7aedb92b12c517e8c5c0d3ffcc90490d04415787af960088b184787471a49b",
+    "role-l15-2601": "b65f8cf595a098fcdd52fe9e1a453968330daf47b36b29e351a272fbea601c2c",
+    "role-l15-2602": "f39490e86e90ec31bba2dc5829fa8e7843e841ded355d3d8f25a1b4a1901a932",
+    "role-l15-2603": "5c769420dfe24311e74ba33b4c24b4ab508edf46673e5b784cbda12875a25f4b",
+    "role-l15-2604": "d439b9224b438aa4292dae536019cd41127f19bb75abadde1d1ed2d30fa1e54c",
+    "role-l15-2605": "235b0d21ec1be39e45f8fe965bdb629b1461fefa212bfdf73d5cac3682baa98d",
+    "role-l15-2606": "042f616781515d0524163d72ed18a23e9a642ba1ba66c272a0705a55f4f89d40",
+    "role-l15-2607": "a284732fdb5c293b4e11bc206a1a168e8dcc657dda5874c9892f8f6f5edd051a",
+    "role-l15-2608": "ea83853a45ab40fd35b1572cd2ab541f2aac82f268c647be2d7d56844d9cde04",
+    "role-l28-2692": "a52801a10a97496ab1d39144fb642620cfe261b8b1b97171052bc95fd4917a16",
+    "role-l28-2693": "01812d8a7698c8a8a68d3c19f2b4ddedbbdc33ef76022730174edc3ae00765ae",
+    "role-l28-2694": "4548e387f2cb8304e28b9b92f070c8964e499b2203ff79b4597482f845e3d1f0",
+    "role-l28-2695": "7299e0bace72083369537385d33c940ef460d3363ea7892b1d64b430f99d10da",
+    "role-l28-2696": "f81f4609c2e7244fe3450ca198c0ce042ceb56d06b1391042fcefef6464e73d6",
+    "role-l29-2596": "22b79e8a13b2258753ec5dd30c45d7e202b10de53c52d0a8bfe90f0502c95650",
+    "role-l29-2597": "ef8b8479e6540dec476c2f2f67bac0c17f488065c29f45d039adfaed5a4afa32",
+    "role-l29-2598": "4d0c05fb8ad11aaa35777015be4289ce221e760ee16ac627963f9e3742ed914d",
+    "role-l29-2599": "ca7c6f9ed2999ef8cd996bb2df09576889db52ddf809044fc3a2a292a342b9d9",
+    "role-l29-2600": "15d18aa0689dffb5f55a593cd533281ae9b7ebd86e1e673ddad44bd7773f5ee5",
+    "role-l29-2601": "1143555c427d23add0d65eda158c8c3bf415dd1735d7b4698baeb4638aa4db9e",
+    "role-l29-2602": "c58d18c06f44cf5fce34ffe5409c7ea74124bd36e85453071cbb05fcd054618e",
+    "role-l29-2603": "4ce9e583462e1e4b5f188d81655f388c0be7983dcffd106e3ed807e921ba54f3",
+    "role-l29-2604": "073fccf6710ee90d6f845e46f5b92bbee7ab2db4501d29de88d96ec818cc977a",
+    "role-l29-2605": "c6f407a209bd0d5b356808b99333fd1368ffa0143647de78428b70de2725a95e",
+    "role-l29-2606": "f79566670dfbde352d197cfefe36cd61a02832544fb806442e45365353125ad1",
+    "role-l29-2607": "a0bb128320b176a84b4739d95a087ce6f03d2cbf6ccdebc31e9c89c17d64af9e",
+    "role-l29-2608": "b895f6f7ae5c7f0b6d964aea2cda3d623bdc167fbe7d843e98f846f39b1f953c",
+    "sculpted tree wood": "a8264b371efe97c86149d2a78089d67a5ba3acd301d587e1e104ca7827be244e",
+    "sculpted tree wood.001": "ccbab7907386ec2a64c3d3b58ada8c8d1a52ab05f0268f8de390f6ee7c6e4c82",
+    "sculpted tree wood.002": "c8c6e55e3d59f9f8ec175d3a57679d9ad4a7d49718e6fc63c3ee988acbfd9ff7",
+    "sculpted tree wood.003": "0ea93ce322e83f223a1061161d2bb207c31e7e0bc282a5dd8e6953a60c21c333",
+    "silver birch / bark markings": "5f8f23663d4ab00a064a4e3f878410f241fee2d8f82c345a326b6b151e322938",
+    "silver birch / pale gold leaves": "eeef85682ccab2782db500f4684d6df72ff182c1e8896ebfe586e8da2b1bbff2",
+    "silver birch / porcelain bark": "0ec31dcecdcafacb6d7cf726e090c6a25ba476d68b7bdd5acc22eabfb47796eb",
+    "spire grove / blue teal foliage": "debf6a53c109aa51aae920c8ecb302af4447f837919f14a4d23226d07609fc53",
+    "spire grove / bright jade foliage": "9c8090dd6fca933aa947487bd253a0c27264b47c57a51218c3456a46d641d885",
+    "Village / shared sunny court:0": "83c33a7aee4020aad8fb22ec4650335b9a24eac1d806cb95ec5b4a064a3467f8",
+    "Water town / shared frontage court:0": "08ed1fd051eb178e0fdcfcff913d3062e245bd9bc8e72b39ac92f65b2172c68d",
+    "willow / cool shade leaves": "497400fe041d93766fd9d030a956bc7b3e56ef450ffd50714e8d9b8c6afd2025",
+    "willow / fresh mint tips": "579a9c44a74c06c5499ebf88ccb0d20bf17026b0b7a4678580927a1102cfb08a",
+    "willow / pale blue jade leaves": "ed156b9e7f0756a5f73c44e385187d02d7f0f4cac658bf0e391549a4aa45772e",
+    "window / pale blue glass": "5aa33d6e7ae90a88f4e3b50062808952a039b7e1c809e61ede77093394abb64b",
+    "window / pale blue glass.001": "24477c0016f695f957ccb70e679fd660fd845f13b3a2024e011edd331665b72d",
+    "window / pale blue glass.002": "8bf8d0fb07c27ccd37b2077478fc6891a959e29cca754cac999b7a453736a81d",
+    "window / pale blue glass.003": "4cc823707b5624c4282a1b24bfd87013e9b3ab350d575e95d81e6eaf3e444a14",
+    "window / pale blue glass.004": "bdba1be947d7943d895c509304bb6d6210e1a8320b2bcf8d2575ff7256e86e25",
+    "window / pale blue glass.005": "6f9d76d1e4f2b6bbcad626d296bb1e2e70d7fd4cc2b15fcd4dea0d7269035962",
+    "window / pale blue glass.006": "aa2e6d7ef4c61aee120fd7623ff7f0d05b27db750308191ca8f73ee00e76c83f",
+    "window / pale blue glass.007": "4fcb4ef7b8161a0213fc6844780f29a71860dfeafe26c8c4b169d12fd2bb3b45",
+    "young branches": "b9bf8d5af308dacd771c34ee8226407f994163d47a692cf225a36dcbd010ffcf",
+    "young branches.001": "b99ea9a543216b5243ccf4fde9f4346f2441127f11b9e6d03344a58298478456"
+  },
+  "meshDigestsAfter": {
+    "authored-bank": "705f79372fe32456b1dec1a96623bdbd4207400b9ffc4dec7af44ebb899c437a",
+    "authored-bank.001": "9e0bfe933ff5737a3b6a2ded3f51197c96644fc2e5dec9efdfcbacda7eec155d",
+    "authored-bank.002": "fd130542e56badbbc8fb183a7227c0b86230a83bbb01e726580029d05f94b44a",
+    "authored-bank.003": "99d220e7282989c6e347ca812897fba26972c1bcc89b1d5d4a3896092175947c",
+    "authored-bank.004": "ed098daafbf100be71efa41add0fbbb146ea29eb184ca5286d23ff5a155cb1cd",
+    "authored-bank.005": "a3f999641c983d93f45463a27a6a4303ba696bf1bdcf081129a7d560ad0a73b3",
+    "authored-bank.006": "c5a6e109c6d922faf2e3afb6bd7defcc6df8bb0054fbfbd03284f8ca8204e4aa",
+    "authored-bank.007": "869f5e4b7f26271f0fc158cc168a1e06a12f3c48bfafcae14a12852c6994bfbd",
+    "authored-bank.008": "347b7a02f616bbe4c4aa3f7854bf52d03afba6d1d72826b38a78283db468ca90",
+    "authored-bank.009": "254be68455bab8d3eefeee640827c17739beeb943c2634c63226507b4710aa59",
+    "authored-bank.010": "1672c65542e03a3a566cc9d32ed4ce6d8d2d4e5dc2dd6da587e6bd1897d60ffb",
+    "authored-bank.011": "3326a48a2dc878988d8a4e6182131da866fd7b2db60e5cf5be45f8c096b53da3",
+    "authored-bank.012": "10b2bb2bf9e132c96a46f3171dadf582e87498fdcdc500bd49655c8d45370cd3",
+    "authored-bank.013": "061519ff93baca8b2b1eba5386b39fcc11694bad93c7ec8f870003a70872bd9f",
+    "authored-bank.014": "de4bd325159fd99b538ebeda75ab03f29d53465e94547366cfa52dfaafb5b70a",
+    "authored-bank.015": "f7e2fce7d777f6869f50565e548d58e71693da55bfbd7c3a7c8216d8875d7f4a",
+    "authored-bank.016": "33ac44c9e606504d5a722d82842bb7bbf5ba867d84fa978d7184e6fd4e331d3b",
+    "authored-bank.017": "ecfe9f4e4622aa76230f6906cf21391911fbbdbd5df5a704c96e84c0bf018b79",
+    "authored-bank.018": "110f414347cd1872c789e5dba865236c1b0fa930a59b80b529b2217d6b8ba504",
+    "authored-bank.019": "8a1683dc1f7dc8b4616d20856335041fab7260e3f5b81b1077f3fada4829d95b",
+    "authored-bank.020": "5be5eff1040a3d33c5d2244a9103d701cd7842d330179598b6e765570433a103",
+    "authored-bank.021": "89674da35d354840c6a7201b3005e9540541d8720c3a9a2eb20f567fbfdfa627",
+    "authored-bank.022": "9c53856c9274256bc710dcc5dcf502c086131255653e45aee0893e8f648c5d85",
+    "authored-bank.023": "2b6738a9e63d678837c1b9201ff823206c63165bbfdd3774d040d31cb1a8f310",
+    "authored-bank.024": "b1f5dfe5b3f2c8853396ad47dae71c0d7f840ffeb11e1e94f5265145650e144e",
+    "authored-bank.025": "d1ababa1ffa7d9094eb8ce60a76b8c23c9b392469431951fa89cb9e7c025d476",
+    "authored-bank.026": "e553017cceb169558d7c3ea4e273f1ad7225f75aaedd60fc895a4500899a16c5",
+    "authored-bank.027": "43cdd96f6a035efa98bf439de8dbb448e83010bbb2cfff5a7cf1154530d2c928",
+    "authored-bank.028": "50588467c7dfbd4d64a4d2b9e028e47192eaf77e048c4c8807bafa326d1d65f7",
+    "authored-bank.029": "e6e1425df0e5794ac38ddbaaddbf1a5ff33535c71c5705531d1912dd0c03c9ac",
+    "authored-bank.030": "41689471dab7de04559803f9f78190dd2ec19d5b350cca1c2016144d63e8dc5a",
+    "authored-bank.031": "368bea06fa974d569cd3fabd556eafee1accf52773922f06822c4304af41521d",
+    "authored-bank.032": "7b2b50f34ffa20b634687f510380fd76e6d9487d129994f4aa1c67f68dd31c88",
+    "authored-bank.033": "200698c54c5d3f0b6968d1521b7162f83aa29d5f73aa7d93132dcf0f5baa6fee",
+    "authored-bank.034": "64fc9cdb3a0cadc3a58e770e1a3452ac45afe1ae91dc3a122a12057af9f57f18",
+    "authored-bank.035": "e2a81660dffe293a4b7e78d6cad5a99310c2d6e26f02fc99c3b7bc674f1a4178",
+    "authored-bank.036": "66be7af1d62e0d63da11d2ae3d5f1d8df7839edc8eb89b48948c2ec4f0d8f6f2",
+    "authored-bank.037": "ca43f211a2eb991e9d45bd2ef955f7929ab396e933228e60fe72d074fb492d1d",
+    "authored-bank.038": "70768146cfc6b26e1efeff1b082d1ce84fb601cb7827a2d6fdf22afb0af4c9e1",
+    "authored-bank.039": "299a53775195733f88b39295688026f1987a6262cb389ad62b9e33cdd196c98e",
+    "authored-bank.040": "684c8a4cb894f685b323de4b1f25bda3707e7b8808dbd2a0f4f8c06809497a5c",
+    "authored-bank.041": "381c8ebb84ac7cf3b974d808b49c537364cb4dae25f555f0210f3b0a19b4fea1",
+    "authored-bank.042": "824ab1dc001649d9b378addde0671a0bfd047ab613f00221d0461c6d573c3a99",
+    "authored-bank.043": "20c394cf9a5eca54e1866fd3196acefc2db399b916d7dfce199187fb47025e4a",
+    "authored-bank.044": "e12232b75d96927a0587dd22dc78e7c31967a35faa94e3d20e818f22f0c398ef",
+    "authored-bank.045": "d4a48dd74a581ed674942cf202a92f65c56fef50f870400209494282f3ca14f3",
+    "authored-bank.046": "fd0d23e3fde5a49bdf6d2392116ef6b6193b35690ceb9e7207cb5cec4c43c5cd",
+    "authored-bank.047": "4bff74b3adcb4efad9e77c3edfa9ae25209fcac2e53897b8db4bc840f7fe9a02",
+    "authored-bank.048": "0173ea666c8eadb0ba98639f06d95a76a27268e521adeb7b920b0271a478762a",
+    "authored-bank.049": "93d0373b5cf6637773eab5e4a0e209b1a464737dc0a727956c0551f89e2099e7",
+    "authored-bank.050": "73cdb3df9da76aa83216103636c85fe002e34a2519c399cbb497951d6903cc6f",
+    "authored-bank.051": "7aa5e53e4da53707c1be1396cd78b916b6c21d37f499423386e9ab7a852057c2",
+    "authored-evaluated-floor": "09fed74ce89e6e3ab9ddb9fd9cfaad44888920fa647db8b78df8b07da57b4190",
+    "authored-flow": "4dd547ccbe4a4b974414748112c4849b3f04b289440a8834effee1af8953dadc",
+    "authored-flow.001": "9677612710cc1384ecff72d1bad43e6654832e2a08f7657606496859a76668cd",
+    "authored-flow.002": "5ae6684f388699838f1f75b6e5acf9f396645f2e8aea6b85d5416dfda272452b",
+    "authored-flower-high-support": "c78c6ec7aa80ce16a0e0e7bf91e4b813e4166109e8d25b7349ca9771edfaf711",
+    "authored-flower-high-support.001": "9883e61d78fb1567d9473555515b46ecac21c8badd00c969d2eafb91dd2b7722",
+    "authored-flower-seat-foliage": "6dd63e2a47a672fcd7caed345b0a54b536c38d292ba2de4b4e70b229a79da1ee",
+    "authored-flower-seat-foliage.001": "57ec75dcd20bf2e97aeb0c6a9fa44a6a935587bc3315c0bcb323e7275958509b",
+    "authored-flower-stock": "27ce7104347b9abe4a888d9c3ceca781fdf109f380c6a7a38444d2efab09520d",
+    "authored-flower-stock.001": "1a405ca6575d66d621b224fedfd2df455b24581d2d1600795ad1997e17346486",
+    "authored-flower-stock.002": "1c04622c658dfab99b531d58348b100b1de060a450a37b826320a409a75bb56a",
+    "authored-flower-stock.003": "ccddae5057a821e21b1ef6b7c32b2c8d47d623088732035419f5075e3de7c097",
+    "authored-flower-stock.004": "8509643ac7bf72bfadd01a7bf78f21dcfd7ef04cafe95304453d54b665027bba",
+    "authored-flower-stock.005": "d5ae96c2e10e076315c4d239829a189a628b3f8a9490fd5e0e3efb1e7b0ab438",
+    "authored-flower-stock.006": "b0085f505c126006a76dc248029009632b4ebd774a8295f022e2e7e04a9028e3",
+    "authored-flower-stock.007": "153db38c2b706d23f3f12e1f79b3688222663e3ca14ab72d798e057ef15ad968",
+    "authored-flower-stock.008": "5259d44263a3c0eb99f4ff4b578d74cd14b5a1df7db90c9703c3a056fa97ff76",
+    "authored-flower-stock.009": "14ae9231b7b583d40de51b4c4877b70a50be971a9dc7a121fb58d084c4e96379",
+    "authored-flower-stock.010": "8cb5cf0f2ac53fb855baa7daa1d06fc2ee96ba318b5bac591d86a3a994b15240",
+    "authored-flower-stock.011": "0a6f0380e577154d48e9f7fa4476d907d7618ddbc697b6a74c591a556a4bc619",
+    "authored-flower-tip-foliage": "f6f0b55ded2573fb86db71c2c587379d28252ca60bc03f78580d7edfcd47d9a1",
+    "authored-flower-tip-foliage.001": "6704262a90691c14d677f2665ba7132e7856c47d618ff8a770a616df8b4e082b",
+    "authored-flower-tip-foliage.002": "377f8a59e455100c7e56190377f8f4b025d993a2b5a08f328c5250d442bcb1a8",
+    "authored-flower-tip-foliage.003": "95626f7e80136c718a4e25ddb2b5f7c5c2ffae4aa72914fcc5af0ca4c338bd88",
+    "authored-flower-top-foliage": "6d00ff97ccd6bb5fdadeffd44506b70387d8d0f423bf1d9aaa979443b016297c",
+    "authored-flower-top-foliage.001": "9bde9a8e5c7330adeacc2e0d053c9848584126fad7e56478a764752ac507951d",
+    "authored-flower-top-foliage.002": "ab232c478f527375ca71d78fd5aa3aef8f4f1a735d0faf9ee522b6d67935f70c",
+    "authored-flower-top-foliage.003": "bafaf158e505d792a7b5ac4895a0f4ef0c1067cd9d86c97ea57c3372c50ba880",
+    "authored-water-bridge": "d816b3403418fcc0562b0b53958f0524ad0c22470b78e867aabb67476f64d8c4",
+    "authored-water-bridge.001": "8c7f7a0c9bade88540fbe78399e556dd1390e8295a5c60b19e3fef82181a58bf",
+    "authored-water-floor": "ac3fc1cd9aa1d64e6cefa462d004e397944774560107dc56b206f3e5b911999d",
+    "authored-water-floor.001": "51ae6b004517f40cab7451d5d5a7ba4e320cb0f1ab445189cfbd5b2b5757de16",
+    "authored-water-floor.002": "09a57c47c3f9947f7bc2361df8cbf2c6d171999d0dc37040e49648f2d55b63cf",
+    "authored-water-floor.003": "52a4209c655a771dbcde708ca2e392b19b2e04a2cb878dbab219dfffaacea0a3",
+    "authored-water-floor.004": "212ff02070d69b38a6ab2fe2670e8c90ef0b2e99fd6b60bb448a14244a1c3506",
+    "authored-water-floor.005": "31585628d584b25659877601f6db77d51a731e244b28d9139e6754b242a372c9",
+    "authored-water-floor.006": "2af89b9cd864734f438eee4f23f099602ef9cc93dc6cd8d6c86833a6e9f020f7",
+    "authored-water-floor.007": "10ce95ad660eecd856239475c23023a7cb67a2ddfa0201cb53c842911ade8b62",
+    "authored-water-floor.008": "e8ee0e8888baded3572fd016ac7e96b8ba7583ce5e7e3ac0514a3f047e40d4f7",
+    "authored-water-floor.009": "a7509f22501a3b49376eb4808f66f31ab8bd5ffe632be68ffdf57c2eb9031f60",
+    "authored-water-floor.010": "802fa7a8f0c51fc02e78e215b80ec96c7f7d0bddcf82313fdbcaa4293f6dbeaa",
+    "authored-water-floor.011": "080863e7f2381207a54fed7f9c6d23be1ab9ef51da064427cc3ce5fa8c0384ab",
+    "authored-water-floor.012": "ec0a1cd633ed38b24b81aa8f4aa81521de3ac8ef4b46dc230107520eb68b8127",
+    "authored-water-floor.013": "bcfe88efb26e6f23e9a2aed35bab2b2b6b6b39c3b67735cdd89361ba176e1edf",
+    "authored-water-floor.014": "7f74e185dd28dda2385a4cda893b0f66b23c7f678537aa8957e60a790ffb161e",
+    "authored-water-floor.015": "7026a5fbd7d357741c32de410e759fbc54a4eff17c23e20aec69ceed3d9a5ce3",
+    "authored-water-floor.016": "3c2b5107b155e414775d8de5f14708a0a832fa662b76f22ea0aa709b019baabe",
+    "authored-water-floor.017": "48b3ca7c9c7891436502b80e100689b43356bf2bcc4342fb2097c576c51f29b0",
+    "authored-water-floor.018": "296b469842408f55d0c00a673c30ea3077c80470df37e714e357e27dc14d9409",
+    "authored-water-floor.019": "2effe38ae74b3e73cdd2ec4272b3263a1eb85c63ceefe72da2b4a8921edd2c70",
+    "authored-water-floor.020": "c1623153b3b2559cbfd8185f53e8ac0db8397da17e1ef6397275cf95ed45f4c8",
+    "authored-water-floor.021": "4c56ff1d18ce14755731a05d5cac6bba378f99cddfd3b56ea53d0c20cc02694d",
+    "authored-water-floor.022": "1c078081f0d51e819d624dac0f5ec75f56a729ed3916ce6687c9d6f3f6a73bbd",
+    "authored-water-floor.023": "608500d499aa602bc79050720d7b35b2f6f32b0290c3ed7881f7e28245e5cde3",
+    "authored-water-floor.024": "d98a3f2a2d3c6e89196c42fe35086f37f40d312a6a5fc54baba7cc5c08ebd104",
+    "authored-water-floor.025": "64c712d0361a086a4cb91c533806fbab8c0ae2cfd28cb1160bf171b5ee57a19b",
+    "authored-water-floor.026": "64a62d13ff975dd4ae14a10a5541cc8f133f3e022e82fb2fec07b7d8a05d4764",
+    "authored-water-floor.027": "e641897fe13d3e94170aa85d433bc6fa2533d669e03621bfcd79684670b8718f",
+    "authored-water-floor.028": "b42534ea34f60fbebb79868a16c203d599c6e658b64981c6e18006a90151b6c1",
+    "authored-water-floor.029": "4f1ea4c01af3083bdb0b3e10788df6f5e59d852bfe1208e99a60f27c21c21e12",
+    "authored-water-floor.030": "381489c44fff7739db028a2f75047940e92e406eefe171f3584fd6389e8c6b74",
+    "authored-water-floor.031": "27e8e6efee9a5f87b256b5ec7894896e840d66547a34769fed25eb8317236aad",
+    "authored-water-floor.032": "34d2a8f0660fd0dfd0c1a2f33a014d66272d0295e21b8038f51cfd1c5f7d2b2f",
+    "authored-water-floor.033": "f2b3b002627bf1bd538a9a877f84cba966ad287e0c0d2bd32c24bfb2fe5e26cf",
+    "authored-water-floor.034": "621bf1041ac8487c076aef129dae7b86878c2924c8ab094a0fcc180e1ac82b0f",
+    "authored-water-floor.035": "3efe2bf06534254a14a61ad0ba21095eca7931bf4f7a7cb8a6a039b537646574",
+    "authored-water-floor.036": "cefa1e197877297c9df671e6ce0bcef06494a0328e03e325c66fffbdb81a6e8e",
+    "authored-water-floor.037": "a49a2ee7a6d7c7173fd294f2d3378fe0bb83b9f5d78e90f757aeb8a3e1f8ab8a",
+    "authored-water-floor.038": "60e85ff9fe475e7fcacc14057f46c5de9a4528479ab97b4ece8f75b401e63831",
+    "authored-water-floor.039": "4ea66428a8ce3dce6b8c91c79827ee126dc9a483055d9fec78356e59506a55bd",
+    "authored-water-floor.040": "24e51410d5f48a32c5abb736ecb73786c05abbb1eff7adafd839fc1eceae5a95",
+    "authored-water-floor.041": "4d810c23305e538cc4333b3035faf6b07b1a206aa0ceda03690133dd55ca3e82",
+    "authored-water-ripples": "3d10b0ffb16553da682c7ef821d4aacac57c2ff3b44d0d3aca8b1cad8b865cfa",
+    "authored-water-ripples.001": "fd4dde8883a2743d413b2b851e7c82b0c1e01d2cbbda2425c4db0034c676d466",
+    "authored-water-ripples.002": "827afbe321fd3afb801d769156046aac37ddafd90933af9feecda689a1c8373a",
+    "Central_shoulder__continuous_closed_supporting_soil": "613b9cc1bd8438b6d9923970f962ebe2c5c79ae7e53a81dae9a5e5c7a9709ef3",
+    "Coast / continuous layered shore:0": "cacf04dc3b5845958bd8e1c836a14f37c73c2b017858a4489795dea6a736af1e",
+    "Coast / continuous layered shore:1": "3102b7a23c39df9a91aff4fa927a3388991e5e10f6d7670c433b3ef67d831938",
+    "Coast / continuous layered shore:2": "ccdf8c13fdef94d22c6945205ce922108055668a12a7b6427d1e9989e7f90763",
+    "Flowers / open sky gathering court:0": "0b43c7eb6d0327b3e2683c5e2c0af1078ca05671283bc8692c3b79658cb8d50c",
+    "flowers / porcelain lower petals": "5f31d900eb6792e00abe663994470272ce33ca54426d5715c10d19f30001d98d",
+    "flowers / soft lilac petals": "caba1e683dd1e3090db33d093d5738bc7350026304a5dbd5731a93b511065bb8",
+    "flowers / warm pink upper petals": "5e9095e3204dba325e982a938dd0a83c762f36ad355caade2750c9de252ca791",
+    "Garden / rounded flower terrace:0": "4b6f17563b2d51e2892428b2f45766067c32df9439ee90b6c3e9847a280a08e4",
+    "grove / blue silver leaf tips": "c3d7ebbf9a5f1801028f917def4beb0b551bba2d63c0926cec7dca38b93dfbb5",
+    "grove / blue silver leaf tips.001": "5e5503dba6277722e377eef664451a2312c29487f48c2c5f132a0001af5b98b7",
+    "grove / blue silver leaf tips.002": "668d82fb5ea886755a3a8ea9122a8c0c9b4ccafb757e9e4ef041555227c09921",
+    "grove / blue silver leaf tips.003": "a702d592f0678dbf1c9fed0e28a7ab14ae368038b799950ebe39c0e067598eed",
+    "grove / living violet and jade lamina": "7a0ea50e3b4f2678779a47e058b41c6ac7cbf27f1fc4f27b9e4128eb36f182ad",
+    "grove / pale raised leaf veins": "ac2a3a7d0ce4fd468fdeb1bdbc0503124f83423f3f76d5b9cdda74be0024f2c5",
+    "grove / pale raised leaf veins.001": "5b77535422625c3205303b3039c6597544f6d8337c4a0106f516a6893956281e",
+    "grove / pale raised leaf veins.002": "657f87215585133128586fd6749f767db26b672a8f46e8e92249d872f4d3f950",
+    "Grove / rounded living terrace:0": "c9608fb3159b581633d62c5723d3b9ba3dfd27c85bb56b0f06ae16c4281e3aec",
+    "Grove / sheltered open room:0": "539524177d4b49b27c7bb8e279ffc67fbe8790018b2e27fb73a55af87508789b",
+    "growing-flag-cloth": "f7ddc1693f9bf9a9d28fb67bd32dfe26013c431338dab218307e3d96e90540b4",
+    "growing-reachable-paths": "10401ad433baf66ce2833fdf36d78aa63bd50b1752eb715a5482488874b77954",
+    "Harbor / shared waterfront court:0": "0751a189b150f7ea22def87f425e9cb31fb0b17032795131799b5cb9aca74da5",
+    "Harbor__continuous_entrance_runner_jamb_rear_arch": "3df9f712a57cc5cc00a671fc6566b81048e68e395350729ac2161927498d662b",
+    "Harbor__continuous_grounded_runner_socket_left": "9589b63003854a49bcada4304ef643e8dc770c678b06a80324b7745c150e3986",
+    "Harbor__continuous_grounded_runner_socket_right": "0b89a41ed3c668a71474723c14847397abc223a8c0cd61b6f260de9d6406fed5",
+    "Harbor__continuous_translucent_shell_hall_1": "c183927b0070dcff885bbacc22789037e6073dec095a0411a6bcfe3293c5922d",
+    "Harbor__continuous_translucent_shell_hall_2": "43fd875b7e42b5d930cff975771491145b7591186d230c9b2d32c78e7b1fd660",
+    "Harbor__corner_structural_rib_joined_to_rim": "4222ae6ae16b7fbaba533fcd6898267b17f37415b21db9152721a36a56101284",
+    "Harbor__curved_shell_structural_rib": "39928e98a30eb207782dcf4d832cda920894b98577fdb5cd74b0c0c5cb693528",
+    "Harbor__curved_shell_structural_rib001": "5cbedac755d2047d74557404b8380fbee0b3d99f1d8d1ebc12313c793ed52b5d",
+    "Harbor__curved_shell_structural_rib002": "411d7f11ddaec41cf373ef66f297b6b8e68f705ecf59f1504615f51d2be6c394",
+    "Harbor__curved_shell_structural_rib003": "c20d4e721b01c058250194a3fa9c1b6535dc631bf0ff119f2e3632b523a12822",
+    "Harbor__curved_shell_structural_rib004": "ac0af49bc51c5f4986781eafc2a190ceb13f0fe085d7a65d7ed21f64c3e879cf",
+    "Harbor__longitudinal_seam_joined_to_corner_rim_5": "966712a1c5595c9327f0f698a944675a686ef96c931b6dad152f809b3f1a2075",
+    "Harbor__longitudinal_seam_joined_to_corner_rim_6": "1632f53e80290c2ae290cbb5d395d1e269789b60413196413598c88dedda3c8a",
+    "Harbor__shell_grown_footing001": "41d54392ec3b437987b55eb97a5934655041ae14faf40613435474f8c25d31d9",
+    "Harbor__shell_longitudinal_seam": "d2f36b342facb734f7230285e237f49f1bf5496d98b1caf0f47f02c94590a123",
+    "Harbor__shell_longitudinal_seam001": "9cb75ce547c204cde2f1ae303e08e3bf0db3089ced561e3118e5bee436a82b36",
+    "Harbor__shell_longitudinal_seam002": "83a4bdc0dbe958d7b47ed7b421c5a7b7d9183a840b2daf7f0974211062408781",
+    "Harbor__shell_longitudinal_seam003": "7e0a861daa94d8f6e7ea71efd452e321100cd3039448736c6310ea06f2937376",
+    "Harbor__shell_longitudinal_seam004": "9f0e9d73382456b021d4daa80f96c0da4c05ea28e497d5b58c824906dff5fbe8",
+    "home / curled jade leaf roof": "c4a74c74246791b057cbaf91ac146df2ab3564c032535020d368ad71e249284b",
+    "home / curled jade leaf roof.001": "e59099903aadc98f3a44947ff6ce0b5c9529f6b9bd5a90cbf0d851608c237039",
+    "home / scalloped blue cap": "f5a0846682a1dc9bb3a7be041c52590bdfef8844af08a00941b54f30fc79b02d",
+    "home / scalloped blue cap.001": "4182144e67719a34fc4f71e9449666b5db04182c573b5937ffbb4b6542cc61a7",
+    "house / cobalt door": "8b17184a73285059adc61f5ecd6e34920c127398c71f7eeb381b334d82a33ec8",
+    "house / cobalt door.001": "9278fb0a8eca0a5603398e1272d427159aa2b4eeaaa479df608ffda6464dcadf",
+    "house / cobalt door.002": "21d8f5da7d279aeca021ab201b952c274b3c4218cdd84f514a753795a1051d7f",
+    "house / cobalt door.003": "c6c4dfca2ab77f6ea82e558019ba5129c513ce2dffecd491de329abc61de4eba",
+    "house / cobalt door.004": "c882fe56a3949e34cab89f8514adc55fed5af482bd65f366be4fa40fe64765b9",
+    "house / cobalt door.005": "7213ca289c0b7af7ab119ce31ce91fa991f8ea36f7c3957f05d84d69c14dc197",
+    "house / cobalt door.006": "4b9c7aca7401d96be30305416f62498c79f84f8d06b423bc793682ec149c8c21",
+    "house / cobalt door.007": "5699654b063dde09b831cd37c609d8ad6babd076fbb0b5c39cad5ba651652c90",
+    "house / cobalt door.008": "90430c02848f86b9fcb432ff0a5899c37fc57a1a80f42e4f8a01c5d84a7ee166",
+    "house / honey wood": "e9161f3aff0c26518be219224aa174733aea450b4502552b862ef7900ff872f3",
+    "house / honey wood.001": "d7718b333b84b01fef2ffe29e05ca319d668b07850f3d61a8b30dc4be17b812e",
+    "house / honey wood.002": "64df446d1874f0bb28a94e3ac97d9161065471eb339df90738e691019af7849b",
+    "house / honey wood.003": "933ef590351782a576019ba81b29e2c6cd0bc1003dda78e7d04c735ee83e8721",
+    "house / honey wood.004": "102881098f24903338cba6c106677d2d7d15f383b8d39f2ec60ad4fb2892a45c",
+    "house / honey wood.005": "585a95bb48ced5d9665668633500f17e9f74551e2725477ff29e383159bec775",
+    "house / honey wood.006": "bb6fa6297ecc5eb1b8db299705b23bab127a86e67f32aa80cf3b1d4831c05be1",
+    "house / honey wood.007": "b4cd42b69daf5ee2098a1819bddf8c0e7a691a16d23f2543733ac14f20b2457c",
+    "house / honey wood.008": "87523cb7e54a2c1545f1ceae535cc23c88fca3c3b8d5f3a104928dca6a7cde0f",
+    "house / porcelain plaster": "cf1923658623f6b1a2b18feaa912310a7811c5ab933eeb19f5cda40fc0165a42",
+    "house / porcelain plaster.001": "6fb59ce3a964d910bae2e2e1373da1ea6a893d293ea219247a8cd953e3d3b402",
+    "house / porcelain plaster.002": "255144923fcd0a3e102037a7bc88350455d026d81d561474a42c31b587746074",
+    "house / porcelain plaster.003": "200069bd927e3fb502044a9938ffc5e9dd1074c569083ba1a0db58b766d8e508",
+    "house / porcelain plaster.004": "480bf46b6d1cb4706ed540aebd35081c87741d940207e91eb87929219461392b",
+    "house / porcelain plaster.005": "62393debdc4b744e2ff3a3945fa070029fab4f536f59d9fa86d53b8031b61524",
+    "house / porcelain plaster.006": "ac8d16c7abf4feb615faf401edeed369f7a53d41960468a1eb410ebfe0f84fe4",
+    "house / porcelain plaster.007": "711a37110b88e94f113d169f34d0fe1375ad4292d6f7670a43f14b89be6ddb83",
+    "house / shadow plaster": "05da713503b7ffcb9ca31d15a8a2f14d08f99478cfd879a363760b0da6073bb0",
+    "house / shadow plaster.001": "040ebed7636fe3d0f1814df97a9f76996d870e914cdfad134b730801a03ffca2",
+    "house / shadow plaster.002": "b278e7b62543f2a124f5b4620f460ed6fa9f937d5933015e89c49acf00dd2223",
+    "house / shadow plaster.003": "a6056250fbff9f90c9163fb9ca3ccdf2d323369151cf9b63229c5823f2a133ba",
+    "house / warm yellow roof": "bd4c3c572823753fbacf2c604c225afabe1fee5763f10136498a43d5839bf5fc",
+    "house / warm yellow roof.001": "8d4b8c804912da7757c5a9d2719b8c8440d9437f15bc640295aaa34b67165338",
+    "house / warm yellow roof.002": "a2ffed08d88315c50fa6b856a384dccafb38046d05d33b6e744fafd824428279",
+    "house / warm yellow roof.003": "faecb649e2a2138b865fb34141ff42e587d2fbbeb5b654c24b049e5fe718a825",
+    "house / warm yellow roof.004": "d3a527bed883b7c352f03797c4f5476bdfcdf25889552d240b24692a1ceeabd3",
+    "l33__source-contour_planted_root_continuation": "d7ddc4ce7e4f3ad611e8f2b8e075254ee52492ba57626b0d43c098ee165ae4fc",
+    "l34__source-contour_planted_root_continuation": "f8c313d581d48dcfb0e4b2699eecd934c9e91e5223c020d816be9b04631799f5",
+    "l35__source-contour_planted_root_continuation": "fbcc20debb5037ee705ee91ae8a29f584ff0f7ed4fc76b3610f88bb9e30a2270",
+    "life-bench-seat": "f27e8d0f6542dab11d6e5d27a936498fceb37925ae39d013eeabd0c7f43f103c",
+    "life-bench-seat.001": "a1ba73e47b1185faecf2f04408b7459721b925306636a351de586c3ec93259bd",
+    "life-bench-seat.002": "005561382e6ac281e56faec4b55936fcf9f331f0b0517d1d5654ef41b8046b19",
+    "life-bench-seat.003": "387cba44c33d3412b5d6987a7bb8e1205d387deac0cbea4210cfa02976e4985a",
+    "life-bowl-water": "d5dd337d412f9b4c1ee9bfd33c3af5cbbf76bbd26b90eb4121e702cbcdddaed4",
+    "Mesh_0": "1ce91dadf16720d1aed7b4cc9c31c6f0f93c4ca1d9cd5a13d5216b680e00f14a",
+    "Mesh_1": "7210e93a35eb028a8eb325e9fd4d10fbaf5ff540ddd24d6774107f01e48b00ca",
+    "Mesh_10": "bb5981dfbf6e44d53c10538595d7c0b7a7b9b305c1af1ba483308246fc4e7f4e",
+    "Mesh_11": "b1ab7cfad79ed7e9f8e7f40d7bcb6b20a9f36f2b963d082ba30004f6c8b3171b",
+    "Mesh_12": "d4a6db5b2981110512736643eb10bbb9d495201364ed77a7471605320b6a7141",
+    "Mesh_13": "ba47c51f98698bf9e62ace3393e1e22fd3fca500b858f0474143ef571c705b48",
+    "Mesh_14": "10b625a70baabdb9abfb0e6f878bdabefcfa3d169f100d11785c94d06a8c6e08",
+    "Mesh_144": "4d30977d9a1543d54885e2480116fefd5084c10d7af1b4ec3549fb24e92e8dda",
+    "Mesh_149": "d35aa7bc212d78754c39a79174c3803f733c4664709dbe4bbb921fc9e1744cb3",
+    "Mesh_15": "3e02b9726b5e638d5aad894c84bb454826f1563ccef7a6fa54d18ac684699e38",
+    "Mesh_150": "702694384999f730ae7fe02b7574269640b283e7408d80c0b1fce1db73c84fe6",
+    "Mesh_151": "1ac87f2f141a73f5adc71041d28e505d8d84d1f40fc605f299f8446702ac97f7",
+    "Mesh_152": "6934a8a188792bb6ac772db4b2dcaee7363d9ac32202fac30702d80c00626709",
+    "Mesh_153": "c5626a93b8b1db12ab439a431e0ac92832f753dccd1b627dcfbc0e9d14aba3a5",
+    "Mesh_154": "7a2087829605961a888a0a6f5ffe7b2b42a0a621ec3c2c31d0976be2a43dd09b",
+    "Mesh_155": "9d586b95be6b24b9ad7724f936fb6ada2abae36087b3d69d0313f29f1759a6e6",
+    "Mesh_156": "bae0f8c99c382faa31facadd1de031c626963726e2e53306d6f4180977e2d287",
+    "Mesh_157": "fd7d212ba74838e8c6fb12d081dd3aed8121857024cb0130f7c8b99a4c5bcb1d",
+    "Mesh_158": "ffffd4fced4693324916328cd57f68d346ab4d7e3bed8f1a11a96c7769106aa4",
+    "Mesh_159": "d3650c84da915d90238f7930c90721edc7103bc57e7bff81d149a48c8bc69a39",
+    "Mesh_160": "3c84e5af418c0619ae669e8727fc77b1f2599a5c2e1054ce5913b9bb6eed3286",
+    "Mesh_161": "6e74fdaa72d897ae096292869ce63bdfebd5b76efbb652c7666cb3c18543ace2",
+    "Mesh_163": "87ef7d664b83f774c2f05ddd0dc404fb0a1110f59f996eea1b9bad22aa19af61",
+    "Mesh_164": "e0479898966e1b45f31ef2ccf696cf57d2d7527618a1530e8d28cfc26433e30f",
+    "Mesh_165": "45a60683d81e71d238ebc035938b973338f24c2b46b2150cd0c56235f9e5aaa4",
+    "Mesh_166": "d7a46bf30361e3d67c3123cd497ed245972bc1ebf9ce8322b9fb35df77d2a0d5",
+    "Mesh_167": "b718a27fde48aa77054472cebf2d16603efad782b652e2b7352991e8d1793d34",
+    "Mesh_17": "90d77b194d69241bcc17a1e149d32e08c5ca1548adbdb5695341484f13c6ff76",
+    "Mesh_18": "eef5430e6681dae8fefa67d27a02ae2d7a55cd9902108c61578be40e98ec99ee",
+    "Mesh_19": "21089f245df3bbffa28087a87ef1a73ed9d808cb86d940b008a240b0efd30504",
+    "Mesh_2": "431a9c19704b411d2bbb73924b18653dd1234d0cc41c2885b5cb915b480ff422",
+    "Mesh_21": "ddf02444afc61273461e47b0cb8e97d5207d0524b20385516c0ba64760be629d",
+    "Mesh_22": "961c70bc9e8884f69d1d357e7308bc84113614f2e0222c3808ba04d557257486",
+    "Mesh_23": "60d039cb479fd8ba55c739892c381b73aeda2b842c3e5e2a5afed4bd42b13703",
+    "Mesh_25": "096eabb29e18a2db6205aae4947a409b6ca4f1fb1a9db5f810981120db22a174",
+    "Mesh_26": "a6ca7460454c0f338de96546eaef0ba51403225b0a2028d3da3e92dec1eec089",
+    "Mesh_27": "5bde2bff320cf189e300866d1752969865156d1bac1947587b6369d662d9b4fc",
+    "Mesh_29": "f94826559b9a68287d19180f7c1604fa11a0a430ec93e7f138ac00d5795a08d6",
+    "Mesh_3": "d8da73af3f9079c3500e8759f0c0a4a16c29998c24fd7c2e0e10abee810d2f42",
+    "Mesh_30": "f78ac30f4a962f8842f5e7dc1f64e398c936f54837fcfd477c008409f23c5424",
+    "Mesh_31": "4ddbadf3c47854d1caea9a828362e93fa94df52e9b3164d87058e50cb00533da",
+    "Mesh_32": "82ce076f279d3511792e1a5e0dc889191edab74cc3ac23b3beff77b6fc364b4c",
+    "Mesh_33": "5bf8545de9864531f0ee9f7abb28a4408b99efef45ef66410c761bda71a5af73",
+    "Mesh_34": "42f64f5ad1cedce159a98db8944ec9e5bcc3877e03cc98833675f08b76d58762",
+    "Mesh_35": "48b733a0d9ff34070be7a379d333bb62b98247cd8eeb7f952aabb8854c465b9d",
+    "Mesh_36": "64446e4ce7e2642edac81b9d5a4816faa22744ac7905336db4667ade9eec9894",
+    "Mesh_38": "bc75c18a860dbbdc71050c881b89bd0dc392f2ffd0f16180afa153e169ac70fc",
+    "Mesh_4": "30e8b1b0c33d56f2646f6e5938d04b67b13181db0c955fb1777447c5898a01df",
+    "Mesh_5": "82ce965ccfa165ac0520424c51664cbd4cc71dfabed462590c939b9ad7e83db6",
+    "Mesh_6": "7bd58d4715da1a76f5e283fc1bc5f4664e8e49dd497c4d6896f0e7be2aa8075b",
+    "Mesh_7": "b34d01235a6373284e83a9f0e46b75b20853091aab53ab04f918967943b46621",
+    "Mesh_8": "732a82cfaa54af113e26b04be2251e0a97a756e4a12776dd7ca259fcdf83715c",
+    "Mesh_80": "ef08a11b2c6f583a6db1a0da817d7e4733cc02ce61699e16ed7722912bd77aec",
+    "Mesh_81": "6a5d2debecd9ec29a67fbbeb36247efc9c2c9a6848b1483bf12912a3fb45829f",
+    "Mesh_82": "e1a47ff97439ef560277795009e6e79e01a9aa53fda0bf8953865fb1f9d25f8c",
+    "Mesh_83": "ac3bfb83d57427ab577e37fad851775ed22110f06c9d196125fa2c0003c0a124",
+    "Mesh_84": "aa59940077557b924422a5a719b759a7de7154c6e8cb8362a360a8457beba212",
+    "Mesh_85": "2943736ac2cebf122bfefbaa23f6c7deb12e966487a2a024e3baeaa308dffc90",
+    "Mesh_86": "dd989ce1c6db434daeb0983d0dc1ab454a0fb4a9a58680b4420fb81e8ebc0698",
+    "Mesh_87": "e96efa946f7dd378cba3f7f1139fc6e2069b832dc56d49efc1cfa80d042232ce",
+    "Mesh_88": "70f8a9ee6b499f805bc8f588a29e6c0ae12f9adb68c253f28d5571000c380d18",
+    "Mesh_9": "f406b807eeec58e3452aa04543fd4c9de7f060dd1cdfbf8865b6d4270987d13b",
+    "Mesh_96": "0f121829e17255e226a50a32a6d7dd66595e7c5571c11ffc59e9c55c2a231a50",
+    "path / light sandstone": "2419590f66d95c2e4437945696a1751818b45fc6ac4b61337dafab97da77f8b0",
+    "path / light sandstone.001": "56a1400c0eadb9c4e7afcf577507d9fad2542e1a34874e7ee6bb09bf5233158c",
+    "path / light sandstone.002": "d4821fc34e901cc3cd82823ebac3e023a430701dd2257f0efa5412dbb9d9736d",
+    "path / light sandstone.003": "187d14a28a07f5e34054ab9d5da3e2d513ef7bc681e3bdd765faf2ab83af0d20",
+    "path / light sandstone.004": "e7569207e3e833a58675e07bb32bfbe76656e5a8748dfa7dec5c0dc155d01826",
+    "path / light sandstone.005": "4b6f1392d3b84e73c937874d6a2879baaab69cf74a144b5db0c8ebd714c01219",
+    "path / light sandstone.006": "2c6d6de7d5514373761322e04916a475ff4e580e5e0619abdb6cf7516b0d376c",
+    "path / light sandstone.007": "9da033d935d24b1fb9e74aabe1c87c7926ad2c32944681b4d555bd97ccfcd10f",
+    "path / warm stone variation": "8074c210f31aabd9a0223b2a53f2b023bb7ac6539bc03423fb7d275f086644af",
+    "path / warm stone variation.001": "5d6b9bb96f46a4688917a299eae7cba67abf203ae5bd65acde8eb1f56d2194b2",
+    "path / warm stone variation.002": "4160856e556c42348c7bcc5ab0c670e243169c24fe035689236a0b10cee0391e",
+    "path / warm stone variation.003": "42e7f8e8fab32c723b02070789a09e373cd622c02dae8424989b741cb8f82309",
+    "role-l14-2220": "b0044c8bb7092e6dbe785ab32bacec6f971e63edf7e7cd0997e958e1f7ee2d67",
+    "role-l14-2221": "c9636a58b50452f875d1308a0538692ca66c33c8a8ca9ee06c14f5101c71bbc3",
+    "role-l14-2222": "2562f7262e0d7138349bae9ffe201d4a40c9d768bbf886cd1c9a8c5185cbaa12",
+    "role-l14-2223": "f14847b1f5d6e66c11da3fe3e5641a5dc10f554d61da742bb0e1120c075d7438",
+    "role-l14-2224": "d0754fb7b2d678b1ecd65dbca484fffa0ceaba71fed3ed94d9bf5fe3048ea793",
+    "role-l14-2225": "e49f63568085ba56f09aab2e5bac0971bd2dcdb4d564cbe1d5c7d07eed90a2e0",
+    "role-l14-2226": "8f62632a00f0638d1b01079accb208fed40d529b1845169e2435e1b6a064f070",
+    "role-l14-2227": "b8efd6b8f2ffe0b512ba22305472cb9449a5e1caeba12c3a6604cbae82f58d36",
+    "role-l14-2228": "f5adbfe992654fd4e071f53c22df1c39dae09d967d16287e77ee30b452d3c815",
+    "role-l14-2229": "1f1a69b30129018b174ca310025e67df6d0cc2d61697fe7ba4b1f6298320d65f",
+    "role-l14-2230": "0c98fe3b4b38185cb74f5ba9fa8796dc743b2fea13628bce0a83cf7a333760bb",
+    "role-l14-2231": "618701f6e5ea71895be615f03ac752410a9e016ce10029bb81c1ccb1e156e2d1",
+    "role-l14-2232": "07400090c961b802a8abd6978e7654b177632776a83be8265f30e3430fa35223",
+    "role-l14-2233": "1f2b14d8a934868ae4500113b0a68ad0e9ff33d52c74faa38cd69cd36d4c9582",
+    "role-l14-2234": "75740f05dab88e014e2be1fd46c65f5dc9af926b6672bc55cede3edaa9b64e0a",
+    "role-l14-2235": "9c976bc12eb001bc62a8a0f70d7d35e205ec2ba24e10a46d2730ae637c218bab",
+    "role-l14-2236": "659683a082a685fbb70e1fda23c43156c05f65f414122fb7fcaab5e2dd3af967",
+    "role-l14-2237": "56e7dbdd2b455d38c83766c8363599091ef2a11c3e9a241cc46be94bbbe151f4",
+    "role-l14-2238": "2515a349b8105bfa609083906f21564aceb26ec4428299320eea0d213367d632",
+    "role-l14-2239": "533f622998d6c4924d03b031f185be9db88487780dea8a7493fe24ac166203d5",
+    "role-l14-2240": "a8b6258503524db16b6c784f0b0e0c241dbd5480bc3eedc8893077fe0b3e0981",
+    "role-l14-2241": "6b7dba4ef003cdfea8223ebe6cb87cd582ce9a6ed72810dc051f72502cad6a88",
+    "role-l14-2242": "c1702d31ac1eda3a126553ed6fbff6ee25700b2aa819558ab4fba3985105eabf",
+    "role-l14-2243": "f425ad9365eab38f972e67ceb9263a51865aa5cf16ea71f0931e6030cd2f5ac0",
+    "role-l14-2244": "19f83af93f8240a7f9cac1d5c7dd20aac6a4dff438663135f71609626f31af04",
+    "role-l14-2245": "a5ff13f8a6d3aeabd6f1424c0cf78efa3d2d294473957b9a73017b7de9851edb",
+    "role-l14-2246": "12d3a32c5a66f4a7d8ccf239d554a51d0dc1dfcfb8f0140ffca0db3d009808de",
+    "role-l14-2247": "fa0b51a89c950e7842f73ebd24e34ce95af36ff8c885b1a9fdb589ca9d2819c5",
+    "role-l14-2248": "c4f5d27fdfc11952c5583acd2872569f1a3c4d2a85308370254c03b7f388ee8a",
+    "role-l14-2249": "f5d0d682f91388107281dda142b9f098ffad62e0244b9d57462e76c978e93bbe",
+    "role-l14-2250": "89eb2257ab126716b738d169e06e798934119af14898cad50fb07ca3d887a3d4",
+    "role-l14-2251": "1b36223307e220207a0c90246c528d3639c01fbfb72c9b07bb2266dc814e0ecb",
+    "role-l14-2252": "700037ec9bb4828c56eb424ecabf9b42685376b30da23dc33c2da95a132d61ed",
+    "role-l14-2253": "0d7a57c1b4d2e5cd9893eab30351ecba5aacfdd719a6326e45aa6325073c1fe1",
+    "role-l14-2254": "de9ff6bc56400607fc35d8abe647deab37ecb159d7130433621dc5f217a35b11",
+    "role-l14-2255": "6c70b57c42f80cca233e9ad5514c0260f50bc74124808779f0858f57af29604d",
+    "role-l14-2256": "fd09935d572445765798bb7d80b1a9f64121e99d671508ee53c7c50e481e1307",
+    "role-l14-2257": "2aa165fa73df8d297763cab2a6937e93b62b68301145e0f79814e3deb3f8894f",
+    "role-l14-2258": "5c31d712c10d3c380aecfdfd7ae753b6a0e7ef78a68122f1837e247c9a69425d",
+    "role-l14-2259": "2b7f12ff0a1b4bbaa3f023edf229e28bdb21fa59e305cfca24c4334704c93c13",
+    "role-l14-2260": "6df60804f14e1a618fbf819886b5afd129747a33de333b9d21f70d8d8c76a7b0",
+    "role-l14-2261": "f9a98178dfb2944ef0e12dd68eeb218c484c71ecd0a02bb5d7f5dd307a03ed3c",
+    "role-l14-2262": "dc38d32c19db92dadfc000ca6b171064a744e2af33ef1165733e2add945309ba",
+    "role-l14-2263": "3645aeb79cacae2f9cb1d8a998a1e02fd9cf51196f23b86ab2d29aa125c245aa",
+    "role-l14-2264": "5d214bd7296cf4954922f36169c52571b5bcc92c344af11252da5ec2af931ca0",
+    "role-l14-2265": "ddb09a210c80be0ef643807a5e3ff56f528f03131b9b62a513f2ec24f6a0b234",
+    "role-l14-2266": "1efbd7e6ab56f046dca2f7142dc55e0e3c2355b0cde9436cd48acbe0dea9a217",
+    "role-l14-2267": "9ee199b2981bbd6e69b25540a90e0e6bc54c44b9f4d115478ffb1f2df282ef25",
+    "role-l14-2268": "9d96059ab7bb69923e1e62f2f19ef16b8e7c622539ce0175391ff47b53743117",
+    "role-l14-2269": "4c6460e52e819d9c633566b23ae3ae59c5409eb628384207dea4b76ea696756f",
+    "role-l14-2270": "0f961b56fc742da904d9a3a58ad7d7b1382b4565bab3873a0befb43d3b7bb8c4",
+    "role-l14-2271": "ed3ca0912f48476d236919dcfa74c3575d5da942f273950ae5b4ad8239b7db90",
+    "role-l14-2272": "f3a0cd84056fce16f5cb075ae222bb3e8c5d1f6da2408f32a3372a0a161fc6a4",
+    "role-l14-2273": "58f20cfa6718f24b27d28ccf9daaa6988a3a740b744c78f31c9d17e180e78388",
+    "role-l14-2274": "b0d40ec2b44b744f6afeda584e51321272e7dd918da55ab5f15f78d73d612f77",
+    "role-l14-2275": "eb4eeefe541622749b8c4da092e1c90cc3f6437d5f911d0038962c12163cab47",
+    "role-l14-2276": "8692f72172b340fdded20c272177c2b98ea413bf5f3cef018185c688d9947e8a",
+    "role-l14-2277": "1ab499a7d112a1f41c845c453e4f0f4feca17af0a15d6eaa474f80ec49965898",
+    "role-l14-2278": "7fca66bfc8cd82bea4b5ade9a4789146bcfb8b0a5225b98619cd7bbd7e9d0002",
+    "role-l14-2279": "9515ff6f0017ea9cd96650b3cb89d057819998c49a0c76d3df76611fc8e447fa",
+    "role-l14-2280": "73cbff826115d941588bab40e10bdc4895a99b039c206a40c62f3ed37590643c",
+    "role-l14-2281": "906066966aa5752db3e619b4a21b67cb814690ff494e09c4a15ce0456c4044fc",
+    "role-l14-2282": "4b820fcbce2a0df3b2ce3b22c708cfe54bdd959795273d48fee0a8cd9b45ea78",
+    "role-l14-2283": "773fff31711ad384b53567046aecae32d9fb120f6bbb3b949afb154336bb79ec",
+    "role-l14-2284": "db2bcba1c6af7caf583fc13193992d3678e109f09cfe67897c4675e9c515d86c",
+    "role-l14-2285": "1c37da769f0eb7b5739f6852b0a98b13e8628d02a6f563fb6d8c4c2238db2d17",
+    "role-l14-2286": "b6a40c043b01244a25808e3420a5acfab042f805e75354876f9bebae947b2e90",
+    "role-l14-2287": "f38155935afa80b720be388bf20e61a418f67238295fd47764e2718971a41e39",
+    "role-l14-2288": "25eab65a5e3bae498dfdfa9d18e3063f6b673fc7ce1fcea70ddfcf5ccc0da013",
+    "role-l14-2289": "574d3b635765a9cb291be4146241d598beb8f02a0738b0b314855acdb3130e5a",
+    "role-l14-2290": "31031e9bd1ef735183df610c2b058ce313a8ca425f54273b555f299c9603537a",
+    "role-l14-2291": "886dcd931de41ca36af5a879bbc702486843bc4c116fd7b6dec7e03444f785cf",
+    "role-l14-2292": "2b56000a509414003ce67c433e09eeb6b78660d2a745dbc50755d989ac1b7e19",
+    "role-l14-2293": "24a02493b066ffe2f353052b30a974f58c42f41513cee82c7a6c0ff9da1e6875",
+    "role-l14-2294": "05388714a4e4092205e7f2942d951df843671c6009163298d1d25f84ef4a5cb8",
+    "role-l14-2295": "473cc339456a03a121797cf4cdff1dd5b2dd648a82e2b4371ae66150e07b3f48",
+    "role-l14-2296": "d5688a8456a7df505b05d66139b926e9b3f1d8d7e3b20bf06b446696643a1abb",
+    "role-l14-2297": "595b7f30529c8aaff40bb378423f669a3a48bc5de5bff2a8659ba596bc4ab708",
+    "role-l14-2298": "45581cf91cd5efb0bfaa5cc4a06093aa8cb71898a6441684729ac238e39f3e39",
+    "role-l14-2299": "14c5971d21de97c6200edda346aca4b1c64cea2d04bea9952a812e261b034db4",
+    "role-l14-2300": "a93caece96b6e7a5fc9c08512dfd9e0fcb84ad5c5230b2f9bd4f44d5b66529e1",
+    "role-l14-2301": "59e8d1be0be2d45f93643b16651346140ee92d3ce6949f0ef45cbf50bc38c801",
+    "role-l14-2302": "2e42974946cb7cbb2cdeb00de2571c42c9b6a3a37a680a76e157ec4c643d36f6",
+    "role-l14-2303": "288c334d93026c7357c54c4b30256335612b964382a9fe0ab144e7df050b7e96",
+    "role-l14-2304": "d612ee994d1cee6797d2d81cb987cf7a295ce36f07a1dac09ae4931fa4cb90cb",
+    "role-l14-2305": "d8b4f5ffef6637c8d1ab8a8764d45adadb9a79164f39aca7bfdc2f2f26f663e6",
+    "role-l14-2306": "084f9e5db1052a41aad8217792c713c96972608c283580a69c8c21d7a5f0e0c4",
+    "role-l14-2307": "4af25a0532ff7a9a9c5f6999a62b2e8564650b4ce5a74aba8713afea0b7ec503",
+    "role-l14-2308": "682373919922fad6ac8fa77c1a31721e73fb7090d00b1c25116c8bd340dc6c90",
+    "role-l14-2740": "85a7d29e8e12c8f3bf2b4def7e12093d94ab83b2cadb0dcd26cc469b6f063fab",
+    "role-l14-2741": "0d0976dee5ec523e778c408ec6af3dc698c389fabf9bf54580b9fa350af4cdb5",
+    "role-l14-2742": "afc39262084ecfb9ee2dbde6e92eff3e68368fba674c94d4ee3278f81174ea99",
+    "role-l14-2743": "9cc715b81f12450e49f0cad65f258b95b43dd886528e3e9003d75f1e1d206baf",
+    "role-l14-2744": "64c2dc227fd993cfe066dfce05c9ab1364f0c27faf0ec2bf7694378b49be1492",
+    "role-l14-2745": "f7a02f0ad29fa89f58fcebefb0cc6bdfcd6ea7986ce7e076c77282cfdb87fee6",
+    "role-l14-2746": "a907079156238c84264894c676f58b86fc2390173f7fe60109c356b80eb62d47",
+    "role-l14-2747": "26ddc4a113069d9be87f5bb43c5aceb2885248a33b25f0277b3f8f5b5254279a",
+    "role-l15-2596": "b3b211ea3682a93c86db96cf27b29b713e16b56d6d2628424146dc397dd836da",
+    "role-l15-2597": "1c6d3471a2bbfad97dc65613e6fa498a33b946aafa248139b5871e15beb502f0",
+    "role-l15-2598": "206be51379ba0c307d70d9004fe6bca30456b93be1aa5d04238989aad4a84406",
+    "role-l15-2599": "3c7a87fa141d99b73bdec371f261ceeaf675b80e0f5b0a2d995b9faadd6de2bf",
+    "role-l15-2600": "ad7aedb92b12c517e8c5c0d3ffcc90490d04415787af960088b184787471a49b",
+    "role-l15-2601": "b65f8cf595a098fcdd52fe9e1a453968330daf47b36b29e351a272fbea601c2c",
+    "role-l15-2602": "f39490e86e90ec31bba2dc5829fa8e7843e841ded355d3d8f25a1b4a1901a932",
+    "role-l15-2603": "5c769420dfe24311e74ba33b4c24b4ab508edf46673e5b784cbda12875a25f4b",
+    "role-l15-2604": "d439b9224b438aa4292dae536019cd41127f19bb75abadde1d1ed2d30fa1e54c",
+    "role-l15-2605": "235b0d21ec1be39e45f8fe965bdb629b1461fefa212bfdf73d5cac3682baa98d",
+    "role-l15-2606": "042f616781515d0524163d72ed18a23e9a642ba1ba66c272a0705a55f4f89d40",
+    "role-l15-2607": "a284732fdb5c293b4e11bc206a1a168e8dcc657dda5874c9892f8f6f5edd051a",
+    "role-l15-2608": "ea83853a45ab40fd35b1572cd2ab541f2aac82f268c647be2d7d56844d9cde04",
+    "role-l28-2692": "a52801a10a97496ab1d39144fb642620cfe261b8b1b97171052bc95fd4917a16",
+    "role-l28-2693": "01812d8a7698c8a8a68d3c19f2b4ddedbbdc33ef76022730174edc3ae00765ae",
+    "role-l28-2694": "4548e387f2cb8304e28b9b92f070c8964e499b2203ff79b4597482f845e3d1f0",
+    "role-l28-2695": "7299e0bace72083369537385d33c940ef460d3363ea7892b1d64b430f99d10da",
+    "role-l28-2696": "f81f4609c2e7244fe3450ca198c0ce042ceb56d06b1391042fcefef6464e73d6",
+    "role-l29-2596": "22b79e8a13b2258753ec5dd30c45d7e202b10de53c52d0a8bfe90f0502c95650",
+    "role-l29-2597": "ef8b8479e6540dec476c2f2f67bac0c17f488065c29f45d039adfaed5a4afa32",
+    "role-l29-2598": "4d0c05fb8ad11aaa35777015be4289ce221e760ee16ac627963f9e3742ed914d",
+    "role-l29-2599": "ca7c6f9ed2999ef8cd996bb2df09576889db52ddf809044fc3a2a292a342b9d9",
+    "role-l29-2600": "15d18aa0689dffb5f55a593cd533281ae9b7ebd86e1e673ddad44bd7773f5ee5",
+    "role-l29-2601": "1143555c427d23add0d65eda158c8c3bf415dd1735d7b4698baeb4638aa4db9e",
+    "role-l29-2602": "c58d18c06f44cf5fce34ffe5409c7ea74124bd36e85453071cbb05fcd054618e",
+    "role-l29-2603": "4ce9e583462e1e4b5f188d81655f388c0be7983dcffd106e3ed807e921ba54f3",
+    "role-l29-2604": "073fccf6710ee90d6f845e46f5b92bbee7ab2db4501d29de88d96ec818cc977a",
+    "role-l29-2605": "c6f407a209bd0d5b356808b99333fd1368ffa0143647de78428b70de2725a95e",
+    "role-l29-2606": "f79566670dfbde352d197cfefe36cd61a02832544fb806442e45365353125ad1",
+    "role-l29-2607": "a0bb128320b176a84b4739d95a087ce6f03d2cbf6ccdebc31e9c89c17d64af9e",
+    "role-l29-2608": "b895f6f7ae5c7f0b6d964aea2cda3d623bdc167fbe7d843e98f846f39b1f953c",
+    "sculpted tree wood": "a8264b371efe97c86149d2a78089d67a5ba3acd301d587e1e104ca7827be244e",
+    "sculpted tree wood.001": "ccbab7907386ec2a64c3d3b58ada8c8d1a52ab05f0268f8de390f6ee7c6e4c82",
+    "sculpted tree wood.002": "c8c6e55e3d59f9f8ec175d3a57679d9ad4a7d49718e6fc63c3ee988acbfd9ff7",
+    "sculpted tree wood.003": "0ea93ce322e83f223a1061161d2bb207c31e7e0bc282a5dd8e6953a60c21c333",
+    "silver birch / bark markings": "5f8f23663d4ab00a064a4e3f878410f241fee2d8f82c345a326b6b151e322938",
+    "silver birch / pale gold leaves": "eeef85682ccab2782db500f4684d6df72ff182c1e8896ebfe586e8da2b1bbff2",
+    "silver birch / porcelain bark": "0ec31dcecdcafacb6d7cf726e090c6a25ba476d68b7bdd5acc22eabfb47796eb",
+    "spire grove / blue teal foliage": "debf6a53c109aa51aae920c8ecb302af4447f837919f14a4d23226d07609fc53",
+    "spire grove / bright jade foliage": "9c8090dd6fca933aa947487bd253a0c27264b47c57a51218c3456a46d641d885",
+    "Village / shared sunny court:0": "83c33a7aee4020aad8fb22ec4650335b9a24eac1d806cb95ec5b4a064a3467f8",
+    "Water town / shared frontage court:0": "08ed1fd051eb178e0fdcfcff913d3062e245bd9bc8e72b39ac92f65b2172c68d",
+    "willow / cool shade leaves": "497400fe041d93766fd9d030a956bc7b3e56ef450ffd50714e8d9b8c6afd2025",
+    "willow / fresh mint tips": "579a9c44a74c06c5499ebf88ccb0d20bf17026b0b7a4678580927a1102cfb08a",
+    "willow / pale blue jade leaves": "ed156b9e7f0756a5f73c44e385187d02d7f0f4cac658bf0e391549a4aa45772e",
+    "window / pale blue glass": "5aa33d6e7ae90a88f4e3b50062808952a039b7e1c809e61ede77093394abb64b",
+    "window / pale blue glass.001": "24477c0016f695f957ccb70e679fd660fd845f13b3a2024e011edd331665b72d",
+    "window / pale blue glass.002": "8bf8d0fb07c27ccd37b2077478fc6891a959e29cca754cac999b7a453736a81d",
+    "window / pale blue glass.003": "4cc823707b5624c4282a1b24bfd87013e9b3ab350d575e95d81e6eaf3e444a14",
+    "window / pale blue glass.004": "bdba1be947d7943d895c509304bb6d6210e1a8320b2bcf8d2575ff7256e86e25",
+    "window / pale blue glass.005": "6f9d76d1e4f2b6bbcad626d296bb1e2e70d7fd4cc2b15fcd4dea0d7269035962",
+    "window / pale blue glass.006": "aa2e6d7ef4c61aee120fd7623ff7f0d05b27db750308191ca8f73ee00e76c83f",
+    "window / pale blue glass.007": "4fcb4ef7b8161a0213fc6844780f29a71860dfeafe26c8c4b169d12fd2bb3b45",
+    "young branches": "b9bf8d5af308dacd771c34ee8226407f994163d47a692cf225a36dcbd010ffcf",
+    "young branches.001": "b99ea9a543216b5243ccf4fde9f4346f2441127f11b9e6d03344a58298478456"
+  },
+  "materialSlots": {
+    "authored-bank": [
+      "Material_131"
+    ],
+    "authored-bank.001": [
+      "Material_132"
+    ],
+    "authored-bank.002": [
+      "Material_133"
+    ],
+    "authored-bank.003": [
+      "Material_134"
+    ],
+    "authored-bank.004": [
+      "Material_135"
+    ],
+    "authored-bank.005": [
+      "Material_136"
+    ],
+    "authored-bank.006": [
+      "Material_137"
+    ],
+    "authored-bank.007": [
+      "Material_138"
+    ],
+    "authored-bank.008": [
+      "Material_139"
+    ],
+    "authored-bank.009": [
+      "Material_140"
+    ],
+    "authored-bank.010": [
+      "Material_141"
+    ],
+    "authored-bank.011": [
+      "Material_142"
+    ],
+    "authored-bank.012": [
+      "Material_143"
+    ],
+    "authored-bank.013": [
+      "Material_144"
+    ],
+    "authored-bank.014": [
+      "Material_146"
+    ],
+    "authored-bank.015": [
+      "Material_147"
+    ],
+    "authored-bank.016": [
+      "Material_148"
+    ],
+    "authored-bank.017": [
+      "Material_150"
+    ],
+    "authored-bank.018": [
+      "Material_151"
+    ],
+    "authored-bank.019": [
+      "Material_152"
+    ],
+    "authored-bank.020": [
+      "Material_153"
+    ],
+    "authored-bank.021": [
+      "Material_154"
+    ],
+    "authored-bank.022": [
+      "Material_155"
+    ],
+    "authored-bank.023": [
+      "Material_156"
+    ],
+    "authored-bank.024": [
+      "Material_157"
+    ],
+    "authored-bank.025": [
+      "Material_158"
+    ],
+    "authored-bank.026": [
+      "Material_159"
+    ],
+    "authored-bank.027": [
+      "Material_160"
+    ],
+    "authored-bank.028": [
+      "Material_161"
+    ],
+    "authored-bank.029": [
+      "Material_162"
+    ],
+    "authored-bank.030": [
+      "Material_163"
+    ],
+    "authored-bank.031": [
+      "Material_164"
+    ],
+    "authored-bank.032": [
+      "Material_165"
+    ],
+    "authored-bank.033": [
+      "Material_166"
+    ],
+    "authored-bank.034": [
+      "Material_167"
+    ],
+    "authored-bank.035": [
+      "Material_168"
+    ],
+    "authored-bank.036": [
+      "Material_169"
+    ],
+    "authored-bank.037": [
+      "Material_171"
+    ],
+    "authored-bank.038": [
+      "Material_172"
+    ],
+    "authored-bank.039": [
+      "Material_173"
+    ],
+    "authored-bank.040": [
+      "Material_174"
+    ],
+    "authored-bank.041": [
+      "Material_175"
+    ],
+    "authored-bank.042": [
+      "Material_176"
+    ],
+    "authored-bank.043": [
+      "Material_177"
+    ],
+    "authored-bank.044": [
+      "Material_178"
+    ],
+    "authored-bank.045": [
+      "Material_179"
+    ],
+    "authored-bank.046": [
+      "Material_180"
+    ],
+    "authored-bank.047": [
+      "Material_181"
+    ],
+    "authored-bank.048": [
+      "Material_182"
+    ],
+    "authored-bank.049": [
+      "Material_183"
+    ],
+    "authored-bank.050": [
+      "Material_184"
+    ],
+    "authored-bank.051": [
+      "Material_185"
+    ],
+    "authored-evaluated-floor": [
+      "Material_74",
+      "Material_75"
+    ],
+    "authored-flow": [
+      "Material_145"
+    ],
+    "authored-flow.001": [
+      "Material_149"
+    ],
+    "authored-flow.002": [
+      "Material_170"
+    ],
+    "authored-flower-high-support": [
+      "young branches.001"
+    ],
+    "authored-flower-high-support.001": [
+      "willow / fresh mint tips.001"
+    ],
+    "authored-flower-seat-foliage": [
+      "young branches.001"
+    ],
+    "authored-flower-seat-foliage.001": [
+      "willow / fresh mint tips.001"
+    ],
+    "authored-flower-stock": [
+      "sculpted tree wood.001"
+    ],
+    "authored-flower-stock.001": [
+      "young branches.001"
+    ],
+    "authored-flower-stock.002": [
+      "willow / fresh mint tips.001"
+    ],
+    "authored-flower-stock.003": [
+      "sculpted tree wood.001"
+    ],
+    "authored-flower-stock.004": [
+      "young branches.001"
+    ],
+    "authored-flower-stock.005": [
+      "willow / fresh mint tips.001"
+    ],
+    "authored-flower-stock.006": [
+      "sculpted tree wood.001"
+    ],
+    "authored-flower-stock.007": [
+      "young branches.001"
+    ],
+    "authored-flower-stock.008": [
+      "willow / fresh mint tips.001"
+    ],
+    "authored-flower-stock.009": [
+      "sculpted tree wood.001"
+    ],
+    "authored-flower-stock.010": [
+      "young branches.001"
+    ],
+    "authored-flower-stock.011": [
+      "willow / fresh mint tips.001"
+    ],
+    "authored-flower-tip-foliage": [
+      "willow / fresh mint tips.001"
+    ],
+    "authored-flower-tip-foliage.001": [
+      "willow / fresh mint tips.001"
+    ],
+    "authored-flower-tip-foliage.002": [
+      "willow / fresh mint tips.001"
+    ],
+    "authored-flower-tip-foliage.003": [
+      "willow / fresh mint tips.001"
+    ],
+    "authored-flower-top-foliage": [
+      "willow / fresh mint tips.001"
+    ],
+    "authored-flower-top-foliage.001": [
+      "willow / fresh mint tips.001"
+    ],
+    "authored-flower-top-foliage.002": [
+      "willow / fresh mint tips.001"
+    ],
+    "authored-flower-top-foliage.003": [
+      "willow / fresh mint tips.001"
+    ],
+    "authored-water-bridge": [
+      "Material_186"
+    ],
+    "authored-water-bridge.001": [
+      "Material_187"
+    ],
+    "authored-water-floor": [
+      "Material_86"
+    ],
+    "authored-water-floor.001": [
+      "Material_88"
+    ],
+    "authored-water-floor.002": [
+      "Material_90"
+    ],
+    "authored-water-floor.003": [
+      "Material_92"
+    ],
+    "authored-water-floor.004": [
+      "Material_93"
+    ],
+    "authored-water-floor.005": [
+      "Material_94"
+    ],
+    "authored-water-floor.006": [
+      "Material_95"
+    ],
+    "authored-water-floor.007": [
+      "Material_96"
+    ],
+    "authored-water-floor.008": [
+      "Material_97"
+    ],
+    "authored-water-floor.009": [
+      "Material_98"
+    ],
+    "authored-water-floor.010": [
+      "Material_99"
+    ],
+    "authored-water-floor.011": [
+      "Material_100"
+    ],
+    "authored-water-floor.012": [
+      "Material_101"
+    ],
+    "authored-water-floor.013": [
+      "Material_102"
+    ],
+    "authored-water-floor.014": [
+      "Material_103"
+    ],
+    "authored-water-floor.015": [
+      "Material_104"
+    ],
+    "authored-water-floor.016": [
+      "Material_105"
+    ],
+    "authored-water-floor.017": [
+      "Material_106"
+    ],
+    "authored-water-floor.018": [
+      "Material_107"
+    ],
+    "authored-water-floor.019": [
+      "Material_108"
+    ],
+    "authored-water-floor.020": [
+      "Material_109"
+    ],
+    "authored-water-floor.021": [
+      "Material_110"
+    ],
+    "authored-water-floor.022": [
+      "Material_111"
+    ],
+    "authored-water-floor.023": [
+      "Material_112"
+    ],
+    "authored-water-floor.024": [
+      "Material_113"
+    ],
+    "authored-water-floor.025": [
+      "Material_114"
+    ],
+    "authored-water-floor.026": [
+      "Material_115"
+    ],
+    "authored-water-floor.027": [
+      "Material_116"
+    ],
+    "authored-water-floor.028": [
+      "Material_117"
+    ],
+    "authored-water-floor.029": [
+      "Material_118"
+    ],
+    "authored-water-floor.030": [
+      "Material_119"
+    ],
+    "authored-water-floor.031": [
+      "Material_120"
+    ],
+    "authored-water-floor.032": [
+      "Material_121"
+    ],
+    "authored-water-floor.033": [
+      "Material_122"
+    ],
+    "authored-water-floor.034": [
+      "Material_123"
+    ],
+    "authored-water-floor.035": [
+      "Material_124"
+    ],
+    "authored-water-floor.036": [
+      "Material_125"
+    ],
+    "authored-water-floor.037": [
+      "Material_126"
+    ],
+    "authored-water-floor.038": [
+      "Material_127"
+    ],
+    "authored-water-floor.039": [
+      "Material_128"
+    ],
+    "authored-water-floor.040": [
+      "Material_129"
+    ],
+    "authored-water-floor.041": [
+      "Material_130"
+    ],
+    "authored-water-ripples": [
+      "Material_87"
+    ],
+    "authored-water-ripples.001": [
+      "Material_89"
+    ],
+    "authored-water-ripples.002": [
+      "Material_91"
+    ],
+    "Central_shoulder__continuous_closed_supporting_soil": [
+      "shore / pale sand.001"
+    ],
+    "Coast / continuous layered shore:0": [
+      "shore / pale sand"
+    ],
+    "Coast / continuous layered shore:1": [
+      "ridge / dusty violet limestone"
+    ],
+    "Coast / continuous layered shore:2": [
+      "ridge / light stratified stone"
+    ],
+    "Flowers / open sky gathering court:0": [
+      "path / light sandstone.001"
+    ],
+    "flowers / porcelain lower petals": [
+      "flowers / porcelain lower petals"
+    ],
+    "flowers / soft lilac petals": [
+      "flowers / soft lilac petals"
+    ],
+    "flowers / warm pink upper petals": [
+      "flowers / warm pink upper petals"
+    ],
+    "Garden / rounded flower terrace:0": [
+      "ground / fresh soft meadow"
+    ],
+    "grove / blue silver leaf tips": [
+      "grove / blue silver leaf tips"
+    ],
+    "grove / blue silver leaf tips.001": [
+      "grove / blue silver leaf tips.001"
+    ],
+    "grove / blue silver leaf tips.002": [
+      "grove / blue silver leaf tips.002"
+    ],
+    "grove / blue silver leaf tips.003": [
+      "grove / blue silver leaf tips.003"
+    ],
+    "grove / living violet and jade lamina": [
+      "grove / living violet and jade lamina"
+    ],
+    "grove / pale raised leaf veins": [
+      "grove / pale raised leaf veins"
+    ],
+    "grove / pale raised leaf veins.001": [
+      "grove / pale raised leaf veins"
+    ],
+    "grove / pale raised leaf veins.002": [
+      "grove / pale raised leaf veins"
+    ],
+    "Grove / rounded living terrace:0": [
+      "ground / higher garden"
+    ],
+    "Grove / sheltered open room:0": [
+      "path / light sandstone.002"
+    ],
+    "growing-flag-cloth": [
+      "Material_68"
+    ],
+    "growing-reachable-paths": [
+      "Material_62"
+    ],
+    "Harbor / shared waterfront court:0": [
+      "path / light sandstone.003"
+    ],
+    "Harbor__continuous_entrance_runner_jamb_rear_arch": [
+      "harbor / blue porcelain shell footing"
+    ],
+    "Harbor__continuous_grounded_runner_socket_left": [
+      "harbor / blue porcelain shell footing"
+    ],
+    "Harbor__continuous_grounded_runner_socket_right": [
+      "harbor / blue porcelain shell footing"
+    ],
+    "Harbor__continuous_translucent_shell_hall_1": [
+      "harbor / translucent pearl shell"
+    ],
+    "Harbor__continuous_translucent_shell_hall_2": [
+      "harbor / translucent violet shell panels"
+    ],
+    "Harbor__corner_structural_rib_joined_to_rim": [
+      "harbor / coral shell ribs"
+    ],
+    "Harbor__curved_shell_structural_rib": [
+      "harbor / coral shell ribs"
+    ],
+    "Harbor__curved_shell_structural_rib001": [
+      "harbor / coral shell ribs"
+    ],
+    "Harbor__curved_shell_structural_rib002": [
+      "harbor / coral shell ribs"
+    ],
+    "Harbor__curved_shell_structural_rib003": [
+      "harbor / coral shell ribs"
+    ],
+    "Harbor__curved_shell_structural_rib004": [
+      "harbor / coral shell ribs"
+    ],
+    "Harbor__longitudinal_seam_joined_to_corner_rim_5": [
+      "harbor / blue porcelain shell footing"
+    ],
+    "Harbor__longitudinal_seam_joined_to_corner_rim_6": [
+      "harbor / blue porcelain shell footing"
+    ],
+    "Harbor__shell_grown_footing001": [
+      "harbor / blue porcelain shell footing"
+    ],
+    "Harbor__shell_longitudinal_seam": [
+      "harbor / blue porcelain shell footing"
+    ],
+    "Harbor__shell_longitudinal_seam001": [
+      "harbor / blue porcelain shell footing"
+    ],
+    "Harbor__shell_longitudinal_seam002": [
+      "harbor / blue porcelain shell footing"
+    ],
+    "Harbor__shell_longitudinal_seam003": [
+      "harbor / blue porcelain shell footing"
+    ],
+    "Harbor__shell_longitudinal_seam004": [
+      "harbor / blue porcelain shell footing"
+    ],
+    "home / curled jade leaf roof": [
+      "home / curled jade leaf roof"
+    ],
+    "home / curled jade leaf roof.001": [
+      "home / curled jade leaf roof.001"
+    ],
+    "home / scalloped blue cap": [
+      "home / scalloped blue cap"
+    ],
+    "home / scalloped blue cap.001": [
+      "home / scalloped blue cap.001"
+    ],
+    "house / cobalt door": [
+      "house / cobalt door"
+    ],
+    "house / cobalt door.001": [
+      "house / cobalt door"
+    ],
+    "house / cobalt door.002": [
+      "house / cobalt door"
+    ],
+    "house / cobalt door.003": [
+      "house / cobalt door"
+    ],
+    "house / cobalt door.004": [
+      "house / cobalt door"
+    ],
+    "house / cobalt door.005": [
+      "house / cobalt door"
+    ],
+    "house / cobalt door.006": [
+      "house / cobalt door"
+    ],
+    "house / cobalt door.007": [
+      "house / cobalt door"
+    ],
+    "house / cobalt door.008": [
+      "house / cobalt door"
+    ],
+    "house / honey wood": [
+      "house / honey wood"
+    ],
+    "house / honey wood.001": [
+      "house / honey wood"
+    ],
+    "house / honey wood.002": [
+      "house / honey wood"
+    ],
+    "house / honey wood.003": [
+      "house / honey wood"
+    ],
+    "house / honey wood.004": [
+      "house / honey wood"
+    ],
+    "house / honey wood.005": [
+      "house / honey wood"
+    ],
+    "house / honey wood.006": [
+      "house / honey wood"
+    ],
+    "house / honey wood.007": [
+      "house / honey wood"
+    ],
+    "house / honey wood.008": [
+      "house / honey wood"
+    ],
+    "house / porcelain plaster": [
+      "house / porcelain plaster"
+    ],
+    "house / porcelain plaster.001": [
+      "house / porcelain plaster"
+    ],
+    "house / porcelain plaster.002": [
+      "house / porcelain plaster"
+    ],
+    "house / porcelain plaster.003": [
+      "house / porcelain plaster"
+    ],
+    "house / porcelain plaster.004": [
+      "house / porcelain plaster"
+    ],
+    "house / porcelain plaster.005": [
+      "house / porcelain plaster"
+    ],
+    "house / porcelain plaster.006": [
+      "house / porcelain plaster"
+    ],
+    "house / porcelain plaster.007": [
+      "house / porcelain plaster"
+    ],
+    "house / shadow plaster": [
+      "house / shadow plaster"
+    ],
+    "house / shadow plaster.001": [
+      "house / shadow plaster"
+    ],
+    "house / shadow plaster.002": [
+      "house / shadow plaster"
+    ],
+    "house / shadow plaster.003": [
+      "house / shadow plaster"
+    ],
+    "house / warm yellow roof": [
+      "house / warm yellow roof"
+    ],
+    "house / warm yellow roof.001": [
+      "house / warm yellow roof.001"
+    ],
+    "house / warm yellow roof.002": [
+      "house / warm yellow roof.002"
+    ],
+    "house / warm yellow roof.003": [
+      "house / warm yellow roof.003"
+    ],
+    "house / warm yellow roof.004": [
+      "house / warm yellow roof.004"
+    ],
+    "l33__source-contour_planted_root_continuation": [
+      "sculpted tree wood.002"
+    ],
+    "l34__source-contour_planted_root_continuation": [
+      "silver birch / porcelain bark.001"
+    ],
+    "l35__source-contour_planted_root_continuation": [
+      "sculpted tree wood.002"
+    ],
+    "life-bench-seat": [
+      "Material_7"
+    ],
+    "life-bench-seat.001": [
+      "Material_7"
+    ],
+    "life-bench-seat.002": [
+      "Material_7"
+    ],
+    "life-bench-seat.003": [
+      "Material_7"
+    ],
+    "life-bowl-water": [
+      "Material_11"
+    ],
+    "Mesh_0": [
+      "Material_0"
+    ],
+    "Mesh_1": [
+      "Material_1"
+    ],
+    "Mesh_10": [
+      "Material_6"
+    ],
+    "Mesh_11": [
+      "Material_3"
+    ],
+    "Mesh_12": [
+      "Material_0"
+    ],
+    "Mesh_13": [
+      "Material_1"
+    ],
+    "Mesh_14": [
+      "Material_2"
+    ],
+    "Mesh_144": [
+      "Material_59"
+    ],
+    "Mesh_149": [
+      "Material_63"
+    ],
+    "Mesh_15": [
+      "Material_3"
+    ],
+    "Mesh_150": [
+      "Material_64"
+    ],
+    "Mesh_151": [
+      "Material_63"
+    ],
+    "Mesh_152": [
+      "Material_64"
+    ],
+    "Mesh_153": [
+      "Material_63"
+    ],
+    "Mesh_154": [
+      "Material_65"
+    ],
+    "Mesh_155": [
+      "Material_65"
+    ],
+    "Mesh_156": [
+      "Material_65"
+    ],
+    "Mesh_157": [
+      "Material_65"
+    ],
+    "Mesh_158": [
+      "Material_65"
+    ],
+    "Mesh_159": [
+      "Material_65"
+    ],
+    "Mesh_160": [
+      "Material_66"
+    ],
+    "Mesh_161": [
+      "Material_67"
+    ],
+    "Mesh_163": [
+      "Material_69"
+    ],
+    "Mesh_164": [
+      "Material_70"
+    ],
+    "Mesh_165": [
+      "Material_71"
+    ],
+    "Mesh_166": [
+      "Material_72"
+    ],
+    "Mesh_167": [
+      "Material_73"
+    ],
+    "Mesh_17": [
+      "Material_8"
+    ],
+    "Mesh_18": [
+      "Material_7"
+    ],
+    "Mesh_19": [
+      "Material_7"
+    ],
+    "Mesh_2": [
+      "Material_2"
+    ],
+    "Mesh_21": [
+      "Material_8"
+    ],
+    "Mesh_22": [
+      "Material_7"
+    ],
+    "Mesh_23": [
+      "Material_7"
+    ],
+    "Mesh_25": [
+      "Material_8"
+    ],
+    "Mesh_26": [
+      "Material_7"
+    ],
+    "Mesh_27": [
+      "Material_7"
+    ],
+    "Mesh_29": [
+      "Material_8"
+    ],
+    "Mesh_3": [
+      "Material_3"
+    ],
+    "Mesh_30": [
+      "Material_7"
+    ],
+    "Mesh_31": [
+      "Material_7"
+    ],
+    "Mesh_32": [
+      "Material_0"
+    ],
+    "Mesh_33": [
+      "Material_1"
+    ],
+    "Mesh_34": [
+      "Material_9"
+    ],
+    "Mesh_35": [
+      "Material_3"
+    ],
+    "Mesh_36": [
+      "Material_10"
+    ],
+    "Mesh_38": [
+      "Material_12"
+    ],
+    "Mesh_4": [
+      "Material_0"
+    ],
+    "Mesh_5": [
+      "Material_1"
+    ],
+    "Mesh_6": [
+      "Material_4"
+    ],
+    "Mesh_7": [
+      "Material_5"
+    ],
+    "Mesh_8": [
+      "Material_0"
+    ],
+    "Mesh_80": [
+      "Material_43"
+    ],
+    "Mesh_81": [
+      "Material_44"
+    ],
+    "Mesh_82": [
+      "Material_44"
+    ],
+    "Mesh_83": [
+      "Material_44"
+    ],
+    "Mesh_84": [
+      "Material_44"
+    ],
+    "Mesh_85": [
+      "Material_44"
+    ],
+    "Mesh_86": [
+      "Material_44"
+    ],
+    "Mesh_87": [
+      "Material_44"
+    ],
+    "Mesh_88": [
+      "Material_45"
+    ],
+    "Mesh_9": [
+      "Material_1"
+    ],
+    "Mesh_96": [
+      "Material_47"
+    ],
+    "path / light sandstone": [
+      "path / light sandstone"
+    ],
+    "path / light sandstone.001": [
+      "path / light sandstone"
+    ],
+    "path / light sandstone.002": [
+      "path / light sandstone"
+    ],
+    "path / light sandstone.003": [
+      "path / light sandstone"
+    ],
+    "path / light sandstone.004": [
+      "path / light sandstone"
+    ],
+    "path / light sandstone.005": [
+      "path / light sandstone"
+    ],
+    "path / light sandstone.006": [
+      "path / light sandstone"
+    ],
+    "path / light sandstone.007": [
+      "path / light sandstone"
+    ],
+    "path / warm stone variation": [
+      "path / warm stone variation"
+    ],
+    "path / warm stone variation.001": [
+      "path / warm stone variation"
+    ],
+    "path / warm stone variation.002": [
+      "path / warm stone variation"
+    ],
+    "path / warm stone variation.003": [
+      "path / warm stone variation"
+    ],
+    "role-l14-2220": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2221": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2222": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2223": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2224": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2225": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2226": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2227": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2228": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2229": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2230": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2231": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2232": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2233": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2234": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2235": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2236": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2237": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2238": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2239": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2240": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2241": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2242": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2243": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2244": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2245": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2246": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2247": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2248": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2249": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2250": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2251": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2252": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2253": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2254": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2255": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2256": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2257": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2258": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2259": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2260": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2261": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2262": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2263": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2264": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2265": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2266": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2267": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2268": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2269": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2270": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2271": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2272": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2273": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2274": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2275": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2276": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2277": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2278": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2279": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2280": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2281": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2282": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2283": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2284": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2285": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2286": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2287": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2288": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2289": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2290": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2291": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2292": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2293": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2294": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2295": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2296": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2297": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2298": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2299": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2300": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2301": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2302": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2303": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2304": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2305": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2306": [
+      "willow / pale blue jade leaves.001"
+    ],
+    "role-l14-2307": [
+      "willow / fresh mint tips.002"
+    ],
+    "role-l14-2308": [
+      "willow / cool shade leaves.001"
+    ],
+    "role-l14-2740": [
+      "young branches.002"
+    ],
+    "role-l14-2741": [
+      "young branches.002"
+    ],
+    "role-l14-2742": [
+      "young branches.002"
+    ],
+    "role-l14-2743": [
+      "sculpted tree wood.003"
+    ],
+    "role-l14-2744": [
+      "sculpted tree wood.003"
+    ],
+    "role-l14-2745": [
+      "sculpted tree wood.003"
+    ],
+    "role-l14-2746": [
+      "sculpted tree wood.003"
+    ],
+    "role-l14-2747": [
+      "sculpted tree wood.003"
+    ],
+    "role-l15-2596": [
+      "silver birch / pale gold leaves.001"
+    ],
+    "role-l15-2597": [
+      "silver birch / pale gold leaves.001"
+    ],
+    "role-l15-2598": [
+      "silver birch / pale gold leaves.001"
+    ],
+    "role-l15-2599": [
+      "silver birch / bark markings.001"
+    ],
+    "role-l15-2600": [
+      "silver birch / bark markings.001"
+    ],
+    "role-l15-2601": [
+      "silver birch / bark markings.001"
+    ],
+    "role-l15-2602": [
+      "silver birch / bark markings.001"
+    ],
+    "role-l15-2603": [
+      "silver birch / bark markings.001"
+    ],
+    "role-l15-2604": [
+      "silver birch / bark markings.001"
+    ],
+    "role-l15-2605": [
+      "silver birch / porcelain bark.002"
+    ],
+    "role-l15-2606": [
+      "silver birch / porcelain bark.002"
+    ],
+    "role-l15-2607": [
+      "silver birch / porcelain bark.002"
+    ],
+    "role-l15-2608": [
+      "silver birch / porcelain bark.002"
+    ],
+    "role-l28-2692": [
+      "sculpted tree wood.003"
+    ],
+    "role-l28-2693": [
+      "spire grove / bright jade foliage.001"
+    ],
+    "role-l28-2694": [
+      "spire grove / blue teal foliage.001"
+    ],
+    "role-l28-2695": [
+      "spire grove / bright jade foliage.001"
+    ],
+    "role-l28-2696": [
+      "spire grove / blue teal foliage.001"
+    ],
+    "role-l29-2596": [
+      "silver birch / pale gold leaves.001"
+    ],
+    "role-l29-2597": [
+      "silver birch / pale gold leaves.001"
+    ],
+    "role-l29-2598": [
+      "silver birch / pale gold leaves.001"
+    ],
+    "role-l29-2599": [
+      "silver birch / bark markings.001"
+    ],
+    "role-l29-2600": [
+      "silver birch / bark markings.001"
+    ],
+    "role-l29-2601": [
+      "silver birch / bark markings.001"
+    ],
+    "role-l29-2602": [
+      "silver birch / bark markings.001"
+    ],
+    "role-l29-2603": [
+      "silver birch / bark markings.001"
+    ],
+    "role-l29-2604": [
+      "silver birch / bark markings.001"
+    ],
+    "role-l29-2605": [
+      "silver birch / porcelain bark.002"
+    ],
+    "role-l29-2606": [
+      "silver birch / porcelain bark.002"
+    ],
+    "role-l29-2607": [
+      "silver birch / porcelain bark.002"
+    ],
+    "role-l29-2608": [
+      "silver birch / porcelain bark.002"
+    ],
+    "sculpted tree wood": [
+      "sculpted tree wood"
+    ],
+    "sculpted tree wood.001": [
+      "sculpted tree wood"
+    ],
+    "sculpted tree wood.002": [
+      "sculpted tree wood"
+    ],
+    "sculpted tree wood.003": [
+      "sculpted tree wood"
+    ],
+    "silver birch / bark markings": [
+      "silver birch / bark markings"
+    ],
+    "silver birch / pale gold leaves": [
+      "silver birch / pale gold leaves"
+    ],
+    "silver birch / porcelain bark": [
+      "silver birch / porcelain bark"
+    ],
+    "spire grove / blue teal foliage": [
+      "spire grove / blue teal foliage"
+    ],
+    "spire grove / bright jade foliage": [
+      "spire grove / bright jade foliage"
+    ],
+    "Village / shared sunny court:0": [
+      "path / light sandstone.004"
+    ],
+    "Water town / shared frontage court:0": [
+      "path / light sandstone.005"
+    ],
+    "willow / cool shade leaves": [
+      "willow / cool shade leaves"
+    ],
+    "willow / fresh mint tips": [
+      "willow / fresh mint tips"
+    ],
+    "willow / pale blue jade leaves": [
+      "willow / pale blue jade leaves"
+    ],
+    "window / pale blue glass": [
+      "window / pale blue glass"
+    ],
+    "window / pale blue glass.001": [
+      "window / pale blue glass"
+    ],
+    "window / pale blue glass.002": [
+      "window / pale blue glass"
+    ],
+    "window / pale blue glass.003": [
+      "window / pale blue glass"
+    ],
+    "window / pale blue glass.004": [
+      "window / pale blue glass"
+    ],
+    "window / pale blue glass.005": [
+      "window / pale blue glass"
+    ],
+    "window / pale blue glass.006": [
+      "window / pale blue glass"
+    ],
+    "window / pale blue glass.007": [
+      "window / pale blue glass"
+    ],
+    "young branches": [
+      "young branches"
+    ],
+    "young branches.001": [
+      "young branches"
+    ]
+  },
+  "materialsUnchanged": true,
+  "cameraReferenceSha256": "070ca145b6b32563d0ebc3032cf82684b0bf32f9ead881fb8551231ab920d3ea",
+  "cameraMatrix": [
+    [
+      0.7912848591804504,
+      -0.35705915093421936,
+      0.49636366963386536,
+      20.050125122070312
+    ],
+    [
+      0.6114475131034851,
+      0.4620763659477234,
+      -0.6423528790473938,
+      -13.088081359863281
+    ],
+    [
+      6.696541987594173e-08,
+      0.8117845058441162,
+      0.5839570760726929,
+      17.236913681030273
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "cameraProjectionScale": 20.63031005859375,
+  "originalAddViewsHelperSha256": "9f369d576e5cca7cd53c362b5dd8b59051e8b98600f6c2c7583862c5224806d9",
+  "localeSafeAddViewsHelperSha256": "8c06d2c318cccf0c9ef4031347dd73d80363cc13acae899c3ccc0eddcce88b27",
+  "helperChange": "Background lookup by shader node type; identical world/light/camera values",
+  "settings": {
+    "engine": "CYCLES",
+    "device": "CPU",
+    "samples": 16,
+    "threads": 2,
+    "resolution": [
+      1280,
+      925
+    ],
+    "viewTransform": "AgX"
+  },
+  "limitations": "Owner layer only/no residents; Blender lighting/transmission/ocean differ; ripple line roundtrip differs; no runtime or art acceptance; joint checking failed before any connector; all 105 deformations present; black path dots uncorrected and not attributed to water ripples",
+  "elapsedSeconds": 17.964529416989535,
+  "sceneSaved": false,
+  "geometryModified": false,
+  "sourceOnly": true,
+  "runtimeIntegrated": false,
+  "independentObservers": 0
+}

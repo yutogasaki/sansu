@@ -1,0 +1,65 @@
+"""Exact helper functions from frozen stage2; no entrypoint."""
+import json
+import struct
+import hashlib
+
+def glb_json(path):
+    with path.open('rb') as stream:
+        assert stream.read(4) == b'glTF'
+        version, total = struct.unpack('<II', stream.read(8))
+        length, kind = struct.unpack('<II', stream.read(8))
+        assert version == 2 and kind == 0x4e4f534a and total == path.stat().st_size
+        return json.loads(stream.read(length))
+
+def material_spec(item):
+    pbr = item.get('pbrMetallicRoughness', {})
+    def no_textures(value):
+        if isinstance(value, dict):
+            assert not any('texture' in key.lower() for key in value), 'Do not mock or drop textures'
+            for child in value.values(): no_textures(child)
+        elif isinstance(value, list):
+            for child in value: no_textures(child)
+    no_textures(item)
+    return {'baseColor': pbr.get('baseColorFactor', [1, 1, 1, 1]),
+            'roughness': pbr.get('roughnessFactor', 1), 'metalness': pbr.get('metallicFactor', 1),
+            'doubleSided': item.get('doubleSided', False), 'alphaMode': item.get('alphaMode', 'OPAQUE'),
+            'emissive': item.get('emissiveFactor', [0, 0, 0])}
+
+def close_values(a, b):
+    if isinstance(a, dict): return a.keys() == b.keys() and all(close_values(a[k], b[k]) for k in a)
+    if isinstance(a, list): return len(a) == len(b) and all(close_values(x, y) for x, y in zip(a, b))
+    if isinstance(a, (int, float)) and not isinstance(a, bool): return abs(a - b) <= 2e-6
+    return a == b
+
+def exported_roles(document):
+    result = {}
+    for node in document.get('nodes', []):
+        extra = node.get('extras', {})
+        if 'sourceNodeIndex' not in extra or 'mesh' not in node: continue
+        key = (extra['ownerId'], int(extra['sourceNodeIndex']))
+        assert key not in result
+        primitives = document['meshes'][node['mesh']]['primitives']
+        assert all('NORMAL' in primitive['attributes'] for primitive in primitives)
+        result[key] = {'role': extra['forestRole'], 'fixed': bool(extra['forestFixed']),
+                       'sourceSha256': extra['sourceSha256'],
+                       'materials': [material_spec(document['materials'][primitive['material']]) for primitive in primitives]}
+    return result
+
+def material_digest(material):
+    values = {'diffuse': list(material.diffuse_color), 'roughness': material.roughness,
+              'metallic': material.metallic, 'backfaceCulling': material.use_backface_culling,
+              'useNodes': material.use_nodes, 'nodes': [], 'links': []}
+    if material.node_tree:
+        for node in material.node_tree.nodes:
+            inputs = []
+            for socket in node.inputs:
+                if not hasattr(socket, 'default_value'): continue
+                value = socket.default_value
+                if not isinstance(value, (int, float, bool, str)):
+                    try: value = list(value)
+                    except TypeError: value = str(value)
+                inputs.append([socket.name, value])
+            values['nodes'].append([node.name, node.bl_idname, inputs, getattr(getattr(node, 'image', None), 'name', None)])
+        values['links'] = sorted([link.from_node.name, link.from_socket.name, link.to_node.name, link.to_socket.name]
+                                for link in material.node_tree.links)
+    return hashlib.sha256(json.dumps(values, sort_keys=True).encode()).hexdigest()

@@ -1,0 +1,74 @@
+"""Small pure-Python checks only. No source vertex decode, Blender, scene or render."""
+import ast
+import hashlib
+import importlib.util
+import json
+import math
+import sys
+from datetime import datetime,timezone
+from pathlib import Path
+sys.dont_write_bytecode=True
+HERE=Path(__file__).resolve().parent
+sys.path.insert(0,str(HERE))
+import fields
+from native_section import section
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+P=json.loads((HERE/'proposal.json').read_text()); rows=[]
+for f in sorted(HERE.glob('*.py')):ast.parse(f.read_text(),filename=str(f))
+# Existing stage2 willow equation must be numerically identical to this field.
+spec=importlib.util.spec_from_file_location('prior_fields',HERE.parent/'stage2/fields.py')
+prior=importlib.util.module_from_spec(spec);spec.loader.exec_module(prior)
+for x in [1.2,1.9,2.468,3.3,3.8]:
+ for y in [2.2,2.8,3.174249989,3.7]:
+  for z in [-4.8,-4.,-3.1]:
+   a=fields.willow((x,y,z),P['owners']['l14']);b=prior.willow_field((x,y,z),P['owners']['l14'])
+   assert max(abs(u-v) for u,v in zip(a,b))<1e-12
+for owner_id in ['l15','l29']:
+ owner=P['owners'][owner_id];root=owner['branchRootPin']['anchorWorld'];stop=root[1]+owner['branchRootPin']['fixedBandWorld']
+ for i,pair in enumerate(owner['branchCrownPairs']):
+  branch=fields.field_for_role(owner_id,'main-branch',i,P);crown=fields.field_for_role(owner_id,'crown-lobe',i,P)
+  tip=pair['anchorWorld'];target=pair['targetTipWorld'];L=tip[1]-stop
+  error=max(abs(a-b) for a,b in zip(branch(tip),target));assert error<1e-12
+  for y in [root[1]-.1,root[1],stop-1e-10,stop]:
+   for dx,dz in [(-.08,-.06),(0,0),(.07,.03)]:
+    p=(root[0]+dx,y,root[2]+dz);assert branch(p)==p
+  # Triangular map: det = radialScale(y)^2 * dY/dy. radialScale >= 1.
+  # s'=30 t²(1-t)², bell'=192 t²(1-t)²(1-2t), maximum t²(1-t)²=1/16.
+  dy=target[1]-tip[1];by=pair['bowOffsetWorld'][1]
+  determinant_lower=1+min(0.,30*dy-192*abs(by))/(16*L)
+  assert pair['distalWidthScale']>=1 and pair['bodyWidthBulge']>=0
+  assert determinant_lower>P['guards']['minimumSampledJacobianDeterminant']
+  samples=[]
+  for j in range(9):
+   t=j/8;y=stop+t*L;source=fields.guide(y,owner,pair)
+   a=branch(source);b=crown(source);assert a==b
+   samples.append({'t':t,'sourceGuide':source,'mappedGuide':a})
+  # No derivative jump at the fixed-band or distal crown boundary.
+  for y in [stop,tip[1]]:
+   p=(tip[0]+.05,y,tip[2]-.03);eps=1e-6
+   lower=branch((p[0],y-eps,p[2]));center=branch(p);upper=branch((p[0],y+eps,p[2]))
+   err=max(abs((upper[k]-center[k])-(center[k]-lower[k]))/eps for k in range(3))
+   assert err<.002
+  rows.append({'ownerId':owner_id,'ordinal':i,'sourceBranchNode':pair['sourceBranchNode'],
+    'sourceCrownNode':pair['sourceCrownNode'],'rootFixedThroughY':stop,'targetTipWorld':target,
+    'tipError':error,'globalAnalyticDeterminantLowerBoundForExactField':determinant_lower,
+    'bodyWidthScaleUpperBound':pair['distalWidthScale']+pair['bodyWidthBulge'],
+    'samples':samples})
+# Synthetic contour test for query-only section code; not native mesh evidence.
+points=[(-1,0,-1),(1,0,-1),(1,0,1),(-1,0,1),(-1,2,-1),(1,2,-1),(1,2,1),(-1,2,1)]
+tris=[]
+for i in range(4):
+ j=(i+1)%4;tris.extend([(i,j,j+4),(i,j+4,i+4)])
+result=section(points,tris,.83);assert abs(result['sourceSectionArea']-4)<1e-12
+for label,pp,tt,h in [('vertex-plane',points,tris,0),('open-contour',points,tris[:-2],.83)]:
+ try:section(pp,tt,h)
+ except ValueError:pass
+ else:raise AssertionError('Expected section HOLD: '+label)
+assert P['guards']['maximumDerivedBoughs']==19
+assert P['guards']['maximumBirchRepairBoughs']==0
+report={'checkedAtUtc':datetime.now(timezone.utc).isoformat(),'status':'STATIC-CHECKS-PASS-NOT-GENERATED',
+ 'astFiles':{f.name:sha(f) for f in sorted(HERE.glob('*.py'))},'willowStage2Equation':{'sampleCount':60,'maxDifferenceLimit':1e-12},
+ 'birchBranchCrownControls':rows,'syntheticSectionTests':3,'nativeMeshesExecuted':False,
+ 'limitations':'Analytic field bound is not Blender f32 Jacobian/normal/topology or join evidence; actual vertex shift/hero guards remain build-time. Native donor contours may HOLD. No actor/leaf70/runtime/art acceptance.'}
+(HERE/'static-check.json').write_text(json.dumps(report,indent=2)+'\n')
+print(json.dumps({'status':report['status'],'branches':len(rows),'astFiles':len(report['astFiles']),'minimumAnalyticBirchDeterminant':min(r['globalAnalyticDeterminantLowerBoundForExactField'] for r in rows)}))

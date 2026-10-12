@@ -1,0 +1,927 @@
+{
+  "recordedAt": "2026-10-12T09:13:30.662953+00:00",
+  "scope": "Bounded read-only ordinary-command planning; no browser/Blender/source edits",
+  "fixture": "prototypes/place-qa/authored-shoulder-reference-mature.json",
+  "options": {
+    "water": true,
+    "cove": true,
+    "shoulder": "prototypes/place-qa/authored-shoulder-profile.json.gz"
+  },
+  "sourceWorld": "prototypes/place-qa/native05-world-source-shading.json.gz",
+  "plans": [
+    {
+      "id": "west-open-center",
+      "commands": [
+        {
+          "type": "move",
+          "id": "l28",
+          "cell": {
+            "x": 4,
+            "z": -4
+          }
+        },
+        {
+          "type": "move",
+          "id": "l14",
+          "cell": {
+            "x": 1,
+            "z": -4
+          }
+        },
+        {
+          "type": "move",
+          "id": "l15",
+          "cell": {
+            "x": 2,
+            "z": -2
+          }
+        },
+        {
+          "type": "move",
+          "id": "l29",
+          "cell": {
+            "x": 3,
+            "z": -2
+          }
+        }
+      ],
+      "completedMoves": 4,
+      "finalStateRecorded": true,
+      "finalStateFile": "west-open-center-state.json",
+      "status": "Completed domain negative case: legal moves but 31 unreachable owners",
+      "recordedSteps": [
+        {
+          "command": {
+            "type": "store",
+            "id": "l15"
+          },
+          "beforeCell": {
+            "x": 2,
+            "z": -2
+          },
+          "invariants": {
+            "owners": 35,
+            "placedOwners": 34,
+            "rights": 75,
+            "drops": 9170,
+            "otherOwnersExact": true,
+            "treeFieldsExceptCellExact": true,
+            "townNatureLandExact": true,
+            "newOwnerOrRights": false
+          },
+          "events": [],
+          "revision": "authored-world:fa68de1019f4a9e4"
+        },
+        {
+          "command": {
+            "type": "unstore",
+            "id": "l15",
+            "cell": {
+              "x": 2,
+              "z": -2
+            }
+          },
+          "invariants": {
+            "owners": 35,
+            "placedOwners": 35,
+            "rights": 75,
+            "drops": 9170,
+            "otherOwnersExact": true,
+            "treeFieldsExceptCellExact": true,
+            "townNatureLandExact": true,
+            "newOwnerOrRights": false
+          },
+          "events": [],
+          "revision": "authored-world:8bc099f30dbbd33d"
+        }
+      ]
+    },
+    {
+      "id": "east-shore-line",
+      "commands": [
+        {
+          "type": "move",
+          "id": "l14",
+          "cell": {
+            "x": 12,
+            "z": -9
+          }
+        },
+        {
+          "type": "move",
+          "id": "l15",
+          "cell": {
+            "x": 12,
+            "z": -8
+          }
+        },
+        {
+          "type": "move",
+          "id": "l28",
+          "cell": {
+            "x": 12,
+            "z": -7
+          }
+        },
+        {
+          "type": "move",
+          "id": "l29",
+          "cell": {
+            "x": 12,
+            "z": -5
+          }
+        }
+      ],
+      "completedMoves": 2,
+      "finalStateRecorded": false,
+      "finalStateFile": null,
+      "status": "Incomplete: 2 moves recorded, Node heap OOM before final state",
+      "recordedSteps": [
+        {
+          "command": {
+            "type": "move",
+            "id": "l14",
+            "cell": {
+              "x": 12,
+              "z": -9
+            }
+          },
+          "beforeCell": {
+            "x": 2,
+            "z": -4
+          },
+          "invariants": {
+            "owners": 35,
+            "placedOwners": 35,
+            "rights": 75,
+            "drops": 9170,
+            "otherOwnersExact": true,
+            "treeFieldsExceptCellExact": true,
+            "townNatureLandExact": true,
+            "newOwnerOrRights": false
+          },
+          "events": [],
+          "revision": "authored-world:f398083335ebeb07"
+        },
+        {
+          "command": {
+            "type": "move",
+            "id": "l15",
+            "cell": {
+              "x": 12,
+              "z": -8
+            }
+          },
+          "beforeCell": {
+            "x": 2,
+            "z": -3
+          },
+          "invariants": {
+            "owners": 35,
+            "placedOwners": 35,
+            "rights": 75,
+            "drops": 9170,
+            "otherOwnersExact": true,
+            "treeFieldsExceptCellExact": true,
+            "townNatureLandExact": true,
+            "newOwnerOrRights": false
+          },
+          "events": [],
+          "revision": "authored-world:38dc07cb1bbb7333"
+        }
+      ]
+    },
+    {
+      "id": "split-west-east",
+      "commands": [
+        {
+          "type": "move",
+          "id": "l14",
+          "cell": {
+            "x": 4,
+            "z": -7
+          }
+        },
+        {
+          "type": "move",
+          "id": "l15",
+          "cell": {
+            "x": 12,
+            "z": -7
+          }
+        },
+        {
+          "type": "move",
+          "id": "l28",
+          "cell": {
+            "x": 1,
+            "z": -7
+          }
+        },
+        {
+          "type": "move",
+          "id": "l29",
+          "cell": {
+            "x": 13,
+            "z": -5
+          }
+        }
+      ],
+      "completedMoves": 1,
+      "finalStateRecorded": false,
+      "finalStateFile": null,
+      "status": "Incomplete: 1 move recorded, stopped at 100 second outer bound",
+      "recordedSteps": [
+        {
+          "command": {
+            "type": "move",
+            "id": "l14",
+            "cell": {
+              "x": 4,
+              "z": -7
+            }
+          },
+          "beforeCell": {
+            "x": 2,
+            "z": -4
+          },
+          "invariants": {
+            "owners": 35,
+            "placedOwners": 35,
+            "rights": 75,
+            "drops": 9170,
+            "otherOwnersExact": true,
+            "treeFieldsExceptCellExact": true,
+            "townNatureLandExact": true,
+            "newOwnerOrRights": false
+          },
+          "events": [],
+          "revision": "authored-world:da60615452644782"
+        }
+      ]
+    }
+  ],
+  "initial": {
+    "owners": 35,
+    "placedOwners": 35,
+    "rights": 75,
+    "drops": 9170,
+    "otherOwnersExact": true,
+    "treeFieldsExceptCellExact": true,
+    "townNatureLandExact": true,
+    "newOwnerOrRights": false
+  },
+  "finalA": {
+    "revision": "authored-world:8bc099f30dbbd33d",
+    "invariants": {
+      "owners": 35,
+      "placedOwners": 35,
+      "rights": 75,
+      "drops": 9170,
+      "otherOwnersExact": true,
+      "treeFieldsExceptCellExact": true,
+      "townNatureLandExact": true,
+      "newOwnerOrRights": false
+    },
+    "trees": [
+      {
+        "id": "l14",
+        "cell": {
+          "x": 1,
+          "z": -4
+        },
+        "growth": 18,
+        "age": "big",
+        "floor": {
+          "x": 1,
+          "y": -0.00899999,
+          "z": -4
+        },
+        "placementSupport": true
+      },
+      {
+        "id": "l15",
+        "cell": {
+          "x": 2,
+          "z": -2
+        },
+        "growth": 18,
+        "age": "big",
+        "floor": {
+          "x": 2,
+          "y": 0.209249989,
+          "z": -2
+        },
+        "placementSupport": true
+      },
+      {
+        "id": "l28",
+        "cell": {
+          "x": 4,
+          "z": -4
+        },
+        "growth": 18,
+        "age": "mature",
+        "floor": {
+          "x": 4,
+          "y": 0.209249989,
+          "z": -4
+        },
+        "placementSupport": true
+      },
+      {
+        "id": "l29",
+        "cell": {
+          "x": 3,
+          "z": -2
+        },
+        "growth": 18,
+        "age": "mature",
+        "floor": {
+          "x": 3,
+          "y": 0.209249989,
+          "z": -2
+        },
+        "placementSupport": true
+      }
+    ],
+    "places": [
+      {
+        "id": "P01:l14",
+        "ruleId": "P01",
+        "variant": "lane",
+        "stage": "seeded",
+        "mainIds": [
+          "l14"
+        ],
+        "memberIds": [
+          "l14"
+        ],
+        "entrances": 0,
+        "missing": [
+          "\u6728\u3092 \u3088\u305b\u3066\u307f\u3088\u3046",
+          "\u6728\u304c \u305d\u3060\u3064\u306e\u3092 \u305f\u306e\u3057\u3082\u3046",
+          "\u6728\u306e\u305d\u3070\u306b \u30d9\u30f3\u30c1\u3092 \u304a\u3053\u3046",
+          "\u306f\u3044\u308c\u308b \u3059\u304d\u307e\u3092 \u3042\u3051\u3088\u3046"
+        ]
+      },
+      {
+        "id": "P01:l15",
+        "ruleId": "P01",
+        "variant": "corner",
+        "stage": "seeded",
+        "mainIds": [
+          "l15",
+          "l29"
+        ],
+        "memberIds": [
+          "l15",
+          "l29"
+        ],
+        "entrances": 4,
+        "missing": [
+          "\u6728\u306e\u305d\u3070\u306b \u30d9\u30f3\u30c1\u3092 \u304a\u3053\u3046"
+        ]
+      },
+      {
+        "id": "P01:l28",
+        "ruleId": "P01",
+        "variant": "lane",
+        "stage": "seeded",
+        "mainIds": [
+          "l28"
+        ],
+        "memberIds": [
+          "l28"
+        ],
+        "entrances": 0,
+        "missing": [
+          "\u6728\u3092 \u3088\u305b\u3066\u307f\u3088\u3046",
+          "\u6728\u304c \u305d\u3060\u3064\u306e\u3092 \u305f\u306e\u3057\u3082\u3046",
+          "\u6728\u306e\u305d\u3070\u306b \u30d9\u30f3\u30c1\u3092 \u304a\u3053\u3046",
+          "\u306f\u3044\u308c\u308b \u3059\u304d\u307e\u3092 \u3042\u3051\u3088\u3046"
+        ]
+      }
+    ],
+    "allPlaces": [
+      {
+        "id": "P01:l10",
+        "ruleId": "P01",
+        "variant": "lane",
+        "stage": "seeded",
+        "mainIds": [
+          "l10",
+          "l11",
+          "l12",
+          "l13"
+        ],
+        "memberIds": [
+          "l10",
+          "l11",
+          "l12",
+          "l13"
+        ],
+        "entrances": 0,
+        "missing": [
+          "\u6728\u306e\u305d\u3070\u306b \u30d9\u30f3\u30c1\u3092 \u304a\u3053\u3046",
+          "\u306f\u3044\u308c\u308b \u3059\u304d\u307e\u3092 \u3042\u3051\u3088\u3046"
+        ]
+      },
+      {
+        "id": "P01:l14",
+        "ruleId": "P01",
+        "variant": "lane",
+        "stage": "seeded",
+        "mainIds": [
+          "l14"
+        ],
+        "memberIds": [
+          "l14"
+        ],
+        "entrances": 0,
+        "missing": [
+          "\u6728\u3092 \u3088\u305b\u3066\u307f\u3088\u3046",
+          "\u6728\u304c \u305d\u3060\u3064\u306e\u3092 \u305f\u306e\u3057\u3082\u3046",
+          "\u6728\u306e\u305d\u3070\u306b \u30d9\u30f3\u30c1\u3092 \u304a\u3053\u3046",
+          "\u306f\u3044\u308c\u308b \u3059\u304d\u307e\u3092 \u3042\u3051\u3088\u3046"
+        ]
+      },
+      {
+        "id": "P01:l15",
+        "ruleId": "P01",
+        "variant": "corner",
+        "stage": "seeded",
+        "mainIds": [
+          "l15",
+          "l29"
+        ],
+        "memberIds": [
+          "l15",
+          "l29"
+        ],
+        "entrances": 4,
+        "missing": [
+          "\u6728\u306e\u305d\u3070\u306b \u30d9\u30f3\u30c1\u3092 \u304a\u3053\u3046"
+        ]
+      },
+      {
+        "id": "P01:l28",
+        "ruleId": "P01",
+        "variant": "lane",
+        "stage": "seeded",
+        "mainIds": [
+          "l28"
+        ],
+        "memberIds": [
+          "l28"
+        ],
+        "entrances": 0,
+        "missing": [
+          "\u6728\u3092 \u3088\u305b\u3066\u307f\u3088\u3046",
+          "\u6728\u304c \u305d\u3060\u3064\u306e\u3092 \u305f\u306e\u3057\u3082\u3046",
+          "\u6728\u306e\u305d\u3070\u306b \u30d9\u30f3\u30c1\u3092 \u304a\u3053\u3046",
+          "\u306f\u3044\u308c\u308b \u3059\u304d\u307e\u3092 \u3042\u3051\u3088\u3046"
+        ]
+      },
+      {
+        "id": "P01:l33",
+        "ruleId": "P01",
+        "variant": "lane",
+        "stage": "seeded",
+        "mainIds": [
+          "l33"
+        ],
+        "memberIds": [
+          "l33"
+        ],
+        "entrances": 0,
+        "missing": [
+          "\u6728\u3092 \u3088\u305b\u3066\u307f\u3088\u3046",
+          "\u6728\u304c \u305d\u3060\u3064\u306e\u3092 \u305f\u306e\u3057\u3082\u3046",
+          "\u6728\u306e\u305d\u3070\u306b \u30d9\u30f3\u30c1\u3092 \u304a\u3053\u3046",
+          "\u306f\u3044\u308c\u308b \u3059\u304d\u307e\u3092 \u3042\u3051\u3088\u3046"
+        ]
+      },
+      {
+        "id": "P01:l34",
+        "ruleId": "P01",
+        "variant": "corner",
+        "stage": "seeded",
+        "mainIds": [
+          "l34",
+          "l35"
+        ],
+        "memberIds": [
+          "l34",
+          "l35"
+        ],
+        "entrances": 0,
+        "missing": [
+          "\u6728\u306e\u305d\u3070\u306b \u30d9\u30f3\u30c1\u3092 \u304a\u3053\u3046",
+          "\u306f\u3044\u308c\u308b \u3059\u304d\u307e\u3092 \u3042\u3051\u3088\u3046"
+        ]
+      },
+      {
+        "id": "P03:l20",
+        "ruleId": "P03",
+        "variant": "tiered",
+        "stage": "seeded",
+        "mainIds": [
+          "l20",
+          "l21",
+          "l22",
+          "l23",
+          "l24"
+        ],
+        "memberIds": [
+          "l20",
+          "l21",
+          "l22",
+          "l23",
+          "l24"
+        ],
+        "entrances": 0,
+        "missing": [
+          "\u6c34\u306e\u305d\u3070\u3067 \u82b1\u3092 \u305d\u3060\u3066\u3088\u3046",
+          "\u5cb8\u306e\u305d\u3070\u306b \u30d9\u30f3\u30c1\u3092 \u304a\u3053\u3046",
+          "\u306f\u3044\u308c\u308b \u3059\u304d\u307e\u3092 \u3042\u3051\u3088\u3046"
+        ]
+      },
+      {
+        "id": "P05:l17",
+        "ruleId": "P05",
+        "variant": "arch",
+        "stage": "seeded",
+        "mainIds": [
+          "l17",
+          "l18",
+          "l19",
+          "l31"
+        ],
+        "memberIds": [
+          "l17",
+          "l18",
+          "l19",
+          "l31"
+        ],
+        "entrances": 0,
+        "missing": [
+          "\u82b1\u306e\u305d\u3070\u306b \u30d9\u30f3\u30c1\u3092 \u304a\u3053\u3046",
+          "\u306f\u3044\u308c\u308b \u3059\u304d\u307e\u3092 \u3042\u3051\u3088\u3046"
+        ]
+      }
+    ],
+    "path": {
+      "scope": "Current domain walk graph; no actual tree/canopy mesh or body-envelope clearance test",
+      "open": 1447,
+      "reached": 126,
+      "ownerApproaches": [
+        {
+          "id": "p1",
+          "cell": {
+            "x": 3,
+            "z": 1
+          },
+          "reachedApproaches": 13
+        },
+        {
+          "id": "p2",
+          "cell": {
+            "x": 4,
+            "z": 0
+          },
+          "reachedApproaches": 14
+        },
+        {
+          "id": "p3",
+          "cell": {
+            "x": 2,
+            "z": -8
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "p4",
+          "cell": {
+            "x": 1,
+            "z": -3
+          },
+          "reachedApproaches": 2
+        },
+        {
+          "id": "p5",
+          "cell": {
+            "x": 9,
+            "z": -9
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "p6",
+          "cell": {
+            "x": 7,
+            "z": -1
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "p7",
+          "cell": {
+            "x": 9,
+            "z": -1
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "p8",
+          "cell": {
+            "x": 12,
+            "z": 0
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "p9",
+          "cell": {
+            "x": 8,
+            "z": 0
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l10",
+          "cell": {
+            "x": 3,
+            "z": -9
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l11",
+          "cell": {
+            "x": 4,
+            "z": -9
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l12",
+          "cell": {
+            "x": 3,
+            "z": -8
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l13",
+          "cell": {
+            "x": 4,
+            "z": -8
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l14",
+          "cell": {
+            "x": 1,
+            "z": -4
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l15",
+          "cell": {
+            "x": 2,
+            "z": -2
+          },
+          "reachedApproaches": 1
+        },
+        {
+          "id": "l16",
+          "cell": {
+            "x": 6,
+            "z": -10
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l17",
+          "cell": {
+            "x": 9,
+            "z": -4
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l18",
+          "cell": {
+            "x": 10,
+            "z": -4
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l19",
+          "cell": {
+            "x": 11,
+            "z": -4
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l20",
+          "cell": {
+            "x": 5,
+            "z": -9
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l21",
+          "cell": {
+            "x": 6,
+            "z": -9
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l22",
+          "cell": {
+            "x": 8,
+            "z": -9
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l23",
+          "cell": {
+            "x": 7,
+            "z": -9
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l24",
+          "cell": {
+            "x": 7,
+            "z": -8
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l25",
+          "cell": {
+            "x": 2,
+            "z": -7
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l26",
+          "cell": {
+            "x": 10,
+            "z": -8
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l27",
+          "cell": {
+            "x": 12,
+            "z": -4
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l28",
+          "cell": {
+            "x": 4,
+            "z": -4
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l29",
+          "cell": {
+            "x": 3,
+            "z": -2
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l30",
+          "cell": {
+            "x": 4,
+            "z": -2
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l31",
+          "cell": {
+            "x": 8,
+            "z": -4
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l32",
+          "cell": {
+            "x": 8,
+            "z": -2
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l33",
+          "cell": {
+            "x": 6,
+            "z": -7
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l34",
+          "cell": {
+            "x": 7,
+            "z": -6
+          },
+          "reachedApproaches": 0
+        },
+        {
+          "id": "l35",
+          "cell": {
+            "x": 8,
+            "z": -6
+          },
+          "reachedApproaches": 0
+        }
+      ],
+      "unreachedOwners": [
+        "p3",
+        "p5",
+        "p6",
+        "p7",
+        "p8",
+        "p9",
+        "l10",
+        "l11",
+        "l12",
+        "l13",
+        "l14",
+        "l16",
+        "l17",
+        "l18",
+        "l19",
+        "l20",
+        "l21",
+        "l22",
+        "l23",
+        "l24",
+        "l25",
+        "l26",
+        "l27",
+        "l28",
+        "l29",
+        "l30",
+        "l31",
+        "l32",
+        "l33",
+        "l34",
+        "l35"
+      ]
+    },
+    "coveAssemblyCount": 0
+  },
+  "storeRestoreA": {
+    "id": "l15",
+    "commands": [
+      {
+        "type": "store",
+        "id": "l15"
+      },
+      {
+        "type": "unstore",
+        "id": "l15",
+        "cell": {
+          "x": 2,
+          "z": -2
+        }
+      }
+    ],
+    "canonicalExactExceptReceiptsAndPlaceProgress": true,
+    "storedOwners": 35,
+    "storedPlacedOwners": 34
+  },
+  "inputsUnchanged": true,
+  "changedInputs": [],
+  "sourceBundleSha256": "c65c12ebacb14e9b70f44a928feb816f451fa0dc5d0b71c9cb733d50beed5d53",
+  "limits": [
+    "No whole-island art or growth-assembly completion",
+    "No renderer/factory output validation",
+    "Domain graph paths only; no actual-mesh/canopy/gallery collision or actor envelope",
+    "No new district or land acquisition",
+    "B/C final places and state not verified",
+    "No automatic retry or memory-cause investigation after these bounded attempts"
+  ]
+}

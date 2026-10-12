@@ -1,0 +1,78 @@
+{
+  "scope": "Exact leaf triangle projected union at native .45 unchanged source: willow(6,-7)y1.20757, birch(7,-6)y1.585, spire(8,-6)y1.615. Projection overlap is not leaf triangle collision or visual acceptance.",
+  "inputSha256": "d999e22cf1e0ba9eac6534af0abfe1f84f011c4c9e7418dfe98a381fbf93086f",
+  "bounds": [
+    {
+      "part": "willow",
+      "triangles": 16720,
+      "min": [
+        5.553810988915382,
+        2.475398390602356,
+        -7.689585873534719
+      ],
+      "max": [
+        7.250927076955489,
+        3.8637742997746,
+        -6.3443991224323915
+      ]
+    },
+    {
+      "part": "birch",
+      "triangles": 3648,
+      "min": [
+        6.251350988300697,
+        2.971872994524241,
+        -6.570649457337189
+      ],
+      "max": [
+        7.748649011699303,
+        3.5307729987084864,
+        -5.429350542662811
+      ]
+    },
+    {
+      "part": "spire",
+      "triangles": 768,
+      "min": [
+        7.424327564239502,
+        2.305542947649956,
+        -6.575672435760498
+      ],
+      "max": [
+        8.575672435760499,
+        3.894942869544029,
+        -5.424327564239502
+      ]
+    }
+  ],
+  "pairs": [
+    {
+      "parts": [
+        "willow",
+        "birch"
+      ],
+      "topXZ": {
+        "distance": 0.0,
+        "overlapArea": 0.06110300875813371
+      },
+      "frontXY": {
+        "distance": 0.0,
+        "overlapArea": 0.3995966969606542
+      }
+    },
+    {
+      "parts": [
+        "birch",
+        "spire"
+      ],
+      "topXZ": {
+        "distance": 0.0,
+        "overlapArea": 0.1005966791114284
+      },
+      "frontXY": {
+        "distance": 0.0,
+        "overlapArea": 0.0018009456367012859
+      }
+    }
+  ]
+}

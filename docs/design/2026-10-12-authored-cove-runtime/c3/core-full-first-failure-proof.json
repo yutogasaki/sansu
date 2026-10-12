@@ -1,0 +1,165 @@
+{
+  "revision": "authored-cove-c3",
+  "corePass": true,
+  "coreInputCount": 2137,
+  "fullPass": false,
+  "fullError": "page.waitForFunction: Timeout 90000ms exceeded.\n    at preview (/private/tmp/sansu-authored-cove-c3/candidate/tools/e2e-authored-cove.mjs:223:16)\n    at edits (/private/tmp/sansu-authored-cove-c3/candidate/tools/e2e-authored-cove.mjs:289:29)\n    at async file:///private/tmp/sansu-authored-cove-c3/candidate/tools/e2e-authored-cove.mjs:328:9",
+  "driverInputCount": 2012,
+  "driverExactCoreSubset": true,
+  "snapshotSha256": "f3fe7b909e8c7aa71023889161eec3e448c6d2aecba58436fbe37ca144cdc910",
+  "regressions": "NOT STARTED",
+  "classification": "Harness expected an order-sensitive fingerprint computed after JSON omitted an undefined cell property. Pure reproduction found equal full state values, water plans, cove assemblies, floors and sites; actual UI preview, real unstore and baseline revisions match. Corrected driver restores its target from the proven invariant baseline.",
+  "files": [
+    {
+      "file": "core/execution.log.txt",
+      "sha256": "3e6d042d02417e27a7c7f9169c8832746f4ffae163761eb0099291737936e87e",
+      "bytes": 143797,
+      "source": "/private/tmp/sansu-authored-cove-c3/core/execution.log"
+    },
+    {
+      "file": "core/report.json",
+      "sha256": "fb9c46d364ee3a3b3a14ca1a12358727dc0245330653668e2475c42c416a4ea5",
+      "bytes": 512774,
+      "source": "/private/tmp/sansu-authored-cove-c3/core/report.json"
+    },
+    {
+      "file": "closure/domain-inputs.txt",
+      "sha256": "53ed920c9e1afd51d934cdecbac2b6aaadafc631895129ea0f648c0915a07425",
+      "bytes": 1863,
+      "source": "/private/tmp/sansu-authored-cove-c3/closure/domain-inputs.txt"
+    },
+    {
+      "file": "closure/driver-inputs.json",
+      "sha256": "256b6c16db05de24baae12b5b659c9021174ea2bbae9b6576ca831e588a1b64e",
+      "bytes": 236578,
+      "source": "/private/tmp/sansu-authored-cove-c3/closure/driver-inputs.json"
+    },
+    {
+      "file": "closure/driver-inputs.txt",
+      "sha256": "8a0a1943b0ad731309088c8e8ab43bc399864f95b0a60685a60d586301336931",
+      "bytes": 89699,
+      "source": "/private/tmp/sansu-authored-cove-c3/closure/driver-inputs.txt"
+    },
+    {
+      "file": "closure/import-audit.json",
+      "sha256": "eca3bff0c4b89d9760599af93922d9320175c7b24c7ed4dbf50a472b71a2e44d",
+      "bytes": 308,
+      "source": "/private/tmp/sansu-authored-cove-c3/closure/import-audit.json"
+    },
+    {
+      "file": "closure/inputs.json",
+      "sha256": "b9bd886acbf9906698507532ac927fbd9ff95da5c94e1383253694e2d7b463b1",
+      "bytes": 251863,
+      "source": "/private/tmp/sansu-authored-cove-c3/closure/inputs.json"
+    },
+    {
+      "file": "closure/inputs.txt",
+      "sha256": "d82ee43322fe93313b4825bf39b352d913924354a4c5a21d5b73968d421e07ab",
+      "bytes": 95859,
+      "source": "/private/tmp/sansu-authored-cove-c3/closure/inputs.txt"
+    },
+    {
+      "file": "closure/plan.json",
+      "sha256": "ca70a4c86126293456984f5999a81aaaaeaaac43f17fe124ce1da9d591890bb7",
+      "bytes": 1550,
+      "source": "/private/tmp/sansu-authored-cove-c3/closure/plan.json"
+    },
+    {
+      "file": "closure/reasons.json",
+      "sha256": "0f0c54022d0fa882f68037248becc06f3ad8727bba5eacde5a42c1f1bc917f61",
+      "bytes": 802105,
+      "source": "/private/tmp/sansu-authored-cove-c3/closure/reasons.json"
+    },
+    {
+      "file": "full-first-failure/desktop-cove-close-day.png",
+      "sha256": "91399bc490261fd3857352d14e0735b31b87de69e7069b1fd70a9f4de59235fa",
+      "bytes": 424285,
+      "source": "/private/tmp/sansu-authored-cove-c3/full/desktop-cove-close-day.png"
+    },
+    {
+      "file": "full-first-failure/desktop-mature-whole-day.png",
+      "sha256": "26137993039f097b6dae839f77ec2ca9f759e4e7e682a3f4aede17b4cb6710b3",
+      "bytes": 481233,
+      "source": "/private/tmp/sansu-authored-cove-c3/full/desktop-mature-whole-day.png"
+    },
+    {
+      "file": "full-first-failure/desktop-p9-move-preview.png",
+      "sha256": "2ea0ad6725ff8b27701ca1c6ced19ad812ddc31ebe1a611fa7838c091c33d3fc",
+      "bytes": 478601,
+      "source": "/private/tmp/sansu-authored-cove-c3/full/desktop-p9-move-preview.png"
+    },
+    {
+      "file": "full-first-failure/desktop-p9-moved-whole-day.png",
+      "sha256": "7ad9bd60a6cdea8e234690a99ed523ba9877aa32fef1478be51e72cfeb49f4cd",
+      "bytes": 469708,
+      "source": "/private/tmp/sansu-authored-cove-c3/full/desktop-p9-moved-whole-day.png"
+    },
+    {
+      "file": "full-first-failure/first-failure.png",
+      "sha256": "6951429bb1bc87a2662724acad71f96563141f2406c9ad2a59b3ba98672e1187",
+      "bytes": 483451,
+      "source": "/private/tmp/sansu-authored-cove-c3/full/first-failure.png"
+    },
+    {
+      "file": "full-first-failure/progress.json",
+      "sha256": "0e6ca22c5ecdd72726f98a56ad29abbf8d4597238d86ab3447f874dea35ba591",
+      "bytes": 21,
+      "source": "/private/tmp/sansu-authored-cove-c3/full/progress.json"
+    },
+    {
+      "file": "full-first-failure/report.json",
+      "sha256": "cb3309eb792c40274e599381e32e342091a446259eafb7ba3d0acf759654c9a5",
+      "bytes": 1177568,
+      "source": "/private/tmp/sansu-authored-cove-c3/full/report.json"
+    },
+    {
+      "file": "snapshot.json",
+      "sha256": "f3fe7b909e8c7aa71023889161eec3e448c6d2aecba58436fbe37ca144cdc910",
+      "bytes": 3176839,
+      "source": "/private/tmp/sansu-authored-cove-c3/snapshot.json"
+    },
+    {
+      "file": "snapshot.mjs",
+      "sha256": "9dfe5fa51372722198c08732111e9311ed0dc0a0d59be211f4c9666fd120375d",
+      "bytes": 1509,
+      "source": "/private/tmp/sansu-authored-cove-c3/snapshot.mjs"
+    },
+    {
+      "file": "server-startup-note.json",
+      "sha256": "61445ac58229b7aad3e905afc95908955e7e06ed3e0c66a305d5bfcb6dbbc8e1",
+      "bytes": 660,
+      "source": "/private/tmp/sansu-authored-cove-c3/server-startup-note.json"
+    },
+    {
+      "file": "full-execution.log.txt",
+      "sha256": "c765219ef6badf2ab6309d0b7235376e2b3316dfa2e697a7ece06c03194dfb75",
+      "bytes": 833,
+      "source": "/private/tmp/sansu-authored-cove-c3/full-execution.log"
+    },
+    {
+      "file": "runners/closure.py",
+      "sha256": "3c5a483713e7bdb2654ff3886fcbf02a9d3b17680a4830b63817eb66197a1c54",
+      "bytes": 7524,
+      "source": "/private/tmp/sansu-authored-cove-c3-prep/closure.py"
+    },
+    {
+      "file": "runners/core.py",
+      "sha256": "960302f89f929673fe99504dd58ee764115ca70cd98fb6c045f054b9404fd13e",
+      "bytes": 3475,
+      "source": "/private/tmp/sansu-authored-cove-c3-prep/core.py"
+    },
+    {
+      "file": "runners/check-driver-imports.mjs",
+      "sha256": "1fc144edd0ab2db41d23ea6b3a816b6bd89dc471143e9bc538ff6d926f5fa963",
+      "bytes": 3342,
+      "source": "/private/tmp/sansu-authored-cove-c3-prep/check-driver-imports.mjs"
+    },
+    {
+      "file": "runners/regressions.py",
+      "sha256": "9c5ec42553e9dcd8962dccb62b54111c498991af2343e63a4a3be2a269bef3f5",
+      "bytes": 21338,
+      "source": "/private/tmp/sansu-authored-cove-c3-prep/regressions.py"
+    }
+  ],
+  "diagnosis": "../target-diagnosis/c3-recovery/report.json"
+}

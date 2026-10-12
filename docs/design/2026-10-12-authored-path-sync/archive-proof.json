@@ -1,0 +1,170 @@
+{
+  "recordedAtUtc": "2026-10-12T07:53:47.234127+00:00",
+  "scope": "Fixed c4 core and exact seven-file overlay; browser evidence pending",
+  "entries": [
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/readiness.json",
+      "archive": "readiness.json",
+      "bytes": 5519,
+      "sha256": "4b66e057a8a240e6953a3ac0e14ca54c623faafba66b83567690045a7fde8a89",
+      "archiveSha256": "4b66e057a8a240e6953a3ac0e14ca54c623faafba66b83567690045a7fde8a89",
+      "encoding": "exact bytes"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/snapshot.json",
+      "archive": "snapshot.json.gz",
+      "bytes": 3301367,
+      "sha256": "a7c29b7a440246b1d3ce4737854a548e74817c281f6682e0a58fd307984a2394",
+      "archiveSha256": "32afcbc735e4e5ee9d95a071e255da38b4586f6f362add24565fa52bc450ba6d",
+      "encoding": "gzip lossless"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/candidate-copy.json",
+      "archive": "candidate-copy.json.gz",
+      "bytes": 6974696,
+      "sha256": "2460ef2e856f69b1f9df8d1fcfa5d1fce4b06387a2f7e05ecd8831c4e462c25b",
+      "archiveSha256": "9cd14c15b932a6676ec0f630bb5b0601d9d1aa36235c3f2866db55c2136f1d8d",
+      "encoding": "gzip lossless"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/authorized-overlay.json",
+      "archive": "authorized-overlay.json",
+      "bytes": 3211,
+      "sha256": "672faa681506b2f55ee62c68a2b6019530b92a6cec9f30ffd3309eaa7e16fe02",
+      "archiveSha256": "672faa681506b2f55ee62c68a2b6019530b92a6cec9f30ffd3309eaa7e16fe02",
+      "encoding": "exact bytes"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/verification-plan.json",
+      "archive": "verification-plan.json",
+      "bytes": 2274,
+      "sha256": "237032809643ab25b0cb5a13d292aee7266c93fd2459376db12a918c34f86f83",
+      "archiveSha256": "237032809643ab25b0cb5a13d292aee7266c93fd2459376db12a918c34f86f83",
+      "encoding": "exact bytes"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/core/report.json",
+      "archive": "core/report.json.gz",
+      "bytes": 1744469,
+      "sha256": "3a6bc4be9780d7ca3158b0af87b184145400087c9c48e229d9da8a22f2416cc6",
+      "archiveSha256": "d7b1598f2cd665ed7306586bd263a3654fd339f0615f7854abcd0995c4ff27d9",
+      "encoding": "gzip lossless"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/core/execution.log.txt",
+      "archive": "core/execution.log.txt",
+      "bytes": 149709,
+      "sha256": "8d432accc7d00a4a9b2ea06a297baff45344d2353cc4fb1d263f14de24d79eaa",
+      "archiveSha256": "8d432accc7d00a4a9b2ea06a297baff45344d2353cc4fb1d263f14de24d79eaa",
+      "encoding": "exact bytes"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/closure/inputs.json",
+      "archive": "closure/inputs.json.gz",
+      "bytes": 857649,
+      "sha256": "85554caa70db9c6b5e8d637aebb1044d18ffc893a4abf8351c698a819e49c385",
+      "archiveSha256": "2d66243a92772da6a9ea986c1a3bb5b4f171c51784afa3e2df192e79a0ccf41d",
+      "encoding": "gzip lossless"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/closure/installed-dependencies.json",
+      "archive": "closure/installed-dependencies.json",
+      "bytes": 736,
+      "sha256": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+      "archiveSha256": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+      "encoding": "exact bytes"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/closure/import-audit.json",
+      "archive": "closure/import-audit.json",
+      "bytes": 8552,
+      "sha256": "aa8cd6a53fbda46e2088738d0d7dd29e14a7889c98a40bc030b56ff9276daa19",
+      "archiveSha256": "aa8cd6a53fbda46e2088738d0d7dd29e14a7889c98a40bc030b56ff9276daa19",
+      "encoding": "exact bytes"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/closure/changed-source-import-audit.json",
+      "archive": "closure/changed-source-import-audit.json",
+      "bytes": 18369,
+      "sha256": "5db535ecbdb03ad3c728ae4928ad0840f65161bf115996aa5a508016baa3cac6",
+      "archiveSha256": "5db535ecbdb03ad3c728ae4928ad0840f65161bf115996aa5a508016baa3cac6",
+      "encoding": "exact bytes"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/closure/driver-input-audit.json",
+      "archive": "closure/driver-input-audit.json",
+      "bytes": 477,
+      "sha256": "3ebc935b05f43f4009536c0a6c452b533562d3c51e9d437254f922acb8d8549c",
+      "archiveSha256": "3ebc935b05f43f4009536c0a6c452b533562d3c51e9d437254f922acb8d8549c",
+      "encoding": "exact bytes"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/closure/installed-dependencies-proof.json",
+      "archive": "closure/installed-dependencies-proof.json",
+      "bytes": 1162,
+      "sha256": "309715777829c7f69bf4aec30abdc20c0fd45b9f9fa2ffe4743b858243c183dd",
+      "archiveSha256": "309715777829c7f69bf4aec30abdc20c0fd45b9f9fa2ffe4743b858243c183dd",
+      "encoding": "exact bytes"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/prepared/core.py",
+      "archive": "prepared/core.py.txt",
+      "bytes": 8494,
+      "sha256": "169744c5eb5e56faf21239469904715901b3c2a6d7b085e49784f56d3962250c",
+      "archiveSha256": "169744c5eb5e56faf21239469904715901b3c2a6d7b085e49784f56d3962250c",
+      "encoding": "exact bytes"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/server-identity.json",
+      "archive": "server-identity.json",
+      "bytes": 749,
+      "sha256": "03c727d8153bdff23771ac396aea62109aed098960876aa9105b81b43ebbb829",
+      "archiveSha256": "03c727d8153bdff23771ac396aea62109aed098960876aa9105b81b43ebbb829",
+      "encoding": "exact bytes"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/candidate/docs/product/island-world-contract.md",
+      "archive": "source-after/docs/product/island-world-contract.md.txt",
+      "sha256": "d174a031a2c3ec6358325b04fd3d54ad964f3d8ffbf0eca5893b61b94e08863f",
+      "encoding": "exact bytes"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/candidate/src/components/island/growing/growingLife.ts",
+      "archive": "source-after/src/components/island/growing/growingLife.ts.txt",
+      "sha256": "6648782191e2b1275f661a44bfa9e4235347bac39effd05d8b273ce2dd047973",
+      "encoding": "exact bytes"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/candidate/src/components/island/growing/objectLayer.ts",
+      "archive": "source-after/src/components/island/growing/objectLayer.ts.txt",
+      "sha256": "09f0b0b8999be1e6f3c90c943702d40d9bcb857d5bc10dd04a55f90b6dda0835",
+      "encoding": "exact bytes"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/candidate/src/components/island/growing/placePaths.test.ts",
+      "archive": "source-after/src/components/island/growing/placePaths.test.ts.txt",
+      "sha256": "611e3394573a76b56492045373cc8685860faf4491154c95a801dbd353fd4c75",
+      "encoding": "exact bytes"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/candidate/src/components/island/growing/placePaths.ts",
+      "archive": "source-after/src/components/island/growing/placePaths.ts.txt",
+      "sha256": "f01df6b4f386caf50c8fb4adb95bc994f497493850b778162852bd4f3666b871",
+      "encoding": "exact bytes"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/candidate/src/components/island/growing/placePathsSupport.test.ts",
+      "archive": "source-after/src/components/island/growing/placePathsSupport.test.ts.txt",
+      "sha256": "1fec8511ff0b744a7cd5ee9f0bcb3cb497751359eeeb31279dad306e97d61ccb",
+      "encoding": "exact bytes"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-path-c4/candidate/src/components/island/growing/placePathsSync.test.ts",
+      "archive": "source-after/src/components/island/growing/placePathsSync.test.ts.txt",
+      "sha256": "52ca37c100d3d20cfb5f8a2a023fcb13394afaa90539c1c71d84ff575988fce2",
+      "encoding": "exact bytes"
+    }
+  ],
+  "allDecodedBytesEqual": true,
+  "mainOverlayMatchesCandidateAtArchive": true
+}

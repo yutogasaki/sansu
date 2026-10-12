@@ -1,0 +1,15 @@
+node:internal/fs/promises:622
+  return await PromisePrototypeThen(
+         ^
+
+Error: ENOSYS: function not implemented, copyfile '/private/tmp/sansu-authored-shoulder-c2/candidate/.agents/agent-guide.md' -> '/private/tmp/sansu-authored-shoulder-c3/candidate/.agents/agent-guide.md'
+    at async Object.copyFile (node:internal/fs/promises:622:10)
+    at async file:///private/tmp/sansu-authored-shoulder-c3/prepared/clone-candidate.mjs:66:9 {
+  errno: -78,
+  code: 'ENOSYS',
+  syscall: 'copyfile',
+  path: '/private/tmp/sansu-authored-shoulder-c2/candidate/.agents/agent-guide.md',
+  dest: '/private/tmp/sansu-authored-shoulder-c3/candidate/.agents/agent-guide.md'
+}
+
+Node.js v24.18.0

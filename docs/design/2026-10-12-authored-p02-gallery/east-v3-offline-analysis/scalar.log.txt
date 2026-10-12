@@ -1,0 +1,140 @@
+{
+  "sha256": "18b0ce4722a8bcd23aefb5c79696aa5b88addc2a6d89aac523e6fd3a84c5ca9a",
+  "ray": {
+    "sourceName": "Grove / great root house trunk",
+    "sourceTriangles": 876,
+    "usedCapturedAuthoredEvaluatedMatrix": [
+      [
+        0.44999998807907104,
+        0.0,
+        0.0,
+        5.659999847412109
+      ],
+      [
+        0.0,
+        0.44999998807907104,
+        0.0,
+        -0.21658623218536377
+      ],
+      [
+        0.0,
+        0.0,
+        0.44999998807907104,
+        -0.8500003814697266
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "sourceTransformParityAlreadyPassed": true,
+    "sourceBounds": {
+      "min": [
+        2.7572998100572192,
+        1.4903376365522831,
+        -9.106878920213944
+      ],
+      "max": [
+        4.120249800940357,
+        4.8330351683928825,
+        -7.8931210082604935
+      ]
+    },
+    "origin": [
+      4.199265480041504,
+      1.639064073562622,
+      -7.4759745597839355
+    ],
+    "aim": [
+      3.5,
+      1.419064073562622,
+      -8.5
+    ],
+    "direction": [
+      -0.5552524134528899,
+      -0.1746912073400011,
+      -0.813128365901002
+    ],
+    "aimDistance": 1.2593650438960815,
+    "maxSpan": 1.35,
+    "segmentEnd": [
+      3.4496747218801023,
+      1.4032309436536206,
+      -8.57369785375029
+    ],
+    "aabbIntervalAlongRay": [
+      0.5130142619170972,
+      0.8513676176092424
+    ],
+    "originalHit": [],
+    "sameDirectionExtendedTo10ForDiagnosisOnly": [],
+    "sameOriginHorizontalWithinOriginalSpanForHeightDiagnosisOnly": [],
+    "sameOriginHorizontalExtendedTo10DiagnosisOnly": [
+      {
+        "triangle": 776,
+        "distance": 1.539699535488817,
+        "point": [
+          3.3309923954099405,
+          1.639064073562622,
+          -8.747499828934679
+        ],
+        "triangleVertices": [
+          [
+            3.1444998453855533,
+            2.286660151925446,
+            -8.747499828934679
+          ],
+          [
+            3.1444998453855533,
+            1.629660152163865,
+            -8.747499828934679
+          ],
+          [
+            3.628249532163153,
+            1.629660152163865,
+            -8.747499828934679
+          ]
+        ]
+      },
+      {
+        "triangle": 55,
+        "distance": 1.8452875060154879,
+        "point": [
+          3.158664091296207,
+          1.639064073562622,
+          -8.999862590315779
+        ],
+        "triangleVertices": [
+          [
+            2.9811537498592315,
+            1.5777659536904167,
+            -8.856911637864869
+          ],
+          [
+            3.263055841047077,
+            1.7196422540816059,
+            -9.089674159164588
+          ],
+          [
+            3.2815171633424427,
+            1.6317919718324276,
+            -9.092387267155459
+          ]
+        ]
+      }
+    ],
+    "centerXZCrossingY": 1.419064073562622,
+    "centerAimBelowGlobalTrunkMinimumY": 0.07127356298966103,
+    "noCandidateChanged": true
+  },
+  "burialCounts": {
+    "eastBranchGallery:bottom": 42,
+    "unclassified-within-original-EPS": 27
+  },
+  "newTriangles": {
+    "eastBranchGallery:bottom": 4,
+    "unclassified-within-original-EPS": 2
+  }
+}

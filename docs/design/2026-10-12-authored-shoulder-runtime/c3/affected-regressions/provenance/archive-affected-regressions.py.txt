@@ -1,0 +1,105 @@
+from pathlib import Path
+from datetime import datetime, timezone
+import hashlib
+import json
+import re
+
+BASE = Path('/private/tmp/sansu-authored-shoulder-c3')
+RAW = BASE / 'affected-regressions'
+DEST = Path('/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-shoulder-runtime/c3/affected-regressions')
+sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+summary = json.loads((RAW / 'report.json').read_text())
+assert summary.get('finishedAtUnixSeconds'), 'Archive only after terminal sequence result'
+assert not DEST.exists(), 'Never replace an earlier archive'
+DEST.mkdir(parents=True)
+records = []
+
+def copy(source, relative):
+    destination = DEST / relative
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    before = sha(source)
+    with destination.open('xb') as stream:
+        stream.write(source.read_bytes())
+    assert before == sha(source) == sha(destination)
+    records.append({'source': str(source), 'archiveRelativePath': str(relative), 'bytes': destination.stat().st_size, 'sha256': before})
+
+for path in sorted(RAW.rglob('*')):
+    if path.is_file():
+        assert not path.is_symlink(), f'Unexpected raw symlink: {path}'
+        relative = path.relative_to(RAW)
+        if path.suffix in ['.py', '.mjs', '.ts', '.tsx', '.md']:
+            relative = Path(str(relative) + '.txt')
+        if path.suffix == '.log':
+            relative = Path(str(relative) + '.txt')
+        copy(path, relative)
+for path, relative in [
+    (BASE / 'runtime-prepared/affected-regressions.py', 'provenance/affected-regressions.py.txt'),
+    (BASE / 'runtime-prepared/readiness.json', 'provenance/readiness.json'),
+    (BASE / 'server-identity.json', 'provenance/server-identity.json'),
+    (BASE / 'candidate/tools/e2e-authored-water.mjs', 'provenance/e2e-authored-water.mjs.txt'),
+    (BASE / 'candidate/tools/e2e-smoke.mjs', 'provenance/e2e-smoke.mjs.txt'),
+    (Path(__file__), 'provenance/archive-affected-regressions.py.txt'),
+]:
+    copy(path, Path(relative))
+
+sealed_archive = DEST.parent / 'runtime-prepared'
+reused = []
+for name in ['affected-regressions.py', 'readiness.json']:
+    source = BASE / 'runtime-prepared' / name
+    archived = sealed_archive / (name + '.txt' if name.endswith('.py') else name)
+    assert sha(source) == sha(archived), 'Previously sealed preparation changed'
+    reused.append({'source': str(source), 'archive': str(archived), 'sha256': sha(source)})
+
+core = json.loads((BASE / 'core/report.json').read_text())
+for relative in ['tools/e2e-authored-water.mjs', 'tools/e2e-smoke.mjs']:
+    assert sha(BASE / 'candidate' / relative) == core['initialInputs'][relative] == core['finalInputs'][relative]
+assert sha(BASE / 'runtime-prepared/affected-regressions.py') == summary['runnerSha256']
+
+proof = {
+    'atUtc': datetime.now(timezone.utc).isoformat(),
+    'files': records,
+    'fileCount': len(records),
+    'bytes': sum(item['bytes'] for item in records),
+    'byteIdentical': True,
+    'originalsUnchanged': True,
+    'sealedPreparationReusedByHash': reused,
+    'rawReportSha256': sha(RAW / 'report.json'),
+    'scope': summary['scope'],
+    'result': {key: summary.get(key) for key in ['pass', 'sourceFixed', 'installedDependenciesFixed', 'firstFailure']},
+    'noCandidateOrServerMutation': True,
+}
+with (DEST / 'archive-proof.json').open('x') as stream:
+    stream.write(json.dumps(proof, indent=2) + '\n')
+
+rows = []
+for stage in summary['stages']:
+    report = json.loads((RAW / stage['name'] / 'report.json').read_text())
+    seconds = report['finishedAtUnixSeconds'] - report['startedAtUnixSeconds']
+    rows.append(f"| {stage['name']} | {'PASS' if stage['pass'] else 'FAIL'} | {report.get('exitCode')} | {seconds:.3f} | [raw report]({stage['name']}/report.json) · [log]({stage['name']}/execution.log.txt) |")
+water_file = RAW / '01-wide27-water/actual/report.json'
+water = json.loads(water_file.read_text()) if water_file.exists() else {}
+versions = sorted({json.dumps(item.get('build'), sort_keys=True) for item in water.get('captures', [])})
+status = 'PASS' if summary['pass'] else 'FAIL'
+readme = f'''# c3 affected runtime — {status}
+
+The sealed runner executed the unchanged full wide27-water driver followed by isolated classic smoke, stopping at the first failure. This is the approved affected scope for the three water-support reuse files, not c3 all-eight, shoulder acquisition/fixed35, art, M1, release or performance acceptance. c2 evidence remains unchanged.
+
+| Stage | Result | Exit | Elapsed seconds | Evidence |
+| --- | --- | --- | --- | --- |
+{chr(10).join(rows)}
+
+Elapsed times include browser operations and wrapper checks; the 600/2,700 second outer limits are cleanup deadlines, not performance thresholds. The [outer raw report](report.json) preserves first failure and complete before/after maps: 6,460 source inputs and 6 installed dependency inputs. Source fixed: `{summary.get('sourceFixed')}`; installed dependencies fixed: `{summary.get('installedDependenciesFixed')}`.
+
+The water contract requires 14 ordered captures, six edit/selection steps, the c3 rendered revision, exact raw driver inputs, and complete per-capture water plan equality with c2 including bridges/restoredEdgeIds. Geometry-level edge support is covered by domain evidence rather than claimed as a browser walk. Raw capture build records: `{'; '.join(versions)}`.
+
+The unchanged water driver reads `data-build-revision` from the actual rendered DOM. It does not record the app-version UUID; the separate core distribution version is not substituted for a runtime observation. The classic raw report records 32 scenarios. [Terminal observation](terminal-observation.json) records consumed exec exit 0, stage timestamps, exited owned PIDs and preserved root servers.
+
+The classic driver retains all scenarios and uses an isolated owned test server; root-owned 5359/5360 remain untouched. [Server provenance](provenance/server-identity.json), [executed wrapper](provenance/affected-regressions.py.txt), [sealed readiness](provenance/readiness.json), and [archive proof](archive-proof.json) retain exact identities. The earlier preparation archive is reused after SHA equality checks, not overwritten.
+
+Raw report SHA256: `{sha(RAW / 'report.json')}`. Raw files, screenshots, logs and driver/wrapper source copies are byte-identical to their origins. Historical source copies use `.txt` suffixes to avoid test discovery. No first-failure record was rewritten or reclassified as a pass.
+'''
+with (DEST / 'README.md').open('x') as stream:
+    stream.write(readme)
+for _, link in re.findall(r'\[([^]]+)\]\(([^)]+)\)', readme):
+    assert (DEST / link).exists(), link
+print(json.dumps({'archive': str(DEST), 'fileCount': len(records), 'bytes': proof['bytes'], 'proofSha256': sha(DEST / 'archive-proof.json'), 'reportSha256': sha(RAW / 'report.json'), 'linksExist': True}))

@@ -1,0 +1,105 @@
+{
+  "scope": "Three direct-domain states in separate processes. Exact payload/query parity plus retained/sample measurements; not application performance acceptance.",
+  "payloadAndQueryParity": true,
+  "sourceUnchanged": true,
+  "steps": [
+    {
+      "label": "baseline32",
+      "proof": {
+        "physicalSha256": "aec61861762174d3c2a7a5021add1baf6264608980d6d563107bc1efaeb556ae",
+        "renderPayloadSha256": "b048df12f9e0b8343ce0adccd15149ec81f6a867203998e4c5426f306eee2d96",
+        "sourcePayloadSha256": "51472c6961a9ec39e68f164d71d1176cb4c053a8f696d16c70c654d004ce4a7c",
+        "floorQueries": {
+          "count": 18837,
+          "sha256": "494e3ff36f31b0f90df7c360f795e90a0a913383a3ffb11fc41d9b4fb449e342"
+        },
+        "sitesSha256": "eb7e3b74bbdabca34a5a655dfb018547c455cc96a9ed15a1b5f329fcb056925a",
+        "planSha256": "e11bb1165121c9112600ae1240560d3aa65b8424a0f29f34e4485776f637acb6",
+        "triangleCount": 146482,
+        "rights": 75
+      },
+      "frameRevision": "authored-world:df1a5b7f8687701d",
+      "before": {
+        "retained": 998700192,
+        "sampledAfterCall": 1218279224,
+        "rss": 3013328896,
+        "operationMs": 11710.744
+      },
+      "after": {
+        "retained": 931728472,
+        "sampledAfterCall": 2088313600,
+        "rss": 2673033216,
+        "operationMs": 11313.516500000002
+      },
+      "retainedReductionBytes": 66971720,
+      "sampledAfterCallReductionBytes": -870034376
+    },
+    {
+      "label": "preview-l33",
+      "proof": {
+        "physicalSha256": "aec61861762174d3c2a7a5021add1baf6264608980d6d563107bc1efaeb556ae",
+        "renderPayloadSha256": "b048df12f9e0b8343ce0adccd15149ec81f6a867203998e4c5426f306eee2d96",
+        "sourcePayloadSha256": "38b090bc64e5428c37c6867fe7c49d7f91c8babf2023dbb0aeed3e6120739623",
+        "floorQueries": {
+          "count": 18837,
+          "sha256": "494e3ff36f31b0f90df7c360f795e90a0a913383a3ffb11fc41d9b4fb449e342"
+        },
+        "sitesSha256": "eb7e3b74bbdabca34a5a655dfb018547c455cc96a9ed15a1b5f329fcb056925a",
+        "planSha256": "6ce57ad60c13ccefb379a70d0ea8ff0a432547e97bf44b42bc28dac99e001cce",
+        "triangleCount": 146482,
+        "rights": 75
+      },
+      "frameRevision": "authored-world:ff2c0183273fbe23",
+      "before": {
+        "retained": 1506376784,
+        "sampledAfterCall": 2782262344,
+        "rss": 3702489088,
+        "operationMs": 10652.288542
+      },
+      "after": {
+        "retained": 1421294816,
+        "sampledAfterCall": 1584851312,
+        "rss": 3585474560,
+        "operationMs": 10063.876834
+      },
+      "retainedReductionBytes": 85081968,
+      "sampledAfterCallReductionBytes": 1197411032
+    },
+    {
+      "label": "commit-l33",
+      "proof": {
+        "physicalSha256": "aec61861762174d3c2a7a5021add1baf6264608980d6d563107bc1efaeb556ae",
+        "renderPayloadSha256": "b048df12f9e0b8343ce0adccd15149ec81f6a867203998e4c5426f306eee2d96",
+        "sourcePayloadSha256": "38b090bc64e5428c37c6867fe7c49d7f91c8babf2023dbb0aeed3e6120739623",
+        "floorQueries": {
+          "count": 18837,
+          "sha256": "494e3ff36f31b0f90df7c360f795e90a0a913383a3ffb11fc41d9b4fb449e342"
+        },
+        "sitesSha256": "eb7e3b74bbdabca34a5a655dfb018547c455cc96a9ed15a1b5f329fcb056925a",
+        "planSha256": "6ce57ad60c13ccefb379a70d0ea8ff0a432547e97bf44b42bc28dac99e001cce",
+        "triangleCount": 146482,
+        "rights": 75
+      },
+      "frameRevision": "authored-world:ff2c0183273fbe23",
+      "before": {
+        "retained": 1850261280,
+        "sampledAfterCall": 2024384904,
+        "rss": 3164438528,
+        "operationMs": 1413.3498330000002
+      },
+      "after": {
+        "retained": 1749962592,
+        "sampledAfterCall": 1912382632,
+        "rss": 3628187648,
+        "operationMs": 1351.8480419999978
+      },
+      "retainedReductionBytes": 100298688,
+      "sampledAfterCallReductionBytes": 112002272
+    }
+  ],
+  "limits": [
+    "Checkpoint GC affects scheduling",
+    "After-call heap is a sample, not true transient peak",
+    "No renderer/browser/actor full journey"
+  ]
+}

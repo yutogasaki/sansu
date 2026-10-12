@@ -1,0 +1,10 @@
+{
+  "phase": "static driver import audit",
+  "pass": false,
+  "cause": "Browser page.evaluate import(/src/...) was interpreted as Node absolute path by read-only audit bundling",
+  "sourceOrCandidateChanged": false,
+  "coreStarted": false,
+  "rawLog": "/private/tmp/sansu-authored-shoulder-c1/static-imports-execution-first.log.txt",
+  "rawLogSha256": "835b739627282cd842a8e5d59e368c2b9655caa9c3b9530fbfb7072f98fdb0be",
+  "runnerSha256": "a3286ebadd0ad29eccb9eaf9a47790af4e99acf0d5f521fbced5c7ec5af1de26"
+}

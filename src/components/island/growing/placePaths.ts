@@ -5,17 +5,25 @@ import { HOME_CELL, key, approachCells, passageNeighbors, onLand, walkableCells 
 import type { SceneLayout } from './sceneLayout';
 import type { IslandWorld } from '../../../domain/growingIsland/worldDefinition';
 
+/** The committed actor/structure check owns these decisions. Drawing consumes
+ * its result without evaluating obstacles again or changing navigation. */
+export interface PlacePathAccess {
+    walkable: ReadonlySet<string>;
+    ownerApproaches: ReadonlyMap<string, readonly Cell[]>;
+}
+
 /** A shared path grows between real reachable doorsteps and place entrances. It
  * is an inlay on the existing floor; it grants no new navigation or ownership. */
-export function placePathEdges(state: GrowingState, places: readonly DerivedPlace[], world?: IslandWorld): [Cell, Cell][] {
-    const open = walkableCells(state, world), network = new Map<string, Cell>([[key(HOME_CELL), HOME_CELL]]);
+export function placePathEdges(state: GrowingState, places: readonly DerivedPlace[], world?: IslandWorld, access?: PlacePathAccess): [Cell, Cell][] {
+    const committed = world ? access : undefined;
+    const open = committed?.walkable ?? walkableCells(state, world), network = new Map<string, Cell>([[key(HOME_CELL), HOME_CELL]]);
     if (world && !open.has(key(HOME_CELL))) return [];
     // Compiled authored sites already have a real dry floor. The open set grants
     // this graph access; checking those same nodes against the triangles again
     // changes no route and repeats the expensive floor query for every neighbour.
     const supported = (cell: Cell) => (world ? true : onLand(state, cell)) && open.has(key(cell));
     const targets: Cell[][] = state.plots.filter(plot => plot.kind === 'home' && plot.stage >= 2 && plot.cell)
-        .map(plot => approachCells(plot.cell!, world).filter(supported));
+        .map(plot => (committed?.ownerApproaches.get(key(plot.cell!)) ?? approachCells(plot.cell!, world)).filter(supported));
     targets.push(...places.filter(place => place.stage === 'grown' || place.stage === 'lived')
         .map(place => place.entrances.filter(supported)));
     targets.sort((a, b) => Math.min(...a.map(cell => Math.abs(cell.x - HOME_CELL.x) + Math.abs(cell.z - HOME_CELL.z)))
@@ -43,8 +51,8 @@ export function placePathEdges(state: GrowingState, places: readonly DerivedPlac
     return [...edges.values()];
 }
 
-export function buildPlacePaths(state: GrowingState, layout: SceneLayout, places: readonly DerivedPlace[]) {
-    const world = layout.authored ? layout.world : undefined, edges = placePathEdges(state, places, world);
+export function buildPlacePaths(state: GrowingState, layout: SceneLayout, places: readonly DerivedPlace[], access?: PlacePathAccess) {
+    const world = layout.authored ? layout.world : undefined, edges = placePathEdges(state, places, world, access);
     const water = new Set(state.landmarks.filter(item => item.kind === 'water-channel' && item.cell).map(item => key(item.cell!)));
     const vertices: number[] = [], indices: number[] = [];
     // Adjacent triangles reuse immutable vertices. Cache both dry support and

@@ -1,0 +1,55 @@
+{
+  "command": [
+    "node",
+    "/private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-attempt-02/diagnose-roi-face-normal.mjs",
+    "--start",
+    "--output",
+    "/private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-attempt-02/actual-02"
+  ],
+  "startedAtUtc": "2026-10-12T05:18:55.286073+00:00",
+  "finishedAtUtc": "2026-10-12T05:19:44.385101+00:00",
+  "elapsedSeconds": 49.098995458,
+  "ownedPid": 38695,
+  "ownedProcessGroup": 38695,
+  "exitCode": 1,
+  "stopReason": null,
+  "peakObservedProcessTreeRssBytes": 3126067200,
+  "limits": {
+    "command": [
+      "node",
+      "/private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-attempt-02/diagnose-roi-face-normal.mjs",
+      "--start",
+      "--output",
+      "/private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-attempt-02/actual-02"
+    ],
+    "seconds": 900,
+    "processTreeRssBytes": 4294967296,
+    "rssSampleSeconds": 0.5,
+    "expectedCaptures": [
+      "shadow-off",
+      "roi-face-normal",
+      "restored-shadow-off"
+    ],
+    "sourceCount": 6460,
+    "installedDependencyCount": 6,
+    "freshOutput": "/private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-attempt-02/actual-02",
+    "server": "Root-owned 5359, never signalled",
+    "scope": "Causal diagnosis only; no product performance, art acceptance or source mutation"
+  },
+  "inputBefore": {
+    "diagnose-roi-face-normal.mjs": "08989783cc4e4ab90d2384be54acd38dc23e5084012ed0010d9e234a9242e6eb",
+    "target.json": "d7ecf37dfdce5eec6b7d331a1faf6afa446a34c9ef01e5581ea9f4a0f0f9d819"
+  },
+  "inputAfter": {
+    "diagnose-roi-face-normal.mjs": "08989783cc4e4ab90d2384be54acd38dc23e5084012ed0010d9e234a9242e6eb",
+    "target.json": "d7ecf37dfdce5eec6b7d331a1faf6afa446a34c9ef01e5581ea9f4a0f0f9d819"
+  },
+  "cleanupSignals": [],
+  "unexpectedOwnedGroupAfterDriverExit": [],
+  "ownedGroupRemaining": [],
+  "rawReportPresent": true,
+  "rawContractPass": false,
+  "rawReportSha256": "09e097da6d2a0fed579ba8604baa147af654b46e0c0a6dd7ddb07f899366ed05",
+  "pass": false,
+  "scope": "Diagnostic completion only; original screenshots require root visual judgment; not art/M1 acceptance"
+}

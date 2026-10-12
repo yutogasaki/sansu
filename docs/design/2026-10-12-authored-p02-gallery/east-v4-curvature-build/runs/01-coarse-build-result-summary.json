@@ -1,0 +1,330 @@
+{
+  "upwardNotOnInputTop": {
+    "faces": 15,
+    "failedSamples": 18,
+    "notInReferenceXZ": 8,
+    "planeErrors": {
+      "count": 10,
+      "min": 1.993661187249529e-07,
+      "max": 0.0700000524520874
+    },
+    "first3": [
+      {
+        "face": 117,
+        "triangle": [
+          [
+            3.5438790321350098,
+            1.6814100742340088,
+            -7.245038986206055
+          ],
+          [
+            3.544302225112915,
+            1.6814100742340088,
+            -7.244986534118652
+          ],
+          [
+            3.55536150932312,
+            1.6814100742340088,
+            -7.332456111907959
+          ]
+        ],
+        "samples": [
+          {
+            "point": [
+              3.5438790321350098,
+              1.6814100742340088,
+              -7.245038986206055
+            ],
+            "nearestSameRoleHeightError": null
+          }
+        ]
+      },
+      {
+        "face": 119,
+        "triangle": [
+          [
+            3.55536150932312,
+            1.6814100742340088,
+            -7.332456111907959
+          ],
+          [
+            3.531900644302368,
+            1.6814100742340088,
+            -7.258317470550537
+          ],
+          [
+            3.5438790321350098,
+            1.6814100742340088,
+            -7.245038986206055
+          ]
+        ],
+        "samples": [
+          {
+            "point": [
+              3.5438790321350098,
+              1.6814100742340088,
+              -7.245038986206055
+            ],
+            "nearestSameRoleHeightError": null
+          }
+        ]
+      },
+      {
+        "face": 4099,
+        "triangle": [
+          [
+            3.4752800464630127,
+            1.6814100742340088,
+            -7.253800868988037
+          ],
+          [
+            3.5382134914398193,
+            1.6814100742340088,
+            -7.240995407104492
+          ],
+          [
+            3.5438790321350098,
+            1.6814100742340088,
+            -7.245038986206055
+          ]
+        ],
+        "samples": [
+          {
+            "point": [
+              3.5438790321350098,
+              1.6814100742340088,
+              -7.245038986206055
+            ],
+            "nearestSameRoleHeightError": null
+          }
+        ]
+      }
+    ]
+  },
+  "downwardNotOnInputBottom": {
+    "faces": 10,
+    "failedSamples": 17,
+    "notInReferenceXZ": 3,
+    "planeErrors": {
+      "count": 14,
+      "min": 1.993661187249529e-07,
+      "max": 0.0700000524520874
+    },
+    "first3": [
+      {
+        "face": 1676,
+        "triangle": [
+          [
+            3.544302225112915,
+            1.6114100217819214,
+            -7.244986534118652
+          ],
+          [
+            3.5438790321350098,
+            1.6114100217819214,
+            -7.245038986206055
+          ],
+          [
+            3.544351577758789,
+            1.6114100217819214,
+            -7.2453765869140625
+          ]
+        ],
+        "samples": [
+          {
+            "point": [
+              3.5438790321350098,
+              1.6114100217819214,
+              -7.245038986206055
+            ],
+            "nearestSameRoleHeightError": null
+          }
+        ]
+      },
+      {
+        "face": 4421,
+        "triangle": [
+          [
+            3.544351577758789,
+            1.6114100217819214,
+            -7.2453765869140625
+          ],
+          [
+            3.5438790321350098,
+            1.6114100217819214,
+            -7.245038986206055
+          ],
+          [
+            3.5382134914398193,
+            1.6114100217819214,
+            -7.240995407104492
+          ]
+        ],
+        "samples": [
+          {
+            "point": [
+              3.5438790321350098,
+              1.6114100217819214,
+              -7.245038986206055
+            ],
+            "nearestSameRoleHeightError": null
+          },
+          {
+            "point": [
+              3.5421480337778726,
+              1.6114100217819214,
+              -7.24380366007487
+            ],
+            "nearestSameRoleHeightError": null
+          }
+        ]
+      },
+      {
+        "face": 5318,
+        "triangle": [
+          [
+            3.5155513286590576,
+            1.6814100742340088,
+            -7.879161834716797
+          ],
+          [
+            3.4549999237060547,
+            1.6814100742340088,
+            -7.574749946594238
+          ],
+          [
+            3.478489398956299,
+            1.6814100742340088,
+            -7.692839622497559
+          ]
+        ],
+        "samples": [
+          {
+            "point": [
+              3.5155513286590576,
+              1.6814100742340088,
+              -7.879161834716797
+            ],
+            "nearestSameRoleHeightError": 0.0700000524520874
+          },
+          {
+            "point": [
+              3.4549999237060547,
+              1.6814100742340088,
+              -7.574749946594238
+            ],
+            "nearestSameRoleHeightError": 0.0700000524520874
+          },
+          {
+            "point": [
+              3.478489398956299,
+              1.6814100742340088,
+              -7.692839622497559
+            ],
+            "nearestSameRoleHeightError": 0.0700000524520874
+          },
+          {
+            "point": [
+              3.4830135504404702,
+              1.6814100742340088,
+              -7.715583801269531
+            ],
+            "nearestSameRoleHeightError": 0.0700000524520874
+          }
+        ]
+      }
+    ]
+  },
+  "counts": {
+    "top": 2565,
+    "bottom": 2129,
+    "side": 1016
+  },
+  "unionInputs": [
+    {
+      "object": "construction-solid/terrainThreshold",
+      "faces": 840,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "signedVolume": 0.025043476956363428
+    },
+    {
+      "object": "construction-solid/alignedOpening",
+      "faces": 276,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "signedVolume": 0.028683224737501466
+    },
+    {
+      "object": "construction-solid/eastBranchGallery",
+      "faces": 3816,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "signedVolume": 0.18269861032662094
+    },
+    {
+      "object": "construction-solid/visible-front-branch-junction",
+      "faces": 128,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "signedVolume": 0.022374539501163068
+    },
+    {
+      "object": "construction-solid/unchanged-native-interior",
+      "faces": 188,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "signedVolume": 0.03014564713898074
+    }
+  ],
+  "unionSteps": [
+    {
+      "operand": "construction-solid/terrainThreshold",
+      "faces": 4553,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "signedVolume": 0.20523818970640872
+    },
+    {
+      "operand": "construction-solid/alignedOpening",
+      "faces": 4642,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "signedVolume": 0.22356680079528762
+    },
+    {
+      "operand": "construction-solid/visible-front-branch-junction",
+      "faces": 4535,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "signedVolume": 0.22356680079528848
+    },
+    {
+      "operand": "construction-solid/unchanged-native-interior",
+      "faces": 4622,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "signedVolume": 0.2432965588430422
+    }
+  ],
+  "lineageSHA": "3f4807859c32c37e498356484c88fad637c80f6ce87e404393f6b0672fd987d3",
+  "failedSceneSHA": "4452f3ca5351ef38977cedece0116ab72cc135732f40ea51a65d0d6262b330f9"
+}

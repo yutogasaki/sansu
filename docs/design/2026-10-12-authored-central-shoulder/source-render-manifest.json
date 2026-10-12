@@ -1,0 +1,82 @@
+{
+  "scope": "Offline source-only rendering, not an actual app view or art acceptance.",
+  "inputs": {
+    "central-shoulder-source.blend": "7a7ff0dfe34e2fb68a4c53f7b9c824cc3e20f62e0dccd64d86b45a1ca5781905",
+    "central-shoulder-source-normal-v2.glb": "cd86121c32072053960e927866f9442b7168e281df9d8c46cf9807ce691b2ff9",
+    "central-shoulder-components-normal-v2.glb": "c79e2cd7a228b24ff526e6d78913f6a07880e35dec1532d4c278dd7cbf10411e",
+    "geometry-profile.json.gz": "7b4772489932b225d7b31ced5bd53c6835a47e8e63c71eeb43d7b59af1523d3b"
+  },
+  "views": {
+    "source-whole": {
+      "position": [
+        20,
+        -19,
+        20
+      ],
+      "target": [
+        7,
+        4.5,
+        1.65
+      ],
+      "orthoScale": 19,
+      "path": "source-whole.png",
+      "sha256": "26e88dcd1df54ce80809d9371631d0ca9801a370a3bea0ac5e08fb0b512315b3",
+      "elapsedSeconds": 10.62880574981682
+    },
+    "source-rotated": {
+      "position": [
+        -10,
+        -16,
+        17
+      ],
+      "target": [
+        7,
+        4.5,
+        1.65
+      ],
+      "orthoScale": 19,
+      "path": "source-rotated.png",
+      "sha256": "dab3d4838fcc561c399406458a8a0a6a7b83e37a8210b10b1ccc0494e67e5607",
+      "elapsedSeconds": 10.251211291877553
+    },
+    "source-close": {
+      "position": [
+        12,
+        -3,
+        10
+      ],
+      "target": [
+        7.3,
+        6.1,
+        1.65
+      ],
+      "orthoScale": 7.0,
+      "path": "source-close.png",
+      "sha256": "4e06dbfef0a9da98cf1471221ad784299f8312345dd1971b278e7fa2ee567d26",
+      "elapsedSeconds": 14.595915834186599
+    }
+  },
+  "settings": {
+    "engine": "Cycles CPU",
+    "samples": 24,
+    "resolution": [
+      1280,
+      960
+    ],
+    "viewTransform": "AgX",
+    "coordinates": "Blender (authored x, -authored z, authored y)",
+    "people": "none; same 35-owner layer only",
+    "limitations": [
+      "No resident life/pose rig",
+      "Blender roundtrip omits 3 water ripple line primitives",
+      "No browser lighting, ocean shader, camera or transmission guard parity",
+      "Editable Blender uses split-normal quantization; delivery v2 GLBs restore exact raw top normals"
+    ],
+    "ocean": {
+      "renderOnly": true,
+      "support": false,
+      "authoredY": -0.06
+    }
+  },
+  "sourceUnchanged": true
+}

@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/independent-source-audit/context-audit.py", line 8, in <module>
+    cg,cm=glb(paths[0]);fg,fm=glb(paths[1]);state=json.loads(paths[3].read_text())['state'];manifest=json.loads(paths[2].read_text());ids=sorted(o['id']for o in state['plots']+state['landmarks']if o.get('cell'))
+  File "<string>", line 16, in glb
+  File "<string>", line 15, in walk
+  File "<string>", line 15, in walk
+  File "<string>", line 15, in walk
+  File "<string>", line 14, in walk
+ValueError: cannot reshape array of size 160 into shape (3)

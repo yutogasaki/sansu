@@ -1,0 +1,315 @@
+{
+  "scope": "Read-only source and image audit; no app/source edits, no browser/build/render. Directory contains evidence only.",
+  "recordedAt": "2026-10-11T23:48:23.711295+00:00",
+  "finishedAt": "2026-10-11T23:48:24.458947+00:00",
+  "inputBoundary": "These before/after hashes cover source capture and numerical repeat. They do not retroactively establish all-input hashes for the first tmp probe. The original GLB SHA was recorded by that first probe.",
+  "initialInputs": {
+    "docs/design/2026-10-10-island-final-3d/whole-island.glb": {
+      "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "bytes": 34930176
+    },
+    "docs/design/2026-10-10-island-final-3d/whole-island-render.png": {
+      "sha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "bytes": 2579296
+    },
+    "docs/design/2026-10-10-island-final-3d/build-scene.py": {
+      "sha256": "43d79677024e5cfc298eb67ddd4654677241a44ed9f11cfcff1e1a6d2a6267db",
+      "bytes": 27396
+    },
+    "docs/design/2026-10-10-island-final-3d/fantasy-colour-world.py": {
+      "sha256": "91d3bbf16ee3d2d15fbe1005201675ef365221ac0a5733ce13ba3f1161ffd34c",
+      "bytes": 7931
+    },
+    "prototypes/place-qa/native05-world.json.gz": {
+      "sha256": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+      "bytes": 1436001
+    },
+    "docs/design/2026-10-12-authored-cove-entrance/author-audit-v4/independent-floor-input.json": {
+      "sha256": "519aa8cd405dcb28bdfbd677b802d3189ac2b7799c4810b031fbfc3fe6042cce",
+      "bytes": 20682757
+    },
+    "src/components/island/growing/worldScene.ts": {
+      "sha256": "78f2deca69cbcc31aa119b5e9a2a4f05f6144f542c4522ede83b4ebdb317ade4",
+      "bytes": 9639
+    },
+    "src/components/island/growing/sceneLayout.ts": {
+      "sha256": "57aa76da0cd4ed93a00c077b0020db94fc6bb2de8913363e3ff91c9b8c39144d",
+      "bytes": 9429
+    },
+    "src/components/island/growing/native/authoredGrowingGround.ts": {
+      "sha256": "84af170ec055b25c52778f14657b8160bcf9281afab20aa0569d11a63cff7bc3",
+      "bytes": 9928
+    },
+    "src/components/island/growing/native/nativeGrowingLighting.ts": {
+      "sha256": "14b2c56156ddb8e90310af38eec8f1c5ce41242fffd5096604b140ba24e69165",
+      "bytes": 2156
+    },
+    "src/domain/growingIsland/authoredWaterWorld.ts": {
+      "sha256": "bece348b05568cb8b2e5a2634c809681bb70c6f9267adc5c72b6b97da88b4805",
+      "bytes": 39833
+    },
+    "src/domain/growingIsland/worldTypes.ts": {
+      "sha256": "4dc502b446dc5cf4e78dd851b763ea27e7abd3aaa17f7dead3b7179c5715604d",
+      "bytes": 2783
+    },
+    "tools/build-authored-island-world.mjs": {
+      "sha256": "6211df5cb3b7363139f8caf7320a112ec17f56973e1fbfc102787bcfd2fe41e3",
+      "bytes": 10792
+    },
+    "tools/build-authored-island-skin.mjs": {
+      "sha256": "11ba27c55ded71b648e9b3cb28eabd9274095c79e1a9cdb221f93319c4fc4d54",
+      "bytes": 5680
+    },
+    "package-lock.json": {
+      "sha256": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+      "bytes": 446804
+    },
+    "node_modules/three/package.json": {
+      "sha256": "1d5c438acdc1fe5a52fb8ede2e417afd91fec91d22275c40f7b739591b24e4df",
+      "bytes": 3826
+    },
+    "docs/design/2026-10-12-authored-cove-runtime/c2/shape/desktop-mature-whole-day.png": {
+      "sha256": "0feb543cda241498a45073f8bedefc96a90e47e631cb6109496997f628ab3c2a",
+      "bytes": 482100
+    },
+    "docs/design/2026-10-12-authored-cove-runtime/c2/shape/desktop-cove-close-day.png": {
+      "sha256": "18900f74082b07fc811ab6c253f029accca76efc021c31979481b04113d0fac0",
+      "bytes": 423763
+    },
+    "/private/tmp/sansu-authored-cove-c4/full/desktop-mature-whole-day.png": {
+      "sha256": "5f30661722d319d14a877b92e2af50e85c7a4e3a29b3df64c50250460486b222",
+      "bytes": 481794
+    },
+    "/private/tmp/sansu-authored-cove-c4/full/desktop-cove-close-day.png": {
+      "sha256": "98846bcf18e18d53b34b80193c2e33db086064a96084ebde85e365286e67a091",
+      "bytes": 424897
+    },
+    "/private/tmp/sansu-authored-cove-c4/core/report.json": {
+      "sha256": "b1c98da6515fa927651cfe241df3ed0871e3b8a1072dd4acaf83f6af973b3994",
+      "bytes": 512774
+    }
+  },
+  "finalInputs": {
+    "docs/design/2026-10-10-island-final-3d/whole-island.glb": {
+      "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "bytes": 34930176
+    },
+    "docs/design/2026-10-10-island-final-3d/whole-island-render.png": {
+      "sha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "bytes": 2579296
+    },
+    "docs/design/2026-10-10-island-final-3d/build-scene.py": {
+      "sha256": "43d79677024e5cfc298eb67ddd4654677241a44ed9f11cfcff1e1a6d2a6267db",
+      "bytes": 27396
+    },
+    "docs/design/2026-10-10-island-final-3d/fantasy-colour-world.py": {
+      "sha256": "91d3bbf16ee3d2d15fbe1005201675ef365221ac0a5733ce13ba3f1161ffd34c",
+      "bytes": 7931
+    },
+    "prototypes/place-qa/native05-world.json.gz": {
+      "sha256": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+      "bytes": 1436001
+    },
+    "docs/design/2026-10-12-authored-cove-entrance/author-audit-v4/independent-floor-input.json": {
+      "sha256": "519aa8cd405dcb28bdfbd677b802d3189ac2b7799c4810b031fbfc3fe6042cce",
+      "bytes": 20682757
+    },
+    "src/components/island/growing/worldScene.ts": {
+      "sha256": "78f2deca69cbcc31aa119b5e9a2a4f05f6144f542c4522ede83b4ebdb317ade4",
+      "bytes": 9639
+    },
+    "src/components/island/growing/sceneLayout.ts": {
+      "sha256": "57aa76da0cd4ed93a00c077b0020db94fc6bb2de8913363e3ff91c9b8c39144d",
+      "bytes": 9429
+    },
+    "src/components/island/growing/native/authoredGrowingGround.ts": {
+      "sha256": "84af170ec055b25c52778f14657b8160bcf9281afab20aa0569d11a63cff7bc3",
+      "bytes": 9928
+    },
+    "src/components/island/growing/native/nativeGrowingLighting.ts": {
+      "sha256": "14b2c56156ddb8e90310af38eec8f1c5ce41242fffd5096604b140ba24e69165",
+      "bytes": 2156
+    },
+    "src/domain/growingIsland/authoredWaterWorld.ts": {
+      "sha256": "bece348b05568cb8b2e5a2634c809681bb70c6f9267adc5c72b6b97da88b4805",
+      "bytes": 39833
+    },
+    "src/domain/growingIsland/worldTypes.ts": {
+      "sha256": "4dc502b446dc5cf4e78dd851b763ea27e7abd3aaa17f7dead3b7179c5715604d",
+      "bytes": 2783
+    },
+    "tools/build-authored-island-world.mjs": {
+      "sha256": "6211df5cb3b7363139f8caf7320a112ec17f56973e1fbfc102787bcfd2fe41e3",
+      "bytes": 10792
+    },
+    "tools/build-authored-island-skin.mjs": {
+      "sha256": "11ba27c55ded71b648e9b3cb28eabd9274095c79e1a9cdb221f93319c4fc4d54",
+      "bytes": 5680
+    },
+    "package-lock.json": {
+      "sha256": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+      "bytes": 446804
+    },
+    "node_modules/three/package.json": {
+      "sha256": "1d5c438acdc1fe5a52fb8ede2e417afd91fec91d22275c40f7b739591b24e4df",
+      "bytes": 3826
+    },
+    "docs/design/2026-10-12-authored-cove-runtime/c2/shape/desktop-mature-whole-day.png": {
+      "sha256": "0feb543cda241498a45073f8bedefc96a90e47e631cb6109496997f628ab3c2a",
+      "bytes": 482100
+    },
+    "docs/design/2026-10-12-authored-cove-runtime/c2/shape/desktop-cove-close-day.png": {
+      "sha256": "18900f74082b07fc811ab6c253f029accca76efc021c31979481b04113d0fac0",
+      "bytes": 423763
+    },
+    "/private/tmp/sansu-authored-cove-c4/full/desktop-mature-whole-day.png": {
+      "sha256": "5f30661722d319d14a877b92e2af50e85c7a4e3a29b3df64c50250460486b222",
+      "bytes": 481794
+    },
+    "/private/tmp/sansu-authored-cove-c4/full/desktop-cove-close-day.png": {
+      "sha256": "98846bcf18e18d53b34b80193c2e33db086064a96084ebde85e365286e67a091",
+      "bytes": 424897
+    },
+    "/private/tmp/sansu-authored-cove-c4/core/report.json": {
+      "sha256": "b1c98da6515fa927651cfe241df3ed0871e3b8a1072dd4acaf83f6af973b3994",
+      "bytes": 512774
+    }
+  },
+  "sourceFixed": true,
+  "c4FixedCandidateCompare": {
+    "docs/design/2026-10-10-island-final-3d/whole-island.glb": {
+      "candidateSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "auditWorkingTreeSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "equal": true
+    },
+    "docs/design/2026-10-10-island-final-3d/whole-island-render.png": {
+      "candidateSha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "auditWorkingTreeSha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "equal": true
+    },
+    "docs/design/2026-10-10-island-final-3d/build-scene.py": {
+      "candidateSha256": "43d79677024e5cfc298eb67ddd4654677241a44ed9f11cfcff1e1a6d2a6267db",
+      "auditWorkingTreeSha256": "43d79677024e5cfc298eb67ddd4654677241a44ed9f11cfcff1e1a6d2a6267db",
+      "equal": true
+    },
+    "docs/design/2026-10-10-island-final-3d/fantasy-colour-world.py": {
+      "candidateSha256": "91d3bbf16ee3d2d15fbe1005201675ef365221ac0a5733ce13ba3f1161ffd34c",
+      "auditWorkingTreeSha256": "91d3bbf16ee3d2d15fbe1005201675ef365221ac0a5733ce13ba3f1161ffd34c",
+      "equal": true
+    },
+    "prototypes/place-qa/native05-world.json.gz": {
+      "candidateSha256": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+      "auditWorkingTreeSha256": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+      "equal": true
+    },
+    "docs/design/2026-10-12-authored-cove-entrance/author-audit-v4/independent-floor-input.json": {
+      "candidateSha256": "519aa8cd405dcb28bdfbd677b802d3189ac2b7799c4810b031fbfc3fe6042cce",
+      "auditWorkingTreeSha256": "519aa8cd405dcb28bdfbd677b802d3189ac2b7799c4810b031fbfc3fe6042cce",
+      "equal": true
+    },
+    "src/components/island/growing/worldScene.ts": {
+      "candidateSha256": "78f2deca69cbcc31aa119b5e9a2a4f05f6144f542c4522ede83b4ebdb317ade4",
+      "auditWorkingTreeSha256": "78f2deca69cbcc31aa119b5e9a2a4f05f6144f542c4522ede83b4ebdb317ade4",
+      "equal": true
+    },
+    "src/components/island/growing/sceneLayout.ts": {
+      "candidateSha256": "57aa76da0cd4ed93a00c077b0020db94fc6bb2de8913363e3ff91c9b8c39144d",
+      "auditWorkingTreeSha256": "57aa76da0cd4ed93a00c077b0020db94fc6bb2de8913363e3ff91c9b8c39144d",
+      "equal": true
+    },
+    "src/components/island/growing/native/authoredGrowingGround.ts": {
+      "candidateSha256": "84af170ec055b25c52778f14657b8160bcf9281afab20aa0569d11a63cff7bc3",
+      "auditWorkingTreeSha256": "84af170ec055b25c52778f14657b8160bcf9281afab20aa0569d11a63cff7bc3",
+      "equal": true
+    },
+    "src/components/island/growing/native/nativeGrowingLighting.ts": {
+      "candidateSha256": "14b2c56156ddb8e90310af38eec8f1c5ce41242fffd5096604b140ba24e69165",
+      "auditWorkingTreeSha256": "14b2c56156ddb8e90310af38eec8f1c5ce41242fffd5096604b140ba24e69165",
+      "equal": true
+    },
+    "src/domain/growingIsland/authoredWaterWorld.ts": {
+      "candidateSha256": "bece348b05568cb8b2e5a2634c809681bb70c6f9267adc5c72b6b97da88b4805",
+      "auditWorkingTreeSha256": "bece348b05568cb8b2e5a2634c809681bb70c6f9267adc5c72b6b97da88b4805",
+      "equal": true
+    },
+    "src/domain/growingIsland/worldTypes.ts": {
+      "candidateSha256": "4dc502b446dc5cf4e78dd851b763ea27e7abd3aaa17f7dead3b7179c5715604d",
+      "auditWorkingTreeSha256": "4dc502b446dc5cf4e78dd851b763ea27e7abd3aaa17f7dead3b7179c5715604d",
+      "equal": true
+    },
+    "tools/build-authored-island-world.mjs": {
+      "candidateSha256": "6211df5cb3b7363139f8caf7320a112ec17f56973e1fbfc102787bcfd2fe41e3",
+      "auditWorkingTreeSha256": "6211df5cb3b7363139f8caf7320a112ec17f56973e1fbfc102787bcfd2fe41e3",
+      "equal": true
+    },
+    "tools/build-authored-island-skin.mjs": {
+      "candidateSha256": "11ba27c55ded71b648e9b3cb28eabd9274095c79e1a9cdb221f93319c4fc4d54",
+      "auditWorkingTreeSha256": "11ba27c55ded71b648e9b3cb28eabd9274095c79e1a9cdb221f93319c4fc4d54",
+      "equal": true
+    },
+    "package-lock.json": {
+      "candidateSha256": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+      "auditWorkingTreeSha256": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+      "equal": true
+    },
+    "docs/design/2026-10-12-authored-cove-runtime/c2/shape/desktop-mature-whole-day.png": {
+      "candidateSha256": "0feb543cda241498a45073f8bedefc96a90e47e631cb6109496997f628ab3c2a",
+      "auditWorkingTreeSha256": "0feb543cda241498a45073f8bedefc96a90e47e631cb6109496997f628ab3c2a",
+      "equal": true
+    },
+    "docs/design/2026-10-12-authored-cove-runtime/c2/shape/desktop-cove-close-day.png": {
+      "candidateSha256": "18900f74082b07fc811ab6c253f029accca76efc021c31979481b04113d0fac0",
+      "auditWorkingTreeSha256": "18900f74082b07fc811ab6c253f029accca76efc021c31979481b04113d0fac0",
+      "equal": true
+    }
+  },
+  "copyMap": [
+    {
+      "from": "/private/tmp/sansu-floor-normal-audit.mjs",
+      "to": "raw/first-probe.mjs",
+      "sha256": "f949b15a6544c442fa244f46fae9ca2d36a99f4a0fa02ea18ed66c062550ece1",
+      "sameBytes": true
+    },
+    {
+      "from": "/private/tmp/sansu-floor-normal-audit.json",
+      "to": "raw/first-report.json",
+      "sha256": "d0ad717ff9bdc5e598b5e1ae4dd565d0f1d1b3258b8985794de18e54acd8c7cd",
+      "sameBytes": true
+    },
+    {
+      "from": "/private/tmp/sansu-floor-normal-audit.log.txt",
+      "to": "raw/first-execution.log.txt",
+      "sha256": "77ad73bb46d940f3d6ada20f4e4e0a0b0acf0ace8ba230def65da25fe4ad983d",
+      "sameBytes": true
+    },
+    {
+      "from": "/private/tmp/sansu-authored-cove-c4/full/desktop-mature-whole-day.png",
+      "to": "evidence/c4-desktop-mature-whole-day.png",
+      "sha256": "5f30661722d319d14a877b92e2af50e85c7a4e3a29b3df64c50250460486b222",
+      "sameBytes": true
+    },
+    {
+      "from": "/private/tmp/sansu-authored-cove-c4/full/desktop-cove-close-day.png",
+      "to": "evidence/c4-desktop-cove-close-day.png",
+      "sha256": "98846bcf18e18d53b34b80193c2e33db086064a96084ebde85e365286e67a091",
+      "sameBytes": true
+    }
+  ],
+  "repeat": {
+    "reportSha256": "d0ad717ff9bdc5e598b5e1ae4dd565d0f1d1b3258b8985794de18e54acd8c7cd",
+    "sameAsFirstReport": true,
+    "executionLogSha256": "77ad73bb46d940f3d6ada20f4e4e0a0b0acf0ace8ba230def65da25fe4ad983d",
+    "sameAsFirstLog": true
+  },
+  "nodeVersion": "v24.18.0",
+  "threeVersion": "0.185.1",
+  "commands": [
+    "node docs/design/2026-10-12-authored-whole-massing/floor-normal-audit/capture-source-evidence.mjs --output docs/design/2026-10-12-authored-whole-massing/floor-normal-audit/source",
+    "node docs/design/2026-10-12-authored-whole-massing/floor-normal-audit/raw/first-probe.mjs"
+  ],
+  "limits": [
+    "Frozen author-audit-v4 wetPatched data is not a captured c4 world frame.",
+    "c4 screenshots provided by the root run; this audit does not assert full runtime completion.",
+    "No controlled render A/B for lighting, shadows, camera, geometry or normals."
+  ]
+}

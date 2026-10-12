@@ -1,0 +1,530 @@
+{
+  "version": 1,
+  "candidate": "native05-growth-terrain-rough-v2",
+  "revision": "a74b436a5165badf2438a6c3a2d0632be9fe27a533b162b62de57aa26bf1ec01",
+  "source": {
+    "artifact": "docs/design/2026-10-10-island-final-3d/whole-island.glb",
+    "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+  },
+  "artifact": {
+    "path": "/prototypes/place-qa/authored-growth-terrain-kit.json.gz",
+    "sha256": "a7dc1ab184aec413acd31081376e82b2b87905d2aa305911a4618952cc9c423c",
+    "expandedSha256": "0f8649f28774cac07c35199d5b3b56f6ccab428451a9a7c88ba4c2f3fef023a6",
+    "expandedBytes": 1020245,
+    "gzipBytes": 217513
+  },
+  "authoring": {
+    "sourceNode": "Island / continuous sculpted mature terrain",
+    "sourceSamples": 1816,
+    "sourceCoastControlFile": "docs/design/2026-10-10-island-final-3d/mature-island.py",
+    "nativeCoastControls": [
+      [
+        11.6,
+        -5.2
+      ],
+      [
+        14.5,
+        -6.7
+      ],
+      [
+        17.6,
+        -4
+      ],
+      [
+        16.8,
+        -1.8
+      ],
+      [
+        14.3,
+        -0.4
+      ],
+      [
+        12.4,
+        2.4
+      ]
+    ],
+    "sourceCoastSamples": [
+      [
+        11.599609375,
+        -5.2001953125
+      ],
+      [
+        11.7841796875,
+        -5.7080078125
+      ],
+      [
+        12.060546875,
+        -6.1025390625
+      ],
+      [
+        12.408203125,
+        -6.3935546875
+      ],
+      [
+        12.806640625,
+        -6.59375
+      ],
+      [
+        13.2353515625,
+        -6.712890625
+      ],
+      [
+        13.673828125,
+        -6.763671875
+      ],
+      [
+        14.1025390625,
+        -6.7548828125
+      ],
+      [
+        14.5,
+        -6.7001953125
+      ],
+      [
+        14.904296875,
+        -6.5595703125
+      ],
+      [
+        15.3525390625,
+        -6.30859375
+      ],
+      [
+        15.8193359375,
+        -5.97265625
+      ],
+      [
+        16.28125,
+        -5.5810546875
+      ],
+      [
+        16.71484375,
+        -5.16015625
+      ],
+      [
+        17.0947265625,
+        -4.73828125
+      ],
+      [
+        17.3974609375,
+        -4.341796875
+      ],
+      [
+        17.599609375,
+        -4
+      ],
+      [
+        17.6982421875,
+        -3.6953125
+      ],
+      [
+        17.7138671875,
+        -3.396484375
+      ],
+      [
+        17.66015625,
+        -3.103515625
+      ],
+      [
+        17.5498046875,
+        -2.818359375
+      ],
+      [
+        17.3955078125,
+        -2.5439453125
+      ],
+      [
+        17.2109375,
+        -2.2822265625
+      ],
+      [
+        17.0078125,
+        -2.033203125
+      ],
+      [
+        16.7998046875,
+        -1.7998046875
+      ],
+      [
+        16.564453125,
+        -1.5966796875
+      ],
+      [
+        16.2802734375,
+        -1.4267578125
+      ],
+      [
+        15.9609375,
+        -1.2783203125
+      ],
+      [
+        15.619140625,
+        -1.1376953125
+      ],
+      [
+        15.2685546875,
+        -0.9921875
+      ],
+      [
+        14.9228515625,
+        -0.830078125
+      ],
+      [
+        14.595703125,
+        -0.63671875
+      ],
+      [
+        14.2998046875,
+        -0.400390625
+      ],
+      [
+        14.0263671875,
+        -0.0458984375
+      ],
+      [
+        13.7568359375,
+        0.4453125
+      ],
+      [
+        13.4951171875,
+        1.0048828125
+      ],
+      [
+        13.244140625,
+        1.5625
+      ],
+      [
+        13.005859375,
+        2.0498046875
+      ],
+      [
+        12.783203125,
+        2.3984375
+      ],
+      [
+        12.5810546875,
+        2.5380859375
+      ],
+      [
+        12.400390625,
+        2.400390625
+      ],
+      [
+        12.2216796875,
+        1.90625
+      ],
+      [
+        12.0361328125,
+        1.087890625
+      ],
+      [
+        11.8564453125,
+        0.0439453125
+      ],
+      [
+        11.7001953125,
+        -1.130859375
+      ],
+      [
+        11.5810546875,
+        -2.33984375
+      ],
+      [
+        11.513671875,
+        -3.4853515625
+      ],
+      [
+        11.515625,
+        -4.470703125
+      ]
+    ],
+    "interpretation": "V2 broad real-ground coastal shoulder falls to waterline; rounded closed bank rings below it. Native05 coast vocabulary, GLB relief samples and PBR retained. Entire acquired v1 template, both sockets and original asset bytes fixed.",
+    "seaDatum": 0,
+    "fixedHeight": 0.34375,
+    "bottom": -0.65625,
+    "fixedRights": [
+      {
+        "x": 1,
+        "z": -1
+      },
+      {
+        "x": 2,
+        "z": -1
+      },
+      {
+        "x": 1,
+        "z": 0
+      },
+      {
+        "x": 2,
+        "z": 0
+      },
+      {
+        "x": 1,
+        "z": 1
+      },
+      {
+        "x": 2,
+        "z": 1
+      }
+    ],
+    "profileScope": [
+      {
+        "x": 2.9,
+        "z": -4.5
+      },
+      {
+        "x": 8,
+        "z": -4.5
+      },
+      {
+        "x": 8,
+        "z": 4.5
+      },
+      {
+        "x": 2.9,
+        "z": 4.5
+      }
+    ],
+    "coastSection": {
+      "endpointRings": "New rings converge exactly to immutable original top / top-.12 / bottom at the seam. Coincident generated vertices share indices.",
+      "groundRollWidth": 0.54,
+      "waterlineGroundHeight": 0.045,
+      "belowGroundRings": [
+        [
+          0,
+          0
+        ],
+        [
+          0.15,
+          0.035
+        ],
+        [
+          0.42,
+          0.06
+        ],
+        [
+          0.72,
+          0.025
+        ],
+        [
+          1,
+          -0.04
+        ]
+      ],
+      "seamFixedThroughX": 3.25
+    },
+    "fixedBaselineSha256": "7316f1577261a7a9807d1ee4ea1f8564341ffca5010ee8077bbe4dd233370f5b",
+    "previousRevision": "9efb5888f3c2d9b94414792f91afbc18c4bf31b9bbe2b2ebf2def70b8380bf1d"
+  },
+  "parts": [
+    {
+      "id": "baseline-low-shore",
+      "vertices": 785,
+      "topTriangles": 1248,
+      "boundaryEdges": 320,
+      "navigationOmittedDisconnected": 0,
+      "bounds": {
+        "min": [
+          -0.5810546875,
+          0.32638078927993774,
+          -2.939453125
+        ],
+        "max": [
+          3.25,
+          0.3641913831233978,
+          2.939453125
+        ]
+      }
+    },
+    {
+      "id": "parallel",
+      "vertices": 705,
+      "topTriangles": 1120,
+      "boundaryEdges": 288,
+      "navigationOmittedDisconnected": 1,
+      "bounds": {
+        "min": [
+          3,
+          0.04500000178813934,
+          -1.451171875
+        ],
+        "max": [
+          5.712890625,
+          1.4073331356048584,
+          1.51953125
+        ]
+      }
+    },
+    {
+      "id": "seaward",
+      "vertices": 705,
+      "topTriangles": 1120,
+      "boundaryEdges": 288,
+      "navigationOmittedDisconnected": 1,
+      "bounds": {
+        "min": [
+          3,
+          0.04500000178813934,
+          -1.1318359375
+        ],
+        "max": [
+          7.3857421875,
+          1.2237499952316284,
+          1.185546875
+        ]
+      }
+    }
+  ],
+  "diagnosticCases": {
+    "parallel": {
+      "localCells": [
+        {
+          "x": 2,
+          "z": -1
+        },
+        {
+          "x": 2,
+          "z": 0
+        }
+      ],
+      "expectedShape": "parallel",
+      "expectedSocket": "south"
+    },
+    "seaward": {
+      "localCells": [
+        {
+          "x": 1,
+          "z": -1
+        },
+        {
+          "x": 2,
+          "z": -1
+        }
+      ],
+      "expectedShape": "seaward",
+      "expectedSocket": "south"
+    },
+    "shifted": {
+      "localCells": [
+        {
+          "x": 2,
+          "z": 0
+        },
+        {
+          "x": 2,
+          "z": 1
+        }
+      ],
+      "expectedShape": "parallel",
+      "expectedSocket": "north"
+    }
+  },
+  "materials": [
+    {
+      "name": "harbor / light seaside meadow",
+      "sourceMaterialIndex": 57,
+      "raw": {
+        "doubleSided": true,
+        "name": "harbor / light seaside meadow",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.43965718150138855,
+            0.5840784311294556,
+            0.2622506618499756,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.7799999713897705
+        }
+      }
+    },
+    {
+      "name": "hill / silvery meadow",
+      "sourceMaterialIndex": 56,
+      "raw": {
+        "doubleSided": true,
+        "name": "hill / silvery meadow",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.28314873576164246,
+            0.4969329833984375,
+            0.3967552185058594,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.7799999713897705
+        }
+      }
+    },
+    {
+      "name": "shore / pale sand",
+      "sourceMaterialIndex": 0,
+      "raw": {
+        "doubleSided": true,
+        "name": "shore / pale sand",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.7605245113372803,
+            0.6795424818992615,
+            0.5840784311294556,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.7799999713897705
+        }
+      }
+    },
+    {
+      "name": "ridge / light stratified stone",
+      "sourceMaterialIndex": 2,
+      "raw": {
+        "doubleSided": true,
+        "name": "ridge / light stratified stone",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.6104955673217773,
+            0.6307571530342102,
+            0.68668532371521,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.7799999713897705
+        }
+      }
+    }
+  ],
+  "status": {
+    "visual": "HOLD",
+    "runtime": "NOT RUN",
+    "independentObservers": 0,
+    "acquisition": "same diagnostic district menu; no personal save or production purchase claim"
+  },
+  "limitations": [
+    "Author-derived topology and normals, not untouched original source triangles.",
+    "Mature patches have walking-only sites and never grant land.",
+    "Source shapes need whole-app art review and actual owner-obstruction walking review."
+  ],
+  "sourceArtifacts": [
+    {
+      "shape": "baseline",
+      "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/baseline-source.glb",
+      "sha256": "7efd2c20d369958df39728c03ba68c9dc2a5f7060575b9ea721280661a801421",
+      "bytes": 133592,
+      "transform": "catalog local frame; mature patch socket south = translation(0,0,-1)"
+    },
+    {
+      "shape": "parallel",
+      "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/parallel-source.glb",
+      "sha256": "8ce75b606aa49b0d7a3f6b27d1617a5e09693e8678dc20182a079c7f3cad5b85",
+      "bytes": 229096,
+      "transform": "catalog local frame; mature patch socket south = translation(0,0,-1)"
+    },
+    {
+      "shape": "seaward",
+      "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/seaward-source.glb",
+      "sha256": "01900c4b8aa0d6d5002063e5740e4bd39c5c18ca3270b070454ced7efa7226a7",
+      "bytes": 230148,
+      "transform": "catalog local frame; mature patch socket south = translation(0,0,-1)"
+    }
+  ]
+}

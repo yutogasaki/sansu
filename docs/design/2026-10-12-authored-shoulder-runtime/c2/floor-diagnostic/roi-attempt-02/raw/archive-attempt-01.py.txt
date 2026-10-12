@@ -1,0 +1,51 @@
+"""Archive the completed first failure without editing or reclassifying its raw records."""
+from pathlib import Path
+import hashlib, json
+from datetime import datetime, timezone
+
+SOURCE = Path('/private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-prepared')
+DEST = Path('/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-shoulder-runtime/c2/floor-diagnostic/roi-attempt-01')
+sha = lambda b: hashlib.sha256(b).hexdigest()
+files = sorted(p for p in SOURCE.rglob('*') if p.is_file())
+assert len(files) == 30
+before = {str(p.relative_to(SOURCE)): sha(p.read_bytes()) for p in files}
+assert before['actual-01/report.json'] == '4ba6380cc8581e7f61d884b5b46bc2341e464ee33ff4bb32bf4bdf623793772e'
+assert before['execution-01/terminal-summary.json'] == 'f5fcc17249cc98b07bcd54e655d8b5cf87665efa89827c247b85f0120a5ffdd0'
+assert not DEST.exists(), 'Never overwrite an existing archive'
+DEST.mkdir(parents=True)
+records = []
+for p in files:
+    relative = p.relative_to(SOURCE)
+    # Inert program filenames preserve bytes and avoid repository test/lint discovery.
+    archived = Path(str(relative) + '.txt') if p.suffix in ['.mjs', '.py'] else relative
+    dst = DEST / 'raw' / archived
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    body = p.read_bytes()
+    with dst.open('xb') as f: f.write(body)
+    assert sha(dst.read_bytes()) == before[str(relative)]
+    records.append({'sourceRelativePath': str(relative), 'archiveRelativePath': str(Path('raw') / archived),
+                    'bytes': len(body), 'sha256': sha(body)})
+after = {str(p.relative_to(SOURCE)): sha(p.read_bytes()) for p in files}
+assert before == after
+proof = {'recordedAtUtc': datetime.now(timezone.utc).isoformat(), 'source': str(SOURCE), 'archive': str(DEST),
+         'files': records, 'fileCount': len(records), 'bytes': sum(r['bytes'] for r in records),
+         'sourceBefore': before, 'sourceAfter': after, 'sourceUnchanged': before == after,
+         'allArchivedBytesMatch': True, 'rawRewritten': False, 'programFileSuffixOnly': '.mjs/.py -> .mjs.txt/.py.txt'}
+with (DEST / 'archive-proof.json').open('x') as f: f.write(json.dumps(proof, indent=2)+'\n')
+readme = '''# ROI attempt 01 — first harness failure preserved
+
+The single authorized run exited **1** at 2026-10-12 05:09:37 UTC after 32.528 seconds. It stopped before the ROI material intervention or any screenshot: **0 captures, no shader compilation evidence**. The original material and Scene hook were restored, no clone was created, and the owned process group was empty at exit. Root's Vite 5359 server was untouched.
+
+The first assertion compared an in-memory orthographic projection containing `-0` with the same projection read through JSON, which represents those entries as `0`. Node strict equality distinguishes their signs. This is a harness representation failure; it does not test or disprove the local shading hypothesis. Exact nonzero projection entries were not relaxed. The failure followed target/index/normal/group checks, but the observation had not yet been saved, so no persisted target-match capture is claimed.
+
+A separate console 404 was recorded without URL, location, resource type or response body. It remains **unclassified**. Favicon is only a hypothesis; no error is dismissed. A later attempt must capture this evidence while keeping unknown 404 and shader errors fatal.
+
+Peak observed process-tree RSS was 3,156,967,424 bytes; neither the 4 GiB nor 900 second limit was reached. Source 6,460 / installed 6 and browser-driver dependencies were unchanged. These bounds and elapsed time are diagnostic bookkeeping, not performance acceptance.
+
+Every one of the original directory's 30 files is copied byte-for-byte under `raw/`. Program filenames alone gain `.txt` to remain inert. Historical preparation README/readiness files still say “not executed”; they are preserved history, not the final status. The final status is the original [terminal summary](raw/execution-01/terminal-summary.json), [outer result](raw/execution-01/result.json), [raw report](raw/actual-01/report.json), and [execution log](raw/execution-01/execution.log.txt). [Archive proof](archive-proof.json) maps all paths and verifies every byte before and after copying.
+
+No candidate, application, source mesh, earlier root diagnostic, or raw failure record was changed. This archive is not visual acceptance, a geometry repair, or an M1 pass.
+'''
+with (DEST / 'README.md').open('x') as f: f.write(readme)
+print(json.dumps({'archive': str(DEST), 'files': len(records), 'bytes': proof['bytes'], 'byteIdentical': True,
+                  'archiveProofSha256': sha((DEST/'archive-proof.json').read_bytes())}))

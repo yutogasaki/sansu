@@ -1,0 +1,19 @@
+# P02 east coarse v3 MANIFOLD — prepared, not executed
+
+This is one solver-only coarse source candidate. Original east-v2 EXACT build, staged diagnostic, failed scene and whole/entry views remain immutable. The new candidate label is `p02-native-east-bough-coarse-v3-manifold`; geometry design, material donors, four owners, native transform, width, floor heights, west plateau entry and route are byte-identical to v2 outside the Boolean audit block.
+
+All four unions use MANIFOLD in the original order. The five raw input solids, then body and operand before each union and result immediately after each union, must have no duplicate coordinate faces, no zero-area faces, no nonmanifold edges and exactly one component. Any failure stops and saves first-failure plus failed scene. No widening of EPS, vertex welding repair, deletion of duplicates or geometry replacement is added. Original post-union EPS audit is preserved as a separate check. Closed edge counts do not prove absence of self-intersection; this limit is explicit in each raw record.
+
+The separate staged test only established that MANIFOLD handled the second operation on the same pre-operation inputs without its observed EXACT duplication. It did not establish a full candidate. EXACT's first zero-area face at step0 and first640 duplicates at step1 are historical results, not this candidate's data.
+
+If all raw unions are valid, the same existing build proceeds to the six curved native-trunk bough supports, both edge rails/posts and end rail, source-derived gallery, visible terrain-seamed entrance, sampled full-width support and reserved actor-box diagnostics. It preserves any clearance/support concern as HOLD. Actual animated motion bands and continuous swept support remain separate pending validation exactly as before. There is no auto-render or runtime adoption.
+
+One scheduled build only: CPU2, RSS2560MiB,180s, new runs/01-coarse-build. Exact command and SHA are in preparation.json. Executor records external actual child PID and observed UTC/RSS; the inherited supervisor stays byte-identical. Source window authorization is required before execution.
+
+## Separate stair proposal, not implemented here
+
+The whole/entry image exposes an abrupt continuous band. A later alternative can replace its walk surface with real horizontal treads and risers along the same eastern arc, retaining native hollow entry, interior and upper gallery endpoints, owner binding and shared floor/path provenance. This is not an overlay of decorative stair meshes on an invisible ramp.
+
+One explicit coarse starting proposal is18 risers over1.316007376m: each .073111521m. Place riser stations where the current smoothstep rise reaches equal height increments, preserving its XZ arc R1.24,143°, horizontal run3.094817830m. Tread runs then range .114833685–.442798674m. Structural width stays.64m; nominal space between .014-radius edge rails is.612m versus .568138741m reserved actor width. These numbers are authoring choices, not a product threshold or evidence that actors can use them. The shortest middle treads need actual foot placement, overhang and clearance inspection.
+
+The alternative would make the actual owner-use floor triangles be the tread surfaces, with explicit riser solids and stair transitions. Actor approach, route Y, animation poses and guard query must use those same surfaces. Same-owner bough contacts and rails must be regenerated against the new real stepped slab. Default ground remains isolated; no new grants or unsupported art anchors. Retain the current west terrain seam, hollow opening and full gallery endpoint floor. It may need a different step count or stair-specific movement after source visual review; do not pretend ordinary ramp interpolation already implements it. `separate-stair-proposal.json` contains the station calculation only. No stair geometry or runtime code exists in this solver-only candidate.

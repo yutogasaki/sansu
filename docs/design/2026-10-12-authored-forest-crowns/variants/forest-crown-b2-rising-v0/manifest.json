@@ -1,0 +1,1142 @@
+{
+  "candidate": "forest-crown-b2-rising-v0",
+  "parameters": {
+    "id": "forest-crown-b2-rising-v0",
+    "name": "斜めに上がる冠",
+    "purpose": "前の低い白樺から奥の柳へ段差を付け、最高大樹を第二冠で隠さない。",
+    "owners": {
+      "l14": {
+        "stretch": [
+          1.16,
+          1.04,
+          1.34
+        ],
+        "yawDegrees": 12,
+        "upperShiftWorld": [
+          -0.08,
+          0.08,
+          -0.08
+        ]
+      },
+      "l15": {
+        "stretch": [
+          1.2,
+          1.06,
+          1.34
+        ],
+        "yawDegrees": -8,
+        "upperShiftWorld": [
+          0,
+          0.13,
+          -0.1
+        ]
+      },
+      "l28": {
+        "stretch": [
+          1.05,
+          1,
+          1.12
+        ],
+        "yawDegrees": 0,
+        "upperShiftWorld": [
+          0,
+          0,
+          0
+        ]
+      },
+      "l29": {
+        "stretch": [
+          1.45,
+          0.82,
+          1.05
+        ],
+        "yawDegrees": 10,
+        "upperShiftWorld": [
+          -0.15,
+          -0.08,
+          -0.06
+        ]
+      }
+    },
+    "status": "Unexecuted rough-shape parameters, not accepted physical or visual dimensions",
+    "maxChangedWorldVertexDisplacement": 0.85,
+    "heroTopClearanceWorld": 0.25,
+    "willowJunction": {
+      "count": 5,
+      "radialSegments": 10,
+      "longitudinalSegments": 16,
+      "rootRadiusFractionOfSourceTrunkTip": 0.75,
+      "tipRadiusWorld": 0.026,
+      "surfacePenetrationWorld": 0.025,
+      "archRiseWorld": 0.09,
+      "maxSpanWorld": 1.8,
+      "construction": "closed taper from exact original upper-trunk surface into each existing lobe surface; original trunk remains unchanged",
+      "pending": "actual overlap/full actor bands/closed branch audit; no support PASS from recipe anchors"
+    }
+  },
+  "fixedOriginalRoleHashesBefore": {
+    "role-l14-2740": "85a7d29e8e12c8f3bf2b4def7e12093d94ab83b2cadb0dcd26cc469b6f063fab",
+    "role-l14-2741": "0d0976dee5ec523e778c408ec6af3dc698c389fabf9bf54580b9fa350af4cdb5",
+    "role-l14-2742": "afc39262084ecfb9ee2dbde6e92eff3e68368fba674c94d4ee3278f81174ea99",
+    "role-l14-2743": "9cc715b81f12450e49f0cad65f258b95b43dd886528e3e9003d75f1e1d206baf",
+    "role-l14-2744": "64c2dc227fd993cfe066dfce05c9ab1364f0c27faf0ec2bf7694378b49be1492",
+    "role-l14-2745": "f7a02f0ad29fa89f58fcebefb0cc6bdfcd6ea7986ce7e076c77282cfdb87fee6",
+    "role-l14-2746": "a907079156238c84264894c676f58b86fc2390173f7fe60109c356b80eb62d47",
+    "role-l14-2747": "26ddc4a113069d9be87f5bb43c5aceb2885248a33b25f0277b3f8f5b5254279a",
+    "role-l15-2599": "3c7a87fa141d99b73bdec371f261ceeaf675b80e0f5b0a2d995b9faadd6de2bf",
+    "role-l15-2600": "ad7aedb92b12c517e8c5c0d3ffcc90490d04415787af960088b184787471a49b",
+    "role-l15-2601": "b65f8cf595a098fcdd52fe9e1a453968330daf47b36b29e351a272fbea601c2c",
+    "role-l15-2602": "f39490e86e90ec31bba2dc5829fa8e7843e841ded355d3d8f25a1b4a1901a932",
+    "role-l15-2603": "5c769420dfe24311e74ba33b4c24b4ab508edf46673e5b784cbda12875a25f4b",
+    "role-l15-2604": "d439b9224b438aa4292dae536019cd41127f19bb75abadde1d1ed2d30fa1e54c",
+    "role-l15-2608": "ea83853a45ab40fd35b1572cd2ab541f2aac82f268c647be2d7d56844d9cde04",
+    "role-l28-2692": "a52801a10a97496ab1d39144fb642620cfe261b8b1b97171052bc95fd4917a16",
+    "role-l29-2599": "ca7c6f9ed2999ef8cd996bb2df09576889db52ddf809044fc3a2a292a342b9d9",
+    "role-l29-2600": "15d18aa0689dffb5f55a593cd533281ae9b7ebd86e1e673ddad44bd7773f5ee5",
+    "role-l29-2601": "1143555c427d23add0d65eda158c8c3bf415dd1735d7b4698baeb4638aa4db9e",
+    "role-l29-2602": "c58d18c06f44cf5fce34ffe5409c7ea74124bd36e85453071cbb05fcd054618e",
+    "role-l29-2603": "4ce9e583462e1e4b5f188d81655f388c0be7983dcffd106e3ed807e921ba54f3",
+    "role-l29-2604": "073fccf6710ee90d6f845e46f5b92bbee7ab2db4501d29de88d96ec818cc977a",
+    "role-l29-2608": "b895f6f7ae5c7f0b6d964aea2cda3d623bdc167fbe7d843e98f846f39b1f953c"
+  },
+  "fixedOriginalRoleHashesAfter": {
+    "role-l14-2740": "85a7d29e8e12c8f3bf2b4def7e12093d94ab83b2cadb0dcd26cc469b6f063fab",
+    "role-l14-2741": "0d0976dee5ec523e778c408ec6af3dc698c389fabf9bf54580b9fa350af4cdb5",
+    "role-l14-2742": "afc39262084ecfb9ee2dbde6e92eff3e68368fba674c94d4ee3278f81174ea99",
+    "role-l14-2743": "9cc715b81f12450e49f0cad65f258b95b43dd886528e3e9003d75f1e1d206baf",
+    "role-l14-2744": "64c2dc227fd993cfe066dfce05c9ab1364f0c27faf0ec2bf7694378b49be1492",
+    "role-l14-2745": "f7a02f0ad29fa89f58fcebefb0cc6bdfcd6ea7986ce7e076c77282cfdb87fee6",
+    "role-l14-2746": "a907079156238c84264894c676f58b86fc2390173f7fe60109c356b80eb62d47",
+    "role-l14-2747": "26ddc4a113069d9be87f5bb43c5aceb2885248a33b25f0277b3f8f5b5254279a",
+    "role-l15-2599": "3c7a87fa141d99b73bdec371f261ceeaf675b80e0f5b0a2d995b9faadd6de2bf",
+    "role-l15-2600": "ad7aedb92b12c517e8c5c0d3ffcc90490d04415787af960088b184787471a49b",
+    "role-l15-2601": "b65f8cf595a098fcdd52fe9e1a453968330daf47b36b29e351a272fbea601c2c",
+    "role-l15-2602": "f39490e86e90ec31bba2dc5829fa8e7843e841ded355d3d8f25a1b4a1901a932",
+    "role-l15-2603": "5c769420dfe24311e74ba33b4c24b4ab508edf46673e5b784cbda12875a25f4b",
+    "role-l15-2604": "d439b9224b438aa4292dae536019cd41127f19bb75abadde1d1ed2d30fa1e54c",
+    "role-l15-2608": "ea83853a45ab40fd35b1572cd2ab541f2aac82f268c647be2d7d56844d9cde04",
+    "role-l28-2692": "a52801a10a97496ab1d39144fb642620cfe261b8b1b97171052bc95fd4917a16",
+    "role-l29-2599": "ca7c6f9ed2999ef8cd996bb2df09576889db52ddf809044fc3a2a292a342b9d9",
+    "role-l29-2600": "15d18aa0689dffb5f55a593cd533281ae9b7ebd86e1e673ddad44bd7773f5ee5",
+    "role-l29-2601": "1143555c427d23add0d65eda158c8c3bf415dd1735d7b4698baeb4638aa4db9e",
+    "role-l29-2602": "c58d18c06f44cf5fce34ffe5409c7ea74124bd36e85453071cbb05fcd054618e",
+    "role-l29-2603": "4ce9e583462e1e4b5f188d81655f388c0be7983dcffd106e3ed807e921ba54f3",
+    "role-l29-2604": "073fccf6710ee90d6f845e46f5b92bbee7ab2db4501d29de88d96ec818cc977a",
+    "role-l29-2608": "b895f6f7ae5c7f0b6d964aea2cda3d623bdc167fbe7d843e98f846f39b1f953c"
+  },
+  "changed": [
+    {
+      "name": "role-l14-2220",
+      "ownerId": "l14",
+      "role": "hanging-stem",
+      "maxWorldDisplacement": 0.2949616459846955,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l14-2221",
+      "ownerId": "l14",
+      "role": "hanging-stem",
+      "maxWorldDisplacement": 0.35517253625146233,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l14-2222",
+      "ownerId": "l14",
+      "role": "hanging-stem",
+      "maxWorldDisplacement": 0.38576682410454954,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l14-2223",
+      "ownerId": "l14",
+      "role": "hanging-stem",
+      "maxWorldDisplacement": 0.38094519601922877,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l14-2224",
+      "ownerId": "l14",
+      "role": "hanging-stem",
+      "maxWorldDisplacement": 0.35018507213268335,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l14-2225",
+      "ownerId": "l14",
+      "role": "hanging-stem",
+      "maxWorldDisplacement": 0.30621654880670546,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l14-2226",
+      "ownerId": "l14",
+      "role": "hanging-stem",
+      "maxWorldDisplacement": 0.26574662545394284,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l14-2227",
+      "ownerId": "l14",
+      "role": "hanging-stem",
+      "maxWorldDisplacement": 0.2411795163249297,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l14-2228",
+      "ownerId": "l14",
+      "role": "hanging-stem",
+      "maxWorldDisplacement": 0.22529528521176548,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l14-2229",
+      "ownerId": "l14",
+      "role": "hanging-stem",
+      "maxWorldDisplacement": 0.20450565898119313,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l14-2230",
+      "ownerId": "l14",
+      "role": "hanging-stem",
+      "maxWorldDisplacement": 0.1702227196975069,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l14-2231",
+      "ownerId": "l14",
+      "role": "hanging-stem",
+      "maxWorldDisplacement": 0.13629921679063145,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l14-2232",
+      "ownerId": "l14",
+      "role": "hanging-stem",
+      "maxWorldDisplacement": 0.15251199742274568,
+      "minimumSampledJacobianDeterminant": 1.591744303703308,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l14-2233",
+      "ownerId": "l14",
+      "role": "hanging-stem",
+      "maxWorldDisplacement": 0.2194886031675372,
+      "minimumSampledJacobianDeterminant": 1.591744303703308,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l14-2234",
+      "ownerId": "l14",
+      "role": "crown-lobe",
+      "maxWorldDisplacement": 0.383385936122238,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 691,
+      "polygons": 1216
+    },
+    {
+      "name": "role-l14-2235",
+      "ownerId": "l14",
+      "role": "crown-lobe",
+      "maxWorldDisplacement": 0.3365983921604279,
+      "minimumSampledJacobianDeterminant": 0.5167409181594849,
+      "vertices": 691,
+      "polygons": 1216
+    },
+    {
+      "name": "role-l14-2236",
+      "ownerId": "l14",
+      "role": "crown-lobe",
+      "maxWorldDisplacement": 0.4533114568633436,
+      "minimumSampledJacobianDeterminant": 0.6090573668479919,
+      "vertices": 691,
+      "polygons": 1216
+    },
+    {
+      "name": "role-l14-2237",
+      "ownerId": "l14",
+      "role": "crown-lobe",
+      "maxWorldDisplacement": 0.4841391802682045,
+      "minimumSampledJacobianDeterminant": 0.5051314234733582,
+      "vertices": 691,
+      "polygons": 1216
+    },
+    {
+      "name": "role-l14-2238",
+      "ownerId": "l14",
+      "role": "crown-lobe",
+      "maxWorldDisplacement": 0.24174279773755827,
+      "minimumSampledJacobianDeterminant": 0.8135582208633423,
+      "vertices": 691,
+      "polygons": 1216
+    },
+    {
+      "name": "role-l14-2239",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.4626446204915409,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2240",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.32471676718664766,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2241",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.460806256828211,
+      "minimumSampledJacobianDeterminant": 1.5829012393951416,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2242",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.3220609797232455,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2243",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.4595485538045617,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2244",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.5194795509299922,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2245",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.34788816597859956,
+      "minimumSampledJacobianDeterminant": 1.591744303703308,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2246",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.5178852506116444,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2247",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.3451064083157129,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2248",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.5167542725496841,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2249",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.48523549154159606,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2250",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.3641809230222103,
+      "minimumSampledJacobianDeterminant": 1.5640361309051514,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2251",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.4838169718381894,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2252",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.36205508201626524,
+      "minimumSampledJacobianDeterminant": 1.5640361309051514,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2253",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.4826630575130892,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2254",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.48662682800122026,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2255",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.3551577344520181,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2256",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.48495515229580377,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2257",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.35244865361142935,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2258",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.4837435137299776,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2259",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.39878955882509853,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2260",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.3267026219327847,
+      "minimumSampledJacobianDeterminant": 1.5988187789916992,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2261",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.3969166186500709,
+      "minimumSampledJacobianDeterminant": 1.5799535512924194,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2262",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.32421059698746385,
+      "minimumSampledJacobianDeterminant": 1.5988187789916992,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2263",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.39540577222678897,
+      "minimumSampledJacobianDeterminant": 1.598114013671875,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2264",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.32777208056218454,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2265",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.2875122978272823,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2266",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.3257487409195259,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2267",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.2852226034787363,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2268",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.32398437594516555,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2269",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.29180092831111043,
+      "minimumSampledJacobianDeterminant": 1.6013243198394775,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2270",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.25191972668512375,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2271",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.2893698928995893,
+      "minimumSampledJacobianDeterminant": 1.5879123210906982,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2272",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.24887270999823544,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2273",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.2873576146937812,
+      "minimumSampledJacobianDeterminant": 1.5879123210906982,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2274",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.3000074704178881,
+      "minimumSampledJacobianDeterminant": 1.6013243198394775,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2275",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.22837300006769048,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2276",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.297587769980621,
+      "minimumSampledJacobianDeterminant": 1.6013243198394775,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2277",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.22474780222613933,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2278",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.2956603529598877,
+      "minimumSampledJacobianDeterminant": 1.6013243198394775,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2279",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.3434811561635484,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2280",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.20992061649217844,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2281",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.34104148396623124,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2282",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.20510844108754406,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2283",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.33932676495153846,
+      "minimumSampledJacobianDeterminant": 1.5894742012023926,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2284",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.31472025617869837,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2285",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.18515763236990493,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2286",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.312141138645929,
+      "minimumSampledJacobianDeterminant": 1.5946919918060303,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2287",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.17994129356878444,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2288",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.31025472842903934,
+      "minimumSampledJacobianDeterminant": 1.5946919918060303,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2289",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.2486410758420076,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2290",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.14924298337441527,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2291",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.2455774039052027,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2292",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.14328715151309146,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2293",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.24319772889430835,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2294",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.21894727878512837,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2295",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.14905438664627188,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2296",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.2151443088658374,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2297",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.14424440202481684,
+      "minimumSampledJacobianDeterminant": 1.5894742012023926,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2298",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.21240618115828153,
+      "minimumSampledJacobianDeterminant": 1.5946919918060303,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2299",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.2249686487942545,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2300",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.19762715607071468,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2301",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.2217461002326736,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2302",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.19433504692893747,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2303",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.2191578272983975,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2304",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.30789630201164003,
+      "minimumSampledJacobianDeterminant": 1.591744303703308,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2305",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.2587717222601501,
+      "minimumSampledJacobianDeterminant": 1.5946919918060303,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2306",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.30569894541330916,
+      "minimumSampledJacobianDeterminant": 1.5988187789916992,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2307",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.25625044532058816,
+      "minimumSampledJacobianDeterminant": 1.5946919918060303,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l14-2308",
+      "ownerId": "l14",
+      "role": "hanging-leaf",
+      "maxWorldDisplacement": 0.30388911730346047,
+      "minimumSampledJacobianDeterminant": 1.6079565286636353,
+      "vertices": 78,
+      "polygons": 152
+    },
+    {
+      "name": "role-l15-2596",
+      "ownerId": "l15",
+      "role": "crown-lobe",
+      "maxWorldDisplacement": 0.3422098324767429,
+      "minimumSampledJacobianDeterminant": 1.6695222854614258,
+      "vertices": 691,
+      "polygons": 1216
+    },
+    {
+      "name": "role-l15-2597",
+      "ownerId": "l15",
+      "role": "crown-lobe",
+      "maxWorldDisplacement": 0.41199517131509383,
+      "minimumSampledJacobianDeterminant": 1.6640064716339111,
+      "vertices": 691,
+      "polygons": 1216
+    },
+    {
+      "name": "role-l15-2598",
+      "ownerId": "l15",
+      "role": "crown-lobe",
+      "maxWorldDisplacement": 0.29463884054295897,
+      "minimumSampledJacobianDeterminant": 1.6695222854614258,
+      "vertices": 691,
+      "polygons": 1216
+    },
+    {
+      "name": "role-l15-2605",
+      "ownerId": "l15",
+      "role": "main-branch",
+      "maxWorldDisplacement": 0.24110813981295368,
+      "minimumSampledJacobianDeterminant": 1.0040795803070068,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l15-2606",
+      "ownerId": "l15",
+      "role": "main-branch",
+      "maxWorldDisplacement": 0.3052518728403814,
+      "minimumSampledJacobianDeterminant": 1.0040795803070068,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l15-2607",
+      "ownerId": "l15",
+      "role": "main-branch",
+      "maxWorldDisplacement": 0.1976040708136607,
+      "minimumSampledJacobianDeterminant": 1.0040795803070068,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l28-2693",
+      "ownerId": "l28",
+      "role": "crown-tier",
+      "maxWorldDisplacement": 0.06951003792387235,
+      "minimumSampledJacobianDeterminant": 0.9921262860298157,
+      "vertices": 120,
+      "polygons": 192
+    },
+    {
+      "name": "role-l28-2694",
+      "ownerId": "l28",
+      "role": "crown-tier",
+      "maxWorldDisplacement": 0.0559871158444837,
+      "minimumSampledJacobianDeterminant": 0.9921262860298157,
+      "vertices": 120,
+      "polygons": 192
+    },
+    {
+      "name": "role-l28-2695",
+      "ownerId": "l28",
+      "role": "crown-tier",
+      "maxWorldDisplacement": 0.04429367418316406,
+      "minimumSampledJacobianDeterminant": 0.9921262860298157,
+      "vertices": 120,
+      "polygons": 192
+    },
+    {
+      "name": "role-l28-2696",
+      "ownerId": "l28",
+      "role": "crown-tier",
+      "maxWorldDisplacement": 0.03448272510932182,
+      "minimumSampledJacobianDeterminant": 0.9921262860298157,
+      "vertices": 120,
+      "polygons": 192
+    },
+    {
+      "name": "role-l29-2596",
+      "ownerId": "l29",
+      "role": "crown-lobe",
+      "maxWorldDisplacement": 0.4488767856484305,
+      "minimumSampledJacobianDeterminant": 1.2133510112762451,
+      "vertices": 691,
+      "polygons": 1216
+    },
+    {
+      "name": "role-l29-2597",
+      "ownerId": "l29",
+      "role": "crown-lobe",
+      "maxWorldDisplacement": 0.48296541364557793,
+      "minimumSampledJacobianDeterminant": 1.2258836030960083,
+      "vertices": 691,
+      "polygons": 1216
+    },
+    {
+      "name": "role-l29-2598",
+      "ownerId": "l29",
+      "role": "crown-lobe",
+      "maxWorldDisplacement": 0.3322215866391341,
+      "minimumSampledJacobianDeterminant": 1.2222075462341309,
+      "vertices": 691,
+      "polygons": 1216
+    },
+    {
+      "name": "role-l29-2605",
+      "ownerId": "l29",
+      "role": "main-branch",
+      "maxWorldDisplacement": 0.29386190406509977,
+      "minimumSampledJacobianDeterminant": 0.4645128846168518,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l29-2606",
+      "ownerId": "l29",
+      "role": "main-branch",
+      "maxWorldDisplacement": 0.3521646167720627,
+      "minimumSampledJacobianDeterminant": 0.4692833423614502,
+      "vertices": 295,
+      "polygons": 496
+    },
+    {
+      "name": "role-l29-2607",
+      "ownerId": "l29",
+      "role": "main-branch",
+      "maxWorldDisplacement": 0.23135985837022724,
+      "minimumSampledJacobianDeterminant": 0.4645128846168518,
+      "vertices": 295,
+      "polygons": 496
+    }
+  ],
+  "junctions": [
+    {
+      "ownerId": "l14",
+      "crownNode": 2234,
+      "actualTrunkRayHit": [
+        2.4363460540771484,
+        3.182178020477295,
+        -4.024966716766357
+      ],
+      "generatedBranch": false,
+      "status": "Actual trunk surface already inside closed lobe; preserve overlap without an unnecessary extra branch"
+    },
+    {
+      "ownerId": "l14",
+      "crownNode": 2235,
+      "actualTrunkRayHit": [
+        2.3384172916412354,
+        3.1343748569488525,
+        -4.008151054382324
+      ],
+      "generatedBranch": false,
+      "status": "Actual trunk surface already inside closed lobe; preserve overlap without an unnecessary extra branch"
+    },
+    {
+      "ownerId": "l14",
+      "crownNode": 2236,
+      "actualTrunkRayHit": [
+        2.573296070098877,
+        3.14372181892395,
+        -4.055292129516602
+      ],
+      "generatedBranch": false,
+      "status": "Actual trunk surface already inside closed lobe; preserve overlap without an unnecessary extra branch"
+    },
+    {
+      "ownerId": "l14",
+      "crownNode": 2237,
+      "actualTrunkRayHit": [
+        2.409564256668091,
+        3.148282766342163,
+        -4.109250068664551
+      ],
+      "generatedBranch": false,
+      "status": "Actual trunk surface already inside closed lobe; preserve overlap without an unnecessary extra branch"
+    },
+    {
+      "ownerId": "l14",
+      "crownNode": 2238,
+      "actualTrunkRayHit": [
+        2.506309986114502,
+        3.1378138065338135,
+        -3.894075870513916
+      ],
+      "generatedBranch": false,
+      "status": "Actual trunk surface already inside closed lobe; preserve overlap without an unnecessary extra branch"
+    }
+  ],
+  "heroTopWorld": 5.0775065422058105,
+  "candidateTopWorld": 3.7493584156036377,
+  "renderExecuted": false,
+  "runtimeIntegrated": false,
+  "independentObservers": 0,
+  "geometryAuditStatus": "PENDING: actual closed junction/overlap/actor-band/owner approach/source parity audits",
+  "files": {
+    "study.blend": "6ee40968c114fb9e8f5703732e3a3ae801276b1359007d4e03cab25763b73e6b",
+    "study.glb": "358a707752a8ad8d59847d019abdde0709f340e727292421f68933ab3d0b9ff0",
+    "owned-tree-components.glb": "3d74656e72c1186b16789ec4d3b245651d525127b314637a701f8c24ce933a71"
+  }
+}

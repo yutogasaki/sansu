@@ -1,0 +1,65 @@
+{
+  "status": "Complete pre-joint shape saved as HOLD; later assembly scope failure exit1",
+  "candidate": "forest-crown-organic-boughs-stage4-HOLD-parent-recomposition-diagnostic-v3",
+  "ownedPid": 70261,
+  "startedAtUtc": "2026-10-12T07:31:55.875986+00:00",
+  "finishedAtUtc": "2026-10-12T07:32:41.427597+00:00",
+  "elapsedSeconds": 45.551347791,
+  "peakSampledRssBytes": 1121288192,
+  "ownedProcessExited": true,
+  "ownedProcessGroupGone": true,
+  "exitCode": 1,
+  "boundInputs": 305,
+  "inputParity": true,
+  "savedPreJointScope": {
+    "activeScene": "HOLD / complete128-HOLD / stage4 organic grove",
+    "candidate": "forest-crown-organic-boughs-stage4-HOLD-parent-recomposition-diagnostic-v3",
+    "roles": 128,
+    "uniqueRoleKeys": 128,
+    "contextMeshes": 314,
+    "derivedBoughs": 0,
+    "diagnosticClonesIncluded": false,
+    "onlyActiveSceneIsHOLDAssembly": true,
+    "otherBlenderScenesRetainOriginalsForEditing": true,
+    "exportAndRoundtrip": "NOT RUN"
+  },
+  "changedRepresentationsConstructed": 101,
+  "notAll101GeometryPASS": true,
+  "evaluations": 210,
+  "precisionHoldsByLabel": {
+    "candidate": 3,
+    "baseline": 5,
+    "source-oracle": 5
+  },
+  "precisionHoldsByKind": {
+    "translation-only": 9,
+    "linear-recomposition": 4
+  },
+  "maximumRecordedWorldError": 1.145581224567568e-06,
+  "maximumRecordedLinearComponentDifference": 1.043081283569336e-07,
+  "afterCheckpoint": {
+    "recordedPrimaryMeasurements": 31,
+    "derivedBoughCount": 6,
+    "certifiedContactPass": false,
+    "sceneSaved": false,
+    "firstFailure": {
+      "phase": "save-HOLD-assembly-only",
+      "error": "AssertionError('Diagnostic/original replacement role leaked into active assembly')",
+      "traceback": "Traceback (most recent call last):\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/hold-shape-diagnostic-v3/build-source.py\", line 279, in <module>\n    PHASE='save-HOLD-assembly-only';save_hold_assembly('HOLD-diagnostic-assembly-after-joints')\n                                    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/hold-shape-diagnostic-v3/build-source.py\", line 140, in save_hold_assembly\n    assert set(role_objects)==set(ROLES), 'Diagnostic/original replacement role leaked into active assembly'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Diagnostic/original replacement role leaked into active assembly\n"
+    },
+    "staticCause": "derived-native-junction also has forestRole; after-joint scope collector incorrectly includes those six in original128 set equality",
+    "fallbackMissingReason": "Pre-joint ASSEMBLY_SAVED=true suppresses fallback after post-joint assertion; assertion occurs before second save"
+  },
+  "source442AndMaterialsExact": true,
+  "precisionFollowupRun": false,
+  "renderRun": false,
+  "rendererDraft": "pre-joint-whole-view-v1; not sealed/run, awaiting root choice",
+  "files": {
+    "execution-hold-01/result.json": "8df218bc181d9bb0dc5ff1c9c1c246585285ab0be7a616bb81c195fb44e9e880",
+    "attempt-hold-01/shape-manifest.json": "c39eb00dc0d4a10ed7cf8a12ccb4851f5427ca8c3157cbb8839a12c964d9b27e",
+    "attempt-hold-01/first-failure.json": "b2a50cc37851499c7b1736e74fef990cc5f4b7a72e9bab240fa1d2a920ded73d",
+    "attempt-hold-01/primary-junctions.json": "62d5bb37e1b56635788d45cfeb0d48ebd982cedcefaa78ba5347927b39c1baf1",
+    "attempt-hold-01/complete128-HOLD.blend": "936543916d0a5dccfb58b4979c58a8b8cce8084586e6c19f97e44002ad9e724c",
+    "attempt-hold-01/complete128-HOLD-scope.json": "f6f48654ccff67cea66b4b7eac0f3284baefe41732cc991a3bcdbac9f3c05f0a"
+  }
+}

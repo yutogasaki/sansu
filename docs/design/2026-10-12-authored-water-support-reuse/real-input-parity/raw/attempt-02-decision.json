@@ -1,0 +1,9 @@
+{
+  "dateUtc": "2026-10-12T05:42:50.967612+00:00",
+  "firstReportSha256": "35d17887320dca38b7f63d16e1b8badded4890ced5a525208fa2e50648090d5d",
+  "classification": "harness RSS boundary; 35-owner baseline terminated by supervisor before output. Not application failure.",
+  "preserved": "All attempt01 files unchanged; 27/32 before-after equivalence already acquired.",
+  "change": "Rerun shoulder35 pair only under 2.5 GiB per-child RSS, same 180s timeout and exact bundles/fixtures; no resource constraint changed mid-run.",
+  "concurrency": "core completed; source preparation only; this is functional comparison, not performance evidence.",
+  "runnerSha256": "71beb5d4fca44d7554454c106f60f8f9dd7dab30e51f5fdf602979ebd78112ba"
+}

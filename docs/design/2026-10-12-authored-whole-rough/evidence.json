@@ -1,0 +1,73 @@
+{
+  "candidate": "native05-whole-rough-v1",
+  "buildRevision": "authored-whole-c5",
+  "appVersion": "authored-whole-c5:8f872715-7c8f-4db4-9afc-54e81e6057b1",
+  "target": "http://127.0.0.1:5362/prototypes/place-qa/authored.html?art=whole",
+  "delivery": {
+    "environment": "DEV",
+    "island": true,
+    "productionNativeArt": false,
+    "runtimeNativeArt": "true"
+  },
+  "core": {
+    "pass": true,
+    "files": 615,
+    "tests": 5323,
+    "sourceFixed": true
+  },
+  "currentBrowserScope": "Terminal harness failure after l14 move: P02 legitimately disappears; store/restore not reached",
+  "galleryTraversalEnabled": false,
+  "gates": {
+    "visual": "HOLD: broad empty hill and separated districts",
+    "silentComprehensionSafety": "UNMEASURED: independent N=0",
+    "runtime": "PARTIAL: core PASS; gallery entry blocks 22 owners; editing harness failed"
+  },
+  "files": {
+    "captures/whole-day.png": {
+      "source": "/private/tmp/sansu-authored-whole-c5/runtime/whole-day.png",
+      "sourceSha256": "f13cd51bca60e67becb39b83da402a11fa3bf1620fd73a3446cbb7fb49eff3c7",
+      "savedSha256": "f13cd51bca60e67becb39b83da402a11fa3bf1620fd73a3446cbb7fb49eff3c7"
+    },
+    "captures/whole-rotated.png": {
+      "source": "/private/tmp/sansu-authored-whole-c5/runtime/whole-rotated.png",
+      "sourceSha256": "007fb800cc5be28a477340c510c614b2137326dd13bdd4c967d6e70685aee518",
+      "savedSha256": "007fb800cc5be28a477340c510c614b2137326dd13bdd4c967d6e70685aee518"
+    },
+    "captures/whole-phone.png": {
+      "source": "/private/tmp/sansu-authored-whole-c5/runtime/whole-phone.png",
+      "sourceSha256": "8cfed74a05b2f70a3d806114b61e3dafd344528b67ac83f07988d7da689c0e54",
+      "savedSha256": "8cfed74a05b2f70a3d806114b61e3dafd344528b67ac83f07988d7da689c0e54"
+    },
+    "core/execution.log.txt": {
+      "source": "/private/tmp/sansu-authored-whole-c5/core/execution.log.txt",
+      "sourceSha256": "15ef65022488864081b9db9c051c8aff18dc1328d05eb808af650e3fe7ccdcb2",
+      "savedSha256": "15ef65022488864081b9db9c051c8aff18dc1328d05eb808af650e3fe7ccdcb2"
+    },
+    "core/report.json.gz": {
+      "source": "/private/tmp/sansu-authored-whole-c5/core/report.json",
+      "sourceSha256": "5998f5874c50b05fc80c2d28e8105c7879fc0ed47e5565a13dd960345b366255",
+      "savedSha256": "596e007352943ab952e1290ce8c8961015c68d2c426254c10262c8cefe06f5e1"
+    },
+    "core/first-docs-failure.log.txt": {
+      "source": "/private/tmp/sansu-authored-whole-c5/core-first-docs/execution.log.txt",
+      "sourceSha256": "2a37c7704d4ecf492899a4efd688f54d13697d715855015c5eb5ec3e6776d7e1",
+      "savedSha256": "2a37c7704d4ecf492899a4efd688f54d13697d715855015c5eb5ec3e6776d7e1"
+    },
+    "candidate-inputs.json": {
+      "source": "/private/tmp/sansu-authored-whole-c5/overlay.json",
+      "sourceSha256": "2efbc69f9cb746d801060d18e43831b9ff08b19eb47aaef93179a0599a4b667e",
+      "savedSha256": "2efbc69f9cb746d801060d18e43831b9ff08b19eb47aaef93179a0599a4b667e"
+    },
+    "route-diagnosis/summary.json": {
+      "source": "/private/tmp/sansu-whole-route-diagnosis/summary.json",
+      "sourceSha256": "6181ff2f70f76a75376e89aa811b15c38c618502132c56664549c55db81ba0cb",
+      "savedSha256": "6181ff2f70f76a75376e89aa811b15c38c618502132c56664549c55db81ba0cb"
+    },
+    "route-diagnosis/report.json.gz": {
+      "source": "/private/tmp/sansu-whole-route-diagnosis/report.json",
+      "sourceSha256": "35eea4b420ffeb34e4769e0c2719763eedeff22e87a919137e1754b2b384984e",
+      "savedSha256": "549cbf3749fe50a7648e31c7361ce2ff54e061aa8b644db581943f088177c9d1"
+    }
+  },
+  "browserReportSha256": "265264d108f64c003fffb73a33bc6c7ca88389fb2424ca09d50e2ad1cbe193fd"
+}

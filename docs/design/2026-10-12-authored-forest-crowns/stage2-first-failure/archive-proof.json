@@ -1,0 +1,238 @@
+{
+  "createdAt": "2026-10-12T04:02:41.690496+00:00",
+  "scope": "Forest stage2 first failed shape build and the unchanged-kernel first-ray numerical reproduction. No render or contact PASS.",
+  "fileCount": 38,
+  "bytes": 13216766,
+  "files": [
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/README.md",
+      "target": "README.md.txt",
+      "bytes": 7335,
+      "sha256": "258f060a6307db315c76afb23b51169d3e02917913fd83ea2e0a203d836f9dd2"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/attempt-01/baseline-joints.json",
+      "target": "attempt-01/baseline-joints.json",
+      "bytes": 80976,
+      "sha256": "d5766520f092a624d4172883822848490fb8468830b5abf2741c19723583aa75"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/attempt-01/deformations.json",
+      "target": "attempt-01/deformations.json",
+      "bytes": 28369,
+      "sha256": "ab3e457f51479fc1f84b86d225f75ba5e33fad109a24b15388cb3ad01d6af6d1"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/attempt-01/failed-stage.blend",
+      "target": "attempt-01/failed-stage.blend",
+      "bytes": 12655704,
+      "sha256": "7010856b68de220ceb13781ff12f8c82b6c6aae9b9c575c748688043b98f3ccc"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/attempt-01/first-failure.json",
+      "target": "attempt-01/first-failure.json",
+      "bytes": 9599,
+      "sha256": "7b75784860ec3442609deca521684e4874f8fc9aaa392c2dc121431d6fb2e22b"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/attempt-01/inputs-before.json",
+      "target": "attempt-01/inputs-before.json",
+      "bytes": 3814,
+      "sha256": "844b7dcd7c2779328ded40aa6a7a70a332178c1299d017a7cd1ca87c70ee0003"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/baseline-static-check.json",
+      "target": "baseline-static-check.json",
+      "bytes": 3336,
+      "sha256": "1f2efcf68a2a8f75ef0dfb9b6472d2f6d615445c0f98bbb6983272b5e8a81bca"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/black-path-static.json",
+      "target": "black-path-static.json",
+      "bytes": 8067,
+      "sha256": "c97dc283387391fd8f1b7fbcd9a6685eb71186aca93f88dfec6a2bb1a4b834aa"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/brief.md",
+      "target": "brief.md.txt",
+      "bytes": 8970,
+      "sha256": "dca46cd4b6405f0897ced5cd78c95e547974ced0df0ef6d57c741d9bfe803989"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/build-ready.json",
+      "target": "build-ready.json",
+      "bytes": 3111,
+      "sha256": "ba6f7d1718ac9c0b486c9d5cb0dd30595c66b36b99c3bc8bdd258cfa4e0e5b87"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/build-stage2.py",
+      "target": "build-stage2.py.txt",
+      "bytes": 24129,
+      "sha256": "7198fac3b3ed9cb082a9814b66be55c05c71380a76f4ce4e9775380d4d6efbe0"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/execution-attempt-01/build-stage2.py.log.txt",
+      "target": "execution-attempt-01/build-stage2.py.log.txt",
+      "bytes": 20333,
+      "sha256": "643aa7a96eb7f4203b4a5d89e7909517ca908b844a77c1a5b80438a435fc1e95"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/execution-attempt-01/build-stage2.py.result.json",
+      "target": "execution-attempt-01/build-stage2.py.result.json",
+      "bytes": 653,
+      "sha256": "9d18424375856b3c7d82aeca4e1fa242c6c0c992ff2e1179c0e5a4b2791ef443"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/fields.py",
+      "target": "fields.py.txt",
+      "bytes": 4253,
+      "sha256": "237497e6a48782ff2285f9fdb51a9fe6783c27f7c7c98b29924f154180838fd2"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/helper-provenance.json",
+      "target": "helper-provenance.json",
+      "bytes": 1295,
+      "sha256": "30639796f38b3820a09318a403c83dab56aa3a6c6f36e5e7e650de506dc17a7e"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/inspect-path-json.py",
+      "target": "inspect-path-json.py.txt",
+      "bytes": 4424,
+      "sha256": "8d7791e12ec2b897719c24c85915712c09477ba5e871d8d3168e9b6287161a10"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/joints.py",
+      "target": "joints.py.txt",
+      "bytes": 8474,
+      "sha256": "c99059a0af65cdd62b741911537dc26f605051d22e57207d452d7f5e12ca8db1"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/prepare-plan.py",
+      "target": "prepare-plan.py.txt",
+      "bytes": 8417,
+      "sha256": "0a62703f183bcacdfa723e78a03ad028dd76763d0c5825bcd429baf8446d8408"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/proposal.json",
+      "target": "proposal.json",
+      "bytes": 18989,
+      "sha256": "98fc19102edfb3fe2a3aa89840ebd31fabfdd0ac3d7ee691dfe494808a56b5a4"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/ray-debug/README.md",
+      "target": "ray-debug/README.md.txt",
+      "bytes": 1878,
+      "sha256": "8be8d3a377877a8d262d0266d00a30f1b38e599e7e5082d7b9b01ed8074901f6"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/ray-debug/attempt-01/inputs-after.json",
+      "target": "ray-debug/attempt-01/inputs-after.json",
+      "bytes": 450,
+      "sha256": "1ba3007233f5dd8641a75ddc3bfc50f28d9cf8b617b383ed0c806538ab413ba0"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/ray-debug/attempt-01/inputs-before.json",
+      "target": "ray-debug/attempt-01/inputs-before.json",
+      "bytes": 450,
+      "sha256": "1ba3007233f5dd8641a75ddc3bfc50f28d9cf8b617b383ed0c806538ab413ba0"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/ray-debug/attempt-01/query-input.json",
+      "target": "ray-debug/attempt-01/query-input.json",
+      "bytes": 1735,
+      "sha256": "7330ac1c390e684c20e772f44c2fb3e327632763115937c660dbcfd7a29b03d2"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/ray-debug/attempt-01/raw-outcome.json",
+      "target": "ray-debug/attempt-01/raw-outcome.json",
+      "bytes": 1002,
+      "sha256": "f69d0bb6a9e220ba20f1339d7bb057a059065992e140c9b7735b0da503ef1ed7"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/ray-debug/attempt-01/result.json",
+      "target": "ray-debug/attempt-01/result.json",
+      "bytes": 2788,
+      "sha256": "836e2f80da0d276d912b5d1486ba87543b1096cfc21757e3752ed065641df17d"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/ray-debug/attempt-01/trace.json",
+      "target": "ray-debug/attempt-01/trace.json",
+      "bytes": 272903,
+      "sha256": "284739b99cca76b8e5aaa5cd64a8b3046b4edcd406e7d69f2edfec54feb0884e"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/ray-debug/debug-first-ray.py",
+      "target": "ray-debug/debug-first-ray.py.txt",
+      "bytes": 7891,
+      "sha256": "7a47800c38e5407b567e9a939cd7fcd3393cba7c218a7ac76bc6a73537974dab"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/ray-debug/diagnostic-manifest.json",
+      "target": "ray-debug/diagnostic-manifest.json",
+      "bytes": 2200,
+      "sha256": "5dd187b32324544de8995a9ebc5450e73aae18d811d0b290aff88b4303ba7781"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/ray-debug/execution-attempt-01/execution.log.txt",
+      "target": "ray-debug/execution-attempt-01/execution.log.txt",
+      "bytes": 3686,
+      "sha256": "67a196b14f74be11b61357640abbb24943c50866750f9affc49700d0b281a533"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/ray-debug/execution-attempt-01/result.json",
+      "target": "ray-debug/execution-attempt-01/result.json",
+      "bytes": 598,
+      "sha256": "cfc11e9b6d2ec93b20fce7376a0c9c8828310e7746fc7e344f3b691044e21406"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/ray-debug/result-note.md",
+      "target": "ray-debug/result-note.md.txt",
+      "bytes": 2760,
+      "sha256": "33f6cac3682ff8258b49e735b989a26c263f7a305499bff3eb41ae58aecde4e5"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/ray-debug/run-once.py",
+      "target": "ray-debug/run-once.py.txt",
+      "bytes": 2340,
+      "sha256": "9bec5964b97af9232968676db6af19b37ff7272ff81b3953f774d7c50d6da68d"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/ray-debug/static-check.json",
+      "target": "ray-debug/static-check.json",
+      "bytes": 443,
+      "sha256": "f58726f06bd8fd62ae2417a1c78c90c272deaf39a265648da576cd66458d3aa2"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/readiness.json",
+      "target": "readiness.json",
+      "bytes": 2708,
+      "sha256": "0d633f20b92225775676ae17b2fcb6b2b8e7e53e94c54f380a54ce9784f053b2"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/render-one-whole.py",
+      "target": "render-one-whole.py.txt",
+      "bytes": 2697,
+      "sha256": "603c866675506857ab89e38adecabb4532066a85d57421f89c378a27b6012973"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/run-window.py",
+      "target": "run-window.py.txt",
+      "bytes": 2822,
+      "sha256": "1c83538e15b745568be477855bdf0cfa677d115f834893d8c3b583fae0be5e5a"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/stage1_support.py",
+      "target": "stage1_support.py.txt",
+      "bytes": 6271,
+      "sha256": "9f369d576e5cca7cd53c362b5dd8b59051e8b98600f6c2c7583862c5224806d9"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage2/thread2-static-check.json",
+      "target": "thread2-static-check.json",
+      "bytes": 896,
+      "sha256": "98d8a5c0af689dc24c5be28c3efbdf63ecb5f39d177df3f5bfef89e0e8bc57f7"
+    }
+  ],
+  "allBytesIdentical": true,
+  "packaging": "Historical markdown and Python names append .txt; original bytes are unchanged."
+}

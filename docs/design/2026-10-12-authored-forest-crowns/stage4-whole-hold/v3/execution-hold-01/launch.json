@@ -1,0 +1,19 @@
+{
+  "ownedPid": 70261,
+  "ownedProcessGroup": 70261,
+  "startedAtUtc": "2026-10-12T07:31:55.875986+00:00",
+  "command": [
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/hold-shape-diagnostic-v3/build-source.py"
+  ],
+  "threads": 2,
+  "rssLimitBytes": 3221225472,
+  "timeoutSeconds": 300,
+  "readinessSha256": "d0522c40a19326b84acea099482023d674c9d3bd3d255f6693521e1462e9534c"
+}

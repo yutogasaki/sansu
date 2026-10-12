@@ -1,0 +1,25 @@
+{
+  "recordedAt": "2026-10-12T02:39:32.284187+00:00",
+  "scope": "Read-only comparison of two completed snapshot maps for full src/tools/prototypes/public/assets. Documentation changes are separately captured in the c2 closure.",
+  "c1SnapshotSha256": "c162db0673a712c6829c974b0344073a39e8a95b1feb120285f6a6d3a456a022",
+  "c2SnapshotSha256": "59e4fe1d4c6662073b156a304a1ae471c0bef0c9187e6bfde93b49e694494879",
+  "inputNameCount": 2435,
+  "changes": [
+    {
+      "file": "src/domain/growingIsland/worldDefinition.test.ts",
+      "c1": "8d4f6d66d0c4078f3dc77c5911ecfb9e84e508137a15b035971dc68c9787b581",
+      "c2": "a52da8cd4aad28bd4fee91a18681c044ff7cbc945d8f18b79f75c01103c90aa9"
+    },
+    {
+      "file": "src/domain/growingIsland/worldDefinition.ts",
+      "c1": "8e88855dd180624f1c2b32437e6d1b93cc66e978f2fc9c741d5f004e8ba45db7",
+      "c2": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338"
+    },
+    {
+      "file": "tools/e2e-authored-shoulder.mjs",
+      "c1": "c31ad10110bc641e3edffb12de36075ee2eb23885241c807203e8f4bf764f29d",
+      "c2": "2fbbf7bd3d86e807a2673649924ee0d6aace213e2a57b5efeed091b2614f5f17"
+    }
+  ],
+  "exactExpectedThreeChanges": true
+}

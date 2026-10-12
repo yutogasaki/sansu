@@ -1,0 +1,51 @@
+{
+  "recordedAtUtc": "2026-10-12T05:40:02.947314+00:00",
+  "reviewer": "cove_runtime_tests",
+  "mode": "Independent static read of immutable c3 code; no app edits or extra test execution",
+  "inputs": {
+    "src/domain/growingIsland/authoredWaterBridge.ts": "23d75eb2a3f7e9a2c623ee8ac44758d7c4b677260cdd74025e82dbabc6e95b1d",
+    "src/domain/growingIsland/authoredWaterWorld.ts": "3cf0b8992204fdc26f820b6a948f743c3f2d59e1033ec93223ba3b4ae1db76d0",
+    "src/domain/growingIsland/authoredWaterBridge.test.ts": "c7a4b1d5397975324102a000f82358c310c3ddfa1c3653410f596bd9d394587a",
+    "src/domain/growingIsland/worldDefinition.ts": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+    "src/domain/growingIsland/authoredWaterWorld.test.ts": "08edc91ee01f20f3f49640b99a50ca96649859642f8605902bb12b9291eec8a2",
+    "tools/e2e-authored-water.mjs": "6eb46f7f80170f092a4b2f1e705da62140543e5632f8029156cadb5afa46d7ce",
+    "docs/ai/verification_matrix.md": "3a252f4c72b73d1fd648950317909a21c73245b63e5c950072497071cfdbf4a1"
+  },
+  "findings": [],
+  "conclusion": "No concrete regression found in the accepted/rejected/multiple-accepted bridge state invariant, geometry support queries, passage-right restoration or later definition mutation.",
+  "reasoning": [
+    {
+      "location": "authoredWaterBridge.ts:174-175,229-238",
+      "claim": "At entry definition is a deep clone of cutWorld.definition and current is cutWorld. Each next extends the current definition with one deck. Successful compile and foot-band checks precede the single definition=next/current=supported adoption. Every rejection skips both assignments, so multiple accepted bridges retain all prior decks and the final pair represents identical support."
+    },
+    {
+      "location": "worldDefinition.ts:107,379-387",
+      "claim": "The compiler deep-clones its input and freezes compiled definition/geometry. isWorldWalkEdgeSupported is geometry-only, using sites and floor sampling rather than route/grant adjacency. Reusing the already compiled snapshot has the same lookup ordering/data as recompiling the identical definition."
+    },
+    {
+      "location": "authoredWaterWorld.ts:542-563",
+      "claim": "Source-edge walk grants are restored against the returned support; no new edges are introduced. The separate dryWorld compilation remains for shore entry resolution, and final compilation remains after shore/revision changes. Mutable returned definition edits cannot change the independent frozen support."
+    },
+    {
+      "location": "authoredWaterBridge.test.ts:162-199; authoredWaterWorld.test.ts:289-311",
+      "claim": "Focused parity covers ordinary/rotated/nonlinear floor and support queries, all-rejected cutWorld identity, accepted-then-rejected owner, and later caller edits. Existing world integration checks original restored edge identity/support plus owner removal/restoration."
+    }
+  ],
+  "coverageLimits": [
+    "No new dedicated two-successful-bridge fixture was executed by this review; correctness for that case follows the same inductive state update. Root is preparing a separate actual fixture equivalence diagnostic.",
+    "Core is running; no c3 runtime journey has run yet.",
+    "The existing water driver asserts the full initial renderer plan, including restoredEdgeIds, and actual board owner selection; per-edge geometric support is checked by the domain test, not by a browser iteration over edges."
+  ],
+  "recommendedRuntime": [
+    "One unchanged full wide27-water journey with fixed core/installed inputs and recorded initial bridge/restoredEdgeIds.",
+    "One existing isolated classic smoke to retain the matrix common regression."
+  ],
+  "notRequiredByThisNarrowDelta": [
+    "Shoulder full natural acquisition replay or all-eight sequence absent new evidence of a regression. Mark them unexecuted on c3; do not inherit c2 PASS as c3 PASS."
+  ],
+  "notProven": [
+    "Performance gain",
+    "Art/M1 acceptance",
+    "PWA/release acceptance"
+  ]
+}

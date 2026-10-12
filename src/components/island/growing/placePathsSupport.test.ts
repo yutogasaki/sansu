@@ -56,6 +56,8 @@ describe('authored paving support queries preserve the complete output', () => {
         // Recorded before query caching: every position, index, normal and edge.
         expect(fingerprint(path)).toEqual({ hash: 'bb509feaaef02bc7edfea0ddba91779f941a948bd5e8ea918be97cec702b1238', vertices: 312, indices: 864,
             edgeHash: '78d0c3b81d64f6b527318e82bd677ba691540c67bd07a09a6b8a40455a77eae2', edges: 7 });
+        const withAuthoredAccess = buildPlacePaths(state, sceneLayout(state), [], { walkable: new Set(), ownerApproaches: new Map() });
+        expect(fingerprint(withAuthoredAccess)).toEqual(fingerprint(path)); release(withAuthoredAccess);
         expect(state).toEqual(before); release(path);
     });
     it('keeps all authored quarter-route costs, mesh resolution and buffers identical', () => {

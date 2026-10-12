@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "build-coarse.py",
+    "--",
+    "build",
+    "--scheduled",
+    "--out",
+    "runs/01-coarse-build"
+  ],
+  "exitCode": 1,
+  "stop": null,
+  "peakSampledRssBytes": 848461824,
+  "elapsedSeconds": 8.235756875,
+  "limits": {
+    "seconds": 180,
+    "rssMiB": 2560
+  },
+  "sourceOnly": true
+}

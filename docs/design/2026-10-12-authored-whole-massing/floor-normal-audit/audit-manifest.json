@@ -1,0 +1,69 @@
+{
+  "scope": "Evidence archive only",
+  "files": {
+    "README.md": {
+      "bytes": 9842,
+      "sha256": "53c13fc91e1200b0d2af861f9fc42314a445c678f9a68114bab64d0c7e40e326"
+    },
+    "capture-source-evidence.mjs": {
+      "bytes": 6344,
+      "sha256": "b6a5aef8d854c44a40ccba27525a28ee895c656ffd7837cd78db0355ce6b9ca2"
+    },
+    "evidence/c4-desktop-cove-close-day.png": {
+      "bytes": 424897,
+      "sha256": "98846bcf18e18d53b34b80193c2e33db086064a96084ebde85e365286e67a091"
+    },
+    "evidence/c4-desktop-mature-whole-day.png": {
+      "bytes": 481794,
+      "sha256": "5f30661722d319d14a877b92e2af50e85c7a4e3a29b3df64c50250460486b222"
+    },
+    "input-manifest.json": {
+      "bytes": 14885,
+      "sha256": "bd3c861be5391971640c887b163399f4cb0d34ba7ae0b56ba4d021207b0cb519"
+    },
+    "raw/first-execution.log.txt": {
+      "bytes": 5400,
+      "sha256": "77ad73bb46d940f3d6ada20f4e4e0a0b0acf0ace8ba230def65da25fe4ad983d"
+    },
+    "raw/first-probe.mjs": {
+      "bytes": 5335,
+      "sha256": "f949b15a6544c442fa244f46fae9ca2d36a99f4a0fa02ea18ed66c062550ece1"
+    },
+    "raw/first-report.json": {
+      "bytes": 5467,
+      "sha256": "d0ad717ff9bdc5e598b5e1ae4dd565d0f1d1b3258b8985794de18e54acd8c7cd"
+    },
+    "raw/repeat-execution.log.txt": {
+      "bytes": 5400,
+      "sha256": "77ad73bb46d940f3d6ada20f4e4e0a0b0acf0ace8ba230def65da25fe4ad983d"
+    },
+    "raw/repeat-report.json": {
+      "bytes": 5467,
+      "sha256": "d0ad717ff9bdc5e598b5e1ae4dd565d0f1d1b3258b8985794de18e54acd8c7cd"
+    },
+    "raw/source-capture.log.txt": {
+      "bytes": 368,
+      "sha256": "72cb1c5ae87993053a2a947d40d98fa19a5dad09b40097830034de25f1c7479b"
+    },
+    "source/source-normal-materials.json": {
+      "bytes": 7226,
+      "sha256": "96a78fa21537071ebd272ebf5da92b70e392d15fac268772e39c18eb13a520e2"
+    },
+    "source/terrain-0-normal.f32le.gz": {
+      "bytes": 35184,
+      "sha256": "482854dc8103677b0114fb2521b95618bf5b70ca05442a47d808c84b42b020d8"
+    },
+    "source/terrain-1-normal.f32le.gz": {
+      "bytes": 169226,
+      "sha256": "db6aab0c2e408071d6b1e5a38a491a00398930b0bf32a21e36a3f07c608e9288"
+    },
+    "source/terrain-2-normal.f32le.gz": {
+      "bytes": 83013,
+      "sha256": "c2998bddce27acdaaaccdeefea67a744aef065e1206735baf9baec04eb7968a3"
+    },
+    "verification.json": {
+      "bytes": 760,
+      "sha256": "9baa541d320a235f2e84cc1bdbac4dbb3dde29b42872e2db118c68b1fb624449"
+    }
+  }
+}

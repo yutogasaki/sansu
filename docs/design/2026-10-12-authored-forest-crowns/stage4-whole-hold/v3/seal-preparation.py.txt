@@ -1,0 +1,52 @@
+"""Seal only; never launches Blender, builds source, or renders."""
+import ast
+import hashlib
+import json
+from pathlib import Path
+HERE=Path(__file__).resolve().parent;STAGE=HERE.parent;OLD=STAGE/'normal-generalization-prep'
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+assert not (HERE/'readiness.json').exists(),'Preserve preparation seal'
+check=json.loads((HERE/'static-check.json').read_text())
+assert check['predicateTestExitCode']==0 and all(check['unchangedChecks'].values())
+syntax=[]
+for p in sorted(HERE.glob('*.py')):ast.parse(p.read_text(),filename=str(p));syntax.append(p.name)
+prior=json.loads((OLD/'readiness.json').read_text())
+external=dict(prior['externalInputs'])
+external.update({str(OLD/n):digest for n,digest in prior['files'].items()})
+paths=[OLD/'readiness.json',OLD/'readiness.sha256',
+ OLD/'attempt-full-01/first-failure.json',OLD/'attempt-full-01/shape-manifest.json',
+ OLD/'attempt-full-01/FAILED-incomplete-shape.blend',OLD/'execution-full-01/result.json',
+ OLD/'post-build-world-analysis/analyze.py',OLD/'post-build-world-analysis/result.json',
+ OLD/'attempt-full-01/roles/l14:2269/candidate-evaluation.json.gz']
+V1=STAGE/'hold-shape-diagnostic-v1'
+v1_ready=json.loads((V1/'readiness.json').read_text())
+external.update({str(V1/n):digest for n,digest in v1_ready['files'].items()})
+paths.extend([V1/'readiness.json',V1/'readiness.sha256',V1/'terminal-summary.json',
+ V1/'execution-hold-01/result.json',V1/'attempt-hold-01/first-failure.json',
+ V1/'attempt-hold-01/shape-manifest.json',V1/'attempt-hold-01/FAILED-incomplete-diagnostic.blend',
+ V1/'attempt-hold-01/roles/l14:2289/baseline-evaluation.json.gz'])
+V2=STAGE/'hold-shape-diagnostic-v2'
+v2_ready=json.loads((V2/'readiness.json').read_text())
+external.update({str(V2/n):digest for n,digest in v2_ready['files'].items()})
+paths.extend([V2/'readiness.json',V2/'readiness.sha256',V2/'terminal-summary.json',
+ V2/'execution-hold-01/result.json',V2/'attempt-hold-01/first-failure.json',
+ V2/'attempt-hold-01/shape-manifest.json',V2/'attempt-hold-01/FAILED-incomplete-diagnostic.blend',
+ V2/'attempt-hold-01/roles/l14:2290/baseline-evaluation.json.gz'])
+for p in paths:external[str(p)]=sha(p)
+assert all(sha(Path(p))==digest for p,digest in external.items()),'Original sealed input changed'
+files={p.name:sha(p) for p in sorted(HERE.iterdir()) if p.is_file() and p.name not in ('readiness.json','readiness.sha256')}
+record={'scope':'one HOLD scene build only; no strict geometry/roundtrip/contact/runtime/art PASS',
+ 'files':files,'externalInputs':external,'syntaxParsed':syntax,
+ 'command':'SANSU_FOREST_HOLD_SHAPE_BUILD_APPROVED=1 python3 '+str(HERE/'run-once.py'),
+ 'threads':2,'rssLimitBytes':3*1024**3,'wallSeconds':300,'oneBlenderOnly':True,
+ 'normalTolerance':.002,'worldTolerance':1e-6,'strictWorldGeometryGate':False,
+ 'precisionHoldQualification':'baseline/source-oracle/candidate separately, finite pre-world<=1e-6, unchanged exact local/parent, exact Float32 parent product; linear-zero NOT REQUIRED, each difference recorded as HOLD',
+ 'normalScope':{'changed101':'raw source accessor inverse-transpose, hard stop','fixed27':'unchanged imported baseline'},
+ 'originalSourceSha256':'10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae',
+ 'roundtrip':'NOT RUN','wholeView':'separate root decision, same stage3 camera/materials plus named path-shadow compatibility only',
+ 'classificationRevision':'v3; not same execution as v1/v2','v1AndV2FirstFailuresUnchanged':True,
+ 'preJointCheckpoint':'complete128-HOLD.blend','strictGeometryRoundtripAndAcceptance':False,
+ 'blenderExecuted':False,'requiresRootSourceWindow':True}
+(HERE/'readiness.json').write_text(json.dumps(record,indent=2)+'\n')
+digest=sha(HERE/'readiness.json');(HERE/'readiness.sha256').write_text(digest+'\n')
+print(json.dumps({'readinessSha256':digest,'localFiles':len(files),'externalInputs':len(external),'syntaxFiles':len(syntax),'command':record['command']}))

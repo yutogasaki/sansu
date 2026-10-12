@@ -1,0 +1,66 @@
+{
+  "status": "COMPLETED",
+  "command": [
+    "python3",
+    "../east-v2/supervise.py",
+    "--scheduled",
+    "--seconds",
+    "240",
+    "--rss-mib",
+    "2560",
+    "--log",
+    "runs/01-whole.log.txt",
+    "--",
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "render-failed.py",
+    "--",
+    "--scheduled",
+    "--source",
+    "../east-v2/runs/01-coarse-build/failed-scene.blend",
+    "--out",
+    "runs/01-whole",
+    "--view",
+    "whole"
+  ],
+  "cwd": "/private/tmp/sansu-p02-gallery-source-study/east-v2-failed-shape-view",
+  "launchRequestedUtc": "2026-10-12T05:21:56.127543+00:00",
+  "timestampMeaning": "supervisor launch bracket; child times are observations, not exact child spawn/exit",
+  "observedChildren": {
+    "39505": {
+      "firstObservedUtc": "2026-10-12T05:21:56.430799+00:00",
+      "parentPid": 39503,
+      "peakObservedRssBytes": 403324928,
+      "lastObservedUtc": "2026-10-12T05:21:58.131118+00:00"
+    }
+  },
+  "before": {
+    "failedScene": "e61a390ef10e77ef40de77972454050b19e469b725ea8ebbec7b43e35b199746",
+    "study": "7ff0cd080569eb92928cbe7d974fa4348ff89e597d7c98f5ecff471fdc105cec",
+    "originalRenderCode": "d1635d4fb6e0dfcf6f2423310e5bdedba1cf29d2381a50bcaf11c830e197f1f6",
+    "supervisor": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "closedFloorQA": "6d6d98206d86a953b3299aefbf289f6b987aa5f5f25eae6aca339b8122e6e12d",
+    "script": "ed901f090fb420d6a4f847af1b4203c28ea6362c555511bb95e9a531f071fc76",
+    "preparation": "c6d8e6f357cc2ae5699e9faa47efc88d1c4c40f5865884b1fde08710c2da16ef"
+  },
+  "supervisorPid": 39503,
+  "supervisorPopenReturnedUtc": "2026-10-12T05:21:56.129647+00:00",
+  "supervisorExitCode": 1,
+  "supervisorExitObservedUtc": "2026-10-12T05:21:58.391389+00:00",
+  "elapsedSeconds": 2.263709792,
+  "after": {
+    "failedScene": "e61a390ef10e77ef40de77972454050b19e469b725ea8ebbec7b43e35b199746",
+    "study": "7ff0cd080569eb92928cbe7d974fa4348ff89e597d7c98f5ecff471fdc105cec",
+    "originalRenderCode": "d1635d4fb6e0dfcf6f2423310e5bdedba1cf29d2381a50bcaf11c830e197f1f6",
+    "supervisor": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "closedFloorQA": "6d6d98206d86a953b3299aefbf289f6b987aa5f5f25eae6aca339b8122e6e12d",
+    "script": "ed901f090fb420d6a4f847af1b4203c28ea6362c555511bb95e9a531f071fc76",
+    "preparation": "c6d8e6f357cc2ae5699e9faa47efc88d1c4c40f5865884b1fde08710c2da16ef"
+  },
+  "inputsUnchanged": true
+}

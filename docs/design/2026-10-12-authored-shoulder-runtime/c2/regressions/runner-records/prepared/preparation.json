@@ -1,0 +1,319 @@
+{
+  "preparedAt": "2026-10-12T02:19:41.500582+00:00",
+  "revision": "authored-shoulder-c2",
+  "port": 5359,
+  "preparationOnly": true,
+  "closureCollected": false,
+  "snapshotCreated": false,
+  "staticImportsCompiled": false,
+  "coreStarted": false,
+  "browserStarted": false,
+  "sourceCandidateCreated": false,
+  "executionRequiresParentFreezeAndStart": true,
+  "sourceOfRunners": "/private/tmp/sansu-authored-shoulder-c1/prepared",
+  "copiedRunners": [
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c1/prepared/closure.py",
+      "sourceSha256Before": "90db806c2e015dc3d724bb057e9cfcb19b06a9bba9f696d774b23327943ebbbf",
+      "sourceSha256After": "90db806c2e015dc3d724bb057e9cfcb19b06a9bba9f696d774b23327943ebbbf",
+      "destination": "/private/tmp/sansu-authored-shoulder-c2/prepared/closure.py",
+      "destinationSha256": "6b6902465e3f581a5150be95acac5dc4e440174123c48116b6612162c6e87595",
+      "changes": "Only c2 paths/revision/port; core docstring identity updated"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c1/prepared/collect-installed-dependencies.mjs",
+      "sourceSha256Before": "c95d9c15aa27333b8d414df6256a78552145c38b074f76d2dd28cd53e4afbdf7",
+      "sourceSha256After": "c95d9c15aa27333b8d414df6256a78552145c38b074f76d2dd28cd53e4afbdf7",
+      "destination": "/private/tmp/sansu-authored-shoulder-c2/prepared/collect-installed-dependencies.mjs",
+      "destinationSha256": "85d0377a22ae5f11053b1b3737524f508717cda70436efb621ffed40dbd21375",
+      "changes": "Only c2 paths/revision/port; core docstring identity updated"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c1/prepared/snapshot.mjs",
+      "sourceSha256Before": "2effc4f08353496ec2a2b171a3573476bc1360b927c1ee6e8f4c009cd9f2a3c4",
+      "sourceSha256After": "2effc4f08353496ec2a2b171a3573476bc1360b927c1ee6e8f4c009cd9f2a3c4",
+      "destination": "/private/tmp/sansu-authored-shoulder-c2/prepared/snapshot.mjs",
+      "destinationSha256": "ffa7d75e1f693c6674294fb2818f0ff42bef468712dac19a7e2ca445bb0b338a",
+      "changes": "Only c2 paths/revision/port; core docstring identity updated"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c1/prepared/check-driver-imports.mjs",
+      "sourceSha256Before": "5388ba2b74ee697f35acdcf76b9d8d231f5038c0b7909ef36649b9d290907e3a",
+      "sourceSha256After": "5388ba2b74ee697f35acdcf76b9d8d231f5038c0b7909ef36649b9d290907e3a",
+      "destination": "/private/tmp/sansu-authored-shoulder-c2/prepared/check-driver-imports.mjs",
+      "destinationSha256": "74f17976bd655f794b2c2c2774221019576afdfb6d83d28bf7cda0ad0218ce27",
+      "changes": "Only c2 paths/revision/port; core docstring identity updated"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c1/prepared/check-harness-inputs.mjs",
+      "sourceSha256Before": "9a2b8646f5f95ea9bfa0dc410d96f65beb223dc3bf1b7b25787ac89357d3d4c2",
+      "sourceSha256After": "9a2b8646f5f95ea9bfa0dc410d96f65beb223dc3bf1b7b25787ac89357d3d4c2",
+      "destination": "/private/tmp/sansu-authored-shoulder-c2/prepared/check-harness-inputs.mjs",
+      "destinationSha256": "5c91b75642e68857106f928e59c7b52f087c5b2770962bb8903bae2c8ed9b1f9",
+      "changes": "Only c2 paths/revision/port; core docstring identity updated"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c1/prepared/core.py",
+      "sourceSha256Before": "ebb0ddfc88cd98854a56c170a293ca7a54cd6fdda1ac96ec12b513fd989462e9",
+      "sourceSha256After": "ebb0ddfc88cd98854a56c170a293ca7a54cd6fdda1ac96ec12b513fd989462e9",
+      "destination": "/private/tmp/sansu-authored-shoulder-c2/prepared/core.py",
+      "destinationSha256": "a3f4d8854fe714ede83d8552366b100ce8de7aca4f5ffd2482163e9a7ec113a3",
+      "changes": "Only c2 paths/revision/port; core docstring identity updated"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c1/prepared/regressions.py",
+      "sourceSha256Before": "deffbce627f91546e83a4fbbbf24745162613a15efa76478e84ead275f40b333",
+      "sourceSha256After": "deffbce627f91546e83a4fbbbf24745162613a15efa76478e84ead275f40b333",
+      "destination": "/private/tmp/sansu-authored-shoulder-c2/prepared/regressions.py",
+      "destinationSha256": "c7b14ec8107ae17b6cb9e4afda1b935b4cc0dcb84b466af86e25430ac64f19ca",
+      "changes": "Only c2 paths/revision/port; core docstring identity updated"
+    }
+  ],
+  "c1FilesUnchanged": true,
+  "syntaxChecks": [
+    {
+      "file": "closure.py",
+      "check": "Python AST only",
+      "pass": true
+    },
+    {
+      "file": "collect-installed-dependencies.mjs",
+      "check": "node --check syntax only",
+      "pass": true,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "snapshot.mjs",
+      "check": "node --check syntax only",
+      "pass": true,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "check-driver-imports.mjs",
+      "check": "node --check syntax only",
+      "pass": true,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "check-harness-inputs.mjs",
+      "check": "node --check syntax only",
+      "pass": true,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "file": "core.py",
+      "check": "Python AST only",
+      "pass": true
+    },
+    {
+      "file": "regressions.py",
+      "check": "Python AST only",
+      "pass": true
+    }
+  ],
+  "regressionPlan": [
+    {
+      "name": "01-floor-shading-ab",
+      "command": [
+        "node",
+        "tools/e2e-authored-floor-shading.mjs"
+      ],
+      "environmentOverrides": {
+        "SANSU_FLOOR_SHADING_URL": "http://127.0.0.1:5359/prototypes/place-qa/authored.html?water=wide&reference=preflight32&cove=corner",
+        "SANSU_FLOOR_SHADING_OUTPUT": "/private/tmp/sansu-authored-shoulder-c2/regressions/01-floor-shading-ab/actual",
+        "SANSU_FLOOR_SHADING_BUILD": "authored-shoulder-c2"
+      },
+      "scope": "Same 32-owner physical world/camera; legacy/source normals and material A/B, 10 actual views and 5 pairs; no art or performance pass",
+      "requiredServerConfiguration": {
+        "url": "http://127.0.0.1:5359",
+        "revision": "authored-shoulder-c2",
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_NATIVE_GROWING_ART": "false"
+      },
+      "reportRelative": "actual/report.json",
+      "timeoutSeconds": 1800,
+      "deadlineScope": "Outer command termination only; completion does not establish a performance pass"
+    },
+    {
+      "name": "02-shoulder-full",
+      "command": [
+        "node",
+        "tools/e2e-authored-shoulder.mjs"
+      ],
+      "environmentOverrides": {
+        "SANSU_AUTHORED_SHOULDER_URL": "http://127.0.0.1:5359/prototypes/place-qa/authored.html?water=wide&cove=corner&shoulder=central&ground=source",
+        "SANSU_AUTHORED_SHOULDER_OUTPUT": "/private/tmp/sansu-authored-shoulder-c2/regressions/02-shoulder-full/actual",
+        "SANSU_AUTHORED_SHOULDER_BUILD": "authored-shoulder-c2",
+        "SANSU_AUTHORED_SHOULDER_SHAPE_ONLY": "0",
+        "SANSU_AUTHORED_SHOULDER_CORE_REPORT": "/private/tmp/sansu-authored-shoulder-c2/core/report.json",
+        "SANSU_AUTHORED_SHOULDER_TIMEOUT_MS": "180000"
+      },
+      "scope": "Both full scopes: preflight32 actual diagnostic purchase/nature journey and fixed shoulder35 editing; synthetic inputs, no personal save or whole M1 acceptance",
+      "requiredServerConfiguration": {
+        "url": "http://127.0.0.1:5359",
+        "revision": "authored-shoulder-c2",
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_NATIVE_GROWING_ART": "false"
+      },
+      "reportRelative": "actual/report.json",
+      "timeoutSeconds": 3600,
+      "deadlineScope": "Outer command termination only; completion does not establish a performance pass"
+    },
+    {
+      "name": "03-baseline27-editing",
+      "command": [
+        "node",
+        "tools/e2e-authored-island-editing.mjs"
+      ],
+      "environmentOverrides": {
+        "SANSU_AUTHORED_EDIT_URL": "http://127.0.0.1:5359/prototypes/place-qa/authored.html?ground=legacy",
+        "SANSU_AUTHORED_EDIT_OUTPUT": "/private/tmp/sansu-authored-shoulder-c2/regressions/03-baseline27-editing/actual",
+        "SANSU_AUTHORED_EDIT_HEADED": "0"
+      },
+      "scope": "Existing baseline27 real pointer editing plus phone/tablet, no shoulder",
+      "requiredServerConfiguration": {
+        "url": "http://127.0.0.1:5359",
+        "revision": "authored-shoulder-c2",
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_NATIVE_GROWING_ART": "false"
+      },
+      "reportRelative": "actual/report.json",
+      "timeoutSeconds": 600,
+      "deadlineScope": "Outer command termination only; completion does not establish a performance pass"
+    },
+    {
+      "name": "04-wide27-water",
+      "command": [
+        "node",
+        "tools/e2e-authored-water.mjs"
+      ],
+      "environmentOverrides": {
+        "SANSU_AUTHORED_WATER_URL": "http://127.0.0.1:5359/prototypes/place-qa/authored.html?water=wide&ground=legacy",
+        "SANSU_AUTHORED_WATER_OUTPUT": "/private/tmp/sansu-authored-shoulder-c2/regressions/04-wide27-water/actual"
+      },
+      "scope": "Existing wide-water27 real pointer edits plus phone/tablet, no shoulder",
+      "requiredServerConfiguration": {
+        "url": "http://127.0.0.1:5359",
+        "revision": "authored-shoulder-c2",
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_NATIVE_GROWING_ART": "false"
+      },
+      "reportRelative": "actual/report.json",
+      "timeoutSeconds": 600,
+      "deadlineScope": "Outer command termination only; completion does not establish a performance pass"
+    },
+    {
+      "name": "05-authored-flower-full-cove-off",
+      "command": [
+        "node",
+        "tools/e2e-authored-flower.mjs"
+      ],
+      "environmentOverrides": {
+        "SANSU_AUTHORED_FLOWER_URL": "http://127.0.0.1:5359/prototypes/place-qa/authored.html?water=wide&reference=preflight32&cove=false&ground=legacy",
+        "SANSU_AUTHORED_FLOWER_OUTPUT": "/private/tmp/sansu-authored-shoulder-c2/regressions/05-authored-flower-full-cove-off/actual",
+        "SANSU_AUTHORED_FLOWER_BUILD": "authored-shoulder-c2",
+        "SANSU_AUTHORED_FLOWER_SHAPE_ONLY": "0",
+        "SANSU_AUTHORED_FLOWER_RAY_ONLY": "0"
+      },
+      "scope": "Full mature/young 32-owner flower journey with cove and shoulder disabled; 12 views, four canvas selections, cancel/split/store/restore",
+      "requiredServerConfiguration": {
+        "url": "http://127.0.0.1:5359",
+        "revision": "authored-shoulder-c2",
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_NATIVE_GROWING_ART": "false"
+      },
+      "reportRelative": "actual/report.json",
+      "timeoutSeconds": 2400,
+      "deadlineScope": "Outer command termination only; completion does not establish a performance pass"
+    },
+    {
+      "name": "06-authored-cove-full",
+      "command": [
+        "node",
+        "tools/e2e-authored-cove.mjs"
+      ],
+      "environmentOverrides": {
+        "SANSU_AUTHORED_COVE_URL": "http://127.0.0.1:5359/prototypes/place-qa/authored.html?water=wide&reference=preflight32&cove=corner&ground=legacy",
+        "SANSU_AUTHORED_COVE_OUTPUT": "/private/tmp/sansu-authored-shoulder-c2/regressions/06-authored-cove-full/actual",
+        "SANSU_AUTHORED_COVE_BUILD": "authored-shoulder-c2",
+        "SANSU_AUTHORED_COVE_SHAPE_ONLY": "0"
+      },
+      "scope": "Full existing 32-owner cove journey with source legacy floor and no shoulder; original strict cove candidate remains required",
+      "requiredServerConfiguration": {
+        "url": "http://127.0.0.1:5359",
+        "revision": "authored-shoulder-c2",
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_NATIVE_GROWING_ART": "false"
+      },
+      "reportRelative": "actual/report.json",
+      "timeoutSeconds": 2400,
+      "deadlineScope": "Outer command termination only; completion does not establish a performance pass"
+    },
+    {
+      "name": "07-ordinary-growing-balance",
+      "command": [
+        "node",
+        "tools/e2e-growing-balance.mjs"
+      ],
+      "environmentOverrides": {
+        "SANSU_GROWING_URL": "http://127.0.0.1:5359",
+        "SANSU_GROWING_OUTPUT": "/private/tmp/sansu-authored-shoulder-c2/regressions/07-ordinary-growing-balance/actual"
+      },
+      "scope": "Ordinary Growing disposable profiles, real learning and explicit fixture scenarios, native=false",
+      "requiredServerConfiguration": {
+        "url": "http://127.0.0.1:5359",
+        "revision": "authored-shoulder-c2",
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_NATIVE_GROWING_ART": "false"
+      },
+      "reportRelative": "actual/report.json",
+      "timeoutSeconds": 900,
+      "deadlineScope": "Outer command termination only; completion does not establish a performance pass"
+    },
+    {
+      "name": "08-classic-smoke",
+      "command": [
+        "npm",
+        "run",
+        "e2e:smoke"
+      ],
+      "environmentOverrides": {
+        "VITE_ISLAND_ENABLED": "false",
+        "VITE_NATIVE_GROWING_ART": "false",
+        "VITE_EXPLORE_EXPERIENCE": "classic-v1",
+        "SANSU_E2E_DIAGNOSTIC_DIR": "/private/tmp/sansu-authored-shoulder-c2/regressions/08-classic-smoke/diagnostics",
+        "SANSU_E2E_CAPTURE_DIR": "/private/tmp/sansu-authored-shoulder-c2/regressions/08-classic-smoke/captures"
+      },
+      "scope": "Full classic smoke, isolated owned server on an available 4173/4174/4175; disposable browser contexts",
+      "requiredServerConfiguration": {
+        "ownServer": true,
+        "portCandidates": [
+          4173,
+          4174,
+          4175
+        ],
+        "VITE_ISLAND_ENABLED": "false",
+        "VITE_NATIVE_GROWING_ART": "false"
+      },
+      "reportRelative": "diagnostics/smoke-report.json",
+      "timeoutSeconds": 2700,
+      "deadlineScope": "Outer command termination only; no performance acceptance"
+    }
+  ],
+  "eightStagePlanPass": true,
+  "coveCorrectedContractRetained": true,
+  "c1History": {
+    "firstFullFailure": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-shoulder-runtime/c1/regression-summary/README.md",
+    "shapeOnlyDiagnosis": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-shoulder-runtime/c1/shape-after-first-oom/README.md",
+    "scope": "Retain first failure and independent shape diagnosis. c2 is a new candidate; no evidence is reclassified or overwritten."
+  },
+  "futureSourceScope": "Root-confirmed three app/tool changes against c1: worldDefinition.ts exact-XZ index sharing, worldDefinition.test.ts one additional regression, e2e-authored-shoulder.mjs outer Map removal. Source/docs now frozen for collection.",
+  "readmeSha256": "a6079f291b7cfaee26af4a9f916e1b10d114a15f7c01f0c9fbd89503ffce10af",
+  "diffSha256": "3aa4bde0c715a4301ef9ef80266e735bb5da98f749662bce3c8ceb26000199ec",
+  "freezeAuthorizedAt": "2026-10-12T02:37:28.048423+00:00",
+  "preFreezePreparationPreserved": "/private/tmp/sansu-authored-shoulder-c2/prepared/before-freeze-scope-update"
+}

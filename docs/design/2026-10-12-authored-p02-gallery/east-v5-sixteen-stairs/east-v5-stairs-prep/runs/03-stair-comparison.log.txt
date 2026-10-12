@@ -1,0 +1,60 @@
+[
+  {
+    "n": 16,
+    "riserHeight": 0.08225046098232269,
+    "averageCenterlineRun": 0.18766021335110827,
+    "topology": {
+      "vertices": 2550,
+      "triangles": 5096,
+      "badEdges": 0,
+      "zeroArea": 0,
+      "duplicateTriangles": 0,
+      "components": 1,
+      "unusedVertices": 0,
+      "signedVolume": 0.2614977583966151,
+      "walkingNormalYFailures": 0
+    },
+    "neutral": {
+      "checks": 576,
+      "failed": 0,
+      "minMargin": 0.015941620525242995,
+      "maxUncoveredArea": 3.469446951953614e-18
+    },
+    "currentGallerySamples": {
+      "checks": 5184,
+      "failed": 0,
+      "minMargin": 0.015941620525242995,
+      "maxUncoveredArea": 5.204170427930421e-18,
+      "meaning": "Plan projection only; sampled current swing is not a valid stair pose nor a proof of continuous riser clearance"
+    }
+  },
+  {
+    "n": 18,
+    "riserHeight": 0.07311152087317573,
+    "averageCenterlineRun": 0.16680907853431848,
+    "topology": {
+      "vertices": 2584,
+      "triangles": 5164,
+      "badEdges": 0,
+      "zeroArea": 0,
+      "duplicateTriangles": 0,
+      "components": 1,
+      "unusedVertices": 0,
+      "signedVolume": 0.252718502806848,
+      "walkingNormalYFailures": 0
+    },
+    "neutral": {
+      "checks": 648,
+      "failed": 0,
+      "minMargin": 0.005739746638736423,
+      "maxUncoveredArea": 3.469446951953614e-18
+    },
+    "currentGallerySamples": {
+      "checks": 5832,
+      "failed": 0,
+      "minMargin": 0.005739746638736423,
+      "maxUncoveredArea": 8.673617379884035e-18,
+      "meaning": "Plan projection only; sampled current swing is not a valid stair pose nor a proof of continuous riser clearance"
+    }
+  }
+]

@@ -1,0 +1,738 @@
+{
+  "status": "SURVEY_COMPLETED_ALL_THREE_GEOMETRIC_HOLD",
+  "startUtc": "2026-10-12T04:08:10.536360+00:00",
+  "endUtc": "2026-10-12T04:08:19.291808+00:00",
+  "supervisorPid": 23129,
+  "ownedBlenderProcesses": [
+    {
+      "pid": 23131,
+      "parentPid": 23129,
+      "firstObservedUtc": "2026-10-12T04:08:11.133610+00:00",
+      "command": "/Applications/Blender.app/Contents/MacOS/Blender",
+      "lastObservedUtc": "2026-10-12T04:08:18.238139+00:00",
+      "peakObservedRssBytes": 735150080
+    }
+  ],
+  "supervisor": {
+    "command": [
+      "/Applications/Blender.app/Contents/MacOS/Blender",
+      "-b",
+      "--threads",
+      "2",
+      "--python-exit-code",
+      "1",
+      "--python",
+      "source-study.py",
+      "--",
+      "measure",
+      "--scheduled",
+      "--out",
+      "runs/03-survey"
+    ],
+    "exitCode": 0,
+    "stop": null,
+    "peakSampledRssBytes": 732119040,
+    "elapsedSeconds": 8.237206082999998,
+    "limits": {
+      "seconds": 180,
+      "rssMiB": 2560
+    },
+    "sourceOnly": true
+  },
+  "sourceDonorParity": {
+    "status": "MATCH",
+    "donors": [
+      {
+        "name": "Grove / hollow dwelling floor",
+        "localMaxError": 0.0,
+        "matrixMaxError": 0.0,
+        "worldMaxError": 0.0
+      },
+      {
+        "name": "Grove / continuous bough gallery",
+        "localMaxError": 0.0,
+        "matrixMaxError": 0.0,
+        "worldMaxError": 0.0
+      },
+      {
+        "name": "Grove / gallery grown support",
+        "localMaxError": 0.0,
+        "matrixMaxError": 0.0,
+        "worldMaxError": 0.0
+      },
+      {
+        "name": "Grove / great root house trunk",
+        "localMaxError": 0.0,
+        "matrixMaxError": 0.0,
+        "worldMaxError": 0.0
+      }
+    ]
+  },
+  "authoredDonorParity": {
+    "status": "MATCH",
+    "allLocalGeometryUnchanged": true,
+    "donors": [
+      {
+        "name": "Grove / hollow dwelling floor",
+        "localMaxError": 0.0,
+        "matrixMaxError": 0.0,
+        "worldMaxError": 0.0
+      },
+      {
+        "name": "Grove / continuous bough gallery",
+        "localMaxError": 0.0,
+        "matrixMaxError": 0.0,
+        "worldMaxError": 0.0
+      },
+      {
+        "name": "Grove / gallery grown support",
+        "localMaxError": 0.0,
+        "matrixMaxError": 0.0,
+        "worldMaxError": 0.0
+      },
+      {
+        "name": "Grove / great root house trunk",
+        "localMaxError": 0.0,
+        "matrixMaxError": 0.0,
+        "worldMaxError": 0.0
+      }
+    ]
+  },
+  "selectedIndex": null,
+  "measuredHeightsAndArc": {
+    "interiorTopY": 1.6814100742340088,
+    "galleryStartY": 2.734410285949707,
+    "rampRise": 1.0530002117156982,
+    "rampHorizontalRun": 2.8749063438850593,
+    "maximumSampledRampSlope": 0.5494000019173765
+  },
+  "openingSurvey": [
+    {
+      "sectionZ": -7.924751281738281,
+      "widths": [
+        {
+          "heightAboveFloor": 0.08,
+          "leftContact": null,
+          "rightContact": null,
+          "clearRayWidth": null
+        },
+        {
+          "heightAboveFloor": 0.28,
+          "leftContact": null,
+          "rightContact": null,
+          "clearRayWidth": null
+        },
+        {
+          "heightAboveFloor": 0.590092887975358,
+          "leftContact": null,
+          "rightContact": null,
+          "clearRayWidth": null
+        }
+      ],
+      "headContact": null,
+      "headClearance": null,
+      "insideVolumeProof": "PENDING"
+    },
+    {
+      "sectionZ": -8.074751281738282,
+      "widths": [
+        {
+          "heightAboveFloor": 0.08,
+          "leftContact": [
+            3.1445000171661377,
+            1.761410117149353,
+            -8.074750900268555
+          ],
+          "rightContact": [
+            3.765500068664551,
+            1.761410117149353,
+            -8.074750900268555
+          ],
+          "clearRayWidth": 0.6210000514984131
+        },
+        {
+          "heightAboveFloor": 0.28,
+          "leftContact": [
+            3.1445000171661377,
+            1.9614100456237793,
+            -8.074750900268555
+          ],
+          "rightContact": [
+            3.765500068664551,
+            1.9614100456237793,
+            -8.074750900268555
+          ],
+          "clearRayWidth": 0.6210000514984131
+        },
+        {
+          "heightAboveFloor": 0.590092887975358,
+          "leftContact": [
+            3.1445000171661377,
+            2.27150297164917,
+            -8.074750900268555
+          ],
+          "rightContact": null,
+          "clearRayWidth": null
+        }
+      ],
+      "headContact": [
+        3.4549999237060547,
+        2.5971603393554688,
+        -8.074750900268555
+      ],
+      "headClearance": 0.9157500991821289,
+      "insideVolumeProof": "PENDING"
+    },
+    {
+      "sectionZ": -8.356000900268555,
+      "widths": [
+        {
+          "heightAboveFloor": 0.08,
+          "leftContact": [
+            3.1445000171661377,
+            1.761410117149353,
+            -8.356000900268555
+          ],
+          "rightContact": [
+            3.765500068664551,
+            1.761410117149353,
+            -8.356000900268555
+          ],
+          "clearRayWidth": 0.6210000514984131
+        },
+        {
+          "heightAboveFloor": 0.28,
+          "leftContact": [
+            3.1445000171661377,
+            1.9614100456237793,
+            -8.356000900268555
+          ],
+          "rightContact": [
+            3.765500068664551,
+            1.9614100456237793,
+            -8.356000900268555
+          ],
+          "clearRayWidth": 0.6210000514984131
+        },
+        {
+          "heightAboveFloor": 0.590092887975358,
+          "leftContact": [
+            3.1445000171661377,
+            2.27150297164917,
+            -8.356000900268555
+          ],
+          "rightContact": [
+            3.765500068664551,
+            2.27150297164917,
+            -8.356000900268555
+          ],
+          "clearRayWidth": 0.6210000514984131
+        }
+      ],
+      "headContact": [
+        3.4549999237060547,
+        2.5971601009368896,
+        -8.356000900268555
+      ],
+      "headClearance": 0.9157499799728394,
+      "insideVolumeProof": "PENDING"
+    }
+  ],
+  "candidates": [
+    {
+      "entry": [
+        3.0,
+        1.5630645751953125,
+        -7.25
+      ],
+      "status": "HOLD",
+      "coarseClear": false,
+      "holdReasons": [
+        "ramp:full-width-flat-ground-seam",
+        "interiorSpur:full-width-flat-ground-seam",
+        "ramp:buried-or-coplanar-top",
+        "interiorSpur:buried-or-coplanar-top",
+        "sampled-body-intersection"
+      ],
+      "sampledBodyIntersectionCount": 159,
+      "sampledNativeInteriorWidthAllSupported": true,
+      "seams": {
+        "ramp": {
+          "flatLandingGapRange": [
+            -0.006655950048551684,
+            0.030747247674667744
+          ],
+          "supportedFullWidth": true,
+          "flatLandingMatchesGround": false,
+          "uncovered": [],
+          "discontinuities": []
+        },
+        "interiorSpur": {
+          "flatLandingGapRange": [
+            -0.011812254310530124,
+            0.018887848936485874
+          ],
+          "supportedFullWidth": true,
+          "flatLandingMatchesGround": false,
+          "uncovered": [],
+          "discontinuities": []
+        }
+      },
+      "groundRelations": {
+        "ramp": {
+          "minGap": -0.006655950048551018,
+          "maxGap": 1.7569576722085283,
+          "buriedPolygons": 485,
+          "coplanarTopArea": 0.0,
+          "clear": false
+        },
+        "interiorSpur": {
+          "minGap": -0.012390991545995433,
+          "maxGap": 0.1775606528336804,
+          "buriedPolygons": 302,
+          "coplanarTopArea": 0.0,
+          "clear": false
+        },
+        "nativeInterior": {
+          "minGap": 0.01922630725708996,
+          "maxGap": 0.2914243569303019,
+          "buriedPolygons": 0,
+          "coplanarTopArea": 0.0,
+          "clear": true
+        }
+      },
+      "slopes": {
+        "groundToRamp": {
+          "horizontalRun": 0.9506894110626647,
+          "signedRise": 0.11834549903869629,
+          "maximumAbsoluteSlope": 0.12448488797559228,
+          "verticalSegments": 0
+        },
+        "groundToInterior": {
+          "horizontalRun": 1.2450765183013046,
+          "signedRise": 0.11834549903869629,
+          "maximumAbsoluteSlope": 0.14542069313972217,
+          "verticalSegments": 0
+        },
+        "rampArc": {
+          "horizontalRun": 2.8746796401836505,
+          "signedRise": 1.0530002117156982,
+          "maximumAbsoluteSlope": 0.5494000019173765,
+          "verticalSegments": 0
+        },
+        "shortGallery": {
+          "horizontalRun": 0.5061053543267338,
+          "signedRise": 0.0,
+          "maximumAbsoluteSlope": 0.0,
+          "verticalSegments": 0
+        },
+        "fullJourney": {
+          "horizontalRun": 11.153101847930694,
+          "signedRise": 0.0,
+          "maximumAbsoluteSlope": 0.5494030253905337,
+          "verticalSegments": 0
+        }
+      }
+    },
+    {
+      "entry": [
+        3.75,
+        1.6333465576171875,
+        -7.25
+      ],
+      "status": "HOLD",
+      "coarseClear": false,
+      "holdReasons": [
+        "ramp:full-width-flat-ground-seam",
+        "interiorSpur:full-width-flat-ground-seam",
+        "ramp:buried-or-coplanar-top",
+        "interiorSpur:buried-or-coplanar-top",
+        "sampled-body-intersection"
+      ],
+      "sampledBodyIntersectionCount": 142,
+      "sampledNativeInteriorWidthAllSupported": true,
+      "seams": {
+        "ramp": {
+          "flatLandingGapRange": [
+            -0.0016046639968743115,
+            0.017631179280757525
+          ],
+          "supportedFullWidth": true,
+          "flatLandingMatchesGround": false,
+          "uncovered": [],
+          "discontinuities": []
+        },
+        "interiorSpur": {
+          "flatLandingGapRange": [
+            -0.03278639975297337,
+            0.03414572237870139
+          ],
+          "supportedFullWidth": true,
+          "flatLandingMatchesGround": false,
+          "uncovered": [],
+          "discontinuities": []
+        }
+      },
+      "groundRelations": {
+        "ramp": {
+          "minGap": -0.004685281403501662,
+          "maxGap": 1.7569576722085283,
+          "buriedPolygons": 55,
+          "coplanarTopArea": 0.0,
+          "clear": false
+        },
+        "interiorSpur": {
+          "minGap": -0.03278639975297337,
+          "maxGap": 0.1775606528336804,
+          "buriedPolygons": 173,
+          "coplanarTopArea": 0.0,
+          "clear": false
+        },
+        "nativeInterior": {
+          "minGap": 0.01922630725708996,
+          "maxGap": 0.2914243569303019,
+          "buriedPolygons": 0,
+          "coplanarTopArea": 0.0,
+          "clear": true
+        }
+      },
+      "slopes": {
+        "groundToRamp": {
+          "horizontalRun": 0.253958543553264,
+          "signedRise": 0.04806351661682129,
+          "maximumAbsoluteSlope": 0.18925857221965153,
+          "verticalSegments": 0
+        },
+        "groundToInterior": {
+          "horizontalRun": 1.1676695647726243,
+          "signedRise": 0.04806351661682129,
+          "maximumAbsoluteSlope": 0.06526875637817565,
+          "verticalSegments": 0
+        },
+        "rampArc": {
+          "horizontalRun": 2.8746796401836505,
+          "signedRise": 1.0530002117156982,
+          "maximumAbsoluteSlope": 0.5494000019173765,
+          "verticalSegments": 0
+        },
+        "shortGallery": {
+          "horizontalRun": 0.5061053543267338,
+          "signedRise": 0.0,
+          "maximumAbsoluteSlope": 0.0,
+          "verticalSegments": 0
+        },
+        "fullJourney": {
+          "horizontalRun": 9.604826205853715,
+          "signedRise": 0.0,
+          "maximumAbsoluteSlope": 0.5494030253905337,
+          "verticalSegments": 0
+        }
+      }
+    },
+    {
+      "entry": [
+        4.0,
+        1.6509284973144531,
+        -7.25
+      ],
+      "status": "HOLD",
+      "coarseClear": false,
+      "holdReasons": [
+        "ramp:full-width-flat-ground-seam",
+        "interiorSpur:full-width-flat-ground-seam",
+        "ramp:buried-or-coplanar-top",
+        "interiorSpur:buried-or-coplanar-top",
+        "sampled-body-intersection"
+      ],
+      "sampledBodyIntersectionCount": 144,
+      "sampledNativeInteriorWidthAllSupported": true,
+      "seams": {
+        "ramp": {
+          "flatLandingGapRange": [
+            -0.03292056061465942,
+            0.03390726249339471
+          ],
+          "supportedFullWidth": true,
+          "flatLandingMatchesGround": false,
+          "uncovered": [],
+          "discontinuities": []
+        },
+        "interiorSpur": {
+          "flatLandingGapRange": [
+            -0.03706667080263504,
+            0.043465369517027064
+          ],
+          "supportedFullWidth": true,
+          "flatLandingMatchesGround": false,
+          "uncovered": [],
+          "discontinuities": []
+        }
+      },
+      "groundRelations": {
+        "ramp": {
+          "minGap": -0.03292056061465942,
+          "maxGap": 1.7569576722085283,
+          "buriedPolygons": 98,
+          "coplanarTopArea": 0.0,
+          "clear": false
+        },
+        "interiorSpur": {
+          "minGap": -0.03706667080263504,
+          "maxGap": 0.1775606528336804,
+          "buriedPolygons": 299,
+          "coplanarTopArea": 0.0,
+          "clear": false
+        },
+        "nativeInterior": {
+          "minGap": 0.01922630725708996,
+          "maxGap": 0.2914243569303019,
+          "buriedPolygons": 0,
+          "coplanarTopArea": 0.0,
+          "clear": true
+        }
+      },
+      "slopes": {
+        "groundToRamp": {
+          "horizontalRun": 0.1863414527981034,
+          "signedRise": 0.030481576919555664,
+          "maximumAbsoluteSlope": 0.16358160770684096,
+          "verticalSegments": 0
+        },
+        "groundToInterior": {
+          "horizontalRun": 1.2986101983282707,
+          "signedRise": 0.030481576919555664,
+          "maximumAbsoluteSlope": 0.035146304027783834,
+          "verticalSegments": 0
+        },
+        "rampArc": {
+          "horizontalRun": 2.8746796401836505,
+          "signedRise": 1.0530002117156982,
+          "maximumAbsoluteSlope": 0.5494000019173765,
+          "verticalSegments": 0
+        },
+        "shortGallery": {
+          "horizontalRun": 0.5061053543267338,
+          "signedRise": 0.0,
+          "maximumAbsoluteSlope": 0.0,
+          "verticalSegments": 0
+        },
+        "fullJourney": {
+          "horizontalRun": 9.731473291454687,
+          "signedRise": 0.0,
+          "maximumAbsoluteSlope": 0.5494030253905337,
+          "verticalSegments": 0
+        }
+      }
+    }
+  ],
+  "failureClassification": {
+    "run01": "Discarded source-floor object translation: raw doorway/internal rise and collision interpretation invalid; preserved, not overwritten.",
+    "run02": "Mutable destination-list replaced donor strings with Objects, throwing before parity; no geometric measurements.",
+    "run03": "Donor source and transform checks match for all four; geometric flat-entry/HOLD results now measurable. This does not establish full swept-rig clearance, source art acceptance or runtime use."
+  },
+  "preLinkFloorEvidence": {
+    "referenceName": "Grove / hollow dwelling floor",
+    "matrixBasis": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        -4.900000095367432
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        16.68000030517578
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        4.157769680023193
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "matrixWorld": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "parent": null
+  },
+  "updatedSourceFloorEvidence": {
+    "matrixBasis": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        -4.900000095367432
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        16.68000030517578
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        4.157769680023193
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "matrixWorld": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        -4.900000095367432
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        16.68000030517578
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        4.157769680023193
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "evaluatedMatrixWorld": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        -4.900000095367432
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        16.68000030517578
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        4.157769680023193
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "preservation": {
+    "originalRunsRehashedUnchanged": {
+      "01": true,
+      "02": true
+    },
+    "inputsUnchanged": true,
+    "scriptsUnchanged": true,
+    "manifestBeforeAfterEqual": true
+  },
+  "limits": [
+    "Conservative sampled boxes, not exact swept animated-rig proof",
+    "Native interior width sampled on its flat middle only",
+    "Box checks find triangle intersections, not enclosed-volume containment",
+    "Openings retain original meshes; no manifold/interior winding proof yet",
+    "No proof of ground HOME reachability or all owner approaches",
+    "No automatic source doorway cutting",
+    "No art/physics PASS"
+  ],
+  "buildRenderOrFurtherRetries": false,
+  "files": {
+    "runs/03-survey/candidate-0.json": {
+      "sha256": "0a14b9fc0b83233cfa8f1e6b524b966c60ff0a22679debcaa72102c677350f1b",
+      "bytes": 876378
+    },
+    "runs/03-survey/candidate-1.json": {
+      "sha256": "8f3406b4767d9b44c425d7388980aa11cf8daa707601c532c28f7142fd9195bf",
+      "bytes": 423638
+    },
+    "runs/03-survey/candidate-2.json": {
+      "sha256": "bd0e10d4248fe9ccc6d6a4542d8619663378dfcf451cef7b1eecb2283b91c065",
+      "bytes": 547792
+    },
+    "runs/03-survey/candidates-partial.json": {
+      "sha256": "e367cb7af48e6f29b7c00d54d5069556be701b087a4f9704cc5e4cfa6d9e8b69",
+      "bytes": 2185971
+    },
+    "runs/03-survey/donor-authored-parity.json": {
+      "sha256": "260090547b1fab9ef2151056f4089791381f4c00da2fe585ed63c0297e431874",
+      "bytes": 22237
+    },
+    "runs/03-survey/donor-source-parity.json": {
+      "sha256": "5a5fe4100ed45b64d2eb3e6ab41654f9c2c6f63bc1c684c34cd2010382ccf917",
+      "bytes": 26545
+    },
+    "runs/03-survey/execution.json": {
+      "sha256": "7091eb51482546dc5ca2c525f4d8818adb4a2977a9b05669e7c0d4ba56f1f59b",
+      "bytes": 1514
+    },
+    "runs/03-survey/measurement.json": {
+      "sha256": "252f75dce85a7ebd73100c322f960cda8e1c29bc95f6103b30ac1a708965e6c0",
+      "bytes": 2190266
+    },
+    "runs/03-survey-observation.json": {
+      "sha256": "2463fd18d7615070dbf4c4440773d3b03c2c98e6f21fe68e89b128d3a42794e2",
+      "bytes": 4094
+    },
+    "runs/03-survey-supervisor-output.log.txt": {
+      "sha256": "a4b356410fc0d89ca6ed426af6a04e9e4d7ecaf23aa76a397c6ad9fd41797425",
+      "bytes": 371
+    },
+    "runs/03-survey.log.txt": {
+      "sha256": "a5c8d6ffb1388a4f5b9a60abab8825e1ea6d19ab2fd7eed67d76f556dceaa449",
+      "bytes": 18601
+    },
+    "runs/03-survey.log.txt.json": {
+      "sha256": "7c4d5f777caf62661b785b8af4a0ca516cd3320647eb9fc76a3e1733ebbe0b08",
+      "bytes": 455
+    }
+  }
+}

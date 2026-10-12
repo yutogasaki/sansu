@@ -1,0 +1,96 @@
+"""GLB accessors and oriented triangle/NORMAL matching without welding."""
+import json
+import math
+import struct
+from collections import defaultdict
+
+
+def read(path, g):
+    data = path.read_bytes()
+    assert data[:4]==b'glTF' and struct.unpack_from('<II',data,4)==(2,len(data))
+    offset=12;doc=None;binary=None
+    while offset<len(data):
+        n,kind=struct.unpack_from('<II',data,offset)
+        chunk=data[offset+8:offset+8+n];offset+=8+n
+        if kind==0x4e4f534a:doc=json.loads(chunk)
+        elif kind==0x004e4942:binary=chunk
+    assert offset==len(data) and doc is not None and binary is not None
+    def accessor(index):
+        a=doc['accessors'][index];v=doc['bufferViews'][a['bufferView']]
+        assert 'sparse' not in a and not a.get('normalized',False)
+        width={'SCALAR':1,'VEC3':3}[a['type']]
+        code={5121:'B',5123:'H',5125:'I',5126:'f'}[a['componentType']]
+        fmt='<'+code*width;size=struct.calcsize(fmt);stride=v.get('byteStride',size)
+        start=v.get('byteOffset',0)+a.get('byteOffset',0)
+        return [list(struct.unpack_from(fmt,binary,start+i*stride)) for i in range(a['count'])],code
+    def matrix(node):
+        if 'matrix' in node:return [[node['matrix'][c*4+r] for c in range(4)] for r in range(4)]
+        x,y,z,w=node.get('rotation',[0,0,0,1]);s=node.get('scale',[1,1,1]);t=node.get('translation',[0,0,0])
+        m=[[1-2*y*y-2*z*z,2*x*y-2*z*w,2*x*z+2*y*w],
+           [2*x*y+2*z*w,1-2*x*x-2*z*z,2*y*z-2*x*w],
+           [2*x*z-2*y*w,2*y*z+2*x*w,1-2*x*x-2*y*y]]
+        return [[m[r][c]*s[c] for c in range(3)]+[t[r]] for r in range(3)]+[[0,0,0,1]]
+    parents={child:i for i,n in enumerate(doc.get('nodes',[])) for child in n.get('children',[])}
+    cache={}
+    def world(index):
+        if index not in cache:
+            local=matrix(doc['nodes'][index]);cache[index]=g.multiply(world(parents[index]),local) if index in parents else local
+        return cache[index]
+    rows=[]
+    for ni,node in enumerate(doc.get('nodes',[])):
+        if 'mesh' not in node:continue
+        parts=[];triangles=[]
+        for primitive in doc['meshes'][node['mesh']]['primitives']:
+            if primitive.get('mode',4)!=4:continue
+            p,_=accessor(primitive['attributes']['POSITION']);n,_=accessor(primitive['attributes']['NORMAL'])
+            ii,code=accessor(primitive['indices']);indices=[v[0] for v in ii]
+            assert len(indices)%3==0 and len(p)==len(n)
+            part={'positions':p,'normals':n,'indices':indices,'indexComponentCode':code,'material':primitive.get('material')}
+            parts.append(part)
+            for start in range(0,len(indices),3):
+                ids=indices[start:start+3]
+                triangles.append({'positions':[p[i] for i in ids],'normals':[n[i] for i in ids]})
+        rows.append({'node':node,'index':ni,'world':world(ni),'parts':parts,'triangles':triangles})
+    return doc,rows
+
+
+def compare(actual,expected):
+    """Exact oriented positions, .002 corner NORMAL; also handles fixed zero faces.
+
+    No factorial search. Duplicate triangles use bipartite matching at the
+    unchanged threshold. Degenerate fixed source faces are retained and matched,
+    not removed or used to weaken positive-area candidate face gates.
+    """
+    def group(items):
+        result=defaultdict(list)
+        for t in items:
+            p=tuple(tuple(v) for v in t['positions']);n=t['normals'];assert len(p)==3
+            rotations=[p[i:]+p[:i] for i in range(3)];key=min(rotations)
+            result[key].append([n[i:]+n[:i] for i in range(3) if rotations[i]==key])
+        return result
+    a,b=group(actual),group(expected)
+    if a.keys()!=b.keys() or any(len(a[k])!=len(b[k]) for k in a):
+        return {'passed':False,'physicalTriangleMultisetExact':False,'normalMaxL2':None,
+                'actualTriangles':len(actual),'expectedTriangles':len(expected)}
+    maximum=0.;unmatched=0
+    for key,aa in a.items():
+        bb=b[key];costs=[[min(max(math.dist(x,y) for x,y in zip(an,bn)) for an in ax for bn in bx)
+                         for bx in bb] for ax in aa]
+        assigned={}
+        def match(i,seen):
+            for j in sorted(range(len(bb)),key=lambda k:costs[i][k]):
+                if costs[i][j]>.002 or j in seen:continue
+                seen.add(j)
+                if j not in assigned or match(assigned[j],seen):assigned[j]=i;return True
+            return False
+        for i in range(len(aa)):
+            if not match(i,set()):unmatched+=1
+        maximum=max(maximum,max((costs[i][j] for j,i in assigned.items()),default=0.))
+    return {'passed':unmatched==0,'physicalTriangleMultisetExact':True,'normalMaxL2':maximum,
+            'unmatchedNormalTriangles':unmatched,'orientedTriangleCount':len(actual),
+            'normalLimitUnchanged':.002,'weldOrPositionTolerance':False}
+
+
+def canonical_material(raw,checks):
+    out=checks.material_spec(raw);out['alphaCutoff']=raw.get('alphaCutoff',.5);out['extensions']=raw.get('extensions',{})
+    return out

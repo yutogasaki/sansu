@@ -1,0 +1,52 @@
+{
+  "status": "READY_TO_SCHEDULE; source extraction/Blender/render/geometry checks NOT EXECUTED",
+  "sourcePreparationOnly": true,
+  "runtimeIntegrated": false,
+  "independentObservers": 0,
+  "files": {
+    "README.md": {
+      "sha256": "2d4ea15d7066bef35ecf8849e74d035e140348855b5d0da963de13be26bbc2b0",
+      "bytes": 9253
+    },
+    "build-variants.py": {
+      "sha256": "666c67ec8ab86ed754c965fc30d543ed339fc24200e901711693f2d618e05117",
+      "bytes": 18004
+    },
+    "extract-context.mjs": {
+      "sha256": "7f02311bf61f6a96d9c5d49a73ba6fea47d410ad084f70a414bca53a28c9811c",
+      "bytes": 13086
+    },
+    "preparation.json": {
+      "sha256": "961ed502bfda6dd0baca0443c6c4df0d4592ba3e8d8e73febdbec125bbfe0025",
+      "bytes": 432
+    },
+    "prepare-study.py": {
+      "sha256": "510415124b187b37e7f07b75e634754f4bcfef82b5acbe06aeb324aa379278e0",
+      "bytes": 7377
+    },
+    "render-whole.py": {
+      "sha256": "b26481861617b984de2240911766fe412614cfc22fbd7426e6512f59aae0e725",
+      "bytes": 2358
+    },
+    "study.json": {
+      "sha256": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+      "bytes": 482322
+    }
+  },
+  "verification": [
+    "prepare-study metadata/SHA check",
+    "Python ast.parse only, no bpy import",
+    "node --check only",
+    "README relative links"
+  ],
+  "notExecuted": [
+    "domain assembly",
+    "original vertex decoding",
+    "Blender",
+    "render",
+    "heavy geometry audit",
+    "browser",
+    "build",
+    "core"
+  ]
+}

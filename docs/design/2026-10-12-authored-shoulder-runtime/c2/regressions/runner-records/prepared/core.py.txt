@@ -1,0 +1,120 @@
+#!/usr/bin/env python3
+"""Prepared shoulder c2 core runner. Does not collect source or execute without --start."""
+from pathlib import Path
+import argparse
+import hashlib
+import json
+import os
+import subprocess
+import signal
+import time
+
+BASE = Path('/private/tmp/sansu-authored-shoulder-c2')
+REPO = BASE / 'candidate'
+CLOSURE = BASE / 'closure/inputs.json'
+INSTALLED = BASE / 'closure/installed-dependencies.json'
+SNAPSHOT = BASE / 'snapshot.json'
+OUTPUT = BASE / 'core'
+REVISION = 'authored-shoulder-c2'
+DEADLINE = 7200
+
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--start', action='store_true', help='Run only after root confirms author freeze, snapshot and closure')
+    args = parser.parse_args()
+    if not args.start:
+        print(json.dumps({'prepared': True, 'executionStarted': False, 'inventoryCollected': False,
+                          'candidate': str(REPO), 'revision': REVISION, 'closure': str(CLOSURE),
+                          'snapshot': str(SNAPSHOT), 'output': str(OUTPUT), 'command': 'npm run verify:core', 'timeoutSeconds': DEADLINE}))
+        return 0
+    OUTPUT.mkdir(exist_ok=False)
+    report = {'target': str(REPO), 'revision': REVISION, 'command': 'npm run verify:core',
+              'startedAt': time.time(), 'pass': False, 'phase': 'fixed-source-preflight', 'timeoutSeconds': DEADLINE,
+              'deadlineScope': 'Outer command termination only; no performance acceptance'}
+    expected = None
+    installed_expected = None
+    process = None
+    report['runnerSha256'] = sha(Path(__file__))
+    def hashes():
+        # Strict reads: deleted or omitted inputs are failures, never dropped.
+        return {name: sha(REPO / name) for name in sorted(expected)}
+    def installed_hashes():
+        return {name: sha(REPO / name) for name in sorted(installed_expected)}
+    try:
+        expected = json.loads(CLOSURE.read_text())
+        installed_expected = json.loads(INSTALLED.read_text())
+        assert installed_expected.get('node_modules/.package-lock.json') and len(installed_expected) > 1
+        assert all(name.startswith('node_modules/') and '..' not in Path(name).parts for name in installed_expected)
+        assert not any('node_modules' in Path(name).parts for name in expected)
+        snapshot = json.loads(SNAPSHOT.read_text())
+        assert expected, 'An independently prepared source closure is required'
+        audit_path = BASE / 'closure/import-audit.json'
+        audit = json.loads(audit_path.read_text())
+        assert audit['pass'] is True and audit['repo'] == str(REPO), 'Candidate static import audit PASS is required'
+        report['importAuditSha256'] = sha(audit_path)
+        driver_audit_path = BASE / 'closure/driver-input-audit.json'
+        driver_audit = json.loads(driver_audit_path.read_text())
+        assert driver_audit['pass'] is True and driver_audit['repo'] == str(REPO), 'Actual shoulder input collector coverage PASS is required'
+        assert expected[driver_audit['driver']] == driver_audit['driverSha256']
+        report['driverInputAuditSha256'] = sha(driver_audit_path)
+        assert audit['installedDependenciesManifestSha256'] == sha(INSTALLED)
+        assert snapshot['installedDependenciesManifestSha256'] == sha(INSTALLED) and snapshot['installedDependenciesFixed'] is True
+        assert snapshot['initialInstalledDependencies'] == snapshot['finalInstalledDependencies'] == installed_expected
+        report.update(installedDependenciesManifestSha256=sha(INSTALLED), initialInstalledDependencies=installed_hashes())
+        assert report['initialInstalledDependencies'] == installed_expected, 'Installed dependency bytes changed since snapshot'
+        assert snapshot['dest'] == str(REPO) and snapshot['changedDuringCopy'] == [], 'Snapshot is not fixed'
+        assert all(snapshot['files'].get(name) == value for name, value in expected.items()), 'Closure differs from snapshot'
+        report.update(closureSha256=sha(CLOSURE), snapshotSha256=sha(SNAPSHOT), initialInputs=hashes())
+        assert report['initialInputs'] == expected, 'Candidate differs from frozen source closure'
+        report['phase'] = 'verify-core'
+        env = os.environ.copy()
+        removed = [name for name in env if name.startswith(('VITE_', 'SANSU_AUTHORED_', 'SANSU_FLOOR_SHADING_'))]
+        for name in removed: env.pop(name, None)
+        env.update({'SANSU_BUILD_REVISION': REVISION, 'VITE_ISLAND_ENABLED': 'true', 'VITE_NATIVE_GROWING_ART': 'false'})
+        report['removedInheritedTaskEnvironmentNames'] = sorted(removed)
+        report['environmentOverrides'] = {name: env[name] for name in ('SANSU_BUILD_REVISION', 'VITE_ISLAND_ENABLED', 'VITE_NATIVE_GROWING_ART')}
+        with (OUTPUT / 'execution.log.txt').open('xb') as log:
+            process = subprocess.Popen(['npm', 'run', 'verify:core'], cwd=REPO, env=env, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+            report['processId'] = process.pid
+            (OUTPUT / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
+            try: process.wait(timeout=DEADLINE)
+            except subprocess.TimeoutExpired:
+                report['timeout'] = True
+                os.killpg(process.pid, signal.SIGTERM)
+                try: process.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    os.killpg(process.pid, signal.SIGKILL); process.wait()
+        report.update(exitCode=process.returncode, finalInputs=hashes(), finalInstalledDependencies=installed_hashes())
+        report['installedDependenciesFixed'] = report['initialInstalledDependencies'] == installed_expected == report['finalInstalledDependencies']
+        report['sourceFixed'] = report['initialInputs'] == expected == report['finalInputs']
+        report['pass'] = process.returncode == 0 and report['sourceFixed'] and report['installedDependenciesFixed'] and not report.get('timeout')
+        report['phase'] = 'complete' if report['pass'] else 'verify-core-failed'
+    except Exception as error:
+        report['error'] = str(error)
+        if expected is not None:
+            try: report['finalInputs'] = hashes()
+            except Exception as final_error: report['finalHashError'] = str(final_error)
+        report['sourceFixed'] = bool(report.get('initialInputs')) and report.get('initialInputs') == report.get('finalInputs') == expected
+    if installed_expected is not None:
+        try:
+            report['finalInstalledDependencies'] = installed_hashes()
+            report['installedDependenciesFixed'] = report.get('initialInstalledDependencies') == installed_expected == report['finalInstalledDependencies']
+        except Exception as error:
+            report['installedDependenciesFixed'] = False; report['finalDependencyHashError'] = str(error)
+        if not report['installedDependenciesFixed']: report['pass'] = False
+    if process:
+        try: os.killpg(process.pid, signal.SIGTERM)
+        except ProcessLookupError: pass
+    report['finishedAt'] = time.time()
+    (OUTPUT / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
+    print(json.dumps({key: report.get(key) for key in ['pass', 'exitCode', 'sourceFixed', 'revision', 'phase', 'error']}))
+    return 0 if report['pass'] else 1
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

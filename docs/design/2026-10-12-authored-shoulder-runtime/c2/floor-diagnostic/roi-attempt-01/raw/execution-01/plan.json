@@ -1,0 +1,22 @@
+{
+  "command": [
+    "node",
+    "/private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-prepared/diagnose-roi-face-normal.mjs",
+    "--start",
+    "--output",
+    "/private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-prepared/actual-01"
+  ],
+  "seconds": 900,
+  "processTreeRssBytes": 4294967296,
+  "rssSampleSeconds": 0.5,
+  "expectedCaptures": [
+    "shadow-off",
+    "roi-face-normal",
+    "restored-shadow-off"
+  ],
+  "sourceCount": 6460,
+  "installedDependencyCount": 6,
+  "freshOutput": "/private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-prepared/actual-01",
+  "server": "Root-owned 5359, never signalled",
+  "scope": "Causal diagnosis only; no product performance, art acceptance or source mutation"
+}

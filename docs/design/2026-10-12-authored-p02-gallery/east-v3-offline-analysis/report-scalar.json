@@ -1,0 +1,5606 @@
+{
+  "status": "OFFLINE_CLASSIFICATION_HOLD_NO_REPAIR",
+  "supportRay": {
+    "sourceName": "Grove / great root house trunk",
+    "sourceTriangles": 876,
+    "usedCapturedAuthoredEvaluatedMatrix": [
+      [
+        0.44999998807907104,
+        0.0,
+        0.0,
+        5.659999847412109
+      ],
+      [
+        0.0,
+        0.44999998807907104,
+        0.0,
+        -0.21658623218536377
+      ],
+      [
+        0.0,
+        0.0,
+        0.44999998807907104,
+        -0.8500003814697266
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "sourceTransformParityAlreadyPassed": true,
+    "sourceBounds": {
+      "min": [
+        2.7572998100572192,
+        1.4903376365522831,
+        -9.106878920213944
+      ],
+      "max": [
+        4.120249800940357,
+        4.8330351683928825,
+        -7.8931210082604935
+      ]
+    },
+    "origin": [
+      4.199265480041504,
+      1.639064073562622,
+      -7.4759745597839355
+    ],
+    "aim": [
+      3.5,
+      1.419064073562622,
+      -8.5
+    ],
+    "direction": [
+      -0.5552524134528899,
+      -0.1746912073400011,
+      -0.813128365901002
+    ],
+    "aimDistance": 1.2593650438960815,
+    "maxSpan": 1.35,
+    "segmentEnd": [
+      3.4496747218801023,
+      1.4032309436536206,
+      -8.57369785375029
+    ],
+    "aabbIntervalAlongRay": [
+      0.5130142619170972,
+      0.8513676176092424
+    ],
+    "originalHit": [],
+    "sameDirectionExtendedTo10ForDiagnosisOnly": [],
+    "sameOriginHorizontalWithinOriginalSpanForHeightDiagnosisOnly": [],
+    "sameOriginHorizontalExtendedTo10DiagnosisOnly": [
+      {
+        "triangle": 776,
+        "distance": 1.539699535488817,
+        "point": [
+          3.3309923954099405,
+          1.639064073562622,
+          -8.747499828934679
+        ],
+        "triangleVertices": [
+          [
+            3.1444998453855533,
+            2.286660151925446,
+            -8.747499828934679
+          ],
+          [
+            3.1444998453855533,
+            1.629660152163865,
+            -8.747499828934679
+          ],
+          [
+            3.628249532163153,
+            1.629660152163865,
+            -8.747499828934679
+          ]
+        ]
+      },
+      {
+        "triangle": 55,
+        "distance": 1.8452875060154879,
+        "point": [
+          3.158664091296207,
+          1.639064073562622,
+          -8.999862590315779
+        ],
+        "triangleVertices": [
+          [
+            2.9811537498592315,
+            1.5777659536904167,
+            -8.856911637864869
+          ],
+          [
+            3.263055841047077,
+            1.7196422540816059,
+            -9.089674159164588
+          ],
+          [
+            3.2815171633424427,
+            1.6317919718324276,
+            -9.092387267155459
+          ]
+        ]
+      }
+    ],
+    "centerXZCrossingY": 1.419064073562622,
+    "centerAimBelowGlobalTrunkMinimumY": 0.07127356298966103,
+    "noCandidateChanged": true
+  },
+  "rayMethod": "scalar double precision Moller-Trumbore; initial NumPy matmul-warning run preserved and superseded for ray values only",
+  "burial": {
+    "reportedMinGap": -0.06779787323917397,
+    "pieces": 69,
+    "classificationPieceCounts": {
+      "eastBranchGallery:bottom": 42,
+      "unclassified-within-original-EPS": 27
+    },
+    "uniqueNewTrianglesByClass": {
+      "eastBranchGallery:bottom": [
+        1306,
+        1307,
+        1309,
+        1310
+      ],
+      "unclassified-within-original-EPS": [
+        1307,
+        1308
+      ]
+    },
+    "rows": [
+      {
+        "newTriangle": 1306,
+        "groundTriangle": 57218,
+        "gapRange": [
+          -0.06587119401491082,
+          -0.06231298296277776
+        ],
+        "center": [
+          4.013923453170351,
+          1.6114100217819214,
+          -7.614842853286455
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.245208734017126e-08,
+          "originalTopTriangle": 88
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.245208734017126e-08,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.2452087562215866e-08,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.015728395239012594,
+            "originalTopTriangle": 145
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 81
+          }
+        ],
+        "intersection": [
+          [
+            4.028061809235617,
+            1.6114100217819214,
+            -7.609636547957067
+          ],
+          [
+            4.032675230380376,
+            1.6114100217819214,
+            -7.620108955636936
+          ],
+          [
+            3.9980094006124003,
+            1.6114100217819214,
+            -7.6196452176503895
+          ],
+          [
+            3.996947372453012,
+            1.6114100217819214,
+            -7.609980691901426
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1306,
+        "groundTriangle": 57265,
+        "gapRange": [
+          -0.06779787323917397,
+          -0.06320603596519181
+        ],
+        "center": [
+          4.026966307883095,
+          1.6114100217819214,
+          -7.663070514422202
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.245208734017126e-08,
+          "originalTopTriangle": 88
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.245208734017126e-08,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.2452087562215866e-08,
+            "originalTopTriangle": 80
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.02420997179451212,
+            "originalTopTriangle": 160
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 80
+          }
+        ],
+        "intersection": [
+          [
+            4.050944185788042,
+            1.6114100217819214,
+            -7.661579253472581
+          ],
+          [
+            4.051059246063232,
+            1.6114100217819214,
+            -7.661840438842773
+          ],
+          [
+            4.003315448760986,
+            1.6114100217819214,
+            -7.667930603027344
+          ],
+          [
+            4.0025463509201185,
+            1.6114100217819214,
+            -7.660931762346111
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1306,
+        "groundTriangle": 57269,
+        "gapRange": [
+          -0.06714108726576118,
+          -0.06299369070636396
+        ],
+        "center": [
+          4.022406956976722,
+          1.6114100217819214,
+          -7.645677032594157
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.245208734017126e-08,
+          "originalTopTriangle": 88
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.245208734017126e-08,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.2452087562215866e-08,
+            "originalTopTriangle": 80
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.020470175763401377,
+            "originalTopTriangle": 153
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 80
+          }
+        ],
+        "intersection": [
+          [
+            4.041809815544648,
+            1.6114100217819214,
+            -7.640844348488596
+          ],
+          [
+            4.04608138537916,
+            1.6114100217819214,
+            -7.650540758015581
+          ],
+          [
+            4.0014587266757395,
+            1.6114100217819214,
+            -7.651034310548748
+          ],
+          [
+            4.000277900307341,
+            1.6114100217819214,
+            -7.640288713323702
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1306,
+        "groundTriangle": 57270,
+        "gapRange": [
+          -0.06619254043276745,
+          -0.0626879340726072
+        ],
+        "center": [
+          4.016739752844963,
+          1.6114100217819214,
+          -7.6250873459564925
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.245208734017126e-08,
+          "originalTopTriangle": 80
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.245208734017126e-08,
+            "originalTopTriangle": 80
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.245208734017126e-08,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.017200714988469645,
+            "originalTopTriangle": 145
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 80
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 88
+          }
+        ],
+        "intersection": [
+          [
+            4.032675230380376,
+            1.6114100217819214,
+            -7.620108955636936
+          ],
+          [
+            4.037071380420357,
+            1.6114100217819214,
+            -7.630088160655504
+          ],
+          [
+            3.9992029999667165,
+            1.6114100217819214,
+            -7.63050704988314
+          ],
+          [
+            3.9980094006124003,
+            1.6114100217819214,
+            -7.6196452176503895
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1306,
+        "groundTriangle": 57271,
+        "gapRange": [
+          -0.06688094589794757,
+          -0.06270751843439992
+        ],
+        "center": [
+          4.019590524059765,
+          1.6114100217819214,
+          -7.635432068087735
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.245208734017126e-08,
+          "originalTopTriangle": 88
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.245208734017126e-08,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.2452087562215866e-08,
+            "originalTopTriangle": 80
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.019609840496871644,
+            "originalTopTriangle": 152
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 80
+          }
+        ],
+        "intersection": [
+          [
+            4.037071380420357,
+            1.6114100217819214,
+            -7.630088160655504
+          ],
+          [
+            4.041809815544648,
+            1.6114100217819214,
+            -7.640844348488596
+          ],
+          [
+            4.000277900307341,
+            1.6114100217819214,
+            -7.640288713323702
+          ],
+          [
+            3.9992029999667165,
+            1.6114100217819214,
+            -7.63050704988314
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1306,
+        "groundTriangle": 57273,
+        "gapRange": [
+          -0.06779227583245206,
+          -0.06299369070636374
+        ],
+        "center": [
+          4.025257662190765,
+          1.6114100217819214,
+          -7.656021521095755
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.245208734017126e-08,
+          "originalTopTriangle": 88
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.245208734017126e-08,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.2452087562215866e-08,
+            "originalTopTriangle": 80
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0241519914512891,
+            "originalTopTriangle": 160
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 80
+          }
+        ],
+        "intersection": [
+          [
+            4.04608138537916,
+            1.6114100217819214,
+            -7.650540758015581
+          ],
+          [
+            4.050944185788042,
+            1.6114100217819214,
+            -7.661579253472581
+          ],
+          [
+            4.0025463509201185,
+            1.6114100217819214,
+            -7.660931762346111
+          ],
+          [
+            4.00145872667574,
+            1.6114100217819214,
+            -7.651034310548748
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1306,
+        "groundTriangle": 57410,
+        "gapRange": [
+          -0.06514826977180399,
+          -0.06231298296277776
+        ],
+        "center": [
+          4.010792656827517,
+          1.6114100217819214,
+          -7.603462647317726
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.245208734017126e-08,
+          "originalTopTriangle": 81
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.245208734017126e-08,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.2452087562215866e-08,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.014689734886552896,
+            "originalTopTriangle": 144
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 88
+          }
+        ],
+        "intersection": [
+          [
+            4.0226547032784294,
+            1.6114100217819214,
+            -7.597362485786038
+          ],
+          [
+            4.028061809235617,
+            1.6114100217819214,
+            -7.6096365479570665
+          ],
+          [
+            3.9969473724530116,
+            1.6114100217819214,
+            -7.609980691901426
+          ],
+          [
+            3.995506742343009,
+            1.6114100217819214,
+            -7.596870863626375
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1306,
+        "groundTriangle": 57411,
+        "gapRange": [
+          -0.06361758782410742,
+          -0.06151017070255582
+        ],
+        "center": [
+          4.003960811653647,
+          1.6114100217819214,
+          -7.578647259832418
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.245208734017126e-08,
+          "originalTopTriangle": 81
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.245208734017126e-08,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.2452087562215866e-08,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.010354270865326365,
+            "originalTopTriangle": 137
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 88
+          }
+        ],
+        "intersection": [
+          [
+            4.011729576235113,
+            1.6114100217819214,
+            -7.572562585503372
+          ],
+          [
+            4.017110260651787,
+            1.6114100217819214,
+            -7.584776671111432
+          ],
+          [
+            3.9942055590556875,
+            1.6114100217819214,
+            -7.585030010563043
+          ],
+          [
+            3.9927978506719985,
+            1.6114100217819214,
+            -7.572219772151826
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1306,
+        "groundTriangle": 57412,
+        "gapRange": [
+          -0.06479835833910208,
+          -0.061574394269489074
+        ],
+        "center": [
+          4.007369316332229,
+          1.6114100217819214,
+          -7.591010007771722
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.245208734017126e-08,
+          "originalTopTriangle": 81
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.245208734017126e-08,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.245208734017126e-08,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.011683977859944905,
+            "originalTopTriangle": 137
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 88
+          }
+        ],
+        "intersection": [
+          [
+            4.017110260651787,
+            1.6114100217819214,
+            -7.584776671111432
+          ],
+          [
+            4.0226547032784294,
+            1.6114100217819214,
+            -7.597362485786038
+          ],
+          [
+            3.995506742343009,
+            1.6114100217819214,
+            -7.596870863626375
+          ],
+          [
+            3.9942055590556875,
+            1.6114100217819214,
+            -7.585030010563043
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1306,
+        "groundTriangle": 57415,
+        "gapRange": [
+          -0.06195206073513049,
+          -0.06052332920870129
+        ],
+        "center": [
+          3.9971289649212336,
+          1.6114100217819214,
+          -7.553831865309978
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.2452087562215866e-08,
+          "originalTopTriangle": 81
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.2452087562215866e-08,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.2452087562215866e-08,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.007696578830501677,
+            "originalTopTriangle": 129
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 88
+          }
+        ],
+        "intersection": [
+          [
+            4.000804240096488,
+            1.6114100217819214,
+            -7.547762210576998
+          ],
+          [
+            4.0061589169784195,
+            1.6114100217819214,
+            -7.559917259409958
+          ],
+          [
+            3.991463798783134,
+            1.6114100217819214,
+            -7.560079812663548
+          ],
+          [
+            3.990088903826894,
+            1.6114100217819214,
+            -7.547568178589408
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1306,
+        "groundTriangle": 57416,
+        "gapRange": [
+          -0.060151437687897324,
+          -0.05937363333307477
+        ],
+        "center": [
+          3.9902970531117354,
+          1.6114100217819214,
+          -7.52901623018327
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.245208734017126e-08,
+          "originalTopTriangle": 81
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.245208734017126e-08,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.245208734017126e-08,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0049229172039193525,
+            "originalTopTriangle": 122
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 88
+          }
+        ],
+        "intersection": [
+          [
+            3.9898789039578633,
+            1.6114100217819214,
+            -7.522961835650626
+          ],
+          [
+            3.995207367391465,
+            1.6114100217819214,
+            -7.535057380287243
+          ],
+          [
+            3.988721984115825,
+            1.6114100217819214,
+            -7.53512911976822
+          ],
+          [
+            3.987379956981789,
+            1.6114100217819214,
+            -7.522916585026991
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1306,
+        "groundTriangle": 57417,
+        "gapRange": [
+          -0.06145968031676219,
+          -0.059597013155670675
+        ],
+        "center": [
+          3.993705623857668,
+          1.6114100217819214,
+          -7.541379222305467
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.245208734017126e-08,
+          "originalTopTriangle": 88
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.245208734017126e-08,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.2452087562215866e-08,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0064336512719611605,
+            "originalTopTriangle": 129
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 81
+          }
+        ],
+        "intersection": [
+          [
+            3.995207367391465,
+            1.6114100217819214,
+            -7.535057380287243
+          ],
+          [
+            4.000804240096488,
+            1.6114100217819214,
+            -7.547762210576998
+          ],
+          [
+            3.990088903826894,
+            1.6114100217819214,
+            -7.547568178589408
+          ],
+          [
+            3.988721984115825,
+            1.6114100217819214,
+            -7.53512911976822
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1306,
+        "groundTriangle": 57419,
+        "gapRange": [
+          -0.06319631707209017,
+          -0.06066880930589713
+        ],
+        "center": [
+          4.000537535667166,
+          1.6114100217819214,
+          -7.566194857432176
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.245208734017126e-08,
+          "originalTopTriangle": 81
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.245208734017126e-08,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.2452087562215866e-08,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.009291792786288555,
+            "originalTopTriangle": 136
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 88
+          }
+        ],
+        "intersection": [
+          [
+            4.0061589169784195,
+            1.6114100217819214,
+            -7.559917259409958
+          ],
+          [
+            4.011729576235113,
+            1.6114100217819214,
+            -7.572562585503372
+          ],
+          [
+            3.9927978506719985,
+            1.6114100217819214,
+            -7.572219772151826
+          ],
+          [
+            3.991463798783134,
+            1.6114100217819214,
+            -7.560079812663548
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1306,
+        "groundTriangle": 57541,
+        "gapRange": [
+          -0.05958791184391421,
+          -0.05877645175405011
+        ],
+        "center": [
+          3.9879383047004247,
+          1.6114100217819214,
+          -7.520432475675091
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.245208734017126e-08,
+          "originalTopTriangle": 81
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.245208734017126e-08,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.245208734017126e-08,
+            "originalTopTriangle": 88
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.004182177505952733,
+            "originalTopTriangle": 122
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 88
+          }
+        ],
+        "intersection": [
+          [
+            3.986556053161621,
+            1.6114100217819214,
+            -7.515419006347656
+          ],
+          [
+            3.9898789039578633,
+            1.6114100217819214,
+            -7.522961835650626
+          ],
+          [
+            3.987379956981789,
+            1.6114100217819214,
+            -7.522916585026991
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1307,
+        "groundTriangle": 57218,
+        "gapRange": [
+          -0.05323568976089166,
+          -0.05263195784437591
+        ],
+        "center": [
+          3.8973498462948117,
+          1.6118264318933646,
+          -7.614652628802921
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0031840958781134006,
+          0.9999940411206852,
+          0.0013338877614760094
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 2.4043215118840777e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 2.4043215118840777e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0004342682201352588,
+            "originalTopTriangle": 65
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0006992250355262186,
+            "originalTopTriangle": 105
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06960231377815007,
+            "originalTopTriangle": 65
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005243391105,
+            "originalTopTriangle": 96
+          }
+        ],
+        "intersection": [
+          [
+            3.8932291817059435,
+            1.611844342454144,
+            -7.618243532819222
+          ],
+          [
+            3.899196859209682,
+            1.6118157610943304,
+            -7.611061869986885
+          ],
+          [
+            3.901697943082668,
+            1.6118077604558587,
+            -7.61103420653036
+          ],
+          [
+            3.8952754011809536,
+            1.6118378635691253,
+            -7.618270905875217
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1307,
+        "groundTriangle": 57269,
+        "gapRange": [
+          -0.051125062552221046,
+          -0.04971427416843088
+        ],
+        "center": [
+          3.8707666773286635,
+          1.6119523442704238,
+          -7.645590965012679
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0031840958782709547,
+          0.999994041120685,
+          0.001333887761334186
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 8.570527036955156e-07,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 8.570527036955156e-07,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00026774775858773303,
+            "originalTopTriangle": 104
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005707867817497103,
+            "originalTopTriangle": 57
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06948747103590147,
+            "originalTopTriangle": 57
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005231752504,
+            "originalTopTriangle": 96
+          }
+        ],
+        "intersection": [
+          [
+            3.864724633486181,
+            1.6119808610157584,
+            -7.652546669068493
+          ],
+          [
+            3.8762888967541516,
+            1.6119254755883066,
+            -7.638629925135375
+          ],
+          [
+            3.8771960811766295,
+            1.6119226031981073,
+            -7.638642061911715
+          ],
+          [
+            3.8648570978976924,
+            1.6119804372795232,
+            -7.652545203935134
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1307,
+        "groundTriangle": 57270,
+        "gapRange": [
+          -0.05282633497188738,
+          -0.05142946613449961
+        ],
+        "center": [
+          3.8884358512414687,
+          1.6118686533290383,
+          -7.62502694182552
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0031840958780536012,
+          0.9999940411206855,
+          0.00133388776151932
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 1.998744221687332e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 1.998744221687332e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00048823553865573466,
+            "originalTopTriangle": 64
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0006038583432135258,
+            "originalTopTriangle": 104
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0695722106648835,
+            "originalTopTriangle": 64
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005240359175,
+            "originalTopTriangle": 96
+          }
+        ],
+        "intersection": [
+          [
+            3.88196101410389,
+            1.6118983097726645,
+            -7.631803947303002
+          ],
+          [
+            3.893229181705944,
+            1.6118443424541438,
+            -7.618243532819222
+          ],
+          [
+            3.895275401180954,
+            1.6118378635691253,
+            -7.618270905875217
+          ],
+          [
+            3.883277807975088,
+            1.6118940975202196,
+            -7.63178938130464
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1307,
+        "groundTriangle": 57271,
+        "gapRange": [
+          -0.051554862751141295,
+          -0.05103818449803077
+        ],
+        "center": [
+          3.8796809500024394,
+          1.6119101215198246,
+          -7.635216328913683
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.003184095878273165,
+          0.9999940411206849,
+          0.0013338877613257158
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 1.2411078507135187e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 1.2411078507135187e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0003808124506932131,
+            "originalTopTriangle": 104
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005154013542978397,
+            "originalTopTriangle": 57
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06951597671378917,
+            "originalTopTriangle": 57
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005234634288,
+            "originalTopTriangle": 96
+          }
+        ],
+        "intersection": [
+          [
+            3.8762888967541516,
+            1.6119254755883066,
+            -7.638629925135375
+          ],
+          [
+            3.8819610141038896,
+            1.6118983097726647,
+            -7.631803947303002
+          ],
+          [
+            3.883277807975088,
+            1.6118940975202196,
+            -7.63178938130464
+          ],
+          [
+            3.8771960811766295,
+            1.6119226031981073,
+            -7.638642061911715
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1307,
+        "groundTriangle": 57273,
+        "gapRange": [
+          -0.04972700964180854,
+          -0.04956714503155313
+        ],
+        "center": [
+          3.86412617161038,
+          1.6119837974933855,
+          -7.653319522802559
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.003184095878655333,
+          0.9999940411206841,
+          0.0013338877609713837
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 7.785788080916234e-08,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 7.785788080916234e-08,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 3.835512199623636e-05,
+            "originalTopTriangle": 104
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005800199508667614,
+            "originalTopTriangle": 56
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06942963695448556,
+            "originalTopTriangle": 56
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005225877204,
+            "originalTopTriangle": 96
+          }
+        ],
+        "intersection": [
+          [
+            3.8627967834472656,
+            1.6119900941848755,
+            -7.654866695404053
+          ],
+          [
+            3.864724633486181,
+            1.6119808610157584,
+            -7.652546669068493
+          ],
+          [
+            3.8648570978976924,
+            1.6119804372795232,
+            -7.652545203935134
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1307,
+        "groundTriangle": 57410,
+        "gapRange": [
+          -0.05474213083269719,
+          -0.052999779160144644
+        ],
+        "center": [
+          3.907172406796973,
+          1.6117799064912488,
+          -7.603220519663145
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.003184095878131886,
+          0.9999940411206852,
+          0.0013338877614437457
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 3.2792451394314526e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 3.2792451394314526e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00040568686032171897,
+            "originalTopTriangle": 65
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0009176294562307508,
+            "originalTopTriangle": 105
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06966725312682986,
+            "originalTopTriangle": 65
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005250018759,
+            "originalTopTriangle": 96
+          }
+        ],
+        "intersection": [
+          [
+            3.8991968592096815,
+            1.6118157610943304,
+            -7.611061869986885
+          ],
+          [
+            3.9122419796878782,
+            1.6117532833076265,
+            -7.5953630228519735
+          ],
+          [
+            3.9155528452076633,
+            1.611742821107179,
+            -7.595422979283363
+          ],
+          [
+            3.901697943082668,
+            1.6118077604558587,
+            -7.61103420653036
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1307,
+        "groundTriangle": 57411,
+        "gapRange": [
+          -0.0563121874350101,
+          -0.05466272532853611
+        ],
+        "center": [
+          3.92841493367969,
+          1.6116792901166552,
+          -7.578497650395363
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.003184095878107062,
+          0.9999940411206852,
+          0.0013338877614724877
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 4.6362416128431505e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 4.6362416128431505e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0003053459951323223,
+            "originalTopTriangle": 73
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.001982202422508017,
+            "originalTopTriangle": 113
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06976797330902507,
+            "originalTopTriangle": 73
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005260251085,
+            "originalTopTriangle": 96
+          }
+        ],
+        "intersection": [
+          [
+            3.9201476441899867,
+            1.611715420229141,
+            -7.585849134595754
+          ],
+          [
+            3.932382175175802,
+            1.6116568246478558,
+            -7.571125772551328
+          ],
+          [
+            3.9370416389005203,
+            1.6116421009249835,
+            -7.571210145545779
+          ],
+          [
+            3.9240882764524505,
+            1.6117028146646406,
+            -7.585805548888594
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1307,
+        "groundTriangle": 57412,
+        "gapRange": [
+          -0.05502685149268305,
+          -0.05443108595629065
+        ],
+        "center": [
+          3.9180076863844944,
+          1.6117285848271468,
+          -7.590610171404921
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0031840958781080226,
+          0.9999940411206852,
+          0.0013338877614767907
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 3.8182493413696506e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 3.8182493413696506e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.000343209073617734,
+            "originalTopTriangle": 65
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0015080930087862932,
+            "originalTopTriangle": 112
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06970725956936819,
+            "originalTopTriangle": 65
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000525403528,
+            "originalTopTriangle": 96
+          }
+        ],
+        "intersection": [
+          [
+            3.9122419796878782,
+            1.6117532833076265,
+            -7.5953630228519735
+          ],
+          [
+            3.9201476441899863,
+            1.611715420229141,
+            -7.585849134595754
+          ],
+          [
+            3.9240882764524505,
+            1.6117028146646406,
+            -7.585805548888594
+          ],
+          [
+            3.9155528452076633,
+            1.611742821107179,
+            -7.595422979283363
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1307,
+        "groundTriangle": 57415,
+        "gapRange": [
+          -0.057634305883794035,
+          -0.056065553232218956
+        ],
+        "center": [
+          3.949657477674226,
+          1.6115786736610282,
+          -7.553774761225247
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0031840958781284632,
+          0.9999940411206852,
+          0.001333887761452691
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.993270636661663e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.993270636661663e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00020500730287165148,
+            "originalTopTriangle": 73
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0027365370193115357,
+            "originalTopTriangle": 113
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06986869590718214,
+            "originalTopTriangle": 73
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005270483678,
+            "originalTopTriangle": 96
+          }
+        ],
+        "intersection": [
+          [
+            3.9410979754711355,
+            1.6116150815368806,
+            -7.560636945198331
+          ],
+          [
+            3.9525228567821635,
+            1.6115603636598888,
+            -7.546887937242744
+          ],
+          [
+            3.958530948042127,
+            1.6115413783268269,
+            -7.546996731018269
+          ],
+          [
+            3.9464781304014793,
+            1.6115978711205168,
+            -7.560577431441645
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1307,
+        "groundTriangle": 57416,
+        "gapRange": [
+          -0.05871192336588593,
+          -0.05721204804320035
+        ],
+        "center": [
+          3.9709002719519533,
+          1.6114780560198774,
+          -7.529051580732784
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.003184095878141907,
+          0.9999940411206852,
+          0.0013338877614340683
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 7.350299660036086e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 7.350299660036086e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00010466628360061847,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.003476577892364885,
+            "originalTopTriangle": 121
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06996941850533833,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000528071627,
+            "originalTopTriangle": 96
+          }
+        ],
+        "intersection": [
+          [
+            3.962048792623137,
+            1.6115147405176093,
+            -7.53542417109092
+          ],
+          [
+            3.9726635383885256,
+            1.6114639026719217,
+            -7.5226501019341585
+          ],
+          [
+            3.9800202571837344,
+            1.6114406557286702,
+            -7.5227833164907585
+          ],
+          [
+            3.9688684996124164,
+            1.6114929251613075,
+            -7.535348733415299
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1307,
+        "groundTriangle": 57417,
+        "gapRange": [
+          -0.05781686870493341,
+          -0.057090308291008585
+        ],
+        "center": [
+          3.960492774264961,
+          1.6115273519164082,
+          -7.541164393191808
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0031840958781153158,
+          0.9999940411206852,
+          0.0013338877614612363
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 6.646076988747751e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 6.646076988747751e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00015028942588002359,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.003099413868647538,
+            "originalTopTriangle": 113
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0699171490727013,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005275323384,
+            "originalTopTriangle": 96
+          }
+        ],
+        "intersection": [
+          [
+            3.9525228567821635,
+            1.6115603636598888,
+            -7.546887937242744
+          ],
+          [
+            3.962048792623137,
+            1.6115147405176093,
+            -7.53542417109092
+          ],
+          [
+            3.9688684996124164,
+            1.6114929251613075,
+            -7.535348733415299
+          ],
+          [
+            3.958530948042127,
+            1.6115413783268269,
+            -7.546996731018269
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1307,
+        "groundTriangle": 57419,
+        "gapRange": [
+          -0.05655258576311839,
+          -0.055882470487288005
+        ],
+        "center": [
+          3.9392499799872343,
+          1.6116279695575593,
+          -7.56588757368427
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.003184095878118622,
+          0.9999940411206852,
+          0.0013338877614494419
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.23214689596152e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.23214689596152e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00024675041384703,
+            "originalTopTriangle": 73
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00231344955403312,
+            "originalTopTriangle": 113
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06981220311349201,
+            "originalTopTriangle": 73
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000526467921,
+            "originalTopTriangle": 96
+          }
+        ],
+        "intersection": [
+          [
+            3.932382175175802,
+            1.6116568246478558,
+            -7.571125772551328
+          ],
+          [
+            3.9410979754711355,
+            1.6116150815368806,
+            -7.560636945198331
+          ],
+          [
+            3.9464781304014793,
+            1.6115978711205168,
+            -7.560577431441645
+          ],
+          [
+            3.9370416389005203,
+            1.6116421009249835,
+            -7.571210145545779
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1307,
+        "groundTriangle": 57541,
+        "gapRange": [
+          -0.05877645175405011,
+          -0.05805785601580138
+        ],
+        "center": [
+          3.981321476435479,
+          1.6114278006857234,
+          -7.516252212644733
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0031840958780466,
+          0.9999940411206854,
+          0.0013338877615209689
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 7.763028835316987e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 7.763028835316987e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.3828437912795124e-05,
+            "originalTopTriangle": 82
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0037202493111050394,
+            "originalTopTriangle": 122
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 82
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005285967403,
+            "originalTopTriangle": 96
+          }
+        ],
+        "intersection": [
+          [
+            3.9726635383885256,
+            1.6114639026719215,
+            -7.5226501019341585
+          ],
+          [
+            3.982999199314256,
+            1.6114144014641831,
+            -7.510211890943121
+          ],
+          [
+            3.9843683341292575,
+            1.6114100217819214,
+            -7.5101967475079725
+          ],
+          [
+            3.986556053161621,
+            1.6114100217819214,
+            -7.515419006347656
+          ],
+          [
+            3.9800202571837344,
+            1.6114406557286702,
+            -7.5227833164907585
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1307,
+        "groundTriangle": 57584,
+        "gapRange": [
+          -0.05822417208145936,
+          -0.058105202635378106
+        ],
+        "center": [
+          3.9837603978309843,
+          1.6114114816760086,
+          -7.509840014290013
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0031840958780476026,
+          0.9999940411206856,
+          0.0013338877614307877
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 1.2920090117773952e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 1.2920090117773952e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 4.327230174405727e-06,
+            "originalTopTriangle": 83
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.003407932039320327,
+            "originalTopTriangle": 122
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 83
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005286431965,
+            "originalTopTriangle": 96
+          }
+        ],
+        "intersection": [
+          [
+            3.982999199314256,
+            1.6114144014641831,
+            -7.510211890943121
+          ],
+          [
+            3.9839136600494385,
+            1.6114100217819214,
+            -7.509111404418945
+          ],
+          [
+            3.9843683341292575,
+            1.6114100217819214,
+            -7.5101967475079725
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1308,
+        "groundTriangle": 57218,
+        "gapRange": [
+          -0.0626879340726072,
+          -0.05282633497188738
+        ],
+        "center": [
+          3.9479825293322586,
+          1.6116164168972067,
+          -7.6147327554893485
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.00417065318951867,
+          0.999991197763108,
+          0.00045831024153117193
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 2.917306342498094e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 2.917306342498094e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00042778933511655737,
+            "originalTopTriangle": 72
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00792554833498671,
+            "originalTopTriangle": 121
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06999800125577837,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 72
+          }
+        ],
+        "intersection": [
+          [
+            3.8952754011809536,
+            1.6118378635691253,
+            -7.618270905875217
+          ],
+          [
+            3.901697943082668,
+            1.6118077604558587,
+            -7.61103420653036
+          ],
+          [
+            3.996947372453012,
+            1.6114100217819214,
+            -7.609980691901426
+          ],
+          [
+            3.9980094006124003,
+            1.6114100217819214,
+            -7.6196452176503895
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1308,
+        "groundTriangle": 57265,
+        "gapRange": [
+          -0.06327275675905186,
+          -0.05478253377043063
+        ],
+        "center": [
+          3.973790367063993,
+          1.6115308454051647,
+          -7.662876567102778
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.00417065318951857,
+          0.999991197763108,
+          0.00045831024153311384
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 3.063678144510362e-07,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 3.063678144510362e-07,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00036241841764250715,
+            "originalTopTriangle": 72
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.01606510610805656,
+            "originalTopTriangle": 144
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005228103512,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 72
+          }
+        ],
+        "intersection": [
+          [
+            4.0025463509201185,
+            1.6114100217819214,
+            -7.660931762346111
+          ],
+          [
+            4.003315448760986,
+            1.6114100217819214,
+            -7.667930603027344
+          ],
+          [
+            3.915509301510876,
+            1.611772492651651,
+            -7.6597673359348795
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1308,
+        "groundTriangle": 57269,
+        "gapRange": [
+          -0.06303507285397059,
+          -0.04972700964180854
+        ],
+        "center": [
+          3.935947451514351,
+          1.6116807710103682,
+          -7.645627572429825
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.004170653189518471,
+          0.9999911977631077,
+          0.0004583102415393631
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 1.364200977960195e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 1.364200977960195e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005703630455144992,
+            "originalTopTriangle": 65
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.013459379074249211,
+            "originalTopTriangle": 128
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06999992214211925,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 65
+          }
+        ],
+        "intersection": [
+          [
+            3.8648570978976924,
+            1.6119804372795232,
+            -7.652545203935134
+          ],
+          [
+            3.8771960811766295,
+            1.6119226031981073,
+            -7.638642061911715
+          ],
+          [
+            4.000277900307341,
+            1.6114100217819214,
+            -7.640288713323702
+          ],
+          [
+            4.0014587266757395,
+            1.6114100217819214,
+            -7.651034310548748
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1308,
+        "groundTriangle": 57270,
+        "gapRange": [
+          -0.06270751843440014,
+          -0.05155486275114174
+        ],
+        "center": [
+          3.9439414024337895,
+          1.611638001163297,
+          -7.625053138678346
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.004170653189518483,
+          0.9999911977631077,
+          0.00045831024153035807
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 2.42205702938314e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 2.42205702938314e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0004840232862113325,
+            "originalTopTriangle": 72
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.008366850599719422,
+            "originalTopTriangle": 121
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06999875889214935,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 72
+          }
+        ],
+        "intersection": [
+          [
+            3.883277807975088,
+            1.6118940975202196,
+            -7.63178938130464
+          ],
+          [
+            3.895275401180954,
+            1.6118378635691253,
+            -7.618270905875217
+          ],
+          [
+            3.9980094006124003,
+            1.6114100217819214,
+            -7.6196452176503895
+          ],
+          [
+            3.9992029999667165,
+            1.6114100217819214,
+            -7.63050704988314
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1308,
+        "groundTriangle": 57271,
+        "gapRange": [
+          -0.06303507285397059,
+          -0.051125062552220824
+        ],
+        "center": [
+          3.9399886973564433,
+          1.6116591860705425,
+          -7.635306801605799
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0041706531895181346,
+          0.9999911977631079,
+          0.00045831024153705226
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 1.8654528990413866e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 1.8654528990413866e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005125289640985908,
+            "originalTopTriangle": 72
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.012619873038681506,
+            "originalTopTriangle": 128
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06999914294729637,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 72
+          }
+        ],
+        "intersection": [
+          [
+            3.8771960811766295,
+            1.6119226031981073,
+            -7.638642061911715
+          ],
+          [
+            3.883277807975088,
+            1.6118940975202196,
+            -7.63178938130464
+          ],
+          [
+            3.9992029999667165,
+            1.6114100217819214,
+            -7.63050704988314
+          ],
+          [
+            4.000277900307341,
+            1.6114100217819214,
+            -7.640288713323702
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1308,
+        "groundTriangle": 57273,
+        "gapRange": [
+          -0.06327275675905208,
+          -0.04956714503155313
+        ],
+        "center": [
+          3.9294336520903386,
+          1.6117126135359787,
+          -7.655829061633786
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.004170653189519142,
+          0.999991197763108,
+          0.0004583102415208245
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 8.135531983644029e-07,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 8.135531983644029e-07,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005800199508663173,
+            "originalTopTriangle": 64
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.014232623254782917,
+            "originalTopTriangle": 128
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005226100359,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 64
+          }
+        ],
+        "intersection": [
+          [
+            3.8627967834472656,
+            1.6119900941848755,
+            -7.654866695404053
+          ],
+          [
+            3.8648570978976924,
+            1.6119804372795232,
+            -7.652545203935134
+          ],
+          [
+            4.00145872667574,
+            1.6114100217819214,
+            -7.651034310548748
+          ],
+          [
+            4.0025463509201185,
+            1.6114100217819214,
+            -7.660931762346111
+          ],
+          [
+            3.915509301510876,
+            1.611772492651651,
+            -7.6597673359348795
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1308,
+        "groundTriangle": 57410,
+        "gapRange": [
+          -0.06233368355964353,
+          -0.0532356897608921
+        ],
+        "center": [
+          3.952426225771588,
+          1.61159265628172,
+          -7.603327185335381
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.004170653189518895,
+          0.999991197763108,
+          0.00045831024153176293
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 3.5891068648208346e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 3.5891068648208346e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00039768622184999103,
+            "originalTopTriangle": 73
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.007532891091789784,
+            "originalTopTriangle": 121
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06999759567848818,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 73
+          }
+        ],
+        "intersection": [
+          [
+            3.901697943082668,
+            1.6118077604558587,
+            -7.61103420653036
+          ],
+          [
+            3.9155528452076633,
+            1.611742821107179,
+            -7.595422979283363
+          ],
+          [
+            3.995506742343009,
+            1.6114100217819214,
+            -7.596870863626375
+          ],
+          [
+            3.9969473724530116,
+            1.6114100217819214,
+            -7.609980691901426
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1308,
+        "groundTriangle": 57411,
+        "gapRange": [
+          -0.06157439426948885,
+          -0.05502685149268305
+        ],
+        "center": [
+          3.962033331270164,
+          1.6115412397883668,
+          -7.5785663692873095
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.004170653189518714,
+          0.999991197763108,
+          0.0004583102415352646
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 4.852328303162068e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 4.852328303162068e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00029274043063187705,
+            "originalTopTriangle": 73
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.006519177019862932,
+            "originalTopTriangle": 121
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06999618175065869,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 73
+          }
+        ],
+        "intersection": [
+          [
+            3.9240882764524505,
+            1.6117028146646406,
+            -7.585805548888594
+          ],
+          [
+            3.9370416389005203,
+            1.6116421009249835,
+            -7.571210145545779
+          ],
+          [
+            3.9927978506719985,
+            1.6114100217819214,
+            -7.572219772151826
+          ],
+          [
+            3.9942055590556875,
+            1.6114100217819214,
+            -7.585030010563043
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1308,
+        "groundTriangle": 57412,
+        "gapRange": [
+          -0.062333683559643305,
+          -0.05474213083269697
+        ],
+        "center": [
+          3.9573383557647026,
+          1.6115664198339155,
+          -7.590782350590343
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.004170653189519099,
+          0.9999911977631079,
+          0.0004583102415319754
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 4.195879974577821e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 4.195879974577821e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00033274687316997564,
+            "originalTopTriangle": 73
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.007000255640968511,
+            "originalTopTriangle": 121
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06999672075486063,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 73
+          }
+        ],
+        "intersection": [
+          [
+            3.9155528452076633,
+            1.611742821107179,
+            -7.595422979283363
+          ],
+          [
+            3.9240882764524505,
+            1.6117028146646406,
+            -7.585805548888594
+          ],
+          [
+            3.9942055590556875,
+            1.6114100217819214,
+            -7.585030010563043
+          ],
+          [
+            3.995506742343009,
+            1.6114100217819214,
+            -7.596870863626375
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1308,
+        "groundTriangle": 57415,
+        "gapRange": [
+          -0.06066880930589713,
+          -0.05655258576311861
+        ],
+        "center": [
+          3.9716404452634086,
+          1.6114898232527965,
+          -7.553805538428218
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.004170653189518186,
+          0.9999911977631081,
+          0.00045831024153919877
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 6.115575470255763e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 6.115575470255763e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00018779688650805149,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0055054825894358395,
+            "originalTopTriangle": 121
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0699947678531041,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 81
+          }
+        ],
+        "intersection": [
+          [
+            3.9464781304014793,
+            1.6115978711205168,
+            -7.560577431441645
+          ],
+          [
+            3.958530948042127,
+            1.6115413783268269,
+            -7.546996731018269
+          ],
+          [
+            3.990088903826894,
+            1.6114100217819214,
+            -7.547568178589408
+          ],
+          [
+            3.991463798783134,
+            1.6114100217819214,
+            -7.560079812663548
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1308,
+        "groundTriangle": 57416,
+        "gapRange": [
+          -0.0595970131556709,
+          -0.05781686870493319
+        ],
+        "center": [
+          3.9812476744734413,
+          1.611438406113455,
+          -7.529044438675317
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.004170653189514079,
+          0.9999911977631079,
+          0.0004583102415465577
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 7.378822637571503e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 7.378822637571503e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 8.285092729876098e-05,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.004494327449138913,
+            "originalTopTriangle": 122
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06999335392301131,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 81
+          }
+        ],
+        "intersection": [
+          [
+            3.9688684996124164,
+            1.6114929251613075,
+            -7.535348733415299
+          ],
+          [
+            3.9800202571837344,
+            1.6114406557286702,
+            -7.5227833164907585
+          ],
+          [
+            3.987379956981789,
+            1.6114100217819214,
+            -7.522916585026991
+          ],
+          [
+            3.988721984115825,
+            1.6114100217819214,
+            -7.53512911976822
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1308,
+        "groundTriangle": 57417,
+        "gapRange": [
+          -0.06052332920870129,
+          -0.05763430588379426
+        ],
+        "center": [
+          3.976552583899316,
+          1.6114635867629943,
+          -7.541260690697799
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.004170653189522831,
+          0.9999911977631079,
+          0.0004583102415211633
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 6.753003058079798e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 6.753003058079798e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00013130409281791877,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.004997150999138222,
+            "originalTopTriangle": 121
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0699940067293634,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 81
+          }
+        ],
+        "intersection": [
+          [
+            3.958530948042127,
+            1.6115413783268269,
+            -7.546996731018269
+          ],
+          [
+            3.9688684996124164,
+            1.6114929251613075,
+            -7.535348733415299
+          ],
+          [
+            3.988721984115825,
+            1.6114100217819214,
+            -7.53512911976822
+          ],
+          [
+            3.990088903826894,
+            1.6114100217819214,
+            -7.547568178589408
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1308,
+        "groundTriangle": 57419,
+        "gapRange": [
+          -0.0615101707025556,
+          -0.056312187435009875
+        ],
+        "center": [
+          3.9669453546892828,
+          1.6115150039023358,
+          -7.5660217904507
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.004170653189519972,
+          0.9999911977631079,
+          0.00045831024152697807
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.474428833363021e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.474428833363021e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00023202669097477369,
+            "originalTopTriangle": 80
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0059987135196448715,
+            "originalTopTriangle": 121
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06999536375838722,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 80
+          }
+        ],
+        "intersection": [
+          [
+            3.9370416389005203,
+            1.6116421009249835,
+            -7.571210145545779
+          ],
+          [
+            3.9464781304014793,
+            1.6115978711205168,
+            -7.560577431441645
+          ],
+          [
+            3.991463798783134,
+            1.6114100217819214,
+            -7.560079812663548
+          ],
+          [
+            3.9927978506719985,
+            1.6114100217819214,
+            -7.572219772151826
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1308,
+        "groundTriangle": 57541,
+        "gapRange": [
+          -0.05937363333307455,
+          -0.05871192336588571
+        ],
+        "center": [
+          3.9846520891090482,
+          1.6114202330975045,
+          -7.520372969288469
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.004170653189513828,
+          0.999991197763108,
+          0.0004583102415327415
+        ],
+        "classification": "unclassified-within-original-EPS",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 7.763028835316987e-06,
+          "originalTopTriangle": 96
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 7.763028835316987e-06,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 3.058149466172999e-05,
+            "originalTopTriangle": 81
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0040147028040926624,
+            "originalTopTriangle": 122
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06999264970034003,
+            "originalTopTriangle": 96
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 81
+          }
+        ],
+        "intersection": [
+          [
+            3.9800202571837344,
+            1.6114406557286702,
+            -7.5227833164907585
+          ],
+          [
+            3.986556053161621,
+            1.6114100217819214,
+            -7.515419006347656
+          ],
+          [
+            3.987379956981789,
+            1.6114100217819214,
+            -7.522916585026991
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1309,
+        "groundTriangle": 57218,
+        "gapRange": [
+          -0.052999779160144644,
+          -0.05114305821776077
+        ],
+        "center": [
+          3.8881363784255325,
+          1.6119100729795564,
+          -7.614652670666527
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.009907140042582016,
+          0.9999418790054905,
+          -0.004252903378378056
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.304391836880029e-08,
+          "originalTopTriangle": 97
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.304391836880029e-08,
+            "originalTopTriangle": 97
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005800199508667614,
+            "originalTopTriangle": 64
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.000648225681403769,
+            "originalTopTriangle": 104
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06959431313967834,
+            "originalTopTriangle": 64
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005304391843,
+            "originalTopTriangle": 97
+          }
+        ],
+        "intersection": [
+          [
+            3.899196859209682,
+            1.6118157610943304,
+            -7.611061869986885
+          ],
+          [
+            3.8932291817059435,
+            1.611844342454144,
+            -7.618243532819222
+          ],
+          [
+            3.8786022466909436,
+            1.6119900941848755,
+            -7.618047862747609
+          ],
+          [
+            3.8815172260955606,
+            1.6119900941848755,
+            -7.6112574171123955
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1309,
+        "groundTriangle": 57269,
+        "gapRange": [
+          -0.05103818449803055,
+          -0.049618011932173856
+        ],
+        "center": [
+          3.8686514731318358,
+          1.611971631243454,
+          -7.645569197023348
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.009907140042480894,
+          0.9999418790054917,
+          -0.004252903378304471
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.276453984848217e-08,
+          "originalTopTriangle": 97
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.276453984848217e-08,
+            "originalTopTriangle": 97
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0002403051784876098,
+            "originalTopTriangle": 104
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005800199508667614,
+            "originalTopTriangle": 57
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06948459864570222,
+            "originalTopTriangle": 57
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005276453991,
+            "originalTopTriangle": 97
+          }
+        ],
+        "intersection": [
+          [
+            3.8762888967541516,
+            1.6119254755883066,
+            -7.638629925135375
+          ],
+          [
+            3.864724633486181,
+            1.6119808610157584,
+            -7.652546669068493
+          ],
+          [
+            3.8637882705643674,
+            1.6119900941848755,
+            -7.65255702578648
+          ],
+          [
+            3.8698040917226435,
+            1.6119900941848755,
+            -7.638543168103046
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1309,
+        "groundTriangle": 57270,
+        "gapRange": [
+          -0.05263195784437613,
+          -0.05048105552193727
+        ],
+        "center": [
+          3.8816113310021176,
+          1.6119307101491398,
+          -7.625000563520425
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.0099071400425959,
+          0.9999418790054901,
+          -0.004252903378395858
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.2971138364554804e-08,
+          "originalTopTriangle": 97
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.2971138364554804e-08,
+            "originalTopTriangle": 97
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005419596608753352,
+            "originalTopTriangle": 104
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005800199508667614,
+            "originalTopTriangle": 57
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06956573177986503,
+            "originalTopTriangle": 57
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005297113843,
+            "originalTopTriangle": 97
+          }
+        ],
+        "intersection": [
+          [
+            3.893229181705944,
+            1.6118443424541438,
+            -7.618243532819222
+          ],
+          [
+            3.88196101410389,
+            1.6118983097726645,
+            -7.631803947303002
+          ],
+          [
+            3.8726528815076926,
+            1.6119900941848755,
+            -7.6319069112118685
+          ],
+          [
+            3.878602246690944,
+            1.6119900941848755,
+            -7.618047862747609
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1309,
+        "groundTriangle": 57271,
+        "gapRange": [
+          -0.05142946613449939,
+          -0.050373070192953895
+        ],
+        "center": [
+          3.875176721022094,
+          1.6119509934326806,
+          -7.635220987938323
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.009907140042572826,
+          0.9999418790054904,
+          -0.0042529033783877505
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.283371518061131e-08,
+          "originalTopTriangle": 97
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.283371518061131e-08,
+            "originalTopTriangle": 97
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00034130817979760586,
+            "originalTopTriangle": 104
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005800199508667614,
+            "originalTopTriangle": 57
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0695117644613441,
+            "originalTopTriangle": 57
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005283371524,
+            "originalTopTriangle": 97
+          }
+        ],
+        "intersection": [
+          [
+            3.8819610141038896,
+            1.6118983097726647,
+            -7.631803947303002
+          ],
+          [
+            3.8762888967541516,
+            1.6119254755883066,
+            -7.638629925135375
+          ],
+          [
+            3.8698040917226435,
+            1.6119900941848755,
+            -7.638543168103046
+          ],
+          [
+            3.8726528815076926,
+            1.6119900941848755,
+            -7.6319069112118685
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1309,
+        "groundTriangle": 57273,
+        "gapRange": [
+          -0.04971427416843133,
+          -0.04956714503155313
+        ],
+        "center": [
+          3.8637698958326046,
+          1.6119870164618364,
+          -7.6533234634196745
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.009907140042481371,
+          0.9999418790054916,
+          -0.004252903378348688
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.2623505331084175e-08,
+          "originalTopTriangle": 97
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.2623505331084175e-08,
+            "originalTopTriangle": 97
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 3.438114236775647e-05,
+            "originalTopTriangle": 104
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005800199508667614,
+            "originalTopTriangle": 56
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06942921321825035,
+            "originalTopTriangle": 56
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000526235054,
+            "originalTopTriangle": 97
+          }
+        ],
+        "intersection": [
+          [
+            3.864724633486181,
+            1.6119808610157584,
+            -7.652546669068493
+          ],
+          [
+            3.8627967834472656,
+            1.6119900941848755,
+            -7.654866695404053
+          ],
+          [
+            3.8637882705643674,
+            1.6119900941848755,
+            -7.65255702578648
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1309,
+        "groundTriangle": 57410,
+        "gapRange": [
+          -0.05443108595629065,
+          -0.05121439873144196
+        ],
+        "center": [
+          3.895370188811001,
+          1.611887308192927,
+          -7.603153959160062
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.009907140042587621,
+          0.9999418790054903,
+          -0.004252903378399173
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.3203012440050657e-08,
+          "originalTopTriangle": 97
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.3203012440050657e-08,
+            "originalTopTriangle": 97
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005800199508669834,
+            "originalTopTriangle": 65
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0008805192394365502,
+            "originalTopTriangle": 104
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06965679092638233,
+            "originalTopTriangle": 65
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000532030125,
+            "originalTopTriangle": 97
+          }
+        ],
+        "intersection": [
+          [
+            3.9122419796878782,
+            1.6117532833076265,
+            -7.5953630228519735
+          ],
+          [
+            3.8991968592096815,
+            1.6118157610943304,
+            -7.611061869986885
+          ],
+          [
+            3.8815172260955606,
+            1.6119900941848755,
+            -7.6112574171123955
+          ],
+          [
+            3.8885246902508825,
+            1.6119900941848755,
+            -7.594933526688999
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1309,
+        "groundTriangle": 57411,
+        "gapRange": [
+          -0.05588247048728778,
+          -0.051903226573069006
+        ],
+        "center": [
+          3.9109565563364628,
+          1.6118381083116868,
+          -7.578413377309422
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.009907140042586715,
+          0.9999418790054904,
+          -0.004252903378390449
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.344863640566189e-08,
+          "originalTopTriangle": 97
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.344863640566189e-08,
+            "originalTopTriangle": 97
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005800199508667614,
+            "originalTopTriangle": 65
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0011348696292525773,
+            "originalTopTriangle": 105
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06975324958615303,
+            "originalTopTriangle": 65
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005344863647,
+            "originalTopTriangle": 97
+          }
+        ],
+        "intersection": [
+          [
+            3.932382175175802,
+            1.6116568246478558,
+            -7.571125772551328
+          ],
+          [
+            3.9201476441899867,
+            1.611715420229141,
+            -7.585849134595754
+          ],
+          [
+            3.8922921478627712,
+            1.6119900941848755,
+            -7.586157232744697
+          ],
+          [
+            3.89900425811729,
+            1.6119900941848755,
+            -7.57052136934591
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1309,
+        "groundTriangle": 57412,
+        "gapRange": [
+          -0.054662725328535666,
+          -0.051903226573068784
+        ],
+        "center": [
+          3.9033016154978792,
+          1.6118622229766295,
+          -7.590575729220356
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.009907140042584027,
+          0.9999418790054904,
+          -0.004252903378382935
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.3299427760222784e-08,
+          "originalTopTriangle": 97
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.3299427760222784e-08,
+            "originalTopTriangle": 97
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005800199508667614,
+            "originalTopTriangle": 65
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0009504568006575287,
+            "originalTopTriangle": 105
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06969465400486774,
+            "originalTopTriangle": 65
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005329942782,
+            "originalTopTriangle": 97
+          }
+        ],
+        "intersection": [
+          [
+            3.9201476441899863,
+            1.611715420229141,
+            -7.585849134595754
+          ],
+          [
+            3.9122419796878782,
+            1.6117532833076265,
+            -7.5953630228519735
+          ],
+          [
+            3.8885246902508825,
+            1.6119900941848755,
+            -7.594933526688999
+          ],
+          [
+            3.8922921478627712,
+            1.6119900941848755,
+            -7.586157232744697
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1309,
+        "groundTriangle": 57415,
+        "gapRange": [
+          -0.05709030829100881,
+          -0.05236946913331608
+        ],
+        "center": [
+          3.9265429350440044,
+          1.6117889083916301,
+          -7.553672778536744
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.009907140042584788,
+          0.9999418790054904,
+          -0.00425290337839112
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.369426592238824e-08,
+          "originalTopTriangle": 97
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.369426592238824e-08,
+            "originalTopTriangle": 97
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005800199508667614,
+            "originalTopTriangle": 73
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0014384529925357548,
+            "originalTopTriangle": 105
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06984971057412004,
+            "originalTopTriangle": 73
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005369426598,
+            "originalTopTriangle": 97
+          }
+        ],
+        "intersection": [
+          [
+            3.9525228567821635,
+            1.6115603636598888,
+            -7.546887937242744
+          ],
+          [
+            3.9410979754711355,
+            1.6116150815368806,
+            -7.560636945198331
+          ],
+          [
+            3.9030668177460766,
+            1.6119900941848755,
+            -7.561057635140653
+          ],
+          [
+            3.909484090176643,
+            1.6119900941848755,
+            -7.546108596565252
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1309,
+        "groundTriangle": 57416,
+        "gapRange": [
+          -0.05805785601580116,
+          -0.052615555298626715
+        ],
+        "center": [
+          3.9421295010859865,
+          1.6117397078898206,
+          -7.528931880150006
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.009907140042584937,
+          0.9999418790054904,
+          -0.004252903378398549
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.393989521706999e-08,
+          "originalTopTriangle": 97
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.393989521706999e-08,
+            "originalTopTriangle": 97
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005800199508669834,
+            "originalTopTriangle": 82
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00331061119741749,
+            "originalTopTriangle": 112
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06994617156208705,
+            "originalTopTriangle": 82
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005393989528,
+            "originalTopTriangle": 97
+          }
+        ],
+        "intersection": [
+          [
+            3.9726635383885256,
+            1.6114639026719217,
+            -7.5226501019341585
+          ],
+          [
+            3.962048792623137,
+            1.6115147405176093,
+            -7.53542417109092
+          ],
+          [
+            3.9138417510962866,
+            1.6119900941848755,
+            -7.535957423790353
+          ],
+          [
+            3.919963922235996,
+            1.6119900941848755,
+            -7.521695823784594
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1309,
+        "groundTriangle": 57417,
+        "gapRange": [
+          -0.057212048043200125,
+          -0.05261555529862694
+        ],
+        "center": [
+          3.9344743726695577,
+          1.6117638231368123,
+          -7.541094532172317
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.009907140042585149,
+          0.9999418790054905,
+          -0.0042529033783934266
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.381044121399725e-08,
+          "originalTopTriangle": 97
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.381044121399725e-08,
+            "originalTopTriangle": 97
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005800199508669834,
+            "originalTopTriangle": 73
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.001582038780620465,
+            "originalTopTriangle": 105
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06989533371639967,
+            "originalTopTriangle": 73
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005381044128,
+            "originalTopTriangle": 97
+          }
+        ],
+        "intersection": [
+          [
+            3.962048792623137,
+            1.6115147405176093,
+            -7.53542417109092
+          ],
+          [
+            3.9525228567821635,
+            1.6115603636598888,
+            -7.546887937242744
+          ],
+          [
+            3.909484090176643,
+            1.6119900941848755,
+            -7.546108596565252
+          ],
+          [
+            3.913841751096287,
+            1.6119900941848755,
+            -7.535957423790353
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1309,
+        "groundTriangle": 57419,
+        "gapRange": [
+          -0.05606555323221918,
+          -0.05236946913331586
+        ],
+        "center": [
+          3.918887806627576,
+          1.6118130236386219,
+          -7.565835430559056
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.009907140042587761,
+          0.9999418790054903,
+          -0.004252903378404622
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.3554931600530153e-08,
+          "originalTopTriangle": 97
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.3554931600530153e-08,
+            "originalTopTriangle": 97
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005800199508665393,
+            "originalTopTriangle": 73
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0012662441288391335,
+            "originalTopTriangle": 105
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06979499269712841,
+            "originalTopTriangle": 73
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005355493166,
+            "originalTopTriangle": 97
+          }
+        ],
+        "intersection": [
+          [
+            3.9410979754711355,
+            1.6116150815368806,
+            -7.560636945198331
+          ],
+          [
+            3.932382175175802,
+            1.6116568246478558,
+            -7.571125772551328
+          ],
+          [
+            3.89900425811729,
+            1.6119900941848755,
+            -7.57052136934591
+          ],
+          [
+            3.9030668177460766,
+            1.6119900941848755,
+            -7.561057635140653
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1309,
+        "groundTriangle": 57541,
+        "gapRange": [
+          -0.05810520263537833,
+          -0.052643168961587605
+        ],
+        "center": [
+          3.9500607904400087,
+          1.6117146231264639,
+          -7.516353863631872
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.009907140042587578,
+          0.9999418790054903,
+          -0.004252903378392895
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.406594594248304e-08,
+          "originalTopTriangle": 97
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.406594594248304e-08,
+            "originalTopTriangle": 97
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005800199508669834,
+            "originalTopTriangle": 82
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.003347415611381299,
+            "originalTopTriangle": 114
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.06999567276982566,
+            "originalTopTriangle": 82
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.070000054065946,
+            "originalTopTriangle": 97
+          }
+        ],
+        "intersection": [
+          [
+            3.982999199314256,
+            1.6114144014641831,
+            -7.510211890943121
+          ],
+          [
+            3.9726635383885256,
+            1.6114639026719215,
+            -7.5226501019341585
+          ],
+          [
+            3.919963922235996,
+            1.6119900941848755,
+            -7.521695823784594
+          ],
+          [
+            3.9246165018212573,
+            1.6119900941848755,
+            -7.510857637865618
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1309,
+        "groundTriangle": 57584,
+        "gapRange": [
+          -0.0581689406330983,
+          -0.052643168961587605
+        ],
+        "center": [
+          3.9543601969322855,
+          1.6117011529039638,
+          -7.509505510864294
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.009907140042584098,
+          0.9999418790054901,
+          -0.004252903378479725
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.407709857685461e-08,
+          "originalTopTriangle": 97
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.407709857685461e-08,
+            "originalTopTriangle": 97
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005800199508667614,
+            "originalTopTriangle": 82
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0033795712649076215,
+            "originalTopTriangle": 114
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 82
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005407709864,
+            "originalTopTriangle": 97
+          }
+        ],
+        "intersection": [
+          [
+            3.9259114265441895,
+            1.6119900941848755,
+            -7.507841110229492
+          ],
+          [
+            3.9839136600494385,
+            1.6114100217819214,
+            -7.509111404418945
+          ],
+          [
+            3.982999199314256,
+            1.6114144014641831,
+            -7.510211890943121
+          ],
+          [
+            3.9246165018212573,
+            1.6119900941848755,
+            -7.510857637865618
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1310,
+        "groundTriangle": 57476,
+        "gapRange": [
+          -0.05151572330012111,
+          -0.04935312510749612
+        ],
+        "center": [
+          3.9611563981943334,
+          1.611510671233476,
+          -7.404985815172958
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.01002717990845922,
+          0.9999489762997303,
+          0.001224932734795076
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.282684334417809e-08,
+          "originalTopTriangle": 98
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.282684334417809e-08,
+            "originalTopTriangle": 98
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00022220157933938722,
+            "originalTopTriangle": 91
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0006624657636382647,
+            "originalTopTriangle": 99
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 91
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000528268434,
+            "originalTopTriangle": 98
+          }
+        ],
+        "intersection": [
+          [
+            3.9497223052147232,
+            1.6116322758133481,
+            -7.410656875764918
+          ],
+          [
+            3.95251120627519,
+            1.6115903655567123,
+            -7.399273960488703
+          ],
+          [
+            3.970535655639301,
+            1.6114100217819214,
+            -7.3996003649754805
+          ],
+          [
+            3.97185642564812,
+            1.6114100217819214,
+            -7.410412059462734
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1310,
+        "groundTriangle": 57477,
+        "gapRange": [
+          -0.04943865363287436,
+          -0.04802778523694151
+        ],
+        "center": [
+          3.96267603961793,
+          1.6114650693037589,
+          -7.380199241898918
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.010027179908449119,
+          0.9999489762997305,
+          0.0012249327348110165
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.267133484920805e-08,
+          "originalTopTriangle": 98
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.267133484920805e-08,
+            "originalTopTriangle": 98
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00012997516596913172,
+            "originalTopTriangle": 91
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0003875910911792513,
+            "originalTopTriangle": 99
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 91
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005267133491,
+            "originalTopTriangle": 98
+          }
+        ],
+        "intersection": [
+          [
+            3.9558594745545843,
+            1.6115400493999779,
+            -7.385607984779975
+          ],
+          [
+            3.958512284739606,
+            1.6115001842512149,
+            -7.374780525173027
+          ],
+          [
+            3.967523566912498,
+            1.6114100217819214,
+            -7.374943700404631
+          ],
+          [
+            3.9688088322650317,
+            1.6114100217819214,
+            -7.385464757238038
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1310,
+        "groundTriangle": 57478,
+        "gapRange": [
+          -0.05094365739732121,
+          -0.04833218740207901
+        ],
+        "center": [
+          3.9619287921835267,
+          1.6114876146301331,
+          -7.392486766870549
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.010027179908439548,
+          0.9999489762997306,
+          0.0012249327348102708
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.275944880978045e-08,
+          "originalTopTriangle": 98
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.275944880978045e-08,
+            "originalTopTriangle": 98
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00018029132270336312,
+            "originalTopTriangle": 91
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005433402183532277,
+            "originalTopTriangle": 99
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 91
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005275944887,
+            "originalTopTriangle": 98
+          }
+        ],
+        "intersection": [
+          [
+            3.95251120627519,
+            1.611590365556712,
+            -7.399273960488703
+          ],
+          [
+            3.9558594745545848,
+            1.6115400493999776,
+            -7.385607984779975
+          ],
+          [
+            3.968808832265032,
+            1.6114100217819214,
+            -7.385464757238038
+          ],
+          [
+            3.970535655639301,
+            1.6114100217819214,
+            -7.3996003649754805
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1310,
+        "groundTriangle": 57481,
+        "gapRange": [
+          -0.047200539569043576,
+          -0.04652057463827575
+        ],
+        "center": [
+          3.9640899806125454,
+          1.6114226226829442,
+          -7.357123187602242
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.010027179908478286,
+          0.9999489762997301,
+          0.0012249327348054031
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.2515828574684065e-08,
+          "originalTopTriangle": 98
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.2515828574684065e-08,
+            "originalTopTriangle": 98
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 3.775025098118334e-05,
+            "originalTopTriangle": 91
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00011272083949154243,
+            "originalTopTriangle": 99
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 91
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005251582864,
+            "originalTopTriangle": 98
+          }
+        ],
+        "intersection": [
+          [
+            3.961996544185205,
+            1.61144782448499,
+            -7.360559500758857
+          ],
+          [
+            3.9645121097564697,
+            1.6114100217819214,
+            -7.350292205810547
+          ],
+          [
+            3.9657612878959627,
+            1.6114100217819214,
+            -7.360517856237323
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1310,
+        "groundTriangle": 57485,
+        "gapRange": [
+          -0.04881068732486615,
+          -0.046884574087156405
+        ],
+        "center": [
+          3.963448420933318,
+          1.6114420130750118,
+          -7.3677003956434595
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.010027179908419188,
+          0.9999489762997308,
+          0.0012249327348169093
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.2605751976742e-08,
+          "originalTopTriangle": 98
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.2605751976742e-08,
+            "originalTopTriangle": 98
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 9.011001720615752e-05,
+            "originalTopTriangle": 91
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00027166785326948606,
+            "originalTopTriangle": 99
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 91
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005260575204,
+            "originalTopTriangle": 98
+          }
+        ],
+        "intersection": [
+          [
+            3.958512284739606,
+            1.6115001842512149,
+            -7.374780525173027
+          ],
+          [
+            3.961996544185205,
+            1.6114478244849897,
+            -7.360559500758857
+          ],
+          [
+            3.9657612878959627,
+            1.6114100217819214,
+            -7.360517856237323
+          ],
+          [
+            3.967523566912498,
+            1.6114100217819214,
+            -7.374943700404631
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1310,
+        "groundTriangle": 57573,
+        "gapRange": [
+          -0.05291831872358821,
+          -0.049589803583724335
+        ],
+        "center": [
+          3.9604091518962923,
+          1.611533216488829,
+          -7.4172732914700985
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.010027179908455338,
+          0.9999489762997303,
+          0.0012249327347942304
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.2913144754640484e-08,
+          "originalTopTriangle": 98
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.2913144754640484e-08,
+            "originalTopTriangle": 98
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0002704723441162571,
+            "originalTopTriangle": 91
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0008150112883558158,
+            "originalTopTriangle": 99
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 91
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005291314482,
+            "originalTopTriangle": 98
+          }
+        ],
+        "intersection": [
+          [
+            3.9465101467150583,
+            1.611680546578125,
+            -7.423767318646436
+          ],
+          [
+            3.9497223052147232,
+            1.6116322758133481,
+            -7.410656875764918
+          ],
+          [
+            3.97185642564812,
+            1.6114100217819214,
+            -7.410412059462734
+          ],
+          [
+            3.973547730007268,
+            1.6114100217819214,
+            -7.424256912006302
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1310,
+        "groundTriangle": 57584,
+        "gapRange": [
+          -0.0581689406330983,
+          -0.052704251601839225
+        ],
+        "center": [
+          3.9552289745372464,
+          1.611690307784851,
+          -7.503107155909197
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.010027179908450774,
+          0.9999489762997303,
+          0.0012249327348086755
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.3442083647325944e-08,
+          "originalTopTriangle": 98
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.3442083647325944e-08,
+            "originalTopTriangle": 98
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005800199508667614,
+            "originalTopTriangle": 82
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0033795712649076215,
+            "originalTopTriangle": 114
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 82
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005344208371,
+            "originalTopTriangle": 98
+          }
+        ],
+        "intersection": [
+          [
+            3.9259114265441895,
+            1.6119900941848755,
+            -7.507841110229492
+          ],
+          [
+            3.9285067186040696,
+            1.6119510933906858,
+            -7.4972484111719995
+          ],
+          [
+            3.9825840929512895,
+            1.6114100217819214,
+            -7.498227697816351
+          ],
+          [
+            3.9839136600494385,
+            1.6114100217819214,
+            -7.509111404418945
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1310,
+        "groundTriangle": 57585,
+        "gapRange": [
+          -0.056772120033074636,
+          -0.05220148329597962
+        ],
+        "center": [
+          3.956597477045992,
+          1.6116474768636795,
+          -7.479345430801992
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.010027179908452784,
+          0.9999489762997305,
+          0.0012249327348063952
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.329336283388386e-08,
+          "originalTopTriangle": 98
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.329336283388386e-08,
+            "originalTopTriangle": 98
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0004988772712124501,
+            "originalTopTriangle": 83
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0016214148233759662,
+            "originalTopTriangle": 106
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 83
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000532933629,
+            "originalTopTriangle": 98
+          }
+        ],
+        "intersection": [
+          [
+            3.9313110333111796,
+            1.6119089515052212,
+            -7.485802585010805
+          ],
+          [
+            3.9345077770741526,
+            1.6118609123856538,
+            -7.472755057463306
+          ],
+          [
+            3.9795720093002576,
+            1.6114100217819214,
+            -7.473571074795269
+          ],
+          [
+            3.980999088498377,
+            1.6114100217819214,
+            -7.485253005938583
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1310,
+        "groundTriangle": 57587,
+        "gapRange": [
+          -0.05788597118516292,
+          -0.0522014832959794
+        ],
+        "center": [
+          3.955850233341229,
+          1.6116700221149374,
+          -7.491632924984434
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.010027179908453941,
+          0.9999489762997305,
+          0.0012249327347878443
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.3374240360781755e-08,
+          "originalTopTriangle": 98
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.3374240360781755e-08,
+            "originalTopTriangle": 98
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0005410191566770362,
+            "originalTopTriangle": 82
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0016902925261235158,
+            "originalTopTriangle": 107
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 82
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005337424042,
+            "originalTopTriangle": 98
+          }
+        ],
+        "intersection": [
+          [
+            3.9285067186040696,
+            1.6119510933906858,
+            -7.4972484111719995
+          ],
+          [
+            3.9313110333111796,
+            1.6119089515052212,
+            -7.485802585010805
+          ],
+          [
+            3.980999088498377,
+            1.6114100217819214,
+            -7.485253005938583
+          ],
+          [
+            3.9825840929512895,
+            1.6114100217819214,
+            -7.498227697816351
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1310,
+        "groundTriangle": 57588,
+        "gapRange": [
+          -0.05518306687200836,
+          -0.05144958279322842
+        ],
+        "center": [
+          3.9581171159163455,
+          1.6116018749826908,
+          -7.454558876405745
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.01002717990844983,
+          0.9999489762997303,
+          0.0012249327347977406
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.313785678140448e-08,
+          "originalTopTriangle": 98
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.313785678140448e-08,
+            "originalTopTriangle": 98
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00040665265930561745,
+            "originalTopTriangle": 83
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0013058320475300977,
+            "originalTopTriangle": 106
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 83
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005313785684,
+            "originalTopTriangle": 98
+          }
+        ],
+        "intersection": [
+          [
+            3.9374480827733724,
+            1.6118167268933143,
+            -7.460754183307236
+          ],
+          [
+            3.9405089624458065,
+            1.6117707294736061,
+            -7.448261185805141
+          ],
+          [
+            3.9765598693604143,
+            1.6114100217819214,
+            -7.448913990999462
+          ],
+          [
+            3.977951549085789,
+            1.6114100217819214,
+            -7.460306145511139
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1310,
+        "groundTriangle": 57589,
+        "gapRange": [
+          -0.05343076757469989,
+          -0.05049432531704734
+        ],
+        "center": [
+          3.9596367721086025,
+          1.6115562726357526,
+          -7.429772083436306
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.01002717990845122,
+          0.9999489762997303,
+          0.0012249327347995326
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.2982348286434444e-08,
+          "originalTopTriangle": 98
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.2982348286434444e-08,
+            "originalTopTriangle": 98
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00031442616703381,
+            "originalTopTriangle": 91
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0009902435426150102,
+            "originalTopTriangle": 106
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 91
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005298234835,
+            "originalTopTriangle": 98
+          }
+        ],
+        "intersection": [
+          [
+            3.943585257363712,
+            1.6117245004010425,
+            -7.435705270892439
+          ],
+          [
+            3.9465101467150583,
+            1.611680546578125,
+            -7.423767318646436
+          ],
+          [
+            3.973547730007268,
+            1.6114100217819214,
+            -7.424256912006302
+          ],
+          [
+            3.9749039543483726,
+            1.6114100217819214,
+            -7.435358832200046
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1310,
+        "groundTriangle": 57591,
+        "gapRange": [
+          -0.05473414898751927,
+          -0.05065519492985904
+        ],
+        "center": [
+          3.9588895108795765,
+          1.611578818359623,
+          -7.442059819974271
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.010027179908450265,
+          0.9999489762997303,
+          0.0012249327348010485
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.3066844252214196e-08,
+          "originalTopTriangle": 98
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.3066844252214196e-08,
+            "originalTopTriangle": 98
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.000360655239597385,
+            "originalTopTriangle": 91
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0011617190135824185,
+            "originalTopTriangle": 106
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.0700000524520874,
+            "originalTopTriangle": 91
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005306684431,
+            "originalTopTriangle": 98
+          }
+        ],
+        "intersection": [
+          [
+            3.9405089624458065,
+            1.6117707294736061,
+            -7.448261185805141
+          ],
+          [
+            3.943585257363712,
+            1.6117245004010425,
+            -7.435705270892439
+          ],
+          [
+            3.9749039543483726,
+            1.6114100217819214,
+            -7.435358832200046
+          ],
+          [
+            3.9765598693604143,
+            1.6114100217819214,
+            -7.448913990999462
+          ]
+        ]
+      },
+      {
+        "newTriangle": 1310,
+        "groundTriangle": 57596,
+        "gapRange": [
+          -0.05639009514031201,
+          -0.051526313082405295
+        ],
+        "center": [
+          3.957369854558393,
+          1.6116244207107027,
+          -7.466846615269238
+        ],
+        "clippedPolygonNormalFromStoredOrder": [
+          0.010027179908454188,
+          0.9999489762997303,
+          0.001224932734797063
+        ],
+        "classification": "eastBranchGallery:bottom",
+        "closestInputPlane": {
+          "part": "eastBranchGallery",
+          "role": "bottom",
+          "maximumPlaneResidual": 5.322054374978791e-08,
+          "originalTopTriangle": 98
+        },
+        "otherInputPlanes": [
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 5.322054374978791e-08,
+            "originalTopTriangle": 98
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.0004508381516450388,
+            "originalTopTriangle": 83
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "bottom",
+            "maximumPlaneResidual": 0.00147363605705908,
+            "originalTopTriangle": 106
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005245208762,
+            "originalTopTriangle": 83
+          },
+          {
+            "part": "eastBranchGallery",
+            "role": "top",
+            "maximumPlaneResidual": 0.07000005322054381,
+            "originalTopTriangle": 98
+          }
+        ],
+        "intersection": [
+          [
+            3.9345077770741526,
+            1.6118609123856538,
+            -7.472755057463306
+          ],
+          [
+            3.9374480827733724,
+            1.6118167268933146,
+            -7.460754183307236
+          ],
+          [
+            3.977951549085789,
+            1.6114100217819214,
+            -7.460306145511139
+          ],
+          [
+            3.9795720093002576,
+            1.6114100217819214,
+            -7.473571074795269
+          ]
+        ]
+      }
+    ],
+    "classificationTolerance": 1e-07,
+    "toleranceUnchangedDiagnosticOnly": true,
+    "limits": [
+      "Saved intersections are polygons from faces selected into walk-top by geometric normal.y>.1. Plane attribution is not a proof of correct final surface orientation or usable support.",
+      "A bottom-attributed upward-facing facet must not silently remain eligible for walking. Saved full Boolean mesh is only in Blend; exact orientation/lineage needs separately scheduled inspection if required.",
+      "Unclassified polygon roles stay HOLD."
+    ]
+  },
+  "inputsBefore": {
+    "same-owner-bough-contacts.json": "5a7bf053f39cacbeaab603fd7249a7e5a4df0c8f77e02ec72848f2a598146767",
+    "donor-authored-parity.json": "260090547b1fab9ef2151056f4089791381f4c00da2fe585ed63c0297e431874",
+    "built-floor-ground-relation.json": "dd5dea7f9d930dcb1871814906dbb9938e08af862956fedae64bab7c8cc2185e",
+    "planned-floor-tops.json": "e44d250ca5440d0f5aae661d321bde8de7c031296939b820eeb8f9d400c2b53d",
+    "sourceGlb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "study": "48def2a0503b82a8af71071c23586638629d82d12fb5c6ca2f2e5865360d0aa9",
+    "script": "d91bfc3c7edd238b65c9e5dc6d8e4c5f1a6008bebf08bc998b9745b4909fc7e0"
+  },
+  "inputsAfter": {
+    "same-owner-bough-contacts.json": "5a7bf053f39cacbeaab603fd7249a7e5a4df0c8f77e02ec72848f2a598146767",
+    "donor-authored-parity.json": "260090547b1fab9ef2151056f4089791381f4c00da2fe585ed63c0297e431874",
+    "built-floor-ground-relation.json": "dd5dea7f9d930dcb1871814906dbb9938e08af862956fedae64bab7c8cc2185e",
+    "planned-floor-tops.json": "e44d250ca5440d0f5aae661d321bde8de7c031296939b820eeb8f9d400c2b53d",
+    "sourceGlb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "study": "48def2a0503b82a8af71071c23586638629d82d12fb5c6ca2f2e5865360d0aa9",
+    "script": "d91bfc3c7edd238b65c9e5dc6d8e4c5f1a6008bebf08bc998b9745b4909fc7e0"
+  }
+}

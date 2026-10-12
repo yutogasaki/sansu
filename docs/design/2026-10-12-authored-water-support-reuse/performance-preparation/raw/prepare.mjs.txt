@@ -1,0 +1,63 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import { build } from '/private/tmp/sansu-authored-shoulder-c3/candidate/node_modules/esbuild/lib/main.js';
+
+const root = '/private/tmp/sansu-water-support-perf-c2-c3';
+const prior = '/private/tmp/sansu-water-support-real-input-parity-c2-c3';
+const sha = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+const read = file => JSON.parse(fs.readFileSync(file));
+const templatePath = `${root}/prepared/worker-template.ts.txt`, template = fs.readFileSync(templatePath, 'utf8');
+const sources = {}, dependencies = {}, versions = {};
+const canonicalExpected = {};
+for (const version of ['c2', 'c3']) {
+  const repo = `/private/tmp/sansu-authored-shoulder-${version}/candidate`;
+  const corePath = path.dirname(repo) + '/core/report.json', core = read(corePath);
+  if (!core.pass || !core.sourceFixed || !core.installedDependenciesFixed || JSON.stringify(core.initialInputs) !== JSON.stringify(core.finalInputs)) throw Error('Core not fixed');
+  for (const [name, value] of Object.entries(core.finalInputs)) {
+    const file = path.join(repo, name); if (sha(file) !== value) throw Error(`Core source changed: ${file}`); sources[file] = value;
+  }
+  for (const [name, value] of Object.entries(core.finalInstalledDependencies)) {
+    const file = path.join(repo, name); if (sha(file) !== value) throw Error(`Core dependency changed: ${file}`); dependencies[file] = value;
+  }
+  const entry = `${root}/prepared/worker-${version}.ts`, bundle = `${root}/prepared/worker-${version}.mjs`;
+  fs.writeFileSync(entry, template.replaceAll('__REPO__', repo), { flag: 'wx' });
+  const built = await build({ entryPoints: [entry], bundle: true, platform: 'node', target: 'node24', format: 'esm', outfile: bundle,
+    metafile: true, sourcemap: true, define: { 'import.meta.env.DEV': 'false' }, logLevel: 'silent' });
+  const metaPath = `${root}/prepared/${version}-metafile.json`; fs.writeFileSync(metaPath, JSON.stringify(built.metafile, null, 2) + '\n', { flag: 'wx' });
+  const actualImports = {};
+  for (const name of Object.keys(built.metafile.inputs)) {
+    const file = path.resolve(name), value = sha(file);
+    if (file !== entry && (!file.startsWith(repo + '/') || core.finalInputs[path.relative(repo, file)] !== value)) throw Error(`Import outside sealed core: ${file}`);
+    actualImports[file] = value;
+  }
+  execFileSync(process.execPath, ['--check', bundle]);
+  const fixtures = {};
+  for (const scenario of ['wide27', 'source32', 'shoulder35']) {
+    const expectedPath = `${prior}/${scenario === 'shoulder35' ? 'actual-03' : 'actual-01'}/${version}-${scenario}.json`;
+    const expected = read(expectedPath);
+    for (const item of expected.inputFiles) if (sha(item.path) !== item.sha256 || sources[item.path] !== item.sha256) throw Error(`Fixture changed: ${item.path}`);
+    const normalized = { inputStateSha256: expected.inputStateSha256, baseDefinitionSha256: expected.baseDefinitionSha256, owners: expected.owners,
+      bridgeCount: expected.bridgeCount, bridges: expected.bridges, sites: expected.sites, sourceWalkEdges: expected.sourceWalkEdges, output: expected.output };
+    if (version === 'c2') canonicalExpected[scenario] = normalized;
+    else if (JSON.stringify(normalized) !== JSON.stringify(canonicalExpected[scenario])) throw Error('Existing parity no longer agrees');
+    const copied = `${root}/prepared/expected-${version}-${scenario}.json`; fs.copyFileSync(expectedPath, copied, fs.constants.COPYFILE_EXCL);
+    fixtures[scenario] = { expectedOriginal: expectedPath, expectedPath: copied, expectedSha256: sha(copied), inputFiles: expected.inputFiles, normalized };
+  }
+  versions[version] = { repo, coreReport: corePath, coreReportSha256: sha(corePath), sourceCount: Object.keys(core.finalInputs).length,
+    dependencyCount: Object.keys(core.finalInstalledDependencies).length, actualImports, bundle, bundleSha256: sha(bundle), fixtures,
+    unchangedWaterDriverSha256: sources[repo + '/tools/e2e-authored-water.mjs'] };
+}
+const beforeMap = read(versions.c2.coreReport).finalInputs, afterMap = read(versions.c3.coreReport).finalInputs;
+const changed = [...new Set([...Object.keys(beforeMap), ...Object.keys(afterMap)])].filter(name => name.startsWith('src/') || name.startsWith('tools/') || name.startsWith('prototypes/') || name.startsWith('public/'))
+  .filter(name => beforeMap[name] !== afterMap[name]).sort();
+const required = ['src/domain/growingIsland/authoredWaterBridge.test.ts', 'src/domain/growingIsland/authoredWaterBridge.ts', 'src/domain/growingIsland/authoredWaterWorld.ts'];
+if (JSON.stringify(changed) !== JSON.stringify(required)) throw Error('Unexpected application delta');
+const record = { schema: 'sansu-water-support-perf-preparation-v1', executionStarted: false, versions, fullSources: sources, installedDependencies: dependencies,
+  applicationDelta: changed, benchmarkTemplateSha256: sha(templatePath), templateSameApartFromAbsoluteRepository: true,
+  runtime: { node: process.execPath, nodeRealPath: fs.realpathSync(process.execPath), nodeSha256: sha(fs.realpathSync(process.execPath)), version: process.version, flags: ['--expose-gc'] },
+  bundler: { version: read('/private/tmp/sansu-authored-shoulder-c3/candidate/node_modules/esbuild/package.json').version, mainSha256: sha('/private/tmp/sansu-authored-shoulder-c3/candidate/node_modules/esbuild/lib/main.js') },
+  priorParityUsedOnlyForFunctionalExpectedHashes: true, oldTimingNotPerformanceEvidence: true };
+fs.writeFileSync(`${root}/prepared/inputs.json`, JSON.stringify(record, null, 2) + '\n', { flag: 'wx' });
+console.log(JSON.stringify({ prepared: true, executionStarted: false, sourceCounts: Object.fromEntries(Object.entries(versions).map(([k, v]) => [k, v.sourceCount])), inputManifestSha256: sha(`${root}/prepared/inputs.json`), bundleImports: Object.fromEntries(Object.entries(versions).map(([k, v]) => [k, Object.keys(v.actualImports).length])) }));

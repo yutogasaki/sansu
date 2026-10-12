@@ -3,6 +3,7 @@ import type { SceneLayout } from '../sceneLayout';
 import type { GardenTime } from '../../three/garden/presentation';
 import { buildAuthoredPoolRipples, colorAuthoredWater } from './authoredWaterAppearance';
 import { buildAuthoredWaterBridgeArt, type AuthoredWaterBridgeSkin } from './authoredWaterBridgeArt';
+import type { WorldPoint } from '../../../../domain/growingIsland/worldTypes';
 
 export interface AuthoredCoastSkin {
     version: 1;
@@ -78,20 +79,35 @@ export function buildAuthoredGrowingGround(layout: SceneLayout, skin?: AuthoredC
     if (skin && (skin.worldId !== layout.world.id || skin.source.sha256 !== layout.world.definition.source?.sha256)) throw Error('Authored coast and floor sources differ');
     const root = new T.Group(); root.name = 'authored-shared-terrain';
     const positions: number[] = [], colors: number[] = [], indices: number[] = [];
+    const sourceNormals: (WorldPoint | undefined)[] = [], floorMaterials: T.MeshStandardMaterial[] = [];
+    const materialIndices = new Map<string, number>(), groups: { start: number; count: number; materialIndex: number }[] = [];
     for (const surface of layout.world.floors.filter(floor => floor.kind === 'ground' || floor.kind === 'deck')) {
         const offset = positions.length / 3, color = new T.Color(surface.color);
-        for (const { point } of surface.vertices) {
+        const appearance = surface.material ?? { roughness: .95, metalness: 0, doubleSided: false };
+        const key = JSON.stringify([appearance.roughness, appearance.metalness, appearance.doubleSided]);
+        let materialIndex = materialIndices.get(key);
+        if (materialIndex === undefined) {
+            materialIndex = floorMaterials.length; materialIndices.set(key, materialIndex);
+            floorMaterials.push(new T.MeshStandardMaterial({ vertexColors: true, roughness: appearance.roughness,
+                metalness: appearance.metalness, side: appearance.doubleSided ? T.DoubleSide : T.FrontSide }));
+        }
+        groups.push({ start: indices.length, count: surface.indices.length, materialIndex });
+        for (const { point, normal } of surface.vertices) {
             positions.push(point.x - layout.center, point.y, point.z - 2);
             colors.push(color.r, color.g, color.b);
+            sourceNormals.push(normal);
         }
         for (const index of surface.indices) indices.push(index + offset);
     }
     const geometry = new T.BufferGeometry(); geometry.setAttribute('position', new T.Float32BufferAttribute(positions, 3));
     geometry.setAttribute('color', new T.Float32BufferAttribute(colors, 3)); geometry.setIndex(indices); geometry.computeVertexNormals();
-    const material = new T.MeshStandardMaterial({ vertexColors: true, roughness: .95 });
-    const floor = new T.Mesh(geometry, material); floor.name = 'authored-evaluated-floor'; floor.receiveShadow = true;
+    const normals = geometry.getAttribute('normal');
+    sourceNormals.forEach((normal, i) => { if (normal) normals.setXYZ(i, normal.x, normal.y, normal.z); });
+    for (const group of groups) geometry.addGroup(group.start, group.count, group.materialIndex);
+    const floor = new T.Mesh(geometry, floorMaterials.length === 1 ? floorMaterials[0] : floorMaterials);
+    floor.name = 'authored-evaluated-floor'; floor.receiveShadow = true;
     floor.userData.terrainSurface = true; floor.userData.worldDefinition = layout.world.id; root.add(floor);
-    const geometries = [geometry], materials: T.Material[] = [material];
+    const geometries = [geometry], materials: T.Material[] = [...floorMaterials];
     for (const part of skin?.parts ?? []) {
         const coastGeometry = new T.BufferGeometry();
         const points = part.positions.map((value, index) => value - (index % 3 === 0 ? layout.center : index % 3 === 2 ? 2 : 0));

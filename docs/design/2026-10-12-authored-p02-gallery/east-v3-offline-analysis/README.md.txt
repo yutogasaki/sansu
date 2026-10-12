@@ -1,0 +1,13 @@
+# v3 failed floor and first support: offline cause
+
+This is source-only diagnostic evidence. No Blender, source repair, runtime or visual acceptance was performed here. The saved v3 scene remains failed and immutable.
+
+The original `eastBranchGallery` input has 17 downward top triangles at three abrupt centerline transitions, and 1,084 positive-area XZ overlap pairs (pair-area sum 0.46514646580787034). This is an input ribbon defect; closing edge topology or changing the Boolean solver cannot prove the intended surface is valid. `input-volume.json` reproduces the negative faces and signed-volume calculation. Total signed volume is positive (0.2056917263), although 0.1324216151 square units of its top project downward. Extrusion reverses those bad faces into upward bottom faces.
+
+The saved Boolean output ground report contains 69 buried polygons, minimum gap -0.067797873239. All are closest to the branch underside, not the terrain threshold: 42 match the intended bottom within unchanged EPS 1e-7; 27 remain unclassified at that EPS (nearest-bottom plane residual at most 7.763e-6). Those 27 retain HOLD. They were selected into walk-top by their upward orientation; this is not harmless thickness or a reason to hide faces from walking. Whole Boolean output signed volume has not been measured because that mesh is only in the failed Blend; no additional Blender run was authorized.
+
+The first support ray was also invalid by design: its centre aim lies 0.07127356 below the actual native trunk minimum, and neither the bounded nor extended original direction hits the trunk. A horizontal ray reaches the back inner wall only at 1.53970, beyond the unchanged 1.35 limit. At its first deck point, the underside is 0.04676 below actual ground while the top is 0.02324 above it. A ground-bearing root role is needed here, rather than a universal downward-to-trunk ray.
+
+`analyze.py` / `first.log.txt` / `report.json` preserve the initial NumPy warning result. Only its ray arithmetic is superseded by warning-free scalar `analyze-scalar.py` / `report-scalar.json`; no original result was overwritten. `ground-roles.py`, `input-volume.py`, and `overlap.py` are reproducible offline diagnostics. `input-top-orientation.json` was the first one-off raw orientation result; its findings are reproduced by `input-volume.py`.
+
+The next proposed geometry is separate in `../east-v4-curvature/`. v3's inputs, failed Blend, code and durable failure archive are unchanged. No face flip, maxSpan increase, tolerance relaxation, ground change, owner/grant change, or blanket collision exclusion is adopted.

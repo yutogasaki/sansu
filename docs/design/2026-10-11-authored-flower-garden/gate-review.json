@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-12",
+  "candidate": "native05-authored-flower-garden-v1",
+  "build": "authored-flower-shape-c3",
+  "nativeGrowingArt": true,
+  "normalProductionNativeArt": false,
+  "art": {
+    "result": "HOLD",
+    "evaluator": "author internal software review of actual pixels",
+    "axes": [6, 7, 6, 5, 6, 5],
+    "total": 35,
+    "requiredMinimumForEachAxis": 8,
+    "imagesReviewed": 12,
+    "benchmark": "../2026-10-10-island-final-3d/whole-island-render.png",
+    "sameStatePrevious": "../2026-10-11-authored-whole-preflight/runtime/mature-32-whole-day.png",
+    "currentInputs": "fixed archived synthetic 32 owners and 8 homes; benchmark has different authored composition",
+    "review": "art-review.md"
+  },
+  "independentComprehensionAndSafety": {
+    "result": "NOT_EVALUATED",
+    "observers": 0,
+    "actualRigChecksAreIndependentObservation": false
+  },
+  "runtime": {
+    "result": "PARTIAL",
+    "localFlowerMechanism": "PASS",
+    "core": "PASS",
+    "evidence": "verification.json",
+    "remaining": ["whole-island art", "next personal-save integration", "offline/update acceptance for next world", "performance", "devices", "independent observations", "release"]
+  },
+  "M1Complete": false,
+  "goalStatus": "active",
+  "next": "next-production.md"
+}

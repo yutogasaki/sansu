@@ -1,0 +1,64 @@
+{
+  "scope": "c3 immutable baseline plus root-authorized guarded path synchronization; preparation only",
+  "base": "/private/tmp/sansu-authored-shoulder-c3",
+  "candidate": "/private/tmp/sansu-authored-path-c4/candidate",
+  "revision": "authored-path-c4",
+  "sourcePaths": [
+    "src/components/island/growing/growingLife.ts",
+    "src/components/island/growing/objectLayer.ts",
+    "src/components/island/growing/placePaths.test.ts",
+    "src/components/island/growing/placePaths.ts",
+    "src/components/island/growing/placePathsSupport.test.ts",
+    "src/components/island/growing/placePathsSync.test.ts"
+  ],
+  "overlayPaths": [
+    "docs/product/island-world-contract.md",
+    "src/components/island/growing/growingLife.ts",
+    "src/components/island/growing/objectLayer.ts",
+    "src/components/island/growing/placePaths.test.ts",
+    "src/components/island/growing/placePaths.ts",
+    "src/components/island/growing/placePathsSupport.test.ts",
+    "src/components/island/growing/placePathsSync.test.ts"
+  ],
+  "addedPaths": [
+    "src/components/island/growing/placePathsSync.test.ts"
+  ],
+  "files": {
+    "docs/product/island-world-contract.md": {
+      "beforeSha256": "8afc4a1d58745dbdb22db73809f340f38ba2bf0fa4ccc48773154973b4e0f068",
+      "afterSha256": "d174a031a2c3ec6358325b04fd3d54ad964f3d8ffbf0eca5893b61b94e08863f"
+    },
+    "src/components/island/growing/growingLife.ts": {
+      "beforeSha256": "5479b7915165422fa6345b3297aa1eb4068bbc24ad88642a3b6ae7f8f115007d",
+      "afterSha256": "6648782191e2b1275f661a44bfa9e4235347bac39effd05d8b273ce2dd047973"
+    },
+    "src/components/island/growing/objectLayer.ts": {
+      "beforeSha256": "e5a579c2ed7a01b9392db046802411580a855562885ddf9d7ec506c17934c618",
+      "afterSha256": "09f0b0b8999be1e6f3c90c943702d40d9bcb857d5bc10dd04a55f90b6dda0835"
+    },
+    "src/components/island/growing/placePaths.test.ts": {
+      "beforeSha256": "0784ce7d9d84957dc80798c281044c1650a410d1735a315a520d65e27135cef1",
+      "afterSha256": "611e3394573a76b56492045373cc8685860faf4491154c95a801dbd353fd4c75"
+    },
+    "src/components/island/growing/placePaths.ts": {
+      "beforeSha256": "8e3622686e4ff2a94ac28c33e0d0cd90fc743e3e81cce514603182091c22178c",
+      "afterSha256": "f01df6b4f386caf50c8fb4adb95bc994f497493850b778162852bd4f3666b871"
+    },
+    "src/components/island/growing/placePathsSupport.test.ts": {
+      "beforeSha256": "880edf3fd8fc8a90667f11803d5725fff5e926aa01c1ece54c4db3b4b407f202",
+      "afterSha256": "1fec8511ff0b744a7cd5ee9f0bcb3cb497751359eeeb31279dad306e97d61ccb"
+    },
+    "src/components/island/growing/placePathsSync.test.ts": {
+      "beforeSha256": null,
+      "afterSha256": "52ca37c100d3d20cfb5f8a2a023fcb13394afaa90539c1c71d84ff575988fce2"
+    }
+  },
+  "baseEvidenceSha256": {
+    "snapshot.json": "e585e81b2ae462ff673883bde384d7511c167582250ed4cb13c5dc1e46444451",
+    "closure/inputs.json": "aff1e4d3c12b82d74db7c08da5c1f4db6c063151372b6de47f893cca6ad98722",
+    "closure/installed-dependencies.json": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+    "core/report.json": "50526df495d9122cb2e248e888a8e91c2b00841953a75966432f785b11231b77"
+  },
+  "coreStarted": false,
+  "browserStarted": false
+}

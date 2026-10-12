@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "candidate": "native05-central-shoulder-sw-v3-source-v1",
+  "artifact": {
+    "path": "/prototypes/place-qa/authored-shoulder-profile.json.gz",
+    "sha256": "82f8cd9ad83f4ffef7995d42087eb7d0f388b759a4b55526c10fe1c0ab1e34eb",
+    "expandedSha256": "3e3834ce41ba22bc7791019001f7b20a5c0d2f4c9e5ffdf2ca01b64cae3ffb82",
+    "expandedBytes": 6808883,
+    "gzipBytes": 693036
+  },
+  "source": {
+    "baseSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "componentSha256": "c79e2cd7a228b24ff526e6d78913f6a07880e35dec1532d4c278dd7cbf10411e",
+    "geometryProfileSha256": "7b4772489932b225d7b31ced5bd53c6835a47e8e63c71eeb43d7b59af1523d3b"
+  },
+  "physicalRevision": "1c7668aed7249b80",
+  "localGroundRevision": "f38365786e1d669a",
+  "inputs": {
+    "handoff": {
+      "path": "docs/design/2026-10-12-authored-whole-massing/central-shoulder-feasibility/selected-v3-handoff.json.gz",
+      "sha256": "a5e947cf22a7a2ad02272902f5836da464f0f89630001eea4be95583103efdb8"
+    },
+    "geometryProfile": {
+      "path": "docs/design/2026-10-12-authored-central-shoulder/geometry-profile.json.gz",
+      "sha256": "7b4772489932b225d7b31ced5bd53c6835a47e8e63c71eeb43d7b59af1523d3b"
+    },
+    "components": {
+      "path": "docs/design/2026-10-12-authored-central-shoulder/central-shoulder-components-normal-v2.glb",
+      "sha256": "c79e2cd7a228b24ff526e6d78913f6a07880e35dec1532d4c278dd7cbf10411e"
+    },
+    "nativeWorld": {
+      "path": "prototypes/place-qa/native05-world.json.gz",
+      "sha256": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08"
+    },
+    "referenceState": {
+      "path": "prototypes/place-qa/authored-flower-reference-mature.json",
+      "sha256": "a6371602364a531130fb2a99e927958648ff1c57c2cc5a0966c315538ecbf533"
+    }
+  },
+  "counts": {
+    "trianglesByMaterial": [
+      1722,
+      4893
+    ],
+    "sites": 19,
+    "addedRights": 2,
+    "addedWalkSites": 17,
+    "edges": 36
+  },
+  "scope": "Explicit diagnostic terrain extension. Source double positions/indices and actual NORMAL-v2 Float32 attributes, no root geometry or owner lifecycle. Lazy-load only."
+}

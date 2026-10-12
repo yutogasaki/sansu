@@ -1,0 +1,131 @@
+{
+  "status": "EXTRACTED_NOT_STAIR_PASS",
+  "pid": 57890,
+  "startUtc": "2026-10-12T06:38:16.126Z",
+  "endUtc": "2026-10-12T06:38:16.263Z",
+  "inputsBefore": {
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/authored-shoulder-reference-mature.json": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+    "/Users/yutogasaki/Projects/sansu/node_modules/three/build/three.module.js": "bbf5ed13fe4373f5bd38b14ea8e62e9f157327da5638edc6d3863e08b167c9c7",
+    "/Users/yutogasaki/Projects/sansu/node_modules/three/build/three.core.js": "3718df126d69c125362a03340913204470d8c50238605150e57f808840fb7759",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-prep/extract-feet-v2.mjs": "73ff707c317f0879482074ae8766b01e927a8ed07aa4372fee59de7f86d77678",
+    "/Users/yutogasaki/Projects/sansu/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js": "5c552223a9309883743b80538d6e9cdb45e3227f30d3ec56fb2c39b46e78d595",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/three/worldPalette.ts": "00ad2759a32e5664ab88d4bde483fa261d54401ce37228368763a41b4c8b24e6",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/three/residentFabric.ts": "94aac1f3650bb7ffe82f395519370e91664d173efa868c97b95b943144ea0f87",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/three/primitives.ts": "024f55cd70eeb753dccc5610613221c29e3fddae05385b2403ee53d85dce1e24",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/three/residentRig.ts": "efbebea3ae6b3235301dd96c66598294c6deb2ae5dbdad33bd31dfb97afd9b51",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/three/islandCharacters.ts": "378bbc8127df7e0d7db61ad5428dbf412f35f6221ef16110a0d20fc329ff6da9",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/domain/growingIsland/rules.ts": "0a4e0289c595318443683fcbcf330d397b532f433d3faa993900fc986a8e6727",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/growing/friendRig.ts": "f4db2d23ec178a20f58256abebe3477b622c7ed60097c4c4a9031ca96d4dbeac",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/growing/wonderPaint.ts": "ad55bf214601e1565d2e19405b312862f4aba4100c2885290b472b2d3dc0c40e",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/growing/plotParts.ts": "dcd1ce1f3f4b98439f5063f45e21286998d69163e56834dc1a319da7fd2614de",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/growing/pierGeometry.ts": "37d259dcb9cccc258c3e0f5af1212e0186d5d6dd7e2137f9051de156a0aefaea",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/growing/actorScale.ts": "6120e10eae06f3ea61b7e798a1c214c814df563a63a8e1677d897e185e93f57f",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/growing/actors.ts": "0569af32a74fca09f27771d94391c0d15d94a92e9be1460be88f5b4e32a69d21"
+  },
+  "inputsAfter": {
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/authored-shoulder-reference-mature.json": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+    "/Users/yutogasaki/Projects/sansu/node_modules/three/build/three.module.js": "bbf5ed13fe4373f5bd38b14ea8e62e9f157327da5638edc6d3863e08b167c9c7",
+    "/Users/yutogasaki/Projects/sansu/node_modules/three/build/three.core.js": "3718df126d69c125362a03340913204470d8c50238605150e57f808840fb7759",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-prep/extract-feet-v2.mjs": "73ff707c317f0879482074ae8766b01e927a8ed07aa4372fee59de7f86d77678",
+    "/Users/yutogasaki/Projects/sansu/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js": "5c552223a9309883743b80538d6e9cdb45e3227f30d3ec56fb2c39b46e78d595",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/three/worldPalette.ts": "00ad2759a32e5664ab88d4bde483fa261d54401ce37228368763a41b4c8b24e6",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/three/residentFabric.ts": "94aac1f3650bb7ffe82f395519370e91664d173efa868c97b95b943144ea0f87",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/three/primitives.ts": "024f55cd70eeb753dccc5610613221c29e3fddae05385b2403ee53d85dce1e24",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/three/residentRig.ts": "efbebea3ae6b3235301dd96c66598294c6deb2ae5dbdad33bd31dfb97afd9b51",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/three/islandCharacters.ts": "378bbc8127df7e0d7db61ad5428dbf412f35f6221ef16110a0d20fc329ff6da9",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/domain/growingIsland/rules.ts": "0a4e0289c595318443683fcbcf330d397b532f433d3faa993900fc986a8e6727",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/growing/friendRig.ts": "f4db2d23ec178a20f58256abebe3477b622c7ed60097c4c4a9031ca96d4dbeac",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/growing/wonderPaint.ts": "ad55bf214601e1565d2e19405b312862f4aba4100c2885290b472b2d3dc0c40e",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/growing/plotParts.ts": "dcd1ce1f3f4b98439f5063f45e21286998d69163e56834dc1a319da7fd2614de",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/growing/pierGeometry.ts": "37d259dcb9cccc258c3e0f5af1212e0186d5d6dd7e2137f9051de156a0aefaea",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/growing/actorScale.ts": "6120e10eae06f3ea61b7e798a1c214c814df563a63a8e1677d897e185e93f57f",
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/src/components/island/growing/actors.ts": "0569af32a74fca09f27771d94391c0d15d94a92e9be1460be88f5b4e32a69d21"
+  },
+  "virtualInputs": {
+    "feet-extraction-entry.ts": {
+      "kind": "generated-stdin",
+      "sha256": "852eeaff3269183e35e8188a140a70a854f8c1de958654536b56e0453a0453cb"
+    },
+    "<define:import.meta.env>": {
+      "kind": "esbuild-defined-object",
+      "literal": "{}",
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    }
+  },
+  "bundleSha256": "fafb9be1c479d2e2f53c0afaff577f3ce9caefb60ef0da7005de7ea4e065f1ac",
+  "outputSha256": "6fddaf75ffea4cc246a10655d1839b3e1b4986a9f40427097d7f7f751cbe1122",
+  "usage": {
+    "userCPUTime": 232998,
+    "systemCPUTime": 18543,
+    "maxRSS": 138224,
+    "sharedMemorySize": 0,
+    "unsharedDataSize": 0,
+    "unsharedStackSize": 0,
+    "minorPageFault": 8828,
+    "majorPageFault": 83,
+    "swappedOut": 0,
+    "fsRead": 0,
+    "fsWrite": 0,
+    "ipcSent": 15,
+    "ipcReceived": 15,
+    "signalsCount": 0,
+    "voluntaryContextSwitches": 0,
+    "involuntaryContextSwitches": 927
+  },
+  "counts": [
+    {
+      "id": "pokomoko",
+      "species": "pokomoko",
+      "feet": 2,
+      "neutralVertices": 646
+    },
+    {
+      "id": "authored-friend-0",
+      "species": "rabbit",
+      "feet": 2,
+      "neutralVertices": 438
+    },
+    {
+      "id": "authored-friend-1",
+      "species": "otter",
+      "feet": 2,
+      "neutralVertices": 438
+    },
+    {
+      "id": "authored-friend-2",
+      "species": "fox",
+      "feet": 2,
+      "neutralVertices": 438
+    },
+    {
+      "id": "authored-friend-3",
+      "species": "duck",
+      "feet": 2,
+      "neutralVertices": 438
+    },
+    {
+      "id": "authored-friend-4",
+      "species": "squirrel",
+      "feet": 2,
+      "neutralVertices": 438
+    },
+    {
+      "id": "authored-friend-5",
+      "species": "hedgehog",
+      "feet": 2,
+      "neutralVertices": 438
+    },
+    {
+      "id": "authored-friend-6",
+      "species": "penguin",
+      "feet": 2,
+      "neutralVertices": 438
+    },
+    {
+      "id": "authored-friend-7",
+      "species": "owl",
+      "feet": 2,
+      "neutralVertices": 438
+    }
+  ]
+}

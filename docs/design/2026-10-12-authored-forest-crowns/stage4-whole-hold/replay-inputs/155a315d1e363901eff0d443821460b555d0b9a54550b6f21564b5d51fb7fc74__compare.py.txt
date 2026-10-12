@@ -1,0 +1,256 @@
+"""One source leaf, sharp-flag fan controls, unchanged raw NORMAL and original field.
+
+This is diagnostic preparation, not an adopted correction. No fixed role changes,
+normal recalculation, tolerance increase, stage4 rebuild, source save, or render.
+"""
+import os
+assert os.environ.get('SANSU_FOREST_SHARP_FAN_APPROVED') == '1', 'Await diagnostic window'
+import bpy
+import gzip
+import hashlib
+import json
+import sys
+import traceback
+from pathlib import Path
+from mathutils import Matrix, Vector
+
+HERE = Path(__file__).resolve().parent
+DEBUG = HERE.parent
+STAGE = DEBUG.parent
+BASE = STAGE.parent
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(STAGE))
+sys.path.insert(0, str(HERE))
+import deform
+import fields
+import source_helpers as native
+import source_checks as checks
+from export_check import read_glb, compare_triangles
+
+sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+OUT = HERE / 'attempt-01'
+assert not OUT.exists(), 'No retry'
+OUT.mkdir()
+BOUND = json.loads((HERE / 'readiness.json').read_text())['externalInputs']
+assert {path: sha(Path(path)) for path in BOUND} == BOUND
+P = json.loads((STAGE / 'proposal.json').read_text())
+PRIOR = json.loads(gzip.decompress((DEBUG / 'attempt-01/failing-role-raw.json.gz').read_bytes()))
+SOURCE = json.loads(gzip.decompress((DEBUG / 'attempt-01/source-role-accessors.json.gz').read_bytes()))['extracted']
+ZERO_PRIOR = json.loads(gzip.decompress((DEBUG / 'zero-face-comparison/attempt-01/comparison-raw.json.gz').read_bytes()))[2]
+B = Matrix(((1, 0, 0, 0), (0, 0, -1, 0), (0, 1, 0, 0), (0, 0, 0, 1)))
+BI = B.inverted()
+phase = 'import'
+
+
+def save(name, value):
+    data = (json.dumps(value, indent=2, allow_nan=False) + '\n').encode()
+    (OUT / name).write_bytes(gzip.compress(data, mtime=0) if name.endswith('.gz') else data)
+
+
+def vecs(values):
+    return [list(value) for value in values]
+
+
+def errors(actual, expected):
+    assert len(actual) == len(expected)
+    return [(Vector(a) - Vector(b)).length for a, b in zip(actual, expected)]
+
+
+def stats(actual, expected):
+    values = errors(actual, expected)
+    return {'maxL2': max(values), 'over002': sum(value > .002 for value in values), 'corners': len(values)}
+
+
+def edge_key(edge):
+    return ','.join(map(str, sorted(edge.vertices)))
+
+
+def sharp(mesh):
+    return {edge_key(edge): bool(edge.use_edge_sharp) for edge in mesh.edges}
+
+
+def cross(a, b):
+    return (a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0])
+
+
+def sub(a, b):
+    return tuple(x - y for x, y in zip(a, b))
+
+
+def yup(value):
+    # Blender local -> glTF local. Exact component/sign change, no rounding/weld.
+    return [value[0], value[2], -value[1]]
+
+
+def expected_triangles(mesh, normals):
+    return [{'positions': [yup(mesh.vertices[mesh.loops[i].vertex_index].co) for i in polygon.loop_indices],
+             'normals': [yup(normals[i]) for i in polygon.loop_indices]} for polygon in mesh.polygons]
+
+
+def export_and_check(obj, desired, label):
+    # Keep the original owner matrix/parent. Only this diagnostic clone selected.
+    matrix_before = obj.matrix_world.copy()
+    digest_before = native.fixed_digest(obj)
+    desired_triangles = expected_triangles(obj.data, desired)
+    readback_triangles = expected_triangles(obj.data, [item.vector.copy() for item in obj.data.corner_normals])
+    path = OUT / (label + '-DIAGNOSTIC.glb')
+    bpy.ops.object.select_all(action='DESELECT')
+    obj.select_set(True)
+    bpy.context.view_layer.objects.active = obj
+    bpy.ops.export_scene.gltf(filepath=str(path), export_format='GLB', use_selection=True,
+        export_normals=True, export_apply=False, export_yup=True, export_extras=True,
+        export_animations=False, export_cameras=False, export_lights=False, export_materials='EXPORT')
+    assert obj.matrix_world == matrix_before and native.fixed_digest(obj) == digest_before
+    document, node, triangles, attributes = read_glb(path)
+    readback = compare_triangles(triangles, readback_triangles)
+    source = compare_triangles(triangles, desired_triangles)
+    save(label + '-export-accessors.json.gz', {'node': node, 'allNodes': document['nodes'],
+        'materials': document.get('materials', []), 'attributes': attributes,
+        'expectedFromRawSource': desired_triangles, 'expectedFromBlenderReadback': readback_triangles})
+    return {'file': path.name, 'sha256': sha(path), 'bytes': path.stat().st_size,
+        'exportVsBlenderCornerReadback': readback, 'exportVsRawSourceDesired': source,
+        'objectMatrixAndGeometryUnchangedByExport': True,
+        'passed': source['physicalTriangleMultisetExact'] and source['normalMaxL2'] <= .002,
+        'scope': 'local accessor triangle/corner parity; delivered instance/world composition not accepted'}
+
+
+try:
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    bpy.ops.import_scene.gltf(filepath=str(BASE / 'extraction-attempt02/fixed-c1-context.glb'))
+    context = set(bpy.data.objects)
+    bpy.ops.import_scene.gltf(filepath=str(BASE / 'extraction-attempt02/role-separated-originals.glb'))
+    originals = [obj for obj in bpy.data.objects if obj.type == 'MESH']
+    original_digests = {obj.name: native.fixed_digest(obj) for obj in originals}
+    original_flags = {obj.name: {'sharp': sharp(obj.data), 'smooth': [p.use_smooth for p in obj.data.polygons]} for obj in originals}
+    materials = list(bpy.data.materials)
+    material_digests = {mat.name: checks.material_digest(mat) for mat in materials}
+    original = next(obj for obj in originals if obj not in context and obj.get('ownerId') == 'l14' and obj.get('sourceNodeIndex') == 2239)
+    mesh = original.data
+    positions = [vertex.co.copy() for vertex in mesh.vertices]
+    faces = [tuple(polygon.vertices) for polygon in mesh.polygons]
+    edges = [tuple(edge.vertices) for edge in mesh.edges]
+    source_normals = [B.to_3x3() @ Vector(normal) for normal in SOURCE['normals']]
+    assert vecs(positions) == PRIOR['inputLocalPositions']
+    assert [loop.vertex_index for loop in mesh.loops] == SOURCE['indices']
+    assert stats([n.vector for n in mesh.corner_normals], PRIOR['inputCornerNormals'])['maxL2'] == 0
+    assert not mesh.uv_layers and not mesh.color_attributes, 'Unexpected source attributes; HOLD'
+    zero = [i for i, face in enumerate(faces) if cross(sub(positions[face[1]], positions[face[0]]), sub(positions[face[2]], positions[face[0]])) == (0., 0., 0.)]
+    assert zero == [0, 2, 98, 100], 'Exact-zero set changed; no near-zero removal'
+    keep = [i for i in range(len(faces)) if i not in zero]
+    source_loops = [loop for i in keep for loop in mesh.polygons[i].loop_indices]
+    provided = [source_normals[mesh.loops[i].vertex_index] for i in source_loops]
+    original_sharp = sharp(mesh)
+
+    def clone(name, requested_sharp):
+        obj = original.copy()
+        obj.data = bpy.data.meshes.new(name + '-mesh')
+        obj.name = name
+        obj.data.from_pydata(vecs(positions), edges, [faces[i] for i in keep])
+        obj.data.update()
+        for mat in mesh.materials:
+            obj.data.materials.append(mat)
+        for polygon, source_face in zip(obj.data.polygons, keep):
+            polygon.use_smooth = mesh.polygons[source_face].use_smooth
+            polygon.material_index = mesh.polygons[source_face].material_index
+        for edge in obj.data.edges:
+            edge.use_edge_sharp = original_sharp[edge_key(edge)] or edge_key(edge) in requested_sharp
+        bpy.context.scene.collection.objects.link(obj)
+        assert obj.matrix_world == original.matrix_world
+        assert vecs([v.co for v in obj.data.vertices]) == vecs(positions)
+        assert [tuple(p.vertices) for p in obj.data.polygons] == [faces[i] for i in keep]
+        assert sorted(tuple(sorted(e.vertices)) for e in obj.data.edges) == sorted(tuple(sorted(e)) for e in edges)
+        return obj
+
+    phase = 'derive-targeted-sharp-flags-from-zero-baseline'
+    baseline = clone('FAN DIAGNOSTIC / zero-removed baseline', set())
+    baseline.data.normals_split_custom_set(provided)
+    baseline_normals = [n.vector.copy() for n in baseline.data.corner_normals]
+    assert vecs(baseline_normals) == ZERO_PRIOR['readbackBeforeField'], 'Same baseline did not reproduce'
+    bad_corners = [i for i, value in enumerate(errors(baseline_normals, provided)) if value > .002]
+    bad_vertices = sorted({baseline.data.loops[i].vertex_index for i in bad_corners})
+    assert bad_corners == [134, 136, 432, 435, 439, 441] and bad_vertices == [38]
+    targeted = {edge_key(edge) for edge in baseline.data.edges if any(v in bad_vertices for v in edge.vertices)}
+    all_edges = set(original_sharp)
+    save('targeted-selection.json', {'thresholdUnchanged': .002, 'baselineSourceNormalReadback': stats(baseline_normals, provided),
+        'retainedCornerIndices': bad_corners, 'originalSourceLoopIndices': [source_loops[i] for i in bad_corners],
+        'sourceVertexIndices': bad_vertices, 'requestedIncidentEdges': sorted(targeted),
+        'selectionRule': 'every existing edge incident to a baseline source-normal mismatch vertex; one nonadaptive pass'})
+    variants = [('zero-removed-baseline', baseline, set()),
+        ('targeted-incident-sharp', clone('FAN DIAGNOSTIC / targeted incident sharp', targeted), targeted),
+        ('all-edges-sharp-control', clone('FAN DIAGNOSTIC / all edges sharp control', all_edges), all_edges)]
+    function = fields.field_for_role('l14', 'hanging-leaf', 0, P)
+    field = lambda point: Vector(function(tuple(point)))
+    records = []
+    raw_records = []
+    for name, obj, requested in variants:
+        phase = name + ':raw-source-input'
+        m = obj.data
+        flags_requested = sharp(m)
+        m.normals_split_custom_set(provided)
+        readback = [n.vector.copy() for n in m.corner_normals]
+        input_stats = stats(readback, provided)
+        flags_after_source = sharp(m)
+        input_export = export_and_check(obj, provided, name + '-input') if input_stats['maxL2'] <= .002 else None
+        state = {}
+        def observe(frame, event, arg):
+            if event == 'return' and frame.f_code.co_name == 'apply' and Path(frame.f_code.co_filename).resolve() == (STAGE / 'deform.py').resolve():
+                state.update(frame.f_locals)
+        phase = name + ':unchanged-original-field-and-guard'
+        sys.setprofile(observe)
+        method_error = None
+        method_return = None
+        try:
+            method_return = deform.apply(obj, field, BI, None)
+        except Exception as error:
+            method_error = repr(error)
+        finally:
+            sys.setprofile(None)
+        assert all(key in state for key in ['expected', 'actual', 'matrices', 'old_normals', 'residual']), 'Failure before normal comparison'
+        desired = [(state['matrices'][loop.vertex_index] @ normal).normalized() for loop, normal in zip(m.loops, provided)]
+        actual = [n.vector.copy() for n in m.corner_normals]
+        desired_stats = stats(actual, desired)
+        phase = name + ':optional-export-readback'
+        output_export = export_and_check(obj, desired, name + '-output') if method_error is None and input_stats['maxL2'] <= .002 and desired_stats['maxL2'] <= .002 else None
+        flags_after_field = sharp(m)
+        changed = sorted(key for key in original_sharp if original_sharp[key] != flags_after_source[key])
+        record = {'variant': name, 'sourceId': {'ownerId': 'l14', 'sourceNodeIndex': 2239, 'forestRole': 'hanging-leaf', 'ordinal': 0},
+            'rawSourceInputStored': input_stats, 'methodExpectedStored': stats(actual, state['expected']),
+            'rawSourceDesiredStored': desired_stats, 'originalGuard': .002,
+            'originalMethodError': method_error, 'originalMethodReturn': method_return,
+            'sharpFlags': {'original': original_sharp, 'requested': flags_requested, 'afterRawSourceSetter': flags_after_source,
+                'afterFieldSetter': flags_after_field, 'changedAfterSourceSetter': changed, 'changedCount': len(changed),
+                'plannedNewSharpEdges': sorted(requested - {key for key, value in original_sharp.items() if value})},
+            'allPolygonSmoothFlagsUnchanged': [p.use_smooth for p in m.polygons] == [mesh.polygons[i].use_smooth for i in keep],
+            'remainingTriangles': len(m.polygons), 'vertices': len(m.vertices),
+            'inputExport': input_export, 'outputExport': output_export,
+            'sourceCorrectionAdopted': False}
+        records.append(record)
+        raw_records.append({'variant': name, 'sourceLoopIndices': source_loops,
+            'providedSourceNormals': vecs(provided), 'storedBeforeField': vecs(readback),
+            'desiredFromRawSourceSameJ': vecs(desired), 'expectedByOriginalMethod': vecs(state['expected']),
+            'storedAfterField': vecs(actual), 'positionsAfterField': vecs([v.co for v in m.vertices]),
+            'inputNormalsSeenByMethod': vecs(state['old_normals']), 'loopVertexIndices': [loop.vertex_index for loop in m.loops]})
+        save('variants-so-far.json', records)
+        save('comparison-raw.json.gz', raw_records)
+    phase = 'parity'
+    assert all(raw['positionsAfterField'] == ZERO_PRIOR['positionsAfterField'] for raw in raw_records)
+    assert original_digests == {obj.name: native.fixed_digest(obj) for obj in originals}
+    assert original_flags == {obj.name: {'sharp': sharp(obj.data), 'smooth': [p.use_smooth for p in obj.data.polygons]} for obj in originals}
+    assert material_digests == {mat.name: checks.material_digest(mat) for mat in materials}
+    save('result.json', {'status': 'DIAGNOSTIC ONLY; no correction adopted; stage4 remains HOLD', 'variants': records,
+        'blenderVersion': bpy.app.version_string, 'blenderBuildHash': bpy.app.build_hash.decode(),
+        'exactZeroFacesRemovedOnEveryThrowawayClone': zero, 'sourceCoordinatesAndRetainedTrianglesIdentical': True,
+        'allDeformedPositionsExactToPriorZeroFaceCase': True, 'originalImportedMeshesUnchanged': len(originals),
+        'originalImportedDigestMap': original_digests, 'allOriginalSharpAndSmoothFlagsUnchanged': True,
+        'sourceMaterialsUnchanged': material_digests, 'fixed27Touched': False, 'normalRecalculation': False,
+        'normalPayload': 'literal original GLB NORMAL per retained corner, then unchanged original inverse-transpose field',
+        'guardRelaxed': False, 'rendered': False, 'runtimeAcceptance': False,
+        'limitation': 'one leaf and one field only; custom-normal semantics beyond observed outputs not inferred; no all-101, joint70 or actor acceptance'})
+    print(json.dumps({'status': 'DIAGNOSTIC ONLY', 'variants': [{key: value[key] for key in ['variant', 'rawSourceInputStored', 'rawSourceDesiredStored', 'originalMethodError']} for value in records]}), flush=True)
+except BaseException as error:
+    save('diagnostic-failure.json', {'phase': phase, 'error': repr(error), 'traceback': traceback.format_exc()})
+    raise
+finally:
+    after = {path: sha(Path(path)) for path in BOUND}
+    save('input-parity.json', {'before': BOUND, 'after': after, 'equal': BOUND == after})
+    assert BOUND == after

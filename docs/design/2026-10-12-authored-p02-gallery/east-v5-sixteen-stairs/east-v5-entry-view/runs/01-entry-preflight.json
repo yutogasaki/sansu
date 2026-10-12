@@ -1,0 +1,60 @@
+{
+  "utc": "2026-10-12T07:20:34.157619+00:00",
+  "authorizedPreparationSHA": "2a4822e9b43375bba0e81af16d42db4e717638bfed99491daa35721cea2f0a11",
+  "outerScriptSHA": "600552feadf5d77fce4cce5c05b428a2709be8ffea1a8dd1f4f0f0f5e4c55aca",
+  "inputHashes": {
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/study.blend": "d90bc6bd35f041d2431acf8a48ecb7dc541d5d03d35baaf244086fad38bcc666",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/study.json": "ee868c08b484953386ab271a624c70ab5ddd4e8f89cae8919d398f04f7dec32e",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/preparation.json": "2925ad7ec636aa3cb1f8f9713d5d5be09d5c81d7d75a1a102afde87b8ca9b770",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/coarse-qa.json": "8d948621bb2fde90c0692231b5fd8fc4310920dbb58a70738a17f1752fbcd509",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/direct-components-topology.json": "19d0e91f5e93a30d3544c43408c3a360b13494f206721406b46a510d0ad9c2f5",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/tread-visible-parity.json": "3465e1b5336e48dc973cda8baf519beb6877001c64ada2729064df591a724aec",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/new-stair-support-contacts.json": "6dd9709e6bc60db5050696ecbe7e77029d20d3fa9988131c0b32af4be29975f1",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/current-entry-joints.json": "c196c27ab50a675f85b1fc0d6bd4cc404921ea998e0eb440004adc1bcf674663",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/exposed-surface-lineage.json": "06e6f97c8379efa7694208681b8303d326db9889959f060b89947325e6bf65bb",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-failed-shape-view/render-failed.py": "6889d86f29ac383bc210ed04e711f171c260480189b1b534ae80b4eb4acae42e",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/supervise.py": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-shape-view/render-coarse.py": "f977df0427b45dbe43a9265f770ab4ceb80c8997a9811453a4c1be49ee6fc5a2",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-entry-view/render-coarse.py": "cc70987e091eed7ac0962b9d1d1aedf13e786e9f669408e5d0db9b190ee487da",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-entry-view/README.md": "9355381ecd112e631dff5bc127e26de022aa475cddfca04e72e2648d74c0cdae",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-entry-view/preparation.json": "2a4822e9b43375bba0e81af16d42db4e717638bfed99491daa35721cea2f0a11"
+  },
+  "noExistingBackgroundBlender": true,
+  "untouchedPreexistingBlenderProcesses": [
+    [
+      13395,
+      1,
+      32325632,
+      "/Applications/Blender.app/Contents/MacOS/Blender"
+    ]
+  ],
+  "command": [
+    "python3",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/supervise.py",
+    "--scheduled",
+    "--seconds",
+    "60",
+    "--rss-mib",
+    "2560",
+    "--log",
+    "runs/01-entry.log.txt",
+    "--",
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "render-coarse.py",
+    "--",
+    "--scheduled",
+    "--source",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/study.blend",
+    "--out",
+    "runs/01-entry",
+    "--view",
+    "entry-section"
+  ],
+  "cwd": "/private/tmp/sansu-p02-gallery-source-study/east-v5-entry-view"
+}

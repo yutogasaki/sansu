@@ -1,0 +1,124 @@
+{
+  "scope": "Supplementary read-only final-input identity; source/floor diagnostics are separately recorded, not rerun here",
+  "hashes": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/assembly-manifest.json": "092e21cee39bad1f386cf446e3b6901bcdd275f34583da6e4e51a384875dfbf9",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/cove-corner-with-apron-v3.blend": "52b3a24c79ada053728ca55d2c2fb7b86f6954e5e77164a375434446f2952696",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/authored-flower-reference-mature.json": "a6371602364a531130fb2a99e927958648ff1c57c2cc5a0966c315538ecbf533",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/native05-world.json.gz": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+    "/private/tmp/sansu-flower-edge-c5/shape/report.json": "5cdce825cb38bb8fa36589a3071d61374fafa047642236ad7d194f62e3d5619c",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/feasibility-with-apron-v3.json": "8abbd59db88851c98a46e03514afce9ba74b44e6bcede58e631e427f603a2ea4"
+  },
+  "actorEnvelopeEqualsOriginalActualC5Capture": true,
+  "actorEnvelope": {
+    "radius": 0.24406937059140585,
+    "height": 0.5500928879753579,
+    "bands": [
+      {
+        "radius": 0.09134999737143516,
+        "minY": 0.20385103985494077,
+        "maxY": 0.5500928879753579
+      },
+      {
+        "radius": 0.1353778402505187,
+        "minY": 0.018073202984005398,
+        "maxY": 0.12266860259311367
+      },
+      {
+        "radius": 0.11740714544627996,
+        "minY": -0.013389719108070908,
+        "maxY": 0.10058152468518997
+      },
+      {
+        "radius": 0.2238622310757637,
+        "minY": 0.022500694926418825,
+        "maxY": 0.32194834489438806
+      },
+      {
+        "radius": 0.11572916628891829,
+        "minY": -0.0190976441475757,
+        "maxY": 0.09264667927451685
+      },
+      {
+        "radius": 0.24406937059140585,
+        "minY": 0.08157946600510133,
+        "maxY": 0.2593961556396356
+      },
+      {
+        "radius": 0.21917178645545318,
+        "minY": 0.03156508037188276,
+        "maxY": 0.4915557144776604
+      },
+      {
+        "radius": 0.08661284906887425,
+        "minY": 0.01597534732239344,
+        "maxY": 0.2971977641282517
+      }
+    ],
+    "source": {
+      "actorIds": [
+        "pokomoko",
+        "authored-friend-0",
+        "authored-friend-1",
+        "authored-friend-2",
+        "authored-friend-3",
+        "authored-friend-4",
+        "authored-friend-5",
+        "authored-friend-6",
+        "authored-friend-7"
+      ],
+      "visualScales": [
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ]
+      ],
+      "meshes": 117,
+      "vertices": 99868,
+      "footSwing": 0.5,
+      "armSwing": 0.6,
+      "walkBob": 0.015750000000000004,
+      "method": "indexed-source-motion-intervals"
+    }
+  }
+}

@@ -15,16 +15,22 @@ import { wonder } from './wonderPaint';
 import { buildColorFlower } from './flowerGeometry';
 import { buildBoat, buildPier } from './pierGeometry';
 import { sceneLayout, type SceneLayout } from './sceneLayout';
-import { authoredWaterFrame } from '../../../domain/growingIsland/authoredWaterFrame';
+import { authoredWorldFrame } from '../../../domain/growingIsland/authoredWorldFrame';
 import { buildBridge } from './bridgeGeometry';
 import { derivePlaces } from '../../../domain/growingIsland/places';
 import { derivePlaceRelations } from '../../../domain/growingIsland/placeRelations';
 import { buildPlaceGeometry } from './placeGeometry';
-import { buildPlacePaths } from './placePaths';
+import { buildPlacePaths, type PlacePathAccess } from './placePaths';
 import type { NativeGrowingKit } from './native/nativeGrowingKit';
+import type { NativeAuthoredFlower } from './native/nativeAuthoredFlower';
+import type { NativeAuthoredCove } from './native/nativeAuthoredCove';
+import type { NativeAuthoredShoulder } from './native/nativeAuthoredShoulder';
+import { authoredCompactGroveCells } from './native/nativePlaceGrove';
 import { curveGroundGeometry } from './curvedGeometry';
 import type { IslandWorld } from '../../../domain/growingIsland/worldDefinition';
 import { cloneGrowingPreviewMaterial } from './growingShaderWarmup';
+import { growingSceneStateKey } from './growingSceneInputs';
+import { attachAuthoredWholeArt, type AuthoredWholeArt } from './authoredWholeArt';
 
 export interface Ghost { kind: SeedKind | LandmarkKind; seed: boolean; cell?: Cell; valid: boolean; style: PlotStyle; allowed: Cell[]; keepsake?: string; color?: FlowerColor; ownerId?: string; prospectiveOwnerId?: string }
 
@@ -63,6 +69,10 @@ function ghostModel(m: IslandMaterials, ghost: Ghost, state: GrowingState, nativ
             : OWN_MODELS[ghost.kind as LandmarkKind] ? OWN_MODELS[ghost.kind as LandmarkKind]!(m)
             : ghost.kind === 'flower' && ghost.color ? buildColorFlower(m, ghost.color, flowerGrowth)
             : buildLifeItem({ id: 'ghost', kind: ghost.kind as ItemKind, growth: 18, style: 'original' }, m).root;
+    if (native && !ghost.seed && ghost.kind === 'sapling' && ghost.ownerId) {
+        const age = treeAge(state, ghost.ownerId);
+        model.scale.multiplyScalar(age === 'lord' ? 1.75 : age === 'big' ? 1.3 : 1);
+    }
     model.traverse(o => {
         if (!(o instanceof T.Mesh)) return;
         const previous = o.material as T.Material, material = cloneGrowingPreviewMaterial(previous);
@@ -128,7 +138,7 @@ export function previewGrowingState(state: GrowingState, ghost?: Ghost): Growing
     return future;
 }
 
-export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout: SceneLayout, ghost?: Ghost, selectedId?: string, hints: readonly Cell[] = [], native?: NativeGrowingKit) {
+export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout: SceneLayout, ghost?: Ghost, selectedId?: string, hints: readonly Cell[] = [], native?: NativeGrowingKit, flowerSupport?: NativeAuthoredFlower, cove?: NativeAuthoredCove, shoulder?: NativeAuthoredShoulder, wholeArt?: AuthoredWholeArt) {
     const root = new T.Group(); root.name = 'growing-objects';
     const objects = new Map<string, T.Object3D>(), buds = new Map<string, T.Object3D>(), seats = new Map<string, Seat>();
     const swingPivots = new Map<string, T.Object3D>(), fingerTargets: T.Mesh[] = [];
@@ -202,8 +212,26 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
         if (p.kind === 'play' && p.stage > 0) seats.set(key(p.cell), 'play');
     }
     for (const k of state.keepsakes) if (k.cell) add(k.id, buildKeepsake(m, keepsakeKind(k.unitId)), k.cell);
-    const placeRoot = buildPlaceGeometry(state, layout, visiblePlaces, relations, false, native); root.add(placeRoot);
-    root.add(buildPlacePaths(state, layout, visiblePlaces));
+    const placeRoot = buildPlaceGeometry(state, layout, visiblePlaces, relations, false, native, flowerSupport, cove); root.add(placeRoot);
+    const shoulderRoots: { tree: T.Object3D; extension: T.Group; ownerId: string }[] = [];
+    if (shoulder && native) {
+        const trees: T.Object3D[] = [];
+        root.traverse(object => { if (object.userData.nativePart && /^growing-tree-(spread|spire|branch)$/.test(object.name)) trees.push(object); });
+        const attached = new Set<string>();
+        for (const tree of trees) {
+            const ownerId = tree.userData.ownerId ?? tree.userData.objectId;
+            if (attached.has(ownerId)) continue;
+            const extension = shoulder.instanceRoots(state, layout, tree, native.manifest);
+            if (!extension) continue;
+            root.add(extension); attached.add(ownerId); shoulderRoots.push({ tree, extension, ownerId });
+        }
+    }
+    const wholeAttachments = attachAuthoredWholeArt(root, state, layout, native, wholeArt);
+    // Source exporters also use this layer without GrowingLife. Keep their
+    // initial paths; live authored scenes replace them synchronously after the
+    // actual actor/structure guard resolves the committed walking set.
+    let paths = buildPlacePaths(state, layout, visiblePlaces); root.add(paths);
+    const pathStateKey = layout.authored ? growingSceneStateKey(state) : undefined;
     if (state.bridge) {
         const bridge = buildBridge(m), anchor = bridgeAnchor(state);
         curveGroundGeometry(bridge, layout, anchor); add('bridge', bridge, anchor);
@@ -226,11 +254,26 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
     const nextBoat = buildBoat(m, true); nextBoat.position.copy(layout.farther); nextBoat.scale.setScalar(.8); root.add(nextBoat);
     nextBoat.traverse(o => { if (o instanceof T.Mesh) o.userData.ownMaterial = true; });
     const previews: T.Object3D[] = [];
+    const hiddenStructures: { object: T.Object3D; visible: boolean }[] = [];
     let disposed = false;
+    const updatePaths = (snapshot: PlacePathAccess & { state: GrowingState; layout: SceneLayout }) => {
+        if (disposed || !layout.authored || snapshot.layout !== layout || growingSceneStateKey(snapshot.state) !== pathStateKey) return;
+        const next = buildPlacePaths(state, layout, visiblePlaces, snapshot);
+        disposeRoots([paths]); paths = next; root.add(paths);
+    };
     const clearPreview = () => {
         disposeRoots(previews); previews.length = 0; glows.length = 0;
+        for (const saved of hiddenStructures) {
+            saved.object.visible = saved.visible;
+            delete saved.object.userData.authoredPreviewHidden;
+        }
+        hiddenStructures.length = 0;
     };
     const addPreview = (object: T.Object3D, parent: T.Object3D = root) => { parent.add(object); previews.push(object); };
+    const hideCommitted = (object: T.Object3D) => {
+        hiddenStructures.push({ object, visible: object.visible });
+        object.userData.authoredPreviewHidden = object.visible; object.visible = false;
+    };
     const updatePreview = (nextGhost?: Ghost, selected?: string, nextHints: readonly Cell[] = []) => {
         if (disposed) return;
         clearPreview();
@@ -263,14 +306,77 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
                     // Predict the same owned IDs/ages used by confirmation. A purchase
                     // is shown as young; it never pretends to have earned maturity.
                     const future = previewGrowingState(state, nextGhost)!;
-                    const frame = layout.authoredWaterPlan && layout.authoredBaseWorld ? authoredWaterFrame(future, layout.authoredBaseWorld) : undefined;
+                    // Older callers may still supply only the water plan. Keep
+                    // that path while the explicit frame also supports cove-only.
+                    const options = layout.authoredFrameOptions ?? (layout.authoredWaterPlan ? { water: true, cove: false } : undefined);
+                    const frame = options && layout.authoredBaseWorld ? authoredWorldFrame(future, layout.authoredBaseWorld, options) : undefined;
                     const futureWorld = frame?.world ?? authoredWorld;
-                    const futureLayout = frame ? sceneLayout(future, layout.curved, frame.world, frame.plan, layout.authoredBaseWorld) : layout;
+                    const futureLayout = frame ? sceneLayout(future, layout.curved, frame.world, frame.waterPlan, layout.authoredBaseWorld,
+                        { options: options!, covePlan: frame.covePlan, revision: frame.revision }) : layout;
                     const predicted = derivePlaces(future, futureWorld);
-                    const changes = predicted.filter(place => !places.some(before => before.id === place.id && before.revision === place.revision));
+                    if (shoulder && native) {
+                        const futureReplacedTrees = new Set(predicted.filter(place => authoredCompactGroveCells(future, futureLayout, place))
+                            .flatMap(place => place.mainIds));
+                        for (const saved of shoulderRoots) {
+                            const retained = !futureReplacedTrees.has(saved.ownerId)
+                                && shoulder.instanceRoots(future, futureLayout, saved.tree, native.manifest);
+                            // A temporary instance only tests the same source conditions;
+                            // its buffers/materials belong to the source factory.
+                            if (!retained || saved.ownerId === nextGhost.ownerId) hideCommitted(saved.extension);
+                        }
+                        if (nextGhost.kind === 'sapling' && nextGhost.ownerId && treeAge(future, nextGhost.ownerId) === 'mature'
+                            && !futureReplacedTrees.has(nextGhost.ownerId)) {
+                            const model = preview.children[0]; model.userData.ownerId = nextGhost.ownerId;
+                            preview.position.copy(futureLayout.point(nextGhost.cell));
+                            const extension = shoulder.instanceRoots(future, futureLayout, model, native.manifest);
+                            if (extension) {
+                                extension.traverse(object => {
+                                    if (!(object instanceof T.Mesh)) return;
+                                    const material = cloneGrowingPreviewMaterial(object.material as T.Material);
+                                    material.transparent = true; material.opacity = .5; material.depthWrite = false;
+                                    object.material = material; object.castShadow = false;
+                                    object.userData.ownMaterial = true; object.userData.nativeSharedMaterial = false;
+                                });
+                                const projection = new T.Group(); projection.name = 'growing-place-preview'; projection.add(extension); addPreview(projection);
+                            }
+                        }
+                    }
+                    const changedCoves = new Set<string>();
+                    const currentCoves = new Map((layout.authoredCovePlan?.assemblies ?? []).map(assembly => [assembly.placeId, JSON.stringify(assembly)]));
+                    const futureCoves = new Map((frame?.covePlan?.assemblies ?? []).map(assembly => [assembly.placeId, JSON.stringify(assembly)]));
+                    for (const id of new Set([...currentCoves.keys(), ...futureCoves.keys()])) {
+                        if (currentCoves.get(id) !== futureCoves.get(id)) changedCoves.add(id);
+                    }
+                    if (changedCoves.size) {
+                        // The existing owners and actors keep their committed
+                        // objects/world. Hide only the shell whose future shape
+                        // changes or disappears, and restore it exactly on cancel.
+                        placeRoot.traverse(object => {
+                            if (object.name === 'authored-cove-shell' && changedCoves.has(object.userData.placeId)) {
+                                // A camera reset may rebuild life while this
+                                // preview is active. Preserve canonical physical
+                                // visibility independently of its temporary draw state.
+                                hideCommitted(object);
+                            }
+                        });
+                    }
+                    const changes = predicted.filter(place => changedCoves.has(place.id) || !places.some(before => before.id === place.id && before.revision === place.revision));
+                    if (wholeArt && nextGhost.ownerId) {
+                        const affected = new Set(places.filter(place => place.mainIds.includes(nextGhost.ownerId!)).map(place => place.id));
+                        for (const attachment of wholeAttachments) if (attachment.ownerIds.includes(nextGhost.ownerId)
+                            || affected.has(attachment.rendered.userData.placeId)) hideCommitted(attachment.rendered);
+                    }
                     if (changes.length) {
-                        const projection = buildPlaceGeometry(future, futureLayout, changes, derivePlaceRelations(future, predicted, futureWorld), true, native);
+                        const projection = buildPlaceGeometry(future, futureLayout, changes, derivePlaceRelations(future, predicted, futureWorld), true, native, flowerSupport, cove);
+                        attachAuthoredWholeArt(projection, future, futureLayout, native, wholeArt, projection, true);
                         projection.userData.previewRevisions = changes.map(place => place.revision); addPreview(projection);
+                    }
+                    if (wholeArt && nextGhost.kind === 'sapling' && !predicted.some(place => place.mainIds.includes(nextGhost.ownerId ?? '')
+                        && (place.stage === 'grown' || place.stage === 'lived'))) {
+                        const model = preview.children[0]; model.userData.ownerId = nextGhost.ownerId;
+                        const projection = new T.Group(); projection.name = 'growing-place-preview';
+                        attachAuthoredWholeArt(preview, future, futureLayout, native, wholeArt, projection, true);
+                        if (projection.children.length) addPreview(projection);
                     }
                 }
             }
@@ -278,7 +384,7 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
     };
     updatePreview(ghost, selectedId, hints);
     return {
-        root, objects, buds, seats, swingPivots, fingerTargets, arrivalBoat, visitorBoat, nextBoat, glows, flag, places, relations, placeRoot, updatePreview,
+        root, objects, buds, seats, swingPivots, fingerTargets, arrivalBoat, visitorBoat, nextBoat, glows, flag, places, relations, placeRoot, updatePreview, updatePaths,
         dispose() {
             if (disposed) return;
             disposed = true;

@@ -1,0 +1,42 @@
+{
+  "schema": "sansu-water-support-real-input-parity-v1",
+  "repo": "/private/tmp/sansu-authored-shoulder-c3/candidate",
+  "scenario": "wide27",
+  "node": "v24.18.0",
+  "synthetic": true,
+  "notPerformanceEvidence": true,
+  "inputFiles": [
+    {
+      "path": "/private/tmp/sansu-authored-shoulder-c3/candidate/prototypes/place-qa/authored-water-fixture.json",
+      "sha256": "9556c32d026099812d80449625d741978a0810d031b645b7fc482c9b5084abd0"
+    },
+    {
+      "path": "/private/tmp/sansu-authored-shoulder-c3/candidate/prototypes/place-qa/native05-world.json.gz",
+      "sha256": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08"
+    }
+  ],
+  "inputStateSha256": "2a083acfdcd592e683acbc8fce6fa50f979c2ae9086b08722e9d750abc3fbb8a",
+  "baseDefinitionSha256": "2489fe05732736419f73a13d5a3ee4ae8d17d05853ff5941f82b8551c0e56cda",
+  "owners": 27,
+  "bridgeCount": 1,
+  "bridges": [
+    {
+      "ownerId": "l24",
+      "restoredEdgeIds": [
+        "[\"[\\\"native05-inlet-core\\\",\\\"6.75,-8\\\"]\",\"[\\\"native05-inlet-core\\\",\\\"7,-8\\\"]\"]",
+        "[\"[\\\"native05-inlet-core\\\",\\\"6.75,-7.75\\\"]\",\"[\\\"native05-inlet-core\\\",\\\"6.75,-8\\\"]\"]",
+        "[\"[\\\"native05-inlet-core\\\",\\\"7,-8\\\"]\",\"[\\\"native05-inlet-core\\\",\\\"7.25,-8\\\"]\"]",
+        "[\"[\\\"native05-inlet-core\\\",\\\"7,-7.75\\\"]\",\"[\\\"native05-inlet-core\\\",\\\"7,-8\\\"]\"]",
+        "[\"[\\\"native05-inlet-core\\\",\\\"7.25,-7.75\\\"]\",\"[\\\"native05-inlet-core\\\",\\\"7.25,-8\\\"]\"]"
+      ]
+    }
+  ],
+  "sites": 2063,
+  "sourceWalkEdges": 3774,
+  "output": {
+    "definitionSha256": "f452caf83cadd9e17e8c39229ca0e2db65b61346ef9c09f95c8fec293e06724d",
+    "planSha256": "adb0aee253062431224716aa98dbd3d60a5b78047fdd0cf11f025a4dcd220672",
+    "siteQuerySha256": "e1c9b9a594a536307e3efd5b5336b9b04b65e5f89a759d6dae60181502900cbd",
+    "sourceWalkQuerySha256": "6af0048779e87aa39c149cca009538c330fe19364c06a63f207b2e8180783cb5"
+  }
+}

@@ -1,0 +1,18 @@
+THREE.Material: parameter 'map' has value of undefined.
+file:///Users/yutogasaki/Projects/sansu/node_modules/three/examples/jsm/loaders/GLTFLoader.js:3301
+		const URL = self.URL || self.webkitURL;
+		            ^
+
+ReferenceError: self is not defined
+    at GLTFParser.loadImageSource (file:///Users/yutogasaki/Projects/sansu/node_modules/three/examples/jsm/loaders/GLTFLoader.js:3301:15)
+    at GLTFParser.loadTextureImage (file:///Users/yutogasaki/Projects/sansu/node_modules/three/examples/jsm/loaders/GLTFLoader.js:3250:24)
+    at GLTFParser.loadTexture (file:///Users/yutogasaki/Projects/sansu/node_modules/three/examples/jsm/loaders/GLTFLoader.js:3229:15)
+    at file:///Users/yutogasaki/Projects/sansu/node_modules/three/examples/jsm/loaders/GLTFLoader.js:2928:37
+    at GLTFParser._invokeOne (file:///Users/yutogasaki/Projects/sansu/node_modules/three/examples/jsm/loaders/GLTFLoader.js:2835:19)
+    at GLTFParser.getDependency (file:///Users/yutogasaki/Projects/sansu/node_modules/three/examples/jsm/loaders/GLTFLoader.js:2926:24)
+    at GLTFParser.assignTexture (file:///Users/yutogasaki/Projects/sansu/node_modules/three/examples/jsm/loaders/GLTFLoader.js:3390:15)
+    at GLTFParser.loadMaterial (file:///Users/yutogasaki/Projects/sansu/node_modules/three/examples/jsm/loaders/GLTFLoader.js:3582:26)
+    at file:///Users/yutogasaki/Projects/sansu/node_modules/three/examples/jsm/loaders/GLTFLoader.js:2920:38
+    at GLTFParser._invokeOne (file:///Users/yutogasaki/Projects/sansu/node_modules/three/examples/jsm/loaders/GLTFLoader.js:2835:19)
+
+Node.js v24.18.0

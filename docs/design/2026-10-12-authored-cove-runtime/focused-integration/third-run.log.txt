@@ -1,0 +1,27 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+stderr | src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > walks from the shared entrance to p9, earns one use and exits safely with mixed flowers=false
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > walks from the shared entrance to p9, earns one use and exits safely with mixed flowers=false 10767ms
+ ✓ src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > walks from the shared entrance to p9, earns one use and exits safely with mixed flowers=true 798ms
+ ✓ src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > keeps the cove-only release and final-pose guard active when there are zero flower stocks 462ms
+ ✓ src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > returns an occupant of removed apron to real supported ground and restores owners with mixed flowers=false 11095ms
+ ✓ src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > returns an occupant of removed apron to real supported ground and restores owners with mixed flowers=true 1460ms
+stderr | src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > renders the shared apron exactly once from the evaluated world and preserves all acquired owners and ground
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > renders the shared apron exactly once from the evaluated world and preserves all acquired owners and ground 10829ms
+ ✓ src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > guards actual cove triangles and all owner approaches with mixed flowers=false 516ms
+ ✓ src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > guards actual cove triangles and all owner approaches with mixed flowers=true 506ms
+ ✓ src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > removes and restores shell and apron through real storage of required owner p9 9680ms
+ ✓ src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > removes and restores shell and apron through real storage of required owner l32 9245ms
+ ✓ src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > preserves occupied-home storage protection and removes/restores the cove through permitted home movement 9298ms
+ ✓ src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > previews the confirmed loss of shell and apron while cancel restores the same committed resources and pointer support 10296ms
+
+ Test Files  2 passed (2)
+      Tests  12 passed (12)
+   Start at  07:12:11
+   Duration  52.35s (transform 413ms, setup 0ms, collect 985ms, tests 77.06s, environment 0ms, prepare 75ms)
+

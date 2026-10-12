@@ -1,0 +1,21 @@
+from pathlib import Path
+import json,hashlib,gzip
+from datetime import datetime,timezone
+S=Path('/private/tmp/sansu-p02-gallery-source-study/east-v5-threequarter-view');D=Path('/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-p02-gallery/east-v5-sixteen-stairs/east-v5-threequarter-view');assert not D.exists();sha=lambda b:hashlib.sha256(b).hexdigest()
+items=[(p,p.relative_to(S))for p in sorted(S.rglob('*'))if p.is_file() and '__pycache__'not in p.parts]
+for name in ['east-v5-render-threequarter-once.py','archive-v5-threequarter.py']:items.append((S.parent/name,Path('execution-observers')/name))
+rows=[]
+for p,rel in items:
+ raw=p.read_bytes();before=sha(raw)
+ if rel.suffix in ['.md','.py','.mjs','.ts']:rel=Path(str(rel)+'.txt')
+ compressed=rel.suffix in ['.json','.txt'] and len(raw)>1024*1024
+ if compressed:rel=Path(str(rel)+'.gz');data=gzip.compress(raw,compresslevel=6,mtime=0)
+ else:data=raw
+ q=D/rel;q.parent.mkdir(parents=True,exist_ok=True);assert not q.exists();q.write_bytes(data);decoded=gzip.decompress(q.read_bytes())if compressed else q.read_bytes();after=sha(p.read_bytes());assert before==after==sha(decoded)
+ rows.append({'source':str(p),'destination':str(rel),'sourceBeforeSHA256':before,'sourceAfterSHA256':after,'destinationSHA256':sha(data),'decodedSHA256':sha(decoded),'sourceBytes':len(raw),'storedBytes':len(data),'compression':'gzip lossless mtime0'if compressed else None})
+p=D/'archive-proof.json';p.write_text(json.dumps({'status':'ALL_SOURCE_BEFORE_AFTER_AND_DESTINATION_DECODED_BYTES_IDENTICAL','utc':datetime.now(timezone.utc).isoformat(),'fileCount':len(rows),'source':str(S),'destination':str(D),'files':rows,'priorV5ArchiveUnmodified':True},indent=2)+'\n')
+r=json.loads((S/'runs/01-three-quarter-external-process.json').read_text());rm=json.loads((S/'runs/01-three-quarter/render-manifest.json').read_text())
+summary={'status':'SOURCE_VISUAL_HOLD_RUNTIME_HOLD','exitCode':r['supervisorExitCode'],'elapsedSeconds':r['outerElapsedSeconds'],'ownedBlender':r['ownedBlender'],'ownedPIDAndGroupGone':not r['ownedBlenderRemaining'] and not r['ownedProcessGroupRemaining'],'inputsUnchanged':r['allInputsUnchanged'],'png':'runs/01-three-quarter/coarse-real-stair-HOLD-three-quarter.png','pngSHA':rm['sha256'],'archiveProofSHA':sha(p.read_bytes()),'visibleObservation':'Black near-plane oval and sliced foreground leaves are absent. Real foreground crown still hides part of lower staircase; original fan leaves hide part of upper gallery. Conservative bounds show no near cut, not unoccluded targets. No geometry/visibility repair or acceptance.'}
+(D/'completion-summary.json').write_text(json.dumps(summary,indent=2)+'\n')
+(D/'README.md').write_text('''# P02 v5 3/4近景・追加生記録\n\n同じ粗形sceneのcameraだけを変更した1枚を実行済み。**source visual HOLD / runtime HOLD**。旧whole/entry/生記録/親README/root reviewは変更していません。\n\n[3/4実画像](runs/01-three-quarter/coarse-real-stair-HOLD-three-quarter.png)・[実行結果](completion-summary.json)・[byte保存証拠](archive-proof.json)。CPU2/60秒/2560MiB枠で20.682秒、exit0、入力・geometry・material不変、owned PID/group終了。pathshadowfalseはv5の他2画像と同一です。\n\n実GLBの全階層行列とaccessor boundsから、cameraとnear面が全mesh boundsの手前になる位置を設定。全scene最前深さ.5/near.1、原点内包0・near交差0。これは遮蔽を解決する証明ではありません。黒いoval/切れた前景葉は解消しましたが、実foreground crownが階段下部を、元大樹の冠葉が上回廊の一部を隠します。形は補修せず、見えない物を非表示にしていません。このviewだけで全対象が同時に読めるとの合格は付けません。\n\n最初のカメラ案の静的near交差結果もhistoryへ保持。prepared READMEはREADME.md.txtとして当時のbytesを保存し、実行後の状態はこの文書です。大きいbounds JSONはgzipで元byte復元SHAを照合。既存v5 archive-proofはそのまま、今回分だけ別proofです。\n''')
+print(json.dumps({'destination':str(D),'files':len(rows),'proofSHA':summary['archiveProofSHA'],'pngSHA':rm['sha256']},indent=2))

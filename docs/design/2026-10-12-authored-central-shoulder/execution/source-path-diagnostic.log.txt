@@ -1,0 +1,74 @@
+{
+  "scope": "Existing path transport/render diagnosis only; no geometry, source, material or runtime edits.",
+  "observed": "Whole and rotated source previews have black oval dots on existing path strips. 171 sampled dark-pixel rays all hit growing-reachable-paths / Material_60, not the new shoulder or roots.",
+  "results": [
+    {
+      "path": "source-context.glb",
+      "sha256": "22ad846e8c1fcfcdc9fd30a65b7398520c63b5fd5d54c60791c1342fa00f8059",
+      "node": "growing-reachable-paths",
+      "triangles": 9120,
+      "upwardFaces": 4584,
+      "downwardFaces": 4536,
+      "material": {
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.5394794890033748,
+            0.5332764040016892,
+            0.7230551289161951,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 1
+        },
+        "doubleSided": true
+      },
+      "sampledDarkPixelRayCoincidentFaces": [
+        {
+          "triangle": 2834,
+          "height": 0.21724998950958252,
+          "normalY": -0.003961085435548739
+        },
+        {
+          "triangle": 7459,
+          "height": 0.2172499895095825,
+          "normalY": 0.002337649802711894
+        }
+      ]
+    },
+    {
+      "path": "central-shoulder-source-normal-v2.glb",
+      "sha256": "cd86121c32072053960e927866f9442b7168e281df9d8c46cf9807ce691b2ff9",
+      "node": "growing-reachable-paths",
+      "triangles": 9120,
+      "upwardFaces": 4584,
+      "downwardFaces": 4536,
+      "material": {
+        "doubleSided": true,
+        "name": "Material_60",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.5394794940948486,
+            0.533276379108429,
+            0.7230551242828369,
+            1
+          ],
+          "metallicFactor": 0
+        }
+      },
+      "sampledDarkPixelRayCoincidentFaces": [
+        {
+          "triangle": 2834,
+          "height": 0.21724998950958252,
+          "normalY": -0.003961085435548739
+        },
+        {
+          "triangle": 7459,
+          "height": 0.2172499895095825,
+          "normalY": 0.002337649802711894
+        }
+      ]
+    }
+  ],
+  "interpretation": "The actual path contains upward joint discs and downward strips at coincident heights. Its runtime DoubleSide material uses polygonOffset; standard glTF does not encode that raster offset. Source and final GLB keep the pale path PBR, not black color. Coplanar opposite faces under Cycles are a likely cause of the source-only dark joints; this is not an isolated causal render experiment.",
+  "action": "Keep source images as HOLD evidence. Do not alter frozen geometry or infer that the c4 app has black dots. Actual app retains its existing path renderer."
+}

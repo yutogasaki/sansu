@@ -1,0 +1,6 @@
+maximum immutable double station to constructed Float32 rounding 4.837389055845967e-07
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+  File "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/build_checks.py", line 12, in assert_sealed_plan
+    assert math.dist(plan['primaryEndpoints']['galleryStart'],gallery[0])<=epsilon
+AssertionError

@@ -1,0 +1,316 @@
+{
+  "createdAtUtc": "2026-10-12T04:35:47.907306+00:00",
+  "scope": "Stage3 source U court build and whole view. Art HOLD; no runtime integration; no leaf70/actor pass. Preparation and first AST failure preserved.",
+  "files": [
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/README.md",
+      "target": "README.md.txt",
+      "sourceBytes": 4981,
+      "storedBytes": 4981,
+      "sourceSha256": "84479276361d87e0ce4793f38f99077fa8a781a158b88caf064afb5ffce8b675",
+      "storedSha256": "84479276361d87e0ce4793f38f99077fa8a781a158b88caf064afb5ffce8b675",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/anchor-static-check.json",
+      "target": "anchor-static-check.json",
+      "sourceBytes": 3251,
+      "storedBytes": 3251,
+      "sourceSha256": "a0d1d546bcf4a1302e8efec391b4246d73efe60cf2d317e7b1ab9ac50eef0675",
+      "storedSha256": "a0d1d546bcf4a1302e8efec391b4246d73efe60cf2d317e7b1ab9ac50eef0675",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/attempt-01/HOLD-shape.blend",
+      "target": "attempt-01/HOLD-shape.blend",
+      "sourceBytes": 12624458,
+      "storedBytes": 12624458,
+      "sourceSha256": "9cc5ceb102726eaabc9d7dc7e8b9a5cbb56e7f75af87b0efb7b7c93ecd887ebd",
+      "storedSha256": "9cc5ceb102726eaabc9d7dc7e8b9a5cbb56e7f75af87b0efb7b7c93ecd887ebd",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/attempt-01/HOLD-shape.glb",
+      "target": "attempt-01/HOLD-shape.glb.gz",
+      "sourceBytes": 20415652,
+      "storedBytes": 7192258,
+      "sourceSha256": "97cb39200ddef15aa3535b6dd35accc00c7e0e56ee617dd8e52ea7bdc6ef164f",
+      "storedSha256": "b5b988aa553f3f83569af8bdb556ca3ee89840eaad143300dab56d231e645bec",
+      "encoding": "gzip"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/attempt-01/HOLD-source-whole.png",
+      "target": "attempt-01/HOLD-source-whole.png",
+      "sourceBytes": 1455613,
+      "storedBytes": 1455613,
+      "sourceSha256": "ac24191d8aa3603ea9e80ba56b2285a617cb906596b4390260d0f5648d0b400b",
+      "storedSha256": "ac24191d8aa3603ea9e80ba56b2285a617cb906596b4390260d0f5648d0b400b",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/attempt-01/deformations.json",
+      "target": "attempt-01/deformations.json",
+      "sourceBytes": 23934,
+      "storedBytes": 23934,
+      "sourceSha256": "635a2265c3791235f3de5dbd57c17a77b5d1ec1b3260d0e2ecc9f52d33df928f",
+      "storedSha256": "635a2265c3791235f3de5dbd57c17a77b5d1ec1b3260d0e2ecc9f52d33df928f",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/attempt-01/inputs-before.json",
+      "target": "attempt-01/inputs-before.json",
+      "sourceBytes": 4904,
+      "storedBytes": 4904,
+      "sourceSha256": "27794b8d82d2af52209396e13dd62de2cd18e08bfce9b554767e847d6d447f06",
+      "storedSha256": "27794b8d82d2af52209396e13dd62de2cd18e08bfce9b554767e847d6d447f06",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/attempt-01/owned-crown-components.glb",
+      "target": "attempt-01/owned-crown-components.glb.gz",
+      "sourceBytes": 1069396,
+      "storedBytes": 490535,
+      "sourceSha256": "f0b5f5887df70eade566dc7fbc44681da574710a150bc46704f238cdff3116a0",
+      "storedSha256": "79d976574665c6b9a8df7c1c92348ed0c5763afd891714326d2790ca8eefcc6b",
+      "encoding": "gzip"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/attempt-01/primary-junctions.json",
+      "target": "attempt-01/primary-junctions.json",
+      "sourceBytes": 28950,
+      "storedBytes": 28950,
+      "sourceSha256": "4aea66cbbe34391b83d9900f8468b60d14284b46bbd41d85214edbb0d60a755f",
+      "storedSha256": "4aea66cbbe34391b83d9900f8468b60d14284b46bbd41d85214edbb0d60a755f",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/attempt-01/render-manifest.json",
+      "target": "attempt-01/render-manifest.json",
+      "sourceBytes": 1786,
+      "storedBytes": 1786,
+      "sourceSha256": "262d5e57025b73703caa16db60038c72ed9249bdc9c6cc7a4523ba3067f6e81e",
+      "storedSha256": "262d5e57025b73703caa16db60038c72ed9249bdc9c6cc7a4523ba3067f6e81e",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/attempt-01/shape-manifest.json",
+      "target": "attempt-01/shape-manifest.json",
+      "sourceBytes": 44668,
+      "storedBytes": 44668,
+      "sourceSha256": "1fe45f63731b6141e36ac88ba05ddaa883b2998db3936812395dd613097159b4",
+      "storedSha256": "1fe45f63731b6141e36ac88ba05ddaa883b2998db3936812395dd613097159b4",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/build-shape.py",
+      "target": "build-shape.py.txt",
+      "sourceBytes": 10796,
+      "storedBytes": 10796,
+      "sourceSha256": "f3917c34c8386404aaa85ef1187711896a9a6410b7d6faf2e82191df6ecc499a",
+      "storedSha256": "f3917c34c8386404aaa85ef1187711896a9a6410b7d6faf2e82191df6ecc499a",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/execution-build-01/execution.log.txt",
+      "target": "execution-build-01/execution.log.txt",
+      "sourceBytes": 67641,
+      "storedBytes": 67641,
+      "sourceSha256": "28b23f2af018b776915daa54b9cb18066f0338265103ea5e20581bcbd50178a1",
+      "storedSha256": "28b23f2af018b776915daa54b9cb18066f0338265103ea5e20581bcbd50178a1",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/execution-build-01/postflight.json",
+      "target": "execution-build-01/postflight.json",
+      "sourceBytes": 1146,
+      "storedBytes": 1146,
+      "sourceSha256": "b0ac01246075138bc390469308da0d810be43189ee23d95ef844b85312937f84",
+      "storedSha256": "b0ac01246075138bc390469308da0d810be43189ee23d95ef844b85312937f84",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/execution-build-01/result.json",
+      "target": "execution-build-01/result.json",
+      "sourceBytes": 3850,
+      "storedBytes": 3850,
+      "sourceSha256": "6a24c170846ff4014520f36316f1ddcd18b4072df05a785fd7c86b3282ad64eb",
+      "storedSha256": "6a24c170846ff4014520f36316f1ddcd18b4072df05a785fd7c86b3282ad64eb",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/execution-view-01/execution.log.txt",
+      "target": "execution-view-01/execution.log.txt",
+      "sourceBytes": 799,
+      "storedBytes": 799,
+      "sourceSha256": "dda69809f07c8fb1a529438e86091fef90b3f10cc3ed03d6a1eafa72b81270b8",
+      "storedSha256": "dda69809f07c8fb1a529438e86091fef90b3f10cc3ed03d6a1eafa72b81270b8",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/execution-view-01/result.json",
+      "target": "execution-view-01/result.json",
+      "sourceBytes": 3857,
+      "storedBytes": 3857,
+      "sourceSha256": "5a14046ea463c26e19f5a89fb759630bff02b01322cecb9ff51ae6db0d8ca52a",
+      "storedSha256": "5a14046ea463c26e19f5a89fb759630bff02b01322cecb9ff51ae6db0d8ca52a",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/fields.py",
+      "target": "fields.py.txt",
+      "sourceBytes": 2553,
+      "storedBytes": 2553,
+      "sourceSha256": "359fca42b7d7e20d2fee134f8e9e910ba39f6c855fe0e6816c2ce962aac49394",
+      "storedSha256": "359fca42b7d7e20d2fee134f8e9e910ba39f6c855fe0e6816c2ce962aac49394",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/helper-provenance.json",
+      "target": "helper-provenance.json",
+      "sourceBytes": 857,
+      "storedBytes": 857,
+      "sourceSha256": "9a347ab8d3fa97b9f46ca8264b38b7ac9446aa97ff00a2a288f39eb6f8d72a45",
+      "storedSha256": "9a347ab8d3fa97b9f46ca8264b38b7ac9446aa97ff00a2a288f39eb6f8d72a45",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/history/static-first-failure/build-shape.py",
+      "target": "history/static-first-failure/build-shape.py.txt",
+      "sourceBytes": 10818,
+      "storedBytes": 10818,
+      "sourceSha256": "6126d13c8e693556d9310c6e329721f80553a502d83a15c4ced9ed83ae0166e7",
+      "storedSha256": "6126d13c8e693556d9310c6e329721f80553a502d83a15c4ced9ed83ae0166e7",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/history/static-first-failure/failure.log.txt",
+      "target": "history/static-first-failure/failure.log.txt",
+      "sourceBytes": 130,
+      "storedBytes": 130,
+      "sourceSha256": "b263b1a7be690f9eb2688551662ab9678a8e5275395cff7588bfba0cc38ed238",
+      "storedSha256": "b263b1a7be690f9eb2688551662ab9678a8e5275395cff7588bfba0cc38ed238",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/history/static-first-failure/manifest.json",
+      "target": "history/static-first-failure/manifest.json",
+      "sourceBytes": 139,
+      "storedBytes": 139,
+      "sourceSha256": "6b3eb451f8a4430f73340ffa3bbaf7bf86881f6516980bc656492bdeae15fb23",
+      "storedSha256": "6b3eb451f8a4430f73340ffa3bbaf7bf86881f6516980bc656492bdeae15fb23",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/joints.py",
+      "target": "joints.py.txt",
+      "sourceBytes": 8474,
+      "storedBytes": 8474,
+      "sourceSha256": "c99059a0af65cdd62b741911537dc26f605051d22e57207d452d7f5e12ca8db1",
+      "storedSha256": "c99059a0af65cdd62b741911537dc26f605051d22e57207d452d7f5e12ca8db1",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/junctions.py",
+      "target": "junctions.py.txt",
+      "sourceBytes": 3345,
+      "storedBytes": 3345,
+      "sourceSha256": "3ed8dd1fef7dac55e447ea82ec420c60ad7fe3e60a72375a6f21ea151d197b67",
+      "storedSha256": "3ed8dd1fef7dac55e447ea82ec420c60ad7fe3e60a72375a6f21ea151d197b67",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/proposal.json",
+      "target": "proposal.json",
+      "sourceBytes": 19547,
+      "storedBytes": 19547,
+      "sourceSha256": "8d049e290ef41a11cc7cf15ce55203da4af79ab78d03b6e59cc45372d9443d8d",
+      "storedSha256": "8d049e290ef41a11cc7cf15ce55203da4af79ab78d03b6e59cc45372d9443d8d",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/ray_query64.py",
+      "target": "ray_query64.py.txt",
+      "sourceBytes": 7270,
+      "storedBytes": 7270,
+      "sourceSha256": "e5b6c22a0781049f8ffbf33d6166064b79b34dcdbca6fe6d348f760af109b3b3",
+      "storedSha256": "e5b6c22a0781049f8ffbf33d6166064b79b34dcdbca6fe6d348f760af109b3b3",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/readiness.json",
+      "target": "readiness.json",
+      "sourceBytes": 2478,
+      "storedBytes": 2478,
+      "sourceSha256": "cd8077546024dd624d7dfcc8ae7774b9b0ad916fab5245fee7576e9d43ff8891",
+      "storedSha256": "cd8077546024dd624d7dfcc8ae7774b9b0ad916fab5245fee7576e9d43ff8891",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/readiness.sha256",
+      "target": "readiness.sha256",
+      "sourceBytes": 65,
+      "storedBytes": 65,
+      "sourceSha256": "69caa00985c182c7103c1cbf44ec3e0331b9886d8a6412bc5faca550737543e2",
+      "storedSha256": "69caa00985c182c7103c1cbf44ec3e0331b9886d8a6412bc5faca550737543e2",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/render-whole.py",
+      "target": "render-whole.py.txt",
+      "sourceBytes": 3549,
+      "storedBytes": 3549,
+      "sourceSha256": "1b3c875abb12a2c03300f69c6d52d446dccf0ee2a2b80979f0e1993e1e58d530",
+      "storedSha256": "1b3c875abb12a2c03300f69c6d52d446dccf0ee2a2b80979f0e1993e1e58d530",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/run-once.py",
+      "target": "run-once.py.txt",
+      "sourceBytes": 3087,
+      "storedBytes": 3087,
+      "sourceSha256": "6b09e5e3808fa9fa5b3eee292d6bfd95829273c2407b2e2b3b515bd89bc0ff63",
+      "storedSha256": "6b09e5e3808fa9fa5b3eee292d6bfd95829273c2407b2e2b3b515bd89bc0ff63",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/source_checks.py",
+      "target": "source_checks.py.txt",
+      "sourceBytes": 3435,
+      "storedBytes": 3435,
+      "sourceSha256": "8af619dabe604ae5831b7c50dc061840e95fa31814678f857a8cf6af1dc0a9df",
+      "storedSha256": "8af619dabe604ae5831b7c50dc061840e95fa31814678f857a8cf6af1dc0a9df",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/source_helpers.py",
+      "target": "source_helpers.py.txt",
+      "sourceBytes": 6529,
+      "storedBytes": 6529,
+      "sourceSha256": "8c06d2c318cccf0c9ef4031347dd73d80363cc13acae899c3ccc0eddcce88b27",
+      "storedSha256": "8c06d2c318cccf0c9ef4031347dd73d80363cc13acae899c3ccc0eddcce88b27",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/static-check.json",
+      "target": "static-check.json",
+      "sourceBytes": 979,
+      "storedBytes": 979,
+      "sourceSha256": "aeb64b574f5443ddd9ee7f0f0676826db4828c3538a617b9ea1290fb01c4cf74",
+      "storedSha256": "aeb64b574f5443ddd9ee7f0f0676826db4828c3538a617b9ea1290fb01c4cf74",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage3-u-court/volume_adapter.py",
+      "target": "volume_adapter.py.txt",
+      "sourceBytes": 872,
+      "storedBytes": 872,
+      "sourceSha256": "f79f9ebdd7a764a7f0957a93163f5172164f062940991ac83ecc51401c5b7c27",
+      "storedSha256": "f79f9ebdd7a764a7f0957a93163f5172164f062940991ac83ecc51401c5b7c27",
+      "encoding": "raw"
+    }
+  ],
+  "fileCount": 34,
+  "sourceBytes": 35839809,
+  "storedBytes": 22037554,
+  "allDecodedBytesIdentical": true
+}

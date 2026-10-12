@@ -1,0 +1,388 @@
+{
+  "status": "BYTE_IDENTICAL_ARCHIVE",
+  "createdUtc": "2026-10-12T06:28:07.774946+00:00",
+  "source": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build",
+  "destination": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-p02-gallery/east-v4-curvature-build",
+  "files": [
+    {
+      "sourceRelativePath": "README.md",
+      "destinationRelativePath": "README.md.txt",
+      "sourceBeforeSha256": "7c4ff0088859867ec9160cb9c41ab5e1f41c08e1bfedbfdff1092f3f1808b953",
+      "sourceAfterSha256": "7c4ff0088859867ec9160cb9c41ab5e1f41c08e1bfedbfdff1092f3f1808b953",
+      "destinationSha256": "7c4ff0088859867ec9160cb9c41ab5e1f41c08e1bfedbfdff1092f3f1808b953",
+      "bytes": 4837
+    },
+    {
+      "sourceRelativePath": "build-coarse.py",
+      "destinationRelativePath": "build-coarse.py.txt",
+      "sourceBeforeSha256": "d4a2a463c9766c3902879b021bc5c6922890083baf0106486e850ec2a6a4a5e7",
+      "sourceAfterSha256": "d4a2a463c9766c3902879b021bc5c6922890083baf0106486e850ec2a6a4a5e7",
+      "destinationSha256": "d4a2a463c9766c3902879b021bc5c6922890083baf0106486e850ec2a6a4a5e7",
+      "bytes": 36118
+    },
+    {
+      "sourceRelativePath": "build_checks.py",
+      "destinationRelativePath": "build_checks.py.txt",
+      "sourceBeforeSha256": "7f0b53371ca8c47b2e7bc106fe6e766c6706a866be3a9091b7726022a82d7688",
+      "sourceAfterSha256": "7f0b53371ca8c47b2e7bc106fe6e766c6706a866be3a9091b7726022a82d7688",
+      "destinationSha256": "7f0b53371ca8c47b2e7bc106fe6e766c6706a866be3a9091b7726022a82d7688",
+      "bytes": 8983
+    },
+    {
+      "sourceRelativePath": "check-preparation.py",
+      "destinationRelativePath": "check-preparation.py.txt",
+      "sourceBeforeSha256": "1ca259235d60ea69001f160d9bb5730c6dc8001b5051dd0f6372ad4b568ec2fa",
+      "sourceAfterSha256": "1ca259235d60ea69001f160d9bb5730c6dc8001b5051dd0f6372ad4b568ec2fa",
+      "destinationSha256": "1ca259235d60ea69001f160d9bb5730c6dc8001b5051dd0f6372ad4b568ec2fa",
+      "bytes": 5175
+    },
+    {
+      "sourceRelativePath": "derivation-inputs.json",
+      "destinationRelativePath": "derivation-inputs.json",
+      "sourceBeforeSha256": "ee06cf3245c2f0be819044e1f823f926ad3ee3d39e7ac5a1ee788e6df2776e4b",
+      "sourceAfterSha256": "ee06cf3245c2f0be819044e1f823f926ad3ee3d39e7ac5a1ee788e6df2776e4b",
+      "destinationSha256": "ee06cf3245c2f0be819044e1f823f926ad3ee3d39e7ac5a1ee788e6df2776e4b",
+      "bytes": 3010
+    },
+    {
+      "sourceRelativePath": "donor_reference.py",
+      "destinationRelativePath": "donor_reference.py.txt",
+      "sourceBeforeSha256": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+      "sourceAfterSha256": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+      "destinationSha256": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+      "bytes": 3333
+    },
+    {
+      "sourceRelativePath": "entry_geometry.py",
+      "destinationRelativePath": "entry_geometry.py.txt",
+      "sourceBeforeSha256": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+      "sourceAfterSha256": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+      "destinationSha256": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+      "bytes": 7937
+    },
+    {
+      "sourceRelativePath": "history/preseal-float32-boundary/build-coarse.py",
+      "destinationRelativePath": "history/preseal-float32-boundary/build-coarse.py.txt",
+      "sourceBeforeSha256": "d4a2a463c9766c3902879b021bc5c6922890083baf0106486e850ec2a6a4a5e7",
+      "sourceAfterSha256": "d4a2a463c9766c3902879b021bc5c6922890083baf0106486e850ec2a6a4a5e7",
+      "destinationSha256": "d4a2a463c9766c3902879b021bc5c6922890083baf0106486e850ec2a6a4a5e7",
+      "bytes": 36118
+    },
+    {
+      "sourceRelativePath": "history/preseal-float32-boundary/build_checks.py",
+      "destinationRelativePath": "history/preseal-float32-boundary/build_checks.py.txt",
+      "sourceBeforeSha256": "93cfbe83087600f4d21705d103b9a1c32389e489f87bfdd8a74f0af56196553d",
+      "sourceAfterSha256": "93cfbe83087600f4d21705d103b9a1c32389e489f87bfdd8a74f0af56196553d",
+      "destinationSha256": "93cfbe83087600f4d21705d103b9a1c32389e489f87bfdd8a74f0af56196553d",
+      "bytes": 8569
+    },
+    {
+      "sourceRelativePath": "history/preseal-float32-boundary/check-preparation.py",
+      "destinationRelativePath": "history/preseal-float32-boundary/check-preparation.py.txt",
+      "sourceBeforeSha256": "d27f985eca692aa0080fd1bfbe318ead2fb46c9edcc46e5dab1c945c095a102d",
+      "sourceAfterSha256": "d27f985eca692aa0080fd1bfbe318ead2fb46c9edcc46e5dab1c945c095a102d",
+      "destinationSha256": "d27f985eca692aa0080fd1bfbe318ead2fb46c9edcc46e5dab1c945c095a102d",
+      "bytes": 4915
+    },
+    {
+      "sourceRelativePath": "history/preseal-float32-boundary/preservation.json",
+      "destinationRelativePath": "history/preseal-float32-boundary/preservation.json",
+      "sourceBeforeSha256": "df822b18b1e1c98b7c5c230dfc28d8fbd6937774b4fd242d0be5dcf19aa57b3a",
+      "sourceAfterSha256": "df822b18b1e1c98b7c5c230dfc28d8fbd6937774b4fd242d0be5dcf19aa57b3a",
+      "destinationSha256": "df822b18b1e1c98b7c5c230dfc28d8fbd6937774b4fd242d0be5dcf19aa57b3a",
+      "bytes": 696
+    },
+    {
+      "sourceRelativePath": "history/preseal-float32-boundary/static-first.log.txt",
+      "destinationRelativePath": "history/preseal-float32-boundary/static-first.log.txt",
+      "sourceBeforeSha256": "96808e4c9869cc67e483fc941a1f3c1b07cbd77a749183f26fec920abdb0bdd9",
+      "sourceAfterSha256": "96808e4c9869cc67e483fc941a1f3c1b07cbd77a749183f26fec920abdb0bdd9",
+      "destinationSha256": "96808e4c9869cc67e483fc941a1f3c1b07cbd77a749183f26fec920abdb0bdd9",
+      "bytes": 1694
+    },
+    {
+      "sourceRelativePath": "history/preseal-float32-boundary/static-float32-first.log.txt",
+      "destinationRelativePath": "history/preseal-float32-boundary/static-float32-first.log.txt",
+      "sourceBeforeSha256": "4f040248333712946a68d522a3daa51e97c92c59e7a89eaa9484519a4b0868f1",
+      "sourceAfterSha256": "4f040248333712946a68d522a3daa51e97c92c59e7a89eaa9484519a4b0868f1",
+      "destinationSha256": "4f040248333712946a68d522a3daa51e97c92c59e7a89eaa9484519a4b0868f1",
+      "bytes": 383
+    },
+    {
+      "sourceRelativePath": "preparation.json",
+      "destinationRelativePath": "preparation.json",
+      "sourceBeforeSha256": "312bbc4224ac6ccf9fb3af1c3d4159b50c16ea6ba170309f3569b739cd3a89a0",
+      "sourceAfterSha256": "312bbc4224ac6ccf9fb3af1c3d4159b50c16ea6ba170309f3569b739cd3a89a0",
+      "destinationSha256": "312bbc4224ac6ccf9fb3af1c3d4159b50c16ea6ba170309f3569b739cd3a89a0",
+      "bytes": 13787
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build/alignedOpening-closure-input.json",
+      "destinationRelativePath": "runs/01-coarse-build/alignedOpening-closure-input.json",
+      "sourceBeforeSha256": "98dc7949b2d0de917f00766965dbbc3cb9d8b2a18df51c0a81f6be7dfb9f36cb",
+      "sourceAfterSha256": "98dc7949b2d0de917f00766965dbbc3cb9d8b2a18df51c0a81f6be7dfb9f36cb",
+      "destinationSha256": "98dc7949b2d0de917f00766965dbbc3cb9d8b2a18df51c0a81f6be7dfb9f36cb",
+      "bytes": 219
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build/boolean-surface-lineage.json",
+      "destinationRelativePath": "runs/01-coarse-build/boolean-surface-lineage.json",
+      "sourceBeforeSha256": "3f4807859c32c37e498356484c88fad637c80f6ce87e404393f6b0672fd987d3",
+      "sourceAfterSha256": "3f4807859c32c37e498356484c88fad637c80f6ce87e404393f6b0672fd987d3",
+      "destinationSha256": "3f4807859c32c37e498356484c88fad637c80f6ce87e404393f6b0672fd987d3",
+      "bytes": 17958
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build/closed-floor-union.json",
+      "destinationRelativePath": "runs/01-coarse-build/closed-floor-union.json",
+      "sourceBeforeSha256": "bcd8bdc01f848eea4d2b31a8188fe4e9147ae04abc38f153d3b1409052d93bc1",
+      "sourceAfterSha256": "bcd8bdc01f848eea4d2b31a8188fe4e9147ae04abc38f153d3b1409052d93bc1",
+      "destinationSha256": "bcd8bdc01f848eea4d2b31a8188fe4e9147ae04abc38f153d3b1409052d93bc1",
+      "bytes": 143
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build/donor-authored-parity.json",
+      "destinationRelativePath": "runs/01-coarse-build/donor-authored-parity.json",
+      "sourceBeforeSha256": "260090547b1fab9ef2151056f4089791381f4c00da2fe585ed63c0297e431874",
+      "sourceAfterSha256": "260090547b1fab9ef2151056f4089791381f4c00da2fe585ed63c0297e431874",
+      "destinationSha256": "260090547b1fab9ef2151056f4089791381f4c00da2fe585ed63c0297e431874",
+      "bytes": 22237
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build/donor-source-parity.json",
+      "destinationRelativePath": "runs/01-coarse-build/donor-source-parity.json",
+      "sourceBeforeSha256": "5a5fe4100ed45b64d2eb3e6ab41654f9c2c6f63bc1c684c34cd2010382ccf917",
+      "sourceAfterSha256": "5a5fe4100ed45b64d2eb3e6ab41654f9c2c6f63bc1c684c34cd2010382ccf917",
+      "destinationSha256": "5a5fe4100ed45b64d2eb3e6ab41654f9c2c6f63bc1c684c34cd2010382ccf917",
+      "bytes": 26545
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build/eastBranchGallery-closure-input.json",
+      "destinationRelativePath": "runs/01-coarse-build/eastBranchGallery-closure-input.json",
+      "sourceBeforeSha256": "b0ac39395b4279f6b0ab7ce23411c8b148bb776523a70366facc90a71c828eec",
+      "sourceAfterSha256": "b0ac39395b4279f6b0ab7ce23411c8b148bb776523a70366facc90a71c828eec",
+      "destinationSha256": "b0ac39395b4279f6b0ab7ce23411c8b148bb776523a70366facc90a71c828eec",
+      "bytes": 223
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build/failed-scene.blend",
+      "destinationRelativePath": "runs/01-coarse-build/failed-scene.blend",
+      "sourceBeforeSha256": "4452f3ca5351ef38977cedece0116ab72cc135732f40ea51a65d0d6262b330f9",
+      "sourceAfterSha256": "4452f3ca5351ef38977cedece0116ab72cc135732f40ea51a65d0d6262b330f9",
+      "destinationSha256": "4452f3ca5351ef38977cedece0116ab72cc135732f40ea51a65d0d6262b330f9",
+      "bytes": 12466187
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build/first-failure.json",
+      "destinationRelativePath": "runs/01-coarse-build/first-failure.json",
+      "sourceBeforeSha256": "0df7f0ee90943ba10aa87bdd4c0c303ba4a32840ecd1d9f5dd8226a25aba371b",
+      "sourceAfterSha256": "0df7f0ee90943ba10aa87bdd4c0c303ba4a32840ecd1d9f5dd8226a25aba371b",
+      "destinationSha256": "0df7f0ee90943ba10aa87bdd4c0c303ba4a32840ecd1d9f5dd8226a25aba371b",
+      "bytes": 205
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build/gallery-local-top-probes.json",
+      "destinationRelativePath": "runs/01-coarse-build/gallery-local-top-probes.json",
+      "sourceBeforeSha256": "6c8566ff0203ef63f3cd8183861af935d8f13df041c3f8588fc74d5e3c0999b1",
+      "sourceAfterSha256": "6c8566ff0203ef63f3cd8183861af935d8f13df041c3f8588fc74d5e3c0999b1",
+      "destinationSha256": "6c8566ff0203ef63f3cd8183861af935d8f13df041c3f8588fc74d5e3c0999b1",
+      "bytes": 5241
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build/manifold-union-topology.json",
+      "destinationRelativePath": "runs/01-coarse-build/manifold-union-topology.json",
+      "sourceBeforeSha256": "0b83230ef546e23b9cec046a17571e4a43378b1f261d7ded1c3f8eb92b4e31c5",
+      "sourceAfterSha256": "0b83230ef546e23b9cec046a17571e4a43378b1f261d7ded1c3f8eb92b4e31c5",
+      "destinationSha256": "0b83230ef546e23b9cec046a17571e4a43378b1f261d7ded1c3f8eb92b4e31c5",
+      "bytes": 8062
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build/obstacle-identities.json",
+      "destinationRelativePath": "runs/01-coarse-build/obstacle-identities.json",
+      "sourceBeforeSha256": "f530071acc276e7dd7dd73d9d69da3e1fb36bf5afa36c6fab8c232ce4474c189",
+      "sourceAfterSha256": "f530071acc276e7dd7dd73d9d69da3e1fb36bf5afa36c6fab8c232ce4474c189",
+      "destinationSha256": "f530071acc276e7dd7dd73d9d69da3e1fb36bf5afa36c6fab8c232ce4474c189",
+      "bytes": 190132
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build/planned-floor-tops.json",
+      "destinationRelativePath": "runs/01-coarse-build/planned-floor-tops.json",
+      "sourceBeforeSha256": "524c7dd70e3dea2c32f9b56b09b8cbbd65b65733b4b67eb5337d9a7e4304b3f9",
+      "sourceAfterSha256": "524c7dd70e3dea2c32f9b56b09b8cbbd65b65733b4b67eb5337d9a7e4304b3f9",
+      "destinationSha256": "524c7dd70e3dea2c32f9b56b09b8cbbd65b65733b4b67eb5337d9a7e4304b3f9",
+      "bytes": 360017
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build/sealed-curvature-prebuild-check.json",
+      "destinationRelativePath": "runs/01-coarse-build/sealed-curvature-prebuild-check.json",
+      "sourceBeforeSha256": "89000671192823c30b53f9c3cc1e12354293f7404851d03e123128baf52c1ea3",
+      "sourceAfterSha256": "89000671192823c30b53f9c3cc1e12354293f7404851d03e123128baf52c1ea3",
+      "destinationSha256": "89000671192823c30b53f9c3cc1e12354293f7404851d03e123128baf52c1ea3",
+      "bytes": 476
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build/terrainThreshold-closure-input.json",
+      "destinationRelativePath": "runs/01-coarse-build/terrainThreshold-closure-input.json",
+      "sourceBeforeSha256": "e2f21ce4cc8ae56cc014291fe64df8508d71ef0ea3e2ea64ae59c453277701e9",
+      "sourceAfterSha256": "e2f21ce4cc8ae56cc014291fe64df8508d71ef0ea3e2ea64ae59c453277701e9",
+      "destinationSha256": "e2f21ce4cc8ae56cc014291fe64df8508d71ef0ea3e2ea64ae59c453277701e9",
+      "bytes": 240
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build-external-process.json",
+      "destinationRelativePath": "runs/01-coarse-build-external-process.json",
+      "sourceBeforeSha256": "82c00ef047cdd8bddf350dec0f149105876ef3d0d164d5431f499b89d519f158",
+      "sourceAfterSha256": "82c00ef047cdd8bddf350dec0f149105876ef3d0d164d5431f499b89d519f158",
+      "destinationSha256": "82c00ef047cdd8bddf350dec0f149105876ef3d0d164d5431f499b89d519f158",
+      "bytes": 16031
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build-preflight.json",
+      "destinationRelativePath": "runs/01-coarse-build-preflight.json",
+      "sourceBeforeSha256": "b479abc9a88b6b7b3e397583af1410541e6a702e6f444e8a12e1633d3e53acee",
+      "sourceAfterSha256": "b479abc9a88b6b7b3e397583af1410541e6a702e6f444e8a12e1633d3e53acee",
+      "destinationSha256": "b479abc9a88b6b7b3e397583af1410541e6a702e6f444e8a12e1633d3e53acee",
+      "bytes": 7900
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build-result-summary.json",
+      "destinationRelativePath": "runs/01-coarse-build-result-summary.json",
+      "sourceBeforeSha256": "3b1fe13ce5e785d3c3cd5e1624ea7a82fd2dcd018a57186d617bb6a11b42a55d",
+      "sourceAfterSha256": "3b1fe13ce5e785d3c3cd5e1624ea7a82fd2dcd018a57186d617bb6a11b42a55d",
+      "destinationSha256": "3b1fe13ce5e785d3c3cd5e1624ea7a82fd2dcd018a57186d617bb6a11b42a55d",
+      "bytes": 7877
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build-supervisor-output.log.txt",
+      "destinationRelativePath": "runs/01-coarse-build-supervisor-output.log.txt",
+      "sourceBeforeSha256": "1ba3784b85de4cdda69aae79a02980395debb5f69953bb3a4ab697888396948b",
+      "sourceAfterSha256": "1ba3784b85de4cdda69aae79a02980395debb5f69953bb3a4ab697888396948b",
+      "destinationSha256": "1ba3784b85de4cdda69aae79a02980395debb5f69953bb3a4ab697888396948b",
+      "bytes": 370
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build.log.txt",
+      "destinationRelativePath": "runs/01-coarse-build.log.txt",
+      "sourceBeforeSha256": "26803b249c29aad5f5a1e5fcf2f1908b2845766ddd21aaf1addd0ffbf3befbfd",
+      "sourceAfterSha256": "26803b249c29aad5f5a1e5fcf2f1908b2845766ddd21aaf1addd0ffbf3befbfd",
+      "destinationSha256": "26803b249c29aad5f5a1e5fcf2f1908b2845766ddd21aaf1addd0ffbf3befbfd",
+      "bytes": 19205
+    },
+    {
+      "sourceRelativePath": "runs/01-coarse-build.log.txt.json",
+      "destinationRelativePath": "runs/01-coarse-build.log.txt.json",
+      "sourceBeforeSha256": "9d371b63ed1bd6d6426996ef17f2aa430ad4b3f0f776d99ba5ee3aeebb198d90",
+      "sourceAfterSha256": "9d371b63ed1bd6d6426996ef17f2aa430ad4b3f0f776d99ba5ee3aeebb198d90",
+      "destinationSha256": "9d371b63ed1bd6d6426996ef17f2aa430ad4b3f0f776d99ba5ee3aeebb198d90",
+      "bytes": 454
+    },
+    {
+      "sourceRelativePath": "sealed-input/gallery-local-top-probes.json",
+      "destinationRelativePath": "sealed-input/gallery-local-top-probes.json",
+      "sourceBeforeSha256": "6c8566ff0203ef63f3cd8183861af935d8f13df041c3f8588fc74d5e3c0999b1",
+      "sourceAfterSha256": "6c8566ff0203ef63f3cd8183861af935d8f13df041c3f8588fc74d5e3c0999b1",
+      "destinationSha256": "6c8566ff0203ef63f3cd8183861af935d8f13df041c3f8588fc74d5e3c0999b1",
+      "bytes": 5241
+    },
+    {
+      "sourceRelativePath": "sealed-input/offline-result.json",
+      "destinationRelativePath": "sealed-input/offline-result.json",
+      "sourceBeforeSha256": "f3a409266b1057ad348bcf759b9c878564028d3c463c8e01c5b0f151d128638e",
+      "sourceAfterSha256": "f3a409266b1057ad348bcf759b9c878564028d3c463c8e01c5b0f151d128638e",
+      "destinationSha256": "f3a409266b1057ad348bcf759b9c878564028d3c463c8e01c5b0f151d128638e",
+      "bytes": 57304
+    },
+    {
+      "sourceRelativePath": "sealed-input/planned-floor-tops.json",
+      "destinationRelativePath": "sealed-input/planned-floor-tops.json",
+      "sourceBeforeSha256": "e44d250ca5440d0f5aae661d321bde8de7c031296939b820eeb8f9d400c2b53d",
+      "sourceAfterSha256": "e44d250ca5440d0f5aae661d321bde8de7c031296939b820eeb8f9d400c2b53d",
+      "destinationSha256": "e44d250ca5440d0f5aae661d321bde8de7c031296939b820eeb8f9d400c2b53d",
+      "bytes": 270264
+    },
+    {
+      "sourceRelativePath": "sealed-input/planned-floor-v4-stations-once.json",
+      "destinationRelativePath": "sealed-input/planned-floor-v4-stations-once.json",
+      "sourceBeforeSha256": "2968d018782cea82afa443bbbffc111eb0ead51a3d5f5f2e8be2814354fee3ca",
+      "sourceAfterSha256": "2968d018782cea82afa443bbbffc111eb0ead51a3d5f5f2e8be2814354fee3ca",
+      "destinationSha256": "2968d018782cea82afa443bbbffc111eb0ead51a3d5f5f2e8be2814354fee3ca",
+      "bytes": 228088
+    },
+    {
+      "sourceRelativePath": "sealed-input/preparation.json",
+      "destinationRelativePath": "sealed-input/preparation.json",
+      "sourceBeforeSha256": "5c1ae10e7017749cbd3b315fe71ef52722ba2eb537269384a90ac06e3f2f3c44",
+      "sourceAfterSha256": "5c1ae10e7017749cbd3b315fe71ef52722ba2eb537269384a90ac06e3f2f3c44",
+      "destinationSha256": "5c1ae10e7017749cbd3b315fe71ef52722ba2eb537269384a90ac06e3f2f3c44",
+      "bytes": 4523
+    },
+    {
+      "sourceRelativePath": "sealed-input/support-contact-result.json",
+      "destinationRelativePath": "sealed-input/support-contact-result.json",
+      "sourceBeforeSha256": "53774b4a10e1b893837fc0fbe6551d3d734b6c818eb86d9bebef29d9dbe35548",
+      "sourceAfterSha256": "53774b4a10e1b893837fc0fbe6551d3d734b6c818eb86d9bebef29d9dbe35548",
+      "destinationSha256": "53774b4a10e1b893837fc0fbe6551d3d734b6c818eb86d9bebef29d9dbe35548",
+      "bytes": 24585
+    },
+    {
+      "sourceRelativePath": "sealed-input/support-edge-proposal.json",
+      "destinationRelativePath": "sealed-input/support-edge-proposal.json",
+      "sourceBeforeSha256": "55427cf8902e997ecc84acc7894feef90db2f7ff23494017681069a91a4c8cb5",
+      "sourceAfterSha256": "55427cf8902e997ecc84acc7894feef90db2f7ff23494017681069a91a4c8cb5",
+      "destinationSha256": "55427cf8902e997ecc84acc7894feef90db2f7ff23494017681069a91a4c8cb5",
+      "bytes": 24692
+    },
+    {
+      "sourceRelativePath": "static-first.log.txt",
+      "destinationRelativePath": "static-first.log.txt",
+      "sourceBeforeSha256": "96808e4c9869cc67e483fc941a1f3c1b07cbd77a749183f26fec920abdb0bdd9",
+      "sourceAfterSha256": "96808e4c9869cc67e483fc941a1f3c1b07cbd77a749183f26fec920abdb0bdd9",
+      "destinationSha256": "96808e4c9869cc67e483fc941a1f3c1b07cbd77a749183f26fec920abdb0bdd9",
+      "bytes": 1694
+    },
+    {
+      "sourceRelativePath": "static-float32-first.log.txt",
+      "destinationRelativePath": "static-float32-first.log.txt",
+      "sourceBeforeSha256": "4f040248333712946a68d522a3daa51e97c92c59e7a89eaa9484519a4b0868f1",
+      "sourceAfterSha256": "4f040248333712946a68d522a3daa51e97c92c59e7a89eaa9484519a4b0868f1",
+      "destinationSha256": "4f040248333712946a68d522a3daa51e97c92c59e7a89eaa9484519a4b0868f1",
+      "bytes": 383
+    },
+    {
+      "sourceRelativePath": "static-float32-fixed.log.txt",
+      "destinationRelativePath": "static-float32-fixed.log.txt",
+      "sourceBeforeSha256": "742cff5d5eb2b8939db843de70ba4db34bf15337711cc17d976c0be1422905ce",
+      "sourceAfterSha256": "742cff5d5eb2b8939db843de70ba4db34bf15337711cc17d976c0be1422905ce",
+      "destinationSha256": "742cff5d5eb2b8939db843de70ba4db34bf15337711cc17d976c0be1422905ce",
+      "bytes": 1747
+    },
+    {
+      "sourceRelativePath": "study.json",
+      "destinationRelativePath": "study.json",
+      "sourceBeforeSha256": "fc9b054f95375363c88e317299ad6a45a0d8b28d674e44daefa8d2e4634e1812",
+      "sourceAfterSha256": "fc9b054f95375363c88e317299ad6a45a0d8b28d674e44daefa8d2e4634e1812",
+      "destinationSha256": "fc9b054f95375363c88e317299ad6a45a0d8b28d674e44daefa8d2e4634e1812",
+      "bytes": 16681
+    },
+    {
+      "sourceRelativePath": "supervise.py",
+      "destinationRelativePath": "supervise.py.txt",
+      "sourceBeforeSha256": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+      "sourceAfterSha256": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+      "destinationSha256": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+      "bytes": 1920
+    },
+    {
+      "sourceRelativePath": "terrain_connector.py",
+      "destinationRelativePath": "terrain_connector.py.txt",
+      "sourceBeforeSha256": "47a00db51d9826ca56a717db06feb48930dfbe77f3fcf301783ad1d90ea0b18d",
+      "sourceAfterSha256": "47a00db51d9826ca56a717db06feb48930dfbe77f3fcf301783ad1d90ea0b18d",
+      "destinationSha256": "47a00db51d9826ca56a717db06feb48930dfbe77f3fcf301783ad1d90ea0b18d",
+      "bytes": 4796
+    }
+  ],
+  "excluded": [
+    "__pycache__"
+  ],
+  "scope": "Raw source diagnostics and failed incomplete shape views; no app or runtime acceptance. Source .py/.md files carry .txt archive suffix; bytes unchanged."
+}

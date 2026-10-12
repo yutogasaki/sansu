@@ -1,0 +1,23 @@
+{
+  "startedAtUtc": "2026-10-12T04:09:17.899076+00:00",
+  "finishedAtUtc": "2026-10-12T04:09:20.939601+00:00",
+  "elapsedSeconds": 3.040564708,
+  "command": [
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/failed-shape-view/render-failed-whole.py"
+  ],
+  "ownedPid": 23345,
+  "exitCode": 1,
+  "stopReason": null,
+  "peakObservedRssBytes": 425918464,
+  "effectiveThreads": 2,
+  "rssGuardBytes": 3221225472,
+  "timeoutSeconds": 120,
+  "attempts": 1
+}

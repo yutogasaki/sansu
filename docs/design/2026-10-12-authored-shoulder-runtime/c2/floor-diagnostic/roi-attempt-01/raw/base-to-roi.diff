@@ -1,0 +1,346 @@
+--- /private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/executed-driver.mjs
++++ diagnose-roi-face-normal.mjs
+@@ -12,15 +12,14 @@
+ const runRoot = '/private/tmp/sansu-authored-shoulder-c2';
+ const candidate = `${runRoot}/candidate`;
+ const { values: args } = parseArgs({ options: {
+-    start: { type: 'boolean', default: false }, mode: { type: 'string', default: 'shadow-off' },
+-    output: { type: 'string' }, 'shadow-report': { type: 'string' }, 'line-review': { type: 'string' },
++    start: { type: 'boolean', default: false }, output: { type: 'string' },
+ } });
+-assert(['shadow-off', 'unlit'].includes(args.mode), 'Mode must be shadow-off or unlit');
++args.mode = 'roi-face-normal';
+ if (!args.start) {
+     console.log(JSON.stringify({ prepared: true, executionStarted: false, candidate, mode: args.mode,
+         requires: ['Explicit execution authorization, then --start', 'Completed fixed core and all eight regressions',
+             'Fresh --output under this external diagnostic directory',
+-            'unlit additionally requires a successful shadow-off report and recorded visual review that the fine line remains'],
++            'Matched actual target mesh/index/position/normal proof before local shader intervention'],
+         scope: 'Causal diagnosis only; no art, runtime candidate, or M1 acceptance' }, null, 2));
+     process.exit(0);
+ }
+@@ -62,13 +61,15 @@
+ const walkingTopology = walking => { const value = structuredClone(walking); delete value.poses; return value; };
+ 
+ await fs.mkdir(output, { recursive: false });
+-const report = { schema: 'sansu-external-floor-seam-diagnostic-v1', diagnosticCompleted: false,
++const report = { schema: 'sansu-external-floor-local-normal-diagnostic-v1', diagnosticCompleted: false,
+     visualAcceptance: 'not-assessed', mode: args.mode, candidateDirectory: candidate, output,
+     startedAt: new Date().toISOString(), captures: [], errors: [],
+     exclusions: ['No application candidate edits', 'No source normals or geometry repair', 'No art/M1/application pass',
+         'Canonical state equality excludes applied command receipts and placeProgress; raw values are retained',
+         'Physical walking equality excludes instantaneous actor poses; raw poses are retained'] };
+-let browser, page, expectedSource, expectedInstalled, dependencyRoots, executable, beforeDependency, harnessBefore;
++let browser, page, expectedSource, expectedInstalled, dependencyRoots, executable, beforeDependency, harnessBefore, targetBefore;
++const targetPath = path.join(externalRoot, 'target.json');
++const target = await readJson(targetPath);
+ try {
+     const corePath = `${runRoot}/core/report.json`, regressionPath = `${runRoot}/regressions/report.json`;
+     const core = await readJson(corePath), regressions = await readJson(regressionPath);
+@@ -100,19 +101,15 @@
+         candidate: reference.observed.app.visualCandidate, sourceRevision: reference.observed.app.groundSourceRevision };
+     report.target = String(url); report.expectedIdentity = expectedIdentity;
+     report.gates = await Promise.all([corePath, regressionPath, serverIdentityPath, abPath].map(stamp));
+-    if (args.mode === 'unlit') {
+-        assert(args['shadow-report'] && args['line-review'], 'unlit requires --shadow-report and --line-review');
+-        const prior = await readJson(args['shadow-report']), review = await readJson(args['line-review']);
+-        assert(prior.diagnosticCompleted && prior.mode === 'shadow-off' && prior.restoration?.complete, 'Prior shadow-off did not complete/restored');
+-        assert.deepEqual(prior.expectedIdentity, expectedIdentity);
+-        assert.deepEqual(prior.sourceAfter, expectedSource); assert.deepEqual(prior.installedAfter, expectedInstalled);
+-        assert.equal(review.shadowReportSha256, (await stamp(args['shadow-report'])).sha256);
+-        const previousCapture = prior.captures.find(c => c.stage === 'shadow-off'); assert(previousCapture);
+-        assert.equal(review.shadowCaptureSha256, previousCapture.image.sha256);
+-        assert.equal(review.fineLineRemains, true, 'unlit requires the recorded fine-line-remains observation');
+-        assert(typeof review.reviewer === 'string' && review.reviewer.trim() && typeof review.observation === 'string' && review.observation.trim());
+-        report.priorVisualReview = { report: await stamp(args['shadow-report']), review: await stamp(args['line-review']), value: review };
+-    }
++    const priorPath = '/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/report.json';
++    const prior = await readJson(priorPath);
++    assert.equal((await stamp(priorPath)).sha256, target.priorReportSha256, 'Prior causal report changed');
++    assert(prior.diagnosticCompleted && prior.restoration?.complete && prior.sourceFixed && prior.installedFixed);
++    assert.deepEqual(prior.expectedIdentity, expectedIdentity);
++    assert.deepEqual(prior.sourceAfter, expectedSource); assert.deepEqual(prior.installedAfter, expectedInstalled);
++    report.priorProbe = await stamp(priorPath); report.targetSpec = target;
++    targetBefore = await stamp(targetPath); report.targetSpecBefore = targetBefore;
++    await fs.copyFile(targetPath, path.join(output, 'target.json'), constants.COPYFILE_EXCL);
+     report.sourceBefore = await hashInputs(expectedSource); assert.deepEqual(report.sourceBefore, expectedSource, 'Source differs from fixed core');
+     report.installedBefore = await hashInputs(expectedInstalled); assert.deepEqual(report.installedBefore, expectedInstalled, 'Installed source differs');
+     harnessBefore = await stamp(self); report.externalHarnessBefore = harnessBefore;
+@@ -131,6 +128,7 @@
+     const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce', serviceWorkers: 'block' });
+     page = await context.newPage(); page.setDefaultTimeout(90000);
+     page.on('pageerror', error => report.errors.push({ kind: 'pageerror', error: error.stack ?? String(error) }));
++    page.on('console', message => { if (message.type() === 'error') report.errors.push({ kind: 'console-error', text: message.text() }); });
+     const transformedResponse = page.waitForResponse(response => new URL(response.url()).pathname === '/src/components/island/growing/GrowingWorld.tsx'
+         && response.request().resourceType() === 'script');
+     await page.goto(String(url), { waitUntil: 'domcontentloaded' });
+@@ -150,7 +148,7 @@
+     await page.locator('[data-owner-id="l14"]').click();
+     await page.waitForFunction(() => document.querySelector('[data-growing-world]')?.dataset.growingFocus === 'l14');
+     await page.locator('[data-growing-world] canvas').scrollIntoViewIfNeeded();
+-    report.hookInstall = await page.evaluate(async moduleUrl => {
++    report.hookInstall = await page.evaluate(async ({ moduleUrl, target }) => {
+         if (window.__sansuFloorDiagnostic) throw Error('Diagnostic already exists');
+         const T = await import(moduleUrl);
+         const response = await fetch(moduleUrl, { cache: 'no-store' });
+@@ -161,7 +159,33 @@
+         const prior = T.Scene.prototype.onBeforeRender;
+         if (typeof prior !== 'function' || descriptor && descriptor.configurable === false) throw Error('Unsupported Scene hook');
+         const d = { calls: 0, matches: 0, failure: undefined, scene: undefined, renderer: undefined, camera: undefined,
+-            floor: undefined, original: undefined, clones: [], cloneDisposed: 0, stage: 'baseline', drawStage: undefined };
++            floor: undefined, original: undefined, clones: [], cloneDisposed: 0, stage: 'baseline', drawStage: undefined,
++            targetProof: undefined, shaderRecords: [] };
++        const close = (actual, expected, label) => { if (!Number.isFinite(actual) || Math.abs(actual - expected) > 0.000001) throw Error(`Target ${label} differs: ${actual} vs ${expected}`); };
++        const verifyTarget = floor => {
++            const g = floor.geometry, p = g.getAttribute('position'), n = g.getAttribute('normal');
++            if (!g.index || !p || !n || floor.isInstancedMesh || floor.isSkinnedMesh || g.morphAttributes.position?.length) throw Error('Unsupported floor target geometry');
++            floor.updateMatrixWorld(true);
++            const identity = new T.Matrix4().elements; floor.matrixWorld.elements.forEach((x, i) => close(x, identity[i], `matrixWorld[${i}]`));
++            const triangles = target.triangles.map(t => {
++                const indices = t.expectedRendererGlobalVertexIndices.map((wanted, i) => {
++                    const actual = g.index.getX(t.expectedRendererIndexOffset + i);
++                    if (actual !== wanted) throw Error('Actual renderer target index differs'); return actual;
++                });
++                const group = g.groups.find(group => t.expectedRendererIndexOffset >= group.start && t.expectedRendererIndexOffset + 3 <= group.start + group.count);
++                if (!group || group.materialIndex !== target.materialIndex) throw Error('Target triangle material group differs');
++                const vertices = indices.map((index, i) => {
++                    const point = new T.Vector3().fromBufferAttribute(p, index), normal = new T.Vector3().fromBufferAttribute(n, index);
++                    const source = t.vertices[i]; const expected = [source.point.x - target.layoutCenter, source.point.y, source.point.z - 2];
++                    point.toArray().forEach((x, k) => close(x, expected[k], `position ${index}:${k}`));
++                    normal.toArray().forEach((x, k) => close(x, [source.normal.x, source.normal.y, source.normal.z][k], `normal ${index}:${k}`));
++                    const world = point.clone().applyMatrix4(floor.matrixWorld);
++                    return { index, point: point.toArray(), world: world.toArray(), normal: normal.toArray(), projectedNdc: world.clone().project(d.camera).toArray() };
++                });
++                return { sourceTriangle: t.sourceTriangle, indexOffset: t.expectedRendererIndexOffset, indices, group: { ...group }, vertices };
++            });
++            return { matched: true, tolerance: 0.000001, triangles, roi: target.roi, materialIndex: target.materialIndex };
++        };
+         const wrapper = function (...values) {
+             prior.apply(this, values);
+             const [renderer, actualScene, camera] = values;
+@@ -184,6 +208,7 @@
+             }
+             d.scene = this; d.renderer = renderer; d.camera = camera; d.floor = floor;
+             if (!d.original) d.original = { material: floor.material, receiveShadow: floor.receiveShadow, castShadow: floor.castShadow };
++            if (!d.targetProof) { try { d.targetProof = verifyTarget(floor); } catch (error) { d.failure = String(error); return; } }
+             d.matches++; d.drawStage = d.stage;
+         };
+         Object.defineProperty(T.Scene.prototype, 'onBeforeRender', { configurable: true, writable: true, value: wrapper });
+@@ -191,7 +216,8 @@
+             side: m.side, vertexColors: m.vertexColors, color: m.color?.toArray(), opacity: m.opacity, transparent: m.transparent,
+             depthTest: m.depthTest, depthWrite: m.depthWrite, depthFunc: m.depthFunc, colorWrite: m.colorWrite,
+             polygonOffset: m.polygonOffset, polygonOffsetFactor: m.polygonOffsetFactor, polygonOffsetUnits: m.polygonOffsetUnits,
+-            roughness: m.roughness, metalness: m.metalness, toneMapped: m.toneMapped }));
++            roughness: m.roughness, metalness: m.metalness, toneMapped: m.toneMapped, flatShading: m.flatShading,
++            emissive: m.emissive?.toArray(), emissiveIntensity: m.emissiveIntensity, envMapIntensity: m.envMapIntensity }));
+         const attribute = async attr => {
+             if (!attr || attr.isInterleavedBufferAttribute) throw Error('Unexpected common-floor attribute');
+             const a = attr.array;
+@@ -207,29 +233,64 @@
+             d.stage = 'restored';
+         };
+         window.__sansuFloorDiagnostic = {
+-            status: () => ({ calls: d.calls, matches: d.matches, failure: d.failure, stage: d.stage, drawStage: d.drawStage }),
++            status: () => ({ calls: d.calls, matches: d.matches, failure: d.failure, stage: d.stage, drawStage: d.drawStage, shaderCompileCount: d.shaderRecords.length }),
+             setStage(stage) {
+                 if (!d.floor || !d.original || d.failure) throw Error(d.failure ?? 'No actual scene');
+                 if (stage === 'shadow-off') { if (d.stage !== 'baseline') throw Error('Unexpected shadow transition'); d.floor.receiveShadow = false; }
+-                else if (stage === 'unlit') {
+-                    if (d.stage !== 'shadow-off') throw Error('Unlit requires shadow-off');
++                else if (stage === 'roi-face-normal') {
++                    if (d.stage !== 'shadow-off' || !d.targetProof?.matched) throw Error('ROI requires matched shadow-off baseline');
+                     const source = Array.isArray(d.original.material) ? d.original.material : [d.original.material];
+-                    for (const original of source) {
+-                        if (!(original instanceof T.MeshStandardMaterial) || !original.vertexColors || original.map || original.normalMap
+-                            || original.alphaMap || original.displacementMap || original.alphaTest !== 0 || original.stencilWrite
+-                            || original.clippingPlanes?.length) throw Error('Unsupported original floor material');
+-                    }
+-                    for (const original of source) {
+-                        const clone = new T.MeshBasicMaterial({ vertexColors: true });
+-                        d.clones.push(clone);
+-                        clone.name = `diagnostic-unlit:${original.uuid}`; clone.color.copy(original.color);
+-                        for (const key of ['side', 'shadowSide', 'transparent', 'opacity', 'depthTest', 'depthWrite', 'depthFunc',
+-                            'colorWrite', 'polygonOffset', 'polygonOffsetFactor', 'polygonOffsetUnits', 'toneMapped', 'visible',
+-                            'blending', 'blendSrc', 'blendDst', 'blendEquation', 'premultipliedAlpha', 'dithering', 'forceSinglePass']) clone[key] = original[key];
+-                    }
+-                    d.floor.material = Array.isArray(d.original.material) ? d.clones : d.clones[0];
+-                } else if (stage === 'restored') { restore(); return; }
+-                else throw Error('Unsupported stage');
++                    const original = source[target.materialIndex];
++                    if (!(original instanceof T.MeshStandardMaterial) || original.isMeshPhysicalMaterial || !original.vertexColors
++                        || original.map || original.normalMap || original.bumpMap || original.alphaMap || original.displacementMap
++                        || original.alphaTest !== 0 || original.stencilWrite || original.clippingPlanes?.length || original.flatShading
++                        || original.onBeforeCompile !== T.Material.prototype.onBeforeCompile)
++                        throw Error('Unsupported original target material');
++                    const clone = original.clone(); d.clones.push(clone);
++                    clone.customProgramCacheKey = () => `sansu-local-face-normal-v1:${JSON.stringify(target.roi)}`;
++                    clone.onBeforeCompile = shader => {
++                        const vertexMarker = '#include <project_vertex>', normalMarker = '#include <normal_fragment_begin>';
++                        const lightingMarker = '#include <lights_physical_fragment>';
++                        const once = (text, marker) => { if (text.split(marker).length !== 2) throw Error(`Unsupported shader marker ${marker}`); };
++                        once(shader.vertexShader, vertexMarker); once(shader.fragmentShader, normalMarker); once(shader.fragmentShader, lightingMarker);
++                        const normalChunk = T.ShaderChunk.normal_fragment_begin;
++                        if (!normalChunk.includes('vec3 nonPerturbedNormal = normal;')) throw Error('Missing normal field declaration');
++                        const lightingChunk = T.ShaderChunk.lights_physical_fragment;
++                        const derivative = 'vec3 dxy = max( abs( dFdx( nonPerturbedNormal ) ), abs( dFdy( nonPerturbedNormal ) ) );';
++                        once(lightingChunk, derivative);
++                        shader.uniforms.sansuRoiMin = { value: new T.Vector3(...target.roi.runtimeWorld.min) };
++                        shader.uniforms.sansuRoiMax = { value: new T.Vector3(...target.roi.runtimeWorld.max) };
++                        const declaration = 'varying vec3 vSansuRoiWorld;\n';
++                        shader.vertexShader = declaration + shader.vertexShader.replace(vertexMarker,
++                            `${vertexMarker}\nvSansuRoiWorld = (modelMatrix * vec4(transformed, 1.0)).xyz;`);
++                        const override = `
++// Diagnostic only: all derivative evaluation is outside conditional control flow.
++// The mask changes the lighting normal field solely within the fixed world-space ROI.
++float sansuRoiMask = float(all(greaterThanEqual(vSansuRoiWorld, sansuRoiMin)) && all(lessThanEqual(vSansuRoiWorld, sansuRoiMax)));
++vec3 sansuSourceNormalDxy = max(abs(dFdx(nonPerturbedNormal)), abs(dFdy(nonPerturbedNormal)));
++vec3 sansuFaceNormal = normalize(cross(dFdx(vViewPosition), dFdy(vViewPosition)));
++vec3 sansuFaceNormalDxy = max(abs(dFdx(sansuFaceNormal)), abs(dFdy(sansuFaceNormal)));
++if (sansuRoiMask > 0.5) {
++    normal = sansuFaceNormal;
++    nonPerturbedNormal = sansuFaceNormal;
++}
++`;
++                        shader.fragmentShader = declaration + 'uniform vec3 sansuRoiMin;\nuniform vec3 sansuRoiMax;\n' + shader.fragmentShader
++                            .replace(normalMarker, `${normalMarker}\n${override}`)
++                            .replace(lightingMarker, lightingChunk.replace(derivative,
++                                'vec3 dxy = sansuSourceNormalDxy; if (sansuRoiMask > 0.5) { dxy = sansuFaceNormalDxy; }'));
++                        // Both derivative fields are computed before selecting one: fragments outside
++                        // the ROI retain the original geometryRoughness too, including at the boundary.
++                        d.shaderRecords.push({ materialUuid: clone.uuid, originalMaterialUuid: original.uuid,
++                            roi: target.roi, vertexShader: shader.vertexShader, fragmentShader: shader.fragmentShader,
++                            normalChunk, lightingChunk, treatment: 'normal and nonPerturbedNormal both overridden inside ROI; original normal and original derivative roughness outside ROI' });
++                    };
++                    const next = [...source]; next[target.materialIndex] = clone;
++                    d.floor.material = Array.isArray(d.original.material) ? next : next[0];
++                    clone.needsUpdate = true;
++                } else if (stage === 'restored-shadow-off') {
++                    restore(); d.floor.receiveShadow = false; d.stage = stage; return;
++                } else throw Error('Unsupported stage');
+                 d.stage = stage;
+             },
+             async observe() {
+@@ -241,7 +302,8 @@
+                     || d.renderer.domElement !== host.querySelector('canvas') || d.renderer.domElement.getBoundingClientRect().width <= 0)
+                     throw Error('Observed scene no longer owns the single current visible floor/canvas');
+                 for (let ancestor = d.floor; ancestor; ancestor = ancestor.parent) if (!ancestor.visible) throw Error('Current floor is hidden');
+-                return { hook: { calls: d.calls, matches: d.matches, stage: d.stage, drawStage: d.drawStage,
++                return { targetProof: d.targetProof, shaderCompileCount: d.shaderRecords.length,
++                    hook: { calls: d.calls, matches: d.matches, stage: d.stage, drawStage: d.drawStage,
+                     sameThreeScene: d.scene instanceof T.Scene, sameThreeMesh: d.floor instanceof T.Mesh,
+                     actualRendererCanvas: d.renderer.domElement === host.querySelector('canvas'), floorCount: actualFloors.length },
+                     floor: { name: d.floor.name, uuid: d.floor.uuid, geometryUuid: g.uuid, visible: d.floor.visible,
+@@ -264,6 +326,7 @@
+                     serviceWorker: { blockedByContext: true, controlled: Boolean(navigator.serviceWorker?.controller),
+                         registrations: navigator.serviceWorker ? (await navigator.serviceWorker.getRegistrations()).length : 0 } };
+             },
++            shaderEvidence: () => d.shaderRecords.map(record => ({ ...record })),
+             cleanup() {
+                 restore();
+                 if (T.Scene.prototype.onBeforeRender !== wrapper) throw Error('Diagnostic prototype hook was replaced');
+@@ -278,7 +341,7 @@
+         };
+         return { moduleUrl, moduleSha256: await hash(bytes), threeRevision: T.REVISION, hookInstalled: T.Scene.prototype.onBeforeRender === wrapper,
+             priorOwnDescriptor: Boolean(descriptor), priorMethodName: prior.name };
+-    }, String(threeUrl));
++    }, { moduleUrl: String(threeUrl), target });
+     await writeJson('hook-install.json', report.hookInstall);
+     await page.waitForFunction(() => {
+         const s = window.__sansuFloorDiagnostic?.status(); if (s?.failure) throw Error(s.failure); return s?.matches >= 2;
+@@ -292,10 +355,10 @@
+     });
+     const capture = async stage => {
+         const beforeDraw = await page.evaluate(() => window.__sansuFloorDiagnostic.status().matches);
+-        if (stage !== 'baseline') await page.evaluate(value => window.__sansuFloorDiagnostic.setStage(value), stage);
++        await page.evaluate(value => window.__sansuFloorDiagnostic.setStage(value), stage);
+         await page.waitForFunction(({ stage, beforeDraw }) => {
+             const s = window.__sansuFloorDiagnostic.status(); if (s.failure) throw Error(s.failure);
+-            return s.matches >= beforeDraw + 2 && s.drawStage === stage;
++            return s.matches >= beforeDraw + 2 && s.drawStage === stage && (stage !== 'roi-face-normal' || s.shaderCompileCount >= 1);
+         }, { stage, beforeDraw });
+         const observed = await page.evaluate(() => window.__sansuFloorDiagnostic.observe());
+         assert.equal(observed.app.buildRevision, expectedIdentity.build); assert.equal(observed.app.appVersion, expectedIdentity.appVersion);
+@@ -308,23 +371,41 @@
+         assert.equal(observed.serviceWorker.controlled, false); assert.equal(observed.serviceWorker.registrations, 0);
+         assert(observed.hook.sameThreeScene && observed.hook.sameThreeMesh && observed.hook.actualRendererCanvas);
+         assert.equal(observed.floor.name, 'authored-evaluated-floor'); assert.equal(observed.hook.floorCount, 1);
+-        assert.equal(observed.floor.receiveShadow, stage === 'baseline' || stage === 'restored' ? observed.floor.originalReceiveShadow : false);
+-        if (stage === 'baseline') {
+-            baseline = observed; assert.equal(observed.floor.originalReceiveShadow, true); assert.equal(observed.floor.castShadow, false);
++        assert.equal(observed.floor.receiveShadow, false);
++        assert(observed.targetProof?.matched, 'Actual mesh/index target was not verified');
++        if (stage === 'shadow-off') {
++            baseline = observed;
++            for (const key of ['position','normal','color','index']) assert.deepEqual(observed.floor[key], target.floorAttributes[key], `Prior actual floor ${key} changed`);
++            assert.deepEqual(observed.floor.groups, target.floorGroups, 'Prior actual floor groups changed');
++            assert.deepEqual(observed.camera.matrixWorld, target.camera.matrixWorld, 'Camera matrix differs from static target');
++            assert.deepEqual(observed.camera.projectionMatrix, target.camera.projectionMatrix, 'Projection differs from static target');
++            assert.equal(observed.floor.originalReceiveShadow, true); assert.equal(observed.floor.castShadow, false);
+             assert(observed.renderer.shadowEnabled, 'Cannot diagnose shadow removal when baseline shadows are disabled');
+             assert.deepEqual(JSON.parse(observed.host.growingCamera), reference.camera, 'Baseline differs from the reviewed hill-close camera');
+             assert.deepEqual(canonicalState(observed.state), reference.state, 'Baseline differs from the reviewed 32-owner fixture');
+             assert.deepEqual(walkingTopology(observed.walking), walkingTopology(JSON.parse(reference.observed.world.authoredObstructionWalking)),
+                 'Baseline differs from the reviewed physical walking topology');
+         } else assert.deepEqual(invariant(observed), invariant(baseline), `${stage}: physical/drawing input changed`);
+-        if (stage === 'unlit') {
++        if (stage === 'roi-face-normal') {
+             assert.equal(observed.floor.materialCount, baseline.floor.materialCount);
+-            assert(observed.floor.materials.every(material => material.type === 'MeshBasicMaterial'));
+-            for (let i = 0; i < observed.floor.materials.length; i++) for (const property of ['side', 'vertexColors', 'color', 'opacity',
+-                'transparent', 'depthTest', 'depthWrite', 'depthFunc', 'colorWrite', 'polygonOffset', 'polygonOffsetFactor', 'polygonOffsetUnits', 'toneMapped'])
+-                assert.deepEqual(observed.floor.materials[i][property], baseline.floor.materials[i][property], `Unlit changed ${property}`);
++            assert.equal(observed.floor.diagnosticClonesActive, 1);
++            assert(observed.shaderCompileCount >= 1);
++            for (let i = 0; i < observed.floor.materials.length; i++) {
++                const original = baseline.floor.materials[i], current = observed.floor.materials[i];
++                assert.equal(current.type, 'MeshStandardMaterial'); assert.equal(current.flatShading, false);
++                if (i === target.materialIndex) {
++                    assert.notEqual(current.uuid, original.uuid);
++                    const withoutUuid = m => Object.fromEntries(Object.entries(m).filter(([key]) => key !== 'uuid'));
++                    assert.deepEqual(withoutUuid(current), withoutUuid(original), 'ROI clone changed material properties');
++                } else assert.deepEqual(current, original, 'Non-target material changed');
++            }
++        } else {
++            assert.deepEqual(observed.floor.materials, baseline.floor.materials);
++            assert(observed.floor.originalMaterialRestored);
++            if (stage === 'restored-shadow-off') {
++                assert.equal(observed.floor.diagnosticClonesActive, 0); assert.equal(observed.floor.diagnosticClonesDisposed, 1);
++            }
+         }
+-        else assert.deepEqual(observed.floor.materials, baseline.floor.materials);
+         const file = `1280-hill-close-source-${stage}.png`;
+         await page.screenshot({ path: path.join(output, file), scale: 'css' });
+         const after = await page.evaluate(() => window.__sansuFloorDiagnostic.observe());
+@@ -335,9 +416,11 @@
+             walkingTopologySha256: sha(JSON.stringify(walkingTopology(observed.walking))) });
+         await writeJson(`${stage}-capture.json`, report.captures.at(-1));
+     };
+-    await capture('baseline'); await capture('shadow-off');
+-    if (args.mode === 'unlit') await capture('unlit');
+-    await capture('restored');
++    await capture('shadow-off'); await capture('roi-face-normal');
++    report.shaderEvidence = await page.evaluate(() => window.__sansuFloorDiagnostic.shaderEvidence());
++    assert(report.shaderEvidence.length >= 1);
++    await writeJson('shader-evidence.json', report.shaderEvidence);
++    await capture('restored-shadow-off');
+     report.moduleResponsesAfter = await page.evaluate(async urls => {
+         const results = [];
+         for (const url of urls) {
+@@ -352,7 +435,7 @@
+     assert.equal(report.moduleResponsesAfter[1].sha256, report.hookInstall.moduleSha256);
+     report.restoration = await page.evaluate(() => window.__sansuFloorDiagnostic.cleanup());
+     assert(report.restoration.complete && report.restoration.matches >= 2);
+-    assert.equal(report.restoration.clonesDisposed, args.mode === 'unlit' ? baseline.floor.materialCount : 0);
++    assert.equal(report.restoration.clonesDisposed, 1);
+     assert.deepEqual(report.errors, []);
+     report.diagnosticCompleted = true;
+ } catch (error) {
+@@ -374,6 +457,8 @@
+             assert.deepEqual(report.installedAfter, report.installedBefore); report.installedFixed = true; }
+         if (dependencyRoots) { report.driverDependenciesAfter = await dependencySnapshot(dependencyRoots, executable);
+             assert.deepEqual(report.driverDependenciesAfter, beforeDependency); report.driverDependenciesFixed = true; }
++        report.targetSpecAfter = await stamp(targetPath);
++        if (targetBefore) assert.deepEqual(report.targetSpecAfter, targetBefore);
+         report.externalHarnessAfter = await stamp(self);
+         if (harnessBefore) assert.deepEqual(report.externalHarnessAfter, harnessBefore);
+         if (report.diagnosticCompleted) assert(report.restoration?.complete && report.sourceFixed && report.installedFixed && report.driverDependenciesFixed);

@@ -1,0 +1,15 @@
+# Observed zero advancement in the first trunk query
+
+The original uninstrumented query and the transparent-proxy replay both raised `Ray parity exceeded bounded intersections: role-l14-2743`. This is a reproduced numerical failure, not evidence that the trunk and lobe lack an intersection. No joint or art gate passed.
+
+Only the first candidate point was reached: `[2.4679999351501465, 3.0542500019073486, -4]`. In the second normalized ray direction `[0.24380448460578918, 0.8614999651908875, 0.44539549946784973]`, the first hit was triangle 2 at `[2.498983383178711, 3.1637325286865234, -3.9433975219726562]`. Its distance from the initial point was `0.12708358466625214`.
+
+The original `hit + direction * 1e-7` produced that same hit coordinate on all three axes. Each hit coordinate has adjacent Float32 spacing `2.384185791015625e-7`. The intended double-precision increments were `[2.4380448460578918e-8, 8.614999651908874e-8, 4.453954994678497e-8]`; all are less than half the spacing. The next actual ray origin matched the recorded expression exactly.
+
+The next 127 calls returned the same triangle and hit. BVH reported a tiny positive distance `1.3880291582779591e-8`, while the stored origin and hit coordinates were identical. Actual origin-to-next displacement stayed `[0,0,0]` until the unchanged 128-intersection limit raised the failure. The first direction also had a rounded-zero post-hit step, but its next BVH call returned no hit. Thus a zero step does not inevitably cause repeated hits for every surface/direction; the complete cycle was observed for the second direction here.
+
+The raw trace has 130 calls: first direction hit then miss, followed by 128 second-direction hits. It contains each candidate, origin, direction, hit normal, triangle, distance, next origin, advance and Float32 bit pattern. All predicted next origins matched the subsequent actual ray inputs. The original `inside`, `clearance` and `overlap_ball` code was imported unchanged. No epsilon, limit, weld tolerance, mesh, radius, transform or connection condition was adjusted.
+
+The scheduled diagnostic used one Blender process, CPU2. It ran 2026-10-12 03:57:54.047933–03:57:56.072528 UTC (2.025 seconds), observed peak RSS 374,095,872 bytes, exit 0. PID/PGID 20577 was absent afterward. Exit 0 denotes successful failure reproduction only. Input file hashes and both mesh/normal/transform digests matched before and after.
+
+This establishes the rounding/re-hit mechanism for this one fixed trunk query. It does not classify the 70 original leaf/stem baseline pairs, establish volumetric connectivity, or validate a future numerical remedy. The stage2 source candidate remains HOLD. No full rebuild, render, application change or automatic retry followed.

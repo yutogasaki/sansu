@@ -1,0 +1,14 @@
+{
+  "scope": "Runner-only contract repair before any regression browser starts",
+  "cause": "Shoulder-only fields accidentally inserted into cove block by an overly broad preparation string replacement",
+  "beforeSha256": "e7f1e1e24d675128bb38e1dce9a9a8570a384da8ff62442ce0c4e8c208760add",
+  "afterSha256": "deffbce627f91546e83a4fbbbf24745162613a15efa76478e84ead275f40b333",
+  "changes": [
+    "Cove requires 10 captures, preview/move/store/restore edit sequence, one successful p6-to-p9 canvas selection; no shoulder scopes/dependency/raw paid-acquisition fields",
+    "Preserve shoulder firstFailure.error in generic failure reporting"
+  ],
+  "candidateAppOrDriverModified": false,
+  "browserStarted": false,
+  "coreReportSha256": "14b5eaacdd32329234c61fb1879248b9694fcb980d225e6f785f0dacb258a2be",
+  "snapshotSha256": "c162db0673a712c6829c974b0344073a39e8a95b1feb120285f6a6d3a456a022"
+}

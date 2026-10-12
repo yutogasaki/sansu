@@ -1,0 +1,195 @@
+{
+  "states": {
+    "baseline": {
+      "revision": "authored-world:72a57599a43ddca5",
+      "coveRevision": "authored-cove:213e45e94bb5b88b",
+      "waterRevision": "authored-water-v2:3c5f4ee9f492cc25:eb41954202b1926a",
+      "assemblies": 1,
+      "p9Keys": [
+        "id",
+        "kind",
+        "cell",
+        "plantedAt",
+        "stage",
+        "growth",
+        "origin",
+        "paid",
+        "style",
+        "builtAt",
+        "stagedAt"
+      ],
+      "p9OwnCell": true,
+      "p9Cell": {
+        "x": 8,
+        "z": 0
+      },
+      "canonicalSortedSha256": "e735164f876aeef239f2a082779f2fa0909797b12f74ed2fbf8d8d9e71fa4ae4"
+    },
+    "moved": {
+      "revision": "authored-world:972af660a422ab64",
+      "coveRevision": "authored-cove:9f93a7cf2ae41f35",
+      "waterRevision": "authored-water-v2:95974d4a3e0fc33a:eb41954202b1926a",
+      "assemblies": 0,
+      "p9Keys": [
+        "id",
+        "kind",
+        "cell",
+        "plantedAt",
+        "stage",
+        "growth",
+        "origin",
+        "paid",
+        "style",
+        "builtAt",
+        "stagedAt"
+      ],
+      "p9OwnCell": true,
+      "p9Cell": {
+        "x": 12,
+        "z": -9
+      },
+      "canonicalSortedSha256": "6f631e16a3a66d08daf1301a512baa2f6beddea5270768acad15b30a95ade964"
+    },
+    "storedMemory": {
+      "revision": "authored-world:063fdbf4bf1fb7e6",
+      "coveRevision": "authored-cove:3f1554c5586bc5e3",
+      "waterRevision": "authored-water-v2:21ae5c119512d131:eb41954202b1926a",
+      "assemblies": 0,
+      "p9Keys": [
+        "id",
+        "kind",
+        "cell",
+        "plantedAt",
+        "stage",
+        "growth",
+        "origin",
+        "paid",
+        "style",
+        "builtAt",
+        "stagedAt"
+      ],
+      "p9OwnCell": true,
+      "p9Cell": null,
+      "canonicalSortedSha256": "4ad2245603a333d918eebe53c570ad581fd2e088de6b6c48713570b48276c7aa"
+    },
+    "driverJSONRestored": {
+      "revision": "authored-world:aa54694380b082d1",
+      "coveRevision": "authored-cove:ee1c2d5f145198a7",
+      "waterRevision": "authored-water-v2:3c5f4ee9f492cc25:eb41954202b1926a",
+      "assemblies": 1,
+      "p9Keys": [
+        "id",
+        "kind",
+        "plantedAt",
+        "stage",
+        "growth",
+        "origin",
+        "paid",
+        "style",
+        "builtAt",
+        "stagedAt",
+        "cell"
+      ],
+      "p9OwnCell": true,
+      "p9Cell": {
+        "x": 8,
+        "z": 0
+      },
+      "canonicalSortedSha256": "e735164f876aeef239f2a082779f2fa0909797b12f74ed2fbf8d8d9e71fa4ae4"
+    },
+    "UIRestored": {
+      "revision": "authored-world:72a57599a43ddca5",
+      "coveRevision": "authored-cove:213e45e94bb5b88b",
+      "waterRevision": "authored-water-v2:3c5f4ee9f492cc25:eb41954202b1926a",
+      "assemblies": 1,
+      "p9Keys": [
+        "id",
+        "kind",
+        "cell",
+        "plantedAt",
+        "stage",
+        "growth",
+        "origin",
+        "paid",
+        "style",
+        "builtAt",
+        "stagedAt"
+      ],
+      "p9OwnCell": true,
+      "p9Cell": {
+        "x": 8,
+        "z": 0
+      },
+      "canonicalSortedSha256": "e735164f876aeef239f2a082779f2fa0909797b12f74ed2fbf8d8d9e71fa4ae4"
+    },
+    "previewHelperFromJSON": {
+      "revision": "authored-world:aa54694380b082d1",
+      "coveRevision": "authored-cove:ee1c2d5f145198a7",
+      "waterRevision": "authored-water-v2:3c5f4ee9f492cc25:eb41954202b1926a",
+      "assemblies": 1,
+      "p9Keys": [
+        "id",
+        "kind",
+        "plantedAt",
+        "stage",
+        "growth",
+        "origin",
+        "paid",
+        "style",
+        "builtAt",
+        "stagedAt",
+        "cell"
+      ],
+      "p9OwnCell": true,
+      "p9Cell": {
+        "x": 8,
+        "z": 0
+      },
+      "canonicalSortedSha256": "e735164f876aeef239f2a082779f2fa0909797b12f74ed2fbf8d8d9e71fa4ae4"
+    },
+    "actualUnstore": {
+      "revision": "authored-world:72a57599a43ddca5",
+      "coveRevision": "authored-cove:213e45e94bb5b88b",
+      "waterRevision": "authored-water-v2:3c5f4ee9f492cc25:eb41954202b1926a",
+      "assemblies": 1,
+      "p9Keys": [
+        "id",
+        "kind",
+        "cell",
+        "plantedAt",
+        "stage",
+        "growth",
+        "origin",
+        "paid",
+        "style",
+        "builtAt",
+        "stagedAt"
+      ],
+      "p9OwnCell": true,
+      "p9Cell": {
+        "x": 8,
+        "z": 0
+      },
+      "canonicalSortedSha256": "e735164f876aeef239f2a082779f2fa0909797b12f74ed2fbf8d8d9e71fa4ae4"
+    }
+  },
+  "comparisons": {
+    "storedMemorySerializesExactlyAsFailure": true,
+    "storedMemoryJSONValueEqualsFailure": true,
+    "driverVsUIAllStateValuesEqual": true,
+    "driverVsUIValueDifferentFields": [],
+    "driverVsUIStringifiedStateEqual": false,
+    "driverVsUIWaterPlansEqual": true,
+    "driverVsUIAssembliesEqual": true,
+    "driverVsUIFloorsEqual": true,
+    "driverVsUISitesEqual": true,
+    "driverVsUIRevisionEqual": false,
+    "uiRevisionMatchesActualMetadata": true,
+    "driverRevisionMatchesActualMetadata": false,
+    "uiMatchesBaselineCanonical": true,
+    "actualUnstoreCanonicalMatchesBaseline": true,
+    "actualUnstoreRevisionMatchesInitial": true
+  },
+  "inputCount": 90,
+  "allInputsMatchBrowser": true
+}

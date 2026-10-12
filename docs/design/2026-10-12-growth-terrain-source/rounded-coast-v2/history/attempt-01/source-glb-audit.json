@@ -1,0 +1,207 @@
+{
+  "scope": "Source GLB vs catalog exact local arrays plus welded composed-solid closure; not runtime walking or visual acceptance",
+  "parts": {
+    "baseline": {
+      "sha256": "64ee8e4e0616bb14f1f05b7941882facf50cd564863e704c2f38a261a35dd9c3",
+      "topParity": [
+        {
+          "name": "baseline/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1248
+        }
+      ],
+      "allSurfacePositionsAndIndicesExact": true,
+      "triangles": 3776,
+      "zeroAreaTriangles": 0,
+      "closedOrientedEdgeFailures": 0,
+      "firstEdgeFailures": [],
+      "signedVolume": 18.829668741142598,
+      "closed": true
+    },
+    "parallel": {
+      "sha256": "d3ad9bfa38803d55e0b92ba9ab08ece4fe02725e735e50a1b4755faa751c329f",
+      "topParity": [
+        {
+          "name": "baseline/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1248
+        },
+        {
+          "name": "parallel/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1120
+        }
+      ],
+      "allSurfacePositionsAndIndicesExact": true,
+      "triangles": 7552,
+      "zeroAreaTriangles": 0,
+      "closedOrientedEdgeFailures": 12,
+      "firstEdgeFailures": [
+        {
+          "edge": [
+            [
+              3.0,
+              0.22374999523162842,
+              -2.0
+            ],
+            [
+              3.0,
+              0.34375,
+              -2.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": -1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              -0.65625,
+              -2.0
+            ],
+            [
+              3.0,
+              0.22374999523162842,
+              -2.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": -1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              0.22374999523162842,
+              0.0
+            ],
+            [
+              3.0,
+              0.34375,
+              0.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": 1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              -0.65625,
+              0.0
+            ],
+            [
+              3.0,
+              0.22374999523162842,
+              0.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": 1
+        }
+      ],
+      "signedVolume": 27.132956262025704,
+      "closed": false
+    },
+    "seaward": {
+      "sha256": "a844691cd3f8f85e5981b088712902e12079fa2ff457f65569d9e79978a19141",
+      "topParity": [
+        {
+          "name": "baseline/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1248
+        },
+        {
+          "name": "seaward/top",
+          "positionExact": true,
+          "normalExact": true,
+          "indicesExact": true,
+          "triangles": 1120
+        }
+      ],
+      "allSurfacePositionsAndIndicesExact": true,
+      "triangles": 7552,
+      "zeroAreaTriangles": 0,
+      "closedOrientedEdgeFailures": 12,
+      "firstEdgeFailures": [
+        {
+          "edge": [
+            [
+              3.0,
+              0.22374999523162842,
+              -2.0
+            ],
+            [
+              3.0,
+              0.34375,
+              -2.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": -1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              -0.65625,
+              -2.0
+            ],
+            [
+              3.0,
+              0.22374999523162842,
+              -2.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": -1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              0.22374999523162842,
+              0.0
+            ],
+            [
+              3.0,
+              0.34375,
+              0.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": 1
+        },
+        {
+          "edge": [
+            [
+              3.0,
+              -0.65625,
+              0.0
+            ],
+            [
+              3.0,
+              0.22374999523162842,
+              0.0
+            ]
+          ],
+          "incidence": 1,
+          "orientationSum": 1
+        }
+      ],
+      "signedVolume": 29.538687641373574,
+      "closed": false
+    }
+  },
+  "pass": false
+}

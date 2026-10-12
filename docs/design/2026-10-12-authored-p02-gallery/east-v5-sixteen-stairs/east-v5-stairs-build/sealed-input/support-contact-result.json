@@ -1,0 +1,818 @@
+{
+  "status": "HOLD_SOURCE_PREPARATION_ONLY",
+  "semanticCorrection": "The negative side offset is the INNER edge toward the original trunk; support-edge-proposal called it outer by mistake. Coordinates and checks are unchanged. Future object label must be inner-edge living root.",
+  "inputSHA": {
+    "support-edge-proposal.json": "55427cf8902e997ecc84acc7894feef90db2f7ff23494017681069a91a4c8cb5",
+    "planned-floor-v4-stations-once.json": "2968d018782cea82afa443bbbffc111eb0ead51a3d5f5f2e8be2814354fee3ca"
+  },
+  "topology": {
+    "badEdges": 0,
+    "signedVolume": 0.001472692397549002,
+    "faceCount": 140,
+    "zeroAreaTriangles": 0
+  },
+  "caps": {
+    "ground": {
+      "projectedArea": 0.001936916669416533,
+      "coveredArea": 0.001936916669421862,
+      "uncoveredArea": -5.329070518200751e-15,
+      "minimumAboveActualFloor": -0.12448091237117631,
+      "maximumAboveActualFloor": -0.015529664920966857,
+      "positiveConnectionProjectedArea": 0.0,
+      "positiveConnectionCapSurfaceArea": 0.0,
+      "pieces": [
+        {
+          "capTriangle": 0,
+          "floorTriangle": 5438,
+          "projectedArea": 4.957240764547066e-05,
+          "aboveActualFloorRange": [
+            -0.11528586045150191,
+            -0.09073008295782192
+          ]
+        },
+        {
+          "capTriangle": 0,
+          "floorTriangle": 5439,
+          "projectedArea": 3.291764825164023e-06,
+          "aboveActualFloorRange": [
+            -0.08319180363041445,
+            -0.07331762716438406
+          ]
+        },
+        {
+          "capTriangle": 0,
+          "floorTriangle": 5440,
+          "projectedArea": 4.474710630120171e-05,
+          "aboveActualFloorRange": [
+            -0.11149103821601081,
+            -0.07765161112977581
+          ]
+        },
+        {
+          "capTriangle": 0,
+          "floorTriangle": 5504,
+          "projectedArea": 3.3777300348702965e-05,
+          "aboveActualFloorRange": [
+            -0.12050174020520821,
+            -0.10109410217679904
+          ]
+        },
+        {
+          "capTriangle": 0,
+          "floorTriangle": 5515,
+          "projectedArea": 1.0437318698208742e-05,
+          "aboveActualFloorRange": [
+            -0.12442200818754423,
+            -0.11357199627909442
+          ]
+        },
+        {
+          "capTriangle": 0,
+          "floorTriangle": 5517,
+          "projectedArea": 1.5416485865671348e-09,
+          "aboveActualFloorRange": [
+            -0.12448091237117631,
+            -0.12433816256869146
+          ]
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 5438,
+          "projectedArea": 3.889041602356258e-05,
+          "aboveActualFloorRange": [
+            -0.10109410217679926,
+            -0.08041222976563112
+          ]
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 5439,
+          "projectedArea": 1.6062905494607094e-06,
+          "aboveActualFloorRange": [
+            -0.07765161112977581,
+            -0.07331762716438406
+          ]
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 5440,
+          "projectedArea": 2.155879614740286e-05,
+          "aboveActualFloorRange": [
+            -0.09073008295782237,
+            -0.07494814981432785
+          ]
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 5504,
+          "projectedArea": 6.487941016253274e-05,
+          "aboveActualFloorRange": [
+            -0.11357199627909464,
+            -0.08428146505363521
+          ]
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 5514,
+          "projectedArea": 4.547326511428196e-05,
+          "aboveActualFloorRange": [
+            -0.11831286344035341,
+            -0.09819567038356203
+          ]
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 5515,
+          "projectedArea": 8.296120812900654e-05,
+          "aboveActualFloorRange": [
+            -0.12433816256869168,
+            -0.08940730854812373
+          ]
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 5517,
+          "projectedArea": 7.721653160608355e-05,
+          "aboveActualFloorRange": [
+            -0.12448091237117631,
+            -0.09340035219789167
+          ]
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 5520,
+          "projectedArea": 9.815810154023552e-06,
+          "aboveActualFloorRange": [
+            -0.11078775502719673,
+            -0.10230314795082673
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 5438,
+          "projectedArea": 3.0170546867935855e-05,
+          "aboveActualFloorRange": [
+            -0.08428146505363499,
+            -0.07129412887311237
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 5439,
+          "projectedArea": 1.2408187526347092e-06,
+          "aboveActualFloorRange": [
+            -0.07494814981432785,
+            -0.07285979444820967
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 5440,
+          "projectedArea": 1.652493787496212e-05,
+          "aboveActualFloorRange": [
+            -0.0804122297656309,
+            -0.07249926699132403
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 5504,
+          "projectedArea": 4.9412555974015504e-05,
+          "aboveActualFloorRange": [
+            -0.08940730854812395,
+            -0.07087493840230374
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 5511,
+          "projectedArea": 3.8090392614265056e-05,
+          "aboveActualFloorRange": [
+            -0.09892102332835795,
+            -0.06575924820650303
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 5514,
+          "projectedArea": 0.0001030299224336062,
+          "aboveActualFloorRange": [
+            -0.10230314795082673,
+            -0.06748065517084734
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 5515,
+          "projectedArea": 6.479062091102605e-05,
+          "aboveActualFloorRange": [
+            -0.09340035219789167,
+            -0.06950167091969317
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 5517,
+          "projectedArea": 7.868056586168848e-05,
+          "aboveActualFloorRange": [
+            -0.09819567038356203,
+            -0.06903253165501488
+          ]
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 5520,
+          "projectedArea": 0.00010228880606355517,
+          "aboveActualFloorRange": [
+            -0.10595572409442067,
+            -0.0669705454976619
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 5438,
+          "projectedArea": 3.2697696468630966e-05,
+          "aboveActualFloorRange": [
+            -0.07249926699132403,
+            -0.05727257873259095
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 5439,
+          "projectedArea": 1.3396282412259097e-06,
+          "aboveActualFloorRange": [
+            -0.07331762716438406,
+            -0.07060513813761315
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 5440,
+          "projectedArea": 1.7716266148326554e-05,
+          "aboveActualFloorRange": [
+            -0.07285979444820989,
+            -0.06401166997427032
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 5504,
+          "projectedArea": 5.266467986864143e-05,
+          "aboveActualFloorRange": [
+            -0.07129412887311237,
+            -0.050996759513439294
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 5511,
+          "projectedArea": 2.5171510216637216e-05,
+          "aboveActualFloorRange": [
+            -0.0669705454976619,
+            -0.04585651322253126
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 5514,
+          "projectedArea": 0.00011292335720014535,
+          "aboveActualFloorRange": [
+            -0.06903253165501488,
+            -0.029885160431839752
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 5515,
+          "projectedArea": 7.063282497554724e-05,
+          "aboveActualFloorRange": [
+            -0.07087493840230397,
+            -0.043699871544230495
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 5517,
+          "projectedArea": 8.325714645351923e-05,
+          "aboveActualFloorRange": [
+            -0.06950167091969339,
+            -0.03775158466469275
+          ]
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 5520,
+          "projectedArea": 8.782605778279162e-05,
+          "aboveActualFloorRange": [
+            -0.06748065517084734,
+            -0.02845153182999982
+          ]
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 5438,
+          "projectedArea": 5.1206552583948906e-05,
+          "aboveActualFloorRange": [
+            -0.06401166997427055,
+            -0.035423271897225606
+          ]
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 5439,
+          "projectedArea": 2.0874973287732246e-06,
+          "aboveActualFloorRange": [
+            -0.07331762716438406,
+            -0.06709178354808398
+          ]
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 5440,
+          "projectedArea": 2.7351818419063534e-05,
+          "aboveActualFloorRange": [
+            -0.07060513813761338,
+            -0.05089924169242499
+          ]
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 5504,
+          "projectedArea": 8.066917566473819e-05,
+          "aboveActualFloorRange": [
+            -0.05727257873259095,
+            -0.020287102288877756
+          ]
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 5514,
+          "projectedArea": 2.8508947330863066e-05,
+          "aboveActualFloorRange": [
+            -0.03775158466469275,
+            -0.023088617204814144
+          ]
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 5515,
+          "projectedArea": 9.4451541281515e-05,
+          "aboveActualFloorRange": [
+            -0.05099675951343907,
+            -0.015529664920966857
+          ]
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 5517,
+          "projectedArea": 5.726214293311216e-05,
+          "aboveActualFloorRange": [
+            -0.04369987154423027,
+            -0.01850744958039985
+          ]
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 5520,
+          "projectedArea": 8.640523425640367e-07,
+          "aboveActualFloorRange": [
+            -0.029885160431839752,
+            -0.027367838926807497
+          ]
+        },
+        {
+          "capTriangle": 5,
+          "floorTriangle": 5438,
+          "projectedArea": 4.7201460644075155e-05,
+          "aboveActualFloorRange": [
+            -0.05089924169242521,
+            -0.02379922602923079
+          ]
+        },
+        {
+          "capTriangle": 5,
+          "floorTriangle": 5439,
+          "projectedArea": 6.239137606556255e-06,
+          "aboveActualFloorRange": [
+            -0.07331762716438406,
+            -0.056591026293211666
+          ]
+        },
+        {
+          "capTriangle": 5,
+          "floorTriangle": 5440,
+          "projectedArea": 6.556128206547385e-05,
+          "aboveActualFloorRange": [
+            -0.06709178354808398,
+            -0.030675938539575842
+          ]
+        },
+        {
+          "capTriangle": 5,
+          "floorTriangle": 5504,
+          "projectedArea": 2.1630844932118976e-05,
+          "aboveActualFloorRange": [
+            -0.035423271897225606,
+            -0.01764427032486604
+          ]
+        },
+        {
+          "capTriangle": 5,
+          "floorTriangle": 5515,
+          "projectedArea": 1.194714226215865e-06,
+          "aboveActualFloorRange": [
+            -0.020287102288878422,
+            -0.015529664920966857
+          ]
+        }
+      ]
+    },
+    "deck": {
+      "projectedArea": 0.00518425416285595,
+      "coveredArea": 0.005184254162848845,
+      "uncoveredArea": 7.105427357601002e-15,
+      "minimumAboveActualFloor": -0.14836551374699236,
+      "maximumAboveActualFloor": -0.02457988801370159,
+      "positiveConnectionProjectedArea": 0.0017227863358328932,
+      "positiveConnectionCapSurfaceArea": 0.002843252999222468,
+      "pieces": [
+        {
+          "capTriangle": 0,
+          "floorTriangle": 377,
+          "projectedArea": 2.746469834846721e-05,
+          "aboveActualFloorRange": [
+            -0.0955737402768797,
+            -0.08116918354076574
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 0,
+          "floorTriangle": 384,
+          "projectedArea": 2.9468310533076192e-05,
+          "aboveActualFloorRange": [
+            -0.10218016166703525,
+            -0.09426250684059823
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 0,
+          "floorTriangle": 385,
+          "projectedArea": 0.00012811570586990229,
+          "aboveActualFloorRange": [
+            -0.12003268474867368,
+            -0.1014603713916924
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 0,
+          "floorTriangle": 392,
+          "projectedArea": 7.807971029905048e-05,
+          "aboveActualFloorRange": [
+            -0.1271228052042468,
+            -0.11607027099952094
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 0,
+          "floorTriangle": 393,
+          "projectedArea": 9.536798174636374e-05,
+          "aboveActualFloorRange": [
+            -0.13883602887721658,
+            -0.1250806904331685
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 0,
+          "floorTriangle": 400,
+          "projectedArea": 2.0955524345112053e-05,
+          "aboveActualFloorRange": [
+            -0.14763184531473184,
+            -0.13699694607931012
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 0,
+          "floorTriangle": 401,
+          "projectedArea": 1.5629107963377464e-07,
+          "aboveActualFloorRange": [
+            -0.14836551374699236,
+            -0.14753617091425086
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 377,
+          "projectedArea": 4.470059030481366e-05,
+          "aboveActualFloorRange": [
+            -0.094262506840598,
+            -0.08116918354076574
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 384,
+          "projectedArea": 6.2067394175358e-05,
+          "aboveActualFloorRange": [
+            -0.10146037139169262,
+            -0.09212838878502105
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 385,
+          "projectedArea": 0.00017799755927683236,
+          "aboveActualFloorRange": [
+            -0.11607027099952094,
+            -0.10011052956076738
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 392,
+          "projectedArea": 0.00017727931668432007,
+          "aboveActualFloorRange": [
+            -0.12508069043316872,
+            -0.10997263931694401
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 393,
+          "projectedArea": 0.0002120222856980547,
+          "aboveActualFloorRange": [
+            -0.1369969460793099,
+            -0.1210134774454954
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 400,
+          "projectedArea": 0.00024068015888545347,
+          "aboveActualFloorRange": [
+            -0.14753617091425064,
+            -0.1266051630103764
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 1,
+          "floorTriangle": 401,
+          "projectedArea": 1.7080134568914218e-06,
+          "aboveActualFloorRange": [
+            -0.14836551374699236,
+            -0.14649060155743943
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 377,
+          "projectedArea": 0.0001493090721034207,
+          "aboveActualFloorRange": [
+            -0.09212838878502128,
+            -0.08116918354076574
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 384,
+          "projectedArea": 0.00040099874179588824,
+          "aboveActualFloorRange": [
+            -0.1001105295607676,
+            -0.08500000000000019
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 385,
+          "projectedArea": 0.00025765176247816157,
+          "aboveActualFloorRange": [
+            -0.10997263931694357,
+            -0.09451370146451521
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 392,
+          "projectedArea": 0.0003626921447974496,
+          "aboveActualFloorRange": [
+            -0.1210134774454954,
+            -0.09602520371598877
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 393,
+          "projectedArea": 7.238165357037474e-05,
+          "aboveActualFloorRange": [
+            -0.1266051630103764,
+            -0.11756874740981793
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 2,
+          "floorTriangle": 400,
+          "projectedArea": 5.303016597224541e-05,
+          "aboveActualFloorRange": [
+            -0.13507048873658256,
+            -0.12133603685003602
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 368,
+          "projectedArea": 2.8368398218958646e-05,
+          "aboveActualFloorRange": [
+            -0.05059874408234544,
+            -0.04428976968900855
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 2.8368398218958646e-05
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 369,
+          "projectedArea": 9.422682225235235e-05,
+          "aboveActualFloorRange": [
+            -0.06139975715340307,
+            -0.050520217861373284
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 9.422682225235235e-05
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 376,
+          "projectedArea": 0.0005544821818368462,
+          "aboveActualFloorRange": [
+            -0.07585436827875558,
+            -0.053327428695588486
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.000378932061384063
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 377,
+          "projectedArea": 0.0003975117776491288,
+          "aboveActualFloorRange": [
+            -0.08500000000000041,
+            -0.07271319437869694
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 3,
+          "floorTriangle": 384,
+          "projectedArea": 0.00022147436075314886,
+          "aboveActualFloorRange": [
+            -0.09081482333497659,
+            -0.07442625972311956
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 360,
+          "projectedArea": 3.0137924689199735e-06,
+          "aboveActualFloorRange": [
+            -0.026689460847614033,
+            -0.02457988801370159
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 3.0137924689199735e-06
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 361,
+          "projectedArea": 0.0001085731086654107,
+          "aboveActualFloorRange": [
+            -0.03814109729952331,
+            -0.026436257079302194
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0001085731086654107
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 368,
+          "projectedArea": 0.00037842737873461374,
+          "aboveActualFloorRange": [
+            -0.05052021786137284,
+            -0.03381503647500472
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.00037842737873461374
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 369,
+          "projectedArea": 0.0003131927607817886,
+          "aboveActualFloorRange": [
+            -0.06786891528236305,
+            -0.05029750485795348
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0003131927607817886
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 376,
+          "projectedArea": 0.00010025754939135822,
+          "aboveActualFloorRange": [
+            -0.07618515830805817,
+            -0.06139975715340307
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 5.804571897982669e-05
+        },
+        {
+          "capTriangle": 4,
+          "floorTriangle": 377,
+          "projectedArea": 1.2990728446737876e-05,
+          "aboveActualFloorRange": [
+            -0.08116918354076574,
+            -0.0758543682787558
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        },
+        {
+          "capTriangle": 5,
+          "floorTriangle": 360,
+          "projectedArea": 1.2274034837389536e-06,
+          "aboveActualFloorRange": [
+            -0.026436257079302194,
+            -0.02457988801370159
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 1.2274034837389536e-06
+        },
+        {
+          "capTriangle": 5,
+          "floorTriangle": 361,
+          "projectedArea": 0.0001040062689199317,
+          "aboveActualFloorRange": [
+            -0.041586248807557125,
+            -0.0263331367784021
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0001040062689199317
+        },
+        {
+          "capTriangle": 5,
+          "floorTriangle": 368,
+          "projectedArea": 0.00011477910533130853,
+          "aboveActualFloorRange": [
+            -0.05029750485795348,
+            -0.03814109729952353
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.00011477910533130853
+        },
+        {
+          "capTriangle": 5,
+          "floorTriangle": 369,
+          "projectedArea": 0.00013498496471697763,
+          "aboveActualFloorRange": [
+            -0.06927475639857872,
+            -0.050214154576068815
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.00013498496471697763
+        },
+        {
+          "capTriangle": 5,
+          "floorTriangle": 376,
+          "projectedArea": 2.0344579727549217e-05,
+          "aboveActualFloorRange": [
+            -0.07629378325608682,
+            -0.06786891528236261
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 5.008551895002711e-06
+        },
+        {
+          "capTriangle": 5,
+          "floorTriangle": 377,
+          "projectedArea": 4.265900049205129e-06,
+          "aboveActualFloorRange": [
+            -0.08116918354076574,
+            -0.0761851583080575
+          ],
+          "positiveDeckSolidIntersectionProjectedArea": 0.0
+        }
+      ]
+    }
+  },
+  "limits": [
+    "Positive cap intersection demonstrates a nonzero proposed deck joint, not a final Boolean export verification.",
+    "No support source has been built or rendered.",
+    "Root body motion-band contact0 is station-sampled, not continuous animated acceptance."
+  ]
+}

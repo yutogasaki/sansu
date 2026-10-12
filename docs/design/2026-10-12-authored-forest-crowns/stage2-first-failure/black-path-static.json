@@ -1,0 +1,260 @@
+{
+  "scope": "Read-only JSON/material plus first/last path triangle; no projection or Blender",
+  "inputsBefore": {
+    "/private/tmp/sansu-authored-forest-crown-study/extraction-attempt02/fixed-c1-context.glb": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+    "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b1-low-wide-v0/study.glb": "1aaf96c36cb01692208a629a7d922a886e5307bd9707c485d51089427a3a3c97"
+  },
+  "files": [
+    {
+      "path": "/private/tmp/sansu-authored-forest-crown-study/extraction-attempt02/fixed-c1-context.glb",
+      "sha256": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+      "node": {
+        "name": "growing-reachable-paths",
+        "mesh": 148
+      },
+      "groundPathEdges": 191,
+      "nodeInstanced": false,
+      "sceneGpuInstancingNodeCount": 0,
+      "primitives": [
+        {
+          "mode": 4,
+          "indices": 27360,
+          "vertices": 9880,
+          "material": {
+            "pbrMetallicRoughness": {
+              "baseColorFactor": [
+                0.5394794890033748,
+                0.5332764040016892,
+                0.7230551289161951,
+                1
+              ],
+              "metallicFactor": 0,
+              "roughnessFactor": 1
+            },
+            "doubleSided": true
+          },
+          "samples": [
+            {
+              "indexOffset": 0,
+              "indices": [
+                0,
+                2,
+                1
+              ],
+              "positions": [
+                [
+                  -5.002655982971191,
+                  -0.0009999900357797742,
+                  -1.0981305837631226
+                ],
+                [
+                  -4.981822490692139,
+                  -0.0009999900357797742,
+                  -1.0983352661132812
+                ],
+                [
+                  -5.002655982971191,
+                  -0.0009999900357797742,
+                  -0.9018693566322327
+                ]
+              ],
+              "geometricCrossYLocal": -0.00408880676010881,
+              "normals": [
+                [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              ]
+            },
+            {
+              "indexOffset": 27357,
+              "indices": [
+                9854,
+                9879,
+                9878
+              ],
+              "positions": [
+                [
+                  2.2473440170288086,
+                  1.8183066844940186,
+                  -10.25
+                ],
+                [
+                  2.343480110168457,
+                  1.7611418962478638,
+                  -10.25
+                ],
+                [
+                  2.3402044773101807,
+                  1.7627201080322266,
+                  -10.274882316589355
+                ]
+              ],
+              "geometricCrossYLocal": 0.002392088705164497,
+              "normals": [
+                [
+                  0.5134495496749878,
+                  0.8530217409133911,
+                  0.09339959919452667
+                ],
+                [
+                  0.511052131652832,
+                  0.8594549298286438,
+                  -0.012764783576130867
+                ],
+                [
+                  0.500255823135376,
+                  0.8636277914047241,
+                  -0.06237885355949402
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b1-low-wide-v0/study.glb",
+      "sha256": "1aaf96c36cb01692208a629a7d922a886e5307bd9707c485d51089427a3a3c97",
+      "node": {
+        "mesh": 311,
+        "name": "growing-reachable-paths"
+      },
+      "groundPathEdges": 191,
+      "nodeInstanced": false,
+      "sceneGpuInstancingNodeCount": 0,
+      "primitives": [
+        {
+          "mode": 4,
+          "indices": 27360,
+          "vertices": 10172,
+          "material": {
+            "doubleSided": true,
+            "name": "Material_62",
+            "pbrMetallicRoughness": {
+              "baseColorFactor": [
+                0.5394794940948486,
+                0.533276379108429,
+                0.7230551242828369,
+                1
+              ],
+              "metallicFactor": 0
+            }
+          },
+          "samples": [
+            {
+              "indexOffset": 0,
+              "indices": [
+                0,
+                2,
+                1
+              ],
+              "positions": [
+                [
+                  -5.002655982971191,
+                  -0.0009999900357797742,
+                  -1.0981305837631226
+                ],
+                [
+                  -4.981822490692139,
+                  -0.0009999900357797742,
+                  -1.0983352661132812
+                ],
+                [
+                  -5.002655982971191,
+                  -0.0009999900357797742,
+                  -0.9018693566322327
+                ]
+              ],
+              "geometricCrossYLocal": -0.00408880676010881,
+              "normals": [
+                [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  -1.0,
+                  0.0
+                ],
+                [
+                  0.0,
+                  -1.0,
+                  0.0
+                ]
+              ]
+            },
+            {
+              "indexOffset": 27357,
+              "indices": [
+                10146,
+                10171,
+                10170
+              ],
+              "positions": [
+                [
+                  2.2473440170288086,
+                  1.8183066844940186,
+                  -10.25
+                ],
+                [
+                  2.343480110168457,
+                  1.7611418962478638,
+                  -10.25
+                ],
+                [
+                  2.3402044773101807,
+                  1.7627201080322266,
+                  -10.274882316589355
+                ]
+              ],
+              "geometricCrossYLocal": 0.002392088705164497,
+              "normals": [
+                [
+                  0.5134961605072021,
+                  0.8529936671257019,
+                  0.09339930862188339
+                ],
+                [
+                  0.5109935998916626,
+                  0.8594892621040344,
+                  -0.012799839489161968
+                ],
+                [
+                  0.5003034472465515,
+                  0.8636059165000916,
+                  -0.0623004287481308
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "facts": [
+    "The named path node is an ordinary Mesh, not an instanced node.",
+    "Runtime source offsets all ribbons and discs by .008; double-sided material has polygonOffset -1/-1; castShadow remains false.",
+    "glTF path material/node do not encode Three polygonOffset or castShadow flags.",
+    "Water ripple line omission is separate and is not the demonstrated cause of path dots."
+  ],
+  "hypothesis": "Coplanar ribbon/disc overlap with opposite winding, combined with Blender shadow-casting defaults and missing polygonOffset, may contribute to black circles. Not pixel-cause proof.",
+  "nextDiagnosticNotRun": "After reference comparison and separate authorization, same-frame path-only visible_shadow=false could test one part of this hypothesis.",
+  "imageOrMaterialModified": false,
+  "inputsAfter": {
+    "/private/tmp/sansu-authored-forest-crown-study/extraction-attempt02/fixed-c1-context.glb": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+    "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b1-low-wide-v0/study.glb": "1aaf96c36cb01692208a629a7d922a886e5307bd9707c485d51089427a3a3c97"
+  }
+}

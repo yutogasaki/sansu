@@ -1,0 +1,58 @@
+"""One explicit source-only replacement of folded internal ribbon controls.
+
+No source, context, owner, endpoint, width, or physical tolerance is changed.
+Analytic center tangent defines the full-width cross section before triangulation.
+"""
+import math
+
+def smooth(t): return t*t*(3-2*t)
+
+def make_plan(joint, gallery, width=.64, outer_radius=1.24, center=(3.5,-8.5)):
+    cx,cz=center;dx=joint[0]-cx;dz=joint[2]-cz
+    theta0=math.atan2(-dz,dx);r0=math.hypot(dx,dz)
+    front_end=theta0+math.radians(60);rear_start=math.radians(25)
+    gallery_start=math.radians(75);end=math.radians(115)
+    gallery_radius=math.hypot(gallery[0][0]-cx,gallery[0][2]-cz)
+    y0=joint[1];yg=gallery[0][1]
+    def radial(theta):
+        if theta < front_end:
+            start,stop,ra,rb=theta0,front_end,r0,outer_radius
+        elif theta < rear_start:return outer_radius,0.,0.,'outer-arc'
+        elif theta < gallery_start:
+            start,stop,ra,rb=rear_start,gallery_start,outer_radius,gallery_radius
+        else:return gallery_radius,0.,0.,'source-gallery'
+        t=(theta-start)/(stop-start);dr=rb-ra;span=stop-start
+        return ra+dr*smooth(t),dr*6*t*(1-t)/span,dr*(6-12*t)/(span*span),('front-outward' if start==theta0 else 'rear-inward')
+    def height(theta):
+        if theta <= math.radians(-68):return y0
+        if theta < gallery_start:
+            t=(theta-math.radians(-68))/math.radians(143)
+            return y0+(yg-y0)*smooth(t)
+        # Preserve the exact measured gallery stations and interpolate between
+        # them; source heights are never replaced by a convenient constant.
+        t=(math.degrees(theta)-75)/2;i=max(0,min(len(gallery)-2,int(math.floor(t))))
+        return gallery[i][1]+(gallery[i+1][1]-gallery[i][1])*(t-i)
+    breaks=[theta0,math.radians(-68),front_end,rear_start,gallery_start]
+    angles=[]
+    for a,b in zip(breaks,breaks[1:]):
+        n=math.ceil(math.degrees(b-a)/1.)
+        angles.extend(a+(b-a)*i/n for i in range(n))
+    # The final region uses only the measured gallery stations, once each.
+    # Independently computing equivalent angles then set-deduplicating floats
+    # creates sub-ULP rows that Float32 correctly rejects as collapsed faces.
+    angles.extend(math.radians(75+2*i) for i in range(len(gallery)))
+    rows=[];vertices=[];cuts=[-.5,-.25,0.,.25,.5]
+    for theta in angles:
+        r,rp,rpp,role=radial(theta);c=math.cos(theta);s=math.sin(theta)
+        x,z=cx+r*c,cz-r*s;tx,tz=rp*c-r*s,-rp*s-r*c
+        speed=math.hypot(tx,tz);sx,sz=-tz/speed,tx/speed
+        y=height(theta)
+        rows.append({'degrees':math.degrees(theta),'center':[x,y,z],'side':[sx,0.,sz],'radius':r,'radialDerivative':rp,'curvature':(r*r+2*rp*rp-r*rpp)/(r*r+rp*rp)**1.5,'role':role})
+        for u in cuts:vertices.append([x+sx*width*u,y,z+sz*width*u])
+    # Exact endpoints, already mathematically equal, avoid introducing a
+    # different source station through trig roundoff in provenance checks.
+    faces=[]
+    for row in range(len(rows)-1):
+        for col in range(4):
+            a=row*5+col;b=a+5;faces.extend([[a,a+1,b],[a+1,b+1,b]])
+    return {'topVertices':vertices,'topFaces':faces,'width':width,'columns':cuts,'rows':rows,'primaryEndpoints':{'joint':list(joint),'galleryStart':list(gallery[0]),'galleryEnd':list(gallery[-1])},'internalControlChanges':{'oldFrontOuterArcDegrees':-68,'newFrontOutwardEndDegrees':math.degrees(front_end),'oldRearRadialAtDegrees':75,'newRearInwardStartDegrees':25,'newRearInwardEndDegrees':75,'primaryEndpointChange':False},'construction':'Analytic tangent offsets of C1 polar centerline; no local face flips or bottom filtering; exact existing height law by angle and measured gallery heights'}

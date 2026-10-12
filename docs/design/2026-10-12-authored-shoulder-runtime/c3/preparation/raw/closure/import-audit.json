@@ -1,0 +1,191 @@
+{
+  "scope": "Static local imports and the domain projection; no execution of driver source collectors. Runtime reports must separately prove their complete initial/final input subset.",
+  "repo": "/private/tmp/sansu-authored-shoulder-c3/candidate",
+  "reports": [
+    {
+      "driver": "tools/e2e-authored-floor-shading.mjs",
+      "driverSha256": "ba5a3a685aa9b915e3026dd658e5d60d05604257de3760b742ce6e1abfb93bac",
+      "imports": [
+        "tools/e2e-authored-floor-shading.mjs"
+      ],
+      "missing": [],
+      "changed": []
+    },
+    {
+      "driver": "tools/e2e-authored-shoulder.mjs",
+      "driverSha256": "2fbbf7bd3d86e807a2673649924ee0d6aace213e2a57b5efeed091b2614f5f17",
+      "imports": [
+        "tools/e2e-authored-shoulder.mjs"
+      ],
+      "missing": [],
+      "changed": []
+    },
+    {
+      "driver": "tools/e2e-authored-island-editing.mjs",
+      "driverSha256": "86e212eb6a92a47ca9269f7b3aa1af3e9560452b101234e8093a6d2d4b9481c6",
+      "imports": [
+        "tools/e2e-authored-island-editing.mjs"
+      ],
+      "missing": [],
+      "changed": []
+    },
+    {
+      "driver": "tools/e2e-authored-water.mjs",
+      "driverSha256": "6eb46f7f80170f092a4b2f1e705da62140543e5632f8029156cadb5afa46d7ce",
+      "imports": [
+        "tools/e2e-authored-water.mjs"
+      ],
+      "missing": [],
+      "changed": []
+    },
+    {
+      "driver": "tools/e2e-authored-flower.mjs",
+      "driverSha256": "acffc6dce33d5366d88cd0e8ea5c77699c48260919562b7b55262d33b3cdb912",
+      "imports": [
+        "tools/e2e-authored-flower.mjs"
+      ],
+      "missing": [],
+      "changed": []
+    },
+    {
+      "driver": "tools/e2e-authored-cove.mjs",
+      "driverSha256": "f6c7f13232a405612faa7606dcfe3f87b4c34193afe1bb6362eeb985d33cf0e5",
+      "imports": [
+        "tools/e2e-authored-cove.mjs"
+      ],
+      "missing": [],
+      "changed": []
+    },
+    {
+      "driver": "tools/e2e-growing-balance.mjs",
+      "driverSha256": "bb7ae801189dfc39656102b16df8287e30cce4cd262cd510fe30c78a3d05ac6f",
+      "imports": [
+        "tools/e2e-growing-balance.mjs",
+        "tools/growing-production-helpers.mjs",
+        "tools/island-e2e-helpers.mjs"
+      ],
+      "missing": [],
+      "changed": []
+    },
+    {
+      "driver": "tools/e2e-smoke.mjs",
+      "driverSha256": "40c85b53373959b0331f2a671e8e395e76e66db4ab71080dd5ac97b19f4c8396",
+      "imports": [
+        "tools/e2e-smoke.mjs"
+      ],
+      "missing": [],
+      "changed": []
+    }
+  ],
+  "browserRootInputs": {
+    "src/db/index.ts": "95ffd6dafae239f26c8a26ccf5c5a427e7ae9cab2bef31b85b0f32f3bd3ee6bd",
+    "src/domain/english/words.ts": "030a8754b28bcc2bb6a474ba95a2ecc2d98be356539accb2dfa52f6f96bd529c",
+    "src/domain/growingIsland/repository.ts": "8f21a839b2a9cc27fb444ce52bc7df44f70feb0cdc81f6c05649c2c94610242b",
+    "src/domain/math/curriculum.ts": "02ff6f08d63cab7babd04ee6c1157908c8f1e2d227a715342ef3d9e5d7398962",
+    "src/domain/math/fractionInput.ts": "fd53a7088b202db63f0de8179f80634757213d7f85b60a7798d147f82bca6ed0",
+    "src/domain/math/index.ts": "330e06c73023b61ae159cca2b651957d64bb71b77def535201030d11a4e9dbdf",
+    "src/domain/math/writtenInput.ts": "f1e93a629c9b3d89938e00be70002935fea19ab7a2d28ed40e53e489054264a1",
+    "src/domain/park/learning.ts": "d9a034c0008afd77f2af7314b9de47f985366e0e24de4ae86ee19d982d0f243c",
+    "src/domain/user/profile.ts": "bfaf6b3c015a7d7b4ae4b6588e057de6cdc3d51dc98a7546c4c622ed9cd8d85e",
+    "src/domain/user/repository.ts": "4073a8ef14ec17c89ec5e11f9450d873a5a1b2f6dfd24847ba3dacec518dba3f"
+  },
+  "domainInputs": [
+    "docs/design/2026-10-11-authored-flower-garden/native-flower-support-profile.json",
+    "docs/design/2026-10-12-authored-cove-entrance/shared-apron-world-patch-v1.json",
+    "docs/design/2026-10-12-authored-cove-entrance/source-manifest.json",
+    "docs/product/island-place-goals.json",
+    "src/components/island/growing/actorScale.ts",
+    "src/components/island/growing/bridgeGeometry.ts",
+    "src/components/island/growing/curvedGeometry.ts",
+    "src/components/island/growing/fieldGeometry.ts",
+    "src/components/island/growing/flowerGeometry.ts",
+    "src/components/island/growing/growingShaderWarmup.ts",
+    "src/components/island/growing/homeGeometry.ts",
+    "src/components/island/growing/homeSurfaceGeometry.ts",
+    "src/components/island/growing/keepsakeGeometry.ts",
+    "src/components/island/growing/native/nativePlaceGrove.ts",
+    "src/components/island/growing/objectLayer.ts",
+    "src/components/island/growing/ownLandmarks.ts",
+    "src/components/island/growing/pierGeometry.ts",
+    "src/components/island/growing/placeFlowerGeometry.ts",
+    "src/components/island/growing/placeGeometry.ts",
+    "src/components/island/growing/placeLeafGeometry.ts",
+    "src/components/island/growing/placePaths.ts",
+    "src/components/island/growing/placePondGeometry.ts",
+    "src/components/island/growing/placeRootRoomGeometry.ts",
+    "src/components/island/growing/placeShellGeometry.ts",
+    "src/components/island/growing/placeSpringGeometry.ts",
+    "src/components/island/growing/plotGeometry.ts",
+    "src/components/island/growing/plotParts.ts",
+    "src/components/island/growing/sceneLayout.ts",
+    "src/components/island/growing/treeSilhouettes.ts",
+    "src/components/island/growing/wonderPaint.ts",
+    "src/components/island/life/decorationGeometry.ts",
+    "src/components/island/life/facilityGeometry.ts",
+    "src/components/island/life/itemGeometry.ts",
+    "src/components/island/life/sandboxGeometry.ts",
+    "src/components/island/life/windArchGeometry.ts",
+    "src/components/island/three/garden/geometry.ts",
+    "src/components/island/three/garden/staticRaycast.ts",
+    "src/components/island/three/primitives.ts",
+    "src/components/island/three/residentFabric.ts",
+    "src/components/island/three/worldPalette.ts",
+    "src/domain/growingIsland/authoredCoveWorld.ts",
+    "src/domain/growingIsland/authoredPlacementSupport.ts",
+    "src/domain/growingIsland/authoredShoulderWorld.ts",
+    "src/domain/growingIsland/authoredWaterBridge.ts",
+    "src/domain/growingIsland/authoredWaterCarving.ts",
+    "src/domain/growingIsland/authoredWaterContour.ts",
+    "src/domain/growingIsland/authoredWaterFrame.ts",
+    "src/domain/growingIsland/authoredWaterGeometry.ts",
+    "src/domain/growingIsland/authoredWaterRim.ts",
+    "src/domain/growingIsland/authoredWaterWorld.ts",
+    "src/domain/growingIsland/authoredWorldAccess.ts",
+    "src/domain/growingIsland/authoredWorldFrame.ts",
+    "src/domain/growingIsland/commands.ts",
+    "src/domain/growingIsland/community.ts",
+    "src/domain/growingIsland/environment.ts",
+    "src/domain/growingIsland/flowers.ts",
+    "src/domain/growingIsland/gifts.ts",
+    "src/domain/growingIsland/guidance.ts",
+    "src/domain/growingIsland/index.ts",
+    "src/domain/growingIsland/island.ts",
+    "src/domain/growingIsland/landscape.ts",
+    "src/domain/growingIsland/legacyWorldDefinition.ts",
+    "src/domain/growingIsland/moments.ts",
+    "src/domain/growingIsland/names.ts",
+    "src/domain/growingIsland/nativeWaterBridgeProfile.json",
+    "src/domain/growingIsland/nativeWaterSource.json",
+    "src/domain/growingIsland/nature.ts",
+    "src/domain/growingIsland/pier.ts",
+    "src/domain/growingIsland/placeCatalog.ts",
+    "src/domain/growingIsland/placeGoals.ts",
+    "src/domain/growingIsland/placeRelations.ts",
+    "src/domain/growingIsland/placeTerrain.ts",
+    "src/domain/growingIsland/placeTypes.ts",
+    "src/domain/growingIsland/places.ts",
+    "src/domain/growingIsland/random.ts",
+    "src/domain/growingIsland/room.ts",
+    "src/domain/growingIsland/rules.ts",
+    "src/domain/growingIsland/space.ts",
+    "src/domain/growingIsland/town.ts",
+    "src/domain/growingIsland/types.ts",
+    "src/domain/growingIsland/worldDefinition.ts",
+    "src/domain/islandLife/decorations.ts",
+    "src/domain/islandLife/economyRules.ts",
+    "src/domain/islandLife/footprint.ts",
+    "src/domain/islandLife/landRules.ts",
+    "src/domain/islandLife/model.ts",
+    "src/domain/islandLife/space.ts",
+    "src/domain/islandLife/walkingSpace.ts",
+    "src/domain/islandLife/waterChannels.ts",
+    "src/domain/natureTown/random.ts"
+  ],
+  "domainChanged": [],
+  "installedDependenciesMatch": true,
+  "projectionDriverMatches": true,
+  "installedDependenciesManifestSha256": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+  "domainMissing": [],
+  "runnerSha256": "31accec5ff7078b1c54e245c6eca1e12a024a2d64380b55dd5fe17bc8197f887",
+  "pass": true
+}

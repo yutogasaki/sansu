@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-10-11T23:50:19.310084+00:00",
+  "readmeLocalLinks": 22,
+  "brokenLinks": [],
+  "scriptsSyntax": "node --check PASS for capture-source-evidence.mjs and raw/first-probe.mjs",
+  "sourceChecks": [
+    {
+      "primitive": 0,
+      "rawNormalBytesMatchGLB": true,
+      "rawMaterialMatchesGLB": true,
+      "vertices": 20327
+    },
+    {
+      "primitive": 1,
+      "rawNormalBytesMatchGLB": true,
+      "rawMaterialMatchesGLB": true,
+      "vertices": 15972
+    },
+    {
+      "primitive": 2,
+      "rawNormalBytesMatchGLB": true,
+      "rawMaterialMatchesGLB": true,
+      "vertices": 9374
+    }
+  ],
+  "copyMapHashes": true,
+  "inputBeforeAfterSame": true,
+  "scope": "Artifact-only checks. No docs:check, app build, browser or render."
+}

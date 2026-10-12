@@ -1,0 +1,46 @@
+{
+  "createdAt": "2026-10-12T03:08:20.600372+00:00",
+  "status": "STATIC-PREPARATION-ONLY",
+  "files": {
+    "brief.md": "dca46cd4b6405f0897ced5cd78c95e547974ced0df0ef6d57c741d9bfe803989",
+    "fields.py": "237497e6a48782ff2285f9fdb51a9fe6783c27f7c7c98b29924f154180838fd2",
+    "prepare-plan.py": "0a62703f183bcacdfa723e78a03ad028dd76763d0c5825bcd429baf8446d8408",
+    "proposal.json": "98fc19102edfb3fe2a3aa89840ebd31fabfdd0ac3d7ee691dfe494808a56b5a4"
+  },
+  "checks": {
+    "pythonSyntax": "PASS",
+    "modifiedRoleDispatches": 105,
+    "fixedRoleDispatchesRejected": 23,
+    "stage1FilesCheckedUnchanged": 54,
+    "originalInputHashesUnchanged": {
+      "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.glb": true,
+      "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.blend": true,
+      "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island-render.png": true,
+      "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/authored-shoulder-reference-mature.json": true,
+      "/private/tmp/sansu-authored-shoulder-c1/candidate/docs/design/2026-10-11-native-owned-island/kit-manifest.json": true,
+      "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/report.json": true,
+      "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/fixed35-desktop-whole-day.png": true,
+      "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/fixed35-desktop-hill-close-day.png": true,
+      "/private/tmp/sansu-forest-role-inventory/inventory.json": true,
+      "/private/tmp/sansu-forest-role-inventory/anchors.json": true,
+      "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/native05-world-source-shading.json.gz": true,
+      "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/authored-shoulder-profile.json.gz": true,
+      "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/native-shoulder-manifest.json": true,
+      "/private/tmp/sansu-authored-shoulder-c1/candidate/docs/design/2026-10-12-authored-cove-entrance/cove-delivery-manifest.json": true,
+      "/private/tmp/sansu-authored-shoulder-c1/candidate/package-lock.json": true
+    },
+    "localLinksMissing": []
+  },
+  "limits": {
+    "vertexDecode": false,
+    "geometryGeneration": false,
+    "blender": false,
+    "nodeProjection": false,
+    "render": false,
+    "physicalAcceptance": false,
+    "runtimeIntegration": false,
+    "independentObservers": 0,
+    "builderImplemented": false
+  },
+  "next": "Parent reviews role-specific parameters; schedule source builder and actual geometry checks separately."
+}

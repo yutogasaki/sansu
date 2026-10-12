@@ -1,0 +1,100 @@
+{
+  "candidate": "native05-central-shoulder-sw-v3-source-v1",
+  "closedSoil": {
+    "topTriangles": 6615,
+    "topUniqueFloat32Vertices": 3797,
+    "outsideBoundaryEdges": 977,
+    "internalBoundaryEdges": 0,
+    "collapsedTriangles": 0,
+    "nonmanifoldEdges": 0,
+    "sideTriangles": 1954,
+    "bottomTriangles": 6615,
+    "bottomY": -0.30899999029934405,
+    "minThickness": 0.3,
+    "topFloat32MaxAbsError": 4.7673486314181446e-07,
+    "boundaryNormalDifferenceMaxL2": 1.2301777521997068e-11,
+    "float32OrientationSlivers": []
+  },
+  "roots": [
+    {
+      "ownerId": "l33",
+      "closed": true,
+      "nonmanifoldEdges": 0,
+      "contourVertices": 10,
+      "triangles": 36,
+      "bounds": [
+        [
+          5.731341402053833,
+          1.2000000039999998,
+          -7.26943717956543
+        ],
+        [
+          6.2686586017608645,
+          1.2808616161346436,
+          -6.73056282043457
+        ]
+      ],
+      "insideOwnerHalf46": true,
+      "uncoveredDryFloorArea": 0.0,
+      "lowestFloorOverFullFootprint": 1.2060000039999998,
+      "bottomY": 1.2000000039999998,
+      "minimumFullFootprintEmbed": 0.006,
+      "topCapCopiedFromOriginal": true,
+      "originalTreeUnchanged": true
+    },
+    {
+      "ownerId": "l34",
+      "closed": true,
+      "nonmanifoldEdges": 0,
+      "contourVertices": 10,
+      "triangles": 36,
+      "bounds": [
+        [
+          6.680050079345703,
+          1.557199926719666,
+          -6.137650358200073
+        ],
+        [
+          6.857601463317871,
+          1.6376460790634155,
+          -5.950450536727906
+        ]
+      ],
+      "insideOwnerHalf46": true,
+      "uncoveredDryFloorArea": 0.0,
+      "lowestFloorOverFullFootprint": 1.563199926719666,
+      "bottomY": 1.557199926719666,
+      "minimumFullFootprintEmbed": 0.006,
+      "topCapCopiedFromOriginal": true,
+      "originalTreeUnchanged": true
+    },
+    {
+      "ownerId": "l35",
+      "closed": true,
+      "nonmanifoldEdges": 0,
+      "contourVertices": 10,
+      "triangles": 36,
+      "bounds": [
+        [
+          7.905454145431518,
+          1.5791650239753723,
+          -6.099449920654297
+        ],
+        [
+          8.094545370101928,
+          1.6600857973098755,
+          -5.900550079345703
+        ]
+      ],
+      "insideOwnerHalf46": true,
+      "uncoveredDryFloorArea": 0.0,
+      "lowestFloorOverFullFootprint": 1.5851650239753723,
+      "bottomY": 1.5791650239753723,
+      "minimumFullFootprintEmbed": 0.006,
+      "topCapCopiedFromOriginal": true,
+      "originalTreeUnchanged": true
+    }
+  ],
+  "profileBytes": 17255423,
+  "profileGzipBytes": 3905846
+}

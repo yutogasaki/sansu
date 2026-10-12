@@ -1,0 +1,100 @@
+{
+  "scope": "Derived from existing raw elapsedMs only; no browser run. Cumulative means sum of timed intervals, not wall-clock position. Untimed work, captures, startup and cleanup are excluded from this sum.",
+  "rawReport": "05-authored-flower-full-cove-off/actual/report.json",
+  "rawReportSha256": "c2a62d6d8e0fb694924c117c2dfbd03eaa1a6ff4e8af1b8866d4b83482cc9060",
+  "runnerWallSeconds": 900.595,
+  "timedIntervalTotalSeconds": 615.935,
+  "wallMinusTimedSeconds": 284.66,
+  "fourEditTimedSeconds": 118.328,
+  "fourCanvasTimedSeconds": 309.576,
+  "rows": [
+    {
+      "name": "load-mature-32",
+      "success": true,
+      "elapsedSeconds": 21.945,
+      "cumulativeTimedSeconds": 21.945
+    },
+    {
+      "name": "select-l31",
+      "success": true,
+      "elapsedSeconds": 31.395,
+      "cumulativeTimedSeconds": 53.34
+    },
+    {
+      "name": "select-l17",
+      "success": true,
+      "elapsedSeconds": 32.699,
+      "cumulativeTimedSeconds": 86.039
+    },
+    {
+      "name": "select-l18",
+      "success": true,
+      "elapsedSeconds": 31.222,
+      "cumulativeTimedSeconds": 117.261
+    },
+    {
+      "name": "select-l19",
+      "success": true,
+      "elapsedSeconds": 31.71,
+      "cumulativeTimedSeconds": 148.971
+    },
+    {
+      "name": "preview-and-cancel-flower",
+      "success": true,
+      "elapsedSeconds": 57.386,
+      "cumulativeTimedSeconds": 206.357
+    },
+    {
+      "name": "split-flower",
+      "success": true,
+      "elapsedSeconds": 17.752,
+      "cumulativeTimedSeconds": 224.109
+    },
+    {
+      "name": "store-flower",
+      "success": true,
+      "elapsedSeconds": 25.237,
+      "cumulativeTimedSeconds": 249.346
+    },
+    {
+      "name": "restore-reconnect-flower",
+      "success": true,
+      "elapsedSeconds": 17.953,
+      "cumulativeTimedSeconds": 267.299
+    },
+    {
+      "name": "canvas-select-l31",
+      "success": true,
+      "elapsedSeconds": 91.67,
+      "cumulativeTimedSeconds": 358.969
+    },
+    {
+      "name": "canvas-select-l17",
+      "success": true,
+      "elapsedSeconds": 72.77,
+      "cumulativeTimedSeconds": 431.74
+    },
+    {
+      "name": "canvas-select-l18",
+      "success": true,
+      "elapsedSeconds": 72.957,
+      "cumulativeTimedSeconds": 504.697
+    },
+    {
+      "name": "canvas-select-l19",
+      "success": true,
+      "elapsedSeconds": 72.178,
+      "cumulativeTimedSeconds": 576.874
+    },
+    {
+      "name": "rotate-whole",
+      "success": false,
+      "elapsedSeconds": 39.061,
+      "cumulativeTimedSeconds": 615.935
+    }
+  ],
+  "limitations": [
+    "No raw wall-clock start/end timestamp exists per timed step. Exact cumulative wall-clock positions cannot be reconstructed from elapsedMs.",
+    "No device or product performance acceptance is inferred."
+  ]
+}

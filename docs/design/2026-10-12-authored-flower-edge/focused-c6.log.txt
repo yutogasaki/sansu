@@ -1,0 +1,31 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+stderr | src/components/island/growing/authoredFlowerObstructions.test.ts > actual walking source envelope > includes actual indexed clothing, hats, ears, tail, soles and continuous walking angles with bob, while excluding sparkles
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/authoredFlowerObstructions.test.ts (12 tests) 659ms
+   ✓ actual walking source envelope > includes actual indexed clothing, hats, ears, tail, soles and continuous walking angles with bob, while excluding sparkles 410ms
+stderr | src/components/island/growing/native/nativeAuthoredFlower.test.ts > authored P05 comes from current owned flowers and existing ground > grounds every thick stock in its actual owned footprint and preserves the original low flower colours
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/native/nativeAuthoredFlower.test.ts (8 tests) 3202ms
+   ✓ authored P05 comes from current owned flowers and existing ground > grounds every thick stock in its actual owned footprint and preserves the original low flower colours 461ms
+   ✓ authored P05 comes from current owned flowers and existing ground > splits and stores through commands, restores the same owners and crown, and cancels a preview without changing saved geometry 486ms
+   ✓ authored P05 comes from current owned flowers and existing ground > avoids source stocks with actual .45 actors, retains all 32 owner approaches and the real bench pose/exit, and releases stored stock 649ms
+   ✓ authored P05 comes from current owned flowers and existing ground > grows the garden edge toward its current real seat and removes it in a move preview or storage without moving owners 307ms
+stderr | src/components/island/growing/authoredFlowerLife.test.ts > actual authored P05 flower life > excludes every owned stock centre but preserves an actual safe walk, bench use receipt and exit
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/authoredFlowerLife.test.ts (5 tests) 6105ms
+   ✓ actual authored P05 flower life > excludes every owned stock centre but preserves an actual safe walk, bench use receipt and exit 829ms
+   ✓ actual authored P05 flower life > lands release and gesture cancellation safely from all four occupied stock centres without a false use 388ms
+   ✓ actual authored P05 flower life > keeps the same seated resident safe through split, store and reconnect, then safely leaves a removed bench 1523ms
+   ✓ actual authored P05 flower life > relocates an existing ground occupant when its stored flower reconnects, and completes safe hand-placed bench play 2192ms
+   ✓ actual authored P05 flower life > keeps an unplaced resident hidden across ticks with no source walking refs and recovers the same actor when refs return 455ms
+
+ Test Files  3 passed (3)
+      Tests  25 passed (25)
+   Start at  05:59:38
+   Duration  6.76s (transform 399ms, setup 0ms, collect 994ms, tests 9.97s, environment 0ms, prepare 135ms)
+

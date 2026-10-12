@@ -1,0 +1,16 @@
+from pathlib import Path
+import os,json,subprocess,signal,time
+out=Path('/private/tmp/sansu-island-variation-c9'); candidate=out/'candidate'
+env=os.environ.copy(); env.update(SANSU_ISLAND_VARIATION_OUTPUT=str(out/'runtime'), SANSU_ISLAND_VARIATION_BUILD='island-variation-c9', SANSU_ISLAND_VARIATION_CORE_REPORT=str(out/'core/report.json'), SANSU_ISLAND_VARIATION_URL='http://127.0.0.1:5366/prototypes/place-qa/authored.html?art=whole&terrain=grove')
+report={'startedAt':time.time(),'revision':'island-variation-c9','command':'node tools/e2e-authored-island-variation.mjs','timeoutSeconds':2400}
+with (out/'runtime-execution.log.txt').open('x') as log:
+    proc=subprocess.Popen(['node','tools/e2e-authored-island-variation.mjs'],cwd=candidate,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+    report['pid']=proc.pid; (out/'runtime-execution.json').write_text(json.dumps(report,indent=2)); print(json.dumps({'started':True,'pid':proc.pid}),flush=True)
+    try: report['exitCode']=proc.wait(timeout=2400)
+    except subprocess.TimeoutExpired:
+        os.killpg(proc.pid,signal.SIGTERM); report['timeout']=True
+        try: report['exitCode']=proc.wait(timeout=15)
+        except subprocess.TimeoutExpired:
+            os.killpg(proc.pid,signal.SIGKILL); report['exitCode']=proc.wait(timeout=15)
+report['finishedAt']=time.time(); (out/'runtime-execution.json').write_text(json.dumps(report,indent=2)+'\n'); print(json.dumps(report),flush=True)
+raise SystemExit(report['exitCode'])

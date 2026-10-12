@@ -1,0 +1,37 @@
+same-driver target { x: 3, z: -4 }
+THREE.Material: parameter 'map' has value of undefined.
+{
+  "target": {
+    "x": 3,
+    "z": -4
+  },
+  "initial": {
+    "expectedPlaceId": "P02:p3",
+    "expectedOwners": [
+      "l10",
+      "l11",
+      "l12",
+      "l13"
+    ],
+    "ownersUnmovedMature": true,
+    "expectedPlacePresent": true,
+    "expectedPlaceStage": "grown",
+    "expectedPlaceVariant": "cluster",
+    "mainIdsMatch": true
+  },
+  "after": {
+    "expectedPlaceId": "P02:p3",
+    "expectedOwners": [
+      "l10",
+      "l11",
+      "l12",
+      "l13"
+    ],
+    "ownersUnmovedMature": true,
+    "expectedPlacePresent": false,
+    "mainIdsMatch": false
+  },
+  "sharedAfter": [],
+  "attachedAfter": [],
+  "worldRevisionMatchesUi": true
+}

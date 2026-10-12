@@ -1,0 +1,20 @@
+{
+  "scope": "Root inspected only the c2 source/legacy hill-close pair after stage01 PASS; source and geometry unchanged by this inspection. Full eight stages still running.",
+  "reportSha256": "9a31152cc83ce8f596bbc88bcfa7468c4b32f626c4aadde21650617a5ffd3564",
+  "build": "authored-shoulder-c2",
+  "appVersion": "authored-shoulder-c2:79e9300a-ec58-4cfc-83fc-5dc24d2d4092",
+  "candidate": "native05-authored-cove-shore-v4+source-shading-v1",
+  "url": "http://127.0.0.1:5359/prototypes/place-qa/authored.html?water=wide&reference=preflight32&cove=corner&ground=source",
+  "finding": "Broad triangular stripes are reduced in source shading. A fine segmented line remains on the central/right slope. Actor positions differ and are not terrain evidence.",
+  "next": "No diagnostic browser launched. Shadow-off remains gated on completed c2 regressions.",
+  "images": [
+    {
+      "file": "/private/tmp/sansu-authored-shoulder-c2/regressions/01-floor-shading-ab/actual/1280-hill-close-source.png",
+      "sha256": "bcaaa5f3112ea93fb82a3bc96761fb99575b3b03ac61a1e2c2bdd3efc52acf1b"
+    },
+    {
+      "file": "/private/tmp/sansu-authored-shoulder-c2/regressions/01-floor-shading-ab/actual/1280-hill-close-legacy.png",
+      "sha256": "d5894bbd5ab54dc98c8c5c8160281ff41a37753ca803d975869bbe378368e8ef"
+    }
+  ]
+}

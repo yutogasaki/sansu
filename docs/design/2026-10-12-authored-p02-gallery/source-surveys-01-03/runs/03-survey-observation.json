@@ -1,0 +1,89 @@
+{
+  "stage": "single immutable-name corrected survey",
+  "command": [
+    "python3",
+    "supervise.py",
+    "--scheduled",
+    "--seconds",
+    "180",
+    "--rss-mib",
+    "2560",
+    "--log",
+    "runs/03-survey.log.txt",
+    "--",
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "source-study.py",
+    "--",
+    "measure",
+    "--scheduled",
+    "--out",
+    "runs/03-survey"
+  ],
+  "startUtc": "2026-10-12T04:08:10.536360+00:00",
+  "endUtc": "2026-10-12T04:08:19.291808+00:00",
+  "timingMeaning": "supervisor process launch and observed exit; Blender observed timestamps separately",
+  "supervisorPid": 23129,
+  "ownedBlenderProcesses": [
+    {
+      "pid": 23131,
+      "parentPid": 23129,
+      "firstObservedUtc": "2026-10-12T04:08:11.133610+00:00",
+      "command": "/Applications/Blender.app/Contents/MacOS/Blender",
+      "lastObservedUtc": "2026-10-12T04:08:18.238139+00:00",
+      "peakObservedRssBytes": 735150080
+    }
+  ],
+  "supervisorExitCode": 0,
+  "preparedManifest": {
+    "path": "/private/tmp/sansu-p02-gallery-source-study/prepared-survey03/manifest.json",
+    "shaBefore": "b0f0da4c36ff4369a0caef2c0d44f225658c1912959d0379749f036a792e78cd",
+    "shaAfter": "b0f0da4c36ff4369a0caef2c0d44f225658c1912959d0379749f036a792e78cd"
+  },
+  "inputShaBefore": {
+    "context": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+    "leftTrees": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+    "contextManifest": "3c3fcd13bf4867946a0f393769f852cb938286329dfa2e11dac3afe74796bda2",
+    "forestStudy": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+    "sourceBlend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "sourceGlb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "benchmark": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+    "envelope": "444beab3c5b078799e974424e225e0a2e6742d6b99ad7e94be5edb54088af1db"
+  },
+  "inputShaAfter": {
+    "context": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+    "leftTrees": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+    "contextManifest": "3c3fcd13bf4867946a0f393769f852cb938286329dfa2e11dac3afe74796bda2",
+    "forestStudy": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+    "sourceBlend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "sourceGlb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "benchmark": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+    "envelope": "444beab3c5b078799e974424e225e0a2e6742d6b99ad7e94be5edb54088af1db"
+  },
+  "inputsUnchanged": true,
+  "scriptShaBefore": {
+    "source-study.py": "d0c32c205d8e89443d3920ae7e67f5fa372b508340e18bbc5479105f249ae5a5",
+    "entry_geometry.py": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+    "donor_reference.py": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+    "check-donor-reference.py": "f42c23086021971b60d25767f5a34ad328847773c130595023323e4f011000ec",
+    "supervise.py": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "study.json": "258376c7a16aed0aa4645e7b08b95f4392057309c4996d629e4542cb13f4ecc9"
+  },
+  "scriptShaAfter": {
+    "source-study.py": "d0c32c205d8e89443d3920ae7e67f5fa372b508340e18bbc5479105f249ae5a5",
+    "entry_geometry.py": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+    "donor_reference.py": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+    "check-donor-reference.py": "f42c23086021971b60d25767f5a34ad328847773c130595023323e4f011000ec",
+    "supervise.py": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "study.json": "258376c7a16aed0aa4645e7b08b95f4392057309c4996d629e4542cb13f4ecc9"
+  },
+  "scriptsUnchanged": true,
+  "automaticRetry": false,
+  "buildOrRenderExecuted": false,
+  "otherProcessesStoppedOrChanged": false
+}

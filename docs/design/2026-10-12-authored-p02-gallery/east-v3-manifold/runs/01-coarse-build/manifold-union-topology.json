@@ -1,0 +1,279 @@
+{
+  "attempt": "all-unions-MANIFOLD-same-input-shape",
+  "sourceExactFailureRetained": "/private/tmp/sansu-p02-gallery-source-study/east-v2/runs/01-coarse-build",
+  "inputs": [
+    {
+      "object": "construction-solid/terrainThreshold",
+      "vertices": 422,
+      "edges": 1260,
+      "faces": 840,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "edgeValence": {
+        "2": 1260
+      },
+      "selfIntersectionProvenAbsent": false
+    },
+    {
+      "object": "construction-solid/alignedOpening",
+      "vertices": 140,
+      "edges": 414,
+      "faces": 276,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "edgeValence": {
+        "2": 414
+      },
+      "selfIntersectionProvenAbsent": false
+    },
+    {
+      "object": "construction-solid/eastBranchGallery",
+      "vertices": 1560,
+      "edges": 4674,
+      "faces": 3116,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "edgeValence": {
+        "2": 4674
+      },
+      "selfIntersectionProvenAbsent": false
+    },
+    {
+      "object": "construction-solid/visible-front-branch-junction",
+      "vertices": 66,
+      "edges": 192,
+      "faces": 128,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "edgeValence": {
+        "2": 192
+      },
+      "selfIntersectionProvenAbsent": false
+    },
+    {
+      "object": "construction-solid/unchanged-native-interior",
+      "vertices": 96,
+      "edges": 282,
+      "faces": 188,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "edgeValence": {
+        "2": 282
+      },
+      "selfIntersectionProvenAbsent": false
+    }
+  ],
+  "steps": [
+    {
+      "operandIndex": 0,
+      "operand": "construction-solid/terrainThreshold",
+      "beforeBody": {
+        "object": "construction-solid/eastBranchGallery",
+        "vertices": 1560,
+        "edges": 4674,
+        "faces": 3116,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "edgeValence": {
+          "2": 4674
+        },
+        "selfIntersectionProvenAbsent": false
+      },
+      "beforeOperand": {
+        "object": "construction-solid/terrainThreshold",
+        "vertices": 422,
+        "edges": 1260,
+        "faces": 840,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "edgeValence": {
+          "2": 1260
+        },
+        "selfIntersectionProvenAbsent": false
+      },
+      "solver": "MANIFOLD",
+      "operatorResult": [
+        "FINISHED"
+      ],
+      "after": {
+        "object": "construction-solid/eastBranchGallery",
+        "vertices": 2087,
+        "edges": 5921,
+        "faces": 3836,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "edgeValence": {
+          "2": 5921
+        },
+        "selfIntersectionProvenAbsent": false
+      }
+    },
+    {
+      "operandIndex": 1,
+      "operand": "construction-solid/alignedOpening",
+      "beforeBody": {
+        "object": "construction-solid/eastBranchGallery",
+        "vertices": 2087,
+        "edges": 5921,
+        "faces": 3836,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "edgeValence": {
+          "2": 5921
+        },
+        "selfIntersectionProvenAbsent": false
+      },
+      "beforeOperand": {
+        "object": "construction-solid/alignedOpening",
+        "vertices": 140,
+        "edges": 414,
+        "faces": 276,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "edgeValence": {
+          "2": 414
+        },
+        "selfIntersectionProvenAbsent": false
+      },
+      "solver": "MANIFOLD",
+      "operatorResult": [
+        "FINISHED"
+      ],
+      "after": {
+        "object": "construction-solid/eastBranchGallery",
+        "vertices": 2317,
+        "edges": 6293,
+        "faces": 3978,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "edgeValence": {
+          "2": 6293
+        },
+        "selfIntersectionProvenAbsent": false
+      }
+    },
+    {
+      "operandIndex": 2,
+      "operand": "construction-solid/visible-front-branch-junction",
+      "beforeBody": {
+        "object": "construction-solid/eastBranchGallery",
+        "vertices": 2317,
+        "edges": 6293,
+        "faces": 3978,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "edgeValence": {
+          "2": 6293
+        },
+        "selfIntersectionProvenAbsent": false
+      },
+      "beforeOperand": {
+        "object": "construction-solid/visible-front-branch-junction",
+        "vertices": 66,
+        "edges": 192,
+        "faces": 128,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "edgeValence": {
+          "2": 192
+        },
+        "selfIntersectionProvenAbsent": false
+      },
+      "solver": "MANIFOLD",
+      "operatorResult": [
+        "FINISHED"
+      ],
+      "after": {
+        "object": "construction-solid/eastBranchGallery",
+        "vertices": 2364,
+        "edges": 6323,
+        "faces": 3961,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "edgeValence": {
+          "2": 6323
+        },
+        "selfIntersectionProvenAbsent": false
+      }
+    },
+    {
+      "operandIndex": 3,
+      "operand": "construction-solid/unchanged-native-interior",
+      "beforeBody": {
+        "object": "construction-solid/eastBranchGallery",
+        "vertices": 2364,
+        "edges": 6323,
+        "faces": 3961,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "edgeValence": {
+          "2": 6323
+        },
+        "selfIntersectionProvenAbsent": false
+      },
+      "beforeOperand": {
+        "object": "construction-solid/unchanged-native-interior",
+        "vertices": 96,
+        "edges": 282,
+        "faces": 188,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "edgeValence": {
+          "2": 282
+        },
+        "selfIntersectionProvenAbsent": false
+      },
+      "solver": "MANIFOLD",
+      "operatorResult": [
+        "FINISHED"
+      ],
+      "after": {
+        "object": "construction-solid/eastBranchGallery",
+        "vertices": 2461,
+        "edges": 6507,
+        "faces": 4048,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "edgeValence": {
+          "2": 6507
+        },
+        "selfIntersectionProvenAbsent": false
+      }
+    }
+  ],
+  "selfIntersectionNotProvenAbsentByTheseChecks": true
+}

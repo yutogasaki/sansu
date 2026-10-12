@@ -1,0 +1,68 @@
+{
+  "scope": "Saved raw replay of pure rules only; no new Blender/role/field evaluation",
+  "inputsBefore": {
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/attempt-01/failing-role-raw.json.gz": "e2820d44f4270b1e8346c00c313048f7bf1e7ce1c03f9452c438942b0d153dc0",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/sharp-fan-comparison/attempt-01/comparison-raw.json.gz": "e712cc994097adfb1cdea956e41a02b56342ba3a723293bd163f13080624b1bc",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/tip-recenter-evaluated-baseline/attempt-01/float64-profile.json.gz": "84d48a20741d04d9d5025fc4de6f19a5a9ee8d788f38477c762eab549e82b3fe",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/tip-recenter-evaluated-baseline/attempt-01/result.json": "46d0f80a517b83cf3e62dfbf67a98f3084d888812baaaefac21f88311bd9dbec",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/tip-recenter-evaluated-baseline/attempt-01/six-incident-sharp-tip-recenter-pre-export-oracle.json.gz": "2c6ee60bb62b9c1f0390bee56fc91d1357490366fb42dbf9ef1ef12aab01ad0f",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-generalization-prep/source-classification.json": "47b7ffe36b0a473f85acf9a402b2561492827f02326f25158f4b984cd9319b00"
+  },
+  "inputsAfter": {
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/attempt-01/failing-role-raw.json.gz": "e2820d44f4270b1e8346c00c313048f7bf1e7ce1c03f9452c438942b0d153dc0",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/sharp-fan-comparison/attempt-01/comparison-raw.json.gz": "e712cc994097adfb1cdea956e41a02b56342ba3a723293bd163f13080624b1bc",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/tip-recenter-evaluated-baseline/attempt-01/float64-profile.json.gz": "84d48a20741d04d9d5025fc4de6f19a5a9ee8d788f38477c762eab549e82b3fe",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/tip-recenter-evaluated-baseline/attempt-01/result.json": "46d0f80a517b83cf3e62dfbf67a98f3084d888812baaaefac21f88311bd9dbec",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/tip-recenter-evaluated-baseline/attempt-01/six-incident-sharp-tip-recenter-pre-export-oracle.json.gz": "2c6ee60bb62b9c1f0390bee56fc91d1357490366fb42dbf9ef1ef12aab01ad0f",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-generalization-prep/source-classification.json": "47b7ffe36b0a473f85acf9a402b2561492827f02326f25158f4b984cd9319b00"
+  },
+  "derivedSourceVertexIds": [
+    38
+  ],
+  "derivedSharpEdges": [
+    [
+      34,
+      38
+    ],
+    [
+      35,
+      38
+    ],
+    [
+      37,
+      38
+    ],
+    [
+      38,
+      74
+    ],
+    [
+      38,
+      77
+    ],
+    [
+      38,
+      76
+    ]
+  ],
+  "newSharpCount": 6,
+  "sharpFlagsEqualPassedOneLeaf": true,
+  "derivedCenterSourceVertex": 37,
+  "derivedCollisionSourceVertices": [
+    36,
+    37,
+    38
+  ],
+  "recenterCoordinatesEqualPassedOneLeaf": true,
+  "centerEqualPassedOneLeaf": true,
+  "retainedFaceMapEqualPassedOneLeaf": true,
+  "retainedLocalNonzeroFaces": 148,
+  "dispatchCounts": {
+    "original-method-plus-independent-source-oracle": 31,
+    "candidate-data-derived-lamina-representation": 70,
+    "retain-exact-fixed": 27
+  },
+  "remainingLeafBlenderEvaluations": 69,
+  "wholeBuildOrRuntimePass": false,
+  "passed": true
+}

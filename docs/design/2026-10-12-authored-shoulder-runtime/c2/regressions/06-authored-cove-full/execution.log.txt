@@ -1,0 +1,12 @@
+authored-cove: load-mature-32
+authored-cove: select-p9-close
+authored-cove: canvas-select-source-shell
+authored-cove: preview-distant-p9
+authored-cove: cancel-p9
+authored-cove: commit-distant-p9
+authored-cove: store-p9
+authored-cove: restore-p9-original-cell
+authored-cove: rotate-whole
+authored-cove: phone-whole
+authored-cove: tablet-whole
+{"pass":true,"shapeOnly":false,"captures":10,"steps":["Actual source shell canvas tap changes selection from p6 to p9","Move preview hides committed shell and cancel restores it without canonical changes","Move/store remove shell; original-cell restore recovers the original plan/source, eight homes, rights, maturity, colors and clock"],"output":"/private/tmp/sansu-authored-shoulder-c2/regressions/06-authored-cove-full/actual"}

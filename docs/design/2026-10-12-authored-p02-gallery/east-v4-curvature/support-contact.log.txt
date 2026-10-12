@@ -1,0 +1,39 @@
+{
+  "status": "HOLD_SOURCE_PREPARATION_ONLY",
+  "semanticCorrection": "The negative side offset is the INNER edge toward the original trunk; support-edge-proposal called it outer by mistake. Coordinates and checks are unchanged. Future object label must be inner-edge living root.",
+  "inputSHA": {
+    "support-edge-proposal.json": "55427cf8902e997ecc84acc7894feef90db2f7ff23494017681069a91a4c8cb5",
+    "planned-floor-v4-stations-once.json": "2968d018782cea82afa443bbbffc111eb0ead51a3d5f5f2e8be2814354fee3ca"
+  },
+  "topology": {
+    "badEdges": 0,
+    "signedVolume": 0.001472692397549002,
+    "faceCount": 140,
+    "zeroAreaTriangles": 0
+  },
+  "caps": {
+    "ground": {
+      "projectedArea": 0.001936916669416533,
+      "coveredArea": 0.001936916669421862,
+      "uncoveredArea": -5.329070518200751e-15,
+      "minimumAboveActualFloor": -0.12448091237117631,
+      "maximumAboveActualFloor": -0.015529664920966857,
+      "positiveConnectionProjectedArea": 0.0,
+      "positiveConnectionCapSurfaceArea": 0.0
+    },
+    "deck": {
+      "projectedArea": 0.00518425416285595,
+      "coveredArea": 0.005184254162848845,
+      "uncoveredArea": 7.105427357601002e-15,
+      "minimumAboveActualFloor": -0.14836551374699236,
+      "maximumAboveActualFloor": -0.02457988801370159,
+      "positiveConnectionProjectedArea": 0.0017227863358328932,
+      "positiveConnectionCapSurfaceArea": 0.002843252999222468
+    }
+  },
+  "limits": [
+    "Positive cap intersection demonstrates a nonzero proposed deck joint, not a final Boolean export verification.",
+    "No support source has been built or rendered.",
+    "Root body motion-band contact0 is station-sampled, not continuous animated acceptance."
+  ]
+}

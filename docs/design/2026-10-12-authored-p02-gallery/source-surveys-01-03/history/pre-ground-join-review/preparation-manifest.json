@@ -1,0 +1,49 @@
+{
+  "status": "PREPARED_ONLY",
+  "files": {
+    "README.md": {
+      "bytes": 9409,
+      "sha256": "28209661f8de48cc33ca1450c54506343d5c0a5241eb72069649b702da318b22"
+    },
+    "check-readiness.py": {
+      "bytes": 1130,
+      "sha256": "253653ca426fe8e85959d2b74aed6f37e5d068c9558702996a99ca4d2af01ee3"
+    },
+    "readiness.json": {
+      "bytes": 1484,
+      "sha256": "b046712681a2de0f9d41b573b637fadbd2c752a7cf11611e3402e858dbf30efa"
+    },
+    "render-source.py": {
+      "bytes": 4405,
+      "sha256": "c2cd13aca0211b0283b916b462338db5ae3e2d54a598a9abcd250e986f2e54c7"
+    },
+    "source-study.py": {
+      "bytes": 20327,
+      "sha256": "d70e733def05a6493ebf9f062b595ce21fbbab828e06b5f8f845d47eae87da90"
+    },
+    "study.json": {
+      "bytes": 11855,
+      "sha256": "258376c7a16aed0aa4645e7b08b95f4392057309c4996d629e4542cb13f4ecc9"
+    },
+    "supervise.py": {
+      "bytes": 1920,
+      "sha256": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb"
+    }
+  },
+  "syntaxCheck": "python3 -m py_compile: exit 0",
+  "readinessCheck": "check-readiness.py: exit 0",
+  "executed": [
+    "Python syntax parsing",
+    "immutable input SHA verification",
+    "GLB JSON metadata only reads"
+  ],
+  "notExecuted": [
+    "Blender",
+    "Node world compilation",
+    "geometry survey",
+    "source build",
+    "render",
+    "browser"
+  ],
+  "firstSuggestedStage": "measure only, single Blender process, 180 s cap, 2560 MiB sampled RSS cap"
+}

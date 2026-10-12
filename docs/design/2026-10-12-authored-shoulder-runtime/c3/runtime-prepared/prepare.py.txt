@@ -1,0 +1,98 @@
+from pathlib import Path
+import hashlib,json,difflib,ast
+P=Path(__file__).resolve().parent
+OLD=Path('/private/tmp/sansu-authored-shoulder-c2/prepared/regressions.py')
+before=OLD.read_text()
+s=before.replace('/private/tmp/sansu-authored-shoulder-c2','/private/tmp/sansu-authored-shoulder-c3').replace('authored-shoulder-c2','authored-shoulder-c3')
+s=s.replace("OUTPUT = ROOT / 'regressions'","OUTPUT = ROOT / 'affected-regressions'")
+s=s.replace("BASE = 'http://127.0.0.1:5359'","BASE = 'http://127.0.0.1:5360'")
+s=s.replace('08-classic-smoke','02-classic-smoke')
+a=s.index('def plan():');b=s.index('\n\ndef clean_group',a)
+s=s[:a]+'''def plan():
+    return [
+        {'name':'01-wide27-water', 'command':['node','tools/e2e-authored-water.mjs'],
+         'environmentOverrides':{'SANSU_AUTHORED_WATER_URL':BASE+'/prototypes/place-qa/authored.html?water=wide&ground=legacy',
+                                 'SANSU_AUTHORED_WATER_OUTPUT':str(OUTPUT/'01-wide27-water/actual')},
+         'scope':'Unchanged full 27-owner/73-right wide water pointer editing, 14 captures, no shoulder/cove',
+         'requiredServerConfiguration':{'url':BASE,'revision':REVISION,'VITE_ISLAND_ENABLED':'true','VITE_NATIVE_GROWING_ART':'false'},
+         'reportRelative':'actual/report.json','timeoutSeconds':600,'deadlineScope':'Owned process termination only; not performance acceptance'},
+        {'name':'02-classic-smoke','command':['npm','run','e2e:smoke'],
+         'environmentOverrides':{'VITE_ISLAND_ENABLED':'false','VITE_NATIVE_GROWING_ART':'false','VITE_EXPLORE_EXPERIENCE':'classic-v1',
+            'SANSU_E2E_DIAGNOSTIC_DIR':str(OUTPUT/'02-classic-smoke/diagnostics'),'SANSU_E2E_CAPTURE_DIR':str(OUTPUT/'02-classic-smoke/captures')},
+         'scope':'Unchanged full classic smoke on isolated owned server; no reuse',
+         'requiredServerConfiguration':{'ownServer':True,'portCandidates':[4173,4174,4175],'VITE_ISLAND_ENABLED':'false','VITE_NATIVE_GROWING_ART':'false'},
+         'reportRelative':'diagnostics/smoke-report.json','timeoutSeconds':2700,'deadlineScope':'Owned process termination only; not performance acceptance'}]
+''' +s[b:]
+a=s.index('def inspect_result(');b=s.index('\n\ndef run_stage',a)
+s=s[:a]+'''def inspect_result(item, actual, log, expected):
+    if not actual or 'readError' in actual:
+        return {'pass':False,'failurePhase':'missing-or-unreadable-tool-report','error':'Original driver report unavailable'}
+    scenarios=actual.get('scenarios',[])
+    failures=[x for x in scenarios if x.get('pass') is False]
+    error=actual.get('error') or (actual.get('firstFailure') or {}).get('error') or (failures[0].get('error') if failures else None)
+    checks={'driverPass':actual.get('pass') is True,'noRuntimeErrors':not actual.get('errors'),'noScenarioFailure':not failures,'noError':not error}
+    result={'pass':False,'failurePhase':actual.get('phase'),'error':error,'scenarioCount':len(scenarios),
+            'captureCount':len(actual.get('captures',[])),'checks':checks}
+    if item['name']=='02-classic-smoke':
+        checks['noServerReuse']='All smoke-test ports are occupied; reusing ' not in log
+        checks['harnessMatchesCore']=actual.get('harnessHash')==expected['tools/e2e-smoke.mjs']
+        result['rawInputSubset']={'scope':'Classic exposes its harness hash; wrapper verifies complete source/dependency closure before/after','count':1,'pass':checks['harnessMatchesCore']}
+    else:
+        initial,final=actual.get('initialInputs'),actual.get('finalInputs')
+        missing=sorted(set(initial or {})-set(expected))
+        different=[n for n,v in (initial or {}).items() if expected.get(n)!=v or (final or {}).get(n)!=v]
+        checks['rawInputSubset']=bool(initial) and initial==final and not missing and not different
+        result['rawInputSubset']={'count':len(initial or {}),'missing':missing,'different':different,'beforeAfterEqual':initial==final,'pass':checks['rawInputSubset']}
+        captures=actual.get('captures',[])
+        expectedFiles=['desktop-whole.png','water-close.png','water-bridge-close.png','stored-dry-ground.png','reconnect-preview.png',
+                       'reconnected.png','move-preview.png','preview-cancelled.png','moved-split.png','desktop-dusk-whole.png',
+                       'water-dusk-close.png','desktop-rotated-whole.png','phone-whole.png','tablet-whole.png']
+        checks['fourteenOrderedCaptures']=[x.get('file') for x in captures]==expectedFiles
+        checks['sameBuild']=bool(captures) and all(x.get('build')==REVISION for x in captures)
+        checks['sameTarget']=bool(captures) and all(x.get('url')==item['environmentOverrides']['SANSU_AUTHORED_WATER_URL'] for x in captures)
+        checks['noCoveOrShoulder']=bool(captures) and all(x.get('metadata',{}).get('authoredCoveEnabled')=='false'
+          and x.get('metadata',{}).get('authoredShoulderEnabled')=='false' for x in captures)
+        checks['captureFilesExist']=bool(captures) and all((OUTPUT/item['name']/'actual'/x.get('file','')).is_file() for x in captures)
+        checks['sixCompletedSteps']=actual.get('steps')==[
+          'actual water mesh selects its owner','actual source bridge board selects its supplying owner','store restores dry original floor',
+          'confirmation uses same water revision as preview','cancel restores committed world without changing owner fields','split and reconnect retain all 27 owner IDs']
+        referencePath=Path('/private/tmp/sansu-authored-shoulder-c2/regressions/04-wide27-water/actual/report.json')
+        baseline=read_json(referencePath)
+        assert baseline and baseline.get('pass') is True, 'Prior c2 water reference must remain an actual PASS'
+        baselineByFile={x['file']:x for x in baseline['captures']}
+        comparisons=[]
+        for capture in captures:
+            name=capture.get('file'); old=baselineByFile.get(name)
+            plan=json.loads(capture.get('metadata',{}).get('authoredWater','null'))
+            prior=json.loads(old['metadata']['authoredWater']) if old else None
+            comparisons.append({'capture':name,'planMatchesC2':plan==prior,'bridgeCount':len(plan.get('bridges',[])) if plan else None,
+                'bridges':plan.get('bridges') if plan else None,'runtimeBridgeSourceId':capture.get('metadata',{}).get('authoredWaterBridgeId'),
+                'worldRevision':capture.get('metadata',{}).get('worldRevision')})
+        checks['allWaterPlansEqualC2']=len(comparisons)==14 and all(x['planMatchesC2'] for x in comparisons)
+        checks['initialBridgeAndEdges']=bool(comparisons) and comparisons[0]['bridgeCount']==1 and bool(comparisons[0]['bridges'][0]['restoredEdgeIds'])
+        result['bridgeAndRestoredEdgeEvidence']={'baselineReport':str(referencePath),'baselineReportSha256':sha(referencePath),'captures':comparisons,
+            'scope':'Exact renderer water-plan equality with c2 includes all bridge and restoredEdgeIds fields. Per-edge physical query checks remain domain-test evidence; no invented browser route claim.'}
+    result['pass']=all(checks.values())
+    result['failurePhase']=None if result['pass'] else result['failurePhase'] or 'contract-inspection'
+    result['error']=error or (None if result['pass'] else ', '.join(k for k,v in checks.items() if not v))
+    return result
+''' +s[b:]
+s=s.replace('    global OUTPUT','    global OUTPUT, BASE')
+marker="    parser.add_argument('--start', action='store_true', help='Execute only after explicit parent START authorization')"
+s=s.replace(marker,marker+"\n    parser.add_argument('--server-origin', default=BASE, help='Root-owned c3 DEV origin; must match server-identity.json')")
+s=s.replace('    OUTPUT = args.output_root.resolve()','    OUTPUT = args.output_root.resolve()\n    BASE = args.server_origin.rstrip(\'/\')')
+marker="    OUTPUT.mkdir(exist_ok=False)"
+s=s.replace(marker,"""    from urllib.parse import urlparse
+    server=read_json(ROOT/'server-identity.json'); origin=urlparse(BASE)
+    assert origin.hostname=='127.0.0.1' and origin.scheme=='http' and not origin.path and origin.port, 'Explicit local root-owned origin required'
+    assert server and server.get('cwd')==str(REPO) and server.get('revision')==REVISION and server.get('httpStatus')==200, 'Root server identity must match c3'
+    assert server.get('port')==origin.port and server.get('deliveryFlags')=={'VITE_ISLAND_ENABLED':'true','VITE_NATIVE_GROWING_ART':'false'}
+    observedCwd=subprocess.run(['lsof','-a','-p',str(server['pid']),'-d','cwd','-Fn'],capture_output=True,text=True,check=True).stdout
+    assert '\\nn'+str(REPO)+'\\n' in '\\n'+observedCwd, 'Live server PID must still have exact candidate cwd'
+    """+marker.strip())
+s=s.replace("'scope': 'Sequential floor A/B, shoulder full, baseline27, wide27water, flower full, cove full, ordinaryGrowing and isolated classic; fixed source, disposable browser data, no independent art/performance/whole-M1 acceptance'", "'scope': 'Affected-only c3 wide27water plus isolated classic; not c3 all-eight, shoulder acquisition, art, performance or M1 acceptance',\n               'serverIdentity':server,'serverIdentitySha256':sha(ROOT/'server-identity.json'),'observedServerCwdAtStart':observedCwd")
+ast.parse(s)
+with (P/'affected-regressions.py').open('x') as f:f.write(s)
+with (P/'c2-to-c3-affected.diff').open('x') as f:f.writelines(difflib.unified_diff(before.splitlines(True),s.splitlines(True),fromfile='c2/regressions.py',tofile='c3/affected-regressions.py'))
+sha=lambda b:hashlib.sha256(b).hexdigest()
+with (P/'adaptation.json').open('x') as f:f.write(json.dumps({'source':str(OLD),'sourceSha256':sha(before.encode()),'runnerSha256':sha(s.encode()),'scope':'Two stages only; no runtime execution. Retains source/deps/first-failure/owned group timeout contract.', 'syntaxPass':True},indent=2)+'\n')

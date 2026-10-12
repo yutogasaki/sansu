@@ -1,0 +1,320 @@
+{
+  "version": 1,
+  "createdUtc": "2026-10-12T09:49:24.485340+00:00",
+  "scope": "Archive and file-hash comparison only; no new domain/compiler/test/browser execution.",
+  "frozenCandidate": "/private/tmp/sansu-districts-c7/candidate",
+  "layoutProofDirectory": "/private/tmp/sansu-districts-c7/layouts",
+  "allCopiedBytesUnchanged": true,
+  "files": [
+    {
+      "source": "/private/tmp/sansu-districts-c7/layouts/east-chain-bundle.mjs",
+      "destination": "layouts/east-chain-bundle.mjs",
+      "bytes": 50870,
+      "sourceBeforeSha256": "4940a6045089febc45ef996743fcc60f9845919706ec020b0e903ad1839d7c37",
+      "sourceAfterSha256": "4940a6045089febc45ef996743fcc60f9845919706ec020b0e903ad1839d7c37",
+      "destinationSha256": "4940a6045089febc45ef996743fcc60f9845919706ec020b0e903ad1839d7c37"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/layouts/east-chain.json",
+      "destination": "layouts/east-chain.json",
+      "bytes": 5538,
+      "sourceBeforeSha256": "7d2905f551d9ddc7cc5331f8e80678436d9cfe99eb823f211edf054711fcbdc8",
+      "sourceAfterSha256": "7d2905f551d9ddc7cc5331f8e80678436d9cfe99eb823f211edf054711fcbdc8",
+      "destinationSha256": "7d2905f551d9ddc7cc5331f8e80678436d9cfe99eb823f211edf054711fcbdc8"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/layouts/north-chain-bundle.mjs",
+      "destination": "layouts/north-chain-bundle.mjs",
+      "bytes": 50870,
+      "sourceBeforeSha256": "4940a6045089febc45ef996743fcc60f9845919706ec020b0e903ad1839d7c37",
+      "sourceAfterSha256": "4940a6045089febc45ef996743fcc60f9845919706ec020b0e903ad1839d7c37",
+      "destinationSha256": "4940a6045089febc45ef996743fcc60f9845919706ec020b0e903ad1839d7c37"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/layouts/north-chain.json",
+      "destination": "layouts/north-chain.json",
+      "bytes": 5555,
+      "sourceBeforeSha256": "d029c55cf1ddd28b2d03f2ed1af4794d153657232e9dc5ff8ab94641d9a98cd5",
+      "sourceAfterSha256": "d029c55cf1ddd28b2d03f2ed1af4794d153657232e9dc5ff8ab94641d9a98cd5",
+      "destinationSha256": "d029c55cf1ddd28b2d03f2ed1af4794d153657232e9dc5ff8ab94641d9a98cd5"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/layouts/prove.mjs",
+      "destination": "layouts/prove.mjs",
+      "bytes": 8037,
+      "sourceBeforeSha256": "fe5a48d6307abf79278079576637b1c82aeb78fad3f4081d32837972a6e59b78",
+      "sourceAfterSha256": "fe5a48d6307abf79278079576637b1c82aeb78fad3f4081d32837972a6e59b78",
+      "destinationSha256": "fe5a48d6307abf79278079576637b1c82aeb78fad3f4081d32837972a6e59b78"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/layouts/summarize.mjs",
+      "destination": "layouts/summarize.mjs",
+      "bytes": 2252,
+      "sourceBeforeSha256": "ba4e7b311059c12e1caf502bdb667b6b7f884ac096aabf4224b6de95c22eaa3a",
+      "sourceAfterSha256": "ba4e7b311059c12e1caf502bdb667b6b7f884ac096aabf4224b6de95c22eaa3a",
+      "destinationSha256": "ba4e7b311059c12e1caf502bdb667b6b7f884ac096aabf4224b6de95c22eaa3a"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/layouts/summary.json",
+      "destination": "layouts/summary.json",
+      "bytes": 3906,
+      "sourceBeforeSha256": "1640ee339f67692623ae30a4f1c3577767cdbc257a804aa2509285bdb87456eb",
+      "sourceAfterSha256": "1640ee339f67692623ae30a4f1c3577767cdbc257a804aa2509285bdb87456eb",
+      "destinationSha256": "1640ee339f67692623ae30a4f1c3577767cdbc257a804aa2509285bdb87456eb"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/layouts/two-arms-bundle.mjs",
+      "destination": "layouts/two-arms-bundle.mjs",
+      "bytes": 50870,
+      "sourceBeforeSha256": "4940a6045089febc45ef996743fcc60f9845919706ec020b0e903ad1839d7c37",
+      "sourceAfterSha256": "4940a6045089febc45ef996743fcc60f9845919706ec020b0e903ad1839d7c37",
+      "destinationSha256": "4940a6045089febc45ef996743fcc60f9845919706ec020b0e903ad1839d7c37"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/layouts/two-arms.json",
+      "destination": "layouts/two-arms.json",
+      "bytes": 5541,
+      "sourceBeforeSha256": "2b428c5d5bbb57ab0ed2463a7144d4475ca40e200060944b030b24c81ba1728e",
+      "sourceAfterSha256": "2b428c5d5bbb57ab0ed2463a7144d4475ca40e200060944b030b24c81ba1728e",
+      "destinationSha256": "2b428c5d5bbb57ab0ed2463a7144d4475ca40e200060944b030b24c81ba1728e"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/candidate/prototypes/place-qa/authored-district-kit-manifest.json",
+      "destination": "catalog/authored-district-kit-manifest.json",
+      "bytes": 5586,
+      "sourceBeforeSha256": "4f805bf2aad7dcfe7c605d33e8a06d6d9cd5de0defc57d30db8380f045cd2ce7",
+      "sourceAfterSha256": "4f805bf2aad7dcfe7c605d33e8a06d6d9cd5de0defc57d30db8380f045cd2ce7",
+      "destinationSha256": "4f805bf2aad7dcfe7c605d33e8a06d6d9cd5de0defc57d30db8380f045cd2ce7"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/candidate/prototypes/place-qa/authored-district-kit.json.gz",
+      "destination": "catalog/authored-district-kit.json.gz",
+      "bytes": 2088641,
+      "sourceBeforeSha256": "5ec00efb522247797fd8f269174901b2fba888cdd64c9c0bcd730db083c3a38f",
+      "sourceAfterSha256": "5ec00efb522247797fd8f269174901b2fba888cdd64c9c0bcd730db083c3a38f",
+      "destinationSha256": "5ec00efb522247797fd8f269174901b2fba888cdd64c9c0bcd730db083c3a38f"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/candidate/prototypes/place-qa/native05-world-source-shading.json.gz",
+      "destination": "inputs/native05-world-source-shading.json.gz",
+      "bytes": 2276640,
+      "sourceBeforeSha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+      "sourceAfterSha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+      "destinationSha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/candidate/prototypes/place-qa/authored-shoulder-reference-mature.json",
+      "destination": "inputs/authored-shoulder-reference-mature.json",
+      "bytes": 72862,
+      "sourceBeforeSha256": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+      "sourceAfterSha256": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+      "destinationSha256": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/candidate/src/domain/growingIsland/authoredDistrictWorld.ts",
+      "destination": "source/authoredDistrictWorld.ts.txt",
+      "bytes": 18418,
+      "sourceBeforeSha256": "49ddc14789f0b66a1905718ebcb2b4cd74b14fbf91bbe1960090853e5f58d8e6",
+      "sourceAfterSha256": "49ddc14789f0b66a1905718ebcb2b4cd74b14fbf91bbe1960090853e5f58d8e6",
+      "destinationSha256": "49ddc14789f0b66a1905718ebcb2b4cd74b14fbf91bbe1960090853e5f58d8e6"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/candidate/src/domain/growingIsland/authoredDistrictWorld.test.ts",
+      "destination": "source/authoredDistrictWorld.test.ts.txt",
+      "bytes": 10158,
+      "sourceBeforeSha256": "62c7945a9a020cdce98e64b43984e55c8fbe6883aa5b6c72b7fcc041a464c1e4",
+      "sourceAfterSha256": "62c7945a9a020cdce98e64b43984e55c8fbe6883aa5b6c72b7fcc041a464c1e4",
+      "destinationSha256": "62c7945a9a020cdce98e64b43984e55c8fbe6883aa5b6c72b7fcc041a464c1e4"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/candidate/src/domain/growingIsland/authoredDistrictKit.test.ts",
+      "destination": "source/authoredDistrictKit.test.ts.txt",
+      "bytes": 7042,
+      "sourceBeforeSha256": "d35b8f419abd049d390095ece730e3709ad88afb688b1f824846117cc426fb98",
+      "sourceAfterSha256": "d35b8f419abd049d390095ece730e3709ad88afb688b1f824846117cc426fb98",
+      "destinationSha256": "d35b8f419abd049d390095ece730e3709ad88afb688b1f824846117cc426fb98"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/candidate/tools/build-authored-district-kit.mjs",
+      "destination": "source/build-authored-district-kit.mjs.txt",
+      "bytes": 15903,
+      "sourceBeforeSha256": "20a3d5904ac991488f92fab778b78504d09c7678491d31c7fb621ae97b693572",
+      "sourceAfterSha256": "20a3d5904ac991488f92fab778b78504d09c7678491d31c7fb621ae97b693572",
+      "destinationSha256": "20a3d5904ac991488f92fab778b78504d09c7678491d31c7fb621ae97b693572"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/candidate/src/domain/growingIsland/worldDefinition.ts",
+      "destination": "source/worldDefinition.ts.txt",
+      "bytes": 29593,
+      "sourceBeforeSha256": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+      "sourceAfterSha256": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+      "destinationSha256": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/candidate/src/domain/growingIsland/worldTypes.ts",
+      "destination": "source/worldTypes.ts.txt",
+      "bytes": 3039,
+      "sourceBeforeSha256": "d573184d5f78c77faa6a7c2811057f899356801e803df7df01ccb63073fd306f",
+      "sourceAfterSha256": "d573184d5f78c77faa6a7c2811057f899356801e803df7df01ccb63073fd306f",
+      "destinationSha256": "d573184d5f78c77faa6a7c2811057f899356801e803df7df01ccb63073fd306f"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/candidate/src/domain/growingIsland/authoredWorldAccess.ts",
+      "destination": "source/authoredWorldAccess.ts.txt",
+      "bytes": 14497,
+      "sourceBeforeSha256": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+      "sourceAfterSha256": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+      "destinationSha256": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/candidate/src/domain/growingIsland/authoredWaterGeometry.ts",
+      "destination": "source/authoredWaterGeometry.ts.txt",
+      "bytes": 5451,
+      "sourceBeforeSha256": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+      "sourceAfterSha256": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+      "destinationSha256": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/candidate/src/domain/growingIsland/types.ts",
+      "destination": "source/types.ts.txt",
+      "bytes": 9935,
+      "sourceBeforeSha256": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+      "sourceAfterSha256": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+      "destinationSha256": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a"
+    },
+    {
+      "source": "/private/tmp/sansu-districts-c7/candidate/src/domain/growingIsland/space.ts",
+      "destination": "source/space.ts.txt",
+      "bytes": 7835,
+      "sourceBeforeSha256": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+      "sourceAfterSha256": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+      "destinationSha256": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792"
+    }
+  ],
+  "sourceSnapshots": [
+    {
+      "path": "prototypes/place-qa/authored-district-kit-manifest.json",
+      "archive": "catalog/authored-district-kit-manifest.json",
+      "frozenSha256": "4f805bf2aad7dcfe7c605d33e8a06d6d9cd5de0defc57d30db8380f045cd2ce7",
+      "bytes": 5586,
+      "liveSha256AtArchive": "4f805bf2aad7dcfe7c605d33e8a06d6d9cd5de0defc57d30db8380f045cd2ce7",
+      "liveMatchesFrozen": true
+    },
+    {
+      "path": "prototypes/place-qa/authored-district-kit.json.gz",
+      "archive": "catalog/authored-district-kit.json.gz",
+      "frozenSha256": "5ec00efb522247797fd8f269174901b2fba888cdd64c9c0bcd730db083c3a38f",
+      "bytes": 2088641,
+      "liveSha256AtArchive": "5ec00efb522247797fd8f269174901b2fba888cdd64c9c0bcd730db083c3a38f",
+      "liveMatchesFrozen": true
+    },
+    {
+      "path": "prototypes/place-qa/native05-world-source-shading.json.gz",
+      "archive": "inputs/native05-world-source-shading.json.gz",
+      "frozenSha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+      "bytes": 2276640,
+      "liveSha256AtArchive": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+      "liveMatchesFrozen": true
+    },
+    {
+      "path": "prototypes/place-qa/authored-shoulder-reference-mature.json",
+      "archive": "inputs/authored-shoulder-reference-mature.json",
+      "frozenSha256": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+      "bytes": 72862,
+      "liveSha256AtArchive": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+      "liveMatchesFrozen": true
+    },
+    {
+      "path": "src/domain/growingIsland/authoredDistrictWorld.ts",
+      "archive": "source/authoredDistrictWorld.ts.txt",
+      "frozenSha256": "49ddc14789f0b66a1905718ebcb2b4cd74b14fbf91bbe1960090853e5f58d8e6",
+      "bytes": 18418,
+      "liveSha256AtArchive": "49ddc14789f0b66a1905718ebcb2b4cd74b14fbf91bbe1960090853e5f58d8e6",
+      "liveMatchesFrozen": true
+    },
+    {
+      "path": "src/domain/growingIsland/authoredDistrictWorld.test.ts",
+      "archive": "source/authoredDistrictWorld.test.ts.txt",
+      "frozenSha256": "62c7945a9a020cdce98e64b43984e55c8fbe6883aa5b6c72b7fcc041a464c1e4",
+      "bytes": 10158,
+      "liveSha256AtArchive": "62c7945a9a020cdce98e64b43984e55c8fbe6883aa5b6c72b7fcc041a464c1e4",
+      "liveMatchesFrozen": true
+    },
+    {
+      "path": "src/domain/growingIsland/authoredDistrictKit.test.ts",
+      "archive": "source/authoredDistrictKit.test.ts.txt",
+      "frozenSha256": "d35b8f419abd049d390095ece730e3709ad88afb688b1f824846117cc426fb98",
+      "bytes": 7042,
+      "liveSha256AtArchive": "d35b8f419abd049d390095ece730e3709ad88afb688b1f824846117cc426fb98",
+      "liveMatchesFrozen": true
+    },
+    {
+      "path": "tools/build-authored-district-kit.mjs",
+      "archive": "source/build-authored-district-kit.mjs.txt",
+      "frozenSha256": "20a3d5904ac991488f92fab778b78504d09c7678491d31c7fb621ae97b693572",
+      "bytes": 15903,
+      "liveSha256AtArchive": "20a3d5904ac991488f92fab778b78504d09c7678491d31c7fb621ae97b693572",
+      "liveMatchesFrozen": true
+    },
+    {
+      "path": "src/domain/growingIsland/worldDefinition.ts",
+      "archive": "source/worldDefinition.ts.txt",
+      "frozenSha256": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+      "bytes": 29593,
+      "liveSha256AtArchive": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+      "liveMatchesFrozen": true
+    },
+    {
+      "path": "src/domain/growingIsland/worldTypes.ts",
+      "archive": "source/worldTypes.ts.txt",
+      "frozenSha256": "d573184d5f78c77faa6a7c2811057f899356801e803df7df01ccb63073fd306f",
+      "bytes": 3039,
+      "liveSha256AtArchive": "d573184d5f78c77faa6a7c2811057f899356801e803df7df01ccb63073fd306f",
+      "liveMatchesFrozen": true
+    },
+    {
+      "path": "src/domain/growingIsland/authoredWorldAccess.ts",
+      "archive": "source/authoredWorldAccess.ts.txt",
+      "frozenSha256": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+      "bytes": 14497,
+      "liveSha256AtArchive": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+      "liveMatchesFrozen": true
+    },
+    {
+      "path": "src/domain/growingIsland/authoredWaterGeometry.ts",
+      "archive": "source/authoredWaterGeometry.ts.txt",
+      "frozenSha256": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+      "bytes": 5451,
+      "liveSha256AtArchive": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+      "liveMatchesFrozen": true
+    },
+    {
+      "path": "src/domain/growingIsland/types.ts",
+      "archive": "source/types.ts.txt",
+      "frozenSha256": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+      "bytes": 9935,
+      "liveSha256AtArchive": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+      "liveMatchesFrozen": true
+    },
+    {
+      "path": "src/domain/growingIsland/space.ts",
+      "archive": "source/space.ts.txt",
+      "frozenSha256": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+      "bytes": 7835,
+      "liveSha256AtArchive": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+      "liveMatchesFrozen": true
+    }
+  ],
+  "originalSource": {
+    "path": "docs/design/2026-10-10-island-final-3d/whole-island.glb",
+    "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "bytes": 34930176,
+    "archivedCopy": false,
+    "reason": "Existing immutable durable native05 source is linked; not duplicated."
+  },
+  "excluded": [
+    "In-progress c7 core outputs",
+    "In-progress or future browser/runtime outputs"
+  ],
+  "proofSemantics": "Historical absolute /private/tmp paths inside raw files are retained byte-for-byte; destination maps above identify durable copies."
+}

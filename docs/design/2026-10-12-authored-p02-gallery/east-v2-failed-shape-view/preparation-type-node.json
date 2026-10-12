@@ -1,0 +1,78 @@
+{
+  "status": "PREPARED_CORRECTED_LOCALE_NODE_LOOKUP_COPY",
+  "cwd": "/private/tmp/sansu-p02-gallery-source-study/east-v2-failed-shape-view",
+  "command": [
+    "python3",
+    "../east-v2/supervise.py",
+    "--scheduled",
+    "--seconds",
+    "240",
+    "--rss-mib",
+    "2560",
+    "--log",
+    "runs/02-whole.log.txt",
+    "--",
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "render-failed-type-node.py",
+    "--",
+    "--scheduled",
+    "--source",
+    "../east-v2/runs/01-coarse-build/failed-scene.blend",
+    "--out",
+    "runs/02-whole",
+    "--view",
+    "whole"
+  ],
+  "scriptSha256": "6b5a4a9280a1323d4c665c888dc0243800b932ad0db63a0a2890bc8b86cd1ec2",
+  "readmeSha256": "6010fafb78b03498bf547b6cd1f245540cb7076efa6cae85261f6451096702e3",
+  "inputPaths": {
+    "failedScene": "/private/tmp/sansu-p02-gallery-source-study/east-v2/runs/01-coarse-build/failed-scene.blend",
+    "study": "/private/tmp/sansu-p02-gallery-source-study/east-v2/study.json",
+    "originalRenderCode": "/private/tmp/sansu-p02-gallery-source-study/east-v2/render-source.py",
+    "supervisor": "/private/tmp/sansu-p02-gallery-source-study/east-v2/supervise.py",
+    "closedFloorQA": "/private/tmp/sansu-p02-gallery-source-study/east-v2/runs/01-coarse-build/closed-floor-union.json",
+    "originalFailedRenderer": "/private/tmp/sansu-p02-gallery-source-study/east-v2-failed-shape-view/render-failed.py",
+    "originalPreparation": "/private/tmp/sansu-p02-gallery-source-study/east-v2-failed-shape-view/preparation.json"
+  },
+  "inputSha256": {
+    "failedScene": "e61a390ef10e77ef40de77972454050b19e469b725ea8ebbec7b43e35b199746",
+    "study": "7ff0cd080569eb92928cbe7d974fa4348ff89e597d7c98f5ecff471fdc105cec",
+    "originalRenderCode": "d1635d4fb6e0dfcf6f2423310e5bdedba1cf29d2381a50bcaf11c830e197f1f6",
+    "supervisor": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "closedFloorQA": "6d6d98206d86a953b3299aefbf289f6b987aa5f5f25eae6aca339b8122e6e12d",
+    "originalFailedRenderer": "ed901f090fb420d6a4f847af1b4203c28ea6362c555511bb95e9a531f071fc76",
+    "originalPreparation": "c6d8e6f357cc2ae5699e9faa47efc88d1c4c40f5865884b1fde08710c2da16ef"
+  },
+  "staticChecks": {
+    "ast": true,
+    "cameraLightingEngineBlockByteIdenticalToSealedOriginal": false,
+    "noSaveOrModifierOperation": true,
+    "originalCameraLightingBlockOnlyExistingNodeLookupChanged": true,
+    "reasonNotByteIdentical": "Existing background node lookup changes from display name to exact bl_idname; camera/color/strength/engine settings remain identical."
+  },
+  "resourceLimits": {
+    "threads": 2,
+    "seconds": 240,
+    "rssMiB": 2560,
+    "samples": 16
+  },
+  "outputLabel": "INCOMPLETE_FLOOR_ONLY_TOPOLOGY_INVALID_HOLD",
+  "appOrRuntimeAcceptance": false,
+  "correction": {
+    "onlyChanges": [
+      "local manifest filename for corrected copy",
+      "existing background by bl_idname ShaderNodeBackground; exactly one required"
+    ],
+    "originalScriptSha256": "ed901f090fb420d6a4f847af1b4203c28ea6362c555511bb95e9a531f071fc76",
+    "originalPreparationSha256": "c6d8e6f357cc2ae5699e9faa47efc88d1c4c40f5865884b1fde08710c2da16ef",
+    "firstFailurePreserved": "runs/01-whole.log.txt",
+    "noNodeCreationOrLightingFallback": true,
+    "sameColorStrengthCameraGeometry": true
+  }
+}

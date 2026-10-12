@@ -1,0 +1,78 @@
+"""Same-owner organic boughs swept from actual donor triangle sections.
+
+No generic circular/elliptical profile. Source meshes remain untouched. Endpoint
+clearance uses inherited approximate weld/f32-nearest and query64 parity: this
+is a source shape measurement, not certified overlap or actor clearance.
+"""
+import math
+import bpy
+from mathutils import Vector
+from volume_adapter import Volume64 as Volume
+from native_section import section
+
+
+def frame(tangent):
+    tangent=tangent.normalized()
+    up=Vector((0,1,0)) if abs(tangent.y)<.95 else Vector((1,0,0))
+    side=tangent.cross(up).normalized()
+    return side,tangent.cross(side).normalized()
+
+
+def connector(left,right,left_guess,right_guess,radius,max_span,name,
+              owner_id,material,collection,world_to_blender,source_sha,
+              donor,style,controls):
+    assert left.obj['ownerId']==right.obj['ownerId']==donor.obj['ownerId']==owner_id
+    ball_radius=radius*controls['capBallFactor']
+    start=left.interior_ball(left_guess,ball_radius)
+    end=right.interior_ball(right_guess,ball_radius)
+    span=(end-start).length
+    if not .002<span<=max_span:raise ValueError(f'Organic bough outside authored span: {name} {span}')
+    # The chosen plane intersects the actual donor; no procedural cylinder donor.
+    donor_point=start if donor is left else end
+    profile=section(donor.points,donor.triangles,float(donor_point.y))
+    delta=end-start
+    if style=='willow-main':
+        handle=min(controls['maximumHandleWorld'],max(controls['minimumHandleWorld'],span*controls['handleLengthFraction']))
+        b=start+Vector(controls['controlStartTangentWorld']).normalized()*handle
+        c=end-Vector((delta.x,max(controls['endVerticalMinimumWorld'],span*controls['endVerticalSpanFactor']),delta.z)).normalized()*handle
+    elif style=='willow-stem':
+        b=start+delta/3+Vector((0,span*.15,0))
+        c=start+delta*2/3+Vector((0,span*.15,0))
+    else:raise ValueError('No birch/generic repair bough permitted')
+    def point(t):return start*(1-t)**3+b*(3*t*(1-t)**2)+c*(3*t*t*(1-t))+end*t**3
+    points=[];faces=[];segments=controls['segments'];sides=len(profile['outlineUnit'])
+    prior_side=None;maximum_radius=0.
+    for i in range(segments+1):
+        t=i/segments;tangent=(point(min(1,t+.0001))-point(max(0,t-.0001))).normalized()
+        if prior_side is None:side,across=frame(tangent)
+        else:
+            side=(prior_side-tangent*prior_side.dot(tangent)).normalized();across=tangent.cross(side).normalized()
+        if side.length<.99:raise ValueError('Degenerate transported bough frame')
+        prior_side=side
+        # Full root, organic shoulder, clear distal taper. Outline stays native.
+        radial=radius*((1-.45*t)+.22*math.sin(math.pi*t)**2)
+        maximum_radius=max(maximum_radius,radial)
+        for u,v in profile['outlineUnit']:points.append(point(t)+side*(u*radial)+across*(v*radial))
+    for i in range(segments):
+        for j in range(sides):
+            k=(j+1)%sides;faces.append((i*sides+j,i*sides+k,(i+1)*sides+k,(i+1)*sides+j))
+    faces.extend([tuple(reversed(range(sides))),tuple(segments*sides+j for j in range(sides))])
+    assert max((p-start).length for p in points[:sides])<ball_radius
+    assert max((p-end).length for p in points[-sides:])<ball_radius
+    mesh=bpy.data.meshes.new(name);mesh.from_pydata([tuple(world_to_blender@p) for p in points],[],faces)
+    mesh.update();mesh.materials.append(material)
+    for polygon in mesh.polygons:polygon.use_smooth=len(polygon.vertices)==4
+    obj=bpy.data.objects.new(name,mesh);collection.objects.link(obj)
+    for key,value in {'ownerId':owner_id,'forestRole':'derived-native-junction','sourceSha256':source_sha,
+        'jointLeft':left.obj.name,'jointRight':right.obj.name,'sourceDonor':donor.obj.name,
+        'sourceDonorNodeIndex':int(donor.obj['sourceNodeIndex']),'sameOwnerOnly':True,'runtimeIntegrated':False,
+        'status':'HOLD source coarse bough','boughStyle':style}.items():obj[key]=value
+    measured=Volume(obj,world_to_blender.inverted())
+    return obj,{'name':name,'ownerId':owner_id,'generated':True,'style':style,'spanWorld':span,
+        'bezierControlsWorld':[list(v) for v in (start,b,c,end)],'radiusWorld':radius,'maximumRadiusWorld':maximum_radius,
+        'endpointBallRadiusWorld':ball_radius,'endpointSurfaceClearanceWorld':[left.clearance(start),right.clearance(end)],
+        'capVerticesInsideApproximateEndpointBalls':True,'closure':measured.closure,
+        'sourceDonor':donor.obj.name,'sourceDonorNodeIndex':int(donor.obj['sourceNodeIndex']),
+        'nativeProfile':profile,'segments':segments,'profileVertexCount':sides,
+        'normalMethod':'smooth side faces, flat caps; not source-to-bough seam continuity',
+        'material':material.name,'sourceSha256':source_sha,'clearanceApproximate':True}

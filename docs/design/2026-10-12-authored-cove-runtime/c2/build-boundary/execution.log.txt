@@ -1,0 +1,53 @@
+{
+  "pass": true,
+  "revision": "authored-cove-c2",
+  "native": false,
+  "dist": {
+    "files": 171,
+    "bytes": 24547855,
+    "inventorySha256": "0a358450982274cef5070c3bb7b08c15fb11126b2f5e3301c278037868c52ae1",
+    "unchangedDuringReadOnlyChecks": true
+  },
+  "precache": {
+    "count": 145,
+    "bytes": 8896755,
+    "maxBytes": 12582912
+  },
+  "inputCount": 2137,
+  "payloadFileCount": 0,
+  "renamedPayloadCount": 0,
+  "embeddedPayloadCount": 0,
+  "codeChunks": [
+    {
+      "file": "assets/_native-owned-art-disabled-BiOygDaT.js",
+      "bytes": 55,
+      "sha256": "18bb61573fafb98bc9007fb11db2e8df0e3be7e0726ec21f5d154b858f96d356"
+    },
+    {
+      "file": "assets/authoredGrowingAssets-DFvrLLpN.js",
+      "bytes": 469,
+      "sha256": "62f591b5121c85c53b98e4092670117cbda91f41a57994ce89329685bc290536"
+    },
+    {
+      "file": "assets/nativeAuthoredFlower-J_eJry4h.js",
+      "bytes": 8482,
+      "sha256": "59735dbc90a57758a646fd6fecd5e75fd60fa1a0c91cc330111c3f70fd28fa8e"
+    }
+  ],
+  "inlineCoveDefinitions": [
+    {
+      "file": "assets/GrowingWorld-BEmheuSc.js",
+      "bytes": 415779,
+      "exactSerializedDistrictPresent": true,
+      "serializedDistrictCharacters": 147435,
+      "districtSha256": "ef7c526096b066095123b99e9e3b8ea8f0ef73ed40fa98b69030e465e7cd97dc",
+      "floorCount": 1,
+      "vertices": 598,
+      "triangles": 596,
+      "districtSites": 9,
+      "sourcePatchEdgeCount": 15,
+      "interpretation": "Actual shared-apron district geometry and walk-site data remains inline in JS. This is more than descriptive names, but is separate from absent native GLB/gzip/Blender art payloads."
+    }
+  ],
+  "assetBudgetExitCode": 0
+}

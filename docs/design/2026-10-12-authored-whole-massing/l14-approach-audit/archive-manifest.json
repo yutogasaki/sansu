@@ -1,0 +1,77 @@
+{
+  "scope": "Durable archive of a read-only l14 baseline approach diagnosis for next M1 implementation design. No app correction or whole-app acceptance PASS is asserted.",
+  "copy": {
+    "probe.mjs": {
+      "source": "/private/tmp/sansu-l14-access-diagnosis/probe.mjs",
+      "bytes": 9119,
+      "sourceSha256": "d7382bf370c742cefa006492ccc4b6d51464741d9b86ed251e55611f765f2fd7",
+      "archivedSha256": "d7382bf370c742cefa006492ccc4b6d51464741d9b86ed251e55611f765f2fd7",
+      "sourceAfterCopySha256": "d7382bf370c742cefa006492ccc4b6d51464741d9b86ed251e55611f765f2fd7",
+      "bytesIdentical": true
+    },
+    "report.json": {
+      "source": "/private/tmp/sansu-l14-access-diagnosis/report.json",
+      "bytes": 60354,
+      "sourceSha256": "2edd683fb2003b6fb229e8b931a4dad8b56b9100960a059846b0d4ca8e6fafa8",
+      "archivedSha256": "2edd683fb2003b6fb229e8b931a4dad8b56b9100960a059846b0d4ca8e6fafa8",
+      "sourceAfterCopySha256": "2edd683fb2003b6fb229e8b931a4dad8b56b9100960a059846b0d4ca8e6fafa8",
+      "bytesIdentical": true
+    },
+    "execution.log.txt": {
+      "source": "/private/tmp/sansu-l14-access-diagnosis/execution.log.txt",
+      "bytes": 4702,
+      "sourceSha256": "526702875fea5ba0b62880e7cb1ef807180fe08a978f997ac4474dd0b9d5c7b3",
+      "archivedSha256": "526702875fea5ba0b62880e7cb1ef807180fe08a978f997ac4474dd0b9d5c7b3",
+      "sourceAfterCopySha256": "526702875fea5ba0b62880e7cb1ef807180fe08a978f997ac4474dd0b9d5c7b3",
+      "bytesIdentical": true
+    },
+    "findings.md": {
+      "source": "/private/tmp/sansu-l14-access-diagnosis/findings.md",
+      "bytes": 7212,
+      "sourceSha256": "82b5f12ba7839c5d016186869296c7aa24f2efa573213ad5e55665aa4083ac74",
+      "archivedSha256": "82b5f12ba7839c5d016186869296c7aa24f2efa573213ad5e55665aa4083ac74",
+      "sourceAfterCopySha256": "82b5f12ba7839c5d016186869296c7aa24f2efa573213ad5e55665aa4083ac74",
+      "bytesIdentical": true
+    },
+    "handoff-hashes.json": {
+      "source": "/private/tmp/sansu-l14-access-diagnosis/handoff-hashes.json",
+      "bytes": 347,
+      "sourceSha256": "65b1b2652fd59be6568a89b5a0619274ee917043855567714bac2728ba217b5e",
+      "archivedSha256": "65b1b2652fd59be6568a89b5a0619274ee917043855567714bac2728ba217b5e",
+      "sourceAfterCopySha256": "65b1b2652fd59be6568a89b5a0619274ee917043855567714bac2728ba217b5e",
+      "bytesIdentical": true
+    },
+    "archive.py": {
+      "source": "/private/tmp/sansu-l14-access-diagnosis/archive.py",
+      "bytes": 7085,
+      "sourceSha256": "9c74a9b5d44670ba932d212894c6c2e4dc606965d6850ca69a80d97f6016b480",
+      "archivedSha256": "9c74a9b5d44670ba932d212894c6c2e4dc606965d6850ca69a80d97f6016b480",
+      "sourceAfterCopySha256": "9c74a9b5d44670ba932d212894c6c2e4dc606965d6850ca69a80d97f6016b480",
+      "bytesIdentical": true
+    }
+  },
+  "extracts": {
+    "input-hashes-before.json": {
+      "source": "report.json",
+      "field": "inputHashesBefore",
+      "bytes": 12349,
+      "sha256": "9ec2d83ebef70def7e2900e977b0cfe53c50cc1d90a77e115fa19c3858b86e7c",
+      "count": 104
+    },
+    "input-hashes-after.json": {
+      "source": "report.json",
+      "field": "inputHashesAfter",
+      "bytes": 12349,
+      "sha256": "9ec2d83ebef70def7e2900e977b0cfe53c50cc1d90a77e115fa19c3858b86e7c",
+      "count": 104
+    }
+  },
+  "inputsUnchanged": true,
+  "inputCount": 104,
+  "scopeLimitations": [
+    "Current runtime indexes flower/cove roots, not native groves; diagnostic temporarily registers actual native tree roots.",
+    "l14 has no own seat or PlaceUseTarget and no legitimate l14-specific use receipt.",
+    "Safe local point and real neighbor route do not constitute completed actor-use/full-footprint support/visual acceptance.",
+    "No app, source, fixture, owner, land grant, geometry, mature age, browser or core was changed or started."
+  ]
+}

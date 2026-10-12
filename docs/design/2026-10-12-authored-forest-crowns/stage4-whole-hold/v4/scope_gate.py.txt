@@ -1,0 +1,29 @@
+"""Exact source-role/CREATED/context classification; no unknown-tag ignore."""
+
+def inspect(records, expected_roles, expected_created, expected_context):
+    # expected_roles maps owner:sourceNode -> exact expected object token.
+    # expected_created maps exact recorded object token -> expected owner.
+    tokens=[r['token'] for r in records]
+    source_tokens=set(expected_roles.values());derived_tokens=set(expected_created)
+    context_tokens=set(expected_context)
+    tagged={r['token'] for r in records if r['role'] is not None}
+    original=[r for r in records if r['token'] in source_tokens]
+    derived=[r for r in records if r['token'] in derived_tokens]
+    identities=[str(r['owner'])+':'+str(r['sourceNode']) for r in original]
+    mapping=dict(zip(identities,[r['token'] for r in original]))
+    checks={
+        'uniqueSceneTokens':len(tokens)==len(set(tokens)),
+        'sourceRolesHaveUniqueExpectedIdentities':len(identities)==len(set(identities))==128 and mapping==expected_roles,
+        'originalRolesNotDerived':all(r['role'] is not None and r['role']!='derived-native-junction' for r in original),
+        'createdExactlyPresent':{r['token'] for r in derived}==derived_tokens,
+        'createdRoleAndOwnerExact':all(r['role']=='derived-native-junction' and r['owner']==expected_created[r['token']] for r in derived),
+        'noUnknownForestRoleObject':tagged==source_tokens|derived_tokens,
+        'disjointResponsibilities':not(source_tokens&derived_tokens or source_tokens&context_tokens or derived_tokens&context_tokens),
+        'allMeshesExactlyExpected':set(tokens)==source_tokens|derived_tokens|context_tokens,
+    }
+    return {'passed':all(checks.values()),'checks':checks,'actualOriginalRoleCount':len(original),
+            'actualDerivedCount':len(derived),'expectedCreatedObjects':expected_created,
+            'originalIdentityToObject':mapping,'expectedContextCount':len(context_tokens),
+            'actualMeshCount':len(records),
+            'unknownTaggedObjects':sorted(tagged-source_tokens-derived_tokens),
+            'missingExpectedObjects':sorted((source_tokens|derived_tokens|context_tokens)-set(tokens))}

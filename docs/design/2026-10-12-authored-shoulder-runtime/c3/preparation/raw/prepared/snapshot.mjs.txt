@@ -1,0 +1,47 @@
+// Seal the already cloned c3 candidate; never copies more live files or runs core.
+import assert from 'node:assert/strict';
+import { promises as fs } from 'node:fs';
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+const output='/private/tmp/sansu-authored-shoulder-c3', dest=`${output}/candidate`;
+const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+const readJson=async file=>JSON.parse(await fs.readFile(file,'utf8'));
+const hashes=async names=>{
+    const result={};
+    for(const name of [...names].sort()) result[name]=sha(await fs.readFile(path.join(dest,name)));
+    return result;
+};
+if(!process.argv.includes('--start')) console.log(JSON.stringify({prepared:true,executionStarted:false,dest,scope:'Seal clone and audit identities only; no new copy/core/browser'}));
+else {
+    const closurePath=`${output}/closure/inputs.json`, installedPath=`${output}/closure/installed-dependencies.json`;
+    const expected=await readJson(closurePath), installed=await readJson(installedPath);
+    const copyBytes=await fs.readFile(`${output}/candidate-copy.json`), copy=JSON.parse(copyBytes);
+    const c2Core=await readJson('/private/tmp/sansu-authored-shoulder-c2/core/report.json');
+    const audit=await readJson(`${output}/closure/import-audit.json`), harness=await readJson(`${output}/closure/driver-input-audit.json`);
+    assert(copy.dest===dest && copy.sourceDeltaExactlyThree && copy.baselineSnapshotFixed && !copy.changedDuringCopy.length);
+    assert(c2Core.pass && c2Core.sourceFixed && c2Core.installedDependenciesFixed);
+    assert.deepEqual(Object.keys(expected).sort(),Object.keys(c2Core.finalInputs).sort(),'Closure path set must remain c2-equivalent');
+    const differences=Object.keys(expected).filter(name=>expected[name]!==c2Core.finalInputs[name]).sort();
+    assert.deepEqual(differences,copy.sourceDeltaPaths);
+    assert.deepEqual(installed,c2Core.finalInstalledDependencies,'Installed bytes must remain unchanged');
+    assert(audit.pass && audit.repo===dest && harness.pass && harness.repo===dest);
+    const initialInstalledDependencies=await hashes(Object.keys(installed));
+    assert.deepEqual(initialInstalledDependencies,installed);
+    const files=await hashes(Object.keys(copy.files));
+    assert.deepEqual(files,copy.files,'Any snapshot byte change prevents sealing');
+    const closureDifferences=Object.keys(expected).filter(name=>files[name]!==expected[name]); assert.deepEqual(closureDifferences,[]);
+    const finalInstalledDependencies=await hashes(Object.keys(installed)); assert.deepEqual(finalInstalledDependencies,installed);
+    const report={source:copy.source,dest,createdAt:new Date().toISOString(),files,changedDuringCopy:[],closureDifferences,
+        closurePath,closureSha256:sha(await fs.readFile(closurePath)),installedDependenciesManifestSha256:sha(await fs.readFile(installedPath)),
+        initialInstalledDependencies,finalInstalledDependencies,installedDependenciesFixed:true,
+        sourceDeltaExactlyThree:true,sourceDeltaPaths:differences,copyProofSha256:sha(copyBytes),copyProofFixed:true,
+        importAuditSha256:sha(await fs.readFile(`${output}/closure/import-audit.json`)),
+        driverInputAuditSha256:sha(await fs.readFile(`${output}/closure/driver-input-audit.json`)),
+        runnerSha256:sha(await fs.readFile(new URL(import.meta.url))),
+        nodeModules:{sharedPath:copy.installedRoot,identityBasis:'Real shoulder projection dependency bytes plus installed lock; never copied into local source closure'},
+        sealPolicy:'Operational immutability backed by complete file hashes and required pre/post checks. No source file chmod or c2 mutation.',
+        coreStarted:false,browserStarted:false};
+    await fs.writeFile(`${output}/snapshot.json`,JSON.stringify(report,null,2)+'\n',{flag:'wx'});
+    console.log(JSON.stringify({dest,fileCount:Object.keys(files).length,closureCount:Object.keys(expected).length,installedCount:Object.keys(installed).length,
+        sourceDeltaPaths:differences,copyProofFixed:true,coreStarted:false,browserStarted:false}));
+}

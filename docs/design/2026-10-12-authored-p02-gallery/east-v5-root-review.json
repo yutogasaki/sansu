@@ -1,0 +1,102 @@
+{
+  "dateUtc": "2026-10-12",
+  "reviewer": "root implementing author",
+  "candidate": "p02-native-east-real-stair-v5-sixteen",
+  "evidenceType": "Blender source render, not actual app",
+  "actualAppTarget": null,
+  "buildRevision": null,
+  "deliveryFlag": null,
+  "independentObservers": 0,
+  "verdicts": {
+    "sourceVisual": "HOLD; continue actual sixteen-step direction",
+    "silentComprehensionSafety": "UNTESTED N=0",
+    "runtime": "NOT_INTEGRATED"
+  },
+  "findings": [
+    "Actual treads, curved rails and trunk supports read as a staircase in the close view, improving on the smooth v4 band.",
+    "The whole view does not yet establish a welcoming upper gallery or its endpoint; the broad rise is partly concealed by the fan.",
+    "The inherited close camera was obstructed by foreground leaves and a black near cut. A new three-quarter camera removes the black cut without changing the geometry or visibility, while existing crowns still obscure lower stairs and fan leaves conceal part of the upper gallery.",
+    "The wider island still has sparse forest masses, a broad bare hill and angular thin paths relative to native05. This local stair improvement does not pass whole-island art."
+  ],
+  "comparability": {
+    "cameraAndMaterialsVsV4": "same for the two current views",
+    "pathShadowChange": "v5 sets only growing-reachable-paths.visible_shadow=false to match runtime. Old v4 was not recorded as false; not every image difference is caused by stair geometry.",
+    "forest": "original left tree context; not the new stage4 forest"
+  },
+  "technicalEvidence": {
+    "archive": "east-v5-sixteen-stairs/archive-proof.json",
+    "steps": 16,
+    "directClosedStair": {
+      "vertices": 2550,
+      "triangles": 5096,
+      "components": 1,
+      "badEdges": 0,
+      "zeroArea": 0,
+      "duplicateTriangles": 0,
+      "signedVolume": 0.2614977583966151
+    },
+    "visibleTreadTriangles": 1280,
+    "sourceTreadParity": "exact",
+    "supportsBuilt": 6,
+    "supportProofLimit": "sampled end caps only; not full-solid self-intersection or actor passage",
+    "entryThreshold": {
+      "maxHeightDifference": 1.4361322620004557e-07,
+      "uncoveredTotalWidth": 0.257290291,
+      "maxUncoveredWidth": 0.035064681,
+      "cause": "Classified against actual saved GLB: Float32 outer boundary differs from the original double-precision query line; the same uncovered length exists before exposed-skin processing. Five samples per gap are within 2.0385e-7 m of an actual face. The original zero-shift query remains recorded as HOLD.",
+      "uncoveredLengthUnit": "distance along the old threshold query line, not thickness of a hole",
+      "analysis": "east-v5-sixteen-stairs/saved-analysis/boundary-report.json",
+      "visibleSkinMicrocracks": {
+        "projectedMissingArea": 5.9439076985191953e-08,
+        "fragments": 39,
+        "largestMinorBoundSide": 2.5564e-07,
+        "status": "Actual exposed-skin microcracks retained as separate HOLD; no geometry or epsilon changed"
+      }
+    },
+    "exposedSkinLineageHolds": 28,
+    "actualStepMotion": "unimplemented",
+    "bodyContacts": {
+      "analysis": "east-v5-sixteen-stairs/saved-analysis/contact-report.json.gz",
+      "totalTriangleStationContacts": 305,
+      "risers": 167,
+      "terminalEndCaps": 13,
+      "terminalGuard": 121,
+      "buriedSupport": 4,
+      "scope": "All contacts are with new P02 structure bound to the same four owners; no original trunk/leaves or other owners. End contacts lie beyond the declared 95-degree use endpoint; support contact pieces are inside the adjacent tread solid. These classifications do not erase raw contacts or establish actual step motion."
+    }
+  },
+  "decision": "Retain actual sixteen-step construction as the working basis. Saved entry and body-band contacts have been classified; the next implementation must establish actual per-foot tread contact and continuous riser clearance with all nine real rigs. No more camera-only iterations now; no hidden ramp and no source-only runtime acceptance.",
+  "images": [
+    {
+      "path": "../2026-10-10-island-final-3d/whole-island-render.png",
+      "label": "採用native-05",
+      "sha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6"
+    },
+    {
+      "path": "east-v4-failed-shape-view/runs/01-whole/failed-floor-only-HOLD-whole.png",
+      "label": "東案v4・床のみ",
+      "sha256": "6ee3a8b39d7a523562373f062aa60447f08de7c1c69a1c891167db3920aafe92"
+    },
+    {
+      "path": "east-v5-sixteen-stairs/east-v5-shape-view/runs/01-whole/coarse-real-stair-HOLD-whole.png",
+      "label": "実16段v5・全景",
+      "sha256": "659ddc73eefedea0784730b771187c75b35db5c22758f51ea2b2f925a8ee0521"
+    },
+    {
+      "path": "east-v5-sixteen-stairs/east-v5-entry-view/runs/01-entry/coarse-real-stair-HOLD-entry-section.png",
+      "label": "実16段v5・旧cameraの入口近景",
+      "sha256": "d684d1701bd12081a5c8a99cbf3f50d9c02b2f02bc76e87f12bf2155c25260c8"
+    },
+    {
+      "path": "east-v5-sixteen-stairs/east-v5-threequarter-view/runs/01-three-quarter/coarse-real-stair-HOLD-three-quarter.png",
+      "label": "実16段v5・3/4近景（geometry/visibility固定）",
+      "sha256": "f6aadfe21100181aedf16fb3d030681c8fedb4cc1c882b288dfab036191d2fda"
+    }
+  ],
+  "followupThreeQuarter": {
+    "sourceUnchanged": true,
+    "nearPlaneBoundsIntersections": 0,
+    "finding": "The new camera removes the black near cut and reveals treads, both rails and trunk supports. Existing foreground crowns still hide lower steps and original fan leaves conceal part of the upper gallery. The shape remains a working basis, not final art or verified actor use.",
+    "archive": "east-v5-sixteen-stairs/east-v5-threequarter-view/archive-proof.json"
+  }
+}

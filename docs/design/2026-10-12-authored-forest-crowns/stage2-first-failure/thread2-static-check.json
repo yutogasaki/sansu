@@ -1,0 +1,29 @@
+{
+  "createdAt": "2026-10-12T03:42:05.341564+00:00",
+  "scope": "Thread settings and UTC overlap timestamps only; not executed",
+  "threads": {
+    "cli": 2,
+    "omp": 2,
+    "openblas": 1,
+    "savedScene": 2,
+    "renderer": 2,
+    "renderManifest": 2
+  },
+  "unchangedLimits": {
+    "buildSeconds": 300,
+    "renderSeconds": 120,
+    "rssBytes": 3221225472,
+    "rssSampleSeconds": 1
+  },
+  "sourceAndRenderOnlyThreadLiteralEdits": true,
+  "baselineAndGeometryConditionsUnchanged": true,
+  "historyExactBytes": true,
+  "allPythonAst": "PASS",
+  "outputsAbsent": true,
+  "scripts": {
+    "build-stage2.py": "7198fac3b3ed9cb082a9814b66be55c05c71380a76f4ce4e9775380d4d6efbe0",
+    "run-window.py": "1c83538e15b745568be477855bdf0cfa677d115f834893d8c3b583fae0be5e5a",
+    "render-one-whole.py": "603c866675506857ab89e38adecabb4532066a85d57421f89c378a27b6012973"
+  },
+  "geometryExecuted": false
+}

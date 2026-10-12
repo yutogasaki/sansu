@@ -1,0 +1,518 @@
+{
+  "schema": "sansu-fixed-c2-local-ridge-target-v1",
+  "materialIndex": 0,
+  "layoutCenter": 7.0026560305,
+  "triangles": [
+    {
+      "floor": "Island / continuous sculpted mature terrain:0",
+      "sourceTriangle": 36705,
+      "sourceVertexIndices": [
+        19456,
+        20205,
+        19457
+      ],
+      "expectedRendererIndexOffset": 118563,
+      "expectedRendererGlobalVertexIndices": [
+        23109,
+        23858,
+        23110
+      ],
+      "vertices": [
+        {
+          "cell": {
+            "x": 5.431822789,
+            "z": -4.858346109
+          },
+          "point": {
+            "x": 5.431822789,
+            "y": 0.621000026,
+            "z": -4.858346109
+          },
+          "normal": {
+            "x": 0.2623949944972992,
+            "y": 0.940682053565979,
+            "z": -0.2150959074497223
+          }
+        },
+        {
+          "cell": {
+            "x": 5.125295007,
+            "z": -4.858901863
+          },
+          "point": {
+            "x": 5.125295007,
+            "y": 0.567419897,
+            "z": -4.858901863
+          },
+          "normal": {
+            "x": -0.616280198097229,
+            "y": 0.6913778185844421,
+            "z": -0.37708789110183716
+          }
+        },
+        {
+          "cell": {
+            "x": 5.128775924,
+            "z": -4.854654961
+          },
+          "point": {
+            "x": 5.128775924,
+            "y": 0.572651706,
+            "z": -4.854654961
+          },
+          "normal": {
+            "x": -0.6154077053070068,
+            "y": 0.7137088775634766,
+            "z": -0.3345041871070862
+          }
+        }
+      ],
+      "faceNormal": [
+        -0.11602757308228091,
+        0.6713771401519888,
+        -0.7319770064462221
+      ],
+      "faceViewDot": 0.07938316581584742
+    },
+    {
+      "floor": "Island / continuous sculpted mature terrain:0",
+      "sourceTriangle": 36710,
+      "sourceVertexIndices": [
+        20205,
+        19465,
+        19615
+      ],
+      "expectedRendererIndexOffset": 118578,
+      "expectedRendererGlobalVertexIndices": [
+        23858,
+        23118,
+        23268
+      ],
+      "vertices": [
+        {
+          "cell": {
+            "x": 5.125295007,
+            "z": -4.858901863
+          },
+          "point": {
+            "x": 5.125295007,
+            "y": 0.567419897,
+            "z": -4.858901863
+          },
+          "normal": {
+            "x": -0.616280198097229,
+            "y": 0.6913778185844421,
+            "z": -0.37708789110183716
+          }
+        },
+        {
+          "cell": {
+            "x": 5.12181409,
+            "z": -4.863148766
+          },
+          "point": {
+            "x": 5.12181409,
+            "y": 0.561739944,
+            "z": -4.863148766
+          },
+          "normal": {
+            "x": -0.614696741104126,
+            "y": 0.6678964495658875,
+            "z": -0.4195977449417114
+          }
+        },
+        {
+          "cell": {
+            "x": 4.818767226,
+            "z": -4.859457188
+          },
+          "point": {
+            "x": 4.818767226,
+            "y": -0.009024828,
+            "z": -4.859457188
+          },
+          "normal": {
+            "x": -0.4303896427154541,
+            "y": 0.8314799666404724,
+            "z": 0.3512915372848511
+          }
+        }
+      ],
+      "faceNormal": [
+        -0.878938149146178,
+        0.467288444662067,
+        0.09544233578867108
+      ],
+      "faceViewDot": -0.3578342595104337
+    }
+  ],
+  "roi": {
+    "authoredWorld": {
+      "min": [
+        5.08,
+        0.52,
+        -4.885
+      ],
+      "max": [
+        5.46,
+        0.66,
+        -4.82
+      ]
+    },
+    "runtimeWorld": {
+      "min": [
+        -1.9226560304999998,
+        0.52,
+        -6.885
+      ],
+      "max": [
+        -1.5426560304999999,
+        0.66,
+        -6.82
+      ]
+    },
+    "scope": "Small first ridge segment near screenshot (727,615); runtimeWorld is authoredWorld translated by (-layoutCenter,0,-2). No override outside this box."
+  },
+  "floorAttributes": {
+    "position": {
+      "arrayType": "Float32Array",
+      "itemSize": 3,
+      "count": 129127,
+      "normalized": false,
+      "sha256": "91db30145c8f9edb4ccd05d66ac2660fe5553d8d57efe23d15db6e4a9517ba18"
+    },
+    "normal": {
+      "arrayType": "Float32Array",
+      "itemSize": 3,
+      "count": 129127,
+      "normalized": false,
+      "sha256": "1a109e125916b58b56aab9dcd292c9b955d8a2f5280076579638684c25fe24da"
+    },
+    "color": {
+      "arrayType": "Float32Array",
+      "itemSize": 3,
+      "count": 129127,
+      "normalized": false,
+      "sha256": "b50d21de5cbe84cda7fd04c013cb5f0c60836aeb8f1fcc097a637566a20243a3"
+    },
+    "index": {
+      "arrayType": "Uint32Array",
+      "itemSize": 1,
+      "count": 368703,
+      "normalized": false,
+      "sha256": "10a15de667b42a6152e7d9b640a80c3398bb9810ed2667878bb2b017f5189dcf"
+    }
+  },
+  "floorGroups": [
+    {
+      "start": 0,
+      "count": 1056,
+      "materialIndex": 0
+    },
+    {
+      "start": 1056,
+      "count": 2640,
+      "materialIndex": 0
+    },
+    {
+      "start": 3696,
+      "count": 2640,
+      "materialIndex": 0
+    },
+    {
+      "start": 6336,
+      "count": 1056,
+      "materialIndex": 0
+    },
+    {
+      "start": 7392,
+      "count": 1056,
+      "materialIndex": 0
+    },
+    {
+      "start": 8448,
+      "count": 114021,
+      "materialIndex": 0
+    },
+    {
+      "start": 122469,
+      "count": 134652,
+      "materialIndex": 0
+    },
+    {
+      "start": 257121,
+      "count": 50919,
+      "materialIndex": 0
+    },
+    {
+      "start": 308040,
+      "count": 1056,
+      "materialIndex": 0
+    },
+    {
+      "start": 309096,
+      "count": 1056,
+      "materialIndex": 0
+    },
+    {
+      "start": 310152,
+      "count": 10365,
+      "materialIndex": 1
+    },
+    {
+      "start": 320517,
+      "count": 2778,
+      "materialIndex": 1
+    },
+    {
+      "start": 323295,
+      "count": 6207,
+      "materialIndex": 1
+    },
+    {
+      "start": 329502,
+      "count": 606,
+      "materialIndex": 1
+    },
+    {
+      "start": 330108,
+      "count": 546,
+      "materialIndex": 1
+    },
+    {
+      "start": 330654,
+      "count": 633,
+      "materialIndex": 1
+    },
+    {
+      "start": 331287,
+      "count": 795,
+      "materialIndex": 1
+    },
+    {
+      "start": 332082,
+      "count": 333,
+      "materialIndex": 1
+    },
+    {
+      "start": 332415,
+      "count": 399,
+      "materialIndex": 1
+    },
+    {
+      "start": 332814,
+      "count": 612,
+      "materialIndex": 1
+    },
+    {
+      "start": 333426,
+      "count": 624,
+      "materialIndex": 1
+    },
+    {
+      "start": 334050,
+      "count": 744,
+      "materialIndex": 1
+    },
+    {
+      "start": 334794,
+      "count": 666,
+      "materialIndex": 1
+    },
+    {
+      "start": 335460,
+      "count": 678,
+      "materialIndex": 1
+    },
+    {
+      "start": 336138,
+      "count": 558,
+      "materialIndex": 1
+    },
+    {
+      "start": 336696,
+      "count": 516,
+      "materialIndex": 1
+    },
+    {
+      "start": 337212,
+      "count": 144,
+      "materialIndex": 1
+    },
+    {
+      "start": 337356,
+      "count": 1170,
+      "materialIndex": 1
+    },
+    {
+      "start": 338526,
+      "count": 978,
+      "materialIndex": 1
+    },
+    {
+      "start": 339504,
+      "count": 864,
+      "materialIndex": 1
+    },
+    {
+      "start": 340368,
+      "count": 666,
+      "materialIndex": 1
+    },
+    {
+      "start": 341034,
+      "count": 555,
+      "materialIndex": 1
+    },
+    {
+      "start": 341589,
+      "count": 1149,
+      "materialIndex": 1
+    },
+    {
+      "start": 342738,
+      "count": 1080,
+      "materialIndex": 1
+    },
+    {
+      "start": 343818,
+      "count": 873,
+      "materialIndex": 1
+    },
+    {
+      "start": 344691,
+      "count": 552,
+      "materialIndex": 1
+    },
+    {
+      "start": 345243,
+      "count": 534,
+      "materialIndex": 1
+    },
+    {
+      "start": 345777,
+      "count": 264,
+      "materialIndex": 1
+    },
+    {
+      "start": 346041,
+      "count": 216,
+      "materialIndex": 1
+    },
+    {
+      "start": 346257,
+      "count": 354,
+      "materialIndex": 1
+    },
+    {
+      "start": 346611,
+      "count": 330,
+      "materialIndex": 1
+    },
+    {
+      "start": 346941,
+      "count": 342,
+      "materialIndex": 1
+    },
+    {
+      "start": 347283,
+      "count": 342,
+      "materialIndex": 1
+    },
+    {
+      "start": 347625,
+      "count": 324,
+      "materialIndex": 1
+    },
+    {
+      "start": 347949,
+      "count": 300,
+      "materialIndex": 1
+    },
+    {
+      "start": 348249,
+      "count": 570,
+      "materialIndex": 1
+    },
+    {
+      "start": 348819,
+      "count": 579,
+      "materialIndex": 1
+    },
+    {
+      "start": 349398,
+      "count": 81,
+      "materialIndex": 1
+    },
+    {
+      "start": 349479,
+      "count": 564,
+      "materialIndex": 1
+    },
+    {
+      "start": 350043,
+      "count": 570,
+      "materialIndex": 1
+    },
+    {
+      "start": 350613,
+      "count": 660,
+      "materialIndex": 1
+    },
+    {
+      "start": 351273,
+      "count": 1308,
+      "materialIndex": 1
+    },
+    {
+      "start": 352581,
+      "count": 14334,
+      "materialIndex": 1
+    },
+    {
+      "start": 366915,
+      "count": 1788,
+      "materialIndex": 1
+    }
+  ],
+  "camera": {
+    "matrixWorld": [
+      0.37954916230133906,
+      -5.551115123125783e-17,
+      -0.925171569708209,
+      0,
+      -0.5402605646482221,
+      0.8117844741035437,
+      -0.2216404518367916,
+      0,
+      0.7510399161711285,
+      0.5839571624737837,
+      0.308112117115233,
+      0,
+      11.43980323952666,
+      13.033779349790631,
+      0.7454749437239725,
+      1
+    ],
+    "projectionMatrix": [
+      0.22183415890809055,
+      0,
+      0,
+      0,
+      0,
+      0.3069212335577691,
+      0,
+      0,
+      0,
+      0,
+      -0.02002002002002002,
+      0,
+      0,
+      0,
+      -1.002002002002002,
+      1
+    ]
+  },
+  "priorReportSha256": "8d2d1fb5719feb75d0c8e91ff96ecafcc435e4c7f32eb3e621508c55fb0d3f10",
+  "staticAuditSha256": "dd93014f1ee1037dd8d0865a9675788d258b51d43530a3296f89fdaea3aeee87"
+}

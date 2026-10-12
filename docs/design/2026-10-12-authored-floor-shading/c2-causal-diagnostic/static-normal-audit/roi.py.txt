@@ -1,0 +1,21 @@
+exec(open('/private/tmp/sansu-floor-shading-diagnostic-c2/static-normal-audit/audit.py').read().split('report=')[0])
+from heapq import nsmallest
+out=[]
+for pixel in [(705,631),(727,615),(759,612),(808,608),(851,582),(887,571),(933,587),(981,590)]:
+ nearest=[]
+ for fi,f in enumerate(floors):
+  for vi in set(f['indices']):
+   v=f['vertices'][vi];q=project(v['point']);d=math.dist(q,pixel)
+   nearest.append((d,fi,vi,q,v['point'],v['normal']))
+ out.append({'pixel':pixel,'nearest':[{'distancePixels':d,'floor':floors[fi]['id'],'vertex':vi,'projected':q,'point':p,'normal':n} for d,fi,vi,q,p,n in nsmallest(3,nearest)]})
+roiBoundary=[]
+for key,items in edges.items():
+ if len(items)!=1:continue
+ if not all(floors[x[0]]['id'].startswith('Island') for x in items):continue
+ pixels=[project(dict(zip(['x','y','z'],p))) for p in key]
+ if any(680<p[0]<1010 and 545<p[1]<660 for p in pixels):roiBoundary.append({'points':key,'pixels':pixels,'faces':[(floors[x[0]]['id'],x[1]) for x in items]})
+R={'nearestToObservedFineLine':out,'sourceOpenBoundaryEdgesInRoi':roiBoundary}
+(D/'roi-report.json').write_text(json.dumps(R,indent=2)+'\n')
+print('open boundary roi',len(roiBoundary))
+for row in out:print(row['pixel'],row['nearest'][0])
+print('boundaries',json.dumps(roiBoundary[:8]))

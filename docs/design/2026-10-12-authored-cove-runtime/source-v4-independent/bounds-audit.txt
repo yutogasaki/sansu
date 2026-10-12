@@ -1,0 +1,32 @@
+{
+  "scope": "Read-only proposed expanded eligibility profile, no app mutation",
+  "bounds": {
+    "min": {
+      "x": 5,
+      "z": -3.5
+    },
+    "max": {
+      "x": 11,
+      "z": 3.5
+    }
+  },
+  "revisions": {
+    "base": "b854fd9d1de0c4d9",
+    "water": "b854fd9d1de0c4d9"
+  },
+  "results": [
+    {
+      "water": false,
+      "currentFixture": 1,
+      "nearOwnerNewBounds": 0,
+      "nearOwnerOldBounds": 1
+    },
+    {
+      "water": true,
+      "currentFixture": 1,
+      "nearOwnerNewBounds": 0,
+      "nearOwnerOldBounds": 1
+    }
+  ],
+  "inputHashesUnchanged": true
+}

@@ -1,0 +1,13 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/domain/growingIsland/worldDefinition.test.ts (20 tests) 151ms
+ ✓ src/domain/growingIsland/worldFloorIndex.test.ts (6 tests) 2245ms
+   ✓ fine floor index matches the original ordered sampler > retains dense native05 floors, triangle identity, all sites and nearby physical inverses 1551ms
+   ✓ fine floor index matches the original ordered sampler > preserves highest and nearest-y floors, floor filters and water masking in dense overlapping tiles 507ms
+
+ Test Files  2 passed (2)
+      Tests  26 passed (26)
+   Start at  11:22:56
+   Duration  2.54s (transform 140ms, setup 0ms, collect 304ms, tests 2.40s, environment 0ms, prepare 56ms)
+

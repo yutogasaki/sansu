@@ -1,0 +1,13 @@
+00:00.632  blend            | Read blend: "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/central-shoulder-source.blend"
+/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/render-source.py:25: DeprecationWarning: 'Material.use_nodes' is expected to be removed in Blender 6.0
+  mat.use_nodes = True
+00:11.347  render           | Saved: '/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/source-whole.png'
+BlenderMCP: cannot start server in background mode (blender -b) - commands would never execute
+BlenderMCP: run Blender with a GUI, or use a virtual display: xvfb-run -a blender
+BlenderMCP addon registered
+SOURCE_RENDER_COMPLETE source-whole {"position": [20, -19, 20], "target": [7, 4.5, 1.65], "orthoScale": 19, "path": "source-whole.png", "sha256": "26e88dcd1df54ce80809d9371631d0ca9801a370a3bea0ac5e08fb0b512315b3", "elapsedSeconds": 10.62880574981682}
+BlenderMCP server stopped
+BlenderMCP addon unregistered
+Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 01:35:57)
+
+Blender quit

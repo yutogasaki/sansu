@@ -1,0 +1,11 @@
+"""Reproducible original ribbon normal, envelope and signed-volume evidence."""
+from pathlib import Path
+import json,hashlib,sys,collections
+import numpy as np
+P=Path(__file__).resolve().parent;V=P.parent/'east-v3-manifold';raw=V/'runs/01-coarse-build/planned-floor-tops.json';plans=json.loads(raw.read_text());sys.path.insert(0,str(V));from terrain_connector import closed_solid
+results={}
+for name,p in plans.items():
+    a=np.array(p['topVertices'])[np.array(p['topFaces'])];cross=np.cross(a[:,1]-a[:,0],a[:,2]-a[:,0]);negative=np.flatnonzero(cross[:,1]<0);v,f,qa=closed_solid(p,.07);s=np.array(v)[np.array(f)];volume=float(np.sum(np.einsum('ij,ij->i',s[:,0],np.cross(s[:,1],s[:,2])))/6)
+    signed_area=float(np.sum(cross[:,1])/2);absolute_area=float(np.sum(abs(cross[:,1]))/2)
+    results[name]={'topTriangles':len(a),'negativeTopCount':len(negative),'negativeTopFaces':[{'face':int(i),'triangle':a[i].tolist(),'normal':(cross[i]/np.linalg.norm(cross[i])).tolist()} for i in negative],'zeroAreaFaces':list(map(int,np.flatnonzero(np.linalg.norm(cross,axis=1)==0))),'signedProjectedArea':signed_area,'absoluteProjectedArea':absolute_area,'signedVolume':volume,'signedAreaTimesThickness':signed_area*.07,'absoluteAreaTimesThickness':absolute_area*.07,'negativeTopArea':float(np.sum(-cross[negative,1])/2),'closedSlabInput':qa,'interpretation':'Positive total signed volume does not prove locally oriented top or no overlap. Every negative top is extruded into an upward bottom.'}
+out=P/'input-volume.json';assert not out.exists();out.write_text(json.dumps({'status':'ORIGINAL_INPUT_DEFECT_CONFIRMED','originalRawSha256':hashlib.sha256(raw.read_bytes()).hexdigest(),'results':results,'booleanOutputVolume':'Not available without reading saved Blend; no new Blender run authorized. Saved upward buried output polygon attribution is separately retained in report-scalar and ground-roles.'},indent=2)+'\n');print(json.dumps({k:{kk:vv for kk,vv in v.items() if kk not in ['negativeTopFaces','closedSlabInput']} for k,v in results.items()},indent=2))

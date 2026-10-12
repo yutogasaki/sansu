@@ -24,8 +24,15 @@ import type { NativeGrowingKit } from './native/nativeGrowingKit';
 import type { IslandWorld as CompiledWorld } from '../../../domain/growingIsland/worldDefinition';
 import type { AuthoredCoastSkin } from './native/authoredGrowingGround';
 import type { AuthoredWaterBridgeSkin } from './native/authoredWaterBridgeArt';
+import type { NativeAuthoredFlower } from './native/nativeAuthoredFlower';
+import type { NativeAuthoredCove } from './native/nativeAuthoredCove';
 import { makeGrowingInteractionWarmBank, warmGrowingShaders } from './growingShaderWarmup';
 import { growingSceneStateKey, growingScenePreviewKey } from './growingSceneInputs';
+import { AUTHORED_COVE_VISUAL_CANDIDATE } from '../../../domain/growingIsland/authoredCoveWorld';
+import { AUTHORED_SHOULDER_CANDIDATE, type AuthoredShoulderProfile } from '../../../domain/growingIsland/authoredShoulderWorld';
+import type { AuthoredGrowthTerrainCatalog } from '../../../domain/growingIsland/authoredGrowthTerrain';
+import type { NativeAuthoredShoulder } from './native/nativeAuthoredShoulder';
+import { AUTHORED_WHOLE_ART_CANDIDATE, type AuthoredWholeArt } from './authoredWholeArt';
 
 export interface WorldHandlers {
     onCell: (cell: Cell) => void;
@@ -52,13 +59,13 @@ export interface WorldCamera {
 }
 export interface ShownMoment { id: number; moment: Moment; cell?: Cell }
 /** `cheer` makes the waiting friend jump (a home seed was planted); `festival` celebrates a new level. */
-type Props = WorldHandlers & { state: GrowingState; world?: CompiledWorld; authoredWater?: boolean; time: GardenTime; ghost?: Ghost; selectedId?: string; turn: number; cheer: number; festival: number;
+type Props = WorldHandlers & { state: GrowingState; world?: CompiledWorld; authoredWater?: boolean; authoredCove?: boolean; authoredShoulder?: AuthoredShoulderProfile; authoredGrowthTerrain?: AuthoredGrowthTerrainCatalog; authoredWholeArt?: boolean; time: GardenTime; ghost?: Ghost; selectedId?: string; turn: number; cheer: number; festival: number;
     hints?: readonly Cell[]; moment?: ShownMoment; show?: boolean; active?: boolean; compact?: boolean; qualityCeiling?: number; focus?: { id: string; n: number }; concert?: { cell: Cell; n: number }; bridgeBuild?: number; onCamera?: (camera?: WorldCamera) => void };
 
 const reducedMotion = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const nativeArtEnabled = import.meta.env.DEV || import.meta.env.VITE_NATIVE_GROWING_ART === 'true';
 
-export default function GrowingWorld({ state, world: authoredWorld, authoredWater = false, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, compact, qualityCeiling = 1.25, focus, concert, bridgeBuild, onCamera, ...handlers }: Props) {
+export default function GrowingWorld({ state, world: authoredWorld, authoredWater = false, authoredCove = false, authoredShoulder, authoredGrowthTerrain, authoredWholeArt = false, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, compact, qualityCeiling = 1.25, focus, concert, bridgeBuild, onCamera, ...handlers }: Props) {
     const host = useRef<HTMLDivElement>(null);
     const handlerRef = useRef(handlers);
     useEffect(() => { handlerRef.current = handlers; });
@@ -130,18 +137,47 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
         if (released) return;
         let coast: AuthoredCoastSkin | undefined;
         let waterBridgeSkin: AuthoredWaterBridgeSkin | undefined;
+        let flowerSupport: NativeAuthoredFlower | undefined;
+        let cove: NativeAuthoredCove | undefined;
+        let shoulder: NativeAuthoredShoulder | undefined;
+        let wholeArt: AuthoredWholeArt | undefined;
         if (authoredWorld) {
-            const { loadAuthoredCoastSkin, loadAuthoredWaterBridgeSkin } = await import('./native/authoredGrowingAssets');
+            const { loadAuthoredCoastSkin, loadAuthoredWaterBridgeSkin, loadAuthoredFlowerSupportSkin, loadAuthoredCove, loadAuthoredShoulder, loadAuthoredWholeArt } = await import('./native/authoredGrowingAssets');
             coast = await loadAuthoredCoastSkin(abort.signal);
             node.dataset.authoredCoastSource = coast.source.sha256;
+            const flowerSkin = await loadAuthoredFlowerSupportSkin(abort.signal);
+            const { makeNativeAuthoredFlower } = await import('./native/nativeAuthoredFlower');
+            if (released) return;
+            flowerSupport = makeNativeAuthoredFlower(flowerSkin);
+            disposers.push(() => flowerSupport?.dispose());
+            node.dataset.authoredFlowerSource = flowerSkin.source.sha256;
+            node.dataset.authoredFlowerSupport = flowerSkin.source.id;
             if (authoredWater) {
                 waterBridgeSkin = await loadAuthoredWaterBridgeSkin(abort.signal);
                 node.dataset.authoredWaterBridgeSource = waterBridgeSkin.source.sha256;
                 node.dataset.authoredWaterBridgeId = waterBridgeSkin.source.id;
             }
+            if (authoredCove) {
+                cove = await loadAuthoredCove(abort.signal);
+                disposers.push(() => cove?.dispose());
+                node.dataset.authoredCoveSource = cove.sourceSha256;
+                node.dataset.authoredCoveSourceId = cove.sourceId;
+            }
+            if (authoredShoulder) {
+                shoulder = await loadAuthoredShoulder(abort.signal);
+                disposers.push(() => shoulder?.dispose());
+                node.dataset.authoredShoulderSource = shoulder.sourceSha256;
+                node.dataset.authoredShoulderSourceId = shoulder.sourceId;
+            }
+            if (authoredWholeArt) {
+                wholeArt = await loadAuthoredWholeArt(abort.signal);
+                disposers.push(() => { wholeArt?.forest.dispose(); wholeArt?.gallery.dispose(); });
+                node.dataset.authoredForestSource = wholeArt.forest.sourceSha256;
+                node.dataset.authoredGallerySource = wholeArt.gallery.sourceSha256;
+            }
         }
         if (released) return;
-        const world = createWorldScene(renderer, native, authoredWorld, coast, authoredWater, waterBridgeSkin); disposers.push(() => world.dispose());
+        const world = createWorldScene(renderer, native, authoredWorld, coast, authoredWater, waterBridgeSkin, authoredCove, authoredShoulder, shoulder, authoredGrowthTerrain); disposers.push(() => world.dispose());
         const releaseSharedCache = retainSharedRendererCache(world.m.residentFabric());
         disposers.push(releaseSharedCache);
         let bridgeWork: { at: number; resident: string; owner: string; parts: T.Object3D[]; crossing?: boolean } | undefined;
@@ -184,9 +220,30 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
             node.dataset.growingSceneCounters = JSON.stringify(sceneCounters);
         };
         const showPreview = (next: GrowingState, nextGhost?: Ghost) => {
-            const revision = world.showWaterPreview(authoredWater ? previewGrowingState(next, nextGhost) : undefined);
+            const revision = world.showWaterPreview(authoredWater || authoredCove || authoredShoulder || authoredGrowthTerrain ? previewGrowingState(next, nextGhost) : undefined);
             if (revision) node.dataset.previewWorldRevision = revision;
             else delete node.dataset.previewWorldRevision;
+            if (authoredCove && layer) {
+                const describe = (objects: T.Object3D[]) => objects.map(object => ({ placeId: object.userData.placeId,
+                    sourceSha256: object.userData.sourceSha256, visible: object.visible }));
+                node.dataset.authoredCovePreview = JSON.stringify({ worldRevision: revision ?? null,
+                    committed: describe(layer.placeRoot.getObjectsByProperty('name', 'authored-cove-shell')),
+                    prospective: describe(layer.root.getObjectsByProperty('name', 'growing-place-preview')
+                        .flatMap(root => root.getObjectsByProperty('name', 'authored-cove-shell'))) });
+            }
+            if (authoredShoulder && layer) {
+                const components = layer.root.getObjectsByProperty('name', 'authored-tree-root-continuation').map(object => {
+                    let prospective = false;
+                    for (let parent: T.Object3D | null = object; parent; parent = parent.parent)
+                        if (parent.name === 'growing-place-preview') prospective = true;
+                    return { ownerId: object.userData.ownerId, sourceSha256: object.userData.sourceSha256,
+                        artifactSha256: object.userData.artifactSha256, prospective, visible: object.visible,
+                        retainedPhysical: object.userData.authoredPreviewHidden === true };
+                });
+                node.dataset.authoredShoulder = JSON.stringify({ candidate: authoredShoulder.candidate,
+                    profilePhysicalRevision: authoredShoulder.physicalRevision, soilPresent: Boolean(world.shoulderSoil()),
+                    previewWorldRevision: revision ?? null, roots: components });
+            }
         };
 
         const rebuild = (next: GrowingState, nextGhost?: Ghost, selected?: string, nextHints?: readonly Cell[]) => {
@@ -211,12 +268,16 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
             node.dataset.growingBounds = JSON.stringify(layout.bounds);
             node.dataset.worldDefinition = layout.world.id;
             if (layout.authored) {
-                node.dataset.worldRevision = layout.world.definition.revision ?? 'base';
+                node.dataset.worldRevision = authoredCove ? layout.key.slice(layout.world.id.length + 1) : layout.world.definition.revision ?? 'base';
                 node.dataset.authoredWater = JSON.stringify(layout.authoredWaterPlan);
+                const covePlan = layout.authoredCovePlan;
+                node.dataset.authoredCove = JSON.stringify(covePlan ? { revision: covePlan.revision, profileRevision: covePlan.profileRevision,
+                    sourceId: covePlan.sourceId, sourceSha256: covePlan.sourceSha256, assemblies: covePlan.assemblies } : null);
+                node.dataset.authoredFrameRevision = layout.key;
             }
             node.dataset.bridgeSaved = String(Boolean(next.bridge));
             layer?.dispose();
-            layer = buildObjectLayer(world.m, next, layout, nextGhost, selected, nextHints, native);
+            layer = buildObjectLayer(world.m, next, layout, nextGhost, selected, nextHints, native, flowerSupport, cove, shoulder, wholeArt);
             counted('fullLayerBuild');
             world.scene.add(layer.root);
             const now = performance.now();
@@ -233,6 +294,16 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
             known = new Set(layer.objects.keys());
             unopened = new Set(next.unopened);
             world.life.sync(next, layout, layer);
+            if (wholeArt) node.dataset.authoredWholeArt = JSON.stringify({ candidate: AUTHORED_WHOLE_ART_CANDIDATE,
+                forestOwners: layer.root.getObjectsByProperty('name', 'authored-forest-tree').map(object => object.userData.ownerId),
+                galleryOwners: layer.root.getObjectsByProperty('name', 'authored-gallery-structure').map(object => object.userData.ownerIds),
+                galleryTraversalEnabled: false });
+            if (layout.authored) node.dataset.authoredFlowerShape = JSON.stringify(layer.placeRoot.children
+                .filter(place => place.userData.placeRule === 'P05')
+                .map(place => ({ id: place.userData.placeId, ownerIds: place.userData.authoredFlowerOwnerIds,
+                    crownCount: place.userData.authoredFlowerCrownCount, art: place.userData.authoredFlowerArt, floor: place.userData.authoredFlowerFloor })));
+            if (layout.authored) node.dataset.authoredFlowerWalking = JSON.stringify(world.life.walkingObstructionProof() ?? null);
+            if (layout.authored) node.dataset.authoredObstructionWalking = node.dataset.authoredFlowerWalking;
             showPreview(next, nextGhost);
             if (bridgeWork && (!next.bridge || bridgeWork.owner !== next.seed)) {
                 bridgeWork = undefined; window.clearTimeout(bridgeClear); setBridgeStage(undefined);
@@ -270,7 +341,10 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
             concert: (cell, receipt) => { world.life.startConcert(cell, performance.now()); pendingConcert = receipt; },
             focus: id => {
                 playFocus = undefined;
-                const target = world.life.focusPositionOf(id) ?? layer?.objects.get(id)?.position.clone().add(new T.Vector3(0, 0, id === 'bridge' ? 1.1 : 0)); if (!target) return;
+                const flower = layout.authored && layer?.placeRoot.children.find(place => place.userData.authoredFlowerOwnerIds?.includes(id));
+                const flowerBounds = flower ? new T.Box3().setFromObject(flower) : undefined;
+                const flowerCenter = flowerBounds && !flowerBounds.isEmpty() ? flowerBounds.getCenter(new T.Vector3()) : undefined;
+                const target = world.life.focusPositionOf(id) ?? flowerCenter ?? layer?.objects.get(id)?.position.clone().add(new T.Vector3(0, 0, id === 'bridge' ? 1.1 : 0)); if (!target) return;
                 view.zoom = Math.max(view.zoom, id === 'bridge' ? 1.35 : 2.2);
                 const home = frameCamera(camera, layout, { ...view, pan: { x: 0, z: 0 } }, width / height);
                 view.pan = panToFocus(camera, home, target);
@@ -458,6 +532,7 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
                 node.dataset.placeTopology = layer.places.map(place => `${place.ruleId}:${place.variant}:${place.stage}`).join('|');
                 if (import.meta.env.DEV && now >= nextTelemetry) {
                     nextTelemetry = now + 250;
+                    if (layout.authored) node.dataset.authoredFlowerPoses = JSON.stringify(world.life.walkingPoseProof() ?? null);
                     const rect = renderer.domElement.getBoundingClientRect();
                     const screen = (position: T.Vector3) => { const p = position.clone().project(camera); return { screenX: rect.left + (p.x + 1) * rect.width / 2, screenY: rect.top + (1 - p.y) * rect.height / 2 }; };
                     node.dataset.placeActors = JSON.stringify(world.life.objects().map(actor => ({ id: actor.userData.actorId, x: actor.position.x, y: actor.position.y, z: actor.position.z, ...screen(new T.Box3().setFromObject(actor).getCenter(new T.Vector3())) })));
@@ -616,7 +691,7 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
         return release;
     // A retry mounts a fresh world; its graphics profile is fixed for that lifetime.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [authoredWorld, authoredWater]);
+    }, [authoredWorld, authoredWater, authoredCove, authoredShoulder, authoredGrowthTerrain, authoredWholeArt]);
 
     useEffect(() => { api.current?.rebuild(state, ghost, selectedId, hints); }, [state, ghost, selectedId, hints]);
     useEffect(() => { if (moment) api.current?.moment(moment); }, [moment]);
@@ -629,7 +704,7 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
     const lastTurn = useRef(turn);
     useEffect(() => { if (turn !== lastTurn.current) { api.current?.turn(turn - lastTurn.current); lastTurn.current = turn; } }, [turn]);
 
-    return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-art-candidate={authoredWorld ? 'native05-authored-whole-preflight-v1' : nativeArtEnabled ? 'native05-expanding-runtime-v2' : 'native-05-place-runtime-v3'} data-landscape-projection={authoredWorld ? 'authored-floor-v1' : nativeArtEnabled ? 'curved-owned-v1' : 'linear'} data-native-growing-art={String(nativeArtEnabled)} data-growing-feature-enabled="true">
+    return <div className="growing-world" ref={host} data-growing-world data-visual-candidate="growing-island-v1" data-art-candidate={authoredWorld ? authoredWholeArt ? AUTHORED_WHOLE_ART_CANDIDATE : authoredShoulder ? AUTHORED_SHOULDER_CANDIDATE : authoredCove ? AUTHORED_COVE_VISUAL_CANDIDATE : 'native05-authored-flower-garden-v3' : nativeArtEnabled ? 'native05-expanding-runtime-v2' : 'native-05-place-runtime-v3'} data-landscape-projection={authoredWorld ? 'authored-floor-v1' : nativeArtEnabled ? 'curved-owned-v1' : 'linear'} data-native-growing-art={String(nativeArtEnabled)} data-authored-cove-enabled={String(Boolean(authoredWorld && authoredCove))} data-authored-shoulder-enabled={String(Boolean(authoredWorld && authoredShoulder))} data-authored-whole-art-enabled={String(Boolean(authoredWorld && authoredWholeArt))} data-authored-growth-terrain-candidate={authoredGrowthTerrain?.candidate} data-growing-feature-enabled="true">
         {failed && <p className="growing-world-failed">しまを ひょうじ できなかったよ。よみなおしてみてね。</p>}
         {bridgeStage && <div className="growing-bridge-caption" data-bridge-stage={bridgeStage} role="status">
             {bridgeStage === 'building' ? 'ぽこもこが はしを つくっているよ' : bridgeStage === 'crossing' ? 'なかまが わたっているよ' : 'むこうまで いけた！'}

@@ -1,0 +1,69 @@
+{
+  "sharedEdges": 10,
+  "coplanarPairs": [
+    {
+      "parts": [
+        "walk-top/terrain-threshold",
+        "walk-top/front-junction"
+      ],
+      "area": 0.14310331654517228
+    },
+    {
+      "parts": [
+        "walk-top/terrain-threshold",
+        "walk-top/real-sixteen-stairs"
+      ],
+      "area": 0.07282993074773536
+    },
+    {
+      "parts": [
+        "walk-top/terrain-threshold",
+        "walk-top/aligned-opening"
+      ],
+      "area": 0.08733775422558843
+    },
+    {
+      "parts": [
+        "walk-top/terrain-threshold",
+        "walk-top/native-interior"
+      ],
+      "area": 0.07465094036354003
+    },
+    {
+      "parts": [
+        "walk-top/front-junction",
+        "walk-top/real-sixteen-stairs"
+      ],
+      "area": 0.1598180350805194
+    },
+    {
+      "parts": [
+        "walk-top/front-junction",
+        "walk-top/aligned-opening"
+      ],
+      "area": 0.18101696996477834
+    },
+    {
+      "parts": [
+        "walk-top/front-junction",
+        "walk-top/native-interior"
+      ],
+      "area": 0.1383900147712005
+    },
+    {
+      "parts": [
+        "walk-top/real-sixteen-stairs",
+        "walk-top/aligned-opening"
+      ],
+      "area": 0.18665727340718163
+    },
+    {
+      "parts": [
+        "walk-top/real-sixteen-stairs",
+        "walk-top/native-interior"
+      ],
+      "area": 0.0027392548131608407
+    }
+  ],
+  "verdict": "HOLD: real visible coplanar top overlap exists; cannot use individual closure to claim an artifact-free assembled shape"
+}

@@ -1,0 +1,18 @@
+test_affine_inverse_and_inverse_transpose_normal (test_geometry.GeometryTests) ... ok
+test_folded_field_does_not_pass_existing_determinant_guard (test_geometry.GeometryTests) ... ok
+test_identity_field_preserves_source_normal (test_geometry.GeometryTests) ... ok
+test_source_leaf_precision_and_translation_contract (test_geometry.GeometryTests) ... ok
+test_cyclic_reordering_and_duplicates_keep_authored_normals (test_export_check.ExportOracleTests) ... ok
+test_flat_geometric_normals_do_not_pass_as_source_normals (test_export_check.ExportOracleTests) ... ok
+test_glb_accessor_reader_handles_strides_and_indices (test_export_check.ExportOracleTests) ... ok
+test_missing_duplicate_and_zero_edge_are_rejected (test_export_check.ExportOracleTests) ... ok
+test_physical_winding_and_coordinate_changes_are_not_welded (test_export_check.ExportOracleTests) ... ok
+test_axis_basis_and_translated_point (test_world_check.WorldCheck) ... ok
+test_gltf_matrix_is_column_major (test_world_check.WorldCheck) ... ok
+test_parent_graph_rejected (test_world_check.WorldCheck) ... ok
+test_world_error_and_missing_vertex_cannot_pass (test_world_check.WorldCheck) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.028s
+
+OK

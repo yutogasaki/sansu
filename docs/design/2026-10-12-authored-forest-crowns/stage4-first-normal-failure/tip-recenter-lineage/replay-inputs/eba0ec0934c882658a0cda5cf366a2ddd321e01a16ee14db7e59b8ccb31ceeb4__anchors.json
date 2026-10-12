@@ -1,0 +1,1406 @@
+{
+  "contract": "Recipe centers/control points/origins are not certified mesh seams. No physical support or normal continuity is inferred from bounds.",
+  "willow": {
+    "sourceRecipe": "build-scene.py trunk / grove_trees; fantasy-landscape.py willow_crown",
+    "trunkBezierControlPointsGltf": [
+      [
+        -8,
+        1.24,
+        -2.7
+      ],
+      [
+        -8.18,
+        2.74,
+        -2.79
+      ],
+      [
+        -7.52,
+        4.49,
+        -2.85
+      ],
+      [
+        -7.2,
+        6.24,
+        -2.7
+      ]
+    ],
+    "bevelRadius": 0.45,
+    "radiusMultipliers": [
+      1.3,
+      1.1,
+      0.78,
+      0.46
+    ],
+    "crownRecipeCenterGltf": [
+      -7.2,
+      6.24,
+      -2.7
+    ],
+    "crownScale": 0.93,
+    "status": "Source-script parameter/control-point anchors; not exported vertex loops or mesh weld proof.",
+    "groundRootCurves": [
+      {
+        "angle": 0,
+        "controlsGltf": [
+          [
+            -7.1,
+            1.27,
+            -2.7
+          ],
+          [
+            -7.62,
+            1.39,
+            -2.7
+          ],
+          [
+            -8,
+            1.69,
+            -2.7
+          ]
+        ]
+      },
+      {
+        "angle": 1.7,
+        "controlsGltf": [
+          [
+            -8.115960044865972,
+            1.27,
+            -3.4437486078393515
+          ],
+          [
+            -8.0489609078323,
+            1.39,
+            -2.9776661469266914
+          ],
+          [
+            -8,
+            1.69,
+            -2.7
+          ]
+        ]
+      },
+      {
+        "angle": 3.25,
+        "controlsGltf": [
+          [
+            -8.894716708472492,
+            1.27,
+            -2.618853649102419
+          ],
+          [
+            -8.377769276910607,
+            1.39,
+            -2.6697053623315696
+          ],
+          [
+            -8,
+            1.69,
+            -2.7
+          ]
+        ]
+      },
+      {
+        "angle": 4.7,
+        "controlsGltf": [
+          [
+            -8.011149797116602,
+            1.27,
+            -1.9500575568269245
+          ],
+          [
+            -8.004707692115899,
+            1.39,
+            -2.420021487882052
+          ],
+          [
+            -8,
+            1.69,
+            -2.7
+          ]
+        ]
+      }
+    ],
+    "hangingFamilies": [
+      {
+        "k": 0,
+        "stemSuffixOrdinal": 0,
+        "leafSuffixOrdinals": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "scriptStemStartGltf": [
+          -5.8515,
+          6.220000000000001,
+          -2.7
+        ],
+        "length": "L=.93*random.uniform(1.05,2.0); the final execution RNG sequence is not replayed",
+        "controlFormulaBlender": [
+          "(xx,yy,6.24-.02)",
+          "(xx+cos(a)*.10,yy+sin(a)*.10,6.24-L*.45)",
+          "(xx+cos(a)*.06,yy+sin(a)*.06,6.24-L)"
+        ],
+        "membershipStatus": "Suffix order corresponds to generator k outer / j inner loops; no GLB parent/skin/joint encodes this family."
+      },
+      {
+        "k": 1,
+        "stemSuffixOrdinal": 1,
+        "leafSuffixOrdinals": [
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "scriptStemStartGltf": [
+          -5.985043481633588,
+          6.220000000000001,
+          -3.095441639831743
+        ],
+        "length": "L=.93*random.uniform(1.05,2.0); the final execution RNG sequence is not replayed",
+        "controlFormulaBlender": [
+          "(xx,yy,6.24-.02)",
+          "(xx+cos(a)*.10,yy+sin(a)*.10,6.24-L*.45)",
+          "(xx+cos(a)*.06,yy+sin(a)*.06,6.24-L)"
+        ],
+        "membershipStatus": "Suffix order corresponds to generator k outer / j inner loops; no GLB parent/skin/joint encodes this family."
+      },
+      {
+        "k": 2,
+        "stemSuffixOrdinal": 2,
+        "leafSuffixOrdinals": [
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "scriptStemStartGltf": [
+          -6.359224002193498,
+          6.220000000000001,
+          -3.4125612131213625
+        ],
+        "length": "L=.93*random.uniform(1.05,2.0); the final execution RNG sequence is not replayed",
+        "controlFormulaBlender": [
+          "(xx,yy,6.24-.02)",
+          "(xx+cos(a)*.10,yy+sin(a)*.10,6.24-L*.45)",
+          "(xx+cos(a)*.06,yy+sin(a)*.06,6.24-L)"
+        ],
+        "membershipStatus": "Suffix order corresponds to generator k outer / j inner loops; no GLB parent/skin/joint encodes this family."
+      },
+      {
+        "k": 3,
+        "stemSuffixOrdinal": 3,
+        "leafSuffixOrdinals": [
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "scriptStemStartGltf": [
+          -6.89993052055991,
+          6.220000000000001,
+          -3.5885492991625143
+        ],
+        "length": "L=.93*random.uniform(1.05,2.0); the final execution RNG sequence is not replayed",
+        "controlFormulaBlender": [
+          "(xx,yy,6.24-.02)",
+          "(xx+cos(a)*.10,yy+sin(a)*.10,6.24-L*.45)",
+          "(xx+cos(a)*.06,yy+sin(a)*.06,6.24-L)"
+        ],
+        "membershipStatus": "Suffix order corresponds to generator k outer / j inner loops; no GLB parent/skin/joint encodes this family."
+      },
+      {
+        "k": 4,
+        "stemSuffixOrdinal": 4,
+        "leafSuffixOrdinals": [
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "scriptStemStartGltf": [
+          -7.50006947944009,
+          6.220000000000001,
+          -3.5885492991625143
+        ],
+        "length": "L=.93*random.uniform(1.05,2.0); the final execution RNG sequence is not replayed",
+        "controlFormulaBlender": [
+          "(xx,yy,6.24-.02)",
+          "(xx+cos(a)*.10,yy+sin(a)*.10,6.24-L*.45)",
+          "(xx+cos(a)*.06,yy+sin(a)*.06,6.24-L)"
+        ],
+        "membershipStatus": "Suffix order corresponds to generator k outer / j inner loops; no GLB parent/skin/joint encodes this family."
+      },
+      {
+        "k": 5,
+        "stemSuffixOrdinal": 5,
+        "leafSuffixOrdinals": [
+          25,
+          26,
+          27,
+          28,
+          29
+        ],
+        "scriptStemStartGltf": [
+          -8.040775997806502,
+          6.220000000000001,
+          -3.4125612131213625
+        ],
+        "length": "L=.93*random.uniform(1.05,2.0); the final execution RNG sequence is not replayed",
+        "controlFormulaBlender": [
+          "(xx,yy,6.24-.02)",
+          "(xx+cos(a)*.10,yy+sin(a)*.10,6.24-L*.45)",
+          "(xx+cos(a)*.06,yy+sin(a)*.06,6.24-L)"
+        ],
+        "membershipStatus": "Suffix order corresponds to generator k outer / j inner loops; no GLB parent/skin/joint encodes this family."
+      },
+      {
+        "k": 6,
+        "stemSuffixOrdinal": 6,
+        "leafSuffixOrdinals": [
+          30,
+          31,
+          32,
+          33,
+          34
+        ],
+        "scriptStemStartGltf": [
+          -8.414956518366413,
+          6.220000000000001,
+          -3.095441639831743
+        ],
+        "length": "L=.93*random.uniform(1.05,2.0); the final execution RNG sequence is not replayed",
+        "controlFormulaBlender": [
+          "(xx,yy,6.24-.02)",
+          "(xx+cos(a)*.10,yy+sin(a)*.10,6.24-L*.45)",
+          "(xx+cos(a)*.06,yy+sin(a)*.06,6.24-L)"
+        ],
+        "membershipStatus": "Suffix order corresponds to generator k outer / j inner loops; no GLB parent/skin/joint encodes this family."
+      },
+      {
+        "k": 7,
+        "stemSuffixOrdinal": 7,
+        "leafSuffixOrdinals": [
+          35,
+          36,
+          37,
+          38,
+          39
+        ],
+        "scriptStemStartGltf": [
+          -8.5485,
+          6.220000000000001,
+          -2.7
+        ],
+        "length": "L=.93*random.uniform(1.05,2.0); the final execution RNG sequence is not replayed",
+        "controlFormulaBlender": [
+          "(xx,yy,6.24-.02)",
+          "(xx+cos(a)*.10,yy+sin(a)*.10,6.24-L*.45)",
+          "(xx+cos(a)*.06,yy+sin(a)*.06,6.24-L)"
+        ],
+        "membershipStatus": "Suffix order corresponds to generator k outer / j inner loops; no GLB parent/skin/joint encodes this family."
+      },
+      {
+        "k": 8,
+        "stemSuffixOrdinal": 8,
+        "leafSuffixOrdinals": [
+          40,
+          41,
+          42,
+          43,
+          44
+        ],
+        "scriptStemStartGltf": [
+          -8.414956518366413,
+          6.220000000000001,
+          -2.304558360168258
+        ],
+        "length": "L=.93*random.uniform(1.05,2.0); the final execution RNG sequence is not replayed",
+        "controlFormulaBlender": [
+          "(xx,yy,6.24-.02)",
+          "(xx+cos(a)*.10,yy+sin(a)*.10,6.24-L*.45)",
+          "(xx+cos(a)*.06,yy+sin(a)*.06,6.24-L)"
+        ],
+        "membershipStatus": "Suffix order corresponds to generator k outer / j inner loops; no GLB parent/skin/joint encodes this family."
+      },
+      {
+        "k": 9,
+        "stemSuffixOrdinal": 9,
+        "leafSuffixOrdinals": [
+          45,
+          46,
+          47,
+          48,
+          49
+        ],
+        "scriptStemStartGltf": [
+          -8.040775997806502,
+          6.220000000000001,
+          -1.9874387868786378
+        ],
+        "length": "L=.93*random.uniform(1.05,2.0); the final execution RNG sequence is not replayed",
+        "controlFormulaBlender": [
+          "(xx,yy,6.24-.02)",
+          "(xx+cos(a)*.10,yy+sin(a)*.10,6.24-L*.45)",
+          "(xx+cos(a)*.06,yy+sin(a)*.06,6.24-L)"
+        ],
+        "membershipStatus": "Suffix order corresponds to generator k outer / j inner loops; no GLB parent/skin/joint encodes this family."
+      },
+      {
+        "k": 10,
+        "stemSuffixOrdinal": 10,
+        "leafSuffixOrdinals": [
+          50,
+          51,
+          52,
+          53,
+          54
+        ],
+        "scriptStemStartGltf": [
+          -7.50006947944009,
+          6.220000000000001,
+          -1.811450700837486
+        ],
+        "length": "L=.93*random.uniform(1.05,2.0); the final execution RNG sequence is not replayed",
+        "controlFormulaBlender": [
+          "(xx,yy,6.24-.02)",
+          "(xx+cos(a)*.10,yy+sin(a)*.10,6.24-L*.45)",
+          "(xx+cos(a)*.06,yy+sin(a)*.06,6.24-L)"
+        ],
+        "membershipStatus": "Suffix order corresponds to generator k outer / j inner loops; no GLB parent/skin/joint encodes this family."
+      },
+      {
+        "k": 11,
+        "stemSuffixOrdinal": 11,
+        "leafSuffixOrdinals": [
+          55,
+          56,
+          57,
+          58,
+          59
+        ],
+        "scriptStemStartGltf": [
+          -6.899930520559912,
+          6.220000000000001,
+          -1.8114507008374858
+        ],
+        "length": "L=.93*random.uniform(1.05,2.0); the final execution RNG sequence is not replayed",
+        "controlFormulaBlender": [
+          "(xx,yy,6.24-.02)",
+          "(xx+cos(a)*.10,yy+sin(a)*.10,6.24-L*.45)",
+          "(xx+cos(a)*.06,yy+sin(a)*.06,6.24-L)"
+        ],
+        "membershipStatus": "Suffix order corresponds to generator k outer / j inner loops; no GLB parent/skin/joint encodes this family."
+      },
+      {
+        "k": 12,
+        "stemSuffixOrdinal": 12,
+        "leafSuffixOrdinals": [
+          60,
+          61,
+          62,
+          63,
+          64
+        ],
+        "scriptStemStartGltf": [
+          -6.359224002193498,
+          6.220000000000001,
+          -1.9874387868786378
+        ],
+        "length": "L=.93*random.uniform(1.05,2.0); the final execution RNG sequence is not replayed",
+        "controlFormulaBlender": [
+          "(xx,yy,6.24-.02)",
+          "(xx+cos(a)*.10,yy+sin(a)*.10,6.24-L*.45)",
+          "(xx+cos(a)*.06,yy+sin(a)*.06,6.24-L)"
+        ],
+        "membershipStatus": "Suffix order corresponds to generator k outer / j inner loops; no GLB parent/skin/joint encodes this family."
+      },
+      {
+        "k": 13,
+        "stemSuffixOrdinal": 13,
+        "leafSuffixOrdinals": [
+          65,
+          66,
+          67,
+          68,
+          69
+        ],
+        "scriptStemStartGltf": [
+          -5.985043481633587,
+          6.220000000000001,
+          -2.3045583601682584
+        ],
+        "length": "L=.93*random.uniform(1.05,2.0); the final execution RNG sequence is not replayed",
+        "controlFormulaBlender": [
+          "(xx,yy,6.24-.02)",
+          "(xx+cos(a)*.10,yy+sin(a)*.10,6.24-L*.45)",
+          "(xx+cos(a)*.06,yy+sin(a)*.06,6.24-L)"
+        ],
+        "membershipStatus": "Suffix order corresponds to generator k outer / j inner loops; no GLB parent/skin/joint encodes this family."
+      }
+    ],
+    "leafOriginAnchors": [
+      {
+        "nodeIndex": 2239,
+        "name": "Grove / living willow 1 / tapered hanging leaf",
+        "k": 0,
+        "j": 0,
+        "originGltf": [
+          -5.851500034332275,
+          6.187327861785889,
+          -2.700000047683716
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2240,
+        "name": "Grove / living willow 1 / tapered hanging leaf.001",
+        "k": 0,
+        "j": 1,
+        "originGltf": [
+          -5.851500034332275,
+          5.836180210113525,
+          -2.700000047683716
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2241,
+        "name": "Grove / living willow 1 / tapered hanging leaf.002",
+        "k": 0,
+        "j": 2,
+        "originGltf": [
+          -5.851500034332275,
+          5.485032081604004,
+          -2.700000047683716
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2242,
+        "name": "Grove / living willow 1 / tapered hanging leaf.003",
+        "k": 0,
+        "j": 3,
+        "originGltf": [
+          -5.851500034332275,
+          5.133884429931641,
+          -2.700000047683716
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2243,
+        "name": "Grove / living willow 1 / tapered hanging leaf.004",
+        "k": 0,
+        "j": 4,
+        "originGltf": [
+          -5.851500034332275,
+          4.782736778259277,
+          -2.700000047683716
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2244,
+        "name": "Grove / living willow 1 / tapered hanging leaf.005",
+        "k": 1,
+        "j": 0,
+        "originGltf": [
+          -5.985043525695801,
+          6.190155506134033,
+          -3.0954415798187256
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2245,
+        "name": "Grove / living willow 1 / tapered hanging leaf.006",
+        "k": 1,
+        "j": 1,
+        "originGltf": [
+          -5.985043525695801,
+          5.857859134674072,
+          -3.0954415798187256
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2246,
+        "name": "Grove / living willow 1 / tapered hanging leaf.007",
+        "k": 1,
+        "j": 2,
+        "originGltf": [
+          -5.985043525695801,
+          5.525562763214111,
+          -3.0954415798187256
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2247,
+        "name": "Grove / living willow 1 / tapered hanging leaf.008",
+        "k": 1,
+        "j": 3,
+        "originGltf": [
+          -5.985043525695801,
+          5.19326639175415,
+          -3.0954415798187256
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2248,
+        "name": "Grove / living willow 1 / tapered hanging leaf.009",
+        "k": 1,
+        "j": 4,
+        "originGltf": [
+          -5.985043525695801,
+          4.860970497131348,
+          -3.0954415798187256
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2249,
+        "name": "Grove / living willow 1 / tapered hanging leaf.010",
+        "k": 2,
+        "j": 0,
+        "originGltf": [
+          -6.35922384262085,
+          6.203503131866455,
+          -3.4125611782073975
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2250,
+        "name": "Grove / living willow 1 / tapered hanging leaf.011",
+        "k": 2,
+        "j": 1,
+        "originGltf": [
+          -6.35922384262085,
+          5.9601898193359375,
+          -3.4125611782073975
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2251,
+        "name": "Grove / living willow 1 / tapered hanging leaf.012",
+        "k": 2,
+        "j": 2,
+        "originGltf": [
+          -6.35922384262085,
+          5.716876029968262,
+          -3.4125611782073975
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2252,
+        "name": "Grove / living willow 1 / tapered hanging leaf.013",
+        "k": 2,
+        "j": 3,
+        "originGltf": [
+          -6.35922384262085,
+          5.473562717437744,
+          -3.4125611782073975
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2253,
+        "name": "Grove / living willow 1 / tapered hanging leaf.014",
+        "k": 2,
+        "j": 4,
+        "originGltf": [
+          -6.35922384262085,
+          5.230249404907227,
+          -3.4125611782073975
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2254,
+        "name": "Grove / living willow 1 / tapered hanging leaf.015",
+        "k": 3,
+        "j": 0,
+        "originGltf": [
+          -6.899930477142334,
+          6.191898822784424,
+          -3.5885493755340576
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2255,
+        "name": "Grove / living willow 1 / tapered hanging leaf.016",
+        "k": 3,
+        "j": 1,
+        "originGltf": [
+          -6.899930477142334,
+          5.871224880218506,
+          -3.5885493755340576
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2256,
+        "name": "Grove / living willow 1 / tapered hanging leaf.017",
+        "k": 3,
+        "j": 2,
+        "originGltf": [
+          -6.899930477142334,
+          5.550550937652588,
+          -3.5885493755340576
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2257,
+        "name": "Grove / living willow 1 / tapered hanging leaf.018",
+        "k": 3,
+        "j": 3,
+        "originGltf": [
+          -6.899930477142334,
+          5.22987699508667,
+          -3.5885493755340576
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2258,
+        "name": "Grove / living willow 1 / tapered hanging leaf.019",
+        "k": 3,
+        "j": 4,
+        "originGltf": [
+          -6.899930477142334,
+          4.909203052520752,
+          -3.5885493755340576
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2259,
+        "name": "Grove / living willow 1 / tapered hanging leaf.020",
+        "k": 4,
+        "j": 0,
+        "originGltf": [
+          -7.500069618225098,
+          6.2011919021606445,
+          -3.5885493755340576
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2260,
+        "name": "Grove / living willow 1 / tapered hanging leaf.021",
+        "k": 4,
+        "j": 1,
+        "originGltf": [
+          -7.500069618225098,
+          5.9424729347229,
+          -3.5885493755340576
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2261,
+        "name": "Grove / living willow 1 / tapered hanging leaf.022",
+        "k": 4,
+        "j": 2,
+        "originGltf": [
+          -7.500069618225098,
+          5.683753490447998,
+          -3.5885493755340576
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2262,
+        "name": "Grove / living willow 1 / tapered hanging leaf.023",
+        "k": 4,
+        "j": 3,
+        "originGltf": [
+          -7.500069618225098,
+          5.425034046173096,
+          -3.5885493755340576
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2263,
+        "name": "Grove / living willow 1 / tapered hanging leaf.024",
+        "k": 4,
+        "j": 4,
+        "originGltf": [
+          -7.500069618225098,
+          5.166314601898193,
+          -3.5885493755340576
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2264,
+        "name": "Grove / living willow 1 / tapered hanging leaf.025",
+        "k": 5,
+        "j": 0,
+        "originGltf": [
+          -8.040776252746582,
+          6.209941864013672,
+          -3.4125611782073975
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2265,
+        "name": "Grove / living willow 1 / tapered hanging leaf.026",
+        "k": 5,
+        "j": 1,
+        "originGltf": [
+          -8.040776252746582,
+          6.009555339813232,
+          -3.4125611782073975
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2266,
+        "name": "Grove / living willow 1 / tapered hanging leaf.027",
+        "k": 5,
+        "j": 2,
+        "originGltf": [
+          -8.040776252746582,
+          5.809168338775635,
+          -3.4125611782073975
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2267,
+        "name": "Grove / living willow 1 / tapered hanging leaf.028",
+        "k": 5,
+        "j": 3,
+        "originGltf": [
+          -8.040776252746582,
+          5.608781814575195,
+          -3.4125611782073975
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2268,
+        "name": "Grove / living willow 1 / tapered hanging leaf.029",
+        "k": 5,
+        "j": 4,
+        "originGltf": [
+          -8.040776252746582,
+          5.408394813537598,
+          -3.4125611782073975
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2269,
+        "name": "Grove / living willow 1 / tapered hanging leaf.030",
+        "k": 6,
+        "j": 0,
+        "originGltf": [
+          -8.414956092834473,
+          6.203998565673828,
+          -3.0954415798187256
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2270,
+        "name": "Grove / living willow 1 / tapered hanging leaf.031",
+        "k": 6,
+        "j": 1,
+        "originGltf": [
+          -8.414956092834473,
+          5.963989734649658,
+          -3.0954415798187256
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2271,
+        "name": "Grove / living willow 1 / tapered hanging leaf.032",
+        "k": 6,
+        "j": 2,
+        "originGltf": [
+          -8.414956092834473,
+          5.72398042678833,
+          -3.0954415798187256
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2272,
+        "name": "Grove / living willow 1 / tapered hanging leaf.033",
+        "k": 6,
+        "j": 3,
+        "originGltf": [
+          -8.414956092834473,
+          5.48397159576416,
+          -3.0954415798187256
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2273,
+        "name": "Grove / living willow 1 / tapered hanging leaf.034",
+        "k": 6,
+        "j": 4,
+        "originGltf": [
+          -8.414956092834473,
+          5.243962287902832,
+          -3.0954415798187256
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2274,
+        "name": "Grove / living willow 1 / tapered hanging leaf.035",
+        "k": 7,
+        "j": 0,
+        "originGltf": [
+          -8.548500061035156,
+          6.200579643249512,
+          -2.700000047683716
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2275,
+        "name": "Grove / living willow 1 / tapered hanging leaf.036",
+        "k": 7,
+        "j": 1,
+        "originGltf": [
+          -8.548500061035156,
+          5.937775611877441,
+          -2.700000047683716
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2276,
+        "name": "Grove / living willow 1 / tapered hanging leaf.037",
+        "k": 7,
+        "j": 2,
+        "originGltf": [
+          -8.548500061035156,
+          5.674972057342529,
+          -2.700000047683716
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2277,
+        "name": "Grove / living willow 1 / tapered hanging leaf.038",
+        "k": 7,
+        "j": 3,
+        "originGltf": [
+          -8.548500061035156,
+          5.412168502807617,
+          -2.700000047683716
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2278,
+        "name": "Grove / living willow 1 / tapered hanging leaf.039",
+        "k": 7,
+        "j": 4,
+        "originGltf": [
+          -8.548500061035156,
+          5.149364471435547,
+          -2.700000047683716
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2279,
+        "name": "Grove / living willow 1 / tapered hanging leaf.040",
+        "k": 8,
+        "j": 0,
+        "originGltf": [
+          -8.414956092834473,
+          6.189152717590332,
+          -2.304558277130127
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2280,
+        "name": "Grove / living willow 1 / tapered hanging leaf.041",
+        "k": 8,
+        "j": 1,
+        "originGltf": [
+          -8.414956092834473,
+          5.8501715660095215,
+          -2.304558277130127
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2281,
+        "name": "Grove / living willow 1 / tapered hanging leaf.042",
+        "k": 8,
+        "j": 2,
+        "originGltf": [
+          -8.414956092834473,
+          5.511190414428711,
+          -2.304558277130127
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2282,
+        "name": "Grove / living willow 1 / tapered hanging leaf.043",
+        "k": 8,
+        "j": 3,
+        "originGltf": [
+          -8.414956092834473,
+          5.1722092628479,
+          -2.304558277130127
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2283,
+        "name": "Grove / living willow 1 / tapered hanging leaf.044",
+        "k": 8,
+        "j": 4,
+        "originGltf": [
+          -8.414956092834473,
+          4.83322811126709,
+          -2.304558277130127
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2284,
+        "name": "Grove / living willow 1 / tapered hanging leaf.045",
+        "k": 9,
+        "j": 0,
+        "originGltf": [
+          -8.040776252746582,
+          6.192317008972168,
+          -1.9874387979507446
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2285,
+        "name": "Grove / living willow 1 / tapered hanging leaf.046",
+        "k": 9,
+        "j": 1,
+        "originGltf": [
+          -8.040776252746582,
+          5.874429702758789,
+          -1.9874387979507446
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2286,
+        "name": "Grove / living willow 1 / tapered hanging leaf.047",
+        "k": 9,
+        "j": 2,
+        "originGltf": [
+          -8.040776252746582,
+          5.55654239654541,
+          -1.9874387979507446
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2287,
+        "name": "Grove / living willow 1 / tapered hanging leaf.048",
+        "k": 9,
+        "j": 3,
+        "originGltf": [
+          -8.040776252746582,
+          5.238655090332031,
+          -1.9874387979507446
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2288,
+        "name": "Grove / living willow 1 / tapered hanging leaf.049",
+        "k": 9,
+        "j": 4,
+        "originGltf": [
+          -8.040776252746582,
+          4.920767784118652,
+          -1.9874387979507446
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2289,
+        "name": "Grove / living willow 1 / tapered hanging leaf.050",
+        "k": 10,
+        "j": 0,
+        "originGltf": [
+          -7.500069618225098,
+          6.197540760040283,
+          -1.811450719833374
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2290,
+        "name": "Grove / living willow 1 / tapered hanging leaf.051",
+        "k": 10,
+        "j": 1,
+        "originGltf": [
+          -7.500069618225098,
+          5.914480686187744,
+          -1.811450719833374
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2291,
+        "name": "Grove / living willow 1 / tapered hanging leaf.052",
+        "k": 10,
+        "j": 2,
+        "originGltf": [
+          -7.500069618225098,
+          5.631420135498047,
+          -1.811450719833374
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2292,
+        "name": "Grove / living willow 1 / tapered hanging leaf.053",
+        "k": 10,
+        "j": 3,
+        "originGltf": [
+          -7.500069618225098,
+          5.34835958480835,
+          -1.811450719833374
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2293,
+        "name": "Grove / living willow 1 / tapered hanging leaf.054",
+        "k": 10,
+        "j": 4,
+        "originGltf": [
+          -7.500069618225098,
+          5.0652995109558105,
+          -1.811450719833374
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2294,
+        "name": "Grove / living willow 1 / tapered hanging leaf.055",
+        "k": 11,
+        "j": 0,
+        "originGltf": [
+          -6.899930477142334,
+          6.190338611602783,
+          -1.811450719833374
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2295,
+        "name": "Grove / living willow 1 / tapered hanging leaf.056",
+        "k": 11,
+        "j": 1,
+        "originGltf": [
+          -6.899930477142334,
+          5.859261989593506,
+          -1.811450719833374
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2296,
+        "name": "Grove / living willow 1 / tapered hanging leaf.057",
+        "k": 11,
+        "j": 2,
+        "originGltf": [
+          -6.899930477142334,
+          5.528185844421387,
+          -1.811450719833374
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2297,
+        "name": "Grove / living willow 1 / tapered hanging leaf.058",
+        "k": 11,
+        "j": 3,
+        "originGltf": [
+          -6.899930477142334,
+          5.197109222412109,
+          -1.811450719833374
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2298,
+        "name": "Grove / living willow 1 / tapered hanging leaf.059",
+        "k": 11,
+        "j": 4,
+        "originGltf": [
+          -6.899930477142334,
+          4.86603307723999,
+          -1.811450719833374
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2299,
+        "name": "Grove / living willow 1 / tapered hanging leaf.060",
+        "k": 12,
+        "j": 0,
+        "originGltf": [
+          -6.35922384262085,
+          6.200852870941162,
+          -1.9874387979507446
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2300,
+        "name": "Grove / living willow 1 / tapered hanging leaf.061",
+        "k": 12,
+        "j": 1,
+        "originGltf": [
+          -6.35922384262085,
+          5.939872741699219,
+          -1.9874387979507446
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2301,
+        "name": "Grove / living willow 1 / tapered hanging leaf.062",
+        "k": 12,
+        "j": 2,
+        "originGltf": [
+          -6.35922384262085,
+          5.678892135620117,
+          -1.9874387979507446
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2302,
+        "name": "Grove / living willow 1 / tapered hanging leaf.063",
+        "k": 12,
+        "j": 3,
+        "originGltf": [
+          -6.35922384262085,
+          5.417912006378174,
+          -1.9874387979507446
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2303,
+        "name": "Grove / living willow 1 / tapered hanging leaf.064",
+        "k": 12,
+        "j": 4,
+        "originGltf": [
+          -6.35922384262085,
+          5.156931400299072,
+          -1.9874387979507446
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2304,
+        "name": "Grove / living willow 1 / tapered hanging leaf.065",
+        "k": 13,
+        "j": 0,
+        "originGltf": [
+          -5.985043525695801,
+          6.204524993896484,
+          -2.304558277130127
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2305,
+        "name": "Grove / living willow 1 / tapered hanging leaf.066",
+        "k": 13,
+        "j": 1,
+        "originGltf": [
+          -5.985043525695801,
+          5.9680256843566895,
+          -2.304558277130127
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2306,
+        "name": "Grove / living willow 1 / tapered hanging leaf.067",
+        "k": 13,
+        "j": 2,
+        "originGltf": [
+          -5.985043525695801,
+          5.7315263748168945,
+          -2.304558277130127
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2307,
+        "name": "Grove / living willow 1 / tapered hanging leaf.068",
+        "k": 13,
+        "j": 3,
+        "originGltf": [
+          -5.985043525695801,
+          5.4950270652771,
+          -2.304558277130127
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      },
+      {
+        "nodeIndex": 2308,
+        "name": "Grove / living willow 1 / tapered hanging leaf.069",
+        "k": 13,
+        "j": 4,
+        "originGltf": [
+          -5.985043525695801,
+          5.258527755737305,
+          -2.304558277130127
+        ],
+        "status": "Exact exported node origin; lamina local t=0 recipe. Thickened mesh attachment/weld not inspected."
+      }
+    ],
+    "unknowns": [
+      "No selected independent main-bough node; bark ridges are trunk decoration, not main branches.",
+      "Hanging-stem bend controls shift x/y while leaf origins stay at (xx,yy); generator does not weld/connect leaf bases to stem surfaces.",
+      "No explicit lobe-to-trunk collar or seam loop; soft_mass volumes overlap by composition.",
+      "Random stem lengths and exact cap/collar/vertex-normal continuity require source/mesh audit beyond this inventory."
+    ]
+  },
+  "birch": {
+    "sourceRecipe": "mature-island.py birch_tree; first call x=-7.5,y=10.9,h=3.6,lean=.4",
+    "knownXYHeight": {
+      "x": -7.5,
+      "blenderY": 10.9,
+      "height": 3.6,
+      "lean": 0.4
+    },
+    "baseZ": "terrain_height(-7.5,10.9); not recomputed or inferred from AABB minimum",
+    "trunkControlFormulaBlender": [
+      "(x,y,z)",
+      "(x-.12,y,z+h*.45)",
+      "(x+lean,y,z+h)"
+    ],
+    "branchRootFormulaBlender": "(x,y,z+h*.55)",
+    "branchControlsFormulaBlender": [
+      "(x,y,z+h*.55)",
+      "(xx,yy,z+h*.83)",
+      "(xx+.4,yy,z+h)"
+    ],
+    "branchDirectionFormula": "angle=j*2.1+.3; xx=x+.80*cos(angle); yy=y+.65*sin(angle)",
+    "crownOriginAndRecipeBranchTipAnchors": [
+      {
+        "nodeIndex": 2596,
+        "name": "Grove / silver birch 0 / airy golden crown",
+        "j": 0,
+        "originGltf": [
+          -6.335731029510498,
+          6.79165506362915,
+          -11.092087745666504
+        ],
+        "status": "Exact GLB leaf-volume origin; generator branch terminal equals it before Float32 export."
+      },
+      {
+        "nodeIndex": 2597,
+        "name": "Grove / silver birch 0 / airy golden crown.001",
+        "j": 1,
+        "originGltf": [
+          -7.689915180206299,
+          6.79165506362915,
+          -11.339051246643066
+        ],
+        "status": "Exact GLB leaf-volume origin; generator branch terminal equals it before Float32 export."
+      },
+      {
+        "nodeIndex": 2598,
+        "name": "Grove / silver birch 0 / airy golden crown.002",
+        "j": 2,
+        "originGltf": [
+          -7.268636703491211,
+          6.79165506362915,
+          -10.264605522155762
+        ],
+        "status": "Exact GLB leaf-volume origin; generator branch terminal equals it before Float32 export."
+      }
+    ],
+    "unknowns": [
+      "Three branch starts are specified at x,y at .55h; the leaning curved trunk centerline is not constrained to those starts.",
+      "Crown origin equals terminal branch control by generator; this is not a fused topology or tangent proof.",
+      "Six bark marks are attached to the original stem recipe; reorienting the stem separately would strand them.",
+      "Ground cap and actual continuous trunk/branch joint surface are not encoded as anchors in GLB."
+    ]
+  },
+  "spire": {
+    "sourceRecipe": "mature-island.py spire_tree; first call x=-11.3,y=9.3,height=4.4",
+    "knownXYHeight": {
+      "x": -11.3,
+      "blenderY": 9.3,
+      "height": 4.4
+    },
+    "baseZ": "terrain_height(-11.3,9.3); not recomputed or inferred from AABB minimum",
+    "trunkControlFormulaBlender": [
+      "(x,y,z)",
+      "(x-.08,y,z+.65*4.4)",
+      "(x+.12,y,z+4.4)"
+    ],
+    "tiers": [
+      {
+        "tier": 0,
+        "baseHeightAboveRecipeZ": 1.54,
+        "tipHeightAboveRecipeZ": 2.8600000000000003,
+        "baseRadius": 1.2320000000000002
+      },
+      {
+        "tier": 1,
+        "baseHeightAboveRecipeZ": 2.244,
+        "tipHeightAboveRecipeZ": 3.5640000000000005,
+        "baseRadius": 1.0252000000000003
+      },
+      {
+        "tier": 2,
+        "baseHeightAboveRecipeZ": 2.948,
+        "tipHeightAboveRecipeZ": 4.268,
+        "baseRadius": 0.8184000000000001
+      },
+      {
+        "tier": 3,
+        "baseHeightAboveRecipeZ": 3.652,
+        "tipHeightAboveRecipeZ": 4.9719999999999995,
+        "baseRadius": 0.6116000000000001
+      }
+    ],
+    "unknowns": [
+      "No separate woody main branches or branch-to-tier collars exist among selected nodes.",
+      "Each tier is an authored ring surface in absolute source coords; node identity origin [0,0,0] is not an attachment anchor.",
+      "Generator creates 5 rings/24 sectors and only lateral quads; no bottom cap or solidify is authored for these foliage tiers.",
+      "Tier central axis is x,y; the trunk leans and is not jointed/welded to tier tips by source constraints.",
+      "Highest tier reaches z+1.13h, above the woody trunk end; maintaining silhouette does not establish structural continuation."
+    ]
+  }
+}

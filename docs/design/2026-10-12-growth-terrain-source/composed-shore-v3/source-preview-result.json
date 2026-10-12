@@ -1,0 +1,26 @@
+{
+  "startedUtc": "2026-10-12T11:34:58.800297+00:00",
+  "finishedUtc": "2026-10-12T11:35:25.381547+00:00",
+  "pid": 65565,
+  "exitCode": 0,
+  "elapsedSeconds": 26.581128917,
+  "peakSampledRssBytes": 1973075968,
+  "effectiveThreads": 2,
+  "limitReason": null,
+  "sourceBefore": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/build-source-preview.py": "e9b11dc414cdc812b438b99863df3e89987cc997a21acb7ac0acbc6d7cb365f1",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/source-manifest.json": "84b435515479e1f37db01731257a0c7ed2386a063000027b62b4dfb3882a6307",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/single-source.glb": "85dba429d8d66fed3db664eb187942c7582243dbbe4f46f89ffeaee8a8048f2d",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/split-source.glb": "cf327baccb1caa88a0e579d5d45ce29267768ab89ce3f83b969d15158e40918c",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/loop-source.glb": "137a5228cc0ba51f071831155fdd7fceaa43fb9cfb96f5dd07170ee4fae96c3c"
+  },
+  "sourceAfter": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/build-source-preview.py": "e9b11dc414cdc812b438b99863df3e89987cc997a21acb7ac0acbc6d7cb365f1",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/source-manifest.json": "84b435515479e1f37db01731257a0c7ed2386a063000027b62b4dfb3882a6307",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/single-source.glb": "85dba429d8d66fed3db664eb187942c7582243dbbe4f46f89ffeaee8a8048f2d",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/split-source.glb": "cf327baccb1caa88a0e579d5d45ce29267768ab89ce3f83b969d15158e40918c",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/loop-source.glb": "137a5228cc0ba51f071831155fdd7fceaa43fb9cfb96f5dd07170ee4fae96c3c"
+  },
+  "inputsUnchanged": true,
+  "evidence": "Source-only static comparison; not performance evidence or app acceptance"
+}

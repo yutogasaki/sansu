@@ -1,0 +1,111 @@
+{
+  "scope": "Pure Node frame-retention diagnostic, not browser/purchase/placement/owner-access acceptance",
+  "candidate": "/private/tmp/sansu-authored-shoulder-c1/candidate",
+  "outcome": "LRU3 eight frames completed; unbounded self-stopped after four frames; no OOM",
+  "completedComparison": false,
+  "selfStopped": true,
+  "totalFrameSteps": 12,
+  "elapsedMs": 105790.503875,
+  "heapLimitBytes": 4496293888,
+  "heapStopBytes": 3221225472,
+  "fixedReserveBytes": 805306368,
+  "bounded3MaxFramePostGcHeapBytes": 2146379576,
+  "bounded3MaxFrameAfterCallHeapBytes": 2702854856,
+  "maxObservedRssBytes": 4947460096,
+  "betweenModes": {
+    "rss": 2943369216,
+    "heapTotal": 182779904,
+    "heapUsed": 45492280,
+    "external": 4240020,
+    "arrayBuffers": 1757041,
+    "heapLimit": 4496293888
+  },
+  "comparisons": [
+    {
+      "label": "baseline32",
+      "canonicalSha256": "bdc6e76a7e18128366d08b3f598cc6112597da52363330568e580fcf3f6d4ac1",
+      "frameRevision": "authored-world:df1a5b7f8687701d",
+      "bounded3PostGcHeapBytes": 911623664,
+      "unboundedPostGcHeapBytes": 911268168,
+      "differenceBytes": -355496
+    },
+    {
+      "label": "preview-l33",
+      "canonicalSha256": "25a4c938cb73c0056f77f0151795e88417b2706e67fd8a8a8ee855d15fce5ed6",
+      "frameRevision": "authored-world:ff2c0183273fbe23",
+      "bounded3PostGcHeapBytes": 1506494312,
+      "unboundedPostGcHeapBytes": 1506923664,
+      "differenceBytes": 429352
+    },
+    {
+      "label": "commit-l33",
+      "canonicalSha256": "8a92fd0a17be137db40c68ad97ee34be3300129ff066836f6e2ce782f3a5baee",
+      "frameRevision": "authored-world:ff2c0183273fbe23",
+      "bounded3PostGcHeapBytes": 1850328504,
+      "unboundedPostGcHeapBytes": 1850567272,
+      "differenceBytes": 238768
+    },
+    {
+      "label": "preview-l34",
+      "canonicalSha256": "e76bf5c5ecf7904ddedc42fc4997a377605f59a1fcdb4137bf54b3c221bcad2d",
+      "frameRevision": "authored-world:18c25ced7fc133af",
+      "bounded3PostGcHeapBytes": 2102375472,
+      "unboundedPostGcHeapBytes": 2446170912,
+      "differenceBytes": 343795440
+    }
+  ],
+  "operations": [
+    {
+      "operation": "advanceNature18h",
+      "operationMsExcludingCheckpointGc": 1.1050410000025295,
+      "beforePostGcHeapBytes": 2146361512,
+      "afterCallBeforeGcHeapBytes": 2147299056,
+      "afterPostGcHeapBytes": 2146479032,
+      "postGcDeltaBytes": 117520,
+      "events": [
+        {
+          "type": "matured",
+          "id": "l33"
+        },
+        {
+          "type": "matured",
+          "id": "l34"
+        },
+        {
+          "type": "matured",
+          "id": "l35"
+        }
+      ]
+    },
+    {
+      "operation": "syncPlaceMilestones",
+      "operationMsExcludingCheckpointGc": 55.64854199999536,
+      "beforePostGcHeapBytes": 2146479032,
+      "afterCallBeforeGcHeapBytes": 2202719200,
+      "afterPostGcHeapBytes": 2146612080,
+      "postGcDeltaBytes": 133048
+    }
+  ],
+  "stopReason": "Preflight reserve stop before unbounded:apply-l34: used=2446305440, fixed transient reserve=805306368",
+  "localInputCount": 99,
+  "localInputsUnchanged": true,
+  "installedDependencyCount": 6,
+  "installedDependenciesUnchanged": true,
+  "rawFailure": {
+    "path": "/private/tmp/sansu-authored-shoulder-c1/regressions/02-shoulder-full/execution.log.txt",
+    "sha256": "66123f59c71a7b09a803fa541036f5fa0db7b5976e1a455ca1e41e654ea342b0"
+  },
+  "limitations": [
+    "Browser/renderer/screenshot/report capture retention",
+    "All 75 placement targets and direct canPlace acceptance",
+    "Actor/owner-access acceptance",
+    "Production performance conclusion",
+    "Unbounded remaining four frames were not executed.",
+    "Forced GC and sequential bounded-first execution are diagnostic conditions, not production performance.",
+    "After-call memory is a sampled value, not the maximum inside a synchronous operation.",
+    "Original explicit-diagnostic-18h OOM JS call site remains unproven.",
+    "All twelve projections were cache misses. Outer/domain cache hit-refresh divergence and the actual direct-delegation repair were not exercised.",
+    "Bounded mode uses an outer LRU3 plus the unchanged domain LRU3; acquisition.initial and fixedEdits.initial live references from the full driver are omitted.",
+    "Frame :after event elapsedMs/cpu fields contain operation duration/delta because summary fields override cumulative logging fields; other events contain cumulative values."
+  ]
+}

@@ -1,0 +1,410 @@
+{
+  "scope": "Exported context metadata and per-owner/shared aggregate triangle counts and bounds. This is not exhaustive per-vertex context parity, skin lighting or app acceptance.",
+  "inputs": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/source-context.glb": "22ad846e8c1fcfcdc9fd30a65b7398520c63b5fd5d54c60791c1342fa00f8059",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/central-shoulder-source.glb": "16ff4e1a1b31a4dcb676dbc6283ec368902f08bfba2a895a436a93845a4907b8",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/context-manifest.json": "a504c0afc2b3d8b1937a9801a43d16b0ff02859a21d0ea3410cc48daa323f90d",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/input/candidate-state.json": "a286b06b513e3661aebb6387c7e09a66fd8d0f0329da0bbfe7b2d901736f6ee9",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/input/candidate-world.json.gz": "b2d0bdbe3c9be24deb52cb1e0d10c11e7b27bfb3464501d46249b176287ef1cc",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/input/candidate-frame-plans.json": "4f19b61ef7cb256c8a39238d80a492a8a33855d847feb945f723647d48f0fd18"
+  },
+  "metadataMultisetPreserved": true,
+  "metadataBeforeCount": 407,
+  "metadataAfterCount": 407,
+  "expectedOwnerCount": 35,
+  "expectedOwnerIds": [
+    "l10",
+    "l11",
+    "l12",
+    "l13",
+    "l14",
+    "l15",
+    "l16",
+    "l17",
+    "l18",
+    "l19",
+    "l20",
+    "l21",
+    "l22",
+    "l23",
+    "l24",
+    "l25",
+    "l26",
+    "l27",
+    "l28",
+    "l29",
+    "l30",
+    "l31",
+    "l32",
+    "l33",
+    "l34",
+    "l35",
+    "p1",
+    "p2",
+    "p3",
+    "p4",
+    "p5",
+    "p6",
+    "p7",
+    "p8",
+    "p9"
+  ],
+  "manifestOwnerIdsMatch": true,
+  "contextOwnerGroups": 36,
+  "fullOwnerGroups": 36,
+  "perOwnerAndSharedGeometryDifferences": [],
+  "maxContextBoundsDelta": 4.196167004977269e-07,
+  "staticInputRawParity": {
+    "candidate-state.json": true,
+    "candidate-world.json.gz": true,
+    "candidate-frame-plans.json": true
+  },
+  "contextManifestInputsStillMatch": true,
+  "changedContextInputs": [],
+  "retainedFloorChecks": [
+    {
+      "id": "[\"native05-inlet-core\",\"Flowers / open sky gathering court:0\"]",
+      "actualPrimitives": 1,
+      "triangles": 352,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+      "actualPrimitives": 1,
+      "triangles": 880,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+      "actualPrimitives": 1,
+      "triangles": 880,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Grove / sheltered open room:0\"]",
+      "actualPrimitives": 1,
+      "triangles": 352,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Harbor / shared waterfront court:0\"]",
+      "actualPrimitives": 1,
+      "triangles": 352,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "actualPrimitives": 1,
+      "triangles": 39553,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "actualPrimitives": 1,
+      "triangles": 46161,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+      "actualPrimitives": 1,
+      "triangles": 16973,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Village / shared sunny court:0\"]",
+      "actualPrimitives": 1,
+      "triangles": 352,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Water town / shared frontage court:0\"]",
+      "actualPrimitives": 1,
+      "triangles": 352,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:pool-bed:l22\"]",
+      "actualPrimitives": 1,
+      "triangles": 3455,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:pool-bed:l20\"]",
+      "actualPrimitives": 1,
+      "triangles": 926,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:pool-bed:l21\"]",
+      "actualPrimitives": 1,
+      "triangles": 2069,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A9\"]",
+      "actualPrimitives": 1,
+      "triangles": 202,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A7\"]",
+      "actualPrimitives": 1,
+      "triangles": 182,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A8\"]",
+      "actualPrimitives": 1,
+      "triangles": 211,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A9\"]",
+      "actualPrimitives": 1,
+      "triangles": 265,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A0\"]",
+      "actualPrimitives": 1,
+      "triangles": 111,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A1\"]",
+      "actualPrimitives": 1,
+      "triangles": 133,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A2\"]",
+      "actualPrimitives": 1,
+      "triangles": 204,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A3\"]",
+      "actualPrimitives": 1,
+      "triangles": 208,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A4\"]",
+      "actualPrimitives": 1,
+      "triangles": 248,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A5\"]",
+      "actualPrimitives": 1,
+      "triangles": 222,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A6\"]",
+      "actualPrimitives": 1,
+      "triangles": 226,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A7\"]",
+      "actualPrimitives": 1,
+      "triangles": 186,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A8\"]",
+      "actualPrimitives": 1,
+      "triangles": 172,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l20%22%2C%22l21%22%5D%3A9\"]",
+      "actualPrimitives": 1,
+      "triangles": 48,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A2\"]",
+      "actualPrimitives": 1,
+      "triangles": 390,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A3\"]",
+      "actualPrimitives": 1,
+      "triangles": 326,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A4\"]",
+      "actualPrimitives": 1,
+      "triangles": 288,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A5\"]",
+      "actualPrimitives": 1,
+      "triangles": 222,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A0\"]",
+      "actualPrimitives": 1,
+      "triangles": 185,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A1\"]",
+      "actualPrimitives": 1,
+      "triangles": 383,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A3\"]",
+      "actualPrimitives": 1,
+      "triangles": 360,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A4\"]",
+      "actualPrimitives": 1,
+      "triangles": 291,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A5\"]",
+      "actualPrimitives": 1,
+      "triangles": 184,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A6\"]",
+      "actualPrimitives": 1,
+      "triangles": 178,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A2\"]",
+      "actualPrimitives": 1,
+      "triangles": 88,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A1\"]",
+      "actualPrimitives": 1,
+      "triangles": 72,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A3\"]",
+      "actualPrimitives": 1,
+      "triangles": 118,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A5\"]",
+      "actualPrimitives": 1,
+      "triangles": 110,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A4\"]",
+      "actualPrimitives": 1,
+      "triangles": 114,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A6\"]",
+      "actualPrimitives": 1,
+      "triangles": 114,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A8\"]",
+      "actualPrimitives": 1,
+      "triangles": 108,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A7\"]",
+      "actualPrimitives": 1,
+      "triangles": 100,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A7\"]",
+      "actualPrimitives": 1,
+      "triangles": 190,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A8\"]",
+      "actualPrimitives": 1,
+      "triangles": 193,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l23%22%2C%22l24%22%5D%3A0\"]",
+      "actualPrimitives": 1,
+      "triangles": 27,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l21%22%2C%22l23%22%5D%3A6\"]",
+      "actualPrimitives": 1,
+      "triangles": 188,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A0\"]",
+      "actualPrimitives": 1,
+      "triangles": 190,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A1\"]",
+      "actualPrimitives": 1,
+      "triangles": 220,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:stream-bed:stream%3A%5B%22l22%22%2C%22l23%22%5D%3A2\"]",
+      "actualPrimitives": 1,
+      "triangles": 436,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"authored-water:bridge:l24\"]",
+      "actualPrimitives": 1,
+      "triangles": 4778,
+      "exactFloat32TriangleParity": true
+    },
+    {
+      "id": "[\"native05-cove-corner-shared-apron-v1\",\"shared-apron\"]",
+      "actualPrimitives": 1,
+      "triangles": 596,
+      "exactFloat32TriangleParity": true
+    }
+  ],
+  "metadataNumberNormalization": "JSON integer/float spelling normalized without numeric tolerance",
+  "nonTrianglePrimitiveCountsPreserved": false,
+  "sourceNonTriangleModes": "Counter({(1, 160): 3})",
+  "finalNonTriangleModes": "Counter()",
+  "addedRootOwnerIds": [
+    "l33",
+    "l34",
+    "l35"
+  ],
+  "retainedFloorNodeCount": 54,
+  "newSoilNodeCount": 1,
+  "finalInputs": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/source-context.glb": "22ad846e8c1fcfcdc9fd30a65b7398520c63b5fd5d54c60791c1342fa00f8059",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/central-shoulder-source.glb": "16ff4e1a1b31a4dcb676dbc6283ec368902f08bfba2a895a436a93845a4907b8",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/context-manifest.json": "a504c0afc2b3d8b1937a9801a43d16b0ff02859a21d0ea3410cc48daa323f90d",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/input/candidate-state.json": "a286b06b513e3661aebb6387c7e09a66fd8d0f0329da0bbfe7b2d901736f6ee9",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/input/candidate-world.json.gz": "b2d0bdbe3c9be24deb52cb1e0d10c11e7b27bfb3464501d46249b176287ef1cc",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/input/candidate-frame-plans.json": "4f19b61ef7cb256c8a39238d80a492a8a33855d847feb945f723647d48f0fd18"
+  },
+  "inputsUnchanged": true
+}

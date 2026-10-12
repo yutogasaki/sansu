@@ -1,0 +1,76 @@
+{
+  "status": "COMPLETED",
+  "command": [
+    "python3",
+    "../east-v2/supervise.py",
+    "--scheduled",
+    "--seconds",
+    "240",
+    "--rss-mib",
+    "2560",
+    "--log",
+    "runs/02-whole.log.txt",
+    "--",
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "render-failed-type-node.py",
+    "--",
+    "--scheduled",
+    "--source",
+    "../east-v2/runs/01-coarse-build/failed-scene.blend",
+    "--out",
+    "runs/02-whole",
+    "--view",
+    "whole"
+  ],
+  "cwd": "/private/tmp/sansu-p02-gallery-source-study/east-v2-failed-shape-view",
+  "launchRequestedUtc": "2026-10-12T05:23:39.537394+00:00",
+  "timestampMeaning": "supervisor launch bracket; child times are observations not exact spawn/exit",
+  "observedChildren": {
+    "39851": {
+      "firstObservedUtc": "2026-10-12T05:23:39.835670+00:00",
+      "parentPid": 39849,
+      "peakObservedRssBytes": 2513371136,
+      "lastObservedUtc": "2026-10-12T05:23:51.825672+00:00"
+    },
+    "39929": {
+      "firstObservedUtc": "2026-10-12T05:23:49.870527+00:00",
+      "parentPid": 39849,
+      "peakObservedRssBytes": 2113536,
+      "lastObservedUtc": "2026-10-12T05:23:49.870584+00:00"
+    }
+  },
+  "before": {
+    "failedScene": "e61a390ef10e77ef40de77972454050b19e469b725ea8ebbec7b43e35b199746",
+    "study": "7ff0cd080569eb92928cbe7d974fa4348ff89e597d7c98f5ecff471fdc105cec",
+    "originalRenderCode": "d1635d4fb6e0dfcf6f2423310e5bdedba1cf29d2381a50bcaf11c830e197f1f6",
+    "supervisor": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "closedFloorQA": "6d6d98206d86a953b3299aefbf289f6b987aa5f5f25eae6aca339b8122e6e12d",
+    "originalFailedRenderer": "ed901f090fb420d6a4f847af1b4203c28ea6362c555511bb95e9a531f071fc76",
+    "originalPreparation": "c6d8e6f357cc2ae5699e9faa47efc88d1c4c40f5865884b1fde08710c2da16ef",
+    "script": "6b5a4a9280a1323d4c665c888dc0243800b932ad0db63a0a2890bc8b86cd1ec2",
+    "preparation": "4d829bb9cdc661b5363632ea55a3896e1ca10ad14ff20993e9731c7a2de53853"
+  },
+  "supervisorPid": 39849,
+  "supervisorPopenReturnedUtc": "2026-10-12T05:23:39.539204+00:00",
+  "supervisorExitCode": 0,
+  "supervisorExitObservedUtc": "2026-10-12T05:23:52.076343+00:00",
+  "elapsedSeconds": 12.538808458,
+  "after": {
+    "failedScene": "e61a390ef10e77ef40de77972454050b19e469b725ea8ebbec7b43e35b199746",
+    "study": "7ff0cd080569eb92928cbe7d974fa4348ff89e597d7c98f5ecff471fdc105cec",
+    "originalRenderCode": "d1635d4fb6e0dfcf6f2423310e5bdedba1cf29d2381a50bcaf11c830e197f1f6",
+    "supervisor": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "closedFloorQA": "6d6d98206d86a953b3299aefbf289f6b987aa5f5f25eae6aca339b8122e6e12d",
+    "originalFailedRenderer": "ed901f090fb420d6a4f847af1b4203c28ea6362c555511bb95e9a531f071fc76",
+    "originalPreparation": "c6d8e6f357cc2ae5699e9faa47efc88d1c4c40f5865884b1fde08710c2da16ef",
+    "script": "6b5a4a9280a1323d4c665c888dc0243800b932ad0db63a0a2890bc8b86cd1ec2",
+    "preparation": "4d829bb9cdc661b5363632ea55a3896e1ca10ad14ff20993e9731c7a2de53853"
+  },
+  "inputsUnchanged": true
+}

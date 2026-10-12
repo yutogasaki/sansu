@@ -1,0 +1,27 @@
+{
+  "originalTerrainSource": {
+    "artifact": "docs/design/2026-10-10-island-final-3d/whole-island.glb",
+    "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+  },
+  "originalTerrainSourceVerified": true,
+  "artifact": "selected-v3-handoff.json.gz",
+  "sha256": "a5e947cf22a7a2ad02272902f5836da464f0f89630001eea4be95583103efdb8",
+  "decodedSha256": "a79148e28e5e51618a1be1558c4c491acb955d01e9b4b30e142db44a07683139",
+  "bytes": 236426,
+  "inputs": {
+    "raw/south-west-v3/candidate-proof.json": "26fdf12119e32675508424e787afc94a9eb45de40ce7a81d5f35ea399bd55854",
+    "raw/south-west-v3/candidate-world.json.gz": "b2d0bdbe3c9be24deb52cb1e0d10c11e7b27bfb3464501d46249b176287ef1cc",
+    "raw/south-west-v3/assembly-extract.json": "feb55d314e9c197da78acdbbcd56012157bad00ecba8f628a0084d2e8ced27ee",
+    "raw/south-west-v3/material-provenance.json": "7a2d216e59b234becdd364c563d1fd5fe0e56f84b31f64051b44eaea4b5594c4",
+    "raw/south-west-v3/root-contact-floor.json": "66e9f6f9c293ae8aebb36f971043156b0ec2c4534ac03aeef5106ffc6ff1b486",
+    "raw/south-west-v3/geometry-summary.json": "47f1e740cc0b3e29366c2f01a7fc15ca533ca5671a485227383b4aff0f1dd483",
+    "raw/sections.json.gz": "0e3020be4eb7f0bf4a018563ed82f069823fa4a17d1bccaefae0b441ad4fb9cb"
+  },
+  "newTriangles": 6615,
+  "boundaryVertices": 41,
+  "materialCounts": {
+    "Island / continuous sculpted mature terrain:0": 1722,
+    "Island / continuous sculpted mature terrain:1": 4893
+  },
+  "note": "Generated exclusively by copying raw fields and exact height-function source; no geometric recomputation."
+}

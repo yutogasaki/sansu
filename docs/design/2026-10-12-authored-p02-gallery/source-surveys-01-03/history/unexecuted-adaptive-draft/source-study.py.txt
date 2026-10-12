@@ -1,0 +1,289 @@
+"""Scheduled Blender-only bounded source study. No app modules or world compiler.
+measure writes raw candidates/HOLD; build consumes one successful measurement.
+Neither stage renders. Every invocation requires a new output directory.
+"""
+import argparse, hashlib, json, math, struct, sys, time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+sys.path.insert(0,str(HERE))
+from entry_geometry import Terrain, ribbon_plan, solid_geometry, slope_report, EPS
+args = argparse.ArgumentParser()
+args.add_argument('stage', choices=['measure', 'build'])
+args.add_argument('--scheduled', action='store_true')
+args.add_argument('--out', type=Path, required=True)
+args.add_argument('--measurement', type=Path)
+opt = args.parse_args(sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else [])
+assert opt.scheduled, 'Execution window must be scheduled by the parent task'
+assert not opt.out.exists(), 'Preserve all first failures; choose a fresh output directory'
+opt.out.mkdir(parents=True)
+import bpy
+from mathutils import Matrix, Vector
+from mathutils.bvhtree import BVHTree
+
+S = json.loads((HERE / 'study.json').read_text()); D = S['design']; TR = S['transform']
+sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+B = Matrix(((1,0,0,0),(0,0,-1,0),(0,1,0,0),(0,0,0,1))); BI = B.inverted()
+A = Matrix.Translation(Vector(TR['authoredOrigin'])) @ Matrix.Diagonal((TR['scale'],)*3+(1,)) @ Matrix.Translation(-Vector(TR['sourceGltfPivot']))
+started = time.monotonic()
+def dump(name, value): (opt.out / name).write_text(json.dumps(value, indent=2) + '\n')
+def verify_inputs():
+    got = {k:sha(v['path']) for k,v in S['inputs'].items()}
+    assert all(got[k] == v['sha256'] for k,v in S['inputs'].items()), 'Frozen source input changed'
+    return got
+
+def digest(obj):
+    h = hashlib.sha256()
+    for row in obj.matrix_world: h.update(struct.pack('<4d', *row))
+    if obj.type == 'MESH':
+        for v in obj.data.vertices: h.update(struct.pack('<3f', *v.co))
+        for loop in obj.data.loops: h.update(struct.pack('<I', loop.vertex_index))
+        for n in obj.data.corner_normals: h.update(struct.pack('<3f', *n.vector))
+        for m in obj.data.materials: h.update((m.name if m else '').encode())
+    return h.hexdigest()
+
+def vertices_faces(obj):
+    deps = bpy.context.evaluated_depsgraph_get(); ev = obj.evaluated_get(deps); mesh = ev.to_mesh()
+    try:
+        mesh.calc_loop_triangles(); matrix = BI @ obj.matrix_world
+        return [matrix @ v.co for v in mesh.vertices], [tuple(t.vertices) for t in mesh.loop_triangles]
+    finally: ev.to_mesh_clear()
+
+def tree(objects, local=False):
+    vertices, faces = [], []
+    for obj in objects:
+        if obj.type != 'MESH': continue
+        if local:
+            corners = [BI @ obj.matrix_world @ Vector(p) for p in obj.bound_box]
+            if max(p.x for p in corners)<1.6 or min(p.x for p in corners)>5.4 or max(p.z for p in corners)<-10.8 or min(p.z for p in corners)>-6.8: continue
+        vs, fs = vertices_faces(obj); base=len(vertices); vertices.extend(vs)
+        for face in fs:
+            if local:
+                pts=[vs[i] for i in face]
+                if max(p.x for p in pts)<1.6 or min(p.x for p in pts)>5.4 or max(p.z for p in pts)<-10.8 or min(p.z for p in pts)>-6.8: continue
+            faces.append(tuple(base+i for i in face))
+    assert faces, 'Missing real source geometry'
+    return BVHTree.FromPolygons(vertices, faces, all_triangles=True), len(faces)
+
+def ground_at(x,z):
+    hit, normal, _, _ = floor_tree.ray_cast(Vector((x,20,z)), Vector((0,-1,0)), 40)
+    assert hit is not None and normal.y > .1, f'No actual dry floor at {x},{z}'
+    return hit
+
+def box_tree(center, radius, height):
+    # Conservative full-width sample, not an exact moving-rig acceptance proof.
+    x,y,z=center
+    vs=[(x+dx*radius,y+dy,z+dz*radius) for dy in (.012,height) for dz in (-1,1) for dx in (-1,1)]
+    fs=[(0,1,3,2),(4,6,7,5),(0,4,5,1),(2,3,7,6),(0,2,6,4),(1,5,7,3)]
+    return BVHTree.FromPolygons(vs, fs)
+
+def resample(points):
+    out=[points[0].copy()]
+    for a,b in zip(points,points[1:]):
+        count=max(1,math.ceil((b-a).length/D['probeStep']))
+        out.extend(a.lerp(b,i/count) for i in range(1,count+1))
+    return out
+
+def new_mesh(name, verts, faces, material, role):
+    mesh=bpy.data.meshes.new(name);mesh.from_pydata([tuple(B @ p) for p in verts],[],faces);mesh.update();mesh.materials.append(material)
+    obj=bpy.data.objects.new(name,mesh);assembly.objects.link(obj)
+    obj['ownerIds']=S['place']['ownerIds'];obj['placeId']=S['place']['id'];obj['useFloorRole']=role
+    obj['candidate']=S['candidate'];obj['sourceSha256']=S['inputs']['sourceGlb']['sha256'];obj['runtimeIntegrated']=False
+    return obj
+
+def ribbon(plan, name):
+    assert plan['ready'] and plan['entrySection']['supportedFullWidth'],'Unsupported full-width ground seam'
+    vertices,faces=solid_geometry(plan,D['thickness'])
+    return new_mesh('construction-solid/'+name,[Vector(p) for p in vertices],faces,wood,'construction')
+
+def tube(name, points, radius):
+    sides=8;v=[];f=[]
+    for i,p in enumerate(points):
+        tangent=(points[min(i+1,len(points)-1)]-points[max(i-1,0)]).normalized();side=tangent.cross(Vector((0,1,0)))
+        if side.length<.001:side=tangent.cross(Vector((1,0,0)))
+        side.normalize();across=tangent.cross(side).normalized()
+        for j in range(sides):v.append(p+radius*(math.cos(j*math.tau/sides)*side+math.sin(j*math.tau/sides)*across))
+    for i in range(len(points)-1):
+        for j in range(sides):f.append((i*sides+j,i*sides+(j+1)%sides,(i+1)*sides+(j+1)%sides,(i+1)*sides+j))
+    f += [tuple(reversed(range(sides))),tuple((len(points)-1)*sides+j for j in range(sides))]
+    return new_mesh(name,v,f,bark,'structure')
+
+try:
+    inputs_before=verify_inputs();bpy.ops.wm.read_factory_settings(use_empty=True)
+    bpy.ops.import_scene.gltf(filepath=S['inputs']['context']['path']);context=list(bpy.data.objects)
+    bpy.ops.import_scene.gltf(filepath=S['inputs']['leftTrees']['path']);left=[o for o in bpy.data.objects if o not in context]
+    left_meshes=[o for o in left if o.type=='MESH'];assert len(left_meshes)==128, 'Restore all original role trees exactly once'
+    fixed=[o for o in [*context,*left] if o.type=='MESH'];fixed_before={o.name:digest(o) for o in fixed}
+    hero=next(o for o in context if o.name=='place-native-shared-tree');assert list(hero['ownerIds'])==S['place']['ownerIds']
+    assert ((BI @ hero.matrix_world).translation-Vector(TR['authoredOrigin'])).length<1e-10, 'Actual owner transform changed'
+    floors=[o for o in context if o.name.startswith('authored-evaluated-floor')];floor_tree,floor_tris=tree(floors)
+    ground_triangles=[]
+    for obj in floors:
+        if obj.type!='MESH':continue
+        vs,fs=vertices_faces(obj)
+        ground_triangles.extend([[list(vs[i]) for i in face] for face in fs])
+    terrain=Terrain(ground_triangles)
+    trunk_root=next(o for o in context if o.get('nativePart')=='hollow-trunk');trunks=[o for o in [trunk_root,*trunk_root.children_recursive] if o.type=='MESH']
+    trunk_tree,trunk_tris=tree(trunks)
+    obstacles=[o for o in context if o.type=='MESH' and o not in floors and not o.get('placementHitOnly') and not o.hide_render]
+    obstacle_tree,obstacle_tris=tree(obstacles,local=True)
+    donor_names=[D['sourceFloorName'],D['sourceGalleryName'],D['sourceBarkDonorName'],'Grove / great root house trunk']
+    with bpy.data.libraries.load(S['inputs']['sourceBlend']['path'],link=False) as (src,dst):
+        assert all(n in src.objects for n in donor_names);dst.objects=donor_names
+    donors=dst.objects
+    for o in donors:bpy.context.scene.collection.objects.link(o);o.matrix_world=B @ A @ BI @ o.matrix_world
+    interior,old_gallery,bark_donor,original_trunk_probe=donors
+    source_support_tree,_=tree([original_trunk_probe])
+    wood=old_gallery.data.materials[0];bark=bark_donor.data.materials[0]
+    iv,iff=vertices_faces(interior);interior_top=max(p.y for p in iv)
+    gv,gff=vertices_faces(old_gallery)
+    top_faces=[f for f in gff if (gv[f[1]]-gv[f[0]]).cross(gv[f[2]]-gv[f[0]]).normalized().y>.95]
+    assert top_faces,'Source gallery lacks upward walk face'
+    gallery_y=min(gv[i].y for f in top_faces for i in f)
+    interior_center=Vector(((min(p.x for p in iv)+max(p.x for p in iv))/2,interior_top,(min(p.z for p in iv)+max(p.z for p in iv))/2))
+    interior_front=Vector((interior_center.x,interior_top,max(p.z for p in iv)-.03))
+    native_floor_tree,_=tree([interior])
+    opening_survey=[]
+    for z in [interior_front.z,interior_front.z-.15,interior_center.z]:
+        widths=[]
+        for dy in [.08,.28,S['envelope']['height']+D['headReserve']]:
+            at=Vector((interior_center.x,interior_top+dy,z));left=trunk_tree.ray_cast(at,Vector((-1,0,0)),2);right=trunk_tree.ray_cast(at,Vector((1,0,0)),2)
+            widths.append({'heightAboveFloor':dy,'leftContact':list(left[0]) if left[0] is not None else None,'rightContact':list(right[0]) if right[0] is not None else None,'clearRayWidth':left[3]+right[3] if left[3] is not None and right[3] is not None else None})
+        at=Vector((interior_center.x,interior_top+.001,z));roof=trunk_tree.ray_cast(at,Vector((0,1,0)),3)
+        opening_survey.append({'sectionZ':z,'widths':widths,'headContact':list(roof[0]) if roof[0] is not None else None,'headClearance':roof[3]+.001 if roof[3] is not None else None,'insideVolumeProof':'PENDING'})
+    for o in donors:o.hide_render=True;o.hide_set(True)
+    cx,_,cz=TR['authoredOrigin'];steps=math.ceil(abs(D['rampEndDegrees']-D['rampStartDegrees'])/360*D['segmentsPerFullTurn'])
+    ramp=[]
+    for i in range(steps+1):
+        t=i/steps;a=math.radians(D['rampStartDegrees']+(D['rampEndDegrees']-D['rampStartDegrees'])*t)
+        ramp.append(Vector((cx+D['rampRadius']*math.cos(a),interior_top+(gallery_y-interior_top)*(3*t*t-2*t*t*t),cz-D['rampRadius']*math.sin(a))))
+    gallery=[]
+    for i in range(1,11):
+        a=math.radians(D['rampEndDegrees']+(D['shortGalleryEndDegrees']-D['rampEndDegrees'])*i/10)
+        gallery.append(Vector((cx+D['rampRadius']*math.cos(a),gallery_y,cz-D['rampRadius']*math.sin(a))))
+    interior_walk_triangles=[[list(iv[i]) for i in f] for f in iff if (iv[f[1]]-iv[f[0]]).cross(iv[f[2]]-iv[f[0]]).normalized().y>.1]
+    raw=[]
+    for entry_xz in S['place']['groundEntryCandidates']:
+        entry=ground_at(*entry_xz);connector=resample([entry,ramp[0]])
+        route=resample([entry,interior_front,interior_center,interior_front,entry,*ramp,*gallery])
+        return_points=resample([entry,*ramp,*gallery]);route.extend(reversed(return_points[:-1]))
+        hits=[]
+        for i,p in enumerate(route):
+            overlap=obstacle_tree.overlap(box_tree(p,D['clearWidth']/2,S['envelope']['height']+D['headReserve']))
+            if overlap:hits.append({'sample':i,'point':list(p),'trianglePairs':len(overlap)})
+        floor_width=[]
+        for side in [-.5,-.25,0,.25,.5]:
+            p=interior_center+Vector((side*D['clearWidth'],0,0));hit,_,_,_=native_floor_tree.ray_cast(p+Vector((0,1,0)),Vector((0,-1,0)),2)
+            floor_width.append({'point':list(p),'supported':hit is not None and abs(hit.y-p.y)<1e-5})
+        entry_width=[]
+        for dx,dz in [(x*D['clearWidth']/2,z*D['clearWidth']/2) for x,z in [(-1,-1),(-1,1),(1,-1),(1,1),(0,0)]]:
+            try:p=ground_at(entry.x+dx,entry.z+dz);entry_width.append({'point':list(p),'heightDelta':p.y-entry.y})
+            except AssertionError:entry_width.append({'missing':True})
+        ribbon_points=[*connector,*ramp[1:],*gallery];spur_points=resample([entry,interior_front,interior_center])
+        plans={'ramp':ribbon_plan(ribbon_points,D['structuralWidth'],terrain),'interiorSpur':ribbon_plan(spur_points,D['structuralWidth'],terrain)}
+        relations={name:terrain.relation([[plan['topVertices'][i] for i in face] for face in plan['topFaces']]) for name,plan in plans.items() if plan['ready']}
+        relations['nativeInterior']=terrain.relation(interior_walk_triangles)
+        slopes={'groundToRamp':slope_report(connector),'groundToInterior':slope_report(spur_points),'rampArc':slope_report(ramp),'shortGallery':slope_report([ramp[-1],*gallery]),'fullJourney':slope_report(route)}
+        full_width=all(plan['ready'] for plan in plans.values())
+        ground_clear=full_width and all(value['clear'] for value in relations.values())
+        clear=not hits and all(x['supported'] for x in floor_width) and not any(x.get('missing') for x in entry_width) and ground_clear and not slopes['fullJourney']['verticalSegments']
+        raw.append({'entry':list(entry),'ribbon':[list(p) for p in ribbon_points],'route':[list(p) for p in route],
+            'collisionSamples':hits,'nativeInteriorWidthSamples':floor_width,'actualGroundEntrySamples':entry_width,
+            'entryPlans':plans,'sourceGroundRelations':relations,'candidateSlopes':slopes,
+            'coarseClear':clear,'status':'BOUNDED_SOURCE_CANDIDATE_ONLY' if clear else 'HOLD',
+            'navReachability':'PENDING current guard + HOME path; no world compile in this source study'})
+    if opt.stage=='measure':
+        result={'status':'BOUNDED_SOURCE_SURVEY_ONLY','candidates':raw,'selectedIndex':next((i for i,x in enumerate(raw) if x['coarseClear']),None),
+            'interiorTopY':interior_top,'galleryStartY':gallery_y,'openingSurvey':opening_survey,'rampRise':gallery_y-interior_top,'rampHorizontalRun':D['rampRadius']*math.radians(abs(D['rampEndDegrees']-D['rampStartDegrees'])),'maximumSampledRampSlope':max(abs(b.y-a.y)/max(1e-10,math.hypot(b.x-a.x,b.z-a.z)) for a,b in zip(ramp,ramp[1:])),'sourceFloorTriangles':floor_tris,'sourceTrunkTriangles':trunk_tris,'localObstacleTriangles':obstacle_tris,
+            'inputHashes':inputs_before,'scriptSha256':sha(__file__),'entryGeometrySha256':sha(HERE/'entry_geometry.py'),'studySha256':sha(HERE/'study.json'),'runtimeIntegrated':False,
+            'limits':['Conservative sampled boxes, not exact swept animated-rig proof','Native interior width sampled on its flat middle only','Box checks find triangle intersections, not enclosed-volume containment','Openings retain original meshes; no manifold/interior winding proof yet','No proof of ground HOME reachability or all owner approaches','No automatic source doorway cutting','No art/physics PASS']}
+        dump('measurement.json',result)
+    else:
+        assert opt.measurement and opt.measurement.exists(),'Build requires preceding raw measurement'
+        saved=json.loads(opt.measurement.read_text());assert saved['inputHashes']==inputs_before and saved['studySha256']==sha(HERE/'study.json') and saved['entryGeometrySha256']==sha(HERE/'entry_geometry.py')
+        index=saved['selectedIndex'];assert index is not None,'No bounded clear candidate: preserve HOLD and redesign before editing native trunk'
+        chosen=raw[index];assert chosen==saved['candidates'][index] and chosen['coarseClear'],'Measurement drift or failed source candidate'
+        assembly=bpy.data.collections.new('P02 owner-use coarse source');bpy.context.scene.collection.children.link(assembly)
+        points=[Vector(p) for p in chosen['ribbon']]
+        body=ribbon(chosen['entryPlans']['ramp'],'continuous-branch-ramp')
+        spur=ribbon(chosen['entryPlans']['interiorSpur'],'entry-interior-spur')
+        entry_checks=[]
+        for name,plan in chosen['entryPlans'].items():
+            for vertex in plan['topVertices'][:len(plan['columns'])]:
+                actual=ground_at(vertex[0],vertex[2]);entry_checks.append({'piece':name,'vertex':vertex,'actualGround':list(actual),'error':vertex[1]-actual.y})
+        dump('full-width-entry-contact.json',{'entrySections':{name:plan['entrySection'] for name,plan in chosen['entryPlans'].items()},'actualBvhChecks':entry_checks,'epsilon':EPS})
+        assert all(abs(item['error'])<=EPS for item in entry_checks),'Entry contact differs from actual original floor'
+        native_floor=new_mesh('construction-solid/native-interior',iv,iff,interior.data.materials[0],'construction')
+        # Union only newly authored walk solids + the newly reintroduced native floor.
+        # Original hollow trunk/crown and context floor are NEVER Boolean operands.
+        for operand in [spur,native_floor]:
+            bpy.context.view_layer.objects.active=body;mod=body.modifiers.new('continuous closed owner floor','BOOLEAN');mod.operation='UNION';mod.solver='EXACT';mod.object=operand
+            bpy.ops.object.modifier_apply(modifier=mod.name);bpy.data.objects.remove(operand,do_unlink=True)
+        import bmesh
+        check=bmesh.new();check.from_mesh(body.data);bmesh.ops.remove_doubles(check,verts=list(check.verts),dist=1e-7)
+        bad=sum(not edge.is_manifold for edge in check.edges)
+        remaining=set(check.verts);components=0
+        while remaining:
+            components+=1;queue=[remaining.pop()]
+            while queue:
+                for edge in queue.pop().link_edges:
+                    for vertex in edge.verts:
+                        if vertex in remaining:remaining.remove(vertex);queue.append(vertex)
+        check.free();dump('closed-floor-union.json',{'nonmanifoldEdges':bad,'connectedComponents':components})
+        assert bad==0 and components==1,'New floor union must be one connected closed solid'
+        uv,uf=vertices_faces(body)
+        top_faces=[f for f in uf if (uv[f[1]]-uv[f[0]]).cross(uv[f[2]]-uv[f[0]]).normalized().y>.1]
+        wall_faces=[f for f in uf if f not in top_faces]
+        actual_ground_relation=terrain.relation([[list(uv[i]) for i in face] for face in top_faces])
+        dump('built-floor-ground-relation.json',actual_ground_relation)
+        assert actual_ground_relation['clear'],'Actual union top is buried in or duplicates original ground'
+        planned_walk=Terrain([tri for plan in chosen['entryPlans'].values() for tri in [[plan['topVertices'][i] for i in face] for face in plan['topFaces']]]+interior_walk_triangles)
+        walk=new_mesh('walk-top/native-interior-branch-ramp-gallery',uv,top_faces,wood,'owner-use')
+        walk['floorId']=S['place']['id']+':gallery:floor:continuous';walk['sourceFloorDerivative']='native floor + entry/branch union; source trunk unchanged'
+        new_mesh('solid-underside/native-interior-branch-ramp-gallery',uv,wall_faces,wood,'structure')
+        use_tree,_=tree([walk]);support_failures=[]
+        for i,raw_point in enumerate(chosen['route']):
+            p=Vector(raw_point);prev=Vector(chosen['route'][max(0,i-1)]);nxt=Vector(chosen['route'][min(i+1,len(chosen['route'])-1)])
+            tangent=nxt-prev;tangent.y=0
+            if tangent.length<1e-8:tangent=Vector((0,0,1))
+            tangent.normalize();side=Vector((-tangent.z,0,tangent.x))
+            for fraction in [-.5,-.25,0,.25,.5]:
+                at=p+side*fraction*D['clearWidth'];expected=at.y if fraction==0 else planned_walk.top_y(at)
+                hit=None
+                if expected is not None:hit,_,_,_=use_tree.ray_cast(Vector((at.x,expected+.08,at.z)),Vector((0,-1,0)),.16)
+                if hit is None or expected is None or abs(hit.y-expected)>.025:support_failures.append({'sample':i,'fraction':fraction,'point':list(at),'expectedActualSurfaceY':expected,'hit':list(hit) if hit else None})
+        dump('sampled-walk-support.json',{'failures':support_failures,'sampleCount':len(chosen['route'])*5,'tolerance':.025,'fullSweptRigAudit':'PENDING'})
+        assert not support_failures,'New visible use-floor differs from route; preserve first failure'
+        profile=[{'id':walk['floorId'],'vertices':[list(p) for p in uv],'indices':[i for f in top_faces for i in f]}]
+        bpy.data.objects.remove(body,do_unlink=True)
+        joins=[]
+        for ordinal,t in enumerate([.22,.50,.78,1.]):
+            dest=points[round(t*(len(points)-1))]-Vector((0,D['thickness'],0));aim=Vector((cx,dest.y-.22,cz));direction=(aim-dest).normalized()
+            hit,normal,_,_=source_support_tree.ray_cast(dest,direction,D['maximumBoughSpan']);assert hit is not None,'No actual native trunk support within bounded span'
+            start=hit+direction*.015;mid=(start+dest)/2-Vector((0,.08,0));tube('solid-bough/native-contact-'+str(ordinal),resample([start,mid,dest]),D['boughRadius'])
+            joins.append({'sourceObject':'Grove / great root house trunk','referenceOnlyDonor':True,'sourceHit':list(hit),'start':list(start),'deckContact':list(dest),'sourcePenetration':.015,'manifoldContactAudit':'PENDING'})
+        # Both open ramp edges get actual rails; interior entrance remains unbarred.
+        rail_points=points[len(points)-len(ramp)-len(gallery):]
+        for sign in [-1,1]:
+            edge=[]
+            for i,p in enumerate(rail_points):
+                d=rail_points[min(i+1,len(rail_points)-1)]-rail_points[max(i-1,0)];d.y=0;d.normalize();edge.append(p+Vector((-d.z,0,d.x))*sign*(D['structuralWidth']/2)+Vector((0,D['railHeight'],0)))
+            tube('solid-rail/'+str(sign),edge,D['railRadius'])
+            for i in range(0,len(edge),8):tube('solid-rail-post/'+str(sign)+'/'+str(i),[edge[i]-Vector((0,D['railHeight'],0)),edge[i]],D['railRadius'])
+        assert fixed_before=={o.name:digest(o) for o in fixed},'Native/context geometry, normals or owner matrix changed'
+        for o in donors:bpy.data.objects.remove(o,do_unlink=True)
+        bpy.context.scene['candidate']=S['candidate'];bpy.context.scene['runtimeIntegrated']=False
+        bpy.ops.wm.save_as_mainfile(filepath=str(opt.out/'study.blend'))
+        bpy.ops.export_scene.gltf(filepath=str(opt.out/'study.glb'),export_format='GLB',export_extras=True,export_cameras=False,export_lights=False)
+        bpy.ops.object.select_all(action='DESELECT')
+        for obj in assembly.objects:obj.select_set(True)
+        bpy.ops.export_scene.gltf(filepath=str(opt.out/'owner-use-components.glb'),export_format='GLB',use_selection=True,export_extras=True)
+        dump('owner-use-profile.json',{'role':'owner-use','placeId':S['place']['id'],'ownerIds':S['place']['ownerIds'],'floors':profile,'route':[{'point':p,'floorId':profile[0]['id']} for p in chosen['route']],'entry':chosen['entry'],'coordinateSpace':'authored Y-up physical XYZ','transform':TR,'defaultGroundExcluded':True,'useRegion':{'kind':'gallery-end','point':list(gallery[-1])},'runtimeIntegrated':False})
+        dump('manifest.json',{'candidate':S['candidate'],'inputHashes':inputs_before,'measurementSha256':sha(opt.measurement),'scriptSha256':sha(__file__),
+             'fixedMeshHashesBefore':fixed_before,'fixedMeshHashesAfter':{o.name:digest(o) for o in fixed},'leftOriginalMeshesRestored':len(left_meshes),'supports':joins,
+             'status':'COARSE_SOURCE_ONLY_INDEPENDENT_AUDIT_PENDING','runtimeIntegrated':False,'artAccepted':False,'independentObservers':0,
+             'files':{name:sha(opt.out/name) for name in ['study.blend','study.glb','owner-use-components.glb','owner-use-profile.json']}})
+    dump('execution.json',{'stage':opt.stage,'inputsBefore':inputs_before,'inputsAfter':verify_inputs(),'elapsedSeconds':time.monotonic()-started,'runtimeIntegrated':False})
+except Exception as error:
+    dump('first-failure.json',{'stage':opt.stage,'error':repr(error),'elapsedSeconds':time.monotonic()-started,'runtimeIntegrated':False})
+    raise

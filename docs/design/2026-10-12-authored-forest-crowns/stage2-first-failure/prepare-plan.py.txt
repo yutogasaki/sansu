@@ -1,0 +1,152 @@
+"""Metadata-only plan. Reads JSON, no vertices, Blender, domain, or rendering.
+
+The proposal is not a new source artifact. Never overwrite stage1 outputs.
+"""
+from pathlib import Path
+import hashlib
+import json
+
+HERE = Path(__file__).resolve().parent
+BASE = HERE.parent
+study_path = BASE / 'study.json'
+bindings_path = BASE / 'extraction-attempt02/bindings.json'
+inventory_path = Path('/private/tmp/sansu-forest-role-inventory/inventory.json')
+study = json.loads(study_path.read_text())
+bindings = json.loads(bindings_path.read_text())['bindings']
+inventory = json.loads(inventory_path.read_text())
+sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def world(owner_id, point):
+    matrix = bindings[owner_id]['sourceToAuthoredMatrix']
+    return [sum(matrix[j * 4 + i] * point[j] for j in range(3)) + matrix[12 + i]
+            for i in range(3)]
+
+
+def role(owner_id, name, ordinal):
+    found = [item for item in study['owners'][owner_id]['roles']
+             if item['role'] == name and item['suffixOrdinal'] == ordinal]
+    assert len(found) == 1
+    return found[0]
+
+
+def crown_hint(owner_id, ordinal, stretch, shift, label):
+    item = role(owner_id, 'crown-lobe', ordinal)
+    return {'ordinal': ordinal, 'sourceCrownNode': item['nodeIndex'],
+            'anchorWorld': world(owner_id, item['sourceOrigin']),
+            'stretch': stretch, 'shiftWorld': shift, 'purpose': label}
+
+
+proposal = {
+    'candidate': 'forest-crown-b1-layered-v1-proposal',
+    'status': 'STATIC-PROPOSAL-NOT-GENERATED',
+    'baseDirection': 'forest-crown-b1-low-wide-v0; all stage1 candidates HOLD',
+    'coordinates': 'Authored Y-up metres. Source node matrices, native pivot, owner matrix and age stay exact.',
+    'sourceSha256': study['sourceSha256'],
+    'sourceStudySha256': sha(study_path),
+    'bindingsSha256': sha(bindings_path),
+    'sourceRoleInventorySha256': sha(inventory_path),
+    'originalMaterialSpecsByIndex': inventory['materials'],
+    'fixedFrameRevision': json.loads(bindings_path.read_text())['frameRevision'],
+    'owners': {},
+    'authorGuardsNotProductInvariants': {
+        'maxVertexWorldDisplacement': 1.35,
+        'warnVertexWorldDisplacement': 0.9,
+        'highestHeroClearanceWorld': 0.4,
+        'minimumSampledJacobianDeterminant': 0.15,
+        'allRequireActualVertexChecks': True,
+    },
+    'execution': {'geometryGenerated': False, 'rendered': False, 'runtimeIntegrated': False,
+                  'independentObservers': 0, 'physicalStatus': 'NOT-RUN', 'artStatus': 'NOT-REVIEWED'},
+}
+for owner_id in study['owners']:
+    proposal['owners'][owner_id] = {
+        'record': bindings[owner_id]['record'], 'species': bindings[owner_id]['species'],
+        'sourcePivot': bindings[owner_id]['sourcePivot'],
+        'sourceToAuthoredMatrix': bindings[owner_id]['sourceToAuthoredMatrix'],
+        'authoredTreeMatrixWorld': bindings[owner_id]['authoredTreeMatrixWorld'],
+        'fixedNodes': [r['nodeIndex'] for r in study['owners'][owner_id]['roles'] if r['fixed']],
+    }
+
+willow = proposal['owners']['l14']
+willow['field'] = 'one smooth spatial field shared by all 89 non-fixed source roles'
+willow['fixedTipCore'] = {
+    'anchorWorld': world('l14', study['anchors']['willow']['crownRecipeCenterGltf']),
+    'radiusWorld': 0.07, 'falloffWorld': 0.3,
+}
+willow['lobeHints'] = [
+    crown_hint('l14', 0, [1.35, 1.18, 1.32], [0.1, 0.12, -0.12], 'central full-bodied roof'),
+    crown_hint('l14', 1, [1.2, 1.15, 1.1], [-0.12, -0.02, -0.16], 'west return; keep underpass distinct'),
+    crown_hint('l14', 2, [1.45, 1.08, 1.35], [0.3, 0.12, -0.15], 'inner east shoulder above birch middle layer'),
+    crown_hint('l14', 3, [1.26, 1.2, 1.38], [0.0, 0.38, -0.45], 'rear upper ridge toward hero/court; not a bridge to it'),
+    crown_hint('l14', 4, [1.45, 0.98, 1.18], [0.25, -0.13, 0.16], 'lower front return and drooping edge'),
+]
+for item in willow['lobeHints']:
+    item['influenceRadiusXZWorld'] = 0.52
+
+pair_parameters = {
+    'l15': [
+        ([1.35, 1.2, 1.35], [0.4, 0.58, -0.25], 'upper east bough: join the visible leaf mass beneath willow'),
+        ([1.16, 1.08, 1.13], [-0.05, 0.05, -0.12], 'west middle shelf: soft edge beside spire'),
+        ([1.24, 1.10, 1.04], [0.12, -0.06, 0.1], 'lower southern eave, leaving bright foreground court'),
+    ],
+    'l29': [
+        ([1.2, 1.15, 1.16], [-0.05, 0.23, -0.1], 'outer eastern return; do not make a new tower'),
+        ([1.65, 1.24, 1.45], [-0.45, 0.67, -0.27], 'inward rising branch/crown: middle bridge in leaf silhouette'),
+        ([1.17, 1.12, 1.05], [-0.12, 0.16, -0.02], 'small front crown raised away from bench court'),
+    ],
+}
+for owner_id, parameters in pair_parameters.items():
+    owner = proposal['owners'][owner_id]
+    source_tip = study['anchors']['birch']['crownOriginAndRecipeBranchTipAnchors'][0]['originGltf']
+    source_root = [-7.5, source_tip[1] - 3.6 * 0.45, -10.9]
+    scale = study['owners'][owner_id]['expectedUniformScale']
+    owner['branchRootPin'] = {'anchorWorld': world(owner_id, source_root),
+                             'fixedBandWorld': 0.15 * scale, 'transitionWorld': 0.80 * scale,
+                             'status': 'Recipe root; actual source trunk/branch contact remains to be checked'}
+    owner['branchCrownPairs'] = []
+    for ordinal, (stretch, shift, label) in enumerate(parameters):
+        hint = crown_hint(owner_id, ordinal, stretch, shift, label)
+        hint['sourceBranchNode'] = role(owner_id, 'main-branch', ordinal)['nodeIndex']
+        hint['sameFieldForBranchAndCrown'] = True
+        owner['branchCrownPairs'].append(hint)
+
+spire = proposal['owners']['l28']
+spire['fixedAxisRadiusWorld'] = 0.08
+spire['axisFalloffWorld'] = 0.2
+spire['tiers'] = []
+for ordinal, stretch in enumerate([[1.05, 1, 1.08], [1.2, 1, 1.28], [1.25, 1, 1.15], [1.06, 1, 1.05]]):
+    item = role('l28', 'crown-tier', ordinal)
+    box = item['sourceBoundsFromAccessorBox']
+    center = [(a + b) * 0.5 for a, b in zip(box['min'], box['max'])]
+    spire['tiers'].append({'ordinal': ordinal, 'sourceNode': item['nodeIndex'],
+                          'anchorWorld': world('l28', center), 'stretch': stretch,
+                          'shiftWorld': [0, 0, 0], 'heightAndAxisPreserved': True})
+
+proposal['materialContract'] = {
+    'preserveOriginalMaterialSlotsAndValues': True, 'allowPaletteOverride': False,
+    'allowTextureMockOrOmission': False, 'originalSelectedTextureReferences': 0,
+    'willowBoughMaterial': 'actual original l14 trunk material; no fresh color',
+    'birchRepairMaterial': 'actual original white branching crown material',
+    'normals': 'Original split normals transformed by inverse-transpose Jacobian. New boughs get authored normals; fixed 23 nodes unchanged.',
+}
+proposal['jointGate'] = {
+    'trunkLobeTests': 'All 5 willow lobes against actual retained trunk, plus every hanging-family start against actual crown; no center/AABB contact claim.',
+    'birchTests': 'All 6 actual branch-root contacts and 6 branch-tip/crown contacts; retained recipe anchors alone cannot pass.',
+    'repair': 'If needed, closed tapered curved wood anchored into actual same-owner source surfaces, sufficient full end-section overlap, no cross-owner structural join.',
+    'stop': 'Preserve first failed candidate; no detached leaf, hidden floating bough, or unsupported endpoint.',
+}
+proposal['openings'] = [
+    {'id': 'front-court', 'intent': 'Bright opening beneath the l15/l29 inner crown seam, viewed toward existing bench l30 at (4,-2).',
+     'worldAnchorGrant': None, 'existingRouteAndActorBand': 'PENDING; reuse actual existing c1 graph and exact actor envelope'},
+    {'id': 'west-perimeter', 'intent': 'Narrower side opening at the l28/l14 outer perimeter, distinct in silhouette and direction from the front court.',
+     'worldAnchorGrant': None, 'existingRouteAndActorBand': 'PENDING; do not invent dry floor or a nav ref'},
+]
+
+assert sum(len(owner['fixedNodes']) for owner in proposal['owners'].values()) == 23
+assert sum(len(study['owners'][key]['roles']) for key in proposal['owners']) == 128
+output = HERE / 'proposal.json'
+assert not output.exists(), 'Preserve previous proposal; create a new version'
+output.write_text(json.dumps(proposal, ensure_ascii=False, indent=2) + '\n')
+print(json.dumps({'output': str(output), 'sha256': sha(output), 'metadataOnly': True,
+                  'geometryGenerated': False, 'sourceStudySha256': sha(study_path)}))

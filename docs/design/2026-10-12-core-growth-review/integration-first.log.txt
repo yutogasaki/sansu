@@ -1,0 +1,2267 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ❯ src/components/island/growing/native/authoredCoreGrowthIntegration.test.ts (1 test | 1 failed) 60566ms
+   × grows the original whole-island coast from the same mature owners while sharing real ground with the renderer 60566ms
+     → expected [ { ref: { …(2) }, …(5) }, …(74) ] to deeply equal [ { ref: { …(2) }, …(5) }, …(74) ]
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/island/growing/native/authoredCoreGrowthIntegration.test.ts > grows the original whole-island coast from the same mature owners while sharing real ground with the renderer
+AssertionError: expected [ { ref: { …(2) }, …(5) }, …(74) ] to deeply equal [ { ref: { …(2) }, …(5) }, …(74) ]
+
+- Expected
++ Received
+
+  Array [
+    Object {
+      "cell": Object {
+        "x": 6,
+        "z": -10,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 6,
+        "y": 1.670528243,
+        "z": -10,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "6,-10",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 6,
+          "z": -10,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 6,
+          "y": 1.670528243,
+          "z": -10,
+        },
+        "triangle": 49121,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 7,
+        "z": -10,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 7,
+        "y": 1.842040716,
+        "z": -10,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "7,-10",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 7,
+          "z": -10,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 7,
+          "y": 1.842040716,
+          "z": -10,
+        },
+-       "triangle": 86928,
++       "triangle": 86168,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 3,
+        "z": -9,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 3,
+        "y": 1.298761617,
+        "z": -9,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "3,-9",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 3,
+          "z": -9,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 3,
+          "y": 1.298761617,
+          "z": -9,
+        },
+-       "triangle": 54331,
++       "triangle": 53652,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 4,
+        "z": -9,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 4,
+        "y": 1.455667974,
+        "z": -9,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "4,-9",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 4,
+          "z": -9,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 4,
+          "y": 1.455667974,
+          "z": -9,
+        },
+-       "triangle": 54321,
++       "triangle": 53642,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 5,
+        "z": -9,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 5,
+        "y": 1.653261426,
+        "z": -9,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "5,-9",
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 6,
+        "z": -9,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 6,
+        "y": 1.852728784,
+        "z": -9,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "6,-9",
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 7,
+        "z": -9,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 7,
+        "y": 1.793744015,
+        "z": -9,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "7,-9",
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 8,
+        "z": -9,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 8,
+        "y": 1.962000034,
+        "z": -9,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "8,-9",
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 9,
+        "z": -9,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 9,
+        "y": 1.82633556,
+        "z": -9,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "9,-9",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 9,
+          "z": -9,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 9,
+          "y": 1.82633556,
+          "z": -9,
+        },
+-       "triangle": 54192,
++       "triangle": 53511,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 12,
+        "z": -9,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 12,
+        "y": 0.686117975,
+        "z": -9,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "12,-9",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 12,
+          "z": -9,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 12,
+          "y": 0.686117975,
+          "z": -9,
+        },
+-       "triangle": 54154,
++       "triangle": 53473,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 2,
+        "z": -8,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 2,
+        "y": 1.337271708,
+        "z": -8,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "2,-8",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 2,
+          "z": -8,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 2,
+          "y": 1.337271708,
+          "z": -8,
+        },
+-       "triangle": 56917,
++       "triangle": 56164,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 3,
+        "z": -8,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 3,
+        "y": 1.548049431,
+        "z": -8,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "3,-8",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 3,
+          "z": -8,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 3,
+          "y": 1.548049431,
+          "z": -8,
+        },
+-       "triangle": 56902,
++       "triangle": 56149,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 4,
+        "z": -8,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 4,
+        "y": 1.658871341,
+        "z": -8,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "4,-8",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 4,
+          "z": -8,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 4,
+          "y": 1.658871341,
+          "z": -8,
+        },
+-       "triangle": 56749,
++       "triangle": 55996,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 7,
+        "z": -8,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 7,
+        "y": 1.66785449,
+        "z": -8,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "7,-8",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 7,
+          "z": -8,
+        },
+        "floorId": "[\"native05-inlet-core\",\"authored-water:bridge:l24\"]",
+        "point": Object {
+          "x": 7,
+          "y": 1.800305067,
+          "z": -8,
+        },
+-       "triangle": 138570,
++       "triangle": 137836,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 10,
+        "z": -8,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 10,
+        "y": 1.610761116,
+        "z": -8,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "10,-8",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 10,
+          "z": -8,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 10,
+          "y": 1.610761116,
+          "z": -8,
+        },
+-       "triangle": 56811,
++       "triangle": 56058,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 12,
+        "z": -8,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 12,
+        "y": 0.780728825,
+        "z": -8,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "12,-8",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 12,
+          "z": -8,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 12,
+          "y": 0.780728825,
+          "z": -8,
+        },
+-       "triangle": 56769,
++       "triangle": 56016,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 13,
+        "z": -8,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 13,
+        "y": 0.522460648,
+        "z": -8,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "13,-8",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 13,
+          "z": -8,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 13,
+          "y": 0.522460648,
+          "z": -8,
+        },
+-       "triangle": 56755,
++       "triangle": 56002,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 1,
+        "z": -7,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 1,
+        "y": 0.990921726,
+        "z": -7,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "1,-7",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 1,
+          "z": -7,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 1,
+          "y": 0.990921726,
+          "z": -7,
+        },
+-       "triangle": 58021,
++       "triangle": 57268,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 2,
+        "z": -7,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 2,
+        "y": 1.343980361,
+        "z": -7,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "2,-7",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 2,
+          "z": -7,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 2,
+          "y": 1.343980361,
+          "z": -7,
+        },
+-       "triangle": 58057,
++       "triangle": 57304,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 3,
+        "z": -7,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 3,
+        "y": 1.535034955,
+        "z": -7,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "3,-7",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 3,
+          "z": -7,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 3,
+          "y": 1.535034955,
+          "z": -7,
+        },
+-       "triangle": 58059,
++       "triangle": 57306,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 4,
+        "z": -7,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 4,
+        "y": 1.614424717,
+        "z": -7,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "4,-7",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 4,
+          "z": -7,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 4,
+          "y": 1.614424717,
+          "z": -7,
+        },
+-       "triangle": 58006,
++       "triangle": 57253,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 6,
+        "z": -7,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 6,
+        "y": 1.207569681,
+        "z": -7,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "6,-7",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 6,
+          "z": -7,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 6,
+          "y": 1.207569681,
+          "z": -7,
+        },
+-       "triangle": 65126,
++       "triangle": 64373,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 10,
+        "z": -7,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 10,
+        "y": 1.487975278,
+        "z": -7,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "10,-7",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 10,
+          "z": -7,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 10,
+          "y": 1.487975278,
+          "z": -7,
+        },
+-       "triangle": 58451,
++       "triangle": 57698,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 12,
+        "z": -7,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 12,
+        "y": 0.856392683,
+        "z": -7,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "12,-7",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 12,
+          "z": -7,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 12,
+          "y": 0.856392683,
+          "z": -7,
+        },
+-       "triangle": 58150,
++       "triangle": 57397,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 13,
+        "z": -7,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 13,
+        "y": 0.684914506,
+        "z": -7,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "13,-7",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 13,
+          "z": -7,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 13,
+          "y": 0.684914506,
+          "z": -7,
+        },
+-       "triangle": 58153,
++       "triangle": 57400,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 13,
+        "z": -6,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 13,
+        "y": 0.823883148,
+        "z": -6,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "13,-6",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 13,
+          "z": -6,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+        "point": Object {
+          "x": 13,
+          "y": 0.823883148,
+          "z": -6,
+        },
+-       "triangle": 60521,
++       "triangle": 59768,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 0,
+        "z": -5,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 0,
+        "y": -0.002849216,
+        "z": -5,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "0,-5",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 0,
+          "z": -5,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "point": Object {
+          "x": 0,
+          "y": -0.002849216,
+          "z": -5,
+        },
+        "triangle": 4293,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 12,
+        "z": -5,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+      "placement": true,
+      "point": Object {
+        "x": 12,
+        "y": 0.462165896,
+        "z": -5,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "12,-5",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 12,
+          "z": -5,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+        "point": Object {
+          "x": 12,
+          "y": 0.462165896,
+          "z": -5,
+        },
+-       "triangle": 88813,
++       "triangle": 88053,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 13,
+        "z": -5,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+      "placement": true,
+      "point": Object {
+        "x": 13,
+        "y": 0.721240143,
+        "z": -5,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "13,-5",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 13,
+          "z": -5,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+        "point": Object {
+          "x": 13,
+          "y": 0.721240143,
+          "z": -5,
+        },
+-       "triangle": 88708,
++       "triangle": 87948,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 1,
+        "z": -4,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 1,
+        "y": -0.00899999,
+        "z": -4,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "1,-4",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 1,
+          "z": -4,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "point": Object {
+          "x": 1,
+          "y": -0.00899999,
+          "z": -4,
+        },
+        "triangle": 6087,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 2,
+        "z": -4,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 2,
+        "y": 0.209249989,
+        "z": -4,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "2,-4",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 2,
+          "z": -4,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+        "point": Object {
+          "x": 2,
+          "y": 0.209249989,
+          "z": -4,
+        },
+        "triangle": 1263,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 3,
+        "z": -4,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 3,
+        "y": 0.209249989,
+        "z": -4,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "3,-4",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 3,
+          "z": -4,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+        "point": Object {
+          "x": 3,
+          "y": 0.209249989,
+          "z": -4,
+        },
+        "triangle": 1263,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 4,
+        "z": -4,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 4,
+        "y": 0.209249989,
+        "z": -4,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "4,-4",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 4,
+          "z": -4,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+        "point": Object {
+          "x": 4,
+          "y": 0.209249989,
+          "z": -4,
+        },
+        "triangle": 1263,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 7,
+        "z": -4,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 7,
+        "y": -0.00899999,
+        "z": -4,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "7,-4",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 7,
+          "z": -4,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "point": Object {
+          "x": 7,
+          "y": -0.00899999,
+          "z": -4,
+        },
+        "triangle": 5907,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 8,
+        "z": -4,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 8,
+        "y": 0.220500005,
+        "z": -4,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "8,-4",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 8,
+          "z": -4,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+        "point": Object {
+          "x": 8,
+          "y": 0.220500005,
+          "z": -4,
+        },
+        "triangle": 374,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 9,
+        "z": -4,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 9,
+        "y": 0.220500005,
+        "z": -4,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "9,-4",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 9,
+          "z": -4,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+        "point": Object {
+          "x": 9,
+          "y": 0.220500005,
+          "z": -4,
+        },
+        "triangle": 374,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 10,
+        "z": -4,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 10,
+        "y": 0.003116783,
+        "z": -4,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "10,-4",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 10,
+          "z": -4,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "point": Object {
+          "x": 10,
+          "y": 0.003116783,
+          "z": -4,
+        },
+        "triangle": 5929,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 11,
+        "z": -4,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+      "placement": true,
+      "point": Object {
+        "x": 11,
+        "y": 0.121922646,
+        "z": -4,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "11,-4",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 11,
+          "z": -4,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+        "point": Object {
+          "x": 11,
+          "y": 0.121922646,
+          "z": -4,
+        },
+-       "triangle": 89305,
++       "triangle": 88545,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 12,
+        "z": -4,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+      "placement": true,
+      "point": Object {
+        "x": 12,
+        "y": 0.413194333,
+        "z": -4,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "12,-4",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 12,
+          "z": -4,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+        "point": Object {
+          "x": 12,
+          "y": 0.413194333,
+          "z": -4,
+        },
+-       "triangle": 89302,
++       "triangle": 88542,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 13,
+        "z": -4,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+      "placement": true,
+      "point": Object {
+        "x": 13,
+        "y": 0.618647244,
+        "z": -4,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "13,-4",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 13,
+          "z": -4,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+        "point": Object {
+          "x": 13,
+          "y": 0.618647244,
+          "z": -4,
+        },
+-       "triangle": 89380,
++       "triangle": 88620,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 1,
+        "z": -3,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 1,
+        "y": -0.00899999,
+        "z": -3,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "1,-3",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 1,
+          "z": -3,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "point": Object {
+          "x": 1,
+          "y": -0.00899999,
+          "z": -3,
+        },
+        "triangle": 10454,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 2,
+        "z": -3,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 2,
+        "y": 0.209249989,
+        "z": -3,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "2,-3",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 2,
+          "z": -3,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+        "point": Object {
+          "x": 2,
+          "y": 0.209249989,
+          "z": -3,
+        },
+        "triangle": 1279,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 3,
+        "z": -3,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Grove / sheltered open room:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 3,
+        "y": 0.211718589,
+        "z": -3,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "3,-3",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 3,
+          "z": -3,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Grove / sheltered open room:0\"]",
+        "point": Object {
+          "x": 3,
+          "y": 0.211718589,
+          "z": -3,
+        },
+        "triangle": 2447,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 4,
+        "z": -3,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 4,
+        "y": 0.209249989,
+        "z": -3,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "4,-3",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 4,
+          "z": -3,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+        "point": Object {
+          "x": 4,
+          "y": 0.209249989,
+          "z": -3,
+        },
+        "triangle": 1280,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 7,
+        "z": -3,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 7,
+        "y": 0.220500005,
+        "z": -3,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "7,-3",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 7,
+          "z": -3,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+        "point": Object {
+          "x": 7,
+          "y": 0.220500005,
+          "z": -3,
+        },
+        "triangle": 391,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 8,
+        "z": -3,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 8,
+        "y": 0.220500005,
+        "z": -3,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "8,-3",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 8,
+          "z": -3,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+        "point": Object {
+          "x": 8,
+          "y": 0.220500005,
+          "z": -3,
+        },
+        "triangle": 391,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 9,
+        "z": -3,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 9,
+        "y": 0.220500005,
+        "z": -3,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "9,-3",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 9,
+          "z": -3,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+        "point": Object {
+          "x": 9,
+          "y": 0.220500005,
+          "z": -3,
+        },
+        "triangle": 392,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 10,
+        "z": -3,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 10,
+        "y": 0.220500005,
+        "z": -3,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "10,-3",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 10,
+          "z": -3,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+        "point": Object {
+          "x": 10,
+          "y": 0.220500005,
+          "z": -3,
+        },
+        "triangle": 392,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 14,
+        "z": -3,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+      "placement": true,
+      "point": Object {
+        "x": 14,
+        "y": 0.329971325,
+        "z": -3,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "14,-3",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 14,
+          "z": -3,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+        "point": Object {
+          "x": 14,
+          "y": 0.329971325,
+          "z": -3,
+        },
+-       "triangle": 91138,
++       "triangle": 90378,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 2,
+        "z": -2,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 2,
+        "y": 0.209249989,
+        "z": -2,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "2,-2",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 2,
+          "z": -2,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+        "point": Object {
+          "x": 2,
+          "y": 0.209249989,
+          "z": -2,
+        },
+        "triangle": 1296,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 3,
+        "z": -2,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 3,
+        "y": 0.209249989,
+        "z": -2,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "3,-2",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 3,
+          "z": -2,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+        "point": Object {
+          "x": 3,
+          "y": 0.209249989,
+          "z": -2,
+        },
+        "triangle": 1295,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 4,
+        "z": -2,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 4,
+        "y": 0.209249989,
+        "z": -2,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "4,-2",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 4,
+          "z": -2,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Grove / rounded living terrace:0\"]",
+        "point": Object {
+          "x": 4,
+          "y": 0.209249989,
+          "z": -2,
+        },
+        "triangle": 1295,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 7,
+        "z": -2,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 7,
+        "y": -0.00899999,
+        "z": -2,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "7,-2",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 7,
+          "z": -2,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "point": Object {
+          "x": 7,
+          "y": -0.00899999,
+          "z": -2,
+        },
+        "triangle": 16613,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 8,
+        "z": -2,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 8,
+        "y": 0.220500005,
+        "z": -2,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "8,-2",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 8,
+          "z": -2,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+        "point": Object {
+          "x": 8,
+          "y": 0.220500005,
+          "z": -2,
+        },
+        "triangle": 409,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 9,
+        "z": -2,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 9,
+        "y": 0.220500005,
+        "z": -2,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "9,-2",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 9,
+          "z": -2,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+        "point": Object {
+          "x": 9,
+          "y": 0.220500005,
+          "z": -2,
+        },
+        "triangle": 409,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 10,
+        "z": -2,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 10,
+        "y": 0.220500005,
+        "z": -2,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "10,-2",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 10,
+          "z": -2,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Garden / rounded flower terrace:0\"]",
+        "point": Object {
+          "x": 10,
+          "y": 0.220500005,
+          "z": -2,
+        },
+        "triangle": 409,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 2,
+        "z": -1,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 2,
+        "y": -0.00899999,
+        "z": -1,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "2,-1",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 2,
+          "z": -1,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "point": Object {
+          "x": 2,
+          "y": -0.00899999,
+          "z": -1,
+        },
+        "triangle": 22050,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 3,
+        "z": -1,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 3,
+        "y": -0.00899999,
+        "z": -1,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "3,-1",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 3,
+          "z": -1,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "point": Object {
+          "x": 3,
+          "y": -0.00899999,
+          "z": -1,
+        },
+        "triangle": 22002,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 4,
+        "z": -1,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 4,
+        "y": -0.00899999,
+        "z": -1,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "4,-1",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 4,
+          "z": -1,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "point": Object {
+          "x": 4,
+          "y": -0.00899999,
+          "z": -1,
+        },
+        "triangle": 21473,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 7,
+        "z": -1,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 7,
+        "y": -0.00899999,
+        "z": -1,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "7,-1",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 7,
+          "z": -1,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "point": Object {
+          "x": 7,
+          "y": -0.00899999,
+          "z": -1,
+        },
+        "triangle": 21900,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 8,
+        "z": -1,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 8,
+        "y": -0.00899999,
+        "z": -1,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "8,-1",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 8,
+          "z": -1,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "point": Object {
+          "x": 8,
+          "y": -0.00899999,
+          "z": -1,
+        },
+        "triangle": 21921,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 9,
+        "z": -1,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 9,
+        "y": -0.00899999,
+        "z": -1,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "9,-1",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 9,
+          "z": -1,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "point": Object {
+          "x": 9,
+          "y": -0.00899999,
+          "z": -1,
+        },
+        "triangle": 21716,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 2,
+        "z": 0,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 2,
+        "y": -0.00899999,
+        "z": 0,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "2,0",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 2,
+          "z": 0,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "point": Object {
+          "x": 2,
+          "y": -0.00899999,
+          "z": 0,
+        },
+        "triangle": 25965,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 3,
+        "z": 0,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Village / shared sunny court:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 3,
+        "y": 0.021938537,
+        "z": 0,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "3,0",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 3,
+          "z": 0,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Village / shared sunny court:0\"]",
+        "point": Object {
+          "x": 3,
+          "y": 0.021938537,
+          "z": 0,
+        },
+-       "triangle": 105842,
++       "triangle": 105082,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 4,
+        "z": 0,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Village / shared sunny court:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 4,
+        "y": 0.013209769,
+        "z": 0,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "4,0",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 4,
+          "z": 0,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Village / shared sunny court:0\"]",
+        "point": Object {
+          "x": 4,
+          "y": 0.013209769,
+          "z": 0,
+        },
+-       "triangle": 105548,
++       "triangle": 104788,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 8,
+        "z": 0,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Water town / shared frontage court:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 8,
+        "y": 0.025666217,
+        "z": 0,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "8,0",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 8,
+          "z": 0,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Water town / shared frontage court:0\"]",
+        "point": Object {
+          "x": 8,
+          "y": 0.025666217,
+          "z": 0,
+        },
+-       "triangle": 106096,
++       "triangle": 105336,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 9,
+        "z": 0,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Water town / shared frontage court:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 9,
+        "y": 0.017529589,
+        "z": 0,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "9,0",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 9,
+          "z": 0,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Water town / shared frontage court:0\"]",
+        "point": Object {
+          "x": 9,
+          "y": 0.017529589,
+          "z": 0,
+        },
+-       "triangle": 105954,
++       "triangle": 105194,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 12,
+        "z": 0,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Harbor / shared waterfront court:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 12,
+        "y": 0.055278577,
+        "z": 0,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "12,0",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 12,
+          "z": 0,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Harbor / shared waterfront court:0\"]",
+        "point": Object {
+          "x": 12,
+          "y": 0.055278577,
+          "z": 0,
+        },
+        "triangle": 2636,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 2,
+        "z": 1,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 2,
+        "y": -0.00899999,
+        "z": 1,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "2,1",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 2,
+          "z": 1,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "point": Object {
+          "x": 2,
+          "y": -0.00899999,
+          "z": 1,
+        },
+        "triangle": 31116,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 3,
+        "z": 1,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Village / shared sunny court:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 3,
+        "y": 0.024105618,
+        "z": 1,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "3,1",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 3,
+          "z": 1,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Village / shared sunny court:0\"]",
+        "point": Object {
+          "x": 3,
+          "y": 0.024105618,
+          "z": 1,
+        },
+-       "triangle": 105708,
++       "triangle": 104948,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 4,
+        "z": 1,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Village / shared sunny court:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 4,
+        "y": 0.015817959,
+        "z": 1,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "4,1",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 4,
+          "z": 1,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Village / shared sunny court:0\"]",
+        "point": Object {
+          "x": 4,
+          "y": 0.015817959,
+          "z": 1,
+        },
+-       "triangle": 105628,
++       "triangle": 104868,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 8,
+        "z": 1,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "placement": true,
+      "point": Object {
+        "x": 8,
+        "y": -0.00899999,
+        "z": 1,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "8,1",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 8,
+          "z": 1,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+        "point": Object {
+          "x": 8,
+          "y": -0.00899999,
+          "z": 1,
+        },
+        "triangle": 31381,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 12,
+        "z": 1,
+      },
+      "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+      "placement": true,
+      "point": Object {
+        "x": 12,
+        "y": -0.004473119,
+        "z": 1,
+      },
+      "ref": Object {
+        "districtId": "native05-inlet-core",
+        "siteId": "12,1",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 12,
+          "z": 1,
+        },
+        "floorId": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+        "point": Object {
+          "x": 12,
+          "y": -0.004473119,
+          "z": 1,
+        },
+-       "triangle": 102893,
++       "triangle": 102133,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 7,
+        "z": -6,
+      },
+      "floorId": "[\"diagnostic-central-shoulder-c-feasibility\",\"numeric-source-triangle-retopology:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 7,
+        "y": 1.585,
+        "z": -6,
+      },
+      "ref": Object {
+        "districtId": "diagnostic-central-shoulder-c-feasibility",
+        "siteId": "7,-6",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 7,
+          "z": -6,
+        },
+        "floorId": "[\"diagnostic-central-shoulder-c-feasibility\",\"numeric-source-triangle-retopology:1\"]",
+        "point": Object {
+          "x": 7,
+          "y": 1.585,
+          "z": -6,
+        },
+-       "triangle": 143707,
++       "triangle": 142973,
+      },
+    },
+    Object {
+      "cell": Object {
+        "x": 8,
+        "z": -6,
+      },
+      "floorId": "[\"diagnostic-central-shoulder-c-feasibility\",\"numeric-source-triangle-retopology:1\"]",
+      "placement": true,
+      "point": Object {
+        "x": 8,
+        "y": 1.615,
+        "z": -6,
+      },
+      "ref": Object {
+        "districtId": "diagnostic-central-shoulder-c-feasibility",
+        "siteId": "8,-6",
+      },
+      "support": Object {
+        "cell": Object {
+          "x": 8,
+          "z": -6,
+        },
+        "floorId": "[\"diagnostic-central-shoulder-c-feasibility\",\"numeric-source-triangle-retopology:1\"]",
+        "point": Object {
+          "x": 8,
+          "y": 1.615,
+          "z": -6,
+        },
+-       "triangle": 142276,
++       "triangle": 141542,
+      },
+    },
+  ]
+
+ ❯ src/components/island/growing/native/authoredCoreGrowthIntegration.test.ts:70:66
+     68|             expect([...assembly.ownerIds].sort()).toEqual([...ids].sor…
+     69|         }
+     70|         expect(frame.world.sites.filter(site => site.placement)).toEqu…
+       |                                                                  ^
+     71|         for (const site of rights) {
+     72|             expect(frame.world.anchorAt(site.cell)).toEqual(baseline.w…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  21:14:07
+   Duration  61.13s (transform 195ms, setup 0ms, collect 277ms, tests 60.57s, environment 0ms, prepare 34ms)
+

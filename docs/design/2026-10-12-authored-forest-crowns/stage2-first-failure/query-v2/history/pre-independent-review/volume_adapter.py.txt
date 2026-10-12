@@ -1,0 +1,14 @@
+"""Optional candidate adapter. Never imported by the existing stage2 builder."""
+from mathutils import Vector
+import joints
+from ray_query64 import RayQuery64
+
+class Volume64(joints.Volume):
+    def __init__(self, obj, blender_to_world):
+        # Exactly the old world vertices, triangle order, closure/weld and BVH.
+        super().__init__(obj,blender_to_world)
+        self.query64 = RayQuery64(self.points,self.triangles,obj.name)
+
+    def inside(self,point):
+        directions = [tuple(Vector(raw).normalized()) for raw in [(1,.371,.619),(.283,1,.517)]]
+        return self.query64.classify(tuple(point),directions)['inside']

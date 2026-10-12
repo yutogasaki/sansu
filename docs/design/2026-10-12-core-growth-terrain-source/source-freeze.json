@@ -1,0 +1,189 @@
+{
+  "candidate": "native05-core-growth-terrain-rough-v1",
+  "frozenUtc": "2026-10-12T12:15:25.368602+00:00",
+  "status": "ROUGH HOLD; source only; c10 full core/browser NOT RUN",
+  "inputs": [
+    {
+      "path": "tools/build-authored-core-growth-terrain-kit.mjs",
+      "bytes": 19650,
+      "sha256": "72ef25c71e770bddbbffce906396832fc88616498467fb6031293dc23aa7cd36"
+    },
+    {
+      "path": "prototypes/place-qa/native05-world-source-shading.json.gz",
+      "bytes": 2276640,
+      "sha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921"
+    },
+    {
+      "path": "docs/design/2026-10-10-island-final-3d/whole-island.glb",
+      "bytes": 34930176,
+      "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/README.md",
+      "bytes": 6147,
+      "sha256": "55791ca94daebaf73178ace91d77f73dca2da36a031483ec341eb651d630c536"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/authored-core-growth-terrain-kit.json.gz",
+      "bytes": 3503856,
+      "sha256": "2fa98f58014db987421edf0110b1d18b8360c03e504cf2df3580f699a183b06a"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/authored-core-growth-terrain-manifest.json",
+      "bytes": 35805,
+      "sha256": "b3d78573d86c6ade84a04634a9abb68465427e3ca74eed6d67076e4ebd7acc80"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/build-attempt-01.log.txt",
+      "bytes": 759,
+      "sha256": "aea82e602117c70f033fba07c60c1882579b1e04eabdbeea1b33a0b87f1cf4b6"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/build-attempt-02.log.txt",
+      "bytes": 1662,
+      "sha256": "c557c44129e6946be0bd11bd0f873df9fd39643e015409041c637c955e543a07"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/build-glb.log.txt",
+      "bytes": 1662,
+      "sha256": "c557c44129e6946be0bd11bd0f873df9fd39643e015409041c637c955e543a07"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/build-source-preview.py",
+      "bytes": 3339,
+      "sha256": "59ae09515aa3caa47a406c9193c6fce5eb659f6cb66a7fe0775d65d6a27fb063"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/check-source.mjs",
+      "bytes": 3168,
+      "sha256": "c92e0d5afb73684c3660d2d343a28aa77e3a285855dd386bc324013e49c32042"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/core-growth-family.blend",
+      "bytes": 18134242,
+      "sha256": "e0c60b641366611fd7a1060bef725ff0bfb95617b5ad8995910c44dd947f4c02"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/east-parts.glb",
+      "bytes": 324864,
+      "sha256": "38afeab2dfd5e129b8b406ce6ec015790f2b71982d3b72ee1d2953557bd294b1"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/east-whole.glb",
+      "bytes": 35237488,
+      "sha256": "98a2bf9362bfa4abd4aa9d983fb317a1c8db51cb14bfbab5a1a9f27b16edc9ef"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/geometry-profile.json.gz",
+      "bytes": 4036808,
+      "sha256": "fee29ef755be364476012a4659ec191983ad90120f085a4d692482a4f7c44464"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/history/attempt-01/build.log.txt",
+      "bytes": 759,
+      "sha256": "aea82e602117c70f033fba07c60c1882579b1e04eabdbeea1b33a0b87f1cf4b6"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/history/attempt-01/builder.mjs.txt",
+      "bytes": 15739,
+      "sha256": "1f476e9c4e4842ac1ba92a0bb793521c43bebd21d6ec0e1c6dd5710f8826643b"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/inspect-boundary.py",
+      "bytes": 1939,
+      "sha256": "cf0b150a1979e7ff4ea1a3b2caae9afee0a80034135c7c6d4abc11077cf5a90f"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/lint.log.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/loop-parts.glb",
+      "bytes": 604916,
+      "sha256": "4c521e6b913af7fce4786d6090251eded585cf27d0cd0ca1d88886b218e0f0c2"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/loop-whole.glb",
+      "bytes": 35517692,
+      "sha256": "04fb23076edb963e88942926c6df55f8df494f3d6595f6af1723162fad91468f"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/north-parts.glb",
+      "bytes": 285512,
+      "sha256": "de9b92d43adbb246ee269e1748c422d9063a5e9f1a0e42000c156150a3d2addc"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/north-whole.glb",
+      "bytes": 35198136,
+      "sha256": "5c6c84f4ee336628669de8a30510dad2c5d5e172b9681bb38958454104eeb845"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/original-boundary.json",
+      "bytes": 467422,
+      "sha256": "06704e87b4f424983ed4adad2456bd5bf768589cdb29a52596fba0ce8e5db36e"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/publish.log.txt",
+      "bytes": 1662,
+      "sha256": "c557c44129e6946be0bd11bd0f873df9fd39643e015409041c637c955e543a07"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/repro.log.txt",
+      "bytes": 1662,
+      "sha256": "c557c44129e6946be0bd11bd0f873df9fd39643e015409041c637c955e543a07"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/run-source-preview.py",
+      "bytes": 1991,
+      "sha256": "8eb8b81137bce7334f71b52e31527981eb92d944bce51058461a7a032854ef63"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/source-check-attempt-01.json",
+      "bytes": 3819,
+      "sha256": "2677a35cf3857d7c89a61cc54191140c1ca7b188017134e1d70bbf9654b0ca31"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/source-check-attempt-01.log.txt",
+      "bytes": 46,
+      "sha256": "0c7d2fc6059b91cce7424aac9118b30d4689d184696d0f80fe0c0244e76906b3"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/source-east-whole.png",
+      "bytes": 775064,
+      "sha256": "cea4b0d19578a912c07320c34b48ee1d44272d8f5240d972af0911af37d53e55"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/source-loop-whole.png",
+      "bytes": 777412,
+      "sha256": "d89b45c87f073d6bc5a3c93a54fb955403be40e4d7258b15dc13843f8d0a7c36"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/source-north-whole.png",
+      "bytes": 776013,
+      "sha256": "1e5acd8a8bdacdda7b1219f60b5348940624e42002291d5dbc3a367bee358ceb"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/source-preview-execution.log.txt",
+      "bytes": 253492,
+      "sha256": "50bac75a9d08c7febff6a39422439f5c394bb0a3597d7019cec83a6d2ebfab2e"
+    },
+    {
+      "path": "docs/design/2026-10-12-core-growth-terrain-source/source-preview-result.json",
+      "bytes": 2231,
+      "sha256": "6135da9eb8714b973bce0aff14ec86b7c531825941b1236af1df13c045624971"
+    },
+    {
+      "path": "prototypes/place-qa/authored-core-growth-terrain-kit.json.gz",
+      "bytes": 3503856,
+      "sha256": "2fa98f58014db987421edf0110b1d18b8360c03e504cf2df3580f699a183b06a"
+    },
+    {
+      "path": "prototypes/place-qa/authored-core-growth-terrain-manifest.json",
+      "bytes": 35805,
+      "sha256": "b3d78573d86c6ade84a04634a9abb68465427e3ca74eed6d67076e4ebd7acc80"
+    }
+  ]
+}

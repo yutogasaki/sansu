@@ -1,0 +1,34 @@
+# P02 donor transform: static diagnosis after the one survey
+
+Original survey, eight inputs and raw logs/results are immutable. This follow-up read authoring Python and original GLB JSON/accessor bounds only. No Blender rerun, vertex evaluation, world compilation, source/app edit or adaptation.
+
+## Evidence
+
+`source-study.py:131–135` appends the four donors, then links each and immediately reads/overwrites its `matrix_world` in the same loop. There is no view-layer update between linking and reading. `vertices_faces` at lines 44–49 obtains an evaluated mesh but applies the original object's matrix rather than that same evaluated object's matrix.
+
+The original `build-scene.py:70–76` creates the dwelling floor via a cube **with object location**, then applies **scale only** (`location=False`). `varied-world.py:59` locates that floor at `(tx-.1, ty-.32, tz+.08)`. In contrast, `native_mesh` at varied-world lines 25–28 puts gallery vertices directly in source coordinates; original trunk/support curves likewise store coordinates directly in their data. Thus these donors intentionally mix localized mesh plus object transform and already-positioned mesh plus identity transform.
+
+Original GLB JSON verifies this distinction without a new geometry run:
+
+- `Grove / hollow dwelling floor`, node 2216: no parent, translation **(-4.9000000954, 4.1577696800, -16.6800003052)**; local bounds ±(.69,.06,1.025).
+- Gallery, support and trunk: no parents and identity node transforms; accessor positions already contain their source-world coordinates.
+- Source floor world bounds are **(-5.590000093,4.097769681,-17.705000281)** to **(-4.210000098,4.217769679,-15.655000329)**.
+- Applying the unchanged frozen pivot/.45/owner transform yields expected authored bounds **(3.144499958,1.627410033,-8.817250127)** to **(3.765499956,1.681410032,-7.894750148)**. Expected XZ centre is approximately **(3.454999957,-8.356000137)**, not raw survey **(5.659999847,-.850000381)**. These are reference GLB bounds, not a new measurement of the .blend.
+- The raw centre instead equals `A * (local floor centre)`; raw top is approximately `A.translation.y + .45 * .06`. Omitting the GLB node translation reproduces the failure within float precision. This identifies the **lost original floor object transform** as the concrete defect class.
+
+Most likely trigger: reading stale/uninitialized appended `matrix_world` before dependency evaluation, then overwriting it. That lifecycle cause requires instrumented verification in the later scheduled run. Parent loss is unsupported for these four donors (original JSON has none; authoring contains no parent assignment for them). A blanket double-bake is also unsupported: identity-transform gallery/trunk retain plausible source-world positions while only the localized floor loses its location. Do not correct with a constant offset.
+
+Machine evidence: `donor-transform-static-evidence.json` retains the exact node ids, node transforms, local/source/authored bounds and source SHA.
+
+## Minimal correction proposal (not implemented)
+
+1. Append **and link all four donors first**. Verify expected parent state (none); unexpected parent/constraint state must HOLD rather than silently flattening it. Update the view layer/dependency graph before reading any source world matrix.
+2. For each donor, record source `matrix_basis`, `matrix_world`, parent chain and evaluated matrix. Capture its evaluated mesh and **matching evaluated matrix** as one source snapshot. Compute source-world bounds before applying P02 transform. Compare against the immutable GLB reference bounds at declared export precision; record any discrepancy and HOLD before route generation.
+3. Apply the existing `B @ A @ BI @ sourceWorldMatrix` once to each donor, with no relocation constant. Update again. Use `ev.matrix_world` with `ev.to_mesh()` consistently. Record and compare resulting authored bounds against `A(source bounds)` and the P02 region before using floor height or casting opening rays.
+4. Only after these identity checks pass, run the unchanged horizontal-entry survey and retain its full-width HOLD rules. Do not repair a landing, change tolerances or execute build/render in the correction. Remeasure actual connector/spur grades; never derive acceptance from the contaminated first-survey route.
+
+The current floor reference maximum Y is ~1.681410032, while the raw floor top was -.189586237. This correction can materially change measured rise/run; therefore the original collision counts and large grades are not evidence that the native gallery proposal is geometrically impossible. Opening containment/headroom and floor support still need their proper measurement.
+
+## Preservation
+
+All artifacts listed in the original run handoff were rehashed and matched. Active source-study.py and study.json were not edited by this static investigation. The later execution window remains pending.

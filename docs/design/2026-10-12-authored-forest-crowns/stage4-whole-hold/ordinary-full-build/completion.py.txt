@@ -1,0 +1,7 @@
+"""Source build completion does not promote a saved failed shape."""
+def classify(all_deformations, roundtrip, first_failure):
+    geometry=bool(all_deformations and roundtrip)
+    success=geometry and first_failure is None
+    return {'terminalSuccess':success,'wholeViewEligibleForRootDecision':success,
+            'normalGeometryCompleteButFailedShape':geometry and first_failure is not None,
+            'failedShapeViewRequiresSeparateRootAuthorization':first_failure is not None}

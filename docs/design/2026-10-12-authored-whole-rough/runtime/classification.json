@@ -1,0 +1,80 @@
+{
+  "recordedAt": "2026-10-12T08:54:34.660872+00:00",
+  "scope": "One l14 move, fixed c5 domain and actual objectLayer; no browser rerun or app changes",
+  "classification": "Driver assertion incompatible with actual derived-place eligibility after its selected move",
+  "move": {
+    "ownerId": "l14",
+    "from": {
+      "x": 2,
+      "z": -4
+    },
+    "to": {
+      "x": 3,
+      "z": -4
+    }
+  },
+  "galleryOwnerCountExpectedByDriver": 1,
+  "galleryOwnerCountActual": 0,
+  "before": {
+    "place": "P02:p3",
+    "variant": "cluster",
+    "stage": "grown",
+    "mainIds": [
+      "l10",
+      "l11",
+      "l12",
+      "l13"
+    ],
+    "entrances": 38,
+    "sharedOrigin": [
+      3.5,
+      1.49033759075,
+      -8.5
+    ],
+    "originMatchesManifest": true,
+    "directFactoryAccepted": true
+  },
+  "after": {
+    "galleryPlacePresent": false,
+    "remainingPlace": "P01:l10",
+    "stage": "seeded",
+    "mainIds": [
+      "l10",
+      "l11",
+      "l12",
+      "l13"
+    ],
+    "entrances": 0,
+    "attachedBenchAndHome": [],
+    "sharedTrees": 0,
+    "galleryInstances": 0,
+    "forestOwners": [
+      "l28",
+      "l15",
+      "l29"
+    ]
+  },
+  "mechanism": "The move changes reached walk cells. With zero reached entrances and no reachable attached tree home or bench, derivePlaces omits P02:p3 and keeps P01 seeded; the shared tree and its gallery therefore have no eligible target. Exact graph choke-edge isolation was not separately run.",
+  "originOrWiringBugObserved": false,
+  "uiWorldRevision": "authored-world:daaac2cd75f83c59",
+  "worldRevisionMatchesUi": true,
+  "fixedInputsUnchanged": true,
+  "fixedInputCount": 120,
+  "generality": {
+    "domain": "Ordinary derived places depend on ownership, position, growth, attachments and reached space.",
+    "forestDelivery": "Stage4 DEV replacement is bound to exact owner/cell/age/source matrix. Moved l14 loses this authored replacement.",
+    "galleryDelivery": "Bound to exact four owner cells, P02:p3 cluster stage, kit and source origin.",
+    "conclusion": "The authored rough composition is a fixture-specific appearance, not yet a general forest/gallery construction system that adapts that authored geometry to arbitrary growth or editing."
+  },
+  "notClaimed": [
+    "UI journey PASS",
+    "store/restore coverage",
+    "all-owner walking PASS",
+    "M1 completion",
+    "art acceptance"
+  ],
+  "rawResultSha256": "8654aa5795934ff388c88dad01836016bccc9c5fe8ea2fde7627c5c44b19d8b1",
+  "scriptSha256": "54b1e6987c2f3878f59195e5029e1249e0fbf14708d7275ab8ff87019c161acc",
+  "bundleSha256": "c756329129633c8937beff47e6eab7aa84d00e03a2436736f1aa5874108cbda2",
+  "successfulLogSha256": "1455e9a74d410270a60c411d6c2f1d20bd6b58e5c1688e55d5924b12cb296288"
+}

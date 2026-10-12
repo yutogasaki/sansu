@@ -1,0 +1,26 @@
+{
+  "startedUtc": "2026-10-12T10:25:55.088663+00:00",
+  "finishedUtc": "2026-10-12T10:26:21.106993+00:00",
+  "pid": 44355,
+  "exitCode": 0,
+  "elapsedSeconds": 26.018257583999997,
+  "peakSampledRssBytes": 1965391872,
+  "effectiveThreads": 2,
+  "limitReason": null,
+  "sourceBefore": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/build-source-preview.py": "d50577dc411e565d7a75b3e2451ec7455b3bd33ebd43dd791f2d6377a9d69fed",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/source-manifest.json": "ba96a80db980c540c444809df29b292c20ec301deb750ec62ff27ff90617afc4",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/baseline-source.glb": "df082ea1721e1af94f6ee2c71ac103649da4ddfb379126318d6b6bac7df1ef64",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/parallel-source.glb": "b3b73e6b477b887d385b683932ca26880c0e60ad117716ebd2506a05d3b2c1ad",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/seaward-source.glb": "b85b1c034de0c33e297e0be83e88a7a2cc2b01f64beb521fad59a75bab073fe8"
+  },
+  "sourceAfter": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/build-source-preview.py": "d50577dc411e565d7a75b3e2451ec7455b3bd33ebd43dd791f2d6377a9d69fed",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/source-manifest.json": "ba96a80db980c540c444809df29b292c20ec301deb750ec62ff27ff90617afc4",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/baseline-source.glb": "df082ea1721e1af94f6ee2c71ac103649da4ddfb379126318d6b6bac7df1ef64",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/parallel-source.glb": "b3b73e6b477b887d385b683932ca26880c0e60ad117716ebd2506a05d3b2c1ad",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-growth-terrain-source/seaward-source.glb": "b85b1c034de0c33e297e0be83e88a7a2cc2b01f64beb521fad59a75bab073fe8"
+  },
+  "inputsUnchanged": true,
+  "evidence": "Source-only static comparison; not performance evidence or app acceptance"
+}

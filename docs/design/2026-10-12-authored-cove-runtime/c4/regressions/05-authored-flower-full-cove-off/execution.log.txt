@@ -1,0 +1,15 @@
+authored-flower: load-mature-32
+authored-flower: select-l31
+authored-flower: select-l17
+authored-flower: select-l18
+authored-flower: select-l19
+authored-flower: preview-and-cancel-flower
+authored-flower: split-flower
+authored-flower: store-flower
+authored-flower: restore-reconnect-flower
+authored-flower: canvas-select-l31
+authored-flower: canvas-select-l17
+authored-flower: canvas-select-l18
+authored-flower: canvas-select-l19
+authored-flower: rotate-whole
+{"pass":false,"captures":4,"selections":6,"error":"locator.scrollIntoViewIfNeeded: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - attempting scroll into view action\u001b[22m\n\u001b[2m    - waiting for element to be stable\u001b[22m\n\n    at whole (/private/tmp/sansu-authored-cove-c4/candidate/tools/e2e-authored-flower.mjs:85:55)\n    at async file:///private/tmp/sansu-authored-cove-c4/candidate/tools/e2e-authored-flower.mjs:174:47\n    at async timed (/private/tmp/sansu-authored-cove-c4/candidate/tools/e2e-authored-flower.mjs:58:11)\n    at async file:///private/tmp/sansu-authored-cove-c4/candidate/tools/e2e-authored-flower.mjs:174:5","output":"/private/tmp/sansu-authored-cove-c4/regressions/05-authored-flower-full-cove-off/actual"}

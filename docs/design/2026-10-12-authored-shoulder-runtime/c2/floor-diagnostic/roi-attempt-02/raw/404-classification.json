@@ -1,0 +1,52 @@
+{
+  "classification": "Unclassified console 404; original attempt did not retain URL/location/response evidence.",
+  "firstRawReport": "/private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-prepared/actual-01/report.json",
+  "firstRawReportSha256": "4ba6380cc8581e7f61d884b5b46bc2341e464ee33ff4bb32bf4bdf623793772e",
+  "originalConsoleErrors": [
+    {
+      "kind": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "fixedCandidateReferences": [
+    {
+      "path": "/private/tmp/sansu-authored-shoulder-c2/candidate/prototypes/place-qa/authored.html",
+      "sha256": "6475f334bfd0b66f1e55bf457305cdc828a05300b4df4d04bdd19e35167b18b3",
+      "faviconOrIconReferences": []
+    },
+    {
+      "path": "/private/tmp/sansu-authored-shoulder-c2/candidate/index.html",
+      "sha256": "4edbfe0b2e908eb28433582708a97fd28963a325d8c5371725a3fa6ec5fc8b60",
+      "faviconOrIconReferences": [
+        {
+          "line": 17,
+          "text": "    <link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"%BASE_URL%icons/apple-touch-icon.png\">"
+        },
+        {
+          "line": 19,
+          "text": "    <!-- Favicon -->"
+        },
+        {
+          "line": 20,
+          "text": "    <link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"%BASE_URL%icons/favicon-32.png\">"
+        }
+      ]
+    },
+    {
+      "path": "/private/tmp/sansu-authored-shoulder-c2/candidate/src/prototypes/placeQa/authored.tsx",
+      "sha256": "84da5918e6d26f6284321e7cbf03245a8e9d691b6dc64a7ae41e80b739627450",
+      "faviconOrIconReferences": []
+    }
+  ],
+  "candidatePublicFaviconIcoExists": false,
+  "limits": "No authored-page favicon link found in these direct files. Root index.html icon link belongs to a different entry. Automatic browser favicon request is plausible but unconfirmed; absence of a file does not identify the recorded request.",
+  "nextAttemptErrorPolicy": "No exclusions; console errors and HTTP >=400 responses remain fatal, including all404 and shader compilation errors.",
+  "nextAttemptEvidence": [
+    "console.location",
+    "response URL/status/statusText/method/resourceType/contentType/fromServiceWorker",
+    "body first1024 characters or body read error",
+    "requestfailed URL/type/error",
+    "UTC times"
+  ],
+  "networkOrBrowserStartedForClassification": false
+}

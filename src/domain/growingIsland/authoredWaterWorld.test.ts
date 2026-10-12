@@ -75,6 +75,29 @@ function intersection(a: readonly WorldPoint[], b: readonly WorldPoint[]) {
 }
 
 describe('pure authored water geometry composition', () => {
+    it('interpolates the original shading field through cuts without changing support or copying grass normals to new beds', () => {
+        const plain = source(), state = owners(plain), original = plain.definition.districts[0];
+        const normalAt = ({ x, z }: WorldPoint) => ({ x: x * .01, y: .9, z: z * .02 });
+        const sourceMaterial = { roughness: .78, metalness: 0, doubleSided: true };
+        const shaded = compileWorldDefinition({ ...plain.definition, districts: [{ ...original, floors: original.floors.map(floor => ({ ...floor,
+            vertices: floor.vertices.map(vertex => ({ ...vertex, normal: normalAt(vertex.point) })), material: sourceMaterial })) }] });
+        const before = composeAuthoredWaterWorld(state, plain), after = composeAuthoredWaterWorld(state, shaded);
+        const geometry = (world: IslandWorld) => world.floors.map(floor => ({ id: floor.id, kind: floor.kind, color: floor.color,
+            indices: floor.indices, vertices: floor.vertices.map(({ cell, point }) => ({ cell, point })) }));
+        expect(geometry(after.world)).toEqual(geometry(before.world)); expect(after.plan).toEqual(before.plan);
+        expect(after.world.sites).toEqual(before.world.sites); expect(after.world.walkSites).toEqual(before.world.walkSites);
+        const remaining = after.world.floors.find(floor => floor.id === shaded.floors[0].id)!;
+        expect(remaining.vertices.length).toBeGreaterThan(shaded.floors[0].vertices.length);
+        expect(remaining.material).toEqual(sourceMaterial);
+        for (const vertex of remaining.vertices) {
+            const expected = normalAt(vertex.point);
+            for (const axis of ['x', 'y', 'z'] as const) expect(vertex.normal?.[axis]).toBeCloseTo(expected[axis], 8);
+        }
+        const added = after.world.floors.filter(floor => floor.id !== remaining.id);
+        expect(added.some(floor => floor.kind === 'water')).toBe(true);
+        expect(added.every(floor => !floor.material && floor.vertices.every(vertex => !vertex.normal))).toBe(true);
+    });
+
     it('cuts real source triangles and keeps fixed acquired anchors over three different water/bed floors', () => {
         const base = source(), state = owners(base), definition = structuredClone(base.definition), saved = structuredClone(state);
         const { world, plan } = composeAuthoredWaterWorld(state, base);

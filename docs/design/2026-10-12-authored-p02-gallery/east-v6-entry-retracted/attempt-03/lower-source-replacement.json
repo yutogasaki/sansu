@@ -1,0 +1,42 @@
+{
+  "removedTriangles": [
+    408,
+    244
+  ],
+  "retainedTriangles": [
+    3048,
+    1440
+  ],
+  "sourceFirstRiserPlane": {
+    "point": [
+      3.8905972016997925,
+      1.6814100742340088,
+      -7.53323800109165
+    ],
+    "normal": [
+      0.9999299352335986,
+      0,
+      0.011837424708570117
+    ]
+  },
+  "upperBoundaryEdges": 10,
+  "upperClosed": {
+    "triangles": 4498,
+    "zeroArea": 0,
+    "signedVolume": 0.2418841973159406,
+    "badEdges": 0
+  },
+  "newLowerClosed": {
+    "triangles": 356,
+    "zeroArea": 0,
+    "signedVolume": 0.027882951537137313,
+    "badEdges": 0
+  },
+  "circularRadius": 0.4508553626920552,
+  "structuralWidth": 0.64,
+  "innerRadius": 0.13085536269205517,
+  "originalFirstRiserPreserved": true,
+  "upperPositionsNormalsTrianglesExact": true,
+  "separateSolidsWithPositiveDepthOverlap": true,
+  "inheritedDeliveredExactBoundaryEdges": 94
+}

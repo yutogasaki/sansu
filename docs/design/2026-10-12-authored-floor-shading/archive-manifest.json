@@ -1,0 +1,29 @@
+{
+  "stage": "source-extraction-only",
+  "command": "node tools/build-authored-island-world.mjs --output /private/tmp/sansu-floor-source-c1",
+  "cwd": "/private/tmp/sansu-next-m1-code",
+  "exitCode": 0,
+  "archivePreparationFirstFailure": "Python rejected a non-UTF-8 heredoc before execution; no files were created. Retried with ASCII-only archival code and separate UTF-8 document edit.",
+  "files": {
+    "native05-world.json.gz": {
+      "sha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+      "bytes": 2276640
+    },
+    "physical-parity.json": {
+      "sha256": "1a88b09caf6fffff0c270fec6981fcf5505f80440dd28ad3dd0baa8a447b38ba",
+      "bytes": 570
+    },
+    "source-extraction.log.txt": {
+      "sha256": "35f57c6ac605f610159af6c7f114bc5171d1030f65718b2c8f910bf99fdbaf68",
+      "bytes": 135
+    },
+    "source-extractor.mjs": {
+      "sha256": "f2118d254d9d6b42169f490f2bcc90626cfa7daee149a84cb7a9d048e3c1f2d6",
+      "bytes": 11745
+    },
+    "world-manifest.json": {
+      "sha256": "76df85f5697f1d13623929b742eb0c35cda90bd69fd8863fef882e4abe3fc1fc",
+      "bytes": 4028
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "scope": "Only the saved first-leaf Float64 field/transport arithmetic; no Blender/cohort",
+  "inputsBefore": {
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/attempt-01/failing-role-raw.json.gz": "e2820d44f4270b1e8346c00c313048f7bf1e7ce1c03f9452c438942b0d153dc0",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/attempt-01/source-role-accessors.json.gz": "30f6a737860e89c644fdd2fcafa365f15bf6bb95afe01af17225a7ef5e3bdc61",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/tip-recenter-evaluated-baseline/attempt-01/float64-profile.json.gz": "84d48a20741d04d9d5025fc4de6f19a5a9ee8d788f38477c762eab549e82b3fe",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/tip-recenter-evaluated-baseline/geometry.py": "b55d6bad7dfd21146b424765bb6928c4bc639808693db57f79131f362768ef34",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/fields.py": "18bd502a2b3d0013fa0cbca4b4e53cba99d6b7ec70aa3d4275b0636271d70e8a",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/proposal.json": "60411e8b70d3b8f6829a34654cee5caf3f740065f34a7e4b3e7b159b8bcf2364",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-generalization-prep/leaf_adapter.py": "ae572fab05503c4fa9caab52f0490983ff7ec57749e66c70258f1865943a8484"
+  },
+  "inputsAfter": {
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/attempt-01/failing-role-raw.json.gz": "e2820d44f4270b1e8346c00c313048f7bf1e7ce1c03f9452c438942b0d153dc0",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/attempt-01/source-role-accessors.json.gz": "30f6a737860e89c644fdd2fcafa365f15bf6bb95afe01af17225a7ef5e3bdc61",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/tip-recenter-evaluated-baseline/attempt-01/float64-profile.json.gz": "84d48a20741d04d9d5025fc4de6f19a5a9ee8d788f38477c762eab549e82b3fe",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/tip-recenter-evaluated-baseline/geometry.py": "b55d6bad7dfd21146b424765bb6928c4bc639808693db57f79131f362768ef34",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/fields.py": "18bd502a2b3d0013fa0cbca4b4e53cba99d6b7ec70aa3d4275b0636271d70e8a",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/proposal.json": "60411e8b70d3b8f6829a34654cee5caf3f740065f34a7e4b3e7b159b8bcf2364",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-generalization-prep/leaf_adapter.py": "ae572fab05503c4fa9caab52f0490983ff7ec57749e66c70258f1865943a8484"
+  },
+  "sourceIdentity": {
+    "name": "role-l14-2239",
+    "ownerId": "l14",
+    "role": "hanging-leaf",
+    "sourceNodeIndex": 2239,
+    "ordinal": 0
+  },
+  "sameComponents": {
+    "world64": true,
+    "targets64": true,
+    "local64": false,
+    "desiredNormalsByVertex64": false,
+    "jacobians64": true,
+    "normalTransports64": true,
+    "minimumJacobianDeterminant": true,
+    "finiteDifferenceEpsilonUnchanged": true
+  },
+  "desiredNormalMaxL2": 2.2898349882893854e-16,
+  "worldTargetMaxDifference": 0.0,
+  "passed": false
+}

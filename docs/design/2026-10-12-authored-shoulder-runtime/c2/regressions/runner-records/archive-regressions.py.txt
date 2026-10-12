@@ -1,0 +1,47 @@
+from pathlib import Path
+import hashlib,json,shutil,datetime
+B=Path('/private/tmp/sansu-authored-shoulder-c2')
+D=Path('/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-shoulder-runtime/c2/regressions')
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+record=lambda p:{'sha256':sha(p),'bytes':p.stat().st_size}
+protected=[D/'01-floor-shading-ab',D/'02-shoulder-full',D/'03-baseline27-editing',D/'archive-01-03.json',D.parent/'visual-contact-sheet']
+before={str(p):record(p) for root in protected for p in ([root] if root.is_file() else root.rglob('*')) if p.is_file()}
+reused=[]
+for name in ['01-floor-shading-ab','02-shoulder-full','03-baseline27-editing']:
+ src=B/'regressions'/name;dst=D/name
+ sm={str(p.relative_to(src)):record(p) for p in src.rglob('*') if p.is_file()}
+ dm={str(p.relative_to(dst)):record(p) for p in dst.rglob('*') if p.is_file()}
+ assert sm==dm,name
+ reused += [{'source':str(src/k),'target':str((dst/k).relative_to(D)),**v} for k,v in sorted(sm.items())]
+pairs=[]
+for name in ['04-wide27-water','05-authored-flower-full-cove-off','06-authored-cove-full','07-ordinary-growing-balance','08-classic-smoke']:
+ src=B/'regressions'/name
+ assert not (D/name).exists()
+ pairs += [(p,D/name/p.relative_to(src)) for p in sorted(src.rglob('*')) if p.is_file()]
+for src,rel in [(B/'regressions/report.json','report.json'),(B/'regressions-terminal-summary.json','terminal-summary.json'),(B/'regressions-runner-execution.log.txt','runner-execution.log.txt'),(B/'execution-handoff.json','runner-records/execution-handoff.json'),(B/'scheduling-assessment.json','runner-records/scheduling-assessment.json'),(B/'source-concurrency-window.json','runner-records/source-concurrency-window.json')]:
+ pairs.append((src,D/rel))
+for name in ['closure.py','collect-installed-dependencies.mjs','snapshot.mjs','check-driver-imports.mjs','check-harness-inputs.mjs','core.py','regressions.py','preparation.json','c1-to-c2-prepared.diff','README.md']:
+ p=B/'prepared'/name
+ pairs.append((p,D/'runner-records/prepared'/(name+'.txt' if p.suffix in ['.py','.mjs'] else name)))
+core=json.loads((B/'core/report.json').read_text());outer=json.loads((B/'regressions/report.json').read_text())
+drivers=['e2e-authored-floor-shading.mjs','e2e-authored-shoulder.mjs','e2e-authored-island-editing.mjs','e2e-authored-water.mjs','e2e-authored-flower.mjs','e2e-authored-cove.mjs','e2e-growing-balance.mjs','e2e-smoke.mjs']
+driverproof=[]
+for name in drivers:
+ p=B/'candidate/tools'/name;key='tools/'+name
+ assert sha(p)==core['initialInputs'][key]==core['finalInputs'][key]==outer['initialSources'][key]==outer['finalSources'][key]
+ pairs.append((p,D/'runner-records/drivers'/(name+'.txt')))
+ driverproof.append({'sourcePath':key,'sha256':sha(p),'matchesCoreAndRegressionsBeforeAfter':True,'archive':'runner-records/drivers/'+name+'.txt'})
+pairs.append((B/'archive-regressions.py',D/'runner-records/archive-regressions.py.txt'))
+assert sha(B/'prepared/regressions.py')==outer['runnerSha256']
+entries=[]
+for src,dst in pairs:
+ assert src.is_file(),src
+ assert not dst.exists(),dst
+ orig=record(src);dst.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(src,dst)
+ assert record(src)==record(dst)==orig
+ entries.append({'source':str(src),'target':str(dst.relative_to(D)),**orig})
+after={str(p):record(p) for root in protected for p in ([root] if root.is_file() else root.rglob('*')) if p.is_file()}
+assert before==after
+proof={'createdAtUtc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'scope':'Completed c2 stages 04-08 and terminal outer reports; existing 01-03 verified and reused without overwrite. Fixed candidate remains read-only.','sourceRoot':str(B),'targetRoot':str(D),'copiedFileCount':len(entries),'copiedBytes':sum(x['bytes'] for x in entries),'files':entries,'allCopiedBytesIdentical':True,'reusedFileCount':len(reused),'reusedFiles':reused,'allReusedRawSetsAndHashesIdentical':True,'protectedFilesBefore':before,'protectedFilesAfter':after,'rootArchivesAndVisualContactSheetUntouched':True,'executedDrivers':driverproof,'runnerSha256':outer['runnerSha256'],'runnerArchive':'runner-records/prepared/regressions.py.txt','outerReportSha256':sha(B/'regressions/report.json'),'sourceCount':len(outer['initialSources']),'sourceFixed':outer['sourceFixed'],'installedDependencyCount':len(outer['initialInstalledDependencies']),'installedDependenciesFixed':outer['installedDependenciesFixed'],'firstFailure':outer['firstFailure'],'pass':outer['pass'],'acceptanceLimit':'Functional regressions only; not art/performance/M1 acceptance. Bounded source work overlap is separately recorded. No regression pause or deadline change.'}
+p=D/'archive-04-08-and-terminal.json';assert not p.exists();p.write_text(json.dumps(proof,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps({'proof':str(p),'proofSha256':sha(p),'copiedFiles':len(entries),'copiedBytes':proof['copiedBytes'],'reusedFiles':len(reused),'protectedUnchanged':before==after,'sourceCount':proof['sourceCount'],'installedCount':proof['installedDependencyCount']}))

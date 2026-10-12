@@ -1,0 +1,30 @@
+{
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "docs:check"
+      ],
+      "exitCode": 0,
+      "log": "docs-check.log.txt",
+      "sha256": "653a4d85c405c81754be6c4c4cfb6caa10d3e6573f5a91d341ebb97c33d4f47d"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "docs/design/2026-10-12-authored-forest-crowns/stage4-first-normal-failure/zero-face-comparison",
+        "docs/design/2026-10-12-authored-forest-crowns/stage4-first-normal-failure/sharp-fan-comparison"
+      ],
+      "exitCode": 0,
+      "log": "diff-check.log.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "archiveSourceStillUnchanged": true,
+  "allDecodedDestinationsExact": true,
+  "readmeLinksExist": true
+}

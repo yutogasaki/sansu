@@ -1,0 +1,423 @@
+"""One source-only layered crown candidate. Requires a scheduled Blender window."""
+import os
+assert os.environ.get('SANSU_FOREST_STAGE2_APPROVED') == '1', 'Await parent execution window'
+import bpy
+import hashlib
+import json
+import struct
+import sys
+import time
+import traceback
+import gc
+from pathlib import Path
+from mathutils import Matrix, Vector
+
+HERE = Path(__file__).resolve().parent
+BASE = HERE.parent
+sys.path.insert(0, str(HERE))
+import fields
+import joints
+import stage1_support as native
+
+sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+PROPOSAL = json.loads((HERE / 'proposal.json').read_text())
+STUDY = json.loads((BASE / 'study.json').read_text())
+EXTRACT = BASE / 'extraction-attempt02'
+OUTPUT = HERE / 'attempt-01'
+assert not OUTPUT.exists(), 'Preserve first stage2 output; a retry needs a new script/version'
+OUTPUT.mkdir()
+B = Matrix(((1, 0, 0, 0), (0, 0, -1, 0), (0, 1, 0, 0), (0, 0, 0, 1)))
+BI = B.inverted()
+BINDINGS = json.loads((EXTRACT / 'bindings.json').read_text())['bindings']
+native.B = B; native.BI = BI; native.STUDY = STUDY; native.BINDINGS = BINDINGS
+START = time.monotonic()
+INPUTS = {}
+JOINTS = []
+CREATED = []
+CURRENT_PHASE = 'input-validation'
+BASELINE_ROWS = {}
+ACTIVE_JOINT_CONTEXT = None
+
+
+def glb_json(path):
+    with path.open('rb') as stream:
+        assert stream.read(4) == b'glTF'
+        version, total = struct.unpack('<II', stream.read(8))
+        length, kind = struct.unpack('<II', stream.read(8))
+        assert version == 2 and kind == 0x4e4f534a and total == path.stat().st_size
+        return json.loads(stream.read(length))
+
+
+def material_spec(item):
+    pbr = item.get('pbrMetallicRoughness', {})
+    def no_textures(value):
+        if isinstance(value, dict):
+            assert not any('texture' in key.lower() for key in value), 'Do not mock or drop textures'
+            for child in value.values(): no_textures(child)
+        elif isinstance(value, list):
+            for child in value: no_textures(child)
+    no_textures(item)
+    return {'baseColor': pbr.get('baseColorFactor', [1, 1, 1, 1]),
+            'roughness': pbr.get('roughnessFactor', 1), 'metalness': pbr.get('metallicFactor', 1),
+            'doubleSided': item.get('doubleSided', False), 'alphaMode': item.get('alphaMode', 'OPAQUE'),
+            'emissive': item.get('emissiveFactor', [0, 0, 0])}
+
+
+def close_values(a, b):
+    if isinstance(a, dict): return a.keys() == b.keys() and all(close_values(a[k], b[k]) for k in a)
+    if isinstance(a, list): return len(a) == len(b) and all(close_values(x, y) for x, y in zip(a, b))
+    if isinstance(a, (int, float)) and not isinstance(a, bool): return abs(a - b) <= 2e-6
+    return a == b
+
+
+def exported_roles(document):
+    result = {}
+    for node in document.get('nodes', []):
+        extra = node.get('extras', {})
+        if 'sourceNodeIndex' not in extra or 'mesh' not in node: continue
+        key = (extra['ownerId'], int(extra['sourceNodeIndex']))
+        assert key not in result
+        primitives = document['meshes'][node['mesh']]['primitives']
+        assert all('NORMAL' in primitive['attributes'] for primitive in primitives)
+        result[key] = {'role': extra['forestRole'], 'fixed': bool(extra['forestFixed']),
+                       'sourceSha256': extra['sourceSha256'],
+                       'materials': [material_spec(document['materials'][primitive['material']]) for primitive in primitives]}
+    return result
+
+
+def material_digest(material):
+    values = {'diffuse': list(material.diffuse_color), 'roughness': material.roughness,
+              'metallic': material.metallic, 'backfaceCulling': material.use_backface_culling,
+              'useNodes': material.use_nodes, 'nodes': [], 'links': []}
+    if material.node_tree:
+        for node in material.node_tree.nodes:
+            inputs = []
+            for socket in node.inputs:
+                if not hasattr(socket, 'default_value'): continue
+                value = socket.default_value
+                if not isinstance(value, (int, float, bool, str)):
+                    try: value = list(value)
+                    except TypeError: value = str(value)
+                inputs.append([socket.name, value])
+            values['nodes'].append([node.name, node.bl_idname, inputs, getattr(getattr(node, 'image', None), 'name', None)])
+        values['links'] = sorted([link.from_node.name, link.from_socket.name, link.to_node.name, link.to_socket.name]
+                                for link in material.node_tree.links)
+    return hashlib.sha256(json.dumps(values, sort_keys=True).encode()).hexdigest()
+
+
+def role_object(owner, role, ordinal=0):
+    found = [obj for obj in ROLE_OBJECTS if obj.get('ownerId') == owner and obj.get('forestRole') == role
+             and obj.get('forestOrdinal') == ordinal]
+    assert len(found) == 1, (owner, role, ordinal, len(found))
+    return found[0]
+
+
+VOLUMES = {}
+def volume(obj):
+    if obj.name not in VOLUMES:
+        VOLUMES[obj.name] = joints.Volume(obj, BI)
+    return VOLUMES[obj.name]
+
+
+def mapped(owner, role, ordinal, point):
+    return Vector(fields.field_for_role(owner, role, ordinal, PROPOSAL)(point))
+
+
+def original_world(owner, point):
+    return native.world_matrix(owner) @ Vector(point)
+
+
+def checkpoint():
+    (OUTPUT / 'joint-checks-progress.json').write_text(json.dumps(JOINTS, indent=2) + '\n')
+    print('STAGE2_PHASE', CURRENT_PHASE, 'jointChecks', len(JOINTS), flush=True)
+
+
+def query_joint(left_obj, right_obj, left_guess, right_guess, radius):
+    """Read-only scalar result; identical kernel/arguments for baseline and build.
+
+    Let query errors propagate. Only the baseline recorder catches them as
+    diagnostic states; generated geometry keeps its original strict failure.
+    """
+    assert left_obj['ownerId'] == right_obj['ownerId'], 'Cross-owner structural joins are prohibited'
+    left, right = volume(left_obj), volume(right_obj)
+    overlap = joints.overlap_ball(left, right, [left_guess, right_guess], radius * .6)
+    return {'left': left_obj.name, 'right': right_obj.name, 'ownerId': left_obj['ownerId'],
+            'requestedBallRadiusWorld': radius * .6, 'leftClosure': left.closure,
+            'rightClosure': right.closure, 'overlap': overlap}
+
+
+def query_error_status(error):
+    message = str(error)
+    if message.startswith('Actual volume is not closed/oriented:'):
+        return 'closure-invalid'
+    if message.startswith(('Ambiguous actual-volume ray parity:', 'Ray parity exceeded bounded intersections:')):
+        return 'ray-parity-unresolved'
+    return 'query-error'
+
+
+def compare_baseline(key, after_status):
+    baseline = BASELINE_ROWS[key]
+    before = baseline['status']
+    if after_status not in ('overlap-found', 'overlap-not-found'):
+        category = 'after-query-unresolved'
+    elif before not in ('overlap-found', 'overlap-not-found'):
+        category = 'baseline-query-unresolved'
+    elif before == 'overlap-found' and after_status == 'overlap-not-found':
+        category = 'overlap-proof-lost-after-deformation'
+    elif before == 'overlap-not-found' and after_status == 'overlap-not-found':
+        category = 'already-unproven-in-unmodified-imported-input'
+    elif before == 'overlap-not-found':
+        category = 'overlap-proof-found-after-deformation'
+    else:
+        category = 'overlap-proof-retained'
+    return {'baselineKey': key, 'baselineStatus': before, 'afterStatus': after_status,
+            'classification': category,
+            'limit': 'Finite no-ball search is not a proof of noncontact; baseline is after Blender import.'}
+
+
+def leaf_joint_spec(anchor, deformed):
+    ordinal = anchor['k'] * 5 + anchor['j']
+    stem = role_object('l14', 'hanging-stem', anchor['k'])
+    leaf = role_object('l14', 'hanging-leaf', ordinal)
+    original = original_world('l14', anchor['originGltf'])
+    at = mapped('l14', 'hanging-leaf', ordinal, original) if deformed else original
+    metadata = {'key': f"l14:{int(stem['sourceNodeIndex'])}:{int(leaf['sourceNodeIndex'])}",
+                'ownerId': 'l14', 'stemSourceNode': int(stem['sourceNodeIndex']),
+                'leafSourceNode': int(leaf['sourceNodeIndex']), 'k': anchor['k'], 'j': anchor['j'],
+                'sourceAnchorGltf': anchor['originGltf'], 'originalAnchorWorld': list(original),
+                'queryAnchorWorld': list(at), 'anchorMapping': 'reviewed-field' if deformed else 'identity',
+                'radiusArgumentWorld': .0008, 'actualOverlapBallRadiusWorld': .0008 * .6,
+                'maxSpanArgumentWorld': .04, 'repairAllowed': False,
+                'positionWeldDecimalsWorld': 7, 'rayAdvanceWorld': 1e-7}
+    return stem, leaf, at, metadata
+
+
+def record_leaf_baseline():
+    """Query all 70 original pairs before any deformation; retain scalars only."""
+    global ACTIVE_JOINT_CONTEXT
+    originals_before = {obj.name: native.fixed_digest(obj) for obj in ROLE_OBJECTS}
+    metadata = {'sourceSha256': STUDY['sourceSha256'],
+                'extractionSha256': sha(EXTRACT / 'role-separated-originals.glb'),
+                'queryImplementation': {'builderSha256': sha(Path(__file__)), 'jointsSha256': sha(HERE / 'joints.py')},
+                'scope': 'Unmodified imported input, no connector generation; not an independent raw-GLB mesh audit',
+                'ownerBinding': {key: BINDINGS['l14'][key] for key in
+                                 ['record', 'sourcePivot', 'sourceScale', 'ageScale',
+                                  'authoredTreeMatrixWorld', 'sourceToAuthoredMatrix']}}
+    def flush():
+        (OUTPUT / 'baseline-joints.json').write_text(json.dumps({**metadata, 'rows': BASELINE_ROWS}, indent=2) + '\n')
+    try:
+        for anchor in STUDY['anchors']['willow']['leafOriginAnchors']:
+            stem, leaf, at, spec = leaf_joint_spec(anchor, deformed=False)
+            ACTIVE_JOINT_CONTEXT = spec
+            try:
+                result = query_joint(stem, leaf, at, at, radius=.0008)
+                row = {**spec, 'status': 'overlap-found' if result['overlap'] else 'overlap-not-found',
+                       'measurement': result}
+            except Exception as error:
+                row = {**spec, 'status': query_error_status(error),
+                       'errorClass': type(error).__name__, 'error': str(error)}
+            assert spec['key'] not in BASELINE_ROWS
+            BASELINE_ROWS[spec['key']] = row
+            if len(BASELINE_ROWS) % 10 == 0:
+                flush()
+        assert len(BASELINE_ROWS) == 70
+        assert originals_before == {obj.name: native.fixed_digest(obj) for obj in ROLE_OBJECTS}
+        metadata['originalRoleDigestsUnchanged'] = True
+    finally:
+        metadata['cachedVolumesBeforeClear'] = len(VOLUMES)
+        VOLUMES.clear()
+        gc.collect()
+        metadata['cachedVolumesAfterClear'] = len(VOLUMES)
+        ACTIVE_JOINT_CONTEXT = None
+        flush()
+    assert not VOLUMES
+    print('STAGE2_BASELINE_RECORDED', len(BASELINE_ROWS), 'cache-cleared', flush=True)
+
+
+def connect(left_obj, right_obj, left_guess, right_guess, radius, max_span, repair=True, baseline_spec=None):
+    global ACTIVE_JOINT_CONTEXT
+    ACTIVE_JOINT_CONTEXT = baseline_spec
+    measurement = query_joint(left_obj, right_obj, left_guess, right_guess, radius)
+    overlap = measurement.pop('overlap')
+    row = measurement
+    if baseline_spec:
+        row['sourceJoint'] = baseline_spec
+        row['baselineComparison'] = compare_baseline(baseline_spec['key'],
+                                                    'overlap-found' if overlap else 'overlap-not-found')
+    name = f"joint-{len(JOINTS):03d}-{left_obj['ownerId']}-{right_obj.name}"
+    if overlap:
+        row.update({'generated': False, 'status': 'actual-positive-volume-overlap-ball', 'overlap': overlap})
+    elif repair:
+        assert len(CREATED) < 31, 'Bounded native joint repairs exhausted; preserve the first failure'
+        left, right = volume(left_obj), volume(right_obj)
+        obj, proof = joints.connector(left, right, left_guess, right_guess, radius, max_span, name,
+                                      left_obj['ownerId'], right_obj.data.materials[0] if right_obj['forestRole'] in ('main-branch', 'hanging-stem')
+                                      else left_obj.data.materials[0], JOINT_COLLECTION, B, STUDY['sourceSha256'])
+        CREATED.append(obj)
+        row.update({'status': 'closed-native-connector-with-both-cap-disks-embedded', 'connector': proof})
+    else:
+        row['status'] = 'HOLD-no-positive-volume-attachment-proven; no automatic leaf decoration repair'
+        JOINTS.append(row); checkpoint()
+        raise ValueError(f'Native hanging leaf joint requires inspection: {name}')
+    JOINTS.append(row); checkpoint()
+    ACTIVE_JOINT_CONTEXT = None
+
+
+try:
+    frozen = json.loads((EXTRACT / 'manifest.json').read_text())
+    for name, digest in frozen['files'].items(): assert sha(EXTRACT / name) == digest
+    assert sha(BASE / 'study.json') == PROPOSAL['sourceStudySha256']
+    assert sha(EXTRACT / 'bindings.json') == PROPOSAL['bindingsSha256']
+    for path, record in STUDY['inputs'].items():
+        assert sha(Path(path)) == record['sha256']; INPUTS[path] = record['sha256']
+    for file in [BASE / 'study.json', EXTRACT / 'fixed-c1-context.glb', EXTRACT / 'role-separated-originals.glb',
+                 EXTRACT / 'bindings.json', HERE / 'proposal.json', HERE / 'fields.py', HERE / 'joints.py',
+                 HERE / 'stage1_support.py', Path(__file__)]: INPUTS[str(file)] = sha(file)
+    (OUTPUT / 'inputs-before.json').write_text(json.dumps(INPUTS, indent=2) + '\n')
+    source_document = glb_json(EXTRACT / 'role-separated-originals.glb')
+    expected_roles = exported_roles(source_document); assert len(expected_roles) == 128
+    source_materials = {item['name']: material_spec(item) for item in source_document['materials']}
+    original_materials = {item['name']: material_spec(item) for item in PROPOSAL['originalMaterialSpecsByIndex'].values()}
+    assert source_materials.keys() == original_materials.keys()
+    assert all(close_values(spec, original_materials[name]) for name, spec in source_materials.items())
+
+    CURRENT_PHASE = 'import-fixed-context-and-roles'
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    bpy.ops.import_scene.gltf(filepath=str(EXTRACT / 'fixed-c1-context.glb'))
+    CONTEXT = set(bpy.data.objects)
+    context_before = {obj.name: native.fixed_digest(obj) for obj in CONTEXT if obj.type == 'MESH'}
+    bpy.ops.import_scene.gltf(filepath=str(EXTRACT / 'role-separated-originals.glb'))
+    ROLE_OBJECTS = [obj for obj in bpy.data.objects if obj not in CONTEXT and obj.type == 'MESH']
+    assert len(ROLE_OBJECTS) == 128
+    FIXED = [obj for obj in ROLE_OBJECTS if obj.get('forestFixed')]; assert len(FIXED) == 23
+    before = {obj.name: native.fixed_digest(obj) for obj in FIXED}
+    role_topology_before = {obj.name: [[*poly.vertices] for poly in obj.data.polygons] for obj in ROLE_OBJECTS}
+    materials = {material for obj in ROLE_OBJECTS for material in obj.data.materials}
+    materials_before = {material.name: material_digest(material) for material in materials}
+    slots_before = {obj.name: [material.name for material in obj.data.materials] for obj in ROLE_OBJECTS}
+    CURRENT_PHASE = 'unmodified-input-70-leaf-baseline'
+    record_leaf_baseline()
+    CURRENT_PHASE = 'deform-original-105-roles'
+    changes = []
+    guards = PROPOSAL['authorGuardsNotProductInvariants']
+    for obj in ROLE_OBJECTS:
+        if obj.get('forestFixed'): continue
+        function = fields.field_for_role(obj['ownerId'], obj['forestRole'], obj['forestOrdinal'], PROPOSAL)
+        obj.data = obj.data.copy()
+        result = native.deform_object(obj, lambda point, function=function: Vector(function(tuple(point))))
+        assert result['maxWorldDisplacement'] <= guards['maxVertexWorldDisplacement'], result
+        assert result['minimumSampledJacobianDeterminant'] >= guards['minimumSampledJacobianDeterminant'], result
+        result['aboveAuthorWarning'] = result['maxWorldDisplacement'] > guards['warnVertexWorldDisplacement']
+        changes.append(result)
+    assert len(changes) == 105
+    assert role_topology_before == {obj.name: [[*poly.vertices] for poly in obj.data.polygons] for obj in ROLE_OBJECTS}
+    (OUTPUT / 'deformations.json').write_text(json.dumps(changes, indent=2) + '\n')
+    JOINT_COLLECTION = bpy.data.collections.new('stage2 / same-owner native junctions')
+    bpy.context.scene.collection.children.link(JOINT_COLLECTION)
+
+    CURRENT_PHASE = 'willow-actual-trunk-and-lobes'
+    trunk = role_object('l14', 'trunk')
+    trunk_guess = Vector(PROPOSAL['owners']['l14']['fixedTipCore']['anchorWorld']) - Vector((0, .12, 0))
+    for ordinal, hint in enumerate(PROPOSAL['owners']['l14']['lobeHints']):
+        target = mapped('l14', 'crown-lobe', ordinal, hint['anchorWorld'])
+        connect(trunk, role_object('l14', 'crown-lobe', ordinal), trunk_guess, target,
+                radius=.45 * .46 * .585 * .35, max_span=1.6)
+
+    CURRENT_PHASE = 'birch-actual-branch-roots-and-crown-ends'
+    for owner in ['l15', 'l29']:
+        root = PROPOSAL['owners'][owner]['branchRootPin']['anchorWorld']
+        scale = STUDY['owners'][owner]['expectedUniformScale']
+        for ordinal, hint in enumerate(PROPOSAL['owners'][owner]['branchCrownPairs']):
+            branch = role_object(owner, 'main-branch', ordinal)
+            root_guess = Vector(root) + Vector((0, .04 * scale, 0))
+            connect(role_object(owner, 'trunk'), branch, root_guess, root_guess,
+                    radius=.078 * scale * .28, max_span=.35)
+            tip = mapped(owner, 'main-branch', ordinal, hint['anchorWorld'])
+            connect(branch, role_object(owner, 'crown-lobe', ordinal), tip, tip,
+                    radius=.078 * scale * .12 * .28, max_span=.12)
+
+    CURRENT_PHASE = 'willow-actual-hanging-stem-roots'
+    for family in STUDY['anchors']['willow']['hangingFamilies']:
+        ordinal = family['k']
+        stem = role_object('l14', 'hanging-stem', ordinal)
+        start = mapped('l14', 'hanging-stem', ordinal, original_world('l14', family['scriptStemStartGltf']))
+        lobes = [role_object('l14', 'crown-lobe', j) for j in range(5)]
+        # Nearest actual triangle surface, never a material batch or recipe box.
+        lobe = min(lobes, key=lambda obj: volume(obj).tree.find_nearest(start)[3])
+        connect(lobe, stem, start, start - Vector((0, .005, 0)), radius=.012 * .93 * .585 * .25, max_span=.15)
+
+    CURRENT_PHASE = 'willow-actual-70-leaf-attachments'
+    for anchor in STUDY['anchors']['willow']['leafOriginAnchors']:
+        stem, leaf, at, spec = leaf_joint_spec(anchor, deformed=True)
+        connect(stem, leaf, at, at, radius=.0008, max_span=.04, repair=False, baseline_spec=spec)
+
+    CURRENT_PHASE = 'fixed-material-hero-parity'
+    after = {obj.name: native.fixed_digest(obj) for obj in FIXED}; assert before == after
+    assert context_before == {obj.name: native.fixed_digest(obj) for obj in CONTEXT if obj.type == 'MESH'}
+    assert materials_before == {material.name: material_digest(material) for material in materials}
+    assert slots_before == {obj.name: [material.name for material in obj.data.materials] for obj in ROLE_OBJECTS}
+    heroes = [obj for obj in CONTEXT if obj.get('nativePart') == 'fan-crown']
+    hero_meshes = {child for obj in heroes for child in [obj, *obj.children_recursive] if child.type == 'MESH'}
+    assert hero_meshes
+    hero_top = max((obj.matrix_world @ vertex.co).z for obj in hero_meshes for vertex in obj.data.vertices)
+    candidate_top = max((obj.matrix_world @ vertex.co).z for obj in [*ROLE_OBJECTS, *CREATED] for vertex in obj.data.vertices)
+    assert candidate_top + guards['highestHeroClearanceWorld'] < hero_top
+    scene = bpy.context.scene
+    scene['candidate'] = PROPOSAL['candidate'].replace('-proposal', '')
+    native.add_views()
+    scene.render.threads_mode = 'FIXED'; scene.render.threads = 2
+    scene.cycles.samples = 16
+    scene['renderLimitations'] += '; black path dots are an export/material difference under static investigation, not attributed to water ripples'
+
+    CURRENT_PHASE = 'save-editable-and-export'
+    bpy.ops.wm.save_as_mainfile(filepath=str(OUTPUT / 'study.blend'))
+    bpy.ops.export_scene.gltf(filepath=str(OUTPUT / 'study.glb'), export_format='GLB', export_extras=True, export_cameras=False, export_lights=False)
+    bpy.ops.object.select_all(action='DESELECT')
+    for obj in [*ROLE_OBJECTS, *CREATED]:
+        obj.select_set(True)
+        parent = obj.parent
+        while parent is not None:
+            parent.select_set(True); parent = parent.parent
+    bpy.ops.export_scene.gltf(filepath=str(OUTPUT / 'owned-tree-components.glb'), export_format='GLB', use_selection=True, export_extras=True)
+    actual_roles = exported_roles(glb_json(OUTPUT / 'owned-tree-components.glb'))
+    assert actual_roles.keys() == expected_roles.keys()
+    for key, expected in expected_roles.items():
+        assert close_values(expected, actual_roles[key]), ('role/material GLB parity', key, expected, actual_roles[key])
+    assert all(sha(Path(path)) == digest for path, digest in INPUTS.items())
+    result = {'candidate': scene['candidate'], 'proposal': PROPOSAL,
+              'inputsBefore': INPUTS, 'inputsAfter': INPUTS,
+              'fixedOriginalRoleHashesBefore': before, 'fixedOriginalRoleHashesAfter': after,
+              'changedRoleCount': len(changes), 'unchangedContextMeshCount': len(context_before),
+              'materialDigestsBefore': materials_before, 'materialDigestsAfter': materials_before,
+              'rawSourceMaterialToExtraction': True, 'exportedOriginalRoleMaterialParityCount': len(actual_roles),
+              'newJunctionCount': len(CREATED), 'jointChecks': JOINTS,
+              'leafBaseline': 'baseline-joints.json',
+              'heroTopWorld': hero_top, 'candidateTopWorld': candidate_top,
+              'elapsedSeconds': time.monotonic() - START, 'renderExecuted': False,
+              'sourceOnly': True, 'runtimeIntegrated': False, 'independentObservers': 0,
+              'limits': ['Clearance-ball local joins, not Boolean-union/self-intersection certification',
+                         'Actor/full-route/house/independent audit NOT RUN', 'Original split-normal exact GLB roundtrip not independently audited',
+                         'Static context lacks residents; black path dots remain uncorrected'],
+              'files': {name: sha(OUTPUT / name) for name in ['study.blend', 'study.glb', 'owned-tree-components.glb', 'deformations.json', 'joint-checks-progress.json', 'baseline-joints.json']}}
+    (OUTPUT / 'manifest.json').write_text(json.dumps(result, indent=2) + '\n')
+    print('STAGE2_SOURCE_BUILT', scene['candidate'], result['elapsedSeconds'], flush=True)
+except BaseException as error:
+    failure = {'candidate': PROPOSAL['candidate'], 'phase': CURRENT_PHASE, 'error': repr(error),
+               'traceback': traceback.format_exc(), 'elapsedSeconds': time.monotonic() - START,
+               'inputsBefore': INPUTS, 'inputsAfter': {path: sha(Path(path)) for path in INPUTS},
+               'jointChecks': JOINTS, 'activeJoint': ACTIVE_JOINT_CONTEXT,
+               'leafBaseline': 'baseline-joints.json' if (OUTPUT / 'baseline-joints.json').exists() else None,
+               'renderExecuted': False, 'runtimeIntegrated': False}
+    if ACTIVE_JOINT_CONTEXT and ACTIVE_JOINT_CONTEXT['key'] in BASELINE_ROWS:
+        recorded = next((row.get('baselineComparison') for row in reversed(JOINTS)
+                         if row.get('sourceJoint', {}).get('key') == ACTIVE_JOINT_CONTEXT['key']), None)
+        failure['baselineComparison'] = recorded or compare_baseline(ACTIVE_JOINT_CONTEXT['key'], query_error_status(error))
+    try:
+        if bpy.data.objects:
+            bpy.ops.wm.save_as_mainfile(filepath=str(OUTPUT / 'failed-stage.blend'))
+            failure['failedBlendSha256'] = sha(OUTPUT / 'failed-stage.blend')
+    except BaseException as save_error:
+        failure['failedBlendSaveError'] = repr(save_error)
+    with (OUTPUT / 'first-failure.json').open('x') as stream:
+        json.dump(failure, stream, indent=2)
+    raise

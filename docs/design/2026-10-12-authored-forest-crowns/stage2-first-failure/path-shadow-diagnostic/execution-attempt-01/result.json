@@ -1,0 +1,23 @@
+{
+  "startedAtUtc": "2026-10-12T04:20:17.940738+00:00",
+  "finishedAtUtc": "2026-10-12T04:20:37.158462+00:00",
+  "elapsedSeconds": 19.217805333,
+  "command": [
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/path-shadow-diagnostic/render-failed-whole.py"
+  ],
+  "ownedPid": 25525,
+  "exitCode": 0,
+  "stopReason": null,
+  "peakObservedRssBytes": 2519285760,
+  "effectiveThreads": 2,
+  "rssGuardBytes": 3221225472,
+  "timeoutSeconds": 120,
+  "attempts": 1
+}

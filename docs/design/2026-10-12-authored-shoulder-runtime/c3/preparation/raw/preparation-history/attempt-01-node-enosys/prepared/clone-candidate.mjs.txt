@@ -1,0 +1,91 @@
+import assert from 'node:assert/strict';
+import { constants, promises as fs } from 'node:fs';
+import { createHash } from 'node:crypto';
+import path from 'node:path';
+import { execFileSync } from 'node:child_process';
+const base = '/private/tmp/sansu-authored-shoulder-c3';
+const baseline = '/private/tmp/sansu-authored-shoulder-c2';
+const source = `${baseline}/candidate`, dest = `${base}/candidate`;
+const live = '/Users/yutogasaki/Projects/sansu';
+const evidence = `${live}/docs/design/2026-10-12-authored-water-support-reuse`;
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const json = async file => JSON.parse(await fs.readFile(file, 'utf8'));
+const hashes = async (root, names) => {
+    const result = {};
+    for (const name of names) result[name] = sha(await fs.readFile(path.join(root, name)));
+    return result;
+};
+const walk = async (root, relative) => {
+    const result = [];
+    for (const entry of (await fs.readdir(path.join(root, relative), { withFileTypes: true })).sort((a,b) => a.name.localeCompare(b.name))) {
+        const name = `${relative}/${entry.name}`;
+        assert(!entry.isSymbolicLink(), `Unexpected app source symlink: ${name}`);
+        if (entry.isDirectory()) result.push(...await walk(root, name));
+        else if (entry.isFile()) result.push(name);
+    }
+    return result;
+};
+const write = async (name, value) => fs.writeFile(`${base}/${name}`, JSON.stringify(value,null,2)+'\n', { flag:'wx' });
+if (!process.argv.includes('--start')) {
+    console.log(JSON.stringify({prepared:true, executionStarted:false, source, dest, scope:'Clone only baseline snapshot file set plus three authorized byte replacements; no core/browser'}));
+} else {
+    const snapshotBytes = await fs.readFile(`${baseline}/snapshot.json`), snapshot = JSON.parse(snapshotBytes);
+    const coreBytes = await fs.readFile(`${baseline}/core/report.json`), core = JSON.parse(coreBytes);
+    assert(core.pass && core.sourceFixed && core.installedDependenciesFixed && core.exitCode === 0);
+    assert.deepEqual(core.initialInputs, core.finalInputs);
+    assert.equal(core.target, source); assert.equal(snapshot.dest, source);
+    const focusedBytes = await fs.readFile(`${evidence}/focused-checks.json`), focused = JSON.parse(focusedBytes);
+    const expectedNames = ['src/domain/growingIsland/authoredWaterBridge.test.ts','src/domain/growingIsland/authoredWaterBridge.ts','src/domain/growingIsland/authoredWaterWorld.ts'];
+    assert.deepEqual(focused.files.map(x=>x.path).sort(), expectedNames);
+    const accepted = Object.fromEntries(focused.files.map(x=>[x.path,x]));
+    const names = Object.keys(snapshot.files).sort();
+    assert(!names.some(x=>x.startsWith('dist/') || x.startsWith('node_modules/')));
+    const diskBefore = execFileSync('df',['-Pk',base],{encoding:'utf8'});
+    const availableKiB = Number(diskBefore.trim().split('\n').at(-1).split(/\s+/)[3]);
+    assert(availableKiB > 1024*1024, 'Require at least 1 GiB free and mandatory copy-on-write');
+    const roots = ['src','tools','prototypes','public'];
+    const baseNames = (await Promise.all(roots.map(x=>walk(source,x)))).flat().sort();
+    const mainNames = (await Promise.all(roots.map(x=>walk(live,x)))).flat().sort();
+    assert.deepEqual(mainNames, baseNames, 'Runtime source path set differs');
+    const baselineRuntime = await hashes(source,baseNames), mainRuntime = await hashes(live,mainNames);
+    const mainDelta = baseNames.filter(x=>baselineRuntime[x] !== mainRuntime[x]);
+    assert.deepEqual(mainDelta,expectedNames,'Only the three authorized runtime files may differ');
+    for (const name of expectedNames) {
+        assert.equal(baselineRuntime[name],accepted[name].beforeSha256,name);
+        assert.equal(mainRuntime[name],accepted[name].afterSha256,name);
+    }
+    await fs.mkdir(dest,{recursive:false});
+    const files = {}, originalFiles = {}, copyNames = [];
+    for (const name of names) {
+        assert(!path.isAbsolute(name) && !name.split('/').includes('..'));
+        const from=path.join(source,name), to=path.join(dest,name);
+        const before=sha(await fs.readFile(from));
+        assert.equal(before,snapshot.files[name],`Baseline snapshot changed: ${name}`);
+        await fs.mkdir(path.dirname(to),{recursive:true});
+        // FORCE refuses a full-data fallback and creates independent COW extents, never hard links.
+        await fs.copyFile(from,to,constants.COPYFILE_FICLONE_FORCE|constants.COPYFILE_EXCL);
+        assert.notEqual((await fs.stat(from)).ino,(await fs.stat(to)).ino,`Hard link prohibited: ${name}`);
+        originalFiles[name]=before; files[name]=sha(await fs.readFile(to));
+        assert.equal(files[name],before,name); copyNames.push(name);
+    }
+    const installedRoot = await fs.realpath(`${source}/node_modules`);
+    await fs.symlink(installedRoot,`${dest}/node_modules`,'dir');
+    // Every existing clone was verified before overwriting the three accepted files.
+    for (const name of expectedNames) {
+        const bytes=await fs.readFile(path.join(live,name)); assert.equal(sha(bytes),accepted[name].afterSha256);
+        await fs.writeFile(path.join(dest,name),bytes); files[name]=sha(bytes);
+    }
+    const sourceAfter=await hashes(source,names);
+    assert.deepEqual(sourceAfter,originalFiles,'Baseline changed during clone');
+    const currentMain=await hashes(live,mainNames);
+    assert.deepEqual(currentMain,mainRuntime,'Main runtime tree changed during clone');
+    assert.deepEqual(names.filter(x=>files[x]!==originalFiles[x]),expectedNames);
+    const report={source,dest,createdAt:new Date().toISOString(),sourceSnapshotSha256:sha(snapshotBytes),sourceCoreReportSha256:sha(coreBytes),
+        sourceSnapshotFileCount:names.length,copyMethod:'COPYFILE_FICLONE_FORCE|COPYFILE_EXCL; independent inode per file',files,originalFiles,
+        runtimeSourceRoots:roots,runtimeInputCount:mainNames.length,baselineRuntime,mainRuntimeBefore:mainRuntime,mainRuntimeAfter:currentMain,
+        sourceDeltaPaths:expectedNames,sourceDeltaExactlyThree:true,changedDuringCopy:[],baselineSnapshotFixed:true,
+        focusedEvidence:{path:evidence,reportSha256:sha(focusedBytes),files:focused.files},installedRoot,
+        diskBefore,diskAfter:execFileSync('df',['-Pk',base],{encoding:'utf8'}),runnerSha256:sha(await fs.readFile(new URL(import.meta.url)))};
+    await write('candidate-copy.json',report);
+    console.log(JSON.stringify({dest,files:copyNames.length,sourceDeltaPaths:expectedNames,baselineSnapshotFixed:true,mainRuntimeStable:true,diskAfter:report.diskAfter}));
+}

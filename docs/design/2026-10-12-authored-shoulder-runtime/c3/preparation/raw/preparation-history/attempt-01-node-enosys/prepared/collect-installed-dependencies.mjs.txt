@@ -1,0 +1,78 @@
+// Static compiler input inventory. Never imports or executes the browser harness.
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
+import { createRequire } from 'node:module';
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+export async function collectProjection(repo) {
+    repo = path.resolve(repo);
+    const driver = 'tools/e2e-authored-shoulder.mjs', driverBytes = await fs.readFile(path.join(repo, driver));
+    const text = driverBytes.toString('utf8');
+    const matches = [...text.matchAll(/build\(\{\s*stdin:\s*\{\s*contents:\s*`([^`]*)`,\s*resolveDir:\s*process\.cwd\(\)\s*\},\s*bundle:\s*true,\s*platform:\s*'node',\s*format:\s*'esm',\s*write:\s*false,\s*metafile:\s*true,\s*logLevel:\s*'silent'\s*\}\)/g)];
+    assert.equal(matches.length, 1, 'Expected the exact sole literal shoulder projection and its complete compiler settings');
+    const contents = matches[0][1];
+    assert(!contents.includes('${') && !contents.includes('\\'), 'Projection must be an uninterpolated literal; do not evaluate harness code');
+    assert(contents.includes('previewGrowingState') && contents.includes('objectLayer.ts'), 'Real renderer projection is required');
+    const installedRoot = await fs.realpath(path.join(repo, 'node_modules'));
+    // A draft checkout may symlink docs. Normalize only explicitly observed roots;
+    // final candidate docs are copied and node_modules alone remains shared.
+    const aliases = await Promise.all(['src', 'docs', 'tools', 'prototypes', 'public', 'assets'].map(async name =>
+        [name, await fs.realpath(path.join(repo, name)).catch(() => path.join(repo, name))]));
+    const inside = (parent, file) => { const relative = path.relative(parent, file); return relative && relative !== '..' && !relative.startsWith('../') && !path.isAbsolute(relative) ? relative.split(path.sep).join('/') : undefined; };
+    const normalize = original => {
+        const actual = path.resolve(repo, original), dependency = inside(installedRoot, actual);
+        if (dependency) return { name: `node_modules/${dependency}`, actual, installed: true };
+        const local = inside(repo, actual);
+        if (local && !local.startsWith('node_modules/')) return { name: local, actual, installed: false };
+        for (const [name, real] of aliases) {
+            const relative = inside(real, actual);
+            if (relative) return { name: `${name}/${relative}`, actual, installed: false };
+        }
+        throw Error(`Projection input outside explicit source/dependency roots: ${original}`);
+    };
+    const { build } = createRequire(path.join(repo, 'package.json'))('esbuild');
+    const settings = { absWorkingDir: repo, stdin: { contents, resolveDir: repo }, bundle: true, platform: 'node', format: 'esm', write: false, metafile: true, logLevel: 'silent' };
+    const compiled = await build(settings);
+    const files = Object.keys(compiled.metafile.inputs).filter(name => name !== '<stdin>').sort().map(normalize);
+    files.push({ name: 'node_modules/.package-lock.json', actual: path.join(installedRoot, '.package-lock.json'), installed: true });
+    const local = {}, installed = {};
+    for (const file of files) {
+        const value = sha(await fs.readFile(file.actual)), destination = file.installed ? installed : local;
+        assert(!destination[file.name] || destination[file.name] === value, `Conflicting canonical input: ${file.name}`);
+        destination[file.name] = value;
+    }
+    assert(Object.keys(installed).length > 1, 'The actual renderer projection must expose installed module inputs');
+    // The inventory is now known. Compile between before/after hashes so this
+    // second read-only compiler pass has an actual stable input identity.
+    const verified = await build(settings);
+    assert.deepEqual(verified.metafile, compiled.metafile, 'Projection input graph changed during collection');
+    assert.equal(sha(verified.outputFiles[0].contents), sha(compiled.outputFiles[0].contents), 'Projection output changed during collection');
+    for (const file of files) assert.equal(sha(await fs.readFile(file.actual)), (file.installed ? installed : local)[file.name], `Input changed during static compile: ${file.name}`);
+    assert.equal(sha(await fs.readFile(path.join(repo, driver))), sha(driverBytes), 'Driver changed during dependency collection');
+    return { installed: Object.fromEntries(Object.entries(installed).sort()), local: Object.fromEntries(Object.entries(local).sort()), metafile: verified.metafile,
+        proof: { mode: 'Static projection dependency inventory, not browser/core verification', repo, driver, driverSha256: sha(driverBytes),
+            projectionLiteralSha256: sha(contents), projectionOutputSha256: sha(verified.outputFiles[0].contents),
+            settings: { bundle: true, platform: 'node', format: 'esm', write: false, metafile: true, logLevel: 'silent' },
+            installedRoot, installedInputCount: Object.keys(installed).length, localInputCount: Object.keys(local).length,
+            actualMetafileInputCount: files.length - 1, installedLockExplicit: true, inputHashesStableAcrossVerificationCompile: true } };
+}
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+    const repo = process.env.SANSU_CLOSURE_REPO ?? '/private/tmp/sansu-authored-shoulder-c3/candidate';
+    const out = process.env.SANSU_CLOSURE_OUT ?? '/private/tmp/sansu-authored-shoulder-c3/closure';
+    if (!process.argv.includes('--start')) console.log(JSON.stringify({ prepared: true, executionStarted: false, repo, out }));
+    else {
+        await fs.mkdir(out, { recursive: true });
+        const names = ['installed-dependencies.json', 'projection-local-inputs.json', 'projection-metafile.json', 'installed-dependencies-proof.json'];
+        for (const name of names) assert(!(await fs.stat(path.join(out, name)).catch(() => null)), `Refuse to overwrite ${name}`);
+        const result = await collectProjection(repo);
+        for (const [name, value] of [[names[0], result.installed], [names[1], result.local], [names[2], result.metafile]])
+            await fs.writeFile(path.join(out, name), JSON.stringify(value, null, 2) + '\n', { flag: 'wx' });
+        result.proof.installedDependenciesManifestSha256 = sha(await fs.readFile(path.join(out, names[0])));
+        result.proof.projectionLocalInputsSha256 = sha(await fs.readFile(path.join(out, names[1])));
+        result.proof.runnerSha256 = sha(await fs.readFile(fileURLToPath(import.meta.url)));
+        await fs.writeFile(path.join(out, names[3]), JSON.stringify(result.proof, null, 2) + '\n', { flag: 'wx' });
+        console.log(JSON.stringify(result.proof));
+    }
+}

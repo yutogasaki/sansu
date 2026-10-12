@@ -1,0 +1,25 @@
+{
+  "scope": "Prepared only; syntax/lint/focused unit tests performed, no memory execution",
+  "syntax": [
+    {
+      "file": "diagnose.mjs",
+      "exitCode": 0,
+      "log": "/private/tmp/sansu-world-index-sharing/diagnose.mjs.syntax.log.txt"
+    },
+    {
+      "file": "compare.mjs",
+      "exitCode": 0,
+      "log": "/private/tmp/sansu-world-index-sharing/compare.mjs.syntax.log.txt"
+    }
+  ],
+  "sha256": {
+    "diagnose.mjs": "e9ba11b85491b8b94001f8a183c65f8e8ef275f0ec679fb9d9c056aca20fca50",
+    "compare.mjs": "f03f0607136a4823c3f31ee83075bda3d432fa2081b8c7f03a47f5982f2f0c99",
+    "prepared-inputs.json": "b7ff352504362e720136c85b46c4dc83a7f0a7e1cf68179699b2834bb871c18f",
+    "README.md": "2ad9f45136685bb009a40744f8d182ca3931d171d6ce81e953cc4510f5a18eed",
+    "worldDefinition.before.ts": "8e88855dd180624f1c2b32437e6d1b93cc66e978f2fc9c741d5f004e8ba45db7",
+    "worldDefinition.before.test.ts": "8d4f6d66d0c4078f3dc77c5911ecfb9e84e508137a15b035971dc68c9787b581",
+    "focused-first.log.txt": "528301ca516b8c8bd1dfec18b2bfcc6ef8637fca3b380279685882fbea0fe3ff",
+    "lint-first.log.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

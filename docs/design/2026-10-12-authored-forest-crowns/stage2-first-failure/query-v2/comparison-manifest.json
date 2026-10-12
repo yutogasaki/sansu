@@ -1,0 +1,60 @@
+{
+  "createdAtUtc": "2026-10-12T04:17:05.950811+00:00",
+  "status": "FIRST-PAIR-NUMERICAL-COMPARISON-COMPLETE-SOURCE-HOLD",
+  "readinessSha256": "6ab1c96d34bb964c3b5df7060066c63866b0781a9e2c541fa51bb70d59f1efbb",
+  "files": {
+    "blender-attempt-01/bound-inputs-before.json": {
+      "sha256": "6f7ac051e8421e35aebd10b4e844aac04c60e6ae5bf45bae5d7a8d422dbd6d8b",
+      "bytes": 1486
+    },
+    "blender-attempt-01/candidate-first-point-rays.json": {
+      "sha256": "714cb81a3f57df813504e549cb6977ff6750344dc12cb21e97b616efa409e6f2",
+      "bytes": 914
+    },
+    "blender-attempt-01/candidate64-result.json": {
+      "sha256": "f98ed2bf2c94c0432fabdad0b22d36146cdbd03234d7ae35fd5fb123d0dc4b57",
+      "bytes": 795
+    },
+    "blender-attempt-01/comparison.json": {
+      "sha256": "45c125b8c52a381eba6ac49a1c6dc3640f1a9060a319453611d79031bdad94aa",
+      "bytes": 7396
+    },
+    "blender-attempt-01/inputs-before.json": {
+      "sha256": "1ba3007233f5dd8641a75ddc3bfc50f28d9cf8b617b383ed0c806538ab413ba0",
+      "bytes": 450
+    },
+    "blender-attempt-01/original-result.json": {
+      "sha256": "0c225854dfe613e516ba3d382102f849714c5f59ed86abc9792ad23ad6d0c2e9",
+      "bytes": 1499
+    },
+    "blender-attempt-01/query-input.json": {
+      "sha256": "d03154ef5d524cc86fc0374d1c621627beff7cee50cb4538eecc7042ab8dfb8a",
+      "bytes": 625
+    },
+    "comparison-summary.md": {
+      "sha256": "6072777ea4169e58ac7002c4c58b5fd3ba679a79f1c8e7e57b3e4703e5d20d10",
+      "bytes": 3543
+    },
+    "execution-attempt-01/bound-inputs-before.json": {
+      "sha256": "6f7ac051e8421e35aebd10b4e844aac04c60e6ae5bf45bae5d7a8d422dbd6d8b",
+      "bytes": 1486
+    },
+    "execution-attempt-01/execution.log.txt": {
+      "sha256": "933a5f3a2d561e0f8540c7cf5b3b85c44e10f60f7d5a70d38e3e68d7f9993318",
+      "bytes": 2485
+    },
+    "execution-attempt-01/exit-and-parity.json": {
+      "sha256": "f512a49f0ba41818a32c7cf7ebaa1395699bda34d6a0aaab8b0937c0e16e3146",
+      "bytes": 335
+    },
+    "execution-attempt-01/result.json": {
+      "sha256": "62d9ffc556e4a27536f2e5e8b99876b378929b695ac14ccbbee763963543100f",
+      "bytes": 3704
+    }
+  },
+  "fullBuilderExecuted": false,
+  "allBaselineExecuted": false,
+  "sourceGeometryModified": false,
+  "runtimeIntegrated": false,
+  "independentObservers": 0
+}

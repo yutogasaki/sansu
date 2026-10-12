@@ -1,0 +1,146 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { gzipSync, gunzipSync } from 'node:zlib';
+import * as T from 'three';
+
+const check=process.argv.includes('--check'), publish=process.argv.includes('--publish');
+assert(process.argv.slice(2).every(v=>['--check','--publish'].includes(v)));
+const dir='docs/design/2026-10-12-core-growth-terrain-source';
+const sha=v=>createHash('sha256').update(v).digest('hex');
+const source={artifact:'docs/design/2026-10-10-island-final-3d/whole-island.glb',sha256:'8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d'};
+const worldPath='prototypes/place-qa/native05-world-source-shading.json.gz';
+const worldBytes=await readFile(worldPath), original=JSON.parse(gunzipSync(worldBytes));
+const raw=await readFile(source.artifact);assert.equal(sha(raw),source.sha256);
+const n=raw.readUInt32LE(12), gltf=JSON.parse(raw.subarray(20,20+n));
+const boundary=JSON.parse(await readFile(`${dir}/original-boundary.json`));assert.equal(boundary.sha256,sha(worldBytes));
+const core=original.districts[0];assert.equal(core.templateId,'native05-inlet-core-v1');
+const copy=structuredClone(core);copy.id=copy.templateId;
+const edges=original.edges.map(e=>({...e,from:{...e.from,districtId:copy.id},to:{...e.to,districtId:copy.id}}));
+const template={id:copy.id,label:'原本の北東と東岸',district:copy,edges,ports:[]};
+assert.equal(copy.sites.filter(s=>s.placement).length,73);
+const smooth=t=>{t=Math.max(0,Math.min(1,t));return t*t*(3-2*t);};
+const lerp=(a,b,t)=>a+(b-a)*t;
+const names=['hill / silvery meadow','harbor / light seaside meadow','shore / pale sand','ridge / light stratified stone'];
+const mats=names.map(name=>{const m=gltf.materials.find(m=>m.name===name);assert(m&&!/Texture/.test(JSON.stringify(m)));return m;});
+const appearance=i=>{const p=mats[i].pbrMetallicRoughness;return {color:`#${new T.Color().fromArray(p.baseColorFactor).getHexString()}`,roughness:p.roughnessFactor??1,metalness:p.metallicFactor??1,doubleSided:mats[i].doubleSided===true};};
+const terrain=core.floors.filter(f=>f.id.startsWith('Island / continuous sculpted mature terrain:'));
+const sourceVertices=new Map(terrain.flatMap(f=>f.vertices.map(v=>[`${v.point.x},${v.point.z}`,v])));
+function coast(low,high){
+ const points=boundary.outerBoundary.filter(p=>p[0]>13&&p[2]>=low&&p[2]<=high).sort((a,b)=>a[2]-b[2]);
+ assert(points.length>20);for(let i=1;i<points.length;i++)assert(points[i][2]>points[i-1][2]);
+ for(const p of points)assert.deepEqual(p,['x','y','z'].map(k=>sourceVertices.get(`${p[0]},${p[2]}`).point[k]));
+ return points;
+}
+const seams={north:coast(-9.25,-6.65),east:coast(-5.35,-2.75)};
+const joinA=15.25,joinB=17.25;
+const shapeControls={north:{anchor:{x:13,z:-8},baseSite:'13.5,-8',landing:{x:14,z:-8},outerEnd:17.75,peak:1.15,mat:0},east:{anchor:{x:13,z:-4},baseSite:'14,-4.5',landing:{x:14.75,z:-4.5},outerEnd:18.0,peak:.32,mat:1}};
+const allMeshes=[];
+function finish(points,indices,name,material,boundaryNormals=new Map()){
+ const normals=points.map(()=>new T.Vector3());const map=new Map();
+ for(let i=0;i<indices.length;i+=3){const ids=indices.slice(i,i+3),[a,b,c]=ids.map(j=>new T.Vector3().fromArray(points[j]));const normal=b.sub(a).cross(c.sub(a));assert(normal.y>0,`${name}: positive top`);for(const j of ids)normals[j].add(normal);for(let j=0;j<3;j++){const a=ids[j],b=ids[(j+1)%3],key=[a,b].sort((a,b)=>a-b).join(',');const e=map.get(key);if(e)e.count++;else map.set(key,{a,b,count:1});}}
+ assert([...map.values()].every(e=>e.count<=2));
+ const result={name,points,indices,normals:normals.map((v,i)=>(boundaryNormals.get(i)??v.normalize().toArray()).map(Math.fround)),boundary:[...map.values()].filter(e=>e.count===1),material};allMeshes.push(result);return result;
+}
+function strip(rows,name,material,sourceNormalRows=false){
+ const points=[],indices=[],cache=new Map(),normalMap=new Map();
+ const id=p=>{const key=p.join(',');if(!cache.has(key)){cache.set(key,points.length);points.push(p);}return cache.get(key);};
+ const ids=rows.map(row=>row.map(id));
+ const tri=(a,b,c)=>{if(a===b||b===c||c===a)return;const p=points[a],q=points[b],r=points[c],area=(q[2]-p[2])*(r[0]-p[0])-(q[0]-p[0])*(r[2]-p[2]);assert(Math.abs(area)>1e-14,`${name}: nonzero face`);indices.push(...(area>0?[a,b,c]:[a,c,b]));};
+ for(let i=1;i<ids.length;i++)for(let j=1;j<ids[i].length;j++){tri(ids[i-1][j-1],ids[i][j-1],ids[i-1][j]);tri(ids[i-1][j],ids[i][j-1],ids[i][j]);}
+ if(sourceNormalRows)for(let i=0;i<rows.length;i++){const p=rows[i][0],v=sourceVertices.get(`${p[0]},${p[2]}`);assert(v);normalMap.set(ids[i][0],['x','y','z'].map(k=>v.normal[k]));}
+ return finish(points,indices,name,material,normalMap);
+}
+const rowAtJoin={};
+function branch(socket,shape){
+ const control=shapeControls[socket],seam=seams[socket],end=socket==='north'?seam.at(-1):seam[0],endWidth=control.outerEnd-end[0];
+ const fractions=[...Array.from({length:5},(_,i)=>(joinA-end[0])/endWidth*i/4),...Array.from({length:8},(_,i)=>((joinA-end[0])+(joinB-joinA)*(i+1)/8)/endWidth),...Array.from({length:4},(_,i)=>((joinB-end[0])+(control.outerEnd-joinB)*(i+1)/4)/endWidth)];
+ const rows=seam.map((p,i)=>{const u=i/(seam.length-1),active=socket==='north'?u:1-u,neck=smooth(Math.min(1,active/.20));
+  const width=(endWidth+ (socket==='east'?1.0:.55)*Math.sin(Math.PI*active))*Math.sin(Math.PI*active/2);
+  return fractions.map((t,j)=>{if(j===0||width===0)return [...p];const x=p[0]+width*t,z=p[2];
+   const outer=.045,roll=smooth(t),arch=Math.sin(Math.PI*t);
+   const relief=(control.peak*(shape==='parallel'?1.08:1))*arch*arch*(.60+.40*Math.sin(Math.PI*active));
+   // Preserve the exact inner edge. The broad shoulder and low cape both roll
+   // down through their real ground to the shared sea level.
+   let y=lerp(p[1],outer,roll)+relief*neck;
+   if(active>.45){const common=.44+(socket==='north'?.14:0);const band=smooth((t-fractions[3])/(fractions[4]-fractions[3]))*(1-smooth((t-fractions[13])/(fractions[14]-fractions[13])));
+    y=lerp(y,common,smooth((active-.45)/.55)*band);}
+   if(active===1&&j>=4&&j<=12)y=socket==='north'?.58:.44;
+   return [x,y,z];});});
+ const result=strip(rows,`${socket}-${shape}`,control.mat,true);
+ result.socket=socket;result.origin=control.anchor;
+ result.join={z:end[2],points:(socket==='north'?rows.at(-1):rows[0]).slice(4,13)};
+ if(shape==='seaward')rowAtJoin[socket]=result.join;
+ return result;
+}
+const branches={north:['parallel','seaward'].map(shape=>branch('north',shape)),east:['parallel','seaward'].map(shape=>branch('east',shape))};
+function connection(){const a=rowAtJoin.north,b=rowAtJoin.east,rows=Array.from({length:13},(_,i)=>{const t=i/12;return a.points.map((p,j)=>{const q=b.points[j],v=j/(a.points.length-1);return [lerp(p[0],q[0],t)+Math.sin(Math.PI*t)*(.30*(2*v-1)),lerp(p[1],q[1],t)+.08*Math.sin(Math.PI*t)*Math.sin(Math.PI*v),lerp(p[2],q[2],t)];});});
+ return strip(rows,'outer-walking-shore',1);
+}
+const connector=connection();
+const bottom=-.84;
+function bankParts(m){const groups=new Map();const get=id=>{if(!groups.has(id))groups.set(id,{id,kind:'bank',vertices:[],indices:[],material:appearance(m.material===0?3:2)});return groups.get(id);};
+ for(const e of m.boundary){const a=m.points[e.a],b=m.points[e.b];
+  let id='coastal-bank';
+  if(m.join&&a[2]===m.join.z&&b[2]===m.join.z&&Math.min(a[0],b[0])>=joinA-1e-12&&Math.max(a[0],b[0])<=joinB+1e-12)id='connection-bank';
+  if(m.name==='outer-walking-shore'&&(a[2]===rowAtJoin.north.z&&b[2]===a[2]||a[2]===rowAtJoin.east.z&&b[2]===a[2]))continue;
+  const g=get(id),n=g.vertices.length;for(const p of [a,b])for(const y of [p[1],Math.min(0,p[1]-.12),bottom])g.vertices.push({x:p[0],y,z:p[2]});for(let k=0;k<2;k++)g.indices.push(n+k,n+k+1,n+3+k,n+3+k,n+k+1,n+4+k);
+ }
+ const g=get('soil-bottom');g.vertices=m.points.map(p=>({x:p[0],y:bottom,z:p[2]}));for(let i=0;i<m.indices.length;i+=3)g.indices.push(m.indices[i],m.indices[i+2],m.indices[i+1]);return [...groups.values()];
+}
+function groundAt(m,x,z){for(let i=0;i<m.indices.length;i+=3){const [a,b,c]=m.indices.slice(i,i+3).map(j=>m.points[j]),den=(b[2]-c[2])*(a[0]-c[0])+(c[0]-b[0])*(a[2]-c[2]);const u=((b[2]-c[2])*(x-c[0])+(c[0]-b[0])*(z-c[2]))/den,v=((c[2]-a[2])*(x-c[0])+(a[0]-c[0])*(z-c[2]))/den;if(Math.min(u,v,1-u-v)>=-1e-8)return u*a[1]+v*b[1]+(1-u-v)*c[1];}}
+function part(m,id,origin={x:0,z:0}){const point=p=>({x:p[0]-origin.x,y:p[1],z:p[2]-origin.z}), sites=[],edges=[],map=new Map();
+ const add=(x,z,id)=>{const key=`${x},${z}`;if(map.has(key))return;const s={id:id??key,cell:{x:x-origin.x,z:z-origin.z},floorId:'top',placement:false};sites.push(s);map.set(key,s);};
+ const within=(x,z)=>{const h=groundAt(m,x,z);return h!==undefined&&[-.12,0,.12].every(dx=>[-.12,0,.12].every(dz=>{const y=groundAt(m,x+dx,z+dz);return y!==undefined&&Math.abs(y-h)<=.22;}));};
+ const connect=(a,b)=>{const dx=b.cell.x-a.cell.x,dz=b.cell.z-a.cell.z,l=Math.hypot(dx,dz);if(Array.from({length:9},(_,i)=>i/8).every(t=>[-.12,0,.12].every(side=>groundAt(m,a.cell.x+origin.x+dx*t-dz/l*side,a.cell.z+origin.z+dz*t+dx/l*side)!==undefined)))edges.push({from:{districtId:id,siteId:a.id},to:{districtId:id,siteId:b.id},allows:['walk']});};
+ const minX=Math.ceil(Math.min(...m.points.map(p=>p[0]))*4),maxX=Math.floor(Math.max(...m.points.map(p=>p[0]))*4),minZ=Math.ceil(Math.min(...m.points.map(p=>p[2]))*4),maxZ=Math.floor(Math.max(...m.points.map(p=>p[2]))*4);
+ if(m.socket){const p=shapeControls[m.socket].landing;assert(within(p.x,p.z),`${m.name} source landing`);add(p.x,p.z,'entry');}
+ for(let zi=minZ;zi<=maxZ;zi++)for(let xi=minX;xi<=maxX;xi++)if(within(xi/4,zi/4))add(xi/4,zi/4);
+ for(const [key,a]of map){const [x,z]=key.split(',').map(Number);for(const [dx,dz]of [[.25,0],[0,.25]]){const b=map.get(`${x+dx},${z+dz}`);if(b)connect(a,b);}}
+ // Named connection landings sit safely inside each real part. The neighboring
+ // explicit edges bridge only the remaining fractional row interval.
+ const landings=m.socket?[{id:'outer-entry',x:16.25,z:m.join.z+(m.socket==='north'?-.25:.25)}]:[{id:'north-entry',x:16.25,z:rowAtJoin.north.z+.25},{id:'east-entry',x:16.25,z:rowAtJoin.east.z-.25}];
+ for(const p of landings){assert(within(p.x,p.z),`${m.name} outer landing`);add(p.x,p.z,p.id);const a=map.get(`${p.x},${p.z}`);for(const b of sites)if(b!==a&&Math.hypot(b.cell.x-a.cell.x,b.cell.z-a.cell.z)<=.42)connect(a,b);}
+ const entry=m.socket?'entry':'north-entry',seen=new Set([entry]),queue=[entry],adj=new Map(sites.map(s=>[s.id,[]]));for(const e of edges){adj.get(e.from.siteId).push(e.to.siteId);adj.get(e.to.siteId).push(e.from.siteId);}for(let i=0;i<queue.length;i++)for(const next of adj.get(queue[i])??[])if(!seen.has(next)){seen.add(next);queue.push(next);}
+ assert(landings.every(p=>seen.has(p.id)),`${m.name}: connection landing unreachable`);
+ const material=appearance(m.material),district={id,templateId:id,logicalOrigin:{x:0,z:0},worldOrigin:{x:0,y:0,z:0},turn:0,floors:[{id:'top',kind:'ground',vertices:m.points.map((p,i)=>({cell:{x:p[0]-origin.x,z:p[2]-origin.z},point:point(p),normal:{x:m.normals[i][0],y:m.normals[i][1],z:m.normals[i][2]}})),indices:m.indices,color:material.color,material:{roughness:material.roughness,metalness:material.metalness,doubleSided:material.doubleSided}}],surfaces:bankParts(m).map(s=>({...s,vertices:s.vertices.map(p=>({x:p.x-origin.x,y:p.y,z:p.z-origin.z}))})),sites:sites.filter(s=>seen.has(s.id)),ports:[]};
+ m.omittedSites=sites.length-district.sites.length;
+ return {district,edges:edges.filter(e=>seen.has(e.from.siteId)&&seen.has(e.to.siteId))};
+}
+const socketVariants=Object.fromEntries(Object.entries(branches).map(([id,meshes])=>[id,meshes.map((m,i)=>({id:i?'seaward':'parallel',...part(m,`core-growth-${m.name}`,shapeControls[id].anchor)}))]));
+const connectionPart=part(connector,'core-growth-outer-shore');
+const profile={trigger:[{x:11.5,z:-8.5},{x:14.5,z:-8.5},{x:14.5,z:-3.5},{x:11.5,z:-3.5}],scope:[{x:12.5,z:-10},{x:20.5,z:-10},{x:20.5,z:-2},{x:12.5,z:-2}],shoreFacing:0,
+ sockets:Object.entries(shapeControls).map(([id,c])=>({id,logicalOrigin:c.anchor,worldOrigin:{x:c.anchor.x,y:0,z:c.anchor.z},turn:0,shoreFacing:0,landings:[{baseSiteId:c.baseSite,patchSiteId:'entry'}],replaceSurfaceIds:[],variants:socketVariants[id]})),variants:socketVariants.north,
+ connections:[{id:'northeast-outer-shore',socketIds:['north','east'],branchShape:'seaward',...connectionPart,landings:[{socketId:'north',patchSiteId:'outer-entry',connectionSiteId:'north-entry'},{socketId:'east',patchSiteId:'outer-entry',connectionSiteId:'east-entry'}],replaceSurfaceIds:[{socketId:'north',surfaceIds:['connection-bank']},{socketId:'east',surfaceIds:['connection-bank']}]}]};
+const identity={version:1,candidate:'native05-core-growth-terrain-rough-v1',source,template,profile},catalog={...identity,revision:sha(JSON.stringify(identity))};
+const data=Buffer.from(JSON.stringify(catalog)),compressed=gzipSync(data,{level:9,mtime:0});
+const manifest={version:1,candidate:catalog.candidate,revision:catalog.revision,source,artifact:{path:'/prototypes/place-qa/authored-core-growth-terrain-kit.json.gz',sha256:sha(compressed),expandedSha256:sha(data),expandedBytes:data.length,gzipBytes:compressed.length},
+ variationCases:{north:{localCells:[{x:12,z:-8},{x:13,z:-8},{x:12,z:-7},{x:13,z:-7}],expectedSockets:['north'],expectedShape:'seaward',expectedConnections:[]},east:{localCells:[{x:12,z:-5},{x:13,z:-5},{x:12,z:-4},{x:13,z:-4}],expectedSockets:['east'],expectedShape:'seaward',expectedConnections:[]},loop:{localCells:[{x:13,z:-7},{x:13,z:-6},{x:13,z:-5},{x:13,z:-4}],expectedSockets:['north','east'],expectedShape:'seaward',expectedConnections:['northeast-outer-shore']}},
+ authoring:{baseWorld:{path:worldPath,sha256:sha(worldBytes)},originalFloorSha256:sha(JSON.stringify(core.floors)),originalSitesSha256:sha(JSON.stringify(core.sites)),originalEdgesSha256:sha(JSON.stringify(original.edges)),sourceBoundarySha256:sha(await readFile(`${dir}/original-boundary.json`)),shapeControls,seams,connectionBoundary:rowAtJoin,originalCoastSkin:'Retained. Shared boundary walls become interior below the unchanged ground seam; exposed-wall/skin assessment is separate, no invisible clipping.',newGroundNormals:'Area-weighted authored topology; exact source normals at the retained ground seam',seaDatum:0,bottom},materials:mats,
+ parts:allMeshes.map(m=>({name:m.name,vertices:m.points.length,topTriangles:m.indices.length/3,omittedWalkingSites:m.omittedSites??0,bounds:{min:[0,1,2].map(k=>Math.min(...m.points.map(p=>p[k]))),max:[0,1,2].map(k=>Math.max(...m.points.map(p=>p[k])))}})),status:{visual:'HOLD',runtime:'NOT RUN',independentObservers:0}};
+// Every delivery surface uses the same catalog arrays. Original native05
+// scene data is retained verbatim in whole views under its known rigid transform.
+function exportGlb(state, whole=false){
+ const doc=whole?structuredClone(gltf):{asset:{version:'2.0'},nodes:[],meshes:[],materials:structuredClone(gltf.materials),accessors:[],bufferViews:[],buffers:[{byteLength:0}]};
+ const originalBin=raw.subarray(28+n),chunks=whole?[originalBin]:[];let size=whole?originalBin.length:0;
+ const roots=[];
+ if(whole){const children=[...doc.scenes[doc.scene??0].nodes];roots.push(doc.nodes.length);doc.nodes.push({name:'Preserved native05 original / source comparison only',translation:[5.65,-.3645,-1.03],scale:[.45,.45,.45],children});}
+ const add=(typed,type,componentType,components)=>{const data=Buffer.from(typed.buffer,typed.byteOffset,typed.byteLength),bytes=Buffer.alloc(Math.ceil(data.length/4)*4);data.copy(bytes);const view=doc.bufferViews.length;doc.bufferViews.push({buffer:0,byteOffset:size,byteLength:data.length});chunks.push(bytes);size+=bytes.length;const a={bufferView:view,componentType,count:typed.length/components,type};if(type==='VEC3'){a.min=[0,1,2].map(k=>Math.min(...Array.from({length:a.count},(_,i)=>typed[i*3+k])));a.max=[0,1,2].map(k=>Math.max(...Array.from({length:a.count},(_,i)=>typed[i*3+k])));}doc.accessors.push(a);return doc.accessors.length-1;};
+ const mesh=(name,points,indices,normals,material,origin)=>{const positions=new Float32Array(points),geometry=new T.BufferGeometry().setAttribute('position',new T.BufferAttribute(positions,3)).setIndex(indices);if(!normals)geometry.computeVertexNormals();const normal=normals?new Float32Array(normals):geometry.getAttribute('normal').array;
+  const primitive={attributes:{POSITION:add(positions,'VEC3',5126,3),NORMAL:add(normal,'VEC3',5126,3)},indices:add(new Uint32Array(indices),'SCALAR',5125,1),material:doc.materials.findIndex(m=>m.name===mats[material].name)};
+  doc.meshes.push({name,primitives:[primitive]});roots.push(doc.nodes.length);doc.nodes.push({name,mesh:doc.meshes.length-1,translation:[origin.x,0,origin.z]});geometry.dispose();};
+ const take=(part,prefix,origin,mat,hide=[])=>{for(const f of part.floors)mesh(`${prefix}/${f.id}`,f.vertices.flatMap(v=>[v.point.x,v.point.y,v.point.z]),f.indices,f.vertices.flatMap(v=>[v.normal.x,v.normal.y,v.normal.z]),mat,origin);for(const f of part.surfaces??[])if(!hide.includes(f.id))mesh(`${prefix}/${f.id}`,f.vertices.flatMap(v=>[v.x,v.y,v.z]),f.indices,null,mat===0?3:2,origin);};
+ for(const socket of state==='loop'?['north','east']:state?[state]:[]){take(socketVariants[socket][1].district,socket,shapeControls[socket].anchor,shapeControls[socket].mat,state==='loop'?['connection-bank']:[]);}
+ if(state==='loop')take(connectionPart.district,'connection',{x:0,z:0},1);
+ doc.scene=0;doc.scenes=[{name:`native05 core + ${state??'original'}`,nodes:roots}];doc.buffers=[{byteLength:size}];doc.extras={candidate:catalog.candidate,catalogRevision:catalog.revision,sourceSha256:source.sha256,scope:'Original native05 scene plus exact current parts; NOT the latest 35-owner app fixture'};
+ const text=Buffer.from(JSON.stringify(doc)),json=Buffer.alloc(Math.ceil(text.length/4)*4,32);text.copy(json);const header=Buffer.alloc(20);header.writeUInt32LE(0x46546c67,0);header.writeUInt32LE(2,4);header.writeUInt32LE(28+json.length+size,8);header.writeUInt32LE(json.length,12);header.writeUInt32LE(0x4e4f534a,16);const binHead=Buffer.alloc(8);binHead.writeUInt32LE(size,0);binHead.writeUInt32LE(0x004e4942,4);return Buffer.concat([header,json,binHead,...chunks]);
+}
+async function emit(path,bytes){if(check)assert((await readFile(path)).equals(bytes),`Stale ${path}`);else await writeFile(path,bytes);}
+await mkdir(dir,{recursive:true});
+manifest.sourceArtifacts=[];
+for(const state of ['north','east','loop'])for(const whole of [false,true]){const name=`${state}-${whole?'whole':'parts'}.glb`,bytes=exportGlb(state,whole);await emit(`${dir}/${name}`,bytes);manifest.sourceArtifacts.push({name,sha256:sha(bytes),bytes:bytes.length,wholeOriginalContext:whole});}
+await emit(`${dir}/authored-core-growth-terrain-kit.json.gz`,compressed);await emit(`${dir}/authored-core-growth-terrain-manifest.json`,Buffer.from(JSON.stringify(manifest,null,2)+'\n'));
+await emit(`${dir}/geometry-profile.json.gz`,gzipSync(Buffer.from(JSON.stringify({catalog,manifest,meshes:allMeshes})),{level:9,mtime:0}));
+if(publish){await emit('prototypes/place-qa/authored-core-growth-terrain-kit.json.gz',compressed);await emit('prototypes/place-qa/authored-core-growth-terrain-manifest.json',Buffer.from(JSON.stringify(manifest,null,2)+'\n'));}
+assert.equal(sha(await readFile(source.artifact)),source.sha256);assert.deepEqual(original.districts[0].floors,core.floors);
+console.log(JSON.stringify({candidate:catalog.candidate,revision:catalog.revision,artifact:manifest.artifact,parts:manifest.parts,seamEnds:Object.fromEntries(Object.entries(seams).map(([k,s])=>[k,[s[0],s.at(-1)]])),sourceUnchanged:true}));

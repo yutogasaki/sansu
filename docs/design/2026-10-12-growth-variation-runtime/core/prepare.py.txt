@@ -1,0 +1,48 @@
+from pathlib import Path
+import hashlib,json,os,shutil,subprocess,time
+
+source=Path('/Users/yutogasaki/Projects/sansu')
+out=Path('/private/tmp/sansu-island-variation-c9');target=out/'candidate'
+previous=Path('/private/tmp/sansu-growth-terrain-c8')
+revision='island-variation-c9'
+started=time.time()
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+def gitpaths(arguments):
+ return sorted(set(p for p in subprocess.check_output(['git','ls-files',*arguments,'-z'],cwd=source).decode().split('\0') if p))
+def inventory():
+ return [p for p in gitpaths(['-co','--exclude-standard']) if (source/p).is_file()]
+files=inventory();tracked=gitpaths(['--cached'])
+deleted=sorted(p for p in tracked if not os.path.lexists(source/p))
+before={p:sha(source/p) for p in files}
+oldfiles=set(json.loads((previous/'inputs.json').read_text()))
+subprocess.run(['cp','-cR',str(previous/'candidate'),str(target)],check=True)
+removed=[]
+for p in sorted((oldfiles-set(files))|set(deleted)):
+ dest=target/p
+ if os.path.lexists(dest):
+  assert not dest.is_dir() or dest.is_symlink(),f'Refuse unexpected stale directory: {p}'
+  dest.unlink();removed.append(p)
+copied=[]
+for p,h in before.items():
+ dest=target/p
+ if not dest.is_file() or sha(dest)!=h:
+  dest.parent.mkdir(parents=True,exist_ok=True)
+  if dest.is_symlink():dest.unlink()
+  shutil.copy2(source/p,dest);copied.append(p)
+after={p:sha(source/p) for p in files}
+assert inventory()==files,'Source inventory changed during snapshot'
+assert gitpaths(['--cached'])==tracked,'Tracked inventory changed during snapshot'
+assert sorted(p for p in tracked if not os.path.lexists(source/p))==deleted,'Deleted tracked paths changed during snapshot'
+assert before==after,'Source changed during snapshot'
+candidate={p:sha(target/p) for p in files}
+assert candidate==before,'Candidate copy differs'
+assert all(not os.path.lexists(target/p) for p in deleted),'Deleted tracked file remained in candidate'
+assert all(not os.path.lexists(target/p) for p in oldfiles-set(files)),'Obsolete c8 input remained in candidate'
+(out/'inputs.json').write_text(json.dumps(before,indent=2)+'\n')
+(out/'source-after.json').write_text(json.dumps(after,indent=2)+'\n')
+(out/'candidate-inputs.json').write_text(json.dumps(candidate,indent=2)+'\n')
+(out/'snapshot.json').write_text(json.dumps({'revision':revision,'source':str(source),'target':str(target),'cloneBase':str(previous/'candidate'),
+ 'baseInputsSha256':sha(previous/'inputs.json'),'copied':copied,'removed':removed,'deletedTrackedPaths':deleted,'inputs':len(files),
+ 'inventoryFixed':True,'deletedTrackedAbsent':True,'obsoleteInputsAbsent':True,'candidateEqualsSource':True,'sourceFixed':True,
+ 'processId':os.getpid(),'startedAt':started,'finishedAt':time.time()},indent=2)+'\n')
+print(json.dumps({'revision':revision,'inputs':len(files),'copied':len(copied),'removed':len(removed),'deletedTracked':len(deleted),'sourceFixed':True}))

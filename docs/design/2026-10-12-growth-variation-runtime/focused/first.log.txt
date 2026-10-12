@@ -1,0 +1,38 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/domain/growingIsland/authoredDistrictWorld.test.ts (21 tests) 223ms
+ ✓ src/domain/growingIsland/authoredGrowthTerrain.test.ts (12 tests) 68ms
+ ✓ src/components/island/growing/authoredSceneLayout.test.ts (7 tests) 20ms
+ ❯ src/components/island/growing/native/authoredGrowthTerrainIntegration.test.ts (4 tests | 1 failed) 830ms
+   × shipped growth terrain through the shared frame and ground renderer > makes a branch, two branches and an outer walking loop from the same four mature trees 509ms
+     → ここには もう ものが あるよ。
+stderr | src/components/island/growing/authoredGrowthTerrainLife.test.ts > walks through the authored outer connection and into the other branch using the normal life route
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/authoredGrowthTerrainLife.test.ts (2 tests) 865ms
+   ✓ walks through the authored outer connection and into the other branch using the normal life route 364ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/island/growing/native/authoredGrowthTerrainIntegration.test.ts > shipped growth terrain through the shared frame and ground renderer > makes a branch, two branches and an outer walking loop from the same four mature trees
+Error: ここには もう ものが あるよ。
+ ❯ fail src/domain/growingIsland/commands.ts:17:47
+     15| export interface Intent { id: string; command: Command }
+     16| 
+     17| function fail(message: string): never { throw new Error(message); }
+       |                                               ^
+     18| 
+     19| /** Seeds and landmarks may replace a spread wild plant; everything el…
+ ❯ claim src/domain/growingIsland/commands.ts:25:5
+ ❯ apply src/domain/growingIsland/commands.ts:172:13
+ ❯ Module.applyIntent src/domain/growingIsland/commands.ts:289:20
+ ❯ src/components/island/growing/native/authoredGrowthTerrainIntegration.test.ts:134:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 4 passed (5)
+      Tests  1 failed | 45 passed (46)
+   Start at  20:40:10
+   Duration  1.79s (transform 756ms, setup 0ms, collect 1.65s, tests 2.01s, environment 0ms, prepare 199ms)
+

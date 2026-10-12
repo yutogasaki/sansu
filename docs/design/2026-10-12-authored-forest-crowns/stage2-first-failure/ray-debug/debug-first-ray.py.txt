@@ -1,0 +1,163 @@
+"""Read-only replay of the first failed trunk query; no kernel modifications."""
+import os
+assert os.environ.get('SANSU_FOREST_RAY_DEBUG_APPROVED') == '1', 'Await source window'
+import hashlib
+import json
+import math
+import struct
+import sys
+import traceback
+from datetime import datetime, timezone
+from pathlib import Path
+import bpy
+from mathutils import Matrix, Vector
+
+HERE = Path(__file__).resolve().parent
+STAGE = HERE.parent
+OUT = HERE / 'attempt-01'
+assert not OUT.exists(), 'Preserve the first diagnostic'
+OUT.mkdir()
+sys.path.insert(0, str(STAGE))
+sys.dont_write_bytecode = True
+import joints
+import fields
+import stage1_support as native
+
+EXPECTED = {
+    'attempt-01/failed-stage.blend': '7010856b68de220ceb13781ff12f8c82b6c6aae9b9c575c748688043b98f3ccc',
+    'joints.py': 'c99059a0af65cdd62b741911537dc26f605051d22e57207d452d7f5e12ca8db1',
+    'fields.py': '237497e6a48782ff2285f9fdb51a9fe6783c27f7c7c98b29924f154180838fd2',
+    'proposal.json': '98fc19102edfb3fe2a3aa89840ebd31fabfdd0ac3d7ee691dfe494808a56b5a4',
+    'stage1_support.py': '9f369d576e5cca7cd53c362b5dd8b59051e8b98600f6c2c7583862c5224806d9',
+}
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+def save(name, value):
+    (OUT / name).write_text(json.dumps(value, indent=2, allow_nan=False) + '\n')
+
+before = {name: sha(STAGE / name) for name in EXPECTED}
+assert before == EXPECTED, before
+save('inputs-before.json', before)
+bpy.ops.wm.open_mainfile(filepath=str(STAGE / 'attempt-01/failed-stage.blend'))
+trunk = bpy.data.objects['role-l14-2743']
+lobe = bpy.data.objects['role-l14-2234']
+assert trunk['ownerId'] == lobe['ownerId'] == 'l14'
+assert trunk['forestRole'] == 'trunk' and lobe['forestRole'] == 'crown-lobe'
+assert lobe['forestOrdinal'] == 0
+digests_before = {o.name: native.fixed_digest(o) for o in (trunk, lobe)}
+BI = Matrix(((1, 0, 0, 0), (0, 0, -1, 0), (0, 1, 0, 0), (0, 0, 0, 1))).inverted()
+proposal = json.loads((STAGE / 'proposal.json').read_text())
+trunk_guess = Vector(proposal['owners']['l14']['fixedTipCore']['anchorWorld']) - Vector((0, .12, 0))
+hint = proposal['owners']['l14']['lobeHints'][0]
+target = Vector(fields.field_for_role('l14', 'crown-lobe', 0, proposal)(hint['anchorWorld']))
+radius = .45 * .46 * .585 * .35 * .6
+left, right = joints.Volume(trunk, BI), joints.Volume(lobe, BI)
+save('query-input.json', {
+    'phase': 'willow-actual-trunk-and-lobes', 'left': trunk.name, 'right': lobe.name,
+    'leftGuess': list(trunk_guess), 'rightGuess': list(target), 'ballRadiusWorld': radius,
+    'leftClosure': left.closure, 'rightClosure': right.closure,
+    'blenderToWorld': [list(row) for row in BI], 'blenderVersion': bpy.app.version_string,
+    'sourceProperties': {o.name: {k: str(v) for k, v in o.items()} for o in (trunk, lobe)},
+    'kernelUnchanged': True, 'rayLimit': 128, 'step': 1e-7, 'rayDistance': 100,
+})
+
+def run_query():
+    try:
+        return {'returned': joints.overlap_ball(left, right, [trunk_guess, target], radius)}
+    except Exception as error:
+        return {'errorType': type(error).__name__, 'error': str(error), 'traceback': traceback.format_exc()}
+
+# First call uses the original BVH and original methods with no instrumentation.
+raw = run_query()
+save('raw-outcome.json', raw)
+print('RAW_OUTCOME', json.dumps(raw), flush=True)
+
+def f32_info(value):
+    bits = struct.unpack('<I', struct.pack('<f', value))[0]
+    if value == 0:
+        above, below = 1, 0x80000001
+    elif value > 0:
+        above, below = bits + 1, bits - 1
+    else:
+        above, below = bits - 1, bits + 1
+    unpack = lambda b: struct.unpack('<f', struct.pack('<I', b))[0]
+    return {'bitsHex': f'{bits:08x}', 'ulpUp': unpack(above) - value,
+            'ulpDown': value - unpack(below)}
+
+queries, rays = [], []
+active = None
+class ObservedTree:
+    """Return original BVH results; all extra arithmetic is diagnostic only."""
+    def __init__(self, original):
+        self.original = original
+    def find_nearest(self, *args):
+        return self.original.find_nearest(*args)
+    def ray_cast(self, origin, direction, distance):
+        result = self.original.ray_cast(origin, direction, distance)
+        hit, normal, triangle, hit_distance = result
+        entry = {'queryIndex': active['index'], 'call': len(rays),
+                 'origin': list(origin), 'direction': list(direction),
+                 'maxDistance': distance, 'hit': list(hit) if hit is not None else None,
+                 'normal': list(normal) if normal is not None else None,
+                 'triangle': triangle, 'distance': hit_distance}
+        previous = rays[-1] if rays else None
+        if previous and previous['queryIndex'] == active['index'] and previous['direction'] == entry['direction']:
+            entry['matchesPreviousNextOrigin'] = entry['origin'] == previous.get('nextOrigin')
+            entry['sameHitAndTriangle'] = entry['hit'] == previous['hit'] and triangle == previous['triangle']
+        if hit is not None:
+            # Exactly the original mathutils expression; never returned to the kernel.
+            next_origin = hit + direction * 1e-7
+            delta = [float(next_origin[i]) - float(hit[i]) for i in range(3)]
+            entry.update({
+                'nextOrigin': list(next_origin), 'advanceFromHit': delta,
+                'advanceFromHitLength': math.sqrt(sum(v * v for v in delta)),
+                'originToNext': [float(next_origin[i]) - float(origin[i]) for i in range(3)],
+                'doubleIntendedNext': [float(hit[i]) + float(direction[i]) * 1e-7 for i in range(3)],
+                'doubleIntendedDelta': [float(direction[i]) * 1e-7 for i in range(3)],
+                'hitFloat32': [f32_info(float(v)) for v in hit],
+                'nextFloat32': [f32_info(float(v)) for v in next_origin],
+            })
+        rays.append(entry)
+        return result
+
+original_clearance = left.clearance
+def observed_clearance(point):
+    global active
+    active = {'index': len(queries), 'point': list(point), 'firstRay': len(rays)}
+    queries.append(active)
+    try:
+        result = original_clearance(point)
+        active['returned'] = result
+        return result
+    except Exception as error:
+        active['error'] = str(error)
+        raise
+    finally:
+        active['rayCount'] = len(rays) - active['firstRay']
+
+left.tree = ObservedTree(left.tree)
+left.clearance = observed_clearance
+traced = run_query()
+save('trace.json', {'queries': queries, 'rays': rays, 'outcome': traced})
+after = {name: sha(STAGE / name) for name in EXPECTED}
+digests_after = {o.name: native.fixed_digest(o) for o in (trunk, lobe)}
+save('inputs-after.json', after)
+expected_error = 'Ray parity exceeded bounded intersections: role-l14-2743'
+zero_steps = [r for r in rays if r.get('advanceFromHitLength') == 0]
+result = {
+    'finishedAtUtc': datetime.now(timezone.utc).isoformat(), 'scope': 'first trunk query only',
+    'rawFailureReproduced': raw.get('error') == expected_error,
+    'tracedFailureReproduced': traced.get('error') == expected_error,
+    'kernelMethodsUnmodified': True, 'inputsUnchanged': before == after,
+    'objectDigestsBefore': digests_before, 'objectDigestsAfter': digests_after,
+    'objectsUnchanged': digests_before == digests_after,
+    'queryCount': len(queries), 'rayCount': len(rays), 'zeroAdvanceCount': len(zero_steps),
+    'firstZeroAdvance': zero_steps[0] if zero_steps else None,
+    'repeatedHits': sum(r.get('sameHitAndTriangle', False) for r in rays),
+    'recordedNextOriginMatchesActualNextCalls': all(r.get('matchesPreviousNextOrigin', True) for r in rays),
+    'noGeometryAcceptance': True, 'noKernelFix': True, 'noRender': True,
+}
+save('result.json', result)
+print('RAY_DIAGNOSTIC', json.dumps(result), flush=True)
+assert result['rawFailureReproduced'] and result['tracedFailureReproduced'], 'Reproduction differs; stop'
+assert result['inputsUnchanged'] and result['objectsUnchanged'], 'Read-only parity failed'
+

@@ -1,0 +1,61 @@
+{
+  "createdAtUtc": "2026-10-12T05:29:05.422910+00:00",
+  "status": "LOCAL_NORMAL_RESPONSE_CONFIRMED_NOT_REPAIR",
+  "reviewer": "root implementing author",
+  "independentObservers": 0,
+  "evidenceType": "actual app diagnostic screenshots, same camera, shadow receiving disabled",
+  "identity": {
+    "build": "authored-shoulder-c2",
+    "appVersion": "authored-shoulder-c2:79e9300a-ec58-4cfc-83fc-5dc24d2d4092",
+    "candidate": "native05-authored-cove-shore-v4+source-shading-v1",
+    "sourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df"
+  },
+  "target": "http://127.0.0.1:5359/prototypes/place-qa/authored.html?water=wide&reference=preflight32&cove=corner&ground=source",
+  "viewport": [
+    1280,
+    900
+  ],
+  "rawRunStatus": "FAIL; final all-errors assertion records favicon.ico 404; not excluded",
+  "images": [
+    {
+      "file": "1280-hill-close-source-shadow-off.png",
+      "sha256": "dc07620cdcc70d27bbadb0e5ed0e03c2d83f23cc892d2fab892d84d45d1e93c7"
+    },
+    {
+      "file": "1280-hill-close-source-roi-face-normal.png",
+      "sha256": "c5465c08e1bef07bb32d5f68c44bab6ce5ca1a13dd69a98fd3f55ea4b5961b6b"
+    },
+    {
+      "file": "1280-hill-close-source-restored-shadow-off.png",
+      "sha256": "3b47e091fad8425a6ad0803362da331cb36362381d9ddd957aebde98d92c1759"
+    }
+  ],
+  "pixelAnalysis": {
+    "method": "Read original RGB pixels; no modified raster created",
+    "boxLeftTopRightBottomExclusive": [
+      680,
+      575,
+      800,
+      680
+    ],
+    "baselineToIntervention": {
+      "changedPixels": 110,
+      "boundsInclusive": [
+        724,
+        614,
+        743,
+        633
+      ],
+      "maximumChannelDelta": 31
+    },
+    "baselineToRestoration": {
+      "changedPixels": 0,
+      "boundsInclusive": null,
+      "maximumChannelDelta": 0
+    }
+  },
+  "visualJudgment": "A tiny interval of the fine ridge line changes tone; the overall visible line remains. This does not demonstrate complete cause or a visually accepted correction.",
+  "invariants": "Actual target triangles, buffers, groups, camera, light, state, walking and material restoration checked by original driver before final favicon gate.",
+  "adoption": false,
+  "next": "Keep app/source unchanged. Treat local shading response as a scoped diagnostic; prioritize whole-island source art."
+}

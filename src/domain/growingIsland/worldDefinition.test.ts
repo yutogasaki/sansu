@@ -10,6 +10,35 @@ import type { WorldDistrict } from './worldTypes';
 import { inletWorldDefinition } from './worldDefinition.fixture';
 
 describe('a common island world grants rights through sites and edges', () => {
+    it('rotates source shading without moving support, grants or input data', () => {
+        const definition = inletWorldDefinition(), district = definition.districts[0];
+        const positioned = { ...district, turn: 1 as const, logicalOrigin: { x: 8, z: 4 }, worldOrigin: { x: 20, y: 2, z: 10 } };
+        const plain = compileWorldDefinition({ ...definition, districts: [positioned] });
+        const shaded = { ...definition, districts: [{ ...positioned, floors: positioned.floors.map(floor => ({ ...floor,
+            vertices: floor.vertices.map(vertex => ({ ...vertex, normal: { x: .2, y: .9, z: .3 } })),
+            material: { roughness: .78, metalness: 0, doubleSided: true } })) }] };
+        const snapshot = structuredClone(shaded), world = compileWorldDefinition(shaded);
+        expect(world.sites).toEqual(plain.sites); expect(world.walkSites).toEqual(plain.walkSites);
+        for (const site of world.sites) expect(world.floorAt(site.cell)).toEqual(plain.floorAt(site.cell));
+        expect(world.floors[0].vertices[0].normal).toEqual({ x: -.3, y: .9, z: .2 });
+        expect(world.floors[0].material).toEqual({ roughness: .78, metalness: 0, doubleSided: true });
+        expect(Object.isFrozen(world.floors[0].vertices[0].normal)).toBe(true);
+        expect(Object.isFrozen(world.floors[0].material)).toBe(true); expect(shaded).toEqual(snapshot);
+    });
+
+    it('rejects invalid source shading while retaining support for legacy floors without it', () => {
+        const definition = inletWorldDefinition(), district = definition.districts[0], floor = district.floors[0];
+        for (const normal of [{ x: 0, y: 0, z: 0 }, { x: Infinity, y: 1, z: 0 }, { x: 0, y: NaN, z: 0 }]) {
+            const bad = { ...floor, vertices: floor.vertices.map(vertex => ({ ...vertex, normal })) };
+            expect(() => compileWorldDefinition({ ...definition, districts: [{ ...district, floors: [bad, ...district.floors.slice(1)] }] })).toThrow('floor normal');
+        }
+        for (const material of [{ roughness: -1, metalness: 0, doubleSided: false }, { roughness: .8, metalness: NaN, doubleSided: false }]) {
+            expect(() => compileWorldDefinition({ ...definition, districts: [{ ...district, floors: [{ ...floor, material }, ...district.floors.slice(1)] }] })).toThrow('floor material');
+        }
+        const legacy = compileWorldDefinition(definition);
+        expect(legacy.floors[0].vertices[0]).not.toHaveProperty('normal'); expect(legacy.floors[0]).not.toHaveProperty('material');
+    });
+
     it('keeps the inlet empty despite its enclosing bounds and visible water surface', () => {
         const world = compileWorldDefinition(inletWorldDefinition());
         expect(world.bounds.max.x).toBeGreaterThan(1); expect(world.bounds.max.z).toBeGreaterThan(1);
@@ -35,6 +64,26 @@ describe('a common island world grants rights through sites and edges', () => {
             expect(world.siteAt(floor.point)?.cell).toEqual({ x: Math.round(cell.x) || 0, z: Math.round(cell.z) || 0 });
         }
         expect(world.siteAt({ x: 1.3, y: .6, z: 0 })).toBeUndefined();
+    });
+
+    it('retains physical hits on a mapped floor following identity floors', () => {
+        const definition = inletWorldDefinition(), district = definition.districts[0];
+        const identity = { ...district.floors[0], vertices: district.floors[0].vertices.map(vertex => ({
+            cell: vertex.cell, point: { ...vertex.cell, y: vertex.point.y },
+        })) };
+        const mapped = { ...identity, id: 'mapped-pad', vertices: identity.vertices.map(vertex => ({
+            cell: { x: vertex.cell.x + 4, z: vertex.cell.z },
+            point: { x: vertex.point.x + 12, y: vertex.point.y + 2, z: vertex.point.z },
+        })) };
+        const world = compileWorldDefinition({ ...definition, edges: [],
+            districts: [{ ...district, floors: [identity, mapped], sites: [], ports: [] }] });
+        const at = { x: .13, z: -.21 }, first = world.floorAt(at)!;
+        expect(first.point).toEqual({ ...at, y: -.029 });
+        expect(world.logicalAt(first.point)).toEqual(at);
+        const second = world.floorAt({ x: at.x + 4, z: at.z })!;
+        expect(second.point).toEqual({ x: 12.13, y: 1.971, z: -.21 });
+        expect(world.logicalAt(second.point)).toEqual({ x: 4.13, z: -.21 });
+        expect(world.logicalAt({ x: 4.13, y: 1.971, z: -.21 })).toBeUndefined();
     });
 
     it('separates walking, merging and supplied water, and stops passage when an edge is removed', () => {

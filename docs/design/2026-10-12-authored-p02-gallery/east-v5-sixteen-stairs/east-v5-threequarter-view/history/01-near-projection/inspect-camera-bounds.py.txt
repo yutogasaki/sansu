@@ -1,0 +1,39 @@
+"""Lightweight GLB accessor-bound projection; no Blender, mesh mutation or triangles."""
+import json,struct,math,hashlib,itertools
+from pathlib import Path
+B=Path(__file__).resolve().parent
+SOURCE=Path('/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/study.glb')
+b=SOURCE.read_bytes();n,_=struct.unpack_from('<II',b,12);g=json.loads(b[20:20+n]);I=[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]
+def mm(a,b):return [sum(a[k*4+r]*b[c*4+k]for k in range(4))for c in range(4)for r in range(4)]
+def point(m,p):return [sum(m[c*4+r]*p[c]for c in range(3))+m[12+r]for r in range(3)]
+def matrix(node):
+ if 'matrix'in node:return node['matrix']
+ x,y,z,w=node.get('rotation',[0,0,0,1]);s=node.get('scale',[1,1,1]);t=node.get('translation',[0,0,0]);v=[1-2*y*y-2*z*z,2*x*y+2*z*w,2*x*z-2*y*w,0,2*x*y-2*z*w,1-2*x*x-2*z*z,2*y*z+2*x*w,0,2*x*z+2*y*w,2*y*z-2*x*w,1-2*x*x-2*y*y,0,*t,1]
+ for c in range(3):
+  for r in range(3):v[c*4+r]*=s[c]
+ return v
+records=[]
+def visit(i,parent):
+ node=g['nodes'][i];m=mm(parent,matrix(node))
+ if 'mesh'in node:
+  for pi,p in enumerate(g['meshes'][node['mesh']]['primitives']):
+   a=g['accessors'][p['attributes']['POSITION']];assert 'min'in a and 'max'in a
+   corners=[point(m,p)for p in itertools.product(*zip(a['min'],a['max']))]
+   records.append({'node':i,'primitive':pi,'name':node.get('name'),'corners':corners,'min':[min(p[k]for p in corners)for k in range(3)],'max':[max(p[k]for p in corners)for k in range(3)]})
+ for c in node.get('children',[]):visit(c,m)
+for i in g['scenes'][g.get('scene',0)]['nodes']:visit(i,I)
+def sub(a,b):return [a[k]-b[k]for k in range(3)]
+def dot(a,b):return sum(x*y for x,y in zip(a,b))
+def cross(a,b):return [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]]
+def norm(a):return [x/math.sqrt(dot(a,a))for x in a]
+def camera(origin,target,ortho):
+ f=norm(sub(target,origin));right=norm(cross(f,[0,1,0]));up=cross(right,f);halfH=ortho/2;halfW=halfH*1280/925;project=[]
+ for r in records:
+  xyz=[[dot(sub(p,origin),a)for a in [right,up,f]]for p in r['corners']];bounds=[[min(p[k]for p in xyz),max(p[k]for p in xyz)]for k in range(3)];inside=all(r['min'][k]<=origin[k]<=r['max'][k]for k in range(3));frustumXY=bounds[0][0]<halfW and bounds[0][1]>-halfW and bounds[1][0]<halfH and bounds[1][1]>-halfH
+  project.append({'node':r['node'],'name':r['name'],'worldMin':r['min'],'worldMax':r['max'],'cameraBounds':bounds,'cameraInsideWorldAABB':inside,'nearPlaneCrossesProjectedBounds':frustumXY and bounds[2][0]<=.1<=bounds[2][1]})
+ targets=[x for x in project if x['name'].startswith(('walk-top/','solid-bough/','solid-rail/','solid-rail-post/'))]
+ return {'origin':origin,'target':target,'ortho':ortho,'near':.1,'basis':{'forward':f,'right':right,'up':up},'cameraInsideBounds':[x for x in project if x['cameraInsideWorldAABB']],'nearPlaneCrossesBounds':[x for x in project if x['nearPlaneCrossesProjectedBounds']],'subjectBounds':targets,'projectedAll':project,'scope':'conservative accessor AABB projection; no occlusion/face self-intersection acceptance'}
+old=camera([3.5,2.55,-4.45],[3.5,2.2,-8.45],4.7);new=camera([7.6,4.6,-6.7],[3.6,2.3,-8.45],4.7)
+result={'status':'STATIC_CAMERA_BOUNDS_ONLY','source':str(SOURCE),'sha256':hashlib.sha256(b).hexdigest(),'meshPrimitives':len(records),'oldEntry':old,'proposedThreeQuarter':new}
+(B/'camera-bounds.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps({'oldInside':[(x['name'],x['worldMin'],x['worldMax'])for x in old['cameraInsideBounds']],'oldNear':[x['name']for x in old['nearPlaneCrossesBounds']],'newInside':[x['name']for x in new['cameraInsideBounds']],'newNear':[x['name']for x in new['nearPlaneCrossesBounds']],'newSubjectProjectedBounds':[[min(x['cameraBounds'][k][0]for x in new['subjectBounds']),max(x['cameraBounds'][k][1]for x in new['subjectBounds'])]for k in range(3)]},indent=2))

@@ -1,0 +1,19 @@
+"""Optional adapter; not imported by the builder and not a certified-ball test.
+
+The inherited 7-decimal position weld is approximate closure, and inherited
+float32 BVH distance is not a conservative lower clearance bound. This module
+changes ray parity only. Agreement does not prove exact seams or ball clearance.
+"""
+from mathutils import Vector
+import joints
+from ray_query64 import RayQuery64
+
+class Volume64(joints.Volume):
+    def __init__(self, obj, blender_to_world):
+        # Exactly the old world vertices, triangle order, closure/weld and BVH.
+        super().__init__(obj,blender_to_world)
+        self.query64 = RayQuery64(self.points,self.triangles,obj.name)
+
+    def inside(self,point):
+        directions = [tuple(Vector(raw).normalized()) for raw in [(1,.371,.619),(.283,1,.517)]]
+        return self.query64.classify(tuple(point),directions)['inside']

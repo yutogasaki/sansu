@@ -1,0 +1,15 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import {build} from '/private/tmp/sansu-authored-shoulder-c3/candidate/node_modules/esbuild/lib/main.js';
+const root='/private/tmp/sansu-water-support-real-input-parity-c2-c3';
+const result={schema:'sansu-water-support-real-input-parity-preparation-v1',scope:'Functional comparison only; no browser, no performance claim',versions:{}};
+for(const v of ['c2','c3']){
+ const built=await build({entryPoints:[root+'/'+v+'.ts'],bundle:true,platform:'node',target:'node24',format:'esm',outfile:root+'/'+v+'.mjs',metafile:true,sourcemap:true,define:{'import.meta.env.DEV':'false'}});
+ fs.writeFileSync(root+'/'+v+'-metafile.json',JSON.stringify(built.metafile,null,2)+'\n');
+ const inputs={};for(const p of Object.keys(built.metafile.inputs)){const absolute=path.resolve(p);inputs[absolute]=crypto.createHash('sha256').update(fs.readFileSync(absolute)).digest('hex');}
+ for(const p of [root+'/'+v+'.mjs',root+'/'+v+'-metafile.json'])inputs[p]=crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+ result.versions[v]={inputs,inputCount:Object.keys(inputs).length};
+}
+fs.writeFileSync(root+'/prepared.json',JSON.stringify(result,null,2)+'\n');
+console.log(JSON.stringify(Object.fromEntries(Object.entries(result.versions).map(([k,v])=>[k,v.inputCount]))));

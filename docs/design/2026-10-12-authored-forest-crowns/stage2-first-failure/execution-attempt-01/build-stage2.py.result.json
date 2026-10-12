@@ -1,0 +1,24 @@
+{
+  "script": "build-stage2.py",
+  "command": [
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/build-stage2.py"
+  ],
+  "timeoutSeconds": 300,
+  "startedAtUtc": "2026-10-12T03:49:37.177446+00:00",
+  "finishedAtUtc": "2026-10-12T03:49:45.259840+00:00",
+  "effectiveThreads": 2,
+  "elapsedSeconds": 8.082110041,
+  "exitCode": 1,
+  "ownedPid": 18918,
+  "peakObservedRssBytes": 603275264,
+  "stopReason": null,
+  "rssGuardBytes": 3221225472,
+  "scope": "source only; no Node re-extraction or browser"
+}

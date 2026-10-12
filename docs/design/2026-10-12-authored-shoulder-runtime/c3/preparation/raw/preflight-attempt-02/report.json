@@ -1,0 +1,125 @@
+{
+  "startedAtUtc": "2026-10-12T05:33:41.316518+00:00",
+  "pass": true,
+  "coreStarted": false,
+  "browserStarted": false,
+  "stages": [
+    {
+      "name": "01-clone-candidate",
+      "command": [
+        "node",
+        "/private/tmp/sansu-authored-shoulder-c3/prepared/clone-candidate.mjs",
+        "--start"
+      ],
+      "startedAtUtc": "2026-10-12T05:33:41.431664+00:00",
+      "log": "/private/tmp/sansu-authored-shoulder-c3/preflight-attempt-02/01-clone-candidate.log.txt",
+      "exitCode": 0,
+      "elapsedSeconds": 21.396153625,
+      "finishedAtUtc": "2026-10-12T05:34:02.827781+00:00",
+      "logSha256": "ac44847084415c68fc2e842d950dfffa7c5a466b7d36b7c4151801b105768ab0"
+    },
+    {
+      "name": "02-closure",
+      "command": [
+        "python3",
+        "/private/tmp/sansu-authored-shoulder-c3/prepared/closure.py",
+        "--start"
+      ],
+      "startedAtUtc": "2026-10-12T05:34:02.828295+00:00",
+      "log": "/private/tmp/sansu-authored-shoulder-c3/preflight-attempt-02/02-closure.log.txt",
+      "exitCode": 0,
+      "elapsedSeconds": 3.6842527909999987,
+      "finishedAtUtc": "2026-10-12T05:34:06.512546+00:00",
+      "logSha256": "a907361c14593f7e6feeff825c54619668477035d08a3f26e706b76477768bc8"
+    },
+    {
+      "name": "03-collect-installed-dependencies",
+      "command": [
+        "node",
+        "/private/tmp/sansu-authored-shoulder-c3/prepared/collect-installed-dependencies.mjs",
+        "--start"
+      ],
+      "startedAtUtc": "2026-10-12T05:34:06.512877+00:00",
+      "log": "/private/tmp/sansu-authored-shoulder-c3/preflight-attempt-02/03-collect-installed-dependencies.log.txt",
+      "exitCode": 0,
+      "elapsedSeconds": 0.19832683400000306,
+      "finishedAtUtc": "2026-10-12T05:34:06.711210+00:00",
+      "logSha256": "e577bbd24b4e7707b0767ff182199665204bd0d7bdf33f48d644a5ddcba4063f"
+    },
+    {
+      "name": "04-check-driver-imports",
+      "command": [
+        "node",
+        "/private/tmp/sansu-authored-shoulder-c3/prepared/check-driver-imports.mjs",
+        "--start"
+      ],
+      "startedAtUtc": "2026-10-12T05:34:06.711489+00:00",
+      "log": "/private/tmp/sansu-authored-shoulder-c3/preflight-attempt-02/04-check-driver-imports.log.txt",
+      "exitCode": 0,
+      "elapsedSeconds": 0.1997001669999996,
+      "finishedAtUtc": "2026-10-12T05:34:06.911195+00:00",
+      "logSha256": "3bcc239d30a789b767185e5920c8e2473719053112e50ad9bcc54682ea8b8de9"
+    },
+    {
+      "name": "05-check-harness-inputs",
+      "command": [
+        "node",
+        "/private/tmp/sansu-authored-shoulder-c3/prepared/check-harness-inputs.mjs",
+        "--start"
+      ],
+      "startedAtUtc": "2026-10-12T05:34:06.911484+00:00",
+      "log": "/private/tmp/sansu-authored-shoulder-c3/preflight-attempt-02/05-check-harness-inputs.log.txt",
+      "exitCode": 0,
+      "elapsedSeconds": 0.47042554099999734,
+      "finishedAtUtc": "2026-10-12T05:34:07.381914+00:00",
+      "logSha256": "628fff8431b654ec0cd0e78dd4d29e21d917ee47e379bacdf8fb3059d96ac565"
+    },
+    {
+      "name": "06-snapshot",
+      "command": [
+        "node",
+        "/private/tmp/sansu-authored-shoulder-c3/prepared/snapshot.mjs",
+        "--start"
+      ],
+      "startedAtUtc": "2026-10-12T05:34:07.382141+00:00",
+      "log": "/private/tmp/sansu-authored-shoulder-c3/preflight-attempt-02/06-snapshot.log.txt",
+      "exitCode": 0,
+      "elapsedSeconds": 5.962344334000001,
+      "finishedAtUtc": "2026-10-12T05:34:13.344480+00:00",
+      "logSha256": "094c52d6c4ac9c8f18b17f9956a84b4369a4d4f5f0322c704c963d1326820be4"
+    }
+  ],
+  "preparedSha256": {
+    "README.md": "e2f26391324829df27448b870644f3954cbe3037c4b93c3ed9fe01a86255d293",
+    "adapt-runners.py": "8e779f673f3468cf2b32fbad19449db2197bd94e3e690d875646166e71eaeb26",
+    "adaptation.json": "e9b9097386e3602d85c12f14ba03d0e7c74e374a54e6001be36f1337f7189c9f",
+    "c2-to-c3-runners.diff": "7dd9be15264ebc57023e7d884b80d2dbda0ba3b102eae7b54ddd3ed4d797c47a",
+    "check-driver-imports.mjs": "31accec5ff7078b1c54e245c6eca1e12a024a2d64380b55dd5fe17bc8197f887",
+    "check-harness-inputs.mjs": "610c632a3a77ae3dfced297fb407358e10b81ccf5aad25a617c032cec208904a",
+    "clone-candidate.mjs": "96534d9d62da405150706de2bdf5dcf8f9d43bdb4658ed221b56d9fcab8ab33c",
+    "clone-files.py": "53cfbb6e5097d3eb304504548931ff653bd74b23af1f36f0ec17317803c231da",
+    "closure.py": "44dd2a19b0294a1c9a2f99392e5e1f87057ae15ddae786d1bef19a385745cca3",
+    "collect-installed-dependencies.mjs": "2b5a08155c36d65d0c332fc773139923e1d924e6ad6200a63b614b5fe8fa840d",
+    "core.py": "cabaa8ee5a9f4c2e1759a54864ffeae27ff89cdc9ebfd7c23001341d7e0cebc4",
+    "preflight.py": "822cf3fbc22453db1d3f00b0d44acef2c7f06a99f4b087ad7bee03c2b98e8218",
+    "snapshot.mjs": "c9022f0b2abf75a42d9d7b9c49f332445ae1b60c223c95850e5eb3701a1afeb8"
+  },
+  "syntaxPass": true,
+  "finishedAtUtc": "2026-10-12T05:34:13.344777+00:00",
+  "preparedAfterSha256": {
+    "README.md": "e2f26391324829df27448b870644f3954cbe3037c4b93c3ed9fe01a86255d293",
+    "adapt-runners.py": "8e779f673f3468cf2b32fbad19449db2197bd94e3e690d875646166e71eaeb26",
+    "adaptation.json": "e9b9097386e3602d85c12f14ba03d0e7c74e374a54e6001be36f1337f7189c9f",
+    "c2-to-c3-runners.diff": "7dd9be15264ebc57023e7d884b80d2dbda0ba3b102eae7b54ddd3ed4d797c47a",
+    "check-driver-imports.mjs": "31accec5ff7078b1c54e245c6eca1e12a024a2d64380b55dd5fe17bc8197f887",
+    "check-harness-inputs.mjs": "610c632a3a77ae3dfced297fb407358e10b81ccf5aad25a617c032cec208904a",
+    "clone-candidate.mjs": "96534d9d62da405150706de2bdf5dcf8f9d43bdb4658ed221b56d9fcab8ab33c",
+    "clone-files.py": "53cfbb6e5097d3eb304504548931ff653bd74b23af1f36f0ec17317803c231da",
+    "closure.py": "44dd2a19b0294a1c9a2f99392e5e1f87057ae15ddae786d1bef19a385745cca3",
+    "collect-installed-dependencies.mjs": "2b5a08155c36d65d0c332fc773139923e1d924e6ad6200a63b614b5fe8fa840d",
+    "core.py": "cabaa8ee5a9f4c2e1759a54864ffeae27ff89cdc9ebfd7c23001341d7e0cebc4",
+    "preflight.py": "822cf3fbc22453db1d3f00b0d44acef2c7f06a99f4b087ad7bee03c2b98e8218",
+    "snapshot.mjs": "c9022f0b2abf75a42d9d7b9c49f332445ae1b60c223c95850e5eb3701a1afeb8"
+  },
+  "preparedFixed": true
+}

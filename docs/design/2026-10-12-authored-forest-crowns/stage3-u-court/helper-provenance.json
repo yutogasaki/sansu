@@ -1,0 +1,18 @@
+{
+  "stage2BuilderSHA": "7198fac3b3ed9cb082a9814b66be55c05c71380a76f4ce4e9775380d4d6efbe0",
+  "copiedHelperFunctions": [
+    "close_values",
+    "exported_roles",
+    "glb_json",
+    "material_digest",
+    "material_spec"
+  ],
+  "exactFiles": {
+    "source_helpers.py": "8c06d2c318cccf0c9ef4031347dd73d80363cc13acae899c3ccc0eddcce88b27",
+    "ray_query64.py": "e5b6c22a0781049f8ffbf33d6166064b79b34dcdbca6fe6d348f760af109b3b3",
+    "volume_adapter.py": "f79f9ebdd7a764a7f0957a93163f5172164f062940991ac83ecc51401c5b7c27",
+    "joints.py": "c99059a0af65cdd62b741911537dc26f605051d22e57207d452d7f5e12ca8db1"
+  },
+  "junctionFunctionBodies": "frame and connector exact AST/source copy; only external Volume binding changes; no radius/cap/repair modifications",
+  "originalQueryReadinessSHA": "6ab1c96d34bb964c3b5df7060066c63866b0781a9e2c541fa51bb70d59f1efbb"
+}

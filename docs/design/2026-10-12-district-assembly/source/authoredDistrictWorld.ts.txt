@@ -1,0 +1,254 @@
+import { compileWorldDefinition, type IslandWorld } from './worldDefinition';
+import type { Cell } from './types';
+import type { WorldDistrict, WorldEdge, WorldPoint, WorldSiteRef } from './worldTypes';
+import { intersectPolygons, polygonArea } from './authoredWaterGeometry';
+
+/** Clockwise on the logical X/Z plane: east, south, west, north. */
+export type DistrictFacing = 0 | 1 | 2 | 3;
+export interface AuthoredDistrictPort { id: string; siteId: string; facing: DistrictFacing }
+export interface AuthoredDistrictTemplate {
+    id: string;
+    label: string;
+    district: WorldDistrict;
+    edges: readonly WorldEdge[];
+    ports: readonly AuthoredDistrictPort[];
+}
+export interface AuthoredDistrictCatalog {
+    version: 1;
+    candidate: string;
+    source: { artifact: string; sha256: string };
+    templates: readonly AuthoredDistrictTemplate[];
+    basePorts: readonly (AuthoredDistrictPort & { districtId: string })[];
+}
+/** Diagnostic acquisition ledger. Geometry never belongs in GrowingState. */
+export interface AuthoredDistrictGrant {
+    id: string;
+    templateId: string;
+    parent: { districtId: string; portId: string };
+    entryPortId: string;
+    turn: DistrictFacing;
+    logicalOrigin: Cell;
+    worldOrigin: WorldPoint;
+}
+export interface AuthoredDistrictChoice {
+    id: string;
+    templateId: string;
+    parent: { districtId: string; portId: string };
+    entryPortId?: string;
+}
+
+const fail = (message: string): never => { throw Error(`Authored districts: ${message}`); };
+const rotate = ({ x, z }: Cell, turn: number): Cell => turn === 1 ? { x: -z, z: x }
+    : turn === 2 ? { x: -x, z: -z } : turn === 3 ? { x: z, z: -x } : { x, z };
+const direction = (facing: number) => rotate({ x: 1, z: 0 }, facing);
+const key = (districtId: string, portId: string) => JSON.stringify([districtId, portId]);
+const ref = (districtId: string, siteId: string): WorldSiteRef => ({ districtId, siteId });
+const near = (a: WorldPoint, b: WorldPoint) => Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z) < 1e-7;
+function fingerprint(value: unknown): string {
+    const text = JSON.stringify(value); let hash = 2166136261;
+    for (let i = 0; i < text.length; i++) hash = Math.imul(hash ^ text.charCodeAt(i), 16777619);
+    return (hash >>> 0).toString(16).padStart(8, '0');
+}
+
+function checkCatalog(base: IslandWorld, catalog: AuthoredDistrictCatalog) {
+    if (catalog.version !== 1 || !catalog.candidate || base.definition.source?.sha256 !== catalog.source.sha256)
+        fail('catalog source differs');
+    const ids = new Set<string>();
+    for (const template of catalog.templates) {
+        if (!template.id || ids.has(template.id)) fail('duplicate template');
+        ids.add(template.id);
+        const district = template.district;
+        if (district.id !== template.id || district.turn !== 0 || district.logicalOrigin.x || district.logicalOrigin.z
+            || Object.values(district.worldOrigin).some(n => n !== 0)) fail('template must use a local unturned frame');
+        const ports = new Set<string>();
+        for (const port of template.ports) {
+            if (!port.id || ports.has(port.id) || ![0, 1, 2, 3].includes(port.facing)
+                || !district.sites.some(site => site.id === port.siteId)) fail('invalid template port');
+            ports.add(port.id);
+        }
+        if (!ports.size) fail('template has no port');
+        if (template.edges.some(edge => edge.from.districtId !== template.id || edge.to.districtId !== template.id))
+            fail('template edge leaves its district');
+    }
+    const ports = new Set<string>();
+    for (const port of catalog.basePorts) {
+        const id = key(port.districtId, port.id);
+        if (ports.has(id) || ![0, 1, 2, 3].includes(port.facing)
+            || !base.sites.some(site => site.ref.districtId === port.districtId && site.ref.siteId === port.siteId && site.support))
+            fail('invalid base port');
+        ports.add(id);
+    }
+}
+
+export function availableAuthoredDistrictPorts(base: IslandWorld, catalog: AuthoredDistrictCatalog,
+    grants: readonly AuthoredDistrictGrant[]) {
+    checkCatalog(base, catalog);
+    const used = new Set(grants.flatMap(grant => [key(grant.parent.districtId, grant.parent.portId), key(grant.id, grant.entryPortId)]));
+    const ports = [...catalog.basePorts, ...grants.flatMap(grant => {
+        const template = catalog.templates.find(item => item.id === grant.templateId) ?? fail('unknown template');
+        return template.ports.map(port => ({ ...port, districtId: grant.id, facing: (port.facing + grant.turn) % 4 as DistrictFacing }));
+    })];
+    return ports.filter(port => !used.has(key(port.districtId, port.id)));
+}
+
+function positioned(template: AuthoredDistrictTemplate, grant: AuthoredDistrictGrant): WorldDistrict {
+    return { ...template.district, id: grant.id, templateId: template.id, turn: grant.turn,
+        logicalOrigin: { ...grant.logicalOrigin }, worldOrigin: { ...grant.worldOrigin } };
+}
+function bounds(district: WorldDistrict, physical: boolean) {
+    const points = district.floors.flatMap(floor => [...new Set(floor.indices)].map(index => {
+        const vertex = floor.vertices[index], p = rotate(physical ? vertex.point : vertex.cell, district.turn);
+        const origin = physical ? district.worldOrigin : district.logicalOrigin;
+        return { x: p.x + origin.x, z: p.z + origin.z };
+    }));
+    if (!points.length) return fail('empty district');
+    return points.reduce((box, p) => ({ minX: Math.min(box.minX, p.x), maxX: Math.max(box.maxX, p.x),
+        minZ: Math.min(box.minZ, p.z), maxZ: Math.max(box.maxZ, p.z) }),
+    { minX: Infinity, maxX: -Infinity, minZ: Infinity, maxZ: -Infinity });
+}
+function overlaps(a: ReturnType<typeof bounds>, b: ReturnType<typeof bounds>) {
+    return a.minX < b.maxX - 1e-7 && a.maxX > b.minX + 1e-7 && a.minZ < b.maxZ - 1e-7 && a.maxZ > b.minZ + 1e-7;
+}
+function disjoint(world: IslandWorld, district: WorldDistrict) {
+    return [false, true].every(physical => {
+        const box = bounds(district, physical);
+        return world.definition.districts.every(other => !overlaps(box, bounds(other, physical)));
+    });
+}
+
+/** A visible, finite-width connection. Its sites are walking-only, never new land. */
+function entrance(world: IslandWorld, child: IslandWorld, fromRef: WorldSiteRef, toRef: WorldSiteRef, id: string) {
+    const from = world.sites.find(site => key(site.ref.districtId, site.ref.siteId) === key(fromRef.districtId, fromRef.siteId));
+    const to = child.sites.find(site => key(site.ref.districtId, site.ref.siteId) === key(toRef.districtId, toRef.siteId));
+    if (!from?.support || !to?.support) return fail('entry has no dry support');
+    const a = from.support.point, b = to.support.point, dx = to.cell.x - from.cell.x, dz = to.cell.z - from.cell.z;
+    const length = Math.hypot(dx, dz), physicalLength = Math.hypot(b.x - a.x, b.z - a.z);
+    if (!length || !physicalLength || Math.abs(b.y - a.y) / physicalLength > .3) return fail('entry slope is unsupported');
+    const segments = Math.max(1, Math.ceil(length * 4)), half = .22;
+    const vertices = [], sides: WorldPoint[] = [], sideIndices: number[] = [];
+    const indices: number[] = [], sites: WorldDistrict['sites'][number][] = [], route: WorldSiteRef[] = [fromRef];
+    const known = new Map([...world.sites, ...child.sites].map(site => [`${site.cell.x},${site.cell.z}`, site]));
+    const lerp = (x: number, y: number, t: number) => x + (y - x) * t;
+    // Test the actual strip against every existing floor triangle, including
+    // tiny unowned fragments between walking samples. Only the half-cell
+    // landing at each endpoint may overlap the authored source ground.
+    if (length > 1.02) for (const physical of [false, true]) {
+        const p = physical ? a : from.cell, q = physical ? b : to.cell;
+        const span = Math.hypot(q.x - p.x, q.z - p.z), ux = (q.x - p.x) / span, uz = (q.z - p.z) / span;
+        const corners = [[.51, -half], [span - .51, -half], [span - .51, half], [.51, half]]
+            .map(([along, side]) => ({ x: p.x + ux * along - uz * side, z: p.z + uz * along + ux * side }));
+        const box = { minX: Math.min(...corners.map(p => p.x)), maxX: Math.max(...corners.map(p => p.x)),
+            minZ: Math.min(...corners.map(p => p.z)), maxZ: Math.max(...corners.map(p => p.z)) };
+        for (const floor of [...world.floors, ...child.floors].filter(floor => floor.kind !== 'water')) for (let i = 0; i < floor.indices.length; i += 3) {
+            const triangle = floor.indices.slice(i, i + 3).map(index => physical ? floor.vertices[index].point : floor.vertices[index].cell);
+            if (Math.max(...triangle.map(p => p.x)) <= box.minX || Math.min(...triangle.map(p => p.x)) >= box.maxX
+                || Math.max(...triangle.map(p => p.z)) <= box.minZ || Math.min(...triangle.map(p => p.z)) >= box.maxZ) continue;
+            if (Math.abs(polygonArea(intersectPolygons(triangle, corners))) > 1e-10) fail('entry crosses existing terrain');
+        }
+    }
+    for (let i = 0; i <= segments; i++) {
+        const t = i / segments, cell = { x: lerp(from.cell.x, to.cell.x, t), z: lerp(from.cell.z, to.cell.z, t) };
+        const point = { x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t), z: lerp(a.z, b.z, t) };
+        for (const sign of [-1, 0, 1]) {
+            const at = { x: cell.x - dz / length * half * sign, z: cell.z + dx / length * half * sign };
+            const landing = world.floorAt(at) ?? child.floorAt(at);
+            vertices.push({ cell: at, point: landing?.point ?? { x: point.x - (b.z - a.z) / physicalLength * half * sign,
+                y: point.y, z: point.z + (b.x - a.x) / physicalLength * half * sign } });
+        }
+        if (i && i < segments) {
+            const existing = known.get(`${cell.x},${cell.z}`);
+            if (existing) route.push(existing.ref);
+            else { const site = { id: `step-${i}`, cell, floorId: 'entry-floor', placement: false }; sites.push(site); route.push(ref(id, site.id)); }
+        }
+        if (i) for (const side of [0, 1]) { const j = (i - 1) * 3 + side; indices.push(j, j + 1, j + 3, j + 1, j + 4, j + 3); }
+    }
+    for (let i = 0; i < segments; i++) for (const side of [0, 2]) {
+        const p = vertices[i * 3 + side].point, q = vertices[(i + 1) * 3 + side].point, start = sides.length;
+        sides.push(p, q, { ...q, y: q.y - .16 }, { ...p, y: p.y - .16 });
+        sideIndices.push(start, start + 1, start + 2, start, start + 2, start + 3);
+    }
+    const district: WorldDistrict = { id, templateId: 'native05-district-entry-v1', turn: 0, logicalOrigin: { x: 0, z: 0 }, worldOrigin: { x: 0, y: 0, z: 0 },
+        floors: [{ id: 'entry-floor', kind: 'deck', vertices, indices, color: '#d8c7ad', material: { roughness: .9, metalness: 0, doubleSided: true } }],
+        surfaces: [{ id: 'entry-sides', kind: 'bank', vertices: sides, indices: sideIndices, material: { color: '#baa78d', roughness: .95, metalness: 0 } }], sites, ports: [] };
+    route.push(toRef);
+    const edgeKey = (edge: Pick<WorldEdge, 'from' | 'to'>) => JSON.stringify([key(edge.from.districtId, edge.from.siteId), key(edge.to.districtId, edge.to.siteId)].sort());
+    const existingEdges = new Map([...world.definition.edges, ...child.definition.edges].map(edge => [edgeKey(edge), edge]));
+    const edges: WorldEdge[] = route.slice(1).flatMap((to, i) => {
+        const edge: WorldEdge = { from: route[i], to, allows: ['walk'] }, existing = existingEdges.get(edgeKey(edge));
+        if (existing && !existing.allows.includes('walk')) fail('landing has no authored walking connection');
+        return existing ? [] : [edge];
+    });
+    return { district, edges };
+}
+
+function append(base: IslandWorld, catalog: AuthoredDistrictCatalog, previous: readonly AuthoredDistrictGrant[],
+    world: IslandWorld, grant: AuthoredDistrictGrant): IslandWorld {
+    if (!grant.id || world.definition.districts.some(district => district.id === grant.id || district.id === `${grant.id}:entry`)) fail('duplicate district grant');
+    const template = catalog.templates.find(item => item.id === grant.templateId) ?? fail('unknown template');
+    const port = availableAuthoredDistrictPorts(base, catalog, previous).find(port => port.districtId === grant.parent.districtId && port.id === grant.parent.portId) ?? fail('parent port is missing or occupied');
+    const entryPort = template.ports.find(port => port.id === grant.entryPortId) ?? fail('unknown entry port');
+    if ((entryPort.facing + grant.turn) % 4 !== (port.facing + 2) % 4) fail('ports must face each other');
+    const district = positioned(template, grant);
+    if (!disjoint(world, district)) fail('district overlaps acquired terrain');
+    const edges = template.edges.map(edge => ({ ...edge, from: { ...edge.from, districtId: grant.id }, to: { ...edge.to, districtId: grant.id } }));
+    const child = compileWorldDefinition({ version: 1, id: grant.id, districts: [district], edges });
+    const parentSite = world.sites.find(site => site.ref.districtId === port.districtId && site.ref.siteId === port.siteId)!;
+    const childSite = child.sites.find(site => site.ref.siteId === entryPort.siteId)!;
+    const forward = direction(port.facing), dx = childSite.cell.x - parentSite.cell.x, dz = childSite.cell.z - parentSite.cell.z;
+    const gap = dx * forward.x + dz * forward.z;
+    if (!Number.isInteger(gap) || gap < 1 || gap > 64 || Math.abs(dx * forward.z - dz * forward.x) > 1e-7
+        || grant.worldOrigin.y !== 0 || !parentSite.support || !childSite.support || !near(childSite.support.point, {
+            x: parentSite.support.point.x + forward.x * gap, y: childSite.support.point.y,
+            z: parentSite.support.point.z + forward.z * gap })) fail('grant differs from its fixed port alignment');
+    const entry = entrance(world, child, ref(port.districtId, port.siteId), ref(grant.id, entryPort.siteId), `${grant.id}:entry`);
+    const result = compileWorldDefinition({ ...world.definition, revision: `districts:${fingerprint([base.definition.revision, catalog.candidate, [...previous, grant]])}`,
+        districts: [...world.definition.districts, district, entry.district], edges: [...world.definition.edges, ...edges, ...entry.edges] });
+    // No new template or connection may change a previously acquired anchor or
+    // its actual support. This includes walking-only points and their heights.
+    for (const old of world.sites) {
+        const next = result.sites.find(site => site.ref.districtId === old.ref.districtId && site.ref.siteId === old.ref.siteId);
+        if (!next || next.placement !== old.placement || !near(next.point, old.point)
+            || Boolean(next.support) !== Boolean(old.support) || old.support && !near(next.support!.point, old.support.point)) fail('existing floor or rights changed');
+    }
+    return result;
+}
+
+export function composeAuthoredDistrictWorld(base: IslandWorld, catalog: AuthoredDistrictCatalog, grants: readonly AuthoredDistrictGrant[]): IslandWorld {
+    checkCatalog(base, catalog);
+    let world = base;
+    for (let i = 0; i < grants.length; i++) world = append(base, catalog, grants.slice(0, i), world, grants[i]);
+    return world;
+}
+
+/** Resolve a choice once; the returned ledger fixes every earlier transform. */
+export function planAuthoredDistrict(base: IslandWorld, catalog: AuthoredDistrictCatalog, grants: readonly AuthoredDistrictGrant[], choice: AuthoredDistrictChoice) {
+    const world = composeAuthoredDistrictWorld(base, catalog, grants);
+    const parent = availableAuthoredDistrictPorts(base, catalog, grants).find(port => port.districtId === choice.parent.districtId && port.id === choice.parent.portId) ?? fail('parent port is missing or occupied');
+    const template = catalog.templates.find(item => item.id === choice.templateId) ?? fail('unknown template');
+    const local = compileWorldDefinition({ version: 1, id: template.id, districts: [template.district], edges: template.edges });
+    const parentPoint = world.sites.find(site => site.ref.districtId === parent.districtId && site.ref.siteId === parent.siteId)?.support?.point ?? fail('port has no dry support');
+    const entries = choice.entryPortId ? template.ports.filter(port => port.id === choice.entryPortId) : [...template.ports].sort((a, b) => {
+        const height = (port: AuthoredDistrictPort) => Math.abs((local.sites.find(site => site.ref.siteId === port.siteId)?.support?.point.y ?? Infinity) - parentPoint.y);
+        return height(a) - height(b) || Number(b.facing === 2) - Number(a.facing === 2);
+    });
+    const entry = entries[0] ?? fail('unknown entry port');
+    const entrySite = local.sites.find(site => site.ref.siteId === entry.siteId), parentSite = world.sites.find(site => site.ref.districtId === parent.districtId && site.ref.siteId === parent.siteId);
+    if (!entrySite?.support || !parentSite?.support) return fail('port has no dry support');
+    const turn = (parent.facing + 2 - entry.facing + 4) % 4 as DistrictFacing, forward = direction(parent.facing);
+    const cell = rotate(entrySite.cell, turn), point = rotate(entrySite.support.point, turn);
+    // Bounded candidate search, not a district/population limit. Different
+    // ports remain available when this straight connection cannot be supported.
+    for (let gap = Math.max(1, Math.ceil(Math.abs(parentPoint.y - entrySite.support.point.y) / .3)); gap <= 64; gap++) {
+        const grant: AuthoredDistrictGrant = { id: choice.id, templateId: template.id, parent: { ...choice.parent }, entryPortId: entry.id, turn,
+            logicalOrigin: { x: parentSite.cell.x + forward.x * gap - cell.x, z: parentSite.cell.z + forward.z * gap - cell.z },
+            worldOrigin: { x: parentSite.support.point.x + forward.x * gap - point.x,
+                // All source terrain shares the same sea datum. Matching port
+                // heights by lifting/sinking the whole district breaks the coast.
+                y: 0, z: parentSite.support.point.z + forward.z * gap - point.z } };
+        if (!Number.isInteger(grant.logicalOrigin.x) || !Number.isInteger(grant.logicalOrigin.z)) fail('ports require compatible logical coordinates');
+        if (!disjoint(world, positioned(template, grant))) continue;
+        const result = append(base, catalog, grants, world, grant);
+        return { grant, grants: [...grants, grant], world: result };
+    }
+    return fail('no supported district position at this port');
+}

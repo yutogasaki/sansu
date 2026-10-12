@@ -1,0 +1,74 @@
+{
+  "status": "BYTE_IDENTICAL_ARCHIVE",
+  "source": "/private/tmp/sansu-p02-gallery-source-study/east-v2-staged-boolean",
+  "destination": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-p02-gallery/east-v2-staged-boolean",
+  "createdUtc": "2026-10-12T05:29:19.601090+00:00",
+  "files": [
+    {
+      "sourceRelativePath": "README.md",
+      "destinationRelativePath": "README.md.txt",
+      "sourceBeforeSha256": "873d7a8c0045716f4b9f5e90a180a49fd020ebf6fcb32f7f45fa5e68ddcee0b8",
+      "sourceAfterSha256": "873d7a8c0045716f4b9f5e90a180a49fd020ebf6fcb32f7f45fa5e68ddcee0b8",
+      "destinationSha256": "873d7a8c0045716f4b9f5e90a180a49fd020ebf6fcb32f7f45fa5e68ddcee0b8",
+      "bytes": 2124
+    },
+    {
+      "sourceRelativePath": "diagnose.py",
+      "destinationRelativePath": "diagnose.py.txt",
+      "sourceBeforeSha256": "b749ff52b938ada7ebb2d6f36cda84ba96403f4bf37f4e19238ee8ac2682cc39",
+      "sourceAfterSha256": "b749ff52b938ada7ebb2d6f36cda84ba96403f4bf37f4e19238ee8ac2682cc39",
+      "destinationSha256": "b749ff52b938ada7ebb2d6f36cda84ba96403f4bf37f4e19238ee8ac2682cc39",
+      "bytes": 7962
+    },
+    {
+      "sourceRelativePath": "outcome.json",
+      "destinationRelativePath": "outcome.json",
+      "sourceBeforeSha256": "2722bab2f6d8575988c786d96a607fa0b3f4e2ee296950ddff7930e817c5f3ef",
+      "sourceAfterSha256": "2722bab2f6d8575988c786d96a607fa0b3f4e2ee296950ddff7930e817c5f3ef",
+      "destinationSha256": "2722bab2f6d8575988c786d96a607fa0b3f4e2ee296950ddff7930e817c5f3ef",
+      "bytes": 2109
+    },
+    {
+      "sourceRelativePath": "preparation.json",
+      "destinationRelativePath": "preparation.json",
+      "sourceBeforeSha256": "26613874d2767291c9db9e41e9599626b0c4845e33fd7070bcdb70c6786a79af",
+      "sourceAfterSha256": "26613874d2767291c9db9e41e9599626b0c4845e33fd7070bcdb70c6786a79af",
+      "destinationSha256": "26613874d2767291c9db9e41e9599626b0c4845e33fd7070bcdb70c6786a79af",
+      "bytes": 4569
+    },
+    {
+      "sourceRelativePath": "runs/01-staged/report.json",
+      "destinationRelativePath": "runs/01-staged/report.json",
+      "sourceBeforeSha256": "9040cc60d56c0efd69786547cf16014351e993635ab17325664f04748978d9d1",
+      "sourceAfterSha256": "9040cc60d56c0efd69786547cf16014351e993635ab17325664f04748978d9d1",
+      "destinationSha256": "9040cc60d56c0efd69786547cf16014351e993635ab17325664f04748978d9d1",
+      "bytes": 87851
+    },
+    {
+      "sourceRelativePath": "runs/01-staged-external-process.json",
+      "destinationRelativePath": "runs/01-staged-external-process.json",
+      "sourceBeforeSha256": "3c97a921ecb61dfbb3cc23e89e0b66ca8952696f175d8c8c2f1f18a802c4f46b",
+      "sourceAfterSha256": "3c97a921ecb61dfbb3cc23e89e0b66ca8952696f175d8c8c2f1f18a802c4f46b",
+      "destinationSha256": "3c97a921ecb61dfbb3cc23e89e0b66ca8952696f175d8c8c2f1f18a802c4f46b",
+      "bytes": 4550
+    },
+    {
+      "sourceRelativePath": "runs/01-staged.log.txt",
+      "destinationRelativePath": "runs/01-staged.log.txt",
+      "sourceBeforeSha256": "28eff3c5e1be2d55313b225f1f2a2be6cca180d076bc313b40aaba7fb341183a",
+      "sourceAfterSha256": "28eff3c5e1be2d55313b225f1f2a2be6cca180d076bc313b40aaba7fb341183a",
+      "destinationSha256": "28eff3c5e1be2d55313b225f1f2a2be6cca180d076bc313b40aaba7fb341183a",
+      "bytes": 639
+    },
+    {
+      "sourceRelativePath": "runs/01-staged.log.txt.json",
+      "destinationRelativePath": "runs/01-staged.log.txt.json",
+      "sourceBeforeSha256": "74c02ca423308d68a0040b12c3961a2ecd807aff5810cceaed8c2e4b48c2b269",
+      "sourceAfterSha256": "74c02ca423308d68a0040b12c3961a2ecd807aff5810cceaed8c2e4b48c2b269",
+      "destinationSha256": "74c02ca423308d68a0040b12c3961a2ecd807aff5810cceaed8c2e4b48c2b269",
+      "bytes": 485
+    }
+  ],
+  "allSourceBeforeAfterDestinationMatch": true,
+  "mappingNote": "Python/Markdown raw snapshots use .txt suffix; bytes unchanged. Original manifests preserve historical runnable names. Prepared README is historical; outcome.json records terminal status. __pycache__ excluded. Existing archives and originals unchanged."
+}

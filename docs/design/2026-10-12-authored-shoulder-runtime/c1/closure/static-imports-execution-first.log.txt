@@ -1,0 +1,26 @@
+/Users/yutogasaki/Projects/sansu/node_modules/esbuild/lib/main.js:1467
+  let error = new Error(text);
+              ^
+
+Error: Build failed with 10 errors:
+tools/e2e-growing-balance.mjs:27:39: ERROR: Could not resolve "/src/domain/growingIsland/repository.ts"
+tools/island-e2e-helpers.mjs:28:36: ERROR: Could not resolve "/src/db/index.ts"
+tools/island-e2e-helpers.mjs:29:54: ERROR: Could not resolve "/src/domain/user/profile.ts"
+tools/island-e2e-helpers.mjs:30:65: ERROR: Could not resolve "/src/domain/user/repository.ts"
+tools/island-e2e-helpers.mjs:31:50: ERROR: Could not resolve "/src/domain/math/curriculum.ts"
+...
+    at failureErrorWithLog (/Users/yutogasaki/Projects/sansu/node_modules/esbuild/lib/main.js:1467:15)
+    at /Users/yutogasaki/Projects/sansu/node_modules/esbuild/lib/main.js:926:25
+    at /Users/yutogasaki/Projects/sansu/node_modules/esbuild/lib/main.js:878:52
+    at buildResponseToResult (/Users/yutogasaki/Projects/sansu/node_modules/esbuild/lib/main.js:924:7)
+    at /Users/yutogasaki/Projects/sansu/node_modules/esbuild/lib/main.js:951:16
+    at responseCallbacks.<computed> (/Users/yutogasaki/Projects/sansu/node_modules/esbuild/lib/main.js:603:9)
+    at handleIncomingPacket (/Users/yutogasaki/Projects/sansu/node_modules/esbuild/lib/main.js:658:12)
+    at Socket.readFromStdout (/Users/yutogasaki/Projects/sansu/node_modules/esbuild/lib/main.js:581:7)
+    at Socket.emit (node:events:509:28)
+    at addChunk (node:internal/streams/readable:563:12) {
+  errors: [Getter/Setter],
+  warnings: [Getter/Setter]
+}
+
+Node.js v24.18.0

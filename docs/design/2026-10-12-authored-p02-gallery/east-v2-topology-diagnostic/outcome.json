@@ -1,0 +1,37 @@
+{
+  "status": "DIAGNOSTIC_COMPLETED_NO_REPAIR",
+  "sourceSlotFree": true,
+  "execution": {
+    "supervisorExitCode": 0,
+    "launchRequestedUtc": "2026-10-12T05:12:07.904455+00:00",
+    "firstChildObservedUtc": "2026-10-12T05:12:08.205821+00:00",
+    "lastChildObservedUtc": "2026-10-12T05:12:08.759808+00:00",
+    "exitObservedUtc": "2026-10-12T05:12:09.019986+00:00",
+    "ownedChildPid": 37365,
+    "ownedPidVerifiedAbsent": true,
+    "outer250msPeakObservedRssBytes": 408109056,
+    "sealedSupervisor1sPeakRssBytes": 0,
+    "samplingDifference": "Short-lived process ended before supervisor first RSS sample; zero is missed sample, not no memory",
+    "codeAndFailedSourceUnchanged": true
+  },
+  "finding": {
+    "phase": "Boolean floor union result, before walk-top split or renderer/owner-use data assembly",
+    "object": "construction-solid/eastBranchGallery",
+    "rawAndWeldedBadEdges": 6745,
+    "rawExactCoordinateDuplicateFaces": 4322,
+    "rawExactCoincidentExtraVertices": 0,
+    "edgeValence": {
+      "6": 1792,
+      "5": 260,
+      "4": 4253,
+      "3": 401,
+      "2": 6089,
+      "1": 39
+    },
+    "triggerNotProven": "Which Boolean step/coplanar input or geometric self-intersection caused duplicate face generation is not established."
+  },
+  "recommendedNextBoundary": "Keep failed scene immutable. Prefer a single explicitly stitched shared floor topology over stacking coplanar slab unions; preserve visible shape/terrain/width/height. Any new construction needs separately reviewed plan/window; do not drop duplicated faces as a silent repair.",
+  "noGeometryChanges": true,
+  "noBuildRetry": true,
+  "noRender": true
+}

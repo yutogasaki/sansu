@@ -1,0 +1,2243 @@
+{
+  "inputs": {
+    "src/domain/growingIsland/authoredWaterGeometry.ts": {
+      "bytes": 5451,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/authoredWorldAccess.ts": {
+      "bytes": 14497,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/authoredWaterGeometry.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterGeometry"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/worldDefinition.ts": {
+      "bytes": 29593,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/authoredWorldAccess.ts",
+          "kind": "import-statement",
+          "original": "./authoredWorldAccess"
+        },
+        {
+          "path": "src/domain/growingIsland/authoredWaterGeometry.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterGeometry"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/authoredWaterCarving.ts": {
+      "bytes": 10093,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/worldDefinition.ts",
+          "kind": "import-statement",
+          "original": "./worldDefinition"
+        },
+        {
+          "path": "src/domain/growingIsland/authoredWaterGeometry.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterGeometry"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/islandLife/economyRules.ts": {
+      "bytes": 3512,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/domain/islandLife/model.ts": {
+      "bytes": 9588,
+      "imports": [
+        {
+          "path": "src/domain/islandLife/economyRules.ts",
+          "kind": "import-statement",
+          "original": "./economyRules"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/islandLife/decorations.ts": {
+      "bytes": 216,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/domain/islandLife/footprint.ts": {
+      "bytes": 720,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/domain/islandLife/landRules.ts": {
+      "bytes": 2863,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/domain/islandLife/walkingSpace.ts": {
+      "bytes": 7357,
+      "imports": [
+        {
+          "path": "src/domain/islandLife/footprint.ts",
+          "kind": "import-statement",
+          "original": "./footprint"
+        },
+        {
+          "path": "src/domain/islandLife/landRules.ts",
+          "kind": "import-statement",
+          "original": "./landRules"
+        },
+        {
+          "path": "src/domain/islandLife/model.ts",
+          "kind": "import-statement",
+          "original": "./model"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/islandLife/space.ts": {
+      "bytes": 6843,
+      "imports": [
+        {
+          "path": "src/domain/islandLife/decorations.ts",
+          "kind": "import-statement",
+          "original": "./decorations"
+        },
+        {
+          "path": "src/domain/islandLife/walkingSpace.ts",
+          "kind": "import-statement",
+          "original": "./walkingSpace"
+        },
+        {
+          "path": "src/domain/islandLife/footprint.ts",
+          "kind": "import-statement",
+          "original": "./footprint"
+        },
+        {
+          "path": "src/domain/islandLife/landRules.ts",
+          "kind": "import-statement",
+          "original": "./landRules"
+        },
+        {
+          "path": "src/domain/islandLife/model.ts",
+          "kind": "import-statement",
+          "original": "./model"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/islandLife/waterChannels.ts": {
+      "bytes": 3941,
+      "imports": [
+        {
+          "path": "src/domain/islandLife/model.ts",
+          "kind": "import-statement",
+          "original": "./model"
+        },
+        {
+          "path": "src/domain/islandLife/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/rules.ts": {
+      "bytes": 6080,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/types.ts": {
+      "bytes": 9935,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/space.ts": {
+      "bytes": 7835,
+      "imports": [
+        {
+          "path": "src/domain/islandLife/footprint.ts",
+          "kind": "import-statement",
+          "original": "../islandLife/footprint"
+        },
+        {
+          "path": "src/domain/growingIsland/types.ts",
+          "kind": "import-statement",
+          "original": "./types"
+        },
+        {
+          "path": "src/domain/growingIsland/authoredWorldAccess.ts",
+          "kind": "import-statement",
+          "original": "./authoredWorldAccess"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/environment.ts": {
+      "bytes": 6303,
+      "imports": [
+        {
+          "path": "src/domain/islandLife/model.ts",
+          "kind": "import-statement",
+          "original": "../islandLife/model"
+        },
+        {
+          "path": "src/domain/islandLife/waterChannels.ts",
+          "kind": "import-statement",
+          "original": "../islandLife/waterChannels"
+        },
+        {
+          "path": "src/domain/growingIsland/rules.ts",
+          "kind": "import-statement",
+          "original": "./rules"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        },
+        {
+          "path": "src/domain/growingIsland/types.ts",
+          "kind": "import-statement",
+          "original": "./types"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/authoredWaterContour.ts": {
+      "bytes": 8472,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/authoredWaterRim.ts": {
+      "bytes": 2487,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/authoredWaterContour.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterContour"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/nativeWaterBridgeProfile.json": {
+      "bytes": 1471,
+      "imports": []
+    },
+    "src/domain/growingIsland/authoredWaterBridge.ts": {
+      "bytes": 18811,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/authoredWaterCarving.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterCarving"
+        },
+        {
+          "path": "src/domain/growingIsland/authoredWaterContour.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterContour"
+        },
+        {
+          "path": "src/domain/growingIsland/nativeWaterBridgeProfile.json",
+          "kind": "import-statement",
+          "original": "./nativeWaterBridgeProfile.json"
+        },
+        {
+          "path": "src/domain/growingIsland/authoredWorldAccess.ts",
+          "kind": "import-statement",
+          "original": "./authoredWorldAccess"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        },
+        {
+          "path": "src/domain/growingIsland/worldDefinition.ts",
+          "kind": "import-statement",
+          "original": "./worldDefinition"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/nativeWaterSource.json": {
+      "bytes": 18730,
+      "imports": []
+    },
+    "src/domain/growingIsland/authoredWaterWorld.ts": {
+      "bytes": 40232,
+      "imports": [
+        {
+          "path": "src/domain/islandLife/waterChannels.ts",
+          "kind": "import-statement",
+          "original": "../islandLife/waterChannels"
+        },
+        {
+          "path": "src/domain/growingIsland/authoredWorldAccess.ts",
+          "kind": "import-statement",
+          "original": "./authoredWorldAccess"
+        },
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "./environment"
+        },
+        {
+          "path": "src/domain/growingIsland/authoredWaterCarving.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterCarving"
+        },
+        {
+          "path": "src/domain/growingIsland/authoredWaterContour.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterContour"
+        },
+        {
+          "path": "src/domain/growingIsland/authoredWaterRim.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterRim"
+        },
+        {
+          "path": "src/domain/growingIsland/authoredWaterBridge.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterBridge"
+        },
+        {
+          "path": "src/domain/growingIsland/nativeWaterSource.json",
+          "kind": "import-statement",
+          "original": "./nativeWaterSource.json"
+        },
+        {
+          "path": "src/domain/growingIsland/nativeWaterBridgeProfile.json",
+          "kind": "import-statement",
+          "original": "./nativeWaterBridgeProfile.json"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        },
+        {
+          "path": "src/domain/growingIsland/worldDefinition.ts",
+          "kind": "import-statement",
+          "original": "./worldDefinition"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/authoredWaterFrame.ts": {
+      "bytes": 930,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/authoredWaterWorld.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterWorld"
+        }
+      ],
+      "format": "esm"
+    },
+    "docs/design/2026-10-12-authored-cove-entrance/source-manifest.json": {
+      "bytes": 28562,
+      "imports": []
+    },
+    "docs/design/2026-10-12-authored-cove-entrance/shared-apron-world-patch-v1.json": {
+      "bytes": 383750,
+      "imports": []
+    },
+    "src/domain/growingIsland/authoredCoveWorld.ts": {
+      "bytes": 14337,
+      "imports": [
+        {
+          "path": "docs/design/2026-10-12-authored-cove-entrance/source-manifest.json",
+          "kind": "import-statement",
+          "original": "../../../docs/design/2026-10-12-authored-cove-entrance/source-manifest.json"
+        },
+        {
+          "path": "docs/design/2026-10-12-authored-cove-entrance/shared-apron-world-patch-v1.json",
+          "kind": "import-statement",
+          "original": "../../../docs/design/2026-10-12-authored-cove-entrance/shared-apron-world-patch-v1.json"
+        },
+        {
+          "path": "src/domain/growingIsland/worldDefinition.ts",
+          "kind": "import-statement",
+          "original": "./worldDefinition"
+        },
+        {
+          "path": "src/domain/islandLife/footprint.ts",
+          "kind": "import-statement",
+          "original": "../islandLife/footprint"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/natureTown/random.ts": {
+      "bytes": 2335,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/random.ts": {
+      "bytes": 644,
+      "imports": [
+        {
+          "path": "src/domain/natureTown/random.ts",
+          "kind": "import-statement",
+          "original": "../natureTown/random"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/flowers.ts": {
+      "bytes": 4908,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/random.ts",
+          "kind": "import-statement",
+          "original": "./random"
+        },
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "./environment"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/nature.ts": {
+      "bytes": 6360,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "./environment"
+        },
+        {
+          "path": "src/domain/islandLife/waterChannels.ts",
+          "kind": "import-statement",
+          "original": "../islandLife/waterChannels"
+        },
+        {
+          "path": "src/domain/growingIsland/random.ts",
+          "kind": "import-statement",
+          "original": "./random"
+        },
+        {
+          "path": "src/domain/growingIsland/flowers.ts",
+          "kind": "import-statement",
+          "original": "./flowers"
+        },
+        {
+          "path": "src/domain/growingIsland/rules.ts",
+          "kind": "import-statement",
+          "original": "./rules"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        }
+      ],
+      "format": "esm"
+    },
+    "docs/product/island-place-goals.json": {
+      "bytes": 29559,
+      "imports": []
+    },
+    "src/domain/growingIsland/placeCatalog.ts": {
+      "bytes": 708,
+      "imports": [
+        {
+          "path": "docs/product/island-place-goals.json",
+          "kind": "import-statement",
+          "original": "../../../docs/product/island-place-goals.json"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/placeTerrain.ts": {
+      "bytes": 7077,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/places.ts": {
+      "bytes": 24418,
+      "imports": [
+        {
+          "path": "src/domain/islandLife/waterChannels.ts",
+          "kind": "import-statement",
+          "original": "../islandLife/waterChannels"
+        },
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "./environment"
+        },
+        {
+          "path": "src/domain/growingIsland/nature.ts",
+          "kind": "import-statement",
+          "original": "./nature"
+        },
+        {
+          "path": "src/domain/growingIsland/placeCatalog.ts",
+          "kind": "import-statement",
+          "original": "./placeCatalog"
+        },
+        {
+          "path": "src/domain/growingIsland/placeTerrain.ts",
+          "kind": "import-statement",
+          "original": "./placeTerrain"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/authoredShoulderWorld.ts": {
+      "bytes": 12614,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/worldDefinition.ts",
+          "kind": "import-statement",
+          "original": "./worldDefinition"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/authoredWorldFrame.ts": {
+      "bytes": 4486,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/authoredWaterFrame.ts",
+          "kind": "import-statement",
+          "original": "./authoredWaterFrame"
+        },
+        {
+          "path": "src/domain/growingIsland/authoredCoveWorld.ts",
+          "kind": "import-statement",
+          "original": "./authoredCoveWorld"
+        },
+        {
+          "path": "src/domain/growingIsland/places.ts",
+          "kind": "import-statement",
+          "original": "./places"
+        },
+        {
+          "path": "src/domain/growingIsland/authoredShoulderWorld.ts",
+          "kind": "import-statement",
+          "original": "./authoredShoulderWorld"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/guidance.ts": {
+      "bytes": 13453,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/rules.ts",
+          "kind": "import-statement",
+          "original": "./rules"
+        },
+        {
+          "path": "src/domain/growingIsland/commands.ts",
+          "kind": "import-statement",
+          "original": "./commands"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/community.ts": {
+      "bytes": 7874,
+      "imports": [
+        {
+          "path": "src/domain/islandLife/model.ts",
+          "kind": "import-statement",
+          "original": "../islandLife/model"
+        },
+        {
+          "path": "src/domain/islandLife/waterChannels.ts",
+          "kind": "import-statement",
+          "original": "../islandLife/waterChannels"
+        },
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "./environment"
+        },
+        {
+          "path": "src/domain/growingIsland/rules.ts",
+          "kind": "import-statement",
+          "original": "./rules"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/room.ts": {
+      "bytes": 3637,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/placeTypes.ts": {
+      "bytes": 2154,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/placeGoals.ts": {
+      "bytes": 12902,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/placeCatalog.ts",
+          "kind": "import-statement",
+          "original": "./placeCatalog"
+        },
+        {
+          "path": "src/domain/growingIsland/places.ts",
+          "kind": "import-statement",
+          "original": "./places"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        },
+        {
+          "path": "src/domain/growingIsland/placeTypes.ts",
+          "kind": "import-statement",
+          "original": "./placeTypes"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/names.ts": {
+      "bytes": 2011,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/random.ts",
+          "kind": "import-statement",
+          "original": "./random"
+        },
+        {
+          "path": "src/domain/growingIsland/rules.ts",
+          "kind": "import-statement",
+          "original": "./rules"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/pier.ts": {
+      "bytes": 3980,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "./environment"
+        },
+        {
+          "path": "src/domain/growingIsland/random.ts",
+          "kind": "import-statement",
+          "original": "./random"
+        },
+        {
+          "path": "src/domain/growingIsland/rules.ts",
+          "kind": "import-statement",
+          "original": "./rules"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/town.ts": {
+      "bytes": 8632,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/community.ts",
+          "kind": "import-statement",
+          "original": "./community"
+        },
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "./environment"
+        },
+        {
+          "path": "src/domain/growingIsland/names.ts",
+          "kind": "import-statement",
+          "original": "./names"
+        },
+        {
+          "path": "src/domain/growingIsland/pier.ts",
+          "kind": "import-statement",
+          "original": "./pier"
+        },
+        {
+          "path": "src/domain/growingIsland/rules.ts",
+          "kind": "import-statement",
+          "original": "./rules"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/authoredPlacementSupport.ts": {
+      "bytes": 8940,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/authoredWorldAccess.ts",
+          "kind": "import-statement",
+          "original": "./authoredWorldAccess"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/commands.ts": {
+      "bytes": 18676,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/guidance.ts",
+          "kind": "import-statement",
+          "original": "./guidance"
+        },
+        {
+          "path": "src/domain/growingIsland/community.ts",
+          "kind": "import-statement",
+          "original": "./community"
+        },
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "./environment"
+        },
+        {
+          "path": "src/domain/growingIsland/rules.ts",
+          "kind": "import-statement",
+          "original": "./rules"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        },
+        {
+          "path": "src/domain/growingIsland/room.ts",
+          "kind": "import-statement",
+          "original": "./room"
+        },
+        {
+          "path": "src/domain/growingIsland/flowers.ts",
+          "kind": "import-statement",
+          "original": "./flowers"
+        },
+        {
+          "path": "src/domain/growingIsland/placeGoals.ts",
+          "kind": "import-statement",
+          "original": "./placeGoals"
+        },
+        {
+          "path": "src/domain/growingIsland/placeTypes.ts",
+          "kind": "import-statement",
+          "original": "./placeTypes"
+        },
+        {
+          "path": "src/domain/growingIsland/town.ts",
+          "kind": "import-statement",
+          "original": "./town"
+        },
+        {
+          "path": "src/domain/growingIsland/authoredPlacementSupport.ts",
+          "kind": "import-statement",
+          "original": "./authoredPlacementSupport"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/three/build/three.core.js": {
+      "bytes": 1443056,
+      "imports": [],
+      "format": "esm"
+    },
+    "node_modules/three/build/three.module.js": {
+      "bytes": 650153,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.core.js",
+          "kind": "import-statement",
+          "original": "./three.core.js"
+        },
+        {
+          "path": "node_modules/three/build/three.core.js",
+          "kind": "import-statement",
+          "original": "./three.core.js"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/three/examples/jsm/utils/BufferGeometryUtils.js": {
+      "bytes": 37621,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/three/worldPalette.ts": {
+      "bytes": 6433,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/three/residentFabric.ts": {
+      "bytes": 6350,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/three/primitives.ts": {
+      "bytes": 8523,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "node_modules/three/examples/jsm/utils/BufferGeometryUtils.js",
+          "kind": "import-statement",
+          "original": "three/addons/utils/BufferGeometryUtils.js"
+        },
+        {
+          "path": "src/components/island/three/worldPalette.ts",
+          "kind": "import-statement",
+          "original": "./worldPalette"
+        },
+        {
+          "path": "src/components/island/three/residentFabric.ts",
+          "kind": "import-statement",
+          "original": "./residentFabric"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/three/examples/jsm/geometries/RoundedBoxGeometry.js": {
+      "bytes": 6476,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/three/garden/staticRaycast.ts": {
+      "bytes": 1621,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/three/garden/geometry.ts": {
+      "bytes": 6201,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "node_modules/three/examples/jsm/geometries/RoundedBoxGeometry.js",
+          "kind": "import-statement",
+          "original": "three/addons/geometries/RoundedBoxGeometry.js"
+        },
+        {
+          "path": "node_modules/three/examples/jsm/utils/BufferGeometryUtils.js",
+          "kind": "import-statement",
+          "original": "three/addons/utils/BufferGeometryUtils.js"
+        },
+        {
+          "path": "src/components/island/three/garden/staticRaycast.ts",
+          "kind": "import-statement",
+          "original": "./staticRaycast"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/treeSilhouettes.ts": {
+      "bytes": 3526,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/components/island/three/primitives.ts",
+          "kind": "import-statement",
+          "original": "../three/primitives"
+        },
+        {
+          "path": "src/components/island/three/garden/geometry.ts",
+          "kind": "import-statement",
+          "original": "../three/garden/geometry"
+        },
+        {
+          "path": "src/domain/islandLife/model.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/islandLife/model"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/life/decorationGeometry.ts": {
+      "bytes": 3111,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/components/island/three/primitives.ts",
+          "kind": "import-statement",
+          "original": "../three/primitives"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/life/facilityGeometry.ts": {
+      "bytes": 5493,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/components/island/three/primitives.ts",
+          "kind": "import-statement",
+          "original": "../three/primitives"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/life/sandboxGeometry.ts": {
+      "bytes": 1743,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/components/island/three/primitives.ts",
+          "kind": "import-statement",
+          "original": "../three/primitives"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/life/windArchGeometry.ts": {
+      "bytes": 2273,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/components/island/three/primitives.ts",
+          "kind": "import-statement",
+          "original": "../three/primitives"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/life/itemGeometry.ts": {
+      "bytes": 8753,
+      "imports": [
+        {
+          "path": "src/domain/islandLife/decorations.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/islandLife/decorations"
+        },
+        {
+          "path": "src/components/island/life/decorationGeometry.ts",
+          "kind": "import-statement",
+          "original": "./decorationGeometry"
+        },
+        {
+          "path": "src/components/island/life/facilityGeometry.ts",
+          "kind": "import-statement",
+          "original": "./facilityGeometry"
+        },
+        {
+          "path": "src/domain/islandLife/footprint.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/islandLife/footprint"
+        },
+        {
+          "path": "src/components/island/life/sandboxGeometry.ts",
+          "kind": "import-statement",
+          "original": "./sandboxGeometry"
+        },
+        {
+          "path": "src/components/island/life/windArchGeometry.ts",
+          "kind": "import-statement",
+          "original": "./windArchGeometry"
+        },
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/components/island/three/primitives.ts",
+          "kind": "import-statement",
+          "original": "../three/primitives"
+        },
+        {
+          "path": "src/domain/islandLife/model.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/islandLife/model"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/island.ts": {
+      "bytes": 5507,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/guidance.ts",
+          "kind": "import-statement",
+          "original": "./guidance"
+        },
+        {
+          "path": "src/domain/growingIsland/placeGoals.ts",
+          "kind": "import-statement",
+          "original": "./placeGoals"
+        },
+        {
+          "path": "src/domain/growingIsland/community.ts",
+          "kind": "import-statement",
+          "original": "./community"
+        },
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "./environment"
+        },
+        {
+          "path": "src/domain/growingIsland/random.ts",
+          "kind": "import-statement",
+          "original": "./random"
+        },
+        {
+          "path": "src/domain/growingIsland/pier.ts",
+          "kind": "import-statement",
+          "original": "./pier"
+        },
+        {
+          "path": "src/domain/growingIsland/rules.ts",
+          "kind": "import-statement",
+          "original": "./rules"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/gifts.ts": {
+      "bytes": 3896,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/community.ts",
+          "kind": "import-statement",
+          "original": "./community"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/moments.ts": {
+      "bytes": 6202,
+      "imports": [
+        {
+          "path": "src/domain/islandLife/model.ts",
+          "kind": "import-statement",
+          "original": "../islandLife/model"
+        },
+        {
+          "path": "src/domain/growingIsland/community.ts",
+          "kind": "import-statement",
+          "original": "./community"
+        },
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "./environment"
+        },
+        {
+          "path": "src/domain/growingIsland/random.ts",
+          "kind": "import-statement",
+          "original": "./random"
+        },
+        {
+          "path": "src/domain/growingIsland/rules.ts",
+          "kind": "import-statement",
+          "original": "./rules"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/index.ts": {
+      "bytes": 1377,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/types.ts",
+          "kind": "import-statement",
+          "original": "./types"
+        },
+        {
+          "path": "src/domain/growingIsland/placeTypes.ts",
+          "kind": "import-statement",
+          "original": "./placeTypes"
+        },
+        {
+          "path": "src/domain/growingIsland/placeGoals.ts",
+          "kind": "import-statement",
+          "original": "./placeGoals"
+        },
+        {
+          "path": "src/domain/growingIsland/rules.ts",
+          "kind": "import-statement",
+          "original": "./rules"
+        },
+        {
+          "path": "src/domain/growingIsland/commands.ts",
+          "kind": "import-statement",
+          "original": "./commands"
+        },
+        {
+          "path": "src/domain/growingIsland/town.ts",
+          "kind": "import-statement",
+          "original": "./town"
+        },
+        {
+          "path": "src/domain/growingIsland/nature.ts",
+          "kind": "import-statement",
+          "original": "./nature"
+        },
+        {
+          "path": "src/domain/growingIsland/island.ts",
+          "kind": "import-statement",
+          "original": "./island"
+        },
+        {
+          "path": "src/domain/growingIsland/community.ts",
+          "kind": "import-statement",
+          "original": "./community"
+        },
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "./environment"
+        },
+        {
+          "path": "src/domain/growingIsland/pier.ts",
+          "kind": "import-statement",
+          "original": "./pier"
+        },
+        {
+          "path": "src/domain/growingIsland/gifts.ts",
+          "kind": "import-statement",
+          "original": "./gifts"
+        },
+        {
+          "path": "src/domain/growingIsland/moments.ts",
+          "kind": "import-statement",
+          "original": "./moments"
+        },
+        {
+          "path": "src/domain/growingIsland/names.ts",
+          "kind": "import-statement",
+          "original": "./names"
+        },
+        {
+          "path": "src/domain/growingIsland/room.ts",
+          "kind": "import-statement",
+          "original": "./room"
+        },
+        {
+          "path": "src/domain/growingIsland/flowers.ts",
+          "kind": "import-statement",
+          "original": "./flowers"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/plotParts.ts": {
+      "bytes": 1521,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/wonderPaint.ts": {
+      "bytes": 2632,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/fieldGeometry.ts": {
+      "bytes": 5066,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/components/island/growing/plotParts.ts",
+          "kind": "import-statement",
+          "original": "./plotParts"
+        },
+        {
+          "path": "src/components/island/growing/wonderPaint.ts",
+          "kind": "import-statement",
+          "original": "./wonderPaint"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/ownLandmarks.ts": {
+      "bytes": 6696,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/components/island/growing/plotParts.ts",
+          "kind": "import-statement",
+          "original": "./plotParts"
+        },
+        {
+          "path": "src/components/island/growing/wonderPaint.ts",
+          "kind": "import-statement",
+          "original": "./wonderPaint"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/homeSurfaceGeometry.ts": {
+      "bytes": 4105,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/homeGeometry.ts": {
+      "bytes": 12896,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/components/island/growing/plotParts.ts",
+          "kind": "import-statement",
+          "original": "./plotParts"
+        },
+        {
+          "path": "src/components/island/growing/wonderPaint.ts",
+          "kind": "import-statement",
+          "original": "./wonderPaint"
+        },
+        {
+          "path": "src/components/island/growing/homeSurfaceGeometry.ts",
+          "kind": "import-statement",
+          "original": "./homeSurfaceGeometry"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/plotGeometry.ts": {
+      "bytes": 2365,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/components/island/growing/fieldGeometry.ts",
+          "kind": "import-statement",
+          "original": "./fieldGeometry"
+        },
+        {
+          "path": "src/components/island/growing/ownLandmarks.ts",
+          "kind": "import-statement",
+          "original": "./ownLandmarks"
+        },
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/environment"
+        },
+        {
+          "path": "src/components/island/growing/homeGeometry.ts",
+          "kind": "import-statement",
+          "original": "./homeGeometry"
+        },
+        {
+          "path": "src/components/island/growing/plotParts.ts",
+          "kind": "import-statement",
+          "original": "./plotParts"
+        },
+        {
+          "path": "src/components/island/growing/wonderPaint.ts",
+          "kind": "import-statement",
+          "original": "./wonderPaint"
+        },
+        {
+          "path": "src/components/island/growing/plotParts.ts",
+          "kind": "import-statement",
+          "original": "./plotParts"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/keepsakeGeometry.ts": {
+      "bytes": 8315,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/components/island/growing/plotParts.ts",
+          "kind": "import-statement",
+          "original": "./plotParts"
+        },
+        {
+          "path": "src/components/island/growing/wonderPaint.ts",
+          "kind": "import-statement",
+          "original": "./wonderPaint"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/flowerGeometry.ts": {
+      "bytes": 2079,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/components/island/three/primitives.ts",
+          "kind": "import-statement",
+          "original": "../three/primitives"
+        },
+        {
+          "path": "src/components/island/growing/wonderPaint.ts",
+          "kind": "import-statement",
+          "original": "./wonderPaint"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/pierGeometry.ts": {
+      "bytes": 2615,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/components/island/growing/plotParts.ts",
+          "kind": "import-statement",
+          "original": "./plotParts"
+        },
+        {
+          "path": "src/components/island/growing/wonderPaint.ts",
+          "kind": "import-statement",
+          "original": "./wonderPaint"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/landscape.ts": {
+      "bytes": 2240,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/legacyWorldDefinition.ts": {
+      "bytes": 5269,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        },
+        {
+          "path": "src/domain/growingIsland/placeTerrain.ts",
+          "kind": "import-statement",
+          "original": "./placeTerrain"
+        },
+        {
+          "path": "src/domain/growingIsland/landscape.ts",
+          "kind": "import-statement",
+          "original": "./landscape"
+        },
+        {
+          "path": "src/domain/growingIsland/worldDefinition.ts",
+          "kind": "import-statement",
+          "original": "./worldDefinition"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/actorScale.ts": {
+      "bytes": 8341,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/sceneLayout.ts": {
+      "bytes": 9429,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/space"
+        },
+        {
+          "path": "src/domain/growingIsland/placeTerrain.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/placeTerrain"
+        },
+        {
+          "path": "src/domain/growingIsland/landscape.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/landscape"
+        },
+        {
+          "path": "src/domain/growingIsland/legacyWorldDefinition.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/legacyWorldDefinition"
+        },
+        {
+          "path": "src/components/island/growing/actorScale.ts",
+          "kind": "import-statement",
+          "original": "./actorScale"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/bridgeGeometry.ts": {
+      "bytes": 1383,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/domain/growingIsland/placeRelations.ts": {
+      "bytes": 2438,
+      "imports": [
+        {
+          "path": "src/domain/islandLife/waterChannels.ts",
+          "kind": "import-statement",
+          "original": "../islandLife/waterChannels"
+        },
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "./environment"
+        },
+        {
+          "path": "src/domain/growingIsland/placeCatalog.ts",
+          "kind": "import-statement",
+          "original": "./placeCatalog"
+        },
+        {
+          "path": "src/domain/growingIsland/places.ts",
+          "kind": "import-statement",
+          "original": "./places"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./space"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/placeLeafGeometry.ts": {
+      "bytes": 3258,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/placePaths.ts": {
+      "bytes": 6804,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/space"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/placePondGeometry.ts": {
+      "bytes": 11545,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/domain/islandLife/waterChannels.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/islandLife/waterChannels"
+        },
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/environment"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/space"
+        },
+        {
+          "path": "../three/garden/geometry",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/components/island/growing/placePaths.ts",
+          "kind": "import-statement",
+          "original": "./placePaths"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/placeSpringGeometry.ts": {
+      "bytes": 13608,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/domain/islandLife/waterChannels.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/islandLife/waterChannels"
+        },
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/environment"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/space"
+        },
+        {
+          "path": "../three/garden/geometry",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/components/island/growing/placePondGeometry.ts",
+          "kind": "import-statement",
+          "original": "./placePondGeometry"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/placeShellGeometry.ts": {
+      "bytes": 9613,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "../three/garden/geometry",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    },
+    "docs/design/2026-10-11-authored-flower-garden/native-flower-support-profile.json": {
+      "bytes": 5449,
+      "imports": []
+    },
+    "src/components/island/growing/placeFlowerGeometry.ts": {
+      "bytes": 13613,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "../three/garden/geometry",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/space"
+        },
+        {
+          "path": "src/components/island/growing/placeLeafGeometry.ts",
+          "kind": "import-statement",
+          "original": "./placeLeafGeometry"
+        },
+        {
+          "path": "docs/design/2026-10-11-authored-flower-garden/native-flower-support-profile.json",
+          "kind": "import-statement",
+          "original": "../../../../docs/design/2026-10-11-authored-flower-garden/native-flower-support-profile.json"
+        },
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/environment"
+        },
+        {
+          "path": "src/domain/growingIsland/places.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/places"
+        }
+      ],
+      "format": "esm"
+    },
+    "node_modules/three/examples/jsm/objects/MarchingCubes.js": {
+      "bytes": 40408,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/placeRootRoomGeometry.ts": {
+      "bytes": 15236,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "node_modules/three/examples/jsm/objects/MarchingCubes.js",
+          "kind": "import-statement",
+          "original": "three/addons/objects/MarchingCubes.js"
+        },
+        {
+          "path": "../three/garden/geometry",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/space"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/native/nativePlaceGrove.ts": {
+      "bytes": 12668,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/components/island/growing/placeRootRoomGeometry.ts",
+          "kind": "import-statement",
+          "original": "../placeRootRoomGeometry"
+        },
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "../../../../domain/growingIsland/environment"
+        },
+        {
+          "path": "src/domain/growingIsland/places.ts",
+          "kind": "import-statement",
+          "original": "../../../../domain/growingIsland/places"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "../../../../domain/growingIsland/space"
+        },
+        {
+          "path": "src/domain/growingIsland/nature.ts",
+          "kind": "import-statement",
+          "original": "../../../../domain/growingIsland/nature"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/growingShaderWarmup.ts": {
+      "bytes": 9721,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/placeGeometry.ts": {
+      "bytes": 26852,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/components/island/three/garden/geometry.ts",
+          "kind": "import-statement",
+          "original": "../three/garden/geometry"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/space"
+        },
+        {
+          "path": "src/domain/growingIsland/placeTerrain.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/placeTerrain"
+        },
+        {
+          "path": "src/components/island/growing/placeLeafGeometry.ts",
+          "kind": "import-statement",
+          "original": "./placeLeafGeometry"
+        },
+        {
+          "path": "src/components/island/growing/placeSpringGeometry.ts",
+          "kind": "import-statement",
+          "original": "./placeSpringGeometry"
+        },
+        {
+          "path": "src/components/island/growing/placeShellGeometry.ts",
+          "kind": "import-statement",
+          "original": "./placeShellGeometry"
+        },
+        {
+          "path": "src/components/island/growing/placeFlowerGeometry.ts",
+          "kind": "import-statement",
+          "original": "./placeFlowerGeometry"
+        },
+        {
+          "path": "src/components/island/growing/placeRootRoomGeometry.ts",
+          "kind": "import-statement",
+          "original": "./placeRootRoomGeometry"
+        },
+        {
+          "path": "src/components/island/three/primitives.ts",
+          "kind": "import-statement",
+          "original": "../three/primitives"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/space"
+        },
+        {
+          "path": "src/components/island/growing/native/nativePlaceGrove.ts",
+          "kind": "import-statement",
+          "original": "./native/nativePlaceGrove"
+        },
+        {
+          "path": "src/components/island/growing/growingShaderWarmup.ts",
+          "kind": "import-statement",
+          "original": "./growingShaderWarmup"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/curvedGeometry.ts": {
+      "bytes": 1539,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/components/island/growing/objectLayer.ts": {
+      "bytes": 26600,
+      "imports": [
+        {
+          "path": "node_modules/three/build/three.module.js",
+          "kind": "import-statement",
+          "original": "three"
+        },
+        {
+          "path": "src/components/island/growing/treeSilhouettes.ts",
+          "kind": "import-statement",
+          "original": "./treeSilhouettes"
+        },
+        {
+          "path": "src/components/island/life/itemGeometry.ts",
+          "kind": "import-statement",
+          "original": "../life/itemGeometry"
+        },
+        {
+          "path": "src/domain/islandLife/waterChannels.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/islandLife/waterChannels"
+        },
+        {
+          "path": "src/domain/growingIsland/environment.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/environment"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/space"
+        },
+        {
+          "path": "src/domain/growingIsland/index.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland"
+        },
+        {
+          "path": "src/components/island/growing/plotGeometry.ts",
+          "kind": "import-statement",
+          "original": "./plotGeometry"
+        },
+        {
+          "path": "src/components/island/growing/keepsakeGeometry.ts",
+          "kind": "import-statement",
+          "original": "./keepsakeGeometry"
+        },
+        {
+          "path": "src/components/island/growing/ownLandmarks.ts",
+          "kind": "import-statement",
+          "original": "./ownLandmarks"
+        },
+        {
+          "path": "src/components/island/growing/wonderPaint.ts",
+          "kind": "import-statement",
+          "original": "./wonderPaint"
+        },
+        {
+          "path": "src/components/island/growing/flowerGeometry.ts",
+          "kind": "import-statement",
+          "original": "./flowerGeometry"
+        },
+        {
+          "path": "src/components/island/growing/pierGeometry.ts",
+          "kind": "import-statement",
+          "original": "./pierGeometry"
+        },
+        {
+          "path": "src/components/island/growing/sceneLayout.ts",
+          "kind": "import-statement",
+          "original": "./sceneLayout"
+        },
+        {
+          "path": "src/domain/growingIsland/authoredWorldFrame.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/authoredWorldFrame"
+        },
+        {
+          "path": "src/components/island/growing/bridgeGeometry.ts",
+          "kind": "import-statement",
+          "original": "./bridgeGeometry"
+        },
+        {
+          "path": "src/domain/growingIsland/places.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/places"
+        },
+        {
+          "path": "src/domain/growingIsland/placeRelations.ts",
+          "kind": "import-statement",
+          "original": "../../../domain/growingIsland/placeRelations"
+        },
+        {
+          "path": "src/components/island/growing/placeGeometry.ts",
+          "kind": "import-statement",
+          "original": "./placeGeometry"
+        },
+        {
+          "path": "src/components/island/growing/placePaths.ts",
+          "kind": "import-statement",
+          "original": "./placePaths"
+        },
+        {
+          "path": "src/components/island/growing/native/nativePlaceGrove.ts",
+          "kind": "import-statement",
+          "original": "./native/nativePlaceGrove"
+        },
+        {
+          "path": "src/components/island/growing/curvedGeometry.ts",
+          "kind": "import-statement",
+          "original": "./curvedGeometry"
+        },
+        {
+          "path": "src/components/island/growing/growingShaderWarmup.ts",
+          "kind": "import-statement",
+          "original": "./growingShaderWarmup"
+        }
+      ],
+      "format": "esm"
+    },
+    "<stdin>": {
+      "bytes": 972,
+      "imports": [
+        {
+          "path": "src/domain/growingIsland/worldDefinition.ts",
+          "kind": "import-statement",
+          "original": "./src/domain/growingIsland/worldDefinition.ts"
+        },
+        {
+          "path": "src/domain/growingIsland/authoredWaterCarving.ts",
+          "kind": "import-statement",
+          "original": "./src/domain/growingIsland/authoredWaterCarving.ts"
+        },
+        {
+          "path": "src/domain/growingIsland/authoredWorldFrame.ts",
+          "kind": "import-statement",
+          "original": "./src/domain/growingIsland/authoredWorldFrame.ts"
+        },
+        {
+          "path": "src/domain/growingIsland/commands.ts",
+          "kind": "import-statement",
+          "original": "./src/domain/growingIsland/commands.ts"
+        },
+        {
+          "path": "src/domain/growingIsland/nature.ts",
+          "kind": "import-statement",
+          "original": "./src/domain/growingIsland/nature.ts"
+        },
+        {
+          "path": "src/domain/growingIsland/placeGoals.ts",
+          "kind": "import-statement",
+          "original": "./src/domain/growingIsland/placeGoals.ts"
+        },
+        {
+          "path": "src/domain/growingIsland/places.ts",
+          "kind": "import-statement",
+          "original": "./src/domain/growingIsland/places.ts"
+        },
+        {
+          "path": "src/domain/growingIsland/space.ts",
+          "kind": "import-statement",
+          "original": "./src/domain/growingIsland/space.ts"
+        },
+        {
+          "path": "src/components/island/growing/objectLayer.ts",
+          "kind": "import-statement",
+          "original": "./src/components/island/growing/objectLayer.ts"
+        },
+        {
+          "path": "src/components/island/growing/treeSilhouettes.ts",
+          "kind": "import-statement",
+          "original": "./src/components/island/growing/treeSilhouettes.ts"
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "stdin.js": {
+      "imports": [],
+      "exports": [
+        "advanceNature",
+        "applyIntent",
+        "approachCells",
+        "authoredWorldFrame",
+        "canPlace",
+        "compileWorldDefinition",
+        "derivePlaces",
+        "key",
+        "landCells",
+        "previewGrowingState",
+        "reachableFromHome",
+        "syncPlaceMilestones",
+        "treeForm",
+        "withNative05WaterCarvingScope"
+      ],
+      "entryPoint": "<stdin>",
+      "inputs": {
+        "src/domain/growingIsland/authoredWaterGeometry.ts": {
+          "bytesInOutput": 4677
+        },
+        "src/domain/growingIsland/authoredWorldAccess.ts": {
+          "bytesInOutput": 10246
+        },
+        "src/domain/growingIsland/worldDefinition.ts": {
+          "bytesInOutput": 24006
+        },
+        "<stdin>": {
+          "bytesInOutput": 0
+        },
+        "src/domain/growingIsland/authoredWaterCarving.ts": {
+          "bytesInOutput": 7649
+        },
+        "src/domain/islandLife/economyRules.ts": {
+          "bytesInOutput": 57
+        },
+        "src/domain/islandLife/model.ts": {
+          "bytesInOutput": 517
+        },
+        "src/domain/islandLife/footprint.ts": {
+          "bytesInOutput": 288
+        },
+        "src/domain/islandLife/space.ts": {
+          "bytesInOutput": 39
+        },
+        "src/domain/islandLife/waterChannels.ts": {
+          "bytesInOutput": 2262
+        },
+        "src/domain/growingIsland/rules.ts": {
+          "bytesInOutput": 4237
+        },
+        "src/domain/growingIsland/types.ts": {
+          "bytesInOutput": 105
+        },
+        "src/domain/growingIsland/space.ts": {
+          "bytesInOutput": 5577
+        },
+        "src/domain/growingIsland/environment.ts": {
+          "bytesInOutput": 4394
+        },
+        "src/domain/growingIsland/authoredWaterContour.ts": {
+          "bytesInOutput": 6734
+        },
+        "src/domain/growingIsland/authoredWaterRim.ts": {
+          "bytesInOutput": 1531
+        },
+        "src/domain/growingIsland/nativeWaterBridgeProfile.json": {
+          "bytesInOutput": 1560
+        },
+        "src/domain/growingIsland/authoredWaterBridge.ts": {
+          "bytesInOutput": 15570
+        },
+        "src/domain/growingIsland/nativeWaterSource.json": {
+          "bytesInOutput": 19974
+        },
+        "src/domain/growingIsland/authoredWaterWorld.ts": {
+          "bytesInOutput": 30949
+        },
+        "src/domain/growingIsland/authoredWaterFrame.ts": {
+          "bytesInOutput": 519
+        },
+        "docs/design/2026-10-12-authored-cove-entrance/source-manifest.json": {
+          "bytesInOutput": 28303
+        },
+        "docs/design/2026-10-12-authored-cove-entrance/shared-apron-world-patch-v1.json": {
+          "bytesInOutput": 366596
+        },
+        "src/domain/growingIsland/authoredCoveWorld.ts": {
+          "bytesInOutput": 10053
+        },
+        "src/domain/natureTown/random.ts": {
+          "bytesInOutput": 2136
+        },
+        "src/domain/growingIsland/random.ts": {
+          "bytesInOutput": 418
+        },
+        "src/domain/growingIsland/flowers.ts": {
+          "bytesInOutput": 2812
+        },
+        "src/domain/growingIsland/nature.ts": {
+          "bytesInOutput": 4987
+        },
+        "docs/product/island-place-goals.json": {
+          "bytesInOutput": 37084
+        },
+        "src/domain/growingIsland/placeCatalog.ts": {
+          "bytesInOutput": 409
+        },
+        "src/domain/growingIsland/placeTerrain.ts": {
+          "bytesInOutput": 4278
+        },
+        "src/domain/growingIsland/places.ts": {
+          "bytesInOutput": 21527
+        },
+        "src/domain/growingIsland/authoredShoulderWorld.ts": {
+          "bytesInOutput": 9743
+        },
+        "src/domain/growingIsland/authoredWorldFrame.ts": {
+          "bytesInOutput": 2792
+        },
+        "src/domain/growingIsland/guidance.ts": {
+          "bytesInOutput": 3885
+        },
+        "src/domain/growingIsland/community.ts": {
+          "bytesInOutput": 5690
+        },
+        "src/domain/growingIsland/room.ts": {
+          "bytesInOutput": 2402
+        },
+        "src/domain/growingIsland/placeTypes.ts": {
+          "bytesInOutput": 65
+        },
+        "src/domain/growingIsland/placeGoals.ts": {
+          "bytesInOutput": 8099
+        },
+        "src/domain/growingIsland/names.ts": {
+          "bytesInOutput": 1858
+        },
+        "src/domain/growingIsland/pier.ts": {
+          "bytesInOutput": 2308
+        },
+        "src/domain/growingIsland/town.ts": {
+          "bytesInOutput": 6919
+        },
+        "src/domain/growingIsland/authoredPlacementSupport.ts": {
+          "bytesInOutput": 7197
+        },
+        "src/domain/growingIsland/commands.ts": {
+          "bytesInOutput": 16641
+        },
+        "src/components/island/growing/treeSilhouettes.ts": {
+          "bytesInOutput": 187
+        },
+        "src/domain/growingIsland/index.ts": {
+          "bytesInOutput": 0
+        },
+        "src/components/island/growing/plotParts.ts": {
+          "bytesInOutput": 212
+        },
+        "src/components/island/growing/plotGeometry.ts": {
+          "bytesInOutput": 0
+        },
+        "src/components/island/growing/placeFlowerGeometry.ts": {
+          "bytesInOutput": 41
+        },
+        "src/components/island/growing/placeRootRoomGeometry.ts": {
+          "bytesInOutput": 96
+        },
+        "src/components/island/growing/objectLayer.ts": {
+          "bytesInOutput": 846
+        }
+      },
+      "bytes": 691004
+    }
+  }
+}

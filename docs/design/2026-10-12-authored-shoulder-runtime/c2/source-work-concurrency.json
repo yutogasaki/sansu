@@ -1,0 +1,45 @@
+{
+  "observedAt": "2026-10-12T03:49:10.340106+00:00",
+  "stage02Report": "/private/tmp/sansu-authored-shoulder-c2/regressions/02-shoulder-full/report.json",
+  "stage02ReportSha256": "e4afb306e25af4b1bd6fdbac4c1849aab320f142a54e78ee20ec8f30697eab0a",
+  "stage02Pass": true,
+  "formerStage02Pid": 8055,
+  "formerStage02Exited": true,
+  "observations": [
+    {
+      "command": [
+        "sysctl",
+        "-n",
+        "hw.ncpu"
+      ],
+      "output": "10"
+    },
+    {
+      "command": [
+        "sysctl",
+        "-n",
+        "hw.memsize"
+      ],
+      "output": "34359738368"
+    },
+    {
+      "command": [
+        "memory_pressure",
+        "-Q"
+      ],
+      "output": "The system has 34359738368 (2097152 pages with a page size of 16384).\nSystem-wide memory free percentage: 74%"
+    },
+    {
+      "command": [
+        "ps",
+        "-p",
+        "6930,6704",
+        "-o",
+        "pid=,ppid=,%cpu=,rss=,comm="
+      ],
+      "output": "6704 33232   0.0 185168 node\n 6930  6929   0.0 392272 /Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python"
+    }
+  ],
+  "decision": "Allow one serial source-only Blender process with configured 2 threads and observed RSS guard 3 GiB. Remaining c2 functional regressions stay uninterrupted; source work may overlap them. No performance acceptance from overlapping wall times.",
+  "unchanged": "No source/candidate mutation, supervisor pause or timeout adjustment. Floor browser diagnostic still waits for all8 PASS."
+}

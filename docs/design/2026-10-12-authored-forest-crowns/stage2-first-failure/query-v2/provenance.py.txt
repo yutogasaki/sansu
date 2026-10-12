@@ -1,0 +1,32 @@
+"""Read and validate the preparation seal without launching any process."""
+import hashlib
+import json
+from pathlib import Path
+
+REQUIRED={'ray_query64.py','volume_adapter.py','compare-failed-query.py','provenance.py','run-once.py'}
+def digest(path):
+    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+def verify_readiness(root):
+    root=Path(root)
+    ready_path=root/'readiness.json'
+    seal_path=root/'readiness.sha256'
+    ready_sha=digest(ready_path)
+    if seal_path.read_text().strip()!=ready_sha:
+        raise ValueError('Readiness SHA seal mismatch')
+    ready=json.loads(ready_path.read_text())
+    if ready.get('status')!='READY-NOT-BLENDER-EXECUTED':
+        raise ValueError('Unexpected preparation status')
+    expected=ready['files']
+    if not REQUIRED.issubset(expected):
+        raise ValueError('Required v2 code omitted from readiness')
+    actual={}
+    for name,wanted in expected.items():
+        if Path(name).name!=name:
+            raise ValueError('Readiness file must be a local basename')
+        actual[name]=digest(root/name)
+        if actual[name]!=wanted:
+            raise ValueError('Prepared file SHA mismatch: '+name)
+    actual['readiness.json']=ready_sha
+    actual['readiness.sha256']=digest(seal_path)
+    return actual

@@ -1,0 +1,68 @@
+{
+  "status": "SOURCE_VISUAL_AND_RUNTIME_HOLD",
+  "recordMeaning": "Observed completed source build and two renders, not app acceptance",
+  "runs": {
+    "build": {
+      "raw": "east-v5-stairs-build/runs/01-coarse-build-external-process.json",
+      "rawSHA256": "fd39d56e1d6b4370e5c7379babfb1bbec124a6141868bc63f419ce85a54eb901",
+      "elapsedSeconds": 15.517189792,
+      "observedBlender": {
+        "64992": {
+          "pid": 64992,
+          "firstObservedUTC": "2026-10-12T07:12:53.863461+00:00",
+          "command": "/Applications/Blender.app/Contents/MacOS/Blender -b --threads 2 --python-exit-code 1 --python build-coarse.py -- build --scheduled --out runs/01-coarse-build",
+          "peakObservedRSSBytes": 1067827200,
+          "lastObservedUTC": "2026-10-12T07:13:08.170827+00:00"
+        }
+      },
+      "exitCode": 0,
+      "exitObservedUTC": "2026-10-12T07:13:09.033209+00:00",
+      "inputsUnchanged": true,
+      "ownedPIDAndGroupGone": true
+    },
+    "whole": {
+      "raw": "east-v5-shape-view/runs/01-whole-external-process.json",
+      "rawSHA256": "38a45d6c97a6021958707fd55ae089e8983f631828630498c866d0ee9142fb3f",
+      "elapsedSeconds": 13.467570417000001,
+      "observedBlender": {
+        "66075": {
+          "pid": 66075,
+          "firstObservedUTC": "2026-10-12T07:16:40.995936+00:00",
+          "command": "/Applications/Blender.app/Contents/MacOS/Blender -b --threads 2 --python-exit-code 1 --python render-coarse.py -- --scheduled --source /private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/study.blend --out runs/01-whole --view whole",
+          "peakObservedRSSBytes": 2520154112,
+          "lastObservedUTC": "2026-10-12T07:16:52.933845+00:00"
+        }
+      },
+      "exitCode": 0,
+      "exitObservedUTC": "2026-10-12T07:16:54.125055+00:00",
+      "inputsUnchanged": true,
+      "ownedPIDAndGroupGone": true,
+      "png": "east-v5-shape-view/runs/01-whole/coarse-real-stair-HOLD-whole.png",
+      "pngSHA256": "659ddc73eefedea0784730b771187c75b35db5c22758f51ea2b2f925a8ee0521"
+    },
+    "entry": {
+      "raw": "east-v5-entry-view/runs/01-entry-external-process.json",
+      "rawSHA256": "1f076b5b7ee5159f4a58cda7ece9b118ac31b882cc44fdd68899c394672c1866",
+      "elapsedSeconds": 19.80330675,
+      "observedBlender": {
+        "67042": {
+          "pid": 67042,
+          "firstObservedUTC": "2026-10-12T07:20:34.508972+00:00",
+          "command": "/Applications/Blender.app/Contents/MacOS/Blender -b --threads 2 --python-exit-code 1 --python render-coarse.py -- --scheduled --source /private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/study.blend --out runs/01-entry --view entry-section",
+          "peakObservedRSSBytes": 2520547328,
+          "lastObservedUTC": "2026-10-12T07:20:53.094527+00:00"
+        }
+      },
+      "exitCode": 0,
+      "exitObservedUTC": "2026-10-12T07:20:53.961531+00:00",
+      "inputsUnchanged": true,
+      "ownedPIDAndGroupGone": true,
+      "png": "east-v5-entry-view/runs/01-entry/coarse-real-stair-HOLD-entry-section.png",
+      "pngSHA256": "d684d1701bd12081a5c8a99cbf3f50d9c02b2f02bc76e87f12bf2155c25260c8"
+    }
+  },
+  "archiveProofSHA256": "89c913423c20fe53941cf1d3442c086603f0fff91bddb189badb1e6bd7386b8d",
+  "topology": "five closed components, exact1280 visible tread triangles; no hidden ramp",
+  "knownCoverage": "raw threshold line new surface uncovered total .2572902908m, max .03506468085m; original ground0; cause unclassified",
+  "next": "Root near-view review, then scoped geometry/contact decision; no new Blender authorized"
+}

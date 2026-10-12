@@ -1,0 +1,98 @@
+{
+  "scope": "Source geometry/domain composition diagnostic. Synthetic two-owner poses only; not ordinary UI purchase or maturity evidence.",
+  "cases": {
+    "parallel": {
+      "plan": {
+        "revision": "growth-terrain:ad6985e1cbf2c25f",
+        "upstreamRevision": "f691731f76848489",
+        "catalogRevision": "9efb5888f3c2d9b94414792f91afbc18c4bf31b9bbe2b2ebf2def70b8380bf1d",
+        "assemblies": [
+          {
+            "id": "native05-growing-shore-v1:growth-terrain",
+            "districtId": "native05-growing-shore-v1",
+            "ownerIds": [
+              "source-0",
+              "source-1"
+            ],
+            "socketId": "south",
+            "shape": "parallel"
+          }
+        ]
+      },
+      "sites": 281,
+      "added": 13,
+      "reachedAdded": 13
+    },
+    "seaward": {
+      "plan": {
+        "revision": "growth-terrain:0bef8ebd1b1a435b",
+        "upstreamRevision": "f691731f76848489",
+        "catalogRevision": "9efb5888f3c2d9b94414792f91afbc18c4bf31b9bbe2b2ebf2def70b8380bf1d",
+        "assemblies": [
+          {
+            "id": "native05-growing-shore-v1:growth-terrain",
+            "districtId": "native05-growing-shore-v1",
+            "ownerIds": [
+              "source-0",
+              "source-1"
+            ],
+            "socketId": "south",
+            "shape": "seaward"
+          }
+        ]
+      },
+      "sites": 404,
+      "added": 136,
+      "reachedAdded": 136
+    },
+    "shifted": {
+      "plan": {
+        "revision": "growth-terrain:c9deb4eb14e57295",
+        "upstreamRevision": "f691731f76848489",
+        "catalogRevision": "9efb5888f3c2d9b94414792f91afbc18c4bf31b9bbe2b2ebf2def70b8380bf1d",
+        "assemblies": [
+          {
+            "id": "native05-growing-shore-v1:growth-terrain",
+            "districtId": "native05-growing-shore-v1",
+            "ownerIds": [
+              "source-0",
+              "source-1"
+            ],
+            "socketId": "north",
+            "shape": "parallel"
+          }
+        ]
+      },
+      "sites": 281,
+      "added": 13,
+      "reachedAdded": 13
+    }
+  },
+  "pass": true,
+  "baseline": {
+    "sites": 268,
+    "rights": 6
+  },
+  "acquisition": {
+    "grant": {
+      "id": "source-growing-shore",
+      "templateId": "native05-growing-shore-v1",
+      "parent": {
+        "districtId": "native05-inlet-core",
+        "portId": "east-entry"
+      },
+      "entryPortId": "west-entry",
+      "turn": 0,
+      "logicalOrigin": {
+        "x": 16,
+        "z": -4
+      },
+      "worldOrigin": {
+        "x": 16,
+        "y": 0,
+        "z": -4
+      }
+    },
+    "rights": 79
+  }
+}

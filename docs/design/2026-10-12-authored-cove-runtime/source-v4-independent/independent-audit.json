@@ -1,0 +1,587 @@
+{
+  "schema": "sansu-independent-cove-v4-source-audit-v1",
+  "scope": "Independent changed shore/floor audit; actual runtime domain and actor rigs, no browser, art or full runtime acceptance.",
+  "candidate": "native05-authored-cove-shore-v4",
+  "shellSourceId": "native05-authored-cove-corner-v3",
+  "inputHashes": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/assembly-manifest.json": "6e1fcafe9babaa141b51ec120f80c4a82407458bb380ba0c2c9b9e978e04218f",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/cove-corner-v3.blend": "c45edc72343d9ff597631c89f37541575838ddd5038d98c848653513f012ab03",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/cove-corner-v3.glb": "f08ada4907c76a617e2c22090049b9b2880dde2d75fa11ad61f6e76c7eec7146",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/cove-corner-with-shore-v4.blend": "0955cd2dc49d7a6cdb46c4c89d5a8b2ecab41807b03074ca90586bf74af7d24b",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/cove-corner-with-shore-v4.glb": "ff79d2bff518cbd94a5ef2a5566e5f24ed09296248bd538c7fa41a475f849077",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/cove-delivery-manifest.json": "90dd4291dee8e498deac9908f1890b5afbf71b07bac3181bc72b0109d6453873",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/ground-input.json": "3fd007a67719b534cc7538f5632572c2e123eb2c865887a6e072cc069235dfb6",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/shared-apron-world-patch-v1.json": "7a5cc9edd5282f7471f8257e4ee83212cbf93f3f30ba269bb102d91bc11dc969",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/source-manifest.json": "c52169062d71aa4e19ad82c2103440a76c3fb071db9b7b286066827aa6aacf1c",
+    "/Users/yutogasaki/Projects/sansu/docs/product/island-place-goals.json": "c4714aae51b3b0504ee23e999276518541aa13a0c80b05768d82112f172f4424",
+    "/Users/yutogasaki/Projects/sansu/package-lock.json": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+    "/Users/yutogasaki/Projects/sansu/package.json": "25e546df94c00864ac013b74100634eb4825071536946087267c77892fbc4451",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/authored-flower-reference-mature.json": "a6371602364a531130fb2a99e927958648ff1c57c2cc5a0966c315538ecbf533",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/native-cove-corner.glb.gz": "7e8aeee0a7d1b821f9977f483436dec3d8beb1f19f6c352d2c51f00285c0bb87",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/native05-world.json.gz": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/growing/actorScale.ts": "6120e10eae06f3ea61b7e798a1c214c814df563a63a8e1677d897e185e93f57f",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/growing/actors.ts": "0569af32a74fca09f27771d94391c0d15d94a92e9be1460be88f5b4e32a69d21",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/growing/authoredFlowerObstructions.ts": "c50f5991a89ce14c7f0d63868b21399c0ac3fc13f0965e2d498772a4fe047487",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/growing/friendRig.ts": "f4db2d23ec178a20f58256abebe3477b622c7ed60097c4c4a9031ca96d4dbeac",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/growing/pierGeometry.ts": "37d259dcb9cccc258c3e0f5af1212e0186d5d6dd7e2137f9051de156a0aefaea",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/growing/plotParts.ts": "dcd1ce1f3f4b98439f5063f45e21286998d69163e56834dc1a319da7fd2614de",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/growing/wonderPaint.ts": "ad55bf214601e1565d2e19405b312862f4aba4100c2885290b472b2d3dc0c40e",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/three/islandCharacters.ts": "378bbc8127df7e0d7db61ad5428dbf412f35f6221ef16110a0d20fc329ff6da9",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/three/primitives.ts": "024f55cd70eeb753dccc5610613221c29e3fddae05385b2403ee53d85dce1e24",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/three/residentFabric.ts": "94aac1f3650bb7ffe82f395519370e91664d173efa868c97b95b943144ea0f87",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/three/residentRig.ts": "efbebea3ae6b3235301dd96c66598294c6deb2ae5dbdad33bd31dfb97afd9b51",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/three/worldPalette.ts": "00ad2759a32e5664ab88d4bde483fa261d54401ce37228368763a41b4c8b24e6",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredCoveWorld.ts": "b773f24672e5badc5259594ae5bdc378daedc861577f245d66ccdfdeb38b8781",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWaterBridge.ts": "65594e5eb508d5dad13bd0693d213a66731caa9b60b9d419eefcf3c5983f60cf",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWaterCarving.ts": "6ae51dfb1c3278471b928b54e3d170adefe7dbb4452f1360d7cfbfb52bf83c88",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWaterContour.ts": "bffd4d8b78e12c06a9433b16992b5ca7cc9e44aaf21c4a571d2dff9dc53d6352",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWaterFrame.ts": "6a8e19e2f63f84669ea7fb847955b10bc8dd1b64c555625fc886ec6a730ea7d7",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWaterGeometry.ts": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWaterRim.ts": "4e54cd274658531dcf70d66c2038347aaa8c80a83c4eefd764c0e9e65bf8409f",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWaterWorld.ts": "bece348b05568cb8b2e5a2634c809681bb70c6f9267adc5c72b6b97da88b4805",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWorldAccess.ts": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWorldFrame.ts": "dfe9b76bec5eda6cb5c3fae58fea76925e562496205894f327bd398d4c941c7e",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/environment.ts": "e965f2cd29601e5ee10f5b6dd9861a937e6c4b6ce3f71c35ad9c330109ab97f5",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/flowers.ts": "74c38a6ae4239e97831e2707a4a8f75ab0e0b39f113038bc65626d6c424b561d",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/nativeWaterBridgeProfile.json": "7ad19971180d7d572045d0bc620ca6559cdb165fd55c0e14c4e2e5a681f6fe13",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/nativeWaterSource.json": "e0f652839690f2143279fbbfb60829912802de9bf008ac7d7f3232bf6fb3f306",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/nature.ts": "73a7a4b2d18bfaf84b7ec0b724e07e7ec13088a36eae31b54313d597949be733",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/placeCatalog.ts": "af31b65939c6c58fd4471ef55de8bab4f2a792287caebd648bb7de37282bbb47",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/placeTerrain.ts": "b79248f1bf23a324b152d9e36310aeabcaa8a30abeae58b535f8c40f9cc7d28d",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/places.ts": "25a712391722d414b7d88dadb7ff1e7637aeee80a4397093d2c886bca8755b2a",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/random.ts": "2d3e35f0f26da88acc2228454193fda88b759ac9f58ce8cc96d96b2234c01175",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/rules.ts": "0a4e0289c595318443683fcbcf330d397b532f433d3faa993900fc986a8e6727",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/space.ts": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/types.ts": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/worldDefinition.ts": "c230e8fb354a43792d22814d6eaf82cd7adf0110d517250d1399be84b00ba7ea",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/decorations.ts": "5cfbccce407f289411af0f7317fa15ad96eea8f6abfb52b79a89203f4195ecb1",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/economyRules.ts": "2feb596641a89a83ff6fb7cd915548f3bcf9a8212ddafa75ddc05910e4091272",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/footprint.ts": "756e569dff83698e12dc6401fb96be06a23b950b003df4b1af21b8a1aa38916b",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/landRules.ts": "db73f083a1e73dbfa280401898a406afe9a8294d51d7aaaa5cf57140942dd774",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/model.ts": "c373f5a532347d3f030420f40774a85e8a9434b095cb763138a34b45cd925ea3",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/space.ts": "699f197c86b4e7142b20a1790a6adefd3287445848c708990dc9c5c1423fff55",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/walkingSpace.ts": "5143cdea48aa648b4b2b34f8920168d61b0ea0ed4034b3890e0a76a1c7b85827",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/waterChannels.ts": "b98fef9f0eea7ed48e79890826689db3cbc0cd4a763c8d43eae95254a146f988",
+    "/Users/yutogasaki/Projects/sansu/src/domain/natureTown/random.ts": "45919ef8e7eb46920e60fe20b7992b96621fb9c1f889c81ddcce8d12496cbce9",
+    "/private/tmp/sansu-authored-cove-c1/candidate/docs/design/2026-10-12-authored-cove-entrance/assembly-manifest.json": "092e21cee39bad1f386cf446e3b6901bcdd275f34583da6e4e51a384875dfbf9",
+    "/private/tmp/sansu-authored-cove-c1/candidate/docs/design/2026-10-12-authored-cove-entrance/cove-corner-v3.glb": "f08ada4907c76a617e2c22090049b9b2880dde2d75fa11ad61f6e76c7eec7146",
+    "/private/tmp/sansu-authored-cove-v4-independent/audit.mjs": "ced41b117224ccc9647d23e28f59f7527517dbb21d255294199d8575670d933e",
+    "/private/tmp/sansu-authored-cove-v4-independent/floor-audit.py": "8f8fcd5ac396a312b0f4969dde33fd82c338814a82c081ffdafdb86d9e517c56",
+    "/private/tmp/sansu-authored-cove-v4-independent/freeze-inputs.json": "85155e3c6e0bedda9a56022d14cd9e582a4e2ff273513e1e9d7a8e963b5c1a85"
+  },
+  "sourceClosureCount": 67,
+  "bundleSha256": "8d92ecd48078b760c9fc19374253a60fb0221a884a0c148fdb668889598c776e",
+  "authorFreezeHashesAgree": true,
+  "glbTopology": {
+    "vertices": 1196,
+    "triangles": 2388,
+    "edges": 3582,
+    "boundaryEdges": 0,
+    "nonManifoldEdges": 0,
+    "allFinite": true
+  },
+  "manifestHashesAgree": true,
+  "shell": {
+    "sha256": "f08ada4907c76a617e2c22090049b9b2880dde2d75fa11ad61f6e76c7eec7146",
+    "sameAsFixedV3": true,
+    "transformSameAsFixedV3": true,
+    "sourceIdMatchesDelivery": true,
+    "matchesDelivery": true,
+    "compressedArtifactMatchesDelivery": true,
+    "expandedArtifactMatchesShell": true,
+    "combinedGeometryAndMaterialsPreserved": true,
+    "priorHomeCollisionAuditReuse": "Only unchanged shell geometry/transform allows prior v3 shell/house collision findings to carry. This run rechecks floor and socket support."
+  },
+  "transform": {
+    "source_gltf_pivot": [
+      13.9,
+      0.89,
+      1.2
+    ],
+    "authored_position": [
+      8,
+      0.0475,
+      0.5
+    ],
+    "scale": [
+      0.45,
+      0.45,
+      0.45
+    ],
+    "yaw": 0,
+    "blender_to_gltf": "(X,Z,-Y)",
+    "renderer_from_authored": "subtract layout.center from X and 2 from Z; Y unchanged"
+  },
+  "applicability": {
+    "currentLocalGround": {
+      "min": {
+        "x": 5,
+        "z": -3.5
+      },
+      "max": {
+        "x": 11,
+        "z": 3.5
+      },
+      "revision": "b854fd9d1de0c4d9"
+    },
+    "currentClearCourt": {
+      "min": {
+        "x": 5,
+        "z": -3.5
+      },
+      "max": {
+        "x": 11,
+        "z": 3.5
+      }
+    },
+    "sourceBounds": {
+      "min": {
+        "x": 6.04625,
+        "z": -0.9173270505817582
+      },
+      "max": {
+        "x": 10.285000086,
+        "z": 2.5843744201660157
+      }
+    },
+    "actorSweepBounds": {
+      "min": {
+        "x": 6.265930629408594,
+        "z": -0.5340693705914059
+      },
+      "max": {
+        "x": 9.934069370591406,
+        "z": 1.9840693705914059
+      }
+    },
+    "requiredBounds": {
+      "min": {
+        "x": 6.04625,
+        "z": -0.9173270505817582
+      },
+      "max": {
+        "x": 10.285000086,
+        "z": 2.5843744201660157
+      }
+    },
+    "localGroundCoversSourceAndSweeps": true,
+    "clearCourtCoversSourceAndSweeps": true,
+    "proposedLocalGround": {
+      "min": {
+        "x": 5,
+        "z": -3.5
+      },
+      "max": {
+        "x": 11,
+        "z": 3.5
+      }
+    },
+    "proposedClearCourt": {
+      "min": {
+        "x": 5,
+        "z": -3.5
+      },
+      "max": {
+        "x": 11,
+        "z": 3.5
+      }
+    },
+    "proposedLocalGroundRevision": {
+      "base": "b854fd9d1de0c4d9",
+      "water": "b854fd9d1de0c4d9"
+    },
+    "proposalMethod": "Union exact patch/bank/shell bounds and measured actor radius + .04 edge sweeps; expand existing source applicability rectangles with .05 guard rounded outward to .05 grid. Root must implement/test any required eligibility adjustment."
+  },
+  "frames": {
+    "dry": {
+      "revision": "authored-world:cabd4f083a22fd68",
+      "assemblies": [
+        {
+          "placeId": "P04:p6",
+          "placeRevision": "[1,\"P04\",\"bay\",\"grown\",[[\"l32\",8,-2],[\"p6\",7,-1],[\"p7\",9,-1],[\"p9\",8,0]],[{\"x\":8,\"z\":-3},{\"x\":7.75,\"z\":-2.75},{\"x\":8,\"z\":-2.75},{\"x\":8.25,\"z\":-2.75},{\"x\":7.25,\"z\":-2.25},{\"x\":8.75,\"z\":-2.25},{\"x\":7,\"z\":-2},{\"x\":8,\"z\":-2},{\"x\":8.75,\"z\":-2},{\"x\":9,\"z\":-2},{\"x\":6.75,\"z\":-1.75},{\"x\":7,\"z\":-1.75},{\"x\":8.75,\"z\":-1.75},{\"x\":9,\"z\":-1.75},{\"x\":9.25,\"z\":-1.75},{\"x\":6.25,\"z\":-1.25},{\"x\":7.75,\"z\":-1.25},{\"x\":8,\"z\":-1.25},{\"x\":9.75,\"z\":-1.25},{\"x\":7,\"z\":-1},{\"x\":7.75,\"z\":-1},{\"x\":8,\"z\":-1},{\"x\":8.25,\"z\":-1},{\"x\":9,\"z\":-1},{\"x\":9.75,\"z\":-1},{\"x\":10,\"z\":-1},{\"x\":7.75,\"z\":-0.75},{\"x\":8,\"z\":-0.75},{\"x\":8.25,\"z\":-0.75},{\"x\":9.75,\"z\":-0.75},{\"x\":7,\"z\":-0.25},{\"x\":7.25,\"z\":-0.25},{\"x\":8.75,\"z\":-0.25},{\"x\":9,\"z\":-0.25},{\"x\":9.25,\"z\":-0.25},{\"x\":7,\"z\":0},{\"x\":7.25,\"z\":0},{\"x\":8,\"z\":0},{\"x\":8.75,\"z\":0},{\"x\":9,\"z\":0},{\"x\":7.25,\"z\":0.25},{\"x\":8.75,\"z\":0.25},{\"x\":7.75,\"z\":0.75},{\"x\":8,\"z\":0.75},{\"x\":8.25,\"z\":0.75},{\"x\":8,\"z\":1}],[{\"x\":8,\"z\":-3},{\"x\":7.75,\"z\":-2.75},{\"x\":8,\"z\":-2.75},{\"x\":8.25,\"z\":-2.75},{\"x\":7.25,\"z\":-2.25},{\"x\":8.75,\"z\":-2.25},{\"x\":8.75,\"z\":-2},{\"x\":9,\"z\":-2},{\"x\":8.75,\"z\":-1.75},{\"x\":9,\"z\":-1.75},{\"x\":9.25,\"z\":-1.75},{\"x\":9.75,\"z\":-1.25},{\"x\":9.75,\"z\":-1},{\"x\":10,\"z\":-1},{\"x\":9.75,\"z\":-0.75},{\"x\":7,\"z\":-0.25},{\"x\":7.25,\"z\":-0.25},{\"x\":8.75,\"z\":-0.25},{\"x\":9,\"z\":-0.25},{\"x\":9.25,\"z\":-0.25},{\"x\":7,\"z\":0},{\"x\":7.25,\"z\":0},{\"x\":8.75,\"z\":0},{\"x\":9,\"z\":0},{\"x\":7.25,\"z\":0.25},{\"x\":8.75,\"z\":0.25},{\"x\":7.75,\"z\":0.75},{\"x\":8,\"z\":0.75},{\"x\":8.25,\"z\":0.75},{\"x\":8,\"z\":1}],[],[{\"id\":\"p9\",\"kind\":\"play\",\"cell\":{\"x\":8,\"z\":0}}]]",
+          "ownerIds": [
+            "l32",
+            "p6",
+            "p7",
+            "p9"
+          ],
+          "playId": "p9",
+          "sourceId": "native05-authored-cove-corner-v3",
+          "sourceSha256": "f08ada4907c76a617e2c22090049b9b2880dde2d75fa11ad61f6e76c7eec7146",
+          "transform": {
+            "pivot": [
+              13.9,
+              0.89,
+              1.2
+            ],
+            "position": {
+              "x": 8,
+              "y": 0.0475,
+              "z": 0.5
+            },
+            "scale": 0.45,
+            "yaw": 0
+          }
+        }
+      ]
+    },
+    "water": {
+      "revision": "authored-world:72a57599a43ddca5",
+      "assemblies": [
+        {
+          "placeId": "P04:p6",
+          "placeRevision": "[1,\"P04\",\"bay\",\"grown\",[[\"l32\",8,-2],[\"p6\",7,-1],[\"p7\",9,-1],[\"p9\",8,0]],[{\"x\":8,\"z\":-3},{\"x\":7.75,\"z\":-2.75},{\"x\":8,\"z\":-2.75},{\"x\":8.25,\"z\":-2.75},{\"x\":7.25,\"z\":-2.25},{\"x\":8.75,\"z\":-2.25},{\"x\":7,\"z\":-2},{\"x\":8,\"z\":-2},{\"x\":8.75,\"z\":-2},{\"x\":9,\"z\":-2},{\"x\":6.75,\"z\":-1.75},{\"x\":7,\"z\":-1.75},{\"x\":8.75,\"z\":-1.75},{\"x\":9,\"z\":-1.75},{\"x\":9.25,\"z\":-1.75},{\"x\":6.25,\"z\":-1.25},{\"x\":7.75,\"z\":-1.25},{\"x\":8,\"z\":-1.25},{\"x\":9.75,\"z\":-1.25},{\"x\":7,\"z\":-1},{\"x\":7.75,\"z\":-1},{\"x\":8,\"z\":-1},{\"x\":8.25,\"z\":-1},{\"x\":9,\"z\":-1},{\"x\":9.75,\"z\":-1},{\"x\":10,\"z\":-1},{\"x\":7.75,\"z\":-0.75},{\"x\":8,\"z\":-0.75},{\"x\":8.25,\"z\":-0.75},{\"x\":9.75,\"z\":-0.75},{\"x\":7,\"z\":-0.25},{\"x\":7.25,\"z\":-0.25},{\"x\":8.75,\"z\":-0.25},{\"x\":9,\"z\":-0.25},{\"x\":9.25,\"z\":-0.25},{\"x\":7,\"z\":0},{\"x\":7.25,\"z\":0},{\"x\":8,\"z\":0},{\"x\":8.75,\"z\":0},{\"x\":9,\"z\":0},{\"x\":7.25,\"z\":0.25},{\"x\":8.75,\"z\":0.25},{\"x\":7.75,\"z\":0.75},{\"x\":8,\"z\":0.75},{\"x\":8.25,\"z\":0.75},{\"x\":8,\"z\":1}],[{\"x\":8,\"z\":-3},{\"x\":7.75,\"z\":-2.75},{\"x\":8,\"z\":-2.75},{\"x\":8.25,\"z\":-2.75},{\"x\":7.25,\"z\":-2.25},{\"x\":8.75,\"z\":-2.25},{\"x\":8.75,\"z\":-2},{\"x\":9,\"z\":-2},{\"x\":8.75,\"z\":-1.75},{\"x\":9,\"z\":-1.75},{\"x\":9.25,\"z\":-1.75},{\"x\":9.75,\"z\":-1.25},{\"x\":9.75,\"z\":-1},{\"x\":10,\"z\":-1},{\"x\":9.75,\"z\":-0.75},{\"x\":7,\"z\":-0.25},{\"x\":7.25,\"z\":-0.25},{\"x\":8.75,\"z\":-0.25},{\"x\":9,\"z\":-0.25},{\"x\":9.25,\"z\":-0.25},{\"x\":7,\"z\":0},{\"x\":7.25,\"z\":0},{\"x\":8.75,\"z\":0},{\"x\":9,\"z\":0},{\"x\":7.25,\"z\":0.25},{\"x\":8.75,\"z\":0.25},{\"x\":7.75,\"z\":0.75},{\"x\":8,\"z\":0.75},{\"x\":8.25,\"z\":0.75},{\"x\":8,\"z\":1}],[],[{\"id\":\"p9\",\"kind\":\"play\",\"cell\":{\"x\":8,\"z\":0}}]]",
+          "ownerIds": [
+            "l32",
+            "p6",
+            "p7",
+            "p9"
+          ],
+          "playId": "p9",
+          "sourceId": "native05-authored-cove-corner-v3",
+          "sourceSha256": "f08ada4907c76a617e2c22090049b9b2880dde2d75fa11ad61f6e76c7eec7146",
+          "transform": {
+            "pivot": [
+              13.9,
+              0.89,
+              1.2
+            ],
+            "position": {
+              "x": 8,
+              "y": 0.0475,
+              "z": 0.5
+            },
+            "scale": 0.45,
+            "yaw": 0
+          }
+        }
+      ]
+    },
+    "dryMatchesIndependentPatch": true,
+    "waterMatchesIndependentPatch": true
+  },
+  "base": {
+    "floorsUnchanged": true,
+    "anchorFloorsUnchanged": true,
+    "oldSitesUnchanged": true,
+    "oldEdgesUnchanged": true,
+    "definitionSourceUnchanged": true,
+    "oldSiteSupportFailures": [],
+    "sitesChecked": 2063,
+    "grantsUnchanged": true,
+    "grantsBefore": 73,
+    "grantsAfter": 73,
+    "addedRefs": 13,
+    "addedEdges": 15
+  },
+  "water": {
+    "floorsUnchanged": true,
+    "anchorFloorsUnchanged": true,
+    "oldSitesUnchanged": true,
+    "oldEdgesUnchanged": true,
+    "definitionSourceUnchanged": true,
+    "oldSiteSupportFailures": [],
+    "sitesChecked": 2063,
+    "grantsUnchanged": true,
+    "grantsBefore": 73,
+    "grantsAfter": 73,
+    "addedRefs": 13,
+    "addedEdges": 15
+  },
+  "apron": {
+    "parts": 2,
+    "triangles": 2388,
+    "topTriangles": 596,
+    "expectedTopTriangles": 596,
+    "triangleParity": true,
+    "maxVertexError": 4.251159422060467e-7,
+    "upwardTopTriangles": 593,
+    "nonUpwardTopTriangles": [
+      {
+        "area": 1.0519057550928499e-7,
+        "points": [
+          [
+            6.161675567626953,
+            -0.008999988317489632,
+            -0.9173270726203919
+          ],
+          [
+            6.16328875541687,
+            -0.008999988317489632,
+            -0.913500794172287
+          ],
+          [
+            6.594345922470093,
+            -0.008999988317489632,
+            0.10904297888278963
+          ]
+        ]
+      },
+      {
+        "area": 2.047977153158819e-9,
+        "points": [
+          [
+            6.602076692581177,
+            -0.008999988317489632,
+            -0.360442733168602
+          ],
+          [
+            6.598284263610839,
+            -0.008999988317489632,
+            -0.3699869984388351
+          ],
+          [
+            6.590699834823608,
+            -0.008999988317489632,
+            -0.3890755289793014
+          ]
+        ]
+      },
+      {
+        "area": 4.238552868060519e-18,
+        "points": [
+          [
+            6.590699834823608,
+            -0.008999988317489632,
+            -0.3890755289793014
+          ],
+          [
+            6.586907405853271,
+            -0.008999988317489632,
+            -0.39861979424953464
+          ],
+          [
+            6.583114976882935,
+            -0.008999988317489632,
+            -0.40816405951976786
+          ]
+        ]
+      }
+    ],
+    "bankTriangles": 1196,
+    "expectedBankTriangles": 1196,
+    "bankTriangleParity": true,
+    "bankMaxVertexError": 4.251159422060467e-7,
+    "materialInfo": [
+      {
+        "name": "P04 candidate / shared court ground #a4cb87",
+        "material": {
+          "doubleSided": true,
+          "name": "P04 candidate / shared court ground #a4cb87",
+          "pbrMetallicRoughness": {
+            "baseColorFactor": [
+              0.37123769521713257,
+              0.5972017645835876,
+              0.24228112399578094,
+              1
+            ],
+            "metallicFactor": 0,
+            "roughnessFactor": 0.949999988079071
+          }
+        },
+        "top": true
+      },
+      {
+        "name": "P04 candidate / shared court bank #e2d7c9",
+        "material": {
+          "doubleSided": true,
+          "name": "P04 candidate / shared court bank #e2d7c9",
+          "pbrMetallicRoughness": {
+            "baseColorFactor": [
+              0.7605245113372803,
+              0.6795424818992615,
+              0.5840784311294556,
+              1
+            ],
+            "metallicFactor": 0,
+            "roughnessFactor": 0.7799999713897705
+          }
+        },
+        "top": false
+      }
+    ],
+    "patchTopColor": "#a4cb87",
+    "patchBankColor": "#e2d7c9",
+    "topMaterialsMatchPatch": true,
+    "bankMaterialsMatchPatch": true
+  },
+  "envelope": {
+    "radius": 0.24406937059140585,
+    "height": 0.5500928879753579,
+    "bands": [
+      {
+        "radius": 0.09134999737143516,
+        "minY": 0.20385103985494077,
+        "maxY": 0.5500928879753579
+      },
+      {
+        "radius": 0.1353778402505187,
+        "minY": 0.018073202984005398,
+        "maxY": 0.12266860259311367
+      },
+      {
+        "radius": 0.11740714544627996,
+        "minY": -0.013389719108070908,
+        "maxY": 0.10058152468518997
+      },
+      {
+        "radius": 0.2238622310757637,
+        "minY": 0.022500694926418825,
+        "maxY": 0.32194834489438806
+      },
+      {
+        "radius": 0.11572916628891829,
+        "minY": -0.0190976441475757,
+        "maxY": 0.09264667927451685
+      },
+      {
+        "radius": 0.24406937059140585,
+        "minY": 0.08157946600510133,
+        "maxY": 0.2593961556396356
+      },
+      {
+        "radius": 0.21917178645545318,
+        "minY": 0.03156508037188276,
+        "maxY": 0.4915557144776604
+      },
+      {
+        "radius": 0.08661284906887425,
+        "minY": 0.01597534732239344,
+        "maxY": 0.2971977641282517
+      }
+    ],
+    "source": {
+      "actorIds": [
+        "pokomoko",
+        "authored-friend-0",
+        "authored-friend-1",
+        "authored-friend-2",
+        "authored-friend-3",
+        "authored-friend-4",
+        "authored-friend-5",
+        "authored-friend-6",
+        "authored-friend-7"
+      ],
+      "visualScales": [
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ]
+      ],
+      "meshes": 117,
+      "vertices": 99868,
+      "footSwing": 0.5,
+      "armSwing": 0.6,
+      "walkBob": 0.015750000000000004,
+      "method": "indexed-source-motion-intervals"
+    }
+  },
+  "finalHashes": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/assembly-manifest.json": "6e1fcafe9babaa141b51ec120f80c4a82407458bb380ba0c2c9b9e978e04218f",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/cove-corner-v3.blend": "c45edc72343d9ff597631c89f37541575838ddd5038d98c848653513f012ab03",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/cove-corner-v3.glb": "f08ada4907c76a617e2c22090049b9b2880dde2d75fa11ad61f6e76c7eec7146",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/cove-corner-with-shore-v4.blend": "0955cd2dc49d7a6cdb46c4c89d5a8b2ecab41807b03074ca90586bf74af7d24b",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/cove-corner-with-shore-v4.glb": "ff79d2bff518cbd94a5ef2a5566e5f24ed09296248bd538c7fa41a475f849077",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/cove-delivery-manifest.json": "90dd4291dee8e498deac9908f1890b5afbf71b07bac3181bc72b0109d6453873",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/ground-input.json": "3fd007a67719b534cc7538f5632572c2e123eb2c865887a6e072cc069235dfb6",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/shared-apron-world-patch-v1.json": "7a5cc9edd5282f7471f8257e4ee83212cbf93f3f30ba269bb102d91bc11dc969",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-cove-entrance/source-manifest.json": "c52169062d71aa4e19ad82c2103440a76c3fb071db9b7b286066827aa6aacf1c",
+    "/Users/yutogasaki/Projects/sansu/docs/product/island-place-goals.json": "c4714aae51b3b0504ee23e999276518541aa13a0c80b05768d82112f172f4424",
+    "/Users/yutogasaki/Projects/sansu/package-lock.json": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+    "/Users/yutogasaki/Projects/sansu/package.json": "25e546df94c00864ac013b74100634eb4825071536946087267c77892fbc4451",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/authored-flower-reference-mature.json": "a6371602364a531130fb2a99e927958648ff1c57c2cc5a0966c315538ecbf533",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/native-cove-corner.glb.gz": "7e8aeee0a7d1b821f9977f483436dec3d8beb1f19f6c352d2c51f00285c0bb87",
+    "/Users/yutogasaki/Projects/sansu/prototypes/place-qa/native05-world.json.gz": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/growing/actorScale.ts": "6120e10eae06f3ea61b7e798a1c214c814df563a63a8e1677d897e185e93f57f",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/growing/actors.ts": "0569af32a74fca09f27771d94391c0d15d94a92e9be1460be88f5b4e32a69d21",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/growing/authoredFlowerObstructions.ts": "c50f5991a89ce14c7f0d63868b21399c0ac3fc13f0965e2d498772a4fe047487",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/growing/friendRig.ts": "f4db2d23ec178a20f58256abebe3477b622c7ed60097c4c4a9031ca96d4dbeac",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/growing/pierGeometry.ts": "37d259dcb9cccc258c3e0f5af1212e0186d5d6dd7e2137f9051de156a0aefaea",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/growing/plotParts.ts": "dcd1ce1f3f4b98439f5063f45e21286998d69163e56834dc1a319da7fd2614de",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/growing/wonderPaint.ts": "ad55bf214601e1565d2e19405b312862f4aba4100c2885290b472b2d3dc0c40e",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/three/islandCharacters.ts": "378bbc8127df7e0d7db61ad5428dbf412f35f6221ef16110a0d20fc329ff6da9",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/three/primitives.ts": "024f55cd70eeb753dccc5610613221c29e3fddae05385b2403ee53d85dce1e24",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/three/residentFabric.ts": "94aac1f3650bb7ffe82f395519370e91664d173efa868c97b95b943144ea0f87",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/three/residentRig.ts": "efbebea3ae6b3235301dd96c66598294c6deb2ae5dbdad33bd31dfb97afd9b51",
+    "/Users/yutogasaki/Projects/sansu/src/components/island/three/worldPalette.ts": "00ad2759a32e5664ab88d4bde483fa261d54401ce37228368763a41b4c8b24e6",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredCoveWorld.ts": "b773f24672e5badc5259594ae5bdc378daedc861577f245d66ccdfdeb38b8781",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWaterBridge.ts": "65594e5eb508d5dad13bd0693d213a66731caa9b60b9d419eefcf3c5983f60cf",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWaterCarving.ts": "6ae51dfb1c3278471b928b54e3d170adefe7dbb4452f1360d7cfbfb52bf83c88",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWaterContour.ts": "bffd4d8b78e12c06a9433b16992b5ca7cc9e44aaf21c4a571d2dff9dc53d6352",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWaterFrame.ts": "6a8e19e2f63f84669ea7fb847955b10bc8dd1b64c555625fc886ec6a730ea7d7",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWaterGeometry.ts": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWaterRim.ts": "4e54cd274658531dcf70d66c2038347aaa8c80a83c4eefd764c0e9e65bf8409f",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWaterWorld.ts": "bece348b05568cb8b2e5a2634c809681bb70c6f9267adc5c72b6b97da88b4805",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWorldAccess.ts": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/authoredWorldFrame.ts": "dfe9b76bec5eda6cb5c3fae58fea76925e562496205894f327bd398d4c941c7e",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/environment.ts": "e965f2cd29601e5ee10f5b6dd9861a937e6c4b6ce3f71c35ad9c330109ab97f5",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/flowers.ts": "74c38a6ae4239e97831e2707a4a8f75ab0e0b39f113038bc65626d6c424b561d",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/nativeWaterBridgeProfile.json": "7ad19971180d7d572045d0bc620ca6559cdb165fd55c0e14c4e2e5a681f6fe13",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/nativeWaterSource.json": "e0f652839690f2143279fbbfb60829912802de9bf008ac7d7f3232bf6fb3f306",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/nature.ts": "73a7a4b2d18bfaf84b7ec0b724e07e7ec13088a36eae31b54313d597949be733",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/placeCatalog.ts": "af31b65939c6c58fd4471ef55de8bab4f2a792287caebd648bb7de37282bbb47",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/placeTerrain.ts": "b79248f1bf23a324b152d9e36310aeabcaa8a30abeae58b535f8c40f9cc7d28d",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/places.ts": "25a712391722d414b7d88dadb7ff1e7637aeee80a4397093d2c886bca8755b2a",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/random.ts": "2d3e35f0f26da88acc2228454193fda88b759ac9f58ce8cc96d96b2234c01175",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/rules.ts": "0a4e0289c595318443683fcbcf330d397b532f433d3faa993900fc986a8e6727",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/space.ts": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/types.ts": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+    "/Users/yutogasaki/Projects/sansu/src/domain/growingIsland/worldDefinition.ts": "c230e8fb354a43792d22814d6eaf82cd7adf0110d517250d1399be84b00ba7ea",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/decorations.ts": "5cfbccce407f289411af0f7317fa15ad96eea8f6abfb52b79a89203f4195ecb1",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/economyRules.ts": "2feb596641a89a83ff6fb7cd915548f3bcf9a8212ddafa75ddc05910e4091272",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/footprint.ts": "756e569dff83698e12dc6401fb96be06a23b950b003df4b1af21b8a1aa38916b",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/landRules.ts": "db73f083a1e73dbfa280401898a406afe9a8294d51d7aaaa5cf57140942dd774",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/model.ts": "c373f5a532347d3f030420f40774a85e8a9434b095cb763138a34b45cd925ea3",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/space.ts": "699f197c86b4e7142b20a1790a6adefd3287445848c708990dc9c5c1423fff55",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/walkingSpace.ts": "5143cdea48aa648b4b2b34f8920168d61b0ea0ed4034b3890e0a76a1c7b85827",
+    "/Users/yutogasaki/Projects/sansu/src/domain/islandLife/waterChannels.ts": "b98fef9f0eea7ed48e79890826689db3cbc0cd4a763c8d43eae95254a146f988",
+    "/Users/yutogasaki/Projects/sansu/src/domain/natureTown/random.ts": "45919ef8e7eb46920e60fe20b7992b96621fb9c1f889c81ddcce8d12496cbce9",
+    "/private/tmp/sansu-authored-cove-c1/candidate/docs/design/2026-10-12-authored-cove-entrance/assembly-manifest.json": "092e21cee39bad1f386cf446e3b6901bcdd275f34583da6e4e51a384875dfbf9",
+    "/private/tmp/sansu-authored-cove-c1/candidate/docs/design/2026-10-12-authored-cove-entrance/cove-corner-v3.glb": "f08ada4907c76a617e2c22090049b9b2880dde2d75fa11ad61f6e76c7eec7146",
+    "/private/tmp/sansu-authored-cove-v4-independent/audit.mjs": "ced41b117224ccc9647d23e28f59f7527517dbb21d255294199d8575670d933e",
+    "/private/tmp/sansu-authored-cove-v4-independent/floor-audit.py": "8f8fcd5ac396a312b0f4969dde33fd82c338814a82c081ffdafdb86d9e517c56",
+    "/private/tmp/sansu-authored-cove-v4-independent/freeze-inputs.json": "85155e3c6e0bedda9a56022d14cd9e582a4e2ff273513e1e9d7a8e963b5c1a85"
+  },
+  "inputHashesUnchanged": true
+}

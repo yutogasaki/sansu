@@ -1,0 +1,678 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Byte-identical archive of authorized immutable c1 raw verification evidence only",
+  "startedAt": "2026-10-12T01:37:03.432023+00:00",
+  "completedAt": "2026-10-12T01:37:03.450625+00:00",
+  "sourceRoot": "/private/tmp/sansu-authored-shoulder-c1",
+  "destinationRoot": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-shoulder-runtime/c1",
+  "pass": true,
+  "sourceBeforeAfterExact": true,
+  "destinationMatchesSource": true,
+  "selectedDirectoryInventoryUnchanged": true,
+  "uniqueSourceFiles": 32,
+  "archivedRawFiles": 34,
+  "uniqueSourceBytes": 9776016,
+  "archivedRawBytes": 9777901,
+  "sourceInventoryBefore": {
+    "core": [
+      "execution.log.txt",
+      "report.json",
+      "terminal-summary.json"
+    ],
+    "closure": [
+      "driver-input-audit.json",
+      "driver-inputs.txt",
+      "import-audit-first-failure.json",
+      "import-audit.json",
+      "inputs.json",
+      "inputs.txt",
+      "installed-dependencies-proof.json",
+      "installed-dependencies.json",
+      "plan.json",
+      "projection-local-inputs.json",
+      "projection-metafile.json",
+      "reasons.json",
+      "shoulder-driver-inputs.json"
+    ],
+    "build-boundary": [
+      "asset-budget.log.txt",
+      "dist-files.json",
+      "input-hashes.json",
+      "inspect-build.mjs",
+      "report.json"
+    ]
+  },
+  "sourceInventoryAfter": {
+    "core": [
+      "execution.log.txt",
+      "report.json",
+      "terminal-summary.json"
+    ],
+    "closure": [
+      "driver-input-audit.json",
+      "driver-inputs.txt",
+      "import-audit-first-failure.json",
+      "import-audit.json",
+      "inputs.json",
+      "inputs.txt",
+      "installed-dependencies-proof.json",
+      "installed-dependencies.json",
+      "plan.json",
+      "projection-local-inputs.json",
+      "projection-metafile.json",
+      "reasons.json",
+      "shoulder-driver-inputs.json"
+    ],
+    "build-boundary": [
+      "asset-budget.log.txt",
+      "dist-files.json",
+      "input-hashes.json",
+      "inspect-build.mjs",
+      "report.json"
+    ]
+  },
+  "excluded": [
+    "candidate/**",
+    "prepared/**",
+    "regressions/**",
+    "build-boundary/README.md",
+    "execution-handoff.json"
+  ],
+  "notes": [
+    "No build, browser, Blender, core, or docs check was executed by this archive script.",
+    "The candidate tree was neither copied nor modified by this archive script.",
+    "Raw JSON and logs are unchanged; recorded absolute run paths remain original provenance.",
+    "The initial static import failure is preserved as both raw JSON and its .log.txt output.",
+    "Two small installed dependency JSON files are also retained at their original closure paths.",
+    "This archive equality result does not confer an application or visual acceptance result."
+  ],
+  "archiver": {
+    "source": "/private/tmp/sansu-authored-shoulder-c1-archive-records.py",
+    "destination": "archive-proof/archive-records.py",
+    "sourceSha256": "cba58caecc6f3c3be32ba33c0466b6758ccc4e02790863297272a6accd4cd45c",
+    "destinationAfter": {
+      "sha256": "cba58caecc6f3c3be32ba33c0466b6758ccc4e02790863297272a6accd4cd45c",
+      "bytes": 8124
+    }
+  },
+  "files": [
+    {
+      "source": "build-boundary/asset-budget.log.txt",
+      "destination": "build-boundary/asset-budget.log.txt",
+      "sourceBefore": {
+        "sha256": "b5982d14985281a3f10a55d961dd566394fd3bf495301e985ee4419c62b360cc",
+        "bytes": 212
+      },
+      "sourceAfter": {
+        "sha256": "b5982d14985281a3f10a55d961dd566394fd3bf495301e985ee4419c62b360cc",
+        "bytes": 212
+      },
+      "destinationAfter": {
+        "sha256": "b5982d14985281a3f10a55d961dd566394fd3bf495301e985ee4419c62b360cc",
+        "bytes": 212
+      },
+      "allEqual": true
+    },
+    {
+      "source": "build-boundary/dist-files.json",
+      "destination": "build-boundary/dist-files.json",
+      "sourceBefore": {
+        "sha256": "9374339aed412938983508743c9f15dde1014c1528731aa28e3d58ebbf8d5f7e",
+        "bytes": 24870
+      },
+      "sourceAfter": {
+        "sha256": "9374339aed412938983508743c9f15dde1014c1528731aa28e3d58ebbf8d5f7e",
+        "bytes": 24870
+      },
+      "destinationAfter": {
+        "sha256": "9374339aed412938983508743c9f15dde1014c1528731aa28e3d58ebbf8d5f7e",
+        "bytes": 24870
+      },
+      "allEqual": true
+    },
+    {
+      "source": "build-boundary/input-hashes.json",
+      "destination": "build-boundary/input-hashes.json",
+      "sourceBefore": {
+        "sha256": "b9a693ecc43b04c40b444ba5cdd76d91d3a54581bb2ac4f6bfba9fa9eee63902",
+        "bytes": 847121
+      },
+      "sourceAfter": {
+        "sha256": "b9a693ecc43b04c40b444ba5cdd76d91d3a54581bb2ac4f6bfba9fa9eee63902",
+        "bytes": 847121
+      },
+      "destinationAfter": {
+        "sha256": "b9a693ecc43b04c40b444ba5cdd76d91d3a54581bb2ac4f6bfba9fa9eee63902",
+        "bytes": 847121
+      },
+      "allEqual": true
+    },
+    {
+      "source": "inspect-build-execution.log.txt",
+      "destination": "build-boundary/inspect-build-execution.log.txt",
+      "sourceBefore": {
+        "sha256": "23ef2380bb498a778edf524b42135c9bb75750668556ca39d7778488ebb2e289",
+        "bytes": 320
+      },
+      "sourceAfter": {
+        "sha256": "23ef2380bb498a778edf524b42135c9bb75750668556ca39d7778488ebb2e289",
+        "bytes": 320
+      },
+      "destinationAfter": {
+        "sha256": "23ef2380bb498a778edf524b42135c9bb75750668556ca39d7778488ebb2e289",
+        "bytes": 320
+      },
+      "allEqual": true
+    },
+    {
+      "source": "build-boundary/inspect-build.mjs",
+      "destination": "build-boundary/inspect-build.mjs",
+      "sourceBefore": {
+        "sha256": "f12a13af2742ef66844d887f29d402cb810217a8b0fd2eebf47b06c012ec9c07",
+        "bytes": 15428
+      },
+      "sourceAfter": {
+        "sha256": "f12a13af2742ef66844d887f29d402cb810217a8b0fd2eebf47b06c012ec9c07",
+        "bytes": 15428
+      },
+      "destinationAfter": {
+        "sha256": "f12a13af2742ef66844d887f29d402cb810217a8b0fd2eebf47b06c012ec9c07",
+        "bytes": 15428
+      },
+      "allEqual": true
+    },
+    {
+      "source": "build-boundary/report.json",
+      "destination": "build-boundary/report.json",
+      "sourceBefore": {
+        "sha256": "b408f1169f3ef34086ee32939d471c4b0790a1d66a5e839543d305ac08405bf8",
+        "bytes": 345288
+      },
+      "sourceAfter": {
+        "sha256": "b408f1169f3ef34086ee32939d471c4b0790a1d66a5e839543d305ac08405bf8",
+        "bytes": 345288
+      },
+      "destinationAfter": {
+        "sha256": "b408f1169f3ef34086ee32939d471c4b0790a1d66a5e839543d305ac08405bf8",
+        "bytes": 345288
+      },
+      "allEqual": true
+    },
+    {
+      "source": "closure-execution.log.txt",
+      "destination": "closure/closure-execution.log.txt",
+      "sourceBefore": {
+        "sha256": "6ccccec48d76f0653b91b1d614b84d31cced438ede33e8d7613af23eaa9ed084",
+        "bytes": 1841
+      },
+      "sourceAfter": {
+        "sha256": "6ccccec48d76f0653b91b1d614b84d31cced438ede33e8d7613af23eaa9ed084",
+        "bytes": 1841
+      },
+      "destinationAfter": {
+        "sha256": "6ccccec48d76f0653b91b1d614b84d31cced438ede33e8d7613af23eaa9ed084",
+        "bytes": 1841
+      },
+      "allEqual": true
+    },
+    {
+      "source": "driver-input-audit-execution.log.txt",
+      "destination": "closure/driver-input-audit-execution.log.txt",
+      "sourceBefore": {
+        "sha256": "21c387df573dc1fb771430cdf19aa2ae0eb1ebf892897c4b1531a79ef8671256",
+        "bytes": 440
+      },
+      "sourceAfter": {
+        "sha256": "21c387df573dc1fb771430cdf19aa2ae0eb1ebf892897c4b1531a79ef8671256",
+        "bytes": 440
+      },
+      "destinationAfter": {
+        "sha256": "21c387df573dc1fb771430cdf19aa2ae0eb1ebf892897c4b1531a79ef8671256",
+        "bytes": 440
+      },
+      "allEqual": true
+    },
+    {
+      "source": "closure/driver-input-audit.json",
+      "destination": "closure/driver-input-audit.json",
+      "sourceBefore": {
+        "sha256": "f6185fa95ae147d15e4b94587d1a8cf9ff26cf84cde18612c6aea8e8b4f7d892",
+        "bytes": 481
+      },
+      "sourceAfter": {
+        "sha256": "f6185fa95ae147d15e4b94587d1a8cf9ff26cf84cde18612c6aea8e8b4f7d892",
+        "bytes": 481
+      },
+      "destinationAfter": {
+        "sha256": "f6185fa95ae147d15e4b94587d1a8cf9ff26cf84cde18612c6aea8e8b4f7d892",
+        "bytes": 481
+      },
+      "allEqual": true
+    },
+    {
+      "source": "closure/driver-inputs.txt",
+      "destination": "closure/driver-inputs.txt",
+      "sourceBefore": {
+        "sha256": "1a6b282f715652440b5075e0aded8ab96fb3878f10af12143c409d87f7b239ab",
+        "bytes": 91040
+      },
+      "sourceAfter": {
+        "sha256": "1a6b282f715652440b5075e0aded8ab96fb3878f10af12143c409d87f7b239ab",
+        "bytes": 91040
+      },
+      "destinationAfter": {
+        "sha256": "1a6b282f715652440b5075e0aded8ab96fb3878f10af12143c409d87f7b239ab",
+        "bytes": 91040
+      },
+      "allEqual": true
+    },
+    {
+      "source": "closure/import-audit-first-failure.json",
+      "destination": "closure/import-audit-first-failure.json",
+      "sourceBefore": {
+        "sha256": "3328a51367caff63cbaba640a9ff5f2fd4ecf72f0660298040d6c3bf1beb1f41",
+        "bytes": 507
+      },
+      "sourceAfter": {
+        "sha256": "3328a51367caff63cbaba640a9ff5f2fd4ecf72f0660298040d6c3bf1beb1f41",
+        "bytes": 507
+      },
+      "destinationAfter": {
+        "sha256": "3328a51367caff63cbaba640a9ff5f2fd4ecf72f0660298040d6c3bf1beb1f41",
+        "bytes": 507
+      },
+      "allEqual": true
+    },
+    {
+      "source": "closure/import-audit.json",
+      "destination": "closure/import-audit.json",
+      "sourceBefore": {
+        "sha256": "34a2579d32d20e0fb478d1b3ffbea81438159bc72c35c3fb123ce90ad971e9d8",
+        "bytes": 8497
+      },
+      "sourceAfter": {
+        "sha256": "34a2579d32d20e0fb478d1b3ffbea81438159bc72c35c3fb123ce90ad971e9d8",
+        "bytes": 8497
+      },
+      "destinationAfter": {
+        "sha256": "34a2579d32d20e0fb478d1b3ffbea81438159bc72c35c3fb123ce90ad971e9d8",
+        "bytes": 8497
+      },
+      "allEqual": true
+    },
+    {
+      "source": "closure/inputs.json",
+      "destination": "closure/inputs.json",
+      "sourceBefore": {
+        "sha256": "b9a693ecc43b04c40b444ba5cdd76d91d3a54581bb2ac4f6bfba9fa9eee63902",
+        "bytes": 847121
+      },
+      "sourceAfter": {
+        "sha256": "b9a693ecc43b04c40b444ba5cdd76d91d3a54581bb2ac4f6bfba9fa9eee63902",
+        "bytes": 847121
+      },
+      "destinationAfter": {
+        "sha256": "b9a693ecc43b04c40b444ba5cdd76d91d3a54581bb2ac4f6bfba9fa9eee63902",
+        "bytes": 847121
+      },
+      "allEqual": true
+    },
+    {
+      "source": "closure/inputs.txt",
+      "destination": "closure/inputs.txt",
+      "sourceBefore": {
+        "sha256": "008345a3c23d6ac1c4b1f9ce2e4b067bec297793da5c82f10ed4cac6daff1ed8",
+        "bytes": 380064
+      },
+      "sourceAfter": {
+        "sha256": "008345a3c23d6ac1c4b1f9ce2e4b067bec297793da5c82f10ed4cac6daff1ed8",
+        "bytes": 380064
+      },
+      "destinationAfter": {
+        "sha256": "008345a3c23d6ac1c4b1f9ce2e4b067bec297793da5c82f10ed4cac6daff1ed8",
+        "bytes": 380064
+      },
+      "allEqual": true
+    },
+    {
+      "source": "closure/installed-dependencies-proof.json",
+      "destination": "closure/installed-dependencies-proof.json",
+      "sourceBefore": {
+        "sha256": "cf3f809331b2f5d688a33750f12d6dc4ea22b63ece654f0f292fbbb6afb46413",
+        "bytes": 1149
+      },
+      "sourceAfter": {
+        "sha256": "cf3f809331b2f5d688a33750f12d6dc4ea22b63ece654f0f292fbbb6afb46413",
+        "bytes": 1149
+      },
+      "destinationAfter": {
+        "sha256": "cf3f809331b2f5d688a33750f12d6dc4ea22b63ece654f0f292fbbb6afb46413",
+        "bytes": 1149
+      },
+      "allEqual": true
+    },
+    {
+      "source": "closure/installed-dependencies.json",
+      "destination": "closure/installed-dependencies.json",
+      "sourceBefore": {
+        "sha256": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+        "bytes": 736
+      },
+      "sourceAfter": {
+        "sha256": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+        "bytes": 736
+      },
+      "destinationAfter": {
+        "sha256": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+        "bytes": 736
+      },
+      "allEqual": true
+    },
+    {
+      "source": "closure/plan.json",
+      "destination": "closure/plan.json",
+      "sourceBefore": {
+        "sha256": "6ccccec48d76f0653b91b1d614b84d31cced438ede33e8d7613af23eaa9ed084",
+        "bytes": 1841
+      },
+      "sourceAfter": {
+        "sha256": "6ccccec48d76f0653b91b1d614b84d31cced438ede33e8d7613af23eaa9ed084",
+        "bytes": 1841
+      },
+      "destinationAfter": {
+        "sha256": "6ccccec48d76f0653b91b1d614b84d31cced438ede33e8d7613af23eaa9ed084",
+        "bytes": 1841
+      },
+      "allEqual": true
+    },
+    {
+      "source": "closure/projection-local-inputs.json",
+      "destination": "closure/projection-local-inputs.json",
+      "sourceBefore": {
+        "sha256": "714604658a910a0623156a3e2308a26823d917e7ce22f5fbde65833c81230dd3",
+        "bytes": 10565
+      },
+      "sourceAfter": {
+        "sha256": "714604658a910a0623156a3e2308a26823d917e7ce22f5fbde65833c81230dd3",
+        "bytes": 10565
+      },
+      "destinationAfter": {
+        "sha256": "714604658a910a0623156a3e2308a26823d917e7ce22f5fbde65833c81230dd3",
+        "bytes": 10565
+      },
+      "allEqual": true
+    },
+    {
+      "source": "closure/projection-metafile.json",
+      "destination": "closure/projection-metafile.json",
+      "sourceBefore": {
+        "sha256": "3d4923abeb9ad1ab0ca6eb5dba29d6c7e99d3dd4164c4c9a362ec6210dcdde0b",
+        "bytes": 67174
+      },
+      "sourceAfter": {
+        "sha256": "3d4923abeb9ad1ab0ca6eb5dba29d6c7e99d3dd4164c4c9a362ec6210dcdde0b",
+        "bytes": 67174
+      },
+      "destinationAfter": {
+        "sha256": "3d4923abeb9ad1ab0ca6eb5dba29d6c7e99d3dd4164c4c9a362ec6210dcdde0b",
+        "bytes": 67174
+      },
+      "allEqual": true
+    },
+    {
+      "source": "closure/reasons.json",
+      "destination": "closure/reasons.json",
+      "sourceBefore": {
+        "sha256": "1dfe1c72d9b86345c22626cde6640bd9608fdca27fac8bb1bbb9344030a676c8",
+        "bytes": 1727419
+      },
+      "sourceAfter": {
+        "sha256": "1dfe1c72d9b86345c22626cde6640bd9608fdca27fac8bb1bbb9344030a676c8",
+        "bytes": 1727419
+      },
+      "destinationAfter": {
+        "sha256": "1dfe1c72d9b86345c22626cde6640bd9608fdca27fac8bb1bbb9344030a676c8",
+        "bytes": 1727419
+      },
+      "allEqual": true
+    },
+    {
+      "source": "closure/shoulder-driver-inputs.json",
+      "destination": "closure/shoulder-driver-inputs.json",
+      "sourceBefore": {
+        "sha256": "ef5dda1290bd589a92822de7ba8ae138d2bf9de87faeaff9a8a925b4a8cb24fe",
+        "bytes": 250297
+      },
+      "sourceAfter": {
+        "sha256": "ef5dda1290bd589a92822de7ba8ae138d2bf9de87faeaff9a8a925b4a8cb24fe",
+        "bytes": 250297
+      },
+      "destinationAfter": {
+        "sha256": "ef5dda1290bd589a92822de7ba8ae138d2bf9de87faeaff9a8a925b4a8cb24fe",
+        "bytes": 250297
+      },
+      "allEqual": true
+    },
+    {
+      "source": "static-imports-execution-first.log.txt",
+      "destination": "closure/static-imports-execution-first.log.txt",
+      "sourceBefore": {
+        "sha256": "835b739627282cd842a8e5d59e368c2b9655caa9c3b9530fbfb7072f98fdb0be",
+        "bytes": 1557
+      },
+      "sourceAfter": {
+        "sha256": "835b739627282cd842a8e5d59e368c2b9655caa9c3b9530fbfb7072f98fdb0be",
+        "bytes": 1557
+      },
+      "destinationAfter": {
+        "sha256": "835b739627282cd842a8e5d59e368c2b9655caa9c3b9530fbfb7072f98fdb0be",
+        "bytes": 1557
+      },
+      "allEqual": true
+    },
+    {
+      "source": "static-imports-execution-second.log.txt",
+      "destination": "closure/static-imports-execution-second.log.txt",
+      "sourceBefore": {
+        "sha256": "3bcc239d30a789b767185e5920c8e2473719053112e50ad9bcc54682ea8b8de9",
+        "bytes": 44
+      },
+      "sourceAfter": {
+        "sha256": "3bcc239d30a789b767185e5920c8e2473719053112e50ad9bcc54682ea8b8de9",
+        "bytes": 44
+      },
+      "destinationAfter": {
+        "sha256": "3bcc239d30a789b767185e5920c8e2473719053112e50ad9bcc54682ea8b8de9",
+        "bytes": 44
+      },
+      "allEqual": true
+    },
+    {
+      "source": "core-runner-execution.log.txt",
+      "destination": "core/core-runner-execution.log.txt",
+      "sourceBefore": {
+        "sha256": "b17f222dac36f89a38945fb567b966a8110751ea723d703b4dc9c5818e749152",
+        "bytes": 123
+      },
+      "sourceAfter": {
+        "sha256": "b17f222dac36f89a38945fb567b966a8110751ea723d703b4dc9c5818e749152",
+        "bytes": 123
+      },
+      "destinationAfter": {
+        "sha256": "b17f222dac36f89a38945fb567b966a8110751ea723d703b4dc9c5818e749152",
+        "bytes": 123
+      },
+      "allEqual": true
+    },
+    {
+      "source": "core/execution.log.txt",
+      "destination": "core/execution.log.txt",
+      "sourceBefore": {
+        "sha256": "57e545702656c92f30a2aaa237efc25a60c38d78dbb346b2140ba0c4a84ca470",
+        "bytes": 149538
+      },
+      "sourceAfter": {
+        "sha256": "57e545702656c92f30a2aaa237efc25a60c38d78dbb346b2140ba0c4a84ca470",
+        "bytes": 149538
+      },
+      "destinationAfter": {
+        "sha256": "57e545702656c92f30a2aaa237efc25a60c38d78dbb346b2140ba0c4a84ca470",
+        "bytes": 149538
+      },
+      "allEqual": true
+    },
+    {
+      "source": "core/report.json",
+      "destination": "core/report.json",
+      "sourceBefore": {
+        "sha256": "14b5eaacdd32329234c61fb1879248b9694fcb980d225e6f785f0dacb258a2be",
+        "bytes": 1722662
+      },
+      "sourceAfter": {
+        "sha256": "14b5eaacdd32329234c61fb1879248b9694fcb980d225e6f785f0dacb258a2be",
+        "bytes": 1722662
+      },
+      "destinationAfter": {
+        "sha256": "14b5eaacdd32329234c61fb1879248b9694fcb980d225e6f785f0dacb258a2be",
+        "bytes": 1722662
+      },
+      "allEqual": true
+    },
+    {
+      "source": "core/terminal-summary.json",
+      "destination": "core/terminal-summary.json",
+      "sourceBefore": {
+        "sha256": "f8071a66901118f077af0380413736ce30b56a7bd4df92bcb9808e02a5b91eb7",
+        "bytes": 1346
+      },
+      "sourceAfter": {
+        "sha256": "f8071a66901118f077af0380413736ce30b56a7bd4df92bcb9808e02a5b91eb7",
+        "bytes": 1346
+      },
+      "destinationAfter": {
+        "sha256": "f8071a66901118f077af0380413736ce30b56a7bd4df92bcb9808e02a5b91eb7",
+        "bytes": 1346
+      },
+      "allEqual": true
+    },
+    {
+      "source": "dependencies-execution.log.txt",
+      "destination": "installed-dependencies/dependencies-execution.log.txt",
+      "sourceBefore": {
+        "sha256": "0aaa87c654acee3c08fdfdae1fa0c585117c0bd87e7130523ce66780c78c8f0e",
+        "bytes": 1045
+      },
+      "sourceAfter": {
+        "sha256": "0aaa87c654acee3c08fdfdae1fa0c585117c0bd87e7130523ce66780c78c8f0e",
+        "bytes": 1045
+      },
+      "destinationAfter": {
+        "sha256": "0aaa87c654acee3c08fdfdae1fa0c585117c0bd87e7130523ce66780c78c8f0e",
+        "bytes": 1045
+      },
+      "allEqual": true
+    },
+    {
+      "source": "closure/installed-dependencies-proof.json",
+      "destination": "installed-dependencies/installed-dependencies-proof.json",
+      "sourceBefore": {
+        "sha256": "cf3f809331b2f5d688a33750f12d6dc4ea22b63ece654f0f292fbbb6afb46413",
+        "bytes": 1149
+      },
+      "sourceAfter": {
+        "sha256": "cf3f809331b2f5d688a33750f12d6dc4ea22b63ece654f0f292fbbb6afb46413",
+        "bytes": 1149
+      },
+      "destinationAfter": {
+        "sha256": "cf3f809331b2f5d688a33750f12d6dc4ea22b63ece654f0f292fbbb6afb46413",
+        "bytes": 1149
+      },
+      "allEqual": true
+    },
+    {
+      "source": "closure/installed-dependencies.json",
+      "destination": "installed-dependencies/installed-dependencies.json",
+      "sourceBefore": {
+        "sha256": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+        "bytes": 736
+      },
+      "sourceAfter": {
+        "sha256": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+        "bytes": 736
+      },
+      "destinationAfter": {
+        "sha256": "6f3cd4440b5cc33206b275a513244b94e1bf1b3b34e7eee3510af511af9631e0",
+        "bytes": 736
+      },
+      "allEqual": true
+    },
+    {
+      "source": "server-identity.json",
+      "destination": "server-identity/server-identity.json",
+      "sourceBefore": {
+        "sha256": "37ebcf5d589ac91313213ba787eda82e90f3af26fda9c6cc0cb55264ba0c9ad5",
+        "bytes": 813
+      },
+      "sourceAfter": {
+        "sha256": "37ebcf5d589ac91313213ba787eda82e90f3af26fda9c6cc0cb55264ba0c9ad5",
+        "bytes": 813
+      },
+      "destinationAfter": {
+        "sha256": "37ebcf5d589ac91313213ba787eda82e90f3af26fda9c6cc0cb55264ba0c9ad5",
+        "bytes": 813
+      },
+      "allEqual": true
+    },
+    {
+      "source": "snapshot-execution.log.txt",
+      "destination": "snapshot/snapshot-execution.log.txt",
+      "sourceBefore": {
+        "sha256": "1ae40473b8519664dac1f19cd2d52330446abbf14bf1c9a9e97b6f0f410915ab",
+        "bytes": 122
+      },
+      "sourceAfter": {
+        "sha256": "1ae40473b8519664dac1f19cd2d52330446abbf14bf1c9a9e97b6f0f410915ab",
+        "bytes": 122
+      },
+      "destinationAfter": {
+        "sha256": "1ae40473b8519664dac1f19cd2d52330446abbf14bf1c9a9e97b6f0f410915ab",
+        "bytes": 122
+      },
+      "allEqual": true
+    },
+    {
+      "source": "snapshot.json",
+      "destination": "snapshot/snapshot.json",
+      "sourceBefore": {
+        "sha256": "c162db0673a712c6829c974b0344073a39e8a95b1feb120285f6a6d3a456a022",
+        "bytes": 3276191
+      },
+      "sourceAfter": {
+        "sha256": "c162db0673a712c6829c974b0344073a39e8a95b1feb120285f6a6d3a456a022",
+        "bytes": 3276191
+      },
+      "destinationAfter": {
+        "sha256": "c162db0673a712c6829c974b0344073a39e8a95b1feb120285f6a6d3a456a022",
+        "bytes": 3276191
+      },
+      "allEqual": true
+    },
+    {
+      "source": "server-startup.log.txt",
+      "destination": "startup/server-startup.log.txt",
+      "sourceBefore": {
+        "sha256": "98147c2a914121f8f668919bdcc32fcacdb2f64cdcfad0cc20ed19fa05de0942",
+        "bytes": 164
+      },
+      "sourceAfter": {
+        "sha256": "98147c2a914121f8f668919bdcc32fcacdb2f64cdcfad0cc20ed19fa05de0942",
+        "bytes": 164
+      },
+      "destinationAfter": {
+        "sha256": "98147c2a914121f8f668919bdcc32fcacdb2f64cdcfad0cc20ed19fa05de0942",
+        "bytes": 164
+      },
+      "allEqual": true
+    }
+  ]
+}

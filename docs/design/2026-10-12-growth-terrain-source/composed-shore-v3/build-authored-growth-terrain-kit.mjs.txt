@@ -1,0 +1,338 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { gzipSync, gunzipSync } from 'node:zlib';
+import * as T from 'three';
+
+const check = process.argv.includes('--check'), draft = process.argv.includes('--draft');
+assert(process.argv.slice(2).every(v => ['--check', '--draft'].includes(v)));
+const dir = 'docs/design/2026-10-12-growth-terrain-source/composed-shore-v3';
+const previous = JSON.parse(gunzipSync(await readFile('docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/v1-input/authored-growth-terrain-kit.json.gz')));
+const source = { artifact: 'docs/design/2026-10-10-island-final-3d/whole-island.glb', sha256: '8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d' };
+const hash = value => createHash('sha256').update(value).digest('hex');
+const sourceBytes = await readFile(source.artifact); assert.equal(hash(sourceBytes), source.sha256);
+const jsonLength = sourceBytes.readUInt32LE(12), doc = JSON.parse(sourceBytes.subarray(20, 20 + jsonLength)), bin = sourceBytes.subarray(jsonLength + 28);
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const smooth = (a, b, v) => { const t = clamp((v - a) / (b - a)); return t * t * (3 - 2 * t); };
+const q = x => Math.round(x * 1024) / 1024;
+const H = .34375, bottom = -.65625;
+function access(id, n) {
+    const a = doc.accessors[id], v = doc.bufferViews[a.bufferView], format = { 5126: [4, 'readFloatLE'], 5125: [4, 'readUInt32LE'], 5123: [2, 'readUInt16LE'] }[a.componentType];
+    assert(format && !a.sparse); const [width, reader] = format;
+    return Array.from({ length: a.count }, (_, i) => Array.from({ length: n }, (_, j) => bin[reader]((v.byteOffset ?? 0) + (a.byteOffset ?? 0) + i * (v.byteStride ?? n * width) + j * width)));
+}
+const transforms = new Map();
+function visit(id, parent) {
+    const node = doc.nodes[id], local = node.matrix ? new T.Matrix4().fromArray(node.matrix) : new T.Matrix4().compose(new T.Vector3().fromArray(node.translation ?? [0, 0, 0]), new T.Quaternion().fromArray(node.rotation ?? [0, 0, 0, 1]), new T.Vector3().fromArray(node.scale ?? [1, 1, 1]));
+    const world = parent.clone().multiply(local); transforms.set(id, world); for (const child of node.children ?? []) visit(child, world);
+}
+for (const id of doc.scenes[doc.scene ?? 0].nodes) visit(id, new T.Matrix4());
+const terrainId = doc.nodes.findIndex(n => n.name === 'Island / continuous sculpted mature terrain');
+const terrain = doc.meshes[doc.nodes[terrainId].mesh];
+const samples = [], buckets = new Map();
+for (let pi = 0; pi < terrain.primitives.length; pi++) {
+    const p = terrain.primitives[pi], points = access(p.attributes.POSITION, 3).map(a => new T.Vector3().fromArray(a).applyMatrix4(transforms.get(terrainId)).multiplyScalar(.45).add(new T.Vector3(5.65, -.3645, -1.03)));
+    const ids = access(p.indices, 1).flat();
+    for (let i = 0; i < ids.length; i += 3) {
+        const points3 = ids.slice(i, i + 3).map(j => points[j]);
+        const item = { points: points3, primitive: pi, sourceTriangle: i / 3 }; const id = samples.length; samples.push(item);
+        for (let x = Math.floor(Math.min(...points3.map(v => v.x)) * 2); x <= Math.floor(Math.max(...points3.map(v => v.x)) * 2); x++)
+            for (let z = Math.floor(Math.min(...points3.map(v => v.z)) * 2); z <= Math.floor(Math.max(...points3.map(v => v.z)) * 2); z++) {
+                const k = `${x},${z}`; if (!buckets.has(k)) buckets.set(k, []); buckets.get(k).push(id);
+            }
+    }
+}
+const sourceSamples = new Map();
+function sample(x, z) {
+    for (const id of buckets.get(`${Math.floor(x * 2)},${Math.floor(z * 2)}`) ?? []) {
+        const item = samples[id], [a, b, c] = item.points, den = (b.z - c.z) * (a.x - c.x) + (c.x - b.x) * (a.z - c.z);
+        if (Math.abs(den) < 1e-14) continue;
+        const u = ((b.z - c.z) * (x - c.x) + (c.x - b.x) * (z - c.z)) / den;
+        const v = ((c.z - a.z) * (x - c.x) + (a.x - c.x) * (z - c.z)) / den, w = 1 - u - v;
+        if (Math.min(u, v, w) < -1e-8) continue;
+        sourceSamples.set(`${q(x)},${q(z)}`, { x, z, primitive: item.primitive, triangle: item.sourceTriangle, barycentric: [u, v, w] });
+        return u * a.y + v * b.y + w * c.y;
+    }
+    throw Error(`Source terrain has no sample at ${x},${z}`);
+}
+function material(name) {
+    const index = doc.materials.findIndex(m => m.name === name); assert(index >= 0, name);
+    const raw = doc.materials[index]; assert(!/Texture/.test(JSON.stringify(raw)), 'Source texture cannot be discarded');
+    const p = raw.pbrMetallicRoughness;
+    return { name, raw, index, color: `#${new T.Color().fromArray(p.baseColorFactor).getHexString()}`, roughness: p.roughnessFactor ?? 1, metalness: p.metallicFactor ?? 1 };
+}
+const mats = [material('harbor / light seaside meadow'), material('hill / silvery meadow'), material('shore / pale sand'), material('ridge / light stratified stone')];
+// The front harbor arc is taken from native05's authored Catmull coast controls,
+// then affinely fitted to each new shoreline. This is new terrain authoring;
+// it does not claim to preserve the old top's triangles or its old NORMAL values.
+const nativeCoastControls = [[11.6, -5.2], [14.5, -6.7], [17.6, -4], [16.8, -1.8], [14.3, -.4], [12.4, 2.4]];
+function catmull(points, steps = 8, closed = true) {
+    const out = [];
+    for (let i = 0; i < (closed ? points.length : points.length - 1); i++) {
+        const a = points[closed ? (i - 1 + points.length) % points.length : Math.max(0, i - 1)], b = points[i], c = points[(i + 1) % points.length], d = points[closed ? (i + 2) % points.length : Math.min(points.length - 1, i + 2)];
+        for (let j = 0; j < steps; j++) { const t = j / steps;
+            out.push([0, 1].map(k => q(.5 * (2 * b[k] + (-a[k] + c[k]) * t + (2 * a[k] - 5 * b[k] + 4 * c[k] - d[k]) * t * t + (-a[k] + 3 * b[k] - 3 * c[k] + d[k]) * t * t * t))));
+        }
+    }
+    return out;
+}
+const coastSamples = catmull(nativeCoastControls, 8);
+const coastSignature = v => { const i = Math.min(coastSamples.length - 1, Math.floor(clamp(v) * (coastSamples.length - 1))); return (coastSamples[i][0] - 14.8) / 8; };
+const seam = Array.from({ length: 17 }, (_, i) => { const v = -1 + i / 8; return [q(3 + .25 * (1 - v * v)), q(v)]; });
+const seamVertices = new Set(seam.slice(1).flatMap((p,i)=>Array.from({length:5},(_,k)=>[seam[i][0]+(p[0]-seam[i][0])*k/4,seam[i][1]+(p[1]-seam[i][1])*k/4].join(','))));
+const baseOutline = [...seam.map(([x, z]) => [x, z - 1]), ...seam.slice(1).map(([x, z]) => [x, z + 1]),
+    ...catmull([[3, 2], [2.15, 2.875], [.85, 2.75], [-.5, 1.75], [-.4375, .2], [-.45, -1.75], [.8, -2.75], [2.2, -2.875], [3, -2]], 6, false).slice(1)];
+// Six persistent footprints plus a bright central approach. The surrounding
+// low undulation is sampled from the actual native05 harbor top, not a plane.
+const rights = [-1, 0, 1].flatMap(z => [1, 2].map(x => ({ x, z })));
+function baseHeight(x, z) {
+    const raw = sample(11.6 + clamp(x, -.7, 3.3) * .32, -4.1 + clamp(z, -3, 3) * .30);
+    const protect = Math.min(...rights.map(c => Math.max(Math.abs(x - c.x), Math.abs(z - c.z))));
+    return H + .1 * (raw - .38) * smooth(.53, .9, protect) * (1 - smooth(2.65, 3, x));
+}
+function outlineFor(kind) {
+    if (kind === 'seaward') {
+        // Exact flat seam intervals let two real branch solids receive one
+        // optional connection. The curve narrows away from the fixed baseline.
+        const upper = catmull([[3, 1], [3.55, .82], [4.45, .6875], [5.25, .6875]], 8, false);
+        upper.push([5.25, .6875]);
+        const join = Array.from({ length: 9 }, (_, i) => [5.25 + i / 8, .6875]);
+        const tip = catmull([[6.25, .6875], [7.125, .50], [7.375, 0], [7.125, -.50], [6.25, -.6875]], 8, false);
+        tip.push([6.25, -.6875]);
+        return [...seam, ...upper.slice(1), ...join.slice(1), ...tip.slice(1),
+            ...join.slice(0, -1).reverse().map(([x, z]) => [x, -z]),
+            ...upper.slice(0, -1).reverse().map(([x, z]) => [x, -z]).slice(0, -1)];
+    }
+    const end = 5.68;
+    const controls = kind === 'parallel'
+        ? [[3, 1], [3.55, 1.22], [4.35, 1.52], [5.25, 1.25], [5.68, .25], [5.15, -.90], [4.25, -1.45], [3.55, -1.16], [3, -1]]
+        : [[3, 1], [4.15, 1.12], [5.50, 1.16], [6.80, .73], [7.35, -.08], [6.54, -.8], [5.16, -1.12], [3.85, -1.06], [3, -1]];
+    // A small source-coast signature modulates the long outside arc. The seam
+    // is exact and identical for both sockets; its bank is explicitly replaced.
+    const arc = catmull(controls, 7, false).slice(1).map(([x, z], i, values) => [q(x + .12 * coastSignature(i / values.length) * smooth(3.4, end - .4, x)), z]);
+    return [...seam, ...arc];
+}
+const outlines = Object.fromEntries(['parallel', 'seaward'].map(kind => [kind, outlineFor(kind)]));
+function coastDistance(kind, x, z) {
+    // Only the outside coast rolls down. The original shared seam remains H.
+    const arc = outlines[kind].slice(seam.length - 1); arc.push(seam[0]);
+    let nearest = Infinity;
+    for (let i = 1; i < arc.length; i++) {
+        const a = arc[i - 1], b = arc[i], dx = b[0] - a[0], dz = b[1] - a[1];
+        const t = clamp(((x - a[0]) * dx + (z - a[1]) * dz) / (dx * dx + dz * dz));
+        nearest = Math.min(nearest, Math.hypot(x - a[0] - t * dx, z - a[1] - t * dz));
+    }
+    return nearest;
+}
+function patchHeight(kind, x, z) {
+    if (x <= 3.25) return H;
+    if (kind === 'connection') {
+        return H + .065 * Math.sin(Math.PI * (x - 5.25)) * Math.sin(Math.PI * (z + .3125) / .625);
+    }
+    const raw = sample(7.45 + (x - 3) * .27, -8.30 + z * .36);
+    const field = clamp((raw - .9) / 1.1);
+    const ramp = smooth(3.25, kind === 'parallel' ? 4.18 : 4.5, x);
+    const fall = 1 - smooth(kind === 'parallel' ? 4.45 : 5.55, kind === 'parallel' ? 5.72 : 7.45, x);
+    const side = 1 - smooth(kind === 'parallel' ? .45 : .35, kind === 'parallel' ? 1.7 : 1.35, Math.abs(z));
+    const relief = H + (kind === 'parallel' ? 1.12 : .42) * ramp * fall * side * (.60 + .40 * field);
+    const shore = H + (.045 - H) * smooth(3.25, 3.95, x);
+    const rolled = shore + (relief - shore) * smooth(0, kind === 'parallel' ? .54 : .36, coastDistance(kind, x, z));
+    if (kind === 'parallel') return rolled;
+    // A broad real saddle meets the connection at the same .34375 height.
+    // It is ground geometry in both cases, not an invisible nav allowance.
+    const joinBand = smooth(4.75, 5.25, x) * (1 - smooth(6.25, 6.75, x)) * smooth(.25, .5, Math.abs(z));
+    return rolled * (1 - joinBand) + H * joinBand;
+}
+function mesh(outline, height, name) {
+    const contour = outline.map(([x, z]) => new T.Vector2(x, z));
+    const initial = T.ShapeUtils.triangulateShape(contour, []), points = [], indices = [], cache = new Map();
+    const vertex = (x, z) => { const key = `${x},${z}`; if (!cache.has(key)) { cache.set(key, points.length); points.push([x, Math.fround(height(x, z)), z]); } return cache.get(key); };
+    function tri(a, b, c, level) {
+        if (level) { const ab = a.map((v, i) => (v + b[i]) / 2), bc = b.map((v, i) => (v + c[i]) / 2), ca = c.map((v, i) => (v + a[i]) / 2);
+            tri(a, ab, ca, level - 1); tri(ab, b, bc, level - 1); tri(ca, bc, c, level - 1); tri(ab, bc, ca, level - 1); return; }
+        let ids = [a, b, c].map(([x, z]) => vertex(x, z));
+        const [p, r, s] = ids.map(i => points[i]); const area = (r[2] - p[2]) * (s[0] - p[0]) - (r[0] - p[0]) * (s[2] - p[2]);
+        if (Math.abs(area) <= 1e-12) return; if (area < 0) ids = [ids[0], ids[2], ids[1]]; indices.push(...ids);
+    }
+    for (const ids of initial) tri(...ids.map(i => outline[i]), 2);
+    const normal = Array.from({ length: points.length }, () => new T.Vector3());
+    const boundaries = new Map();
+    for (let i = 0; i < indices.length; i += 3) { const ids = indices.slice(i, i + 3), [a, b, c] = ids.map(j => new T.Vector3().fromArray(points[j])); const n = b.sub(a).cross(c.sub(a)); assert(n.y > 0);
+        for (const j of ids) normal[j].add(n);
+        for (let k = 0; k < 3; k++) { const a = ids[k], b = ids[(k + 1) % 3], key = [a, b].sort((a, b) => a - b).join(','); const e = boundaries.get(key); if (e) e.count++; else boundaries.set(key, { a, b, count: 1 }); }
+    }
+    assert([...boundaries.values()].every(e => e.count <= 2));
+    const boundary = [...boundaries.values()].filter(e => e.count === 1);
+    return { name, points, indices, normals: normal.map(v => v.normalize().toArray().map(Math.fround)), boundary };
+}
+function floor(m, id = 'top', mat = mats[0]) { return { id, kind: 'ground', vertices: m.points.map((p, i) => ({ cell: { x: p[0], z: p[2] }, point: { x: p[0], y: p[1], z: p[2] }, normal: { x: m.normals[i][0], y: m.normals[i][1], z: m.normals[i][2] } })), indices: m.indices,
+    color: mat.color, material: { roughness: mat.roughness, metalness: mat.metalness, doubleSided: false } }; }
+function roundedSurfaces(m) {
+    const bankMaterial = { color: mats[2].color, roughness: mats[2].roughness, metalness: mats[2].metalness };
+    const groups = new Map();
+    const group = id => { if (!groups.has(id)) groups.set(id, { id, kind: 'bank', vertices: [], indices: [], material: bankMaterial }); return groups.get(id); };
+    let shore = group('rounded-coast');
+    const centerX = m.name === 'parallel' ? 4.35 : 5.2;
+    const profile = [[0, 0], [.15, .035], [.42, .06], [.72, .025], [1, -.04]];
+    // One continuous closed underside. All outward bulge is below the real
+    // ground edge; the broad ABOVE-water rounded shoulder is the ground itself.
+    const ringPoint = (p, level) => {
+        const [depth, radial] = profile[level];
+        const join = m.name === 'seaward' && p[0] >= 5.25 && p[0] <= 6.25 && Math.abs(p[2]) === .6875;
+        const fade = m.name === 'connection' || join ? 0 : smooth(3.25, 4.05, p[0]);
+        return { x: Math.fround(p[0] + (p[0] - centerX) * radial * fade),
+            y: Math.fround(level === 0 ? p[1] : level === profile.length - 1 ? bottom
+                : (p[1] - .12) * (1 - fade) + (p[1] + (bottom - p[1]) * depth) * fade), z: Math.fround(p[2] * (1 + radial * fade)) };
+    };
+    const cache = new Map();
+    const index = (id, level) => { const point = ringPoint(m.points[id], level), key = `${shore.id}:${point.x},${point.y},${point.z}`;
+        if (!cache.has(key)) { cache.set(key, shore.vertices.length); shore.vertices.push(point); } return cache.get(key); };
+    const triangle = (a, b, c) => { if (a !== b && b !== c && c !== a) shore.indices.push(a, b, c); };
+    for (const edge of m.boundary) {
+        const a = m.points[edge.a], b = m.points[edge.b];
+        if (m.name !== 'connection' && [a,b].every(p=>seamVertices.has(`${p[0]},${p[2]}`))) continue;
+        const joinEdge = m.name === 'seaward' && [a, b].every(p => p[0] >= 5.25 && p[0] <= 6.25 && Math.abs(p[2]) === .6875) && a[2] === b[2];
+        if (m.name === 'connection' && Math.abs(a[2]) === .3125 && a[2] === b[2]) continue;
+        shore = group(joinEdge ? (a[2] > 0 ? 'bank-connection-positive' : 'bank-connection-negative') : 'rounded-coast');
+        for (let k = 0; k < profile.length - 1; k++) {
+            const a0 = index(edge.a, k), a1 = index(edge.a, k + 1), b0 = index(edge.b, k), b1 = index(edge.b, k + 1);
+            triangle(a0, a1, b0); triangle(b0, a1, b1);
+        }
+    }
+    const soil = { id: 'soil-bottom', kind: 'bank', vertices: m.points.map(p => ringPoint(p, profile.length - 1)), indices: [], material: { ...shore.material } };
+    for (let i = 0; i < m.indices.length; i += 3) soil.indices.push(m.indices[i], m.indices[i + 2], m.indices[i + 1]);
+    return [...groups.values(), soil];
+}
+function surfaces(m, base = false) {
+    if (!base) return roundedSurfaces(m);
+    const groups = new Map();
+    const group = id => { if (!groups.has(id)) groups.set(id, { id, kind: 'bank', vertices: [], indices: [], material: { color: mats[2].color, roughness: mats[2].roughness, metalness: mats[2].metalness } }); return groups.get(id); };
+    for (const edge of m.boundary) { const a = m.points[edge.a], b = m.points[edge.b], seamEdge = a[0] >= 3 && b[0] >= 3 && Math.max(a[0], b[0]) <= 3.25;
+        if (!base && seamEdge && Math.max(Math.abs(a[2]), Math.abs(b[2])) <= 1) continue;
+        const id = base && seamEdge ? (a[2] + b[2] < 0 ? 'bank-south-seam' : 'bank-north-seam') : 'rounded-coast';
+        const g = group(id), n = g.vertices.length;
+        // Three real levels soften the top shore and retain a visible soil band.
+        for (const p of [a, b]) for (const y of [p[1], Math.fround(p[1] - .12), bottom]) g.vertices.push({ x: p[0], y, z: p[2] });
+        for (let k = 0; k < 2; k++) g.indices.push(n + k, n + k + 1, n + 3 + k, n + 3 + k, n + k + 1, n + 4 + k);
+    }
+    const g = group('soil-bottom'); g.vertices = m.points.map(p => ({ x: p[0], y: bottom, z: p[2] }));
+    for (let i = 0; i < m.indices.length; i += 3) g.indices.push(m.indices[i], m.indices[i + 2], m.indices[i + 1]);
+    return [...groups.values()];
+}
+function groundAt(m, x, z) {
+    for (let i = 0; i < m.indices.length; i += 3) { const [a, b, c] = m.indices.slice(i, i + 3).map(j => m.points[j]);
+        const d = (b[2] - c[2]) * (a[0] - c[0]) + (c[0] - b[0]) * (a[2] - c[2]);
+        if (Math.abs(d) < 1e-14) continue;
+        const u = ((b[2] - c[2]) * (x - c[0]) + (c[0] - b[0]) * (z - c[2])) / d, v = ((c[2] - a[2]) * (x - c[0]) + (a[0] - c[0]) * (z - c[2])) / d;
+        if (Math.min(u, v, 1 - u - v) >= -1e-8) return u * a[1] + v * b[1] + (1 - u - v) * c[1];
+    }
+}
+function district(m, id, isBase = false) {
+    const sites = [], edges = [], byCell = new Map();
+    const add = (x, z, siteId, placement = false) => { const key = `${x},${z}`; if (byCell.has(key)) return byCell.get(key); const s = { id: siteId ?? key, cell: { x, z }, floorId: 'top', placement }; sites.push(s); byCell.set(key, s); return s; };
+    const lowX = Math.floor(Math.min(...m.points.map(p => p[0])) * 4), highX = Math.ceil(Math.max(...m.points.map(p => p[0])) * 4), lowZ = Math.floor(Math.min(...m.points.map(p => p[2])) * 4), highZ = Math.ceil(Math.max(...m.points.map(p => p[2])) * 4);
+    if (isBase) { for (const c of rights) add(c.x, c.z, `${c.x},${c.z}`, true); add(0, 0, 'entry'); add(3, -1, 'seam-south'); add(3, 1, 'seam-north'); }
+    else if (m.name === 'connection') { add(5.75, -.125, 'south-entry'); add(5.75, .125, 'north-entry'); }
+    else add(3.5, 0, 'entry');
+    for (let zi = lowZ; m.name !== 'connection' && zi <= highZ; zi++) for (let xi = lowX; xi <= highX; xi++) { const x = xi / 4, z = zi / 4, h = groundAt(m, x, z); if (h === undefined) continue;
+        if ([-.12, 0, .12].every(dx => [-.12, 0, .12].every(dz => { const y = groundAt(m, x + dx, z + dz); return y !== undefined && Math.abs(y - h) <= .19; }))) add(x, z);
+    }
+    const link = (a, b, allows) => edges.push({ from: { districtId: id, siteId: a.id }, to: { districtId: id, siteId: b.id }, allows });
+    for (const a of sites) for (const delta of [{ x: .25, z: 0 }, { x: 0, z: .25 }]) {
+        const b = byCell.get(`${a.cell.x + delta.x},${a.cell.z + delta.z}`); if (!b) continue;
+        const l = .25;
+        if (Array.from({ length: 9 }, (_, i) => i / 8).every(t => [-.12, 0, .12].every(side => groundAt(m, a.cell.x + delta.x * t - delta.z / l * side, a.cell.z + delta.z * t + delta.x / l * side) !== undefined))) link(a, b, ['walk']);
+    }
+    if (isBase) for (const a of sites.filter(s => s.placement)) for (const delta of [{ x: 1, z: 0 }, { x: 0, z: 1 }]) { const b = byCell.get(`${a.cell.x + delta.x},${a.cell.z + delta.z}`); if (b?.placement) link(a, b, ['join', 'water']); }
+    let keptSites = sites, keptEdges = edges;
+    if (!isBase) { const entry = m.name === 'connection' ? 'south-entry' : 'entry'; const reached = new Set([entry]), queue = [entry], neighbors = new Map(sites.map(s => [s.id, []]));
+        for (const e of edges) { neighbors.get(e.from.siteId).push(e.to.siteId); neighbors.get(e.to.siteId).push(e.from.siteId); }
+        for (let i = 0; i < queue.length; i++) for (const next of neighbors.get(queue[i])) if (!reached.has(next)) { reached.add(next); queue.push(next); }
+        keptSites = sites.filter(s => reached.has(s.id)); keptEdges = edges.filter(e => reached.has(e.from.siteId) && reached.has(e.to.siteId));
+        m.navigationOmittedDisconnected = sites.length - keptSites.length;
+    }
+    const d = { id, templateId: id, turn: 0, logicalOrigin: { x: 0, z: 0 }, worldOrigin: { x: 0, y: 0, z: 0 }, floors: [floor(m, 'top', isBase ? mats[0] : mats[1])], surfaces: surfaces(m, isBase), sites: keptSites, ports: [] };
+    return { district: d, edges: keptEdges };
+}
+const connectionOutline = [...Array.from({length:9},(_,i)=>[5.25+i/8,.3125]),[6.25,-.3125],...Array.from({length:8},(_,i)=>[6.125-i/8,-.3125])];
+const meshes = [mesh(baseOutline, baseHeight, 'baseline-low-shore'), ...['parallel', 'seaward'].map(kind => mesh(outlines[kind], (x, z) => patchHeight(kind, x, z), kind)), mesh(connectionOutline, (x,z)=>patchHeight('connection',x,z), 'connection')];
+const base = district(meshes[0], 'native05-growing-shore-v1', true);
+const variants = meshes.slice(1, 3).map(m => ({ id: m.name, ...district(m, `growth-${m.name}`) }));
+const template = { id: base.district.id, label: '木と育つ丸い岸', ...base, ports: [{ id: 'west-entry', siteId: 'entry', facing: 2 }] };
+template.district.ports = [{ id: 'west-entry', siteId: 'entry' }];
+const connectionPart = district(meshes[3], 'growth-loop-connection');
+const profile = { trigger: [{ x: .5, z: -1.5 }, { x: 2.5, z: -1.5 }, { x: 2.5, z: 1.5 }, { x: .5, z: 1.5 }], scope: [{ x: 2.9, z: -4.5 }, { x: 8, z: -4.5 }, { x: 8, z: 4.5 }, { x: 2.9, z: 4.5 }], shoreFacing: 0,
+    sockets: [{ id: 'south', logicalOrigin: { x: 0, z: -1 }, worldOrigin: { x: 0, y: 0, z: -1 }, turn: 0, landings: [{ baseSiteId: 'seam-south', patchSiteId: 'entry' }], replaceSurfaceIds: ['bank-south-seam'] },
+        { id: 'north', logicalOrigin: { x: 0, z: 1 }, worldOrigin: { x: 0, y: 0, z: 1 }, turn: 0, landings: [{ baseSiteId: 'seam-north', patchSiteId: 'entry' }], replaceSurfaceIds: ['bank-north-seam'] }], variants, connections: [{ id: 'coastal-loop', socketIds: ['south', 'north'], branchShape: 'seaward', ...connectionPart,
+        landings: [{socketId:'south',patchSiteId:'5.75,0.5',connectionSiteId:'south-entry'}, {socketId:'north',patchSiteId:'5.75,-0.5',connectionSiteId:'north-entry'}],
+        replaceSurfaceIds: [{socketId:'south',surfaceIds:['bank-connection-positive']},{socketId:'north',surfaceIds:['bank-connection-negative']}] }] };
+assert.deepEqual(template, previous.template, 'The entire acquired baseline template must remain byte-equivalent');
+for (const key of ['trigger', 'scope', 'shoreFacing', 'sockets']) assert.deepEqual(profile[key], previous.profile[key], `Fixed ${key}`);
+template.growthReservation = { logical: profile.scope, physical: profile.scope };
+const identity = { version: 1, candidate: 'native05-growth-terrain-rough-v3', source, template, profile };
+const revision = hash(JSON.stringify(identity)), catalog = { ...identity, revision };
+const expanded = Buffer.from(JSON.stringify(catalog)), compressed = gzipSync(expanded, { level: 9, mtime: 0 });
+const artifact = { path: '/prototypes/place-qa/authored-growth-terrain-kit.json.gz', sha256: hash(compressed), expandedSha256: hash(expanded), expandedBytes: expanded.length, gzipBytes: compressed.length };
+const manifest = { version: 1, candidate: catalog.candidate, revision, source, artifact,
+    authoring: { sourceNode: doc.nodes[terrainId].name, sourceSamples: sourceSamples.size, sourceCoastControlFile: 'docs/design/2026-10-10-island-final-3d/mature-island.py', nativeCoastControls, sourceCoastSamples: coastSamples,
+        interpretation: 'V3 additive narrow branches and one optional connection form a real coastal loop. V2 parallel shoulder and rounded shore section retained. Baseline geometry/sites/edges/ports and original source bytes fixed; growth reservation metadata added.',
+        seaDatum: 0, fixedHeight: H, bottom, fixedRights: rights, profileScope: profile.scope,
+        coastSection: { endpointRings: 'New rings converge exactly to immutable original top / top-.12 / bottom at the seam. Coincident generated vertices share indices.', groundRollWidth: {parallel:.54,seaward:.36}, waterlineGroundHeight: .045, belowGroundRings: [[0, 0], [.15, .035], [.42, .06], [.72, .025], [1, -.04]], seamFixedThroughX: 3.25 },
+        fixedBaselineSha256: hash(JSON.stringify(previous.template)), previousRevision: previous.revision, v2SourceRevision: 'a74b436a5165badf2438a6c3a2d0632be9fe27a533b162b62de57aa26bf1ec01', connectionSeam: {x:[5.25,6.25],branchLocalZ:[-.6875,.6875],parentZ:[-.3125,.3125],height:H,parts:'same2branch meshes + optional real connection ground/bank/bottom; no new placement rights'} },
+    parts: meshes.map(m => ({ id: m.name, vertices: m.points.length, topTriangles: m.indices.length / 3, boundaryEdges: m.boundary.length, navigationOmittedDisconnected: m.navigationOmittedDisconnected ?? 0, bounds: { min: [0, 1, 2].map(k => Math.min(...m.points.map(p => p[k]))), max: [0, 1, 2].map(k => Math.max(...m.points.map(p => p[k]))) } })),
+    diagnosticCases: { parallel: { localCells: [{ x: 2, z: -1 }, { x: 2, z: 0 }], expectedShape: 'parallel', expectedSocket: 'south' }, seaward: { localCells: [{ x: 1, z: -1 }, { x: 2, z: -1 }], expectedShape: 'seaward', expectedSocket: 'south' }, shifted: { localCells: [{ x: 2, z: 0 }, { x: 2, z: 1 }], expectedShape: 'parallel', expectedSocket: 'north' } },
+    variationCases: { single: { localCells:[{x:1,z:-1},{x:2,z:-1},{x:1,z:0},{x:2,z:0}], expectedSockets:['south'], expectedShape:'seaward', expectedConnections:[] }, split: { localCells:[{x:1,z:-1},{x:2,z:-1},{x:1,z:1},{x:2,z:1}], expectedSockets:['south','north'], expectedShape:'seaward', expectedConnections:[] }, loop: { localCells:[{x:2,z:-1},{x:2,z:0},{x:2,z:1},{x:1,z:0}], expectedSockets:['south','north'], expectedShape:'seaward', expectedConnections:['coastal-loop'] } },
+    materials: mats.map(({ name, raw, index }) => ({ name, sourceMaterialIndex: index, raw })),
+    status: { visual: 'HOLD', runtime: 'NOT RUN', independentObservers: 0, acquisition: 'same diagnostic district menu; no personal save or production purchase claim' },
+    limitations: ['Author-derived topology and normals, not untouched original source triangles.', 'Mature patches have walking-only sites and never grant land.', 'Source shapes need whole-app art review and actual owner-obstruction walking review.'] };
+// Direct native glTF: the same authoritative WorldFloor / WorldSurface arrays,
+// with only the catalog's socket translation. No substitute preview ground.
+function exportGlb(shape) {
+    const chunks = [], views = [], accessors = [], nodes = [], gltfMeshes = []; let size = 0;
+    const add = (typed, type, componentType, n) => {
+        const raw = Buffer.from(typed.buffer, typed.byteOffset, typed.byteLength), bytes = Buffer.alloc(Math.ceil(raw.length / 4) * 4); raw.copy(bytes);
+        const view = views.length; views.push({ buffer: 0, byteOffset: size, byteLength: raw.length }); chunks.push(bytes); size += bytes.length;
+        const entry = { bufferView: view, componentType, count: typed.length / n, type };
+        if (type === 'VEC3') { entry.min = [0, 1, 2].map(k => Math.min(...Array.from({ length: entry.count }, (_, i) => typed[i * 3 + k]))); entry.max = [0, 1, 2].map(k => Math.max(...Array.from({ length: entry.count }, (_, i) => typed[i * 3 + k]))); }
+        accessors.push(entry); return accessors.length - 1;
+    };
+    const addMesh = (name, positions, indices, normals, material, translation) => {
+        const p = new Float32Array(positions), ix = new Uint32Array(indices);
+        const geometry = new T.BufferGeometry().setAttribute('position', new T.BufferAttribute(p, 3)).setIndex(new T.BufferAttribute(ix, 1));
+        if (!normals) geometry.computeVertexNormals();
+        const normal = normals ? new Float32Array(normals) : geometry.getAttribute('normal').array;
+        gltfMeshes.push({ name, primitives: [{ attributes: { POSITION: add(p, 'VEC3', 5126, 3), NORMAL: add(normal, 'VEC3', 5126, 3) }, indices: add(ix, 'SCALAR', 5125, 1), material }] });
+        nodes.push({ name, mesh: gltfMeshes.length - 1, ...(translation ? { translation } : {}) }); geometry.dispose();
+    };
+    const take = (d, prefix, translation, hide = []) => {
+        for (const f of d.floors) addMesh(`${prefix}/${f.id}`, f.vertices.flatMap(v => [v.point.x, v.point.y, v.point.z]), f.indices,
+            f.vertices.flatMap(v => [v.normal.x, v.normal.y, v.normal.z]), prefix === 'baseline' ? 0 : 1, translation);
+        for (const surface of d.surfaces ?? []) if (!hide.includes(surface.id))
+            addMesh(`${prefix}/${surface.id}`, surface.vertices.flatMap(v => [v.x, v.y, v.z]), surface.indices, null, 2, translation);
+    };
+    const multi = ['split','loop'].includes(shape), actualShape = ['single','split','loop'].includes(shape) ? 'seaward' : shape;
+    take(template.district, 'baseline', null, shape ? (multi ? ['bank-south-seam','bank-north-seam'] : ['bank-south-seam']) : []);
+    if (shape) take(variants.find(v => v.id === actualShape).district, `${actualShape}-south`, [0, 0, -1], shape === 'loop' ? ['bank-connection-positive'] : []);
+    if (multi) take(variants.find(v => v.id === 'seaward').district, 'seaward-north', [0, 0, 1], shape === 'loop' ? ['bank-connection-negative'] : []);
+    if (shape === 'loop') take(connectionPart.district, 'connection', null);
+    const json = { asset: { version: '2.0', generator: 'Sansu authored growth terrain: exact catalog arrays' }, scene: 0, scenes: [{ name: shape ?? 'baseline', nodes: nodes.map((_, i) => i) }], nodes, meshes: gltfMeshes,
+        materials: mats.slice(0, 3).map(m => m.raw), accessors, bufferViews: views, buffers: [{ byteLength: size }], extras: { candidate: catalog.candidate, catalogRevision: revision, shape: shape ?? 'baseline', socket: shape ? 'south' : null, sourceSha256: source.sha256, evidence: 'source only; visual HOLD' } };
+    const text = Buffer.from(JSON.stringify(json)), jsonPadded = Buffer.alloc(Math.ceil(text.length / 4) * 4, 32); text.copy(jsonPadded);
+    const header = Buffer.alloc(20); header.writeUInt32LE(0x46546c67, 0); header.writeUInt32LE(2, 4); header.writeUInt32LE(28 + jsonPadded.length + size, 8); header.writeUInt32LE(jsonPadded.length, 12); header.writeUInt32LE(0x4e4f534a, 16);
+    const binHead = Buffer.alloc(8); binHead.writeUInt32LE(size, 0); binHead.writeUInt32LE(0x004e4942, 4);
+    return Buffer.concat([header, jsonPadded, binHead, ...chunks]);
+}
+async function emit(path, bytes) { if (check) assert((await readFile(path)).equals(bytes), `Stale ${path}`); else await writeFile(path, bytes); }
+await mkdir(dir, { recursive: true });
+manifest.sourceArtifacts = [];
+for (const shape of [null, 'parallel', 'seaward', 'single', 'split', 'loop']) { const bytes = exportGlb(shape), path = `${dir}/${shape ?? 'baseline'}-source.glb`; await emit(path, bytes); manifest.sourceArtifacts.push({ shape: shape ?? 'baseline', path, sha256: hash(bytes), bytes: bytes.length, transform: 'catalog parent local; south(0,0,-1),north(0,0,1),connection identity' }); }
+await emit(`${dir}/authored-growth-terrain-kit.json.gz`, compressed);
+await emit(`${dir}/authored-growth-terrain-manifest.json`, Buffer.from(JSON.stringify(manifest, null, 2) + '\n'));
+if (!draft) {
+    await emit('prototypes/place-qa/authored-growth-terrain-kit.json.gz', compressed);
+    await emit('prototypes/place-qa/authored-growth-terrain-manifest.json', Buffer.from(JSON.stringify(manifest, null, 2) + '\n'));
+}
+await emit(`${dir}/source-profile.json.gz`, gzipSync(Buffer.from(JSON.stringify({ catalog, manifest, samples: [...sourceSamples.values()] })), { level: 9, mtime: 0 }));
+await emit(`${dir}/source-manifest.json`, Buffer.from(JSON.stringify(manifest, null, 2) + '\n'));
+assert.equal(hash(await readFile(source.artifact)), source.sha256);
+console.log(JSON.stringify({ candidate: catalog.candidate, revision, artifact, parts: manifest.parts, sourceUnchanged: true }));

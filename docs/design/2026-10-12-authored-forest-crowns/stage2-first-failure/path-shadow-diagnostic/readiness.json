@@ -1,0 +1,14 @@
+{
+  "preparedAtUtc": "2026-10-12T04:20:17.863166+00:00",
+  "baselineManifestSha256": "dc6a2b6c96e8394815e9301106a3089e211f435ca61520f06da538f53f4b3f14",
+  "baselineImageSha256": "fb888e3d9c79d2f64015fc6d9a1e8ff01b24acb60be43d7ff3e18d3e9d478e90",
+  "scope": "Only the named path mesh shadow-ray visibility is disabled during one source render; no app, geometry, material, camera/light parameter edits.",
+  "files": {
+    "run-once.py": "873f32e70965b197c8f5081a4ff2b7cf531d5d3d196caa8c3d01753bbfde3eba",
+    "stage1_support_locale_safe.py": "8c06d2c318cccf0c9ef4031347dd73d80363cc13acae899c3ccc0eddcce88b27",
+    "render-failed-whole.py": "8773da04ab35c040e86fcf1808e2b4dc0b00d71b40e89551751abd0df836eb41"
+  },
+  "maxThreads": 2,
+  "maxSeconds": 120,
+  "observedRSSGuardBytes": 3221225472
+}

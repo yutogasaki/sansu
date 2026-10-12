@@ -1,0 +1,106 @@
+{
+  "scope": "Static source and existing functional expected data; no runtime instrumentation or measured call counts",
+  "sources": {
+    "c2": {
+      "/private/tmp/sansu-authored-shoulder-c2/candidate/src/domain/growingIsland/authoredWorldAccess.ts": {
+        "sha256": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+        "cacheDeclarations": [
+          {
+            "line": 26,
+            "source": "const shoreIndexes = new WeakMap<readonly CompiledWorldFloor[], ShoreIndex>();"
+          },
+          {
+            "line": 27,
+            "source": "const walkKeys = new WeakMap<readonly CompiledWorldSite[], ReadonlySet<string>>();"
+          }
+        ]
+      },
+      "/private/tmp/sansu-authored-shoulder-c2/candidate/src/domain/growingIsland/worldDefinition.ts": {
+        "sha256": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+        "cacheDeclarations": []
+      },
+      "/private/tmp/sansu-authored-shoulder-c2/candidate/src/domain/growingIsland/authoredWaterCarving.ts": {
+        "sha256": "6ae51dfb1c3278471b928b54e3d170adefe7dbb4452f1360d7cfbfb52bf83c88",
+        "cacheDeclarations": [
+          {
+            "line": 9,
+            "source": "const indexes = new WeakMap<IslandWorld, Map<string, SourceIndex>>();"
+          }
+        ]
+      },
+      "/private/tmp/sansu-authored-shoulder-c2/candidate/src/domain/growingIsland/authoredWaterBridge.ts": {
+        "sha256": "65594e5eb508d5dad13bd0693d213a66731caa9b60b9d419eefcf3c5983f60cf",
+        "cacheDeclarations": []
+      },
+      "/private/tmp/sansu-authored-shoulder-c2/candidate/src/domain/growingIsland/authoredWaterWorld.ts": {
+        "sha256": "7640bd96ac4eb6797f46862f1b9a223d575f3bc9b51ae05f41351865cce2e486",
+        "cacheDeclarations": []
+      }
+    },
+    "c3": {
+      "/private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWorldAccess.ts": {
+        "sha256": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+        "cacheDeclarations": [
+          {
+            "line": 26,
+            "source": "const shoreIndexes = new WeakMap<readonly CompiledWorldFloor[], ShoreIndex>();"
+          },
+          {
+            "line": 27,
+            "source": "const walkKeys = new WeakMap<readonly CompiledWorldSite[], ReadonlySet<string>>();"
+          }
+        ]
+      },
+      "/private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/worldDefinition.ts": {
+        "sha256": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+        "cacheDeclarations": []
+      },
+      "/private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterCarving.ts": {
+        "sha256": "6ae51dfb1c3278471b928b54e3d170adefe7dbb4452f1360d7cfbfb52bf83c88",
+        "cacheDeclarations": [
+          {
+            "line": 9,
+            "source": "const indexes = new WeakMap<IslandWorld, Map<string, SourceIndex>>();"
+          }
+        ]
+      },
+      "/private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterBridge.ts": {
+        "sha256": "23d75eb2a3f7e9a2c623ee8ac44758d7c4b677260cdd74025e82dbabc6e95b1d",
+        "cacheDeclarations": []
+      },
+      "/private/tmp/sansu-authored-shoulder-c3/candidate/src/domain/growingIsland/authoredWaterWorld.ts": {
+        "sha256": "3cf0b8992204fdc26f820b6a948f743c3f2d59e1033ec93223ba3b4ae1db76d0",
+        "cacheDeclarations": []
+      }
+    }
+  },
+  "findings": [
+    {
+      "finding": "No whole-composition or compiler-result memoization in production call boundary",
+      "paths": [
+        "authoredWaterWorld.ts:398-563",
+        "authoredWaterBridge.ts:174-238",
+        "worldDefinition.ts:102-107"
+      ]
+    },
+    {
+      "finding": "All matching bridge-bearing outputs require accepted candidate compile at bridge lines230-233; c2 extra compile at water line548 is removed in c3",
+      "observedCallCount": false
+    },
+    {
+      "finding": "Base carving WeakMap warmed identically; holds source index, not result",
+      "path": "authoredWaterCarving.ts:9,41-73"
+    },
+    {
+      "finding": "Shore WeakMaps keyed by newly compiled floors/sites each composition",
+      "path": "authoredWorldAccess.ts:26-27"
+    },
+    {
+      "finding": "Legacy islandLife walkingSpace cache is imported by dependency graph but omitted from emitted bundles",
+      "metafileBytesInOutput": 0
+    },
+    {
+      "finding": "Worker WeakSets retain no graph; expected values contain only hashes and compact bridge IDs; outputs/queries leave iteration scope"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "originalWrapperFailurePreserved": true,
+  "reclassifiedStageResult": "PASS",
+  "commandExitCode": 0,
+  "all1895CoreInputsMatchBefore": true,
+  "all1895CoreInputsMatchAfter": true,
+  "toolInitialFinalInputsEqual": true,
+  "toolInspection": {
+    "pass": true,
+    "failurePhase": null,
+    "error": null,
+    "scenarioCount": 0,
+    "failedScenarios": [],
+    "stepsPassed": 6,
+    "captureCount": 14,
+    "target": null,
+    "lastCompletedScenario": null,
+    "lastCapture": {
+      "file": "tablet-whole.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "url": "http://127.0.0.1:5352/prototypes/place-qa/authored.html?water=wide",
+      "build": "authored-flower-lifecycle-c4"
+    }
+  },
+  "reason": "Read-only re-inspection after /tmp wrapper adapted to string[] steps; no app/QA rerun"
+}

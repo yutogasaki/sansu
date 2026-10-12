@@ -1,0 +1,48 @@
+"""One authorized diagnostic, CPU2 / 90 seconds / observed RSS 3 GiB."""
+import os
+import json
+import signal
+import subprocess
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+
+assert os.environ.get('SANSU_FOREST_QUERY64_APPROVED') == '1', 'Await root window'
+HERE = Path(__file__).resolve().parent
+OUT = HERE / 'execution-attempt-01'
+assert not OUT.exists() and not (HERE / 'blender-attempt-01').exists(), 'No automatic retry'
+OUT.mkdir()
+command = ['/Applications/Blender.app/Contents/MacOS/Blender', '-b', '--threads', '2',
+           '--python-exit-code', '1', '--python', str(HERE / 'compare-failed-query.py')]
+start = time.monotonic()
+started = datetime.now(timezone.utc).isoformat()
+peak, stop = 0, None
+with (OUT / 'execution.log.txt').open('xb') as log:
+    process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT, start_new_session=True,
+                               env=dict(os.environ, OMP_NUM_THREADS='2', OPENBLAS_NUM_THREADS='1'))
+    try:
+        while process.poll() is None:
+            rss = subprocess.run(['ps', '-o', 'rss=', '-p', str(process.pid)], capture_output=True,
+                                 text=True, check=False).stdout.strip()
+            if rss:
+                peak = max(peak, int(rss) * 1024)
+            if peak > 3 * 1024 ** 3:
+                stop = 'observed RSS exceeded 3 GiB'; break
+            if time.monotonic() - start > 90:
+                stop = '90 second wall limit'; break
+            time.sleep(1)
+    finally:
+        if process.poll() is None:
+            os.killpg(process.pid, signal.SIGTERM)
+            try:
+                process.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                os.killpg(process.pid, signal.SIGKILL); process.wait()
+code = (125 if 'RSS' in stop else 124) if stop else process.returncode
+record = {'startedAtUtc': started, 'finishedAtUtc': datetime.now(timezone.utc).isoformat(),
+          'elapsedSeconds': time.monotonic() - start, 'command': command, 'ownedPid': process.pid,
+          'exitCode': code, 'stopReason': stop, 'peakObservedRssBytes': peak, 'effectiveThreads': 2,
+          'rssGuardBytes': 3 * 1024 ** 3, 'timeoutSeconds': 90, 'attempts': 1}
+(OUT / 'result.json').write_text(json.dumps(record, indent=2) + '\n')
+print(json.dumps(record), flush=True)
+raise SystemExit(code)

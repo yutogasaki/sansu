@@ -1,0 +1,20 @@
+{
+  "status": "SOURCE_VISUAL_HOLD_RUNTIME_HOLD",
+  "exitCode": 0,
+  "elapsedSeconds": 20.682355083999997,
+  "ownedBlender": {
+    "69322": {
+      "pid": 69322,
+      "firstObservedUTC": "2026-10-12T07:28:47.455512+00:00",
+      "command": "/Applications/Blender.app/Contents/MacOS/Blender -b --threads 2 --python-exit-code 1 --python render-coarse.py -- --scheduled --source /private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/runs/01-coarse-build/study.blend --out runs/01-three-quarter --view three-quarter",
+      "peakObservedRSSBytes": 2519908352,
+      "lastObservedUTC": "2026-10-12T07:29:07.223773+00:00"
+    }
+  },
+  "ownedPIDAndGroupGone": true,
+  "inputsUnchanged": true,
+  "png": "runs/01-three-quarter/coarse-real-stair-HOLD-three-quarter.png",
+  "pngSHA": "f6aadfe21100181aedf16fb3d030681c8fedb4cc1c882b288dfab036191d2fda",
+  "archiveProofSHA": "2d4da29c26f183e01d75bb40c349da5e7a1038d807d3f12de8039e5b371bda3f",
+  "visibleObservation": "Black near-plane oval and sliced foreground leaves are absent. Real foreground crown still hides part of lower staircase; original fan leaves hide part of upper gallery. Conservative bounds show no near cut, not unoccluded targets. No geometry/visibility repair or acceptance."
+}

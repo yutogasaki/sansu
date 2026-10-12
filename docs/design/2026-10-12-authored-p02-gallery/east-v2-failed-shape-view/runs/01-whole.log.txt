@@ -1,0 +1,18 @@
+00:00.488  blend            | Read blend: "/private/tmp/sansu-p02-gallery-source-study/east-v2/runs/01-coarse-build/failed-scene.blend"
+/private/tmp/sansu-p02-gallery-source-study/east-v2-failed-shape-view/render-failed.py:32: DeprecationWarning: 'World.use_nodes' is expected to be removed in Blender 6.0
+  scene.world=bpy.data.worlds.new('Forest reference source lighting');scene.world.use_nodes=True
+Traceback (most recent call last):
+  File "/private/tmp/sansu-p02-gallery-source-study/east-v2-failed-shape-view/render-failed.py", line 33, in <module>
+    bg=scene.world.node_tree.nodes['Background'];bg.inputs['Color'].default_value=(.055,.20,.26,1);bg.inputs['Strength'].default_value=.7
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+KeyError: 'bpy_prop_collection[key]: key "Background" not found'
+BlenderMCP: cannot start server in background mode (blender -b) - commands would never execute
+BlenderMCP: run Blender with a GUI, or use a virtual display: xvfb-run -a blender
+BlenderMCP addon registered
+
+Error: script failed, file: 'render-failed.py', exiting.
+BlenderMCP server stopped
+BlenderMCP addon unregistered
+Blender 5.2.1 LTS (hash 9e2066aef7ef built 2026-08-25 01:35:57)
+
+Blender quit

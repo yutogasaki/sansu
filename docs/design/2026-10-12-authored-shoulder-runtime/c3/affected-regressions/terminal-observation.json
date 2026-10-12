@@ -1,0 +1,52 @@
+{
+  "atUtc": "2026-10-12T05:57:13.028788+00:00",
+  "execSession": 50456,
+  "execExitCode": 0,
+  "sourceCount": 6460,
+  "installedDependencyCount": 6,
+  "stages": [
+    {
+      "name": "01-wide27-water",
+      "pid": 47527,
+      "startedAtUtc": "2026-10-12T05:47:35.775855+00:00",
+      "finishedAtUtc": "2026-10-12T05:53:49.260143+00:00",
+      "elapsedSeconds": 373.4842879772186,
+      "pass": true,
+      "exitCode": 0,
+      "cleanup": "runner-owned process group already exited",
+      "observedProcess": "",
+      "psExitCode": 1,
+      "reportSha256": "5f1b59d167a23492cd6ebbc15a901bfff81ff8a4a86d7a35097ff68e3f931522"
+    },
+    {
+      "name": "02-classic-smoke",
+      "pid": 48769,
+      "startedAtUtc": "2026-10-12T05:53:49.377179+00:00",
+      "finishedAtUtc": "2026-10-12T05:56:14.259359+00:00",
+      "elapsedSeconds": 144.88217997550964,
+      "pass": true,
+      "exitCode": 0,
+      "cleanup": "runner-owned process group already exited",
+      "observedProcess": "",
+      "psExitCode": 1,
+      "reportSha256": "4e3cdad64a092a848208b9fb9cddb1d5f231e50b6b063eada6de22252a9dfadc"
+    }
+  ],
+  "servers": [
+    {
+      "pid": 6704,
+      "port": 5359,
+      "process": "6704 node ./node_modules/.bin/vite --host 127.0.0.1 --port 5359 --strictPort",
+      "cwd": "p6704\nfcwd\nn/private/tmp/sansu-authored-shoulder-c2/candidate\n",
+      "rootOwnedPreserved": true
+    },
+    {
+      "pid": 47164,
+      "port": 5360,
+      "process": "47164 node ./node_modules/.bin/vite --host 127.0.0.1 --port 5360 --strictPort",
+      "cwd": "p47164\nfcwd\nn/private/tmp/sansu-authored-shoulder-c3/candidate\n",
+      "rootOwnedPreserved": true
+    }
+  ],
+  "noSignalsSent": true
+}

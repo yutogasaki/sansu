@@ -1,0 +1,69 @@
+{
+  "schema": "sansu-water-support-perf-preparation-seal-v1",
+  "sealedAtUtc": "2026-10-12T06:17:04.520677+00:00",
+  "executionStarted": false,
+  "awaitingParentQuietWindow": true,
+  "files": {
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/README.md": "cdc862da0815cb082b5057be9ac9a511cf871c840498ee0482a85112115bd0c7",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/c2-metafile.json": "7701f945daa5918f8249b31a8a4685aa48c6eb7ec9cf6ce0b7fd26909533c3f3",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/c3-metafile.json": "e6b962498cc99d9a72727c19233d13ac4aa2664f4693114ff0b69879fd029b5c",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/cache-audit.json": "2bc73b2ac8f629d9c258803f78b0f52a5fd2451bcfeb635ed464055235ca8131",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/expected-c2-shoulder35.json": "76de4de5b68e72bee1d2064eea09c12dfc771831e0cc41efbdec854e0a3b0e67",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/expected-c2-source32.json": "9d96deeac3d2940bf50ba1684b85e32e71a69a114f9f3f109cba37276bdbfab0",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/expected-c2-wide27.json": "5be89554a00dc321c5eeeabca9493eeed0577e2ad27c7e763ac5a2cda48cc695",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/expected-c3-shoulder35.json": "6a368c4b4be433ff118f652e1dac439a0602e16dc0ab3deddf23a2d91cbf5374",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/expected-c3-source32.json": "d780cefdf3fce220c9107420ff45f7d22bc5497d93b0c6fd3d6decc1d7aac88c",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/expected-c3-wide27.json": "d4701ecfad221dfb612d4a8ec6a7f27904058feab1a3093dbcf50bf3afc144fe",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/inputs.json": "726f55c01fd51b4496a68795899db4c86876f9db4c4ea25b290d0bc36803ee85",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/preparation.log.txt": "174113b1b9692c26d41a9dc7808a538717e19395c2999e21d7d2ebb60a6b5697",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/prepare.mjs": "9cc3e559ea00c3adbec62fe2313651c32c516a7e549b9630be86cd959d732bf0",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/run.py": "ff5b9dc4a7a5937bc031ea5829f43f9a41157e0d24f2fd254b02b196627fed77",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/seal-preparation.py": "352a28f82d94b84c2f6cf1176dfee13102f42c0ec4c7c0158dedd690ce5e10d7",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/static-checks.json": "f0f049fa945cc2d8ebb5eb518fa3893042f5cc93b21be1bef5625b4e0d8b3ba7",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/worker-c2.mjs": "677dcace73892596d94a4c3f92546d08ad540811e00d3b580dcc29d7fadc69c5",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/worker-c2.mjs.map": "e6816b3e7374a1d07961e01272c95e52ba00a55b8d67e24305f570bf6b403c58",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/worker-c2.ts": "a0b6f06cc9dc44ebbe1ed175b0eef2c1656c632e1397371e4dd47c03510f4fe5",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/worker-c3.mjs": "7bf5949b945c41b74de1bce197318d10752a1f2b9252581a7d97b5355bea2938",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/worker-c3.mjs.map": "0fca8d7eb7cb222163abb984a8501f09696d82307e02ae067a4e63024c0210fc",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/worker-c3.ts": "634a0381940f5b327b5b127b06d526f2747905d34562c25982eb8988c3fc9713",
+    "/private/tmp/sansu-water-support-perf-c2-c3/prepared/worker-template.ts.txt": "8ea7ae70966f2aa8ccc3433159f227e6e5760a74c9d9fe75401208dcf88634f5"
+  },
+  "idleProcesses": [
+    {
+      "pid": 6704,
+      "ppid": 33232,
+      "comm": "node",
+      "kind": "root-c2-vite",
+      "command": "node ./node_modules/.bin/vite --host 127.0.0.1 --port 5359 --strictPort",
+      "cwdAtPreparation": "p6704\nfcwd\nn/private/tmp/sansu-authored-shoulder-c2/candidate\n"
+    },
+    {
+      "pid": 47164,
+      "ppid": 33232,
+      "comm": "node",
+      "kind": "root-c3-vite",
+      "command": "node ./node_modules/.bin/vite --host 127.0.0.1 --port 5360 --strictPort",
+      "cwdAtPreparation": "p47164\nfcwd\nn/private/tmp/sansu-authored-shoulder-c3/candidate\n"
+    },
+    {
+      "pid": 13395,
+      "ppid": 1,
+      "comm": "/Applications/Blender.app/Contents/MacOS/Blender",
+      "kind": "user-gui-blender"
+    }
+  ],
+  "python": {
+    "executable": "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+    "version": "3.9.6 (default, Mar  6 2026, 16:22:43) \n[Clang 21.0.0 (clang-2100.0.123.102)]",
+    "sha256": "fb49353c025e39b9253567759fc80f20ed0f6e8b0d0bc6c5fddb47dc235ce22a"
+  },
+  "inputManifestSha256": "726f55c01fd51b4496a68795899db4c86876f9db4c4ea25b290d0bc36803ee85",
+  "runnerSha256": "ff5b9dc4a7a5937bc031ea5829f43f9a41157e0d24f2fd254b02b196627fed77",
+  "protocolSha256": "cdc862da0815cb082b5057be9ac9a511cf871c840498ee0482a85112115bd0c7",
+  "bounds": {
+    "wholeSeconds": 2700,
+    "workerSeconds": 180,
+    "rssBytes": 4294967296
+  },
+  "notUiOrProductPerformanceEvidence": true
+}

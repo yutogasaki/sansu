@@ -1,0 +1,16 @@
+{
+  "pass": true,
+  "threeRevision": "185",
+  "scope": "Static shader-string preparation only. No browser, renderer, GPU/GLSL compile, source mutation, or diagnostic execution.",
+  "driverSha256": "f94d8ce0d306fc5c04228cfb63dcd81c47fdd7a533b697edc98fe24ec6fc3415",
+  "targetSha256": "d7ecf37dfdce5eec6b7d331a1faf6afa446a34c9ef01e5581ea9f4a0f0f9d819",
+  "vertexShaderSha256": "a5d2dfe044cce1ce21f7d644da4ee6e507fdda8e243372f41962e5a3dd714d65",
+  "fragmentShaderSha256": "ffd859bf22117923e4d4b1359c94ec7ef5aa0de2b285213d07f069db83cd7fe0",
+  "overrideFields": [
+    "normal",
+    "nonPerturbedNormal"
+  ],
+  "roiMask": "runtime-world AABB only",
+  "derivatives": "Computed outside control-flow; original geometryRoughness derivative source retained outside ROI",
+  "markersMatched": true
+}

@@ -1,0 +1,145 @@
+{
+  "status": "FAIL",
+  "classification": "Runtime terrain-contact limitation exposed by a diagnostic graph extension; not a missing gallery-obstacle check.",
+  "candidate": "/private/tmp/sansu-growth-terrain-c8/candidate",
+  "originalWorldRevision": "authored-cove:b9c853b15f0b4d15",
+  "scope": "Diagnostic graph only: two walking-only sites and three edges. Original floors, placement rights, owners, source models and guard thresholds stay unchanged. One retained resident, ordinary target selection and life ticks; no position/route injection, no all-rig sweep, no production eligibility claim.",
+  "execution": {
+    "exitCode": 1,
+    "timedOut": false,
+    "wallSeconds": 14.706617333,
+    "heapLimitMiB": 4096,
+    "wallLimitSeconds": 180,
+    "candidate": "/private/tmp/sansu-growth-terrain-c8/candidate"
+  },
+  "inputsUnchanged": true,
+  "preserved": {
+    "geometry": true,
+    "placementRights": true,
+    "originalSites": true
+  },
+  "guard": {
+    "obstructionRoots": 19,
+    "triangles": 269104,
+    "candidateEdgeContacts": [
+      0,
+      0,
+      0
+    ],
+    "routeNodes": [
+      {
+        "cell": {
+          "x": 5.25,
+          "z": -7.25
+        },
+        "walkable": true,
+        "reachable": true
+      },
+      {
+        "cell": {
+          "x": 5.25,
+          "z": -7.5
+        },
+        "walkable": true,
+        "reachable": true
+      },
+      {
+        "cell": {
+          "x": 5.5,
+          "z": -7.75
+        },
+        "walkable": true,
+        "reachable": true
+      },
+      {
+        "cell": {
+          "x": 5.75,
+          "z": -8
+        },
+        "walkable": true,
+        "reachable": true
+      }
+    ]
+  },
+  "ordinaryRouteUsesAllThreeEdges": true,
+  "actor": {
+    "id": "authored-friend-0",
+    "species": "rabbit",
+    "start": {
+      "x": 3,
+      "z": 1.75
+    },
+    "target": {
+      "x": 5.75,
+      "z": -8
+    },
+    "visualScale": [
+      0.45,
+      0.45,
+      0.45
+    ],
+    "actorIdentity": "0128a0c1-9adf-4bc9-874c-950b7c34abfc"
+  },
+  "firstFailure": {
+    "at": {
+      "x": 5.25,
+      "z": -7.248749999999957
+    },
+    "now": 14825,
+    "floorY": 1.277759121,
+    "soleY": 1.2826500626094832,
+    "rendered": {
+      "x": 5.25,
+      "z": -7.24875
+    },
+    "feet": [
+      {
+        "foot": 0,
+        "minClearance": -0.004721549599843833,
+        "worst": {
+          "vertex": 159,
+          "point": [
+            -1.7219435305,
+            1.2986852344001563,
+            -9.322065850941554
+          ],
+          "cell": {
+            "x": 5.2807125,
+            "z": -7.322065851
+          },
+          "floorY": 1.303406784
+        }
+      },
+      {
+        "foot": 1,
+        "minClearance": -0.07870620748515123,
+        "worst": {
+          "vertex": 124,
+          "point": [
+            -1.8176107554168155,
+            1.2994292175148487,
+            -9.342159600284118
+          ],
+          "cell": {
+            "x": 5.185045275,
+            "z": -7.3421596
+          },
+          "floorY": 1.378135425
+        }
+      }
+    ],
+    "minFootClearance": -0.07870620748515123,
+    "missingFootSupport": 0
+  },
+  "limitation": "Stopped at the first violating posed foot vertex. The actor center was still 0.00125 before the first candidate edge, while a foot already extended onto its steep approach. This does not establish full traversal, all-rig behavior, or that penetration is unique to the newly added graph. No successful endpoint or path was injected. Saved owner-state equality after the failure was not reached; input files remained unchanged.",
+  "nextDecision": "Do not promote these extra sites/edges or relax the nine-sample height condition. Keep gallery traversal unresolved. Any later proposed route needs visible, existing or intentionally authored terrain that supports the actor footprint and its real contact pose; further art or runtime changes require a separate scoped decision.",
+  "files": {
+    "diagnose.mjs": "62c8432544408c126aec4d2c9009eb80c46575c361d2f39f0cfb154853609be7",
+    "exports.ts.txt": "8ebba5210e79708f693f4cca7fa9517055cedd649e77e233e3b9bd2955b932fa",
+    "run-bounded.py": "a32e7c93e4b551e1cf4fd7a957d16c95e9a5c28d60f759a2769184ae7381c61f",
+    "execution.json": "bcfee56be3c644fdc336ccf049e1da121770263ae0738b57aeac423e3110676a",
+    "first-run.log.txt": "b72d64f4e0e78118902a43586db2727e377e4157c664dc53ae8424972f8a8ea2",
+    "attempt-01/report.json": "10ff97dff8b0d21889deb8ca9f8051f90c9a078889a9970231e5b2fc4563e62b",
+    "attempt-01/instrumentation.txt": "1ddc6dd68671d8fea24603f3b250cba37442cceb10f22aad19a42d889a5cd049"
+  }
+}

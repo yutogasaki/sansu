@@ -1,0 +1,54 @@
+// Static import/URL coverage audit only. No driver/browser execution or source writes.
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { createRequire } from 'node:module';
+import { collectProjection } from './collect-installed-dependencies.mjs';
+const repo = process.env.SANSU_CLOSURE_REPO ?? '/private/tmp/sansu-authored-shoulder-c3/candidate';
+const out = process.env.SANSU_CLOSURE_OUT ?? '/private/tmp/sansu-authored-shoulder-c3/closure';
+const drivers = ['tools/e2e-authored-floor-shading.mjs', 'tools/e2e-authored-shoulder.mjs', 'tools/e2e-authored-island-editing.mjs',
+    'tools/e2e-authored-water.mjs', 'tools/e2e-authored-flower.mjs', 'tools/e2e-authored-cove.mjs', 'tools/e2e-growing-balance.mjs', 'tools/e2e-smoke.mjs'];
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+if (!process.argv.includes('--start')) {
+    console.log(JSON.stringify({ prepared: true, executionStarted: false, repo, out, drivers }));
+} else {
+    const require = createRequire(path.join(repo, 'package.json'));
+    const { build } = require('esbuild');
+    const expected = JSON.parse(await fs.readFile(path.join(out, 'inputs.json'), 'utf8'));
+    const reports = [];
+    const browserReferences = new Map();
+    for (const driver of drivers) {
+        const result = await build({ absWorkingDir: repo, entryPoints: [driver], bundle: true, packages: 'external',
+            platform: 'node', format: 'esm', write: false, logLevel: 'silent', metafile: true,
+            plugins: [{ name: 'verify-browser-root-imports', setup(builder) {
+                builder.onResolve({ filter: /^\/src\// }, async args => {
+                    const name = args.path.slice(1).split('?')[0], absolute = path.resolve(repo, name);
+                    if (!absolute.startsWith(path.resolve(repo, 'src') + path.sep)) throw Error(`Browser import escaped source: ${args.path}`);
+                    const hash = sha(await fs.readFile(absolute));
+                    if (expected[name] !== hash) throw Error(`Browser import missing/different in closure: ${name}`);
+                    browserReferences.set(name, hash);
+                    // The driver executes this URL inside page.evaluate, not Node.
+                    return { path: args.path, external: true };
+                });
+            } }] });
+        const imports = Object.keys(result.metafile.inputs).sort();
+        reports.push({ driver, driverSha256: sha(await fs.readFile(path.join(repo, driver))), imports,
+            missing: imports.filter(name => !expected[name]),
+            changed: (await Promise.all(imports.map(async name => expected[name] && sha(await fs.readFile(path.join(repo, name))) !== expected[name] ? name : null))).filter(Boolean) });
+    }
+    const actual = await collectProjection(repo);
+    const installed = JSON.parse(await fs.readFile(path.join(out, 'installed-dependencies.json'), 'utf8'));
+    const proof = JSON.parse(await fs.readFile(path.join(out, 'installed-dependencies-proof.json'), 'utf8'));
+    const domainInputs = Object.keys(actual.local);
+    const domainChanged = domainInputs.filter(name => actual.local[name] !== expected[name]);
+    const installedDependenciesMatch = JSON.stringify(actual.installed) === JSON.stringify(installed);
+    const projectionDriverMatches = actual.proof.driverSha256 === proof.driverSha256 && proof.driverSha256 === expected[proof.driver];
+    const report = { scope: 'Static local imports and the domain projection; no execution of driver source collectors. Runtime reports must separately prove their complete initial/final input subset.',
+        repo, reports, browserRootInputs: Object.fromEntries([...browserReferences].sort()), domainInputs, domainChanged, installedDependenciesMatch, projectionDriverMatches,
+        installedDependenciesManifestSha256: sha(await fs.readFile(path.join(out, 'installed-dependencies.json'))), domainMissing: domainInputs.filter(name => !expected[name]),
+        runnerSha256: sha(await fs.readFile(new URL(import.meta.url))) };
+    report.pass = reports.every(value => !value.missing.length && !value.changed.length) && !report.domainMissing.length && !domainChanged.length && installedDependenciesMatch && projectionDriverMatches;
+    await fs.writeFile(path.join(out, 'import-audit.json'), JSON.stringify(report, null, 2) + '\n', { flag: 'wx' });
+    console.log(JSON.stringify({ pass: report.pass, drivers: reports.length, domainInputs: domainInputs.length }));
+    if (!report.pass) process.exitCode = 1;
+}

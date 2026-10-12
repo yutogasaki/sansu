@@ -171,7 +171,7 @@ function dryLanding(world: IslandWorld, outline: readonly WorldPoint[], bedIds: 
 
 /** A fed terminal's current cut may remove a source path foot band. A bridge
  * spans that actual band between dry shores; it never adds sites or edges. */
-export function composeAuthoredWaterBridges(state: GrowingState, base: IslandWorld, cutWorld: IslandWorld, water: AuthoredWaterBridgeInput): { definition: WorldDefinition; bridges: AuthoredWaterBridgePlan[] } {
+export function composeAuthoredWaterBridges(state: GrowingState, base: IslandWorld, cutWorld: IslandWorld, water: AuthoredWaterBridgeInput): { definition: WorldDefinition; bridges: AuthoredWaterBridgePlan[]; supportWorld: IslandWorld } {
     let definition = structuredClone(cutWorld.definition), current = cutWorld;
     const bridges: AuthoredWaterBridgePlan[] = [], sites = new Map(base.sites.map(site => [refKey(site.ref), site]));
     const protectedOwners = protections(state, new Set(water.ownerIds));
@@ -232,5 +232,8 @@ export function composeAuthoredWaterBridges(state: GrowingState, base: IslandWor
         plan.restoredEdgeIds = candidates.map(({ edge }) => edgeKey(edge));
         definition = next; current = supported; bridges.push(plan);
     }
-    return { definition, bridges };
+    // Every adopted deck has already been compiled to verify its foot bands.
+    // The caller can restore source edges against that same support snapshot;
+    // rejected candidates never replace it, and later definition edits are separate.
+    return { definition, bridges, supportWorld: current };
 }

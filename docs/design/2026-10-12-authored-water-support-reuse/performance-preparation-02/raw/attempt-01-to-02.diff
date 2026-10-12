@@ -1,0 +1,258 @@
+--- prepared/run.py
++++ prepared-02/run.py
+@@ -12,7 +12,7 @@
+ import time
+ 
+ ROOT = Path('/private/tmp/sansu-water-support-perf-c2-c3')
+-PREP = ROOT / 'prepared'
++PREP = ROOT / 'prepared-02'
+ SCENARIOS = ['wide27', 'source32', 'shoulder35']
+ TOTAL_SECONDS, WORKER_SECONDS, RSS_BYTES = 2700, 180, 4 * 1024 ** 3
+ sha = lambda path: hashlib.sha256(Path(path).read_bytes()).hexdigest()
+@@ -46,13 +46,40 @@
+     command = row['args'].lower()
+     if 'blender' in executable:
+         return 'other-blender'
+-    # GUI browser roots/helpers and test browser engines are forbidden, even idle.
+-    if re.search(r'chrome|chromium|firefox|safari|headless_shell|webkitwebprocess|playwright', executable) or re.search(r'/applications/(google chrome|firefox|safari|microsoft edge)', command):
+-        return 'other-browser'
++    # Background test engines are prohibited; existing GUI browsers/helpers are
++    # activity-monitored separately rather than rejected merely for existing.
++    if re.search(r'headless[-_]shell|playwright', executable) or re.search(r'(?:^|\s)--headless(?:[=\s]|$)', command):
++        return 'background-test-browser'
+     if re.search(r'node|python|npm|npx|bun|deno|vitest|jest|esbuild', executable):
+-        if re.search(r'(?:^|[/\s])(?:blender|vitest|jest|pytest|playwright|esbuild)(?:[/\s]|$)|e2e[-:]|verify:|(?:npm|pnpm|yarn)\s+(?:run\s+)?(?:test|build)|[/\s]tools/(?:build|e2e|check)-|[/\s](?:core|regressions|affected-regressions)\.py|(?:^|[/\s])vite(?:[/\s]|$)', command):
++        if re.search(r'(?:^|[/\s])(?:blender|vitest|jest|pytest|playwright|esbuild)(?:[/\s]|$)|e2e[-:]|verify:|(?:npm|pnpm|yarn)\s+(?:run\s+)?(?:test|build)|[/\s]tools/(?:build|e2e|check)-|[/\s](?:core|regressions|affected-regressions)\.py|(?:^|[/\s])vite(?:[/\s]|$)|sansu-water-support-perf[^\s]*/(?:prepared[^/]*/)?(?:run\.py|worker-c[23]\.mjs)', command):
+             return 'other-test-build-or-vite'
+     return None
++
++def gui_browser(row):
++    executable = Path(row['comm']).name.lower()
++    return bool(re.search(r'chrome|chromium|firefox|safari|webkitwebprocess', executable)
++                or re.search(r'/applications/(google chrome|firefox|safari|microsoft edge)', row['args'].lower()))
++
++def vite_child_service(row, by_pid, allowed):
++    if Path(row['comm']).name.lower() != 'esbuild':
++        return False
++    seen = set()
++    parent = row['ppid']
++    while parent and parent not in seen:
++        seen.add(parent)
++        record = allowed.get(str(parent))
++        if record and record['kind'] in ['root-c2-vite', 'root-c3-vite']:
++            return True
++        parent = by_pid[parent]['ppid'] if parent in by_pid else 0
++    return False
++
++def cpu_delta(cpu_seconds, previous, observed_at):
++    if previous is None:
++        return None
++    return max(0, 100 * (cpu_seconds - previous[0]) / (observed_at - previous[1]))
++
++def exceeds_activity_limit(cpu):
++    return cpu is not None and cpu > 10
+ 
+ def stop_owned(proc):
+     if proc is None:
+@@ -84,11 +111,13 @@
+     assert all(sha(path) == expected for path, expected in seal['files'].items()), 'Prepared input/script changed'
+     inputs = json.loads((PREP / 'inputs.json').read_text())
+     all_inputs = {**inputs['fullSources'], **inputs['installedDependencies'], **seal['files']}
++    for version in inputs['versions'].values():
++        all_inputs.update(version['actualImports'])
+     all_inputs[inputs['runtime']['nodeRealPath']] = inputs['runtime']['nodeSha256']
+     all_inputs[str(PREP / 'seal.json')] = sha(PREP / 'seal.json')
+     before = {path: sha(path) for path in all_inputs}
+     assert before == all_inputs, 'Source/runtime prehash changed'
+-    output = ROOT / 'actual-01'
++    output = ROOT / 'actual-02'
+     output.mkdir(exist_ok=False)
+     report = {'schema': 'sansu-water-support-local-performance-run-v1', 'startedAtUtc': utc(), 'scope': 'Warmed pure domain composition, not individual compile self-time or UI/device/P95 performance',
+               'preparationSealSha256': sha(PREP / 'seal.json'), 'totalSeconds': TOTAL_SECONDS, 'workerSeconds': WORKER_SECONDS, 'rssLimitBytes': RSS_BYTES,
+@@ -97,24 +126,26 @@
+               'host': {'platform': sys.platform, 'os': subprocess.run(['uname', '-a'], capture_output=True, text=True, check=True).stdout.strip(),
+                        'cpuCount': os.cpu_count(), 'physicalMemoryBytes': int(subprocess.run(['sysctl', '-n', 'hw.memsize'], capture_output=True, text=True, check=True).stdout),
+                        'initialVmStat': subprocess.run(['vm_stat'], capture_output=True, text=True, check=True).stdout},
+-              'concurrencyPolicy': 'Reject sampled background Blender/browser/test/build. Sealed user GUI Blender PID13395 and root Vite servers may remain idle, never signaled: reject observed CPU delta >10% for any allowed process. Also reject external summed CPU >100% for 3 consecutive 1s samples. ps snapshots cannot exclude subsecond unsampled activity.'}
++              'concurrencyPolicy': 'Reject sampled background Blender/test/build/benchmark and headless test browsers. GUI browsers/OS helpers, user GUI Blender PID13395, root Vite and its esbuild children are monitored by cumulative CPU delta: >10% of one core rejects. Initial missing deltas are null, never zero/idle. Ten preflight observations require at least three consecutive complete activity baselines. Also reject external summed CPU >100% for three consecutive samples. ps sampling cannot exclude subsecond activity.'}
+     write = lambda: (output / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
+     write()
+     allowed = {str(item['pid']): item for item in seal['idleProcesses']}
+     high_cpu_count = 0
++    complete_guard_baseline_count = 0
+     previous_cpu = {}
+     proc = None
+     started = time.monotonic()
+     host_log = (output / 'host-observations.jsonl').open('x')
+ 
+     def observe(phase, worker=None):
+-        nonlocal high_cpu_count, previous_cpu
++        nonlocal high_cpu_count, previous_cpu, complete_guard_baseline_count
+         rows = ps_rows()
+         observed_at = time.monotonic()
+         for row in rows:
+             previous = previous_cpu.get(row['pid'])
+-            row['cpu'] = max(0, 100 * (row['cpuSeconds'] - previous[0]) / (observed_at - previous[1])) if previous else 0
++            row['cpu'] = cpu_delta(row['cpuSeconds'], previous, observed_at)
+         previous_cpu = {row['pid']: (row['cpuSeconds'], observed_at) for row in rows}
++        by_pid = {row['pid']: row for row in rows}
+         own = {os.getpid()}
+         if worker is not None:
+             own.add(worker.pid)
+@@ -124,25 +155,36 @@
+                 break
+             own |= more
+         external = [row for row in rows if row['pid'] not in own]
+-        forbidden, idle_server_checks = [], []
++        forbidden, activity_checks = [], []
+         for row in external:
+             server = allowed.get(str(row['pid']))
+             if server is not None:
+                 assert row['comm'] == server['comm'] and row['ppid'] == server['ppid'], 'Allowed idle PID identity changed'
+                 if 'command' in server:
+                     assert row['args'] == server['command'], 'Allowed Vite command changed'
+-                idle_server_checks.append({'pid': row['pid'], 'kind': server['kind'], 'cpu': row['cpu'], 'reportedCpu': row['reportedCpu']})
+-                if row['cpu'] > 10:
+-                    forbidden.append({'pid': row['pid'], 'name': Path(row['comm']).name, 'reason': 'allowed-idle-process-active', 'cpu': row['cpu']})
+-                continue
+-            reason = forbidden_reason(row)
+-            if reason:
+-                forbidden.append({'pid': row['pid'], 'name': Path(row['comm']).name, 'reason': reason, 'cpu': row['cpu']})
+-        external_cpu = sum(row['cpu'] for row in external)
++                kind = server['kind']
++            elif vite_child_service(row, by_pid, allowed):
++                kind = 'root-vite-esbuild-service'
++            else:
++                reason = forbidden_reason(row)
++                if reason:
++                    forbidden.append({'pid': row['pid'], 'name': Path(row['comm']).name, 'reason': reason, 'cpu': row['cpu']})
++                    continue
++                kind = 'gui-browser-or-os-helper' if gui_browser(row) else None
++            if kind:
++                activity_checks.append({'pid': row['pid'], 'ppid': row['ppid'], 'name': Path(row['comm']).name, 'kind': kind, 'cpu': row['cpu'],
++                                        'cpuBaselineAvailable': row['cpu'] is not None, 'reportedCpu': row['reportedCpu'], 'rssBytes': row['rss']})
++                if exceeds_activity_limit(row['cpu']):
++                    forbidden.append({'pid': row['pid'], 'name': Path(row['comm']).name, 'reason': 'activity-monitored-process-exceeded-10-percent', 'cpu': row['cpu']})
++        missing_activity = [item['pid'] for item in activity_checks if not item['cpuBaselineAvailable']]
++        complete_guard_baseline_count = complete_guard_baseline_count + 1 if not missing_activity else 0
++        external_cpu = sum(row['cpu'] for row in external if row['cpu'] is not None)
+         high_cpu_count = high_cpu_count + 1 if external_cpu > 100 else 0
+         sample = {'utc': utc(), 'phase': phase, 'loadAverage': os.getloadavg(), 'externalCpuPercentSum': external_cpu,
+-                  'forbidden': forbidden, 'idleServerChecks': idle_server_checks,
+-                  'topExternal': [{'pid': row['pid'], 'name': Path(row['comm']).name, 'cpu': row['cpu'], 'rssBytes': row['rss']} for row in sorted(external, key=lambda x: x['cpu'], reverse=True)[:10]],
++                  'forbidden': forbidden, 'activityChecks': activity_checks, 'missingActivityBaselines': missing_activity,
++                  'completeGuardBaselineConsecutiveSamples': complete_guard_baseline_count,
++                  'externalCpuBaselinesMissingCount': sum(row['cpu'] is None for row in external),
++                  'topExternal': [{'pid': row['pid'], 'name': Path(row['comm']).name, 'cpu': row['cpu'], 'rssBytes': row['rss']} for row in sorted(external, key=lambda x: x['cpu'] if x['cpu'] is not None else -1, reverse=True)[:10]],
+                   'ownedRssBytes': sum(row['rss'] for row in rows if worker is not None and row['pgid'] == worker.pid)}
+         host_log.write(json.dumps(sample) + '\n'); host_log.flush()
+         if forbidden or high_cpu_count >= 3:
+@@ -155,6 +197,7 @@
+         # This pre-window is deliberately observed, not an unrecorded delay.
+         for _ in range(10):
+             observe('quiet-window-preflight'); time.sleep(1)
++        assert complete_guard_baseline_count >= 3, 'Quiet preflight lacks three complete activity-baseline samples'
+         for index, item in enumerate(schedule()):
+             label = f"{index + 1:02d}-block{item['block']}-{item['scenario']}-{item['version']}"
+             data = inputs['versions'][item['version']]
+--- prepared/README.md
++++ prepared-02/README.md
+@@ -1,4 +1,4 @@
+-# Water support reuse: sealed local measurement preparation
++# Water support reuse: second preparation after preflight rejection
+ 
+ Status: **PREPARED, NOT EXECUTED**. Parent must explicitly assign a quiet window before `--start`. This program does not start a browser, build an application, edit a candidate, or rerun the eight-stage acceptance journey.
+ 
+@@ -31,14 +31,20 @@
+ 
+ Before work, observe ten seconds of host activity. During work, sample process identity/CPU/RSS every second. Command arguments are only examined transiently to classify interpreter tasks; stored host observations contain PID, executable basename, CPU delta, RSS, rule and aggregate load. No complete private process command-line inventory is saved.
+ 
+-Background Blender/browser/test/build processes reject the run. The parent-owned idle Vite PIDs 6704/47164 and user-owned GUI Blender PID 13395 may remain, but each is sealed by PID/parent/executable (Vite also exact command). Observed CPU usage greater than 10% of one core for any allowed process rejects the measurement. Other external summed CPU greater than 100% for three consecutive one-second samples also rejects it. CPU uses differences of cumulative process CPU time, not only ps's decaying percentage. User GUI Blender and root servers are never signaled. Sampling cannot exclude subsecond activity between observations; the parent quiet-window schedule and observed process data are both required.
++Background Blender/test/build/benchmark and headless test browser processes reject the run by presence. Existing GUI browsers and OS helpers are instead monitored by cumulative CPU delta, as is the user-owned GUI Blender PID 13395. Root Vite PIDs 6704/47164 and their actual descendant esbuild services may remain idle; an unrelated esbuild process is still prohibited. Root Vite and GUI Blender identities are sealed by PID/parent/executable (Vite also exact command). Observed CPU greater than 10% of one core for any activity-monitored process rejects the measurement. Other external summed CPU greater than 100% for three consecutive one-second samples also rejects it.
++
++A first observation without a cumulative-CPU baseline records `cpu: null` and `cpuBaselineAvailable: false`; it is never labeled zero or idle. The ten preflight samples must end with at least three consecutive samples with complete baselines for the monitored activity processes. The same monitoring continues throughout runtime. New background test/build/benchmark work is prohibited independently of whether a CPU delta already exists. CPU uses cumulative time differences, not only ps's decaying percentage. User processes and root servers are never signaled. Sampling cannot exclude subsecond activity between observations; the parent quiet-window schedule and process observations are both required.
+ 
+ `ps` observes all processes; only the benchmark's own process group can be terminated by this runner. Whole-host VM counters and load are recorded, without claiming resource isolation equivalent to a dedicated test machine. All source/runtime/preparation/dependency hashes are checked before and after. Functional success alone does not set performance-valid when isolation or input stability fails.
+ 
+ ## Exact gated command
+ 
+ ```sh
+-python3 /private/tmp/sansu-water-support-perf-c2-c3/prepared/run.py --start
++python3 /private/tmp/sansu-water-support-perf-c2-c3/prepared-02/run.py --start
+ ```
+ 
+-Fresh output is `/private/tmp/sansu-water-support-perf-c2-c3/actual-01`. There is no browser/server option. Invoking without `--start` only prints the sealed plan. Existing c2/c3 candidates, previous parity attempts, runtime evidence and main sources remain unchanged.
++Fresh output is `/private/tmp/sansu-water-support-perf-c2-c3/actual-02`. There is no browser/server option. Invoking without `--start` only prints the sealed plan. Existing c2/c3 candidates, previous parity attempts, runtime evidence and main sources remain unchanged.
++
++## Initial rejection retained
++
++Attempt 01 started no worker and stopped at its first presence-based process snapshot. Browser/helper and idle Vite esbuild presence was treated as prohibited, while zero delta had no preceding baseline. The old report, protocol, source and seal remain unchanged. This second preparation changes only the external isolation supervisor/protocol and output location. The same worker bundle bytes, state/base/expected hashes, 18-worker order, warmups, counts, GC, 10% activity ceiling and resource/deadline bounds are reused. The historical builder is copied as text and not executed again. A new quiet-window authorization is required.
+--- prepared/seal-preparation.py
++++ prepared-02/seal-preparation.py
+@@ -9,9 +9,9 @@
+ import sys
+ 
+ ROOT = Path('/private/tmp/sansu-water-support-perf-c2-c3')
+-P = ROOT / 'prepared'
++P = ROOT / 'prepared-02'
+ sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+-assert not (ROOT / 'actual-01').exists(), 'No benchmark before sealing'
++assert not (ROOT / 'actual-02').exists(), 'No benchmark before sealing'
+ assert not (P / 'seal.json').exists(), 'Seal is one-shot'
+ inputs = json.loads((P / 'inputs.json').read_text())
+ ast.parse((P / 'run.py').read_text())
+@@ -24,23 +24,51 @@
+ assert all(sha(name) == expected for name, expected in inputs['installedDependencies'].items())
+ cases = [
+     ('background Blender', {'comm': '/Applications/Blender.app/Contents/MacOS/Blender', 'args': 'Blender -b file.blend'}, 'other-blender'),
+-    ('headless', {'comm': '/tmp/chrome-headless-shell', 'args': 'chrome-headless-shell'}, 'other-browser'),
++    ('headless', {'comm': '/tmp/chrome-headless-shell', 'args': 'chrome-headless-shell'}, 'background-test-browser'),
+     ('Vitest', {'comm': 'node', 'args': 'node node_modules/vitest/vitest.mjs run'}, 'other-test-build-or-vite'),
+     ('browser driver', {'comm': 'node', 'args': 'node tools/e2e-authored-water.mjs'}, 'other-test-build-or-vite'),
+-    ('benchmark child', {'comm': 'node', 'args': 'node --expose-gc /private/tmp/sansu-water-support-perf-c2-c3/prepared/worker-c2.mjs'}, None),
++    ('other benchmark worker (own descendants excluded before classification)', {'comm': 'node', 'args': 'node --expose-gc /private/tmp/sansu-water-support-perf-c2-c3/prepared/worker-c2.mjs'}, 'other-test-build-or-vite'),
+ ]
+ checks = []
+ for name, row, expected in cases:
+     actual = runner['forbidden_reason'](row)
+     assert actual == expected
+     checks.append({'case': name, 'expected': expected, 'actual': actual})
++for name, row in [
++    ('existing Firefox GUI', {'comm': '/Applications/Firefox.app/Contents/MacOS/firefox', 'args': '/Applications/Firefox.app/Contents/MacOS/firefox'}),
++    ('existing Safari OS helper', {'comm': 'com.apple.SafariPlatformSupport.Helper', 'args': 'com.apple.SafariPlatformSupport.Helper'}),
++    ('existing Chrome renderer', {'comm': 'Google Chrome Helper (Renderer)', 'args': '/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Helper (Renderer)'}),
++]:
++    assert runner['forbidden_reason'](row) is None and runner['gui_browser'](row)
++    checks.append({'case': name, 'presenceRejected': False, 'activityMonitored': True})
++fake_allowed = {'6704': {'kind': 'root-c2-vite'}}
++fake_rows = {7000: {'ppid': 6704}, 6704: {'ppid': 1}}
++service = {'comm': '/node_modules/esbuild', 'ppid': 7000}
++assert runner['vite_child_service'](service, fake_rows, fake_allowed)
++assert not runner['vite_child_service']({**service, 'ppid': 1}, fake_rows, fake_allowed)
++checks.append({'case': 'Vite esbuild actual ancestor only', 'descendantActivityMonitored': True, 'unrelatedServiceExempted': False})
++assert runner['cpu_delta'](20, None, 100) is None
++assert not runner['exceeds_activity_limit'](None)
++assert runner['cpu_delta'](20, (20, 99), 100) == 0
++assert runner['cpu_delta'](1, (0, 90), 100) == 10
++assert not runner['exceeds_activity_limit'](10)
++assert runner['exceeds_activity_limit'](10.01)
++checks.append({'case': 'CPU baseline/threshold', 'firstDelta': None, 'firstDeltaIsNotIdle': True, 'measuredZeroPermitted': True, 'threshold': 10, 'aboveThresholdRejected': True})
++original = ROOT / 'prepared'
++original_seal = json.loads((original / 'seal.json').read_text())
++assert all(sha(name) == value for name, value in original_seal['files'].items()), 'First sealed preparation changed'
++assert sha(original / 'seal.json') == 'e6de08c031fa11c9be70fef0ed373692e75bd08fb48b161c8caa49d29d8a5120'
++for version in ['c2', 'c3']:
++    for suffix in ['.mjs', '.mjs.map', '.ts']:
++        assert sha(P / ('worker-' + version + suffix)) == sha(original / ('worker-' + version + suffix))
+ schedule = runner['schedule']()
+ for scenario in runner['SCENARIOS']:
+     orders = [[item['version'] for item in schedule if item['block'] == block and item['scenario'] == scenario] for block in range(3)]
+     assert orders[0] == orders[2] and orders[1] == list(reversed(orders[0]))
+ static = {'atUtc': datetime.now(timezone.utc).isoformat(), 'benchmarkStarted': False, 'astAndBundleSyntaxPass': True,
+           'sourceAndDependencyHashesMatchCores': True, 'actualImportCounts': {v: len(inputs['versions'][v]['actualImports']) for v in ['c2', 'c3']},
+-          'classifierCases': checks, 'schedule': schedule, 'alternatingWithinScenario': True, 'limits': {'wholeSeconds': 2700, 'workerSeconds': 180, 'rssBytes': 4294967296}}
++          'classifierCases': checks, 'originalSealUnchanged': True, 'workerBundleAndSourceUnchanged': True,
++          'schedule': schedule, 'alternatingWithinScenario': True, 'limits': {'wholeSeconds': 2700, 'workerSeconds': 180, 'rssBytes': 4294967296}}
+ (P / 'static-checks.json').write_text(json.dumps(static, indent=2) + '\n')
+ cache_files = ['authoredWaterWorld.ts', 'authoredWaterBridge.ts', 'worldDefinition.ts', 'authoredWaterCarving.ts', 'authoredWorldAccess.ts']
+ audit = {'scope': 'Static source and existing functional expected data; no runtime instrumentation or measured call counts', 'sources': {}, 'findings': [

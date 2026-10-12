@@ -1,0 +1,49 @@
+{
+  "command": [
+    "node",
+    "--max-old-space-size=512",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-prep/extract-feet-v2.mjs",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-prep/runs/02-feet"
+  ],
+  "preparationSha256": "b621e9a860e96f28489dd49da642ae9ac01f3fda075e39b9859a46afa72f76b2",
+  "pid": 57890,
+  "launchRequestedUtc": "2026-10-12T06:38:16.102451+00:00",
+  "terminalObservedUtc": "2026-10-12T06:38:16.384325+00:00",
+  "elapsedSeconds": 0.281900458,
+  "exitCode": 0,
+  "stopReason": null,
+  "peakObservedProcessTreeRssBytes": 127614976,
+  "samplingNote": "external ps observations, not kernel exact peak or exact child launch timestamp",
+  "samples": [
+    {
+      "observedUtc": "2026-10-12T06:38:16.136523+00:00",
+      "pids": [
+        57890
+      ],
+      "rssBytes": 933888
+    },
+    {
+      "observedUtc": "2026-10-12T06:38:16.275836+00:00",
+      "pids": [
+        57890,
+        57892
+      ],
+      "rssBytes": 127614976
+    }
+  ],
+  "sealedBefore": {
+    "README.md": "88aaf6ae281556a87fb2c349f16aa03264ceb2920b0b4f78f61598f577fe281a",
+    "stair-plan.json": "01ba7f95ee91829ef1ebd7aa1406485d4bdceed9eb75fa08cf64f3f3e1a88d33",
+    "quiet-handoff.md": "b9e5a4bb547cea6c2f1dc4d9b43b220feff4abea4c011776281eb9374363c270",
+    "extract-feet.mjs": "97e7568a98298014006406843fb46fe436b6373c8a43ddfcc70d94fcd4eeae8d",
+    "extract-feet-v2.mjs": "73ff707c317f0879482074ae8766b01e927a8ed07aa4372fee59de7f86d77678"
+  },
+  "sealedAfter": {
+    "README.md": "88aaf6ae281556a87fb2c349f16aa03264ceb2920b0b4f78f61598f577fe281a",
+    "stair-plan.json": "01ba7f95ee91829ef1ebd7aa1406485d4bdceed9eb75fa08cf64f3f3e1a88d33",
+    "quiet-handoff.md": "b9e5a4bb547cea6c2f1dc4d9b43b220feff4abea4c011776281eb9374363c270",
+    "extract-feet.mjs": "97e7568a98298014006406843fb46fe436b6373c8a43ddfcc70d94fcd4eeae8d",
+    "extract-feet-v2.mjs": "73ff707c317f0879482074ae8766b01e927a8ed07aa4372fee59de7f86d77678"
+  },
+  "unchanged": true
+}

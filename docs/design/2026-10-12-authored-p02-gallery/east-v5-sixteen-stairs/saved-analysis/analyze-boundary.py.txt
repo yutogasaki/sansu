@@ -1,0 +1,58 @@
+"""Saved Float32 surface analysis only. No mesh/epsilon change or Blender."""
+from pathlib import Path
+import json,struct,hashlib,math,sys,signal,time
+from collections import Counter
+from shapely.geometry import Polygon,LineString,Point,mapping
+from shapely.ops import unary_union
+ROOT=Path('/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build');RUN=ROOT/'runs/01-coarse-build';OUT=Path(__file__).resolve().parent
+sys.path.insert(0,str(ROOT));from terrain_connector import closed_solid
+paths=[RUN/'owner-use-components.glb',RUN/'owner-use-profile.json',RUN/'terrain-threshold-input.json',RUN/'current-entry-joints.json',ROOT/'terrain_connector.py',ROOT/'entry_geometry.py']
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();before={str(p):sha(p)for p in paths};signal.signal(signal.SIGALRM,lambda *_:(_ for _ in ()).throw(TimeoutError('30-second bound')));signal.alarm(30);start=time.monotonic()
+b=paths[0].read_bytes();chunks={};off=12
+while off<len(b):
+ n,t=struct.unpack_from('<II',b,off);chunks[t]=b[off+8:off+8+n];off+=8+n
+G=json.loads(chunks[0x4E4F534A]);blob=chunks[0x004E4942]
+def accessor(i):
+ a=G['accessors'][i];v=G['bufferViews'][a['bufferView']];fmt,size={5126:('f',4),5125:('I',4),5123:('H',2),5121:('B',1)}[a['componentType']];count={'SCALAR':1,'VEC3':3}[a['type']];step=v.get('byteStride',count*size);base=v.get('byteOffset',0)+a.get('byteOffset',0)
+ return [struct.unpack_from('<'+fmt*count,blob,base+k*step)for k in range(a['count'])]
+floors={};parents={c for n in G['nodes']for c in n.get('children',[])}
+for ni,n in enumerate(G['nodes']):
+ if not n.get('name','').startswith('walk-top/'):continue
+ assert ni not in parents and n.get('translation',[0,0,0])==[0,0,0] and n.get('scale',[1,1,1])==[1,1,1] and n.get('rotation',[0,0,0,1])==[0,0,0,1] and 'matrix'not in n
+ out=[]
+ for p in G['meshes'][n['mesh']]['primitives']:
+  assert p.get('mode',4)==4;v=accessor(p['attributes']['POSITION']);indices=[x[0]for x in accessor(p['indices'])]
+  out.extend([[list(v[indices[k+j]])for j in range(3)]for k in range(0,len(indices),3)])
+ floors[n['name'][9:]]=out
+profile=json.loads(paths[1].read_text());expected={k:[]for k in floors}
+for f in profile['floors']:expected[f['component']].extend(f['triangles'])
+key=lambda t:tuple(sorted(tuple(p)for p in t));parity={k:Counter(map(key,floors[k]))==Counter(map(key,expected[k]))for k in floors};assert all(parity.values())
+plan=json.loads(paths[2].read_text())['plan'];v,f,_=closed_solid(plan,.07);raw=[[v[i]for i in tri]for tri in f[:len(plan['topFaces'])]];original=[[plan['topVertices'][i]for i in tri]for tri in plan['topFaces']]
+def union(tris):return unary_union([Polygon([(v[0],v[2])for v in t])for t in tris])
+original_u=union(original);raw_u=union(raw);visible_u=union(floors['terrain-threshold']);all_u=union([t for ts in floors.values()for t in ts]);missing=raw_u.difference(all_u)
+def parts(g):return list(g.geoms)if hasattr(g,'geoms')else[g]
+def lines(g):
+ return [{'length':p.length,'coordinates':list(p.coords)}for p in parts(g)if p.geom_type in ['LineString','LinearRing']and p.length>0]
+j=json.loads(paths[3].read_text());sections=[('threshold',j['thresholdOriginal']['start'],j['thresholdOriginal']['end']),('plateau',j['currentCrossSections'][0]['endpoints'][0],j['currentCrossSections'][0]['endpoints'][1])]
+# The route normal is fixed source design; shifts only diagnose the query.
+entry=profile['entry'];joint=next(x['point']for x in j['samples']if x['role']=='joint');dx,dz=joint[0]-entry[0],joint[2]-entry[2];length=math.hypot(dx,dz);inward=[dx/length,dz/length];section_reports=[]
+for name,a,b in sections:
+ line=LineString([(a[0],a[2]),(b[0],b[2])]);base=line.difference(all_u);query=[]
+ for shift in [-1e-5,-1e-6,-3e-7,-1e-7,0,1e-7,3e-7,1e-6,1e-5]:
+  q=LineString([(p[0]+inward[0]*shift,p[1]+inward[1]*shift)for p in line.coords]);d=q.difference(all_u);query.append({'normalShift':shift,'uncoveredTotalLength':d.length,'maximumGapLength':max((x['length']for x in lines(d)),default=0)})
+ samples=[]
+ for gap in lines(base):
+  segment=LineString(gap['coordinates']);qs=[]
+  for u in [0,.25,.5,.75,1]:
+   pt=segment.interpolate(u,normalized=True);qs.append({'u':u,'point':list(pt.coords)[0],'distanceToActualVisibleUnion':pt.distance(all_u)})
+  samples.append({'gap':gap,'fiveDistanceSamples':qs,'sampledMaximumNormalOrNearestDistance':max(x['distanceToActualVisibleUnion']for x in qs)})
+ section_reports.append({'name':name,'coordinates':list(line.coords),'fullWidth':line.length,'originalPlanMissing':line.difference(original_u).length,'reconstructedActualClosedThresholdMissing':line.difference(raw_u).length,'actualGLBVisibleThresholdMissing':line.difference(visible_u).length,'actualGLBAllOwnerTopMissing':base.length,'exactLineGaps':lines(base),'probeLineShiftsNotMeshOrEpsilonChanges':query,'gapDistanceSamples':samples})
+missing_parts=[]
+for p in parts(missing):
+ if p.geom_type!='Polygon':continue
+ rect=p.minimum_rotated_rectangle;coords=list(rect.exterior.coords);sides=[math.dist(a,b)for a,b in zip(coords,coords[1:])]
+ missing_parts.append({'area':p.area,'bounds':list(p.bounds),'rectangleMinorSide':min(sides),'rectangleMajorSide':max(sides),'geometry':mapping(p)})
+report={'status':'READ_ONLY_SURFACE_CLASSIFICATION_NOT_ACCEPTANCE','inputShaBefore':before,'glbProfileExactCoordinateTriangleMultisetParity':parity,'sameVisibleGeometry':True,'units':'authored world units','construction':'reconstructed Float32 closed threshold uses same sealed pure closed_solid helper; actual visible arrays independently read from GLB','areas':{'originalDoublePlan':original_u.area,'reconstructedRawFloat32':raw_u.area,'visibleThresholdOnly':visible_u.area,'rawThresholdNotCoveredByAnyVisibleOwnerTop':missing.area},'visibleMissingComponents':missing_parts,'largestMissingComponentMinorSide':max((p['rectangleMinorSide']for p in missing_parts),default=0),'sections':section_reports,'sourceGeometryOrEPSChanged':False,'methodLimits':['Line gap length is tangent to seam, distinct from distance normal to boundary.','Distance maxima are explicitly five-point samples per exact GEOS gap, not a continuous maximum certificate.','Higher overlapping tops included in projected owner union; heights retain original raw HOLD and are not accepted by projection alone.','Shifts only classify original query; zero-shift HOLD remains.','Shapely double precision union is numerical analysis, not arbitrary real-number proof.'],'seconds':time.monotonic()-start}
+report['inputShaAfter']={str(p):sha(p)for p in paths};assert report['inputShaAfter']==before
+(OUT/'boundary-report.json').write_text(json.dumps(report,indent=2)+'\n');signal.alarm(0)
+print(json.dumps({'parity':parity,'areas':report['areas'],'missingParts':len(missing_parts),'maximumMissingMinorWidth':report['largestMissingComponentMinorSide'],'sections':[{k:x[k]for k in ['name','originalPlanMissing','reconstructedActualClosedThresholdMissing','actualGLBVisibleThresholdMissing','actualGLBAllOwnerTopMissing','probeLineShiftsNotMeshOrEpsilonChanges']}for x in section_reports],'seconds':report['seconds']},indent=2))

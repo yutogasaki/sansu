@@ -1,0 +1,46 @@
+{
+  "schema": "sansu-water-support-real-input-parity-v1",
+  "repo": "/private/tmp/sansu-authored-shoulder-c2/candidate",
+  "scenario": "shoulder35",
+  "node": "v24.18.0",
+  "synthetic": true,
+  "notPerformanceEvidence": true,
+  "inputFiles": [
+    {
+      "path": "/private/tmp/sansu-authored-shoulder-c2/candidate/prototypes/place-qa/authored-shoulder-reference-mature.json",
+      "sha256": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b"
+    },
+    {
+      "path": "/private/tmp/sansu-authored-shoulder-c2/candidate/prototypes/place-qa/native05-world-source-shading.json.gz",
+      "sha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921"
+    },
+    {
+      "path": "/private/tmp/sansu-authored-shoulder-c2/candidate/prototypes/place-qa/authored-shoulder-profile.json.gz",
+      "sha256": "82f8cd9ad83f4ffef7995d42087eb7d0f388b759a4b55526c10fe1c0ab1e34eb"
+    }
+  ],
+  "inputStateSha256": "9cbb5f2860e11d7f88200b4f47d91f21581fb98c78a5443f8fd4d2a11b424422",
+  "baseDefinitionSha256": "9ee57b8108013d40f177d03e211ec50944fd38df3ecacbe022d385d286e89225",
+  "owners": 35,
+  "bridgeCount": 1,
+  "bridges": [
+    {
+      "ownerId": "l24",
+      "restoredEdgeIds": [
+        "[\"[\\\"native05-inlet-core\\\",\\\"6.75,-8\\\"]\",\"[\\\"native05-inlet-core\\\",\\\"7,-8\\\"]\"]",
+        "[\"[\\\"native05-inlet-core\\\",\\\"6.75,-7.75\\\"]\",\"[\\\"native05-inlet-core\\\",\\\"6.75,-8\\\"]\"]",
+        "[\"[\\\"native05-inlet-core\\\",\\\"7,-8\\\"]\",\"[\\\"native05-inlet-core\\\",\\\"7.25,-8\\\"]\"]",
+        "[\"[\\\"native05-inlet-core\\\",\\\"7,-7.75\\\"]\",\"[\\\"native05-inlet-core\\\",\\\"7,-8\\\"]\"]",
+        "[\"[\\\"native05-inlet-core\\\",\\\"7.25,-7.75\\\"]\",\"[\\\"native05-inlet-core\\\",\\\"7.25,-8\\\"]\"]"
+      ]
+    }
+  ],
+  "sites": 2080,
+  "sourceWalkEdges": 3809,
+  "output": {
+    "definitionSha256": "64c431be0400ae7c13079e0d27db63a51d53c53614d56e0af275d8b84e91b1f9",
+    "planSha256": "63ab0af98ca03033ae5c38a17bdf2910252942b77d6c5a9ab97dfc84216daa26",
+    "siteQuerySha256": "0478b269155c99f601bda20ec0237163649f19adb1d58bebdbb0c1c11eb91ab0",
+    "sourceWalkQuerySha256": "c692d65c271708613b54d2f2caa8995173dc2080fc430bb08519eb5c763d78bd"
+  }
+}

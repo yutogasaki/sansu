@@ -1,0 +1,27 @@
+{
+  "inputHashesUnchanged": true,
+  "results": [
+    {
+      "id": "native05-authored-cove-shore-v4",
+      "unsupportedFootVertices": 0,
+      "houseIntersections": 0,
+      "shellTriangles": 79384,
+      "excludedRefs": 37,
+      "reachable": [
+        [
+          "p6",
+          2
+        ],
+        [
+          "p7",
+          7
+        ],
+        [
+          "p9",
+          6
+        ]
+      ],
+      "decision": "LOCAL GEOMETRY PASS: current home approaches and play target reachable; source-only feasibility, not app/art acceptance"
+    }
+  ]
+}

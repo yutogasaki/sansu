@@ -1,0 +1,40 @@
+{
+  "preparedAtUtc": "2026-10-12T04:14:29.336373+00:00",
+  "status": "READY-NOT-BLENDER-EXECUTED",
+  "files": {
+    "README.md": "57454309d380c6d41394007f06c567c6d7f353d57a3c15456b28e802430b0362",
+    "compare-failed-query.py": "e989acfec28288318926c5b3e398149aa452b6c5b87599d180885025f1466ee9",
+    "provenance-tests.json": "4aacb1e8e70d274ebc0c70e788e3d45702fb1021203ecbb699b55fe7d3d66dd2",
+    "provenance-tests.log.txt": "8a72aafc5a2e540067776951aad8bf43005b9e5f58f653e65bdccbb9d354204d",
+    "provenance.py": "cb9226b364c568ef759a1e16b98b9a62bb4199219d971a97bbb2434ffd3139e6",
+    "pure-python-first.log.txt": "ef1ef0ea4ba0032ed999bbb6d8ab866199c34c9d82c170e43c4ef6f0dbc2a9f2",
+    "pure-python-result.json": "38894ed39a52ff46a0b773ca907b7596cff1cd89365556e4a12a3d94ed41f122",
+    "pure-python-review-result.json": "c5696c65a8184605cc5f9b3a05f82635fd9b9c149d23a40c0fa15add96e4fb1c",
+    "pure-python-review.log.txt": "d6eb342de1c3ca9dabd7a7b8eee3899656bbf20074b40b3d5ead01e1067063da",
+    "ray_query64.py": "e5b6c22a0781049f8ffbf33d6166064b79b34dcdbca6fe6d348f760af109b3b3",
+    "run-once.py": "a7a1f44710721c562a27941320708c67da364f16e340edf783fbff471e621710",
+    "test_provenance.py": "56f05e2814fa3500054894af43eb70ae4b5a38df4b6222982f2a94b5a3ba2e5c",
+    "test_query64.py": "f0b19db948543013619e202b08da1f4c4320731d87ded38626d1b7e1a07c2614",
+    "volume_adapter.py": "f79f9ebdd7a764a7f0957a93163f5172164f062940991ac83ecc51401c5b7c27"
+  },
+  "pythonAstParsed": true,
+  "historyManifestSHA": "0922a5c9ea7388ec1e2fdae03a392825a641a10456f609252bd193dda10d2b8c",
+  "originalJointsSha256": "c99059a0af65cdd62b741911537dc26f605051d22e57207d452d7f5e12ca8db1",
+  "failedBlendSha256": "7010856b68de220ceb13781ff12f8c82b6c6aae9b9c575c748688043b98f3ccc",
+  "purePythonChecks": 36,
+  "purePythonComplete": true,
+  "provenanceChecks": 8,
+  "scope": "source query only; no Blender/app/build execution",
+  "limits": {
+    "threads": 2,
+    "maxProcesses": 1,
+    "timeoutSeconds": 90,
+    "observedRssBytes": 3221225472
+  },
+  "command": "SANSU_FOREST_QUERY64_APPROVED=1 python3 /private/tmp/sansu-authored-forest-crown-study/stage2/query-v2/run-once.py",
+  "limitations": [
+    "Inherited welded closure is approximate, not exact seam closure",
+    "Inherited float32 nearest distance is not a certified clearance lower bound",
+    "Original-source comparison and exact-seam/clearance-boundary adapter tests remain unexecuted"
+  ]
+}

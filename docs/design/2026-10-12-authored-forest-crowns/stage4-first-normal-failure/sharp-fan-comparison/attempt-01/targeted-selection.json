@@ -1,0 +1,36 @@
+{
+  "thresholdUnchanged": 0.002,
+  "baselineSourceNormalReadback": {
+    "maxL2": 0.012402114105726777,
+    "over002": 6,
+    "corners": 444
+  },
+  "retainedCornerIndices": [
+    134,
+    136,
+    432,
+    435,
+    439,
+    441
+  ],
+  "originalSourceLoopIndices": [
+    140,
+    142,
+    444,
+    447,
+    451,
+    453
+  ],
+  "sourceVertexIndices": [
+    38
+  ],
+  "requestedIncidentEdges": [
+    "34,38",
+    "35,38",
+    "37,38",
+    "38,74",
+    "38,76",
+    "38,77"
+  ],
+  "selectionRule": "every existing edge incident to a baseline source-normal mismatch vertex; one nonadaptive pass"
+}

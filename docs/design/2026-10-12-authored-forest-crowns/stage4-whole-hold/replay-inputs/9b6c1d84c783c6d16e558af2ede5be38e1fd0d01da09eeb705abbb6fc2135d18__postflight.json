@@ -1,0 +1,83 @@
+{
+  "recordedAtUtc": "2026-10-12T05:10:13.742464+00:00",
+  "scope": "exact-zero-face diagnostic completed; source correction remains HOLD",
+  "ownedPid": 36604,
+  "processGroupMembers": [],
+  "processExited": true,
+  "startedAtUtc": "2026-10-12T05:09:01.598874+00:00",
+  "finishedAtUtc": "2026-10-12T05:09:04.763273+00:00",
+  "elapsedSeconds": 3.164281625,
+  "exitCode": 0,
+  "peakSampledRssBytes": 542375936,
+  "sampleSeconds": 0.25,
+  "outcomes": [
+    {
+      "variant": "imported-baseline",
+      "originalMethodError": "AssertionError('Unexpected custom-normal encoding residual: 0.11765023964224385')",
+      "sourceInput": {
+        "maxL2": 0.5755355566665995,
+        "over002": 17,
+        "corners": 456
+      },
+      "methodExpectedStored": {
+        "maxL2": 0.11765023964224385,
+        "over002": 5,
+        "corners": 456
+      },
+      "sourceDesiredStored": {
+        "maxL2": 0.45794911354116774,
+        "over002": 17,
+        "corners": 456
+      }
+    },
+    {
+      "variant": "raw-normal-original-faces",
+      "originalMethodError": "AssertionError('Unexpected custom-normal encoding residual: 0.11765023964224385')",
+      "sourceInput": {
+        "maxL2": 0.5755355566665995,
+        "over002": 17,
+        "corners": 456
+      },
+      "methodExpectedStored": {
+        "maxL2": 0.11765023964224385,
+        "over002": 5,
+        "corners": 456
+      },
+      "sourceDesiredStored": {
+        "maxL2": 0.45794911354116774,
+        "over002": 17,
+        "corners": 456
+      }
+    },
+    {
+      "variant": "raw-normal-zero-faces-removed",
+      "originalMethodError": null,
+      "sourceInput": {
+        "maxL2": 0.012402114105726777,
+        "over002": 6,
+        "corners": 444
+      },
+      "methodExpectedStored": {
+        "maxL2": 0.00015989722246823488,
+        "over002": 0,
+        "corners": 444
+      },
+      "sourceDesiredStored": {
+        "maxL2": 0.011551790348245881,
+        "over002": 6,
+        "corners": 444
+      }
+    }
+  ],
+  "conclusion": "Removing four exactly-zero-area faces strongly reduces the measured storage discrepancy and lets the local guard pass; six source-NORMAL mismatches remain. A passing local guard is not preservation of authored shading. No correction adopted.",
+  "allPositionsAndDeformedPositionsIdentical": true,
+  "sourceBoundBeforeAfterIdentical": true,
+  "files": {
+    "attempt-01/comparison-raw.json.gz": "ac130aabfa36923ae095beb354630a2a4d3c009e63cb0d2c7f80b8d2d57fb5d1",
+    "attempt-01/input-parity.json": "bd24303de09f1109d39d7f7ba77f650030755827db32c9e037831e4a0185ad4b",
+    "attempt-01/result.json": "78d10b221892b4808e53a90101c1783276bd2f176a8acd02154b45bbad933950",
+    "attempt-01/variants-so-far.json": "bb7793b6f87c35fe0393af44718db326e390114704c0c9ff69e489aaadbbc8e4",
+    "execution-01/result.json": "dd5a27dc9a0d6af26cbfe82b4c5fec4cbd666f79dc70babc3bdd3c2195c42718",
+    "execution-01/execution.log.txt": "183e6d5b7da433f4cf21f80fd809fddd2c2d85444e5df1fea2ee680961248c98"
+  }
+}

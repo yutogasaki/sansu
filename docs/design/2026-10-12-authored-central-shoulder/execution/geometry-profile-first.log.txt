@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/build-geometry-profile.py", line 33, in <module>
+    assert not any(k in n for k in ['matrix','rotation','scale']),('unexpected source normal transform',name)
+AssertionError: ('unexpected source normal transform', 'Flowers / open sky gathering court:0')

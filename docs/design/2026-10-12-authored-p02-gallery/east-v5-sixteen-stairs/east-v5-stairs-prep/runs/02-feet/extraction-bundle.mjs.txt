@@ -1,0 +1,1433 @@
+// <define:import.meta.env>
+var define_import_meta_env_default = {};
+
+// src/components/island/three/primitives.ts
+import * as THREE3 from "/Users/yutogasaki/Projects/sansu/node_modules/three/build/three.module.js";
+
+// ../../../../Users/yutogasaki/Projects/sansu/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js
+import {
+  BufferAttribute,
+  BufferGeometry,
+  Float32BufferAttribute,
+  InstancedBufferAttribute,
+  InterleavedBuffer,
+  InterleavedBufferAttribute,
+  TriangleFanDrawMode,
+  TriangleStripDrawMode,
+  TrianglesDrawMode,
+  Vector3
+} from "/Users/yutogasaki/Projects/sansu/node_modules/three/build/three.module.js";
+function mergeGeometries(geometries, useGroups = false) {
+  const isIndexed = geometries[0].index !== null;
+  const attributesUsed = new Set(Object.keys(geometries[0].attributes));
+  const morphAttributesUsed = new Set(Object.keys(geometries[0].morphAttributes));
+  const attributes = {};
+  const morphAttributes = {};
+  const morphTargetsRelative = geometries[0].morphTargetsRelative;
+  const mergedGeometry = new BufferGeometry();
+  let offset = 0;
+  for (let i = 0; i < geometries.length; ++i) {
+    const geometry = geometries[i];
+    let attributesCount = 0;
+    if (isIndexed !== (geometry.index !== null)) {
+      console.error("THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index " + i + ". All geometries must have compatible attributes; make sure index attribute exists among all geometries, or in none of them.");
+      return null;
+    }
+    for (const name in geometry.attributes) {
+      if (!attributesUsed.has(name)) {
+        console.error("THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index " + i + '. All geometries must have compatible attributes; make sure "' + name + '" attribute exists among all geometries, or in none of them.');
+        return null;
+      }
+      if (attributes[name] === void 0) attributes[name] = [];
+      attributes[name].push(geometry.attributes[name]);
+      attributesCount++;
+    }
+    if (attributesCount !== attributesUsed.size) {
+      console.error("THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index " + i + ". Make sure all geometries have the same number of attributes.");
+      return null;
+    }
+    if (morphTargetsRelative !== geometry.morphTargetsRelative) {
+      console.error("THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index " + i + ". .morphTargetsRelative must be consistent throughout all geometries.");
+      return null;
+    }
+    for (const name in geometry.morphAttributes) {
+      if (!morphAttributesUsed.has(name)) {
+        console.error("THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index " + i + ".  .morphAttributes must be consistent throughout all geometries.");
+        return null;
+      }
+      if (morphAttributes[name] === void 0) morphAttributes[name] = [];
+      morphAttributes[name].push(geometry.morphAttributes[name]);
+    }
+    if (useGroups) {
+      let count;
+      if (isIndexed) {
+        count = geometry.index.count;
+      } else if (geometry.attributes.position !== void 0) {
+        count = geometry.attributes.position.count;
+      } else {
+        console.error("THREE.BufferGeometryUtils: .mergeGeometries() failed with geometry at index " + i + ". The geometry must have either an index or a position attribute");
+        return null;
+      }
+      mergedGeometry.addGroup(offset, count, i);
+      offset += count;
+    }
+  }
+  if (isIndexed) {
+    let indexOffset = 0;
+    const mergedIndex = [];
+    for (let i = 0; i < geometries.length; ++i) {
+      const index = geometries[i].index;
+      for (let j = 0; j < index.count; ++j) {
+        mergedIndex.push(index.getX(j) + indexOffset);
+      }
+      indexOffset += geometries[i].attributes.position.count;
+    }
+    mergedGeometry.setIndex(mergedIndex);
+  }
+  for (const name in attributes) {
+    const mergedAttribute = mergeAttributes(attributes[name]);
+    if (!mergedAttribute) {
+      console.error("THREE.BufferGeometryUtils: .mergeGeometries() failed while trying to merge the " + name + " attribute.");
+      return null;
+    }
+    mergedGeometry.setAttribute(name, mergedAttribute);
+  }
+  for (const name in morphAttributes) {
+    const numMorphTargets = morphAttributes[name][0].length;
+    if (numMorphTargets === 0) continue;
+    mergedGeometry.morphAttributes = mergedGeometry.morphAttributes || {};
+    mergedGeometry.morphAttributes[name] = [];
+    for (let i = 0; i < numMorphTargets; ++i) {
+      const morphAttributesToMerge = [];
+      for (let j = 0; j < morphAttributes[name].length; ++j) {
+        morphAttributesToMerge.push(morphAttributes[name][j][i]);
+      }
+      const mergedMorphAttribute = mergeAttributes(morphAttributesToMerge);
+      if (!mergedMorphAttribute) {
+        console.error("THREE.BufferGeometryUtils: .mergeGeometries() failed while trying to merge the " + name + " morphAttribute.");
+        return null;
+      }
+      mergedGeometry.morphAttributes[name].push(mergedMorphAttribute);
+    }
+  }
+  return mergedGeometry;
+}
+function mergeAttributes(attributes) {
+  let TypedArray;
+  let itemSize;
+  let normalized;
+  let gpuType = -1;
+  let arrayLength = 0;
+  for (let i = 0; i < attributes.length; ++i) {
+    const attribute = attributes[i];
+    if (TypedArray === void 0) TypedArray = attribute.array.constructor;
+    if (TypedArray !== attribute.array.constructor) {
+      console.error("THREE.BufferGeometryUtils: .mergeAttributes() failed. BufferAttribute.array must be of consistent array types across matching attributes.");
+      return null;
+    }
+    if (itemSize === void 0) itemSize = attribute.itemSize;
+    if (itemSize !== attribute.itemSize) {
+      console.error("THREE.BufferGeometryUtils: .mergeAttributes() failed. BufferAttribute.itemSize must be consistent across matching attributes.");
+      return null;
+    }
+    if (normalized === void 0) normalized = attribute.normalized;
+    if (normalized !== attribute.normalized) {
+      console.error("THREE.BufferGeometryUtils: .mergeAttributes() failed. BufferAttribute.normalized must be consistent across matching attributes.");
+      return null;
+    }
+    if (gpuType === -1) gpuType = attribute.gpuType;
+    if (gpuType !== attribute.gpuType) {
+      console.error("THREE.BufferGeometryUtils: .mergeAttributes() failed. BufferAttribute.gpuType must be consistent across matching attributes.");
+      return null;
+    }
+    arrayLength += attribute.count * itemSize;
+  }
+  const array = new TypedArray(arrayLength);
+  const result = new BufferAttribute(array, itemSize, normalized);
+  let offset = 0;
+  for (let i = 0; i < attributes.length; ++i) {
+    const attribute = attributes[i];
+    if (attribute.isInterleavedBufferAttribute) {
+      const tupleOffset = offset / itemSize;
+      for (let j = 0, l = attribute.count; j < l; j++) {
+        for (let c = 0; c < itemSize; c++) {
+          const value = attribute.getComponent(j, c);
+          result.setComponent(j + tupleOffset, c, value);
+        }
+      }
+    } else {
+      array.set(attribute.array, offset);
+    }
+    offset += attribute.count * itemSize;
+  }
+  if (gpuType !== void 0) {
+    result.gpuType = gpuType;
+  }
+  return result;
+}
+
+// src/components/island/three/worldPalette.ts
+import * as THREE from "/Users/yutogasaki/Projects/sansu/node_modules/three/build/three.module.js";
+var ISLAND_ART_DIRECTIONS = ["festival", "moon-garden", "prism"];
+function currentIslandArtDirection() {
+  const requested = (define_import_meta_env_default.DEV && typeof location !== "undefined" ? new URLSearchParams(location.search).get("island-art") : void 0) ?? define_import_meta_env_default.VITE_ISLAND_ART_DIRECTION;
+  return ISLAND_ART_DIRECTIONS.includes(requested) ? requested : "moon-garden";
+}
+var palettes = {
+  festival: {
+    sea: "#1abaca",
+    deep: "#168fc7",
+    grass: "#7ace35",
+    leaf: "#00a779",
+    leafLight: "#61d46d",
+    leafAccent: "#ff55ad",
+    roof: "#ff4b61",
+    trim: "#ffd447",
+    wood: "#f0a73b",
+    ink: "#292341",
+    stone: "#899adb",
+    sand: "#ffdb86"
+  },
+  "moon-garden": {
+    sea: "#4370e6",
+    deep: "#304cad",
+    grass: "#39c4a7",
+    leaf: "#9f48d5",
+    leafLight: "#df6cbc",
+    leafAccent: "#ffcc40",
+    roof: "#ffd447",
+    trim: "#f75aa4",
+    wood: "#e79b50",
+    ink: "#292341",
+    stone: "#9580ca",
+    sand: "#ffc58e"
+  },
+  prism: {
+    sea: "#23bfd5",
+    deep: "#227bcb",
+    grass: "#a0d64c",
+    leaf: "#2d9bbb",
+    leafLight: "#47d2ad",
+    leafAccent: "#f968ac",
+    roof: "#e9549b",
+    trim: "#ffbc37",
+    wood: "#ee9551",
+    ink: "#292341",
+    stone: "#b59bd5",
+    sand: "#ffe29a"
+  },
+  starry: {
+    sea: "#303f9d",
+    deep: "#1c256d",
+    grass: "#6755cb",
+    leaf: "#414cc3",
+    leafLight: "#9464e5",
+    leafAccent: "#ffd340",
+    roof: "#303eaa",
+    trim: "#ffcb4f",
+    wood: "#c88e40",
+    ink: "#292c58",
+    stone: "#9690de",
+    sand: "#ffdc8a"
+  },
+  candy: {
+    sea: "#ef8cb8",
+    deep: "#c866a9",
+    grass: "#41cbaa",
+    leaf: "#ec427f",
+    leafLight: "#ff82b8",
+    leafAccent: "#ffdc66",
+    roof: "#e93078",
+    trim: "#fff0b8",
+    wood: "#c99146",
+    ink: "#772847",
+    stone: "#c886ca",
+    sand: "#eab461"
+  },
+  crystal: {
+    sea: "#2bcacb",
+    deep: "#266dad",
+    grass: "#73cfc9",
+    leaf: "#11a9c2",
+    leafLight: "#91ddd9",
+    leafAccent: "#8750df",
+    roof: "#eae1ff",
+    trim: "#9856e6",
+    wood: "#558aaa",
+    ink: "#3d4d83",
+    stone: "#919bce",
+    sand: "#dfd5f4"
+  }
+};
+function islandWorldColor(source, direction) {
+  const p = palettes[direction];
+  const groups = [
+    [["#76cdd3", "#78d5d5"], p.sea],
+    [["#43a9c5"], p.deep],
+    [["#72ab50"], p.grass],
+    [["#76d3c9"], direction === "starry" ? "#8994ed" : direction === "candy" ? "#ffdab9" : direction === "crystal" ? "#b1f1ed" : "#75e9da"],
+    [["#4e8843", "#649c46", "#67994a", "#5e9d63"], p.leaf],
+    [["#76a84d", "#77a854", "#7caf4b", "#75ae66"], p.leafLight],
+    [["#86b557"], p.leafAccent],
+    [["#77ab4d"], direction === "festival" ? "#15b6ad" : p.leaf],
+    [["#c24f3e", "#dc7c62", "#dc795d"], p.roof],
+    [["#eb8a5a", "#ed9967", "#de7956", "#e58259", "#426857", "#4d7e62", "#687c71"], p.ink],
+    [["#dfb37b", "#e9b768", "#d6a76e", "#e7bb7c", "#d9ab6b"], p.trim],
+    [["#bc8a4d", "#c89d5f", "#ba7b49", "#b77640", "#b78552", "#a97b4b"], p.wood],
+    [["#e4c48a", "#e5d3a2", "#ecd2a0"], p.sand],
+    [["#939d85", "#9ca99e", "#b9b9a2", "#8eaaa3", "#cdd3b9"], p.stone],
+    [["#f7e8c6", "#f6eacb", "#dcceab", "#d5dac3"], "#fff1bf"],
+    [["#67c9bf", "#b3efde", "#c0eee1", "#79b6ac", "#80b5b5"], "#60dcf2"],
+    [["#f39482"], "#f24e9c"],
+    [["#ffd06c", "#d99635"], "#ffbf27"],
+    [["#638f48", "#467343", "#4d8c50"], "#087f6a"],
+    [["#76a85b", "#76aa53"], "#32bb83"],
+    [["#6baba0"], "#16bfa7"],
+    [["#9faebf"], "#788ae3"]
+  ];
+  return groups.find(([keys]) => keys.includes(source.toLowerCase()))?.[1] ?? source;
+}
+function makeWorldPattern(source, direction) {
+  const pattern = source === "#c24f3e" ? "patchwork" : source === "#86b557" || source === "#dc795d" ? "dots" : void 0;
+  if (!pattern) return;
+  const p = palettes[direction], size = 128;
+  const rgb = (hex) => [1, 3, 5].map((start) => Number.parseInt(hex.slice(start, start + 2), 16));
+  const base = rgb(islandWorldColor(source, direction)), ink2 = rgb(p.ink), gold2 = rgb(p.trim), aqua = rgb(p.sea);
+  const data = new Uint8Array(size * size * 4);
+  for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
+    const u = (x + 0.5) / size, v = (y + 0.5) / size;
+    let color = base;
+    if (direction === "starry" && pattern === "patchwork") {
+      const px = u * 4 % 1 - 0.5, py = v * 4 % 1 - 0.5;
+      if (Math.abs(px) < 0.035 && Math.abs(py) < 0.16 || Math.abs(py) < 0.035 && Math.abs(px) < 0.16) color = gold2;
+      if (Math.abs(v - 0.3 - u * 0.35) < 9e-3) color = aqua;
+    } else if (direction === "candy" && pattern === "patchwork") {
+      if ((u + v) * 5 % 1 < 0.3) color = gold2;
+      if ((u + v) * 5 % 1 > 0.87) color = ink2;
+    } else if (direction === "crystal" && pattern === "patchwork") {
+      if ((u * 3 + v * 2) % 1 < 0.5) color = aqua;
+      if (Math.abs((u * 3 - v * 2 + 3) % 1 - 0.5) < 0.027) color = gold2;
+    } else if (pattern === "dots") {
+      const row = Math.floor(v * 3), px = (u * 3 + row % 2 * 0.5) % 1 - 0.5, py = v * 3 % 1 - 0.5;
+      if (Math.hypot(px, py) < 0.19) color = source === "#dc795d" ? ink2 : gold2;
+    } else {
+      const division = u + v;
+      if (division < 0.75) color = gold2;
+      else if (division > 1.3) color = aqua;
+      if (Math.abs(division - 0.75) < 0.016 || Math.abs(division - 1.3) < 0.016) color = ink2;
+      if (division < 0.7 && Math.hypot(u * 4 % 1 - 0.5, v * 4 % 1 - 0.5) < 0.14) color = ink2;
+      if (division > 1.35 && (u - v + 2) * 6 % 1 < 0.12) color = ink2;
+    }
+    const i = (y * size + x) * 4;
+    data.set([...color, 255], i);
+  }
+  const texture = new THREE.DataTexture(data, size, size, THREE.RGBAFormat);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+  texture.magFilter = THREE.LinearFilter;
+  texture.minFilter = THREE.LinearMipmapLinearFilter;
+  texture.generateMipmaps = true;
+  texture.needsUpdate = true;
+  return texture;
+}
+
+// src/components/island/three/residentFabric.ts
+import * as THREE2 from "/Users/yutogasaki/Projects/sansu/node_modules/three/build/three.module.js";
+var RESIDENT_VISUAL_CANDIDATE = "patchwork-otter-v1";
+var FABRIC_PANELS = ["head", "body", "tealDots", "roseDots", "goldStripes", "cream", "navyDots", "sole"];
+var TILE = 256;
+var GUTTER = 4;
+var COLUMNS = 4;
+var ROWS = 2;
+var cream = [250, 229, 186];
+var ink = [38, 35, 51];
+var blue = [32, 114, 195];
+var rose = [221, 67, 121];
+var teal = [24, 154, 151];
+var gold = [250, 185, 39];
+var thread = [255, 207, 93];
+var fract = (n) => n - Math.floor(n);
+function dots(u, v, base, spot, columns = 7) {
+  const row = Math.floor(v * 5);
+  return Math.hypot(fract(u * columns + row % 2 * 0.5) - 0.5, fract(v * 5) - 0.5) < 0.2 ? spot : base;
+}
+function swatch(panel, u, v) {
+  switch (panel) {
+    case "head": {
+      const cut = 0.255 + Math.sin(v * Math.PI) * 0.012;
+      const backCut = 0.755;
+      const color = u < cut || u > backCut ? cream : blue;
+      return { color, seam: Math.abs(u - cut) < Math.abs(u - backCut) ? u - cut : u - backCut, along: v };
+    }
+    case "body": {
+      const vertical = u - 0.27, diagonal = v - (0.34 + u * 0.48);
+      const color = u > 0.53 ? dots(u, v, teal, cream, 6) : vertical < 0 ? v > 0.37 ? fract(v * 7) < 0.33 ? ink : cream : rose : diagonal < 0 ? gold : blue;
+      const seams = [
+        { distance: vertical, along: v },
+        { distance: u - 0.53, along: v },
+        { distance: u < 0.5 ? u : u - 1, along: v }
+      ];
+      if (u < 0.53) seams.push({ distance: u < 0.27 ? v - 0.37 : diagonal, along: u * 1.5 });
+      const seam = seams.reduce((closest, next) => Math.abs(next.distance) < Math.abs(closest.distance) ? next : closest);
+      return { color, seam: seam.distance, along: seam.along };
+    }
+    case "tealDots":
+      return { color: dots(u, v, teal, ink, 6) };
+    case "roseDots":
+      return { color: dots(u, v, rose, [250, 138, 160], 6) };
+    case "goldStripes":
+      return { color: fract(v * 6) < 0.29 ? ink : gold };
+    case "navyDots":
+      return { color: dots(u, v, ink, cream, 5) };
+    case "sole":
+      return { color: v < 0.46 ? gold : rose, seam: v - 0.46, along: u * 1.5 };
+    case "cream":
+      return { color: cream };
+  }
+}
+function createResidentFabric() {
+  const width = TILE * COLUMNS, height = TILE * ROWS;
+  const colors = new Uint8Array(width * height * 4), relief = new Uint8Array(width * height * 4);
+  for (let panelIndex = 0; panelIndex < FABRIC_PANELS.length; panelIndex++) {
+    const panel = FABRIC_PANELS[panelIndex];
+    for (let y = 0; y < TILE; y++) for (let x = 0; x < TILE; x++) {
+      const sx = Math.max(GUTTER, Math.min(TILE - GUTTER - 1, x));
+      const sy = Math.max(GUTTER, Math.min(TILE - GUTTER - 1, y));
+      const u = (sx - GUTTER + 0.5) / (TILE - GUTTER * 2), v = (sy - GUTTER + 0.5) / (TILE - GUTTER * 2);
+      const sample = swatch(panel, u, v);
+      const grain = (sx * 73 + sy * 151 + sx * sy * 19) % 37 / 36 - 0.5;
+      const weave = Math.sin(sx * Math.PI / 2) * Math.cos(sy * Math.PI / 2);
+      const stitch = sample.seam !== void 0 && Math.abs(sample.seam) < 0.018 && fract((sample.along ?? v) * 17 + sample.seam * 7) < 0.14;
+      const groove = sample.seam !== void 0 && Math.abs(sample.seam) < 35e-4;
+      const rgb = stitch ? thread : sample.color;
+      const shade = stitch ? 1 : groove ? 0.64 : 1 + weave * 0.026 + grain * 0.065;
+      const bump = stitch ? 233 : groove ? 62 : 133 + weave * 27 + grain * 22;
+      const index = ((Math.floor(panelIndex / COLUMNS) * TILE + y) * width + panelIndex % COLUMNS * TILE + x) * 4;
+      for (let channel = 0; channel < 3; channel++) {
+        colors[index + channel] = Math.min(255, Math.max(0, Math.round(rgb[channel] * shade)));
+        relief[index + channel] = Math.round(bump);
+      }
+      colors[index + 3] = relief[index + 3] = 255;
+    }
+  }
+  const texture = (bytes, colorSpace) => {
+    const result = new THREE2.DataTexture(bytes, width, height, THREE2.RGBAFormat);
+    result.colorSpace = colorSpace;
+    result.magFilter = THREE2.LinearFilter;
+    result.minFilter = THREE2.LinearMipmapLinearFilter;
+    result.generateMipmaps = true;
+    result.needsUpdate = true;
+    return result;
+  };
+  const map = texture(colors, THREE2.SRGBColorSpace), bumpMap = texture(relief, THREE2.NoColorSpace);
+  const material = new THREE2.MeshStandardMaterial({
+    color: "#ffffff",
+    map,
+    bumpMap,
+    bumpScale: 6e-3,
+    roughness: 0.98,
+    metalness: 0
+  });
+  material.name = RESIDENT_VISUAL_CANDIDATE;
+  return { material, dispose: () => {
+    material.dispose();
+    map.dispose();
+    bumpMap.dispose();
+  } };
+}
+function applyFabricPanel(object, panel, material) {
+  const index = FABRIC_PANELS.indexOf(panel), uv = object.geometry.getAttribute("uv");
+  if (!uv) throw new Error(`Resident fabric requires UVs: ${panel}`);
+  for (let i = 0; i < uv.count; i++) {
+    const u = GUTTER / TILE + uv.getX(i) * (1 - 2 * GUTTER / TILE);
+    const v = GUTTER / TILE + uv.getY(i) * (1 - 2 * GUTTER / TILE);
+    uv.setXY(i, (index % COLUMNS + u) / COLUMNS, (Math.floor(index / COLUMNS) + v) / ROWS);
+  }
+  uv.needsUpdate = true;
+  object.material = material;
+  object.userData.fabricPanel = panel;
+  return object;
+}
+
+// src/components/island/three/primitives.ts
+var IslandMaterials = class {
+  constructor(artDirection = currentIslandArtDirection()) {
+    this.artDirection = artDirection;
+  }
+  colors = /* @__PURE__ */ new Map();
+  patterns = /* @__PURE__ */ new Map();
+  cloth;
+  painted = new THREE3.MeshStandardMaterial({ color: "#ffffff", vertexColors: true, roughness: 0.87, metalness: 0 });
+  get(color, glow = false) {
+    return this.surface(color, 0.87, 0, glow);
+  }
+  surface(color, roughness, metalness = 0, glow = false) {
+    const key = `${color}:${roughness}:${metalness}:${glow}`;
+    let material = this.colors.get(key);
+    if (!material) {
+      let pattern = this.patterns.get(color);
+      if (!pattern) {
+        pattern = makeWorldPattern(color, this.artDirection);
+        if (pattern) this.patterns.set(color, pattern);
+      }
+      const paint = this.color(color);
+      material = new THREE3.MeshStandardMaterial({
+        color: pattern ? "#ffffff" : paint,
+        roughness,
+        metalness,
+        ...pattern ? { map: pattern } : {},
+        ...glow ? { emissive: paint, emissiveIntensity: 0.65 } : {}
+      });
+      this.colors.set(key, material);
+    }
+    return material;
+  }
+  color(source) {
+    return islandWorldColor(source, this.artDirection);
+  }
+  residentFabric() {
+    return (this.cloth ??= createResidentFabric()).material;
+  }
+  dispose() {
+    for (const material of this.colors.values()) material.dispose();
+    for (const texture of this.patterns.values()) texture.dispose();
+    this.painted.dispose();
+    this.cloth?.dispose();
+  }
+};
+function mesh(parent, geometry, material, position = [0, 0, 0], scale) {
+  const object = new THREE3.Mesh(geometry, material);
+  object.position.set(...position);
+  if (scale) object.scale.set(...scale);
+  object.castShadow = true;
+  object.receiveShadow = true;
+  parent.add(object);
+  return object;
+}
+function ellipsoid(parent, material, position, scale, detail = 16) {
+  return mesh(parent, new THREE3.SphereGeometry(1, detail, 12), material, position, scale);
+}
+function curve(parent, material, points, radius) {
+  return mesh(parent, new THREE3.TubeGeometry(
+    new THREE3.CatmullRomCurve3(points.map((p) => new THREE3.Vector3(...p))),
+    Math.max(8, points.length * 4),
+    radius,
+    5,
+    false
+  ), material);
+}
+function batch(group, painted) {
+  group.updateMatrixWorld(true);
+  const worldInverse = group.matrixWorld.clone().invert();
+  const buckets = /* @__PURE__ */ new Map();
+  const originals = [];
+  group.traverse((object) => {
+    if (!(object instanceof THREE3.Mesh) || Array.isArray(object.material)) return;
+    const geometry = object.geometry.clone().applyMatrix4(worldInverse.clone().multiply(object.matrixWorld));
+    const mapped = object.material instanceof THREE3.MeshStandardMaterial && (object.material.map || object.material.bumpMap);
+    if (!mapped) geometry.deleteAttribute("uv");
+    else if (!geometry.attributes.uv) {
+      geometry.computeBoundingBox();
+      const bounds = geometry.boundingBox, size = bounds.getSize(new THREE3.Vector3());
+      const positions = geometry.attributes.position, uv = new Float32Array(positions.count * 2);
+      for (let i = 0; i < positions.count; i++) {
+        uv[i * 2] = (positions.getX(i) - bounds.min.x) / Math.max(1e-3, size.x);
+        uv[i * 2 + 1] = (positions.getY(i) - bounds.min.y) / Math.max(1e-3, size.y);
+      }
+      geometry.setAttribute("uv", new THREE3.BufferAttribute(uv, 2));
+    }
+    const flat = geometry.index ? geometry.toNonIndexed() : geometry;
+    if (flat !== geometry) geometry.dispose();
+    let material = object.material;
+    if (painted && material instanceof THREE3.MeshStandardMaterial && material.emissive.getHex() === 0 && !material.map && !material.bumpMap && material.roughness === painted.roughness && material.metalness === painted.metalness) {
+      const color = material.color, colors = new Float32Array(flat.attributes.position.count * 3);
+      for (let i = 0; i < colors.length; i += 3) {
+        colors[i] = color.r;
+        colors[i + 1] = color.g;
+        colors[i + 2] = color.b;
+      }
+      flat.setAttribute("color", new THREE3.BufferAttribute(colors, 3));
+      material = painted;
+    }
+    const list = buckets.get(material) ?? [];
+    list.push(flat);
+    buckets.set(material, list);
+    originals.push(object);
+  });
+  for (const object of originals) {
+    object.removeFromParent();
+    object.geometry.dispose();
+  }
+  for (const [material, geometries] of buckets) {
+    const merged = mergeGeometries(geometries);
+    for (const geometry of geometries) geometry.dispose();
+    if (merged) mesh(group, merged, material);
+  }
+  return group;
+}
+function disposeGeometry(object) {
+  const geometries = /* @__PURE__ */ new Set(), owned = /* @__PURE__ */ new Set();
+  object.traverse((child2) => {
+    if (!(child2 instanceof THREE3.Mesh)) return;
+    geometries.add(child2.geometry);
+    for (const material of Array.isArray(child2.material) ? child2.material : [child2.material]) {
+      if (material.userData.islandOwned) owned.add(material);
+    }
+  });
+  geometries.forEach((geometry) => geometry.dispose());
+  owned.forEach((material) => material.dispose());
+}
+
+// src/components/island/three/islandCharacters.ts
+import * as T from "/Users/yutogasaki/Projects/sansu/node_modules/three/build/three.module.js";
+
+// src/components/island/three/residentRig.ts
+import * as THREE4 from "/Users/yutogasaki/Projects/sansu/node_modules/three/build/three.module.js";
+var SEATED_BODY_Y = -0.08;
+var proportions = {
+  rabbit: { bodyY: 0.51, bodyRadiusY: 0.34, footY: 0.105 },
+  otter: { bodyY: 0.53, bodyRadiusY: 0.4, footY: 0.11 },
+  fox: { bodyY: 0.51, bodyRadiusY: 0.37, footY: 0.11 }
+};
+var residentFootY = (species) => proportions[species].footY;
+var residentSeatContactY = (species) => proportions[species].bodyY + SEATED_BODY_Y - proportions[species].bodyRadiusY;
+function makeOtterTail(parent, material) {
+  return ellipsoid(parent, material, [0, 0.245, -0.28], [0.105, 0.105, 0.105]);
+}
+function makeResidentRig(species, m, otterAppearance = "patchwork") {
+  const pose = new THREE4.Group(), body = new THREE4.Group(), head = new THREE4.Group();
+  pose.name = "resident-pose";
+  body.name = "resident-body";
+  head.name = "resident-head";
+  pose.add(body);
+  body.add(head);
+  const rabbit2 = species === "rabbit", otter2 = species === "otter", fox2 = species === "fox";
+  const patchwork = otter2 && otterAppearance === "patchwork";
+  const cloth = (object, panel) => {
+    if (!patchwork) return object;
+    if (object.geometry instanceof THREE4.SphereGeometry) {
+      object.geometry.dispose();
+      object.geometry = new THREE4.SphereGeometry(1, 32, 24);
+    }
+    return applyFabricPanel(object, panel, m.residentFabric());
+  };
+  if (otter2) pose.userData.visualCandidate = patchwork ? RESIDENT_VISUAL_CANDIDATE : "natural-otter-v1";
+  const fur = m.get(rabbit2 ? "#f3ead4" : fox2 ? "#d99753" : "#b38154");
+  const cream2 = m.get("#fff0d4"), dark = m.get("#493e32");
+  cloth(ellipsoid(body, fur, [0, proportions[species].bodyY, 0], rabbit2 ? [0.245, 0.34, 0.22] : otter2 ? [0.305, 0.4, 0.255] : [0.33, 0.37, 0.265]), "body");
+  if (!patchwork) ellipsoid(body, cream2, [0, 0.47, 0.21], rabbit2 ? [0.16, 0.22, 0.055] : [0.23, 0.25, 0.067]);
+  batch(body);
+  const tail = new THREE4.Group();
+  tail.name = "resident-tail";
+  tail.userData.visualCandidate = fox2 ? "island-tail-seat-joint-v2" : "island-tail-seat-joint-v1";
+  tail.position.set(fox2 ? -0.18 : 0, otter2 ? 0.245 : rabbit2 ? 0.29 : 0.19, fox2 ? 0.1 : -0.1);
+  const tailShape = otter2 ? cloth(makeOtterTail(tail, fur), "cream") : ellipsoid(tail, fur, [0, 0.19, -0.31], rabbit2 ? [0.12, 0.12, 0.12] : [0.2, 0.105, 0.6]);
+  if (!otter2) tailShape.rotation.x = -0.2;
+  tailShape.position.sub(tail.position);
+  body.add(tail);
+  const shoulders = [-1, 1].map((side) => {
+    const shoulder = new THREE4.Group();
+    shoulder.name = side < 0 ? "shoulder-left" : "shoulder-right";
+    shoulder.position.set(side * (rabbit2 ? 0.21 : 0.27), otter2 ? 0.67 : 0.64, 0.08);
+    shoulder.rotation.z = side * 0.2;
+    body.add(shoulder);
+    const paw = cloth(ellipsoid(shoulder, fur, [0, -0.15, 0], [0.095, 0.19, 0.105]), side < 0 ? "tealDots" : "roseDots");
+    const hand = new THREE4.Object3D();
+    hand.name = side < 0 ? "hand-contact-left" : "hand-contact-right";
+    hand.position.set(0, -Math.sqrt(1 - 0.25 ** 2), 0.25);
+    paw.add(hand);
+    return shoulder;
+  });
+  head.position.y = rabbit2 ? 0.93 : otter2 ? 1.01 : 0.99;
+  cloth(ellipsoid(head, fur, [0, 0, 0], rabbit2 ? [0.29, 0.27, 0.255] : otter2 ? [0.365, 0.295, 0.3] : [0.37, 0.31, 0.295]), "head");
+  for (const side of [-1, 1]) {
+    const earX = rabbit2 ? 0.135 : otter2 ? 0.285 : 0.275;
+    const earY = rabbit2 ? 0.4 : otter2 ? 0.2 : 0.235;
+    const ear = cloth(ellipsoid(
+      head,
+      fur,
+      [side * earX, earY, -0.02],
+      rabbit2 ? [0.079, 0.34, 0.079] : otter2 ? [0.105, 0.105, 0.072] : [0.12, 0.13, 0.077]
+    ), side < 0 ? "navyDots" : "roseDots");
+    ear.rotation.z = -side * (rabbit2 ? 0.14 : 0.2);
+    const inner = cloth(ellipsoid(
+      head,
+      m.get(rabbit2 ? "#dba596" : "#d6a679"),
+      [side * earX, earY + (rabbit2 ? 0.02 : 0.015), rabbit2 ? 0.052 : 0.048],
+      rabbit2 ? [0.038, 0.245, 0.028] : otter2 ? [0.058, 0.057, 0.023] : [0.068, 0.074, 0.025]
+    ), side < 0 ? "cream" : "sole");
+    inner.rotation.z = ear.rotation.z;
+    cloth(ellipsoid(
+      head,
+      cream2,
+      [side * 0.085, -0.085, rabbit2 ? 0.221 : otter2 ? 0.277 : 0.263],
+      rabbit2 ? [0.106, 0.074, 0.047] : otter2 ? [0.15, 0.082, 0.067] : [0.145, 0.104, 0.065]
+    ), "cream");
+    ellipsoid(head, otter2 ? m.surface("#272433", 0.25) : dark, [side * (rabbit2 ? 0.108 : 0.15), 0.047, rabbit2 ? 0.241 : 0.27], [0.028, 0.043, 0.024], 10);
+    ellipsoid(head, cream2, [side * (rabbit2 ? 0.105 : 0.147), 0.059, rabbit2 ? 0.263 : 0.292], [9e-3, 0.012, 6e-3], 8);
+  }
+  ellipsoid(
+    head,
+    otter2 ? m.surface("#302731", 0.36) : m.get(rabbit2 ? "#ba836d" : "#51453b"),
+    [0, -0.052, rabbit2 ? 0.283 : otter2 ? 0.354 : 0.341],
+    rabbit2 ? [0.042, 0.031, 0.022] : [0.058, 0.043, 0.03]
+  );
+  if (otter2) {
+    curve(head, dark, [[0, -0.085, 0.36], [0, -0.108, 0.351], [0, -0.13, 0.337]], 6e-3);
+    for (const side of [-1, 1]) curve(head, dark, [[0, -0.13, 0.337], [side * 0.04, -0.147, 0.332], [side * 0.075, -0.126, 0.342]], 7e-3);
+  } else curve(head, dark, [[-0.063, -0.122, rabbit2 ? 0.264 : 0.317], [0, -0.14, rabbit2 ? 0.28 : 0.332], [0.062, -0.12, rabbit2 ? 0.264 : 0.317]], 0.01);
+  batch(head);
+  const feet2 = [-1, 1].map((side) => cloth(ellipsoid(
+    pose,
+    fur,
+    [side * 0.16, residentFootY(species), 0.12],
+    rabbit2 ? [0.125, 0.105, 0.205] : [0.15, 0.11, 0.195]
+  ), side < 0 ? "tealDots" : "sole"));
+  if (!otter2) {
+    const scarf = new THREE4.Group(), scarfMaterial = m.get(rabbit2 ? "#9faebf" : "#6baba0");
+    ellipsoid(scarf, scarfMaterial, [0, rabbit2 ? 0.725 : 0.735, 0.04], [0.24, 0.055, 0.22]);
+    ellipsoid(scarf, scarfMaterial, [0.09, 0.635, 0.252], [0.07, 0.13, 0.027]);
+    body.add(batch(scarf));
+  }
+  const seatContact = new THREE4.Object3D();
+  seatContact.name = "resident-seat-contact";
+  seatContact.position.y = residentSeatContactY(species);
+  pose.add(seatContact);
+  pose.traverse((object) => {
+    if (object instanceof THREE4.Mesh) object.castShadow = false;
+  });
+  const handContacts = shoulders.map((shoulder) => shoulder.getObjectByName(shoulder.name === "shoulder-left" ? "hand-contact-left" : "hand-contact-right"));
+  return { pose, body, head, tail, feet: feet2, shoulders, handContacts, seatContact };
+}
+
+// src/components/island/three/islandCharacters.ts
+function makePokomokoRig(m) {
+  const wall = m.surface("#fff0d4", 0.8);
+  const paint = (hex) => m.surface(hex, 0.8);
+  const hero = new T.Group(), heroBody = new T.Group();
+  hero.name = "pokomoko";
+  hero.add(heroBody);
+  const fabric = (panel, position, scale) => applyFabricPanel(ellipsoid(heroBody, wall, position, scale, 32), panel, m.residentFabric());
+  fabric("body", [0, 0.43, 0], [0.24, 0.3, 0.2]);
+  fabric("head", [0, 0.88, 0], [0.34, 0.3, 0.27]);
+  for (const side of [-1, 1]) {
+    fabric(side < 0 ? "navyDots" : "roseDots", [side * 0.27, 1.12, -0.015], [0.125, 0.135, 0.08]);
+    fabric(side < 0 ? "tealDots" : "roseDots", [side * 0.27, 0.46, 0.025], [0.095, 0.18, 0.095]);
+    ellipsoid(heroBody, m.surface("#252535", 0.25), [side * 0.12, 0.9, 0.249], [0.035, 0.041, 0.025]);
+    ellipsoid(heroBody, wall, [side * 0.11, 0.913, 0.269], [9e-3, 0.012, 8e-3]);
+  }
+  fabric("cream", [0, 0.77, 0.25], [0.16, 0.095, 0.065]);
+  ellipsoid(heroBody, m.surface("#282333", 0.32), [0, 0.79, 0.31], [0.044, 0.029, 0.023]);
+  const mouth = new T.Mesh(new T.TorusGeometry(0.041, 7e-3, 6, 16, Math.PI), paint("#34293c"));
+  mouth.rotation.z = Math.PI;
+  mouth.position.set(0, 0.748, 0.31);
+  heroBody.add(mouth);
+  const heroFeet = [-1, 1].map((side) => applyFabricPanel(ellipsoid(hero, wall, [side * 0.12, 0.1, 0.09], [0.1, 0.1, 0.14], 24), side < 0 ? "cream" : "roseDots", m.residentFabric()));
+  return { hero, heroBody, heroFeet };
+}
+
+// src/components/island/growing/actors.ts
+import * as T7 from "/Users/yutogasaki/Projects/sansu/node_modules/three/build/three.module.js";
+
+// src/domain/growingIsland/rules.ts
+var RULES = {
+  dropsPerCompletion: 2,
+  townHoursPerCompletion: 2,
+  buildHours: 6,
+  dawnHour: 6,
+  /** Homes stay small so each new friend usually needs a new seed: the core loop. */
+  homeCapacity: [0, 1, 1, 2, 2],
+  /** Town hours after building, comfort average and island level for each home stage. */
+  homeGrowth: [
+    void 0,
+    { hours: 24, comfort: 1, level: 2 },
+    { hours: 48, comfort: 2, level: 4 },
+    { hours: 96, comfort: 3, level: 6 }
+  ],
+  /** Pokomoko's basket feeds the first two friends; farms feed the rest. */
+  baseFood: 2,
+  basePlay: 2,
+  /** The next boat docks this many town hours after the previous friend arrived. */
+  boatBaseHours: 48,
+  boatHoursPerVillager: 2,
+  likeRadius: 3,
+  quietRadius: 2,
+  styleRadius: 2,
+  genkiLevels: [0, 3, 8, 15, 25, 40, 60, 85, 115, 150],
+  characterShare: 0.3,
+  characterMinimum: 6,
+  favoredWeight: 3,
+  rareBase: 0.05,
+  rareBonus: 0.1,
+  rareRichness: 40,
+  natureHourCap: 24 * 7,
+  soilBase: 0.2,
+  soilHalfLife: 3,
+  spreadEvery: 12,
+  spreadChance: 0.5,
+  spreadMoisture: 0.35,
+  wildShare: 0.4,
+  bigTreeHours: 24 * 7,
+  lordTreeHours: 24 * 30,
+  appliedMemory: 500,
+  /** Completion ids kept for de-duplication; older ones collapse into a time floor. */
+  learnedMemory: 3e3
+};
+var isKid = (species) => species === "girl" || species === "boy";
+
+// src/components/island/growing/friendRig.ts
+import * as T2 from "/Users/yutogasaki/Projects/sansu/node_modules/three/build/three.module.js";
+var cone = (parent, material, position, radius, height, rotation = [0, 0, 0]) => {
+  const m = mesh(parent, new T2.ConeGeometry(radius, height, 12), material, position);
+  m.rotation.set(...rotation);
+  return m;
+};
+function face(head, m, { x, y, z, size = 1 }) {
+  const dark = m.surface("#2b2622", 0.35), shine = m.get("#fff8ea");
+  for (const side of [-1, 1]) {
+    ellipsoid(head, dark, [side * x, y, z], [0.03 * size, 0.042 * size, 0.022 * size], 10);
+    ellipsoid(head, shine, [side * x - 6e-3, y + 0.014 * size, z + 0.016 * size], [9e-3, 0.011, 5e-3], 8);
+  }
+}
+function cheeks(head, m, x, y, z) {
+  const blush = m.surface("#f2a0a0", 0.9);
+  for (const side of [-1, 1]) ellipsoid(head, blush, [side * x, y, z], [0.045, 0.026, 0.012], 10);
+}
+function frame() {
+  const pose = new T2.Group(), body = new T2.Group(), head = new T2.Group();
+  pose.name = "friend-pose";
+  body.name = "friend-body";
+  head.name = "friend-head";
+  pose.add(body);
+  body.add(head);
+  return { pose, body, head };
+}
+function finish(body, head) {
+  const limbs = body.children.filter((child2) => child2.userData.limb);
+  body.remove(head, ...limbs);
+  batch(body);
+  body.add(head, ...limbs);
+  batch(head);
+  body.traverse((o) => {
+    if (o instanceof T2.Mesh) o.castShadow = false;
+  });
+}
+function feet(pose, material, scale = [0.14, 0.1, 0.19], y = 0.1, spread = 0.16) {
+  return [-1, 1].map((side) => ellipsoid(pose, material, [side * spread, y, 0.1], scale));
+}
+function limb(body, side, shoulder, build) {
+  const pivot = new T2.Group();
+  pivot.name = side < 0 ? "arm-left" : "arm-right";
+  pivot.userData.limb = true;
+  pivot.position.set(...shoulder);
+  build(pivot);
+  body.add(pivot);
+  return pivot;
+}
+function arms(body, material, y, x, scale = [0.08, 0.17, 0.09]) {
+  for (const side of [-1, 1]) limb(body, side, [side * (x - 0.03), y + scale[1] * 0.7, 0.06], (pivot) => {
+    const arm = ellipsoid(pivot, material, [side * 0.03, -scale[1] * 0.7, 0], scale);
+    arm.rotation.z = side * 0.35;
+  });
+}
+function otter(m) {
+  const { pose, body, head } = frame();
+  const fur = m.get("#7d5236"), cream2 = m.get("#f1dfc2"), dark = m.surface("#2b2220", 0.35);
+  ellipsoid(body, fur, [0, 0.5, 0], [0.25, 0.42, 0.23]);
+  ellipsoid(body, cream2, [0, 0.48, 0.17], [0.16, 0.3, 0.07]);
+  cone(body, fur, [0, 0.2, -0.42], 0.13, 0.6, [-Math.PI / 2 - 0.25, 0, 0]);
+  arms(body, fur, 0.58, 0.24, [0.07, 0.15, 0.08]);
+  head.position.y = 0.98;
+  ellipsoid(head, fur, [0, 0, 0], [0.33, 0.25, 0.28]);
+  ellipsoid(head, cream2, [0, -0.07, 0.19], [0.21, 0.13, 0.12]);
+  for (const side of [-1, 1]) {
+    ellipsoid(head, fur, [side * 0.27, 0.09, -0.05], [0.06, 0.055, 0.04]);
+    for (const lift of [0, 0.025]) curve(head, dark, [[side * 0.09, -0.06 + lift, 0.3], [side * 0.2, -0.05 + lift * 1.6, 0.3], [side * 0.3, -0.03 + lift * 2, 0.26]], 4e-3);
+  }
+  ellipsoid(head, dark, [0, -0.035, 0.31], [0.055, 0.038, 0.03]);
+  face(head, m, { x: 0.12, y: 0.05, z: 0.25 });
+  finish(body, head);
+  return { pose, body, head, feet: feet(pose, fur, [0.15, 0.07, 0.22], 0.07, 0.15), headTop: 0.25 };
+}
+function fox(m) {
+  const { pose, body, head } = frame();
+  const fur = m.get("#e27d34"), white = m.get("#fbf2e3"), dark = m.get("#3a2a22");
+  ellipsoid(body, fur, [0, 0.5, 0], [0.27, 0.36, 0.24]);
+  ellipsoid(body, white, [0, 0.52, 0.17], [0.15, 0.24, 0.07]);
+  const tail = ellipsoid(body, fur, [0.18, 0.42, -0.36], [0.16, 0.15, 0.36]);
+  tail.rotation.set(0.5, 0.5, 0);
+  const tip = ellipsoid(body, white, [0.3, 0.56, -0.6], [0.1, 0.1, 0.12]);
+  tip.rotation.copy(tail.rotation);
+  arms(body, fur, 0.56, 0.25);
+  head.position.y = 0.98;
+  ellipsoid(head, fur, [0, 0, 0], [0.3, 0.27, 0.27]);
+  ellipsoid(head, white, [0, -0.08, 0.12], [0.22, 0.14, 0.18]);
+  cone(head, white, [0, -0.07, 0.33], 0.09, 0.22, [Math.PI / 2, 0, 0]);
+  ellipsoid(head, dark, [0, -0.06, 0.44], [0.035, 0.03, 0.03]);
+  for (const side of [-1, 1]) {
+    cone(head, fur, [side * 0.16, 0.3, -0.02], 0.1, 0.28, [0, 0, -side * 0.28]);
+    cone(head, dark, [side * 0.2, 0.42, -0.02], 0.045, 0.09, [0, 0, -side * 0.28]);
+  }
+  face(head, m, { x: 0.11, y: 0.06, z: 0.24 });
+  finish(body, head);
+  return { pose, body, head, feet: feet(pose, dark, [0.12, 0.09, 0.17]), headTop: 0.26 };
+}
+function duck(m) {
+  const { pose, body, head } = frame();
+  const feather = m.get("#f6f1e4"), bill = m.get("#f0a13c"), green = m.get("#4f8f6a");
+  const shell = ellipsoid(body, feather, [0, 0.42, -0.04], [0.3, 0.3, 0.36]);
+  shell.rotation.x = -0.2;
+  cone(body, feather, [0, 0.5, -0.42], 0.1, 0.2, [-Math.PI / 2 - 0.6, 0, 0]);
+  for (const side of [-1, 1]) limb(body, side, [side * 0.26, 0.58, -0.04], (pivot) => {
+    const wing = ellipsoid(pivot, feather, [side * 0.02, -0.13, 0], [0.06, 0.17, 0.24]);
+    wing.rotation.z = side * 0.25;
+  });
+  head.position.set(0, 0.86, 0.08);
+  ellipsoid(head, feather, [0, 0, 0], [0.22, 0.22, 0.21]);
+  ellipsoid(head, green, [0, 0.19, -0.02], [0.05, 0.07, 0.05]);
+  ellipsoid(head, bill, [0, -0.05, 0.22], [0.12, 0.04, 0.12]);
+  face(head, m, { x: 0.1, y: 0.05, z: 0.18, size: 0.85 });
+  finish(body, head);
+  return { pose, body, head, feet: feet(pose, bill, [0.13, 0.04, 0.18], 0.05, 0.13), headTop: 0.22 };
+}
+function squirrel(m) {
+  const { pose, body, head } = frame();
+  const fur = m.get("#b8683a"), cream2 = m.get("#f3dcb8"), dark = m.surface("#2b2220", 0.35);
+  ellipsoid(body, fur, [0, 0.44, 0], [0.22, 0.3, 0.2]);
+  ellipsoid(body, cream2, [0, 0.44, 0.14], [0.13, 0.21, 0.07]);
+  const tail = [[0.06, 0.3, -0.22], [0.12, 0.56, -0.44], [0.16, 0.9, -0.5], [0.16, 1.18, -0.38], [0.12, 1.3, -0.16]];
+  tail.forEach((p, i) => ellipsoid(body, fur, p, [0.2 - i * 0.01, 0.19, 0.19 - i * 0.01]));
+  ellipsoid(body, cream2, [0.12, 1.34, -0.08], [0.1, 0.08, 0.08]);
+  arms(body, fur, 0.5, 0.2, [0.06, 0.13, 0.07]);
+  head.position.y = 0.86;
+  ellipsoid(head, fur, [0, 0, 0], [0.25, 0.23, 0.23]);
+  ellipsoid(head, cream2, [0, -0.07, 0.14], [0.14, 0.1, 0.1]);
+  for (const side of [-1, 1]) {
+    cone(head, fur, [side * 0.13, 0.25, -0.03], 0.06, 0.18, [0, 0, -side * 0.18]);
+    cone(head, cream2, [side * 0.15, 0.36, -0.03], 0.025, 0.08, [0, 0, -side * 0.18]);
+  }
+  ellipsoid(head, dark, [0, -0.04, 0.24], [0.03, 0.024, 0.02]);
+  face(head, m, { x: 0.1, y: 0.05, z: 0.2, size: 0.9 });
+  finish(body, head);
+  return { pose, body, head, feet: feet(pose, fur, [0.1, 0.08, 0.15], 0.08, 0.12), headTop: 0.26 };
+}
+function hedgehog(m) {
+  const { pose, body, head } = frame();
+  const spine = m.get("#6d5240"), skin = m.get("#e9d2b0"), dark = m.surface("#2b2220", 0.35);
+  ellipsoid(body, skin, [0, 0.42, 0.04], [0.28, 0.3, 0.26]);
+  ellipsoid(body, spine, [0, 0.52, -0.08], [0.33, 0.36, 0.3]);
+  for (let ring = 0; ring < 3; ring++) for (let i = 0; i < 7; i++) {
+    const a = -Math.PI * 0.85 + i / 6 * Math.PI * 0.7 + ring * 0.12, lift = 0.35 + ring * 0.22;
+    const p = [Math.cos(a) * 0.3 * (1 - ring * 0.18), 0.52 + lift * 0.5, -0.08 + Math.sin(a) * 0.28 * (1 - ring * 0.18)];
+    const c = cone(body, spine, p, 0.045, 0.16);
+    c.lookAt(new T2.Vector3(p[0] * 3, p[1] + 0.6, p[2] * 3 - 0.2));
+    c.rotateX(Math.PI / 2);
+  }
+  arms(body, skin, 0.42, 0.26, [0.06, 0.11, 0.07]);
+  head.position.set(0, 0.7, 0.18);
+  ellipsoid(head, skin, [0, 0, 0], [0.2, 0.18, 0.19]);
+  cone(head, skin, [0, -0.03, 0.2], 0.08, 0.18, [Math.PI / 2, 0, 0]);
+  ellipsoid(head, dark, [0, -0.03, 0.3], [0.03, 0.026, 0.024]);
+  for (const side of [-1, 1]) ellipsoid(head, skin, [side * 0.15, 0.13, -0.02], [0.05, 0.05, 0.03]);
+  face(head, m, { x: 0.08, y: 0.04, z: 0.16, size: 0.8 });
+  cheeks(head, m, 0.12, -0.02, 0.14);
+  finish(body, head);
+  return { pose, body, head, feet: feet(pose, skin, [0.1, 0.07, 0.14], 0.07, 0.14), headTop: 0.5 };
+}
+function bird(m) {
+  const { pose, body, head } = frame();
+  const blue2 = m.get("#6fa9d8"), belly = m.get("#fbe7a8"), beak = m.get("#f0a13c");
+  ellipsoid(body, blue2, [0, 0.45, 0], [0.26, 0.3, 0.25]);
+  ellipsoid(body, belly, [0, 0.43, 0.15], [0.17, 0.22, 0.1]);
+  for (const side of [-1, 1]) limb(body, side, [side * 0.22, 0.64, -0.02], (pivot) => {
+    const wing = ellipsoid(pivot, blue2, [side * 0.03, -0.14, 0], [0.05, 0.2, 0.15]);
+    wing.rotation.z = side * 0.4;
+  });
+  for (const side of [-1, 0, 1]) {
+    const feather = ellipsoid(body, blue2, [side * 0.06, 0.32, -0.3], [0.05, 0.03, 0.16]);
+    feather.rotation.x = -0.5;
+  }
+  head.position.y = 0.86;
+  ellipsoid(head, blue2, [0, 0, 0], [0.21, 0.2, 0.2]);
+  cone(head, beak, [0, -0.02, 0.23], 0.05, 0.12, [Math.PI / 2, 0, 0]);
+  for (const tilt of [-0.3, 0, 0.3]) cone(head, blue2, [tilt * 0.1, 0.24, -0.02], 0.03, 0.14, [-0.3, 0, tilt]);
+  face(head, m, { x: 0.09, y: 0.05, z: 0.17, size: 0.85 });
+  cheeks(head, m, 0.13, -0.03, 0.14);
+  finish(body, head);
+  return { pose, body, head, feet: feet(pose, beak, [0.06, 0.04, 0.12], 0.05, 0.09), headTop: 0.3 };
+}
+function child(m, girl, clothes) {
+  const { pose, body, head } = frame();
+  const skin = m.get("#f4d3ba"), hair = m.get(girl ? "#4a3024" : "#2c221d");
+  const shirt = m.get(clothes ?? (girl ? "#e58ea3" : "#5f9ec4")), shoes = m.get(girl ? "#c94f5a" : "#e0b454");
+  if (girl) {
+    mesh(body, new T2.CylinderGeometry(0.14, 0.3, 0.42, 18), shirt, [0, 0.34, 0]);
+    ellipsoid(body, shirt, [0, 0.58, 0], [0.17, 0.12, 0.15]);
+    for (const side of [-1, 1]) ellipsoid(body, skin, [side * 0.08, 0.12, 0.02], [0.05, 0.1, 0.05]);
+  } else {
+    ellipsoid(body, shirt, [0, 0.5, 0], [0.21, 0.22, 0.18]);
+    mesh(body, new T2.CylinderGeometry(0.19, 0.2, 0.16, 16), m.get("#3f4f72"), [0, 0.3, 0]);
+    for (const side of [-1, 1]) ellipsoid(body, skin, [side * 0.08, 0.17, 0.02], [0.055, 0.09, 0.055]);
+  }
+  for (const side of [-1, 1]) {
+    limb(body, side, [side * 0.17, 0.63, 0.02], (pivot) => {
+      const arm = ellipsoid(pivot, shirt, [side * 0.03, -0.07, 0], [0.06, 0.1, 0.06]);
+      arm.rotation.z = side * 0.4;
+      ellipsoid(pivot, skin, [side * 0.08, -0.18, 0.02], [0.045, 0.05, 0.045]);
+    });
+  }
+  head.position.y = 0.93;
+  ellipsoid(head, skin, [0, 0, 0], [0.26, 0.25, 0.24]);
+  for (const side of [-1, 1]) ellipsoid(head, skin, [side * 0.25, -0.01, 0], [0.04, 0.06, 0.04]);
+  face(head, m, { x: 0.09, y: 0, z: 0.22 });
+  cheeks(head, m, 0.15, -0.06, 0.19);
+  curve(head, m.surface("#a05050", 0.6), [[-0.04, -0.09, 0.225], [0, -0.105, 0.232], [0.04, -0.09, 0.225]], 7e-3);
+  const cap = ellipsoid(head, hair, [0, 0.06, -0.03], [0.28, 0.24, 0.26]);
+  cap.scale.y = 0.23;
+  ellipsoid(head, hair, [0, 0.15, 0.14], [0.22, 0.08, 0.1]);
+  if (girl) {
+    const ribbon = m.get("#f7d9e0");
+    for (const side of [-1, 1]) {
+      ellipsoid(head, hair, [side * 0.29, -0.02, -0.08], [0.09, 0.13, 0.09]);
+      ellipsoid(head, ribbon, [side * 0.26, 0.09, -0.06], [0.05, 0.035, 0.035]);
+    }
+    ellipsoid(head, hair, [0, -0.02, -0.2], [0.24, 0.2, 0.08]);
+  } else {
+    cone(head, hair, [0.04, 0.3, 0.02], 0.05, 0.12, [0.3, 0, -0.3]);
+    ellipsoid(head, hair, [0, -0.04, -0.18], [0.24, 0.17, 0.09]);
+  }
+  finish(body, head);
+  return { pose, body, head, feet: feet(pose, shoes, [0.08, 0.06, 0.12], 0.06, 0.09), headTop: 0.28 };
+}
+function penguin(m) {
+  const { pose, body, head } = frame();
+  const navy = m.get("#2f3a52"), white = m.get("#f7f4ec"), beak = m.get("#f0a13c");
+  ellipsoid(body, navy, [0, 0.46, -0.02], [0.27, 0.4, 0.25]);
+  ellipsoid(body, white, [0, 0.44, 0.1], [0.2, 0.32, 0.17]);
+  for (const side of [-1, 1]) limb(body, side, [side * 0.25, 0.62, 0], (pivot) => {
+    const flipper = ellipsoid(pivot, navy, [side * 0.03, -0.16, 0], [0.05, 0.2, 0.1]);
+    flipper.rotation.z = side * 0.25;
+  });
+  head.position.y = 0.9;
+  ellipsoid(head, navy, [0, 0, 0], [0.23, 0.21, 0.22]);
+  ellipsoid(head, white, [0, -0.03, 0.1], [0.16, 0.14, 0.13]);
+  cone(head, beak, [0, -0.05, 0.25], 0.045, 0.12, [Math.PI / 2, 0, 0]);
+  face(head, m, { x: 0.08, y: 0.03, z: 0.2, size: 0.85 });
+  cheeks(head, m, 0.13, -0.05, 0.16);
+  finish(body, head);
+  return { pose, body, head, feet: feet(pose, beak, [0.1, 0.035, 0.14], 0.04, 0.1), headTop: 0.22 };
+}
+function owl(m) {
+  const { pose, body, head } = frame();
+  const brown = m.get("#9a7352"), cream2 = m.get("#f1dfc2"), gold2 = m.get("#e9b949"), beak = m.get("#d08a3c");
+  ellipsoid(body, brown, [0, 0.44, 0], [0.3, 0.34, 0.27]);
+  ellipsoid(body, cream2, [0, 0.42, 0.14], [0.2, 0.25, 0.12]);
+  for (const side of [-1, 1]) limb(body, side, [side * 0.27, 0.6, -0.02], (pivot) => {
+    const wing = ellipsoid(pivot, brown, [side * 0.03, -0.16, 0], [0.07, 0.22, 0.17]);
+    wing.rotation.z = side * 0.2;
+  });
+  head.position.y = 0.86;
+  ellipsoid(head, brown, [0, 0, 0], [0.29, 0.25, 0.25]);
+  for (const side of [-1, 1]) {
+    ellipsoid(head, cream2, [side * 0.11, 0.02, 0.19], [0.1, 0.1, 0.06], 14);
+    ellipsoid(head, gold2, [side * 0.11, 0.02, 0.235], [0.05, 0.05, 0.02], 12);
+    cone(head, brown, [side * 0.17, 0.25, -0.02], 0.06, 0.16, [0, 0, -side * 0.35]);
+  }
+  face(head, m, { x: 0.11, y: 0.02, z: 0.25, size: 0.9 });
+  cone(head, beak, [0, -0.07, 0.25], 0.03, 0.08, [Math.PI, 0, 0]);
+  finish(body, head);
+  return { pose, body, head, feet: feet(pose, gold2, [0.07, 0.04, 0.1], 0.04, 0.11), headTop: 0.28 };
+}
+function frog(m) {
+  const { pose, body, head } = frame();
+  const green = m.get("#6dbb5f"), belly = m.get("#e8f3c4"), white = m.get("#fbf9f0");
+  ellipsoid(body, green, [0, 0.38, 0], [0.27, 0.28, 0.25]);
+  ellipsoid(body, belly, [0, 0.36, 0.13], [0.18, 0.2, 0.12]);
+  arms(body, green, 0.42, 0.25, [0.06, 0.12, 0.07]);
+  head.position.y = 0.72;
+  ellipsoid(head, green, [0, 0, 0], [0.3, 0.2, 0.25]);
+  for (const side of [-1, 1]) {
+    ellipsoid(head, green, [side * 0.14, 0.17, 0.05], [0.09, 0.09, 0.09], 14);
+    ellipsoid(head, white, [side * 0.14, 0.19, 0.12], [0.06, 0.06, 0.04], 12);
+  }
+  face(head, m, { x: 0.14, y: 0.19, z: 0.155, size: 0.8 });
+  cheeks(head, m, 0.19, -0.03, 0.19);
+  curve(head, m.surface("#3d6f3a", 0.6), [[-0.12, -0.06, 0.22], [0, -0.09, 0.245], [0.12, -0.06, 0.22]], 8e-3);
+  finish(body, head);
+  return { pose, body, head, feet: feet(pose, green, [0.13, 0.05, 0.17], 0.05, 0.17), headTop: 0.3 };
+}
+function rabbit(m) {
+  const rig = makeResidentRig("rabbit", m, "natural");
+  return { pose: rig.pose, body: rig.body, head: rig.head, feet: rig.feet, headTop: 0.3, arms: rig.shoulders };
+}
+function makeFriendRig(species, m, clothes) {
+  const rig = buildRig(species, m, clothes);
+  return { ...rig, arms: rig.arms ?? rig.body.children.filter((child2) => child2.userData.limb) };
+}
+function buildRig(species, m, clothes) {
+  switch (species) {
+    case "penguin":
+      return penguin(m);
+    case "owl":
+      return owl(m);
+    case "frog":
+      return frog(m);
+    case "otter":
+      return otter(m);
+    case "fox":
+      return fox(m);
+    case "duck":
+      return duck(m);
+    case "squirrel":
+      return squirrel(m);
+    case "hedgehog":
+      return hedgehog(m);
+    case "bird":
+      return bird(m);
+    case "girl":
+      return child(m, true, clothes);
+    case "boy":
+      return child(m, false, clothes);
+    default:
+      return rabbit(m);
+  }
+}
+
+// src/components/island/growing/wonderPaint.ts
+import * as T3 from "/Users/yutogasaki/Projects/sansu/node_modules/three/build/three.module.js";
+var cache = /* @__PURE__ */ new Map();
+function draw(kind) {
+  const size = 128, canvas = document.createElement("canvas");
+  canvas.width = canvas.height = size;
+  const g = canvas.getContext("2d");
+  if (!g) return void 0;
+  if (kind === "blocks") {
+    const colors = ["#f25c8a", "#ffd23f", "#3fb8e8", "#6ccf6b", "#9b6ae0", "#ff8a3d"];
+    for (let y = 0; y < 4; y++) for (let x = 0; x < 4; x++) {
+      g.fillStyle = colors[(x + y * 2) % colors.length];
+      g.fillRect(x * 32, y * 32, 32, 32);
+    }
+    g.strokeStyle = "#1f1a24";
+    g.lineWidth = 4;
+    for (let i = 0; i <= 4; i++) {
+      g.beginPath();
+      g.moveTo(i * 32, 0);
+      g.lineTo(i * 32 - 8, size);
+      g.stroke();
+      g.beginPath();
+      g.moveTo(0, i * 32);
+      g.lineTo(size, i * 32 + 6);
+      g.stroke();
+    }
+    g.fillStyle = "#fff";
+    for (const [x, y] of [[16, 16], [80, 48], [48, 96], [112, 112]]) {
+      g.beginPath();
+      g.arc(x, y, 5, 0, Math.PI * 2);
+      g.fill();
+    }
+  } else {
+    const [ground, dot] = kind === "dots-red" ? ["#e23b3b", "#fff7f0"] : kind === "dots-yellow" ? ["#f7c83a", "#1f1a24"] : ["#f6c6d4", "#fff1b0"];
+    g.fillStyle = ground;
+    g.fillRect(0, 0, size, size);
+    g.fillStyle = dot;
+    for (let row = 0; row < 5; row++) for (let col = 0; col < 5; col++) {
+      const x = col * 28 + row % 2 * 14 + 6, y = row * 26 + 10, r = 5 + (row * 3 + col) % 3 * 2;
+      g.beginPath();
+      g.arc(x % size, y, r, 0, Math.PI * 2);
+      g.fill();
+    }
+  }
+  const texture = new T3.CanvasTexture(canvas);
+  texture.colorSpace = T3.SRGBColorSpace;
+  texture.wrapS = texture.wrapT = T3.RepeatWrapping;
+  return texture;
+}
+function wonder(kind) {
+  let material = cache.get(kind);
+  if (!material) {
+    const map = typeof document === "undefined" ? void 0 : draw(kind);
+    material = new T3.MeshStandardMaterial({ color: map ? "#ffffff" : "#e23b3b", map, roughness: 0.7 });
+    cache.set(kind, material);
+  }
+  return material;
+}
+
+// src/components/island/growing/pierGeometry.ts
+import * as T5 from "/Users/yutogasaki/Projects/sansu/node_modules/three/build/three.module.js";
+
+// src/components/island/growing/plotParts.ts
+import * as T4 from "/Users/yutogasaki/Projects/sansu/node_modules/three/build/three.module.js";
+var ROOF_COLORS = ["#a2644e", "#d77a86", "#e0b454", "#5f9ec4", "#78a86a", "#9a7cc4", "#e59a58", "#6f6a8e"];
+var WONDER_ROOFS = ["dots-red", "blocks"];
+var ROOF_CHOICES = ROOF_COLORS.length + WONDER_ROOFS.length;
+
+// src/components/island/growing/pierGeometry.ts
+function buildSparkle() {
+  const material = new T5.MeshBasicMaterial({ color: "#fff2a6", transparent: true, opacity: 0.85, depthWrite: false });
+  const star = new T5.Mesh(new T5.OctahedronGeometry(0.07), material);
+  star.name = "growing-sparkle";
+  return star;
+}
+
+// src/components/island/growing/actorScale.ts
+import * as T6 from "/Users/yutogasaki/Projects/sansu/node_modules/three/build/three.module.js";
+var seatContacts = /* @__PURE__ */ new WeakMap();
+var soleVertices = /* @__PURE__ */ new WeakMap();
+var neutralFeet = /* @__PURE__ */ new WeakMap();
+function prepareActorVisual(actor) {
+  if (!actor.visual) {
+    const visual = new T6.Group();
+    visual.name = "growing-actor-visual";
+    visual.userData.actorId = actor.id;
+    if (actor.root.children.length) visual.add(...actor.root.children);
+    actor.root.add(visual);
+    actor.visual = visual;
+  }
+  if (!neutralFeet.has(actor)) neutralFeet.set(actor, actor.feet.map((foot) => foot.position.clone()));
+  if (!seatContacts.has(actor)) {
+    actor.root.updateWorldMatrix(true, true);
+    const origin = actor.body.getWorldPosition(new T6.Vector3());
+    origin.y -= 4;
+    const hits = new T6.Raycaster(origin, new T6.Vector3(0, 1, 0)).intersectObject(actor.body, true);
+    const contact = hits[0]?.point;
+    seatContacts.set(actor, contact ? actor.body.worldToLocal(contact.clone()) : void 0);
+  }
+  return actor.visual;
+}
+function setActorVisualScale(actor, scale) {
+  if (!Number.isFinite(scale) || scale <= 0) throw Error("Actor visual scale must be positive");
+  const visual = prepareActorVisual(actor);
+  visual.scale.setScalar(scale);
+  resetActorVisualContact(actor);
+}
+function resetActorVisualContact(actor) {
+  actor.visual?.position.set(0, 0, 0);
+  neutralFeet.get(actor)?.forEach((at, i) => actor.feet[i]?.position.copy(at));
+}
+function actorSeatContact(actor) {
+  const point = seatContacts.get(actor);
+  if (!point) return void 0;
+  actor.root.updateWorldMatrix(true, true);
+  return point.clone().applyMatrix4(actor.body.matrixWorld);
+}
+function actorFootMinY(actor) {
+  actor.root.updateWorldMatrix(true, true);
+  let min = Infinity;
+  for (const foot of actor.feet) foot.traverse((object) => {
+    if (!(object instanceof T6.Mesh) || !object.visible) return;
+    const geometry = object.geometry;
+    let vertices = soleVertices.get(geometry);
+    if (!vertices) {
+      const position = geometry.getAttribute("position");
+      if (!position) return;
+      const used = geometry.index ? new Set(Array.from(geometry.index.array)) : new Set(Array.from({ length: position.count }, (_, i) => i));
+      const values = [];
+      for (const index of used) values.push(position.getX(index), position.getY(index), position.getZ(index));
+      vertices = values;
+      soleVertices.set(geometry, vertices);
+    }
+    const e = object.matrixWorld.elements;
+    for (let i = 0; i < vertices.length; i += 3) min = Math.min(min, e[1] * vertices[i] + e[5] * vertices[i + 1] + e[9] * vertices[i + 2] + e[13]);
+  });
+  return Number.isFinite(min) ? min : void 0;
+}
+function alignActorContact(actor, footY, seatY, seatWeight = 0) {
+  if (!actor.visual) return false;
+  const foot = actorFootMinY(actor), seat = seatY === void 0 ? void 0 : actorSeatContact(actor);
+  const weight = seat ? Math.max(0, Math.min(1, seatWeight)) : 0;
+  const correction = (foot === void 0 ? 0 : (footY - foot) * (1 - weight)) + (seat && seatY !== void 0 ? (seatY - seat.y) * weight : 0);
+  const linear = new T6.Matrix3().setFromMatrix4(actor.root.matrixWorld);
+  if (!Number.isFinite(correction) || Math.abs(linear.determinant()) < 1e-6 || foot === void 0 && !seat) return false;
+  actor.visual.position.add(new T6.Vector3(0, correction, 0).applyMatrix3(linear.invert()));
+  actor.root.updateWorldMatrix(true, true);
+  return true;
+}
+
+// src/components/island/growing/actors.ts
+var ACCENT_COLORS = ["#d77a86", "#5f9ec4", "#e0b454", "#78a86a", "#9a7cc4", "#e59a58"];
+var disposedActors = /* @__PURE__ */ new WeakSet();
+function disposeActor(actor) {
+  if (disposedActors.has(actor)) return;
+  disposedActors.add(actor);
+  disposeGeometry(actor.root);
+  if (actor.sparkle instanceof T7.Mesh) {
+    const materials = Array.isArray(actor.sparkle.material) ? actor.sparkle.material : [actor.sparkle.material];
+    for (const material of new Set(materials)) material.dispose();
+  }
+  actor.root.removeFromParent();
+  actor.root.clear();
+}
+function accessory(rig, m, villager) {
+  const color = villager.variant.sparkle ? wonder("dots-red") : m.surface(ACCENT_COLORS[(villager.outfit?.color ?? villager.variant.color) % ACCENT_COLORS.length], 0.7);
+  const group = new T7.Group();
+  group.name = "growing-accessory";
+  const hat = villager.outfit?.hat;
+  if (hat) {
+    rig.head.add(buildHat(m, hat, rig.headTop));
+    return;
+  }
+  if (isKid(villager.species)) return;
+  const kind = villager.variant.accessory % 4, top = rig.headTop;
+  if (kind === 0) {
+    for (const side of [-1, 1]) {
+      const loop = new T7.Mesh(new T7.SphereGeometry(0.07, 10, 8), color);
+      loop.scale.set(1.2, 0.7, 0.5);
+      loop.position.set(side * 0.07, top, 0.05);
+      group.add(loop);
+    }
+    rig.head.add(group);
+  } else if (kind === 1) {
+    const cap = new T7.Mesh(new T7.CylinderGeometry(0.13, 0.17, 0.1, 14), color);
+    cap.position.set(0, top, 0);
+    group.add(cap);
+    rig.head.add(group);
+  } else if (kind === 2) {
+    const scarf = new T7.Mesh(new T7.TorusGeometry(0.2, 0.04, 8, 20), color);
+    scarf.rotation.x = Math.PI / 2;
+    scarf.position.set(0, rig.head.position.y - 0.24, 0.02);
+    group.add(scarf);
+    rig.body.add(group);
+  } else {
+    const bag = new T7.Mesh(new T7.BoxGeometry(0.14, 0.14, 0.08), color);
+    bag.position.set(0.24, 0.42, 0.12);
+    group.add(bag);
+    rig.body.add(group);
+  }
+}
+function buildHat(m, hat, top) {
+  const group = new T7.Group();
+  group.name = "growing-hat";
+  group.position.y = top - 0.04;
+  const add = (geometry, color, y, scale) => {
+    const piece = new T7.Mesh(geometry, m.surface(color, 0.75));
+    piece.position.y = y;
+    if (scale) piece.scale.set(...scale);
+    group.add(piece);
+    return piece;
+  };
+  if (hat === 1) {
+    add(new T7.CylinderGeometry(0.3, 0.3, 0.02, 20), "#e8c878", 0);
+    add(new T7.CylinderGeometry(0.15, 0.17, 0.12, 16), "#e8c878", 0.06);
+    add(new T7.CylinderGeometry(0.172, 0.172, 0.03, 16), "#d77a86", 0.02);
+  } else if (hat === 2) add(new T7.SphereGeometry(0.2, 16, 10), "#9a3f4f", 0.04, [1, 0.35, 1]);
+  else if (hat === 3) for (let i = 0; i < 7; i++) {
+    const a = i / 7 * Math.PI * 2, flower = add(new T7.SphereGeometry(0.045, 8, 6), ["#f6c6d4", "#fff1b0", "#b9d9ef"][i % 3], 0.02);
+    flower.position.x = Math.cos(a) * 0.18;
+    flower.position.z = Math.sin(a) * 0.18;
+  }
+  else if (hat === 4) {
+    add(new T7.SphereGeometry(0.2, 16, 10, 0, Math.PI * 2, 0, Math.PI / 2), "#5f9ec4", -0.02);
+    add(new T7.SphereGeometry(0.05, 8, 6), "#f3ecdc", 0.2);
+  } else {
+    add(new T7.CylinderGeometry(0.13, 0.12, 0.1, 5), "#f0cf6a", 0.05);
+    for (let i = 0; i < 5; i++) {
+      const a = i / 5 * Math.PI * 2, point = add(new T7.ConeGeometry(0.03, 0.07, 6), "#f0cf6a", 0.12);
+      point.position.x = Math.cos(a) * 0.11;
+      point.position.z = Math.sin(a) * 0.11;
+    }
+  }
+  group.traverse((o) => {
+    if (o instanceof T7.Mesh) o.castShadow = false;
+  });
+  return group;
+}
+function makeVillagerActor(m, villager, visualScale = 1) {
+  const clothes = isKid(villager.species) && villager.outfit?.color !== void 0 ? ACCENT_COLORS[villager.outfit.color] : void 0;
+  const rig = makeFriendRig(villager.species, m, clothes);
+  accessory(rig, m, villager);
+  const root = new T7.Group();
+  root.name = `growing-villager-${villager.id}`;
+  root.userData.actorId = villager.id;
+  rig.pose.scale.setScalar(0.7);
+  root.add(rig.pose);
+  let sparkle;
+  if (villager.variant.sparkle) {
+    sparkle = buildSparkle();
+    sparkle.position.set(0, 1.25, 0);
+    root.add(sparkle);
+  }
+  root.traverse((o) => {
+    o.userData.actorId = villager.id;
+  });
+  const actor = { id: villager.id, root, body: rig.body, feet: rig.feet, sparkle, arms: rig.arms, trait: villager.trait };
+  setActorVisualScale(actor, visualScale);
+  return actor;
+}
+function wrapPokomoko(hero, heroBody, heroFeet) {
+  const root = new T7.Group();
+  root.name = "growing-pokomoko";
+  hero.removeFromParent();
+  hero.position.set(0, 0, 0);
+  hero.scale.setScalar(0.7);
+  root.add(hero);
+  root.traverse((o) => {
+    o.userData.actorId = "pokomoko";
+  });
+  const actor = { id: "pokomoko", root, body: heroBody, feet: heroFeet };
+  setActorVisualScale(actor, 1);
+  return actor;
+}
+
+// feet-extraction-entry.ts
+import * as T8 from "/Users/yutogasaki/Projects/sansu/node_modules/three/build/three.module.js";
+function extract(state) {
+  const m = new IslandMaterials("moon-garden");
+  const rig = makePokomokoRig(m);
+  const hero = wrapPokomoko(rig.hero, rig.heroBody, rig.heroFeet);
+  setActorVisualScale(hero, 0.45);
+  const roster = [{ actor: hero, species: "pokomoko" }, ...state.villagers.map((v) => ({ actor: makeVillagerActor(m, v, 0.45), species: v.species }))];
+  const result = [];
+  try {
+    for (const { actor, species } of roster) {
+      resetActorVisualContact(actor);
+      actor.root.position.set(0, 0, 0);
+      actor.root.rotation.set(0, 0, 0);
+      actor.body.rotation.set(0, 0, 0);
+      actor.feet.forEach((f) => f.rotation.set(0, 0, 0));
+      actor.root.updateWorldMatrix(true, true);
+      const actorRow = { id: actor.id, species, visualScale: actor.visual.scale.toArray(), feet: [], gallerySwingSamples: [] };
+      for (const [footIndex, foot] of actor.feet.entries()) {
+        const p = foot.getWorldPosition(new T8.Vector3());
+        const footRow = { footIndex, pivotRoot: p.toArray(), positionParent: foot.position.toArray(), quaternion: foot.quaternion.toArray(), scale: foot.scale.toArray(), parentMatrixRoot: foot.parent.matrixWorld.toArray(), meshes: [] };
+        foot.traverse((node) => {
+          if (!(node instanceof T8.Mesh) || !node.visible) return;
+          const attr = node.geometry.getAttribute("position");
+          if (!attr) return;
+          const ids = node.geometry.index ? Array.from(node.geometry.index.array) : Array.from({ length: attr.count }, (_, i) => i);
+          const used = [...new Set(ids)], vertices = used.map((i) => new T8.Vector3().fromBufferAttribute(attr, i).applyMatrix4(node.matrixWorld).toArray());
+          const map = new Map(used.map((i, j) => [i, j]));
+          footRow.meshes.push({ name: node.name, sourceVertexIds: used, verticesRoot: vertices, indices: ids.map((i) => map.get(i)), lowerHalfVertexIds: vertices.flatMap((v, i) => v[1] <= p.y ? [i] : []), neutralMatrixRoot: node.matrixWorld.toArray(), meshToFoot: foot.matrixWorld.clone().invert().multiply(node.matrixWorld).toArray() });
+        });
+        actorRow.feet.push(footRow);
+      }
+      for (let sample = 0; sample <= 8; sample++) {
+        const swing = -0.5 + sample * 0.125;
+        resetActorVisualContact(actor);
+        actor.feet.forEach((f, i) => f.rotation.x = i ? -swing : swing);
+        alignActorContact(actor, 0);
+        const feet2 = [];
+        for (const [footIndex, foot] of actor.feet.entries()) {
+          const vertices = [];
+          foot.traverse((node) => {
+            if (!(node instanceof T8.Mesh) || !node.visible) return;
+            const a = node.geometry.getAttribute("position");
+            if (!a) return;
+            const used = node.geometry.index ? new Set(node.geometry.index.array) : new Set(Array.from({ length: a.count }, (_, i) => i));
+            for (const i of used) vertices.push(new T8.Vector3().fromBufferAttribute(a, i).applyMatrix4(node.matrixWorld).toArray());
+          });
+          feet2.push({ footIndex, verticesRoot: vertices });
+        }
+        actorRow.gallerySwingSamples.push({ swing, visualCorrection: actor.visual.position.toArray(), feet: feet2 });
+      }
+      actorRow.gallerySwingMeaning = "Sampled baseline only; no guarantee of continuous extrema or per-tread planted-foot support";
+      result.push(actorRow);
+    }
+    return result;
+  } finally {
+    for (const { actor } of roster) disposeActor(actor);
+    m.dispose();
+  }
+}
+export {
+  extract
+};

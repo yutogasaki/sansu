@@ -1,0 +1,31 @@
+{
+  "preparedOnly": true,
+  "started": false,
+  "oldSource": "/private/tmp/sansu-floor-shading-diagnostic/diagnose-floor.mjs",
+  "oldSha256": "83743685cd123fb370b4eebd3de9e13a4c9e913e0ad68e14ab55fd3a119f2472",
+  "newSource": "/private/tmp/sansu-floor-shading-diagnostic-c2/diagnose-floor.mjs",
+  "newSha256": "befd9cf6f7aeb91a2b27e27c96c416d19954fb24cd5303e3cc753619451d6fc1",
+  "changes": [
+    "c2 immutable candidate/revision/port/6460-input closure only"
+  ],
+  "preparationNote": "Initial static probe incorrectly expected double backslash in writeJson and stopped before writing. Actual bytes are a valid single backslash-n escape. No writeJson change was needed or made.",
+  "check": {
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "dryPreparation": {
+    "prepared": true,
+    "executionStarted": false,
+    "candidate": "/private/tmp/sansu-authored-shoulder-c2/candidate",
+    "mode": "shadow-off",
+    "requires": [
+      "Explicit execution authorization, then --start",
+      "Completed fixed core and all eight regressions",
+      "Fresh --output under this external diagnostic directory",
+      "unlit additionally requires a successful shadow-off report and recorded visual review that the fine line remains"
+    ],
+    "scope": "Causal diagnosis only; no art, runtime candidate, or M1 acceptance"
+  },
+  "next": "Wait for all eight c2 regressions. Use fresh output; shadow-off only first. No current browser or app changes."
+}

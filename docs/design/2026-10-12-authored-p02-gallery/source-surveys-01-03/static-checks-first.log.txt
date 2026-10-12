@@ -1,0 +1,17 @@
+{
+  "scope": "synthetic static arithmetic only",
+  "checks": [
+    "sloping ground exposes both burial and floating ends of former flat landing",
+    "conformed exact-width seam joins existing sloped plane, rising ribbon stays above it",
+    "planned ribbon closes each edge exactly twice with outward winding",
+    "former horizontal seam is rejected when it buries part of its width",
+    "centre/width gap in original terrain cannot synthesize a landing",
+    "discontinuous existing height seam is HOLD, not smoothed into invented ground",
+    "positive-area duplicated source top is rejected",
+    "short entry connector grade is measured rather than hidden by fixed arc grade"
+  ],
+  "passed": 8,
+  "sourceGeometryMeasured": false,
+  "BlenderExecuted": false,
+  "worldCompiled": false
+}

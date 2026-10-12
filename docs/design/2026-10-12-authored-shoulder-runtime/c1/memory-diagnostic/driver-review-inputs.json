@@ -1,0 +1,25 @@
+{
+  "scope": "Read-only static review; no new execution or browser",
+  "files": {
+    "tools/e2e-authored-shoulder.mjs": {
+      "candidateSha256": "c31ad10110bc641e3edffb12de36075ee2eb23885241c807203e8f4bf764f29d",
+      "liveSha256": "2fbbf7bd3d86e807a2673649924ee0d6aace213e2a57b5efeed091b2614f5f17"
+    },
+    "src/domain/growingIsland/authoredWorldFrame.ts": {
+      "candidateSha256": "a9f9e49efd9e8d4a07379d27d5c914f7bec6949035be51bea90b35ac335e75e8",
+      "liveSha256": "a9f9e49efd9e8d4a07379d27d5c914f7bec6949035be51bea90b35ac335e75e8"
+    },
+    "src/domain/growingIsland/authoredShoulderWorld.ts": {
+      "candidateSha256": "b37a6ad14398394b7ab999a0a1d4c21f0722e22a54b817c46c015ae454bd7348",
+      "liveSha256": "b37a6ad14398394b7ab999a0a1d4c21f0722e22a54b817c46c015ae454bd7348"
+    },
+    "src/domain/growingIsland/authoredWaterFrame.ts": {
+      "candidateSha256": "6a8e19e2f63f84669ea7fb847955b10bc8dd1b64c555625fc886ec6a730ea7d7",
+      "liveSha256": "6a8e19e2f63f84669ea7fb847955b10bc8dd1b64c555625fc886ec6a730ea7d7"
+    },
+    "src/domain/growingIsland/authoredCoveWorld.ts": {
+      "candidateSha256": "7a917dd1b9df157997ff539257b7a53938dbcc15546400202667e6ad6119e819",
+      "liveSha256": "7a917dd1b9df157997ff539257b7a53938dbcc15546400202667e6ad6119e819"
+    }
+  }
+}

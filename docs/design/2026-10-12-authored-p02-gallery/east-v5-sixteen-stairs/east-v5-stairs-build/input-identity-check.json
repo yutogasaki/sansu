@@ -1,0 +1,37 @@
+{
+  "status": "STATIC_ALL_INPUT_BYTES_MATCH",
+  "checks": [
+    "inputs:context",
+    "inputs:leftTrees",
+    "inputs:contextManifest",
+    "inputs:forestStudy",
+    "inputs:sourceBlend",
+    "inputs:sourceGlb",
+    "inputs:benchmark",
+    "inputs:envelope",
+    "basis:eastV1Measurement",
+    "basis:classifiedEastV1",
+    "basis:singleProposalProbe",
+    "basis:doorwayOverlapProbe",
+    "basis:curvaturePreparation",
+    "v4Inputs:sealed-input/planned-floor-v4-stations-once.json",
+    "v4Inputs:sealed-input/offline-result.json",
+    "v4Inputs:sealed-input/support-edge-proposal.json",
+    "v4Inputs:sealed-input/support-contact-result.json",
+    "v4Inputs:sealed-input/preparation.json",
+    "v4Inputs:sealed-input/planned-floor-tops.json",
+    "v4Inputs:sealed-input/gallery-local-top-probes.json",
+    "v5Inputs:stairs-16-closed.json",
+    "v5Inputs:feet-comparison-report.json",
+    "unchanged helper:build_checks.py",
+    "unchanged helper:entry_geometry.py",
+    "unchanged helper:terrain_connector.py",
+    "unchanged helper:donor_reference.py",
+    "unchanged helper:supervise.py"
+  ],
+  "sourceV4Builder": {
+    "path": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/build-coarse.py",
+    "sha256": "d4a2a463c9766c3902879b021bc5c6922890083baf0106486e850ec2a6a4a5e7"
+  },
+  "noBlender": true
+}

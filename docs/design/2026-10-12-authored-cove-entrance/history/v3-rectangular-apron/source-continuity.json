@@ -1,0 +1,94 @@
+{
+  "candidate": "native05-authored-cove-corner-v3",
+  "scope": "read-only source continuity; excludes the intended corner aperture",
+  "original_blend_sha256": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+  "candidate_blend_sha256": "c45edc72343d9ff597631c89f37541575838ddd5038d98c848653513f012ab03",
+  "comparison": "evaluated solidified polygon vertex coordinates rounded to 1e-6 source units plus per-face material name; source far region authored X>8 or all Z>.15",
+  "unchanged_shell_region": {
+    "original_polygons": 3520,
+    "missing_or_material_changed": 0
+  },
+  "rim_joins": [
+    {
+      "name": "Harbor / corner structural rib joined to rim",
+      "point_blender_source": [
+        12.296329498291016,
+        -0.013333333656191826,
+        2.409031391143799
+      ]
+    },
+    {
+      "name": "Harbor / longitudinal seam joined to corner rim 5",
+      "point_blender_source": [
+        12.230897903442383,
+        -0.11853992938995361,
+        2.3093557357788086
+      ]
+    },
+    {
+      "name": "Harbor / longitudinal seam joined to corner rim 6",
+      "point_blender_source": [
+        11.942826271057129,
+        -0.31111109256744385,
+        1.0116604566574097
+      ]
+    }
+  ],
+  "unchanged_native_parts": [
+    {
+      "name": "Harbor / curved shell structural rib",
+      "polygons": 2896,
+      "identical": true
+    },
+    {
+      "name": "Harbor / curved shell structural rib.001",
+      "polygons": 2896,
+      "identical": true
+    },
+    {
+      "name": "Harbor / curved shell structural rib.002",
+      "polygons": 2896,
+      "identical": true
+    },
+    {
+      "name": "Harbor / curved shell structural rib.003",
+      "polygons": 2896,
+      "identical": true
+    },
+    {
+      "name": "Harbor / curved shell structural rib.004",
+      "polygons": 2896,
+      "identical": true
+    },
+    {
+      "name": "Harbor / shell longitudinal seam",
+      "polygons": 976,
+      "identical": true
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.001",
+      "polygons": 976,
+      "identical": true
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.002",
+      "polygons": 976,
+      "identical": true
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.003",
+      "polygons": 976,
+      "identical": true
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.004",
+      "polygons": 976,
+      "identical": true
+    },
+    {
+      "name": "Harbor / shell grown footing.001",
+      "polygons": 256,
+      "identical": true
+    }
+  ]
+}

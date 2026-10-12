@@ -1,0 +1,124 @@
+{
+  "status": "FOCUSED_PASS_RUNTIME_PENDING",
+  "cwd": "/private/tmp/sansu-next-m1-code",
+  "base": "authored-cove-c4",
+  "test": {
+    "files": 10,
+    "tests": 94,
+    "exitCode": 0,
+    "durationSeconds": 116.97,
+    "maxWorkers": 2,
+    "session": 22836
+  },
+  "eslint": {
+    "exitCode": 0,
+    "errors": 0,
+    "warnings": 1,
+    "warning": "Existing QA module react-refresh/only-export-components; the QA source includes new A/B loader and is not included in this production draft archive.",
+    "session": 58808
+  },
+  "sourcesAfterRun": [
+    {
+      "path": "src/domain/growingIsland/worldTypes.ts",
+      "sha256": "d573184d5f78c77faa6a7c2811057f899356801e803df7df01ccb63073fd306f",
+      "baseSha256": "4dc502b446dc5cf4e78dd851b763ea27e7abd3aaa17f7dead3b7179c5715604d"
+    },
+    {
+      "path": "src/domain/growingIsland/worldDefinition.ts",
+      "sha256": "8e88855dd180624f1c2b32437e6d1b93cc66e978f2fc9c741d5f004e8ba45db7",
+      "baseSha256": "c230e8fb354a43792d22814d6eaf82cd7adf0110d517250d1399be84b00ba7ea"
+    },
+    {
+      "path": "src/domain/growingIsland/authoredWaterWorld.ts",
+      "sha256": "7640bd96ac4eb6797f46862f1b9a223d575f3bc9b51ae05f41351865cce2e486",
+      "baseSha256": "bece348b05568cb8b2e5a2634c809681bb70c6f9267adc5c72b6b97da88b4805"
+    },
+    {
+      "path": "src/domain/growingIsland/authoredCoveWorld.ts",
+      "sha256": "7a917dd1b9df157997ff539257b7a53938dbcc15546400202667e6ad6119e819",
+      "baseSha256": "b773f24672e5badc5259594ae5bdc378daedc861577f245d66ccdfdeb38b8781"
+    },
+    {
+      "path": "src/components/island/growing/native/authoredGrowingGround.ts",
+      "sha256": "98f92585ea60c361c440c602f77208ee978cedbf662c21c28927956adb4db32f",
+      "baseSha256": "84af170ec055b25c52778f14657b8160bcf9281afab20aa0569d11a63cff7bc3"
+    },
+    {
+      "path": "tools/build-authored-island-world.mjs",
+      "sha256": "f2118d254d9d6b42169f490f2bcc90626cfa7daee149a84cb7a9d048e3c1f2d6",
+      "baseSha256": "6211df5cb3b7363139f8caf7320a112ec17f56973e1fbfc102787bcfd2fe41e3"
+    },
+    {
+      "path": "src/domain/growingIsland/worldDefinition.test.ts",
+      "sha256": "8d4f6d66d0c4078f3dc77c5911ecfb9e84e508137a15b035971dc68c9787b581",
+      "baseSha256": "e412d7e9c6fce5660404085bdacc8655e555ee3fb83f30110f6e09992e036e2e"
+    },
+    {
+      "path": "src/domain/growingIsland/authoredWaterWorld.test.ts",
+      "sha256": "08edc91ee01f20f3f49640b99a50ca96649859642f8605902bb12b9291eec8a2",
+      "baseSha256": "4eac8db3690c0cb53df8ee947646522e93110598f6bab3b27e0b65846592fe62"
+    },
+    {
+      "path": "src/domain/growingIsland/authoredCoveWorld.test.ts",
+      "sha256": "39631a69804218c1497127d6a018c557ccd478ac96fbc0b3bcb3711ce30cab4c",
+      "baseSha256": "cd718461fae45d6cee85e406c3e420d2d52acb8cedb5ddab2ef673bc81e3b461"
+    },
+    {
+      "path": "src/components/island/growing/native/authoredGrowingGround.test.ts",
+      "sha256": "9225666b78e374da86d8c5f097a99185e71d50e665cab26c4a953408e5659337",
+      "baseSha256": "00efee10344fa079a7047b602ac4552cb334e1f94ccafb69cc626b9374025969"
+    },
+    {
+      "path": "src/components/island/growing/growingLife.ts",
+      "sha256": "5479b7915165422fa6345b3297aa1eb4068bbc24ad88642a3b6ae7f8f115007d",
+      "baseSha256": "cc27a8c2b16856f7b8f10f9c9088c4216cb9a5bc2deb2f4ad2a39d06c7021d5c"
+    },
+    {
+      "path": "src/components/island/growing/authoredFlowerObstructions.ts",
+      "sha256": "1381930d6e1720bda6c0de22e9188c49c7c137b0ff86133f69e19cf22049ee09",
+      "baseSha256": "c50f5991a89ce14c7f0d63868b21399c0ac3fc13f0965e2d498772a4fe047487"
+    },
+    {
+      "path": "src/components/island/growing/authoredFlowerObstructions.test.ts",
+      "sha256": "3b327fdc9341b1ae7cc04ea4cf96787707f65057dac80ee9e154839045a509c9",
+      "baseSha256": "a1cb260d9b3df1efab841f6d6096a13e9f2f701c4ee7234d4f86389f25eb822b"
+    },
+    {
+      "path": "src/components/island/growing/authoredGroveLife.test.ts",
+      "sha256": "fc88cfbe1377c9e9f1f2156474d6fee4e6ce84c3de8f6c25518ab6b2192a9332",
+      "baseSha256": null
+    },
+    {
+      "path": "src/components/island/growing/authoredCoveLife.test.ts",
+      "sha256": "b52c0d33c4484db8c43b23145561f3f7677a34d0237a71d0eb74fbbbadb8bfbd",
+      "baseSha256": "27cd7b4575e74d66b1386184c83a579b86708bdeb64ce027632b9a17211adab4"
+    },
+    {
+      "path": "src/components/island/growing/authoredFlowerLife.test.ts",
+      "sha256": "6293688ca26f072aa5457e727920301d8e79f10866851f9c1e5664425d5d7679",
+      "baseSha256": "228bdd457b8b5de3808950aafba6c9020d4db6c1aca6bbac891db31cbd8e34cd"
+    },
+    {
+      "path": "src/components/island/growing/native/authoredCoveIntegration.test.ts",
+      "sha256": "6c8d8ae7944d8f477cb2741e256f7c16ed2f73fd8f42f7868091037852225549",
+      "baseSha256": "e61c08505af726f46ae42bebbf94e80c5eb4c55dd009086b33d19eb9cbf44f3e"
+    }
+  ],
+  "logs": [
+    {
+      "path": "focused-first.log.txt",
+      "sha256": "778593831e8f79a3b0b8196ae80cf2eac819ff35c90ad7515f802175efbdef31"
+    },
+    {
+      "path": "eslint-first.log.txt",
+      "sha256": "3ea5cee1a9790665928d7134f52a1b6211673847b7703cdb9dbac55c8998d7b3"
+    }
+  ],
+  "identityScope": "Normal draft files match the pre-existing draft manifest. Source copies reflect the tested isolated changes; this is not a full dependency-closure before/after core proof.",
+  "limits": [
+    "No global typecheck/core/build/browser for this draft yet",
+    "No terrain art or independent observer acceptance",
+    "No current-repository app source changed",
+    "Source-only shoulder work is separate and not covered by these 94 tests"
+  ]
+}

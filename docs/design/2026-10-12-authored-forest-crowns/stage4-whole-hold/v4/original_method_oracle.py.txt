@@ -1,0 +1,54 @@
+"""Unexecuted wrapper; preserves the existing non-leaf deformation arithmetic.
+
+Caller passes an editable candidate copy, never a fixed27/source original.
+Source corner mapping and immutable-scene/material/owner guards are established
+by the future builder. This wrapper has no repair path and changes no normals
+itself; it calls the original method exactly once.
+"""
+from rules import require, normal_residuals, NORMAL_LIMIT
+
+
+def apply(candidate, field, blender_to_world, raw_normals_by_vertex,
+          native_helpers, original_deform, emit, pin_height=None):
+    from mathutils import Vector
+    mesh = candidate.data
+    source_corner_normals = [Vector(raw_normals_by_vertex[loop.vertex_index]) for loop in mesh.loops]
+    input_oracle = normal_residuals([list(n.vector) for n in mesh.corner_normals],
+                                   [list(n) for n in source_corner_normals])
+    emit('original-method-input-source-normal.json', input_oracle)
+    require(input_oracle['maxL2'] <= NORMAL_LIMIT,
+            'Original-method role imports outside source NORMAL guard; no automatic leaf correction')
+    transform = blender_to_world @ candidate.matrix_world
+    normal_world = transform.to_3x3().inverted().transposed()
+    normal_local = transform.to_3x3().transposed()
+    matrices, pinned = [], set()
+    for vertex in mesh.vertices:
+        point = transform @ vertex.co
+        if pin_height is not None and point.y <= pin_height:
+            require(field(point)==point, 'Pinned field must be exact identity')
+            pinned.add(vertex.index)
+            matrices.append(None)
+        else:
+            derivative = native_helpers.jacobian(field, point)
+            # Same Float32 mathutils sequence as original deform.apply.
+            matrices.append(normal_local @ derivative.inverted().transposed() @ normal_world)
+    desired = [normal if loop.vertex_index in pinned
+               else (matrices[loop.vertex_index] @ normal).normalized()
+               for loop,normal in zip(mesh.loops,source_corner_normals)]
+    topology = [list(p.vertices) for p in mesh.polygons]
+    row = original_deform.apply(candidate, field, blender_to_world, pin_height)
+    actual = [list(n.vector) for n in mesh.corner_normals]
+    output_oracle = normal_residuals(actual, [list(n) for n in desired])
+    emit('original-method-desired-source-normal.json', {
+        'sourceNormals': [list(n) for n in source_corner_normals],
+        'desiredSourceNormals': [list(n) for n in desired], 'storedNormals': actual,
+        'residual': output_oracle,
+        'methodChanged': False, 'normalAssignmentAddedByWrapper': False,
+    })
+    require(output_oracle['maxL2'] <= NORMAL_LIMIT,
+            'Unchanged original method fails independent raw source NORMAL oracle')
+    require(topology == [list(p.vertices) for p in mesh.polygons], 'Original-method topology changed')
+    row.update(inputSourceNormalOracle=input_oracle, desiredSourceNormalOracle=output_oracle,
+               normalMethodUnchanged=True, extraNormalAssignment=False,
+               desiredNormalsByRetainedCorner=[list(n) for n in desired])
+    return row

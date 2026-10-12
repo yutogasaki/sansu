@@ -45,6 +45,13 @@ for (const [index, node] of gltf.nodes.entries()) {
             const point = new T.Vector3().fromArray(values).applyMatrix4(matrices.get(index)).multiplyScalar(scale);
             return { x: stable(point.x + origin.x), y: stable(point.y + origin.y), z: stable(point.z + origin.z) };
         });
+        const normalMatrix = new T.Matrix3().getNormalMatrix(matrices.get(index));
+        const normals = accessor(primitive.attributes.NORMAL, 3).map(values => {
+            const normal = new T.Vector3().fromArray(values).applyMatrix3(normalMatrix);
+            assert(normal.toArray().every(Number.isFinite) && normal.lengthSq() > 1e-24, 'Invalid source floor normal');
+            return { x: normal.x, y: normal.y, z: normal.z };
+        });
+        assert.equal(normals.length, points.length, 'Source floor normals differ from vertices');
         const originalIndices = accessor(primitive.indices, 1).flat(), indices = [];
         for (let i = 0; i < originalIndices.length; i += 3) {
             const [a, b, c] = originalIndices.slice(i, i + 3).map(id => points[id]);
@@ -54,9 +61,11 @@ for (const [index, node] of gltf.nodes.entries()) {
             if (normalY > 1e-12) indices.push(...originalIndices.slice(i, i + 3));
         }
         if (!indices.length) continue;
-        const color = new T.Color().fromArray(gltf.materials[primitive.material].pbrMetallicRoughness.baseColorFactor).getHexString();
+        const sourceMaterial = gltf.materials[primitive.material], pbr = sourceMaterial.pbrMetallicRoughness;
+        const color = new T.Color().fromArray(pbr.baseColorFactor).getHexString();
         floors.push({ id: `${node.name}:${serial}`, kind: 'ground', color: `#${color}`,
-            vertices: points.map(point => ({ cell: { x: point.x, z: point.z }, point })), indices });
+            vertices: points.map((point, i) => ({ cell: { x: point.x, z: point.z }, point, normal: normals[i] })), indices,
+            material: { roughness: pbr.roughnessFactor ?? 1, metalness: pbr.metallicFactor ?? 1, doubleSided: sourceMaterial.doubleSided === true } });
         extraction.push({ name: node.name, primitive: serial, material: gltf.materials[primitive.material].name,
             sourceTriangles: originalIndices.length / 3, floorTriangles: indices.length / 3, vertices: points.length });
     }
@@ -66,6 +75,7 @@ const compiled = await build({ stdin: { contents: `export { compileWorldDefiniti
     bundle: true, platform: 'node', format: 'esm', write: false, metafile: true, logLevel: 'silent' });
 const { compileWorldDefinition } = await import(`data:text/javascript;base64,${Buffer.from(compiled.outputFiles[0].text).toString('base64')}`);
 const districtId = 'native05-inlet-core', definition = { version: 1, id: 'native05-authored-world-m0-v2', source: { artifact: sourcePath, sha256: sourceSha },
+    revision: `native05-source-shading-v1:${hash(Buffer.from(JSON.stringify(floors.map(floor => [floor.id, floor.vertices.map(vertex => vertex.normal), floor.material]))))}`,
     districts: [{ id: districtId, templateId: 'native05-inlet-core-v1', logicalOrigin: { x: 0, z: 0 }, worldOrigin: { x: 0, y: 0, z: 0 }, turn: 0, floors, sites: [], ports: [] }], edges: [] };
 const floorWorld = compileWorldDefinition(definition), district = definition.districts[0];
 const cellKey = cell => `${cell.x},${cell.z}`;

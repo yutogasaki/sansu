@@ -1,0 +1,63 @@
+"""Exact original connector body; Volume binding is candidate query64 only."""
+import math
+import bpy
+from mathutils import Vector
+from volume_adapter import Volume64 as Volume
+
+def frame(tangent):
+    tangent = tangent.normalized()
+    up = Vector((0, 1, 0)) if abs(tangent.y) < .95 else Vector((1, 0, 0))
+    side = tangent.cross(up).normalized()
+    return side, tangent.cross(side).normalized()
+
+def connector(left, right, left_guess, right_guess, radius, max_span, name,
+              owner_id, material, collection, world_to_blender, source_sha):
+    ball_radius = radius * 1.5
+    start = left.interior_ball(left_guess, ball_radius)
+    end = right.interior_ball(right_guess, ball_radius)
+    span = (end - start).length
+    if not .002 < span <= max_span:
+        raise ValueError(f'Connector span outside authored bounds: {name} {span}')
+    delta = end - start
+    arch = min(.10, span * .16)
+    b = start + delta / 3 + Vector((0, arch, 0))
+    c = start + delta * 2 / 3 + Vector((0, arch, 0))
+    def point(t):
+        return start * (1 - t) ** 3 + b * (3 * t * (1 - t) ** 2) + c * (3 * t * t * (1 - t)) + end * t ** 3
+    points, faces = [], []
+    segments, sides = 12, 12
+    for i in range(segments + 1):
+        t = i / segments
+        tangent = point(min(1, t + .001)) - point(max(0, t - .001))
+        side, across = frame(tangent)
+        # Slight natural taper; closed source bough, not a substitute crown.
+        r = radius * (1 - .22 * t)
+        for j in range(sides):
+            angle = math.tau * j / sides
+            points.append(point(t) + side * (math.cos(angle) * r)
+                          + across * (math.sin(angle) * r * .9))
+    for i in range(segments):
+        for j in range(sides):
+            k = (j + 1) % sides
+            faces.append((i * sides + j, i * sides + k, (i + 1) * sides + k, (i + 1) * sides + j))
+    faces.extend([tuple(reversed(range(sides))), tuple(segments * sides + j for j in range(sides))])
+    # Every cap vertex, edge and triangle lies inside its endpoint ball.
+    assert max((p - start).length for p in points[:sides]) < ball_radius
+    assert max((p - end).length for p in points[-sides:]) < ball_radius
+    mesh = bpy.data.meshes.new(name)
+    mesh.from_pydata([tuple(world_to_blender @ p) for p in points], [], faces)
+    mesh.update(); mesh.materials.append(material)
+    for polygon in mesh.polygons:
+        polygon.use_smooth = len(polygon.vertices) == 4
+    obj = bpy.data.objects.new(name, mesh); collection.objects.link(obj)
+    for key, value in {'ownerId': owner_id, 'forestRole': 'derived-native-junction',
+                       'sourceSha256': source_sha, 'jointLeft': left.obj.name, 'jointRight': right.obj.name,
+                       'sameOwnerOnly': True, 'runtimeIntegrated': False}.items():
+        obj[key] = value
+    volume = Volume(obj, world_to_blender.inverted())
+    return obj, {'name': name, 'ownerId': owner_id, 'generated': True, 'spanWorld': span,
+                 'start': list(start), 'end': list(end), 'radiusWorld': radius,
+                 'endpointBallRadiusWorld': ball_radius,
+                 'endpointSurfaceClearanceWorld': [left.clearance(start), right.clearance(end)],
+                 'fullCapDisksInsideEndpointBalls': True, 'closure': volume.closure,
+                 'material': material.name, 'sourceSha256': source_sha}

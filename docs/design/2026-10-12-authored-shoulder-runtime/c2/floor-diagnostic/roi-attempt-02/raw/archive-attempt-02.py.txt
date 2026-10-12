@@ -1,0 +1,56 @@
+"""Preserve attempt02 raw failure, successful acquisitions, and preparation without rerunning."""
+from pathlib import Path
+from datetime import datetime, timezone
+import json, hashlib, re
+
+SOURCE = Path(__file__).resolve().parent
+DEST = Path('/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-shoulder-runtime/c2/floor-diagnostic/roi-attempt-02')
+sha = lambda b: hashlib.sha256(b).hexdigest()
+files = sorted(p for p in SOURCE.rglob('*') if p.is_file())
+before = {str(p.relative_to(SOURCE)): sha(p.read_bytes()) for p in files}
+assert before['actual-02/report.json'] == '09e097da6d2a0fed579ba8604baa147af654b46e0c0a6dd7ddb07f899366ed05'
+assert not DEST.exists(), 'Do not overwrite earlier raw evidence'
+DEST.mkdir(parents=True)
+records = []
+for source in files:
+    relative = source.relative_to(SOURCE)
+    archived = Path(str(relative)+'.txt') if source.suffix in ['.py', '.mjs'] else relative
+    target = DEST/'raw'/archived
+    target.parent.mkdir(parents=True, exist_ok=True)
+    body = source.read_bytes()
+    with target.open('xb') as f: f.write(body)
+    assert sha(target.read_bytes()) == before[str(relative)]
+    records.append({'sourceRelativePath': str(relative), 'archiveRelativePath': str(Path('raw')/archived), 'bytes': len(body), 'sha256': sha(body)})
+after = {str(p.relative_to(SOURCE)): sha(p.read_bytes()) for p in files}
+assert before == after
+proof = {'recordedAtUtc': datetime.now(timezone.utc).isoformat(), 'source': str(SOURCE), 'archive': str(DEST),
+         'fileCount': len(records), 'bytes': sum(r['bytes'] for r in records), 'files': records,
+         'sourceBefore': before, 'sourceAfter': after, 'sourceUnchanged': before == after, 'allArchivedBytesMatch': True,
+         'rawFailurePreserved': True, 'programFileSuffixOnly': '.mjs/.py -> .mjs.txt/.py.txt'}
+with (DEST/'archive-proof.json').open('x') as f:f.write(json.dumps(proof,indent=2)+'\n')
+readme = '''# ROI attempt 02 — three captures acquired; raw run FAIL
+
+The authorized single run exited **1**, preserving the all-errors gate. Its sole recorded error is a console 404 whose location identifies `http://127.0.0.1:5359/favicon.ico`. It was not excluded. The run acquired all three requested images and checked all instrumented invariants before that final gate. This archive does not replace the raw FAIL with PASS or retrospectively identify attempt 01's URL.
+
+The browser console provides the URL and 404 text. The page response/requestfailed listeners did not observe this browser-level request, so response-body/resource-type evidence is absent and is not invented. No shader error was recorded. See [raw report](raw/actual-02/report.json), [final network evidence](raw/actual-02/network-errors-final.json), [terminal summary](raw/execution-02/terminal-summary.json), [outer result](raw/execution-02/result.json), and [execution log](raw/execution-02/execution.log.txt).
+
+## Actual acquisition and invariants
+
+- [Shadow-off baseline](raw/actual-02/1280-hill-close-source-shadow-off.png)
+- [ROI face-normal](raw/actual-02/1280-hill-close-source-roi-face-normal.png)
+- [Restored shadow-off](raw/actual-02/1280-hill-close-source-restored-shadow-off.png)
+
+The actual target matches source triangles 36705/36710 at index offsets 118563/118578 in material group 0 (`start=8448`, `count=114021`). All 54 groups and prior position/normal/color/index hashes match. The three capture invariant hashes are identical: `0d04b99f959f74119d940a64688fd3b2f522ccd31cb1c4a59b0099152d67e08c`.
+
+Two onBeforeCompile records and actual post-intervention draws were observed. [Full shader evidence](raw/actual-02/shader-evidence.json) preserves both generated programs, ROI uniforms and treatment of `normal` plus `nonPerturbedNormal`. Only the cloned material's shader changed; geometry/normal/color/index buffers, groups, camera, light, renderer, canonical state and walking topology remained invariant. Original material identity, receiveShadow and Scene hook were restored; one clone was disposed.
+
+The original actual projection's indices 12 and 13 are `-0`, while JSON target entries are `0`. [Pre-assert raw evidence](raw/actual-02/shadow-off-pre-assert.json) retains number tokens and negative-zero indices before comparison. Only signed zero was canonicalized; all three canonical comparisons have no mismatches. No tolerance or geometry/shader change was added for this comparison.
+
+Execution was 2026-10-12 05:18:55.286–05:19:44.385 UTC, 49.099 seconds, Node/PGID 38695. Peak observed process-tree RSS was 3,126,067,200 bytes; neither the 900 second nor 4 GiB boundary was reached. Source 6,460 / installed 6 and browser dependencies were stable. The owned group was empty, no cleanup signals were needed, and root Vite 5359 was untouched. Timing is not performance evidence.
+
+All preparation and raw files are byte-identical under `raw/`; only program filename suffixes become `.mjs.txt` or `.py.txt`. [Archive proof](archive-proof.json) records each path/hash and before/after equality. Historical readiness/README claims of “not executed” describe preparation and remain unchanged. [Attempt 01](../roi-attempt-01/README.md) is independently preserved. No candidate/app/source edit or further retry was made. Visual comparison remains root-owned; this is not art, repair, M1 or product acceptance.
+'''
+with (DEST/'README.md').open('x') as f:f.write(readme)
+for _, link in re.findall(r'\[([^]]+)\]\(([^)]+)\)', readme): assert (DEST/link).exists(),link
+print(json.dumps({'archive':str(DEST),'files':len(records),'bytes':proof['bytes'],'allBytesVerified':True,
+                  'archiveProofSha256':sha((DEST/'archive-proof.json').read_bytes())}))

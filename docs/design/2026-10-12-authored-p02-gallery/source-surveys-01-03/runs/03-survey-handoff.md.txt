@@ -1,0 +1,21 @@
+# P02 run03 — donor parity matches, all three flat candidates HOLD
+
+One authorized corrected survey completed; no build/render or further retry. CPU 2. UTC **2026-10-12T04:08:10.536360+00:00 → 2026-10-12T04:08:19.291808+00:00**. Owned Blender **23131**, supervisor **23129**. Exit **0** with no first-failure file. Supervisor elapsed **8.237206083 s**, peak sampled RSS **732,119,040 B**; outer observer peak **735,150,080 B**. Limits stayed 180 seconds / 2560 MiB. `--python-exit-code 1` was explicit.
+
+All four original donors matched immutable GLB local bounds, node/world matrices and source-world bounds with recorded error **0**. All four transformed donors also matched the explicit captured target matrix/bounds with error **0**, and evaluated local geometry SHA was unchanged. The raw records include pre-link, basis, world and evaluated matrices. No tolerance enlargement or offset correction. Eight source inputs, six code/config files and prepared manifest remained byte-identical during execution. Original run01 and run02 artifact hashes still match.
+
+Actual original interior top is **1.681410074**, gallery start **2.734410286**: rise **1.053000212**, arc horizontal run **2.874906344**, sampled maximum arc grade **0.549400002**. Grade is a measured design property, not a newly introduced acceptance threshold. The central interior width samples support the .568138741 corridor. Two interior ray sections show .621000051 side-to-side width and ~.91575 head clearance, but the front section has null wall/head rays; these are raw ray observations, not containment or doorway acceptance.
+
+All entries have continuous source-ground coverage over their .64 structural transverse section, but the unchanged horizontal seam does not meet the nonplanar ground across its width. Positive gap means floating; negative means burial. Each also has proposed top/ground burial and sampled body intersections:
+
+| Entry XZ | Ramp seam gap range | Spur seam gap range | Connector max grade | Spur max grade | Body-hit samples |
+|---|---:|---:|---:|---:|---:|
+| (3.0, -7.25) | -0.006656 … 0.030747 | -0.011812 … 0.018888 | 0.124485 | 0.145421 | 159 |
+| (3.75, -7.25) | -0.001605 … 0.017631 | -0.032786 … 0.034146 | 0.189259 | 0.065269 | 142 |
+| (4.0, -7.25) | -0.032921 … 0.033907 | -0.037067 … 0.043465 | 0.163582 | 0.035146 | 144 |
+
+`selectedIndex=null`; each raw hold reason is preserved in candidate-N.json and the compact JSON. Body-hit counts are conservative sample boxes against original triangles, not exact swept-rig or object-attributed collision proofs. The native interior is above original ground in the sampled triangle relation; that is not a proof of structural support. No candidate is accepted or automatically adapted.
+
+The runs are classified separately: run01 lost the floor object translation and its large rise/grade values are invalid; run02 failed at the mutable name-list boundary before geometry; run03 passes donor identity and transform validation and measures these geometric HOLD conditions. Raw earlier records are retained rather than replaced. The next design decision can use run03 dimensions, but would require separately scoped shape work and new verification.
+
+Files: `03-survey/measurement.json`, `candidate-0.json` through `candidate-2.json`, `donor-source-parity.json`, `donor-authored-parity.json`, `candidates-partial.json`, `execution.json`; untouched Blender log `03-survey.log.txt`; UTC/PID/SHA observer and RSS supervisor JSON beside it. Artifact bytes/SHA and classifications are in `03-survey-handoff.json`.

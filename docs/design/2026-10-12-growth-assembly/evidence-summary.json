@@ -1,0 +1,279 @@
+{
+  "status": "INCOMPLETE",
+  "currentPriority": "Assemble varying terrain through owned districts; this archive does not establish district acquisition or varying island outline.",
+  "c6": {
+    "revision": "growth-assembly-c6",
+    "target": "http://127.0.0.1:5363/prototypes/place-qa/authored.html?art=whole",
+    "candidate": "native05-growth-assembly-v1",
+    "appVersion": "growth-assembly-c6:52f0447d-9bbf-4b4f-844c-f77ceeeb3a08",
+    "core": {
+      "pass": true,
+      "exitCode": 0,
+      "sourceFixed": true,
+      "sourceInputCount": 6550,
+      "testFiles": 615,
+      "tests": 5327,
+      "excludesLaterCacheChange": true
+    },
+    "firstRuntime": {
+      "pass": false,
+      "phase": "whole-load",
+      "timeoutMs": 90000,
+      "completedSteps": 0,
+      "successfulCaptures": 0,
+      "moveProof": false,
+      "failureScreenshot": "c6/runtime/failure.png"
+    },
+    "laterIdentity": {
+      "scope": "Separate read-only DOM identity observation; no move/store/restore proof",
+      "hostRevision": "authored-world:66d51261fb72ffdf",
+      "worldRevision": "authored-world:66d51261fb72ffdf",
+      "forestOwners": [
+        "l33",
+        "l34",
+        "l35",
+        "l14",
+        "l15",
+        "l28",
+        "l29"
+      ],
+      "galleryOwners": [
+        [
+          "l10",
+          "l11",
+          "l12",
+          "l13"
+        ]
+      ],
+      "galleryTraversalEnabled": false,
+      "actualObstructionOwnerCount": 35,
+      "actualObstructionReachable": 13,
+      "actualObstructionUnreachable": [
+        "p5",
+        "p6",
+        "p7",
+        "p8",
+        "p9",
+        "l11",
+        "l13",
+        "l16",
+        "l17",
+        "l18",
+        "l19",
+        "l20",
+        "l21",
+        "l22",
+        "l23",
+        "l24",
+        "l26",
+        "l27",
+        "l31",
+        "l32",
+        "l34",
+        "l35"
+      ]
+    }
+  },
+  "cache1": {
+    "scope": "Current domain only; no browser, renderer or actual-mesh clearance",
+    "exitCode": 0,
+    "elapsedSeconds": 51.00430488586426,
+    "nodeHeapMiB": 3072,
+    "commands": [
+      {
+        "type": "move",
+        "id": "l14",
+        "cell": {
+          "x": 12,
+          "z": -9
+        }
+      },
+      {
+        "type": "move",
+        "id": "l15",
+        "cell": {
+          "x": 12,
+          "z": -8
+        }
+      },
+      {
+        "type": "move",
+        "id": "l28",
+        "cell": {
+          "x": 12,
+          "z": -7
+        }
+      },
+      {
+        "type": "move",
+        "id": "l29",
+        "cell": {
+          "x": 12,
+          "z": -5
+        }
+      }
+    ],
+    "recordedSteps": 4,
+    "inputsUnchanged": true,
+    "revision": "authored-world:c5bb6b4f908cc003",
+    "invariants": {
+      "owners": 35,
+      "placedOwners": 35,
+      "rights": 75,
+      "drops": 9170,
+      "otherOwnersExact": true,
+      "treeFieldsExceptCellExact": true,
+      "townNatureLandExact": true,
+      "newOwnerOrRights": false
+    },
+    "trees": [
+      {
+        "id": "l14",
+        "cell": {
+          "x": 12,
+          "z": -9
+        },
+        "growth": 18,
+        "age": "big",
+        "floor": {
+          "x": 12,
+          "y": 0.686117975,
+          "z": -9
+        },
+        "placementSupport": true
+      },
+      {
+        "id": "l15",
+        "cell": {
+          "x": 12,
+          "z": -8
+        },
+        "growth": 18,
+        "age": "big",
+        "floor": {
+          "x": 12,
+          "y": 0.780728825,
+          "z": -8
+        },
+        "placementSupport": true
+      },
+      {
+        "id": "l28",
+        "cell": {
+          "x": 12,
+          "z": -7
+        },
+        "growth": 18,
+        "age": "mature",
+        "floor": {
+          "x": 12,
+          "y": 0.856392683,
+          "z": -7
+        },
+        "placementSupport": true
+      },
+      {
+        "id": "l29",
+        "cell": {
+          "x": 12,
+          "z": -5
+        },
+        "growth": 18,
+        "age": "mature",
+        "floor": {
+          "x": 12,
+          "y": 0.462165896,
+          "z": -5
+        },
+        "placementSupport": true
+      }
+    ],
+    "places": [
+      {
+        "id": "P01:l14",
+        "ruleId": "P01",
+        "variant": "alcove",
+        "stage": "grown",
+        "mainIds": [
+          "l14",
+          "l15",
+          "l28"
+        ],
+        "memberIds": [
+          "l14",
+          "l15",
+          "l26",
+          "l28"
+        ],
+        "entrances": 47,
+        "missing": []
+      },
+      {
+        "id": "P01:l29",
+        "ruleId": "P01",
+        "variant": "alcove",
+        "stage": "seeded",
+        "mainIds": [
+          "l29"
+        ],
+        "memberIds": [
+          "l27",
+          "l29"
+        ],
+        "entrances": 23,
+        "missing": [
+          "\u6728\u3092 \u3088\u305b\u3066\u307f\u3088\u3046",
+          "\u6728\u304c \u305d\u3060\u3064\u306e\u3092 \u305f\u306e\u3057\u3082\u3046"
+        ]
+      },
+      {
+        "id": "P02:p3",
+        "ruleId": "P02",
+        "variant": "cluster",
+        "stage": "grown",
+        "mainIds": [
+          "l10",
+          "l11",
+          "l12",
+          "l13"
+        ],
+        "memberIds": [
+          "l10",
+          "l11",
+          "l12",
+          "l13",
+          "l25",
+          "p3"
+        ],
+        "entrances": 38,
+        "missing": []
+      }
+    ],
+    "path": {
+      "scope": "Current domain walk graph; no actual tree/canopy mesh or body-envelope clearance test",
+      "open": 1454,
+      "reached": 1414,
+      "ownersWithGraphApproach": 35,
+      "ownerCount": 35,
+      "unreachedOwners": [],
+      "actualMeshWalkingPass": false
+    },
+    "allLayoutsPass": false,
+    "performancePass": false,
+    "replacesEarlierFailureRecord": false
+  },
+  "focusedCacheTests": {
+    "reportedPassCount": 9,
+    "evidence": "Prior worker terminal session 5835, confirmed by root",
+    "durableRawLogAvailable": false,
+    "rerunForArchive": false
+  },
+  "notEstablished": [
+    "Successful c6 UI move or restore",
+    "Full actual-mesh walking and gallery route clearance",
+    "All three proposed layouts complete",
+    "Art or child-observer acceptance",
+    "Priced district acquisition or differing composed island terrain",
+    "Whole M1 completion"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "phase": "deform-101-original-roles",
+  "error": "AssertionError('Unexpected custom-normal encoding residual: 0.11765023964224385')",
+  "traceback": "Traceback (most recent call last):\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/build-shape.py\", line 120, in <module>\n    row=deform.apply(obj,lambda p,function=function:Vector(function(tuple(p))),BI,pin_height)\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/deform.py\", line 33, in apply\n    assert residual<=.002,f'Unexpected custom-normal encoding residual: {residual}'\n           ^^^^^^^^^^^^^^\nAssertionError: Unexpected custom-normal encoding residual: 0.11765023964224385\n",
+  "allDeformationsComplete": false,
+  "sourceOnly": true,
+  "jointCount": 0,
+  "generatedBoughCount": 0
+}

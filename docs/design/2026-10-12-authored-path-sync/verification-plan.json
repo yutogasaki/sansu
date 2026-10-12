@@ -1,0 +1,77 @@
+{
+  "changeType": "Authored rendered paths use the same committed actor-guarded walk set and owner approach candidates; legacy unchanged",
+  "preparationStatus": "SEALED_PREFLIGHT_PASS_CORE_NOT_STARTED",
+  "completed": [
+    {
+      "check": "APFS full snapshot clone plus exact seven path overlay",
+      "baselineFiles": 20775,
+      "candidateFiles": 20776,
+      "addedPaths": [
+        "src/components/island/growing/placePathsSync.test.ts"
+      ],
+      "pass": true
+    },
+    {
+      "check": "core source closure",
+      "inputs": 6461,
+      "pass": true
+    },
+    {
+      "check": "installed renderer projection dependency bytes plus lock",
+      "inputs": 6,
+      "pass": true
+    },
+    {
+      "check": "fresh static eight-driver import audit",
+      "drivers": 8,
+      "domainInputs": 91,
+      "pass": true
+    },
+    {
+      "check": "all changed source/test static imports including new scene-key import",
+      "entries": 6,
+      "pass": true
+    },
+    {
+      "check": "actual read-only shoulder collector",
+      "inputs": 2128,
+      "pass": true
+    }
+  ],
+  "pending": [
+    {
+      "check": "c4 actual integration core",
+      "command": [
+        "python3",
+        "/private/tmp/sansu-authored-path-c4/prepared/core.py",
+        "--start"
+      ],
+      "underlyingCommand": "npm run verify:core",
+      "environment": {
+        "SANSU_BUILD_REVISION": "authored-path-c4",
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_NATIVE_GROWING_ART": "false"
+      },
+      "outerDeadlineSeconds": 7200,
+      "expectedTestCount": null,
+      "authorization": "Wait for root slot/start notification",
+      "requires": "fixed source/installed pre-post hashes and exact seven path provenance"
+    },
+    {
+      "check": "normal-false build boundary",
+      "status": "not started; after terminal core PASS"
+    },
+    {
+      "check": "actual native path parity/edit/removal/reset/preview runtime",
+      "status": "not started; root selects bounded browser scope"
+    }
+  ],
+  "baselineEvidence": "c3 core PASS is inherited provenance only; not a c4 PASS",
+  "notClaimed": [
+    "performance improvement",
+    "whole paving width support or passability",
+    "visual acceptance",
+    "M1 acceptance",
+    "PWA/release/product acceptance"
+  ]
+}

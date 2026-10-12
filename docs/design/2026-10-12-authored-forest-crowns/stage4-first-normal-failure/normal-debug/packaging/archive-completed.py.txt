@@ -1,0 +1,41 @@
+"""Exact-byte archive of completed normal diagnostic, excluding the next probe."""
+from pathlib import Path
+from datetime import datetime,timezone
+import gzip,hashlib,json
+SOURCE=Path(__file__).resolve().parent
+DEST=Path('/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/stage4-first-normal-failure/normal-debug')
+assert not DEST.exists(),'Never overwrite an existing archive'
+selected=[SOURCE/name for name in ['README.md','analyze-raw.py','diagnose.py','run-once.py','readiness.json','readiness.sha256','static-check.json']]
+selected += sorted((SOURCE/'attempt-01').glob('*'))+sorted((SOURCE/'execution-01').glob('*'))
+assert len(selected)==18 and all(f.is_file() for f in selected)
+selected.append(Path(__file__).resolve())
+sha=lambda data:hashlib.sha256(data).hexdigest()
+before={str(f):sha(f.read_bytes()) for f in selected};records=[];DEST.mkdir()
+for source in selected:
+ data=source.read_bytes();rel=source.relative_to(SOURCE)
+ if source.name=='archive-completed.py':target=Path('packaging/archive-completed.py.txt')
+ elif source.suffix in ['.py','.md']:target=Path(str(rel)+'.txt')
+ else:target=rel
+ encoding='raw';stored=data
+ if source.suffix=='.json' and len(data)>=65536:
+  target=Path(str(target)+'.gz');encoding='gzip';stored=gzip.compress(data,compresslevel=9,mtime=0)
+  assert stored==gzip.compress(data,compresslevel=9,mtime=0),'Non-deterministic packaging'
+ dest=DEST/target;dest.parent.mkdir(parents=True,exist_ok=True);assert not dest.exists();dest.write_bytes(stored)
+ decoded=gzip.decompress(dest.read_bytes()) if encoding=='gzip' else dest.read_bytes()
+ assert decoded==data
+ row={'source':str(source),'target':str(target),'sourceBytes':len(data),'storedBytes':len(stored),
+      'sourceSha256':sha(data),'storedSha256':sha(stored),'decodedSha256':sha(decoded),'encoding':encoding}
+ if source.suffix=='.gz':
+  row['originalGzipRetainedByteIdentical']=True;row['originalExpandedSHA']=sha(gzip.decompress(data))
+ records.append(row)
+after={str(f):sha(f.read_bytes()) for f in selected};assert before==after
+proof={'createdAtUtc':datetime.now(timezone.utc).isoformat(),
+ 'scope':'Completed first-leaf normal diagnostic and exact raw accessor audit; source remains HOLD. Preparation snapshot is historical; execution01 completed. Unexecuted zero-face-comparison excluded.',
+ 'excludedDirectories':['zero-face-comparison'],
+ 'compressionRule':'Only uncompressed JSON >=65536 bytes is gzip level9/mtime0; existing gzip copied byte-identical. Python/Markdown historical content renamed .txt without changing bytes.',
+ 'sourceBefore':before,'sourceAfter':after,'allSourceBeforeAfterIdentical':before==after,
+ 'files':records,'fileCount':len(records),'completedDiagnosticFiles':18,'packagingScriptFiles':1,
+ 'sourceBytes':sum(r['sourceBytes'] for r in records),'storedBytes':sum(r['storedBytes'] for r in records),
+ 'allDecodedBytesIdentical':True,'allOriginalGzipBytesIdentical':True}
+(DEST/'archive-proof.json').write_text(json.dumps(proof,indent=2)+'\n')
+print(json.dumps({'destination':str(DEST),'files':len(records),'archiveProofSHA':sha((DEST/'archive-proof.json').read_bytes()),'compressedFiles':[r['target'] for r in records if r['encoding']=='gzip']},indent=2))

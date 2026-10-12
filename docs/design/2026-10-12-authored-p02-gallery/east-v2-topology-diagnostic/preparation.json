@@ -1,0 +1,39 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "cwd": "/private/tmp/sansu-p02-gallery-source-study/east-v2-topology-diagnostic",
+  "command": [
+    "python3",
+    "../east-v2/supervise.py",
+    "--scheduled",
+    "--seconds",
+    "60",
+    "--rss-mib",
+    "2560",
+    "--log",
+    "runs/01-inspect.log.txt",
+    "--",
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "../east-v2/runs/01-coarse-build/failed-scene.blend",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "inspect-failed.py",
+    "--",
+    "--scheduled",
+    "--out",
+    "runs/01-inspect"
+  ],
+  "scriptSha256": "b34bf5963b7f7bacc486d6f4eb7bdc06324c2c44281d10337e63681ad7d108f3",
+  "offlineSha256": "4b73a754420892f1593f0f49cf5a1b5e0f22f915824d75de28c3ac21ba2baaaf",
+  "failedSceneSha256": "e61a390ef10e77ef40de77972454050b19e469b725ea8ebbec7b43e35b199746",
+  "supervisorSha256": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+  "limits": {
+    "seconds": 60,
+    "rssMiB": 2560,
+    "threads": 2
+  },
+  "scope": "Read saved Boolean-result topology only; private copied bmesh weld diagnostics. No rebuild/save/render. Exact process times/PID recorded externally by executor."
+}

@@ -1,0 +1,5 @@
+{
+  "errorType": "ValueError",
+  "error": "Ray parity exceeded bounded intersections: role-l14-2743",
+  "traceback": "Traceback (most recent call last):\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage2/ray-debug/debug-first-ray.py\", line 65, in run_query\n    return {'returned': joints.overlap_ball(left, right, [trunk_guess, target], radius)}\n                        ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage2/joints.py\", line 106, in overlap_ball\n    a = left.clearance(point)\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage2/joints.py\", line 68, in clearance\n    if not self.inside(point):\n           ~~~~~~~~~~~^^^^^^^\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage2/joints.py\", line 61, in inside\n    raise ValueError(f'Ray parity exceeded bounded intersections: {self.obj.name}')\nValueError: Ray parity exceeded bounded intersections: role-l14-2743\n"
+}

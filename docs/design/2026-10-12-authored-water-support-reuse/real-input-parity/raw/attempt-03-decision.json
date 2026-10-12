@@ -1,0 +1,10 @@
+{
+  "dateUtc": "2026-10-12T05:44:21.517625+00:00",
+  "previousReportSha256": "f9bba96bb3749f1dd829df888ed38efefe04aae65155157933954a812ce8c9d9",
+  "classification": "baseline process exceeded 2.5 GiB transient RSS and was terminated by harness; no application exception or output.",
+  "previousSampledRss": 2912813056,
+  "change": "Shoulder35 pair only, 4 GiB per-process bound matching the earlier actual browser diagnostic process-tree allowance; same 180s and bundles/fixtures.",
+  "notPerformanceEvidence": true,
+  "noMidRunLimitChange": true,
+  "runnerSha256": "386602f78a57291950281967413d493b50cc23bd0c8fec27d84314ac1ac1e60b"
+}

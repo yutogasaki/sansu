@@ -1,0 +1,316 @@
+{
+  "createdAtUtc": "2026-10-12T04:52:40.601646+00:00",
+  "scope": "Completed fixed-c2 actual renderer shadow-off and unlit causal diagnostics, after all8 regressions PASS. No application edits; settings restored; root image review separate.",
+  "files": [
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/c1-to-c2.diff",
+      "target": "c1-to-c2.diff",
+      "sourceBytes": 2672,
+      "storedBytes": 2672,
+      "sourceSha256": "6ea0fe91839369ecd0fe0d440960c9d153e0cd6f9d9127c8ca9fac5779d76860",
+      "storedSha256": "6ea0fe91839369ecd0fe0d440960c9d153e0cd6f9d9127c8ca9fac5779d76860",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/c2-visual-followup.json",
+      "target": "c2-visual-followup.json",
+      "sourceBytes": 1308,
+      "storedBytes": 1308,
+      "sourceSha256": "04b2015d71f55901de8eafe965f896070cacd33a034745bc4537535d94444e8e",
+      "storedSha256": "04b2015d71f55901de8eafe965f896070cacd33a034745bc4537535d94444e8e",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/diagnose-floor.mjs",
+      "target": "diagnose-floor.mjs.txt",
+      "sourceBytes": 32244,
+      "storedBytes": 32244,
+      "sourceSha256": "befd9cf6f7aeb91a2b27e27c96c416d19954fb24cd5303e3cc753619451d6fc1",
+      "storedSha256": "befd9cf6f7aeb91a2b27e27c96c416d19954fb24cd5303e3cc753619451d6fc1",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/preparation.json",
+      "target": "preparation.json",
+      "sourceBytes": 1458,
+      "storedBytes": 1458,
+      "sourceSha256": "d1aa93f171dc421df4e1098562ef2237860480e2e12e4cb8d8fd619c65a2989e",
+      "storedSha256": "d1aa93f171dc421df4e1098562ef2237860480e2e12e4cb8d8fd619c65a2989e",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/run-once.py",
+      "target": "run-once.py.txt",
+      "sourceBytes": 2973,
+      "storedBytes": 2973,
+      "sourceSha256": "39311981ecf637e2faf021b121ee8e205a3e265af1ff52111fac0a8f2e4039ec",
+      "storedSha256": "39311981ecf637e2faf021b121ee8e205a3e265af1ff52111fac0a8f2e4039ec",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/shadow-off-01/1280-hill-close-source-baseline.png",
+      "target": "shadow-off-01/1280-hill-close-source-baseline.png",
+      "sourceBytes": 420198,
+      "storedBytes": 420198,
+      "sourceSha256": "bcd26fbcdaf190a7f45eaffd492ff8740f86b26c540b22a06fbfdd6bab2d6b0b",
+      "storedSha256": "bcd26fbcdaf190a7f45eaffd492ff8740f86b26c540b22a06fbfdd6bab2d6b0b",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/shadow-off-01/1280-hill-close-source-restored.png",
+      "target": "shadow-off-01/1280-hill-close-source-restored.png",
+      "sourceBytes": 422769,
+      "storedBytes": 422769,
+      "sourceSha256": "ddec2b12885cf5244812adc4db01e13b40e86d3868ed9d21afab7025a56e55fd",
+      "storedSha256": "ddec2b12885cf5244812adc4db01e13b40e86d3868ed9d21afab7025a56e55fd",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/shadow-off-01/1280-hill-close-source-shadow-off.png",
+      "target": "shadow-off-01/1280-hill-close-source-shadow-off.png",
+      "sourceBytes": 388955,
+      "storedBytes": 388955,
+      "sourceSha256": "b55ab25a86631c65932f62999ff715138969df52be82d6251045b6ca4e573fa8",
+      "storedSha256": "b55ab25a86631c65932f62999ff715138969df52be82d6251045b6ca4e573fa8",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/shadow-off-01/GrowingWorld.vite-response.js.txt",
+      "target": "shadow-off-01/GrowingWorld.vite-response.js.txt",
+      "sourceBytes": 175368,
+      "storedBytes": 175368,
+      "sourceSha256": "2589b620fabd96275f6c410fa87d3978d6d99924e296222d03505c0a8b0a9270",
+      "storedSha256": "2589b620fabd96275f6c410fa87d3978d6d99924e296222d03505c0a8b0a9270",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/shadow-off-01/baseline-capture.json",
+      "target": "shadow-off-01/baseline-capture.json.gz",
+      "sourceBytes": 848917,
+      "storedBytes": 86607,
+      "sourceSha256": "0ff5d3266a819b33e574397d38726fdbfc25e21ac56128d2de6c375a281c840f",
+      "storedSha256": "c3eba262f646e6290b505131b979a447521bf52037c934b9b26865a5c0acb5e7",
+      "encoding": "gzip"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/shadow-off-01/before-integrity.json",
+      "target": "shadow-off-01/before-integrity.json.gz",
+      "sourceBytes": 964065,
+      "storedBytes": 332329,
+      "sourceSha256": "def0fcdf3a0cd5551ba5f208548a6440f342de5ac0155d7a42bf382df5627f5f",
+      "storedSha256": "ae1027e38567e7c14b19e9ca9b94eaead21c248bd1474fbce2721c071d126538",
+      "encoding": "gzip"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/shadow-off-01/executed-driver.mjs",
+      "target": "shadow-off-01/executed-driver.mjs.txt",
+      "sourceBytes": 32244,
+      "storedBytes": 32244,
+      "sourceSha256": "befd9cf6f7aeb91a2b27e27c96c416d19954fb24cd5303e3cc753619451d6fc1",
+      "storedSha256": "befd9cf6f7aeb91a2b27e27c96c416d19954fb24cd5303e3cc753619451d6fc1",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/shadow-off-01/hook-install.json",
+      "target": "shadow-off-01/hook-install.json",
+      "sourceBytes": 294,
+      "storedBytes": 294,
+      "sourceSha256": "955d8eeac569615149e1a8a68ab34173e52d6ff2c258705931100257e9ec19f6",
+      "storedSha256": "955d8eeac569615149e1a8a68ab34173e52d6ff2c258705931100257e9ec19f6",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/shadow-off-01/report.json",
+      "target": "shadow-off-01/report.json.gz",
+      "sourceBytes": 4570991,
+      "storedBytes": 926123,
+      "sourceSha256": "a515045045c15bbda43f83a95174a4298098f46961ed48d6c238fdd483a0e0a4",
+      "storedSha256": "795e0f1a66ecabc2db2cd7803f230a5e059d4b1f2bf7fd43b71153e107f5c43e",
+      "encoding": "gzip"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/shadow-off-01/restored-capture.json",
+      "target": "shadow-off-01/restored-capture.json.gz",
+      "sourceBytes": 848893,
+      "storedBytes": 86606,
+      "sourceSha256": "49eaa8a83d2310ab9feeb34485ae8d6ea1e893f062e8ff8a9648ea4ada4c9f2e",
+      "storedSha256": "db7842b5658059137097f83542aa3c8d1ef8decac1b36f5ff5321be486cfccab",
+      "encoding": "gzip"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/shadow-off-01/shadow-off-capture.json",
+      "target": "shadow-off-01/shadow-off-capture.json.gz",
+      "sourceBytes": 848936,
+      "storedBytes": 86616,
+      "sourceSha256": "0ef2b13767ff692af5ce91092f200bba29aca286ea71da89f634e45336b3743a",
+      "storedSha256": "a298aa0d88f2ddba0961c97786ebee46df5b9c262125737f8efea67978b231a9",
+      "encoding": "gzip"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/shadow-off-execution-01/execution.log.txt",
+      "target": "shadow-off-execution-01/execution.log.txt",
+      "sourceBytes": 354,
+      "storedBytes": 354,
+      "sourceSha256": "f963d430af8bf57bf203b816ef76318da5ac92c019bb255e1e3d803d5afe3460",
+      "storedSha256": "f963d430af8bf57bf203b816ef76318da5ac92c019bb255e1e3d803d5afe3460",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/shadow-off-execution-01/result.json",
+      "target": "shadow-off-execution-01/result.json",
+      "sourceBytes": 910,
+      "storedBytes": 910,
+      "sourceSha256": "3f2ed82535c6d25ea75970ccd1feecabe673da93437fcde8a90f758128946f72",
+      "storedSha256": "3f2ed82535c6d25ea75970ccd1feecabe673da93437fcde8a90f758128946f72",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/shadow-off-line-review.json",
+      "target": "shadow-off-line-review.json",
+      "sourceBytes": 886,
+      "storedBytes": 886,
+      "sourceSha256": "85864f7dc1cae4dcf584b82bd3ed0397620c1e2deabc2b92f8d866bb43950452",
+      "storedSha256": "85864f7dc1cae4dcf584b82bd3ed0397620c1e2deabc2b92f8d866bb43950452",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/1280-hill-close-source-baseline.png",
+      "target": "unlit-01/1280-hill-close-source-baseline.png",
+      "sourceBytes": 420071,
+      "storedBytes": 420071,
+      "sourceSha256": "3d0b194554edeccf2e138dce25f22327a94ec443063e28d036fd5d904df19f80",
+      "storedSha256": "3d0b194554edeccf2e138dce25f22327a94ec443063e28d036fd5d904df19f80",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/1280-hill-close-source-restored.png",
+      "target": "unlit-01/1280-hill-close-source-restored.png",
+      "sourceBytes": 422652,
+      "storedBytes": 422652,
+      "sourceSha256": "c93f101594cce0459862aff05828ac0e23806842d3a422d2cf7b16eb54247c36",
+      "storedSha256": "c93f101594cce0459862aff05828ac0e23806842d3a422d2cf7b16eb54247c36",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/1280-hill-close-source-shadow-off.png",
+      "target": "unlit-01/1280-hill-close-source-shadow-off.png",
+      "sourceBytes": 388894,
+      "storedBytes": 388894,
+      "sourceSha256": "7961ab3b134dfcee0fd12a581b11f40857b99f767ac1760203922268c63d740e",
+      "storedSha256": "7961ab3b134dfcee0fd12a581b11f40857b99f767ac1760203922268c63d740e",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/1280-hill-close-source-unlit.png",
+      "target": "unlit-01/1280-hill-close-source-unlit.png",
+      "sourceBytes": 322724,
+      "storedBytes": 322724,
+      "sourceSha256": "b0c0cd68a2ce13f00093db2cfa7c3430f6273e972e99c3999207725c26888efa",
+      "storedSha256": "b0c0cd68a2ce13f00093db2cfa7c3430f6273e972e99c3999207725c26888efa",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/GrowingWorld.vite-response.js.txt",
+      "target": "unlit-01/GrowingWorld.vite-response.js.txt",
+      "sourceBytes": 175368,
+      "storedBytes": 175368,
+      "sourceSha256": "2589b620fabd96275f6c410fa87d3978d6d99924e296222d03505c0a8b0a9270",
+      "storedSha256": "2589b620fabd96275f6c410fa87d3978d6d99924e296222d03505c0a8b0a9270",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/baseline-capture.json",
+      "target": "unlit-01/baseline-capture.json.gz",
+      "sourceBytes": 848898,
+      "storedBytes": 86610,
+      "sourceSha256": "e870fa0860b1b74fc6d3f2e851031c43b2dd23bf684256ade14ec00dbda7a070",
+      "storedSha256": "9b06d7d07eafed92db4463946f1a27233d5bc78de3dc68c6a7f33440d8eae7b5",
+      "encoding": "gzip"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/before-integrity.json",
+      "target": "unlit-01/before-integrity.json.gz",
+      "sourceBytes": 964065,
+      "storedBytes": 332329,
+      "sourceSha256": "def0fcdf3a0cd5551ba5f208548a6440f342de5ac0155d7a42bf382df5627f5f",
+      "storedSha256": "ae1027e38567e7c14b19e9ca9b94eaead21c248bd1474fbce2721c071d126538",
+      "encoding": "gzip"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/executed-driver.mjs",
+      "target": "unlit-01/executed-driver.mjs.txt",
+      "sourceBytes": 32244,
+      "storedBytes": 32244,
+      "sourceSha256": "befd9cf6f7aeb91a2b27e27c96c416d19954fb24cd5303e3cc753619451d6fc1",
+      "storedSha256": "befd9cf6f7aeb91a2b27e27c96c416d19954fb24cd5303e3cc753619451d6fc1",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/hook-install.json",
+      "target": "unlit-01/hook-install.json",
+      "sourceBytes": 294,
+      "storedBytes": 294,
+      "sourceSha256": "955d8eeac569615149e1a8a68ab34173e52d6ff2c258705931100257e9ec19f6",
+      "storedSha256": "955d8eeac569615149e1a8a68ab34173e52d6ff2c258705931100257e9ec19f6",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/report.json",
+      "target": "unlit-01/report.json.gz",
+      "sourceBytes": 5452971,
+      "storedBytes": 1014216,
+      "sourceSha256": "8d2d1fb5719feb75d0c8e91ff96ecafcc435e4c7f32eb3e621508c55fb0d3f10",
+      "storedSha256": "c247e40ed951461e2bb71eb12e7baf79dc13178f7f67814fe0c7989b7ceae11f",
+      "encoding": "gzip"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/restored-capture.json",
+      "target": "unlit-01/restored-capture.json.gz",
+      "sourceBytes": 849078,
+      "storedBytes": 86731,
+      "sourceSha256": "0f88ebf6d6485c1e3ab9310764312dca2e55fa7f2d21644cc908c1aebdbe1b9c",
+      "storedSha256": "801d747c22670b7bdac5c6d8e9678bc98fa3ecef71c68dfe247145844eef65ad",
+      "encoding": "gzip"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/shadow-off-capture.json",
+      "target": "unlit-01/shadow-off-capture.json.gz",
+      "sourceBytes": 848911,
+      "storedBytes": 86633,
+      "sourceSha256": "07bd8baf3e0bdd6277a3b4aab5e6f0c24093fb272dcab913d5b28cc47b5be6ec",
+      "storedSha256": "45a82973b5c6d11a3a810aa14a733840ba1d1aedba7950f5ebbf39a3b369a31f",
+      "encoding": "gzip"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-01/unlit-capture.json",
+      "target": "unlit-01/unlit-capture.json.gz",
+      "sourceBytes": 848865,
+      "storedBytes": 86789,
+      "sourceSha256": "0d26540939a54120577a0639785de820f6354dc4060cf31408b342c7b2f1918c",
+      "storedSha256": "47a01c42b9be1ac00e7a763b6f88d1197f8d7d241d9bb66a70d67958641d951c",
+      "encoding": "gzip"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-execution-01/execution.log.txt",
+      "target": "unlit-execution-01/execution.log.txt",
+      "sourceBytes": 344,
+      "storedBytes": 344,
+      "sourceSha256": "4b9cf36183c3d4d8a3cf75d5e9fe0a496762b758b19cc6ba22f5924b6fedac59",
+      "storedSha256": "4b9cf36183c3d4d8a3cf75d5e9fe0a496762b758b19cc6ba22f5924b6fedac59",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-floor-shading-diagnostic-c2/unlit-execution-01/result.json",
+      "target": "unlit-execution-01/result.json",
+      "sourceBytes": 1105,
+      "storedBytes": 1105,
+      "sourceSha256": "97f34a104e77bf05409e8885c88d7bd6c824763341bfa6319c3b3f0d5ceac228",
+      "storedSha256": "97f34a104e77bf05409e8885c88d7bd6c824763341bfa6319c3b3f0d5ceac228",
+      "encoding": "raw"
+    }
+  ],
+  "fileCount": 34,
+  "sourceBytes": 21140919,
+  "storedBytes": 6457918,
+  "allDecodedBytesIdentical": true
+}

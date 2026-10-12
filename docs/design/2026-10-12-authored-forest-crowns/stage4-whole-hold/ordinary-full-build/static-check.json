@@ -1,0 +1,18 @@
+{
+  "scope": "pure fixtures and saved one-leaf arithmetic only",
+  "commands": [
+    {
+      "command": "python3 -B -m unittest -v test_rules.py test_bundle.py",
+      "exitCode": 0,
+      "tests": 17
+    },
+    {
+      "command": "/Applications/Blender.app/Contents/Resources/5.2/python/bin/python3.13 -B check-recorded-profile-blender-python.py",
+      "exitCode": 0,
+      "allRecordedFloat64ComponentsExact": true
+    }
+  ],
+  "firstHostPython39BitExactReplayFailureRetained": true,
+  "blenderExecuted": false,
+  "wholeBuildOrRuntimePass": false
+}

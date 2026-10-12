@@ -1,0 +1,328 @@
+--- c2/regressions.py
++++ c3/affected-regressions.py
+@@ -11,13 +11,13 @@
+ import time
+ from pathlib import Path
+ 
+-ROOT = Path('/private/tmp/sansu-authored-shoulder-c2')
++ROOT = Path('/private/tmp/sansu-authored-shoulder-c3')
+ REPO = ROOT / 'candidate'
+ CORE = ROOT / 'core/report.json'
+ SNAPSHOT = ROOT / 'snapshot.json'
+-OUTPUT = ROOT / 'regressions'
+-REVISION = 'authored-shoulder-c2'
+-BASE = 'http://127.0.0.1:5359'
++OUTPUT = ROOT / 'affected-regressions'
++REVISION = 'authored-shoulder-c3'
++BASE = 'http://127.0.0.1:5360'
+ 
+ 
+ def write_json(path, data):
+@@ -60,52 +60,19 @@
+ 
+ 
+ def plan():
+-    server = {'url': BASE, 'revision': REVISION, 'VITE_ISLAND_ENABLED': 'true', 'VITE_NATIVE_GROWING_ART': 'false'}
+-    specs = [
+-        ('01-floor-shading-ab', 'tools/e2e-authored-floor-shading.mjs', 'SANSU_FLOOR_SHADING',
+-         '?water=wide&reference=preflight32&cove=corner', 1800,
+-         'Same 32-owner physical world/camera; legacy/source normals and material A/B, 10 actual views and 5 pairs; no art or performance pass'),
+-        ('02-shoulder-full', 'tools/e2e-authored-shoulder.mjs', 'SANSU_AUTHORED_SHOULDER',
+-         '?water=wide&cove=corner&shoulder=central&ground=source', 3600,
+-         'Both full scopes: preflight32 actual diagnostic purchase/nature journey and fixed shoulder35 editing; synthetic inputs, no personal save or whole M1 acceptance'),
+-        ('03-baseline27-editing', 'tools/e2e-authored-island-editing.mjs', 'SANSU_AUTHORED_EDIT',
+-         '?ground=legacy', 600, 'Existing baseline27 real pointer editing plus phone/tablet, no shoulder'),
+-        ('04-wide27-water', 'tools/e2e-authored-water.mjs', 'SANSU_AUTHORED_WATER',
+-         '?water=wide&ground=legacy', 600, 'Existing wide-water27 real pointer edits plus phone/tablet, no shoulder'),
+-        ('05-authored-flower-full-cove-off', 'tools/e2e-authored-flower.mjs', 'SANSU_AUTHORED_FLOWER',
+-         '?water=wide&reference=preflight32&cove=false&ground=legacy', 2400,
+-         'Full mature/young 32-owner flower journey with cove and shoulder disabled; 12 views, four canvas selections, cancel/split/store/restore'),
+-        ('06-authored-cove-full', 'tools/e2e-authored-cove.mjs', 'SANSU_AUTHORED_COVE',
+-         '?water=wide&reference=preflight32&cove=corner&ground=legacy', 2400,
+-         'Full existing 32-owner cove journey with source legacy floor and no shoulder; original strict cove candidate remains required'),
+-        ('07-ordinary-growing-balance', 'tools/e2e-growing-balance.mjs', 'SANSU_GROWING',
+-         None, 900, 'Ordinary Growing disposable profiles, real learning and explicit fixture scenarios, native=false'),
+-    ]
+-    result = []
+-    for name, driver, prefix, query, deadline, scope in specs:
+-        env = {prefix + '_URL': BASE + '/prototypes/place-qa/authored.html' + query if query is not None else BASE,
+-               prefix + '_OUTPUT': str(OUTPUT / name / 'actual')}
+-        if name in {'01-floor-shading-ab', '02-shoulder-full', '05-authored-flower-full-cove-off', '06-authored-cove-full'}:
+-            env[prefix + '_BUILD'] = REVISION
+-        if name in {'02-shoulder-full', '05-authored-flower-full-cove-off', '06-authored-cove-full'}:
+-            env[prefix + '_SHAPE_ONLY'] = '0'
+-        if name == '02-shoulder-full':
+-            env[prefix + '_CORE_REPORT'] = str(CORE)
+-            env[prefix + '_TIMEOUT_MS'] = '180000'
+-        if name == '05-authored-flower-full-cove-off': env[prefix + '_RAY_ONLY'] = '0'
+-        if name == '03-baseline27-editing': env[prefix + '_HEADED'] = '0'
+-        result.append({'name': name, 'command': ['node', driver], 'environmentOverrides': env, 'scope': scope,
+-            'requiredServerConfiguration': server, 'reportRelative': 'actual/report.json', 'timeoutSeconds': deadline,
+-            'deadlineScope': 'Outer command termination only; completion does not establish a performance pass'})
+-    result.append({'name': '08-classic-smoke', 'command': ['npm', 'run', 'e2e:smoke'],
+-        'environmentOverrides': {'VITE_ISLAND_ENABLED': 'false', 'VITE_NATIVE_GROWING_ART': 'false', 'VITE_EXPLORE_EXPERIENCE': 'classic-v1',
+-            'SANSU_E2E_DIAGNOSTIC_DIR': str(OUTPUT / '08-classic-smoke/diagnostics'),
+-            'SANSU_E2E_CAPTURE_DIR': str(OUTPUT / '08-classic-smoke/captures')},
+-        'scope': 'Full classic smoke, isolated owned server on an available 4173/4174/4175; disposable browser contexts',
+-        'requiredServerConfiguration': {'ownServer': True, 'portCandidates': [4173,4174,4175], 'VITE_ISLAND_ENABLED': 'false', 'VITE_NATIVE_GROWING_ART': 'false'},
+-        'reportRelative': 'diagnostics/smoke-report.json', 'timeoutSeconds': 2700,
+-        'deadlineScope': 'Outer command termination only; no performance acceptance'})
+-    return result
++    return [
++        {'name':'01-wide27-water', 'command':['node','tools/e2e-authored-water.mjs'],
++         'environmentOverrides':{'SANSU_AUTHORED_WATER_URL':BASE+'/prototypes/place-qa/authored.html?water=wide&ground=legacy',
++                                 'SANSU_AUTHORED_WATER_OUTPUT':str(OUTPUT/'01-wide27-water/actual')},
++         'scope':'Unchanged full 27-owner/73-right wide water pointer editing, 14 captures, no shoulder/cove',
++         'requiredServerConfiguration':{'url':BASE,'revision':REVISION,'VITE_ISLAND_ENABLED':'true','VITE_NATIVE_GROWING_ART':'false'},
++         'reportRelative':'actual/report.json','timeoutSeconds':600,'deadlineScope':'Owned process termination only; not performance acceptance'},
++        {'name':'02-classic-smoke','command':['npm','run','e2e:smoke'],
++         'environmentOverrides':{'VITE_ISLAND_ENABLED':'false','VITE_NATIVE_GROWING_ART':'false','VITE_EXPLORE_EXPERIENCE':'classic-v1',
++            'SANSU_E2E_DIAGNOSTIC_DIR':str(OUTPUT/'02-classic-smoke/diagnostics'),'SANSU_E2E_CAPTURE_DIR':str(OUTPUT/'02-classic-smoke/captures')},
++         'scope':'Unchanged full classic smoke on isolated owned server; no reuse',
++         'requiredServerConfiguration':{'ownServer':True,'portCandidates':[4173,4174,4175],'VITE_ISLAND_ENABLED':'false','VITE_NATIVE_GROWING_ART':'false'},
++         'reportRelative':'diagnostics/smoke-report.json','timeoutSeconds':2700,'deadlineScope':'Owned process termination only; not performance acceptance'}]
+ 
+ 
+ def clean_group(pid):
+@@ -118,136 +85,56 @@
+ 
+ 
+ def inspect_result(item, actual, log, expected):
+-    if actual is None:
+-        return {'pass': False, 'failurePhase': 'missing-tool-report', 'error': 'Tool report was not created'}
+-    if 'readError' in actual:
+-        return {'pass': False, 'failurePhase': 'unreadable-tool-report', 'error': actual['readError']}
+-    scenarios = actual.get('scenarios', [])
+-    failures = [scenario for scenario in scenarios if scenario.get('pass') is False]
+-    first = failures[0] if failures else None
+-    error = actual.get('error') or (actual.get('firstFailure') or {}).get('error') or (first or {}).get('error')
+-    if item['name'] == '08-classic-smoke' and 'All smoke-test ports are occupied; reusing ' in log:
+-        return {'pass': False, 'failurePhase': 'classic-server-isolation', 'error': 'Smoke harness reused a preexisting server'}
+-    result = {
+-        'pass': actual.get('pass') is True and not failures and not error and not actual.get('errors'),
+-        'failurePhase': actual.get('phase') or (first or {}).get('name'),
+-        'error': error,
+-        'scenarioCount': len(scenarios),
+-        'stepCount': len(actual.get('steps', [])),
+-        'failedSteps': [step for step in actual.get('steps', []) if isinstance(step, dict) and step.get('pass') is False],
+-        'runtimeErrors': actual.get('errors', []),
+-        'failedScenarios': [{'name': scenario.get('name'), 'error': scenario.get('error')} for scenario in failures],
+-        'stepsPassed': sum((isinstance(step, dict) and step.get('pass') is True)
+-                           or (isinstance(step, str) and actual.get('pass') is True)
+-                           for step in actual.get('steps', [])),
+-        'captureCount': len(actual.get('captures', [])),
+-        'target': actual.get('target'),
+-        'lastCompletedScenario': scenarios[-1].get('name') if scenarios else None,
+-        'lastCapture': ({key: actual['captures'][-1].get(key) for key in ['file', 'viewport', 'url', 'build']}
+-                        if actual.get('captures') and isinstance(actual['captures'][-1], dict) else None),
+-    }
+-    if result['failedSteps']:
+-        result['pass'] = False
+-        result['failurePhase'] = 'failed-tool-step'
+-    if item['name'] in {'03-baseline27-editing', '04-wide27-water', '07-ordinary-growing-balance', '05-authored-flower-full-cove-off'}:
+-        captures = actual.get('captures', [])
+-        result['runtimeBuilds'] = sorted({capture.get('build') or capture.get('revision') or '' for capture in captures})
+-        result['runtimeBuildMatches'] = bool(captures) and result['runtimeBuilds'] == [REVISION]
+-        if not result['runtimeBuildMatches']:
+-            result['pass'] = False
+-            result['failurePhase'] = result['failurePhase'] or 'runtime-build-identity'
+-            result['error'] = result['error'] or 'Runtime captures do not all identify the fixed candidate build'
+-    # Tool evidence is a subset of the fixed core closure, not an independent
+-    # source lineage. Preserve missing entries and first/final differences.
+-    if item['name'] == '08-classic-smoke':
+-        harness_name = 'tools/e2e-smoke.mjs'
+-        subset = {'scope': 'Classic raw report exposes only its harness hash; outer runner covers the complete core closure',
+-                  'count': 1, 'beforeAfterEqual': None,
+-                  'pass': bool(expected.get(harness_name)) and actual.get('harnessHash') == expected[harness_name]}
++    if not actual or 'readError' in actual:
++        return {'pass':False,'failurePhase':'missing-or-unreadable-tool-report','error':'Original driver report unavailable'}
++    scenarios=actual.get('scenarios',[])
++    failures=[x for x in scenarios if x.get('pass') is False]
++    error=actual.get('error') or (actual.get('firstFailure') or {}).get('error') or (failures[0].get('error') if failures else None)
++    checks={'driverPass':actual.get('pass') is True,'noRuntimeErrors':not actual.get('errors'),'noScenarioFailure':not failures,'noError':not error}
++    result={'pass':False,'failurePhase':actual.get('phase'),'error':error,'scenarioCount':len(scenarios),
++            'captureCount':len(actual.get('captures',[])),'checks':checks}
++    if item['name']=='02-classic-smoke':
++        checks['noServerReuse']='All smoke-test ports are occupied; reusing ' not in log
++        checks['harnessMatchesCore']=actual.get('harnessHash')==expected['tools/e2e-smoke.mjs']
++        result['rawInputSubset']={'scope':'Classic exposes its harness hash; wrapper verifies complete source/dependency closure before/after','count':1,'pass':checks['harnessMatchesCore']}
+     else:
+-        before = actual.get('initialInputs', actual.get('initialSources'))
+-        after = actual.get('finalInputs', actual.get('finalSources'))
+-        missing = sorted(set(before or {}) - set(expected))
+-        mismatch = [{'file': name, 'core': expected.get(name), 'toolBefore': value,
+-                     'toolAfter': (after or {}).get(name)} for name, value in (before or {}).items()
+-                    if value != expected.get(name) or (after or {}).get(name) != value]
+-        subset = {'scope': 'Raw tool initial/final source hashes must equal a subset of core initial/final inputs',
+-                  'count': len(before or {}), 'beforeAfterEqual': bool(before) and before == after,
+-                  'missingFromCore': missing, 'differences': mismatch,
+-                  'pass': bool(before) and before == after and not missing and not mismatch}
+-    result['rawInputSubset'] = subset
+-    if not subset['pass']:
+-        result['pass'] = False
+-        result['failurePhase'] = result['failurePhase'] or 'raw-input-subset'
+-        result['error'] = result['error'] or 'Raw tool hashes are absent or differ from the frozen core closure'
+-    if item['name'] == '05-authored-flower-full-cove-off':
+-        captures = actual.get('captures', [])
+-        result['fullFlowerScope'] = (actual.get('shapeOnly') is False and actual.get('rayOnly') is False
+-                                     and actual.get('expectedBuild') == REVISION
+-                                     and actual.get('sourceClosureUnchanged') is True)
+-        result['coveDisabledThroughout'] = bool(captures) and all(
+-            capture.get('metadata', {}).get('authoredCoveEnabled') == 'false'
+-            and capture.get('metadata', {}).get('artCandidate') == 'native05-authored-flower-garden-v3'
+-            and 'cove=false' in capture.get('url', '') for capture in captures)
+-        result['matureAndYoung'] = {capture.get('referenceSource', {}).get('stage') for capture in captures} == {'mature', 'young'}
+-        if not all(result[key] for key in ['fullFlowerScope', 'coveDisabledThroughout', 'matureAndYoung']):
+-            result['pass'] = False
+-            result['failurePhase'] = result['failurePhase'] or 'flower-full-cove-off-scope'
+-            result['error'] = result['error'] or 'Flower evidence must include the full mature/young cove-disabled driver'
+-    checks = {}
+-    captures = actual.get('captures', [])
+-    if item['name'] == '01-floor-shading-ab':
+-        checks = {'expectedBuild': actual.get('expectedBuild') == REVISION,
+-            'tenCapturesFivePairs': len(captures) == 10 and len(actual.get('pairs', [])) == 5,
+-            'matchedPairs': all(all(pair.get(key) is True for key in ['sameCamera','sameState','samePhysicalWalking','sameAppVersion']) for pair in actual.get('pairs', [])),
+-            'sameRuntimeBuild': bool(captures) and all(c.get('observed', {}).get('app', {}).get('buildRevision') == REVISION for c in captures),
+-            'bothShadingVariants': {c.get('variant') for c in captures} == {'legacy', 'source'},
+-            'noShoulder': bool(captures) and all(c.get('observed', {}).get('world', {}).get('authoredShoulderEnabled') == 'false' for c in captures)}
+-    if item['name'] == '02-shoulder-full':
+-        checks = {'expectedBuild': actual.get('expectedBuild') == REVISION,
+-            'fullScope': actual.get('shapeOnly') is False,
+-            'twentyCaptures': len(captures) == 20,
+-            'sixAcquisitionFourteenFixedCaptures': sum(c.get('scope') == 'acquisition' for c in captures) == 6 and sum(c.get('scope') == 'fixed35' for c in captures) == 14,
+-            'paidAcquisition': actual.get('scopes', {}).get('acquisition', {}).get('paidDrops') == 60 and actual.get('scopes', {}).get('acquisition', {}).get('rights') == 75,
+-            'installedDependenciesUnchanged': actual.get('installedDependenciesUnchanged') is True,
+-            'sourceClosureUnchanged': actual.get('sourceClosureUnchanged') is True,
+-            'acquisitionPassed': actual.get('scopes', {}).get('acquisition', {}).get('pass') is True,
+-            'fixed35Passed': actual.get('scopes', {}).get('fixed35', {}).get('pass') is True,
+-            'installedProjectionStable': bool(actual.get('initialInstalledDependencies')) and actual.get('initialInstalledDependencies') == actual.get('finalInstalledDependencies'),
+-            'installedProjectionMatchesCore': actual.get('initialInstalledDependencies') == (read_json(CORE) or {}).get('initialInstalledDependencies')}
+-    if item['name'] == '05-authored-flower-full-cove-off':
+-        edits, selections = actual.get('edits', []), actual.get('canvasSelections', [])
+-        checks = {'twelveCaptures': len(captures) == 12,
+-            'fourCanvasSelections': len(selections) == 4 and all(value.get('pass') is True for value in selections),
+-            'fourFullEdits': len(edits) == 4 and all(value.get('pass') is True for value in edits)
+-                and {value.get('action') for value in edits} == {'cancel','move-split','store','restore-reconnect'}}
+-    if item['name'] == '06-authored-cove-full':
+-        edits, selections = actual.get('edits', []), actual.get('canvasSelections', [])
+-        checks = {'expectedBuild': actual.get('expectedBuild') == REVISION,
+-            'fullScope': actual.get('shapeOnly') is False,
+-            'sourceClosureUnchanged': actual.get('sourceClosureUnchanged') is True,
+-            'tenCaptures': len(captures) == 10,
+-            # Cove edit entries do not have a per-entry pass field. Their action
+-            # sequence is recorded only after each driver's assertions complete.
+-            'fourEdits': len(edits) == 4 and [value.get('action') for value in edits] == ['preview', 'move', 'store', 'restore'],
+-            'oneCanvasSelection': len(selections) == 1 and selections[0].get('pass') is True
+-                and selections[0].get('previousOwner') == 'p6' and selections[0].get('expectedOwner') == 'p9',
+-            'sameRuntimeBuild': bool(captures) and all(c.get('build') == REVISION for c in captures),
+-            'noShoulder': bool(captures) and all(c.get('metadata', {}).get('authoredShoulderEnabled') == 'false' for c in captures)}
+-    if checks:
+-        result['fullScopeChecks'] = checks
+-        if not all(checks.values()):
+-            result['pass'] = False
+-            result['failurePhase'] = result['failurePhase'] or 'required-full-scope'
+-            result['error'] = result['error'] or ', '.join(key for key,value in checks.items() if not value)
+-    if captures:
+-        files_exist = all((OUTPUT / item['name'] / 'actual' / capture.get('file','')).is_file() for capture in captures)
+-        result['captureFilesExist'] = files_exist
+-        if not files_exist:
+-            result['pass'] = False
+-            result['failurePhase'] = result['failurePhase'] or 'missing-capture-files'
+-    if result['pass']:
+-        result['failurePhase'] = None
++        initial,final=actual.get('initialInputs'),actual.get('finalInputs')
++        missing=sorted(set(initial or {})-set(expected))
++        different=[n for n,v in (initial or {}).items() if expected.get(n)!=v or (final or {}).get(n)!=v]
++        checks['rawInputSubset']=bool(initial) and initial==final and not missing and not different
++        result['rawInputSubset']={'count':len(initial or {}),'missing':missing,'different':different,'beforeAfterEqual':initial==final,'pass':checks['rawInputSubset']}
++        captures=actual.get('captures',[])
++        expectedFiles=['desktop-whole.png','water-close.png','water-bridge-close.png','stored-dry-ground.png','reconnect-preview.png',
++                       'reconnected.png','move-preview.png','preview-cancelled.png','moved-split.png','desktop-dusk-whole.png',
++                       'water-dusk-close.png','desktop-rotated-whole.png','phone-whole.png','tablet-whole.png']
++        checks['fourteenOrderedCaptures']=[x.get('file') for x in captures]==expectedFiles
++        checks['sameBuild']=bool(captures) and all(x.get('build')==REVISION for x in captures)
++        checks['sameTarget']=bool(captures) and all(x.get('url')==item['environmentOverrides']['SANSU_AUTHORED_WATER_URL'] for x in captures)
++        checks['noCoveOrShoulder']=bool(captures) and all(x.get('metadata',{}).get('authoredCoveEnabled')=='false'
++          and x.get('metadata',{}).get('authoredShoulderEnabled')=='false' for x in captures)
++        checks['captureFilesExist']=bool(captures) and all((OUTPUT/item['name']/'actual'/x.get('file','')).is_file() for x in captures)
++        checks['sixCompletedSteps']=actual.get('steps')==[
++          'actual water mesh selects its owner','actual source bridge board selects its supplying owner','store restores dry original floor',
++          'confirmation uses same water revision as preview','cancel restores committed world without changing owner fields','split and reconnect retain all 27 owner IDs']
++        referencePath=Path('/private/tmp/sansu-authored-shoulder-c2/regressions/04-wide27-water/actual/report.json')
++        baseline=read_json(referencePath)
++        assert baseline and baseline.get('pass') is True, 'Prior c2 water reference must remain an actual PASS'
++        baselineByFile={x['file']:x for x in baseline['captures']}
++        comparisons=[]
++        for capture in captures:
++            name=capture.get('file'); old=baselineByFile.get(name)
++            plan=json.loads(capture.get('metadata',{}).get('authoredWater','null'))
++            prior=json.loads(old['metadata']['authoredWater']) if old else None
++            comparisons.append({'capture':name,'planMatchesC2':plan==prior,'bridgeCount':len(plan.get('bridges',[])) if plan else None,
++                'bridges':plan.get('bridges') if plan else None,'runtimeBridgeSourceId':capture.get('metadata',{}).get('authoredWaterBridgeId'),
++                'worldRevision':capture.get('metadata',{}).get('worldRevision')})
++        checks['allWaterPlansEqualC2']=len(comparisons)==14 and all(x['planMatchesC2'] for x in comparisons)
++        checks['initialBridgeAndEdges']=bool(comparisons) and comparisons[0]['bridgeCount']==1 and bool(comparisons[0]['bridges'][0]['restoredEdgeIds'])
++        result['bridgeAndRestoredEdgeEvidence']={'baselineReport':str(referencePath),'baselineReportSha256':sha(referencePath),'captures':comparisons,
++            'scope':'Exact renderer water-plan equality with c2 includes all bridge and restoredEdgeIds fields. Per-edge physical query checks remain domain-test evidence; no invented browser route claim.'}
++    result['pass']=all(checks.values())
++    result['failurePhase']=None if result['pass'] else result['failurePhase'] or 'contract-inspection'
++    result['error']=error or (None if result['pass'] else ', '.join(k for k,v in checks.items() if not v))
+     return result
+ 
+ 
+@@ -282,7 +169,7 @@
+         report['removedInheritedTaskEnvironmentNames'] = sorted(removed)
+         env.update({'SANSU_BUILD_REVISION': REVISION, 'VITE_ISLAND_ENABLED': 'true', 'VITE_NATIVE_GROWING_ART': 'false'})
+         env.update(item['environmentOverrides'])
+-        if item['name'] == '08-classic-smoke':
++        if item['name'] == '02-classic-smoke':
+             ports = occupied_ports()
+             report['occupiedCandidatePortsBeforeStart'] = ports
+             if len(ports) == 3:
+@@ -321,7 +208,7 @@
+             report['lastToolPhase'] = (progress or {}).get('phase')
+         if report['exitCode'] != 0 and not report.get('failurePhase'):
+             report['failurePhase'] = 'command-exit'
+-        if item['name'] == '08-classic-smoke':
++        if item['name'] == '02-classic-smoke':
+             report['dedicatedServerEvidence'] = [line for line in text.splitlines()
+                                                  if 'Starting dev server on ' in line or 'Dev server ready on ' in line]
+             if not report['dedicatedServerEvidence']:
+@@ -355,12 +242,14 @@
+ 
+ 
+ def main():
+-    global OUTPUT
++    global OUTPUT, BASE
+     parser = argparse.ArgumentParser()
+     parser.add_argument('--start', action='store_true', help='Execute only after explicit parent START authorization')
++    parser.add_argument('--server-origin', default=BASE, help='Root-owned c3 DEV origin; must match server-identity.json')
+     parser.add_argument('--output-root', type=Path, default=OUTPUT, help='Fresh evidence root outside the repository')
+     args = parser.parse_args()
+     OUTPUT = args.output_root.resolve()
++    BASE = args.server_origin.rstrip('/')
+     assert REPO not in OUTPUT.parents and OUTPUT != REPO, 'Evidence must stay outside the fixed candidate'
+     core = read_json(CORE)
+     if not args.start:
+@@ -379,12 +268,20 @@
+     snapshot = read_json(SNAPSHOT)
+     assert snapshot and snapshot.get('dest') == str(REPO) and snapshot.get('changedDuringCopy') == [], 'Snapshot must identify an unchanged fixed candidate'
+     assert all(snapshot['files'].get(name) == value for name, value in expected.items()), 'Core inputs differ from fixed snapshot'
++    from urllib.parse import urlparse
++    server=read_json(ROOT/'server-identity.json'); origin=urlparse(BASE)
++    assert origin.hostname=='127.0.0.1' and origin.scheme=='http' and not origin.path and origin.port, 'Explicit local root-owned origin required'
++    assert server and server.get('cwd')==str(REPO) and server.get('revision')==REVISION and server.get('httpStatus')==200, 'Root server identity must match c3'
++    assert server.get('port')==origin.port and server.get('deliveryFlags')=={'VITE_ISLAND_ENABLED':'true','VITE_NATIVE_GROWING_ART':'false'}
++    observedCwd=subprocess.run(['lsof','-a','-p',str(server['pid']),'-d','cwd','-Fn'],capture_output=True,text=True,check=True).stdout
++    assert '\nn'+str(REPO)+'\n' in '\n'+observedCwd, 'Live server PID must still have exact candidate cwd'
+     OUTPUT.mkdir(exist_ok=False)
+     summary = {'coreReport': str(CORE), 'coreReportSha256': sha(CORE), 'coreInputCount': len(expected),
+               'initialInstalledDependencies': sources(installed_expected),
+                'candidate': str(REPO), 'revision': REVISION, 'snapshotSha256': sha(SNAPSHOT),
+                'startedAtUnixSeconds': time.time(), 'initialSources': sources(expected), 'runnerSha256': sha(Path(__file__)), 'pass': False, 'stages': [], 'firstFailure': None,
+-               'scope': 'Sequential floor A/B, shoulder full, baseline27, wide27water, flower full, cove full, ordinaryGrowing and isolated classic; fixed source, disposable browser data, no independent art/performance/whole-M1 acceptance'}
++               'scope': 'Affected-only c3 wide27water plus isolated classic; not c3 all-eight, shoulder acquisition, art, performance or M1 acceptance',
++               'serverIdentity':server,'serverIdentitySha256':sha(ROOT/'server-identity.json'),'observedServerCwdAtStart':observedCwd}
+     write_json(OUTPUT / 'report.json', summary)
+     for item in plan():
+         print(json.dumps({'starting': item['name'], 'command': item['command']}, ensure_ascii=False), flush=True)

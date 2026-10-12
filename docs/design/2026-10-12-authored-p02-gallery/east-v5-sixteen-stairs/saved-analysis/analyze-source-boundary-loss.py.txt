@@ -1,0 +1,16 @@
+"""Separate actual outer-edge Float32 displacement from tangential query gaps."""
+from pathlib import Path
+import json,hashlib,sys,math
+from shapely.geometry import Polygon,mapping
+from shapely.ops import unary_union
+B=Path('/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build');O=Path(__file__).resolve().parent;sys.path.insert(0,str(B));from terrain_connector import closed_solid
+P=B/'runs/01-coarse-build/terrain-threshold-input.json';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest();before=sha(P);plan=json.loads(P.read_text())['plan'];v,f,_=closed_solid(plan,.07)
+def union(vertices,faces):return unary_union([Polygon([(vertices[i][0],vertices[i][2])for i in face])for face in faces])
+a=union(plan['topVertices'],plan['topFaces']);b=union(v,f[:len(plan['topFaces'])]);result={}
+for name,g in [('originalPlanOutsideRawFloat32',a.difference(b)),('rawFloat32OutsideOriginalPlan',b.difference(a))]:
+ parts=list(g.geoms)if hasattr(g,'geoms')else[g];rows=[]
+ for p in parts:
+  if p.is_empty:continue
+  assert p.geom_type=='Polygon';r=p.minimum_rotated_rectangle;co=list(r.exterior.coords);length=[math.dist(a,b)for a,b in zip(co,co[1:])];rows.append({'area':p.area,'minorBoundingWidth':min(length),'majorBoundingLength':max(length),'geometry':mapping(p)})
+ result[name]={'area':g.area,'components':rows,'maximumComponentMinorBoundingWidth':max((r['minorBoundingWidth']for r in rows),default=0)}
+r={'status':'SAVED_INPUT_FLOAT32_BOUNDARY_DIFFERENCE','input':str(P),'beforeSHA':before,'afterSHA':sha(P),'samePrimaryGeometry':True,'epsilonChange':False,'method':'same sealed helper; original double top union versus constructed Float32 top union, no diagnostic offset accepted','results':result};assert r['beforeSHA']==r['afterSHA'];(O/'source-boundary-loss.json').write_text(json.dumps(r,indent=2)+'\n');print(json.dumps({k:{'area':v['area'],'components':len(v['components']),'maxMinorWidth':v['maximumComponentMinorBoundingWidth']}for k,v in result.items()},indent=2))

@@ -1,0 +1,17 @@
+{
+  "pass": true,
+  "testCount": 1,
+  "includedInC8Core": false,
+  "runtimeInputParityWithC8": 1627,
+  "mismatch": [],
+  "testSha256": "8170f247ddcf152780f747a30db93363416c1ae7a149eb95d3370088a1cdecf7",
+  "scope": "One resident on an explicit small HOME foundation with real acquired terrain and tree meshes; GrowingLife sync/tick walk and store/evacuation. Random target choice fixed; no injected coordinates/routes.",
+  "firstFailure": "Harness counter groveCount does not include authored forest roots; replaced with obstructionRootCount; runtime unchanged.",
+  "excludes": [
+    "Whole island 35-owner reachability",
+    "natural use observations",
+    "personal purchase/save",
+    "rendered browser evidence"
+  ],
+  "testArchive": "authoredGrowthTerrainLife.test.ts.txt"
+}

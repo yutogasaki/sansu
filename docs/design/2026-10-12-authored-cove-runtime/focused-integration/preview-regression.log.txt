@@ -1,0 +1,45 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+stderr | src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > retains committed shell obstruction when the initial layer starts with a disappearance preview, including after cancel
+THREE.Material: parameter 'map' has value of undefined.
+
+ × src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > retains committed shell obstruction when the initial layer starts with a disappearance preview, including after cancel 20200ms
+   → expected { stockCount: +0, coveCount: 1, …(13) } to match object { coveCount: 1, stockCount: +0, …(1) }
+(19 matching properties omitted from actual)
+stderr | src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > previews the confirmed loss of shell and apron while cancel restores the same committed resources and pointer support
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/native/authoredCoveIntegration.test.ts > actual authored P04 cove runtime composition > previews the confirmed loss of shell and apron while cancel restores the same committed resources and pointer support 21461ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/island/growing/authoredCoveLife.test.ts > actual authored P04 cove life > retains committed shell obstruction when the initial layer starts with a disappearance preview, including after cancel
+AssertionError: expected { stockCount: +0, coveCount: 1, …(13) } to match object { coveCount: 1, stockCount: +0, …(1) }
+(19 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  Object {
+    "coveCount": 1,
+    "stockCount": 0,
+-   "triangles": 79384,
++   "triangles": 0,
+  }
+
+ ❯ src/components/island/growing/authoredCoveLife.test.ts:96:28
+     94|             expect(shell.visible).toBe(false);
+     95|             const before = f.life.walkingObstructionProof()!;
+     96|             expect(before).toMatchObject({ coveCount: 1, stockCount: 0…
+       |                            ^
+     97|             expect(before.blockedEdges).toBeGreaterThan(0); expect(bef…
+     98|             const blocked = before.excludedCells.find(at => at.x > 6 &…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 1 passed | 11 skipped (13)
+   Start at  07:13:28
+   Duration  23.25s (transform 382ms, setup 0ms, collect 911ms, tests 43.54s, environment 0ms, prepare 79ms)
+

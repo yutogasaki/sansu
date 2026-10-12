@@ -1,0 +1,57 @@
+{
+  "sha256": "fcce20cea385989175a4a8a2bc48e48a904e306d189d841cfd82b2e558a4dbe2",
+  "firstSupport": {
+    "deckUnderside": [
+      4.199265480041504,
+      1.639064073562622,
+      -7.4759745597839355
+    ],
+    "groundY": 1.6858205150963252,
+    "undersideAboveGround": -0.046756441533703175,
+    "plannedWalkTopAtThisStationY": 1.7090640735626221,
+    "plannedWalkTopAboveGround": 0.023243558466296887,
+    "boughRadius": 0.055,
+    "radiusBottomAboveGroundAtEndpoint": -0.10175644153370311
+  },
+  "plannedTopVsGround": {
+    "terrainThreshold": {
+      "minGap": 5.050073026424684e-09,
+      "maxGap": 0.10927153813109358,
+      "overlapArea": 0.3577636970884548,
+      "buriedPolygons": 0,
+      "coplanarTopArea": 0.0,
+      "clear": true,
+      "epsilon": 1e-07
+    },
+    "alignedOpening": {
+      "minGap": 0.027685467675921505,
+      "maxGap": 0.15081478793073466,
+      "overlapArea": 0.4097601318359505,
+      "buriedPolygons": 0,
+      "coplanarTopArea": 0.0,
+      "clear": true,
+      "epsilon": 1e-07
+    },
+    "eastBranchGallery": {
+      "minGap": 0.0022021729700125725,
+      "maxGap": 1.968251413602748,
+      "overlapArea": 3.1039870055922183,
+      "buriedPolygons": 0,
+      "coplanarTopArea": 0.0,
+      "clear": true,
+      "epsilon": 1e-07
+    }
+  },
+  "buriedSummary": {
+    "exactWithinOriginal1e7Epsilon": 42,
+    "nearestBottomButNotWithinOriginalEpsilon": 27,
+    "all69NearestRoleBottom": true,
+    "maximumNearestBottomPlaneResidual": 7.763028835316987e-06,
+    "unclassifiedTriangleIds": [
+      1307,
+      1308
+    ],
+    "sourceSideOrThresholdAttribution": false,
+    "interpretation": "All69 saved buried pieces lie on/near east-branch underside, not terrain threshold.42 match within original EPS;27 retain unresolved micrometer-scale remeshing/plane residual and do not receive PASS. Their clipped polygon winding is upward and they entered walk-top extraction: classify as wrong physical eligibility/orientation until separately verified, not harmless thickness acceptance."
+  }
+}

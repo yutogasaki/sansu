@@ -1,0 +1,32 @@
+"""Read saved raw + immutable local GLB triangles; no source stage execution."""
+from pathlib import Path
+import json,hashlib
+HERE=Path(__file__).resolve().parent
+# Reuse only the decoder/query definitions; do not execute the route scan again.
+s=(HERE/'analyze.py').read_text();exec(compile(s[:s.index('results=[]')],str(HERE/'analyze.py'),'exec'))
+R=json.loads((HERE/'report.json').read_text());out={'objects':{},'candidates':[]}
+for oid in [6,7,10,12,13,14,19]:
+ tri=T[OID==oid];out['objects'][str(oid)]={'identity':objects[oid],'bounds':{'min':tri.min(axis=(0,1)).tolist(),'max':tri.max(axis=(0,1)).tolist()}}
+for c in R['candidates']:
+ groups={};foot={};ranges={}
+ for segment in [x['name'] for x in c['segments']]:
+  items=[x for x in c['samples'] if x['segment']==segment];raw=[x for x in items if x['rawTrianglePairs'] is not None]
+  groups[segment]={'rawHitSamples':len(raw),'rawAndBands':sum(bool(x['motionBandObjects']) for x in raw),'rawBoxOnly':sum(not x['motionBandObjects'] for x in raw),'motionBandsWithoutRawHit':sum(x['rawTrianglePairs'] is None and bool(x['motionBandObjects']) for x in items)}
+  for oid in [6,7,10,12,13,14,19]:
+   hit=[x for x in items if oid in x['boxObjects'] or oid in x['motionBandObjects']]
+   if hit:ranges[segment+':'+str(oid)]={'firstSample':hit[0]['sample'],'lastSample':hit[-1]['sample'],'distance3DRange':[hit[0]['distance3D'],hit[-1]['distance3D']],'routeYRange':[min(x['point'][1] for x in hit),max(x['point'][1] for x in hit)],'firstPoint':hit[0]['point'],'lastPoint':hit[-1]['point']}
+  samples=[x for x in c['entrySpurFootSamples'] if x['segment']==segment]
+  if samples:
+   valid=[x['proposedRouteMinusGround'] for x in samples if x['proposedRouteMinusGround'] is not None];foot[segment]={'sampleCount':len(samples),'missingGround':sum(x['existingGroundY'] is None for x in samples),'routeMinusGroundRange':[min(valid),max(valid)]}
+ out['candidates'].append({'candidate':c['candidate'],'segmentClassifications':groups,'objectProgressRanges':ranges,'existingGroundFootSamples':foot})
+# Actual original p3 wall/roof through the common arc: centre/spine-segment witnesses.
+c=M['candidates'][0];route=np.array(c['route']);hits=[]
+for oid in [7,10,14]:
+ tri=T[OID==oid];a=tri[:,0];e1=tri[:,1]-a;e2=tri[:,2]-a
+ for offset in [0.,.10,.20,.30]:
+  for i,(p,q) in enumerate(zip(route,route[1:])):
+   p=p+np.array([0,offset,0]);q=q+np.array([0,offset,0]);direction=q-p;h=np.cross(direction,e2);det=np.einsum('ij,ij->i',e1,h);valid=np.abs(det)>1e-10;inv=np.zeros(len(det));inv[valid]=1/det[valid];v=p-a;u=np.einsum('ij,ij->i',v,h)*inv;k=np.cross(v,e1);w=np.einsum('j,ij->i',direction,k)*inv;t=np.einsum('ij,ij->i',e2,k)*inv;which=np.flatnonzero(valid&(u>=0)&(w>=0)&(u+w<=1)&(t>=0)&(t<=1))
+   for j in which:hits.append({'object':oid,'segmentStartSample':i,'spineHeightOffset':offset,'at':(p+direction*t[j]).tolist(),'triangle':tri[j].tolist(),'meaning':'route-axis witness intersects actual triangle; not an animated body-mesh test'})
+out['routeAxisSurfaceCrossings']=hits
+out['sourceUnchanged']=sha(S['inputs']['context']['path'])==S['inputs']['context']['sha256'];out['rawReportSha256']=sha(HERE/'report.json');out['scriptSha256']=sha(__file__)
+p=HERE/'sections.json';assert not p.exists();p.write_text(json.dumps(out,indent=2)+'\n');print(json.dumps({'sectionSha256':sha(p),'axisSurfaceCrossings':len(hits),'doorBounds':out['objects']['14']['bounds'],'p3WallBounds':out['objects']['10']['bounds']}))

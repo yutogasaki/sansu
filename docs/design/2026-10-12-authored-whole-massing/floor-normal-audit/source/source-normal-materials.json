@@ -1,0 +1,258 @@
+{
+  "scope": "Source evidence only; no rendering, geometry, physics or ownership changes",
+  "source": {
+    "path": "docs/design/2026-10-10-island-final-3d/whole-island.glb",
+    "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+  },
+  "terrain": {
+    "nodeIndex": 3112,
+    "node": {
+      "mesh": 3112,
+      "name": "Island / continuous sculpted mature terrain"
+    },
+    "mesh": 3112,
+    "isActiveSceneRoot": true,
+    "sourceNodeTransform": "identity"
+  },
+  "sourceToWorld": {
+    "scale": 0.45,
+    "origin": {
+      "x": 5.65,
+      "y": -0.36450000000000005,
+      "z": -1.03
+    },
+    "normals": "unchanged direction under this positive uniform scale and translation"
+  },
+  "rendererReadFromCode": {
+    "path": "src/components/island/growing/native/authoredGrowingGround.ts",
+    "normal": "computeVertexNormals after combining separately indexed floors",
+    "material": {
+      "type": "MeshStandardMaterial",
+      "vertexColors": true,
+      "roughness": 0.95,
+      "metalnessDefault": 0,
+      "sideDefault": "FrontSide"
+    }
+  },
+  "primitives": [
+    {
+      "serial": 0,
+      "attributes": {
+        "POSITION": 9053,
+        "NORMAL": 9054
+      },
+      "indicesAccessor": 9055,
+      "materialIndex": 25,
+      "rawMaterial": {
+        "doubleSided": true,
+        "name": "ground / fresh soft meadow",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.37123769521713257,
+            0.5972017645835876,
+            0.24228112399578094,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.7799999713897705
+        }
+      },
+      "textureFields": [],
+      "hasVertexColors": false,
+      "sourceNormal": {
+        "accessor": {
+          "bufferView": 9054,
+          "componentType": 5126,
+          "count": 20327,
+          "type": "VEC3"
+        },
+        "bufferView": {
+          "buffer": 0,
+          "byteLength": 243924,
+          "byteOffset": 21855184,
+          "target": 34962
+        },
+        "artifact": "terrain-0-normal.f32le.gz",
+        "encoding": "gzip of tightly packed little-endian Float32 xyz; source NORMAL vertex order",
+        "count": 20327,
+        "bytes": 243924,
+        "sha256": "a1dc6977bfeefd149ca666b38f8cba716eb74f92aa472c47e22a708e782a7892",
+        "gzipBytes": 35184,
+        "gzipSha256": "482854dc8103677b0114fb2521b95618bf5b70ca05442a47d808c84b42b020d8",
+        "firstThree": [
+          [
+            -0.024698922410607338,
+            0.5609754920005798,
+            0.8274638652801514
+          ],
+          [
+            -0.014799396507441998,
+            0.5358781218528748,
+            0.8441656231880188
+          ],
+          [
+            -0.02609996870160103,
+            0.5474993586540222,
+            0.8363989591598511
+          ]
+        ]
+      },
+      "extractedFloor": {
+        "id": "Island / continuous sculpted mature terrain:0",
+        "color": "#a4cb87",
+        "vertices": 20327,
+        "triangles": 38007,
+        "positionMaxError": 0,
+        "hasNormalField": false,
+        "roughness": null,
+        "material": null
+      }
+    },
+    {
+      "serial": 1,
+      "attributes": {
+        "POSITION": 9056,
+        "NORMAL": 9057
+      },
+      "indicesAccessor": 9058,
+      "materialIndex": 56,
+      "rawMaterial": {
+        "doubleSided": true,
+        "name": "hill / silvery meadow",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.28314873576164246,
+            0.4969329833984375,
+            0.3967552185058594,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.7799999713897705
+        }
+      },
+      "textureFields": [],
+      "hasVertexColors": false,
+      "sourceNormal": {
+        "accessor": {
+          "bufferView": 9057,
+          "componentType": 5126,
+          "count": 15972,
+          "type": "VEC3"
+        },
+        "bufferView": {
+          "buffer": 0,
+          "byteLength": 191664,
+          "byteOffset": 22518816,
+          "target": 34962
+        },
+        "artifact": "terrain-1-normal.f32le.gz",
+        "encoding": "gzip of tightly packed little-endian Float32 xyz; source NORMAL vertex order",
+        "count": 15972,
+        "bytes": 191664,
+        "sha256": "7350d15c3036ea2525efd8f0b0938012ffb801e62ead1ae829e8a6813590489c",
+        "gzipBytes": 169226,
+        "gzipSha256": "db6aab0c2e408071d6b1e5a38a491a00398930b0bf32a21e36a3f07c608e9288",
+        "firstThree": [
+          [
+            0.24909278750419617,
+            0.9137735366821289,
+            -0.3208906948566437
+          ],
+          [
+            0.24730080366134644,
+            0.9105029702186584,
+            -0.3314010798931122
+          ],
+          [
+            0.2441953718662262,
+            0.9079827666282654,
+            -0.3404935300350189
+          ]
+        ]
+      },
+      "extractedFloor": {
+        "id": "Island / continuous sculpted mature terrain:1",
+        "color": "#91bba9",
+        "vertices": 15972,
+        "triangles": 30988,
+        "positionMaxError": 0,
+        "hasNormalField": false,
+        "roughness": null,
+        "material": null
+      }
+    },
+    {
+      "serial": 2,
+      "attributes": {
+        "POSITION": 9059,
+        "NORMAL": 9060
+      },
+      "indicesAccessor": 9061,
+      "materialIndex": 57,
+      "rawMaterial": {
+        "doubleSided": true,
+        "name": "harbor / light seaside meadow",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.43965718150138855,
+            0.5840784311294556,
+            0.2622506618499756,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.7799999713897705
+        }
+      },
+      "textureFields": [],
+      "hasVertexColors": false,
+      "sourceNormal": {
+        "accessor": {
+          "bufferView": 9060,
+          "componentType": 5126,
+          "count": 9374,
+          "type": "VEC3"
+        },
+        "bufferView": {
+          "buffer": 0,
+          "byteLength": 112488,
+          "byteOffset": 23008896,
+          "target": 34962
+        },
+        "artifact": "terrain-2-normal.f32le.gz",
+        "encoding": "gzip of tightly packed little-endian Float32 xyz; source NORMAL vertex order",
+        "count": 9374,
+        "bytes": 112488,
+        "sha256": "004bf7e2a2826ff26ad5debce3f9f1401f35674ed59e01675e9fb1019edcd8ee",
+        "gzipBytes": 83013,
+        "gzipSha256": "c2998bddce27acdaaaccdeefea67a744aef065e1206735baf9baec04eb7968a3",
+        "firstThree": [
+          [
+            0.048199139535427094,
+            0.9842824339866638,
+            0.1698969602584839
+          ],
+          [
+            0.04990091547369957,
+            0.9891181588172913,
+            0.1384025514125824
+          ],
+          [
+            -0.06700342148542404,
+            0.9723495841026306,
+            0.22371141612529755
+          ]
+        ]
+      },
+      "extractedFloor": {
+        "id": "Island / continuous sculpted mature terrain:2",
+        "color": "#b1c98c",
+        "vertices": 9374,
+        "triangles": 16973,
+        "positionMaxError": 0,
+        "hasNormalField": false,
+        "roughness": null,
+        "material": null
+      }
+    }
+  ]
+}

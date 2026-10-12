@@ -1,0 +1,38 @@
+{
+  "createdAt": "2026-10-12T03:05:29.730245+00:00",
+  "reason": "Historical Markdown copies retain links relative to their original directory. Store exact bytes as .md.txt so documentation link checking does not interpret the historical copies as live documents.",
+  "historicalCopies": [
+    {
+      "oldPath": "history/completed-before-root-review/README.md",
+      "newPath": "history/completed-before-root-review/README.md.txt",
+      "oldSha256": "9440bf2514a97de1bfe95bcd2ab4fe4750af8d246bcbd2d4dbf48891e2ff3f48",
+      "newSha256": "9440bf2514a97de1bfe95bcd2ab4fe4750af8d246bcbd2d4dbf48891e2ff3f48",
+      "bytesUnchanged": true
+    },
+    {
+      "oldPath": "history/preparation/README.md",
+      "newPath": "history/preparation/README.md.txt",
+      "oldSha256": "2d4ea15d7066bef35ecf8849e74d035e140348855b5d0da963de13be26bbc2b0",
+      "newSha256": "2d4ea15d7066bef35ecf8849e74d035e140348855b5d0da963de13be26bbc2b0",
+      "bytesUnchanged": true
+    }
+  ],
+  "activeReadme": {
+    "path": "README.md",
+    "beforeSha256": "4c02e1fa8451f13afe6defa031906b6aad865d1d9b8719ae7916a56553dd75b9",
+    "beforeCopy": "packaging-correction/README-before-packaging.md.txt",
+    "afterSha256": "71c555e86ec6feae2ad99571f45e1ea61ade4825f5031bfe11cfca7bbe789181",
+    "change": "Link target suffix only"
+  },
+  "originalProofsUnchanged": {
+    "handoff-manifest.json": "da50dd7817b7fc83c21fd82731c078ba4787e492a9206a0541f9a9b1ce2e262f",
+    "archive-transfer-manifest.json": "ab59f443aa01b45f3986669410017fe3a7f375ea386de65ca16200ee8e5e765c",
+    "archive-transfer-addendum.json": "d1348dbc68c5ff3978b8bdd6e6616260f17b95dee7831d67f96e527ce2a232be"
+  },
+  "firstFailure": {
+    "path": "packaging-correction/docs-check-first-failure.log.txt",
+    "sha256": "5d6654c218ccb8927b67097308444d31734ad57c3ba83afe93a784359fd460ca",
+    "exitCode": 1
+  },
+  "scope": "Packaging only; no geometry/material/render/source input change; no asset duplication"
+}

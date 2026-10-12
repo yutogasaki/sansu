@@ -1,0 +1,45 @@
+"""Static source JSON + small arithmetic fixtures only. Never imports bpy."""
+from pathlib import Path
+import ast
+import hashlib
+import json
+from donor_reference import identity, read_references, transform_bounds, compare_bounds, compare_matrix
+from entry_geometry import EPS
+
+root=Path(__file__).resolve().parent
+study=json.loads((root/'study.json').read_text())
+names=[study['design'][key] for key in ['sourceFloorName','sourceGalleryName','sourceBarkDonorName']]+['Grove / great root house trunk']
+references=read_references(study['inputs']['sourceGlb']['path'],names)
+prior=json.loads((root/'donor-transform-static-evidence.json').read_text())
+checks=[]
+for item in prior['donors']:
+    ref=references[item['name']]
+    assert ref['gltfNode']==item['gltfNode'] and ref['parent'] is None
+    assert ref['localBoundsGltf']==item['positionAccessorBounds']
+    assert compare_bounds(ref['sourceWorldBoundsGltf'],item['sourceWorldBounds'],EPS)['matches']
+    checks.append('original GLB local/node/world correspondence: '+item['name'])
+
+floor=references[names[0]]
+assert not compare_bounds(floor['localBoundsGltf'],floor['sourceWorldBoundsGltf'],EPS)['matches']
+assert not compare_matrix(identity(),floor['sourceWorldMatrixGltf'],EPS)['matches']
+checks.append('lost source floor object translation is rejected before route generation')
+tr=study['transform'];a=identity()
+for i in range(3):
+    a[i][i]=tr['scale'];a[i][3]=tr['authoredOrigin'][i]-tr['scale']*tr['sourceGltfPivot'][i]
+correct=transform_bounds(a,floor['sourceWorldBoundsGltf'])
+omitted=transform_bounds(a,floor['localBoundsGltf'])
+double=transform_bounds(a,correct)
+assert not compare_bounds(omitted,correct,EPS)['matches']
+assert not compare_bounds(double,correct,EPS)['matches']
+checks.append('omitted and double-applied source transforms cannot match authored bounds')
+assert compare_bounds(correct,prior['donors'][0]['expectedAuthoredBounds'],EPS)['matches']
+checks.append('unchanged .45/pivot/owner transform matches pre-fix independent GLB reference')
+
+archive=root/'history/pre-donor-matrix-fix';sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+for name in ['study.json','entry_geometry.py']:
+    assert sha(root/name)==sha(archive/name)
+checks.append('all shape/entry choices and existing numeric/HOLD rules are byte-identical')
+for p in root.glob('*.py'):ast.parse(p.read_text(),filename=str(p))
+print(json.dumps({'status':'STATIC_PREPARATION_ONLY','passed':len(checks),'checks':checks,
+                  'sourceGlbSha256':study['inputs']['sourceGlb']['sha256'],'unchangedEpsilon':EPS,
+                  'BlenderExecuted':False,'correctedSourceGeometryMeasured':False,'actualDonorParity':'PENDING scheduled measure'},indent=2))

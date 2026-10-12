@@ -1,0 +1,125 @@
+--- attempt-01/diagnose-roi-face-normal.mjs
++++ attempt-02/diagnose-roi-face-normal.mjs
+@@ -59,15 +59,36 @@
+ };
+ const canonicalState = state => { const value = structuredClone(state); delete value.applied; delete value.placeProgress; return value; };
+ const walkingTopology = walking => { const value = structuredClone(walking); delete value.poses; return value; };
++// JSON turns -0 into 0. Only the persisted projection comparison uses this equivalence.
++const projectionCanonical = values => values.map(value => Object.is(value, -0) ? 0 : value);
++const rawNumberEvidence = values => ({ numericValues: values,
++    numberTokens: values.map(value => Object.is(value, -0) ? '-0' : String(value)),
++    negativeZeroIndices: values.flatMap((value, index) => Object.is(value, -0) ? [index] : []) });
++const projectionEvidence = (actual, expected) => {
++    const canonicalActual = projectionCanonical(actual), canonicalExpected = projectionCanonical(expected);
++    return { rule: 'Only Object.is(value, -0) becomes 0; no tolerance or other numeric conversion',
++        rawActual: rawNumberEvidence(actual), rawExpected: rawNumberEvidence(expected),
++        canonicalActual, canonicalExpected,
++        rawMismatchIndices: actual.flatMap((value, index) => Object.is(value, expected[index]) ? [] : [index]),
++        canonicalMismatchIndices: canonicalActual.flatMap((value, index) => Object.is(value, canonicalExpected[index]) ? [] : [index]),
++        sameLength: actual.length === expected.length,
++        canonicalExactEqual: actual.length === expected.length && canonicalActual.every((value, index) => Object.is(value, canonicalExpected[index])) };
++};
+ 
+ await fs.mkdir(output, { recursive: false });
+ const report = { schema: 'sansu-external-floor-local-normal-diagnostic-v1', diagnosticCompleted: false,
+     visualAcceptance: 'not-assessed', mode: args.mode, candidateDirectory: candidate, output,
+-    startedAt: new Date().toISOString(), captures: [], errors: [],
++    startedAt: new Date().toISOString(), captures: [], errors: [], preAssertObservations: [],
++    consoleErrors: [], failedResponses: [], failedRequests: [],
++    errorPolicy: 'All page errors, console errors, HTTP >=400 responses and request failures are fatal. No favicon or 404 exclusions. Shader errors remain fatal.',
+     exclusions: ['No application candidate edits', 'No source normals or geometry repair', 'No art/M1/application pass',
+         'Canonical state equality excludes applied command receipts and placeProgress; raw values are retained',
+         'Physical walking equality excludes instantaneous actor poses; raw poses are retained'] };
+ let browser, page, expectedSource, expectedInstalled, dependencyRoots, executable, beforeDependency, harnessBefore, targetBefore;
++const pendingResponseEvidence = new Set();
++const drainResponseEvidence = async () => {
++    while (pendingResponseEvidence.size) await Promise.all([...pendingResponseEvidence]);
++};
+ const targetPath = path.join(externalRoot, 'target.json');
+ const target = await readJson(targetPath);
+ try {
+@@ -127,8 +148,33 @@
+     report.browser = { executable, version: browser.version(), headless: true };
+     const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce', serviceWorkers: 'block' });
+     page = await context.newPage(); page.setDefaultTimeout(90000);
+-    page.on('pageerror', error => report.errors.push({ kind: 'pageerror', error: error.stack ?? String(error) }));
+-    page.on('console', message => { if (message.type() === 'error') report.errors.push({ kind: 'console-error', text: message.text() }); });
++    page.on('pageerror', error => report.errors.push({ kind: 'pageerror', atUtc: new Date().toISOString(), error: error.stack ?? String(error) }));
++    page.on('console', message => {
++        if (message.type() !== 'error') return;
++        const record = { kind: 'console-error', atUtc: new Date().toISOString(), text: message.text(), location: message.location() };
++        report.consoleErrors.push(record); report.errors.push(record);
++    });
++    page.on('requestfailed', request => {
++        const record = { kind: 'request-failed', atUtc: new Date().toISOString(), url: request.url(),
++            method: request.method(), resourceType: request.resourceType(), failure: request.failure() };
++        report.failedRequests.push(record); report.errors.push(record);
++    });
++    page.on('response', response => {
++        if (response.status() < 400) return;
++        const request = response.request();
++        const record = { kind: 'http-error-response', atUtc: new Date().toISOString(), url: response.url(),
++            status: response.status(), statusText: response.statusText(), method: request.method(),
++            resourceType: request.resourceType(), contentType: response.headers()['content-type'] ?? null,
++            fromServiceWorker: response.fromServiceWorker(), bodyPrefixCharacterLimit: 1024 };
++        // Record status immediately, even if response body retrieval later fails.
++        report.failedResponses.push(record); report.errors.push(record);
++        const task = (async () => {
++            try { const body = await response.text(); record.bodyFirstChars = body.slice(0, 1024); record.bodyCharacters = body.length; }
++            catch (error) { record.bodyReadError = error.stack ?? String(error); }
++        })();
++        pendingResponseEvidence.add(task);
++        void task.then(() => pendingResponseEvidence.delete(task));
++    });
+     const transformedResponse = page.waitForResponse(response => new URL(response.url()).pathname === '/src/components/island/growing/GrowingWorld.tsx'
+         && response.request().resourceType() === 'script');
+     await page.goto(String(url), { waitUntil: 'domcontentloaded' });
+@@ -361,6 +407,13 @@
+             return s.matches >= beforeDraw + 2 && s.drawStage === stage && (stage !== 'roi-face-normal' || s.shaderCompileCount >= 1);
+         }, { stage, beforeDraw });
+         const observed = await page.evaluate(() => window.__sansuFloorDiagnostic.observe());
++        // Persist the raw observation and lossless signed-zero evidence BEFORE any following assertion.
++        const preAssert = { stage, atUtc: new Date().toISOString(), observed,
++            rawCameraMatrices: { matrixWorld: rawNumberEvidence(observed.camera.matrixWorld),
++                projectionMatrix: rawNumberEvidence(observed.camera.projectionMatrix) },
++            projectionComparison: projectionEvidence(observed.camera.projectionMatrix, target.camera.projectionMatrix) };
++        report.preAssertObservations.push(preAssert);
++        await writeJson(`${stage}-pre-assert.json`, preAssert);
+         assert.equal(observed.app.buildRevision, expectedIdentity.build); assert.equal(observed.app.appVersion, expectedIdentity.appVersion);
+         assert.equal(observed.app.visualCandidate, expectedIdentity.candidate); assert.equal(observed.app.groundShading, 'source');
+         assert.equal(observed.app.groundSourceRevision, expectedIdentity.sourceRevision);
+@@ -378,7 +431,8 @@
+             for (const key of ['position','normal','color','index']) assert.deepEqual(observed.floor[key], target.floorAttributes[key], `Prior actual floor ${key} changed`);
+             assert.deepEqual(observed.floor.groups, target.floorGroups, 'Prior actual floor groups changed');
+             assert.deepEqual(observed.camera.matrixWorld, target.camera.matrixWorld, 'Camera matrix differs from static target');
+-            assert.deepEqual(observed.camera.projectionMatrix, target.camera.projectionMatrix, 'Projection differs from static target');
++            assert.deepEqual(preAssert.projectionComparison.canonicalActual, preAssert.projectionComparison.canonicalExpected,
++                'Projection differs from static target after signed-zero-only canonicalization');
+             assert.equal(observed.floor.originalReceiveShadow, true); assert.equal(observed.floor.castShadow, false);
+             assert(observed.renderer.shadowEnabled, 'Cannot diagnose shadow removal when baseline shadows are disabled');
+             assert.deepEqual(JSON.parse(observed.host.growingCamera), reference.camera, 'Baseline differs from the reviewed hill-close camera');
+@@ -436,6 +490,9 @@
+     report.restoration = await page.evaluate(() => window.__sansuFloorDiagnostic.cleanup());
+     assert(report.restoration.complete && report.restoration.matches >= 2);
+     assert.equal(report.restoration.clonesDisposed, 1);
++    await drainResponseEvidence();
++    await writeJson('network-errors-before-completion.json', { consoleErrors: report.consoleErrors,
++        failedResponses: report.failedResponses, failedRequests: report.failedRequests, errors: report.errors });
+     assert.deepEqual(report.errors, []);
+     report.diagnosticCompleted = true;
+ } catch (error) {
+@@ -448,8 +505,14 @@
+         }
+         catch (error) { report.restoration = { complete: false, error: error.stack ?? String(error) }; }
+     }
++    // Keep listeners active through cleanup/close, then drain body evidence even on the first failure.
++    await drainResponseEvidence();
+     try { await browser?.close(); }
+     catch (error) { report.browserCloseError = error.stack ?? String(error); report.diagnosticCompleted = false; process.exitCode = 1; }
++    await drainResponseEvidence();
++    await writeJson('network-errors-final.json', { consoleErrors: report.consoleErrors,
++        failedResponses: report.failedResponses, failedRequests: report.failedRequests, errors: report.errors });
++    if (report.errors.length) { report.diagnosticCompleted = false; process.exitCode = 1; }
+     try {
+         if (expectedSource) { report.sourceAfter = await hashInputs(expectedSource); report.sourceFixed = JSON.stringify(report.sourceAfter) === JSON.stringify(report.sourceBefore);
+             assert.deepEqual(report.sourceAfter, expectedSource); assert.deepEqual(report.sourceAfter, report.sourceBefore); }

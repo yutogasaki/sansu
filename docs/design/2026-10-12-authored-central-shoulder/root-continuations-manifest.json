@@ -1,0 +1,241 @@
+{
+  "candidate": "native05-central-shoulder-sw-v3-source-v1",
+  "scope": "Three conditional owner-specific native trunk extensions, not fixed background trees.",
+  "componentArtifact": {
+    "path": "central-shoulder-components-normal-v2.glb",
+    "sha256": "c79e2cd7a228b24ff526e6d78913f6a07880e35dec1532d4c278dd7cbf10411e"
+  },
+  "profile": {
+    "path": "geometry-profile.json.gz",
+    "sha256": "7b4772489932b225d7b31ced5bd53c6835a47e8e63c71eeb43d7b59af1523d3b"
+  },
+  "roots": [
+    {
+      "node": "l33 / source-contour planted root continuation",
+      "diagnosticOwnerId": "l33",
+      "sourceNode": "Grove tree 1 / planted trunk",
+      "binding": {
+        "ownerRecord": {
+          "id": "l33",
+          "kind": "sapling",
+          "cell": {
+            "x": 6,
+            "z": -7
+          },
+          "growth": 18,
+          "maturedAt": 251
+        },
+        "sourcePart": "willow",
+        "sourcePivot": [
+          -8,
+          1.24,
+          -2.7
+        ],
+        "matureScale": [
+          0.45,
+          0.45,
+          0.45
+        ],
+        "sourceId": "native05-owned-kit-v1",
+        "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "kitExpandedSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "kitGzipSha256": "79b8ae671444bf0c4869bd8e185f8d5ac140a1d7ee3e5709c5d39e4a6735e615",
+        "authoredMatrixWorld": [
+          0.45,
+          0,
+          0,
+          0,
+          0,
+          0.45,
+          0,
+          0,
+          0,
+          0,
+          0.45,
+          0,
+          6,
+          1.247569681,
+          -7,
+          1
+        ],
+        "floorWorldId": "native05-authored-world-m0-v2",
+        "floorRevision": "authored-cove:69d3a6068481cb90",
+        "coordinateSpace": "authored world Y-up; identity source node, renderer subtracts layout.center and z2",
+        "lifecycle": "Only while this source part, owner record maturity, cell, full owner transform and composed floor revision match this audited case. Remove on move, storage, young form, source change or floor revision mismatch. Recompute contact before reuse elsewhere. No additional owner or right."
+      },
+      "vertices": 20,
+      "triangles": 36,
+      "positionsSha256": "3208881acf50348347396bc0671c5754e72744e3c5824ee24b93bc8655e9d779",
+      "indicesSha256": "1ba4d1d20e1ffd39a89900b036eddfe00eca5be973e2d60497154596e9d1ba6d",
+      "material": {
+        "doubleSided": true,
+        "name": "sculpted tree wood",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.423267662525177,
+            0.19120168685913086,
+            0.08865558356046677,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.7799999713897705
+        }
+      },
+      "renderOnce": true,
+      "countsAsNewOwner": false,
+      "attachment": "Already authored-world geometry with identity node; attach under T(-layout.center,0,-2). Never apply the source .45 owner matrix a second time."
+    },
+    {
+      "node": "l34 / source-contour planted root continuation",
+      "diagnosticOwnerId": "l34",
+      "sourceNode": "Grove / silver birch 0 / white planted trunk",
+      "binding": {
+        "ownerRecord": {
+          "id": "l34",
+          "kind": "sapling",
+          "cell": {
+            "x": 7,
+            "z": -6
+          },
+          "growth": 18,
+          "maturedAt": 251
+        },
+        "sourcePart": "birch",
+        "sourcePivot": [
+          -6.986279184897697,
+          3.1776039600372314,
+          -10.80210926532267
+        ],
+        "matureScale": [
+          0.45,
+          0.45,
+          0.45
+        ],
+        "sourceId": "native05-owned-kit-v1",
+        "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "kitExpandedSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "kitGzipSha256": "79b8ae671444bf0c4869bd8e185f8d5ac140a1d7ee3e5709c5d39e4a6735e615",
+        "authoredMatrixWorld": [
+          0.45,
+          0,
+          0,
+          0,
+          0,
+          0.45,
+          0,
+          0,
+          0,
+          0,
+          0.45,
+          0,
+          7,
+          1.625,
+          -6,
+          1
+        ],
+        "floorWorldId": "native05-authored-world-m0-v2",
+        "floorRevision": "authored-cove:69d3a6068481cb90",
+        "coordinateSpace": "authored world Y-up; identity source node, renderer subtracts layout.center and z2",
+        "lifecycle": "Only while this source part, owner record maturity, cell, full owner transform and composed floor revision match this audited case. Remove on move, storage, young form, source change or floor revision mismatch. Recompute contact before reuse elsewhere. No additional owner or right."
+      },
+      "vertices": 20,
+      "triangles": 36,
+      "positionsSha256": "01724f59c22670680bdda13313adfa9d41ec38a7761f8461db95f5522fa92f8c",
+      "indicesSha256": "217383e0b5656c079e91ecffb18bfb8f06af5aab6236ed278010d80cbd337493",
+      "material": {
+        "doubleSided": true,
+        "name": "silver birch / porcelain bark",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.8713670969009399,
+            0.8069522380828857,
+            0.838798999786377,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.7799999713897705
+        }
+      },
+      "renderOnce": true,
+      "countsAsNewOwner": false,
+      "attachment": "Already authored-world geometry with identity node; attach under T(-layout.center,0,-2). Never apply the source .45 owner matrix a second time."
+    },
+    {
+      "node": "l35 / source-contour planted root continuation",
+      "diagnosticOwnerId": "l35",
+      "sourceNode": "Grove / spire tree 0 / slender grown trunk",
+      "binding": {
+        "ownerRecord": {
+          "id": "l35",
+          "kind": "sapling",
+          "cell": {
+            "x": 8,
+            "z": -6
+          },
+          "growth": 18,
+          "maturedAt": 252
+        },
+        "sourcePart": "spire",
+        "sourcePivot": [
+          -11.300000190734863,
+          0.9632976651191711,
+          -9.300000190734863
+        ],
+        "matureScale": [
+          0.45,
+          0.45,
+          0.45
+        ],
+        "sourceId": "native05-owned-kit-v1",
+        "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+        "kitExpandedSha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+        "kitGzipSha256": "79b8ae671444bf0c4869bd8e185f8d5ac140a1d7ee3e5709c5d39e4a6735e615",
+        "authoredMatrixWorld": [
+          0.45,
+          0,
+          0,
+          0,
+          0,
+          0.45,
+          0,
+          0,
+          0,
+          0,
+          0.45,
+          0,
+          8,
+          1.655,
+          -6,
+          1
+        ],
+        "floorWorldId": "native05-authored-world-m0-v2",
+        "floorRevision": "authored-cove:69d3a6068481cb90",
+        "coordinateSpace": "authored world Y-up; identity source node, renderer subtracts layout.center and z2",
+        "lifecycle": "Only while this source part, owner record maturity, cell, full owner transform and composed floor revision match this audited case. Remove on move, storage, young form, source change or floor revision mismatch. Recompute contact before reuse elsewhere. No additional owner or right."
+      },
+      "vertices": 20,
+      "triangles": 36,
+      "positionsSha256": "ef62e6b3d9cdabf08c05eb2b0d8b2defccd890977d92c2c544871326d6b2afef",
+      "indicesSha256": "217383e0b5656c079e91ecffb18bfb8f06af5aab6236ed278010d80cbd337493",
+      "material": {
+        "doubleSided": true,
+        "name": "sculpted tree wood",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.423267662525177,
+            0.19120168685913086,
+            0.08865558356046677,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.7799999713897705
+        }
+      },
+      "renderOnce": true,
+      "countsAsNewOwner": false,
+      "attachment": "Already authored-world geometry with identity node; attach under T(-layout.center,0,-2). Never apply the source .45 owner matrix a second time."
+    }
+  ],
+  "matchingPolicy": "Match source kit identity/part, mature form and scale, source pivot, audited cell/full transform, and physical composed floor revision. IDs identify this diagnostic; matching an ID alone is insufficient. Any mismatch removes the extension until contact is recomputed. Preview move/storage/young form must never leave a root at the committed cell.",
+  "physicalGuard": "Include actual 108 root triangles with the three original tree bodies in owner access/actor-band checks. Do not grant navigation or placement from root geometry."
+}

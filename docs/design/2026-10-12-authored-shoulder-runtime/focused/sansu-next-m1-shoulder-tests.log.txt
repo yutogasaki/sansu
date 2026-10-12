@@ -1,0 +1,37 @@
+
+ RUN  v2.1.9 /private/tmp/sansu-next-m1-code
+
+stdout | src/domain/growingIsland/authoredShoulderWorld.test.ts > explicit authored shoulder diagnostic terrain > reports the bounded composition order evidence without silently dropping future water owners
+shoulder-order-locality { base: 'f38365786e1d669a', water: 'f38365786e1d669a' }
+
+ ❯ src/domain/growingIsland/authoredShoulderWorld.test.ts (6 tests | 1 failed) 49103ms
+   ✓ explicit authored shoulder diagnostic terrain > composes exact two-material source top and actual site floor references without mutating water input 3668ms
+   ✓ explicit authored shoulder diagnostic terrain > keeps all 73 acquired anchors/full-footprint samples, adds two supported rights, and retains ordinary place identities 1905ms
+   ✓ explicit authored shoulder diagnostic terrain > uses normal purchases/maturation for the same three trees without coupling land to their records 16787ms
+   ✓ explicit authored shoulder diagnostic terrain > accepts source normal/material changes, preserves clip interpolation, and changes drawing identity only 7450ms
+   ✓ explicit authored shoulder diagnostic terrain > fails closed for double composition, wrong source/local geometry, or changed physical profile 4231ms
+   × explicit authored shoulder diagnostic terrain > reports the bounded composition order evidence without silently dropping future water owners 671ms
+     → Invalid island world: site has no actual dry floor
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/domain/growingIsland/authoredShoulderWorld.test.ts > explicit authored shoulder diagnostic terrain > reports the bounded composition order evidence without silently dropping future water owners
+Error: Invalid island world: site has no actual dry floor
+ ❯ requireWorld src/domain/growingIsland/worldDefinition.ts:13:91
+     11| const turn = (x: number, z: number, count: number): Cell => count === …
+     12|     : count === 2 ? { x: -x, z: -z } : count === 3 ? { x: z, z: -x } :…
+     13| function requireWorld(valid: unknown, message: string): asserts valid …
+       |                                                                                           ^
+     14| function freeze<T>(value: T): T {
+     15|     if (value && typeof value === 'object' && !Object.isFrozen(value))…
+ ❯ Module.compileWorldDefinition src/domain/growingIsland/worldDefinition.ts:288:13
+ ❯ Module.composeAuthoredShoulderWorld src/domain/growingIsland/authoredShoulderWorld.ts:149:21
+ ❯ src/domain/growingIsland/authoredShoulderWorld.test.ts:118:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 5 passed (6)
+   Start at  09:42:35
+   Duration  49.83s (transform 244ms, setup 0ms, collect 325ms, tests 49.10s, environment 0ms, prepare 31ms)
+

@@ -1,0 +1,320 @@
+{
+  "target": {
+    "x": 4,
+    "z": -4
+  },
+  "canPlace": true,
+  "before": {
+    "reached": 1490,
+    "unreachable": []
+  },
+  "after": {
+    "reached": 181,
+    "unreachable": [
+      "p3",
+      "p5",
+      "p6",
+      "p7",
+      "p8",
+      "l10",
+      "l11",
+      "l12",
+      "l13",
+      "l16",
+      "l17",
+      "l18",
+      "l19",
+      "l20",
+      "l21",
+      "l22",
+      "l23",
+      "l24",
+      "l25",
+      "l26",
+      "l27",
+      "l28",
+      "l31",
+      "l32"
+    ]
+  },
+  "sameFailedWorldBeforeMove": {
+    "reached": 1477,
+    "unreachable": []
+  },
+  "waterFloorsIdentical": true,
+  "removedFloorIds": [
+    "[\"native05-cove-corner-shared-apron-v1\",\"shared-apron\"]"
+  ],
+  "changedRetainedFloors": [],
+  "removedWalkable": [
+    "3.5,-4.5",
+    "3.75,-4.5",
+    "4,-4.5",
+    "4.5,-4.5",
+    "3.5,-4.25",
+    "3.75,-4.25",
+    "4,-4.25",
+    "4.25,-4.25",
+    "4.5,-4.25",
+    "3.5,-4",
+    "3.75,-4",
+    "4,-4",
+    "4.25,-4",
+    "4.5,-4",
+    "3.5,-3.75",
+    "3.75,-3.75",
+    "4,-3.75",
+    "4.25,-3.75",
+    "4.5,-3.75"
+  ],
+  "addedWalkable": [
+    "7.75,-0.5",
+    "8,-0.5",
+    "8.25,-0.5",
+    "7.5,-0.25",
+    "7.75,-0.25",
+    "8,-0.25",
+    "8.25,-0.25",
+    "8.5,-0.25",
+    "7.5,0",
+    "7.75,0",
+    "8,0",
+    "8.25,0",
+    "8.5,0",
+    "7.5,0.25",
+    "7.75,0.25",
+    "8,0.25",
+    "8.25,0.25",
+    "8.5,0.25",
+    "7.5,0.5",
+    "7.75,0.5",
+    "8,0.5",
+    "8.25,0.5",
+    "8.5,0.5"
+  ],
+  "blockingBoundary": [
+    {
+      "key": "3.5,-4.5",
+      "neighbors": [
+        "3.5,-4.75",
+        "3.25,-4.5",
+        "3.75,-4.5",
+        "3.5,-4.25"
+      ],
+      "reachableNeighbors": [
+        "3.25,-4.5"
+      ],
+      "disconnectedNeighbors": [
+        "3.5,-4.75"
+      ]
+    },
+    {
+      "key": "3.75,-4.5",
+      "neighbors": [
+        "3.5,-4.5",
+        "4,-4.5",
+        "3.75,-4.25"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4,-4.5",
+      "neighbors": [
+        "4,-4.75",
+        "3.75,-4.5",
+        "4,-4.25"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": [
+        "4,-4.75"
+      ]
+    },
+    {
+      "key": "4.5,-4.5",
+      "neighbors": [
+        "4.5,-4.75",
+        "4.75,-4.5",
+        "4.5,-4.25"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": [
+        "4.5,-4.75",
+        "4.75,-4.5"
+      ]
+    },
+    {
+      "key": "3.5,-4.25",
+      "neighbors": [
+        "3.5,-4.5",
+        "3.25,-4.25",
+        "3.75,-4.25",
+        "3.5,-4"
+      ],
+      "reachableNeighbors": [
+        "3.25,-4.25"
+      ],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "3.75,-4.25",
+      "neighbors": [
+        "3.75,-4.5",
+        "3.5,-4.25",
+        "4,-4.25",
+        "3.75,-4"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4,-4.25",
+      "neighbors": [
+        "4,-4.5",
+        "3.75,-4.25",
+        "4.25,-4.25",
+        "4,-4"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4.25,-4.25",
+      "neighbors": [
+        "4,-4.25",
+        "4.5,-4.25",
+        "4.25,-4"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4.5,-4.25",
+      "neighbors": [
+        "4.5,-4.5",
+        "4.25,-4.25",
+        "4.5,-4"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "3.5,-4",
+      "neighbors": [
+        "3.5,-4.25",
+        "3.25,-4",
+        "3.75,-4",
+        "3.5,-3.75"
+      ],
+      "reachableNeighbors": [
+        "3.25,-4"
+      ],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "3.75,-4",
+      "neighbors": [
+        "3.75,-4.25",
+        "3.5,-4",
+        "4,-4",
+        "3.75,-3.75"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4,-4",
+      "neighbors": [
+        "4,-4.25",
+        "3.75,-4",
+        "4.25,-4",
+        "4,-3.75"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4.25,-4",
+      "neighbors": [
+        "4.25,-4.25",
+        "4,-4",
+        "4.5,-4",
+        "4.25,-3.75"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4.5,-4",
+      "neighbors": [
+        "4.5,-4.25",
+        "4.25,-4",
+        "4.5,-3.75"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "3.5,-3.75",
+      "neighbors": [
+        "3.5,-4",
+        "3.25,-3.75",
+        "3.75,-3.75",
+        "3.5,-3.5"
+      ],
+      "reachableNeighbors": [
+        "3.25,-3.75"
+      ],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "3.75,-3.75",
+      "neighbors": [
+        "3.75,-4",
+        "3.5,-3.75",
+        "4,-3.75",
+        "3.75,-3.5"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4,-3.75",
+      "neighbors": [
+        "4,-4",
+        "3.75,-3.75",
+        "4.25,-3.75",
+        "4,-3.5"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4.25,-3.75",
+      "neighbors": [
+        "4.25,-4",
+        "4,-3.75",
+        "4.5,-3.75",
+        "4.25,-3.5"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    },
+    {
+      "key": "4.5,-3.75",
+      "neighbors": [
+        "4.5,-4",
+        "4.25,-3.75",
+        "4.5,-3.5"
+      ],
+      "reachableNeighbors": [],
+      "disconnectedNeighbors": []
+    }
+  ],
+  "blockedRoutePoints": [
+    {
+      "x": 3.5,
+      "z": -4.5
+    }
+  ]
+}

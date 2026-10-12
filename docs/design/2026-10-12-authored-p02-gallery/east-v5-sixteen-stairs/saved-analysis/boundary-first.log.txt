@@ -1,0 +1,128 @@
+{
+  "parity": {
+    "aligned-opening": true,
+    "front-junction": true,
+    "native-interior": true,
+    "real-sixteen-stairs": true,
+    "terrain-threshold": true
+  },
+  "areas": {
+    "originalDoublePlan": 0.35776369708886185,
+    "reconstructedRawFloat32": 0.3577636884415938,
+    "visibleThresholdOnly": 0.19184253543386412,
+    "rawThresholdNotCoveredByAnyVisibleOwnerTop": 5.9439076985191953e-08
+  },
+  "missingParts": 39,
+  "maximumMissingMinorWidth": 2.5564106833636773e-07,
+  "sections": [
+    {
+      "name": "threshold",
+      "originalPlanMissing": 0.0,
+      "reconstructedActualClosedThresholdMissing": 0.2572902908493592,
+      "actualGLBVisibleThresholdMissing": 0.2572902908493592,
+      "actualGLBAllOwnerTopMissing": 0.2572902908493592,
+      "probeLineShiftsNotMeshOrEpsilonChanges": [
+        {
+          "normalShift": -1e-05,
+          "uncoveredTotalLength": 0.6400000000000007,
+          "maximumGapLength": 0.6400000000000007
+        },
+        {
+          "normalShift": -1e-06,
+          "uncoveredTotalLength": 0.6400000000000007,
+          "maximumGapLength": 0.6400000000000007
+        },
+        {
+          "normalShift": -3e-07,
+          "uncoveredTotalLength": 0.6400000000000007,
+          "maximumGapLength": 0.6400000000000007
+        },
+        {
+          "normalShift": -1e-07,
+          "uncoveredTotalLength": 0.5650250756402999,
+          "maximumGapLength": 0.14750823412879213
+        },
+        {
+          "normalShift": 0,
+          "uncoveredTotalLength": 0.2572902908493592,
+          "maximumGapLength": 0.035064680851531825
+        },
+        {
+          "normalShift": 1e-07,
+          "uncoveredTotalLength": 0.052744349758163694,
+          "maximumGapLength": 0.015946313322219893
+        },
+        {
+          "normalShift": 3e-07,
+          "uncoveredTotalLength": 2.0866048629778402e-07,
+          "maximumGapLength": 1.0433110305526117e-07
+        },
+        {
+          "normalShift": 1e-06,
+          "uncoveredTotalLength": 2.0865967001398288e-07,
+          "maximumGapLength": 1.0433272896338271e-07
+        },
+        {
+          "normalShift": 1e-05,
+          "uncoveredTotalLength": 2.086491756663625e-07,
+          "maximumGapLength": 1.0435363949974328e-07
+        }
+      ]
+    },
+    {
+      "name": "plateau",
+      "originalPlanMissing": 6.447353299354008e-08,
+      "reconstructedActualClosedThresholdMissing": 0.0,
+      "actualGLBVisibleThresholdMissing": 0.00784488005669701,
+      "actualGLBAllOwnerTopMissing": 0.00784488005669701,
+      "probeLineShiftsNotMeshOrEpsilonChanges": [
+        {
+          "normalShift": -1e-05,
+          "uncoveredTotalLength": 9.623626892041933e-09,
+          "maximumGapLength": 9.623626892041933e-09
+        },
+        {
+          "normalShift": -1e-06,
+          "uncoveredTotalLength": 9.623629162910983e-10,
+          "maximumGapLength": 9.623629162910983e-10
+        },
+        {
+          "normalShift": -3e-07,
+          "uncoveredTotalLength": 2.8870909176583675e-10,
+          "maximumGapLength": 2.8870909176583675e-10
+        },
+        {
+          "normalShift": -1e-07,
+          "uncoveredTotalLength": 9.624276866761355e-11,
+          "maximumGapLength": 9.623636392194557e-11
+        },
+        {
+          "normalShift": 0,
+          "uncoveredTotalLength": 0.00784488005669701,
+          "maximumGapLength": 0.007229459012406739
+        },
+        {
+          "normalShift": 1e-07,
+          "uncoveredTotalLength": 0.003324223031105691,
+          "maximumGapLength": 0.0032581187382836117
+        },
+        {
+          "normalShift": 3e-07,
+          "uncoveredTotalLength": 1.5189425700632995e-12,
+          "maximumGapLength": 1.1292821873304523e-12
+        },
+        {
+          "normalShift": 1e-06,
+          "uncoveredTotalLength": 4.82475769588767e-12,
+          "maximumGapLength": 3.763722993764876e-12
+        },
+        {
+          "normalShift": 1e-05,
+          "uncoveredTotalLength": 4.733295021871207e-11,
+          "maximumGapLength": 3.763888266982439e-11
+        }
+      ]
+    }
+  ],
+  "seconds": 0.097251542
+}

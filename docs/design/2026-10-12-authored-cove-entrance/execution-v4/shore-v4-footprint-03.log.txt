@@ -1,0 +1,28 @@
+{
+  "candidate": "native05-authored-cove-shore-v4",
+  "sourceId": "native05-authored-cove-corner-v3",
+  "method": "Piecewise cubic sea-facing arc, exact GEOS difference from existing dry triangles; no original-floor changes",
+  "library": {
+    "shapely": "2.0.7",
+    "geos": "3.11.4"
+  },
+  "source_world_sha256": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+  "original_outline_area": 11.901102494132548,
+  "added_area": 4.764945608606567,
+  "overlap_area": 9.14242973600705e-20,
+  "protected_sweep_radius": 0.28406937059140586,
+  "full_width_sweep_uncovered_area": 0.0,
+  "added_bounds": [
+    6.04625,
+    -0.9173270505817582,
+    10.285000086,
+    2.5843744201660157
+  ],
+  "prior_rectangle_bounds": [
+    6.23,
+    -0.55,
+    9.96,
+    2
+  ],
+  "original_triangle_count_in_clip": 11856
+}

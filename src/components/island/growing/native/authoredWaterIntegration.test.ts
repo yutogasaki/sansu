@@ -21,6 +21,7 @@ import type { AuthoredWaterBridgeSkin } from './authoredWaterBridgeArt';
 import bridgeProfile from '../../../../domain/growingIsland/nativeWaterBridgeProfile.json';
 
 let base: IslandWorld, state: GrowingState, epoch: number, bridgeSkin: AuthoredWaterBridgeSkin;
+const definitionSha = (world: IslandWorld) => createHash('sha256').update(JSON.stringify(world.definition)).digest('hex');
 beforeAll(() => {
     base = withNative05WaterCarvingScope(compileWorldDefinition(JSON.parse(gunzipSync(readFileSync('prototypes/place-qa/native05-world.json.gz')).toString())));
     const fixture = JSON.parse(readFileSync('prototypes/place-qa/authored-water-fixture.json', 'utf8'));
@@ -99,17 +100,26 @@ describe('actual 27-owner hill water frame', () => {
 
     it('uses the same future geometry for preview and confirmation without changing the committed frame', () => {
         const initial = authoredWaterFrame(state, base), cell = { x: 12, z: -9 };
+        const initialDefinition = definitionSha(initial.world);
+        const rights = initial.world.sites.filter(site => site.placement).map(site => [site.ref, site.cell, site.point]);
         expect(canPlace(state, cell, 'l20', initial.world)).toBe(true);
         const future = previewGrowingState(state, { ownerId: 'l20', kind: 'water-bowl', cell, valid: true, allowed: [cell], seed: false, style: 'plain' })!;
         const predicted = authoredWaterFrame(future, base);
+        const predictedDefinition = definitionSha(predicted.world);
         const confirmed = applyIntent(state, { id: 'wet-move', command: { type: 'move', id: 'l20', cell } }, epoch, initial.world).state;
         expect(authoredWaterFrame(confirmed, base).plan).toEqual(predicted.plan);
-        expect(authoredWaterFrame(state, base)).toBe(initial);
-        expect(authoredWaterFrame({ ...state, applied: [] }, base)).toBe(initial);
+        const returned = authoredWaterFrame(state, base);
+        expect(returned.plan).toEqual(initial.plan); expect(returned.world.revision).toBe(initial.world.revision);
+        expect(definitionSha(returned.world)).toBe(initialDefinition);
+        expect(authoredWaterFrame({ ...state, applied: [] }, base)).toBe(returned);
         const keepsake = { ...state, keepsakes: [...state.keepsakes, { id: 'frame-shell', unitId: 'frame-unit', cell: { x: 6, z: -7 } }] };
         const obstructed = authoredWaterFrame(keepsake, base);
         expect(obstructed).not.toBe(initial);
         expect(obstructed.plan).toEqual(composeAuthoredWaterWorld(keepsake, base).plan);
+        for (const frame of [predicted, returned, obstructed])
+            expect(frame.world.sites.filter(site => site.placement).map(site => [site.ref, site.cell, site.point])).toEqual(rights);
+        expect(definitionSha(initial.world)).toBe(initialDefinition);
+        expect(definitionSha(predicted.world)).toBe(predictedDefinition);
         expect(base.definition.revision).toBeUndefined();
     });
 

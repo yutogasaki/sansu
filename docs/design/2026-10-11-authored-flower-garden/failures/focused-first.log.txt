@@ -1,0 +1,226 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+stderr | src/components/island/growing/native/nativeAuthoredFlower.test.ts > authored P05 comes from current owned flowers and existing ground > keeps real selectable geometry for every flower ID rather than assigning the whole garden to its anchor
+THREE.Material: parameter 'map' has value of undefined.
+
+ ❯ src/components/island/growing/native/nativeAuthoredFlower.test.ts (7 tests | 3 failed) 2256ms
+   × authored P05 comes from current owned flowers and existing ground > uses a normal white purchase and natural bloom to unlock exactly one proportional source crown 93ms
+     → expected 'connected' to be 'seeded' // Object.is equality
+   × authored P05 comes from current owned flowers and existing ground > grounds every thick stock in its actual owned footprint and preserves the original low flower colours 133ms
+     → expected -0.2145165820240128 to be greater than -0.1
+   ✓ authored P05 comes from current owned flowers and existing ground > splits and stores through commands, restores the same owners and crown, and cancels a preview without changing saved geometry 490ms
+   × authored P05 comes from current owned flowers and existing ground > avoids source stocks with actual .45 actors, retains all 32 owner approaches and the real bench pose/exit, and releases stored stock 395ms
+     → expected [ 'p6', 'p7', 'p8', 'p9', 'l17', …(2) ] to deeply equal []
+stderr | src/components/island/growing/authoredFlowerObstructions.test.ts > actual walking source envelope > includes actual indexed clothing, hats, ears, tail, soles and continuous walking angles with bob, while excluding sparkles
+THREE.Material: parameter 'map' has value of undefined.
+
+ ❯ src/components/island/growing/authoredFlowerObstructions.test.ts (8 tests | 2 failed) 27502ms
+   × actual walking source envelope > includes actual indexed clothing, hats, ears, tail, soles and continuous walking angles with bob, while excluding sparkles 27394ms
+     → expected { radius: 0.24406937059140585, …(2) } to deeply equal { radius: 0.24406937059140585, …(2) }
+   × actual walking source envelope > is independent of held, seat and react transforms, restores every transform/contact, and never accumulates .45 scaling 7ms
+     → expected { radius: 0.13537784025051935, …(2) } to deeply equal { radius: 0.1353778402505187, …(2) }
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/island/growing/authoredFlowerObstructions.test.ts > actual walking source envelope > includes actual indexed clothing, hats, ears, tail, soles and continuous walking angles with bob, while excluding sparkles
+AssertionError: expected { radius: 0.24406937059140585, …(2) } to deeply equal { radius: 0.24406937059140585, …(2) }
+
+- Expected
++ Received
+
+  Object {
+-   "height": 0.5571504652700214,
++   "height": 0.5571504652700219,
+    "radius": 0.24406937059140585,
+    "source": Object {
+      "actorIds": Array [
+        "pokomoko",
+        "walk-rabbit",
+        "walk-fox",
+        "walk-otter",
+        "walk-duck",
+        "walk-squirrel",
+        "walk-hedgehog",
+        "walk-penguin",
+        "walk-owl",
+        "walk-girl",
+        "walk-boy",
+      ],
+      "armSwing": 0.6,
+      "footSwing": 0.5,
+      "meshes": 166,
+      "method": "indexed-source-motion-intervals",
+      "vertices": 136336,
+      "visualScales": Array [
+        Array [
+          0.45,
+          0.45,
+          0.45,
+        ],
+        Array [
+          0.45,
+          0.45,
+          0.45,
+        ],
+        Array [
+          0.45,
+          0.45,
+          0.45,
+        ],
+        Array [
+          0.45,
+          0.45,
+          0.45,
+        ],
+        Array [
+          0.45,
+          0.45,
+          0.45,
+        ],
+        Array [
+          0.45,
+          0.45,
+          0.45,
+        ],
+        Array [
+          0.45,
+          0.45,
+          0.45,
+        ],
+        Array [
+          0.45,
+          0.45,
+          0.45,
+        ],
+        Array [
+          0.45,
+          0.45,
+          0.45,
+        ],
+        Array [
+          0.45,
+          0.45,
+          0.45,
+        ],
+        Array [
+          0.45,
+          0.45,
+          0.45,
+        ],
+      ],
+      "walkBob": 0.015750000000000004,
+    },
+  }
+
+ ❯ src/components/island/growing/authoredFlowerObstructions.test.ts:76:60
+     74|                 }
+     75|             }
+     76|             expect(measureAuthoredWalkingEnvelope(actors)).toEqual(env…
+       |                                                            ^
+     77|         } finally { actors.forEach(disposeActor); m.dispose(); }
+     78|     });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  src/components/island/growing/authoredFlowerObstructions.test.ts > actual walking source envelope > is independent of held, seat and react transforms, restores every transform/contact, and never accumulates .45 scaling
+AssertionError: expected { radius: 0.13537784025051935, …(2) } to deeply equal { radius: 0.1353778402505187, …(2) }
+
+- Expected
++ Received
+
+  Object {
+-   "height": 0.5500928879753579,
+-   "radius": 0.1353778402505187,
++   "height": 0.5500928879753577,
++   "radius": 0.13537784025051935,
+    "source": Object {
+      "actorIds": Array [
+        "walk-rabbit",
+      ],
+      "armSwing": 0.6,
+      "footSwing": 0.5,
+      "meshes": 16,
+      "method": "indexed-source-motion-intervals",
+      "vertices": 16827,
+      "visualScales": Array [
+        Array [
+          0.45,
+          0.45,
+          0.45,
+        ],
+      ],
+      "walkBob": 0.015750000000000004,
+    },
+  }
+
+ ❯ src/components/island/growing/authoredFlowerObstructions.test.ts:90:65
+     88|                 actor.arms?.forEach((arm, i) => arm.rotation.set(-1.4,…
+     89|                 const before = snapshot(actor);
+     90|                 expect(measureAuthoredWalkingEnvelope([actor])).toEqua…
+       |                                                                 ^
+     91|                 expect(measureAuthoredWalkingEnvelope([actor])).toEqua…
+     92|                 expect(actor.visual!.scale.toArray()).toEqual([.45, .4…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  src/components/island/growing/native/nativeAuthoredFlower.test.ts > authored P05 comes from current owned flowers and existing ground > uses a normal white purchase and natural bloom to unlock exactly one proportional source crown
+AssertionError: expected 'connected' to be 'seeded' // Object.is equality
+
+Expected: "seeded"
+Received: "connected"
+
+ ❯ src/components/island/growing/native/nativeAuthoredFlower.test.ts:80:36
+     78|         expect(mature.town).toEqual(young.town); expect(mature.drops).…
+     79|         const before = flowerArt(young), after = flowerArt(mature);
+     80|         expect(before.place.stage).toBe('seeded'); expect(crownParts(b…
+       |                                    ^
+     81|         expect(before.g.root.getObjectsByProperty('name', 'authored-fl…
+     82|         expect(after.place.stage).toBe('grown'); expect(after.place.ma…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  src/components/island/growing/native/nativeAuthoredFlower.test.ts > authored P05 comes from current owned flowers and existing ground > grounds every thick stock in its actual owned footprint and preserves the original low flower colours
+AssertionError: expected -0.2145165820240128 to be greater than -0.1
+ ❯ src/components/island/growing/native/nativeAuthoredFlower.test.ts:125:63
+    123|                 }
+    124|             }
+    125|             expect(lowest).toBeLessThan(.001); expect(lowest).toBeGrea…
+       |                                                               ^
+    126|         }
+    127|         const material = new IslandMaterials('moon-garden'), layer = b…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  src/components/island/growing/native/nativeAuthoredFlower.test.ts > authored P05 comes from current owned flowers and existing ground > avoids source stocks with actual .45 actors, retains all 32 owner approaches and the real bench pose/exit, and releases stored stock
+AssertionError: expected [ 'p6', 'p7', 'p8', 'p9', 'l17', …(2) ] to deeply equal []
+
+- Expected
++ Received
+
+- Array []
++ Array [
++   "p6",
++   "p7",
++   "p8",
++   "p9",
++   "l17",
++   "l31",
++   "l32",
++ ]
+
+ ❯ src/components/island/growing/native/nativeAuthoredFlower.test.ts:205:29
+    203|             const reached = reachableFromHome(state, filtered.walkable…
+    204|             const missing = [...state.plots, ...state.landmarks].filte…
+    205|             expect(missing).toEqual([]); expect(checksum(JSON.stringif…
+       |                             ^
+    206|             const bench = state.landmarks.find(owner => owner.id === '…
+    207|             const route = world.route(HOME_CELL, entrance, filtered.wa…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+ Test Files  2 failed (2)
+      Tests  5 failed | 10 passed (15)
+   Start at  23:53:00
+   Duration  27.88s (transform 323ms, setup 0ms, collect 568ms, tests 29.76s, environment 0ms, prepare 64ms)
+

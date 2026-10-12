@@ -1,0 +1,43 @@
+{
+  "version": {
+    "version": "authored-flower-c4-core-0e9527076f0a:6b059f7d-e8f1-4a12-9365-e8e061c26700",
+    "revision": "authored-flower-c4-core-0e9527076f0a",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "nativeKitOrWholeIslandFiles": [],
+  "versionSha256": "ff482a0c471194e4be985b56885e6dfb1b55f8941539156593f29c6bc9f93034",
+  "serviceWorkerSha256": "1821e31360773fa03555eee44551cb09067c7a9cc9c289c3d3762d19ef56bdc3",
+  "assetBudget": "PASS: precache145/8.33MiB of12MiB; Explore27/2.97MiB of8MiB, see execution.log.txt",
+  "pass": true,
+  "scope": "Normal false build; world, owned kit, flower support and editable whole-island assets excluded. DEV true captures are a separate target."
+}

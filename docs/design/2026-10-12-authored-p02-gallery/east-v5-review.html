@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>P02の実16段 — source比較</title>
+<style>
+body{margin:28px;color:#202937;background:#f5f6f8;font:15px/1.7 system-ui}main{max-width:1600px;margin:auto}h1{font-size:24px}p{max-width:1120px}section{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}figure{margin:0;padding:12px;border:1px solid #d6dbe4;background:white}img{width:100%;display:block}figcaption{font-weight:650;margin-bottom:10px}a{color:#3454a2}@media(max-width:750px){body{margin:16px}section{grid-template-columns:1fr}}
+</style>
+<main>
+<h1>P02の実16段 — 段と支えが見える形へ</h1>
+<p>滑らかな帯状だったv4から、実際の踏面・蹴上げ・手すり・幹からの支えを持つ階段に変わりました。近景では階段として読み取れます。一方、上階の居場所と入口のつながり、島全体の美術はまだHOLDです。住人の足を踏段ごとに置く動作は未実装です。</p>
+<p>最初の入口近景は旧cameraを継いだため、手前の葉と黒い近接切断が重なりました。geometryやvisibilityを変えず、cameraだけを変えた追加画像も下に並べています。保存値を照合すると、端線に沿う最大3.51cm・合計25.73cmの未被覆は、元の照会線とFloat32外周のずれでした。穴の厚みを表す数字ではありません。一方、可視床の再三角形化による微小欠け39片は別に残っています。geometryや判定幅を変えて合格にしたものではありません。</p>
+<p><strong>source美術：HOLD ／ 独立理解・安全：未検証 N=0 ／ runtime：未統合。</strong> 全画像はBlender sourceです。実アプリtarget・build・delivery flagはなく、本体での表示や通行の証拠にはしません。v5では道だけのshadow設定を本体に合わせてfalseにしたため、v4との差をすべて階段の変更へ帰属させません。</p>
+<p>追加の3/4近景では黒い近接切断が消え、踏面・両側の手すり・幹からの支えが確認できます。元の樹冠が下部を、扇葉が上回廊の一部を隠しています。16段の方式を作業の基盤にします。身体接触305件を分類し、実際の踏段動作で解決すべき蹴上げ接触167件を特定しました。次は9種の実モデルで、片足を踏面に残し、もう片足を段の上へ運ぶ動作を検証します。</p>
+<p><a href="east-v5-root-review.json">判定と画像SHA</a> · <a href="east-v5-sixteen-stairs/saved-analysis/README.md">保存値の接触分類</a> · <a href="east-v5-sixteen-stairs/README.md">原記録</a> · <a href="README.md">制作記録</a></p>
+<section>
+<figure><figcaption>採用native-05 — 全島の目標</figcaption><img src="../2026-10-10-island-final-3d/whole-island-render.png" alt="採用native-05の全島"></figure>
+<figure><figcaption>v5 — 16段・支え・手すりを含む全景</figcaption><img src="east-v5-sixteen-stairs/east-v5-shape-view/runs/01-whole/coarse-real-stair-HOLD-whole.png" alt="実16段を作ったv5の全景"></figure>
+<figure><figcaption>v4 — 支え・手すり未生成の滑らかな床</figcaption><img src="east-v4-failed-shape-view/runs/01-whole/failed-floor-only-HOLD-whole.png" alt="東回りv4の全景"></figure>
+<figure><figcaption>v5 — 旧cameraの入口近景・前景の遮蔽あり</figcaption><img src="east-v5-sixteen-stairs/east-v5-entry-view/runs/01-entry/coarse-real-stair-HOLD-entry-section.png" alt="段と支えが見える入口近景。左側は前景の葉などで遮られている"></figure>
+<figure><figcaption>v5 — cameraだけを変えた3/4近景</figcaption><img src="east-v5-sixteen-stairs/east-v5-threequarter-view/runs/01-three-quarter/coarse-real-stair-HOLD-three-quarter.png" alt="黒い近接切断のない3/4近景。下部と上回廊には既存の葉の遮蔽が残る"></figure>
+</section>
+</main>
+</html>

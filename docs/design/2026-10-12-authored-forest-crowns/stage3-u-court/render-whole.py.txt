@@ -1,0 +1,54 @@
+"""One HOLD coarse-source whole view, separately scheduled after build."""
+import os
+assert os.environ.get('SANSU_FOREST_STAGE3_APPROVED')=='1','Await source window'
+import bpy
+import hashlib
+import json
+import sys
+import time
+from pathlib import Path
+from mathutils import Matrix
+HERE=Path(__file__).resolve().parent;BASE=HERE.parent;OUT=HERE/'attempt-01'
+sys.dont_write_bytecode=True;sys.path.insert(0,str(HERE))
+import source_helpers as native
+import source_checks as checks
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+manifest=json.loads((OUT/'shape-manifest.json').read_text())
+assert manifest['allDeformationsComplete'] and manifest['status']=='HOLD-source-coarse-shape'
+for name,digest in manifest['files'].items():assert sha(OUT/name)==digest
+output=OUT/'HOLD-source-whole.png';assert not output.exists(),'No render retry'
+start=time.monotonic()
+bpy.ops.wm.open_mainfile(filepath=str(OUT/'HOLD-shape.blend'))
+scene=bpy.context.scene;assert not scene.camera
+before={o.name:native.fixed_digest(o) for o in bpy.data.objects if o.type=='MESH'}
+materials={m.name:checks.material_digest(m) for m in bpy.data.materials}
+native.B=Matrix(((1,0,0,0),(0,0,-1,0),(0,1,0,0),(0,0,0,1)))
+native.STUDY=json.loads((BASE/'study.json').read_text());native.add_views()
+scene.cycles.samples=16;scene.cycles.device='CPU';scene.render.threads_mode='FIXED';scene.render.threads=2
+assert scene.render.resolution_x==1280 and scene.render.resolution_percentage==100
+paths=[o for o in bpy.data.objects if o.name=='growing-reachable-paths' and o.type=='MESH'];assert len(paths)==1
+path=paths[0];old_shadow=path.visible_shadow
+assert old_shadow is True
+try:
+    path.visible_shadow=False
+    scene.render.image_settings.file_format='PNG';scene.render.filepath=str(output)
+    bpy.ops.render.render(write_still=True)
+finally:
+    path.visible_shadow=old_shadow
+assert before=={o.name:native.fixed_digest(o) for o in bpy.data.objects if o.type=='MESH'}
+assert materials=={m.name:checks.material_digest(m) for m in bpy.data.materials}
+for name,digest in manifest['files'].items():assert sha(OUT/name)==digest
+result={'candidate':manifest['candidate'],'status':'HOLD coarse source view; not actual app',
+        'image':output.name,'sha256':sha(output),'shapeManifestSHA':sha(OUT/'shape-manifest.json'),
+        'cameraReferenceSHA':scene.camera['evidenceSha256'],'cameraMatrix':[list(r) for r in scene.camera.matrix_world],
+        'settings':{'samples':16,'threads':2,'engine':'Cycles CPU','resolution':[scene.render.resolution_x,scene.render.resolution_y],
+                    'viewTransform':scene.view_settings.view_transform},
+        'compatibilityFix':{'object':path.name,'property':'visible_shadow','duringRender':False,'restored':path.visible_shadow,
+                            'reason':'match actual Three castShadow=false; root source-only A/B confirmed dotted-row shadow contribution'},
+        'comparisonBaseline':'../stage2/path-shadow-diagnostic/attempt-01/FAILED-HOLD-source-whole.png',
+        'comparisonBaselineSHA':'253be71d04a80c5650db98311c155083efb7e5f3cf6a53667374be2e2a19aee1',
+        'meshesMaterialsUnchanged':True,'sceneSaved':False,'elapsedSeconds':time.monotonic()-start,
+        'limitations':'Primary junctions may be unresolved; leaf70 and exact seams/clearance and actor routes untested; source lighting/ocean differ and no residents',
+        'runtimeIntegrated':False,'independentObservers':0}
+(OUT/'render-manifest.json').write_text(json.dumps(result,indent=2)+'\n')
+print('STAGE3_HOLD_WHOLE',result['sha256'],flush=True)

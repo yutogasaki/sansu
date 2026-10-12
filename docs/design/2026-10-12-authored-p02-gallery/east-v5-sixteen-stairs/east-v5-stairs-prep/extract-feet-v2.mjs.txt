@@ -1,0 +1,94 @@
+// PREPARED ONLY. Execute explicitly with a fresh output directory; no world construction.
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import {createRequire} from 'node:module';
+import {pathToFileURL} from 'node:url';
+const candidate='/private/tmp/sansu-authored-shoulder-c1/candidate';
+const output=process.argv[2];
+if(!output || fs.existsSync(output)) throw Error('Pass a fresh output directory');
+const fixture=path.join(candidate,'prototypes/place-qa/authored-shoulder-reference-mature.json');
+const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+const startUtc=new Date().toISOString();
+const require=createRequire(path.join(candidate,'package.json'));
+const {build}=require('esbuild');
+const three=path.join(path.dirname(require.resolve('three')),'three.module.js');
+const imports=[
+ ['primitives','src/components/island/three/primitives.ts'],
+ ['characters','src/components/island/three/islandCharacters.ts'],
+ ['actors','src/components/island/growing/actors.ts'],
+ ['contact','src/components/island/growing/actorScale.ts'],
+];
+const source=imports.map(([name,p])=>`import * as ${name} from ${JSON.stringify(path.join(candidate,p))};`).join('\n')+`
+import * as T from 'three';
+export function extract(state) {
+ const m=new primitives.IslandMaterials('moon-garden');
+ const rig=characters.makePokomokoRig(m);
+ const hero=actors.wrapPokomoko(rig.hero,rig.heroBody,rig.heroFeet);
+ contact.setActorVisualScale(hero,.45);
+ const roster=[{actor:hero,species:'pokomoko'},...state.villagers.map(v=>({actor:actors.makeVillagerActor(m,v,.45),species:v.species}))];
+ const result=[];
+ try {
+  for(const {actor,species} of roster) {
+   contact.resetActorVisualContact(actor);
+   actor.root.position.set(0,0,0);actor.root.rotation.set(0,0,0);actor.body.rotation.set(0,0,0);
+   actor.feet.forEach(f=>f.rotation.set(0,0,0));
+   actor.root.updateWorldMatrix(true,true);
+   const actorRow={id:actor.id,species,visualScale:actor.visual.scale.toArray(),feet:[],gallerySwingSamples:[]};
+   for(const [footIndex,foot] of actor.feet.entries()) {
+    const p=foot.getWorldPosition(new T.Vector3());
+    const footRow={footIndex,pivotRoot:p.toArray(),positionParent:foot.position.toArray(),quaternion:foot.quaternion.toArray(),scale:foot.scale.toArray(),parentMatrixRoot:foot.parent.matrixWorld.toArray(),meshes:[]};
+    foot.traverse(node=>{
+     if(!(node instanceof T.Mesh)||!node.visible)return;
+     const attr=node.geometry.getAttribute('position');if(!attr)return;
+     const ids=node.geometry.index?Array.from(node.geometry.index.array):Array.from({length:attr.count},(_,i)=>i);
+     const used=[...new Set(ids)],vertices=used.map(i=>new T.Vector3().fromBufferAttribute(attr,i).applyMatrix4(node.matrixWorld).toArray());
+     const map=new Map(used.map((i,j)=>[i,j]));
+     footRow.meshes.push({name:node.name,sourceVertexIds:used,verticesRoot:vertices,indices:ids.map(i=>map.get(i)),lowerHalfVertexIds:vertices.flatMap((v,i)=>v[1]<=p.y?[i]:[]),neutralMatrixRoot:node.matrixWorld.toArray(),meshToFoot:foot.matrixWorld.clone().invert().multiply(node.matrixWorld).toArray()});
+    });
+    actorRow.feet.push(footRow);
+   }
+   // Actual current gallery movement, no fabricated stair pose or collision PASS.
+   for(let sample=0;sample<=8;sample++) {
+    const swing=-.5+sample*.125;
+    contact.resetActorVisualContact(actor);
+    actor.feet.forEach((f,i)=>f.rotation.x=i?-swing:swing);
+    contact.alignActorContact(actor,0);
+    const feet=[];
+    for(const [footIndex,foot] of actor.feet.entries()) {
+     const vertices=[];foot.traverse(node=>{if(!(node instanceof T.Mesh)||!node.visible)return;
+      const a=node.geometry.getAttribute('position');if(!a)return;
+      const used=node.geometry.index?new Set(node.geometry.index.array):new Set(Array.from({length:a.count},(_,i)=>i));
+      for(const i of used)vertices.push(new T.Vector3().fromBufferAttribute(a,i).applyMatrix4(node.matrixWorld).toArray());
+     });feet.push({footIndex,verticesRoot:vertices});
+    }
+    actorRow.gallerySwingSamples.push({swing,visualCorrection:actor.visual.position.toArray(),feet});
+   }
+   actorRow.gallerySwingMeaning='Sampled baseline only; no guarantee of continuous extrema or per-tread planted-foot support';
+   result.push(actorRow);
+  }
+  return result;
+ } finally {for(const {actor} of roster)actors.disposeActor(actor);m.dispose();}
+}
+`;
+const bundle=await build({absWorkingDir:candidate,stdin:{contents:source,resolveDir:candidate,sourcefile:'feet-extraction-entry.ts',loader:'ts'},bundle:true,platform:'node',format:'esm',write:false,metafile:true,define:{'import.meta.env':'{}'},plugins:[{name:'one-three-runtime',setup(b){b.onResolve({filter:/^three$/},()=>({path:three,external:true}));}}]});
+const threeCore=path.join(path.dirname(three),'three.core.js');
+const virtualInputNames=['feet-extraction-entry.ts','<define:import.meta.env>'];
+const virtualInputs={
+ 'feet-extraction-entry.ts':{kind:'generated-stdin',sha256:crypto.createHash('sha256').update(source).digest('hex')},
+ '<define:import.meta.env>':{kind:'esbuild-defined-object',literal:'{}',sha256:crypto.createHash('sha256').update('{}').digest('hex')},
+};
+for(const name of Object.keys(bundle.metafile.inputs))if(name.startsWith('<')&&!virtualInputNames.includes(name))throw Error('Unknown virtual input '+name);
+const inputs=[...new Set([fixture,three,...(fs.existsSync(threeCore)?[threeCore]:[]),process.argv[1],...Object.keys(bundle.metafile.inputs).filter(p=>!virtualInputNames.includes(p)).map(p=>path.resolve(candidate,p))])];
+const before=Object.fromEntries(inputs.map(p=>[p,hash(p)]));
+fs.mkdirSync(output,{recursive:false});
+const bundlePath=path.join(output,'extraction-bundle.mjs');fs.writeFileSync(bundlePath,bundle.outputFiles[0].contents);
+const {extract}=await import(pathToFileURL(bundlePath).href);
+const state=JSON.parse(fs.readFileSync(fixture,'utf8')).state;
+const feet=extract(state);
+const after=Object.fromEntries(inputs.map(p=>[p,hash(p)]));
+if(JSON.stringify(before)!==JSON.stringify(after))throw Error('Input changed during extraction');
+const counts=feet.map(a=>({id:a.id,species:a.species,feet:a.feet.length,neutralVertices:a.feet.reduce((n,f)=>n+f.meshes.reduce((m,g)=>m+g.verticesRoot.length,0),0)}));
+fs.writeFileSync(path.join(output,'actual-feet.json'),JSON.stringify({status:'RAW_ACTUAL_FOOT_GEOMETRY_ONLY_NOT_STAIR_PASS',sourceCandidate:candidate,fixture,coordinateFrame:'actor.root local, Y up, effective pose .7 and visual .45; actual foot offsets retained',roster:counts,actors:feet},null,2)+'\n');
+fs.writeFileSync(path.join(output,'execution.json'),JSON.stringify({status:'EXTRACTED_NOT_STAIR_PASS',pid:process.pid,startUtc,endUtc:new Date().toISOString(),inputsBefore:before,inputsAfter:after,virtualInputs,bundleSha256:hash(bundlePath),outputSha256:hash(path.join(output,'actual-feet.json')),usage:process.resourceUsage(),counts},null,2)+'\n');
+console.log(JSON.stringify({output,counts,status:'EXTRACTED_NOT_STAIR_PASS'}));

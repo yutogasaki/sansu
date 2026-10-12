@@ -1,0 +1,624 @@
+{
+  "source": "/private/tmp/sansu-authored-shoulder-c2/candidate/prototypes/place-qa/native05-world-source-shading.json.gz",
+  "sha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+  "scope": "Static source-shading payload, not recomposed runtime normal buffer. Exact same-position shared edges only; does not establish no T-junctions, overlap, or geometry gaps. Projection uses static base bounds center; no fresh browser or compilation.",
+  "center": 7.0026560305,
+  "floors": [
+    {
+      "id": "Flowers / open sky gathering court:0",
+      "triangles": 352,
+      "vertices": 427,
+      "material": {
+        "roughness": 0.7799999713897705,
+        "metalness": 0,
+        "doubleSided": true
+      }
+    },
+    {
+      "id": "Garden / rounded flower terrace:0",
+      "triangles": 880,
+      "vertices": 1186,
+      "material": {
+        "roughness": 0.7799999713897705,
+        "metalness": 0,
+        "doubleSided": true
+      }
+    },
+    {
+      "id": "Grove / rounded living terrace:0",
+      "triangles": 880,
+      "vertices": 1186,
+      "material": {
+        "roughness": 0.7799999713897705,
+        "metalness": 0,
+        "doubleSided": true
+      }
+    },
+    {
+      "id": "Grove / sheltered open room:0",
+      "triangles": 352,
+      "vertices": 427,
+      "material": {
+        "roughness": 0.7799999713897705,
+        "metalness": 0,
+        "doubleSided": true
+      }
+    },
+    {
+      "id": "Harbor / shared waterfront court:0",
+      "triangles": 352,
+      "vertices": 427,
+      "material": {
+        "roughness": 0.7799999713897705,
+        "metalness": 0,
+        "doubleSided": true
+      }
+    },
+    {
+      "id": "Island / continuous sculpted mature terrain:0",
+      "triangles": 38007,
+      "vertices": 20327,
+      "material": {
+        "roughness": 0.7799999713897705,
+        "metalness": 0,
+        "doubleSided": true
+      }
+    },
+    {
+      "id": "Island / continuous sculpted mature terrain:1",
+      "triangles": 30988,
+      "vertices": 15972,
+      "material": {
+        "roughness": 0.7799999713897705,
+        "metalness": 0,
+        "doubleSided": true
+      }
+    },
+    {
+      "id": "Island / continuous sculpted mature terrain:2",
+      "triangles": 16973,
+      "vertices": 9374,
+      "material": {
+        "roughness": 0.7799999713897705,
+        "metalness": 0,
+        "doubleSided": true
+      }
+    },
+    {
+      "id": "Village / shared sunny court:0",
+      "triangles": 352,
+      "vertices": 427,
+      "material": {
+        "roughness": 0.7799999713897705,
+        "metalness": 0,
+        "doubleSided": true
+      }
+    },
+    {
+      "id": "Water town / shared frontage court:0",
+      "triangles": 352,
+      "vertices": 427,
+      "material": {
+        "roughness": 0.7799999713897705,
+        "metalness": 0,
+        "doubleSided": true
+      }
+    }
+  ],
+  "positionGroups": 47042,
+  "duplicatePositionGroups": 813,
+  "vertexNormalGapCountAbovePoint01Deg": 196,
+  "sharedEdges": 131942,
+  "edgeNormalGapCountAbovePoint01Deg": 196,
+  "nonManifoldExactEdges": 0,
+  "duplicatePhysicalTriangleCount": 0,
+  "maxVertexGapDeg": 11.252458753491476,
+  "roiVertexGaps": [
+    {
+      "point": {
+        "x": 3.763712692,
+        "y": 0.209249989,
+        "z": -4.71097353
+      },
+      "pixel": [
+        653.6799142341348,
+        568.7303223138442
+      ],
+      "angleDegrees": 11.244765355357089,
+      "floors": [
+        "Grove / rounded living terrace:0"
+      ],
+      "roi": true
+    },
+    {
+      "point": {
+        "x": 3.868196428,
+        "y": 0.209249989,
+        "z": -4.707549314
+      },
+      "pixel": [
+        657.7676095165854,
+        575.13905136478
+      ],
+      "angleDegrees": 11.244139183043206,
+      "floors": [
+        "Grove / rounded living terrace:0"
+      ],
+      "roi": true
+    },
+    {
+      "point": {
+        "x": 3.970100737,
+        "y": 0.209249989,
+        "z": -4.696368151
+      },
+      "pixel": [
+        660.9416717812556,
+        581.5842663068258
+      ],
+      "angleDegrees": 11.239538389418382,
+      "floors": [
+        "Grove / rounded living terrace:0"
+      ],
+      "roi": true
+    },
+    {
+      "point": {
+        "x": 4.069383454,
+        "y": 0.209249989,
+        "z": -4.676333551
+      },
+      "pixel": [
+        663.086664131438,
+        588.0906405241662
+      ],
+      "angleDegrees": 11.236641744572546,
+      "floors": [
+        "Grove / rounded living terrace:0"
+      ],
+      "roi": true
+    },
+    {
+      "point": {
+        "x": 4.166002524,
+        "y": 0.209249989,
+        "z": -4.646349888
+      },
+      "pixel": [
+        664.0872438955518,
+        594.682832605826
+      ],
+      "angleDegrees": 11.236364974622331,
+      "floors": [
+        "Grove / rounded living terrace:0"
+      ],
+      "roi": true
+    },
+    {
+      "point": {
+        "x": 4.259915781,
+        "y": 0.209249989,
+        "z": -4.605320673
+      },
+      "pixel": [
+        663.8279742380136,
+        601.385515850637
+      ],
+      "angleDegrees": 11.2340818882637,
+      "floors": [
+        "Grove / rounded living terrace:0"
+      ],
+      "roi": true
+    },
+    {
+      "point": {
+        "x": 4.525,
+        "y": 0.209249989,
+        "z": -4.405
+      },
+      "pixel": [
+        654.3372785553256,
+        622.4031767602471
+      ],
+      "angleDegrees": 11.233941267426497,
+      "floors": [
+        "Grove / rounded living terrace:0"
+      ],
+      "roi": true
+    },
+    {
+      "point": {
+        "x": 4.43945663,
+        "y": 0.209249989,
+        "z": -4.485742002
+      },
+      "pixel": [
+        659.068403677917,
+        615.2210166634131
+      ],
+      "angleDegrees": 11.233452927853493,
+      "floors": [
+        "Grove / rounded living terrace:0"
+      ],
+      "roi": true
+    },
+    {
+      "point": {
+        "x": 4.351081169,
+        "y": 0.209249989,
+        "z": -4.552150064
+      },
+      "pixel": [
+        662.1934900577271,
+        608.223354150283
+      ],
+      "angleDegrees": 11.232589318161613,
+      "floors": [
+        "Grove / rounded living terrace:0"
+      ],
+      "roi": true
+    }
+  ],
+  "roiEdgeGaps": [
+    {
+      "points": [
+        [
+          3.763712692,
+          0.209249989,
+          -4.71097353
+        ],
+        [
+          3.868196428,
+          0.209249989,
+          -4.707549314
+        ]
+      ],
+      "pixels": [
+        [
+          653.6799142341348,
+          568.7303223138442
+        ],
+        [
+          657.7676095165854,
+          575.13905136478
+        ]
+      ],
+      "angleDegrees": 11.244765355357089,
+      "faces": [
+        [
+          "Grove / rounded living terrace:0",
+          0
+        ],
+        [
+          "Grove / rounded living terrace:0",
+          486
+        ]
+      ],
+      "roi": true
+    },
+    {
+      "points": [
+        [
+          3.656691694,
+          0.209249989,
+          -4.707736855
+        ],
+        [
+          3.763712692,
+          0.209249989,
+          -4.71097353
+        ]
+      ],
+      "pixels": [
+        [
+          648.7939778493318,
+          562.333416545858
+        ],
+        [
+          653.6799142341348,
+          568.7303223138442
+        ]
+      ],
+      "angleDegrees": 11.244765355357089,
+      "faces": [
+        [
+          "Grove / rounded living terrace:0",
+          0
+        ],
+        [
+          "Grove / rounded living terrace:0",
+          478
+        ]
+      ],
+      "roi": true
+    },
+    {
+      "points": [
+        [
+          3.868196428,
+          0.209249989,
+          -4.707549314
+        ],
+        [
+          3.970100737,
+          0.209249989,
+          -4.696368151
+        ]
+      ],
+      "pixels": [
+        [
+          657.7676095165854,
+          575.13905136478
+        ],
+        [
+          660.9416717812556,
+          581.5842663068258
+        ]
+      ],
+      "angleDegrees": 11.244139183043206,
+      "faces": [
+        [
+          "Grove / rounded living terrace:0",
+          2
+        ],
+        [
+          "Grove / rounded living terrace:0",
+          494
+        ]
+      ],
+      "roi": true
+    },
+    {
+      "points": [
+        [
+          3.970100737,
+          0.209249989,
+          -4.696368151
+        ],
+        [
+          4.069383454,
+          0.209249989,
+          -4.676333551
+        ]
+      ],
+      "pixels": [
+        [
+          660.9416717812556,
+          581.5842663068258
+        ],
+        [
+          663.086664131438,
+          588.0906405241662
+        ]
+      ],
+      "angleDegrees": 11.239538389418382,
+      "faces": [
+        [
+          "Grove / rounded living terrace:0",
+          4
+        ],
+        [
+          "Grove / rounded living terrace:0",
+          502
+        ]
+      ],
+      "roi": true
+    },
+    {
+      "points": [
+        [
+          4.069383454,
+          0.209249989,
+          -4.676333551
+        ],
+        [
+          4.166002524,
+          0.209249989,
+          -4.646349888
+        ]
+      ],
+      "pixels": [
+        [
+          663.086664131438,
+          588.0906405241662
+        ],
+        [
+          664.0872438955518,
+          594.682832605826
+        ]
+      ],
+      "angleDegrees": 11.236641744572546,
+      "faces": [
+        [
+          "Grove / rounded living terrace:0",
+          6
+        ],
+        [
+          "Grove / rounded living terrace:0",
+          510
+        ]
+      ],
+      "roi": true
+    },
+    {
+      "points": [
+        [
+          4.166002524,
+          0.209249989,
+          -4.646349888
+        ],
+        [
+          4.259915781,
+          0.209249989,
+          -4.605320673
+        ]
+      ],
+      "pixels": [
+        [
+          664.0872438955518,
+          594.682832605826
+        ],
+        [
+          663.8279742380136,
+          601.385515850637
+        ]
+      ],
+      "angleDegrees": 11.236364974622331,
+      "faces": [
+        [
+          "Grove / rounded living terrace:0",
+          9
+        ],
+        [
+          "Grove / rounded living terrace:0",
+          518
+        ]
+      ],
+      "roi": true
+    },
+    {
+      "points": [
+        [
+          4.259915781,
+          0.209249989,
+          -4.605320673
+        ],
+        [
+          4.351081169,
+          0.209249989,
+          -4.552150064
+        ]
+      ],
+      "pixels": [
+        [
+          663.8279742380136,
+          601.385515850637
+        ],
+        [
+          662.1934900577271,
+          608.223354150283
+        ]
+      ],
+      "angleDegrees": 11.2340818882637,
+      "faces": [
+        [
+          "Grove / rounded living terrace:0",
+          12
+        ],
+        [
+          "Grove / rounded living terrace:0",
+          526
+        ]
+      ],
+      "roi": true
+    },
+    {
+      "points": [
+        [
+          4.43945663,
+          0.209249989,
+          -4.485742002
+        ],
+        [
+          4.525,
+          0.209249989,
+          -4.405
+        ]
+      ],
+      "pixels": [
+        [
+          659.068403677917,
+          615.2210166634131
+        ],
+        [
+          654.3372785553256,
+          622.4031767602471
+        ]
+      ],
+      "angleDegrees": 11.233941267426497,
+      "faces": [
+        [
+          "Grove / rounded living terrace:0",
+          18
+        ],
+        [
+          "Grove / rounded living terrace:0",
+          542
+        ]
+      ],
+      "roi": true
+    },
+    {
+      "points": [
+        [
+          4.525,
+          0.209249989,
+          -4.405
+        ],
+        [
+          4.590684724,
+          0.209249989,
+          -4.327455621
+        ]
+      ],
+      "pixels": [
+        [
+          654.3372785553256,
+          622.4031767602471
+        ],
+        [
+          649.0931871861924,
+          628.3040292364777
+        ]
+      ],
+      "angleDegrees": 11.233941267426497,
+      "faces": [
+        [
+          "Grove / rounded living terrace:0",
+          21
+        ],
+        [
+          "Grove / rounded living terrace:0",
+          550
+        ]
+      ],
+      "roi": true
+    },
+    {
+      "points": [
+        [
+          4.351081169,
+          0.209249989,
+          -4.552150064
+        ],
+        [
+          4.43945663,
+          0.209249989,
+          -4.485742002
+        ]
+      ],
+      "pixels": [
+        [
+          662.1934900577271,
+          608.223354150283
+        ],
+        [
+          659.068403677917,
+          615.2210166634131
+        ]
+      ],
+      "angleDegrees": 11.233452927853493,
+      "faces": [
+        [
+          "Grove / rounded living terrace:0",
+          15
+        ],
+        [
+          "Grove / rounded living terrace:0",
+          534
+        ]
+      ],
+      "roi": true
+    }
+  ]
+}

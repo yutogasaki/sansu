@@ -1,0 +1,52 @@
+{
+  "createdAtUtc": "2026-10-12T05:07:51.318110+00:00",
+  "status": "FOCUSED_PASS_INTEGRATION_PENDING",
+  "base": "immutable authored-shoulder-c2 candidate; original all8 remains separate",
+  "purpose": "Reuse the already compiled accepted bridge support snapshot; remove one redundant full world compile when a bridge is accepted. No new cache or physical/rendered world changes.",
+  "files": [
+    {
+      "path": "src/domain/growingIsland/authoredWaterBridge.ts",
+      "beforeSha256": "65594e5eb508d5dad13bd0693d213a66731caa9b60b9d419eefcf3c5983f60cf",
+      "afterSha256": "23d75eb2a3f7e9a2c623ee8ac44758d7c4b677260cdd74025e82dbabc6e95b1d"
+    },
+    {
+      "path": "src/domain/growingIsland/authoredWaterWorld.ts",
+      "beforeSha256": "7640bd96ac4eb6797f46862f1b9a223d575f3bc9b51ae05f41351865cce2e486",
+      "afterSha256": "3cf0b8992204fdc26f820b6a948f743c3f2d59e1033ec93223ba3b4ae1db76d0"
+    },
+    {
+      "path": "src/domain/growingIsland/authoredWaterBridge.test.ts",
+      "beforeSha256": "383f68903130972e452cae3b4e6ecc7a516845b323702efc406e524c26e99555",
+      "afterSha256": "c7a4b1d5397975324102a000f82358c310c3ddfa1c3653410f596bd9d394587a"
+    }
+  ],
+  "checks": [
+    {
+      "command": "npx vitest run src/domain/growingIsland/authoredWaterBridge.test.ts src/domain/growingIsland/authoredWaterWorld.test.ts",
+      "exitCode": 0,
+      "files": 2,
+      "tests": 30,
+      "durationSeconds": 7.14,
+      "cases": [
+        "ordinary, rotated and nonlinear floor/walk query parity versus fresh compile",
+        "exact cutWorld identity after all bridges rejected",
+        "retained accepted snapshot after later rejected owner and caller definition mutation"
+      ]
+    },
+    {
+      "command": "npx eslint src/domain/growingIsland/authoredWaterBridge.ts src/domain/growingIsland/authoredWaterWorld.ts src/domain/growingIsland/authoredWaterBridge.test.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run typecheck",
+      "exitCode": 0
+    }
+  ],
+  "evidenceProvenance": "Root recorded completed exec tool return values; commands were not redirected to saved raw stdout. Source before/after files are byte copies, not reconstructed.",
+  "requiredRemaining": [
+    "stable integration core including build",
+    "affected actual authored water/shoulder editing checks",
+    "isolated interaction performance measurement; no claimed speedup"
+  ],
+  "performanceClaim": null
+}

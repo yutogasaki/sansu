@@ -1,0 +1,34 @@
+{
+  "scope": "Supplemental classic build-value observation only; no extra browser or regression retry.",
+  "status": "BUILD_VALUE_NOT_OBTAINED",
+  "regressionPassUnchanged": true,
+  "runnerCommandPid": 68382,
+  "candidateCwd": "/private/tmp/sansu-authored-cove-c4/candidate",
+  "command": [
+    "npm",
+    "run",
+    "e2e:smoke"
+  ],
+  "environmentOverrides": {
+    "VITE_ISLAND_ENABLED": "false",
+    "VITE_NATIVE_GROWING_ART": "false",
+    "VITE_EXPLORE_EXPERIENCE": "classic-v1",
+    "SANSU_E2E_DIAGNOSTIC_DIR": "/private/tmp/sansu-authored-cove-c4/regressions/04-classic-smoke/diagnostics",
+    "SANSU_E2E_CAPTURE_DIR": "/private/tmp/sansu-authored-cove-c4/regressions/04-classic-smoke/captures"
+  },
+  "ownedServerStartupEvidence": [
+    "Starting dev server on http://127.0.0.1:4173...",
+    "Dev server ready on http://127.0.0.1:4173."
+  ],
+  "recordedAtUnixSeconds": 1791764306.659633,
+  "observedResponses": [
+    "served-App.tsx.txt",
+    "served-vite-client.txt"
+  ],
+  "observations": [
+    "Actual App response sets data-build-revision from __BUILD_REVISION__, not an inline value.",
+    "Actual Vite client imports the env module from the recorded node_modules path.",
+    "The next HTTP read of that env module returned connection refused after normal classic completion and server cleanup. No retry or new browser was started."
+  ],
+  "limitation": "Classic raw smoke-report exposes harnessHash and scenario results, but no screen build value. Runtime DOM build value is unavailable; provenance uses fixed source/harness, command/env, owned command PID/candidate cwd and owned port startup."
+}

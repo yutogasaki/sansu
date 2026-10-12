@@ -1,0 +1,65 @@
+"""Small GLB JSON/bounds checks for the four frozen donors; no bpy or meshes.
+
+EPS is supplied by the unchanged entry helper. Bounds arithmetic uses doubles
+and the explicitly captured matrix, avoiding a new geometry-gap tolerance.
+"""
+import itertools
+import json
+import struct
+
+
+def identity():
+    return [[float(i == j) for j in range(4)] for i in range(4)]
+
+
+def transform_point(matrix, point):
+    return [sum(matrix[i][j] * point[j] for j in range(3)) + matrix[i][3] for i in range(3)]
+
+
+def bounds(points):
+    return {key: [op(p[i] for p in points) for i in range(3)] for key, op in [('min', min), ('max', max)]}
+
+
+def transform_bounds(matrix, box):
+    corners = itertools.product(*[(box['min'][i], box['max'][i]) for i in range(3)])
+    return bounds([transform_point(matrix, p) for p in corners])
+
+
+def compare_bounds(actual, expected, epsilon):
+    errors = {key: [actual[key][i] - expected[key][i] for i in range(3)] for key in ['min', 'max']}
+    maximum = max(abs(x) for values in errors.values() for x in values)
+    return {'actual': actual, 'expected': expected, 'delta': errors, 'maxAbsError': maximum, 'epsilon': epsilon, 'matches': maximum <= epsilon}
+
+
+def compare_matrix(actual, expected, epsilon):
+    maximum = max(abs(actual[i][j] - expected[i][j]) for i in range(4) for j in range(4))
+    return {'actual': actual, 'expected': expected, 'maxAbsError': maximum, 'epsilon': epsilon, 'matches': maximum <= epsilon}
+
+
+def read_references(path, names):
+    with open(path, 'rb') as stream:
+        magic, version, _ = struct.unpack('<III', stream.read(12))
+        assert magic == 0x46546c67 and version == 2, 'Expected immutable GLB 2'
+        size, kind = struct.unpack('<II', stream.read(8))
+        assert kind == 0x4e4f534a, 'Expected GLB JSON first'
+        document = json.loads(stream.read(size))
+    parents = {child: i for i, node in enumerate(document['nodes']) for child in node.get('children', [])}
+    result = {}
+    for name in names:
+        matches = [(i, node) for i, node in enumerate(document['nodes']) if node.get('name') == name]
+        assert len(matches) == 1, 'Expected one exact original donor: ' + name
+        index, node = matches[0]
+        # These are observed frozen-source conditions, not silent hierarchy loss.
+        assert index not in parents, 'Unexpected source donor parent: ' + name
+        assert 'matrix' not in node and node.get('rotation', [0, 0, 0, 1]) == [0, 0, 0, 1]
+        assert node.get('scale', [1, 1, 1]) == [1, 1, 1], 'Unexpected source donor scale'
+        matrix = identity()
+        for i, value in enumerate(node.get('translation', [0, 0, 0])):
+            matrix[i][3] = value
+        accessors = [document['accessors'][p['attributes']['POSITION']] for p in document['meshes'][node['mesh']]['primitives']]
+        assert all(a['componentType'] == 5126 and a['type'] == 'VEC3' and 'min' in a and 'max' in a for a in accessors)
+        local = bounds([a[key] for a in accessors for key in ['min', 'max']])
+        result[name] = {'gltfNode': index, 'name': name, 'parent': None, 'sourceWorldMatrixGltf': matrix,
+                        'localBoundsGltf': local, 'sourceWorldBoundsGltf': transform_bounds(matrix, local),
+                        'reference': 'immutable GLB JSON POSITION accessor bounds + observed node translation'}
+    return result

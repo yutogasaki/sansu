@@ -1,0 +1,64 @@
+{
+  "kind": "byte-identical raw source analysis archive",
+  "source": "/private/tmp/sansu-p02-gallery-source-study/east-v1-analysis",
+  "destination": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-p02-gallery/east-v1-analysis",
+  "utc": "2026-10-12T05:01:02.487222+00:00",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 5148,
+      "sourceBefore": "af6c5456d726a8030ee9e5ff2eccd06bfbbc626b883912bb7991cfa94bc83781",
+      "sourceAfter": "af6c5456d726a8030ee9e5ff2eccd06bfbbc626b883912bb7991cfa94bc83781",
+      "destinationSha256": "af6c5456d726a8030ee9e5ff2eccd06bfbbc626b883912bb7991cfa94bc83781"
+    },
+    {
+      "path": "analyze.py",
+      "bytes": 9098,
+      "sourceBefore": "d11b8a6a87bab31e5432af788ce01332afd715ad9882e1534e613211abeb7d70",
+      "sourceAfter": "d11b8a6a87bab31e5432af788ce01332afd715ad9882e1534e613211abeb7d70",
+      "destinationSha256": "d11b8a6a87bab31e5432af788ce01332afd715ad9882e1534e613211abeb7d70"
+    },
+    {
+      "path": "design-probe.json",
+      "bytes": 49533,
+      "sourceBefore": "43ec18d642cfd4ba7d20f511a7ab06889144c4daeb6d794ac29594eb7e414c73",
+      "sourceAfter": "43ec18d642cfd4ba7d20f511a7ab06889144c4daeb6d794ac29594eb7e414c73",
+      "destinationSha256": "43ec18d642cfd4ba7d20f511a7ab06889144c4daeb6d794ac29594eb7e414c73"
+    },
+    {
+      "path": "design-probe.log.txt",
+      "bytes": 333,
+      "sourceBefore": "87a104b3daeab027f88ecea4f7200ddd376ba14e68ddf8e258ba87afd8e4804c",
+      "sourceAfter": "87a104b3daeab027f88ecea4f7200ddd376ba14e68ddf8e258ba87afd8e4804c",
+      "destinationSha256": "87a104b3daeab027f88ecea4f7200ddd376ba14e68ddf8e258ba87afd8e4804c"
+    },
+    {
+      "path": "design-probe.py",
+      "bytes": 5806,
+      "sourceBefore": "5013037bb59f010848e0c6d4158af70f4b62ce6e58de79ab31a9723e391d6cf3",
+      "sourceAfter": "5013037bb59f010848e0c6d4158af70f4b62ce6e58de79ab31a9723e391d6cf3",
+      "destinationSha256": "5013037bb59f010848e0c6d4158af70f4b62ce6e58de79ab31a9723e391d6cf3"
+    },
+    {
+      "path": "first.log.txt",
+      "bytes": 886,
+      "sourceBefore": "f212217088a7216e9b0f4344038d96abeabd7691e639acca61ff4a556fe472a7",
+      "sourceAfter": "f212217088a7216e9b0f4344038d96abeabd7691e639acca61ff4a556fe472a7",
+      "destinationSha256": "f212217088a7216e9b0f4344038d96abeabd7691e639acca61ff4a556fe472a7"
+    },
+    {
+      "path": "handoff.json",
+      "bytes": 1074,
+      "sourceBefore": "e8877aff8fbcf315a7845e07c1f472db9a5a41d003a78fb7ff4f3b0ab6f87e8b",
+      "sourceAfter": "e8877aff8fbcf315a7845e07c1f472db9a5a41d003a78fb7ff4f3b0ab6f87e8b",
+      "destinationSha256": "e8877aff8fbcf315a7845e07c1f472db9a5a41d003a78fb7ff4f3b0ab6f87e8b"
+    },
+    {
+      "path": "report.json",
+      "bytes": 336914,
+      "sourceBefore": "6b7386fce94325a37d17df782617c4fb1f08172a6c9bf013ac57a431c391f088",
+      "sourceAfter": "6b7386fce94325a37d17df782617c4fb1f08172a6c9bf013ac57a431c391f088",
+      "destinationSha256": "6b7386fce94325a37d17df782617c4fb1f08172a6c9bf013ac57a431c391f088"
+    }
+  ]
+}

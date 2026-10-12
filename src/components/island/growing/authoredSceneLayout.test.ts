@@ -4,6 +4,17 @@ import { newIsland } from '../../../domain/growingIsland/island';
 import { compileWorldDefinition } from '../../../domain/growingIsland/worldDefinition';
 import { inletWorldDefinition } from '../../../domain/growingIsland/worldDefinition.fixture';
 import { sceneLayout } from './sceneLayout';
+import { buildAuthoredGrowingGround } from './native/authoredGrowingGround';
+import { frameCamera, initialView } from './growingCamera';
+
+function growingBoundsFixture() {
+    const definition = inletWorldDefinition(), source = definition.districts[0];
+    const base = compileWorldDefinition(definition);
+    const growth = { ...source, id: 'derived-growing-cape', templateId: 'growing-cape', logicalOrigin: { x: 12, z: 5 },
+        worldOrigin: { x: 12, y: 2, z: 5 }, floors: source.floors.filter(floor => floor.kind === 'ground'), sites: [], ports: [] };
+    const grown = compileWorldDefinition({ ...definition, revision: 'grown-cape', districts: [...definition.districts, growth] });
+    return { base, grown, state: newIsland('growth-frame', 0) };
+}
 
 describe('authored layout uses actual floor and planting rights', () => {
     it('maps feet, hit inversion and authored gallery heights without legacy terrain or projection', () => {
@@ -27,6 +38,23 @@ describe('authored layout uses actual floor and planting rights', () => {
             const cell = layout.cellAt(p); expect(Number.isFinite(cell.x)).toBe(false); expect(world.owns(cell)).toBe(false);
         }
     });
+    it.each([true, false])('keeps arrival world positions when a district adds connection ports (original port: %s)', explicitPort => {
+        const definition = inletWorldDefinition(), source = definition.districts[0];
+        const original = { ...source, logicalOrigin: { x: 2, z: 1 }, worldOrigin: { x: 4, y: .7, z: -3 }, ports: explicitPort ? source.ports : [] };
+        const added = { ...source, id: 'added-shore', logicalOrigin: { x: 20, z: -8 }, worldOrigin: { x: 30, y: 1.1, z: 6 }, turn: 2 as const };
+        const beforeWorld = compileWorldDefinition({ ...definition, districts: [original] });
+        const afterWorld = compileWorldDefinition({ ...definition, districts: [original, added] });
+        const state = newIsland('stable-arrival', 0), before = sceneLayout(state, false, beforeWorld), after = sceneLayout(state, false, afterWorld);
+        const worldPoint = (layout: typeof before, point: T.Vector3) => point.clone().add(new T.Vector3(layout.center, 0, 2));
+        const approach = beforeWorld.sites.find(site => site.ref.siteId === (explicitPort ? 'b' : 'a'))!.point;
+        const expectedRoot = new T.Vector3(approach.x + .22, approach.y - .02, approach.z + .75);
+        expect(worldPoint(before, before.pierRoot).distanceTo(expectedRoot)).toBeLessThan(1e-9);
+        expect(after.center).not.toBe(before.center);
+        expect(afterWorld.definition.districts[1].ports.length).toBeGreaterThan(0);
+        for (const anchor of ['pierRoot', 'pierEnd', 'dock', 'far', 'farther'] as const) {
+            expect(worldPoint(after, after[anchor]).distanceTo(worldPoint(before, before[anchor])), anchor).toBeLessThan(1e-9);
+        }
+    });
     it('reuses immutable floor answers across builders without sharing their mutable output', () => {
         const world = compileWorldDefinition(inletWorldDefinition()), floorAt = vi.fn(world.floorAt);
         const layout = sceneLayout(newIsland('floor-reuse', 0), false, { ...world, floorAt });
@@ -45,5 +73,46 @@ describe('authored layout uses actual floor and planting rights', () => {
         layout.point(missing); layout.heightAt(missing); layout.projected(missing);
         expect(floorAt).toHaveBeenCalledTimes(2);
         expect(Number.isNaN(layout.cellAt(layout.point(missing)).x)).toBe(true);
+    });
+    it('keeps original floor projection, owner/ghost positions and hit coordinates through growth preview, commit and cancel', () => {
+        const { base, grown, state } = growingBoundsFixture();
+        const original = sceneLayout(state, true, base, undefined, base);
+        const preview = sceneLayout(state, true, grown, undefined, base, { options: { water: false, cove: false }, revision: 'preview' });
+        const committed = sceneLayout(state, true, grown, undefined, base, { options: { water: false, cove: false }, revision: 'committed' });
+        const cancelled = sceneLayout(state, true, base, undefined, base);
+        expect(grown.bounds.max.x).toBeGreaterThan(base.bounds.max.x);
+        expect(preview.width).toBe(grown.bounds.max.x - grown.bounds.min.x);
+        expect(preview.maxHeight).toBe(grown.bounds.max.y);
+        for (const layout of [preview, committed, cancelled]) {
+            expect(layout.center).toBe(original.center);
+            for (const site of base.sites) {
+                const originalPoint = original.point(site.cell, 0);
+                expect(layout.point(site.cell, 0)).toEqual(originalPoint);
+                expect(layout.projected(site.cell)).toEqual(original.projected(site.cell));
+                expect(layout.cellAt(originalPoint)).toEqual(site.cell);
+                expect(layout.logicalAt(originalPoint)).toEqual(site.cell);
+                expect(layout.floorPoint({ ...site.cell, y: site.point.y + 1 })).toEqual(original.floorPoint({ ...site.cell, y: site.point.y + 1 }));
+            }
+            expect(layout.pierRoot).toEqual(original.pierRoot);
+            expect(layout.dock).toEqual(original.dock);
+        }
+        // A genuinely different acquisition may establish a new scene origin.
+        expect(sceneLayout(state, true, grown, undefined, grown).center).not.toBe(original.center);
+    });
+    it('fits the actual grown ground in wide and narrow cameras even when its render origin stays with the base', () => {
+        const { base, grown, state } = growingBoundsFixture();
+        const layout = sceneLayout(state, true, grown, undefined, base), ground = buildAuthoredGrowingGround(layout);
+        layout.nativeArt = true; layout.cameraObjects = () => [ground.root];
+        try {
+            for (const aspect of [1440 / 1000, 390 / 844]) for (const azimuth of [0, Math.PI / 2]) {
+                const camera = new T.OrthographicCamera(-1, 1, 1, -1, .1, 100);
+                frameCamera(camera, layout, { ...initialView(), azimuth }, aspect); camera.updateMatrixWorld();
+                for (const floor of grown.floors) for (const vertex of floor.vertices) {
+                    const p = new T.Vector3(vertex.point.x - layout.center, vertex.point.y, vertex.point.z - 2).project(camera);
+                    expect(Math.abs(p.x)).toBeLessThanOrEqual(.90001); expect(Math.abs(p.y)).toBeLessThanOrEqual(.90001);
+                    expect(p.z).toBeGreaterThan(-1); expect(p.z).toBeLessThan(1);
+                }
+            }
+        } finally { ground.dispose(); }
     });
 });

@@ -1,0 +1,43 @@
+"""Authorized c3 prepare/seal only. Does not execute core, build, tests or browser."""
+from pathlib import Path
+from datetime import datetime, timezone
+import argparse, ast, hashlib, json, subprocess, time
+BASE=Path('/private/tmp/sansu-authored-shoulder-c3')
+PREP=BASE/'prepared'
+OUT=BASE/'preflight-attempt-02'
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+parser=argparse.ArgumentParser();parser.add_argument('--start',action='store_true');args=parser.parse_args()
+commands=[['node',str(PREP/'clone-candidate.mjs'),'--start'],
+ ['python3',str(PREP/'closure.py'),'--start'],
+ ['node',str(PREP/'collect-installed-dependencies.mjs'),'--start'],
+ ['node',str(PREP/'check-driver-imports.mjs'),'--start'],
+ ['node',str(PREP/'check-harness-inputs.mjs'),'--start'],
+ ['node',str(PREP/'snapshot.mjs'),'--start']]
+if not args.start:
+ print(json.dumps({'prepared':True,'executionStarted':False,'commands':commands,'coreWillStart':False}));raise SystemExit(0)
+OUT.mkdir(exist_ok=False)
+assert not (OUT/'report.json').exists()
+report={'startedAtUtc':datetime.now(timezone.utc).isoformat(),'pass':False,'coreStarted':False,'browserStarted':False,'stages':[],
+ 'preparedSha256':{p.name:sha(p) for p in sorted(PREP.iterdir()) if p.is_file()}}
+try:
+ for p in sorted(PREP.glob('*.py')):ast.parse(p.read_text())
+ for p in sorted(PREP.glob('*.mjs')):subprocess.run(['node','--check',str(p)],capture_output=True,text=True,check=True)
+ report['syntaxPass']=True
+ for i,command in enumerate(commands,1):
+  name=f'{i:02d}-'+Path(command[1]).stem;log=OUT/(name+'.log.txt')
+  start=time.monotonic();record={'name':name,'command':command,'startedAtUtc':datetime.now(timezone.utc).isoformat(),'log':str(log)}
+  print(json.dumps({'phase':name,'event':'start','atUtc':record['startedAtUtc']}),flush=True)
+  with log.open('xb') as f:proc=subprocess.run(command,stdout=f,stderr=subprocess.STDOUT,timeout=1200)
+  record.update(exitCode=proc.returncode,elapsedSeconds=time.monotonic()-start,finishedAtUtc=datetime.now(timezone.utc).isoformat(),logSha256=sha(log))
+  report['stages'].append(record)
+  print(json.dumps({'phase':name,'exitCode':proc.returncode,'elapsedSeconds':record['elapsedSeconds']}),flush=True)
+  if proc.returncode!=0:raise RuntimeError('First failure: '+name+'; preserve output and do not retry')
+ report['pass']=True
+except Exception as error:report['error']=repr(error)
+report['finishedAtUtc']=datetime.now(timezone.utc).isoformat()
+report['preparedAfterSha256']={name:sha(PREP/name) for name in report['preparedSha256']}
+report['preparedFixed']=report['preparedAfterSha256']==report['preparedSha256']
+report['pass']=report['pass'] and report['preparedFixed']
+with (OUT/'report.json').open('x') as f:f.write(json.dumps(report,indent=2)+'\n')
+print(json.dumps({k:report.get(k) for k in ['pass','preparedFixed','coreStarted','browserStarted','error']}),flush=True)
+raise SystemExit(0 if report['pass'] else 1)

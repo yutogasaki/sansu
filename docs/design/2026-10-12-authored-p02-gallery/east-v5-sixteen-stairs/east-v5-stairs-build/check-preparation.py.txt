@@ -1,0 +1,31 @@
+from pathlib import Path
+import ast,json,hashlib,sys,math
+B=Path(__file__).resolve().parent;sys.path.insert(0,str(B))
+from surface_assembly import exposed_tops,compare_sections
+from entry_geometry import polygon_area
+checks=[]
+def check(name,value):assert value,name;checks.append(name)
+for p in B.glob('*.py'):ast.parse(p.read_text());checks.append(p.name+' syntax')
+stair=json.loads((B/'sealed-input/stairs-16-closed.json').read_text());report=json.loads((B/'sealed-input/feet-comparison-report.json').read_text());s=json.loads((B/'study.json').read_text())
+check('selected16',stair['n']==16 and report['candidates'][0]['n']==16)
+check('direct closed original result',stair['stats']['badEdges']==stair['stats']['zeroArea']==stair['stats']['duplicateTriangles']==stair['stats']['walkingNormalYFailures']==0 and stair['stats']['components']==1 and stair['stats']['signedVolume']>0)
+check('feet proof limited',report['candidates'][0]['neutral']['failed']==0 and report['candidates'][0]['neutral']['minMargin']>.015)
+check('source actors unchanged',s['design']['structuralWidth']==.64 and s['place']['ownerIds']==['l10','l11','l12','l13'])
+for key,item in s['v5Inputs'].items():check('v5 input '+key,hashlib.sha256((B/item['path']).read_bytes()).hexdigest()==item['sha256'])
+tri=[[0.,0.,0.],[0.,0.,1.],[1.,0.,0.]]
+def part(id,priority,y):return {'id':id,'priority':priority,'triangles':[{'triangle':[[x,y,z]for x,_,z in tri],'role':'fixture-flat','sourceFace':0}]}
+for name,parts,winner in [('coplanar',[part('a',0,0),part('b',1,0)],'a'),('higher',[part('a',0,0),part('b',1,.2)],'b')]:
+ out,qa=exposed_tops(parts);check(name+' single visible top',len(out[winner])==1 and len(out['b'if winner=='a'else'a'])==0 and not qa['holds']);check(name+' original area',abs(sum(polygon_area(r['triangle'])for rows in out.values()for r in rows)-.5)<1e-12)
+def sec(y,full=True):return {'segments':[{'from':0.,'to':1.,'yFrom':y,'yTo':y+.1,'triangle':0}],'supportedFullWidth':full}
+check('full-width section same',compare_sections(sec(0),sec(0))['sameHeightAcrossWidth'])
+check('full-width section mismatch',not compare_sections(sec(0),sec(.01))['sameHeightAcrossWidth'])
+check('full-width support missing',not compare_sections(sec(0),sec(0,False))['supportedFullWidth'])
+code=(B/'build-coarse.py').read_text()
+check('full-width named QA hold',"if width_holds:holds.append"in code)
+check('no Boolean',"modifiers.new("not in code and "mod.solver"not in code)
+check('same exact tread triangles',"assert tread_exposed==tread_raw"in code)
+check('no hidden ramp route',"'linearRampRoute':None"in code and "PER_FOOT_STAIR_TRANSITION_REQUIRED_NOT_IMPLEMENTED"in code)
+check('no old gap inherited',"no current gap copied from history"in code)
+check('all originals restored',"len(left_meshes)==128"in code)
+check('source before/after guard',"fixed_after==fixed_before"in code)
+print(json.dumps({'status':'PREPARATION_STATIC_CHECKS_ONLY','checks':checks,'count':len(checks),'Blender':'NOT_RUN','actualNewSupportsRailsEntrySections':'NOT_BUILT_OR_MEASURED','fullSelfIntersection':'NOT_PROVEN'},indent=2))

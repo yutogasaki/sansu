@@ -1,0 +1,60 @@
+{
+  "scope": "Factory and component extraction only; no app wiring, build, browser or full core.",
+  "source": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/central-shoulder-components-normal-v2.glb",
+  "sourceSha256": "c79e2cd7a228b24ff526e6d78913f6a07880e35dec1532d4c278dd7cbf10411e",
+  "inputHashesBefore": {
+    "src/components/island/growing/native/nativeAuthoredShoulder.ts": "b8d3107de1394fef2e3f27c292fcbc1a45086f080d48ad56846638c46d081122",
+    "src/components/island/growing/native/nativeAuthoredShoulder.test.ts": "bf57bab28c7de14c92324fb1b60323847004b0d73a4f5efe3b7b888cd4d371ca",
+    "tools/build-authored-shoulder-kit.mjs": "90fd2ac0e4e8391031e3384892b819e659922771162c0a6a6dd1ce55b3e69339",
+    "prototypes/place-qa/native-shoulder-components.glb.gz": "67348e1cd7f945d6670684d6dff6a352e49a689f5d0c27bfe71a1891223dbf3f",
+    "prototypes/place-qa/native-shoulder-manifest.json": "0ffd6f38fbcbe5ea5a3a0b46b3d2dcd9784df6d775082fe4138056df7e22ee9b"
+  },
+  "inputHashesAfter": {
+    "src/components/island/growing/native/nativeAuthoredShoulder.ts": "b8d3107de1394fef2e3f27c292fcbc1a45086f080d48ad56846638c46d081122",
+    "src/components/island/growing/native/nativeAuthoredShoulder.test.ts": "bf57bab28c7de14c92324fb1b60323847004b0d73a4f5efe3b7b888cd4d371ca",
+    "tools/build-authored-shoulder-kit.mjs": "90fd2ac0e4e8391031e3384892b819e659922771162c0a6a6dd1ce55b3e69339",
+    "prototypes/place-qa/native-shoulder-components.glb.gz": "67348e1cd7f945d6670684d6dff6a352e49a689f5d0c27bfe71a1891223dbf3f",
+    "prototypes/place-qa/native-shoulder-manifest.json": "0ffd6f38fbcbe5ea5a3a0b46b3d2dcd9784df6d775082fe4138056df7e22ee9b"
+  },
+  "inputsUnchanged": true,
+  "focused": {
+    "files": 1,
+    "tests": 6,
+    "status": "PASS",
+    "durationSeconds": 7.55,
+    "log": "focused-first.log.txt"
+  },
+  "lint": {
+    "status": "PASS",
+    "files": 3,
+    "log": "lint-first.log.txt"
+  },
+  "artifacts": {
+    "src/components/island/growing/native/nativeAuthoredShoulder.ts": {
+      "bytes": 11683,
+      "sha256": "b8d3107de1394fef2e3f27c292fcbc1a45086f080d48ad56846638c46d081122"
+    },
+    "src/components/island/growing/native/nativeAuthoredShoulder.test.ts": {
+      "bytes": 14961,
+      "sha256": "bf57bab28c7de14c92324fb1b60323847004b0d73a4f5efe3b7b888cd4d371ca"
+    },
+    "tools/build-authored-shoulder-kit.mjs": {
+      "bytes": 10155,
+      "sha256": "90fd2ac0e4e8391031e3384892b819e659922771162c0a6a6dd1ce55b3e69339"
+    },
+    "prototypes/place-qa/native-shoulder-components.glb.gz": {
+      "bytes": 88954,
+      "sha256": "67348e1cd7f945d6670684d6dff6a352e49a689f5d0c27bfe71a1891223dbf3f"
+    },
+    "prototypes/place-qa/native-shoulder-manifest.json": {
+      "bytes": 5706,
+      "sha256": "0ffd6f38fbcbe5ea5a3a0b46b3d2dcd9784df6d775082fe4138056df7e22ee9b"
+    }
+  },
+  "limitations": [
+    "Current repo and fixed c4 unchanged; edited only five assigned files in isolated copy.",
+    "Soil is intentionally absent if later water carving changes its source top union.",
+    "Integration must pass actual native root and native.manifest, add authored-tree-root-continuation to physical guard, and use shared-resource disposal.",
+    "Existing THREE.Material map undefined warning in native fixture is retained in the raw log."
+  ]
+}

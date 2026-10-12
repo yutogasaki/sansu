@@ -1,0 +1,375 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "candidate": "p02-native-east-real-stair-v5-sixteen",
+  "preparedUTC": "2026-10-12T07:09:54.970370+00:00",
+  "workingDirectory": "/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build",
+  "buildCommand": [
+    "python3",
+    "supervise.py",
+    "--scheduled",
+    "--seconds",
+    "180",
+    "--rss-mib",
+    "2560",
+    "--log",
+    "runs/01-coarse-build.log.txt",
+    "--",
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "build-coarse.py",
+    "--",
+    "build",
+    "--scheduled",
+    "--out",
+    "runs/01-coarse-build"
+  ],
+  "files": {
+    "README.md": {
+      "sha256": "011a508614ddec2ae6728746372eafb5bdd78d28466e32c558fe564d810a8f6e",
+      "bytes": 6604
+    },
+    "build-coarse.py": {
+      "sha256": "98dd64964c6b6541ce2984089d172761f3937b9aeee1b07b24e6191260150c87",
+      "bytes": 38211
+    },
+    "build_checks.py": {
+      "sha256": "7f0b53371ca8c47b2e7bc106fe6e766c6706a866be3a9091b7726022a82d7688",
+      "bytes": 8983
+    },
+    "check-preparation.py": {
+      "sha256": "a8df831a2ff4aa6ddd71d1af6294d88eab693e67e1513375970641772b35c7d5",
+      "bytes": 3076
+    },
+    "current-joints-plan.json": {
+      "sha256": "359c2c114c88984cc0ed8703dfc1a6c7c0fc8b8fe05bf9abd0e8df08c24cdb39",
+      "bytes": 1404
+    },
+    "donor_reference.py": {
+      "sha256": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+      "bytes": 3333
+    },
+    "entry_geometry.py": {
+      "sha256": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+      "bytes": 7937
+    },
+    "history/preseal-section-review/README.md": {
+      "sha256": "6f60486b8bb9dcdc22bc18d8a9352a4955df971a5a55d7efff7e26b8b016bbf9",
+      "bytes": 5596
+    },
+    "history/preseal-section-review/build-coarse.py": {
+      "sha256": "6b9f0f27101046aba1758fd27658938576780e7957f872c1631f6c0d52b9ee3f",
+      "bytes": 37368
+    },
+    "history/preseal-section-review/check-preparation.py": {
+      "sha256": "6cb564955782584a5f55e62a25ff3b61b3be7e21b52bd3e7065f78c618b33f1c",
+      "bytes": 2575
+    },
+    "history/preseal-section-review/preservation.json": {
+      "sha256": "21776c003d540f369aa4e46c7a0de90c0d5ed5a3365990f8f14cf2f438f44523",
+      "bytes": 709
+    },
+    "history/preseal-section-review/surface_assembly.py": {
+      "sha256": "6a93047b735e748fd3dc078089283d642ad7e37004002b0f6afb3b73600d2614",
+      "bytes": 6007
+    },
+    "input-identity-check.json": {
+      "sha256": "7232c729a637ee3261966cfc1671e1363e2ae180952ffa7c15482ee60ed7aaf2",
+      "bytes": 1328
+    },
+    "sealed-input/feet-comparison-report.json": {
+      "sha256": "67607c13d87ae069f74881fe4be331784d3c3dd9cc6f7449a7f4792646b2b355",
+      "bytes": 20202
+    },
+    "sealed-input/gallery-local-top-probes.json": {
+      "sha256": "6c8566ff0203ef63f3cd8183861af935d8f13df041c3f8588fc74d5e3c0999b1",
+      "bytes": 5241
+    },
+    "sealed-input/offline-result.json": {
+      "sha256": "f3a409266b1057ad348bcf759b9c878564028d3c463c8e01c5b0f151d128638e",
+      "bytes": 57304
+    },
+    "sealed-input/planned-floor-tops.json": {
+      "sha256": "e44d250ca5440d0f5aae661d321bde8de7c031296939b820eeb8f9d400c2b53d",
+      "bytes": 270264
+    },
+    "sealed-input/planned-floor-v4-stations-once.json": {
+      "sha256": "2968d018782cea82afa443bbbffc111eb0ead51a3d5f5f2e8be2814354fee3ca",
+      "bytes": 228088
+    },
+    "sealed-input/preparation.json": {
+      "sha256": "5c1ae10e7017749cbd3b315fe71ef52722ba2eb537269384a90ac06e3f2f3c44",
+      "bytes": 4523
+    },
+    "sealed-input/stairs-16-closed.json": {
+      "sha256": "4ed8c4466fcf3c7362fde6c11b72aca94a2a87eb3fae844698487187a0766909",
+      "bytes": 1150935
+    },
+    "sealed-input/support-contact-result.json": {
+      "sha256": "53774b4a10e1b893837fc0fbe6551d3d734b6c818eb86d9bebef29d9dbe35548",
+      "bytes": 24585
+    },
+    "sealed-input/support-edge-proposal.json": {
+      "sha256": "55427cf8902e997ecc84acc7894feef90db2f7ff23494017681069a91a4c8cb5",
+      "bytes": 24692
+    },
+    "static-final.log.txt": {
+      "sha256": "a005e68e0fc8848c08f9a4162e0d27e94dd7a371d10ba9a00ad864a193270f54",
+      "bytes": 959
+    },
+    "static-first.log.txt": {
+      "sha256": "a005e68e0fc8848c08f9a4162e0d27e94dd7a371d10ba9a00ad864a193270f54",
+      "bytes": 959
+    },
+    "static-section-reviewed.log.txt": {
+      "sha256": "acb7802621bbfc32be088d6f92e2b999ee647f0dadd7f5f6b21cc417c9ce596f",
+      "bytes": 1091
+    },
+    "study.json": {
+      "sha256": "ee868c08b484953386ab271a624c70ab5ddd4e8f89cae8919d398f04f7dec32e",
+      "bytes": 17503
+    },
+    "supervise.py": {
+      "sha256": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+      "bytes": 1920
+    },
+    "surface_assembly.py": {
+      "sha256": "dc04130bd2a342a48ee75ab5b1452fa8c481a2367340a34aa78fc49d28ef9b85",
+      "bytes": 7328
+    },
+    "terrain_connector.py": {
+      "sha256": "47a00db51d9826ca56a717db06feb48930dfbe77f3fcf301783ad1d90ea0b18d",
+      "bytes": 4796
+    }
+  },
+  "sourceInputs": {
+    "context": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/extraction-attempt02/fixed-c1-context.glb",
+      "sha256": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+      "bytes": 19623452
+    },
+    "leftTrees": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/extraction-attempt02/role-separated-originals.glb",
+      "sha256": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+      "bytes": 843044
+    },
+    "contextManifest": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/extraction-attempt02/manifest.json",
+      "sha256": "3c3fcd13bf4867946a0f393769f852cb938286329dfa2e11dac3afe74796bda2",
+      "bytes": 170092
+    },
+    "forestStudy": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/study.json",
+      "sha256": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+      "bytes": 482322
+    },
+    "sourceBlend": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.blend",
+      "sha256": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+      "bytes": 6585301
+    },
+    "sourceGlb": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.glb",
+      "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "bytes": 34930176
+    },
+    "benchmark": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island-render.png",
+      "sha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "bytes": 2579296
+    },
+    "envelope": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-whole-massing/raw/actor-envelope-identity.json",
+      "sha256": "444beab3c5b078799e974424e225e0a2e6742d6b99ad7e94be5edb54088af1db",
+      "bytes": 5969
+    }
+  },
+  "basis": {
+    "eastV1Measurement": {
+      "path": "/private/tmp/sansu-p02-gallery-source-study/east-v1/runs/01-east-survey/measurement.json",
+      "sha256": "be452b8297a17246ebaa376edffef35de2b5821c554717ed53cfb9d04c022e21"
+    },
+    "classifiedEastV1": {
+      "path": "/private/tmp/sansu-p02-gallery-source-study/east-v1-analysis/report.json",
+      "sha256": "6b7386fce94325a37d17df782617c4fb1f08172a6c9bf013ac57a431c391f088"
+    },
+    "singleProposalProbe": {
+      "path": "/private/tmp/sansu-p02-gallery-source-study/east-v1-analysis/design-probe.json",
+      "sha256": "43ec18d642cfd4ba7d20f511a7ab06889144c4daeb6d794ac29594eb7e414c73"
+    },
+    "doorwayOverlapProbe": {
+      "path": "/private/tmp/sansu-p02-gallery-source-study/east-v2/entry-audit/result.json",
+      "sha256": "2bfc69e1e4b87a0d7fd5df6215c9f6aba8f671b7d1fc5430c413bf465f232bc5"
+    },
+    "curvaturePreparation": {
+      "path": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature/preparation.json",
+      "sha256": "5c1ae10e7017749cbd3b315fe71ef52722ba2eb537269384a90ac06e3f2f3c44"
+    }
+  },
+  "sealedGeometryInputs": {
+    "sealed-input/planned-floor-v4-stations-once.json": {
+      "path": "sealed-input/planned-floor-v4-stations-once.json",
+      "sha256": "2968d018782cea82afa443bbbffc111eb0ead51a3d5f5f2e8be2814354fee3ca",
+      "originalPath": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature/planned-floor-v4-stations-once.json"
+    },
+    "sealed-input/offline-result.json": {
+      "path": "sealed-input/offline-result.json",
+      "sha256": "f3a409266b1057ad348bcf759b9c878564028d3c463c8e01c5b0f151d128638e",
+      "originalPath": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature/offline-result.json"
+    },
+    "sealed-input/support-edge-proposal.json": {
+      "path": "sealed-input/support-edge-proposal.json",
+      "sha256": "55427cf8902e997ecc84acc7894feef90db2f7ff23494017681069a91a4c8cb5",
+      "originalPath": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature/support-edge-proposal.json"
+    },
+    "sealed-input/support-contact-result.json": {
+      "path": "sealed-input/support-contact-result.json",
+      "sha256": "53774b4a10e1b893837fc0fbe6551d3d734b6c818eb86d9bebef29d9dbe35548",
+      "originalPath": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature/support-contact-result.json"
+    },
+    "sealed-input/preparation.json": {
+      "path": "sealed-input/preparation.json",
+      "sha256": "5c1ae10e7017749cbd3b315fe71ef52722ba2eb537269384a90ac06e3f2f3c44",
+      "originalPath": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature/preparation.json"
+    },
+    "sealed-input/planned-floor-tops.json": {
+      "path": "sealed-input/planned-floor-tops.json",
+      "sha256": "e44d250ca5440d0f5aae661d321bde8de7c031296939b820eeb8f9d400c2b53d",
+      "originalPath": "/private/tmp/sansu-p02-gallery-source-study/east-v3-manifold/runs/01-coarse-build/planned-floor-tops.json"
+    },
+    "sealed-input/gallery-local-top-probes.json": {
+      "path": "sealed-input/gallery-local-top-probes.json",
+      "sha256": "6c8566ff0203ef63f3cd8183861af935d8f13df041c3f8588fc74d5e3c0999b1",
+      "originalPath": "/private/tmp/sansu-p02-gallery-source-study/east-v3-manifold/runs/01-coarse-build/gallery-local-top-probes.json"
+    },
+    "stairs-16-closed.json": {
+      "path": "sealed-input/stairs-16-closed.json",
+      "sha256": "4ed8c4466fcf3c7362fde6c11b72aca94a2a87eb3fae844698487187a0766909"
+    },
+    "feet-comparison-report.json": {
+      "path": "sealed-input/feet-comparison-report.json",
+      "sha256": "67607c13d87ae069f74881fe4be331784d3c3dd9cc6f7449a7f4792646b2b355"
+    }
+  },
+  "staticChecks": {
+    "status": "PREPARATION_STATIC_CHECKS_ONLY",
+    "checks": [
+      "entry_geometry.py syntax",
+      "build-coarse.py syntax",
+      "terrain_connector.py syntax",
+      "surface_assembly.py syntax",
+      "check-preparation.py syntax",
+      "donor_reference.py syntax",
+      "build_checks.py syntax",
+      "supervise.py syntax",
+      "selected16",
+      "direct closed original result",
+      "feet proof limited",
+      "source actors unchanged",
+      "v5 input stairs-16-closed.json",
+      "v5 input feet-comparison-report.json",
+      "coplanar single visible top",
+      "coplanar original area",
+      "higher single visible top",
+      "higher original area",
+      "full-width section same",
+      "full-width section mismatch",
+      "full-width support missing",
+      "full-width named QA hold",
+      "no Boolean",
+      "same exact tread triangles",
+      "no hidden ramp route",
+      "no old gap inherited",
+      "all originals restored",
+      "source before/after guard"
+    ],
+    "count": 28,
+    "Blender": "NOT_RUN",
+    "actualNewSupportsRailsEntrySections": "NOT_BUILT_OR_MEASURED",
+    "fullSelfIntersection": "NOT_PROVEN",
+    "inputIdentityChecks": [
+      "inputs:context",
+      "inputs:leftTrees",
+      "inputs:contextManifest",
+      "inputs:forestStudy",
+      "inputs:sourceBlend",
+      "inputs:sourceGlb",
+      "inputs:benchmark",
+      "inputs:envelope",
+      "basis:eastV1Measurement",
+      "basis:classifiedEastV1",
+      "basis:singleProposalProbe",
+      "basis:doorwayOverlapProbe",
+      "basis:curvaturePreparation",
+      "v4Inputs:sealed-input/planned-floor-v4-stations-once.json",
+      "v4Inputs:sealed-input/offline-result.json",
+      "v4Inputs:sealed-input/support-edge-proposal.json",
+      "v4Inputs:sealed-input/support-contact-result.json",
+      "v4Inputs:sealed-input/preparation.json",
+      "v4Inputs:sealed-input/planned-floor-tops.json",
+      "v4Inputs:sealed-input/gallery-local-top-probes.json",
+      "v5Inputs:stairs-16-closed.json",
+      "v5Inputs:feet-comparison-report.json",
+      "unchanged helper:build_checks.py",
+      "unchanged helper:entry_geometry.py",
+      "unchanged helper:terrain_connector.py",
+      "unchanged helper:donor_reference.py",
+      "unchanged helper:supervise.py"
+    ]
+  },
+  "sourceV4Builder": {
+    "path": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/build-coarse.py",
+    "sha256": "d4a2a463c9766c3902879b021bc5c6922890083baf0106486e850ec2a6a4a5e7",
+    "preparationSha256": "312bbc4224ac6ccf9fb3af1c3d4159b50c16ea6ba170309f3569b739cd3a89a0"
+  },
+  "resources": {
+    "BlenderProcesses": 1,
+    "cpuThreads": 2,
+    "seconds": 180,
+    "rssMiB": 2560,
+    "actualDuration": "NOT_MEASURED; inherited bound, no render included"
+  },
+  "generatedTargets": [
+    "five named closed floor components, with exact16 treads",
+    "visible top skin once plus actual solid undersides/risers",
+    "one same-owner ground-root and five trunk bough candidates",
+    "two rail edges, posts, terminal guard",
+    "current full-width ground/entry/joint comparisons",
+    "neutral standing body-band/reserved-box raw contacts",
+    "study.blend and visible GLBs with same fixed35/all128 restored lefttree meshes",
+    "owner-use profile from same visible triangles, per-foot transition explicitly pending"
+  ],
+  "shapeChanges": {
+    "selectedSteps": 16,
+    "visibleRealTreads": true,
+    "hiddenRamp": false,
+    "Boolean": false,
+    "stepsAndRisersShareVertices": true,
+    "samePrimaryEndpointsWidthOwnersDonorsMaterials": true,
+    "underside": "single closed structural underside below real treads, never walk floor",
+    "supportEndY": "actual new underside + original .015 penetration, not old ramp contact PASS"
+  },
+  "hardFailures": [
+    "input/code/source parity",
+    "invalid positive closed topology",
+    "required stair top or underside missing",
+    "selected tread arrays changed or clipped"
+  ],
+  "locatedHolds": [
+    "no native support ray within original1.35",
+    "insufficient cap contact patch",
+    "entry full-width mismatch",
+    "internal skin Float32 lineage",
+    "reserved-box or motion-band contact",
+    "new true stair pose not implemented"
+  ],
+  "noAutoRetry": true,
+  "noAutoRender": true,
+  "runtimeIntegrated": false,
+  "verdict": "HOLD_SOURCE_COARSE_ONLY",
+  "executionMetadata": "External observer records owned Blender PID and first/last observed UTC/RSS/process-group exit. The inherited sealed supervisor lacks exact launch UTC/PID and must not be described as providing them."
+}

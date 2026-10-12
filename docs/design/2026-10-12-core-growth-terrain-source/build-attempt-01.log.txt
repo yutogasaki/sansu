@@ -1,0 +1,20 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: north-parallel outer landing
+    at part (file:///Users/yutogasaki/Projects/sansu/tools/build-authored-core-growth-terrain-kit.mjs:103:27)
+    at file:///Users/yutogasaki/Projects/sansu/tools/build-authored-core-growth-terrain-kit.mjs:110:138
+    at Array.map (<anonymous>)
+    at file:///Users/yutogasaki/Projects/sansu/tools/build-authored-core-growth-terrain-kit.mjs:110:96
+    at Array.map (<anonymous>)
+    at file:///Users/yutogasaki/Projects/sansu/tools/build-authored-core-growth-terrain-kit.mjs:110:66 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

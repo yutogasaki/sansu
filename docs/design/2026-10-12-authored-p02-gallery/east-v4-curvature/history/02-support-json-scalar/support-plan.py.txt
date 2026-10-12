@@ -1,0 +1,64 @@
+"""One role-specific support proposal. No source build or acceptance claim."""
+from pathlib import Path
+import json,hashlib,math,sys,collections
+import numpy as np
+P=Path(__file__).resolve().parent;V=P.parent/'east-v3-manifold';S=json.loads((V/'study.json').read_text());D=S['design'];plan=json.loads((P/'planned-floor-v4-stations-once.json').read_text());rows=plan['rows'];sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+src=P.parent/'east-v1-analysis/analyze.py';text=src.read_text();E={'__file__':str(src),'__name__':'readonly'};exec(compile(text[:text.index("c=M['candidates'][0]")],str(src),'exec'),E)
+src2=P.parent/'east-v3-offline-analysis/analyze-scalar.py';text2=src2.read_text();N={'__file__':str(src2),'__name__':'readonly'};exec(compile(text2[:text2.index('T=np.array(tri)')],str(src2),'exec'),N);trunk=np.array(N['tri']);sys.path.insert(0,str(V));from entry_geometry import Terrain
+terrain=Terrain(E['F'].tolist());floor=Terrain([[plan['topVertices'][i] for i in f] for f in plan['topFaces']])
+def station(fraction):
+    deg=-68+143*fraction;r=min(rows,key=lambda row:abs(row['degrees']-deg));return np.array(r['center']),r['degrees']
+def cast(o,d,length):
+    hits=[]
+    # Scalar operations avoid the initial historical NumPy backend warning.
+    dot=lambda a,b:sum(a[i]*b[i] for i in range(3))
+    sub=lambda a,b:[a[i]-b[i] for i in range(3)]
+    cross=lambda a,b:[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]]
+    for i,t in enumerate(trunk.tolist()):
+        e1=sub(t[1],t[0]);e2=sub(t[2],t[0]);p=cross(d,e2);det=dot(e1,p)
+        if abs(det)<1e-12:continue
+        tv=sub(o,t[0]);u=dot(tv,p)/det;q=cross(tv,e1);v=dot(d,q)/det;dist=dot(e2,q)/det
+        if u>=-1e-10 and v>=-1e-10 and u+v<=1+1e-10 and 0<=dist<=length:hits.append({'triangle':i,'distance':dist,'point':[o[j]+d[j]*dist for j in range(3)],'triangleVertices':t})
+    return sorted(hits,key=lambda h:h['distance'])[:1]
+radius=D['boughRadius'];penetration=.015
+# First low station already has soil crossing its floor underside. The new
+# proposed living root runs from ground-bearing station .08 to deck station
+# .16; both station roles are explicit rather than an invalid trunk ray.
+ground_station,gd=station(.08);deck_station,dd=station(.16);ground_y=terrain.top_y(ground_station);deck_under=deck_station.copy();deck_under[1]-=.07
+ground_center=ground_station.copy();ground_center[1]=ground_y-radius-penetration
+deck_center=deck_under.copy();deck_center[1]-=penetration
+mid=(ground_center+deck_center)/2;mid[1]-=.02
+path=[ground_center,mid,deck_center]
+# Finite tube proposal used for meaningful contact and motion-band diagnostics.
+# The same vertices must be used in any later source build. It is not a column
+# added to the world or a new owner/grant.
+points=[]
+for a,b in zip(path,path[1:]):
+    n=max(1,math.ceil(float(np.linalg.norm(b-a))/.025));points.extend(a+(b-a)*i/n for i in range(n))
+points.append(path[-1]);vertices=[];faces=[]
+for i,p in enumerate(points):
+    tangent=points[min(i+1,len(points)-1)]-points[max(i-1,0)];tangent/=np.linalg.norm(tangent);side=np.cross(tangent,[0,1,0]);side/=np.linalg.norm(side);across=np.cross(tangent,side)
+    for j in range(8):vertices.append(p+radius*(math.cos(j*math.tau/8)*side+math.sin(j*math.tau/8)*across))
+for i in range(len(points)-1):
+    for j in range(8):
+        a=i*8+j;b=i*8+(j+1)%8;c=(i+1)*8+(j+1)%8;d=(i+1)*8+j;faces.extend([[a,b,c],[a,c,d]])
+for j in range(1,7):faces.extend([[0,j+1,j],[(len(points)-1)*8,(len(points)-1)*8+j,(len(points)-1)*8+j+1]])
+vertices=np.array(vertices);triangles=vertices[np.array(faces)];body=[];floor_gaps=[];ground_gaps=[]
+for i,p in enumerate(vertices):
+    fy=floor.top_y(p);gy=terrain.top_y(p)
+    floor_gaps.append({'vertex':i,'floorY':fy,'gapBelowFloor':None if fy is None else fy-p[1]})
+    ground_gaps.append({'vertex':i,'groundY':gy,'aboveGround':None if gy is None else p[1]-gy})
+for i,r in enumerate(rows):
+    at=np.array(r['center']);lo=triangles.min(axis=1);hi=triangles.max(axis=1);ids=np.flatnonzero((hi[:,0]>=at[0]-S['envelope']['radius'])&(lo[:,0]<=at[0]+S['envelope']['radius'])&(hi[:,2]>=at[2]-S['envelope']['radius'])&(lo[:,2]<=at[2]+S['envelope']['radius'])&(hi[:,1]>=at[1]+min(b['minY'] for b in S['envelope']['bands']))&(lo[:,1]<=at[1]+S['envelope']['height']))
+    hits=[int(k) for k in ids if any(E['band_hit'](at,b,triangles[k]) for b in S['envelope']['bands'])]
+    if hits:body.append({'row':i,'point':r['center'],'triangles':hits})
+cap=vertices[-8:];contact=[]
+for i,p in enumerate(cap):
+    fy=floor.top_y(p);contact.append({'corner':i,'point':p.tolist(),'actualDeckTopY':fy,'aboveDeckBottom':None if fy is None else float(p[1]-(fy-.07))})
+high=[];cx,_,cz=S['transform']['authoredOrigin']
+for fraction in [.28,.5,.72,.92,1.]:
+    at,deg=station(fraction) if fraction<1 else (np.array(rows[-1]['center']),rows[-1]['degrees'])
+    dest=at-np.array([0,.07,0]);aim=np.array([cx,dest[1]-.22,cz]);direction=aim-dest;direction/=np.linalg.norm(direction)
+    high.append({'fraction':fraction,'degrees':deg,'deckContact':dest.tolist(),'aim':aim.tolist(),'sourceHit':cast(dest,direction,D['maximumBoughSpan']),'maximumSpanUnchanged':D['maximumBoughSpan']})
+report={'status':'HOLD_PROPOSAL_NOT_SOURCE_BUILT','candidate':'p02-east-v4-curvature','inputSha':{'plan':sha(P/'planned-floor-v4-stations-once.json'),'script':sha(__file__),'sourceGLB':sha(S['inputs']['sourceGlb']['path']),'context':sha(S['inputs']['context']['path']),'capturedDonorParity':sha(V/'runs/01-coarse-build/donor-authored-parity.json')},'firstSupport':{'role':'same-owner living root, lower end ground-bearing; never ray below hollow trunk','oldInvalidFraction':.08,'groundBearingFraction':.08,'newDeckFraction':.16,'stationShiftIsExplicitNewSupportDesign':True,'groundStation':ground_station.tolist(),'groundDegrees':gd,'actualGroundY':ground_y,'originalLowDeckUndersideY':float(ground_station[1]-.07),'deckStation':deck_station.tolist(),'deckDegrees':dd,'path':[p.tolist() for p in path],'radius':radius,'sourcePenetrationUnchanged':penetration,'deckCapContactVertices':contact,'minimumMeshBelowPlannedFloor':min(x['gapBelowFloor'] for x in floor_gaps if x['gapBelowFloor'] is not None),'uncoveredRootVertices':sum(x['floorY'] is None for x in floor_gaps),'groundContactVertices':ground_gaps[:8],'visibleAboveGroundVertexCount':sum(x['aboveGround'] is not None and x['aboveGround']>0 for x in ground_gaps),'motionBandRows':body,'vertices':vertices.tolist(),'faces':faces},'higherFiveNativeTrunkSupportRays':high,'limitations':['Root cap/deck plane vertex penetration is not yet a closed-solid Boolean joint proof.','Ground cap vertex depths are not a full projected cap/terrain intersection proof.','Same 35 owner and75right context; no physical app/route integration.','Only new root triangles against branch route motion bands were checked; new high boughs/rails not yet generated.','No maxSpan, width, head margin, collision exclusion or original mesh change.']}
+out=P/'support-proposal.json';assert not out.exists();out.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps({'sha':sha(out),'ground':report['firstSupport']['groundStation'],'groundY':ground_y,'deck':deck_station.tolist(),'rootCapDepth':report['firstSupport']['groundContactVertices'],'deckCap':[x['aboveDeckBottom'] for x in contact],'minBelowFloor':report['firstSupport']['minimumMeshBelowPlannedFloor'],'visibleVertices':report['firstSupport']['visibleAboveGroundVertexCount'],'rootBodyRows':len(body),'highRays':[{'degrees':x['degrees'],'hit':len(x['sourceHit']),'distance':x['sourceHit'][0]['distance'] if x['sourceHit'] else None} for x in high]},indent=2))

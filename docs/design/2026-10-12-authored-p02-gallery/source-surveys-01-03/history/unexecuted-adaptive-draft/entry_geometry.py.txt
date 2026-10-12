@@ -1,0 +1,121 @@
+"""Pure numeric preparation helpers. No app imports, bpy or invented support floors.
+EPS matches worldDefinition.ts sampling epsilon; it is not a new gap allowance.
+"""
+import math
+EPS = 1e-7
+
+def cross(a,b,c):return (b[0]-a[0])*(c[2]-a[2])-(b[2]-a[2])*(c[0]-a[0])
+def mix(a,b,t):return tuple(a[i]+(b[i]-a[i])*t for i in range(3))
+def plane_y(p,tri):
+    a,b,c=tri;area=cross(a,b,c)
+    u=cross(p,b,c)/area;v=cross(a,p,c)/area
+    return u*a[1]+v*b[1]+(1-u-v)*c[1]
+def polygon_area(poly):return abs(sum(a[0]*b[2]-b[0]*a[2] for a,b in zip(poly,poly[1:]+poly[:1])))/2
+
+def clip(poly,tri):
+    sign=1 if cross(*tri)>0 else -1
+    for a,b in zip(tri,tri[1:]+tri[:1]):
+        result=[]
+        for p,q in zip(poly,poly[1:]+poly[:1]):
+            x,y=sign*cross(a,b,p),sign*cross(a,b,q)
+            if x>=0:result.append(p)
+            if (x>=0)!=(y>=0):result.append(mix(p,q,x/(x-y)))
+        poly=result
+        if not poly:break
+    return poly
+
+class Terrain:
+    def __init__(self,triangles):
+        self.triangles=[tuple(tuple(p) for p in tri) for tri in triangles if abs(cross(*tri))>1e-12]
+        self.bins={}
+        for i,tri in enumerate(self.triangles):
+            for x in range(math.floor(min(p[0] for p in tri)),math.floor(max(p[0] for p in tri))+1):
+                for z in range(math.floor(min(p[2] for p in tri)),math.floor(max(p[2] for p in tri))+1):self.bins.setdefault((x,z),set()).add(i)
+    def nearby(self,points):
+        ids=set()
+        for x in range(math.floor(min(p[0] for p in points)),math.floor(max(p[0] for p in points))+1):
+            for z in range(math.floor(min(p[2] for p in points)),math.floor(max(p[2] for p in points))+1):ids.update(self.bins.get((x,z),()))
+        return sorted(ids)
+    def top_y(self,p):
+        heights=[]
+        for i in self.nearby([p]):
+            tri=self.triangles[i];sign=1 if cross(*tri)>0 else -1
+            if all(sign*cross(a,b,p)>=-1e-12 for a,b in zip(tri,tri[1:]+tri[:1])):heights.append(plane_y(p,tri))
+        return max(heights) if heights else None
+    def section(self,a,b,flat_y):
+        lines=[];breaks={0.,1.}
+        for index in self.nearby([a,b]):
+            tri=self.triangles[index];sign=1 if cross(*tri)>0 else -1;lo=0.;hi=1.
+            for p,q in zip(tri,tri[1:]+tri[:1]):
+                c=sign*cross(p,q,a);s=sign*(cross(p,q,b)-cross(p,q,a))
+                if abs(s)<1e-14:
+                    if c < -1e-12:hi=-1;break
+                elif s>0:lo=max(lo,-c/s)
+                else:hi=min(hi,-c/s)
+            if hi-lo<=1e-12:continue
+            y0=plane_y(a,tri);dy=plane_y(b,tri)-y0
+            lines.append({'lo':lo,'hi':hi,'y0':y0,'dy':dy,'triangle':index});breaks.update([lo,hi])
+        # Also split crossing height planes; nearest/highest support cannot change unseen.
+        for i,l in enumerate(lines):
+            for r in lines[i+1:]:
+                if abs(l['dy']-r['dy'])<1e-14:continue
+                t=(r['y0']-l['y0'])/(l['dy']-r['dy'])
+                if max(l['lo'],r['lo'])<t<min(l['hi'],r['hi']):breaks.add(t)
+        cuts=sorted(breaks);segments=[];gaps=[]
+        for lo,hi in zip(cuts,cuts[1:]):
+            if hi-lo<=1e-12:continue
+            mid=(lo+hi)/2;cover=[l for l in lines if l['lo']<=mid<=l['hi']]
+            if not cover:gaps.append([lo,hi]);continue
+            l=max(cover,key=lambda x:x['y0']+mid*x['dy'])
+            segments.append({'from':lo,'to':hi,'yFrom':l['y0']+lo*l['dy'],'yTo':l['y0']+hi*l['dy'],'triangle':l['triangle']})
+        jumps=[{'at':r['from'],'delta':r['yFrom']-l['yTo']} for l,r in zip(segments,segments[1:]) if abs(r['from']-l['to'])<1e-12 and abs(r['yFrom']-l['yTo'])>EPS]
+        flat=[flat_y-y for s in segments for y in [s['yFrom'],s['yTo']]]
+        return {'start':list(a),'end':list(b),'segments':segments,'uncovered':gaps,'discontinuities':jumps,'flatLandingGapRange':([min(flat),max(flat)] if flat else None),'supportedFullWidth':not gaps and not jumps and bool(segments),'epsilon':EPS}
+    def relation(self,top_triangles):
+        minimum=math.inf;maximum=-math.inf;buried=[];coplanar=0.;overlap=0.
+        for i,tri in enumerate(top_triangles):
+            for j in self.nearby(tri):
+                ground=self.triangles[j];poly=clip(list(tri),ground)
+                if len(poly)<3:continue
+                area=polygon_area(poly)
+                if area<=1e-12:continue
+                delta=[p[1]-plane_y(p,ground) for p in poly];low=min(delta);high=max(delta);minimum=min(minimum,low);maximum=max(maximum,high);overlap+=area
+                if low < -EPS:buried.append({'newTriangle':i,'groundTriangle':j,'gapRange':[low,high],'intersection':[list(p) for p in poly]})
+                if max(abs(low),abs(high))<=EPS:coplanar+=area
+        return {'minGap':minimum if overlap else None,'maxGap':maximum if overlap else None,'overlapArea':overlap,'buriedPolygons':buried,'coplanarTopArea':coplanar,'clear':not buried and coplanar<=1e-10,'epsilon':EPS}
+
+def ribbon_plan(points,width,terrain):
+    points=[tuple(p) for p in points];direction=(points[1][0]-points[0][0],points[1][2]-points[0][2]);length=math.hypot(*direction);assert length>1e-10
+    side=(-direction[1]/length,0,direction[0]/length)
+    a=tuple(points[0][i]-side[i]*width/2 for i in range(3));b=tuple(points[0][i]+side[i]*width/2 for i in range(3));section=terrain.section(a,b,points[0][1])
+    if not section['supportedFullWidth']:return {'entrySection':section,'ready':False}
+    cuts=sorted({0.,.25,.5,.75,1.,*[s[k] for s in section['segments'] for k in ['from','to']]});assert len(cuts)<=128,'Bounded source entry exceeds 128 exact ground breaks'
+    def height(u):
+        values=[s['yFrom']+(s['yTo']-s['yFrom'])*(u-s['from'])/(s['to']-s['from']) for s in section['segments'] if s['from']-1e-12<=u<=s['to']+1e-12]
+        assert values;return max(values)
+    verts=[]
+    for i,p in enumerate(points):
+        before=points[max(0,i-1)];after=points[min(len(points)-1,i+1)];dx=after[0]-before[0];dz=after[2]-before[2];length=math.hypot(dx,dz);assert length>1e-10
+        sx,sz=-dz/length,dx/length
+        for u in cuts:verts.append([p[0]+sx*width*(u-.5),height(u) if i==0 else p[1],p[2]+sz*width*(u-.5)])
+    count=len(verts);cols=len(cuts);top=[]
+    for row in range(len(points)-1):
+        for col in range(cols-1):
+            a=row*cols+col;b=a+cols;top.extend([(a,a+1,b),(a+1,b+1,b)])
+    boundary=[]
+    for col in range(cols-1):boundary.extend([(col,col+1),((len(points)-1)*cols+col+1,(len(points)-1)*cols+col)])
+    for row in range(len(points)-1):boundary.extend([((row+1)*cols,row*cols),(row*cols+cols-1,(row+1)*cols+cols-1)])
+    return {'ready':True,'entrySection':section,'topVertices':verts,'topFaces':[list(f) for f in top],'boundaryEdges':[list(e) for e in boundary],'width':width,'columns':cuts,'topology':'section follows exact original floor breakpoints; no source floor changed'}
+
+def solid_geometry(plan,thickness):
+    v=plan['topVertices'];count=len(v);vertices=v+[[x,y-thickness,z] for x,y,z in v];faces=list(plan['topFaces'])+[(c+count,b+count,a+count) for a,b,c in plan['topFaces']]
+    for a,b in plan['boundaryEdges']:faces.extend([(a,a+count,b),(b,a+count,b+count)])
+    return vertices,faces
+
+def slope_report(points):
+    items=[]
+    for a,b in zip(points,points[1:]):
+        run=math.hypot(b[0]-a[0],b[2]-a[2]);rise=b[1]-a[1]
+        if run<1e-12 and abs(rise)<1e-12:continue
+        items.append({'run':run,'rise':rise,'absoluteSlope':abs(rise)/run if run else None})
+    return {'horizontalRun':sum(x['run'] for x in items),'signedRise':sum(x['rise'] for x in items),'maximumAbsoluteSlope':max((x['absoluteSlope'] for x in items if x['absoluteSlope'] is not None),default=0),'verticalSegments':sum(x['absoluteSlope'] is None for x in items),'segments':items,'acceptance':'reported only; no invented maximum slope rule'}

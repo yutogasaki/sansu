@@ -1,0 +1,115 @@
+{
+  "recordedAtUtc": "2026-10-12T05:20:41.243753+00:00",
+  "execSession": 66792,
+  "rawStatus": "FAIL preserved",
+  "outerExitCode": 1,
+  "rawDiagnosticCompleted": false,
+  "startedAtUtc": "2026-10-12T05:18:55.286073+00:00",
+  "finishedAtUtc": "2026-10-12T05:19:44.385101+00:00",
+  "ownedPid": 38695,
+  "ownedProcessGroup": 38695,
+  "elapsedSeconds": 49.098995458,
+  "peakObservedProcessTreeRssBytes": 3126067200,
+  "stopReason": null,
+  "failureClassification": "The sole recorded fatal error is a console 404 at /favicon.ico. Three-stage acquisition and all instrumented invariants/restoration succeeded before the unchanged all-error gate. This summary does not rewrite the raw failed run as PASS.",
+  "errorEvidence": [
+    {
+      "kind": "console-error",
+      "atUtc": "2026-10-12T05:18:56.972Z",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)",
+      "location": {
+        "url": "http://127.0.0.1:5359/favicon.ico",
+        "lineNumber": 0,
+        "columnNumber": 0
+      }
+    }
+  ],
+  "networkEvidenceLimit": "The browser console location identifies /favicon.ico, but Playwright page response/requestfailed listeners did not observe that browser-level request; no response body/status object/resourceType was captured. HTTP404 comes from the console message. Attempt01 remains historically unclassified because it lacked location.",
+  "projectionSignedZero": {
+    "rawMismatchIndices": [
+      12,
+      13
+    ],
+    "canonicalMismatchIndices": [],
+    "allThreeStagesExactAfterSignedZeroOnly": true
+  },
+  "target": {
+    "matched": true,
+    "triangles": [
+      {
+        "sourceTriangle": 36705,
+        "indexOffset": 118563,
+        "indices": [
+          23109,
+          23858,
+          23110
+        ],
+        "group": {
+          "start": 8448,
+          "count": 114021,
+          "materialIndex": 0
+        }
+      },
+      {
+        "sourceTriangle": 36710,
+        "indexOffset": 118578,
+        "indices": [
+          23858,
+          23118,
+          23268
+        ],
+        "group": {
+          "start": 8448,
+          "count": 114021,
+          "materialIndex": 0
+        }
+      }
+    ],
+    "groupCount": 54,
+    "materialIndex": 0
+  },
+  "captures": [
+    {
+      "stage": "shadow-off",
+      "file": "1280-hill-close-source-shadow-off.png",
+      "sha256": "dc07620cdcc70d27bbadb0e5ed0e03c2d83f23cc892d2fab892d84d45d1e93c7",
+      "invariantSha256": "0d04b99f959f74119d940a64688fd3b2f522ccd31cb1c4a59b0099152d67e08c",
+      "shaderCompileHookCount": 0
+    },
+    {
+      "stage": "roi-face-normal",
+      "file": "1280-hill-close-source-roi-face-normal.png",
+      "sha256": "c5465c08e1bef07bb32d5f68c44bab6ce5ca1a13dd69a98fd3f55ea4b5961b6b",
+      "invariantSha256": "0d04b99f959f74119d940a64688fd3b2f522ccd31cb1c4a59b0099152d67e08c",
+      "shaderCompileHookCount": 2
+    },
+    {
+      "stage": "restored-shadow-off",
+      "file": "1280-hill-close-source-restored-shadow-off.png",
+      "sha256": "3b47e091fad8425a6ad0803362da331cb36362381d9ddd957aebde98d92c1759",
+      "invariantSha256": "0d04b99f959f74119d940a64688fd3b2f522ccd31cb1c4a59b0099152d67e08c",
+      "shaderCompileHookCount": 2
+    }
+  ],
+  "shaderRecords": 2,
+  "shaderErrorsObserved": false,
+  "restoration": {
+    "complete": true,
+    "originalMaterialIdentity": true,
+    "hookRestored": true,
+    "clonesDisposed": 1,
+    "matches": 25
+  },
+  "sourceCount": 6460,
+  "sourceStable": true,
+  "installedCount": 6,
+  "installedStable": true,
+  "driverDependenciesStable": true,
+  "ownedGroupRemaining": [],
+  "rootVite5359": "Not signalled or restarted",
+  "rawReportSha256": "09e097da6d2a0fed579ba8604baa147af654b46e0c0a6dd7ddb07f899366ed05",
+  "noRetry": true,
+  "noAppOrCandidateEdits": true,
+  "visualJudgment": "Root-owned; no visual conclusion made by this summary",
+  "acceptance": "Not art/M1/product performance acceptance"
+}

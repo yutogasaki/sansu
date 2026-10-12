@@ -1,0 +1,17 @@
+# First-pair comparison completed; source candidate remains HOLD
+
+The one authorized comparison ran 2026-10-12 04:15:49.403690–04:15:51.431162 UTC, elapsed 2.027493 seconds, CPU2, Blender PID/PGID 24705, exit 0. Its process group was absent afterward. No full builder, 70-pair baseline, geometry repair or render ran.
+
+Both kernels used the preserved fixed trunk `role-l14-2743` and deformed lobe `role-l14-2234`, the same triangle arrays/closure check, guesses and radius `0.025429949999999996`. The original kernel reproduced `Ray parity exceeded bounded intersections: role-l14-2743`. Candidate v2 returned a measured overlap at the first original point `[2.4679999351501465,3.0542500019073486,-4]`. Inherited approximate BVH surface distances were `0.09988880157470703` and `0.1608559787273407`. This is not a certified ball-clearance or exact-seam result.
+
+For the original failing trunk point, both captured Float32-normalized directions returned one distinct crossing. Direction 1 crossed triangle 721 with distance interval `[0.1099741139722041,0.10997411397220468]`; direction 2 crossed triangle 2 with interval `[0.12708360606982366,0.12708360606982427]`. Their interval upper bounds for exiting the entire mesh AABB were `0.14404143325789281` and `0.16626590065527758`, both below 100. No stepped origin or enlarged epsilon was used.
+
+Five original input hashes, both mesh/normal/transform digests, all 16 v2 code/preparation bindings and the readiness seal matched before/after. The original failure and original `joints.py` remain unchanged. The runner verified bindings before launch and after exit; the comparison also checked them internally. The frozen preparation remains described as not yet executed in its immutable readiness; this new result records subsequent execution separately.
+
+The runner's one-second RSS sampling recorded a maximum of only 1,261,568 bytes. That appears to capture startup rather than the brief Blender working peak; actual transient peak RSS is not established. The 3 GiB sampled stop remained configured, no stop fired, and no extra run was made to improve measurement. These source timings are not product performance evidence.
+
+The separate root-authored FAILED/HOLD whole render still shows a column of large leaf clumps and individually readable white-birch umbrellas. Compared with stage1 b1, the willow gained depth, but the crowns do not yet surround the houses and bench courtyard as a forest with a bright interior. This numerical fix does not change that composition. Do not repeat the complete v1 builder merely because the first query now resolves.
+
+The proposed next composition keeps the same four roots/owners and forms a shallow U around the rear and sides of the bench garden: l14's original lobes and main boughs become the upper rear canopy; l29 turns its native branch/crown arrangement back toward that canopy as a lower right return; l15 separates its front canopy from its rear connection to frame a wide, bright front entrance; l28 retains a distinct vertical rear silhouette. Keep a second narrow sight opening toward the right/rear hill. Plan the native bough paths and negative space before any scale adjustments. No extra trees, owner cells, terrain, highest hero or shoulder-owner changes are proposed. This is an untested art direction, not an approved design.
+
+Raw records are in `blender-attempt-01/`; the owned process log, UTC/resource record and exit/parity check are in `execution-attempt-01/`. Source-only, runtime unintegrated, independent observers N=0.

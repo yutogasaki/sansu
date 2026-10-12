@@ -1,0 +1,62 @@
+"""Pure syntax/oracle tests and immutable-input sealing; never launches Blender."""
+import ast
+import hashlib
+import json
+import os
+import subprocess
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+DEBUG = HERE.parent
+sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+assert not (HERE / 'readiness.json').exists(), 'Preserve previous preparation if revising'
+assert not (HERE / 'attempt-01').exists() and not (HERE / 'execution-01').exists()
+previous = json.loads((DEBUG / 'zero-face-comparison/readiness.json').read_text())
+external = dict(previous['externalInputs'])
+for subdir in (DEBUG, DEBUG / 'zero-face-comparison'):
+    ready = json.loads((subdir / 'readiness.json').read_text())
+    assert sha(subdir / 'readiness.json') == (subdir / 'readiness.sha256').read_text().strip()
+    for name, expected in ready['files'].items():
+        assert sha(subdir / name) == expected
+        external[str(subdir / name)] = expected
+    for name in ['readiness.json', 'readiness.sha256']:
+        external[str(subdir / name)] = sha(subdir / name)
+for name in ['attempt-01/result.json', 'attempt-01/comparison-raw.json.gz', 'attempt-01/input-parity.json', 'execution-01/result.json', 'execution-01/postflight.json']:
+    path = DEBUG / 'zero-face-comparison' / name
+    external[str(path)] = sha(path)
+assert {name: sha(Path(name)) for name in external} == external
+files = ['compare.py', 'export_check.py', 'test_export_check.py', 'run-once.py', 'prepare.py', 'README.md']
+syntax = []
+for name in files:
+    if name.endswith('.py'):
+        source = (HERE / name).read_text()
+        compile(source, str(HERE / name), 'exec')
+        syntax.append(name)
+tree = ast.parse((HERE / 'compare.py').read_text())
+calls = sorted({ast.unparse(node.func) for node in ast.walk(tree) if isinstance(node, ast.Call) and ast.unparse(node.func).startswith('bpy.ops.')})
+assert calls == ['bpy.ops.export_scene.gltf', 'bpy.ops.import_scene.gltf', 'bpy.ops.object.select_all', 'bpy.ops.wm.read_factory_settings']
+assert 'deform.apply(obj, field, BI, None)' in (HERE / 'compare.py').read_text()
+test = subprocess.run([sys.executable, '-B', 'test_export_check.py'], cwd=HERE, text=True, capture_output=True,
+                      env=dict(os.environ, PYTHONDONTWRITEBYTECODE='1'))
+(HERE / 'pure-tests.log.txt').write_text(test.stdout + test.stderr)
+assert test.returncode == 0, 'Preserve first test failure before revising'
+static = {'syntaxChecked': syntax, 'pureTestsExit': test.returncode, 'blenderOperatorAllowlist': calls,
+          'blenderExecuted': False, 'originalFieldAndGuardImportedUnmodified': True,
+          'externalInputsBeforeAfterSame': {name: sha(Path(name)) for name in external} == external}
+assert static['externalInputsBeforeAfterSame']
+(HERE / 'static-check.json').write_text(json.dumps(static, indent=2) + '\n')
+files += ['pure-tests.log.txt', 'static-check.json']
+ready = {'preparedAtUtc': datetime.now(timezone.utc).isoformat(), 'status': 'READY-NOT-EXECUTED',
+    'files': {name: sha(HERE / name) for name in files}, 'externalInputs': external,
+    'limits': {'threads': 2, 'maxConcurrentBlender': 1, 'rssObservedStopBytes': 2 * 1024**3,
+               'rssSampleSeconds': .25, 'timeoutSeconds': 60},
+    'variants': ['zero-removed-baseline', 'targeted-incident-sharp', 'all-edges-sharp-control'],
+    'sourceVertex': 38, 'guardUnchanged': .002, 'rendered': False,
+    'scope': 'one throwaway changed-role leaf; raw source normals explicit; no correction adopted',
+    'command': 'SANSU_FOREST_SHARP_FAN_APPROVED=1 python3 ' + str(HERE / 'run-once.py')}
+(HERE / 'readiness.json').write_text(json.dumps(ready, indent=2) + '\n')
+(HERE / 'readiness.sha256').write_text(sha(HERE / 'readiness.json') + '\n')
+print(json.dumps({'readinessSHA': sha(HERE / 'readiness.json'), 'files': ready['files'],
+                  'externalInputCount': len(external), 'blenderExecuted': False}), flush=True)

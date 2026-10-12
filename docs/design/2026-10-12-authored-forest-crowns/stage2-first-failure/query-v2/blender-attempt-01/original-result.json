@@ -1,0 +1,31 @@
+{
+  "variant": "original",
+  "closure": [
+    {
+      "name": "role-l14-2743",
+      "triangles": 736,
+      "positionWeldDecimalsWorld": 7,
+      "badEdges": 0,
+      "collapsedSeamTriangles": 0
+    },
+    {
+      "name": "role-l14-2234",
+      "triangles": 1216,
+      "positionWeldDecimalsWorld": 7,
+      "badEdges": 0,
+      "collapsedSeamTriangles": 0
+    }
+  ],
+  "triangleCounts": [
+    736,
+    1216
+  ],
+  "diagonals": [
+    3.2243574102934596,
+    3.0499769706325663
+  ],
+  "errorType": "ValueError",
+  "error": "Ray parity exceeded bounded intersections: role-l14-2743",
+  "traceback": "Traceback (most recent call last):\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage2/query-v2/compare-failed-query.py\", line 65, in <module>\n    row['returned']=joints.overlap_ball(left,right,[guess,target],radius)\n                    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage2/joints.py\", line 106, in overlap_ball\n    a = left.clearance(point)\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage2/joints.py\", line 68, in clearance\n    if not self.inside(point):\n           ~~~~~~~~~~~^^^^^^^\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage2/joints.py\", line 61, in inside\n    raise ValueError(f'Ray parity exceeded bounded intersections: {self.obj.name}')\nValueError: Ray parity exceeded bounded intersections: role-l14-2743\n",
+  "elapsedSeconds": 0.007099792128428817
+}

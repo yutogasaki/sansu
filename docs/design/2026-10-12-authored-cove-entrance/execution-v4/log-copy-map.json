@@ -1,0 +1,152 @@
+{
+  "reason": "Raw .log paths remain historical metadata; durable .log.txt copies have identical bytes and SHA. Source authoring/audits only, no app/core/runtime evidence.",
+  "files": [
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/build-shore-v4-01.log",
+      "durable": "execution-v4/build-shore-v4-01.log.txt",
+      "bytes": 3589,
+      "sha256": "9e46e63bed20efc736266ba5bb28dd4e24c5fcc8cc01ab1e250a7f479967cb4b",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/build-shore-v4-02.log",
+      "durable": "execution-v4/build-shore-v4-02.log.txt",
+      "bytes": 3590,
+      "sha256": "b0a84e65130c3e8c5ca336f10d8cc1e4e5afa5a0bd4747ad0ca40ca61961c40a",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/build-shore-v4-03.log",
+      "durable": "execution-v4/build-shore-v4-03.log.txt",
+      "bytes": 3590,
+      "sha256": "d349762bcf888137d207834cf4a22e426da9991d2dc28c75f002affbfdae8469",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-audit-01.log",
+      "durable": "execution-v4/shore-v4-audit-01.log.txt",
+      "bytes": 3786,
+      "sha256": "0ec0a603ca1748f5b4ae2e95282803d351eb3d56a6cbad7126caff42a37d6877",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-audit-02.log",
+      "durable": "execution-v4/shore-v4-audit-02.log.txt",
+      "bytes": 3786,
+      "sha256": "447f0cbec9494917b7baa5a91319caa565d9649205565ad11b0014101bec5449",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-audit-03.log",
+      "durable": "execution-v4/shore-v4-audit-03.log.txt",
+      "bytes": 3786,
+      "sha256": "447f0cbec9494917b7baa5a91319caa565d9649205565ad11b0014101bec5449",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-floor-audit-02.log",
+      "durable": "execution-v4/shore-v4-floor-audit-02.log.txt",
+      "bytes": 5008,
+      "sha256": "35676a38f8fd9520db075b93b4db78de1fdd523366338961c3217aca271e6983",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-floor-audit-03.log",
+      "durable": "execution-v4/shore-v4-floor-audit-03.log.txt",
+      "bytes": 5010,
+      "sha256": "11bb458fac9e0566e518eb19113ffe236a3d23dee483f8949061a62c0b5b2abd",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-footprint-02.log",
+      "durable": "execution-v4/shore-v4-footprint-02.log.txt",
+      "bytes": 817,
+      "sha256": "e88be3fa7185daff11ade497e2305c37f1ad12bf29a14891d0ab8a80ea1c6db9",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-footprint-03.log",
+      "durable": "execution-v4/shore-v4-footprint-03.log.txt",
+      "bytes": 818,
+      "sha256": "8cedc0e97245fb9acfd0ed9acbb4043f95f0e6be0d461b1a0abedae4f33587aa",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-prepare-01.log",
+      "durable": "execution-v4/shore-v4-prepare-01.log.txt",
+      "bytes": 20,
+      "sha256": "dcb5a94487507904edd49650a69e6a90e41760807188a382c9b3af7cea29f594",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-prepare-02.log",
+      "durable": "execution-v4/shore-v4-prepare-02.log.txt",
+      "bytes": 20,
+      "sha256": "dcb5a94487507904edd49650a69e6a90e41760807188a382c9b3af7cea29f594",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-prepare-03.log",
+      "durable": "execution-v4/shore-v4-prepare-03.log.txt",
+      "bytes": 20,
+      "sha256": "dcb5a94487507904edd49650a69e6a90e41760807188a382c9b3af7cea29f594",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-preview-01.log",
+      "durable": "execution-v4/shore-v4-preview-01.log.txt",
+      "bytes": 1136,
+      "sha256": "5525092c35e28fb685bb8b87930e34ff7095bc0700270596085f795ba25dc195",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-preview-02.log",
+      "durable": "execution-v4/shore-v4-preview-02.log.txt",
+      "bytes": 1136,
+      "sha256": "67be5b6f5cf998bc929c09a09c1937c30da2bca3cd00427b9bd17ea2cc9851b2",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-preview-03.log",
+      "durable": "execution-v4/shore-v4-preview-03.log.txt",
+      "bytes": 1136,
+      "sha256": "e7f2591f686c2e77e600b7725217fde3e061862a6699120c2850fce5e13abb4a",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-probe-01.log",
+      "durable": "execution-v4/shore-v4-probe-01.log.txt",
+      "bytes": 554,
+      "sha256": "4d5d244e57dde5c504c64b0046a467338a9230a70409f4f1ac991da6a89fe384",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-probe-02.log",
+      "durable": "execution-v4/shore-v4-probe-02.log.txt",
+      "bytes": 554,
+      "sha256": "4d5d244e57dde5c504c64b0046a467338a9230a70409f4f1ac991da6a89fe384",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-probe-03.log",
+      "durable": "execution-v4/shore-v4-probe-03.log.txt",
+      "bytes": 554,
+      "sha256": "4d5d244e57dde5c504c64b0046a467338a9230a70409f4f1ac991da6a89fe384",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-support-02.log",
+      "durable": "execution-v4/shore-v4-support-02.log.txt",
+      "bytes": 96,
+      "sha256": "8b88b57eb4b83db844673108821c0db1876cba865d415af1d75c7540722708ec",
+      "identical": true
+    },
+    {
+      "raw": "/private/tmp/sansu-authored-cove-entrance/shore-v4-support-03.log",
+      "durable": "execution-v4/shore-v4-support-03.log.txt",
+      "bytes": 96,
+      "sha256": "8b88b57eb4b83db844673108821c0db1876cba865d415af1d75c7540722708ec",
+      "identical": true
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "recordedAt": "2026-10-12T02:52:36.262409+00:00",
+  "scope": "Fresh c2 server launch records only; this records a point-in-time running server, not browser/rendered identity or later log stability.",
+  "files": [
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/server-identity.json",
+      "destination": "server-identity/server-identity.json",
+      "bytes": 812,
+      "sourceBeforeSha256": "bb261505844aafc7c6dcd27d6d4360d85d732e70d968e52fce453ae10bf0c225",
+      "sourceAfterSha256": "bb261505844aafc7c6dcd27d6d4360d85d732e70d968e52fce453ae10bf0c225",
+      "destinationSha256": "bb261505844aafc7c6dcd27d6d4360d85d732e70d968e52fce453ae10bf0c225"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-shoulder-c2/server-startup.log.txt",
+      "destination": "startup/server-startup.log.txt",
+      "bytes": 350,
+      "sourceBeforeSha256": "a7c682a7131deb1b3279677ff50140db067a0273ead0fc5c407f7199f26bc387",
+      "sourceAfterSha256": "a7c682a7131deb1b3279677ff50140db067a0273ead0fc5c407f7199f26bc387",
+      "destinationSha256": "a7c682a7131deb1b3279677ff50140db067a0273ead0fc5c407f7199f26bc387"
+    }
+  ],
+  "byteIdentical": true,
+  "previousRawProof": {
+    "path": "raw-archive-proof.json",
+    "beforeSha256": "84250d3b9a12ec1f4374e0c60aeea8df56fbce26e6c62b5050ec33665b3202dd",
+    "afterSha256": "84250d3b9a12ec1f4374e0c60aeea8df56fbce26e6c62b5050ec33665b3202dd"
+  },
+  "server": {
+    "pid": 6704,
+    "execSession": 87101,
+    "port": 5359
+  }
+}

@@ -1,0 +1,152 @@
+"""Narrow, fail-closed representation rules. No Blender, file IO or source edits.
+
+The constants are the existing guards. Selection comes from the sealed raw
+accessor inventory, never a role ordinal, a leaf vertex number, or mesh scale.
+"""
+from fractions import Fraction
+import math
+import struct
+
+NORMAL_LIMIT = .002
+WORLD_LIMIT = 1e-6
+
+
+class Hold(ValueError):
+    """This representation has not proved the unchanged contract."""
+
+
+def require(condition, message):
+    if not condition:
+        raise Hold(message)
+
+
+def finite_points(points):
+    require(bool(points), 'Empty points')
+    require(all(len(p) == 3 and all(math.isfinite(x) for x in p) for p in points),
+            'Expected finite triples')
+
+
+def f32(value):
+    return struct.unpack('<f', struct.pack('<f', value))[0]
+
+
+def exact_zero_faces(positions, faces):
+    """Exact rational cross products of the actual supplied binary floats."""
+    finite_points(positions)
+    points = [tuple(Fraction(x) for x in p) for p in positions]
+    zeros = []
+    for index, face in enumerate(faces):
+        require(len(face) == 3 and all(isinstance(i, int) and 0 <= i < len(points)
+                                    for i in face), 'Invalid triangle')
+        a, b, c = [points[i] for i in face]
+        u = [y - x for x, y in zip(a, b)]
+        v = [y - x for x, y in zip(a, c)]
+        cross = [u[1]*v[2] - u[2]*v[1], u[2]*v[0] - u[0]*v[2],
+                 u[0]*v[1] - u[1]*v[0]]
+        if cross == [0, 0, 0]:
+            zeros.append(index)
+    return zeros
+
+
+def retain_exact_nonzero(positions, faces, sealed_zero_ids):
+    """A declared topology revision, not a claim of original topology parity."""
+    zeros = exact_zero_faces(positions, faces)
+    require(zeros == list(sealed_zero_ids), 'Raw exact-zero face IDs differ from sealed inventory')
+    excluded = set(zeros)
+    keep = [i for i in range(len(faces)) if i not in excluded]
+    return {'sourceFaceIds': keep, 'sourceCornerIds': [3*i+j for i in keep for j in range(3)],
+            'faces': [list(faces[i]) for i in keep], 'excludedExactZeroSourceFaceIds': zeros}
+
+
+def normal_residuals(actual, expected):
+    require(len(actual) == len(expected) and bool(actual), 'Normal count mismatch')
+    finite_points(actual)
+    finite_points(expected)
+    values = [math.dist(a, b) for a, b in zip(actual, expected)]
+    return {'maxL2': max(values), 'failedCorners': [i for i, x in enumerate(values)
+                                                 if x > NORMAL_LIMIT], 'values': values}
+
+
+def derive_incident_sharp(source_corner_vertices, source_normals, stored_normals,
+                          source_edges, original_sharp):
+    """One derivation only; no all-sharp or iterative sharp fallback.
+
+    Inputs are from a fresh exact-zero-pruned clone at original coordinates,
+    literal raw accessor normals assigned, and original edge/smooth flags.
+    The caller must keep that baseline and gate a second fresh clone's readback.
+    """
+    require(len(source_corner_vertices) == len(source_normals), 'Corner mapping mismatch')
+    edges = [tuple(sorted(e)) for e in source_edges]
+    require(all(len(e) == 2 and e[0] != e[1] for e in edges), 'Invalid edge')
+    require(len(set(edges)) == len(edges), 'Duplicate source edge')
+    require(len(original_sharp) == len(edges), 'Sharp flag count mismatch')
+    residual = normal_residuals(stored_normals, source_normals)
+    vertices = sorted({source_corner_vertices[i] for i in residual['failedCorners']})
+    affected = set(vertices)
+    selected = [i for i, e in enumerate(edges) if affected.intersection(e)]
+    selected_set = set(selected)
+    flags = [bool(old) or i in selected_set for i, old in enumerate(original_sharp)]
+    return {'baselineResidual': residual, 'sourceVertexIds': vertices,
+            'selectedSourceEdgeIndices': selected,
+            'selectedSourceEdges': [list(edges[i]) for i in selected],
+            'flags': flags, 'newSharpCount': sum(now and not old
+                                              for old, now in zip(original_sharp, flags)),
+            'rule': 'all incident original edges of raw-source-normal failing corners; one pass'}
+
+
+def choose_representation(local64, retained_faces):
+    """Preserve nonzero local faces using one data-derived translation.
+
+    Recenter is eligible only for ONE exact F32 collision group responsible for
+    every collapsed face. The center is an existing Float64 target vertex chosen
+    by minimax distance, then sum distance, then source vertex ID. No retries,
+    free anchor, scale change, epsilon or deletion of positive-area triangles.
+    """
+    finite_points(local64)
+    require(not exact_zero_faces(local64, retained_faces),
+            'Float64 authored target already has a zero retained face')
+    old32 = [[f32(x) for x in p] for p in local64]
+    collapsed = exact_zero_faces(old32, retained_faces)
+    if not collapsed:
+        return {'centerVertexId': None, 'center64': [0., 0., 0.], 'local32': old32,
+                'oldPivotCollapsedRetainedFaces': [], 'collisionVertexIds': [],
+                'recentered': False}
+    used = {i for face in retained_faces for i in face}
+    grouped = {}
+    for i in sorted(used):
+        grouped.setdefault(tuple(old32[i]), []).append(i)
+    collisions = [ids for ids in grouped.values()
+                  if len({tuple(local64[i]) for i in ids}) > 1]
+    relevant = [ids for ids in collisions
+                if any(len(set(ids).intersection(retained_faces[fi])) >= 2 for fi in collapsed)]
+    require(len(relevant) == 1, 'Not one exact Float32 collision group; no recenter fallback')
+    group = relevant[0]
+    require(all(len(set(group).intersection(retained_faces[fi])) >= 2 for fi in collapsed),
+            'Collapsed face without the classified exact vertex collision')
+    def key(i):
+        distances = [sum((x-y)**2 for x, y in zip(local64[i], local64[j])) for j in group]
+        return max(distances), sum(distances), i
+    center_id = min(group, key=key)
+    center = list(local64[center_id])
+    represented = [[f32(x-c) for x, c in zip(p, center)] for p in local64]
+    require(not exact_zero_faces(represented, retained_faces),
+            'Deterministic recenter leaves a collapsed retained face; no alternative center retry')
+    return {'centerVertexId': center_id, 'center64': center, 'local32': represented,
+            'oldPivotCollapsedRetainedFaces': collapsed, 'collisionVertexIds': group,
+            'recentered': True}
+
+
+def method_for_role(row):
+    """Inventory is a bound input. This does not authorize running the adapter."""
+    if row['fixed']:
+        return 'retain-exact-fixed'
+    if row['classification'] == 'existing-guard-passed-retain':
+        return 'original-method-plus-independent-source-oracle'
+    if row['classification'] == 'retain-existing-method-unvalidated':
+        return 'original-method-plus-independent-source-oracle'
+    require(row['classification'] in ('single-leaf-validated', 'same-source-lamina-topology-unvalidated'),
+            'Unclassified role')
+    require(row['ownerId'] == 'l14' and row['role'] == 'hanging-leaf'
+            and row['sameLaminaTopologyAsValidatedLeaf'], 'Outside classified lamina scope')
+    require(len(row['primitives']) == 1, 'Multiple primitives require separate review')
+    return 'candidate-data-derived-lamina-representation'

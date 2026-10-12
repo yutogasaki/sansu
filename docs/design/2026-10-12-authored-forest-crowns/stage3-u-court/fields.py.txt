@@ -1,0 +1,53 @@
+"""New assembly direction in authored Y-up metres, without scene side effects."""
+import math
+
+def smooth(x):
+    x=max(0.,min(1.,x));return x*x*(3-2*x)
+
+def rotate_xz(v,angle):
+    c,s=math.cos(angle),math.sin(angle)
+    return (c*v[0]-s*v[2],v[1],s*v[0]+c*v[2])
+
+def willow(point,owner):
+    sweep=owner['sweep'];pivot=sweep['pivotWorld']
+    local=tuple(point[i]-pivot[i] for i in range(3))
+    turned=rotate_xz(local,math.radians(sweep['yawDegrees']))
+    weights=[]
+    for hint in owner['lobeHints']:
+        anchor=hint['anchorWorld']
+        weight=math.exp(-((point[0]-anchor[0])**2+(point[2]-anchor[2])**2)/sweep['hintWidthWorld']**2)
+        weights.append((weight,hint['residualAfterSweepWorld']))
+    total=sum(w for w,_ in weights)
+    if total<1e-12:raise ValueError('Outside common native willow field')
+    return tuple(pivot[i]+turned[i]+sweep['translationWorld'][i]+
+                 sum(w*residual[i] for w,residual in weights)/total for i in range(3))
+
+def birch(point,owner,ordinal):
+    """Turn the existing branch/crown pair around its pinned original root.
+
+    Above the transition the crown receives a rigid yaw and translation, not
+    larger radii. The same function acts on original branch and crown vertices.
+    """
+    pin=owner['branchRootPin'];root=pin['anchorWorld']
+    pair=owner['branchCrownPairs'][ordinal]
+    tip=pair['anchorWorld'];target=pair['targetTipWorld']
+    source_delta=tuple(tip[i]-root[i] for i in range(3))
+    target_delta=tuple(target[i]-root[i] for i in range(3))
+    angle=math.atan2(target_delta[2],target_delta[0])-math.atan2(source_delta[2],source_delta[0])
+    angle=(angle+math.pi)%(2*math.pi)-math.pi
+    turned_tip=rotate_xz(source_delta,angle)
+    translation=tuple(target_delta[i]-turned_tip[i] for i in range(3))
+    weight=smooth((point[1]-root[1]-pin['fixedBandWorld'])/pin['transitionWorld'])
+    relative=tuple(point[i]-root[i] for i in range(3))
+    turned=rotate_xz(relative,angle*weight)
+    return tuple(root[i]+turned[i]+translation[i]*weight for i in range(3))
+
+def field_for_role(owner_id,role,ordinal,proposal):
+    owner=proposal['owners'][owner_id]
+    if owner_id=='l14' and role in ('crown-lobe','hanging-stem','hanging-leaf'):
+        return lambda point:willow(point,owner)
+    if owner_id in ('l15','l29') and role in ('crown-lobe','main-branch'):
+        return lambda point:birch(point,owner,ordinal)
+    if owner_id=='l28' and role=='crown-tier':
+        return lambda point:tuple(point)
+    raise ValueError('Fixed/unknown role: '+str((owner_id,role,ordinal)))

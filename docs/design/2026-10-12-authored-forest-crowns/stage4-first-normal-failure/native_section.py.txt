@@ -1,0 +1,53 @@
+"""Query-only source section, no source mesh mutation or primitive donor.
+
+Intersections follow triangle/plane edges. Rounding is only a 7-decimal graph
+key, inherited query precision rather than a weld or certified cross-section.
+A non-single, non-closed, non-star-shaped section is HOLD, never convexified.
+"""
+import math
+from collections import defaultdict
+
+
+def section(points,triangles,height):
+    segments=[]; coord={}; adjacency=defaultdict(set)
+    def key(p):return tuple(round(v,7) for v in p)
+    for tri in triangles:
+        vs=[tuple(float(c) for c in points[i]) for i in tri]
+        if any(abs(v[1]-height)<1e-10 for v in vs):
+            raise ValueError('Native section through a source vertex/edge; explicit HOLD, no epsilon retry')
+        hits=[]
+        for a,b in zip(vs,vs[1:]+vs[:1]):
+            if (a[1]-height)*(b[1]-height)<0:
+                t=(height-a[1])/(b[1]-a[1])
+                hits.append(tuple(a[i]+t*(b[i]-a[i]) for i in range(3)))
+        if not hits:continue
+        if len(hits)!=2:raise ValueError('Ambiguous native triangle/plane section')
+        a,b=map(key,hits)
+        if a==b:raise ValueError('Native section collapsed under query graph precision')
+        coord.setdefault(a,hits[0]);coord.setdefault(b,hits[1])
+        adjacency[a].add(b);adjacency[b].add(a);segments.append((a,b))
+    if not 8<=len(adjacency)<=1024:raise ValueError('Unexpected native section size')
+    if any(len(neighbours)!=2 for neighbours in adjacency.values()):raise ValueError('Native section is not a closed single loop')
+    start=min(adjacency);order=[start];prev=None;current=start
+    while True:
+        nexts=sorted(n for n in adjacency[current] if n!=prev)
+        nxt=nexts[0]
+        if nxt==start:break
+        if nxt in order:raise ValueError('Native section self-loop')
+        order.append(nxt);prev,current=current,nxt
+    if len(order)!=len(adjacency):raise ValueError('Multiple disconnected native donor sections')
+    raw=[(coord[k][0],coord[k][2]) for k in order]
+    area=sum(a[0]*b[1]-b[0]*a[1] for a,b in zip(raw,raw[1:]+raw[:1]))*.5
+    if abs(area)<1e-12:raise ValueError('Degenerate native profile')
+    if area<0:raw.reverse();area=-area
+    cx=sum((a[0]+b[0])*(a[0]*b[1]-b[0]*a[1]) for a,b in zip(raw,raw[1:]+raw[:1]))/(6*area)
+    cz=sum((a[1]+b[1])*(a[0]*b[1]-b[0]*a[1]) for a,b in zip(raw,raw[1:]+raw[:1]))/(6*area)
+    offsets=[(x-cx,z-cz) for x,z in raw]
+    if any(a[0]*b[1]-a[1]*b[0]<=0 for a,b in zip(offsets,offsets[1:]+offsets[:1])):
+        raise ValueError('Native donor section not star-shaped about area centroid; no convex hull substitution')
+    radius=max(math.hypot(x,z) for x,z in offsets)
+    return {'outlineUnit':[(x/radius,z/radius) for x,z in offsets],
+            'sourcePlaneY':height,'sourceSectionArea':area,'sourceSectionRadius':radius,
+            'sourceSectionCentroid':[cx,height,cz],'sourceGraphVertices':len(order),
+            'sourceIntersectionSegments':len(segments),'graphQueryDecimals':7,
+            'status':'approximate connected donor contour, not a certified solid/seam'}

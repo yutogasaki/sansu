@@ -1,0 +1,59 @@
+{
+  "status": "COMPLETED",
+  "command": [
+    "python3",
+    "../east-v2/supervise.py",
+    "--scheduled",
+    "--seconds",
+    "60",
+    "--rss-mib",
+    "2560",
+    "--log",
+    "runs/01-inspect.log.txt",
+    "--",
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "../east-v2/runs/01-coarse-build/failed-scene.blend",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "inspect-failed.py",
+    "--",
+    "--scheduled",
+    "--out",
+    "runs/01-inspect"
+  ],
+  "cwd": "/private/tmp/sansu-p02-gallery-source-study/east-v2-topology-diagnostic",
+  "launchRequestedUtc": "2026-10-12T05:12:07.904455+00:00",
+  "timestampMeaning": "launch bracket of supervisor; child timestamps are process observations, not exact child spawn or exit",
+  "observedChildren": {
+    "37365": {
+      "firstObservedUtc": "2026-10-12T05:12:08.205821+00:00",
+      "parentPid": 37363,
+      "peakObservedRssBytes": 408109056,
+      "lastObservedUtc": "2026-10-12T05:12:08.759808+00:00"
+    }
+  },
+  "before": {
+    "/private/tmp/sansu-p02-gallery-source-study/east-v2-topology-diagnostic/preparation.json": "d837311660170de3321b2c3a2cb9fb93bbcafed3969f7bca784f1f60ec061412",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v2-topology-diagnostic/inspect-failed.py": "b34bf5963b7f7bacc486d6f4eb7bdc06324c2c44281d10337e63681ad7d108f3",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v2-topology-diagnostic/offline-result.json": "4b73a754420892f1593f0f49cf5a1b5e0f22f915824d75de28c3ac21ba2baaaf",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v2/supervise.py": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v2/runs/01-coarse-build/failed-scene.blend": "e61a390ef10e77ef40de77972454050b19e469b725ea8ebbec7b43e35b199746"
+  },
+  "supervisorPid": 37363,
+  "supervisorPopenReturnedUtc": "2026-10-12T05:12:07.905928+00:00",
+  "supervisorExitCode": 0,
+  "supervisorExitObservedUtc": "2026-10-12T05:12:09.019986+00:00",
+  "elapsedSeconds": 1.115373875,
+  "after": {
+    "/private/tmp/sansu-p02-gallery-source-study/east-v2-topology-diagnostic/preparation.json": "d837311660170de3321b2c3a2cb9fb93bbcafed3969f7bca784f1f60ec061412",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v2-topology-diagnostic/inspect-failed.py": "b34bf5963b7f7bacc486d6f4eb7bdc06324c2c44281d10337e63681ad7d108f3",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v2-topology-diagnostic/offline-result.json": "4b73a754420892f1593f0f49cf5a1b5e0f22f915824d75de28c3ac21ba2baaaf",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v2/supervise.py": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v2/runs/01-coarse-build/failed-scene.blend": "e61a390ef10e77ef40de77972454050b19e469b725ea8ebbec7b43e35b199746"
+  },
+  "inputsUnchanged": true
+}

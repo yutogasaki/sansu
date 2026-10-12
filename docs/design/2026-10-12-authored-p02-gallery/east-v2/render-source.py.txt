@@ -1,0 +1,36 @@
+"""One scheduled view per call; source comparison, never an app screenshot."""
+import argparse, hashlib, json, math, sys, time
+from pathlib import Path
+HERE=Path(__file__).resolve().parent
+p=argparse.ArgumentParser();p.add_argument('--scheduled',action='store_true');p.add_argument('--source',type=Path,required=True);p.add_argument('--out',type=Path,required=True);p.add_argument('--view',choices=['whole','rotated','entry-section'],required=True)
+a=p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
+assert a.scheduled,'Parent must schedule CPU/render window';assert not a.out.exists(),'Preserve previous output';a.out.mkdir(parents=True)
+import bpy
+from mathutils import Matrix,Vector
+S=json.loads((HERE/'study.json').read_text());sha=lambda f:hashlib.sha256(Path(f).read_bytes()).hexdigest()
+prepared=json.loads((HERE/'preparation.json').read_text());assert sha(__file__)==prepared['files']['render-source.py']['sha256'] and sha(HERE/'study.json')==prepared['files']['study.json']['sha256'],'Prepared source view code/config drifted'
+source_hash=sha(a.source/'study.blend');manifest=json.loads((a.source/'manifest.json').read_text());assert manifest['files']['study.blend']==source_hash
+bpy.ops.wm.open_mainfile(filepath=str(a.source/'study.blend'));scene=bpy.context.scene;assert scene['candidate']==S['candidate']
+B=Matrix(((1,0,0,0),(0,0,-1,0),(0,1,0,0),(0,0,0,1)))
+def mat(v):return Matrix(tuple(tuple(v[column*4+row] for column in range(4)) for row in range(4)))
+scene.world=bpy.data.worlds.new('Forest reference source lighting');scene.world.use_nodes=True
+bg=scene.world.node_tree.nodes['Background'];bg.inputs['Color'].default_value=(.055,.20,.26,1);bg.inputs['Strength'].default_value=.7
+for name,location,energy,size in [('key',(2,-6,17),1800,10),('fill',(15,1,11),1000,12)]:
+    d=bpy.data.lights.new(name,'AREA');d.energy=energy;d.shape='DISK';d.size=size;o=bpy.data.objects.new(name,d);scene.collection.objects.link(o);o.location=location;o.rotation_euler=(Vector((5,4,1))-o.location).to_track_quat('-Z','Y').to_euler()
+ref=S['camera'];c=ref['camera'];data=bpy.data.cameras.new('SOURCE '+a.view);data.type='ORTHO';data.ortho_scale=2/c['projectionMatrix'][0]
+cam=bpy.data.objects.new(data.name,data);scene.collection.objects.link(cam)
+actual=Matrix.Translation(Vector((c['center'],0,2)))@mat(c['matrixWorld']);derived=None
+if a.view=='whole':cam.matrix_world=B@actual
+elif a.view=='rotated':
+    target=Vector((7.0026560305,1,-4.0));rotation=Matrix.Translation(target)@Matrix.Rotation(math.radians(35),4,'Y')@Matrix.Translation(-target)
+    cam.matrix_world=B@rotation@actual;derived={'rotationDegrees':35,'authoredPivot':list(target),'notAnActualRotatedRuntimeCamera':True}
+else:
+    origin=Vector((3.5,2.55,-4.45));target=Vector((3.5,2.2,-8.45));cam.location=B@origin;cam.rotation_euler=(B@target-cam.location).to_track_quat('-Z','Y').to_euler();data.ortho_scale=4.7;data.clip_start=.1
+    derived={'authoredCamera':list(origin),'authoredTarget':list(target),'nearClip':data.clip_start,'sectionMethod':'front opening / threshold close view; no near-plane removal of the ground entrance; geometry unchanged'}
+scene.camera=cam;scene.render.engine='CYCLES';scene.cycles.device='CPU';scene.cycles.samples=16;scene.cycles.use_denoising=True
+scene.render.threads_mode='FIXED';scene.render.threads=2
+scene.render.resolution_x=1280;scene.render.resolution_y=round(1280*c['projectionMatrix'][0]/c['projectionMatrix'][5]);scene.render.resolution_percentage=100
+scene.render.image_settings.file_format='PNG';output=a.out/('source-'+a.view+'.png');scene.render.filepath=str(output);start=time.monotonic();bpy.ops.render.render(write_still=True)
+assert sha(a.source/'study.blend')==source_hash
+report={'candidate':S['candidate'],'view':a.view,'evidenceType':'offline source render','reference':'fixed authored-shoulder-c1 35 owners; exact original four left trees restored','referenceCameraImage':ref['file'],'referenceCameraSha256':ref['sha256'],'cameraDerived':derived,'cameraMatrixWorldBlender':[list(row) for row in cam.matrix_world],'sourceBlendBefore':source_hash,'sourceBlendAfter':sha(a.source/'study.blend'),'scriptSha256':sha(__file__),'output':output.name,'sha256':sha(output),'seconds':time.monotonic()-start,'viewport':[scene.render.resolution_x,scene.render.resolution_y],'engine':'Cycles CPU, 2 threads, 16 samples','runtimeIntegrated':False,'artAccepted':False,'independentObservers':0,'limitations':['no residents','Blender lights/material/transmission/ocean/ripple differ','source view is not current c2 runtime','entry close view retains the original hollow opening and full ground threshold; no geometric section cut']}
+(a.out/'render-manifest.json').write_text(json.dumps(report,indent=2)+'\n')

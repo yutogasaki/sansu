@@ -1,0 +1,25 @@
+{
+  "status": "paused-for-user-review",
+  "scope": "Targeted working-copy checks only. No c10 fixed build, whole-input stability proof, core or browser run.",
+  "checks": {
+    "typecheck": "PASS",
+    "targetedLint": "PASS; existing authored.tsx fast-refresh warning",
+    "growthTerrainDomain": "15/15 PASS",
+    "coreGrowthIntegration": "FAIL at original placement support.triangle identity comparison; later assertions not reached",
+    "sourceThreeCases": "PASS; source/domain diagnostic only",
+    "docs": "PASS; pre-existing review-date warnings",
+    "reviewHtmlLocalLinks": "PASS"
+  },
+  "knownFailure": "integration-first.log.txt",
+  "sourceEvidence": "../2026-10-12-core-growth-terrain-source/README.md",
+  "pauseFileSha256": {
+    "src/domain/growingIsland/authoredGrowthTerrain.ts": "d412455060a7e0055baadb10ecaf4605d01efa1237d7266020553963b27ffb1d",
+    "src/domain/growingIsland/authoredGrowthTerrain.test.ts": "a7cd7f64e983d4c5cdec5e70f7d16ef6636376f4807944b88902de11a5e0b64c",
+    "src/components/island/growing/native/authoredCoreGrowthIntegration.test.ts": "0f451b999af7eaa348dc257c13a7b38384fc25b44bda9da98238ee77fcce4c47",
+    "src/prototypes/placeQa/authored.tsx": "dadc0501c39a7c2b78ce644bc1600db3db567f41ffa8279c7cae872a88ac23af",
+    "tools/e2e-authored-core-growth.mjs": "2ef7cd6c0a856f62b41b750015f04249963ba706192c1665433b58fec58f13ec",
+    "tools/build-authored-core-growth-terrain-kit.mjs": "72ef25c71e770bddbbffce906396832fc88616498467fb6031293dc23aa7cd36",
+    "prototypes/place-qa/authored-core-growth-terrain-manifest.json": "b3d78573d86c6ade84a04634a9abb68465427e3ca74eed6d67076e4ebd7acc80",
+    "prototypes/place-qa/authored-core-growth-terrain-kit.json.gz": "2fa98f58014db987421edf0110b1d18b8360c03e504cf2df3580f699a183b06a"
+  }
+}

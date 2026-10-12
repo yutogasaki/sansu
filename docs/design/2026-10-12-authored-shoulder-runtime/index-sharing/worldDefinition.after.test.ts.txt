@@ -1,0 +1,207 @@
+import { describe, expect, it } from 'vitest';
+import { compileWorldDefinition } from './worldDefinition';
+import { legacyIslandWorld } from './legacyWorldDefinition';
+import { newIsland } from './island';
+import { landCells, key } from './space';
+import { terrainHeightAt } from './placeTerrain';
+import { landscapePoint, landscapeRise } from './landscape';
+import type { Side } from './types';
+import type { WorldDistrict } from './worldTypes';
+import { inletWorldDefinition } from './worldDefinition.fixture';
+
+describe('a common island world grants rights through sites and edges', () => {
+    it('rotates source shading without moving support, grants or input data', () => {
+        const definition = inletWorldDefinition(), district = definition.districts[0];
+        const positioned = { ...district, turn: 1 as const, logicalOrigin: { x: 8, z: 4 }, worldOrigin: { x: 20, y: 2, z: 10 } };
+        const plain = compileWorldDefinition({ ...definition, districts: [positioned] });
+        const shaded = { ...definition, districts: [{ ...positioned, floors: positioned.floors.map(floor => ({ ...floor,
+            vertices: floor.vertices.map(vertex => ({ ...vertex, normal: { x: .2, y: .9, z: .3 } })),
+            material: { roughness: .78, metalness: 0, doubleSided: true } })) }] };
+        const snapshot = structuredClone(shaded), world = compileWorldDefinition(shaded);
+        expect(world.sites).toEqual(plain.sites); expect(world.walkSites).toEqual(plain.walkSites);
+        for (const site of world.sites) expect(world.floorAt(site.cell)).toEqual(plain.floorAt(site.cell));
+        expect(world.floors[0].vertices[0].normal).toEqual({ x: -.3, y: .9, z: .2 });
+        expect(world.floors[0].material).toEqual({ roughness: .78, metalness: 0, doubleSided: true });
+        expect(Object.isFrozen(world.floors[0].vertices[0].normal)).toBe(true);
+        expect(Object.isFrozen(world.floors[0].material)).toBe(true); expect(shaded).toEqual(snapshot);
+    });
+
+    it('rejects invalid source shading while retaining support for legacy floors without it', () => {
+        const definition = inletWorldDefinition(), district = definition.districts[0], floor = district.floors[0];
+        for (const normal of [{ x: 0, y: 0, z: 0 }, { x: Infinity, y: 1, z: 0 }, { x: 0, y: NaN, z: 0 }]) {
+            const bad = { ...floor, vertices: floor.vertices.map(vertex => ({ ...vertex, normal })) };
+            expect(() => compileWorldDefinition({ ...definition, districts: [{ ...district, floors: [bad, ...district.floors.slice(1)] }] })).toThrow('floor normal');
+        }
+        for (const material of [{ roughness: -1, metalness: 0, doubleSided: false }, { roughness: .8, metalness: NaN, doubleSided: false }]) {
+            expect(() => compileWorldDefinition({ ...definition, districts: [{ ...district, floors: [{ ...floor, material }, ...district.floors.slice(1)] }] })).toThrow('floor material');
+        }
+        const legacy = compileWorldDefinition(definition);
+        expect(legacy.floors[0].vertices[0]).not.toHaveProperty('normal'); expect(legacy.floors[0]).not.toHaveProperty('material');
+    });
+
+    it('keeps the inlet empty despite its enclosing bounds and visible water surface', () => {
+        const world = compileWorldDefinition(inletWorldDefinition());
+        expect(world.bounds.max.x).toBeGreaterThan(1); expect(world.bounds.max.z).toBeGreaterThan(1);
+        expect(world.owns({ x: 1, z: 1 })).toBe(false);
+        expect(world.floorAt({ x: 1, z: 1 })).toBeUndefined();
+        expect(world.siteAt({ x: 1.45, y: -.2, z: 1.1 })).toBeUndefined();
+        expect(world.route({ x: 1, z: 1 }, { x: 1, z: 1 }, new Set(['1,1']))).toBeUndefined();
+        expect(world.owns({ x: .5, z: 0 })).toBe(false);
+        const unowned = inletWorldDefinition(), district = unowned.districts[0];
+        unowned.districts = [{ ...district, sites: district.sites.filter(site => site.id !== 'b'), ports: [] }]; unowned.edges = unowned.edges.slice(1);
+        const drawing = compileWorldDefinition(unowned);
+        expect(drawing.floorAt({ x: 1, z: 0 })).toBeDefined(); expect(drawing.owns({ x: 1, z: 0 })).toBe(false);
+        expect(drawing.siteAt({ x: 1.3, y: .1, z: 0 })).toBeUndefined();
+    });
+
+    it('uses the same triangles to travel from a floor point through its inverse hit', () => {
+        const world = compileWorldDefinition(inletWorldDefinition());
+        for (const cell of [{ x: .13, z: -.21 }, { x: 1.11, z: .17 }, { x: -.19, z: 1.23 }]) {
+            const floor = world.floorAt(cell)!;
+            expect(floor.point.y).toBeCloseTo(cell.x * .1 + cell.z * .2, 10);
+            const logical = world.logicalAt(floor.point)!;
+            expect(logical.x).toBeCloseTo(cell.x, 10); expect(logical.z).toBeCloseTo(cell.z, 10);
+            expect(world.siteAt(floor.point)?.cell).toEqual({ x: Math.round(cell.x) || 0, z: Math.round(cell.z) || 0 });
+        }
+        expect(world.siteAt({ x: 1.3, y: .6, z: 0 })).toBeUndefined();
+    });
+
+    it('retains physical hits on a mapped floor following identity floors', () => {
+        const definition = inletWorldDefinition(), district = definition.districts[0];
+        const identity = { ...district.floors[0], vertices: district.floors[0].vertices.map(vertex => ({
+            cell: vertex.cell, point: { ...vertex.cell, y: vertex.point.y },
+        })) };
+        const mapped = { ...identity, id: 'mapped-pad', vertices: identity.vertices.map(vertex => ({
+            cell: { x: vertex.cell.x + 4, z: vertex.cell.z },
+            point: { x: vertex.point.x + 12, y: vertex.point.y + 2, z: vertex.point.z },
+        })) };
+        const world = compileWorldDefinition({ ...definition, edges: [],
+            districts: [{ ...district, floors: [identity, mapped], sites: [], ports: [] }] });
+        const at = { x: .13, z: -.21 }, first = world.floorAt(at)!;
+        expect(first.point).toEqual({ ...at, y: -.029 });
+        expect(world.logicalAt(first.point)).toEqual(at);
+        const second = world.floorAt({ x: at.x + 4, z: at.z })!;
+        expect(second.point).toEqual({ x: 12.13, y: 1.971, z: -.21 });
+        expect(world.logicalAt(second.point)).toEqual({ x: 4.13, z: -.21 });
+        expect(world.logicalAt({ x: 4.13, y: 1.971, z: -.21 })).toBeUndefined();
+    });
+
+    it('separates walking, merging and supplied water, and stops passage when an edge is removed', () => {
+        const definition = inletWorldDefinition(), world = compileWorldDefinition(definition), open = new Set(['0,0', '1,0', '0,1']);
+        expect(world.route({ x: 1, z: 0 }, { x: 0, z: 1 }, open)).toEqual([{ x: 1, z: 0 }, { x: 0, z: 0 }, { x: 0, z: 1 }]);
+        expect(world.route({ x: 1, z: 0 }, { x: 0, z: 1 }, open, 'water')).toBeUndefined();
+        const withoutWalk = compileWorldDefinition({ ...definition, edges: definition.edges.map(edge => ({ ...edge, allows: edge.allows.filter(kind => kind !== 'walk') })) });
+        expect(withoutWalk.route({ x: 0, z: 0 }, { x: 1, z: 0 }, open)).toBeUndefined();
+        expect(withoutWalk.neighbors({ x: 0, z: 0 }, 'join')).toHaveLength(2);
+        const separated = compileWorldDefinition({ ...definition, edges: definition.edges.slice(1) });
+        expect(separated.neighbors({ x: 1, z: 0 }, 'join')).toEqual([]);
+        expect(world.route({ x: 1, z: 0 }, { x: 0, z: 1 }, new Set(['1,0', '0,1']))).toBeUndefined();
+    });
+
+    it('appends a district without moving the original sites or reinterpreting their rights', () => {
+        const definition = inletWorldDefinition(), snapshot = structuredClone(definition), before = compileWorldDefinition(definition);
+        const template = definition.districts[0], a = template.sites[0];
+        const next: WorldDistrict = { ...template, id: 'new-shore', logicalOrigin: { x: 2, z: 0 }, worldOrigin: { x: 2.6, y: .2, z: 0 },
+            floors: [template.floors[0]], sites: [a], ports: [{ id: 'west-port', siteId: a.id }] };
+        const after = compileWorldDefinition({ ...definition, districts: [...definition.districts, next], edges: [...definition.edges,
+            { from: { districtId: template.id, siteId: 'b' }, to: { districtId: next.id, siteId: a.id }, allows: ['walk', 'join'] }] });
+        for (const site of before.sites) expect(after.sites.find(other => key(other.cell) === key(site.cell))).toEqual(site);
+        expect(after.route({ x: 0, z: 0 }, { x: 2, z: 0 }, new Set(['0,0', '1,0', '2,0']))).toHaveLength(3);
+        expect(definition).toEqual(snapshot);
+        expect(Object.isFrozen(after.sites[0].point)).toBe(true);
+        // Compiling captures the input: later authoring edits cannot mutate an active world.
+        definition.districts = []; expect(before.owns({ x: 0, z: 0 })).toBe(true);
+    });
+
+    it('rotates a local district while preserving floor hit and stable site IDs', () => {
+        const definition = inletWorldDefinition(), district = definition.districts[0];
+        const world = compileWorldDefinition({ ...definition, districts: [{ ...district, turn: 1, logicalOrigin: { x: 8, z: 4 }, worldOrigin: { x: 20, y: 2, z: 10 } }] });
+        const b = world.sites.find(site => site.ref.siteId === 'b')!;
+        expect(b.cell).toEqual({ x: 8, z: 5 }); expect(b.point).toEqual({ x: 20, y: 2.1, z: 11.3 });
+        expect(world.siteAt(b.point)?.ref).toEqual(b.ref);
+        expect(world.neighbors({ x: 8, z: 4 })).toEqual([{ x: 8, z: 5 }, { x: 7, z: 4 }]);
+    });
+
+    it('rejects a declared walking edge across sea until an actual dry floor exists', () => {
+        const definition = inletWorldDefinition(), d = definition.districts[0];
+        // Opposite shores can both exist while the water between them remains impassable.
+        const far: WorldDistrict = { ...d, id: 'far', logicalOrigin: { x: 4, z: 0 }, worldOrigin: { x: 5.2, y: .4, z: 0 }, sites: [d.sites[0]], ports: [] };
+        expect(() => compileWorldDefinition({ ...definition, districts: [...definition.districts, far], edges: [...definition.edges,
+            { from: { districtId: d.id, siteId: 'b' }, to: { districtId: far.id, siteId: 'a' }, allows: ['walk'] }] })).toThrow('walk edge crosses missing floor or water');
+    });
+
+    it('uses fine dry walking points without granting planting or extending merging and water rules', () => {
+        const definition = inletWorldDefinition(), district = definition.districts[0];
+        const between = [.25, .5, .75].map(x => ({ id: `path-${x}`, cell: { x, z: 0 }, floorId: 'shore', placement: false }));
+        definition.districts = [{ ...district, sites: [...district.sites, ...between] }];
+        definition.edges = [{ ...definition.edges[0], allows: ['join', 'water'] }, definition.edges[1]];
+        const sequence = ['a', ...between.map(site => site.id), 'b'];
+        definition.edges = [...definition.edges, ...sequence.slice(1).map((siteId, i) => ({
+            from: { districtId: district.id, siteId: sequence[i] }, to: { districtId: district.id, siteId }, allows: ['walk'] as const,
+        }))];
+        const world = compileWorldDefinition(definition), open = new Set(world.sites.map(site => key(site.cell)));
+        expect(world.route({ x: 0, z: 0 }, { x: 1, z: 0 }, open)).toEqual([0, .25, .5, .75, 1].map(x => ({ x, z: 0 })));
+        expect(world.owns({ x: .5, z: 0 })).toBe(false);
+        expect(world.neighbors({ x: .5, z: 0 }, 'join')).toEqual([]); expect(world.neighbors({ x: .5, z: 0 }, 'water')).toEqual([]);
+        expect(world.neighbors({ x: 0, z: 0 }, 'water')).toEqual([{ x: 1, z: 0 }]);
+    });
+
+    it('rejects logically adjacent districts whose actual floors do not meet', () => {
+        const definition = inletWorldDefinition(), d = definition.districts[0];
+        const far: WorldDistrict = { ...d, id: 'far', logicalOrigin: { x: 2, z: 0 }, worldOrigin: { x: 12.6, y: .2, z: 0 },
+            floors: [d.floors[0]], sites: [d.sites[0]], ports: [] };
+        expect(() => compileWorldDefinition({ ...definition, districts: [...definition.districts, far], edges: [...definition.edges,
+            { from: { districtId: d.id, siteId: 'b' }, to: { districtId: far.id, siteId: 'a' }, allows: ['walk'] }] })).toThrow('separated physical floors');
+    });
+
+    it('rejects duplicate identity, unknown floors, malformed geometry and unknown versions', () => {
+        const input = inletWorldDefinition();
+        expect(() => compileWorldDefinition({ ...input, version: 2 as 1 })).toThrow('unknown version');
+        expect(() => compileWorldDefinition({ ...input, districts: [input.districts[0], input.districts[0]] })).toThrow('duplicate district');
+        const district = input.districts[0], floor = district.floors[0];
+        expect(() => compileWorldDefinition({ ...input, districts: [{ ...district, sites: [{ ...district.sites[0], floorId: 'absent' }] }] })).toThrow('unknown floor');
+        expect(() => compileWorldDefinition({ ...input, districts: [{ ...district, floors: [{ ...floor, indices: [0, 1, 9999] }] }] })).toThrow('index out of range');
+        expect(() => compileWorldDefinition({ ...input, districts: [{ ...district, floors: [{ ...floor, vertices: [{ cell: { x: NaN, z: 0 }, point: { x: 0, y: 0, z: 0 } }, ...floor.vertices.slice(1)] }] }] })).toThrow('non-finite');
+    });
+
+    it('does not treat a submerged ground bed as dry planting or walking floor', () => {
+        const definition = inletWorldDefinition(), district = definition.districts[0], water = district.floors[1];
+        const pond = { ...water, id: 'pond-above-ground', vertices: water.vertices.map(v => ({
+            cell: { x: v.cell.x - 1, z: v.cell.z - 1 }, point: { x: v.point.x - 1.45, y: .4, z: v.point.z - 1.1 },
+        })) };
+        expect(() => compileWorldDefinition({ ...definition, districts: [{ ...district, floors: [...district.floors, pond] }] })).toThrow('no actual dry floor');
+        const world = compileWorldDefinition({ ...definition, edges: [], districts: [{ ...district, floors: [...district.floors, pond],
+            sites: district.sites.filter(site => site.id !== 'a') }] });
+        expect(world.floorAt({ x: 0, z: 0 })).toBeUndefined();
+        expect(world.logicalAt({ x: 0, y: 0, z: 0 })).toBeUndefined(); expect(world.owns({ x: 0, z: 0 })).toBe(false);
+    });
+});
+
+describe('the legacy adapter preserves the actual acquired world', () => {
+    for (const curved of [false, true]) for (const districts of [[], ['south', 'east', 'west'], ['east', 'east', 'south', 'south', 'west']] as Side[][]) {
+        it(`retains every owner cell and real floor for ${curved ? 'curved' : 'linear'} ${districts.join('/')}`, () => {
+            const state = newIsland('legacy-world', 0);
+            if (districts.length) state.land = { expanded: 'east', extra: ['west', 'south'], capes: ['east', 'west'], districts };
+            const saved = structuredClone(state), world = legacyIslandWorld(state, curved), owned = landCells(state);
+            expect(world.sites.filter(site => site.placement).map(site => key(site.cell))).toEqual(owned.map(key));
+            for (const cell of owned) {
+                expect(world.owns(cell)).toBe(true);
+                const sample = world.floorAt(cell)!;
+                const p = curved ? landscapePoint(cell) : cell;
+                expect(sample.point.x).toBeCloseTo(p.x, 8); expect(sample.point.z).toBeCloseTo(p.z, 8);
+                expect(sample.point.y).toBeCloseTo(terrainHeightAt(state, cell) + (curved ? landscapeRise(cell) : 0), 8);
+                expect(world.siteAt(sample.point)?.cell).toEqual(cell);
+            }
+            expect(state).toEqual(saved);
+            expect(legacyIslandWorld(state, curved)).toBe(world);
+        });
+    }
+    it('keeps a previously acquired bridge walkable without granting new planting cells', () => {
+        const state = newIsland('legacy-bridge', 0); state.bridge = { x: 3, builtAt: 0 };
+        const world = legacyIslandWorld(state), shore = { x: 3, z: 4 }, end = { x: 3, z: 6 };
+        const open = new Set(world.sites.map(site => key(site.cell)));
+        expect(world.route(shore, end, open)).toEqual([shore, { x: 3, z: 5 }, end]);
+        expect(world.owns(end)).toBe(false); expect(world.neighbors(end, 'join')).toEqual([]); expect(world.neighbors(end, 'water')).toEqual([]);
+        expect(world.floorAt(end)?.point.y).toBeCloseTo(.1525, 9);
+    });
+});

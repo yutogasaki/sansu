@@ -1,0 +1,16 @@
+{
+  "recordedAtUtc": "2026-10-12T07:51:37.115591+00:00",
+  "pid": 77026,
+  "execSession": 33833,
+  "cwd": "/private/tmp/sansu-authored-path-c4/candidate",
+  "revision": "authored-path-c4",
+  "port": 5361,
+  "httpStatus": 200,
+  "deliveryFlags": {
+    "VITE_ISLAND_ENABLED": "true",
+    "VITE_NATIVE_GROWING_ART": "false"
+  },
+  "launchCommand": "SANSU_BUILD_REVISION=authored-path-c4 VITE_ISLAND_ENABLED=true VITE_NATIVE_GROWING_ART=false node node_modules/vite/bin/vite.js --host 127.0.0.1 --port 5361 --strictPort",
+  "cwdObserved": "p77026\nfcwd\nn/private/tmp/sansu-authored-path-c4/candidate\n",
+  "identityScope": "Owned process cwd, explicit launch environment, listener and HTTP response. DOM identity is verified by the runtime harness."
+}

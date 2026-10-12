@@ -1,0 +1,215 @@
+{
+  "candidate": "native05-authored-cove-shore-v4",
+  "scope": "fixed P04 new route and play-entry full width dry support; not whole-island support proof",
+  "method": "Exact planar union of actual low dry floor triangles and difference from edge AABBs expanded by maximum measured actor radius plus 40 mm; conservative for diagonal/circular sweeps",
+  "library": {
+    "shapely": "2.0.7",
+    "geos": "3.11.4"
+  },
+  "triangle_count": 8901,
+  "support_height_range": [
+    -0.00899999,
+    0.029250007
+  ],
+  "patch_sha256": "7a5cc9edd5282f7471f8257e4ee83212cbf93f3f30ba269bb102d91bc11dc969",
+  "context_sha256": "32236833d7ad7b79a3ec44e1800cf981192bac78726a032fb4404ea819faed69",
+  "world_sha256": "5c576dbff9b414c927b63ee458ecbab0db73f4896cab9724321ba91bf2c97f08",
+  "results": [
+    {
+      "from": [
+        9.5,
+        1
+      ],
+      "to": [
+        9.65,
+        1.25
+      ],
+      "radius": 0.28406937059140586,
+      "uncoveredArea": 2.0491421059976034e-17,
+      "covered": true
+    },
+    {
+      "from": [
+        9.65,
+        1.25
+      ],
+      "to": [
+        9.65,
+        1.7
+      ],
+      "radius": 0.28406937059140586,
+      "uncoveredArea": 2.5953089503871762e-18,
+      "covered": true
+    },
+    {
+      "from": [
+        9.65,
+        1.7
+      ],
+      "to": [
+        9.3,
+        1.7
+      ],
+      "radius": 0.28406937059140586,
+      "uncoveredArea": 5.3939058081153846e-18,
+      "covered": true
+    },
+    {
+      "from": [
+        9.3,
+        1.7
+      ],
+      "to": [
+        9,
+        1.7
+      ],
+      "radius": 0.28406937059140586,
+      "uncoveredArea": 9.215718466126788e-18,
+      "covered": true
+    },
+    {
+      "from": [
+        9,
+        1.7
+      ],
+      "to": [
+        8.5,
+        1.7
+      ],
+      "radius": 0.28406937059140586,
+      "uncoveredArea": 1.214306433183765e-17,
+      "covered": true
+    },
+    {
+      "from": [
+        8.5,
+        1.7
+      ],
+      "to": [
+        8,
+        1.7
+      ],
+      "radius": 0.28406937059140586,
+      "uncoveredArea": 1.3026439905320254e-13,
+      "covered": true
+    },
+    {
+      "from": [
+        8,
+        1.7
+      ],
+      "to": [
+        7.5,
+        1.7
+      ],
+      "radius": 0.28406937059140586,
+      "uncoveredArea": 1.302539500547652e-13,
+      "covered": true
+    },
+    {
+      "from": [
+        7.5,
+        1.7
+      ],
+      "to": [
+        7,
+        1.7
+      ],
+      "radius": 0.28406937059140586,
+      "uncoveredArea": 1.6940658945086007e-18,
+      "covered": true
+    },
+    {
+      "from": [
+        7,
+        1.7
+      ],
+      "to": [
+        6.55,
+        1.7
+      ],
+      "radius": 0.28406937059140586,
+      "uncoveredArea": 0.0,
+      "covered": true
+    },
+    {
+      "from": [
+        6.55,
+        1.7
+      ],
+      "to": [
+        6.55,
+        1.2
+      ],
+      "radius": 0.28406937059140586,
+      "uncoveredArea": 4.8721335126067356e-18,
+      "covered": true
+    },
+    {
+      "from": [
+        6.55,
+        1.2
+      ],
+      "to": [
+        6.55,
+        0.7
+      ],
+      "radius": 0.28406937059140586,
+      "uncoveredArea": 0.0,
+      "covered": true
+    },
+    {
+      "from": [
+        6.55,
+        0.7
+      ],
+      "to": [
+        6.55,
+        0.25
+      ],
+      "radius": 0.28406937059140586,
+      "uncoveredArea": 5.588723385983874e-18,
+      "covered": true
+    },
+    {
+      "from": [
+        6.55,
+        0.25
+      ],
+      "to": [
+        6.55,
+        -0.25
+      ],
+      "radius": 0.28406937059140586,
+      "uncoveredArea": 4.313312906545602e-14,
+      "covered": true
+    },
+    {
+      "from": [
+        6.55,
+        -0.25
+      ],
+      "to": [
+        7,
+        -0.25
+      ],
+      "radius": 0.28406937059140586,
+      "uncoveredArea": 4.312760641063992e-14,
+      "covered": true
+    },
+    {
+      "from": [
+        8,
+        1.7
+      ],
+      "to": [
+        8,
+        1
+      ],
+      "radius": 0.28406937059140586,
+      "uncoveredArea": 1.302522559888707e-13,
+      "covered": true
+    }
+  ],
+  "all_covered": true
+}

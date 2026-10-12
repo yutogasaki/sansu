@@ -1,0 +1,140 @@
+{
+  "inputs": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-11-native-owned-island/native05-owned-kit.glb.gz": "79b8ae671444bf0c4869bd8e185f8d5ac140a1d7ee3e5709c5d39e4a6735e615",
+    "/private/tmp/sansu-whole-massing-c-terrain/south-west-v3/assembly-extract.json": "feb55d314e9c197da78acdbbcd56012157bad00ecba8f628a0084d2e8ced27ee"
+  },
+  "scope": "Bottom vertex diagnostic only, not support acceptance. Positive is visible-source vertex above dry top; 0.04 owner placement offset is preserved; no source or terrain changed.",
+  "floorInputs": {
+    "/private/tmp/sansu-whole-massing-c-terrain/south-west-v3/root-contact-source.json": "b8fcee50db23b3f23a0deb30bb8c4d1217ab4704d4e99231e593524ef855bb27",
+    "/private/tmp/sansu-whole-massing-c-terrain/south-west-v3/candidate-world.json.gz": "b2d0bdbe3c9be24deb52cb1e0d10c11e7b27bfb3464501d46249b176287ef1cc"
+  },
+  "floorInputsUnchanged": true
+}
+[
+  {
+    "owner": "l33",
+    "part": "willow",
+    "minY": 1.214277785133606,
+    "bottomVertices": [
+      {
+        "name": "Grove_tree_1__planted_trunk",
+        "x": 5.814434480667114,
+        "y": 1.214277785133606,
+        "z": -7.18373251914978,
+        "floorY": 1.2132079865982017,
+        "gap": 0.0010697985354042316
+      },
+      {
+        "name": "Grove_tree_1__planted_trunk",
+        "x": 5.741674518585205,
+        "y": 1.214277785133606,
+        "z": -7.038211307525635,
+        "floorY": 1.206000004,
+        "gap": 0.008277781133605888
+      },
+      {
+        "name": "Grove_tree_1__planted_trunk",
+        "x": 5.814434480667114,
+        "y": 1.214277785133606,
+        "z": -7.18373251914978,
+        "floorY": 1.2132079865982017,
+        "gap": 0.0010697985354042316
+      },
+      {
+        "name": "Grove_tree_1__planted_trunk",
+        "x": 5.741674518585205,
+        "y": 1.214277785133606,
+        "z": -7.038211307525635,
+        "floorY": 1.206000004,
+        "gap": 0.008277781133605888
+      }
+    ],
+    "scope": "Global lowest native-part vertices, not all underside triangle interiors.",
+    "gapMin": 0.0010697985354042316,
+    "gapMax": 0.008277781133605888
+  },
+  {
+    "owner": "l34",
+    "part": "birch",
+    "minY": 1.625,
+    "bottomVertices": [
+      {
+        "name": "Grove__silver_birch_0__white_planted_trunk",
+        "x": 6.683464438593368,
+        "y": 1.625,
+        "z": -6.071862376930482,
+        "floorY": 1.5970626462369455,
+        "gap": 0.027937353763054507
+      },
+      {
+        "name": "Grove__silver_birch_0__white_planted_trunk",
+        "x": 6.683464438593368,
+        "y": 1.625,
+        "z": -6.016238940956361,
+        "floorY": 1.5803756154447095,
+        "gap": 0.0446243845552905
+      },
+      {
+        "name": "Grove__silver_birch_0__white_planted_trunk",
+        "x": 6.683464438593368,
+        "y": 1.625,
+        "z": -6.071862376930482,
+        "floorY": 1.5970626462369455,
+        "gap": 0.027937353763054507
+      },
+      {
+        "name": "Grove__silver_birch_0__white_planted_trunk",
+        "x": 6.683464438593368,
+        "y": 1.625,
+        "z": -6.016238940956361,
+        "floorY": 1.5803756154447095,
+        "gap": 0.0446243845552905
+      }
+    ],
+    "scope": "Global lowest native-part vertices, not all underside triangle interiors.",
+    "gapMin": 0.027937353763054507,
+    "gapMax": 0.0446243845552905
+  },
+  {
+    "owner": "l35",
+    "part": "spire",
+    "minY": 1.655,
+    "bottomVertices": [
+      {
+        "name": "Grove__spire_tree_0__slender_grown_trunk",
+        "x": 7.9090907096862795,
+        "y": 1.655,
+        "z": -6.029549789428711,
+        "floorY": 1.6211376581192016,
+        "gap": 0.0338623418807984
+      },
+      {
+        "name": "Grove__spire_tree_0__slender_grown_trunk",
+        "x": 7.9090907096862795,
+        "y": 1.6550000268220901,
+        "z": -5.970450210571289,
+        "floorY": 1.603407784461975,
+        "gap": 0.05159224236011517
+      },
+      {
+        "name": "Grove__spire_tree_0__slender_grown_trunk",
+        "x": 7.9090907096862795,
+        "y": 1.655,
+        "z": -6.029549789428711,
+        "floorY": 1.6211376581192016,
+        "gap": 0.0338623418807984
+      },
+      {
+        "name": "Grove__spire_tree_0__slender_grown_trunk",
+        "x": 7.9090907096862795,
+        "y": 1.6550000268220901,
+        "z": -5.970450210571289,
+        "floorY": 1.603407784461975,
+        "gap": 0.05159224236011517
+      }
+    ],
+    "scope": "Global lowest native-part vertices, not all underside triangle interiors.",
+    "gapMin": 0.0338623418807984,
+    "gapMax": 0.05159224236011517
+  }
+]

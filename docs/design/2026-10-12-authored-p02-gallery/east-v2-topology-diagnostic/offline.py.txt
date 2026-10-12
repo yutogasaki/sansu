@@ -1,0 +1,29 @@
+from pathlib import Path
+import json,math,struct,sys,collections,hashlib
+P=Path(__file__).resolve().parent;V=P.parent/'east-v2';sys.path.insert(0,str(V));from terrain_connector import closed_solid
+S=json.loads((V/'study.json').read_text());raw=V/'runs/01-coarse-build/planned-floor-tops.json';plans=json.loads(raw.read_text())
+def qa(v,f):
+ edges=collections.defaultdict(list);deg=[];signed=0.;duplicates=collections.Counter(tuple(sorted(face)) for face in f)
+ for i,face in enumerate(f):
+  for a,b in zip(face,face[1:]+face[:1]):edges[tuple(sorted((a,b)))].append((a,b))
+  a,b,c=[v[j] for j in face];u=[b[j]-a[j] for j in range(3)];w=[c[j]-a[j] for j in range(3)];n=[u[1]*w[2]-u[2]*w[1],u[2]*w[0]-u[0]*w[2],u[0]*w[1]-u[1]*w[0]]
+  if sum(x*x for x in n)<1e-24:deg.append(i)
+  signed+=sum(a[j]*n[j] for j in range(3))/6
+ return {'vertices':len(v),'triangles':len(f),'edgeValences':dict(collections.Counter(len(x) for x in edges.values())),'sameDirectionDoubleEdges':sum(len(x)==2 and x[0]==x[1] for x in edges.values()),'duplicateFaces':sum(n-1 for n in duplicates.values() if n>1),'nearZeroAreaTriangles':deg,'signedVolume':signed}
+result={}
+for name,plan in plans.items():
+ v,f,detail=closed_solid(plan,S['design']['thickness']);result[name]=qa(v,f)
+# Reference interior topology, exact-coordinate weld only accommodates GLB normal seams.
+b=Path(S['inputs']['sourceGlb']['path']).read_bytes();jl=struct.unpack_from('<I',b,12)[0];g=json.loads(b[20:20+jl]);bb=b[28+jl:]
+def acc(i):
+ a=g['accessors'][i];v=g['bufferViews'][a['bufferView']];n={'SCALAR':1,'VEC3':3}[a['type']];fmt={5126:'f',5125:'I',5123:'H'}[a['componentType']];size=struct.calcsize('<'+fmt)*n;off=v.get('byteOffset',0)+a.get('byteOffset',0);stride=v.get('byteStride',size);return [list(struct.unpack_from('<'+fmt*n,bb,off+k*stride)) for k in range(a['count'])]
+node=next(n for n in g['nodes'] if n.get('name')==S['design']['sourceFloorName']);verts=[];faces=[]
+for prim in g['meshes'][node['mesh']]['primitives']:
+ v=acc(prim['attributes']['POSITION']);idx=[a[0] for a in acc(prim['indices'])];base=len(verts);verts+=v;faces += [[base+j for j in idx[i:i+3]] for i in range(0,len(idx),3)]
+lookup={};unique=[];remap=[]
+for v in verts:
+ key=tuple(v)
+ if key not in lookup:lookup[key]=len(unique);unique.append(v)
+ remap.append(lookup[key])
+result['nativeInteriorOriginalGLBExactPositionWeld']=qa(unique,[[remap[i] for i in f] for f in faces])
+report={'status':'OFFLINE_OPERAND_TOPOLOGY_ONLY','operands':result,'sourceRawSha256':hashlib.sha256(raw.read_bytes()).hexdigest(),'failureUnion':json.loads((V/'runs/01-coarse-build/closed-floor-union.json').read_text()),'limits':['Saved Boolean result only available in failed-scene.blend; no Blender run or repair','Positive volume and edge counts do not rule out ribbon self intersections or Boolean coplanar sensitivity']};out=P/'offline-result.json';assert not out.exists();out.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))

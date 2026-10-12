@@ -1,0 +1,17 @@
+{
+  "recordedAtUnixSeconds": 1791784023.811163,
+  "pid": 47164,
+  "execSession": 87514,
+  "cwd": "/private/tmp/sansu-authored-shoulder-c3/candidate",
+  "observedCwd": "p47164\nfcwd\nn/private/tmp/sansu-authored-shoulder-c3/candidate\n",
+  "observedCommand": "node ./node_modules/.bin/vite --host 127.0.0.1 --port 5360 --strictPort",
+  "command": "SANSU_BUILD_REVISION=authored-shoulder-c3 VITE_ISLAND_ENABLED=true VITE_NATIVE_GROWING_ART=false node ./node_modules/.bin/vite --host 127.0.0.1 --port 5360 --strictPort",
+  "revision": "authored-shoulder-c3",
+  "deliveryFlags": {
+    "VITE_ISLAND_ENABLED": "true",
+    "VITE_NATIVE_GROWING_ART": "false"
+  },
+  "httpStatus": 200,
+  "port": 5360,
+  "scope": "Fresh root-owned DEV server; launch flags and observed process/cwd recorded. Actual rendered identity checked by driver."
+}

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-central-shoulder/build-geometry-profile.py", line 87, in <module>
+    soilmat=next(m for m in g['materials']if m['name']=='soil / rounded exposed edges');soil['materials'].append(soilmat)
+StopIteration

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/private/tmp/sansu-p02-gallery-source-study/archive-v5-saved-analysis.py", line 38, in <module>
+    assert sha(decoded)==h,(path,rec['destination'])
+AssertionError: ('/private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-build/sealed-input/stairs-16-closed.json', 'east-v5-stairs-build/sealed-input/stairs-16-closed.json.gz')

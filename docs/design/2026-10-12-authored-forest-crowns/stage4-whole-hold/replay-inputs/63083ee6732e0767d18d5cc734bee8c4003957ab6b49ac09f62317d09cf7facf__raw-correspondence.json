@@ -1,0 +1,107 @@
+{
+  "status": "EXACT-CORRESPONDENCE-CONFIRMED",
+  "coordinateMap": "GLTF local (x,y,z) -> Blender local (x,-z,y)",
+  "sourceAndExtractedPositionNormalIndicesEqual": true,
+  "positionMaxL2": 0.0,
+  "loopVertexIndicesExact": true,
+  "vertices": 78,
+  "corners": 456,
+  "triangles": 152,
+  "sourceNormalLengthRange": [
+    0.9999999406627769,
+    1.0000001033468284
+  ],
+  "importedCornerNormalLengthRange": [
+    0.8177572696762492,
+    1.000000114454166
+  ],
+  "sourceToImportedNormalMaxL2": 0.5755355483534538,
+  "sourceToImportedNormalsOver002": 17,
+  "exactZeroAreaPolygonIndices": [
+    0,
+    2,
+    98,
+    100
+  ],
+  "zeroThreshold": 0,
+  "nearZeroFacesNotRemovedOrClassified": true,
+  "failingVertexFan": [
+    {
+      "polygon": 0,
+      "vertices": [
+        0,
+        1,
+        4
+      ],
+      "inputArea": 0.0,
+      "deformedArea": 0.0,
+      "smooth": true
+    },
+    {
+      "polygon": 1,
+      "vertices": [
+        0,
+        4,
+        3
+      ],
+      "inputArea": 0.0015800523661777283,
+      "deformedArea": 0.0032427628439698594,
+      "smooth": true
+    },
+    {
+      "polygon": 96,
+      "vertices": [
+        0,
+        3,
+        42
+      ],
+      "inputArea": 0.0006163996407262273,
+      "deformedArea": 0.000943971293740694,
+      "smooth": true
+    },
+    {
+      "polygon": 97,
+      "vertices": [
+        0,
+        42,
+        39
+      ],
+      "inputArea": 0.0006081895987977482,
+      "deformedArea": 0.0009323629217858089,
+      "smooth": true
+    },
+    {
+      "polygon": 98,
+      "vertices": [
+        1,
+        0,
+        39
+      ],
+      "inputArea": 0.0,
+      "deformedArea": 0.0,
+      "smooth": true
+    }
+  ],
+  "failingVertex0SourceNormalBlenderLocal": [
+    -0.6400629878044128,
+    0.2541853189468384,
+    0.7250580787658691
+  ],
+  "failingVertex0ImportedNormal": [
+    -0.2777269184589386,
+    -0.19254665076732635,
+    0.7446613311767578
+  ],
+  "failingVertex0SourceImportL2": 0.5755355483534538,
+  "finding": "Input NORMAL changed during Blender import/readback at this exact source-index mapping; this precedes deformation. The later expected-to-stored loss persists through all tested updates. Zero-area faces share the failing fan, but causality has not been tested.",
+  "noBlenderSemanticsClaim": true,
+  "noGeometryOrNormalChanges": true,
+  "inputs": {
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/attempt-01/failing-role-raw.json.gz": "e2820d44f4270b1e8346c00c313048f7bf1e7ce1c03f9452c438942b0d153dc0",
+    "/private/tmp/sansu-authored-forest-crown-study/extraction-attempt02/role-separated-originals.glb": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.glb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+  },
+  "files": {
+    "sourceRoleAccessorData": "source-role-accessors.json.gz"
+  }
+}

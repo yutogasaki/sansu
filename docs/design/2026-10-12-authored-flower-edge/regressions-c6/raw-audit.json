@@ -1,0 +1,59 @@
+{
+  "auditedAt": 1791755652.894754,
+  "runnerExitCode": 0,
+  "pass": true,
+  "firstFailure": null,
+  "coreInputCount": 1987,
+  "stages": [
+    {
+      "name": "01-baseline27-editing",
+      "pass": true,
+      "exitCode": 0,
+      "sourceFixed": true,
+      "elapsedSeconds": 493.14,
+      "steps": 6,
+      "scenarios": 0,
+      "captures": 7,
+      "rawInputCount": 1573,
+      "rawInputSubsetMatches": true
+    },
+    {
+      "name": "02-wide27-water",
+      "pass": true,
+      "exitCode": 0,
+      "sourceFixed": true,
+      "elapsedSeconds": 478.54,
+      "steps": 6,
+      "scenarios": 0,
+      "captures": 14,
+      "rawInputCount": 1577,
+      "rawInputSubsetMatches": true
+    },
+    {
+      "name": "03-ordinary-growing-balance",
+      "pass": true,
+      "exitCode": 0,
+      "sourceFixed": true,
+      "elapsedSeconds": 250.96,
+      "steps": 0,
+      "scenarios": 8,
+      "captures": 22,
+      "rawInputCount": 1572,
+      "rawInputSubsetMatches": true
+    },
+    {
+      "name": "04-classic-smoke",
+      "pass": true,
+      "exitCode": 0,
+      "sourceFixed": true,
+      "elapsedSeconds": 145.9,
+      "steps": 0,
+      "scenarios": 32,
+      "captures": 0,
+      "rawHarnessMatchesCore": true,
+      "dedicatedServer": "http://127.0.0.1:4173",
+      "scope": "Full classic flag-off regression; product timing acceptance excluded"
+    }
+  ],
+  "currentCandidateMatchesCore": true
+}

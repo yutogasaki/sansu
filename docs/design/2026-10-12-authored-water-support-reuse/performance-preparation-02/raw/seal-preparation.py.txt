@@ -1,0 +1,114 @@
+from pathlib import Path
+from datetime import datetime, timezone
+import ast
+import hashlib
+import json
+import re
+import runpy
+import subprocess
+import sys
+
+ROOT = Path('/private/tmp/sansu-water-support-perf-c2-c3')
+P = ROOT / 'prepared-02'
+sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+assert not (ROOT / 'actual-02').exists(), 'No benchmark before sealing'
+assert not (P / 'seal.json').exists(), 'Seal is one-shot'
+inputs = json.loads((P / 'inputs.json').read_text())
+ast.parse((P / 'run.py').read_text())
+runner = runpy.run_path(str(P / 'run.py'), run_name='readiness_static_only')
+for version in ['c2', 'c3']:
+    bundle = inputs['versions'][version]['bundle']
+    subprocess.run([inputs['runtime']['node'], '--check', bundle], check=True)
+    assert all(sha(name) == expected for name, expected in inputs['versions'][version]['actualImports'].items())
+assert all(sha(name) == expected for name, expected in inputs['fullSources'].items())
+assert all(sha(name) == expected for name, expected in inputs['installedDependencies'].items())
+cases = [
+    ('background Blender', {'comm': '/Applications/Blender.app/Contents/MacOS/Blender', 'args': 'Blender -b file.blend'}, 'other-blender'),
+    ('headless', {'comm': '/tmp/chrome-headless-shell', 'args': 'chrome-headless-shell'}, 'background-test-browser'),
+    ('Vitest', {'comm': 'node', 'args': 'node node_modules/vitest/vitest.mjs run'}, 'other-test-build-or-vite'),
+    ('browser driver', {'comm': 'node', 'args': 'node tools/e2e-authored-water.mjs'}, 'other-test-build-or-vite'),
+    ('other benchmark worker (own descendants excluded before classification)', {'comm': 'node', 'args': 'node --expose-gc /private/tmp/sansu-water-support-perf-c2-c3/prepared/worker-c2.mjs'}, 'other-test-build-or-vite'),
+]
+checks = []
+for name, row, expected in cases:
+    actual = runner['forbidden_reason'](row)
+    assert actual == expected
+    checks.append({'case': name, 'expected': expected, 'actual': actual})
+for name, row in [
+    ('existing Firefox GUI', {'comm': '/Applications/Firefox.app/Contents/MacOS/firefox', 'args': '/Applications/Firefox.app/Contents/MacOS/firefox'}),
+    ('existing Safari OS helper', {'comm': 'com.apple.SafariPlatformSupport.Helper', 'args': 'com.apple.SafariPlatformSupport.Helper'}),
+    ('existing Chrome renderer', {'comm': 'Google Chrome Helper (Renderer)', 'args': '/Applications/Google Chrome.app/Contents/Frameworks/Google Chrome Helper (Renderer)'}),
+]:
+    assert runner['forbidden_reason'](row) is None and runner['gui_browser'](row)
+    checks.append({'case': name, 'presenceRejected': False, 'activityMonitored': True})
+fake_allowed = {'6704': {'kind': 'root-c2-vite'}}
+fake_rows = {7000: {'ppid': 6704}, 6704: {'ppid': 1}}
+service = {'comm': '/node_modules/esbuild', 'ppid': 7000}
+assert runner['vite_child_service'](service, fake_rows, fake_allowed)
+assert not runner['vite_child_service']({**service, 'ppid': 1}, fake_rows, fake_allowed)
+checks.append({'case': 'Vite esbuild actual ancestor only', 'descendantActivityMonitored': True, 'unrelatedServiceExempted': False})
+assert runner['cpu_delta'](20, None, 100) is None
+assert not runner['exceeds_activity_limit'](None)
+assert runner['cpu_delta'](20, (20, 99), 100) == 0
+assert runner['cpu_delta'](1, (0, 90), 100) == 10
+assert not runner['exceeds_activity_limit'](10)
+assert runner['exceeds_activity_limit'](10.01)
+checks.append({'case': 'CPU baseline/threshold', 'firstDelta': None, 'firstDeltaIsNotIdle': True, 'measuredZeroPermitted': True, 'threshold': 10, 'aboveThresholdRejected': True})
+original = ROOT / 'prepared'
+original_seal = json.loads((original / 'seal.json').read_text())
+assert all(sha(name) == value for name, value in original_seal['files'].items()), 'First sealed preparation changed'
+assert sha(original / 'seal.json') == 'e6de08c031fa11c9be70fef0ed373692e75bd08fb48b161c8caa49d29d8a5120'
+for version in ['c2', 'c3']:
+    for suffix in ['.mjs', '.mjs.map', '.ts']:
+        assert sha(P / ('worker-' + version + suffix)) == sha(original / ('worker-' + version + suffix))
+schedule = runner['schedule']()
+for scenario in runner['SCENARIOS']:
+    orders = [[item['version'] for item in schedule if item['block'] == block and item['scenario'] == scenario] for block in range(3)]
+    assert orders[0] == orders[2] and orders[1] == list(reversed(orders[0]))
+static = {'atUtc': datetime.now(timezone.utc).isoformat(), 'benchmarkStarted': False, 'astAndBundleSyntaxPass': True,
+          'sourceAndDependencyHashesMatchCores': True, 'actualImportCounts': {v: len(inputs['versions'][v]['actualImports']) for v in ['c2', 'c3']},
+          'classifierCases': checks, 'originalSealUnchanged': True, 'workerBundleAndSourceUnchanged': True,
+          'schedule': schedule, 'alternatingWithinScenario': True, 'limits': {'wholeSeconds': 2700, 'workerSeconds': 180, 'rssBytes': 4294967296}}
+(P / 'static-checks.json').write_text(json.dumps(static, indent=2) + '\n')
+cache_files = ['authoredWaterWorld.ts', 'authoredWaterBridge.ts', 'worldDefinition.ts', 'authoredWaterCarving.ts', 'authoredWorldAccess.ts']
+audit = {'scope': 'Static source and existing functional expected data; no runtime instrumentation or measured call counts', 'sources': {}, 'findings': [
+    {'finding': 'No whole-composition or compiler-result memoization in production call boundary', 'paths': ['authoredWaterWorld.ts:398-563', 'authoredWaterBridge.ts:174-238', 'worldDefinition.ts:102-107']},
+    {'finding': 'All matching bridge-bearing outputs require accepted candidate compile at bridge lines230-233; c2 extra compile at water line548 is removed in c3', 'observedCallCount': False},
+    {'finding': 'Base carving WeakMap warmed identically; holds source index, not result', 'path': 'authoredWaterCarving.ts:9,41-73'},
+    {'finding': 'Shore WeakMaps keyed by newly compiled floors/sites each composition', 'path': 'authoredWorldAccess.ts:26-27'},
+    {'finding': 'Legacy islandLife walkingSpace cache is imported by dependency graph but omitted from emitted bundles', 'metafileBytesInOutput': 0},
+    {'finding': 'Worker WeakSets retain no graph; expected values contain only hashes and compact bridge IDs; outputs/queries leave iteration scope'}]}
+for version in ['c2', 'c3']:
+    audit['sources'][version] = {}
+    for name, value in inputs['versions'][version]['actualImports'].items():
+        if Path(name).name in cache_files:
+            text = Path(name).read_text()
+            audit['sources'][version][name] = {'sha256': value, 'cacheDeclarations': [{'line': i + 1, 'source': line.strip()} for i, line in enumerate(text.splitlines()) if re.search(r'new WeakMap|new WeakSet', line)]}
+    meta = json.loads((P / f'{version}-metafile.json').read_text())
+    assert not any(info.get('bytesInOutput', 0) for output in meta['outputs'].values() for name, info in output.get('inputs', {}).items() if name.endswith('/walkingSpace.ts'))
+(P / 'cache-audit.json').write_text(json.dumps(audit, indent=2) + '\n')
+rows = {row['pid']: row for row in runner['ps_rows']()}
+idle = []
+for pid, kind in [(6704, 'root-c2-vite'), (47164, 'root-c3-vite'), (13395, 'user-gui-blender')]:
+    assert pid in rows, 'Expected idle identity missing at preparation'
+    row = rows[pid]
+    item = {key: row[key] for key in ['pid', 'ppid', 'comm']}
+    item['kind'] = kind
+    if kind.startswith('root-'):
+        item['command'] = row['args']
+        cwd = subprocess.run(['lsof', '-a', '-p', str(pid), '-d', 'cwd', '-Fn'], capture_output=True, text=True, check=True).stdout
+        expected = '/private/tmp/sansu-authored-shoulder-' + ('c2' if pid == 6704 else 'c3') + '/candidate'
+        assert '\nn' + expected + '\n' in '\n' + cwd
+        item['cwdAtPreparation'] = cwd
+    else:
+        assert row['ppid'] == 1 and Path(row['comm']).name == 'Blender'
+    idle.append(item)
+files = {str(path): sha(path) for path in sorted(P.iterdir()) if path.is_file() and path.name != 'seal.json'}
+seal = {'schema': 'sansu-water-support-perf-preparation-seal-v1', 'sealedAtUtc': datetime.now(timezone.utc).isoformat(),
+        'executionStarted': False, 'awaitingParentQuietWindow': True, 'files': files, 'idleProcesses': idle,
+        'python': {'executable': sys.executable, 'version': sys.version, 'sha256': sha(Path(sys.executable).resolve())},
+        'inputManifestSha256': sha(P / 'inputs.json'), 'runnerSha256': sha(P / 'run.py'), 'protocolSha256': sha(P / 'README.md'),
+        'bounds': static['limits'], 'notUiOrProductPerformanceEvidence': True}
+with (P / 'seal.json').open('x') as stream:
+    stream.write(json.dumps(seal, indent=2) + '\n')
+print(json.dumps({'prepared': True, 'executionStarted': False, 'sealSha256': sha(P / 'seal.json'), 'runnerSha256': sha(P / 'run.py'), 'inputManifestSha256': sha(P / 'inputs.json'), 'protocolSha256': sha(P / 'README.md'), 'filesSealed': len(files)}))

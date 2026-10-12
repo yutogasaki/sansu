@@ -1,5 +1,5 @@
 import * as T from 'three';
-import { landBounds } from '../../../domain/growingIsland/space';
+import { HOME_CELL, landBounds } from '../../../domain/growingIsland/space';
 import { terrainHeightAt } from '../../../domain/growingIsland/placeTerrain';
 import type { PlacePoint } from '../../../domain/growingIsland/placeTypes';
 import type { Cell, GrowingState } from '../../../domain/growingIsland';
@@ -7,11 +7,19 @@ import { landscapeCell, landscapePoint, landscapeRise } from '../../../domain/gr
 import { legacyIslandWorld } from '../../../domain/growingIsland/legacyWorldDefinition';
 import type { IslandWorld as CompiledWorld } from '../../../domain/growingIsland/worldDefinition';
 import type { AuthoredWaterPlan } from '../../../domain/growingIsland/authoredWaterWorld';
+import type { AuthoredCovePlan } from '../../../domain/growingIsland/authoredCoveWorld';
+import type { AuthoredWorldOptions } from '../../../domain/growingIsland/authoredWorldFrame';
 import { AUTHORED_ACTOR_VISUAL_SCALE } from './actorScale';
 
+export interface AuthoredLayoutFrame {
+    options: AuthoredWorldOptions;
+    covePlan?: AuthoredCovePlan;
+    revision: string;
+}
+
 /** The same cell-to-world mapping as the current garden, so saved coordinates look the same. */
-export function sceneLayout(state: Pick<GrowingState, 'land'> & Partial<Pick<GrowingState, 'bridge'>>, curved = false, authored?: CompiledWorld, waterPlan?: AuthoredWaterPlan, baseWorld?: CompiledWorld) {
-    if (authored) return authoredSceneLayout(authored, waterPlan, baseWorld);
+export function sceneLayout(state: Pick<GrowingState, 'land'> & Partial<Pick<GrowingState, 'bridge'>>, curved = false, authored?: CompiledWorld, waterPlan?: AuthoredWaterPlan, baseWorld?: CompiledWorld, frame?: AuthoredLayoutFrame) {
+    if (authored) return authoredSceneLayout(authored, waterPlan, baseWorld, frame);
     const bounds = landBounds(state), center = (bounds.minX + bounds.maxX) / 2;
     const world = legacyIslandWorld(state, curved);
     const groundFloor = world.floors.find(floor => floor.kind === 'ground')!;
@@ -58,14 +66,19 @@ export function sceneLayout(state: Pick<GrowingState, 'land'> & Partial<Pick<Gro
         // uses their vertices rather than placing a tall imaginary tree on every shore.
         cameraObjects: undefined as (() => readonly T.Object3D[]) | undefined,
         authoredWaterPlan: undefined as AuthoredWaterPlan | undefined, authoredBaseWorld: undefined as CompiledWorld | undefined,
+        authoredCovePlan: undefined as AuthoredCovePlan | undefined, authoredFrameOptions: undefined as AuthoredWorldOptions | undefined,
         artMargin: bounds.maxX - bounds.minX > 5 || bounds.depth > 5 ? 2.7 : 1.1,
         width: bounds.maxX - bounds.minX + 1, depth: bounds.depth };
 }
 
 /** Authored terrain owns both the physical map and its placement sites. Bounds
  * are only a framing extent; an inlet inside them never acquires a floor. */
-function authoredSceneLayout(world: CompiledWorld, waterPlan?: AuthoredWaterPlan, baseWorld?: CompiledWorld) {
-    const center = (world.bounds.min.x + world.bounds.max.x) / 2;
+function authoredSceneLayout(world: CompiledWorld, waterPlan?: AuthoredWaterPlan, baseWorld?: CompiledWorld, frame?: AuthoredLayoutFrame) {
+    // Growth may change the shoreline bounds during an owner preview. Keep the
+    // same render origin as its immutable acquired land so the future floor,
+    // committed owners/cottage and ghost still share one coordinate frame.
+    const originBounds = (baseWorld ?? world).bounds;
+    const center = (originBounds.min.x + originBounds.max.x) / 2;
     const bounds = { minX: Math.floor(world.bounds.min.x), maxX: Math.ceil(world.bounds.max.x), depth: Math.ceil(world.bounds.max.z - world.bounds.min.z) };
     // A layout belongs to one immutable compiled world. Geometry builders ask
     // for the same floor through point, projection and height; reuse that answer
@@ -100,18 +113,20 @@ function authoredSceneLayout(world: CompiledWorld, waterPlan?: AuthoredWaterPlan
         const site = world.siteAt({ x: position.x + center, y: position.y, z: position.z + 2 });
         return site ? { ...site.cell } : { x: Number.NaN, z: Number.NaN };
     };
-    // The diagnostic native05 template keeps its original south-facing home
-    // approach as a shore port. Other templates may supply an explicit port.
-    const port = world.definition.districts.flatMap(district => district.ports.map(port => world.sites.find(site => site.ref.districtId === district.id && site.ref.siteId === port.siteId)))
+    // Assembly appends districts after the original. Its explicit arrival port
+    // or home approach stays put; later connection ports cannot move the pier.
+    const original = world.definition.districts[0];
+    const port = original?.ports.map(port => world.sites.find(site => site.ref.districtId === original.id && site.ref.siteId === port.siteId))
         .find(site => site);
-    const approach = port?.cell ?? { x: 2, z: 1 };
+    const approach = port?.cell ?? HOME_CELL;
     const pierRoot = point(approach, -.02).add(new T.Vector3(.22, 0, .75));
     const pierEnd = pierRoot.clone().add(new T.Vector3(0, 0, 1.2)); pierEnd.y = .09;
     const dock = pierRoot.clone().add(new T.Vector3(.62, 0, 1.3)); dock.y = -.16;
     const far = dock.clone().add(new T.Vector3(3.4, 0, 3.2)), farther = dock.clone().add(new T.Vector3(5.6, 0, 5.2));
     return { bounds, center, world, point, floorPoint, heightAt, maxHeight: world.bounds.max.y, cellAt, logicalAt, projected, curved: false, authored: true, actorVisualScale: AUTHORED_ACTOR_VISUAL_SCALE,
-        pierRoot, pierEnd, dock, far, farther, key: `${world.id}:${world.definition.revision ?? 'base'}`, nativeArt: false,
+        pierRoot, pierEnd, dock, far, farther, key: `${world.id}:${frame?.revision ?? world.definition.revision ?? 'base'}`, nativeArt: false,
         authoredWaterPlan: waterPlan, authoredBaseWorld: baseWorld,
+        authoredCovePlan: frame?.covePlan, authoredFrameOptions: frame?.options,
         cameraObjects: undefined as (() => readonly T.Object3D[]) | undefined, artMargin: .1,
         width: world.bounds.max.x - world.bounds.min.x, depth: world.bounds.max.z - world.bounds.min.z };
 }

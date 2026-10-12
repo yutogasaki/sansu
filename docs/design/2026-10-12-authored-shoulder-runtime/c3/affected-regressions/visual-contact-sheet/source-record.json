@@ -1,0 +1,236 @@
+{
+  "date": "2026-10-12",
+  "scope": "DEV synthetic 27-owner/73-right hill water; actual pointer edits, static future terrain, desktop mouse plus phone/tablet crops",
+  "excludes": [
+    "Natural acquisition/growth",
+    "Player save or learning",
+    "Touch hardware",
+    "Performance acceptance",
+    "Independent understanding/art acceptance"
+  ],
+  "runtimeGate": "PASS for unchanged wide27-water editing and separate classic32 only",
+  "visualGate": "HOLD; this regression target omits newer shoulder/cove configuration and is not the current whole-art candidate",
+  "silentGate": "NOT_EVALUATED; independent N=0",
+  "reviewedByRoot": [
+    "desktop-whole.png",
+    "water-bridge-close.png",
+    "phone-whole.png"
+  ],
+  "observations": [
+    "Water bowls, connecting channels and bridge render in the inspected views.",
+    "Broad bare ground, sparse canopy and small phone island remain visible.",
+    "No all-eight c3, M1, performance or whole-art acceptance is claimed."
+  ],
+  "captures": [
+    {
+      "file": "../01-wide27-water/actual/desktop-whole.png",
+      "sha256": "5c65c0042d15b328a86705f58b3c81ecf15ffc4c39246fbe8073f4ca48e6f349",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "url": "http://127.0.0.1:5360/prototypes/place-qa/authored.html?water=wide&ground=legacy",
+      "buildRevision": "authored-shoulder-c3",
+      "visualCandidate": "growing-island-v1",
+      "artCandidate": "native05-authored-flower-garden-v3",
+      "nativeGrowingArt": "true",
+      "authoredCoveEnabled": "false",
+      "authoredShoulderEnabled": "false"
+    },
+    {
+      "file": "../01-wide27-water/actual/water-close.png",
+      "sha256": "01db6afcf9e8021e7a8554c448b6bfdfe836f7a2dd2928f8a364f6ef6320ec4f",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "url": "http://127.0.0.1:5360/prototypes/place-qa/authored.html?water=wide&ground=legacy",
+      "buildRevision": "authored-shoulder-c3",
+      "visualCandidate": "growing-island-v1",
+      "artCandidate": "native05-authored-flower-garden-v3",
+      "nativeGrowingArt": "true",
+      "authoredCoveEnabled": "false",
+      "authoredShoulderEnabled": "false"
+    },
+    {
+      "file": "../01-wide27-water/actual/water-bridge-close.png",
+      "sha256": "c0db0f92b7f9e1bb12bcfa983cddf9c8d7f9267d6f9217300d51f62cd5e4abb6",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "url": "http://127.0.0.1:5360/prototypes/place-qa/authored.html?water=wide&ground=legacy",
+      "buildRevision": "authored-shoulder-c3",
+      "visualCandidate": "growing-island-v1",
+      "artCandidate": "native05-authored-flower-garden-v3",
+      "nativeGrowingArt": "true",
+      "authoredCoveEnabled": "false",
+      "authoredShoulderEnabled": "false"
+    },
+    {
+      "file": "../01-wide27-water/actual/stored-dry-ground.png",
+      "sha256": "87ab5322b118b686fa9d0172be620a310aef96327055233a9c0f3b323253f058",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "url": "http://127.0.0.1:5360/prototypes/place-qa/authored.html?water=wide&ground=legacy",
+      "buildRevision": "authored-shoulder-c3",
+      "visualCandidate": "growing-island-v1",
+      "artCandidate": "native05-authored-flower-garden-v3",
+      "nativeGrowingArt": "true",
+      "authoredCoveEnabled": "false",
+      "authoredShoulderEnabled": "false"
+    },
+    {
+      "file": "../01-wide27-water/actual/reconnect-preview.png",
+      "sha256": "872dacdc1b0686394c359b9a0261599e59cf57cc885d93ee23b1d4875f3c79b9",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "url": "http://127.0.0.1:5360/prototypes/place-qa/authored.html?water=wide&ground=legacy",
+      "buildRevision": "authored-shoulder-c3",
+      "visualCandidate": "growing-island-v1",
+      "artCandidate": "native05-authored-flower-garden-v3",
+      "nativeGrowingArt": "true",
+      "authoredCoveEnabled": "false",
+      "authoredShoulderEnabled": "false"
+    },
+    {
+      "file": "../01-wide27-water/actual/reconnected.png",
+      "sha256": "b89ba2226b35eb8171641fe46db562c0a020a27f125e5b8c0e13b2f540aa7db6",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "url": "http://127.0.0.1:5360/prototypes/place-qa/authored.html?water=wide&ground=legacy",
+      "buildRevision": "authored-shoulder-c3",
+      "visualCandidate": "growing-island-v1",
+      "artCandidate": "native05-authored-flower-garden-v3",
+      "nativeGrowingArt": "true",
+      "authoredCoveEnabled": "false",
+      "authoredShoulderEnabled": "false"
+    },
+    {
+      "file": "../01-wide27-water/actual/move-preview.png",
+      "sha256": "72fb35fdec1a5743a947ade79dec3008cffccbb701033d23668218198e71def3",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "url": "http://127.0.0.1:5360/prototypes/place-qa/authored.html?water=wide&ground=legacy",
+      "buildRevision": "authored-shoulder-c3",
+      "visualCandidate": "growing-island-v1",
+      "artCandidate": "native05-authored-flower-garden-v3",
+      "nativeGrowingArt": "true",
+      "authoredCoveEnabled": "false",
+      "authoredShoulderEnabled": "false"
+    },
+    {
+      "file": "../01-wide27-water/actual/preview-cancelled.png",
+      "sha256": "a6a6423d0cec0c52b4fe1bdb62f34e24983c479e3dca0dceb58f002fe7d07086",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "url": "http://127.0.0.1:5360/prototypes/place-qa/authored.html?water=wide&ground=legacy",
+      "buildRevision": "authored-shoulder-c3",
+      "visualCandidate": "growing-island-v1",
+      "artCandidate": "native05-authored-flower-garden-v3",
+      "nativeGrowingArt": "true",
+      "authoredCoveEnabled": "false",
+      "authoredShoulderEnabled": "false"
+    },
+    {
+      "file": "../01-wide27-water/actual/moved-split.png",
+      "sha256": "5b6635c86aa00fa28492a003f0229a60805ad6c974cc94ca11fcbf3ad4266a43",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "url": "http://127.0.0.1:5360/prototypes/place-qa/authored.html?water=wide&ground=legacy",
+      "buildRevision": "authored-shoulder-c3",
+      "visualCandidate": "growing-island-v1",
+      "artCandidate": "native05-authored-flower-garden-v3",
+      "nativeGrowingArt": "true",
+      "authoredCoveEnabled": "false",
+      "authoredShoulderEnabled": "false"
+    },
+    {
+      "file": "../01-wide27-water/actual/desktop-dusk-whole.png",
+      "sha256": "c0cf1d07dd869da51279aa075299f2a127e5c49b78f0221a788c2b265dd907dd",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "url": "http://127.0.0.1:5360/prototypes/place-qa/authored.html?water=wide&ground=legacy",
+      "buildRevision": "authored-shoulder-c3",
+      "visualCandidate": "growing-island-v1",
+      "artCandidate": "native05-authored-flower-garden-v3",
+      "nativeGrowingArt": "true",
+      "authoredCoveEnabled": "false",
+      "authoredShoulderEnabled": "false"
+    },
+    {
+      "file": "../01-wide27-water/actual/water-dusk-close.png",
+      "sha256": "53c925e0c5c3ecdf4f35cb81335c1704f4d1ccf2019c469ff8ce4eac9a917307",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "url": "http://127.0.0.1:5360/prototypes/place-qa/authored.html?water=wide&ground=legacy",
+      "buildRevision": "authored-shoulder-c3",
+      "visualCandidate": "growing-island-v1",
+      "artCandidate": "native05-authored-flower-garden-v3",
+      "nativeGrowingArt": "true",
+      "authoredCoveEnabled": "false",
+      "authoredShoulderEnabled": "false"
+    },
+    {
+      "file": "../01-wide27-water/actual/desktop-rotated-whole.png",
+      "sha256": "031dd1f7a2492cee736904b5a74888cfa8a9e0ce68a521f36c0953bfc7531882",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "url": "http://127.0.0.1:5360/prototypes/place-qa/authored.html?water=wide&ground=legacy",
+      "buildRevision": "authored-shoulder-c3",
+      "visualCandidate": "growing-island-v1",
+      "artCandidate": "native05-authored-flower-garden-v3",
+      "nativeGrowingArt": "true",
+      "authoredCoveEnabled": "false",
+      "authoredShoulderEnabled": "false"
+    },
+    {
+      "file": "../01-wide27-water/actual/phone-whole.png",
+      "sha256": "0c2d35dcb9c6b519daa659524d437826b1563d6f2ada344ad4437232902e3e8c",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "url": "http://127.0.0.1:5360/prototypes/place-qa/authored.html?water=wide&ground=legacy",
+      "buildRevision": "authored-shoulder-c3",
+      "visualCandidate": "growing-island-v1",
+      "artCandidate": "native05-authored-flower-garden-v3",
+      "nativeGrowingArt": "true",
+      "authoredCoveEnabled": "false",
+      "authoredShoulderEnabled": "false"
+    },
+    {
+      "file": "../01-wide27-water/actual/tablet-whole.png",
+      "sha256": "d6e01846ed0e3fc4721309b942fbf14c04e50ffbff99e08bd7dfb1ba27e6df8a",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "url": "http://127.0.0.1:5360/prototypes/place-qa/authored.html?water=wide&ground=legacy",
+      "buildRevision": "authored-shoulder-c3",
+      "visualCandidate": "growing-island-v1",
+      "artCandidate": "native05-authored-flower-garden-v3",
+      "nativeGrowingArt": "true",
+      "authoredCoveEnabled": "false",
+      "authoredShoulderEnabled": "false"
+    }
+  ]
+}

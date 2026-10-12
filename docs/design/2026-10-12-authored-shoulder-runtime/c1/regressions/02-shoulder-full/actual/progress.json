@@ -1,0 +1,37 @@
+{
+  "phase": "acquisition:explicit-diagnostic-18h",
+  "steps": [
+    "setup:compile-read-only-domain-projection",
+    "acquisition:load",
+    "acquisition:purchase-l33",
+    "acquisition:purchase-l34",
+    "acquisition:purchase-l35"
+  ],
+  "timings": [
+    {
+      "name": "setup:compile-read-only-domain-projection",
+      "elapsedMs": 995.306375,
+      "success": true
+    },
+    {
+      "name": "acquisition:load",
+      "elapsedMs": 25318.268875,
+      "success": true
+    },
+    {
+      "name": "acquisition:purchase-l33",
+      "elapsedMs": 284695.50662500004,
+      "success": true
+    },
+    {
+      "name": "acquisition:purchase-l34",
+      "elapsedMs": 286133.96870800003,
+      "success": true
+    },
+    {
+      "name": "acquisition:purchase-l35",
+      "elapsedMs": 295483.228584,
+      "success": true
+    }
+  ]
+}

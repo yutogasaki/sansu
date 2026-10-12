@@ -1,0 +1,63 @@
+"""Compare data-derived rules with saved single-leaf PASS, without Blender."""
+import gzip
+import hashlib
+import json
+from pathlib import Path
+import rules
+
+HERE = Path(__file__).resolve().parent
+DEBUG = HERE.parent/'normal-debug'
+PATHS = {
+    'raw': DEBUG/'attempt-01/failing-role-raw.json.gz',
+    'sharp': DEBUG/'sharp-fan-comparison/attempt-01/comparison-raw.json.gz',
+    'profile': DEBUG/'tip-recenter-evaluated-baseline/attempt-01/float64-profile.json.gz',
+    'passed': DEBUG/'tip-recenter-evaluated-baseline/attempt-01/result.json',
+    'oracle': DEBUG/'tip-recenter-evaluated-baseline/attempt-01/six-incident-sharp-tip-recenter-pre-export-oracle.json.gz',
+    'inventory': HERE/'source-classification.json',
+}
+sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+before = {str(p): sha(p) for p in PATHS.values()}
+def read(path):
+    data = path.read_bytes()
+    return json.loads(gzip.decompress(data) if path.suffix=='.gz' else data)
+raw, sharp, profile, passed, oracle, inventory = [read(PATHS[k]) for k in PATHS]
+observed = next(r for r in inventory['roles'] if r['sourceImportNormalReadbackKnown'])
+zero_ids = observed['primitives'][0]['exactZeroSourceFaceIds']
+lineage = rules.retain_exact_nonzero(raw['inputLocalPositions'],
+                                  [p['vertices'] for p in raw['polygons']], zero_ids)
+baseline = sharp[0]
+derived = rules.derive_incident_sharp(baseline['loopVertexIndices'], baseline['providedSourceNormals'],
+                     baseline['storedBeforeField'], [e['vertices'] for e in raw['edges']],
+                     [e['sharp'] for e in raw['edges']])
+representation = rules.choose_representation(profile['local64'], lineage['faces'])
+variant = oracle
+actual_flags = {','.join(map(str,sorted(e['vertices']))): value
+                for e,value in zip(raw['edges'],derived['flags'])}
+methods = {}
+for row in inventory['roles']:
+    method = rules.method_for_role(row)
+    methods[method] = methods.get(method, 0)+1
+result = {
+    'scope': 'Saved raw replay of pure rules only; no new Blender/role/field evaluation',
+    'inputsBefore': before, 'inputsAfter': {str(p):sha(p) for p in PATHS.values()},
+    'derivedSourceVertexIds': derived['sourceVertexIds'],
+    'derivedSharpEdges': derived['selectedSourceEdges'],
+    'newSharpCount': derived['newSharpCount'],
+    'sharpFlagsEqualPassedOneLeaf': actual_flags==variant['sharpFlags'],
+    'derivedCenterSourceVertex': representation['centerVertexId'],
+    'derivedCollisionSourceVertices': representation['collisionVertexIds'],
+    'recenterCoordinatesEqualPassedOneLeaf': representation['local32']==profile['tipRelative32'],
+    'centerEqualPassedOneLeaf': representation['center64']==profile['center64'],
+    'retainedFaceMapEqualPassedOneLeaf': lineage['sourceFaceIds']==variant['originalSourceFaceMap'],
+    'retainedLocalNonzeroFaces': len(lineage['faces'])-len(rules.exact_zero_faces(representation['local32'],lineage['faces'])),
+    'dispatchCounts': methods, 'remainingLeafBlenderEvaluations': 69,
+    'wholeBuildOrRuntimePass': False,
+}
+result['passed'] = all(result[k] for k in ['sharpFlagsEqualPassedOneLeaf',
+    'recenterCoordinatesEqualPassedOneLeaf','centerEqualPassedOneLeaf','retainedFaceMapEqualPassedOneLeaf'])
+result['passed'] = result['passed'] and result['inputsBefore']==result['inputsAfter']
+out = HERE/'recorded-leaf-rule-check.json'
+assert not out.exists(), 'Preserve the first pure-rule check'
+out.write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps(result,indent=2))
+assert result['passed']

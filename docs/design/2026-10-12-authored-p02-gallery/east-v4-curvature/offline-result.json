@@ -1,0 +1,1985 @@
+{
+  "status": "HOLD_PREPARATION_ONLY",
+  "candidate": "p02-east-v4-curvature",
+  "inputHashesBefore": {
+    "context": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+    "leftTrees": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+    "contextManifest": "3c3fcd13bf4867946a0f393769f852cb938286329dfa2e11dac3afe74796bda2",
+    "forestStudy": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+    "sourceBlend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "sourceGlb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "benchmark": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+    "envelope": "444beab3c5b078799e974424e225e0a2e6742d6b99ad7e94be5edb54088af1db",
+    "oldPlans": "e44d250ca5440d0f5aae661d321bde8de7c031296939b820eeb8f9d400c2b53d",
+    "galleryProbes": "6c8566ff0203ef63f3cd8183861af935d8f13df041c3f8588fc74d5e3c0999b1",
+    "study": "48def2a0503b82a8af71071c23586638629d82d12fb5c6ca2f2e5865360d0aa9",
+    "script": "420c4796f1a57120a9a3ad2f7f6cb97e840356766c21710b235216f8501a1963",
+    "generator": "1aef69c81788434f04b6bf92f32255fa3247906491eb64fe0fb0a9795fa3ce4f"
+  },
+  "inputHashesAfter": {
+    "context": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+    "leftTrees": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+    "contextManifest": "3c3fcd13bf4867946a0f393769f852cb938286329dfa2e11dac3afe74796bda2",
+    "forestStudy": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+    "sourceBlend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "sourceGlb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "benchmark": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+    "envelope": "444beab3c5b078799e974424e225e0a2e6742d6b99ad7e94be5edb54088af1db",
+    "oldPlans": "e44d250ca5440d0f5aae661d321bde8de7c031296939b820eeb8f9d400c2b53d",
+    "galleryProbes": "6c8566ff0203ef63f3cd8183861af935d8f13df041c3f8588fc74d5e3c0999b1",
+    "study": "48def2a0503b82a8af71071c23586638629d82d12fb5c6ca2f2e5865360d0aa9",
+    "script": "420c4796f1a57120a9a3ad2f7f6cb97e840356766c21710b235216f8501a1963",
+    "generator": "1aef69c81788434f04b6bf92f32255fa3247906491eb64fe0fb0a9795fa3ce4f"
+  },
+  "planSha256": "2968d018782cea82afa443bbbffc111eb0ead51a3d5f5f2e8be2814354fee3ca",
+  "primaryEndpointDistances": {
+    "joint": 0.0,
+    "galleryStart": 0.0,
+    "galleryEnd": 0.0
+  },
+  "widthRange": [
+    0.6399999999999983,
+    0.6400000000000017
+  ],
+  "top": {
+    "triangles": 1520,
+    "minimumNormalY": 0.35306845973462836,
+    "nonpositiveNormalY": 0,
+    "positiveAreaOverlapPairs": [],
+    "pairThreshold": 1e-12,
+    "sameThresholdAsPreviousDiagnostic": true,
+    "projectionArea": 2.6099809792877307
+  },
+  "curvature": {
+    "maximumAbsoluteCurvature": 2.476891056353531,
+    "halfWidth": 0.32,
+    "sampledMinimumOffsetScale": 0.20739486196687007,
+    "samplingNotAnalyticBound": true
+  },
+  "solid": {
+    "topFaces": 1520,
+    "boundaryEdges": 388,
+    "float32UniqueTopVertices": 955,
+    "rawTopVertices": 955,
+    "sourceTopTrianglesRetained": true,
+    "intersectionWeldEpsilon": 1e-07,
+    "maximumIntersectionWeldDistance": 0.0,
+    "badEdges": 0,
+    "edgeValences": {
+      "2": 5724
+    },
+    "signedVolume": 0.18269866703884144,
+    "expectedAreaTimesThickness": 0.18269866855014116,
+    "volumeDelta": -1.5112997242550108e-09,
+    "float32TopNonpositiveY": 0,
+    "float32BottomNonnegativeY": 0,
+    "verticalColumnUniqueTopFromProjectionProof": true
+  },
+  "groundRelation": {
+    "minGap": 0.013206272365879679,
+    "maxGap": 1.9682483667636843,
+    "overlapArea": 2.5131937581847303,
+    "buriedPolygons": [],
+    "coplanarTopArea": 0.0,
+    "clear": true,
+    "epsilon": 1e-07
+  },
+  "existingJunctionTopParity": [
+    {
+      "other": "terrainThreshold",
+      "overlapPairs": 781,
+      "maximumTopHeightDifference": 6.661338147750939e-16,
+      "mismatch": []
+    },
+    {
+      "other": "alignedOpening",
+      "overlapPairs": 535,
+      "maximumTopHeightDifference": 6.661338147750939e-16,
+      "mismatch": []
+    }
+  ],
+  "pathSlope": {
+    "horizontalRun": 4.078430631287332,
+    "signedRise": 1.359283208847046,
+    "maximumAbsoluteSlope": 0.6378409444755957,
+    "verticalSegments": 0,
+    "segments": [
+      {
+        "run": 0.01603234080250294,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.01605658671777826,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.016103258098544716,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.016170384304544656,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.016256008772901648,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.016358210594899624,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.01647512268276901,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.016604946420904654,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.016745962895933428,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.016896540948133296,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.017055142383860543,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.0172203247408081,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.017390742013691,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.017565143736668176,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.01774237278930665,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.017921362252617177,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.018101131596584476,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.018280782434931527,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.018459494039502554,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.0186365187673628,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.018811177519299553,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.018982855319159588,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.019150997079217063,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.01931510359702105,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.019474727813571974,
+        "rise": 0.0,
+        "absoluteSlope": 0.0
+      },
+      {
+        "run": 0.019367791370712917,
+        "rise": 0.00018390227687015148,
+        "absoluteSlope": 0.009495263210457752
+      },
+      {
+        "run": 0.01951342754457621,
+        "rise": 0.0005483367736081046,
+        "absoluteSlope": 0.028100484774163405
+      },
+      {
+        "run": 0.019653743312848186,
+        "rise": 0.0009077161848431992,
+        "absoluteSlope": 0.046185409588096145
+      },
+      {
+        "run": 0.01978848154006055,
+        "rise": 0.001262040510575213,
+        "absoluteSlope": 0.06377652110498173
+      },
+      {
+        "run": 0.01991742041383946,
+        "rise": 0.0016113097508043683,
+        "absoluteSlope": 0.08089951998426276
+      },
+      {
+        "run": 0.020040371539577762,
+        "rise": 0.001955523905530221,
+        "absoluteSlope": 0.09757922410112276
+      },
+      {
+        "run": 0.020157178271121196,
+        "rise": 0.002294682974753437,
+        "absoluteSlope": 0.11383949399509878
+      },
+      {
+        "run": 0.020267714267471905,
+        "rise": 0.0026287869584731283,
+        "absoluteSlope": 0.129703178354558
+      },
+      {
+        "run": 0.020371882265393177,
+        "rise": 0.002957835856690183,
+        "absoluteSlope": 0.14519207494708622
+      },
+      {
+        "run": 0.020469613057917172,
+        "rise": 0.003281829669404157,
+        "absoluteSlope": 0.16032690310845038
+      },
+      {
+        "run": 0.020560864669241143,
+        "rise": 0.0036007683966150505,
+        "absoluteSlope": 0.1751272845057808
+      },
+      {
+        "run": 0.02064562171695491,
+        "rise": 0.003914652038322863,
+        "absoluteSlope": 0.1896117294015909
+      },
+      {
+        "run": 0.02072389495318899,
+        "rise": 0.0042234805945275955,
+        "absoluteSlope": 0.20379762607693044
+      },
+      {
+        "run": 0.020795720976889084,
+        "rise": 0.004527254065229469,
+        "absoluteSlope": 0.21770123143413705
+      },
+      {
+        "run": 0.020861162109995793,
+        "rise": 0.004825972450428262,
+        "absoluteSlope": 0.2313376611035422
+      },
+      {
+        "run": 0.020920306430870252,
+        "rise": 0.005119635750124196,
+        "absoluteSlope": 0.24472087763349398
+      },
+      {
+        "run": 0.020973267958710434,
+        "rise": 0.005408243964316828,
+        "absoluteSlope": 0.25786367555899764
+      },
+      {
+        "run": 0.02102018698304417,
+        "rise": 0.005691797093006379,
+        "absoluteSlope": 0.27077766232991357
+      },
+      {
+        "run": 0.021061230532524046,
+        "rise": 0.005970295136193293,
+        "absoluteSlope": 0.2834732342430608
+      },
+      {
+        "run": 0.021096592977218644,
+        "rise": 0.006243738093876905,
+        "absoluteSlope": 0.2959595466727383
+      },
+      {
+        "run": 0.021126496758392052,
+        "rise": 0.006512125966057436,
+        "absoluteSlope": 0.30824447803778127
+      },
+      {
+        "run": 0.0211511932392577,
+        "rise": 0.0067754587527353305,
+        "absoluteSlope": 0.3203345870889086
+      },
+      {
+        "run": 0.021170963669473263,
+        "rise": 0.0070337364539097,
+        "absoluteSlope": 0.3322350632556114
+      },
+      {
+        "run": 0.02118612025507869,
+        "rise": 0.0072869590695814335,
+        "absoluteSlope": 0.34394966996539256
+      },
+      {
+        "run": 0.021197007324190466,
+        "rise": 0.007535126599749864,
+        "absoluteSlope": 0.35548068104645225
+      },
+      {
+        "run": 0.021204002577038677,
+        "rise": 0.007778239044415436,
+        "absoluteSlope": 0.3668288105585457
+      },
+      {
+        "run": 0.021207518406706,
+        "rise": 0.00801629640357815,
+        "absoluteSlope": 0.3779931366719138
+      },
+      {
+        "run": 0.021208003274383436,
+        "rise": 0.008249298677237338,
+        "absoluteSlope": 0.388971020539281
+      },
+      {
+        "run": 0.021205943119878376,
+        "rise": 0.008477245865394112,
+        "absoluteSlope": 0.3997580214882106
+      },
+      {
+        "run": 0.02120186278455325,
+        "rise": 0.008700137968047139,
+        "absoluteSlope": 0.4103478103058793
+      },
+      {
+        "run": 0.021196327419936427,
+        "rise": 0.008917974985197974,
+        "absoluteSlope": 0.42073208289894976
+      },
+      {
+        "run": 0.021189943850757953,
+        "rise": 0.009130756916845062,
+        "absoluteSlope": 0.43090047718642066
+      },
+      {
+        "run": 0.02118336185636347,
+        "rise": 0.009338483762989735,
+        "absoluteSlope": 0.4408404967214616
+      },
+      {
+        "run": 0.02117727532936151,
+        "rise": 0.009541155523630884,
+        "absoluteSlope": 0.4505374452209357
+      },
+      {
+        "run": 0.021172423265046012,
+        "rise": 0.009738772198769174,
+        "absoluteSlope": 0.45997437689842113
+      },
+      {
+        "run": 0.02116959052994991,
+        "rise": 0.009931333788404606,
+        "absoluteSlope": 0.4691320682067111
+      },
+      {
+        "run": 0.021561369561303532,
+        "rise": 0.010307518903200252,
+        "absoluteSlope": 0.4780549247529846
+      },
+      {
+        "run": 0.021561369561303865,
+        "rise": 0.01049667733547599,
+        "absoluteSlope": 0.4868279496639374
+      },
+      {
+        "run": 0.021561369561303088,
+        "rise": 0.010680495294513648,
+        "absoluteSlope": 0.4953532874684496
+      },
+      {
+        "run": 0.0215613695613048,
+        "rise": 0.010858972780313447,
+        "absoluteSlope": 0.5036309381664487
+      },
+      {
+        "run": 0.02156136956130322,
+        "rise": 0.011032109792874945,
+        "absoluteSlope": 0.5116609017580486
+      },
+      {
+        "run": 0.021561369561303587,
+        "rise": 0.011199906332198806,
+        "absoluteSlope": 0.5194431782431573
+      },
+      {
+        "run": 0.02156136956130394,
+        "rise": 0.011362362398284143,
+        "absoluteSlope": 0.5269777676217797
+      },
+      {
+        "run": 0.021561369561303497,
+        "rise": 0.011519477991131621,
+        "absoluteSlope": 0.5342646698939661
+      },
+      {
+        "run": 0.021561369561303813,
+        "rise": 0.011671253110741242,
+        "absoluteSlope": 0.5413038850596782
+      },
+      {
+        "run": 0.021561369561303705,
+        "rise": 0.011817687757112783,
+        "absoluteSlope": 0.548095413118935
+      },
+      {
+        "run": 0.02156136956130394,
+        "rise": 0.011958781930246243,
+        "absoluteSlope": 0.554639254071717
+      },
+      {
+        "run": 0.021561369561303424,
+        "rise": 0.012094535630141401,
+        "absoluteSlope": 0.5609354079180425
+      },
+      {
+        "run": 0.02156136956130465,
+        "rise": 0.012224948856799145,
+        "absoluteSlope": 0.5669838746578875
+      },
+      {
+        "run": 0.02156136956130363,
+        "rise": 0.012350021610218587,
+        "absoluteSlope": 0.5727846542913152
+      },
+      {
+        "run": 0.021561369561304056,
+        "rise": 0.012469753890399726,
+        "absoluteSlope": 0.5783377468182286
+      },
+      {
+        "run": 0.02156136956130428,
+        "rise": 0.012584145697343452,
+        "absoluteSlope": 0.5836431522387123
+      },
+      {
+        "run": 0.021561369561303063,
+        "rise": 0.012693197031048431,
+        "absoluteSlope": 0.5887008705527385
+      },
+      {
+        "run": 0.021561369561303965,
+        "rise": 0.012796907891515996,
+        "absoluteSlope": 0.593510901760272
+      },
+      {
+        "run": 0.021561369561304455,
+        "rise": 0.012895278278744815,
+        "absoluteSlope": 0.5980732458613197
+      },
+      {
+        "run": 0.021561369561302713,
+        "rise": 0.01298830819273622,
+        "absoluteSlope": 0.6023879028559948
+      },
+      {
+        "run": 0.02156136956130339,
+        "rise": 0.013075997633489767,
+        "absoluteSlope": 0.6064548727441468
+      },
+      {
+        "run": 0.021561369561303768,
+        "rise": 0.013158346601005011,
+        "absoluteSlope": 0.6102741555258309
+      },
+      {
+        "run": 0.021561369561305093,
+        "rise": 0.013235355095281509,
+        "absoluteSlope": 0.6138457512009912
+      },
+      {
+        "run": 0.021561369561303802,
+        "rise": 0.013307023116321481,
+        "absoluteSlope": 0.6171696597698321
+      },
+      {
+        "run": 0.021561369561304024,
+        "rise": 0.013373350664122263,
+        "absoluteSlope": 0.6202458812321126
+      },
+      {
+        "run": 0.02156136956130245,
+        "rise": 0.013434337738685187,
+        "absoluteSlope": 0.6230744155879894
+      },
+      {
+        "run": 0.021561369561303813,
+        "rise": 0.013489984340010253,
+        "absoluteSlope": 0.6256552628373258
+      },
+      {
+        "run": 0.02156136956130407,
+        "rise": 0.013540290468097904,
+        "absoluteSlope": 0.6279884229802591
+      },
+      {
+        "run": 0.021561369561303438,
+        "rise": 0.013585256122946365,
+        "absoluteSlope": 0.630073896016701
+      },
+      {
+        "run": 0.02156136956130512,
+        "rise": 0.013624881304557412,
+        "absoluteSlope": 0.6319116819466403
+      },
+      {
+        "run": 0.021561369561303508,
+        "rise": 0.013659166012930157,
+        "absoluteSlope": 0.6335017807701999
+      },
+      {
+        "run": 0.021561369561302966,
+        "rise": 0.013688110248065932,
+        "absoluteSlope": 0.6348441924873139
+      },
+      {
+        "run": 0.02156136956130409,
+        "rise": 0.013711714009962073,
+        "absoluteSlope": 0.6359389170978409
+      },
+      {
+        "run": 0.02156136956130423,
+        "rise": 0.013729977298621687,
+        "absoluteSlope": 0.6367859546020032
+      },
+      {
+        "run": 0.021561369561302633,
+        "rise": 0.013742900114042111,
+        "absoluteSlope": 0.6373853049996993
+      },
+      {
+        "run": 0.02156136956130451,
+        "rise": 0.013750482456225122,
+        "absoluteSlope": 0.6377369682908578
+      },
+      {
+        "run": 0.02156136956130451,
+        "rise": 0.01375272432516983,
+        "absoluteSlope": 0.6378409444755957
+      },
+      {
+        "run": 0.021561369561303237,
+        "rise": 0.01374962572087668,
+        "absoluteSlope": 0.6376972335539157
+      },
+      {
+        "run": 0.02156136956130354,
+        "rise": 0.013741186643345227,
+        "absoluteSlope": 0.637305835525713
+      },
+      {
+        "run": 0.02156136956130427,
+        "rise": 0.01372740709257636,
+        "absoluteSlope": 0.6366667503910626
+      },
+      {
+        "run": 0.021561369561302758,
+        "rise": 0.013708287068569192,
+        "absoluteSlope": 0.6357799781500023
+      },
+      {
+        "run": 0.021561369561305208,
+        "rise": 0.013683826571323277,
+        "absoluteSlope": 0.6346455188023284
+      },
+      {
+        "run": 0.021561369561303566,
+        "rise": 0.013654025600840836,
+        "absoluteSlope": 0.6332633723483814
+      },
+      {
+        "run": 0.0215613695613036,
+        "rise": 0.013618884157119204,
+        "absoluteSlope": 0.6316335387878675
+      },
+      {
+        "run": 0.021561369561303424,
+        "rise": 0.01357840224015927,
+        "absoluteSlope": 0.6297560181208838
+      },
+      {
+        "run": 0.021561369561303254,
+        "rise": 0.013532579849962367,
+        "absoluteSlope": 0.6276308103474854
+      },
+      {
+        "run": 0.02156136956130527,
+        "rise": 0.013481416986526717,
+        "absoluteSlope": 0.6252579154675268
+      },
+      {
+        "run": 0.021561369561302977,
+        "rise": 0.013424913649853654,
+        "absoluteSlope": 0.6226373334812583
+      },
+      {
+        "run": 0.02156136956130427,
+        "rise": 0.013363069839942288,
+        "absoluteSlope": 0.6197690643884098
+      },
+      {
+        "run": 0.021561369561302276,
+        "rise": 0.013295885556792175,
+        "absoluteSlope": 0.6166531081891592
+      },
+      {
+        "run": 0.021561369561305332,
+        "rise": 0.013223360800404649,
+        "absoluteSlope": 0.6132894648833291
+      },
+      {
+        "run": 0.021561369561302376,
+        "rise": 0.013145495570779708,
+        "absoluteSlope": 0.6096781344712352
+      },
+      {
+        "run": 0.021561369561305364,
+        "rise": 0.013062289867915577,
+        "absoluteSlope": 0.6058191169524559
+      },
+      {
+        "run": 0.0215613695613041,
+        "rise": 0.012973743691814477,
+        "absoluteSlope": 0.601712412327382
+      },
+      {
+        "run": 0.021561369561303508,
+        "rise": 0.01287985704247463,
+        "absoluteSlope": 0.5973580205957922
+      },
+      {
+        "run": 0.02156136956130285,
+        "rise": 0.012780629919897368,
+        "absoluteSlope": 0.5927559417577691
+      },
+      {
+        "run": 0.021561369561303383,
+        "rise": 0.01267606232408136,
+        "absoluteSlope": 0.5879061758132165
+      },
+      {
+        "run": 0.021561369561304534,
+        "rise": 0.012566154255027495,
+        "absoluteSlope": 0.5828087227621918
+      },
+      {
+        "run": 0.02121753966853964,
+        "rise": 0.012253243138399483,
+        "absoluteSlope": 0.5775053719620475
+      },
+      {
+        "run": 0.021229947769260595,
+        "rise": 0.012136552773897247,
+        "absoluteSlope": 0.5716713439808874
+      },
+      {
+        "run": 0.0212523498365414,
+        "rise": 0.012014773427079461,
+        "absoluteSlope": 0.565338587002798
+      },
+      {
+        "run": 0.021282376959840872,
+        "rise": 0.011887905097946572,
+        "absoluteSlope": 0.5585797639229231
+      },
+      {
+        "run": 0.021317801905341785,
+        "rise": 0.011755947786497245,
+        "absoluteSlope": 0.5514615361704556
+      },
+      {
+        "run": 0.021356542301809167,
+        "rise": 0.011618901492731926,
+        "absoluteSlope": 0.544044130764916
+      },
+      {
+        "run": 0.021396661193193233,
+        "rise": 0.011476766216651058,
+        "absoluteSlope": 0.5363811724187173
+      },
+      {
+        "run": 0.02143636547590148,
+        "rise": 0.011329541958254197,
+        "absoluteSlope": 0.5285197236906014
+      },
+      {
+        "run": 0.021474002705217005,
+        "rise": 0.011177228717541787,
+        "absoluteSlope": 0.5205004800910421
+      },
+      {
+        "run": 0.02150805670749287,
+        "rise": 0.011019826494513385,
+        "absoluteSlope": 0.5123580732737398
+      },
+      {
+        "run": 0.021537142379525743,
+        "rise": 0.01085733528916899,
+        "absoluteSlope": 0.504121442754193
+      },
+      {
+        "run": 0.02155999999983384,
+        "rise": 0.01068975510150949,
+        "absoluteSlope": 0.49581424404415003
+      },
+      {
+        "run": 0.02157548932222087,
+        "rise": 0.01051708593153311,
+        "absoluteSlope": 0.4874552680805913
+      },
+      {
+        "run": 0.02158258367232305,
+        "rise": 0.010339327779242069,
+        "absoluteSlope": 0.4790588530186475
+      },
+      {
+        "run": 0.021580364224468584,
+        "rise": 0.010156480644634147,
+        "absoluteSlope": 0.4706352746872719
+      },
+      {
+        "run": 0.021568014599427792,
+        "rise": 0.009968544527710677,
+        "absoluteSlope": 0.46219110626785026
+      },
+      {
+        "run": 0.021544815893539796,
+        "rise": 0.009775519428471657,
+        "absoluteSlope": 0.4537295411005504
+      },
+      {
+        "run": 0.02151014222603178,
+        "rise": 0.00957740534691709,
+        "absoluteSlope": 0.44525067506650057
+      },
+      {
+        "run": 0.0214634568733681,
+        "rise": 0.00937420228304564,
+        "absoluteSlope": 0.4367517468575703
+      },
+      {
+        "run": 0.021404309046677866,
+        "rise": 0.009165910236859531,
+        "absoluteSlope": 0.42822733576079436
+      },
+      {
+        "run": 0.021332331360010053,
+        "rise": 0.008952529208356985,
+        "absoluteSlope": 0.4196695174695977
+      },
+      {
+        "run": 0.021247238032787514,
+        "rise": 0.00873405919753889,
+        "absoluteSlope": 0.4110679790032471
+      },
+      {
+        "run": 0.021148823868803335,
+        "rise": 0.008510500204404359,
+        "absoluteSlope": 0.4024100941593358
+      },
+      {
+        "run": 0.021036964055927837,
+        "rise": 0.008281852228955167,
+        "absoluteSlope": 0.3936809611376167
+      },
+      {
+        "run": 0.02091161483505662,
+        "rise": 0.008048115271189094,
+        "absoluteSlope": 0.3848634041258776
+      },
+      {
+        "run": 0.020772815093129046,
+        "rise": 0.007809289331107472,
+        "absoluteSlope": 0.3759379408181669
+      },
+      {
+        "run": 0.020620688943079255,
+        "rise": 0.007565374408710301,
+        "absoluteSlope": 0.36688271810866935
+      },
+      {
+        "run": 0.020455449362851295,
+        "rise": 0.007316370503996694,
+        "absoluteSlope": 0.35767341866778046
+      },
+      {
+        "run": 0.02027740297546582,
+        "rise": 0.007062277616968871,
+        "absoluteSlope": 0.3482831418556761
+      },
+      {
+        "run": 0.020086956062086984,
+        "rise": 0.006803095747622834,
+        "absoluteSlope": 0.33868226358414255
+      },
+      {
+        "run": 0.019884621908833562,
+        "rise": 0.0065388248959625805,
+        "absoluteSlope": 0.3288382814589885
+      },
+      {
+        "run": 0.019671029594551137,
+        "rise": 0.006269465061986335,
+        "absoluteSlope": 0.3187156539952018
+      },
+      {
+        "run": 0.019446934328679177,
+        "rise": 0.005995016245693208,
+        "absoluteSlope": 0.30827564614398456
+      },
+      {
+        "run": 0.01921322944311988,
+        "rise": 0.005715478447085864,
+        "absoluteSlope": 0.2974761980543847
+      },
+      {
+        "run": 0.01897096012551497,
+        "rise": 0.005430851666162084,
+        "absoluteSlope": 0.28627184023532193
+      },
+      {
+        "run": 0.01872133894846847,
+        "rise": 0.005141135902921867,
+        "absoluteSlope": 0.2746136863967439
+      },
+      {
+        "run": 0.018465763192902877,
+        "rise": 0.004846331157366546,
+        "absoluteSlope": 0.2624495455042542
+      },
+      {
+        "run": 0.01820583387491394,
+        "rise": 0.0045464374294952314,
+        "absoluteSlope": 0.24972420712680607
+      },
+      {
+        "run": 0.01794337625320164,
+        "rise": 0.004241454719307924,
+        "absoluteSlope": 0.23637996882281953
+      },
+      {
+        "run": 0.017680461405372435,
+        "rise": 0.003931383026804625,
+        "absoluteSlope": 0.222357490376921
+      },
+      {
+        "run": 0.017419428202584995,
+        "rise": 0.003616222351985776,
+        "absoluteSlope": 0.2075970755141744
+      },
+      {
+        "run": 0.017162904670811774,
+        "rise": 0.003295972694851379,
+        "absoluteSlope": 0.19204049419773916
+      },
+      {
+        "run": 0.016913827296656546,
+        "rise": 0.002970634055400989,
+        "absoluteSlope": 0.1756334626869586
+      },
+      {
+        "run": 0.016675456321460284,
+        "rise": 0.0026402064336346065,
+        "absoluteSlope": 0.1583288866426296
+      },
+      {
+        "run": 0.016451384496111884,
+        "rise": 0.002304689829552231,
+        "absoluteSlope": 0.1400909346017
+      },
+      {
+        "run": 0.01624553620067458,
+        "rise": 0.001964084243154307,
+        "absoluteSlope": 0.1208999333043098
+      },
+      {
+        "run": 0.01606215337327104,
+        "rise": 0.0016183896744403903,
+        "absoluteSlope": 0.10075795174098794
+      },
+      {
+        "run": 0.015905764500077187,
+        "rise": 0.0012676061234109248,
+        "absoluteSlope": 0.0796947624494738
+      },
+      {
+        "run": 0.015781133197724524,
+        "rise": 0.0009117335900654666,
+        "absoluteSlope": 0.05777364519025346
+      },
+      {
+        "run": 0.015693183891828003,
+        "rise": 0.0005507720744044597,
+        "absoluteSlope": 0.03509626078435659
+      },
+      {
+        "run": 0.015646903933075704,
+        "rise": 0.00018472157642701603,
+        "absoluteSlope": 0.011805631147037112
+      },
+      {
+        "run": 0.031902998967354705,
+        "rise": 0.00179290771484375,
+        "absoluteSlope": 0.05619872027323744
+      },
+      {
+        "run": 0.031902998967354025,
+        "rise": 0.00261688232421875,
+        "absoluteSlope": 0.08202621724987597
+      },
+      {
+        "run": 0.03190299896735396,
+        "rise": 0.0019626617431640625,
+        "absoluteSlope": 0.0615196629374071
+      },
+      {
+        "run": 0.03190299896735468,
+        "rise": 0.00201416015625,
+        "absoluteSlope": 0.06313388149844552
+      },
+      {
+        "run": 0.03190299896735432,
+        "rise": 0.002567291259765625,
+        "absoluteSlope": 0.0804717845614665
+      },
+      {
+        "run": 0.03190299896735403,
+        "rise": 0.001789093017578125,
+        "absoluteSlope": 0.056079148527976415
+      },
+      {
+        "run": 0.03190299896735413,
+        "rise": 0.0023784637451171875,
+        "absoluteSlope": 0.07455298317098762
+      },
+      {
+        "run": 0.03190299896735427,
+        "rise": 0.002201080322265625,
+        "absoluteSlope": 0.06899289701629457
+      },
+      {
+        "run": 0.03190299896735457,
+        "rise": 0.00179290771484375,
+        "absoluteSlope": 0.056198720273237676
+      },
+      {
+        "run": 0.03190299896735403,
+        "rise": 0.00273895263671875,
+        "absoluteSlope": 0.08585251309826666
+      },
+      {
+        "run": 0.03190299896735432,
+        "rise": 0.001842498779296875,
+        "absoluteSlope": 0.05775315296164684
+      },
+      {
+        "run": 0.03190299896735423,
+        "rise": 0.002132415771484375,
+        "absoluteSlope": 0.06684060560157488
+      },
+      {
+        "run": 0.0319029989673544,
+        "rise": 0.0024471282958984375,
+        "absoluteSlope": 0.07670527458570674
+      },
+      {
+        "run": 0.031902998967354025,
+        "rise": 0.00179290771484375,
+        "absoluteSlope": 0.05619872027323864
+      },
+      {
+        "run": 0.031902998967354705,
+        "rise": 0.0024929046630859375,
+        "absoluteSlope": 0.07814013552885249
+      },
+      {
+        "run": 0.031902998967354254,
+        "rise": 0.002086639404296875,
+        "absoluteSlope": 0.06540574465842833
+      },
+      {
+        "run": 0.03190299896735397,
+        "rise": 0.00189208984375,
+        "absoluteSlope": 0.0593075856500562
+      },
+      {
+        "run": 0.031902998967354414,
+        "rise": 0.0026874542236328125,
+        "absoluteSlope": 0.08423829453722582
+      },
+      {
+        "run": 0.03190299896735435,
+        "rise": 0.00179290771484375,
+        "absoluteSlope": 0.056198720273238065
+      },
+      {
+        "run": 0.031902998967354115,
+        "rise": 0.002254486083984375,
+        "absoluteSlope": 0.07066690144996583
+      }
+    ],
+    "acceptance": "reported only; no invented maximum slope rule"
+  },
+  "fixedSourceCollisionRows": [],
+  "fixedSourceObjects": [
+    {
+      "source": "context",
+      "id": 0,
+      "node": 39,
+      "primitive": 0,
+      "name": "life-bench-seat",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "node-37",
+        "node-38",
+        "life-bench-seat"
+      ],
+      "ownerId": null,
+      "objectId": "l25",
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 12
+    },
+    {
+      "source": "context",
+      "id": 1,
+      "node": 40,
+      "primitive": 0,
+      "name": "node-40",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "node-37",
+        "node-38",
+        "node-40"
+      ],
+      "ownerId": null,
+      "objectId": "l25",
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 12
+    },
+    {
+      "source": "context",
+      "id": 2,
+      "node": 41,
+      "primitive": 0,
+      "name": "node-41",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "node-37",
+        "node-38",
+        "node-41"
+      ],
+      "ownerId": null,
+      "objectId": "l25",
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 12
+    },
+    {
+      "source": "context",
+      "id": 3,
+      "node": 42,
+      "primitive": 0,
+      "name": "node-42",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "node-37",
+        "node-38",
+        "node-42"
+      ],
+      "ownerId": null,
+      "objectId": "l25",
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 12
+    },
+    {
+      "source": "context",
+      "id": 4,
+      "node": 113,
+      "primitive": 0,
+      "name": "house / honey wood",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "node-111",
+        "growing-native-home",
+        "house / honey wood"
+      ],
+      "ownerId": null,
+      "objectId": "p3",
+      "placeId": null,
+      "nativePart": "home-leaf",
+      "originalSourcePartNames": [
+        "Harbor / peninsula home / arched entry frame",
+        "Harbor / peninsula home / cobalt entry",
+        "Harbor / peninsula home / folded leaf roof",
+        "Harbor / peninsula home / folded leaf roof.001",
+        "Harbor / peninsula home / grown roof midrib",
+        "Harbor / peninsula home / grown roof midrib.001",
+        "Harbor / peninsula home / oval side window",
+        "Harbor / peninsula home / oval window surround",
+        "Harbor / peninsula home / rounded walls",
+        "Harbor / peninsula home / shared entrance step",
+        "Harbor / peninsula home / shared entrance step.001"
+      ],
+      "triangles": 6736
+    },
+    {
+      "source": "context",
+      "id": 5,
+      "node": 114,
+      "primitive": 0,
+      "name": "house / cobalt door",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "node-111",
+        "growing-native-home",
+        "house / cobalt door"
+      ],
+      "ownerId": null,
+      "objectId": "p3",
+      "placeId": null,
+      "nativePart": "home-leaf",
+      "originalSourcePartNames": [
+        "Harbor / peninsula home / arched entry frame",
+        "Harbor / peninsula home / cobalt entry",
+        "Harbor / peninsula home / folded leaf roof",
+        "Harbor / peninsula home / folded leaf roof.001",
+        "Harbor / peninsula home / grown roof midrib",
+        "Harbor / peninsula home / grown roof midrib.001",
+        "Harbor / peninsula home / oval side window",
+        "Harbor / peninsula home / oval window surround",
+        "Harbor / peninsula home / rounded walls",
+        "Harbor / peninsula home / shared entrance step",
+        "Harbor / peninsula home / shared entrance step.001"
+      ],
+      "triangles": 104
+    },
+    {
+      "source": "context",
+      "id": 6,
+      "node": 115,
+      "primitive": 0,
+      "name": "grove / blue silver leaf tips",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "node-111",
+        "growing-native-home",
+        "grove / blue silver leaf tips"
+      ],
+      "ownerId": null,
+      "objectId": "p3",
+      "placeId": null,
+      "nativePart": "home-leaf",
+      "originalSourcePartNames": [
+        "Harbor / peninsula home / arched entry frame",
+        "Harbor / peninsula home / cobalt entry",
+        "Harbor / peninsula home / folded leaf roof",
+        "Harbor / peninsula home / folded leaf roof.001",
+        "Harbor / peninsula home / grown roof midrib",
+        "Harbor / peninsula home / grown roof midrib.001",
+        "Harbor / peninsula home / oval side window",
+        "Harbor / peninsula home / oval window surround",
+        "Harbor / peninsula home / rounded walls",
+        "Harbor / peninsula home / shared entrance step",
+        "Harbor / peninsula home / shared entrance step.001"
+      ],
+      "triangles": 138
+    },
+    {
+      "source": "context",
+      "id": 7,
+      "node": 116,
+      "primitive": 0,
+      "name": "home / curled jade leaf roof",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "node-111",
+        "growing-native-home",
+        "home / curled jade leaf roof"
+      ],
+      "ownerId": null,
+      "objectId": "p3",
+      "placeId": null,
+      "nativePart": "home-leaf",
+      "originalSourcePartNames": [
+        "Harbor / peninsula home / arched entry frame",
+        "Harbor / peninsula home / cobalt entry",
+        "Harbor / peninsula home / folded leaf roof",
+        "Harbor / peninsula home / folded leaf roof.001",
+        "Harbor / peninsula home / grown roof midrib",
+        "Harbor / peninsula home / grown roof midrib.001",
+        "Harbor / peninsula home / oval side window",
+        "Harbor / peninsula home / oval window surround",
+        "Harbor / peninsula home / rounded walls",
+        "Harbor / peninsula home / shared entrance step",
+        "Harbor / peninsula home / shared entrance step.001"
+      ],
+      "triangles": 138
+    },
+    {
+      "source": "context",
+      "id": 8,
+      "node": 117,
+      "primitive": 0,
+      "name": "grove / pale raised leaf veins",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "node-111",
+        "growing-native-home",
+        "grove / pale raised leaf veins"
+      ],
+      "ownerId": null,
+      "objectId": "p3",
+      "placeId": null,
+      "nativePart": "home-leaf",
+      "originalSourcePartNames": [
+        "Harbor / peninsula home / arched entry frame",
+        "Harbor / peninsula home / cobalt entry",
+        "Harbor / peninsula home / folded leaf roof",
+        "Harbor / peninsula home / folded leaf roof.001",
+        "Harbor / peninsula home / grown roof midrib",
+        "Harbor / peninsula home / grown roof midrib.001",
+        "Harbor / peninsula home / oval side window",
+        "Harbor / peninsula home / oval window surround",
+        "Harbor / peninsula home / rounded walls",
+        "Harbor / peninsula home / shared entrance step",
+        "Harbor / peninsula home / shared entrance step.001"
+      ],
+      "triangles": 7712
+    },
+    {
+      "source": "context",
+      "id": 9,
+      "node": 118,
+      "primitive": 0,
+      "name": "window / pale blue glass",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "node-111",
+        "growing-native-home",
+        "window / pale blue glass"
+      ],
+      "ownerId": null,
+      "objectId": "p3",
+      "placeId": null,
+      "nativePart": "home-leaf",
+      "originalSourcePartNames": [
+        "Harbor / peninsula home / arched entry frame",
+        "Harbor / peninsula home / cobalt entry",
+        "Harbor / peninsula home / folded leaf roof",
+        "Harbor / peninsula home / folded leaf roof.001",
+        "Harbor / peninsula home / grown roof midrib",
+        "Harbor / peninsula home / grown roof midrib.001",
+        "Harbor / peninsula home / oval side window",
+        "Harbor / peninsula home / oval window surround",
+        "Harbor / peninsula home / rounded walls",
+        "Harbor / peninsula home / shared entrance step",
+        "Harbor / peninsula home / shared entrance step.001"
+      ],
+      "triangles": 624
+    },
+    {
+      "source": "context",
+      "id": 10,
+      "node": 119,
+      "primitive": 0,
+      "name": "house / porcelain plaster",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "node-111",
+        "growing-native-home",
+        "house / porcelain plaster"
+      ],
+      "ownerId": null,
+      "objectId": "p3",
+      "placeId": null,
+      "nativePart": "home-leaf",
+      "originalSourcePartNames": [
+        "Harbor / peninsula home / arched entry frame",
+        "Harbor / peninsula home / cobalt entry",
+        "Harbor / peninsula home / folded leaf roof",
+        "Harbor / peninsula home / folded leaf roof.001",
+        "Harbor / peninsula home / grown roof midrib",
+        "Harbor / peninsula home / grown roof midrib.001",
+        "Harbor / peninsula home / oval side window",
+        "Harbor / peninsula home / oval window surround",
+        "Harbor / peninsula home / rounded walls",
+        "Harbor / peninsula home / shared entrance step",
+        "Harbor / peninsula home / shared entrance step.001"
+      ],
+      "triangles": 427
+    },
+    {
+      "source": "context",
+      "id": 11,
+      "node": 120,
+      "primitive": 0,
+      "name": "path / light sandstone",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "node-111",
+        "growing-native-home",
+        "path / light sandstone"
+      ],
+      "ownerId": null,
+      "objectId": "p3",
+      "placeId": null,
+      "nativePart": "home-leaf",
+      "originalSourcePartNames": [
+        "Harbor / peninsula home / arched entry frame",
+        "Harbor / peninsula home / cobalt entry",
+        "Harbor / peninsula home / folded leaf roof",
+        "Harbor / peninsula home / folded leaf roof.001",
+        "Harbor / peninsula home / grown roof midrib",
+        "Harbor / peninsula home / grown roof midrib.001",
+        "Harbor / peninsula home / oval side window",
+        "Harbor / peninsula home / oval window surround",
+        "Harbor / peninsula home / rounded walls",
+        "Harbor / peninsula home / shared entrance step",
+        "Harbor / peninsula home / shared entrance step.001"
+      ],
+      "triangles": 253
+    },
+    {
+      "source": "context",
+      "id": 12,
+      "node": 186,
+      "primitive": 0,
+      "name": "sculpted tree wood",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "growing-derived-places",
+        "growing-place-P02-cluster",
+        "place-native-shared-tree",
+        "native05-hollow-trunk",
+        "sculpted tree wood"
+      ],
+      "ownerId": "l10",
+      "objectId": "l10",
+      "placeId": "P02:p3",
+      "nativePart": "hollow-trunk",
+      "originalSourcePartNames": [
+        "Grove / great root house trunk",
+        "Grove / grown doorway buttress",
+        "Grove / grown doorway buttress.001",
+        "Grove / hollow doorway grown edge",
+        "Grove / root house cobalt entry",
+        "Grove / root house window surround",
+        "Grove / root house window surround.001"
+      ],
+      "triangles": 1868
+    },
+    {
+      "source": "context",
+      "id": 13,
+      "node": 187,
+      "primitive": 0,
+      "name": "young branches",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "growing-derived-places",
+        "growing-place-P02-cluster",
+        "place-native-shared-tree",
+        "native05-hollow-trunk",
+        "young branches"
+      ],
+      "ownerId": "l11",
+      "objectId": "l11",
+      "placeId": "P02:p3",
+      "nativePart": "hollow-trunk",
+      "originalSourcePartNames": [
+        "Grove / great root house trunk",
+        "Grove / grown doorway buttress",
+        "Grove / grown doorway buttress.001",
+        "Grove / hollow doorway grown edge",
+        "Grove / root house cobalt entry",
+        "Grove / root house window surround",
+        "Grove / root house window surround.001"
+      ],
+      "triangles": 976
+    },
+    {
+      "source": "context",
+      "id": 14,
+      "node": 188,
+      "primitive": 0,
+      "name": "house / cobalt door",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "growing-derived-places",
+        "growing-place-P02-cluster",
+        "place-native-shared-tree",
+        "native05-hollow-trunk",
+        "house / cobalt door"
+      ],
+      "ownerId": "l12",
+      "objectId": "l12",
+      "placeId": "P02:p3",
+      "nativePart": "hollow-trunk",
+      "originalSourcePartNames": [
+        "Grove / great root house trunk",
+        "Grove / grown doorway buttress",
+        "Grove / grown doorway buttress.001",
+        "Grove / hollow doorway grown edge",
+        "Grove / root house cobalt entry",
+        "Grove / root house window surround",
+        "Grove / root house window surround.001"
+      ],
+      "triangles": 188
+    },
+    {
+      "source": "context",
+      "id": 15,
+      "node": 189,
+      "primitive": 0,
+      "name": "house / honey wood",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "growing-derived-places",
+        "growing-place-P02-cluster",
+        "place-native-shared-tree",
+        "native05-hollow-trunk",
+        "house / honey wood"
+      ],
+      "ownerId": "l13",
+      "objectId": "l13",
+      "placeId": "P02:p3",
+      "nativePart": "hollow-trunk",
+      "originalSourcePartNames": [
+        "Grove / great root house trunk",
+        "Grove / grown doorway buttress",
+        "Grove / grown doorway buttress.001",
+        "Grove / hollow doorway grown edge",
+        "Grove / root house cobalt entry",
+        "Grove / root house window surround",
+        "Grove / root house window surround.001"
+      ],
+      "triangles": 9600
+    },
+    {
+      "source": "context",
+      "id": 16,
+      "node": 191,
+      "primitive": 0,
+      "name": "grove / living violet and jade lamina",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "growing-derived-places",
+        "growing-place-P02-cluster",
+        "place-native-shared-tree",
+        "place-native-fan-crown",
+        "grove / living violet and jade lamina"
+      ],
+      "ownerId": "l10",
+      "objectId": "l10",
+      "placeId": "P02:p3",
+      "nativePart": "fan-crown",
+      "originalSourcePartNames": [
+        "Grove / broad silver fan leaf",
+        "Grove / broad silver fan leaf.001",
+        "Grove / broad silver fan leaf.002",
+        "Grove / broad silver fan leaf.003",
+        "Grove / broad silver fan leaf.004",
+        "Grove / broad silver fan leaf.005",
+        "Grove / broad silver fan leaf.006",
+        "Grove / broad silver fan leaf.007",
+        "Grove / broad silver fan leaf.008",
+        "Grove / broad silver fan leaf.009",
+        "Grove / broad silver fan leaf.010",
+        "Grove / broad silver fan leaf.011",
+        "Grove / fan crown grown bough",
+        "Grove / fan crown grown bough.001",
+        "Grove / fan crown grown bough.002",
+        "Grove / fan crown grown bough.003",
+        "Grove / fan crown grown bough.004",
+        "Grove / fan crown grown bough.005",
+        "Grove / fan crown grown bough.006",
+        "Grove / fan crown grown bough.007",
+        "Grove / fan crown grown bough.008",
+        "Grove / fan crown grown bough.009",
+        "Grove / fan crown grown bough.010",
+        "Grove / fan crown grown bough.011",
+        "Grove / fan leaf raised midrib",
+        "Grove / fan leaf raised midrib.001",
+        "Grove / fan leaf raised midrib.002",
+        "Grove / fan leaf raised midrib.003",
+        "Grove / fan leaf raised midrib.004",
+        "Grove / fan leaf raised midrib.005",
+        "Grove / fan leaf raised midrib.006",
+        "Grove / fan leaf raised midrib.007",
+        "Grove / fan leaf raised midrib.008",
+        "Grove / fan leaf raised midrib.009",
+        "Grove / fan leaf raised midrib.010",
+        "Grove / fan leaf raised midrib.011"
+      ],
+      "triangles": 1816
+    },
+    {
+      "source": "context",
+      "id": 17,
+      "node": 192,
+      "primitive": 0,
+      "name": "sculpted tree wood",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "growing-derived-places",
+        "growing-place-P02-cluster",
+        "place-native-shared-tree",
+        "place-native-fan-crown",
+        "sculpted tree wood"
+      ],
+      "ownerId": "l11",
+      "objectId": "l11",
+      "placeId": "P02:p3",
+      "nativePart": "fan-crown",
+      "originalSourcePartNames": [
+        "Grove / broad silver fan leaf",
+        "Grove / broad silver fan leaf.001",
+        "Grove / broad silver fan leaf.002",
+        "Grove / broad silver fan leaf.003",
+        "Grove / broad silver fan leaf.004",
+        "Grove / broad silver fan leaf.005",
+        "Grove / broad silver fan leaf.006",
+        "Grove / broad silver fan leaf.007",
+        "Grove / broad silver fan leaf.008",
+        "Grove / broad silver fan leaf.009",
+        "Grove / broad silver fan leaf.010",
+        "Grove / broad silver fan leaf.011",
+        "Grove / fan crown grown bough",
+        "Grove / fan crown grown bough.001",
+        "Grove / fan crown grown bough.002",
+        "Grove / fan crown grown bough.003",
+        "Grove / fan crown grown bough.004",
+        "Grove / fan crown grown bough.005",
+        "Grove / fan crown grown bough.006",
+        "Grove / fan crown grown bough.007",
+        "Grove / fan crown grown bough.008",
+        "Grove / fan crown grown bough.009",
+        "Grove / fan crown grown bough.010",
+        "Grove / fan crown grown bough.011",
+        "Grove / fan leaf raised midrib",
+        "Grove / fan leaf raised midrib.001",
+        "Grove / fan leaf raised midrib.002",
+        "Grove / fan leaf raised midrib.003",
+        "Grove / fan leaf raised midrib.004",
+        "Grove / fan leaf raised midrib.005",
+        "Grove / fan leaf raised midrib.006",
+        "Grove / fan leaf raised midrib.007",
+        "Grove / fan leaf raised midrib.008",
+        "Grove / fan leaf raised midrib.009",
+        "Grove / fan leaf raised midrib.010",
+        "Grove / fan leaf raised midrib.011"
+      ],
+      "triangles": 5952
+    },
+    {
+      "source": "context",
+      "id": 18,
+      "node": 193,
+      "primitive": 0,
+      "name": "grove / pale raised leaf veins",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "growing-derived-places",
+        "growing-place-P02-cluster",
+        "place-native-shared-tree",
+        "place-native-fan-crown",
+        "grove / pale raised leaf veins"
+      ],
+      "ownerId": "l12",
+      "objectId": "l12",
+      "placeId": "P02:p3",
+      "nativePart": "fan-crown",
+      "originalSourcePartNames": [
+        "Grove / broad silver fan leaf",
+        "Grove / broad silver fan leaf.001",
+        "Grove / broad silver fan leaf.002",
+        "Grove / broad silver fan leaf.003",
+        "Grove / broad silver fan leaf.004",
+        "Grove / broad silver fan leaf.005",
+        "Grove / broad silver fan leaf.006",
+        "Grove / broad silver fan leaf.007",
+        "Grove / broad silver fan leaf.008",
+        "Grove / broad silver fan leaf.009",
+        "Grove / broad silver fan leaf.010",
+        "Grove / broad silver fan leaf.011",
+        "Grove / fan crown grown bough",
+        "Grove / fan crown grown bough.001",
+        "Grove / fan crown grown bough.002",
+        "Grove / fan crown grown bough.003",
+        "Grove / fan crown grown bough.004",
+        "Grove / fan crown grown bough.005",
+        "Grove / fan crown grown bough.006",
+        "Grove / fan crown grown bough.007",
+        "Grove / fan crown grown bough.008",
+        "Grove / fan crown grown bough.009",
+        "Grove / fan crown grown bough.010",
+        "Grove / fan crown grown bough.011",
+        "Grove / fan leaf raised midrib",
+        "Grove / fan leaf raised midrib.001",
+        "Grove / fan leaf raised midrib.002",
+        "Grove / fan leaf raised midrib.003",
+        "Grove / fan leaf raised midrib.004",
+        "Grove / fan leaf raised midrib.005",
+        "Grove / fan leaf raised midrib.006",
+        "Grove / fan leaf raised midrib.007",
+        "Grove / fan leaf raised midrib.008",
+        "Grove / fan leaf raised midrib.009",
+        "Grove / fan leaf raised midrib.010",
+        "Grove / fan leaf raised midrib.011"
+      ],
+      "triangles": 28936
+    },
+    {
+      "source": "context",
+      "id": 19,
+      "node": 276,
+      "primitive": 0,
+      "name": "growing-reachable-paths",
+      "path": [
+        "renderer-to-authored-once",
+        "growing-objects",
+        "growing-reachable-paths"
+      ],
+      "ownerId": null,
+      "objectId": null,
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 598
+    },
+    {
+      "source": "context",
+      "id": 20,
+      "node": 301,
+      "primitive": 0,
+      "name": "Coast / continuous layered shore:0",
+      "path": [
+        "renderer-to-authored-once",
+        "authored-shared-terrain",
+        "Coast / continuous layered shore:0"
+      ],
+      "ownerId": null,
+      "objectId": null,
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 24
+    },
+    {
+      "source": "context",
+      "id": 21,
+      "node": 302,
+      "primitive": 0,
+      "name": "Coast / continuous layered shore:1",
+      "path": [
+        "renderer-to-authored-once",
+        "authored-shared-terrain",
+        "Coast / continuous layered shore:1"
+      ],
+      "ownerId": null,
+      "objectId": null,
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 24
+    },
+    {
+      "source": "context",
+      "id": 22,
+      "node": 303,
+      "primitive": 0,
+      "name": "Coast / continuous layered shore:2",
+      "path": [
+        "renderer-to-authored-once",
+        "authored-shared-terrain",
+        "Coast / continuous layered shore:2"
+      ],
+      "ownerId": null,
+      "objectId": null,
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 24
+    },
+    {
+      "source": "context",
+      "id": 23,
+      "node": 314,
+      "primitive": 0,
+      "name": "authored-water-floor",
+      "path": [
+        "renderer-to-authored-once",
+        "authored-shared-terrain",
+        "authored-shared-water",
+        "authored-water-floor"
+      ],
+      "ownerId": null,
+      "objectId": "l20",
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 926
+    },
+    {
+      "source": "context",
+      "id": 24,
+      "node": 322,
+      "primitive": 0,
+      "name": "authored-water-floor",
+      "path": [
+        "renderer-to-authored-once",
+        "authored-shared-terrain",
+        "authored-shared-water",
+        "authored-water-floor"
+      ],
+      "ownerId": null,
+      "objectId": "l20",
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 111
+    },
+    {
+      "source": "context",
+      "id": 25,
+      "node": 323,
+      "primitive": 0,
+      "name": "authored-water-floor",
+      "path": [
+        "renderer-to-authored-once",
+        "authored-shared-terrain",
+        "authored-shared-water",
+        "authored-water-floor"
+      ],
+      "ownerId": null,
+      "objectId": "l20",
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 133
+    },
+    {
+      "source": "context",
+      "id": 26,
+      "node": 324,
+      "primitive": 0,
+      "name": "authored-water-floor",
+      "path": [
+        "renderer-to-authored-once",
+        "authored-shared-terrain",
+        "authored-shared-water",
+        "authored-water-floor"
+      ],
+      "ownerId": null,
+      "objectId": "l20",
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 157
+    },
+    {
+      "source": "context",
+      "id": 27,
+      "node": 363,
+      "primitive": 0,
+      "name": "authored-bank",
+      "path": [
+        "renderer-to-authored-once",
+        "authored-shared-terrain",
+        "authored-shared-water",
+        "authored-bank"
+      ],
+      "ownerId": null,
+      "objectId": null,
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 131
+    },
+    {
+      "source": "context",
+      "id": 28,
+      "node": 364,
+      "primitive": 0,
+      "name": "authored-bank",
+      "path": [
+        "renderer-to-authored-once",
+        "authored-shared-terrain",
+        "authored-shared-water",
+        "authored-bank"
+      ],
+      "ownerId": null,
+      "objectId": null,
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 149
+    },
+    {
+      "source": "context",
+      "id": 29,
+      "node": 365,
+      "primitive": 0,
+      "name": "authored-bank",
+      "path": [
+        "renderer-to-authored-once",
+        "authored-shared-terrain",
+        "authored-shared-water",
+        "authored-bank"
+      ],
+      "ownerId": null,
+      "objectId": null,
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 139
+    },
+    {
+      "source": "context",
+      "id": 30,
+      "node": 374,
+      "primitive": 0,
+      "name": "authored-bank",
+      "path": [
+        "renderer-to-authored-once",
+        "authored-shared-terrain",
+        "authored-shared-water",
+        "authored-bank"
+      ],
+      "ownerId": null,
+      "objectId": null,
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 4
+    },
+    {
+      "source": "context",
+      "id": 31,
+      "node": 375,
+      "primitive": 0,
+      "name": "authored-flow",
+      "path": [
+        "renderer-to-authored-once",
+        "authored-shared-terrain",
+        "authored-shared-water",
+        "authored-flow"
+      ],
+      "ownerId": null,
+      "objectId": null,
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 6
+    },
+    {
+      "source": "context",
+      "id": 32,
+      "node": 376,
+      "primitive": 0,
+      "name": "authored-bank",
+      "path": [
+        "renderer-to-authored-once",
+        "authored-shared-terrain",
+        "authored-shared-water",
+        "authored-bank"
+      ],
+      "ownerId": null,
+      "objectId": null,
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 4
+    },
+    {
+      "source": "context",
+      "id": 33,
+      "node": 377,
+      "primitive": 0,
+      "name": "authored-bank",
+      "path": [
+        "renderer-to-authored-once",
+        "authored-shared-terrain",
+        "authored-shared-water",
+        "authored-bank"
+      ],
+      "ownerId": null,
+      "objectId": null,
+      "placeId": null,
+      "nativePart": null,
+      "originalSourcePartNames": null,
+      "triangles": 4
+    }
+  ],
+  "limits": [
+    "No Blender, unions, generated support/rail or runtime validation executed.",
+    "Sampled curvature is reported; exact triangulated top overlap/normal and thickness checks cover this mesh.",
+    "Motion bands are actual saved rig conservative cylinders, not exact animated skin.",
+    "Old actors/trees/house/ground unchanged; no obstacle exclusions.",
+    "Ground/threshold/native interior input meshes stay fixed."
+  ],
+  "seconds": 7.021222666
+}

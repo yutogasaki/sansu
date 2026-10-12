@@ -1,0 +1,107 @@
+{
+  "status": "PREPARED_ONLY_UNCHANGED_FLAT_SURVEY",
+  "activeBoundary": {
+    "automaticLandingAdaptation": false,
+    "fullWidthFlatSeamRequired": true,
+    "candidateFailuresSavedAsHold": true,
+    "nextEligibleStage": "survey only after parent scheduling; measurement then one-candidate review",
+    "buildAndRenderScheduled": false
+  },
+  "files": {
+    "README.md": {
+      "bytes": 12275,
+      "sha256": "02ee156b8988e03227d9a1181e67139cff76960a9e489fee006dccd956430bce"
+    },
+    "check-readiness.py": {
+      "bytes": 1481,
+      "sha256": "0dad018e36f4957982bbaf294089a18a1b68573c47d9add6a41a02af18a71df9"
+    },
+    "entry_geometry.py": {
+      "bytes": 7937,
+      "sha256": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5"
+    },
+    "readiness.json": {
+      "bytes": 2068,
+      "sha256": "ce76c703463a9c0e6042e1b9c33119653733c52ad8a40057b48a55c18b8921f5"
+    },
+    "render-source.py": {
+      "bytes": 4405,
+      "sha256": "c2cd13aca0211b0283b916b462338db5ae3e2d54a598a9abcd250e986f2e54c7"
+    },
+    "source-study.py": {
+      "bytes": 24524,
+      "sha256": "3d6e6b1248ee86d2d225d04bb2f7120eb91d760fbd096203bced169d0473d175"
+    },
+    "static-checks-final.log.txt": {
+      "bytes": 854,
+      "sha256": "8378ad04ac390f7ba16e9ce1d79b98254ecea44252816326b805eba08304d56c"
+    },
+    "static-checks-first.log.txt": {
+      "bytes": 793,
+      "sha256": "787bd952480feb24c8e4548585f736bd61daeb075c86a447fdc7c6d82d9577ba"
+    },
+    "static-checks.py": {
+      "bytes": 3192,
+      "sha256": "6bc2c01351dfa6d0c63078450ad65fd91400634e317c5d28c93109f24ebc0127"
+    },
+    "study.json": {
+      "bytes": 11855,
+      "sha256": "258376c7a16aed0aa4645e7b08b95f4392057309c4996d629e4542cb13f4ecc9"
+    },
+    "supervise.py": {
+      "bytes": 1920,
+      "sha256": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb"
+    }
+  },
+  "initialPreparationArchive": "history/pre-ground-join-review/archive-proof.json",
+  "unexecutedAdaptiveDraftArchive": {
+    "path": "history/unexecuted-adaptive-draft/archive-proof.json",
+    "sha256": "3631e13db28e9caeefc2ed6fac4081b06d74795fd97bcbae4b5d7868bfc62d0b"
+  },
+  "changes": {
+    "source-study.py": {
+      "beforeSha256": "d70e733def05a6493ebf9f062b595ce21fbbab828e06b5f8f845d47eae87da90",
+      "afterSha256": "3d6e6b1248ee86d2d225d04bb2f7120eb91d760fbd096203bced169d0473d175",
+      "originalBytesPreservedAt": "/private/tmp/sansu-p02-gallery-source-study/history/pre-ground-join-review/source-study.py"
+    },
+    "README.md": {
+      "beforeSha256": "28209661f8de48cc33ca1450c54506343d5c0a5241eb72069649b702da318b22",
+      "afterSha256": "02ee156b8988e03227d9a1181e67139cff76960a9e489fee006dccd956430bce",
+      "originalBytesPreservedAt": "/private/tmp/sansu-p02-gallery-source-study/history/pre-ground-join-review/README.md"
+    },
+    "readiness.json": {
+      "beforeSha256": "b046712681a2de0f9d41b573b637fadbd2c752a7cf11611e3402e858dbf30efa",
+      "afterSha256": "ce76c703463a9c0e6042e1b9c33119653733c52ad8a40057b48a55c18b8921f5",
+      "originalBytesPreservedAt": "/private/tmp/sansu-p02-gallery-source-study/history/pre-ground-join-review/readiness.json"
+    }
+  },
+  "frozenInputSha256": {
+    "context": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+    "leftTrees": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+    "contextManifest": "3c3fcd13bf4867946a0f393769f852cb938286329dfa2e11dac3afe74796bda2",
+    "forestStudy": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+    "sourceBlend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "sourceGlb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "benchmark": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+    "envelope": "444beab3c5b078799e974424e225e0a2e6742d6b99ad7e94be5edb54088af1db"
+  },
+  "verification": {
+    "syntax": "all root Python files AST parsed; source-study/helper/static-checks py_compile exit 0",
+    "inputIdentity": "check-readiness.py exit 0; all frozen inputs equal study.json",
+    "syntheticArithmetic": "9 checks, exit 0; actual source not measured"
+  },
+  "executed": [
+    "Python syntax parsing",
+    "immutable input SHA verification",
+    "tiny synthetic plane/solid arithmetic"
+  ],
+  "notExecuted": [
+    "Blender",
+    "Node world compilation",
+    "actual source geometry survey",
+    "source build",
+    "render",
+    "browser"
+  ],
+  "firstSuggestedStage": "measure only, single Blender process, CPU 2, 180 s / 2560 MiB sampled RSS caps; no actual cost observed"
+}

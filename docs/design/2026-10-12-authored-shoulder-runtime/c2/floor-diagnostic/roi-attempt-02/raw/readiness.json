@@ -1,0 +1,78 @@
+{
+  "preparedAtUtc": "2026-10-12T05:18:25.383648+00:00",
+  "readyForRootReview": true,
+  "executionStarted": false,
+  "browserStarted": false,
+  "candidate": "/private/tmp/sansu-authored-shoulder-c2/candidate",
+  "server": "http://127.0.0.1:5359",
+  "commandAfterRootAuthorization": [
+    "python3",
+    "/private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-attempt-02/run-once.py",
+    "--start"
+  ],
+  "files": {
+    "404-classification.json": "3e62b9c44d5521720a553c516ee3a580427c319e0a35e90103ec47316dec16c2",
+    "archive-attempt-01.py": "b5e7b63609af5f0faa5445fc26158ef5425157c8a11fc0d5ad0a5661502b6dc3",
+    "attempt-01-to-02.diff": "33cec578f0a335dfd2d58639102c6a9660caa6be17690691350e31fed1c5643f",
+    "check-comparison.mjs": "bc3f7a37642e0ac78df2acb3cffbcdf17b32ea667f270db8ec462e9cbd56d7c3",
+    "check-prepared.mjs": "d53132cc3ced1ace037251d79b2aa9da4fc6ceabbd64f2ee6ca132dc7f483ac0",
+    "comparison-check.json": "f478c81c7c1ebd3d1e5148a905dd3b38af6711af2195a429c0520ece07c78a87",
+    "comparison-check.log.txt": "44c90a677a68efb05e145c3a62a1e614229de41e6329b79a08d60a388ada430f",
+    "diagnose-roi-face-normal.mjs": "08989783cc4e4ab90d2384be54acd38dc23e5084012ed0010d9e234a9242e6eb",
+    "preparation-origin.json": "761be4d0628120641851662bb997f6b6e0dd867cf7bde4884202608b02c2d404",
+    "prepare.py": "8f6d78d0190ed7b8944c3c5b99bfb5100e441521a3246ab86e94a10af0e90b84",
+    "prepared-fragment-shader.glsl.txt": "ffd859bf22117923e4d4b1359c94ec7ef5aa0de2b285213d07f069db83cd7fe0",
+    "prepared-vertex-shader.glsl.txt": "a5d2dfe044cce1ce21f7d644da4ee6e507fdda8e243372f41962e5a3dd714d65",
+    "run-once.py": "1cc870d32f0939a32660dd02754ad572e223f947d603ef7e271d459d75b9ec0d",
+    "static-check.json": "9d6d5f4663570fd3ff690fef3ad6dd42b9a49fd813fea23ceb53f68fbb395f17",
+    "static-check.log.txt": "ae90204c0c2978f648e853e7fc948351743ed2d0a6f77c4ef929ddfea9954d28",
+    "target.json": "d7ecf37dfdce5eec6b7d331a1faf6afa446a34c9ef01e5581ea9f4a0f0f9d819"
+  },
+  "checks": {
+    "nodeCheck": true,
+    "pythonAstParse": true,
+    "staticThreeShaderStringInjection": true,
+    "signedZeroOnlyComparison": true,
+    "nonZeroDifferenceRejected": true,
+    "targetAndExpandedShaderBytesIdenticalToAttempt01": true,
+    "actualGpuShaderCompile": false
+  },
+  "limits": {
+    "outerWallSeconds": 900,
+    "rssBytes": 4294967296,
+    "rssSampleSeconds": 0.5,
+    "operationTimeoutMs": 90000,
+    "ownsNewNodeProcessGroupOnly": true,
+    "rootServerNeverSignalled": true
+  },
+  "outputs": {
+    "freshDriverOutput": "/private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-attempt-02/actual-02",
+    "freshOuterOutput": "/private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-attempt-02/execution-02",
+    "expectedStages": [
+      "shadow-off",
+      "roi-face-normal",
+      "restored-shadow-off"
+    ]
+  },
+  "fixedInputs": {
+    "coreLocalSourceCount": 6460,
+    "coreInstalledDependencyCount": 6,
+    "actualRendererBufferAttributes": [
+      "position",
+      "normal",
+      "color",
+      "index"
+    ],
+    "floorGroups": true,
+    "cameraMatrix": true,
+    "lightsAndRenderer": true,
+    "canonicalStateAndTopology": true
+  },
+  "normalTreatment": "Only materialIndex0 clone; normal AND nonPerturbedNormal use geometric face normal inside a runtime-world AABB. dFdx/dFdy evaluated before conditional assignments. Source normal derivative roughness preserved outside AABB; face-normal derivative selected inside. Original material/receiveShadow/hook restored and clone disposed.",
+  "sourceContextClarification": "The runtime placed water cuts are z~-9..-8; the native05 source terrain was already locally subdivided/sculpted near its lower stream. The identified source point maps to native x~-1.166, Blender y~8.509,z~2.071 near the original lower flow. No claim that current runtime clipping created the ridge.",
+  "scope": "Prepared attempt02 causal diagnostic only; not executed. No retry authorization implied, app edits, visual acceptance, performance or M1 pass.",
+  "attempt": 2,
+  "comparisonChange": "Only Object.is(x,-0) -> 0 in persisted projection comparison. No tolerance, matrixWorld or geometry/shader changes. Raw number tokens/negativeZeroIndices and canonical proof saved before next capture assertion.",
+  "404Policy": "Unclassified; all console/HTTP>=400/request failures fatal. No favicon exclusions.",
+  "firstFailureArchive": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-shoulder-runtime/c2/floor-diagnostic/roi-attempt-01"
+}

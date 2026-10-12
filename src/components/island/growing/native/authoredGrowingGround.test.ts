@@ -11,6 +11,43 @@ import { sceneLayout } from '../sceneLayout';
 import { buildAuthoredGrowingGround, buildAuthoredGrowingSea, type AuthoredCoastSkin } from './authoredGrowingGround';
 
 describe('authored ground does not fill the authored inlet', () => {
+    it('keeps source normals and per-floor materials without changing drawn triangles or pointer support', () => {
+        const definition = inletWorldDefinition(), original = definition.districts[0], state = newIsland('floor-shading', 0);
+        const legacyDeck = { ...original.floors[0], id: 'legacy-deck', kind: 'deck' as const,
+            vertices: original.floors[0].vertices.map(vertex => ({ cell: { ...vertex.cell, x: vertex.cell.x + 20 },
+                point: { ...vertex.point, x: vertex.point.x + 20 } })) };
+        const district = { ...original, floors: [...original.floors, legacyDeck] }; definition.districts = [district];
+        const before = buildAuthoredGrowingGround(sceneLayout(state, false, compileWorldDefinition(definition)));
+        const sourceNormal = { x: .2, y: .9, z: .3 };
+        const afterWorld = compileWorldDefinition({ ...definition, districts: [{ ...district, floors: district.floors.map((floor, i) => i ? floor : ({ ...floor,
+            vertices: floor.vertices.map(vertex => ({ ...vertex, normal: sourceNormal })),
+            material: { roughness: .78, metalness: .04, doubleSided: true } })) }] });
+        const layout = sceneLayout(state, false, afterWorld), after = buildAuthoredGrowingGround(layout);
+        expect(Array.from(after.floor.geometry.getAttribute('position').array)).toEqual(Array.from(before.floor.geometry.getAttribute('position').array));
+        expect(Array.from(after.floor.geometry.index!.array)).toEqual(Array.from(before.floor.geometry.index!.array));
+        expect(Array.from(after.floor.geometry.getAttribute('color').array)).toEqual(Array.from(before.floor.geometry.getAttribute('color').array));
+        const normal = after.floor.geometry.getAttribute('normal');
+        for (let i = 0; i < district.floors[0].vertices.length; i++) {
+            expect([normal.getX(i), normal.getY(i), normal.getZ(i)]).toEqual(Array.from(new Float32Array([.2, .9, .3])));
+        }
+        const materials = Array.isArray(after.floor.material) ? after.floor.material : [after.floor.material];
+        expect(materials[0]).toMatchObject({ roughness: .78, metalness: .04, side: T.DoubleSide });
+        expect(materials[1]).toMatchObject({ roughness: .95, metalness: 0, side: T.FrontSide });
+        for (let i = district.floors[0].vertices.length; i < normal.count; i++) {
+            const fallback = before.floor.geometry.getAttribute('normal');
+            expect([normal.getX(i), normal.getY(i), normal.getZ(i)]).toEqual([fallback.getX(i), fallback.getY(i), fallback.getZ(i)]);
+        }
+        const renderedFloors = afterWorld.floors.filter(floor => floor.kind !== 'water');
+        expect(after.floor.geometry.groups.map(group => group.count)).toEqual(renderedFloors.map(floor => floor.indices.length));
+        after.root.updateMatrixWorld(true);
+        for (const site of afterWorld.sites) {
+            const point = layout.point(site.cell, 0), ray = new T.Raycaster(point.clone().add(new T.Vector3(0, 3, 0)), new T.Vector3(0, -1, 0));
+            expect(ray.intersectObject(after.floor)[0]?.point.y).toBeCloseTo(point.y, 7);
+        }
+        const disposed = materials.map(material => vi.spyOn(material, 'dispose'));
+        after.dispose(); before.dispose(); disposed.forEach(spy => expect(spy).toHaveBeenCalledOnce());
+    });
+
     it('renders the evaluated dry triangles, leaves water open and releases all ground resources', () => {
         const world = compileWorldDefinition(inletWorldDefinition()), layout = sceneLayout(newIsland('authored-ground', 0), false, world);
         const ground = buildAuthoredGrowingGround(layout); ground.root.updateMatrixWorld(true);

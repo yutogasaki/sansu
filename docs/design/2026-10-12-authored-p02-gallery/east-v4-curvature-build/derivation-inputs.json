@@ -1,0 +1,54 @@
+{
+  "sources": {
+    "build-coarse.py": {
+      "from": "/private/tmp/sansu-p02-gallery-source-study/east-v3-manifold/build-coarse.py",
+      "sha256": "d91bfc3c7edd238b65c9e5dc6d8e4c5f1a6008bebf08bc998b9745b4909fc7e0"
+    },
+    "entry_geometry.py": {
+      "from": "/private/tmp/sansu-p02-gallery-source-study/east-v3-manifold/entry_geometry.py",
+      "sha256": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5"
+    },
+    "terrain_connector.py": {
+      "from": "/private/tmp/sansu-p02-gallery-source-study/east-v3-manifold/terrain_connector.py",
+      "sha256": "47a00db51d9826ca56a717db06feb48930dfbe77f3fcf301783ad1d90ea0b18d"
+    },
+    "donor_reference.py": {
+      "from": "/private/tmp/sansu-p02-gallery-source-study/east-v3-manifold/donor_reference.py",
+      "sha256": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e"
+    },
+    "supervise.py": {
+      "from": "/private/tmp/sansu-p02-gallery-source-study/east-v3-manifold/supervise.py",
+      "sha256": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb"
+    },
+    "sealed-input/planned-floor-v4-stations-once.json": {
+      "from": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature/planned-floor-v4-stations-once.json",
+      "sha256": "2968d018782cea82afa443bbbffc111eb0ead51a3d5f5f2e8be2814354fee3ca"
+    },
+    "sealed-input/offline-result.json": {
+      "from": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature/offline-result.json",
+      "sha256": "f3a409266b1057ad348bcf759b9c878564028d3c463c8e01c5b0f151d128638e"
+    },
+    "sealed-input/support-edge-proposal.json": {
+      "from": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature/support-edge-proposal.json",
+      "sha256": "55427cf8902e997ecc84acc7894feef90db2f7ff23494017681069a91a4c8cb5"
+    },
+    "sealed-input/support-contact-result.json": {
+      "from": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature/support-contact-result.json",
+      "sha256": "53774b4a10e1b893837fc0fbe6551d3d734b6c818eb86d9bebef29d9dbe35548"
+    },
+    "sealed-input/preparation.json": {
+      "from": "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature/preparation.json",
+      "sha256": "5c1ae10e7017749cbd3b315fe71ef52722ba2eb537269384a90ac06e3f2f3c44"
+    },
+    "sealed-input/planned-floor-tops.json": {
+      "from": "/private/tmp/sansu-p02-gallery-source-study/east-v3-manifold/runs/01-coarse-build/planned-floor-tops.json",
+      "sha256": "e44d250ca5440d0f5aae661d321bde8de7c031296939b820eeb8f9d400c2b53d"
+    },
+    "sealed-input/gallery-local-top-probes.json": {
+      "from": "/private/tmp/sansu-p02-gallery-source-study/east-v3-manifold/runs/01-coarse-build/gallery-local-top-probes.json",
+      "sha256": "6c8566ff0203ef63f3cd8183861af935d8f13df041c3f8588fc74d5e3c0999b1"
+    }
+  },
+  "originalBuilderSHA": "d91bfc3c7edd238b65c9e5dc6d8e4c5f1a6008bebf08bc998b9745b4909fc7e0",
+  "originalPreparationSHA": "7576ef48a4c320ace790224103929d0e52a95ba51c768e579410a9f833efaa86"
+}

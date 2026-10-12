@@ -1,0 +1,17 @@
+{
+  "cwd": "/Users/yutogasaki/Projects/sansu",
+  "run": "03 final fixed geometry",
+  "exitCode": 0,
+  "commands": [
+    "/private/tmp/sansu-authored-cove-entrance/geometry-venv/bin/python docs/design/2026-10-12-authored-cove-entrance/build-shore-footprint-v4.py",
+    "node docs/design/2026-10-12-authored-cove-entrance/probe-cove-shore-v4.mjs --prepare",
+    "/private/tmp/sansu-authored-cove-entrance/geometry-venv/bin/python docs/design/2026-10-12-authored-cove-entrance/verify-floor-support-v4.py",
+    "/Applications/Blender.app/Contents/MacOS/Blender -b --python docs/design/2026-10-12-authored-cove-entrance/build-assembled-shore-v4.py",
+    "node docs/design/2026-10-12-authored-cove-entrance/probe-cove-shore-v4.mjs",
+    "/Applications/Blender.app/Contents/MacOS/Blender -b --python docs/design/2026-10-12-authored-cove-entrance/render-source-preview-v4.py",
+    "node docs/design/2026-10-12-authored-cove-entrance/author-audit-v4/audit.mjs",
+    "/private/tmp/sansu-authored-cove-entrance/geometry-venv/bin/python docs/design/2026-10-12-authored-cove-entrance/author-audit-v4/floor-audit.py"
+  ],
+  "reproductionOrder": "Sequential in listed order. --prepare writes patch and context; support proof must precede full probe. Source preview is optional and does not save the blend. Do not run old v3 overwrite scripts.",
+  "sourcePreviewOnly": "BLENDER_WORKBENCH,1000x800, no browser/GPU Cycles, no real material/transmission acceptance"
+}

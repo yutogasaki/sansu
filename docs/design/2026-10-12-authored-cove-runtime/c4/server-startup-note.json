@@ -1,0 +1,8 @@
+{
+  "command": "SANSU_BUILD_REVISION=authored-cove-c4 VITE_ISLAND_ENABLED=true VITE_NATIVE_GROWING_ART=false ./node_modules/.bin/vite --host 127.0.0.1 --port 5357 --strictPort",
+  "target": "http://127.0.0.1:5357",
+  "candidate": "/private/tmp/sansu-authored-cove-c4/candidate",
+  "sequence": "core terminal PASS and exit 0 before server start; full browser started after target ready",
+  "normalDeliveryNativeFlag": false,
+  "explicitAuthoredRouteLoadsNativeSource": true
+}

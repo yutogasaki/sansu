@@ -1,0 +1,10 @@
+{"phase": "all-input-diff", "baseInputs": 2137, "targetInputs": 2137, "changed": ["src/components/island/growing/authoredCoveLife.test.ts", "tools/e2e-authored-cove.mjs"], "added": [], "deleted": []}
+{"phase": "verified-base-part", "path": "input-sources.tar.gz.part01", "bytes": 50331648, "sha256": "3e02790100b86a6a9a59fd96c6a72a9705c15c9c19dee90768fce33a692723d4"}
+{"phase": "verified-base-part", "path": "input-sources.tar.gz.part02", "bytes": 50331648, "sha256": "1970b4ae2b644fd666aaae6cfdc6d57926edbec388b8b92149c145a6eae37aee"}
+{"phase": "verified-base-part", "path": "input-sources.tar.gz.part03", "bytes": 5389360, "sha256": "72fa3ba0a58d52f26811805cd0cb5095938a29c3796b07b676c5a78c3a51c092"}
+{"phase": "base-concatenation", "bytes": 106052656, "sha256": "7458c6f2f1802a763dda45e5c235597e758bd9a9a138b5f9d2cbb4ab3bee5729"}
+{"phase": "actual-base-reconstruction", "verifiedInputs": 2137, "mismatches": []}
+{"phase": "apply-small-delta", "members": 2, "bytes": 13661, "sha256": "4123457484059e6fa0423fa785ad71492d6c9852f69b999e6af449626a556008", "deletions": []}
+{"phase": "actual-c4-reconstruction", "restoredInputs": 2137, "expectedInputs": 2137, "exactFileSet": true, "sha256Mismatches": [], "candidateInputsStillFixed": true, "basePartsStillFixed": true}
+{"phase": "complete", "status": "PASS", "manifest": "manifest.json", "scope": "source recovery only"}
+{"phase": "previous-revision-and-snapshot-check", "c3ToC4": {"revision": "authored-cove-c3", "inputManifestSha256": "b9bd886acbf9906698507532ac927fbd9ff95da5c94e1383253694e2d7b463b1", "inputCount": 2137, "changed": ["tools/e2e-authored-cove.mjs"], "added": [], "deleted": []}, "authoritativeSnapshot": "/private/tmp/sansu-authored-cove-c4/snapshot.json", "snapshotChangedDuringCopy": [], "rejectedFirstCopyUsed": false}

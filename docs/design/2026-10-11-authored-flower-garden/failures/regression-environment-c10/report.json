@@ -1,0 +1,57 @@
+{
+  "coreReport": "/private/tmp/sansu-authored-flower-core-c9/report.json",
+  "coreReportSha256": "6143c61748605dc7fec64b1e3f885601839e43189f56001414ce4cb9bf04555c",
+  "coreInputCount": 1895,
+  "startedAtUnixSeconds": 1791734830.710073,
+  "pass": false,
+  "stages": [
+    {
+      "name": "01-baseline27-editing",
+      "pass": false,
+      "exitCode": 1,
+      "coreInputsMatch": true,
+      "sourceFixed": true,
+      "failurePhase": "missing-tool-report",
+      "error": "Tool report was not created",
+      "toolReportInspection": {
+        "pass": false,
+        "failurePhase": "missing-tool-report",
+        "error": "Tool report was not created"
+      },
+      "report": "/private/tmp/sansu-authored-flower-regressions-c10/01-baseline27-editing/report.json",
+      "classifiedFailure": {
+        "phase": "chromium-launch-before-page-goto",
+        "category": "environment/sandbox-mach-port-denial",
+        "source": "tools/e2e-authored-island-editing.mjs:202:36",
+        "evidence": "bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.36819: Permission denied (1100); process SIGTRAP",
+        "appReached": false,
+        "remainingStagesNotRun": true
+      }
+    }
+  ],
+  "firstFailure": {
+    "name": "01-baseline27-editing",
+    "pass": false,
+    "exitCode": 1,
+    "coreInputsMatch": true,
+    "sourceFixed": true,
+    "failurePhase": "missing-tool-report",
+    "error": "Tool report was not created",
+    "toolReportInspection": {
+      "pass": false,
+      "failurePhase": "missing-tool-report",
+      "error": "Tool report was not created"
+    },
+    "report": "/private/tmp/sansu-authored-flower-regressions-c10/01-baseline27-editing/report.json",
+    "classifiedFailure": {
+      "phase": "chromium-launch-before-page-goto",
+      "category": "environment/sandbox-mach-port-denial",
+      "source": "tools/e2e-authored-island-editing.mjs:202:36",
+      "evidence": "bootstrap_check_in org.chromium.Chromium.MachPortRendezvousServer.36819: Permission denied (1100); process SIGTRAP",
+      "appReached": false,
+      "remainingStagesNotRun": true
+    }
+  },
+  "scope": "Sequential baseline27, wide27water, ordinaryGrowing, isolated flag-off classic; no user servers 8230/5198, player profile or independent art acceptance",
+  "finishedAtUnixSeconds": 1791734831.442715
+}

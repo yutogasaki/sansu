@@ -1,0 +1,188 @@
+{
+  "createdAtUtc": "2026-10-12T05:25:11.460041+00:00",
+  "scope": "zero-face-comparison completed diagnostic only; no correction adopted",
+  "compressionRule": "Only uncompressed JSON >=65536 bytes is gzip level9/mtime0. Existing gzip stays byte-identical. Historical Markdown/Python gets .txt suffix without content changes.",
+  "sourceBefore": {
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/README.md": "24d8ae95eb15380714ad7d13be10acc930bd3825639c7835ffef0f2bb1b7416d",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/attempt-01/comparison-raw.json.gz": "ac130aabfa36923ae095beb354630a2a4d3c009e63cb0d2c7f80b8d2d57fb5d1",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/attempt-01/input-parity.json": "bd24303de09f1109d39d7f7ba77f650030755827db32c9e037831e4a0185ad4b",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/attempt-01/result.json": "78d10b221892b4808e53a90101c1783276bd2f176a8acd02154b45bbad933950",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/attempt-01/variants-so-far.json": "bb7793b6f87c35fe0393af44718db326e390114704c0c9ff69e489aaadbbc8e4",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/compare.py": "5656e4989068601ddb50dff6b772dffe98cb22a28628792d70807aaee4ca9981",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/execution-01/execution.log.txt": "183e6d5b7da433f4cf21f80fd809fddd2c2d85444e5df1fea2ee680961248c98",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/execution-01/postflight.json": "9b6c1d84c783c6d16e558af2ede5be38e1fd0d01da09eeb705abbb6fc2135d18",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/execution-01/result.json": "dd5a27dc9a0d6af26cbfe82b4c5fec4cbd666f79dc70babc3bdd3c2195c42718",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/readiness.json": "696f85666e21a332f4e3081030acf23994a61602448cce7f7bc6b0b78e408e89",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/readiness.sha256": "53b865569dd8ad3729e2a08ecd2a580370f7082663a52632fdb950d0673bb3e7",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/run-once.py": "5ff2e8cdae42fbabb9cb198f55d34970e0b6ae980a2935f303039070b58c18f8",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/static-check.json": "1f3d22693e58e414dd31ba8a65126ef735b857a838c982957a8a06de7768de98",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/archive-zero-sharp.py": "80cd0185bc1520d6ce0ba04688740491a5aeb7305069c7bc08567fa9f423a7f8"
+  },
+  "sourceAfter": {
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/README.md": "24d8ae95eb15380714ad7d13be10acc930bd3825639c7835ffef0f2bb1b7416d",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/attempt-01/comparison-raw.json.gz": "ac130aabfa36923ae095beb354630a2a4d3c009e63cb0d2c7f80b8d2d57fb5d1",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/attempt-01/input-parity.json": "bd24303de09f1109d39d7f7ba77f650030755827db32c9e037831e4a0185ad4b",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/attempt-01/result.json": "78d10b221892b4808e53a90101c1783276bd2f176a8acd02154b45bbad933950",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/attempt-01/variants-so-far.json": "bb7793b6f87c35fe0393af44718db326e390114704c0c9ff69e489aaadbbc8e4",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/compare.py": "5656e4989068601ddb50dff6b772dffe98cb22a28628792d70807aaee4ca9981",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/execution-01/execution.log.txt": "183e6d5b7da433f4cf21f80fd809fddd2c2d85444e5df1fea2ee680961248c98",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/execution-01/postflight.json": "9b6c1d84c783c6d16e558af2ede5be38e1fd0d01da09eeb705abbb6fc2135d18",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/execution-01/result.json": "dd5a27dc9a0d6af26cbfe82b4c5fec4cbd666f79dc70babc3bdd3c2195c42718",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/readiness.json": "696f85666e21a332f4e3081030acf23994a61602448cce7f7bc6b0b78e408e89",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/readiness.sha256": "53b865569dd8ad3729e2a08ecd2a580370f7082663a52632fdb950d0673bb3e7",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/run-once.py": "5ff2e8cdae42fbabb9cb198f55d34970e0b6ae980a2935f303039070b58c18f8",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/static-check.json": "1f3d22693e58e414dd31ba8a65126ef735b857a838c982957a8a06de7768de98",
+    "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/archive-zero-sharp.py": "80cd0185bc1520d6ce0ba04688740491a5aeb7305069c7bc08567fa9f423a7f8"
+  },
+  "allSourceBeforeAfterIdentical": true,
+  "files": [
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/README.md",
+      "target": "README.md.txt",
+      "sourceBytes": 3177,
+      "storedBytes": 3177,
+      "sourceSha256": "24d8ae95eb15380714ad7d13be10acc930bd3825639c7835ffef0f2bb1b7416d",
+      "storedSha256": "24d8ae95eb15380714ad7d13be10acc930bd3825639c7835ffef0f2bb1b7416d",
+      "decodedSha256": "24d8ae95eb15380714ad7d13be10acc930bd3825639c7835ffef0f2bb1b7416d",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/attempt-01/comparison-raw.json.gz",
+      "target": "attempt-01/comparison-raw.json.gz",
+      "sourceBytes": 70087,
+      "storedBytes": 70087,
+      "sourceSha256": "ac130aabfa36923ae095beb354630a2a4d3c009e63cb0d2c7f80b8d2d57fb5d1",
+      "storedSha256": "ac130aabfa36923ae095beb354630a2a4d3c009e63cb0d2c7f80b8d2d57fb5d1",
+      "decodedSha256": "ac130aabfa36923ae095beb354630a2a4d3c009e63cb0d2c7f80b8d2d57fb5d1",
+      "encoding": "raw",
+      "originalGzipRetainedByteIdentical": true,
+      "originalExpandedSHA": "a3f1cec43bae23de527e52830738b2482162e44a4a4fc6a82dafc965011eec65"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/attempt-01/input-parity.json",
+      "target": "attempt-01/input-parity.json",
+      "sourceBytes": 14731,
+      "storedBytes": 14731,
+      "sourceSha256": "bd24303de09f1109d39d7f7ba77f650030755827db32c9e037831e4a0185ad4b",
+      "storedSha256": "bd24303de09f1109d39d7f7ba77f650030755827db32c9e037831e4a0185ad4b",
+      "decodedSha256": "bd24303de09f1109d39d7f7ba77f650030755827db32c9e037831e4a0185ad4b",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/attempt-01/result.json",
+      "target": "attempt-01/result.json",
+      "sourceBytes": 46319,
+      "storedBytes": 46319,
+      "sourceSha256": "78d10b221892b4808e53a90101c1783276bd2f176a8acd02154b45bbad933950",
+      "storedSha256": "78d10b221892b4808e53a90101c1783276bd2f176a8acd02154b45bbad933950",
+      "decodedSha256": "78d10b221892b4808e53a90101c1783276bd2f176a8acd02154b45bbad933950",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/attempt-01/variants-so-far.json",
+      "target": "attempt-01/variants-so-far.json",
+      "sourceBytes": 41551,
+      "storedBytes": 41551,
+      "sourceSha256": "bb7793b6f87c35fe0393af44718db326e390114704c0c9ff69e489aaadbbc8e4",
+      "storedSha256": "bb7793b6f87c35fe0393af44718db326e390114704c0c9ff69e489aaadbbc8e4",
+      "decodedSha256": "bb7793b6f87c35fe0393af44718db326e390114704c0c9ff69e489aaadbbc8e4",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/compare.py",
+      "target": "compare.py.txt",
+      "sourceBytes": 8733,
+      "storedBytes": 8733,
+      "sourceSha256": "5656e4989068601ddb50dff6b772dffe98cb22a28628792d70807aaee4ca9981",
+      "storedSha256": "5656e4989068601ddb50dff6b772dffe98cb22a28628792d70807aaee4ca9981",
+      "decodedSha256": "5656e4989068601ddb50dff6b772dffe98cb22a28628792d70807aaee4ca9981",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/execution-01/execution.log.txt",
+      "target": "execution-01/execution.log.txt",
+      "sourceBytes": 19271,
+      "storedBytes": 19271,
+      "sourceSha256": "183e6d5b7da433f4cf21f80fd809fddd2c2d85444e5df1fea2ee680961248c98",
+      "storedSha256": "183e6d5b7da433f4cf21f80fd809fddd2c2d85444e5df1fea2ee680961248c98",
+      "decodedSha256": "183e6d5b7da433f4cf21f80fd809fddd2c2d85444e5df1fea2ee680961248c98",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/execution-01/postflight.json",
+      "target": "execution-01/postflight.json",
+      "sourceBytes": 2980,
+      "storedBytes": 2980,
+      "sourceSha256": "9b6c1d84c783c6d16e558af2ede5be38e1fd0d01da09eeb705abbb6fc2135d18",
+      "storedSha256": "9b6c1d84c783c6d16e558af2ede5be38e1fd0d01da09eeb705abbb6fc2135d18",
+      "decodedSha256": "9b6c1d84c783c6d16e558af2ede5be38e1fd0d01da09eeb705abbb6fc2135d18",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/execution-01/result.json",
+      "target": "execution-01/result.json",
+      "sourceBytes": 16813,
+      "storedBytes": 16813,
+      "sourceSha256": "dd5a27dc9a0d6af26cbfe82b4c5fec4cbd666f79dc70babc3bdd3c2195c42718",
+      "storedSha256": "dd5a27dc9a0d6af26cbfe82b4c5fec4cbd666f79dc70babc3bdd3c2195c42718",
+      "decodedSha256": "dd5a27dc9a0d6af26cbfe82b4c5fec4cbd666f79dc70babc3bdd3c2195c42718",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/readiness.json",
+      "target": "readiness.json",
+      "sourceBytes": 8394,
+      "storedBytes": 8394,
+      "sourceSha256": "696f85666e21a332f4e3081030acf23994a61602448cce7f7bc6b0b78e408e89",
+      "storedSha256": "696f85666e21a332f4e3081030acf23994a61602448cce7f7bc6b0b78e408e89",
+      "decodedSha256": "696f85666e21a332f4e3081030acf23994a61602448cce7f7bc6b0b78e408e89",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/readiness.sha256",
+      "target": "readiness.sha256",
+      "sourceBytes": 65,
+      "storedBytes": 65,
+      "sourceSha256": "53b865569dd8ad3729e2a08ecd2a580370f7082663a52632fdb950d0673bb3e7",
+      "storedSha256": "53b865569dd8ad3729e2a08ecd2a580370f7082663a52632fdb950d0673bb3e7",
+      "decodedSha256": "53b865569dd8ad3729e2a08ecd2a580370f7082663a52632fdb950d0673bb3e7",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/run-once.py",
+      "target": "run-once.py.txt",
+      "sourceBytes": 3025,
+      "storedBytes": 3025,
+      "sourceSha256": "5ff2e8cdae42fbabb9cb198f55d34970e0b6ae980a2935f303039070b58c18f8",
+      "storedSha256": "5ff2e8cdae42fbabb9cb198f55d34970e0b6ae980a2935f303039070b58c18f8",
+      "decodedSha256": "5ff2e8cdae42fbabb9cb198f55d34970e0b6ae980a2935f303039070b58c18f8",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/zero-face-comparison/static-check.json",
+      "target": "static-check.json",
+      "sourceBytes": 515,
+      "storedBytes": 515,
+      "sourceSha256": "1f3d22693e58e414dd31ba8a65126ef735b857a838c982957a8a06de7768de98",
+      "storedSha256": "1f3d22693e58e414dd31ba8a65126ef735b857a838c982957a8a06de7768de98",
+      "decodedSha256": "1f3d22693e58e414dd31ba8a65126ef735b857a838c982957a8a06de7768de98",
+      "encoding": "raw"
+    },
+    {
+      "source": "/private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/normal-debug/archive-zero-sharp.py",
+      "target": "packaging/archive-zero-sharp.py.txt",
+      "sourceBytes": 5237,
+      "storedBytes": 5237,
+      "sourceSha256": "80cd0185bc1520d6ce0ba04688740491a5aeb7305069c7bc08567fa9f423a7f8",
+      "storedSha256": "80cd0185bc1520d6ce0ba04688740491a5aeb7305069c7bc08567fa9f423a7f8",
+      "decodedSha256": "80cd0185bc1520d6ce0ba04688740491a5aeb7305069c7bc08567fa9f423a7f8",
+      "encoding": "raw"
+    }
+  ],
+  "fileCount": 14,
+  "allDecodedBytesIdentical": true,
+  "allOriginalGzipBytesIdentical": true,
+  "sourceBytes": 240898,
+  "storedBytes": 240898,
+  "unexecutedNextPreparationIncluded": false
+}

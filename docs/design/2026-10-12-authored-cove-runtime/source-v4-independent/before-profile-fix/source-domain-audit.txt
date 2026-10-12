@@ -1,0 +1,366 @@
+{
+  "schema": "sansu-independent-cove-v4-source-audit-v1",
+  "scope": "Independent changed shore/floor audit; actual runtime domain and actor rigs, no browser, art or full runtime acceptance.",
+  "candidate": "native05-authored-cove-shore-v4",
+  "shellSourceId": "native05-authored-cove-corner-v3",
+  "sourceClosureCount": 66,
+  "bundleSha256": "f93f91ff852a55615049bd42d8a67d3afe9a4d93bc32d3afa67178c501f8fae9",
+  "manifestHashesAgree": true,
+  "shell": {
+    "sha256": "f08ada4907c76a617e2c22090049b9b2880dde2d75fa11ad61f6e76c7eec7146",
+    "sameAsFixedV3": true,
+    "transformSameAsFixedV3": true,
+    "sourceIdMatchesDelivery": true,
+    "matchesDelivery": true,
+    "compressedArtifactMatchesDelivery": true,
+    "expandedArtifactMatchesShell": true,
+    "combinedGeometryAndMaterialsPreserved": true,
+    "priorHomeCollisionAuditReuse": "Only unchanged shell geometry/transform allows prior v3 shell/house collision findings to carry. This run rechecks floor and socket support."
+  },
+  "transform": {
+    "source_gltf_pivot": [
+      13.9,
+      0.89,
+      1.2
+    ],
+    "authored_position": [
+      8,
+      0.0475,
+      0.5
+    ],
+    "scale": [
+      0.45,
+      0.45,
+      0.45
+    ],
+    "yaw": 0,
+    "blender_to_gltf": "(X,Z,-Y)",
+    "renderer_from_authored": "subtract layout.center from X and 2 from Z; Y unchanged"
+  },
+  "applicability": {
+    "currentLocalGround": {
+      "min": {
+        "x": 6,
+        "z": -2.6
+      },
+      "max": {
+        "x": 10.5,
+        "z": 2.25
+      },
+      "revision": "4b88013eae1b204e"
+    },
+    "currentClearCourt": {
+      "min": {
+        "x": 6.1,
+        "z": -1.7
+      },
+      "max": {
+        "x": 10.15,
+        "z": 2.25
+      }
+    },
+    "sourceBounds": {
+      "min": {
+        "x": 6.04625,
+        "z": -0.9173270505817582
+      },
+      "max": {
+        "x": 10.285000086,
+        "z": 2.5843744201660157
+      }
+    },
+    "actorSweepBounds": {
+      "min": {
+        "x": 6.265930629408594,
+        "z": -0.5340693705914059
+      },
+      "max": {
+        "x": 9.934069370591406,
+        "z": 1.9840693705914059
+      }
+    },
+    "requiredBounds": {
+      "min": {
+        "x": 6.04625,
+        "z": -0.9173270505817582
+      },
+      "max": {
+        "x": 10.285000086,
+        "z": 2.5843744201660157
+      }
+    },
+    "localGroundCoversSourceAndSweeps": false,
+    "clearCourtCoversSourceAndSweeps": false,
+    "proposedLocalGround": {
+      "min": {
+        "x": 5.95,
+        "z": -2.6
+      },
+      "max": {
+        "x": 10.5,
+        "z": 2.65
+      }
+    },
+    "proposedClearCourt": {
+      "min": {
+        "x": 5.95,
+        "z": -1.7
+      },
+      "max": {
+        "x": 10.35,
+        "z": 2.65
+      }
+    },
+    "proposedLocalGroundRevision": {
+      "base": "4b88013eae1b204e",
+      "water": "4b88013eae1b204e"
+    },
+    "proposalMethod": "Union exact patch/bank/shell bounds and measured actor radius + .04 edge sweeps; expand existing source applicability rectangles with .05 guard rounded outward to .05 grid. Root must implement/test any required eligibility adjustment."
+  },
+  "frames": {
+    "dry": {
+      "revision": "authored-world:fd0c90500e938040",
+      "assemblies": [
+        {
+          "placeId": "P04:p6",
+          "placeRevision": "[1,\"P04\",\"bay\",\"grown\",[[\"l32\",8,-2],[\"p6\",7,-1],[\"p7\",9,-1],[\"p9\",8,0]],[{\"x\":8,\"z\":-3},{\"x\":7.75,\"z\":-2.75},{\"x\":8,\"z\":-2.75},{\"x\":8.25,\"z\":-2.75},{\"x\":7.25,\"z\":-2.25},{\"x\":8.75,\"z\":-2.25},{\"x\":7,\"z\":-2},{\"x\":8,\"z\":-2},{\"x\":8.75,\"z\":-2},{\"x\":9,\"z\":-2},{\"x\":6.75,\"z\":-1.75},{\"x\":7,\"z\":-1.75},{\"x\":8.75,\"z\":-1.75},{\"x\":9,\"z\":-1.75},{\"x\":9.25,\"z\":-1.75},{\"x\":6.25,\"z\":-1.25},{\"x\":7.75,\"z\":-1.25},{\"x\":8,\"z\":-1.25},{\"x\":9.75,\"z\":-1.25},{\"x\":7,\"z\":-1},{\"x\":7.75,\"z\":-1},{\"x\":8,\"z\":-1},{\"x\":8.25,\"z\":-1},{\"x\":9,\"z\":-1},{\"x\":9.75,\"z\":-1},{\"x\":10,\"z\":-1},{\"x\":7.75,\"z\":-0.75},{\"x\":8,\"z\":-0.75},{\"x\":8.25,\"z\":-0.75},{\"x\":9.75,\"z\":-0.75},{\"x\":7,\"z\":-0.25},{\"x\":7.25,\"z\":-0.25},{\"x\":8.75,\"z\":-0.25},{\"x\":9,\"z\":-0.25},{\"x\":9.25,\"z\":-0.25},{\"x\":7,\"z\":0},{\"x\":7.25,\"z\":0},{\"x\":8,\"z\":0},{\"x\":8.75,\"z\":0},{\"x\":9,\"z\":0},{\"x\":7.25,\"z\":0.25},{\"x\":8.75,\"z\":0.25},{\"x\":7.75,\"z\":0.75},{\"x\":8,\"z\":0.75},{\"x\":8.25,\"z\":0.75},{\"x\":8,\"z\":1}],[{\"x\":8,\"z\":-3},{\"x\":7.75,\"z\":-2.75},{\"x\":8,\"z\":-2.75},{\"x\":8.25,\"z\":-2.75},{\"x\":7.25,\"z\":-2.25},{\"x\":8.75,\"z\":-2.25},{\"x\":8.75,\"z\":-2},{\"x\":9,\"z\":-2},{\"x\":8.75,\"z\":-1.75},{\"x\":9,\"z\":-1.75},{\"x\":9.25,\"z\":-1.75},{\"x\":9.75,\"z\":-1.25},{\"x\":9.75,\"z\":-1},{\"x\":10,\"z\":-1},{\"x\":9.75,\"z\":-0.75},{\"x\":7,\"z\":-0.25},{\"x\":7.25,\"z\":-0.25},{\"x\":8.75,\"z\":-0.25},{\"x\":9,\"z\":-0.25},{\"x\":9.25,\"z\":-0.25},{\"x\":7,\"z\":0},{\"x\":7.25,\"z\":0},{\"x\":8.75,\"z\":0},{\"x\":9,\"z\":0},{\"x\":7.25,\"z\":0.25},{\"x\":8.75,\"z\":0.25},{\"x\":7.75,\"z\":0.75},{\"x\":8,\"z\":0.75},{\"x\":8.25,\"z\":0.75},{\"x\":8,\"z\":1}],[],[{\"id\":\"p9\",\"kind\":\"play\",\"cell\":{\"x\":8,\"z\":0}}]]",
+          "ownerIds": [
+            "l32",
+            "p6",
+            "p7",
+            "p9"
+          ],
+          "playId": "p9",
+          "sourceId": "native05-authored-cove-corner-v3",
+          "sourceSha256": "f08ada4907c76a617e2c22090049b9b2880dde2d75fa11ad61f6e76c7eec7146",
+          "transform": {
+            "pivot": [
+              13.9,
+              0.89,
+              1.2
+            ],
+            "position": {
+              "x": 8,
+              "y": 0.0475,
+              "z": 0.5
+            },
+            "scale": 0.45,
+            "yaw": 0
+          }
+        }
+      ]
+    },
+    "water": {
+      "revision": "authored-world:f53d806ca4f3b658",
+      "assemblies": [
+        {
+          "placeId": "P04:p6",
+          "placeRevision": "[1,\"P04\",\"bay\",\"grown\",[[\"l32\",8,-2],[\"p6\",7,-1],[\"p7\",9,-1],[\"p9\",8,0]],[{\"x\":8,\"z\":-3},{\"x\":7.75,\"z\":-2.75},{\"x\":8,\"z\":-2.75},{\"x\":8.25,\"z\":-2.75},{\"x\":7.25,\"z\":-2.25},{\"x\":8.75,\"z\":-2.25},{\"x\":7,\"z\":-2},{\"x\":8,\"z\":-2},{\"x\":8.75,\"z\":-2},{\"x\":9,\"z\":-2},{\"x\":6.75,\"z\":-1.75},{\"x\":7,\"z\":-1.75},{\"x\":8.75,\"z\":-1.75},{\"x\":9,\"z\":-1.75},{\"x\":9.25,\"z\":-1.75},{\"x\":6.25,\"z\":-1.25},{\"x\":7.75,\"z\":-1.25},{\"x\":8,\"z\":-1.25},{\"x\":9.75,\"z\":-1.25},{\"x\":7,\"z\":-1},{\"x\":7.75,\"z\":-1},{\"x\":8,\"z\":-1},{\"x\":8.25,\"z\":-1},{\"x\":9,\"z\":-1},{\"x\":9.75,\"z\":-1},{\"x\":10,\"z\":-1},{\"x\":7.75,\"z\":-0.75},{\"x\":8,\"z\":-0.75},{\"x\":8.25,\"z\":-0.75},{\"x\":9.75,\"z\":-0.75},{\"x\":7,\"z\":-0.25},{\"x\":7.25,\"z\":-0.25},{\"x\":8.75,\"z\":-0.25},{\"x\":9,\"z\":-0.25},{\"x\":9.25,\"z\":-0.25},{\"x\":7,\"z\":0},{\"x\":7.25,\"z\":0},{\"x\":8,\"z\":0},{\"x\":8.75,\"z\":0},{\"x\":9,\"z\":0},{\"x\":7.25,\"z\":0.25},{\"x\":8.75,\"z\":0.25},{\"x\":7.75,\"z\":0.75},{\"x\":8,\"z\":0.75},{\"x\":8.25,\"z\":0.75},{\"x\":8,\"z\":1}],[{\"x\":8,\"z\":-3},{\"x\":7.75,\"z\":-2.75},{\"x\":8,\"z\":-2.75},{\"x\":8.25,\"z\":-2.75},{\"x\":7.25,\"z\":-2.25},{\"x\":8.75,\"z\":-2.25},{\"x\":8.75,\"z\":-2},{\"x\":9,\"z\":-2},{\"x\":8.75,\"z\":-1.75},{\"x\":9,\"z\":-1.75},{\"x\":9.25,\"z\":-1.75},{\"x\":9.75,\"z\":-1.25},{\"x\":9.75,\"z\":-1},{\"x\":10,\"z\":-1},{\"x\":9.75,\"z\":-0.75},{\"x\":7,\"z\":-0.25},{\"x\":7.25,\"z\":-0.25},{\"x\":8.75,\"z\":-0.25},{\"x\":9,\"z\":-0.25},{\"x\":9.25,\"z\":-0.25},{\"x\":7,\"z\":0},{\"x\":7.25,\"z\":0},{\"x\":8.75,\"z\":0},{\"x\":9,\"z\":0},{\"x\":7.25,\"z\":0.25},{\"x\":8.75,\"z\":0.25},{\"x\":7.75,\"z\":0.75},{\"x\":8,\"z\":0.75},{\"x\":8.25,\"z\":0.75},{\"x\":8,\"z\":1}],[],[{\"id\":\"p9\",\"kind\":\"play\",\"cell\":{\"x\":8,\"z\":0}}]]",
+          "ownerIds": [
+            "l32",
+            "p6",
+            "p7",
+            "p9"
+          ],
+          "playId": "p9",
+          "sourceId": "native05-authored-cove-corner-v3",
+          "sourceSha256": "f08ada4907c76a617e2c22090049b9b2880dde2d75fa11ad61f6e76c7eec7146",
+          "transform": {
+            "pivot": [
+              13.9,
+              0.89,
+              1.2
+            ],
+            "position": {
+              "x": 8,
+              "y": 0.0475,
+              "z": 0.5
+            },
+            "scale": 0.45,
+            "yaw": 0
+          }
+        }
+      ]
+    },
+    "dryMatchesIndependentPatch": true,
+    "waterMatchesIndependentPatch": true
+  },
+  "base": {
+    "floorsUnchanged": true,
+    "anchorFloorsUnchanged": true,
+    "oldSitesUnchanged": true,
+    "oldEdgesUnchanged": true,
+    "definitionSourceUnchanged": true,
+    "oldSiteSupportFailures": [],
+    "sitesChecked": 2063,
+    "grantsUnchanged": true,
+    "grantsBefore": 73,
+    "grantsAfter": 73,
+    "addedRefs": 13,
+    "addedEdges": 15
+  },
+  "water": {
+    "floorsUnchanged": true,
+    "anchorFloorsUnchanged": true,
+    "oldSitesUnchanged": true,
+    "oldEdgesUnchanged": true,
+    "definitionSourceUnchanged": true,
+    "oldSiteSupportFailures": [],
+    "sitesChecked": 2063,
+    "grantsUnchanged": true,
+    "grantsBefore": 73,
+    "grantsAfter": 73,
+    "addedRefs": 13,
+    "addedEdges": 15
+  },
+  "apron": {
+    "parts": 2,
+    "triangles": 2388,
+    "topTriangles": 596,
+    "expectedTopTriangles": 596,
+    "triangleParity": true,
+    "maxVertexError": 4.251159422060467e-7,
+    "upwardTopTriangles": 593,
+    "nonUpwardTopTriangles": [
+      {
+        "area": 1.0519057550928499e-7,
+        "points": [
+          [
+            6.161675567626953,
+            -0.008999988317489632,
+            -0.9173270726203919
+          ],
+          [
+            6.16328875541687,
+            -0.008999988317489632,
+            -0.913500794172287
+          ],
+          [
+            6.594345922470093,
+            -0.008999988317489632,
+            0.10904297888278963
+          ]
+        ]
+      },
+      {
+        "area": 2.047977153158819e-9,
+        "points": [
+          [
+            6.602076692581177,
+            -0.008999988317489632,
+            -0.360442733168602
+          ],
+          [
+            6.598284263610839,
+            -0.008999988317489632,
+            -0.3699869984388351
+          ],
+          [
+            6.590699834823608,
+            -0.008999988317489632,
+            -0.3890755289793014
+          ]
+        ]
+      },
+      {
+        "area": 4.238552868060519e-18,
+        "points": [
+          [
+            6.590699834823608,
+            -0.008999988317489632,
+            -0.3890755289793014
+          ],
+          [
+            6.586907405853271,
+            -0.008999988317489632,
+            -0.39861979424953464
+          ],
+          [
+            6.583114976882935,
+            -0.008999988317489632,
+            -0.40816405951976786
+          ]
+        ]
+      }
+    ],
+    "bankTriangles": 1196,
+    "expectedBankTriangles": 1196,
+    "bankTriangleParity": true,
+    "bankMaxVertexError": 4.251159422060467e-7,
+    "patchTopColor": "#a4cb87",
+    "patchBankColor": "#e2d7c9",
+    "topMaterialsMatchPatch": true,
+    "bankMaterialsMatchPatch": true
+  },
+  "envelope": {
+    "radius": 0.24406937059140585,
+    "height": 0.5500928879753579,
+    "source": {
+      "actorIds": [
+        "pokomoko",
+        "authored-friend-0",
+        "authored-friend-1",
+        "authored-friend-2",
+        "authored-friend-3",
+        "authored-friend-4",
+        "authored-friend-5",
+        "authored-friend-6",
+        "authored-friend-7"
+      ],
+      "visualScales": [
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ]
+      ],
+      "meshes": 117,
+      "vertices": 99868,
+      "footSwing": 0.5,
+      "armSwing": 0.6,
+      "walkBob": 0.015750000000000004,
+      "method": "indexed-source-motion-intervals"
+    }
+  },
+  "inputHashesUnchanged": true
+}

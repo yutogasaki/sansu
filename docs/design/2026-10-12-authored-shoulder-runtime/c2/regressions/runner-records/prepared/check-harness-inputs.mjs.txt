@@ -1,0 +1,31 @@
+// Execute only the explicitly bounded read-only input collector, never the harness.
+import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+const repo = '/private/tmp/sansu-authored-shoulder-c2/candidate';
+const out = '/private/tmp/sansu-authored-shoulder-c2/closure';
+const sha = value => createHash('sha256').update(value).digest('hex');
+if (!process.argv.includes('--start')) console.log(JSON.stringify({ prepared: true, executionStarted: false, repo, out }));
+else {
+    process.chdir(repo);
+    const expected = JSON.parse(await fs.readFile(path.join(out, 'inputs.json'), 'utf8'));
+    const driver = 'tools/e2e-authored-shoulder.mjs', bytes = await fs.readFile(driver), text = bytes.toString('utf8');
+    assert.equal(sha(bytes), expected[driver], 'Input collector driver must match frozen source');
+    const start = text.indexOf('const walk = async directory =>'), end = text.indexOf('\nconst owners =', start);
+    assert(start >= 0 && end > start, 'Known collector boundaries are required');
+    const collector = text.slice(start, end);
+    assert(!/chromium|launch\(|writeFile|mkdir|unlink|\brm\(|\.open\(|child_process|\bexec\(/.test(collector), 'Collector acquired side effects');
+    assert([...collector.matchAll(/fs\.([a-zA-Z]+)/g)].every(match => ['readdir','readFile','stat'].includes(match[1])), 'Only known fs read operations are allowed');
+    const readJson = async file => JSON.parse(await fs.readFile(file, 'utf8'));
+    const collect = new Function('fs','path','sha','readJson','sourceDirectory', `${collector}\nreturn inputs();`);
+    const actual = await collect(fs,path,sha,readJson,'docs/design/2026-10-12-authored-central-shoulder');
+    const missing = Object.keys(actual).filter(name => !expected[name]);
+    const changed = Object.keys(actual).filter(name => expected[name] && actual[name] !== expected[name]);
+    const report = { mode: 'Actual read-only shoulder input collector coverage; no driver/browser execution', repo, driver,
+        driverSha256: sha(bytes), collectorSha256: sha(collector), inputCount: Object.keys(actual).length, coreClosureCount: Object.keys(expected).length,
+        missing, changed, pass: !missing.length && !changed.length };
+    await fs.writeFile(path.join(out,'shoulder-driver-inputs.json'), JSON.stringify(actual,null,2)+'\n', { flag:'wx' });
+    await fs.writeFile(path.join(out,'driver-input-audit.json'), JSON.stringify(report,null,2)+'\n', { flag:'wx' });
+    console.log(JSON.stringify(report)); if (!report.pass) process.exitCode=1;
+}

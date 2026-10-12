@@ -1,0 +1,169 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "candidate": "p02-native-east-bough-coarse-v3-manifold",
+  "workingDirectory": "/private/tmp/sansu-p02-gallery-source-study/east-v3-manifold",
+  "buildCommand": [
+    "python3",
+    "supervise.py",
+    "--scheduled",
+    "--seconds",
+    "180",
+    "--rss-mib",
+    "2560",
+    "--log",
+    "runs/01-coarse-build.log.txt",
+    "--",
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "build-coarse.py",
+    "--",
+    "build",
+    "--scheduled",
+    "--out",
+    "runs/01-coarse-build"
+  ],
+  "files": {
+    "README.md": {
+      "sha256": "89ab07bac3c21acc97464d48df68012b7eeb7d3ce532c1b4eaba9c50c504177c",
+      "bytes": 3927
+    },
+    "build-coarse.py": {
+      "sha256": "d91bfc3c7edd238b65c9e5dc6d8e4c5f1a6008bebf08bc998b9745b4909fc7e0",
+      "bytes": 31215
+    },
+    "check-preparation.py": {
+      "sha256": "8def9f3887ea30f6591e2ce937d73528ca3c96da60f70f43f0a10c347951b5f7",
+      "bytes": 2333
+    },
+    "donor_reference.py": {
+      "sha256": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+      "bytes": 3333
+    },
+    "entry_geometry.py": {
+      "sha256": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+      "bytes": 7937
+    },
+    "separate-stair-proposal.json": {
+      "sha256": "6a2091f73cff2b682cc6cbb0d6bed6ac6cc9496edccd9fea5a2c15732a824f94",
+      "bytes": 2127
+    },
+    "static-first.log.txt": {
+      "sha256": "45a79307eb775dc477a9da0de0d1fa9cf1143a14bc40fe5a1efa3749c4cc08bc",
+      "bytes": 736
+    },
+    "study.json": {
+      "sha256": "48def2a0503b82a8af71071c23586638629d82d12fb5c6ca2f2e5865360d0aa9",
+      "bytes": 13425
+    },
+    "supervise.py": {
+      "sha256": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+      "bytes": 1920
+    },
+    "terrain_connector.py": {
+      "sha256": "47a00db51d9826ca56a717db06feb48930dfbe77f3fcf301783ad1d90ea0b18d",
+      "bytes": 4796
+    }
+  },
+  "sourceInputs": {
+    "context": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/extraction-attempt02/fixed-c1-context.glb",
+      "sha256": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+      "bytes": 19623452
+    },
+    "leftTrees": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/extraction-attempt02/role-separated-originals.glb",
+      "sha256": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+      "bytes": 843044
+    },
+    "contextManifest": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/extraction-attempt02/manifest.json",
+      "sha256": "3c3fcd13bf4867946a0f393769f852cb938286329dfa2e11dac3afe74796bda2",
+      "bytes": 170092
+    },
+    "forestStudy": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/study.json",
+      "sha256": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+      "bytes": 482322
+    },
+    "sourceBlend": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.blend",
+      "sha256": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+      "bytes": 6585301
+    },
+    "sourceGlb": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.glb",
+      "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "bytes": 34930176
+    },
+    "benchmark": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island-render.png",
+      "sha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "bytes": 2579296
+    },
+    "envelope": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-whole-massing/raw/actor-envelope-identity.json",
+      "sha256": "444beab3c5b078799e974424e225e0a2e6742d6b99ad7e94be5edb54088af1db",
+      "bytes": 5969
+    }
+  },
+  "basis": {
+    "eastV1Measurement": {
+      "path": "/private/tmp/sansu-p02-gallery-source-study/east-v1/runs/01-east-survey/measurement.json",
+      "sha256": "be452b8297a17246ebaa376edffef35de2b5821c554717ed53cfb9d04c022e21"
+    },
+    "classifiedEastV1": {
+      "path": "/private/tmp/sansu-p02-gallery-source-study/east-v1-analysis/report.json",
+      "sha256": "6b7386fce94325a37d17df782617c4fb1f08172a6c9bf013ac57a431c391f088"
+    },
+    "singleProposalProbe": {
+      "path": "/private/tmp/sansu-p02-gallery-source-study/east-v1-analysis/design-probe.json",
+      "sha256": "43ec18d642cfd4ba7d20f511a7ab06889144c4daeb6d794ac29594eb7e414c73"
+    },
+    "doorwayOverlapProbe": {
+      "path": "/private/tmp/sansu-p02-gallery-source-study/east-v2/entry-audit/result.json",
+      "sha256": "2bfc69e1e4b87a0d7fd5df6215c9f6aba8f671b7d1fc5430c413bf465f232bc5"
+    }
+  },
+  "sourceV2PreparationSha256": "85eb4660e91a378277b56f895fd8367b8960a39b846f0a7de5b0fa9e6f9409b0",
+  "stagedResultSha256": "9040cc60d56c0efd69786547cf16014351e993635ab17325664f04748978d9d1",
+  "staticChecks": {
+    "status": "STATIC_ONLY_PASS_NOT_BUILD",
+    "checks": {
+      "allPythonAST": true,
+      "originalSealedV2AndHistoryUnchanged": true,
+      "allSourceInputsUnchanged": true,
+      "allMeasuredBasisUnchanged": true,
+      "studyOnlyCandidateLabelChanged": true,
+      "allInputGeometryAndTransformsByteIdentical": true,
+      "allPostUnionSupportRailRouteActorAndExportCodeByteIdentical": true,
+      "allNumericHelpersAndSupervisorByteIdentical": true,
+      "newUnionHasNoRepairOps": true,
+      "noAutoRender": true,
+      "originalFiveInputsAndFourUnionOrderPreserved": true,
+      "selfIntersectionLimitationExplicit": true
+    },
+    "pending": "actual MANIFOLD full union,6bough contacts,rails,allguards,sourcevisuals; no acceptance from input closure"
+  },
+  "changes": [
+    "candidate label only in study",
+    "all-union solver MANIFOLD",
+    "raw topology audit and hard failure before/after each operation"
+  ],
+  "noShapeMaterialWidthHeightRouteOwnerChange": true,
+  "stairsAreSeparateProposalOnly": true,
+  "resourceLimits": {
+    "threads": 2,
+    "seconds": 180,
+    "rssMiB": 2560
+  },
+  "noAutoRetry": true,
+  "noAutoRender": true,
+  "runtimeIntegrated": false,
+  "verdictRemains": "HOLD_SOURCE_COARSE_ONLY",
+  "executionMetadata": "External observer must record actual owned child PID and observed UTC/RSS; unchanged supervisor has no precise process times."
+}

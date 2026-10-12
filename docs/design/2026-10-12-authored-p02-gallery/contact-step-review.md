@@ -1,0 +1,55 @@
+# P02 stair contact: narrow runtime review
+
+2026-10-12. **Read-only source findings and an implementation proposal; unimplemented and not verified with actual stair poses.** No app/source edit, world compilation, test, browser, Blender or render was performed. References below identify the current live source at review time. This review extends [the floor/ownership contract review](contract-review.md) only at the actor contact boundary; it does not repeat or replace that work.
+
+The smallest contact implementation can keep the existing meshes, materials, face, body proportions and actor scale: add per-foot contact application in `actorScale.ts`, and apply a route-synchronized step pose inside the existing gallery branch of `growingLife.ts`. Moving two feet independently is already possible. **That fact is not evidence that every unchanged rig can climb the proposed stair without separating a foot from its leg/body, intersecting a riser, or losing support.** Real source dimensions and actual posed rigs must establish that separately before enabling the route.
+
+## 1. Actual rig and animation responsibilities
+
+| Source reference | Observed behavior | Consequence |
+| --- | --- | --- |
+| [worldScene.ts](../../../src/components/island/growing/worldScene.ts), lines 37–38; [islandCharacters.ts](../../../src/components/island/three/islandCharacters.ts), lines 7–26 | Growing creates the real Pokomoko through `makePokomokoRig`, then `wrapPokomoko`. Its two feet are independent ellipsoid Mesh objects directly under `hero`, constructed in `[-1, 1]` order at local X −0.12/+0.12. | Foot transforms can change without rebuilding the face/body. These are mesh-center pivots, not ankle, knee or hip joints. The learning-actor rig is not the Growing entry point. |
+| [actors.ts](../../../src/components/island/growing/actors.ts), lines 13–24, 89–107 | `Actor` exposes `feet: Object3D[]`, body and optional shoulder pivots. Original rig scale is 0.7 under the visual wrapper; authored visual scale is applied separately. | There is no leg/ankle IK or left/right contact interface. Retain construction order, geometry and scale; do not add a second 0.45 scale. |
+| [friendRig.ts](../../../src/components/island/growing/friendRig.ts), lines 40–49, 203–209, 301–308; [residentRig.ts](../../../src/components/island/three/residentRig.ts), lines 128–142 | Friend feet are independent meshes under the pose. Rabbit retains the shared resident rig. Girl/boy leg shapes are body children and are merged by `finish` into the body batch. | Foot translation does not articulate a child's leg. Any new leg joint would require a separate scope and proof of unchanged neutral geometry; it is not necessary merely to demonstrate two-foot contact, and is not included in this minimal proposal. |
+| [growingLife.ts](../../../src/components/island/growing/growingLife.ts), lines 522–540, 588–628 | Gallery currently interpolates a 3D route, places the root, sets body pitch to zero and alternates foot pitch with `sin(now / 110 + side * π)`. Ordinary walking/play owns its separate root/body/foot pose. | The gallery animation has no planted-foot lock or tread-aware swing phase. Time-based foot rotation alone cannot establish discrete stair climbing. |
+| [residentRig.ts](../../../src/components/island/three/residentRig.ts), lines 32–46 | `sampleResidentStride` has a distance-based planted/swing pattern for other resident consumers. GrowingLife does not call it. | Its separation of planted and swing phases is a useful reference, but its fixed flat-ground stride/lift values and scale assumptions are not a stair-support API. |
+
+## 2. What contact correction changes
+
+[actorScale.ts](../../../src/components/island/growing/actorScale.ts), lines 49–82, measures the minimum world Y across **both** feet's actual indexed mesh vertices. `alignActorContact` computes one correction and adds it to `actor.visual.position`. It transforms a world-Y displacement through the inverse linear part of `actor.root.matrixWorld`, so a leaning root does not produce unintended world X/Z movement. It does not alter the root, individual foot transforms, geometry, materials or scale. The optional seat weight blends this correction with the cached torso contact.
+
+Therefore, calling the existing global alignment **after** placing each foot on a separate tread could displace both contacts together. The proposed order is:
+
+1. Reset previous contact offsets, then establish this frame's root/body/foot pose.
+2. Establish the body/visual reference height once, before independent foot correction.
+3. Apply each actual sole's world contact or swing target through that foot parent's inverse linear transform.
+4. Check the final actual pose; do not pass it through a second ordinary ground alignment.
+
+The current gallery branch ends with `continue` at line 541, isolating it from ordinary contact at lines 610–628. `resetActorVisualContact` already runs at line 454 on normal ticks and restores the visual position plus each cached neutral foot **position** ([actorScale.ts](../../../src/components/island/growing/actorScale.ts), lines 17, 37–40). It does not restore foot rotation. The minimal implementation should keep the existing pitch-only foot rotation responsibility; adding yaw/roll/quaternion changes would also require an explicit reset contract.
+
+The per-foot parent-space mechanism already exists in `alignActorOnSeat`, lines 111–129: it measures each foot and translates its position using the actual parent's matrix. This supports reuse of the transformation technique, not reuse of the seat plane as stair support.
+
+## 3. Minimal proposed step API and boundaries
+
+Suggested split, with names illustrative rather than implemented:
+
+- A pure gallery step sampler uses the approved physical route/treads and progress to produce body reference, left/right world contact targets, planted/swing phase and their existing source floor/segment identities. Store phase/stance anchors only within `Walker.gallery` (currently lines 18–25). A planted foot keeps its world X/Z while the root advances; the other foot crosses the real riser with a clearance-validated swing trajectory. Neither interpolation through a riser nor an invisible support ramp is sufficient.
+- `applyActorStepContacts(actor, pose)` in `actorScale.ts` factors the indexed-vertex sole measurement into a per-foot query and applies the resulting XYZ delta through `foot.parent.matrixWorld`. It consumes already validated support targets; it does not infer floor ownership or select the highest floor. Flat planted feet can use pitch zero; swing pitch must be set before measuring its actual sole. Geometry, material, scale, face and body proportions remain unchanged.
+- Apply this only for an authored gallery step route in `growingLife.ts:522–540`. Retain existing legacy gallery behavior otherwise. Reduced motion may suppress decorative bob/arm swing, but must retain necessary foot lift, alternating support and valid landing contacts.
+- A missing tread, unsupported footprint, excessive reach/body separation or obstructed swing must fail closed through the route/pose safety path. A per-foot Y adjustment alone does not establish these conditions. Do not use a global actor enlargement, limb stretching or arbitrary extra clearance to turn an invalid stair into a passing one.
+
+Existing sitting and shore responsibilities remain separate: `alignActorOnSeat` is called only through lines 612–627; shore uses the ordinary branch after lines 543–544. Boat/pier have earlier branches at lines 475–496. Do not replace their global contact behavior with tread lookup.
+
+Keep new step state inside `gallery`, so the existing clear paths also clear it: source/place invalidation (`growingLife.ts:109–118`), home return (171–173), safe-ground settlement (237–249), pick (336–339), new visit (405–413) and gallery completion (539). The following tick's reset must restore both foot positions without accumulated offsets. Existing final-pose guard at 256–263 discards newly issued receipts when the pose fails; maintain that order. Continuous route/swing clearance still requires the separate contract review's selected-route guard, not merely an end-frame pose assertion.
+
+## 4. Minimum meaningful verification for implementation
+
+1. **Two real feet, two real treads:** with the real Pokomoko and each eligible friend rig, including girl/boy and the actual visual scale, place the two soles on different verified source tread triangles. Assert each planted foot's contact/footprint, actual mesh clearance from riser/structure and bounded continuity with the unchanged leg/body. Test a rotated/transformed assembly and changing heading. Preserve root anchor, geometry/material identities, face/body local transforms and scales. This is the missing evidence; static transform capability is insufficient.
+2. **Public journey with frame progression:** use `visitGallery` or the real pick/drag/drop entry and `tick`, rather than setting private mode/receipt fields. Cross ascent, landing, designated use and descent/exit with ordinary/reduced motion and a delta that crosses a step boundary. Check planted-foot stability, lifted-foot clearance throughout the swing, actual full-body pose safety and a legitimate receipt only after valid use. Include an unsupported landing / too-high or blocked step that produces no receipt and no imaginary support.
+3. **No persistent step offsets:** interrupt ascent through real pick/cancel and owner invalidation/store/restore. Verify safe return, cleared gallery phase, neutral foot positions and no stale contact/receipt. Afterward exercise the same actor on a bench/swing and shore or boat/pier support; their existing contact behavior and world dimensions must remain intact.
+
+Existing [actorScale.test.ts](../../../src/components/island/growing/actorScale.test.ts), lines 40–56, tests fixed single-ground contact for actual friend feet; lines 58–120 test seat correction, return and boat contact. [growingLifeScale.test.ts](../../../src/components/island/growing/growingLifeScale.test.ts), lines 69–132, exercises real seat/boat/pier behavior through public methods. These are useful regression anchors, not stair acceptance.
+
+Two existing gallery tests are specifically insufficient for this new claim: [placeGeometry.test.ts](../../../src/components/island/growing/placeGeometry.test.ts), lines 172–197, uses an actor with `feet: []`; [placeRootRoomGeometry.test.ts](../../../src/components/island/growing/placeRootRoomGeometry.test.ts), lines 219–253, samples real Pokomoko soles at route midpoints with a 0.10 height allowance, without a public animated stair journey or independent per-tread placement. Preserve their existing purposes, and add focused step tests rather than treating them as proof that stair gait already works.
+
+**Result:** a small contact/animation seam exists without changing Pokomoko's design. No implemented step API, verified climbable riser/reach limit, successful actual P02 stair traversal or release acceptance is claimed here.

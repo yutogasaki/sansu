@@ -1,0 +1,43 @@
+{
+  "pass": true,
+  "scope": "Normal native=false build only. DEV authored renderer is a separate target; no final deployment or offline update acceptance.",
+  "version": {
+    "version": "authored-flower-edge-c6:0b8f45f9-298b-453a-85ca-43138b83f07c",
+    "revision": "authored-flower-edge-c6",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "nativeArtFiles": [],
+  "versionSha256": "928af02a11441c16ee343fabdc7d06bb8068c9f4998029249204c69e80ea84f6",
+  "serviceWorkerSha256": "83c70e31c2f2163986fa5588d9bc7792bf4f1a7956094af163bc97a8382aeace",
+  "assetBudget": "PASS: precache 145 files / 8.33 MiB of 12 MiB; see execution.log"
+}

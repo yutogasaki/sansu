@@ -1,0 +1,190 @@
+{
+  "scope": "Read-only numerical source-normal/material comparison; no geometry, rights, app, source or browser changes",
+  "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+  "terrainNode": {
+    "mesh": 3112,
+    "name": "Island / continuous sculpted mature terrain"
+  },
+  "parts": [
+    {
+      "id": "Island / continuous sculpted mature terrain:0",
+      "material": {
+        "doubleSided": true,
+        "name": "ground / fresh soft meadow",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.37123769521713257,
+            0.5972017645835876,
+            0.24228112399578094,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.7799999713897705
+        }
+      },
+      "sourceNormalComparedToRecomputedDegrees": {
+        "count": 20327,
+        "mean": 0.7658768431139187,
+        "p50": 0,
+        "p95": 5.750831808735851,
+        "max": 81.33001951530109
+      },
+      "centralNormalDifferenceDegrees": {
+        "count": 84,
+        "mean": 1.2096075928207977,
+        "p50": 0.8874564367770456,
+        "p95": 3.132654390794351,
+        "max": 4.8951878676366904
+      }
+    },
+    {
+      "id": "Island / continuous sculpted mature terrain:1",
+      "material": {
+        "doubleSided": true,
+        "name": "hill / silvery meadow",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.28314873576164246,
+            0.4969329833984375,
+            0.3967552185058594,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.7799999713897705
+        }
+      },
+      "sourceNormalComparedToRecomputedDegrees": {
+        "count": 15972,
+        "mean": 3.156211220131534,
+        "p50": 1.3381472704957962,
+        "p95": 12.266114621495591,
+        "max": 64.72592948111382
+      },
+      "centralNormalDifferenceDegrees": {
+        "count": 2123,
+        "mean": 4.759198609662623,
+        "p50": 3.726324938872278,
+        "p95": 13.705496066634156,
+        "max": 31.433297146832295
+      }
+    },
+    {
+      "id": "Island / continuous sculpted mature terrain:2",
+      "material": {
+        "doubleSided": true,
+        "name": "harbor / light seaside meadow",
+        "pbrMetallicRoughness": {
+          "baseColorFactor": [
+            0.43965718150138855,
+            0.5840784311294556,
+            0.2622506618499756,
+            1
+          ],
+          "metallicFactor": 0,
+          "roughnessFactor": 0.7799999713897705
+        }
+      },
+      "sourceNormalComparedToRecomputedDegrees": {
+        "count": 9374,
+        "mean": 1.1002369092606303,
+        "p50": 0.02225178241050878,
+        "p95": 5.722980778564864,
+        "max": 82.1036458424357
+      },
+      "centralNormalDifferenceDegrees": null
+    }
+  ],
+  "seams": {
+    "count": 578,
+    "source": {
+      "count": 578,
+      "mean": 3.295096795674049e-7,
+      "p50": 0,
+      "p95": 0.0000012074182697257333,
+      "max": 0.0000017075472925031877
+    },
+    "recomputed": {
+      "count": 578,
+      "mean": 9.881781210921341,
+      "p50": 5.593262626326303,
+      "p95": 29.323374928627935,
+      "max": 163.43366535666826
+    },
+    "centralCount": 6,
+    "centralRecomputed": {
+      "count": 6,
+      "mean": 3.3186030250119543,
+      "p50": 4.922825234914207,
+      "p95": 5.694496929040011,
+      "max": 5.694496929040011
+    },
+    "worst": [
+      {
+        "point": {
+          "x": 10.652499199,
+          "y": 0.029913069,
+          "z": -3.656145697
+        },
+        "sourceNormalAngle": 8.537736462515939e-7,
+        "recomputedNormalAngle": 163.43366535666826
+      },
+      {
+        "point": {
+          "x": 10.364283609,
+          "y": 0.001607342,
+          "z": -3.138232594
+        },
+        "sourceNormalAngle": 0.0000012074182697257333,
+        "recomputedNormalAngle": 107.17047974058232
+      },
+      {
+        "point": {
+          "x": 10.330416536,
+          "y": 0.000128318,
+          "z": -3.145078235
+        },
+        "sourceNormalAngle": 8.537736462515939e-7,
+        "recomputedNormalAngle": 105.92928999177518
+      },
+      {
+        "point": {
+          "x": 10.881588173,
+          "y": 0.05208563,
+          "z": -3.122949367
+        },
+        "sourceNormalAngle": 8.537736462515939e-7,
+        "recomputedNormalAngle": 103.19984917449516
+      },
+      {
+        "point": {
+          "x": 10.8477211,
+          "y": 0.047046484,
+          "z": -3.129795008
+        },
+        "sourceNormalAngle": 0.0000012074182697257333,
+        "recomputedNormalAngle": 101.57507350143693
+      }
+    ]
+  },
+  "carvedFloorDiagnosticFromFrozenV4AuthorInput": [
+    {
+      "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:0\"]",
+      "usedVertices": 20327,
+      "uniquePositions": 20327,
+      "duplicateCoordinateVertices": 0
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:1\"]",
+      "usedVertices": 51875,
+      "uniquePositions": 24422,
+      "duplicateCoordinateVertices": 27453
+    },
+    {
+      "id": "[\"native05-inlet-core\",\"Island / continuous sculpted mature terrain:2\"]",
+      "usedVertices": 9374,
+      "uniquePositions": 9374,
+      "duplicateCoordinateVertices": 0
+    }
+  ]
+}
+CARVED_NORMAL_BREAKS {"count":6,"mean":5.000636098461972,"p50":2.9891541508021082,"p95":13.140262705155333,"max":13.140262705155333}

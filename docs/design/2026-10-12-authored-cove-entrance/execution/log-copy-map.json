@@ -1,0 +1,149 @@
+{
+  "reason": "Raw *.log files are gitignored; .log.txt is byte-identical durable copy",
+  "files": [
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/apron-probe-v2-01.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/execution/apron-probe-v2-01.log.txt",
+      "sha256": "d11d71c7353ab211eb4d6e183509dd282ab9ce6dd8f32213ea0b2fbcf4ca9f51",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/apron-probe-v2-01.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/history/v3-rectangular-apron/execution/apron-probe-v2-01.log.txt",
+      "sha256": "d11d71c7353ab211eb4d6e183509dd282ab9ce6dd8f32213ea0b2fbcf4ca9f51",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/apron-probe-v3-clipped-01.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/execution/apron-probe-v3-clipped-01.log.txt",
+      "sha256": "68d12c6767c9e115f561e2d11bb17057856498ab494dcbc8335eea9183be3a55",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/apron-probe-v3-clipped-01.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/history/v3-rectangular-apron/execution/apron-probe-v3-clipped-01.log.txt",
+      "sha256": "68d12c6767c9e115f561e2d11bb17057856498ab494dcbc8335eea9183be3a55",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/apron-probe-v3-closed.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/execution/apron-probe-v3-closed.log.txt",
+      "sha256": "7f56f9eed1bba1cb85face20e266bd90a0ac4d0a2e1c26e63701c991a6688afb",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/apron-probe-v3-closed.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/history/v3-rectangular-apron/execution/apron-probe-v3-closed.log.txt",
+      "sha256": "7f56f9eed1bba1cb85face20e266bd90a0ac4d0a2e1c26e63701c991a6688afb",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/build-01.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/execution/build-01.log.txt",
+      "sha256": "04df8b12452f9c59bbdc5eb20d58062d2533dd99fb319c8e1e5bf50ade4ca67c",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/build-01.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/history/v3-rectangular-apron/execution/build-01.log.txt",
+      "sha256": "04df8b12452f9c59bbdc5eb20d58062d2533dd99fb319c8e1e5bf50ade4ca67c",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/build-02.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/execution/build-02.log.txt",
+      "sha256": "3e2ddd90b4093b73d5fedab298d36102c5612b713d087cfe5fb64ed94c29f480",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/build-02.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/history/v3-rectangular-apron/execution/build-02.log.txt",
+      "sha256": "3e2ddd90b4093b73d5fedab298d36102c5612b713d087cfe5fb64ed94c29f480",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/build-assembly-v3-clipped.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/execution/build-assembly-v3-clipped.log.txt",
+      "sha256": "e50fb0ac2ec259e5b06ee717f71a2eb1ed37a6d4eddc1cce9added3b763c0d08",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/build-assembly-v3-clipped.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/history/v3-rectangular-apron/execution/build-assembly-v3-clipped.log.txt",
+      "sha256": "e50fb0ac2ec259e5b06ee717f71a2eb1ed37a6d4eddc1cce9added3b763c0d08",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/build-assembly-v3-materials.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/execution/build-assembly-v3-materials.log.txt",
+      "sha256": "a71194d33078a181ca7afd02a82b5e00b8688560526f38dc293668cb4dd5528c",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/build-assembly-v3-materials.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/history/v3-rectangular-apron/execution/build-assembly-v3-materials.log.txt",
+      "sha256": "a71194d33078a181ca7afd02a82b5e00b8688560526f38dc293668cb4dd5528c",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/build-v3-01.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/execution/build-v3-01.log.txt",
+      "sha256": "fe5e3b877d0c6206ba09179bdac5b2305bce605c302cf3985d21a7a660ca174d",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/build-v3-01.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/history/v3-rectangular-apron/execution/build-v3-01.log.txt",
+      "sha256": "fe5e3b877d0c6206ba09179bdac5b2305bce605c302cf3985d21a7a660ca174d",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/full-width-v3-closed.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/execution/full-width-v3-closed.log.txt",
+      "sha256": "5d4338ca24e632ada3e25054c5c95966b04e17369c04d5ab404e28bff58496b3",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/full-width-v3-closed.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/history/v3-rectangular-apron/execution/full-width-v3-closed.log.txt",
+      "sha256": "5d4338ca24e632ada3e25054c5c95966b04e17369c04d5ab404e28bff58496b3",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/probe-02.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/execution/probe-02.log.txt",
+      "sha256": "c8acd193fed96f718c6793d8ef5070b933a3eb36aab43536aa26b27809333b46",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/probe-02.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/history/v3-rectangular-apron/execution/probe-02.log.txt",
+      "sha256": "c8acd193fed96f718c6793d8ef5070b933a3eb36aab43536aa26b27809333b46",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/source-continuity-02.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/execution/source-continuity-02.log.txt",
+      "sha256": "d59e1aa4efe758591bf6d41fb3550381e3aa60e915ed7f419f3cba336fae14c1",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/source-continuity-02.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/history/v3-rectangular-apron/execution/source-continuity-02.log.txt",
+      "sha256": "d59e1aa4efe758591bf6d41fb3550381e3aa60e915ed7f419f3cba336fae14c1",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/source-preview-v3-materials.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/execution/source-preview-v3-materials.log.txt",
+      "sha256": "5f3465629ac6552de551e979cff1f1f3d7ceaedfe7d428880ae24daeb94613ff",
+      "identical": true
+    },
+    {
+      "raw": "docs/design/2026-10-12-authored-cove-entrance/execution/source-preview-v3-materials.log",
+      "durable": "docs/design/2026-10-12-authored-cove-entrance/history/v3-rectangular-apron/execution/source-preview-v3-materials.log.txt",
+      "sha256": "5f3465629ac6552de551e979cff1f1f3d7ceaedfe7d428880ae24daeb94613ff",
+      "identical": true
+    }
+  ]
+}

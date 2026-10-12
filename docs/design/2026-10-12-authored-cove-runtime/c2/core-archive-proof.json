@@ -1,0 +1,34 @@
+{
+  "revision": "authored-cove-c2",
+  "target": "/private/tmp/sansu-authored-cove-c2/candidate",
+  "visualCandidate": "native05-authored-cove-shore-v4",
+  "shellSourceId": "native05-authored-cove-corner-v3",
+  "status": "Core PASS and two-view shape PASS; first full browser failed after legal p9 move onto a main-path bottleneck. Full/regression acceptance is not established for c2.",
+  "corePass": true,
+  "coreInputCount": 2137,
+  "sourceClosureUnchanged": true,
+  "snapshotSha256": "5eecfc05c92420b3f7fc2b8923ef6fa371637ca0e3c30f43d8ac77931f294a36",
+  "inputArchiveSha256": "7458c6f2f1802a763dda45e5c235597e758bd9a9a138b5f9d2cbb4ab3bee5729",
+  "inputArchiveBytes": 106052656,
+  "archiveInputsVerified": true,
+  "inputArchiveParts": [
+    {
+      "path": "input-sources.tar.gz.part01",
+      "bytes": 50331648,
+      "sha256": "3e02790100b86a6a9a59fd96c6a72a9705c15c9c19dee90768fce33a692723d4"
+    },
+    {
+      "path": "input-sources.tar.gz.part02",
+      "bytes": 50331648,
+      "sha256": "1970b4ae2b644fd666aaae6cfdc6d57926edbec388b8b92149c145a6eae37aee"
+    },
+    {
+      "path": "input-sources.tar.gz.part03",
+      "bytes": 5389360,
+      "sha256": "72fa3ba0a58d52f26811805cd0cb5095938a29c3796b07b676c5a78c3a51c092"
+    }
+  ],
+  "reconstruction": "Concatenate numbered parts in ascending order; their concatenated bytes form the verified gzip tar. Each part is below 100 MiB.",
+  "fullBrowserPass": false,
+  "regressionsStarted": false
+}

@@ -1,0 +1,65 @@
+{
+  "coreReport": "/private/tmp/sansu-authored-flower-core-c13/report.json",
+  "coreReportSha256": "5c029c5ddbba5643dfffb235cc008e01eff7f111ea575fe7627ec1a7637ce6d7",
+  "coreInputCount": 1895,
+  "startedAtUnixSeconds": 1791737278.7426538,
+  "pass": false,
+  "stages": [
+    {
+      "name": "01-baseline27-editing",
+      "pass": true,
+      "exitCode": 0,
+      "coreInputsMatch": true,
+      "sourceFixed": true,
+      "failurePhase": null,
+      "error": null,
+      "toolReportInspection": {
+        "pass": true,
+        "failurePhase": null,
+        "error": null,
+        "scenarioCount": 0,
+        "failedScenarios": [],
+        "stepsPassed": 6,
+        "captureCount": 7,
+        "target": "http://127.0.0.1:5352/prototypes/place-qa/authored.html",
+        "lastCompletedScenario": null,
+        "lastCapture": {
+          "file": "tablet-dusk-whole.png",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "url": "http://127.0.0.1:5352/prototypes/place-qa/authored.html",
+          "build": "authored-flower-lifecycle-c4"
+        }
+      },
+      "flowerResultInspection": null,
+      "report": "/private/tmp/sansu-authored-flower-regressions-c15/01-baseline27-editing/report.json"
+    },
+    {
+      "name": "02-wide27-water",
+      "pass": false,
+      "exitCode": 0,
+      "coreInputsMatch": true,
+      "sourceFixed": true,
+      "failurePhase": "outer-runner-error",
+      "error": "AttributeError(\"'str' object has no attribute 'get'\")",
+      "toolReportInspection": null,
+      "flowerResultInspection": null,
+      "report": "/private/tmp/sansu-authored-flower-regressions-c15/02-wide27-water/report.json"
+    }
+  ],
+  "firstFailure": {
+    "name": "02-wide27-water",
+    "pass": false,
+    "exitCode": 0,
+    "coreInputsMatch": true,
+    "sourceFixed": true,
+    "failurePhase": "outer-runner-error",
+    "error": "AttributeError(\"'str' object has no attribute 'get'\")",
+    "toolReportInspection": null,
+    "flowerResultInspection": null,
+    "report": "/private/tmp/sansu-authored-flower-regressions-c15/02-wide27-water/report.json"
+  },
+  "finishedAtUnixSeconds": 1791738031.349702
+}

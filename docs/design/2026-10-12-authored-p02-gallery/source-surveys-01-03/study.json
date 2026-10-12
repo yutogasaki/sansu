@@ -1,0 +1,462 @@
+{
+  "candidate": "p02-native-bough-ramp-coarse-v0",
+  "status": "PREPARED_NOT_EXECUTED",
+  "inputs": {
+    "context": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/extraction-attempt02/fixed-c1-context.glb",
+      "sha256": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008",
+      "bytes": 19623452
+    },
+    "leftTrees": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/extraction-attempt02/role-separated-originals.glb",
+      "sha256": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+      "bytes": 843044
+    },
+    "contextManifest": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/extraction-attempt02/manifest.json",
+      "sha256": "3c3fcd13bf4867946a0f393769f852cb938286329dfa2e11dac3afe74796bda2",
+      "bytes": 170092
+    },
+    "forestStudy": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-forest-crowns/study.json",
+      "sha256": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+      "bytes": 482322
+    },
+    "sourceBlend": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.blend",
+      "sha256": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+      "bytes": 6585301
+    },
+    "sourceGlb": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.glb",
+      "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "bytes": 34930176
+    },
+    "benchmark": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island-render.png",
+      "sha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "bytes": 2579296
+    },
+    "envelope": {
+      "path": "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-whole-massing/raw/actor-envelope-identity.json",
+      "sha256": "444beab3c5b078799e974424e225e0a2e6742d6b99ad7e94be5edb54088af1db",
+      "bytes": 5969
+    }
+  },
+  "place": {
+    "id": "P02:p3",
+    "revision": "[1,\"P02\",\"cluster\",\"grown\",[[\"l10\",3,-9],[\"l11\",4,-9],[\"l12\",3,-8],[\"l13\",4,-8],[\"l25\",2,-7],[\"p3\",2,-8]],[{\"x\":4,\"z\":-10},{\"x\":3,\"z\":-9.75},{\"x\":3.25,\"z\":-9.75},{\"x\":3.75,\"z\":-9.75},{\"x\":4,\"z\":-9.75},{\"x\":4.25,\"z\":-9.75},{\"x\":2.25,\"z\":-9.25},{\"x\":2,\"z\":-9},{\"x\":2.25,\"z\":-9},{\"x\":3,\"z\":-9},{\"x\":4,\"z\":-9},{\"x\":1.75,\"z\":-8.75},{\"x\":2,\"z\":-8.75},{\"x\":2.25,\"z\":-8.75},{\"x\":1.25,\"z\":-8.25},{\"x\":4.75,\"z\":-8.25},{\"x\":1,\"z\":-8},{\"x\":1.25,\"z\":-8},{\"x\":2,\"z\":-8},{\"x\":3,\"z\":-8},{\"x\":4,\"z\":-8},{\"x\":4.75,\"z\":-8},{\"x\":5,\"z\":-8},{\"x\":1.25,\"z\":-7.75},{\"x\":4.75,\"z\":-7.75},{\"x\":1.25,\"z\":-7.25},{\"x\":2.75,\"z\":-7.25},{\"x\":3,\"z\":-7.25},{\"x\":3.25,\"z\":-7.25},{\"x\":3.75,\"z\":-7.25},{\"x\":4,\"z\":-7.25},{\"x\":4.25,\"z\":-7.25},{\"x\":1,\"z\":-7},{\"x\":1.25,\"z\":-7},{\"x\":2,\"z\":-7},{\"x\":2.75,\"z\":-7},{\"x\":3,\"z\":-7},{\"x\":4,\"z\":-7},{\"x\":1.25,\"z\":-6.75},{\"x\":2.75,\"z\":-6.75},{\"x\":1.75,\"z\":-6.25},{\"x\":2,\"z\":-6.25},{\"x\":2.25,\"z\":-6.25},{\"x\":2,\"z\":-6}],[{\"x\":4,\"z\":-10},{\"x\":3,\"z\":-9.75},{\"x\":3.25,\"z\":-9.75},{\"x\":3.75,\"z\":-9.75},{\"x\":4,\"z\":-9.75},{\"x\":4.25,\"z\":-9.75},{\"x\":2.25,\"z\":-9.25},{\"x\":2,\"z\":-9},{\"x\":2.25,\"z\":-9},{\"x\":1.75,\"z\":-8.75},{\"x\":2,\"z\":-8.75},{\"x\":2.25,\"z\":-8.75},{\"x\":1.25,\"z\":-8.25},{\"x\":4.75,\"z\":-8.25},{\"x\":1,\"z\":-8},{\"x\":1.25,\"z\":-8},{\"x\":4.75,\"z\":-8},{\"x\":5,\"z\":-8},{\"x\":1.25,\"z\":-7.75},{\"x\":4.75,\"z\":-7.75},{\"x\":1.25,\"z\":-7.25},{\"x\":2.75,\"z\":-7.25},{\"x\":3,\"z\":-7.25},{\"x\":3.25,\"z\":-7.25},{\"x\":3.75,\"z\":-7.25},{\"x\":4,\"z\":-7.25},{\"x\":4.25,\"z\":-7.25},{\"x\":1,\"z\":-7},{\"x\":1.25,\"z\":-7},{\"x\":2.75,\"z\":-7},{\"x\":3,\"z\":-7},{\"x\":4,\"z\":-7},{\"x\":1.25,\"z\":-6.75},{\"x\":2.75,\"z\":-6.75},{\"x\":1.75,\"z\":-6.25},{\"x\":2,\"z\":-6.25},{\"x\":2.25,\"z\":-6.25},{\"x\":2,\"z\":-6}],[],[{\"id\":\"l25\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":-7}}]]",
+    "ownerIds": [
+      "l10",
+      "l11",
+      "l12",
+      "l13"
+    ],
+    "supportCells": [
+      [
+        3,
+        -9
+      ],
+      [
+        4,
+        -9
+      ],
+      [
+        3,
+        -8
+      ],
+      [
+        4,
+        -8
+      ]
+    ],
+    "derivedGroundEntrances": [
+      {
+        "x": 4,
+        "z": -10
+      },
+      {
+        "x": 3,
+        "z": -9.75
+      },
+      {
+        "x": 3.25,
+        "z": -9.75
+      },
+      {
+        "x": 3.75,
+        "z": -9.75
+      },
+      {
+        "x": 4,
+        "z": -9.75
+      },
+      {
+        "x": 4.25,
+        "z": -9.75
+      },
+      {
+        "x": 2.25,
+        "z": -9.25
+      },
+      {
+        "x": 2,
+        "z": -9
+      },
+      {
+        "x": 2.25,
+        "z": -9
+      },
+      {
+        "x": 1.75,
+        "z": -8.75
+      },
+      {
+        "x": 2,
+        "z": -8.75
+      },
+      {
+        "x": 2.25,
+        "z": -8.75
+      },
+      {
+        "x": 1.25,
+        "z": -8.25
+      },
+      {
+        "x": 4.75,
+        "z": -8.25
+      },
+      {
+        "x": 1,
+        "z": -8
+      },
+      {
+        "x": 1.25,
+        "z": -8
+      },
+      {
+        "x": 4.75,
+        "z": -8
+      },
+      {
+        "x": 5,
+        "z": -8
+      },
+      {
+        "x": 1.25,
+        "z": -7.75
+      },
+      {
+        "x": 4.75,
+        "z": -7.75
+      },
+      {
+        "x": 1.25,
+        "z": -7.25
+      },
+      {
+        "x": 2.75,
+        "z": -7.25
+      },
+      {
+        "x": 3,
+        "z": -7.25
+      },
+      {
+        "x": 3.25,
+        "z": -7.25
+      },
+      {
+        "x": 3.75,
+        "z": -7.25
+      },
+      {
+        "x": 4,
+        "z": -7.25
+      },
+      {
+        "x": 4.25,
+        "z": -7.25
+      },
+      {
+        "x": 1,
+        "z": -7
+      },
+      {
+        "x": 1.25,
+        "z": -7
+      },
+      {
+        "x": 2.75,
+        "z": -7
+      },
+      {
+        "x": 3,
+        "z": -7
+      },
+      {
+        "x": 4,
+        "z": -7
+      },
+      {
+        "x": 1.25,
+        "z": -6.75
+      },
+      {
+        "x": 2.75,
+        "z": -6.75
+      },
+      {
+        "x": 1.75,
+        "z": -6.25
+      },
+      {
+        "x": 2,
+        "z": -6.25
+      },
+      {
+        "x": 2.25,
+        "z": -6.25
+      },
+      {
+        "x": 2,
+        "z": -6
+      }
+    ],
+    "groundEntryCandidates": [
+      [
+        3,
+        -7.25
+      ],
+      [
+        3.75,
+        -7.25
+      ],
+      [
+        4,
+        -7.25
+      ]
+    ],
+    "entryNote": "actual derived P02 entrances, not yet triangle/guard measured"
+  },
+  "transform": {
+    "authoredOrigin": [
+      3.5,
+      1.49033759075,
+      -8.5
+    ],
+    "sourceGltfPivot": [
+      -4.8,
+      3.7931642532348633,
+      -17
+    ],
+    "scale": 0.45,
+    "rendererToAuthored": [
+      7.0026560305,
+      0,
+      2
+    ],
+    "fanLocalY": 2.055093097686768
+  },
+  "envelope": {
+    "radius": 0.24406937059140585,
+    "height": 0.5500928879753579,
+    "bands": [
+      {
+        "radius": 0.09134999737143516,
+        "minY": 0.20385103985494077,
+        "maxY": 0.5500928879753579
+      },
+      {
+        "radius": 0.1353778402505187,
+        "minY": 0.018073202984005398,
+        "maxY": 0.12266860259311367
+      },
+      {
+        "radius": 0.11740714544627996,
+        "minY": -0.013389719108070908,
+        "maxY": 0.10058152468518997
+      },
+      {
+        "radius": 0.2238622310757637,
+        "minY": 0.022500694926418825,
+        "maxY": 0.32194834489438806
+      },
+      {
+        "radius": 0.11572916628891829,
+        "minY": -0.0190976441475757,
+        "maxY": 0.09264667927451685
+      },
+      {
+        "radius": 0.24406937059140585,
+        "minY": 0.08157946600510133,
+        "maxY": 0.2593961556396356
+      },
+      {
+        "radius": 0.21917178645545318,
+        "minY": 0.03156508037188276,
+        "maxY": 0.4915557144776604
+      },
+      {
+        "radius": 0.08661284906887425,
+        "minY": 0.01597534732239344,
+        "maxY": 0.2971977641282517
+      }
+    ],
+    "source": {
+      "actorIds": [
+        "pokomoko",
+        "authored-friend-0",
+        "authored-friend-1",
+        "authored-friend-2",
+        "authored-friend-3",
+        "authored-friend-4",
+        "authored-friend-5",
+        "authored-friend-6",
+        "authored-friend-7"
+      ],
+      "visualScales": [
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ],
+        [
+          0.45,
+          0.45,
+          0.45
+        ]
+      ],
+      "meshes": 117,
+      "vertices": 99868,
+      "footSwing": 0.5,
+      "armSwing": 0.6,
+      "walkBob": 0.015750000000000004,
+      "method": "indexed-source-motion-intervals"
+    }
+  },
+  "design": {
+    "clearWidth": 0.5681387411828117,
+    "structuralWidth": 0.64,
+    "headReserve": 0.04,
+    "thickness": 0.07,
+    "railRadius": 0.014,
+    "railHeight": 0.32,
+    "rampRadius": 1.16,
+    "rampStartDegrees": -68,
+    "rampEndDegrees": -210,
+    "shortGalleryEndDegrees": -235,
+    "segmentsPerFullTurn": 144,
+    "sourceFloorName": "Grove / hollow dwelling floor",
+    "sourceGalleryName": "Grove / continuous bough gallery",
+    "sourceBarkDonorName": "Grove / gallery grown support",
+    "maximumBoughSpan": 1.35,
+    "boughRadius": 0.055,
+    "probeStep": 0.05,
+    "probeSectionSides": 5,
+    "limitNote": "all geometry numbers are coarse authoring choices, not product/runtime thresholds; measured constraints are envelope and original transform"
+  },
+  "camera": {
+    "file": "fixed35-desktop-whole-day.png",
+    "sha256": "070ca145b6b32563d0ebc3032cf82684b0bf32f9ead881fb8551231ab920d3ea",
+    "build": "authored-shoulder-c1",
+    "appVersion": "authored-shoulder-c1:3fd164b9-6f32-4502-9ca5-dde6c5c1cbd7",
+    "viewport": {
+      "width": 1280,
+      "height": 900
+    },
+    "url": "http://127.0.0.1:5358/prototypes/place-qa/authored.html?water=wide&cove=corner&shoulder=central&ground=source&reference=shoulder35",
+    "path": "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/fixed35-desktop-whole-day.png",
+    "camera": {
+      "matrixWorld": [
+        0.791285001392167,
+        0,
+        -0.6114475010757655,
+        0,
+        -0.35705914772988984,
+        0.8117844741035437,
+        -0.4620765441210338,
+        0,
+        0.4963635881027163,
+        0.5839571624737837,
+        0.6423528787211621,
+        0,
+        13.047468327933109,
+        17.236913749938754,
+        11.088080956571414,
+        1
+      ],
+      "projectionMatrix": [
+        0.09694473508925269,
+        0,
+        0,
+        0,
+        0,
+        0.13412901704129482,
+        0,
+        0,
+        0,
+        0,
+        -0.02002002002002002,
+        0,
+        0,
+        0,
+        -1.002002002002002,
+        1
+      ],
+      "center": 7.0026560305,
+      "curved": false
+    }
+  },
+  "plannedViews": [
+    "whole-exact-reference",
+    "whole-rotated-derived-35deg",
+    "entry-section-derived"
+  ],
+  "scope": {
+    "runtimeIntegrated": false,
+    "ownerCount": 35,
+    "rights": 75,
+    "noNewRights": true,
+    "noNewOwners": true,
+    "noSourceTrunkChange": true,
+    "leftTreesRestoredExactly": true,
+    "sourceOnly": true
+  }
+}

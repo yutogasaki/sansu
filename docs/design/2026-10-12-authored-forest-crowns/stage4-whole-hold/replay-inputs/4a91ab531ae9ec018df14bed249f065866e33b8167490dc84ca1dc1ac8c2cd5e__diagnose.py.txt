@@ -1,0 +1,164 @@
+"""Replay original stage4 apply, stop at first exception, inspect throwaway clones.
+
+No guard replacement, tolerance change, broad normal recalculation, source save,
+join work, render, or stage4 retry. Exception frame locals expose exact operands.
+"""
+import os
+assert os.environ.get('SANSU_FOREST_NORMAL_DEBUG_APPROVED')=='1','Await diagnostic window'
+import bpy
+import gzip
+import hashlib
+import json
+import math
+import sys
+import traceback
+from pathlib import Path
+from mathutils import Matrix,Vector
+HERE=Path(__file__).resolve().parent;STAGE=HERE.parent;BASE=STAGE.parent
+sys.dont_write_bytecode=True;sys.path.insert(0,str(STAGE))
+import deform
+import fields
+import source_helpers as native
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+OUT=HERE/'attempt-01';assert not OUT.exists(),'Retain first diagnostic';OUT.mkdir()
+P=json.loads((STAGE/'proposal.json').read_text())
+B=Matrix(((1,0,0,0),(0,0,-1,0),(0,1,0,0),(0,0,0,1)));BI=B.inverted()
+EXTRACT=BASE/'extraction-attempt02'
+
+def save(name,value):
+    text=json.dumps(value,indent=2,allow_nan=False)+'\n'
+    if name.endswith('.gz'):(OUT/name).write_bytes(gzip.compress(text.encode(),mtime=0))
+    else:(OUT/name).write_text(text)
+
+def vectors(values):return [list(v) for v in values]
+def rows(matrix):return [list(row) for row in matrix]
+def normal_stats(mesh,expected):
+    actual=[n.vector.copy() for n in mesh.corner_normals]
+    errors=[(a-b).length for a,b in zip(actual,expected)]
+    assert len(actual)==len(expected)
+    return {'maxL2':max(errors),'meanL2':sum(errors)/len(errors),'overOriginalGuard':sum(e>.002 for e in errors),
+            'normalLengths':[min(n.length for n in actual),max(n.length for n in actual)]},actual
+
+def clone(obj,data,name):
+    result=obj.copy();result.data=data.copy();result.name=name
+    bpy.context.scene.collection.objects.link(result)
+    assert result.matrix_world==obj.matrix_world
+    return result
+
+def frame_locals(error):
+    tb=error.__traceback__
+    while tb:
+        if Path(tb.tb_frame.f_code.co_filename).resolve()==(STAGE/'deform.py').resolve() and tb.tb_frame.f_code.co_name=='apply':
+            return dict(tb.tb_frame.f_locals)
+        tb=tb.tb_next
+    raise AssertionError('Expected original deform.apply exception frame unavailable')
+
+BOUND=json.loads((HERE/'readiness.json').read_text())['externalInputs']
+assert {name:sha(Path(name)) for name in BOUND}==BOUND
+completed=[];current=None
+try:
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    bpy.ops.import_scene.gltf(filepath=str(EXTRACT/'fixed-c1-context.glb'));context=set(bpy.data.objects)
+    bpy.ops.import_scene.gltf(filepath=str(EXTRACT/'role-separated-originals.glb'))
+    roles=[o for o in bpy.data.objects if o not in context and o.type=='MESH'];assert len(roles)==128
+    selected=[o for o in roles if not o['forestFixed'] and not(o['ownerId']=='l28' and o['forestRole']=='crown-tier')]
+    assert len(selected)==101
+    save('role-order.json',[{'name':o.name,'ownerId':o['ownerId'],'role':o['forestRole'],'ordinal':int(o['forestOrdinal'])} for o in selected])
+    for current in selected:
+        function=fields.field_for_role(current['ownerId'],current['forestRole'],current['forestOrdinal'],P)
+        field=lambda p,function=function:Vector(function(tuple(p)))
+        pin=P['owners'][current['ownerId']].get('branchRootPin')
+        pin_height=pin['anchorWorld'][1]+pin['fixedBandWorld'] if pin else None
+        input_data=current.data;current.data=input_data.copy()
+        try:
+            result=deform.apply(current,field,BI,pin_height)
+            completed.append(result)
+        except Exception as error:
+            original_traceback=traceback.format_exc();loc=frame_locals(error)
+            # Exact original implementation/guard ran above; do not patch it.
+            expected=loc['expected'];actual=loc['actual'];old_normals=loc['old_normals'];old_positions=loc['old_positions']
+            mesh=current.data;transform=loc['transform']
+            identity={'name':current.name,'ownerId':current['ownerId'],'role':current['forestRole'],
+                      'sourceNodeIndex':int(current['sourceNodeIndex']),'ordinal':int(current['forestOrdinal'])}
+            polygon_for_loop={li:p.index for p in mesh.polygons for li in p.loop_indices}
+            errors=[(a-b).length for a,b in zip(actual,expected)]
+            examples=[]
+            for li in sorted(range(len(errors)),key=lambda i:errors[i],reverse=True)[:24]:
+                loop=mesh.loops[li];vi=loop.vertex_index;poly=mesh.polygons[polygon_for_loop[li]]
+                point=transform@old_positions[vi]
+                derivative=native.jacobian(field,point)
+                eps=1e-5;columns=[]
+                for axis in range(3):
+                    lo=list(point);hi=list(point);lo[axis]-=eps;hi[axis]+=eps
+                    a=function(tuple(lo));b=function(tuple(hi));columns.append([(b[k]-a[k])/(2*eps) for k in range(3)])
+                j64=Matrix(tuple(tuple(columns[c][r] for c in range(3)) for r in range(3)))
+                normal64=(loc['normal_local']@j64.inverted().transposed()@loc['normal_world']@old_normals[li]).normalized()
+                fan=[i for i,l in enumerate(mesh.loops) if l.vertex_index==vi]
+                examples.append({'loop':li,'vertex':vi,'polygon':poly.index,'edge':loop.edge_index,
+                  'polygonSmooth':poly.use_smooth,'pinned':vi in loc['pinned'],'inputLocalPosition':list(old_positions[vi]),
+                  'storedLocalPosition':list(mesh.vertices[vi].co),'inputNormal':list(old_normals[li]),
+                  'expectedNormal':list(expected[li]),'storedNormal':list(actual[li]),'L2':errors[li],
+                  'storedPolygonGeometricNormal':list(poly.normal),'worldPoint':list(point),'worldTarget':list(field(point)),
+                  'jacobianOriginalF32Field':rows(derivative),'jacobianFieldPython64ThenMatrixF32':rows(j64),
+                  'expectedUsingPython64Field':list(normal64),'expectedJ64Difference':(normal64-expected[li]).length,
+                  'normalTransportMatrix':rows(loc['matrices'][vi]) if loc['matrices'][vi] is not None else None,
+                  'loopsSharingVertex':[{'loop':j,'polygon':polygon_for_loop[j],'expected':list(expected[j]),'stored':list(actual[j])} for j in fan]})
+            raw={'identity':identity,'inputLocalPositions':vectors(old_positions),'inputCornerNormals':vectors(old_normals),
+                 'expectedCornerNormals':vectors(expected),'storedCornerNormals':vectors(actual),
+                 'deformedLocalPositions':vectors([v.co for v in mesh.vertices]),
+                 'loops':[{'vertex':l.vertex_index,'edge':l.edge_index,'polygon':polygon_for_loop[l.index]} for l in mesh.loops],
+                 'polygons':[{'vertices':list(p.vertices),'loops':list(p.loop_indices),'smooth':p.use_smooth,'normal':list(p.normal)} for p in mesh.polygons],
+                 'edges':[{'vertices':list(e.vertices),'sharp':getattr(e,'use_edge_sharp',None)} for e in mesh.edges],
+                 'attributes':[{'name':a.name,'domain':a.domain,'dataType':a.data_type} for a in mesh.attributes],
+                 'hasCustomNormals':mesh.has_custom_normals,'objectMatrix':rows(current.matrix_world),
+                 'localToWorld':rows(transform),'normalToWorld':rows(loc['normal_world']),'normalToLocal':rows(loc['normal_local']),
+                 'perVertexNormalTransport':[rows(m) if m is not None else None for m in loc['matrices']],
+                 'pinnedVertexIndices':sorted(loc['pinned']),'largestResidualExamples':examples}
+            save('failing-role-raw.json.gz',raw);save('completed-before-failure.json',completed)
+            observations=[]
+            stat,_=normal_stats(mesh,expected);observations.append({'step':'original failure mesh repeated read; no update','stats':stat})
+            # Explicit cache/update probes affect throwaway data only.
+            probe=clone(current,mesh,'NORMAL DEBUG / post-failure copy')
+            stat,_=normal_stats(probe.data,expected);observations.append({'step':'post-failure data.copy immediate read','stats':stat})
+            probe.data.update()
+            stat,_=normal_stats(probe.data,expected);observations.append({'step':'copy mesh.update then read','stats':stat})
+            bpy.context.view_layer.update()
+            stat,_=normal_stats(probe.data,expected);observations.append({'step':'copy view_layer.update then read','stats':stat})
+            # Repeat same setter on same deformed geometry, no recomputed normals.
+            probe.data.normals_split_custom_set(expected)
+            stat,_=normal_stats(probe.data,expected);observations.append({'step':'copy resubmit exact original expected normals, immediate read','stats':stat})
+            probe.data.update();bpy.context.view_layer.update()
+            stat,probe_actual=normal_stats(probe.data,expected);observations.append({'step':'copy same expected assignment plus explicit updates','stats':stat})
+            save('clone-final-stored-normals.json.gz',vectors(probe_actual))
+            # A pristine input clone verifies the unmodified method and guard fail
+            # the same way independent of the first failed mesh's cache state.
+            pristine=clone(current,input_data,'NORMAL DEBUG / original-input copy')
+            pristine_outcome={}
+            try:
+                result=deform.apply(pristine,field,BI,pin_height)
+                pristine_outcome={'returned':result,'error':None}
+            except Exception as clone_error:
+                clone_loc=frame_locals(clone_error)
+                pristine_outcome={'error':repr(clone_error),'residual':clone_loc.get('residual'),
+                    'positionMaxL2AgainstFirst':max((a.co-b.co).length for a,b in zip(pristine.data.vertices,mesh.vertices)),
+                    'expectedMaxL2AgainstFirst':max((a-b).length for a,b in zip(clone_loc['expected'],expected)),
+                    'storedMaxL2AgainstFirst':max((a-b).length for a,b in zip(clone_loc['actual'],actual))}
+            result={'status':'DIAGNOSTIC ONLY; stage4 remains first-failure HOLD','failing':identity,
+                    'completedCountBeforeFailure':len(completed),'attemptedCount':len(completed)+1,'intendedCount':101,
+                    'originalError':repr(error),'originalTraceback':original_traceback,
+                    'originalResidual':loc.get('residual'),'originalGuard':.002,'observations':observations,
+                    'pristineExactMethodRepeat':pristine_outcome,'largestResidualExamples':examples,
+                    'originalApplyCodeSHA':sha(STAGE/'deform.py'),'originalFieldCodeSHA':sha(STAGE/'fields.py'),
+                    'noExplicitRecalculateNormalsOperator':True,'noToleranceChanges':True,'sceneSaved':False,
+                    'scope':'single first failing role diagnosis; no joins, leaf70, actor, render or acceptance'}
+            save('result.json',result);print(json.dumps({k:result[k] for k in ['failing','completedCountBeforeFailure','originalResidual','pristineExactMethodRepeat']}),flush=True)
+            break
+    else:raise AssertionError('Original 101 roles unexpectedly pass; first failure not reproduced')
+except BaseException as error:
+    save('diagnostic-failure.json',{'error':repr(error),'traceback':traceback.format_exc(),'completedCount':len(completed),
+                                 'object':current.name if current is not None else None})
+    raise
+finally:
+    after={name:sha(Path(name)) for name in BOUND}
+    save('input-parity.json',{'before':BOUND,'after':after,'equal':BOUND==after})
+    assert BOUND==after,'Diagnostic modified frozen input'

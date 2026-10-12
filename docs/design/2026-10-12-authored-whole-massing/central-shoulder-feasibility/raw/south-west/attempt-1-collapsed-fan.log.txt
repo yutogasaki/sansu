@@ -1,0 +1,14 @@
+<anonymous_script>:334
+  if (!valid) throw new Error(`Invalid island world: ${message}`);
+                    ^
+
+Error: Invalid island world: collapsed floor triangle
+    at requireWorld (eval at <anonymous> (file:///private/tmp/sansu-whole-massing-c-terrain/south-west/candidate-probe.mjs:4:1146), <anonymous>:334:21)
+    at compileFloor (eval at <anonymous> (file:///private/tmp/sansu-whole-massing-c-terrain/south-west/candidate-probe.mjs:4:1146), <anonymous>:434:9)
+    at Object.compileWorldDefinition (eval at <anonymous> (file:///private/tmp/sansu-whole-massing-c-terrain/south-west/candidate-probe.mjs:4:1146), <anonymous>:446:42)
+    at composeNumericC (file:///private/tmp/sansu-whole-massing-c-terrain/south-west/candidate-probe.mjs:28:16)
+    at composed (file:///private/tmp/sansu-whole-massing-c-terrain/south-west/candidate-probe.mjs:37:97)
+    at file:///private/tmp/sansu-whole-massing-c-terrain/south-west/candidate-probe.mjs:38:241
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v24.18.0

@@ -1,0 +1,96 @@
+{
+  "scope": "Explicit Float32 near-collinear top exceptions; source top triangulation and matching closed bank are fully retained, not triangle omission",
+  "candidate": "native05-authored-cove-shore-v4",
+  "triangleCount": 596,
+  "nonUpwardFloat32Count": 3,
+  "triangles": [
+    {
+      "patchTriangleIndex": 500,
+      "patchIndices": [
+        597,
+        0,
+        501
+      ],
+      "patchSignedUpArea": 2.721484516378641e-08,
+      "glbUnsignedArea": 1.0519057550928499e-07,
+      "maximumNearestVertexError": 2.095337497029541e-07,
+      "glbPoints": [
+        [
+          6.161675567626953,
+          -0.008999988317489632,
+          -0.9173270726203919
+        ],
+        [
+          6.16328875541687,
+          -0.008999988317489632,
+          -0.913500794172287
+        ],
+        [
+          6.594345922470093,
+          -0.008999988317489632,
+          0.10904297888278963
+        ]
+      ]
+    },
+    {
+      "patchTriangleIndex": 537,
+      "patchIndices": [
+        537,
+        538,
+        539
+      ],
+      "patchSignedUpArea": 9.544257311561166e-12,
+      "glbUnsignedArea": 2.047977153158819e-09,
+      "maximumNearestVertexError": 1.1253924083170075e-07,
+      "glbPoints": [
+        [
+          6.602076692581177,
+          -0.008999988317489632,
+          -0.360442733168602
+        ],
+        [
+          6.598284263610839,
+          -0.008999988317489632,
+          -0.3699869984388351
+        ],
+        [
+          6.590699834823608,
+          -0.008999988317489632,
+          -0.3890755289793014
+        ]
+      ]
+    },
+    {
+      "patchTriangleIndex": 538,
+      "patchIndices": [
+        539,
+        540,
+        541
+      ],
+      "patchSignedUpArea": 6.66829818359721e-12,
+      "glbUnsignedArea": 4.238552868060519e-18,
+      "maximumNearestVertexError": 1.1226352943891892e-07,
+      "glbPoints": [
+        [
+          6.590699834823608,
+          -0.008999988317489632,
+          -0.3890755289793014
+        ],
+        [
+          6.586907405853271,
+          -0.008999988317489632,
+          -0.39861979424953464
+        ],
+        [
+          6.583114976882935,
+          -0.008999988317489632,
+          -0.40816405951976786
+        ]
+      ]
+    }
+  ],
+  "closedSourceBoundaryEdges": 0,
+  "closedSourceNonmanifoldEdges": 0,
+  "noTopologyRepairApplied": true,
+  "limit": "Matching triangles within 4.252e-7 world-unit vertex serialization error. Do not claim every exported near-collinear top normal is upward."
+}

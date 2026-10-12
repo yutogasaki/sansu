@@ -1,0 +1,468 @@
+{
+  "finishedAt": "2026-10-12T02:53:53.638540+00:00",
+  "scope": "Three editable source candidates and source-only whole images; no selection, runtime integration or physical acceptance",
+  "sourceInputsBefore": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.glb": {
+      "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "bytes": 34930176
+    },
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.blend": {
+      "sha256": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+      "bytes": 6585301
+    },
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island-render.png": {
+      "sha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "bytes": 2579296
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/authored-shoulder-reference-mature.json": {
+      "sha256": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+      "bytes": 72862
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/docs/design/2026-10-11-native-owned-island/kit-manifest.json": {
+      "sha256": "0653ef4cd09a34102235e92726f77db772391b66d27e01da8175b8a6fd7eea8e",
+      "bytes": 20221
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/report.json": {
+      "sha256": "5479ebcf1d1ed27f4b2efcc6e5b5fb5772d9d9af6d522756b40d8b13d233e382",
+      "bytes": 1494352
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/fixed35-desktop-whole-day.png": {
+      "sha256": "070ca145b6b32563d0ebc3032cf82684b0bf32f9ead881fb8551231ab920d3ea",
+      "bytes": 489608
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/fixed35-desktop-hill-close-day.png": {
+      "sha256": "7ee7d70f87758e2d45dcc8f5f26cd4bad1c427df15d8de7e666bd77de34c7caf",
+      "bytes": 547519
+    },
+    "/private/tmp/sansu-forest-role-inventory/inventory.json": {
+      "sha256": "3abc8b69e2a94e269b81c55901513571e03c5cd9911e31af7d6902d44eb881e1",
+      "bytes": 402384
+    },
+    "/private/tmp/sansu-forest-role-inventory/anchors.json": {
+      "sha256": "eba0ec0934c882658a0cda5cf366a2ddd321e01a16ee14db7e59b8ccb31ceeb4",
+      "bytes": 44194
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/native05-world-source-shading.json.gz": {
+      "sha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+      "bytes": 2276640
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/authored-shoulder-profile.json.gz": {
+      "sha256": "82f8cd9ad83f4ffef7995d42087eb7d0f388b759a4b55526c10fe1c0ab1e34eb",
+      "bytes": 693036
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/native-shoulder-manifest.json": {
+      "sha256": "0ffd6f38fbcbe5ea5a3a0b46b3d2dcd9784df6d775082fe4138056df7e22ee9b",
+      "bytes": 5706
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/docs/design/2026-10-12-authored-cove-entrance/cove-delivery-manifest.json": {
+      "sha256": "90dd4291dee8e498deac9908f1890b5afbf71b07bac3181bc72b0109d6453873",
+      "bytes": 6057
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/package-lock.json": {
+      "sha256": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+      "bytes": 446804
+    }
+  },
+  "sourceInputsAfter": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.glb": {
+      "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "bytes": 34930176
+    },
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island.blend": {
+      "sha256": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+      "bytes": 6585301
+    },
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-10-island-final-3d/whole-island-render.png": {
+      "sha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "bytes": 2579296
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/authored-shoulder-reference-mature.json": {
+      "sha256": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+      "bytes": 72862
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/docs/design/2026-10-11-native-owned-island/kit-manifest.json": {
+      "sha256": "0653ef4cd09a34102235e92726f77db772391b66d27e01da8175b8a6fd7eea8e",
+      "bytes": 20221
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/report.json": {
+      "sha256": "5479ebcf1d1ed27f4b2efcc6e5b5fb5772d9d9af6d522756b40d8b13d233e382",
+      "bytes": 1494352
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/fixed35-desktop-whole-day.png": {
+      "sha256": "070ca145b6b32563d0ebc3032cf82684b0bf32f9ead881fb8551231ab920d3ea",
+      "bytes": 489608
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/shape-after-first-oom/actual/fixed35-desktop-hill-close-day.png": {
+      "sha256": "7ee7d70f87758e2d45dcc8f5f26cd4bad1c427df15d8de7e666bd77de34c7caf",
+      "bytes": 547519
+    },
+    "/private/tmp/sansu-forest-role-inventory/inventory.json": {
+      "sha256": "3abc8b69e2a94e269b81c55901513571e03c5cd9911e31af7d6902d44eb881e1",
+      "bytes": 402384
+    },
+    "/private/tmp/sansu-forest-role-inventory/anchors.json": {
+      "sha256": "eba0ec0934c882658a0cda5cf366a2ddd321e01a16ee14db7e59b8ccb31ceeb4",
+      "bytes": 44194
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/native05-world-source-shading.json.gz": {
+      "sha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+      "bytes": 2276640
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/authored-shoulder-profile.json.gz": {
+      "sha256": "82f8cd9ad83f4ffef7995d42087eb7d0f388b759a4b55526c10fe1c0ab1e34eb",
+      "bytes": 693036
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/prototypes/place-qa/native-shoulder-manifest.json": {
+      "sha256": "0ffd6f38fbcbe5ea5a3a0b46b3d2dcd9784df6d775082fe4138056df7e22ee9b",
+      "bytes": 5706
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/docs/design/2026-10-12-authored-cove-entrance/cove-delivery-manifest.json": {
+      "sha256": "90dd4291dee8e498deac9908f1890b5afbf71b07bac3181bc72b0109d6453873",
+      "bytes": 6057
+    },
+    "/private/tmp/sansu-authored-shoulder-c1/candidate/package-lock.json": {
+      "sha256": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+      "bytes": 446804
+    }
+  },
+  "sourceInputsUnchanged": true,
+  "studyParametersSha256": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+  "sourceOnly": true,
+  "runtimeIntegrated": false,
+  "independentObservers": 0,
+  "candidates": [
+    {
+      "candidate": "forest-crown-b1-low-wide-v0",
+      "image": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b1-low-wide-v0/source-whole.png",
+      "imageSha256": "f12760bbf244bc18461cb41de866b5c108e80536bdd4cc780122e571567ec2eb",
+      "sourceFiles": {
+        "study.blend": {
+          "path": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b1-low-wide-v0/study.blend",
+          "sha256": "fd03eff7851cc1f9c16708e305efcdd0c94f68c4775853b2714f145cc58a41c9",
+          "bytes": 13350531
+        },
+        "study.glb": {
+          "path": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b1-low-wide-v0/study.glb",
+          "sha256": "1aaf96c36cb01692208a629a7d922a886e5307bd9707c485d51089427a3a3c97",
+          "bytes": 20344892
+        },
+        "owned-tree-components.glb": {
+          "path": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b1-low-wide-v0/owned-tree-components.glb",
+          "sha256": "6209230945bda4bac3198ec159820a4ce8993cc21a5d3eb70f3b727c5c1b1eaf",
+          "bytes": 1008476
+        },
+        "manifest.json": {
+          "path": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b1-low-wide-v0/manifest.json",
+          "sha256": "1c75ca0a4266f5a694a181b1978b9adf4e11f425a6ef1953d72dabe5f9941e1c",
+          "bytes": 35113
+        },
+        "render-manifest.json": {
+          "path": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b1-low-wide-v0/render-manifest.json",
+          "sha256": "6732d9b8d4e46bf35e2f081204ad1198b6526d8876b20a74447f927375b5dab9",
+          "bytes": 1546
+        }
+      },
+      "fixedNodes": 23,
+      "parametersUnchanged": true,
+      "runtimeIntegrated": false
+    },
+    {
+      "candidate": "forest-crown-b2-rising-v0",
+      "image": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b2-rising-v0/source-whole.png",
+      "imageSha256": "8119a468dccb39bb472e172a34b0b4ae287c17809895eabbe96fc6458096dbbd",
+      "sourceFiles": {
+        "study.blend": {
+          "path": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b2-rising-v0/study.blend",
+          "sha256": "6ee40968c114fb9e8f5703732e3a3ae801276b1359007d4e03cab25763b73e6b",
+          "bytes": 13359558
+        },
+        "study.glb": {
+          "path": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b2-rising-v0/study.glb",
+          "sha256": "358a707752a8ad8d59847d019abdde0709f340e727292421f68933ab3d0b9ff0",
+          "bytes": 20345540
+        },
+        "owned-tree-components.glb": {
+          "path": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b2-rising-v0/owned-tree-components.glb",
+          "sha256": "3d74656e72c1186b16789ec4d3b245651d525127b314637a701f8c24ce933a71",
+          "bytes": 1009124
+        },
+        "manifest.json": {
+          "path": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b2-rising-v0/manifest.json",
+          "sha256": "c7f3fee78232f8da160be0cadbb182088181528dc8166de36dcea71fa41c8d2f",
+          "bytes": 35136
+        },
+        "render-manifest.json": {
+          "path": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b2-rising-v0/render-manifest.json",
+          "sha256": "24276a4aa742a8a230fb26313d3b9b8816e3895ef270fb14184fef777586143a",
+          "bytes": 1544
+        }
+      },
+      "fixedNodes": 23,
+      "parametersUnchanged": true,
+      "runtimeIntegrated": false
+    },
+    {
+      "candidate": "forest-crown-b3-open-crescent-v0",
+      "image": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b3-open-crescent-v0/source-whole.png",
+      "imageSha256": "4fc76def2d2d864ee0702acfc086eb9dc10f5dcd72b8f33333a61b642dfdcecc",
+      "sourceFiles": {
+        "study.blend": {
+          "path": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b3-open-crescent-v0/study.blend",
+          "sha256": "621089f1c84ccb0e8708a3f8d12e06e6b0514998feac4d46f30e9bef8c68abf8",
+          "bytes": 13361662
+        },
+        "study.glb": {
+          "path": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b3-open-crescent-v0/study.glb",
+          "sha256": "b13adbfcc4547456cb4b2988c663480fb927091bd39debf42a7f88a14b2785bb",
+          "bytes": 20345244
+        },
+        "owned-tree-components.glb": {
+          "path": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b3-open-crescent-v0/owned-tree-components.glb",
+          "sha256": "2b3f74a9435719d55d2ec8c6389b4a20e49a07db5a45ec06065f07eda1ecdf6e",
+          "bytes": 1008828
+        },
+        "manifest.json": {
+          "path": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b3-open-crescent-v0/manifest.json",
+          "sha256": "5f8e789e77d00c6aa42439a20f2544d5c6ef10bd29eb4006a190cf7bc82f15bc",
+          "bytes": 35171
+        },
+        "render-manifest.json": {
+          "path": "/private/tmp/sansu-authored-forest-crown-study/variants/forest-crown-b3-open-crescent-v0/render-manifest.json",
+          "sha256": "00299455b25b19231b23bb1a971e6a74f0b6e1ac03c4f93f15be8554b7c3aee6",
+          "bytes": 1551
+        }
+      },
+      "fixedNodes": 23,
+      "parametersUnchanged": true,
+      "runtimeIntegrated": false
+    }
+  ],
+  "files": {
+    "README.md": {
+      "bytes": 14121,
+      "sha256": "4c02e1fa8451f13afe6defa031906b6aad865d1d9b8719ae7916a56553dd75b9"
+    },
+    "build-variants.py": {
+      "bytes": 18014,
+      "sha256": "4cd0419b79e844036ff114de3c8ece9fb974541effba143d80f73bff99fa4ca8"
+    },
+    "execution-build.log.txt": {
+      "bytes": 195848,
+      "sha256": "23e4f6f27a76847b7b690f128a47e5162a85dfb97d782675e3a9929064423636"
+    },
+    "execution-extract-attempt02.log.txt": {
+      "bytes": 733,
+      "sha256": "5405f5baba5a30599fa668f760bc8748ec7c7edd852ec5db0ec4cd23714c033e"
+    },
+    "execution-extract.log.txt": {
+      "bytes": 1570,
+      "sha256": "639f9c1bc99bbfc117fd0561cb86edc53c69f1e5459c2d4f2818ecf5043e897a"
+    },
+    "execution-render.log.txt": {
+      "bytes": 5682,
+      "sha256": "a059f2ef41d3f3f9e613d4a2476b42b1ce465f8f4cea272086667a17c748ade5"
+    },
+    "extract-context.mjs": {
+      "bytes": 13720,
+      "sha256": "416d04bcdadd6a9b4b80251ac4cbaf5ecab3286812e9784ce5d4d9dc8e1e4908"
+    },
+    "extraction-attempt02/bindings.json": {
+      "bytes": 129110,
+      "sha256": "ea37659462f0b84df651131d60b47cba04c9f588aa4981d74d6c74bf8a229d16"
+    },
+    "extraction-attempt02/fixed-c1-context.glb": {
+      "bytes": 19623452,
+      "sha256": "67e7959da39c5854afe4441d76d5d093fa6206b5d4b916491fb48c17d480c008"
+    },
+    "extraction-attempt02/manifest.json": {
+      "bytes": 170092,
+      "sha256": "3c3fcd13bf4867946a0f393769f852cb938286329dfa2e11dac3afe74796bda2"
+    },
+    "extraction-attempt02/original-tree-role-subset.glb": {
+      "bytes": 34913404,
+      "sha256": "ae9f7a63398ddb49865e59e3e552019308ac82cb5dea0855afa3345b1b0b11ed"
+    },
+    "extraction-attempt02/role-separated-originals.glb": {
+      "bytes": 843044,
+      "sha256": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae"
+    },
+    "extraction-attempt02/source-subset-proof.json": {
+      "bytes": 111100,
+      "sha256": "76b5f1f293c1783d66d6af3fce38d16063e239f9cdf36bcb9523b8c242b8e22f"
+    },
+    "extraction-attempt02-script-manifest.json": {
+      "bytes": 627,
+      "sha256": "53f1079a83e9ed56272a67c7b4cd97de995ad85384b11599969951dedd7abfa5"
+    },
+    "history/completed-before-root-review/README.md": {
+      "bytes": 12640,
+      "sha256": "9440bf2514a97de1bfe95bcd2ab4fe4750af8d246bcbd2d4dbf48891e2ff3f48"
+    },
+    "history/extraction-attempt-01/execution-extract.log.txt": {
+      "bytes": 1570,
+      "sha256": "639f9c1bc99bbfc117fd0561cb86edc53c69f1e5459c2d4f2818ecf5043e897a"
+    },
+    "history/extraction-attempt-01/extract-context.mjs": {
+      "bytes": 13086,
+      "sha256": "7f02311bf61f6a96d9c5d49a73ba6fea47d410ad084f70a414bca53a28c9811c"
+    },
+    "history/extraction-attempt-01/first-failure.json": {
+      "bytes": 431,
+      "sha256": "f5588f52535b6c6faaa288c720ad821bee0cd10a1c4943d587417c9c9e47537b"
+    },
+    "history/extraction-attempt-01/readiness-manifest.json": {
+      "bytes": 1497,
+      "sha256": "1819e725e0ad8207f11ae32c9d93afd46b3ad93a03902b1931e8a1ad8f6f22d4"
+    },
+    "history/extraction-attempt-01/study.json": {
+      "bytes": 482322,
+      "sha256": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210"
+    },
+    "history/preparation/README.md": {
+      "bytes": 9253,
+      "sha256": "2d4ea15d7066bef35ecf8849e74d035e140348855b5d0da963de13be26bbc2b0"
+    },
+    "history/preparation/build-variants.py": {
+      "bytes": 18004,
+      "sha256": "666c67ec8ab86ed754c965fc30d543ed339fc24200e901711693f2d618e05117"
+    },
+    "history/preparation/extract-context.mjs": {
+      "bytes": 13086,
+      "sha256": "7f02311bf61f6a96d9c5d49a73ba6fea47d410ad084f70a414bca53a28c9811c"
+    },
+    "history/preparation/preparation.json": {
+      "bytes": 432,
+      "sha256": "961ed502bfda6dd0baca0443c6c4df0d4592ba3e8d8e73febdbec125bbfe0025"
+    },
+    "history/preparation/prepare-study.py": {
+      "bytes": 7377,
+      "sha256": "510415124b187b37e7f07b75e634754f4bcfef82b5acbe06aeb324aa379278e0"
+    },
+    "history/preparation/render-whole.py": {
+      "bytes": 2358,
+      "sha256": "b26481861617b984de2240911766fe412614cfc22fbd7426e6512f59aae0e725"
+    },
+    "history/preparation/study.json": {
+      "bytes": 482322,
+      "sha256": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210"
+    },
+    "preparation.json": {
+      "bytes": 432,
+      "sha256": "961ed502bfda6dd0baca0443c6c4df0d4592ba3e8d8e73febdbec125bbfe0025"
+    },
+    "prepare-study.py": {
+      "bytes": 7377,
+      "sha256": "510415124b187b37e7f07b75e634754f4bcfef82b5acbe06aeb324aa379278e0"
+    },
+    "readiness-manifest.json": {
+      "bytes": 1497,
+      "sha256": "1819e725e0ad8207f11ae32c9d93afd46b3ad93a03902b1931e8a1ad8f6f22d4"
+    },
+    "render-whole.py": {
+      "bytes": 2358,
+      "sha256": "b26481861617b984de2240911766fe412614cfc22fbd7426e6512f59aae0e725"
+    },
+    "source-subset.mjs": {
+      "bytes": 5660,
+      "sha256": "29a5aaecdc026fc293b2f1dc1ef02dd5e043856ec9066cb51bfa6b990a2862d0"
+    },
+    "study.json": {
+      "bytes": 482322,
+      "sha256": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210"
+    },
+    "variants/forest-crown-b1-low-wide-v0/manifest.json": {
+      "bytes": 35113,
+      "sha256": "1c75ca0a4266f5a694a181b1978b9adf4e11f425a6ef1953d72dabe5f9941e1c"
+    },
+    "variants/forest-crown-b1-low-wide-v0/owned-tree-components.glb": {
+      "bytes": 1008476,
+      "sha256": "6209230945bda4bac3198ec159820a4ce8993cc21a5d3eb70f3b727c5c1b1eaf"
+    },
+    "variants/forest-crown-b1-low-wide-v0/render-manifest.json": {
+      "bytes": 1546,
+      "sha256": "6732d9b8d4e46bf35e2f081204ad1198b6526d8876b20a74447f927375b5dab9"
+    },
+    "variants/forest-crown-b1-low-wide-v0/source-whole.png": {
+      "bytes": 1461636,
+      "sha256": "f12760bbf244bc18461cb41de866b5c108e80536bdd4cc780122e571567ec2eb"
+    },
+    "variants/forest-crown-b1-low-wide-v0/study.blend": {
+      "bytes": 13350531,
+      "sha256": "fd03eff7851cc1f9c16708e305efcdd0c94f68c4775853b2714f145cc58a41c9"
+    },
+    "variants/forest-crown-b1-low-wide-v0/study.glb": {
+      "bytes": 20344892,
+      "sha256": "1aaf96c36cb01692208a629a7d922a886e5307bd9707c485d51089427a3a3c97"
+    },
+    "variants/forest-crown-b2-rising-v0/manifest.json": {
+      "bytes": 35136,
+      "sha256": "c7f3fee78232f8da160be0cadbb182088181528dc8166de36dcea71fa41c8d2f"
+    },
+    "variants/forest-crown-b2-rising-v0/owned-tree-components.glb": {
+      "bytes": 1009124,
+      "sha256": "3d74656e72c1186b16789ec4d3b245651d525127b314637a701f8c24ce933a71"
+    },
+    "variants/forest-crown-b2-rising-v0/render-manifest.json": {
+      "bytes": 1544,
+      "sha256": "24276a4aa742a8a230fb26313d3b9b8816e3895ef270fb14184fef777586143a"
+    },
+    "variants/forest-crown-b2-rising-v0/source-whole.png": {
+      "bytes": 1462834,
+      "sha256": "8119a468dccb39bb472e172a34b0b4ae287c17809895eabbe96fc6458096dbbd"
+    },
+    "variants/forest-crown-b2-rising-v0/study.blend": {
+      "bytes": 13359558,
+      "sha256": "6ee40968c114fb9e8f5703732e3a3ae801276b1359007d4e03cab25763b73e6b"
+    },
+    "variants/forest-crown-b2-rising-v0/study.glb": {
+      "bytes": 20345540,
+      "sha256": "358a707752a8ad8d59847d019abdde0709f340e727292421f68933ab3d0b9ff0"
+    },
+    "variants/forest-crown-b3-open-crescent-v0/manifest.json": {
+      "bytes": 35171,
+      "sha256": "5f8e789e77d00c6aa42439a20f2544d5c6ef10bd29eb4006a190cf7bc82f15bc"
+    },
+    "variants/forest-crown-b3-open-crescent-v0/owned-tree-components.glb": {
+      "bytes": 1008828,
+      "sha256": "2b3f74a9435719d55d2ec8c6389b4a20e49a07db5a45ec06065f07eda1ecdf6e"
+    },
+    "variants/forest-crown-b3-open-crescent-v0/render-manifest.json": {
+      "bytes": 1551,
+      "sha256": "00299455b25b19231b23bb1a971e6a74f0b6e1ac03c4f93f15be8554b7c3aee6"
+    },
+    "variants/forest-crown-b3-open-crescent-v0/source-whole.png": {
+      "bytes": 1462269,
+      "sha256": "4fc76def2d2d864ee0702acfc086eb9dc10f5dcd72b8f33333a61b642dfdcecc"
+    },
+    "variants/forest-crown-b3-open-crescent-v0/study.blend": {
+      "bytes": 13361662,
+      "sha256": "621089f1c84ccb0e8708a3f8d12e06e6b0514998feac4d46f30e9bef8c68abf8"
+    },
+    "variants/forest-crown-b3-open-crescent-v0/study.glb": {
+      "bytes": 20345244,
+      "sha256": "b13adbfcc4547456cb4b2988c663480fb927091bd39debf42a7f88a14b2785bb"
+    }
+  },
+  "limitations": [
+    "Original full scene loader failure preserved; reachability-only subset used in attempt02",
+    "Three variants not independently audited for actor-width/owner approaches/full contact",
+    "Local Blender fixed-node hashes do not prove raw GLB roundtrip parity",
+    "Black path dots are static export difference absent from actual c1",
+    "No resident rig; Blender lighting/ocean/transmission/ripple differ from app",
+    "Only whole images rendered; no near/rotated/mobile evidence",
+    "Visual direction is for root to select from images"
+  ],
+  "review": {
+    "status": "HOLD-all-three",
+    "preferredCoarseDirection": "forest-crown-b1-low-wide-v0",
+    "decision": "Next source study only; no runtime integration",
+    "reason": "Low-wide roof mass improves, but silhouettes remain close and read as separate trees/cloud planes, not a layered forest interior",
+    "independentObservers": 0,
+    "runtimeScore": null
+  },
+  "history": {
+    "originalPreparation": "history/preparation",
+    "completedBeforeRootReview": "history/completed-before-root-review",
+    "originalFailure": "history/extraction-attempt-01"
+  }
+}

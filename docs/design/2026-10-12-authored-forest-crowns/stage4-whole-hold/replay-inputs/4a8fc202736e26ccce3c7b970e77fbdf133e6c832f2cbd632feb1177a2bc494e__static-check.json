@@ -1,0 +1,19 @@
+{
+  "syntaxChecked": [
+    "compare.py",
+    "export_check.py",
+    "test_export_check.py",
+    "run-once.py",
+    "prepare.py"
+  ],
+  "pureTestsExit": 0,
+  "blenderOperatorAllowlist": [
+    "bpy.ops.export_scene.gltf",
+    "bpy.ops.import_scene.gltf",
+    "bpy.ops.object.select_all",
+    "bpy.ops.wm.read_factory_settings"
+  ],
+  "blenderExecuted": false,
+  "originalFieldAndGuardImportedUnmodified": true,
+  "externalInputsBeforeAfterSame": true
+}

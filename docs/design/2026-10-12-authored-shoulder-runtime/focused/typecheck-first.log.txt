@@ -1,0 +1,15 @@
+
+> pokko-fushigi-zukan-app@0.0.0 typecheck
+> tsc -b --pretty false
+
+src/components/island/growing/worldScene.ts(65,13): error TS2322: Type '{ root: Group<Object3DEventMap>; floor: Mesh<BufferGeometry<NormalBufferAttributes, BufferGeometryEventMap>, MeshStandardMaterial | MeshStandardMaterial[], Object3DEventMap>; dispose(): void; }' is not assignable to type '{ root: Group<Object3DEventMap>; floor: Mesh<BufferGeometry<NormalBufferAttributes, BufferGeometryEventMap>, MeshStandardMaterial, Object3DEventMap>; dispose(): void; }'.
+  Types of property 'floor' are incompatible.
+    Type 'Mesh<BufferGeometry<NormalBufferAttributes, BufferGeometryEventMap>, MeshStandardMaterial | MeshStandardMaterial[], Object3DEventMap>' is not assignable to type 'Mesh<BufferGeometry<NormalBufferAttributes, BufferGeometryEventMap>, MeshStandardMaterial, Object3DEventMap>'.
+      Type 'MeshStandardMaterial | MeshStandardMaterial[]' is not assignable to type 'MeshStandardMaterial'.
+        Type 'MeshStandardMaterial[]' is missing the following properties from type 'MeshStandardMaterial': isMeshStandardMaterial, setValues, isMaterial, uuid, and 116 more.
+src/components/island/growing/worldScene.ts(66,29): error TS2345: Argument of type '{ root: Group<Object3DEventMap>; floor: Mesh<BufferGeometry<NormalBufferAttributes, BufferGeometryEventMap>, MeshStandardMaterial, Object3DEventMap>; dispose(): void; } | undefined' is not assignable to parameter of type '{ root: Group<Object3DEventMap>; floor: Mesh<BufferGeometry<NormalBufferAttributes, BufferGeometryEventMap>, MeshStandardMaterial | MeshStandardMaterial[], Object3DEventMap>; dispose(): void; }'.
+  Type 'undefined' is not assignable to type '{ root: Group<Object3DEventMap>; floor: Mesh<BufferGeometry<NormalBufferAttributes, BufferGeometryEventMap>, MeshStandardMaterial | MeshStandardMaterial[], Object3DEventMap>; dispose(): void; }'.
+src/components/island/growing/worldScene.ts(72,19): error TS18048: 'terrain' is possibly 'undefined'.
+src/domain/growingIsland/authoredShoulderWorld.ts(131,21): error TS18048: 'source' is possibly 'undefined'.
+src/domain/growingIsland/authoredShoulderWorld.ts(141,81): error TS18048: 'source' is possibly 'undefined'.
+src/domain/growingIsland/authoredShoulderWorld.ts(147,76): error TS18048: 'source' is possibly 'undefined'.

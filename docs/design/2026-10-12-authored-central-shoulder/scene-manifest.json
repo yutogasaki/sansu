@@ -1,0 +1,245 @@
+{
+  "candidate": "native05-central-shoulder-sw-v3-source-v1",
+  "exportRevision": "normal-v2",
+  "status": "Frozen source geometry and normal delivery. Source/runtime/observer art acceptance is separate.",
+  "originalSource": {
+    "path": "docs/design/2026-10-10-island-final-3d/whole-island.glb",
+    "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+  },
+  "originalAssetsUnchanged": true,
+  "originalAssets": {
+    "docs/design/2026-10-10-island-final-3d/whole-island.blend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "docs/design/2026-10-10-island-final-3d/whole-island.glb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "docs/design/2026-10-10-island-final-3d/whole-island-render.png": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6"
+  },
+  "artifacts": {
+    "geometry-profile.json.gz": {
+      "sha256": "7b4772489932b225d7b31ced5bd53c6835a47e8e63c71eeb43d7b59af1523d3b",
+      "bytes": 3905846
+    },
+    "central-shoulder-components-normal-v2.glb": {
+      "sha256": "c79e2cd7a228b24ff526e6d78913f6a07880e35dec1532d4c278dd7cbf10411e",
+      "bytes": 396488
+    },
+    "central-shoulder-source-normal-v2.glb": {
+      "sha256": "cd86121c32072053960e927866f9442b7168e281df9d8c46cf9807ce691b2ff9",
+      "bytes": 16419780
+    },
+    "central-shoulder-source.blend": {
+      "sha256": "7a7ff0dfe34e2fb68a4c53f7b9c824cc3e20f62e0dccd64d86b45a1ca5781905",
+      "bytes": 12156349
+    },
+    "source-context.glb": {
+      "sha256": "22ad846e8c1fcfcdc9fd30a65b7398520c63b5fd5d54c60791c1342fa00f8059",
+      "bytes": 11665064
+    },
+    "root-continuations-manifest.json": {
+      "sha256": "8221c008d25d1f926dcc21aeabbb0c00066abe62dafbc3f56b90e7b65c514901",
+      "bytes": 8837
+    },
+    "normal-export-v2.json": {
+      "sha256": "8c0fda281048ba1c8b6212b77b158a2d57ea6abcb12197d2e74c8216449b1766",
+      "bytes": 58431
+    },
+    "export-parity.json": {
+      "sha256": "fed36c3d8073856c1a9d60d553d352102a7a6c4152ecfad905cd57884ae22dcb",
+      "bytes": 2883
+    },
+    "geometry-profile-qa.json": {
+      "sha256": "13224cbd4266c94104fe2b87cbf7beaea1bba8abc6c090dc8c791388f087fa21",
+      "bytes": 14975
+    },
+    "context-manifest.json": {
+      "sha256": "a504c0afc2b3d8b1937a9801a43d16b0ff02859a21d0ea3410cc48daa323f90d",
+      "bytes": 315869
+    },
+    "dimensioned-sections.json": {
+      "sha256": "eb6532493bc77e1ceb1bdbbc4f1194f2ba5618d31ea2d85a3c7e94486a43da5a",
+      "bytes": 521264
+    },
+    "dimensioned-sections.svg": {
+      "sha256": "affa757be4bc66a082b1d8e212588eeea838627c11edaba2e1ac3eaa244175c8",
+      "bytes": 680206
+    },
+    "source-path-diagnostic.json": {
+      "sha256": "c22511fab0b12f256de4c5e0423013c7569fd44bdb5bf67950e90612ea3fcf9c",
+      "bytes": 2712
+    }
+  },
+  "authoringScripts": {
+    "export-source-context.mjs": "bdc7d36d5834a481ed0ded8c93acc87e0ccce84de153c2d57660e6d63d5965d9",
+    "extract-trunk-bases.mjs": "6f20c3a262d67bc2b3a68a6423666fa72d721284108233611ae47f2d7dd927a3",
+    "build-geometry-profile.py": "25b690d74b73b26fd0feb65a1babd6f55d98c82f6a31eb4097f39b8635edaa64",
+    "assemble-source.py": "38ffa2abece1fdc9d78bab46d81fcea91e80478349d8fef40cf4e500f7ff80a1",
+    "reexport-source-context.py": "790da931be3351e594939b3b663f6f965677a22f8c922b71dfd91a32c694f034",
+    "restore-profile-normals.py": "f5a3613fc3b8cde745aa72320f55cf4bfbd10de7096bebe23ecc5248cc3af41a",
+    "audit-export.py": "3e125ab60ee1c0b207110f1f566c07bf46420448bc9137198d38a23dee648145",
+    "export-sections.py": "8c7266b01fca499917e39f7be619c1106ac903cc78cba22ba87a553386922515",
+    "render-source.py": "9a9a671273df6aaa6f958e1b936e2638c16d29a3b0d403a8f7c649d5fba881e6",
+    "diagnose-source-path.py": "7d7749cb35069c69ded1680832595917981a8628cd4413baee524a92dc158116",
+    "source-path-ray.py": "1292cc9880dbcc39b93869e6e794f676a5840ab3879dd7cff8833d453067a6dd",
+    "write-handoff-manifests.py": "721112935965441e3e6576ffd58fb5e8ed570f6c54aaf4b0e984c6c389d9f036"
+  },
+  "selectedHandoff": {
+    "path": "input/selected-v3-handoff.json.gz",
+    "sha256": "a5e947cf22a7a2ad02272902f5836da464f0f89630001eea4be95583103efdb8"
+  },
+  "world": {
+    "path": "input/candidate-world.json.gz",
+    "sha256": "b2d0bdbe3c9be24deb52cb1e0d10c11e7b27bfb3464501d46249b176287ef1cc",
+    "id": "native05-authored-world-m0-v2",
+    "revision": "authored-cove:69d3a6068481cb90",
+    "sourceDistrict": "native05-inlet-core",
+    "replacementDistrict": "diagnostic-central-shoulder-c-feasibility",
+    "oldRights": 73,
+    "diagnosticRights": 2,
+    "totalRights": 75,
+    "oldOwners": 32,
+    "normalSaplingOwners": 3,
+    "totalOwners": 35,
+    "normalExpansionOrUserSaveImplemented": false
+  },
+  "coordinateContract": {
+    "positions": "authored world Y-up",
+    "gltf": "identity transform",
+    "blender": "(x,-z,y)",
+    "renderer": "(x-layout.center,y,z-2)"
+  },
+  "sourceTransformProvenance": {
+    "axis": "glTF / Three.js Y-up",
+    "terrainTransformFromOriginalReport": {
+      "scale": 0.45,
+      "origin": {
+        "x": 5.65,
+        "y": -0.3645,
+        "z": -1.03
+      }
+    },
+    "worldFromTerrainSource": "world = source * .45 + (5.65, -.3645, -1.03)",
+    "blenderFromGltf": "(x, -z, y)",
+    "floorCoordinates": "Already authored world; identity district origins and turn0. Do not scale .45 again.",
+    "treeCoordinates": "Actual authoredMatrixWorld on source node matrixWorld baked geometry minus sourceOrigin. Tree pivot differs from terrain origin.",
+    "rendererCoordinates": "renderer.x = authored.x - layout.center; renderer.z = authored.z - 2. Transform objectLayer.root back with T(layout.center,0,2)."
+  },
+  "fixedFrame": {
+    "contextRendererToAuthored": {
+      "translation": [
+        7.0026560305,
+        0,
+        2
+      ]
+    },
+    "dynamicRendererFromAuthored": "translation [-layout.center, 0, -2]",
+    "planInputs": "input/candidate-frame-plans.json",
+    "stateInputs": "input/candidate-state.json",
+    "treeOwnerMatrices": "root-continuations-manifest.json / roots[].binding.authoredMatrixWorld; column-major"
+  },
+  "terrain": {
+    "node": "Central shoulder / continuous closed supporting soil",
+    "regionAreaM2": 5.4729109594800045,
+    "boundaryVertices": 41,
+    "topRawVertices": 14959,
+    "topTriangles": 6615,
+    "sourceClosedVertices": 7594,
+    "sourceClosedTriangles": 15184,
+    "materialTriangles": {
+      "0": 1722,
+      "1": 4893
+    },
+    "closedSideAndBottomTriangles": 8569,
+    "clipBothOriginalFloors": [
+      "Island / continuous sculpted mature terrain:0",
+      "Island / continuous sculpted mature terrain:1"
+    ],
+    "rawTopPositionSha256": "17ea818adf009f72123dfccda657c9b4eb4f3b8e71c33383a149c04929cded0e",
+    "rawTopIndexSha256": "a05abb825472061af088990934eb498292d323e9415380922cc0c78e1ed3065e",
+    "triangleMaterialSha256": "f4fc10fa6e47a9555204c6cb4d4701d968aa02373d3daccc33f04a17cb908b9c",
+    "rawNormalPath": "newFloorAttributes.normals; one unit XYZ normal per original raw vertex index",
+    "materialPath": "newFloorAttributes.materials; exact source glTF PBR, including .7799999713897705 terrain roughness",
+    "normalPolicy": {
+      "boundary": "source NORMAL barycentrically interpolated from exact original triangle provenance",
+      "interior": "area-weighted actual new faces, shared across material0/1",
+      "boundaryBlendWidth": 0.16,
+      "blend": "smoothstep distance / .16; coordinates unchanged"
+    },
+    "renderOnce": "Runtime adapter may split original indices into material 0/1 floors sharing raw positions/normals. In that mode do not also draw soil GLB top primitives 0/1; optional closed side/bottom primitive 2 is separate. Full-source GLB is a diagnostic composition, not an additional runtime background.",
+    "sitePolicy": "Rebind a site to its actual supporting material-floor after any 2-floor split, preserve union triangles and all physical supports/edges; never create duplicate cell sites."
+  },
+  "rootManifest": "root-continuations-manifest.json",
+  "normalDelivery": {
+    "onlyTwoTopNormalAccessorsChanged": true,
+    "geometryAuditReusable": true,
+    "proof": "normal-export-v2.json",
+    "finalMaxUnitNormalL2Error": 4.3841199311342295e-08,
+    "editableBlendFirstExportMaxNormalL2Error": 0.004525506827518773,
+    "restoreCommand": "python3 docs/design/2026-10-12-authored-central-shoulder/restore-profile-normals.py"
+  },
+  "contextLimits": [
+    "Fixed c4 objectLayer geometry with selected 35-owner diagnostic state/world; not the original 15-home composition.",
+    "No residents or life poses. No claim of person appeal or event anticipation from absent characters.",
+    "Three water ripple line primitives disappear through Blender import/export; actual app must retain its existing water renderer.",
+    "Offline lighting/camera/ocean and original transmission are source comparison only; not runtime parity.",
+    "Existing path coplanar joints render as dark dots in source previews; the app must keep its existing path renderer, not import this diagnostic full-scene mesh.",
+    "App integration, acquisition/save, final M1 acceptance and independent child observation remain unperformed."
+  ],
+  "sourceViews": "source-render-manifest.json (separate render settings/hashes; does not alter frozen geometry)",
+  "independentAudit": "independent-source-audit/README.md",
+  "logs": [
+    {
+      "path": "execution/blender-assemble-first.log.txt",
+      "sha256": "da883b609f5b0b848eb87704c8a011891d6fab3a3fff6a038ae852047e510280"
+    },
+    {
+      "path": "execution/blender-context-reexport.log.txt",
+      "sha256": "eadc378bc249111d8e97f202a822d9160f50b87c5fc94f07f98274b87333d4d8"
+    },
+    {
+      "path": "execution/context-export-first.log.txt",
+      "sha256": "2d4cb04c0fd7b111c078b949567f42fad3d22f5bdfa8cfe29ee3ac68e0562256"
+    },
+    {
+      "path": "execution/dimensioned-sections.log.txt",
+      "sha256": "5e72b70213fbfaac5edce8b20c362e02c539c86a1b5a628c9b97a1ceb9abfd1d"
+    },
+    {
+      "path": "execution/export-audit-first.log.txt",
+      "sha256": "6547050366e2518929ecdd033f41d2125d9dbf841a3d635b87a1dd3dc34f222e"
+    },
+    {
+      "path": "execution/export-audit-v2.log.txt",
+      "sha256": "fed36c3d8073856c1a9d60d553d352102a7a6c4152ecfad905cd57884ae22dcb"
+    },
+    {
+      "path": "execution/geometry-profile-final.log.txt",
+      "sha256": "b31437e67f46cbac8af49c381a2120f948d169708368438c5a235a4db9d8c97d"
+    },
+    {
+      "path": "execution/geometry-profile-first.log.txt",
+      "sha256": "5b04f4b7343da4a42ca8734d8f1df8945338595c773b38b1a5642a8447bcd2bc"
+    },
+    {
+      "path": "execution/geometry-profile-second.log.txt",
+      "sha256": "c24fa2f77d607414d4684c84294c772bdf99511629ae0cf211d5eb9821d3093e"
+    },
+    {
+      "path": "execution/geometry-profile-third.log.txt",
+      "sha256": "dcfef5e1e5e025a0a0213ab61e2ae2bf513bcfeca56c717a8b76fbc0ca741c47"
+    },
+    {
+      "path": "execution/normal-export-v2.log.txt",
+      "sha256": "7ceb65e9d9a1a4576898964ee40bf5781158311002a06ea8d47ca2968c43f59d"
+    },
+    {
+      "path": "execution/source-path-diagnostic.log.txt",
+      "sha256": "c22511fab0b12f256de4c5e0423013c7569fd44bdb5bf67950e90612ea3fcf9c"
+    },
+    {
+      "path": "execution/source-path-ray.log.txt",
+      "sha256": "44399333ffe43e5b2f0eef28ba31a85d6f5a5857916cfa2b556b3bd00ed2a322"
+    },
+    {
+      "path": "execution/trunk-extract-first.log.txt",
+      "sha256": "5fce45ab5aae42a70a11793ffe40d2f920cce0d96b0a592de2d30151bd67314f"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "status": "STOPPED_AFTER_FIRST_FAILED_COARSE_ATTEMPT",
+  "priorityChange": "User asked whether island shape varies with growth; parent redirected work to whole-island growth/placement behavior.",
+  "method": "Node source geometry only",
+  "command": [
+    "node",
+    "tools/build-authored-gallery-entry-kit.mjs",
+    "--attempt",
+    "1",
+    "--output",
+    "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry/attempt-01"
+  ],
+  "syntaxCheck": "PASS",
+  "exitCode": 1,
+  "failure": "walk-top/front-junction: inverted top",
+  "phase": "in-memory deformation validation, before GLB serialization/output",
+  "newGlbWritten": false,
+  "newManifestWritten": false,
+  "worldLifeTrialStarted": false,
+  "secondAttemptStarted": false,
+  "blenderStarted": false,
+  "sharedAppChanged": false,
+  "inputs": {
+    "sourceGzip": {
+      "path": "prototypes/place-qa/native-gallery-v5.glb.gz",
+      "sha256": "e5cdf3424ab1132fcc1b22d0ea8aa89ae520b0f3137ab252898efd781c842ac6",
+      "expected": "e5cdf3424ab1132fcc1b22d0ea8aa89ae520b0f3137ab252898efd781c842ac6",
+      "unchanged": true
+    },
+    "sourceExpanded": {
+      "sha256": "e7a8c6dee084c11c199b50b31798b3a8fcf33215252de375d03342da82807919",
+      "expected": "e7a8c6dee084c11c199b50b31798b3a8fcf33215252de375d03342da82807919",
+      "unchanged": true
+    },
+    "manifest": {
+      "path": "prototypes/place-qa/native-gallery-v5-manifest.json",
+      "sha256": "a9cacd89b1b28cc0dac2fb70425cd4755d9543cbf7beda2649b36b55ee11f21c"
+    }
+  },
+  "evidence": {
+    "scriptSha256": "5cdc0ec65bdfcfbd832e38ed5ff3123312b6254057e5b7264ffcb48a3035607c",
+    "rawLogSha256": "7422d7d44f0fff459489bc3196ffad0cdc548b592be251f9aba5d2c74b0c031d"
+  },
+  "recordedAt": "2026-10-12T08:54:16.661Z",
+  "timestampNote": "Record creation time only; not claimed as exact process launch/exit time."
+}

@@ -1,0 +1,391 @@
+import * as T from 'three';
+import type { IslandWorld } from '../../../domain/growingIsland/worldDefinition';
+import type { Cell } from '../../../domain/growingIsland/types';
+import { approachCells, key } from '../../../domain/growingIsland/space';
+import { authoredPointBlocked } from '../../../domain/growingIsland/authoredWorldAccess';
+import type { Actor } from './actors';
+import { resetActorVisualContact } from './actorScale';
+import type { SceneLayout } from './sceneLayout';
+
+const EPS = 1e-8;
+const FOOT_SWING = .5, ARM_SWING = .6;
+// GrowingLife.tick's ground walk bob: abs(sin(now / 110)) * .035 * actorScale.
+const WALK_BOB = .035;
+const BIN = .25;
+const OBSTRUCTION_ROOTS = new Set(['authored-flower-owned-stock', 'authored-flower-shared-support', 'authored-flower-main-crown', 'authored-cove-shell']);
+
+const NATIVE_TREES = new Set(['growing-tree-spread', 'growing-tree-spire', 'growing-tree-branch']);
+const GROVE_ROOTS = new Set(['place-native-shared-tree', 'place-native-mature-branch']);
+const PREVIEW_ROOTS = new Set(['growing-ghost', 'growing-place-preview']);
+function isObstructionRoot(object: T.Object3D) {
+    return OBSTRUCTION_ROOTS.has(object.name) || GROVE_ROOTS.has(object.name)
+        || NATIVE_TREES.has(object.name) && Boolean(object.userData.nativePart);
+}
+function committedVisible(object: T.Object3D, root: T.Object3D) {
+    for (let parent: T.Object3D | null = object; parent; parent = parent.parent) {
+        if (PREVIEW_ROOTS.has(parent.name) || parent.userData.placementHitOnly) return false;
+        // Only a temporarily hidden committed structure bypasses visibility.
+        // A replaced solitary tree and hidden source children stay excluded.
+        if (!parent.visible && !(isObstructionRoot(parent) && parent.userData.authoredPreviewHidden === true)) return false;
+        if (parent === root) break;
+    }
+    return true;
+}
+function obstructionRoots(root: T.Object3D) {
+    const roots: T.Object3D[] = [];
+    root.traverse(object => { if (isObstructionRoot(object) && committedVisible(object, root)) roots.push(object); });
+    return roots;
+}
+
+/** Committed source structures supply obstacles; the same world supplies floor.
+ * Scan the full object layer so solitary native trees participate too. */
+export function hasAuthoredObstructionRoots(root: T.Object3D): boolean {
+    return obstructionRoots(root).length > 0;
+}
+
+/** Resolve runtime endpoints after physical filtering, without changing place
+ * recognition or the walk graph. Exploring past a rejected point does not make
+ * that point traversable: only guarded, supported HOME-reachable refs qualify. */
+export function authoredOwnerApproaches(owners: readonly { cell?: Cell }[], world: IslandWorld,
+    walkable: ReadonlySet<string>, reachable: ReadonlySet<string>): Map<string, Cell[]> {
+    const resolved = new Map<string, Cell[]>();
+    const available = (cell: Cell) => walkable.has(key(cell)) && reachable.has(key(cell)) && Boolean(world.floorAt(cell));
+    for (const owner of owners) {
+        const cell = owner.cell; if (!cell) continue;
+        const candidates = approachCells(cell, world).filter(available);
+        // Preserve explicit water-bank contracts and current successful entries.
+        // Only a supported owner's rejected first ring needs further discovery.
+        if (!candidates.length && world.floorAt(cell) && world.shoreApproachCells(cell) === undefined) {
+            const queue = [cell], seen = new Set([key(cell)]);
+            for (let i = 0; i < queue.length; i++) for (const next of world.neighbors(queue[i], 'walk')) {
+                const id = key(next);
+                if (seen.has(id) || Math.hypot(next.x - cell.x, next.z - cell.z) > 1.1) continue;
+                seen.add(id); queue.push(next);
+                if (!authoredPointBlocked(next, cell) && available(next)) candidates.push({ ...next });
+            }
+            candidates.sort((a, b) => Math.hypot(a.x - cell.x, a.z - cell.z) - Math.hypot(b.x - cell.x, b.z - cell.z)
+                || b.z - a.z || a.x - b.x);
+        }
+        resolved.set(key(cell), candidates.map(candidate => ({ ...candidate })));
+    }
+    return resolved;
+}
+
+export interface AuthoredWalkingEnvelope {
+    radius: number;
+    height: number;
+    bands?: readonly { radius: number; minY: number; maxY: number }[];
+    source: { actorIds: string[]; visualScales: number[][]; meshes: number; vertices: number;
+        footSwing: number; armSwing: number; walkBob: number; method: 'indexed-source-motion-intervals' };
+}
+
+/** Extrema of c + a*cos(t) + b*sin(t) over the actual walking joint range. */
+function interval(c: number, a: number, b: number, limit: number) {
+    const values = [-limit, limit, 0].map(t => c + a * Math.cos(t) + b * Math.sin(t));
+    const peak = Math.atan2(b, a);
+    for (let n = -2; n <= 2; n++) {
+        const t = peak + n * Math.PI;
+        if (t >= -limit && t <= limit) values.push(c + a * Math.cos(t) + b * Math.sin(t));
+    }
+    return { min: Math.min(...values), max: Math.max(...values) };
+}
+
+/** Read the real rig, including clothing, ears, hats and tails. Walking limbs
+ * use continuous source-angle intervals; the temporary neutral pose is restored.
+ * The radius is heading-independent, so rotation never shrinks the clearance. */
+export function measureAuthoredWalkingEnvelope(actors: readonly Actor[]): AuthoredWalkingEnvelope {
+    let radius = 0, meshCount = 0, vertexCount = 0, bob = 0;
+    const bands: { radius: number; minY: number; maxY: number }[] = [];
+    for (const actor of actors) {
+        let soleLow = Infinity, soleHigh = Infinity;
+        const meshBands: { radius: number; minY: number; maxY: number }[] = [];
+        const snapshots: { node: T.Object3D; position: T.Vector3; quaternion: T.Quaternion; scale: T.Vector3 }[] = [];
+        actor.root.traverse(node => snapshots.push({ node, position: node.position.clone(), quaternion: node.quaternion.clone(), scale: node.scale.clone() }));
+        try {
+            resetActorVisualContact(actor);
+            actor.root.position.set(0, 0, 0); actor.root.rotation.set(0, 0, 0); actor.body.rotation.set(0, 0, 0);
+            bob = Math.max(bob, WALK_BOB * (actor.visual?.scale.y ?? 1));
+            const limbs = new Map<T.Object3D, number>();
+            actor.feet.forEach(foot => { foot.rotation.set(0, 0, 0); limbs.set(foot, FOOT_SWING); });
+            actor.arms?.forEach(arm => { arm.rotation.set(0, 0, 0); limbs.set(arm, ARM_SWING); });
+            actor.root.updateWorldMatrix(true, true);
+            const inverse = actor.root.matrixWorld.clone().invert();
+            actor.root.traverse(node => {
+                if (!(node instanceof T.Mesh)) return;
+                let limb: T.Object3D | undefined, foot = false;
+                for (let parent: T.Object3D | null = node; parent && parent !== actor.root; parent = parent.parent) {
+                    if (parent === actor.sparkle) return;
+                    if (actor.feet.includes(parent)) foot = true;
+                    if (limbs.has(parent)) limb = parent;
+                }
+                const positions = node.geometry.getAttribute('position'); if (!positions) return;
+                const indices = node.geometry.index ? new Set(Array.from({ length: node.geometry.index.count }, (_, i) => node.geometry.index!.getX(i))) : new Set(Array.from({ length: positions.count }, (_, i) => i));
+                meshCount++; vertexCount += indices.size;
+                const band = { radius: 0, minY: Infinity, maxY: -Infinity };
+                const toRoot = inverse.clone().multiply(node.matrixWorld), point = new T.Vector3();
+                const toLimb = limb?.matrixWorld.clone().invert().multiply(node.matrixWorld);
+                const parentToRoot = limb?.parent ? inverse.clone().multiply(limb.parent.matrixWorld) : undefined;
+                const linear = parentToRoot && new T.Matrix3().setFromMatrix4(parentToRoot);
+                for (const index of indices) {
+                    point.fromBufferAttribute(positions, index);
+                    if (!limb || !toLimb || !parentToRoot || !linear) {
+                        point.applyMatrix4(toRoot); band.radius = Math.max(band.radius, Math.hypot(point.x, point.z)); band.minY = Math.min(band.minY, point.y); band.maxY = Math.max(band.maxY, point.y);
+                        if (foot) { soleLow = Math.min(soleLow, point.y); soleHigh = Math.min(soleHigh, point.y); }
+                        continue;
+                    }
+                    point.applyMatrix4(toLimb).multiply(limb.scale);
+                    const c = new T.Vector3(point.x, 0, 0).add(limb.position).applyMatrix4(parentToRoot);
+                    const a = new T.Vector3(0, point.y, point.z).applyMatrix3(linear), b = new T.Vector3(0, -point.z, point.y).applyMatrix3(linear);
+                    const x = interval(c.x, a.x, b.x, limbs.get(limb)!), y = interval(c.y, a.y, b.y, limbs.get(limb)!), z = interval(c.z, a.z, b.z, limbs.get(limb)!);
+                    band.radius = Math.max(band.radius, Math.hypot(Math.max(Math.abs(x.min), Math.abs(x.max)), Math.max(Math.abs(z.min), Math.abs(z.max))));
+                    band.minY = Math.min(band.minY, y.min); band.maxY = Math.max(band.maxY, y.max);
+                    if (foot) { soleLow = Math.min(soleLow, y.min); soleHigh = Math.min(soleHigh, y.max); }
+                }
+                if (Number.isFinite(band.minY) && Number.isFinite(band.maxY)) meshBands.push(band);
+            });
+            if (Number.isFinite(soleLow) && Number.isFinite(soleHigh)) for (const band of meshBands) {
+                radius = Math.max(radius, band.radius);
+                bands.push({ radius: band.radius, minY: band.minY - soleHigh, maxY: band.maxY - soleLow + WALK_BOB * (actor.visual?.scale.y ?? 1) });
+            }
+        } finally {
+            for (const saved of snapshots) { saved.node.position.copy(saved.position); saved.node.quaternion.copy(saved.quaternion); saved.node.scale.copy(saved.scale); }
+            actor.root.updateWorldMatrix(true, true);
+        }
+    }
+    // Remove only bands wholly covered by another measured source band. This
+    // retains every vertex envelope and avoids repeating identical rig parts.
+    const compact = bands.filter((band, i) => !bands.some((other, j) => i !== j && other.radius >= band.radius && other.minY <= band.minY && other.maxY >= band.maxY
+        && (other.radius > band.radius || other.minY < band.minY || other.maxY > band.maxY || j < i)));
+    return { radius, height: compact.length ? Math.max(...compact.map(band => band.maxY)) : 0, bands: compact,
+        source: { actorIds: actors.map(actor => actor.id), visualScales: actors.map(actor => actor.visual?.scale.toArray() ?? [1, 1, 1]),
+            meshes: meshCount, vertices: vertexCount, footSwing: FOOT_SWING, armSwing: ARM_SWING, walkBob: bob, method: 'indexed-source-motion-intervals' } };
+}
+
+interface Triangle { triangle: T.Triangle; box: T.Box3 }
+interface FloorTriangle { cells: readonly Cell[]; points: readonly T.Vector3[]; box: T.Box3 }
+interface Index<V> { bins: Map<string, V[]>; broad: V[]; all: V[] }
+const emptyIndex = <V>(): Index<V> => ({ bins: new Map(), broad: [], all: [] });
+function bins(box: T.Box3) {
+    const x0 = Math.floor((box.min.x - EPS) / BIN), x1 = Math.floor((box.max.x + EPS) / BIN);
+    const z0 = Math.floor((box.min.z - EPS) / BIN), z1 = Math.floor((box.max.z + EPS) / BIN);
+    if (![x0, x1, z0, z1].every(Number.isSafeInteger) || (x1 - x0 + 1) * (z1 - z0 + 1) > 64) return undefined;
+    const ids: string[] = [];
+    for (let z = z0; z <= z1; z++) for (let x = x0; x <= x1; x++) ids.push(`${x},${z}`);
+    return ids;
+}
+function add<V>(index: Index<V>, value: V, box: T.Box3) {
+    index.all.push(value); const ids = bins(box); if (!ids) { index.broad.push(value); return; }
+    for (const id of ids) { const bucket = index.bins.get(id) ?? []; bucket.push(value); index.bins.set(id, bucket); }
+}
+function query<V>(index: Index<V>, box: T.Box3) {
+    const ids = bins(box); if (!ids) return index.all;
+    const values = new Set(index.broad); for (const id of ids) for (const value of index.bins.get(id) ?? []) values.add(value);
+    return values;
+}
+function obstructionIndex(root: T.Object3D) {
+    const index = emptyIndex<Triangle>(); root.updateWorldMatrix(true, true);
+    root.traverse(node => {
+        if (!(node instanceof T.Mesh)) return;
+        if (!committedVisible(node, root)) return;
+        let supported = false;
+        for (let parent: T.Object3D | null = node; parent; parent = parent.parent) {
+            if (isObstructionRoot(parent)) supported = true;
+            if (parent === root) break;
+        }
+        if (!supported) return;
+        const position = node.geometry.getAttribute('position'), indices = node.geometry.index;
+        if (!position) return;
+        for (let i = 0; i < (indices?.count ?? position.count); i += 3) {
+            const points = [0, 1, 2].map(offset => new T.Vector3().fromBufferAttribute(position, indices ? indices.getX(i + offset) : i + offset).applyMatrix4(node.matrixWorld));
+            const triangle = new T.Triangle(points[0], points[1], points[2]), box = new T.Box3().setFromPoints(points);
+            add(index, { triangle, box }, box);
+        }
+    });
+    return index;
+}
+const floorIndices = new WeakMap<IslandWorld, { index: Index<FloorTriangle>; identityDelta?: number }>();
+function floorIndex(world: IslandWorld) {
+    const cached = floorIndices.get(world); if (cached) return cached;
+    const index = emptyIndex<FloorTriangle>(); let delta = 0;
+    for (const floor of world.floors) {
+        if (floor.kind === 'water') continue;
+        for (const vertex of floor.vertices) delta = Math.max(delta, Math.abs(vertex.point.x - vertex.cell.x), Math.abs(vertex.point.z - vertex.cell.z));
+        for (let i = 0; i < floor.indices.length; i += 3) {
+            const vertices = [0, 1, 2].map(offset => floor.vertices[floor.indices[i + offset]]), cells = vertices.map(vertex => vertex.cell);
+            const box = new T.Box3().setFromPoints(cells.map(cell => new T.Vector3(cell.x, 0, cell.z)));
+            add(index, { cells, points: vertices.map(vertex => new T.Vector3(vertex.point.x, vertex.point.y, vertex.point.z)), box }, box);
+        }
+    }
+    const result = { index, ...(delta <= EPS ? { identityDelta: delta } : {}) }; floorIndices.set(world, result); return result;
+}
+function segmentInterval(from: Cell, to: Cell, triangle: readonly Cell[]) {
+    const cross = (a: Cell, b: Cell, c: Cell) => (b.x - a.x) * (c.z - a.z) - (b.z - a.z) * (c.x - a.x);
+    const area = cross(triangle[0], triangle[1], triangle[2]); if (Math.abs(area) < 1e-14) return undefined;
+    const sign = Math.sign(area); let low = 0, high = 1;
+    for (let i = 0; i < 3; i++) {
+        const a = triangle[i], b = triangle[(i + 1) % 3], p = cross(a, b, from) * sign, q = cross(a, b, to) * sign, change = q - p;
+        if (Math.abs(change) < 1e-14) { if (p < -EPS) return undefined; continue; }
+        const boundary = (-EPS - p) / change;
+        if (change > 0) low = Math.max(low, boundary); else high = Math.min(high, boundary);
+        if (low > high) return undefined;
+    }
+    return [Math.max(0, low), Math.min(1, high)];
+}
+function mapped(cell: Cell, floor: FloorTriangle) {
+    const [a, b, c] = floor.cells, area = (b.z - c.z) * (a.x - c.x) + (c.x - b.x) * (a.z - c.z);
+    const u = ((b.z - c.z) * (cell.x - c.x) + (c.x - b.x) * (cell.z - c.z)) / area;
+    const v = ((c.z - a.z) * (cell.x - c.x) + (a.x - c.x) * (cell.z - c.z)) / area;
+    return floor.points[0].clone().multiplyScalar(u).addScaledVector(floor.points[1], v).addScaledVector(floor.points[2], 1 - u - v);
+}
+function pathGroundBox(from: Cell, to: Cell, layout: SceneLayout, floors: ReturnType<typeof floorIndex>) {
+    const box = new T.Box3().setFromPoints([layout.point(from, 0), layout.point(to, 0)]);
+    const logicalBox = new T.Box3().setFromPoints([new T.Vector3(from.x, 0, from.z), new T.Vector3(to.x, 0, to.z)]);
+    for (const floor of query(floors.index, logicalBox)) {
+        if (!floor.box.intersectsBox(logicalBox)) continue;
+        const range = segmentInterval(from, to, floor.cells); if (!range) continue;
+        for (const t of range) {
+            const point = mapped({ x: from.x + (to.x - from.x) * t, z: from.z + (to.z - from.z) * t }, floor);
+            point.x -= layout.center; point.z -= 2; box.expandByPoint(point);
+        }
+    }
+    return box;
+}
+function bandBox(ground: T.Box3, band: { radius: number; minY: number; maxY: number }) {
+    const box = ground.clone();
+    box.min.x -= band.radius + EPS; box.max.x += band.radius + EPS;
+    box.min.z -= band.radius + EPS; box.max.z += band.radius + EPS;
+    box.min.y += band.minY - EPS; box.max.y += band.maxY + EPS;
+    return box;
+}
+function clipHeight(points: readonly T.Vector3[], height: number, lower: boolean) {
+    const result: T.Vector3[] = [];
+    for (let i = 0; i < points.length; i++) {
+        const a = points[i], b = points[(i + 1) % points.length], insideA = lower ? a.y >= height : a.y <= height, insideB = lower ? b.y >= height : b.y <= height;
+        if (insideA) result.push(a);
+        if (insideA !== insideB) result.push(a.clone().lerp(b, (height - a.y) / (b.y - a.y)));
+    }
+    return result;
+}
+function cylinderHit(at: T.Vector3, envelope: AuthoredWalkingEnvelope, triangle: Triangle) {
+    if (triangle.box.max.y < at.y - EPS || triangle.box.min.y > at.y + envelope.height + EPS) return false;
+    const polygon = clipHeight(clipHeight([triangle.triangle.a, triangle.triangle.b, triangle.triangle.c], at.y - EPS, true), at.y + envelope.height + EPS, false);
+    if (!polygon.length) return false;
+    let positive = false, negative = false, distance = Infinity;
+    for (let i = 0; i < polygon.length; i++) {
+        const a = polygon[i], b = polygon[(i + 1) % polygon.length], dx = b.x - a.x, dz = b.z - a.z;
+        const cross = dx * (at.z - a.z) - dz * (at.x - a.x); if (cross > EPS) positive = true; if (cross < -EPS) negative = true;
+        const denominator = dx * dx + dz * dz, t = denominator ? Math.max(0, Math.min(1, ((at.x - a.x) * dx + (at.z - a.z) * dz) / denominator)) : 0;
+        distance = Math.min(distance, Math.hypot(at.x - a.x - dx * t, at.z - a.z - dz * t));
+    }
+    const area = polygon.reduce((sum, a, i) => { const b = polygon[(i + 1) % polygon.length]; return sum + a.x * b.z - b.x * a.z; }, 0);
+    return Math.abs(area) > EPS && !(positive && negative) || distance <= envelope.radius + EPS;
+}
+
+/** Actual final pose, rather than a walking envelope. Ignore only the cosmetic
+ * sparkle subtree; indexed clothing, ears, hats, tail and sole vertices remain. */
+const indexedBounds = new WeakMap<T.BufferGeometry, { position: T.BufferAttribute | T.InterleavedBufferAttribute; positionVersion: number;
+    index: T.BufferAttribute | null; indexVersion: number; count: number; box: T.Box3 }>();
+function indexedLocalBox(geometry: T.BufferGeometry) {
+    const position = geometry.getAttribute('position'), index = geometry.index;
+    if (!position) return new T.Box3();
+    const positionVersion = position instanceof T.InterleavedBufferAttribute ? position.data.version : position.version;
+    const saved = indexedBounds.get(geometry), indexVersion = index?.version ?? -1;
+    if (saved && saved.position === position && saved.positionVersion === positionVersion && saved.index === index
+        && saved.indexVersion === indexVersion && saved.count === (index?.count ?? position.count)) return saved.box;
+    const box = new T.Box3(), point = new T.Vector3(), used = index ? new Set(Array.from({ length: index.count }, (_, i) => index.getX(i))) : Array.from({ length: position.count }, (_, i) => i);
+    for (const i of used) box.expandByPoint(point.fromBufferAttribute(position, i));
+    // BufferAttribute.needsUpdate, index replacement and count changes invalidate
+    // exactly as Three.js geometry uploads do; transforms are never cached.
+    indexedBounds.set(geometry, { position, positionVersion, index, indexVersion, count: index?.count ?? position.count, box });
+    return box;
+}
+function actorPoseBoxes(actor: Actor, broad = false) {
+    actor.root.updateWorldMatrix(true, true);
+    const boxes: T.Box3[] = [], point = new T.Vector3();
+    actor.root.traverse(node => {
+        if (!(node instanceof T.Mesh)) return;
+        for (let parent: T.Object3D | null = node; parent; parent = parent.parent) {
+            if (!parent.visible || parent === actor.sparkle) return;
+            if (parent === actor.root) break;
+        }
+        const positions = node.geometry.getAttribute('position'), indices = node.geometry.index;
+        if (!positions) return;
+        if (broad) { boxes.push(indexedLocalBox(node.geometry).clone().applyMatrix4(node.matrixWorld)); return; }
+        const box = new T.Box3();
+        const used = indices ? new Set(Array.from({ length: indices.count }, (_, i) => indices.getX(i))) : Array.from({ length: positions.count }, (_, i) => i);
+        for (const i of used) box.expandByPoint(point.fromBufferAttribute(positions, i).applyMatrix4(node.matrixWorld));
+        boxes.push(box);
+    });
+    return boxes;
+}
+
+/** This is a renderer's restriction of existing walking refs. It creates no
+ * floor or grant. Swept boxes include every current dry triangle along an edge,
+ * including height seams; rejecting both endpoints preserves route(allowed). */
+export function authoredFlowerWalkSet(baseAllowed: ReadonlySet<string>, world: IslandWorld | undefined, layout: SceneLayout,
+    placeRoot: T.Object3D | undefined, envelope: AuthoredWalkingEnvelope) {
+    const walkable = new Set(baseAllowed), proof = { stockCount: 0, coveCount: 0, groveCount: 0, obstructionRootCount: 0, triangles: 0, checkedPoints: 0, blockedPoints: 0,
+        checkedEdges: 0, blockedEdges: 0, excludedRefs: 0, excludedCells: [] as Cell[], envelope };
+    const unrestricted: { walkable: Set<string>; proof: typeof proof; clearGroundPath: (from: Cell, to: Cell) => boolean; poseClear: (actor: Actor) => boolean }
+        = { walkable, proof, clearGroundPath: () => true, poseClear: () => true };
+    if (!layout.authored || !world || !placeRoot) return unrestricted;
+    if (![envelope.radius, envelope.height].every(value => Number.isFinite(value) && value >= 0)) throw Error('Authored walking envelope differs');
+    const bands = envelope.bands ?? [{ radius: envelope.radius, minY: 0, maxY: envelope.height }];
+    if (bands.some(band => ![band.radius, band.minY, band.maxY].every(Number.isFinite) || band.radius < 0 || band.maxY < band.minY
+        || band.radius > envelope.radius + EPS || band.maxY > envelope.height + EPS)) throw Error('Authored walking bands differ');
+    if (!envelope.radius || !envelope.height) return unrestricted;
+    const broadBand = { radius: Math.max(envelope.radius, ...bands.map(band => band.radius)), minY: Math.min(0, ...bands.map(band => band.minY)),
+        maxY: Math.max(envelope.height, ...bands.map(band => band.maxY)) };
+    const roots = obstructionRoots(placeRoot);
+    proof.stockCount = roots.filter(object => object.name === 'authored-flower-owned-stock').length;
+    proof.coveCount = roots.filter(object => object.name === 'authored-cove-shell').length;
+    proof.groveCount = roots.filter(object => GROVE_ROOTS.has(object.name) || NATIVE_TREES.has(object.name)).length;
+    proof.obstructionRootCount = roots.length;
+    if (!proof.obstructionRootCount) return unrestricted;
+    const index = obstructionIndex(placeRoot); proof.triangles = index.all.length;
+    const floors = floorIndex(world);
+    const boxClear = (box: T.Box3) => ![...query(index, box)].some(triangle => triangle.box.intersectsBox(box) && box.intersectsTriangle(triangle.triangle));
+    const groundPathClear = (from: Cell, to: Cell) => {
+        const ground = pathGroundBox(from, to, layout, floors);
+        if (boxClear(bandBox(ground, broadBand))) return true;
+        return bands.every(band => boxClear(bandBox(ground, band)));
+    };
+    // This tests obstruction only. Existing world support/grants and the
+    // caller's route remain responsible for permitting the ground journey.
+    const clearGroundPath = (from: Cell, to: Cell) => {
+        if (![from.x, from.z, to.x, to.z].every(Number.isFinite) || !world.floorAt(from) || !world.floorAt(to)) return false;
+        return groundPathClear(from, to);
+    };
+    const poseClear = (actor: Actor) => {
+        const broad = actorPoseBoxes(actor, true);
+        if (broad.every(box => box.isEmpty() || boxClear(box))) return true;
+        return actorPoseBoxes(actor).every(box => box.isEmpty() || boxClear(box));
+    };
+    const cell = (id: string) => { const [x, z] = id.split(',').map(Number); return { x, z }; };
+    for (const id of baseAllowed) {
+        const at = layout.point(cell(id), 0), box = new T.Box3(new T.Vector3(at.x - broadBand.radius - EPS, at.y + broadBand.minY - EPS, at.z - broadBand.radius - EPS),
+            new T.Vector3(at.x + broadBand.radius + EPS, at.y + broadBand.maxY + EPS, at.z + broadBand.radius + EPS));
+        const candidates = [...query(index, box)].filter(triangle => triangle.box.intersectsBox(box)); if (!candidates.length) continue;
+        proof.checkedPoints++;
+        if (candidates.some(triangle => bands.some(band => cylinderHit(at.clone().add(new T.Vector3(0, band.minY, 0)),
+            { ...envelope, radius: band.radius, height: band.maxY - band.minY }, triangle)))) { walkable.delete(id); proof.blockedPoints++; }
+    }
+    const seen = new Set<string>(), unsafe = new Set<string>();
+    for (const id of walkable) for (const next of world.neighbors(cell(id))) {
+        const other = key(next); if (!walkable.has(other)) continue;
+        const edge = [id, other].sort().join('|'); if (seen.has(edge)) continue; seen.add(edge);
+        if (floors.identityDelta !== undefined) {
+            const a = layout.point(cell(id), 0), b = layout.point(next, 0), broad = new T.Box3().setFromPoints([a, b]);
+            broad.min.y = -Infinity; broad.max.y = Infinity; broad.expandByVector(new T.Vector3(broadBand.radius + EPS + floors.identityDelta, 0, broadBand.radius + EPS + floors.identityDelta));
+            if (![...query(index, broad)].some(triangle => triangle.box.intersectsBox(broad))) continue;
+        }
+        proof.checkedEdges++;
+        if (!groundPathClear(cell(id), next)) {
+            unsafe.add(id); unsafe.add(other); proof.blockedEdges++;
+        }
+    }
+    for (const id of unsafe) walkable.delete(id);
+    proof.excludedRefs = baseAllowed.size - walkable.size;
+    proof.excludedCells = [...baseAllowed].filter(id => !walkable.has(id)).map(cell);
+    return { walkable, proof, clearGroundPath, poseClear };
+}

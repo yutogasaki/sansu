@@ -1,0 +1,13 @@
+{
+  "error": "AttributeError(\"'NoneType' object has no attribute 'inputs'\")",
+  "traceback": "Traceback (most recent call last):\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage2/failed-shape-view/render-failed-whole.py\", line 54, in <module>\n    native.add_views()\n    ~~~~~~~~~~~~~~~~^^\n  File \"/private/tmp/sansu-authored-forest-crown-study/stage2/stage1_support.py\", line 105, in add_views\n    background = scene.world.node_tree.nodes.get('Background'); background.inputs['Color'].default_value = (.055, .20, .26, 1); background.inputs['Strength'].default_value = .7\n                                                                ^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'inputs'\n",
+  "elapsedSeconds": 1.8722735000774264,
+  "inputsBefore": {
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/attempt-01/failed-stage.blend": "7010856b68de220ceb13781ff12f8c82b6c6aae9b9c575c748688043b98f3ccc",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/stage1_support.py": "9f369d576e5cca7cd53c362b5dd8b59051e8b98600f6c2c7583862c5224806d9",
+    "/private/tmp/sansu-authored-forest-crown-study/study.json": "3db0e4dc50454f0cee4db788209cdc945811767ca585a59ae11f25e66a1f9210",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/attempt-01/first-failure.json": "7b75784860ec3442609deca521684e4874f8fc9aaa392c2dc121431d6fb2e22b",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/attempt-01/deformations.json": "ab3e457f51479fc1f84b86d225f75ba5e33fad109a24b15388cb3ad01d6af6d1",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/failed-shape-view/render-failed-whole.py": "51c92cbc7f4246fc562078b30bb94ed3d9f2badadeb91a86a2dc106b9c64f12f"
+  }
+}

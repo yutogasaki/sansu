@@ -1,0 +1,17 @@
+"""Static scope/hash checks; no Blender, meshes, world compiler or render."""
+from pathlib import Path
+import ast,json,hashlib
+P=Path(__file__).resolve().parent;V=P.parent/'east-v2';sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest();new=(P/'build-coarse.py').read_text();old=(V/'build-coarse.py').read_text();S=json.loads((P/'study.json').read_text());T=json.loads((V/'study.json').read_text());M=json.loads((V/'preparation.json').read_text());checks={}
+for f in P.glob('*.py'):ast.parse(f.read_text())
+checks['allPythonAST']=True;checks['originalSealedV2AndHistoryUnchanged']=sha(V/'preparation.json')=='85eb4660e91a378277b56f895fd8367b8960a39b846f0a7de5b0fa9e6f9409b0' and all(sha(V/f)==v['sha256'] for f,v in M['files'].items());checks['allSourceInputsUnchanged']=all(sha(v['path'])==v['sha256'] for v in S['inputs'].values());checks['allMeasuredBasisUnchanged']=all(sha(v['path'])==v['sha256'] for v in S['basis'].values())
+checks['studyOnlyCandidateLabelChanged']={k:v for k,v in S.items() if k!='candidate'}=={k:v for k,v in T.items() if k!='candidate'}
+start='    body=solids[2]\n    for operand in [o for o in solids if o is not body]:';newstart='    # Solver-only candidate.';suffix='    import bmesh\n    check=bmesh.new()'
+checks['allInputGeometryAndTransformsByteIdentical']=new[:new.index(newstart)]==old[:old.index(start)]
+checks['allPostUnionSupportRailRouteActorAndExportCodeByteIdentical']=new[new.index(suffix):]==old[old.index(suffix):]
+checks['allNumericHelpersAndSupervisorByteIdentical']=all(sha(P/f)==sha(V/f) for f in ['terrain_connector.py','entry_geometry.py','donor_reference.py','supervise.py'])
+checks['newUnionHasNoRepairOps']=all(x not in new[new.index(newstart):new.index(suffix)] for x in ['remove_doubles','dissolve','bmesh.ops','delete','threshold='])
+checks['noAutoRender']='bpy.ops.render' not in new
+checks['originalFiveInputsAndFourUnionOrderPreserved']='body=solids[2]' in new and 'enumerate([o for o in solids if o is not body])' in new
+checks['selfIntersectionLimitationExplicit']="'selfIntersectionNotProvenAbsentByTheseChecks':True" in new
+assert all(checks.values()),checks
+print(json.dumps({'status':'STATIC_ONLY_PASS_NOT_BUILD','checks':checks,'pending':'actual MANIFOLD full union,6bough contacts,rails,allguards,sourcevisuals; no acceptance from input closure'},indent=2))

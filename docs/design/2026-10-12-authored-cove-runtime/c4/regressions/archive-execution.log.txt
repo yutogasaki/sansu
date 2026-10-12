@@ -1,0 +1,10 @@
+PASS: fixed candidate, core before/after, snapshot and outer before/after all match 2137 inputs.
+Current repository differences outside candidate: [{"file": "docs/ai/verification_matrix.md", "core": "e343b1b2c0c423e967ae39c3de522ced593d590a97634fd1cb8d24ee8734d46a", "current": "679d11a4ca231d86e5b6519f0a7926a953624bc7b42c6b366da6e65c26266762"}]
+01-baseline27-editing: PASS; exit 0; raw subset 1581; captures 7.
+02-wide27-water: PASS; exit 0; raw subset 1585; captures 14.
+03-ordinary-growing-balance: PASS; exit 0; raw subset 1580; captures 22.
+04-classic-smoke: PASS; exit 0; raw subset 1; captures 0.
+05-authored-flower-full-cove-off: FAIL/INCOMPLETE; exit 1; raw subset 1899; captures 4.
+Archive integrity PASS: 121 files / 29335088 bytes; source-before/source-after/copy SHA256 all equal.
+Post-archive fixed candidate: all 2137 inputs still match.
+Post-archive working repository differences: [{"file": "docs/ai/verification_matrix.md", "core": "e343b1b2c0c423e967ae39c3de522ced593d590a97634fd1cb8d24ee8734d46a", "current": "679d11a4ca231d86e5b6519f0a7926a953624bc7b42c6b366da6e65c26266762"}]

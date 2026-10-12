@@ -1,0 +1,86 @@
+{
+  "status": "FAILED_BEFORE_DONOR_PARITY_NO_CANDIDATE_MEASUREMENT",
+  "startUtc": "2026-10-12T04:05:23.946310+00:00",
+  "endUtc": "2026-10-12T04:05:30.508849+00:00",
+  "supervisorPid": 22346,
+  "ownedBlenderProcesses": [
+    {
+      "pid": 22348,
+      "parentPid": 22346,
+      "firstObservedUtc": "2026-10-12T04:05:24.534846+00:00",
+      "command": "/Applications/Blender.app/Contents/MacOS/Blender",
+      "lastObservedUtc": "2026-10-12T04:05:29.451808+00:00",
+      "peakObservedRssBytes": 694829056
+    }
+  ],
+  "supervisor": {
+    "command": [
+      "/Applications/Blender.app/Contents/MacOS/Blender",
+      "-b",
+      "--threads",
+      "2",
+      "--python",
+      "source-study.py",
+      "--",
+      "measure",
+      "--scheduled",
+      "--out",
+      "runs/02-survey"
+    ],
+    "exitCode": 0,
+    "stop": null,
+    "peakSampledRssBytes": 723714048,
+    "elapsedSeconds": 6.200600583,
+    "limits": {
+      "seconds": 180,
+      "rssMiB": 2560
+    },
+    "sourceOnly": true
+  },
+  "blenderExitZeroIsNotSuccess": true,
+  "firstFailure": {
+    "stage": "measure",
+    "error": "TypeError('can only concatenate str (not \"Object\") to str')",
+    "elapsedSeconds": 4.670447000069544,
+    "runtimeIntegrated": false
+  },
+  "donorSourceParity": "NOT_REACHED",
+  "donorAuthoredParity": "NOT_REACHED",
+  "candidateResults": "NONE; no candidate was measured in run02",
+  "classification": {
+    "run01": "Original source-floor object translation was lost; raw route/interior grades were invalid. Raw remains unchanged.",
+    "run02": "Measurement implementation failure: mutable donor_names list supplied to bpy.data.libraries.load became Object entries, but read_references requires original strings. Failure happened before the corrected donor parity or route generation.",
+    "nextMinimalProposalNotImplemented": "Retain names as immutable tuple, pass a new list to dst.objects, and use the tuple for reference lookup and donor pairing. Add a tiny list-mutation regression fixture before any future scheduled survey.",
+    "noNewGeometricConclusion": true
+  },
+  "preservation": {
+    "inputsUnchanged": true,
+    "scriptsUnchanged": true,
+    "preparedManifestBeforeAfterEqual": true,
+    "originalRunArtifactsRehashedEqual": true
+  },
+  "noRetryBuildRender": true,
+  "otherProcessesChangedOrStopped": false,
+  "files": {
+    "runs/02-survey/first-failure.json": {
+      "sha256": "b7edc3e81a39793a69da8aa6a0ce22913293a037d8602c4e50fa710f4fb37f74",
+      "bytes": 170
+    },
+    "runs/02-survey-observation.json": {
+      "sha256": "569ad758ac068bdb9ddbff5aa653e8d6765f6b76b02e1b742a328b80bc4cdc49",
+      "bytes": 4065
+    },
+    "runs/02-survey-supervisor-output.log.txt": {
+      "sha256": "cdcad32e32799528a3da697a78baabda61413c18efea8a44715487c8d695e788",
+      "bytes": 338
+    },
+    "runs/02-survey.log.txt": {
+      "sha256": "c0081c49e609b9750881faa5e3d622ca46e8477f70562ce1907832d13986aa70",
+      "bytes": 19114
+    },
+    "runs/02-survey.log.txt.json": {
+      "sha256": "3d6650ecf3294d3547233176052e52d921f0c99e8ad11e0dd86bc548b93a9a79",
+      "bytes": 414
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "observedUTC": "2026-10-12T06:16:05.708780+00:00",
+  "stage": "preflight, before supervisor/Blender launch",
+  "error": "Another Blender process is active; do not overlap",
+  "existingGUI": {
+    "pid": 13395,
+    "ppid": 1,
+    "rssKiB": 26464,
+    "elapsed": "02-05:05:53",
+    "command": "/Applications/Blender.app/Contents/MacOS/Blender"
+  },
+  "newBlenderLaunched": false,
+  "sourceScriptSHA": "b88ab26a01a83496d8a91a8e0f8a5ee93f8230b3ea931a580a77c960ba47bd05",
+  "correction": "Only background Blender processes conflict; pre-existing GUI remains untouched."
+}

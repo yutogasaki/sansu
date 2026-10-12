@@ -1,0 +1,125 @@
+{
+  "reason": "Historical source text must not be discovered as another executable Vitest/ESLint source tree. Only archive filenames changed; bytes and raw report stay identical.",
+  "rawReportSha256": "cfeed8e4fccb90622f9d9252d98ceb90f75170f1ad5bf2bcd88ed8e30fc1e51d",
+  "files": [
+    {
+      "originalSourcePath": "src/domain/growingIsland/worldTypes.ts",
+      "oldArchivePath": "source/src/domain/growingIsland/worldTypes.ts",
+      "archivePath": "source/src/domain/growingIsland/worldTypes.ts.txt",
+      "sha256": "d573184d5f78c77faa6a7c2811057f899356801e803df7df01ccb63073fd306f",
+      "bytes": 3039
+    },
+    {
+      "originalSourcePath": "src/domain/growingIsland/worldDefinition.ts",
+      "oldArchivePath": "source/src/domain/growingIsland/worldDefinition.ts",
+      "archivePath": "source/src/domain/growingIsland/worldDefinition.ts.txt",
+      "sha256": "8e88855dd180624f1c2b32437e6d1b93cc66e978f2fc9c741d5f004e8ba45db7",
+      "bytes": 29199
+    },
+    {
+      "originalSourcePath": "src/domain/growingIsland/authoredWaterWorld.ts",
+      "oldArchivePath": "source/src/domain/growingIsland/authoredWaterWorld.ts",
+      "archivePath": "source/src/domain/growingIsland/authoredWaterWorld.ts.txt",
+      "sha256": "7640bd96ac4eb6797f46862f1b9a223d575f3bc9b51ae05f41351865cce2e486",
+      "bytes": 40232
+    },
+    {
+      "originalSourcePath": "src/domain/growingIsland/authoredCoveWorld.ts",
+      "oldArchivePath": "source/src/domain/growingIsland/authoredCoveWorld.ts",
+      "archivePath": "source/src/domain/growingIsland/authoredCoveWorld.ts.txt",
+      "sha256": "7a917dd1b9df157997ff539257b7a53938dbcc15546400202667e6ad6119e819",
+      "bytes": 14337
+    },
+    {
+      "originalSourcePath": "src/components/island/growing/native/authoredGrowingGround.ts",
+      "oldArchivePath": "source/src/components/island/growing/native/authoredGrowingGround.ts",
+      "archivePath": "source/src/components/island/growing/native/authoredGrowingGround.ts.txt",
+      "sha256": "98f92585ea60c361c440c602f77208ee978cedbf662c21c28927956adb4db32f",
+      "bytes": 11252
+    },
+    {
+      "originalSourcePath": "tools/build-authored-island-world.mjs",
+      "oldArchivePath": "source/tools/build-authored-island-world.mjs",
+      "archivePath": "source/tools/build-authored-island-world.mjs.txt",
+      "sha256": "f2118d254d9d6b42169f490f2bcc90626cfa7daee149a84cb7a9d048e3c1f2d6",
+      "bytes": 11745
+    },
+    {
+      "originalSourcePath": "src/domain/growingIsland/worldDefinition.test.ts",
+      "oldArchivePath": "source/src/domain/growingIsland/worldDefinition.test.ts",
+      "archivePath": "source/src/domain/growingIsland/worldDefinition.test.ts.txt",
+      "sha256": "8d4f6d66d0c4078f3dc77c5911ecfb9e84e508137a15b035971dc68c9787b581",
+      "bytes": 14965
+    },
+    {
+      "originalSourcePath": "src/domain/growingIsland/authoredWaterWorld.test.ts",
+      "oldArchivePath": "source/src/domain/growingIsland/authoredWaterWorld.test.ts",
+      "archivePath": "source/src/domain/growingIsland/authoredWaterWorld.test.ts.txt",
+      "sha256": "08edc91ee01f20f3f49640b99a50ca96649859642f8605902bb12b9291eec8a2",
+      "bytes": 36377
+    },
+    {
+      "originalSourcePath": "src/domain/growingIsland/authoredCoveWorld.test.ts",
+      "oldArchivePath": "source/src/domain/growingIsland/authoredCoveWorld.test.ts",
+      "archivePath": "source/src/domain/growingIsland/authoredCoveWorld.test.ts.txt",
+      "sha256": "39631a69804218c1497127d6a018c557ccd478ac96fbc0b3bcb3711ce30cab4c",
+      "bytes": 11713
+    },
+    {
+      "originalSourcePath": "src/components/island/growing/native/authoredGrowingGround.test.ts",
+      "oldArchivePath": "source/src/components/island/growing/native/authoredGrowingGround.test.ts",
+      "archivePath": "source/src/components/island/growing/native/authoredGrowingGround.test.ts.txt",
+      "sha256": "9225666b78e374da86d8c5f097a99185e71d50e665cab26c4a953408e5659337",
+      "bytes": 8120
+    },
+    {
+      "originalSourcePath": "src/components/island/growing/growingLife.ts",
+      "oldArchivePath": "source/src/components/island/growing/growingLife.ts",
+      "archivePath": "source/src/components/island/growing/growingLife.ts.txt",
+      "sha256": "5479b7915165422fa6345b3297aa1eb4068bbc24ad88642a3b6ae7f8f115007d",
+      "bytes": 42787
+    },
+    {
+      "originalSourcePath": "src/components/island/growing/authoredFlowerObstructions.ts",
+      "oldArchivePath": "source/src/components/island/growing/authoredFlowerObstructions.ts",
+      "archivePath": "source/src/components/island/growing/authoredFlowerObstructions.ts.txt",
+      "sha256": "1381930d6e1720bda6c0de22e9188c49c7c137b0ff86133f69e19cf22049ee09",
+      "bytes": 26696
+    },
+    {
+      "originalSourcePath": "src/components/island/growing/authoredFlowerObstructions.test.ts",
+      "oldArchivePath": "source/src/components/island/growing/authoredFlowerObstructions.test.ts",
+      "archivePath": "source/src/components/island/growing/authoredFlowerObstructions.test.ts.txt",
+      "sha256": "3b327fdc9341b1ae7cc04ea4cf96787707f65057dac80ee9e154839045a509c9",
+      "bytes": 25066
+    },
+    {
+      "originalSourcePath": "src/components/island/growing/authoredGroveLife.test.ts",
+      "oldArchivePath": "source/src/components/island/growing/authoredGroveLife.test.ts",
+      "archivePath": "source/src/components/island/growing/authoredGroveLife.test.ts.txt",
+      "sha256": "fc88cfbe1377c9e9f1f2156474d6fee4e6ce84c3de8f6c25518ab6b2192a9332",
+      "bytes": 19800
+    },
+    {
+      "originalSourcePath": "src/components/island/growing/authoredCoveLife.test.ts",
+      "oldArchivePath": "source/src/components/island/growing/authoredCoveLife.test.ts",
+      "archivePath": "source/src/components/island/growing/authoredCoveLife.test.ts.txt",
+      "sha256": "b52c0d33c4484db8c43b23145561f3f7677a34d0237a71d0eb74fbbbadb8bfbd",
+      "bytes": 19824
+    },
+    {
+      "originalSourcePath": "src/components/island/growing/authoredFlowerLife.test.ts",
+      "oldArchivePath": "source/src/components/island/growing/authoredFlowerLife.test.ts",
+      "archivePath": "source/src/components/island/growing/authoredFlowerLife.test.ts.txt",
+      "sha256": "6293688ca26f072aa5457e727920301d8e79f10866851f9c1e5664425d5d7679",
+      "bytes": 19060
+    },
+    {
+      "originalSourcePath": "src/components/island/growing/native/authoredCoveIntegration.test.ts",
+      "oldArchivePath": "source/src/components/island/growing/native/authoredCoveIntegration.test.ts",
+      "archivePath": "source/src/components/island/growing/native/authoredCoveIntegration.test.ts.txt",
+      "sha256": "6c8d8ae7944d8f477cb2741e256f7c16ed2f73fd8f42f7868091037852225549",
+      "bytes": 17516
+    }
+  ]
+}

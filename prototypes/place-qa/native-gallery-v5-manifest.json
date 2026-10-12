@@ -1,0 +1,484 @@
+{
+  "version": 1,
+  "source": {
+    "id": "p02-native-east-real-stair-v5-sixteen",
+    "sha256": "e7a8c6dee084c11c199b50b31798b3a8fcf33215252de375d03342da82807919",
+    "artifact": "docs/design/2026-10-12-authored-p02-gallery/east-v5-sixteen-stairs/east-v5-stairs-build/runs/01-coarse-build/owner-use-components.glb"
+  },
+  "artifact": {
+    "path": "/prototypes/place-qa/native-gallery-v5.glb.gz",
+    "sha256": "e5cdf3424ab1132fcc1b22d0ea8aa89ae520b0f3137ab252898efd781c842ac6",
+    "expandedSha256": "e7a8c6dee084c11c199b50b31798b3a8fcf33215252de375d03342da82807919",
+    "expandedBytes": 640412,
+    "gzipBytes": 161147
+  },
+  "counts": {
+    "nodes": 39,
+    "primitives": 39,
+    "triangles": 10220,
+    "materials": 2
+  },
+  "nodes": [
+    {
+      "name": "solid-body/aligned-opening",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 172,
+          "material": "house / honey wood.001"
+        }
+      ]
+    },
+    {
+      "name": "solid-body/front-junction",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 96,
+          "material": "house / honey wood.001"
+        }
+      ]
+    },
+    {
+      "name": "solid-body/native-interior",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 110,
+          "material": "house / honey wood.001"
+        }
+      ]
+    },
+    {
+      "name": "solid-body/real-sixteen-stairs",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 3456,
+          "material": "house / honey wood.001"
+        }
+      ]
+    },
+    {
+      "name": "solid-body/terrain-threshold",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 572,
+          "material": "house / honey wood.001"
+        }
+      ]
+    },
+    {
+      "name": "solid-bough/native-contact-1",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 284,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-bough/native-contact-2",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 300,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-bough/native-contact-3",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 332,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-bough/native-contact-4",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 236,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-bough/native-contact-5",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 172,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-bough/same-owner-ground-root",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 124,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/1/0",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/1/2",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/1/4",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/1/6",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/1/8",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/1/10",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/1/12",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/1/14",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/1/16",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/1/36",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/-1/0",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/-1/2",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/-1/4",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/-1/6",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/-1/8",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/-1/10",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/-1/12",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/-1/14",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/-1/16",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail-post/-1/36",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail/stair-edge-1",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 588,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail/stair-edge--1",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 588,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "solid-rail/visible-terminal-guard",
+      "sourceRole": "structure",
+      "primitives": [
+        {
+          "triangles": 28,
+          "material": "young branches.003"
+        }
+      ]
+    },
+    {
+      "name": "walk-top/aligned-opening",
+      "sourceRole": "owner-use",
+      "primitives": [
+        {
+          "triangles": 105,
+          "material": "house / honey wood.001"
+        }
+      ]
+    },
+    {
+      "name": "walk-top/front-junction",
+      "sourceRole": "owner-use",
+      "primitives": [
+        {
+          "triangles": 26,
+          "material": "house / honey wood.001"
+        }
+      ]
+    },
+    {
+      "name": "walk-top/native-interior",
+      "sourceRole": "owner-use",
+      "primitives": [
+        {
+          "triangles": 52,
+          "material": "house / honey wood.001"
+        }
+      ]
+    },
+    {
+      "name": "walk-top/real-sixteen-stairs",
+      "sourceRole": "owner-use",
+      "primitives": [
+        {
+          "triangles": 1684,
+          "material": "house / honey wood.001"
+        }
+      ]
+    },
+    {
+      "name": "walk-top/terrain-threshold",
+      "sourceRole": "owner-use",
+      "primitives": [
+        {
+          "triangles": 735,
+          "material": "house / honey wood.001"
+        }
+      ]
+    }
+  ],
+  "materialNames": [
+    "house / honey wood.001",
+    "young branches.003"
+  ],
+  "binding": {
+    "placeId": "P02:p3",
+    "owners": [
+      {
+        "id": "l10",
+        "cell": {
+          "x": 3,
+          "z": -9
+        }
+      },
+      {
+        "id": "l11",
+        "cell": {
+          "x": 4,
+          "z": -9
+        }
+      },
+      {
+        "id": "l12",
+        "cell": {
+          "x": 3,
+          "z": -8
+        }
+      },
+      {
+        "id": "l13",
+        "cell": {
+          "x": 4,
+          "z": -8
+        }
+      }
+    ],
+    "nativeKit": {
+      "candidate": "native05-owned-kit-v1",
+      "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+      "sha256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+      "gzipSha256": "79b8ae671444bf0c4869bd8e185f8d5ac140a1d7ee3e5709c5d39e4a6735e615"
+    },
+    "authoredOrigin": [
+      3.5,
+      1.49033759075,
+      -8.5
+    ],
+    "sourcePivot": [
+      -4.8,
+      3.7931642532348633,
+      -17
+    ],
+    "sourceScale": 0.45,
+    "crownLocalY": 2.055093097686768
+  },
+  "coordinateContract": "GLB already contains authored Y-up physical XYZ; apply only [-layout.center, 0, -2]. Do not reapply native pivot or .45 scale.",
+  "role": "visible-owner-structure-and-obstruction-only",
+  "defaultGroundExcluded": true,
+  "galleryTraversalEnabled": false,
+  "limitations": [
+    "Source visual/runtime HOLD remains; this is coarse whole-island presentation, not accepted stair traversal.",
+    "Fixed original four-owner placement and actual native shared trunk/crown transform only.",
+    "No default ground, placement right, upper walking route or use receipt is supplied.",
+    "All 39 source components retain original attributes, indices, PBR and Float32 lineage; original source context is excluded."
+  ],
+  "inputs": {
+    "docs/design/2026-10-12-authored-p02-gallery/east-v5-sixteen-stairs/east-v5-stairs-build/runs/01-coarse-build/owner-use-components.glb": "e7a8c6dee084c11c199b50b31798b3a8fcf33215252de375d03342da82807919",
+    "docs/design/2026-10-12-authored-p02-gallery/east-v5-sixteen-stairs/east-v5-stairs-build/runs/01-coarse-build/owner-use-profile.json": "f7fb21c93573ee944ac48a1cdd814108cc6180277ed14c56fef8049acccdfaf2",
+    "docs/design/2026-10-12-authored-p02-gallery/east-v5-sixteen-stairs/east-v5-stairs-build/study.json": "ee868c08b484953386ab271a624c70ab5ddd4e8f89cae8919d398f04f7dec32e",
+    "docs/design/2026-10-11-native-owned-island/kit-manifest.json": "0653ef4cd09a34102235e92726f77db772391b66d27e01da8175b8a6fd7eea8e"
+  }
+}

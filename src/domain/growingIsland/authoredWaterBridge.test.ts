@@ -145,7 +145,8 @@ describe('source-shaped actual authored water bridges', () => {
         expect(composeAuthoredWaterBridges(f.state, f.base, f.cut, junction).bridges).toEqual([]);
         const noEdges = compileWorldDefinition({ ...f.base.definition, edges: f.base.definition.edges.filter(edge => !edge.allows.includes('walk')) });
         expect(composeAuthoredWaterBridges(f.state, noEdges, f.cut, f.water).bridges).toEqual([]);
-        expect(composeAuthoredWaterBridges(f.state, f.base, f.cut, f.water)).toEqual(first);
+        const repeated = composeAuthoredWaterBridges(f.state, f.base, f.cut, f.water);
+        expect(repeated.definition).toEqual(first.definition); expect(repeated.bridges).toEqual(first.bridges);
     });
 
     it('keeps a basin and the supported mineral base clear of the bridge body', () => {
@@ -156,5 +157,44 @@ describe('source-shaped actual authored water bridges', () => {
         f.water.pools = [{ ownerId: 'bowl-owner', ownerIds: ['bowl-owner'], districtId: 'district', center: bridge.center, radius: .3,
             waterY: .025, bedY: -.155, outline: bridge.outline, outerOutline: bridge.outline, sourceRole: 'upper', axes: [.3, .3, .3, .3], waterFloorId: f.floorId('wet'), bedFloorId: f.floorId('bed'), color: '#abc', bedColor: '#def' }];
         expect(composeAuthoredWaterBridges(f.state, f.base, f.cut, f.water).bridges).toEqual([]);
+    });
+
+    it.each([{}, { rotated: true }, { nonlinearMapping: true }])('reuses the accepted support with the same floors and walking queries %j', options => {
+        const f = fixture(options), result = composeAuthoredWaterBridges(f.state, f.base, f.cut, f.water);
+        expect(result.bridges).toHaveLength(1);
+        const fresh = compileWorldDefinition(result.definition), support = result.supportWorld;
+        expect(support).not.toBe(f.cut); expect(support.definition).toEqual(fresh.definition);
+        expect(support.floors).toEqual(fresh.floors); expect(support.sites).toEqual(fresh.sites);
+        for (const site of fresh.sites) {
+            expect(support.floorAt(site.cell)).toEqual(fresh.floorAt(site.cell));
+            expect(support.anchorAt(site.cell)).toEqual(fresh.anchorAt(site.cell));
+        }
+        for (const edge of f.base.definition.edges.filter(edge => edge.allows.includes('walk'))) {
+            const from = f.cell(edge.from.siteId), to = f.cell(edge.to.siteId);
+            expect(isWorldWalkEdgeSupported(support, from, to)).toBe(isWorldWalkEdgeSupported(fresh, from, to));
+        }
+    });
+
+    it('keeps the original cut support when every bridge is rejected', () => {
+        const f = fixture({ landingGap: true }), result = composeAuthoredWaterBridges(f.state, f.base, f.cut, f.water);
+        expect(result.bridges).toEqual([]); expect(result.supportWorld).toBe(f.cut);
+        expect(result.definition).toEqual(f.cut.definition);
+    });
+
+    it('keeps accepted support after a later rejected owner and later caller edits', () => {
+        const f = fixture();
+        f.state.landmarks.push({ ...f.state.landmarks[1], id: 'zz-rejected' });
+        f.water.ownerIds = [...f.water.ownerIds, 'zz-rejected'];
+        // The later owner has no feeding stream, so it cannot adopt another deck.
+        const result = composeAuthoredWaterBridges(f.state, f.base, f.cut, f.water), support = result.supportWorld;
+        expect(result.bridges.map(bridge => bridge.ownerId)).toEqual(['terminal']);
+        const before = structuredClone(support.definition), sample = support.floorAt(f.cell('0,-2'));
+        expect(sample?.floorId).toBe(result.bridges[0].deckFloorId);
+        result.definition.edges = [];
+        result.definition.districts[0].shoreAccess = [];
+        result.definition.districts[0].floors[0].vertices[0].point.y += 10;
+        expect(support.definition).toEqual(before);
+        expect(support.floorAt(f.cell('0,-2'))).toEqual(sample);
+        expect(support.definition.districts[0].floors.some(floor => floor.id.includes('zz-rejected'))).toBe(false);
     });
 });

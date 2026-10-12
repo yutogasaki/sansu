@@ -1,0 +1,168 @@
+{
+  "status": "SURVEY_EXECUTED_ONCE_ALL_HOLD_DONOR_TRANSFORM_SUSPECT",
+  "startUtc": "2026-10-12T03:51:33.580133+00:00",
+  "endUtc": "2026-10-12T03:51:49.406751+00:00",
+  "ownedBlenderProcesses": [
+    {
+      "pid": 19411,
+      "parentPid": 19409,
+      "firstObservedUtc": "2026-10-12T03:51:34.168586+00:00",
+      "command": "/Applications/Blender.app/Contents/MacOS/Blender",
+      "lastObservedUtc": "2026-10-12T03:51:48.357394+00:00",
+      "peakObservedRssBytes": 1007091712
+    }
+  ],
+  "supervisor": {
+    "command": [
+      "/Applications/Blender.app/Contents/MacOS/Blender",
+      "-b",
+      "--threads",
+      "2",
+      "--python",
+      "source-study.py",
+      "--",
+      "measure",
+      "--scheduled",
+      "--out",
+      "runs/01-survey"
+    ],
+    "exitCode": 0,
+    "stop": null,
+    "peakSampledRssBytes": 1004486656,
+    "elapsedSeconds": 15.447743208,
+    "limits": {
+      "seconds": 180,
+      "rssMiB": 2560
+    },
+    "sourceOnly": true
+  },
+  "inputsUnchanged": true,
+  "selectedIndex": null,
+  "candidateStatus": [
+    "HOLD",
+    "HOLD",
+    "HOLD"
+  ],
+  "interpretation": {
+    "rawNeverReplaced": true,
+    "runtimeAcceptance": false,
+    "artAcceptance": false,
+    "sourceDimensionsAccepted": false,
+    "donorTransformIssue": {
+      "observedNativeInteriorCentre": [
+        5.659999847412109,
+        -0.18958623707294464,
+        -0.8500003814697266
+      ],
+      "fixedP02AuthoredOrigin": [
+        3.5,
+        1.49033759075,
+        -8.5
+      ],
+      "sourceToAuthoredPivotTranslation": [
+        5.66,
+        -0.21658632320568838,
+        -0.8499999999999996
+      ],
+      "evidence": "Observed interior XZ approximately equals the pivot-subtraction translation itself, not the native floor transformed into the P02 assembly. Doorway rays all return null.",
+      "hypothesis": "Loaded .blend donor matrix_world may not have been updated/evaluated before its transform is copied. No rerun or source edit performed.",
+      "limits": "Raw connector/spur grades, body collision counts, original interior/gallery Y and route feasibility must not be adopted as valid P02 dimensions. Interior-spur section direction also depends on this invalid donor location.",
+      "nextRequiredCheck": "In a separately scheduled corrected survey, record donor source matrix_basis/matrix_world/evaluated world bounds and reject before route generation if transformed floor is outside the fixed P02 assembly; do not adapt the landing to conceal this issue."
+    },
+    "usableGroundObservation": "Actual context ground entry Y and ramp-entry transverse sections are independent of donor heights: fixed authored entry XZ and fixed ramp-start XZ determine the cross-section. All three show continuous source floor coverage but nonzero flat-seam gaps. They are observations, not full route PASS."
+  },
+  "rampEntryGroundSections": [
+    {
+      "entry": [
+        3.0,
+        1.5630645751953125,
+        -7.25
+      ],
+      "fullWidthSupport": true,
+      "flatSeamGapRange": [
+        -0.006655413074197147,
+        0.030746338345437385
+      ],
+      "flatLandingMatchesGround": false
+    },
+    {
+      "entry": [
+        3.75,
+        1.6333465576171875,
+        -7.25
+      ],
+      "fullWidthSupport": true,
+      "flatSeamGapRange": [
+        -0.001604461886609121,
+        0.01763036452131539
+      ],
+      "flatLandingMatchesGround": false
+    },
+    {
+      "entry": [
+        4.0,
+        1.6509284973144531,
+        -7.25
+      ],
+      "fullWidthSupport": true,
+      "flatSeamGapRange": [
+        -0.03292027384088447,
+        0.03390690098880178
+      ],
+      "flatLandingMatchesGround": false
+    }
+  ],
+  "noAdditionalExecution": {
+    "build": false,
+    "render": false,
+    "automaticAdaptation": false,
+    "retry": false,
+    "otherFunctionalRegressionsChangedOrStopped": false
+  },
+  "artifacts": {
+    "runs/01-survey/candidate-0.json": {
+      "bytes": 10719990,
+      "sha256": "1ac1568a4072510990f3a089f681fd2b9edb399a284a1e3899e34ed27ddea237"
+    },
+    "runs/01-survey/candidate-1.json": {
+      "bytes": 9233324,
+      "sha256": "4f2d65b8bd951c922295e8b8c214581ab46b4987a72c5afbd9e133731790753c"
+    },
+    "runs/01-survey/candidate-2.json": {
+      "bytes": 8135931,
+      "sha256": "0d32ae8665a6672e665947fd111e5744fcd48ef632468854aede94a310975564"
+    },
+    "runs/01-survey/candidates-partial.json": {
+      "bytes": 32684650,
+      "sha256": "47a7f5b04797c2fee2c78d667f68c722a5b8868b96ae03d12f724c0f1b33786c"
+    },
+    "runs/01-survey/execution.json": {
+      "bytes": 1516,
+      "sha256": "9c490e88a0495879563634db1907ed2fdd46c165a44969f97f2ab7746834afbb"
+    },
+    "runs/01-survey/measurement.json": {
+      "bytes": 32687547,
+      "sha256": "d171fc2de6b751ef706bd40c1fbb9788cd6ff8836354efba442ef0b0226afbe1"
+    },
+    "runs/01-survey-observation.json": {
+      "bytes": 2786,
+      "sha256": "04a62bcc8bac63f054e4a3cf368b41cc9499e4c33c5329320bae26dd2d98502d"
+    },
+    "runs/01-survey-summary.json": {
+      "bytes": 13528,
+      "sha256": "add77f34dc860fb0e7d880b66d05be47374dd32c7db3f586598a97e6f16cf545"
+    },
+    "runs/01-survey-supervisor-output.log.txt": {
+      "bytes": 340,
+      "sha256": "fb61aa7701d3f89afdb67b7183c045a2f2261192dbff57b659d78c01803f33b6"
+    },
+    "runs/01-survey.log.txt": {
+      "bytes": 18601,
+      "sha256": "576b157990fb72814256db839bf742a4326e9c9b04d9a3f914b6b27f7aac5b8d"
+    },
+    "runs/01-survey.log.txt.json": {
+      "bytes": 416,
+      "sha256": "b1faef52b0ad82dd4d01cc5a54a0ce2b8801f5cd0db2cc00e7c48ee721437bd2"
+    }
+  }
+}

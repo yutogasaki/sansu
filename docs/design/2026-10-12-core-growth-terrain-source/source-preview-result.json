@@ -1,0 +1,26 @@
+{
+  "startedUtc": "2026-10-12T12:13:03.875431+00:00",
+  "finishedUtc": "2026-10-12T12:13:24.698700+00:00",
+  "pid": 76884,
+  "exitCode": 0,
+  "elapsedSeconds": 20.822952417,
+  "peakSampledRssBytes": 2248179712,
+  "effectiveThreads": 2,
+  "limitReason": null,
+  "sourceBefore": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-core-growth-terrain-source/build-source-preview.py": "59ae09515aa3caa47a406c9193c6fce5eb659f6cb66a7fe0775d65d6a27fb063",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-core-growth-terrain-source/authored-core-growth-terrain-manifest.json": "b3d78573d86c6ade84a04634a9abb68465427e3ca74eed6d67076e4ebd7acc80",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-core-growth-terrain-source/north-whole.glb": "5c6c84f4ee336628669de8a30510dad2c5d5e172b9681bb38958454104eeb845",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-core-growth-terrain-source/east-parts.glb": "38afeab2dfd5e129b8b406ce6ec015790f2b71982d3b72ee1d2953557bd294b1",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-core-growth-terrain-source/loop-parts.glb": "4c521e6b913af7fce4786d6090251eded585cf27d0cd0ca1d88886b218e0f0c2"
+  },
+  "sourceAfter": {
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-core-growth-terrain-source/build-source-preview.py": "59ae09515aa3caa47a406c9193c6fce5eb659f6cb66a7fe0775d65d6a27fb063",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-core-growth-terrain-source/authored-core-growth-terrain-manifest.json": "b3d78573d86c6ade84a04634a9abb68465427e3ca74eed6d67076e4ebd7acc80",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-core-growth-terrain-source/north-whole.glb": "5c6c84f4ee336628669de8a30510dad2c5d5e172b9681bb38958454104eeb845",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-core-growth-terrain-source/east-parts.glb": "38afeab2dfd5e129b8b406ce6ec015790f2b71982d3b72ee1d2953557bd294b1",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-core-growth-terrain-source/loop-parts.glb": "4c521e6b913af7fce4786d6090251eded585cf27d0cd0ca1d88886b218e0f0c2"
+  },
+  "inputsUnchanged": true,
+  "evidence": "Source-only static comparison; not performance evidence or app acceptance"
+}

@@ -1,0 +1,290 @@
+{
+  "scope": "40 root/worker-owned normal, all-tree, shoulder integration files; new browser harness remains separately owned",
+  "at": "2026-10-12T10:08:00+0900",
+  "base": "/private/tmp/sansu-authored-cove-c4/candidate",
+  "draft": "/private/tmp/sansu-next-m1-code",
+  "live": "/Users/yutogasaki/Projects/sansu",
+  "files": [
+    {
+      "file": "src/components/island/growing/GrowingWorld.tsx",
+      "baseSha256": "e02cb2d5e4dd30f7a1f21e02bb79bb9fad87200ddfe648e0d6af4544d3e70720",
+      "draftSha256": "a307b9c6eb8145659ddb6062faf9ba9f6e763f6e1af999fc29fcabb4e05f2991",
+      "liveBeforeSha256": "e02cb2d5e4dd30f7a1f21e02bb79bb9fad87200ddfe648e0d6af4544d3e70720",
+      "liveAfterSha256": "a307b9c6eb8145659ddb6062faf9ba9f6e763f6e1af999fc29fcabb4e05f2991"
+    },
+    {
+      "file": "src/components/island/growing/authoredCoveLife.test.ts",
+      "baseSha256": "27cd7b4575e74d66b1386184c83a579b86708bdeb64ce027632b9a17211adab4",
+      "draftSha256": "b52c0d33c4484db8c43b23145561f3f7677a34d0237a71d0eb74fbbbadb8bfbd",
+      "liveBeforeSha256": "27cd7b4575e74d66b1386184c83a579b86708bdeb64ce027632b9a17211adab4",
+      "liveAfterSha256": "b52c0d33c4484db8c43b23145561f3f7677a34d0237a71d0eb74fbbbadb8bfbd"
+    },
+    {
+      "file": "src/components/island/growing/authoredFlowerLife.test.ts",
+      "baseSha256": "228bdd457b8b5de3808950aafba6c9020d4db6c1aca6bbac891db31cbd8e34cd",
+      "draftSha256": "6293688ca26f072aa5457e727920301d8e79f10866851f9c1e5664425d5d7679",
+      "liveBeforeSha256": "228bdd457b8b5de3808950aafba6c9020d4db6c1aca6bbac891db31cbd8e34cd",
+      "liveAfterSha256": "6293688ca26f072aa5457e727920301d8e79f10866851f9c1e5664425d5d7679"
+    },
+    {
+      "file": "src/components/island/growing/authoredFlowerObstructions.test.ts",
+      "baseSha256": "a1cb260d9b3df1efab841f6d6096a13e9f2f701c4ee7234d4f86389f25eb822b",
+      "draftSha256": "3b327fdc9341b1ae7cc04ea4cf96787707f65057dac80ee9e154839045a509c9",
+      "liveBeforeSha256": "a1cb260d9b3df1efab841f6d6096a13e9f2f701c4ee7234d4f86389f25eb822b",
+      "liveAfterSha256": "3b327fdc9341b1ae7cc04ea4cf96787707f65057dac80ee9e154839045a509c9"
+    },
+    {
+      "file": "src/components/island/growing/authoredFlowerObstructions.ts",
+      "baseSha256": "c50f5991a89ce14c7f0d63868b21399c0ac3fc13f0965e2d498772a4fe047487",
+      "draftSha256": "bd84da266762a3a18ccd0492810864efab310152018f8fd51d1da432c593c56e",
+      "liveBeforeSha256": "c50f5991a89ce14c7f0d63868b21399c0ac3fc13f0965e2d498772a4fe047487",
+      "liveAfterSha256": "bd84da266762a3a18ccd0492810864efab310152018f8fd51d1da432c593c56e"
+    },
+    {
+      "file": "src/components/island/growing/authoredGroveLife.test.ts",
+      "baseSha256": null,
+      "draftSha256": "fc88cfbe1377c9e9f1f2156474d6fee4e6ce84c3de8f6c25518ab6b2192a9332",
+      "liveBeforeSha256": null,
+      "liveAfterSha256": "fc88cfbe1377c9e9f1f2156474d6fee4e6ce84c3de8f6c25518ab6b2192a9332"
+    },
+    {
+      "file": "src/components/island/growing/growingLife.ts",
+      "baseSha256": "cc27a8c2b16856f7b8f10f9c9088c4216cb9a5bc2deb2f4ad2a39d06c7021d5c",
+      "draftSha256": "5479b7915165422fa6345b3297aa1eb4068bbc24ad88642a3b6ae7f8f115007d",
+      "liveBeforeSha256": "cc27a8c2b16856f7b8f10f9c9088c4216cb9a5bc2deb2f4ad2a39d06c7021d5c",
+      "liveAfterSha256": "5479b7915165422fa6345b3297aa1eb4068bbc24ad88642a3b6ae7f8f115007d"
+    },
+    {
+      "file": "src/components/island/growing/native/authoredCoveIntegration.test.ts",
+      "baseSha256": "e61c08505af726f46ae42bebbf94e80c5eb4c55dd009086b33d19eb9cbf44f3e",
+      "draftSha256": "6c8d8ae7944d8f477cb2741e256f7c16ed2f73fd8f42f7868091037852225549",
+      "liveBeforeSha256": "e61c08505af726f46ae42bebbf94e80c5eb4c55dd009086b33d19eb9cbf44f3e",
+      "liveAfterSha256": "6c8d8ae7944d8f477cb2741e256f7c16ed2f73fd8f42f7868091037852225549"
+    },
+    {
+      "file": "src/components/island/growing/native/authoredGrowingAssets.ts",
+      "baseSha256": "6dae528a6ed4e872776b27a13989f85f41c46fb73c6271f2b4afb7b36435cfa1",
+      "draftSha256": "351e6247dba4fe19edd2cf5c58390b028cca0882e6092c59c913396ba8cab504",
+      "liveBeforeSha256": "6dae528a6ed4e872776b27a13989f85f41c46fb73c6271f2b4afb7b36435cfa1",
+      "liveAfterSha256": "351e6247dba4fe19edd2cf5c58390b028cca0882e6092c59c913396ba8cab504"
+    },
+    {
+      "file": "src/components/island/growing/native/authoredGrowingGround.test.ts",
+      "baseSha256": "00efee10344fa079a7047b602ac4552cb334e1f94ccafb69cc626b9374025969",
+      "draftSha256": "9225666b78e374da86d8c5f097a99185e71d50e665cab26c4a953408e5659337",
+      "liveBeforeSha256": "00efee10344fa079a7047b602ac4552cb334e1f94ccafb69cc626b9374025969",
+      "liveAfterSha256": "9225666b78e374da86d8c5f097a99185e71d50e665cab26c4a953408e5659337"
+    },
+    {
+      "file": "src/components/island/growing/native/authoredGrowingGround.ts",
+      "baseSha256": "84af170ec055b25c52778f14657b8160bcf9281afab20aa0569d11a63cff7bc3",
+      "draftSha256": "98f92585ea60c361c440c602f77208ee978cedbf662c21c28927956adb4db32f",
+      "liveBeforeSha256": "84af170ec055b25c52778f14657b8160bcf9281afab20aa0569d11a63cff7bc3",
+      "liveAfterSha256": "98f92585ea60c361c440c602f77208ee978cedbf662c21c28927956adb4db32f"
+    },
+    {
+      "file": "src/components/island/growing/native/authoredShoulderIntegration.test.ts",
+      "baseSha256": null,
+      "draftSha256": "21c5c6093cac01b17a63600b77ddd424b075d018edd81e38b1cf4ac7b9b5f09b",
+      "liveBeforeSha256": null,
+      "liveAfterSha256": "21c5c6093cac01b17a63600b77ddd424b075d018edd81e38b1cf4ac7b9b5f09b"
+    },
+    {
+      "file": "src/components/island/growing/native/nativeAuthoredShoulder.test.ts",
+      "baseSha256": null,
+      "draftSha256": "bf57bab28c7de14c92324fb1b60323847004b0d73a4f5efe3b7b888cd4d371ca",
+      "liveBeforeSha256": null,
+      "liveAfterSha256": "bf57bab28c7de14c92324fb1b60323847004b0d73a4f5efe3b7b888cd4d371ca"
+    },
+    {
+      "file": "src/components/island/growing/native/nativeAuthoredShoulder.ts",
+      "baseSha256": null,
+      "draftSha256": "b8d3107de1394fef2e3f27c292fcbc1a45086f080d48ad56846638c46d081122",
+      "liveBeforeSha256": null,
+      "liveAfterSha256": "b8d3107de1394fef2e3f27c292fcbc1a45086f080d48ad56846638c46d081122"
+    },
+    {
+      "file": "src/components/island/growing/native/nativePlaceGrove.ts",
+      "baseSha256": "b1d77d999a78f84f0f1a09f6117927a39629c3e803501e3898b1939ef368cfd9",
+      "draftSha256": "c1843fea02c193a124ef39299ef3b3f0821a4afe4a4d88a25da7d8964f200b46",
+      "liveBeforeSha256": "b1d77d999a78f84f0f1a09f6117927a39629c3e803501e3898b1939ef368cfd9",
+      "liveAfterSha256": "c1843fea02c193a124ef39299ef3b3f0821a4afe4a4d88a25da7d8964f200b46"
+    },
+    {
+      "file": "src/components/island/growing/objectLayer.ts",
+      "baseSha256": "fb67823156a4da834a6ff70f6a1d0f61eb802ea93074a75e4bf943e69752814f",
+      "draftSha256": "e5a579c2ed7a01b9392db046802411580a855562885ddf9d7ec506c17934c618",
+      "liveBeforeSha256": "fb67823156a4da834a6ff70f6a1d0f61eb802ea93074a75e4bf943e69752814f",
+      "liveAfterSha256": "e5a579c2ed7a01b9392db046802411580a855562885ddf9d7ec506c17934c618"
+    },
+    {
+      "file": "src/components/island/growing/worldScene.ts",
+      "baseSha256": "78f2deca69cbcc31aa119b5e9a2a4f05f6144f542c4522ede83b4ebdb317ade4",
+      "draftSha256": "d8029015b4d4ca8f8fbf445a97a113646c1b42854c279329da4f7daee3669095",
+      "liveBeforeSha256": "78f2deca69cbcc31aa119b5e9a2a4f05f6144f542c4522ede83b4ebdb317ade4",
+      "liveAfterSha256": "d8029015b4d4ca8f8fbf445a97a113646c1b42854c279329da4f7daee3669095"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredCoveWorld.test.ts",
+      "baseSha256": "cd718461fae45d6cee85e406c3e420d2d52acb8cedb5ddab2ef673bc81e3b461",
+      "draftSha256": "39631a69804218c1497127d6a018c557ccd478ac96fbc0b3bcb3711ce30cab4c",
+      "liveBeforeSha256": "cd718461fae45d6cee85e406c3e420d2d52acb8cedb5ddab2ef673bc81e3b461",
+      "liveAfterSha256": "39631a69804218c1497127d6a018c557ccd478ac96fbc0b3bcb3711ce30cab4c"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredCoveWorld.ts",
+      "baseSha256": "b773f24672e5badc5259594ae5bdc378daedc861577f245d66ccdfdeb38b8781",
+      "draftSha256": "7a917dd1b9df157997ff539257b7a53938dbcc15546400202667e6ad6119e819",
+      "liveBeforeSha256": "b773f24672e5badc5259594ae5bdc378daedc861577f245d66ccdfdeb38b8781",
+      "liveAfterSha256": "7a917dd1b9df157997ff539257b7a53938dbcc15546400202667e6ad6119e819"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredShoulderWorld.test.ts",
+      "baseSha256": null,
+      "draftSha256": "033ae76de241313fe031ba6603f0c6ab016ec07d00953558fadf4c92f3bbe8cb",
+      "liveBeforeSha256": null,
+      "liveAfterSha256": "033ae76de241313fe031ba6603f0c6ab016ec07d00953558fadf4c92f3bbe8cb"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredShoulderWorld.ts",
+      "baseSha256": null,
+      "draftSha256": "b37a6ad14398394b7ab999a0a1d4c21f0722e22a54b817c46c015ae454bd7348",
+      "liveBeforeSha256": null,
+      "liveAfterSha256": "b37a6ad14398394b7ab999a0a1d4c21f0722e22a54b817c46c015ae454bd7348"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWaterWorld.test.ts",
+      "baseSha256": "4eac8db3690c0cb53df8ee947646522e93110598f6bab3b27e0b65846592fe62",
+      "draftSha256": "08edc91ee01f20f3f49640b99a50ca96649859642f8605902bb12b9291eec8a2",
+      "liveBeforeSha256": "4eac8db3690c0cb53df8ee947646522e93110598f6bab3b27e0b65846592fe62",
+      "liveAfterSha256": "08edc91ee01f20f3f49640b99a50ca96649859642f8605902bb12b9291eec8a2"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWaterWorld.ts",
+      "baseSha256": "bece348b05568cb8b2e5a2634c809681bb70c6f9267adc5c72b6b97da88b4805",
+      "draftSha256": "7640bd96ac4eb6797f46862f1b9a223d575f3bc9b51ae05f41351865cce2e486",
+      "liveBeforeSha256": "bece348b05568cb8b2e5a2634c809681bb70c6f9267adc5c72b6b97da88b4805",
+      "liveAfterSha256": "7640bd96ac4eb6797f46862f1b9a223d575f3bc9b51ae05f41351865cce2e486"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWorldFrame.ts",
+      "baseSha256": "dfe9b76bec5eda6cb5c3fae58fea76925e562496205894f327bd398d4c941c7e",
+      "draftSha256": "a9f9e49efd9e8d4a07379d27d5c914f7bec6949035be51bea90b35ac335e75e8",
+      "liveBeforeSha256": "dfe9b76bec5eda6cb5c3fae58fea76925e562496205894f327bd398d4c941c7e",
+      "liveAfterSha256": "a9f9e49efd9e8d4a07379d27d5c914f7bec6949035be51bea90b35ac335e75e8"
+    },
+    {
+      "file": "src/domain/growingIsland/worldDefinition.test.ts",
+      "baseSha256": "e412d7e9c6fce5660404085bdacc8655e555ee3fb83f30110f6e09992e036e2e",
+      "draftSha256": "8d4f6d66d0c4078f3dc77c5911ecfb9e84e508137a15b035971dc68c9787b581",
+      "liveBeforeSha256": "e412d7e9c6fce5660404085bdacc8655e555ee3fb83f30110f6e09992e036e2e",
+      "liveAfterSha256": "8d4f6d66d0c4078f3dc77c5911ecfb9e84e508137a15b035971dc68c9787b581"
+    },
+    {
+      "file": "src/domain/growingIsland/worldDefinition.ts",
+      "baseSha256": "c230e8fb354a43792d22814d6eaf82cd7adf0110d517250d1399be84b00ba7ea",
+      "draftSha256": "8e88855dd180624f1c2b32437e6d1b93cc66e978f2fc9c741d5f004e8ba45db7",
+      "liveBeforeSha256": "c230e8fb354a43792d22814d6eaf82cd7adf0110d517250d1399be84b00ba7ea",
+      "liveAfterSha256": "8e88855dd180624f1c2b32437e6d1b93cc66e978f2fc9c741d5f004e8ba45db7"
+    },
+    {
+      "file": "src/domain/growingIsland/worldTypes.ts",
+      "baseSha256": "4dc502b446dc5cf4e78dd851b763ea27e7abd3aaa17f7dead3b7179c5715604d",
+      "draftSha256": "d573184d5f78c77faa6a7c2811057f899356801e803df7df01ccb63073fd306f",
+      "liveBeforeSha256": "4dc502b446dc5cf4e78dd851b763ea27e7abd3aaa17f7dead3b7179c5715604d",
+      "liveAfterSha256": "d573184d5f78c77faa6a7c2811057f899356801e803df7df01ccb63073fd306f"
+    },
+    {
+      "file": "src/prototypes/placeQa/authored.tsx",
+      "baseSha256": "ef7288bf8b1f066545d4517779c0d6e3d39ccca717b0130b42ed67f220259572",
+      "draftSha256": "84da5918e6d26f6284321e7cbf03245a8e9d691b6dc64a7ae41e80b739627450",
+      "liveBeforeSha256": "ef7288bf8b1f066545d4517779c0d6e3d39ccca717b0130b42ed67f220259572",
+      "liveAfterSha256": "84da5918e6d26f6284321e7cbf03245a8e9d691b6dc64a7ae41e80b739627450"
+    },
+    {
+      "file": "tools/build-authored-island-world.mjs",
+      "baseSha256": "6211df5cb3b7363139f8caf7320a112ec17f56973e1fbfc102787bcfd2fe41e3",
+      "draftSha256": "f2118d254d9d6b42169f490f2bcc90626cfa7daee149a84cb7a9d048e3c1f2d6",
+      "liveBeforeSha256": "6211df5cb3b7363139f8caf7320a112ec17f56973e1fbfc102787bcfd2fe41e3",
+      "liveAfterSha256": "f2118d254d9d6b42169f490f2bcc90626cfa7daee149a84cb7a9d048e3c1f2d6"
+    },
+    {
+      "file": "tools/build-authored-shoulder-kit.mjs",
+      "baseSha256": null,
+      "draftSha256": "90fd2ac0e4e8391031e3384892b819e659922771162c0a6a6dd1ce55b3e69339",
+      "liveBeforeSha256": null,
+      "liveAfterSha256": "90fd2ac0e4e8391031e3384892b819e659922771162c0a6a6dd1ce55b3e69339"
+    },
+    {
+      "file": "tools/build-authored-shoulder-profile.mjs",
+      "baseSha256": null,
+      "draftSha256": "a47e98aff82363350f23e75fe229fcecd139785d6ded6dc97d4f1d1eff68257b",
+      "liveBeforeSha256": null,
+      "liveAfterSha256": "a47e98aff82363350f23e75fe229fcecd139785d6ded6dc97d4f1d1eff68257b"
+    },
+    {
+      "file": "tools/e2e-authored-floor-shading.mjs",
+      "baseSha256": null,
+      "draftSha256": "ba5a3a685aa9b915e3026dd658e5d60d05604257de3760b742ce6e1abfb93bac",
+      "liveBeforeSha256": null,
+      "liveAfterSha256": "ba5a3a685aa9b915e3026dd658e5d60d05604257de3760b742ce6e1abfb93bac"
+    },
+    {
+      "file": "prototypes/place-qa/authored-shoulder-profile-manifest.json",
+      "baseSha256": null,
+      "draftSha256": "966995e12c1a3738841d4bb603baa00a0a6977e21bff4b340bc9e2c3e445bbe8",
+      "liveBeforeSha256": null,
+      "liveAfterSha256": "966995e12c1a3738841d4bb603baa00a0a6977e21bff4b340bc9e2c3e445bbe8"
+    },
+    {
+      "file": "prototypes/place-qa/authored-shoulder-profile.json.gz",
+      "baseSha256": null,
+      "draftSha256": "82f8cd9ad83f4ffef7995d42087eb7d0f388b759a4b55526c10fe1c0ab1e34eb",
+      "liveBeforeSha256": null,
+      "liveAfterSha256": "82f8cd9ad83f4ffef7995d42087eb7d0f388b759a4b55526c10fe1c0ab1e34eb"
+    },
+    {
+      "file": "prototypes/place-qa/authored-shoulder-reference-mature.json",
+      "baseSha256": null,
+      "draftSha256": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+      "liveBeforeSha256": null,
+      "liveAfterSha256": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b"
+    },
+    {
+      "file": "prototypes/place-qa/authored-shoulder-state-source.json",
+      "baseSha256": null,
+      "draftSha256": "a286b06b513e3661aebb6387c7e09a66fd8d0f0329da0bbfe7b2d901736f6ee9",
+      "liveBeforeSha256": null,
+      "liveAfterSha256": "a286b06b513e3661aebb6387c7e09a66fd8d0f0329da0bbfe7b2d901736f6ee9"
+    },
+    {
+      "file": "prototypes/place-qa/native-shoulder-components.glb.gz",
+      "baseSha256": null,
+      "draftSha256": "67348e1cd7f945d6670684d6dff6a352e49a689f5d0c27bfe71a1891223dbf3f",
+      "liveBeforeSha256": null,
+      "liveAfterSha256": "67348e1cd7f945d6670684d6dff6a352e49a689f5d0c27bfe71a1891223dbf3f"
+    },
+    {
+      "file": "prototypes/place-qa/native-shoulder-manifest.json",
+      "baseSha256": null,
+      "draftSha256": "0ffd6f38fbcbe5ea5a3a0b46b3d2dcd9784df6d775082fe4138056df7e22ee9b",
+      "liveBeforeSha256": null,
+      "liveAfterSha256": "0ffd6f38fbcbe5ea5a3a0b46b3d2dcd9784df6d775082fe4138056df7e22ee9b"
+    },
+    {
+      "file": "prototypes/place-qa/native05-world-source-shading-manifest.json",
+      "baseSha256": null,
+      "draftSha256": "76df85f5697f1d13623929b742eb0c35cda90bd69fd8863fef882e4abe3fc1fc",
+      "liveBeforeSha256": null,
+      "liveAfterSha256": "76df85f5697f1d13623929b742eb0c35cda90bd69fd8863fef882e4abe3fc1fc"
+    },
+    {
+      "file": "prototypes/place-qa/native05-world-source-shading.json.gz",
+      "baseSha256": null,
+      "draftSha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+      "liveBeforeSha256": null,
+      "liveAfterSha256": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921"
+    }
+  ],
+  "pass": true
+}

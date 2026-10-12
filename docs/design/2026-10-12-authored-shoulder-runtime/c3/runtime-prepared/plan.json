@@ -1,0 +1,62 @@
+{
+  "prepared": true,
+  "executionStarted": false,
+  "core": "/private/tmp/sansu-authored-shoulder-c3/core/report.json",
+  "coreStatus": "ready",
+  "coreInputCount": 6460,
+  "candidate": "/private/tmp/sansu-authored-shoulder-c3/candidate",
+  "revision": "authored-shoulder-c3",
+  "output": "/private/tmp/sansu-authored-shoulder-c3/affected-regressions",
+  "plan": [
+    {
+      "name": "01-wide27-water",
+      "command": [
+        "node",
+        "tools/e2e-authored-water.mjs"
+      ],
+      "environmentOverrides": {
+        "SANSU_AUTHORED_WATER_URL": "http://127.0.0.1:5360/prototypes/place-qa/authored.html?water=wide&ground=legacy",
+        "SANSU_AUTHORED_WATER_OUTPUT": "/private/tmp/sansu-authored-shoulder-c3/affected-regressions/01-wide27-water/actual"
+      },
+      "scope": "Unchanged full 27-owner/73-right wide water pointer editing, 14 captures, no shoulder/cove",
+      "requiredServerConfiguration": {
+        "url": "http://127.0.0.1:5360",
+        "revision": "authored-shoulder-c3",
+        "VITE_ISLAND_ENABLED": "true",
+        "VITE_NATIVE_GROWING_ART": "false"
+      },
+      "reportRelative": "actual/report.json",
+      "timeoutSeconds": 600,
+      "deadlineScope": "Owned process termination only; not performance acceptance"
+    },
+    {
+      "name": "02-classic-smoke",
+      "command": [
+        "npm",
+        "run",
+        "e2e:smoke"
+      ],
+      "environmentOverrides": {
+        "VITE_ISLAND_ENABLED": "false",
+        "VITE_NATIVE_GROWING_ART": "false",
+        "VITE_EXPLORE_EXPERIENCE": "classic-v1",
+        "SANSU_E2E_DIAGNOSTIC_DIR": "/private/tmp/sansu-authored-shoulder-c3/affected-regressions/02-classic-smoke/diagnostics",
+        "SANSU_E2E_CAPTURE_DIR": "/private/tmp/sansu-authored-shoulder-c3/affected-regressions/02-classic-smoke/captures"
+      },
+      "scope": "Unchanged full classic smoke on isolated owned server; no reuse",
+      "requiredServerConfiguration": {
+        "ownServer": true,
+        "portCandidates": [
+          4173,
+          4174,
+          4175
+        ],
+        "VITE_ISLAND_ENABLED": "false",
+        "VITE_NATIVE_GROWING_ART": "false"
+      },
+      "reportRelative": "diagnostics/smoke-report.json",
+      "timeoutSeconds": 2700,
+      "deadlineScope": "Owned process termination only; not performance acceptance"
+    }
+  ]
+}

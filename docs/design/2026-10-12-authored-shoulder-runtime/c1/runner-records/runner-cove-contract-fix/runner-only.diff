@@ -1,0 +1,34 @@
+--- original-regressions.py
++++ regressions.py
+@@ -125,7 +125,7 @@
+     scenarios = actual.get('scenarios', [])
+     failures = [scenario for scenario in scenarios if scenario.get('pass') is False]
+     first = failures[0] if failures else None
+-    error = actual.get('error') or (first or {}).get('error')
++    error = actual.get('error') or (actual.get('firstFailure') or {}).get('error') or (first or {}).get('error')
+     if item['name'] == '08-classic-smoke' and 'All smoke-test ports are occupied; reusing ' in log:
+         return {'pass': False, 'failurePhase': 'classic-server-isolation', 'error': 'Smoke harness reused a preexisting server'}
+     result = {
+@@ -222,13 +222,16 @@
+             'fourFullEdits': len(edits) == 4 and all(value.get('pass') is True for value in edits)
+                 and {value.get('action') for value in edits} == {'cancel','move-split','store','restore-reconnect'}}
+     if item['name'] == '06-authored-cove-full':
+-        checks = {'expectedBuild': actual.get('expectedBuild') == REVISION, 'fullScope': actual.get('shapeOnly') is False,
+-            'twentyCaptures': len(captures) == 20,
+-            'sixAcquisitionFourteenFixedCaptures': sum(c.get('scope') == 'acquisition' for c in captures) == 6 and sum(c.get('scope') == 'fixed35' for c in captures) == 14,
+-            'paidAcquisition': actual.get('scopes', {}).get('acquisition', {}).get('paidDrops') == 60 and actual.get('scopes', {}).get('acquisition', {}).get('rights') == 75,
+-            'installedDependenciesUnchanged': actual.get('installedDependenciesUnchanged') is True,
++        edits, selections = actual.get('edits', []), actual.get('canvasSelections', [])
++        checks = {'expectedBuild': actual.get('expectedBuild') == REVISION,
++            'fullScope': actual.get('shapeOnly') is False,
+             'sourceClosureUnchanged': actual.get('sourceClosureUnchanged') is True,
+-            'tenCaptures': len(captures) == 10, 'fourEdits': len(actual.get('edits', [])) == 4,
++            'tenCaptures': len(captures) == 10,
++            # Cove edit entries do not have a per-entry pass field. Their action
++            # sequence is recorded only after each driver's assertions complete.
++            'fourEdits': len(edits) == 4 and [value.get('action') for value in edits] == ['preview', 'move', 'store', 'restore'],
++            'oneCanvasSelection': len(selections) == 1 and selections[0].get('pass') is True
++                and selections[0].get('previousOwner') == 'p6' and selections[0].get('expectedOwner') == 'p9',
+             'sameRuntimeBuild': bool(captures) and all(c.get('build') == REVISION for c in captures),
+             'noShoulder': bool(captures) and all(c.get('metadata', {}).get('authoredShoulderEnabled') == 'false' for c in captures)}
+     if checks:

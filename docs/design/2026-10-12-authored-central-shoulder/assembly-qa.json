@@ -1,0 +1,55 @@
+{
+  "candidate": "native05-central-shoulder-sw-v3-source-v1",
+  "scope": "Source assembly and exports only. Original source files unchanged; no app build/browser/render.",
+  "originalInputs": {
+    "docs/design/2026-10-10-island-final-3d/whole-island.blend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "docs/design/2026-10-10-island-final-3d/whole-island.glb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "docs/design/2026-10-10-island-final-3d/whole-island-render.png": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6"
+  },
+  "finalOriginalInputs": {
+    "docs/design/2026-10-10-island-final-3d/whole-island.blend": "d1c7bb078b8f4fafad97862fcd1d691e63cfbcce9c378f21da47ccd167139c2a",
+    "docs/design/2026-10-10-island-final-3d/whole-island.glb": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+    "docs/design/2026-10-10-island-final-3d/whole-island-render.png": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6"
+  },
+  "originalsUnchanged": true,
+  "closedMeshChecks": [
+    {
+      "name": "Central shoulder / continuous closed supporting soil",
+      "vertices": 7594,
+      "faces": 15184,
+      "nonmanifoldEdges": 0,
+      "boundaryEdges": 0
+    },
+    {
+      "name": "l33 / source-contour planted root continuation",
+      "ownerId": "l33",
+      "vertices": 20,
+      "faces": 36,
+      "nonmanifoldEdges": 0,
+      "boundaryEdges": 0
+    },
+    {
+      "name": "l34 / source-contour planted root continuation",
+      "ownerId": "l34",
+      "vertices": 20,
+      "faces": 36,
+      "nonmanifoldEdges": 0,
+      "boundaryEdges": 0
+    },
+    {
+      "name": "l35 / source-contour planted root continuation",
+      "ownerId": "l35",
+      "vertices": 20,
+      "faces": 36,
+      "nonmanifoldEdges": 0,
+      "boundaryEdges": 0
+    }
+  ],
+  "sourceContextSHA256": "22ad846e8c1fcfcdc9fd30a65b7398520c63b5fd5d54c60791c1342fa00f8059",
+  "profileSHA256": "7b4772489932b225d7b31ced5bd53c6835a47e8e63c71eeb43d7b59af1523d3b",
+  "outputs": {
+    "central-shoulder-source.blend": "7a7ff0dfe34e2fb68a4c53f7b9c824cc3e20f62e0dccd64d86b45a1ca5781905",
+    "central-shoulder-source.glb": "afb83c51c3b6730d4408b47cf8e23378e11307df2ee5ac5147c9a2207f8249c4",
+    "central-shoulder-components.glb": "24f32eed46efe18cd3411220771b2b4f5266449278f00499c0917550f1a7d998"
+  }
+}

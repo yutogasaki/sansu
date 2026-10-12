@@ -1,0 +1,255 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { gunzipSync, gzipSync } from 'node:zlib';
+import * as T from 'three';
+
+// Attempt 01 is immutable in east-v6-entry/attempt-01/build-script.mjs.txt.
+assert(process.argv.length === 6 && process.argv[2] === '--attempt' && process.argv[4] === '--output',
+    'Use --attempt 2 --output NEW_DIRECTORY');
+assert.equal(Number(process.argv[3]), 2, 'The first failed contraction is retained as an inert historical script');
+const output = path.resolve(process.argv[5]);
+assert(!fs.existsSync(output), 'Preserve every prior output');
+fs.mkdirSync(output, { recursive: true });
+const sha = x => createHash('sha256').update(x).digest('hex');
+const save = (name, value) => fs.writeFileSync(path.join(output, name), JSON.stringify(value, null, 2) + '\n', { flag: 'wx' });
+const sourcePath = 'prototypes/place-qa/native-gallery-v5.glb.gz';
+const manifestPath = 'prototypes/place-qa/native-gallery-v5-manifest.json';
+const floorPath = 'prototypes/place-qa/native05-world-source-shading.json.gz';
+const rawPath = 'docs/design/2026-10-12-authored-whole-rough/route-diagnosis/report.json.gz';
+const inputs = Object.fromEntries([sourcePath, manifestPath, floorPath, rawPath, import.meta.filename].map(p => [p, sha(fs.readFileSync(p))]));
+save('inputs-before.json', inputs);
+const original = gunzipSync(fs.readFileSync(sourcePath)), prior = JSON.parse(fs.readFileSync(manifestPath));
+assert.equal(sha(original), prior.artifact.expandedSha256);
+const jsonLength = original.readUInt32LE(12), gltf = JSON.parse(original.subarray(20, 20 + jsonLength));
+const sourceBin = original.subarray(28 + jsonLength);
+const world = JSON.parse(gunzipSync(fs.readFileSync(floorPath)));
+const route = JSON.parse(gunzipSync(fs.readFileSync(rawPath)));
+const H = Math.fround(1.6814100742340088), BOTTOM = Math.fround(1.6114100217819214), WIDTH = .64;
+const END = [3.8905972016997925, H, -7.53323800109165], SIDE = [-.011837424708570117, 0, .9999299352335986];
+const TAN = [SIDE[2], 0, -SIDE[0]], JOINT = [3.455, H, -7.89];
+const spec = { attempt: 2, candidate: 'native05-p02-gallery-east-v6-retracted-02',
+    entry: [2.98, null, -7.89], joint: JOINT, structuralWidth: WIDTH, thickness: H - BOTTOM,
+    thresholdBounds: { x: [2.98, 3.455], z: [-8.21, -7.57] }, plateauX: 3.2,
+    jointRadius: .32, originalFirstRiser: END, fixedOriginalUpperTreads: true,
+    method: 'New ground-clipped threshold and northern round junction; circular full-width low landing joins the unchanged first riser. Original upper geometry and all other nodes remain fixed.',
+    validationScope: 'Light source geometry and saved cut-edge actor bands only. Full 35-owner reach and visual NOT RUN.' };
+save('spec.json', spec);
+const cross = (a, b, c) => new T.Vector3().subVectors(new T.Vector3(...b), new T.Vector3(...a))
+    .cross(new T.Vector3().subVectors(new T.Vector3(...c), new T.Vector3(...a)));
+const key = p => p.join(',');
+const faceKey = t => t.map(key).sort().join('|');
+const f32 = p => p.map(Math.fround);
+const widths = { SCALAR: 1, VEC3: 3 }, sizes = { 5123: 2, 5125: 4, 5126: 4 };
+function accessor(id) {
+    const a = gltf.accessors[id], v = gltf.bufferViews[a.bufferView], w = widths[a.type], size = sizes[a.componentType];
+    assert(w && size && !a.sparse);
+    return Array.from({ length: a.count }, (_, i) => Array.from({ length: w }, (_, k) => {
+        const off = (v.byteOffset ?? 0) + (a.byteOffset ?? 0) + i * (v.byteStride ?? size * w) + k * size;
+        return a.componentType === 5126 ? sourceBin.readFloatLE(off) : a.componentType === 5123 ? sourceBin.readUInt16LE(off) : sourceBin.readUInt32LE(off);
+    }));
+}
+const sourceParts = new Map(gltf.nodes.map(node => {
+    assert(!node.matrix && !node.translation && !node.rotation && !node.scale && !node.children?.length);
+    const p = gltf.meshes[node.mesh].primitives[0], pos = accessor(p.attributes.POSITION), norm = accessor(p.attributes.NORMAL), idx = accessor(p.indices).flat();
+    return [node.name, { node, p, rows: Array.from({ length: idx.length / 3 }, (_, k) => ({
+        positions: idx.slice(k * 3, k * 3 + 3).map(i => pos[i]), normals: idx.slice(k * 3, k * 3 + 3).map(i => norm[i]),
+    })) }];
+}));
+const flat = positions => ({ positions: positions.map(f32), normals: positions.map(() => cross(...positions).normalize().toArray().map(Math.fround)) });
+const upward = t => cross(...t).y > 0 ? t : [t[0], t[2], t[1]];
+function topology(rows) {
+    const edges = new Map(); let zero = 0, volume = 0;
+    for (const { positions: t } of rows) {
+        const n = cross(...t); if (!n.lengthSq()) zero++;
+        volume += new T.Vector3(...t[0]).dot(new T.Vector3(...t[1]).cross(new T.Vector3(...t[2]))) / 6;
+        for (let i = 0; i < 3; i++) {
+            const a = key(t[i]), b = key(t[(i + 1) % 3]), k = [a, b].sort().join('|');
+            const r = edges.get(k) ?? { count: 0, balance: 0, a: t[i], b: t[(i + 1) % 3] };
+            r.count++; r.balance += a < b ? 1 : -1; edges.set(k, r);
+        }
+    }
+    return { triangles: rows.length, zeroArea: zero, signedVolume: volume,
+        badEdges: [...edges.values()].filter(e => e.count !== 2 || e.balance !== 0).length,
+        boundary: [...edges.values()].filter(e => e.count === 1) };
+}
+function solid(topTriangles) {
+    const top = topTriangles.map(t => flat(upward(t))), body = [];
+    for (const r of top) body.push(flat(r.positions.map(p => [p[0], Math.fround(p[1] - (H - BOTTOM)), p[2]]).reverse()));
+    for (const e of topology(top).boundary) {
+        const a = e.a, b = e.b, c = [a[0], Math.fround(a[1] - (H - BOTTOM)), a[2]], d = [b[0], Math.fround(b[1] - (H - BOTTOM)), b[2]];
+        body.push(flat([a, c, b]), flat([b, c, d]));
+    }
+    return { top, body };
+}
+const changed = new Map();
+let phase = 'terrain-source';
+try {
+    // Source planes are restricted to the original low terrain, not furniture or a synthetic floor.
+    const ground = [];
+    for (const district of world.districts) for (const floor of district.floors) {
+        if (!floor.id.startsWith('Island / continuous sculpted mature terrain:')) continue;
+        for (let i = 0; i < floor.indices.length; i += 3) {
+            const t = floor.indices.slice(i, i + 3).map(k => floor.vertices[k].point).map(p => [p.x, p.y, p.z]);
+            if (Math.max(...t.map(p => p[0])) < 2.98 || Math.min(...t.map(p => p[0])) > 3.455
+                || Math.max(...t.map(p => p[2])) < -8.21 || Math.min(...t.map(p => p[2])) > -7.57) continue;
+            ground.push({ floor: floor.id, triangle: i / 3, t });
+        }
+    }
+    function clip(poly, axis, cut, sign) {
+        const out = [];
+        for (let i = 0; i < poly.length; i++) {
+            const a = poly[i], b = poly[(i + 1) % poly.length], da = (a[axis] - cut) * sign, db = (b[axis] - cut) * sign;
+            if (da >= 0) out.push(a);
+            if ((da < 0) !== (db < 0)) { const u = da / (da - db); const p = a.map((v, k) => v + (b[k] - v) * u); p[axis] = cut; out.push(p); }
+        }
+        return out;
+    }
+    const top = [], lineage = []; let maximumSourceHeight = -Infinity, maxCanonicalization = 0;
+    const canonical = new Map();
+    function canon(p) {
+        const k = p.map(v => Math.round(v * 1e6)).join(',');
+        if (!canonical.has(k)) canonical.set(k, f32(p));
+        const q = canonical.get(k); maxCanonicalization = Math.max(maxCanonicalization, Math.hypot(...p.map((v, i) => v - q[i]))); return q;
+    }
+    for (const g of ground) for (const [left, right] of [[2.98, 3.2], [3.2, 3.455]]) {
+        let poly = g.t;
+        for (const [axis, cut, sign] of [[0, left, 1], [0, right, -1], [2, -8.21, 1], [2, -7.57, -1]]) poly = clip(poly, axis, cut, sign);
+        if (poly.length < 3) continue;
+        poly = poly.map(p => {
+            maximumSourceHeight = Math.max(maximumSourceHeight, p[1]); assert(p[1] <= H, 'Native ground already above this entry; do not auto-raise');
+            const u = Math.min(1, Math.max(0, (p[0] - 2.98) / .22));
+            return canon([p[0], p[1] + (H - p[1]) * u, p[2]]);
+        });
+        for (let i = 1; i + 1 < poly.length; i++) {
+            const t = [poly[0], poly[i], poly[i + 1]]; if (cross(...t).lengthSq() < 1e-24) continue;
+            top.push(t); lineage.push({ floor: g.floor, triangle: g.triangle });
+        }
+    }
+    const threshold = solid(top);
+    changed.set('terrain-threshold', threshold);
+    save('terrain-lineage.json', { input: floorPath, sourceTriangles: ground.length, topTriangleLineage: lineage,
+        maximumSourceHeight, maxCanonicalization, entryHeightRule: 'Exact source plane at west edge, continuous .22m transition to original H; no base floor change.' });
+    phase = 'front-junction';
+    const ring = Array.from({ length: 32 }, (_, i) => f32([JOINT[0] + .32 * Math.cos(i * Math.PI / 16), H, JOINT[2] + .32 * Math.sin(i * Math.PI / 16)]));
+    changed.set('front-junction', solid(ring.map((p, i) => [f32(JOINT), p, ring[(i + 1) % ring.length]])));
+    phase = 'low-landing-lineage';
+    const originalStairs = ['solid-body/real-sixteen-stairs', 'walk-top/real-sixteen-stairs'].map(n => sourceParts.get(n));
+    const plane = p => (p[0] - END[0]) * TAN[0] + (p[2] - END[2]) * TAN[2];
+    const low = row => row.positions.every(p => p[1] <= H && plane(p) <= 1e-6);
+    const upper = originalStairs.map(part => part.rows.filter(r => !low(r)));
+    const removed = originalStairs.map(part => part.rows.filter(low));
+    // The cut is only the original flat lower run. The same plane crosses upper tread14/15/gallery: never use it globally.
+    assert(removed.every(rows => rows.every(r => r.positions.every(p => p[1] <= H))));
+    const boundary = topology(upper.flat()).boundary;
+    assert(boundary.length > 0 && boundary.every(e => [e.a, e.b].every(p => Math.abs(plane(p)) <= 1e-6 && p[1] <= H)),
+        'Upper cut has a boundary outside the source row25 interface');
+    const center = boundary.flatMap(e => [e.a, e.b]).reduce((s, p) => s.map((v, i) => v + p[i]), [0, 0, 0]).map(v => v / (boundary.length * 2));
+    const cap = boundary.map(e => flat([e.b, e.a, f32(center)]));
+    const upperClosed = [...upper.flat(), ...cap], upperQA = topology(upperClosed);
+    assert.equal(upperQA.badEdges, 0, 'Retained upper component plus exact boundary cap must close');
+    assert.equal(upperQA.zeroArea, 0);
+    assert(upperQA.signedVolume > 0);
+    // Circular approach retains the actual .64 width; it does not compress the old triangles.
+    const dx = END[0] - JOINT[0], dz = END[2] - JOINT[2], radius = (dx * dx + dz * dz) / (2 * (dx * SIDE[0] + dz * SIDE[2]));
+    assert(radius > WIDTH / 2, 'Inner offset would fold');
+    const cc = [END[0] - radius * SIDE[0], END[2] - radius * SIDE[2]];
+    const a0 = Math.atan2(JOINT[2] - cc[1], JOINT[0] - cc[0]), a1 = Math.atan2(SIDE[2], SIDE[0]);
+    const rows = Array.from({ length: 17 }, (_, i) => {
+        const a = a0 + (a1 - a0) * i / 16;
+        return Array.from({ length: 5 }, (_, k) => { const r = radius + (-.32 + .16 * k); return f32([cc[0] + r * Math.cos(a), H, cc[1] + r * Math.sin(a)]); });
+    });
+    // Positive-volume connection to the retained first riser underside, rather than relying on almost-touching Float32 caps.
+    rows.push(rows.at(-1).map(p => f32([p[0] + .015 * TAN[0], p[1], p[2] + .015 * TAN[2]])));
+    const lowTop = [];
+    for (let i = 0; i + 1 < rows.length; i++) for (let k = 0; k < 4; k++) {
+        lowTop.push([rows[i][k], rows[i + 1][k], rows[i][k + 1]], [rows[i][k + 1], rows[i + 1][k], rows[i + 1][k + 1]]);
+    }
+    const lower = solid(lowTop);
+    changed.set('real-sixteen-stairs', { body: [...upper[0], ...cap, ...lower.body], top: [...upper[1], ...lower.top] });
+    const lowerQA = topology([...lower.body, ...lower.top]);
+    save('lower-source-replacement.json', { removedTriangles: removed.map(v => v.length), retainedTriangles: upper.map(v => v.length),
+        sourceFirstRiserPlane: { point: END, normal: TAN }, upperBoundaryEdges: boundary.length,
+        upperClosed: { ...upperQA, boundary: undefined }, newLowerClosed: { ...lowerQA, boundary: undefined },
+        circularRadius: radius, structuralWidth: WIDTH, innerRadius: radius - WIDTH / 2, originalFirstRiserPreserved: true,
+        upperPositionsNormalsTrianglesExact: true, separateSolidsWithPositiveDepthOverlap: true,
+        inheritedDeliveredExactBoundaryEdges: topology(originalStairs.flatMap(p => p.rows)).badEdges });
+    phase = 'light-shape-checks';
+    const checks = {};
+    for (const [name, part] of changed) {
+        const qa = topology([...part.body, ...part.top]); checks[name] = { ...qa, boundary: undefined };
+        assert.equal(qa.zeroArea, 0, `${name}: zero face`); assert.equal(qa.badEdges, 0, `${name}: open/thin boundary`);
+        assert(qa.signedVolume > 0, `${name}: winding`);
+    }
+    const newParts = new Map(sourceParts);
+    for (const [name, part] of changed) for (const [prefix, rows2] of [['solid-body', part.body], ['walk-top', part.top]]) newParts.set(`${prefix}/${name}`, { ...sourceParts.get(`${prefix}/${name}`), rows: rows2 });
+    // Every higher original triangle/corner NORMAL is retained byte-exact in both stair nodes.
+    const rowKey = r => JSON.stringify(r);
+    for (const [i, p] of originalStairs.entries()) {
+        const actual = new Set(newParts.get(p.node.name).rows.map(rowKey));
+        assert(upper[i].every(r => actual.has(rowKey(r))), 'Changed an upper stair corner attribute');
+    }
+    const changedNames = [...newParts.keys()].filter(name => newParts.get(name) !== sourceParts.get(name));
+    assert.equal(changedNames.length, 6);
+    save('geometry-checks.json', { sourceOnly: true, checks, changedNodes: changedNames, fixedNodes: 33,
+        fixedNodePrimitiveBytes: true, materialJsonUnchanged: true, ownerAndTransformUnchanged: true,
+        galleryTraversalEnabled: false, fullWorldReachability: 'NOT RUN', art: 'HOLD' });
+    phase = 'saved-cut-edge-contact';
+    const cases = route.cases.find(c => c.name === 'gallery-only');
+    const edgeContacts = cases.contacts.map(edge => {
+        const g = edge.hits[0].ground, from = [g.min[0] + 7.0026560305, g.min[1], g.min[2] + 2], to = [g.max[0] + 7.0026560305, g.max[1], g.max[2] + 2];
+        const hits = [];
+        for (const [bandId, band] of cases.proof.envelope.bands.entries()) {
+            const box = new T.Box3(new T.Vector3(from[0] - band.radius, from[1] + band.minY, from[2] - band.radius),
+                new T.Vector3(to[0] + band.radius, to[1] + band.maxY, to[2] + band.radius));
+            for (const name of changedNames) for (const row of newParts.get(name).rows) {
+                const triangle = new T.Triangle(...row.positions.map(p => new T.Vector3(...p)));
+                if (box.intersectsTriangle(triangle)) hits.push({ name, bandId, triangle: row.positions });
+            }
+        }
+        return { from: edge.from, to: edge.to, hits: hits.length, roles: [...new Set(hits.map(h => h.name))], firstHits: hits.slice(0, 6) };
+    });
+    save('cut-edge-contact.json', { scope: 'Only 3 modified parts, same saved actual actor bands and ground extrema. No new rig measurement or full world path query.',
+        source: rawPath, edges: edgeContacts, clear: edgeContacts.every(e => !e.hits), adoption: 'HOLD_PENDING_FULL_35_OWNER_REACH_AND_ART' });
+    phase = 'asset-output';
+    const appended = [sourceBin], originalBinaryBytes = sourceBin.length; let byteLength = originalBinaryBytes;
+    function addArray(values, type, componentType) {
+        const ar = componentType === 5126 ? new Float32Array(values.flat()) : new Uint32Array(values.flat());
+        const bytes = Buffer.from(ar.buffer), view = gltf.bufferViews.length;
+        gltf.bufferViews.push({ buffer: 0, byteOffset: byteLength, byteLength: bytes.length }); appended.push(bytes); byteLength += bytes.length;
+        const id = gltf.accessors.length, a = { bufferView: view, componentType, count: values.length, type };
+        if (type === 'VEC3') { a.min = [0, 1, 2].map(k => Math.min(...values.map(p => p[k]))); a.max = [0, 1, 2].map(k => Math.max(...values.map(p => p[k]))); }
+        gltf.accessors.push(a); return id;
+    }
+    for (const name of changedNames) {
+        const part = newParts.get(name), positions = part.rows.flatMap(r => r.positions), normals = part.rows.flatMap(r => r.normals);
+        part.p.attributes = { POSITION: addArray(positions, 'VEC3', 5126), NORMAL: addArray(normals, 'VEC3', 5126) };
+        part.p.indices = addArray(positions.map((_, i) => [i]), 'SCALAR', 5125);
+    }
+    gltf.buffers[0].byteLength = byteLength;
+    const rawJson = Buffer.from(JSON.stringify(gltf)), encoded = Buffer.alloc(Math.ceil(rawJson.length / 4) * 4, 0x20); rawJson.copy(encoded);
+    const binary = Buffer.concat(appended), result = Buffer.alloc(28 + encoded.length + binary.length);
+    result.writeUInt32LE(0x46546c67, 0); result.writeUInt32LE(2, 4); result.writeUInt32LE(result.length, 8);
+    result.writeUInt32LE(encoded.length, 12); result.writeUInt32LE(0x4e4f534a, 16); encoded.copy(result, 20);
+    result.writeUInt32LE(binary.length, 20 + encoded.length); result.writeUInt32LE(0x004e4942, 24 + encoded.length); binary.copy(result, 28 + encoded.length);
+    assert(binary.subarray(0, originalBinaryBytes).equals(sourceBin), 'Original accessor bytes changed');
+    const zipped = gzipSync(result, { level: 9, mtime: 0 });
+    const nodes = prior.nodes.map(node => ({ ...node, primitives: [{ ...node.primitives[0], triangles: newParts.get(node.name).rows.length }] }));
+    const manifest = { ...prior, source: { id: spec.candidate, sha256: sha(result), artifact: path.relative(process.cwd(), path.join(output, 'native-gallery-entry.glb')) },
+        artifact: { path: '/prototypes/place-qa/native-gallery-entry.glb.gz', sha256: sha(zipped), expandedSha256: sha(result), expandedBytes: result.length, gzipBytes: zipped.length },
+        counts: { ...prior.counts, triangles: nodes.reduce((n, part) => n + part.primitives[0].triangles, 0) }, nodes,
+        entryRevision: { status: 'HOLD_PENDING_ROUTE_AND_ART', spec, source: prior.source, oldFailureRetained: true, changedNodes: changedNames, fixedNodes: 33,
+            upperTriangleAttributesPreserved: true, separateSolidsConnectedByOverlap: true, cutEdgesClear: edgeContacts.every(e => !e.hits), full35OwnerReach: 'NOT RUN' }, inputs };
+    fs.writeFileSync(path.join(output, 'native-gallery-entry.glb'), result, { flag: 'wx' });
+    fs.writeFileSync(path.join(output, 'native-gallery-entry.glb.gz'), zipped, { flag: 'wx' }); save('native-gallery-entry-manifest.json', manifest);
+    save('result.json', { generationCompleted: true, sourceOnly: true, status: 'HOLD', phase, artifact: manifest.artifact, cutEdgesClear: manifest.entryRevision.cutEdgesClear,
+        full35OwnerReach: 'NOT RUN', visual: 'NOT RUN', inputsUnchanged: true });
+    console.log(JSON.stringify({ generationCompleted: true, status: 'HOLD', artifact: manifest.artifact, cutEdgeHits: edgeContacts.map(e => e.hits) }, null, 2));
+} catch (error) {
+    save('first-failure.json', { phase, error: String(error), stack: error.stack, status: 'HOLD', prototypeDeliveryChanged: false });
+    throw error;
+} finally {
+    const after = Object.fromEntries(Object.keys(inputs).map(p => [p, sha(fs.readFileSync(p))]));
+    save('inputs-after.json', after); assert.deepEqual(after, inputs, 'External inputs changed');
+}

@@ -1,0 +1,28 @@
+"""New raw v5 archive only; preserve source bytes and all first failures."""
+from pathlib import Path
+from datetime import datetime,timezone
+import hashlib,json,gzip
+S=Path('/private/tmp/sansu-p02-gallery-source-study')
+D=Path('/Users/yutogasaki/Projects/sansu/docs/design/2026-10-12-authored-p02-gallery/east-v5-sixteen-stairs')
+assert not D.exists(),'Never overwrite archive or root review'
+sha=lambda b:hashlib.sha256(b).hexdigest()
+mapping=[]
+for name in ['east-v5-stairs-prep','east-v5-stairs-build','east-v5-shape-view','east-v5-entry-view']:
+ for p in sorted((S/name).rglob('*')):
+  if p.is_file() and '__pycache__'not in p.parts:mapping.append((p,Path(name)/p.relative_to(S/name)))
+for name in ['prepare-v5-builder.py','east-v5-execute-once.py','east-v5-render-whole-once.py','east-v5-render-entry-once.py','east-v5-outcome.json','archive-v5-raw.py']:
+ p=S/name;assert p.is_file();mapping.append((p,Path('execution-observers')/name))
+records=[]
+for p,rel in mapping:
+ raw=p.read_bytes();before=sha(raw)
+ # Text snapshots retain exact bytes but cannot be picked up as executable tests.
+ if rel.suffix in ['.py','.mjs','.js','.ts','.md']:rel=Path(str(rel)+'.txt')
+ compressed=rel.suffix in ['.json','.txt'] and len(raw)>1024*1024
+ if compressed:rel=Path(str(rel)+'.gz');stored=gzip.compress(raw,compresslevel=6,mtime=0)
+ else:stored=raw
+ dst=D/rel;dst.parent.mkdir(parents=True,exist_ok=True);assert not dst.exists();dst.write_bytes(stored)
+ decoded=gzip.decompress(dst.read_bytes())if compressed else dst.read_bytes();after=sha(p.read_bytes());assert before==after==sha(decoded)
+ records.append({'source':str(p),'destination':str(rel),'sourceBytes':len(raw),'destinationBytes':len(stored),'sourceBeforeSHA256':before,'sourceAfterSHA256':after,'destinationSHA256':sha(stored),'decodedSHA256':sha(decoded),'compression':'gzip lossless, mtime0'if compressed else None,'byteIdentity':'exact decoded bytes'if compressed else'exact stored bytes'})
+proof={'createdUTC':datetime.now(timezone.utc).isoformat(),'status':'ALL_SOURCE_BEFORE_AFTER_AND_DESTINATION_DECODED_BYTES_IDENTICAL','sourceRoot':str(S),'destinationRoot':str(D),'files':records,'fileCount':len(records),'sourceBytes':sum(r['sourceBytes']for r in records),'destinationBytes':sum(r['destinationBytes']for r in records),'noOverwrites':True,'excluded':['__pycache__ generated files only'],'history':'Prepared manifests describe their original moment; completed raw runs are retained beside them. Snapshot extension mapping avoids executing archived code.'}
+(D/'archive-proof.json').write_text(json.dumps(proof,indent=2)+'\n')
+print(json.dumps({'destination':str(D),'files':len(records),'sourceBytes':proof['sourceBytes'],'destinationBytes':proof['destinationBytes'],'proofSHA256':sha((D/'archive-proof.json').read_bytes())},indent=2))

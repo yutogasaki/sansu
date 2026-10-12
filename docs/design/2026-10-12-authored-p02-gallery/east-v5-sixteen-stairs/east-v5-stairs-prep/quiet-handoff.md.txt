@@ -1,0 +1,13 @@
+# Quiet-window handoff
+
+Blender, Node rig extraction, geometry generation, world compilation and tests have not been run for v5. Only source reads, 146-row length arithmetic, writing preparation and JavaScript syntax checks occurred. The 16/18 route-bin arithmetic is not a physical-foot diagnostic. No runtime changes.
+
+Main next decision: build actual horizontal treads and risers, directly closed with a separately identified visible underside, rather than fixing v4 Boolean slivers into the rejected smooth-ramp shape. The actual original native gallery/door/interior floor remain the upper/lower anchors. The current eight friends plus Pokomoko are the actor roster; do not use an invented capsule as a foot.
+
+Prepared extraction command after a separate root window (not launched):
+
+    GOMAXPROCS=2 node --max-old-space-size=512 /private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-prep/extract-feet.mjs /private/tmp/sansu-p02-gallery-source-study/east-v5-stairs-prep/runs/01-feet
+
+The output parent `runs` must exist but output `01-feet` must not. The extraction instantiates only nine actor rigs, no island world, and exports actual used indexed foot vertices and nine existing-gallery swing samples. This is expected to be a short single-process read, but runtime/RSS are not yet measured. Bound the first execution externally to 30 seconds / 768 MiB, preserve failure and do not auto-retry. Future tread placement tests are a separate not-yet-written small diagnostic.
+
+Parent-provided runtime followups retained: gallery receipt relies on elevated explicit point minus unchanged default ground > .8; gallery move/store invalidates place revision and exits through prior actual entrance. New revision binds owners/source/shape; prior use history survives. No owner-use source profile alone implements these rules.

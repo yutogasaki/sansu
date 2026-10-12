@@ -1,0 +1,108 @@
+"""Pure exact-input guards shared by static preparation and scheduled builder.
+
+No bpy, app, world compiler, scene mutation, geometry repair or new epsilon.
+"""
+import math
+import numpy as np
+from entry_geometry import Terrain,plane_y,cross,clip,polygon_area
+
+def assert_sealed_plan(plan,numeric,root,contact,joint,gallery,D,epsilon):
+    # Compare the same representation that Blender actually constructs.
+    # The frozen double-precision numeric profile remains unmodified; no EPS
+    # is enlarged to cover an avoidable double-versus-Float32 comparison.
+    constructed=lambda point:np.asarray(point,dtype=np.float32).astype(float).tolist()
+    assert plan['width']==D['structuralWidth']==.64
+    assert math.dist(constructed(plan['primaryEndpoints']['joint']),constructed(joint))<=epsilon
+    assert math.dist(constructed(plan['primaryEndpoints']['galleryStart']),constructed(gallery[0]))<=epsilon
+    assert math.dist(constructed(plan['primaryEndpoints']['galleryEnd']),constructed(gallery[-1]))<=epsilon
+    for expected in gallery:
+        assert min(math.dist(constructed(expected),constructed(row['center'])) for row in plan['rows'])<=epsilon,'Actual original gallery no longer matches sealed v4 stations'
+    vertices=np.asarray(plan['topVertices']);faces=np.asarray(plan['topFaces']);tri=vertices[faces]
+    normal=np.cross(tri[:,1]-tri[:,0],tri[:,2]-tri[:,0]);assert np.all(normal[:,1]>0),'Downward or collapsed top before Blender construction'
+    width=[math.dist(plan['topVertices'][i],plan['topVertices'][i+4]) for i in range(0,len(vertices),5)]
+    assert all(abs(w-D['structuralWidth'])<=epsilon for w in width)
+    assert not numeric['top']['positiveAreaOverlapPairs'] and numeric['top']['nonpositiveNormalY']==0
+    assert numeric['solid']['badEdges']==0 and numeric['solid']['float32TopNonpositiveY']==0 and numeric['solid']['float32BottomNonnegativeY']==0
+    assert not numeric['groundRelation']['buriedPolygons']
+    assert not root['firstSupport']['motionBandRows'] and len(root['higherFiveNativeTrunkSupportRays'])==5
+    assert root['firstSupport']['groundBearingFraction']==.08 and root['firstSupport']['newDeckFraction']==.16 and root['firstSupport']['lateralOffset']==-.26
+    assert root['firstSupport']['radius']==D['boughRadius'] and root['firstSupport']['sourcePenetrationUnchanged']==.015
+    assert contact['topology']['badEdges']==0 and contact['topology']['signedVolume']>0
+    assert contact['caps']['ground']['maximumAboveActualFloor']<0 and abs(contact['caps']['ground']['uncoveredArea'])<=epsilon
+    assert contact['caps']['deck']['positiveConnectionCapSurfaceArea']>0 and abs(contact['caps']['deck']['uncoveredArea'])<=epsilon
+    assert all(site['maximumSpanUnchanged']==D['maximumBoughSpan'] and len(site['sourceHit'])==1 for site in root['higherFiveNativeTrunkSupportRays'])
+    return {'status':'EXACT_SEALED_INPUT_CHECK_ONLY','topTriangles':len(tri),'rows':len(plan['rows']),'minimumTopNormalYRaw':float(normal[:,1].min()),'widthRange':[min(width),max(width)],'sameEndpointWidthHeightOwnerDoorRules':True,'positiveAreaOverlapProof':'sealed offline-result over these exact arrays; recomputation belongs static check','rootRole':'inner-edge ground-bearing, explicit .08 earth to .16 deck','noRuntimeAcceptance':True}
+
+def surface_lineage(vertices,faces,top,bottom,epsilon):
+    """Every up/down output vertex and centroid must lie on same-role input.
+
+    This catches reversed bottoms; it is intentionally not claimed as a full
+    self-intersection proof of arbitrary Boolean geometry.
+    """
+    terrains={'top':Terrain(top),'bottom':Terrain(bottom)};bad={'top':[],'bottom':[]};counts={'top':0,'bottom':0,'side':0}
+    for fi,face in enumerate(faces):
+        t=np.array([vertices[i] for i in face]);normal=np.cross(t[1]-t[0],t[2]-t[0]);length=np.linalg.norm(normal)
+        if not length or abs(normal[1]/length)<=.1:counts['side']+=1;continue
+        role='top' if normal[1]>0 else 'bottom';counts[role]+=1;terrain=terrains[role];samples=[*t.tolist(),t.mean(axis=0).tolist()];failure=[]
+        for p in samples:
+            best=None
+            for j in terrain.nearby([p]):
+                candidate=terrain.triangles[j];sign=1 if cross(*candidate)>0 else -1
+                if not all(sign*cross(a,b,p)>=-1e-12 for a,b in zip(candidate,candidate[1:]+candidate[:1])):continue
+                error=abs(p[1]-plane_y(p,candidate));best=error if best is None else min(best,error)
+            if best is None or best>epsilon:failure.append({'point':p,'nearestSameRoleHeightError':best})
+        if failure:bad[role].append({'face':fi,'triangle':t.tolist(),'samples':failure})
+    return {'counts':counts,'upwardNotOnInputTop':bad['top'],'downwardNotOnInputBottom':bad['bottom'],'epsilon':epsilon,'sourceReference':'actual evaluated Float32 operands before any Boolean','method':'role-specific vertex+centroid exact-height sampling; never adopt another higher floor','fullPolygonCoverageOrSelfIntersectionProof':False}
+
+def clip_height(poly,y,lower):
+    result=[]
+    for a,b in zip(poly,poly[1:]+poly[:1]):
+        ia=a[1]>=y if lower else a[1]<=y;ib=b[1]>=y if lower else b[1]<=y
+        if ia:result.append(a)
+        if ia!=ib:result.append(a+(b-a)*((y-a[1])/(b[1]-a[1])))
+    return result
+
+def band_hit(at,band,triangle):
+    # Existing source-rig cylinder semantics, with the unchanged 1e-8 guard
+    # arithmetic epsilon. No object, sole-contact, or new-root exclusions.
+    eps=1e-8;poly=clip_height(clip_height(list(triangle),at[1]+band['minY']-eps,True),at[1]+band['maxY']+eps,False)
+    if not poly:return False
+    positive=False;negative=False;distance=math.inf;area=0
+    for a,b in zip(poly,poly[1:]+poly[:1]):
+        d=b-a;cr=d[0]*(at[2]-a[2])-d[2]*(at[0]-a[0]);positive|=cr>eps;negative|=cr< -eps;den=d[0]**2+d[2]**2;t=max(0,min(1,((at[0]-a[0])*d[0]+(at[2]-a[2])*d[2])/den)) if den else 0
+        distance=min(distance,math.hypot(at[0]-a[0]-d[0]*t,at[2]-a[2]-d[2]*t));area+=a[0]*b[2]-b[0]*a[2]
+    return (abs(area)>eps and not(positive and negative)) or distance<=band['radius']+eps
+
+def motion_band_contacts(route,provenance,envelope):
+    triangles=np.array([p['triangle'] for p in provenance]);lo=triangles.min(axis=1);hi=triangles.max(axis=1);result=[];radius=envelope['radius'];bottom=min(b['minY'] for b in envelope['bands'])
+    for si,point in enumerate(route):
+        p=np.array(point);ids=np.flatnonzero((hi[:,0]>=p[0]-radius)&(lo[:,0]<=p[0]+radius)&(hi[:,2]>=p[2]-radius)&(lo[:,2]<=p[2]+radius)&(hi[:,1]>=p[1]+bottom)&(lo[:,1]<=p[1]+envelope['height']));hits=[]
+        for ti in ids:
+            bands=[i for i,b in enumerate(envelope['bands']) if band_hit(p,b,triangles[ti])]
+            if bands:hits.append({'triangle':int(ti),'object':provenance[ti]['object'],'motionBands':bands,'vertices':provenance[ti]['triangle']})
+        if hits:result.append({'sample':si,'point':point,'contacts':hits})
+    return result
+
+def root_cap_contacts(vertices,ground,floor,thickness):
+    """Exact projected cap intersections using current constructed meshes."""
+    def clip_delta(poly,plane,offset,positive):
+        result=[]
+        for a,b in zip(poly,poly[1:]+poly[:1]):
+            x=a[1]-(plane_y(a,plane)+offset);y=b[1]-(plane_y(b,plane)+offset);ia=x>=0 if positive else x<=0;ib=y>=0 if positive else y<=0
+            if ia:result.append(a)
+            if ia!=ib:result.append([a[i]+(b[i]-a[i])*x/(x-y) for i in range(3)])
+        return result
+    result={}
+    for name,cap,terrain in [('ground',vertices[:8],ground),('deck',vertices[-8:],floor)]:
+        projected=covered=area3d=0.;pieces=[]
+        for k in range(1,7):
+            ct=[cap[i] for i in [0,k,k+1]];projected+=polygon_area(ct)
+            for j in terrain.nearby(ct):
+                ft=terrain.triangles[j];poly=clip(ct,ft)
+                if len(poly)<3 or polygon_area(poly)<=1e-12:continue
+                area=polygon_area(poly);covered+=area;gaps=[p[1]-plane_y(p,ft) for p in poly];rec={'capTriangle':k-1,'floorTriangle':j,'projectedArea':area,'aboveActualFloorRange':[min(gaps),max(gaps)]}
+                if name=='deck':
+                    part=clip_delta(clip_delta(poly,ft,-thickness,True),ft,0.,False);ia=polygon_area(part) if len(part)>=3 else 0.;normal=np.cross(np.array(ct[1])-ct[0],np.array(ct[2])-ct[0]);pa=ia*float(np.linalg.norm(normal))/abs(float(normal[1]));area3d+=pa;rec['connectionCapSurfaceArea']=pa
+                pieces.append(rec)
+        result[name]={'projectedArea':projected,'coveredArea':covered,'uncoveredArea':projected-covered,'minimumAboveActualFloor':min((p['aboveActualFloorRange'][0] for p in pieces),default=None),'maximumAboveActualFloor':max((p['aboveActualFloorRange'][1] for p in pieces),default=None),'positiveConnectionCapSurfaceArea':area3d,'pieces':pieces}
+    return {'caps':result,'actualCurrentMeshes':True,'method':'cap polygons clipped to current terrain/current constructed top, deck bottom uses unchanged local .07 slab thickness','arbitrarySolidIntersectionProof':False}

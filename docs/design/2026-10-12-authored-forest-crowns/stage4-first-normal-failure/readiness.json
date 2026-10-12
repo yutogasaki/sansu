@@ -1,0 +1,52 @@
+{
+  "preparedAtUtc": "2026-10-12T04:48:11.929452+00:00",
+  "status": "READY-NOT-EXECUTED",
+  "files": {
+    "README.md": "0dbf12f80065e7018723da14887767a3a8bf3082dedd20f52b3fdfc5ed723778",
+    "build-shape.py": "96dd28dc08edbb8fcc471cfda0de6b3a2a6996483ceca1df199bc94d1df15025",
+    "deform.py": "4fd53469212d3d42a9ab170eb4c2bb478c15a4f067dec1832dcf1217efee5a9c",
+    "fields.py": "18bd502a2b3d0013fa0cbca4b4e53cba99d6b7ec70aa3d4275b0636271d70e8a",
+    "helper-provenance.json": "bd59995ee5625a7d33caec353a8a43e9a278e311abb1a7955d7c38997d3108a2",
+    "joints.py": "c99059a0af65cdd62b741911537dc26f605051d22e57207d452d7f5e12ca8db1",
+    "junctions.py": "4efa1250793373baea601030abc5e551f0818b8ba5daafd8fa6b5347cc31c7bf",
+    "native_section.py": "6cb4c89d078f867eeb687fb35e2e9874220ce4d47ea822b3764b01473e92462f",
+    "proposal.json": "60411e8b70d3b8f6829a34654cee5caf3f740065f34a7e4b3e7b159b8bcf2364",
+    "ray_query64.py": "e5b6c22a0781049f8ffbf33d6166064b79b34dcdbca6fe6d348f760af109b3b3",
+    "render-whole.py": "556eff70f274eae7fc2efada2e81750ced3f25a34c2a9fd1237dfe4ccfcefe21",
+    "run-once.py": "98db35867f97f6eb3f70b89fd8b657dcb614374268d9bf2a922bcc22ff341aed",
+    "source_checks.py": "8af619dabe604ae5831b7c50dc061840e95fa31814678f857a8cf6af1dc0a9df",
+    "source_helpers.py": "8c06d2c318cccf0c9ef4031347dd73d80363cc13acae899c3ccc0eddcce88b27",
+    "static-check.json": "9e6624704363734c4a24c7ba9b9ee05c0000bd1cf23d4261f3389803ecafd639",
+    "static-check.py": "717a0b4f46448f95641e80bab0b349b43b94572134dbad50bddda64e7525d8c8",
+    "volume_adapter.py": "f79f9ebdd7a764a7f0957a93163f5172164f062940991ac83ecc51401c5b7c27"
+  },
+  "candidate": "forest-crown-stage4-organic-boughs-v0",
+  "counts": {
+    "originalRoles": 128,
+    "fixedOriginal": 23,
+    "additionalRetainedSpire": 4,
+    "deformed": 101,
+    "primaryQueries": 31,
+    "maxDerivedBoughs": 19,
+    "leaf70": "deferred"
+  },
+  "sourceScope": "coarse HOLD shape plus separately authorized one whole view; no certified join or actor/runtime pass",
+  "limits": {
+    "threads": 2,
+    "maxConcurrentBlender": 1,
+    "rssObservedStopBytes": 3221225472,
+    "rssSampleSeconds": 0.25,
+    "buildSeconds": 300,
+    "viewSeconds": 120,
+    "renderSamples": 16,
+    "renderWidth": 1280
+  },
+  "commands": {
+    "build": "SANSU_FOREST_STAGE4_APPROVED=1 python3 /private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/run-once.py build",
+    "view": "SANSU_FOREST_STAGE4_APPROVED=1 python3 /private/tmp/sansu-authored-forest-crown-study/stage4-organic-boughs/run-once.py view"
+  },
+  "timeEstimate": "Unmeasured new section/normal checks; use bounded300s build/120s view. Previous stage3 build19.3s view17.6s are context only, not stage4 predictions.",
+  "historicalStage3ReadinessSHA": "cd8077546024dd624d7dfcc8ae7774b9b0ad916fab5245fee7576e9d43ff8891",
+  "runtimeIntegrated": false,
+  "independentObservers": 0
+}

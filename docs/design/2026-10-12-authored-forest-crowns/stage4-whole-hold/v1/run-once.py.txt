@@ -1,0 +1,55 @@
+"""One sealed CPU2/RSS3GiB/300s BUILD ONLY. Never renders or retries."""
+import os
+assert os.environ.get('SANSU_FOREST_HOLD_SHAPE_BUILD_APPROVED')=='1','Await source window'
+import hashlib
+import json
+import signal
+import subprocess
+import time
+from datetime import datetime,timezone
+from pathlib import Path
+HERE=Path(__file__).resolve().parent
+OUT=HERE/'execution-hold-01';assert not OUT.exists(),'Preserve first attempt';OUT.mkdir()
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+def snapshot():
+    ready=HERE/'readiness.json';assert sha(ready)==(HERE/'readiness.sha256').read_text().strip()
+    r=json.loads(ready.read_text())
+    local={str(HERE/p):sha(HERE/p) for p in r['files']}
+    assert {p:local[str(HERE/p)] for p in r['files']}==r['files'],'Prepared code changed'
+    ext={p:sha(Path(p)) for p in r['externalInputs']};assert ext==r['externalInputs'],'External input changed'
+    return {**local,**ext,str(ready):sha(ready)}
+before=snapshot();started=datetime.now(timezone.utc).isoformat();start=time.monotonic();peak=0;stop=None
+command=['/Applications/Blender.app/Contents/MacOS/Blender','-b','--threads','2','--python-exit-code','1','--python',str(HERE/'build-source.py')]
+with (OUT/'execution.log.txt').open('xb') as log:
+    p=subprocess.Popen(command,stdout=log,stderr=subprocess.STDOUT,start_new_session=True,
+        env=dict(os.environ,OMP_NUM_THREADS='2',OPENBLAS_NUM_THREADS='1'))
+    launch={'ownedPid':p.pid,'ownedProcessGroup':p.pid,'startedAtUtc':started,'command':command,
+            'threads':2,'rssLimitBytes':3*1024**3,'timeoutSeconds':300,'readinessSha256':sha(HERE/'readiness.json')}
+    (OUT/'launch.json').write_text(json.dumps(launch,indent=2)+'\n');print(json.dumps(launch),flush=True)
+    try:
+        while p.poll() is None:
+            raw=subprocess.run(['ps','-o','rss=','-p',str(p.pid)],capture_output=True,text=True).stdout.strip()
+            if raw:peak=max(peak,int(raw)*1024)
+            if peak>3*1024**3:stop='observed RSS 3 GiB';break
+            if time.monotonic()-start>300:stop='wall 300s';break
+            time.sleep(.25)
+    finally:
+        if p.poll() is None:
+            os.killpg(p.pid,signal.SIGTERM)
+            try:p.wait(timeout=10)
+            except subprocess.TimeoutExpired:os.killpg(p.pid,signal.SIGKILL);p.wait()
+code=(125 if 'RSS' in stop else 124) if stop else p.returncode
+after=None;binding_error=None
+try:after=snapshot();assert before==after
+except Exception as error:binding_error=repr(error);code=126
+try:os.killpg(p.pid,0);group_gone=False
+except ProcessLookupError:group_gone=True
+record={**launch,'finishedAtUtc':datetime.now(timezone.utc).isoformat(),'elapsedSeconds':time.monotonic()-start,
+    'exitCode':code,'peakObservedRssBytes':peak,'rssSampleSeconds':.25,'stopReason':stop,
+    'ownedProcessExited':p.poll() is not None,'ownedProcessGroupGone':group_gone,
+    'inputsBefore':before,'inputsAfter':after,'bindingError':binding_error,
+    'scope':'HOLD scene construction only; exit0 is not strict geometry/contact/roundtrip/runtime/performance pass',
+    'runtimeOverlap':'Compare UTC with root activity; no runtime pause/deadline changes; not performance evidence'}
+(OUT/'result.json').write_text(json.dumps(record,indent=2)+'\n')
+print(json.dumps({k:v for k,v in record.items() if k not in ('inputsBefore','inputsAfter')}),flush=True)
+raise SystemExit(code if group_gone else 127)

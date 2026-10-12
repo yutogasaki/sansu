@@ -1,0 +1,93 @@
+import fs from 'node:fs';
+import zlib from 'node:zlib';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
+import { compileWorldDefinition, isWorldWalkEdgeSupported } from '__REPO__/src/domain/growingIsland/worldDefinition.ts';
+import { composeAuthoredWaterWorld } from '__REPO__/src/domain/growingIsland/authoredWaterWorld.ts';
+import { composeAuthoredShoulderWorld } from '__REPO__/src/domain/growingIsland/authoredShoulderWorld.ts';
+import { withNative05WaterCarvingScope } from '__REPO__/src/domain/growingIsland/authoredWaterCarving.ts';
+
+const repo = '__REPO__';
+const [scenario, output, expectedPath] = process.argv.slice(2);
+const fixtures = { wide27: 'authored-water-fixture.json', source32: 'authored-flower-reference-mature.json', shoulder35: 'authored-shoulder-reference-mature.json' };
+assert(scenario in fixtures);
+assert.equal(typeof globalThis.gc, 'function', 'Identical --expose-gc flag is required');
+assert(!fs.existsSync(output), 'Fresh output only');
+const hash = value => crypto.createHash('sha256').update(typeof value === 'string' || Buffer.isBuffer(value) ? value : JSON.stringify(value)).digest('hex');
+const expected = JSON.parse(fs.readFileSync(expectedPath, 'utf8'));
+const inputs = [];
+function read(name, gzip = false) {
+  const file = `${repo}/prototypes/place-qa/${name}`, bytes = fs.readFileSync(file);
+  inputs.push({ path: file, sha256: hash(bytes) });
+  return JSON.parse((gzip ? zlib.gunzipSync(bytes) : bytes).toString());
+}
+const fixture = read(fixtures[scenario]);
+let definition = read(scenario === 'wide27' ? 'native05-world.json.gz' : 'native05-world-source-shading.json.gz', true);
+assert(fixture.synthetic === true && fixture.worldId === definition.id);
+let base = withNative05WaterCarvingScope(compileWorldDefinition(definition));
+definition = undefined;
+if (scenario === 'shoulder35') base = composeAuthoredShoulderWorld(base, read('authored-shoulder-profile.json.gz', true));
+const stateBefore = hash(fixture.state), baseBefore = hash(base.definition);
+assert.equal(stateBefore, expected.inputStateSha256);
+assert.equal(baseBefore, expected.baseDefinitionSha256);
+assert.equal(expected.bridgeCount, 1);
+assert.equal(expected.bridges[0].ownerId, 'l24');
+const seenWorlds = new WeakSet(), seenPlans = new WeakSet();
+const report = {
+  schema: 'sansu-water-support-local-microbenchmark-v1', repo, scenario,
+  node: process.version, execArgv: process.execArgv, pid: process.pid,
+  scope: 'Uninstrumented warmed pure composeAuthoredWaterWorld only; not UI/cold-start/frame/device performance',
+  inputs, inputStateSha256: stateBefore, baseDefinitionSha256: baseBefore,
+  expectedPath, expectedSha256: hash(fs.readFileSync(expectedPath)),
+  warmups: 2, measuredIterations: 2, forcedGcOutsideTiming: true, samples: [], pass: false,
+};
+const write = () => fs.writeFileSync(output, JSON.stringify(report, null, 2) + '\n');
+write();
+function iteration(index) {
+  globalThis.gc(); globalThis.gc();
+  const phase = index < 2 ? 'warmup' : 'measured';
+  console.log(JSON.stringify({ event: 'compose-start', phase, index, utc: new Date().toISOString(), rssBytes: process.memoryUsage().rss }));
+  const memoryBefore = process.memoryUsage(), cpuBefore = process.cpuUsage();
+  const startedAtUtc = new Date().toISOString();
+  const start = process.hrtime.bigint();
+  const result = composeAuthoredWaterWorld(fixture.state, base);
+  const elapsedNanoseconds = process.hrtime.bigint() - start;
+  const cpu = process.cpuUsage(cpuBefore), memoryAfter = process.memoryUsage();
+  const finishedAtUtc = new Date().toISOString();
+  console.log(JSON.stringify({ event: 'compose-end', phase, index, utc: finishedAtUtc }));
+  // WeakSets prove fresh identities without retaining earlier worlds or plans.
+  assert(result.world !== base && !seenWorlds.has(result.world) && !seenPlans.has(result.plan));
+  seenWorlds.add(result.world); seenPlans.add(result.plan);
+  assert.equal(result.plan.bridges.length, 1);
+  assert.deepEqual(result.plan.bridges.map(bridge => ({ ownerId: bridge.ownerId, restoredEdgeIds: bridge.restoredEdgeIds })), expected.bridges);
+  const siteMap = new Map(result.world.sites.map(site => [JSON.stringify([site.ref.districtId, site.ref.siteId]), site.cell]));
+  const queries = result.world.sites.map(site => ({ ref: site.ref, floor: result.world.floorAt(site.cell), anchor: result.world.anchorAt(site.cell) }));
+  const sourceWalk = base.definition.edges.filter(edge => edge.allows.includes('walk')).map(edge => ({ edge, supported: isWorldWalkEdgeSupported(result.world,
+    siteMap.get(JSON.stringify([edge.from.districtId, edge.from.siteId])), siteMap.get(JSON.stringify([edge.to.districtId, edge.to.siteId]))) }));
+  const actual = { definitionSha256: hash(result.world.definition), planSha256: hash(result.plan), siteQuerySha256: hash(queries), sourceWalkQuerySha256: hash(sourceWalk) };
+  assert.deepEqual(actual, expected.output);
+  assert.equal(hash(fixture.state), stateBefore); assert.equal(hash(base.definition), baseBefore);
+  assert.equal(queries.length, expected.sites); assert.equal(sourceWalk.length, expected.sourceWalkEdges);
+  return {
+    index, phase, startedAtUtc, finishedAtUtc, elapsedNanoseconds: elapsedNanoseconds.toString(), elapsedMs: Number(elapsedNanoseconds) / 1e6,
+    cpuUserMicroseconds: cpu.user, cpuSystemMicroseconds: cpu.system, memoryBefore, memoryAfter,
+    cumulativeProcessMaxRssKiB: process.resourceUsage().maxRSS,
+    freshWorld: true, freshPlan: true, baseNotReturned: true, bridgeCount: 1,
+    acceptedOwnerId: 'l24', restoredEdgeIds: expected.bridges[0].restoredEdgeIds,
+    resultHashes: actual, inputUnchanged: true, functionalMatch: true,
+  };
+}
+try {
+  for (let index = 0; index < 4; index++) {
+    // Only small scalar/hash records escape iteration; no result/query graph is retained.
+    report.samples.push(iteration(index));
+    write();
+  }
+  report.pass = true;
+} catch (error) {
+  report.firstFailure = { name: error.name, message: error.message, stack: error.stack };
+  process.exitCode = 1;
+} finally {
+  report.finishedAtUtc = new Date().toISOString(); report.finalResourceUsage = process.resourceUsage(); write();
+}
+console.log(JSON.stringify({ event: 'worker-finished', pass: report.pass, scenario, sampleCount: report.samples.length }));

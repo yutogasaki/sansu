@@ -1,0 +1,145 @@
+{
+  "purpose": "Byte-identical original survey and pre-fix preparation preservation",
+  "files": [
+    {
+      "path": "source-study.py",
+      "sourceBeforeSha256": "3d6e6b1248ee86d2d225d04bb2f7120eb91d760fbd096203bced169d0473d175",
+      "sourceAfterSha256": "3d6e6b1248ee86d2d225d04bb2f7120eb91d760fbd096203bced169d0473d175",
+      "destinationSha256": "3d6e6b1248ee86d2d225d04bb2f7120eb91d760fbd096203bced169d0473d175",
+      "bytes": 24524
+    },
+    {
+      "path": "entry_geometry.py",
+      "sourceBeforeSha256": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+      "sourceAfterSha256": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+      "destinationSha256": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+      "bytes": 7937
+    },
+    {
+      "path": "study.json",
+      "sourceBeforeSha256": "258376c7a16aed0aa4645e7b08b95f4392057309c4996d629e4542cb13f4ecc9",
+      "sourceAfterSha256": "258376c7a16aed0aa4645e7b08b95f4392057309c4996d629e4542cb13f4ecc9",
+      "destinationSha256": "258376c7a16aed0aa4645e7b08b95f4392057309c4996d629e4542cb13f4ecc9",
+      "bytes": 11855
+    },
+    {
+      "path": "readiness.json",
+      "sourceBeforeSha256": "ce76c703463a9c0e6042e1b9c33119653733c52ad8a40057b48a55c18b8921f5",
+      "sourceAfterSha256": "ce76c703463a9c0e6042e1b9c33119653733c52ad8a40057b48a55c18b8921f5",
+      "destinationSha256": "ce76c703463a9c0e6042e1b9c33119653733c52ad8a40057b48a55c18b8921f5",
+      "bytes": 2068
+    },
+    {
+      "path": "preparation-manifest.json",
+      "sourceBeforeSha256": "c8ed9703a8a982c7f91e6373b9d40514c1faa0d2f4466d23470edc513f55cbc4",
+      "sourceAfterSha256": "c8ed9703a8a982c7f91e6373b9d40514c1faa0d2f4466d23470edc513f55cbc4",
+      "destinationSha256": "c8ed9703a8a982c7f91e6373b9d40514c1faa0d2f4466d23470edc513f55cbc4",
+      "bytes": 4592
+    },
+    {
+      "path": "donor-transform-static-evidence.json",
+      "sourceBeforeSha256": "454f627b50ab42ff9c69daf4aff684d549811dbebffb3e8f2e06f0cb5905f50f",
+      "sourceAfterSha256": "454f627b50ab42ff9c69daf4aff684d549811dbebffb3e8f2e06f0cb5905f50f",
+      "destinationSha256": "454f627b50ab42ff9c69daf4aff684d549811dbebffb3e8f2e06f0cb5905f50f",
+      "bytes": 4940
+    },
+    {
+      "path": "donor-transform-static-review.md",
+      "sourceBeforeSha256": "45943df06b009e47385a1487a5906e5529dc337cdeb8a0226658de894d6ccfab",
+      "sourceAfterSha256": "45943df06b009e47385a1487a5906e5529dc337cdeb8a0226658de894d6ccfab",
+      "destinationSha256": "45943df06b009e47385a1487a5906e5529dc337cdeb8a0226658de894d6ccfab",
+      "bytes": 4928
+    },
+    {
+      "path": "runs/01-survey-handoff.md",
+      "sourceBeforeSha256": "2dfac6b19bd28ca58e2fec84dbef4bfd5fea514fa520c44ca89920102451f6aa",
+      "sourceAfterSha256": "2dfac6b19bd28ca58e2fec84dbef4bfd5fea514fa520c44ca89920102451f6aa",
+      "destinationSha256": "2dfac6b19bd28ca58e2fec84dbef4bfd5fea514fa520c44ca89920102451f6aa",
+      "bytes": 2745
+    },
+    {
+      "path": "runs/01-survey.log.txt",
+      "sourceBeforeSha256": "576b157990fb72814256db839bf742a4326e9c9b04d9a3f914b6b27f7aac5b8d",
+      "sourceAfterSha256": "576b157990fb72814256db839bf742a4326e9c9b04d9a3f914b6b27f7aac5b8d",
+      "destinationSha256": "576b157990fb72814256db839bf742a4326e9c9b04d9a3f914b6b27f7aac5b8d",
+      "bytes": 18601
+    },
+    {
+      "path": "runs/01-survey-supervisor-output.log.txt",
+      "sourceBeforeSha256": "fb61aa7701d3f89afdb67b7183c045a2f2261192dbff57b659d78c01803f33b6",
+      "sourceAfterSha256": "fb61aa7701d3f89afdb67b7183c045a2f2261192dbff57b659d78c01803f33b6",
+      "destinationSha256": "fb61aa7701d3f89afdb67b7183c045a2f2261192dbff57b659d78c01803f33b6",
+      "bytes": 340
+    },
+    {
+      "path": "runs/01-survey-observation.json",
+      "sourceBeforeSha256": "04a62bcc8bac63f054e4a3cf368b41cc9499e4c33c5329320bae26dd2d98502d",
+      "sourceAfterSha256": "04a62bcc8bac63f054e4a3cf368b41cc9499e4c33c5329320bae26dd2d98502d",
+      "destinationSha256": "04a62bcc8bac63f054e4a3cf368b41cc9499e4c33c5329320bae26dd2d98502d",
+      "bytes": 2786
+    },
+    {
+      "path": "runs/01-survey.log.txt.json",
+      "sourceBeforeSha256": "b1faef52b0ad82dd4d01cc5a54a0ce2b8801f5cd0db2cc00e7c48ee721437bd2",
+      "sourceAfterSha256": "b1faef52b0ad82dd4d01cc5a54a0ce2b8801f5cd0db2cc00e7c48ee721437bd2",
+      "destinationSha256": "b1faef52b0ad82dd4d01cc5a54a0ce2b8801f5cd0db2cc00e7c48ee721437bd2",
+      "bytes": 416
+    },
+    {
+      "path": "runs/01-survey-summary.json",
+      "sourceBeforeSha256": "add77f34dc860fb0e7d880b66d05be47374dd32c7db3f586598a97e6f16cf545",
+      "sourceAfterSha256": "add77f34dc860fb0e7d880b66d05be47374dd32c7db3f586598a97e6f16cf545",
+      "destinationSha256": "add77f34dc860fb0e7d880b66d05be47374dd32c7db3f586598a97e6f16cf545",
+      "bytes": 13528
+    },
+    {
+      "path": "runs/01-survey-handoff.json",
+      "sourceBeforeSha256": "6c9c1f40aa05ccca0233dca614e441a5e936d64df4a16ce5d60b0d1b07e2f40f",
+      "sourceAfterSha256": "6c9c1f40aa05ccca0233dca614e441a5e936d64df4a16ce5d60b0d1b07e2f40f",
+      "destinationSha256": "6c9c1f40aa05ccca0233dca614e441a5e936d64df4a16ce5d60b0d1b07e2f40f",
+      "bytes": 5548
+    },
+    {
+      "path": "runs/01-survey/candidate-2.json",
+      "sourceBeforeSha256": "0d32ae8665a6672e665947fd111e5744fcd48ef632468854aede94a310975564",
+      "sourceAfterSha256": "0d32ae8665a6672e665947fd111e5744fcd48ef632468854aede94a310975564",
+      "destinationSha256": "0d32ae8665a6672e665947fd111e5744fcd48ef632468854aede94a310975564",
+      "bytes": 8135931
+    },
+    {
+      "path": "runs/01-survey/measurement.json",
+      "sourceBeforeSha256": "d171fc2de6b751ef706bd40c1fbb9788cd6ff8836354efba442ef0b0226afbe1",
+      "sourceAfterSha256": "d171fc2de6b751ef706bd40c1fbb9788cd6ff8836354efba442ef0b0226afbe1",
+      "destinationSha256": "d171fc2de6b751ef706bd40c1fbb9788cd6ff8836354efba442ef0b0226afbe1",
+      "bytes": 32687547
+    },
+    {
+      "path": "runs/01-survey/candidates-partial.json",
+      "sourceBeforeSha256": "47a7f5b04797c2fee2c78d667f68c722a5b8868b96ae03d12f724c0f1b33786c",
+      "sourceAfterSha256": "47a7f5b04797c2fee2c78d667f68c722a5b8868b96ae03d12f724c0f1b33786c",
+      "destinationSha256": "47a7f5b04797c2fee2c78d667f68c722a5b8868b96ae03d12f724c0f1b33786c",
+      "bytes": 32684650
+    },
+    {
+      "path": "runs/01-survey/candidate-0.json",
+      "sourceBeforeSha256": "1ac1568a4072510990f3a089f681fd2b9edb399a284a1e3899e34ed27ddea237",
+      "sourceAfterSha256": "1ac1568a4072510990f3a089f681fd2b9edb399a284a1e3899e34ed27ddea237",
+      "destinationSha256": "1ac1568a4072510990f3a089f681fd2b9edb399a284a1e3899e34ed27ddea237",
+      "bytes": 10719990
+    },
+    {
+      "path": "runs/01-survey/execution.json",
+      "sourceBeforeSha256": "9c490e88a0495879563634db1907ed2fdd46c165a44969f97f2ab7746834afbb",
+      "sourceAfterSha256": "9c490e88a0495879563634db1907ed2fdd46c165a44969f97f2ab7746834afbb",
+      "destinationSha256": "9c490e88a0495879563634db1907ed2fdd46c165a44969f97f2ab7746834afbb",
+      "bytes": 1516
+    },
+    {
+      "path": "runs/01-survey/candidate-1.json",
+      "sourceBeforeSha256": "4f2d65b8bd951c922295e8b8c214581ab46b4987a72c5afbd9e133731790753c",
+      "sourceAfterSha256": "4f2d65b8bd951c922295e8b8c214581ab46b4987a72c5afbd9e133731790753c",
+      "destinationSha256": "4f2d65b8bd951c922295e8b8c214581ab46b4987a72c5afbd9e133731790753c",
+      "bytes": 9233324
+    }
+  ]
+}

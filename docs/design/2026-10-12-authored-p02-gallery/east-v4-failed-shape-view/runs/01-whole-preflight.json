@@ -1,0 +1,54 @@
+{
+  "utc": "2026-10-12T06:20:18.029498+00:00",
+  "authorizedPreparationSHA": "4e5807d506483eb2680d2f4a1889a6ef1d26b93b7efcd2ecfd3ec0a250a438a7",
+  "outerScriptSHA": "098cbb52c64d724d3422ac63104da33d8ca3de5d351d495810aa18a433dcb07d",
+  "inputHashes": {
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/failed-scene.blend": "4452f3ca5351ef38977cedece0116ab72cc135732f40ea51a65d0d6262b330f9",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/study.json": "fc9b054f95375363c88e317299ad6a45a0d8b28d674e44daefa8d2e4634e1812",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/preparation.json": "312bbc4224ac6ccf9fb3af1c3d4159b50c16ea6ba170309f3569b739cd3a89a0",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/boolean-surface-lineage.json": "3f4807859c32c37e498356484c88fad637c80f6ce87e404393f6b0672fd987d3",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/manifold-union-topology.json": "0b83230ef546e23b9cec046a17571e4a43378b1f261d7ded1c3f8eb92b4e31c5",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v2-failed-shape-view/render-failed-type-node.py": "6b5a4a9280a1323d4c665c888dc0243800b932ad0db63a0a2890bc8b86cd1ec2",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/supervise.py": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-failed-shape-view/render-failed.py": "6889d86f29ac383bc210ed04e711f171c260480189b1b534ae80b4eb4acae42e",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-failed-shape-view/preparation.json": "4e5807d506483eb2680d2f4a1889a6ef1d26b93b7efcd2ecfd3ec0a250a438a7"
+  },
+  "noExistingBackgroundBlender": true,
+  "untouchedPreexistingBlenderProcesses": [
+    [
+      13395,
+      1,
+      27099136,
+      "/Applications/Blender.app/Contents/MacOS/Blender"
+    ]
+  ],
+  "command": [
+    "python3",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/supervise.py",
+    "--scheduled",
+    "--seconds",
+    "60",
+    "--rss-mib",
+    "2560",
+    "--log",
+    "runs/01-whole.log.txt",
+    "--",
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "render-failed.py",
+    "--",
+    "--scheduled",
+    "--source",
+    "/private/tmp/sansu-p02-gallery-source-study/east-v4-curvature-build/runs/01-coarse-build/failed-scene.blend",
+    "--out",
+    "runs/01-whole",
+    "--view",
+    "whole"
+  ],
+  "cwd": "/private/tmp/sansu-p02-gallery-source-study/east-v4-failed-shape-view"
+}

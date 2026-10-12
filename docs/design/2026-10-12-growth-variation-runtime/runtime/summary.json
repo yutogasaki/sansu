@@ -1,0 +1,1444 @@
+{
+  "revision": "island-variation-c9",
+  "target": "http://127.0.0.1:5366/prototypes/place-qa/authored.html?art=whole&terrain=grove",
+  "pass": true,
+  "sourceFixed": true,
+  "errors": [],
+  "core": {
+    "files": 620,
+    "tests": 5373,
+    "pass": true,
+    "sourceFixed": true,
+    "inputCount": 25798,
+    "startedAt": 1791805431.9612968,
+    "finishedAt": 1791805867.423321,
+    "elapsedSeconds": 435.46202421188354
+  },
+  "execution": {
+    "startedAt": 1791805952.0275059,
+    "revision": "island-variation-c9",
+    "command": "node tools/e2e-authored-island-variation.mjs",
+    "timeoutSeconds": 2400,
+    "pid": 71972,
+    "exitCode": 0,
+    "finishedAt": 1791806211.8857641
+  },
+  "runtimeElapsedSeconds": 259.8582582473755,
+  "browserVersion": "145.0.7632.6",
+  "launchOptions": {
+    "executablePath": "/Users/yutogasaki/Library/Caches/ms-playwright/chromium-1208/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+    "headless": true,
+    "args": [
+      "--use-angle=metal"
+    ]
+  },
+  "candidate": "native05-growth-terrain-rough-v3",
+  "catalogRevision": "d755b76f91f650ce9489408a1e49732e61c53ae0d13369f2df91275489108062",
+  "acquisition": {
+    "grants": [
+      {
+        "id": "diagnostic-district-1",
+        "templateId": "native05-growing-shore-v1",
+        "parent": {
+          "districtId": "native05-inlet-core",
+          "portId": "east-entry"
+        },
+        "entryPortId": "west-entry",
+        "turn": 0,
+        "logicalOrigin": {
+          "x": 16,
+          "z": -4
+        },
+        "worldOrigin": {
+          "x": 16,
+          "y": 0,
+          "z": -4
+        }
+      }
+    ],
+    "revision": "districts:e6215ecb",
+    "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+    "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+    "land": {
+      "extra": [],
+      "capes": []
+    }
+  },
+  "newOwnerIds": [
+    "l36",
+    "l37",
+    "l38",
+    "l39"
+  ],
+  "originalOwnerCount": 35,
+  "matureOwnerCount": 39,
+  "natureAdvance": {
+    "hours": 18,
+    "before": {
+      "hours": 252,
+      "realAt": 1791817200000,
+      "lastSpread": 216,
+      "lastMix": 216
+    },
+    "after": {
+      "hours": 270,
+      "realAt": 1791882000000,
+      "lastSpread": 216,
+      "lastMix": 216
+    },
+    "existingOwnerChanges": []
+  },
+  "cases": {
+    "single": {
+      "localCells": [
+        {
+          "x": 1,
+          "z": -1
+        },
+        {
+          "x": 2,
+          "z": -1
+        },
+        {
+          "x": 1,
+          "z": 0
+        },
+        {
+          "x": 2,
+          "z": 0
+        }
+      ],
+      "patches": [
+        {
+          "socket": "south",
+          "owners": [
+            0,
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "connections": 0
+    },
+    "split": {
+      "localCells": [
+        {
+          "x": 1,
+          "z": -1
+        },
+        {
+          "x": 2,
+          "z": -1
+        },
+        {
+          "x": 1,
+          "z": 1
+        },
+        {
+          "x": 2,
+          "z": 1
+        }
+      ],
+      "patches": [
+        {
+          "socket": "south",
+          "owners": [
+            0,
+            1
+          ]
+        },
+        {
+          "socket": "north",
+          "owners": [
+            2,
+            3
+          ]
+        }
+      ],
+      "connections": 0
+    },
+    "loop": {
+      "localCells": [
+        {
+          "x": 2,
+          "z": -1
+        },
+        {
+          "x": 2,
+          "z": 0
+        },
+        {
+          "x": 2,
+          "z": 1
+        },
+        {
+          "x": 1,
+          "z": 0
+        }
+      ],
+      "patches": [
+        {
+          "socket": "south",
+          "owners": [
+            0,
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "socket": "north",
+          "owners": [
+            0,
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "connections": 1
+    }
+  },
+  "steps": [
+    {
+      "name": "verify-fixed-candidate",
+      "elapsedMs": 3987
+    },
+    {
+      "name": "load",
+      "elapsedMs": 16486
+    },
+    {
+      "name": "acquire-diagnostic-shore",
+      "elapsedMs": 15501
+    },
+    {
+      "name": "purchase-four-saplings",
+      "elapsedMs": 60030
+    },
+    {
+      "name": "mature-through-existing-clock",
+      "elapsedMs": 16798
+    },
+    {
+      "name": "same-owners-split",
+      "elapsedMs": 33959
+    },
+    {
+      "name": "same-owners-loop",
+      "elapsedMs": 67652
+    },
+    {
+      "name": "separate-middle-tree",
+      "elapsedMs": 16605
+    },
+    {
+      "name": "reconnect-and-restore-loop",
+      "elapsedMs": 18220
+    },
+    {
+      "name": "rotate-and-small-screens",
+      "elapsedMs": 1523
+    }
+  ],
+  "initialGraphics": {
+    "webgl2": true,
+    "contextLost": false,
+    "vendor": "WebKit",
+    "renderer": "WebKit WebGL",
+    "unmaskedVendor": "Google Inc. (Apple)",
+    "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "attributes": {
+      "alpha": false,
+      "antialias": true,
+      "depth": true,
+      "desynchronized": false,
+      "failIfMajorPerformanceCaveat": false,
+      "powerPreference": "low-power",
+      "premultipliedAlpha": true,
+      "preserveDrawingBuffer": false,
+      "stencil": false,
+      "xrCompatible": false
+    },
+    "dataset": {
+      "engine": "three.js r185",
+      "pixelRatio": "1",
+      "qualityCeiling": "1.25",
+      "graphicsQuality": "standard"
+    }
+  },
+  "captures": [
+    {
+      "name": "young",
+      "file": "young.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "host": {
+        "buildRevision": "island-variation-c9",
+        "appVersion": "island-variation-c9:b946e26b-82c7-4ad3-b60c-73a5f236cecf",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "worldRevision": "authored-world:d6c52e033ff5f5fb",
+        "districtWorldRevision": "districts:e6215ecb",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "groundShading": "source",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v3"
+      },
+      "renderer": {
+        "worldId": null,
+        "worldRevision": "authored-world:d6c52e033ff5f5fb",
+        "nativeGrowingArt": "true",
+        "authoredWholeArtEnabled": "true",
+        "authoredGrowthTerrainCandidate": "native05-growth-terrain-rough-v3",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,8.326672684688674e-17,-0.6114475010757655,0,-0.35705914772988967,0.8117844741035438,-0.4620765441210339,0,0.4963635881027163,0.5839571624737837,0.6423528787211623,0,12.904639209437061,18.186607155533203,11.727465207501318,1],\"projectionMatrix\":[0.09116002305935336,0,0,0,0,0.1285026831077632,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":9.3,\"curved\":false}",
+        "growingSceneCounters": "{\"fullLayerBuild\":1,\"previewUpdate\":0,\"receiptReuse\":1}"
+      },
+      "graphics": {
+        "webgl2": true,
+        "contextLost": false,
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "attributes": {
+          "alpha": false,
+          "antialias": true,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "low-power",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "dataset": {
+          "engine": "three.js r185",
+          "pixelRatio": "1",
+          "qualityCeiling": "1.25",
+          "graphicsQuality": "standard"
+        }
+      },
+      "plan": {
+        "revision": "growth-terrain:7c71541ba2872733",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "d755b76f91f650ce9489408a1e49732e61c53ae0d13369f2df91275489108062",
+        "assemblies": [],
+        "connections": []
+      },
+      "ownershipHash": "3505ec8517ce5db5ef2b011636bc1eaa43946d15f6420359808c2eb111da82e9",
+      "newOwners": [
+        {
+          "id": "l36",
+          "kind": "sapling",
+          "cell": {
+            "x": 17,
+            "z": -5
+          },
+          "growth": 0
+        },
+        {
+          "id": "l37",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -5
+          },
+          "growth": 0
+        },
+        {
+          "id": "l38",
+          "kind": "sapling",
+          "cell": {
+            "x": 17,
+            "z": -4
+          },
+          "growth": 0
+        },
+        {
+          "id": "l39",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -4
+          },
+          "growth": 0
+        }
+      ]
+    },
+    {
+      "name": "single",
+      "file": "single.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "host": {
+        "buildRevision": "island-variation-c9",
+        "appVersion": "island-variation-c9:b946e26b-82c7-4ad3-b60c-73a5f236cecf",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "worldRevision": "authored-world:d4527e65fcc55a19",
+        "districtWorldRevision": "districts:e6215ecb",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "groundShading": "source",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v3"
+      },
+      "renderer": {
+        "worldId": null,
+        "worldRevision": "authored-world:d4527e65fcc55a19",
+        "nativeGrowingArt": "true",
+        "authoredWholeArtEnabled": "true",
+        "authoredGrowthTerrainCandidate": "native05-growth-terrain-rough-v3",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,0,-0.6114475010757654,0,-0.3570591477298898,0.8117844741035437,-0.4620765441210338,0,0.4963635881027162,0.5839571624737837,0.6423528787211622,0,15.45422589776154,19.654478477033226,12.512344319662148,1],\"projectionMatrix\":[0.0811609829845619,0,0,0,0,0.11440765071317763,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":9.3,\"curved\":false}",
+        "growingSceneCounters": "{\"fullLayerBuild\":1,\"previewUpdate\":0,\"receiptReuse\":1}"
+      },
+      "graphics": {
+        "webgl2": true,
+        "contextLost": false,
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "attributes": {
+          "alpha": false,
+          "antialias": true,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "low-power",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "dataset": {
+          "engine": "three.js r185",
+          "pixelRatio": "1",
+          "qualityCeiling": "1.25",
+          "graphicsQuality": "standard"
+        }
+      },
+      "plan": {
+        "revision": "growth-terrain:aa06fd939d9b35f7",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "d755b76f91f650ce9489408a1e49732e61c53ae0d13369f2df91275489108062",
+        "assemblies": [
+          {
+            "id": "diagnostic-district-1:growth-terrain:south",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37",
+              "l38",
+              "l39"
+            ],
+            "socketId": "south",
+            "shape": "seaward"
+          }
+        ],
+        "connections": []
+      },
+      "ownershipHash": "dec5157a8f8b9c843800938e6c88753c46d0d8c0598882b04de0be1f581b6dfd",
+      "newOwners": [
+        {
+          "id": "l36",
+          "kind": "sapling",
+          "cell": {
+            "x": 17,
+            "z": -5
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l37",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -5
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l38",
+          "kind": "sapling",
+          "cell": {
+            "x": 17,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l39",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        }
+      ]
+    },
+    {
+      "name": "split",
+      "file": "split.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "host": {
+        "buildRevision": "island-variation-c9",
+        "appVersion": "island-variation-c9:b946e26b-82c7-4ad3-b60c-73a5f236cecf",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "worldRevision": "authored-world:7887b8ccbf95e78a",
+        "districtWorldRevision": "districts:e6215ecb",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "groundShading": "source",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v3"
+      },
+      "renderer": {
+        "worldId": null,
+        "worldRevision": "authored-world:7887b8ccbf95e78a",
+        "nativeGrowingArt": "true",
+        "authoredWholeArtEnabled": "true",
+        "authoredGrowthTerrainCandidate": "native05-growth-terrain-rough-v3",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,0,-0.6114475010757654,0,-0.3570591477298898,0.8117844741035437,-0.4620765441210338,0,0.4963635881027162,0.5839571624737837,0.6423528787211622,0,15.61921455479137,19.27937191266835,12.725859052288987,1],\"projectionMatrix\":[0.0811609829845619,0,0,0,0,0.11440765071317763,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":9.3,\"curved\":false}",
+        "growingSceneCounters": "{\"fullLayerBuild\":1,\"previewUpdate\":0,\"receiptReuse\":1}"
+      },
+      "graphics": {
+        "webgl2": true,
+        "contextLost": false,
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "attributes": {
+          "alpha": false,
+          "antialias": true,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "low-power",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "dataset": {
+          "engine": "three.js r185",
+          "pixelRatio": "1",
+          "qualityCeiling": "1.25",
+          "graphicsQuality": "standard"
+        }
+      },
+      "plan": {
+        "revision": "growth-terrain:15d5466f6002deff",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "d755b76f91f650ce9489408a1e49732e61c53ae0d13369f2df91275489108062",
+        "assemblies": [
+          {
+            "id": "diagnostic-district-1:growth-terrain:north",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l38",
+              "l39"
+            ],
+            "socketId": "north",
+            "shape": "seaward"
+          },
+          {
+            "id": "diagnostic-district-1:growth-terrain:south",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37"
+            ],
+            "socketId": "south",
+            "shape": "seaward"
+          }
+        ],
+        "connections": []
+      },
+      "ownershipHash": "dec5157a8f8b9c843800938e6c88753c46d0d8c0598882b04de0be1f581b6dfd",
+      "newOwners": [
+        {
+          "id": "l36",
+          "kind": "sapling",
+          "cell": {
+            "x": 17,
+            "z": -5
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l37",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -5
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l38",
+          "kind": "sapling",
+          "cell": {
+            "x": 17,
+            "z": -3
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l39",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -3
+          },
+          "growth": 18,
+          "maturedAt": 270
+        }
+      ]
+    },
+    {
+      "name": "loop",
+      "file": "loop.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "host": {
+        "buildRevision": "island-variation-c9",
+        "appVersion": "island-variation-c9:b946e26b-82c7-4ad3-b60c-73a5f236cecf",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "worldRevision": "authored-world:dd305dfe00eb79b4",
+        "districtWorldRevision": "districts:e6215ecb",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "groundShading": "source",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v3"
+      },
+      "renderer": {
+        "worldId": null,
+        "worldRevision": "authored-world:dd305dfe00eb79b4",
+        "nativeGrowingArt": "true",
+        "authoredWholeArtEnabled": "true",
+        "authoredGrowthTerrainCandidate": "native05-growth-terrain-rough-v3",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,0,-0.6114475010757654,0,-0.3570591477298898,0.8117844741035437,-0.4620765441210338,0,0.4963635881027162,0.5839571624737837,0.6423528787211622,0,15.61921455479137,19.27937191266835,12.725859052288987,1],\"projectionMatrix\":[0.0811609829845619,0,0,0,0,0.11440765071317763,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":9.3,\"curved\":false}",
+        "growingSceneCounters": "{\"fullLayerBuild\":1,\"previewUpdate\":0,\"receiptReuse\":1}"
+      },
+      "graphics": {
+        "webgl2": true,
+        "contextLost": false,
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "attributes": {
+          "alpha": false,
+          "antialias": true,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "low-power",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "dataset": {
+          "engine": "three.js r185",
+          "pixelRatio": "1",
+          "qualityCeiling": "1.25",
+          "graphicsQuality": "standard"
+        }
+      },
+      "plan": {
+        "revision": "growth-terrain:60627775e23f0deb",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "d755b76f91f650ce9489408a1e49732e61c53ae0d13369f2df91275489108062",
+        "assemblies": [
+          {
+            "id": "diagnostic-district-1:growth-terrain:north",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37",
+              "l38",
+              "l39"
+            ],
+            "socketId": "north",
+            "shape": "seaward"
+          },
+          {
+            "id": "diagnostic-district-1:growth-terrain:south",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37",
+              "l38",
+              "l39"
+            ],
+            "socketId": "south",
+            "shape": "seaward"
+          }
+        ],
+        "connections": [
+          {
+            "id": "diagnostic-district-1:growth-connection:coastal-loop",
+            "districtId": "diagnostic-district-1",
+            "connectionId": "coastal-loop",
+            "ownerIds": [
+              "l36",
+              "l37",
+              "l38",
+              "l39"
+            ]
+          }
+        ]
+      },
+      "ownershipHash": "dec5157a8f8b9c843800938e6c88753c46d0d8c0598882b04de0be1f581b6dfd",
+      "newOwners": [
+        {
+          "id": "l36",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -5
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l37",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l38",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -3
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l39",
+          "kind": "sapling",
+          "cell": {
+            "x": 17,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        }
+      ]
+    },
+    {
+      "name": "separated",
+      "file": "separated.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "host": {
+        "buildRevision": "island-variation-c9",
+        "appVersion": "island-variation-c9:b946e26b-82c7-4ad3-b60c-73a5f236cecf",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "worldRevision": "authored-world:28349c0603378fcc",
+        "districtWorldRevision": "districts:e6215ecb",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "groundShading": "source",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v3"
+      },
+      "renderer": {
+        "worldId": null,
+        "worldRevision": "authored-world:28349c0603378fcc",
+        "nativeGrowingArt": "true",
+        "authoredWholeArtEnabled": "true",
+        "authoredGrowthTerrainCandidate": "native05-growth-terrain-rough-v3",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,8.326672684688674e-17,-0.6114475010757655,0,-0.35705914772988967,0.8117844741035438,-0.4620765441210339,0,0.4963635881027163,0.5839571624737837,0.6423528787211623,0,12.972914895504736,18.186607155533203,11.674706722812658,1],\"projectionMatrix\":[0.09116002305935336,0,0,0,0,0.1285026831077632,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":9.3,\"curved\":false}",
+        "growingSceneCounters": "{\"fullLayerBuild\":1,\"previewUpdate\":0,\"receiptReuse\":1}"
+      },
+      "graphics": {
+        "webgl2": true,
+        "contextLost": false,
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "attributes": {
+          "alpha": false,
+          "antialias": true,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "low-power",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "dataset": {
+          "engine": "three.js r185",
+          "pixelRatio": "1",
+          "qualityCeiling": "1.25",
+          "graphicsQuality": "standard"
+        }
+      },
+      "plan": {
+        "revision": "growth-terrain:7c71541ba2872733",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "d755b76f91f650ce9489408a1e49732e61c53ae0d13369f2df91275489108062",
+        "assemblies": [],
+        "connections": []
+      },
+      "ownershipHash": "dec5157a8f8b9c843800938e6c88753c46d0d8c0598882b04de0be1f581b6dfd",
+      "newOwners": [
+        {
+          "id": "l36",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -5
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l37",
+          "kind": "sapling",
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l38",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -3
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l39",
+          "kind": "sapling",
+          "cell": {
+            "x": 17,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        }
+      ]
+    },
+    {
+      "name": "loop-restored",
+      "file": "loop-restored.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "host": {
+        "buildRevision": "island-variation-c9",
+        "appVersion": "island-variation-c9:b946e26b-82c7-4ad3-b60c-73a5f236cecf",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "worldRevision": "authored-world:dd305dfe00eb79b4",
+        "districtWorldRevision": "districts:e6215ecb",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "groundShading": "source",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v3"
+      },
+      "renderer": {
+        "worldId": null,
+        "worldRevision": "authored-world:dd305dfe00eb79b4",
+        "nativeGrowingArt": "true",
+        "authoredWholeArtEnabled": "true",
+        "authoredGrowthTerrainCandidate": "native05-growth-terrain-rough-v3",
+        "growingCamera": "{\"matrixWorld\":[0.7912850013921671,0,-0.6114475010757654,0,-0.3570591477298898,0.8117844741035437,-0.4620765441210338,0,0.4963635881027162,0.5839571624737837,0.6423528787211622,0,15.61921455479137,19.27937191266835,12.725859052288987,1],\"projectionMatrix\":[0.0811609829845619,0,0,0,0,0.11440765071317763,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":9.3,\"curved\":false}",
+        "growingSceneCounters": "{\"fullLayerBuild\":1,\"previewUpdate\":0,\"receiptReuse\":1}"
+      },
+      "graphics": {
+        "webgl2": true,
+        "contextLost": false,
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "attributes": {
+          "alpha": false,
+          "antialias": true,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "low-power",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "dataset": {
+          "engine": "three.js r185",
+          "pixelRatio": "1",
+          "qualityCeiling": "1.25",
+          "graphicsQuality": "standard"
+        }
+      },
+      "plan": {
+        "revision": "growth-terrain:60627775e23f0deb",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "d755b76f91f650ce9489408a1e49732e61c53ae0d13369f2df91275489108062",
+        "assemblies": [
+          {
+            "id": "diagnostic-district-1:growth-terrain:north",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37",
+              "l38",
+              "l39"
+            ],
+            "socketId": "north",
+            "shape": "seaward"
+          },
+          {
+            "id": "diagnostic-district-1:growth-terrain:south",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37",
+              "l38",
+              "l39"
+            ],
+            "socketId": "south",
+            "shape": "seaward"
+          }
+        ],
+        "connections": [
+          {
+            "id": "diagnostic-district-1:growth-connection:coastal-loop",
+            "districtId": "diagnostic-district-1",
+            "connectionId": "coastal-loop",
+            "ownerIds": [
+              "l36",
+              "l37",
+              "l38",
+              "l39"
+            ]
+          }
+        ]
+      },
+      "ownershipHash": "dec5157a8f8b9c843800938e6c88753c46d0d8c0598882b04de0be1f581b6dfd",
+      "newOwners": [
+        {
+          "id": "l36",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -5
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l37",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l38",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -3
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l39",
+          "kind": "sapling",
+          "cell": {
+            "x": 17,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        }
+      ]
+    },
+    {
+      "name": "rotated",
+      "file": "rotated.png",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "host": {
+        "buildRevision": "island-variation-c9",
+        "appVersion": "island-variation-c9:b946e26b-82c7-4ad3-b60c-73a5f236cecf",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "worldRevision": "authored-world:dd305dfe00eb79b4",
+        "districtWorldRevision": "districts:e6215ecb",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "groundShading": "source",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v3"
+      },
+      "renderer": {
+        "worldId": null,
+        "worldRevision": "authored-world:dd305dfe00eb79b4",
+        "nativeGrowingArt": "true",
+        "authoredWholeArtEnabled": "true",
+        "authoredGrowthTerrainCandidate": "native05-growth-terrain-rough-v3",
+        "growingCamera": "{\"matrixWorld\":[0.37954916230133895,0,-0.9251715697082091,0,-0.5402605646482223,0.8117844741035436,-0.22164045183679154,0,0.7510399161711284,0.5839571624737838,0.308112117115233,0,21.73601155620205,17.624294295176462,4.218042966025554,1],\"projectionMatrix\":[0.07389762287890755,0,0,0,0,0.10416893827508654,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":9.3,\"curved\":false}",
+        "growingSceneCounters": "{\"fullLayerBuild\":1,\"previewUpdate\":0,\"receiptReuse\":1}"
+      },
+      "graphics": {
+        "webgl2": true,
+        "contextLost": false,
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "attributes": {
+          "alpha": false,
+          "antialias": true,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "low-power",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "dataset": {
+          "engine": "three.js r185",
+          "pixelRatio": "1",
+          "qualityCeiling": "1.25",
+          "graphicsQuality": "standard"
+        }
+      },
+      "plan": {
+        "revision": "growth-terrain:60627775e23f0deb",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "d755b76f91f650ce9489408a1e49732e61c53ae0d13369f2df91275489108062",
+        "assemblies": [
+          {
+            "id": "diagnostic-district-1:growth-terrain:north",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37",
+              "l38",
+              "l39"
+            ],
+            "socketId": "north",
+            "shape": "seaward"
+          },
+          {
+            "id": "diagnostic-district-1:growth-terrain:south",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37",
+              "l38",
+              "l39"
+            ],
+            "socketId": "south",
+            "shape": "seaward"
+          }
+        ],
+        "connections": [
+          {
+            "id": "diagnostic-district-1:growth-connection:coastal-loop",
+            "districtId": "diagnostic-district-1",
+            "connectionId": "coastal-loop",
+            "ownerIds": [
+              "l36",
+              "l37",
+              "l38",
+              "l39"
+            ]
+          }
+        ]
+      },
+      "ownershipHash": "dec5157a8f8b9c843800938e6c88753c46d0d8c0598882b04de0be1f581b6dfd",
+      "newOwners": [
+        {
+          "id": "l36",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -5
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l37",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l38",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -3
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l39",
+          "kind": "sapling",
+          "cell": {
+            "x": 17,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        }
+      ]
+    },
+    {
+      "name": "phone",
+      "file": "phone.png",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "host": {
+        "buildRevision": "island-variation-c9",
+        "appVersion": "island-variation-c9:b946e26b-82c7-4ad3-b60c-73a5f236cecf",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "worldRevision": "authored-world:dd305dfe00eb79b4",
+        "districtWorldRevision": "districts:e6215ecb",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "groundShading": "source",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v3"
+      },
+      "renderer": {
+        "worldId": null,
+        "worldRevision": "authored-world:dd305dfe00eb79b4",
+        "nativeGrowingArt": "true",
+        "authoredWholeArtEnabled": "true",
+        "authoredGrowthTerrainCandidate": "native05-growth-terrain-rough-v3",
+        "growingCamera": "{\"matrixWorld\":[0.37954916230133895,1.6653345369377348e-16,-0.9251715697082092,0,-0.5402605646482224,0.8117844741035437,-0.22164045183679146,0,0.7510399161711285,0.5839571624737837,0.308112117115233,0,29.428435472220194,23.605395892870888,7.3738393058463965,1],\"projectionMatrix\":[0.11034616676605964,0,0,0,0,0.07497387637415201,0,0,0,0,-0.018258959319914763,0,0,0,-1.0018258959319915,1],\"center\":9.3,\"curved\":false}",
+        "growingSceneCounters": "{\"fullLayerBuild\":1,\"previewUpdate\":0,\"receiptReuse\":1}"
+      },
+      "graphics": {
+        "webgl2": true,
+        "contextLost": false,
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "attributes": {
+          "alpha": false,
+          "antialias": true,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "low-power",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "dataset": {
+          "engine": "three.js r185",
+          "pixelRatio": "1",
+          "qualityCeiling": "1.25",
+          "graphicsQuality": "standard"
+        }
+      },
+      "plan": {
+        "revision": "growth-terrain:60627775e23f0deb",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "d755b76f91f650ce9489408a1e49732e61c53ae0d13369f2df91275489108062",
+        "assemblies": [
+          {
+            "id": "diagnostic-district-1:growth-terrain:north",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37",
+              "l38",
+              "l39"
+            ],
+            "socketId": "north",
+            "shape": "seaward"
+          },
+          {
+            "id": "diagnostic-district-1:growth-terrain:south",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37",
+              "l38",
+              "l39"
+            ],
+            "socketId": "south",
+            "shape": "seaward"
+          }
+        ],
+        "connections": [
+          {
+            "id": "diagnostic-district-1:growth-connection:coastal-loop",
+            "districtId": "diagnostic-district-1",
+            "connectionId": "coastal-loop",
+            "ownerIds": [
+              "l36",
+              "l37",
+              "l38",
+              "l39"
+            ]
+          }
+        ]
+      },
+      "ownershipHash": "dec5157a8f8b9c843800938e6c88753c46d0d8c0598882b04de0be1f581b6dfd",
+      "newOwners": [
+        {
+          "id": "l36",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -5
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l37",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l38",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -3
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l39",
+          "kind": "sapling",
+          "cell": {
+            "x": 17,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        }
+      ]
+    },
+    {
+      "name": "tablet",
+      "file": "tablet.png",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "host": {
+        "buildRevision": "island-variation-c9",
+        "appVersion": "island-variation-c9:b946e26b-82c7-4ad3-b60c-73a5f236cecf",
+        "visualCandidate": "native05-growth-assembly-v1+source-shading-v1",
+        "worldRevision": "authored-world:dd305dfe00eb79b4",
+        "districtWorldRevision": "districts:e6215ecb",
+        "groundSourceRevision": "native05-source-shading-v1:080f5fa9acc68fd4b3f182249cec65b9c487d2522327ad7977d78023822362df",
+        "groundShading": "source",
+        "growthTerrainCandidate": "native05-growth-terrain-rough-v3"
+      },
+      "renderer": {
+        "worldId": null,
+        "worldRevision": "authored-world:dd305dfe00eb79b4",
+        "nativeGrowingArt": "true",
+        "authoredWholeArtEnabled": "true",
+        "authoredGrowthTerrainCandidate": "native05-growth-terrain-rough-v3",
+        "growingCamera": "{\"matrixWorld\":[0.37954916230133895,1.1102230246251565e-16,-0.9251715697082092,0,-0.5402605646482223,0.8117844741035437,-0.22164045183679149,0,0.7510399161711285,0.5839571624737837,0.308112117115233,0,33.96123396965849,27.129789326077404,9.233407767430315,1],\"projectionMatrix\":[0.11034616676605964,0,0,0,0,0.06434706211884976,0,0,0,0,-0.015668902702619735,0,0,0,-1.001566890270262,1],\"center\":9.3,\"curved\":false}",
+        "growingSceneCounters": "{\"fullLayerBuild\":1,\"previewUpdate\":0,\"receiptReuse\":1}"
+      },
+      "graphics": {
+        "webgl2": true,
+        "contextLost": false,
+        "vendor": "WebKit",
+        "renderer": "WebKit WebGL",
+        "unmaskedVendor": "Google Inc. (Apple)",
+        "unmaskedRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+        "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+        "attributes": {
+          "alpha": false,
+          "antialias": true,
+          "depth": true,
+          "desynchronized": false,
+          "failIfMajorPerformanceCaveat": false,
+          "powerPreference": "low-power",
+          "premultipliedAlpha": true,
+          "preserveDrawingBuffer": false,
+          "stencil": false,
+          "xrCompatible": false
+        },
+        "dataset": {
+          "engine": "three.js r185",
+          "pixelRatio": "1",
+          "qualityCeiling": "1.25",
+          "graphicsQuality": "standard"
+        }
+      },
+      "plan": {
+        "revision": "growth-terrain:60627775e23f0deb",
+        "upstreamRevision": "538318ba292d4fd6",
+        "catalogRevision": "d755b76f91f650ce9489408a1e49732e61c53ae0d13369f2df91275489108062",
+        "assemblies": [
+          {
+            "id": "diagnostic-district-1:growth-terrain:north",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37",
+              "l38",
+              "l39"
+            ],
+            "socketId": "north",
+            "shape": "seaward"
+          },
+          {
+            "id": "diagnostic-district-1:growth-terrain:south",
+            "districtId": "diagnostic-district-1",
+            "ownerIds": [
+              "l36",
+              "l37",
+              "l38",
+              "l39"
+            ],
+            "socketId": "south",
+            "shape": "seaward"
+          }
+        ],
+        "connections": [
+          {
+            "id": "diagnostic-district-1:growth-connection:coastal-loop",
+            "districtId": "diagnostic-district-1",
+            "connectionId": "coastal-loop",
+            "ownerIds": [
+              "l36",
+              "l37",
+              "l38",
+              "l39"
+            ]
+          }
+        ]
+      },
+      "ownershipHash": "dec5157a8f8b9c843800938e6c88753c46d0d8c0598882b04de0be1f581b6dfd",
+      "newOwners": [
+        {
+          "id": "l36",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -5
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l37",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l38",
+          "kind": "sapling",
+          "cell": {
+            "x": 18,
+            "z": -3
+          },
+          "growth": 18,
+          "maturedAt": 270
+        },
+        {
+          "id": "l39",
+          "kind": "sapling",
+          "cell": {
+            "x": 17,
+            "z": -4
+          },
+          "growth": 18,
+          "maturedAt": 270
+        }
+      ]
+    }
+  ],
+  "gates": {
+    "limitedUiJourney": "PASS",
+    "wholeRuntime": "PARTIAL",
+    "visualAppeal": "HOLD",
+    "independentComprehensionSafety": "NOT_TESTED",
+    "independentObservers": 0
+  },
+  "excludes": [
+    "personal land purchase/save",
+    "offline/update",
+    "natural time observation",
+    "actor traversal/use acceptance",
+    "whole-island art acceptance",
+    "performance/device acceptance"
+  ],
+  "focusedFirstFailure": {
+    "result": "45 PASS / 1 FAIL",
+    "cause": "Test district origin0 collided with existing HOUSE_CELLS at (2,0); unstore correctly refused",
+    "fix": "Test fixture logical/physical X offset +10; production behavior unchanged",
+    "correctedResult": "4 integration tests PASS",
+    "originalFailedTestSourcePreserved": false,
+    "reconstructedOriginalSource": false
+  }
+}

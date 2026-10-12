@@ -1,0 +1,28 @@
+{
+  "atUtc": "2026-10-12T05:33:28.658795+00:00",
+  "pass": true,
+  "filesAreThrowaway": true,
+  "records": [
+    {
+      "method": "cp-c",
+      "sourceSha256": "fbbab289f7f94b25736c58be46a994c441fd02552cc6022352e3d86d2fab7c83",
+      "destinationInitiallySameSha256": true,
+      "differentInodes": true,
+      "sourceInode": 120117167,
+      "destinationInode": 120117168,
+      "destinationModifiedSha256": "bc5542657193c4564d181a5ea104073b59c91782b22e73caf450a68422a27dc8",
+      "sourceUnchangedAfterDestinationWrite": true
+    },
+    {
+      "method": "direct-clonefile",
+      "sourceSha256": "fbbab289f7f94b25736c58be46a994c441fd02552cc6022352e3d86d2fab7c83",
+      "destinationInitiallySameSha256": true,
+      "differentInodes": true,
+      "sourceInode": 120117167,
+      "destinationInode": 120117170,
+      "destinationModifiedSha256": "bc5542657193c4564d181a5ea104073b59c91782b22e73caf450a68422a27dc8",
+      "sourceUnchangedAfterDestinationWrite": true
+    }
+  ],
+  "cpLimitation": "man cp says -c may fallback to ordinary copy. Candidate copier will call clonefile(2) directly and fail on any nonzero return; no fallback."
+}

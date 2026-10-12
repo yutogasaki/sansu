@@ -1,0 +1,20 @@
+{
+  "preparedAtUtc": "2026-10-12T04:07:15.600919+00:00",
+  "status": "READY-NOT-BLENDER-EXECUTED",
+  "files": {
+    "README.md": "751e14a04d86a6dfc98f6f6cdbe77c3ced8119f6b3d1ae22babb85922a1d8ff9",
+    "render-failed-whole.py": "51c92cbc7f4246fc562078b30bb94ed3d9f2badadeb91a86a2dc106b9c64f12f",
+    "run-once.py": "873f32e70965b197c8f5081a4ff2b7cf531d5d3d196caa8c3d01753bbfde3eba"
+  },
+  "pythonAstParsed": true,
+  "originalJointsSha256": "c99059a0af65cdd62b741911537dc26f605051d22e57207d452d7f5e12ca8db1",
+  "failedBlendSha256": "7010856b68de220ceb13781ff12f8c82b6c6aae9b9c575c748688043b98f3ccc",
+  "scope": "source only; no app/source candidate edits",
+  "limits": {
+    "threads": 2,
+    "maxProcesses": 1,
+    "timeoutSeconds": 120,
+    "observedRssBytes": 3221225472
+  },
+  "command": "SANSU_FOREST_FAILED_SHAPE_APPROVED=1 python3 /private/tmp/sansu-authored-forest-crown-study/stage2/failed-shape-view/run-once.py"
+}

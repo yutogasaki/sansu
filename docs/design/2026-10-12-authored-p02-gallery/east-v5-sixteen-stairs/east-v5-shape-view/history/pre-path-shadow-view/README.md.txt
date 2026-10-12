@@ -1,0 +1,7 @@
+# P02 sixteen-step coarse whole source view
+
+PREPARED, NOT EXECUTED. One read-only whole view of the completed v5 coarse source, still HOLD. The scene contains actual16 treads, six support candidates and handrails/posts. The original fixed35 context and all128 original left-tree meshes are restored. Source art only, no residents or app acceptance.
+
+The existing v4 locale-safe renderer is copied. Its lighting/camera/engine/resolution block is byte-identical: same c1 whole camera,1280px,Cycles CPU2/16samples. No model/material/normal/visibility edit, mesh repair, save, or geometry regeneration. Original source plus full mesh/matrix/material/visibility identity are checked before/after. New world lights/camera exist only in the unsaved read-only process.
+
+The entire width of the west ground seam/plateau retains its exact Float32/HOLD evidence, and all neutral reserved-box/motion-band contacts are retained. This is a visual decision view before any repair; no contacts or seams are hidden. Continuous real step motion remains unimplemented. The first render is separately scheduled by root,60sec/RSS2560MiB/CPU2, one fresh run, no retry or entry render.

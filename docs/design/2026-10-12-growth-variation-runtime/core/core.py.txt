@@ -1,0 +1,36 @@
+from pathlib import Path
+import hashlib,json,os,signal,subprocess,time
+
+out=Path('/private/tmp/sansu-island-variation-c9');root=out/'candidate'
+revision='island-variation-c9'
+paths=set(json.loads((out/'inputs.json').read_text()))
+deleted=json.loads((out/'snapshot.json').read_text())['deletedTrackedPaths']
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+hashes=lambda:{p:sha(root/p) for p in sorted(paths)}
+report={'revision':revision,'target':str(root),'pass':False,'command':'npm run verify:core','startedAt':time.time(),'initialInputs':hashes()}
+assert report['initialInputs']==json.loads((out/'inputs.json').read_text()),'Snapshot inputs changed before core'
+assert all(not os.path.lexists(root/p) for p in deleted),'Deleted tracked path returned before core'
+(out/'core').mkdir(exist_ok=False)
+reportfile=out/'core/report.json'
+env=os.environ.copy()
+for k in list(env):
+ if k.startswith(('VITE_','SANSU_AUTHORED_','SANSU_FLOOR_SHADING_','SANSU_GROWTH_TERRAIN_','SANSU_ISLAND_VARIATION_')):del env[k]
+env.update(SANSU_BUILD_REVISION=revision,VITE_ISLAND_ENABLED='true',VITE_NATIVE_GROWING_ART='false')
+report['environment']={k:env[k] for k in ['SANSU_BUILD_REVISION','VITE_ISLAND_ENABLED','VITE_NATIVE_GROWING_ART']}
+report['wrapperProcessId']=os.getpid();report['timeoutSeconds']=7200
+reportfile.write_text(json.dumps(report,indent=2)+'\n')
+with (out/'core/execution.log.txt').open('x') as log:
+ process=subprocess.Popen(['npm','run','verify:core'],cwd=root,env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+ report['processId']=process.pid;reportfile.write_text(json.dumps(report,indent=2)+'\n')
+ try:report['exitCode']=process.wait(timeout=7200)
+ except subprocess.TimeoutExpired:
+  report['timeout']=True;os.killpg(process.pid,signal.SIGTERM)
+  try:report['exitCode']=process.wait(timeout=15)
+  except subprocess.TimeoutExpired:
+   os.killpg(process.pid,signal.SIGKILL);report['forcedKill']=True;report['exitCode']=process.wait(timeout=15)
+report['finalInputs']=hashes();report['deletedTrackedAbsent']=all(not os.path.lexists(root/p) for p in deleted)
+report['sourceFixed']=report['initialInputs']==report['finalInputs'] and report['deletedTrackedAbsent']
+report['finishedAt']=time.time();report['pass']=report['exitCode']==0 and report['sourceFixed']
+reportfile.write_text(json.dumps(report,indent=2)+'\n')
+print(json.dumps({k:report[k] for k in ['pass','exitCode','sourceFixed','revision']}))
+raise SystemExit(0 if report['pass'] else 1)

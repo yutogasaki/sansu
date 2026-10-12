@@ -1,0 +1,162 @@
+"""Query-only binary64 interval ray parity; no surface stepping or mesh edits.
+
+Intervals outward-round every arithmetic operation. Unresolved boundary,
+parallel, duplicate or near-coincident intersections raise instead of merging.
+Closure and nearest-distance checks remain the caller's existing responsibility.
+"""
+import math
+
+class QueryHold(ValueError):
+    pass
+
+def exact(x):
+    x = float(x)
+    if not math.isfinite(x):
+        raise QueryHold('Nonfinite query input')
+    return (x, x)
+
+def outward(low, high):
+    if not math.isfinite(low) or not math.isfinite(high):
+        raise QueryHold('Nonfinite interval arithmetic')
+    return math.nextafter(low, -math.inf), math.nextafter(high, math.inf)
+
+def add(a, b):
+    return outward(a[0] + b[0], a[1] + b[1])
+
+def neg(a):
+    return -a[1], -a[0]
+
+def sub(a, b):
+    return add(a, neg(b))
+
+def mul(a, b):
+    p = (a[0]*b[0], a[0]*b[1], a[1]*b[0], a[1]*b[1])
+    return outward(min(p), max(p))
+
+def div(a, b):
+    if b[0] <= 0 <= b[1]:
+        raise QueryHold('Interval division crosses zero')
+    q = (a[0]/b[0], a[0]/b[1], a[1]/b[0], a[1]/b[1])
+    return outward(min(q), max(q))
+
+def cross(a, b):
+    return (sub(mul(a[1],b[2]),mul(a[2],b[1])),
+            sub(mul(a[2],b[0]),mul(a[0],b[2])),
+            sub(mul(a[0],b[1]),mul(a[1],b[0])))
+
+def dot(a, b):
+    return add(add(mul(a[0],b[0]),mul(a[1],b[1])),mul(a[2],b[2]))
+
+def vsub(a, b):
+    return tuple(sub(x,y) for x,y in zip(a,b))
+
+def slab_may_hit(point, direction, low, high, distance):
+    near, far = 0., distance
+    for axis in range(3):
+        if direction[axis] == 0:
+            if not low[axis] <= point[axis] <= high[axis]:
+                return False
+            continue
+        a = div(sub(exact(low[axis]),exact(point[axis])),exact(direction[axis]))
+        b = div(sub(exact(high[axis]),exact(point[axis])),exact(direction[axis]))
+        near = max(near,min(a[0],b[0]))
+        far = min(far,max(a[1],b[1]))
+        if near > far:
+            return False
+    return True
+
+def bounded_ray_aabb(point, direction, low, high):
+    """Prove every possible forward AABB hit occurs before ray parameter 100.
+
+    Use the actual supplied direction, including its float32 normalization error.
+    An outside origin is included; a box first reached beyond 100 cannot be
+    silently classified from a truncated empty ray. A proven miss is safe.
+    """
+    enter_low,enter_high=-math.inf,-math.inf
+    exit_low,exit_high=math.inf,math.inf
+    for axis in range(3):
+        if direction[axis]==0:
+            if not low[axis]<=point[axis]<=high[axis]:
+                return {'possible':False,'reason':'parallel-axis miss'}
+            continue
+        a=div(sub(exact(low[axis]),exact(point[axis])),exact(direction[axis]))
+        b=div(sub(exact(high[axis]),exact(point[axis])),exact(direction[axis]))
+        entering,leaving=(a,b) if direction[axis]>0 else (b,a)
+        enter_low,enter_high=max(enter_low,entering[0]),max(enter_high,entering[1])
+        exit_low,exit_high=min(exit_low,leaving[0]),min(exit_high,leaving[1])
+    if enter_low>exit_high or exit_high<0:
+        return {'possible':False,'reason':'forward ray misses box'}
+    if not exit_high<100.:
+        raise QueryHold('Bounded ray cannot provably exit mesh AABB before 100')
+    return {'possible':True,'entryDistanceInterval':[enter_low,enter_high],
+            'exitDistanceInterval':[exit_low,exit_high]}
+
+class RayQuery64:
+    def __init__(self, points, triangles, name='volume'):
+        self.name = name
+        self.points = tuple(tuple(float(v) for v in p) for p in points)
+        self.triangles = tuple(tuple(t) for t in triangles)
+        self.low = tuple(min(p[i] for p in self.points) for i in range(3))
+        self.high = tuple(max(p[i] for p in self.points) for i in range(3))
+        self.prepared = []
+        for ordinal, indices in enumerate(self.triangles):
+            vertices = tuple(self.points[i] for i in indices)
+            a,b,c = tuple(tuple(exact(x) for x in p) for p in vertices)
+            self.prepared.append((ordinal,a,vsub(b,a),vsub(c,a),
+                                  tuple(min(p[i] for p in vertices) for i in range(3)),
+                                  tuple(max(p[i] for p in vertices) for i in range(3))))
+
+    def ray(self, point, direction):
+        # Same extent and intersection cap as the original kernel.
+        distance, limit = 100., 128
+        point, direction = tuple(point), tuple(direction)
+        p,d = tuple(map(exact,point)),tuple(map(exact,direction))
+        if not any(direction):
+            raise QueryHold('Zero ray direction')
+        extent=bounded_ray_aabb(point,direction,self.low,self.high)
+        if not extent['possible']:
+            return {'inside':False,'count':0,'hits':[],'boundedExtent':extent}
+        hits = []
+        for ordinal,a,e1,e2,low,high in self.prepared:
+            if not slab_may_hit(point,direction,low,high,distance):
+                continue
+            h = cross(d,e2)
+            determinant = dot(e1,h)
+            s = vsub(p,a)
+            q = cross(s,e1)
+            t_numerator = dot(e2,q)
+            if determinant[0] <= 0 <= determinant[1]:
+                possible = sub(t_numerator,mul(determinant,(0.,distance)))
+                if possible[0] > 0 or possible[1] < 0:
+                    continue
+                raise QueryHold(f'Parallel/coplanar/degenerate ray ambiguity: {self.name} triangle {ordinal}')
+            u,v = dot(s,h),dot(d,q)
+            if determinant[1] < 0:
+                determinant,u,v,t_numerator = map(neg,(determinant,u,v,t_numerator))
+            w = sub(sub(determinant,u),v)
+            if any(value[1] < 0 for value in (u,v,w)):
+                continue
+            t = div(t_numerator,determinant)
+            if t[1] < 0 or t[0] > distance:
+                continue
+            if t[0] <= 0 or t[1] >= distance:
+                raise QueryHold(f'Ray endpoint ambiguity: {self.name} triangle {ordinal}')
+            if any(value[0] <= 0 for value in (u,v,w)):
+                raise QueryHold(f'Edge/vertex intersection ambiguity: {self.name} triangle {ordinal}')
+            hits.append({'triangle':ordinal,'distanceInterval':list(t)})
+        hits.sort(key=lambda hit:hit['distanceInterval'][0])
+        for previous,current in zip(hits,hits[1:]):
+            if current['distanceInterval'][0] <= previous['distanceInterval'][1]:
+                raise QueryHold(f'Duplicate/near-coincident intersection ambiguity: {self.name}')
+        if len(hits) >= limit:
+            raise QueryHold(f'Ray parity exceeded bounded intersections: {self.name}')
+        return {'inside':len(hits)%2 == 1,'count':len(hits),'hits':hits,'boundedExtent':extent}
+
+    def classify(self, point, directions):
+        # Retain the old strict bounding-box precheck, including its face behavior.
+        if any(point[i] <= self.low[i] or point[i] >= self.high[i] for i in range(3)):
+            return {'inside':False,'boundingBoxRejected':True,'rays':[]}
+        rays = [self.ray(point,direction) for direction in directions]
+        if rays[0]['inside'] != rays[1]['inside']:
+            raise QueryHold(f'Ambiguous actual-volume ray parity: {self.name}')
+        return {'inside':rays[0]['inside'],'boundingBoxRejected':False,'rays':rays}

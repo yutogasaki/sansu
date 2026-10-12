@@ -1,0 +1,19 @@
+{
+  "status": "AST-PASS-NOT-EXECUTED",
+  "files": {
+    "run-once.py": "5ff2e8cdae42fbabb9cb198f55d34970e0b6ae980a2935f303039070b58c18f8",
+    "compare.py": "5656e4989068601ddb50dff6b772dffe98cb22a28628792d70807aaee4ca9981"
+  },
+  "exactZeroFaceIndices": [
+    0,
+    2,
+    98,
+    100
+  ],
+  "areaThreshold": 0,
+  "nearZeroDeletion": false,
+  "sourceNormalAssignment": "literal original accessor values, not recomputation",
+  "originalGuard": 0.002,
+  "externalInputsVerified": 44,
+  "fixedRolesChanged": false
+}

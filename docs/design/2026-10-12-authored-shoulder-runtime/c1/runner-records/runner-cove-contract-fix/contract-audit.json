@@ -1,0 +1,285 @@
+{
+  "scope": "Runner contract review only; six historical raw report shapes replayed, two new shapes statically matched to fixed driver source. No new browser/runtime evidence.",
+  "historicalReplays": [
+    {
+      "stage": "03-baseline27-editing",
+      "historicalRawReport": "/private/tmp/sansu-authored-cove-c4/regressions/01-baseline27-editing/actual/report.json",
+      "historicalRawSha256": "1b4e4e657da945036ea69285c49aa0255726beba11c86893413fe60fed6298bb",
+      "adapters": [
+        "In-memory capture.file made absolute to locate the unchanged old raw screenshots"
+      ],
+      "inspection": {
+        "pass": true,
+        "failurePhase": null,
+        "error": null,
+        "scenarioCount": 0,
+        "stepCount": 6,
+        "failedSteps": [],
+        "runtimeErrors": [],
+        "failedScenarios": [],
+        "stepsPassed": 6,
+        "captureCount": 7,
+        "target": "http://127.0.0.1:5357/prototypes/place-qa/authored.html",
+        "lastCompletedScenario": null,
+        "lastCapture": {
+          "file": "/private/tmp/sansu-authored-cove-c4/regressions/01-baseline27-editing/actual/tablet-dusk-whole.png",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "url": "http://127.0.0.1:5357/prototypes/place-qa/authored.html",
+          "build": "authored-cove-c4"
+        },
+        "runtimeBuilds": [
+          "authored-cove-c4"
+        ],
+        "runtimeBuildMatches": true,
+        "rawInputSubset": {
+          "scope": "Raw tool initial/final source hashes must equal a subset of core initial/final inputs",
+          "count": 1581,
+          "beforeAfterEqual": true,
+          "missingFromCore": [],
+          "differences": [],
+          "pass": true
+        },
+        "captureFilesExist": true
+      }
+    },
+    {
+      "stage": "04-wide27-water",
+      "historicalRawReport": "/private/tmp/sansu-authored-cove-c4/regressions/02-wide27-water/actual/report.json",
+      "historicalRawSha256": "683af6460ba7695e0bedcaec1289018f4790dcebc051f6c67d735cf80011ebc8",
+      "adapters": [
+        "In-memory capture.file made absolute to locate the unchanged old raw screenshots"
+      ],
+      "inspection": {
+        "pass": true,
+        "failurePhase": null,
+        "error": null,
+        "scenarioCount": 0,
+        "stepCount": 6,
+        "failedSteps": [],
+        "runtimeErrors": [],
+        "failedScenarios": [],
+        "stepsPassed": 6,
+        "captureCount": 14,
+        "target": null,
+        "lastCompletedScenario": null,
+        "lastCapture": {
+          "file": "/private/tmp/sansu-authored-cove-c4/regressions/02-wide27-water/actual/tablet-whole.png",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "url": "http://127.0.0.1:5357/prototypes/place-qa/authored.html?water=wide",
+          "build": "authored-cove-c4"
+        },
+        "runtimeBuilds": [
+          "authored-cove-c4"
+        ],
+        "runtimeBuildMatches": true,
+        "rawInputSubset": {
+          "scope": "Raw tool initial/final source hashes must equal a subset of core initial/final inputs",
+          "count": 1585,
+          "beforeAfterEqual": true,
+          "missingFromCore": [],
+          "differences": [],
+          "pass": true
+        },
+        "captureFilesExist": true
+      }
+    },
+    {
+      "stage": "05-authored-flower-full-cove-off",
+      "historicalRawReport": "/private/tmp/sansu-authored-cove-c4/flower-full-retry-2400/actual/report.json",
+      "historicalRawSha256": "2e6a87610377e9a27f966efc1130e02aca779fd30af1aa9cf0829e363294e954",
+      "adapters": [
+        "In-memory capture.file made absolute to locate the unchanged old raw screenshots"
+      ],
+      "inspection": {
+        "pass": true,
+        "failurePhase": null,
+        "error": null,
+        "scenarioCount": 0,
+        "stepCount": 0,
+        "failedSteps": [],
+        "runtimeErrors": [],
+        "failedScenarios": [],
+        "stepsPassed": 0,
+        "captureCount": 12,
+        "target": "http://127.0.0.1:5357/prototypes/place-qa/authored.html?water=wide&reference=preflight32&cove=false",
+        "lastCompletedScenario": null,
+        "lastCapture": {
+          "file": "/private/tmp/sansu-authored-cove-c4/flower-full-retry-2400/actual/desktop-young-flower-close-day.png",
+          "viewport": {
+            "width": 1280,
+            "height": 900
+          },
+          "url": "http://127.0.0.1:5357/prototypes/place-qa/authored.html?water=wide&reference=preflight32-young&cove=false",
+          "build": "authored-cove-c4"
+        },
+        "runtimeBuilds": [
+          "authored-cove-c4"
+        ],
+        "runtimeBuildMatches": true,
+        "rawInputSubset": {
+          "scope": "Raw tool initial/final source hashes must equal a subset of core initial/final inputs",
+          "count": 1899,
+          "beforeAfterEqual": true,
+          "missingFromCore": [],
+          "differences": [],
+          "pass": true
+        },
+        "fullFlowerScope": true,
+        "coveDisabledThroughout": true,
+        "matureAndYoung": true,
+        "fullScopeChecks": {
+          "twelveCaptures": true,
+          "fourCanvasSelections": true,
+          "fourFullEdits": true
+        },
+        "captureFilesExist": true
+      }
+    },
+    {
+      "stage": "06-authored-cove-full",
+      "historicalRawReport": "/private/tmp/sansu-authored-cove-c4/full/report.json",
+      "historicalRawSha256": "59d72929c409b455921afbe854f854588c5861ce6f6ec418c144eea53d557530",
+      "adapters": [
+        "In-memory capture.file made absolute to locate the unchanged old raw screenshots",
+        "Added current no-shoulder DOM attribute absent in c4; current source definition checked separately"
+      ],
+      "inspection": {
+        "pass": true,
+        "failurePhase": null,
+        "error": null,
+        "scenarioCount": 0,
+        "stepCount": 3,
+        "failedSteps": [],
+        "runtimeErrors": [],
+        "failedScenarios": [],
+        "stepsPassed": 3,
+        "captureCount": 10,
+        "target": "http://127.0.0.1:5357/prototypes/place-qa/authored.html?water=wide&reference=preflight32&cove=corner",
+        "lastCompletedScenario": null,
+        "lastCapture": {
+          "file": "/private/tmp/sansu-authored-cove-c4/full/tablet-cove-close-day.png",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "url": "http://127.0.0.1:5357/prototypes/place-qa/authored.html?water=wide&reference=preflight32&cove=corner",
+          "build": "authored-cove-c4"
+        },
+        "rawInputSubset": {
+          "scope": "Raw tool initial/final source hashes must equal a subset of core initial/final inputs",
+          "count": 2012,
+          "beforeAfterEqual": true,
+          "missingFromCore": [],
+          "differences": [],
+          "pass": true
+        },
+        "fullScopeChecks": {
+          "expectedBuild": true,
+          "fullScope": true,
+          "sourceClosureUnchanged": true,
+          "tenCaptures": true,
+          "fourEdits": true,
+          "oneCanvasSelection": true,
+          "sameRuntimeBuild": true,
+          "noShoulder": true
+        },
+        "captureFilesExist": true
+      }
+    },
+    {
+      "stage": "07-ordinary-growing-balance",
+      "historicalRawReport": "/private/tmp/sansu-authored-cove-c4/regressions/03-ordinary-growing-balance/actual/report.json",
+      "historicalRawSha256": "4739bd5e2e8f1badf103f281636b0fd0cd27b30dcad747f80cb0c1fc88112e95",
+      "adapters": [
+        "In-memory capture.file made absolute to locate the unchanged old raw screenshots"
+      ],
+      "inspection": {
+        "pass": true,
+        "failurePhase": null,
+        "error": null,
+        "scenarioCount": 8,
+        "stepCount": 0,
+        "failedSteps": [],
+        "runtimeErrors": [],
+        "failedScenarios": [],
+        "stepsPassed": 0,
+        "captureCount": 22,
+        "target": "http://127.0.0.1:5357",
+        "lastCompletedScenario": "explicit-thirteen-residents-select-indoor-home-preserve-save-resume-learning",
+        "lastCapture": {
+          "file": "/private/tmp/sansu-authored-cove-c4/regressions/03-ordinary-growing-balance/actual/768-indoor-friend-focus.png",
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "url": "http://127.0.0.1:5357/#/island",
+          "build": null
+        },
+        "runtimeBuilds": [
+          "authored-cove-c4"
+        ],
+        "runtimeBuildMatches": true,
+        "rawInputSubset": {
+          "scope": "Raw tool initial/final source hashes must equal a subset of core initial/final inputs",
+          "count": 1580,
+          "beforeAfterEqual": true,
+          "missingFromCore": [],
+          "differences": [],
+          "pass": true
+        },
+        "captureFilesExist": true
+      }
+    },
+    {
+      "stage": "08-classic-smoke",
+      "historicalRawReport": "/private/tmp/sansu-authored-cove-c4/regressions/04-classic-smoke/diagnostics/smoke-report.json",
+      "historicalRawSha256": "d1f38e85676d3151abf73b741a2fdf8bfa9ea7661334ac5ba87f2e5222a7c662",
+      "adapters": [],
+      "inspection": {
+        "pass": true,
+        "failurePhase": null,
+        "error": null,
+        "scenarioCount": 32,
+        "stepCount": 0,
+        "failedSteps": [],
+        "runtimeErrors": [],
+        "failedScenarios": [],
+        "stepsPassed": 0,
+        "captureCount": 0,
+        "target": "http://127.0.0.1:4173",
+        "lastCompletedScenario": "opens /parents directly without arithmetic",
+        "lastCapture": null,
+        "rawInputSubset": {
+          "scope": "Classic raw report exposes only its harness hash; outer runner covers the complete core closure",
+          "count": 1,
+          "beforeAfterEqual": null,
+          "pass": true
+        }
+      }
+    }
+  ],
+  "newDriverContracts": {
+    "01-floor-shading-ab": "10 captures / 5 pairs; expectedBuild; observed.app.buildRevision; observed.world.authoredShoulderEnabled; pair booleans; initialInputs/finalInputs",
+    "02-shoulder-full": "20 captures: acquisition 6, fixed35 14; both scopes pass; acquisition paidDrops60/rights75; sourceClosureUnchanged; installedDependenciesUnchanged and separate before/after dependency maps"
+  },
+  "fixedDriverSha256": {
+    "tools/e2e-authored-floor-shading.mjs": "ba5a3a685aa9b915e3026dd658e5d60d05604257de3760b742ce6e1abfb93bac",
+    "tools/e2e-authored-shoulder.mjs": "c31ad10110bc641e3edffb12de36075ee2eb23885241c807203e8f4bf764f29d",
+    "tools/e2e-authored-island-editing.mjs": "86e212eb6a92a47ca9269f7b3aa1af3e9560452b101234e8093a6d2d4b9481c6",
+    "tools/e2e-authored-water.mjs": "6eb46f7f80170f092a4b2f1e705da62140543e5632f8029156cadb5afa46d7ce",
+    "tools/e2e-authored-flower.mjs": "acffc6dce33d5366d88cd0e8ea5c77699c48260919562b7b55262d33b3cdb912",
+    "tools/e2e-authored-cove.mjs": "f6c7f13232a405612faa7606dcfe3f87b4c34193afe1bb6362eeb985d33cf0e5",
+    "tools/e2e-growing-balance.mjs": "bb7ae801189dfc39656102b16df8287e30cce4cd262cd510fe30c78a3d05ac6f",
+    "tools/e2e-smoke.mjs": "40c85b53373959b0331f2a671e8e395e76e66db4ab71080dd5ac97b19f4c8396"
+  },
+  "allFixedDriversMatchCore": true,
+  "candidateAppOrDriverModified": false,
+  "pass": true,
+  "runnerSha256": "deffbce627f91546e83a4fbbbf24745162613a15efa76478e84ead275f40b333"
+}

@@ -1,0 +1,36 @@
+"""Static/arithmetic preparation check only. Never imports bpy or app/world code."""
+import ast,hashlib,json,math
+from pathlib import Path
+P=Path(__file__).resolve().parent;BASE=P.parent
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+S=json.loads((P/'study.json').read_text());O=json.loads((BASE/'study.json').read_text());M=json.loads((BASE/'prepared-survey03/manifest.json').read_text())
+checks={}
+for file in ['source-study.py','entry_geometry.py','donor_reference.py','supervise.py','check-preparation.py']:ast.parse((P/file).read_text())
+checks['pythonSyntax']=True
+checks['originalRun03FilesUnchanged']=all(sha(BASE/k)==v['sha256'] for k,v in M['files'].items())
+checks['allEightSourceInputsUnchanged']=all(sha(v['path'])==v['sha256'] for v in S['inputs'].values())
+checks['sourceMatricesOwnersEnvelopeUnchanged']=all(S[k]==O[k] for k in ['inputs','transform','envelope','scope','camera']) and S['place']['ownerIds']==O['place']['ownerIds'] and S['place']['revision']==O['place']['revision']
+checks['helpersByteIdentical']=all(sha(P/f)==sha(BASE/f) for f in ['entry_geometry.py','donor_reference.py','supervise.py'])
+a=(P/'source-study.py').read_text();b=(BASE/'source-study.py').read_text()
+start="    donor_names=(D['sourceFloorName']";end='    interior,old_gallery,bark_donor,original_trunk_probe=donors'
+checks['donorTransformBlockByteIdentical']=a[a.index(start):a.index(end)]==b[b.index(start):b.index(end)]
+checks['measureOnlyNoBuildRender']= "choices=['measure']" in a and 'bpy.ops.export_scene' not in a and 'bpy.ops.render' not in a and 'modifier_apply' not in a
+checks['restoredLeftMeshesIncludedWithoutNewExclusions']=next(x for x in a.splitlines() if 'obstacles=[' in x)==next(x for x in b.splitlines() if 'obstacles=[' in x).replace('o for o in context if','o for o in [*context,*left] if')
+checks['widthEpsilonAndBoxUnchanged']=all(S['design'][k]==O['design'][k] for k in ['clearWidth','structuralWidth','headReserve','probeStep','thickness','rampRadius']) and a[a.index('def box_tree'):a.index('def resample')]==b[b.index('def box_tree'):b.index('def resample')]
+# Arithmetic only: synthetic heights are explicitly NOT measurements of the east source.
+D=S['design'];cx,_,cz=S['transform']['authoredOrigin'];R=D['rampRadius']
+arc=[(cx+R*math.cos(math.radians(-68+143*i/58)),1.68+1.32*(3*(i/58)**2-2*(i/58)**3),cz-R*math.sin(math.radians(-68+143*i/58))) for i in range(59)]
+gallery=[(cx+D['shortGalleryCenterRadius']*math.cos(math.radians(75+2*i)),3+.002*i,cz-D['shortGalleryCenterRadius']*math.sin(math.radians(75+2*i))) for i in range(11)]
+front=(3.455,1.68,-7.92475);junction=(3.455,1.68,D['frontJunctionZ']);arrival=(3.455,1.68,D['interiorArrivalZ']);entry=(3.75,1.633,-7.25)
+branch=[front,junction,*arc,gallery[0],*gallery[1:]];spur=[entry,front,arrival]
+for points in [branch,spur]:
+ for i,p in enumerate(points):
+  before=points[max(0,i-1)];after=points[min(len(points)-1,i+1)];assert math.hypot(after[0]-before[0],after[2]-before[2])>1e-10
+checks['syntheticRibbonNoZeroTangent']=True
+p3roofMaxX=2.627715015411377
+minX=min(p[0] for p in [*arc,*gallery,front,junction,arrival])-D['clearWidth']/2
+checks['p3OnlyEasternHorizontalBound']=minX>p3roofMaxX
+checks['arrivalInFrontOfDoorPlane']=arrival[2]-D['clearWidth']/2> -8.518000411987305
+assert all(checks.values()),checks
+report={'status':'STATIC_ARITHMETIC_ONLY_PASS','sourceSurveyExecuted':False,'checks':checks,'candidate':S['candidate'],'p3OnlyHorizontalMargin':minX-p3roofMaxX,'arrivalDoorPlaneOnlyMargin':arrival[2]-D['clearWidth']/2+8.518000411987305,'pending':['source gallery top at east angles','all actual obstacle/full-width/ground/joint/support checks','new visible terrain connector design'],'files':{f:sha(P/f) for f in ['source-study.py','study.json','entry_geometry.py','donor_reference.py','supervise.py','check-preparation.py']}}
+print(json.dumps(report,indent=2))

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>島の育ち方 — レビュー</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f3f5f8;color:#202731;font:16px/1.75 system-ui,sans-serif}main{max-width:1500px;margin:auto;padding:36px 24px 60px}h1{font-size:30px;line-height:1.35;margin:6px 0 14px}h2{font-size:23px;margin:36px 0 12px}p{max-width:950px}.tag{font-size:13px;font-weight:700;letter-spacing:.05em;color:#475e83}.notice{padding:16px 20px;background:white;border-left:4px solid #6f86b3;border-radius:5px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.pair{grid-template-columns:repeat(2,minmax(0,1fr))}figure{margin:0;background:white;border:1px solid #dce1e9;border-radius:10px;overflow:hidden}figure a{display:block}img{width:100%;height:auto;display:block;background:#e9edf4}figcaption{padding:14px 17px}figcaption b{display:block;font-size:18px}small{display:block;color:#596473;font-size:13px}.status{display:flex;gap:12px;flex-wrap:wrap}.status span{background:#fff;border:1px solid #dce1e9;border-radius:6px;padding:8px 12px}a{color:#315d9d}li{margin:7px 0}@media(max-width:900px){.grid,.pair{grid-template-columns:1fr}main{padding:25px 16px}h1{font-size:25px}}
+</style><main>
+<div class="tag">2026-10-12 · レビュー前の区切り · 未完成</div>
+<h1>育て方で、どのくらい島が変わるべきか</h1>
+<p class="notice">今回のラフは、元の海岸から直接育つ3つの形です。下の3枚は原本3Dの試作レンダリングで、本体の実画面ではありません。実画面テストはレビュー後の作業として残しています。</p>
+<h2>今回のラフ：同じ4本から育つ岸</h2>
+<div class="grid">
+<figure><a href="../2026-10-12-core-growth-terrain-source/source-north-whole.png"><img src="../2026-10-12-core-growth-terrain-source/source-north-whole.png" alt="元島の北東から高い肩が伸びる原本3Dの試作"></a><figcaption><b>北東：高い肩</b>木を北東へまとめる。<small>原本3Dの試作・本体未確認</small></figcaption></figure>
+<figure><a href="../2026-10-12-core-growth-terrain-source/source-east-whole.png"><img src="../2026-10-12-core-growth-terrain-source/source-east-whole.png" alt="元島の東から低い岬が伸びる原本3Dの試作"></a><figcaption><b>東：低い岬</b>同じ木を東へまとめる。<small>原本3Dの試作・本体未確認</small></figcaption></figure>
+<figure><a href="../2026-10-12-core-growth-terrain-source/source-loop-whole.png"><img src="../2026-10-12-core-growth-terrain-source/source-loop-whole.png" alt="北東と東が外側の岸でつながる原本3Dの試作"></a><figcaption><b>接続：入り江を囲む岸</b>木を間へ連ね、2つの岸を結ぶ。<small>原本3Dの試作・本体未確認</small></figcaption></figure>
+</div>
+<p>中央丘や島の西側はまだ固定です。完成像の原本シーンへ地形を足した比較で、今回移動させる4本の木を示す画面ではありません。北東は三角の斜面、東は平たい岬、接続は部品を足した形に見えるため、美術はまだ調整が必要です。</p>
+<h2>目標と、実画面で確認済みの前段階</h2>
+<div class="grid pair">
+<figure><a href="../2026-10-10-island-final-3d/whole-island-render.png"><img src="../2026-10-10-island-final-3d/whole-island-render.png" alt="採用native05の完成像"></a><figcaption><b>採用した完成像</b>明るく丸い地形と、植物・家・水のまとまり。<small>美術の目標。動作完成の証拠ではない</small></figcaption></figure>
+<figure><a href="../2026-10-12-growth-variation-runtime/runtime/loop.png"><img src="../2026-10-12-growth-variation-runtime/runtime/loop.png" alt="c9で実UIから枝を接続した島の実画面"></a><figcaption><b>前段 c9 の実画面</b>移動・分離・再接続を確認済み。ただし形の変化は橋の先の小島にとどまる。<small>固定版 island-variation-c9・本体共有DEV renderer</small></figcaption></figure>
+</div>
+<h2>ここでレビューしたいこと</h2>
+<ol><li>この変化の大きさで「自分の育て方で違う島になる」と感じるか。</li><li>まず東岸を完成させるか、島全体の地形や家のまとまりまで変えたいか。</li><li>このラフで遊び方を先に確かめるか、美術の方向を先に直すか。</li></ol>
+<div class="status"><span>美術：HOLD</span><span>実行整合：PARTIAL</span><span>独立理解・安全：未検証</span></div>
+<p>型チェック・組立て規則15件は通過。本体統合の新テスト1件は、既存床の三角形参照番号の比較で失敗し、原因確認を残しています。今回の本体検証は完了していません。</p>
+<p><a href="README.md">実装範囲・未確認事項</a> · <a href="../2026-10-12-growth-variation-runtime/runtime-contact-sheet.html">前段c9の実画面9枚</a></p>
+</main></html>

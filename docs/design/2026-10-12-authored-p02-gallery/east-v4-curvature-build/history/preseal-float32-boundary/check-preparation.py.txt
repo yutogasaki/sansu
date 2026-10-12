@@ -1,0 +1,37 @@
+"""Light pure/static preparation; never launches Blender or compiles world."""
+from pathlib import Path
+import ast,json,hashlib,math,sys
+import numpy as np
+P=Path(__file__).resolve().parent;V=P.parent/'east-v3-manifold';C=P.parent/'east-v4-curvature';sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest();S=json.loads((P/'study.json').read_text());old=json.loads((V/'study.json').read_text());code=(P/'build-coarse.py').read_text();prior=(V/'build-coarse.py').read_text();checks={}
+for f in P.glob('*.py'):ast.parse(f.read_text())
+checks['allPythonAST']=True
+checks['originalV3BuilderImmutable']=sha(V/'build-coarse.py')=='d91bfc3c7edd238b65c9e5dc6d8e4c5f1a6008bebf08bc998b9745b4909fc7e0'
+checks['originalV4PreparationImmutable']=sha(C/'preparation.json')=='5c1ae10e7017749cbd3b315fe71ef52722ba2eb537269384a90ac06e3f2f3c44'
+checks['allOriginalInputs']=all(sha(v['path'])==v['sha256'] for v in S['inputs'].values())
+checks['allBasisInputs']=all(sha(v['path'])==v['sha256'] for v in S['basis'].values())
+checks['allCopiedSealedInputs']=all(sha(P/v['path'])==v['sha256']==sha(v['originalPath']) for v in S['v4Inputs'].values())
+checks['actorWidthHeadHeightDoorOwnerTransformUnchanged']=all(S[k]==old[k] for k in ['inputs','place','transform','envelope','design','camera','scope'])
+checks['donorTransformBlockUnchanged']=prior[prior.index('    inputs_before='):prior.index('    steps=')]==code[code.index('    inputs_before='):code.index('    # The prepared corrected surface')]
+checks['helpersAndSupervisorUnchanged']=all(sha(P/f)==sha(V/f) for f in ['entry_geometry.py','terrain_connector.py','donor_reference.py','supervise.py'])
+checks['noRendererOrRetry']='bpy.ops.render' not in code and 'EXACT' not in code
+checks['sameFiveOperandOrder']='body=solids[2]' in code and 'enumerate([o for o in solids if o is not body])' in code
+checks['allUnionHardGuards']='require_closed(pre);require_closed(other)' in code and "require_closed(step['after'])" in code and "mod.solver='MANIFOLD'" in code
+checks['noUnionRepair']=all(word not in code[code.index('    topology='):code.index('    import bmesh\n    check=')] for word in ['remove_doubles','delete','dissolve','bmesh.ops'])
+checks['sameSealedFloorAndRoute']='branch_points=[Vector(row[\'center\'])' in code and "'continuous-front-east-ramp',ramp" in code and 'radial=' not in code
+checks['actualRootAndAllObstacleBands']='root_cap_contacts([list(v) for v in root_vertices],terrain,built_terrain' in code and 'motion_band_contacts([list(point) for point in route],provenance,S[\'envelope\'])' in code
+from build_checks import assert_sealed_plan,surface_lineage,motion_band_contacts,root_cap_contacts
+from entry_geometry import Terrain
+plan=json.loads((P/'sealed-input/planned-floor-v4-stations-once.json').read_text());numeric=json.loads((P/'sealed-input/offline-result.json').read_text());root=json.loads((P/'sealed-input/support-edge-proposal.json').read_text());contact=json.loads((P/'sealed-input/support-contact-result.json').read_text());g=json.loads((P/'sealed-input/gallery-local-top-probes.json').read_text());cx,_,cz=S['transform']['authoredOrigin'];gallery=[[cx+.914*math.cos(math.radians(x['degrees'])),x['hit'][1],cz-.914*math.sin(math.radians(x['degrees']))] for x in g]
+plan_result=assert_sealed_plan(plan,numeric,root,contact,plan['primaryEndpoints']['joint'],gallery,S['design'],1e-7);checks['sealedPlanGuards']=True
+# Meaningful arithmetic regression: an upward-facing bottom must fail even
+# when closed topology elsewhere happens to be positive.
+top=[[[0.,1.,0.],[0.,1.,1.],[1.,1.,0.]]];bottom=[[[0.,.93,0.],[1.,.93,0.],[0.,.93,1.]]]
+valid=surface_lineage(top[0],[[0,1,2]],top,bottom,1e-7);bad=surface_lineage([bottom[0][i] for i in [0,2,1]],[[0,1,2]],top,bottom,1e-7)
+checks['upwardBottomRejected']=not valid['upwardNotOnInputTop'] and len(bad['upwardNotOnInputTop'])==1
+# New structure uses the same actual intervals. One actual body-interior
+# triangle must be included; a distant identical triangle must stay clear.
+env=S['envelope'];t=[[0.,.1,0.],[.02,.1,0.],[0.,.12,.02]];hit=motion_band_contacts([[0.,0.,0.],[4.,0.,0.]],[{'object':'new-root-fixture','triangle':t}],env)
+checks['newGeometryMotionBandIncluded']=len(hit)==1 and hit[0]['sample']==0 and hit[0]['contacts'][0]['object']=='new-root-fixture'
+checks['heightAndSpanGuardsUnchanged']="assert delta<=EPS" in code and "D['maximumBoughSpan']" in code and "abs(x['delta'])>EPS" in code
+assert all(checks.values()),checks
+print(json.dumps({'status':'STATIC_ONLY_PASS_NOT_BUILD','checks':checks,'sealedPlanCheck':plan_result,'pending':['No Blender execution','MANIFOLD actual operands/steps, role lineage, Float32 native hit equality','Actual constructed roots/boughs/rails and full route body contacts','Coarse whole/rotated/entry source images','Runtime owner-use integration and continuous motion support'],'resourceLimits':{'cpuThreads':2,'seconds':180,'rssMiB':2560}},indent=2))

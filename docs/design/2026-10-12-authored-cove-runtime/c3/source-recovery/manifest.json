@@ -1,0 +1,80 @@
+{
+  "schema": "sansu-source-base-delta-recovery-v1",
+  "status": "PASS",
+  "scope": "Source restoration proof only. No c3 core, browser, regression, visual, or product acceptance is claimed.",
+  "revision": "authored-cove-c3",
+  "startedAtUnixSeconds": 1791760306.651366,
+  "base": {
+    "revision": "authored-cove-c2",
+    "proof": "../../c2/core-archive-proof.json",
+    "proofSha256": "be5453bb7ed543683975d4c4e73cb8df4a523fc3ada34bd62951587f58ba4d37",
+    "inputManifest": "../../c2/closure/inputs.json",
+    "inputManifestSha256": "f76cf17ed6f376ca88e33cc54780ffc9059f90c170fcbcb1fc7226f9d9cc4534",
+    "inputCount": 2137,
+    "parts": [
+      {
+        "path": "../../c2/input-sources.tar.gz.part01",
+        "bytes": 50331648,
+        "sha256": "3e02790100b86a6a9a59fd96c6a72a9705c15c9c19dee90768fce33a692723d4"
+      },
+      {
+        "path": "../../c2/input-sources.tar.gz.part02",
+        "bytes": 50331648,
+        "sha256": "1970b4ae2b644fd666aaae6cfdc6d57926edbec388b8b92149c145a6eae37aee"
+      },
+      {
+        "path": "../../c2/input-sources.tar.gz.part03",
+        "bytes": 5389360,
+        "sha256": "72fa3ba0a58d52f26811805cd0cb5095938a29c3796b07b676c5a78c3a51c092"
+      }
+    ],
+    "concatenatedBytes": 106052656,
+    "concatenatedSha256": "7458c6f2f1802a763dda45e5c235597e758bd9a9a138b5f9d2cbb4ab3bee5729",
+    "actualExtractedInputsVerified": 2137,
+    "baseFilesUnchanged": true
+  },
+  "target": {
+    "revision": "authored-cove-c3",
+    "candidate": "/private/tmp/sansu-authored-cove-c3/candidate",
+    "inputManifest": "inputs.json",
+    "inputManifestSha256": "b9bd886acbf9906698507532ac927fbd9ff95da5c94e1383253694e2d7b463b1",
+    "inputCount": 2137,
+    "snapshotSha256": "f3fe7b909e8c7aa71023889161eec3e448c6d2aecba58436fbe37ca144cdc910",
+    "snapshotChangedDuringCopy": [],
+    "candidateBeforeAndAfterMatchesTargetInputs": true
+  },
+  "delta": {
+    "path": "delta.tar.gz",
+    "bytes": 13408,
+    "sha256": "b999ba7820860a4a7405d414917b5cf1dc8d32e884fc4511f72c3ab7b332ef7f",
+    "members": [
+      "src/components/island/growing/authoredCoveLife.test.ts",
+      "tools/e2e-authored-cove.mjs"
+    ],
+    "changed": [
+      {
+        "path": "src/components/island/growing/authoredCoveLife.test.ts",
+        "baseSha256": "1045c73742f03487cd7aa0fe437eb2eb135611928c584dea52647a41ba05875f",
+        "targetSha256": "27cd7b4575e74d66b1386184c83a579b86708bdeb64ce027632b9a17211adab4"
+      },
+      {
+        "path": "tools/e2e-authored-cove.mjs",
+        "baseSha256": "591c87ebbd9fdd896ea087170ccb2633710cf9d7689efd1c0c07177555ea704a",
+        "targetSha256": "7509a8d7a0dbd8d3b2457f893322806ec50695846e63b3cbf78853134d596b55"
+      }
+    ],
+    "added": [],
+    "deletionsPath": "deletions.json",
+    "deletionsSha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "deleted": []
+  },
+  "reconstruction": {
+    "method": "Verify/concatenate three original c2 parts; extract each regular member to a fresh actual filesystem tree and verify all c2 inputs; apply explicit deletions then extract only delta members; hash every restored file and compare exact file set and SHA map against c3 inputs.",
+    "temporaryTree": "/private/tmp/sansu-authored-cove-c3-source-recovery/reconstructed",
+    "actualRestoredInputCount": 2137,
+    "exactFileSet": true,
+    "sha256Mismatches": [],
+    "inputMapSha256": "7f30d8b3143a95fab3ae29bdc17269022350ca512d8a1ba29fddaf915a8f6dca"
+  },
+  "finishedAtUnixSeconds": 1791760310.188767
+}

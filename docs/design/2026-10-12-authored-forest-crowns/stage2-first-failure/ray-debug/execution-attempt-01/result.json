@@ -1,0 +1,23 @@
+{
+  "startedAtUtc": "2026-10-12T03:57:54.047933+00:00",
+  "finishedAtUtc": "2026-10-12T03:57:56.072528+00:00",
+  "elapsedSeconds": 2.0246454170000003,
+  "command": [
+    "/Applications/Blender.app/Contents/MacOS/Blender",
+    "-b",
+    "--threads",
+    "2",
+    "--python-exit-code",
+    "1",
+    "--python",
+    "/private/tmp/sansu-authored-forest-crown-study/stage2/ray-debug/debug-first-ray.py"
+  ],
+  "ownedPid": 20577,
+  "exitCode": 0,
+  "stopReason": null,
+  "peakObservedRssBytes": 374095872,
+  "effectiveThreads": 2,
+  "rssGuardBytes": 3221225472,
+  "timeoutSeconds": 90,
+  "attempts": 1
+}

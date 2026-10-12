@@ -1,0 +1,15 @@
+authored-edit: compile-projection
+authored-edit: viewport-reload
+authored-edit: initial-identity
+authored-edit: tree-choice
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: Target page, context or browser has been closed
+    at ready (/Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:32:16)
+    at async full (/Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:97:101)
+    at async run (/Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:188:66)
+    at async file:///Users/yutogasaki/Projects/sansu/tools/e2e-authored-island-editing.mjs:206:36
+
+Node.js v24.18.0

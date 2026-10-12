@@ -1,0 +1,2930 @@
+{
+  "sourceSha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d",
+  "extractionSha256": "10d650992410d4a064ef16ca7f59331d41a44d3d8f5fdc3241cfbc1dd88c3aae",
+  "queryImplementation": {
+    "builderSha256": "7198fac3b3ed9cb082a9814b66be55c05c71380a76f4ce4e9775380d4d6efbe0",
+    "jointsSha256": "c99059a0af65cdd62b741911537dc26f605051d22e57207d452d7f5e12ca8db1"
+  },
+  "scope": "Unmodified imported input, no connector generation; not an independent raw-GLB mesh audit",
+  "ownerBinding": {
+    "record": {
+      "id": "l14",
+      "kind": "sapling",
+      "cell": {
+        "x": 2,
+        "z": -4
+      },
+      "growth": 18,
+      "maturedAt": 0
+    },
+    "sourcePivot": [
+      -8,
+      1.24,
+      -2.7
+    ],
+    "sourceScale": 0.45,
+    "ageScale": 1.3,
+    "authoredTreeMatrixWorld": [
+      0.5850000000000001,
+      0,
+      0,
+      0,
+      0,
+      0.5850000000000001,
+      0,
+      0,
+      0,
+      0,
+      0.5850000000000001,
+      0,
+      2,
+      0.249249989,
+      -4,
+      1
+    ],
+    "sourceToAuthoredMatrix": [
+      0.5850000000000001,
+      0,
+      0,
+      0,
+      0,
+      0.5850000000000001,
+      0,
+      0,
+      0,
+      0,
+      0.5850000000000001,
+      0,
+      6.680000000000001,
+      -0.47615001100000004,
+      -2.4204999999999997,
+      1
+    ]
+  },
+  "originalRoleDigestsUnchanged": true,
+  "cachedVolumesBeforeClear": 84,
+  "cachedVolumesAfterClear": 0,
+  "rows": {
+    "l14:2220:2239": {
+      "key": "l14:2220:2239",
+      "ownerId": "l14",
+      "stemSourceNode": 2220,
+      "leafSourceNode": 2239,
+      "k": 0,
+      "j": 0,
+      "sourceAnchorGltf": [
+        -5.851500034332275,
+        6.187327861785889,
+        -2.700000047683716
+      ],
+      "originalAnchorWorld": [
+        3.2568724155426025,
+        3.1434366703033447,
+        -4.0
+      ],
+      "queryAnchorWorld": [
+        3.2568724155426025,
+        3.1434366703033447,
+        -4.0
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2220"
+    },
+    "l14:2220:2240": {
+      "key": "l14:2220:2240",
+      "ownerId": "l14",
+      "stemSourceNode": 2220,
+      "leafSourceNode": 2240,
+      "k": 0,
+      "j": 1,
+      "sourceAnchorGltf": [
+        -5.851500034332275,
+        5.836180210113525,
+        -2.700000047683716
+      ],
+      "originalAnchorWorld": [
+        3.2568724155426025,
+        2.9380152225494385,
+        -4.0
+      ],
+      "queryAnchorWorld": [
+        3.2568724155426025,
+        2.9380152225494385,
+        -4.0
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ambiguous actual-volume ray parity: role-l14-2220"
+    },
+    "l14:2220:2241": {
+      "key": "l14:2220:2241",
+      "ownerId": "l14",
+      "stemSourceNode": 2220,
+      "leafSourceNode": 2241,
+      "k": 0,
+      "j": 2,
+      "sourceAnchorGltf": [
+        -5.851500034332275,
+        5.485032081604004,
+        -2.700000047683716
+      ],
+      "originalAnchorWorld": [
+        3.2568724155426025,
+        2.732593536376953,
+        -4.0
+      ],
+      "queryAnchorWorld": [
+        3.2568724155426025,
+        2.732593536376953,
+        -4.0
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2220"
+    },
+    "l14:2220:2242": {
+      "key": "l14:2220:2242",
+      "ownerId": "l14",
+      "stemSourceNode": 2220,
+      "leafSourceNode": 2242,
+      "k": 0,
+      "j": 3,
+      "sourceAnchorGltf": [
+        -5.851500034332275,
+        5.133884429931641,
+        -2.700000047683716
+      ],
+      "originalAnchorWorld": [
+        3.2568724155426025,
+        2.527172327041626,
+        -4.0
+      ],
+      "queryAnchorWorld": [
+        3.2568724155426025,
+        2.527172327041626,
+        -4.0
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2220",
+        "right": "role-l14-2242",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2220",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2242",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2220:2243": {
+      "key": "l14:2220:2243",
+      "ownerId": "l14",
+      "stemSourceNode": 2220,
+      "leafSourceNode": 2243,
+      "k": 0,
+      "j": 4,
+      "sourceAnchorGltf": [
+        -5.851500034332275,
+        4.782736778259277,
+        -2.700000047683716
+      ],
+      "originalAnchorWorld": [
+        3.2568724155426025,
+        2.3217508792877197,
+        -4.0
+      ],
+      "queryAnchorWorld": [
+        3.2568724155426025,
+        2.3217508792877197,
+        -4.0
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2220"
+    },
+    "l14:2221:2244": {
+      "key": "l14:2221:2244",
+      "ownerId": "l14",
+      "stemSourceNode": 2221,
+      "leafSourceNode": 2244,
+      "k": 1,
+      "j": 0,
+      "sourceAnchorGltf": [
+        -5.985043525695801,
+        6.190155506134033,
+        -3.0954415798187256
+      ],
+      "originalAnchorWorld": [
+        3.1787495613098145,
+        3.1450908184051514,
+        -4.231333255767822
+      ],
+      "queryAnchorWorld": [
+        3.1787495613098145,
+        3.1450908184051514,
+        -4.231333255767822
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2221"
+    },
+    "l14:2221:2245": {
+      "key": "l14:2221:2245",
+      "ownerId": "l14",
+      "stemSourceNode": 2221,
+      "leafSourceNode": 2245,
+      "k": 1,
+      "j": 1,
+      "sourceAnchorGltf": [
+        -5.985043525695801,
+        5.857859134674072,
+        -3.0954415798187256
+      ],
+      "originalAnchorWorld": [
+        3.1787495613098145,
+        2.950697422027588,
+        -4.231333255767822
+      ],
+      "queryAnchorWorld": [
+        3.1787495613098145,
+        2.950697422027588,
+        -4.231333255767822
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2221",
+        "right": "role-l14-2245",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2221",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2245",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2221:2246": {
+      "key": "l14:2221:2246",
+      "ownerId": "l14",
+      "stemSourceNode": 2221,
+      "leafSourceNode": 2246,
+      "k": 1,
+      "j": 2,
+      "sourceAnchorGltf": [
+        -5.985043525695801,
+        5.525562763214111,
+        -3.0954415798187256
+      ],
+      "originalAnchorWorld": [
+        3.1787495613098145,
+        2.7563040256500244,
+        -4.231333255767822
+      ],
+      "queryAnchorWorld": [
+        3.1787495613098145,
+        2.7563040256500244,
+        -4.231333255767822
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2221"
+    },
+    "l14:2221:2247": {
+      "key": "l14:2221:2247",
+      "ownerId": "l14",
+      "stemSourceNode": 2221,
+      "leafSourceNode": 2247,
+      "k": 1,
+      "j": 3,
+      "sourceAnchorGltf": [
+        -5.985043525695801,
+        5.19326639175415,
+        -3.0954415798187256
+      ],
+      "originalAnchorWorld": [
+        3.1787495613098145,
+        2.561910629272461,
+        -4.231333255767822
+      ],
+      "queryAnchorWorld": [
+        3.1787495613098145,
+        2.561910629272461,
+        -4.231333255767822
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2221",
+        "right": "role-l14-2247",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2221",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2247",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2221:2248": {
+      "key": "l14:2221:2248",
+      "ownerId": "l14",
+      "stemSourceNode": 2221,
+      "leafSourceNode": 2248,
+      "k": 1,
+      "j": 4,
+      "sourceAnchorGltf": [
+        -5.985043525695801,
+        4.860970497131348,
+        -3.0954415798187256
+      ],
+      "originalAnchorWorld": [
+        3.1787495613098145,
+        2.3675177097320557,
+        -4.231333255767822
+      ],
+      "queryAnchorWorld": [
+        3.1787495613098145,
+        2.3675177097320557,
+        -4.231333255767822
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2221",
+        "right": "role-l14-2248",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2221",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2248",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2222:2249": {
+      "key": "l14:2222:2249",
+      "ownerId": "l14",
+      "stemSourceNode": 2222,
+      "leafSourceNode": 2249,
+      "k": 2,
+      "j": 0,
+      "sourceAnchorGltf": [
+        -6.35922384262085,
+        6.203503131866455,
+        -3.4125611782073975
+      ],
+      "originalAnchorWorld": [
+        2.9598541259765625,
+        3.1528992652893066,
+        -4.416848182678223
+      ],
+      "queryAnchorWorld": [
+        2.9598541259765625,
+        3.1528992652893066,
+        -4.416848182678223
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2222"
+    },
+    "l14:2222:2250": {
+      "key": "l14:2222:2250",
+      "ownerId": "l14",
+      "stemSourceNode": 2222,
+      "leafSourceNode": 2250,
+      "k": 2,
+      "j": 1,
+      "sourceAnchorGltf": [
+        -6.35922384262085,
+        5.9601898193359375,
+        -3.4125611782073975
+      ],
+      "originalAnchorWorld": [
+        2.9598541259765625,
+        3.010560989379883,
+        -4.416848182678223
+      ],
+      "queryAnchorWorld": [
+        2.9598541259765625,
+        3.010560989379883,
+        -4.416848182678223
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ambiguous actual-volume ray parity: role-l14-2222"
+    },
+    "l14:2222:2251": {
+      "key": "l14:2222:2251",
+      "ownerId": "l14",
+      "stemSourceNode": 2222,
+      "leafSourceNode": 2251,
+      "k": 2,
+      "j": 2,
+      "sourceAnchorGltf": [
+        -6.35922384262085,
+        5.716876029968262,
+        -3.4125611782073975
+      ],
+      "originalAnchorWorld": [
+        2.9598541259765625,
+        2.868222236633301,
+        -4.416848182678223
+      ],
+      "queryAnchorWorld": [
+        2.9598541259765625,
+        2.868222236633301,
+        -4.416848182678223
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2222",
+        "right": "role-l14-2251",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2222",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2251",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2222:2252": {
+      "key": "l14:2222:2252",
+      "ownerId": "l14",
+      "stemSourceNode": 2222,
+      "leafSourceNode": 2252,
+      "k": 2,
+      "j": 3,
+      "sourceAnchorGltf": [
+        -6.35922384262085,
+        5.473562717437744,
+        -3.4125611782073975
+      ],
+      "originalAnchorWorld": [
+        2.9598541259765625,
+        2.725883960723877,
+        -4.416848182678223
+      ],
+      "queryAnchorWorld": [
+        2.9598541259765625,
+        2.725883960723877,
+        -4.416848182678223
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2222",
+        "right": "role-l14-2252",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2222",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2252",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2222:2253": {
+      "key": "l14:2222:2253",
+      "ownerId": "l14",
+      "stemSourceNode": 2222,
+      "leafSourceNode": 2253,
+      "k": 2,
+      "j": 4,
+      "sourceAnchorGltf": [
+        -6.35922384262085,
+        5.230249404907227,
+        -3.4125611782073975
+      ],
+      "originalAnchorWorld": [
+        2.9598541259765625,
+        2.583545684814453,
+        -4.416848182678223
+      ],
+      "queryAnchorWorld": [
+        2.9598541259765625,
+        2.583545684814453,
+        -4.416848182678223
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2222"
+    },
+    "l14:2223:2254": {
+      "key": "l14:2223:2254",
+      "ownerId": "l14",
+      "stemSourceNode": 2223,
+      "leafSourceNode": 2254,
+      "k": 3,
+      "j": 0,
+      "sourceAnchorGltf": [
+        -6.899930477142334,
+        6.191898822784424,
+        -3.5885493755340576
+      ],
+      "originalAnchorWorld": [
+        2.643540859222412,
+        3.1461105346679688,
+        -4.519801139831543
+      ],
+      "queryAnchorWorld": [
+        2.643540859222412,
+        3.1461105346679688,
+        -4.519801139831543
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2223"
+    },
+    "l14:2223:2255": {
+      "key": "l14:2223:2255",
+      "ownerId": "l14",
+      "stemSourceNode": 2223,
+      "leafSourceNode": 2255,
+      "k": 3,
+      "j": 1,
+      "sourceAnchorGltf": [
+        -6.899930477142334,
+        5.871224880218506,
+        -3.5885493755340576
+      ],
+      "originalAnchorWorld": [
+        2.643540859222412,
+        2.9585163593292236,
+        -4.519801139831543
+      ],
+      "queryAnchorWorld": [
+        2.643540859222412,
+        2.9585163593292236,
+        -4.519801139831543
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2223"
+    },
+    "l14:2223:2256": {
+      "key": "l14:2223:2256",
+      "ownerId": "l14",
+      "stemSourceNode": 2223,
+      "leafSourceNode": 2256,
+      "k": 3,
+      "j": 2,
+      "sourceAnchorGltf": [
+        -6.899930477142334,
+        5.550550937652588,
+        -3.5885493755340576
+      ],
+      "originalAnchorWorld": [
+        2.643540859222412,
+        2.7709221839904785,
+        -4.519801139831543
+      ],
+      "queryAnchorWorld": [
+        2.643540859222412,
+        2.7709221839904785,
+        -4.519801139831543
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2223"
+    },
+    "l14:2223:2257": {
+      "key": "l14:2223:2257",
+      "ownerId": "l14",
+      "stemSourceNode": 2223,
+      "leafSourceNode": 2257,
+      "k": 3,
+      "j": 3,
+      "sourceAnchorGltf": [
+        -6.899930477142334,
+        5.22987699508667,
+        -3.5885493755340576
+      ],
+      "originalAnchorWorld": [
+        2.643540859222412,
+        2.5833280086517334,
+        -4.519801139831543
+      ],
+      "queryAnchorWorld": [
+        2.643540859222412,
+        2.5833280086517334,
+        -4.519801139831543
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2223",
+        "right": "role-l14-2257",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2223",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2257",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2223:2258": {
+      "key": "l14:2223:2258",
+      "ownerId": "l14",
+      "stemSourceNode": 2223,
+      "leafSourceNode": 2258,
+      "k": 3,
+      "j": 4,
+      "sourceAnchorGltf": [
+        -6.899930477142334,
+        4.909203052520752,
+        -3.5885493755340576
+      ],
+      "originalAnchorWorld": [
+        2.643540859222412,
+        2.395733594894409,
+        -4.519801139831543
+      ],
+      "queryAnchorWorld": [
+        2.643540859222412,
+        2.395733594894409,
+        -4.519801139831543
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2223"
+    },
+    "l14:2224:2259": {
+      "key": "l14:2224:2259",
+      "ownerId": "l14",
+      "stemSourceNode": 2224,
+      "leafSourceNode": 2259,
+      "k": 4,
+      "j": 0,
+      "sourceAnchorGltf": [
+        -7.500069618225098,
+        6.2011919021606445,
+        -3.5885493755340576
+      ],
+      "originalAnchorWorld": [
+        2.292459487915039,
+        3.1515471935272217,
+        -4.519801139831543
+      ],
+      "queryAnchorWorld": [
+        2.292459487915039,
+        3.1515471935272217,
+        -4.519801139831543
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2224"
+    },
+    "l14:2224:2260": {
+      "key": "l14:2224:2260",
+      "ownerId": "l14",
+      "stemSourceNode": 2224,
+      "leafSourceNode": 2260,
+      "k": 4,
+      "j": 1,
+      "sourceAnchorGltf": [
+        -7.500069618225098,
+        5.9424729347229,
+        -3.5885493755340576
+      ],
+      "originalAnchorWorld": [
+        2.292459487915039,
+        3.0001964569091797,
+        -4.519801139831543
+      ],
+      "queryAnchorWorld": [
+        2.292459487915039,
+        3.0001964569091797,
+        -4.519801139831543
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2224",
+        "right": "role-l14-2260",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2224",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2260",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2224:2261": {
+      "key": "l14:2224:2261",
+      "ownerId": "l14",
+      "stemSourceNode": 2224,
+      "leafSourceNode": 2261,
+      "k": 4,
+      "j": 2,
+      "sourceAnchorGltf": [
+        -7.500069618225098,
+        5.683753490447998,
+        -3.5885493755340576
+      ],
+      "originalAnchorWorld": [
+        2.292459487915039,
+        2.8488457202911377,
+        -4.519801139831543
+      ],
+      "queryAnchorWorld": [
+        2.292459487915039,
+        2.8488457202911377,
+        -4.519801139831543
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2224",
+        "right": "role-l14-2261",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2224",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2261",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2224:2262": {
+      "key": "l14:2224:2262",
+      "ownerId": "l14",
+      "stemSourceNode": 2224,
+      "leafSourceNode": 2262,
+      "k": 4,
+      "j": 3,
+      "sourceAnchorGltf": [
+        -7.500069618225098,
+        5.425034046173096,
+        -3.5885493755340576
+      ],
+      "originalAnchorWorld": [
+        2.292459487915039,
+        2.6974947452545166,
+        -4.519801139831543
+      ],
+      "queryAnchorWorld": [
+        2.292459487915039,
+        2.6974947452545166,
+        -4.519801139831543
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2224",
+        "right": "role-l14-2262",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2224",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2262",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2224:2263": {
+      "key": "l14:2224:2263",
+      "ownerId": "l14",
+      "stemSourceNode": 2224,
+      "leafSourceNode": 2263,
+      "k": 4,
+      "j": 4,
+      "sourceAnchorGltf": [
+        -7.500069618225098,
+        5.166314601898193,
+        -3.5885493755340576
+      ],
+      "originalAnchorWorld": [
+        2.292459487915039,
+        2.5461440086364746,
+        -4.519801139831543
+      ],
+      "queryAnchorWorld": [
+        2.292459487915039,
+        2.5461440086364746,
+        -4.519801139831543
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2224"
+    },
+    "l14:2225:2264": {
+      "key": "l14:2225:2264",
+      "ownerId": "l14",
+      "stemSourceNode": 2225,
+      "leafSourceNode": 2264,
+      "k": 5,
+      "j": 0,
+      "sourceAnchorGltf": [
+        -8.040776252746582,
+        6.209941864013672,
+        -3.4125611782073975
+      ],
+      "originalAnchorWorld": [
+        1.9761457443237305,
+        3.156665802001953,
+        -4.416848182678223
+      ],
+      "queryAnchorWorld": [
+        1.9761457443237305,
+        3.156665802001953,
+        -4.416848182678223
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2225"
+    },
+    "l14:2225:2265": {
+      "key": "l14:2225:2265",
+      "ownerId": "l14",
+      "stemSourceNode": 2225,
+      "leafSourceNode": 2265,
+      "k": 5,
+      "j": 1,
+      "sourceAnchorGltf": [
+        -8.040776252746582,
+        6.009555339813232,
+        -3.4125611782073975
+      ],
+      "originalAnchorWorld": [
+        1.9761457443237305,
+        3.0394396781921387,
+        -4.416848182678223
+      ],
+      "queryAnchorWorld": [
+        1.9761457443237305,
+        3.0394396781921387,
+        -4.416848182678223
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2225",
+        "right": "role-l14-2265",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2225",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2265",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2225:2266": {
+      "key": "l14:2225:2266",
+      "ownerId": "l14",
+      "stemSourceNode": 2225,
+      "leafSourceNode": 2266,
+      "k": 5,
+      "j": 2,
+      "sourceAnchorGltf": [
+        -8.040776252746582,
+        5.809168338775635,
+        -3.4125611782073975
+      ],
+      "originalAnchorWorld": [
+        1.9761457443237305,
+        2.922213315963745,
+        -4.416848182678223
+      ],
+      "queryAnchorWorld": [
+        1.9761457443237305,
+        2.922213315963745,
+        -4.416848182678223
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2225"
+    },
+    "l14:2225:2267": {
+      "key": "l14:2225:2267",
+      "ownerId": "l14",
+      "stemSourceNode": 2225,
+      "leafSourceNode": 2267,
+      "k": 5,
+      "j": 3,
+      "sourceAnchorGltf": [
+        -8.040776252746582,
+        5.608781814575195,
+        -3.4125611782073975
+      ],
+      "originalAnchorWorld": [
+        1.9761457443237305,
+        2.8049871921539307,
+        -4.416848182678223
+      ],
+      "queryAnchorWorld": [
+        1.9761457443237305,
+        2.8049871921539307,
+        -4.416848182678223
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2225",
+        "right": "role-l14-2267",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2225",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2267",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2225:2268": {
+      "key": "l14:2225:2268",
+      "ownerId": "l14",
+      "stemSourceNode": 2225,
+      "leafSourceNode": 2268,
+      "k": 5,
+      "j": 4,
+      "sourceAnchorGltf": [
+        -8.040776252746582,
+        5.408394813537598,
+        -3.4125611782073975
+      ],
+      "originalAnchorWorld": [
+        1.9761457443237305,
+        2.687760829925537,
+        -4.416848182678223
+      ],
+      "queryAnchorWorld": [
+        1.9761457443237305,
+        2.687760829925537,
+        -4.416848182678223
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2225",
+        "right": "role-l14-2268",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2225",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2268",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2226:2269": {
+      "key": "l14:2226:2269",
+      "ownerId": "l14",
+      "stemSourceNode": 2226,
+      "leafSourceNode": 2269,
+      "k": 6,
+      "j": 0,
+      "sourceAnchorGltf": [
+        -8.414956092834473,
+        6.203998565673828,
+        -3.0954415798187256
+      ],
+      "originalAnchorWorld": [
+        1.7572507858276367,
+        3.153188943862915,
+        -4.231333255767822
+      ],
+      "queryAnchorWorld": [
+        1.7572507858276367,
+        3.153188943862915,
+        -4.231333255767822
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2226"
+    },
+    "l14:2226:2270": {
+      "key": "l14:2226:2270",
+      "ownerId": "l14",
+      "stemSourceNode": 2226,
+      "leafSourceNode": 2270,
+      "k": 6,
+      "j": 1,
+      "sourceAnchorGltf": [
+        -8.414956092834473,
+        5.963989734649658,
+        -3.0954415798187256
+      ],
+      "originalAnchorWorld": [
+        1.7572507858276367,
+        3.0127837657928467,
+        -4.231333255767822
+      ],
+      "queryAnchorWorld": [
+        1.7572507858276367,
+        3.0127837657928467,
+        -4.231333255767822
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2226",
+        "right": "role-l14-2270",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2226",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2270",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2226:2271": {
+      "key": "l14:2226:2271",
+      "ownerId": "l14",
+      "stemSourceNode": 2226,
+      "leafSourceNode": 2271,
+      "k": 6,
+      "j": 2,
+      "sourceAnchorGltf": [
+        -8.414956092834473,
+        5.72398042678833,
+        -3.0954415798187256
+      ],
+      "originalAnchorWorld": [
+        1.7572507858276367,
+        2.872378349304199,
+        -4.231333255767822
+      ],
+      "queryAnchorWorld": [
+        1.7572507858276367,
+        2.872378349304199,
+        -4.231333255767822
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2226",
+        "right": "role-l14-2271",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2226",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2271",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2226:2272": {
+      "key": "l14:2226:2272",
+      "ownerId": "l14",
+      "stemSourceNode": 2226,
+      "leafSourceNode": 2272,
+      "k": 6,
+      "j": 3,
+      "sourceAnchorGltf": [
+        -8.414956092834473,
+        5.48397159576416,
+        -3.0954415798187256
+      ],
+      "originalAnchorWorld": [
+        1.7572507858276367,
+        2.731973171234131,
+        -4.231333255767822
+      ],
+      "queryAnchorWorld": [
+        1.7572507858276367,
+        2.731973171234131,
+        -4.231333255767822
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2226",
+        "right": "role-l14-2272",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2226",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2272",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2226:2273": {
+      "key": "l14:2226:2273",
+      "ownerId": "l14",
+      "stemSourceNode": 2226,
+      "leafSourceNode": 2273,
+      "k": 6,
+      "j": 4,
+      "sourceAnchorGltf": [
+        -8.414956092834473,
+        5.243962287902832,
+        -3.0954415798187256
+      ],
+      "originalAnchorWorld": [
+        1.7572507858276367,
+        2.5915677547454834,
+        -4.231333255767822
+      ],
+      "queryAnchorWorld": [
+        1.7572507858276367,
+        2.5915677547454834,
+        -4.231333255767822
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2226",
+        "right": "role-l14-2273",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2226",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2273",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2227:2274": {
+      "key": "l14:2227:2274",
+      "ownerId": "l14",
+      "stemSourceNode": 2227,
+      "leafSourceNode": 2274,
+      "k": 7,
+      "j": 0,
+      "sourceAnchorGltf": [
+        -8.548500061035156,
+        6.200579643249512,
+        -2.700000047683716
+      ],
+      "originalAnchorWorld": [
+        1.6791276931762695,
+        3.151188850402832,
+        -4.0
+      ],
+      "queryAnchorWorld": [
+        1.6791276931762695,
+        3.151188850402832,
+        -4.0
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2227"
+    },
+    "l14:2227:2275": {
+      "key": "l14:2227:2275",
+      "ownerId": "l14",
+      "stemSourceNode": 2227,
+      "leafSourceNode": 2275,
+      "k": 7,
+      "j": 1,
+      "sourceAnchorGltf": [
+        -8.548500061035156,
+        5.937775611877441,
+        -2.700000047683716
+      ],
+      "originalAnchorWorld": [
+        1.6791276931762695,
+        2.997448682785034,
+        -4.0
+      ],
+      "queryAnchorWorld": [
+        1.6791276931762695,
+        2.997448682785034,
+        -4.0
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2227",
+        "right": "role-l14-2275",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2227",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2275",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2227:2276": {
+      "key": "l14:2227:2276",
+      "ownerId": "l14",
+      "stemSourceNode": 2227,
+      "leafSourceNode": 2276,
+      "k": 7,
+      "j": 2,
+      "sourceAnchorGltf": [
+        -8.548500061035156,
+        5.674972057342529,
+        -2.700000047683716
+      ],
+      "originalAnchorWorld": [
+        1.6791276931762695,
+        2.8437085151672363,
+        -4.0
+      ],
+      "queryAnchorWorld": [
+        1.6791276931762695,
+        2.8437085151672363,
+        -4.0
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2227",
+        "right": "role-l14-2276",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2227",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2276",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2227:2277": {
+      "key": "l14:2227:2277",
+      "ownerId": "l14",
+      "stemSourceNode": 2227,
+      "leafSourceNode": 2277,
+      "k": 7,
+      "j": 3,
+      "sourceAnchorGltf": [
+        -8.548500061035156,
+        5.412168502807617,
+        -2.700000047683716
+      ],
+      "originalAnchorWorld": [
+        1.6791276931762695,
+        2.6899683475494385,
+        -4.0
+      ],
+      "queryAnchorWorld": [
+        1.6791276931762695,
+        2.6899683475494385,
+        -4.0
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2227",
+        "right": "role-l14-2277",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2227",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2277",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2227:2278": {
+      "key": "l14:2227:2278",
+      "ownerId": "l14",
+      "stemSourceNode": 2227,
+      "leafSourceNode": 2278,
+      "k": 7,
+      "j": 4,
+      "sourceAnchorGltf": [
+        -8.548500061035156,
+        5.149364471435547,
+        -2.700000047683716
+      ],
+      "originalAnchorWorld": [
+        1.6791276931762695,
+        2.5362281799316406,
+        -4.0
+      ],
+      "queryAnchorWorld": [
+        1.6791276931762695,
+        2.5362281799316406,
+        -4.0
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2227",
+        "right": "role-l14-2278",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2227",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2278",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2228:2279": {
+      "key": "l14:2228:2279",
+      "ownerId": "l14",
+      "stemSourceNode": 2228,
+      "leafSourceNode": 2279,
+      "k": 8,
+      "j": 0,
+      "sourceAnchorGltf": [
+        -8.414956092834473,
+        6.189152717590332,
+        -2.304558277130127
+      ],
+      "originalAnchorWorld": [
+        1.7572507858276367,
+        3.1445040702819824,
+        -3.7686667442321777
+      ],
+      "queryAnchorWorld": [
+        1.7572507858276367,
+        3.1445040702819824,
+        -3.7686667442321777
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2228"
+    },
+    "l14:2228:2280": {
+      "key": "l14:2228:2280",
+      "ownerId": "l14",
+      "stemSourceNode": 2228,
+      "leafSourceNode": 2280,
+      "k": 8,
+      "j": 1,
+      "sourceAnchorGltf": [
+        -8.414956092834473,
+        5.8501715660095215,
+        -2.304558277130127
+      ],
+      "originalAnchorWorld": [
+        1.7572507858276367,
+        2.946200132369995,
+        -3.7686667442321777
+      ],
+      "queryAnchorWorld": [
+        1.7572507858276367,
+        2.946200132369995,
+        -3.7686667442321777
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2228",
+        "right": "role-l14-2280",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2228",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2280",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2228:2281": {
+      "key": "l14:2228:2281",
+      "ownerId": "l14",
+      "stemSourceNode": 2228,
+      "leafSourceNode": 2281,
+      "k": 8,
+      "j": 2,
+      "sourceAnchorGltf": [
+        -8.414956092834473,
+        5.511190414428711,
+        -2.304558277130127
+      ],
+      "originalAnchorWorld": [
+        1.7572507858276367,
+        2.747896194458008,
+        -3.7686667442321777
+      ],
+      "queryAnchorWorld": [
+        1.7572507858276367,
+        2.747896194458008,
+        -3.7686667442321777
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2228"
+    },
+    "l14:2228:2282": {
+      "key": "l14:2228:2282",
+      "ownerId": "l14",
+      "stemSourceNode": 2228,
+      "leafSourceNode": 2282,
+      "k": 8,
+      "j": 3,
+      "sourceAnchorGltf": [
+        -8.414956092834473,
+        5.1722092628479,
+        -2.304558277130127
+      ],
+      "originalAnchorWorld": [
+        1.7572507858276367,
+        2.5495922565460205,
+        -3.7686667442321777
+      ],
+      "queryAnchorWorld": [
+        1.7572507858276367,
+        2.5495922565460205,
+        -3.7686667442321777
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2228",
+        "right": "role-l14-2282",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2228",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2282",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2228:2283": {
+      "key": "l14:2228:2283",
+      "ownerId": "l14",
+      "stemSourceNode": 2228,
+      "leafSourceNode": 2283,
+      "k": 8,
+      "j": 4,
+      "sourceAnchorGltf": [
+        -8.414956092834473,
+        4.83322811126709,
+        -2.304558277130127
+      ],
+      "originalAnchorWorld": [
+        1.7572507858276367,
+        2.351288318634033,
+        -3.7686667442321777
+      ],
+      "queryAnchorWorld": [
+        1.7572507858276367,
+        2.351288318634033,
+        -3.7686667442321777
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2228"
+    },
+    "l14:2229:2284": {
+      "key": "l14:2229:2284",
+      "ownerId": "l14",
+      "stemSourceNode": 2229,
+      "leafSourceNode": 2284,
+      "k": 9,
+      "j": 0,
+      "sourceAnchorGltf": [
+        -8.040776252746582,
+        6.192317008972168,
+        -1.9874387979507446
+      ],
+      "originalAnchorWorld": [
+        1.9761457443237305,
+        3.146355390548706,
+        -3.5831518173217773
+      ],
+      "queryAnchorWorld": [
+        1.9761457443237305,
+        3.146355390548706,
+        -3.5831518173217773
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2229"
+    },
+    "l14:2229:2285": {
+      "key": "l14:2229:2285",
+      "ownerId": "l14",
+      "stemSourceNode": 2229,
+      "leafSourceNode": 2285,
+      "k": 9,
+      "j": 1,
+      "sourceAnchorGltf": [
+        -8.040776252746582,
+        5.874429702758789,
+        -1.9874387979507446
+      ],
+      "originalAnchorWorld": [
+        1.9761457443237305,
+        2.9603912830352783,
+        -3.5831518173217773
+      ],
+      "queryAnchorWorld": [
+        1.9761457443237305,
+        2.9603912830352783,
+        -3.5831518173217773
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2229"
+    },
+    "l14:2229:2286": {
+      "key": "l14:2229:2286",
+      "ownerId": "l14",
+      "stemSourceNode": 2229,
+      "leafSourceNode": 2286,
+      "k": 9,
+      "j": 2,
+      "sourceAnchorGltf": [
+        -8.040776252746582,
+        5.55654239654541,
+        -1.9874387979507446
+      ],
+      "originalAnchorWorld": [
+        1.9761457443237305,
+        2.7744271755218506,
+        -3.5831518173217773
+      ],
+      "queryAnchorWorld": [
+        1.9761457443237305,
+        2.7744271755218506,
+        -3.5831518173217773
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2229",
+        "right": "role-l14-2286",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2229",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2286",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2229:2287": {
+      "key": "l14:2229:2287",
+      "ownerId": "l14",
+      "stemSourceNode": 2229,
+      "leafSourceNode": 2287,
+      "k": 9,
+      "j": 3,
+      "sourceAnchorGltf": [
+        -8.040776252746582,
+        5.238655090332031,
+        -1.9874387979507446
+      ],
+      "originalAnchorWorld": [
+        1.9761457443237305,
+        2.588463068008423,
+        -3.5831518173217773
+      ],
+      "queryAnchorWorld": [
+        1.9761457443237305,
+        2.588463068008423,
+        -3.5831518173217773
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2229",
+        "right": "role-l14-2287",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2229",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2287",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2229:2288": {
+      "key": "l14:2229:2288",
+      "ownerId": "l14",
+      "stemSourceNode": 2229,
+      "leafSourceNode": 2288,
+      "k": 9,
+      "j": 4,
+      "sourceAnchorGltf": [
+        -8.040776252746582,
+        4.920767784118652,
+        -1.9874387979507446
+      ],
+      "originalAnchorWorld": [
+        1.9761457443237305,
+        2.402498960494995,
+        -3.5831518173217773
+      ],
+      "queryAnchorWorld": [
+        1.9761457443237305,
+        2.402498960494995,
+        -3.5831518173217773
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ambiguous actual-volume ray parity: role-l14-2229"
+    },
+    "l14:2230:2289": {
+      "key": "l14:2230:2289",
+      "ownerId": "l14",
+      "stemSourceNode": 2230,
+      "leafSourceNode": 2289,
+      "k": 10,
+      "j": 0,
+      "sourceAnchorGltf": [
+        -7.500069618225098,
+        6.197540760040283,
+        -1.811450719833374
+      ],
+      "originalAnchorWorld": [
+        2.292459487915039,
+        3.149411201477051,
+        -3.480198621749878
+      ],
+      "queryAnchorWorld": [
+        2.292459487915039,
+        3.149411201477051,
+        -3.480198621749878
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2289"
+    },
+    "l14:2230:2290": {
+      "key": "l14:2230:2290",
+      "ownerId": "l14",
+      "stemSourceNode": 2230,
+      "leafSourceNode": 2290,
+      "k": 10,
+      "j": 1,
+      "sourceAnchorGltf": [
+        -7.500069618225098,
+        5.914480686187744,
+        -1.811450719833374
+      ],
+      "originalAnchorWorld": [
+        2.292459487915039,
+        2.983821153640747,
+        -3.480198621749878
+      ],
+      "queryAnchorWorld": [
+        2.292459487915039,
+        2.983821153640747,
+        -3.480198621749878
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2230",
+        "right": "role-l14-2290",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2230",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2290",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2230:2291": {
+      "key": "l14:2230:2291",
+      "ownerId": "l14",
+      "stemSourceNode": 2230,
+      "leafSourceNode": 2291,
+      "k": 10,
+      "j": 2,
+      "sourceAnchorGltf": [
+        -7.500069618225098,
+        5.631420135498047,
+        -1.811450719833374
+      ],
+      "originalAnchorWorld": [
+        2.292459487915039,
+        2.818230628967285,
+        -3.480198621749878
+      ],
+      "queryAnchorWorld": [
+        2.292459487915039,
+        2.818230628967285,
+        -3.480198621749878
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2230",
+        "right": "role-l14-2291",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2230",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2291",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2230:2292": {
+      "key": "l14:2230:2292",
+      "ownerId": "l14",
+      "stemSourceNode": 2230,
+      "leafSourceNode": 2292,
+      "k": 10,
+      "j": 3,
+      "sourceAnchorGltf": [
+        -7.500069618225098,
+        5.34835958480835,
+        -1.811450719833374
+      ],
+      "originalAnchorWorld": [
+        2.292459487915039,
+        2.6526401042938232,
+        -3.480198621749878
+      ],
+      "queryAnchorWorld": [
+        2.292459487915039,
+        2.6526401042938232,
+        -3.480198621749878
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2230",
+        "right": "role-l14-2292",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2230",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2292",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2230:2293": {
+      "key": "l14:2230:2293",
+      "ownerId": "l14",
+      "stemSourceNode": 2230,
+      "leafSourceNode": 2293,
+      "k": 10,
+      "j": 4,
+      "sourceAnchorGltf": [
+        -7.500069618225098,
+        5.0652995109558105,
+        -1.811450719833374
+      ],
+      "originalAnchorWorld": [
+        2.292459487915039,
+        2.4870500564575195,
+        -3.480198621749878
+      ],
+      "queryAnchorWorld": [
+        2.292459487915039,
+        2.4870500564575195,
+        -3.480198621749878
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "overlap-not-found",
+      "measurement": {
+        "left": "role-l14-2230",
+        "right": "role-l14-2293",
+        "ownerId": "l14",
+        "requestedBallRadiusWorld": 0.00048,
+        "leftClosure": {
+          "name": "role-l14-2230",
+          "triangles": 496,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 0
+        },
+        "rightClosure": {
+          "name": "role-l14-2293",
+          "triangles": 152,
+          "positionWeldDecimalsWorld": 7,
+          "badEdges": 0,
+          "collapsedSeamTriangles": 8
+        },
+        "overlap": null
+      }
+    },
+    "l14:2231:2294": {
+      "key": "l14:2231:2294",
+      "ownerId": "l14",
+      "stemSourceNode": 2231,
+      "leafSourceNode": 2294,
+      "k": 11,
+      "j": 0,
+      "sourceAnchorGltf": [
+        -6.899930477142334,
+        6.190338611602783,
+        -1.811450719833374
+      ],
+      "originalAnchorWorld": [
+        2.643540859222412,
+        3.145197868347168,
+        -3.480198621749878
+      ],
+      "queryAnchorWorld": [
+        2.643540859222412,
+        3.145197868347168,
+        -3.480198621749878
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2231"
+    },
+    "l14:2231:2295": {
+      "key": "l14:2231:2295",
+      "ownerId": "l14",
+      "stemSourceNode": 2231,
+      "leafSourceNode": 2295,
+      "k": 11,
+      "j": 1,
+      "sourceAnchorGltf": [
+        -6.899930477142334,
+        5.859261989593506,
+        -1.811450719833374
+      ],
+      "originalAnchorWorld": [
+        2.643540859222412,
+        2.9515180587768555,
+        -3.480198621749878
+      ],
+      "queryAnchorWorld": [
+        2.643540859222412,
+        2.9515180587768555,
+        -3.480198621749878
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2231"
+    },
+    "l14:2231:2296": {
+      "key": "l14:2231:2296",
+      "ownerId": "l14",
+      "stemSourceNode": 2231,
+      "leafSourceNode": 2296,
+      "k": 11,
+      "j": 2,
+      "sourceAnchorGltf": [
+        -6.899930477142334,
+        5.528185844421387,
+        -1.811450719833374
+      ],
+      "originalAnchorWorld": [
+        2.643540859222412,
+        2.757838487625122,
+        -3.480198621749878
+      ],
+      "queryAnchorWorld": [
+        2.643540859222412,
+        2.757838487625122,
+        -3.480198621749878
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2231"
+    },
+    "l14:2231:2297": {
+      "key": "l14:2231:2297",
+      "ownerId": "l14",
+      "stemSourceNode": 2231,
+      "leafSourceNode": 2297,
+      "k": 11,
+      "j": 3,
+      "sourceAnchorGltf": [
+        -6.899930477142334,
+        5.197109222412109,
+        -1.811450719833374
+      ],
+      "originalAnchorWorld": [
+        2.643540859222412,
+        2.5641586780548096,
+        -3.480198621749878
+      ],
+      "queryAnchorWorld": [
+        2.643540859222412,
+        2.5641586780548096,
+        -3.480198621749878
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2231"
+    },
+    "l14:2231:2298": {
+      "key": "l14:2231:2298",
+      "ownerId": "l14",
+      "stemSourceNode": 2231,
+      "leafSourceNode": 2298,
+      "k": 11,
+      "j": 4,
+      "sourceAnchorGltf": [
+        -6.899930477142334,
+        4.86603307723999,
+        -1.811450719833374
+      ],
+      "originalAnchorWorld": [
+        2.643540859222412,
+        2.370479106903076,
+        -3.480198621749878
+      ],
+      "queryAnchorWorld": [
+        2.643540859222412,
+        2.370479106903076,
+        -3.480198621749878
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2231"
+    },
+    "l14:2232:2299": {
+      "key": "l14:2232:2299",
+      "ownerId": "l14",
+      "stemSourceNode": 2232,
+      "leafSourceNode": 2299,
+      "k": 12,
+      "j": 0,
+      "sourceAnchorGltf": [
+        -6.35922384262085,
+        6.200852870941162,
+        -1.9874387979507446
+      ],
+      "originalAnchorWorld": [
+        2.9598541259765625,
+        3.151348829269409,
+        -3.5831518173217773
+      ],
+      "queryAnchorWorld": [
+        2.9598541259765625,
+        3.151348829269409,
+        -3.5831518173217773
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2232"
+    },
+    "l14:2232:2300": {
+      "key": "l14:2232:2300",
+      "ownerId": "l14",
+      "stemSourceNode": 2232,
+      "leafSourceNode": 2300,
+      "k": 12,
+      "j": 1,
+      "sourceAnchorGltf": [
+        -6.35922384262085,
+        5.939872741699219,
+        -1.9874387979507446
+      ],
+      "originalAnchorWorld": [
+        2.9598541259765625,
+        2.9986753463745117,
+        -3.5831518173217773
+      ],
+      "queryAnchorWorld": [
+        2.9598541259765625,
+        2.9986753463745117,
+        -3.5831518173217773
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2232"
+    },
+    "l14:2232:2301": {
+      "key": "l14:2232:2301",
+      "ownerId": "l14",
+      "stemSourceNode": 2232,
+      "leafSourceNode": 2301,
+      "k": 12,
+      "j": 2,
+      "sourceAnchorGltf": [
+        -6.35922384262085,
+        5.678892135620117,
+        -1.9874387979507446
+      ],
+      "originalAnchorWorld": [
+        2.9598541259765625,
+        2.846001625061035,
+        -3.5831518173217773
+      ],
+      "queryAnchorWorld": [
+        2.9598541259765625,
+        2.846001625061035,
+        -3.5831518173217773
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2232"
+    },
+    "l14:2232:2302": {
+      "key": "l14:2232:2302",
+      "ownerId": "l14",
+      "stemSourceNode": 2232,
+      "leafSourceNode": 2302,
+      "k": 12,
+      "j": 3,
+      "sourceAnchorGltf": [
+        -6.35922384262085,
+        5.417912006378174,
+        -1.9874387979507446
+      ],
+      "originalAnchorWorld": [
+        2.9598541259765625,
+        2.693328380584717,
+        -3.5831518173217773
+      ],
+      "queryAnchorWorld": [
+        2.9598541259765625,
+        2.693328380584717,
+        -3.5831518173217773
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2232"
+    },
+    "l14:2232:2303": {
+      "key": "l14:2232:2303",
+      "ownerId": "l14",
+      "stemSourceNode": 2232,
+      "leafSourceNode": 2303,
+      "k": 12,
+      "j": 4,
+      "sourceAnchorGltf": [
+        -6.35922384262085,
+        5.156931400299072,
+        -1.9874387979507446
+      ],
+      "originalAnchorWorld": [
+        2.9598541259765625,
+        2.5406546592712402,
+        -3.5831518173217773
+      ],
+      "queryAnchorWorld": [
+        2.9598541259765625,
+        2.5406546592712402,
+        -3.5831518173217773
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2232"
+    },
+    "l14:2233:2304": {
+      "key": "l14:2233:2304",
+      "ownerId": "l14",
+      "stemSourceNode": 2233,
+      "leafSourceNode": 2304,
+      "k": 13,
+      "j": 0,
+      "sourceAnchorGltf": [
+        -5.985043525695801,
+        6.204524993896484,
+        -2.304558277130127
+      ],
+      "originalAnchorWorld": [
+        3.1787495613098145,
+        3.1534969806671143,
+        -3.7686667442321777
+      ],
+      "queryAnchorWorld": [
+        3.1787495613098145,
+        3.1534969806671143,
+        -3.7686667442321777
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2233"
+    },
+    "l14:2233:2305": {
+      "key": "l14:2233:2305",
+      "ownerId": "l14",
+      "stemSourceNode": 2233,
+      "leafSourceNode": 2305,
+      "k": 13,
+      "j": 1,
+      "sourceAnchorGltf": [
+        -5.985043525695801,
+        5.9680256843566895,
+        -2.304558277130127
+      ],
+      "originalAnchorWorld": [
+        3.1787495613098145,
+        3.0151448249816895,
+        -3.7686667442321777
+      ],
+      "queryAnchorWorld": [
+        3.1787495613098145,
+        3.0151448249816895,
+        -3.7686667442321777
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2233"
+    },
+    "l14:2233:2306": {
+      "key": "l14:2233:2306",
+      "ownerId": "l14",
+      "stemSourceNode": 2233,
+      "leafSourceNode": 2306,
+      "k": 13,
+      "j": 2,
+      "sourceAnchorGltf": [
+        -5.985043525695801,
+        5.7315263748168945,
+        -2.304558277130127
+      ],
+      "originalAnchorWorld": [
+        3.1787495613098145,
+        2.8767926692962646,
+        -3.7686667442321777
+      ],
+      "queryAnchorWorld": [
+        3.1787495613098145,
+        2.8767926692962646,
+        -3.7686667442321777
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2233"
+    },
+    "l14:2233:2307": {
+      "key": "l14:2233:2307",
+      "ownerId": "l14",
+      "stemSourceNode": 2233,
+      "leafSourceNode": 2307,
+      "k": 13,
+      "j": 3,
+      "sourceAnchorGltf": [
+        -5.985043525695801,
+        5.4950270652771,
+        -2.304558277130127
+      ],
+      "originalAnchorWorld": [
+        3.1787495613098145,
+        2.738440752029419,
+        -3.7686667442321777
+      ],
+      "queryAnchorWorld": [
+        3.1787495613098145,
+        2.738440752029419,
+        -3.7686667442321777
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ambiguous actual-volume ray parity: role-l14-2233"
+    },
+    "l14:2233:2308": {
+      "key": "l14:2233:2308",
+      "ownerId": "l14",
+      "stemSourceNode": 2233,
+      "leafSourceNode": 2308,
+      "k": 13,
+      "j": 4,
+      "sourceAnchorGltf": [
+        -5.985043525695801,
+        5.258527755737305,
+        -2.304558277130127
+      ],
+      "originalAnchorWorld": [
+        3.1787495613098145,
+        2.600088596343994,
+        -3.7686667442321777
+      ],
+      "queryAnchorWorld": [
+        3.1787495613098145,
+        2.600088596343994,
+        -3.7686667442321777
+      ],
+      "anchorMapping": "identity",
+      "radiusArgumentWorld": 0.0008,
+      "actualOverlapBallRadiusWorld": 0.00048,
+      "maxSpanArgumentWorld": 0.04,
+      "repairAllowed": false,
+      "positionWeldDecimalsWorld": 7,
+      "rayAdvanceWorld": 1e-07,
+      "status": "ray-parity-unresolved",
+      "errorClass": "ValueError",
+      "error": "Ray parity exceeded bounded intersections: role-l14-2233"
+    }
+  }
+}

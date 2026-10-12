@@ -1,0 +1,1370 @@
+{
+  "revision": "island-variation-c9",
+  "archivedAt": 1791806390.067141,
+  "scope": "Exact fixed c9 candidate; later main work is not represented",
+  "files": [
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/core/report.json",
+      "archive": "core/report.json.gz",
+      "originalSha256": "2131b198171cdd80670480126692fc45784a1999fdf799207bd9ba2156f8ad1d",
+      "archiveSha256": "8568bb1d88928d670d99342a9921999c4ec38945e67d23952d0285e466194aa1",
+      "originalBytes": 8535384,
+      "archiveBytes": 2173464,
+      "gzipMtime": 0,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/core/execution.log.txt",
+      "archive": "core/execution.log.txt",
+      "originalSha256": "a99cddd06e20c82d76d2df55f73abff4b3744d82ee56890e1c383f7c0d1c8f81",
+      "archiveSha256": "a99cddd06e20c82d76d2df55f73abff4b3744d82ee56890e1c383f7c0d1c8f81",
+      "originalBytes": 154568,
+      "archiveBytes": 154568,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/core-launcher.log.txt",
+      "archive": "core/launcher.log.txt",
+      "originalSha256": "21a32c79d9920c0e19072b40724e276d572853cbe25dcc683e8f87f58716828b",
+      "archiveSha256": "21a32c79d9920c0e19072b40724e276d572853cbe25dcc683e8f87f58716828b",
+      "originalBytes": 86,
+      "archiveBytes": 86,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/inputs.json",
+      "archive": "core/inputs.json.gz",
+      "originalSha256": "4d67d795d537366ece156f37f15dd5f0664324688ea2c92904d90875b13e30fd",
+      "archiveSha256": "07895cc8a20bbf7afbfb74979e7bfa7fbd759c5a86217e7809ba0db7edfef42e",
+      "originalBytes": 4215813,
+      "archiveBytes": 1085817,
+      "gzipMtime": 0,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/source-after.json",
+      "archive": "core/source-after.json.gz",
+      "originalSha256": "4d67d795d537366ece156f37f15dd5f0664324688ea2c92904d90875b13e30fd",
+      "archiveSha256": "07895cc8a20bbf7afbfb74979e7bfa7fbd759c5a86217e7809ba0db7edfef42e",
+      "originalBytes": 4215813,
+      "archiveBytes": 1085817,
+      "gzipMtime": 0,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/candidate-inputs.json",
+      "archive": "core/candidate-inputs.json.gz",
+      "originalSha256": "4d67d795d537366ece156f37f15dd5f0664324688ea2c92904d90875b13e30fd",
+      "archiveSha256": "07895cc8a20bbf7afbfb74979e7bfa7fbd759c5a86217e7809ba0db7edfef42e",
+      "originalBytes": 4215813,
+      "archiveBytes": 1085817,
+      "gzipMtime": 0,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/snapshot.json",
+      "archive": "core/snapshot.json.gz",
+      "originalSha256": "ef631ccd08dfcfb196c5a1817386467cef884895846b42d674bc752cdabd889a",
+      "archiveSha256": "f80fe738523aba3997b93b388a0dae64b88326f4907c19e864ce8af920f07adc",
+      "originalBytes": 19407,
+      "archiveBytes": 1970,
+      "gzipMtime": 0,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/prepare.py",
+      "archive": "core/prepare.py.txt",
+      "originalSha256": "a312a8e2abf1b64ea063976d201ad21fc3459b34bb013cfef6ace36aa11b0848",
+      "archiveSha256": "a312a8e2abf1b64ea063976d201ad21fc3459b34bb013cfef6ace36aa11b0848",
+      "originalBytes": 2902,
+      "archiveBytes": 2902,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/prepare.log.txt",
+      "archive": "core/prepare.log.txt",
+      "originalSha256": "264c350cae2440d29940bb3b4c81d5610ca81e90ebc675a3dbb83153a3fc1cee",
+      "archiveSha256": "264c350cae2440d29940bb3b4c81d5610ca81e90ebc675a3dbb83153a3fc1cee",
+      "originalBytes": 124,
+      "archiveBytes": 124,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/core.py",
+      "archive": "core/core.py.txt",
+      "originalSha256": "764565a5f846d147fbeadc31032fe34011390c022d9d6b33183a34ea7965f0a5",
+      "archiveSha256": "764565a5f846d147fbeadc31032fe34011390c022d9d6b33183a34ea7965f0a5",
+      "originalBytes": 2475,
+      "archiveBytes": 2475,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/runtime/report.json",
+      "archive": "runtime/report.json.gz",
+      "originalSha256": "c5aee649e40b15d42dbf43e299127d422e39f8e68649e22335fd5f4f078069a4",
+      "archiveSha256": "3072f506bb6f360d8173328d83bd4e446cc9440a7c4d29470bff0f44f7051c75",
+      "originalBytes": 14178286,
+      "archiveBytes": 2851321,
+      "gzipMtime": 0,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/runtime/progress.json",
+      "archive": "runtime/progress.json",
+      "originalSha256": "660a83cbff0d91f21471201b84ea147f2de0cfb8b6c12e46c546d38c50b2b8bf",
+      "archiveSha256": "660a83cbff0d91f21471201b84ea147f2de0cfb8b6c12e46c546d38c50b2b8bf",
+      "originalBytes": 777,
+      "archiveBytes": 777,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/runtime-execution.json",
+      "archive": "runtime/execution.json",
+      "originalSha256": "3e97a1c3add81e0c62e88f1f8b667ccb1a9b32e1cd2cd5f68c596da8ccc2701d",
+      "archiveSha256": "3e97a1c3add81e0c62e88f1f8b667ccb1a9b32e1cd2cd5f68c596da8ccc2701d",
+      "originalBytes": 231,
+      "archiveBytes": 231,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/runtime-execution.log.txt",
+      "archive": "runtime/execution.log.txt",
+      "originalSha256": "ac3b8dc429ae53ee2cfdb34ff6b382ff19a7520ebc025fc4b281879c73eef0eb",
+      "archiveSha256": "ac3b8dc429ae53ee2cfdb34ff6b382ff19a7520ebc025fc4b281879c73eef0eb",
+      "originalBytes": 282,
+      "archiveBytes": 282,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-variation-runtime-launch.py",
+      "archive": "runtime/launch.py.txt",
+      "originalSha256": "07bbe90d1b38272fb372be99e8a43adb2535effe6ec13e4458fa50950afb6cf1",
+      "archiveSha256": "07bbe90d1b38272fb372be99e8a43adb2535effe6ec13e4458fa50950afb6cf1",
+      "originalBytes": 1501,
+      "archiveBytes": 1501,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/runtime/young.png",
+      "archive": "runtime/young.png",
+      "originalSha256": "70ac55ec576bd440cc35bf3372678ed1368c97716476cd69bad6339df4370803",
+      "archiveSha256": "70ac55ec576bd440cc35bf3372678ed1368c97716476cd69bad6339df4370803",
+      "originalBytes": 627236,
+      "archiveBytes": 627236,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/runtime/single.png",
+      "archive": "runtime/single.png",
+      "originalSha256": "5eacc5e501bb24b51a39df514372dae0fbc7651da7348ed29fb6c1f550428cf0",
+      "archiveSha256": "5eacc5e501bb24b51a39df514372dae0fbc7651da7348ed29fb6c1f550428cf0",
+      "originalBytes": 646678,
+      "archiveBytes": 646678,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/runtime/split.png",
+      "archive": "runtime/split.png",
+      "originalSha256": "22a76534dc12802fa88e04bcd1a0d5798ec8511596af20f063b9da68cbc48fca",
+      "archiveSha256": "22a76534dc12802fa88e04bcd1a0d5798ec8511596af20f063b9da68cbc48fca",
+      "originalBytes": 640360,
+      "archiveBytes": 640360,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/runtime/loop.png",
+      "archive": "runtime/loop.png",
+      "originalSha256": "042d066bdfea773a84106a4c6da3db02ea6771e327e4f729b4b014ef6e5ff08a",
+      "archiveSha256": "042d066bdfea773a84106a4c6da3db02ea6771e327e4f729b4b014ef6e5ff08a",
+      "originalBytes": 638423,
+      "archiveBytes": 638423,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/runtime/separated.png",
+      "archive": "runtime/separated.png",
+      "originalSha256": "c17786e38822a3f6e056a4ee91d6c440cedfed03a63aad815192e4ef9016d6e6",
+      "archiveSha256": "c17786e38822a3f6e056a4ee91d6c440cedfed03a63aad815192e4ef9016d6e6",
+      "originalBytes": 631953,
+      "archiveBytes": 631953,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/runtime/loop-restored.png",
+      "archive": "runtime/loop-restored.png",
+      "originalSha256": "943017f850cf273cde99528f6239bf6105fb70c611e390e88d14bb540163d567",
+      "archiveSha256": "943017f850cf273cde99528f6239bf6105fb70c611e390e88d14bb540163d567",
+      "originalBytes": 638753,
+      "archiveBytes": 638753,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/runtime/rotated.png",
+      "archive": "runtime/rotated.png",
+      "originalSha256": "03417892158b3d9c4f79b442b0e263cfb437b896bb3c3af2b973ab7bc8abd842",
+      "archiveSha256": "03417892158b3d9c4f79b442b0e263cfb437b896bb3c3af2b973ab7bc8abd842",
+      "originalBytes": 589220,
+      "archiveBytes": 589220,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/runtime/phone.png",
+      "archive": "runtime/phone.png",
+      "originalSha256": "26928d7c33adb32e935468669597f9c35d9e02f014b0cf29a195e0bfd34d507a",
+      "archiveSha256": "26928d7c33adb32e935468669597f9c35d9e02f014b0cf29a195e0bfd34d507a",
+      "originalBytes": 200053,
+      "archiveBytes": 200053,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/runtime/tablet.png",
+      "archive": "runtime/tablet.png",
+      "originalSha256": "91e50b655d45154a8b0f2942a7faaf4bab2382cb377fbd09e62cf77402f87c95",
+      "archiveSha256": "91e50b655d45154a8b0f2942a7faaf4bab2382cb377fbd09e62cf77402f87c95",
+      "originalBytes": 354894,
+      "archiveBytes": 354894,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-variation-c9-focused-first.log",
+      "archive": "focused/first.log.txt",
+      "originalSha256": "db9b6bdefdf90e835d5b6ec91bb7d879f355676472fff0821d8908aefc6765d3",
+      "archiveSha256": "db9b6bdefdf90e835d5b6ec91bb7d879f355676472fff0821d8908aefc6765d3",
+      "originalBytes": 2303,
+      "archiveBytes": 2303,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-variation-c9-focused-corrected.log",
+      "archive": "focused/corrected.log.txt",
+      "originalSha256": "c5431ace1bfd5667f87a9966f614d407a96a3356806a7ccab4dfb4b108cad9a9",
+      "archiveSha256": "c5431ace1bfd5667f87a9966f614d407a96a3356806a7ccab4dfb4b108cad9a9",
+      "originalBytes": 500,
+      "archiveBytes": 500,
+      "gzipMtime": null,
+      "candidateInput": null,
+      "matchesC9CoreInput": null
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/candidate/tools/e2e-authored-island-variation.mjs",
+      "archive": "runtime/e2e-authored-island-variation.mjs.txt",
+      "originalSha256": "fa511b0a7adea073f8f7d8c2dee44051351fb5f528563c559d18c516f83c1579",
+      "archiveSha256": "fa511b0a7adea073f8f7d8c2dee44051351fb5f528563c559d18c516f83c1579",
+      "originalBytes": 22973,
+      "archiveBytes": 22973,
+      "gzipMtime": null,
+      "candidateInput": "tools/e2e-authored-island-variation.mjs",
+      "matchesC9CoreInput": true
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/candidate/src/components/island/growing/native/authoredGrowthTerrainIntegration.test.ts",
+      "archive": "focused/authoredGrowthTerrainIntegration.test.ts.txt",
+      "originalSha256": "cac9c482069c0147b1702701c23665ed36bb466fd2f5fc771517ca22fd20dac1",
+      "archiveSha256": "cac9c482069c0147b1702701c23665ed36bb466fd2f5fc771517ca22fd20dac1",
+      "originalBytes": 15890,
+      "archiveBytes": 15890,
+      "gzipMtime": null,
+      "candidateInput": "src/components/island/growing/native/authoredGrowthTerrainIntegration.test.ts",
+      "matchesC9CoreInput": true
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/candidate/src/components/island/growing/authoredGrowthTerrainLife.test.ts",
+      "archive": "focused/authoredGrowthTerrainLife.test.ts.txt",
+      "originalSha256": "869cdc2a6e205b111ef103f5d26831c7533ed38114c14d9ff316d0771bf6f7f9",
+      "archiveSha256": "869cdc2a6e205b111ef103f5d26831c7533ed38114c14d9ff316d0771bf6f7f9",
+      "originalBytes": 16953,
+      "archiveBytes": 16953,
+      "gzipMtime": null,
+      "candidateInput": "src/components/island/growing/authoredGrowthTerrainLife.test.ts",
+      "matchesC9CoreInput": true
+    },
+    {
+      "source": "/private/tmp/sansu-island-variation-c9/candidate/docs/design/2026-10-10-island-final-3d/whole-island-render.png",
+      "archive": "benchmark/whole-island-render.png",
+      "originalSha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "archiveSha256": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "originalBytes": 2579296,
+      "archiveBytes": 2579296,
+      "gzipMtime": null,
+      "candidateInput": "docs/design/2026-10-10-island-final-3d/whole-island-render.png",
+      "matchesC9CoreInput": true
+    }
+  ],
+  "sourceDelta": {
+    "archive": "core/source-delta-from-c8.tar.gz",
+    "files": 203,
+    "sha256": "248b99a066b47232bdb1db46e5a3586669c6dae00c097f225402235cb1ad6d75",
+    "bytes": 37883598,
+    "source": "/private/tmp/sansu-island-variation-c9/candidate",
+    "base": "/private/tmp/sansu-growth-terrain-c8/candidate",
+    "baseInputsSha256": "53512e53fbe9c75012e98c52d92be7c8337e10cc13c494a8169ce93390b3c3f5",
+    "baseCoreReportSha256": "9f0b382de74ded96f86b922739ae9858c46df9779edb9bc54cc1cc08f85f9fe6",
+    "removed": [],
+    "requiresCompleteC8Base": true,
+    "members": [
+      {
+        "path": ".agents/tasks/DONE.md",
+        "sha256": "4632983a225590adee6da5106f25d1c1f20b2ef87ccbe81c6898b59b7b8ebea5",
+        "bytes": 37383
+      },
+      {
+        "path": ".agents/tasks/TASKS.md",
+        "sha256": "4196d7d274bc13b902befbeeab5c2abb1835821b419b048178fa27bec2830f10",
+        "bytes": 11169
+      },
+      {
+        "path": "docs/ai/verification_matrix.md",
+        "sha256": "5498c214b0ed5d2f00df2e8e7b163f774a0787b0e71da9ef68a3f4cd5511595e",
+        "bytes": 84631
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/README.md",
+        "sha256": "92c5b44abd3e8e7c6c167b5c8e09dd16c45f96abe0a4ee302f74ae4a09948f92",
+        "bytes": 6257
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-02/first-failure.json",
+        "sha256": "c9199806a5154bebe6e825fc0e736b6b4b0ac532a0a7cc1432f9c975087224a3",
+        "bytes": 598
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-02/inputs-after.json",
+        "sha256": "63be4e5b2223002e1169e02a49ba3b51cd73d9042c59eab3df715c1bdc8e777c",
+        "bytes": 674
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-02/inputs-before.json",
+        "sha256": "63be4e5b2223002e1169e02a49ba3b51cd73d9042c59eab3df715c1bdc8e777c",
+        "bytes": 674
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-02/lower-source-replacement.json",
+        "sha256": "bd8c71228bfc83eb0004c2d4c4c278d30bea70551738283ebc78d9fd6d1b2794",
+        "bytes": 881
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-02/spec.json",
+        "sha256": "2c00232039881c18b7720e0553d4acd3a58f0caa12ae230aa124cfc1c3912166",
+        "bytes": 862
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-02/terrain-lineage.json",
+        "sha256": "835de4d428fefa5fd13178546a98262182ede6b178863e82d2dbe9bed754098e",
+        "bytes": 22967
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-03/compound-interface-audit.json",
+        "sha256": "93fb78363302a27ea4b3e03764863ec3aee1f4aa046cfecb7523fcc18275dd1d",
+        "bytes": 40002
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-03/cut-edge-contact.json",
+        "sha256": "b02884960e1006a1752c0c064c9f909473f4f00f00cc1cd7aac325a89020015f",
+        "bytes": 13938
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-03/geometry-checks.json",
+        "sha256": "3a68ad3bb6f950ebcec06a7614b5fdf5a85027873cd3b90c30d7c2e0faa94729",
+        "bytes": 1051
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-03/inputs-after.json",
+        "sha256": "9c68c0d545faf308c8e61166e6fc2b40dcdb3ae5ef2285eb24648fcac3d8ef2f",
+        "bytes": 674
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-03/inputs-before.json",
+        "sha256": "9c68c0d545faf308c8e61166e6fc2b40dcdb3ae5ef2285eb24648fcac3d8ef2f",
+        "bytes": 674
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-03/lower-source-replacement.json",
+        "sha256": "bd8c71228bfc83eb0004c2d4c4c278d30bea70551738283ebc78d9fd6d1b2794",
+        "bytes": 881
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-03/native-gallery-entry-manifest.json",
+        "sha256": "3e31f4a556d9d9948701c98a39cf474dfbc38d7a1694830ecdeeb90865295b87",
+        "bytes": 13262
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-03/native-gallery-entry.glb",
+        "sha256": "22d6c592ed986d47f9307392550712ed34c4eeb49d07eaeebe99940e3e2b0195",
+        "bytes": 1119392
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-03/native-gallery-entry.glb.gz",
+        "sha256": "574bb38161e01b5381e0475490201371cc0932f7a2066467051d5c158aac57b2",
+        "bytes": 278071
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-03/result.json",
+        "sha256": "624f531ffdd712d9f2f0f7d0ffae4808c906c488ca02d86bc764d6c3254c7196",
+        "bytes": 523
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-03/spec.json",
+        "sha256": "2c00232039881c18b7720e0553d4acd3a58f0caa12ae230aa124cfc1c3912166",
+        "bytes": 862
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/attempt-03/terrain-lineage.json",
+        "sha256": "835de4d428fefa5fd13178546a98262182ede6b178863e82d2dbe9bed754098e",
+        "bytes": 22967
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/audit-compound.mjs",
+        "sha256": "5eb5ed37bdc9fbce2453237515c35a6d16c92796414ac19a7590cae294fb6b68",
+        "bytes": 4828
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/build-attempt-02.log.txt",
+        "sha256": "e6f769334a716760da48b5c4c1f2b7517ee1e12d9bffcc3ce27db0f0308eeccc",
+        "bytes": 603
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/build-attempt-03.log.txt",
+        "sha256": "235bcac9fede369a81e7ed1615a251a73c83726d0028bb34b836a3fbfe18eab9",
+        "bytes": 420
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/build-source.mjs.txt",
+        "sha256": "e11de85313d167fc754a918a7b00ce3008a7a8657c453a90df7a85974d7b7e64",
+        "bytes": 20090
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/closeout-checks-first-failure.log.txt",
+        "sha256": "e6365a84b44c0cc9fcc854799df4783f052199ea11b3f1a88e30eebd71c29cba",
+        "bytes": 432
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/closeout-checks.log.txt",
+        "sha256": "7cc0247da24c9693ef2d850353669949d02272a3f0ba0eea323529bd9a191a6c",
+        "bytes": 279
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/closeout-identity.json",
+        "sha256": "643be2eac0b8fa60b9c1fb5cfbd9cc30acf57866c1199c42b27ab040de06386c",
+        "bytes": 4236
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/compound-audit.log.txt",
+        "sha256": "c6e6c10bd505dd877eda6d054db0d271e569d86faffb2948aca051a3adccca4d",
+        "bytes": 1501
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/execution-attempt-02.json",
+        "sha256": "51b9a5aa4f89b7fe8e567ff2d638115cb0148a13ce4b0238eac92fec1d1a919f",
+        "bytes": 264
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/execution-attempt-03.json",
+        "sha256": "15dcc47824912e7f05fc5a668f7b4ec66a82d550d14b02081af8c2214d3eaa9f",
+        "bytes": 286
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/history/attempt01-builder.mjs.txt",
+        "sha256": "5cdc0ec65bdfcfbd832e38ed5ff3123312b6254057e5b7264ffcb48a3035607c",
+        "bytes": 8022
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-p02-gallery/east-v6-entry-retracted/history/attempt02-before-compound-check.mjs.txt",
+        "sha256": "de4c4073c894244c12b718e44dc6fcdfcd131c88e4894d62d503113bdc0227e6",
+        "bytes": 19419
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-whole-rough/gallery-detour-probe/README.md",
+        "sha256": "7d37e211e43a1481ab1fd81424ca22c9ab71e95660b7f7e0492f6cff586d1f4a",
+        "bytes": 3439
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-whole-rough/gallery-detour-probe/attempt-01/instrumentation.txt",
+        "sha256": "1ddc6dd68671d8fea24603f3b250cba37442cceb10f22aad19a42d889a5cd049",
+        "bytes": 906
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-whole-rough/gallery-detour-probe/attempt-01/report.json",
+        "sha256": "10ff97dff8b0d21889deb8ca9f8051f90c9a078889a9970231e5b2fc4563e62b",
+        "bytes": 34591
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-whole-rough/gallery-detour-probe/diagnose.mjs",
+        "sha256": "62c8432544408c126aec4d2c9009eb80c46575c361d2f39f0cfb154853609be7",
+        "bytes": 16127
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-whole-rough/gallery-detour-probe/execution.json",
+        "sha256": "bcfee56be3c644fdc336ccf049e1da121770263ae0738b57aeac423e3110676a",
+        "bytes": 188
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-whole-rough/gallery-detour-probe/exports.ts.txt",
+        "sha256": "8ebba5210e79708f693f4cca7fa9517055cedd649e77e233e3b9bd2955b932fa",
+        "bytes": 1676
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-whole-rough/gallery-detour-probe/first-run.log.txt",
+        "sha256": "b72d64f4e0e78118902a43586db2727e377e4157c664dc53ae8424972f8a8ea2",
+        "bytes": 380
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-whole-rough/gallery-detour-probe/run-bounded.py",
+        "sha256": "a32e7c93e4b551e1cf4fd7a957d16c95e9a5c28d60f759a2769184ae7381c61f",
+        "bytes": 1172
+      },
+      {
+        "path": "docs/design/2026-10-12-authored-whole-rough/gallery-detour-probe/summary.json",
+        "sha256": "85cb2bd22f8e4894edefb9d07f10b702d00e938b54c945c7d41d936e4891f38c",
+        "bytes": 4570
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/README.md",
+        "sha256": "8ff5b09abf0f7b666790430879fcc1fed76061f96a33c99f3873065996e82f76",
+        "bytes": 8157
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/core/archive-proof.json",
+        "sha256": "ae9d5258e5328239c9b96b97ad6631439516405766e48b50ed04bd019035fa1b",
+        "bytes": 1970
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/core/core.py",
+        "sha256": "5c512c9043ddb777a9853fc1a11384e88ad8c6b327cae0aa210cbac5d54939d1",
+        "bytes": 1658
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/core/execution.log.txt",
+        "sha256": "f34a49bbb5892ec03fddf3ce9892d9311ba68021a5ddc52e4198cec17144218e",
+        "bytes": 155000
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/core/inputs.json.gz",
+        "sha256": "df2fb580a9b0c9097128e96bcf33f67c62d377d93184146c39e4ffc348e941ec",
+        "bytes": 1078374
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/core/prepare.py",
+        "sha256": "1e62037b937e04410f12198777f8e69fb84f23567ee3dddf013ab58969e72547",
+        "bytes": 1218
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/core/report.json.gz",
+        "sha256": "34d25f284ace7a91ccb850db5b847c842fe6157db42f5bb22912aa340bc6b26a",
+        "bytes": 2158921
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/core/snapshot.json.gz",
+        "sha256": "1333976f26623bfd1e4276e34ef4a2cb3c636c5023c30170b56a67db265f54ff",
+        "bytes": 1122
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/core/source-delta-from-c7.tar.gz",
+        "sha256": "0e2d414a1a67caf60b54d1cd31d4b785c48e3527bcfad30094b93515b475bb49",
+        "bytes": 13365596
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/life-probe/authoredGrowthTerrainLife.test.ts.txt",
+        "sha256": "8170f247ddcf152780f747a30db93363416c1ae7a149eb95d3370088a1cdecf7",
+        "bytes": 12657
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/life-probe/report.json",
+        "sha256": "5720fd0f827b8b92be10c95397cdb31580cb7a4c6653c99fc4444a798e899d15",
+        "bytes": 779
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/partial-01/archive-proof.json",
+        "sha256": "097c70e209a5d6fdb86679f7e6466e61fed05734d4ac45064b505a8e16d657a2",
+        "bytes": 914
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/partial-01/browser-environment.json",
+        "sha256": "85dc6be2c14393d3be5c7f2c0ce272f2a59a4dde60f36ab9e0a526e889b249fe",
+        "bytes": 1292
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/partial-01/low-shore.png",
+        "sha256": "93a77ab8da2c7dd55102a138a96f797e520ad6fe63eca44781bb9924f9aa2b8a",
+        "bytes": 634845
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/partial-01/parallel.png",
+        "sha256": "793193082d594744568920cba76c3c5e41623887f02a85a44d5a7814427cd74d",
+        "bytes": 650640
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/partial-01/progress.json",
+        "sha256": "49609353810b102176548bbea173dac289b6823496cc680d1244fde26d056305",
+        "bytes": 357
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/partial-01/runtime-execution.json",
+        "sha256": "d776be23a0b1d55380580329045c21734b7eb763f114c98862e8e05b48806255",
+        "bytes": 173
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/partial-01/young.png",
+        "sha256": "5b12ca609cf16487bfbf285fc6562b1e259a0afe281d7d2e7a8f19664fd802c3",
+        "bytes": 632819
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/README-before-terminal.md.txt",
+        "sha256": "e2cecee450e5ae9b2b843de22f1350ea836891e66b6baa7a268aa3df7578837e",
+        "bytes": 4823
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/archive-proof.json",
+        "sha256": "f42d885335df3b34ca05429202c8b97ac067b3db432fd137f08ff43f14bf2e8f",
+        "bytes": 11453
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/browser-environment.json",
+        "sha256": "85dc6be2c14393d3be5c7f2c0ce272f2a59a4dde60f36ab9e0a526e889b249fe",
+        "bytes": 1292
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/docs-check.json",
+        "sha256": "4e3c324bd255cf26f66fb50c369dae9981c8a8c3a89856dd48118c933ed13f00",
+        "bytes": 192
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/docs-check.log.txt",
+        "sha256": "c1655112be92f5fa8b17292bfaa40251bece452a23bb85707162347e62e939e3",
+        "bytes": 1375
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/e2e-authored-growth-terrain.mjs.txt",
+        "sha256": "b4e1d4570f683ef789a556e7068c22adf5873bf4ff67419085856283de79bf90",
+        "bytes": 11235
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/low-shore.png",
+        "sha256": "93a77ab8da2c7dd55102a138a96f797e520ad6fe63eca44781bb9924f9aa2b8a",
+        "bytes": 634845
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/parallel-restored.png",
+        "sha256": "af155e51ec338eef74863ee855aced3624724a22f76a95eb99317cd56afb429f",
+        "bytes": 630202
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/parallel.png",
+        "sha256": "793193082d594744568920cba76c3c5e41623887f02a85a44d5a7814427cd74d",
+        "bytes": 650640
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/phone.png",
+        "sha256": "a9de6fcbdffa3fef57edef15dcf4c5cf7ca71ad32d590c06bd1247275723c19e",
+        "bytes": 193535
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/report.json.gz",
+        "sha256": "0d2b06b65d8c672eb02a01a634ed1cddebdd66c23739021f28e6bff31cdb25d6",
+        "bytes": 2291655
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/rotated.png",
+        "sha256": "e1ef7f4f11aef85d4b0377203d21bda08c68a07367aff757a509494e684304da",
+        "bytes": 580153
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/runtime-execution.json",
+        "sha256": "a8c49412cf97a3437700743002ead44cb40a124f8344592e51d25ab4c191fdfe",
+        "bytes": 226
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/runtime-execution.log.txt",
+        "sha256": "ab920e0620dc287cc6ba3d689e96ef9f96ced9955d4c81ff9b39129e42f5e77e",
+        "bytes": 232
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/runtime-launch.py.txt",
+        "sha256": "493c5ab674fac492ee3758afdc9b191e5bf96059d722b976e74bcee9e445a426",
+        "bytes": 1311
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/seaward.png",
+        "sha256": "f530a6f31e94c7859f78f5e40603d3dfc1c0dd79b9755193f6914a9cb2c7065e",
+        "bytes": 624745
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/shifted.png",
+        "sha256": "f22a4a4bfe343001bcdf5aeb149ca2b5536a5e0bc421c8d62e407095b6fb97f6",
+        "bytes": 626999
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/summary.json",
+        "sha256": "7104241d916c440dfb5504f4b668bdea8b8d429f234519876d55029ec4c70f7d",
+        "bytes": 32342
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/tablet.png",
+        "sha256": "b68a9f544abd36b762a627ea2bb5394c2fa353e7d7f29c05762ad9a24a00e2ec",
+        "bytes": 346638
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/c8/runtime/young.png",
+        "sha256": "5b12ca609cf16487bfbf285fc6562b1e259a0afe281d7d2e7a8f19664fd802c3",
+        "bytes": 632819
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-runtime/runtime-contact-sheet.html",
+        "sha256": "109feea261c9a6d485e081f360e4488f9524a62483e2b2899a4d2d9183a76de2",
+        "bytes": 8386
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/README.md",
+        "sha256": "79c015f8480ca51956129c24b67f4423df9807f45cc326a7b29085dc49a79ddd",
+        "bytes": 8520
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/README.md",
+        "sha256": "bb669aab034fbb6c0746794613c528cd6850bf7241a17b2ec91e2337d5d8dd65",
+        "bytes": 6608
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/audit-source-glb.py",
+        "sha256": "bf01ce4140c83b6ebd2cd47dd1427c3a5e285b3bb6fbca75b970f0973feb5a2a",
+        "bytes": 3426
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/authored-growth-terrain-kit.json.gz",
+        "sha256": "231cb97b9b26bf6095d7cc2d7acafb2ba0f8e532612d5e9778fe4c032b8f7e3a",
+        "bytes": 253254
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/authored-growth-terrain-manifest.json",
+        "sha256": "84b435515479e1f37db01731257a0c7ed2386a063000027b62b4dfb3882a6307",
+        "bytes": 14038
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/baseline-source.glb",
+        "sha256": "0b905d21161a5d9d8c3779f91f1fb933877494af2db7d346f2f17b2751ac8c6a",
+        "bytes": 133592
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/build-attempt-02.log.txt",
+        "sha256": "54f6f11df70eae7e140f36b80c3ef982ee8138a667850153e04e9edd44499d9a",
+        "bytes": 1252
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/build-authored-growth-terrain-kit.mjs.txt",
+        "sha256": "9db7c1053137d0df693184e40530ab538ef4e06acc2c3496431df46dbc4291a4",
+        "bytes": 32122
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/build-final.log.txt",
+        "sha256": "54f6f11df70eae7e140f36b80c3ef982ee8138a667850153e04e9edd44499d9a",
+        "bytes": 1252
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/build-source-preview.py",
+        "sha256": "e9b11dc414cdc812b438b99863df3e89987cc997a21acb7ac0acbc6d7cb365f1",
+        "bytes": 3361
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/check-source.mjs",
+        "sha256": "76ba162833d9b05df6399b2f00fba230cebc706fc7bf1f22bdd85018aca42913",
+        "bytes": 4360
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/glb-audit-attempt-01.log.txt",
+        "sha256": "c2fdf1f185cbcfb8c8d0134f68d183aefca3257084779e168fc7a4e69e52c4c6",
+        "bytes": 5242
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/glb-audit-attempt-02.log.txt",
+        "sha256": "de125834be561205b1e74484fc553b3d68795c1a94f6c758fc7180ba2657e7b9",
+        "bytes": 3562
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/glb-audit-final.log.txt",
+        "sha256": "de125834be561205b1e74484fc553b3d68795c1a94f6c758fc7180ba2657e7b9",
+        "bytes": 3562
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/growth-terrain-family.blend",
+        "sha256": "6169212feaf06991c5fbaad4e5bc62e49883c32dd07050cd51d493e96b70d0fa",
+        "bytes": 455706
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/history/attempt-01/audit-source-glb.py",
+        "sha256": "bf01ce4140c83b6ebd2cd47dd1427c3a5e285b3bb6fbca75b970f0973feb5a2a",
+        "bytes": 3426
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/history/attempt-01/authored-growth-terrain-kit.json.gz",
+        "sha256": "ed2d2af23c8f61383ef0254e3503e7593dd2d8cf2d1b64ff43ef8c89c5f555c9",
+        "bytes": 251888
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/history/attempt-01/authored-growth-terrain-manifest.json",
+        "sha256": "38b45a1ba285eb21b1eee3062ebf24ab468ecd13fb1a3ed82ef022f39a5d8df6",
+        "bytes": 13554
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/history/attempt-01/baseline-source.glb",
+        "sha256": "0739b6e78e87be7444f6b2b48e32be6425b2f41a7344e3da6c1ddd5c3dafbb9a",
+        "bytes": 133592
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/history/attempt-01/builder.mjs.txt",
+        "sha256": "906d963ce40a25bf77259af3d1860c9b6eda0e8b63e76c839ff05fc9188150bb",
+        "bytes": 31669
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/history/attempt-01/check-source.mjs",
+        "sha256": "76ba162833d9b05df6399b2f00fba230cebc706fc7bf1f22bdd85018aca42913",
+        "bytes": 4360
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/history/attempt-01/glb-audit-attempt-01.log.txt",
+        "sha256": "c2fdf1f185cbcfb8c8d0134f68d183aefca3257084779e168fc7a4e69e52c4c6",
+        "bytes": 5242
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/history/attempt-01/loop-source.glb",
+        "sha256": "eb88b84c8eb13728b58b041c01ea1608e5083173b34e897af18d07c77d388fa2",
+        "bytes": 452116
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/history/attempt-01/parallel-source.glb",
+        "sha256": "b76a3ed96a021b60ef8cd56924452ee74ef24fe1be1b74061b476dcbf0885e54",
+        "bytes": 229132
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/history/attempt-01/seaward-source.glb",
+        "sha256": "00fe9ebaf333357a7ad925ff7e69efc1d74132ca4fc13bfd2806dfbf2efdb646",
+        "bytes": 288892
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/history/attempt-01/single-source.glb",
+        "sha256": "a00a44c5385e198f0cf1fbd6bf7f45ca7dbde40ddfe783fb60231cf030c36681",
+        "bytes": 288892
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/history/attempt-01/source-check-attempt-01.json",
+        "sha256": "05bcfaf47472ed9ee0e0320d110ddc9a81eceab99818cc0eae7ec319b103046a",
+        "bytes": 309
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/history/attempt-01/source-glb-audit.json",
+        "sha256": "8006e3d2b076cdd252d52b4a4066325dbe3189e784e2f960eea40729ba75f53e",
+        "bytes": 9806
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/history/attempt-01/source-manifest.json",
+        "sha256": "38b45a1ba285eb21b1eee3062ebf24ab468ecd13fb1a3ed82ef022f39a5d8df6",
+        "bytes": 13554
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/history/attempt-01/source-profile.json.gz",
+        "sha256": "1121d5474b3baf13f702e386a92dcb7936120d1cf1a479de644c68c2a77d7b1d",
+        "bytes": 343170
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/history/attempt-01/split-source.glb",
+        "sha256": "68e245dda212bdfc5c8370798731e47e319eb72298b51689fd79a04f8042fc2f",
+        "bytes": 444192
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/loop-source.glb",
+        "sha256": "137a5228cc0ba51f071831155fdd7fceaa43fb9cfb96f5dd07170ee4fae96c3c",
+        "bytes": 460204
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/loop-source.png",
+        "sha256": "682caf4ef058609105de9fbc2c25955f50867271cfa24de36b9b2a94a91ec4a0",
+        "bytes": 1013774
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/parallel-source.glb",
+        "sha256": "9a6f64efde456e7414ce0e5af788dfb36427f86a0e53c6f550792df6e38b908e",
+        "bytes": 229132
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/publish.log.txt",
+        "sha256": "54f6f11df70eae7e140f36b80c3ef982ee8138a667850153e04e9edd44499d9a",
+        "bytes": 1252
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/reproducibility-check.log.txt",
+        "sha256": "54f6f11df70eae7e140f36b80c3ef982ee8138a667850153e04e9edd44499d9a",
+        "bytes": 1252
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/reproducibility-published.log.txt",
+        "sha256": "54f6f11df70eae7e140f36b80c3ef982ee8138a667850153e04e9edd44499d9a",
+        "bytes": 1252
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/run-source-preview.py",
+        "sha256": "feaf051530dd5f346a99ed90cb4ffe5b415a6d1f7829c7144536525c50b8342d",
+        "bytes": 1967
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/seaward-source.glb",
+        "sha256": "cfc0aeedaa63658a9f76629b39f0bc47e665ff98d80f7524124a3524dcc27788",
+        "bytes": 292936
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/single-source.glb",
+        "sha256": "85dba429d8d66fed3db664eb187942c7582243dbbe4f46f89ffeaee8a8048f2d",
+        "bytes": 292936
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/single-source.png",
+        "sha256": "6670b28d3a15fea94cfca6002ec8250620102df3a7550566fa05f7782ef9ac61",
+        "bytes": 1010154
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/source-check-attempt-01.json",
+        "sha256": "05bcfaf47472ed9ee0e0320d110ddc9a81eceab99818cc0eae7ec319b103046a",
+        "bytes": 309
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/source-check-attempt-02.json",
+        "sha256": "a8ef638a51e45883fb7394765542b4b2052cf4c8df079ae82e89e20de75eb74b",
+        "bytes": 5849
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/source-check-final.json",
+        "sha256": "a8ef638a51e45883fb7394765542b4b2052cf4c8df079ae82e89e20de75eb74b",
+        "bytes": 5849
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/source-check-post-connection-validation.json",
+        "sha256": "a8ef638a51e45883fb7394765542b4b2052cf4c8df079ae82e89e20de75eb74b",
+        "bytes": 5849
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/source-freeze.json",
+        "sha256": "07184ed7321ef0835116929230f7a39e56185a532beb7b55ffc0f98c9df00ae0",
+        "bytes": 5775
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/source-glb-audit.json",
+        "sha256": "f7529b926890be26c6eacf9edec5f9d2715befe1e3d856d30c246c59123beb27",
+        "bytes": 4958
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/source-manifest.json",
+        "sha256": "84b435515479e1f37db01731257a0c7ed2386a063000027b62b4dfb3882a6307",
+        "bytes": 14038
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/source-preview-execution.log.txt",
+        "sha256": "2b548ebc2f2d9dbe7b8c08f14daa9b3e0b482a0253fe41a2dc3ded2fe57c5653",
+        "bytes": 4122
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/source-preview-result.json",
+        "sha256": "900aa1b00e68476162a221c63a54bf303ea49f9972dffed08c32e67ed6f213e1",
+        "bytes": 2327
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/source-profile.json.gz",
+        "sha256": "ab1678abc977146bffbdd060f6786da0d402e347f5aaee329e7f909173525ecf",
+        "bytes": 344665
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/split-source.glb",
+        "sha256": "cf327baccb1caa88a0e579d5d45ce29267768ab89ce3f83b969d15158e40918c",
+        "bytes": 452280
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/composed-shore-v3/split-source.png",
+        "sha256": "c63e60481c4d9108b8879457b3ecf418b232a5d63093af1ffadfc156886147dd",
+        "bytes": 1014577
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/README.md",
+        "sha256": "53d13c49e530f6cdac32c6a4cbf06ed5492fb2b84bf46538b806012f5433d367",
+        "bytes": 4022
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/audit-source-glb.py",
+        "sha256": "967e85da51cd7f8504a9de623a12478a2e8d9bf302ba8c8a1cf463171d3ac957",
+        "bytes": 3313
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/authored-growth-terrain-kit.json.gz",
+        "sha256": "a7dc1ab184aec413acd31081376e82b2b87905d2aa305911a4618952cc9c423c",
+        "bytes": 217513
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/authored-growth-terrain-manifest.json",
+        "sha256": "d97ec4c6e90cf78204c1c68d7acb571b5bec8ec0a9c8311ba0be03f8683fe989",
+        "bytes": 10942
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/baseline-source.glb",
+        "sha256": "7efd2c20d369958df39728c03ba68c9dc2a5f7060575b9ea721280661a801421",
+        "bytes": 133592
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/baseline-source.png",
+        "sha256": "d8b2261decde83807c6a6bc51c0bd7c19f92e4da5f0f08e77917771ee29ed6ac",
+        "bytes": 994369
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/build-attempt-01.log.txt",
+        "sha256": "8156bd5be68b3a8038e41729dcac7a17d2fe18ca92df3fce8bce32acda844ce5",
+        "bytes": 1093
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/build-attempt-02.log.txt",
+        "sha256": "5a21ef1136abadb8741ddae7e5497aee9e1034b13bb2535034be8a07eeafd5ff",
+        "bytes": 1093
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/build-authored-growth-terrain-kit.mjs.txt",
+        "sha256": "10429fff7a10d94b8ee00f71195576010c0a6dbe2791a5dd9b1979d9f570e33a",
+        "bytes": 27637
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/build-source-preview.py",
+        "sha256": "d50577dc411e565d7a75b3e2451ec7455b3bd33ebd43dd791f2d6377a9d69fed",
+        "bytes": 3389
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/check-source.mjs",
+        "sha256": "9b57dcd231319d142fcbe7ef3e17bc6f1bbf83f8ba017c1c8fc1ab252bb5e50a",
+        "bytes": 4107
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/execution-attempt-01.json",
+        "sha256": "eb5b7894c0a9a052e8a329ab852f2530143fffd8f5b45a9a5ca026c6f166370e",
+        "bytes": 1065
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/execution-attempt-02.json",
+        "sha256": "8f62444f5cd4dcc6344ba6391143a0fa7ef4c16c5958c85c1f16af608317158b",
+        "bytes": 1065
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/glb-audit-attempt-01.log.txt",
+        "sha256": "326fdab20002cc109b9dc00dc1d0cef080435e38ec593e62f2b4b9d8479ead34",
+        "bytes": 2462
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/glb-audit-attempt-02.log.txt",
+        "sha256": "596655aadcc03e07d6314965561a2f31e5d5642d59e796c9654b0216be3746a0",
+        "bytes": 1620
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/growth-terrain-family.blend",
+        "sha256": "522e25901b459da0811fa3de9f6754142d58b43753c081dc3ebe670443dcc235",
+        "bytes": 337612
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/history/attempt-01/audit-source-glb.py",
+        "sha256": "967e85da51cd7f8504a9de623a12478a2e8d9bf302ba8c8a1cf463171d3ac957",
+        "bytes": 3313
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/history/attempt-01/authored-growth-terrain-kit.json.gz",
+        "sha256": "033bac51e71021a9fde94795b144b6695a9ebe622141505491b3830a76838ea8",
+        "bytes": 218265
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/history/attempt-01/authored-growth-terrain-manifest.json",
+        "sha256": "3241ffad2cdfc5cd727c33d34637ec3fe044e92563c215a74a9eafdf13916026",
+        "bytes": 10786
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/history/attempt-01/baseline-source.glb",
+        "sha256": "64ee8e4e0616bb14f1f05b7941882facf50cd564863e704c2f38a261a35dd9c3",
+        "bytes": 133592
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/history/attempt-01/build-attempt-01.log.txt",
+        "sha256": "8156bd5be68b3a8038e41729dcac7a17d2fe18ca92df3fce8bce32acda844ce5",
+        "bytes": 1093
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/history/attempt-01/builder.mjs.txt",
+        "sha256": "76d33fc65f5380720fd6d2dc19f64a28a7d4a603a1f67e26e69b53e9a2f4a55f",
+        "bytes": 27231
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/history/attempt-01/check-source.mjs",
+        "sha256": "9b57dcd231319d142fcbe7ef3e17bc6f1bbf83f8ba017c1c8fc1ab252bb5e50a",
+        "bytes": 4107
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/history/attempt-01/execution-attempt-01.json",
+        "sha256": "eb5b7894c0a9a052e8a329ab852f2530143fffd8f5b45a9a5ca026c6f166370e",
+        "bytes": 1065
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/history/attempt-01/glb-audit-attempt-01.log.txt",
+        "sha256": "326fdab20002cc109b9dc00dc1d0cef080435e38ec593e62f2b4b9d8479ead34",
+        "bytes": 2462
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/history/attempt-01/parallel-source.glb",
+        "sha256": "d3ad9bfa38803d55e0b92ba9ab08ece4fe02725e735e50a1b4755faa751c329f",
+        "bytes": 232024
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/history/attempt-01/seaward-source.glb",
+        "sha256": "a844691cd3f8f85e5981b088712902e12079fa2ff457f65569d9e79978a19141",
+        "bytes": 232020
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/history/attempt-01/source-check-attempt-01.json",
+        "sha256": "06458b9363d1750f0ede99ca7e373f304a469174ac9a9bd616d7b3027599b196",
+        "bytes": 2610
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/history/attempt-01/source-check-attempt-01.log.txt",
+        "sha256": "b39b043ea43926d9553f50b9813dbac34a3e10b366ac9b1d94a887686e8cc8bb",
+        "bytes": 55
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/history/attempt-01/source-glb-audit.json",
+        "sha256": "28a5751799c9ea1ace1fa54344afac7b5bdefa64ded6eefc67a5c900a21b4735",
+        "bytes": 4614
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/history/attempt-01/source-manifest.json",
+        "sha256": "3241ffad2cdfc5cd727c33d34637ec3fe044e92563c215a74a9eafdf13916026",
+        "bytes": 10786
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/history/attempt-01/source-profile.json.gz",
+        "sha256": "81039a50c91ea5a0602a549e5043ddd202a225c95e14f11d5f380876931e9a2a",
+        "bytes": 297513
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/history/attempt-01/v1-input-sha.json",
+        "sha256": "4cdc896ee2ae267e9c502cbd5a9469bc5a8e97beb0c3c484f7784c9bf1ea7f49",
+        "bytes": 551
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/parallel-source.glb",
+        "sha256": "8ce75b606aa49b0d7a3f6b27d1617a5e09693e8678dc20182a079c7f3cad5b85",
+        "bytes": 229096
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/parallel-source.png",
+        "sha256": "8cc8120e0df72bfeee377ccc93f19f7255c2800c2d3c2ba94c5eaa5957545cd7",
+        "bytes": 1000390
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/reproducibility-check.log.txt",
+        "sha256": "5a21ef1136abadb8741ddae7e5497aee9e1034b13bb2535034be8a07eeafd5ff",
+        "bytes": 1093
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/run-source-preview.py",
+        "sha256": "fc6e72705a5ffbdedfd8f9f5270cdeee4221bfe9d96309a060ee4e75602238c4",
+        "bytes": 1975
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/seaward-source.glb",
+        "sha256": "01900c4b8aa0d6d5002063e5740e4bd39c5c18ca3270b070454ced7efa7226a7",
+        "bytes": 230148
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/seaward-source.png",
+        "sha256": "01e207bf17c0089a066b1d02d4b391a50637dffd4a3d29383e1d0c6e5476008f",
+        "bytes": 1003625
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/source-check-attempt-01.json",
+        "sha256": "06458b9363d1750f0ede99ca7e373f304a469174ac9a9bd616d7b3027599b196",
+        "bytes": 2610
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/source-check-attempt-01.log.txt",
+        "sha256": "b39b043ea43926d9553f50b9813dbac34a3e10b366ac9b1d94a887686e8cc8bb",
+        "bytes": 55
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/source-check-attempt-02.json",
+        "sha256": "967571aad0889a51a4400ee643947e6316a549de243a1fcf0a41af3b8c377cbd",
+        "bytes": 2610
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/source-check-attempt-02.log.txt",
+        "sha256": "b39b043ea43926d9553f50b9813dbac34a3e10b366ac9b1d94a887686e8cc8bb",
+        "bytes": 55
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/source-freeze.json",
+        "sha256": "bcb85dca03b5c4af68a55ab582ff1f8d7a86019e2069ac9fc4c02a69ae933d1e",
+        "bytes": 5701
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/source-glb-audit.json",
+        "sha256": "89e0e45595c615388a4d48b90349793bfe0ea41f18841287a04786effde22eb5",
+        "bytes": 2188
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/source-manifest.json",
+        "sha256": "d97ec4c6e90cf78204c1c68d7acb571b5bec8ec0a9c8311ba0be03f8683fe989",
+        "bytes": 10942
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/source-preview-execution.log.txt",
+        "sha256": "07d1c8691fb9829975ac3e769f0fabbaa39dfb94cd820cbb5f74e7d3c3184549",
+        "bytes": 2870
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/source-preview-result.json",
+        "sha256": "d6be0f92a865739f510fde9c5a3f122fed45bedc297b92f01ec2c8650b3e50bd",
+        "bytes": 2332
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/source-profile.json.gz",
+        "sha256": "8f5e24ffa77bed2a7ccf4e7dfd6175c6175595bbe0f4d759b54db8591a148656",
+        "bytes": 296743
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/v1-input-sha.json",
+        "sha256": "4cdc896ee2ae267e9c502cbd5a9469bc5a8e97beb0c3c484f7784c9bf1ea7f49",
+        "bytes": 551
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/v1-input/authored-growth-terrain-kit.json.gz",
+        "sha256": "1e5963d215e1c24557c095322539e0bc14d5a12422a08790056fafddf53d4332",
+        "bytes": 183102
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/v1-input/authored-growth-terrain-manifest.json",
+        "sha256": "ba96a80db980c540c444809df29b292c20ec301deb750ec62ff27ff90617afc4",
+        "bytes": 10066
+      },
+      {
+        "path": "docs/design/2026-10-12-growth-terrain-source/rounded-coast-v2/v1-input/build-authored-growth-terrain-kit.mjs.txt",
+        "sha256": "c82747ef2366eeb2b38db0eafb986cac6886c2b894201e56c960037324ef2301",
+        "bytes": 23582
+      },
+      {
+        "path": "docs/done/2026-10.md",
+        "sha256": "53a844dd1e47dbac13dfd82126519afedc10e1104427dc66ce110d1674c78152",
+        "bytes": 122785
+      },
+      {
+        "path": "docs/product/52_growing_island_game_spec.md",
+        "sha256": "7779faf8a3116bdade3e8311fb1d9b873be0c4b7af8cbe129fba8c707a222a42",
+        "bytes": 72728
+      },
+      {
+        "path": "docs/product/island-world-contract.md",
+        "sha256": "62fc3ef8da7a5ea298176f94ea725422cd312764a662fca6e139a94ac7f30229",
+        "bytes": 28569
+      },
+      {
+        "path": "prototypes/place-qa/authored-growth-terrain-kit.json.gz",
+        "sha256": "231cb97b9b26bf6095d7cc2d7acafb2ba0f8e532612d5e9778fe4c032b8f7e3a",
+        "bytes": 253254
+      },
+      {
+        "path": "prototypes/place-qa/authored-growth-terrain-manifest.json",
+        "sha256": "84b435515479e1f37db01731257a0c7ed2386a063000027b62b4dfb3882a6307",
+        "bytes": 14038
+      },
+      {
+        "path": "src/components/island/growing/authoredGrowthTerrainLife.test.ts",
+        "sha256": "869cdc2a6e205b111ef103f5d26831c7533ed38114c14d9ff316d0771bf6f7f9",
+        "bytes": 16953
+      },
+      {
+        "path": "src/components/island/growing/native/authoredGrowthTerrainIntegration.test.ts",
+        "sha256": "cac9c482069c0147b1702701c23665ed36bb466fd2f5fc771517ca22fd20dac1",
+        "bytes": 15890
+      },
+      {
+        "path": "src/domain/growingIsland/authoredDistrictWorld.test.ts",
+        "sha256": "d7aa233420e5407c8f462bb5ebae1cb6135ff31e5377aa4c167883425cc7a6cf",
+        "bytes": 19798
+      },
+      {
+        "path": "src/domain/growingIsland/authoredDistrictWorld.ts",
+        "sha256": "4315d1bd716a0fcce0cee2c91924941e77a0b8f03d05c99349e1641764f8991d",
+        "bytes": 22470
+      },
+      {
+        "path": "src/domain/growingIsland/authoredGrowthTerrain.test.ts",
+        "sha256": "15fb565e134d9c4013f16f742078be7a777a18264ea507992cbacae59dd7fcc7",
+        "bytes": 27353
+      },
+      {
+        "path": "src/domain/growingIsland/authoredGrowthTerrain.ts",
+        "sha256": "98d99f32f1aae47256b3c908f5c73e6d7429088fb7714eb655401a5bba4f2369",
+        "bytes": 29019
+      },
+      {
+        "path": "src/domain/growingIsland/authoredWorldFrame.ts",
+        "sha256": "5566de30261c3aa517445e1910b86231f3a9c87d1f33f5335b80fc91b8339fe5",
+        "bytes": 5733
+      },
+      {
+        "path": "tools/build-authored-gallery-entry-kit.mjs",
+        "sha256": "e11de85313d167fc754a918a7b00ce3008a7a8657c453a90df7a85974d7b7e64",
+        "bytes": 20090
+      },
+      {
+        "path": "tools/build-authored-growth-terrain-kit.mjs",
+        "sha256": "9db7c1053137d0df693184e40530ab538ef4e06acc2c3496431df46dbc4291a4",
+        "bytes": 32122
+      },
+      {
+        "path": "tools/e2e-authored-island-variation.mjs",
+        "sha256": "fa511b0a7adea073f8f7d8c2dee44051351fb5f528563c559d18c516f83c1579",
+        "bytes": 22973
+      }
+    ]
+  },
+  "sourceBeforeAfterEqual": true,
+  "gzipDecodedContentVerified": true,
+  "sourceDeltaMembersVerified": true,
+  "archiveToolSha256": "757a6ee8d5484b989e964de6d106467c1185337b1653924b8326a97f1338bee5"
+}

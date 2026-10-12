@@ -1,0 +1,34 @@
+{
+  "status": "STATIC_ARITHMETIC_ONLY_PASS",
+  "sourceSurveyExecuted": false,
+  "checks": {
+    "pythonSyntax": true,
+    "originalRun03FilesUnchanged": true,
+    "allEightSourceInputsUnchanged": true,
+    "sourceMatricesOwnersEnvelopeUnchanged": true,
+    "helpersByteIdentical": true,
+    "donorTransformBlockByteIdentical": true,
+    "measureOnlyNoBuildRender": true,
+    "restoredLeftMeshesIncludedWithoutNewExclusions": true,
+    "widthEpsilonAndBoxUnchanged": true,
+    "syntheticRibbonNoZeroTangent": true,
+    "p3OnlyEasternHorizontalBound": true,
+    "arrivalInFrontOfDoorPlane": true
+  },
+  "candidate": "p02-native-east-bough-survey-v1",
+  "p3OnlyHorizontalMargin": 0.5085552651258576,
+  "arrivalDoorPlaneOnlyMargin": 0.018931041395900294,
+  "pending": [
+    "source gallery top at east angles",
+    "all actual obstacle/full-width/ground/joint/support checks",
+    "new visible terrain connector design"
+  ],
+  "files": {
+    "source-study.py": "0dc0e8fff2e2846779f5749bd27c38a9f9181e4addfc26c8f658117ffbc57a1f",
+    "study.json": "29cbc42164ed3317ad171b4371fb6ff480190b7506bd7944c2de6303ad6f3170",
+    "entry_geometry.py": "39af3bee9cd2e21359c3cdd1c1521de2dbb7ef2b7a7e60d5340d648a4c2028a5",
+    "donor_reference.py": "412038bc6ca521a08db0478b3def94bd2032826b8551009abc71d35aadd4189e",
+    "supervise.py": "fef13cc140de8fee6072b9822e3a516d3af9903f0920cd2998807ceace7be3cb",
+    "check-preparation.py": "4206566323cc150bc4befd51394dee40e8162b214c6ff4c330cb64f4e7c8e841"
+  }
+}

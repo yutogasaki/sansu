@@ -1,0 +1,57 @@
+{
+  "status": "STATIC_COORDINATES_NOT_NEW_CONTACT_PROOF",
+  "coordinateSpace": "authored Y-up XYZ; same scene placement, no source pivot change",
+  "entry": [
+    3,
+    1.563063144683838,
+    -7.25
+  ],
+  "actualGroundSeamEndpointsXZ": [
+    [
+      2.814098552749525,
+      -7.5104623809884625
+    ],
+    [
+      3.185901447250475,
+      -6.9895376190115375
+    ]
+  ],
+  "entryGroundYIsPerTriangleNotFlat": true,
+  "plateauDistance": 0.2,
+  "plateauCenter": [
+    3.162788988117789,
+    1.6814100742340088,
+    -7.366188404531547
+  ],
+  "frontOpeningJoint": [
+    3.4549999237060547,
+    1.6814100742340088,
+    -7.574749946594238
+  ],
+  "firstRealRiser": {
+    "lowSide": [
+      3.8905972016997925,
+      1.6814100742340088,
+      -7.53323800109165
+    ],
+    "upperTreadY": 1.7636605501174927,
+    "intentionalVerticalRiser": true
+  },
+  "lastTreadGalleryJoint": [
+    3.736560607223704,
+    2.997417449951172,
+    -9.382856205228208
+  ],
+  "lastTreadY": 2.997417449951172,
+  "galleryTerminal": [
+    3.1137269087690007,
+    3.0406932830810547,
+    -9.328365317351498
+  ],
+  "width": 0.64,
+  "old48mm": {
+    "belongsTo": "rejected middle entry (3.75,-7.25)",
+    "currentV5MismatchClaimed": false
+  },
+  "nextMeasurement": "Actual constructed west seam all-width terrain sections; flat plateau/front/native-arrival/gallery boundaries and positive component joints; failures remain located HOLD."
+}

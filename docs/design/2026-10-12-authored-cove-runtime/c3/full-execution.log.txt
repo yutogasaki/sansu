@@ -1,0 +1,8 @@
+authored-cove: load-mature-32
+authored-cove: select-p9-close
+authored-cove: canvas-select-source-shell
+authored-cove: preview-distant-p9
+authored-cove: cancel-p9
+authored-cove: commit-distant-p9
+authored-cove: store-p9
+{"pass":false,"shapeOnly":false,"captures":3,"steps":["Actual source shell canvas tap changes selection from p6 to p9","Move preview hides committed shell and cancel restores it without canonical changes"],"error":"page.waitForFunction: Timeout 90000ms exceeded.\n    at preview (/private/tmp/sansu-authored-cove-c3/candidate/tools/e2e-authored-cove.mjs:223:16)\n    at edits (/private/tmp/sansu-authored-cove-c3/candidate/tools/e2e-authored-cove.mjs:289:29)\n    at async file:///private/tmp/sansu-authored-cove-c3/candidate/tools/e2e-authored-cove.mjs:328:9","output":"/private/tmp/sansu-authored-cove-c3/full"}

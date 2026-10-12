@@ -1,0 +1,93 @@
+"""Scheduled comparison only; never regenerate stage2 geometry or render."""
+import os
+assert os.environ.get('SANSU_FOREST_QUERY64_APPROVED') == '1', 'Await root execution window'
+import hashlib
+import json
+import sys
+import time
+import traceback
+from pathlib import Path
+import bpy
+from mathutils import Matrix,Vector
+
+HERE=Path(__file__).resolve().parent
+STAGE=HERE.parent
+OUT=HERE/'blender-attempt-01'
+assert not OUT.exists(), 'Preserve first comparison'
+OUT.mkdir()
+sys.dont_write_bytecode=True
+sys.path[:0]=[str(HERE),str(STAGE)]
+from provenance import verify_readiness
+bound_before=verify_readiness(HERE)
+(OUT/'bound-inputs-before.json').write_text(json.dumps(bound_before,indent=2)+'\n')
+import joints
+import fields
+import stage1_support as native
+from volume_adapter import Volume64
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+expected={
+    'attempt-01/failed-stage.blend':'7010856b68de220ceb13781ff12f8c82b6c6aae9b9c575c748688043b98f3ccc',
+    'joints.py':'c99059a0af65cdd62b741911537dc26f605051d22e57207d452d7f5e12ca8db1',
+    'fields.py':'237497e6a48782ff2285f9fdb51a9fe6783c27f7c7c98b29924f154180838fd2',
+    'proposal.json':'98fc19102edfb3fe2a3aa89840ebd31fabfdd0ac3d7ee691dfe494808a56b5a4',
+    'stage1_support.py':'9f369d576e5cca7cd53c362b5dd8b59051e8b98600f6c2c7583862c5224806d9',
+}
+before={n:sha(STAGE/n) for n in expected}
+assert before==expected
+def save(name,data):
+    (OUT/name).write_text(json.dumps(data,indent=2)+'\n')
+save('inputs-before.json',before)
+bpy.ops.wm.open_mainfile(filepath=str(STAGE/'attempt-01/failed-stage.blend'))
+objects=[bpy.data.objects[n] for n in ['role-l14-2743','role-l14-2234']]
+digests={o.name:native.fixed_digest(o) for o in objects}
+BI=Matrix(((1,0,0,0),(0,0,-1,0),(0,1,0,0),(0,0,0,1))).inverted()
+proposal=json.loads((STAGE/'proposal.json').read_text())
+guess=Vector(proposal['owners']['l14']['fixedTipCore']['anchorWorld'])-Vector((0,.12,0))
+hint=proposal['owners']['l14']['lobeHints'][0]
+target=Vector(fields.field_for_role('l14','crown-lobe',0,proposal)(hint['anchorWorld']))
+radius=.45*.46*.585*.35*.6
+directions=[tuple(Vector(raw).normalized()) for raw in [(1,.371,.619),(.283,1,.517)]]
+save('query-input.json',{'guess':list(guess),'target':list(target),'radius':radius,
+                         'directions':directions,'rayLimit':128,'distance':100,'objects':digests})
+records=[]
+candidate_left=None
+for label,klass in [('original',joints.Volume),('candidate64',Volume64)]:
+    start=time.monotonic()
+    row={'variant':label}
+    try:
+        left,right=[klass(o,BI) for o in objects]
+        if label=='candidate64':
+            candidate_left=left
+        row['closure']=[left.closure,right.closure]
+        row['triangleCounts']=[len(left.triangles),len(right.triangles)]
+        row['diagonals']=[(v.high-v.low).length for v in [left,right]]
+        # RayQuery64 itself checks actual origin/direction/AABB exit before 100.
+        row['returned']=joints.overlap_ball(left,right,[guess,target],radius)
+    except Exception as error:
+        row.update(errorType=type(error).__name__,error=str(error),traceback=traceback.format_exc())
+    row['elapsedSeconds']=time.monotonic()-start
+    records.append(row)
+    save(label+'-result.json',row)
+    print('QUERY_COMPARISON',json.dumps(row),flush=True)
+
+details=[]
+for direction in directions:
+    try:
+        assert candidate_left is not None, 'Candidate constructor did not complete'
+        details.append(candidate_left.query64.ray(tuple(guess),direction))
+    except Exception as error:
+        details.append({'errorType':type(error).__name__,'error':str(error)})
+save('candidate-first-point-rays.json',details)
+after={n:sha(STAGE/n) for n in expected}
+bound_after=verify_readiness(HERE)
+assert bound_before==bound_after
+digests_after={o.name:native.fixed_digest(o) for o in objects}
+assert before==after and digests==digests_after
+assert records[0].get('error')=='Ray parity exceeded bounded intersections: role-l14-2743'
+result={'scope':'first failed pair only; no full stage2 execution','inputsBefore':before,'inputsAfter':after,
+        'objectDigestsBefore':digests,'objectDigestsAfter':digests_after,'records':records,
+        'boundInputsBefore':bound_before,'boundInputsAfter':bound_after,
+        'clearanceLimit':'Inherited float32 BVH distance is approximate, not a certified lower bound; 7-decimal welded closure is not exact seam closure',
+        'sourceOnly':True,'geometryAcceptance':False,'runtimeIntegrated':False,'independentObservers':0}
+save('comparison.json',result)
+

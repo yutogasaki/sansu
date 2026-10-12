@@ -1,0 +1,99 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { createHash } from 'node:crypto';
+import { gunzipSync, gzipSync } from 'node:zlib';
+import { BufferAttribute, BufferGeometry } from 'three';
+
+assert(process.argv.length === 6 && process.argv[2] === '--attempt' && process.argv[4] === '--output',
+    'Use --attempt 1|2 --output NEW_DIRECTORY');
+const attempt = Number(process.argv[3]), output = path.resolve(process.argv[5]);
+assert([1, 2].includes(attempt), 'At most two coarse candidates');
+assert(!fs.existsSync(path.join(output, 'native-gallery-entry.glb')), 'Preserve first output');
+// Candidate 2 is deliberately not a hidden search: a second specification must
+// be reviewed from candidate 1's real route result before it is added here.
+assert.equal(attempt, 1, 'Only the first explicit shape is currently specified');
+const sha = value => createHash('sha256').update(value).digest('hex');
+const sourcePath = 'prototypes/place-qa/native-gallery-v5.glb.gz';
+const manifestPath = 'prototypes/place-qa/native-gallery-v5-manifest.json';
+const compressed = fs.readFileSync(sourcePath), manifestBytes = fs.readFileSync(manifestPath);
+const original = gunzipSync(compressed), prior = JSON.parse(manifestBytes);
+assert.equal(sha(compressed), prior.artifact.sha256); assert.equal(sha(original), prior.artifact.expandedSha256);
+const jsonLength = original.readUInt32LE(12), gltf = JSON.parse(original.subarray(20, 20 + jsonLength));
+const binary = Buffer.from(original.subarray(28 + jsonLength));
+assert.equal(gltf.nodes.length, 39);
+const widths = { SCALAR: 1, VEC3: 3 }, sizes = { 5123: 2, 5125: 4, 5126: 4 };
+function accessor(id) {
+    const a = gltf.accessors[id], view = gltf.bufferViews[a.bufferView], width = widths[a.type], bytes = sizes[a.componentType];
+    assert(width && bytes && !a.sparse);
+    const offset = (i, k) => (view.byteOffset ?? 0) + (a.byteOffset ?? 0) + i * (view.byteStride ?? bytes * width) + k * bytes;
+    const values = Array.from({ length: a.count }, (_, i) => Array.from({ length: width }, (_, k) => {
+        const at = offset(i, k); return a.componentType === 5126 ? binary.readFloatLE(at) : a.componentType === 5123 ? binary.readUInt16LE(at) : binary.readUInt32LE(at);
+    }));
+    return { a, values, write(next) { assert.equal(a.componentType, 5126); next.forEach((v, i) => v.forEach((n, k) => binary.writeFloatLE(n, offset(i, k)))); } };
+}
+const spec = { hingeZ: -7.574749946594238, contraction: .08, fullUntilX: 3.775, fixedFromX: 3.95,
+    lowerTopY: 1.6814100742340088, rule: 'Contract only the south-facing low entry apron; shared low stair lead-in follows the identical map. Actual raised treads, rails, boughs and upper model stay fixed.' };
+const eligible = new Set(['solid-body/terrain-threshold', 'walk-top/terrain-threshold', 'solid-body/front-junction',
+    'walk-top/front-junction', 'solid-body/real-sixteen-stairs', 'walk-top/real-sixteen-stairs']);
+const changes = [], accessors = new Set();
+for (const node of gltf.nodes) {
+    assert(!node.matrix && !node.translation && !node.rotation && !node.scale && !node.children?.length);
+    const primitive = gltf.meshes[node.mesh].primitives[0], id = primitive.attributes.POSITION;
+    assert(!accessors.has(id), 'Node positions must not alias'); accessors.add(id);
+    if (!eligible.has(node.name)) continue;
+    const positions = accessor(id), normals = accessor(primitive.attributes.NORMAL), indices = accessor(primitive.indices).values.flat();
+    const before = positions.values, changed = new Set();
+    const after = before.map(([x, y, z], i) => {
+        if (y > spec.lowerTopY || z <= spec.hingeZ || x >= spec.fixedFromX) return [x, y, z];
+        const t = Math.max(0, Math.min(1, (x - spec.fullUntilX) / (spec.fixedFromX - spec.fullUntilX)));
+        const ratio = spec.contraction + (1 - spec.contraction) * t;
+        const next = Math.fround(spec.hingeZ + (z - spec.hingeZ) * ratio);
+        if (next !== z) changed.add(i);
+        return [x, y, next];
+    });
+    if (!changed.size) continue;
+    const touched = new Set(), faceArea = (p, a, b, c) => {
+        const u = p[b].map((v, i) => v - p[a][i]), v = p[c].map((n, i) => n - p[a][i]);
+        return [u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0]];
+    };
+    let changedTriangles = 0;
+    for (let t = 0; t < indices.length; t += 3) {
+        const tri = indices.slice(t, t + 3);
+        if (!tri.some(i => changed.has(i))) continue;
+        changedTriangles++; tri.forEach(i => touched.add(i));
+        const a = faceArea(before, ...tri), b = faceArea(after, ...tri);
+        assert(Math.hypot(...b) > 0, `${node.name}: introduced zero-area face`);
+        if (node.name.startsWith('walk-top/') && a[1] > 0) assert(b[1] > 0, `${node.name}: inverted top`);
+    }
+    const geometry = new BufferGeometry();
+    geometry.setAttribute('position', new BufferAttribute(new Float32Array(after.flat()), 3)); geometry.setIndex(indices); geometry.computeVertexNormals();
+    const computed = geometry.getAttribute('normal');
+    const nextNormals = normals.values.map((normal, i) => touched.has(i) ? [computed.getX(i), computed.getY(i), computed.getZ(i)] : normal);
+    positions.write(after); normals.write(nextNormals); geometry.dispose();
+    positions.a.min = [0, 1, 2].map(i => Math.min(...after.map(v => v[i])));
+    positions.a.max = [0, 1, 2].map(i => Math.max(...after.map(v => v[i])));
+    changes.push({ node: node.name, changedVertices: changed.size, changedTriangles, recomputedNormals: touched.size,
+        beforeMin: [0, 1, 2].map(i => Math.min(...before.map(v => v[i]))), beforeMax: [0, 1, 2].map(i => Math.max(...before.map(v => v[i]))),
+        afterMin: positions.a.min, afterMax: positions.a.max,
+        raisedTreadPositionsUnchanged: before.every((v, i) => v[1] <= spec.lowerTopY || v.every((n, j) => n === after[i][j])) });
+}
+assert.equal(changes.length, 6);
+const rawJson = Buffer.from(JSON.stringify(gltf)), encodedJson = Buffer.alloc(Math.ceil(rawJson.length / 4) * 4, 0x20); rawJson.copy(encodedJson);
+const result = Buffer.alloc(12 + 8 + encodedJson.length + 8 + binary.length);
+result.writeUInt32LE(0x46546c67, 0); result.writeUInt32LE(2, 4); result.writeUInt32LE(result.length, 8);
+result.writeUInt32LE(encodedJson.length, 12); result.writeUInt32LE(0x4e4f534a, 16); encodedJson.copy(result, 20);
+result.writeUInt32LE(binary.length, 20 + encodedJson.length); result.writeUInt32LE(0x004e4942, 24 + encodedJson.length); binary.copy(result, 28 + encodedJson.length);
+const gzip = gzipSync(result, { level: 9, mtime: 0 });
+assert(gunzipSync(gzip).equals(result));
+const next = { ...prior, source: { id: 'native05-p02-gallery-east-v6-entry-01', sha256: sha(result), artifact: path.relative(process.cwd(), path.join(output, 'native-gallery-entry.glb')) },
+    artifact: { path: '/prototypes/place-qa/native-gallery-entry.glb.gz', sha256: sha(gzip), expandedSha256: sha(result), expandedBytes: result.length, gzipBytes: gzip.length },
+    entryRevision: { attempt, status: 'HOLD_PENDING_REAL_WORLD_ROUTE_AND_VISUAL', source: prior.source, sourceArtifact: prior.artifact,
+        method: 'Node POSITION deformation with affected-face NORMAL recomputation. No index/material/node/owner change.', spec, changes },
+    inputs: { [sourcePath]: sha(compressed), [manifestPath]: sha(manifestBytes), 'tools/build-authored-gallery-entry-kit.mjs': sha(fs.readFileSync(import.meta.filename)) } };
+assert.equal(sha(fs.readFileSync(sourcePath)), sha(compressed)); assert.equal(sha(fs.readFileSync(manifestPath)), sha(manifestBytes));
+fs.mkdirSync(output, { recursive: true });
+fs.writeFileSync(path.join(output, 'native-gallery-entry.glb'), result, { flag: 'wx' });
+fs.writeFileSync(path.join(output, 'native-gallery-entry.glb.gz'), gzip, { flag: 'wx' });
+fs.writeFileSync(path.join(output, 'native-gallery-entry-manifest.json'), JSON.stringify(next, null, 2) + '\n', { flag: 'wx' });
+console.log(JSON.stringify({ artifact: next.artifact, changes }, null, 2));

@@ -1,0 +1,27 @@
+{
+  "preparedAtUtc": "2026-10-12T04:07:15.592892+00:00",
+  "status": "READY-NOT-BLENDER-EXECUTED",
+  "files": {
+    "README.md": "7549170148d1232baf7e7e382d2692756cc7b63fb6b41926ecf03fe4b74529c6",
+    "compare-failed-query.py": "52b47a3149b98c72609fbb9c4e4f4a5552806020d31b335bc886ecaea0ba9483",
+    "pure-python-first.log.txt": "ef1ef0ea4ba0032ed999bbb6d8ab866199c34c9d82c170e43c4ef6f0dbc2a9f2",
+    "pure-python-result.json": "38894ed39a52ff46a0b773ca907b7596cff1cd89365556e4a12a3d94ed41f122",
+    "ray_query64.py": "86e0d3c42592d86b0978aaedebb1154e7100589e98b475d114e2896ee3be4f3b",
+    "run-once.py": "91e70644cd3da298c39fb3b83f01f505ec8481880f591a59b63b67d5bc541d57",
+    "test_query64.py": "286c8f31c2245a8343ea4d0f49041c35d32e89c2efa55cfea136de815de97753",
+    "volume_adapter.py": "141529b483f9ceeeb4732c08d997d388a7218cf2aba73d3efcdf8026ae1bc047"
+  },
+  "pythonAstParsed": true,
+  "originalJointsSha256": "c99059a0af65cdd62b741911537dc26f605051d22e57207d452d7f5e12ca8db1",
+  "failedBlendSha256": "7010856b68de220ceb13781ff12f8c82b6c6aae9b9c575c748688043b98f3ccc",
+  "scope": "source only; no app/source candidate edits",
+  "limits": {
+    "threads": 2,
+    "maxProcesses": 1,
+    "timeoutSeconds": 90,
+    "observedRssBytes": 3221225472
+  },
+  "command": "SANSU_FOREST_QUERY64_APPROVED=1 python3 /private/tmp/sansu-authored-forest-crown-study/stage2/query-v2/run-once.py",
+  "purePythonChecks": 28,
+  "purePythonComplete": true
+}

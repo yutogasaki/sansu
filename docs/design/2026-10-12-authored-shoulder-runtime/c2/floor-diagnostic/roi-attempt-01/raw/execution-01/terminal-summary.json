@@ -1,0 +1,41 @@
+{
+  "recordedAtUtc": "2026-10-12T05:11:04.581590+00:00",
+  "execSession": 21765,
+  "outerExitCode": 1,
+  "driverExitCode": 1,
+  "startedAtUtc": "2026-10-12T05:09:04.671376+00:00",
+  "finishedAtUtc": "2026-10-12T05:09:37.199293+00:00",
+  "ownedPid": 36629,
+  "ownedProcessGroup": 36629,
+  "elapsedSeconds": 32.527864916,
+  "peakObservedProcessTreeRssBytes": 3156967424,
+  "stopReason": null,
+  "failureClassification": "Harness cross-JSON exact comparison distinguishes in-memory negative zero from persisted zero in the orthographic projection matrix; failed before ROI intervention. Does not evaluate the visual hypothesis.",
+  "firstFailureError": "AssertionError [ERR_ASSERTION]: Projection differs from static target\n+ actual - expected\n... Skipped lines\n\n  [\n    0.22183415890809055,\n    0,\n    0,\n    0,\n...\n    0,\n+   -0,\n+   -0,\n-   0,\n-   0,\n    -1.002002002002002,\n    1\n  ]\n\n    at capture (file:///private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-prepared/diagnose-roi-face-normal.mjs:381:20)\n    at async file:///private/tmp/sansu-floor-shading-diagnostic-c2/roi-face-normal-prepared/diagnose-roi-face-normal.mjs:419:5",
+  "consoleErrorsUnclassified": [
+    {
+      "kind": "console-error",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "captureCount": 0,
+  "shaderEvidencePresent": false,
+  "restoration": {
+    "complete": true,
+    "originalMaterialIdentity": true,
+    "hookRestored": true,
+    "clonesDisposed": 0,
+    "matches": 4
+  },
+  "sourceCount": 6460,
+  "sourceStable": true,
+  "installedCount": 6,
+  "installedStable": true,
+  "driverDependenciesStable": true,
+  "targetVerificationScope": "The failure line follows actual index/position/normal/group/prior-buffer and camera-world checks. Their detailed observe payload was not persisted because the first capture failed before recording. No claim of a saved target-match capture.",
+  "ownedGroupRemaining": [],
+  "rootVite5359": "No signal or restart performed",
+  "rawReportSha256": "4ba6380cc8581e7f61d884b5b46bc2341e464ee33ff4bb32bf4bdf623793772e",
+  "noRetry": true,
+  "noAppOrCandidateEdits": true
+}

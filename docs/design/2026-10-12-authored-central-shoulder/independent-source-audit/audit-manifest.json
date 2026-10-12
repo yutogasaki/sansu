@@ -1,0 +1,148 @@
+{
+  "scope": "Independent source-only audit. Physical/topology/context checks passed within documented limits; no app or visual acceptance. Static water-ripple omission is a separate known render limit.",
+  "sourceFreeze": {
+    "geometry-profile.json.gz": "7b4772489932b225d7b31ced5bd53c6835a47e8e63c71eeb43d7b59af1523d3b",
+    "central-shoulder-components.glb": "24f32eed46efe18cd3411220771b2b4f5266449278f00499c0917550f1a7d998",
+    "central-shoulder-source.glb": "16ff4e1a1b31a4dcb676dbc6283ec368902f08bfba2a895a436a93845a4907b8",
+    "central-shoulder-source.blend": "7a7ff0dfe34e2fb68a4c53f7b9c824cc3e20f62e0dccd64d86b45a1ca5781905",
+    "central-shoulder-components-normal-v2.glb": "c79e2cd7a228b24ff526e6d78913f6a07880e35dec1532d4c278dd7cbf10411e",
+    "central-shoulder-source-normal-v2.glb": "cd86121c32072053960e927866f9442b7168e281df9d8c46cf9807ce691b2ff9",
+    "source-context.glb": "22ad846e8c1fcfcdc9fd30a65b7398520c63b5fd5d54c60791c1342fa00f8059"
+  },
+  "rawFiles": [
+    {
+      "file": "raw/actual-root-guard-final.log.txt",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/actual-root-guard-final.log.txt",
+      "sha256": "a274b74e6218c2d74bb89c51a42f1a50f7d437b53a9a4e07ac205c7f2aa6786c",
+      "sourceSha256": "a274b74e6218c2d74bb89c51a42f1a50f7d437b53a9a4e07ac205c7f2aa6786c",
+      "bytes": 6936
+    },
+    {
+      "file": "raw/actual-root-guard-first.log.txt",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/actual-root-guard-first.log.txt",
+      "sha256": "f56945a981963f218cdeddd917a68552615768531a662fda6800cb4cff151ba8",
+      "sourceSha256": "f56945a981963f218cdeddd917a68552615768531a662fda6800cb4cff151ba8",
+      "bytes": 1086
+    },
+    {
+      "file": "raw/actual-root-guard-first.mjs",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/actual-root-guard-first.mjs",
+      "sha256": "80b03482c32f1d402750fe46c1ddeeabc4faccdf71833fe083fb77296054f57f",
+      "sourceSha256": "80b03482c32f1d402750fe46c1ddeeabc4faccdf71833fe083fb77296054f57f",
+      "bytes": 8178
+    },
+    {
+      "file": "raw/actual-root-guard.json",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/actual-root-guard.json",
+      "sha256": "d2846f585c4588c15cdba80e0b25a30ef1c6313f2d88ecfab49b2f9b72c1edcb",
+      "sourceSha256": "d2846f585c4588c15cdba80e0b25a30ef1c6313f2d88ecfab49b2f9b72c1edcb",
+      "bytes": 54286
+    },
+    {
+      "file": "raw/components-audit-final.log.txt",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/components-audit-final.log.txt",
+      "sha256": "8e4c19e3710ebb4c1030953a68e1aa6a17b581eeb11c9e8c7485dd3dd7d0df79",
+      "sourceSha256": "8e4c19e3710ebb4c1030953a68e1aa6a17b581eeb11c9e8c7485dd3dd7d0df79",
+      "bytes": 7669
+    },
+    {
+      "file": "raw/components-audit-first.log.txt",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/components-audit-first.log.txt",
+      "sha256": "f71e6b271627ac05c86ee91351820be27bf79fe102da970012be50a77e81c04e",
+      "sourceSha256": "f71e6b271627ac05c86ee91351820be27bf79fe102da970012be50a77e81c04e",
+      "bytes": 1955
+    },
+    {
+      "file": "raw/components-audit-first.py",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/components-audit-first.py",
+      "sha256": "f4b179a756bf5d2aa173ca28bc50efe776d3d5d2d8721896ea9b21b0394ee943",
+      "sourceSha256": "f4b179a756bf5d2aa173ca28bc50efe776d3d5d2d8721896ea9b21b0394ee943",
+      "bytes": 11565
+    },
+    {
+      "file": "raw/components-audit-inconsistent-overlay.json",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/components-audit-inconsistent-overlay.json",
+      "sha256": "f28ee71e0f397b65ed85dd73928780cb7ed279a1edee447447e94b47d82dc606",
+      "sourceSha256": "f28ee71e0f397b65ed85dd73928780cb7ed279a1edee447447e94b47d82dc606",
+      "bytes": 7560
+    },
+    {
+      "file": "raw/components-audit-inconsistent-overlay.py",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/components-audit-inconsistent-overlay.py",
+      "sha256": "5d0ad5172a4cd32e68cb767eb86a8a97ebbd81ef3e5d1b58079404d05abb86f3",
+      "sourceSha256": "5d0ad5172a4cd32e68cb767eb86a8a97ebbd81ef3e5d1b58079404d05abb86f3",
+      "bytes": 11901
+    },
+    {
+      "file": "raw/components-audit.json",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/components-audit.json",
+      "sha256": "8e4c19e3710ebb4c1030953a68e1aa6a17b581eeb11c9e8c7485dd3dd7d0df79",
+      "sourceSha256": "8e4c19e3710ebb4c1030953a68e1aa6a17b581eeb11c9e8c7485dd3dd7d0df79",
+      "bytes": 7669
+    },
+    {
+      "file": "raw/context-audit-final.log.txt",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/context-audit-final.log.txt",
+      "sha256": "26e45426de38acf3925e5c64b9af40ae1746980bdcf0ebbc8708f6809b5cd194",
+      "sourceSha256": "26e45426de38acf3925e5c64b9af40ae1746980bdcf0ebbc8708f6809b5cd194",
+      "bytes": 15115
+    },
+    {
+      "file": "raw/context-audit-first.log.txt",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/context-audit-first.log.txt",
+      "sha256": "44832b83365b82da3ebb08d3561d0d4591f695dfdffcf9ea152725bc9dfdde69",
+      "sourceSha256": "44832b83365b82da3ebb08d3561d0d4591f695dfdffcf9ea152725bc9dfdde69",
+      "bytes": 636
+    },
+    {
+      "file": "raw/context-audit-first.py",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/context-audit-first.py",
+      "sha256": "4c3fed5eff1ea27c35cc585ea78cdcbe9f18f87e0160ab56aea54321a0f35528",
+      "sourceSha256": "4c3fed5eff1ea27c35cc585ea78cdcbe9f18f87e0160ab56aea54321a0f35528",
+      "bytes": 4117
+    },
+    {
+      "file": "raw/context-audit-line-mode-failure.log.txt",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/context-audit-line-mode-failure.log.txt",
+      "sha256": "84d71aa659ffea058ed1a56406b855d4292921ea7b906419576603b1b31b200f",
+      "sourceSha256": "84d71aa659ffea058ed1a56406b855d4292921ea7b906419576603b1b31b200f",
+      "bytes": 640
+    },
+    {
+      "file": "raw/context-audit-raw-json-number-diff.json",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/context-audit-raw-json-number-diff.json",
+      "sha256": "ec26b734b87d79990755ba8e8b4be3930eaa298a326d69c73f694eeb8fda6ddc",
+      "sourceSha256": "ec26b734b87d79990755ba8e8b4be3930eaa298a326d69c73f694eeb8fda6ddc",
+      "bytes": 14921
+    },
+    {
+      "file": "raw/context-audit.json",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/context-audit.json",
+      "sha256": "26e45426de38acf3925e5c64b9af40ae1746980bdcf0ebbc8708f6809b5cd194",
+      "sourceSha256": "26e45426de38acf3925e5c64b9af40ae1746980bdcf0ebbc8708f6809b5cd194",
+      "bytes": 15115
+    },
+    {
+      "file": "raw/normal-v2-audit.json",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/normal-v2-audit.json",
+      "sha256": "db38d3ea78af2350a4b4ce6e5ae9cd8eb8dd6ad564d5213926455ead50aba4ec",
+      "sourceSha256": "db38d3ea78af2350a4b4ce6e5ae9cd8eb8dd6ad564d5213926455ead50aba4ec",
+      "bytes": 1332
+    },
+    {
+      "file": "raw/normal-v2-audit.log.txt",
+      "source": "/private/tmp/sansu-central-shoulder-source-audit/normal-v2-audit.log.txt",
+      "sha256": "db38d3ea78af2350a4b4ce6e5ae9cd8eb8dd6ad564d5213926455ead50aba4ec",
+      "sourceSha256": "db38d3ea78af2350a4b4ce6e5ae9cd8eb8dd6ad564d5213926455ead50aba4ec",
+      "bytes": 1332
+    }
+  ],
+  "allCopiedBytesIdentical": true,
+  "diagnosticFailuresPreserved": [
+    "actual-root-guard-first: leading slash asset path misclassified as absolute, fixed reader only",
+    "components-audit-first: exhaustive normal lookup stopped at 45 seconds, replaced with spatial index; no evidence inferred from incomplete run",
+    "components-audit-inconsistent-overlay: GEOS polygon difference for a narrowly prefiltered floor union returned mutually inconsistent difference/intersection; expanded exact input ROI to include the whole C region, then union difference 2.37e-17 and intersection equals route area",
+    "context-audit-first: unnamed glTF nodes, then non-triangle line mode needed explicit handling",
+    "context-audit-raw-json-number-diff: metadata equality initially used JSON integer/float spellings; semantic exact numeric comparison confirms parity"
+  ]
+}

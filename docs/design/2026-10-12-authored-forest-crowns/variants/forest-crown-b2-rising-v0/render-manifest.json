@@ -1,0 +1,33 @@
+{
+  "candidate": "forest-crown-b2-rising-v0",
+  "evidenceType": "offline source render; NOT an actual app screenshot",
+  "fixedReferenceBuild": "authored-shoulder-c1",
+  "cameraReferenceSha256": "070ca145b6b32563d0ebc3032cf82684b0bf32f9ead881fb8551231ab920d3ea",
+  "inputsBefore": {
+    "study.blend": "6ee40968c114fb9e8f5703732e3a3ae801276b1359007d4e03cab25763b73e6b",
+    "study.glb": "358a707752a8ad8d59847d019abdde0709f340e727292421f68933ab3d0b9ff0",
+    "owned-tree-components.glb": "3d74656e72c1186b16789ec4d3b245651d525127b314637a701f8c24ce933a71",
+    "manifest.json": "c7f3fee78232f8da160be0cadbb182088181528dc8166de36dcea71fa41c8d2f"
+  },
+  "inputsAfter": {
+    "study.blend": "6ee40968c114fb9e8f5703732e3a3ae801276b1359007d4e03cab25763b73e6b",
+    "study.glb": "358a707752a8ad8d59847d019abdde0709f340e727292421f68933ab3d0b9ff0",
+    "owned-tree-components.glb": "3d74656e72c1186b16789ec4d3b245651d525127b314637a701f8c24ce933a71",
+    "manifest.json": "c7f3fee78232f8da160be0cadbb182088181528dc8166de36dcea71fa41c8d2f"
+  },
+  "output": "source-whole.png",
+  "sha256": "8119a468dccb39bb472e172a34b0b4ae287c17809895eabbe96fc6458096dbbd",
+  "elapsedSeconds": 4.496370624983683,
+  "settings": {
+    "engine": "Cycles CPU",
+    "samples": 16,
+    "resolution": [
+      1280,
+      925
+    ],
+    "viewTransform": "AgX"
+  },
+  "limitations": "Owner layer only/no residents; Blender lighting/transmission/ocean differ; ripple line roundtrip differs; no runtime or art acceptance",
+  "runtimeIntegrated": false,
+  "independentObservers": 0
+}

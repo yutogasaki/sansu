@@ -1,0 +1,297 @@
+{
+  "attempt": "v4-curvature-all-unions-MANIFOLD",
+  "sourceExactFailureRetained": "/private/tmp/sansu-p02-gallery-source-study/east-v2/runs/01-coarse-build",
+  "sourceV3InputFoldFailureRetained": "/private/tmp/sansu-p02-gallery-source-study/east-v3-manifold/runs/01-coarse-build",
+  "inputs": [
+    {
+      "object": "construction-solid/terrainThreshold",
+      "vertices": 422,
+      "edges": 1260,
+      "faces": 840,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "signedVolume": 0.025043476956363428,
+      "edgeValence": {
+        "2": 1260
+      },
+      "selfIntersectionProvenAbsent": false
+    },
+    {
+      "object": "construction-solid/alignedOpening",
+      "vertices": 140,
+      "edges": 414,
+      "faces": 276,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "signedVolume": 0.028683224737501466,
+      "edgeValence": {
+        "2": 414
+      },
+      "selfIntersectionProvenAbsent": false
+    },
+    {
+      "object": "construction-solid/eastBranchGallery",
+      "vertices": 1910,
+      "edges": 5724,
+      "faces": 3816,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "signedVolume": 0.18269861032662094,
+      "edgeValence": {
+        "2": 5724
+      },
+      "selfIntersectionProvenAbsent": false
+    },
+    {
+      "object": "construction-solid/visible-front-branch-junction",
+      "vertices": 66,
+      "edges": 192,
+      "faces": 128,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "signedVolume": 0.022374539501163068,
+      "edgeValence": {
+        "2": 192
+      },
+      "selfIntersectionProvenAbsent": false
+    },
+    {
+      "object": "construction-solid/unchanged-native-interior",
+      "vertices": 96,
+      "edges": 282,
+      "faces": 188,
+      "duplicateCoordinateFaces": 0,
+      "zeroAreaFaces": 0,
+      "badEdges": 0,
+      "components": 1,
+      "signedVolume": 0.03014564713898074,
+      "edgeValence": {
+        "2": 282
+      },
+      "selfIntersectionProvenAbsent": false
+    }
+  ],
+  "steps": [
+    {
+      "operandIndex": 0,
+      "operand": "construction-solid/terrainThreshold",
+      "beforeBody": {
+        "object": "construction-solid/eastBranchGallery",
+        "vertices": 1910,
+        "edges": 5724,
+        "faces": 3816,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "signedVolume": 0.18269861032662094,
+        "edgeValence": {
+          "2": 5724
+        },
+        "selfIntersectionProvenAbsent": false
+      },
+      "beforeOperand": {
+        "object": "construction-solid/terrainThreshold",
+        "vertices": 422,
+        "edges": 1260,
+        "faces": 840,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "signedVolume": 0.025043476956363428,
+        "edgeValence": {
+          "2": 1260
+        },
+        "selfIntersectionProvenAbsent": false
+      },
+      "solver": "MANIFOLD",
+      "operatorResult": [
+        "FINISHED"
+      ],
+      "after": {
+        "object": "construction-solid/eastBranchGallery",
+        "vertices": 2462,
+        "edges": 7013,
+        "faces": 4553,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "signedVolume": 0.20523818970640872,
+        "edgeValence": {
+          "2": 7013
+        },
+        "selfIntersectionProvenAbsent": false
+      }
+    },
+    {
+      "operandIndex": 1,
+      "operand": "construction-solid/alignedOpening",
+      "beforeBody": {
+        "object": "construction-solid/eastBranchGallery",
+        "vertices": 2462,
+        "edges": 7013,
+        "faces": 4553,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "signedVolume": 0.20523818970640872,
+        "edgeValence": {
+          "2": 7013
+        },
+        "selfIntersectionProvenAbsent": false
+      },
+      "beforeOperand": {
+        "object": "construction-solid/alignedOpening",
+        "vertices": 140,
+        "edges": 414,
+        "faces": 276,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "signedVolume": 0.028683224737501466,
+        "edgeValence": {
+          "2": 414
+        },
+        "selfIntersectionProvenAbsent": false
+      },
+      "solver": "MANIFOLD",
+      "operatorResult": [
+        "FINISHED"
+      ],
+      "after": {
+        "object": "construction-solid/eastBranchGallery",
+        "vertices": 2745,
+        "edges": 7385,
+        "faces": 4642,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "signedVolume": 0.22356680079528762,
+        "edgeValence": {
+          "2": 7385
+        },
+        "selfIntersectionProvenAbsent": false
+      }
+    },
+    {
+      "operandIndex": 2,
+      "operand": "construction-solid/visible-front-branch-junction",
+      "beforeBody": {
+        "object": "construction-solid/eastBranchGallery",
+        "vertices": 2745,
+        "edges": 7385,
+        "faces": 4642,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "signedVolume": 0.22356680079528762,
+        "edgeValence": {
+          "2": 7385
+        },
+        "selfIntersectionProvenAbsent": false
+      },
+      "beforeOperand": {
+        "object": "construction-solid/visible-front-branch-junction",
+        "vertices": 66,
+        "edges": 192,
+        "faces": 128,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "signedVolume": 0.022374539501163068,
+        "edgeValence": {
+          "2": 192
+        },
+        "selfIntersectionProvenAbsent": false
+      },
+      "solver": "MANIFOLD",
+      "operatorResult": [
+        "FINISHED"
+      ],
+      "after": {
+        "object": "construction-solid/eastBranchGallery",
+        "vertices": 2760,
+        "edges": 7293,
+        "faces": 4535,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "signedVolume": 0.22356680079528848,
+        "edgeValence": {
+          "2": 7293
+        },
+        "selfIntersectionProvenAbsent": false
+      }
+    },
+    {
+      "operandIndex": 3,
+      "operand": "construction-solid/unchanged-native-interior",
+      "beforeBody": {
+        "object": "construction-solid/eastBranchGallery",
+        "vertices": 2760,
+        "edges": 7293,
+        "faces": 4535,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "signedVolume": 0.22356680079528848,
+        "edgeValence": {
+          "2": 7293
+        },
+        "selfIntersectionProvenAbsent": false
+      },
+      "beforeOperand": {
+        "object": "construction-solid/unchanged-native-interior",
+        "vertices": 96,
+        "edges": 282,
+        "faces": 188,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "signedVolume": 0.03014564713898074,
+        "edgeValence": {
+          "2": 282
+        },
+        "selfIntersectionProvenAbsent": false
+      },
+      "solver": "MANIFOLD",
+      "operatorResult": [
+        "FINISHED"
+      ],
+      "after": {
+        "object": "construction-solid/eastBranchGallery",
+        "vertices": 2857,
+        "edges": 7477,
+        "faces": 4622,
+        "duplicateCoordinateFaces": 0,
+        "zeroAreaFaces": 0,
+        "badEdges": 0,
+        "components": 1,
+        "signedVolume": 0.2432965588430422,
+        "edgeValence": {
+          "2": 7477
+        },
+        "selfIntersectionProvenAbsent": false
+      }
+    }
+  ],
+  "selfIntersectionNotProvenAbsentByTheseChecks": true
+}

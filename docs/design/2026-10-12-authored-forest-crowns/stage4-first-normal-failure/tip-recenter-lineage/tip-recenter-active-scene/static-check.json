@@ -1,0 +1,35 @@
+{
+  "compiled": [
+    "geometry.py",
+    "probe.py",
+    "export_check.py",
+    "test_geometry.py",
+    "test_export_check.py",
+    "run-once.py",
+    "prepare.py",
+    "export_isolation.py",
+    "world_check.py",
+    "test_world_check.py",
+    "exact_fingerprint.py",
+    "test_exact_fingerprint.py"
+  ],
+  "pureTestsExitCode": 0,
+  "testCount": 16,
+  "operatorAllowlist": [
+    "bpy.ops.export_scene.gltf",
+    "bpy.ops.import_scene.gltf",
+    "bpy.ops.object.select_all",
+    "bpy.ops.wm.read_factory_settings"
+  ],
+  "externalInputParity": true,
+  "blenderExecuted": false,
+  "unchangedExportOracleSHA": "401f4f6b370a66ca82e9ba81df0b1f4062563e3d800c6610db36f6286e20cb18",
+  "normalTolerance": 0.002,
+  "diagnosticRepresentationErrorBound": 1e-06,
+  "sourceMeshOrMaterialOrOwnerEdited": false,
+  "mathOracleRunnerByteIdenticalToFirstTipProbe": true,
+  "originalSceneGuard": "exact mesh/normal/matrix/parent/sharp/material; no repair assignments",
+  "copyMutationPolicy": "matrix drift observed, output world error unchanged <=1e-6; all other components exact",
+  "exportScope": "use_selection=True/use_active_scene=True; one scene, one exact named leaf,148 exact triangles",
+  "sharpStateEncoding": "same all444 mesh edge order/indices/flags, streamed typed SHA rather than retaining107MB raw list per snapshot"
+}
