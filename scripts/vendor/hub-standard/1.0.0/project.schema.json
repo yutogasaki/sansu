@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hub project metadata 1.0",
+  "description": "Shared by publish/projects/*.json and repository portal/data/project.json. Commands are never executed from metadata.",
+  "type": "object",
+  "required": [
+    "slug",
+    "title"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "localPath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "note": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "status": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "nextAction": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "lastChecked": {
+      "type": "string",
+      "format": "date"
+    },
+    "updated": {
+      "type": "string",
+      "anyOf": [
+        {
+          "format": "date"
+        },
+        {
+          "format": "date-time"
+        }
+      ]
+    },
+    "docs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "uniqueItems": true
+    },
+    "ai": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "uniqueItems": true
+    },
+    "commits": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "pattern": "\\S"
+      },
+      "uniqueItems": true
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "status"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "status": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "owner": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "executor": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "started": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "deadline": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "output": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "notes": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        }
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "status"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "status": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "owner": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "deadline": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "risk": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          },
+          "notes": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        }
+      }
+    }
+  }
+}

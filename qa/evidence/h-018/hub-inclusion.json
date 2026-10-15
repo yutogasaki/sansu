@@ -1,0 +1,45 @@
+{
+  "checkedAt": "2026-10-15T08:50:20.598961+00:00",
+  "commands": [
+    "node hub/common-portal/publish/assemble.cjs",
+    "node hub/common-portal/publish/verify.cjs"
+  ],
+  "expected": "standard Sansu from portal/, images 0, no WebP conversion error, issues 0 and broken 0",
+  "status": "PASS",
+  "discovery": {
+    "slug": "sansu",
+    "root": "portal",
+    "standard": true,
+    "include": [
+      "index.html",
+      "portal.css",
+      "data",
+      "references"
+    ]
+  },
+  "sansu": {
+    "slug": "sansu",
+    "thumbs": 0,
+    "engine": "sips",
+    "extraHtml": [],
+    "downloadsUnpublished": 0,
+    "downloadSample": [],
+    "unpublishedByTop": {},
+    "missing": []
+  },
+  "verify": {
+    "files": 147,
+    "bytes": 1718045,
+    "issues": 0,
+    "bad": [],
+    "broken": 0,
+    "brokenSample": [],
+    "status": "PASS"
+  },
+  "logs": {
+    "assembleSha256": "351c1638e26b9c22b6f7424dedd890c0789ff7cd89fc95b91f856a2a49b75a03",
+    "verifySha256": "333f5c1ff887f44fafaae98d15b26ded3f2b68ffe917933f00dd2cadf2f6cafd"
+  },
+  "warning": "Existing duplicate libvips Objective-C class notice from keep-going/MMmind native libraries; assemble exited 0; not a Sansu WebP error",
+  "hubSourceChanged": false
+}

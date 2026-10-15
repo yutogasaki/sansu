@@ -130,7 +130,8 @@ const checkActiveTaskFiles = async (errors, warnings) => {
     if (!entry.isFile() || !entry.name.endsWith(".md")) continue;
     if (entry.name === "README.md" || entry.name === "TEMPLATE.md") continue;
 
-    if (!activeTaskFilenamePattern.test(entry.name)) {
+    // Cross-repository hub IDs keep their canonical lowercase task filename.
+    if (!activeTaskFilenamePattern.test(entry.name) && !/^h-\d{3}\.md$/.test(entry.name)) {
       errors.push(`docs/tasks/active/${entry.name}: filename must match YYYY-MM-DD-short-task-name.md`);
     }
 

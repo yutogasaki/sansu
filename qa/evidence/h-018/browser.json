@@ -1,0 +1,43 @@
+{
+  "checkedAt": "2026-10-15T08:48:31.248Z",
+  "target": "repo-local generated standard portal; file URL; Chromium headless; JavaScript disabled",
+  "harnessSha256": "6de0f7344dc1d020fc9adc106ed1ccd969e6594b85882cb5aa573bd862260945",
+  "indexSha256": "c30555d65ebcb95f66d015a01ebce3b2028061095229591328643ddb5ef3f996",
+  "projectSha256": "4cb06bc4f799381985fa5db3751986096b0930c8feeb1d7b94da068afc6e5e38",
+  "expected": "five sections, 4 live related tasks, escaped reference return, no horizontal overflow/page errors at 1440/390",
+  "status": "PASS",
+  "screens": [
+    {
+      "width": 1440,
+      "image": "qa/evidence/h-018/portal-1440.png",
+      "imageSha256": "fe9f881c11ab37e190ec87d5f3ce9c94999c40e90c2c4c68372515553a4b28d9",
+      "sections": [
+        "overview",
+        "decisions",
+        "tasks",
+        "documents",
+        "ai"
+      ],
+      "overflow": false,
+      "referencesVisited": 11
+    },
+    {
+      "width": 390,
+      "image": "qa/evidence/h-018/portal-390.png",
+      "imageSha256": "c38a5cf503ebbde837ec59c1a92b94bc633c5e419b37861cd3fa7cd43da84461",
+      "sections": [
+        "overview",
+        "decisions",
+        "tasks",
+        "documents",
+        "ai"
+      ],
+      "overflow": false,
+      "referencesVisited": 11
+    }
+  ],
+  "pageErrors": [],
+  "limits": [
+    "No app visual acceptance, real device, user observation or deployment tested"
+  ]
+}

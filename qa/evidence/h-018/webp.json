@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-10-15T08:46:57.019703+00:00",
+  "command": [
+    "sips",
+    "-s",
+    "format",
+    "webp",
+    "-s",
+    "formatOptions",
+    "80",
+    "-Z",
+    "800",
+    "public/assets/explore/opening-root-pull-v2/ready.webp",
+    "--out",
+    "artifacts/h-018/webp-reproduction.webp"
+  ],
+  "sourceSha256": "8dc7b3806aa8ad666806a3992e05c0ea497f95a51e4f44cc377e56da7bd74f40",
+  "exitCode": 13,
+  "output": "Error: Can't write format: org.webmproject.webp\nError 13: an unknown error occurred\nTry 'sips --help' for help using this tool\n/Users/yutogasaki/Projects/sansu/public/assets/explore/opening-root-pull-v2/ready.webp\n  /Users/yutogasaki/Projects/sansu/artifacts/h-018/webp-reproduction.webp\n",
+  "cause": "No repo sharp; installed sips cannot write WebP",
+  "resolution": "Standard portal embeds escaped text only; 0 image dependencies and 0 Sansu conversions in hub assemble",
+  "limit": "Original historical failing image not identified; equivalent writer path reproduced"
+}

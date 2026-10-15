@@ -1,0 +1,13 @@
+{
+  "capturedAt": "2026-10-15T08:34:47.653825+00:00",
+  "files": 2024,
+  "sha256": "78f9bdf07ba238f53e790f50e3be5a38417833698dff174c1d708d5455601077",
+  "scope": "tracked src/public/prototypes/tools, Vite/TypeScript config and package-lock; working-tree bytes; application verification reuse requires unchanged hash",
+  "packageCommands": {
+    "check:current-ui-entry": "node tools/check-current-ui-entry.mjs",
+    "typecheck": "tsc -b --pretty false",
+    "build": "tsc -b && node tools/build-app.mjs && npm run assets:check",
+    "lint": "eslint .",
+    "test:run": "vitest run"
+  }
+}

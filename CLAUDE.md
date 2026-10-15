@@ -1,49 +1,12 @@
-# CLAUDE.md
+# Claude Code Adapter
 
-## Purpose
+共有の入口は `AGENTS.md`。憲法・仕様・検証・禁止境界はそこから読む。
+共有運用は `.agents/agent-guide.md`、正本の案内は `docs/index.md`。
+このファイルへ規則を複製しない。利用版による自動読込の差は、実際の設定と挙動で確認する。
 
-This file is the Claude Code entry point for the `sansu` repository.
-Keep shared project truth in `docs/` and `.agents/`, and keep this file focused on Claude-specific guidance.
+- 再利用prompt: `.claude/commands/`
+- ローカル設定: `.claude/settings.local.json`
+- 共有skill: `.agents/skills/`
+- 共有queue/memory: `.agents/tasks/` / `.agents/memory/`
 
-Shared canonical guide:
-
-- `/Users/yutogasaki/Projects/_common-ai/PROJECTS_COMMON_AI_GUIDE.md`
-
-## Read First
-
-1. `CONSTITUTION.md`
-2. `.agents/agent-guide.md`
-3. `docs/index.md`
-4. `.agents/tasks/TASKS.md`
-5. `.agents/memory/durable.md`
-6. `docs/ai/verification_matrix.md`
-
-For UI work, also read:
-
-1. `docs/product/07_ui_design_guideline.md`
-2. `docs/product/design_review_checklist.md`
-3. `design-system/MASTER.md`
-
-## Claude-Specific Layer
-
-- Claude reusable prompts live in `.claude/commands/`
-- Claude local settings live in `.claude/settings.local.json`
-- Shared skills live in `.agents/skills/`, not `.claude/skills/`
-- Shared tasks and shared operational memory live in `.agents/tasks/` and `.agents/memory/`
-
-## Slash Commands
-
-- `/project:verify`
-- `/project:doc-sync`
-- `/project:review`
-- `/project:design-review`
-- `/project:ux-tone`
-- `/project:learning-check`
-- `/project:release-check`
-
-## Repo Rules
-
-- `docs/product/01_app_spec.md` is the parent spec
-- Verification is mandatory before closing work
-- Routing, storage, tests, and PWA/update flows are high-risk areas
-- Durable project truth belongs in `docs/`, not in Claude-only memory
+既存slash command（verify、doc-sync、review、design-review、ux-tone、learning-check、release-check）は維持する。

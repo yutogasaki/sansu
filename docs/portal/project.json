@@ -1,0 +1,121 @@
+{
+  "schemaVersion": "1.0",
+  "slug": "sansu",
+  "title": "Sansu — ぽこもこと不思議な島",
+  "summary": "算数・英語の学習から、自分の島を育てる子ども向けPWA。学習記録と所有は端末内に保存する。",
+  "owner": "Yu（採用・公開判断）。個別作業の担当は未設定（要相談）",
+  "lastChecked": "2026-10-15",
+  "updated": "2026-10-15",
+  "note": "Codexが2026-10-15にローカル正本を確認。概要の状態・次の行動・タスクは共有キュー、確認待ちはBLOCKEDから抽出。開始前からの未commit内容を含む作業ツリーの観測であり、製品受入・本番配信・実機・子どもの観察の合格ではない。期限の不明は設定不要と区別する。",
+  "docs": [
+    "docs/index.md",
+    "docs/portal/README.md",
+    "docs/maps/index.md",
+    "docs/strategy/current-state-2026-10-15.md",
+    "docs/tasks/active/h-018.md",
+    "docs/product/README.md",
+    "docs/tasks/README.md",
+    ".agents/tasks/BLOCKED.md"
+  ],
+  "ai": [
+    "AGENTS.md",
+    "CLAUDE.md",
+    "CONSTITUTION.md"
+  ],
+  "status": "開いた入り江の粗い本体を実画面まで作り、採用レビュー待ち。 2026-10-13、同じ所有物と保存形式を保ったまま、旧案の一枚の岬を二本の腕・水面・細い外周接続へ変更した。輪郭差と対象runtimeはGO/PASS、生地形の魅力と独立理解はHOLD。R3は自動開始しない。",
+  "nextAction": "開いた入り江の旧案比較と実画面を利用者が確認し、この輪郭をR3へ進めるかを決める。採用前に装飾や通常保存の実装を先行させない。 計画・タスクの詳細：R0レビュー、R1統合失敗の診断、R2粗い本体三配置まで完了。採用後は R3成長と実利用 → R4通常取得・保存・拡張 → R5美術と配布。各項目を別の短い作業に区切る。",
+  "tasks": [
+    {
+      "id": "2026-10-05-growing-island-release",
+      "title": "最新変更を一つの公開候補へまとめる",
+      "status": "関連する仕事（同時に開始しない）",
+      "owner": "未設定（要相談）",
+      "executor": "未設定（要相談）",
+      "deadline": "未設定（要相談）",
+      "notes": "最新変更を一つの公開候補へまとめる：10/9固定v3のcore4,803/classic32、主要旅程・保存失敗/再試行・旧writer/実SW更新をlocal確認。source/dist archiveと実画面を保持 次：公開依頼時にURL/版/配信を照合。実利用者の保存・実機/子どもは別。確認した旧版以外の保存・全写真は未評価。根拠: .agents/tasks/TASKS.md → docs/tasks/active/2026-10-05-growing-island-release.md。IDは既存ファイル名。関連仕事の登録は同時開始や完了を意味しない。"
+    },
+    {
+      "id": "2026-09-20-whole-app-ux-coherence",
+      "title": "学習・島・家の一続きの体験",
+      "status": "関連する仕事（同時に開始しない）",
+      "owner": "未設定（要相談）",
+      "executor": "未設定（要相談）",
+      "deadline": "未設定（要相談）",
+      "notes": "学習・島・家の一続きの体験：v3で実初回→取得/配置→家/本→学習・同予約復帰・本人切替を両幅確認。案内対象・本人一覧の同期競合・Study重なりを修正 次：実機の音/読み上げ、利用者の無説明理解・再訪はBLOCKEDへ。確認済み経路の再実装はしない。根拠: .agents/tasks/TASKS.md → docs/tasks/active/2026-09-20-whole-app-ux-coherence.md。IDは既存ファイル名。関連仕事の登録は同時開始や完了を意味しない。"
+    },
+    {
+      "id": "2026-09-23-island-performance",
+      "title": "起動と物が増えた島の軽量化",
+      "status": "関連する仕事（同時に開始しない）",
+      "owner": "未設定（要相談）",
+      "executor": "未設定（要相談）",
+      "deadline": "未設定（要相談）",
+      "notes": "起動と物が増えた島の軽量化：M1の形・床・道を保持しNode全layer7,386→174 ms。receiptだけの再構築を省きshaderをready前準備。花庭c6のcore5,232と編集／通常島の回帰はPASS 次：preflight時のbrowser購入予告9〜23秒、成熟後focus約20〜35秒で操作性能は未達。P05反復冠の削減効果とrendererの内訳は未測定。headless回帰の通過を実機性能へ読み替えず、実時計同期・起動/電池/GPUを別確認。根拠: .agents/tasks/TASKS.md → docs/tasks/active/2026-09-23-island-performance.md。IDは既存ファイル名。関連仕事の登録は同時開始や完了を意味しない。"
+    },
+    {
+      "id": "2026-09-27-living-fantasy-first-playable",
+      "title": "島の育ち方と全景",
+      "status": "関連する仕事（同時に開始しない）",
+      "owner": "未設定（要相談）",
+      "executor": "未設定（要相談）",
+      "deadline": "未設定（要相談）",
+      "notes": "島の育ち方と全景：開いた入り江のR0〜R2を完了。輪郭差GO、対象runtime PASS、美術と独立理解HOLD 次：利用者が輪郭を採用した場合だけR3へ。単独→接続→成熟→実利用→分離→復元を一旅程ずつ扱う。根拠: .agents/tasks/TASKS.md → docs/tasks/active/2026-09-27-living-fantasy-first-playable.md。IDは既存ファイル名。関連仕事の登録は同時開始や完了を意味しない。"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "queue-review",
+      "title": "共有キューの次段階を進める判断",
+      "status": "開いた入り江の粗い本体を実画面まで作り、採用レビュー待ち。 2026-10-13、同じ所有物と保存形式を保ったまま、旧案の一枚の岬を二本の腕・水面・細い外周接続へ変更した。輪郭差と対象runtimeはGO/PASS、生地形の魅力と独立理解はHOLD。R3は自動開始しない。",
+      "owner": "Yu（採用判断）",
+      "deadline": "未設定（要相談）",
+      "risk": "未採用の輪郭や美術を、通常保存・公開へ先行させない。",
+      "notes": "根拠: .agents/tasks/TASKS.md。開いた入り江の旧案比較と実画面を利用者が確認し、この輪郭をR3へ進めるかを決める。採用前に装飾や通常保存の実装を先行させない。 計画・タスクの詳細：R0レビュー、R1統合失敗の診断、R2粗い本体三配置まで完了。採用後は R3成長と実利用 → R4通常取得・保存・拡張 → R5美術と配布。各項目を別の短い作業に区切る。"
+    },
+    {
+      "id": "confirmation-1",
+      "title": "iPhoneホーム画面版",
+      "status": "確認条件待ち（二択の判断とは限らない）",
+      "owner": "未設定（要相談）",
+      "deadline": "未設定（要相談）",
+      "risk": "旧Lifeの起動/cache/描画は改善済み。報告された30秒待ちの実端末での解消は未確認",
+      "notes": "根拠: .agents/tasks/BLOCKED.md。次: 現行Growingの同じ端末・版で起動/入室/通信/描画を記録し、初回移行と毎回の遅延、人口/物/電池負荷を分ける"
+    },
+    {
+      "id": "confirmation-2",
+      "title": "Safariの撮影・保存",
+      "status": "確認条件待ち（二択の判断とは限らない）",
+      "owner": "未設定（要相談）",
+      "deadline": "未設定（要相談）",
+      "risk": "一時WebKitでは失敗、保存付きブラウザでは成功した履歴あり",
+      "notes": "根拠: .agents/tasks/BLOCKED.md。次: 最新候補を実Safari/iOS PWAで撮影→保存→再読込。再現すれば全体UXへ修正を戻す"
+    },
+    {
+      "id": "confirmation-3",
+      "title": "実機の音・動き・読み上げ",
+      "status": "確認条件待ち（二択の判断とは限らない）",
+      "owner": "未設定（要相談）",
+      "deadline": "未設定（要相談）",
+      "risk": "学習v8と各操作に自動確認あり。実スピーカーの聴感と読み上げ/負荷は未確認",
+      "notes": "根拠: .agents/tasks/BLOCKED.md。次: 同じ版で音量/ミュート/reduced motion/入力/読み上げ、本人切替と学習往復を確認"
+    },
+    {
+      "id": "confirmation-4",
+      "title": "既存の子の本物の保存",
+      "status": "確認条件待ち（二択の判断とは限らない）",
+      "owner": "未設定（要相談）",
+      "deadline": "未設定（要相談）",
+      "risk": "Growing初回公開の記録と隔離fixtureの移行検証あり。実利用者の旧所有・学習・住人の引き継ぎは未確認",
+      "notes": "根拠: .agents/tasks/BLOCKED.md。次: 復旧手段を用意し、対象端末で公開版/保存を照合して同じ問題・所有/住人/土地が残ることを確認。別DBの自動合算はしない"
+    },
+    {
+      "id": "confirmation-5",
+      "title": "現行Growingを子どもが自分で遊ぶか",
+      "status": "確認条件待ち（二択の判断とは限らない）",
+      "owner": "未設定（要相談）",
+      "deadline": "未設定（要相談）",
+      "risk": "本/メニュー・経済・成長・橋は実装/対象検証あり。旧町や旧Lifeの結果は現行評価へ転用できない",
+      "notes": "根拠: .agents/tasks/BLOCKED.md。次: 仕様52 §17に沿い、配置の効果、本/橋/本人切替の理解、自発的な「まなぶ」、翌日の再訪を観察。経済は少量/20問での遊びと後日の独力正答を別に確認"
+    }
+  ]
+}

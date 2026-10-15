@@ -1,0 +1,35 @@
+{
+  "checkedAt": "2026-10-15T08:48:27.972344+00:00",
+  "status": "PASS",
+  "expected": "All 86 original dirty files unchanged; 2024 tracked application/config/tool inputs match baseline except 2 H-018 doc tools verified separately; original test/build commands unchanged",
+  "preservedFiles": 86,
+  "baselineFiles": 2024,
+  "comparedFiles": 2024,
+  "normalizedSha256": "78f9bdf07ba238f53e790f50e3be5a38417833698dff174c1d708d5455601077",
+  "documentToolExceptions": [
+    {
+      "path": "tools/check-docs.mjs",
+      "beforeSha256": "dffc01fddeed4a0f9241fc615a7722628e3987420ee35ba9cc924a39aff39339",
+      "afterSha256": "cc563643dd38ed97d28c09a036b694c67869ba4f68e8ea21bdbeef5c5475f7d5",
+      "reason": "H-018 docs validation/index tooling only; exercised separately by docs:check and agent:index:check; no application test imports"
+    },
+    {
+      "path": "tools/generate-agent-index.mjs",
+      "beforeSha256": "57e4d7004cc85de0f00d30db7ea9c56e7c4eecb96d7ebeb5813ac7542c33f2ac",
+      "afterSha256": "c79514c3c69b5e0c5f81037e0744d08b262e8c95aead277b9c0047e9ad5ea52a",
+      "reason": "H-018 docs validation/index tooling only; exercised separately by docs:check and agent:index:check; no application test imports"
+    }
+  ],
+  "reused": [
+    {
+      "command": "npm run test:run",
+      "result": "621 files / 5377 tests PASS",
+      "source": "baseline.json; same application/test inputs"
+    },
+    {
+      "command": "npm run build",
+      "result": "PASS",
+      "source": "baseline.json; same application/build inputs"
+    }
+  ]
+}

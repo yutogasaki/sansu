@@ -1,0 +1,53 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><meta name="generator" content="hub-standard-portal/1.0.0"><title>docs/tasks/active/h-018.md</title><link rel="stylesheet" href="../portal.css"></head><body><a href="#main">本文へ</a><main id="main"><a href="../index.html">概要へ</a><h1>docs/tasks/active/h-018.md</h1><p>原文の閲覧用コピー。指示の実行や検査の合格を意味しません。</p><pre># H-018 Sansuの共通リポジトリ標準への移行
+
+- ID: H-018
+- Status: 実装完了・標準/集約/両幅の検証PASS（記録は `qa/evidence/h-018/verification.json`、commitは完了メモ）
+- Owner: Yu / Grok Bot PM（採用判断）
+- Executor: Codex
+- Started: 2026-10-15
+- Review By: 2026-10-22
+- Deadline: 未設定（要相談）
+- Scope: 入口・役割案内・固定共通portal・限定品質証拠。製品挙動・公開は対象外。
+- Dependencies: hub REPO_STANDARD 1.0、共通standard 1.0.0、既存タスク正本の保持。
+
+これは共有キューを複製する実行台帳ではなく、H-018だけの詳細記録。既存 `.agents/tasks/TASKS.md` が実行キューの正本。
+
+## 標準との差分と対応
+
+| 対象 | 開始時 | H-018の対応 |
+| --- | --- | --- |
+| フォルダ | 番号付きproduct・既存ADR・tools・docs/design・.agents運用 | 正本を移動せずstrategy/maps/portalとscripts/vendor、qa/evidenceを役割で追加。git mvなし |
+| AGENTS/CLAUDE | Codex用入口とClaude入口に規則が重複、旧_common-ai参照 | AGENTSを短い共有入口へ、Claudeを薄いadapterへ。共通契約をSHA固定 |
+| タスク正本 | .agents/tasks/TASKS.md・BLOCKED.md、docs/tasks/backlog.mdとactive詳細 | そのまま保持。表示だけ抽出し、担当/期限の不明を明示。h-NNNのファイル名をdocs checkerで許可 |
+| 品質証拠 | 既存docs/designと各trial | 原証拠を保持。H-018はbefore/baseline・入力hash・標準/集約/画面QAを別記録 |
+| ポータル | 旧7画面と限定trialの契約。標準portalなし | 共通5節をportal/へ生成、project.jsonを同期検査。新4文書は標準側で網羅し、旧7画面の検査を維持 |
+| 画像 | sharpなし、sips WebP書出しで終了13を再現 | 標準portalの画像依存0。hubのコードは変更しない |
+
+## 保全と変更境界
+
+開始前の44行/86ファイルは全件hash付き保全し、破棄・上書き・移動・stageしない。srcは一切変更しない。backupと原logはgitignore配下に置く。
+共有ガイド・タスク・検証matrix・旧HTMLの開始前変更があるため、それらへの追記・再生成を避け、旧パスを [portal README](../../portal/README.md) に記す。共有ガイド内の旧_common-ai参照は今回修正しない。
+新4文書は `docs/portal/legacy-boundary.json` で明示する。標準資料との網羅をverifyし、旧資料全件の生成一致は引き続き検査する。
+構成・検証経路の変更だけなので、製品仕様・長期memory・保存/PWA/学習仕様の更新は不要。正本対応表をdocs/indexとmapsへ追加する。
+
+## Docs To Touch
+
+AGENTS.md、CLAUDE.md、README.md、docs/index.md、docs/maps/index.md、docs/strategy/current-state-2026-10-15.md、docs/portal/、この詳細、qa/evidence/h-018/。
+package.json、scripts/adapterと固定vendor、tools/check-docs.mjs、tools/generate-agent-index.mjs、.gitignoreが生成・検証経路の変更対象。
+
+## 完了条件
+
+1. 既存変更86ファイルのhash・未stageを確認する。
+2. baseline全8コマンドと最終の該当検査を記録し、追加失敗を残さない。
+3. portal:verify、hub正本verify、hub assemble→verify（issues 0/broken 0、標準sansu、画像変換0）が通る。
+4. 1440/390pxの5節・資料への往復・横溢れ・エラーを確認する。
+5. H-018のファイルだけを名前指定でstageし、src/開始前変更/原logを除外してローカルcommit。pushしない。
+6. UTC名の完了メモを指定inboxへ置き、未確認を明示する。
+
+## Verification
+
+baselineは [baseline.json](../../../qa/evidence/h-018/baseline.json)。8検査すべてPASS、621 files / 5,377 tests PASS、lint既存警告3件。
+最終は `qa/evidence/h-018/final.json`、`verification.json`、`browser.json`、`hub-inclusion.json`。各記録の日時・入力hash・期待/実結果を確認する。
+アプリ入力が変わらない場合はbaselineの全test/buildをその入力に限って再利用し、H-018で変わるdocs/生成器/adapter/入口の検査を実行する。
+完了結果の取得前にPASSとは記録しない。実機・製品の美術/独立理解・公開・hook実発火は今回の受入対象外。
+</pre></main></body></html>

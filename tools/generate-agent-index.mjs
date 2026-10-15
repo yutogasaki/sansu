@@ -144,7 +144,10 @@ function renderMap(output) {
   return `<section class="intro" id="overview"><p class="eyebrow">ぽこもこと不思議な島</p><h2>どこまで進んだ？</h2><p>主な${mapEntries.length}項目を「今使える」「途中」「これから」に分けました。数字は掲載項目の件数で、アプリ全体の完成率ではありません。</p><div class="progress-overview" aria-label="掲載項目の進行状況">${bands.map(band => `<div><strong>${band.count}</strong><span>${esc(band.label)}</span></div>`).join('')}</div><p class="map-help">「今の島」は通常起動で遊べる画面、「別の試作」は専用の開発設定でだけ動く実験です。旧試作の画面が動いても、今の島にその遊びが入ったことにはなりません。</p></section><nav class="map-jumps" aria-label="このページの目次"><a href="#overview">全体</a><a href="#progress">進み具合</a><a href="#specs">仕様の分類</a><a href="#assets">画像と容量</a><a href="#legacy">旧モード</a><a href="#evidence">検証記録</a></nav><h2 class="section-title" id="progress">島と学習の進み具合</h2><section class="map-list">${rows}</section><h2 class="section-title" id="specs">仕様書を役割で探す</h2><p><a href="${href(output, 'docs/product/README.md')}">仕様書の地図</a>に載る現行・採用済み仕様です。仕様があるだけで完成したことにはなりません。「採用済み」は実装済みと同じ意味ではありません。</p>${specSections}<h2 class="section-title" id="assets">画像・生成素材と容量</h2><p>${currentAssetFiles.length}ファイル・合計${formatSize(currentAssetFiles.reduce((sum, file) => sum + fileSize(file), 0))}。制作中の元画像や3Dも含むため、アプリの容量ではありません。画像は縦横ピクセル数も表示します。</p>${groups}<details class="archive-section" id="legacy"><summary>今の島とは別の遊び・試作を見る</summary><p>今の島の進捗には含めません。現時点の扱いを示します。</p><div class="mode-list">${modeRows}</div><h3>関連する仕様・昔の案</h3><section class="spec-list">${oldSpecs}</section><h3>旧探索・旧町の素材</h3><section class="asset-groups">${pastGroups}</section></details><details class="archive-section" id="evidence"><summary>制作・検証で作った画像や記録を見る</summary><p>${evidenceFiles.length}ファイル。過去の比較や検証を含み、現在版の完成を意味しません。今の島の食料・水路・土の記録は各画面幅の全画像を表示し、その他はフォルダごとに容量の大きい3件を表示します。</p><section class="asset-groups">${evidence}</section></details><h2 class="section-title">このポータルのHTML</h2><p>Markdownから作った閲覧用ページです。</p><ul>${generated}</ul>`;
 }
 const { queue } = parseTaskBoard(read('.agents/tasks/TASKS.md'));
-const docs = walk('docs');
+// Standard-only migration documents are covered by portal:verify. Keep the
+// legacy seven-page scope stable without overwriting another task's HTML.
+const standardOnlyDocs = new Set(JSON.parse(read('docs/portal/legacy-boundary.json')).standardOnlyDocs);
+const docs = walk('docs').filter(file => !standardOnlyDocs.has(file));
 const docGroups = [
   {
     label: 'はじめに',

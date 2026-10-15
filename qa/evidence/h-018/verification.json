@@ -1,0 +1,62 @@
+{
+  "checkedAt": "2026-10-15T08:50:20.598961+00:00",
+  "task": "H-018",
+  "status": "PASS",
+  "baseHead": "f2dd1865f29c0ab32fa7ffd4a676ac995a4e0e1f",
+  "verificationScope": "working tree with 86 preserved original dirty files; not a product release or clean-HEAD legacy portal pass",
+  "baseline": "8/8 PASS; 621 files / 5377 tests PASS; build PASS",
+  "final": "12/12 affected checks PASS; original seven-page equality retained plus standard adapter/common verify",
+  "unchangedWarnings": {
+    "npm run lint": {
+      "status": "PASS",
+      "outputUnchanged": true
+    },
+    "npm run docs:check": {
+      "status": "PASS",
+      "outputUnchanged": true
+    }
+  },
+  "applicationReuse": "input-audit.json; source/config unchanged except separately checked doc tooling; test/build commands unchanged",
+  "portal": {
+    "commonFiles": 15,
+    "standardSections": [
+      "overview",
+      "decisions",
+      "tasks",
+      "documents",
+      "ai"
+    ],
+    "liveRelatedTasks": 4,
+    "decisionsAndConfirmations": 6,
+    "browser": "1440 and 390; noJS; 11 reference visits and returns per width; no overflow/errors",
+    "indexSha256": "c30555d65ebcb95f66d015a01ebce3b2028061095229591328643ddb5ef3f996"
+  },
+  "hub": {
+    "standard": true,
+    "root": "portal",
+    "issues": 0,
+    "broken": 0,
+    "sansuImageConversions": 0,
+    "sourceEdits": false
+  },
+  "preservation": {
+    "files": 86,
+    "archive": "artifacts/h-018/before/preserved-files.tar.gz",
+    "shaEvidence": "before.json",
+    "originalPathsStaged": false
+  },
+  "moves": [],
+  "push": false,
+  "limitations": [
+    "Original historical failing image is unidentified; installed sips WebP writer failure reproduced on an existing repo WebP.",
+    "Deep legacy specialist HTML remains repo-local; hub only distributes standard portal.",
+    "Portal projects the observed dirty task ledger; clean HEAD regeneration can differ. Original files are excluded from this commit.",
+    "Existing trial evidence not reused; no product art/independent understanding/safety/runtime acceptance, real-device validation or deployment claimed.",
+    "Pre-existing shared guide, matrix, queue and old generated HTML remain unchanged; old _common-ai guide reference retained."
+  ],
+  "initialImplementationFailuresFixed": [
+    "Adapter root had a trailing separator incompatible with common safeSource; normalized with path.resolve before generation.",
+    "Initial docs check ran before the first portal build; missing generated link resolved by successful build.",
+    "Chromium launch was blocked by macOS sandbox; authorized local-only browser verification completed outside that restriction."
+  ]
+}

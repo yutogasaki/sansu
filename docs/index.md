@@ -171,3 +171,17 @@
 ## 宣伝用Webサイト
 
 [仕様53](product/53_promotion_website_spec.md) · [完成画面と制作記録](design/2026-10-10-promotion-website/README.md)。島の成長差・家・算数と英語を紹介する独立サイト。
+
+## 共通標準の入口（H-018）
+
+[標準5節ポータル](../portal/index.html) · [入力と旧入口の扱い](portal/README.md) · [正本・旧パス対応表](maps/index.md) · [2026-10-15の観測](strategy/current-state-2026-10-15.md)。
+既存のタスク正本・番号付き仕様・品質証拠は移動しない。標準向け追加文書は新ポータルで検証し、既存7画面の専門索引の対象とは分ける。
+
+| 標準の役割 | Sansuでの実際の正本・入口 |
+| --- | --- |
+| strategy | `docs/product/island-construction-strategy.md` ほか既存戦略。`docs/strategy/` は日付付き観測と案内 |
+| maps | `docs/maps/index.md` が仕様地図・既存 `.agents/map.html` と生成元を案内 |
+| adr | `docs/adr/` を維持 |
+| tasks | `.agents/tasks/TASKS.md`、`BLOCKED.md`、`docs/tasks/backlog.md`、`docs/tasks/active/` を維持 |
+| QA | 従来の `docs/design/`・ローカル証拠を保持。H-018の限定証拠は `qa/evidence/h-018/` |
+| scripts / portal | `tools/` を移動せず、新adapterは `scripts/`。生成先は `portal/` |
