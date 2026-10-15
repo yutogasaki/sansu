@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "currentCandidate": "4c61c6ade812ccc5b45844db458b53a09a5a56bff41282522e9c576b7daa55c0",
+  "currentCandidate": "0c68e83842ac0ae6cabe3e0ff929484a1be7bcfe3ac81f8c85cef944ff72ffbb",
   "legacyCandidate": "d957e47e0b813899fd37d9f60db30a7f513dee58785c675b7b2b197ec126cce8",
   "project": {
     "schemaVersion": "1.0",
@@ -15320,6 +15320,20 @@
       "sha256": "9d1991c9cb31f543564448a0d67579f8b99210a7486923abb81f6f757a07dccf",
       "bytes": 11776,
       "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-12-authored-cove-entrance/history/v3-rectangular-apron/source-overhead-v3.png",
+      "target": "../docs/design/2026-10-12-authored-cove-entrance/history/v3-rectangular-apron/source-overhead-v3.png",
+      "sha256": "c2ae1bab39aec0b2ccc2442e6367c37ccefb74d2b5cd00e48aea945235c401c4",
+      "bytes": 904876,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-12-authored-cove-entrance/source-overhead-v4.png",
+      "target": "../docs/design/2026-10-12-authored-cove-entrance/source-overhead-v4.png",
+      "sha256": "99a273c4417aac4a06915f98ab488f48b3d45a2a262d4a1b29270a88a3efe748",
+      "bytes": 824247,
+      "mode": "reference"
     }
   ],
   "sources": [
@@ -23850,6 +23864,14 @@
     {
       "source": "tools/portal-graph.mjs",
       "target": "../tools/portal-graph.mjs"
+    },
+    {
+      "source": "docs/design/2026-10-12-authored-cove-entrance/history/v3-rectangular-apron/source-overhead-v3.png",
+      "target": "../docs/design/2026-10-12-authored-cove-entrance/history/v3-rectangular-apron/source-overhead-v3.png"
+    },
+    {
+      "source": "docs/design/2026-10-12-authored-cove-entrance/source-overhead-v4.png",
+      "target": "../docs/design/2026-10-12-authored-cove-entrance/source-overhead-v4.png"
     }
   ]
 }
