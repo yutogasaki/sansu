@@ -26,6 +26,13 @@ try {
     assert.equal(await page.locator('.entry-artifact').evaluate(n=>n.getBoundingClientRect().bottom<innerHeight),true,'image result in first viewport, including 320x568');
     assert.equal(await page.locator('.entry-artifact img').evaluate(n=>n.complete&&n.naturalWidth>0),true,'canonical result image loads');
     assert.equal(await page.locator('.link-tail').evaluate(n=>n.getClientRects().length),1,'link arrow stays with final word');
+    assert.equal(await page.locator('.snapshot').evaluate(n=>n.getBoundingClientRect().bottom<document.querySelector('.use-cards').getBoundingClientRect().top),true,'summary precedes image strip');
+    assert.equal(await page.locator('#documents #global-search').count(),1,'global search belongs to materials');
+    for(const card of await page.locator('.use-card').all())assert.equal(await card.locator('img').evaluate(n=>n.complete&&n.naturalWidth>0),true,'existing use images load');
+    if(width===320){
+     const destination=page.locator('.use-cards a').nth(1);await destination.focus();
+     assert.equal(await destination.evaluate(n=>{const r=n.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth;}),true,'keyboard focus brings strip destination into view');
+    }
     await page.locator('#search').fill('存在しない検索語S002');
     assert.equal(await page.locator('section[data-search]:visible').count(),0);
     await page.locator('#search').fill('判断');
@@ -35,6 +42,10 @@ try {
      const clone=n.cloneNode(true);clone.querySelectorAll('details').forEach(d=>d.remove());return /confirmation-\d|\.agents\/|SHA256/.test(clone.textContent);
     }),false);
    }
+   if(file==='overview.html') {
+    for(const label of ['最新試行の結果','確認範囲','失敗段階','未実施の段階','未確認事項'])assert(await page.locator('#formal-status').getByText(label,{exact:true}).isVisible(),'formal result/scope stays outside closed details');
+   }
+   if(file==='tasks.html')for(const label of ['現在地','次の一手','未確認'])assert(await page.locator('.card').getByText(label,{exact:true}).first().isVisible(),'task facts visible without expansion');
    if(file==='map.html') {
     await page.locator('#search').fill('旧探索');
     assert(await page.locator('#legacy').getAttribute('open')!==null);

@@ -25,12 +25,21 @@ export function elements(node, test) { const found=[]; visit(node,n=>{if(n.tag&&
 export const textOf = n => decode(n.raw !== undefined ? n.raw.replace(/<[^>]*>/g,'') : (n.children || []).map(textOf).join(' ')).replace(/\s+/g,' ').trim();
 export const hasClass = (n,c) => (n.attrs?.class||'').split(' ').includes(c);
 export const fragment = html => parse(html).children;
-export const disclosure = (nodes, label='根拠と詳しい内容') => ({tag:'details',attrs:{class:'ai-detail'},children:[{tag:'summary',attrs:{},children:[{raw:escape(label)}]},...nodes]});
+export const disclosure = (nodes, label='元の記録と確認根拠') => ({tag:'details',attrs:{class:'ai-detail'},children:[{tag:'summary',attrs:{},children:[{raw:escape(label)}]},...nodes]});
 
 // Shared by generation and verification; URLs in attributes remain intact.
-export const technicalSurface = /confirmation-\d|trial\d|SHA256|\b[a-f\d]{16,64}\b|\b[\da-f]{8}-[\da-f-]{27,}\b|(?:\.agents|docs|src|public|output|assets)\/|\/(?:Users|tmp|private)\/|\b(?:npm|npx|node|git|pnpm)\s+(?:run\s+)?[\w:-]+|Command failed|(?:Assertion|Type|Reference|Syntax)?Error:|ENOENT|EACCES|Unexpected fixture source|Repository evidence must|\b[\w.-]+\.(?:md|mjs|cjs|js|tsx?|jsonl?|html|log|txt|ya?ml|sh)\b|\b(?:renderer|runtime|HOLD|PASS|FAIL)\b/i;
+export const technicalSurface = /confirmation-\d|trial\d|SHA256|\b[a-f\d]{16,64}\b|\b[\da-f]{8}-[\da-f-]{27,}\b|(?:\.agents|docs|src|public|output|assets)\/|\/(?:Users|tmp|private)\/|\b(?:npm|npx|node|git|pnpm)\s+(?:run\s+)?[\w:-]+|Command failed|(?:Assertion|Type|Reference|Syntax)?Error:|ENOENT|EACCES|Unexpected fixture source|Repository evidence must|\b[\w.-]+\.(?:md|mjs|cjs|js|tsx?|jsonl?|html|log|txt|ya?ml|sh)\b|\b(?:renderer|runtime|HOLD|PASS|FAIL|writer)\b|core[\d,]+|classic\d+|source\/dist|実SW/i;
 export function surfaceText(n) {
   if(n.tag==='details')return surfaceText(n.children.find(c=>c.tag==='summary')||{raw:''});
   if(['script','style'].includes(n.tag))return '';
   return n.raw!==undefined?textOf(n):(n.children||[]).map(surfaceText).join(' ');
+}
+
+// Headings/card names are navigation labels, never a place for execution history.
+export const headingRecord = /(?:20\d{2}[-/]\d{2}[-/]\d{2}|\b\d{1,2}\/\d{1,2}\b)|(?:(?<![a-z])[vcr]\d+(?:\.\d+)*)|(?:[MPRCX]\d+(?:[・〜/]|(?=の|後|と)))|(?:core[\d,]+|classic\d+|source\/dist|writer|実SW)|(?:：.*(?:現在|次|確認|保持))|(?:固定\d+)|(?:native-?\d+)|(?:checkpoint|source recovery|normal false build)|\b(?=[a-f0-9]*[a-f])[a-f0-9]{7,40}\b/i;
+export const headingIssue = value => technicalSurface.test(value) || headingRecord.test(value) || value.length > 48;
+export function surfaceLabels(node, inDetails=false, result=[]) {
+  if(!inDetails && (/^h[1-6]$/.test(node.tag) || node.tag==='summary' || hasClass(node,'asset-name')))result.push(textOf(node.tag==='summary'?{...node,children:node.children.filter(n=>n.tag!=='img')}:node));
+  for(const child of node.children||[])surfaceLabels(child,inDetails||node.tag==='details',result);
+  return result;
 }

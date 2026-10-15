@@ -1,0 +1,70 @@
+{
+  "atUTC": "2026-10-15T18:32:40.550128+00:00",
+  "head": "5b5694e14490bd181706162f012b1f62db6ef521",
+  "inputSha256": {
+    "tools/integrated-portal.mjs": "30f65557256fdf47b459612d23eea6328331378d2d9aeed77ba28cf8bfbe8354",
+    "tools/portal-html.mjs": "22f06d76536562a4e536fb470ba634c51e1bed8f3a6af73fffa0fbe188a59a49",
+    "tools/integrated-portal.css": "1a252c7e4c42ebb116bffbda27e3b4672a1aa1c97605c9980686a8f8fe2d9f61",
+    "tools/check-portal-integration.mjs": "0b8bcea68fa406aa3b4bc1a81bb1873c8aceab529c6e820c89c35855b1af4404",
+    "tools/qa-integrated-portal.mjs": "389668525d1b745b6aa9f6666ea11b46823cae526e210b03593ee6496f3a55d6",
+    "docs/portal/README.md": "591dafbeed7eab1c4965161c3ded5a63bbea0ccfd03a297d3c5e7baf24b8ded0"
+  },
+  "checks": [
+    {
+      "command": "npm run docs:check",
+      "atUTC": "2026-10-15T18:32:40.561245+00:00",
+      "exitCode": 0,
+      "result": "PASS",
+      "durationSeconds": 0.34,
+      "log": "qa/evidence/S-002/r4-logs/docs-check.txt"
+    },
+    {
+      "command": "npm run lint",
+      "atUTC": "2026-10-15T18:32:40.905036+00:00",
+      "exitCode": 0,
+      "result": "PASS",
+      "durationSeconds": 24.79,
+      "log": "qa/evidence/S-002/r4-logs/lint.txt"
+    },
+    {
+      "command": "npm run typecheck",
+      "atUTC": "2026-10-15T18:33:05.696053+00:00",
+      "exitCode": 0,
+      "result": "PASS",
+      "durationSeconds": 0.14,
+      "log": "qa/evidence/S-002/r4-logs/typecheck.txt"
+    },
+    {
+      "command": "npm run test:run",
+      "atUTC": "2026-10-15T18:33:05.833674+00:00",
+      "exitCode": 0,
+      "result": "PASS",
+      "durationSeconds": 692.05,
+      "log": "qa/evidence/S-002/r4-logs/test-run.txt"
+    },
+    {
+      "command": "npm run build",
+      "atUTC": "2026-10-15T18:44:37.889757+00:00",
+      "exitCode": 0,
+      "result": "PASS",
+      "durationSeconds": 7.69,
+      "log": "qa/evidence/S-002/r4-logs/build.txt"
+    },
+    {
+      "command": "npm run portal:verify",
+      "atUTC": "2026-10-15T18:44:45.580815+00:00",
+      "exitCode": 0,
+      "result": "PASS",
+      "durationSeconds": 4.89,
+      "log": "qa/evidence/S-002/r4-logs/portal-verify.txt"
+    },
+    {
+      "command": "npm run agent:index:check",
+      "atUTC": "2026-10-15T18:44:50.468165+00:00",
+      "exitCode": 0,
+      "result": "PASS",
+      "durationSeconds": 5.45,
+      "log": "qa/evidence/S-002/r4-logs/agent-index-check.txt"
+    }
+  ]
+}

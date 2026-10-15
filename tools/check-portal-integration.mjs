@@ -3,9 +3,9 @@ import {createHash} from 'node:crypto';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
-import {parse,elements,textOf,escape,technicalSurface,surfaceText} from './portal-html.mjs';
+import {parse,elements,textOf,escape,technicalSurface,surfaceText,surfaceLabels,headingIssue} from './portal-html.mjs';
 import {legacyPages} from './generate-agent-index.mjs';
-import {destinations,evidenceState,trialSummary} from './integrated-portal.mjs';
+import {destinations,evidenceState,trialSummary,humanLabel,taskPresentation,trialPresentation} from './integrated-portal.mjs';
 const root=path.resolve(fileURLToPath(new URL('../',import.meta.url)));
 export function checkIntegration() {
  const out=path.join(root,'portal');
@@ -100,13 +100,48 @@ export function checkIntegration() {
   assert(!technicalSurface.test(trialSummary(trial)),'plain Japanese reason');
  }
  assert.equal(trialSummary({result:'FAIL',cause:'environment',reason:'Command failed'}),'検査環境に問題があり、自動確認が止まりました。');
+ // These checks cover all eight human pages, including linked card headings and
+ // folder summaries. Full internal titles/records remain in AI pages/details.
+ for(const sample of ['2026-10-15 公開候補','10/9固定v3のcore4,803/classic32','source/dist archive','旧writer/実SW更新','入り江 c4','育つ島v1','83210fd','最新変更：現在地と次の一手を確認'])assert(headingIssue(sample),`heading record detection: ${sample}`);
+ for(const file of ['index.html',...destinations.values()]){
+  const labels=surfaceLabels(document(path.join(out,file)));
+  for(const label of labels)assert(!headingIssue(label),`${file}: short human heading/card name: ${label}`);
+  assert(!fs.readFileSync(path.join(out,file),'utf8').includes('<summary>根拠と詳しい内容</summary>'),'disclosures identify their contents');
+ }
+ for(const task of data.project.tasks){
+  const copy=taskPresentation(task);
+  for(const file of ['index.html','overview.html','tasks.html']){
+   const doc=document(path.join(out,file)),surface=surfaceText(doc);
+   const headings=surfaceLabels(doc);
+   assert(headings.includes(copy.title),`${file}: canonical short task title`);
+   for(const fact of [copy.current,copy.next,copy.unchecked])assert(surface.includes(fact),`${file}: visible current/next/unconfirmed facts`);
+   assert(!headingIssue(copy.title));
+  }
+ }
+ assert(taskPresentation({title:'新しい仕事',notes:'まだ状態の記録がない'}).current.includes('未確認'),'unknown task state never inherits a verified status');
+ const formal=elements(document(path.join(out,'overview.html')),n=>n.attrs?.id==='formal-status')[0];
+ assert(formal,'formal verification section');
+ const formalSurface=surfaceText(formal);
+ if(data.trials.length){
+  const copy=trialPresentation(data.trials[0]);
+  for(const fact of [copy.result,copy.scope,copy.failure,copy.remaining])assert(formalSurface.includes(fact),'latest result/stage/scope/remaining always visible');
+  const status=elements(formal,n=>(n.attrs?.class||'').includes('trial-state'));
+  assert(status.length>=2&&status.every(n=>textOf(n).length),'text accompanies result/current-candidate state colors');
+ }
+ const failed=trialPresentation({result:'FAIL',failedStage:'machine',passedStages:['scope','generate'],notCompleted:['build','browser','accept']});
+ assert.equal(failed.failure,'自動検査');assert(failed.remaining.includes('配布用の生成')&&failed.remaining.includes('画面と操作')&&failed.remaining.includes('受入の照合'));
+ assert.equal(humanLabel('最新変更を一つの公開候補へまとめる：10/9固定v3のcore4,803/classic32、主要旅程を確認'),'最新変更を一つの公開候補へまとめる');
+ const docsSection=elements(parse(index),n=>n.attrs?.id==='documents')[0];
+ assert(elements(docsSection,n=>n.attrs?.id==='global-search').length,'global search lives in documents section');
+ assert(index.indexOf('id="search"')<index.indexOf('id="overview"'),'page search stays above questions');
+
  const artifact=elements(entry,n=>n.attrs?.class==='entry-artifact')[0];
  assert(artifact&&elements(artifact,n=>n.tag==='img').length,'image result at entry');
  assert(index.indexOf('class="entry-artifact"')<index.indexOf('class="original"'),'result beside use destinations before questions');
  assert(elements(artifact,n=>n.tag==='img')[0].attrs.src.startsWith('../docs/'),'result references canonical repository image');
  for(const id of ['search','result','global-search','global-results','global-status'])assert(elements(entry,n=>n.attrs?.id===id).length,`entry search: ${id}`);
  assert(elements(entry,n=>!!n.attrs?.['data-search']).length>=5,'entry page search covers all major sections');
- for(const row of JSON.parse(fs.readFileSync(path.join(out,'data/search.json'),'utf8')))assert(!technicalSurface.test(row.label),'search result title stays human readable');
+ for(const row of JSON.parse(fs.readFileSync(path.join(out,'data/search.json'),'utf8')))assert(!headingIssue(row.label),'search result title stays short and human readable');
  assert(index.indexOf('class="snapshot"')<index.indexOf('class="use-cards"')&&index.indexOf('class="use-cards"')<index.indexOf('class="original"'),'first view priority');
  for(const url of ['https://sansu-seven.vercel.app/','https://sansu-seven.vercel.app/promo/'])assert(index.includes(`href="${url}"`),'known use destination');
  assert(index.includes('未接続'),'help remains unconnected');

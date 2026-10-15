@@ -1,0 +1,7 @@
+
+> pokko-fushigi-zukan-app@0.0.0 portal:verify
+> node scripts/check-standard-portal.mjs && node scripts/standard-portal.mjs verify
+
+PASS: adapter membership, unknown ownership/deadline, malformed/duplicate rejection, fixed date and vendor SHA
+PASS: integrated portal 6496 local links/anchors, 15488 original elements, all 7 pages, two layers and candidate mismatch gates
+{"status":"PASS","files":24}
