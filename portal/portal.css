@@ -47,3 +47,5 @@ img,video,canvas{max-width:100%}pre{max-width:100%}.map-heading,.stage,.progress
 @media(max-width:760px){.entry-work .use-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}.entry-work .use-card{width:auto;flex:none}.entry-work .use-card:nth-child(3){grid-column:1/-1}.use-card small{font-size:16px!important;line-height:1.35}}
 .compare-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 4px}.compare-pair figure{margin:0}.compare-pair img{width:100%;height:160px;object-fit:cover;border-radius:8px;background:#ece8f7}.compare-pair figcaption{margin-top:4px}.compare-note{color:var(--muted)}
 .check-rows{display:grid;gap:6px;margin:8px 0}.check-rows>div{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:8px}.check-rows dt{font-weight:700;color:var(--accent)}.check-rows dd{margin:0}@media(max-width:420px){.compare-pair img{height:110px}.check-rows>div{grid-template-columns:1fr;gap:0}}
+.compare-pair img{height:auto!important;aspect-ratio:4/3;object-fit:contain!important;background:#ece8f7}.check-lead{margin:6px 0}.check-rows ul{margin:0;padding-left:1.2em}
+.compare-pair img{aspect-ratio:5/4}
