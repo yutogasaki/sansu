@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { model, plain, checkVendor } from './standard-portal.mjs';
+import {checkIntegration} from '../tools/check-portal-integration.mjs';
 
 const board = `# 今進めていること
 
@@ -33,3 +34,4 @@ assert.throws(() => model({}, '# 壊れた形式 docs/tasks/active/example.md', 
 assert.throws(() => model({}, board, '| 壊れた確認表 |'), /Unrecognized blocked/);
 checkVendor();
 console.log('PASS: adapter membership, unknown ownership/deadline, malformed/duplicate rejection, fixed date and vendor SHA');
+checkIntegration();

@@ -1,0 +1,58 @@
+[
+  {
+    "command": "npm run docs:check",
+    "at": "2026-10-15T17:56:57.412853+00:00",
+    "exitCode": 0,
+    "seconds": 0.61,
+    "log": "qa/evidence/S-002/r3-logs/docs-check.txt"
+  },
+  {
+    "command": "npm run lint",
+    "at": "2026-10-15T17:56:58.027172+00:00",
+    "exitCode": 0,
+    "seconds": 38.64,
+    "log": "qa/evidence/S-002/r3-logs/lint.txt"
+  },
+  {
+    "command": "npm run typecheck",
+    "at": "2026-10-15T17:57:36.665003+00:00",
+    "exitCode": 0,
+    "seconds": 0.19,
+    "log": "qa/evidence/S-002/r3-logs/typecheck.txt"
+  },
+  {
+    "command": "npm run test:run",
+    "at": "2026-10-15T17:57:36.858883+00:00",
+    "exitCode": 0,
+    "seconds": 750.71,
+    "log": "qa/evidence/S-002/r3-logs/test-run.txt"
+  },
+  {
+    "command": "npm run build",
+    "at": "2026-10-15T18:10:07.565844+00:00",
+    "exitCode": 0,
+    "seconds": 8.11,
+    "log": "qa/evidence/S-002/r3-logs/build.txt"
+  },
+  {
+    "command": "npm run portal:verify",
+    "at": "2026-10-15T18:10:15.673354+00:00",
+    "exitCode": 0,
+    "seconds": 5.82,
+    "log": "qa/evidence/S-002/r3-logs/portal-verify.txt"
+  },
+  {
+    "command": "npm run agent:index:check",
+    "at": "2026-10-15T18:10:21.493029+00:00",
+    "exitCode": 0,
+    "seconds": 5.48,
+    "log": "qa/evidence/S-002/r3-logs/agent-index-check.txt"
+  },
+  {
+    "command": "node tools/check-internal-portal.mjs",
+    "at": "2026-10-15T18:10:26.968411+00:00",
+    "exitCode": 0,
+    "seconds": 1.88,
+    "log": "qa/evidence/S-002/r3-logs/internal-portal.txt"
+  }
+]

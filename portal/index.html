@@ -1,7 +1,251 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><meta name="generator" content="hub-standard-portal/1.0.0"><title>Sansu — ぽこもこと不思議な島</title><link rel="stylesheet" href="portal.css"></head><body><a href="#main">本文へ</a><main id="main"><h1>Sansu — ぽこもこと不思議な島</h1><nav aria-label="章"><a href="#overview">概要</a> · <a href="#decisions">判断待ち</a> · <a href="#tasks">タスク</a> · <a href="#documents">資料</a> · <a href="#ai">AI の入口</a></nav>
-<section id="overview"><h2>概要</h2><p><strong>説明</strong> 算数・英語の学習から、自分の島を育てる子ども向けPWA。学習記録と所有は端末内に保存する。</p><p><strong>状態</strong> 開いた入り江の粗い本体を実画面まで作り、採用レビュー待ち。 2026-10-13、同じ所有物と保存形式を保ったまま、旧案の一枚の岬を二本の腕・水面・細い外周接続へ変更した。輪郭差と対象runtimeはGO/PASS、生地形の魅力と独立理解はHOLD。R3は自動開始しない。</p><p><strong>担当</strong> Yu（採用・公開判断）。個別作業の担当は未設定（要相談）</p><p><strong>次の行動</strong> 開いた入り江の旧案比較と実画面を利用者が確認し、この輪郭をR3へ進めるかを決める。採用前に装飾や通常保存の実装を先行させない。 計画・タスクの詳細：R0レビュー、R1統合失敗の診断、R2粗い本体三配置まで完了。採用後は R3成長と実利用 → R4通常取得・保存・拡張 → R5美術と配布。各項目を別の短い作業に区切る。</p><p><strong>内容確認日</strong> 2026-10-15</p><p><strong>記録更新日</strong> 2026-10-15</p><p><strong>補足</strong> Codexが2026-10-15にローカル正本を確認。概要の状態・次の行動・タスクは共有キュー、確認待ちはBLOCKEDから抽出。開始前からの未commit内容を含む作業ツリーの観測であり、製品受入・本番配信・実機・子どもの観察の合格ではない。期限の不明は設定不要と区別する。</p></section>
-<section id="decisions"><h2>判断待ち</h2><ul><li><h3>queue-review 共有キューの次段階を進める判断</h3><p><strong>状態</strong> 開いた入り江の粗い本体を実画面まで作り、採用レビュー待ち。 2026-10-13、同じ所有物と保存形式を保ったまま、旧案の一枚の岬を二本の腕・水面・細い外周接続へ変更した。輪郭差と対象runtimeはGO/PASS、生地形の魅力と独立理解はHOLD。R3は自動開始しない。</p><p><strong>担当</strong> Yu（採用判断）</p><p><strong>期限</strong> 未設定（要相談）</p><p><strong>リスク</strong> 未採用の輪郭や美術を、通常保存・公開へ先行させない。</p><p><strong>根拠・補足</strong> 根拠: .agents/tasks/TASKS.md。開いた入り江の旧案比較と実画面を利用者が確認し、この輪郭をR3へ進めるかを決める。採用前に装飾や通常保存の実装を先行させない。 計画・タスクの詳細：R0レビュー、R1統合失敗の診断、R2粗い本体三配置まで完了。採用後は R3成長と実利用 → R4通常取得・保存・拡張 → R5美術と配布。各項目を別の短い作業に区切る。</p></li><li><h3>confirmation-1 iPhoneホーム画面版</h3><p><strong>状態</strong> 確認条件待ち（二択の判断とは限らない）</p><p><strong>担当</strong> 未設定（要相談）</p><p><strong>期限</strong> 未設定（要相談）</p><p><strong>リスク</strong> 旧Lifeの起動/cache/描画は改善済み。報告された30秒待ちの実端末での解消は未確認</p><p><strong>根拠・補足</strong> 根拠: .agents/tasks/BLOCKED.md。次: 現行Growingの同じ端末・版で起動/入室/通信/描画を記録し、初回移行と毎回の遅延、人口/物/電池負荷を分ける</p></li><li><h3>confirmation-2 Safariの撮影・保存</h3><p><strong>状態</strong> 確認条件待ち（二択の判断とは限らない）</p><p><strong>担当</strong> 未設定（要相談）</p><p><strong>期限</strong> 未設定（要相談）</p><p><strong>リスク</strong> 一時WebKitでは失敗、保存付きブラウザでは成功した履歴あり</p><p><strong>根拠・補足</strong> 根拠: .agents/tasks/BLOCKED.md。次: 最新候補を実Safari/iOS PWAで撮影→保存→再読込。再現すれば全体UXへ修正を戻す</p></li><li><h3>confirmation-3 実機の音・動き・読み上げ</h3><p><strong>状態</strong> 確認条件待ち（二択の判断とは限らない）</p><p><strong>担当</strong> 未設定（要相談）</p><p><strong>期限</strong> 未設定（要相談）</p><p><strong>リスク</strong> 学習v8と各操作に自動確認あり。実スピーカーの聴感と読み上げ/負荷は未確認</p><p><strong>根拠・補足</strong> 根拠: .agents/tasks/BLOCKED.md。次: 同じ版で音量/ミュート/reduced motion/入力/読み上げ、本人切替と学習往復を確認</p></li><li><h3>confirmation-4 既存の子の本物の保存</h3><p><strong>状態</strong> 確認条件待ち（二択の判断とは限らない）</p><p><strong>担当</strong> 未設定（要相談）</p><p><strong>期限</strong> 未設定（要相談）</p><p><strong>リスク</strong> Growing初回公開の記録と隔離fixtureの移行検証あり。実利用者の旧所有・学習・住人の引き継ぎは未確認</p><p><strong>根拠・補足</strong> 根拠: .agents/tasks/BLOCKED.md。次: 復旧手段を用意し、対象端末で公開版/保存を照合して同じ問題・所有/住人/土地が残ることを確認。別DBの自動合算はしない</p></li><li><h3>confirmation-5 現行Growingを子どもが自分で遊ぶか</h3><p><strong>状態</strong> 確認条件待ち（二択の判断とは限らない）</p><p><strong>担当</strong> 未設定（要相談）</p><p><strong>期限</strong> 未設定（要相談）</p><p><strong>リスク</strong> 本/メニュー・経済・成長・橋は実装/対象検証あり。旧町や旧Lifeの結果は現行評価へ転用できない</p><p><strong>根拠・補足</strong> 根拠: .agents/tasks/BLOCKED.md。次: 仕様52 §17に沿い、配置の効果、本/橋/本人切替の理解、自発的な「まなぶ」、翌日の再訪を観察。経済は少量/20問での遊びと後日の独力正答を別に確認</p></li></ul></section>
-<section id="tasks"><h2>タスク</h2><ul><li><h3>2026-10-05-growing-island-release 最新変更を一つの公開候補へまとめる</h3><p><strong>状態</strong> 関連する仕事（同時に開始しない）</p><p><strong>担当</strong> 未設定（要相談）</p><p><strong>実行</strong> 未設定（要相談）</p><p><strong>開始</strong> 未確認</p><p><strong>期限</strong> 未設定（要相談）</p><p><strong>補足</strong> 最新変更を一つの公開候補へまとめる：10/9固定v3のcore4,803/classic32、主要旅程・保存失敗/再試行・旧writer/実SW更新をlocal確認。source/dist archiveと実画面を保持 次：公開依頼時にURL/版/配信を照合。実利用者の保存・実機/子どもは別。確認した旧版以外の保存・全写真は未評価。根拠: .agents/tasks/TASKS.md → docs/tasks/active/2026-10-05-growing-island-release.md。IDは既存ファイル名。関連仕事の登録は同時開始や完了を意味しない。</p></li><li><h3>2026-09-20-whole-app-ux-coherence 学習・島・家の一続きの体験</h3><p><strong>状態</strong> 関連する仕事（同時に開始しない）</p><p><strong>担当</strong> 未設定（要相談）</p><p><strong>実行</strong> 未設定（要相談）</p><p><strong>開始</strong> 未確認</p><p><strong>期限</strong> 未設定（要相談）</p><p><strong>補足</strong> 学習・島・家の一続きの体験：v3で実初回→取得/配置→家/本→学習・同予約復帰・本人切替を両幅確認。案内対象・本人一覧の同期競合・Study重なりを修正 次：実機の音/読み上げ、利用者の無説明理解・再訪はBLOCKEDへ。確認済み経路の再実装はしない。根拠: .agents/tasks/TASKS.md → docs/tasks/active/2026-09-20-whole-app-ux-coherence.md。IDは既存ファイル名。関連仕事の登録は同時開始や完了を意味しない。</p></li><li><h3>2026-09-23-island-performance 起動と物が増えた島の軽量化</h3><p><strong>状態</strong> 関連する仕事（同時に開始しない）</p><p><strong>担当</strong> 未設定（要相談）</p><p><strong>実行</strong> 未設定（要相談）</p><p><strong>開始</strong> 未確認</p><p><strong>期限</strong> 未設定（要相談）</p><p><strong>補足</strong> 起動と物が増えた島の軽量化：M1の形・床・道を保持しNode全layer7,386→174 ms。receiptだけの再構築を省きshaderをready前準備。花庭c6のcore5,232と編集／通常島の回帰はPASS 次：preflight時のbrowser購入予告9〜23秒、成熟後focus約20〜35秒で操作性能は未達。P05反復冠の削減効果とrendererの内訳は未測定。headless回帰の通過を実機性能へ読み替えず、実時計同期・起動/電池/GPUを別確認。根拠: .agents/tasks/TASKS.md → docs/tasks/active/2026-09-23-island-performance.md。IDは既存ファイル名。関連仕事の登録は同時開始や完了を意味しない。</p></li><li><h3>2026-09-27-living-fantasy-first-playable 島の育ち方と全景</h3><p><strong>状態</strong> 関連する仕事（同時に開始しない）</p><p><strong>担当</strong> 未設定（要相談）</p><p><strong>実行</strong> 未設定（要相談）</p><p><strong>開始</strong> 未確認</p><p><strong>期限</strong> 未設定（要相談）</p><p><strong>補足</strong> 島の育ち方と全景：開いた入り江のR0〜R2を完了。輪郭差GO、対象runtime PASS、美術と独立理解HOLD 次：利用者が輪郭を採用した場合だけR3へ。単独→接続→成熟→実利用→分離→復元を一旅程ずつ扱う。根拠: .agents/tasks/TASKS.md → docs/tasks/active/2026-09-27-living-fantasy-first-playable.md。IDは既存ファイル名。関連仕事の登録は同時開始や完了を意味しない。</p></li></ul></section>
-<section id="documents"><h2>資料</h2><ul><li><a href="references/b4d68dc855d0f9476d3f2ee343853bd21bf82ea9960d0cf06661baa244439dd6.html">docs/index.md</a></li><li><a href="references/104a6450e0aee9ffb394ecf8e7cbb3c1c103b0431d027df17c97d30928ed7794.html">docs/portal/README.md</a></li><li><a href="references/17d52d8a105321c493f5fe2e40598dd3310426e34e8a29ba3369c74aa7b10b0f.html">docs/maps/index.md</a></li><li><a href="references/3544a1d1ea31e85efbf0dfb433989f22040ddbe957c4a3c888d0127609b883a5.html">docs/strategy/current-state-2026-10-15.md</a></li><li><a href="references/b9669491dde88af362a98c29cc802433ed1a66b29e40ed4a90ca9f348ae1129a.html">docs/tasks/active/h-018.md</a></li><li><a href="references/e9cab8a98132ffb174c59d59f283e22cd246e0e2ccd1dfff8c544a87e4584a42.html">docs/product/README.md</a></li><li><a href="references/563339c5dc2ae41c0c89a2f9edd265cfbc3cd49d4b19b89275368e8ebb81776f.html">docs/tasks/README.md</a></li><li><a href="references/9afe5e8cc94329397c577fba0500182739da73f2cd5f4ba567991e6fa0acf0e5.html">.agents/tasks/BLOCKED.md</a></li></ul><p>未登録（0件確認済みとは限りません）</p></section>
-<section id="ai"><h2>AI の入口</h2><ul><li><a href="references/a54ff182c7e8acf56acfd6e4b9c3ff41e2c41a31c9b211b2deb9df75d9a478f9.html">AGENTS.md</a></li><li><a href="references/6ebdb617a8104a7756d0cf36578ab01103dc9f07e4dc6feb751296b9c402faf7.html">CLAUDE.md</a></li><li><a href="references/325ab1fb2ec5d8e78e41ae144d6ea46fc07f73fb3bd729bda484c411bb15f412.html">CONSTITUTION.md</a></li></ul></section>
-<footer>生成物は閲覧用です。正本・検証条件は各リポジトリにあります。生成日時と内容確認日は別です。</footer></main></body></html>
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><meta name="generator" content="sansu-integrated-portal/2"><title>Sansu · 育つ島の、いまと次。</title><link rel="stylesheet" href="portal.css"></head><body><a class="skip" href="#main">本文へ</a><header><nav aria-label="メインナビゲーション"><a class="brand" href="index.html">SANSU</a><a href="index.html#decisions">判断</a><a href="plan.html">計画</a><details class="nav-more"><summary>資料</summary><div class="nav-links"><a href="overview.html">概要</a><a href="map.html">仕様と実装</a><a href="plan.html">計画</a><a href="roles.html">役割・手順</a><a href="operations.html">運用</a><a href="tasks.html">仕事</a><a href="documents.html">知識・仕様</a><a href="ai/index.html">AIの入口</a></div></details></nav></header><main id="main"><h1 class="portal-title">さんすうの仕事場</h1><section class="snapshot" aria-label="いまの状況と次の行動"><p class="purpose">学んで、島を育てる。</p><div class="snapshot-brief"><p><strong>いま</strong> 入り江の輪郭の採用待ち。</p><p><strong>注意</strong> 採用までは次工程を待つ。</p><p><a class="next-action" href="#decisions">次は、輪郭を比較して決める ↓</a></p></div></section><div class="entry-work"><section class="use-cards" aria-label="使う場所"><a class="use-card" href="https://sansu-seven.vercel.app/"><strong>アプリ ↗</strong><span>学ぶ</span></a><a class="use-card" href="https://sansu-seven.vercel.app/promo/"><strong>紹介 ↗</strong><span>見る</span></a><div class="use-card"><strong>ヘルプ</strong><span class="badge">未接続</span></div></section><section class="entry-artifact" aria-label="画像つき成果"><a href="../docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md" class="artifact-image"><img src="../docs/design/2026-10-13-open-inlet-rough-v1-runtime/loop.png" alt="開発中の島の全景。入り江を囲む二本の腕と水面" width="128" height="96" fetchpriority="high"></a><div><span class="badge">現在の判断対象 · 開発中</span><h2><a href="../docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md">入り江の実画面</a></h2><p>輪郭を比較する最新資料。<br>公開版の最新状態は未確認。</p></div></section></div><aside class="original"><a href="../.agents/index.html">元のさんすうポータルを<span class="link-tail">開く →</span></a><p>図・画像・全文・履歴を保持しています。</p></aside><p class="checked-at">内容確認日 2026-10-16 · 公開版の最新状態は未確認</p><nav class="map-jumps" aria-label="章"><a href="#overview">概要</a><a href="#decisions">判断待ち</a><a href="#tasks">タスク</a><a href="#documents">資料</a><a href="#ai">AIの入口</a></nav><label for="search">このページを全文検索</label><input id="search" type="search" placeholder="言葉・資料名・詳しい本文から探す"><p id="result" role="status" hidden=""></p><section class="entry-search"><h2>資料の本文も探す</h2><label for="global-search">資料全体を検索</label><input id="global-search" type="search" placeholder="資料の中の言葉から探す"><p id="global-status" role="status"></p><ul id="global-results"></ul></section><section id="overview" data-search="5つの問いで、全体を見る 1 目標 子どもが自分から学び、育つ島へまた戻りたくなること。 2 現在地 開いた入り江の粗い本体を実画面まで作り、採用レビュー待ち。 3 止まっているものと理由 採用レビュー待ち。採用前に、次の制作や通常保存を先行しません。 4 判断 開いた入り江の旧案比較と実画面を利用者が確認し、この輪郭を成長と実利用へ進めるかを決める。 5 判断後に進むもの 成長と実利用 → 通常取得・保存・拡張 → 美術と配布。 輪郭を見るための開発中の記録 輪郭を見るための開発中の記録 輪郭を見るための開発中の記録"><h2 class="section-title">5つの問いで、全体を見る</h2><div class="questions"><article class="question"><span class="question-number">1</span><h3>目標</h3><p>子どもが自分から学び、育つ島へまた戻りたくなること。</p></article><article class="question"><span class="question-number">2</span><h3>現在地</h3><p>開いた入り江の粗い本体を実画面まで作り、採用レビュー待ち。</p></article><article class="question"><span class="question-number">3</span><h3>止まっているものと理由</h3><p>採用レビュー待ち。採用前に、次の制作や通常保存を先行しません。</p></article><article class="question"><span class="question-number">4</span><h3>判断</h3><p>開いた入り江の旧案比較と実画面を利用者が確認し、この輪郭を成長と実利用へ進めるかを決める。</p></article><article class="question"><span class="question-number">5</span><h3>判断後に進むもの</h3><p>成長と実利用 → 通常取得・保存・拡張 → 美術と配布。</p></article></div><div class="hero-gallery"><figure><a href="../docs/design/2026-10-13-open-inlet-rough-v1-runtime/initial.png"><img src="../docs/design/2026-10-13-open-inlet-rough-v1-runtime/initial.png" alt="開いた入り江の比較記録 1" loading="lazy"></a><figcaption>輪郭を見るための開発中の記録</figcaption></figure><figure><a href="../docs/design/2026-10-13-open-inlet-rough-v1-runtime/loop.png"><img src="../docs/design/2026-10-13-open-inlet-rough-v1-runtime/loop.png" alt="開いた入り江の比較記録 2" loading="lazy"></a><figcaption>輪郭を見るための開発中の記録</figcaption></figure><figure><a href="../docs/design/2026-10-13-open-inlet-rough-v1-runtime/loop-restored.png"><img src="../docs/design/2026-10-13-open-inlet-rough-v1-runtime/loop-restored.png" alt="開いた入り江の比較記録 3" loading="lazy"></a><figcaption>輪郭を見るための開発中の記録</figcaption></figure></div></section><section id="decisions" data-search="判断待ち ◆ 採用の判断待ち 共有キューの次段階を進める判断 決めること 開いた入り江の旧案比較と実画面を利用者が確認し、この輪郭を成長と実利用へ進めるかを決める。 進める【おすすめ】 次は成長と実利用を一件に区切って制作します。 直して比べる 気になる輪郭を指定し、粗い形を比較し直します。 保留する 次工程を始めず、理由と再開条件を残します。 おすすめと理由 同じ所有物の比較で輪郭差と対象動作を確認できています。この輪郭を採り、成長と実利用を一件に絞って確かめることをすすめます。美術と独立した理解は未達のため、完成・公開の判断は分けます。 影響 採用は次の制作を始める判断です。通常保存・公開の承認にはなりません。 比較材料 旧案と今の実画面、同じ所有物での輪郭差。 比較の記録を開く · 画像で比べる 共有キューの根拠 { &quot;id&quot;: &quot;queue-review&quot;, &quot;title&quot;: &quot;共有キューの次段階を進める判断&quot;, &quot;status&quot;: &quot;開いた入り江の粗い本体を実画面まで作り、採用レビュー待ち。 2026-10-13、同じ所有物と保存形式を保ったまま、旧案の一枚の岬を二本の腕・水面・細い外周接続へ変更した。輪郭差と対象runtimeはgo/pass、生地形の魅力と独立理解はhold。r3は自動開始しない。&quot;, &quot;owner&quot;: &quot;yu（採用判断）&quot;, &quot;deadline&quot;: &quot;未設定（要相談）&quot;, &quot;risk&quot;: &quot;未採用の輪郭や美術を、通常保存・公開へ先行させない。&quot;, &quot;notes&quot;: &quot;根拠: .agents/tasks/tasks.md。開いた入り江の旧案比較と実画面を利用者が確認し、この輪郭をr3へ進めるかを決める。採用前に装飾や通常保存の実装を先行させない。 計画・タスクの詳細：r0レビュー、r1統合失敗の診断、r2粗い本体三配置まで完了。採用後は r3成長と実利用 → r4通常取得・保存・拡張 → r5美術と配布。各項目を別の短い作業に区切る。&quot; } 回答依頼とは別の確認条件 ◇ 確認条件待ち iphoneホーム画面版 旧lifeの起動/cache/描画は改善済み。報告された30秒待ちの実端末での解消は未確認 次に必要なこと 現行growingの同じ端末・版で起動/入室/通信/描画を記録し、初回移行と毎回の遅延、人口/物/電池負荷を分ける 端末や参加者を用意する確認です。二択の回答依頼ではありません。 担当・期限・根拠 { &quot;id&quot;: &quot;confirmation-1&quot;, &quot;title&quot;: &quot;iphoneホーム画面版&quot;, &quot;status&quot;: &quot;確認条件待ち（二択の判断とは限らない）&quot;, &quot;owner&quot;: &quot;未設定（要相談）&quot;, &quot;deadline&quot;: &quot;未設定（要相談）&quot;, &quot;risk&quot;: &quot;旧lifeの起動/cache/描画は改善済み。報告された30秒待ちの実端末での解消は未確認&quot;, &quot;notes&quot;: &quot;根拠: .agents/tasks/blocked.md。次: 現行growingの同じ端末・版で起動/入室/通信/描画を記録し、初回移行と毎回の遅延、人口/物/電池負荷を分ける&quot; } ◇ 確認条件待ち safariの撮影・保存 一時webkitでは失敗、保存付きブラウザでは成功した履歴あり 次に必要なこと 最新候補を実safari/ios pwaで撮影→保存→再読込。再現すれば全体uxへ修正を戻す 端末や参加者を用意する確認です。二択の回答依頼ではありません。 担当・期限・根拠 { &quot;id&quot;: &quot;confirmation-2&quot;, &quot;title&quot;: &quot;safariの撮影・保存&quot;, &quot;status&quot;: &quot;確認条件待ち（二択の判断とは限らない）&quot;, &quot;owner&quot;: &quot;未設定（要相談）&quot;, &quot;deadline&quot;: &quot;未設定（要相談）&quot;, &quot;risk&quot;: &quot;一時webkitでは失敗、保存付きブラウザでは成功した履歴あり&quot;, &quot;notes&quot;: &quot;根拠: .agents/tasks/blocked.md。次: 最新候補を実safari/ios pwaで撮影→保存→再読込。再現すれば全体uxへ修正を戻す&quot; } ◇ 確認条件待ち 実機の音・動き・読み上げ 学習v8と各操作に自動確認あり。実スピーカーの聴感と読み上げ/負荷は未確認 次に必要なこと 同じ版で音量/ミュート/reduced motion/入力/読み上げ、本人切替と学習往復を確認 端末や参加者を用意する確認です。二択の回答依頼ではありません。 担当・期限・根拠 { &quot;id&quot;: &quot;confirmation-3&quot;, &quot;title&quot;: &quot;実機の音・動き・読み上げ&quot;, &quot;status&quot;: &quot;確認条件待ち（二択の判断とは限らない）&quot;, &quot;owner&quot;: &quot;未設定（要相談）&quot;, &quot;deadline&quot;: &quot;未設定（要相談）&quot;, &quot;risk&quot;: &quot;学習v8と各操作に自動確認あり。実スピーカーの聴感と読み上げ/負荷は未確認&quot;, &quot;notes&quot;: &quot;根拠: .agents/tasks/blocked.md。次: 同じ版で音量/ミュート/reduced motion/入力/読み上げ、本人切替と学習往復を確認&quot; } ◇ 確認条件待ち 既存の子の本物の保存 growing初回公開の記録と隔離fixtureの移行検証あり。実利用者の旧所有・学習・住人の引き継ぎは未確認 次に必要なこと 復旧手段を用意し、対象端末で公開版/保存を照合して同じ問題・所有/住人/土地が残ることを確認。別dbの自動合算はしない 端末や参加者を用意する確認です。二択の回答依頼ではありません。 担当・期限・根拠 { &quot;id&quot;: &quot;confirmation-4&quot;, &quot;title&quot;: &quot;既存の子の本物の保存&quot;, &quot;status&quot;: &quot;確認条件待ち（二択の判断とは限らない）&quot;, &quot;owner&quot;: &quot;未設定（要相談）&quot;, &quot;deadline&quot;: &quot;未設定（要相談）&quot;, &quot;risk&quot;: &quot;growing初回公開の記録と隔離fixtureの移行検証あり。実利用者の旧所有・学習・住人の引き継ぎは未確認&quot;, &quot;notes&quot;: &quot;根拠: .agents/tasks/blocked.md。次: 復旧手段を用意し、対象端末で公開版/保存を照合して同じ問題・所有/住人/土地が残ることを確認。別dbの自動合算はしない&quot; } ◇ 確認条件待ち 現行growingを子どもが自分で遊ぶか 本/メニュー・経済・成長・橋は実装/対象検証あり。旧町や旧lifeの結果は現行評価へ転用できない 次に必要なこと 仕様52 §17に沿い、配置の効果、本/橋/本人切替の理解、自発的な「まなぶ」、翌日の再訪を観察。経済は少量/20問での遊びと後日の独力正答を別に確認 端末や参加者を用意する確認です。二択の回答依頼ではありません。 担当・期限・根拠 { &quot;id&quot;: &quot;confirmation-5&quot;, &quot;title&quot;: &quot;現行growingを子どもが自分で遊ぶか&quot;, &quot;status&quot;: &quot;確認条件待ち（二択の判断とは限らない）&quot;, &quot;owner&quot;: &quot;未設定（要相談）&quot;, &quot;deadline&quot;: &quot;未設定（要相談）&quot;, &quot;risk&quot;: &quot;本/メニュー・経済・成長・橋は実装/対象検証あり。旧町や旧lifeの結果は現行評価へ転用できない&quot;, &quot;notes&quot;: &quot;根拠: .agents/tasks/blocked.md。次: 仕様52 §17に沿い、配置の効果、本/橋/本人切替の理解、自発的な「まなぶ」、翌日の再訪を観察。経済は少量/20問での遊びと後日の独力正答を別に確認&quot; }"><h2 class="section-title">判断待ち</h2><article class="card decision"><span class="status">◆ 採用の判断待ち</span><h3>共有キューの次段階を進める判断</h3><p><strong>決めること</strong> 開いた入り江の旧案比較と実画面を利用者が確認し、この輪郭を成長と実利用へ進めるかを決める。</p><div class="choices"><p><strong>進める【おすすめ】</strong><br>次は成長と実利用を一件に区切って制作します。</p><p><strong>直して比べる</strong><br>気になる輪郭を指定し、粗い形を比較し直します。</p><p><strong>保留する</strong><br>次工程を始めず、理由と再開条件を残します。</p></div><p><strong>おすすめと理由</strong> 同じ所有物の比較で輪郭差と対象動作を確認できています。この輪郭を採り、成長と実利用を一件に絞って確かめることをすすめます。美術と独立した理解は未達のため、完成・公開の判断は分けます。</p><p><strong>影響</strong> 採用は次の制作を始める判断です。通常保存・公開の承認にはなりません。</p><p><strong>比較材料</strong> 旧案と今の実画面、同じ所有物での輪郭差。<a href="../docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md">比較の記録を開く</a> · <a href="map.html#evidence">画像で比べる</a></p><details class="ai-detail"><summary>共有キューの根拠</summary><pre>{
+  &quot;id&quot;: &quot;queue-review&quot;,
+  &quot;title&quot;: &quot;共有キューの次段階を進める判断&quot;,
+  &quot;status&quot;: &quot;開いた入り江の粗い本体を実画面まで作り、採用レビュー待ち。 2026-10-13、同じ所有物と保存形式を保ったまま、旧案の一枚の岬を二本の腕・水面・細い外周接続へ変更した。輪郭差と対象runtimeはGO/PASS、生地形の魅力と独立理解はHOLD。R3は自動開始しない。&quot;,
+  &quot;owner&quot;: &quot;Yu（採用判断）&quot;,
+  &quot;deadline&quot;: &quot;未設定（要相談）&quot;,
+  &quot;risk&quot;: &quot;未採用の輪郭や美術を、通常保存・公開へ先行させない。&quot;,
+  &quot;notes&quot;: &quot;根拠: .agents/tasks/TASKS.md。開いた入り江の旧案比較と実画面を利用者が確認し、この輪郭をR3へ進めるかを決める。採用前に装飾や通常保存の実装を先行させない。 計画・タスクの詳細：R0レビュー、R1統合失敗の診断、R2粗い本体三配置まで完了。採用後は R3成長と実利用 → R4通常取得・保存・拡張 → R5美術と配布。各項目を別の短い作業に区切る。&quot;
+}</pre></details></article><h3>回答依頼とは別の確認条件</h3><div class="grid"><article class="card"><span class="status">◇ 確認条件待ち</span><h3>iPhoneホーム画面版</h3><p>旧Lifeの起動/cache/描画は改善済み。報告された30秒待ちの実端末での解消は未確認</p><p><strong>次に必要なこと</strong> 現行Growingの同じ端末・版で起動/入室/通信/描画を記録し、初回移行と毎回の遅延、人口/物/電池負荷を分ける</p><p>端末や参加者を用意する確認です。二択の回答依頼ではありません。</p><details class="ai-detail"><summary>担当・期限・根拠</summary><pre>{
+  &quot;id&quot;: &quot;confirmation-1&quot;,
+  &quot;title&quot;: &quot;iPhoneホーム画面版&quot;,
+  &quot;status&quot;: &quot;確認条件待ち（二択の判断とは限らない）&quot;,
+  &quot;owner&quot;: &quot;未設定（要相談）&quot;,
+  &quot;deadline&quot;: &quot;未設定（要相談）&quot;,
+  &quot;risk&quot;: &quot;旧Lifeの起動/cache/描画は改善済み。報告された30秒待ちの実端末での解消は未確認&quot;,
+  &quot;notes&quot;: &quot;根拠: .agents/tasks/BLOCKED.md。次: 現行Growingの同じ端末・版で起動/入室/通信/描画を記録し、初回移行と毎回の遅延、人口/物/電池負荷を分ける&quot;
+}</pre></details></article><article class="card"><span class="status">◇ 確認条件待ち</span><h3>Safariの撮影・保存</h3><p>一時WebKitでは失敗、保存付きブラウザでは成功した履歴あり</p><p><strong>次に必要なこと</strong> 最新候補を実Safari/iOS PWAで撮影→保存→再読込。再現すれば全体UXへ修正を戻す</p><p>端末や参加者を用意する確認です。二択の回答依頼ではありません。</p><details class="ai-detail"><summary>担当・期限・根拠</summary><pre>{
+  &quot;id&quot;: &quot;confirmation-2&quot;,
+  &quot;title&quot;: &quot;Safariの撮影・保存&quot;,
+  &quot;status&quot;: &quot;確認条件待ち（二択の判断とは限らない）&quot;,
+  &quot;owner&quot;: &quot;未設定（要相談）&quot;,
+  &quot;deadline&quot;: &quot;未設定（要相談）&quot;,
+  &quot;risk&quot;: &quot;一時WebKitでは失敗、保存付きブラウザでは成功した履歴あり&quot;,
+  &quot;notes&quot;: &quot;根拠: .agents/tasks/BLOCKED.md。次: 最新候補を実Safari/iOS PWAで撮影→保存→再読込。再現すれば全体UXへ修正を戻す&quot;
+}</pre></details></article><article class="card"><span class="status">◇ 確認条件待ち</span><h3>実機の音・動き・読み上げ</h3><p>学習v8と各操作に自動確認あり。実スピーカーの聴感と読み上げ/負荷は未確認</p><p><strong>次に必要なこと</strong> 同じ版で音量/ミュート/reduced motion/入力/読み上げ、本人切替と学習往復を確認</p><p>端末や参加者を用意する確認です。二択の回答依頼ではありません。</p><details class="ai-detail"><summary>担当・期限・根拠</summary><pre>{
+  &quot;id&quot;: &quot;confirmation-3&quot;,
+  &quot;title&quot;: &quot;実機の音・動き・読み上げ&quot;,
+  &quot;status&quot;: &quot;確認条件待ち（二択の判断とは限らない）&quot;,
+  &quot;owner&quot;: &quot;未設定（要相談）&quot;,
+  &quot;deadline&quot;: &quot;未設定（要相談）&quot;,
+  &quot;risk&quot;: &quot;学習v8と各操作に自動確認あり。実スピーカーの聴感と読み上げ/負荷は未確認&quot;,
+  &quot;notes&quot;: &quot;根拠: .agents/tasks/BLOCKED.md。次: 同じ版で音量/ミュート/reduced motion/入力/読み上げ、本人切替と学習往復を確認&quot;
+}</pre></details></article><article class="card"><span class="status">◇ 確認条件待ち</span><h3>既存の子の本物の保存</h3><p>Growing初回公開の記録と隔離fixtureの移行検証あり。実利用者の旧所有・学習・住人の引き継ぎは未確認</p><p><strong>次に必要なこと</strong> 復旧手段を用意し、対象端末で公開版/保存を照合して同じ問題・所有/住人/土地が残ることを確認。別DBの自動合算はしない</p><p>端末や参加者を用意する確認です。二択の回答依頼ではありません。</p><details class="ai-detail"><summary>担当・期限・根拠</summary><pre>{
+  &quot;id&quot;: &quot;confirmation-4&quot;,
+  &quot;title&quot;: &quot;既存の子の本物の保存&quot;,
+  &quot;status&quot;: &quot;確認条件待ち（二択の判断とは限らない）&quot;,
+  &quot;owner&quot;: &quot;未設定（要相談）&quot;,
+  &quot;deadline&quot;: &quot;未設定（要相談）&quot;,
+  &quot;risk&quot;: &quot;Growing初回公開の記録と隔離fixtureの移行検証あり。実利用者の旧所有・学習・住人の引き継ぎは未確認&quot;,
+  &quot;notes&quot;: &quot;根拠: .agents/tasks/BLOCKED.md。次: 復旧手段を用意し、対象端末で公開版/保存を照合して同じ問題・所有/住人/土地が残ることを確認。別DBの自動合算はしない&quot;
+}</pre></details></article><article class="card"><span class="status">◇ 確認条件待ち</span><h3>現行Growingを子どもが自分で遊ぶか</h3><p>本/メニュー・経済・成長・橋は実装/対象検証あり。旧町や旧Lifeの結果は現行評価へ転用できない</p><p><strong>次に必要なこと</strong> 仕様52 §17に沿い、配置の効果、本/橋/本人切替の理解、自発的な「まなぶ」、翌日の再訪を観察。経済は少量/20問での遊びと後日の独力正答を別に確認</p><p>端末や参加者を用意する確認です。二択の回答依頼ではありません。</p><details class="ai-detail"><summary>担当・期限・根拠</summary><pre>{
+  &quot;id&quot;: &quot;confirmation-5&quot;,
+  &quot;title&quot;: &quot;現行Growingを子どもが自分で遊ぶか&quot;,
+  &quot;status&quot;: &quot;確認条件待ち（二択の判断とは限らない）&quot;,
+  &quot;owner&quot;: &quot;未設定（要相談）&quot;,
+  &quot;deadline&quot;: &quot;未設定（要相談）&quot;,
+  &quot;risk&quot;: &quot;本/メニュー・経済・成長・橋は実装/対象検証あり。旧町や旧Lifeの結果は現行評価へ転用できない&quot;,
+  &quot;notes&quot;: &quot;根拠: .agents/tasks/BLOCKED.md。次: 仕様52 §17に沿い、配置の効果、本/橋/本人切替の理解、自発的な「まなぶ」、翌日の再訪を観察。経済は少量/20問での遊びと後日の独力正答を別に確認&quot;
+}</pre></details></article></div></section><section id="tasks" data-search="ゴールにつながる仕事 登録された関連仕事です。同時にすべてを開始する指示ではありません。 関連する仕事（同時に開始しない） 最新変更を一つの公開候補へまとめる つながる目標 子どもが自分から学び、育つ島へまた戻りたくなること。 登録された関連仕事です。担当ごとの現在地と次の一手は、仕事の一覧で確認できます。 現在地・次の一手・全文へ 担当・期限・根拠 { &quot;id&quot;: &quot;2026-10-05-growing-island-release&quot;, &quot;title&quot;: &quot;最新変更を一つの公開候補へまとめる&quot;, &quot;status&quot;: &quot;関連する仕事（同時に開始しない）&quot;, &quot;owner&quot;: &quot;未設定（要相談）&quot;, &quot;executor&quot;: &quot;未設定（要相談）&quot;, &quot;deadline&quot;: &quot;未設定（要相談）&quot;, &quot;notes&quot;: &quot;最新変更を一つの公開候補へまとめる：10/9固定v3のcore4,803/classic32、主要旅程・保存失敗/再試行・旧writer/実sw更新をlocal確認。source/dist archiveと実画面を保持 次：公開依頼時にurl/版/配信を照合。実利用者の保存・実機/子どもは別。確認した旧版以外の保存・全写真は未評価。根拠: .agents/tasks/tasks.md → docs/tasks/active/2026-10-05-growing-island-release.md。idは既存ファイル名。関連仕事の登録は同時開始や完了を意味しない。&quot; } 関連する仕事（同時に開始しない） 学習・島・家の一続きの体験 つながる目標 子どもが自分から学び、育つ島へまた戻りたくなること。 登録された関連仕事です。担当ごとの現在地と次の一手は、仕事の一覧で確認できます。 現在地・次の一手・全文へ 担当・期限・根拠 { &quot;id&quot;: &quot;2026-09-20-whole-app-ux-coherence&quot;, &quot;title&quot;: &quot;学習・島・家の一続きの体験&quot;, &quot;status&quot;: &quot;関連する仕事（同時に開始しない）&quot;, &quot;owner&quot;: &quot;未設定（要相談）&quot;, &quot;executor&quot;: &quot;未設定（要相談）&quot;, &quot;deadline&quot;: &quot;未設定（要相談）&quot;, &quot;notes&quot;: &quot;学習・島・家の一続きの体験：v3で実初回→取得/配置→家/本→学習・同予約復帰・本人切替を両幅確認。案内対象・本人一覧の同期競合・study重なりを修正 次：実機の音/読み上げ、利用者の無説明理解・再訪はblockedへ。確認済み経路の再実装はしない。根拠: .agents/tasks/tasks.md → docs/tasks/active/2026-09-20-whole-app-ux-coherence.md。idは既存ファイル名。関連仕事の登録は同時開始や完了を意味しない。&quot; } 関連する仕事（同時に開始しない） 起動と物が増えた島の軽量化 つながる目標 子どもが自分から学び、育つ島へまた戻りたくなること。 登録された関連仕事です。担当ごとの現在地と次の一手は、仕事の一覧で確認できます。 現在地・次の一手・全文へ 担当・期限・根拠 { &quot;id&quot;: &quot;2026-09-23-island-performance&quot;, &quot;title&quot;: &quot;起動と物が増えた島の軽量化&quot;, &quot;status&quot;: &quot;関連する仕事（同時に開始しない）&quot;, &quot;owner&quot;: &quot;未設定（要相談）&quot;, &quot;executor&quot;: &quot;未設定（要相談）&quot;, &quot;deadline&quot;: &quot;未設定（要相談）&quot;, &quot;notes&quot;: &quot;起動と物が増えた島の軽量化：m1の形・床・道を保持しnode全layer7,386→174 ms。receiptだけの再構築を省きshaderをready前準備。花庭c6のcore5,232と編集／通常島の回帰はpass 次：preflight時のbrowser購入予告9〜23秒、成熟後focus約20〜35秒で操作性能は未達。p05反復冠の削減効果とrendererの内訳は未測定。headless回帰の通過を実機性能へ読み替えず、実時計同期・起動/電池/gpuを別確認。根拠: .agents/tasks/tasks.md → docs/tasks/active/2026-09-23-island-performance.md。idは既存ファイル名。関連仕事の登録は同時開始や完了を意味しない。&quot; } 関連する仕事（同時に開始しない） 島の育ち方と全景 つながる目標 子どもが自分から学び、育つ島へまた戻りたくなること。 登録された関連仕事です。担当ごとの現在地と次の一手は、仕事の一覧で確認できます。 現在地・次の一手・全文へ 担当・期限・根拠 { &quot;id&quot;: &quot;2026-09-27-living-fantasy-first-playable&quot;, &quot;title&quot;: &quot;島の育ち方と全景&quot;, &quot;status&quot;: &quot;関連する仕事（同時に開始しない）&quot;, &quot;owner&quot;: &quot;未設定（要相談）&quot;, &quot;executor&quot;: &quot;未設定（要相談）&quot;, &quot;deadline&quot;: &quot;未設定（要相談）&quot;, &quot;notes&quot;: &quot;島の育ち方と全景：開いた入り江のr0〜r2を完了。輪郭差go、対象runtime pass、美術と独立理解hold 次：利用者が輪郭を採用した場合だけr3へ。単独→接続→成熟→実利用→分離→復元を一旅程ずつ扱う。根拠: .agents/tasks/tasks.md → docs/tasks/active/2026-09-27-living-fantasy-first-playable.md。idは既存ファイル名。関連仕事の登録は同時開始や完了を意味しない。&quot; }"><h2 class="section-title">ゴールにつながる仕事</h2><p>登録された関連仕事です。同時にすべてを開始する指示ではありません。</p><div class="grid"><article class="card"><span class="badge">関連する仕事（同時に開始しない）</span><h3>最新変更を一つの公開候補へまとめる</h3><p><strong>つながる目標</strong> 子どもが自分から学び、育つ島へまた戻りたくなること。</p><p>登録された関連仕事です。担当ごとの現在地と次の一手は、仕事の一覧で確認できます。</p><a href="tasks.html">現在地・次の一手・全文へ</a><details class="ai-detail"><summary>担当・期限・根拠</summary><pre>{
+  &quot;id&quot;: &quot;2026-10-05-growing-island-release&quot;,
+  &quot;title&quot;: &quot;最新変更を一つの公開候補へまとめる&quot;,
+  &quot;status&quot;: &quot;関連する仕事（同時に開始しない）&quot;,
+  &quot;owner&quot;: &quot;未設定（要相談）&quot;,
+  &quot;executor&quot;: &quot;未設定（要相談）&quot;,
+  &quot;deadline&quot;: &quot;未設定（要相談）&quot;,
+  &quot;notes&quot;: &quot;最新変更を一つの公開候補へまとめる：10/9固定v3のcore4,803/classic32、主要旅程・保存失敗/再試行・旧writer/実SW更新をlocal確認。source/dist archiveと実画面を保持 次：公開依頼時にURL/版/配信を照合。実利用者の保存・実機/子どもは別。確認した旧版以外の保存・全写真は未評価。根拠: .agents/tasks/TASKS.md → docs/tasks/active/2026-10-05-growing-island-release.md。IDは既存ファイル名。関連仕事の登録は同時開始や完了を意味しない。&quot;
+}</pre></details></article><article class="card"><span class="badge">関連する仕事（同時に開始しない）</span><h3>学習・島・家の一続きの体験</h3><p><strong>つながる目標</strong> 子どもが自分から学び、育つ島へまた戻りたくなること。</p><p>登録された関連仕事です。担当ごとの現在地と次の一手は、仕事の一覧で確認できます。</p><a href="tasks.html">現在地・次の一手・全文へ</a><details class="ai-detail"><summary>担当・期限・根拠</summary><pre>{
+  &quot;id&quot;: &quot;2026-09-20-whole-app-ux-coherence&quot;,
+  &quot;title&quot;: &quot;学習・島・家の一続きの体験&quot;,
+  &quot;status&quot;: &quot;関連する仕事（同時に開始しない）&quot;,
+  &quot;owner&quot;: &quot;未設定（要相談）&quot;,
+  &quot;executor&quot;: &quot;未設定（要相談）&quot;,
+  &quot;deadline&quot;: &quot;未設定（要相談）&quot;,
+  &quot;notes&quot;: &quot;学習・島・家の一続きの体験：v3で実初回→取得/配置→家/本→学習・同予約復帰・本人切替を両幅確認。案内対象・本人一覧の同期競合・Study重なりを修正 次：実機の音/読み上げ、利用者の無説明理解・再訪はBLOCKEDへ。確認済み経路の再実装はしない。根拠: .agents/tasks/TASKS.md → docs/tasks/active/2026-09-20-whole-app-ux-coherence.md。IDは既存ファイル名。関連仕事の登録は同時開始や完了を意味しない。&quot;
+}</pre></details></article><article class="card"><span class="badge">関連する仕事（同時に開始しない）</span><h3>起動と物が増えた島の軽量化</h3><p><strong>つながる目標</strong> 子どもが自分から学び、育つ島へまた戻りたくなること。</p><p>登録された関連仕事です。担当ごとの現在地と次の一手は、仕事の一覧で確認できます。</p><a href="tasks.html">現在地・次の一手・全文へ</a><details class="ai-detail"><summary>担当・期限・根拠</summary><pre>{
+  &quot;id&quot;: &quot;2026-09-23-island-performance&quot;,
+  &quot;title&quot;: &quot;起動と物が増えた島の軽量化&quot;,
+  &quot;status&quot;: &quot;関連する仕事（同時に開始しない）&quot;,
+  &quot;owner&quot;: &quot;未設定（要相談）&quot;,
+  &quot;executor&quot;: &quot;未設定（要相談）&quot;,
+  &quot;deadline&quot;: &quot;未設定（要相談）&quot;,
+  &quot;notes&quot;: &quot;起動と物が増えた島の軽量化：M1の形・床・道を保持しNode全layer7,386→174 ms。receiptだけの再構築を省きshaderをready前準備。花庭c6のcore5,232と編集／通常島の回帰はPASS 次：preflight時のbrowser購入予告9〜23秒、成熟後focus約20〜35秒で操作性能は未達。P05反復冠の削減効果とrendererの内訳は未測定。headless回帰の通過を実機性能へ読み替えず、実時計同期・起動/電池/GPUを別確認。根拠: .agents/tasks/TASKS.md → docs/tasks/active/2026-09-23-island-performance.md。IDは既存ファイル名。関連仕事の登録は同時開始や完了を意味しない。&quot;
+}</pre></details></article><article class="card"><span class="badge">関連する仕事（同時に開始しない）</span><h3>島の育ち方と全景</h3><p><strong>つながる目標</strong> 子どもが自分から学び、育つ島へまた戻りたくなること。</p><p>登録された関連仕事です。担当ごとの現在地と次の一手は、仕事の一覧で確認できます。</p><a href="tasks.html">現在地・次の一手・全文へ</a><details class="ai-detail"><summary>担当・期限・根拠</summary><pre>{
+  &quot;id&quot;: &quot;2026-09-27-living-fantasy-first-playable&quot;,
+  &quot;title&quot;: &quot;島の育ち方と全景&quot;,
+  &quot;status&quot;: &quot;関連する仕事（同時に開始しない）&quot;,
+  &quot;owner&quot;: &quot;未設定（要相談）&quot;,
+  &quot;executor&quot;: &quot;未設定（要相談）&quot;,
+  &quot;deadline&quot;: &quot;未設定（要相談）&quot;,
+  &quot;notes&quot;: &quot;島の育ち方と全景：開いた入り江のR0〜R2を完了。輪郭差GO、対象runtime PASS、美術と独立理解HOLD 次：利用者が輪郭を採用した場合だけR3へ。単独→接続→成熟→実利用→分離→復元を一旅程ずつ扱う。根拠: .agents/tasks/TASKS.md → docs/tasks/active/2026-09-27-living-fantasy-first-playable.md。IDは既存ファイル名。関連仕事の登録は同時開始や完了を意味しない。&quot;
+}</pre></details></article></div></section><section id="documents" data-search="資料・図・画像 概要 正式試行と過去の未達、成果物への5導線 仕様と実装 島と学習の進み具合、仕様分類、素材と画像 計画 正式な仕事順と、制作の6段階 役割・手順 人とaiの担当、正本、引継ぎ 運用 生成、検証、配布、保存互換と復旧 仕事 現在地、次の一手、保留と完了記録 知識・仕様 すべての文書を本文から検索 入口と標準化の資料を開く sansu 文書の入口 さんすうの統合ポータル 正本・旧パスと生成元の地図 2026-10-15の状態観測 h-018 sansuの共通リポジトリ標準への移行 仕様書の地図（人向け） タスク文書の読み方 確認条件が必要なもの"><h2 class="section-title">資料・図・画像</h2><div class="destinations"><article class="card"><h3><a href="overview.html">概要</a></h3><p>正式試行と過去の未達、成果物への5導線</p></article><article class="card"><h3><a href="map.html">仕様と実装</a></h3><p>島と学習の進み具合、仕様分類、素材と画像</p></article><article class="card"><h3><a href="plan.html">計画</a></h3><p>正式な仕事順と、制作の6段階</p></article><article class="card"><h3><a href="roles.html">役割・手順</a></h3><p>人とAIの担当、正本、引継ぎ</p></article><article class="card"><h3><a href="operations.html">運用</a></h3><p>生成、検証、配布、保存互換と復旧</p></article><article class="card"><h3><a href="tasks.html">仕事</a></h3><p>現在地、次の一手、保留と完了記録</p></article><article class="card"><h3><a href="documents.html">知識・仕様</a></h3><p>すべての文書を本文から検索</p></article></div><details><summary>入口と標準化の資料を開く</summary><ul><li><a href="../docs/index.md">Sansu 文書の入口</a></li><li><a href="../docs/portal/README.md">さんすうの統合ポータル</a></li><li><a href="../docs/maps/index.md">正本・旧パスと生成元の地図</a></li><li><a href="../docs/strategy/current-state-2026-10-15.md">2026-10-15の状態観測</a></li><li><a href="../docs/tasks/active/h-018.md">H-018 Sansuの共通リポジトリ標準への移行</a></li><li><a href="../docs/product/README.md">仕様書の地図（人向け）</a></li><li><a href="../docs/tasks/README.md">タスク文書の読み方</a></li><li><a href="../.agents/tasks/BLOCKED.md">確認条件が必要なもの</a></li></ul></details></section><section id="trials" data-search="正式検証の対象と履歴 △ 過去の合格は、今の候補には使えません 検証した対象と現在の候補が違います。最新の正式試行の合格を現在版へ引き継がず、現在版の受入は未確認として扱います。 2026-10-14 · 過去候補の試行は合格 理由 この対象の自動確認は完了しました。利用者による採用・製品の完成は別に確認します。 今への影響 現在の候補とは一致しません。今の版の合否は、この履歴では決まりません。 対象・段階・原因の記録 { &quot;trial&quot;: 6, &quot;at&quot;: &quot;2026-10-14t22:36:55.858z&quot;, &quot;result&quot;: &quot;pass&quot;, &quot;candidate&quot;: &quot;790680fb6bb4cc10da4c81319f5c9703ebb4cd7ef08ec7d1453014a7d9e8ff14&quot;, &quot;implementationversion&quot;: &quot;f8b3397c66aa8bbcb55ee3394e0f2b36fec066b30d07a9a7a1515f0a19cbc847&quot;, &quot;inputdocumentversion&quot;: &quot;02d6adfa2fa8e844b3e0f0e56f19def2a820e2abda560d06d855ab1601822a53&quot;, &quot;passedstages&quot;: [ &quot;scope&quot;, &quot;generate&quot;, &quot;machine&quot;, &quot;browser&quot;, &quot;review&quot;, &quot;accept&quot;, &quot;report&quot; ], &quot;failedstage&quot;: null, &quot;cause&quot;: null, &quot;reason&quot;: null, &quot;receipt&quot;: &quot;/users/yutogasaki/projects/sansu/output/internal-portal-evidence/sansu-common-portal-application/live/trial6-report-e26ad6e8-e253-403a-978e-ad5facb26f13.json&quot;, &quot;rawlog&quot;: &quot;/tmp/sansu-common-portal-application/evidence/e26ad6e8-e253-403a-978e-ad5facb26f13.log&quot;, &quot;rawlogsha256&quot;: &quot;dd00ad6e1e66702b506abc6336720115c0753db420e941e773045a9779c2ea04&quot;, &quot;originalstarted&quot;: &quot;2026-10-11t20:35:12.917z&quot;, &quot;repairs&quot;: 4, &quot;specialhumanrepair&quot;: 1, &quot;deadline&quot;: &quot;2026-10-15t00:30:11.547z&quot;, &quot;useracceptance&quot;: false, &quot;productacceptance&quot;: false, &quot;parentcomplete&quot;: false, &quot;applies&quot;: false, &quot;accepted&quot;: false } 2026-10-14 · 正式試行で停止 理由 検査用の一時保存先が、許可した範囲から外れたため停止しました。 今への影響 現在の候補とは一致しません。今の版の合否は、この履歴では決まりません。 対象・段階・原因の記録 { &quot;trial&quot;: 5, &quot;at&quot;: &quot;2026-10-14t22:08:08.942z&quot;, &quot;result&quot;: &quot;fail&quot;, &quot;candidate&quot;: &quot;790680fb6bb4cc10da4c81319f5c9703ebb4cd7ef08ec7d1453014a7d9e8ff14&quot;, &quot;implementationversion&quot;: &quot;f8b3397c66aa8bbcb55ee3394e0f2b36fec066b30d07a9a7a1515f0a19cbc847&quot;, &quot;inputdocumentversion&quot;: &quot;02d6adfa2fa8e844b3e0f0e56f19def2a820e2abda560d06d855ab1601822a53&quot;, &quot;passedstages&quot;: [ &quot;scope&quot;, &quot;generate&quot; ], &quot;failedstage&quot;: &quot;machine&quot;, &quot;cause&quot;: &quot;environment&quot;, &quot;reason&quot;: &quot;command failed: [\&quot;npm\&quot;,\&quot;run\&quot;,\&quot;verify:core\&quot;] {\&quot;code\&quot;:1,\&quot;signal\&quot;:null}&quot;, &quot;receipt&quot;: &quot;/users/yutogasaki/projects/sansu/output/internal-portal-evidence/sansu-common-portal-application/live/trial5-machine-286eed35-9e90-4620-9596-31ddf5736c5a.json&quot;, &quot;rawlog&quot;: &quot;/tmp/sansu-common-portal-application/evidence/286eed35-9e90-4620-9596-31ddf5736c5a.log&quot;, &quot;rawlogsha256&quot;: &quot;22b7034db0fc103b1d14f76e12118cd0be6dec086e68e71655c6c3d1473224b8&quot;, &quot;originalstarted&quot;: &quot;2026-10-11t20:35:12.917z&quot;, &quot;repairs&quot;: 3, &quot;specialhumanrepair&quot;: 1, &quot;deadline&quot;: &quot;2026-10-15t00:04:14.300z&quot;, &quot;useracceptance&quot;: false, &quot;productacceptance&quot;: false, &quot;parentcomplete&quot;: false, &quot;firstmeaningfulerror&quot;: &quot;repository evidence must be inside output/&quot;, &quot;failedsuites&quot;: [ &quot;tools/snapshot-growing.test.mjs&quot; ], &quot;testfiles&quot;: { &quot;passed&quot;: 600, &quot;failed&quot;: 1, &quot;total&quot;: 601 }, &quot;tests&quot;: { &quot;passed&quot;: 5230, &quot;failed&quot;: 2, &quot;total&quot;: 5232 }, &quot;diagnosis&quot;: &quot;the h-003b execution harness set tmpdir=snapshot/node_modules/.tmp. existing snapshot output-boundary tests use os.tmpdir(), so temporary outputs became repository-local paths outside snapshot/output and were rejected before the expected eexist/outside-input assertions. this is a new harness environment failure; the tests and boundary checks were not changed.&quot;, &quot;completedchecks&quot;: [ &quot;scope&quot;, &quot;generation consistency&quot;, &quot;33 page/graph checks&quot;, &quot;docs:check&quot;, &quot;current ui entry guard&quot;, &quot;lint (3 existing warnings)&quot;, &quot;typecheck&quot;, &quot;focused 2 suites/33 tests&quot; ], &quot;notcompleted&quot;: [ &quot;build&quot;, &quot;public output contamination check&quot;, &quot;320/390/768/1440 formal browser checks&quot;, &quot;independent final review&quot;, &quot;accept&quot;, &quot;report&quot; ], &quot;retryperformed&quot;: false, &quot;trial6created&quot;: false, &quot;applies&quot;: false, &quot;accepted&quot;: false } 2026-10-11 · 正式試行で停止 理由 隔離した検査環境の参照先が、決められた範囲を外れたため停止しました。 今への影響 現在の候補とは一致しません。今の版の合否は、この履歴では決まりません。 対象・段階・原因の記録 { &quot;trial&quot;: 4, &quot;at&quot;: &quot;2026-10-11t21:15:40.280917+00:00&quot;, &quot;result&quot;: &quot;fail&quot;, &quot;scope&quot;: &quot;additional one formal local internal portal verification&quot;, &quot;candidate&quot;: &quot;790680fb6bb4cc10da4c81319f5c9703ebb4cd7ef08ec7d1453014a7d9e8ff14&quot;, &quot;implementationversion&quot;: &quot;f8b3397c66aa8bbcb55ee3394e0f2b36fec066b30d07a9a7a1515f0a19cbc847&quot;, &quot;inputdocumentversion&quot;: &quot;02d6adfa2fa8e844b3e0f0e56f19def2a820e2abda560d06d855ab1601822a53&quot;, &quot;passedstages&quot;: [ &quot;scope&quot;, &quot;generate&quot; ], &quot;failedstage&quot;: &quot;machine&quot;, &quot;cause&quot;: &quot;environment&quot;, &quot;reason&quot;: &quot;two existing fixture suites reject uuid realpath outside the copied snapshot node_modules root; snapshot dependency child symlinks resolve into live node_modules. verify:core exited 1. no repair or retry authorized.&quot;, &quot;firstmeaningfulerror&quot;: &quot;assertionerror: unexpected fixture source: node_modules/uuid/dist-node/index.js&quot;, &quot;failedsuites&quot;: [ &quot;tools/compare-growing-fixtures.test.mjs&quot;, &quot;tools/growing-fixture-data.test.mjs&quot; ], &quot;testfiles&quot;: { &quot;passed&quot;: 599, &quot;failed&quot;: 2, &quot;total&quot;: 601 }, &quot;tests&quot;: { &quot;passed&quot;: 5199, &quot;skipped&quot;: 33, &quot;total&quot;: 5232 }, &quot;completedchecks&quot;: [ &quot;33 portal page/graph checks&quot;, &quot;docs:check&quot;, &quot;current ui entry guard&quot;, &quot;lint (3 existing warnings)&quot;, &quot;typecheck&quot;, &quot;supplemental graph negatives and history checks&quot; ], &quot;notcompleted&quot;: [ &quot;build&quot;, &quot;trial4 public output contamination check&quot;, &quot;trial4 320/390/768/1440 browser checks&quot;, &quot;trial4 keyboard/back/close/repeat&quot;, &quot;trial4 final independent review&quot;, &quot;accept&quot;, &quot;report&quot; ], &quot;receipt&quot;: &quot;/users/yutogasaki/projects/sansu/output/internal-portal-evidence/sansu-common-portal-application/live/trial4-machine-7c1f6188-419d-4377-965f-9ab478637419.json&quot;, &quot;rawlog&quot;: &quot;/users/yutogasaki/projects/sansu/output/internal-portal-evidence/sansu-common-portal-application/live/evidence/7c1f6188-419d-4377-965f-9ab478637419.log&quot;, &quot;rawlogsha256&quot;: &quot;2703019fe352548aac2cde2dea8656953ce017da5df56802dad92489cf5ad708&quot;, &quot;preservation&quot;: { &quot;originalstarted&quot;: &quot;2026-10-11t20:35:12.917z&quot;, &quot;repairsretained&quot;: 2, &quot;additionaltrialconsumed&quot;: 1, &quot;additionalrepairs&quot;: 0, &quot;historyprefixintact&quot;: true, &quot;journalmatches&quot;: true, &quot;frozensourcesunchanged&quot;: 693, &quot;applicationsnapshotfilesunchanged&quot;: 1672, &quot;staticevidenceuiunchanged&quot;: true }, &quot;comparison&quot;: { &quot;formaltargetequalsfrozencandidate&quot;: true, &quot;livecandidateatcloseout&quot;: &quot;ae6036f719af68923b824c9ecd8a846efb563c963256149b9b0184c93c2bc184&quot;, &quot;liveequalsformaltarget&quot;: false, &quot;note&quot;: &quot;live canonical documents can change independently; historical trial3 pass does not transfer to trial4 or current live inputs.&quot; }, &quot;downstreamrefusal&quot;: { &quot;operation&quot;: &quot;start browser qa&quot;, &quot;exitcode&quot;: 2, &quot;message&quot;: &quot;predecessor failed&quot; }, &quot;head&quot;: &quot;c1e7b5350ee167c30644f45b87ab9133f017ecc7&quot;, &quot;useracceptance&quot;: false, &quot;productacceptance&quot;: false, &quot;parentcomplete&quot;: false, &quot;applies&quot;: false, &quot;accepted&quot;: false }"><h2 class="section-title">正式検証の対象と履歴</h2><aside class="warning" role="status"><strong>△ 過去の合格は、今の候補には使えません</strong><p>検証した対象と現在の候補が違います。最新の正式試行の合格を現在版へ引き継がず、現在版の受入は未確認として扱います。</p></aside><ol class="trial-history"><li><strong>2026-10-14 · 過去候補の試行は合格</strong><p><strong>理由</strong> この対象の自動確認は完了しました。利用者による採用・製品の完成は別に確認します。</p><p><strong>今への影響</strong> 現在の候補とは一致しません。今の版の合否は、この履歴では決まりません。</p><details class="ai-detail"><summary>対象・段階・原因の記録</summary><pre>{
+  &quot;trial&quot;: 6,
+  &quot;at&quot;: &quot;2026-10-14T22:36:55.858Z&quot;,
+  &quot;result&quot;: &quot;PASS&quot;,
+  &quot;candidate&quot;: &quot;790680fb6bb4cc10da4c81319f5c9703ebb4cd7ef08ec7d1453014a7d9e8ff14&quot;,
+  &quot;implementationVersion&quot;: &quot;f8b3397c66aa8bbcb55ee3394e0f2b36fec066b30d07a9a7a1515f0a19cbc847&quot;,
+  &quot;inputDocumentVersion&quot;: &quot;02d6adfa2fa8e844b3e0f0e56f19def2a820e2abda560d06d855ab1601822a53&quot;,
+  &quot;passedStages&quot;: [
+    &quot;scope&quot;,
+    &quot;generate&quot;,
+    &quot;machine&quot;,
+    &quot;browser&quot;,
+    &quot;review&quot;,
+    &quot;accept&quot;,
+    &quot;report&quot;
+  ],
+  &quot;failedStage&quot;: null,
+  &quot;cause&quot;: null,
+  &quot;reason&quot;: null,
+  &quot;receipt&quot;: &quot;/Users/yutogasaki/Projects/sansu/output/internal-portal-evidence/sansu-common-portal-application/live/trial6-report-e26ad6e8-e253-403a-978e-ad5facb26f13.json&quot;,
+  &quot;rawLog&quot;: &quot;/tmp/sansu-common-portal-application/evidence/e26ad6e8-e253-403a-978e-ad5facb26f13.log&quot;,
+  &quot;rawLogSha256&quot;: &quot;dd00ad6e1e66702b506abc6336720115c0753db420e941e773045a9779c2ea04&quot;,
+  &quot;originalStarted&quot;: &quot;2026-10-11T20:35:12.917Z&quot;,
+  &quot;repairs&quot;: 4,
+  &quot;specialHumanRepair&quot;: 1,
+  &quot;deadline&quot;: &quot;2026-10-15T00:30:11.547Z&quot;,
+  &quot;userAcceptance&quot;: false,
+  &quot;productAcceptance&quot;: false,
+  &quot;parentComplete&quot;: false,
+  &quot;applies&quot;: false,
+  &quot;accepted&quot;: false
+}</pre></details></li><li><strong>2026-10-14 · 正式試行で停止</strong><p><strong>理由</strong> 検査用の一時保存先が、許可した範囲から外れたため停止しました。</p><p><strong>今への影響</strong> 現在の候補とは一致しません。今の版の合否は、この履歴では決まりません。</p><details class="ai-detail"><summary>対象・段階・原因の記録</summary><pre>{
+  &quot;trial&quot;: 5,
+  &quot;at&quot;: &quot;2026-10-14T22:08:08.942Z&quot;,
+  &quot;result&quot;: &quot;FAIL&quot;,
+  &quot;candidate&quot;: &quot;790680fb6bb4cc10da4c81319f5c9703ebb4cd7ef08ec7d1453014a7d9e8ff14&quot;,
+  &quot;implementationVersion&quot;: &quot;f8b3397c66aa8bbcb55ee3394e0f2b36fec066b30d07a9a7a1515f0a19cbc847&quot;,
+  &quot;inputDocumentVersion&quot;: &quot;02d6adfa2fa8e844b3e0f0e56f19def2a820e2abda560d06d855ab1601822a53&quot;,
+  &quot;passedStages&quot;: [
+    &quot;scope&quot;,
+    &quot;generate&quot;
+  ],
+  &quot;failedStage&quot;: &quot;machine&quot;,
+  &quot;cause&quot;: &quot;environment&quot;,
+  &quot;reason&quot;: &quot;Command failed: [\&quot;npm\&quot;,\&quot;run\&quot;,\&quot;verify:core\&quot;] {\&quot;code\&quot;:1,\&quot;signal\&quot;:null}&quot;,
+  &quot;receipt&quot;: &quot;/Users/yutogasaki/Projects/sansu/output/internal-portal-evidence/sansu-common-portal-application/live/trial5-machine-286eed35-9e90-4620-9596-31ddf5736c5a.json&quot;,
+  &quot;rawLog&quot;: &quot;/tmp/sansu-common-portal-application/evidence/286eed35-9e90-4620-9596-31ddf5736c5a.log&quot;,
+  &quot;rawLogSha256&quot;: &quot;22b7034db0fc103b1d14f76e12118cd0be6dec086e68e71655c6c3d1473224b8&quot;,
+  &quot;originalStarted&quot;: &quot;2026-10-11T20:35:12.917Z&quot;,
+  &quot;repairs&quot;: 3,
+  &quot;specialHumanRepair&quot;: 1,
+  &quot;deadline&quot;: &quot;2026-10-15T00:04:14.300Z&quot;,
+  &quot;userAcceptance&quot;: false,
+  &quot;productAcceptance&quot;: false,
+  &quot;parentComplete&quot;: false,
+  &quot;firstMeaningfulError&quot;: &quot;Repository evidence must be inside output/&quot;,
+  &quot;failedSuites&quot;: [
+    &quot;tools/snapshot-growing.test.mjs&quot;
+  ],
+  &quot;testFiles&quot;: {
+    &quot;passed&quot;: 600,
+    &quot;failed&quot;: 1,
+    &quot;total&quot;: 601
+  },
+  &quot;tests&quot;: {
+    &quot;passed&quot;: 5230,
+    &quot;failed&quot;: 2,
+    &quot;total&quot;: 5232
+  },
+  &quot;diagnosis&quot;: &quot;The H-003b execution harness set TMPDIR=snapshot/node_modules/.tmp. Existing snapshot output-boundary tests use os.tmpdir(), so temporary outputs became repository-local paths outside snapshot/output and were rejected before the expected EEXIST/outside-input assertions. This is a new harness environment failure; the tests and boundary checks were not changed.&quot;,
+  &quot;completedChecks&quot;: [
+    &quot;scope&quot;,
+    &quot;generation consistency&quot;,
+    &quot;33 page/graph checks&quot;,
+    &quot;docs:check&quot;,
+    &quot;current UI entry guard&quot;,
+    &quot;lint (3 existing warnings)&quot;,
+    &quot;typecheck&quot;,
+    &quot;focused 2 suites/33 tests&quot;
+  ],
+  &quot;notCompleted&quot;: [
+    &quot;build&quot;,
+    &quot;public output contamination check&quot;,
+    &quot;320/390/768/1440 formal browser checks&quot;,
+    &quot;independent final review&quot;,
+    &quot;accept&quot;,
+    &quot;report&quot;
+  ],
+  &quot;retryPerformed&quot;: false,
+  &quot;trial6Created&quot;: false,
+  &quot;applies&quot;: false,
+  &quot;accepted&quot;: false
+}</pre></details></li><li><strong>2026-10-11 · 正式試行で停止</strong><p><strong>理由</strong> 隔離した検査環境の参照先が、決められた範囲を外れたため停止しました。</p><p><strong>今への影響</strong> 現在の候補とは一致しません。今の版の合否は、この履歴では決まりません。</p><details class="ai-detail"><summary>対象・段階・原因の記録</summary><pre>{
+  &quot;trial&quot;: 4,
+  &quot;at&quot;: &quot;2026-10-11T21:15:40.280917+00:00&quot;,
+  &quot;result&quot;: &quot;FAIL&quot;,
+  &quot;scope&quot;: &quot;additional one formal local internal portal verification&quot;,
+  &quot;candidate&quot;: &quot;790680fb6bb4cc10da4c81319f5c9703ebb4cd7ef08ec7d1453014a7d9e8ff14&quot;,
+  &quot;implementationVersion&quot;: &quot;f8b3397c66aa8bbcb55ee3394e0f2b36fec066b30d07a9a7a1515f0a19cbc847&quot;,
+  &quot;inputDocumentVersion&quot;: &quot;02d6adfa2fa8e844b3e0f0e56f19def2a820e2abda560d06d855ab1601822a53&quot;,
+  &quot;passedStages&quot;: [
+    &quot;scope&quot;,
+    &quot;generate&quot;
+  ],
+  &quot;failedStage&quot;: &quot;machine&quot;,
+  &quot;cause&quot;: &quot;environment&quot;,
+  &quot;reason&quot;: &quot;Two existing fixture suites reject uuid realpath outside the copied snapshot node_modules root; snapshot dependency child symlinks resolve into live node_modules. verify:core exited 1. No repair or retry authorized.&quot;,
+  &quot;firstMeaningfulError&quot;: &quot;AssertionError: Unexpected fixture source: node_modules/uuid/dist-node/index.js&quot;,
+  &quot;failedSuites&quot;: [
+    &quot;tools/compare-growing-fixtures.test.mjs&quot;,
+    &quot;tools/growing-fixture-data.test.mjs&quot;
+  ],
+  &quot;testFiles&quot;: {
+    &quot;passed&quot;: 599,
+    &quot;failed&quot;: 2,
+    &quot;total&quot;: 601
+  },
+  &quot;tests&quot;: {
+    &quot;passed&quot;: 5199,
+    &quot;skipped&quot;: 33,
+    &quot;total&quot;: 5232
+  },
+  &quot;completedChecks&quot;: [
+    &quot;33 portal page/graph checks&quot;,
+    &quot;docs:check&quot;,
+    &quot;current UI entry guard&quot;,
+    &quot;lint (3 existing warnings)&quot;,
+    &quot;typecheck&quot;,
+    &quot;supplemental graph negatives and history checks&quot;
+  ],
+  &quot;notCompleted&quot;: [
+    &quot;build&quot;,
+    &quot;trial4 public output contamination check&quot;,
+    &quot;trial4 320/390/768/1440 browser checks&quot;,
+    &quot;trial4 keyboard/back/close/repeat&quot;,
+    &quot;trial4 final independent review&quot;,
+    &quot;accept&quot;,
+    &quot;report&quot;
+  ],
+  &quot;receipt&quot;: &quot;/Users/yutogasaki/Projects/sansu/output/internal-portal-evidence/sansu-common-portal-application/live/trial4-machine-7c1f6188-419d-4377-965f-9ab478637419.json&quot;,
+  &quot;rawLog&quot;: &quot;/Users/yutogasaki/Projects/sansu/output/internal-portal-evidence/sansu-common-portal-application/live/evidence/7c1f6188-419d-4377-965f-9ab478637419.log&quot;,
+  &quot;rawLogSha256&quot;: &quot;2703019fe352548aac2cde2dea8656953ce017da5df56802dad92489cf5ad708&quot;,
+  &quot;preservation&quot;: {
+    &quot;originalStarted&quot;: &quot;2026-10-11T20:35:12.917Z&quot;,
+    &quot;repairsRetained&quot;: 2,
+    &quot;additionalTrialConsumed&quot;: 1,
+    &quot;additionalRepairs&quot;: 0,
+    &quot;historyPrefixIntact&quot;: true,
+    &quot;journalMatches&quot;: true,
+    &quot;frozenSourcesUnchanged&quot;: 693,
+    &quot;applicationSnapshotFilesUnchanged&quot;: 1672,
+    &quot;staticEvidenceUiUnchanged&quot;: true
+  },
+  &quot;comparison&quot;: {
+    &quot;formalTargetEqualsFrozenCandidate&quot;: true,
+    &quot;liveCandidateAtCloseout&quot;: &quot;ae6036f719af68923b824c9ecd8a846efb563c963256149b9b0184c93c2bc184&quot;,
+    &quot;liveEqualsFormalTarget&quot;: false,
+    &quot;note&quot;: &quot;Live canonical documents can change independently; historical trial3 PASS does not transfer to trial4 or current live inputs.&quot;
+  },
+  &quot;downstreamRefusal&quot;: {
+    &quot;operation&quot;: &quot;start browser QA&quot;,
+    &quot;exitCode&quot;: 2,
+    &quot;message&quot;: &quot;predecessor failed&quot;
+  },
+  &quot;head&quot;: &quot;c1e7b5350ee167c30644f45b87ab9133f017ecc7&quot;,
+  &quot;userAcceptance&quot;: false,
+  &quot;productAcceptance&quot;: false,
+  &quot;parentComplete&quot;: false,
+  &quot;applies&quot;: false,
+  &quot;accepted&quot;: false
+}</pre></details></li></ol></section><section id="ai" data-search="aiの入口 同じ正本から作った詳しいデータ、全文、版の情報へ。 根拠と作業の入口を開く"><h2 class="section-title">AIの入口</h2><p>同じ正本から作った詳しいデータ、全文、版の情報へ。</p><a href="ai/index.html">根拠と作業の入口を開く</a></section><footer>生成時点の閲覧面です。公開・実機・子どもの理解の合格は別に確認します。<a href="ai/index.html">根拠とAIの入口</a></footer></main><dialog id="reader" aria-labelledby="reader-title"><div class="reader-toolbar"><button type="button" id="reader-back" hidden="">ひとつ前の資料</button><button type="button" id="reader-close">閉じる</button></div><h2 id="reader-title"></h2><div id="reader-content"></div></dialog><script src="search-index.js" defer=""></script><script src="portal.js" defer=""></script></body></html>

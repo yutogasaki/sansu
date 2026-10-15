@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { parseTaskBoard } from '../tools/portal-content.mjs';
+import { renderIntegrated } from '../tools/integrated-portal.mjs';
 
 const root = path.resolve(fileURLToPath(new URL('../', import.meta.url)));
 const vendor = 'scripts/vendor/hub-standard/1.0.0';
@@ -81,14 +82,32 @@ export function run(mode) {
   checkVendor();
   const data = project(), text = JSON.stringify(data, null, 2) + '\n';
   const common = require('./vendor/hub-standard/1.0.0/portal.cjs');
+  const files = renderIntegrated(root, data, common.render(root, data), common);
+  files.set('.generated-by-hub-standard', '1.0.0\n');
+  const out = path.join(root, 'portal');
+  common.noSymlinks(root, out);
   if (mode === 'build') {
-    common.render(root, data); // Validate all references before writing the adapter output.
+    if (fs.existsSync(out)) {
+      common.walk(out);
+      if (!fs.existsSync(path.join(out, '.generated-by-hub-standard'))) throw Error('Unowned portal');
+    }
     fs.writeFileSync(path.join(root, 'docs/portal/project.json'), text);
-    return common.build(root);
+    fs.rmSync(out, { recursive: true, force: true });
+    for (const [file, content] of files) {
+      fs.mkdirSync(path.dirname(path.join(out, file)), { recursive: true });
+      if (typeof content === 'string') fs.writeFileSync(path.join(out, file), content);
+      else fs.copyFileSync(path.join(root, content.source), path.join(out, file));
+    }
+    return { status: 'PASS', files: files.size };
   }
   if (mode === 'verify') {
     if (read('docs/portal/project.json') !== text) throw Error('Stale adapter: run npm run portal:build');
-    return common.verify(root);
+    const actual = common.walk(out).map(file => path.relative(out, file));
+    const stale = [...files].filter(([file, content]) => !fs.existsSync(path.join(out, file)) || (typeof content === 'string'
+      ? fs.readFileSync(path.join(out, file), 'utf8') !== content
+      : sha(fs.readFileSync(path.join(out, file))) !== content.sha256));
+    if (stale.length || actual.some(file => !files.has(file))) throw Error(`Stale portal: ${stale.length} changed/missing or extra files`);
+    return { status: 'PASS', files: files.size };
   }
   throw Error('Usage: node scripts/standard-portal.mjs build|verify');
 }

@@ -1,0 +1,50 @@
+[
+  {
+    "command": "npm run docs:check",
+    "atUTC": "2026-10-15T17:32:19.062941+00:00",
+    "seconds": 1.48,
+    "exitCode": 0,
+    "result": "PASS",
+    "expected": "exit 0",
+    "log": "qa/evidence/S-002/r2-logs/docs-stable.txt",
+    "logSha256": "f532551edebda0fda7891fd2f1aed92babcdbcf96bd6b64b3d0e2af635af02a9",
+    "inputFingerprint": "c2de189d162d8c0425775c9bad9f466d650be5f886b464378a177c5c5d51ac10",
+    "currentCandidate": "28f9993ee21aedb84766d344da2af09caf95e8e4287ea4d02fb11c5aed78160d"
+  },
+  {
+    "command": "npm run portal:verify",
+    "atUTC": "2026-10-15T17:32:20.544672+00:00",
+    "seconds": 15.78,
+    "exitCode": 0,
+    "result": "PASS",
+    "expected": "exit 0",
+    "log": "qa/evidence/S-002/r2-logs/portal-stable.txt",
+    "logSha256": "29da3969b4e777974d09a78f61de5a1a1571e441413f44d1d0654220dd82d6d0",
+    "inputFingerprint": "c2de189d162d8c0425775c9bad9f466d650be5f886b464378a177c5c5d51ac10",
+    "currentCandidate": "28f9993ee21aedb84766d344da2af09caf95e8e4287ea4d02fb11c5aed78160d"
+  },
+  {
+    "command": "npm run agent:index:check",
+    "atUTC": "2026-10-15T17:32:36.330341+00:00",
+    "seconds": 13.38,
+    "exitCode": 0,
+    "result": "PASS",
+    "expected": "exit 0",
+    "log": "qa/evidence/S-002/r2-logs/agent-stable.txt",
+    "logSha256": "e23e88ebcde38b7905a8d7ba8aa9709a40c91ef7a2baa4b92d38275f094dd05c",
+    "inputFingerprint": "c2de189d162d8c0425775c9bad9f466d650be5f886b464378a177c5c5d51ac10",
+    "currentCandidate": "28f9993ee21aedb84766d344da2af09caf95e8e4287ea4d02fb11c5aed78160d"
+  },
+  {
+    "command": "node tools/check-internal-portal.mjs",
+    "atUTC": "2026-10-15T17:32:49.716690+00:00",
+    "seconds": 4.71,
+    "exitCode": 0,
+    "result": "PASS",
+    "expected": "exit 0",
+    "log": "qa/evidence/S-002/r2-logs/internal-stable.txt",
+    "logSha256": "072a8eb54f61801e925ba5b6cebf02bcdf240bffb2a60912fbb8372b164c7897",
+    "inputFingerprint": "c2de189d162d8c0425775c9bad9f466d650be5f886b464378a177c5c5d51ac10",
+    "currentCandidate": "28f9993ee21aedb84766d344da2af09caf95e8e4287ea4d02fb11c5aed78160d"
+  }
+]

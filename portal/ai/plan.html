@@ -1,0 +1,1315 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="tools/generate-agent-index.mjs"><title>Sansu · 計画</title><style id="parity-1">
+:root{color-scheme:light;--ink:#24233d;--muted:#55556b;--line:#d9d8e3;--paper:#fffdfa;--accent:#4d3aa2}*{box-sizing:border-box}body{margin:0;background:#f5f3f8;color:var(--ink);font:17px/1.75 system-ui,-apple-system,sans-serif}a{color:var(--accent);text-underline-offset:4px}header{background:var(--paper);border-bottom:1px solid var(--line)}nav,main{max-width:1180px;margin:auto;padding:20px 28px}nav{display:flex;align-items:center;gap:24px;flex-wrap:wrap}nav strong{margin-right:auto;letter-spacing:.12em}nav a{text-decoration:none;padding:6px 2px}nav a[aria-current]{border-bottom:2px solid var(--accent);font-weight:700}main{padding-top:42px;padding-bottom:70px}h1{font-size:clamp(28px,5vw,44px);letter-spacing:-.035em;margin:0}h2{font-size:18px;line-height:1.5;margin:0 0 10px}p{margin:10px 0}.subtitle,.path,footer{color:var(--muted)}.eyebrow{font-size:14px;letter-spacing:.16em}.intro{padding:28px;background:#ece8f7;border:1px solid var(--line);border-radius:14px;margin:28px 0}.intro h2{font-size:26px}.stats{display:flex;flex-wrap:wrap;gap:24px;margin-top:22px}.stats strong{font-size:30px;margin-right:5px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px;overflow-wrap:anywhere}.path{font:14px/1.6 ui-monospace,monospace}.section-title{margin:32px 0 16px}label{display:block;font-weight:600;margin-top:24px}input{width:100%;font:inherit;padding:13px 16px;border:1px solid #93aa9b;border-radius:8px;background:var(--paper);margin:8px 0 24px;color:var(--ink)}summary{cursor:pointer;color:var(--accent);padding:10px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:15px/1.8 ui-monospace,monospace;background:#f0edf5;padding:16px;border-radius:8px;max-height:560px;overflow:auto}.map-list,.asset-groups,.spec-list{display:grid;gap:12px}.map-row{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);gap:24px}.map-row h2{margin:8px 0 4px}.map-row h3{font-size:14px;letter-spacing:.08em;color:var(--muted);margin:0}.map-row p{margin:4px 0}.map-row small{color:var(--muted);white-space:nowrap}.spec-row{display:flex;justify-content:space-between;gap:20px;padding:12px 20px}.spec-row p{margin:0;color:var(--muted)}.spec-row>div:last-child{text-align:right;min-width:160px}.badge,.status{font-size:14px;padding:3px 9px;border-radius:99px;background:#ece8f7;margin-right:6px}.status{background:#fff1ce}.asset-group{padding:12px 20px}.asset-group summary{display:flex;justify-content:space-between;gap:16px;align-items:center}.asset-group summary span,.asset-list span{color:var(--muted);white-space:nowrap}.asset-list{border-top:1px solid var(--line);margin-top:8px;padding-top:8px}.asset-list>div{display:flex;justify-content:space-between;gap:16px;padding:3px 0;border-bottom:1px solid #edf0e9}.asset-list a{overflow-wrap:anywhere}footer{margin-top:40px;font-size:13px}[hidden]{display:none!important}:focus-visible{outline:3px solid #b27523;outline-offset:4px}@media(max-width:760px){.map-row{grid-template-columns:1fr}.spec-row{display:block}.spec-row>div:last-child{text-align:left;min-width:0;margin-top:8px}.asset-group summary,.asset-list>div{align-items:flex-start}.asset-group summary span{font-size:14px}}@media(max-width:640px){nav,main{padding-left:18px;padding-right:18px}nav{gap:16px}.grid{grid-template-columns:1fr}.intro{padding:20px}.card{padding:18px}}
+.asset-item{display:grid!important;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:12px;padding:7px 0!important}.asset-thumb{display:flex;align-items:center;justify-content:center;width:64px;height:54px;border-radius:6px;background:#edf0e9;overflow:hidden;text-decoration:none}.asset-thumb img{width:100%;height:100%;object-fit:contain}.asset-placeholder{font:10px ui-monospace,monospace;color:var(--muted);letter-spacing:.08em}.asset-name{min-width:0;white-space:normal!important}.asset-size{white-space:nowrap}@media(max-width:640px){.asset-item{grid-template-columns:52px minmax(0,1fr);gap:10px}.asset-thumb{width:52px;height:48px}.asset-size{grid-column:2;justify-self:start;font-size:14px}}
+.progress-overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:22px 0}.progress-overview>div{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px}.progress-overview strong{display:block;font-size:30px;line-height:1.2}.progress-overview span{font-size:13px}.map-help{font-size:13px;color:var(--muted)}.map-row{display:block}.map-heading{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.map-heading h2{font-size:22px;margin:5px 0 10px}.map-heading .status{white-space:nowrap;font-weight:700}.map-summary{display:grid;grid-template-columns:1fr 1fr;gap:14px}.map-summary p{margin:0;padding:12px 14px;border-radius:9px;background:#f4f6f0}.map-summary strong{display:block;font-size:14px;color:var(--muted);margin-bottom:2px}.progress-track{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;list-style:none;margin:16px 0 0;padding:0}.stage{padding:10px;border-radius:8px;background:#eef2e9;border:1px solid #d9e2d5}.stage span{display:block;font-size:11px;line-height:1.3;color:var(--muted)}.stage strong{display:block;font-size:14px;line-height:1.4;margin-top:4px}.stage-partial{background:#fff4dc;border-color:#ecdcb7}.stage-waiting{background:#f4f3f0;border-color:#e0ded8}.map-sources{border-top:1px solid var(--line);margin-top:16px}.map-sources>div{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding-top:8px}.map-sources h3{margin:0;font-size:14px}.archive-section{margin:32px 0;padding:20px;background:#e9ece7;border:1px solid var(--line);border-radius:12px}.archive-section>summary{font-size:18px;font-weight:700}.archive-section h3{margin-top:25px}.archive-section .asset-groups{margin-top:14px}@media(max-width:760px){.progress-overview,.progress-track{grid-template-columns:repeat(2,minmax(0,1fr))}.map-summary,.map-sources>div{grid-template-columns:1fr}.map-heading{display:block}.map-heading .status{display:inline-block;margin-bottom:10px}}@media(max-width:400px){.progress-overview{grid-template-columns:repeat(2,minmax(0,1fr))}.progress-track{gap:5px}.stage{padding:8px}}
+.mode-list{display:grid;gap:10px}.mode-row{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:15px}.mode-row>strong{font-size:17px;margin-right:10px}.mode-row p{margin:5px 0}.mode-row a{font-size:13px}
+.map-jumps{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:20px 0 28px}.map-jumps a{display:inline-block;padding:8px 12px;background:var(--paper);border:1px solid var(--line);border-radius:99px;text-decoration:none;font-weight:700;font-size:13px}.map-jumps a:hover{background:#ece8f7}.group-title{font-size:17px;margin:26px 0 10px}.group-title small{font-size:14px;font-weight:500;color:var(--muted);margin-left:6px}.asset-note{font-size:14px;color:var(--muted)}.asset-full-list{border-top:1px solid var(--line);margin-top:12px}.asset-full-list>summary{font-weight:700}.asset-full-list .asset-item{font-size:13px}.asset-full-list .asset-thumb{width:46px;height:38px}.asset-full-list .asset-item{grid-template-columns:46px minmax(0,1fr) auto}.asset-group>summary strong{max-width:70%;overflow-wrap:anywhere}#progress,#specs,#assets,#legacy,#evidence{scroll-margin-top:18px}@media(max-width:640px){.map-jumps{gap:6px}.map-jumps a{font-size:14px;padding:7px 9px}.asset-group>summary{display:block}.asset-group>summary strong{display:block;max-width:none}.asset-group>summary span{display:block}.asset-full-list .asset-item{grid-template-columns:38px minmax(0,1fr)}.asset-full-list .asset-thumb{width:38px;height:34px}}
+.asset-group>summary{display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:14px;align-items:center}.group-thumb{display:block;width:62px;height:52px;object-fit:contain;border-radius:6px;background:#edf0e9}.asset-group>summary strong{max-width:none}.asset-group>summary>span:last-child{white-space:nowrap}@media(max-width:640px){.asset-group>summary{display:grid;grid-template-columns:52px minmax(0,1fr);gap:9px}.group-thumb{width:52px;height:48px}.asset-group>summary>span:last-child{grid-column:2}}
+.asset-group>summary .group-name{white-space:normal;min-width:0}.group-name strong,.group-name small{display:block;line-height:1.5}.group-name small{font:11px/1.5 ui-monospace,monospace;color:var(--muted);overflow-wrap:anywhere}.asset-group>summary .group-name strong{font-size:15px}
+.asset-size{text-align:right}.asset-size small{display:block;color:var(--muted);font-size:11px;line-height:1.45}@media(max-width:640px){.asset-size{text-align:left}}
+.evidence-gallery{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}.evidence-gallery .asset-item{display:block!important;padding:10px!important;border:1px solid var(--line);border-radius:9px;background:#f7f9f4}.evidence-gallery .asset-thumb{width:100%;height:250px;margin-bottom:8px}.evidence-gallery .asset-name{display:block;font-weight:700}.evidence-gallery .asset-size{display:block;text-align:left;font-size:14px}@media(max-width:640px){.evidence-gallery{grid-template-columns:1fr}.evidence-gallery .asset-thumb{height:260px}}
+.destinations{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:16px}nav a{min-height:44px;display:inline-flex;align-items:center}pre{tab-size:2}.skip{position:absolute;left:12px;top:-90px;background:white;padding:12px}.skip:focus{top:0}
+</style></head><body><p><a href="../index.html">さんすうの現在地へ</a></p><a class="skip" href="#main" id="parity-2">本文へ</a><header><nav aria-label="メインナビゲーション" id="parity-3"><strong>SANSU</strong><a href="../overview.html" id="parity-4">概要</a><a href="../plan.html" aria-current="page" id="parity-5">計画</a><a href="../tasks.html" id="parity-6">仕事</a><a href="../documents.html" id="parity-7">知識・仕様</a><a href="../roles.html" id="parity-8">役割・手順</a><a href="../operations.html" id="parity-9">運用</a></nav></header><main id="main"><h1 id="parity-10">計画</h1><p class="subtitle">Sansu repository · Markdownから生成した閲覧用ポータル</p><label for="search">このページを検索</label><input id="search" type="search" placeholder="タイトル・ファイル名・キーワード"><p id="result" role="status" hidden=""></p><section class="intro" id="parity-12"><h2 id="parity-13">目標と実行順の関係</h2><p>正式な実行順はバックログと共有キューを優先。M0〜M5は全島制作の工程、美術計画は表現の判断軸です。資料の存在を工程合格と扱いません。製品全体の採用ロードマップの安定ID・全受入条件は未確認。</p></section><div class="grid"><article class="card" data-search="正式な仕事順と後続候補 docs/tasks/backlog.md # sansu 全体バックログ
+
+更新日: 2026-10-05
+次回棚卸し目安: 2026-10-12
+
+## 進める順番
+
+実行の正本は[共有キュー](../../.agents/tasks/tasks.md)。最新変更の固定候補・公開準備を先頭に、全体ux、性能、美術の4担当へまとめた。実機・利用者の条件が必要な作業は[確認待ち](../../.agents/tasks/blocked.md)へ置く。
+
+後続機能は、既存の一周「しこむ→まなぶ→ひらく」の公開・保存・体験の課題が分かってから選ぶ。検証済み機能を再実装せず、待ち時間を機能の大量追加で埋めない。
+
+## 後で判断する候補
+
+| 候補 | 現在地 | キューへ移す条件・最初の成果物 |
+|---|---|---|
+| [自然の拡張](active/2026-09-22-island-nature-integration.md) | 旧lifeに水路/土/育成/運搬/食事/来訪/入居を統合済み。固定水源・旧保存adapter・時計の導入案は資料あり | 現行growingと仕様52との差分を先に整理。導入の目的、残す資産、移行/復旧と配置の効果を示す。旧51の時計案をそのまま追加しない |
+| [導きと記念の追加](active/2026-10-01-island-guidance.md) | 初期s1〜s5/a1〜a6と本/挿絵は実装済み。混色・木陰利用・学習記念品展示・稀な来訪の記念、自動写真は後続 | 今の本/目標が理解されているかを確認し、追加1種類の達成事実・保存・見返す体験を仕様化する |
+| 共有・季節・追加の暮らし | [仕様51](../product/51_living_fantasy_island_spec.md)の後続構想 | 憲法・52に整合し、くふう/にぎわい/ふしぎ/愛着への効果と必要性を示す。単一財布や時計の構想を採用済み変更と扱わない |
+| 追加の学習単元・教材校閲 | 既存教材/進行の監査修正は実装済み。定着・難度・専門校閲の未評価は残る | 対象単元と既存の学習仕様との差分、検算/校閲・受入基準を定める。島の都合で採点やsrsを変えない |
+| 旧nature townの作物・渡し船・市場 | 試作/参考資料 | 同じgrowingの遊びへ効く必要性を確認し、別作品や別財布を増やさず最小単位を起票する |
+
+クラウド同期は現行local-firstの範囲外。追加機能はこの一覧への記載だけでは採用・実装開始を意味しない。
+
+## 重複して実行しない資料
+
+| 資料 | 位置づけ | 残件の扱い |
+|---|---|---|
+| [育つ島v1](active/2026-09-29-growing-island-v1.md) | 初回実装・10/1本番切替と残る受入の記録 | 最新候補の公開準備へ。実機/既存利用者/子どもは確認待ち |
+| [不思議な島v3](active/2026-09-13-mysterious-island-v3.md) | 局所実装と美術比較の参照元 | 採用する差分だけ現行の美術/性能へ |
+| [家から店への接続試作](active/2026-09-09-home-journey-preview.md) | dev比較用 | 試作全体を本番統合待ちにしない |
+| [島の主要体験](active/2026-09-08-island-experience.md)・[学習と島の楽しさ](active/2026-09-07-experience-improvements.md) | 横断索引 | 操作は全体ux、見た目は美術、性能は性能担当へ |
+| [演出の比較試作](../design/2026-09-28-pokomoko-pop-study/readme.md) | 参考・制作履歴 | 現行v8との差分と採用理由を確認してから選ぶ |
+| [旧探索の初回体験](active/2026-07-21-cold-open-value-loop.md)・[旧探索の全体美術](active/2026-07-23-whole-app-brand-coherence.md) | 再採用条件待ち | 今の島の共通完成ゲートにはしない |
+
+既存ファイルは参照を保つ。`active/`にあるだけでは実行中と判断しない。
+
+## 今回の棚卸しの境界
+
+共有キュー、関連仕様/タスク、git履歴と未コミット一覧、10/1〜10/5の検証記録を照合した。アプリ実装・本番操作・実機/子どもの観察は行っていない。過去の検証を新しい候補の合格として記録しない。
+" id="parity-14"><h2 id="parity-15"><a href="../../docs/tasks/backlog.md" id="parity-16">正式な仕事順と後続候補</a></h2><details id="parity-17"><summary>正本・内容と版の根拠</summary><p class="path">docs/tasks/backlog.md · 内容SHA256 5109ef763e576dab9645d315db1323e1054428f3ed97d4f50472178fb00d029f</p><p>生成時の正本を掲載。内容の確認日は未記録、配布版は未確認。内容hashはcommit IDではありません。</p><pre># Sansu 全体バックログ
+
+更新日: 2026-10-05
+次回棚卸し目安: 2026-10-12
+
+## 進める順番
+
+実行の正本は[共有キュー](../../.agents/tasks/TASKS.md)。最新変更の固定候補・公開準備を先頭に、全体UX、性能、美術の4担当へまとめた。実機・利用者の条件が必要な作業は[確認待ち](../../.agents/tasks/BLOCKED.md)へ置く。
+
+後続機能は、既存の一周「しこむ→まなぶ→ひらく」の公開・保存・体験の課題が分かってから選ぶ。検証済み機能を再実装せず、待ち時間を機能の大量追加で埋めない。
+
+## 後で判断する候補
+
+| 候補 | 現在地 | キューへ移す条件・最初の成果物 |
+|---|---|---|
+| [自然の拡張](active/2026-09-22-island-nature-integration.md) | 旧Lifeに水路/土/育成/運搬/食事/来訪/入居を統合済み。固定水源・旧保存adapter・時計の導入案は資料あり | 現行Growingと仕様52との差分を先に整理。導入の目的、残す資産、移行/復旧と配置の効果を示す。旧51の時計案をそのまま追加しない |
+| [導きと記念の追加](active/2026-10-01-island-guidance.md) | 初期S1〜S5/A1〜A6と本/挿絵は実装済み。混色・木陰利用・学習記念品展示・稀な来訪の記念、自動写真は後続 | 今の本/目標が理解されているかを確認し、追加1種類の達成事実・保存・見返す体験を仕様化する |
+| 共有・季節・追加の暮らし | [仕様51](../product/51_living_fantasy_island_spec.md)の後続構想 | 憲法・52に整合し、くふう/にぎわい/ふしぎ/愛着への効果と必要性を示す。単一財布や時計の構想を採用済み変更と扱わない |
+| 追加の学習単元・教材校閲 | 既存教材/進行の監査修正は実装済み。定着・難度・専門校閲の未評価は残る | 対象単元と既存の学習仕様との差分、検算/校閲・受入基準を定める。島の都合で採点やSRSを変えない |
+| 旧Nature Townの作物・渡し船・市場 | 試作/参考資料 | 同じGrowingの遊びへ効く必要性を確認し、別作品や別財布を増やさず最小単位を起票する |
+
+クラウド同期は現行local-firstの範囲外。追加機能はこの一覧への記載だけでは採用・実装開始を意味しない。
+
+## 重複して実行しない資料
+
+| 資料 | 位置づけ | 残件の扱い |
+|---|---|---|
+| [育つ島v1](active/2026-09-29-growing-island-v1.md) | 初回実装・10/1本番切替と残る受入の記録 | 最新候補の公開準備へ。実機/既存利用者/子どもは確認待ち |
+| [不思議な島v3](active/2026-09-13-mysterious-island-v3.md) | 局所実装と美術比較の参照元 | 採用する差分だけ現行の美術/性能へ |
+| [家から店への接続試作](active/2026-09-09-home-journey-preview.md) | DEV比較用 | 試作全体を本番統合待ちにしない |
+| [島の主要体験](active/2026-09-08-island-experience.md)・[学習と島の楽しさ](active/2026-09-07-experience-improvements.md) | 横断索引 | 操作は全体UX、見た目は美術、性能は性能担当へ |
+| [演出の比較試作](../design/2026-09-28-pokomoko-pop-study/README.md) | 参考・制作履歴 | 現行v8との差分と採用理由を確認してから選ぶ |
+| [旧探索の初回体験](active/2026-07-21-cold-open-value-loop.md)・[旧探索の全体美術](active/2026-07-23-whole-app-brand-coherence.md) | 再採用条件待ち | 今の島の共通完成ゲートにはしない |
+
+既存ファイルは参照を保つ。`active/`にあるだけでは実行中と判断しない。
+
+## 今回の棚卸しの境界
+
+共有キュー、関連仕様/タスク、Git履歴と未コミット一覧、10/1〜10/5の検証記録を照合した。アプリ実装・本番操作・実機/子どもの観察は行っていない。過去の検証を新しい候補の合格として記録しない。
+</pre></details></article><article class="card" data-search="現在の実行担当 .agents/tasks/tasks.md # 今進めていること
+
+**開いた入り江の粗い本体を実画面まで作り、採用レビュー待ち。** 2026-10-13、同じ所有物と保存形式を保ったまま、旧案の一枚の岬を二本の腕・水面・細い外周接続へ変更した。輪郭差と対象runtimeはgo/pass、生地形の魅力と独立理解はhold。r3は自動開始しない。
+
+## 次の一手
+
+[開いた入り江の旧案比較と実画面](../../docs/design/2026-10-13-open-inlet-rough-v1-runtime/readme.md)を利用者が確認し、この輪郭をr3へ進めるかを決める。採用前に装飾や通常保存の実装を先行させない。
+
+[計画・タスクの詳細](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md#現在地と次の計画2026-10-13)：r0レビュー、r1統合失敗の診断、r2粗い本体三配置まで完了。採用後は r3成長と実利用 → r4通常取得・保存・拡張 → r5美術と配布。各項目を別の短い作業に区切る。
+
+[進め方の正本](../../docs/runbooks/bounded-island-work.md)：既定30分・一成果物・追加エージェントなし。方向確認前に細部を磨かず、時間内でも成果が出たら止める。未完・未検証を明記し、上限を超えて自動継続しない。
+
+現在の核心は「育ち方で島の形がいろいろになること」。開いた入り江は、同じ8軒・4成熟木・35所有物で北／東／最終の三配置、分離／復元、小画面まで実画面pass。旧案との輪郭差はgoだが、美術採用、全島の実利用・本人保存・16／32軒以上・性能は未完。過去の詳しい検証履歴は親タスクと各証拠へ集約する。
+
+## 関連する仕事（同時に開始しない）
+
+| 分類 | 仕事 | 今どこまで進んだか | 次にすること |
+|---|---|---|---|
+| 1・統合と公開準備 | [最新変更を一つの公開候補へまとめる](../../docs/tasks/active/2026-10-05-growing-island-release.md) | 10/9固定v3のcore4,803/classic32、主要旅程・保存失敗/再試行・旧writer/実sw更新をlocal確認。source/dist archiveと実画面を保持 | 公開依頼時にurl/版/配信を照合。実利用者の保存・実機/子どもは別。確認した旧版以外の保存・全写真は未評価 |
+| 2・体験 | [学習・島・家の一続きの体験](../../docs/tasks/active/2026-09-20-whole-app-ux-coherence.md) | v3で実初回→取得/配置→家/本→学習・同予約復帰・本人切替を両幅確認。案内対象・本人一覧の同期競合・study重なりを修正 | 実機の音/読み上げ、利用者の無説明理解・再訪はblockedへ。確認済み経路の再実装はしない |
+| 3・性能 | [起動と物が増えた島の軽量化](../../docs/tasks/active/2026-09-23-island-performance.md) | m1の形・床・道を保持しnode全layer7,386→174 ms。receiptだけの再構築を省きshaderをready前準備。花庭c6のcore5,232と編集／通常島の回帰はpass | preflight時のbrowser購入予告9〜23秒、成熟後focus約20〜35秒で操作性能は未達。p05反復冠の削減効果とrendererの内訳は未測定。headless回帰の通過を実機性能へ読み替えず、実時計同期・起動/電池/gpuを別確認 |
+| 4・美術と成長 | [島の育ち方と全景](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md) | 開いた入り江のr0〜r2を完了。輪郭差go、対象runtime pass、美術と独立理解hold | 利用者が輪郭を採用した場合だけr3へ。単独→接続→成熟→実利用→分離→復元を一旅程ずつ扱う |
+
+## 実装済みとして扱うもの
+
+
+- [10/9のローカル品質候補](../../docs/design/2026-10-09-local-quality/readme.md)：こちらで設計・実装・検証する一区切りを完了。公開・実機・参加者評価、残る性能課題は上の親タスクとblockedへ分ける。
+
+- [session責務の分割とpwa更新/復旧の検査](../../docs/runbooks/growing-update.md)：初期読込・学習commit・家に加え、配置hookと写真/工作panel、6責務の3d接続を分離。同じ保存で旧版→候補→対応writerへ実sw更新。共用描画はthree/islandcharactersとthree/gardenへ整理済み。性能計測と公開/実利用者の引継ぎは後続へ残す。
+
+- [島runtimeの一本化](../../docs/architecture/island-runtime.md)：growingを唯一のホームにし、旧独立ui/起動入口を撤去。旧db・学習・所有・移行と共用モデルを保持。今回のlocal検証とgit反映は完了履歴へ記録し、公開/更新/実利用者確認は1の担当に残す。
+
+- [育つ島v1](../../docs/tasks/active/2026-09-29-growing-island-v1.md)：規則・保存・住人・島の画面と10/1初回本番切替。既存の子の実保存引き継ぎ・実機・再訪観察は残る。
+- [任意の導きと記念](../../docs/tasks/active/2026-10-01-island-guidance.md)：s1〜s5/a1〜a6・家の本・記念・挿絵v6。新規実装待ちには戻さず、公開/更新確認を1へ、体験を2へ、美術を4へまとめる。
+- 学習/挑戦/記録の動線、20問/日の経済、来訪と成長の配分、住人一覧から本人の家への移動：[完了履歴](done.md)。検証済み範囲と公開状態はそれぞれの記録を参照する。
+- [橋の本編統合](../../docs/design/2026-10-05-growing-bridge/production.md)と[保護者設定の役割整理](../../docs/design/2026-10-04-parent-settings/readme.md)：既存変更を含むローカル候補。未コミット/未公開を実装未着手と混同しない。
+- 旧lifeの自然・食事・来訪/入居は9/29までに統合済み。旧lifeでの合格をgrowingの機能・保存・性能の合格へ流用しない。
+
+## 実行キューから分けるもの
+
+- [確認待ち](blocked.md)：実iphone起動、safari写真、実機の音・読み上げ、既存利用者の保存と子どもの理解/自発的学習/翌日再訪。
+- [後続候補](../../docs/tasks/backlog.md)：自然の拡張、記念の追加、旧モード・比較資料。採用条件が整ったものだけキューへ移す。
+- [完了履歴](done.md)：過去の実施記録。現在の挙動は憲法・親仕様・該当子仕様を参照する。
+
+## この表の約束
+
+一つの残作業に一つの担当タスクを置く。「実装」「自動検証」「git反映」「公開」「実機・利用者確認」を分ける。activeファイルの数を実行件数にしない。この一覧の更新だけで公開・実機・利用者確認済みにはしない。実施内容と検証範囲は各証拠を参照する。
+" id="parity-18"><h2 id="parity-19"><a href="../../.agents/tasks/TASKS.md" id="parity-20">現在の実行担当</a></h2><details id="parity-21"><summary>正本・内容と版の根拠</summary><p class="path">.agents/tasks/TASKS.md · 内容SHA256 25a152d01336fc254dda3013e2c5a48535d07e4bc495347dbfaa8166aea4a4a5</p><p>生成時の正本を掲載。内容の確認日は未記録、配布版は未確認。内容hashはcommit IDではありません。</p><pre># 今進めていること
+
+**開いた入り江の粗い本体を実画面まで作り、採用レビュー待ち。** 2026-10-13、同じ所有物と保存形式を保ったまま、旧案の一枚の岬を二本の腕・水面・細い外周接続へ変更した。輪郭差と対象runtimeはGO/PASS、生地形の魅力と独立理解はHOLD。R3は自動開始しない。
+
+## 次の一手
+
+[開いた入り江の旧案比較と実画面](../../docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md)を利用者が確認し、この輪郭をR3へ進めるかを決める。採用前に装飾や通常保存の実装を先行させない。
+
+[計画・タスクの詳細](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md#現在地と次の計画2026-10-13)：R0レビュー、R1統合失敗の診断、R2粗い本体三配置まで完了。採用後は R3成長と実利用 → R4通常取得・保存・拡張 → R5美術と配布。各項目を別の短い作業に区切る。
+
+[進め方の正本](../../docs/runbooks/bounded-island-work.md)：既定30分・一成果物・追加エージェントなし。方向確認前に細部を磨かず、時間内でも成果が出たら止める。未完・未検証を明記し、上限を超えて自動継続しない。
+
+現在の核心は「育ち方で島の形がいろいろになること」。開いた入り江は、同じ8軒・4成熟木・35所有物で北／東／最終の三配置、分離／復元、小画面まで実画面PASS。旧案との輪郭差はGOだが、美術採用、全島の実利用・本人保存・16／32軒以上・性能は未完。過去の詳しい検証履歴は親タスクと各証拠へ集約する。
+
+## 関連する仕事（同時に開始しない）
+
+| 分類 | 仕事 | 今どこまで進んだか | 次にすること |
+|---|---|---|---|
+| 1・統合と公開準備 | [最新変更を一つの公開候補へまとめる](../../docs/tasks/active/2026-10-05-growing-island-release.md) | 10/9固定v3のcore4,803/classic32、主要旅程・保存失敗/再試行・旧writer/実SW更新をlocal確認。source/dist archiveと実画面を保持 | 公開依頼時にURL/版/配信を照合。実利用者の保存・実機/子どもは別。確認した旧版以外の保存・全写真は未評価 |
+| 2・体験 | [学習・島・家の一続きの体験](../../docs/tasks/active/2026-09-20-whole-app-ux-coherence.md) | v3で実初回→取得/配置→家/本→学習・同予約復帰・本人切替を両幅確認。案内対象・本人一覧の同期競合・Study重なりを修正 | 実機の音/読み上げ、利用者の無説明理解・再訪はBLOCKEDへ。確認済み経路の再実装はしない |
+| 3・性能 | [起動と物が増えた島の軽量化](../../docs/tasks/active/2026-09-23-island-performance.md) | M1の形・床・道を保持しNode全layer7,386→174 ms。receiptだけの再構築を省きshaderをready前準備。花庭c6のcore5,232と編集／通常島の回帰はPASS | preflight時のbrowser購入予告9〜23秒、成熟後focus約20〜35秒で操作性能は未達。P05反復冠の削減効果とrendererの内訳は未測定。headless回帰の通過を実機性能へ読み替えず、実時計同期・起動/電池/GPUを別確認 |
+| 4・美術と成長 | [島の育ち方と全景](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md) | 開いた入り江のR0〜R2を完了。輪郭差GO、対象runtime PASS、美術と独立理解HOLD | 利用者が輪郭を採用した場合だけR3へ。単独→接続→成熟→実利用→分離→復元を一旅程ずつ扱う |
+
+## 実装済みとして扱うもの
+
+
+- [10/9のローカル品質候補](../../docs/design/2026-10-09-local-quality/README.md)：こちらで設計・実装・検証する一区切りを完了。公開・実機・参加者評価、残る性能課題は上の親タスクとBLOCKEDへ分ける。
+
+- [session責務の分割とPWA更新/復旧の検査](../../docs/runbooks/growing-update.md)：初期読込・学習commit・家に加え、配置hookと写真/工作panel、6責務の3D接続を分離。同じ保存で旧版→候補→対応writerへ実SW更新。共用描画はthree/islandCharactersとthree/gardenへ整理済み。性能計測と公開/実利用者の引継ぎは後続へ残す。
+
+- [島runtimeの一本化](../../docs/architecture/island-runtime.md)：Growingを唯一のホームにし、旧独立UI/起動入口を撤去。旧DB・学習・所有・移行と共用モデルを保持。今回のlocal検証とGit反映は完了履歴へ記録し、公開/更新/実利用者確認は1の担当に残す。
+
+- [育つ島v1](../../docs/tasks/active/2026-09-29-growing-island-v1.md)：規則・保存・住人・島の画面と10/1初回本番切替。既存の子の実保存引き継ぎ・実機・再訪観察は残る。
+- [任意の導きと記念](../../docs/tasks/active/2026-10-01-island-guidance.md)：S1〜S5/A1〜A6・家の本・記念・挿絵v6。新規実装待ちには戻さず、公開/更新確認を1へ、体験を2へ、美術を4へまとめる。
+- 学習/挑戦/記録の動線、20問/日の経済、来訪と成長の配分、住人一覧から本人の家への移動：[完了履歴](DONE.md)。検証済み範囲と公開状態はそれぞれの記録を参照する。
+- [橋の本編統合](../../docs/design/2026-10-05-growing-bridge/production.md)と[保護者設定の役割整理](../../docs/design/2026-10-04-parent-settings/README.md)：既存変更を含むローカル候補。未コミット/未公開を実装未着手と混同しない。
+- 旧Lifeの自然・食事・来訪/入居は9/29までに統合済み。旧Lifeでの合格をGrowingの機能・保存・性能の合格へ流用しない。
+
+## 実行キューから分けるもの
+
+- [確認待ち](BLOCKED.md)：実iPhone起動、Safari写真、実機の音・読み上げ、既存利用者の保存と子どもの理解/自発的学習/翌日再訪。
+- [後続候補](../../docs/tasks/backlog.md)：自然の拡張、記念の追加、旧モード・比較資料。採用条件が整ったものだけキューへ移す。
+- [完了履歴](DONE.md)：過去の実施記録。現在の挙動は憲法・親仕様・該当子仕様を参照する。
+
+## この表の約束
+
+一つの残作業に一つの担当タスクを置く。「実装」「自動検証」「Git反映」「公開」「実機・利用者確認」を分ける。activeファイルの数を実行件数にしない。この一覧の更新だけで公開・実機・利用者確認済みにはしない。実施内容と検証範囲は各証拠を参照する。
+</pre></details></article><article class="card" data-search="全島制作のm0〜m5と進む条件 docs/product/island-construction-strategy.md # 島構築方針 — 美術で設計した場所を、配置から育てる
+
+制作方針 v9 / 2026-10-12。[決定の理由](../adr/2026-10-11-authored-place-world-policy.md) · [美術戦略](island-art-strategy.md) · [拡張戦略](island-expansion-art-strategy.md)。本書が体験・世界の作り方・制作順の正本。現行の遊びは[52](52_growing_island_game_spec.md)、保存は[13](13_data_storage_migration_spec.md)が正本で、新しい世界への切替は未実装。
+
+&gt; **美術で地形と場所の作り方を設計し、子どもの土地選択・配置・成熟から、その子の島を組み立てる。**
+
+美術模型を作った後で別の簡易モデルへ置き換える制作を終える。地形、森、水庭、集落、入口、歩ける床を同時に設計し、その同じ世界の定義を本体で使う。まず一つの島全体で成立させ、配置差と成長を通してから、大規模な拡張へ進む。
+
+## 完成ゴールと最初の到達点
+
+**承認した[native-05の明るく丸い全島3d](../design/2026-10-10-island-final-3d/readme.md)の造形と素材を、本人が配置して育て、歩いて使える島として本体で成立させる。** 青紫の大樹と幹の内側、鉱石の泉から下る水庭、色を透かす殻と入り江、森と家のまとまりを、一つの地形と暮らしとして作る。幻想性は昼の形・素材・高低差・空間で読み取れるものにする。
+
+最終到達対象は本人が使う通常の島入口 `/#/island`。m1のdev診断は本体rendererと世界を共有するが、本人保存へ切り替えた証拠とは区別する。通常配布への切替はm5の保存互換と配布検証を経て行う。
+
+最初の到達点はm1の**編集できる全島一例**。全景で岸と丘・森林の面・水庭・集落・主景と余白が成立し、近景で支持・入口・通路が見え、同じ所有物を選択・移動・収納して戻せるところまで仕上げる。現在の水庭制作はこの一例の一部分であり、m1の完成ではない。
+
+制作途中では保存済みの粗形を同じ本体rendererへ先に揃え、全景と実配置で次の修正を選ぶ。局所の微小精度や全動作の完成を待って全島構成を遅らせない。粗形は元の所有と成立条件に結び付け、予告・確定で同じ実モデルを使い、実障害物としても扱う。未完成の上階移動や利用は有効化せず、可視の階段から架空の床・到達・利用記録を作らない。明示したdev候補での粗い接続と、最終的な美術・歩行・利用・通常配布の合格は区別する。
+
+包括ゴールの完了には、次の結果をすべて必要とする。制作順と詳しい通過条件は§12を使う。
+
+1. **全島の美術**：同じ本体rendererの昼の全景、森・水庭・入り江の近景を採用原本と並べ、形・素材・尺度・密度・余白を確認する。[美術戦略§7](island-art-strategy.md#7-判断と証拠の残し方)の採用基準以上かつ六軸それぞれの事前審査条件を満たす。基準未到達の項目があれば全島美術は未完とする。
+2. **配置による違い**：同じ所有物と成熟で、通常の移動・収納・再接続操作から三つの全島を作る。列・塊・中庭などから、異なる輪郭・通路・暮らしが生まれる。自由な美術anchorによる手直しに頼らない。
+3. **場所が育つ仕組み**：単独→接続→成熟→住人の実利用→分離→再接続を同じ床で示す。元の所有・成熟・入口を保ち、分離と再接続を無料で試し直せる。
+4. **広がる島**：16／32軒とその先を比較し、元の地区と家を保持したまま、岸・丘・森などの異なる場所と関係が増える。戸数の増加を全島の魅力の代用にしない。
+5. **本体で続けられること**：通常取得・学習への往復・保存・offline・更新復旧を検証し、美術、独立した理解／安全、対象配布候補のruntimeをそれぞれ受け入れる。未実施の実機・利用者評価・公開は、そのまま未完として残す。
+
+全島の粗形が本体で見えた段階で、同じ材料の配置差と成長への追従を先に確かめる。一例の美術完成を待って、この中心機能の実装を遅らせない。形を組み立てる規則と、それに対応する美術アセットを一緒に作り、特定の所有id・固定座標だけで成立する模型から脱する。全景の密度・余白と実際の床・通行も同じ結果へ追従させる。三配置の粗い成立はm1の美術合格や大規模拡張の完了とは区別し、包括ゴールは実装数やテスト数によって完了へ変更しない。
+
+m1では、水庭・大樹の回廊・森林を詳細化する前に、三者の位置・大きな塊・家との密度・余白を同じ全景で決める。各部の変更後もその全景で比較する。局所の仕上がりだけでは先へ進まず、[配置予告の長い待ち](../tasks/active/2026-09-23-island-performance.md)も操作性能の未達として保持する。
+
+## 1. 新しい中心
+
+子どもが決めるのは、どちらへ土地を広げ、何をどこへ置き、どんな場所を育てるか。島が行うのは、つながる根・樹冠・岸・道・共有空間の組立てと、住人が使える場所への接続である。
+
+目標は「自分の置き方が、そこで暮らせる景色になる」。小さい島でも一つのかわいい景色として成立し、成熟すると空間と尺度が変わり、拡張すると別の景色を訪ねられる。人口・地区に完成上限を設けない。くふう・にぎわい・ふしぎ・愛着の四つの柱を維持する。
+
+## 2. 何が詰まっているか
+
+2026-10-11の[自由造形の全島](../design/2026-10-11-island-landscape-art/readme.md)と[本体の拡張候補](../design/2026-10-11-expanding-island-runtime/readme.md)は、世界を作る方法が異なる。前者は自由な美術anchor、後者は矩形の取得セルを連続変形した床と個別配置を使う。部品の材質を引き継いでも、地形・密度・入口・集落の構成を引き継げていない。
+
+| 今の方法 | 届かない理由 | 変える責任 |
+| --- | --- | --- |
+| 全景は自由に造形し、後から保存セルへ対応させる | きれいな場所に、本体で成立する床・配置・経路がない | 美術と遊びが同じ世界を作ることを、最初の成果物にする |
+| 地面を曲げ、個々の所有物を描く | 大きな森、囲われた集落、下る水庭の構成を決める処理が足りない | 地形と場所ごとの組立て規則を作る |
+| 全取得セルを矩形boundsの内部として扱う | 新しい土地の購入が、同じ台地の追加へ偏る | 次期は地区ごとの実床・取得範囲・接続を扱う |
+| 8／16／32軒を先に増やす | 小さい島の弱い構成が拡大される | 一つの全島の品質を成立させてから拡張する |
+
+現在の連続写像は旧床・足・hitを揃える実装として保持する。ただし、これを調整し続けるだけで完成美術を作れるという前提は置かない。技術検査のpassと全島美術のholdは両立する。
+
+## 3. 選ぶ制作方式
+
+**作家が設計した地形・場所の形を、配置に応じて組み立てる方式を選ぶ。** 自動化する範囲と、美術で決める範囲を具体的に分ける。
+
+| 決める人・処理 | 決めるもの |
+| --- | --- |
+| 美術 | 岸・丘・低地の形、木陰の回廊・中庭・樹冠の塊、段泉、共同屋根。それぞれの入口、支持構造、床、若い姿、許容する変形 |
+| 子ども | 土地を広げる方向と候補、材料・家の配置、残す余白、移動・分離・再接続 |
+| 本体 | 地形と配置から使える形を選び、向き・長さ・継ぎ目を調整する。成熟と実際の到達・通水・利用を反映する |
+
+採用native-05を造形の基準にし、回廊・中庭・樹冠など、接続できる形の系列へ作り直す。伸ばせる部分、元の幹に接続する部分、入口を空ける部分を設計する。完成モデルを切り出した部品の並べ方だけに、空間の成立を任せない。
+
+形の種類は、色違い・大きさ違いだけで増やさない。列・塊・中央を空けた配置が別の空間になるように、美術部品と接続規則を一緒に制作する。任意の配置を一つの完成模型へ自動整列しない。共同形が成立しない配置にも、かわいい単独の姿を用意する。
+
+この方式には、接続形と成長段階を先に作る制作費がかかる。その代わり、全景の品質をその都度プリミティブから再発明せず、配置による違いを扱える。子どもに地形彫刻や建築cadの操作は要求しない。
+
+参考の役割は[32枚の参考と構造監査](../design/2026-10-10-island-design-strategy/index.html#foundation)へ残す。借りる対象は配置・周辺環境から大きな形と暮らしが生まれる原理。sansuの材料・造形・安全の規則は本書と各仕様で決める。
+
+## 4. 「合体」を三つに分けて設計する
+
+| 仕組み | 変わる瞬間 | 見える変化 |
+| --- | --- | --- |
+| 接続と形の適応 | 隣へ置く、動かす、分ける | 根・枝・岸・花の縁・足元がつながる。確定前に予告する |
+| 場所の成熟 | 元の材料や家の育成が進む | 樹冠・屋根・水庭・使える空間が育つ。既存時計を使う |
+| 関係からの発見 | 異なる役割の場所がつながる | 木陰と暮らし、水と花などから、その場所固有の形や利用が生まれる |
+
+個体の取得・成熟・styleは残し、現在の場所の形を配置から導く。分離で成熟や住人の権利を下げず、再接続で報酬を二重取得しない。個数だけで同じ最高形へ収束させない。詳細の現行条件は[育つ場所v1](island-place-goals.md)を使い、変更は52へ先に反映する。
+
+## 5. 五つの層を一緒に作る
+
+| 層 | 組み立てるもの | 全島での役割 |
+| --- | --- | --- |
+| 土地 | 岸、丘、低地、地区の接続 | 輪郭・高さ・入り江の大形 |
+| 水と余白 | 実水源、水路、歩ける帯、入口 | 流れと見通し、地区の間の抜け |
+| 植物の場所 | 元の幹・株、つながる樹冠・根・花の縁 | 点から面へ育つ森と庭 |
+| 集落と暮らし | 元の家、玄関、共有の足元、席と遊び | 大きな自然の下に読める小さな生活 |
+| 固有の不思議 | 空洞幹、下降する鉱石泉、色を透かす共同屋根 | 地区ごとに成立の異なる主景 |
+
+この五層を別々の完成工程にしない。森の場所を設計するなら、幹と樹冠に加えて地面・入口・通路・隣の家まで一体で作る。地区間は、道・岸・低地の接続部を使って結ぶ。
+
+## 6. 土地の形を根本から扱う
+
+m0の具体契約は[共通世界定義](island-world-contract.md)で定める。取得する配置地点と、狭い岸に沿う細かな歩行点を分け、両方を同じ実床へ接地する。歩行点から材料の結合距離や通水範囲を増やさない。
+
+**次期の土地は、追加列／行を全景の設計単位にせず、形と接続を持つ地区として扱う。** 岸の低地、森へ続く丘の肩、泉から下る斜面など、広げた先で作れる場所の違いを見せる。土地の候補には実際の取得範囲、通れる入口、価格を一緒に示す。完成した森や集落を購入する方式にはしない。
+
+地区には安定したid、局所座標、取得できる配置領域、床高、水域、他地区との接続口を持たせる。配置点と、その点同士の接続を明示し、隣接・通水・歩行はその接続を読む。boundsは検索用の包絡として使えても、その内部がすべて所有地であるとは扱わない。購入済みの地区を、次の拡張で再生成しない。地区が増えても元の家・庭の場所を維持する。
+
+これは次期の世界表現の設計方針で、保存形式や取得規則の切替ではない。52の土地・通水・通行と13の互換契約を先に定める。旧保存は全既得セルと所有物を含む互換地区として読み、既得の床を海に消したり、家を勝手に移動したりしない。新しい岸・段差の選択は新規取得部分から導入する。
+
+## 7. 場所の成長文法
+
+| 系列 | 置き方と環境 | 育つ形 | 美術と遊びが共有するもの |
+| --- | --- | --- | --- |
+| 木 | 列、塊、中央を空ける | 横へ続く木陰、厚い樹冠、内側に入れる中庭 | 元の幹、根と支持、入口、通れる床、木陰の範囲 |
+| 水 | 実水源と水路、地形の高低 | 低地の水庭、斜面を下る段泉 | 水源、通水範囲、水面高、岸、乾いた道。平地に見た目だけの滝を作らない |
+| 花 | 色のまとまり、縁、中央の余白 | 花の面、囲われた庭、元の茎が支える天蓋 | 元の株、成熟、支持、入口、席と通路 |
+| 家・食卓・遊び | 木陰や水庭のそば、向かい合う空き地 | 森の集落、水辺の集落、庭を囲む暮らし | 個々の家と玄関、実経路、到達できる利用先 |
+
+本数・戸数を増やさなくても形が変わることを、島全体で比較する。根や共有屋根は所有物から派生した形で、追加の所有物として数えない。成熟した森を背景用の木の量産で偽らない。低い草・地面の細部は環境装飾として区別する。
+
+## 8. 幻想性を構築の結果にする
+
+[採用native-05](../design/2026-10-10-island-final-3d/readme.md)の、明るく丸い3dと昼にも色を持つ素材を基準にする。青紫・翡翠の大きな葉と琥珀の幹、鉱石を源とする青い水、色を透かす殻は、異なる場所の構造として使う。
+
+全景では岸と丘、森の面、家の群れ、主景の大きさの差を作る。主景のそばに密度を寄せ、水・岸・通路に余白を残す。小さい家と住人は同じ世界尺度で保つ。回転した近景でも、幹の内側、枝の下、屋根の中が実在し、支持と入口が読めるようにする。
+
+樹冠を大きくする場合も玄関や実actorの頭を覆わない。素材と空間が違う主景を地区に置き、同じ巨木を等間隔で複製しない。昼の形と素材が届いてから、夕の光や短い反応を調整する。
+
+## 9. 島を作りたい気持ちの流れ
+
+| 時点 | 景色の見返り | 次に選べること |
+| --- | --- | --- |
+| 少ない材料 | 一つの小さな庭として成立する | 近くへ寄せるか、余白を残すか |
+| 同じ滞在で置き直す | 接続の向きと空間が変わる | 回廊・樹冠・中庭の違いを試す |
+| 成熟する | 前に置いた場所の尺度と使われ方が育つ | 暮らしを添える、隣に別の場所を作る |
+| 土地を広げる | 岸・高さ・隣接関係の違う場所がつながる | 森を続ける、水庭を分ける、花の丘へつなぐ |
+| 長く続ける | 元の庭を覚えたまま、訪ねる先が増える | 好きな一角を編集し、別の組み合わせを育てる |
+
+島の大きくなり方は、土地の候補と配置の組合せから分岐する。「湾型・森型・丘型」を初めに固定する方式にはしない。同じ戸数でも違う島になることを比較する。8／16／32は診断例で、解放条件や上限にしない。
+
+自然とまちの既存時計、無償の置き直し、任意の目標を使う。場所の不足を学習ノルマ・維持費・枯れ・退去へ置き換えない。自発的な学習と再訪への効果は、許可を得た実利用で別に観察する。
+
+## 10. 操作の再設計
+
+配置予告は品一つと、その操作で変わる場所の輪郭・残る入口・道を同時に見せる。予告と確定は同じ計算を使う。取消しで元に戻り、保存しない。
+
+共同形を触っても元の自分の品を選べるようにする。大きな樹冠に隠れた品は、小さな選択肢から移動・収納へ進める。まず個体の移動・分離・再接続を成立させ、場所の一括移動や地形編集を先に増やさない。
+
+自動の道や地面の継ぎ目は、本人が置いた家・木・玄関を勝手に移動しない。配置の巧拙を点数化せず、共同形が成立しない場合も遊べる。学習へはいつでも既存の入口から進める。
+
+## 11. 実装の基盤
+
+**美術表示・本体・配置予告が、一つの世界定義を読む。** 以下は次工程で確定する契約の構成で、現行apiや新しいdb schemaを実装済みと扱わない。
+
+```text
+実所有id・配置・成熟・取得地区
+        ＋ 美術で設計した地形／場所の形と接続規則
+        ↓
+一つの世界定義
+  地形と岸／配置できる床／水域／個体の位置と支持
+  場所の輪郭と成熟／入口／歩行接続／利用先
+        ├─ 全島3dと近景
+        ├─ 配置hit・予告・個体の選択
+        └─ 通水・移動・住人の実利用・目標判定
+```
+
+共有する世界には、安定idを持つ配置点、その隣接、実際の床面、地区間の接続、各場所の入口と利用先を含める。床面から接地と配置hitを求め、その上を通れる接続から実経路を作る。カメラは実地形と主景の範囲を読む。
+
+制作時に、見える地形と配置領域・入口・経路を一緒に編集・出力する。本体はその結果を読み、別の床や代替プリミティブで美術を再制作しない。通常の配置操作で表せない自由anchorを、ゲームへの到達証拠には使わない。
+
+地形・元の所有物・派生した場所の責任は分けるが、同じ世界revisionで合成する。レンダラー独自の隣接判定や、見た目だけ通れる橋は作らない。既存の所有・成熟・目標・履歴の純粋計算と学習を保持し、世界の床・配置・到達を読む境界から接続する。
+
+変更した周辺と接続成分を再計算し、地区単位の共通材質・読み込み・表示品質を扱う。バッチ化しても元の選択idを保持する。編集用全島glbの複製をそのまま配信する方式にはしない。実機予算は既存性能仕様と計測で確定する。
+
+## 12. 作る順序を変える
+
+以前の「完成模型→別の本体へ対応」「木の一系列→水と地形」「先に16／32軒を増やす」という工程を置き換える。**最初の実制作は、地形・場所・生活を含む一つの島全体。** 美術と遊びを別の世界として完成させない。
+
+| 順 | 成果物 | 次へ進む条件 |
+| --- | --- | --- |
+| m0・契約 | 一つの世界定義と、52の土地・床・通水・到達に必要な次期差分。旧保存の保護境界も記す | 美術で作る岸・丘・入口を同じ配置／歩行で表せる。描画だけの例外が要らない |
+| m1・全島一例 | 入り江・丘・森・水庭・小さな集落を含む編集可能な実3d。家8軒程度を診断例にし、所有idを同じ定義へ対応。全景と近景を本体rendererで見る | 採用原本と全景を比較でき、同じモデルを選択・配置・歩行で使える。単体の巨木や独立viewerだけでは完了しない |
+| m2・配置差 | m1の粗形が揃った時点で着手し、同じ材料・家数・成熟の全島を、列／塊／中庭など三つの配置で組み直す | 通常操作だけで輪郭・密度・通路・暮らしが変わり、複数の魅力がある。美術だけの手直しで一例を成立させない |
+| m3・成長 | m2と同じ形・床から、単独→若い接続→成熟→実利用→分離→再接続を作る | 少ない材料でも一景になる。成熟の理由が見え、元の所有・時計・入口・利用と一致する |
+| m4・拡張 | 初期の中心を残し、岸の低地／森の肩／花の丘への拡張を比較。16／32とその先を診断する | 元の地区を変えず、別の場所とその間の関係が増える。大きくすると単調になる場合は、地区の組立てを直す |
+| m5・統合 | 13の保存互換、通常取得・学習・offline・更新・復旧、実機・理解／安全を同じ配布候補で検証 | 美術、無説明理解／安全、runtimeを別々に受け入れる。未実施のゲートを技術passで埋めない |
+
+m1の島は診断用であることを明示し、模型の家や住人を本人の保存へ取り込まない。移動や分離が一例の構図を壊すなら、その場で世界の表現や場所の規則を見直す。既存のd1〜d4は再利用するが、この新工程を通過した証拠にしない。
+
+## 13. 判断に使う比較
+
+1. **全島**：採用native-05と、同じ世界尺度・対応する全景／近景で比較する。岸と起伏、森の面、家のまとまり、主景と余白が一緒に成立するか。
+2. **同じ材料、違う配置**：数を足さず、複数の空間が育つか。元の個体を探して触れるか。
+3. **同じ配置、違う成熟**：巨大物を後付けするだけでなく、元の幹・株・水・暮らしから連続して育つか。
+4. **同じ場所、編集して戻す**：接地・道・所有・成熟・住人・履歴を保つか。
+5. **拡張前後**：中心の場所と尺度を保ち、別の景色が増えるか。島タイプの固定や一つの最適形へ誘導していないか。
+
+全景が届かなければ、機能数や試験数を増やす前に地形・場所の表現を修正する。自由な美術anchorでしか成立しない形は、共有する契約へ戻して作り直す。小物・発光・戸数を増やす改修へ逃がさない。
+
+実画面の記録はapp target、build、delivery flag、候補id、所有と診断の区別を持つ。作者の美術比較、説明を受けていない観察者の理解／安全、対象buildのruntime検査を分ける。
+
+## 14. 保持するものと変更するもの
+
+| 保持するもの | 再設計するもの |
+| --- | --- |
+| 本人の所有id、品・家の成熟と装い、住人、取得土地、履歴・写真 | 土地を全景へ組み立てる表現と、新規地区の形・接続 |
+| 学習の出題・採点・srs・同予約への復帰、既存時計 | 地形・配置・通行と美術が共有する世界定義 |
+| 無償の置き直し、不在の無罰、人口と地区の継続成長 | 接続形・地面・共有空間・成長を一体にした場所の制作 |
+| ぽこもこの顔・頭身・耳・布・色、同じ家の尺度 | 全景の密度、見通し、地区間の継ぎ目、カメラの寄り先 |
+
+既存の家や土地の位置を勝手に再配置しない。旧保存の互換を、美術の簡略化を永久に固定する理由にも、既得権を削る理由にも使わない。次期の取得単位や規則を変更するときは、52と13の契約・検証を先に揃える。
+
+## 15. 正本と完了の境界
+
+本書は制作方針と順序、美術戦略は形・素材・光、[育つ場所v1](island-place-goals.md)は現行の場所条件、52は遊び、13は保存、43／44は操作と画面の正本。数値を戦略文書へ複製しない。
+
+現在は、共通床のm0基盤から[編集できる全島のm1診断](../design/2026-10-11-authored-island-runtime/readme.md)へ進み、[床・道・初回描画](../design/2026-10-11-authored-world-performance/readme.md)、[水庭b6](../design/2026-10-11-authored-water-garden/readme.md)を経て、[全島の尺度・購入・成熟preflight](../design/2026-10-11-authored-whole-preflight/readme.md)を実施した。永続actor `.45`、実3d高さのcamera focus、個々の原本樹種/growthとbig/lord倍率を保持した森林を実装。通常の5購入で27→32所有物、診断18時間で若木と白花が育つ実画面を確認した。家は8軒のままで、m4の32軒への拡張ではない。元27owner・73権利・p02/p03を保持し、背景の無所有植栽・家・人物で密度を作らない。
+
+[p05の花庭粗形](../design/2026-10-11-authored-flower-garden/readme.md)では、同花冠の列を『4株が支える一つの主花・低い周辺花』へ作り直し、原本の太株・根・曲がる枝を実床と元のownerへ接続した。その後、[枝先と席を包む縁](../design/2026-10-12-authored-flower-edge/readme.md)を同じ所有物・成熟・実利用へ接続し、[入り江の低い殻と丸い岸](../design/2026-10-12-authored-cove-runtime/readme.md)を実床・入口と一緒に制作した。固定c4の全編集旅程と既存回帰は通過したが、[全島の作者美術](../design/2026-10-12-authored-cove-runtime/c4/art-review.md)は各幅hold、独立理解／安全n=0。初期のfocus／画面更新の長い待ちは性能課題として残り、回帰通過を改善実測へ読み替えない。
+
+現在は[中央丘肩の森林と支持・入口](../design/2026-10-12-authored-whole-massing/next-production.md)を制作している。明示診断の小さな肩に元73権利を保った2地点を加え、通常3苗・診断18時間の35所有物を、同じ実床・予告・歩行へ接続する。[本体候補c1](../design/2026-10-12-authored-shoulder-runtime/readme.md)はcoreと肩なしの陰影a/bまで通過したが、全旅程は3苗購入後に検証側nodeのメモリ上限で停止し、成熟後と編集・回帰は未完了。分離診断で保持量を確認し、検証cache削除と同じxzの床検索index共有を含む固定c2はcore610 files／5,297 tests・build・配布境界がpass。c2は肩の全取得・診断成熟・固定35の編集と回転／両幅20画面に加え、陰影a/b・元全島編集・水庭・花庭・入り江・通常growing・classicの[全8回帰](../design/2026-10-12-authored-shoulder-runtime/c2/regressions/readme.md)がpass。各段階と全体の入力同一性を確認した。通常の土地購入・本人保存への切替ではない。全native樹木のguardと安全な外側入口、原本法線・材質も同じ候補に含む。
+
+次の美術判断は同じ全景で森の厚み、丘の中景、家・水庭との余白を比較して行う。大樹の実内床・階段・共有galleryは未実装で、上床をdefault groundへ混ぜず、同じworldの明示したowner-use床と支持のある物理経路が必要。局所の詳細を先に完成させず、毎段階で全景の構図と照合する。
+
+水庭の機能完了は包括ゴールとm1の完了ではない。以前の[拡張runtime契約](island-expanding-runtime.md)と[実画面・検証](../design/2026-10-11-expanding-island-runtime/readme.md)は旧土地の互換と履歴として有効で、新工程の通過証拠へ置き換えない。三配置・成長・地区拡張、次期の本人保存/配布、m0〜m5全体、美術の再採用、独立観察、実機、公開は未完。
+
+以前の制作順と判断は[2026-10-10 adr](../adr/2026-10-10-place-first-island-strategy.md)、[成長美術](../design/2026-10-11-island-growth-art/readme.md)、[自由造形の全島](../design/2026-10-11-island-landscape-art/readme.md)、拡張候補とgit履歴に残す。現在の次工程はm0→m1であり、これらの完成ファイルの数から先へ繰り上げない。
+" id="parity-22"><h2 id="parity-23"><a href="../../docs/product/island-construction-strategy.md" id="parity-24">全島制作のM0〜M5と進む条件</a></h2><details id="parity-25"><summary>正本・内容と版の根拠</summary><p class="path">docs/product/island-construction-strategy.md · 内容SHA256 704915e13689349cfa37de2689236bdfcb4fdc86f45d03f03f57732aebb8f87e</p><p>生成時の正本を掲載。内容の確認日は未記録、配布版は未確認。内容hashはcommit IDではありません。</p><pre># 島構築方針 — 美術で設計した場所を、配置から育てる
+
+制作方針 v9 / 2026-10-12。[決定の理由](../adr/2026-10-11-authored-place-world-policy.md) · [美術戦略](island-art-strategy.md) · [拡張戦略](island-expansion-art-strategy.md)。本書が体験・世界の作り方・制作順の正本。現行の遊びは[52](52_growing_island_game_spec.md)、保存は[13](13_data_storage_migration_spec.md)が正本で、新しい世界への切替は未実装。
+
+&gt; **美術で地形と場所の作り方を設計し、子どもの土地選択・配置・成熟から、その子の島を組み立てる。**
+
+美術模型を作った後で別の簡易モデルへ置き換える制作を終える。地形、森、水庭、集落、入口、歩ける床を同時に設計し、その同じ世界の定義を本体で使う。まず一つの島全体で成立させ、配置差と成長を通してから、大規模な拡張へ進む。
+
+## 完成ゴールと最初の到達点
+
+**承認した[native-05の明るく丸い全島3D](../design/2026-10-10-island-final-3d/README.md)の造形と素材を、本人が配置して育て、歩いて使える島として本体で成立させる。** 青紫の大樹と幹の内側、鉱石の泉から下る水庭、色を透かす殻と入り江、森と家のまとまりを、一つの地形と暮らしとして作る。幻想性は昼の形・素材・高低差・空間で読み取れるものにする。
+
+最終到達対象は本人が使う通常の島入口 `/#/island`。M1のDEV診断は本体rendererと世界を共有するが、本人保存へ切り替えた証拠とは区別する。通常配布への切替はM5の保存互換と配布検証を経て行う。
+
+最初の到達点はM1の**編集できる全島一例**。全景で岸と丘・森林の面・水庭・集落・主景と余白が成立し、近景で支持・入口・通路が見え、同じ所有物を選択・移動・収納して戻せるところまで仕上げる。現在の水庭制作はこの一例の一部分であり、M1の完成ではない。
+
+制作途中では保存済みの粗形を同じ本体rendererへ先に揃え、全景と実配置で次の修正を選ぶ。局所の微小精度や全動作の完成を待って全島構成を遅らせない。粗形は元の所有と成立条件に結び付け、予告・確定で同じ実モデルを使い、実障害物としても扱う。未完成の上階移動や利用は有効化せず、可視の階段から架空の床・到達・利用記録を作らない。明示したDEV候補での粗い接続と、最終的な美術・歩行・利用・通常配布の合格は区別する。
+
+包括ゴールの完了には、次の結果をすべて必要とする。制作順と詳しい通過条件は§12を使う。
+
+1. **全島の美術**：同じ本体rendererの昼の全景、森・水庭・入り江の近景を採用原本と並べ、形・素材・尺度・密度・余白を確認する。[美術戦略§7](island-art-strategy.md#7-判断と証拠の残し方)の採用基準以上かつ六軸それぞれの事前審査条件を満たす。基準未到達の項目があれば全島美術は未完とする。
+2. **配置による違い**：同じ所有物と成熟で、通常の移動・収納・再接続操作から三つの全島を作る。列・塊・中庭などから、異なる輪郭・通路・暮らしが生まれる。自由な美術anchorによる手直しに頼らない。
+3. **場所が育つ仕組み**：単独→接続→成熟→住人の実利用→分離→再接続を同じ床で示す。元の所有・成熟・入口を保ち、分離と再接続を無料で試し直せる。
+4. **広がる島**：16／32軒とその先を比較し、元の地区と家を保持したまま、岸・丘・森などの異なる場所と関係が増える。戸数の増加を全島の魅力の代用にしない。
+5. **本体で続けられること**：通常取得・学習への往復・保存・offline・更新復旧を検証し、美術、独立した理解／安全、対象配布候補のruntimeをそれぞれ受け入れる。未実施の実機・利用者評価・公開は、そのまま未完として残す。
+
+全島の粗形が本体で見えた段階で、同じ材料の配置差と成長への追従を先に確かめる。一例の美術完成を待って、この中心機能の実装を遅らせない。形を組み立てる規則と、それに対応する美術アセットを一緒に作り、特定の所有ID・固定座標だけで成立する模型から脱する。全景の密度・余白と実際の床・通行も同じ結果へ追従させる。三配置の粗い成立はM1の美術合格や大規模拡張の完了とは区別し、包括ゴールは実装数やテスト数によって完了へ変更しない。
+
+M1では、水庭・大樹の回廊・森林を詳細化する前に、三者の位置・大きな塊・家との密度・余白を同じ全景で決める。各部の変更後もその全景で比較する。局所の仕上がりだけでは先へ進まず、[配置予告の長い待ち](../tasks/active/2026-09-23-island-performance.md)も操作性能の未達として保持する。
+
+## 1. 新しい中心
+
+子どもが決めるのは、どちらへ土地を広げ、何をどこへ置き、どんな場所を育てるか。島が行うのは、つながる根・樹冠・岸・道・共有空間の組立てと、住人が使える場所への接続である。
+
+目標は「自分の置き方が、そこで暮らせる景色になる」。小さい島でも一つのかわいい景色として成立し、成熟すると空間と尺度が変わり、拡張すると別の景色を訪ねられる。人口・地区に完成上限を設けない。くふう・にぎわい・ふしぎ・愛着の四つの柱を維持する。
+
+## 2. 何が詰まっているか
+
+2026-10-11の[自由造形の全島](../design/2026-10-11-island-landscape-art/README.md)と[本体の拡張候補](../design/2026-10-11-expanding-island-runtime/README.md)は、世界を作る方法が異なる。前者は自由な美術anchor、後者は矩形の取得セルを連続変形した床と個別配置を使う。部品の材質を引き継いでも、地形・密度・入口・集落の構成を引き継げていない。
+
+| 今の方法 | 届かない理由 | 変える責任 |
+| --- | --- | --- |
+| 全景は自由に造形し、後から保存セルへ対応させる | きれいな場所に、本体で成立する床・配置・経路がない | 美術と遊びが同じ世界を作ることを、最初の成果物にする |
+| 地面を曲げ、個々の所有物を描く | 大きな森、囲われた集落、下る水庭の構成を決める処理が足りない | 地形と場所ごとの組立て規則を作る |
+| 全取得セルを矩形boundsの内部として扱う | 新しい土地の購入が、同じ台地の追加へ偏る | 次期は地区ごとの実床・取得範囲・接続を扱う |
+| 8／16／32軒を先に増やす | 小さい島の弱い構成が拡大される | 一つの全島の品質を成立させてから拡張する |
+
+現在の連続写像は旧床・足・hitを揃える実装として保持する。ただし、これを調整し続けるだけで完成美術を作れるという前提は置かない。技術検査のPASSと全島美術のHOLDは両立する。
+
+## 3. 選ぶ制作方式
+
+**作家が設計した地形・場所の形を、配置に応じて組み立てる方式を選ぶ。** 自動化する範囲と、美術で決める範囲を具体的に分ける。
+
+| 決める人・処理 | 決めるもの |
+| --- | --- |
+| 美術 | 岸・丘・低地の形、木陰の回廊・中庭・樹冠の塊、段泉、共同屋根。それぞれの入口、支持構造、床、若い姿、許容する変形 |
+| 子ども | 土地を広げる方向と候補、材料・家の配置、残す余白、移動・分離・再接続 |
+| 本体 | 地形と配置から使える形を選び、向き・長さ・継ぎ目を調整する。成熟と実際の到達・通水・利用を反映する |
+
+採用native-05を造形の基準にし、回廊・中庭・樹冠など、接続できる形の系列へ作り直す。伸ばせる部分、元の幹に接続する部分、入口を空ける部分を設計する。完成モデルを切り出した部品の並べ方だけに、空間の成立を任せない。
+
+形の種類は、色違い・大きさ違いだけで増やさない。列・塊・中央を空けた配置が別の空間になるように、美術部品と接続規則を一緒に制作する。任意の配置を一つの完成模型へ自動整列しない。共同形が成立しない配置にも、かわいい単独の姿を用意する。
+
+この方式には、接続形と成長段階を先に作る制作費がかかる。その代わり、全景の品質をその都度プリミティブから再発明せず、配置による違いを扱える。子どもに地形彫刻や建築CADの操作は要求しない。
+
+参考の役割は[32枚の参考と構造監査](../design/2026-10-10-island-design-strategy/index.html#foundation)へ残す。借りる対象は配置・周辺環境から大きな形と暮らしが生まれる原理。Sansuの材料・造形・安全の規則は本書と各仕様で決める。
+
+## 4. 「合体」を三つに分けて設計する
+
+| 仕組み | 変わる瞬間 | 見える変化 |
+| --- | --- | --- |
+| 接続と形の適応 | 隣へ置く、動かす、分ける | 根・枝・岸・花の縁・足元がつながる。確定前に予告する |
+| 場所の成熟 | 元の材料や家の育成が進む | 樹冠・屋根・水庭・使える空間が育つ。既存時計を使う |
+| 関係からの発見 | 異なる役割の場所がつながる | 木陰と暮らし、水と花などから、その場所固有の形や利用が生まれる |
+
+個体の取得・成熟・styleは残し、現在の場所の形を配置から導く。分離で成熟や住人の権利を下げず、再接続で報酬を二重取得しない。個数だけで同じ最高形へ収束させない。詳細の現行条件は[育つ場所v1](island-place-goals.md)を使い、変更は52へ先に反映する。
+
+## 5. 五つの層を一緒に作る
+
+| 層 | 組み立てるもの | 全島での役割 |
+| --- | --- | --- |
+| 土地 | 岸、丘、低地、地区の接続 | 輪郭・高さ・入り江の大形 |
+| 水と余白 | 実水源、水路、歩ける帯、入口 | 流れと見通し、地区の間の抜け |
+| 植物の場所 | 元の幹・株、つながる樹冠・根・花の縁 | 点から面へ育つ森と庭 |
+| 集落と暮らし | 元の家、玄関、共有の足元、席と遊び | 大きな自然の下に読める小さな生活 |
+| 固有の不思議 | 空洞幹、下降する鉱石泉、色を透かす共同屋根 | 地区ごとに成立の異なる主景 |
+
+この五層を別々の完成工程にしない。森の場所を設計するなら、幹と樹冠に加えて地面・入口・通路・隣の家まで一体で作る。地区間は、道・岸・低地の接続部を使って結ぶ。
+
+## 6. 土地の形を根本から扱う
+
+M0の具体契約は[共通世界定義](island-world-contract.md)で定める。取得する配置地点と、狭い岸に沿う細かな歩行点を分け、両方を同じ実床へ接地する。歩行点から材料の結合距離や通水範囲を増やさない。
+
+**次期の土地は、追加列／行を全景の設計単位にせず、形と接続を持つ地区として扱う。** 岸の低地、森へ続く丘の肩、泉から下る斜面など、広げた先で作れる場所の違いを見せる。土地の候補には実際の取得範囲、通れる入口、価格を一緒に示す。完成した森や集落を購入する方式にはしない。
+
+地区には安定したID、局所座標、取得できる配置領域、床高、水域、他地区との接続口を持たせる。配置点と、その点同士の接続を明示し、隣接・通水・歩行はその接続を読む。boundsは検索用の包絡として使えても、その内部がすべて所有地であるとは扱わない。購入済みの地区を、次の拡張で再生成しない。地区が増えても元の家・庭の場所を維持する。
+
+これは次期の世界表現の設計方針で、保存形式や取得規則の切替ではない。52の土地・通水・通行と13の互換契約を先に定める。旧保存は全既得セルと所有物を含む互換地区として読み、既得の床を海に消したり、家を勝手に移動したりしない。新しい岸・段差の選択は新規取得部分から導入する。
+
+## 7. 場所の成長文法
+
+| 系列 | 置き方と環境 | 育つ形 | 美術と遊びが共有するもの |
+| --- | --- | --- | --- |
+| 木 | 列、塊、中央を空ける | 横へ続く木陰、厚い樹冠、内側に入れる中庭 | 元の幹、根と支持、入口、通れる床、木陰の範囲 |
+| 水 | 実水源と水路、地形の高低 | 低地の水庭、斜面を下る段泉 | 水源、通水範囲、水面高、岸、乾いた道。平地に見た目だけの滝を作らない |
+| 花 | 色のまとまり、縁、中央の余白 | 花の面、囲われた庭、元の茎が支える天蓋 | 元の株、成熟、支持、入口、席と通路 |
+| 家・食卓・遊び | 木陰や水庭のそば、向かい合う空き地 | 森の集落、水辺の集落、庭を囲む暮らし | 個々の家と玄関、実経路、到達できる利用先 |
+
+本数・戸数を増やさなくても形が変わることを、島全体で比較する。根や共有屋根は所有物から派生した形で、追加の所有物として数えない。成熟した森を背景用の木の量産で偽らない。低い草・地面の細部は環境装飾として区別する。
+
+## 8. 幻想性を構築の結果にする
+
+[採用native-05](../design/2026-10-10-island-final-3d/README.md)の、明るく丸い3Dと昼にも色を持つ素材を基準にする。青紫・翡翠の大きな葉と琥珀の幹、鉱石を源とする青い水、色を透かす殻は、異なる場所の構造として使う。
+
+全景では岸と丘、森の面、家の群れ、主景の大きさの差を作る。主景のそばに密度を寄せ、水・岸・通路に余白を残す。小さい家と住人は同じ世界尺度で保つ。回転した近景でも、幹の内側、枝の下、屋根の中が実在し、支持と入口が読めるようにする。
+
+樹冠を大きくする場合も玄関や実actorの頭を覆わない。素材と空間が違う主景を地区に置き、同じ巨木を等間隔で複製しない。昼の形と素材が届いてから、夕の光や短い反応を調整する。
+
+## 9. 島を作りたい気持ちの流れ
+
+| 時点 | 景色の見返り | 次に選べること |
+| --- | --- | --- |
+| 少ない材料 | 一つの小さな庭として成立する | 近くへ寄せるか、余白を残すか |
+| 同じ滞在で置き直す | 接続の向きと空間が変わる | 回廊・樹冠・中庭の違いを試す |
+| 成熟する | 前に置いた場所の尺度と使われ方が育つ | 暮らしを添える、隣に別の場所を作る |
+| 土地を広げる | 岸・高さ・隣接関係の違う場所がつながる | 森を続ける、水庭を分ける、花の丘へつなぐ |
+| 長く続ける | 元の庭を覚えたまま、訪ねる先が増える | 好きな一角を編集し、別の組み合わせを育てる |
+
+島の大きくなり方は、土地の候補と配置の組合せから分岐する。「湾型・森型・丘型」を初めに固定する方式にはしない。同じ戸数でも違う島になることを比較する。8／16／32は診断例で、解放条件や上限にしない。
+
+自然とまちの既存時計、無償の置き直し、任意の目標を使う。場所の不足を学習ノルマ・維持費・枯れ・退去へ置き換えない。自発的な学習と再訪への効果は、許可を得た実利用で別に観察する。
+
+## 10. 操作の再設計
+
+配置予告は品一つと、その操作で変わる場所の輪郭・残る入口・道を同時に見せる。予告と確定は同じ計算を使う。取消しで元に戻り、保存しない。
+
+共同形を触っても元の自分の品を選べるようにする。大きな樹冠に隠れた品は、小さな選択肢から移動・収納へ進める。まず個体の移動・分離・再接続を成立させ、場所の一括移動や地形編集を先に増やさない。
+
+自動の道や地面の継ぎ目は、本人が置いた家・木・玄関を勝手に移動しない。配置の巧拙を点数化せず、共同形が成立しない場合も遊べる。学習へはいつでも既存の入口から進める。
+
+## 11. 実装の基盤
+
+**美術表示・本体・配置予告が、一つの世界定義を読む。** 以下は次工程で確定する契約の構成で、現行APIや新しいDB schemaを実装済みと扱わない。
+
+```text
+実所有ID・配置・成熟・取得地区
+        ＋ 美術で設計した地形／場所の形と接続規則
+        ↓
+一つの世界定義
+  地形と岸／配置できる床／水域／個体の位置と支持
+  場所の輪郭と成熟／入口／歩行接続／利用先
+        ├─ 全島3Dと近景
+        ├─ 配置hit・予告・個体の選択
+        └─ 通水・移動・住人の実利用・目標判定
+```
+
+共有する世界には、安定IDを持つ配置点、その隣接、実際の床面、地区間の接続、各場所の入口と利用先を含める。床面から接地と配置hitを求め、その上を通れる接続から実経路を作る。カメラは実地形と主景の範囲を読む。
+
+制作時に、見える地形と配置領域・入口・経路を一緒に編集・出力する。本体はその結果を読み、別の床や代替プリミティブで美術を再制作しない。通常の配置操作で表せない自由anchorを、ゲームへの到達証拠には使わない。
+
+地形・元の所有物・派生した場所の責任は分けるが、同じ世界revisionで合成する。レンダラー独自の隣接判定や、見た目だけ通れる橋は作らない。既存の所有・成熟・目標・履歴の純粋計算と学習を保持し、世界の床・配置・到達を読む境界から接続する。
+
+変更した周辺と接続成分を再計算し、地区単位の共通材質・読み込み・表示品質を扱う。バッチ化しても元の選択IDを保持する。編集用全島GLBの複製をそのまま配信する方式にはしない。実機予算は既存性能仕様と計測で確定する。
+
+## 12. 作る順序を変える
+
+以前の「完成模型→別の本体へ対応」「木の一系列→水と地形」「先に16／32軒を増やす」という工程を置き換える。**最初の実制作は、地形・場所・生活を含む一つの島全体。** 美術と遊びを別の世界として完成させない。
+
+| 順 | 成果物 | 次へ進む条件 |
+| --- | --- | --- |
+| M0・契約 | 一つの世界定義と、52の土地・床・通水・到達に必要な次期差分。旧保存の保護境界も記す | 美術で作る岸・丘・入口を同じ配置／歩行で表せる。描画だけの例外が要らない |
+| M1・全島一例 | 入り江・丘・森・水庭・小さな集落を含む編集可能な実3D。家8軒程度を診断例にし、所有IDを同じ定義へ対応。全景と近景を本体rendererで見る | 採用原本と全景を比較でき、同じモデルを選択・配置・歩行で使える。単体の巨木や独立viewerだけでは完了しない |
+| M2・配置差 | M1の粗形が揃った時点で着手し、同じ材料・家数・成熟の全島を、列／塊／中庭など三つの配置で組み直す | 通常操作だけで輪郭・密度・通路・暮らしが変わり、複数の魅力がある。美術だけの手直しで一例を成立させない |
+| M3・成長 | M2と同じ形・床から、単独→若い接続→成熟→実利用→分離→再接続を作る | 少ない材料でも一景になる。成熟の理由が見え、元の所有・時計・入口・利用と一致する |
+| M4・拡張 | 初期の中心を残し、岸の低地／森の肩／花の丘への拡張を比較。16／32とその先を診断する | 元の地区を変えず、別の場所とその間の関係が増える。大きくすると単調になる場合は、地区の組立てを直す |
+| M5・統合 | 13の保存互換、通常取得・学習・offline・更新・復旧、実機・理解／安全を同じ配布候補で検証 | 美術、無説明理解／安全、runtimeを別々に受け入れる。未実施のゲートを技術PASSで埋めない |
+
+M1の島は診断用であることを明示し、模型の家や住人を本人の保存へ取り込まない。移動や分離が一例の構図を壊すなら、その場で世界の表現や場所の規則を見直す。既存のD1〜D4は再利用するが、この新工程を通過した証拠にしない。
+
+## 13. 判断に使う比較
+
+1. **全島**：採用native-05と、同じ世界尺度・対応する全景／近景で比較する。岸と起伏、森の面、家のまとまり、主景と余白が一緒に成立するか。
+2. **同じ材料、違う配置**：数を足さず、複数の空間が育つか。元の個体を探して触れるか。
+3. **同じ配置、違う成熟**：巨大物を後付けするだけでなく、元の幹・株・水・暮らしから連続して育つか。
+4. **同じ場所、編集して戻す**：接地・道・所有・成熟・住人・履歴を保つか。
+5. **拡張前後**：中心の場所と尺度を保ち、別の景色が増えるか。島タイプの固定や一つの最適形へ誘導していないか。
+
+全景が届かなければ、機能数や試験数を増やす前に地形・場所の表現を修正する。自由な美術anchorでしか成立しない形は、共有する契約へ戻して作り直す。小物・発光・戸数を増やす改修へ逃がさない。
+
+実画面の記録はapp target、build、delivery flag、候補ID、所有と診断の区別を持つ。作者の美術比較、説明を受けていない観察者の理解／安全、対象buildのruntime検査を分ける。
+
+## 14. 保持するものと変更するもの
+
+| 保持するもの | 再設計するもの |
+| --- | --- |
+| 本人の所有ID、品・家の成熟と装い、住人、取得土地、履歴・写真 | 土地を全景へ組み立てる表現と、新規地区の形・接続 |
+| 学習の出題・採点・SRS・同予約への復帰、既存時計 | 地形・配置・通行と美術が共有する世界定義 |
+| 無償の置き直し、不在の無罰、人口と地区の継続成長 | 接続形・地面・共有空間・成長を一体にした場所の制作 |
+| ぽこもこの顔・頭身・耳・布・色、同じ家の尺度 | 全景の密度、見通し、地区間の継ぎ目、カメラの寄り先 |
+
+既存の家や土地の位置を勝手に再配置しない。旧保存の互換を、美術の簡略化を永久に固定する理由にも、既得権を削る理由にも使わない。次期の取得単位や規則を変更するときは、52と13の契約・検証を先に揃える。
+
+## 15. 正本と完了の境界
+
+本書は制作方針と順序、美術戦略は形・素材・光、[育つ場所v1](island-place-goals.md)は現行の場所条件、52は遊び、13は保存、43／44は操作と画面の正本。数値を戦略文書へ複製しない。
+
+現在は、共通床のM0基盤から[編集できる全島のM1診断](../design/2026-10-11-authored-island-runtime/README.md)へ進み、[床・道・初回描画](../design/2026-10-11-authored-world-performance/README.md)、[水庭b6](../design/2026-10-11-authored-water-garden/README.md)を経て、[全島の尺度・購入・成熟preflight](../design/2026-10-11-authored-whole-preflight/README.md)を実施した。永続actor `.45`、実3D高さのcamera focus、個々の原本樹種/growthとbig/lord倍率を保持した森林を実装。通常の5購入で27→32所有物、診断18時間で若木と白花が育つ実画面を確認した。家は8軒のままで、M4の32軒への拡張ではない。元27owner・73権利・P02/P03を保持し、背景の無所有植栽・家・人物で密度を作らない。
+
+[P05の花庭粗形](../design/2026-10-11-authored-flower-garden/README.md)では、同花冠の列を『4株が支える一つの主花・低い周辺花』へ作り直し、原本の太株・根・曲がる枝を実床と元のownerへ接続した。その後、[枝先と席を包む縁](../design/2026-10-12-authored-flower-edge/README.md)を同じ所有物・成熟・実利用へ接続し、[入り江の低い殻と丸い岸](../design/2026-10-12-authored-cove-runtime/README.md)を実床・入口と一緒に制作した。固定c4の全編集旅程と既存回帰は通過したが、[全島の作者美術](../design/2026-10-12-authored-cove-runtime/c4/art-review.md)は各幅HOLD、独立理解／安全N=0。初期のfocus／画面更新の長い待ちは性能課題として残り、回帰通過を改善実測へ読み替えない。
+
+現在は[中央丘肩の森林と支持・入口](../design/2026-10-12-authored-whole-massing/next-production.md)を制作している。明示診断の小さな肩に元73権利を保った2地点を加え、通常3苗・診断18時間の35所有物を、同じ実床・予告・歩行へ接続する。[本体候補c1](../design/2026-10-12-authored-shoulder-runtime/README.md)はcoreと肩なしの陰影A/Bまで通過したが、全旅程は3苗購入後に検証側Nodeのメモリ上限で停止し、成熟後と編集・回帰は未完了。分離診断で保持量を確認し、検証cache削除と同じXZの床検索index共有を含む固定c2はcore610 files／5,297 tests・build・配布境界がPASS。c2は肩の全取得・診断成熟・固定35の編集と回転／両幅20画面に加え、陰影A/B・元全島編集・水庭・花庭・入り江・通常Growing・classicの[全8回帰](../design/2026-10-12-authored-shoulder-runtime/c2/regressions/README.md)がPASS。各段階と全体の入力同一性を確認した。通常の土地購入・本人保存への切替ではない。全native樹木のguardと安全な外側入口、原本法線・材質も同じ候補に含む。
+
+次の美術判断は同じ全景で森の厚み、丘の中景、家・水庭との余白を比較して行う。大樹の実内床・階段・共有galleryは未実装で、上床をdefault groundへ混ぜず、同じworldの明示したowner-use床と支持のある物理経路が必要。局所の詳細を先に完成させず、毎段階で全景の構図と照合する。
+
+水庭の機能完了は包括ゴールとM1の完了ではない。以前の[拡張runtime契約](island-expanding-runtime.md)と[実画面・検証](../design/2026-10-11-expanding-island-runtime/README.md)は旧土地の互換と履歴として有効で、新工程の通過証拠へ置き換えない。三配置・成長・地区拡張、次期の本人保存/配布、M0〜M5全体、美術の再採用、独立観察、実機、公開は未完。
+
+以前の制作順と判断は[2026-10-10 ADR](../adr/2026-10-10-place-first-island-strategy.md)、[成長美術](../design/2026-10-11-island-growth-art/README.md)、[自由造形の全島](../design/2026-10-11-island-landscape-art/README.md)、拡張候補とGit履歴に残す。現在の次工程はM0→M1であり、これらの完成ファイルの数から先へ繰り上げない。
+</pre></details></article><article class="card" data-search="美術の方針と比較 docs/product/island-art-strategy.md # 島のデザイン戦略 — つながりから、大きな場所が育つ
+
+現在の制作方式と順序は[島構築方針](island-construction-strategy.md)を正とする。美術で地形・場所・入口・床を一緒に設計し、その同じ世界を本体で使う。次は一つの島全体を、配置・歩行まで含む実3dとして成立させる。その後に同材料の配置差、成長、[地区拡張](island-expansion-art-strategy.md)へ進む。16・32軒を増やすことを先行工程にしない。以下の2026-10-10〜11の記録は制作履歴で、現在の次工程は§6に従う。
+
+## 制作履歴：原本の形と材質を本人の所有へ移す
+
+2026-10-11、利用者「続けて」に対し、[採用3dの所有島への転写](island-native-owned-art.md)を実装する。原本の家、垂れ葉/白樺/尖った樹種、大樹の扇葉、花弁、色を透かす殻を損失なく分解し、同じ所有id・成熟・配置・装いから描く。若い苗や分離した材料に完成した共同屋根を付けず、空洞/回廊/入口/移動previewも実際の共有床と対応させる。[実画面と検証](../design/2026-10-11-native-owned-island/readme.md)へ記録する。
+
+原本全島の固定模型を本人の島へ置き換えない。全ての取得済み床を保持する現在の方式では、深い入り江と高い三段泉、地区の密度に大きな差が残る。次の美術の主課題は地形と空間の対応であり、小物や発光の追加で埋めない。通常productionの既定はfalseで、本人島の美術採用・子どもの独立観察・runtimeを別々に扱う。
+
+## 完成景から戻して作る全島の美術（2026-10-11）
+
+利用者「美術やって」に対し、native-05を形・素材の原本として、小さな島／育ち途中／育った島の**全島3d**を制作する。完成模型を並べた説明図だけで終えず、本体内の美術確認で見回せるようにする。愛着とふしぎに効かせ、北極星の柱を削らない。
+
+- **転写するもの**：同じ家の縮尺、翡翠と青紫の葉、琥珀色の幹、青い水深、鉱石の縁、色を透かす貝、地面から伸びる支持構造。native-05の成熟原本は変更しない。
+- **転写しないもの**：完成模型の家数を所有として数えること、全段階で同じ土地に小物だけ追加すること、白さや粒子だけで不思議を表すこと、段階ごとの無関係な画風。
+- **変える大形**：海岸線の広がりと入り江の深さ、丘の高さ、一本の道から地区を結ぶ道への変化、若い扇葉から空洞と回廊を持つ大樹、一つの泉から流れを共有する段泉、開いた小さな殻から集会所。
+- **連続性**：家と主要な場所の座標・材料・カメラを揃えて三段階を比較する。若い段階は成熟物の一律縮小だけで済ませず、芽・葉・根・水の器を造形する。
+- **受入境界**：今回は美術制作と開発用表示。自然取得、本人の所有、地形判定、住人の実利用、成長の時計へ自動接続した完成ゲームとは扱わない。子どもの無説明理解と新しい段階の美術採用は独立して記録する。
+
+制作物と実画面は[全島の成長美術](../design/2026-10-11-island-growth-art/readme.md)へ残す。
+
+2026-10-10 本体統合：利用者「一気に実装」に従い、[育つ場所v1](island-place-goals.md)のd1〜d4を本体へ接続。6目標、15配置、4関係、共有地形、実際の歩行/利用と保存4を実装する。以下の戦略・制作履歴は残し、実装と受入の最新状態は同仕様と[実装adr](../adr/2026-10-10-growing-place-runtime.md)へ集約する。
+最新判断（2026-10-10）：利用者「いい感じ。これをもとに…仕組みに落として」を受け、**全島実3d native-05を今後の美術方向に採用**する。青紫/翡翠の大樹、琥珀の幹、青い鉱石の泉、色を透かす殻と花の屋根を、[育つ場所の目標と組み合わせ](island-place-goals.md)へ具体化する。以下の差し戻し記録は制作履歴。美術方向への評価と、本体の自然成長・独立観察・保存/性能の受入は別に記録する。
+
+2026-10-10最新の「実際につくる」「最終ゴールの美術3d」「例を1つ」「画像生成でうまくいかなかった」を優先し、[編集可能な全島3d美術1案](../design/2026-10-10-island-final-3d/readme.md)へ制作方式を変更した。地形・水辺・森・庭・街区・既存の住人を実物で一体に造形し、blender/glbと回転表示で到達点を揃える。以前の全景/局所の生成画像は制作履歴。native-05は上記の利用者指示に基づく美術方向として採用。系列ごとの実装でも、この全島の実モデルと照合する。
+
+美術・成長戦略 v8 / 2026-10-10。[根本の島構築戦略](island-construction-strategy.md) · [画像ショーケース](../design/2026-10-10-island-design-strategy/index.html) · [32枚の参照台帳](../design/2026-10-10-island-design-strategy/references.json) · [場所の成長系列](island-place-growth-proposal.md) · [改修ごとのレビュー用紙](../design/2026-10-10-island-design-strategy/review-template.md)。
+
+表現の正本は[仕様51の美術章](living-fantasy/01-world-and-art.md)、遊びと成長の規則は[仕様52](52_growing_island_game_spec.md)。本書は構築戦略に従い、形・素材・光・カメラを具体化する。**方針は「配置から場所が育つ」へ改訂する。具体の数値・最終造形と、runtimeの採用/配信を方針の決定と混同しない。**
+
+効かせる柱は、愛着（同じ相棒と土地）、ふしぎ（世界固有の形と現象）、にぎわい（実際の成長が景色になる）、くふう（置いたものの関係が読めること）。いずれの柱も削らない。
+
+## 実3dの差し戻しからの改訂
+
+利用者「参考サイトはもっと幻想的よね」。native-01は実3dとして成立していても、平たい庭、均一な海、同型の丸い樹冠が続き、幻想性が不足した。[前版の実物と検査](../design/2026-10-10-island-final-3d/history/native-01/status.md)は差し戻し履歴として保存する。
+
+native-02では春昼/夕/夜・夏朝の参考を照合し、岸の起伏、水面の明暗と反射、垂れ葉と局所密度、夕空から地面/水への光を一体で作る。泉の切り欠きと滝、枝の下にある庭、複数の茎が支える花の屋根を実造形し、海の素材と照明も再制作する。泉/大きな花の屋根はsansuへの提案で、参考作品の観察事実とは区別する。幻想性の判定は新しい実レンダー/回転表示で行い、技術検査の成功から採用を決めない。
+
+## 成長後の全島で単調さを検証する
+
+利用者の「参考と比べて単調な感じある？」「もっと大きくなった場合のしまのほうが魅力あるかな」に対し、native-02の同型の家/樹冠、ほぼ同じ地面高の繰り返しを問題として扱う。島を拡大すると魅力が増す、という結論はまだ仮説。単なる全モデルの拡大や等間隔の物量増加では検証できない。
+
+native-03は、元の庭と家の寸法/位置を保ち、その先へ丘の段階的な集落・異なる木の森・水辺の入り江が続く**一つの成長後の実3d**を作る。地形は一続きに彫り、岸と地面の高さ、建築の幅/まとまり、樹種のシルエット、視線の抜けを変える。高低差と大中小の場所が全景で読めることを優先する。元のnative-02を保存し、同じカメラ/世界縮尺で切り替え、面積や戸数の増加だけでは説明できない魅力を実画面で比較する。
+
+この全島は美術の到達案。土地の解放条件、人口、購入物の合体規則、保存/移動、runtime性能の仕様はここから自動決定しない。幻想性と成長の伝わり方の採用判断は利用者の実3d比較を待つ。
+
+## 空間の成り立ちからバラエティを作る
+
+利用者の「バラエティ豊かじゃない」「幻想的感がやや単調」を、native-03の全島拡張に対する差し戻しとして記録する。面積、高低差、樹種を増やしても、球状の樹冠と同じ切妻の家が中心では、幻想の形が似通う。実際に提示したnative-03のblender/glb/レンダーは履歴へ保存する。
+
+native-04では、森は**中へ入れる大樹と枝の回廊**、丘は**水がつながって流れる段々の庭**、入り江は**光を透かす貝殻のような集会所**へ造形を変える。家にも丸い傘状の屋根と葉状の屋根を加え、幹の空洞、厚い地面と薄い水、透ける殻という空間・尺度・素材の差を全景で読ませる。元の8軒と相棒の形・布は保ち、新しい地区で変化を作る。
+
+三地区を同じ強さの記号として並べず、水の流れ、道、木陰と余白で一続きにする。昼の全景と各地区の実3dを確認し、色違いの球、同じ家の追加、発光量だけをバラエティの根拠にしない。この一案は美術の提案であり、成長規則やゲーム配信の採用は未決定。
+
+## 白さと幻想性を混同しない
+
+native-04も「幻想的が白いだけにみえる」と差し戻し。白いパステルと強い照明を幻想性へ置き換えたことが問題。[実際に提示した白い前版](../design/2026-10-10-island-final-3d/history/native-04/status.md)を残す。native-05は、青紫から翡翠へ色が変わる大きな葉、琥珀色の幹、鉱石の裂け目を源とする青い段泉、青/紫を透かす共同屋根へ改訂する。地面・木・鉱石・水・ガラスに中間の明度と色を残す。白は家・水際の小さな明部へ限定し、照明後の昼の実画面で色が消えないことを確認する。色と形、透明な素材、土地の成り立ちを一体で示し、発光や粒子の追加を改善の代わりにしない。その実物への好評価を受け、native-05を次期設計の美術方向に採用した。
+
+## 1. 目指す印象
+
+&gt; **明るく丸い島で、小さなもののつながりから、大きな不思議な場所が育つ。**
+
+明るく丸い初期3dのかわいさを保持し、幻想性を成長する島全体の形・尺度・素材・空間で作る。最初から完成した巨大背景を配るのではなく、自分の置き方から大樹の庭、水辺、花の丘、集落が育つ。大きな自然に包まれた、小さな家と布のぽこもこが暮らす。
+
+「明るい」「かわいい」「幻想的」は別々の要件。海の色だけを明るくする、樹冠を丸くする、灯りを追加する、という単独変更で三つを満たしたと扱わない。**光を消した昼の静止画でも、入ってみたい不思議な世界として成立すること**を制作上の最初の問いにする。
+
+### 一枚の完成絵から、育つ世界の文法へ
+
+固定された理想の一枚を先に置いて品を埋める制作から、**同じ材料が、置き方と成熟によって違う大きな姿になる**制作へ改める。各系列は、単体・列・塊・開いた中庭の形、接続前後、成熟、利用、選択した時の見え方を一組で設計する。
+
+地形の大形と岸、根と樹冠、家の個体と共有の足元、住人の顔と接地を五つの層で見る。最初の島・成長途中・成熟した複数地区が、同じ床の上の数違いにならないこと。意味のある変化は構築規則と一緒に作り、美術側だけで水到達や通路を偽らない。[現行の構造監査](../design/2026-10-10-island-design-strategy/construction-audit.md)。
+
+### 今回の判断の状態
+
+| 内容 | 状態と根拠 |
+|---|---|
+| 最初の明るくて丸い3dの島が好み | ユーザーの明示指示。s-01 / s-02はそれを確かめる初期参考で、特定ファイルの完成画像採用ではない |
+| 現在の暗い雰囲気を改める | ユーザーの明示指示 |
+| 灯りと水面の光の追加だけでは足りない | ユーザーの明示指摘。s-06の延長を主戦略にしない |
+| 小物が増えるだけでは魅力が足りない。隣と合体して大きなものが育ってほしい | ユーザーの明示指摘。u-01を問題の基準にし、接続による場所の成長を戦略の核にする |
+| little habitatsを参考にする | ユーザーが指定。借りる具体的な性質は本書の翻訳案として提示する |
+| 巨大花・水のアーチ・浮島の生成案 | c-01〜03は未選定。いずれもruntimeの基準画像へ自動昇格させない |
+| 構築と美術を一体にし、同じ材料の配置/成熟/利用を比較する | 根本の見直し依頼に基づく制作方針。具体の造形と数値は実比較で選定する |
+
+## 2. 戦略の核：つながりが大きな場所を育てる
+
+**置く → 隣につなげる → 一つの場所として育つ → そこで暮らしが変わる。** 品数の増加に加え、岸・地面・樹冠・通路のまとまりが変わり、遠景でも成長を読めることを主要な見返りにする。同じ所有物を離した状態と、つないだ状態に意味のある差が必要。
+
+u-01は利用者提供の現在画面。広い平らな床に、多くの物が個々の形のまま並ぶ。現行52にある木の経年成長や花の拡散も活かしながら、**個体の成長と、隣との関係から生まれる大きな場所の成長を一緒に設計する。**
+
+| 系列 | 成長として見せる大きな変化 | 実際の暮らしとの関係 |
+|---|---|---|
+| 苗と隣の木 → 大樹の庭 | 根・枝・樹冠・地面がつながり、複数の幹が大きな木陰を支える | 同じ木陰に集まり、座る・のぞく・運ぶ |
+| つながる水 → 池・入り江 | 独立した水の縁が、一続きの岸と水面になる | 水が届く範囲、訪れる岸、橋や通路 |
+| 花の群落 → 花の丘・庭園 | 株間の地面と色の面が育ち、歩ける余白を囲む | 花に囲まれた休憩場所へ近づく |
+| 家と通路 → 集落・街区 | 足元と広場を共有し、屋根のまとまりが遠景を変える | 本当の住人、入口、往来と物流 |
+
+little habitatsの公式説明は「形からランドマークが生まれ、三つがwonderと祭りになる」。simcity 2013の公式マニュアルは道路・地区と建物の密度/価値による成長を説明し、小さな家から大きな住宅への変化を挙げる。機構は同一ではないが、参考にする原理は**配置と周囲の条件が、景色の姿と使われ方を育てること**。[little habitats](https://wavedash.com/games/little-habitats) · [simcity 2013公式マニュアル](https://akamai.cdn.ea.com/eadownloads/u/f/manuals/game-simcity/simcity_2013.pdf)。
+
+上の四系列はぽこもこ側の設計案。具体の隣接条件・個数・時間・効果はまだ採用していない。購入物のid・所有・育成履歴・移動/収納を保持し、合体による消費や再購入を既定にしない。[場所の成長設計案](island-place-growth-proposal.md)に接続・分離・保存と合格条件をまとめる。
+
+## 3. 参考の役割を固定する
+
+画像を増やすことより、どの判断に使うかを固定する。32枚のうち、little habitatsの公式サンプル実画面9枚、tiny glade公式紹介4枚、townscaper公式紹介4枚、sansuの保存済み実画面10枚、利用者提供実画面1枚、生成参考4枚。全画像に出典・観察・取り入れる点・避ける点・次の確認を付けた。
+
+| 参照 | 主に借りること | ぽこもこへの翻訳 | そのまま移さないこと |
+|---|---|---|---|
+| lh-01 / 08 地形 | 曲がった岸、厚み、低い段、面の階層 | 周縁の丸い出入りと背景側の低い段から、編集域の奥行きを作る | 競合作品の自由地形編集、保存座標の移動、石畳・鳥居 |
+| lh-01 / 04 水 | 入り江、水と岸の接触、澄んだ浅瀬 | 海・岸・所有水路・水ばちを視覚上でつなぎ、接続の意味を読めるようにする | 無料の機能水路、実際の到達範囲を超えた見せかけの水 |
+| lh-04 / 06、tg-02 植物 | 樹冠の塊、低木・花の局所密度、接地 | 大きな丸い葉と小さな生活物の尺度をそろえ、足元に素材のつながりを持たせる | 一面の細密草、非所有の資源植物、深緑一色の世界 |
+| ts-01 / 02、tg-03 家 | 共通の屋根・窓・扉、大中小の形 | 丸い軒、厚い壁、少し曲がった屋根。色瓦は局所的にまとまる | 都市・城・中世のコピー、全素材の虹色化 |
+| lh-02 / 03 / 05 / 09、tg-01 / 04 光 | 光源から面と水へ届く光、涼暖の差 | 明るい昼を先に作り、夜も顔と足場を残す。家と水辺の光を一画で関係づける | 全面暗転、夜だけの魅力、常時粒子、全面bloom |
+| ts-03、s-03 / 10 成長 | 地区のまとまり、景色に残る変化 | 実際の人口・建物・物流を、大小のまとまりと遠近で扱う | 固定上限で景色を整えること、架空の群衆や荷車 |
+| s-01 / 02 / 08 固有性 | 布の相棒、丸い島、家の色 | 参考世界を既存ぽこもこが暮らす場所へ翻訳する | 別の顔・頭身・布・配色・着替え |
+| c-01〜04 幻想 | 大きな自然、一つの非日常の曲線、奥行きの層 | 形の発想を同じカメラ・同じ相棒の3dへ再設計する | 細密生成絵を実装品質の証拠にすること、全モチーフの同時投入 |
+
+little habitatsは2026-10-10にサンプル庭を観察。季節ジャンプ、時刻スキップ、停止と写真モードを使い、春昼・春夕・春夜・夏朝・夏夜・秋昼・秋夜・冬昼・冬夜を保存した。祭り・精霊・通常の獲得過程・実機性能はこの9枚の証拠範囲外。紹介にある機能と自分で見た場面を混ぜない。[公式ページ](https://wavedash.com/games/little-habitats)。
+
+補助参考は公式掲載画像を視覚的に確認したもの。ゲームの操作・通常の密度・性能は未検証。[tiny glade公式掲載](https://store.steampowered.com/app/2198150/tiny_glade/) · [townscaper公式掲載](https://store.steampowered.com/app/1291340/townscaper/)。ここで述べる魅力の理由は制作上の仮説で、子どもの効果測定ではない。
+
+## 4. 島全体に通す六つの造形ルール
+
+### 4.1 大きな形から決める
+
+同じ画角で、島の輪郭→水の曲線→木の主幹と樹冠→家の屋根→相棒→細部の順に組む。**一つの場所の主形**を絞り、他の形はそれを支える。複数の地区が育つと、それぞれに目印があってよい。島全体を永久に一つの巨木へ固定しない。巨木・水アーチ・宝石・宇宙・浮島を同じ場所へ同格で重ねない。
+
+遠景は空間の続き、周縁は島の厚み、中景は家と暮らし、近景は相棒の表情と接地。前景の葉を入れるときも、顔・足・選択物・タップ対象を隠さない。カメラを自由に動かした状態でも同じ世界の文法を保つ。
+
+### 4.2 丸さに種類を作る
+
+土と岸は大きくふくらむ。木は曲線と葉の塊。家は少し曲がる厚い面。水は薄く透明な面。布のぽこもこは既存の継ぎ目と柔らかな身体。全てを同じ球や同じノイズで丸めない。
+
+家の軒高2〜3相棒、周辺の自然3〜6相棒は美術章の目安を使う。樹冠が編集域の蓋になったら、尺度を変える前に角度・枝分かれ・位置を直す。細部なしの小さいサムネイルでも島・家・木・相棒を分けて読めること。
+
+### 4.3 色を役割で整理する
+
+世界は明るい青の空と澄んだ水、柔らかい砂・土、明度差のある草を土台にする。既存の布と瓦の青・コーラル・黄色が小さな暮らしの印になる。幻想の色は植物の一部・水の現象へ局所的に使う。
+
+ショーケースの色見本は制作の仮置きで、製品uiの変更指示ではない。uiは現行のデザインシステムと可読性を守る。照明後の実画面で再確認し、色コードを当てたことを合格証拠にしない。深緑・生成り・真鍮を新しい既定の世界へ一律に適用しない。
+
+### 4.4 素材の差を残す
+
+木・土・布・瓦・陶器・水を、輪郭、粗さ、反射、透過の差で見せる。木目や布目は近景で読めればよく、通常画角では面を優先する。透明な魔法が現れるときも、布の相棒や生活物が光の塊に溶けない。
+
+### 4.5 不思議はその場所に属する
+
+日常の造形にすでに不思議があり、そこへ小さな反応と特別な出会いが重なる。植物が居場所をつくる、水が少し違う空を映す、灯りが暮らしと水をつなぐ、という美術章の文法を使う。
+
+演出は「水に触る→同じ水面が応える→相棒がのぞく」のように、原因と場所と反応を一画に置く。具体の条件や抽選・記録は52と現行の規則に従う。美術の都合で正答率、滞在時間、深夜ログインを新条件にしない。
+
+### 4.6 育てた景色を本物にする
+
+少ない所有物の島、成長途中、多くの家と住人がいる島を同時に設計する。少ない島は地形と水と空で魅力を作る。育った島は本当に取得した物と実際の往来で豊かになる。未購入の建物や機能植物を常設の景観として配らない。
+
+ゲームの行動に影響する高低差は、描画・ヒット・移動・配置の座標をそろえてから入れる。初期の比較は編集域を保った周縁や背景から始められる。飾りの段でも通れそうな道や、選べそうな土地を偽らない。
+
+## 5. 一周の画面にも同じ文法を通す
+
+| 場面 | 主役と引き継ぐもの | 確認する差 |
+|---|---|---|
+| 入口 | 同じ島の世界、同じぽこもこ | 入口の絵と入った島が別世界にならない |
+| 島 | 自分の土地・住人・置いた物、丸い空間 | 家・水辺・次の操作がすぐ見つかる |
+| 家 | 同じ相棒、外の窓と木・布の素材 | 外観と室内が同じ家に感じられる |
+| 本・図鑑 | 自分の見た物と記録 | 幻想の説明で埋めず、実際の経験を探せる |
+| 学習 | 入力と短い反応、同じ相棒 | tenkeyの全行・物理0〜9入力・通常の次問へのテンポを守る |
+| 帰島 | 実際の成長、覚えている同じ場所 | 同じ保存状態の継続と成長差が見える |
+
+新しい島の一枚だけで全体の美術採用にしない。違う候補や過去の画面を混ぜた連絡シートは診断用と明記する。最終比較は同じbuild・同じ候補で入口から帰島まで撮る。
+
+## 6. 改善の順序と、各段階の成果物
+
+制作順は[構築方針§12](island-construction-strategy.md#12-作る順序を変える)へ集約する。m0の共有する世界契約→m1の一つの全島→m2の同材料の配置差→m3の成長と編集→m4の地区拡張→m5の保存・配布統合へ進む。
+
+美術では地形・主景・森の面・集落・余白を、入口と実床まで一緒に作る。m1の全景と近景を本体rendererで見て、同じ世界で配置・歩行が成立することを確認する。自由な美術anchorの全景と、別の床を使う本体を別々に完成させない。
+
+木の列・塊・中庭の造形はm2の全島比較へ含める。既存のd1〜d4、原本部品の接続、三方向の拡張診断は再利用するが、新工程の通過とは扱わない。実装で大形や素材差が失われたら、共有する世界の地形・場所の表現へ戻して修正する。
+
+## 7. 判断と証拠の残し方
+
+ショーケースで画像をテーマ別に絞り、二枚を並べ、ローカルの「候補・保留・見送り」と理由を記録できる。判断メモはjsonへ書き出せる。**この操作は個人の検討メモであり、製品仕様や画像採用を自動変更しない。** 決定したときに参照idと理由を本書または候補台帳へ転記する。
+
+各改修は[レビュー用紙](../design/2026-10-10-island-design-strategy/review-template.md)を新しい日付の候補フォルダへコピーし、候補id、参照id、変更仮説、実画面、判断理由、次の一点を埋める。比較の相手は前回の失敗案だけでなく、ユーザーが選んだ基準も含める。初期s-01/02は好みの確認資料、全島の到達方向は採用native-05。新しい所有島の全景は引き続きholdで、制作順の完了と美術の採用を分ける。
+
+| 独立ゲート | 確認内容 | 現在 |
+|---|---|---|
+| 視覚の魅力 | 世界の尺度、素材の触感、奥行き、色と光、相棒の存在感、入りたい固有性。各8/10以上かつ採用基準以上を作者の事前審査に使い、利用者の判断を別に残す | 新runtime候補なし。not_evaluated |
+| 無説明理解・安全 | 5人中4人が同じ行為と見返りを説明できる。危害・恐怖・身体の曖昧さがあればhold。制作者を独立観察者に数えない | 未実施。not_evaluated |
+| runtime整合 | 操作、配置/歩行、学習、保存、性能、両幅、reduced motion、pwa。変更範囲に応じ検証matrixを適用 | この資料ではapp変更なし。新候補のpassを付けない |
+
+実画面には対象url・route、build revision/hash、delivery flag、visual candidate、viewport、保存状態/fixture、cache/sw、音とmotion、撮影日時を付ける。生成画像と実画面は証拠の種類を分ける。自動テストで美術・無説明理解・自発的再訪を代用しない。
+
+終わりの問いは、constitutionの「子どもが自分からまなぶを選び、翌日も島へ戻ってくるか」。画像の枚数や制作側の点数を、この基準の代わりにしない。
+
+## 8. 継続更新の契約
+
+画像を追加するときは`references.json`へ新しい固定id、元ページ、元画像、証拠の種類、観察、転用、避けること、確認仮説、hashを追加し、`node build.mjs`でショーケースを再生成する。外部画像は内部の比較資料。競合作品の素材をゲームへ組み込まず、公開サイトへの転用は別作業として扱う。
+
+今の参照は残し、変更した候補には新しいidを付ける。見送り理由を消さず、再採用には新しい根拠を記録する。造形契約を変える決定は美術章へ、遊び・保存の変更は該当仕様へ先に反映する。台帳・タスク・完了記録を仕様の代わりにしない。
+" id="parity-26"><h2 id="parity-27"><a href="../../docs/product/island-art-strategy.md" id="parity-28">美術の方針と比較</a></h2><details id="parity-29"><summary>正本・内容と版の根拠</summary><p class="path">docs/product/island-art-strategy.md · 内容SHA256 3a4e2d81f6d44d28a6950dfb35a758a43f573dd2bad8fd47b3f71e6fddd325cd</p><p>生成時の正本を掲載。内容の確認日は未記録、配布版は未確認。内容hashはcommit IDではありません。</p><pre># 島のデザイン戦略 — つながりから、大きな場所が育つ
+
+現在の制作方式と順序は[島構築方針](island-construction-strategy.md)を正とする。美術で地形・場所・入口・床を一緒に設計し、その同じ世界を本体で使う。次は一つの島全体を、配置・歩行まで含む実3Dとして成立させる。その後に同材料の配置差、成長、[地区拡張](island-expansion-art-strategy.md)へ進む。16・32軒を増やすことを先行工程にしない。以下の2026-10-10〜11の記録は制作履歴で、現在の次工程は§6に従う。
+
+## 制作履歴：原本の形と材質を本人の所有へ移す
+
+2026-10-11、利用者「続けて」に対し、[採用3Dの所有島への転写](island-native-owned-art.md)を実装する。原本の家、垂れ葉/白樺/尖った樹種、大樹の扇葉、花弁、色を透かす殻を損失なく分解し、同じ所有ID・成熟・配置・装いから描く。若い苗や分離した材料に完成した共同屋根を付けず、空洞/回廊/入口/移動previewも実際の共有床と対応させる。[実画面と検証](../design/2026-10-11-native-owned-island/README.md)へ記録する。
+
+原本全島の固定模型を本人の島へ置き換えない。全ての取得済み床を保持する現在の方式では、深い入り江と高い三段泉、地区の密度に大きな差が残る。次の美術の主課題は地形と空間の対応であり、小物や発光の追加で埋めない。通常productionの既定はfalseで、本人島の美術採用・子どもの独立観察・runtimeを別々に扱う。
+
+## 完成景から戻して作る全島の美術（2026-10-11）
+
+利用者「美術やって」に対し、native-05を形・素材の原本として、小さな島／育ち途中／育った島の**全島3D**を制作する。完成模型を並べた説明図だけで終えず、本体内の美術確認で見回せるようにする。愛着とふしぎに効かせ、北極星の柱を削らない。
+
+- **転写するもの**：同じ家の縮尺、翡翠と青紫の葉、琥珀色の幹、青い水深、鉱石の縁、色を透かす貝、地面から伸びる支持構造。native-05の成熟原本は変更しない。
+- **転写しないもの**：完成模型の家数を所有として数えること、全段階で同じ土地に小物だけ追加すること、白さや粒子だけで不思議を表すこと、段階ごとの無関係な画風。
+- **変える大形**：海岸線の広がりと入り江の深さ、丘の高さ、一本の道から地区を結ぶ道への変化、若い扇葉から空洞と回廊を持つ大樹、一つの泉から流れを共有する段泉、開いた小さな殻から集会所。
+- **連続性**：家と主要な場所の座標・材料・カメラを揃えて三段階を比較する。若い段階は成熟物の一律縮小だけで済ませず、芽・葉・根・水の器を造形する。
+- **受入境界**：今回は美術制作と開発用表示。自然取得、本人の所有、地形判定、住人の実利用、成長の時計へ自動接続した完成ゲームとは扱わない。子どもの無説明理解と新しい段階の美術採用は独立して記録する。
+
+制作物と実画面は[全島の成長美術](../design/2026-10-11-island-growth-art/README.md)へ残す。
+
+2026-10-10 本体統合：利用者「一気に実装」に従い、[育つ場所v1](island-place-goals.md)のD1〜D4を本体へ接続。6目標、15配置、4関係、共有地形、実際の歩行/利用と保存4を実装する。以下の戦略・制作履歴は残し、実装と受入の最新状態は同仕様と[実装ADR](../adr/2026-10-10-growing-place-runtime.md)へ集約する。
+最新判断（2026-10-10）：利用者「いい感じ。これをもとに…仕組みに落として」を受け、**全島実3D native-05を今後の美術方向に採用**する。青紫/翡翠の大樹、琥珀の幹、青い鉱石の泉、色を透かす殻と花の屋根を、[育つ場所の目標と組み合わせ](island-place-goals.md)へ具体化する。以下の差し戻し記録は制作履歴。美術方向への評価と、本体の自然成長・独立観察・保存/性能の受入は別に記録する。
+
+2026-10-10最新の「実際につくる」「最終ゴールの美術3D」「例を1つ」「画像生成でうまくいかなかった」を優先し、[編集可能な全島3D美術1案](../design/2026-10-10-island-final-3d/README.md)へ制作方式を変更した。地形・水辺・森・庭・街区・既存の住人を実物で一体に造形し、Blender/GLBと回転表示で到達点を揃える。以前の全景/局所の生成画像は制作履歴。native-05は上記の利用者指示に基づく美術方向として採用。系列ごとの実装でも、この全島の実モデルと照合する。
+
+美術・成長戦略 v8 / 2026-10-10。[根本の島構築戦略](island-construction-strategy.md) · [画像ショーケース](../design/2026-10-10-island-design-strategy/index.html) · [32枚の参照台帳](../design/2026-10-10-island-design-strategy/references.json) · [場所の成長系列](island-place-growth-proposal.md) · [改修ごとのレビュー用紙](../design/2026-10-10-island-design-strategy/review-template.md)。
+
+表現の正本は[仕様51の美術章](living-fantasy/01-world-and-art.md)、遊びと成長の規則は[仕様52](52_growing_island_game_spec.md)。本書は構築戦略に従い、形・素材・光・カメラを具体化する。**方針は「配置から場所が育つ」へ改訂する。具体の数値・最終造形と、runtimeの採用/配信を方針の決定と混同しない。**
+
+効かせる柱は、愛着（同じ相棒と土地）、ふしぎ（世界固有の形と現象）、にぎわい（実際の成長が景色になる）、くふう（置いたものの関係が読めること）。いずれの柱も削らない。
+
+## 実3Dの差し戻しからの改訂
+
+利用者「参考サイトはもっと幻想的よね」。native-01は実3Dとして成立していても、平たい庭、均一な海、同型の丸い樹冠が続き、幻想性が不足した。[前版の実物と検査](../design/2026-10-10-island-final-3d/history/native-01/STATUS.md)は差し戻し履歴として保存する。
+
+native-02では春昼/夕/夜・夏朝の参考を照合し、岸の起伏、水面の明暗と反射、垂れ葉と局所密度、夕空から地面/水への光を一体で作る。泉の切り欠きと滝、枝の下にある庭、複数の茎が支える花の屋根を実造形し、海の素材と照明も再制作する。泉/大きな花の屋根はSansuへの提案で、参考作品の観察事実とは区別する。幻想性の判定は新しい実レンダー/回転表示で行い、技術検査の成功から採用を決めない。
+
+## 成長後の全島で単調さを検証する
+
+利用者の「参考と比べて単調な感じある？」「もっと大きくなった場合のしまのほうが魅力あるかな」に対し、native-02の同型の家/樹冠、ほぼ同じ地面高の繰り返しを問題として扱う。島を拡大すると魅力が増す、という結論はまだ仮説。単なる全モデルの拡大や等間隔の物量増加では検証できない。
+
+native-03は、元の庭と家の寸法/位置を保ち、その先へ丘の段階的な集落・異なる木の森・水辺の入り江が続く**一つの成長後の実3D**を作る。地形は一続きに彫り、岸と地面の高さ、建築の幅/まとまり、樹種のシルエット、視線の抜けを変える。高低差と大中小の場所が全景で読めることを優先する。元のnative-02を保存し、同じカメラ/世界縮尺で切り替え、面積や戸数の増加だけでは説明できない魅力を実画面で比較する。
+
+この全島は美術の到達案。土地の解放条件、人口、購入物の合体規則、保存/移動、runtime性能の仕様はここから自動決定しない。幻想性と成長の伝わり方の採用判断は利用者の実3D比較を待つ。
+
+## 空間の成り立ちからバラエティを作る
+
+利用者の「バラエティ豊かじゃない」「幻想的感がやや単調」を、native-03の全島拡張に対する差し戻しとして記録する。面積、高低差、樹種を増やしても、球状の樹冠と同じ切妻の家が中心では、幻想の形が似通う。実際に提示したnative-03のBlender/GLB/レンダーは履歴へ保存する。
+
+native-04では、森は**中へ入れる大樹と枝の回廊**、丘は**水がつながって流れる段々の庭**、入り江は**光を透かす貝殻のような集会所**へ造形を変える。家にも丸い傘状の屋根と葉状の屋根を加え、幹の空洞、厚い地面と薄い水、透ける殻という空間・尺度・素材の差を全景で読ませる。元の8軒と相棒の形・布は保ち、新しい地区で変化を作る。
+
+三地区を同じ強さの記号として並べず、水の流れ、道、木陰と余白で一続きにする。昼の全景と各地区の実3Dを確認し、色違いの球、同じ家の追加、発光量だけをバラエティの根拠にしない。この一案は美術の提案であり、成長規則やゲーム配信の採用は未決定。
+
+## 白さと幻想性を混同しない
+
+native-04も「幻想的が白いだけにみえる」と差し戻し。白いパステルと強い照明を幻想性へ置き換えたことが問題。[実際に提示した白い前版](../design/2026-10-10-island-final-3d/history/native-04/STATUS.md)を残す。native-05は、青紫から翡翠へ色が変わる大きな葉、琥珀色の幹、鉱石の裂け目を源とする青い段泉、青/紫を透かす共同屋根へ改訂する。地面・木・鉱石・水・ガラスに中間の明度と色を残す。白は家・水際の小さな明部へ限定し、照明後の昼の実画面で色が消えないことを確認する。色と形、透明な素材、土地の成り立ちを一体で示し、発光や粒子の追加を改善の代わりにしない。その実物への好評価を受け、native-05を次期設計の美術方向に採用した。
+
+## 1. 目指す印象
+
+&gt; **明るく丸い島で、小さなもののつながりから、大きな不思議な場所が育つ。**
+
+明るく丸い初期3Dのかわいさを保持し、幻想性を成長する島全体の形・尺度・素材・空間で作る。最初から完成した巨大背景を配るのではなく、自分の置き方から大樹の庭、水辺、花の丘、集落が育つ。大きな自然に包まれた、小さな家と布のぽこもこが暮らす。
+
+「明るい」「かわいい」「幻想的」は別々の要件。海の色だけを明るくする、樹冠を丸くする、灯りを追加する、という単独変更で三つを満たしたと扱わない。**光を消した昼の静止画でも、入ってみたい不思議な世界として成立すること**を制作上の最初の問いにする。
+
+### 一枚の完成絵から、育つ世界の文法へ
+
+固定された理想の一枚を先に置いて品を埋める制作から、**同じ材料が、置き方と成熟によって違う大きな姿になる**制作へ改める。各系列は、単体・列・塊・開いた中庭の形、接続前後、成熟、利用、選択した時の見え方を一組で設計する。
+
+地形の大形と岸、根と樹冠、家の個体と共有の足元、住人の顔と接地を五つの層で見る。最初の島・成長途中・成熟した複数地区が、同じ床の上の数違いにならないこと。意味のある変化は構築規則と一緒に作り、美術側だけで水到達や通路を偽らない。[現行の構造監査](../design/2026-10-10-island-design-strategy/construction-audit.md)。
+
+### 今回の判断の状態
+
+| 内容 | 状態と根拠 |
+|---|---|
+| 最初の明るくて丸い3Dの島が好み | ユーザーの明示指示。S-01 / S-02はそれを確かめる初期参考で、特定ファイルの完成画像採用ではない |
+| 現在の暗い雰囲気を改める | ユーザーの明示指示 |
+| 灯りと水面の光の追加だけでは足りない | ユーザーの明示指摘。S-06の延長を主戦略にしない |
+| 小物が増えるだけでは魅力が足りない。隣と合体して大きなものが育ってほしい | ユーザーの明示指摘。U-01を問題の基準にし、接続による場所の成長を戦略の核にする |
+| Little Habitatsを参考にする | ユーザーが指定。借りる具体的な性質は本書の翻訳案として提示する |
+| 巨大花・水のアーチ・浮島の生成案 | C-01〜03は未選定。いずれもruntimeの基準画像へ自動昇格させない |
+| 構築と美術を一体にし、同じ材料の配置/成熟/利用を比較する | 根本の見直し依頼に基づく制作方針。具体の造形と数値は実比較で選定する |
+
+## 2. 戦略の核：つながりが大きな場所を育てる
+
+**置く → 隣につなげる → 一つの場所として育つ → そこで暮らしが変わる。** 品数の増加に加え、岸・地面・樹冠・通路のまとまりが変わり、遠景でも成長を読めることを主要な見返りにする。同じ所有物を離した状態と、つないだ状態に意味のある差が必要。
+
+U-01は利用者提供の現在画面。広い平らな床に、多くの物が個々の形のまま並ぶ。現行52にある木の経年成長や花の拡散も活かしながら、**個体の成長と、隣との関係から生まれる大きな場所の成長を一緒に設計する。**
+
+| 系列 | 成長として見せる大きな変化 | 実際の暮らしとの関係 |
+|---|---|---|
+| 苗と隣の木 → 大樹の庭 | 根・枝・樹冠・地面がつながり、複数の幹が大きな木陰を支える | 同じ木陰に集まり、座る・のぞく・運ぶ |
+| つながる水 → 池・入り江 | 独立した水の縁が、一続きの岸と水面になる | 水が届く範囲、訪れる岸、橋や通路 |
+| 花の群落 → 花の丘・庭園 | 株間の地面と色の面が育ち、歩ける余白を囲む | 花に囲まれた休憩場所へ近づく |
+| 家と通路 → 集落・街区 | 足元と広場を共有し、屋根のまとまりが遠景を変える | 本当の住人、入口、往来と物流 |
+
+Little Habitatsの公式説明は「形からランドマークが生まれ、三つがWonderと祭りになる」。SimCity 2013の公式マニュアルは道路・地区と建物の密度/価値による成長を説明し、小さな家から大きな住宅への変化を挙げる。機構は同一ではないが、参考にする原理は**配置と周囲の条件が、景色の姿と使われ方を育てること**。[Little Habitats](https://wavedash.com/games/little-habitats) · [SimCity 2013公式マニュアル](https://akamai.cdn.ea.com/eadownloads/u/f/manuals/GAME-SIMCITY/SimCity_2013.pdf)。
+
+上の四系列はぽこもこ側の設計案。具体の隣接条件・個数・時間・効果はまだ採用していない。購入物のID・所有・育成履歴・移動/収納を保持し、合体による消費や再購入を既定にしない。[場所の成長設計案](island-place-growth-proposal.md)に接続・分離・保存と合格条件をまとめる。
+
+## 3. 参考の役割を固定する
+
+画像を増やすことより、どの判断に使うかを固定する。32枚のうち、Little Habitatsの公式サンプル実画面9枚、Tiny Glade公式紹介4枚、Townscaper公式紹介4枚、Sansuの保存済み実画面10枚、利用者提供実画面1枚、生成参考4枚。全画像に出典・観察・取り入れる点・避ける点・次の確認を付けた。
+
+| 参照 | 主に借りること | ぽこもこへの翻訳 | そのまま移さないこと |
+|---|---|---|---|
+| LH-01 / 08 地形 | 曲がった岸、厚み、低い段、面の階層 | 周縁の丸い出入りと背景側の低い段から、編集域の奥行きを作る | 競合作品の自由地形編集、保存座標の移動、石畳・鳥居 |
+| LH-01 / 04 水 | 入り江、水と岸の接触、澄んだ浅瀬 | 海・岸・所有水路・水ばちを視覚上でつなぎ、接続の意味を読めるようにする | 無料の機能水路、実際の到達範囲を超えた見せかけの水 |
+| LH-04 / 06、TG-02 植物 | 樹冠の塊、低木・花の局所密度、接地 | 大きな丸い葉と小さな生活物の尺度をそろえ、足元に素材のつながりを持たせる | 一面の細密草、非所有の資源植物、深緑一色の世界 |
+| TS-01 / 02、TG-03 家 | 共通の屋根・窓・扉、大中小の形 | 丸い軒、厚い壁、少し曲がった屋根。色瓦は局所的にまとまる | 都市・城・中世のコピー、全素材の虹色化 |
+| LH-02 / 03 / 05 / 09、TG-01 / 04 光 | 光源から面と水へ届く光、涼暖の差 | 明るい昼を先に作り、夜も顔と足場を残す。家と水辺の光を一画で関係づける | 全面暗転、夜だけの魅力、常時粒子、全面bloom |
+| TS-03、S-03 / 10 成長 | 地区のまとまり、景色に残る変化 | 実際の人口・建物・物流を、大小のまとまりと遠近で扱う | 固定上限で景色を整えること、架空の群衆や荷車 |
+| S-01 / 02 / 08 固有性 | 布の相棒、丸い島、家の色 | 参考世界を既存ぽこもこが暮らす場所へ翻訳する | 別の顔・頭身・布・配色・着替え |
+| C-01〜04 幻想 | 大きな自然、一つの非日常の曲線、奥行きの層 | 形の発想を同じカメラ・同じ相棒の3Dへ再設計する | 細密生成絵を実装品質の証拠にすること、全モチーフの同時投入 |
+
+Little Habitatsは2026-10-10にサンプル庭を観察。季節ジャンプ、時刻スキップ、停止と写真モードを使い、春昼・春夕・春夜・夏朝・夏夜・秋昼・秋夜・冬昼・冬夜を保存した。祭り・精霊・通常の獲得過程・実機性能はこの9枚の証拠範囲外。紹介にある機能と自分で見た場面を混ぜない。[公式ページ](https://wavedash.com/games/little-habitats)。
+
+補助参考は公式掲載画像を視覚的に確認したもの。ゲームの操作・通常の密度・性能は未検証。[Tiny Glade公式掲載](https://store.steampowered.com/app/2198150/Tiny_Glade/) · [Townscaper公式掲載](https://store.steampowered.com/app/1291340/Townscaper/)。ここで述べる魅力の理由は制作上の仮説で、子どもの効果測定ではない。
+
+## 4. 島全体に通す六つの造形ルール
+
+### 4.1 大きな形から決める
+
+同じ画角で、島の輪郭→水の曲線→木の主幹と樹冠→家の屋根→相棒→細部の順に組む。**一つの場所の主形**を絞り、他の形はそれを支える。複数の地区が育つと、それぞれに目印があってよい。島全体を永久に一つの巨木へ固定しない。巨木・水アーチ・宝石・宇宙・浮島を同じ場所へ同格で重ねない。
+
+遠景は空間の続き、周縁は島の厚み、中景は家と暮らし、近景は相棒の表情と接地。前景の葉を入れるときも、顔・足・選択物・タップ対象を隠さない。カメラを自由に動かした状態でも同じ世界の文法を保つ。
+
+### 4.2 丸さに種類を作る
+
+土と岸は大きくふくらむ。木は曲線と葉の塊。家は少し曲がる厚い面。水は薄く透明な面。布のぽこもこは既存の継ぎ目と柔らかな身体。全てを同じ球や同じノイズで丸めない。
+
+家の軒高2〜3相棒、周辺の自然3〜6相棒は美術章の目安を使う。樹冠が編集域の蓋になったら、尺度を変える前に角度・枝分かれ・位置を直す。細部なしの小さいサムネイルでも島・家・木・相棒を分けて読めること。
+
+### 4.3 色を役割で整理する
+
+世界は明るい青の空と澄んだ水、柔らかい砂・土、明度差のある草を土台にする。既存の布と瓦の青・コーラル・黄色が小さな暮らしの印になる。幻想の色は植物の一部・水の現象へ局所的に使う。
+
+ショーケースの色見本は制作の仮置きで、製品UIの変更指示ではない。UIは現行のデザインシステムと可読性を守る。照明後の実画面で再確認し、色コードを当てたことを合格証拠にしない。深緑・生成り・真鍮を新しい既定の世界へ一律に適用しない。
+
+### 4.4 素材の差を残す
+
+木・土・布・瓦・陶器・水を、輪郭、粗さ、反射、透過の差で見せる。木目や布目は近景で読めればよく、通常画角では面を優先する。透明な魔法が現れるときも、布の相棒や生活物が光の塊に溶けない。
+
+### 4.5 不思議はその場所に属する
+
+日常の造形にすでに不思議があり、そこへ小さな反応と特別な出会いが重なる。植物が居場所をつくる、水が少し違う空を映す、灯りが暮らしと水をつなぐ、という美術章の文法を使う。
+
+演出は「水に触る→同じ水面が応える→相棒がのぞく」のように、原因と場所と反応を一画に置く。具体の条件や抽選・記録は52と現行の規則に従う。美術の都合で正答率、滞在時間、深夜ログインを新条件にしない。
+
+### 4.6 育てた景色を本物にする
+
+少ない所有物の島、成長途中、多くの家と住人がいる島を同時に設計する。少ない島は地形と水と空で魅力を作る。育った島は本当に取得した物と実際の往来で豊かになる。未購入の建物や機能植物を常設の景観として配らない。
+
+ゲームの行動に影響する高低差は、描画・ヒット・移動・配置の座標をそろえてから入れる。初期の比較は編集域を保った周縁や背景から始められる。飾りの段でも通れそうな道や、選べそうな土地を偽らない。
+
+## 5. 一周の画面にも同じ文法を通す
+
+| 場面 | 主役と引き継ぐもの | 確認する差 |
+|---|---|---|
+| 入口 | 同じ島の世界、同じぽこもこ | 入口の絵と入った島が別世界にならない |
+| 島 | 自分の土地・住人・置いた物、丸い空間 | 家・水辺・次の操作がすぐ見つかる |
+| 家 | 同じ相棒、外の窓と木・布の素材 | 外観と室内が同じ家に感じられる |
+| 本・図鑑 | 自分の見た物と記録 | 幻想の説明で埋めず、実際の経験を探せる |
+| 学習 | 入力と短い反応、同じ相棒 | TenKeyの全行・物理0〜9入力・通常の次問へのテンポを守る |
+| 帰島 | 実際の成長、覚えている同じ場所 | 同じ保存状態の継続と成長差が見える |
+
+新しい島の一枚だけで全体の美術採用にしない。違う候補や過去の画面を混ぜた連絡シートは診断用と明記する。最終比較は同じbuild・同じ候補で入口から帰島まで撮る。
+
+## 6. 改善の順序と、各段階の成果物
+
+制作順は[構築方針§12](island-construction-strategy.md#12-作る順序を変える)へ集約する。M0の共有する世界契約→M1の一つの全島→M2の同材料の配置差→M3の成長と編集→M4の地区拡張→M5の保存・配布統合へ進む。
+
+美術では地形・主景・森の面・集落・余白を、入口と実床まで一緒に作る。M1の全景と近景を本体rendererで見て、同じ世界で配置・歩行が成立することを確認する。自由な美術anchorの全景と、別の床を使う本体を別々に完成させない。
+
+木の列・塊・中庭の造形はM2の全島比較へ含める。既存のD1〜D4、原本部品の接続、三方向の拡張診断は再利用するが、新工程の通過とは扱わない。実装で大形や素材差が失われたら、共有する世界の地形・場所の表現へ戻して修正する。
+
+## 7. 判断と証拠の残し方
+
+ショーケースで画像をテーマ別に絞り、二枚を並べ、ローカルの「候補・保留・見送り」と理由を記録できる。判断メモはJSONへ書き出せる。**この操作は個人の検討メモであり、製品仕様や画像採用を自動変更しない。** 決定したときに参照IDと理由を本書または候補台帳へ転記する。
+
+各改修は[レビュー用紙](../design/2026-10-10-island-design-strategy/review-template.md)を新しい日付の候補フォルダへコピーし、候補ID、参照ID、変更仮説、実画面、判断理由、次の一点を埋める。比較の相手は前回の失敗案だけでなく、ユーザーが選んだ基準も含める。初期S-01/02は好みの確認資料、全島の到達方向は採用native-05。新しい所有島の全景は引き続きHOLDで、制作順の完了と美術の採用を分ける。
+
+| 独立ゲート | 確認内容 | 現在 |
+|---|---|---|
+| 視覚の魅力 | 世界の尺度、素材の触感、奥行き、色と光、相棒の存在感、入りたい固有性。各8/10以上かつ採用基準以上を作者の事前審査に使い、利用者の判断を別に残す | 新runtime候補なし。NOT_EVALUATED |
+| 無説明理解・安全 | 5人中4人が同じ行為と見返りを説明できる。危害・恐怖・身体の曖昧さがあればHOLD。制作者を独立観察者に数えない | 未実施。NOT_EVALUATED |
+| runtime整合 | 操作、配置/歩行、学習、保存、性能、両幅、reduced motion、PWA。変更範囲に応じ検証matrixを適用 | この資料ではapp変更なし。新候補のPASSを付けない |
+
+実画面には対象URL・route、build revision/hash、delivery flag、visual candidate、viewport、保存状態/fixture、cache/SW、音とmotion、撮影日時を付ける。生成画像と実画面は証拠の種類を分ける。自動テストで美術・無説明理解・自発的再訪を代用しない。
+
+終わりの問いは、Constitutionの「子どもが自分からまなぶを選び、翌日も島へ戻ってくるか」。画像の枚数や制作側の点数を、この基準の代わりにしない。
+
+## 8. 継続更新の契約
+
+画像を追加するときは`references.json`へ新しい固定ID、元ページ、元画像、証拠の種類、観察、転用、避けること、確認仮説、hashを追加し、`node build.mjs`でショーケースを再生成する。外部画像は内部の比較資料。競合作品の素材をゲームへ組み込まず、公開サイトへの転用は別作業として扱う。
+
+今の参照は残し、変更した候補には新しいIDを付ける。見送り理由を消さず、再採用には新しい根拠を記録する。造形契約を変える決定は美術章へ、遊び・保存の変更は該当仕様へ先に反映する。台帳・タスク・完了記録を仕様の代わりにしない。
+</pre></details></article><article class="card" data-search="場所ごとの目標 docs/product/island-place-goals.md # 育つ場所の目標と組み合わせ
+
+本体統合 v1 / 2026-10-10 / `place-goals-design-v1`。効く柱はくふう・にぎわい・ふしぎ・愛着。弱める柱はない。
+
+利用者「いい感じ。これをもとに、目標や組み合わせとか。ゴール戦略や仕組みに落として」を受け、**全島実3d native-05を美術の到達方向に採用**する。これは固定配置、15軒の上限、模型の巨大glbをそのまま本体へ載せる決定ではない。自分の配置からこの豊かさが育つ仕組みを設計する。
+
+![採用する美術方向：青紫の大樹、青い段泉、透ける殻、花の庭がつながる全島](../design/2026-10-10-island-final-3d/whole-island-render.png)
+
+[目標・配置の設計ショーケース](../design/2026-10-10-island-place-goals/index.html) · [設計カタログ](island-place-goals.json) · [実3dで見る](../design/2026-10-10-island-final-3d/index.html)
+
+## 1. 正本と今回決めること
+
+本書は[52 §0.5](52_growing_island_game_spec.md#05-育つ場所の目標と組み合わせ設計v1)に接続する本体の規則。目標、場所の適応/成熟/利用、組み合わせ、実装境界を定義する。数値と配置例の正本はjson、規則の意味は本書とする。個数は**最小成立条件の試作初期値**で、最大所有数でも購入レシピでもない。6目標・15配置・4関係を本体へ統合した。空間、表示、行動、受領を同じ派生結果で結び、実画面・保存/更新の受入を別々に記録する。
+
+既存の学習完了・しずく・まち時間・しぜん時間・価格・解放・個体id・建築時styleを引き継ぐ。既存a1〜a6/s1〜s5も保持する。新しい道具の購入、素材採集、住人への依頼、道路を一本ずつ引く作業はこの設計に加えない。
+
+## 2. ゴールの戦略
+
+&gt; **育てたい場所を見つける → 同じ材料の置き方を試す → つながりが育つ → その場所で遊ぶ → 次の地区へ広げる。**
+
+ゴールは任意。目標帳で好きな一つを選べるが、選んでいなくても条件がそろえば場所は育つ。順番や全達成で遊びを制限しない。目標変更は無料で、仕込みや時間を失わない。
+
+| 目標 | 到達する大きな姿 | 選択と遊びの見返り |
+|---|---|---|
+| p01 木陰の庭 | 根と樹冠がつながる、入口のある小さな庭 | 早い段階から、同じ苗を置き直して木陰を変え、ぽこもこと座る |
+| p02 大樹の住まい | 木の家を包む幹の空洞、枝の回廊、青紫/翡翠の葉 | 列・塊・中庭で構造が変わり、入口から入って回廊へ歩く |
+| p03 青い泉の庭 | 鉱石を源に水面/岸がつながる庭。斜面なら段泉 | 水の入口・曲げ方・出口を変え、実通水と花・岸の利用を見る |
+| p04 入り江の集会所 | 家とあそびばを包む、色を透かす殻の共同屋根 | 庭の向きと家の並びを選び、元の住人と遊び場を使う |
+| p05 花の屋根の庭 | 複数の茎が支える、花のアーチ/屋根/中庭 | 同じ株と好きな色で形を変え、花弁の下の席に座る |
+| p06 めぐれる島 | 異なる場所を道・岸・木陰でつないだ、自分の全島 | 自分で選んだ3系列以上をつなぐ。森の2目標だけで3系列とは数えない |
+
+p01とp05は少ない所有物から変化を見せる入口。p02は既存の大木と家の成長が景色になる長期目標。p03/p04は水辺や新しい土地で配置の工夫を広げる。p06は全島の目安で、クリアや人口/地区の上限にはしない。模型にある全地区を全部同じ順番で作る必要はない。
+
+目標の主な報酬は**形が育つことと、その場所を使えること**。無料の再配置、触る返事、住人を運ぶ遊びが続く。完成による通貨倍率・学習の抽選券・維持費は追加しない。あゆみには育った事実を残し、本人が写真を撮って見せられる。
+
+## 3. 「組み合わせ」の三層
+
+### 材料の関係
+
+既存の苗、木の家、花、水ばち、みずみち、ベンチ、あそびばが入力。**合体は、個体を消す処理ではなく、同じ個体から共有の形を作る処理**とする。持ち物一覧と現物選択から各品へ戻れ、移動/収納は既存の操作を使う。
+
+### 同じ材料の置き方
+
+| 配置 | 主に変わること | 例 |
+|---|---|---|
+| 列 | 長い境目と経路を育てる | 枝の道、花のアーチ、岸沿いの共同屋根 |
+| 塊 | 密度のある大きな屋根と内部を育てる | 大樹の住まい、花弁の屋根 |
+| 中央を空ける | 入れる庭と、その周りの囲いを育てる | 木陰の中庭、花の庭、開いた殻の集会所 |
+| 水を曲げる/段へつなぐ | 水源・通水・岸と歩く場所を育てる | 曲がる水庭、段泉、海へ開く水庭 |
+
+jsonの15配置例は、各目標の中では同じ種類と個数で比較する。p01の2本は列/角/樹冠の端のくぼみで、4本の大樹や花の本格的な中庭の成立とは区別する。中庭の中心は歩ける余白とし、席で唯一の中央セルを塞がない。配置例は規則の説明図で、実ゲームの成長前/途中を撮影したものではない。完成3dの絵も、一つの成熟例として別に明示する。
+
+### 育った場所どうしの関係
+
+| 関係 | 連続する景色 | 実際の働き |
+|---|---|---|
+| 森＋泉 | 根の足元から青い流れと岸が続く | 実際の木陰/水の届く植物、岸の席を使う |
+| 泉＋花 | 水の縁に花弁と低い岸が続く | 現行の湿りと開花。交配や珍しい色の保証は加えない |
+| 森＋集落 | 枝の回廊と共同の足元が家へ続く | 実住人が自分の家から木陰へ歩く |
+| 花＋集落 | 花弁の屋根から共同の庭が続く | 既存の遊びを、その庭で繰り返す |
+
+異なる系列の関係は、入口間の最短歩行経路が初期値3セル以内かつ同じ到達領域で成立する。水/木陰を使う関係はその影響も必要。近いだけ、見た目だけの接続では成立にしない。入居枠・ごはん・あそび点・げんきは元の個体から1回だけ数える。
+
+## 4. 場所が育つ共通規則
+
+### 4.1 接続と形の判定
+
+1. 現在の本人の、土地へ配置済みの品/種だけを読む。収納品、別人の島、未受領の贈り物は入力にしない。
+2. 木/花の基本接続は辺で接するセル、または**通れる1セルを隔てた直線**。斜めだけで接続しない。間の家/塀/ベンチで経路が塞がれる場合はつながらない。水は現行の水源/通水の辺接続を使う。
+3. 列は分岐のない細長い領域、塊は隣接2×2を含む領域、中庭は中央の歩ける余白を囲み、外へ通れる入口を残す領域とする。複数該当時は**入れる中庭→塊→列→自由形**の順。斜め4点だけの囲いは候補でも、経路がなければ中庭ではない。
+4. 家・席・あそびばは、主要領域から初期値2セル以内で実際に到達できるものを組み込む。同じ役割の品を複数領域へ割り当てる場合は最短経路、同点なら安定id順で一つに決める。p01/p02が同じ木のまとまりを表す場合は同じ席を使い、別系列へ二重割当しない。割当後に入口・足元・対象を再計算する。
+5. 正式な空間判定で読めない地形/空洞/橋は、完成形として表示しない。部分的な木陰や水庭はそれまでの状態で使える。
+
+各購入物の足元は所有セル内に保つ。樹冠/屋根は通路の上へ広がってよいが、物理的な幹/壁/水面が占有を増やす場合は、同じ計算でプレビュー・確定可否・通行を更新する。取得済み土地、玄関、橋の入口を囲い込まない。元の8軒やぽこもこを模型に合わせて勝手に移動しない。
+
+広い領域は一つの超巨大な模型へしない。入口・席・家のまとまりで節を作り、回廊や岸でつなぐ。元の物を削除せず、密度/尺度/屋根の向きを変えて地区が育ち続ける。
+
+### 4.2 成長と時計
+
+| 層 | 進み方 | 保持すること |
+|---|---|---|
+| 配置による接続/形 | 確定した配置を再計算 | 無料。接続前に予告し、元の物を消費しない |
+| 植物の成熟 | 現行しぜん時計 | 花の開花、木の成熟/大木を再利用。別の「場所の待ち時間」を足さない |
+| 家/あそびばの建築 | 現行まち時計と既存の条件 | 段階・builtat・styleを保持。周りが変わったから普通の家を木の家へ自動改造しない |
+| 現在の利用 | 到達、元の役割、実際の住人/ぽこもこの行動 | 架空の人口や利用を足さない |
+| 目標の達成履歴 | 一度成立した節目 | 後で分離しても履歴を消さない。現在の形/機能は現在の配置で再判定する |
+
+p02の初期値は4本成熟、うち2本が大木、木の家がこや以上。大木の既存7日を使い、30日のぬしの木は任意のさらなる変化にする。長期目標のために学習で実時間を早送りさせない。ほかの場所を育てたり、今の庭で遊んでいる間にも自然は育つ。
+
+p03の平地は曲がった池/岸、斜面は段泉として成立する。**段差のない場所へ滝だけを描かない。** 新しい高さは取得済み座標を保持する共有の地形計算を用い、通水の方向、階段/橋、住人の接地、配置hitを一致させる。現行の水源と最大8セルの通水は引き継ぐ。本体v1は初期6×5の床を保ち、拡張地区の床を共有 `placeterrain.ts` から導く。既存の辺接続・8セル通水は保持し、供給済み水路に実下降がある場合のみ段泉にする。地形は供給距離や入居効果を増やさない。元の平地/水源の供給を奪わず、下流の水ばちを接続したから無限の距離へ水を伸ばす処理はしない。
+
+### 4.3 分ける・しまう・やり直す
+
+一本を移すと根/樹冠のつながりと形を再計算する。木の年齢、家の段階、元の持ち主/id/価格、取得した品と達成履歴を保持する。つなぎ直しても追加購入や成長のやり直しは不要。
+
+供給や到達を失った場合、今の水/木陰/利用だけが変わる。枯死、退去、目標失敗、記録の没収はない。元の席/家は現在の条件で使い続ける。回廊や殻が変わる際は、そこで行動中の住人を有効な入口側へ戻してから構造を閉じる。見えない床で歩かせない。
+
+## 5. 子どもに見える一周
+
+1. 任意の「あそびかた/目標」から到達する場所を見る。現在の持ち物でできる候補を先に見せる。目標はいつでも変えられる。
+2. 置く位置を変えると、根が寄る向き、連なる岸、残る入口、将来の屋根が現物に重なる。一つの変更で何が変わるか見える。
+3. 確定すると足元がつながる。まだ若い植物でも庭や席を使え、配置を試す遊びを待機だけにしない。
+4. 通常の学習で材料/まち時間が届き、しぜん時間で植物が育つ。「あと何問」「住人が困るから学ぼう」は使わない。出題/採点/支援/復習の正本は変えない。
+5. 帰島時に変化した場所を短く見せる。新しい必須確認画面を増やさず、既存のひらく/あゆみへ合流する。開けずに遊んでも変化や記録を失わない。
+6. ぽこもこをその席/遊び場へ運ぶ、元の家へ入る、水に触れる。その場所の意味が行動で読める。
+7. 次の目標は、隣に泉を作る、花で庭を囲む、別方向へ土地を広げる、など今の景色から予告する。全系列を集める義務にはしない。
+
+初回はp01またはp05の一つだけを任意に案内し、桟橋/無料家/学習の既存導線を重ねた説明で塞がない。常設ナビと「まなぶ」の入口は維持する。
+
+## 6. 実装へ渡す仕組み
+
+現行には[個体の状態](../../src/domain/growingisland/types.ts)、[環境](../../src/domain/growingisland/environment.ts)、[占有/到達](../../src/domain/growingisland/space.ts)、[通水](../../src/domain/islandlife/waterchannels.ts)、[自然時計](../../src/domain/growingisland/nature.ts)がある。新しい場所の計算を各threeモデルへ埋めず、その状態から純粋に導く。
+
+```text
+本人の配置・成熟・家の段階・取得済み土地
+  → sharedenvironment / sharedterrain / safeaccess
+  → deriveplaces → derivedplace[]
+  → deriverelations → placerelation[]
+  → 同じ結果を、配置予告・描画・住人の行動・目標判定で読む
+```
+
+`derivedplace`は `ruleid, memberids, anchorid, variant, stage, footprint, entrances, walksurface, water/shaderefs, usetargets, revision` を持つ。anchorは家/あそびばを優先し、なければ安定id順。領域全体のidは再計算してよいが、所有物のidへ置き換えない。
+
+保存するのは本人の選んだ目標、goalidごとの達成履歴、実表示した節目の原本/対象id/版。現在の領域mesh、材質、メッシュidをゲームの所有として保存しない。p01〜p06は新しいidであり、既存a1〜a6を上書きしない。合体/分離後に達成を再発行して通貨や学習時間を増やす経路は作らない。
+
+新しい純粋モジュールの想定は `places.ts`（役割/接続/形）、`placerelations.ts`（異なる場所）、`placegoals.ts`（任意目標/履歴）。表現は `placegeometry.ts` と共有地形、住人の行動へ接続する。これらを本体へ追加した。workerの命令/同期で達成を更新し、本人の前景rendererから実表示・実利用の受領を送る。保存4/schema5の `placedislands` を正本とし、旧tableを保持・隔離する。[保存契約13](13_data_storage_migration_spec.md#育つ場所の目標と利用2026-10-10)と[実装adr](../adr/2026-10-10-growing-place-runtime.md)に従う。
+
+## 7. 作る順序と完成条件
+
+| 段階 | 作る一周 | 閉じる条件 |
+|---|---|---|
+| d1 | p01：2本を離す→寄せる→成熟→席を使う→分ける | 実取得/配置で庭が変わり、木の年齢/所有を保持。木陰と行動が同じ計算 |
+| d2 | p02/p05：同じ材料で列/塊/中庭→入口と回廊/花の屋根を使う | 3配置が輪郭で違い、空洞/床/支えが実3d。普通の家/顔/布を保持 |
+| d3 | p03/p04：水→岸→段/殻→実際の席/遊び場 | 水/床高/経路/接地/hitが一致。既存の水供給/家/入居/橋を保持 |
+| d4 | p06/c01〜c04：複数の場所→自然な利用→次の地区 | 元の庭を保ち、異なる系列を歩いてつなぐ。通常取得と保存/更新後にも成立 |
+
+各段階で自分の通常の品を使った自然な一周を検証する。模型や注入した完成状態を自然な取得/成長の証拠にしない。実装を分けても、全景はnative-05の尺度・素材・色の差と照合し、白い小物の列へ戻さない。
+
+必須の規則ケースは、同じ材料の3配置、斜めだけ/遮断/島外、成熟境界、複数領域への席の割当、合流/分離/収納/再接続、通水断絶と8セル境界、床高と経路、元のstyle/所有、複数回の完了と本人分離。動作中の変更、offline再読込、旧保存、同時更新失敗と再試行、学習予約へ戻る経路を対象別に検証する。
+
+視覚は採用方向の実モデルと最新の本体画面を並べる。理解/安全は作者以外が配置の原因と使い方を説明なしで読めるかを観察する。runtimeは同版の形・環境・行動・保存・性能の整合を確認する。三つの判定は独立。今回の利用者の美術方向への好評価を、本体や子どもの一周の合格へ広げない。
+
+## 8. 今回の状態
+
+- 美術方向：native-05を利用者の指示に基づく基準として使用。
+- ゴール/組み合わせ：本書とjsonの設計v1。6目標、15配置例、4つの場所の関係、4実装段階を具体化。
+- 本体の規則/保存/3d/操作：d1〜d4を一続きに統合。目標の選択、場所の接続/成熟/分離、実利用、履歴を保存。学習・価格・時計・建築styleは保持。公開は実施しない。
+- 検証：[本体の実画面と証拠](../design/2026-10-10-growing-place-runtime/readme.md)。通常取得3旅程と、15配置・4関係・全島×390/768幅の成熟40組を同じ固定newへ照合した。複数runの完了行を集約し、観察timeoutの原failは保持。一つのrun全体のpassではない。core・旧writer隔離・実sw更新/中断/互換復旧はローカル検証済み。自然18時間/7日を実待機した成長、実機、子どもの無説明理解/再訪、公開は未実施。設計ショーケースの旧captureは設計時点の記録。
+" id="parity-30"><h2 id="parity-31"><a href="../../docs/product/island-place-goals.md" id="parity-32">場所ごとの目標</a></h2><details id="parity-33"><summary>正本・内容と版の根拠</summary><p class="path">docs/product/island-place-goals.md · 内容SHA256 5af4434ef4e8cf383d76424dd1b50274d49ad7920481033c49c50d87cc46fa03</p><p>生成時の正本を掲載。内容の確認日は未記録、配布版は未確認。内容hashはcommit IDではありません。</p><pre># 育つ場所の目標と組み合わせ
+
+本体統合 v1 / 2026-10-10 / `place-goals-design-v1`。効く柱はくふう・にぎわい・ふしぎ・愛着。弱める柱はない。
+
+利用者「いい感じ。これをもとに、目標や組み合わせとか。ゴール戦略や仕組みに落として」を受け、**全島実3D native-05を美術の到達方向に採用**する。これは固定配置、15軒の上限、模型の巨大GLBをそのまま本体へ載せる決定ではない。自分の配置からこの豊かさが育つ仕組みを設計する。
+
+![採用する美術方向：青紫の大樹、青い段泉、透ける殻、花の庭がつながる全島](../design/2026-10-10-island-final-3d/whole-island-render.png)
+
+[目標・配置の設計ショーケース](../design/2026-10-10-island-place-goals/index.html) · [設計カタログ](island-place-goals.json) · [実3Dで見る](../design/2026-10-10-island-final-3d/index.html)
+
+## 1. 正本と今回決めること
+
+本書は[52 §0.5](52_growing_island_game_spec.md#05-育つ場所の目標と組み合わせ設計v1)に接続する本体の規則。目標、場所の適応/成熟/利用、組み合わせ、実装境界を定義する。数値と配置例の正本はJSON、規則の意味は本書とする。個数は**最小成立条件の試作初期値**で、最大所有数でも購入レシピでもない。6目標・15配置・4関係を本体へ統合した。空間、表示、行動、受領を同じ派生結果で結び、実画面・保存/更新の受入を別々に記録する。
+
+既存の学習完了・しずく・まち時間・しぜん時間・価格・解放・個体ID・建築時styleを引き継ぐ。既存A1〜A6/S1〜S5も保持する。新しい道具の購入、素材採集、住人への依頼、道路を一本ずつ引く作業はこの設計に加えない。
+
+## 2. ゴールの戦略
+
+&gt; **育てたい場所を見つける → 同じ材料の置き方を試す → つながりが育つ → その場所で遊ぶ → 次の地区へ広げる。**
+
+ゴールは任意。目標帳で好きな一つを選べるが、選んでいなくても条件がそろえば場所は育つ。順番や全達成で遊びを制限しない。目標変更は無料で、仕込みや時間を失わない。
+
+| 目標 | 到達する大きな姿 | 選択と遊びの見返り |
+|---|---|---|
+| P01 木陰の庭 | 根と樹冠がつながる、入口のある小さな庭 | 早い段階から、同じ苗を置き直して木陰を変え、ぽこもこと座る |
+| P02 大樹の住まい | 木の家を包む幹の空洞、枝の回廊、青紫/翡翠の葉 | 列・塊・中庭で構造が変わり、入口から入って回廊へ歩く |
+| P03 青い泉の庭 | 鉱石を源に水面/岸がつながる庭。斜面なら段泉 | 水の入口・曲げ方・出口を変え、実通水と花・岸の利用を見る |
+| P04 入り江の集会所 | 家とあそびばを包む、色を透かす殻の共同屋根 | 庭の向きと家の並びを選び、元の住人と遊び場を使う |
+| P05 花の屋根の庭 | 複数の茎が支える、花のアーチ/屋根/中庭 | 同じ株と好きな色で形を変え、花弁の下の席に座る |
+| P06 めぐれる島 | 異なる場所を道・岸・木陰でつないだ、自分の全島 | 自分で選んだ3系列以上をつなぐ。森の2目標だけで3系列とは数えない |
+
+P01とP05は少ない所有物から変化を見せる入口。P02は既存の大木と家の成長が景色になる長期目標。P03/P04は水辺や新しい土地で配置の工夫を広げる。P06は全島の目安で、クリアや人口/地区の上限にはしない。模型にある全地区を全部同じ順番で作る必要はない。
+
+目標の主な報酬は**形が育つことと、その場所を使えること**。無料の再配置、触る返事、住人を運ぶ遊びが続く。完成による通貨倍率・学習の抽選券・維持費は追加しない。あゆみには育った事実を残し、本人が写真を撮って見せられる。
+
+## 3. 「組み合わせ」の三層
+
+### 材料の関係
+
+既存の苗、木の家、花、水ばち、みずみち、ベンチ、あそびばが入力。**合体は、個体を消す処理ではなく、同じ個体から共有の形を作る処理**とする。持ち物一覧と現物選択から各品へ戻れ、移動/収納は既存の操作を使う。
+
+### 同じ材料の置き方
+
+| 配置 | 主に変わること | 例 |
+|---|---|---|
+| 列 | 長い境目と経路を育てる | 枝の道、花のアーチ、岸沿いの共同屋根 |
+| 塊 | 密度のある大きな屋根と内部を育てる | 大樹の住まい、花弁の屋根 |
+| 中央を空ける | 入れる庭と、その周りの囲いを育てる | 木陰の中庭、花の庭、開いた殻の集会所 |
+| 水を曲げる/段へつなぐ | 水源・通水・岸と歩く場所を育てる | 曲がる水庭、段泉、海へ開く水庭 |
+
+JSONの15配置例は、各目標の中では同じ種類と個数で比較する。P01の2本は列/角/樹冠の端のくぼみで、4本の大樹や花の本格的な中庭の成立とは区別する。中庭の中心は歩ける余白とし、席で唯一の中央セルを塞がない。配置例は規則の説明図で、実ゲームの成長前/途中を撮影したものではない。完成3Dの絵も、一つの成熟例として別に明示する。
+
+### 育った場所どうしの関係
+
+| 関係 | 連続する景色 | 実際の働き |
+|---|---|---|
+| 森＋泉 | 根の足元から青い流れと岸が続く | 実際の木陰/水の届く植物、岸の席を使う |
+| 泉＋花 | 水の縁に花弁と低い岸が続く | 現行の湿りと開花。交配や珍しい色の保証は加えない |
+| 森＋集落 | 枝の回廊と共同の足元が家へ続く | 実住人が自分の家から木陰へ歩く |
+| 花＋集落 | 花弁の屋根から共同の庭が続く | 既存の遊びを、その庭で繰り返す |
+
+異なる系列の関係は、入口間の最短歩行経路が初期値3セル以内かつ同じ到達領域で成立する。水/木陰を使う関係はその影響も必要。近いだけ、見た目だけの接続では成立にしない。入居枠・ごはん・あそび点・げんきは元の個体から1回だけ数える。
+
+## 4. 場所が育つ共通規則
+
+### 4.1 接続と形の判定
+
+1. 現在の本人の、土地へ配置済みの品/種だけを読む。収納品、別人の島、未受領の贈り物は入力にしない。
+2. 木/花の基本接続は辺で接するセル、または**通れる1セルを隔てた直線**。斜めだけで接続しない。間の家/塀/ベンチで経路が塞がれる場合はつながらない。水は現行の水源/通水の辺接続を使う。
+3. 列は分岐のない細長い領域、塊は隣接2×2を含む領域、中庭は中央の歩ける余白を囲み、外へ通れる入口を残す領域とする。複数該当時は**入れる中庭→塊→列→自由形**の順。斜め4点だけの囲いは候補でも、経路がなければ中庭ではない。
+4. 家・席・あそびばは、主要領域から初期値2セル以内で実際に到達できるものを組み込む。同じ役割の品を複数領域へ割り当てる場合は最短経路、同点なら安定ID順で一つに決める。P01/P02が同じ木のまとまりを表す場合は同じ席を使い、別系列へ二重割当しない。割当後に入口・足元・対象を再計算する。
+5. 正式な空間判定で読めない地形/空洞/橋は、完成形として表示しない。部分的な木陰や水庭はそれまでの状態で使える。
+
+各購入物の足元は所有セル内に保つ。樹冠/屋根は通路の上へ広がってよいが、物理的な幹/壁/水面が占有を増やす場合は、同じ計算でプレビュー・確定可否・通行を更新する。取得済み土地、玄関、橋の入口を囲い込まない。元の8軒やぽこもこを模型に合わせて勝手に移動しない。
+
+広い領域は一つの超巨大な模型へしない。入口・席・家のまとまりで節を作り、回廊や岸でつなぐ。元の物を削除せず、密度/尺度/屋根の向きを変えて地区が育ち続ける。
+
+### 4.2 成長と時計
+
+| 層 | 進み方 | 保持すること |
+|---|---|---|
+| 配置による接続/形 | 確定した配置を再計算 | 無料。接続前に予告し、元の物を消費しない |
+| 植物の成熟 | 現行しぜん時計 | 花の開花、木の成熟/大木を再利用。別の「場所の待ち時間」を足さない |
+| 家/あそびばの建築 | 現行まち時計と既存の条件 | 段階・builtAt・styleを保持。周りが変わったから普通の家を木の家へ自動改造しない |
+| 現在の利用 | 到達、元の役割、実際の住人/ぽこもこの行動 | 架空の人口や利用を足さない |
+| 目標の達成履歴 | 一度成立した節目 | 後で分離しても履歴を消さない。現在の形/機能は現在の配置で再判定する |
+
+P02の初期値は4本成熟、うち2本が大木、木の家がこや以上。大木の既存7日を使い、30日のぬしの木は任意のさらなる変化にする。長期目標のために学習で実時間を早送りさせない。ほかの場所を育てたり、今の庭で遊んでいる間にも自然は育つ。
+
+P03の平地は曲がった池/岸、斜面は段泉として成立する。**段差のない場所へ滝だけを描かない。** 新しい高さは取得済み座標を保持する共有の地形計算を用い、通水の方向、階段/橋、住人の接地、配置hitを一致させる。現行の水源と最大8セルの通水は引き継ぐ。本体v1は初期6×5の床を保ち、拡張地区の床を共有 `placeTerrain.ts` から導く。既存の辺接続・8セル通水は保持し、供給済み水路に実下降がある場合のみ段泉にする。地形は供給距離や入居効果を増やさない。元の平地/水源の供給を奪わず、下流の水ばちを接続したから無限の距離へ水を伸ばす処理はしない。
+
+### 4.3 分ける・しまう・やり直す
+
+一本を移すと根/樹冠のつながりと形を再計算する。木の年齢、家の段階、元の持ち主/ID/価格、取得した品と達成履歴を保持する。つなぎ直しても追加購入や成長のやり直しは不要。
+
+供給や到達を失った場合、今の水/木陰/利用だけが変わる。枯死、退去、目標失敗、記録の没収はない。元の席/家は現在の条件で使い続ける。回廊や殻が変わる際は、そこで行動中の住人を有効な入口側へ戻してから構造を閉じる。見えない床で歩かせない。
+
+## 5. 子どもに見える一周
+
+1. 任意の「あそびかた/目標」から到達する場所を見る。現在の持ち物でできる候補を先に見せる。目標はいつでも変えられる。
+2. 置く位置を変えると、根が寄る向き、連なる岸、残る入口、将来の屋根が現物に重なる。一つの変更で何が変わるか見える。
+3. 確定すると足元がつながる。まだ若い植物でも庭や席を使え、配置を試す遊びを待機だけにしない。
+4. 通常の学習で材料/まち時間が届き、しぜん時間で植物が育つ。「あと何問」「住人が困るから学ぼう」は使わない。出題/採点/支援/復習の正本は変えない。
+5. 帰島時に変化した場所を短く見せる。新しい必須確認画面を増やさず、既存のひらく/あゆみへ合流する。開けずに遊んでも変化や記録を失わない。
+6. ぽこもこをその席/遊び場へ運ぶ、元の家へ入る、水に触れる。その場所の意味が行動で読める。
+7. 次の目標は、隣に泉を作る、花で庭を囲む、別方向へ土地を広げる、など今の景色から予告する。全系列を集める義務にはしない。
+
+初回はP01またはP05の一つだけを任意に案内し、桟橋/無料家/学習の既存導線を重ねた説明で塞がない。常設ナビと「まなぶ」の入口は維持する。
+
+## 6. 実装へ渡す仕組み
+
+現行には[個体の状態](../../src/domain/growingIsland/types.ts)、[環境](../../src/domain/growingIsland/environment.ts)、[占有/到達](../../src/domain/growingIsland/space.ts)、[通水](../../src/domain/islandLife/waterChannels.ts)、[自然時計](../../src/domain/growingIsland/nature.ts)がある。新しい場所の計算を各Threeモデルへ埋めず、その状態から純粋に導く。
+
+```text
+本人の配置・成熟・家の段階・取得済み土地
+  → sharedEnvironment / sharedTerrain / safeAccess
+  → derivePlaces → DerivedPlace[]
+  → deriveRelations → PlaceRelation[]
+  → 同じ結果を、配置予告・描画・住人の行動・目標判定で読む
+```
+
+`DerivedPlace`は `ruleId, memberIds, anchorId, variant, stage, footprint, entrances, walkSurface, water/shadeRefs, useTargets, revision` を持つ。anchorは家/あそびばを優先し、なければ安定ID順。領域全体のIDは再計算してよいが、所有物のIDへ置き換えない。
+
+保存するのは本人の選んだ目標、goalIdごとの達成履歴、実表示した節目の原本/対象ID/版。現在の領域mesh、材質、メッシュIDをゲームの所有として保存しない。P01〜P06は新しいIDであり、既存A1〜A6を上書きしない。合体/分離後に達成を再発行して通貨や学習時間を増やす経路は作らない。
+
+新しい純粋モジュールの想定は `places.ts`（役割/接続/形）、`placeRelations.ts`（異なる場所）、`placeGoals.ts`（任意目標/履歴）。表現は `placeGeometry.ts` と共有地形、住人の行動へ接続する。これらを本体へ追加した。Workerの命令/同期で達成を更新し、本人の前景rendererから実表示・実利用の受領を送る。保存4/schema5の `placedIslands` を正本とし、旧tableを保持・隔離する。[保存契約13](13_data_storage_migration_spec.md#育つ場所の目標と利用2026-10-10)と[実装ADR](../adr/2026-10-10-growing-place-runtime.md)に従う。
+
+## 7. 作る順序と完成条件
+
+| 段階 | 作る一周 | 閉じる条件 |
+|---|---|---|
+| D1 | P01：2本を離す→寄せる→成熟→席を使う→分ける | 実取得/配置で庭が変わり、木の年齢/所有を保持。木陰と行動が同じ計算 |
+| D2 | P02/P05：同じ材料で列/塊/中庭→入口と回廊/花の屋根を使う | 3配置が輪郭で違い、空洞/床/支えが実3D。普通の家/顔/布を保持 |
+| D3 | P03/P04：水→岸→段/殻→実際の席/遊び場 | 水/床高/経路/接地/hitが一致。既存の水供給/家/入居/橋を保持 |
+| D4 | P06/C01〜C04：複数の場所→自然な利用→次の地区 | 元の庭を保ち、異なる系列を歩いてつなぐ。通常取得と保存/更新後にも成立 |
+
+各段階で自分の通常の品を使った自然な一周を検証する。模型や注入した完成状態を自然な取得/成長の証拠にしない。実装を分けても、全景はnative-05の尺度・素材・色の差と照合し、白い小物の列へ戻さない。
+
+必須の規則ケースは、同じ材料の3配置、斜めだけ/遮断/島外、成熟境界、複数領域への席の割当、合流/分離/収納/再接続、通水断絶と8セル境界、床高と経路、元のstyle/所有、複数回の完了と本人分離。動作中の変更、offline再読込、旧保存、同時更新失敗と再試行、学習予約へ戻る経路を対象別に検証する。
+
+視覚は採用方向の実モデルと最新の本体画面を並べる。理解/安全は作者以外が配置の原因と使い方を説明なしで読めるかを観察する。runtimeは同版の形・環境・行動・保存・性能の整合を確認する。三つの判定は独立。今回の利用者の美術方向への好評価を、本体や子どもの一周の合格へ広げない。
+
+## 8. 今回の状態
+
+- 美術方向：native-05を利用者の指示に基づく基準として使用。
+- ゴール/組み合わせ：本書とJSONの設計v1。6目標、15配置例、4つの場所の関係、4実装段階を具体化。
+- 本体の規則/保存/3D/操作：D1〜D4を一続きに統合。目標の選択、場所の接続/成熟/分離、実利用、履歴を保存。学習・価格・時計・建築styleは保持。公開は実施しない。
+- 検証：[本体の実画面と証拠](../design/2026-10-10-growing-place-runtime/README.md)。通常取得3旅程と、15配置・4関係・全島×390/768幅の成熟40組を同じ固定NEWへ照合した。複数runの完了行を集約し、観察timeoutの原FAILは保持。一つのrun全体のPASSではない。core・旧writer隔離・実SW更新/中断/互換復旧はローカル検証済み。自然18時間/7日を実待機した成長、実機、子どもの無説明理解/再訪、公開は未実施。設計ショーケースの旧captureは設計時点の記録。
+</pre></details></article></div><footer>正本は各カードのリンク先です。更新: <code>npm run agent:index</code> · <a href="../../docs/runbooks/repository-portal.md" id="parity-34">使い方</a></footer></main><script id="parity-35">
+const search=document.querySelector('#search');const cards=[...document.querySelectorAll('[data-search]')];search.addEventListener('input',()=>{const q=search.value.trim().toLowerCase();let count=0;for(const card of cards){card.hidden=!card.dataset.search.includes(q);if(!card.hidden)count++;}for(const group of document.querySelectorAll('.doc-group,.spec-list,.asset-groups')){const visible=[...group.querySelectorAll(':scope > [data-search],:scope > .card')].some(card=>!card.hidden);group.hidden=!visible;if(group.previousElementSibling?.classList.contains('group-title'))group.previousElementSibling.hidden=!visible;}for(const archive of document.querySelectorAll('.archive-section')){if(q&&[...archive.querySelectorAll('[data-search]')].some(card=>!card.hidden))archive.open=true;}const result=document.querySelector('#result');result.hidden=!q;result.textContent=count+' 件を表示';});
+</script></body></html>

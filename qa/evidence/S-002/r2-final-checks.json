@@ -1,0 +1,46 @@
+[
+  {
+    "command": "npm run docs:check",
+    "atUTC": "2026-10-15T17:30:31.594682+00:00",
+    "seconds": 1.75,
+    "exitCode": 0,
+    "result": "PASS",
+    "expected": "exit 0",
+    "log": "qa/evidence/S-002/r2-logs/docs-final.txt",
+    "logSha256": "f532551edebda0fda7891fd2f1aed92babcdbcf96bd6b64b3d0e2af635af02a9",
+    "inputFingerprint": "1dbae0e920877d5ff74d76af593d36a8177bbe906b8c662d408665d94e2cb96d"
+  },
+  {
+    "command": "npm run portal:verify",
+    "atUTC": "2026-10-15T17:30:33.341638+00:00",
+    "seconds": 14.0,
+    "exitCode": 0,
+    "result": "PASS",
+    "expected": "exit 0",
+    "log": "qa/evidence/S-002/r2-logs/portal-final.txt",
+    "logSha256": "dc9341d6356abe42b07abd16e5154696d604c2ca229aa1184fd08be772d407f6",
+    "inputFingerprint": "1dbae0e920877d5ff74d76af593d36a8177bbe906b8c662d408665d94e2cb96d"
+  },
+  {
+    "command": "npm run agent:index:check",
+    "atUTC": "2026-10-15T17:30:47.346775+00:00",
+    "seconds": 15.65,
+    "exitCode": 0,
+    "result": "PASS",
+    "expected": "exit 0",
+    "log": "qa/evidence/S-002/r2-logs/agent-final.txt",
+    "logSha256": "bca57ca8d72f633be79abc767129448d4c0b41b3ad9a71046962ce96b854773f",
+    "inputFingerprint": "1dbae0e920877d5ff74d76af593d36a8177bbe906b8c662d408665d94e2cb96d"
+  },
+  {
+    "command": "node tools/check-internal-portal.mjs",
+    "atUTC": "2026-10-15T17:31:03.001027+00:00",
+    "seconds": 7.06,
+    "exitCode": 0,
+    "result": "PASS",
+    "expected": "exit 0",
+    "log": "qa/evidence/S-002/r2-logs/internal-final.txt",
+    "logSha256": "7d7802812e4fd27b3dec2759eea16db0c1f4fbd1342983a54bc792d65de7e1c1",
+    "inputFingerprint": "1dbae0e920877d5ff74d76af593d36a8177bbe906b8c662d408665d94e2cb96d"
+  }
+]

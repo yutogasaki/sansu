@@ -1,51 +1,60 @@
-# 標準ポータルと既存の専門表示
+# さんすうの統合ポータル
 
-H-018、2026-10-15。共通入口は `portal/index.html`。全体が生成物で、手編集しない。
-Node.js 24以上で `npm run portal:build`、`npm run portal:verify`。アプリのNode要件は変えない。
+S-002 / 2026-10-16。通常入口は `portal/index.html`。元の `.agents/index.html` への目立つリンクを常設する。旧7ページは保持し、生成HTMLを手編集しない。
 
-## 正本と生成
+## 生成と正本
 
-`metadata.json` は説明・内容確認日・明示資料の入力。
-`scripts/standard-portal.mjs` が既存 `tools/portal-content.mjs` のタスク解析を再利用し、共有キューから状態・次の行動・関連仕事を、BLOCKEDから確認待ちを抽出する。
-`project.json` はadapterの生成物。tasks/decisions/status/nextActionをmetadataへ手入力することは拒否する。
-担当・実行者・期限がキューにない場合は未設定（要相談）。確認待ち全件が二択の判断ではなく、空配列も確認済み0件ではない。
-既存タスクにIDがない場合はファイル名を表示用IDにする。新たな実行台帳は作らない。
-`lastChecked` はCodexによる文書確認日で、生成時刻やYuの受入日ではない。buildでは更新しない。
+Node.js 24以上で `npm run portal:build`、`npm run portal:verify`。
+`npm run agent:index` は従来の7ページと統合版を生成し、`npm run agent:index:check` は両方の一致を検査する。
+旧出力を上書きできない作業では `node tools/generate-agent-index.mjs --output-dir /tmp/codex/sansu-original` で別出力を比較できる。既存の未commit入力を取り消して一致させない。
 
-固定部品は `scripts/vendor/hub-standard/1.0.0/`。lockにhub commit、6部品SHA、契約SHAを記録。
-build/verifyは最初にSHAを照合し、verifyはadapter同期・文書分担・生成物の全バイト一致と余分なファイルを検査する。
-入力の実行や、Markdown内の指示・画像・外部リンクの自動収集は行わない。
+- 説明・確認日は `metadata.json`。状態・次の行動・仕事は共有キュー、確認条件はBLOCKED。二重の実行台帳を作らない。
+- `tools/generate-agent-index.mjs` の `legacyPages()` から旧版と統合版の7詳細を同じデータで生成する。
+- `tools/integrated-portal.mjs` が固有adapterとして、概要の5つの問い、選択肢・推奨理由・影響、ゴールと仕事、資料、AI入口を加える。
+- 正式仕事順は共有キューとバックログ。M0〜M5は構築戦略の表から生成し、段階の資料や旧結果を工程合格にしない。
+- vendor `scripts/vendor/hub-standard/1.0.0/` は変更しない。lockの版・hub commit・全SHA検査、schema・明示資料の検証を維持する。固有adapterは標準renderの検証済み出力を拡張する。
 
-## 旧パスを残す理由
+## 人の層とAIの層
 
-| 旧パス | 役割・生成元・扱い |
-| --- | --- |
-| `.agents/index.html` | 既存の詳しい概要・旅程/過去証拠への導線。`tools/generate-agent-index.mjs` を保持 |
-| `.agents/map.html` | 仕様とコード・画像/3D容量の専門表示。同生成器を保持 |
-| `.agents/tasks/index.html` | 共有キューの詳細表示。同生成器と `tools/portal-content.mjs` を保持 |
-| `.agents/plan.html`、`.agents/roles.html`、`.agents/operations.html` | 計画・役割・運用の専門表示。同生成経路を保持 |
-| `docs/index.html` | 従来の全文書索引。既存の資料とURLを保持 |
-| `docs/internal-portal/contract.md` | 既存の限定trial用契約と証拠。H-018の契約・合格証拠へ流用しない |
+人の面は白・薄い灰紫の面、旧版の紫のアクセント、カード、図、画像、短い日本語で現在地を示す。本文は16px以上。生ID、パス、SHA、原文は折りたたみか `ai/` の詳しい表示へ置く。
 
-開始前から変更中の旧HTML・共有ガイド・タスク・検証matrixは書き換えず、H-018 commitにも含めない。
-`internal:build` 系のnpm scriptは開始時package.jsonには存在しなかった。既存の `tools/check-internal-portal.mjs`・`tools/portal-graph.mjs` と証拠は保持し、この移行では別trialを起動しない。
+`portal/data/project.json` は標準データ。`portal/data/integration.json` は同じ入力による候補、正式試行、工程、旧新ページ、素材の対応。`ai/` は旧HTMLの全要素と全文を保持する。原文・版の詳細は資料ページで開く。表面の要約だけを正本として更新しない。
 
-`agent:index` は旧7画面の従来生成に加えて標準buildを実行する。
-`agent:index:check` は従来の7画面の一致検査に標準verifyを追加する。
-`legacy-boundary.json` の4文書だけは新ポータルの対象で、旧索引から除く。除外の正確な集合と標準資料への包含をadapterが検査する。
-既存文書の検査を削らず、新規文書の追加で保全対象HTMLを上書きする必要をなくす。
-`docs/index.md` には役割・旧パス対応表を追加し、旧生成器が使う既存の冒頭抜粋は保持する。
+全文検索は資料の全本文を対象にし、`search-index.js` も生成するためfile://でも読める。検索一致は閉じた履歴を開く。画像・3D素材・HTML・文書はリポジトリ内の元ファイルを `../docs/...`、`../public/assets/...` などの相対パスで参照し、`resources/` へコピーしない。各参照のSHAと容量を対応データへ残す。全文検索とページ内閲覧に必要な文書の本文は、同じ入力から検索indexへ生成する。固定標準の参照HTMLは統合版の元文書参照と重複するため、adapterで取り除く。元画像・元HTML・元文書のコピーは作らない。
 
-## WebP変換の原因と回避
+## 正式試行と検査
 
-hubのassembleはsharpがrepoにないと `sips -s format webp` を使う。
-Sansuにはsharpがなく、このMacでは実在する `public/assets/explore/opening-root-pull-v2/ready.webp` に対し同じ変換引数が終了13、`Can't write format: org.webmproject.webp` を返した。
-これはWebP書出し経路の再現で、元画像の破損を証明するものではない。過去の失敗時の個別画像は未特定。
-標準builderは画像を収集せず、明示テキストをescapeした閲覧コピーだけを作る。標準portalの画像依存を0にし、hubの変換処理に入らない構成へ移行する。hubやsharp依存は変更しない。
+旧 `portal-graph.mjs` の試行・修正上限・証拠整合・承認境界を保持し、閲覧から新trialを起動しない。旧trial6のPASSは旧候補の履歴。統合候補のhashには旧候補、入力、adapter・CSS・操作script、生成内容、素材SHAを含め、対象不一致を警告する。候補一致だけで利用者受入を合格にしない。
 
-## 集約と限界
+verifyは入力から全ファイルを再生成して、文字列の全バイト一致、参照した元ファイルのSHA、欠損・余分・symlinkを検査する。`tools/check-internal-portal.mjs` は従来の旧ページ・グラフ異常系に加え、統合版の全リンク・アンカー、旧要素の全文保存、両層、候補不一致を検査する。これをブラウザの実表示や子どもの理解の合格へ読み替えない。
 
-hubは標準 `portal/` を優先し、旧HTMLやtrial証拠を同時にコピーしない。
-標準schemaには安全なHTML専門ページへのリンク欄がないため、上記の深い専門表示はrepo内の旧パスで使う。将来必要ならhubでallowlist付きの補助生成物/相対リンクをschema・build・verify・assembleと一体で拡張する案とし、今回は適用しない。
-開始時の共有キューは未commitなので、表示はその作業ツリーの観測。元ファイルはH-018へstageせず、表示用の抽出と証拠だけを含める。HEADだけのcheckoutと作業ツリーの観測が違う場合、adapter同期検査は再生成を要求する。共通verifyの保証は記録された入力と閲覧コピーの一致である。
-標準入口の1440/390pxとリンクを確認する。製品の美術・理解/安全・runtime、実機・保存/PWA受入・公開は別の判定で、今回変更しない。
+## 旧パスと公開境界
+
+旧パスは移動せず、`.agents/index.html`、map、plan、roles、operations、tasks/indexと `docs/index.html` を保持する。統合版では overview、map、plan、roles、operations、tasks、documentsとして全7詳細を持つ。パリティ表は `qa/evidence/S-002/parity.md`。
+
+hubは読むだけ。公開時の `../.agents/index.html` から `/sansu/original/` への変換はhub側の責任範囲。commit・push・デプロイはこの生成作業に含まない。紹介サイトのURL、管理画面・ヘルプの不明状態を補作せず、過去証拠と現候補、技術検査と製品受入を分ける。
+
+2026-10-16の読取確認では、hubの `common-portal/publish/sites.cjs` は固定標準の `verify(repo)` を直接呼び、最初のコピー対象を index/portal.css/data/references に限定している。HTMLリンク先は追加取得するが、新しいscript・CSS・ダウンロード素材の全量保持を保証する経路ではない。固定verify自体も拡張出力を拒否する。ローカルの `portal:verify` が合格してもhub公開互換の合格ではない。hub側で拡張出力のallowlistと全バイト/SHA検証を保った受入経路を別タスクで整える必要がある。本タスクではhubを変更・公開しない。
+
+画像のhub集約はsharp（他のallowlist repoからのfallbackを含む）があればWebP化し、無ければsipsを使う。元の `public/assets/explore/opening-root-pull-v2/ready.webp` に対するsipsのWebP書出しは今回も終了13を再現した。ローカル統合buildは元ファイルを参照し、画像変換も複製もしないため影響しない。hub側の実際のsharp選択・画像とscriptの保持は公開前の別検証で確認する。
+
+
+## 見せ方と階層（第2ラウンド）
+
+入口の最上部に、いまの状況・いちばんの注意・次の行動を短く示す。直下の利用先は、アプリ `https://sansu-seven.vercel.app/`、紹介 `https://sansu-seven.vercel.app/promo/`、ヘルプは「未接続」。その下へ目立つ旧ポータルの導線を置く。入口には自分へ戻るリンクを出さない。
+
+ハブ→統合入口→中身を2クリック以内にする。各中身からの文書・画像・比較HTMLは、同じページの読取パネルで開く。文書本文はfile://でも生成済みindexから読め、HTMLの比較表示は元HTMLをページ内で表示する。さらにリンクを開く場合もパネル内で進み、前の資料へ戻れる。閉じる・Escape・フォーカス復帰を備える。元資料を独立して開く操作は詳細欄に残す。主要な章へは入口のカードから直接進め、ヘッダーの補助資料は別のまとまりにする。
+
+正式な優先順は共有キューとバックログ。計画上部に公開準備・体験・性能・美術の関係を示してから、島を作る6段階を説明する。段階カードの短い説明・段階図・進む条件は常時表示し、正本の全文は同じカードで展開する。地図の注意は見出しと短文へ圧縮し、過去の記録の読み方をページ内で開く。
+
+5つの問い、判断の選択肢・おすすめの理由・比較材料・影響、端末などの確認条件を畳まない。採用待ちと確認条件を分け、計画と実績、過去候補と現在候補、公開確認と自動検査を混同しない。人の表面に生ID・版番号・hashを出さない。320pxと拡大時の折り返し・キーボード操作を確認し、静的検査だけで5秒の理解や見た目の合格を宣言しない。
+
+hub側で元画像を縮小WebPへ変換し、相対参照のHTMLをたどって取り込む。こちらの参照方式の検査と、hubの公開物の受入は別であり、本作業ではhubに書き込まない。
+
+## 冒頭の成果・検索・履歴（第3ラウンド）
+
+利用先カードの近くに、共有キューが参照する入り江の実画面を成果カードとして置く。画像は元ファイルへの相対参照を使い、「現在の判断対象・開発中」「最新の判断資料・公開版は未確認」を区別する。狭い幅では利用先を2列にし、ヘルプは横幅を使う。短い状況要約と成果は5つの問いより前に置き、320×568でも冒頭に収まることをheadless検査の条件にする。旧ポータルのリンク末尾と矢印は一緒に折り返す。
+
+統合トップにもページ内検索と全資料の本文検索を備える。ページ内検索は5つの問い・判断・仕事・資料・検証履歴・AI入口を対象にし、資料検索から本文はページ内で開く。検索結果名にも人向けのラベルを使い、元の題名・本文は検索データと詳細で保持する。
+
+正式検証の履歴は、同じ記録から「止まった理由」と「今への影響」を短い日本語で生成する。生の理由・英語エラー・実行コマンド・ファイル名は同じ項目の詳細とAIデータに残す。共通の検出規則で入口と全7詳細、検索結果名を検査し、生ID・短い版の識別値・hash・コマンド・パス・英語エラー・ファイル名の漏れを拒否する。旧版の全要素・全文と5,495項目の検査は維持する。

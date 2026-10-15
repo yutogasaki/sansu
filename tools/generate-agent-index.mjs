@@ -238,6 +238,11 @@ function render([output, label]) {
 const search=document.querySelector('#search');const cards=[...document.querySelectorAll('[data-search]')];search.addEventListener('input',()=>{const q=search.value.trim().toLowerCase();let count=0;for(const card of cards){card.hidden=!card.dataset.search.includes(q);if(!card.hidden)count++;}for(const group of document.querySelectorAll('.doc-group,.spec-list,.asset-groups')){const visible=[...group.querySelectorAll(':scope > [data-search],:scope > .card')].some(card=>!card.hidden);group.hidden=!visible;if(group.previousElementSibling?.classList.contains('group-title'))group.previousElementSibling.hidden=!visible;}for(const archive of document.querySelectorAll('.archive-section')){if(q&&[...archive.querySelectorAll('[data-search]')].some(card=>!card.hidden))archive.open=true;}const result=document.querySelector('#result');result.hidden=!q;result.textContent=count+' 件を表示';});
 </script></body></html>\n`;
 }
+export function legacyPages() {
+  return new Map(pages.map(page => [page[0], render(page)]));
+}
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
 let stale = false;
 const outputDirIndex = process.argv.indexOf('--output-dir');
 if (outputDirIndex !== -1 && !process.argv[outputDirIndex + 1]) throw new Error('--output-dir requires a directory');
@@ -262,3 +267,4 @@ for (const page of pages) {
   }
 }
 if (stale) process.exitCode = 1;
+}

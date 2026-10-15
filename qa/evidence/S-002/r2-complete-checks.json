@@ -1,0 +1,107 @@
+[
+  {
+    "command": "npm run docs:check",
+    "atUTC": "2026-10-15T17:36:20.559364+00:00",
+    "seconds": 0.38,
+    "exitCode": 0,
+    "result": "PASS",
+    "expected": "exit 0",
+    "log": "qa/evidence/S-002/r2-logs/docs-delivery.txt",
+    "logSha256": "f532551edebda0fda7891fd2f1aed92babcdbcf96bd6b64b3d0e2af635af02a9",
+    "inputFingerprint": "dc2def86011266c3fa95b6411cc3283f149579aafeee6e62208d89ba94968121",
+    "currentCandidate": "bd31625b222f298f39e0d57a8a7e92132d42ccca3d639ef3286b70e52493f987"
+  },
+  {
+    "command": "npm run lint",
+    "atUTC": "2026-10-15T17:27:43.376132+00:00",
+    "seconds": 78.88,
+    "exitCode": 0,
+    "result": "PASS",
+    "expected": "exit 0",
+    "log": "qa/evidence/S-002/r2-logs/lint.txt",
+    "logSha256": "2f2fbd27d4b48699f01f31ee66318956a41ab7e5ddddc0af16e5d4159a39f49d",
+    "inputFingerprint": "de2814749191e7b2790ee3b08ca517864523ec05f01285d539fc11088403c016"
+  },
+  {
+    "command": "npm run typecheck",
+    "atUTC": "2026-10-15T17:29:02.259540+00:00",
+    "seconds": 0.29,
+    "exitCode": 0,
+    "result": "PASS",
+    "expected": "exit 0",
+    "log": "qa/evidence/S-002/r2-logs/typecheck.txt",
+    "logSha256": "9e59605fb9172da9759b4feeda0238f5bc35ea2d1abb67d3392904705d025041",
+    "inputFingerprint": "de2814749191e7b2790ee3b08ca517864523ec05f01285d539fc11088403c016"
+  },
+  {
+    "command": "npm run test:run",
+    "atUTC": "2026-10-15T17:27:15.372459+00:00",
+    "seconds": 767.8,
+    "exitCode": 0,
+    "result": "PASS",
+    "expected": "exit 0",
+    "log": "qa/evidence/S-002/r2-logs/test-run.txt",
+    "logSha256": "24ad7e8f966ed68863519dbcda05b7af88deee58747d69d95d08c72c22760a65",
+    "files": 622,
+    "tests": 5379,
+    "applicationInputs": "r2-app-inputs.json",
+    "scope": "unchanged application inputs; portal reader is outside Vitest scope"
+  },
+  {
+    "command": "npm run build",
+    "atUTC": "2026-10-15T17:29:02.552519+00:00",
+    "seconds": 22.57,
+    "exitCode": 0,
+    "result": "PASS",
+    "expected": "exit 0",
+    "log": "qa/evidence/S-002/r2-logs/build.txt",
+    "logSha256": "6becd9a769208185853ae1071ca5ef55f6ac50e1b13913170cd8e1754d559d91",
+    "inputFingerprint": "de2814749191e7b2790ee3b08ca517864523ec05f01285d539fc11088403c016"
+  },
+  {
+    "command": "npm run portal:verify",
+    "atUTC": "2026-10-15T17:36:20.939316+00:00",
+    "seconds": 5.17,
+    "exitCode": 0,
+    "result": "PASS",
+    "expected": "exit 0",
+    "log": "qa/evidence/S-002/r2-logs/portal-delivery.txt",
+    "logSha256": "29da3969b4e777974d09a78f61de5a1a1571e441413f44d1d0654220dd82d6d0",
+    "inputFingerprint": "dc2def86011266c3fa95b6411cc3283f149579aafeee6e62208d89ba94968121",
+    "currentCandidate": "bd31625b222f298f39e0d57a8a7e92132d42ccca3d639ef3286b70e52493f987"
+  },
+  {
+    "command": "npm run agent:index:check",
+    "atUTC": "2026-10-15T17:36:26.105795+00:00",
+    "seconds": 6.09,
+    "exitCode": 0,
+    "result": "PASS",
+    "expected": "exit 0",
+    "log": "qa/evidence/S-002/r2-logs/agent-delivery.txt",
+    "logSha256": "e23e88ebcde38b7905a8d7ba8aa9709a40c91ef7a2baa4b92d38275f094dd05c",
+    "inputFingerprint": "dc2def86011266c3fa95b6411cc3283f149579aafeee6e62208d89ba94968121",
+    "currentCandidate": "bd31625b222f298f39e0d57a8a7e92132d42ccca3d639ef3286b70e52493f987"
+  },
+  {
+    "command": "node tools/check-internal-portal.mjs",
+    "atUTC": "2026-10-15T17:36:32.193847+00:00",
+    "seconds": 2.09,
+    "exitCode": 0,
+    "result": "PASS",
+    "expected": "exit 0",
+    "log": "qa/evidence/S-002/r2-logs/internal-delivery.txt",
+    "logSha256": "072a8eb54f61801e925ba5b6cebf02bcdf240bffb2a60912fbb8372b164c7897",
+    "inputFingerprint": "dc2def86011266c3fa95b6411cc3283f149579aafeee6e62208d89ba94968121",
+    "currentCandidate": "bd31625b222f298f39e0d57a8a7e92132d42ccca3d639ef3286b70e52493f987"
+  },
+  {
+    "command": "npm run docs:check (evidence closeout)",
+    "atUTC": "2026-10-15T17:40:27.233601+00:00",
+    "result": "PASS",
+    "exitCode": 0,
+    "expected": "exit 0",
+    "log": "qa/evidence/S-002/r2-logs/docs-evidence-closeout.txt",
+    "logSha256": "f532551edebda0fda7891fd2f1aed92babcdbcf96bd6b64b3d0e2af635af02a9",
+    "scope": "closeout evidence only; application and portal generation inputs unchanged"
+  }
+]

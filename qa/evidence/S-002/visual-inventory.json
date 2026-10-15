@@ -1,0 +1,625 @@
+{
+  "rules": [
+    {
+      "selector": ":root",
+      "declarations": "color-scheme:light;--ink:#24233d;--muted:#55556b;--line:#d9d8e3;--paper:#fffdfa;--accent:#4d3aa2"
+    },
+    {
+      "selector": "*",
+      "declarations": "box-sizing:border-box"
+    },
+    {
+      "selector": "body",
+      "declarations": "margin:0;background:#f5f3f8;color:var(--ink);font:17px/1.75 system-ui,-apple-system,sans-serif"
+    },
+    {
+      "selector": "a",
+      "declarations": "color:var(--accent);text-underline-offset:4px"
+    },
+    {
+      "selector": "header",
+      "declarations": "background:var(--paper);border-bottom:1px solid var(--line)"
+    },
+    {
+      "selector": "nav,main",
+      "declarations": "max-width:1180px;margin:auto;padding:20px 28px"
+    },
+    {
+      "selector": "nav",
+      "declarations": "display:flex;align-items:center;gap:24px;flex-wrap:wrap"
+    },
+    {
+      "selector": "nav strong",
+      "declarations": "margin-right:auto;letter-spacing:.12em"
+    },
+    {
+      "selector": "nav a",
+      "declarations": "text-decoration:none;padding:6px 2px"
+    },
+    {
+      "selector": "nav a[aria-current]",
+      "declarations": "border-bottom:2px solid var(--accent);font-weight:700"
+    },
+    {
+      "selector": "main",
+      "declarations": "padding-top:42px;padding-bottom:70px"
+    },
+    {
+      "selector": "h1",
+      "declarations": "font-size:clamp(28px,5vw,44px);letter-spacing:-.035em;margin:0"
+    },
+    {
+      "selector": "h2",
+      "declarations": "font-size:18px;line-height:1.5;margin:0 0 10px"
+    },
+    {
+      "selector": "p",
+      "declarations": "margin:10px 0"
+    },
+    {
+      "selector": ".subtitle,.path,footer",
+      "declarations": "color:var(--muted)"
+    },
+    {
+      "selector": ".eyebrow",
+      "declarations": "font-size:14px;letter-spacing:.16em"
+    },
+    {
+      "selector": ".intro",
+      "declarations": "padding:28px;background:#ece8f7;border:1px solid var(--line);border-radius:14px;margin:28px 0"
+    },
+    {
+      "selector": ".intro h2",
+      "declarations": "font-size:26px"
+    },
+    {
+      "selector": ".stats",
+      "declarations": "display:flex;flex-wrap:wrap;gap:24px;margin-top:22px"
+    },
+    {
+      "selector": ".stats strong",
+      "declarations": "font-size:30px;margin-right:5px"
+    },
+    {
+      "selector": ".grid",
+      "declarations": "display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px"
+    },
+    {
+      "selector": ".card",
+      "declarations": "background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px;overflow-wrap:anywhere"
+    },
+    {
+      "selector": ".path",
+      "declarations": "font:14px/1.6 ui-monospace,monospace"
+    },
+    {
+      "selector": ".section-title",
+      "declarations": "margin:32px 0 16px"
+    },
+    {
+      "selector": "label",
+      "declarations": "display:block;font-weight:600;margin-top:24px"
+    },
+    {
+      "selector": "input",
+      "declarations": "width:100%;font:inherit;padding:13px 16px;border:1px solid #93aa9b;border-radius:8px;background:var(--paper);margin:8px 0 24px;color:var(--ink)"
+    },
+    {
+      "selector": "summary",
+      "declarations": "cursor:pointer;color:var(--accent);padding:10px 0"
+    },
+    {
+      "selector": "pre",
+      "declarations": "white-space:pre-wrap;overflow-wrap:anywhere;font:15px/1.8 ui-monospace,monospace;background:#f0edf5;padding:16px;border-radius:8px;max-height:560px;overflow:auto"
+    },
+    {
+      "selector": ".map-list,.asset-groups,.spec-list",
+      "declarations": "display:grid;gap:12px"
+    },
+    {
+      "selector": ".map-row",
+      "declarations": "display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);gap:24px"
+    },
+    {
+      "selector": ".map-row h2",
+      "declarations": "margin:8px 0 4px"
+    },
+    {
+      "selector": ".map-row h3",
+      "declarations": "font-size:14px;letter-spacing:.08em;color:var(--muted);margin:0"
+    },
+    {
+      "selector": ".map-row p",
+      "declarations": "margin:4px 0"
+    },
+    {
+      "selector": ".map-row small",
+      "declarations": "color:var(--muted);white-space:nowrap"
+    },
+    {
+      "selector": ".spec-row",
+      "declarations": "display:flex;justify-content:space-between;gap:20px;padding:12px 20px"
+    },
+    {
+      "selector": ".spec-row p",
+      "declarations": "margin:0;color:var(--muted)"
+    },
+    {
+      "selector": ".spec-row>div:last-child",
+      "declarations": "text-align:right;min-width:160px"
+    },
+    {
+      "selector": ".badge,.status",
+      "declarations": "font-size:14px;padding:3px 9px;border-radius:99px;background:#ece8f7;margin-right:6px"
+    },
+    {
+      "selector": ".status",
+      "declarations": "background:#fff1ce"
+    },
+    {
+      "selector": ".asset-group",
+      "declarations": "padding:12px 20px"
+    },
+    {
+      "selector": ".asset-group summary",
+      "declarations": "display:flex;justify-content:space-between;gap:16px;align-items:center"
+    },
+    {
+      "selector": ".asset-group summary span,.asset-list span",
+      "declarations": "color:var(--muted);white-space:nowrap"
+    },
+    {
+      "selector": ".asset-list",
+      "declarations": "border-top:1px solid var(--line);margin-top:8px;padding-top:8px"
+    },
+    {
+      "selector": ".asset-list>div",
+      "declarations": "display:flex;justify-content:space-between;gap:16px;padding:3px 0;border-bottom:1px solid #edf0e9"
+    },
+    {
+      "selector": ".asset-list a",
+      "declarations": "overflow-wrap:anywhere"
+    },
+    {
+      "selector": "footer",
+      "declarations": "margin-top:40px;font-size:13px"
+    },
+    {
+      "selector": "[hidden]",
+      "declarations": "display:none!important"
+    },
+    {
+      "selector": ":focus-visible",
+      "declarations": "outline:3px solid #b27523;outline-offset:4px"
+    },
+    {
+      "selector": ".map-row",
+      "declarations": "grid-template-columns:1fr"
+    },
+    {
+      "selector": ".spec-row",
+      "declarations": "display:block"
+    },
+    {
+      "selector": ".spec-row>div:last-child",
+      "declarations": "text-align:left;min-width:0;margin-top:8px"
+    },
+    {
+      "selector": ".asset-group summary,.asset-list>div",
+      "declarations": "align-items:flex-start"
+    },
+    {
+      "selector": ".asset-group summary span",
+      "declarations": "font-size:14px"
+    },
+    {
+      "selector": "nav,main",
+      "declarations": "padding-left:18px;padding-right:18px"
+    },
+    {
+      "selector": "nav",
+      "declarations": "gap:16px"
+    },
+    {
+      "selector": ".grid",
+      "declarations": "grid-template-columns:1fr"
+    },
+    {
+      "selector": ".intro",
+      "declarations": "padding:20px"
+    },
+    {
+      "selector": ".card",
+      "declarations": "padding:18px"
+    },
+    {
+      "selector": ".asset-item",
+      "declarations": "display:grid!important;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:12px;padding:7px 0!important"
+    },
+    {
+      "selector": ".asset-thumb",
+      "declarations": "display:flex;align-items:center;justify-content:center;width:64px;height:54px;border-radius:6px;background:#edf0e9;overflow:hidden;text-decoration:none"
+    },
+    {
+      "selector": ".asset-thumb img",
+      "declarations": "width:100%;height:100%;object-fit:contain"
+    },
+    {
+      "selector": ".asset-placeholder",
+      "declarations": "font:10px ui-monospace,monospace;color:var(--muted);letter-spacing:.08em"
+    },
+    {
+      "selector": ".asset-name",
+      "declarations": "min-width:0;white-space:normal!important"
+    },
+    {
+      "selector": ".asset-size",
+      "declarations": "white-space:nowrap"
+    },
+    {
+      "selector": ".asset-item",
+      "declarations": "grid-template-columns:52px minmax(0,1fr);gap:10px"
+    },
+    {
+      "selector": ".asset-thumb",
+      "declarations": "width:52px;height:48px"
+    },
+    {
+      "selector": ".asset-size",
+      "declarations": "grid-column:2;justify-self:start;font-size:14px"
+    },
+    {
+      "selector": ".progress-overview",
+      "declarations": "display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:22px 0"
+    },
+    {
+      "selector": ".progress-overview>div",
+      "declarations": "background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px"
+    },
+    {
+      "selector": ".progress-overview strong",
+      "declarations": "display:block;font-size:30px;line-height:1.2"
+    },
+    {
+      "selector": ".progress-overview span",
+      "declarations": "font-size:13px"
+    },
+    {
+      "selector": ".map-help",
+      "declarations": "font-size:13px;color:var(--muted)"
+    },
+    {
+      "selector": ".map-row",
+      "declarations": "display:block"
+    },
+    {
+      "selector": ".map-heading",
+      "declarations": "display:flex;justify-content:space-between;gap:16px;align-items:flex-start"
+    },
+    {
+      "selector": ".map-heading h2",
+      "declarations": "font-size:22px;margin:5px 0 10px"
+    },
+    {
+      "selector": ".map-heading .status",
+      "declarations": "white-space:nowrap;font-weight:700"
+    },
+    {
+      "selector": ".map-summary",
+      "declarations": "display:grid;grid-template-columns:1fr 1fr;gap:14px"
+    },
+    {
+      "selector": ".map-summary p",
+      "declarations": "margin:0;padding:12px 14px;border-radius:9px;background:#f4f6f0"
+    },
+    {
+      "selector": ".map-summary strong",
+      "declarations": "display:block;font-size:14px;color:var(--muted);margin-bottom:2px"
+    },
+    {
+      "selector": ".progress-track",
+      "declarations": "display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;list-style:none;margin:16px 0 0;padding:0"
+    },
+    {
+      "selector": ".stage",
+      "declarations": "padding:10px;border-radius:8px;background:#eef2e9;border:1px solid #d9e2d5"
+    },
+    {
+      "selector": ".stage span",
+      "declarations": "display:block;font-size:11px;line-height:1.3;color:var(--muted)"
+    },
+    {
+      "selector": ".stage strong",
+      "declarations": "display:block;font-size:14px;line-height:1.4;margin-top:4px"
+    },
+    {
+      "selector": ".stage-partial",
+      "declarations": "background:#fff4dc;border-color:#ecdcb7"
+    },
+    {
+      "selector": ".stage-waiting",
+      "declarations": "background:#f4f3f0;border-color:#e0ded8"
+    },
+    {
+      "selector": ".map-sources",
+      "declarations": "border-top:1px solid var(--line);margin-top:16px"
+    },
+    {
+      "selector": ".map-sources>div",
+      "declarations": "display:grid;grid-template-columns:1fr 1fr;gap:20px;padding-top:8px"
+    },
+    {
+      "selector": ".map-sources h3",
+      "declarations": "margin:0;font-size:14px"
+    },
+    {
+      "selector": ".archive-section",
+      "declarations": "margin:32px 0;padding:20px;background:#e9ece7;border:1px solid var(--line);border-radius:12px"
+    },
+    {
+      "selector": ".archive-section>summary",
+      "declarations": "font-size:18px;font-weight:700"
+    },
+    {
+      "selector": ".archive-section h3",
+      "declarations": "margin-top:25px"
+    },
+    {
+      "selector": ".archive-section .asset-groups",
+      "declarations": "margin-top:14px"
+    },
+    {
+      "selector": ".progress-overview,.progress-track",
+      "declarations": "grid-template-columns:repeat(2,minmax(0,1fr))"
+    },
+    {
+      "selector": ".map-summary,.map-sources>div",
+      "declarations": "grid-template-columns:1fr"
+    },
+    {
+      "selector": ".map-heading",
+      "declarations": "display:block"
+    },
+    {
+      "selector": ".map-heading .status",
+      "declarations": "display:inline-block;margin-bottom:10px"
+    },
+    {
+      "selector": ".progress-overview",
+      "declarations": "grid-template-columns:repeat(2,minmax(0,1fr))"
+    },
+    {
+      "selector": ".progress-track",
+      "declarations": "gap:5px"
+    },
+    {
+      "selector": ".stage",
+      "declarations": "padding:8px"
+    },
+    {
+      "selector": ".mode-list",
+      "declarations": "display:grid;gap:10px"
+    },
+    {
+      "selector": ".mode-row",
+      "declarations": "background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:15px"
+    },
+    {
+      "selector": ".mode-row>strong",
+      "declarations": "font-size:17px;margin-right:10px"
+    },
+    {
+      "selector": ".mode-row p",
+      "declarations": "margin:5px 0"
+    },
+    {
+      "selector": ".mode-row a",
+      "declarations": "font-size:13px"
+    },
+    {
+      "selector": ".map-jumps",
+      "declarations": "display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:20px 0 28px"
+    },
+    {
+      "selector": ".map-jumps a",
+      "declarations": "display:inline-block;padding:8px 12px;background:var(--paper);border:1px solid var(--line);border-radius:99px;text-decoration:none;font-weight:700;font-size:13px"
+    },
+    {
+      "selector": ".map-jumps a:hover",
+      "declarations": "background:#ece8f7"
+    },
+    {
+      "selector": ".group-title",
+      "declarations": "font-size:17px;margin:26px 0 10px"
+    },
+    {
+      "selector": ".group-title small",
+      "declarations": "font-size:14px;font-weight:500;color:var(--muted);margin-left:6px"
+    },
+    {
+      "selector": ".asset-note",
+      "declarations": "font-size:14px;color:var(--muted)"
+    },
+    {
+      "selector": ".asset-full-list",
+      "declarations": "border-top:1px solid var(--line);margin-top:12px"
+    },
+    {
+      "selector": ".asset-full-list>summary",
+      "declarations": "font-weight:700"
+    },
+    {
+      "selector": ".asset-full-list .asset-item",
+      "declarations": "font-size:13px"
+    },
+    {
+      "selector": ".asset-full-list .asset-thumb",
+      "declarations": "width:46px;height:38px"
+    },
+    {
+      "selector": ".asset-full-list .asset-item",
+      "declarations": "grid-template-columns:46px minmax(0,1fr) auto"
+    },
+    {
+      "selector": ".asset-group>summary strong",
+      "declarations": "max-width:70%;overflow-wrap:anywhere"
+    },
+    {
+      "selector": "#progress,#specs,#assets,#legacy,#evidence",
+      "declarations": "scroll-margin-top:18px"
+    },
+    {
+      "selector": ".map-jumps",
+      "declarations": "gap:6px"
+    },
+    {
+      "selector": ".map-jumps a",
+      "declarations": "font-size:14px;padding:7px 9px"
+    },
+    {
+      "selector": ".asset-group>summary",
+      "declarations": "display:block"
+    },
+    {
+      "selector": ".asset-group>summary strong",
+      "declarations": "display:block;max-width:none"
+    },
+    {
+      "selector": ".asset-group>summary span",
+      "declarations": "display:block"
+    },
+    {
+      "selector": ".asset-full-list .asset-item",
+      "declarations": "grid-template-columns:38px minmax(0,1fr)"
+    },
+    {
+      "selector": ".asset-full-list .asset-thumb",
+      "declarations": "width:38px;height:34px"
+    },
+    {
+      "selector": ".asset-group>summary",
+      "declarations": "display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:14px;align-items:center"
+    },
+    {
+      "selector": ".group-thumb",
+      "declarations": "display:block;width:62px;height:52px;object-fit:contain;border-radius:6px;background:#edf0e9"
+    },
+    {
+      "selector": ".asset-group>summary strong",
+      "declarations": "max-width:none"
+    },
+    {
+      "selector": ".asset-group>summary>span:last-child",
+      "declarations": "white-space:nowrap"
+    },
+    {
+      "selector": ".asset-group>summary",
+      "declarations": "display:grid;grid-template-columns:52px minmax(0,1fr);gap:9px"
+    },
+    {
+      "selector": ".group-thumb",
+      "declarations": "width:52px;height:48px"
+    },
+    {
+      "selector": ".asset-group>summary>span:last-child",
+      "declarations": "grid-column:2"
+    },
+    {
+      "selector": ".asset-group>summary .group-name",
+      "declarations": "white-space:normal;min-width:0"
+    },
+    {
+      "selector": ".group-name strong,.group-name small",
+      "declarations": "display:block;line-height:1.5"
+    },
+    {
+      "selector": ".group-name small",
+      "declarations": "font:11px/1.5 ui-monospace,monospace;color:var(--muted);overflow-wrap:anywhere"
+    },
+    {
+      "selector": ".asset-group>summary .group-name strong",
+      "declarations": "font-size:15px"
+    },
+    {
+      "selector": ".asset-size",
+      "declarations": "text-align:right"
+    },
+    {
+      "selector": ".asset-size small",
+      "declarations": "display:block;color:var(--muted);font-size:11px;line-height:1.45"
+    },
+    {
+      "selector": ".asset-size",
+      "declarations": "text-align:left"
+    },
+    {
+      "selector": ".evidence-gallery",
+      "declarations": "display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px"
+    },
+    {
+      "selector": ".evidence-gallery .asset-item",
+      "declarations": "display:block!important;padding:10px!important;border:1px solid var(--line);border-radius:9px;background:#f7f9f4"
+    },
+    {
+      "selector": ".evidence-gallery .asset-thumb",
+      "declarations": "width:100%;height:250px;margin-bottom:8px"
+    },
+    {
+      "selector": ".evidence-gallery .asset-name",
+      "declarations": "display:block;font-weight:700"
+    },
+    {
+      "selector": ".evidence-gallery .asset-size",
+      "declarations": "display:block;text-align:left;font-size:14px"
+    },
+    {
+      "selector": ".evidence-gallery",
+      "declarations": "grid-template-columns:1fr"
+    },
+    {
+      "selector": ".evidence-gallery .asset-thumb",
+      "declarations": "height:260px"
+    },
+    {
+      "selector": ".destinations",
+      "declarations": "display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:16px"
+    },
+    {
+      "selector": "nav a",
+      "declarations": "min-height:44px;display:inline-flex;align-items:center"
+    },
+    {
+      "selector": "pre",
+      "declarations": "tab-size:2"
+    },
+    {
+      "selector": ".skip",
+      "declarations": "position:absolute;left:12px;top:-90px;background:white;padding:12px"
+    },
+    {
+      "selector": ".skip:focus",
+      "declarations": "top:0"
+    }
+  ],
+  "media": [
+    "@media(max-width:760px){",
+    "@media(max-width:640px){",
+    "@media(max-width:640px){",
+    "@media(max-width:760px){",
+    "@media(max-width:400px){",
+    "@media(max-width:640px){",
+    "@media(max-width:640px){",
+    "@media(max-width:640px){",
+    "@media(max-width:640px){"
+  ],
+  "actions": [
+    "検索語をtrimし小文字化",
+    "各カードのタイトル・パス・説明／対象本文を絞り込み",
+    "グループ内に一致がなければ見出しごと非表示",
+    "検索結果の件数をrole=statusへ表示",
+    "検索語を消すと全カードとグループを戻す",
+    "旧履歴に一致したとき折りたたみを開く",
+    "summaryのクリック／キーボードによる展開",
+    "元画像・ファイル・内部ページ・戻るをリンクで開く"
+  ]
+}

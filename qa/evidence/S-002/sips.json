@@ -1,0 +1,24 @@
+{
+  "atUTC": "2026-10-15T16:58:37.508808+00:00",
+  "command": [
+    "sips",
+    "-s",
+    "format",
+    "webp",
+    "-s",
+    "formatOptions",
+    "80",
+    "-Z",
+    "800",
+    "public/assets/explore/opening-root-pull-v2/ready.webp",
+    "--out",
+    "/tmp/codex/S-002/sips-ready.webp"
+  ],
+  "expected": "reproduce unavailable WebP writer",
+  "exitCode": 13,
+  "reproduced": true,
+  "rawLog": "qa/evidence/S-002/logs/sips.txt",
+  "sha256": "e93b014954ce5c5b65b63fcfc4ad860a16769f2d8559081d5368344700608aee",
+  "localBuildRequiresConversion": false,
+  "hub": "sharp/fallback selection unverified; no hub execution"
+}
