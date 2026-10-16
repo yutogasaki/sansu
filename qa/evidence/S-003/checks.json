@@ -1,0 +1,108 @@
+{
+  "at": "2026-10-15T21:48:06.953926+00:00",
+  "node": "v24.18.0",
+  "environment": {
+    "SANSU_PORTAL_FLOW_SOURCE": "explicit isolated input; canonical installation blocked"
+  },
+  "commands": [
+    {
+      "command": "npm run docs:check",
+      "start": "2026-10-15T21:33:22.099754+00:00",
+      "end": "2026-10-15T21:33:23.158932+00:00",
+      "exit": 0,
+      "log": "/tmp/codex/S-003/logs/00.log"
+    },
+    {
+      "command": "npm run check:current-ui-entry",
+      "start": "2026-10-15T21:33:23.159244+00:00",
+      "end": "2026-10-15T21:33:23.284835+00:00",
+      "exit": 0,
+      "log": "/tmp/codex/S-003/logs/01.log"
+    },
+    {
+      "command": "npm run lint",
+      "start": "2026-10-15T21:33:23.285159+00:00",
+      "end": "2026-10-15T21:33:53.419161+00:00",
+      "exit": 0,
+      "log": "/tmp/codex/S-003/logs/02.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "start": "2026-10-15T21:33:53.419482+00:00",
+      "end": "2026-10-15T21:33:53.566139+00:00",
+      "exit": 0,
+      "log": "/tmp/codex/S-003/logs/03.log"
+    },
+    {
+      "command": "npm run test:run",
+      "start": "2026-10-15T21:33:53.566421+00:00",
+      "end": "2026-10-15T21:46:31.555956+00:00",
+      "exit": 0,
+      "log": "/tmp/codex/S-003/logs/04.log"
+    },
+    {
+      "command": "npm run build",
+      "start": "2026-10-15T21:46:31.556783+00:00",
+      "end": "2026-10-15T21:46:39.831422+00:00",
+      "exit": 0,
+      "log": "/tmp/codex/S-003/logs/05.log"
+    },
+    {
+      "command": "npm run agent:index:check",
+      "start": "2026-10-15T21:46:39.831758+00:00",
+      "end": "2026-10-15T21:46:46.525498+00:00",
+      "exit": 0,
+      "log": "/tmp/codex/S-003/logs/06.log"
+    },
+    {
+      "command": "npm run portal:verify",
+      "start": "2026-10-15T21:46:46.526287+00:00",
+      "end": "2026-10-15T21:46:52.786371+00:00",
+      "exit": 0,
+      "log": "/tmp/codex/S-003/logs/07.log"
+    },
+    {
+      "command": "node tools/check-internal-portal.mjs",
+      "start": "2026-10-15T21:46:52.787149+00:00",
+      "end": "2026-10-15T21:46:54.769998+00:00",
+      "exit": 0,
+      "log": "/tmp/codex/S-003/logs/08.log"
+    },
+    {
+      "command": "git diff --check",
+      "start": "2026-10-15T21:46:54.771314+00:00",
+      "end": "2026-10-15T21:46:55.375569+00:00",
+      "exit": 0,
+      "log": "/tmp/codex/S-003/logs/09.log"
+    }
+  ],
+  "additional": [
+    {
+      "command": "hub flow-check / graph-check / five vendor SHA comparisons",
+      "result": "PASS"
+    },
+    {
+      "command": "source evidence staleness negative check",
+      "result": "PASS"
+    },
+    {
+      "command": "entry removal comparison / parity full-row equality",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run portal:verify (without override)",
+      "result": "BLOCKED",
+      "reason": "required .agents/flow/portal-flow.json could not be installed"
+    },
+    {
+      "command": "node tools/qa-integrated-portal.mjs",
+      "result": "BLOCKED",
+      "reason": "OS denied Chromium MachPort bootstrap"
+    },
+    {
+      "command": "npm run e2e:smoke",
+      "result": "BLOCKED",
+      "reason": "EPERM listening on loopback port 4173"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "revision": "5993ee63b2b296788c206c809dcc5a163ca57b98",
+  "at": "2026-10-15T21:48:06.953926+00:00",
+  "flowSha256": "35066fa05c83b865a62f5316957fcda7130e0c32491f53da2abf33aa2e53cb5a",
+  "preexistingManifestSha256": "09ab25bfcde38d8e4baca174c44528f8bc138c9069e12fbb25a12eea4c2605f6",
+  "parityBefore": 5328,
+  "parityAfter": 5328,
+  "originalElements": 15488,
+  "graph": {
+    "goals": 1,
+    "stages": 3,
+    "items": 14,
+    "dependencies": 5
+  },
+  "canonicalInputInstalled": false,
+  "sourceOverride": "SANSU_PORTAL_FLOW_SOURCE",
+  "sourceOverridePurpose": "isolated review build only",
+  "browser": {
+    "mode": "CUA native Firefox self-check",
+    "desktop": "wide window; precise viewport unmeasured",
+    "mobile": [
+      "320x568 responsive",
+      "390x844 responsive"
+    ],
+    "oneClickSamePage": "index.html#work-flow-items-inlet",
+    "independentReview": "not run",
+    "pngFiles": "not saved",
+    "keyboardAnd200Percent": "not confirmed"
+  },
+  "limitations": [
+    ".agents is read-only; required source JSON cannot be installed",
+    "Chromium launch denied by OS MachPort permission",
+    "e2e smoke loopback listener denied (EPERM)",
+    "mobile image result/destination cards move below the fold; visual acceptance remains open"
+  ],
+  "tests": {
+    "files": 622,
+    "tests": 5379,
+    "result": "PASS",
+    "durationSeconds": 757.01
+  },
+  "appInputFiles": 1681,
+  "appInputSha256": "6f02d99d7cbf19c94a23d0058041f4da5634b2bc6c8e762fb448d141d3b6665b",
+  "appInputsUnchangedSinceSnapshot": true
+}
