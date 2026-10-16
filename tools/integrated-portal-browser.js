@@ -61,7 +61,7 @@ if(reader){
  back.addEventListener('click',()=>{stack.pop();const previous=stack.at(-1);show(previous.url,previous.label,false);});
  function follow(event,base,inFrame=false){
   const a=event.target.closest('a[href]');if(!a||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
-  if(!inFrame&&(a.closest('header,.original,.reader-source')||a.classList.contains('back')))return;
+  if(!inFrame&&(a.closest('header,.original,.reader-source,.preserved-original')||a.classList.contains('back')))return;
   const raw=a.getAttribute('href');if(!raw||raw.startsWith('#'))return;
   const url=new URL(raw,base);if(url.origin!==portalBase.origin||(!['file:','http:','https:'].includes(url.protocol)))return;
   const clean=new URL(url);clean.hash='';

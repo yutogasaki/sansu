@@ -1,0 +1,118 @@
+{
+  "scope": "Historical rectangular apron versus curved shore; not the current open-inlet candidate",
+  "operation": "identical pixel crop, no resizing or retouching",
+  "outputSize": [
+    660,
+    440
+  ],
+  "records": [
+    {
+      "source": "docs/design/2026-10-12-authored-cove-runtime/c1/shape/desktop-cove-close-day.png",
+      "sourceSha256": "85df02b0cc415b210eaef7f01b3efdd24f9faa8171500082cdc1073361dd9963",
+      "report": "docs/design/2026-10-12-authored-cove-runtime/c1/shape/report.json",
+      "reportSha256": "db43ef5db48eb0369ba542e5c1e53b1e4eac0401330ef2913ac0bcf569fb9192",
+      "camera": {
+        "matrixWorld": [
+          0.791285001392167,
+          0,
+          -0.6114475010757655,
+          0,
+          -0.35705914772988984,
+          0.8117844741035437,
+          -0.4620765441210338,
+          0,
+          0.4963635881027163,
+          0.5839571624737837,
+          0.6423528787211621,
+          0,
+          13.933635088567378,
+          15.284832239432209,
+          14.74108262467543,
+          1
+        ],
+        "projectionMatrix": [
+          0.21327841719635596,
+          0,
+          0,
+          0,
+          0,
+          0.29508383749084865,
+          0,
+          0,
+          0,
+          0,
+          -0.02002002002002002,
+          0,
+          0,
+          0,
+          -1.002002002002002,
+          1
+        ],
+        "center": 7.0026560305,
+        "curved": false
+      },
+      "crop": [
+        200,
+        300,
+        860,
+        740
+      ],
+      "output": "cove-before.png",
+      "outputSha256": "d4b7d9680eb5bcfc0747eab87c7739c77eb41bb29fd9c5502cac5b8ec39c8a6f"
+    },
+    {
+      "source": "docs/design/2026-10-12-authored-cove-runtime/c4/full/desktop-cove-close-day.png",
+      "sourceSha256": "98846bcf18e18d53b34b80193c2e33db086064a96084ebde85e365286e67a091",
+      "report": "docs/design/2026-10-12-authored-cove-runtime/c4/full/report.json",
+      "reportSha256": "59d72929c409b455921afbe854f854588c5861ce6f6ec418c144eea53d557530",
+      "camera": {
+        "matrixWorld": [
+          0.791285001392167,
+          0,
+          -0.6114475010757655,
+          0,
+          -0.35705914772988984,
+          0.8117844741035437,
+          -0.4620765441210338,
+          0,
+          0.4963635881027163,
+          0.5839571624737837,
+          0.6423528787211621,
+          0,
+          13.953413082695292,
+          15.30810046781799,
+          14.766677675899789,
+          1
+        ],
+        "projectionMatrix": [
+          0.21327841719635596,
+          0,
+          0,
+          0,
+          0,
+          0.29508383749084865,
+          0,
+          0,
+          0,
+          0,
+          -0.02002002002002002,
+          0,
+          0,
+          0,
+          -1.002002002002002,
+          1
+        ],
+        "center": 7.0026560305,
+        "curved": false
+      },
+      "crop": [
+        200,
+        300,
+        860,
+        740
+      ],
+      "output": "cove-after.png",
+      "outputSha256": "69bf06d7543ba579b52ec092eb6c547706a22cd80ed340b9d9958419b8763139"
+    }
+  ]
+}

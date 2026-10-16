@@ -3,12 +3,18 @@ import {createHash} from 'node:crypto';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
+import {execFileSync} from 'node:child_process';
+import {checkEntryCards} from './check-portal-entry.mjs';
 import {parse,elements,textOf,escape,technicalSurface,surfaceText,surfaceLabels,headingIssue} from './portal-html.mjs';
+import {checkOriginals} from './check-portal-originals.mjs';
 import {legacyPages} from './generate-agent-index.mjs';
+import {checkPortalFlow} from './check-portal-flow.mjs';
 import {destinations,evidenceState,trialSummary,humanLabel,taskPresentation,trialPresentation} from './integrated-portal.mjs';
 const root=path.resolve(fileURLToPath(new URL('../',import.meta.url)));
 export function checkIntegration() {
  const out=path.join(root,'portal');
+ checkOriginals(root,destinations);
+ checkPortalFlow(root,out);
  const walk=dir=>fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(dir,e.name)):[path.join(dir,e.name)]);
  const data=JSON.parse(fs.readFileSync(path.join(out,'data/integration.json'),'utf8'));
  const allowedReferences=new Set(data.resources.map(row=>path.resolve(root,row.source)));
@@ -22,6 +28,8 @@ export function checkIntegration() {
  }
  assert(!fs.existsSync(path.join(out,'resources')),'no copied original media or documents');
  const index=fs.readFileSync(path.join(out,'index.html'),'utf8');
+ checkEntryCards(index);
+ execFileSync('python3',[path.join(root,'tools/prepare-portal-comparison.py'),'--check'],{cwd:root,stdio:'pipe'});
  assert.deepEqual(data.project,JSON.parse(fs.readFileSync(path.join(out,'data/project.json'),'utf8')),'human and AI project inputs agree');
  for(const [,answer] of data.humanQuestions)assert(index.includes(escape(answer)),'human answer must use shared data');
  for(const source of data.project.docs) {
