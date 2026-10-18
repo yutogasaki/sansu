@@ -54839,6 +54839,16 @@ core 477ファイル/4,251テスト、最終差分の49テストとactor4テス�
 - 統合版の実swで旧公開版→修正版→算数修正を保持する最新main互換復旧を、phone/tablet・通常/通信中断の4ケースでpass。同じ予約・所有・回答とoffline再起動/追加回答を保持した。本人の保存は使用していない。
 - ユーザーの明示依頼で[pr #5](https://github.com/yutogasaki/sansu/pull/5)をmainへ統合し、`https://sansu-seven.vercel.app/#/island` のvercel配信successを確認。12:26 jst、公開appのrevision `05196dced2cbcc2bbfddc8b0ea9b42590d8d3922` とroot/島画面・versionの一致、実sw制御、海/メニュー/学習/帰島、pageerror 0を確認した。
 - [比較画像・ソース/版/flag・全体ciの差・更新と公開の証拠](../design/2026-10-18-menu-sea-clipping/readme.md)。実機ios・本人保存・子どもの理解/再訪は未評価。既存の非配布3d診断1件の失敗を残し、公開後の通常ci再実行は別の状態として扱う。元の共有dirty treeと他作業は保持した。
+
+## 2026-10-18 共有checkoutの全変更をmainへ統合
+
+- 利用者の「全部をコミットメインプッシュしたい」により、算数表示・初回導線・海背景・紹介画像・制作資料・ポータルを含む全ての非ignore変更を保存。保存コミット `73f8313f` と既存ポータル8コミットを、公開済みmain `05196dce` と通常mergeし、両側の完了記録を保持した。ignoredの本人設定や一時出力は対象外。
+- 約2万ファイルの保存でgithubの100 mib上限を超える生成jsonがあったため、項目を削除せず整形空白だけを除去し、出力manifestも実際のbytesへ一致させた。ポータルの過去s-002固定記録は保持し、更新される現在の索引は全文・属性・css・urlと現在の構造件数で検査する。旧記録の合否や実画面を今回の合格へ変更していない。
+- フローの古い参照hashは一括更新せず、変更された親タスクの冒頭・r0〜r5・全フロー参照を照合。採用待ち・後続未着手・公開未検証という判断が一致した1文書の参照版だけを更新した。実画面reportと履歴hashは保持。
+- 2026-10-18 13:00–13:17 jst、統合候補 `ee38ef88` の全unitは625 files / 5,396 tests pass（2 workers、非同期timeout 30秒）。以前の `authoredcoregrowthintegration.test.ts` もpass。アプリのsource treeは `25db78419fa981fd435b7e599a9b06dd2474a531`。以降の変更は本記録とポータル生成・検査のみ。
+- lintは0 errors / 4 warnings、typecheck・入口guard・docs（working copyとindex書出し）・通常buildとvercel同一flagのproduction build/assetsがpass。pwa 143 files / 8.52 mib、開発3d原本の通常配布除外を確認。索引/portalは7原ページ・40,516項目・15,711要素と292,781 local links/anchorsの一致を確認。
+- 同production候補で390通常motion/768 reduced motionの初回・実家配置/住人・再読込・本人設定・実3問・帰島・実sw offlineと英語のみがpass。別のpwa検査で既存予約/回答の保護8項目・offline再読込/回答/再開がpass。紹介ページは320/390/768/1440幅・切替・連打・keyboard・faq・画像失敗復帰がpass。classic smoke32件がpass。
+- 実行ログ・source/flags・実画面は `output/all-main-release-20261018/`、`output/all-main-first-play-20261018/`、`output/all-main-pwa-20261018/`、`output/all-main-promotion-20261018/`（gitignored）。最終indexのdocs/生成物整合を再確認してpushし、公開revisionは配信後に別確認する。美術試作の採用、本人端末・子どもの理解/再訪、実機性能をこの統合検証の合格に含めない。
 " id="parity-2325"><h2 id="parity-2326"><a href="../docs/done/2026-10.md" id="parity-2327">2026-10 完了記録</a></h2><details class="ai-detail"><summary>参照元の場所と版</summary><p class="path">docs/done/2026-10.md</p></details><details class="ai-detail"><summary>2026-10 完了記録の詳しい記録</summary><p>- 利用者の明示した停止指示に従い、北東の肩・東の岬・外側接続の原本3D比較3枚と検証記録を[レビュー資料](../design/2026-10-12-core-growth-review/README.md)へ保存して一時停止。 - 型・対象lint・組立て規則15件・原本3配置はPASS。新しい本体統合1件は既存床の`support.triangle`比較でFAIL。原因確定と後続assertionは未到達で、初</p></details></article><article class="card" data-search="done logs docs/done/readme.md done logs store completed work and verification facts. they are historical records, not current source of truth. # done logs
 
 ## purpose

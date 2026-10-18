@@ -91,7 +91,13 @@ export function run(mode) {
   require('./vendor/portal-ui/1.0.2/adapter.cjs').enhance(root,files,{slug:'sansu',sources:['scripts/standard-portal.mjs']});
   // Keep the complete generated registry below GitHub's per-file size limit.
   const registry = files.get('data/unification.json');
-  if (registry) files.set('data/unification.json', JSON.stringify(JSON.parse(registry)) + '\n');
+  if (registry) {
+    const compactRegistry = JSON.stringify(JSON.parse(registry)) + '\n';
+    files.set('data/unification.json', compactRegistry);
+    const manifest = JSON.parse(files.get('data/unification-manifest.json'));
+    manifest.outputs['data/unification.json'] = sha(compactRegistry);
+    files.set('data/unification-manifest.json', JSON.stringify(manifest, null, 2) + '\n');
+  }
   files.set('.generated-by-hub-standard', '1.0.0\n');
   const out = path.join(root, 'portal');
   common.noSymlinks(root, out);
