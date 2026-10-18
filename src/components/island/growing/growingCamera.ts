@@ -104,10 +104,11 @@ export function frameCamera(camera: T.OrthographicCamera, layout: SceneLayout, v
     // In a tall viewport, an orthographic camera's lower ray can otherwise
     // start below the sea. Moving its eye back keeps the exact same framing
     // while leaving water under every part of the screen.
+    // Ordinary mature rooms need this clearance too, not only native art.
     // The same retreat keeps a high authored focus ahead of the near plane
     // when rotation places the zero-pan aim below the actual art.
     const authoredClearance = layout.authored && art ? (art.max.y - target.y) / offset.y + camera.near / offset.length() + .000001 : 0;
-    offset.multiplyScalar(Math.max(1, (layout.width + layout.depth) / 30, layout.nativeArt ? half * 1.6 / offset.y : 0, authoredClearance));
+    offset.multiplyScalar(Math.max(1, (layout.width + layout.depth) / 30, half * 1.6 / offset.y, authoredClearance));
     camera.far = Math.max(100, (layout.width + layout.depth) * 2, offset.length() * 3);
     camera.position.copy(target).add(offset); camera.lookAt(target);
     camera.updateProjectionMatrix();

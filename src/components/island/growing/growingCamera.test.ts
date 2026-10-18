@@ -6,6 +6,32 @@ import { buildPlaceGround } from './placeGround';
 import { compileWorldDefinition } from '../../../domain/growingIsland/worldDefinition';
 
 describe('district coordinates and camera clipping', () => {
+    it('keeps sea ahead of the near plane below the menu in ordinary tall island views', () => {
+        const layout = sceneLayout({ land: { expanded: null, extra: [], capes: [] } });
+        const room = new T.Mesh(new T.BoxGeometry(8, 7, 8), new T.MeshBasicMaterial());
+        room.name = 'place-root-room'; room.position.y = 3.5;
+        layout.cameraObjects = () => [room];
+        const camera = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100);
+        const sea = new T.Plane(new T.Vector3(0, 1, 0), .4);
+        const ray = new T.Raycaster();
+        for (const aspect of [320 / 568, 390 / 780, 390 / 1036, 768 / 960, 844 / 326]) {
+            for (const azimuth of [0, Math.PI / 2, Math.PI]) {
+                for (const zoom of [1, .75, 2]) {
+                    frameCamera(camera, layout, { ...initialView(), azimuth, zoom }, aspect);
+                    camera.updateMatrixWorld();
+                    for (const x of [-1, 0, 1]) for (const y of [-1, 0, 1]) {
+                        ray.setFromCamera(new T.Vector2(x, y), camera);
+                        const hit = ray.ray.intersectPlane(sea, new T.Vector3());
+                        expect(hit, `sea at ${aspect}, ${azimuth}, ${zoom}, ${x}, ${y}`).not.toBeNull();
+                        const depth = hit!.clone().project(camera).z;
+                        expect(depth).toBeGreaterThanOrEqual(-1);
+                        expect(depth).toBeLessThanOrEqual(1);
+                    }
+                }
+            }
+        }
+        room.geometry.dispose(); room.material.dispose();
+    });
     it('fits actual curved shore, houses and hero geometry at every azimuth without the uniform empty sky allowance', () => {
         const layout = sceneLayout({ land: { expanded: 'east', extra: ['west', 'south'], capes: ['east', 'west'] } });
         const ground = buildPlaceGround(layout), owners = new T.Group();
