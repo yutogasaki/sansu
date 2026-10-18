@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-18T04:29:49.066314+00:00",
+  "baseRevision": "6dd9ab447db76eca0e26f6eaa5d070355b452b24",
+  "target": "http://127.0.0.1:5269/promo/",
+  "candidate": "promotion-cove-growth-v4",
+  "delivery": "built-static-site; base=/promo/; fresh browser contexts",
+  "hashes": {
+    ".gitignore": "9f2b76ea02905c9a122cdfbef46c8290c9b113d37ecb1edc245d3bdab34a00fd",
+    "tools/verify-promotion-website.mjs": "c43057016c4502f91ac0d9f86196a96231ab0be6b7c79747f20bd625dda87837",
+    "website/public/images/island-start-cove.jpg": "6ca1766b73fbeca346432509891ecaadc1d48c75fb47d9fb7019f4a33c7f1b85",
+    "website/public/images/island-village-cove.jpg": "de7631e5f244fe36888274c613f4cc9d0a8ad2a48fe3efb450dcd759a468f99c"
+  },
+  "publicObservation": "2026-10-18 13:28 JST: /promo/images/island-start-cove.jpg HTTP 404",
+  "cause": ".git/info/exclude Images/ matched website/public/images; new assets absent from tracked delivery",
+  "unverified": [
+    "deployment",
+    "public repair",
+    "iPhone Safari physical device"
+  ]
+}

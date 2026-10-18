@@ -21,6 +21,8 @@ try {
       const button=selector.locator(`[data-stage="${stage}"]`);
       await button.click();
       await page.waitForFunction(()=>document.querySelector('.growth-photo')?.getAttribute('aria-busy')==='false');
+      await page.locator('#growth-image').evaluate(img=>img.decode());
+      assert(await page.locator('#growth-image').evaluate(img=>img.naturalWidth>0), `${stage}: selected image must decode`);
       assert.equal(await button.getAttribute('aria-pressed'),'true');
       assert((await page.locator('#growth-image').getAttribute('src')).includes(stage==='town'?'island-complete.png':`island-${stage}-cove.jpg`));
       assert.equal(await selector.locator('[aria-pressed="true"]').count(),1);

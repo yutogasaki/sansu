@@ -20,5 +20,10 @@ output/
 
 dist-website/
 
+# Keep promotion assets visible even when a local Images/ exclude matches.
+!website/public/images/
+!website/public/images/island-start-cove.jpg
+!website/public/images/island-village-cove.jpg
+
 # H-018 private preservation and raw verification logs
 artifacts/h-018/
