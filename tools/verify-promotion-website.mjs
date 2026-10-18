@@ -60,6 +60,7 @@ try {
   assert((await failurePage.locator('#stage-source').textContent()).includes('現在のゲーム画面ではありません'));
   await failurePage.locator('[data-stage="village"]').click();
   await failurePage.waitForFunction(()=>document.querySelector('#growth-image')?.getAttribute('src')?.includes('village') && document.querySelector('.growth-photo')?.getAttribute('aria-busy')==='false');
+  await failurePage.locator('#growth-image').evaluate(img=>img.decode());
   assert(await failurePage.locator('#growth-image').evaluate(i=>i.naturalWidth>0));
   report.imageFailureRecovery='PASS';await failureContext.close();
   const context=await browser.newContext({viewport:{width:390,height:844},javaScriptEnabled:false});const page=await context.newPage();await page.goto(url);
