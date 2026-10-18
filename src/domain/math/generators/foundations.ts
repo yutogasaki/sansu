@@ -25,9 +25,28 @@ export const generators: Record<string, GeneratorFn> = {
         });
     },
     foundation_expanded: context => {
-        const h = randomInt(1, 4, context?.random), t = randomInt(1, 4, context?.random), o = randomInt(1, 4, context?.random);
-        return createProblem('foundation_expanded', `100が ${h}こ、10が ${t}こ、1が ${o}こ。あわせて？`, String(h * 100 + t * 10 + o), 'number', undefined, {
-            questionVisual: { kind: 'item-order', groups: [{ emoji: '🟥', label: '1こが100', count: h }, { emoji: '🟦', label: '1こが10', count: t }, { emoji: '●', label: '1こが1', count: o }] },
+        const mode = stage('foundation_expanded', context);
+        const h = randomInt(1, 4, context?.random);
+        const t = randomInt(0, 9, context?.random), o = randomInt(0, 9, context?.random);
+        const blocks = { hundreds: h, tens: t, ones: o };
+        if (mode === 0) return createProblem('foundation_expanded', 'ぜんぶで いくつ？', String(h * 100 + t * 10 + o), 'number', undefined, {
+            questionVisual: { kind: 'base-ten-blocks', groups: [{ label: '', blocks }] },
+        });
+        if (mode === 1) {
+            // Include an absent place; swapped places and an extra hundred are distinct distractors.
+            const digit = randomInt(1, 9, context?.random);
+            const tens = randomInt(0, 1, context?.random) ? digit : 0, ones = tens ? 0 : digit;
+            const correct = { hundreds: h, tens, ones };
+            const options = [correct, { hundreds: h, tens: ones, ones: tens }, { ...correct, hundreds: h === 4 ? 3 : h + 1 }];
+            const offset = randomInt(0, 2, context?.random);
+            const groups = options.map((_, index) => ({ label: ['ア', 'イ', 'ウ'][index], blocks: options[(index + offset) % 3] }));
+            const answer = groups.find(group => group.blocks === correct)!.label;
+            return createProblem('foundation_expanded', `${h * 100 + tens * 10 + ones}を あらわす 図は？`, answer, 'choice', {
+                choices: groups.map(group => ({ label: group.label, value: group.label })),
+            }, { questionVisual: { kind: 'base-ten-blocks', groups } });
+        }
+        return createProblem('foundation_expanded', '100の 板に まとめると 何まい？', String(h), 'number', undefined, {
+            questionVisual: { kind: 'base-ten-blocks', groups: [{ label: '', blocks: { hundreds: h - 1, tens: 10, ones: 0 } }] },
         });
     },
     foundation_groups: context => {
