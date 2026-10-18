@@ -1,0 +1,17 @@
+/* Reserve space for the quantity, help and all ten digits in stacked learning layouts. */
+@media (orientation: portrait) {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate]:has([data-base-ten-diagram]) {
+        > .island-workbench { --stage-height: 112px; }
+        .pokomoko-learning-actor { width: 112px; height: 118px; left: calc(50% - 56px); bottom: -12px; }
+        .park-question [data-base-ten-diagram] { --base-ten-max-height: 112px; }
+    }
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-candidate]:has(.island-answer-stage[data-support-stage=hint] [data-base-ten-diagram]) {
+        > .island-workbench { --stage-height: 56px; }
+        .pokomoko-learning-actor { width: 70px; height: 74px; left: calc(50% - 35px); bottom: -12px; }
+        .pokomoko-learning-caption { top: 0; }
+        .island-answer .park-support { flex: 0 0 136px; max-height: 136px; }
+        .park-question [data-base-ten-diagram] { --base-ten-max-height: 64px; }
+        .park-support [data-base-ten-diagram] { --base-ten-max-height: 42px; }
+        .park-support .island-learning-support { font-size: 14px; line-height: 1.4; }
+    }
+}
