@@ -25,6 +25,7 @@ const baseManifestPath = 'prototypes/place-qa/native05-world-source-shading-mani
 const baseArtifactPath = 'prototypes/place-qa/native05-world-source-shading.json.gz';
 const originalTreeCells = [{ x: 3, z: -9 }, { x: 4, z: -9 }, { x: 3, z: -8 }, { x: 4, z: -8 }];
 const benchFrom = { x: 12, z: -4 }, benchTo = { x: 7, z: -3 };
+const spareHomeCells = [{ x: 3, z: -7 }, { x: 3, z: -2 }, { x: 4, z: -1 }];
 const expectedCases = { north: { sockets: ['north'], connections: 0 }, east: { sockets: ['east'], connections: 0 },
     loop: { sockets: ['east', 'north'], connections: 1 } };
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -34,13 +35,13 @@ const sameCell = (a, b) => a?.x === b?.x && a?.z === b?.z;
 const cellKey = cell => `${cell.x},${cell.z}`;
 const launchOptions = { executablePath: chromium.executablePath(), headless: true, args: ['--use-angle=metal'] };
 const report = { pass: false, sourceFixed: false, target: target.href, revision, launchOptions,
-    scope: 'Same four existing mature saplings and eight homes in the diagnostic 35-owner island; one recorded bench move before the invariant baseline, then three core-coast arrangements, separation and restoration through visible controls and canvas pointers',
+    scope: 'Same four existing mature saplings and same eight existing homes in the diagnostic 35-owner island; one recorded bench move before the invariant baseline, then three tree/home/coast arrangements, separation and restoration through visible controls and canvas pointers',
     excludes: ['district or item acquisition', 'personal save', 'natural time observation or clock advance', 'offline/update',
         'actor traversal/use acceptance', 'whole-island art acceptance', 'performance/device acceptance'],
     timingScope: 'Wall time for UI, rendering, assertions and capture; not device latency or FPS',
     steps: [], captures: [], checkpoints: [], pointers: [], errors: [] };
 let core, initial, catalog, localWorld, reference, maturityHours, parentDistrictId, browser, page, cases, loopConnection;
-let originalOwners, sceneIdentity, matureInvariant, ids = [];
+let originalOwners, sceneIdentity, matureInvariant, ids = [], homeIds = [], movableIds = [];
 const fingerprints = () => Object.fromEntries(Object.keys(core.finalInputs).sort().map(file => [file, sha(readFileSync(file))]));
 const requireCoreFile = file => assert(Object.keys(core.finalInputs).some(input => path.resolve(input) === path.resolve(file)), `Core fingerprint must include ${file}`);
 const host = () => page.locator('[data-authored-island]').evaluate(node => ({ ...node.dataset }));
@@ -60,11 +61,11 @@ async function step(name, fn) {
     console.log(name); const start = Date.now(); await fn(); report.steps.push({ name, elapsedMs: Date.now() - start });
 }
 async function click(locator) { await locator.scrollIntoViewIfNeeded(); await locator.click(); }
-function stableState(current, movableIds = ids) {
+function stableState(current, movable = movableIds) {
     // Placement may update soil, receipts and derived places. Every owner's
     // other field, plus clocks, resources and the original land, must stay fixed.
     return { owners: owners(current).map(item => {
-        const copy = structuredClone(item); if (movableIds.includes(copy.id)) delete copy.cell; return copy;
+        const copy = structuredClone(item); if (movable.includes(copy.id)) delete copy.cell; return copy;
     }), land: current.land, bridge: current.bridge, keepsakes: current.keepsakes, villagers: current.villagers,
     seed: current.seed, rules: current.rules, nature: current.nature, town: current.town, drops: current.drops,
     nextId: current.nextId, unlocked: current.unlocked, learned: current.learned, mastery: current.mastery };
@@ -78,7 +79,7 @@ async function checkInvariants() {
     assert.equal(JSON.parse(h.districtPreview), null);
     assert.equal(owners(current).length, 35); assert.equal(current.plots.filter(item => item.kind === 'home').length, 8);
     if (sceneIdentity) for (const [field, value] of Object.entries(sceneIdentity)) assert.equal(h[field], value, `${field} must remain fixed`);
-    if (matureInvariant) assert.deepEqual(stableState(current), matureInvariant, 'Only the four existing sapling cells may change after preparation');
+    if (matureInvariant) assert.deepEqual(stableState(current), matureInvariant, 'Only the four existing sapling and eight existing home cells may change after preparation');
     return { h, current };
 }
 async function graphics() {
@@ -139,7 +140,7 @@ async function tap(cell) {
 async function waitOwner(id, cell) {
     await page.waitForFunction(({ id, cell }) => {
         const text = document.querySelector('[data-authored-island]')?.dataset.authoredState;
-        const owner = text && JSON.parse(text).landmarks.find(item => item.id === id);
+        const state = text && JSON.parse(text), owner = state && [...state.plots, ...state.landmarks].find(item => item.id === id);
         return Boolean(owner && (cell ? owner.cell?.x === cell.x && owner.cell?.z === cell.z : owner.cell === undefined));
     }, { id, cell });
     await ready(); await checkInvariants();
@@ -151,9 +152,14 @@ async function choose(id) {
 }
 async function storeOwner(id) { await choose(id); await click(page.getByRole('button', { name: 'しまう', exact: true })); await waitOwner(id); }
 async function move(id, cell) {
-    const placed = (await state()).landmarks.find(item => item.id === id)?.cell;
+    const placed = owners(await state()).find(item => item.id === id)?.cell;
     await choose(id); await click(page.getByRole('button', { name: placed ? 'うごかす' : 'おく', exact: true }));
-    await tap(cell); await click(page.getByRole('button', { name: 'ここにおく', exact: true })); await waitOwner(id, cell);
+    await tap(cell); await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    const confirm = page.getByRole('button', { name: 'ここにおく', exact: true });
+    if (!await confirm.isEnabled()) {
+        await click(page.getByRole('button', { name: 'やめる', exact: true })); await ready(); return false;
+    }
+    await click(confirm); await waitOwner(id, cell); return true;
 }
 async function checkCase(name) {
     const expected = expectedCases[name], actual = await plan(), current = await state();
@@ -170,20 +176,42 @@ async function checkCase(name) {
         assert.deepEqual([...connection.ownerIds].sort(), [...ids].sort());
     }
     for (let i = 0; i < ids.length; i++) assert.deepEqual(current.landmarks.find(item => item.id === ids[i]).cell, cases[name].localCells[i]);
+    for (let i = 0; i < homeIds.length; i++) assert.deepEqual(current.plots.find(item => item.id === homeIds[i]).cell, cases[name].homeCells[i]);
     await checkInvariants(); return actual;
 }
 async function arrange(name) {
-    const desired = cases[name].localCells;
-    for (let attempt = 0; attempt < 9; attempt++) {
+    const desired = [...ids.map((id, i) => ({ id, cell: cases[name].localCells[i] })),
+        ...homeIds.map((id, i) => ({ id, cell: cases[name].homeCells[i] }))];
+    let parkingCursor = 0;
+    for (let attempt = 0; attempt < movableIds.length * 2 + 4; attempt++) {
         const all = owners(await state());
-        const pending = ids.map((id, i) => ({ id, cell: desired[i], current: all.find(item => item.id === id)?.cell }))
+        const pending = desired.map(item => ({ ...item, current: all.find(owner => owner.id === item.id)?.cell }))
             .filter(item => !sameCell(item.current, item.cell));
         if (!pending.length) return checkCase(name);
-        const free = pending.find(item => !all.some(owner => owner.id !== item.id && owner.cell && sameCell(owner.cell, item.cell)));
-        if (free) await move(free.id, free.cell);
-        else { assert(pending[0].current, 'Cycle breaking requires a placed owner'); await storeOwner(pending[0].id); }
+        const free = pending.filter(item => !all.some(owner => owner.id !== item.id && owner.cell && sameCell(owner.cell, item.cell)));
+        let moved = false;
+        for (const item of free) if (await move(item.id, item.cell)) { moved = true; break; }
+        if (!moved) {
+            const tree = pending.find(item => ids.includes(item.id));
+            if (tree) { assert(tree.current, 'Cycle-breaking tree must be placed'); await storeOwner(tree.id); }
+            else {
+                const parking = pending[parkingCursor++ % pending.length];
+                assert(parking.current, 'Cycle-breaking home must be placed');
+                const reserved = new Set(desired.map(item => cellKey(item.cell))), seen = new Set();
+                const open = [...spareHomeCells, ...localWorld.sites.filter(site => site.placement
+                    && Number.isInteger(site.cell.x) && Number.isInteger(site.cell.z)).map(site => site.cell)]
+                    .filter(cell => {
+                        const key = cellKey(cell);
+                        if (seen.has(key) || reserved.has(key)) return false;
+                        seen.add(key); return !all.some(owner => owner.cell && sameCell(owner.cell, cell));
+                    });
+                let parked = false;
+                for (const cell of open) if (await move(parking.id, cell)) { parked = true; break; }
+                assert(parked, 'Cycle-breaking home needs a reachable spare cell');
+            }
+        }
     }
-    assert.fail('Four-owner rearrangement did not settle within eight edits');
+    assert.fail('Tree/home rearrangement did not settle within its bounded edit count');
 }
 try {
     await step('verify-fixed-candidate', async () => {
@@ -198,8 +226,10 @@ try {
         report.candidate = catalog.candidate; report.catalogRevision = catalog.revision; report.manifest = manifest;
         cases = Object.fromEntries(Object.keys(expectedCases).map(name => {
             const authored = manifest.variationCases?.[name]; assert.equal(authored?.localCells?.length, 4, `Authored ${name} requires four cells`);
+            assert.equal(authored?.homeCells?.length, 8, `Authored ${name} requires eight home cells`);
             assert(authored.localCells.every(cell => Number.isInteger(cell.x) && Number.isInteger(cell.z)));
-            assert.equal(new Set(authored.localCells.map(cellKey)).size, 4); return [name, authored];
+            assert(authored.homeCells.every(cell => Number.isInteger(cell.x) && Number.isInteger(cell.z)));
+            assert.equal(new Set([...authored.localCells, ...authored.homeCells].map(cellKey)).size, 12); return [name, authored];
         })); report.cases = cases;
         assert.deepEqual(catalog.profile.sockets.map(socket => socket.id).sort(), ['east', 'north']);
         for (const socket of catalog.profile.sockets) assert.deepEqual((socket.variants ?? catalog.profile.variants).map(variant => variant.id).sort(), ['parallel', 'seaward']);
@@ -231,15 +261,17 @@ try {
             const matches = current.landmarks.filter(item => sameCell(item.cell, cell)); assert.equal(matches.length, 1);
             assert.equal(matches[0].kind, 'sapling'); assert(matches[0].growth >= maturityHours); return matches[0].id;
         }); assert.equal(new Set(ids).size, 4);
+        homeIds = current.plots.filter(item => item.kind === 'home').map(item => item.id);
+        assert.equal(homeIds.length, 8); assert.equal(new Set(homeIds).size, 8); movableIds = [...ids, ...homeIds];
         sceneIdentity = { districtWorldRevision: h.districtWorldRevision, groundSourceRevision: h.groundSourceRevision, visualCandidate: h.visualCandidate };
         for (const value of Object.values(sceneIdentity)) assert(value, 'The fixed original world needs an explicit identity');
-        report.originalOwners = originalOwners; report.existingTreeIds = ids; report.sceneIdentity = sceneIdentity;
+        report.originalOwners = originalOwners; report.existingTreeIds = ids; report.existingHomeIds = homeIds; report.sceneIdentity = sceneIdentity;
         assert.deepEqual((await plan()).assemblies, []); assert.deepEqual((await plan()).connections, []); await full('initial');
     });
     await step('prepare-existing-bench-once', async () => {
         const before = await state(), matches = before.landmarks.filter(item => item.kind === 'bench' && sameCell(item.cell, benchFrom));
         assert.equal(matches.length, 1); assert(!owners(before).some(item => sameCell(item.cell, benchTo)), 'Preparation destination must be vacant');
-        const benchId = matches[0].id; await move(benchId, benchTo); const after = await state();
+        const benchId = matches[0].id; assert(await move(benchId, benchTo)); const after = await state();
         assert.deepEqual(stableState(after, [benchId]), stableState(before, [benchId]), 'Preparation may only move the same bench');
         report.preparation = { kind: 'ordinary-ui-move', ownerId: benchId, before: matches[0], after: after.landmarks.find(item => item.id === benchId),
             unchangedStateHash: digest(stableState(after, [benchId])) };
@@ -262,7 +294,7 @@ try {
         assert.notEqual(separated.revision, loop.revision); report.separatedPlan = separated; await full('separated');
     });
     await step('reconnect-and-restore-loop', async () => {
-        await move(ids[1], cases.loop.localCells[1]); const restored = await checkCase('loop');
+        assert(await move(ids[1], cases.loop.localCells[1])); const restored = await checkCase('loop');
         assert.deepEqual(restored, loop); assert.equal((await host()).worldRevision, loopWorldRevision); await full('loop-restored');
     });
     await step('rotate-and-small-screens', async () => {

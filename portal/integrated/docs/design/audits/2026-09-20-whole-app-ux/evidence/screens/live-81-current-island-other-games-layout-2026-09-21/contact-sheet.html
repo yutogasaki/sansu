@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ja">
+<head><base data-sansu-source-context href="../../../../../../../../../docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-81-current-island-other-games-layout-2026-09-21/contact-sheet.html"><script src="../../../../../../../portal/native-context.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>現行Island「ほかの あそび」表示監査 live-81</title>
+  <style>
+    :root { color-scheme: light; font: 16px/1.55 system-ui, sans-serif; color: #30364f; background: #f8f7f2; }
+    body { margin: 0; padding: 24px; }
+    main { max-width: 1240px; margin: auto; }
+    h1, h2 { line-height: 1.25; }
+    .meta, figure { border: 1px solid #cfc5da; border-radius: 16px; background: #fffdf9; padding: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    figure { margin: 0; }
+    figcaption { margin-bottom: 10px; font-weight: 700; }
+    img { display: block; width: 100%; height: auto; border: 1px solid #e1dbe8; border-radius: 10px; }
+    code { overflow-wrap: anywhere; }
+    @media (max-width: 720px) { body { padding: 12px; } .grid { grid-template-columns: 1fr; } }
+  </style>
+<link rel="stylesheet" href="../../../../../../../portal/integration.css"><link rel="stylesheet" href="../../../../../../../portal/library.css"></head>
+<body data-portal-item="item-bf47bf5b5454b8fa57d8"><aside class="pu-bar" aria-label="統合ポータル"><nav><strong>さんすう</strong><a href="../../../../../../../portal/index.html">現在地へ</a><a href="../../../../../../../portal/search.html">全ページから探す</a><a href="../../../../../../../portal/pages.html">内容と操作の一覧</a><a href="../../../../../../../.agents/index.html">元のポータルを開く →</a></nav><p>新版を確認中。全項目の表示・操作・独立審査が終わるまで、元の入口を保持しています。</p></aside>
+<main data-portal-item="item-2de9583b960f1cc22ac2">
+  <h1 data-portal-item="item-af54885d7d0d2d933413">現行Island「ほかの あそび」— live-81</h1>
+  <section class="meta" data-portal-item="item-1c0748b11b822bf94d23">
+    <p data-portal-item="item-ed9a048f8e21ea964c22"><strong data-portal-item="item-55529fa2f573a2a30ffb">対象:</strong> <code data-portal-item="item-62799610717f05b4783e">http://127.0.0.1:5198/#/battle</code>。Island=true / NatureTown=false、root delivery <code data-portal-item="item-96f96ef3fa6fba7fb97f">snap-root-v1</code>、Island delivery <code data-portal-item="item-8a63b481b57ddb1d4cd3">mystic-island-v1</code>、visual <code data-portal-item="item-bdb1c0ce10f30432247b">mystic-island-shore-garden-v18</code>、navigation <code data-portal-item="item-d84a1c3c081d848b93e7">island-navigation-five-tabs-v2</code>。revision <code data-portal-item="item-1b7ad5891d46f97067a8">development-local</code>、version <code data-portal-item="item-9d70438b7a7f2c352929">development-local:60d95334-58f8-4594-b548-c113c90cad1c</code>。</p>
+    <p data-portal-item="item-4767c3fc25213154af94"><strong data-portal-item="item-7338b070b3cbf4c52f06">検証:</strong> 320×568 / 390×844 / 768×1024 / 844×390 / 1280×720。137 route/action checks、91 captures、page errors 0。Reduced motion、service workerなし。QAプロフィールとfixtureは隔離ブラウザー内だけで破棄。</p>
+  </section>
+
+  <h2 data-portal-item="item-b54238b58716a5a666cc">F-45 — 広い画面の見出しと選択列</h2>
+  <p data-portal-item="item-7c7df23e2211d52842ef">修正前の1280pxでは見出し中心x=269.93、選択列中心x=640、差370.07px。広い画面では戻るボタンを左に残し、見出しを選択列中央へ合わせた。回帰条件は中心差2px以内。スマホ幅は既存の左寄せのまま。</p>
+  <div class="grid" data-portal-item="item-0526df66d3d666fff727">
+    <figure data-portal-item="item-f73b662f5544486dbc0f"><figcaption data-portal-item="item-871bdb6672c603f44351">修正前 1280×720</figcaption><img src="before-1280-other-games.png" alt="タイトルが左に、ゲーム選択カードが中央に配置された修正前の画面" data-portal-item="item-7135d7da3ddf212f276f"></figure>
+    <figure data-portal-item="item-76bf932098a85057704a"><figcaption data-portal-item="item-f46862731867d65d3485">修正後 1280×720</figcaption><img src="after-1280-other-games.png" alt="タイトルがゲーム選択カードの中央に揃った画面" data-portal-item="item-daf46689b6d0cb64a81a"></figure>
+  </div>
+
+  <h2 data-portal-item="item-3642c56c05256ffffbc3">F-46 — 短い横画面の主要選択肢</h2>
+  <p data-portal-item="item-b3f05624a9e184bd5c9b">修正前の844×390では固定ナビ上端y=324.41pxに対し3枚目カード下端がy=344.19pxで、約19.78pxがナビに隠れた。短い横画面だけカードをコンパクト化し、主要3項目をナビより上に表示。各カードは44px以上のタップ領域を保つ。</p>
+  <div class="grid" data-portal-item="item-04091e75fdc08a2920dc">
+    <figure data-portal-item="item-bb316648a3cb4f1d1cdd"><figcaption data-portal-item="item-2cd62ec2cf8871cba1f8">修正前 844×390</figcaption><img src="before-844-other-games.png" alt="3枚目のゲーム選択カードが固定ナビに一部隠れた画面" data-portal-item="item-d525d5c0af7f32400eb5"></figure>
+    <figure data-portal-item="item-a08833238a838d958d54"><figcaption data-portal-item="item-422ea8a70d0062c1b796">修正後 844×390</figcaption><img src="after-844-other-games.png" alt="3枚のゲーム選択カード全体が固定ナビより上に収まった画面" data-portal-item="item-b9dc8194f180f3160eff"></figure>
+  </div>
+
+  <p data-portal-item="item-d8ab1d4599e6e9ab6993">Before/afterの回帰レポート: <a href="before-alignment-report.json" data-portal-item="item-69de86fb9d917a655043">F-45 再現</a>、<a href="before-landscape-report.json" data-portal-item="item-d8d8e28599b05e864fc6">F-46 再現</a>、<a href="after-report.json" data-portal-item="item-b5d9b4a1b447ab6834ec">修正後5サイズ</a>。</p>
+</main>
+<script src="../../../../../../../portal/integration.js" defer></script><script src="../../../../../../../portal/library-runtime.js" defer></script></body>
+</html>

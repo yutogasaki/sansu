@@ -4,16 +4,17 @@ import { createHash } from 'node:crypto';
 import { gzipSync, gunzipSync } from 'node:zlib';
 import * as T from 'three';
 
-const check=process.argv.includes('--check'), publish=process.argv.includes('--publish');
-assert(process.argv.slice(2).every(v=>['--check','--publish'].includes(v)));
-const dir='docs/design/2026-10-12-core-growth-terrain-source';
+const check=process.argv.includes('--check'), publish=process.argv.includes('--publish'), openInlet=process.argv.includes('--open-inlet');
+assert(process.argv.slice(2).every(v=>['--check','--publish','--open-inlet'].includes(v)));
+const sourceDir='docs/design/2026-10-12-core-growth-terrain-source';
+const dir=openInlet?'docs/design/2026-10-13-open-inlet-terrain-source':sourceDir;
 const sha=v=>createHash('sha256').update(v).digest('hex');
 const source={artifact:'docs/design/2026-10-10-island-final-3d/whole-island.glb',sha256:'8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d'};
 const worldPath='prototypes/place-qa/native05-world-source-shading.json.gz';
 const worldBytes=await readFile(worldPath), original=JSON.parse(gunzipSync(worldBytes));
 const raw=await readFile(source.artifact);assert.equal(sha(raw),source.sha256);
 const n=raw.readUInt32LE(12), gltf=JSON.parse(raw.subarray(20,20+n));
-const boundary=JSON.parse(await readFile(`${dir}/original-boundary.json`));assert.equal(boundary.sha256,sha(worldBytes));
+const boundary=JSON.parse(await readFile(`${sourceDir}/original-boundary.json`));assert.equal(boundary.sha256,sha(worldBytes));
 const core=original.districts[0];assert.equal(core.templateId,'native05-inlet-core-v1');
 const copy=structuredClone(core);copy.id=copy.templateId;
 const edges=original.edges.map(e=>({...e,from:{...e.from,districtId:copy.id},to:{...e.to,districtId:copy.id}}));
@@ -32,9 +33,17 @@ function coast(low,high){
  for(const p of points)assert.deepEqual(p,['x','y','z'].map(k=>sourceVertices.get(`${p[0]},${p[2]}`).point[k]));
  return points;
 }
+// Use long stretches of the original east coast so the same four trees produce
+// a high north-east mass, a low south-east cape, or a large outer loop. The
+// immutable core and its acquired sites stay untouched. The open-inlet mode
+// bends the two arms away from the water and narrows the far connection to a
+// walking bridge; it does not add placement rights or saved state.
 const seams={north:coast(-9.25,-6.65),east:coast(-5.35,-2.75)};
-const joinA=15.25,joinB=17.25;
-const shapeControls={north:{anchor:{x:13,z:-8},baseSite:'13.5,-8',landing:{x:14,z:-8},outerEnd:17.75,peak:1.15,mat:0},east:{anchor:{x:13,z:-4},baseSite:'14,-4.5',landing:{x:14.75,z:-4.5},outerEnd:18.0,peak:.32,mat:1}};
+const joinA=openInlet?20.5:17.5,joinB=openInlet?21.25:20.25;
+const shapeControls={
+ north:{anchor:{x:13,z:-8},baseSite:'13.5,-8',landing:{x:14,z:-8},outerEnd:openInlet?22.5:21.25,peak:openInlet?1.72:1.55,...openInlet&&{bend:-1.75},mat:0},
+ east:{anchor:{x:13,z:-4},baseSite:'14,-4.5',landing:{x:14.75,z:-4.5},outerEnd:openInlet?23:22.0,peak:openInlet?.20:.24,...openInlet&&{bend:0},mat:1}
+};
 const allMeshes=[];
 function finish(points,indices,name,material,boundaryNormals=new Map()){
  const normals=points.map(()=>new T.Vector3());const map=new Map();
@@ -46,7 +55,10 @@ function strip(rows,name,material,sourceNormalRows=false){
  const points=[],indices=[],cache=new Map(),normalMap=new Map();
  const id=p=>{const key=p.join(',');if(!cache.has(key)){cache.set(key,points.length);points.push(p);}return cache.get(key);};
  const ids=rows.map(row=>row.map(id));
- const tri=(a,b,c)=>{if(a===b||b===c||c===a)return;const p=points[a],q=points[b],r=points[c],area=(q[2]-p[2])*(r[0]-p[0])-(q[0]-p[0])*(r[2]-p[2]);assert(Math.abs(area)>1e-14,`${name}: nonzero face`);indices.push(...(area>0?[a,b,c]:[a,c,b]));};
+ const tri=(a,b,c)=>{if(a===b||b===c||c===a)return;const p=points[a],q=points[b],r=points[c],area=(q[2]-p[2])*(r[0]-p[0])-(q[0]-p[0])*(r[2]-p[2]);
+  // Long source seams can contain several vertices where the authored fan has
+  // already converged to its zero-width coast tip. They are not floor area.
+  if(Math.abs(area)<=1e-14)return;indices.push(...(area>0?[a,b,c]:[a,c,b]));};
  for(let i=1;i<ids.length;i++)for(let j=1;j<ids[i].length;j++){tri(ids[i-1][j-1],ids[i][j-1],ids[i-1][j]);tri(ids[i-1][j],ids[i][j-1],ids[i][j]);}
  if(sourceNormalRows)for(let i=0;i<rows.length;i++){const p=rows[i][0],v=sourceVertices.get(`${p[0]},${p[2]}`);assert(v);normalMap.set(ids[i][0],['x','y','z'].map(k=>v.normal[k]));}
  return finish(points,indices,name,material,normalMap);
@@ -57,7 +69,7 @@ function branch(socket,shape){
  const fractions=[...Array.from({length:5},(_,i)=>(joinA-end[0])/endWidth*i/4),...Array.from({length:8},(_,i)=>((joinA-end[0])+(joinB-joinA)*(i+1)/8)/endWidth),...Array.from({length:4},(_,i)=>((joinB-end[0])+(control.outerEnd-joinB)*(i+1)/4)/endWidth)];
  const rows=seam.map((p,i)=>{const u=i/(seam.length-1),active=socket==='north'?u:1-u,neck=smooth(Math.min(1,active/.20));
   const width=(endWidth+ (socket==='east'?1.0:.55)*Math.sin(Math.PI*active))*Math.sin(Math.PI*active/2);
-  return fractions.map((t,j)=>{if(j===0||width===0)return [...p];const x=p[0]+width*t,z=p[2];
+  return fractions.map((t,j)=>{if(j===0||width===0)return [...p];const x=p[0]+width*t,z=p[2]+(control.bend??0)*smooth(active)*smooth(t);
    const outer=.045,roll=smooth(t),arch=Math.sin(Math.PI*t);
    const relief=(control.peak*(shape==='parallel'?1.08:1))*arch*arch*(.60+.40*Math.sin(Math.PI*active));
    // Preserve the exact inner edge. The broad shoulder and low cape both roll
@@ -75,15 +87,17 @@ function branch(socket,shape){
 }
 const branches={north:['parallel','seaward'].map(shape=>branch('north',shape)),east:['parallel','seaward'].map(shape=>branch('east',shape))};
 function connection(){const a=rowAtJoin.north,b=rowAtJoin.east,rows=Array.from({length:13},(_,i)=>{const t=i/12;return a.points.map((p,j)=>{const q=b.points[j],v=j/(a.points.length-1);return [lerp(p[0],q[0],t)+Math.sin(Math.PI*t)*(.30*(2*v-1)),lerp(p[1],q[1],t)+.08*Math.sin(Math.PI*t)*Math.sin(Math.PI*v),lerp(p[2],q[2],t)];});});
- return strip(rows,'outer-walking-shore',1);
+ const result=strip(rows,'outer-walking-shore',1);if(openInlet){result.connectionBoundaryRows=[rows[0],rows.at(-1)];
+ result.connectionLandings={north:rows[1][Math.floor(rows[1].length/2)],east:rows.at(-2)[Math.floor(rows.at(-2).length/2)]};}return result;
 }
 const connector=connection();
 const bottom=-.84;
-function bankParts(m){const groups=new Map();const get=id=>{if(!groups.has(id))groups.set(id,{id,kind:'bank',vertices:[],indices:[],material:appearance(m.material===0?3:2)});return groups.get(id);};
+function bankParts(m){const groups=new Map(),key=p=>p.join(',');const joinKeys=new Set(m.join?.points.map(key)??[]),connectionRows=(m.connectionBoundaryRows??[]).map(row=>new Set(row.map(key)));const get=id=>{if(!groups.has(id))groups.set(id,{id,kind:'bank',vertices:[],indices:[],material:appearance(m.material===0?3:2)});return groups.get(id);};
  for(const e of m.boundary){const a=m.points[e.a],b=m.points[e.b];
   let id='coastal-bank';
-  if(m.join&&a[2]===m.join.z&&b[2]===m.join.z&&Math.min(a[0],b[0])>=joinA-1e-12&&Math.max(a[0],b[0])<=joinB+1e-12)id='connection-bank';
-  if(m.name==='outer-walking-shore'&&(a[2]===rowAtJoin.north.z&&b[2]===a[2]||a[2]===rowAtJoin.east.z&&b[2]===a[2]))continue;
+  if(m.join&&joinKeys.has(key(a))&&joinKeys.has(key(b)))id='connection-bank';
+  if((!openInlet&&m.name==='outer-walking-shore'&&(a[2]===rowAtJoin.north.z&&b[2]===a[2]||a[2]===rowAtJoin.east.z&&b[2]===a[2]))
+   ||connectionRows.some(row=>row.has(key(a))&&row.has(key(b))))continue;
   const g=get(id),n=g.vertices.length;for(const p of [a,b])for(const y of [p[1],Math.min(0,p[1]-.12),bottom])g.vertices.push({x:p[0],y,z:p[2]});for(let k=0;k<2;k++)g.indices.push(n+k,n+k+1,n+3+k,n+3+k,n+k+1,n+4+k);
  }
  const g=get('soil-bottom');g.vertices=m.points.map(p=>({x:p[0],y:bottom,z:p[2]}));for(let i=0;i<m.indices.length;i+=3)g.indices.push(m.indices[i],m.indices[i+2],m.indices[i+1]);return [...groups.values()];
@@ -99,7 +113,10 @@ function part(m,id,origin={x:0,z:0}){const point=p=>({x:p[0]-origin.x,y:p[1],z:p
  for(const [key,a]of map){const [x,z]=key.split(',').map(Number);for(const [dx,dz]of [[.25,0],[0,.25]]){const b=map.get(`${x+dx},${z+dz}`);if(b)connect(a,b);}}
  // Named connection landings sit safely inside each real part. The neighboring
  // explicit edges bridge only the remaining fractional row interval.
- const landings=m.socket?[{id:'outer-entry',x:16.25,z:m.join.z+(m.socket==='north'?-.25:.25)}]:[{id:'north-entry',x:16.25,z:rowAtJoin.north.z+.25},{id:'east-entry',x:16.25,z:rowAtJoin.east.z-.25}];
+ const landingX=joinA+.25;
+ const branchJoin=m.socket&&m.join.points.reduce((best,p)=>Math.abs(p[0]-landingX)<Math.abs(best[0]-landingX)?p:best);
+ const landings=!openInlet?(m.socket?[{id:'outer-entry',x:landingX,z:m.join.z+(m.socket==='north'?-.25:.25)}]:[{id:'north-entry',x:landingX,z:rowAtJoin.north.z+.25},{id:'east-entry',x:landingX,z:rowAtJoin.east.z-.25}]):
+  (m.socket?[{id:'outer-entry',x:branchJoin[0],z:branchJoin[2]+(m.socket==='north'?-.25:.25)}]:[{id:'north-entry',x:m.connectionLandings.north[0],z:m.connectionLandings.north[2]},{id:'east-entry',x:m.connectionLandings.east[0],z:m.connectionLandings.east[2]}]);
  for(const p of landings){assert(within(p.x,p.z),`${m.name} outer landing`);add(p.x,p.z,p.id);const a=map.get(`${p.x},${p.z}`);for(const b of sites)if(b!==a&&Math.hypot(b.cell.x-a.cell.x,b.cell.z-a.cell.z)<=.42)connect(a,b);}
  const entry=m.socket?'entry':'north-entry',seen=new Set([entry]),queue=[entry],adj=new Map(sites.map(s=>[s.id,[]]));for(const e of edges){adj.get(e.from.siteId).push(e.to.siteId);adj.get(e.to.siteId).push(e.from.siteId);}for(let i=0;i<queue.length;i++)for(const next of adj.get(queue[i])??[])if(!seen.has(next)){seen.add(next);queue.push(next);}
  assert(landings.every(p=>seen.has(p.id)),`${m.name}: connection landing unreachable`);
@@ -109,14 +126,19 @@ function part(m,id,origin={x:0,z:0}){const point=p=>({x:p[0]-origin.x,y:p[1],z:p
 }
 const socketVariants=Object.fromEntries(Object.entries(branches).map(([id,meshes])=>[id,meshes.map((m,i)=>({id:i?'seaward':'parallel',...part(m,`core-growth-${m.name}`,shapeControls[id].anchor)}))]));
 const connectionPart=part(connector,'core-growth-outer-shore');
-const profile={trigger:[{x:11.5,z:-8.5},{x:14.5,z:-8.5},{x:14.5,z:-3.5},{x:11.5,z:-3.5}],scope:[{x:12.5,z:-10},{x:20.5,z:-10},{x:20.5,z:-2},{x:12.5,z:-2}],shoreFacing:0,
+const scopeMaxX=openInlet?24.5:24;
+const profile={trigger:[{x:11.5,z:-8.5},{x:14.5,z:-8.5},{x:14.5,z:-3.5},{x:11.5,z:-3.5}],scope:[{x:12.5,z:-11.25},{x:scopeMaxX,z:-11.25},{x:scopeMaxX,z:2.5},{x:12.5,z:2.5}],shoreFacing:0,
  sockets:Object.entries(shapeControls).map(([id,c])=>({id,logicalOrigin:c.anchor,worldOrigin:{x:c.anchor.x,y:0,z:c.anchor.z},turn:0,shoreFacing:0,landings:[{baseSiteId:c.baseSite,patchSiteId:'entry'}],replaceSurfaceIds:[],variants:socketVariants[id]})),variants:socketVariants.north,
  connections:[{id:'northeast-outer-shore',socketIds:['north','east'],branchShape:'seaward',...connectionPart,landings:[{socketId:'north',patchSiteId:'outer-entry',connectionSiteId:'north-entry'},{socketId:'east',patchSiteId:'outer-entry',connectionSiteId:'east-entry'}],replaceSurfaceIds:[{socketId:'north',surfaceIds:['connection-bank']},{socketId:'east',surfaceIds:['connection-bank']}]}]};
-const identity={version:1,candidate:'native05-core-growth-terrain-rough-v1',source,template,profile},catalog={...identity,revision:sha(JSON.stringify(identity))};
+const identity={version:1,candidate:openInlet?'native05-open-inlet-rough-v1':'native05-whole-island-layout-rough-v3',source,template,profile},catalog={...identity,revision:sha(JSON.stringify(identity))};
 const data=Buffer.from(JSON.stringify(catalog)),compressed=gzipSync(data,{level:9,mtime:0});
 const manifest={version:1,candidate:catalog.candidate,revision:catalog.revision,source,artifact:{path:'/prototypes/place-qa/authored-core-growth-terrain-kit.json.gz',sha256:sha(compressed),expandedSha256:sha(data),expandedBytes:data.length,gzipBytes:compressed.length},
- variationCases:{north:{localCells:[{x:12,z:-8},{x:13,z:-8},{x:12,z:-7},{x:13,z:-7}],expectedSockets:['north'],expectedShape:'seaward',expectedConnections:[]},east:{localCells:[{x:12,z:-5},{x:13,z:-5},{x:12,z:-4},{x:13,z:-4}],expectedSockets:['east'],expectedShape:'seaward',expectedConnections:[]},loop:{localCells:[{x:13,z:-7},{x:13,z:-6},{x:13,z:-5},{x:13,z:-4}],expectedSockets:['north','east'],expectedShape:'seaward',expectedConnections:['northeast-outer-shore']}},
- authoring:{baseWorld:{path:worldPath,sha256:sha(worldBytes)},originalFloorSha256:sha(JSON.stringify(core.floors)),originalSitesSha256:sha(JSON.stringify(core.sites)),originalEdgesSha256:sha(JSON.stringify(original.edges)),sourceBoundarySha256:sha(await readFile(`${dir}/original-boundary.json`)),shapeControls,seams,connectionBoundary:rowAtJoin,originalCoastSkin:'Retained. Shared boundary walls become interior below the unchanged ground seam; exposed-wall/skin assessment is separate, no invisible clipping.',newGroundNormals:'Area-weighted authored topology; exact source normals at the retained ground seam',seaDatum:0,bottom},materials:mats,
+ variationCases:{
+  north:{localCells:[{x:12,z:-8},{x:13,z:-8},{x:12,z:-7},{x:13,z:-7}],homeCells:[{x:3,z:-9},{x:2,z:-8},{x:4,z:-7},{x:7,z:-10},{x:9,z:-9},{x:10,z:-7},{x:12,z:-9},{x:13,z:-6}],expectedSockets:['north'],expectedShape:'seaward',expectedConnections:[]},
+  east:{localCells:[{x:12,z:-5},{x:13,z:-5},{x:12,z:-4},{x:13,z:-4}],homeCells:[{x:10,z:-3},{x:9,z:-2},{x:14,z:-3},{x:12,z:1},{x:9,z:0},{x:8,z:-1},{x:9,z:-1},{x:12,z:0}],expectedSockets:['east'],expectedShape:'seaward',expectedConnections:[]},
+  loop:{localCells:[{x:13,z:-7},{x:13,z:-6},{x:13,z:-5},{x:13,z:-4}],homeCells:[{x:3,z:1},{x:4,z:0},{x:2,z:-8},{x:1,z:-3},{x:10,z:-7},{x:12,z:-9},{x:12,z:0},{x:14,z:-3}],expectedSockets:['north','east'],expectedShape:'seaward',expectedConnections:['northeast-outer-shore']}
+ },
+ authoring:{baseWorld:{path:worldPath,sha256:sha(worldBytes)},originalFloorSha256:sha(JSON.stringify(core.floors)),originalSitesSha256:sha(JSON.stringify(core.sites)),originalEdgesSha256:sha(JSON.stringify(original.edges)),sourceBoundarySha256:sha(await readFile(`${sourceDir}/original-boundary.json`)),shapeControls,seams,connectionBoundary:rowAtJoin,originalCoastSkin:'Retained. Shared boundary walls become interior below the unchanged ground seam; exposed-wall/skin assessment is separate, no invisible clipping.',newGroundNormals:'Area-weighted authored topology; exact source normals at the retained ground seam',seaDatum:0,bottom},materials:mats,
  parts:allMeshes.map(m=>({name:m.name,vertices:m.points.length,topTriangles:m.indices.length/3,omittedWalkingSites:m.omittedSites??0,bounds:{min:[0,1,2].map(k=>Math.min(...m.points.map(p=>p[k]))),max:[0,1,2].map(k=>Math.max(...m.points.map(p=>p[k])))}})),status:{visual:'HOLD',runtime:'NOT RUN',independentObservers:0}};
 // Every delivery surface uses the same catalog arrays. Original native05
 // scene data is retained verbatim in whole views under its known rigid transform.
@@ -138,7 +160,8 @@ function exportGlb(state, whole=false){
 async function emit(path,bytes){if(check)assert((await readFile(path)).equals(bytes),`Stale ${path}`);else await writeFile(path,bytes);}
 await mkdir(dir,{recursive:true});
 manifest.sourceArtifacts=[];
-for(const state of ['north','east','loop'])for(const whole of [false,true]){const name=`${state}-${whole?'whole':'parts'}.glb`,bytes=exportGlb(state,whole);await emit(`${dir}/${name}`,bytes);manifest.sourceArtifacts.push({name,sha256:sha(bytes),bytes:bytes.length,wholeOriginalContext:whole});}
+const sourceStates=openInlet?['loop']:['north','east','loop'],sourceContexts=openInlet?[false]:[false,true];
+for(const state of sourceStates)for(const whole of sourceContexts){const name=`${state}-${whole?'whole':'parts'}.glb`,bytes=exportGlb(state,whole);await emit(`${dir}/${name}`,bytes);manifest.sourceArtifacts.push({name,sha256:sha(bytes),bytes:bytes.length,wholeOriginalContext:whole});}
 await emit(`${dir}/authored-core-growth-terrain-kit.json.gz`,compressed);await emit(`${dir}/authored-core-growth-terrain-manifest.json`,Buffer.from(JSON.stringify(manifest,null,2)+'\n'));
 await emit(`${dir}/geometry-profile.json.gz`,gzipSync(Buffer.from(JSON.stringify({catalog,manifest,meshes:allMeshes})),{level:9,mtime:0}));
 if(publish){await emit('prototypes/place-qa/authored-core-growth-terrain-kit.json.gz',compressed);await emit('prototypes/place-qa/authored-core-growth-terrain-manifest.json',Buffer.from(JSON.stringify(manifest,null,2)+'\n'));}

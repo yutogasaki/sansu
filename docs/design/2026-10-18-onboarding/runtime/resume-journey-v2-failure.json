@@ -1,0 +1,113 @@
+{
+  "target": "http://127.0.0.1:5308",
+  "date": "2026-10-18T02:37:36.636Z",
+  "scenarios": [],
+  "captures": [
+    {
+      "file": "390-welcome.png",
+      "url": "http://127.0.0.1:5308/#/onboarding",
+      "revision": "development-local",
+      "version": "development-local:95b87d72-d371-4dde-8c9b-0d0cd52af3e2",
+      "delivery": "mystic-island-v1",
+      "candidate": "island-first-play-v2",
+      "learningCandidate": "not-applicable",
+      "islandFeatureEnabled": true,
+      "mode": "welcome",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:95b87d72-d371-4dde-8c9b-0d0cd52af3e2",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "390-arrival.png",
+      "url": "http://127.0.0.1:5308/#/onboarding",
+      "revision": "development-local",
+      "version": "development-local:95b87d72-d371-4dde-8c9b-0d0cd52af3e2",
+      "delivery": "mystic-island-v1",
+      "candidate": "island-first-play-v2",
+      "learningCandidate": "not-applicable",
+      "islandFeatureEnabled": true,
+      "mode": "first-play",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:95b87d72-d371-4dde-8c9b-0d0cd52af3e2",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    },
+    {
+      "file": "390-first-neighbor.png",
+      "url": "http://127.0.0.1:5308/#/onboarding",
+      "revision": "development-local",
+      "version": "development-local:95b87d72-d371-4dde-8c9b-0d0cd52af3e2",
+      "delivery": "mystic-island-v1",
+      "candidate": "island-first-play-v2",
+      "learningCandidate": "not-applicable",
+      "islandFeatureEnabled": true,
+      "mode": "first-play",
+      "drawCalls": 0,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "serviceWorkerControlled": true,
+      "reducedMotion": false,
+      "appRoot": {
+        "revision": "development-local",
+        "version": "development-local:95b87d72-d371-4dde-8c9b-0d0cd52af3e2",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "cache": {
+        "controlled": true,
+        "online": true
+      }
+    }
+  ],
+  "pass": false,
+  "inputs": {
+    "src/domain/user/firstPlay.ts": "193e0c99d5ae38e8ba6b6373d521134124bfb04ede1169feaad9ac94e3d27728",
+    "src/domain/user/onboarding.ts": "af1ee4fbe44aea4a0f41b312d2a6d595b7131b115a5bd5e73c0d812a5955fc0e",
+    "src/components/island/IslandOnboarding.tsx": "61c57cd751f66a4b663716b653a65fec7921e9a84ad9fc39563650418b228e63",
+    "src/components/island/IslandFirstSetup.tsx": "cd9d9a06465bca746f9509d605102b581e726d534e9948a7764fe947d2b2ebe6",
+    "src/components/island/IslandWelcome.tsx": "925ac7fd6009fbc69eec805876eccb91fbbab3b91dc0a57977eb955af91a5e3d",
+    "src/components/island/IslandOnboarding.css": "79ca010dc470df98191b0dbb2276a306cfcc639be6605da5a567f014dbd01069",
+    "src/components/island/growing/GrowingIsland.tsx": "42026e4d2549b88cee7329753dd743e6da27ebe2d57cf4b35cfca59a846aed07",
+    "src/components/island/growing/GrowingIslandMenu.tsx": "a297b1c5e1ed7f8792ac8214a0d56b24731914bd16150284d637ea27ae872f3e",
+    "tools/e2e-first-play.mjs": "ac340fe5df0bbad2fd6ac11efd461cbdecb63363e14157e7d1af8b3b3802b107"
+  },
+  "error": "TimeoutError: locator.click: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '年中', exact: true })\u001b[22m\n",
+  "url": "http://127.0.0.1:5308/#/onboarding",
+  "body": "メニュー\nまなぶ",
+  "finishedAt": "2026-10-18T02:43:15.448Z"
+}

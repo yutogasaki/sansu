@@ -1,5 +1,7 @@
 # 島のあそびかたとその場の案内
 
+> 2026-10-18 初回導線改訂：新規初回は学習設定前から同じ本人のGrowing島でS1〜S3を体験できる。既存の本・案内を再利用し、追加の必須チュートリアルを重ねない。 詳細は[初回の島と学習設定](island-first-play-onboarding.md)。
+
 ## 育つ島への適用境界（2026-10-01）
 
 [仕様52](52_growing_island_game_spec.md)のGrowing画面は[スターターとアチーブメントv1](island-starter-achievements-proposal.md)を使う。「はじめての しまづくり」のS1〜S5と「しまの できごと」のA1〜A6を一つの本へまとめる。下記の旧島の案内をGrowingへ重ねず、`islandTutorialVersion` と旧localStorageの表示済みをGrowingの達成根拠として流用しない。

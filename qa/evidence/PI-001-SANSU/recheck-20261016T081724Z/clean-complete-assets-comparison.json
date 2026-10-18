@@ -1,0 +1,20 @@
+{
+  "condition": "Full canonical Git source + both saved caches + 33 additional media inputs; output portal absent before build",
+  "status": "FAIL",
+  "expectedFiles": 1310,
+  "rebuiltFiles": 1310,
+  "missing": [],
+  "extra": [],
+  "different": [
+    "data/unification-manifest.json",
+    "data/unification.json",
+    "search-data.js"
+  ],
+  "expectedCandidate": "be55eae17dcadf330948d5261512dc0c8f20b33ea558e3aded97f77d83d4b9d5",
+  "rebuiltCandidate": "be55eae17dcadf330948d5261512dc0c8f20b33ea558e3aded97f77d83d4b9d5",
+  "sourceManifestDifferences": [
+    "portal/index.html"
+  ],
+  "expectedManifestSha256": "c212a26691b577aa9dcca1606aaa18bf03de7352810cb3870f9bb1f743f683a1",
+  "rebuiltManifestSha256": "23060369a76a65fd5d804d4995b5f0bfe40af05b71c0f5cfe617663ebb9a5b8b"
+}

@@ -1,0 +1,18 @@
+{
+  "name": "clean-first-verify",
+  "command": "/Users/yutogasaki/.local/share/fnm/node-versions/v24.18.0/installation/bin/node",
+  "args": [
+    "scripts/standard-portal.mjs",
+    "verify"
+  ],
+  "startedAt": "2026-10-16T08:51:09.781Z",
+  "node": "v24.18.0",
+  "cwd": "/private/tmp/codex/PI-001-SANSU/recheck-20261016T081724Z/clean/sansu",
+  "environment": {},
+  "endedAt": "2026-10-16T08:51:45.973Z",
+  "exitCode": 1,
+  "signal": null,
+  "status": "FAIL",
+  "log": "clean-first-verify.log",
+  "logSha256": "3b4e7859ae629c38a018b7c2c4001bcbe93e04a71ac726008297d690fc825bb8"
+}

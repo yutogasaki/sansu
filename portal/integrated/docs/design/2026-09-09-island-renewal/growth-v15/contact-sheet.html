@@ -1,0 +1,263 @@
+<!doctype html><html lang="ja"><head><base data-sansu-source-context href="../../../../../../docs/design/2026-09-09-island-renewal/growth-v15/contact-sheet.html"><script src="../../../../portal/native-context.js"></script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>成長する島 — 固定34→35 実画面比較</title><style>body{margin:0;background:#f7f4ec;color:#24334c;font:15px/1.6 system-ui,sans-serif}main{max-width:1440px;margin:auto;padding:24px}h1{font-size:27px}h2{margin-top:36px}h3{margin:18px 0 8px}a{color:#245ba5}.note{padding:16px;background:#fff4d7;border-left:4px solid #bf913d}.sequence{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.context{display:grid;grid-template-columns:1fr 1fr;gap:16px}figure{margin:0;padding:12px;background:#fff;border:1px solid #dedbd3;border-radius:10px}img{display:block;max-width:100%;height:auto;margin:8px auto}figcaption{font-size:13px}code,pre{overflow-wrap:anywhere}pre{white-space:pre-wrap;font-size:11px}details{font-size:12px}@media(max-width:700px){main{padding:12px}.sequence,.context{grid-template-columns:1fr}}</style><link rel="stylesheet" href="../../../../portal/integration.css"><link rel="stylesheet" href="../../../../portal/library.css"></head><body data-portal-item="item-8708d469e0a6d2bd1fda"><aside class="pu-bar" aria-label="統合ポータル"><nav><strong>さんすう</strong><a href="../../../../portal/index.html">現在地へ</a><a href="../../../../portal/search.html">全ページから探す</a><a href="../../../../portal/pages.html">内容と操作の一覧</a><a href="../../../../.agents/index.html">元のポータルを開く →</a></nav><p>新版を確認中。全項目の表示・操作・独立審査が終わるまで、元の入口を保持しています。</p></aside><main data-portal-item="item-d469aab2141cb34b4d3b"><h1 data-portal-item="item-1006cd3545777af2e4fa">成長する島の輪郭・画角 — 固定34→35</h1><p class="note" data-portal-item="item-4744519a1f1683bd1703"><strong data-portal-item="item-5b8a7843a256005fce50">局所改善 / 全体HOLD。</strong>全景の対角の奥行きと東西の控えめな膨らみを作者が改善と判断。横に連なる三つの保存楕円は残る。限定実描画8行PASSに対し、固定35の統合unitは4件FAIL。公開完成・子どもの理解/動機の証明ではない（Human N=0）。</p><p data-portal-item="item-31bc3445097d9a55b877">明示fixtureはcompletedSets=24、各居場所progress=6、2品収納。各独立context内でexpansionLevel 0→1→2だけをnative保存へ設定し、実renderer更新を待った。実回答や獲得は行っていない。defaultと明示「しまぜんぶ」は別context。phone 390×844 / tablet 768×1024、reduced motion、Three/home、SW制御あり。</p><p data-portal-item="item-dfa688f75db31d856b20">前は固定34 v14（5420）、後は固定35 v15（5421）、両flag=true。後のdefaultは3段階で32camera値が同一。allは新しい角度と土地の収まりに応じて画角が変わる。24枚のstage PNGと2枚のapp文脈PNGは原bytesを保持し、各SHAを照合済み。</p><p data-portal-item="item-4d0c97e6bc0ab3c3ef3d"><a href="../../../../portal/read/e41902a4bd2814b0cdd6.html" data-portal-item="item-929042d4ad5bc957c8e1">本文</a> · <a href="verification.json" data-portal-item="item-967f2d7639c03687b30d">SHA・対象・結果</a> · <a href="../../../../portal/read/7742f68cc16569ac85a4.html" data-portal-item="item-9984d1342bd20ad0f8f6">形と構図の意図</a> · <a href="../shore-garden-a.png" data-portal-item="item-48d98407307709728fb2">source A</a></p>
+<details data-portal-item="item-9e54e7209dfd3e7a0df7"><summary data-portal-item="item-dac80f3f53bd90e70b09">実buildと検査の帰属</summary><pre data-portal-item="item-ec962007698a704c6eec">{
+  &quot;targets&quot;: [
+    {
+      &quot;name&quot;: &quot;before&quot;,
+      &quot;snapshot&quot;: 34,
+      &quot;url&quot;: &quot;http://127.0.0.1:5420&quot;,
+      &quot;revision&quot;: &quot;workshop-20260909-193b42164378&quot;,
+      &quot;sourceHash&quot;: &quot;193b42164378cf84c3841ef3b0c1849be420cfad2e5e84b3a88114a4c2c270db&quot;,
+      &quot;inputs&quot;: 1076,
+      &quot;manifestSha256&quot;: &quot;1c1ae46885c2ce1942475eed085241de05c8ef97fe13025126d21a7ae6c8a43c&quot;,
+      &quot;candidate&quot;: &quot;mystic-island-shore-garden-v14&quot;,
+      &quot;servedVersion&quot;: &quot;workshop-20260909-193b42164378:364cf6aa-01a4-4171-8807-f30a5d6adb18&quot;,
+      &quot;flags&quot;: {
+        &quot;VITE_ISLAND_ENABLED&quot;: &quot;true&quot;,
+        &quot;VITE_BUILD_PLAY_ENABLED&quot;: &quot;true&quot;
+      }
+    },
+    {
+      &quot;name&quot;: &quot;after&quot;,
+      &quot;snapshot&quot;: 35,
+      &quot;url&quot;: &quot;http://127.0.0.1:5421&quot;,
+      &quot;revision&quot;: &quot;workshop-20260909-94e5462d1f11&quot;,
+      &quot;sourceHash&quot;: &quot;94e5462d1f11b3f0ee30c0727fcb4b77c873b1986577ee644966ad90fbeb0be7&quot;,
+      &quot;inputs&quot;: 1076,
+      &quot;manifestSha256&quot;: &quot;1b8896d40d077d71b0077a775443fd420119b4722b029ff8579bfa46ef3b3c2a&quot;,
+      &quot;candidate&quot;: &quot;mystic-island-shore-garden-v15&quot;,
+      &quot;servedVersion&quot;: &quot;workshop-20260909-94e5462d1f11:2c635205-c81c-4d5a-8bcf-8f1cfb587cd8&quot;,
+      &quot;flags&quot;: {
+        &quot;VITE_ISLAND_ENABLED&quot;: &quot;true&quot;,
+        &quot;VITE_BUILD_PLAY_ENABLED&quot;: &quot;true&quot;
+      }
+    }
+  ],
+  &quot;checks&quot;: {
+    &quot;typeBuildAssets&quot;: {
+      &quot;status&quot;: &quot;PASS&quot;,
+      &quot;path&quot;: &quot;output/playwright/island-renewal/integration-build-35.log&quot;,
+      &quot;sha256&quot;: &quot;b53b43b98a3434f542cfdf252ced747cf841313bc3ed6163574a64ccf3ce598b&quot;
+    },
+    &quot;lint&quot;: {
+      &quot;status&quot;: &quot;PASS&quot;,
+      &quot;errors&quot;: 0,
+      &quot;warnings&quot;: 1,
+      &quot;path&quot;: &quot;output/playwright/island-renewal/integration-lint-35.log&quot;,
+      &quot;sha256&quot;: &quot;784d2d6ae4f2934e1dd6eb05c1f592bbfb257dbddcf0a0bbe9ae14c5e5368652&quot;
+    },
+    &quot;fullUnit&quot;: {
+      &quot;status&quot;: &quot;FAIL&quot;,
+      &quot;filesPassed&quot;: 294,
+      &quot;filesFailed&quot;: 2,
+      &quot;testsPassed&quot;: 3270,
+      &quot;testsFailed&quot;: 4,
+      &quot;total&quot;: 3274,
+      &quot;path&quot;: &quot;output/playwright/island-renewal/integration-tests-35.log&quot;,
+      &quot;sha256&quot;: &quot;bc86434b36ec9bf2044667c36f0c409eb14595afd02b20997b3a1b49c8bc2eb0&quot;,
+      &quot;failures&quot;: [
+        &quot;appearanceRendering: starry/candy/crystal sky projection (3)&quot;,
+        &quot;cosmeticScenery: legacy scenery geometry hash (1)&quot;
+      ],
+      &quot;diagnosis&quot;: &quot;Root/camera agent investigating new all-view framing and roof-material batch split; fixes belong to the next snapshot.&quot;
+    },
+    &quot;formal80&quot;: &quot;NOT_RUN_ON_35&quot;,
+    &quot;ordinarySmoke&quot;: &quot;NOT_RUN_ON_35&quot;,
+    &quot;ci&quot;: &quot;NOT_RUN_ON_35&quot;
+  }
+}</pre></details>
+<section data-portal-item="item-52b688104178bd787318"><h2 data-portal-item="item-159a24b1a921e4bb7a57">phone — 未選択の既定画角</h2>
+<h3 data-portal-item="item-cae9dda06f6b1465a261">前・固定34 / v14</h3><div class="sequence" data-portal-item="item-b84221f11d0dc6e27474">
+<figure data-portal-item="item-6d53db96dbfd6c450b2d"><figcaption data-portal-item="item-ccb74bd323669659d20b"><strong data-portal-item="item-5dc5927317dc06a92f6d">段階0 — 母島のみ</strong><br>district=all / draw=89<br>前段階camera一致=初回</figcaption><a href="phone-before-default-level-0.png" data-portal-item="item-324731f9d811d81e3aef"><img src="phone-before-default-level-0.png" width="390" height="338" alt="phone before default 診断拡張段階0" loading="lazy" data-portal-item="item-92221998b86253b0e8f7"></a><details data-portal-item="item-b6b1954a3268310f1e39"><summary data-portal-item="item-5e72b78d4070e655797d">実frame・PNG SHA</summary><pre data-portal-item="item-2d5fd80bb651ce38bab0">{
+  &quot;revision&quot;: &quot;workshop-20260909-193b42164378&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v14&quot;,
+  &quot;pngSha256&quot;: &quot;59846ef15f5bcf49af97b326f0433c43b75cfd662323074a07ec0551a2d140a2&quot;,
+  &quot;frameTimestamp&quot;: 1883,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.15570,0.00000,0.00000,0.00000,0.00000,0.17965,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00082,0.04494,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure data-portal-item="item-ffe04339d929ccf59113"><figcaption data-portal-item="item-05c6441f205d7f9f1fdb"><strong data-portal-item="item-330007151d1ce4982fdc">段階1 — 東を追加</strong><br>district=home / draw=202<br>前段階camera一致=false</figcaption><a href="phone-before-default-level-1.png" data-portal-item="item-6d7359759e0bc9c7eaad"><img src="phone-before-default-level-1.png" width="390" height="338" alt="phone before default 診断拡張段階1" loading="lazy" data-portal-item="item-6279c2274a3f68a0879e"></a><details data-portal-item="item-0cf9a0d22692baae4853"><summary data-portal-item="item-f211f46b5a7085977082">実frame・PNG SHA</summary><pre data-portal-item="item-1cf8d0be2e2863f5ea08">{
+  &quot;revision&quot;: &quot;workshop-20260909-193b42164378&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v14&quot;,
+  &quot;pngSha256&quot;: &quot;c9466ba17bf2551a1bdddcdb60b466a975c1eb0fe1bcd478eac9b34e41d31dc5&quot;,
+  &quot;frameTimestamp&quot;: 2309.9,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.15944,0.00000,0.00000,0.00000,0.00000,0.18397,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure data-portal-item="item-07914e3041e48bc706d2"><figcaption data-portal-item="item-1d15a6f7694875f2ee7e"><strong data-portal-item="item-d264fa562b888dd4a74a">段階2 — 西も追加</strong><br>district=home / draw=255<br>前段階camera一致=true</figcaption><a href="phone-before-default-level-2.png" data-portal-item="item-b528f003f3a78f07d015"><img src="phone-before-default-level-2.png" width="390" height="338" alt="phone before default 診断拡張段階2" loading="lazy" data-portal-item="item-a40a14d6b60cdc9b2c78"></a><details data-portal-item="item-17f4d2de30ed93f9110e"><summary data-portal-item="item-c44979196187b846ecad">実frame・PNG SHA</summary><pre data-portal-item="item-3453282b8bea63580f49">{
+  &quot;revision&quot;: &quot;workshop-20260909-193b42164378&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v14&quot;,
+  &quot;pngSha256&quot;: &quot;6de5a0769da9fdeec7ada3a240580eb0075ff2d66496c78b3f3262bf180b8097&quot;,
+  &quot;frameTimestamp&quot;: 2746.698,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.15944,0.00000,0.00000,0.00000,0.00000,0.18397,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000&quot;
+}</pre></details></figure>
+</div>
+<h3 data-portal-item="item-aefc6be375edaead737e">後・固定35 / v15</h3><div class="sequence" data-portal-item="item-414a0f6ee091ff01aafc">
+<figure data-portal-item="item-0e0d6f5fd1eb911f4080"><figcaption data-portal-item="item-268586d9e95634591386"><strong data-portal-item="item-103f38447fedc85931cb">段階0 — 母島のみ</strong><br>district=home / draw=89<br>前段階camera一致=初回</figcaption><a href="phone-after-default-level-0.png" data-portal-item="item-c09bd8e1f81d8b5cd596"><img src="phone-after-default-level-0.png" width="390" height="338" alt="phone after default 診断拡張段階0" loading="lazy" data-portal-item="item-8fa567e522c5b88e5eb9"></a><details data-portal-item="item-55cd8dbcd1f4b969f445"><summary data-portal-item="item-6c20071503fd4482deb7">実frame・PNG SHA</summary><pre data-portal-item="item-bff5bef45f0ad13b1b0c">{
+  &quot;revision&quot;: &quot;workshop-20260909-94e5462d1f11&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v15&quot;,
+  &quot;pngSha256&quot;: &quot;fbc23b024b6f3c1310de24a8616926cb8d9c5b4328033867e2d292ce4d21d660&quot;,
+  &quot;frameTimestamp&quot;: 1919.5,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.15944,0.00000,0.00000,0.00000,0.00000,0.18397,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure data-portal-item="item-ff8944f17938fbd693a0"><figcaption data-portal-item="item-6c640571a248700d4713"><strong data-portal-item="item-26bd90a72b4cd8286482">段階1 — 東を追加</strong><br>district=home / draw=202<br>前段階camera一致=true</figcaption><a href="phone-after-default-level-1.png" data-portal-item="item-098146b2bcd8bed40466"><img src="phone-after-default-level-1.png" width="390" height="338" alt="phone after default 診断拡張段階1" loading="lazy" data-portal-item="item-318d1a9e25d6e59f8e23"></a><details data-portal-item="item-002e4a3af34179c31694"><summary data-portal-item="item-c1f943e2dd88996805f6">実frame・PNG SHA</summary><pre data-portal-item="item-eecfb5194eb2f5d103c9">{
+  &quot;revision&quot;: &quot;workshop-20260909-94e5462d1f11&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v15&quot;,
+  &quot;pngSha256&quot;: &quot;441a44b10e2bc4972ae3aabf9df448c0c494c4c40aefc35c07b4d00ec1f0773e&quot;,
+  &quot;frameTimestamp&quot;: 2319.6,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.15944,0.00000,0.00000,0.00000,0.00000,0.18397,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure data-portal-item="item-f1dbb1dfa0a5a0a6f3dd"><figcaption data-portal-item="item-e7c50c05c64af0ffba24"><strong data-portal-item="item-371ad264f7c53f11bf3d">段階2 — 西も追加</strong><br>district=home / draw=255<br>前段階camera一致=true</figcaption><a href="phone-after-default-level-2.png" data-portal-item="item-35096a4effa37b7a3d60"><img src="phone-after-default-level-2.png" width="390" height="338" alt="phone after default 診断拡張段階2" loading="lazy" data-portal-item="item-8900b65725ab35471dc2"></a><details data-portal-item="item-c9d12dd3010a07625d78"><summary data-portal-item="item-ab4767769905daee5157">実frame・PNG SHA</summary><pre data-portal-item="item-139fc498fcaf2ed7fca6">{
+  &quot;revision&quot;: &quot;workshop-20260909-94e5462d1f11&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v15&quot;,
+  &quot;pngSha256&quot;: &quot;ecfe23a19b961232c3eaa41608353016e8520c079142c1a0efb552ceb796b889&quot;,
+  &quot;frameTimestamp&quot;: 2754.498,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.15944,0.00000,0.00000,0.00000,0.00000,0.18397,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000&quot;
+}</pre></details></figure>
+</div>
+</section>
+<section data-portal-item="item-0092d8854f02d4d97618"><h2 data-portal-item="item-c79fad95656d91fd42e1">phone — 本人が選んだ「しまぜんぶ」</h2>
+<h3 data-portal-item="item-ca584f375615af59bf8d">前・固定34 / v14</h3><div class="sequence" data-portal-item="item-c7feac88006f99824756">
+<figure data-portal-item="item-84e4a1b0677247ff7964"><figcaption data-portal-item="item-50e5b6a95513e0bbbc37"><strong data-portal-item="item-4a0f6f12b232bb236390">段階0 — 母島のみ</strong><br>district=all / draw=89<br>前段階camera一致=初回</figcaption><a href="phone-before-all-level-0.png" data-portal-item="item-48feceac6762ada9a56c"><img src="phone-before-all-level-0.png" width="390" height="338" alt="phone before all 診断拡張段階0" loading="lazy" data-portal-item="item-14f1df89571b0f63db1f"></a><details data-portal-item="item-b6948384bd1061527bf7"><summary data-portal-item="item-ac50204385df57bb8443">実frame・PNG SHA</summary><pre data-portal-item="item-8c9205953dab3b1ffb76">{
+  &quot;revision&quot;: &quot;workshop-20260909-193b42164378&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v14&quot;,
+  &quot;pngSha256&quot;: &quot;59846ef15f5bcf49af97b326f0433c43b75cfd662323074a07ec0551a2d140a2&quot;,
+  &quot;frameTimestamp&quot;: 2234.4,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.15570,0.00000,0.00000,0.00000,0.00000,0.17965,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00082,0.04494,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure data-portal-item="item-fc22d069824a35cd6da4"><figcaption data-portal-item="item-8be6a6febca30dcbdc0a"><strong data-portal-item="item-c619665831f9e2d956da">段階1 — 東を追加</strong><br>district=all / draw=204<br>前段階camera一致=false</figcaption><a href="phone-before-all-level-1.png" data-portal-item="item-bbfabb9b10418e27a8b5"><img src="phone-before-all-level-1.png" width="390" height="338" alt="phone before all 診断拡張段階1" loading="lazy" data-portal-item="item-603641b07909e6137bbc"></a><details data-portal-item="item-c350fb53a2ed2ccf5dae"><summary data-portal-item="item-5a25aac667f65ee0f64f">実frame・PNG SHA</summary><pre data-portal-item="item-23e63db6730ac765ccc4">{
+  &quot;revision&quot;: &quot;workshop-20260909-193b42164378&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v14&quot;,
+  &quot;pngSha256&quot;: &quot;cb648f03e31fbc8b6cf141c5541cb604c6d8c7b342a5ce757a7a21daccd75ced&quot;,
+  &quot;frameTimestamp&quot;: 2410.766,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.10777,0.00000,0.00000,0.00000,0.00000,0.12435,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.14137,0.06108,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure data-portal-item="item-8d04dfc603c326cd98f6"><figcaption data-portal-item="item-89413c0984263fc32676"><strong data-portal-item="item-a3c178c7d503d5f4976a">段階2 — 西も追加</strong><br>district=all / draw=152<br>前段階camera一致=false</figcaption><a href="phone-before-all-level-2.png" data-portal-item="item-5fcfa3ed366d7d1cbd79"><img src="phone-before-all-level-2.png" width="390" height="338" alt="phone before all 診断拡張段階2" loading="lazy" data-portal-item="item-ec583a64e382cd81e555"></a><details data-portal-item="item-c28e996cb504ed4d74b5"><summary data-portal-item="item-171e8b44367a97dbd1a7">実frame・PNG SHA</summary><pre data-portal-item="item-b15903da51195b5d0b4f">{
+  &quot;revision&quot;: &quot;workshop-20260909-193b42164378&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v14&quot;,
+  &quot;pngSha256&quot;: &quot;13f21e25d8e3da87dafd1425337456f4af0b479733da20739e367a7fb8be2f25&quot;,
+  &quot;frameTimestamp&quot;: 3128.2,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.08377,0.00000,0.00000,0.00000,0.00000,0.09666,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00842,0.06913,-1.00200,1.00000&quot;
+}</pre></details></figure>
+</div>
+<h3 data-portal-item="item-4ebe5fec0127851846bc">後・固定35 / v15</h3><div class="sequence" data-portal-item="item-67e097394e6989d06e7e">
+<figure data-portal-item="item-8b33be59d8a93c34fc7a"><figcaption data-portal-item="item-759bbe034544dfc06121"><strong data-portal-item="item-b22925a4a40ddd87a859">段階0 — 母島のみ</strong><br>district=all / draw=89<br>前段階camera一致=初回</figcaption><a href="phone-after-all-level-0.png" data-portal-item="item-9464551a63d585dd4b1f"><img src="phone-after-all-level-0.png" width="390" height="338" alt="phone after all 診断拡張段階0" loading="lazy" data-portal-item="item-5a43b4544d05b6d83e2d"></a><details data-portal-item="item-2362d821976a61d23578"><summary data-portal-item="item-b882bd868019c86d2011">実frame・PNG SHA</summary><pre data-portal-item="item-5c0c73efe25e21bd9d6a">{
+  &quot;revision&quot;: &quot;workshop-20260909-94e5462d1f11&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v15&quot;,
+  &quot;pngSha256&quot;: &quot;9de342b34fc7b9318394c72ef15812b60f6616491f6eb886fb23eacfcfdefe0f&quot;,
+  &quot;frameTimestamp&quot;: 2364.266,
+  &quot;camera&quot;: &quot;0.75340,-0.00000,-0.65756,0.00000,-0.34471,0.85158,-0.39495,0.00000,0.55997,0.52422,0.64158,0.00000,9.32000,9.65000,10.74000,1.00000,0.16453,0.00000,0.00000,0.00000,0.00000,0.18985,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.06265,0.12984,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure data-portal-item="item-126358e94ce9a24ca513"><figcaption data-portal-item="item-f76deaefdb3e4796fa77"><strong data-portal-item="item-56b1426f5c03e8e11056">段階1 — 東を追加</strong><br>district=all / draw=204<br>前段階camera一致=false</figcaption><a href="phone-after-all-level-1.png" data-portal-item="item-54f24d5412a1fa86d9c6"><img src="phone-after-all-level-1.png" width="390" height="338" alt="phone after all 診断拡張段階1" loading="lazy" data-portal-item="item-e84ee872af7936243616"></a><details data-portal-item="item-52d42ba7f11f2e458e73"><summary data-portal-item="item-50bdd140d7a78dc5c156">実frame・PNG SHA</summary><pre data-portal-item="item-15f0d00dd307312af9ef">{
+  &quot;revision&quot;: &quot;workshop-20260909-94e5462d1f11&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v15&quot;,
+  &quot;pngSha256&quot;: &quot;b007c8c41837207862bc458eb4f12bcb356e13dba65d74c5b8285643c0f81daf&quot;,
+  &quot;frameTimestamp&quot;: 2774.8,
+  &quot;camera&quot;: &quot;0.75340,-0.00000,-0.65756,0.00000,-0.34471,0.85158,-0.39495,0.00000,0.55997,0.52422,0.64158,0.00000,10.70000,9.65000,10.74000,1.00000,0.11969,0.00000,0.00000,0.00000,0.00000,0.13811,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.08001,0.12552,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure data-portal-item="item-8dddac03057b80eaf75a"><figcaption data-portal-item="item-5894151d9fa2c953c670"><strong data-portal-item="item-01382dd650f4dfebbc9d">段階2 — 西も追加</strong><br>district=all / draw=262<br>前段階camera一致=false</figcaption><a href="phone-after-all-level-2.png" data-portal-item="item-df6a8a3fd10b744783a9"><img src="phone-after-all-level-2.png" width="390" height="338" alt="phone after all 診断拡張段階2" loading="lazy" data-portal-item="item-3cf2b654febd1b5fa910"></a><details data-portal-item="item-63af8f74f6bcece5c58c"><summary data-portal-item="item-7979061241587d308a53">実frame・PNG SHA</summary><pre data-portal-item="item-63f085bf134d1c40710e">{
+  &quot;revision&quot;: &quot;workshop-20260909-94e5462d1f11&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v15&quot;,
+  &quot;pngSha256&quot;: &quot;308a945a8a0c6437ed39de9ff03ab564756b2977c97d54d63be63715b894285a&quot;,
+  &quot;frameTimestamp&quot;: 3219.832,
+  &quot;camera&quot;: &quot;0.75340,-0.00000,-0.65756,0.00000,-0.34471,0.85158,-0.39495,0.00000,0.55997,0.52422,0.64158,0.00000,9.40000,9.65000,10.74000,1.00000,0.09610,0.00000,0.00000,0.00000,0.00000,0.11088,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.02252,0.08297,-1.00200,1.00000&quot;
+}</pre></details></figure>
+</div>
+</section>
+<section data-portal-item="item-4f93c6574b4f8b17186e"><h2 data-portal-item="item-465432ebb48d6eb32fe2">tablet — 未選択の既定画角</h2>
+<h3 data-portal-item="item-efa5697e4e51469a5c38">前・固定34 / v14</h3><div class="sequence" data-portal-item="item-6e037fa23a40711ba646">
+<figure data-portal-item="item-f1100006c2bcdac99596"><figcaption data-portal-item="item-2136d39bde1698cdb37b"><strong data-portal-item="item-3d4d69b5d2ea5b064049">段階0 — 母島のみ</strong><br>district=all / draw=89<br>前段階camera一致=初回</figcaption><a href="tablet-before-default-level-0.png" data-portal-item="item-33d4095b3f08f9b8dc2c"><img src="tablet-before-default-level-0.png" width="768" height="410" alt="tablet before default 診断拡張段階0" loading="lazy" data-portal-item="item-46725e3cddedaf34390b"></a><details data-portal-item="item-548642ac0cfe6c648738"><summary data-portal-item="item-9cc17b4aeac4508a2821">実frame・PNG SHA</summary><pre data-portal-item="item-3a3c5b124615e536ebfc">{
+  &quot;revision&quot;: &quot;workshop-20260909-193b42164378&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v14&quot;,
+  &quot;pngSha256&quot;: &quot;19afd3a87f135077306ca7406e6288846b44f0781e88127718f7be2dd7b09734&quot;,
+  &quot;frameTimestamp&quot;: 1974.2,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.11723,0.00000,0.00000,0.00000,0.00000,0.21958,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00062,0.05492,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure data-portal-item="item-321db77150d8614736ab"><figcaption data-portal-item="item-2ea4df79a82cab8b14c7"><strong data-portal-item="item-80073a61d256dee9d795">段階1 — 東を追加</strong><br>district=home / draw=204<br>前段階camera一致=false</figcaption><a href="tablet-before-default-level-1.png" data-portal-item="item-a9edf1798f92f6038cfe"><img src="tablet-before-default-level-1.png" width="768" height="410" alt="tablet before default 診断拡張段階1" loading="lazy" data-portal-item="item-0526e5fc090dc7811c69"></a><details data-portal-item="item-69577238048907b3c054"><summary data-portal-item="item-43f48b7358a4367a7a73">実frame・PNG SHA</summary><pre data-portal-item="item-354a00e6c6ff1c577a66">{
+  &quot;revision&quot;: &quot;workshop-20260909-193b42164378&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v14&quot;,
+  &quot;pngSha256&quot;: &quot;317bf7e41191a3d93da2bd8b0443c28148e4077ef81af04d19df95b19ba57f1b&quot;,
+  &quot;frameTimestamp&quot;: 2407.732,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.11518,0.00000,0.00000,0.00000,0.00000,0.21575,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure data-portal-item="item-d8c5669f47ee3973007f"><figcaption data-portal-item="item-6985ac2a896e20bb123c"><strong data-portal-item="item-8b4cf03e58ebce665bc3">段階2 — 西も追加</strong><br>district=home / draw=262<br>前段階camera一致=true</figcaption><a href="tablet-before-default-level-2.png" data-portal-item="item-1d3d671fcb64d03fb059"><img src="tablet-before-default-level-2.png" width="768" height="410" alt="tablet before default 診断拡張段階2" loading="lazy" data-portal-item="item-3892d2292e0d2d470e3f"></a><details data-portal-item="item-768ca79a8ce4a24f9217"><summary data-portal-item="item-6b99c23ad15e91902c91">実frame・PNG SHA</summary><pre data-portal-item="item-23fd777148b43d3c3e2b">{
+  &quot;revision&quot;: &quot;workshop-20260909-193b42164378&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v14&quot;,
+  &quot;pngSha256&quot;: &quot;be098b343de66ceac82f42f7f99fc555a07841d18dc20bd8137492d94b1139e2&quot;,
+  &quot;frameTimestamp&quot;: 2874.532,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.11518,0.00000,0.00000,0.00000,0.00000,0.21575,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000&quot;
+}</pre></details></figure>
+</div>
+<h3 data-portal-item="item-1d78aa27e7f014167751">後・固定35 / v15</h3><div class="sequence" data-portal-item="item-3c050cb4300bf2942a37">
+<figure data-portal-item="item-1a2942676c61f010033b"><figcaption data-portal-item="item-51a5fa0609f3a3e55a02"><strong data-portal-item="item-d5115f1ec875740856a2">段階0 — 母島のみ</strong><br>district=home / draw=89<br>前段階camera一致=初回</figcaption><a href="tablet-after-default-level-0.png" data-portal-item="item-9289b0cf6fc466c778b2"><img src="tablet-after-default-level-0.png" width="768" height="410" alt="tablet after default 診断拡張段階0" loading="lazy" data-portal-item="item-8be49fedc1452172a36a"></a><details data-portal-item="item-d212e48347b506ca5b64"><summary data-portal-item="item-b19e90a1b0772fdee3aa">実frame・PNG SHA</summary><pre data-portal-item="item-9c730e0829dc6e0c73d7">{
+  &quot;revision&quot;: &quot;workshop-20260909-94e5462d1f11&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v15&quot;,
+  &quot;pngSha256&quot;: &quot;89996834d346ec1e02bf0f6e51586f59f30848b9ffc87844a4aaba372c3abd69&quot;,
+  &quot;frameTimestamp&quot;: 1922.9,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.11518,0.00000,0.00000,0.00000,0.00000,0.21575,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure data-portal-item="item-6693ed006a97d76a192f"><figcaption data-portal-item="item-687778be6ebb02cf668b"><strong data-portal-item="item-3ef1252c6cbc1309250f">段階1 — 東を追加</strong><br>district=home / draw=204<br>前段階camera一致=true</figcaption><a href="tablet-after-default-level-1.png" data-portal-item="item-3ec60c02d104dd7682bc"><img src="tablet-after-default-level-1.png" width="768" height="410" alt="tablet after default 診断拡張段階1" loading="lazy" data-portal-item="item-fd78648ebfb80ade07ef"></a><details data-portal-item="item-a8702fef5848339d6f0f"><summary data-portal-item="item-4eb5a2765d8fa25cfe87">実frame・PNG SHA</summary><pre data-portal-item="item-f7f2857a2e592bc79ee1">{
+  &quot;revision&quot;: &quot;workshop-20260909-94e5462d1f11&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v15&quot;,
+  &quot;pngSha256&quot;: &quot;92b892e668e8c34803662d0103a84fe71e69258efa04a9e9865bd0311524439a&quot;,
+  &quot;frameTimestamp&quot;: 2349.5,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.11518,0.00000,0.00000,0.00000,0.00000,0.21575,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure data-portal-item="item-c9f257b4a8d45e35f7c9"><figcaption data-portal-item="item-70c9116e8e9999af1e98"><strong data-portal-item="item-7b32a9e2bdd25e0dcd7b">段階2 — 西も追加</strong><br>district=home / draw=152<br>前段階camera一致=true</figcaption><a href="tablet-after-default-level-2.png" data-portal-item="item-12382278abe096f9873b"><img src="tablet-after-default-level-2.png" width="768" height="410" alt="tablet after default 診断拡張段階2" loading="lazy" data-portal-item="item-f32b871d24e108cbfd5a"></a><details data-portal-item="item-a8546c57759aaf196637"><summary data-portal-item="item-728abcefa1fc83463edd">実frame・PNG SHA</summary><pre data-portal-item="item-bd19d1b49e16b3604cd5">{
+  &quot;revision&quot;: &quot;workshop-20260909-94e5462d1f11&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v15&quot;,
+  &quot;pngSha256&quot;: &quot;3c9c8050ba6591581e8b49165579008f4439e64d871c8c3021b455cf515b83eb&quot;,
+  &quot;frameTimestamp&quot;: 3110.9,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.11518,0.00000,0.00000,0.00000,0.00000,0.21575,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00000,0.00000,-1.00200,1.00000&quot;
+}</pre></details></figure>
+</div>
+</section>
+<section data-portal-item="item-cd4f13be8f5698dfe19e"><h2 data-portal-item="item-54740bf99c90773d82df">tablet — 本人が選んだ「しまぜんぶ」</h2>
+<h3 data-portal-item="item-6a28536297034070ced8">前・固定34 / v14</h3><div class="sequence" data-portal-item="item-8217f12028e6e31e6805">
+<figure data-portal-item="item-27a9b0ac1e601f32ff3a"><figcaption data-portal-item="item-ee6e179e41fe84fd0dd9"><strong data-portal-item="item-e1ad821b8f6423977eab">段階0 — 母島のみ</strong><br>district=all / draw=89<br>前段階camera一致=初回</figcaption><a href="tablet-before-all-level-0.png" data-portal-item="item-aee1201d172ec0734d49"><img src="tablet-before-all-level-0.png" width="768" height="410" alt="tablet before all 診断拡張段階0" loading="lazy" data-portal-item="item-f5f3101f6ea9cbe9ae1a"></a><details data-portal-item="item-00ee3385ecaa0de21266"><summary data-portal-item="item-def8e01e68af854d8904">実frame・PNG SHA</summary><pre data-portal-item="item-d9388686dcd68ad82e2d">{
+  &quot;revision&quot;: &quot;workshop-20260909-193b42164378&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v14&quot;,
+  &quot;pngSha256&quot;: &quot;19afd3a87f135077306ca7406e6288846b44f0781e88127718f7be2dd7b09734&quot;,
+  &quot;frameTimestamp&quot;: 2194.5,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.62000,9.65000,13.47000,1.00000,0.11723,0.00000,0.00000,0.00000,0.00000,0.21958,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.00062,0.05492,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure data-portal-item="item-690d95c74d0528d0ca02"><figcaption data-portal-item="item-ed1a44ef8fd695f775ec"><strong data-portal-item="item-5e4ee6c211d10dc4fdf8">段階1 — 東を追加</strong><br>district=all / draw=204<br>前段階camera一致=false</figcaption><a href="tablet-before-all-level-1.png" data-portal-item="item-a01450497b10ab5d05d9"><img src="tablet-before-all-level-1.png" width="768" height="410" alt="tablet before all 診断拡張段階1" loading="lazy" data-portal-item="item-f660d0edc7619a0767fc"></a><details data-portal-item="item-c30d4eca43c585138690"><summary data-portal-item="item-dbbd1865dd5e2892bd56">実frame・PNG SHA</summary><pre data-portal-item="item-39c55f26b468e69ead3d">{
+  &quot;revision&quot;: &quot;workshop-20260909-193b42164378&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v14&quot;,
+  &quot;pngSha256&quot;: &quot;82bd827ad0c03875542fcbb8abca3c33ed46f38f68e19d61bf2f014f354c3bf5&quot;,
+  &quot;frameTimestamp&quot;: 2436.266,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,6.00000,9.65000,13.47000,1.00000,0.10517,0.00000,0.00000,0.00000,0.00000,0.19700,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.13796,0.09676,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure data-portal-item="item-9937b1042f757895e1f6"><figcaption data-portal-item="item-80bec09aa61385279d98"><strong data-portal-item="item-231656e995d06aa00db9">段階2 — 西も追加</strong><br>district=all / draw=152<br>前段階camera一致=false</figcaption><a href="tablet-before-all-level-2.png" data-portal-item="item-6b6d120051451bcda721"><img src="tablet-before-all-level-2.png" width="768" height="410" alt="tablet before all 診断拡張段階2" loading="lazy" data-portal-item="item-fc7e0ad90c5d94eb9e05"></a><details data-portal-item="item-5166dbace46785520119"><summary data-portal-item="item-7b76d135947e3a41d0f8">実frame・PNG SHA</summary><pre data-portal-item="item-92bfc24fd1b9c7aa127a">{
+  &quot;revision&quot;: &quot;workshop-20260909-193b42164378&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v14&quot;,
+  &quot;pngSha256&quot;: &quot;1cfd217403c3fff2372da265bb36a76d6c22ba16fbf53a7122f24583a879ab38&quot;,
+  &quot;frameTimestamp&quot;: 3115.1,
+  &quot;camera&quot;: &quot;0.94440,0.00000,-0.32879,0.00000,-0.17236,0.85157,-0.49509,0.00000,0.27999,0.52424,0.80423,0.00000,4.70000,9.65000,13.47000,1.00000,0.08377,0.00000,0.00000,0.00000,0.00000,0.15692,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.00842,0.11223,-1.00200,1.00000&quot;
+}</pre></details></figure>
+</div>
+<h3 data-portal-item="item-d2b2944e0ee098411888">後・固定35 / v15</h3><div class="sequence" data-portal-item="item-268970c9de71c2b9fbb0">
+<figure data-portal-item="item-7a0851c48127d704b0aa"><figcaption data-portal-item="item-65ac7f38f1f8d0ac1f33"><strong data-portal-item="item-fa76462bcde8a2ceef38">段階0 — 母島のみ</strong><br>district=all / draw=89<br>前段階camera一致=初回</figcaption><a href="tablet-after-all-level-0.png" data-portal-item="item-c0cc7bc175b1e50e05f9"><img src="tablet-after-all-level-0.png" width="768" height="410" alt="tablet after all 診断拡張段階0" loading="lazy" data-portal-item="item-e1b0af634f43cb0d42ff"></a><details data-portal-item="item-a685949d8ffa26bbc0f5"><summary data-portal-item="item-faf24b42721e65d50208">実frame・PNG SHA</summary><pre data-portal-item="item-9e6af4b3523ab8d9931d">{
+  &quot;revision&quot;: &quot;workshop-20260909-94e5462d1f11&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v15&quot;,
+  &quot;pngSha256&quot;: &quot;a476dbfd54a4e1498ebea27b43e5022e531eb450c6fe94cf6eeabf52a712a9d5&quot;,
+  &quot;frameTimestamp&quot;: 2209.866,
+  &quot;camera&quot;: &quot;0.75340,-0.00000,-0.65756,0.00000,-0.34471,0.85158,-0.39495,0.00000,0.55997,0.52422,0.64158,0.00000,9.32000,9.65000,10.74000,1.00000,0.11629,0.00000,0.00000,0.00000,0.00000,0.21783,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.04428,0.14897,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure data-portal-item="item-ae7acd3654645da34b13"><figcaption data-portal-item="item-0232c51054c1a34372c7"><strong data-portal-item="item-bcb125397defd75abed6">段階1 — 東を追加</strong><br>district=all / draw=204<br>前段階camera一致=false</figcaption><a href="tablet-after-all-level-1.png" data-portal-item="item-a2f796612bcfecb6f2a5"><img src="tablet-after-all-level-1.png" width="768" height="410" alt="tablet after all 診断拡張段階1" loading="lazy" data-portal-item="item-cef3dd365aba7461799d"></a><details data-portal-item="item-2b1936ae879e7627e470"><summary data-portal-item="item-b514cebf15b4e1440ea7">実frame・PNG SHA</summary><pre data-portal-item="item-59d758d08bc436525176">{
+  &quot;revision&quot;: &quot;workshop-20260909-94e5462d1f11&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v15&quot;,
+  &quot;pngSha256&quot;: &quot;07c20213cb7b7c2d48411ea01c03e734b4a832ca8a5863f7498a2b5f6c0f5d02&quot;,
+  &quot;frameTimestamp&quot;: 2594.7,
+  &quot;camera&quot;: &quot;0.75340,-0.00000,-0.65756,0.00000,-0.34471,0.85158,-0.39495,0.00000,0.55997,0.52422,0.64158,0.00000,10.70000,9.65000,10.74000,1.00000,0.09970,0.00000,0.00000,0.00000,0.00000,0.18676,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,-0.06665,0.16974,-1.00200,1.00000&quot;
+}</pre></details></figure>
+<figure data-portal-item="item-5ea36a901f38c1753703"><figcaption data-portal-item="item-d106f862d03dd5f250f1"><strong data-portal-item="item-810e70960c6922b5ff1d">段階2 — 西も追加</strong><br>district=all / draw=262<br>前段階camera一致=false</figcaption><a href="tablet-after-all-level-2.png" data-portal-item="item-5ec7f4a82fc9cf180ef1"><img src="tablet-after-all-level-2.png" width="768" height="410" alt="tablet after all 診断拡張段階2" loading="lazy" data-portal-item="item-1c5a2ed2bb5ab401ebae"></a><details data-portal-item="item-b5ccaf10a3317b5cf774"><summary data-portal-item="item-07b10117e5675dd81e29">実frame・PNG SHA</summary><pre data-portal-item="item-eba639f30fcac79e1613">{
+  &quot;revision&quot;: &quot;workshop-20260909-94e5462d1f11&quot;,
+  &quot;candidate&quot;: &quot;mystic-island-shore-garden-v15&quot;,
+  &quot;pngSha256&quot;: &quot;6c33902a71af17cc5df1c85391911c265725dfaa8487815e1204f059e4d5d966&quot;,
+  &quot;frameTimestamp&quot;: 2987.232,
+  &quot;camera&quot;: &quot;0.75340,-0.00000,-0.65756,0.00000,-0.34471,0.85158,-0.39495,0.00000,0.55997,0.52422,0.64158,0.00000,9.40000,9.65000,10.74000,1.00000,0.08871,0.00000,0.00000,0.00000,0.00000,0.16617,0.00000,0.00000,0.00000,0.00000,-0.02002,0.00000,0.02079,0.12434,-1.00200,1.00000&quot;
+}</pre></details></figure>
+</div>
+</section>
+<section data-portal-item="item-49634033cd3271dd946d"><h2 data-portal-item="item-41ec7b62e92defd69bf8">固定35・段階2の実アプリ文脈</h2><p data-portal-item="item-6ff12d3c94656a4ecd1e">撮影時のページ全体。島の画角と学習・任意の遊び入口との位置関係を残す。この2枚を新しい機能経路の完走証拠とは呼ばない。</p><div class="context" data-portal-item="item-9d7ed75e758fc1edd1cb">
+<figure data-portal-item="item-32dda1186fa77b398c9f"><figcaption data-portal-item="item-099f8c57641f33e54d3e">phone / 固定35 / default / 段階2</figcaption><a href="phone-after-default-level-2-page.png" data-portal-item="item-739c6fb9317c70f7df47"><img src="phone-after-default-level-2-page.png" alt="phone 固定35 診断拡張2の実アプリ文脈" loading="lazy" data-portal-item="item-d9326ef004f052f34433"></a><details data-portal-item="item-f9e66bfcd6b8a6891e49"><summary data-portal-item="item-83f8e5dc6a5b63067a06">PNG SHA</summary><code data-portal-item="item-d2191df220f813c4bf63">7a09340959215d3ce7dcc0c3e964c5c48c06f0191557cbc51a5ee2ae6b625dec</code></details></figure>
+<figure data-portal-item="item-cc7c789ea9bff3679b37"><figcaption data-portal-item="item-551f2bc568b03ae3abe4">tablet / 固定35 / default / 段階2</figcaption><a href="tablet-after-default-level-2-page.png" data-portal-item="item-2146789f5dc51979ea06"><img src="tablet-after-default-level-2-page.png" alt="tablet 固定35 診断拡張2の実アプリ文脈" loading="lazy" data-portal-item="item-cf280ea80c43cd543749"></a><details data-portal-item="item-896fd780cdc35542aba0"><summary data-portal-item="item-9b959dc7501f555ac7af">PNG SHA</summary><code data-portal-item="item-748a7869abb349cfe1af">3958fb9be956e0c81bb6778cd2dbd3ce1eb7f409f43c0243774657e521d256cc</code></details></figure>
+</div></section><p data-portal-item="item-223d43bbe75f6ae02c3f">全store比較は各明示fixture更新を除く閲覧区間へ適用。8 context終了・source/QA保持・console/page error 0。警告20件は原reportに保持。通常学習・正式速度・他外見を含む全経路は今回未検証。固定35の4件FAILは後続版で修正・確認し、この原結果は保持する。</p></main><script src="../../../../portal/integration.js" defer></script><script src="../../../../portal/library-runtime.js" defer></script></body></html>

@@ -1,0 +1,744 @@
+{
+  "at": "2026-10-16T04:32:51.353Z",
+  "command": "node tools/check-portal-migration-browser.mjs --full",
+  "candidate": "bde0ad6fe8f207eef20d7ba69133a56d52cfcaa8c06fce3ddf279b3ec8339f35",
+  "beforeManifest": "30a8a8f60921a8e784965ca4aa5ad6c74dcc802206413803bd6655e3c09e023d",
+  "pages": [
+    {
+      "route": "/before/.agents/index.html",
+      "width": 1440,
+      "variant": "original",
+      "height": 3916,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 7,
+      "smallText": [
+        {
+          "tag": "P",
+          "class": "eyebrow",
+          "text": "LOCAL PROJECT PORTAL"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-10-05-growing-island-release.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-20-whole-app-ux-coherence.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-23-island-performance.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/internal-portal/contract.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/wiki/index.md"
+        }
+      ],
+      "minFont": 14,
+      "screenshots": [
+        "before-overview-1440-first.jpg",
+        "before-overview-1440-001000.jpg",
+        "before-overview-1440-002000.jpg",
+        "before-overview-1440-003000.jpg"
+      ]
+    },
+    {
+      "route": "/portal/overview.html",
+      "width": 1440,
+      "variant": "integrated",
+      "height": 3514,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 36,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-overview-1440-first.jpg",
+        "after-overview-1440-001000.jpg",
+        "after-overview-1440-002000.jpg",
+        "after-overview-1440-003000.jpg"
+      ]
+    },
+    {
+      "route": "/before/.agents/map.html",
+      "width": 1440,
+      "variant": "original",
+      "height": 13475,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 364,
+      "smallText": [
+        {
+          "tag": "P",
+          "class": "eyebrow",
+          "text": "ぽこもこと不思議な島"
+        },
+        {
+          "tag": "P",
+          "class": "map-help",
+          "text": "「今の島」は通常起動で遊べる画面、「別の試作」は専用の開発設定でだけ動く実験です。旧試作の画面が動いても、今の島にその遊びが入ったことにはなりません。"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "24件"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "13件"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "2件"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "15フォルダ"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-planter-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-mailbox-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-fence-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-watering-can-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-bridge-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-stepping-stones-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-signpost-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-flowerbed-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-cart-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-toolbox-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-garden-hut-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-rock-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-streetlamp-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-tree-v1"
+        }
+      ],
+      "minFont": 11,
+      "screenshots": [
+        "before-map-1440-first.jpg",
+        "before-map-1440-001000.jpg",
+        "before-map-1440-002000.jpg",
+        "before-map-1440-003000.jpg",
+        "before-map-1440-004000.jpg",
+        "before-map-1440-005000.jpg",
+        "before-map-1440-006000.jpg",
+        "before-map-1440-007000.jpg",
+        "before-map-1440-008000.jpg",
+        "before-map-1440-009000.jpg",
+        "before-map-1440-010000.jpg",
+        "before-map-1440-011000.jpg",
+        "before-map-1440-012000.jpg",
+        "before-map-1440-013000.jpg"
+      ]
+    },
+    {
+      "route": "/portal/map.html",
+      "width": 1440,
+      "variant": "integrated",
+      "height": 15076,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 412,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-map-1440-first.jpg",
+        "after-map-1440-001000.jpg",
+        "after-map-1440-002000.jpg",
+        "after-map-1440-003000.jpg",
+        "after-map-1440-004000.jpg",
+        "after-map-1440-005000.jpg",
+        "after-map-1440-006000.jpg",
+        "after-map-1440-007000.jpg",
+        "after-map-1440-008000.jpg",
+        "after-map-1440-009000.jpg",
+        "after-map-1440-010000.jpg",
+        "after-map-1440-011000.jpg",
+        "after-map-1440-012000.jpg",
+        "after-map-1440-013000.jpg",
+        "after-map-1440-014000.jpg",
+        "after-map-1440-015000.jpg"
+      ]
+    },
+    {
+      "route": "/before/.agents/plan.html",
+      "width": 1440,
+      "variant": "original",
+      "height": 1184,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 6,
+      "smallText": [],
+      "minFont": 17,
+      "screenshots": [
+        "before-plan-1440-first.jpg",
+        "before-plan-1440-001000.jpg"
+      ]
+    },
+    {
+      "route": "/portal/plan.html",
+      "width": 1440,
+      "variant": "integrated",
+      "height": 3252,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 20,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-plan-1440-first.jpg",
+        "after-plan-1440-001000.jpg",
+        "after-plan-1440-002000.jpg",
+        "after-plan-1440-003000.jpg"
+      ]
+    },
+    {
+      "route": "/before/.agents/roles.html",
+      "width": 1440,
+      "variant": "original",
+      "height": 1184,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 7,
+      "smallText": [],
+      "minFont": 17,
+      "screenshots": [
+        "before-roles-1440-first.jpg",
+        "before-roles-1440-001000.jpg"
+      ]
+    },
+    {
+      "route": "/portal/roles.html",
+      "width": 1440,
+      "variant": "integrated",
+      "height": 1247,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 15,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-roles-1440-first.jpg",
+        "after-roles-1440-001000.jpg"
+      ]
+    },
+    {
+      "route": "/before/.agents/operations.html",
+      "width": 1440,
+      "variant": "original",
+      "height": 1184,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 6,
+      "smallText": [],
+      "minFont": 17,
+      "screenshots": [
+        "before-operations-1440-first.jpg",
+        "before-operations-1440-001000.jpg"
+      ]
+    },
+    {
+      "route": "/portal/operations.html",
+      "width": 1440,
+      "variant": "integrated",
+      "height": 1247,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 14,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-operations-1440-first.jpg",
+        "after-operations-1440-001000.jpg"
+      ]
+    },
+    {
+      "route": "/before/.agents/tasks/index.html",
+      "width": 1440,
+      "variant": "original",
+      "height": 3354,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 8,
+      "smallText": [
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-10-05-growing-island-release.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-20-whole-app-ux-coherence.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-23-island-performance.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": ".agents/tasks/BLOCKED.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/backlog.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": ".agents/tasks/DONE.md"
+        }
+      ],
+      "minFont": 14,
+      "screenshots": [
+        "before-tasks-1440-first.jpg",
+        "before-tasks-1440-001000.jpg",
+        "before-tasks-1440-002000.jpg",
+        "before-tasks-1440-003000.jpg"
+      ]
+    },
+    {
+      "route": "/portal/tasks.html",
+      "width": 1440,
+      "variant": "integrated",
+      "height": 2599,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 25,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-tasks-1440-first.jpg",
+        "after-tasks-1440-001000.jpg",
+        "after-tasks-1440-002000.jpg"
+      ]
+    },
+    {
+      "route": "/before/docs/index.html",
+      "width": 1440,
+      "variant": "original",
+      "height": 120056,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 1,
+      "smallText": [
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/index.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/island-nature-integration.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/README.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/README.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/wiki/index.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/00_START_HERE.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/01_PRODUCT_AND_DECISIONS.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/02_CORE_SIMULATION.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/03_GROWTH_AND_RANDOMNESS.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/04_LEARNING_AND_PROGRESSION.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/05_UX_AND_FEEDBACK.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/06_DATA_AND_INTEGRATION.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/07_MVP_AND_DELIVERY.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/08_ACCEPTANCE_TESTS.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/09_CONTENT_CATALOG.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/10_OPEN_RISKS.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/IMPLEMENTATION_GAP.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/IMPLEMENTATION.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/01_app_spec.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/02_math_skills.md"
+        }
+      ],
+      "minFont": 14,
+      "screenshots": [
+        "before-documents-1440-first.jpg",
+        "before-documents-1440-001000.jpg",
+        "before-documents-1440-002000.jpg",
+        "before-documents-1440-003000.jpg",
+        "before-documents-1440-004000.jpg",
+        "before-documents-1440-005000.jpg",
+        "before-documents-1440-006000.jpg",
+        "before-documents-1440-007000.jpg",
+        "before-documents-1440-008000.jpg",
+        "before-documents-1440-009000.jpg",
+        "before-documents-1440-010000.jpg",
+        "before-documents-1440-011000.jpg",
+        "before-documents-1440-012000.jpg",
+        "before-documents-1440-013000.jpg",
+        "before-documents-1440-014000.jpg",
+        "before-documents-1440-015000.jpg",
+        "before-documents-1440-016000.jpg",
+        "before-documents-1440-017000.jpg",
+        "before-documents-1440-018000.jpg",
+        "before-documents-1440-019000.jpg",
+        "before-documents-1440-020000.jpg",
+        "before-documents-1440-021000.jpg",
+        "before-documents-1440-022000.jpg",
+        "before-documents-1440-023000.jpg",
+        "before-documents-1440-024000.jpg",
+        "before-documents-1440-025000.jpg",
+        "before-documents-1440-026000.jpg",
+        "before-documents-1440-027000.jpg",
+        "before-documents-1440-028000.jpg",
+        "before-documents-1440-029000.jpg",
+        "before-documents-1440-030000.jpg",
+        "before-documents-1440-031000.jpg",
+        "before-documents-1440-032000.jpg",
+        "before-documents-1440-033000.jpg",
+        "before-documents-1440-034000.jpg",
+        "before-documents-1440-035000.jpg",
+        "before-documents-1440-036000.jpg",
+        "before-documents-1440-037000.jpg",
+        "before-documents-1440-038000.jpg",
+        "before-documents-1440-039000.jpg",
+        "before-documents-1440-040000.jpg",
+        "before-documents-1440-041000.jpg",
+        "before-documents-1440-042000.jpg",
+        "before-documents-1440-043000.jpg",
+        "before-documents-1440-044000.jpg",
+        "before-documents-1440-045000.jpg",
+        "before-documents-1440-046000.jpg",
+        "before-documents-1440-047000.jpg",
+        "before-documents-1440-048000.jpg",
+        "before-documents-1440-049000.jpg",
+        "before-documents-1440-050000.jpg",
+        "before-documents-1440-051000.jpg",
+        "before-documents-1440-052000.jpg",
+        "before-documents-1440-053000.jpg",
+        "before-documents-1440-054000.jpg",
+        "before-documents-1440-055000.jpg",
+        "before-documents-1440-056000.jpg",
+        "before-documents-1440-057000.jpg",
+        "before-documents-1440-058000.jpg",
+        "before-documents-1440-059000.jpg",
+        "before-documents-1440-060000.jpg",
+        "before-documents-1440-061000.jpg",
+        "before-documents-1440-062000.jpg",
+        "before-documents-1440-063000.jpg",
+        "before-documents-1440-064000.jpg",
+        "before-documents-1440-065000.jpg",
+        "before-documents-1440-066000.jpg",
+        "before-documents-1440-067000.jpg",
+        "before-documents-1440-068000.jpg",
+        "before-documents-1440-069000.jpg",
+        "before-documents-1440-070000.jpg",
+        "before-documents-1440-071000.jpg",
+        "before-documents-1440-072000.jpg",
+        "before-documents-1440-073000.jpg",
+        "before-documents-1440-074000.jpg",
+        "before-documents-1440-075000.jpg",
+        "before-documents-1440-076000.jpg",
+        "before-documents-1440-077000.jpg",
+        "before-documents-1440-078000.jpg",
+        "before-documents-1440-079000.jpg",
+        "before-documents-1440-080000.jpg",
+        "before-documents-1440-081000.jpg",
+        "before-documents-1440-082000.jpg",
+        "before-documents-1440-083000.jpg",
+        "before-documents-1440-084000.jpg",
+        "before-documents-1440-085000.jpg",
+        "before-documents-1440-086000.jpg",
+        "before-documents-1440-087000.jpg",
+        "before-documents-1440-088000.jpg",
+        "before-documents-1440-089000.jpg",
+        "before-documents-1440-090000.jpg",
+        "before-documents-1440-091000.jpg",
+        "before-documents-1440-092000.jpg",
+        "before-documents-1440-093000.jpg",
+        "before-documents-1440-094000.jpg",
+        "before-documents-1440-095000.jpg",
+        "before-documents-1440-096000.jpg",
+        "before-documents-1440-097000.jpg",
+        "before-documents-1440-098000.jpg",
+        "before-documents-1440-099000.jpg",
+        "before-documents-1440-100000.jpg",
+        "before-documents-1440-101000.jpg",
+        "before-documents-1440-102000.jpg",
+        "before-documents-1440-103000.jpg",
+        "before-documents-1440-104000.jpg",
+        "before-documents-1440-105000.jpg",
+        "before-documents-1440-106000.jpg",
+        "before-documents-1440-107000.jpg",
+        "before-documents-1440-108000.jpg",
+        "before-documents-1440-109000.jpg",
+        "before-documents-1440-110000.jpg",
+        "before-documents-1440-111000.jpg",
+        "before-documents-1440-112000.jpg",
+        "before-documents-1440-113000.jpg",
+        "before-documents-1440-114000.jpg",
+        "before-documents-1440-115000.jpg",
+        "before-documents-1440-116000.jpg",
+        "before-documents-1440-117000.jpg",
+        "before-documents-1440-118000.jpg",
+        "before-documents-1440-119000.jpg",
+        "before-documents-1440-120000.jpg"
+      ]
+    },
+    {
+      "route": "/portal/documents.html",
+      "width": 1440,
+      "variant": "integrated",
+      "height": 93020,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 1396,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-documents-1440-first.jpg",
+        "after-documents-1440-001000.jpg",
+        "after-documents-1440-002000.jpg",
+        "after-documents-1440-003000.jpg",
+        "after-documents-1440-004000.jpg",
+        "after-documents-1440-005000.jpg",
+        "after-documents-1440-006000.jpg",
+        "after-documents-1440-007000.jpg",
+        "after-documents-1440-008000.jpg",
+        "after-documents-1440-009000.jpg",
+        "after-documents-1440-010000.jpg",
+        "after-documents-1440-011000.jpg",
+        "after-documents-1440-012000.jpg",
+        "after-documents-1440-013000.jpg",
+        "after-documents-1440-014000.jpg",
+        "after-documents-1440-015000.jpg",
+        "after-documents-1440-016000.jpg",
+        "after-documents-1440-017000.jpg",
+        "after-documents-1440-018000.jpg",
+        "after-documents-1440-019000.jpg",
+        "after-documents-1440-020000.jpg",
+        "after-documents-1440-021000.jpg",
+        "after-documents-1440-022000.jpg",
+        "after-documents-1440-023000.jpg",
+        "after-documents-1440-024000.jpg",
+        "after-documents-1440-025000.jpg",
+        "after-documents-1440-026000.jpg",
+        "after-documents-1440-027000.jpg",
+        "after-documents-1440-028000.jpg",
+        "after-documents-1440-029000.jpg",
+        "after-documents-1440-030000.jpg",
+        "after-documents-1440-031000.jpg",
+        "after-documents-1440-032000.jpg",
+        "after-documents-1440-033000.jpg",
+        "after-documents-1440-034000.jpg",
+        "after-documents-1440-035000.jpg",
+        "after-documents-1440-036000.jpg",
+        "after-documents-1440-037000.jpg",
+        "after-documents-1440-038000.jpg",
+        "after-documents-1440-039000.jpg",
+        "after-documents-1440-040000.jpg",
+        "after-documents-1440-041000.jpg",
+        "after-documents-1440-042000.jpg",
+        "after-documents-1440-043000.jpg",
+        "after-documents-1440-044000.jpg",
+        "after-documents-1440-045000.jpg",
+        "after-documents-1440-046000.jpg",
+        "after-documents-1440-047000.jpg",
+        "after-documents-1440-048000.jpg",
+        "after-documents-1440-049000.jpg",
+        "after-documents-1440-050000.jpg",
+        "after-documents-1440-051000.jpg",
+        "after-documents-1440-052000.jpg",
+        "after-documents-1440-053000.jpg",
+        "after-documents-1440-054000.jpg",
+        "after-documents-1440-055000.jpg",
+        "after-documents-1440-056000.jpg",
+        "after-documents-1440-057000.jpg",
+        "after-documents-1440-058000.jpg",
+        "after-documents-1440-059000.jpg",
+        "after-documents-1440-060000.jpg",
+        "after-documents-1440-061000.jpg",
+        "after-documents-1440-062000.jpg",
+        "after-documents-1440-063000.jpg",
+        "after-documents-1440-064000.jpg",
+        "after-documents-1440-065000.jpg",
+        "after-documents-1440-066000.jpg",
+        "after-documents-1440-067000.jpg",
+        "after-documents-1440-068000.jpg",
+        "after-documents-1440-069000.jpg",
+        "after-documents-1440-070000.jpg",
+        "after-documents-1440-071000.jpg",
+        "after-documents-1440-072000.jpg",
+        "after-documents-1440-073000.jpg",
+        "after-documents-1440-074000.jpg",
+        "after-documents-1440-075000.jpg",
+        "after-documents-1440-076000.jpg",
+        "after-documents-1440-077000.jpg",
+        "after-documents-1440-078000.jpg",
+        "after-documents-1440-079000.jpg",
+        "after-documents-1440-080000.jpg",
+        "after-documents-1440-081000.jpg",
+        "after-documents-1440-082000.jpg",
+        "after-documents-1440-083000.jpg",
+        "after-documents-1440-084000.jpg",
+        "after-documents-1440-085000.jpg",
+        "after-documents-1440-086000.jpg",
+        "after-documents-1440-087000.jpg",
+        "after-documents-1440-088000.jpg",
+        "after-documents-1440-089000.jpg",
+        "after-documents-1440-090000.jpg",
+        "after-documents-1440-091000.jpg",
+        "after-documents-1440-092000.jpg",
+        "after-documents-1440-093000.jpg"
+      ]
+    }
+  ],
+  "operations": [],
+  "failures": [
+    "page.evaluate: Target page, context or browser has been closed\n    at capture (/Users/yutogasaki/Projects/sansu/tools/check-portal-migration-browser.mjs:42:89)\n    at async file:///Users/yutogasaki/Projects/sansu/tools/check-portal-migration-browser.mjs:50:3"
+  ],
+  "status": "FAIL",
+  "pageErrors": []
+}

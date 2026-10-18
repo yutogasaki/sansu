@@ -1,0 +1,36 @@
+{
+  "at": "2026-10-16T08:20:23.667Z",
+  "command": "node tools/check-portal-library-browser.mjs ",
+  "candidate": "be55eae17dcadf330948d5261512dc0c8f20b33ea558e3aded97f77d83d4b9d5",
+  "manifestSha256": "c212a26691b577aa9dcca1606aaa18bf03de7352810cb3870f9bb1f743f683a1",
+  "inputSha256": "a23451705c3c23c37bed021c89c6812123ee0d2cc6eb611550a24e358800d581",
+  "groups": [
+    {
+      "name": "全項目検索・多軸・件数・0件・解除・URL復元・同項目JSON・Escape・フォーカス",
+      "status": "PASS"
+    },
+    {
+      "name": "画像図鑑：全32画像・絞込・比較・メモ追加/編集/保存/書出/削除・再読込",
+      "status": "PASS"
+    },
+    {
+      "name": "画像図鑑：保存失敗の表示・入力保持・書き出し可能",
+      "status": "PASS"
+    },
+    {
+      "name": "観察票：匿名入力・保存/再読込・export/import・不正import・削除",
+      "status": "PASS"
+    },
+    {
+      "name": "観察票：保存失敗の表示・入力保持・削除失敗時の保全",
+      "status": "PASS"
+    },
+    {
+      "name": "フォルダ参照：全件一覧・資料名/容量/詳細・統合HTMLへの入口",
+      "status": "PASS"
+    }
+  ],
+  "pages": [],
+  "failures": [],
+  "status": "PASS"
+}

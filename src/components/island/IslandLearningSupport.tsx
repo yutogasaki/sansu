@@ -1,3 +1,5 @@
+import { baseTenVisual } from '../../domain/math/baseTenVisual';
+import { BaseTenExchangeGuide } from '../domain/BaseTenDiagram';
 import { parkHissanGrid } from '../../domain/park/learning';
 import type { IslandLearningSlot } from '../../domain/island/types';
 import { islandSupportStage } from '../../domain/island/learningSupport';
@@ -36,6 +38,7 @@ export function IslandLearningSupport({ slot }: { slot: IslandLearningSlot }) {
     const answer = problem.displayAnswer ?? (Array.isArray(problem.correctAnswer) ? problem.correctAnswer.join(' / ') : problem.correctAnswer);
     if (stage === 'hint') return <div className="island-learning-support" data-support-kind="hint">
         <p><strong>ヒント</strong> {guidance?.text ?? '「おてほんを みる」で、こたえを たしかめられるよ。'}</p>
+        {baseTenVisual(problem) && <BaseTenExchangeGuide />}
     </div>;
     // These are presentation-only values. The child's saved/draft Hissan values
     // stay in the disabled form; none of the model's cells are submitted.

@@ -1,0 +1,90 @@
+{
+  "title": "さんすう",
+  "original": ".agents/index.html",
+  "publicUrl": "https://sansu-seven.vercel.app",
+  "pages": [
+    {
+      "category": "計画・仕様・役割・運用",
+      "patterns": [
+        ".agents/*.html"
+      ]
+    },
+    {
+      "category": "仕事・知識",
+      "patterns": [
+        ".agents/tasks/index.html",
+        "docs/index.html"
+      ]
+    },
+    {
+      "category": "関連資料",
+      "patterns": [
+        "docs/**/*.html"
+      ]
+    }
+  ],
+  "followHtml": [
+    ".agents/",
+    "docs/"
+  ],
+  "followDocuments": [
+    "docs/",
+    ".agents/tasks/",
+    ".agents/memory/",
+    ".agents/skills/",
+    "ops/",
+    "memory/",
+    "CONSTITUTION.md",
+    "AGENTS.md",
+    "README.md",
+    "DESIGN.md",
+    ".mmmind/task-policy.json"
+  ],
+  "excludeContacts": false,
+  "inputs": [
+    ".agents/tasks/BLOCKED.md",
+    ".agents/tasks/TASKS.md",
+    "docs/portal/legacy-boundary.json",
+    "docs/portal/metadata.json",
+    "docs/portal/project.json",
+    "scripts/check-standard-portal.mjs",
+    "scripts/portal-unification.json",
+    "scripts/standard-portal.mjs",
+    "scripts/vendor/portal-integration/1.0.2/adapter.cjs",
+    "scripts/vendor/portal-integration/1.0.2/integrate.py",
+    "scripts/vendor/portal-integration/1.0.2/integration.css",
+    "scripts/vendor/portal-integration/1.0.2/integration.js",
+    "scripts/vendor/portal-integration/1.0.2/lock.json",
+    "tools/check-internal-portal.mjs",
+    "tools/check-portal-entry.mjs",
+    "tools/check-portal-flow.mjs",
+    "tools/check-portal-integration.mjs",
+    "tools/check-portal-migration-browser.mjs",
+    "tools/check-portal-migration.mjs",
+    "tools/check-portal-originals.mjs",
+    "tools/generate-agent-index.mjs",
+    "tools/integrated-portal-browser.js",
+    "tools/integrated-portal.css",
+    "tools/integrated-portal.mjs",
+    "tools/portal-content.mjs",
+    "tools/portal-entry.test.mjs",
+    "tools/portal-flow.css",
+    "tools/portal-flow.mjs",
+    "tools/portal-graph.mjs",
+    "tools/portal-html.mjs",
+    "tools/portal-originals.mjs",
+    "tools/portal-reader-content.js",
+    "tools/qa-integrated-portal.mjs",
+    "tools/qa-portal-originals.mjs",
+    "tools/portal-library.mjs",
+    "tools/portal-library-runtime.js",
+    "tools/portal-library.css",
+    "tools/portal-native-context.js",
+    "tools/check-portal-library.py",
+    "tools/check-portal-library-browser.mjs",
+    "tools/portal-library-folders.mjs"
+  ],
+  "inlineDocumentExtensions": [
+    ".md"
+  ]
+}

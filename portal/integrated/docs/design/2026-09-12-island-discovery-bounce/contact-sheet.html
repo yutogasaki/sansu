@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ja"><head><base data-sansu-source-context href="../../../../../docs/design/2026-09-12-island-discovery-bounce/contact-sheet.html"><script src="../../../portal/native-context.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>発見した瞬間の小さな反応 — production contact sheet</title>
+<style>
+  :root { color-scheme: light; font: 14px/1.5 system-ui, sans-serif; background: #f5f2e9; color: #173b40; }
+  body { max-width: 1180px; margin: 24px auto; padding: 0 18px 40px; }
+  h1 { font-size: 24px; }
+  p { max-width: 90ch; }
+  main { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; align-items: start; }
+  figure { margin: 0; padding: 10px; background: #fffdf8; border: 1px solid #d8cdb8; border-radius: 14px; }
+  img { display: block; width: 100%; height: auto; border-radius: 9px; background: #e9e2cb; }
+  figcaption { margin-top: 8px; overflow-wrap: anywhere; }
+  small { display: block; color: #53656a; }
+  .benchmark { border-color: #88a6b0; }
+</style>
+<link rel="stylesheet" href="../../../portal/integration.css"><link rel="stylesheet" href="../../../portal/library.css"></head><body><aside class="pu-bar" aria-label="統合ポータル"><nav><strong>さんすう</strong><a href="../../../portal/index.html">現在地へ</a><a href="../../../portal/search.html">全ページから探す</a><a href="../../../.agents/index.html">元のポータルを開く →</a></nav><p>新版を確認中。元の入口を保持しています。</p></aside><h1 data-portal-item="item-9d27abc2387fce126ea3">発見した瞬間の小さな反応 — production</h1>
+<p data-portal-item="item-2d2843c9894f2fdca4a1">Source <code data-portal-item="item-30904cf247f994d86d0a">676dc39cbfe75498de38783df4e13bb59caa104b</code> · Build <code data-portal-item="item-c1596a6fee853c7b4edd">resident-discovery-v1:d80b7d07-d8bb-4ea0-983d-b433b89feba1</code> · <code data-portal-item="item-22a6a3026af1d07d0a24">mystic-island-v1</code> · candidate <code data-portal-item="item-16f3912ef4417dd0368e">mystic-island-shore-garden-v18</code> · Human N=0</p>
+<p data-portal-item="item-858508208d40d05f3114">同じ実buildのクリティカルパス。phoneはmotion、tabletはreduced motion。発見の `!` と、返事中の最新画面を前候補と並べて作者が確認した。</p>
+<main data-portal-item="item-a7e243b69089983953e3">
+  <figure data-portal-item="item-76acc09038eb8d4c9590"><img src="phone-build-empty.png" alt="phone 空の島" data-portal-item="item-35cea43ae7d251865ebe"><figcaption data-portal-item="item-b1ac98374a9d13a7bbce">phone / build empty<small data-portal-item="item-8a909ee51eae2fd0eb2e">390×844 · motion</small></figcaption></figure>
+  <figure data-portal-item="item-689f56db7f3d3f9a1f6a"><img src="phone-initial.png" alt="phone 初期の島" data-portal-item="item-f6362c82ece4eeb79419"><figcaption data-portal-item="item-dfb9c4225076601e49d1">phone / initial<small data-portal-item="item-ecd09958dbbc228af3e5">390×844 · motion</small></figcaption></figure>
+  <figure data-portal-item="item-eb382e1b721016d6a78c"><img src="phone-earned.png" alt="phone 学習報酬" data-portal-item="item-450a7f35ad8c8f59e736"><figcaption data-portal-item="item-efced197d365a7f543cd">phone / earned<small data-portal-item="item-646a9933969c6ce13d3f">390×844 · motion</small></figcaption></figure>
+  <figure data-portal-item="item-1a1134b2d7ad5fac1b74"><img src="phone-observation.png" alt="phone 発見のびっくり反応" data-portal-item="item-80f0c9ee3379166a8b09"><figcaption data-portal-item="item-e14b060f5ce23a0c73b0">phone / discovery ! bounce<small data-portal-item="item-6c291d2df86fe90624f5">390×844 · motion · changed frame</small></figcaption></figure>
+  <figure data-portal-item="item-f93868c2ef73d53843be"><img src="phone-resident-reply.png" alt="phone うさぎの返事と首かしげ" data-portal-item="item-98da5142aaffd5096a11"><figcaption data-portal-item="item-f8c1ea826c172cc6d6b5">phone / favorite reply + tilt<small data-portal-item="item-fb1cb9e5960f1749e3f1">390×844 · motion</small></figcaption></figure>
+  <figure data-portal-item="item-08b4360f82f4901e5209"><img src="phone-growth-inventory.png" alt="phone 成長表示" data-portal-item="item-e97543b31e3fea0bd3c3"><figcaption data-portal-item="item-dd811db8bd1f6029dccd">phone / growth inventory<small data-portal-item="item-fc4033d05b89911d8436">390×844 · motion</small></figcaption></figure>
+  <figure data-portal-item="item-12da5866b73f124e41f8"><img src="phone-offline.png" alt="phone offline再起動" data-portal-item="item-499b0cfad90ae0ee9d9c"><figcaption data-portal-item="item-7ac63b0143a5011e26ac">phone / offline resume<small data-portal-item="item-2b9926577379e1b1349b">390×844 · motion</small></figcaption></figure>
+  <figure data-portal-item="item-ec170183493f45e5f876"><img src="tablet-build-empty.png" alt="tablet 空の島" data-portal-item="item-9d82392844e8bd4fee6d"><figcaption data-portal-item="item-33fe7a36707e1d4d4e33">tablet / build empty<small data-portal-item="item-8d3e4fef3d2716d4b77d">768×1024 · reduced</small></figcaption></figure>
+  <figure data-portal-item="item-6753b806e2638c8777b2"><img src="tablet-initial.png" alt="tablet 初期の島" data-portal-item="item-e6a16be5bdffd1a414a1"><figcaption data-portal-item="item-fd27c19c7eeed8fec34c">tablet / initial<small data-portal-item="item-9d1a4043b7e1e1d42268">768×1024 · reduced</small></figcaption></figure>
+  <figure data-portal-item="item-2e4bb32e97cd0e5f1e13"><img src="tablet-earned.png" alt="tablet 学習報酬" data-portal-item="item-f1d914610a298c18493a"><figcaption data-portal-item="item-a7ca6ed77d96b09a1da1">tablet / earned<small data-portal-item="item-782f93413367e9e89a38">768×1024 · reduced</small></figcaption></figure>
+  <figure data-portal-item="item-72df4d5ead0a46a44ba3"><img src="tablet-observation.png" alt="tablet 発見の静止したびっくり反応" data-portal-item="item-fb118bec69b032942614"><figcaption data-portal-item="item-5c32da231c259b47dc3b">tablet / discovery ! reduced pose<small data-portal-item="item-4f8c8aab644506967501">768×1024 · reduced · changed frame</small></figcaption></figure>
+  <figure data-portal-item="item-d3c2c44f0f17a6865568"><img src="tablet-resident-reply.png" alt="tablet うさぎの返事と静止姿勢" data-portal-item="item-aaae1d8d3d1a2977db15"><figcaption data-portal-item="item-6d283638e2fb8be13c5e">tablet / favorite reply + reduced pose<small data-portal-item="item-3145b85a570cba5d2e66">768×1024 · reduced</small></figcaption></figure>
+  <figure data-portal-item="item-1bc831b4dc633e10dc19"><img src="tablet-growth-inventory.png" alt="tablet 成長表示" data-portal-item="item-de1158c68d06c9ffc5ff"><figcaption data-portal-item="item-e3a73e86e008af6e1287">tablet / growth inventory<small data-portal-item="item-3a10fdb1de24150f6b61">768×1024 · reduced</small></figcaption></figure>
+  <figure data-portal-item="item-8804595747527f803f64"><img src="tablet-offline.png" alt="tablet offline再起動" data-portal-item="item-a0c3452e7cacbe8238c6"><figcaption data-portal-item="item-893a75604278e3534e1f">tablet / offline resume<small data-portal-item="item-79a797711449ec6560d3">768×1024 · reduced</small></figcaption></figure>
+  <figure class="benchmark" data-portal-item="item-17eb3b84df8e496a8692"><img src="../2026-09-11-island-resident-replies/tablet-resident-reply.png" alt="前候補のtablet返事画面" data-portal-item="item-6174d7a611cd4433cb39"><figcaption data-portal-item="item-60e16fba02591afa72e9">benchmark / previous resident-reply candidate<small data-portal-item="item-cebcf41450cc853d94ba">前候補 · 768×1024 · comparison only</small></figcaption></figure>
+</main>
+<script src="../../../portal/integration.js" defer></script><script src="../../../portal/library-runtime.js" defer></script></body></html>

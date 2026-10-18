@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-16T15:23:54.167Z",
+  "method": "Read-only diagnostic: filesystem calls virtualize absent portal and capture writes in memory. Canonical source files stay available. Not a recovery archive test.",
+  "result": {
+    "status": "FAIL",
+    "error": "Error: virtual output absent: /Users/yutogasaki/Projects/sansu/portal/index.html\n    at absent (file:///private/tmp/sansu-portal-verify-20261017/empty-output.mjs:8:26)\n    at fs.<computed> [as readFileSync] (file:///private/tmp/sansu-portal-verify-20261017/empty-output.mjs:12:108)\n    at Object.apply (/Users/yutogasaki/Projects/sansu/scripts/vendor/portal-integration/1.0.2/adapter.cjs:34:16)\n    at run (file:///Users/yutogasaki/Projects/sansu/scripts/standard-portal.mjs:88:74)\n    at file:///private/tmp/sansu-portal-verify-20261017/empty-output.mjs:17:9\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)"
+  },
+  "captured": 0,
+  "differences": [],
+  "manifestSha256": "b76a54e15341dd75b70f6a30dc690500d1ba82cff321962e985b0135358225eb"
+}

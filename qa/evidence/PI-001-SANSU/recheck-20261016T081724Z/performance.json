@@ -1,0 +1,140 @@
+{
+  "at": "2026-10-16T08:26:55.879Z",
+  "candidate": "be55eae17dcadf330948d5261512dc0c8f20b33ea558e3aded97f77d83d4b9d5",
+  "manifestSha256": "c212a26691b577aa9dcca1606aaa18bf03de7352810cb3870f9bb1f743f683a1",
+  "scope": "Diagnostic desktop Chromium 390x844 mobile emulation. Local static HTTP without gzip. Artificial CPU/network limits. Not Safari/iOS, real phone, production latency, peak memory or acceptance.",
+  "profiles": [
+    {
+      "name": "baseline",
+      "cpuRate": 1,
+      "downloadMbps": null,
+      "searchReadyMs": 697,
+      "navigation": {
+        "resources": [
+          {
+            "name": "/portal/integration.css",
+            "encodedBodySize": 3887,
+            "durationMs": 3
+          },
+          {
+            "name": "/portal/library.css",
+            "encodedBodySize": 583,
+            "durationMs": 4
+          },
+          {
+            "name": "/portal/integration.js",
+            "encodedBodySize": 8739,
+            "durationMs": 5
+          },
+          {
+            "name": "/portal/search-data.js",
+            "encodedBodySize": 12049122,
+            "durationMs": 51
+          },
+          {
+            "name": "/portal/library-runtime.js",
+            "encodedBodySize": 1281,
+            "durationMs": 5
+          }
+        ],
+        "count": "82,200件 / 全82,200件。40件を表示。"
+      },
+      "queryToCountMs": 56,
+      "queryCount": "8,923件 / 全82,200件。40件を表示。",
+      "metrics": {
+        "Documents": 1,
+        "Nodes": 1289,
+        "TaskDuration": 0.731135,
+        "JSHeapUsedSize": 106145492,
+        "JSHeapTotalSize": 175751168
+      },
+      "jsHeapSampleMiB": 101.23,
+      "errors": [],
+      "atlasSmallText": [
+        {
+          "tag": "P",
+          "fontPx": 9,
+          "text": "LH-01 / 外部実画面"
+        },
+        {
+          "tag": "P",
+          "fontPx": 11,
+          "text": "主参考・翻訳候補"
+        },
+        {
+          "tag": "P",
+          "fontPx": 12,
+          "text": "Little Habitats / dannylimanseta"
+        },
+        {
+          "tag": "P",
+          "fontPx": 11,
+          "text": "公式サンプル庭。季節ジャンプ・時刻スキップ・停止・写真モードを使用。通常の獲得過程・祭り・精霊の観測証拠ではない。"
+        },
+        {
+          "tag": "P",
+          "fontPx": 11,
+          "text": "この端末のブラウザに保存。製品の採用決定とは分けて記録します。"
+        },
+        {
+          "tag": "LABEL",
+          "fontPx": 11,
+          "text": "今の判断参考候補保留見送り"
+        },
+        {
+          "tag": "LABEL",
+          "fontPx": 11,
+          "text": "理由と、次に確かめること"
+        }
+      ]
+    },
+    {
+      "name": "cpu4-network4Mbps",
+      "cpuRate": 4,
+      "downloadMbps": 4,
+      "searchReadyMs": 26518,
+      "navigation": {
+        "resources": [
+          {
+            "name": "/portal/library.css",
+            "encodedBodySize": 583,
+            "durationMs": 97
+          },
+          {
+            "name": "/portal/integration.css",
+            "encodedBodySize": 3887,
+            "durationMs": 118
+          },
+          {
+            "name": "/portal/search-data.js",
+            "encodedBodySize": 12049122,
+            "durationMs": 24235
+          },
+          {
+            "name": "/portal/library-runtime.js",
+            "encodedBodySize": 1281,
+            "durationMs": 105
+          },
+          {
+            "name": "/portal/integration.js",
+            "encodedBodySize": 8739,
+            "durationMs": 141
+          }
+        ],
+        "count": "82,200件 / 全82,200件。40件を表示。"
+      },
+      "queryToCountMs": 183,
+      "queryCount": "8,923件 / 全82,200件。40件を表示。",
+      "metrics": {
+        "Documents": 1,
+        "Nodes": 1249,
+        "TaskDuration": 2.391534,
+        "JSHeapUsedSize": 106070388,
+        "JSHeapTotalSize": 171540480
+      },
+      "jsHeapSampleMiB": 101.16,
+      "errors": []
+    }
+  ],
+  "status": "MEASURED_DIAGNOSTIC_ONLY"
+}

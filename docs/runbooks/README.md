@@ -9,6 +9,7 @@ They are for deploy, release, recovery, and maintenance workflows.
 
 - [3d-asset-pipeline.md](3d-asset-pipeline.md)
 - [backlog-triage.md](backlog-triage.md)
+- [島制作を短く区切る進め方](bounded-island-work.md)：既定30分・一成果物、段階に応じた検証と記録。
 - [growing-verification.md](growing-verification.md)
 - [growing-fixtures.md](growing-fixtures.md)
 - [差分から検証を選ぶ](verification-plan.md)

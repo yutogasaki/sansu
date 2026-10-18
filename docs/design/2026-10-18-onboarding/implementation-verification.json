@@ -1,0 +1,215 @@
+{
+  "status": "PARTIAL",
+  "implementation": "Local first-play onboarding implemented and target journey verified",
+  "checkedAt": "2026-10-18T02:57:36.966615+00:00",
+  "head": "eb4b907bdf5cb6e99c30c4ac6f28d2d3969cac50",
+  "workingTree": "Shared dirty checkout; no commit, push or deployment. Unrelated edits preserved.",
+  "candidate": "island-first-play-v2",
+  "target": "http://127.0.0.1:5308/#/onboarding",
+  "build": {
+    "version": "development-local:48926313-a2ad-4866-a2ec-46e0d45b78c2",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "inputs": {
+    "src/domain/user/firstPlay.ts": "193e0c99d5ae38e8ba6b6373d521134124bfb04ede1169feaad9ac94e3d27728",
+    "src/domain/user/onboarding.ts": "af1ee4fbe44aea4a0f41b312d2a6d595b7131b115a5bd5e73c0d812a5955fc0e",
+    "src/components/island/IslandOnboarding.tsx": "61c57cd751f66a4b663716b653a65fec7921e9a84ad9fc39563650418b228e63",
+    "src/components/island/IslandFirstSetup.tsx": "cd9d9a06465bca746f9509d605102b581e726d534e9948a7764fe947d2b2ebe6",
+    "src/components/island/IslandWelcome.tsx": "925ac7fd6009fbc69eec805876eccb91fbbab3b91dc0a57977eb955af91a5e3d",
+    "src/components/island/IslandOnboarding.css": "79ca010dc470df98191b0dbb2276a306cfcc639be6605da5a567f014dbd01069",
+    "src/components/island/growing/GrowingIsland.tsx": "42026e4d2549b88cee7329753dd743e6da27ebe2d57cf4b35cfca59a846aed07",
+    "src/components/island/growing/GrowingIslandMenu.tsx": "a297b1c5e1ed7f8792ac8214a0d56b24731914bd16150284d637ea27ae872f3e",
+    "tools/e2e-first-play.mjs": "9544707a4d437f3b80b30f098d1a4baadc544eddc918bf2c094a86bc1d7c0f66"
+  },
+  "additionalInputs": {
+    "src/components/island/IslandWelcome.test.tsx": "36de4e5e6038dcd1a0e357a6b459e6a12c20fdfbe9e7c17b216c70bce1ed7c3d",
+    "src/domain/user/firstPlay.test.ts": "efd882cd7f6b358cfa52aacb77b7a6901e2d71d1eaf879fb73fb082435f2ce8c",
+    "tools/e2e-island-pwa.mjs": "d9c1be003f824b85bdeca893b05f93f63aee4ea3214e5345952b26ed3026f431",
+    "package-lock.json": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d"
+  },
+  "checks": [
+    {
+      "command": "npm run lint",
+      "result": "PASS, 0 errors / 4 existing warnings",
+      "evidence": "runtime/resume-lint.log"
+    },
+    {
+      "command": "npm run typecheck",
+      "result": "PASS",
+      "evidence": "runtime/resume-typecheck.log"
+    },
+    {
+      "command": "npm run build",
+      "result": "PASS; precache 143 files / 8.52 MiB",
+      "evidence": "runtime/resume-build.log"
+    },
+    {
+      "command": "npx vitest run src/components/island/IslandWelcome.test.tsx src/domain/user/firstPlay.test.ts src/domain/user/onboarding.test.ts --maxWorkers=1 --minWorkers=1",
+      "result": "PASS, 3 files / 28 tests",
+      "evidence": "runtime/resume-focused-final.log"
+    },
+    {
+      "command": "npm run e2e:smoke",
+      "result": "PASS, 32 scenarios",
+      "evidence": "runtime/resume-smoke.log"
+    },
+    {
+      "command": "node tools/e2e-first-play.mjs",
+      "result": "PASS, phone390 normal + tablet768 reduced motion, 6 real math answers + English-only entry",
+      "evidence": "runtime/report.json"
+    },
+    {
+      "command": "node tools/e2e-island-pwa.mjs",
+      "result": "PASS, 8 protected flows + legacy compatibility + real SW offline answer/reload",
+      "evidence": "runtime/pwa-report.json"
+    },
+    {
+      "command": "node output/onboarding-first-play/layout-check.mjs",
+      "result": "PASS, 320x568 / 568x320, 44px/hit targets/no horizontal overflow/keyboard entry",
+      "evidence": "runtime/layout-report.json"
+    },
+    {
+      "command": "npm run check:current-ui-entry",
+      "result": "PASS",
+      "evidence": "runtime/resume-entry.log"
+    },
+    {
+      "command": "npm run docs:check",
+      "result": "PASS, existing review-date warnings",
+      "evidence": "runtime/resume-docs.log"
+    },
+    {
+      "command": "npx vitest run src/hooks/learningProgression.integration.test.ts --maxWorkers=1 --minWorkers=1",
+      "result": "PASS, 12 tests, timed-out legacy next-range case completed in 2054ms",
+      "evidence": "runtime/resume-timeout-recheck.log"
+    },
+    {
+      "command": "npm run agent:index:check",
+      "result": "FAIL, stale generated agent/docs index files in shared checkout",
+      "evidence": "runtime/resume-index.log"
+    },
+    {
+      "command": "npm run portal:verify",
+      "result": "FAIL, stale flow evidence for docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+      "evidence": "runtime/resume-portal.log"
+    },
+    {
+      "command": "npm run docs:check (final documentation)",
+      "result": "PASS",
+      "evidence": "runtime/final-docs.log"
+    }
+  ],
+  "fullSuite": {
+    "command": "npm run test:run -- --maxWorkers=4 --minWorkers=1",
+    "status": "FINISHED FAIL: 624 files / 5395 tests passed; 1 file / 1 test timed out. Isolated 12-test rerun PASS.",
+    "evidence": "runtime/resume-full-tests.log",
+    "observedFailure": "src/hooks/learningProgression.integration.test.ts: legacy next range practice timed out after 15000ms; isolated 12-test rerun passed. Cause not conclusively established.",
+    "durationSeconds": 1366.9,
+    "longRunningNativeTerrain": "PASS, authoredCoreGrowthIntegration.test.ts completed in 1020398ms"
+  },
+  "firstFailures": [
+    {
+      "evidence": "runtime/resume-journey-failure.json",
+      "classification": "Harness reloaded immediately after click before successful save/next heading; now waits for persisted stage."
+    },
+    {
+      "evidence": "runtime/resume-journey-v2-failure.json",
+      "classification": "Setup reentry locator timed out; focused UI reproduction passed. No data reset or app change used to force pass."
+    },
+    {
+      "evidence": "runtime/resume-journey-v3-failure.json",
+      "classification": "Native Growing IDB read exceeded 10-second diagnostic timeout. Raised read budget to 30s; successful v4 inputs retained. No performance claim."
+    }
+  ],
+  "visual": {
+    "contactSheet": "runtime/contact-sheet.jpg",
+    "authorReview": "Welcome, real island, neighbor, setup, learning, return and offline captures inspected; approved existing art reused. No new illustration generated.",
+    "independentChildUnderstanding": "Not evaluated",
+    "physicalDevices": "Not evaluated",
+    "publicDeployment": "Not performed"
+  },
+  "limits": [
+    "Full unit run and generated development portal are not all-green.",
+    "PWA update signals/holds and profile abort are explicit fault diagnostics; real SW offline is a separate hook-free check.",
+    "No real two-build update, all DB/photo blobs, child comprehension, motivation or revisit study.",
+    "Root configured delivery snap-root-v1 and route delivery mystic-island-v1 are separately captured. Source revision is development-local; build version and SHA identify this local candidate."
+  ],
+  "environment": {
+    "node": "24.18.0",
+    "nvm": "Not installed at expected ~/.nvm/nvm.sh; used existing fnm Node and installed lockfile dependencies."
+  },
+  "artifacts": {
+    "runtime/resume-full-tests.log": "f9f0d7b0b2b6aedbcfc84a3cca78296e8b76018f93054858c81ba523c72b43f1",
+    "runtime/resume-journey-v3-failure.json": "d7f9d23a80d58ae4d38aa0eb04ae4cb93e526e78491323b06869a867ae3b39bf",
+    "runtime/resume-typecheck.log": "9e59605fb9172da9759b4feeda0238f5bc35ea2d1abb67d3392904705d025041",
+    "runtime/resume-focused-final.log": "3ebcf7f145f98aecf1b8daad7d0348766c18776ba0e250cfa73d059be2084a88",
+    "runtime/390-return.png": "02732d4ea70079340b5bfbc9355a07e5b5a3284f95f2481d83f22894327e0d18",
+    "runtime/report.json": "e60be97d0aae15a41862805deb62c22a82d24b991d0ef0969f00abea1630b35c",
+    "runtime/resume-journey-v2-failure.json": "f4c1dc77e5ba7c3f79a5ecb6e734aea12c0bf52231171f87bfd3e466d7c69cf4",
+    "runtime/390-first-neighbor.png": "97e6a18d7a8472ca4c7769cac519c58462cfe4f7b4c6038dc33c3aaee54012e0",
+    "runtime/resume-docs.log": "f532551edebda0fda7891fd2f1aed92babcdbcf96bd6b64b3d0e2af635af02a9",
+    "runtime/resume-build.log": "f60c322796463ecc9e8b97e5dc3ae4a8a704cf0314f620990998c7f945353ca0",
+    "runtime/resume-portal.log": "5b00ae5a6a322732189865cf774fea37b9c95fe0f6f1af7461d3892f0ced2cad",
+    "runtime/568-setup-layout.png": "c5b8926293a295f6a6806d50314c0ebb12db5e8704774a7bd1aad6721e3be00a",
+    "runtime/768-first-neighbor.png": "ed8cf553cbbc74f57fca8bdc158ab56beb961d20fa5ff02fc7fcabc1ed692260",
+    "runtime/768-welcome.png": "da88356057cc99fd873c417e4ea8c7fdc4479ec415b4cee0414e5a4ace4950d8",
+    "runtime/resume-pwa-v5.log": "c3297da3cac44237deabae2445823a5786a128bc3ef1239e429d19da660ecafe",
+    "runtime/resume-index.log": "43667924049484809fda4bc7bb8f5220580341b338203754f4cce86a40bc4696",
+    "runtime/resume-journey-failure.json": "c5fc1efcfbed1f009bb61288a558e2631f41f4a8b24d9f835aec2164093edd7d",
+    "runtime/resume-timeout-recheck.log": "d6734a62417abdeb72b69ceaaaed63d6226eb61e40ec803312c2a6e6f88ae99e",
+    "runtime/390-welcome.png": "ba304ca795426f6f63fde5a974f5be1136eec5e3908fe8a8801e8bbea7e1c1d2",
+    "runtime/resume-lint.log": "25500cb004645afb5336c101b569c5b708b43c245f41d8805d7d7ee760410941",
+    "runtime/offline-reduced-resume.png": "b4930b765c5357aebdfa50f3a2a03f8944f5b59ab2974540d9df11c740669f43",
+    "runtime/390-offline-return.png": "4e892d508c063d27542f95cedcf547dad6cc7b3c6a5f64b0d40d44d11a794004",
+    "runtime/pwa-report.json": "d4f957b082bfb2f7816d2339a0046101a9a060f159731041f7a416445ae2e92c",
+    "runtime/pwa-legacy-deferred-gift.png": "c3c86c648e7953270f2aa052a603f1cf00c6057b21bcd8f7c4d2f5f6925ee426",
+    "runtime/768-return.png": "98ea0387064ef7115b984b84aa21702b99b0795e4c9ea6469fc684c13a459dd4",
+    "runtime/layout-report.json": "524902339341809edef4c9d96ade73268584652bef56680e79b073c636fcf2bb",
+    "runtime/768-learning-setup.png": "d3a157c379b3e1dbbf291b961b5362d2663e7c7094c0a9bb5d8ed8d3657fcd75",
+    "runtime/final-docs.log": "f532551edebda0fda7891fd2f1aed92babcdbcf96bd6b64b3d0e2af635af02a9",
+    "runtime/768-learning.png": "b9d7282fa4e10b37e2dc3bea150e03e4e329e32e8a9af2e1af0008d696b436b5",
+    "runtime/contact-sheet.jpg": "28f749db6befb4beda1cf51444eb59f4db49a08de36abf77571c87af9913d410",
+    "runtime/resume-smoke.log": "9523ae33ed071de4ddcf517a01652edac02df1e7a777edd892a30e66f38afec0",
+    "runtime/320-setup-layout.png": "87ba35b73d19bf5ef8a185179c535c73675dd4228a39cdb343ac1b901a8fdf97",
+    "runtime/pwa-restored-learning.png": "be96e6b7344b955029661fa5d08df62ce56810b1b9e65b8cb68f97199d6f3801",
+    "runtime/resume-focused-lint.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runtime/390-learning-setup.png": "b145a6fe6756932f4ebb01377da51336a62fc1bcb58b5204270982c6889aa139",
+    "runtime/390-arrival.png": "b87f6e967849409a8cb8405034f66e318076ccd240bd47011ea674588e2f47fa",
+    "runtime/390-learning.png": "9b7180455399fbf5994eb2080ea6c63295dd436b739d143c055cf1a9edeff4bd",
+    "runtime/768-arrival.png": "45e9d1f9cc04c79aaefc88f1a0b4c618794f529a2d27bde718c5b843e2aa70f4",
+    "runtime/768-offline-return.png": "0d70cba9bdbaefbf49a7533801384ad15c5e6f6da350ac8f3ae56b5649c6079c",
+    "runtime/layout-check.mjs.txt": "7789c6077348bd99b00e242f7362b054998b3e21eb729fc4ee73415b09524c18",
+    "runtime/resume-entry.log": "db49097b560a234a9fd11c4cb95697b26617aceb49fac62954132c34737e6c12"
+  }
+}

@@ -1,17 +1,17 @@
 {
   "version": 1,
-  "candidate": "native05-core-growth-terrain-rough-v1",
-  "revision": "a85c8555f05c8d4ce455dbe88a2d931d7c3d362944360e88585d3895539719ed",
+  "candidate": "native05-whole-island-layout-rough-v3",
+  "revision": "c8c18ef4a7f2378b5f328a887814345bd429c17624d4956bd961c1880fd1dd37",
   "source": {
     "artifact": "docs/design/2026-10-10-island-final-3d/whole-island.glb",
     "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
   },
   "artifact": {
     "path": "/prototypes/place-qa/authored-core-growth-terrain-kit.json.gz",
-    "sha256": "2fa98f58014db987421edf0110b1d18b8360c03e504cf2df3580f699a183b06a",
-    "expandedSha256": "19fa663c7acd385cb1b7e2b92b1696b9c564414a4204fbad43dc0a7940d7fd63",
-    "expandedBytes": 16081504,
-    "gzipBytes": 3503856
+    "sha256": "bb97bb52b95895d4db3768e6b9684735cf35960acf36e6a8be0d40c968366acf",
+    "expandedSha256": "ea0920e2e52dba78df85d345748cc3173daa54bb375d236c3c88000f03716f02",
+    "expandedBytes": 16202594,
+    "gzipBytes": 3510812
   },
   "variationCases": {
     "north": {
@@ -31,6 +31,40 @@
         {
           "x": 13,
           "z": -7
+        }
+      ],
+      "homeCells": [
+        {
+          "x": 3,
+          "z": -9
+        },
+        {
+          "x": 2,
+          "z": -8
+        },
+        {
+          "x": 4,
+          "z": -7
+        },
+        {
+          "x": 7,
+          "z": -10
+        },
+        {
+          "x": 9,
+          "z": -9
+        },
+        {
+          "x": 10,
+          "z": -7
+        },
+        {
+          "x": 12,
+          "z": -9
+        },
+        {
+          "x": 13,
+          "z": -6
         }
       ],
       "expectedSockets": [
@@ -58,6 +92,40 @@
           "z": -4
         }
       ],
+      "homeCells": [
+        {
+          "x": 10,
+          "z": -3
+        },
+        {
+          "x": 9,
+          "z": -2
+        },
+        {
+          "x": 14,
+          "z": -3
+        },
+        {
+          "x": 12,
+          "z": 1
+        },
+        {
+          "x": 9,
+          "z": 0
+        },
+        {
+          "x": 8,
+          "z": -1
+        },
+        {
+          "x": 9,
+          "z": -1
+        },
+        {
+          "x": 12,
+          "z": 0
+        }
+      ],
       "expectedSockets": [
         "east"
       ],
@@ -81,6 +149,40 @@
         {
           "x": 13,
           "z": -4
+        }
+      ],
+      "homeCells": [
+        {
+          "x": 3,
+          "z": 1
+        },
+        {
+          "x": 4,
+          "z": 0
+        },
+        {
+          "x": 2,
+          "z": -8
+        },
+        {
+          "x": 1,
+          "z": -3
+        },
+        {
+          "x": 10,
+          "z": -7
+        },
+        {
+          "x": 12,
+          "z": -9
+        },
+        {
+          "x": 12,
+          "z": 0
+        },
+        {
+          "x": 14,
+          "z": -3
         }
       ],
       "expectedSockets": [
@@ -113,8 +215,8 @@
           "x": 14,
           "z": -8
         },
-        "outerEnd": 17.75,
-        "peak": 1.15,
+        "outerEnd": 21.25,
+        "peak": 1.55,
         "mat": 0
       },
       "east": {
@@ -127,8 +229,8 @@
           "x": 14.75,
           "z": -4.5
         },
-        "outerEnd": 18,
-        "peak": 0.32,
+        "outerEnd": 22,
+        "peak": 0.24,
         "mat": 1
       }
     },
@@ -1583,47 +1685,47 @@
         "z": -6.650533371,
         "points": [
           [
-            15.25,
+            17.5,
             0.58,
             -6.650533371
           ],
           [
-            15.5,
+            17.84375,
             0.58,
             -6.650533371
           ],
           [
-            15.75,
+            18.1875,
             0.58,
             -6.650533371
           ],
           [
-            16,
+            18.53125,
             0.58,
             -6.650533371
           ],
           [
-            16.25,
+            18.875,
             0.58,
             -6.650533371
           ],
           [
-            16.5,
+            19.21875,
             0.58,
             -6.650533371
           ],
           [
-            16.75,
+            19.5625,
             0.58,
             -6.650533371
           ],
           [
-            17,
+            19.90625,
             0.58,
             -6.650533371
           ],
           [
-            17.25,
+            20.25,
             0.58,
             -6.650533371
           ]
@@ -1633,47 +1735,47 @@
         "z": -5.341901188,
         "points": [
           [
-            15.25,
+            17.5,
             0.44,
             -5.341901188
           ],
           [
-            15.5,
+            17.84375,
             0.44,
             -5.341901188
           ],
           [
-            15.75,
+            18.1875,
             0.44,
             -5.341901188
           ],
           [
-            16,
+            18.53125,
             0.44,
             -5.341901188
           ],
           [
-            16.25,
+            18.875,
             0.44,
             -5.341901188
           ],
           [
-            16.5,
+            19.21875,
             0.44,
             -5.341901188
           ],
           [
-            16.75,
+            19.5625,
             0.44,
             -5.341901188
           ],
           [
-            17,
+            19.90625,
             0.44,
             -5.341901188
           ],
           [
-            17.25,
+            20.25,
             0.44,
             -5.341901188
           ]
@@ -1748,7 +1850,7 @@
       "name": "north-parallel",
       "vertices": 2262,
       "topTriangles": 4240,
-      "omittedWalkingSites": 1,
+      "omittedWalkingSites": 3,
       "bounds": {
         "min": [
           13.177031231,
@@ -1756,8 +1858,8 @@
           -9.235429268
         ],
         "max": [
-          17.932042941888188,
-          1.4407823835839344,
+          21.36874863813913,
+          1.872654298946177,
           -6.650533371
         ]
       }
@@ -1766,7 +1868,7 @@
       "name": "north-seaward",
       "vertices": 2262,
       "topTriangles": 4240,
-      "omittedWalkingSites": 1,
+      "omittedWalkingSites": 3,
       "bounds": {
         "min": [
           13.177031231,
@@ -1774,8 +1876,8 @@
           -9.235429268
         ],
         "max": [
-          17.932042941888188,
-          1.3492674924109243,
+          21.36874863813913,
+          1.7492657542072292,
           -6.650533371
         ]
       }
@@ -1792,8 +1894,8 @@
           -5.341901188
         ],
         "max": [
-          18.69473167872496,
-          0.6924420091760607,
+          22.436498304899068,
+          0.687802372,
           -2.762031322
         ]
       }
@@ -1810,8 +1912,8 @@
           -5.341901188
         ],
         "max": [
-          18.69473167872496,
-          0.6880814595752566,
+          22.436498304899068,
+          0.687802372,
           -2.762031322
         ]
       }
@@ -1823,12 +1925,12 @@
       "omittedWalkingSites": 0,
       "bounds": {
         "min": [
-          14.95,
+          17.2,
           0.44,
           -6.650533371
         ],
         "max": [
-          17.55,
+          20.55,
           0.6026153656360884,
           -5.341901188
         ]
@@ -1843,38 +1945,38 @@
   "sourceArtifacts": [
     {
       "name": "north-parts.glb",
-      "sha256": "de9b92d43adbb246ee269e1748c422d9063a5e9f1a0e42000c156150a3d2addc",
+      "sha256": "b110608cfc19381c4686ec908773d94443bca2c08eea97250596c14b496940c3",
       "bytes": 285512,
       "wholeOriginalContext": false
     },
     {
       "name": "north-whole.glb",
-      "sha256": "5c6c84f4ee336628669de8a30510dad2c5d5e172b9681bb38958454104eeb845",
+      "sha256": "d92b710de584d9109c0115b4782918d81e63de8245382337abd3cd6b0b35175c",
       "bytes": 35198136,
       "wholeOriginalContext": true
     },
     {
       "name": "east-parts.glb",
-      "sha256": "38afeab2dfd5e129b8b406ce6ec015790f2b71982d3b72ee1d2953557bd294b1",
-      "bytes": 324864,
+      "sha256": "cfd68660c41d7aeb56fdae8ef17e60b1f98cff7ccfbfadd97a27dc7cd820159b",
+      "bytes": 324848,
       "wholeOriginalContext": false
     },
     {
       "name": "east-whole.glb",
-      "sha256": "98a2bf9362bfa4abd4aa9d983fb317a1c8db51cb14bfbab5a1a9f27b16edc9ef",
-      "bytes": 35237488,
+      "sha256": "6716b837be966e40495930c95204259f37a53127e24093ad70501d680d3c09ca",
+      "bytes": 35237472,
       "wholeOriginalContext": true
     },
     {
       "name": "loop-parts.glb",
-      "sha256": "4c521e6b913af7fce4786d6090251eded585cf27d0cd0ca1d88886b218e0f0c2",
-      "bytes": 604916,
+      "sha256": "cfad368e5e4f6ee77112ee31803ea8ec3b66d29c97140798ebc6cf983a2178ff",
+      "bytes": 604904,
       "wholeOriginalContext": false
     },
     {
       "name": "loop-whole.glb",
-      "sha256": "04fb23076edb963e88942926c6df55f8df494f3d6595f6af1723162fad91468f",
-      "bytes": 35517692,
+      "sha256": "508e32da338fa4e4812e5f383def971462a3e1a4111d717fd21e67d9925a4cc4",
+      "bytes": 35517676,
       "wholeOriginalContext": true
     }
   ]

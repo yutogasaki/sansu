@@ -24,7 +24,7 @@ const home = async () => {
 try {
     await page.goto(base);
     await page.waitForURL('**/#/onboarding');
-    await page.getByRole('button', { name: mode === 'island' ? /^まなぶ$/ : /はじめる$/ }).waitFor();
+    await page.getByRole('button', { name: mode === 'island' ? /^しまへ いく$/ : /はじめる$/ }).waitFor();
     const id = await seedNative(page, randomUUID());
     await page.goto(base); await home();
     assert.equal((await readNative(page, id)).exploreRuns.length, 0);

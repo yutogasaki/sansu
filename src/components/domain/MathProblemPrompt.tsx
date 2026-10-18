@@ -2,6 +2,8 @@ import React from "react";
 import { Problem, ProblemVisualBalanceItem, ProblemVisualCategoryBucket, ProblemVisualGroup, ProblemVisualItem, ProblemVisualLengthBar, ProblemVisualNumberCard, ProblemVisualNumberLine, ProblemVisualPairItem, ProblemVisualPositionScene, ProblemVisualReferenceChoice, ProblemVisualSequenceSlot, ProblemVisualValueGroup } from "../../domain/types";
 import { cn } from "../../utils/cn";
 import { MathRenderer } from "./MathRenderer";
+import { baseTenVisual } from '../../domain/math/baseTenVisual';
+import { BaseTenDiagram, baseTenFrame } from './BaseTenDiagram';
 import { FractionStrips } from './FractionStrips';
 import { isMathFoundation } from '../../domain/math/foundationConfig';
 
@@ -559,7 +561,7 @@ const ItemPairCard: React.FC<{
 );
 
 const MathProblemPromptContent: React.FC<MathProblemPromptProps> = ({ problem, className }) => {
-    const visual = problem?.questionVisual;
+    const visual = problem ? baseTenVisual(problem) ?? problem.questionVisual : undefined;
     if (problem && isMathFoundation(problem.categoryId) && visual?.kind === 'sharing-items') return (
         <div className={cn('grid w-full grid-cols-2 gap-2', className)}>
             {[visual.source, visual.recipients].map((group, index) => <div key={index} className="rounded-lg border border-slate-200 bg-white p-1">
@@ -580,6 +582,17 @@ const MathProblemPromptContent: React.FC<MathProblemPromptProps> = ({ problem, c
                     </div>
                 </div>
             ))}
+        </div>
+    );
+    if (visual?.kind === 'base-ten-blocks') return (
+        <div className={cn('w-full space-y-2', className)}>
+            <PromptCaption text={visual.prompt || problem?.questionText || ''} />
+            <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${visual.groups.length}, minmax(0, 1fr))` }}>
+                {visual.groups.map((group, index) => <div key={index} className="min-w-0 rounded-lg border border-slate-200 bg-white p-1">
+                    {group.label && <div className="text-base font-bold">{group.label}</div>}
+                    <BaseTenDiagram blocks={group.blocks} frame={baseTenFrame(visual.groups.map(g => g.blocks))} />
+                </div>)}
+            </div>
         </div>
     );
     if (visual?.kind === 'fraction-strips') return (

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ja">
+<head><base data-sansu-source-context href="../../../../../../../../../docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-84-current-island-photo-short-landscape-2026-09-21/contact-sheet.html"><script src="../../../../../../../portal/native-context.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>F-47 現行Island 写真CTA・短い横画面</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; color: #263145; background: #f6f6f1; }
+    body { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    h1, h2 { line-height: 1.35; }
+    .meta, figure { margin: 0; padding: 16px; border: 1px solid #c9c5d8; border-radius: 16px; background: #fffdf7; }
+    .meta { margin-block: 20px; line-height: 1.8; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 16px; }
+    figure img { display: block; width: 100%; height: auto; border: 1px solid #dedbe7; border-radius: 8px; }
+    figcaption { margin-top: 10px; line-height: 1.6; }
+    code { overflow-wrap: anywhere; }
+  </style>
+<link rel="stylesheet" href="../../../../../../../portal/integration.css"><link rel="stylesheet" href="../../../../../../../portal/library.css"></head>
+<body data-portal-item="item-8229e40752c69cc0f067"><aside class="pu-bar" aria-label="統合ポータル"><nav><strong>さんすう</strong><a href="../../../../../../../portal/index.html">現在地へ</a><a href="../../../../../../../portal/search.html">全ページから探す</a><a href="../../../../../../../portal/pages.html">内容と操作の一覧</a><a href="../../../../../../../.agents/index.html">元のポータルを開く →</a></nav><p>新版を確認中。全項目の表示・操作・独立審査が終わるまで、元の入口を保持しています。</p></aside>
+  <h1 data-portal-item="item-00b10ebf77e41e49c334">F-47: 短い横画面で写真CTAが固定ナビに隠れる</h1>
+  <section class="meta" data-portal-item="item-2f267b57e590ce50a067">
+    <p data-portal-item="item-442f9af64f66a3891c0f"><strong data-portal-item="item-03652c72ed4d761ed54b">対象:</strong> 現行Island、<code data-portal-item="item-03a8456decd4cd31f23a">http://127.0.0.1:5198/#/island?view=photos</code></p>
+    <p data-portal-item="item-54954df59f9a1686f9d5"><strong data-portal-item="item-2212e7759637be6d8e95">修正前:</strong> <code data-portal-item="item-9d9bb1dd40fc7d822e7a">live-82</code>（599×430）で撮影操作 y=388.77–432.77、固定ナビ上端 y=364.41。44pxの操作全体がナビの後ろに入り、タップできない。<code data-portal-item="item-223b4fb2a9a536e4c30f">live-83</code>（480×430）でも同じ幾何を再現。</p>
+    <p data-portal-item="item-fb8bc51dea662786c047"><strong data-portal-item="item-7d943bd0798cc6d83121">修正後:</strong> 高さ430px以下では幅にかかわらずアルバム一覧を独立スクロールにし、撮影操作を隣の列へ配置。320×430・480×430・599×430・600×430・1024×390で操作が表示領域内に入り、最小44pxを維持。</p>
+    <p data-portal-item="item-8d61ea2ffe94f0b22296"><strong data-portal-item="item-00cc741180871d2f0b17">回帰検査:</strong> <code data-portal-item="item-71c812993c4f96e83955">live-84</code> は7 viewport、193 route/action checks、131 captures、page error 0。runtime revision <code data-portal-item="item-008678480ad0f8d07927">development-local</code>、version <code data-portal-item="item-c67f78c2780609c1d57b">development-local:60d95334-58f8-4594-b548-c113c90cad1c</code>、app root Island=true / NatureTown=false、configured delivery <code data-portal-item="item-8caf133360408b7df86f">snap-root-v1</code>、Island delivery <code data-portal-item="item-6e4c4d0c985ed260cf8e">mystic-island-v1</code>、visual candidate <code data-portal-item="item-fa68c68a0fdff542ea6d">mystic-island-shore-garden-v18</code>、reduced motion、service workerなし。QA profile/fixtureは隔離context終了時に破棄。</p>
+    <p data-portal-item="item-a045af5a85d0a6a9c48b"><strong data-portal-item="item-a33a40d4d61d249fdac3">標準回帰:</strong> <code data-portal-item="item-c6b2f8c8be0a77f02d12">live-85</code> の既定3 viewport（390×844 / 768×1024 / 599×430）もPASS。81 checks、55 captures、page error 0。599×430で写真CTAと主要3入口の可視性を継続検査。<a href="default-regression-report.json" data-portal-item="item-1149872e69f491ec038a">live-85 report</a></p>
+    <p data-portal-item="item-4115355e667115533257"><a href="before-480-report.json" data-portal-item="item-9f76f595f8788c89ee66">480px修正前report</a> · <a href="before-599-report.json" data-portal-item="item-e43d16414200c9cd90da">599px修正前report</a> · <a href="after-report.json" data-portal-item="item-b6ca7819716add027f4c">live-84修正後report</a></p>
+  </section>
+  <h2 data-portal-item="item-1582c65090e4b1fdcb14">修正前</h2>
+  <div class="grid" data-portal-item="item-f169fb265581cdcc1405">
+    <figure data-portal-item="item-e30897b4fb02111fe559"><img src="before-480-photos.png" alt="480×430で写真の撮影操作が固定ナビの下へ隠れている修正前画面" data-portal-item="item-f868c5932f2d948c8b60"><figcaption data-portal-item="item-48b4abe40fda3ff35639">480×430 — <code data-portal-item="item-1a9e5507f98a86af04dc">live-83</code></figcaption></figure>
+    <figure data-portal-item="item-4da2892515b388aae294"><img src="before-599-photos.png" alt="599×430で写真の撮影操作が固定ナビの下へ隠れている修正前画面" data-portal-item="item-918f78a48f009025f368"><figcaption data-portal-item="item-6597478930534fb5a04d">599×430 — <code data-portal-item="item-fa469ea5f5b0ee76bc04">live-82</code></figcaption></figure>
+  </div>
+  <h2 data-portal-item="item-a7d5b28eac5baee41ec1">修正後</h2>
+  <div class="grid" data-portal-item="item-ca72ed1efc48a74a603e">
+    <figure data-portal-item="item-b0c2239bbf1f90cf76b4"><img src="after-320-photos.png" alt="320×430でアルバムをスクロールしながら撮影操作が横に表示される修正後画面" data-portal-item="item-b8ddec99e317cfb56838"><figcaption data-portal-item="item-0bdbb1578574dac5b3a2">320×430 — 最小幅でも一覧と操作を分離</figcaption></figure>
+    <figure data-portal-item="item-8ba8d8a56bc10575c315"><img src="after-599-photos.png" alt="599×430で撮影操作がナビの上に完全に表示される修正後画面" data-portal-item="item-3a9e4c0be19940269a49"><figcaption data-portal-item="item-388e1a1fb760740beb66">599×430 — 600px未満の境界</figcaption></figure>
+    <figure data-portal-item="item-931825b2a663a493aa5f"><img src="after-1024-photos.png" alt="1024×390で既存の横向きレイアウトが維持される修正後画面" data-portal-item="item-72356922b022df90b1ee"><figcaption data-portal-item="item-8617990f492a193619f3">1024×390 — 広い短い横画面でも維持</figcaption></figure>
+  </div>
+<script src="../../../../../../../portal/integration.js" defer></script><script src="../../../../../../../portal/library-runtime.js" defer></script></body>
+</html>

@@ -48,4 +48,4 @@ export function renderOriginals(root,pages,files,register) {
  files.set('data/original-inventory.json',JSON.stringify(inventory,null,2)+'\n');
  return inventory;
 }
-export const embeddedOriginal=(source,target,title)=>`<section class="preserved-original" aria-label="元の${escape(title)}"><h2>元の${escape(title)}をそのまま見る</h2><p>配色・図・全文・検索を保ったページです。<a href="../${source}" target="_blank" rel="noopener">元ページを別に開く</a> · <a href="#adapted-content">整理した表示へ</a></p><iframe title="元の${escape(title)}の全文と操作" src="${originalTarget(target)}"></iframe></section><div id="adapted-content"></div>`;
+export const embeddedOriginal=(source,target,title)=>`<details class="preserved-original" aria-label="元の${escape(title)}"><summary>元の${escape(title)}の全表示と操作を開く</summary><p>配色・図・全文・検索を保ったページです。<a href="../${source}" target="_blank" rel="noopener">元ページを別に開く</a> · <a href="#adapted-content">整理した表示へ</a></p><iframe title="元の${escape(title)}の全文と操作" src="${originalTarget(target)}" loading="lazy"></iframe></details><div id="adapted-content"></div>`;

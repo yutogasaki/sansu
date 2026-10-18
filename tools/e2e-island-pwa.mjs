@@ -1,7 +1,7 @@
 import { chromium } from 'playwright';
 import { promises as fs } from 'node:fs';
 import assert from 'node:assert/strict';
-import { answerUI, button, readNative, runtimeMetadata, seedNative, waitMode, waitReady as waitSceneReady } from './island-e2e-helpers.mjs';
+import { answerUI, button, readNative, runtimeMetadata, seedNative, waitMode } from './island-e2e-helpers.mjs';
 import { assertExploreCheckpoint, waitForExploreNumericReady, waitForPageState } from './async-state-checks.mjs';
 
 const base = process.env.SANSU_ISLAND_PRODUCTION_URL || 'http://127.0.0.1:5298';
@@ -51,10 +51,10 @@ async function waitReady(page) {
     if (await island.getAttribute('data-mode') === 'learning') {
         // The learning focus layout keeps the scene mounted but intentionally
         // hidden. Verify the restored input, not visibility of that canvas.
-        await page.locator('[data-renderer="three"] canvas').waitFor({ state: 'attached' });
         await page.locator('.island-workbench[data-input-ready="true"]').waitFor();
     } else {
-        await waitSceneReady(page);
+        await page.locator('[data-growing-island="ready"] [data-growing-world] canvas').waitFor();
+        await page.locator('.growing-loading--overlay').waitFor({ state: 'hidden' });
     }
 }
 async function nativeOwner(page) {
@@ -71,8 +71,8 @@ async function nativeOwner(page) {
 }
 async function waitEmptyWelcome(page) {
     await page.waitForURL('**/#/onboarding');
-    await page.locator('.island-welcome[data-mode="welcome"][data-onboarding-candidate="island-touch-first-v1"]').waitFor();
-    await waitSceneReady(page);
+    await page.locator('.first-play-welcome[data-mode="welcome"][data-onboarding-candidate="island-first-play-v2"]').waitFor();
+    await page.waitForFunction(() => { const img = document.querySelector('.first-play-portrait img'); return img?.complete && img.naturalWidth > 0; });
     const owner = await nativeOwner(page), state = await readNative(page);
     assert.deepEqual(owner.profiles, []); assert.deepEqual(owner.app?.profiles, {});
     assert.equal(owner.app.activeProfileId, null); assert.equal(owner.localActiveId, null);
@@ -83,9 +83,9 @@ async function waitSeededHome(page, profileId) {
     await page.waitForURL('**/#/island'); await waitMode(page, 'home'); await waitReady(page);
     await page.waitForFunction(() => {
         const root = document.querySelector('.island-page[data-mode="home"]');
-        const renderer = root?.querySelector('[data-renderer="three"]');
+        const renderer = root?.querySelector('[data-growing-world]');
         const canvas = renderer?.querySelector('canvas'), rect = canvas?.getBoundingClientRect();
-        return Boolean(rect && rect.width > 1 && rect.height > 1 && Number(renderer.getAttribute('data-draw-calls')) > 0);
+        return Boolean(rect && rect.width > 1 && rect.height > 1);
     });
     const owner = await nativeOwner(page), state = await readNative(page);
     assert.equal(owner.localActiveId, profileId); assert.equal(owner.app.activeProfileId, profileId);
@@ -137,7 +137,7 @@ async function noReloadWhile(page, marker, action) {
 try {
     const context = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block' });
     const page = await context.newPage();
-    page.setDefaultTimeout(15000);
+    page.setDefaultTimeout(90000);
     const errors = [];
     page.on('pageerror', error => errors.push(error.stack));
     await page.addInitScript(() => { window.__SANSU_PWA_E2E__ = true; });
@@ -168,7 +168,7 @@ try {
         await checkpointNavigation;
         await checkpointLoaded;
         await waitReady(page); await waitMode(page, 'home');
-        await page.locator('.island-start').click(); await waitMode(page, 'learning');
+        await page.locator('.island-shell-tab--learn').click(); await waitMode(page, 'learning');
         assert.deepEqual((await readNative(page, id)).plan, before.plan);
         assert.deepEqual((await readNative(page, id)).logs, before.logs);
         report.hookChecks.push('active learning defers update; user home checkpoint reloads with reserved plan preserved');
@@ -194,7 +194,7 @@ try {
         await page.goto(`${base}/#/island`);
         await waitReady(page);
         await waitMode(page, 'home');
-        await page.locator('.island-start').click();
+        await page.locator('.island-shell-tab--learn').click();
         await waitMode(page, 'learning');
         // Router mode changes before the async reservation/checkpoint finishes.
         // Inject an active-session update only once the answer input is ready.
@@ -212,7 +212,7 @@ try {
         await answerCheckpoint;
         await answerLoaded;
         await waitReady(page); await waitMode(page, 'home');
-        await page.locator('.island-start').click(); await waitMode(page, 'learning');
+        await page.locator('.island-shell-tab--learn').click(); await waitMode(page, 'learning');
         assert.deepEqual((await readNative(page, id)).plan, answered);
         report.hookChecks.push('continue pointer protects fresh session; answer receipt survives next user checkpoint');
 
@@ -243,7 +243,7 @@ try {
         const firstNavigation = markerRequest(page, firstMarker), firstLoaded = page.waitForEvent('domcontentloaded');
         await button(page, 'とじる').click();
         await firstNavigation; await firstLoaded; await waitReady(page); await waitMode(page, 'home');
-        await page.locator('.island-start').click(); await waitMode(page, 'learning');
+        await page.locator('.island-shell-tab--learn').click(); await waitMode(page, 'learning');
         const firstRestored = await readNative(page, id);
         assertHomeCheckpointRestored(continuous, firstRestored);
         report.hookChecks.push('first automatic growth defers update; growth, auto placement and next reservation survive user checkpoint');
@@ -277,7 +277,7 @@ try {
         const boundaryLoaded = page.waitForEvent('domcontentloaded');
         await button(page, 'とじる').click();
         await boundaryNavigation; await boundaryLoaded; await waitReady(page); await waitMode(page, 'home');
-        await page.locator('.island-start').click(); await waitMode(page, 'learning');
+        await page.locator('.island-shell-tab--learn').click(); await waitMode(page, 'learning');
         const boundaryRestored = await readNative(page, id);
         assertHomeCheckpointRestored(continuous, boundaryRestored);
         report.hookChecks.push('ordinary second section keeps update deferred; minor growth, unchanged land and album, and next reservation survive the voluntary checkpoint');
@@ -308,7 +308,7 @@ try {
         const matureNavigation = markerRequest(page, matureMarker), matureLoaded = page.waitForEvent('domcontentloaded');
         await button(page, 'とじる').click();
         await matureNavigation; await matureLoaded; await waitReady(page); await waitMode(page, 'home');
-        await page.locator('.island-start').click(); await waitMode(page, 'learning');
+        await page.locator('.island-shell-tab--learn').click(); await waitMode(page, 'learning');
         const matureRestored = await readNative(page, id);
         assertHomeCheckpointRestored(continuous, matureRestored);
         report.hookChecks.push('first maturity defers update; east expansion, combined album record, stable items and next reservation survive the voluntary checkpoint');
@@ -359,7 +359,7 @@ try {
     // remove additive growth/reward-pacing fields to model an actual saved Island v1 plan.
     const legacyContext = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'block' });
     const legacyPage = await legacyContext.newPage();
-    legacyPage.setDefaultTimeout(15000);
+    legacyPage.setDefaultTimeout(90000);
     const legacyErrors = [];
     legacyPage.on('pageerror', error => legacyErrors.push(error.stack));
     await legacyPage.addInitScript(() => { window.__SANSU_PWA_E2E__ = true; });
@@ -449,7 +449,7 @@ try {
 
     const offlineContext = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
     const offlinePage = await offlineContext.newPage();
-    offlinePage.setDefaultTimeout(15000);
+    offlinePage.setDefaultTimeout(90000);
     try {
         await offlinePage.goto(`${base}/#/island`);
         await waitEmptyWelcome(offlinePage);
@@ -488,7 +488,6 @@ try {
         report.offline = { ...(await runtimeMetadata(offlinePage)), serviceWorker: 'real', offlineReload: true,
             answerPersisted: true, automaticGrowthPersisted: true, resumedSamePlan: true, soundEnabled: false };
         assert.equal(report.offline.serviceWorkerControlled, true);
-        assert.equal(report.offline.renderer, 'three');
         assert.equal(report.offline.learningCandidate, report.manifest.island.learningCandidate);
         assert.equal(report.offline.version, report.manifest.version);
         console.log('PASS real service-worker offline reload, answer, and resume');

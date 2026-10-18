@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-18T02:39:02.758340+00:00",
+  "appTarget": "http://127.0.0.1:5199/",
+  "delivery": "standalone-static-promotion-website",
+  "candidate": "promotion-cove-growth-v4",
+  "baseRevision": "eb4b907bdf5cb6e99c30c4ac6f28d2d3969cac50",
+  "workingTree": "shared dirty checkout; only listed inputs describe this candidate",
+  "cache": "new browser contexts; no service worker or IndexedDB",
+  "imageSource": "built-in imagegen; approved left direction; JPEG encoding via sips quality 88",
+  "hashes": {
+    "website/index.html": "e06f759207513689bf78ca117b9beef502aa073b8cf2863c7cb3985981eb0412",
+    "website/main.js": "15f3c73900b6c350eb25aafb78e4bff8312aa92fd84a07ebb0c67030c4227cea",
+    "website/style.css": "5577b3fa61355eac5a91a9628ea7fcf531e01820fcdb468fd2595cc2ff28cc09",
+    "website/public/images/island-start-cove.jpg": "6ca1766b73fbeca346432509891ecaadc1d48c75fb47d9fb7019f4a33c7f1b85",
+    "website/public/images/island-village-cove.jpg": "de7631e5f244fe36888274c613f4cc9d0a8ad2a48fe3efb450dcd759a468f99c",
+    "website/public/images/island-complete.png": "d2a3ff872e3dbff7dd9d3aa90f0476e7ad0123d53042d20fe60b1df01885ff47",
+    "tools/verify-promotion-website.mjs": "98dec0651f6dff785a772f4cbb4b207a8e87032dd0ed6dab26cc59f5ee99aacd",
+    "docs/design/2026-10-18-promotion-cove/start-source.png": "f9bdb1f5f15e692cd85126a5b395bbfd42671fae5fa9d207d1527e1fb236f80c",
+    "docs/design/2026-10-18-promotion-cove/village-source.png": "9a1748aedcc9bd2ef2b421e60d94b9d985528b6f278667456105d919ae93656a"
+  },
+  "notVerified": [
+    "public deployment",
+    "physical devices",
+    "independent child comprehension or return visits",
+    "pixel-identical growth geometry",
+    "gameplay integration"
+  ]
+}

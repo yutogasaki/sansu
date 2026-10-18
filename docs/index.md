@@ -1,5 +1,7 @@
 # Sansu 文書の入口
 
+オンボード：[ぽこもこと出会い、最初のおとなりさんを迎える](design/2026-10-18-onboarding/README.md)。Welcomeから保存する本人の島へ入り、学習設定は任意の「まなぶ」で行います。[入口と保存の契約](product/island-first-play-onboarding.md)、画面仕様・絵の制作依頼書・ローカル検証をまとめています。公開状態は別です。
+
 **現在の島制作方針：[美術で設計した場所を、配置から育てる](product/island-construction-strategy.md)。** 地形・森・水庭・集落を入口と床まで一緒に設計し、美術表示と本体が同じ世界を組み立てます。[全島の尺度・購入・成熟preflight](design/2026-10-11-authored-whole-preflight/README.md)で住人 `.45`・実高さfocus・樹種と成長を修正し、27→32所有物を確認しました。家は8軒のまま。成熟後の美術31/60 HOLD・操作性能未達でM1は未完です。[原本と実画面の比較](design/2026-10-11-authored-whole-preflight/contact-sheet.html)、[次の花庭・森・回廊の制作順](design/2026-10-11-authored-whole-preflight/next-production.md)、[決定の理由](adr/2026-10-11-authored-place-world-policy.md)。全島の粗形が揃った段階で配置差と成長への追従を先に実装し、組立て規則と対応する美術を一緒に育てます。技術検証を美術到達の代用にはしません。
 
 2026-10-11 広がり方を本体へ実装：[8・16・32軒、三方向の実3D展示](design/2026-10-11-expanding-island-runtime/index.html) · [検証と編集素材](design/2026-10-11-expanding-island-runtime/README.md) · [実装契約](product/island-expanding-runtime.md)。土地の選択と配置から、湾を抱く岸・横へ続く森の回廊・南へ連なる低い丘を描きます。所有セル、道、分数位置の足、配置操作を同じ床へ接続。通常productionの美術flagはfalseを保持し、美術の到達・実機・独立理解／再訪は継続課題です。

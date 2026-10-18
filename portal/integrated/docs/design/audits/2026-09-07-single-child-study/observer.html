@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; img-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>1人からの観察記録 · Sansu</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, -apple-system, "Hiragino Sans", sans-serif; color: #2d3436; background: #f4f5f1; line-height: 1.65; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { width: min(880px, 100%); margin: auto; padding: 32px 22px 60px; }
+    h1 { font-size: clamp(25px, 4vw, 34px); line-height: 1.4; margin: 0 0 12px; }
+    h2 { font-size: 21px; line-height: 1.5; margin: 0 0 12px; }
+    h3 { font-size: 17px; margin: 20px 0 8px; }
+    p { margin: 8px 0 16px; }
+    .eyebrow { letter-spacing: .1em; font-size: 12px; color: #476464; margin: 0 0 8px; }
+    .muted, small { color: #586363; }
+    small { display: block; font-size: 13px; }
+    .panel, details { background: #fcfdfb; border: 1px solid #dce2dc; border-radius: 12px; padding: 22px; margin: 20px 0; }
+    summary { cursor: pointer; font-size: 20px; font-weight: 650; padding: 4px 0; min-height: 44px; }
+    summary + p { margin-top: 12px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 20px; }
+    label { display: block; font-size: 14px; font-weight: 600; }
+    input, textarea, select { display: block; width: 100%; min-width: 0; min-height: 46px; margin-top: 6px; padding: 10px 11px; border: 1px solid #9eaaa4; border-radius: 6px; background: white; color: #2d3436; font: inherit; font-size: 16px; font-weight: 400; }
+    .check { display: flex; gap: 12px; align-items: center; min-height: 46px; }
+    .check input { flex: 0 0 22px; width: 22px; height: 22px; min-height: 22px; margin: 0; }
+    textarea { min-height: 84px; resize: vertical; }
+    label + label, .grid + label, label + .grid { margin-top: 14px; }
+    .grid > label { margin-top: 0; }
+    fieldset { min-width: 0; margin: 18px 0; padding: 16px; border: 1px solid #dce2dc; border-radius: 8px; }
+    legend { padding: 0 8px; font-weight: 650; }
+    button { min-height: 46px; border: 1px solid #8eaaa7; border-radius: 7px; padding: 10px 16px; background: #e6efeb; color: #274846; font: inherit; font-weight: 600; cursor: pointer; }
+    button.quiet { background: transparent; color: #586363; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    :focus-visible { outline: 3px solid #297683; outline-offset: 3px; }
+    output { display: block; margin: 12px 0; padding: 12px 14px; background: #eef3ed; border-radius: 6px; white-space: pre-line; overflow-wrap: anywhere; }
+    #save-status { font-size: 13px; min-height: 24px; margin-top: 10px; }
+    dl { margin: 0; }
+    dl > div { display: grid; grid-template-columns: 135px 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid #e0e5df; }
+    dt { font-size: 14px; font-weight: 650; }
+    dd { margin: 0; font-size: 14px; overflow-wrap: anywhere; }
+    [hidden] { display: none !important; }
+    textarea.original { min-height: 200px; font-size: 12px; }
+    input:disabled, select:disabled { color: #586363; background: #f0f2ee; }
+    .notice { border-left: 3px solid #97aaa0; padding-left: 14px; }
+    @media (max-width: 560px) { main { padding: 24px 14px 48px; } .panel, details { padding: 17px; } .grid { grid-template-columns: 1fr; gap: 14px; } fieldset { padding: 12px; } dl > div { grid-template-columns: 1fr; gap: 4px; } }
+    @media print { :root { background: white; } main { width: 100%; padding: 0; } button, .actions, #save-status { display: none; } .panel, details { break-inside: avoid; } }
+  </style>
+<link rel="stylesheet" href="../../../../../integration.css"><link rel="stylesheet" href="../../../../../library.css"></head>
+<body data-portal-item="item-db40632d648a2042842f"><aside class="pu-bar" aria-label="統合ポータル"><nav><strong>さんすう</strong><a href="../../../../../index.html">現在地へ</a><a href="../../../../../search.html">全ページから探す</a><a href="../../../../../pages.html">内容と操作の一覧</a><a href="../../../../../../.agents/index.html">元のポータルを開く →</a></nav><p>新版を確認中。全項目の表示・操作・独立審査が終わるまで、元の入口を保持しています。</p></aside>
+<main data-portal-item="item-ebe65364cd51ea982047">
+  <header data-portal-item="item-64bd66d85a1620610833">
+    <p class="eyebrow" data-portal-item="item-89f9be7b507a1f1abc6a">SANSU · 保護者の観察用</p>
+    <h1 data-portal-item="item-a6fcace3350b4cf23350">1人からの観察記録</h1>
+    <p data-portal-item="item-e742678f59c4c8bf82e6">実際に見た行動と、そのままの発言を残します。空欄は未観察です。子どもにこの記録画面や採点を見せる必要はありません。</p>
+    <p class="muted" data-portal-item="item-8e9bf728a7ebf3393a8a">開始前・直後・翌日に、事前に決めた2問または4問。嫌がったらそこで終了できます。詳しい進め方は同じフォルダの README.md を参照してください。</p>
+    <div class="actions" data-portal-item="item-9bf5c3ed16a6374c7311"><button type="button" id="export" data-portal-item="item-e5e5de9cf4acb4cd9b03">記録を JSON で保存</button><button type="button" id="import" class="quiet" data-portal-item="item-723b165ee6fd036349ed">JSON を開く</button><input id="import-file" type="file" accept="application/json,.json" hidden data-portal-item="item-116376f0f97c335cb5d3"><button type="button" id="clear" class="quiet" data-portal-item="item-9e632126d5241391d9c6">この新記録を消去</button></div>
+    <div id="save-status" role="status" aria-live="polite" data-portal-item="item-beb2931303841b166955"></div>
+    <small data-portal-item="item-71d09c119d5b5d4a1985">入力はこのブラウザ内に自動保存します。外部送信はしません。ファイルの移動・ブラウザ変更で記録が引き継がれないことがあるため、終了時に JSON を保存してください。</small>
+  </header>
+
+  <section class="panel" aria-labelledby="status-title" data-portal-item="item-78dd838460c54562f539">
+    <h2 id="status-title" data-portal-item="item-d2bf01c509584d878c26">今ある観察</h2>
+    <dl id="status-list" data-portal-item="item-9c27489414139c106ea1">
+      <div data-portal-item="item-f3ad97764e12e0c4c7f2"><dt data-portal-item="item-11126f4123a7a22359dc">実観察の確認</dt><dd id="status-participant" data-portal-item="item-7bddbe5511ec147db50d">0人 · 1人用の記録枠</dd></div>
+      <div data-portal-item="item-e3abab0a1296d084a5cf"><dt data-portal-item="item-c01cb132a67613e698f9">直後の問題</dt><dd id="status-immediate" data-portal-item="item-7d89c2b5aa481a039af2">未測定</dd></div>
+      <div data-portal-item="item-8bd474a041c3f449b384"><dt data-portal-item="item-0f65d4138e06276a848b">翌日の追跡</dt><dd id="status-delayed" data-portal-item="item-85a51d54d69cbfd05a47">未測定</dd></div>
+      <div data-portal-item="item-7a3734b13550c38db16b"><dt data-portal-item="item-72ecfa663d253c1732d4">自分で選んだ続行</dt><dd id="status-replay" data-portal-item="item-728a70793d2e3ee0367e">未観察</dd></div>
+      <div data-portal-item="item-2d08f3ca5280fa9fa34d"><dt data-portal-item="item-6c743fe723f48460606c">後日の自発的な再訪</dt><dd id="status-return" data-portal-item="item-256bba6af87aa99da0f0">未観察</dd></div>
+      <div data-portal-item="item-1692d6e559e22f78da4c"><dt data-portal-item="item-5e8458bff61dba5d2405">操作・世界の理解</dt><dd id="status-understanding" data-portal-item="item-3ae5b4034c1c1bdbcca1">未観察</dd></div>
+    </dl>
+    <p class="muted" data-portal-item="item-dcd8978828f3ebc40c08">事前に決めた問題と1人の行動を記述するための記録です。学力向上率、習得認定、アプリの効果、他の子どもにも当てはまる評価は算出しません。問題セットの難度の等価性も未検証です。</p>
+  </section>
+
+  <details id="original-records" hidden data-portal-item="item-f6fff61c1371188642b9">
+    <summary data-portal-item="item-8b597e0fa828efdc3639">別に保存した原記録（新票の集計に含めません）</summary>
+    <p data-portal-item="item-516de9e365c819e4b7dd">旧v1の「未実施・途中で終了」は区別不明のままです。旧票の人数や正答ラベルも新しい観察の証明に使いません。原文を自動で分類し直しません。</p>
+    <label data-portal-item="item-cea9ff71dd66ec2a894c">原記録<select id="original-choice" data-portal-item="item-3df2d3888c1c76c1d2a4"></select></label>
+    <textarea id="original-raw" class="original" readonly aria-label="保存した原記録の全文" data-portal-item="item-f1347b7d611f9a9a4df9"></textarea>
+    <button id="export-original" type="button" data-portal-item="item-dff82c265bea5d3c1819">選んだ原記録をそのまま保存</button>
+  </details>
+
+  <form id="record-form" autocomplete="off" data-portal-item="item-3b7c7bf143d8344a8872">
+    <details open data-portal-item="item-adcb098bbba037fc2694">
+      <summary data-portal-item="item-00c0cc81421267b819e4">準備・利用環境</summary>
+      <div class="grid" data-portal-item="item-9ba17ac760cd2dfd1736">
+        <label data-portal-item="item-eded94081a03121d81e3">匿名 ID<input id="participant" value="P01" maxlength="40" data-portal-item="item-3df08103a2bcb49625c1"></label>
+        <label data-portal-item="item-8487caf96f23b3975a8e">年齢・学年（任意）<input id="age" maxlength="80" data-portal-item="item-e019460283e3df2b5bc9"></label>
+      </div>
+      <label class="check" data-portal-item="item-322756932dfc592d0d7f"><input id="participant-confirmed" type="checkbox" data-portal-item="item-3fbd7d045520faf3f265">実際の子どもの行動を記録した（練習記入・自動操作ではない）</label>
+      <label data-portal-item="item-dc23972824a09afcf5e6">各時点の予定問数（開始前に決める）<select id="planned-count" data-portal-item="item-e179293a46c379aed3c1"><option value="" data-portal-item="item-312091ed87c9e5a59917">まだ決めていない</option><option value="2" data-portal-item="item-d0c60ea2c4078aceacfd">2問ずつ</option><option value="4" data-portal-item="item-958dc157f87d5b5ceebc">4問ずつ</option></select></label>
+      <small id="plan-status" data-portal-item="item-8b0c0930e3e34b7cf4f2">最初の問題を記録すると固定します。誤答・中止を後から計画外にはしません。</small>
+      <label data-portal-item="item-f06eb9f2197f0b1cf33c">普段の学習・このアプリの利用経験（任意）<textarea id="experience" data-portal-item="item-aab55d2435b4d5a8ac3c"></textarea></label>
+      <label data-portal-item="item-20d3904853cab8afc7a2">問題文の読み上げ補助のルール<textarea id="reading-policy" data-portal-item="item-78b945e190b962953423"></textarea></label>
+      <small data-portal-item="item-dab492242878931da53e">問題をそのまま読み上げる補助は、答え・考え方のヒントと分けます。開始前・直後・翌日で同じ条件にし、各時点で実際に読んだかも記録します。</small>
+      <div class="grid" data-portal-item="item-4b231214f99aed27aee6">
+        <label data-portal-item="item-12bf78daa86788f57405">実際に使ったアプリ URL / 対象<input id="target" data-portal-item="item-a8ee25a50d5221fbccf2"></label>
+        <label data-portal-item="item-0e5e2c28f4e50362c7ef">ビルド / revision<input id="revision" data-portal-item="item-a0aef1c7e7fae06fe225"></label>
+        <label data-portal-item="item-d373bf056786953d2647">delivery flag<input id="delivery" data-portal-item="item-2acc6ddaae3875ba32ee"></label>
+        <label data-portal-item="item-abf62bc9b9041ca3e7f8">visual candidate ID<input id="candidate" data-portal-item="item-eeba2999519c84e8a47f"></label>
+        <label data-portal-item="item-057d956c96dce5b07ada">端末・ブラウザ<input id="device" data-portal-item="item-bc94d2425bf1d60ca192"></label>
+        <label data-portal-item="item-3a0e1cf72f34dfa546e3">音・通信・表示条件<input id="conditions" data-portal-item="item-c26e219c98fd61cd39cf"></label>
+      </div>
+      <small data-portal-item="item-1de88e51976506efe1b0">本名は記入しないでください。対象・revision などは観察対象の証拠から転記します。</small>
+    </details>
+
+    <div id="probe-stages" data-portal-item="item-3cb27f19baf01a301451"></div>
+
+    <details data-portal-item="item-5f5b25f9603e43de8071">
+      <summary data-portal-item="item-1bc3ff3c63694529e294">操作と世界の理解</summary>
+      <p class="muted" data-portal-item="item-95490143d0e82cd83881">先に操作を教えず、見たことを記録します。助けた場合もそのまま残します。</p>
+      <label data-portal-item="item-8b31ad7c73d4d7bd57d2">子どもが始めた画面・親が準備した操作<textarea id="starting-surface" data-portal-item="item-ef77dccc38059375f2eb"></textarea></label>
+      <small data-portal-item="item-3afdd443ca600cbaafd4">島ホームを準備した場合、初回の開始・設定操作は未観察です。初回画面を観察する場合も、名前入力やおためし遊びを強制しません。</small>
+      <label data-portal-item="item-284d43ad9797d94276f0">観察日時<input id="operation-date" type="datetime-local" data-portal-item="item-55ad32d1166b9268cc3a"></label>
+      <label data-portal-item="item-75ebf462c3de23ebc886">最初にしたこと（そのまま）<textarea id="first-action" data-portal-item="item-9d620c94444a096a7cd4"></textarea></label>
+      <div id="operation-fields" data-portal-item="item-1a44230cea03e3d1c1e7"></div>
+      <label data-portal-item="item-90ea4005bf7080579dd1">見せた資料・画面の識別子<input id="material" data-portal-item="item-b7f6ba0b2161422feb78"></label>
+      <small data-portal-item="item-155789eccee091b0c304">世界だけを見せた場合は、その stage-only 画像のファイル名を転記します。ボタンや説明付きの画面を見せた場合も区別して記録します。</small>
+      <label data-portal-item="item-6f4a3fef6521c782ccfe">「何が起きたと思う？」への答え（そのまま）<textarea id="comprehension-event" data-portal-item="item-8a8e770d37ebf3310e51"></textarea></label>
+      <label data-portal-item="item-5f6e2a8cf2fc9a4a883e">「わかりにくいところはあった？」への答え（そのまま）<textarea id="comprehension-confusion" data-portal-item="item-ae1fc7732c17f113e485"></textarea></label>
+      <label data-portal-item="item-c592d8d33cbd8452818c">見せ方・大人が言ったこと・困り方のメモ<textarea id="comprehension-notes" data-portal-item="item-8ae65b4cb0f23dc82bbe"></textarea></label>
+    </details>
+
+    <details data-portal-item="item-0b01750413ba992c997d">
+      <summary data-portal-item="item-e2d97b9e57131b026cfa">その場で、何を選んだか</summary>
+      <p class="muted" data-portal-item="item-f5fb108a0a4535b2640d">遊びを続けられる時間があるときに記録します。大人の誘導があったかを分けます。</p>
+      <label data-portal-item="item-ad3e665d69940546a239">観察日時<input id="replay-date" type="datetime-local" data-portal-item="item-c1db40a4e3c2ddc6bc17"></label>
+      <div class="grid" data-portal-item="item-a6defa3317c4da02cd77">
+        <label data-portal-item="item-8d299ad3449410864cfe">続けられる機会があった<select id="replay-opportunity" data-portal-item="item-3df1cf5eb132fbc842cf"><option value="" data-portal-item="item-395e258c6812c6426a88">不明・未観察</option><option value="yes" data-portal-item="item-4c2acf3ef8fbc2e1a75e">はい</option><option value="no" data-portal-item="item-9b114f36263495d20e0a">いいえ</option></select></label>
+        <label data-portal-item="item-0f17fe825f9bdab1ed9f">大人から続行を促した<select id="replay-prompting" data-portal-item="item-e7c1386795c9474a0a1f"><option value="" data-portal-item="item-2a299e0ef1b96be5e30f">不明・未観察</option><option value="yes" data-portal-item="item-c2a6136612d1263ed6aa">はい</option><option value="no" data-portal-item="item-10a72a6434b02793959b">いいえ</option></select></label>
+      </div>
+      <label data-portal-item="item-514130c72a05e0cd98e1">観察した選択<select id="replay-choice" data-portal-item="item-52d1aa3929516580f30c"><option value="" data-portal-item="item-6709918f80523a6daf9b">未観察</option><option value="learning" data-portal-item="item-2c502ed4717919bdfe74">学習を続けた</option><option value="arrange-play" data-portal-item="item-6f0214e7c780da485b46">配置・どうぶつ遊びを続けた</option><option value="stop" data-portal-item="item-39fb678996fd3d717047">終えた</option></select></label>
+      <label data-portal-item="item-cecdaefd58e6decdcb3c">自発的な発言（そのまま）<textarea id="replay-quote" data-portal-item="item-0fa013d9c7bacbc0a696"></textarea></label>
+      <label data-portal-item="item-00e442038fd32865b744">機会の作り方・実際に大人が言ったこと<textarea id="replay-notes" data-portal-item="item-b2e5779181979572dbb1"></textarea></label>
+    </details>
+
+    <details data-portal-item="item-d5d89f837f67a995dad2">
+      <summary data-portal-item="item-bd0c302c8e57378887ce">後日、自分から戻ったか</summary>
+      <p class="muted" data-portal-item="item-e27c2a0bae1542c6f398">翌日の確認テストのために開いたことは、自発的な再訪に数えません。</p>
+      <div class="grid" data-portal-item="item-f2b883b766b1d465a37b">
+        <label data-portal-item="item-9dbc6fea1142b6177cd2">観察期間の開始<input id="return-start" type="datetime-local" data-portal-item="item-cdac1df1e4ac3f59a31d"></label>
+        <label data-portal-item="item-424a0a836ea4f10b189c">観察期間の終了<input id="return-end" type="datetime-local" data-portal-item="item-75d1d489cf6cb1c51284"></label>
+      </div>
+      <label data-portal-item="item-7d3fdcdcd54c4f1b434f">期間中に観察できたこと<select id="return-choice" data-portal-item="item-758f2402097c4b136026"><option value="" data-portal-item="item-7e7836698cee040d7ee4">未観察</option><option value="scheduled" data-portal-item="item-d379d1b106329f55221b">予定した確認テストのために開いたのみ</option><option value="spontaneous" data-portal-item="item-cd991e977604861ac353">本人から開いた / 開きたいと言った</option><option value="no-access" data-portal-item="item-e6c4a18735af388dae16">端末などの利用機会がなかった</option><option value="no-return" data-portal-item="item-48eb9e4726aa7673cc42">利用機会はあったが戻らなかった</option></select></label>
+      <label data-portal-item="item-ae58c8af77e1402cbae0">本人の発言・大人の声かけ・利用機会（そのまま）<textarea id="return-notes" data-portal-item="item-a273a3f2c713d9efdf5f"></textarea></label>
+    </details>
+
+    <details data-portal-item="item-d83fdbea81f9bf2f9693">
+      <summary data-portal-item="item-36fe033abb96d12c7de7">観察の間にしたこと・補足</summary>
+      <label data-portal-item="item-21411d4336f9d82d00be">アプリ内で取り組んだ範囲・時間・支援<textarea id="intervention" data-portal-item="item-10dd9e088f7c82f21cd4"></textarea></label>
+      <label data-portal-item="item-7c4a2e1c91631eb5bcf3">直後の確認までの、ほかの練習・答えの提示<textarea id="practice-immediate" data-portal-item="item-0d197b5e7ccfd11ce442"></textarea></label>
+      <label data-portal-item="item-7251e17f830faae74a9a">翌日の確認までの、学校・家庭・アプリなどでの練習<textarea id="practice-delayed" data-portal-item="item-512c3aa39ac83c5b70d0"></textarea></label>
+      <label data-portal-item="item-041debd8a4ade8f2dc0d">中断理由・疲れ・操作の詰まり・保存や表示の不具合<textarea id="other-notes" data-portal-item="item-92a4da1302977ac21891"></textarea></label>
+      <small data-portal-item="item-c9f6aea9c51335c5a78d">「練習なし」と確認できた場合はそう記入します。空欄は不明のままです。</small>
+    </details>
+  </form>
+  <noscript data-portal-item="item-b9e32ceaa3bbdabe5a4b"><p data-portal-item="item-9c5e77ee7c5365799f1b">この記録ページには JavaScript が必要です。無効な場合は保存・集計が動きません。</p></noscript>
+</main>
+<script>
+  (() => {
+    'use strict';
+    const STORAGE_KEY = 'sansu:single-child-observer:2026-09-08:v2';
+    const LEGACY_KEY = 'sansu:single-child-observer:2026-09-07:v1';
+    const ORIGINALS_KEY = `${STORAGE_KEY}:originals`;
+    const SCHEMA = 'sansu-single-child-observer-v2';
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const stageNames = { baseline: '開始前', immediate: '直後', delayed: '翌日の追跡' };
+    const resultOptions = [
+      ['', '未記録（不明）'], ['first-correct', '初回・追加支援を観察せず正答'], ['first-incorrect', '初回・追加支援を観察せず誤答'],
+      ['app-hint', 'アプリのヒント後に回答'], ['app-model', 'アプリの見本・答えを見て回答'],
+      ['support-completion', '支援の完了操作で進んだ'], ['oral-hint', '大人のヒント後に回答'],
+      ['adult-input', '大人が入力'], ['not-attempted', '未着手（問題に取り組んでいない）'],
+      ['stopped', '着手した後に中止'], ['unknown', '取組みあり・初回結果や支援が不明']
+    ];
+    const operationNames = { start: '学習を始める', place: '報酬を受け取り、置く', animal: 'どうぶつを誘う' };
+    const operationOptions = [
+      ['', '未観察'], ['without-help', '助けなしでできた'], ['with-help', '助けを使った'],
+      ['not-completed', '完了しなかった'], ['no-opportunity', '機会がなかった']
+    ];
+    const optionsHTML = options => options.map(([value, label]) => `<option value="${value}">${label}</option>`).join('');
+    const form = document.getElementById('record-form');
+    const get = id => {
+      const field = document.getElementById(id);
+      return field.type === 'checkbox' ? (field.checked ? 'confirmed' : '') : field.value.trim();
+    };
+    const show = (id, text) => { document.getElementById(id).textContent = text; };
+    document.getElementById('probe-stages').innerHTML = Object.entries(stageNames).map(([stage, name]) => `
+      <details id="stage-${stage}">
+        <summary id="${stage}-title">${name} · 問題の記録</summary>
+        <p class="muted">同じ学習範囲の別問題を使います。ヒント・見本・支援の完了は初回無援助正答ではありません。同じ問題の訂正は「その後」に残します。「追加支援を観察せず」は心理的な独力や既習経験なしの証明ではありません。</p>
+        <div class="grid">
+          <label>実施日時<input id="${stage}-date" type="datetime-local"></label>
+          <label>学習範囲 / skill ID<input id="${stage}-skill"></label>
+          <label>問題セット / form ID<input id="${stage}-form"></label>
+          <label>出題・回答方法<input id="${stage}-method"></label>
+        </div>
+        <label class="check"><input id="${stage}-human" type="checkbox">本人が取り組む様子を実際に観察して記録した</label>
+        <label>読み上げだけの補助を実際にしたか・方法<textarea id="${stage}-reading"></textarea></label>
+        <output id="${stage}-summary">未測定 · 予定問数は未決定</output>
+        ${[1, 2, 3, 4].map(n => `<fieldset id="${stage}-${n}-row"><legend>${n}問目</legend>
+          <div class="grid"><label>実際に出した問題<textarea id="${stage}-${n}-prompt"></textarea></label>
+          <label>最初の答え（未回答ならその事実）<textarea id="${stage}-${n}-response"></textarea></label></div>
+          <div class="grid"><label>最初の結果（その後の正解に置き換えない）<select id="${stage}-${n}-result">${optionsHTML(resultOptions)}</select></label>
+          <label>考えて取り組んだ秒数（任意）<input id="${stage}-${n}-seconds" type="number" min="0" step="any" inputmode="decimal"></label></div>
+          <label>その後の訂正・支援・中止の様子<textarea id="${stage}-${n}-after"></textarea></label>
+          <div id="${stage}-${n}-correction-box" hidden>
+            <label>記録を訂正した理由（選択ミスなど。未記入の変更分も含む）<input id="${stage}-${n}-correction"></label>
+            <small id="${stage}-${n}-audit"></small>
+          </div>
+        </fieldset>`).join('')}
+        <label>出題時の言葉・支援・中断・採点の根拠<textarea id="${stage}-notes"></textarea></label>
+      </details>`).join('');
+    document.getElementById('operation-fields').innerHTML = Object.entries(operationNames).map(([key, label]) => `
+      <fieldset><legend>${label}</legend><label>観察した行動<select id="operation-${key}">${optionsHTML(operationOptions)}</select></label>
+      <label>行動・声かけ（そのまま）<textarea id="operation-${key}-notes"></textarea></label></fieldset>`).join('');
+
+    const fields = Array.from(form.querySelectorAll('input,select,textarea'));
+    let savedAt = null;
+    let storageProblem = false;
+    let invalidSavedDates = new Map();
+    let plan = { questionCount: null, locked: false };
+    let histories = {};
+    let lastResults = {};
+    let originals = [];
+    let recordTimezone = timezone;
+    const questionKeys = Object.keys(stageNames).flatMap(stage => [1, 2, 3, 4].map(n => `${stage}-${n}`));
+    const questionSuffixes = ['prompt', 'response', 'result', 'seconds', 'after', 'correction'];
+    const resultValues = resultOptions.map(([value]) => value);
+    const hasAttempt = result => Boolean(result && result !== 'not-attempted');
+    const plannedKeys = stage => Array.from({ length: plan.questionCount || 0 }, (_, i) => `${stage}-${i + 1}`);
+    const rawValue = id => invalidSavedDates.get(id) || get(id);
+
+    function participantCount() {
+      const observation = questionKeys.some(key => get(`${key}-result`)) || get('first-action') ||
+        Object.keys(operationNames).some(key => get(`operation-${key}`)) || get('replay-choice') || get('return-choice') ||
+        get('comprehension-event') || get('comprehension-confusion');
+      return get('participant-confirmed') && observation ? 1 : 0;
+    }
+
+    function refreshPlan() {
+      const countField = document.getElementById('planned-count');
+      countField.value = plan.questionCount ? String(plan.questionCount) : '';
+      countField.disabled = plan.locked;
+      show('plan-status', plan.locked ? `各${plan.questionCount}問で固定済み。誤答・中止もこの計画に残します。別計画はJSON保存後に新しい記録を始めてください。` : '最初の問題を記録すると固定します。誤答・中止を後から計画外にはしません。');
+      Object.entries(stageNames).forEach(([stage, name]) => {
+        show(`${stage}-title`, `${name} · ${plan.questionCount ? `${plan.questionCount}問` : '予定問数は未決定'}`);
+        [1, 2, 3, 4].forEach(n => {
+          const key = `${stage}-${n}`, included = Boolean(plan.questionCount && n <= plan.questionCount);
+          document.getElementById(`${key}-row`).hidden = !included;
+          questionSuffixes.forEach(suffix => { document.getElementById(`${key}-${suffix}`).disabled = !included; });
+          const revisions = histories[key] || [];
+          document.getElementById(`${key}-correction-box`).hidden = revisions.length === 0;
+          show(`${key}-audit`, revisions.length ? `記録訂正 ${revisions.length}回。${revisions.some(entry => !entry.reason.trim()) ? '理由未記録の訂正あり：初回正答は判定不明。' : '理由と原結果をJSONに保持し、訂正後の記録で集計します。'}` : '');
+        });
+      });
+    }
+
+    function readDate(id) {
+      const value = get(id);
+      if (invalidSavedDates.has(id)) return { state: 'invalid' };
+      if (!value) return { state: 'missing' };
+      const match = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?$/.exec(value);
+      if (!match) return { state: 'invalid' };
+      const date = new Date(value);
+      const valid = !Number.isNaN(date.getTime()) && date.getFullYear() === +match[1] &&
+        date.getMonth() + 1 === +match[2] && date.getDate() === +match[3] &&
+        date.getHours() === +match[4] && date.getMinutes() === +match[5];
+      return valid ? { state: 'valid', ms: date.getTime() } : { state: 'invalid' };
+    }
+
+    function counts(stage) {
+      const rows = plannedKeys(stage).map(key => {
+        const result = get(`${key}-result`), revisions = histories[key] || [];
+        const unresolved = revisions.some(entry => !entry.reason.trim());
+        const attempted = hasAttempt(result) || (unresolved && revisions.some(entry => hasAttempt(entry.from) || hasAttempt(entry.to)));
+        return { result, unresolved, attempted, revisions: revisions.length,
+          rawComplete: Boolean(result && !unresolved && (result === 'not-attempted' ||
+            (get(`${key}-prompt`) && (get(`${key}-response`) || get(`${key}-after`))))) };
+      });
+      const observed = rows.filter(row => row.result || row.attempted).length;
+      const total = predicate => rows.filter(predicate).length;
+      return {
+        planned: plan.questionCount, observed, missing: plan.questionCount === null ? null : plan.questionCount - observed,
+        firstCorrectWithoutObservedSupport: observed ? total(row => row.result === 'first-correct' && !row.unresolved) : null,
+        attempted: observed ? total(row => row.attempted) : null,
+        assisted: observed ? total(row => ['app-hint', 'app-model', 'support-completion', 'oral-hint', 'adult-input'].includes(row.result)) : null,
+        notAttempted: observed ? total(row => row.result === 'not-attempted' && !row.attempted) : null,
+        stoppedAfterStarting: observed ? total(row => row.result === 'stopped') : null,
+        unknownResult: observed ? total(row => row.attempted && (row.unresolved || !row.result || row.result === 'unknown')) : null,
+        recordCorrections: rows.reduce((sum, row) => sum + row.revisions, 0),
+        correctionsWithoutReason: total(row => row.unresolved),
+        completeRawRecords: Boolean(plan.questionCount && rows.every(row => row.rawComplete))
+      };
+    }
+
+    function countText(stage) {
+      const c = counts(stage);
+      if (c.planned === null) return '未測定 · 予定問数は未決定';
+      if (!c.observed) return `未測定 · 予定${c.planned}問 / 未記録${c.planned}問`;
+      return `初回・追加支援を観察せず正答 ${c.firstCorrectWithoutObservedSupport} / 取組み ${c.attempted}問（支援 ${c.assisted}・途中中止 ${c.stoppedAfterStarting}・結果不明 ${c.unknownResult}）\n予定${c.planned}問 / 未着手 ${c.notAttempted}問 / 未記録 ${c.missing}問${c.recordCorrections ? ` / 記録訂正 ${c.recordCorrections}回（理由未記録 ${c.correctionsWithoutReason}問）` : ''}`;
+    }
+
+    function comparison(stage) {
+      const a = readDate('baseline-date'), b = readDate(`${stage}-date`);
+      let elapsedHours = null;
+      let baselineElapsedHours = null;
+      const reasons = [];
+      if (a.state === 'invalid' || b.state === 'invalid') reasons.push('日時が不正です。実際の日時を入れ直してください');
+      else if (a.state === 'missing' || b.state === 'missing') reasons.push('実施日時が未記録');
+      else if (b.ms < a.ms) reasons.push('日時の順序が不正です。開始前以降の日時を確認してください');
+      else {
+        baselineElapsedHours = (b.ms - a.ms) / 3600000;
+        if (stage === 'immediate') elapsedHours = baselineElapsedHours;
+      }
+      if (stage === 'delayed') {
+        const immediate = readDate('immediate-date');
+        if (immediate.state === 'invalid') reasons.push('直後の日時が不正です');
+        else if (immediate.state === 'missing') reasons.push('直後の実施日時が未記録');
+        else if (a.state === 'valid' && immediate.ms < a.ms) reasons.push('日時の順序が不正です。開始前 ≤ 直後 < 翌日を確認してください');
+        else if (b.state === 'valid' && b.ms <= immediate.ms) reasons.push('日時の順序が不正です。翌日は直後より後の日時にしてください');
+        else if (b.state === 'valid') {
+          elapsedHours = (b.ms - immediate.ms) / 3600000;
+        }
+      }
+      const skillA = get('baseline-skill'), skillB = get(`${stage}-skill`);
+      const formA = get('baseline-form'), formB = get(`${stage}-form`);
+      if (!skillA || !skillB) reasons.push('学習範囲 / skill ID が未記録');
+      else if (skillA !== skillB) reasons.push('学習範囲 / skill ID が一致していない');
+      if (stage === 'delayed' && (!get('immediate-skill') || get('immediate-skill') !== skillA)) reasons.push('直後の学習範囲 / skill ID も開始前と一致する記録が必要');
+      if (!formA || !formB) reasons.push('問題セット / form ID が未記録');
+      else if (formA === formB) reasons.push('同じ問題セットのため別問題での比較条件を満たさない');
+      if (stage === 'delayed' && formB && formB === get('immediate-form')) reasons.push('翌日と直後の問題セットが同じ');
+      if (stage === 'delayed' && !get('immediate-form')) reasons.push('直後の問題セットが未記録');
+      if (!plan.questionCount || !plan.locked) reasons.push('事前の予定問数が未確定');
+      if (!counts('baseline').completeRawRecords || !counts(stage).completeRawRecords) reasons.push('開始前と対象時点の予定問題の記録が不足、または記録訂正の理由が未記録');
+      if (counts('baseline').unknownResult || counts(stage).unknownResult) reasons.push('初回結果や支援が不明な取組みあり（原記録は残します）');
+      if (!participantCount()) reasons.push('実参加者の観察確認が未記録');
+      if (recordTimezone !== timezone) reasons.push('記録時と現在のタイムゾーンが異なります。日時を自動解釈し直さず、元の環境で間隔を確認してください');
+      if (!get('baseline-human') || !get(`${stage}-human`) || (stage === 'delayed' && !get('immediate-human'))) reasons.push('本人の行動を実際に観察した確認が未記録');
+      if (!get('reading-policy') || !get('baseline-reading') || !get(`${stage}-reading`) || (stage === 'delayed' && !get('immediate-reading'))) reasons.push('読み上げ補助のルール・実施条件が未記録');
+      const followupWindow = stage !== 'delayed' || elapsedHours === null ? null : elapsedHours < 20 ? 'before-20h' : elapsedHours > 48 ? 'after-48h' : 'within-20-48h';
+      if (recordTimezone !== timezone) { elapsedHours = null; baselineElapsedHours = null; }
+      return { readyForDescriptiveComparison: reasons.length === 0, followupWindow: recordTimezone === timezone ? followupWindow : null, elapsedHours, elapsedFrom: stage === 'delayed' ? 'immediate' : 'baseline', baselineElapsedHours, reasons };
+    }
+
+    function comparisonText(stage) {
+      const result = comparison(stage);
+      const elapsed = result.elapsedHours === null ? '' : `${stage === 'delayed' ? '直後から' : '開始前から'} ${Number(result.elapsedHours.toFixed(4))} 時間。`;
+      const windowText = result.followupWindow ? (result.followupWindow === 'within-20-48h' ? '予定した20〜48時間内。' : '予定した20〜48時間の範囲外（実測記録を保持）。') : '';
+      if (!result.readyForDescriptiveComparison) return `${elapsed}${windowText}記録条件が未充足：${result.reasons.join(' / ')}。`;
+      const a = counts('baseline'), b = counts(stage);
+      return `${elapsed}${windowText}予定各${plan.questionCount}問。初回・追加支援を観察せず正答：開始前 ${a.firstCorrectWithoutObservedSupport}/取組み${a.attempted} → ${stageNames[stage]} ${b.firstCorrectWithoutObservedSupport}/取組み${b.attempted}。未着手・中止・記録訂正は各時点の内訳を確認。別問題の難度の等価性・アプリによる効果は未検証。`;
+    }
+
+    function refresh() {
+      refreshPlan();
+      show('status-participant', `${participantCount()}人の実観察を確認 · 1人用の記録枠。${participantCount() ? '確認欄と原記録に基づく申告です。' : '記録枠・匿名IDだけでは参加者に数えません。'}`);
+      Object.keys(stageNames).forEach(stage => show(`${stage}-summary`, countText(stage)));
+      ['immediate', 'delayed'].forEach(stage => {
+        const any = counts(stage).observed || counts('baseline').observed || get(`${stage}-date`) || get('baseline-date') || invalidSavedDates.size;
+        show(`status-${stage}`, any ? comparisonText(stage) : '未測定');
+      });
+      const choice = get('replay-choice'), opportunity = get('replay-opportunity'), prompting = get('replay-prompting');
+      const choices = { learning: '学習の続行', 'arrange-play': '配置・どうぶつ遊びの続行', stop: '終了' };
+      let replay = '未観察';
+      if (choice) {
+        replay = `観察した選択：${choices[choice]}。`;
+        replay += opportunity === 'yes' && prompting === 'no' ? '機会あり・大人の続行促しなし。' : '自発的な続行の判定条件が未充足（機会・促しを確認）。';
+      } else if (opportunity === 'no') replay = '続けられる機会なし。続行意欲は未測定。';
+      else if (opportunity || prompting) replay = '条件の記録あり。本人の選択は未観察。';
+      show('status-replay', replay);
+      const returns = {
+        scheduled: '確認テストのために開いた記録。自発的な再訪は未観察。',
+        spontaneous: '本人から開いた / 開きたいと言った記録あり。発言・声かけ・期間を確認。',
+        'no-access': '利用機会なし。再訪意欲は未測定。',
+        'no-return': '記録した利用機会では戻らなかった。長期的な継続は未測定。'
+      };
+      const returnStart = readDate('return-start'), returnEnd = readDate('return-end');
+      let returnText = returns[get('return-choice')] || '未観察';
+      if (returnStart.state === 'invalid' || returnEnd.state === 'invalid' || (returnStart.state === 'valid' && returnEnd.state === 'valid' && returnEnd.ms <= returnStart.ms)) returnText += ' 観察期間の日時が不正です。';
+      else if (get('return-choice') && (returnStart.state !== 'valid' || returnEnd.state !== 'valid')) returnText += ' 観察期間が未記録。';
+      show('status-return', returnText);
+      const operations = Object.keys(operationNames).filter(key => get(`operation-${key}`));
+      const quotes = get('comprehension-event') || get('comprehension-confusion');
+      show('status-understanding', operations.length || quotes || get('first-action') ? `操作の記録 ${operations.length}/3項目。${quotes ? '本人の説明あり（原文を確認）。' : '本人の説明は未記録。'}見せた資料と大人の声かけを含めて解釈します。` : '未観察');
+    }
+
+    function snapshot() {
+      return {
+        schema: SCHEMA, participantCapacity: 1, participantCount: participantCount(),
+        participantCountBasis: '実観察確認欄と行動記録の両方がある場合のみ1。自己申告であり本人性の検証ではない。',
+        savedAt, timezone: recordTimezone, plan: { ...plan },
+        fields: Object.fromEntries(fields.map(field => [field.id, rawValue(field.id) || null])),
+        resultHistory: histories, preservedOriginals: originals,
+        summaries: Object.fromEntries(Object.keys(stageNames).map(stage => [stage, counts(stage)])),
+        comparison: { immediate: comparison('immediate'), delayed: comparison('delayed') },
+        interpretation: '1人用の記述的観察。未記録・旧データは不明。訂正や支援後の完了は初回無援助正答でない。心理的独力、難度等価性、因果効果、習得、一般化は未検証。'
+      };
+    }
+
+    function save() {
+      savedAt = new Date().toISOString();
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot()));
+        storageProblem = false;
+        show('save-status', `このブラウザに保存済み · ${new Date(savedAt).toLocaleTimeString('ja-JP')}`);
+      } catch {
+        storageProblem = true;
+        show('save-status', 'ブラウザ内に保存できません。ページを閉じる前に JSON で保存してください。欠測や誤答へは変換しません。');
+      }
+    }
+
+    function keepOriginal(raw, label) {
+      if (!originals.some(entry => entry.raw === raw)) originals.push({ label, raw });
+    }
+
+    function showOriginals() {
+      document.getElementById('original-records').hidden = originals.length === 0;
+      const select = document.getElementById('original-choice');
+      select.innerHTML = originals.map((_, i) => `<option value="${i}">原記録 ${i + 1}</option>`).join('');
+      document.getElementById('original-raw').value = originals[0]?.raw || '';
+    }
+
+    function validate(stored) {
+      if (stored.schema !== SCHEMA || !stored.fields || typeof stored.fields !== 'object' || Array.isArray(stored.fields) ||
+        !stored.plan || ![null, 2, 4].includes(stored.plan.questionCount) || typeof stored.plan.locked !== 'boolean' ||
+        typeof stored.timezone !== 'string' || !stored.timezone) throw new Error('v2形式または事前計画が不正です');
+      if (stored.plan.locked && !stored.plan.questionCount) throw new Error('固定した予定問数がありません');
+      fields.forEach(field => {
+        const value = stored.fields[field.id];
+        if (value !== null && typeof value !== 'string') throw new Error(`記録欄が不足または不正です: ${field.id}`);
+        if (field.type === 'checkbox' && ![null, 'confirmed'].includes(value)) throw new Error('確認欄が不正です');
+        if (field.tagName === 'SELECT' && value !== null && !Array.from(field.options).some(option => option.value === value)) throw new Error('選択肢が不正です');
+      });
+      if (stored.fields['planned-count'] !== (stored.plan.questionCount ? String(stored.plan.questionCount) : null)) throw new Error('予定問数が一致しません');
+      const history = stored.resultHistory;
+      if (!history || typeof history !== 'object' || Array.isArray(history)) throw new Error('訂正履歴が不正です');
+      Object.entries(history).forEach(([key, entries]) => {
+        if (!questionKeys.includes(key) || !Array.isArray(entries) || entries.some(entry =>
+          !entry || !resultValues.includes(entry.from) || !resultValues.includes(entry.to) || typeof entry.reason !== 'string' ||
+          typeof entry.at !== 'string' || !entry.previous || typeof entry.previous !== 'object' ||
+          ['prompt', 'response', 'after'].some(suffix => typeof entry.previous[suffix] !== 'string'))) throw new Error('原結果の履歴が不正です');
+        if (entries.length && (entries[entries.length - 1].to !== (stored.fields[`${key}-result`] || '') ||
+          entries[entries.length - 1].reason !== (stored.fields[`${key}-correction`] || ''))) throw new Error('結果と訂正履歴が一致しません');
+      });
+      questionKeys.forEach(key => {
+        const entered = questionSuffixes.some(suffix => stored.fields[`${key}-${suffix}`]) || (history[key] || []).length;
+        if (entered && (!stored.plan.locked || Number(key.split('-')[1]) > stored.plan.questionCount)) throw new Error('予定外の問題記録があります。自動で計画外へ落としません');
+      });
+      if (!Array.isArray(stored.preservedOriginals) || stored.preservedOriginals.some(entry => !entry || typeof entry.raw !== 'string' || typeof entry.label !== 'string')) throw new Error('原記録の保存形式が不正です');
+      return stored;
+    }
+
+    function restore(stored) {
+      validate(stored);
+      invalidSavedDates = new Map();
+      fields.forEach(field => {
+        const value = stored.fields[field.id];
+        if (field.type === 'checkbox') field.checked = value === 'confirmed';
+        else {
+          field.value = value || '';
+          if (field.type === 'datetime-local' && value && field.value !== value) invalidSavedDates.set(field.id, value);
+        }
+      });
+      plan = { ...stored.plan };
+      histories = structuredClone(stored.resultHistory);
+      lastResults = Object.fromEntries(questionKeys.map(key => [key, get(`${key}-result`)]));
+      stored.preservedOriginals.forEach(entry => keepOriginal(entry.raw, entry.label));
+      recordTimezone = stored.timezone;
+      savedAt = typeof stored.savedAt === 'string' ? stored.savedAt : null;
+      showOriginals(); refresh();
+    }
+
+    try {
+      const archived = localStorage.getItem(ORIGINALS_KEY);
+      if (archived) {
+        const parsed = JSON.parse(archived);
+        if (!Array.isArray(parsed) || parsed.some(entry => !entry || typeof entry.raw !== 'string' || typeof entry.label !== 'string')) throw new Error('原記録一覧が不正です');
+        originals = parsed;
+      }
+      const legacy = localStorage.getItem(LEGACY_KEY);
+      if (legacy) keepOriginal(legacy, '旧v1・ブラウザ原記録');
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        try { restore(JSON.parse(raw)); }
+        catch (error) { keepOriginal(raw, '読み込めなかったv2原記録'); throw error; }
+        show('save-status', 'v2記録を読み込みました。計画・原結果・訂正理由を復元しています。');
+      } else show('save-status', legacy ? '旧v1は原文を別に保持しました。新票へ自動分類していません。' : 'まだ観察記録はありません。入力すると自動保存します。');
+    } catch {
+      storageProblem = true;
+      show('save-status', '保存記録を読み込めませんでした。上書きを停止しています。原記録を保存してから、新しい記録を始めてください。');
+    }
+
+    function inputChanged(event) {
+      const id = event.target.id;
+      invalidSavedDates.delete(id);
+      if (id === 'planned-count' && !plan.locked) plan.questionCount = [2, 4].includes(Number(get(id))) ? Number(get(id)) : null;
+      const key = questionKeys.find(question => id.startsWith(`${question}-`));
+      if (key && plan.questionCount) {
+        if (questionSuffixes.some(suffix => get(`${key}-${suffix}`))) plan.locked = true;
+        if (id === `${key}-result`) {
+          const from = lastResults[key] || '', to = get(id);
+          if (from !== to && (from || histories[key]?.length)) {
+            const entry = { from, to, at: new Date().toISOString(), reason: '',
+              previous: Object.fromEntries(['prompt', 'response', 'after'].map(suffix => [suffix, get(`${key}-${suffix}`)])) };
+            (histories[key] ||= []).push(entry);
+            document.getElementById(`${key}-correction`).value = '';
+          }
+          lastResults[key] = to;
+        }
+        if (id === `${key}-correction` && histories[key]?.length) {
+          const reason = get(id);
+          histories[key].forEach((entry, index) => {
+            if ((!entry.reason && reason) || index === histories[key].length - 1) entry.reason = reason;
+          });
+        }
+      }
+      refresh();
+      if (!storageProblem) save();
+    }
+
+    function download(raw, filename) {
+      const blob = new Blob([raw], { type: 'application/json' });
+      const url = URL.createObjectURL(blob), anchor = document.createElement('a');
+      anchor.href = url; anchor.download = filename;
+      document.body.append(anchor); anchor.click(); anchor.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    form.addEventListener('submit', event => event.preventDefault());
+    form.addEventListener('input', inputChanged);
+    form.addEventListener('change', inputChanged);
+    document.getElementById('export').addEventListener('click', () => {
+      const data = snapshot(); data.exportedAt = new Date().toISOString();
+      download(JSON.stringify(data, null, 2), `sansu-observation-v2-${(get('participant') || 'anonymous').replace(/[^a-zA-Z0-9_-]/g, '_')}-${new Date().toISOString().slice(0, 10)}.json`);
+    });
+    document.getElementById('original-choice').addEventListener('change', () => {
+      document.getElementById('original-raw').value = originals[Number(document.getElementById('original-choice').value)]?.raw || '';
+    });
+    document.getElementById('export-original').addEventListener('click', () => {
+      const index = Number(document.getElementById('original-choice').value), original = originals[index];
+      if (original) download(original.raw, `sansu-observation-original-${index + 1}.json`);
+    });
+    document.getElementById('import').addEventListener('click', () => document.getElementById('import-file').click());
+    document.getElementById('import-file').addEventListener('change', async event => {
+      const file = event.target.files[0];
+      if (!file) return;
+      let applied = false;
+      try {
+        const raw = await file.text(), stored = JSON.parse(raw);
+        if (stored.schema === 'sansu-single-child-observer-v1' || stored.schema === SCHEMA) {
+          if (stored.schema === SCHEMA) validate(stored);
+          if (stored.schema === SCHEMA && !confirm('今の新票を置き換えます。必要な記録は先にJSON保存してください。元ファイルと旧v1原記録は変更しません。読み込みますか？')) return;
+          if (stored.schema === SCHEMA) restore(stored);
+          else keepOriginal(raw, '読み込んだ旧v1原本（分類不明）');
+          applied = true;
+          localStorage.setItem(ORIGINALS_KEY, JSON.stringify(originals));
+          storageProblem = false;
+          showOriginals(); refresh(); save();
+          if (stored.schema !== SCHEMA) show('save-status', '旧v1原文を別保存しました。新票の人数・結果へは加算していません。');
+        } else throw new Error('対応していない形式です');
+      } catch (error) {
+        if (applied) storageProblem = true;
+        show('save-status', applied ? '読み込んだ記録をブラウザに保存できません。自動保存を停止しました。ページを閉じる前にJSON保存してください。' : `読み込めませんでした。今の新票・元ファイルは変更していません。${error.message || ''}`);
+      } finally { event.target.value = ''; }
+    });
+    document.getElementById('clear').addEventListener('click', () => {
+      if (!confirm('この新票を消去します。必要な記録は先にJSON保存してください。別保存した原記録と旧v1は残します。消去しますか？')) return;
+      try {
+        localStorage.setItem(ORIGINALS_KEY, JSON.stringify(originals));
+        localStorage.removeItem(STORAGE_KEY);
+      } catch { show('save-status', '保存領域の消去に失敗しました。記録は変更していません。'); return; }
+      fields.forEach(field => { if (field.type === 'checkbox') field.checked = false; else field.value = field.id === 'participant' ? 'P01' : ''; });
+      savedAt = null; storageProblem = false; invalidSavedDates = new Map();
+      plan = { questionCount: null, locked: false }; histories = {}; lastResults = {}; recordTimezone = timezone;
+      refresh(); show('save-status', '新票を消去しました。実観察の確認は0人。別保存した原記録は残っています。');
+    });
+    showOriginals(); refresh();
+  })();
+</script>
+<script src="../../../../../integration.js" defer></script><script src="../../../../../library-runtime.js" defer></script></body>
+</html>

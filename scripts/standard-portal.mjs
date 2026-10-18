@@ -5,6 +5,7 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { parseTaskBoard } from '../tools/portal-content.mjs';
 import { renderIntegrated } from '../tools/integrated-portal.mjs';
+import { composeLibrary } from '../tools/portal-library.mjs';
 
 const root = path.resolve(fileURLToPath(new URL('../', import.meta.url)));
 const vendor = 'scripts/vendor/hub-standard/1.0.0';
@@ -82,7 +83,15 @@ export function run(mode) {
   checkVendor();
   const data = project(), text = JSON.stringify(data, null, 2) + '\n';
   const common = require('./vendor/hub-standard/1.0.0/portal.cjs');
-  const files = renderIntegrated(root, data, common.render(root, data), common);
+  const core = renderIntegrated(root, data, common.render(root, data), common);
+  const home = core.get('index.html');
+  const files = require('./vendor/portal-integration/1.0.2/adapter.cjs').apply(root, core);
+  composeLibrary(root,files,home);
+  require('./vendor/portal-reader/1.1.3/adapter.cjs').enhance(root,files,{sources:['scripts/standard-portal.mjs']});
+  require('./vendor/portal-ui/1.0.2/adapter.cjs').enhance(root,files,{slug:'sansu',sources:['scripts/standard-portal.mjs']});
+  // Keep the complete generated registry below GitHub's per-file size limit.
+  const registry = files.get('data/unification.json');
+  if (registry) files.set('data/unification.json', JSON.stringify(JSON.parse(registry)) + '\n');
   files.set('.generated-by-hub-standard', '1.0.0\n');
   const out = path.join(root, 'portal');
   common.noSymlinks(root, out);
@@ -95,7 +104,7 @@ export function run(mode) {
     fs.rmSync(out, { recursive: true, force: true });
     for (const [file, content] of files) {
       fs.mkdirSync(path.dirname(path.join(out, file)), { recursive: true });
-      if (typeof content === 'string') fs.writeFileSync(path.join(out, file), content);
+      if (typeof content === 'string' || Buffer.isBuffer(content)) fs.writeFileSync(path.join(out, file), content);
       else fs.copyFileSync(path.join(root, content.source), path.join(out, file));
     }
     return { status: 'PASS', files: files.size };
@@ -103,9 +112,9 @@ export function run(mode) {
   if (mode === 'verify') {
     if (read('docs/portal/project.json') !== text) throw Error('Stale adapter: run npm run portal:build');
     const actual = common.walk(out).map(file => path.relative(out, file));
-    const stale = [...files].filter(([file, content]) => !fs.existsSync(path.join(out, file)) || (typeof content === 'string'
+    const stale = [...files].filter(([file, content]) => !fs.existsSync(path.join(out, file)) || (Buffer.isBuffer(content) ? !fs.readFileSync(path.join(out,file)).equals(content) : (typeof content === 'string'
       ? fs.readFileSync(path.join(out, file), 'utf8') !== content
-      : sha(fs.readFileSync(path.join(out, file))) !== content.sha256));
+      : sha(fs.readFileSync(path.join(out, file))) !== content.sha256)));
     if (stale.length || actual.some(file => !files.has(file))) throw Error(`Stale portal: ${stale.length} changed/missing or extra files`);
     return { status: 'PASS', files: files.size };
   }

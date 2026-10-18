@@ -3,6 +3,7 @@ import type { AppData, MemoryState, UserProfile } from '../types';
 import { getAvailableSkills, MAX_MATH_LEVEL } from '../math/curriculum';
 import { getNextReviewDate } from '../algorithms/srs';
 import { createInitialProfile } from './profile';
+import { firstPlayTable, readFirstPlay } from './firstPlay';
 
 export type OnboardingSubject = 'math' | 'vocab' | 'mix';
 export type OnboardingMathRange = typeof ONBOARDING_MATH_RANGES[number]['value'];
@@ -97,6 +98,9 @@ export async function completeOnboardingProfile(selection: OnboardingSelection, 
             return { profile: existing, activeProfileId: app.activeProfileId && profiles[app.activeProfileId] ? app.activeProfileId : existing.id };
         }
         if (intent !== 'add' && Object.keys(profiles).length) throw new OnboardingAlreadyCompleted('First profile already exists');
+        const firstPlay = intent === 'first' ? await readFirstPlay(database) : undefined;
+        if (firstPlay && !firstPlay.completed && firstPlay.ownerId !== completionId)
+            throw new OnboardingConflict('Continue the same first island');
         const profile = { ...createInitialProfile(resolved.name, resolved.grade, resolved.mathStartLevel, resolved.vocabStartLevel, resolved.subject), id: completionId, islandTutorialVersion: 1 as const };
         if (resolved.seedMath) {
             const now = new Date().toISOString(), nextReview = getNextReviewDate(5).toISOString();
@@ -106,6 +110,7 @@ export async function completeOnboardingProfile(selection: OnboardingSelection, 
             }));
             await database.memoryMath.bulkAdd(memories);
         }
+        if (firstPlay?.ownerId === completionId) await firstPlayTable(database).put({ ...firstPlay, completed: true, selection });
         await database.profiles.add(profile);
         await database.appData.put({ ...app, id: 'app', profiles: { ...profiles, [profile.id]: profile }, activeProfileId: profile.id });
         return { profile, activeProfileId: profile.id };

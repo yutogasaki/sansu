@@ -1,0 +1,26 @@
+[
+  {
+    "command": "npm run portal:build",
+    "cwd": ".",
+    "startedAt": "2026-10-16T04:20:29.918475+00:00",
+    "targetCommit": "eb4b907bdf5cb6e99c30c4ac6f28d2d3969cac50",
+    "inputHash": null,
+    "expected": "exit 0",
+    "log": "20261016T042029924374Z.log",
+    "exitCode": 0,
+    "seconds": 144.14,
+    "finishedAt": "2026-10-16T04:22:54.166836+00:00"
+  },
+  {
+    "command": "npm run portal:verify",
+    "cwd": ".",
+    "startedAt": "2026-10-16T04:22:54.182895+00:00",
+    "targetCommit": "eb4b907bdf5cb6e99c30c4ac6f28d2d3969cac50",
+    "inputHash": "c64e09ab255bc7e0d26ad512fdcb7cfdfb69b03cf26c142ce349c7ce87d9665d",
+    "expected": "exit 0",
+    "log": "20261016T042254182918Z.log",
+    "exitCode": 1,
+    "seconds": 13.54,
+    "finishedAt": "2026-10-16T04:23:07.856113+00:00"
+  }
+]

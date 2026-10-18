@@ -1,15 +1,16 @@
 <!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="generator" content="tools/generate-agent-index.mjs"><title>Sansu · タスク</title><style>
-:root{color-scheme:light;--ink:#213b35;--muted:#61736c;--line:#d8e1d9;--paper:#fffef9;--accent:#28634f}*{box-sizing:border-box}body{margin:0;background:#f3f5ef;color:var(--ink);font:15px/1.75 system-ui,-apple-system,sans-serif}a{color:var(--accent);text-underline-offset:4px}header{background:var(--paper);border-bottom:1px solid var(--line)}nav,main{max-width:1180px;margin:auto;padding:20px 28px}nav{display:flex;align-items:center;gap:24px;flex-wrap:wrap}nav strong{margin-right:auto;letter-spacing:.12em}nav a{text-decoration:none;padding:6px 2px}nav a[aria-current]{border-bottom:2px solid var(--accent);font-weight:700}main{padding-top:42px;padding-bottom:70px}h1{font-size:clamp(28px,5vw,44px);letter-spacing:-.035em;margin:0}h2{font-size:18px;line-height:1.5;margin:0 0 10px}p{margin:10px 0}.subtitle,.path,footer{color:var(--muted)}.eyebrow{font-size:12px;letter-spacing:.16em}.intro{padding:28px;background:#e7eee4;border:1px solid var(--line);border-radius:14px;margin:28px 0}.intro h2{font-size:26px}.stats{display:flex;flex-wrap:wrap;gap:24px;margin-top:22px}.stats strong{font-size:30px;margin-right:5px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px;overflow-wrap:anywhere}.path{font:12px/1.6 ui-monospace,monospace}.section-title{margin:32px 0 16px}label{display:block;font-weight:600;margin-top:24px}input{width:100%;font:inherit;padding:13px 16px;border:1px solid #93aa9b;border-radius:8px;background:var(--paper);margin:8px 0 24px;color:var(--ink)}summary{cursor:pointer;color:var(--accent);padding:10px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.8 ui-monospace,monospace;background:#f0f3ed;padding:16px;border-radius:8px;max-height:560px;overflow:auto}.map-list,.asset-groups,.spec-list{display:grid;gap:12px}.map-row{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);gap:24px}.map-row h2{margin:8px 0 4px}.map-row h3{font-size:12px;letter-spacing:.08em;color:var(--muted);margin:0}.map-row p{margin:4px 0}.map-row small{color:var(--muted);white-space:nowrap}.spec-row{display:flex;justify-content:space-between;gap:20px;padding:12px 20px}.spec-row p{margin:0;color:var(--muted)}.spec-row>div:last-child{text-align:right;min-width:160px}.badge,.status{font-size:12px;padding:3px 9px;border-radius:99px;background:#e7eee4;margin-right:6px}.status{background:#fff1ce}.asset-group{padding:12px 20px}.asset-group summary{display:flex;justify-content:space-between;gap:16px;align-items:center}.asset-group summary span,.asset-list span{color:var(--muted);white-space:nowrap}.asset-list{border-top:1px solid var(--line);margin-top:8px;padding-top:8px}.asset-list>div{display:flex;justify-content:space-between;gap:16px;padding:3px 0;border-bottom:1px solid #edf0e9}.asset-list a{overflow-wrap:anywhere}footer{margin-top:40px;font-size:13px}[hidden]{display:none!important}:focus-visible{outline:3px solid #b27523;outline-offset:4px}@media(max-width:760px){.map-row{grid-template-columns:1fr}.spec-row{display:block}.spec-row>div:last-child{text-align:left;min-width:0;margin-top:8px}.asset-group summary,.asset-list>div{align-items:flex-start}.asset-group summary span{font-size:12px}}@media(max-width:640px){nav,main{padding-left:18px;padding-right:18px}nav{gap:16px}.grid{grid-template-columns:1fr}.intro{padding:20px}.card{padding:18px}}
-.asset-item{display:grid!important;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:12px;padding:7px 0!important}.asset-thumb{display:flex;align-items:center;justify-content:center;width:64px;height:54px;border-radius:6px;background:#edf0e9;overflow:hidden;text-decoration:none}.asset-thumb img{width:100%;height:100%;object-fit:contain}.asset-placeholder{font:10px ui-monospace,monospace;color:var(--muted);letter-spacing:.08em}.asset-name{min-width:0;white-space:normal!important}.asset-size{white-space:nowrap}@media(max-width:640px){.asset-item{grid-template-columns:52px minmax(0,1fr);gap:10px}.asset-thumb{width:52px;height:48px}.asset-size{grid-column:2;justify-self:start;font-size:12px}}
-.progress-overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:22px 0}.progress-overview>div{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px}.progress-overview strong{display:block;font-size:30px;line-height:1.2}.progress-overview span{font-size:13px}.map-help{font-size:13px;color:var(--muted)}.map-row{display:block}.map-heading{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.map-heading h2{font-size:22px;margin:5px 0 10px}.map-heading .status{white-space:nowrap;font-weight:700}.map-summary{display:grid;grid-template-columns:1fr 1fr;gap:14px}.map-summary p{margin:0;padding:12px 14px;border-radius:9px;background:#f4f6f0}.map-summary strong{display:block;font-size:12px;color:var(--muted);margin-bottom:2px}.progress-track{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;list-style:none;margin:16px 0 0;padding:0}.stage{padding:10px;border-radius:8px;background:#eef2e9;border:1px solid #d9e2d5}.stage span{display:block;font-size:11px;line-height:1.3;color:var(--muted)}.stage strong{display:block;font-size:12px;line-height:1.4;margin-top:4px}.stage-partial{background:#fff4dc;border-color:#ecdcb7}.stage-waiting{background:#f4f3f0;border-color:#e0ded8}.map-sources{border-top:1px solid var(--line);margin-top:16px}.map-sources>div{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding-top:8px}.map-sources h3{margin:0;font-size:12px}.archive-section{margin:32px 0;padding:20px;background:#e9ece7;border:1px solid var(--line);border-radius:12px}.archive-section>summary{font-size:18px;font-weight:700}.archive-section h3{margin-top:25px}.archive-section .asset-groups{margin-top:14px}@media(max-width:760px){.progress-overview,.progress-track{grid-template-columns:repeat(2,minmax(0,1fr))}.map-summary,.map-sources>div{grid-template-columns:1fr}.map-heading{display:block}.map-heading .status{display:inline-block;margin-bottom:10px}}@media(max-width:400px){.progress-overview{grid-template-columns:repeat(2,minmax(0,1fr))}.progress-track{gap:5px}.stage{padding:8px}}
+:root{color-scheme:light;--ink:#24233d;--muted:#55556b;--line:#d9d8e3;--paper:#fffdfa;--accent:#4d3aa2}*{box-sizing:border-box}body{margin:0;background:#f5f3f8;color:var(--ink);font:17px/1.75 system-ui,-apple-system,sans-serif}a{color:var(--accent);text-underline-offset:4px}header{background:var(--paper);border-bottom:1px solid var(--line)}nav,main{max-width:1180px;margin:auto;padding:20px 28px}nav{display:flex;align-items:center;gap:24px;flex-wrap:wrap}nav strong{margin-right:auto;letter-spacing:.12em}nav a{text-decoration:none;padding:6px 2px}nav a[aria-current]{border-bottom:2px solid var(--accent);font-weight:700}main{padding-top:42px;padding-bottom:70px}h1{font-size:clamp(28px,5vw,44px);letter-spacing:-.035em;margin:0}h2{font-size:18px;line-height:1.5;margin:0 0 10px}p{margin:10px 0}.subtitle,.path,footer{color:var(--muted)}.eyebrow{font-size:14px;letter-spacing:.16em}.intro{padding:28px;background:#ece8f7;border:1px solid var(--line);border-radius:14px;margin:28px 0}.intro h2{font-size:26px}.stats{display:flex;flex-wrap:wrap;gap:24px;margin-top:22px}.stats strong{font-size:30px;margin-right:5px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px;overflow-wrap:anywhere}.path{font:14px/1.6 ui-monospace,monospace}.section-title{margin:32px 0 16px}label{display:block;font-weight:600;margin-top:24px}input{width:100%;font:inherit;padding:13px 16px;border:1px solid #93aa9b;border-radius:8px;background:var(--paper);margin:8px 0 24px;color:var(--ink)}summary{cursor:pointer;color:var(--accent);padding:10px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:15px/1.8 ui-monospace,monospace;background:#f0edf5;padding:16px;border-radius:8px;max-height:560px;overflow:auto}.map-list,.asset-groups,.spec-list{display:grid;gap:12px}.map-row{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);gap:24px}.map-row h2{margin:8px 0 4px}.map-row h3{font-size:14px;letter-spacing:.08em;color:var(--muted);margin:0}.map-row p{margin:4px 0}.map-row small{color:var(--muted);white-space:nowrap}.spec-row{display:flex;justify-content:space-between;gap:20px;padding:12px 20px}.spec-row p{margin:0;color:var(--muted)}.spec-row>div:last-child{text-align:right;min-width:160px}.badge,.status{font-size:14px;padding:3px 9px;border-radius:99px;background:#ece8f7;margin-right:6px}.status{background:#fff1ce}.asset-group{padding:12px 20px}.asset-group summary{display:flex;justify-content:space-between;gap:16px;align-items:center}.asset-group summary span,.asset-list span{color:var(--muted);white-space:nowrap}.asset-list{border-top:1px solid var(--line);margin-top:8px;padding-top:8px}.asset-list>div{display:flex;justify-content:space-between;gap:16px;padding:3px 0;border-bottom:1px solid #edf0e9}.asset-list a{overflow-wrap:anywhere}footer{margin-top:40px;font-size:13px}[hidden]{display:none!important}:focus-visible{outline:3px solid #b27523;outline-offset:4px}@media(max-width:760px){.map-row{grid-template-columns:1fr}.spec-row{display:block}.spec-row>div:last-child{text-align:left;min-width:0;margin-top:8px}.asset-group summary,.asset-list>div{align-items:flex-start}.asset-group summary span{font-size:14px}}@media(max-width:640px){nav,main{padding-left:18px;padding-right:18px}nav{gap:16px}.grid{grid-template-columns:1fr}.intro{padding:20px}.card{padding:18px}}
+.asset-item{display:grid!important;grid-template-columns:64px minmax(0,1fr) auto;align-items:center;gap:12px;padding:7px 0!important}.asset-thumb{display:flex;align-items:center;justify-content:center;width:64px;height:54px;border-radius:6px;background:#edf0e9;overflow:hidden;text-decoration:none}.asset-thumb img{width:100%;height:100%;object-fit:contain}.asset-placeholder{font:10px ui-monospace,monospace;color:var(--muted);letter-spacing:.08em}.asset-name{min-width:0;white-space:normal!important}.asset-size{white-space:nowrap}@media(max-width:640px){.asset-item{grid-template-columns:52px minmax(0,1fr);gap:10px}.asset-thumb{width:52px;height:48px}.asset-size{grid-column:2;justify-self:start;font-size:14px}}
+.progress-overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:22px 0}.progress-overview>div{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px}.progress-overview strong{display:block;font-size:30px;line-height:1.2}.progress-overview span{font-size:13px}.map-help{font-size:13px;color:var(--muted)}.map-row{display:block}.map-heading{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.map-heading h2{font-size:22px;margin:5px 0 10px}.map-heading .status{white-space:nowrap;font-weight:700}.map-summary{display:grid;grid-template-columns:1fr 1fr;gap:14px}.map-summary p{margin:0;padding:12px 14px;border-radius:9px;background:#f4f6f0}.map-summary strong{display:block;font-size:14px;color:var(--muted);margin-bottom:2px}.progress-track{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;list-style:none;margin:16px 0 0;padding:0}.stage{padding:10px;border-radius:8px;background:#eef2e9;border:1px solid #d9e2d5}.stage span{display:block;font-size:11px;line-height:1.3;color:var(--muted)}.stage strong{display:block;font-size:14px;line-height:1.4;margin-top:4px}.stage-partial{background:#fff4dc;border-color:#ecdcb7}.stage-waiting{background:#f4f3f0;border-color:#e0ded8}.map-sources{border-top:1px solid var(--line);margin-top:16px}.map-sources>div{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding-top:8px}.map-sources h3{margin:0;font-size:14px}.archive-section{margin:32px 0;padding:20px;background:#e9ece7;border:1px solid var(--line);border-radius:12px}.archive-section>summary{font-size:18px;font-weight:700}.archive-section h3{margin-top:25px}.archive-section .asset-groups{margin-top:14px}@media(max-width:760px){.progress-overview,.progress-track{grid-template-columns:repeat(2,minmax(0,1fr))}.map-summary,.map-sources>div{grid-template-columns:1fr}.map-heading{display:block}.map-heading .status{display:inline-block;margin-bottom:10px}}@media(max-width:400px){.progress-overview{grid-template-columns:repeat(2,minmax(0,1fr))}.progress-track{gap:5px}.stage{padding:8px}}
 .mode-list{display:grid;gap:10px}.mode-row{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:15px}.mode-row>strong{font-size:17px;margin-right:10px}.mode-row p{margin:5px 0}.mode-row a{font-size:13px}
-.map-jumps{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:20px 0 28px}.map-jumps a{display:inline-block;padding:8px 12px;background:var(--paper);border:1px solid var(--line);border-radius:99px;text-decoration:none;font-weight:700;font-size:13px}.map-jumps a:hover{background:#e7eee4}.group-title{font-size:17px;margin:26px 0 10px}.group-title small{font-size:12px;font-weight:500;color:var(--muted);margin-left:6px}.asset-note{font-size:12px;color:var(--muted)}.asset-full-list{border-top:1px solid var(--line);margin-top:12px}.asset-full-list>summary{font-weight:700}.asset-full-list .asset-item{font-size:13px}.asset-full-list .asset-thumb{width:46px;height:38px}.asset-full-list .asset-item{grid-template-columns:46px minmax(0,1fr) auto}.asset-group>summary strong{max-width:70%;overflow-wrap:anywhere}#progress,#specs,#assets,#legacy,#evidence{scroll-margin-top:18px}@media(max-width:640px){.map-jumps{gap:6px}.map-jumps a{font-size:12px;padding:7px 9px}.asset-group>summary{display:block}.asset-group>summary strong{display:block;max-width:none}.asset-group>summary span{display:block}.asset-full-list .asset-item{grid-template-columns:38px minmax(0,1fr)}.asset-full-list .asset-thumb{width:38px;height:34px}}
+.map-jumps{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:20px 0 28px}.map-jumps a{display:inline-block;padding:8px 12px;background:var(--paper);border:1px solid var(--line);border-radius:99px;text-decoration:none;font-weight:700;font-size:13px}.map-jumps a:hover{background:#ece8f7}.group-title{font-size:17px;margin:26px 0 10px}.group-title small{font-size:14px;font-weight:500;color:var(--muted);margin-left:6px}.asset-note{font-size:14px;color:var(--muted)}.asset-full-list{border-top:1px solid var(--line);margin-top:12px}.asset-full-list>summary{font-weight:700}.asset-full-list .asset-item{font-size:13px}.asset-full-list .asset-thumb{width:46px;height:38px}.asset-full-list .asset-item{grid-template-columns:46px minmax(0,1fr) auto}.asset-group>summary strong{max-width:70%;overflow-wrap:anywhere}#progress,#specs,#assets,#legacy,#evidence{scroll-margin-top:18px}@media(max-width:640px){.map-jumps{gap:6px}.map-jumps a{font-size:14px;padding:7px 9px}.asset-group>summary{display:block}.asset-group>summary strong{display:block;max-width:none}.asset-group>summary span{display:block}.asset-full-list .asset-item{grid-template-columns:38px minmax(0,1fr)}.asset-full-list .asset-thumb{width:38px;height:34px}}
 .asset-group>summary{display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:14px;align-items:center}.group-thumb{display:block;width:62px;height:52px;object-fit:contain;border-radius:6px;background:#edf0e9}.asset-group>summary strong{max-width:none}.asset-group>summary>span:last-child{white-space:nowrap}@media(max-width:640px){.asset-group>summary{display:grid;grid-template-columns:52px minmax(0,1fr);gap:9px}.group-thumb{width:52px;height:48px}.asset-group>summary>span:last-child{grid-column:2}}
 .asset-group>summary .group-name{white-space:normal;min-width:0}.group-name strong,.group-name small{display:block;line-height:1.5}.group-name small{font:11px/1.5 ui-monospace,monospace;color:var(--muted);overflow-wrap:anywhere}.asset-group>summary .group-name strong{font-size:15px}
 .asset-size{text-align:right}.asset-size small{display:block;color:var(--muted);font-size:11px;line-height:1.45}@media(max-width:640px){.asset-size{text-align:left}}
-.evidence-gallery{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}.evidence-gallery .asset-item{display:block!important;padding:10px!important;border:1px solid var(--line);border-radius:9px;background:#f7f9f4}.evidence-gallery .asset-thumb{width:100%;height:250px;margin-bottom:8px}.evidence-gallery .asset-name{display:block;font-weight:700}.evidence-gallery .asset-size{display:block;text-align:left;font-size:12px}@media(max-width:640px){.evidence-gallery{grid-template-columns:1fr}.evidence-gallery .asset-thumb{height:260px}}
-</style></head><body><header><nav aria-label="メインナビゲーション"><strong>SANSU</strong><a href="../index.html">概要</a><a href="index.html" aria-current="page">タスク</a><a href="../../docs/index.html">ドキュメント</a><a href="../map.html">仕様と実装</a></nav></header><main><h1>タスク</h1><p class="subtitle">Sansu repository · Markdownから生成した閲覧用ポータル</p><label for="search">このページを検索</label><input id="search" type="search" placeholder="タイトル・ファイル名・キーワード"><p id="result" role="status" hidden></p><p>実行キューに登録された 6 件。「何の話か／現在地／次の一手」で分類しています。登録は実装済み・公開済みを意味しません。</p><section class="doc-group"><h2 class="section-title">1・統合と公開準備</h2><div class="grid"><article class="card" data-search="最新変更を一つの公開候補へまとめる：10/9固定v3のcore4,803/classic32、主要旅程・保存失敗/再試行・旧writer/実sw更新をlocal確認。source/dist archiveと実画面を保持 次：公開依頼時にurl/版/配信を照合。実利用者の保存・実機/子どもは別。確認した旧版以外の保存・全写真は未評価 docs/tasks/active/2026-10-05-growing-island-release.md # 最新変更を一つの公開候補へまとめる
+.evidence-gallery{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}.evidence-gallery .asset-item{display:block!important;padding:10px!important;border:1px solid var(--line);border-radius:9px;background:#f7f9f4}.evidence-gallery .asset-thumb{width:100%;height:250px;margin-bottom:8px}.evidence-gallery .asset-name{display:block;font-weight:700}.evidence-gallery .asset-size{display:block;text-align:left;font-size:14px}@media(max-width:640px){.evidence-gallery{grid-template-columns:1fr}.evidence-gallery .asset-thumb{height:260px}}
+.destinations{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:16px}nav a{min-height:44px;display:inline-flex;align-items:center}pre{tab-size:2}.skip{position:absolute;left:12px;top:-90px;background:white;padding:12px}.skip:focus{top:0}
+</style></head><body><a class="skip" href="#main">本文へ</a><header><nav aria-label="メインナビゲーション"><strong>SANSU</strong><a href="../index.html">概要</a><a href="../plan.html">計画</a><a href="index.html" aria-current="page">仕事</a><a href="../../docs/index.html">知識・仕様</a><a href="../roles.html">役割・手順</a><a href="../operations.html">運用</a></nav></header><main id="main"><h1>タスク</h1><p class="subtitle">Sansu repository · Markdownから生成した閲覧用ポータル</p><label for="search">このページを検索</label><input id="search" type="search" placeholder="タイトル・ファイル名・キーワード"><p id="result" role="status" hidden></p><p>関連する仕事（同時に開始しない）に登録された 4 件。同時に開始する件数ではありません。実装済みの参照項目は除外しています。「何の話か／現在地／次の一手」で分類しています。</p><section class="doc-group"><h2 class="section-title">1・統合と公開準備</h2><div class="grid"><article class="card" data-search="最新変更を一つの公開候補へまとめる：10/9固定v3のcore4,803/classic32、主要旅程・保存失敗/再試行・旧writer/実sw更新をlocal確認。source/dist archiveと実画面を保持 次：公開依頼時にurl/版/配信を照合。実利用者の保存・実機/子どもは別。確認した旧版以外の保存・全写真は未評価 docs/tasks/active/2026-10-05-growing-island-release.md # 最新変更を一つの公開候補へまとめる
 
 - 更新日: 2026-10-09
 - review by: 2026-10-12
@@ -681,7 +682,7 @@ main `4002e67b` から本番へ反映済み。公開URLの390/768幅で初回学
 ### Risks
 
 - 「全体」を広げすぎて島v3、家、Nature Town、ブランド外部確認の既存ownerを複製しない。横断の証拠づくりと未所有の共通操作課題に集中する。
-</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">3・性能</h2><div class="grid"><article class="card" data-search="起動と物が増えた島の軽量化：m1の形・床・道を保持しnode全layer7,386→174 ms。receiptだけの再構築を省きshaderをready前準備。preflight c2のcore5,199/購入・育成/編集と通常島の回帰はpass 次：browser購入予告9〜23秒、成熟後focus約20〜35秒で操作性能は未達。p05反復冠の削減効果とrendererの内訳は未測定。実時計同期・実機の起動/電池/gpuは別確認 docs/tasks/active/2026-09-23-island-performance.md # island / iphone pwa performance
+</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">3・性能</h2><div class="grid"><article class="card" data-search="起動と物が増えた島の軽量化：m1の形・床・道を保持しnode全layer7,386→174 ms。receiptだけの再構築を省きshaderをready前準備。花庭c6のcore5,232と編集／通常島の回帰はpass 次：preflight時のbrowser購入予告9〜23秒、成熟後focus約20〜35秒で操作性能は未達。p05反復冠の削減効果とrendererの内訳は未測定。headless回帰の通過を実機性能へ読み替えず、実時計同期・起動/電池/gpuを別確認 docs/tasks/active/2026-09-23-island-performance.md # island / iphone pwa performance
 
 ## 2026-10-11 水庭の岸検索と実browser待ち
 
@@ -834,7 +835,7 @@ this is a performance implementation within the existing product rules, so the p
 - life-enabled `verify:core` passed: 460 files / 4,168 tests, lint (one existing islandmilestone fast-refresh warning), typecheck, build and asset budget. the production decorations journey passed at 390×844 and 768×1024 (tablet reduced motion): six real answers, earned purchase, rotate/move/store/re-place, abort/retry, offline reload and learning return, followed by a separate synthetic 30-item stress fixture. both stress scenes loaded 34 instances from eight glbs, retained 17 textures, switched lod, and had no page errors. phone placement and tablet stress screenshots were inspected for visible props/residents and controls.
 - local browser evidence: `output/playwright/runtime-props-20260924/browser/report.json`; operation-count diagnostic: `output/playwright/runtime-props-20260924/clone-count.json`. target `http://127.0.0.1:5298`, version `development-local:b761cc63-f444-40d7-8107-d092ddce3f07`, app/dist/harness fingerprint `3583321974cb0a09960d6a6867689645af002eb229fdd61c18efa28b46892671` matched at start/end. delivery island/life enabled, life preview/buildplay disabled; runtime assets `island-life-runtime-assets-v3`, home props `island-home-props-v1`.
 - this local renderer change is complete. no deployment, real iphone timing, new art approval, child comprehension/replay assessment or full release-matrix pass is claimed. ongoing per-frame rendering costs and installed-device measurement remain separate follow-ups.
-"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：M1の形・床・道を保持しNode全layer7,386→174 ms。receiptだけの再構築を省きshaderをready前準備。preflight c2のcore5,199/購入・育成/編集と通常島の回帰はPASS 次：browser購入予告9〜23秒、成熟後focus約20〜35秒で操作性能は未達。P05反復冠の削減効果とrendererの内訳は未測定。実時計同期・実機の起動/電池/GPUは別確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>[水庭b6](../../design/2026-10-11-authored-water-garden/README.md)で同じ実島のcomposeはNode診断78,710→7,478ms、岸の5回検索70,508→1,375ms。全world定義・state・art planが一致し、旧oracleとの36境界例で順序/EPS/内部水域/高い床/cache identityの結果を保った。nested ins</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
+"><h2><a href="../../docs/tasks/active/2026-09-23-island-performance.md">起動と物が増えた島の軽量化：M1の形・床・道を保持しNode全layer7,386→174 ms。receiptだけの再構築を省きshaderをready前準備。花庭c6のcore5,232と編集／通常島の回帰はPASS 次：preflight時のbrowser購入予告9〜23秒、成熟後focus約20〜35秒で操作性能は未達。P05反復冠の削減効果とrendererの内訳は未測定。headless回帰の通過を実機性能へ読み替えず、実時計同期・起動/電池/GPUを別確認</a></h2><p class="path">docs/tasks/active/2026-09-23-island-performance.md</p><p>[水庭b6](../../design/2026-10-11-authored-water-garden/README.md)で同じ実島のcomposeはNode診断78,710→7,478ms、岸の5回検索70,508→1,375ms。全world定義・state・art planが一致し、旧oracleとの36境界例で順序/EPS/内部水域/高い床/cache identityの結果を保った。nested ins</p><details><summary>詳細を読む</summary><pre># Island / iPhone PWA performance
 
 ## 2026-10-11 水庭の岸検索と実browser待ち
 
@@ -987,21 +988,50 @@ This is a performance implementation within the existing product rules, so the p
 - Life-enabled `verify:core` passed: 460 files / 4,168 tests, lint (one existing IslandMilestone fast-refresh warning), typecheck, build and asset budget. The production decorations journey passed at 390×844 and 768×1024 (tablet reduced motion): six real answers, earned purchase, rotate/move/store/re-place, abort/retry, offline reload and learning return, followed by a separate synthetic 30-item stress fixture. Both stress scenes loaded 34 instances from eight GLBs, retained 17 textures, switched LOD, and had no page errors. Phone placement and tablet stress screenshots were inspected for visible props/residents and controls.
 - Local browser evidence: `output/playwright/runtime-props-20260924/browser/report.json`; operation-count diagnostic: `output/playwright/runtime-props-20260924/clone-count.json`. Target `http://127.0.0.1:5298`, version `development-local:b761cc63-f444-40d7-8107-d092ddce3f07`, app/dist/harness fingerprint `3583321974cb0a09960d6a6867689645af002eb229fdd61c18efa28b46892671` matched at start/end. Delivery Island/Life enabled, Life preview/BuildPlay disabled; runtime assets `island-life-runtime-assets-v3`, home props `island-home-props-v1`.
 - This local renderer change is complete. No deployment, real iPhone timing, new art approval, child comprehension/replay assessment or full release-matrix pass is claimed. Ongoing per-frame rendering costs and installed-device measurement remain separate follow-ups.
-</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">4・美術</h2><div class="grid"><article class="card" data-search="島・家・本・学習の見た目と理解を確認：[全島preflight c2](../../docs/design/2026-10-11-authored-whole-preflight/readme.md)。actor `.45`・実高さfocus・原本樹種と成長を保持した森、通常5購入/診断18hで27→32所有物を同じworldへ確認。家8軒/旧27id/73権利を保持。美術31/60 hold・独立理解/安全n=0・runtime partial、包括ゴール/m1は未完 次：p05を太株/枝/主花一つ/低い周辺花/その下の生活として実床と全景粗形から制作。殻の内空間・森の厚み・大樹の実galleryは続く。無所有背景や条件緩和で完成させず、全島一例の採用後に三配置/成長/地区拡張へ進む docs/tasks/active/2026-09-27-living-fantasy-first-playable.md # 幻想の庭 — 最初の遊べる一周
+</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">4・美術と成長</h2><div class="grid"><article class="card" data-search="島の育ち方と全景：開いた入り江のr0〜r2を完了。輪郭差go、対象runtime pass、美術と独立理解hold 次：利用者が輪郭を採用した場合だけr3へ。単独→接続→成熟→実利用→分離→復元を一旅程ずつ扱う docs/tasks/active/2026-09-27-living-fantasy-first-playable.md # 幻想の庭 — 最初の遊べる一周
 
-## 現在の次工程：美術と遊びが同じ場所を組み立てる
+2026-10-18：[既存の入り江をmcpで修正するa/b試験](../../design/2026-10-18-cove-mcp-ab/readme.md)。原本を保つ上部変形を別ポートのgrowingworld診断へ返し、同32所有物・物理world・昼・cameraで1280/390幅を比較。工程は通過、美術は隣家との余白減少によりhold。gui context問題のため最終再生成はbackground blender併用。本体src/public・通常配布を変更せず、r2採用待ち・r3以降の計画は維持する。
 
-包括ゴールと最初の到達点は[島構築方針の冒頭](../../product/island-construction-strategy.md#完成ゴールと最初の到達点)に固定した。まず編集できる全島一例の美術を成立させ、同じ所有物の三配置→成長と編集→旧地区を保持した拡張→本人保存と配布へ進む。水庭は全島一例の部分制作であり、包括ゴールとm1は引き続き未完。
+2026-10-18：利用者の「ためして」により、[blender mcpのカニ制作試作](../../design/2026-10-18-crab-mcp-trial/readme.md)を独立制作。造形・12骨格・固定animation・glb・実ブラウザ再生まで確認。本体接続と美術採用は未実施。島輪郭の採用待ちやr3以降の計画を変更しない。
 
-2026-10-11、利用者「完成像に近づきそうにない」「寄せるとかじゃなくて方針が必要」を受け、[島構築方針](../../product/island-construction-strategy.md)と[制作方式の決定](../../adr/2026-10-11-authored-place-world-policy.md)を改訂した。美術で地形・場所の形・入口・床を一緒に設計し、本人の土地選択・配置・成熟から組み立てる。一つの世界定義を美術表示・本体・配置予告・歩行と利用が読む。
+## 現在地と次の計画（2026-10-13）
 
-制作順はm0の世界契約と52/13の必要差分を定め、m1で入り江・丘・森・水庭・集落を含む一つの全島を、本体rendererと実配置・歩行で成立させる。その後に同材料の三配置、成長と編集、地区拡張、保存・配布の統合へ進む。16/32軒の追加や床写像の調整だけを先行させない。現行の実装と検査を再利用するが、新工程の通過とは扱わない。
+**r0〜r2の一候補を完了し、輪郭の採用レビュー待ち。** 利用者の再開指示により、既存 `loop` 実装を土台に、状態・所有権・保存形式を変えない「開いた入り江」を粗い本体へ接続した。作業は[時間・消費を区切る進め方](../../runbooks/bounded-island-work.md)に従い、r3は自動開始しない。
 
-最新の実装単位は[全島preflight c2](../../design/2026-10-11-authored-whole-preflight/readme.md)。永続actor `.45`、実高さfocus、原本の樹種/growthとbig/lord尺度を保持した森を実装。通常5購入と診断18時間で27→32所有物・家8軒の全景と近景27画面を確認した。旧27id/73権利/p02/p03を保持。core597 files/5,199 tests、元の全島編集6確認/7画面、水庭編集6確認/14画面、通常growing8旅程/22画面・40回答、classic32がpassで、各sourceの開始/終了とcoreの共通入力を照合。最初のpreview/確定shape差と、legacy回帰の誤flag接続は別failとして保存した。
+最優先は、**同じ所有物と成熟でも、育て方によって島全体の輪郭・高低差・通路・生活空間が変わること**。組立てアルゴリズムと対応する美術を一緒に作る。子どもが変化の理由を理解できること、実際に歩いて使えること、所有と保存が続くことも必要。細部の美術やテスト件数を核心の成立の代わりにしない。
 
-成熟後の作者美術は31/60・hold、独立理解/安全n=0、runtime partial。購入予告9〜23秒/成熟後focus約20〜35秒が残る。次はp05の太株・枝・一つの主花冠・低い周辺花・その下の生活を実床と全景粗形から制作し、続いてp04の内空間・森の厚み・大樹の実内床/階段/galleryへ進む。galleryは未実装。32は所有物数で、16/32軒以上の地区拡張・三配置・本人保存/学習/配布の新世界統合・性能・実機・独立観察・公開・m1/包括ゴールは引き続き未完。
+- [c9](../../design/2026-10-12-growth-variation-runtime/readme.md)：追加地区の三配置・実編集は確認済み。元島は固定で、全島の多様性には未到達。
+- [元海岸の3案](../../design/2026-10-12-core-growth-review/readme.md)：差が小さいため採用せず、中央を維持して東側を二本の腕と水面へ開く方向を選んだ。
+- 既知の`support.triangle`失敗は、異なる所有配置の床を比較していたテスト前提が原因。同一状態のcontrol worldと実三角形面を比較するよう直し、対象統合テストがpass。
+- [開いた入り江の実画面](../../design/2026-10-13-open-inlet-rough-v1-runtime/readme.md)：旧案からの輪郭差とruntime integrityはgo/pass。生地形の魅力はhold、独立理解／安全n=0、通常体験・配布は未検証。
+- 回廊による既存所有物への通行切断、通常取得・本人保存・offline／更新、16／32軒以上、操作性能は未解決。保存済み証拠を再取得せず、必要な範囲から参照する。
+
+### 実行順と区切り
+
+各行は一度に全部実行する依頼ではない。r3以降は今回の輪郭を利用者が採用した後に一つずつ進める。30分は完成予測ではなく、各回の既定の作業上限。大きい項目は開始前に一成果物へ分割する。
+
+| 順序 | タスク | 成果物・止める条件 | 状態 |
+| --- | --- | --- | --- |
+| r0 | 既存3案を利用者とレビュー | 「東岸の変化で十分か／島全体の構成から変えるか」と、次の一案を決める。新画像・新実装は作らない | 完了・開いた入り江を選択 |
+| r1 | 既知の統合失敗を一件だけ診断 | 実三角形・位置を照合し、実装かテストの前提かを特定。根拠のある最小修正と対象再検証を1回まで。単に比較を外して通さない | 完了・同一状態の実床比較へ修正、対象pass |
+| r2 | 選んだ方向の粗い本体試作 | 同じ所有物・成熟の三配置を同じ全景で比較。輪郭に加え高さ・通路・空間が変わるか判断できる成果ひとつ。固定模型の差替えで代用しない | 完了・輪郭差go、魅力hold、採用レビュー待ち |
+| r3 | 採用した試作の遊びを成立させる | 単独→接続→成熟→住人の利用→分離→復元を一旅程ずつ確認。必要な通行不具合を直す。支持・所有保持を検証 | r2採用後 |
+| r4 | 本体で続けられる形へ統合 | 通常取得・学習往復・本人保存、16／32軒と元地区保持、offline／更新、操作性能を別タスクに分ける。固定候補で必要な全体検証 | r3後 |
+| r5 | 全景の美術と配布を仕上げる | 採用原本との全景・近景・小画面比較、独立理解／安全、実機・公開判定。実装・検証・公開を別々に報告 | 後続 |
+
+r2の「合う／合わない」を先に判断し、合わない案の葉・小物・継ぎ目を磨かない。三配置が同じ島に小さな岬を足しただけなら、全島の多様性を合格にしない。中央地形を変える必要があれば、既得支持を守れる設計を先に短く検討する。
+
+### 次回の依頼例
+
+&gt; まず既存3案をレビューして、島全体の変化として十分かを決める。実装はまだしない。
+
+再開時は「r1を30分、追加エージェントなし。原因と最小修正ひとつ、対象検証まで。時間になったら未完でも止める」のように依頼する。全体の所要日数や完成率は、核心の実画面レビュー前に断定しない。
+
+以下は過去の制作記録。未実行の指示が残っていても、上記の現行キューを上書きしない。
 
 ## これまでの制作単位
+
+[全島preflight c2](../../design/2026-10-11-authored-whole-preflight/readme.md)では永続actor `.45`、実高さfocus、原本の樹種/growthとbig/lord尺度を保持した森を実装した。通常5購入と診断18時間で27→32所有物・家8軒、27画面を確認。旧27id／73権利／p02／p03を保持。core597 files／5,199 tests、元編集6確認／7画面、水庭6確認／14画面、通常growing8旅程／22画面・40回答、classic32がpass。previewと確定のshape差、legacy誤flag接続の最初のfailも保持。当時の作者美術は31/60 holdで、購入予告9〜23秒／成熟後focus約20〜35秒の性能は未達だった。
 
 2026-10-11、利用者「ゴール設定して」に基づき包括ゴールを設定。[共通世界契約m0](../../product/island-world-contract.md)を仕様52/13へ反映し、[共通床・経路の制作基盤](../../design/2026-10-11-authored-world-foundation/readme.md)を完了した。現行の床と足元が同じ三角形を読み、原本native05から89,488三角形・73配置地点・細かな歩行点と辺を抽出。初回は配置マスだけで20地点しか到達できず、歩行点を分けた現行診断では73地点すべてに地形床上の経路がある。旧所有床10組のbufferはbyte一致、core571 files／5,010 tests、専用24、classic32、本体devの390/768幅の実回答/配置/再読込と明示土地/人口診断8組・22画面がpass。古いメニュー名を探した検査の初回failと中断、現行helperへ合わせた最終結果を別に保持する。
 
@@ -1163,21 +1193,50 @@ b方向の実3d地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 ## 2026-09-27 本番統合
 
 元のぽこもこを保つv2を、自然の育成・運搬・食事・水路・土とともに家庭内本番へ統合。[公開記録](../../design/2026-09-27-fantasy-production/readme.md)に固定build・旧→新/中断/互換復旧・実購入/offline・三ゲートを保存した。全v1の完成とは区別し、入口・家の美術統一、30品時の軽量化、実機・子どもの観察は継続する。
-"><h2><a href="../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md">島・家・本・学習の見た目と理解を確認：[全島preflight c2](../../docs/design/2026-10-11-authored-whole-preflight/README.md)。actor `.45`・実高さfocus・原本樹種と成長を保持した森、通常5購入/診断18hで27→32所有物を同じworldへ確認。家8軒/旧27ID/73権利を保持。美術31/60 HOLD・独立理解/安全N=0・runtime PARTIAL、包括ゴール/M1は未完 次：P05を太株/枝/主花一つ/低い周辺花/その下の生活として実床と全景粗形から制作。殻の内空間・森の厚み・大樹の実galleryは続く。無所有背景や条件緩和で完成させず、全島一例の採用後に三配置/成長/地区拡張へ進む</a></h2><p class="path">docs/tasks/active/2026-09-27-living-fantasy-first-playable.md</p><p>包括ゴールと最初の到達点は[島構築方針の冒頭](../../product/island-construction-strategy.md#完成ゴールと最初の到達点)に固定した。まず編集できる全島一例の美術を成立させ、同じ所有物の三配置→成長と編集→旧地区を保持した拡張→本人保存と配布へ進む。水庭は全島一例の部分制作であり、包括ゴールとM1は引き続き未完。 2026-10-11、利用者「完成像に近づきそうにない」「寄</p><details><summary>詳細を読む</summary><pre># 幻想の庭 — 最初の遊べる一周
+"><h2><a href="../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md">島の育ち方と全景：開いた入り江のR0〜R2を完了。輪郭差GO、対象runtime PASS、美術と独立理解HOLD 次：利用者が輪郭を採用した場合だけR3へ。単独→接続→成熟→実利用→分離→復元を一旅程ずつ扱う</a></h2><p class="path">docs/tasks/active/2026-09-27-living-fantasy-first-playable.md</p><p>2026-10-18：[既存の入り江をMCPで修正するA/B試験](../../design/2026-10-18-cove-mcp-ab/README.md)。原本を保つ上部変形を別ポートのGrowingWorld診断へ返し、同32所有物・物理world・昼・cameraで1280/390幅を比較。工程は通過、美術は隣家との余白減少によりHOLD。GUI context問題のため最終再生成はbackground B</p><details><summary>詳細を読む</summary><pre># 幻想の庭 — 最初の遊べる一周
 
-## 現在の次工程：美術と遊びが同じ場所を組み立てる
+2026-10-18：[既存の入り江をMCPで修正するA/B試験](../../design/2026-10-18-cove-mcp-ab/README.md)。原本を保つ上部変形を別ポートのGrowingWorld診断へ返し、同32所有物・物理world・昼・cameraで1280/390幅を比較。工程は通過、美術は隣家との余白減少によりHOLD。GUI context問題のため最終再生成はbackground Blender併用。本体src/public・通常配布を変更せず、R2採用待ち・R3以降の計画は維持する。
 
-包括ゴールと最初の到達点は[島構築方針の冒頭](../../product/island-construction-strategy.md#完成ゴールと最初の到達点)に固定した。まず編集できる全島一例の美術を成立させ、同じ所有物の三配置→成長と編集→旧地区を保持した拡張→本人保存と配布へ進む。水庭は全島一例の部分制作であり、包括ゴールとM1は引き続き未完。
+2026-10-18：利用者の「ためして」により、[Blender MCPのカニ制作試作](../../design/2026-10-18-crab-mcp-trial/README.md)を独立制作。造形・12骨格・固定animation・GLB・実ブラウザ再生まで確認。本体接続と美術採用は未実施。島輪郭の採用待ちやR3以降の計画を変更しない。
 
-2026-10-11、利用者「完成像に近づきそうにない」「寄せるとかじゃなくて方針が必要」を受け、[島構築方針](../../product/island-construction-strategy.md)と[制作方式の決定](../../adr/2026-10-11-authored-place-world-policy.md)を改訂した。美術で地形・場所の形・入口・床を一緒に設計し、本人の土地選択・配置・成熟から組み立てる。一つの世界定義を美術表示・本体・配置予告・歩行と利用が読む。
+## 現在地と次の計画（2026-10-13）
 
-制作順はM0の世界契約と52/13の必要差分を定め、M1で入り江・丘・森・水庭・集落を含む一つの全島を、本体rendererと実配置・歩行で成立させる。その後に同材料の三配置、成長と編集、地区拡張、保存・配布の統合へ進む。16/32軒の追加や床写像の調整だけを先行させない。現行の実装と検査を再利用するが、新工程の通過とは扱わない。
+**R0〜R2の一候補を完了し、輪郭の採用レビュー待ち。** 利用者の再開指示により、既存 `loop` 実装を土台に、状態・所有権・保存形式を変えない「開いた入り江」を粗い本体へ接続した。作業は[時間・消費を区切る進め方](../../runbooks/bounded-island-work.md)に従い、R3は自動開始しない。
 
-最新の実装単位は[全島preflight c2](../../design/2026-10-11-authored-whole-preflight/README.md)。永続actor `.45`、実高さfocus、原本の樹種/growthとbig/lord尺度を保持した森を実装。通常5購入と診断18時間で27→32所有物・家8軒の全景と近景27画面を確認した。旧27ID/73権利/P02/P03を保持。core597 files/5,199 tests、元の全島編集6確認/7画面、水庭編集6確認/14画面、通常Growing8旅程/22画面・40回答、classic32がPASSで、各sourceの開始/終了とcoreの共通入力を照合。最初のpreview/確定shape差と、legacy回帰の誤flag接続は別FAILとして保存した。
+最優先は、**同じ所有物と成熟でも、育て方によって島全体の輪郭・高低差・通路・生活空間が変わること**。組立てアルゴリズムと対応する美術を一緒に作る。子どもが変化の理由を理解できること、実際に歩いて使えること、所有と保存が続くことも必要。細部の美術やテスト件数を核心の成立の代わりにしない。
 
-成熟後の作者美術は31/60・HOLD、独立理解/安全N=0、runtime PARTIAL。購入予告9〜23秒/成熟後focus約20〜35秒が残る。次はP05の太株・枝・一つの主花冠・低い周辺花・その下の生活を実床と全景粗形から制作し、続いてP04の内空間・森の厚み・大樹の実内床/階段/galleryへ進む。galleryは未実装。32は所有物数で、16/32軒以上の地区拡張・三配置・本人保存/学習/配布の新世界統合・性能・実機・独立観察・公開・M1/包括ゴールは引き続き未完。
+- [c9](../../design/2026-10-12-growth-variation-runtime/README.md)：追加地区の三配置・実編集は確認済み。元島は固定で、全島の多様性には未到達。
+- [元海岸の3案](../../design/2026-10-12-core-growth-review/README.md)：差が小さいため採用せず、中央を維持して東側を二本の腕と水面へ開く方向を選んだ。
+- 既知の`support.triangle`失敗は、異なる所有配置の床を比較していたテスト前提が原因。同一状態のcontrol worldと実三角形面を比較するよう直し、対象統合テストがPASS。
+- [開いた入り江の実画面](../../design/2026-10-13-open-inlet-rough-v1-runtime/README.md)：旧案からの輪郭差とruntime integrityはGO/PASS。生地形の魅力はHOLD、独立理解／安全N=0、通常体験・配布は未検証。
+- 回廊による既存所有物への通行切断、通常取得・本人保存・offline／更新、16／32軒以上、操作性能は未解決。保存済み証拠を再取得せず、必要な範囲から参照する。
+
+### 実行順と区切り
+
+各行は一度に全部実行する依頼ではない。R3以降は今回の輪郭を利用者が採用した後に一つずつ進める。30分は完成予測ではなく、各回の既定の作業上限。大きい項目は開始前に一成果物へ分割する。
+
+| 順序 | タスク | 成果物・止める条件 | 状態 |
+| --- | --- | --- | --- |
+| R0 | 既存3案を利用者とレビュー | 「東岸の変化で十分か／島全体の構成から変えるか」と、次の一案を決める。新画像・新実装は作らない | 完了・開いた入り江を選択 |
+| R1 | 既知の統合失敗を一件だけ診断 | 実三角形・位置を照合し、実装かテストの前提かを特定。根拠のある最小修正と対象再検証を1回まで。単に比較を外して通さない | 完了・同一状態の実床比較へ修正、対象PASS |
+| R2 | 選んだ方向の粗い本体試作 | 同じ所有物・成熟の三配置を同じ全景で比較。輪郭に加え高さ・通路・空間が変わるか判断できる成果ひとつ。固定模型の差替えで代用しない | 完了・輪郭差GO、魅力HOLD、採用レビュー待ち |
+| R3 | 採用した試作の遊びを成立させる | 単独→接続→成熟→住人の利用→分離→復元を一旅程ずつ確認。必要な通行不具合を直す。支持・所有保持を検証 | R2採用後 |
+| R4 | 本体で続けられる形へ統合 | 通常取得・学習往復・本人保存、16／32軒と元地区保持、offline／更新、操作性能を別タスクに分ける。固定候補で必要な全体検証 | R3後 |
+| R5 | 全景の美術と配布を仕上げる | 採用原本との全景・近景・小画面比較、独立理解／安全、実機・公開判定。実装・検証・公開を別々に報告 | 後続 |
+
+R2の「合う／合わない」を先に判断し、合わない案の葉・小物・継ぎ目を磨かない。三配置が同じ島に小さな岬を足しただけなら、全島の多様性を合格にしない。中央地形を変える必要があれば、既得支持を守れる設計を先に短く検討する。
+
+### 次回の依頼例
+
+&gt; まず既存3案をレビューして、島全体の変化として十分かを決める。実装はまだしない。
+
+再開時は「R1を30分、追加エージェントなし。原因と最小修正ひとつ、対象検証まで。時間になったら未完でも止める」のように依頼する。全体の所要日数や完成率は、核心の実画面レビュー前に断定しない。
+
+以下は過去の制作記録。未実行の指示が残っていても、上記の現行キューを上書きしない。
 
 ## これまでの制作単位
+
+[全島preflight c2](../../design/2026-10-11-authored-whole-preflight/README.md)では永続actor `.45`、実高さfocus、原本の樹種/growthとbig/lord尺度を保持した森を実装した。通常5購入と診断18時間で27→32所有物・家8軒、27画面を確認。旧27ID／73権利／P02／P03を保持。core597 files／5,199 tests、元編集6確認／7画面、水庭6確認／14画面、通常Growing8旅程／22画面・40回答、classic32がPASS。previewと確定のshape差、legacy誤flag接続の最初のFAILも保持。当時の作者美術は31/60 HOLDで、購入予告9〜23秒／成熟後focus約20〜35秒の性能は未達だった。
 
 2026-10-11、利用者「ゴール設定して」に基づき包括ゴールを設定。[共通世界契約M0](../../product/island-world-contract.md)を仕様52/13へ反映し、[共通床・経路の制作基盤](../../design/2026-10-11-authored-world-foundation/README.md)を完了した。現行の床と足元が同じ三角形を読み、原本native05から89,488三角形・73配置地点・細かな歩行点と辺を抽出。初回は配置マスだけで20地点しか到達できず、歩行点を分けた現行診断では73地点すべてに地形床上の経路がある。旧所有床10組のbufferはbyte一致、core571 files／5,010 tests、専用24、classic32、本体DEVの390/768幅の実回答/配置/再読込と明示土地/人口診断8組・22画面がPASS。古いメニュー名を探した検査の初回FAILと中断、現行helperへ合わせた最終結果を別に保持する。
 
@@ -1339,286 +1398,6 @@ B方向の実3D地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 ## 2026-09-27 本番統合
 
 元のぽこもこを保つv2を、自然の育成・運搬・食事・水路・土とともに家庭内本番へ統合。[公開記録](../../design/2026-09-27-fantasy-production/README.md)に固定build・旧→新/中断/互換復旧・実購入/offline・三ゲートを保存した。全v1の完成とは区別し、入口・家の美術統一、30品時の軽量化、実機・子どもの観察は継続する。
-</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">その他</h2><div class="grid"><article class="card" data-search="育つ島v1：規則・保存・住人・島の画面と10/1初回本番切替。既存の子の実保存引き継ぎ・実機・再訪観察は残る。 docs/tasks/active/2026-09-29-growing-island-v1.md # 育つ島 v1 の実装
-
-- 更新日: 2026-10-05
-- review by: 2026-10-06
-- 状態: 段階1〜6実装、10/1初回本番切替済み。最新候補の公開/更新検証は公開準備タスク、実保存・実機・子どもの確認は確認待ちへ集約
-- 正本: [52 育つ島 ゲーム仕様](../../product/52_growing_island_game_spec.md)、[adr](../../adr/2026-09-29-north-star-growing-island.md)
-- 目的: 「あそぶ・しこむ → まなぶ → ひらく」の一周を、試作で終わらせず本番に載る形で作る。
-
-## 2026-10-10 育つ場所d1〜d4
-
-任意の6目標・15配置・4関係を実3dと暮らしへ統合し、record4/placedislandsへ移行。[契約](../../product/island-place-goals.md)と[ローカルの実画面・検証](../../design/2026-10-10-growing-place-runtime/readme.md)を参照。通常取得3旅程と成熟40組は同じ固定配信で検証済み。native05の全景美術の完成、独立観察/実機、自然18時間/7日成熟、公開は未完了のまま。
-
-## 方針
-
-- 新しいエンジンは島の**今の状態**を保存し、純粋関数で進める。今の `replaylife`（全記録の再生と10以上の切替境界）には積まない。
-- 今の島（保存版21）は、切り替える時に一度だけ再生して新しい形へ写す。元の記録は書き換えない。
-- 通常の入口は切り替え完了まで今の島のまま。新しい島は専用flagとdev portで作る。
-- 各段階で「実装」「自動検証」「画面確認」「本番反映」「子どもの確認」を分けて記録する。
-
-## 段階
-
-| 段階 | 作るもの | 終わりの条件 |
-|---|---|---|
-| **1 規則の中核** | `src/domain/growingisland/`：状態、命令、たね・家、しぜん、まちの夜明け、引っ越し、すみごこち・げんき、島の性格、桟橋の旅人、ひらくの結果、品の解放、決まった乱数 | 仕様52の規則が単体テストで通る。同じ入力で同じ結果。ペースの目安（§15）をシミュレーションで確認 |
-| 2 保存と引き継ぎ | 新しい保存場所、操作idの一度きり反映、学習完了の取り込み（既存の完了id）、保存版21からの写し、flag | 写しの前後で所有・住人・土地・しずくが一致。二重取り込みなし。旧記録は不変 |
-| 3 島の画面 | 新しい島の画面：既存の地形・品・住人の3d、たねのゴースト、家の段階と形、桟橋と船、つぼみを開く、3タブ、ぽこもこのひとこと | 390/768幅で一周が遊べる。学習への往復が今と同じく守られる |
-| 4 触る・くらし | つまむ、触る返事、住人の性格・なかよし・眠る、名前、塗る、しぜんの広がり・大木 | 触った全ての物が返事をする。つまんだ住人が置いた物を使う |
-| 5 見せる | 見せるモード、しまカード、しまのあゆみ、きょうだいの島へ | 画像保存、同じ端末の別プロフィールを見るだけで訪ねられる |
-| 6 美術・音 | 新しい住人4種、家5形×4段階、音、動きを減らす設定 | 仕様51の美術基準で確認。ぽこもこは変えない |
-| 7 本番切替 | 本番形式の引き継ぎ、offline・更新・複数タブ、rollback、実機、子どもの観察 | 検証マトリクスの必須項目と、仕様52 §17の観察 |
-
-## 今どこまで進んだか
-
-2026-09-29 に段階1〜3と段階4の一部を実装した。本番は変えていない（flag `vite_growing_island_enabled`、`npm run dev:growing-island`、port 5260）。
-
-| 作業 | 状態 |
-|---|---|
-| 仕様52 1.1版 | 完了（文書）。シミュレーションで調整した値（家の人数1/1/2/2、船の間隔、岬のlv5/6）を反映 |
-| 段階1 規則の中核 | 実装・単体テスト済み（`src/domain/growingisland/`）。ペースのシミュレーションで初日2・1週8・1か月25・3か月51人 |
-| 段階2 保存と引き継ぎ | 実装・テスト済み（別db `sansugrowingislandv1`、保存版21からの一度きりの写し、学習完了の一度きりの取り込み、操作idの一度きり反映、プロフィール削除時の消去）。本番形式の移行検証は未実施 |
-| 段階3 島の画面 | 実装・開発画面で確認済み（390/768幅）：たねのトレイ、置く前の影、家の段階と周りで変わる形、桟橋の旅人・近づく船・次の船の影、つぼみを開く、船から降りる、夜明け、ぽこもこのひとことと読み上げ、メニュー（回す・土地）、景色は端末の時刻へ自動で合わせる |
-| 段階4 触る・くらし | 実装（9/30）：大木・ぬしの木の見た目、広がった花・贈られた花がふわっと出る、来られなかった場所を光らせる、なかよし、小さな出来事（虹・ちょうちょ・なかよし・まれなおきゃく2種・夜の流れ星）。9/29分：つまんで運ぶ・座る、触ると跳ねる、住人の性格のひとこと、名前、屋根を塗る、夜は眠る、たねを置くと旅人が喜ぶ、レベルアップのおまつり（跳ねる＋紙吹雪）。しぜんの広がり・大木は規則のみ（見た目は未） |
-| 段階5 見せる | 実装（9/30）：見せるモード（島を一周・住人が跳ねる・音楽）、しまカード（顔・人数・きねんひん、端末に保存）、しまのあゆみ（最大60枚・10秒で再生）、きょうだいの島（見るだけ・一日一輪の花）、なかま一覧（顔・好きなもの・ひとこと、触るとカメラが寄る）。開発端末にプロフィールが1つしかなく、訪問の画面は保存テストのみで確認 |
-| 段階6 美術・音 | 実装（9/30）：住人9種の形（カワウソ・キツネを作り直し、カモ・リス・ハリネズミ・ことり・**えま・えいた**を追加。うさぎは既存）。きねんひん10種、島の旗、lv7〜9の旗の模様・服・帽子、ふしぎカラフルの差し色（§19.1）。効果音・環境音は既存の合成音を流用。動きを減らす設定はosの設定に従う。家5形×4段階は既存の形のまま |
-| 開くまでの待ち（10/1） | 段階ごとの%表示（アプリ5→画面の準備10→画面25→学習40→島の時間55→描く70→最初の1枚）。前に開いた島は保存済みの姿を先に出し、学習の取り込みは後から。15秒ごとの更新は学習の記録を読まない。2本指のひねりで回転 |
-| いえのもようがえ（10/1） | 実装：覚えた英単語の水玉の壁紙（8色・触ると読み上げ＋英語と日本語の表示）、算数で増える模様5種、色のまとまりの表示切替、ラグ6色（仕様52 §13.1）。家を開くまで約15秒かかるのは既存の家の読み込みで、今回の変更ではない（次の改善候補） |
-| まざる花・てがみ（10/1） | まざる花（色11種・はなずかん・ヒント・新しい色のひとこと、仕様52 §5.1）、家の「なかまの てがみ」（§13.2）。家の読み込み時間は、ブラウザの画面が隠れた状態では描画が止まり測れなかったため、実機で測る |
-| えんそうかい（10/1） | おんがくの ひろば（lv2・6しずく）。触ると住人が輪になり、触った子の音が鳴る（仕様52 §4） |
-| 品・住人・デザイン（10/1） | ふしぎの たね（lv3/5/7/9、ハートの木・みずたまアーチ・みずたまかぼちゃ）、新しい品5つ（すべりだい・トランポリン・ふんすい・パンやさん・ポスト）、珍しい住人3種（ペンギン・ふくろう・かえる）、一晩のお客3種（くじら・にじいろのとり・つきのうさぎ）、住人の動き（手を振る・回る・照れる・腕を振る）、家5形の個性 |
-| 学習とつながる飾り・動き（10/1） | なぞって かざる、ぽこもこの つくえ、英語の模様・きねんひん、住人が品を使う、ふしぎの品の開き方、曲4つ、きょうだいの島のえんそうかい、カードの枠、ぽこもこのお出迎え、家の住人が跳ねる（仕様52 §13.4〜13.6） |
-| 段階7 本番切替 | 一部（9/30）：よく使った今の島（品・土地の拡張・しずく・住人）からの写しと元の記録の不変をテスト、島の画面2つのchunkがpwaの事前キャッシュに入ることを確認（offlineで開ける）、別タブの保存を知らせて読み直す（broadcastchannel。意味のある変化だけ知らせ、往復しない）、学習完了idは3000件を超えると時刻の床にまとめる。きょうだいの島の訪問と一日一輪、しまのあゆみの保存と再生を開発画面で確認。**10/1 本番切替**：main `cca109ef` で `vite_growing_island_enabled=true` を本番ビルドに入れてpush。vercelの公開`version.json`が同sha、公開swに島の2chunk（えいた等を含む）を確認。同じ設定の手元ビルドで、新しい子のプロフィール作成→新しい島→最初の家→うさぎ入居→「ふねで えまが…」まで確認。公開urlでの操作確認は未（自動モードの安全判定で停止）。未：公開urlの操作、実iphone、既存の子の本物の保存での写し、子どもの観察 |
-
-### 開発画面で見つけて直したこと
-
-- 花が通り道をふさぎ、たねが「行けない」まま止まる → 花・畑・野生の草は歩いて通れるようにした。
-- 村が4人で止まる／1週で23人に増えすぎる → 次の船の間隔（24＋2×住人の数）と家の人数を調整した。
-- 人が増えないとレベルが上がらず、土地がないと人が増えない行き詰まり → 岬をlv5/6で開く。
-- 今の島の仕組みが裏で作る空の記録を「引き継ぐ島」と判定し、最初のお試しが出ない → 中身のない記録は新しい島として始める。
-- 置く場所を選ぶときに住人や物を触ると選べない → 置く間は、どこを触っても下のマスを選ぶ。
-- 船の子を触ると詳細が開く → 船の子を触ると降りる。
-
-### 残り（次にすること）
-
-1. 最新変更の固定候補、growingの更新/offline/復旧と公開urlの照合は[公開準備](2026-10-05-growing-island-release.md)へまとめる。
-2. 既存の子の実保存の写し、実iphoneの起動/音/負荷、子どもの観察（仕様52 §17）は[確認待ち](../../../.agents/tasks/blocked.md)で管理する。
-3. 初回実装・本番切替を再実装待ちにしない。上の段階表は当時の結果を含む履歴であり、最新候補への適用範囲は別に照合する。
-
-開発用の `#/island?lineup` は住人の比較手段で、残タスクには数えない。
-
-## 端末の時刻に合わせる景色（2026-10-01）
-
-- 実装: 手動の時間選択を外し、ローカル時刻で朝5〜10・昼10〜16・夕16〜19・夜19〜5時へ切替。表示用のhookだけで30秒ごとと復帰時に更新し、昔の選択を参照しない。朝の光を追加し、既存lifeの庭・外観componentにも同じ時計を使用する。
-- 効く柱・仮説: 愛着。現実の時間と島の光が揃い、設定の操作を挟まず島へ戻れる。成長・まちの夜明け・出会い・学習の規則は変更しない。
-- 検証: `npm run verify:core` pass（492 files / 4365 tests。lintの既存warning 1件）、`npm run e2e:smoke` pass、変更した旧時間選択ハーネス3本のeslint / syntaxチェックpass。ハーネス3本の全旅程は今回未実施。境界11件と開いたままの切替・背景復帰・時計変更・cleanup・旧設定不使用を追加検査。390×844と768×1024 reduced motionのdevで4時間帯の実描画、時間選択の消去、入室、学習正本の不変を確認。隔離したseeddevプロフィールと診断時刻を使う検査であり、実機・本番・実獲得の証拠ではない。
-- 画面の証拠: `output/playwright/2026-10-01-island-time-retry/`。最初の検査は「いえ」buttonがメニューとtabに重複してlocatorが失敗し、メニューに範囲を絞った再実行でpass。初回のログと撮影は別に保持。
-- ゲート: 視覚は朝/夜の実描画を確認、暗い時間でもキャラ・配置と操作が読める。子どもの無説明理解/安全・魅力の評価は未実施。runtimeは上記チェックまでで、本番反映・実iphone/pwa更新は未実施。
-
-## verification
-
-- 段階1: `npm run lint`、`npm run typecheck`、`src/domain/growingisland` の単体テスト、`npm run test:run`。
-- 段階2以降は[検証マトリクス](../../ai/verification_matrix.md)の保存・ルーティング・pwaの項目を追加する。
-- 自動テストの合格を、子どもが楽しめることの確認として扱わない。
-
-## docs to touch
-
-仕様52、仕様51の整合表、親仕様01、タスク一覧、保存を切り替える段階で保存仕様13と移行手順。
-"><h2><a href="../../docs/tasks/active/2026-09-29-growing-island-v1.md">育つ島v1：規則・保存・住人・島の画面と10/1初回本番切替。既存の子の実保存引き継ぎ・実機・再訪観察は残る。</a></h2><p class="path">docs/tasks/active/2026-09-29-growing-island-v1.md</p><p>- 更新日: 2026-10-05 - Review By: 2026-10-06</p><details><summary>詳細を読む</summary><pre># 育つ島 v1 の実装
-
-- 更新日: 2026-10-05
-- Review By: 2026-10-06
-- 状態: 段階1〜6実装、10/1初回本番切替済み。最新候補の公開/更新検証は公開準備タスク、実保存・実機・子どもの確認は確認待ちへ集約
-- 正本: [52 育つ島 ゲーム仕様](../../product/52_growing_island_game_spec.md)、[ADR](../../adr/2026-09-29-north-star-growing-island.md)
-- 目的: 「あそぶ・しこむ → まなぶ → ひらく」の一周を、試作で終わらせず本番に載る形で作る。
-
-## 2026-10-10 育つ場所D1〜D4
-
-任意の6目標・15配置・4関係を実3Dと暮らしへ統合し、record4/placedIslandsへ移行。[契約](../../product/island-place-goals.md)と[ローカルの実画面・検証](../../design/2026-10-10-growing-place-runtime/README.md)を参照。通常取得3旅程と成熟40組は同じ固定配信で検証済み。native05の全景美術の完成、独立観察/実機、自然18時間/7日成熟、公開は未完了のまま。
-
-## 方針
-
-- 新しいエンジンは島の**今の状態**を保存し、純粋関数で進める。今の `replayLife`（全記録の再生と10以上の切替境界）には積まない。
-- 今の島（保存版21）は、切り替える時に一度だけ再生して新しい形へ写す。元の記録は書き換えない。
-- 通常の入口は切り替え完了まで今の島のまま。新しい島は専用flagとdev portで作る。
-- 各段階で「実装」「自動検証」「画面確認」「本番反映」「子どもの確認」を分けて記録する。
-
-## 段階
-
-| 段階 | 作るもの | 終わりの条件 |
-|---|---|---|
-| **1 規則の中核** | `src/domain/growingIsland/`：状態、命令、たね・家、しぜん、まちの夜明け、引っ越し、すみごこち・げんき、島の性格、桟橋の旅人、ひらくの結果、品の解放、決まった乱数 | 仕様52の規則が単体テストで通る。同じ入力で同じ結果。ペースの目安（§15）をシミュレーションで確認 |
-| 2 保存と引き継ぎ | 新しい保存場所、操作IDの一度きり反映、学習完了の取り込み（既存の完了ID）、保存版21からの写し、flag | 写しの前後で所有・住人・土地・しずくが一致。二重取り込みなし。旧記録は不変 |
-| 3 島の画面 | 新しい島の画面：既存の地形・品・住人の3D、たねのゴースト、家の段階と形、桟橋と船、つぼみを開く、3タブ、ぽこもこのひとこと | 390/768幅で一周が遊べる。学習への往復が今と同じく守られる |
-| 4 触る・くらし | つまむ、触る返事、住人の性格・なかよし・眠る、名前、塗る、しぜんの広がり・大木 | 触った全ての物が返事をする。つまんだ住人が置いた物を使う |
-| 5 見せる | 見せるモード、しまカード、しまのあゆみ、きょうだいの島へ | 画像保存、同じ端末の別プロフィールを見るだけで訪ねられる |
-| 6 美術・音 | 新しい住人4種、家5形×4段階、音、動きを減らす設定 | 仕様51の美術基準で確認。ぽこもこは変えない |
-| 7 本番切替 | 本番形式の引き継ぎ、offline・更新・複数タブ、rollback、実機、子どもの観察 | 検証マトリクスの必須項目と、仕様52 §17の観察 |
-
-## 今どこまで進んだか
-
-2026-09-29 に段階1〜3と段階4の一部を実装した。本番は変えていない（flag `VITE_GROWING_ISLAND_ENABLED`、`npm run dev:growing-island`、port 5260）。
-
-| 作業 | 状態 |
-|---|---|
-| 仕様52 1.1版 | 完了（文書）。シミュレーションで調整した値（家の人数1/1/2/2、船の間隔、岬のLv5/6）を反映 |
-| 段階1 規則の中核 | 実装・単体テスト済み（`src/domain/growingIsland/`）。ペースのシミュレーションで初日2・1週8・1か月25・3か月51人 |
-| 段階2 保存と引き継ぎ | 実装・テスト済み（別DB `SansuGrowingIslandV1`、保存版21からの一度きりの写し、学習完了の一度きりの取り込み、操作IDの一度きり反映、プロフィール削除時の消去）。本番形式の移行検証は未実施 |
-| 段階3 島の画面 | 実装・開発画面で確認済み（390/768幅）：たねのトレイ、置く前の影、家の段階と周りで変わる形、桟橋の旅人・近づく船・次の船の影、つぼみを開く、船から降りる、夜明け、ぽこもこのひとことと読み上げ、メニュー（回す・土地）、景色は端末の時刻へ自動で合わせる |
-| 段階4 触る・くらし | 実装（9/30）：大木・ぬしの木の見た目、広がった花・贈られた花がふわっと出る、来られなかった場所を光らせる、なかよし、小さな出来事（虹・ちょうちょ・なかよし・まれなおきゃく2種・夜の流れ星）。9/29分：つまんで運ぶ・座る、触ると跳ねる、住人の性格のひとこと、名前、屋根を塗る、夜は眠る、たねを置くと旅人が喜ぶ、レベルアップのおまつり（跳ねる＋紙吹雪）。しぜんの広がり・大木は規則のみ（見た目は未） |
-| 段階5 見せる | 実装（9/30）：見せるモード（島を一周・住人が跳ねる・音楽）、しまカード（顔・人数・きねんひん、端末に保存）、しまのあゆみ（最大60枚・10秒で再生）、きょうだいの島（見るだけ・一日一輪の花）、なかま一覧（顔・好きなもの・ひとこと、触るとカメラが寄る）。開発端末にプロフィールが1つしかなく、訪問の画面は保存テストのみで確認 |
-| 段階6 美術・音 | 実装（9/30）：住人9種の形（カワウソ・キツネを作り直し、カモ・リス・ハリネズミ・ことり・**えま・えいた**を追加。うさぎは既存）。きねんひん10種、島の旗、Lv7〜9の旗の模様・服・帽子、ふしぎカラフルの差し色（§19.1）。効果音・環境音は既存の合成音を流用。動きを減らす設定はOSの設定に従う。家5形×4段階は既存の形のまま |
-| 開くまでの待ち（10/1） | 段階ごとの%表示（アプリ5→画面の準備10→画面25→学習40→島の時間55→描く70→最初の1枚）。前に開いた島は保存済みの姿を先に出し、学習の取り込みは後から。15秒ごとの更新は学習の記録を読まない。2本指のひねりで回転 |
-| いえのもようがえ（10/1） | 実装：覚えた英単語の水玉の壁紙（8色・触ると読み上げ＋英語と日本語の表示）、算数で増える模様5種、色のまとまりの表示切替、ラグ6色（仕様52 §13.1）。家を開くまで約15秒かかるのは既存の家の読み込みで、今回の変更ではない（次の改善候補） |
-| まざる花・てがみ（10/1） | まざる花（色11種・はなずかん・ヒント・新しい色のひとこと、仕様52 §5.1）、家の「なかまの てがみ」（§13.2）。家の読み込み時間は、ブラウザの画面が隠れた状態では描画が止まり測れなかったため、実機で測る |
-| えんそうかい（10/1） | おんがくの ひろば（Lv2・6しずく）。触ると住人が輪になり、触った子の音が鳴る（仕様52 §4） |
-| 品・住人・デザイン（10/1） | ふしぎの たね（Lv3/5/7/9、ハートの木・みずたまアーチ・みずたまかぼちゃ）、新しい品5つ（すべりだい・トランポリン・ふんすい・パンやさん・ポスト）、珍しい住人3種（ペンギン・ふくろう・かえる）、一晩のお客3種（くじら・にじいろのとり・つきのうさぎ）、住人の動き（手を振る・回る・照れる・腕を振る）、家5形の個性 |
-| 学習とつながる飾り・動き（10/1） | なぞって かざる、ぽこもこの つくえ、英語の模様・きねんひん、住人が品を使う、ふしぎの品の開き方、曲4つ、きょうだいの島のえんそうかい、カードの枠、ぽこもこのお出迎え、家の住人が跳ねる（仕様52 §13.4〜13.6） |
-| 段階7 本番切替 | 一部（9/30）：よく使った今の島（品・土地の拡張・しずく・住人）からの写しと元の記録の不変をテスト、島の画面2つのchunkがPWAの事前キャッシュに入ることを確認（offlineで開ける）、別タブの保存を知らせて読み直す（BroadcastChannel。意味のある変化だけ知らせ、往復しない）、学習完了IDは3000件を超えると時刻の床にまとめる。きょうだいの島の訪問と一日一輪、しまのあゆみの保存と再生を開発画面で確認。**10/1 本番切替**：main `cca109ef` で `VITE_GROWING_ISLAND_ENABLED=true` を本番ビルドに入れてpush。Vercelの公開`version.json`が同SHA、公開SWに島の2chunk（えいた等を含む）を確認。同じ設定の手元ビルドで、新しい子のプロフィール作成→新しい島→最初の家→うさぎ入居→「ふねで えまが…」まで確認。公開URLでの操作確認は未（自動モードの安全判定で停止）。未：公開URLの操作、実iPhone、既存の子の本物の保存での写し、子どもの観察 |
-
-### 開発画面で見つけて直したこと
-
-- 花が通り道をふさぎ、たねが「行けない」まま止まる → 花・畑・野生の草は歩いて通れるようにした。
-- 村が4人で止まる／1週で23人に増えすぎる → 次の船の間隔（24＋2×住人の数）と家の人数を調整した。
-- 人が増えないとレベルが上がらず、土地がないと人が増えない行き詰まり → 岬をLv5/6で開く。
-- 今の島の仕組みが裏で作る空の記録を「引き継ぐ島」と判定し、最初のお試しが出ない → 中身のない記録は新しい島として始める。
-- 置く場所を選ぶときに住人や物を触ると選べない → 置く間は、どこを触っても下のマスを選ぶ。
-- 船の子を触ると詳細が開く → 船の子を触ると降りる。
-
-### 残り（次にすること）
-
-1. 最新変更の固定候補、Growingの更新/offline/復旧と公開URLの照合は[公開準備](2026-10-05-growing-island-release.md)へまとめる。
-2. 既存の子の実保存の写し、実iPhoneの起動/音/負荷、子どもの観察（仕様52 §17）は[確認待ち](../../../.agents/tasks/BLOCKED.md)で管理する。
-3. 初回実装・本番切替を再実装待ちにしない。上の段階表は当時の結果を含む履歴であり、最新候補への適用範囲は別に照合する。
-
-開発用の `#/island?lineup` は住人の比較手段で、残タスクには数えない。
-
-## 端末の時刻に合わせる景色（2026-10-01）
-
-- 実装: 手動の時間選択を外し、ローカル時刻で朝5〜10・昼10〜16・夕16〜19・夜19〜5時へ切替。表示用のhookだけで30秒ごとと復帰時に更新し、昔の選択を参照しない。朝の光を追加し、既存Lifeの庭・外観componentにも同じ時計を使用する。
-- 効く柱・仮説: 愛着。現実の時間と島の光が揃い、設定の操作を挟まず島へ戻れる。成長・まちの夜明け・出会い・学習の規則は変更しない。
-- 検証: `npm run verify:core` PASS（492 files / 4365 tests。lintの既存warning 1件）、`npm run e2e:smoke` PASS、変更した旧時間選択ハーネス3本のeslint / syntaxチェックPASS。ハーネス3本の全旅程は今回未実施。境界11件と開いたままの切替・背景復帰・時計変更・cleanup・旧設定不使用を追加検査。390×844と768×1024 reduced motionのDEVで4時間帯の実描画、時間選択の消去、入室、学習正本の不変を確認。隔離したseedDevプロフィールと診断時刻を使う検査であり、実機・本番・実獲得の証拠ではない。
-- 画面の証拠: `output/playwright/2026-10-01-island-time-retry/`。最初の検査は「いえ」buttonがメニューとtabに重複してlocatorが失敗し、メニューに範囲を絞った再実行でPASS。初回のログと撮影は別に保持。
-- ゲート: 視覚は朝/夜の実描画を確認、暗い時間でもキャラ・配置と操作が読める。子どもの無説明理解/安全・魅力の評価は未実施。runtimeは上記チェックまでで、本番反映・実iPhone/PWA更新は未実施。
-
-## Verification
-
-- 段階1: `npm run lint`、`npm run typecheck`、`src/domain/growingIsland` の単体テスト、`npm run test:run`。
-- 段階2以降は[検証マトリクス](../../ai/verification_matrix.md)の保存・ルーティング・PWAの項目を追加する。
-- 自動テストの合格を、子どもが楽しめることの確認として扱わない。
-
-## Docs To Touch
-
-仕様52、仕様51の整合表、親仕様01、タスク一覧、保存を切り替える段階で保存仕様13と移行手順。
-</pre></details></article><article class="card" data-search="任意の導きと記念：s1〜s5/a1〜a6・家の本・記念・挿絵v6。新規実装待ちには戻さず、公開/更新確認を1へ、体験を2へ、美術を4へまとめる。 docs/tasks/active/2026-10-01-island-guidance.md # 育つ島のスターターとアチーブメントv1
-
-- 更新日: 2026-10-01
-- review by: 2026-10-08
-- 状態: ローカル実装・対象の検証完了。公開・実機・子どもの確認は未実施
-- 正本: [導きと記念v1](../../product/island-starter-achievements-proposal.md)、[親仕様01](../../product/01_app_spec.md)、[仕様52](../../product/52_growing_island_game_spec.md)、[保存13](../../product/13_data_storage_migration_spec.md)
-- 依頼: 「実装して」。既存のdirty作業を保持し、この機能を実装・検証する
-- 効く柱: くふう、にぎわい、愛着。弱める柱なし
-- 面白さの仮説: 最初の一周の実体験と選べる遊びの絵から、自分で配置を試し、自分でまなぶを選びやすくなる
-
-## 範囲
-
-- 2026-10-02 ux: 通知から対象の記念へ直行。導入中と選択中の主操作を整理し、本人の固定snapshotを大きく表示。保存・時計・報酬の変更なし。
-
-- s1〜s5を保存済み事実から記録し、任意のひとこと案内と本からの再開を設ける。
-- a1〜a6の出来事を本人の対象を反映したsvgの絵・スタンプとして残す。今試せる候補最大3つ、選択目標一つを扱う。
-- 主入口は「いえ → 室内の本「あそびかた」」。メニューにも入口を残す。家で読み、閉じると家に戻り、実際の遊びを選ぶと島へ進む。島メニューにも入口を残す。
-- 2026-10-02: 室内の本から直接開く入口を追加。待つ理由を価格・空き場所・対象・解放ごとに示し、未準備の遊びは目標だけ選んで本に留まる。家の本を開いている間は本人の保存更新を時計同期なしで購読する。
-- 島の命令・学習完了・演奏実開始・通知実表示の境界を分け、本人recordへ保存する。旧writerが案内を消せない保存境界を維持する。
-- 旧島・学習の規則、費用・時間・成長・解放・既得権、ぽこもこの造形は維持する。
-- 混色・木陰利用・学習記念品展示・稀な来訪のアチーブメントと達成の自動写真は後続範囲。
-
-## docs to touch
-
-- 01、52、本仕様、46、43、13、product/readme：機能・導入・旧案内・入口・保存・採用の位置づけ。
-- 本タスクとtasks：実施範囲と状態。完了履歴/証拠は検証後に担当が追記する。
-- 憲法・学習・共通ui・wiki memory・adr：既存契約を維持し変更不要。
-
-## verification
-
-- 文書: 親・52・46・43・13・仕様地図を同期。`npm run docs:check` pass（2026-10-01）。既存の4タスクの期限警告のみ。
-- 純粋ロジックとrepository: 無料/通常/自然の区別、先行操作、取消/同位置/再送、旧島の根拠、未知版/破損、cas、保存失敗、owner削除を対象にする。
-- アプリ: verify:core、smokeとgrowingの該当旅程を適用。390×844/768×1024で新規/既存・本/目標/達成・学習往復・reload/offline・音なし・reduced motionを確認する。
-- 本番sw更新・実two-build・実機・子どもの無説明理解/翌日の再訪は別ゲート。未実行を完了に読み替えない。
-- 視覚の魅力、無文字理解/安全、runtimeを別に判定する。最終結果と証拠は実施後に追記する。
-
-### 最終結果
-
-- 2026-10-02 ux追加候補: core4,576、classic31件、両幅のdev/家/本番形式の実sw offline pass。[実画面と対象境界](../../design/2026-10-02-guidance-ux/readme.md)。実機・実two-build・子どもの理解/再訪は別。
-
-- 2026-10-02コミット対象: core4,570テスト、classic smoke31件、dev家2ケース/16画面、dev全体6ケース/14画面、本番形式2ケース/20画面と実sw offline pass。stageのapp入力一致、indexの文書検証を適用。[最新の結果](../../design/2026-10-01-island-guidance/fixes-checks.json)。
-
-- 家入口の追加: 両幅2ケース・10画面pass。読書で全学習store/growing recordが変わらないこと、家での開閉・reload、目標/記念から実際の旗操作、通常3回答後の同予約再開を確認。追加後のverify:coreも4,586テストpass。[家の実画面](../../design/2026-10-01-island-guidance/house-entry.html)。
-- 家入口closeoutのdocs再checkは、別作業menu-atelierの `screens.html` / `contact-sheet.png` リンク切れ2件でfail。先行coreのdocs passとは区別する。今回の文書リンクとdiffの検査に問題なし。
-- verify:core: 固定入力でも516ファイル / 4,586テスト、docs/lint/typecheck/build/assets pass。classic smoke31件pass。既存のislandlife起動テストのdocumentモックを補って4件の失敗を解消。
-- 390/768幅の固定dev8ケース・14画面、固定production2ケース・16画面pass。s1〜s5/a1〜a6、閉じる・選択・固定記念、学習予約の再開、旧島の保守的移行、本人の演奏実描画と土地拡張を確認。実取得と明示fixtureを区別する。
-- productionはdb注入なしの実初回設定と5回答、実sw offline再読込・同じ次問・所有と記念の保持を確認。開始/終了のapp/dist/qa hash一致。育成の既存回帰4ケースもpass。
-- 独立レビューで訪問先の演奏の出所と同期中の表示抑止を補い、演奏の受領境界2回帰テストを追加。今回の変更ファイルは固定コピーと本体で一致を確認。
-- [実画面・結果・診断の記録](../../design/2026-10-01-island-guidance/readme.md)。入力変更のあった途中の結果を最終passへ読み替えていない。
-- runtime対象旅程はgo。視覚の魅力と無文字理解/安全の利用者評価はhold。commit/push/本番配布・実two-build更新・実機・子どもの理解/意欲の評価は未実施。
-
-## 体験リスク
-
-長い導入が宿題に見えないか、本と小さい目標の絵に気付くか、追加の通貨なしで記念を見返したくなるかは利用者観察で確認する。自動テストや作者の操作だけでは判定しない。
-"><h2><a href="../../docs/tasks/active/2026-10-01-island-guidance.md">任意の導きと記念：S1〜S5/A1〜A6・家の本・記念・挿絵v6。新規実装待ちには戻さず、公開/更新確認を1へ、体験を2へ、美術を4へまとめる。</a></h2><p class="path">docs/tasks/active/2026-10-01-island-guidance.md</p><p>- 更新日: 2026-10-01 - Review By: 2026-10-08</p><details><summary>詳細を読む</summary><pre># 育つ島のスターターとアチーブメントv1
-
-- 更新日: 2026-10-01
-- Review By: 2026-10-08
-- 状態: ローカル実装・対象の検証完了。公開・実機・子どもの確認は未実施
-- 正本: [導きと記念v1](../../product/island-starter-achievements-proposal.md)、[親仕様01](../../product/01_app_spec.md)、[仕様52](../../product/52_growing_island_game_spec.md)、[保存13](../../product/13_data_storage_migration_spec.md)
-- 依頼: 「実装して」。既存のdirty作業を保持し、この機能を実装・検証する
-- 効く柱: くふう、にぎわい、愛着。弱める柱なし
-- 面白さの仮説: 最初の一周の実体験と選べる遊びの絵から、自分で配置を試し、自分でまなぶを選びやすくなる
-
-## 範囲
-
-- 2026-10-02 UX: 通知から対象の記念へ直行。導入中と選択中の主操作を整理し、本人の固定snapshotを大きく表示。保存・時計・報酬の変更なし。
-
-- S1〜S5を保存済み事実から記録し、任意のひとこと案内と本からの再開を設ける。
-- A1〜A6の出来事を本人の対象を反映したSVGの絵・スタンプとして残す。今試せる候補最大3つ、選択目標一つを扱う。
-- 主入口は「いえ → 室内の本「あそびかた」」。メニューにも入口を残す。家で読み、閉じると家に戻り、実際の遊びを選ぶと島へ進む。島メニューにも入口を残す。
-- 2026-10-02: 室内の本から直接開く入口を追加。待つ理由を価格・空き場所・対象・解放ごとに示し、未準備の遊びは目標だけ選んで本に留まる。家の本を開いている間は本人の保存更新を時計同期なしで購読する。
-- 島の命令・学習完了・演奏実開始・通知実表示の境界を分け、本人recordへ保存する。旧writerが案内を消せない保存境界を維持する。
-- 旧島・学習の規則、費用・時間・成長・解放・既得権、ぽこもこの造形は維持する。
-- 混色・木陰利用・学習記念品展示・稀な来訪のアチーブメントと達成の自動写真は後続範囲。
-
-## Docs To Touch
-
-- 01、52、本仕様、46、43、13、product/README：機能・導入・旧案内・入口・保存・採用の位置づけ。
-- 本タスクとTASKS：実施範囲と状態。完了履歴/証拠は検証後に担当が追記する。
-- 憲法・学習・共通UI・wiki memory・ADR：既存契約を維持し変更不要。
-
-## Verification
-
-- 文書: 親・52・46・43・13・仕様地図を同期。`npm run docs:check` PASS（2026-10-01）。既存の4タスクの期限警告のみ。
-- 純粋ロジックとrepository: 無料/通常/自然の区別、先行操作、取消/同位置/再送、旧島の根拠、未知版/破損、CAS、保存失敗、owner削除を対象にする。
-- アプリ: verify:core、smokeとGrowingの該当旅程を適用。390×844/768×1024で新規/既存・本/目標/達成・学習往復・reload/offline・音なし・reduced motionを確認する。
-- 本番SW更新・実two-build・実機・子どもの無説明理解/翌日の再訪は別ゲート。未実行を完了に読み替えない。
-- 視覚の魅力、無文字理解/安全、runtimeを別に判定する。最終結果と証拠は実施後に追記する。
-
-### 最終結果
-
-- 2026-10-02 UX追加候補: core4,576、classic31件、両幅のDEV/家/本番形式の実SW offline PASS。[実画面と対象境界](../../design/2026-10-02-guidance-ux/README.md)。実機・実two-build・子どもの理解/再訪は別。
-
-- 2026-10-02コミット対象: core4,570テスト、classic smoke31件、DEV家2ケース/16画面、DEV全体6ケース/14画面、本番形式2ケース/20画面と実SW offline PASS。stageのapp入力一致、indexの文書検証を適用。[最新の結果](../../design/2026-10-01-island-guidance/fixes-checks.json)。
-
-- 家入口の追加: 両幅2ケース・10画面PASS。読書で全学習store/Growing recordが変わらないこと、家での開閉・reload、目標/記念から実際の旗操作、通常3回答後の同予約再開を確認。追加後のverify:coreも4,586テストPASS。[家の実画面](../../design/2026-10-01-island-guidance/house-entry.html)。
-- 家入口closeoutのdocs再checkは、別作業menu-atelierの `screens.html` / `contact-sheet.png` リンク切れ2件でFAIL。先行coreのdocs PASSとは区別する。今回の文書リンクとdiffの検査に問題なし。
-- verify:core: 固定入力でも516ファイル / 4,586テスト、docs/lint/typecheck/build/assets PASS。classic smoke31件PASS。既存のIslandLife起動テストのdocumentモックを補って4件の失敗を解消。
-- 390/768幅の固定DEV8ケース・14画面、固定production2ケース・16画面PASS。S1〜S5/A1〜A6、閉じる・選択・固定記念、学習予約の再開、旧島の保守的移行、本人の演奏実描画と土地拡張を確認。実取得と明示fixtureを区別する。
-- productionはDB注入なしの実初回設定と5回答、実SW offline再読込・同じ次問・所有と記念の保持を確認。開始/終了のapp/dist/QA hash一致。育成の既存回帰4ケースもPASS。
-- 独立レビューで訪問先の演奏の出所と同期中の表示抑止を補い、演奏の受領境界2回帰テストを追加。今回の変更ファイルは固定コピーと本体で一致を確認。
-- [実画面・結果・診断の記録](../../design/2026-10-01-island-guidance/README.md)。入力変更のあった途中の結果を最終PASSへ読み替えていない。
-- runtime対象旅程はGO。視覚の魅力と無文字理解/安全の利用者評価はHOLD。commit/push/本番配布・実two-build更新・実機・子どもの理解/意欲の評価は未実施。
-
-## 体験リスク
-
-長い導入が宿題に見えないか、本と小さい目標の絵に気付くか、追加の通貨なしで記念を見返したくなるかは利用者観察で確認する。自動テストや作者の操作だけでは判定しない。
 </pre></details></article></div></section><h2 class="section-title">保留・計画・完了記録</h2><section class="grid"><article class="card" data-search="確認条件が必要なもの .agents/tasks/blocked.md # 確認条件が必要なもの
 
 更新: 2026-10-05。端末・利用者の保存・参加者が必要な確認。担当タスク全体を止める意味ではない。ローカルの固定候補・更新検証は共有キューで進める。
@@ -1728,6 +1507,14 @@ B方向の実3D地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 
 共有キュー、関連仕様/タスク、Git履歴と未コミット一覧、10/1〜10/5の検証記録を照合した。アプリ実装・本番操作・実機/子どもの観察は行っていない。過去の検証を新しい候補の合格として記録しない。
 </pre></details></article><article class="card" data-search="shared done index .agents/tasks/done.md # shared done index
+
+- 2026-10-12: [元海岸の成長ラフをレビューへ引継ぎ](../../docs/design/2026-10-12-core-growth-review/readme.md)。利用者指示で一時停止。原本比較3枚と限定検証を保存。統合1件fail、c10 core・実ui未実行、美術hold。実装と包括ゴールは未完。
+
+- 2026-10-12: [同じ4木の分岐・接続c9](../../docs/design/2026-10-12-growth-variation-runtime/readme.md)。一本／二枝／周回を実移動で作り、収納／復元・9画面・固定core620/5,373 pass。将来造成範囲の予約を追加。完了は一地区の機構と限定診断で、三つの全島・美術・本人保存の包括ゴールは継続。詳細: `docs/done/2026-10.md`。
+
+- 2026-10-12: [配置と成熟で岸が育つ初期実装c8](../../docs/design/2026-10-12-growth-terrain-runtime/readme.md)。同じ木2本の三配置から2地形と位置差、実収納／復元・回転・小画面9画面、core619/5,349がpass。別の住人1体歩行／収納後退避もpass。限定実装と診断単位を記録し、全島の多様性・美術hold・本人保存・独立観察n=0・包括ゴールは継続。詳細: `docs/done/2026-10.md`。
+
+- 2026-10-12: [水庭の検証済み支持床を再利用](../../docs/design/2026-10-12-authored-water-support-reuse/readme.md)。固定c3 core5,302、実27／32／35入力の世界・支持一致、水庭14画面／6操作・classic32 pass。内部変更単位を完了。速度未計測、美術hold・n=0・m1／包括ゴールは継続。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-11: [全島の尺度・購入・成熟preflight](../../docs/design/2026-10-11-authored-whole-preflight/readme.md)。actor `.45`・実高さfocus・原本樹種/成長を修正。27→32所有物/家8軒を実購入・診断18hで確認、core5,199/編集/水庭/normal学習保存/classic32 pass。美術31/60 hold・n=0・性能未達・m1/包括ゴールは継続。次はp05の全景制作。詳細: `docs/done/2026-10.md`。
 
@@ -2020,7 +1807,15 @@ durable completion history and verification facts still belong in `docs/done/yyy
 - 2026-10-01: しあげの条件を全20問独力正解に変更。19/20のレベル維持、新予約20/20の進級を実ui/保存で確認、4391 tests pass -&gt; `docs/done/2026-10.md`
 
 - 2026-10-01: 学習アルゴリズム監査a1〜a10修正。独力/代表出題/coverage/復習・回復・配分を整え、全4474 tests・smoke31・固定preview80実回答を確認。ローカル、本番未配布 -&gt; `docs/done/2026-10.md`
-"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-10-11: [全島の尺度・購入・成熟preflight](../../docs/design/2026-10-11-authored-whole-preflight/README.md)。actor `.45`・実高さfocus・原本樹種/成長を修正。27→32所有物/家8軒を実購入・診断18hで確認、core5,199/編集/水庭/normal学習保存/classic32 PASS。美術31/60 </p><details><summary>詳細を読む</summary><pre># Shared Done Index
+"><h2><a href="DONE.md">Shared Done Index</a></h2><p class="path">.agents/tasks/DONE.md</p><p>- 2026-10-12: [元海岸の成長ラフをレビューへ引継ぎ](../../docs/design/2026-10-12-core-growth-review/README.md)。利用者指示で一時停止。原本比較3枚と限定検証を保存。統合1件FAIL、c10 core・実UI未実行、美術HOLD。実装と包括ゴールは未完。 - 2026-10-12: [同じ4木の分岐・接続c9](../../docs/design</p><details><summary>詳細を読む</summary><pre># Shared Done Index
+
+- 2026-10-12: [元海岸の成長ラフをレビューへ引継ぎ](../../docs/design/2026-10-12-core-growth-review/README.md)。利用者指示で一時停止。原本比較3枚と限定検証を保存。統合1件FAIL、c10 core・実UI未実行、美術HOLD。実装と包括ゴールは未完。
+
+- 2026-10-12: [同じ4木の分岐・接続c9](../../docs/design/2026-10-12-growth-variation-runtime/README.md)。一本／二枝／周回を実移動で作り、収納／復元・9画面・固定core620/5,373 PASS。将来造成範囲の予約を追加。完了は一地区の機構と限定診断で、三つの全島・美術・本人保存の包括ゴールは継続。詳細: `docs/done/2026-10.md`。
+
+- 2026-10-12: [配置と成熟で岸が育つ初期実装c8](../../docs/design/2026-10-12-growth-terrain-runtime/README.md)。同じ木2本の三配置から2地形と位置差、実収納／復元・回転・小画面9画面、core619/5,349がPASS。別の住人1体歩行／収納後退避もPASS。限定実装と診断単位を記録し、全島の多様性・美術HOLD・本人保存・独立観察N=0・包括ゴールは継続。詳細: `docs/done/2026-10.md`。
+
+- 2026-10-12: [水庭の検証済み支持床を再利用](../../docs/design/2026-10-12-authored-water-support-reuse/README.md)。固定c3 core5,302、実27／32／35入力の世界・支持一致、水庭14画面／6操作・classic32 PASS。内部変更単位を完了。速度未計測、美術HOLD・N=0・M1／包括ゴールは継続。詳細: `docs/done/2026-10.md`。
 
 - 2026-10-11: [全島の尺度・購入・成熟preflight](../../docs/design/2026-10-11-authored-whole-preflight/README.md)。actor `.45`・実高さfocus・原本樹種/成長を修正。27→32所有物/家8軒を実購入・診断18hで確認、core5,199/編集/水庭/normal学習保存/classic32 PASS。美術31/60 HOLD・N=0・性能未達・M1/包括ゴールは継続。次はP05の全景制作。詳細: `docs/done/2026-10.md`。
 

@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-16T04:45:18.819Z",
+  "mode": "standalone headless Chromium",
+  "widths": [
+    320,
+    390,
+    768,
+    1440
+  ],
+  "pages": [],
+  "result": "FAIL",
+  "screenshotsDeleted": false,
+  "error": "TimeoutError: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#reader[open] .reader-text') to be visible\u001b[22m\n",
+  "screenshots": "qa/evidence/PI-001-SANSU/file-screens"
+}

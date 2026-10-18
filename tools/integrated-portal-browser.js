@@ -1,6 +1,12 @@
-/* Static, local reader only. No task edits or external submission. */
+/* Local search and reading only. Canonical records are never edited here. */
+const setURL=(values,push=false)=>{
+ const url=new URL(location.href);
+ for(const [key,value] of Object.entries(values))value?url.searchParams.set(key,value):url.searchParams.delete(key);
+ if(url.href!==location.href)history[push?'pushState':'replaceState'](null,'',url);
+};
 const search=document.querySelector('#search');
-if(search)search.addEventListener('input',()=>{
+const pageSearch=()=>{
+ if(!search)return;
  const q=search.value.trim().toLowerCase();let count=0;
  const cards=[...document.querySelectorAll('[data-search]')];
  for(const card of cards){card.hidden=!!q&&!card.dataset.search.includes(q);if(!card.hidden)count++;}
@@ -10,22 +16,35 @@ if(search)search.addEventListener('input',()=>{
   if(group.previousElementSibling?.classList.contains('group-title'))group.previousElementSibling.hidden=group.hidden;
  }
  if(q)for(const node of cards.filter(n=>!n.hidden))for(let p=node.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;
- const result=document.querySelector('#result');result.hidden=!q;result.textContent=count+' 件を表示';
-});
+ const result=document.querySelector('#result');result.hidden=!q;result.textContent=count?q+'：'+count+' 件を表示':'一致する項目はありません。条件を解除して探し直せます。';
+ setURL({'page-query':search.value});
+};
+if(search){
+ search.value=new URL(location.href).searchParams.get('page-query')||'';
+ search.addEventListener('input',pageSearch);pageSearch();
+ document.querySelector('#page-search-reset')?.addEventListener('click',()=>{search.value='';pageSearch();search.focus();});
+}
 const globalSearch=document.querySelector('#global-search');
+let restoreGlobal;
 if(globalSearch){
- let index;
- globalSearch.addEventListener('input',async()=>{
+ const category=document.querySelector('#global-category'),format=document.querySelector('#global-format');let index;
+ const run=async()=>{
   const q=globalSearch.value.trim().toLowerCase();const result=document.querySelector('#global-results');const status=document.querySelector('#global-status');result.replaceChildren();
-  if(!q){status.textContent='';return;}
   try{
    index??=window.sansuSearchIndex||fetch('data/search.json').then(r=>{if(!r.ok)throw Error('search unavailable');return r.json();});
-   const rows=(await index).filter(r=>r.body.toLowerCase().includes(q)||r.title.toLowerCase().includes(q));
+   const all=await index;
+   const rows=all.filter(r=>(!q||r.body.toLowerCase().includes(q)||r.title.toLowerCase().includes(q))&&(!category.value||r.category===category.value)&&(!format.value||r.format===format.value));
    if(globalSearch.value.trim().toLowerCase()!==q)return;
-   status.textContent=rows.length+' 件の資料が見つかりました';
+   status.textContent=rows.length+' / '+all.length+' 件の資料'+(!rows.length?'。一致する資料はありません。条件を解除して探し直せます。':'');
+   setURL({q:globalSearch.value,category:category.value,format:format.value});
+   if(!q&&!category.value&&!format.value)return;
    for(const row of rows){const li=document.createElement('li');const a=document.createElement('a');a.href=row.href;a.textContent=row.label||'詳しい資料';li.append(a);result.append(li);}
   }catch{status.textContent='全文検索を開けません。このページの検索をご利用ください。';}
- });
+ };
+ restoreGlobal=()=>{const params=new URL(location.href).searchParams;globalSearch.value=params.get('q')||'';category.value=params.get('category')||'';format.value=params.get('format')||'';run();};
+ for(const input of [globalSearch,category,format])input.addEventListener('input',run);
+ document.querySelector('#global-reset')?.addEventListener('click',()=>{globalSearch.value='';category.value='';format.value='';run();globalSearch.focus();});
+ restoreGlobal();
 }
 
 // A document, image, or interactive HTML opens on this page at the second level.
@@ -37,15 +56,28 @@ if(reader){
  const content=document.querySelector('#reader-content');
  const title=document.querySelector('#reader-title');
  const back=document.querySelector('#reader-back');
- const stack=[];let opener;
+ const stack=[];let opener,restoring=false,activeRow,activeURL;
  const close=()=>reader.close();
  document.querySelector('#reader-close').addEventListener('click',close);
- reader.addEventListener('close',()=>{content.replaceChildren();stack.length=0;opener?.focus();});
+ reader.addEventListener('close',()=>{content.replaceChildren();stack.length=0;if(!restoring)setURL({document:'',view:''});(opener||globalSearch||document.querySelector('h1'))?.focus();});
+ function display(row,url,mode){
+  const source=content.querySelector(':scope > .reader-source');
+  content.replaceChildren();
+  const resolveLink=raw=>new URL(raw.startsWith('/')?raw.slice(1):raw,raw.startsWith('/')?new URL('../',portalBase):url);
+  content.append(window.sansuDocumentView(row,mode,resolveLink));
+  if(source)content.append(source);
+  for(const button of reader.querySelectorAll('[data-reader-view]'))button.setAttribute('aria-pressed',String(button.dataset.readerView===mode));
+ }
+ for(const button of reader.querySelectorAll('[data-reader-view]'))button.addEventListener('click',()=>{
+  if(activeRow){display(activeRow,activeURL,button.dataset.readerView);setURL({view:button.dataset.readerView==='reading'?'':button.dataset.readerView});}
+ });
  function show(url,label,push=true){
   if(push)stack.push({url,label});back.hidden=stack.length<2;
   const clean=new URL(url);clean.hash='';const row=corpus.get(clean.href);
   title.textContent=row?.title||label||'資料';content.replaceChildren();
-  if(row){const pre=document.createElement('pre');pre.className='reader-text';pre.textContent=row.body;content.append(pre);}
+  activeRow=row;activeURL=url;
+  for(const button of reader.querySelectorAll('[data-reader-view]'))button.hidden=!row;
+  if(row){display(row,url,new URL(location.href).searchParams.get('view')||'reading');setURL({document:row.source||row.href},!restoring&&stack.length===1);}
   else if(/\.(?:png|jpe?g|webp|gif|svg)(?:#.*)?$/i.test(url)){
    const img=document.createElement('img');img.src=url;img.alt=label||'比較画像';content.append(img);
   }else{
@@ -55,7 +87,7 @@ if(reader){
   }
   const details=document.createElement('details');details.className='reader-source ai-detail';
   const summary=document.createElement('summary');summary.textContent='元の資料を別に開く';
-  const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.textContent='元の資料';details.append(summary,a);content.append(details);
+ const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener';a.textContent='元の資料';details.append(summary,a);content.append(details);
   if(!reader.open)reader.showModal();document.querySelector('#reader-close').focus();content.scrollTop=0;reader.scrollTop=0;
  }
  back.addEventListener('click',()=>{stack.pop();const previous=stack.at(-1);show(previous.url,previous.label,false);});
@@ -74,4 +106,14 @@ if(reader){
   }
  }
  document.addEventListener('click',event=>follow(event,document.baseURI));
+ const restore=()=>{
+  restoring=true;
+  const source=new URL(location.href).searchParams.get('document');
+  const row=[...corpus.values()].find(item=>item.source===source||item.href===source);
+  if(row){stack.length=0;show(new URL(row.href,portalBase).href,row.label);}
+  else if(reader.open)reader.close();
+  restoring=false;
+ };
+ addEventListener('popstate',()=>{if(search){search.value=new URL(location.href).searchParams.get('page-query')||'';pageSearch();}restoreGlobal?.();restore();});
+ restore();
 }

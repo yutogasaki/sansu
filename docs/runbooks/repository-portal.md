@@ -7,6 +7,9 @@
 
 ## 入口
 
+通常入口は[共通概要](../../.agents/index.html)。共通ナビは概要／計画／仕事／知識・仕様／役割・手順／運用。以下の旧入口は専門索引として保持する。内部資料のため公開配布へコピーしない。
+
+
 - [リポジトリ概要](../../.agents/index.html)
 - [現在のタスク](../../.agents/tasks/index.html)
 - [仕様と実装のマップ](../../.agents/map.html)
@@ -41,3 +44,11 @@ npm run docs:check
 保留は `.agents/tasks/BLOCKED.md`、計画は `docs/tasks/backlog.md`、完了履歴の入口は `.agents/tasks/DONE.md`。
 履歴や古い詳細ファイルの存在から現在のタスク状態を推測しない。
 HTMLは生成時点のスナップショットであり、公開・検証完了の判定には使わない。機能の状態が変わったら、共有タスクと仕様を更新し、生成器の機能マップも照合してから再生成する。
+
+## 今回の限定検証
+
+[検証契約](../internal-portal/contract.md)に範囲・依存・修正上限を定義する。`node tools/check-internal-portal.mjs` で共通ナビ・旧アンカー・リンクと依存の異常系を確認。既存の `verify:core` が必須、4幅のbrowserと独立レビューはローカルで別取得する。原証拠は `/tmp/sansu-common-portal-application/`。再生成のみで検証済みやユーザー受入としない。
+
+## 永続ローカル証拠
+
+今回の原証拠を gitignored `output/internal-portal-evidence/sansu-common-portal-application/` へ内容不変で保全。通常概要の「今回の検証証拠」からローカル閲覧できる。原文の `/tmp/` は取得時の記録として残し、保存先 `archive-manifest.json` の対応で解決する。`node output/internal-portal-evidence/sansu-common-portal-application/validate-archive.mjs` は保存先だけを検査する。別checkoutで保存先が無ければ未取得表示、公開配布へコピーしない。証拠導線追加後は別候補となるため、旧正式PASSは旧13成果とrunの歴史的結果として保持し、現候補へ再受入せず転記しない。

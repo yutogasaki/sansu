@@ -1,5 +1,29 @@
 # さんすうの統合ポータル
 
+## 全件統合の再確認（PI-001-SANSU）
+
+2026-10-16の追加依頼では、Sansuの実装をこのrepoで担当し、他repoとhubの配布器は各担当が扱う。commit・push・公開は行わない。開始時のHEADは `eb4b907bdf5cb6e99c30c4ac6f28d2d3969cac50`。島制作・共有キュー等の既存差分は今回の変更に含めない。
+
+全項目の機械可読対応表と同じ入力の日本語表は `qa/evidence/PI-001-SANSU/parity.json` / `parity.md`。元7ページの要素・属性・全文・CSS・操作定義に加え、全参照資源・旧URL・アンカー・操作の有無を数える。57項目や過去の5,495件を上限にしない。生成は `node tools/check-portal-migration.mjs --write`、一致検査は同スクリプトの `--check`。表示・操作・独立審査は機械照合と別判定する。
+
+全文検索には分類・形式・語句の組合せ、件数、0件の案内、条件解除、URLからの復元を備える。資料を開くと「読みやすく」「原文」「データ」を同じ記録から表示し、開いた資料と表示形式もURLに残す。外部送信や正本の編集・保存は起こさない。元画面に存在しないCRUD・import/export・相談コピーを既存機能と誤記しない。
+
+元画面の全表示は各詳細ページの専用開閉内にも保持する。整理した内容を先に読み、必要時に元の配色・図・全文検索を同じページで開ける。受入前の元URLと元資源は保持する。元URLの保持期限は未決で、今回削除しない。
+
+開始時の元7画面と参照資源2,142件（約1.7GB）の復旧コピーはGit外の `/Users/yutogasaki/Projects/.portal-recovery/PI-001-SANSU/`、全hashはその `manifest.json`。`qa/evidence/PI-001-SANSU/recovery-check.json` に全量照合を残す。作業用の `/tmp/codex/PI-001-SANSU/recovery/` も保持する。再現用ブラウザ検査は `node tools/check-portal-migration-browser.mjs --full`。`SANSU_PORTAL_BEFORE` で復旧コピー、`SANSU_PORTAL_BROWSER_OUTPUT` で新しい証拠保存先を指定する。既存の失敗証拠へ上書きしない。
+
+追加のHTML資料は固定した `scripts/vendor/portal-integration/1.0.2/` から生成する。`pages.html` / `search.html` と `data/unification.json` はこの範囲の全件入口と原文・識別子・出典の詳細。主要7画面の検索・画面検査と混同せず、追加分も別に照合する。`scripts/standard-portal.mjs` の固有合成では既存の冒頭階層を保ち、下部に全件入口を置く。合成したHTMLのhashも `data/unification-manifest.json` に反映する。旧生成器・状態判定・検証・承認エンジンは受入前に廃止しない。
+
+固有の `tools/portal-library.mjs` は、head/bodyを省略した参考HTMLも文書として包み、元のCSS・script本文・操作を保持する。静的URLを対応先へ付け替えた上で元資料をbaseにし、scriptが作る画像、取得データ、フォントの相対参照を維持する。新たに作る資料リンクは統合先へ進む。CSPでbaseや外部scriptを禁止した観察票は、その制約を維持する。匿名の数値モデル `growth-pacing.csv` は列と値を検証してから参照し、個人資料と誤分類しない。端末内の実メモや児童の実記録は読み取らない。
+
+追加範囲の照合は `python3 tools/check-portal-library.py .`。操作は `node tools/check-portal-library-browser.mjs`、全関連HTMLの同幅撮影は同コマンドに `--all-pages --full`。図鑑の比較・メモ保存/編集/削除/書き出し、観察票の保存/import/export/削除と保存失敗を、新しいブラウザcontextの匿名データで試験する。既存の利用者保存や実観察を成功件数へ加えない。主要7画面だけの「CRUDなし」という棚卸しを、これらの参考資料まで一般化しない。
+
+資料領域の全HTMLを対象にし、フォルダ参照も元の内容から一覧と `data/folders.json` を生成する。`index.html` があるフォルダの章リンクは対応する統合HTMLの同じ章へ、それ以外は資料名・容量・hashを持つ一覧へ進む。過去の失敗や見送りを現在の採用へ変えない。
+
+PI-001の拡張棚卸しで、`docs/design/2026-10-11-island-landscape-art/history/draft-05/` の元HTMLに欠損参照6件を確認した。旧候補 `native05-landscape-owned-art-v5` のGLBは `73ba35788ffe12472655ec0183108769f431ecd44249f3010350322f682797ce`、Blender原本は `5c53320a567d1fb8c05f43c3408ff1f51b32874e0b8c2fcbca36e8a7fa83f7c0` が記録上の対象。開始時全ファイルhashとGitの該当パス履歴では同一物を確認できていない。別候補の素材を代用せず、元画面・原文・現存する固定画像を保持し、移行全体の受入と入口切替を保留する。詳細はPI-001の検査記録を参照する。
+
+復旧時は新旧の生成器・固有検証エンジンを分ける。Gitの正本と参照資源を該当版へ復元し、manifestのhashを照合してから `npm run portal:build`。未commitだった資源は上記復旧コピーから同じ相対パスへ戻し、現在のファイルが異なる場合は別名退避してから戻す。共有キュー・保存・旧trial・追加承認履歴はリセットしない。入口切替前へ戻す場合も、元7URLを復元するだけで製品アプリや学習記録に触れない。
+
 S-002 / 2026-10-16。S-004の同等性確認が終わるまでは、通常入口を元の `.agents/index.html` のまま残す。`portal/index.html` は確認中の新ポータル。元の `.agents/index.html` への目立つリンクを常設する。旧7ページは保持し、生成HTMLを手編集しない。
 
 ## 生成と正本
@@ -82,7 +106,7 @@ HTML内の非表示データ、`portal/data/portal-flow.json`、`portal/data/int
 
 元ページは削除・変更せず、通常入口を `.agents/index.html` のまま保持する。新しい流れ図・考え方の節は追加しない。S-003で既に追加済みの流れ図は保持する。
 
-`tools/portal-originals.mjs` は既存の6つの `.agents/` HTMLと `docs/index.html` を読み、`portal/original/` に全要素・直接の文章・全属性・CSS・scriptを保存する。相対URLだけを同じ元資料、または取り込んだ対応ページへ張り直す。7つの対応ページでは、原形表示を同じページのiframeで常時開く。独立したCSS/JSと横幅を保ち、整理した要約はその下から読める。画像や音声の元バイナリ、個人設定や本人の保存はコピーしない。ポータル全体は内部ローカル閲覧用で、公開・hub集約を本作業で実行しない。
+`tools/portal-originals.mjs` は既存の6つの `.agents/` HTMLと `docs/index.html` を読み、`portal/original/` に全要素・直接の文章・全属性・CSS・scriptを保存する。相対URLだけを同じ元資料、または取り込んだ対応ページへ張り直す。S-004では原形表示を常時展開した。PI-001では整理した内容を先に読めるよう専用の開閉内へ置き、同じページのiframeで元のCSS/JS・横幅・検索を保持する。元URLの通常入口は残す。画像や音声の元バイナリ、個人設定や本人の保存はコピーしない。ポータル全体は内部ローカル閲覧用で、公開・hub集約を本作業で実行しない。
 
 棚卸しは `portal/data/original-inventory.json`。要素・属性・空でない直接の文章・CSS・scriptを別々に数え、S-002のCSSルール150・メディア条件9・操作定義8も個別に残す。S-002の5,495件は構造5,328件とこの167件の合計。S-003の5,328件は構造だけの報告で、167件の削除ではない。今回の細分化した総件数とは数え方を区別する。
 

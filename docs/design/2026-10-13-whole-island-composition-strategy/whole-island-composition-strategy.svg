@@ -1,0 +1,284 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1200" viewBox="0 0 1800 1200" role="img" aria-labelledby="title desc">
+  <title id="title">次の全島構図を選ぶための戦略ボード</title>
+  <desc id="desc">丘の町、水辺の群島、環状の入り江を同じ縮尺と同じ視点で比較し、輪郭、高低差、主要道、地区構成、移行難度を判断するためのボード。</desc>
+  <defs>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#C9D4E2" stroke-width="1" opacity="0.55"/>
+    </pattern>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#18243A" flood-opacity="0.08"/>
+    </filter>
+    <style>
+      text { font-family: "Noto Sans JP", "Hiragino Sans", sans-serif; fill: #1B263A; }
+      .display { font-weight: 800; letter-spacing: -0.03em; }
+      .panel-title { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; }
+      .panel-sub { font-size: 15px; font-weight: 600; fill: #637089; }
+      .kicker { font-size: 13px; font-weight: 800; letter-spacing: 0.13em; fill: #637089; }
+      .body { font-size: 17px; font-weight: 600; }
+      .small { font-size: 14px; font-weight: 600; fill: #59667E; }
+      .micro { font-size: 12px; font-weight: 700; fill: #66738B; letter-spacing: 0.04em; }
+      .map-label { font-size: 13px; font-weight: 800; paint-order: stroke; stroke: #F8FAFC; stroke-width: 5px; stroke-linejoin: round; }
+      .panel { fill: #FFFFFF; stroke: #D6DEE9; stroke-width: 2; }
+      .map { fill: #EAF4F8; stroke: #D3DFEA; stroke-width: 1.5; }
+      .land-outline { fill: none; stroke: #202B40; stroke-width: 10; stroke-linejoin: round; stroke-linecap: round; }
+      .land-low { fill: #DCE4EF; stroke: #202B40; stroke-width: 5; stroke-linejoin: round; }
+      .land-mid { fill: #B8C4DA; }
+      .land-high { fill: #8B9BC4; }
+      .route-under { fill: none; stroke: #FFFFFF; stroke-width: 12; stroke-linecap: round; stroke-linejoin: round; }
+      .route { fill: none; stroke: #F25573; stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+      .district { fill: none; stroke: #56637A; stroke-width: 2.5; stroke-dasharray: 7 7; }
+      .node { fill: #FFFFFF; stroke: #202B40; stroke-width: 3; }
+      .gate-pass { fill: #E9EFFB; stroke: #8CA4D8; stroke-width: 1.5; }
+      .gate-hold { fill: #FFF0F3; stroke: #EAA0AF; stroke-width: 1.5; }
+      .gate-conditional { fill: #FFF4DD; stroke: #DFB766; stroke-width: 1.5; }
+      .gate-text { font-size: 12px; font-weight: 800; letter-spacing: 0.03em; }
+      .white { fill: #FFFFFF; }
+      .light { fill: #DCE5F2; }
+      .blue-light { fill: #AFC2E2; }
+    </style>
+  </defs>
+
+  <rect width="1800" height="1200" fill="#F3F5F8"/>
+  <path d="M0 0H1800V14H0Z" fill="#315DA8"/>
+
+  <text x="60" y="67" class="display" font-size="46">次の全島構図を選ぶための戦略ボード</text>
+  <text x="60" y="105" font-size="18" font-weight="600" fill="#59667E">家を動かす前に、島の骨格を選ぶ。3案は同一縮尺・同一視点・同一評価軸。</text>
+
+  <g transform="translate(1428 44)">
+    <rect width="312" height="62" rx="18" fill="#18243A"/>
+    <text x="22" y="25" class="white" font-size="12" font-weight="800" letter-spacing="0.14em">SOURCE STRATEGY</text>
+    <text x="22" y="47" class="light" font-size="13" font-weight="650">runtime未実装 · 2026-10-13</text>
+  </g>
+
+  <g transform="translate(60 128)">
+    <rect width="500" height="42" rx="14" fill="#FFFFFF" stroke="#D4DCE8"/>
+    <text x="18" y="26" class="small"><tspan font-weight="850" fill="#1B263A">固定</tspan><tspan dx="14">8軒の家・住人と家・育った履歴</tspan></text>
+  </g>
+  <g transform="translate(580 128)">
+    <rect width="500" height="42" rx="14" fill="#FFFFFF" stroke="#D4DCE8"/>
+    <text x="18" y="26" class="small"><tspan font-weight="850" fill="#1B263A">可変</tspan><tspan dx="14">輪郭・高低差・主動線・地区の隣接</tspan></text>
+  </g>
+  <g transform="translate(1110 128)">
+    <rect width="630" height="42" rx="14" fill="#FFFFFF" stroke="#D4DCE8"/>
+    <circle cx="24" cy="21" r="7" fill="#DCE4EF" stroke="#202B40" stroke-width="2"/>
+    <text x="40" y="26" class="micro">土地</text>
+    <path d="M95 21H137" class="route"/>
+    <text x="148" y="26" class="micro">主要道</text>
+    <circle cx="236" cy="21" r="11" class="district"/>
+    <text x="255" y="26" class="micro">地区</text>
+    <rect x="330" y="12" width="25" height="18" rx="4" fill="#8B9BC4"/>
+    <text x="366" y="26" class="micro">濃いほど高い</text>
+    <rect x="494" y="9" width="116" height="24" rx="12" fill="#18243A"/>
+    <text x="552" y="26" class="white" text-anchor="middle" font-size="11" font-weight="800">64pxでも判別</text>
+  </g>
+
+  <!-- A: Hill Town -->
+  <g transform="translate(60 190)">
+    <rect class="panel" width="520" height="740" rx="26" filter="url(#shadow)"/>
+    <circle cx="43" cy="43" r="23" fill="#18243A"/>
+    <text x="43" y="51" class="white" text-anchor="middle" font-size="22" font-weight="850">A</text>
+    <text x="82" y="38" class="panel-title">丘の町</text>
+    <text x="82" y="63" class="panel-sub">登るほど、暮らしが濃くなる</text>
+    <rect x="405" y="22" width="91" height="31" rx="15" fill="#EEF1F7"/>
+    <text x="450" y="42" text-anchor="middle" class="micro">単一地形</text>
+
+    <rect x="20" y="82" width="480" height="360" rx="20" class="map"/>
+    <rect x="20" y="82" width="480" height="360" rx="20" fill="url(#grid)"/>
+    <g transform="translate(23 88)">
+      <path class="land-low" d="M55 285C25 245 50 205 98 188C135 175 159 148 178 108C204 54 280 27 342 50C404 74 414 126 379 158C353 181 310 184 300 212C288 240 340 252 375 275C414 301 393 332 352 340C302 348 274 315 228 306C176 296 98 328 55 285Z"/>
+      <path class="land-mid" d="M126 244C95 222 108 182 147 162C174 148 183 111 207 85C236 53 286 47 318 63C350 79 356 109 332 129C303 153 265 148 250 176C232 206 269 232 247 251C217 278 162 273 126 244Z"/>
+      <path class="land-high" d="M180 197C165 174 181 147 206 125C225 108 229 85 250 73C278 57 310 71 316 95C323 120 286 126 275 148C263 174 287 194 268 210C241 231 197 224 180 197Z"/>
+      <path class="district" d="M48 258C92 238 137 250 154 288C113 312 75 310 48 280Z"/>
+      <path class="district" d="M126 169C164 139 216 138 246 174C224 220 169 237 130 208Z"/>
+      <path class="district" d="M230 62C275 36 332 46 350 88C324 125 276 131 239 109Z"/>
+      <path class="route-under" d="M73 286C111 270 117 233 150 213C188 190 188 154 221 132C258 108 285 83 336 89"/>
+      <path class="route" d="M73 286C111 270 117 233 150 213C188 190 188 154 221 132C258 108 285 83 336 89"/>
+      <circle cx="73" cy="286" r="8" class="node"/>
+      <circle cx="185" cy="187" r="8" class="node"/>
+      <circle cx="336" cy="89" r="8" class="node"/>
+      <text x="43" y="324" class="map-label">港</text>
+      <text x="143" y="250" class="map-label">坂の町</text>
+      <text x="296" y="47" class="map-label">丘上の森</text>
+    </g>
+
+    <g transform="translate(24 459)">
+      <rect width="82" height="82" rx="18" fill="#F2F4F8" stroke="#D2DBE7"/>
+      <path d="M14 57C8 47 16 38 26 34C34 31 35 22 43 14C53 5 70 9 72 20C74 29 62 32 58 39C54 47 70 50 69 59C67 70 54 72 44 67C33 62 20 68 14 57Z" fill="#18243A"/>
+      <text x="41" y="77" text-anchor="middle" font-size="9" font-weight="800" fill="#6A7589">64px</text>
+    </g>
+    <text x="126" y="481" class="kicker">黒一色でも</text>
+    <text x="126" y="508" class="body">斜めに登る、一枚の稜線</text>
+    <text x="24" y="575" class="kicker">暮らしの主役</text>
+    <text x="24" y="604" class="body">坂を登るほど、町と森の密度が変わる。</text>
+    <text x="24" y="638" class="small"><tspan font-weight="850" fill="#1B263A">難所</tspan><tspan dx="12">高低差と、配置・歩行の整合</tspan></text>
+    <g transform="translate(24 659)">
+      <rect width="142" height="31" rx="15" class="gate-pass"/>
+      <text x="71" y="20" text-anchor="middle" class="gate-text">輪郭　PASS</text>
+      <rect x="151" width="164" height="31" rx="15" class="gate-hold"/>
+      <text x="233" y="20" text-anchor="middle" class="gate-text">配置因果　HOLD</text>
+      <rect x="324" width="148" height="31" rx="15" class="gate-hold"/>
+      <text x="398" y="20" text-anchor="middle" class="gate-text">移行　HOLD</text>
+    </g>
+    <text x="24" y="718" class="small"><tspan font-weight="850" fill="#315DA8">選ぶなら</tspan><tspan dx="12">「町が育つ」感覚を最優先するとき</tspan></text>
+  </g>
+
+  <!-- B: Archipelago -->
+  <g transform="translate(640 190)">
+    <rect class="panel" width="520" height="740" rx="26" filter="url(#shadow)"/>
+    <circle cx="43" cy="43" r="23" fill="#18243A"/>
+    <text x="43" y="51" class="white" text-anchor="middle" font-size="22" font-weight="850">B</text>
+    <text x="82" y="38" class="panel-title">水辺の群島</text>
+    <text x="82" y="63" class="panel-sub">つなぐほど、地区が生まれる</text>
+    <rect x="405" y="22" width="91" height="31" rx="15" fill="#EEF1F7"/>
+    <text x="450" y="42" text-anchor="middle" class="micro">分散地形</text>
+
+    <rect x="20" y="82" width="480" height="360" rx="20" class="map"/>
+    <rect x="20" y="82" width="480" height="360" rx="20" fill="url(#grid)"/>
+    <g transform="translate(23 88)">
+      <path class="land-low" d="M43 105C42 61 90 37 144 52C190 65 216 98 197 127C180 153 137 145 111 157C76 174 43 150 43 105Z"/>
+      <path class="land-mid" d="M71 89C80 61 121 54 158 69C182 79 189 100 174 116C154 137 122 121 101 130C76 140 63 116 71 89Z"/>
+      <path class="land-low" d="M289 55C319 30 373 40 389 73C402 101 375 126 339 125C303 125 272 102 276 79C278 69 282 62 289 55Z"/>
+      <path class="land-low" d="M165 166C194 140 248 142 274 172C300 203 277 239 235 248C197 257 151 236 149 204C148 188 154 176 165 166Z"/>
+      <path class="land-high" d="M190 177C211 158 243 163 254 184C263 203 248 222 225 225C200 228 180 211 180 194C180 187 184 181 190 177Z"/>
+      <path class="land-low" d="M54 260C81 237 128 239 150 267C171 294 149 323 113 329C78 335 43 315 43 287C43 276 47 267 54 260Z"/>
+      <path class="land-low" d="M296 244C329 218 383 226 405 259C427 292 399 325 354 330C315 334 279 311 280 280C281 265 286 253 296 244Z"/>
+      <path class="land-low" d="M222 294C237 278 265 280 276 298C288 317 271 336 247 338C226 340 207 326 208 309C209 303 214 298 222 294Z"/>
+      <path d="M179 133L190 159" class="route-under"/>
+      <path d="M179 133L190 159" class="route"/>
+      <path d="M267 174L303 116" class="route-under"/>
+      <path d="M267 174L303 116" class="route"/>
+      <path d="M211 242L145 268" class="route-under"/>
+      <path d="M211 242L145 268" class="route"/>
+      <path d="M270 231L310 253" class="route-under"/>
+      <path d="M270 231L310 253" class="route"/>
+      <path d="M77 112C118 91 159 107 190 159C217 180 236 188 267 174C294 145 302 119 330 91" class="route" stroke-dasharray="5 10"/>
+      <path d="M113 291C151 264 190 258 219 224C250 231 281 244 330 278" class="route" stroke-dasharray="5 10"/>
+      <circle cx="111" cy="105" r="42" class="district"/>
+      <circle cx="225" cy="195" r="42" class="district"/>
+      <circle cx="350" cy="280" r="43" class="district"/>
+      <circle cx="111" cy="105" r="8" class="node"/>
+      <circle cx="225" cy="195" r="8" class="node"/>
+      <circle cx="350" cy="280" r="8" class="node"/>
+      <text x="54" y="39" class="map-label">港の集落</text>
+      <text x="183" y="267" class="map-label">畑の島</text>
+      <text x="326" y="347" class="map-label">森の島</text>
+    </g>
+
+    <g transform="translate(24 459)">
+      <rect width="82" height="82" rx="18" fill="#F2F4F8" stroke="#D2DBE7"/>
+      <path d="M10 23C10 12 23 8 34 14C42 19 39 29 29 31C18 34 10 31 10 23ZM50 14C60 7 73 13 72 22C71 31 57 33 50 26C46 22 46 18 50 14ZM28 40C36 32 49 35 52 45C55 55 44 61 34 58C24 55 21 47 28 40ZM12 58C19 52 30 54 33 63C36 71 25 75 17 72C9 69 6 63 12 58ZM55 55C64 48 76 54 75 64C74 74 61 77 53 70C48 66 49 59 55 55Z" fill="#18243A"/>
+      <text x="41" y="77" text-anchor="middle" font-size="9" font-weight="800" fill="#6A7589">64px</text>
+    </g>
+    <text x="126" y="481" class="kicker">黒一色でも</text>
+    <text x="126" y="508" class="body">水で分かれた、五つのかたまり</text>
+    <text x="24" y="575" class="kicker">暮らしの主役</text>
+    <text x="24" y="604" class="body">橋を選ぶほど、水辺と地区の関係が変わる。</text>
+    <text x="24" y="638" class="small"><tspan font-weight="850" fill="#1B263A">難所</tspan><tspan dx="12">視線・移動・保存位置が分断される</tspan></text>
+    <g transform="translate(24 659)">
+      <rect width="142" height="31" rx="15" class="gate-pass"/>
+      <text x="71" y="20" text-anchor="middle" class="gate-text">輪郭　PASS</text>
+      <rect x="151" width="164" height="31" rx="15" class="gate-pass"/>
+      <text x="233" y="20" text-anchor="middle" class="gate-text">配置因果　PASS</text>
+      <rect x="324" width="148" height="31" rx="15" class="gate-hold"/>
+      <text x="398" y="20" text-anchor="middle" class="gate-text">移行　HOLD</text>
+    </g>
+    <text x="24" y="718" class="small"><tspan font-weight="850" fill="#315DA8">選ぶなら</tspan><tspan dx="12">地区ごとの違いを最優先するとき</tspan></text>
+  </g>
+
+  <!-- C: Ring Cove -->
+  <g transform="translate(1220 190)">
+    <rect class="panel" width="520" height="740" rx="26" filter="url(#shadow)"/>
+    <circle cx="43" cy="43" r="23" fill="#18243A"/>
+    <text x="43" y="51" class="white" text-anchor="middle" font-size="22" font-weight="850">C</text>
+    <text x="82" y="38" class="panel-title">環状の入り江</text>
+    <text x="82" y="63" class="panel-sub">一周が、毎日の暮らしになる</text>
+    <rect x="405" y="22" width="91" height="31" rx="15" fill="#EEF1F7"/>
+    <text x="450" y="42" text-anchor="middle" class="micro">環状地形</text>
+
+    <rect x="20" y="82" width="480" height="360" rx="20" class="map"/>
+    <rect x="20" y="82" width="480" height="360" rx="20" fill="url(#grid)"/>
+    <g transform="translate(23 92) scale(1 0.82)">
+      <path d="M105 278C55 220 78 132 150 88C220 45 324 55 383 118C436 175 409 255 349 293C310 317 275 330 248 342" fill="none" stroke="#202B40" stroke-width="112" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M105 278C55 220 78 132 150 88C220 45 324 55 383 118C436 175 409 255 349 293C310 317 275 330 248 342" fill="none" stroke="#DCE4EF" stroke-width="102" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M140 223C120 167 151 116 210 92C268 69 334 90 359 132" fill="none" stroke="#B8C4DA" stroke-width="61" stroke-linecap="round"/>
+      <path d="M222 90C273 72 328 91 359 132" fill="none" stroke="#8B9BC4" stroke-width="35" stroke-linecap="round"/>
+      <ellipse cx="236" cy="202" rx="87" ry="64" fill="#C9E8F2" stroke="#86B9CB" stroke-width="3"/>
+      <path class="district" d="M72 220C83 174 118 143 158 133C181 171 170 219 135 246C111 264 86 251 72 220Z"/>
+      <path class="district" d="M187 65C241 44 300 54 327 91C307 127 254 136 211 119C186 109 177 86 187 65Z"/>
+      <path class="district" d="M343 141C386 148 412 183 401 222C390 260 355 282 321 269C310 227 318 180 343 141Z"/>
+      <path class="route-under" d="M105 278C55 220 78 132 150 88C220 45 324 55 383 118C436 175 409 255 349 293C310 317 275 330 248 342"/>
+      <path class="route" d="M105 278C55 220 78 132 150 88C220 45 324 55 383 118C436 175 409 255 349 293C310 317 275 330 248 342"/>
+      <circle cx="105" cy="278" r="8" class="node"/>
+      <circle cx="245" cy="78" r="8" class="node"/>
+      <circle cx="375" cy="262" r="8" class="node"/>
+      <path d="M105 278C132 302 164 319 196 323" fill="none" stroke="#202B40" stroke-width="10" stroke-linecap="round"/>
+      <path d="M105 278C132 302 164 319 196 323" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+      <text x="51" y="311" class="map-label">西の町</text>
+      <text x="199" y="39" class="map-label">森の門</text>
+      <text x="367" y="312" class="map-label">東の浜</text>
+      <text x="236" y="206" text-anchor="middle" font-size="14" font-weight="850" fill="#315DA8">中央の入り江</text>
+    </g>
+
+    <g transform="translate(24 459)">
+      <rect width="82" height="82" rx="18" fill="#F2F4F8" stroke="#D2DBE7"/>
+      <path d="M22 60C7 44 13 22 31 13C48 4 68 12 73 28C79 45 67 60 53 66" fill="none" stroke="#18243A" stroke-width="16" stroke-linecap="round"/>
+      <text x="41" y="77" text-anchor="middle" font-size="9" font-weight="800" fill="#6A7589">64px</text>
+    </g>
+    <text x="126" y="481" class="kicker">黒一色でも</text>
+    <text x="126" y="508" class="body">中央が抜けた、開いた輪</text>
+    <text x="24" y="575" class="kicker">暮らしの主役</text>
+    <text x="24" y="604" class="body">どこへ置いても、入り江との関係が見える。</text>
+    <text x="24" y="638" class="small"><tspan font-weight="850" fill="#1B263A">難所</tspan><tspan dx="12">均等な輪にすると人工的に見える</tspan></text>
+    <g transform="translate(24 659)">
+      <rect width="142" height="31" rx="15" class="gate-pass"/>
+      <text x="71" y="20" text-anchor="middle" class="gate-text">輪郭　PASS</text>
+      <rect x="151" width="164" height="31" rx="15" class="gate-pass"/>
+      <text x="233" y="20" text-anchor="middle" class="gate-text">配置因果　PASS</text>
+      <rect x="324" width="148" height="31" rx="15" class="gate-conditional"/>
+      <text x="398" y="20" text-anchor="middle" class="gate-text">移行　条件付き</text>
+    </g>
+    <text x="24" y="718" class="small"><tspan font-weight="850" fill="#315DA8">選ぶなら</tspan><tspan dx="12">島の顔と日常動線を両立したいとき</tspan></text>
+  </g>
+
+  <!-- Decision framework -->
+  <g transform="translate(60 960)">
+    <rect width="1110" height="176" rx="24" fill="#FFFFFF" stroke="#D6DEE9" stroke-width="2"/>
+    <text x="26" y="35" class="display" font-size="22">判断する順番</text>
+    <text x="218" y="35" class="small">点数を足し合わせず、前の門を通った案だけ次へ進める。</text>
+    <line x1="365" y1="59" x2="365" y2="153" stroke="#DCE3EC" stroke-width="2"/>
+    <line x1="733" y1="59" x2="733" y2="153" stroke="#DCE3EC" stroke-width="2"/>
+    <g transform="translate(26 66)">
+      <circle cx="18" cy="18" r="18" fill="#18243A"/>
+      <text x="18" y="24" class="white" text-anchor="middle" font-size="16" font-weight="850">1</text>
+      <text x="51" y="15" class="kicker">輪郭の門</text>
+      <text x="51" y="42" class="body">家・色なしで5秒判別</text>
+      <text x="51" y="69" class="small">ここで似る案は終了。</text>
+    </g>
+    <g transform="translate(393 66)">
+      <circle cx="18" cy="18" r="18" fill="#315DA8"/>
+      <text x="18" y="24" class="white" text-anchor="middle" font-size="16" font-weight="850">2</text>
+      <text x="51" y="15" class="kicker">選択の門</text>
+      <text x="51" y="42" class="body">置き方で水・食・人流が変化</text>
+      <text x="51" y="69" class="small">飾り替えだけなら終了。</text>
+    </g>
+    <g transform="translate(761 66)">
+      <circle cx="18" cy="18" r="18" fill="#F25573"/>
+      <text x="18" y="24" class="white" text-anchor="middle" font-size="16" font-weight="850">3</text>
+      <text x="51" y="15" class="kicker">移行の門</text>
+      <text x="51" y="42" class="body">所有・保存・歩行を壊さない</text>
+      <text x="51" y="69" class="small">工数ではなく、実現順を決める。</text>
+    </g>
+  </g>
+
+  <g transform="translate(1190 960)">
+    <rect width="550" height="176" rx="24" fill="#18243A"/>
+    <text x="26" y="35" class="blue-light" font-size="14" font-weight="800" letter-spacing="0.12em">推奨する進め方</text>
+    <text x="26" y="78" class="display white" font-size="30">本命 C ／ 対抗 A ／ 実験 B</text>
+    <text x="26" y="108" class="light" font-size="15" font-weight="650">Cは固有の輪郭・配置の因果・既存水辺資産を同時に残せる。</text>
+    <rect x="26" y="126" width="498" height="34" rx="12" fill="#315DA8"/>
+    <text x="275" y="148" class="white" text-anchor="middle" font-size="14" font-weight="800">次の一手：Cだけを「開口部・高さ・地区偏り」で3派生する</text>
+  </g>
+
+  <text x="60" y="1175" class="micro">SCOPE — 構図の方向決定のみ。コード、Blender、runtime配置、E2E、美術完成、配布は含まない。</text>
+  <text x="1740" y="1175" text-anchor="end" class="micro">同一表示枠 = 同一島面積レンジ</text>
+</svg>

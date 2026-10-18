@@ -6,6 +6,7 @@
 ## Purpose
 
 This file defines the minimum verification expected for each change type.
+島制作の試作・途中停止・正式な受入を分ける実行手順は[時間・消費を区切る進め方](../runbooks/bounded-island-work.md)を参照する。短い試作の対象検証を、この表の完了・配布時の必須検証の代用にはしない。
 If a check cannot run, record the gap in the active task and the done log.
 GitHub Actions should mirror the same baseline for `docs:check` and `verify:core`.
 
@@ -84,7 +85,7 @@ Islandの画面captureは `tools/island-e2e-helpers.mjs` の `runtimeMetadata` �
 | `node tools/e2e-island-sound-control.mjs` | phone/tabletで文字付き音ボタンのtap/keyboard、実デジタル出力、既存プロフィール設定の共有、入力下書き・全学習状態の保持、再読込を検査。resume無応答、gesture途中の復帰、設定保存abortは明示診断として区別する。`SANSU_ISLAND_PRODUCTION_URL`と新しい`SANSU_SOUND_CONTROL_OUTPUT`を指定。OS/タブの消音や実スピーカーの聞こえ方を検知した証拠にはしない |
 | `node tools/e2e-island-support.mjs` | 固定production buildで段階支援の下書き/カーソル保持、お手本中の物理入力停止、全筆算、支援完了/報酬、Due/独力確認の保持、再開を検査。旧slotのoptional field省略は別の明示的な互換fixtureとして記録 |
 | `node tools/e2e-island-observation.mjs` | 固定productionの実DOMと前向き観測イベントを照合。誤答訂正、筆算途中の支援、同slot再入場/reload、表示/支援の観測範囲をChromiumの2 viewportで確認する。`SANSU_ISLAND_PRODUCTION_URL`、`SANSU_ISLAND_BUILD_SOURCE`、`SANSU_ISLAND_OBSERVATION_OUTPUT`を指定。明示profile/memory fixtureを使い、実参加者・独力・定着は認定しない |
-| `node tools/e2e-island-onboarding.mjs` | 固定production buildで空DBからの初回遊び/明示設定/最初の実予約、プロフィール追加、島トップから明示的に旧Exploreを再開する経路をphone/tabletで検査。保存abort/retryと実save完了callback保留/PWA更新は別の明示的診断。`SANSU_ISLAND_PRODUCTION_URL`、`SANSU_ISLAND_BUILD_SOURCE`、`SANSU_ISLAND_ONBOARDING_OUTPUT`を指定 |
+| `node tools/e2e-first-play.mjs` | 現行初回：空DBのWelcome→設定前の実配置/入居→同じ島への再読込→設定草稿の再開→保存abort/retry→実3問→帰島と実SW offline再訪をphone/tabletで検査。英語のみで算数MemoryStateなしも確認。`SANSU_FIRST_PLAY_URL`、未使用の`SANSU_FIRST_PLAY_OUTPUT`を指定。旧`e2e-island-onboarding.mjs`は保存しないWelcomeの履歴用で、新導線の合格に流用しない |
 | `node tools/e2e-island-rhythm.mjs` | 空DBの実設定から最初の3問も通常区間も自動成長/継続し、任意帰島・3Dアルバム・予約再開をphone/tabletで確認。新予約は報酬受取操作0、旧予約は保存済み契約を維持 |
 | `node tools/e2e-island-subjects.mjs` | 固定productionのphone/tabletでmixの「つぎも」の選択/取消/再読込/保存失敗と次一区間への反映、初見継続、Dueによる教科選択、自動2区間上限、追加0操作の切替を実回答で確認。`SANSU_ISLAND_PRODUCTION_URL`、`SANSU_ISLAND_BUILD_SOURCE`、新しい`SANSU_ISLAND_SUBJECT_OUTPUT`を指定。独立したnativeプロフィールfixtureを使い、学習効果は認定しない |
 | `node tools/e2e-island-rhythm-recovery.mjs` | 初回予約・初回3問後/通常の次区間予約をnative IndexedDBで一度だけabortする明示診断。最終回答/成長の保存、次予約だけの再試行、任意帰島/reloadで同じ問題へ戻ることを検査。旧報酬の互換性はisland-pwaで別確認。通常速度・子どもの観察とは別の証拠 |
@@ -314,3 +315,5 @@ P04の低い殻・入口・共有床の制作では、編集可能な派生sourc
 木の配置・成熟から育つ岸は `node tools/e2e-authored-growth-terrain.mjs` を用いる。新規 `SANSU_GROWTH_TERRAIN_OUTPUT`、固定した `SANSU_GROWTH_TERRAIN_BUILD` と終端PASSの `SANSU_GROWTH_TERRAIN_CORE_REPORT`、同candidateの `SANSU_GROWTH_TERRAIN_URL` を指定する。`?art=whole&terrain=grove` の同じ全島で、地区の診断取得→苗2本の通常place→既存の診断18時間→同じ2本の岸沿い／海向き／岸沿い別位置→収納／復元を実DOMとcanvas pointerで操作し、全景・回転・390／768幅を保存する。床・側面・元支持・権利保持とshared rendererの頂点は実asset統合テストで照合する。成長によるbounds差でも予告・確定の原点を共有し、別地形との重複時は元の土地と拒否理由を保つ。実経路上の住人移動・退避、本人土地購入・保存、自然時間・offline・更新、美術と独立理解／安全はこの操作旅程の合格範囲へ含めず、対応する検査を別に完了する。
 
 同じ4本から1枝・2枝・外側周回を組み立てる検査は `node tools/e2e-authored-island-variation.mjs` を用いる。新規 `SANSU_ISLAND_VARIATION_OUTPUT`、固定 `SANSU_ISLAND_VARIATION_BUILD`、終端PASSの `SANSU_ISLAND_VARIATION_CORE_REPORT`、同candidateの `SANSU_ISLAND_VARIATION_URL` が必須。地区の診断取得と4苗の通常購入後、明示18時間を進め、同一所有・成熟・資源を保つ移動／収納／再配置で3構成、分離、同じ周回への復元を確認する。取得時の将来造成範囲予約は論理／物理の両方で他地区や入口との面積重複を拒み、表示床や新しい配置権にはしない。追加地形と実rendererの一致、元地区を通らない外側経路、通常lifeによる実住人の歩行は focused 統合検査で別に確認する。全景・回転・390／768幅の9枚を同じ候補から保存し、実canvasのGPU情報も残す。この検査は一地区の成長岸が対象であり、異なる完成島全体の美術、本人保存、自然時間、実機性能、独立した理解／安全の合格にはしない。
+
+既存全島へ同じ4成熟木と8軒を使った三構成を接続する診断は、source/domain check と `authoredCoreGrowthIntegration.test.ts` を通した後、`node tools/e2e-authored-core-growth.mjs` を用いる。新規 `SANSU_CORE_GROWTH_OUTPUT`、固定 `SANSU_CORE_GROWTH_BUILD`、終端PASSで全入力SHAを持つ `SANSU_CORE_GROWTH_CORE_REPORT`、同candidateの `SANSU_CORE_GROWTH_URL` を指定する。診断35所有物の内容を変えず、北／東／周回の各配置、分離、同じ周回への復元、回転、390／768幅を可視操作とcanvas pointerで確認する。家と木の位置が異なる構成の床を比較せず、各構成と同一状態から成長地形だけを除いたcontrol worldの実面を比較する。これはDEVの粗い輪郭判断であり、通常取得、本人保存、自然時間、住人の通行／利用、offline／更新、完成美術、実機性能、独立した理解／安全の合格にはしない。

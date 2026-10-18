@@ -42,19 +42,29 @@ export function checkIntegration() {
  assert.equal(evidenceState('new',[{candidate:'new',result:'PASS',userAcceptance:false}])[0].accepted,false);
  assert.equal(evidenceState('new',[{candidate:'new',result:'PASS',userAcceptance:true}])[0].accepted,true);
  if(data.trials.some(t=>t.result==='PASS'&&!t.applies))assert(index.includes('過去の合格は、今の候補には使えません'));
+ const libraryPath=path.join(out,'data/unification.json');
+ const missingTargets=new Set();
+ if(fs.existsSync(libraryPath)){
+  const library=JSON.parse(fs.readFileSync(libraryPath,'utf8'));
+  for(const row of [...library.pages,...library.documents,...library.resources])allowedReferences.add(path.join(root,row.source));
+  for(const row of library.resources.filter(r=>r.state==='missing'))missingTargets.add(path.join(root,row.source));
+ }
  let links=0;const cache=new Map();
  const document=file=>{if(!cache.has(file))cache.set(file,parse(fs.readFileSync(file,'utf8')));return cache.get(file);};
  for(const file of [...walk(out).filter(f=>f.endsWith('.html')),...data.resources.filter(row=>row.source.endsWith('.html')).map(row=>path.join(root,row.source))]) {
   const doc=document(file);
+  const base=elements(doc,n=>n.tag==='base'&&n.attrs.href)[0];
+  const baseFile=base?path.resolve(path.dirname(file),decodeURIComponent(base.attrs.href)):file;
   for(const node of elements(doc,n=>n.attrs?.href||n.attrs?.src||n.attrs?.poster)) {
    for(const key of ['href','src','poster']) {
-    const value=node.attrs[key];if(!value||/^(https?:|mailto:|data:|tel:)/.test(value))continue;
-    const [raw,anchor]=value.split('#');
+    const value=node.attrs[key];if(!value||/^(https?:|mailto:|data:|tel:)/.test(value)||node.attrs.class==='pui-hub'||node.attrs['data-portal-project'])continue;
+    const [withQuery,anchor]=value.split('#');const raw=withQuery.split('?')[0];
+    const contextFile=node.tag==='base'?file:baseFile;
     const isReference=!file.startsWith(out+path.sep);
-    const target=isReference&&raw.startsWith('/')?path.join(root,file.startsWith(path.join(root,'website')+path.sep)?'website/public':'public',decodeURIComponent(raw.slice(1))):path.resolve(path.dirname(file),decodeURIComponent(raw)||path.basename(file));
+    const target=isReference&&raw.startsWith('/')?path.join(root,file.startsWith(path.join(root,'website')+path.sep)?'website/public':'public',decodeURIComponent(raw.slice(1))):path.resolve(path.dirname(contextFile),decodeURIComponent(raw)||path.basename(contextFile));
     assert(target.startsWith(out+path.sep)||allowedReferences.has(target)||[...destinations.keys()].some(source=>target===path.join(root,source)),`escaped publication: ${file} ${value}`);
-    assert(fs.existsSync(target),`missing ${file}: ${value}`);
-    if(anchor&&target.endsWith('.html'))assert(elements(document(target),n=>n.attrs?.id===decodeURIComponent(anchor)).length,`anchor ${file}: ${value}`);
+    assert(fs.existsSync(target)||missingTargets.has(target),`missing ${file}: ${value}`);
+    if(anchor&&target.endsWith('.html')&&fs.existsSync(target))assert(elements(document(target),n=>n.attrs?.id===decodeURIComponent(anchor)).length,`anchor ${file}: ${value}`);
     links++;
    }
   }

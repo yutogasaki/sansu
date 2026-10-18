@@ -83,8 +83,9 @@ try {
     await page.waitForFunction(()=>document.querySelectorAll('#global-results a').length>0);
     const before=page.url();const link=page.locator('#global-results a').first();
     await link.focus();await page.keyboard.press('Enter');
-    await page.locator('#reader[open] .reader-text').waitFor();
-    assert.equal(page.url(),before,'document stays on same page');
+    await page.locator('#reader[open] .document-body').waitFor();
+    assert.equal(new URL(page.url()).pathname,new URL(before).pathname,'document stays on same page');
+    assert(new URL(page.url()).searchParams.has('document'),'open document is restorable from its URL');
     await page.keyboard.press('Escape');
     assert.equal(await link.evaluate(n=>n===document.activeElement),true,'return focus');
    }

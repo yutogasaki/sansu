@@ -1,0 +1,166 @@
+{
+  "at": "2026-10-16T08:59:38.738349+00:00",
+  "command": "python3 qa/evidence/PI-001-SANSU/check-preservation.py",
+  "initialFiles": 26130,
+  "missing": [],
+  "changed": [
+    {
+      "path": "README.md",
+      "scope": "owned source",
+      "before": "73f60dd45c274c91681dca54ab7ecaca7db1e24165825cd73e76151639c6816d",
+      "after": "08e65d86ccecd87ed913264e028cfb352afb3867dadabb41ed7c217715c17315"
+    },
+    {
+      "path": "docs/portal/README.md",
+      "scope": "owned source",
+      "before": "d0dc323fa206c144c8fe8e2d4f77377ac2b72f91171098cc7a7ea667050e27e3",
+      "after": "f60a20b2e73508c2089e59d84bc5b17ace784773b57cc64051b3a9467e41cfd2"
+    },
+    {
+      "path": "portal/ai/index.html",
+      "scope": "generated portal",
+      "before": "0fd18d9b9d6764bc71afc7ff318c7cad9b2b21b00034266ee9b910efc8fb0b17",
+      "after": "752985daee85d557dbddaa4337ec11986e81bfb736081cbc5918caaafcefc987"
+    },
+    {
+      "path": "portal/data/integration.json",
+      "scope": "generated portal",
+      "before": "854ad16635daf51cb0b6055de0c155540d6ed6d7222f857af8ac138e562d50c2",
+      "after": "deb1474e3fb8d8c1237ee693db843561873cd1da5ed5f14ee4a94a74e8b6620e"
+    },
+    {
+      "path": "portal/data/parity.json",
+      "scope": "generated portal",
+      "before": "9d563cf000bd3ffd9aed52a1e5e12681f148f7afd7debbf33d4d5c859e80df66",
+      "after": "9dc71aff3ff1bc7feab9a970a68ff58235779a7c9e30e3401caef8876b57e90a"
+    },
+    {
+      "path": "portal/data/search.json",
+      "scope": "generated portal",
+      "before": "34e2fcaef3c2bbf45db7a0e56c372ad19c5e2c05086ad67b8bea8064f904882d",
+      "after": "7f1fb1006a0eb468cc2eb544a0d10d8af110c0d075d594e42e111515aff087cc"
+    },
+    {
+      "path": "portal/documents.html",
+      "scope": "generated portal",
+      "before": "71ad7e61bbafa52495a87de174e8da7b32a164c253bf17c252ee9ca5d542ce14",
+      "after": "4a9e34497aee818f2f12b078a61f89229705fda90bbaaacb0e597539037ceeae"
+    },
+    {
+      "path": "portal/flow.css",
+      "scope": "generated portal",
+      "before": "4a3a65e865c512fcd397357851484edb1558f7079e99ca5544e3e54c91f2688f",
+      "after": "1018601d2176150b8afd766ddf3eac35a538e4986865db0582508d71aac63a2c"
+    },
+    {
+      "path": "portal/index.html",
+      "scope": "generated portal",
+      "before": "904c171c4a52efb5e312fbd6c8dac316e79c8865ea8b39ba3b9e6dc02f9b68a4",
+      "after": "375de2396f464b84590c5fdd68a356ccf69a3839d77348dd4f5115fcb1c5ba30"
+    },
+    {
+      "path": "portal/map.html",
+      "scope": "generated portal",
+      "before": "e523d26ea55979c58b76b2e5fe4792e85c6ca5fd247e2b7fa984c832362df740",
+      "after": "9f6257446aefab28d149cba51d1f02896b5b1163444466e86a8b2dac2049fe70"
+    },
+    {
+      "path": "portal/operations.html",
+      "scope": "generated portal",
+      "before": "0da1b5f659ed0df580ded67044b3a68f2040e35b36ac48da030cfb0040051f6d",
+      "after": "90562c1cebb1f98c7ce3af2535061b646806a68a1412c6dce65333600ce6cefa"
+    },
+    {
+      "path": "portal/overview.html",
+      "scope": "generated portal",
+      "before": "ffe921fbddaa1c1de8a329deb62f5b40d282405718d16bd66fc76b1ab206b31e",
+      "after": "e9c48cd2db200155550f3778e84558fdf8dba5c46f67cff0558b7564cbe2ecfb"
+    },
+    {
+      "path": "portal/plan.html",
+      "scope": "generated portal",
+      "before": "c1b7ff958face2ba5057daa72da5662c568da6c855572bf2e6fcacdc04453bf0",
+      "after": "950f4ece315c2aff97bd88178bb35f5051fe8f944527bdaac9c41a1a36dccc51"
+    },
+    {
+      "path": "portal/portal.css",
+      "scope": "generated portal",
+      "before": "2592704ea31030c83314f53005fbde2cfd8d326efcdc62b68245ff8d14a613b6",
+      "after": "6db528d982c61f32c84d539d21c0f578d56d1a208b0ed09bc2161fc80ef55222"
+    },
+    {
+      "path": "portal/portal.js",
+      "scope": "generated portal",
+      "before": "8f22700f7b93b33e7ddb3ac51001504c1f216877e89dc4aaf46a13099714b1f9",
+      "after": "207a31173fb81aa2ffd5e9177855f9a008549569cbe32412dd36368c0bbc049b"
+    },
+    {
+      "path": "portal/roles.html",
+      "scope": "generated portal",
+      "before": "2f19ffaac3f3a97e9b4532f0c0810d5e02ed86a0243f25c8cb75a6c0eade2129",
+      "after": "7fd0c46d9a63584c16a5f106f1e10cbdc96e0644ef159ff900b3ce831f4e9a0c"
+    },
+    {
+      "path": "portal/search-index.js",
+      "scope": "generated portal",
+      "before": "d9a299b4b7db5eac5a3fc496ee6252d667b69519af82037f9ce439243def86f8",
+      "after": "b597f73a531b979861917d7f5c6ac9ed0d91f06e4ca22f72c42e8653ec71f6ce"
+    },
+    {
+      "path": "portal/tasks.html",
+      "scope": "generated portal",
+      "before": "129a4a33cde1ceaa5f1b701834b9fd94831a19fce1a001ef778edbff24a3fd86",
+      "after": "a9968f01d68dc4fd62771de7b79d2092db6a545a28adb2bb8c870023afb5b891"
+    },
+    {
+      "path": "scripts/standard-portal.mjs",
+      "scope": "owned source",
+      "before": "59c35732718455434c30ff594c37677d78999134f71abe16bb55c50d816c0f34",
+      "after": "717c7519099cb08674680faac190f66781cada782292b82d402c93aa0c49b97d"
+    },
+    {
+      "path": "tools/check-portal-integration.mjs",
+      "scope": "owned source",
+      "before": "58a64f473dcc42dcd969c70aa6c0cd251d37796ed5cd6233105e9f8b467c6a49",
+      "after": "1c30bc6cc9a51a6df3df3c77f6fa9b07ea56121afda67051b86e771067ca6abb"
+    },
+    {
+      "path": "tools/integrated-portal-browser.js",
+      "scope": "owned source",
+      "before": "8f22700f7b93b33e7ddb3ac51001504c1f216877e89dc4aaf46a13099714b1f9",
+      "after": "207a31173fb81aa2ffd5e9177855f9a008549569cbe32412dd36368c0bbc049b"
+    },
+    {
+      "path": "tools/integrated-portal.css",
+      "scope": "owned source",
+      "before": "c2bf849d1793fd3f18a347e11b7262deddd5cceca8b6d7c0b00f6fbe6412bd5a",
+      "after": "5dd5aa7c23196dfce875065e8096ed8d3159071c970a4db644f300aea756683f"
+    },
+    {
+      "path": "tools/integrated-portal.mjs",
+      "scope": "owned source",
+      "before": "2d115bd85260c5bc3a40f586d4a8cd0dcd3b4a69a5f1078b064378ab6bc5e73d",
+      "after": "b9f10c4f1c6981b550d1f0b70037aa996da45566ff57946389a2bb23b7c616d0"
+    },
+    {
+      "path": "tools/portal-flow.css",
+      "scope": "owned source",
+      "before": "71b7a1242588c885fd2f3636013ea6508afb46b18c5a5396fdd424144d67dbf8",
+      "after": "3bba34c7eb1756467ab2dba756cf16a7d7352f329f4f2e67f0976655926b084e"
+    },
+    {
+      "path": "tools/portal-originals.mjs",
+      "scope": "owned source",
+      "before": "401e50a3e8be1b6d9a1c2752ff360625ab7efa1588b6cc847d70556601c7130d",
+      "after": "0f00f1efe79013641c64f564180b5e9c905e9fcd2882f2397838507346e5261f"
+    },
+    {
+      "path": "tools/qa-integrated-portal.mjs",
+      "scope": "owned source",
+      "before": "99e302dc7ceddf46392a2cd01e18b900f29d56db8525493f07739176cfd600b5",
+      "after": "ca1d8184700c00365c6984d110733cf326a24819b1a5c5f5b16e8392cfb5fe25"
+    }
+  ],
+  "outsideOwnedChanges": [],
+  "originalMissing": []
+}

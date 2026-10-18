@@ -1,0 +1,34 @@
+{
+  "confirmedAt": "2026-10-16T08:32:38.665699+00:00",
+  "sourceThreadId": "01a142ce-5e7a-7f23-96d8-9fd47e7b2ccd",
+  "sourceTitle": "各リポのポータル配置と関係",
+  "verifiedHumanMessages": [
+    {
+      "turn": "01a143cc-b8ef-7781-a1a8-baada7c541df",
+      "text": "よくない。二重管理"
+    },
+    {
+      "turn": "01a143d1-b350-7b82-b933-7eb70de76dae",
+      "text": "各リポに伝えたい"
+    },
+    {
+      "turn": "01a143d3-a4d2-7b43-8fab-eedd7f209c12",
+      "text": "複製やめるのと伝えた？いらんもの消したい"
+    }
+  ],
+  "currentPolicy": {
+    "projectCanonical": "Sansu repository",
+    "intendedSingleEntrance": "portal/index.html after acceptance; unaccepted originals retained",
+    "hub": "aggregate status and direct entrance, no separately maintained current portal copy",
+    "hubCopyGate": "superseded, prior failures remain historical evidence",
+    "cleanup": "delete only confirmed unnecessary duplicate artifacts; keep original sources, engines, history, fixed vendors, unique recovery data and other work",
+    "externalActions": "no commit/push/publication/production changes authorized"
+  },
+  "appliedTo": [
+    "README.md",
+    "this verification report and acceptance gates"
+  ],
+  "coordinationRemaining": [
+    "hub direct entrance implementation and removal of old hub copies belong to hub owner; no shared hub edits or thread messages from this task"
+  ]
+}

@@ -77,6 +77,8 @@ Do not duplicate the same durable rule across `docs/`, `.agents/`, `.claude/`, a
 
 ## Key Commands
 
+島制作は[時間・消費を区切る進め方](../docs/runbooks/bounded-island-work.md)を使う。既定30分・一成果物・追加エージェントなし。レビュー待ちの包括ゴールを自動再開せず、上限時は未完でも現在地を保存して止める。
+
 ```bash
 nvm use
 npm ci

@@ -1,34 +1,30 @@
 import { ArrowRight } from 'lucide-react';
 import { useState } from 'react';
-import { createIsland } from '../../domain/island/catalog';
-import { islandEnabled, ISLAND_DELIVERY_ID, ISLAND_VISUAL_CANDIDATE } from '../../domain/island/feature';
-import IslandStage from './IslandStage';
-import { ItemPicture } from './IslandItems';
+import { islandEnabled, ISLAND_DELIVERY_ID } from '../../domain/island/feature';
+const portrait = `${import.meta.env.BASE_URL}icons/icon-512.png`;
 import './Island.css';
 import './IslandOnboarding.css';
 
-const preview = createIsland('welcome-preview', 0);
-export const ISLAND_ONBOARDING_CANDIDATE = 'island-touch-first-v1';
-export default function IslandWelcome({ onStart, actionLabel = 'まなぶ' }: { onStart: () => void; actionLabel?: string }) {
-    const [playRequest, setPlayRequest] = useState<{ id: string; itemId: string }>();
-    const [message, setMessage] = useState('');
-    const play = (itemId: string) => {
-        if (!preview.items.some(item => item.id === itemId)) return;
-        setMessage(''); setPlayRequest({ id: crypto.randomUUID(), itemId });
-    };
-    return <main className="island-page island-welcome" data-mode="welcome" data-onboarding-world="island" data-onboarding-candidate={ISLAND_ONBOARDING_CANDIDATE} data-visual-candidate-id={ISLAND_VISUAL_CANDIDATE} data-delivery-id={ISLAND_DELIVERY_ID} data-island-feature-enabled={String(islandEnabled())} data-build-revision={__BUILD_REVISION__} data-build-version={__APP_VERSION__}>
-        <header><h1 className="pokomoko-wordmark"><span>ぽこもこ</span><small>と不思議な島</small></h1></header>
-        <IslandStage items={preview.items} growth={preview.growth} completedSets={0} pulse={0} learning={false} playRequest={playRequest}
-            onItemSelect={play} onPlayResult={result => {
-                if (result.requestId === playRequest?.id && result.status !== 'playing') setMessage('いまは うまく あそべないよ');
-            }} />
-        <div className="island-home-controls">
-            <div className="island-welcome-play" aria-label="しまに さわってみよう">
-                <button type="button" className="island-secondary" onClick={() => play('starter-flower')}><ItemPicture kind="flower" />おはな</button>
-                <button type="button" className="island-secondary" onClick={() => play('starter-lantern')}><ItemPicture kind="lantern" />あかり</button>
-            </div>
-            {message && <p className="island-note" role="status">{message}</p>}
-            <button type="button" className="island-primary island-start" onClick={onStart}>{actionLabel}<ArrowRight size={20} /></button>
+export const ISLAND_ONBOARDING_CANDIDATE = 'island-first-play-v2';
+export default function IslandWelcome({ onStart, actionLabel = 'しまへ いく', busy = false, error }: {
+    onStart: () => void; actionLabel?: string; busy?: boolean; error?: string;
+}) {
+    const [greeted, setGreeted] = useState(false);
+    return <main className="island-page first-play-welcome" data-mode="welcome" data-onboarding-world="island"
+        data-onboarding-candidate={ISLAND_ONBOARDING_CANDIDATE} data-visual-candidate-id={ISLAND_ONBOARDING_CANDIDATE}
+        data-delivery-id={ISLAND_DELIVERY_ID} data-island-feature-enabled={String(islandEnabled())}
+        data-build-revision={__BUILD_REVISION__} data-build-version={__APP_VERSION__}>
+        <header className="first-play-title"><h1><span>ぽこもこ</span><small>と不思議な島</small></h1></header>
+        <div className="first-play-meeting">
+            <button className="first-play-portrait" type="button" aria-label="ぽこもこに あいさつ" aria-pressed={greeted}
+                onClick={() => setGreeted(value => !value)}>
+                <img src={portrait} alt="クリームと青の顔、水玉の丸い耳のパッチワークのくま、ぽこもこ" fetchPriority="high" />
+            </button>
+            <p className="first-play-hello" role="status">{greeted ? <>きみに あえて<br />うれしいな！</> : <>こんにちは！<br />ぽこもこだよ</>}</p>
         </div>
+        <footer className="first-play-entry">
+            <button className="island-primary" type="button" disabled={busy} onClick={onStart}>{busy ? 'しまを ひらいているよ…' : actionLabel}<ArrowRight size={22} aria-hidden="true" /></button>
+            {error && <p className="first-play-entry-error" role="alert">{error}</p>}
+        </footer>
     </main>;
 }

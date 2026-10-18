@@ -1,0 +1,12 @@
+{
+  "source": "tools/check-portal-library-browser.mjs",
+  "originalSha256": "d751d313fedca594038badeb880c0aed24b6da82c7a5c153e3c3f7a5194554f9",
+  "adaptedSha256": "6f203910cec3f04d79c7679ce818e7404417537df8efb90b4b07a6ad12df0f95",
+  "changes": [
+    "explicit repository root because the diagnostic copy lives in QA",
+    "direct hub base URL /repos/sansu",
+    "origin-only request guard so prefixed routes remain permitted"
+  ],
+  "validationAlgorithm": "same six operation groups as canonical harness; no product or vendor edits",
+  "directBaseUrl": "http://127.0.0.1:47860/repos/sansu"
+}

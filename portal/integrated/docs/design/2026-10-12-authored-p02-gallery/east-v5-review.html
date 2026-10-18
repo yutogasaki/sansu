@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ja"><head><base data-sansu-source-context href="../../../../../docs/design/2026-10-12-authored-p02-gallery/east-v5-review.html"><script src="../../../portal/native-context.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>P02の実16段 — source比較</title>
+<style>
+body{margin:28px;color:#202937;background:#f5f6f8;font:15px/1.7 system-ui}main{max-width:1600px;margin:auto}h1{font-size:24px}p{max-width:1120px}section{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}figure{margin:0;padding:12px;border:1px solid #d6dbe4;background:white}img{width:100%;display:block}figcaption{font-weight:650;margin-bottom:10px}a{color:#3454a2}@media(max-width:750px){body{margin:16px}section{grid-template-columns:1fr}}
+</style>
+<link rel="stylesheet" href="../../../portal/integration.css"><link rel="stylesheet" href="../../../portal/library.css"></head><body><aside class="pu-bar" aria-label="統合ポータル"><nav><strong>さんすう</strong><a href="../../../portal/index.html">現在地へ</a><a href="../../../portal/search.html">全ページから探す</a><a href="../../../.agents/index.html">元のポータルを開く →</a></nav><p>新版を確認中。元の入口を保持しています。</p></aside><main data-portal-item="item-94d731cdf1a0f08162ab">
+<h1 data-portal-item="item-7dad4e7de7040d2e316f">P02の実16段 — 段と支えが見える形へ</h1>
+<p data-portal-item="item-da8caf46d4812ea430f1">滑らかな帯状だったv4から、実際の踏面・蹴上げ・手すり・幹からの支えを持つ階段に変わりました。近景では階段として読み取れます。一方、上階の居場所と入口のつながり、島全体の美術はまだHOLDです。住人の足を踏段ごとに置く動作は未実装です。</p>
+<p data-portal-item="item-4263a320a9a1f18d7766">最初の入口近景は旧cameraを継いだため、手前の葉と黒い近接切断が重なりました。geometryやvisibilityを変えず、cameraだけを変えた追加画像も下に並べています。保存値を照合すると、端線に沿う最大3.51cm・合計25.73cmの未被覆は、元の照会線とFloat32外周のずれでした。穴の厚みを表す数字ではありません。一方、可視床の再三角形化による微小欠け39片は別に残っています。geometryや判定幅を変えて合格にしたものではありません。</p>
+<p data-portal-item="item-ff0acc08306336136edb"><strong data-portal-item="item-26f9cdc301b9a2f49c88">source美術：HOLD ／ 独立理解・安全：未検証 N=0 ／ runtime：未統合。</strong> 全画像はBlender sourceです。実アプリtarget・build・delivery flagはなく、本体での表示や通行の証拠にはしません。v5では道だけのshadow設定を本体に合わせてfalseにしたため、v4との差をすべて階段の変更へ帰属させません。</p>
+<p data-portal-item="item-174bccc3ff4a80ad6233">追加の3/4近景では黒い近接切断が消え、踏面・両側の手すり・幹からの支えが確認できます。元の樹冠が下部を、扇葉が上回廊の一部を隠しています。16段の方式を作業の基盤にします。身体接触305件を分類し、実際の踏段動作で解決すべき蹴上げ接触167件を特定しました。次は9種の実モデルで、片足を踏面に残し、もう片足を段の上へ運ぶ動作を検証します。</p>
+<p data-portal-item="item-803d0900fce9212ed396"><a href="east-v5-root-review.json" data-portal-item="item-58064e8d5307fed4c83a">判定と画像SHA</a> · <a href="../../../portal/read/2a6d1dfc612cd06a7ad1.html" data-portal-item="item-0a34dd42b892eeceea56">保存値の接触分類</a> · <a href="../../../portal/read/67c4ebe237a802d938f1.html" data-portal-item="item-0821a51aa8e8ccab8c3c">原記録</a> · <a href="../../../portal/read/ae6be19975bd59dcf672.html" data-portal-item="item-20e7c9315c5df131b9e1">制作記録</a></p>
+<section data-portal-item="item-b8adeedbc06bed358422">
+<figure data-portal-item="item-206addc6dc6bba1960e9"><figcaption data-portal-item="item-a11b707c6e4fbfd5c6d6">採用native-05 — 全島の目標</figcaption><img src="../2026-10-10-island-final-3d/whole-island-render.png" alt="採用native-05の全島" data-portal-item="item-92cf8b7be18a27398048"></figure>
+<figure data-portal-item="item-ef42558c5e1e6761c19e"><figcaption data-portal-item="item-6202223130714498480e">v5 — 16段・支え・手すりを含む全景</figcaption><img src="east-v5-sixteen-stairs/east-v5-shape-view/runs/01-whole/coarse-real-stair-HOLD-whole.png" alt="実16段を作ったv5の全景" data-portal-item="item-2fd77a3878f17dea2539"></figure>
+<figure data-portal-item="item-58adb39758eaa50fd920"><figcaption data-portal-item="item-27cbdd02c9542c8f4eef">v4 — 支え・手すり未生成の滑らかな床</figcaption><img src="east-v4-failed-shape-view/runs/01-whole/failed-floor-only-HOLD-whole.png" alt="東回りv4の全景" data-portal-item="item-7dfa40073b97ef6b8989"></figure>
+<figure data-portal-item="item-c5a403a10f9c2bc60dc3"><figcaption data-portal-item="item-fd4dd2afe0cffd44c88c">v5 — 旧cameraの入口近景・前景の遮蔽あり</figcaption><img src="east-v5-sixteen-stairs/east-v5-entry-view/runs/01-entry/coarse-real-stair-HOLD-entry-section.png" alt="段と支えが見える入口近景。左側は前景の葉などで遮られている" data-portal-item="item-9a5b861c9528d7471675"></figure>
+<figure data-portal-item="item-ab53fa6d1a7fab84b902"><figcaption data-portal-item="item-3d44c37b52df2f78244a">v5 — cameraだけを変えた3/4近景</figcaption><img src="east-v5-sixteen-stairs/east-v5-threequarter-view/runs/01-three-quarter/coarse-real-stair-HOLD-three-quarter.png" alt="黒い近接切断のない3/4近景。下部と上回廊には既存の葉の遮蔽が残る" data-portal-item="item-f961f70d1819539f9c93"></figure>
+</section>
+</main>
+<script src="../../../portal/integration.js" defer></script><script src="../../../portal/library-runtime.js" defer></script></body></html>

@@ -1,0 +1,133 @@
+{
+  "candidate": "cove-mcp-roof-v1",
+  "original_inputs": {
+    "cove-corner-v3.blend": "c45edc72343d9ff597631c89f37541575838ddd5038d98c848653513f012ab03",
+    "cove-corner-v3.glb": "f08ada4907c76a617e2c22090049b9b2880dde2d75fa11ad61f6e76c7eec7146",
+    "source-manifest.json": "c52169062d71aa4e19ad82c2103440a76c3fb071db9b7b286066827aa6aacf1c",
+    "cove-delivery-manifest.json": "90dd4291dee8e498deac9908f1890b5afbf71b07bac3181bc72b0109d6453873",
+    "shared-apron-world-patch-v1.json": "7a5cc9edd5282f7471f8257e4ee83212cbf93f3f30ba269bb102d91bc11dc969"
+  },
+  "original_inputs_unchanged": true,
+  "warp": {
+    "cutoff_source_z": 2.9,
+    "max_lift_source": 0.9,
+    "world_scale": 0.45
+  },
+  "mesh_audit": [
+    {
+      "name": "Harbor / continuous entrance runner jamb rear arch",
+      "changed_upper_vertices": 2373,
+      "unchanged_lower_vertices": 5337,
+      "max_lift_source": 0.48789374313821826
+    },
+    {
+      "name": "Harbor / corner structural rib joined to rim",
+      "changed_upper_vertices": 1966,
+      "unchanged_lower_vertices": 1664,
+      "max_lift_source": 0.5733079721602165
+    },
+    {
+      "name": "Harbor / longitudinal seam joined to corner rim 5",
+      "changed_upper_vertices": 0,
+      "unchanged_lower_vertices": 2190,
+      "max_lift_source": 0
+    },
+    {
+      "name": "Harbor / longitudinal seam joined to corner rim 6",
+      "changed_upper_vertices": 0,
+      "unchanged_lower_vertices": 2190,
+      "max_lift_source": 0
+    },
+    {
+      "name": "Harbor / continuous grounded runner socket left",
+      "changed_upper_vertices": 0,
+      "unchanged_lower_vertices": 196,
+      "max_lift_source": 0
+    },
+    {
+      "name": "Harbor / continuous grounded runner socket right",
+      "changed_upper_vertices": 0,
+      "unchanged_lower_vertices": 196,
+      "max_lift_source": 0
+    },
+    {
+      "name": "Harbor / continuous translucent shell hall",
+      "changed_upper_vertices": 2078,
+      "unchanged_lower_vertices": 2068,
+      "max_lift_source": 0.9
+    },
+    {
+      "name": "Harbor / curved shell structural rib",
+      "changed_upper_vertices": 1666,
+      "unchanged_lower_vertices": 1244,
+      "max_lift_source": 0.9
+    },
+    {
+      "name": "Harbor / curved shell structural rib.001",
+      "changed_upper_vertices": 1582,
+      "unchanged_lower_vertices": 1328,
+      "max_lift_source": 0.9
+    },
+    {
+      "name": "Harbor / curved shell structural rib.002",
+      "changed_upper_vertices": 1486,
+      "unchanged_lower_vertices": 1424,
+      "max_lift_source": 0.8779039247192765
+    },
+    {
+      "name": "Harbor / curved shell structural rib.003",
+      "changed_upper_vertices": 1414,
+      "unchanged_lower_vertices": 1496,
+      "max_lift_source": 0.7992278699286747
+    },
+    {
+      "name": "Harbor / curved shell structural rib.004",
+      "changed_upper_vertices": 1350,
+      "unchanged_lower_vertices": 1560,
+      "max_lift_source": 0.6909710218355175
+    },
+    {
+      "name": "Harbor / shell longitudinal seam",
+      "changed_upper_vertices": 0,
+      "unchanged_lower_vertices": 990,
+      "max_lift_source": 0
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.001",
+      "changed_upper_vertices": 0,
+      "unchanged_lower_vertices": 990,
+      "max_lift_source": 0
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.002",
+      "changed_upper_vertices": 990,
+      "unchanged_lower_vertices": 0,
+      "max_lift_source": 0.7847150145234107
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.003",
+      "changed_upper_vertices": 990,
+      "unchanged_lower_vertices": 0,
+      "max_lift_source": 0.9
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.004",
+      "changed_upper_vertices": 990,
+      "unchanged_lower_vertices": 0,
+      "max_lift_source": 0.7847150145234107
+    },
+    {
+      "name": "Harbor / shell grown footing.001",
+      "changed_upper_vertices": 0,
+      "unchanged_lower_vertices": 270,
+      "max_lift_source": 0
+    }
+  ],
+  "counts": {
+    "nodes": 18,
+    "primitives": 19,
+    "triangles": 79384,
+    "materials": 4
+  },
+  "derived_glb_sha256": "a8e2f0c6255e79dbf177734646fce4da07dc7f728a7b4855c50b63c03a28184f"
+}

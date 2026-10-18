@@ -1,0 +1,19 @@
+{
+  "name": "primary-browser",
+  "command": "node",
+  "args": [
+    "tools/check-portal-migration-browser.mjs"
+  ],
+  "startedAt": "2026-10-16T08:19:23.639Z",
+  "node": "v24.18.0",
+  "cwd": "/Users/yutogasaki/Projects/sansu",
+  "environment": {
+    "SANSU_PORTAL_BROWSER_OUTPUT": "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/primary-browser"
+  },
+  "endedAt": "2026-10-16T08:19:53.057Z",
+  "exitCode": 0,
+  "signal": null,
+  "status": "PASS",
+  "log": "primary-browser.log",
+  "logSha256": "39271f74c145f48698a5553ffa65312c8e20558d004dbd45acc98e9169bda407"
+}

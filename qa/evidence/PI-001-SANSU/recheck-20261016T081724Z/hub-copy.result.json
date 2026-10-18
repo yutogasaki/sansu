@@ -1,0 +1,17 @@
+{
+  "name": "hub-copy",
+  "command": "node",
+  "args": [
+    "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/hub-preflight.cjs"
+  ],
+  "startedAt": "2026-10-16T08:17:52.306Z",
+  "node": "v24.18.0",
+  "cwd": "/Users/yutogasaki/Projects/sansu",
+  "environment": {},
+  "endedAt": "2026-10-16T08:18:14.499Z",
+  "exitCode": 1,
+  "signal": null,
+  "status": "FAIL",
+  "log": "hub-copy.log",
+  "logSha256": "8edbf5f60464547ef5182ce6d8357b8753545faef1f578f5e0a06e44f92057f4"
+}

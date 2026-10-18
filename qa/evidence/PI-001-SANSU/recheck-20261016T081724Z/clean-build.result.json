@@ -1,0 +1,18 @@
+{
+  "name": "clean-build",
+  "command": "node",
+  "args": [
+    "scripts/standard-portal.mjs",
+    "build"
+  ],
+  "startedAt": "2026-10-16T08:19:55.195Z",
+  "node": "v24.14.0",
+  "cwd": "/private/tmp/codex/PI-001-SANSU/recheck-20261016T081724Z/clean/sansu",
+  "environment": {},
+  "endedAt": "2026-10-16T08:19:55.349Z",
+  "exitCode": 1,
+  "signal": null,
+  "status": "FAIL",
+  "log": "clean-build.log",
+  "logSha256": "89b540973effed0edcc04b0d840852965f678da1b35275bfc0d327ab2995fbb3"
+}

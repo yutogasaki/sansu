@@ -1,0 +1,55 @@
+{
+  "at": "2026-10-16T15:22:12.587Z",
+  "command": "node tools/check-portal-library-browser.mjs ",
+  "candidate": "1896ace0b989df66427b4df811f508cca908388c927f45c6dadc5fa0708e3891",
+  "manifestSha256": "b76a54e15341dd75b70f6a30dc690500d1ba82cff321962e985b0135358225eb",
+  "inputSha256": "75a9e07bf71cd9dd487a61f3ae6555a249d5ecf4f0c4b3d98ea3b1dd658b36fb",
+  "groups": [],
+  "pages": [
+    {
+      "variant": "before",
+      "width": 1440,
+      "route": ".agents/index.html",
+      "metrics": {
+        "title": "Sansu · 概要",
+        "overflow": false,
+        "brokenImages": 0
+      },
+      "screenshot": "before-1440.jpg"
+    },
+    {
+      "variant": "after",
+      "width": 1440,
+      "route": "portal/index.html",
+      "metrics": {
+        "title": "Sansu · 育つ島の、いまと次。",
+        "overflow": false,
+        "brokenImages": 0
+      },
+      "screenshot": "after-1440.jpg"
+    },
+    {
+      "variant": "before",
+      "width": 390,
+      "route": ".agents/index.html",
+      "metrics": {
+        "title": "Sansu · 概要",
+        "overflow": false,
+        "brokenImages": 0
+      },
+      "screenshot": "before-390.jpg"
+    },
+    {
+      "variant": "after",
+      "width": 390,
+      "route": "portal/index.html",
+      "metrics": {
+        "title": "Sansu · 育つ島の、いまと次。",
+        "overflow": false,
+        "brokenImages": 0
+      },
+      "screenshot": "after-390.jpg"
+    }
+  ],
+  "failures": []
+}

@@ -1,0 +1,72 @@
+{
+  "at": "2026-10-16T08:42:43.174832+00:00",
+  "authorization": "Verified human request in structure-policy.json; no deletion of unaccepted originals, engines, unique recovery data or other work.",
+  "plan": [
+    {
+      "path": "/tmp/codex/PI-001-SANSU/hub-copy-GLWyyt",
+      "kind": "obsolete-partial-hub-copy",
+      "evidence": "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/hub-preflight-20261016T045923.json",
+      "reason": "Failed, unpublished partial copy. Current policy uses direct project entrances; canonical inputs, outputs and failure records remain.",
+      "existedBefore": true,
+      "files": 192,
+      "logicalBytes": 167650734
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/hub-copy-FykUBB",
+      "kind": "obsolete-partial-hub-copy",
+      "evidence": "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/hub-preflight.json",
+      "reason": "Failed, unpublished partial copy. Current policy uses direct project entrances; canonical inputs, outputs and failure records remain.",
+      "existedBefore": true,
+      "files": 192,
+      "logicalBytes": 167650734
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/hub-copy-iVG1Fk",
+      "kind": "obsolete-partial-hub-copy",
+      "evidence": "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/hub-preflight.json",
+      "reason": "Failed, unpublished partial copy. Current policy uses direct project entrances; canonical inputs, outputs and failure records remain.",
+      "existedBefore": true,
+      "files": 192,
+      "logicalBytes": 167650730
+    },
+    {
+      "path": "/private/tmp/codex/PI-001-SANSU/recheck-20261016T081724Z/clean/git-base",
+      "kind": "repeatable-temporary-git-extraction",
+      "commit": "eb4b907bdf5cb6e99c30c4ac6f28d2d3969cac50",
+      "reason": "Temporary full Git extraction already copied into the isolated verification workspace. Fixed Git source and recovery inputs remain.",
+      "existedBefore": true,
+      "files": 26071,
+      "logicalBytes": 5747179681
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/rebuild-v5/2026-10-11-island-landscape-art/whole-landscape.glb",
+      "kind": "rejected-diagnostic-model-output",
+      "sha256": "2bf73be6009c5cd20fc2a49d18b7704c6bd44773172b6db11924e91232c22335",
+      "expectedOriginalSha256": "73ba35788ffe12472655ec0183108769f431ecd44249f3010350322f682797ce",
+      "reason": "Explicitly NOT_EXACT, unadopted diagnostic output. Source models, staged script, metadata and failed diagnostic log remain.",
+      "existedBefore": true,
+      "files": 1,
+      "logicalBytes": 27114340
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/rebuild-v5/2026-10-11-island-landscape-art/whole-landscape.blend",
+      "kind": "rejected-diagnostic-model-output",
+      "sha256": "7dc7277139dfd42bfacd74acb5f60133b76f1ffa46e6a79e6309cd2ffb6d310e",
+      "expectedOriginalSha256": "5c53320a567d1fb8c05f43c3408ff1f51b32874e0b8c2fcbca36e8a7fa83f7c0",
+      "reason": "Explicitly NOT_EXACT, unadopted diagnostic output. Source models, staged script, metadata and failed diagnostic log remain.",
+      "existedBefore": true,
+      "files": 1,
+      "logicalBytes": 8166438
+    }
+  ],
+  "preserved": [
+    "all original portal URLs and HTML",
+    "current portal outputs",
+    "canonical docs and data",
+    "fixed vendors and state/verification/approval engines",
+    "all raw verification/approval history",
+    "both required recovery input caches and supplemental inputs",
+    "other tasks and repositories"
+  ],
+  "logicalByteNote": "Logical file sizes only; APFS clones may share storage. No physical disk-reclaim claim."
+}

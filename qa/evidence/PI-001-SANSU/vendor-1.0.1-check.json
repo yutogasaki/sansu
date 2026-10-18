@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "change": "Condition order only. Contact filtering when enabled and generated outputs remain byte-identical. Version 1.0.0 preserved.",
+  "fixtures": [
+    {
+      "excludeContacts": false,
+      "equal": true,
+      "files": 9
+    },
+    {
+      "excludeContacts": true,
+      "equal": true,
+      "files": 8
+    }
+  ],
+  "upstreamLockSha256": "82010f377c815cf1aa8964030327ad04c651cf5b8a5709b647310826e1a4bc75",
+  "newLockSha256": "72c66b0c643510ad1e0ee26cda1de3e4fbb71bf0eb38df2cfcbcea8bdd3a850a"
+}

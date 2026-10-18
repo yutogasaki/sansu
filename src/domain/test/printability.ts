@@ -222,6 +222,8 @@ const describeSharingVisual = (visual: Extract<ProblemVisual, { kind: "sharing-i
 
 const buildVisualPrompt = (visual: ProblemVisual): string => {
     switch (visual.kind) {
+        case 'base-ten-blocks':
+            return visual.groups.map(({ label, blocks: b }) => `${label ? label + ': ' : ''}100の板${b.hundreds}まい、10のぼう${b.tens}本、1のマス${b.ones}こ`).join('\n');
         case 'fraction-strips':
             return visual.groups.map(group => `${group.label}: 1を${group.parts}等分したうち${group.filled}こぶん`).join('\n');
         case "number-card":

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {readFileSync,writeFileSync} from 'node:fs';
 import {gunzipSync} from 'node:zlib';
 import {build} from 'esbuild';
-const d='docs/design/2026-10-12-core-growth-terrain-source', out=process.argv[2];assert(out);
+const out=process.argv[2],d=process.argv[3]??'docs/design/2026-10-12-core-growth-terrain-source';assert(out);
 const bundle=await build({stdin:{contents:"export {compileWorldDefinition} from './src/domain/growingIsland/worldDefinition';export {deriveAuthoredGrowthTerrainPlan,composeAuthoredGrowthTerrainWorld} from './src/domain/growingIsland/authoredGrowthTerrain';",resolveDir:process.cwd()},bundle:true,platform:'node',format:'esm',write:false});
 const api=await import(`data:text/javascript;base64,${Buffer.from(bundle.outputFiles[0].text).toString('base64')}`);
 const catalog=JSON.parse(gunzipSync(readFileSync(`${d}/authored-core-growth-terrain-kit.json.gz`))), manifest=JSON.parse(readFileSync(`${d}/authored-core-growth-terrain-manifest.json`));

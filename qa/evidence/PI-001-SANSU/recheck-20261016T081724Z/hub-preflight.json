@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-16T08:17:59.317Z",
+  "candidate": "be55eae17dcadf330948d5261512dc0c8f20b33ea558e3aded97f77d83d4b9d5",
+  "manifestSha256": "c212a26691b577aa9dcca1606aaa18bf03de7352810cb3870f9bb1f743f683a1",
+  "out": "/tmp/codex/PI-001-SANSU/hub-copy-iVG1Fk",
+  "sourceFiles": 13441,
+  "outputFiles": 1308,
+  "sourceHashes": {
+    "distribution.cjs": "72c2805af0bf113a2a08519aea114af449476ad751cdf71112b5a1a75167405a",
+    "policy.cjs": "196174514fa6101214d5a2e77443c8b4670f9dfd8c4bbe11aa556992237e2ec9",
+    "sites.cjs": "52e61d13a6f6e8f98607c4b353cfddd9fda4e78fbb1d600fac3e216c555b34b6",
+    "sanitize.cjs": "c1126dadf484a5c5dd015f0bf053b0332b2feeba3280077f0f0646ff92743b75"
+  },
+  "status": "FAIL",
+  "error": "Error: sansu: missing referenced image (portal/integrated/assets/island-planter-v1/design-v2/back.png)",
+  "stack": "Error: sansu: missing referenced image (portal/integrated/assets/island-planter-v1/design-v2/back.png)\n    at rewriteURL (/Users/yutogasaki/Projects/hub/common-portal/publish/distribution.cjs:73:36)\n    at url (/Users/yutogasaki/Projects/hub/common-portal/publish/distribution.cjs:82:22)\n    at /Users/yutogasaki/Projects/hub/common-portal/publish/distribution.cjs:90:162\n    at String.replace (<anonymous>)\n    at /Users/yutogasaki/Projects/hub/common-portal/publish/distribution.cjs:90:39\n    at String.replace (<anonymous>)\n    at rewrite (/Users/yutogasaki/Projects/hub/common-portal/publish/distribution.cjs:88:17)\n    at Object.distribute (/Users/yutogasaki/Projects/hub/common-portal/publish/distribution.cjs:110:65)\n    at /Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/hub-preflight.cjs:13:97\n    at Object.<anonymous> (/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/hub-preflight.cjs:13:459)"
+}

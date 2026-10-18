@@ -1,0 +1,11 @@
+{
+  "source": "/Users/yutogasaki/Projects/.portal-recovery/PI-001-SANSU-library/be55eae17dcadf33",
+  "cleanRoot": "/tmp/codex/PI-001-SANSU/recheck-20261016T081724Z/clean/sansu",
+  "condition": "only available source snapshot restored; portal output removed; no .git or node_modules linked; original repository untouched",
+  "supplement": {
+    "command": "git archive HEAD scripts/vendor/hub-flow/2.0.0 scripts/vendor/hub-standard/1.0.0 | tar -x -C <cleanRoot>",
+    "sourceCommit": "eb4b907bdf5cb6e99c30c4ac6f28d2d3969cac50",
+    "reason": "Restore fixed vendor from the Git canonical source, as specified by the recovery procedure; recovery cache alone is not standalone",
+    "node": "/Users/yutogasaki/.local/share/fnm/node-versions/v24.18.0/installation/bin/node"
+  }
+}

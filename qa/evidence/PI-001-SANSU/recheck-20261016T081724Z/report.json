@@ -1,0 +1,948 @@
+{
+  "at": "2026-10-16T09:20:19.664707+00:00",
+  "verdict": "FAIL / 受入HOLD",
+  "scope": "Sansuの未commit作業ツリー。ポータルの再検証と許可された不要物整理。公開版や他repoの合格ではない。",
+  "head": "eb4b907bdf5cb6e99c30c4ac6f28d2d3969cac50",
+  "branch": "codex/pi-001-sansu",
+  "candidate": "be55eae17dcadf330948d5261512dc0c8f20b33ea558e3aded97f77d83d4b9d5",
+  "manifestSha256": "c212a26691b577aa9dcca1606aaa18bf03de7352810cb3870f9bb1f743f683a1",
+  "checks": [
+    {
+      "name": "agent-index",
+      "command": "npm",
+      "args": [
+        "run",
+        "agent:index:check"
+      ],
+      "startedAt": "2026-10-16T08:17:52.302Z",
+      "node": "v24.18.0",
+      "cwd": "/Users/yutogasaki/Projects/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:17:56.225Z",
+      "exitCode": 1,
+      "signal": null,
+      "status": "FAIL",
+      "log": "agent-index.log",
+      "logSha256": "ef51e65ea406219b9a64eb886e84dc58c6660d8744b820c1fc90a06945eaa0f2"
+    },
+    {
+      "name": "app-build",
+      "command": "npm",
+      "args": [
+        "run",
+        "build"
+      ],
+      "startedAt": "2026-10-16T08:42:42.946Z",
+      "node": "v24.18.0",
+      "cwd": "/Users/yutogasaki/Projects/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:43:48.672Z",
+      "exitCode": 0,
+      "signal": null,
+      "status": "PASS",
+      "log": "app-build.log",
+      "logSha256": "1e507be0ae28de9dd96e582aaf70a8709cb7d56f8b25356447f7e3e09f638341"
+    },
+    {
+      "name": "clean-build-canonical",
+      "command": "/Users/yutogasaki/.local/share/fnm/node-versions/v24.18.0/installation/bin/node",
+      "args": [
+        "scripts/standard-portal.mjs",
+        "build"
+      ],
+      "startedAt": "2026-10-16T08:21:54.997Z",
+      "node": "v24.18.0",
+      "cwd": "/private/tmp/codex/PI-001-SANSU/recheck-20261016T081724Z/clean/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:21:56.007Z",
+      "exitCode": 1,
+      "signal": null,
+      "status": "FAIL",
+      "log": "clean-build-canonical.log",
+      "logSha256": "f1a4473a6cc725b2ffcef9ee8a45b63fb66d30c3b74aaf9c8ec4d6f156878f69"
+    },
+    {
+      "name": "clean-build-complete-assets",
+      "command": "/Users/yutogasaki/.local/share/fnm/node-versions/v24.18.0/installation/bin/node",
+      "args": [
+        "scripts/standard-portal.mjs",
+        "build"
+      ],
+      "startedAt": "2026-10-16T08:43:43.885Z",
+      "node": "v24.18.0",
+      "cwd": "/private/tmp/codex/PI-001-SANSU/recheck-20261016T081724Z/clean/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:45:24.433Z",
+      "exitCode": 0,
+      "signal": null,
+      "status": "PASS",
+      "log": "clean-build-complete-assets.log",
+      "logSha256": "d97d90c36643a80b3a4a294deb5c8de76cd11dc6f07b907e9ee20f84c8a4e6a1"
+    },
+    {
+      "name": "clean-build-complete-inputs",
+      "command": "/Users/yutogasaki/.local/share/fnm/node-versions/v24.18.0/installation/bin/node",
+      "args": [
+        "scripts/standard-portal.mjs",
+        "build"
+      ],
+      "startedAt": "2026-10-16T08:22:34.948Z",
+      "node": "v24.18.0",
+      "cwd": "/private/tmp/codex/PI-001-SANSU/recheck-20261016T081724Z/clean/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:22:39.008Z",
+      "exitCode": 1,
+      "signal": null,
+      "status": "FAIL",
+      "log": "clean-build-complete-inputs.log",
+      "logSha256": "efae3d9003c5330b3e9e4fe9b7ea05ebdd7f88150d07d8485056d2bd436febb5"
+    },
+    {
+      "name": "clean-build-full-source",
+      "command": "/Users/yutogasaki/.local/share/fnm/node-versions/v24.18.0/installation/bin/node",
+      "args": [
+        "scripts/standard-portal.mjs",
+        "build"
+      ],
+      "startedAt": "2026-10-16T08:25:26.222Z",
+      "node": "v24.18.0",
+      "cwd": "/private/tmp/codex/PI-001-SANSU/recheck-20261016T081724Z/clean/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:25:47.395Z",
+      "exitCode": 0,
+      "signal": null,
+      "status": "PASS",
+      "log": "clean-build-full-source.log",
+      "logSha256": "d97d90c36643a80b3a4a294deb5c8de76cd11dc6f07b907e9ee20f84c8a4e6a1"
+    },
+    {
+      "name": "clean-build-with-git-vendor",
+      "command": "/Users/yutogasaki/.local/share/fnm/node-versions/v24.18.0/installation/bin/node",
+      "args": [
+        "scripts/standard-portal.mjs",
+        "build"
+      ],
+      "startedAt": "2026-10-16T08:20:32.853Z",
+      "node": "v24.18.0",
+      "cwd": "/private/tmp/codex/PI-001-SANSU/recheck-20261016T081724Z/clean/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:20:33.201Z",
+      "exitCode": 1,
+      "signal": null,
+      "status": "FAIL",
+      "log": "clean-build-with-git-vendor.log",
+      "logSha256": "341405988061a0ad9101f5fdee3bb90db8a469cc921e1bc1189210a9eea2bddf"
+    },
+    {
+      "name": "clean-build",
+      "command": "node",
+      "args": [
+        "scripts/standard-portal.mjs",
+        "build"
+      ],
+      "startedAt": "2026-10-16T08:19:55.195Z",
+      "node": "v24.14.0",
+      "cwd": "/private/tmp/codex/PI-001-SANSU/recheck-20261016T081724Z/clean/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:19:55.349Z",
+      "exitCode": 1,
+      "signal": null,
+      "status": "FAIL",
+      "log": "clean-build.log",
+      "logSha256": "89b540973effed0edcc04b0d840852965f678da1b35275bfc0d327ab2995fbb3"
+    },
+    {
+      "name": "clean-first-verify",
+      "command": "/Users/yutogasaki/.local/share/fnm/node-versions/v24.18.0/installation/bin/node",
+      "args": [
+        "scripts/standard-portal.mjs",
+        "verify"
+      ],
+      "startedAt": "2026-10-16T08:51:09.781Z",
+      "node": "v24.18.0",
+      "cwd": "/private/tmp/codex/PI-001-SANSU/recheck-20261016T081724Z/clean/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:51:45.973Z",
+      "exitCode": 1,
+      "signal": null,
+      "status": "FAIL",
+      "log": "clean-first-verify.log",
+      "logSha256": "3b4e7859ae629c38a018b7c2c4001bcbe93e04a71ac726008297d690fc825bb8"
+    },
+    {
+      "name": "clean-second-build",
+      "command": "/Users/yutogasaki/.local/share/fnm/node-versions/v24.18.0/installation/bin/node",
+      "args": [
+        "scripts/standard-portal.mjs",
+        "build"
+      ],
+      "startedAt": "2026-10-16T08:55:36.173Z",
+      "node": "v24.18.0",
+      "cwd": "/private/tmp/codex/PI-001-SANSU/recheck-20261016T081724Z/clean/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:56:09.760Z",
+      "exitCode": 0,
+      "signal": null,
+      "status": "PASS",
+      "log": "clean-second-build.log",
+      "logSha256": "d97d90c36643a80b3a4a294deb5c8de76cd11dc6f07b907e9ee20f84c8a4e6a1"
+    },
+    {
+      "name": "core-parity",
+      "command": "node",
+      "args": [
+        "tools/check-portal-migration.mjs",
+        "--check"
+      ],
+      "startedAt": "2026-10-16T08:17:52.303Z",
+      "node": "v24.18.0",
+      "cwd": "/Users/yutogasaki/Projects/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:17:54.527Z",
+      "exitCode": 0,
+      "signal": null,
+      "status": "PASS",
+      "log": "core-parity.log",
+      "logSha256": "689d7befeaae9ddabbf68b833d132918a01f2883fb712e32d7540bd42692456f"
+    },
+    {
+      "name": "direct-browser",
+      "command": "node",
+      "args": [
+        "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/direct-browser.mjs"
+      ],
+      "startedAt": "2026-10-16T08:51:08.623Z",
+      "node": "v24.18.0",
+      "cwd": "/Users/yutogasaki/Projects/sansu",
+      "environment": {
+        "SANSU_LIBRARY_BROWSER_OUTPUT": "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/direct-browser"
+      },
+      "endedAt": "2026-10-16T08:51:20.577Z",
+      "exitCode": 0,
+      "signal": null,
+      "status": "PASS",
+      "log": "direct-browser.log",
+      "logSha256": "e0e42090fcc0792ba72952295cc443ca181096d38d571f737c9ba05bd73b144c"
+    },
+    {
+      "name": "direct-bytes-isolated",
+      "command": "node",
+      "args": [
+        "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/direct-bytes-isolated.cjs"
+      ],
+      "startedAt": "2026-10-16T08:59:29.954Z",
+      "node": "v24.18.0",
+      "cwd": "/Users/yutogasaki/Projects/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:59:33.036Z",
+      "exitCode": 1,
+      "signal": null,
+      "status": "FAIL",
+      "log": "direct-bytes-isolated.log",
+      "logSha256": "bd0aba27b2b3fe538201778dca59707702993b8d5f0e5794500c1494358c59b2"
+    },
+    {
+      "name": "direct-bytes",
+      "command": "node",
+      "args": [
+        "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/direct-bytes.cjs"
+      ],
+      "startedAt": "2026-10-16T08:54:59.606Z",
+      "node": "v24.18.0",
+      "cwd": "/Users/yutogasaki/Projects/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:55:01.740Z",
+      "exitCode": 1,
+      "signal": null,
+      "status": "FAIL",
+      "log": "direct-bytes.log",
+      "logSha256": "79b829f44698720abf291f65452b1f8e01d0c28b306726c0069dcf16a4f63571"
+    },
+    {
+      "name": "docs-current",
+      "command": "npm",
+      "args": [
+        "run",
+        "docs:check"
+      ],
+      "startedAt": "2026-10-16T09:10:01.466Z",
+      "node": "v24.18.0",
+      "cwd": "/Users/yutogasaki/Projects/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T09:10:06.012Z",
+      "exitCode": 0,
+      "signal": null,
+      "status": "PASS",
+      "log": "docs-current.log",
+      "logSha256": "f532551edebda0fda7891fd2f1aed92babcdbcf96bd6b64b3d0e2af635af02a9"
+    },
+    {
+      "name": "docs-final",
+      "command": "npm",
+      "args": [
+        "run",
+        "docs:check"
+      ],
+      "startedAt": "2026-10-16T08:46:31.093Z",
+      "node": "v24.18.0",
+      "cwd": "/Users/yutogasaki/Projects/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:46:32.924Z",
+      "exitCode": 0,
+      "signal": null,
+      "status": "PASS",
+      "log": "docs-final.log",
+      "logSha256": "f532551edebda0fda7891fd2f1aed92babcdbcf96bd6b64b3d0e2af635af02a9"
+    },
+    {
+      "name": "generation",
+      "command": "node",
+      "args": [
+        "scripts/standard-portal.mjs",
+        "verify"
+      ],
+      "startedAt": "2026-10-16T08:17:52.305Z",
+      "node": "v24.18.0",
+      "cwd": "/Users/yutogasaki/Projects/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:18:11.173Z",
+      "exitCode": 0,
+      "signal": null,
+      "status": "PASS",
+      "log": "generation.log",
+      "logSha256": "d97d90c36643a80b3a4a294deb5c8de76cd11dc6f07b907e9ee20f84c8a4e6a1"
+    },
+    {
+      "name": "hub-copy",
+      "command": "node",
+      "args": [
+        "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/hub-preflight.cjs"
+      ],
+      "startedAt": "2026-10-16T08:17:52.306Z",
+      "node": "v24.18.0",
+      "cwd": "/Users/yutogasaki/Projects/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:18:14.499Z",
+      "exitCode": 1,
+      "signal": null,
+      "status": "FAIL",
+      "log": "hub-copy.log",
+      "logSha256": "8edbf5f60464547ef5182ce6d8357b8753545faef1f578f5e0a06e44f92057f4"
+    },
+    {
+      "name": "library-audit",
+      "command": "python3",
+      "args": [
+        "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/audit-output-only.py",
+        "."
+      ],
+      "startedAt": "2026-10-16T08:17:52.293Z",
+      "node": "v24.18.0",
+      "cwd": "/Users/yutogasaki/Projects/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:18:02.441Z",
+      "exitCode": 1,
+      "signal": null,
+      "status": "FAIL",
+      "log": "library-audit.log",
+      "logSha256": "8781f80bb11070f9acfd4dfb23ac67ce9f67c6ca7ce816b615fc8fca8185382f"
+    },
+    {
+      "name": "library-browser",
+      "command": "node",
+      "args": [
+        "tools/check-portal-library-browser.mjs"
+      ],
+      "startedAt": "2026-10-16T08:20:23.107Z",
+      "node": "v24.18.0",
+      "cwd": "/Users/yutogasaki/Projects/sansu",
+      "environment": {
+        "SANSU_LIBRARY_BROWSER_OUTPUT": "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/library-browser"
+      },
+      "endedAt": "2026-10-16T08:20:35.916Z",
+      "exitCode": 0,
+      "signal": null,
+      "status": "PASS",
+      "log": "library-browser.log",
+      "logSha256": "e0e42090fcc0792ba72952295cc443ca181096d38d571f737c9ba05bd73b144c"
+    },
+    {
+      "name": "performance",
+      "command": "node",
+      "args": [
+        "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/performance.cjs"
+      ],
+      "startedAt": "2026-10-16T08:26:55.682Z",
+      "node": "v24.18.0",
+      "cwd": "/Users/yutogasaki/Projects/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:27:24.051Z",
+      "exitCode": 0,
+      "signal": null,
+      "status": "PASS",
+      "log": "performance.log",
+      "logSha256": "91f5f3407b8ffbc703fcbb0f3f0e97e5b41aaf9c2451c4740780feb8e5e562e3"
+    },
+    {
+      "name": "persistence-focused",
+      "command": "npm",
+      "args": [
+        "run",
+        "test:run",
+        "--",
+        "src/domain/island/experienceRepository.test.ts",
+        "--maxWorkers=1",
+        "--minWorkers=1",
+        "--no-file-parallelism"
+      ],
+      "startedAt": "2026-10-16T08:39:23.698Z",
+      "node": "v24.18.0",
+      "cwd": "/Users/yutogasaki/Projects/sansu",
+      "environment": {
+        "VITEST_MAX_THREADS": "1",
+        "VITEST_MIN_THREADS": "1"
+      },
+      "endedAt": "2026-10-16T08:39:56.217Z",
+      "exitCode": 0,
+      "signal": null,
+      "status": "PASS",
+      "log": "persistence-focused.log",
+      "logSha256": "295022fb3adf659c25a899d645adf99e28c66bf88e119249493a818281743fed"
+    },
+    {
+      "name": "primary-browser",
+      "command": "node",
+      "args": [
+        "tools/check-portal-migration-browser.mjs"
+      ],
+      "startedAt": "2026-10-16T08:19:23.639Z",
+      "node": "v24.18.0",
+      "cwd": "/Users/yutogasaki/Projects/sansu",
+      "environment": {
+        "SANSU_PORTAL_BROWSER_OUTPUT": "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/primary-browser"
+      },
+      "endedAt": "2026-10-16T08:19:53.057Z",
+      "exitCode": 0,
+      "signal": null,
+      "status": "PASS",
+      "log": "primary-browser.log",
+      "logSha256": "39271f74c145f48698a5553ffa65312c8e20558d004dbd45acc98e9169bda407"
+    },
+    {
+      "name": "storage-route",
+      "command": "node",
+      "args": [
+        "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/storage-route.cjs"
+      ],
+      "startedAt": "2026-10-16T08:55:34.968Z",
+      "node": "v24.18.0",
+      "cwd": "/Users/yutogasaki/Projects/sansu",
+      "environment": {},
+      "endedAt": "2026-10-16T08:55:36.694Z",
+      "exitCode": 0,
+      "signal": null,
+      "status": "PASS",
+      "log": "storage-route.log",
+      "logSha256": "7f6a26316d5214755cad4301c20f52eb723aa8053e2280d10cc760b004fca20d"
+    },
+    {
+      "name": "verify-core",
+      "command": "npm",
+      "args": [
+        "run",
+        "verify:core"
+      ],
+      "startedAt": "2026-10-16T08:31:43.032Z",
+      "node": "v24.18.0",
+      "cwd": "/Users/yutogasaki/Projects/sansu",
+      "environment": {
+        "VITEST_MAX_THREADS": "4",
+        "VITEST_MIN_THREADS": "1"
+      },
+      "endedAt": "2026-10-16T08:39:23.580200+00:00",
+      "status": "TERMINATED_AFTER_TIMEOUT_FAILURES",
+      "exitCode": 130,
+      "reason": "Two 5000ms timeout failures in unchanged product persistence tests; stopped the broad run to isolate the first failure instead of repeating CPU-heavy work",
+      "firstFailingFile": "src/domain/island/experienceRepository.test.ts",
+      "timeoutCases": 2,
+      "completedPassingFiles": 54,
+      "fullSuiteCompleted": false,
+      "log": "verify-core.log",
+      "concurrencyObservation": "Other substantial Vitest runs observed; contribution is suspected, not causally proven."
+    }
+  ],
+  "endState": {
+    "at": "2026-10-16T09:10:21.532861+00:00",
+    "head": "eb4b907bdf5cb6e99c30c4ac6f28d2d3969cac50",
+    "branch": "codex/pi-001-sansu",
+    "candidate": "be55eae17dcadf330948d5261512dc0c8f20b33ea558e3aded97f77d83d4b9d5",
+    "manifestSha256": "c212a26691b577aa9dcca1606aaa18bf03de7352810cb3870f9bb1f743f683a1",
+    "candidateUnchanged": true,
+    "manifestUnchanged": true,
+    "appInputCount": 1683,
+    "appInputChanges": [],
+    "declaredInputCount": 13441,
+    "declaredInputChanges": [],
+    "initialFileCount": 26130,
+    "missingInitialFiles": [],
+    "outsideOwnedChanges": [],
+    "ownedAndGeneratedChanges": [
+      {
+        "source": "README.md",
+        "before": "73f60dd45c274c91681dca54ab7ecaca7db1e24165825cd73e76151639c6816d",
+        "after": "f9a253dd26956adf244908dc68c21ace4996b26a3bc03af3526ca34c6435ce00",
+        "scope": "owned source"
+      },
+      {
+        "source": "docs/portal/README.md",
+        "before": "d0dc323fa206c144c8fe8e2d4f77377ac2b72f91171098cc7a7ea667050e27e3",
+        "after": "f60a20b2e73508c2089e59d84bc5b17ace784773b57cc64051b3a9467e41cfd2",
+        "scope": "owned source"
+      },
+      {
+        "source": "portal/ai/index.html",
+        "before": "0fd18d9b9d6764bc71afc7ff318c7cad9b2b21b00034266ee9b910efc8fb0b17",
+        "after": "752985daee85d557dbddaa4337ec11986e81bfb736081cbc5918caaafcefc987",
+        "scope": "generated portal"
+      },
+      {
+        "source": "portal/data/integration.json",
+        "before": "854ad16635daf51cb0b6055de0c155540d6ed6d7222f857af8ac138e562d50c2",
+        "after": "deb1474e3fb8d8c1237ee693db843561873cd1da5ed5f14ee4a94a74e8b6620e",
+        "scope": "generated portal"
+      },
+      {
+        "source": "portal/data/parity.json",
+        "before": "9d563cf000bd3ffd9aed52a1e5e12681f148f7afd7debbf33d4d5c859e80df66",
+        "after": "9dc71aff3ff1bc7feab9a970a68ff58235779a7c9e30e3401caef8876b57e90a",
+        "scope": "generated portal"
+      },
+      {
+        "source": "portal/data/search.json",
+        "before": "34e2fcaef3c2bbf45db7a0e56c372ad19c5e2c05086ad67b8bea8064f904882d",
+        "after": "7f1fb1006a0eb468cc2eb544a0d10d8af110c0d075d594e42e111515aff087cc",
+        "scope": "generated portal"
+      },
+      {
+        "source": "portal/documents.html",
+        "before": "71ad7e61bbafa52495a87de174e8da7b32a164c253bf17c252ee9ca5d542ce14",
+        "after": "4a9e34497aee818f2f12b078a61f89229705fda90bbaaacb0e597539037ceeae",
+        "scope": "generated portal"
+      },
+      {
+        "source": "portal/flow.css",
+        "before": "4a3a65e865c512fcd397357851484edb1558f7079e99ca5544e3e54c91f2688f",
+        "after": "1018601d2176150b8afd766ddf3eac35a538e4986865db0582508d71aac63a2c",
+        "scope": "generated portal"
+      },
+      {
+        "source": "portal/index.html",
+        "before": "904c171c4a52efb5e312fbd6c8dac316e79c8865ea8b39ba3b9e6dc02f9b68a4",
+        "after": "375de2396f464b84590c5fdd68a356ccf69a3839d77348dd4f5115fcb1c5ba30",
+        "scope": "generated portal"
+      },
+      {
+        "source": "portal/map.html",
+        "before": "e523d26ea55979c58b76b2e5fe4792e85c6ca5fd247e2b7fa984c832362df740",
+        "after": "9f6257446aefab28d149cba51d1f02896b5b1163444466e86a8b2dac2049fe70",
+        "scope": "generated portal"
+      },
+      {
+        "source": "portal/operations.html",
+        "before": "0da1b5f659ed0df580ded67044b3a68f2040e35b36ac48da030cfb0040051f6d",
+        "after": "90562c1cebb1f98c7ce3af2535061b646806a68a1412c6dce65333600ce6cefa",
+        "scope": "generated portal"
+      },
+      {
+        "source": "portal/overview.html",
+        "before": "ffe921fbddaa1c1de8a329deb62f5b40d282405718d16bd66fc76b1ab206b31e",
+        "after": "e9c48cd2db200155550f3778e84558fdf8dba5c46f67cff0558b7564cbe2ecfb",
+        "scope": "generated portal"
+      },
+      {
+        "source": "portal/plan.html",
+        "before": "c1b7ff958face2ba5057daa72da5662c568da6c855572bf2e6fcacdc04453bf0",
+        "after": "950f4ece315c2aff97bd88178bb35f5051fe8f944527bdaac9c41a1a36dccc51",
+        "scope": "generated portal"
+      },
+      {
+        "source": "portal/portal.css",
+        "before": "2592704ea31030c83314f53005fbde2cfd8d326efcdc62b68245ff8d14a613b6",
+        "after": "6db528d982c61f32c84d539d21c0f578d56d1a208b0ed09bc2161fc80ef55222",
+        "scope": "generated portal"
+      },
+      {
+        "source": "portal/portal.js",
+        "before": "8f22700f7b93b33e7ddb3ac51001504c1f216877e89dc4aaf46a13099714b1f9",
+        "after": "207a31173fb81aa2ffd5e9177855f9a008549569cbe32412dd36368c0bbc049b",
+        "scope": "generated portal"
+      },
+      {
+        "source": "portal/roles.html",
+        "before": "2f19ffaac3f3a97e9b4532f0c0810d5e02ed86a0243f25c8cb75a6c0eade2129",
+        "after": "7fd0c46d9a63584c16a5f106f1e10cbdc96e0644ef159ff900b3ce831f4e9a0c",
+        "scope": "generated portal"
+      },
+      {
+        "source": "portal/search-index.js",
+        "before": "d9a299b4b7db5eac5a3fc496ee6252d667b69519af82037f9ce439243def86f8",
+        "after": "b597f73a531b979861917d7f5c6ac9ed0d91f06e4ca22f72c42e8653ec71f6ce",
+        "scope": "generated portal"
+      },
+      {
+        "source": "portal/tasks.html",
+        "before": "129a4a33cde1ceaa5f1b701834b9fd94831a19fce1a001ef778edbff24a3fd86",
+        "after": "a9968f01d68dc4fd62771de7b79d2092db6a545a28adb2bb8c870023afb5b891",
+        "scope": "generated portal"
+      },
+      {
+        "source": "scripts/standard-portal.mjs",
+        "before": "59c35732718455434c30ff594c37677d78999134f71abe16bb55c50d816c0f34",
+        "after": "717c7519099cb08674680faac190f66781cada782292b82d402c93aa0c49b97d",
+        "scope": "owned source"
+      },
+      {
+        "source": "tools/check-portal-integration.mjs",
+        "before": "58a64f473dcc42dcd969c70aa6c0cd251d37796ed5cd6233105e9f8b467c6a49",
+        "after": "1c30bc6cc9a51a6df3df3c77f6fa9b07ea56121afda67051b86e771067ca6abb",
+        "scope": "owned source"
+      },
+      {
+        "source": "tools/integrated-portal-browser.js",
+        "before": "8f22700f7b93b33e7ddb3ac51001504c1f216877e89dc4aaf46a13099714b1f9",
+        "after": "207a31173fb81aa2ffd5e9177855f9a008549569cbe32412dd36368c0bbc049b",
+        "scope": "owned source"
+      },
+      {
+        "source": "tools/integrated-portal.css",
+        "before": "c2bf849d1793fd3f18a347e11b7262deddd5cceca8b6d7c0b00f6fbe6412bd5a",
+        "after": "5dd5aa7c23196dfce875065e8096ed8d3159071c970a4db644f300aea756683f",
+        "scope": "owned source"
+      },
+      {
+        "source": "tools/integrated-portal.mjs",
+        "before": "2d115bd85260c5bc3a40f586d4a8cd0dcd3b4a69a5f1078b064378ab6bc5e73d",
+        "after": "b9f10c4f1c6981b550d1f0b70037aa996da45566ff57946389a2bb23b7c616d0",
+        "scope": "owned source"
+      },
+      {
+        "source": "tools/portal-flow.css",
+        "before": "71b7a1242588c885fd2f3636013ea6508afb46b18c5a5396fdd424144d67dbf8",
+        "after": "3bba34c7eb1756467ab2dba756cf16a7d7352f329f4f2e67f0976655926b084e",
+        "scope": "owned source"
+      },
+      {
+        "source": "tools/portal-originals.mjs",
+        "before": "401e50a3e8be1b6d9a1c2752ff360625ab7efa1588b6cc847d70556601c7130d",
+        "after": "0f00f1efe79013641c64f564180b5e9c905e9fcd2882f2397838507346e5261f",
+        "scope": "owned source"
+      },
+      {
+        "source": "tools/qa-integrated-portal.mjs",
+        "before": "99e302dc7ceddf46392a2cd01e18b900f29d56db8525493f07739176cfd600b5",
+        "after": "ca1d8184700c00365c6984d110733cf326a24819b1a5c5f5b16e8392cfb5fe25",
+        "scope": "owned source"
+      }
+    ],
+    "cleanupRevivedAfterRegeneration": [],
+    "stagedPaths": [],
+    "externalActions": "no commit, push, publication or production changes; no shared hub source/dist edits by this task",
+    "priorLatestSummaryRefresh": {
+      "file": "preservation-final.json",
+      "priorSnapshotSha256": "424242378920d582f8873a15764c4c7dfb62c00c4cec970f726f51436dbca831",
+      "currentSha256": "dfd503cd529b00f2e50fa1fda48b948f7559acc58c50a0f1051df185f13f4193",
+      "note": "Canonical fixed-output preservation check refreshed this latest summary during recheck. This run stores its own immutable end-state receipt; prior failure logs and screenshots were not overwritten."
+    }
+  },
+  "findings": [
+    {
+      "id": "coverage",
+      "severity": "blocking",
+      "detail": "元素材14,069件のうち4,815件がcore/libraryいずれの資源台帳にも個別登録されていない。原本は保持。統合先/利用条件/除外理由の整理が未完。",
+      "evidence": [
+        "asset-coverage.json",
+        "additional-resource-parity.json"
+      ]
+    },
+    {
+      "id": "clean-generation",
+      "severity": "blocking",
+      "detail": "完全な入力から出力を空にしてbuildすると3生成物が不一致。portal/index.htmlが入力に混ざり初回verifyはFAIL。2回目のbuildは1,310件完全一致。既存出力を前提とする依存を解消する必要。",
+      "evidence": [
+        "clean-complete-assets-comparison.json",
+        "clean-first-verify.result.json",
+        "clean-second-comparison.json"
+      ]
+    },
+    {
+      "id": "direct-resources",
+      "severity": "blocking",
+      "detail": "直接経路で生成物等1,317件は同一byte。ただし登録済み資源のHEADで495件が404。実在する489件と元欠損6件。型対応または明示的な非配信案内が必要。hub共有ファイルはこの担当から編集しない。",
+      "evidence": [
+        "direct-bytes-isolated.json"
+      ]
+    },
+    {
+      "id": "original-missing",
+      "severity": "blocking",
+      "detail": "元資料の6参照先が欠損したまま。別候補の模型を代用しない。",
+      "evidence": [
+        "library-audit/audit.json"
+      ]
+    },
+    {
+      "id": "storage-origin",
+      "severity": "unverified-migration",
+      "detail": "匿名試験ではfile旧→新とHTTP旧→新の同じ文書系列は共有。一方file保存はhub HTTPには表示されず、元fileには保持。実データの移行経路は未実装/未確認。",
+      "evidence": [
+        "storage-route.json"
+      ]
+    },
+    {
+      "id": "full-core",
+      "severity": "not-passed",
+      "detail": "verify:coreはdocs/入口/lint/typecheck後、保存テスト2件が5秒で時間切れ。54ファイルPASS時点で中断して切り分けた。該当1ファイル単独12件はPASS。全体一括PASSではない。",
+      "evidence": [
+        "verify-core.result.json",
+        "verify-core.log",
+        "persistence-focused.result.json"
+      ]
+    },
+    {
+      "id": "visual-accessibility",
+      "severity": "unverified",
+      "detail": "既存42条件の横はみ出し、全308ページの全操作/独立受入、実機は未完。静的img 1,555要素/87ページでalt未設定。キャプション等との対応を確認してから判断する。",
+      "evidence": [
+        "../view-metrics.json",
+        "image-alt-review-candidates.json"
+      ]
+    }
+  ],
+  "policy": {
+    "confirmedAt": "2026-10-16T08:32:38.665699+00:00",
+    "sourceThreadId": "01a142ce-5e7a-7f23-96d8-9fd47e7b2ccd",
+    "sourceTitle": "各リポのポータル配置と関係",
+    "verifiedHumanMessages": [
+      {
+        "turn": "01a143cc-b8ef-7781-a1a8-baada7c541df",
+        "text": "よくない。二重管理"
+      },
+      {
+        "turn": "01a143d1-b350-7b82-b933-7eb70de76dae",
+        "text": "各リポに伝えたい"
+      },
+      {
+        "turn": "01a143d3-a4d2-7b43-8fab-eedd7f209c12",
+        "text": "複製やめるのと伝えた？いらんもの消したい"
+      }
+    ],
+    "currentPolicy": {
+      "projectCanonical": "Sansu repository",
+      "intendedSingleEntrance": "portal/index.html after acceptance; unaccepted originals retained",
+      "hub": "aggregate status and direct entrance, no separately maintained current portal copy",
+      "hubCopyGate": "superseded, prior failures remain historical evidence",
+      "cleanup": "delete only confirmed unnecessary duplicate artifacts; keep original sources, engines, history, fixed vendors, unique recovery data and other work",
+      "externalActions": "no commit/push/publication/production changes authorized"
+    },
+    "appliedTo": [
+      "README.md",
+      "this verification report and acceptance gates"
+    ],
+    "coordinationRemaining": [
+      "hub direct entrance implementation and removal of old hub copies belong to hub owner; no shared hub edits or thread messages from this task"
+    ]
+  },
+  "artifactClassification": [
+    {
+      "path": "portal/index.html と主要7詳細",
+      "category": "現行に必要",
+      "action": "保持",
+      "reason": "唯一の統合入口の候補。未受入を表示し元入口を残す。"
+    },
+    {
+      "path": "portal/integrated/・read/・folders/・ai/・data/",
+      "category": "現行に必要",
+      "action": "保持",
+      "reason": "本文・固有操作・詳細・検索から参照される生成物。人向け/原文/データの同一記録による表示。"
+    },
+    {
+      "path": "portal/original/",
+      "category": "現行に必要",
+      "action": "保持",
+      "reason": "主要7詳細の元表示iframeから利用される。即時削除すると表示/操作を失う。独立した正式入口にはしない。"
+    },
+    {
+      "path": ".agents/の元6HTML と docs/index.html",
+      "category": "旧URL互換に必要",
+      "action": "保持",
+      "reason": "全項目未受入。元入口と深いURLを削除・上書きしない。"
+    },
+    {
+      "path": "docs/portal/ と仕様・仕事・判断・スキルの正本",
+      "category": "現行に必要",
+      "action": "保持",
+      "reason": "統合表示の生成元。移動/二重手更新をしない。"
+    },
+    {
+      "path": "tools/generate-agent-index.mjs の legacyPages()",
+      "category": "現行に必要",
+      "action": "保持",
+      "reason": "新生成処理が再利用する。旧画面を書き出すCLIだけの廃止は受入後。"
+    },
+    {
+      "path": "tools/portal-graph.mjs・flow・状態/承認エンジン・固定vendor",
+      "category": "現行に必要",
+      "action": "保持",
+      "reason": "判定・履歴・上限・承認の正本/検査。表示生成と分けて扱う。固定版を直書きしない。"
+    },
+    {
+      "path": "qa/evidence/PI-001-SANSU/screens-stable・library-stable と独立審査/失敗記録",
+      "category": "固定した復旧保存に必要",
+      "action": "保持",
+      "reason": "同版の比較/失敗から修正までの証拠。新しい合格へ読み替えない。"
+    },
+    {
+      "path": "Projects/.portal-recovery/PI-001-SANSU と PI-001-SANSU-library/be55eae17dcadf33",
+      "category": "固定した復旧保存に必要",
+      "action": "保持・33資源と現行READMEを補足",
+      "reason": "現存資源と元7画面の復旧保管。Git正本と組み合わせる。6欠損/単一復旧一式への整理は未達。"
+    },
+    {
+      "path": "他作業の既存差分、portal-fix-done.md、qa/evidence/PORTAL-001",
+      "category": "保持（担当外）",
+      "action": "変更/削除しない",
+      "reason": "自身の不要物と推定しない。"
+    },
+    {
+      "path": "portal直下の candidate/・review/・v2/",
+      "category": "該当なし",
+      "action": "新設しない",
+      "reason": "独立した現行版フォルダはない。docs内の同名の製品履歴とは区別する。"
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/hub-copy-GLWyyt",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "Failed, unpublished partial copy. Current policy uses direct project entrances; canonical inputs, outputs and failure records remain.",
+      "files": 192,
+      "logicalBytes": 167650734
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/hub-copy-FykUBB",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "Failed, unpublished partial copy. Current policy uses direct project entrances; canonical inputs, outputs and failure records remain.",
+      "files": 192,
+      "logicalBytes": 167650734
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/hub-copy-iVG1Fk",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "Failed, unpublished partial copy. Current policy uses direct project entrances; canonical inputs, outputs and failure records remain.",
+      "files": 192,
+      "logicalBytes": 167650730
+    },
+    {
+      "path": "/private/tmp/codex/PI-001-SANSU/recheck-20261016T081724Z/clean/git-base",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "Temporary full Git extraction already copied into the isolated verification workspace. Fixed Git source and recovery inputs remain.",
+      "files": 26071,
+      "logicalBytes": 5747179681
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/rebuild-v5/2026-10-11-island-landscape-art/whole-landscape.glb",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "Explicitly NOT_EXACT, unadopted diagnostic output. Source models, staged script, metadata and failed diagnostic log remain.",
+      "files": 1,
+      "logicalBytes": 27114340
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/rebuild-v5/2026-10-11-island-landscape-art/whole-landscape.blend",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "Explicitly NOT_EXACT, unadopted diagnostic output. Source models, staged script, metadata and failed diagnostic log remain.",
+      "files": 1,
+      "logicalBytes": 8166438
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/recheck-20261016T081724Z/clean/sansu",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "Completed disposable full-source checkout and duplicate portal. Source commit, recovery sets, additional-input receipts, differences, logs and byte comparison remain. No current entrance refers here.",
+      "files": 27677,
+      "logicalBytes": 6029052107
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/hub-preflight.cjs",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "No active copy operation under the new policy; historical source retained in QA.",
+      "files": 1,
+      "logicalBytes": 2497
+    },
+    {
+      "path": "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/library-audit/parity.md",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "This derived table is byte-identical to the retained registered-scope table. Per-run audit JSON, logs and new 4,815-resource supplement remain.",
+      "files": 1,
+      "logicalBytes": 41346327
+    }
+  ],
+  "cleanup": {
+    "entries": 9,
+    "files": 54328,
+    "logicalBytes": 12355813588,
+    "note": "論理サイズ。APFS cloneのため物理的な空き容量の増加量ではない。",
+    "revivedAfterBuild": []
+  },
+  "manualView": {
+    "viewer": "implementation owner, not independent",
+    "images": [
+      "primary-browser/entry-320x568.jpg",
+      "primary-browser/after-home-1440-first.jpg",
+      "library-browser/library-search-390.jpg",
+      "library-browser/atlas-edit-390.jpg",
+      "library-browser/observer-390.jpg"
+    ],
+    "scope": "当該5画像の可読性と入口を実見。全画面/実機/コントラスト測定/独立審査ではない。"
+  },
+  "hubConnection": {
+    "entry": "http://127.0.0.1:47860/repos/sansu/portal/index.html",
+    "canonical": "this repository",
+    "statusData": "portal/data/project.json generated from docs/portal metadata and canonical TASKS/BLOCKED ledgers",
+    "generation": "scripts/standard-portal.mjs + local tools/portal-library*.mjs + pinned vendors",
+    "ownerCoordination": "hub direct routes/type policy/status aggregation/old copy removal remain with hub owner; no outgoing task messages or shared hub source/dist edits by this task",
+    "copyGate": "retired; old failed copy preflight retained only as history"
+  },
+  "recovery": {
+    "canonicalGitCommit": "eb4b907bdf5cb6e99c30c4ac6f28d2d3969cac50",
+    "baseReceipts": [
+      "../recovery-stable.json",
+      "../recovery-check.json"
+    ],
+    "supplements": [
+      "additional-source-inputs.json",
+      "guidance-recovery.json"
+    ],
+    "steps": [
+      "Restore the canonical Git source at the target commit into a separate directory.",
+      "Overlay both preserved source/resource sets, plus the 33 additional media and current README receipts. Keep existing originals and states backed up before replacement.",
+      "Restore only the intended version; do not reset learning stores, trials, approval consumption or user notes.",
+      "Fresh one-pass reproduction is currently FAIL; the observed second pass matches, which is a diagnostic, not an accepted workaround.",
+      "Immediate operational rollback uses the still-retained .agents/index.html. No formal cutover has been done."
+    ]
+  },
+  "limitations": [
+    "過去の1,232画面条件は同じmanifestの比較証拠として参照し、今回全308ページを再撮影したとは扱わない。",
+    "独立審査は以前の11画像の限定範囲のみ。今回の5画像実見は本人確認。",
+    "実Safari/iOS、実ユーザーの保存移行、全フォーカス順/読み上げ/全画像説明、公開/本番/PWA受入は未確認。",
+    "項目の追加・並べ替え後の深いURLの継続性は未検証。同じ候補内での再読込・URL復元のPASSから推測しない。",
+    "初回の共有直接サーバー一括取得は接続エラーになった。実サーバーでの6操作群と後続単発応答は成功。全byte/HEAD比較は同じexported APIを隔離起動して実施し、共有サーバーの稼働率は認定しない。",
+    "旧preservation-final.jsonは固定出力チェックにより最新集計へ更新した。新しいend-state.jsonを本runの保持証拠とする。"
+  ],
+  "externalActions": "No commit/push/publication/deployment/production changes. No original portal deletion or state/approval reset."
+}

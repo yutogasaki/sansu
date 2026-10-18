@@ -1,0 +1,19 @@
+{
+  "name": "library-browser",
+  "command": "node",
+  "args": [
+    "tools/check-portal-library-browser.mjs"
+  ],
+  "startedAt": "2026-10-16T08:20:23.107Z",
+  "node": "v24.18.0",
+  "cwd": "/Users/yutogasaki/Projects/sansu",
+  "environment": {
+    "SANSU_LIBRARY_BROWSER_OUTPUT": "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/library-browser"
+  },
+  "endedAt": "2026-10-16T08:20:35.916Z",
+  "exitCode": 0,
+  "signal": null,
+  "status": "PASS",
+  "log": "library-browser.log",
+  "logSha256": "e0e42090fcc0792ba72952295cc443ca181096d38d571f737c9ba05bd73b144c"
+}

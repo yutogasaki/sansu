@@ -17,3 +17,50 @@
 .island-welcome-play button { flex: 1; max-width: 180px; }
 .island-welcome-play svg { width: 48px; height: 40px; }
 @media (max-height: 740px) { .island-setup-sheet { margin-block: 0 auto; padding: 20px 18px 8px; } .island-setup-header { padding-bottom: 16px; } }
+
+/* One illustrated cover, followed by the child's actual island. */
+.first-play-welcome { --first-play-cover: #c7b0eb; display: flex; flex-direction: column; overflow: hidden; background: var(--first-play-cover); }
+.first-play-title { z-index: 1; flex: none; padding: max(26px,env(safe-area-inset-top)) 24px 12px; color: var(--island-ink); text-align: center; }
+.first-play-title h1 { display: grid; gap: 0; font-family: var(--font-display, inherit); font-weight: 900; letter-spacing: .08em; line-height: 1.35; }
+.first-play-title h1 > span { font-size: clamp(32px,6vw,46px); }
+.first-play-title small { font-size: clamp(20px,4vw,27px); font-weight: 800; }
+.first-play-meeting { position: relative; display: flex; align-items: center; justify-content: center; flex: 1; min-height: 0; width: 100%; max-width: 660px; margin: auto; }
+.first-play-portrait { display: block; width: min(100%, 64dvh); max-height: 100%; aspect-ratio: 1; padding: 0; border: 0; background: transparent; cursor: pointer; overflow: hidden; border-radius: 28px; }
+.first-play-portrait img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.first-play-portrait:focus-visible { outline: 3px solid var(--island-leaf); outline-offset: -5px; }
+.first-play-portrait[aria-pressed="true"] img { transform: rotate(-3deg) scale(.97); }
+.first-play-hello { position: absolute; right: 7%; bottom: 5%; margin: 0; padding: 15px 20px; border-radius: 24px 24px 24px 5px; background: var(--island-paper); color: var(--island-ink); box-shadow: 0 4px 16px #35395820; font-size: clamp(17px,3.5vw,22px); font-weight: 800; line-height: 1.65; pointer-events: none; }
+.first-play-entry { flex: none; width: min(100%,520px); margin: auto; padding: 20px 24px max(24px,env(safe-area-inset-bottom)); }
+.first-play-entry > button { width: 100%; min-height: 60px; justify-content: center; border-radius: 22px; font-size: 20px; }
+.first-play-entry-error { margin: 12px 0 0; padding: 12px; border-radius: 12px; background: var(--island-paper); color: var(--island-ink); font-size: 14px; }
+.first-play-world { display: flex; position: relative; overflow: hidden; }
+.first-play-world > .growing-island { width: 100%; }
+.first-play-world .growing-hud-top { top: max(14px,env(safe-area-inset-top)); }
+.first-play-world .growing-menu { top: max(66px,calc(env(safe-area-inset-top) + 52px)); }
+.first-play-world .growing-menu-button { min-height: 44px; }
+.first-play-world .first-play-learn { min-width: 132px; min-height: 52px; background: var(--island-leaf); color: white; border-color: var(--island-leaf); }
+.first-play-save-error { position: absolute; z-index: 12; left: 12px; right: 12px; top: 72px; padding: 16px; background: var(--island-paper); color: var(--island-ink); border-radius: 16px; }
+.first-play-save-error button { min-height: 44px; padding: 6px 14px; }
+.first-play-read { display: grid; place-items: center; }
+.first-setup-close { margin-left: auto; }
+.first-setup-progress { display: flex; gap: 8px; margin: 0 0 24px; }
+.first-setup-progress span { height: 5px; flex: 1; border-radius: 5px; background: var(--pokomoko-lavender); }
+.first-setup-progress span[data-current="true"] { background: var(--island-leaf); }
+.island-setup-sheet h1:focus { outline: none; }
+@media (max-height: 520px) and (min-width: 560px) {
+    .first-play-welcome { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr auto; }
+    .first-play-title { grid-column: 2; align-self: end; padding: 16px; }
+    .first-play-meeting { grid-column: 1; grid-row: 1 / 3; height: 100%; }
+    .first-play-portrait { width: min(100%, 90dvh); }
+    .first-play-entry { grid-column: 2; padding: 12px 20px 20px; }
+    .first-play-hello { right: 2%; bottom: 7%; padding: 8px 12px; font-size: 15px; }
+}
+@media (prefers-reduced-motion: reduce) { .first-play-portrait[aria-pressed="true"] img { transform: none; } }
+
+/* Explicit first-run surfaces keep the global dotted shell off the cover. */
+.app-container .island-page.first-play-welcome[data-mode] { background: linear-gradient(160deg, #eee7fb 0%, #c6a9e8 100%); }
+.app-container .island-page.island-first-setup { background: var(--pokomoko-paper); }
+.first-play-world .growing-island[data-home-ui-candidate][data-growing-island="ready"] .growing-hud-top { top: auto; bottom: max(12px,env(safe-area-inset-bottom)); left: 12px; right: auto; }
+.first-play-world .growing-island[data-home-ui-candidate][data-growing-island="ready"] .growing-hud-bottom { bottom: max(12px,env(safe-area-inset-bottom)); right: 12px; left: auto; }
+.first-play-world .growing-guide-cue { bottom: max(82px,calc(env(safe-area-inset-bottom) + 70px)); width: min(310px,calc(100% - 24px)); }
+.first-play-world .growing-island[data-home-ui-candidate] .growing-menu { top: auto; bottom: max(76px,calc(env(safe-area-inset-bottom) + 64px)); left: 12px; right: 12px; max-height: calc(100% - 100px); overflow-y: auto; }

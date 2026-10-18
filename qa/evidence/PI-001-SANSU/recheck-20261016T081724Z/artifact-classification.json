@@ -1,0 +1,143 @@
+{
+  "at": "2026-10-16T09:20:19.664707+00:00",
+  "rows": [
+    {
+      "path": "portal/index.html と主要7詳細",
+      "category": "現行に必要",
+      "action": "保持",
+      "reason": "唯一の統合入口の候補。未受入を表示し元入口を残す。"
+    },
+    {
+      "path": "portal/integrated/・read/・folders/・ai/・data/",
+      "category": "現行に必要",
+      "action": "保持",
+      "reason": "本文・固有操作・詳細・検索から参照される生成物。人向け/原文/データの同一記録による表示。"
+    },
+    {
+      "path": "portal/original/",
+      "category": "現行に必要",
+      "action": "保持",
+      "reason": "主要7詳細の元表示iframeから利用される。即時削除すると表示/操作を失う。独立した正式入口にはしない。"
+    },
+    {
+      "path": ".agents/の元6HTML と docs/index.html",
+      "category": "旧URL互換に必要",
+      "action": "保持",
+      "reason": "全項目未受入。元入口と深いURLを削除・上書きしない。"
+    },
+    {
+      "path": "docs/portal/ と仕様・仕事・判断・スキルの正本",
+      "category": "現行に必要",
+      "action": "保持",
+      "reason": "統合表示の生成元。移動/二重手更新をしない。"
+    },
+    {
+      "path": "tools/generate-agent-index.mjs の legacyPages()",
+      "category": "現行に必要",
+      "action": "保持",
+      "reason": "新生成処理が再利用する。旧画面を書き出すCLIだけの廃止は受入後。"
+    },
+    {
+      "path": "tools/portal-graph.mjs・flow・状態/承認エンジン・固定vendor",
+      "category": "現行に必要",
+      "action": "保持",
+      "reason": "判定・履歴・上限・承認の正本/検査。表示生成と分けて扱う。固定版を直書きしない。"
+    },
+    {
+      "path": "qa/evidence/PI-001-SANSU/screens-stable・library-stable と独立審査/失敗記録",
+      "category": "固定した復旧保存に必要",
+      "action": "保持",
+      "reason": "同版の比較/失敗から修正までの証拠。新しい合格へ読み替えない。"
+    },
+    {
+      "path": "Projects/.portal-recovery/PI-001-SANSU と PI-001-SANSU-library/be55eae17dcadf33",
+      "category": "固定した復旧保存に必要",
+      "action": "保持・33資源と現行READMEを補足",
+      "reason": "現存資源と元7画面の復旧保管。Git正本と組み合わせる。6欠損/単一復旧一式への整理は未達。"
+    },
+    {
+      "path": "他作業の既存差分、portal-fix-done.md、qa/evidence/PORTAL-001",
+      "category": "保持（担当外）",
+      "action": "変更/削除しない",
+      "reason": "自身の不要物と推定しない。"
+    },
+    {
+      "path": "portal直下の candidate/・review/・v2/",
+      "category": "該当なし",
+      "action": "新設しない",
+      "reason": "独立した現行版フォルダはない。docs内の同名の製品履歴とは区別する。"
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/hub-copy-GLWyyt",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "Failed, unpublished partial copy. Current policy uses direct project entrances; canonical inputs, outputs and failure records remain.",
+      "files": 192,
+      "logicalBytes": 167650734
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/hub-copy-FykUBB",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "Failed, unpublished partial copy. Current policy uses direct project entrances; canonical inputs, outputs and failure records remain.",
+      "files": 192,
+      "logicalBytes": 167650734
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/hub-copy-iVG1Fk",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "Failed, unpublished partial copy. Current policy uses direct project entrances; canonical inputs, outputs and failure records remain.",
+      "files": 192,
+      "logicalBytes": 167650730
+    },
+    {
+      "path": "/private/tmp/codex/PI-001-SANSU/recheck-20261016T081724Z/clean/git-base",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "Temporary full Git extraction already copied into the isolated verification workspace. Fixed Git source and recovery inputs remain.",
+      "files": 26071,
+      "logicalBytes": 5747179681
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/rebuild-v5/2026-10-11-island-landscape-art/whole-landscape.glb",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "Explicitly NOT_EXACT, unadopted diagnostic output. Source models, staged script, metadata and failed diagnostic log remain.",
+      "files": 1,
+      "logicalBytes": 27114340
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/rebuild-v5/2026-10-11-island-landscape-art/whole-landscape.blend",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "Explicitly NOT_EXACT, unadopted diagnostic output. Source models, staged script, metadata and failed diagnostic log remain.",
+      "files": 1,
+      "logicalBytes": 8166438
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/recheck-20261016T081724Z/clean/sansu",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "Completed disposable full-source checkout and duplicate portal. Source commit, recovery sets, additional-input receipts, differences, logs and byte comparison remain. No current entrance refers here.",
+      "files": 27677,
+      "logicalBytes": 6029052107
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/hub-preflight.cjs",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "No active copy operation under the new policy; historical source retained in QA.",
+      "files": 1,
+      "logicalBytes": 2497
+    },
+    {
+      "path": "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/library-audit/parity.md",
+      "category": "不要",
+      "action": "削除済み",
+      "reason": "This derived table is byte-identical to the retained registered-scope table. Per-run audit JSON, logs and new 4,815-resource supplement remain.",
+      "files": 1,
+      "logicalBytes": 41346327
+    }
+  ]
+}

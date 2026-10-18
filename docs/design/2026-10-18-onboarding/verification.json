@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-10-18T10:50:40.662713+09:00",
+  "workspace_head": "eb4b907bdf5cb6e99c30c4ac6f28d2d3969cac50",
+  "scope": "docs-only proposal; shared dirty working tree; not a commit or runtime verification",
+  "inputs": {
+    "docs/design/2026-10-18-onboarding/README.md": "b45b4c6063ccd1eb96c88db06a05a8c488c5a33674d2d3e72b751f45c06a7dfd",
+    "docs/design/2026-10-18-onboarding/flow-spec.md": "75e1725246e6103295e174c60d88b8c91712ffc47554437cc15e2a1997576dd7",
+    "docs/design/2026-10-18-onboarding/art-brief.md": "9234a59005da96af9b31e911d2140dff4633722f0e26429004d881c342da8ac8",
+    "docs/index.md": "9f8f28f355b9a1ab2e8dc67e978060986ced26bcf3a8ac6d9928c0d1425e3a2e"
+  },
+  "checks": [
+    {
+      "command": "source \"$HOME/.nvm/nvm.sh\" && nvm use && npm run docs:check",
+      "actual": "not run: nvm.sh absent",
+      "expected": "Node 22 runtime from .nvmrc"
+    },
+    {
+      "command": "node --version; npm run docs:check",
+      "actual": "Node v24.18.0; PASS with existing overdue-review warnings",
+      "expected": "docs checker passes"
+    },
+    {
+      "command": "git diff --check -- docs/index.md docs/design/2026-10-18-onboarding",
+      "actual": "PASS",
+      "expected": "no whitespace errors"
+    },
+    {
+      "command": "Python local Markdown link and whitespace inspection",
+      "actual": "PASS: 111 existing local link targets checked; 4 files checked for trailing whitespace",
+      "expected": "all local targets exist; no trailing whitespace"
+    }
+  ],
+  "unverified": [
+    "application implementation",
+    "save migration and provisional owner adoption",
+    "runtime visual appeal",
+    "child comprehension and next-day return",
+    "device and public deployment"
+  ],
+  "doc_sync": "New design proposal and docs/index.md discovery link. Existing parent specs and durable memory unchanged because this work does not establish implemented behavior. App implementation requires coordinated parent/child/storage spec changes."
+}

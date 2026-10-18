@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-16T08:55:35.259Z",
+  "candidate": "be55eae17dcadf330948d5261512dc0c8f20b33ea558e3aded97f77d83d4b9d5",
+  "scope": "new anonymous Chromium context and synthetic notes only; no personal browser/storage read or migration",
+  "fileOldToIntegrated": "QA-FILE-ORIGIN",
+  "fileNoteVisibleAtHubHttp": "",
+  "httpOldToIntegrated": "QA-HTTP-ORIGIN",
+  "originalFileNoteStillPresent": "QA-FILE-ORIGIN",
+  "status": "MEASURED_DIAGNOSTIC_ONLY",
+  "conclusion": "Same-context old/new file URLs and same-origin HTTP URLs share the respective synthetic note; file-to-HTTP origin change requires an explicit migration path when notes exist."
+}

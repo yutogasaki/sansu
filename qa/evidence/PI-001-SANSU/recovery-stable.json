@@ -1,0 +1,49 @@
+{
+  "status": "PARTIAL",
+  "availableFileCheck": "PASS",
+  "at": "2026-10-16T05:05:50.503090+00:00",
+  "candidate": "be55eae17dcadf330948d5261512dc0c8f20b33ea558e3aded97f77d83d4b9d5",
+  "root": "/Users/yutogasaki/Projects/.portal-recovery/PI-001-SANSU-library/be55eae17dcadf33",
+  "availableFiles": 13441,
+  "bytes": 3958321539,
+  "missingResources": [
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/whole-landscape.blend",
+      "state": "missing",
+      "target": "../../../../../../../docs/design/2026-10-11-island-landscape-art/history/draft-05/whole-landscape.blend",
+      "reason": "元ページの参照先。未確認を合格にしない。"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/whole-landscape.glb",
+      "state": "missing",
+      "target": "../../../../../../../docs/design/2026-10-11-island-landscape-art/history/draft-05/whole-landscape.glb",
+      "reason": "元ページの参照先。未確認を合格にしない。"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/2026-10-11-native-owned-island/verification-a6/qa-place-whole-island-v1-768-grown-real-3d.png",
+      "state": "missing",
+      "target": "../../../../../../../docs/design/2026-10-11-island-landscape-art/history/2026-10-11-native-owned-island/verification-a6/qa-place-whole-island-v1-768-grown-real-3d.png",
+      "reason": "元ページの参照先。未確認を合格にしない。"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/README.md",
+      "state": "missing",
+      "target": "../../../../../../../docs/design/2026-10-11-island-landscape-art/history/draft-05/README.md",
+      "reason": "元ページの参照先。未確認を合格にしない。"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/2026-10-11-native-owned-island",
+      "state": "missing",
+      "target": "../../../../../../../docs/design/2026-10-11-island-landscape-art/history/2026-10-11-native-owned-island",
+      "reason": "元ページの参照先。未確認を合格にしない。"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/viewer.bundle.js",
+      "state": "missing",
+      "target": "../../../../../../../docs/design/2026-10-11-island-landscape-art/history/draft-05/viewer.bundle.js",
+      "reason": "元ページの参照先。未確認を合格にしない。"
+    }
+  ],
+  "manifestSha256": "43acfc5c1f6f626a2e952b0221f7c81fa6e0871db4e641023c52629d4685f027",
+  "verification": "Every available cloned file checked against the exact source manifest. Missing historical resources remain missing and are not substituted."
+}

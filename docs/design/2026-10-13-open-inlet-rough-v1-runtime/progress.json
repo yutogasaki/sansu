@@ -1,0 +1,38 @@
+{
+  "phase": "rotate-and-small-screens",
+  "steps": [
+    {
+      "name": "verify-fixed-candidate",
+      "elapsedMs": 1254
+    },
+    {
+      "name": "load-existing-mature-island",
+      "elapsedMs": 15364
+    },
+    {
+      "name": "prepare-existing-bench-once",
+      "elapsedMs": 11771
+    },
+    {
+      "name": "same-owners-north",
+      "elapsedMs": 115616
+    },
+    {
+      "name": "same-owners-east",
+      "elapsedMs": 109110
+    },
+    {
+      "name": "same-owners-loop",
+      "elapsedMs": 126676
+    },
+    {
+      "name": "separate-bridge-tree",
+      "elapsedMs": 11502
+    },
+    {
+      "name": "reconnect-and-restore-loop",
+      "elapsedMs": 11965
+    }
+  ],
+  "at": "2026-10-13T12:04:02.865Z"
+}

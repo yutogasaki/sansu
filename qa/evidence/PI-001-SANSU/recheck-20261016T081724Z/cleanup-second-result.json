@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-16T09:12:31.367375+00:00",
+  "status": "PASS",
+  "entries": [
+    {
+      "path": "/tmp/codex/PI-001-SANSU/recheck-20261016T081724Z/clean/sansu",
+      "kind": "completed-isolated-verification-workspace",
+      "files": 27677,
+      "logicalBytes": 6029052107,
+      "reason": "Completed disposable full-source checkout and duplicate portal. Source commit, recovery sets, additional-input receipts, differences, logs and byte comparison remain. No current entrance refers here.",
+      "absentAfter": true
+    },
+    {
+      "path": "/tmp/codex/PI-001-SANSU/hub-preflight.cjs",
+      "kind": "retired-operational-hub-copy-preflight",
+      "files": 1,
+      "logicalBytes": 2497,
+      "retainedHistoricalCopy": "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/hub-preflight.cjs",
+      "sha256": "52a6fc3a2c53942afaf85f66730b1bc364925e860a89a46cbc08f895bd17d22f",
+      "reason": "No active copy operation under the new policy; historical source retained in QA.",
+      "absentAfter": true
+    }
+  ],
+  "logicalByteNote": "Logical sizes, not a physical disk-space claim."
+}

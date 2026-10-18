@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "currentCandidate": "6996c233e0aef9e6686dfe4717ac8838ff27a72432433dbf3de4a2f756300c78",
-  "legacyCandidate": "998ea0a4fbe5c90c8c145ae3bdb1b08e09967db5ab28b3066c0a7a6eb94aa21a",
+  "currentCandidate": "4af48a7ecb02d8606fdde33073493bbcbedcdbee929c5f59d973615d308741ad",
+  "legacyCandidate": "dc3217e4b4c80cf7d1f3b83a3f5d416d038654b1c9a5e3fc36d7adb6a8387cf4",
   "project": {
     "schemaVersion": "1.0",
     "slug": "sansu",
@@ -871,7 +871,7 @@
       "docs/design/2026-10-13-open-inlet-rough-v1-runtime/report.json": "ac2b3643f8032d8ed85dd7ebc8ae6999ac5fec5b8c822106417566521bd38e23",
       "docs/tasks/active/2026-09-20-whole-app-ux-coherence.md": "f88ac90542d88db1a5ceea185ae482d3cf855efcc2fee74695240d73b455ba17",
       "docs/tasks/active/2026-09-23-island-performance.md": "7ad513c708ef9271c6c4ff66ca46b638e60892e627380f2bc1452d755b8a7e17",
-      "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md": "540549ef62e1c791775c75a7152ac8fabc639a5f6b6c84edc5b0d15a89ddf6e7",
+      "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md": "df5c25214a42012fafd8f98aa52a9820eebb7ef1b0a1bcc413e111121f785d1a",
       "docs/tasks/active/2026-10-05-growing-island-release.md": "a5b06db72a5ff7a2dd271669948df0ef503f22b81e47a56d00b1ad359518fafe"
     },
     "source_history": [
@@ -1114,13 +1114,13 @@
     {
       "source": ".agents/index.html",
       "target": "overview.html",
-      "originalSha256": "5dc9db0ed645dd4e8a741c1c5614682b2dda5e0e04450690ce8b8a8d16092faa",
+      "originalSha256": "290f8c006c48f85e9f2238e7fa90d0f975933c13b549296dcada2d5fcbcdfe73",
       "ai": "ai/overview.html"
     },
     {
       "source": ".agents/map.html",
       "target": "map.html",
-      "originalSha256": "5c9d31762d71abae997694b490c46c532895a5324ea512a9c14fee04da549889",
+      "originalSha256": "b1778ebdbfaecb641f21dcef440df1f95ad9aac0b6c9c7ed1d55cc0376d3fd0f",
       "ai": "ai/map.html"
     },
     {
@@ -1138,19 +1138,19 @@
     {
       "source": ".agents/operations.html",
       "target": "operations.html",
-      "originalSha256": "b67ebbb5ee042d567289047f3841d9b50f105ec33d32c4e0a0a0e41278e86605",
+      "originalSha256": "a97a63c44cdae5883436222ddfbfd98ff62f39c56cec129d6d89104b250db145",
       "ai": "ai/operations.html"
     },
     {
       "source": ".agents/tasks/index.html",
       "target": "tasks.html",
-      "originalSha256": "2c6d9b1b149f640ebd332cc963679c786ff7ed032e32cd6f0de26739d98c981d",
+      "originalSha256": "680e6bdeb996d445b782e500b81732c209751f8211636b21e57fed6d6485154b",
       "ai": "ai/tasks.html"
     },
     {
       "source": "docs/index.html",
       "target": "documents.html",
-      "originalSha256": "fd4cc0940cbca5ed46e07569617dd2544658797bad9473804a8e39febd93eba8",
+      "originalSha256": "aad01022fbc6442b77cc403cb03f94a472a6e643d863a47de70a712d92e1c155",
       "ai": "ai/documents.html"
     }
   ],
@@ -1487,8 +1487,8 @@
     {
       "source": "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
       "target": "../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
-      "sha256": "540549ef62e1c791775c75a7152ac8fabc639a5f6b6c84edc5b0d15a89ddf6e7",
-      "bytes": 33808,
+      "sha256": "df5c25214a42012fafd8f98aa52a9820eebb7ef1b0a1bcc413e111121f785d1a",
+      "bytes": 34652,
       "mode": "reference"
     },
     {
@@ -1746,8 +1746,8 @@
     {
       "source": "website/index.html",
       "target": "../website/index.html",
-      "sha256": "a0e16fef56944ba7ff8c5673985e8ddc9878e4e0054c13d28e63a1e4ef2c2faf",
-      "bytes": 16409,
+      "sha256": "e06f759207513689bf78ca117b9beef502aa073b8cf2863c7cb3985981eb0412",
+      "bytes": 16646,
       "mode": "reference"
     },
     {
@@ -1760,8 +1760,8 @@
     {
       "source": "website/style.css",
       "target": "../website/style.css",
-      "sha256": "add62f134e78582ab16c4ba7f1f4ebd229d30211a8d0291f85fd264e33db084a",
-      "bytes": 21900,
+      "sha256": "5577b3fa61355eac5a91a9628ea7fcf531e01820fcdb468fd2595cc2ff28cc09",
+      "bytes": 22178,
       "mode": "reference"
     },
     {
@@ -1774,22 +1774,22 @@
     {
       "source": "website/main.js",
       "target": "../website/main.js",
-      "sha256": "9dd691e554ccb8f84f9b037594b3c504e353c82f95249d9792c5d71fc9d25603",
-      "bytes": 2849,
+      "sha256": "15f3c73900b6c350eb25aafb78e4bff8312aa92fd84a07ebb0c67030c4227cea",
+      "bytes": 2946,
       "mode": "reference"
     },
     {
-      "source": "website/public/images/island-start.png",
-      "target": "../website/public/images/island-start.png",
-      "sha256": "66791cfccd817677944ff7217b9f1cbc60cf0eeaebd005622a1dc0663304a46b",
-      "bytes": 637503,
+      "source": "website/public/images/island-start-cove.jpg",
+      "target": "../website/public/images/island-start-cove.jpg",
+      "sha256": "6ca1766b73fbeca346432509891ecaadc1d48c75fb47d9fb7019f4a33c7f1b85",
+      "bytes": 357524,
       "mode": "reference"
     },
     {
-      "source": "website/public/images/island-village.png",
-      "target": "../website/public/images/island-village.png",
-      "sha256": "a96ac89e60b23afee3b3bdc293e186e37f68f86a9636944c3688696c16ac5947",
-      "bytes": 656513,
+      "source": "website/public/images/island-village-cove.jpg",
+      "target": "../website/public/images/island-village-cove.jpg",
+      "sha256": "de7631e5f244fe36888274c613f4cc9d0a8ad2a48fe3efb450dcd759a468f99c",
+      "bytes": 450709,
       "mode": "reference"
     },
     {
@@ -1893,8 +1893,8 @@
     {
       "source": "docs/product/07_ui_design_guideline.md",
       "target": "../docs/product/07_ui_design_guideline.md",
-      "sha256": "543b760d118fa0de814a031d7f277ceff2a697304a47331e5b1e2623fbeb4d74",
-      "bytes": 48444,
+      "sha256": "e437c8be6e6582d3c1e6295d1bb5e25ebe8b09470c8c8881e0277d28ac1e445e",
+      "bytes": 48798,
       "mode": "reference"
     },
     {
@@ -1921,8 +1921,8 @@
     {
       "source": "docs/product/01_app_spec.md",
       "target": "../docs/product/01_app_spec.md",
-      "sha256": "a2499aeb67439deb8c625f4b222a3ef72317d7fd87c5b1392e58430b5bd713df",
-      "bytes": 123121,
+      "sha256": "085521ea93522258a71a0aaaae3171d8a505d55e2c24cfc5d797ea8b129023ff",
+      "bytes": 123516,
       "mode": "reference"
     },
     {
@@ -1956,8 +1956,8 @@
     {
       "source": "docs/product/28_mystic_island_spec.md",
       "target": "../docs/product/28_mystic_island_spec.md",
-      "sha256": "ec41fd8e519e6afe75b94b589c1d37c2b6fed684f5be9c675077ae1069228263",
-      "bytes": 68166,
+      "sha256": "c57a6c07fde03cbc578d8a87bf276aed5c8e7296116a7563511e4d95575039f9",
+      "bytes": 68438,
       "mode": "reference"
     },
     {
@@ -1970,8 +1970,8 @@
     {
       "source": "docs/product/43_island_navigation_spec.md",
       "target": "../docs/product/43_island_navigation_spec.md",
-      "sha256": "5a055e20369ee087f4aa4ee288ce7f3ac7e2d51473a62722bcbc3d58df388687",
-      "bytes": 20047,
+      "sha256": "28aba896ff79fa3e51d9286364766e98a1c214006e98844c84291103a8767991",
+      "bytes": 20396,
       "mode": "reference"
     },
     {
@@ -2054,8 +2054,8 @@
     {
       "source": "docs/product/13_data_storage_migration_spec.md",
       "target": "../docs/product/13_data_storage_migration_spec.md",
-      "sha256": "cc5e76a62f78ba2f20c0cfbe3627bef91b561fbd20ec0851306b6b9fe23e7a72",
-      "bytes": 46429,
+      "sha256": "ec3de24d9e6eaf7f5bf663e29e9b03e13c7a96fe1df022f0def07df60a55f8de",
+      "bytes": 46865,
       "mode": "reference"
     },
     {
@@ -2215,15 +2215,15 @@
     {
       "source": "docs/product/46_island_tutorial_spec.md",
       "target": "../docs/product/46_island_tutorial_spec.md",
-      "sha256": "9873c5ef3a38550c0aceb8a67365f121ec77631563b499087db0dab6a0429bda",
-      "bytes": 5115,
+      "sha256": "55f0f898569e2471692eb9ada5d094bb93781bd1422da5a3158443dc0942e235",
+      "bytes": 5411,
       "mode": "reference"
     },
     {
       "source": "docs/product/island-starter-achievements-proposal.md",
       "target": "../docs/product/island-starter-achievements-proposal.md",
-      "sha256": "0ee447784916d3344490b79330402dc5f93ada1d817a2a822563be8d0e8a0021",
-      "bytes": 25610,
+      "sha256": "4b0c14d2908fcf26142a00c09fd0901569e88142c358fd7f5d5e6c2278a8cf8b",
+      "bytes": 25918,
       "mode": "reference"
     },
     {
@@ -4709,6 +4709,139 @@
       "target": "../src/assets/natureTown/town-rabbit-receiving.png",
       "sha256": "b15c570189e2b6eab40818817861962a09f780b1373d8374e8fa4375f19f0832",
       "bytes": 14717,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-cove-mcp-ab/cove-roof-variant.glb",
+      "target": "../docs/design/2026-10-18-cove-mcp-ab/cove-roof-variant.glb",
+      "sha256": "a8e2f0c6255e79dbf177734646fce4da07dc7f728a7b4855c50b63c03a28184f",
+      "bytes": 1682524,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-cove-mcp-ab/comparison-near.jpg",
+      "target": "../docs/design/2026-10-18-cove-mcp-ab/comparison-near.jpg",
+      "sha256": "bbf0c9d8d06926bbc313c22a814445dc75faead20f73941b16971c6974b2eb20",
+      "bytes": 273163,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-cove-mcp-ab/comparison-whole.jpg",
+      "target": "../docs/design/2026-10-18-cove-mcp-ab/comparison-whole.jpg",
+      "sha256": "49fed31b98b1bc509cc52f04cf1d77c0fae88231b038b438e2968221fc80043e",
+      "bytes": 244945,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-crab-mcp-trial/notice.png",
+      "target": "../docs/design/2026-10-18-crab-mcp-trial/notice.png",
+      "sha256": "27d657d04b59cd82c8a227e9eb969b5fbeda2a9c1f71b049ae83900b93a1be40",
+      "bytes": 754204,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-crab-mcp-trial/ready.png",
+      "target": "../docs/design/2026-10-18-crab-mcp-trial/ready.png",
+      "sha256": "e2f36a0c808c01569f704e7e6d7188617f9ee9506347d3e03d06a079279951df",
+      "bytes": 753650,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-crab-mcp-trial/shelter.png",
+      "target": "../docs/design/2026-10-18-crab-mcp-trial/shelter.png",
+      "sha256": "18a253abbe17182db9f7d9d8fee13da614aff3413d2994d5d3625d6ec156a1f8",
+      "bytes": 748053,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-menu-sea-clipping/final-768-interrupted-new-home.png",
+      "target": "../docs/design/2026-10-18-menu-sea-clipping/final-768-interrupted-new-home.png",
+      "sha256": "c9f3e79a09ccfcf669b326f5f89fd8eca1650ec8e487c7d2e28ee79aa2aa6143",
+      "bytes": 436363,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-menu-sea-clipping/final-768-interrupted-new-offline.png",
+      "target": "../docs/design/2026-10-18-menu-sea-clipping/final-768-interrupted-new-offline.png",
+      "sha256": "ab52b7eb5990edfcf1ca054734a57154464bbde4f1b7c0e1f214b9b93ebece46",
+      "bytes": 435785,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-menu-sea-clipping/final-768-normal-new-offline.png",
+      "target": "../docs/design/2026-10-18-menu-sea-clipping/final-768-normal-new-offline.png",
+      "sha256": "61ac6f9cfff491c81adb810c02a611250d5439520debc04412e0850c6f95931b",
+      "bytes": 435692,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-onboarding/runtime/768-welcome.png",
+      "target": "../docs/design/2026-10-18-onboarding/runtime/768-welcome.png",
+      "sha256": "da88356057cc99fd873c417e4ea8c7fdc4479ec415b4cee0414e5a4ace4950d8",
+      "bytes": 703367,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-onboarding/runtime/768-return.png",
+      "target": "../docs/design/2026-10-18-onboarding/runtime/768-return.png",
+      "sha256": "98ea0387064ef7115b984b84aa21702b99b0795e4c9ea6469fc684c13a459dd4",
+      "bytes": 489597,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-onboarding/runtime/768-first-neighbor.png",
+      "target": "../docs/design/2026-10-18-onboarding/runtime/768-first-neighbor.png",
+      "sha256": "ed8cf553cbbc74f57fca8bdc158ab56beb961d20fa5ff02fc7fcabc1ed692260",
+      "bytes": 445852,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-place-value/768-actual.png",
+      "target": "../docs/design/2026-10-18-place-value/768-actual.png",
+      "sha256": "1d791ab1274d1b611de6cf6577915393c6657906db2a8ebed3ae9c962fc1a3f2",
+      "bytes": 85932,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-place-value/768-actual-hint.png",
+      "target": "../docs/design/2026-10-18-place-value/768-actual-hint.png",
+      "sha256": "3a4aa3aaaf9db1310a1a76a5e2f7432549212ae339c5148c9ee0160b336b9c04",
+      "bytes": 83890,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-place-value/390-actual-hint.png",
+      "target": "../docs/design/2026-10-18-place-value/390-actual-hint.png",
+      "sha256": "224c727f8d0ac4855a27594c584a7b09724b14909cd7e03877069c66ba40f6eb",
+      "bytes": 60141,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-promotion-cove/village-source.png",
+      "target": "../docs/design/2026-10-18-promotion-cove/village-source.png",
+      "sha256": "9a1748aedcc9bd2ef2b421e60d94b9d985528b6f278667456105d919ae93656a",
+      "bytes": 1967085,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-promotion-cove/start-source.png",
+      "target": "../docs/design/2026-10-18-promotion-cove/start-source.png",
+      "sha256": "f9bdb1f5f15e692cd85126a5b395bbfd42671fae5fa9d207d1527e1fb236f80c",
+      "bytes": 1795564,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-promotion-cove/runtime-final/1440-village.png",
+      "target": "../docs/design/2026-10-18-promotion-cove/runtime-final/1440-village.png",
+      "sha256": "5fdc44f73d4c407f82d94a0d1719e998c68e6e6ed1127f6895077f2d9113eb4c",
+      "bytes": 1537717,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-promotion-directions/directions.png",
+      "target": "../docs/design/2026-10-18-promotion-directions/directions.png",
+      "sha256": "fa7af18dae94ed9973b1bf3c9105a3bdaecdb4f54a03cd4080eaf5fdce9dc14a",
+      "bytes": 2231444,
       "mode": "reference"
     },
     {
@@ -11140,8 +11273,8 @@
     {
       "source": "docs/ai/verification_matrix.md",
       "target": "../docs/ai/verification_matrix.md",
-      "sha256": "cd1379fdf609783d2d604613e06d92a4db77f3cf719a2db6f46bb5e22691a0c0",
-      "bytes": 85893,
+      "sha256": "dff16dca4e466c7bc365232df73a209154bf1dbd006ef6dc8633be5a71f85652",
+      "bytes": 85931,
       "mode": "reference"
     },
     {
@@ -11168,8 +11301,8 @@
     {
       "source": "docs/index.md",
       "target": "../docs/index.md",
-      "sha256": "6d2c363ad612b8654d07d1765c5a438d5f8781df59d837ec47c932d8e720a0be",
-      "bytes": 19978,
+      "sha256": "52714f2ab472c1cd1d0a0112234150e3540cc92578662de1bf66dd02ac0ed193",
+      "bytes": 20396,
       "mode": "reference"
     },
     {
@@ -11273,15 +11406,15 @@
     {
       "source": "docs/product/52_growing_island_game_spec.md",
       "target": "../docs/product/52_growing_island_game_spec.md",
-      "sha256": "f3b884b4db2b8c072e911732e2eefa30cb2a37944713dbf1c72bc8a94d0be13c",
-      "bytes": 73255,
+      "sha256": "895946891af965e043218acbf0c80d8c114481c2edab46cfeba1559e480a1610",
+      "bytes": 73642,
       "mode": "reference"
     },
     {
       "source": "docs/product/53_promotion_website_spec.md",
       "target": "../docs/product/53_promotion_website_spec.md",
-      "sha256": "13ba46e11492c392e369cde26eff05d76e2adc27061cf10258b750a621db1f80",
-      "bytes": 5379,
+      "sha256": "10708a1e5b3c0540e794b638875310334e1201e9f4226b910de2c4d0b81df07f",
+      "bytes": 6263,
       "mode": "reference"
     },
     {
@@ -11303,6 +11436,13 @@
       "target": "../docs/product/island-expansion-art-strategy.md",
       "sha256": "dbe1a92ffee6685a49b79eab293f8334974760ba7d089b5a11acf76e68ddf1d3",
       "bytes": 17759,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/product/island-first-play-onboarding.md",
+      "target": "../docs/product/island-first-play-onboarding.md",
+      "sha256": "b65c18aa5911b8a891730fea09d8b984f0cb3535f2981c2b532f3f1baf197b0b",
+      "bytes": 4293,
       "mode": "reference"
     },
     {
@@ -11329,8 +11469,8 @@
     {
       "source": "docs/product/learning-content-integrity.md",
       "target": "../docs/product/learning-content-integrity.md",
-      "sha256": "116f962a7af5a3eee05741c7964217600ff26bcfa635bb61cb0a96216cafe06d",
-      "bytes": 5377,
+      "sha256": "86baf79c8a20dd08fda93c97a8c9eb10cd5bfb010c37e513b705b8571d7a9a9b",
+      "bytes": 6926,
       "mode": "reference"
     },
     {
@@ -11499,6 +11639,13 @@
       "target": "../docs/tasks/active/2026-10-01-island-guidance.md",
       "sha256": "9aa82d323d8559a41278d9bd23f03fb5caa38dc6ab0f34dc00619f1c4c0456de",
       "bytes": 6169,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/tasks/active/2026-10-18-promotion-cove-verification.md",
+      "target": "../docs/tasks/active/2026-10-18-promotion-cove-verification.md",
+      "sha256": "beca4b4cf073ff3e39b16022084f386ec2b5977679da4e2eeb4dd7c16936d1e3",
+      "bytes": 1188,
       "mode": "reference"
     },
     {
@@ -14281,6 +14428,69 @@
       "mode": "reference"
     },
     {
+      "source": "docs/design/2026-10-18-cove-mcp-ab/README.md",
+      "target": "../docs/design/2026-10-18-cove-mcp-ab/README.md",
+      "sha256": "c48ed5645a89200968f7e18778f8414a51191300d31550dc859435373fc8c786",
+      "bytes": 6558,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-crab-mcp-trial/README.md",
+      "target": "../docs/design/2026-10-18-crab-mcp-trial/README.md",
+      "sha256": "5d8ea4667306a7a24bd8b107be7afb87c1b4f8a5affac0081be449465caf916e",
+      "bytes": 3801,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-menu-sea-clipping/README.md",
+      "target": "../docs/design/2026-10-18-menu-sea-clipping/README.md",
+      "sha256": "00efef262210d6d62f2e4c15fa79ed2d4b80640cc278ed3cccf2db59f04e9646",
+      "bytes": 9351,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-onboarding/art-brief.md",
+      "target": "../docs/design/2026-10-18-onboarding/art-brief.md",
+      "sha256": "9234a59005da96af9b31e911d2140dff4633722f0e26429004d881c342da8ac8",
+      "bytes": 7004,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-onboarding/flow-spec.md",
+      "target": "../docs/design/2026-10-18-onboarding/flow-spec.md",
+      "sha256": "75e1725246e6103295e174c60d88b8c91712ffc47554437cc15e2a1997576dd7",
+      "bytes": 10146,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-onboarding/README.md",
+      "target": "../docs/design/2026-10-18-onboarding/README.md",
+      "sha256": "a65b885115612652dfc8ba9f46e22c88e4752b9729c79cfef4c92100b0018930",
+      "bytes": 5175,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-place-value/README.md",
+      "target": "../docs/design/2026-10-18-place-value/README.md",
+      "sha256": "3be19dde47eba37c683fa58cef4836d0c009f3f3c85bda0daa2a9e8b70dfd8e7",
+      "bytes": 6051,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-promotion-cove/README.md",
+      "target": "../docs/design/2026-10-18-promotion-cove/README.md",
+      "sha256": "4158da37eab62edc5e8937157aab37d8250fc755394a97390db3b0ba33de7d4f",
+      "bytes": 3810,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-18-promotion-directions/README.md",
+      "target": "../docs/design/2026-10-18-promotion-directions/README.md",
+      "sha256": "c43047308ca062fd3d818ceae457999a37b6fcb5fd3ec827fd9dbb984629e6b8",
+      "bytes": 2180,
+      "mode": "reference"
+    },
+    {
       "source": "docs/design/audits/2026-07-20-score-benchmark/README.md",
       "target": "../docs/design/audits/2026-07-20-score-benchmark/README.md",
       "sha256": "865ae0db1e1168f1b4fcc6f2519b82b057a6f56b8216b45f19d6f52a769f531a",
@@ -15921,8 +16131,8 @@
     {
       "source": "docs/done/2026-10.md",
       "target": "../docs/done/2026-10.md",
-      "sha256": "30837b50e664b4a851357efdc5b52d7aa621d83745c5a5c078d12690b028bb3c",
-      "bytes": 125036,
+      "sha256": "b18b3b99ed8609c5fed4985d2d2afc07ae4d13e8006b58bed242fe05a36cf726",
+      "bytes": 132417,
       "mode": "reference"
     },
     {
@@ -16047,8 +16257,8 @@
     {
       "source": "docs/portal/README.md",
       "target": "../docs/portal/README.md",
-      "sha256": "d0dc323fa206c144c8fe8e2d4f77377ac2b72f91171098cc7a7ea667050e27e3",
-      "bytes": 18067,
+      "sha256": "f60a20b2e73508c2089e59d84bc5b17ace784773b57cc64051b3a9467e41cfd2",
+      "bytes": 23699,
       "mode": "reference"
     },
     {
@@ -16098,6 +16308,13 @@
       "target": "../docs/portal/comparison/comparison.json",
       "sha256": "e9314ecbee9478fade34dc37e3fa170785c9c98d7cf465732f1bd5f6d1437a49",
       "bytes": 3052,
+      "mode": "reference"
+    },
+    {
+      "source": "website/public/images/island-start.png",
+      "target": "../website/public/images/island-start.png",
+      "sha256": "66791cfccd817677944ff7217b9f1cbc60cf0eeaebd005622a1dc0663304a46b",
+      "bytes": 637503,
       "mode": "reference"
     }
   ],
@@ -16459,12 +16676,12 @@
       "target": "../website/main.js"
     },
     {
-      "source": "website/public/images/island-start.png",
-      "target": "../website/public/images/island-start.png"
+      "source": "website/public/images/island-start-cove.jpg",
+      "target": "../website/public/images/island-start-cove.jpg"
     },
     {
-      "source": "website/public/images/island-village.png",
-      "target": "../website/public/images/island-village.png"
+      "source": "website/public/images/island-village-cove.jpg",
+      "target": "../website/public/images/island-village-cove.jpg"
     },
     {
       "source": "website/public/images/island-complete.png",
@@ -18133,6 +18350,82 @@
     {
       "source": "src/assets/natureTown/town-rabbit-receiving.png",
       "target": "../src/assets/natureTown/town-rabbit-receiving.png"
+    },
+    {
+      "source": "docs/design/2026-10-18-cove-mcp-ab/cove-roof-variant.glb",
+      "target": "../docs/design/2026-10-18-cove-mcp-ab/cove-roof-variant.glb"
+    },
+    {
+      "source": "docs/design/2026-10-18-cove-mcp-ab/comparison-near.jpg",
+      "target": "../docs/design/2026-10-18-cove-mcp-ab/comparison-near.jpg"
+    },
+    {
+      "source": "docs/design/2026-10-18-cove-mcp-ab/comparison-whole.jpg",
+      "target": "../docs/design/2026-10-18-cove-mcp-ab/comparison-whole.jpg"
+    },
+    {
+      "source": "docs/design/2026-10-18-crab-mcp-trial/notice.png",
+      "target": "../docs/design/2026-10-18-crab-mcp-trial/notice.png"
+    },
+    {
+      "source": "docs/design/2026-10-18-crab-mcp-trial/ready.png",
+      "target": "../docs/design/2026-10-18-crab-mcp-trial/ready.png"
+    },
+    {
+      "source": "docs/design/2026-10-18-crab-mcp-trial/shelter.png",
+      "target": "../docs/design/2026-10-18-crab-mcp-trial/shelter.png"
+    },
+    {
+      "source": "docs/design/2026-10-18-menu-sea-clipping/final-768-interrupted-new-home.png",
+      "target": "../docs/design/2026-10-18-menu-sea-clipping/final-768-interrupted-new-home.png"
+    },
+    {
+      "source": "docs/design/2026-10-18-menu-sea-clipping/final-768-interrupted-new-offline.png",
+      "target": "../docs/design/2026-10-18-menu-sea-clipping/final-768-interrupted-new-offline.png"
+    },
+    {
+      "source": "docs/design/2026-10-18-menu-sea-clipping/final-768-normal-new-offline.png",
+      "target": "../docs/design/2026-10-18-menu-sea-clipping/final-768-normal-new-offline.png"
+    },
+    {
+      "source": "docs/design/2026-10-18-onboarding/runtime/768-welcome.png",
+      "target": "../docs/design/2026-10-18-onboarding/runtime/768-welcome.png"
+    },
+    {
+      "source": "docs/design/2026-10-18-onboarding/runtime/768-return.png",
+      "target": "../docs/design/2026-10-18-onboarding/runtime/768-return.png"
+    },
+    {
+      "source": "docs/design/2026-10-18-onboarding/runtime/768-first-neighbor.png",
+      "target": "../docs/design/2026-10-18-onboarding/runtime/768-first-neighbor.png"
+    },
+    {
+      "source": "docs/design/2026-10-18-place-value/768-actual.png",
+      "target": "../docs/design/2026-10-18-place-value/768-actual.png"
+    },
+    {
+      "source": "docs/design/2026-10-18-place-value/768-actual-hint.png",
+      "target": "../docs/design/2026-10-18-place-value/768-actual-hint.png"
+    },
+    {
+      "source": "docs/design/2026-10-18-place-value/390-actual-hint.png",
+      "target": "../docs/design/2026-10-18-place-value/390-actual-hint.png"
+    },
+    {
+      "source": "docs/design/2026-10-18-promotion-cove/village-source.png",
+      "target": "../docs/design/2026-10-18-promotion-cove/village-source.png"
+    },
+    {
+      "source": "docs/design/2026-10-18-promotion-cove/start-source.png",
+      "target": "../docs/design/2026-10-18-promotion-cove/start-source.png"
+    },
+    {
+      "source": "docs/design/2026-10-18-promotion-cove/runtime-final/1440-village.png",
+      "target": "../docs/design/2026-10-18-promotion-cove/runtime-final/1440-village.png"
+    },
+    {
+      "source": "docs/design/2026-10-18-promotion-directions/directions.png",
+      "target": "../docs/design/2026-10-18-promotion-directions/directions.png"
     },
     {
       "source": "docs/design/2026-10-13-open-inlet-rough-v1-runtime/initial.png",
@@ -21903,6 +22196,10 @@
       "target": "../docs/product/island-expansion-art-strategy.md"
     },
     {
+      "source": "docs/product/island-first-play-onboarding.md",
+      "target": "../docs/product/island-first-play-onboarding.md"
+    },
+    {
       "source": "docs/product/island-native-owned-art.md",
       "target": "../docs/product/island-native-owned-art.md"
     },
@@ -22013,6 +22310,10 @@
     {
       "source": "docs/tasks/active/2026-10-01-island-guidance.md",
       "target": "../docs/tasks/active/2026-10-01-island-guidance.md"
+    },
+    {
+      "source": "docs/tasks/active/2026-10-18-promotion-cove-verification.md",
+      "target": "../docs/tasks/active/2026-10-18-promotion-cove-verification.md"
     },
     {
       "source": "docs/tasks/active/README.md",
@@ -23603,6 +23904,42 @@
       "target": "../docs/design/2026-10-13-whole-island-layout-rough-v3-runtime-c2/README.md"
     },
     {
+      "source": "docs/design/2026-10-18-cove-mcp-ab/README.md",
+      "target": "../docs/design/2026-10-18-cove-mcp-ab/README.md"
+    },
+    {
+      "source": "docs/design/2026-10-18-crab-mcp-trial/README.md",
+      "target": "../docs/design/2026-10-18-crab-mcp-trial/README.md"
+    },
+    {
+      "source": "docs/design/2026-10-18-menu-sea-clipping/README.md",
+      "target": "../docs/design/2026-10-18-menu-sea-clipping/README.md"
+    },
+    {
+      "source": "docs/design/2026-10-18-onboarding/art-brief.md",
+      "target": "../docs/design/2026-10-18-onboarding/art-brief.md"
+    },
+    {
+      "source": "docs/design/2026-10-18-onboarding/flow-spec.md",
+      "target": "../docs/design/2026-10-18-onboarding/flow-spec.md"
+    },
+    {
+      "source": "docs/design/2026-10-18-onboarding/README.md",
+      "target": "../docs/design/2026-10-18-onboarding/README.md"
+    },
+    {
+      "source": "docs/design/2026-10-18-place-value/README.md",
+      "target": "../docs/design/2026-10-18-place-value/README.md"
+    },
+    {
+      "source": "docs/design/2026-10-18-promotion-cove/README.md",
+      "target": "../docs/design/2026-10-18-promotion-cove/README.md"
+    },
+    {
+      "source": "docs/design/2026-10-18-promotion-directions/README.md",
+      "target": "../docs/design/2026-10-18-promotion-directions/README.md"
+    },
+    {
       "source": "docs/design/audits/2026-07-20-score-benchmark/README.md",
       "target": "../docs/design/audits/2026-07-20-score-benchmark/README.md"
     },
@@ -24641,6 +24978,10 @@
     {
       "source": "docs/portal/comparison/comparison.json",
       "target": "../docs/portal/comparison/comparison.json"
+    },
+    {
+      "source": "website/public/images/island-start.png",
+      "target": "../website/public/images/island-start.png"
     }
   ]
 }

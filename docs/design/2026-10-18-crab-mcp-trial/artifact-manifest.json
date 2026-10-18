@@ -1,0 +1,72 @@
+{
+  "candidate": "crab-mcp-trial-v1",
+  "timestamp": "2026-10-17T23:57:38.837913+00:00",
+  "target": "standalone localhost:8248",
+  "base_revision": "eb4b907b",
+  "delivery_flag": null,
+  "checks": {
+    "glb_parse": "PASS",
+    "animation_count": 1,
+    "skin_count": 1,
+    "duration_over_4_9": "PASS",
+    "browser_playback_and_poses": "PASS",
+    "phone_tablet": "NOT_CHECKED",
+    "reduced_motion": "NOT_CHECKED",
+    "child_observation_n": 0,
+    "application_integration": false
+  },
+  "files": {
+    "build-crab.py": {
+      "bytes": 7476,
+      "sha256": "820911f1f73b53083d7153dde9990bd67607128f8a47902f634b63a5ef529065"
+    },
+    "render-poses.py": {
+      "bytes": 289,
+      "sha256": "03cf22c266f9b13524dea898d14ad6419e91d6bff1da572c9db9c6f8cd494655"
+    },
+    "viewer.js": {
+      "bytes": 4072,
+      "sha256": "857c483524e27104a3e780a5293e8eb8c1214cbbcbbb6943bc56744bcaf2bec7"
+    },
+    "viewer.bundle.js": {
+      "bytes": 619538,
+      "sha256": "7ab0a5096257c84a3b08d7bb48b1b5c1b85f3aebb4d30e384e1e5fc6977a947b"
+    },
+    "index.html": {
+      "bytes": 1874,
+      "sha256": "d37a26c7657721f5afd9cb56a00c3adaa2d2a38bf37a5d2a826aab3bc9f5e241"
+    },
+    "crab-trial.blend": {
+      "bytes": 187342,
+      "sha256": "177da2768ab4d8aebf039141cc189e5e5dd09eb65d4cf577fda4628d44cf001f"
+    },
+    "crab-trial.glb": {
+      "bytes": 433840,
+      "sha256": "28d9c403c34f7eb7434597b70d764b99fb342e1427504b4555f869e9c100f8ae"
+    },
+    "ready.png": {
+      "bytes": 753650,
+      "sha256": "e2f36a0c808c01569f704e7e6d7188617f9ee9506347d3e03d06a079279951df"
+    },
+    "notice.png": {
+      "bytes": 754204,
+      "sha256": "27d657d04b59cd82c8a227e9eb969b5fbeda2a9c1f71b049ae83900b93a1be40"
+    },
+    "shelter.png": {
+      "bytes": 748053,
+      "sha256": "18a253abbe17182db9f7d9d8fee13da614aff3413d2994d5d3625d6ec156a1f8"
+    },
+    "browser-preview.png": {
+      "bytes": 49759,
+      "sha256": "1d3f06d774375e19381106cc275ceceecc4bb5e322e1959cef4704460b976b56"
+    },
+    "contact-sheet.jpg": {
+      "bytes": 49418,
+      "sha256": "9f4ff456aa4849c8958b62a07ea35f52f5dcb1ff1667164cb1915746885b1c8a"
+    },
+    "model-report.json": {
+      "bytes": 170,
+      "sha256": "e3858dc7e6a19e4ceebb9b177bfd0690135016909fdac6d67292d037044426cf"
+    }
+  }
+}

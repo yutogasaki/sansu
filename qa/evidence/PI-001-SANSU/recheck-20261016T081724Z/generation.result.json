@@ -1,0 +1,18 @@
+{
+  "name": "generation",
+  "command": "node",
+  "args": [
+    "scripts/standard-portal.mjs",
+    "verify"
+  ],
+  "startedAt": "2026-10-16T08:17:52.305Z",
+  "node": "v24.18.0",
+  "cwd": "/Users/yutogasaki/Projects/sansu",
+  "environment": {},
+  "endedAt": "2026-10-16T08:18:11.173Z",
+  "exitCode": 0,
+  "signal": null,
+  "status": "PASS",
+  "log": "generation.log",
+  "logSha256": "d97d90c36643a80b3a4a294deb5c8de76cd11dc6f07b907e9ee20f84c8a4e6a1"
+}

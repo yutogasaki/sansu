@@ -1,0 +1,1061 @@
+{
+  "at": "2026-10-16T08:19:23.862Z",
+  "command": "node tools/check-portal-migration-browser.mjs",
+  "candidate": "be55eae17dcadf330948d5261512dc0c8f20b33ea558e3aded97f77d83d4b9d5",
+  "beforeManifest": "30a8a8f60921a8e784965ca4aa5ad6c74dcc802206413803bd6655e3c09e023d",
+  "pages": [
+    {
+      "route": "/before/.agents/index.html",
+      "width": 1440,
+      "variant": "original",
+      "height": 3916,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 7,
+      "smallText": [
+        {
+          "tag": "P",
+          "class": "eyebrow",
+          "text": "LOCAL PROJECT PORTAL"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-10-05-growing-island-release.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-20-whole-app-ux-coherence.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-23-island-performance.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/internal-portal/contract.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/wiki/index.md"
+        }
+      ],
+      "minFont": 14,
+      "screenshots": [
+        "before-overview-1440-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/overview.html",
+      "width": 1440,
+      "variant": "integrated",
+      "height": 3514,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 36,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-overview-1440-first.jpg"
+      ]
+    },
+    {
+      "route": "/before/.agents/map.html",
+      "width": 1440,
+      "variant": "original",
+      "height": 13475,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 364,
+      "smallText": [
+        {
+          "tag": "P",
+          "class": "eyebrow",
+          "text": "ぽこもこと不思議な島"
+        },
+        {
+          "tag": "P",
+          "class": "map-help",
+          "text": "「今の島」は通常起動で遊べる画面、「別の試作」は専用の開発設定でだけ動く実験です。旧試作の画面が動いても、今の島にその遊びが入ったことにはなりません。"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "24件"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "13件"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "2件"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "15フォルダ"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-planter-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-mailbox-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-fence-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-watering-can-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-bridge-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-stepping-stones-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-signpost-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-flowerbed-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-cart-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-toolbox-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-garden-hut-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-rock-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-streetlamp-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-tree-v1"
+        }
+      ],
+      "minFont": 11,
+      "screenshots": [
+        "before-map-1440-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/map.html",
+      "width": 1440,
+      "variant": "integrated",
+      "height": 15076,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 412,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-map-1440-first.jpg"
+      ]
+    },
+    {
+      "route": "/before/.agents/plan.html",
+      "width": 1440,
+      "variant": "original",
+      "height": 1184,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 6,
+      "smallText": [],
+      "minFont": 17,
+      "screenshots": [
+        "before-plan-1440-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/plan.html",
+      "width": 1440,
+      "variant": "integrated",
+      "height": 3252,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 20,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-plan-1440-first.jpg"
+      ]
+    },
+    {
+      "route": "/before/.agents/roles.html",
+      "width": 1440,
+      "variant": "original",
+      "height": 1184,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 7,
+      "smallText": [],
+      "minFont": 17,
+      "screenshots": [
+        "before-roles-1440-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/roles.html",
+      "width": 1440,
+      "variant": "integrated",
+      "height": 1247,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 15,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-roles-1440-first.jpg"
+      ]
+    },
+    {
+      "route": "/before/.agents/operations.html",
+      "width": 1440,
+      "variant": "original",
+      "height": 1184,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 6,
+      "smallText": [],
+      "minFont": 17,
+      "screenshots": [
+        "before-operations-1440-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/operations.html",
+      "width": 1440,
+      "variant": "integrated",
+      "height": 1247,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 14,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-operations-1440-first.jpg"
+      ]
+    },
+    {
+      "route": "/before/.agents/tasks/index.html",
+      "width": 1440,
+      "variant": "original",
+      "height": 3354,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 8,
+      "smallText": [
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-10-05-growing-island-release.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-20-whole-app-ux-coherence.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-23-island-performance.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": ".agents/tasks/BLOCKED.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/backlog.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": ".agents/tasks/DONE.md"
+        }
+      ],
+      "minFont": 14,
+      "screenshots": [
+        "before-tasks-1440-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/tasks.html",
+      "width": 1440,
+      "variant": "integrated",
+      "height": 2599,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 25,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-tasks-1440-first.jpg"
+      ]
+    },
+    {
+      "route": "/before/docs/index.html",
+      "width": 1440,
+      "variant": "original",
+      "height": 120056,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 1,
+      "smallText": [
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/index.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/island-nature-integration.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/README.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/README.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/wiki/index.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/00_START_HERE.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/01_PRODUCT_AND_DECISIONS.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/02_CORE_SIMULATION.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/03_GROWTH_AND_RANDOMNESS.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/04_LEARNING_AND_PROGRESSION.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/05_UX_AND_FEEDBACK.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/06_DATA_AND_INTEGRATION.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/07_MVP_AND_DELIVERY.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/08_ACCEPTANCE_TESTS.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/09_CONTENT_CATALOG.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/10_OPEN_RISKS.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/IMPLEMENTATION_GAP.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/IMPLEMENTATION.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/01_app_spec.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/02_math_skills.md"
+        }
+      ],
+      "minFont": 14,
+      "screenshots": [
+        "before-documents-1440-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/documents.html",
+      "width": 1440,
+      "variant": "integrated",
+      "height": 93020,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 1396,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-documents-1440-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/index.html",
+      "width": 1440,
+      "variant": "integrated",
+      "height": 15787,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 74,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-home-1440-first.jpg"
+      ]
+    },
+    {
+      "route": "/before/.agents/index.html",
+      "width": 390,
+      "variant": "original",
+      "height": 7391,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 7,
+      "smallText": [
+        {
+          "tag": "P",
+          "class": "eyebrow",
+          "text": "LOCAL PROJECT PORTAL"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-10-05-growing-island-release.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-20-whole-app-ux-coherence.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-23-island-performance.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/internal-portal/contract.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/wiki/index.md"
+        }
+      ],
+      "minFont": 14,
+      "screenshots": [
+        "before-overview-390-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/overview.html",
+      "width": 390,
+      "variant": "integrated",
+      "height": 5854,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 36,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-overview-390-first.jpg"
+      ]
+    },
+    {
+      "route": "/before/.agents/map.html",
+      "width": 390,
+      "variant": "original",
+      "height": 21294,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 364,
+      "smallText": [
+        {
+          "tag": "P",
+          "class": "eyebrow",
+          "text": "ぽこもこと不思議な島"
+        },
+        {
+          "tag": "P",
+          "class": "map-help",
+          "text": "「今の島」は通常起動で遊べる画面、「別の試作」は専用の開発設定でだけ動く実験です。旧試作の画面が動いても、今の島にその遊びが入ったことにはなりません。"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "24件"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "13件"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "2件"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "15フォルダ"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-planter-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-mailbox-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-fence-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-watering-can-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-bridge-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-stepping-stones-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-signpost-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-flowerbed-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-cart-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-toolbox-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-garden-hut-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-rock-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-streetlamp-v1"
+        },
+        {
+          "tag": "SMALL",
+          "class": "",
+          "text": "assets/island-tree-v1"
+        }
+      ],
+      "minFont": 11,
+      "screenshots": [
+        "before-map-390-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/map.html",
+      "width": 390,
+      "variant": "integrated",
+      "height": 23516,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 412,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-map-390-first.jpg"
+      ]
+    },
+    {
+      "route": "/before/.agents/plan.html",
+      "width": 390,
+      "variant": "original",
+      "height": 1629,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 6,
+      "smallText": [],
+      "minFont": 17,
+      "screenshots": [
+        "before-plan-390-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/plan.html",
+      "width": 390,
+      "variant": "integrated",
+      "height": 5667,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 20,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-plan-390-first.jpg"
+      ]
+    },
+    {
+      "route": "/before/.agents/roles.html",
+      "width": 390,
+      "variant": "original",
+      "height": 1770,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 7,
+      "smallText": [],
+      "minFont": 17,
+      "screenshots": [
+        "before-roles-390-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/roles.html",
+      "width": 390,
+      "variant": "integrated",
+      "height": 1736,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 15,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-roles-390-first.jpg"
+      ]
+    },
+    {
+      "route": "/before/.agents/operations.html",
+      "width": 390,
+      "variant": "original",
+      "height": 1629,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 6,
+      "smallText": [],
+      "minFont": 17,
+      "screenshots": [
+        "before-operations-390-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/operations.html",
+      "width": 390,
+      "variant": "integrated",
+      "height": 1625,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 14,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-operations-390-first.jpg"
+      ]
+    },
+    {
+      "route": "/before/.agents/tasks/index.html",
+      "width": 390,
+      "variant": "original",
+      "height": 4669,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 8,
+      "smallText": [
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-10-05-growing-island-release.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-20-whole-app-ux-coherence.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-23-island-performance.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": ".agents/tasks/BLOCKED.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/backlog.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": ".agents/tasks/DONE.md"
+        }
+      ],
+      "minFont": 14,
+      "screenshots": [
+        "before-tasks-390-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/tasks.html",
+      "width": 390,
+      "variant": "integrated",
+      "height": 3159,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 25,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-tasks-390-first.jpg"
+      ]
+    },
+    {
+      "route": "/before/docs/index.html",
+      "width": 390,
+      "variant": "original",
+      "height": 302709,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 1,
+      "smallText": [
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/index.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/island-nature-integration.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/README.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/tasks/README.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/wiki/index.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/00_START_HERE.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/01_PRODUCT_AND_DECISIONS.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/02_CORE_SIMULATION.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/03_GROWTH_AND_RANDOMNESS.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/04_LEARNING_AND_PROGRESSION.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/05_UX_AND_FEEDBACK.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/06_DATA_AND_INTEGRATION.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/07_MVP_AND_DELIVERY.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/08_ACCEPTANCE_TESTS.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/09_CONTENT_CATALOG.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/10_OPEN_RISKS.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/IMPLEMENTATION_GAP.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/nature-town/IMPLEMENTATION.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/01_app_spec.md"
+        },
+        {
+          "tag": "P",
+          "class": "path",
+          "text": "docs/product/02_math_skills.md"
+        }
+      ],
+      "minFont": 14,
+      "screenshots": [
+        "before-documents-390-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/documents.html",
+      "width": 390,
+      "variant": "integrated",
+      "height": 184444,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 1396,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-documents-390-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/index.html",
+      "width": 390,
+      "variant": "integrated",
+      "height": 24081,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 74,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-home-390-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/index.html",
+      "width": 320,
+      "variant": "integrated",
+      "height": 27617,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 74,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-home-320-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/index.html",
+      "width": 768,
+      "variant": "integrated",
+      "height": 19548,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 74,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-home-768-first.jpg"
+      ]
+    },
+    {
+      "route": "/portal/index.html",
+      "width": 195,
+      "variant": "integrated",
+      "height": 44457,
+      "overflow": false,
+      "brokenImages": [],
+      "controls": 74,
+      "smallText": [],
+      "minFont": 16,
+      "screenshots": [
+        "after-home-195-first.jpg"
+      ]
+    }
+  ],
+  "operations": [
+    {
+      "name": "元入口を初期画面に保持",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "original": {
+        "x": 14,
+        "y": 486.3125,
+        "width": 292,
+        "height": 79.75
+      },
+      "screenshot": "entry-320x568.jpg"
+    },
+    {
+      "name": "元入口を初期画面に保持",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "original": {
+        "x": 14,
+        "y": 482.28125,
+        "width": 362,
+        "height": 79.75
+      },
+      "screenshot": "entry-390x844.jpg"
+    },
+    "ページ全文検索・0件・URL復元・解除・フォーカス",
+    "全文＋分類＋形式・根拠付き件数・再読込・人/原文/JSON同項目一致・深いURL復元・Escape・開いた位置へ復帰",
+    "overview.html: 元表示/詳細のキーボード開閉・一覧保持",
+    "map.html: 元表示/詳細のキーボード開閉・一覧保持",
+    "plan.html: 元表示/詳細のキーボード開閉・一覧保持",
+    "roles.html: 元表示/詳細のキーボード開閉・一覧保持",
+    "operations.html: 元表示/詳細のキーボード開閉・一覧保持",
+    "tasks.html: 元表示/詳細のキーボード開閉・一覧保持",
+    "documents.html: 元表示/詳細のキーボード開閉・一覧保持"
+  ],
+  "failures": [],
+  "documentURL": "[local-origin]/portal/documents.html?q=%E5%AD%A6%E7%BF%92&category=%E4%BB%95%E6%A7%98&format=%E6%96%87%E7%AB%A0&document=docs%2Fproduct%2F06_screen_specs.md&view=data",
+  "status": "PASS",
+  "pageErrors": []
+}

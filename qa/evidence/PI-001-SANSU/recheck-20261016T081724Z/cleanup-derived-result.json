@@ -1,0 +1,16 @@
+{
+  "at": "2026-10-16T09:20:19.432440+00:00",
+  "status": "PASS",
+  "entries": [
+    {
+      "path": "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/library-audit/parity.md",
+      "kind": "byte-identical-derived-parity-table",
+      "files": 1,
+      "logicalBytes": 41346327,
+      "sha256": "898c7028d736e157505e6757d1dcff56f48ab048ccb5de7aaf7ee0a3348a55e8",
+      "retained": "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/library/parity.md",
+      "reason": "This derived table is byte-identical to the retained registered-scope table. Per-run audit JSON, logs and new 4,815-resource supplement remain.",
+      "absentAfter": true
+    }
+  ]
+}

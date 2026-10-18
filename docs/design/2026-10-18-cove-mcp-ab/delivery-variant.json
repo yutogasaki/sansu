@@ -1,0 +1,223 @@
+{
+  "version": 1,
+  "source": {
+    "id": "cove-mcp-roof-v1",
+    "sha256": "a8e2f0c6255e79dbf177734646fce4da07dc7f728a7b4855c50b63c03a28184f",
+    "artifact": "docs/design/2026-10-18-cove-mcp-ab/cove-roof-variant.glb"
+  },
+  "artifact": {
+    "path": "/prototypes/place-qa/native-cove-corner.glb.gz",
+    "sha256": "be4714caeebf7ff0db722d720a2bbc0ce1468b1520fa2ce9b5e19f16cf294c15",
+    "expandedSha256": "a8e2f0c6255e79dbf177734646fce4da07dc7f728a7b4855c50b63c03a28184f",
+    "expandedBytes": 1682524,
+    "gzipBytes": 901612
+  },
+  "counts": {
+    "nodes": 18,
+    "primitives": 19,
+    "triangles": 79384,
+    "materials": 4
+  },
+  "coordinateContract": {
+    "source": "original native GLTF coordinates; source node transforms are baked before instancing",
+    "pivot": [
+      13.9,
+      0.89,
+      1.2
+    ],
+    "uniformScale": 0.45,
+    "authoredFormula": "world = position + rotateY(yaw, uniformScale * (source - pivot))",
+    "rendererOffset": "X -= layout.center; Z -= 2; Y unchanged"
+  },
+  "nodes": [
+    {
+      "name": "Harbor / continuous entrance runner jamb rear arch",
+      "primitives": [
+        {
+          "material": "harbor / blue porcelain shell footing",
+          "triangles": 15376
+        }
+      ]
+    },
+    {
+      "name": "Harbor / continuous grounded runner socket left",
+      "primitives": [
+        {
+          "material": "harbor / blue porcelain shell footing",
+          "triangles": 388
+        }
+      ]
+    },
+    {
+      "name": "Harbor / continuous grounded runner socket right",
+      "primitives": [
+        {
+          "material": "harbor / blue porcelain shell footing",
+          "triangles": 388
+        }
+      ]
+    },
+    {
+      "name": "Harbor / continuous translucent shell hall",
+      "primitives": [
+        {
+          "material": "harbor / translucent pearl shell",
+          "triangles": 6608
+        },
+        {
+          "material": "harbor / translucent violet shell panels",
+          "triangles": 1680
+        }
+      ]
+    },
+    {
+      "name": "Harbor / corner structural rib joined to rim",
+      "primitives": [
+        {
+          "material": "harbor / coral shell ribs",
+          "triangles": 7216
+        }
+      ]
+    },
+    {
+      "name": "Harbor / curved shell structural rib",
+      "primitives": [
+        {
+          "material": "harbor / coral shell ribs",
+          "triangles": 5776
+        }
+      ]
+    },
+    {
+      "name": "Harbor / curved shell structural rib.001",
+      "primitives": [
+        {
+          "material": "harbor / coral shell ribs",
+          "triangles": 5776
+        }
+      ]
+    },
+    {
+      "name": "Harbor / curved shell structural rib.002",
+      "primitives": [
+        {
+          "material": "harbor / coral shell ribs",
+          "triangles": 5776
+        }
+      ]
+    },
+    {
+      "name": "Harbor / curved shell structural rib.003",
+      "primitives": [
+        {
+          "material": "harbor / coral shell ribs",
+          "triangles": 5776
+        }
+      ]
+    },
+    {
+      "name": "Harbor / curved shell structural rib.004",
+      "primitives": [
+        {
+          "material": "harbor / coral shell ribs",
+          "triangles": 5776
+        }
+      ]
+    },
+    {
+      "name": "Harbor / longitudinal seam joined to corner rim 5",
+      "primitives": [
+        {
+          "material": "harbor / blue porcelain shell footing",
+          "triangles": 4336
+        }
+      ]
+    },
+    {
+      "name": "Harbor / longitudinal seam joined to corner rim 6",
+      "primitives": [
+        {
+          "material": "harbor / blue porcelain shell footing",
+          "triangles": 4336
+        }
+      ]
+    },
+    {
+      "name": "Harbor / shell grown footing.001",
+      "primitives": [
+        {
+          "material": "harbor / blue porcelain shell footing",
+          "triangles": 496
+        }
+      ]
+    },
+    {
+      "name": "Harbor / shell longitudinal seam",
+      "primitives": [
+        {
+          "material": "harbor / blue porcelain shell footing",
+          "triangles": 1936
+        }
+      ]
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.001",
+      "primitives": [
+        {
+          "material": "harbor / blue porcelain shell footing",
+          "triangles": 1936
+        }
+      ]
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.002",
+      "primitives": [
+        {
+          "material": "harbor / blue porcelain shell footing",
+          "triangles": 1936
+        }
+      ]
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.003",
+      "primitives": [
+        {
+          "material": "harbor / blue porcelain shell footing",
+          "triangles": 1936
+        }
+      ]
+    },
+    {
+      "name": "Harbor / shell longitudinal seam.004",
+      "primitives": [
+        {
+          "material": "harbor / blue porcelain shell footing",
+          "triangles": 1936
+        }
+      ]
+    }
+  ],
+  "materialNames": [
+    "harbor / blue porcelain shell footing",
+    "harbor / translucent pearl shell",
+    "harbor / translucent violet shell panels",
+    "harbor / coral shell ribs"
+  ],
+  "provenance": {
+    "profile": {
+      "path": "docs/design/2026-10-12-authored-cove-entrance/profile-boundaries.json",
+      "sha256": "f5cae60c3076974dbe1856f7fcba6846dc47af36bb3b3dae742c99177880524d"
+    },
+    "sourceManifest": {
+      "path": "docs/design/2026-10-12-authored-cove-entrance/source-manifest.json",
+      "sha256": "c52169062d71aa4e19ad82c2103440a76c3fb071db9b7b286066827aa6aacf1c"
+    },
+    "originalSource": {
+      "path": "docs/design/2026-10-10-island-final-3d/whole-island.glb",
+      "sha256": "8398eda9ac084a6e80ed22f1a82670c380b017544a177106325aaa7ba7f8f68d"
+    },
+    "delivery": "Byte-identical shell-only GLB expanded from deterministic gzip; no geometry or material rewrite.",
+    "floor": "No apron or bank in this artifact. The composed WorldDefinition owns and draws its visible floor/bank once.",
+    "feasibility": "Fixed audited P04 arrangement only; domain plan determines eligibility and apron lifecycle."
+  }
+}

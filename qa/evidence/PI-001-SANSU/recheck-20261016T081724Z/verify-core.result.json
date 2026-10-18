@@ -1,0 +1,25 @@
+{
+  "name": "verify-core",
+  "command": "npm",
+  "args": [
+    "run",
+    "verify:core"
+  ],
+  "startedAt": "2026-10-16T08:31:43.032Z",
+  "node": "v24.18.0",
+  "cwd": "/Users/yutogasaki/Projects/sansu",
+  "environment": {
+    "VITEST_MAX_THREADS": "4",
+    "VITEST_MIN_THREADS": "1"
+  },
+  "endedAt": "2026-10-16T08:39:23.580200+00:00",
+  "status": "TERMINATED_AFTER_TIMEOUT_FAILURES",
+  "exitCode": 130,
+  "reason": "Two 5000ms timeout failures in unchanged product persistence tests; stopped the broad run to isolate the first failure instead of repeating CPU-heavy work",
+  "firstFailingFile": "src/domain/island/experienceRepository.test.ts",
+  "timeoutCases": 2,
+  "completedPassingFiles": 54,
+  "fullSuiteCompleted": false,
+  "log": "verify-core.log",
+  "concurrencyObservation": "Other substantial Vitest runs observed; contribution is suspected, not causally proven."
+}

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ja">
+<head><base data-sansu-source-context href="../../../../../../../../../docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-87-current-island-short-landscape-learning-layout-2026-09-22/contact-sheet.html"><script src="../../../../../../../portal/native-context.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>F-48 現行Island 学習画面・短い横画面</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; color: #263145; background: #f6f6f1; }
+    body { max-width: 1200px; margin: 0 auto; padding: 24px; }
+    h1, h2 { line-height: 1.35; }
+    .meta, figure { margin: 0; padding: 16px; border: 1px solid #c9c5d8; border-radius: 16px; background: #fffdf7; }
+    .meta { margin-block: 20px; line-height: 1.8; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 16px; }
+    figure img { display: block; width: 100%; height: auto; border: 1px solid #dedbe7; border-radius: 8px; }
+    figcaption { margin-top: 10px; line-height: 1.6; }
+    code { overflow-wrap: anywhere; }
+  </style>
+<link rel="stylesheet" href="../../../../../../../portal/integration.css"><link rel="stylesheet" href="../../../../../../../portal/library.css"></head>
+<body data-portal-item="item-f8590b0b1a48671b3e30"><aside class="pu-bar" aria-label="統合ポータル"><nav><strong>さんすう</strong><a href="../../../../../../../portal/index.html">現在地へ</a><a href="../../../../../../../portal/search.html">全ページから探す</a><a href="../../../../../../../portal/pages.html">内容と操作の一覧</a><a href="../../../../../../../.agents/index.html">元のポータルを開く →</a></nav><p>新版を確認中。全項目の表示・操作・独立審査が終わるまで、元の入口を保持しています。</p></aside>
+  <h1 data-portal-item="item-e0356ce57209d9fe26cd">F-48: 599×430の学習テンキー最下段が画面外で補助操作と重なる</h1>
+  <section class="meta" data-portal-item="item-de93b6b6d74d9ab9f868">
+    <p data-portal-item="item-ec49947524d06feff4dc"><strong data-portal-item="item-b6930798e1c070ec19a9">対象:</strong> 現行Island、<code data-portal-item="item-51f47c477720d74b0381">http://127.0.0.1:5198/#/settings?section=learning&amp;learn=1</code></p>
+    <p data-portal-item="item-375f9222f7e38baf75e8"><strong data-portal-item="item-49fdabe4d2e8a0103321">修正前 / live-86:</strong> 表示下端は430px。入力欄 y=169.19–219.19、テンキー y=227.19–451.19。13キーは各96.5×47.5pxだが、最下段は y=395.69–443.19となり13.19px画面外。ヒント/スキップ操作は y=369–414で、最下段キーと約18px重なる。</p>
+    <p data-portal-item="item-69a4c9b9a21e38d59a2c"><strong data-portal-item="item-c12a7f05b3e487725b89">修正後 / live-88:</strong> 短い横画面レイアウトの幅下限を700pxから480pxへ。問題文/支援を左の独立scroll、答え欄とテンキーを右へ配置。599×430では入力 y=102.19–150.19、テンキー y=158.19–384、全13キー各61.5×52.95px、ヒント/スキップ y=384–428（44px）。全て画面内で、キーと補助操作は重ならない。</p>
+    <p data-portal-item="item-5d36b83fa200c49877f3"><strong data-portal-item="item-5e4381fd74b5686bd8ca">境界回帰 / live-87:</strong> 480×430、599×430、699×430、700×430、1024×390の5 journeysがPASS（147 route/action checks、95 captures、page error 0）。さらに599×430のlive-88単独journeyも29 checks / 19 captures / error 0。runtime revision <code data-portal-item="item-a98a8a82341eee583a77">development-local</code>、version <code data-portal-item="item-1f6583ec8fc029bc764f">development-local:60d95334-58f8-4594-b548-c113c90cad1c</code>、Island=true / NatureTown=false、root delivery <code data-portal-item="item-4838bbbfc962ca38d079">snap-root-v1</code>、Island delivery <code data-portal-item="item-f05804a868a59706b661">mystic-island-v1</code>、visual <code data-portal-item="item-19c6f10eb0362288a6f0">mystic-island-shore-garden-v18</code>、reduced motion、service workerなし。学習/写真fixtureは隔離context終了時に破棄。</p>
+    <p data-portal-item="item-f7425b7c05570f426705"><a href="before-geometry-report.json" data-portal-item="item-c8c6d24a72bfb6e5bf3e">live-86 修正前report</a> · <a href="after-boundary-report.json" data-portal-item="item-26ff306374a144f66fe5">live-87 境界report</a> · <a href="after-599-geometry-report.json" data-portal-item="item-6d2e057ed6f71c1a8348">live-88 座標report</a></p>
+  </section>
+  <h2 data-portal-item="item-1a9c7cb226ee76f02626">修正前</h2>
+  <div class="grid" data-portal-item="item-debb64b3cbeebaf85f1e">
+    <figure data-portal-item="item-848484a79074cce5eb23"><img src="before-599-learning.png" alt="599×430でテンキー最下段が画面外へ切れ、ヒント操作と重なる修正前画面" data-portal-item="item-7d7a17d3b3ea1c389726"><figcaption data-portal-item="item-e3c4effd641d27ad1333">599×430 — 最下段と補助操作が重なり、全キーを使えない</figcaption></figure>
+  </div>
+  <h2 data-portal-item="item-4974f0693bffbb2eca58">修正後</h2>
+  <div class="grid" data-portal-item="item-6573683405d1717a30fa">
+    <figure data-portal-item="item-09e1e2365e56772e4cb8"><img src="after-480-learning.png" alt="480×430で問題とテンキーを左右に並べ、すべてのキーが表示される修正後画面" data-portal-item="item-7668a75fd3aea9b1563d"><figcaption data-portal-item="item-e64194efed3c07af2fe5">480×430 — 新しい最小幅</figcaption></figure>
+    <figure data-portal-item="item-439be4b22f7e5e8b7b3f"><img src="after-599-learning.png" alt="599×430で全キーとヒント操作が重ならず表示される修正後画面" data-portal-item="item-cfc30e522916016b9b56"><figcaption data-portal-item="item-3adbad7e85f32a8396b9">599×430 — 再現幅で解消</figcaption></figure>
+    <figure data-portal-item="item-6ff8bb99a804455b81a8"><img src="after-1024-learning.png" alt="1024×390で全キーと操作を維持する修正後画面" data-portal-item="item-662e99f0d78f22978f31"><figcaption data-portal-item="item-d8fc708eee3573b2ca7d">1024×390 — 既存の短横画面も維持</figcaption></figure>
+  </div>
+<script src="../../../../../../../portal/integration.js" defer></script><script src="../../../../../../../portal/library-runtime.js" defer></script></body>
+</html>

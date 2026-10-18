@@ -1,0 +1,29 @@
+{
+  "baseline-ci-failure": {
+    "failures": [
+      "src/components/island/growing/native/authoredCoreGrowthIntegration.test.ts > grows the original whole-island coast from the same mature owners while sharing real ground with the renderer"
+    ],
+    "summary": [
+      "2026-10-12T13:08:33.5997840Z  Test Files  1 failed | 620 passed (621)",
+      "2026-10-12T13:08:33.5998341Z       Tests  1 failed | 5376 passed (5377)"
+    ]
+  },
+  "camera-ci-failure": {
+    "failures": [
+      "src/components/island/growing/native/authoredCoreGrowthIntegration.test.ts > grows the original whole-island coast from the same mature owners while sharing real ground with the renderer"
+    ],
+    "summary": [
+      "2026-10-18T03:16:58.0625410Z  Test Files  1 failed | 620 passed (621)",
+      "2026-10-18T03:16:58.0626917Z       Tests  1 failed | 5377 passed (5378)"
+    ]
+  },
+  "other-main-ci": {
+    "failures": [
+      "src/components/island/growing/native/authoredCoreGrowthIntegration.test.ts > grows the original whole-island coast from the same mature owners while sharing real ground with the renderer"
+    ],
+    "summary": [
+      "2026-10-18T03:13:04.6980797Z  Test Files  1 failed | 621 passed (622)",
+      "2026-10-18T03:13:04.6981666Z       Tests  1 failed | 5381 passed (5382)"
+    ]
+  }
+}

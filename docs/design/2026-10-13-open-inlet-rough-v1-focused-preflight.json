@@ -1,0 +1,58 @@
+{
+  "pass": true,
+  "sourceFixed": true,
+  "revision": "open-inlet-rough-v1-735a6a21",
+  "candidate": "native05-open-inlet-rough-v1",
+  "catalogRevision": "735a6a219cb2efc079ba66766247adce3461fdb930fc95355ed48874b49985b0",
+  "scope": "Focused preflight for the DEV-only open-inlet whole-island rough. It preserves the same eight homes, four mature trees, original placement rights and saved-state shape while checking authored source composition and the cumulative north-to-east-to-loop integration. This is not npm run verify:core or release acceptance.",
+  "commands": [
+    {
+      "command": "node tools/build-authored-core-growth-terrain-kit.mjs --open-inlet --publish --check",
+      "result": "pass",
+      "candidate": "native05-open-inlet-rough-v1"
+    },
+    {
+      "command": "node docs/design/2026-10-12-core-growth-terrain-source/check-source.mjs /tmp/sansu-open-inlet-source-check.json docs/design/2026-10-13-open-inlet-terrain-source",
+      "result": "pass",
+      "cases": [
+        "north",
+        "east",
+        "loop"
+      ],
+      "placementRights": 73,
+      "loopWalkingSites": 334
+    },
+    {
+      "command": "npm run test:run -- src/components/island/growing/native/authoredCoreGrowthIntegration.test.ts",
+      "result": "pass",
+      "testFiles": 1,
+      "tests": 1,
+      "elapsedMs": 398110
+    }
+  ],
+  "initialInputs": {
+    "docs/design/2026-10-12-core-growth-terrain-source/check-source.mjs": "1cebfa19caf6b48235fc2c0a890ab8c9102b42a4768e0b42058a8c4fb89b31cb",
+    "prototypes/place-qa/authored-core-growth-terrain-kit.json.gz": "9c47ba048ffb7996086d8a37fe2109abe89a6b227537859bec970cef9744a05c",
+    "prototypes/place-qa/authored-core-growth-terrain-manifest.json": "5bc0d8384450997dfeef1125192e0291e2131915024f5cf00080d8e94833fddd",
+    "prototypes/place-qa/authored-shoulder-reference-mature.json": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+    "prototypes/place-qa/native05-world-source-shading-manifest.json": "76df85f5697f1d13623929b742eb0c35cda90bd69fd8863fef882e4abe3fc1fc",
+    "prototypes/place-qa/native05-world-source-shading.json.gz": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+    "src/components/island/growing/native/authoredCoreGrowthIntegration.test.ts": "ce0c92cc8f96b5b1d7704e860586f744ea0cbe3daa9eea0f7a47e31e9f6477da",
+    "tools/build-authored-core-growth-terrain-kit.mjs": "266a7cda198f956d795df568501049aa48b1450284ff06bf4ebed28c5c815d0b",
+    "tools/e2e-authored-core-growth.mjs": "e86813565d44e01d61b2b653fdcac9200f5a157b1b283425844667e24baf6d02"
+  },
+  "finalInputs": {
+    "docs/design/2026-10-12-core-growth-terrain-source/check-source.mjs": "1cebfa19caf6b48235fc2c0a890ab8c9102b42a4768e0b42058a8c4fb89b31cb",
+    "prototypes/place-qa/authored-core-growth-terrain-kit.json.gz": "9c47ba048ffb7996086d8a37fe2109abe89a6b227537859bec970cef9744a05c",
+    "prototypes/place-qa/authored-core-growth-terrain-manifest.json": "5bc0d8384450997dfeef1125192e0291e2131915024f5cf00080d8e94833fddd",
+    "prototypes/place-qa/authored-shoulder-reference-mature.json": "35e39273432a45fe4c358a3d660db043df2749e76133d773952e314e3066b80b",
+    "prototypes/place-qa/native05-world-source-shading-manifest.json": "76df85f5697f1d13623929b742eb0c35cda90bd69fd8863fef882e4abe3fc1fc",
+    "prototypes/place-qa/native05-world-source-shading.json.gz": "9ff265c4c62477230f3e6dff14903f10c8b4be0953a1fa02bc61abc4f37e4921",
+    "src/components/island/growing/native/authoredCoreGrowthIntegration.test.ts": "ce0c92cc8f96b5b1d7704e860586f744ea0cbe3daa9eea0f7a47e31e9f6477da",
+    "tools/build-authored-core-growth-terrain-kit.mjs": "266a7cda198f956d795df568501049aa48b1450284ff06bf4ebed28c5c815d0b",
+    "tools/e2e-authored-core-growth.mjs": "e86813565d44e01d61b2b653fdcac9200f5a157b1b283425844667e24baf6d02"
+  },
+  "runtimeStatus": "NOT RUN",
+  "visualStatus": "HOLD",
+  "independentObservers": 0
+}

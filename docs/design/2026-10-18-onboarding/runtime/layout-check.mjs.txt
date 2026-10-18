@@ -1,0 +1,20 @@
+import { chromium } from 'playwright';
+import assert from 'node:assert/strict';
+import { onboardingControls } from '../../tools/island-onboarding-checks.mjs';
+import { writeFile } from 'node:fs/promises';
+const browser=await chromium.launch();const context=await browser.newContext({viewport:{width:320,height:568},reducedMotion:'reduce'});
+const page=await context.newPage();page.setDefaultTimeout(90000);const report={pass:false,checks:[]};
+try{
+await page.goto('http://127.0.0.1:5308/#/onboarding');
+await page.getByRole('button',{name:'しまへ いく',exact:true}).focus();await page.keyboard.press('Enter');
+await page.getByRole('button',{name:'まなぶ',exact:true}).click();
+await page.getByRole('heading',{name:'いまの がくねんは？'}).waitFor();
+for(const viewport of [{width:320,height:568},{width:568,height:320}]){
+await page.setViewportSize(viewport);
+const controls=await onboardingControls(page,'.island-setup-options button, .island-setup-name input, .island-setup-header button');
+assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+await page.screenshot({path:`docs/design/2026-10-18-onboarding/runtime/${viewport.width}-setup-layout.png`});
+report.checks.push({viewport,controls});
+}
+report.pass=true;console.log('PASS narrow/landscape setup hit targets, no horizontal overflow, keyboard entry');
+}finally{await writeFile('docs/design/2026-10-18-onboarding/runtime/layout-report.json',JSON.stringify(report,null,2));await browser.close();}

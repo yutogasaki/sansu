@@ -1,0 +1,18 @@
+{
+  "name": "library-audit",
+  "command": "python3",
+  "args": [
+    "/Users/yutogasaki/Projects/sansu/qa/evidence/PI-001-SANSU/recheck-20261016T081724Z/audit-output-only.py",
+    "."
+  ],
+  "startedAt": "2026-10-16T08:17:52.293Z",
+  "node": "v24.18.0",
+  "cwd": "/Users/yutogasaki/Projects/sansu",
+  "environment": {},
+  "endedAt": "2026-10-16T08:18:02.441Z",
+  "exitCode": 1,
+  "signal": null,
+  "status": "FAIL",
+  "log": "library-audit.log",
+  "logSha256": "8781f80bb11070f9acfd4dfb23ac67ce9f67c6ca7ce816b615fc8fca8185382f"
+}

@@ -1,10 +1,12 @@
+import { baseTenVisual } from '../../domain/math/baseTenVisual';
 import type { Problem } from '../../domain/types';
 
 /** Refer only to the displayed task; the same picture can ask for different things. */
 export function visualLearningHint(problem: Problem): string | undefined {
-    const visual = problem.questionVisual;
+    const visual = baseTenVisual(problem) ?? problem.questionVisual;
     if (!visual) return undefined;
     switch (visual.kind) {
+        case 'base-ten-blocks': return 'マス10こで ぼう1本。ぼう10本で 板1まい。ない位は 0だよ。';
         case 'single-items':
             if (['compose_5', 'compose_10'].includes(problem.categoryId) && visual.style === 'frame') {
                 return '絵のない マスを、かぞえよう。';

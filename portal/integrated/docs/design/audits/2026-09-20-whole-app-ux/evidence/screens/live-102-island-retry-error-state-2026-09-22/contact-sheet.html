@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ja">
+<head><base data-sansu-source-context href="../../../../../../../../../docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-102-island-retry-error-state-2026-09-22/contact-sheet.html"><script src="../../../../../../../portal/native-context.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>live-102 Island読込エラーの再試行</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; background: #f7f5ef; color: #23334f; }
+    body { max-width: 1180px; margin: 0 auto; padding: 24px; }
+    h1 { font-size: 1.6rem; }
+    h2 { margin-top: 2rem; font-size: 1.15rem; }
+    p { line-height: 1.7; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+    figure { margin: 0; padding: 12px; border: 1px solid #d8d2c6; border-radius: 14px; background: #fffdf8; }
+    img { display: block; width: 100%; height: 340px; object-fit: contain; background: #f4f2ec; }
+    figcaption { padding-top: 9px; font-size: .9rem; font-weight: 650; }
+    code { overflow-wrap: anywhere; }
+  </style>
+<link rel="stylesheet" href="../../../../../../../portal/integration.css"><link rel="stylesheet" href="../../../../../../../portal/library.css"></head>
+<body data-portal-item="item-dc8b499522e242c251de"><aside class="pu-bar" aria-label="統合ポータル"><nav><strong>さんすう</strong><a href="../../../../../../../portal/index.html">現在地へ</a><a href="../../../../../../../portal/search.html">全ページから探す</a><a href="../../../../../../../portal/pages.html">内容と操作の一覧</a><a href="../../../../../../../.agents/index.html">元のポータルを開く →</a></nav><p>新版を確認中。全項目の表示・操作・独立審査が終わるまで、元の入口を保持しています。</p></aside>
+  <h1 data-portal-item="item-0b4f98e7e8a8effc7b15">Island読込エラーの再試行 — live-102</h1>
+  <p data-portal-item="item-57260f609e1b04dded90">現行 Island（5198 / <code data-portal-item="item-4c95d6cd574f10409cf1">/#/island</code>）。development-local、Island=true、Nature Town=false。失敗中はroute固有のIsland rootがまだ描画されないためroot identityで照合し、再読込後にdeliveryとcandidateを確認しています。</p>
+
+  <h2 data-portal-item="item-f49157a850dc2c08d5dc">島データ読込の失敗</h2>
+  <div class="grid" data-portal-item="item-0d809f05234cd3662a85">
+    <figure data-portal-item="item-b2e2a3d136de5fbb1322"><a href="320x568-error.png" data-portal-item="item-6ab9077e50afefab4b5d"><img src="320x568-error.png" alt="320×568 島データ読込失敗。青いもういちどひらくボタン" data-portal-item="item-ce6501116f4615b9055e"></a><figcaption data-portal-item="item-aee05aa4f4bc595085d7">320×568 — 読込失敗</figcaption></figure>
+    <figure data-portal-item="item-18befbdd27240bc13fa9"><a href="320x568-recovered.png" data-portal-item="item-7a848b6a48974660224a"><img src="320x568-recovered.png" alt="320×568 再読込後のIslandホーム" data-portal-item="item-d628a06e7e8d5d02b9a6"></a><figcaption data-portal-item="item-59ba922e0aa9ee99a367">320×568 — 再読込後</figcaption></figure>
+    <figure data-portal-item="item-06c67158c59b12dd6243"><a href="568x320-error.png" data-portal-item="item-9ba38b9a6fffbafe4e51"><img src="568x320-error.png" alt="568×320 島データ読込失敗。青いもういちどひらくボタン" data-portal-item="item-ccb95e3e0a3ac3fc1b96"></a><figcaption data-portal-item="item-946061fb960be84a59a2">568×320 — 読込失敗</figcaption></figure>
+    <figure data-portal-item="item-57b58f5233b9aa466e1d"><a href="568x320-recovered.png" data-portal-item="item-ba91b1c48509d781c3e4"><img src="568x320-recovered.png" alt="568×320 再読込後のIslandホーム" data-portal-item="item-48cbc8183739e84770ba"></a><figcaption data-portal-item="item-81001db7560bdf1f9f35">568×320 — 再読込後</figcaption></figure>
+  </div>
+
+  <h2 data-portal-item="item-e524f26f1072d87e8a20">プロフィール読込の失敗</h2>
+  <div class="grid" data-portal-item="item-d65929b41712cb3c8870">
+    <figure data-portal-item="item-eccb08bd1d2b2e409240"><a href="320x568-profile-error.png" data-portal-item="item-3d81e1b850a67f21c188"><img src="320x568-profile-error.png" alt="320×568 プロフィール読込失敗。青いもういちどひらくボタン" data-portal-item="item-71b05339bd120b06c46d"></a><figcaption data-portal-item="item-4ea8f75457c81586727f">320×568 — 読込失敗</figcaption></figure>
+    <figure data-portal-item="item-c5f9528a5ea2c0cce2e7"><a href="320x568-profile-recovered.png" data-portal-item="item-0805cf951f806e7e416c"><img src="320x568-profile-recovered.png" alt="320×568 プロフィール再読込後のIslandホーム" data-portal-item="item-d5c8ad7c710a852f3ec0"></a><figcaption data-portal-item="item-3f248be0007ed8698286">320×568 — 再読込後</figcaption></figure>
+    <figure data-portal-item="item-3611547969f5c636b67f"><a href="568x320-profile-error.png" data-portal-item="item-fc1b31bb5dc1ee28b147"><img src="568x320-profile-error.png" alt="568×320 プロフィール読込失敗。青いもういちどひらくボタン" data-portal-item="item-3211393ca3778508e77d"></a><figcaption data-portal-item="item-322d4546e4aae65ac767">568×320 — 読込失敗</figcaption></figure>
+    <figure data-portal-item="item-e5f46c4ce998f4276c9b"><a href="568x320-profile-recovered.png" data-portal-item="item-f9e24415970410883733"><img src="568x320-profile-recovered.png" alt="568×320 プロフィール再読込後のIslandホーム" data-portal-item="item-b236485800a9b4a99381"></a><figcaption data-portal-item="item-7e0a976ba9e7b5c1f934">568×320 — 再読込後</figcaption></figure>
+  </div>
+
+  <p data-portal-item="item-7264efcd0f23d2c841c3">機械可読な座標・runtime identity・一時障害注入条件は <a href="report.json" data-portal-item="item-1f4da801d1892604c019">report.json</a>。</p>
+<script src="../../../../../../../portal/integration.js" defer></script><script src="../../../../../../../portal/library-runtime.js" defer></script></body>
+</html>

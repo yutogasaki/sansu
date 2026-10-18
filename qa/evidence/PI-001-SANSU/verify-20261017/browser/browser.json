@@ -1,0 +1,43 @@
+{
+  "at": "2026-10-16T15:20:58.325Z",
+  "command": "node tools/check-portal-library-browser.mjs ",
+  "candidate": "1896ace0b989df66427b4df811f508cca908388c927f45c6dadc5fa0708e3891",
+  "manifestSha256": "b76a54e15341dd75b70f6a30dc690500d1ba82cff321962e985b0135358225eb",
+  "inputSha256": "75a9e07bf71cd9dd487a61f3ae6555a249d5ecf4f0c4b3d98ea3b1dd658b36fb",
+  "groups": [
+    {
+      "name": "全項目検索・多軸・件数・0件・解除・URL復元・同項目JSON・Escape・フォーカス",
+      "status": "FAIL",
+      "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(await page.locator('#pu-query').evaluate(n=>n===document.activeElement))\n",
+      "screenshot": "failure-0.jpg"
+    },
+    {
+      "name": "画像図鑑：全32画像・絞込・比較・メモ追加/編集/保存/書出/削除・再読込",
+      "status": "PASS"
+    },
+    {
+      "name": "画像図鑑：保存失敗の表示・入力保持・書き出し可能",
+      "status": "PASS"
+    },
+    {
+      "name": "観察票：匿名入力・保存/再読込・export/import・不正import・削除",
+      "status": "PASS"
+    },
+    {
+      "name": "観察票：保存失敗の表示・入力保持・削除失敗時の保全",
+      "status": "PASS"
+    },
+    {
+      "name": "フォルダ参照：全件一覧・資料名/容量/詳細・統合HTMLへの入口",
+      "status": "PASS"
+    }
+  ],
+  "pages": [],
+  "failures": [
+    {
+      "name": "全項目検索・多軸・件数・0件・解除・URL復元・同項目JSON・Escape・フォーカス",
+      "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(await page.locator('#pu-query').evaluate(n=>n===document.activeElement))\n\n    at file:///Users/yutogasaki/Projects/sansu/tools/check-portal-library-browser.mjs:42:154\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:472:9)\n    at async group (file:///Users/yutogasaki/Projects/sansu/tools/check-portal-library-browser.mjs:31:37)\n    at async file:///Users/yutogasaki/Projects/sansu/tools/check-portal-library-browser.mjs:34:2"
+    }
+  ],
+  "status": "FAIL"
+}

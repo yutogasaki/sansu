@@ -1,0 +1,32 @@
+[
+  {
+    "path": "/resources/8433/access",
+    "before": "元repoのアクセス条件を維持。配布可否はhubで別途選別。",
+    "after": "None"
+  },
+  {
+    "path": "/resources/8433/bytes",
+    "before": "205345",
+    "after": "None"
+  },
+  {
+    "path": "/resources/8433/reason",
+    "before": "None",
+    "after": "元ページの参照先。未確認を合格にしない。"
+  },
+  {
+    "path": "/resources/8433/sha256",
+    "before": "375de2396f464b84590c5fdd68a356ccf69a3839d77348dd4f5115fcb1c5ba30",
+    "after": "None"
+  },
+  {
+    "path": "/resources/8433/state",
+    "before": "local-reference",
+    "after": "missing"
+  },
+  {
+    "path": "/resources/8433/target",
+    "before": "../portal/index.html",
+    "after": "../index.html"
+  }
+]

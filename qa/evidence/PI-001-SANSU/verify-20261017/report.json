@@ -1,0 +1,51 @@
+{
+  "at": "2026-10-16T15:35:51.131923+00:00",
+  "status": "FAIL",
+  "acceptance": "HOLD",
+  "candidate": "1896ace0b989df66427b4df811f508cca908388c927f45c6dadc5fa0708e3891",
+  "manifestSha256": "b76a54e15341dd75b70f6a30dc690500d1ba82cff321962e985b0135358225eb",
+  "sourceCount": 13450,
+  "sourceMismatches": [],
+  "head": "eb4b907bdf5cb6e99c30c4ac6f28d2d3969cac50",
+  "branch": "codex/pi-001-sansu",
+  "commands": {
+    "npm run verify:core": {
+      "exitCode": 0,
+      "testFiles": 623,
+      "tests": 5384,
+      "testDurationSeconds": 781.17,
+      "log": "core.log"
+    },
+    "npm run agent:index:check": {
+      "exitCode": 1,
+      "log": "entry.log",
+      "reason": "missing historical whole-landscape.blend"
+    },
+    "node scripts/standard-portal.mjs verify": {
+      "exitCode": 0,
+      "outputs": 1315,
+      "log": "generation.log"
+    },
+    "npm run docs:check after evidence": {
+      "exitCode": 0,
+      "log": "docs-final.log"
+    }
+  },
+  "operations": {
+    "initialHarness": "FAIL due to immediate focus assertion",
+    "explicitCloseWaitDiagnostic": "PASS 6 groups",
+    "scope": "anonymous HTTP Chromium; not file/HTTP storage migration"
+  },
+  "visual": "old/new entry at 1440 and 390 widths inspected; whole independent acceptance unverified",
+  "blockers": [
+    "4815 of 14069 original assets lack individual resource registration",
+    "6 absent historical resources",
+    "virtual absent-output generation reads existing portal/index.html",
+    "full page/operation/independent acceptance and origin migration unverified"
+  ],
+  "cleanup": {
+    "deleted": 0,
+    "classification": "structure.json"
+  },
+  "mutations": "QA evidence only; build generated ignored dist outputs; no source/vendor/old portal edit, commit, push or deployment"
+}

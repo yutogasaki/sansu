@@ -7,7 +7,7 @@ const url = process.argv[2], output = path.resolve(process.argv[3]);
 assert(url && output);
 await fs.mkdir(output,{recursive:true});
 const browser = await chromium.launch();
-const report = {url,candidate:'promotion-learning-complete-v3',cases:[],pass:false};
+const report = {url,candidate:'promotion-cove-growth-v4',cases:[],pass:false};
 const errors=[];
 try {
   for (const width of [320,390,768,1440]) {
@@ -15,17 +15,19 @@ try {
     const page=await context.newPage(); page.on('pageerror',e=>errors.push(e.message));
     await page.goto(url);
     await page.evaluate(()=>document.fonts.ready);
+    await page.evaluate(()=>{document.documentElement.style.scrollBehavior='auto';});
     const selector=page.locator('.growth-selector');
     for (const stage of ['start','village','town']) {
       const button=selector.locator(`[data-stage="${stage}"]`);
       await button.click();
       await page.waitForFunction(()=>document.querySelector('.growth-photo')?.getAttribute('aria-busy')==='false');
       assert.equal(await button.getAttribute('aria-pressed'),'true');
-      assert((await page.locator('#growth-image').getAttribute('src')).includes(stage==='town'?'island-complete.png':`island-${stage}.png`));
+      assert((await page.locator('#growth-image').getAttribute('src')).includes(stage==='town'?'island-complete.png':`island-${stage}-cove.jpg`));
       assert.equal(await selector.locator('[aria-pressed="true"]').count(),1);
       const source=await page.locator('#stage-source').textContent();
-      assert(source.includes(stage==='town'?'現在のゲームにはまだ登場しません':'現在のゲーム画面'));
-      assert(source.includes(stage==='town'?'開発中':'紹介用'));
+      assert(source.includes(stage==='town'?'現在のゲームにはまだ登場しません':'現在のゲーム画面ではありません'));
+      assert(source.includes('開発中'));
+      if (width===390 || width===1440) await page.locator('#growth').screenshot({path:path.join(output,`${width}-${stage}.png`)});
     }
     // A keyboard-only change and a rapid change should settle on the latest selection.
     await selector.locator('[data-stage="start"]').focus(); await page.keyboard.press('Enter');
@@ -45,8 +47,21 @@ try {
     await page.locator('#island').screenshot({path:path.join(output,`${width}-island.png`)});
     report.cases.at(-1).pass=true;await context.close();
   }
+  const failureContext=await browser.newContext({viewport:{width:390,height:844}});
+  const failurePage=await failureContext.newPage();
+  await failurePage.route('**/island-start-cove.jpg',route=>route.abort());
+  await failurePage.goto(url);
+  await failurePage.locator('[data-stage="start"]').click();
+  await failurePage.waitForFunction(()=>document.querySelector('.growth-photo')?.getAttribute('aria-busy')==='false');
+  assert((await failurePage.locator('#growth-image').getAttribute('alt')).includes('開発中'));
+  assert.equal(await failurePage.locator('#growth-image').evaluate(i=>i.naturalWidth),0);
+  assert((await failurePage.locator('#stage-source').textContent()).includes('現在のゲーム画面ではありません'));
+  await failurePage.locator('[data-stage="village"]').click();
+  await failurePage.waitForFunction(()=>document.querySelector('#growth-image')?.getAttribute('src')?.includes('village') && document.querySelector('.growth-photo')?.getAttribute('aria-busy')==='false');
+  assert(await failurePage.locator('#growth-image').evaluate(i=>i.naturalWidth>0));
+  report.imageFailureRecovery='PASS';await failureContext.close();
   const context=await browser.newContext({viewport:{width:390,height:844},javaScriptEnabled:false});const page=await context.newPage();await page.goto(url);
-  assert.equal(await page.locator('noscript img').count(),2);assert.equal(await page.locator('h1').count(),1);assert((await page.locator('#stage-source').textContent()).includes('開発中'));await page.locator('.faq summary').first().click();assert(await page.locator('.faq details').first().getAttribute('open')!==null);report.noJS='PASS';await context.close();
+  assert.equal(await page.locator('noscript img').count(),2);assert((await page.locator('noscript').textContent()).includes('開発中のイメージ'));assert.equal(await page.locator('h1').count(),1);assert((await page.locator('#stage-source').textContent()).includes('開発中'));await page.locator('.faq summary').first().click();assert(await page.locator('.faq details').first().getAttribute('open')!==null);report.noJS='PASS';await context.close();
   assert.deepEqual(errors,[]);report.pass=true;
 } catch(error) {report.failure=String(error.stack||error);throw error;}
 finally {report.errors=errors;await browser.close();await fs.writeFile(path.join(output,'report.json'),JSON.stringify(report,null,2));}

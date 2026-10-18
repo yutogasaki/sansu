@@ -1,0 +1,66 @@
+{
+  "pass": true,
+  "manifest": {
+    "version": "05196dced2cbcc2bbfddc8b0ea9b42590d8d3922:00452bc4-c01f-4ad7-a0bd-addd2ddb7bec",
+    "revision": "05196dced2cbcc2bbfddc8b0ea9b42590d8d3922",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": true,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "metadata": {
+    "url": "https://sansu-seven.vercel.app/#/island",
+    "revision": "05196dced2cbcc2bbfddc8b0ea9b42590d8d3922",
+    "version": "05196dced2cbcc2bbfddc8b0ea9b42590d8d3922:00452bc4-c01f-4ad7-a0bd-addd2ddb7bec",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-shore-garden-v18",
+    "learningCandidate": "pokomoko-pop-live-v8",
+    "islandFeatureEnabled": true,
+    "mode": "home",
+    "drawCalls": 0,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": true,
+    "reducedMotion": false,
+    "appRoot": {
+      "revision": "05196dced2cbcc2bbfddc8b0ea9b42590d8d3922",
+      "version": "05196dced2cbcc2bbfddc8b0ea9b42590d8d3922:00452bc4-c01f-4ad7-a0bd-addd2ddb7bec",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    }
+  },
+  "studyPlanId": "[\"island-plan-v1\",\"qa-fixed-growing-growing-v1\",0]",
+  "fixtureHash": "b81d17d8285da400f214a08f3dc55364a1ed13f6b20b7ded00321fb5b043a2f8",
+  "serviceWorkerControlled": true
+}

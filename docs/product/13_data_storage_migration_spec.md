@@ -1,5 +1,7 @@
 # docs/product/13_data_storage_migration_spec.md — データ・保存・移行仕様
 
+> 2026-10-18 初回導線改訂：主DB appDataの追加行 island-first-play に仮所有者・設定草稿・完了印を保存する。島はそのIDで通常Growing保存を使い、設定完了時に同じIDのプロフィール・MemoryState・active IDと完了印を一transactionで確定する。schema変更や島のDB間コピーは行わない。 詳細は[初回の島と学習設定](island-first-play-onboarding.md)。
+
 > 次期 `living-fantasy-v1` の保存境界・一度だけの財布変換・旧全品保持・完全バックアップは[51のデータ章](living-fantasy/06-data-and-migration.md)が設計正本。未実装の次期契約であり、以下の現在のschemaや既存端末を変換したという記録ではない。
 
 ## 1. 基本方針

@@ -1,34 +1,28 @@
 import { renderToStaticMarkup } from 'react-dom/server';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { IslandStageProps } from './three/types';
-
-const stages = vi.hoisted(() => [] as IslandStageProps[]);
-vi.mock('./IslandStage', () => ({ default: (props: IslandStageProps) => { stages.push(props); return <figure />; } }));
+import { describe, expect, it } from 'vitest';
 import IslandWelcome from './IslandWelcome';
 
 describe('profile-free Island welcome', () => {
-    beforeEach(() => { stages.length = 0; });
-    it('offers the actual flower and lamp plus one learning entry before any required setup field', () => {
+    it('offers the approved companion and island entry before any learning setup', () => {
         const markup = renderToStaticMarkup(<IslandWelcome onStart={() => undefined} />);
         expect(markup).toContain('data-mode="welcome"');
         expect(markup).toContain('data-onboarding-world="island"');
-        expect(markup).toContain('data-onboarding-candidate="island-touch-first-v1"');
+        expect(markup).toContain('data-onboarding-candidate="island-first-play-v2"');
         expect(markup).toMatch(/data-island-feature-enabled="(?:true|false)"/);
-        expect(markup).toContain('おはな');
-        expect(markup).toContain('あかり');
-        expect(markup).toContain('まなぶ');
+        expect(markup).toContain('icons/icon-512.png');
+        expect(markup).toContain('ぽこもこに あいさつ');
+        expect(markup).toContain('しまへ いく');
         expect(markup).not.toContain('<input');
+        expect(markup).not.toContain('<canvas');
         expect(markup).not.toContain('おうちのひと');
-        expect(markup).not.toContain('ひとつ とくと');
     });
-    it('shows the same initial growth scenery as the first island without a persistence callback', () => {
-        renderToStaticMarkup(<IslandWelcome onStart={() => undefined} />);
-        expect(stages).toHaveLength(1);
-        expect(stages[0].growth?.progress).toEqual({ garden: 0, waterside: 0, grove: 0, village: 0 });
-        expect(stages[0].items.every(item => item.growthLevel === 0)).toBe(true);
-        expect(stages[0].onDiscovery).toBeUndefined();
-        expect(stages[0].onItemSelect).toBeTypeOf('function');
-        expect(stages[0].learning).toBe(false);
-        expect(stages[0].readOnly).toBeUndefined();
+    it('keeps the existing additional-profile entry label and prevents duplicate entry while saving', () => {
+        const markup = renderToStaticMarkup(<IslandWelcome onStart={() => undefined} actionLabel="はじめる" />);
+        expect(markup).toContain('はじめる');
+        expect(markup).not.toContain('しまへ いく');
+        const saving = renderToStaticMarkup(<IslandWelcome onStart={() => undefined} busy error="ほぞんできなかったよ" />);
+        expect(saving).toContain('disabled=""');
+        expect(saving).toContain('しまを ひらいているよ…');
+        expect(saving).toContain('role="alert"');
     });
 });

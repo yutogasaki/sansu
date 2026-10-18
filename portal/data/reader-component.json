@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "component": "portal-reader",
+  "version": "1.1.3",
+  "lockSha256": "ffa4606a47140f6a7cc58b4f4e11e7fb2f7bcad0f17c618f1ec854381dc0d1c1",
+  "sourceFiles": {
+    "scripts/vendor/portal-reader/1.1.3/lock.json": "ffa4606a47140f6a7cc58b4f4e11e7fb2f7bcad0f17c618f1ec854381dc0d1c1",
+    "scripts/vendor/portal-reader/1.1.3/reader.js": "60c56dad0dd12819a3bf725931200f1911695290c8f63dc839daab5aae7f74be",
+    "scripts/vendor/portal-reader/1.1.3/adapter.cjs": "1b77c9416f8eed8c314e46600dc1bc1cbe9b24d1c8309bd314df9a6c04a982bd",
+    "scripts/vendor/portal-reader/1.1.3/package.json": "7d38de102f9d211b8a221ab5943610473c4b23aeee36e9a9cf0e22848e04b9d4",
+    "scripts/vendor/portal-reader/1.1.3/library.cjs": "b6ec2ebe0e6f99efc677c97c233bb9b81e656a03086ee423eff1ced3846fbb46",
+    "scripts/vendor/portal-reader/1.1.3/reader.css": "c93bf6be1f1704dcf342fe89ce145f7da23b8079579313b6c1432d09a6d74c29",
+    "scripts/standard-portal.mjs": "339cdf4fe661b9ed0a2fd839f157ef2e133ab659f5c40a9eae5b6d934327f69b"
+  },
+  "clients": [
+    "integration.js"
+  ],
+  "features": {
+    "searchNormalization": true,
+    "urlRestore": true,
+    "clipboard": "only where explicitly bound by the repository adapter"
+  },
+  "acceptance": "component verification does not accept the whole portal"
+}

@@ -1,0 +1,276 @@
+{
+  "candidate": "be55eae17dcadf330948d5261512dc0c8f20b33ea558e3aded97f77d83d4b9d5",
+  "scope": "Media files used by the legacy map inventory count/order/size; absent in both saved input caches and Git canonical baseline",
+  "status": "DISCOVERED_AND_BACKED_UP",
+  "count": 33,
+  "bytes": 8382162,
+  "resources": [
+    {
+      "source": "docs/design/2026-10-13-whole-island-layout-rough-v2-runtime/east.png",
+      "bytes": 572404,
+      "sha256": "0eb1b293c4308b053651944ef2b3288b12f8e40ba682335fb9d9f23c844618d3",
+      "matchesInitial": true,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": true
+    },
+    {
+      "source": "docs/design/2026-10-13-whole-island-layout-rough-v2-runtime/north.png",
+      "bytes": 572708,
+      "sha256": "867e3ce339bc21f11f2ba2ca057084839c65b8b86326b830e22d42a15639185b",
+      "matchesInitial": true,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": true
+    },
+    {
+      "source": "docs/design/2026-10-13-whole-island-layout-rough-v2-runtime/phone.png",
+      "bytes": 186790,
+      "sha256": "6871b9d95636b45a863c26171ebda7c7f0f9c46e7aeffbb7be39187e29bf787a",
+      "matchesInitial": true,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": true
+    },
+    {
+      "source": "docs/design/2026-10-13-whole-island-layout-rough-v2-runtime/rotated.png",
+      "bytes": 550400,
+      "sha256": "30ac6e7d8a667492ed4c164c69acdb1470403afd1d67f4acf2e7689deb8e7ff0",
+      "matchesInitial": true,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": true
+    },
+    {
+      "source": "docs/design/2026-10-13-whole-island-layout-rough-v2-runtime/separated.png",
+      "bytes": 579376,
+      "sha256": "954c1ce24857faf5b57731b1faec56c5975b15dc1fff079e245e8bceb575b8f9",
+      "matchesInitial": true,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": true
+    },
+    {
+      "source": "docs/design/2026-10-13-whole-island-layout-rough-v2-runtime/tablet.png",
+      "bytes": 319867,
+      "sha256": "f31c0f3c7b7ea30638e72bde8c20facb8cefacf215572c604dd23d23eec54cee",
+      "matchesInitial": true,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": true
+    },
+    {
+      "source": "docs/design/2026-10-13-whole-island-layout-rough-v3-runtime/north.png",
+      "bytes": 560451,
+      "sha256": "23d61adbba53ceec1e54d819a06ac5c5fbabb9077ad92cc639b5c8c4b4d16f66",
+      "matchesInitial": true,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": true
+    },
+    {
+      "source": "docs/design/2026-10-13-whole-island-layout-rough-v3-runtime-c2/phone.png",
+      "bytes": 185785,
+      "sha256": "fa1469f10fdbdab67cf5f2d32a9cbe2391a214eeec8320f61b4b91a418b32117",
+      "matchesInitial": true,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": true
+    },
+    {
+      "source": "docs/design/2026-10-13-whole-island-layout-rough-v3-runtime-c2/rotated.png",
+      "bytes": 547897,
+      "sha256": "6b997c3c3bda5914f14da8d080da25ae03f3e3e4582f2dd85bc67ebda0bc3052",
+      "matchesInitial": true,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": true
+    },
+    {
+      "source": "docs/design/2026-10-13-whole-island-layout-rough-v3-runtime-c2/separated.png",
+      "bytes": 574945,
+      "sha256": "fa97cfa9a24dc5f728c0faf84ecb79bfc9337937f1ce6aebb561f64ffd663057",
+      "matchesInitial": true,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": true
+    },
+    {
+      "source": "docs/design/2026-10-13-whole-island-layout-rough-v3-runtime-c2/tablet.png",
+      "bytes": 318498,
+      "sha256": "290e9c4f48c726c314cc5e8d066f840b76031bfb10431840473aa28efe125d35",
+      "matchesInitial": true,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": true
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/park-phone-div_3d2d_exact-late.png",
+      "bytes": 58512,
+      "sha256": "74e3d6fb914e91879fabaaa0c651df556251243da7f699736b70595e414be10f",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/park-phone-div_3d2d_exact-ready.png",
+      "bytes": 55820,
+      "sha256": "5625c9d062b0c75acff2c615d1c6e4fa6a7add10270087c4bb382e2aca57c7b5",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/park-phone-div_rem_q2-ready.png",
+      "bytes": 54167,
+      "sha256": "e7d5d286c428010c46aabd08a4a40497024f73b38e931256ba81c66af6cb4d07",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/park-phone-mul_3d2d-ready.png",
+      "bytes": 57802,
+      "sha256": "3fa9977a6823d30baf0dbf39c8744719dedcd973190e60cee6ce5bf7a77b0d9a",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/park-tablet-div_3d2d_exact-late.png",
+      "bytes": 68928,
+      "sha256": "1e1cb6758e02f46327fe52ecb6a3b6b087fb50c47141b9e4833503f76f0f24ce",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/park-tablet-div_3d2d_exact-ready.png",
+      "bytes": 66084,
+      "sha256": "08a83940d70ccdb8cdb43db80481605299b4aa477bafd613a79ee42641104735",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/park-tablet-div_rem_q2-late.png",
+      "bytes": 67956,
+      "sha256": "287e5c7072126010ab4e8a189b14ab2986689d332dbcc93936a5d1f7e6f8cdf4",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/park-tablet-div_rem_q2-ready.png",
+      "bytes": 65146,
+      "sha256": "7a3f0f413e4f2cb31d5f2acfea646c846b034244f1c441d8787a3e63da726679",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/park-tablet-legacy-resumed.png",
+      "bytes": 58354,
+      "sha256": "7afa2359689c1281df24550d3a9cdb4de1b52f9e4448de40fedcb8e5e2ac00ea",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/park-tablet-mul_3d2d-late.png",
+      "bytes": 73682,
+      "sha256": "2e8cfb720b1f7436394490adedbd942b73864394b085e3695d53bbaf5a62ddd6",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/park-tablet-mul_3d2d-ready.png",
+      "bytes": 66559,
+      "sha256": "edd8fdc43eb091fe67d9e59a73f08d4abb323c6dea5fd14fabfdf624ede6cafc",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/study-phone-div_3d2d_exact-late.png",
+      "bytes": 72325,
+      "sha256": "859c849f73915e9e45b452d6f72ccc01b435b9652ef1f12c6f2048af7fbdf73e",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/study-phone-div_3d2d_exact-ready.png",
+      "bytes": 67040,
+      "sha256": "3f9d9a83fd0045b818d50a1ddb2153a82ac34e3cb6bf9d28f4737a53e3192a47",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/study-phone-div_rem_q2-ready.png",
+      "bytes": 66568,
+      "sha256": "046f9bb652e429cee825bc33de0203094e1566f113ca9f2cda0aecaf3e2e0e83",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/study-phone-mul_3d2d-ready.png",
+      "bytes": 65933,
+      "sha256": "8ff8dd0db197dcd011f9743852006325670f5ffbcb937f85f6027c7c61ff1893",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/study-tablet-div_3d2d_exact-late.png",
+      "bytes": 90144,
+      "sha256": "af98fde82066b4319730dfdf5d94f4b8a44cb2e336f1d26d4c068c7722e5404a",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/study-tablet-div_3d2d_exact-ready.png",
+      "bytes": 84445,
+      "sha256": "c70eb1db5456e283f9f672d50d1395e481be6697891c85a676283bfa14b14483",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/study-tablet-div_rem_q2-late.png",
+      "bytes": 89288,
+      "sha256": "281ff5e4338c3470cdc5c76dc70e2f85cb762f6d17060c10e1a9062885448948",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/study-tablet-div_rem_q2-ready.png",
+      "bytes": 83416,
+      "sha256": "e264b63fc3d7b61ec855e3ea16b906a93925a02115003e2f5670ab55c07b7c37",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/study-tablet-mul_3d2d-late.png",
+      "bytes": 88180,
+      "sha256": "38f1bac12608e997cf2a02dddb94e90a6c4b1402c65f4d02bbb0c693fb51cf3f",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/study-tablet-mul_3d2d-ready.png",
+      "bytes": 81723,
+      "sha256": "04a5e08bb37b10cec6047dc92ab358c00162f3444929b1ac915cf398a3725f4a",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    },
+    {
+      "source": "docs/design/references/mystic-island-goal-pack-v0.1/images/03_mushroom_island.png",
+      "bytes": 1930969,
+      "sha256": "10fad298b092f419fa756a874bdf4675f76803c52d8f76a8e0e7b0291395823c",
+      "matchesInitial": null,
+      "declaredInMainSourceManifest": false,
+      "initialHashAvailable": false
+    }
+  ],
+  "restore": "Combine canonical Git source, full-library cache, original-seven cache, and these additional files; do not treat the cache alone as a standalone repository",
+  "cache": "/Users/yutogasaki/Projects/.portal-recovery/PI-001-SANSU-library/be55eae17dcadf33",
+  "initialManifestNote": "A false matchesInitial means no identical hash in the tracked/untracked start manifest; it does not prove the file changed after start. Ignored files can be absent from that manifest."
+}

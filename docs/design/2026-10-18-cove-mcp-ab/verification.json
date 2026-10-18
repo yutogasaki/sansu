@@ -1,0 +1,172 @@
+{
+  "timestamp": "2026-10-18T00:18:10.861496+00:00",
+  "base_revision": "eb4b907b",
+  "checkout": "shared dirty DEV; not fixed production",
+  "candidate": "cove-mcp-roof-v1",
+  "app_target": "/prototypes/place-qa/authored.html?water=wide&reference=preflight32&cove=corner",
+  "delivery_flag": "DEV diagnostic only; no production toggle",
+  "checks": {
+    "asset": "PASS",
+    "domain": "PASS",
+    "same_owned_state_and_maturity": "PASS",
+    "same_full_live_state": "NOT_EQUAL: autonomous applied UUIDs and placeProgress use history differ",
+    "desktop_same_camera": "PASS",
+    "phone_same_camera_and_scroll": "PASS",
+    "script_syntax": "PASS",
+    "docs": "PASS (existing overdue-review warnings)"
+  },
+  "verdict": {
+    "workflow": "PASS_WITH_BACKGROUND_BLENDER_FALLBACK",
+    "visual": "HOLD",
+    "independent_observers": 0,
+    "production_runtime": "NOT_TESTED"
+  },
+  "files": {
+    "README.md": {
+      "sha256": "c48ed5645a89200968f7e18778f8414a51191300d31550dc859435373fc8c786",
+      "bytes": 6558
+    },
+    "after-near.png": {
+      "sha256": "8e69db879b698a001f9e969b8a2d77cec4682edbe3934994817188ca9dba2775",
+      "bytes": 87750
+    },
+    "after-phone-metadata.json": {
+      "sha256": "69414eadcaae785eaaa41d1549df2361aaffa8a96eaa52f465a3f5b40d4f2c9b",
+      "bytes": 192897
+    },
+    "after-phone.png": {
+      "sha256": "45f584f840f1e435e4a811f2713f0c9a2775ac7872ec8322a590512bc18c5958",
+      "bytes": 45735
+    },
+    "after-whole.png": {
+      "sha256": "5dd4cb8d58af11e453d071537f21d1fcaabc63ddf199dfd66a4456fdbf9960b4",
+      "bytes": 78416
+    },
+    "asset-check.json": {
+      "sha256": "6851f27ded8c61c6971ef3fe3f2dea09419b86aceead2a148c2db1c9d9ae30cb",
+      "bytes": 254
+    },
+    "before-near.png": {
+      "sha256": "84efd759b74a864ef1ef6b46373a463e60abd90789e94076bcea771eb87e7cef",
+      "bytes": 88386
+    },
+    "before-phone-metadata.json": {
+      "sha256": "25e90dfcbae6641ea5d0dca410ce13117596be71bbbdc8bd27631d2555069674",
+      "bytes": 109859
+    },
+    "before-phone.png": {
+      "sha256": "bb2ec1d6e2482b5b9f03f1b41a66d32f01804c9caaa63847fe74a12f348473e7",
+      "bytes": 45928
+    },
+    "before-whole.png": {
+      "sha256": "224e8e778d7b5e2803e0b0447c6870e73eea19483f3e7a13f25972e9e11a1bfb",
+      "bytes": 78632
+    },
+    "browser-metadata.json": {
+      "sha256": "afc3392aefd5d5eb4bde54acb8074d85b03b96b4daa1349e72167d2d767a75e8",
+      "bytes": 359713
+    },
+    "build-variant.py": {
+      "sha256": "7249278632a0320714979f8e56df6f270e0d683253dfe9c9b5f547a887fecdd5",
+      "bytes": 4395
+    },
+    "check-assets.py": {
+      "sha256": "d6f031ce1498b37bc08b121daacb17c27c4159323dcbd55d146723521e6bc8c5",
+      "bytes": 2395
+    },
+    "check-domain.mjs": {
+      "sha256": "0d14e3b8451cce35f51f2780dbcf2b421ec63349b2f9a3fb688054d9500afadd",
+      "bytes": 3662
+    },
+    "comparison-near.jpg": {
+      "sha256": "bbf0c9d8d06926bbc313c22a814445dc75faead20f73941b16971c6974b2eb20",
+      "bytes": 273163
+    },
+    "comparison-phone.jpg": {
+      "sha256": "4b94319402b3269147a2a942cbdfadc493eed7a394856551800d8ed81d3ed376",
+      "bytes": 138081
+    },
+    "comparison-whole.jpg": {
+      "sha256": "49fed31b98b1bc509cc52f04cf1d77c0fae88231b038b438e2968221fc80043e",
+      "bytes": 244945
+    },
+    "cove-roof-variant.blend": {
+      "sha256": "de639d4c739878c0a6e82ef9fad49a0c1e0ffeab4f6c430f11ecacc7d0d70b22",
+      "bytes": 1198822
+    },
+    "cove-roof-variant.glb": {
+      "sha256": "a8e2f0c6255e79dbf177734646fce4da07dc7f728a7b4855c50b63c03a28184f",
+      "bytes": 1682524
+    },
+    "cove-roof-variant.glb.gz": {
+      "sha256": "be4714caeebf7ff0db722d720a2bbc0ce1468b1520fa2ce9b5e19f16cf294c15",
+      "bytes": 901612
+    },
+    "delivery-variant.json": {
+      "sha256": "8c37652af4f39410aafd8c5ee2ce4202f1aa9e168d11ffb72eb670768e797e1d",
+      "bytes": 6033
+    },
+    "domain-check.json": {
+      "sha256": "bed5dc421e50f97674a85908fc92d5c035aab0373ee3fc73956bdb4b057cce28",
+      "bytes": 659
+    },
+    "index.html": {
+      "sha256": "a2a54cc1c9f96cb40e23ec1eded2762da949a289caf436b1ee54799a094351ce",
+      "bytes": 2596
+    },
+    "patch-variant.json": {
+      "sha256": "beadac4aaabb4e3da6399e44c89e892c7713bcc30d2427f6ab4270584798ca5e",
+      "bytes": 383762
+    },
+    "serve-ab.mjs": {
+      "sha256": "d48afaebf236046ce8f044f7d9055f6522a4174285e3bd60e4e22988cc0f767e",
+      "bytes": 1744
+    },
+    "source-audit.json": {
+      "sha256": "70f35dee90937b76f3dd7dae76dd5bee17b31236e1007794e63eda67713d5c33",
+      "bytes": 4182
+    },
+    "source-variant.json": {
+      "sha256": "11cd91276d534fe7c53a3e03a9c573ea830bb5a4d65a5c8ed6311c30c8ab4a6b",
+      "bytes": 28586
+    },
+    "world-field-comparison.json": {
+      "sha256": "30bf8e9fc338797f24c3c8342fa748af736e80e0b2eb968c8100421d9b2f063e",
+      "bytes": 1371
+    },
+    "build-execution.txt": {
+      "sha256": "34fb7d75bb96bff88dce06c4965ff649cd802af1f6cdedc71d5d5b8ee5a331bd",
+      "bytes": 2978
+    },
+    "domain-execution.txt": {
+      "sha256": "da955041cd113d1ddac656d28544e1503ef60183224042a7cedf9e3adb9aa23f",
+      "bytes": 79
+    },
+    "docs-check.txt": {
+      "sha256": "f532551edebda0fda7891fd2f1aed92babcdbcf96bd6b64b3d0e2af635af02a9",
+      "bytes": 1404
+    }
+  },
+  "first_failures": [
+    {
+      "stage": "MCP file open callback",
+      "error": "'Context' object has no attribute 'selected_objects'; exporter then lacked active_object",
+      "resolution": "separate callback export, followed by reproducible background Blender build"
+    },
+    {
+      "stage": "split callback audit",
+      "error": "name 'audit' is not defined",
+      "resolution": "same canonical build regenerated all artifacts"
+    },
+    {
+      "stage": "domain initial assertion",
+      "error": "Full world definition hashes differ",
+      "resolution": "field-level proof: only provenance revision differs; all remaining physical data matches"
+    },
+    {
+      "stage": "docs first run",
+      "error": "README linked verification.json before creation",
+      "resolution": "created verification manifest and reran docs checker"
+    }
+  ]
+}

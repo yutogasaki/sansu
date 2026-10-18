@@ -22,7 +22,7 @@ export interface GrowingIslandMenuProps {
     onFlowers: () => void;
     onGuide: () => void;
     onPlaces?: () => void;
-    onSettings: () => void;
+    onSettings?: () => void;
     onRecords?: () => void;
     onName?: () => void;
     islandName?: string;
@@ -75,7 +75,7 @@ export function GrowingIslandMenuContents(props: GrowingIslandMenuProps) {
             <div className="growing-pocket-tool-buttons">
                 <button aria-label="ひだりに まわす" onClick={() => props.onRotate(-1)}><RotateCcw size={18} aria-hidden="true" /><span>ひだり</span></button>
                 <button aria-label="みぎに まわす" onClick={() => props.onRotate(1)}><RotateCw size={18} aria-hidden="true" /><span>みぎ</span></button>
-                {!props.onRecords && <button onClick={props.onSettings}><Settings2 size={18} aria-hidden="true" /><span>せってい</span></button>}
+                {!props.onRecords && props.onSettings && <button onClick={props.onSettings}><Settings2 size={18} aria-hidden="true" /><span>せってい</span></button>}
             </div>
             {quote && <div className="growing-pocket-expansion" aria-label="しまを ひろげる">
                 {quote.sides.map(side => <button key={side} disabled={props.busy || props.drops < quote.price} onClick={() => props.onExpand(side)}>

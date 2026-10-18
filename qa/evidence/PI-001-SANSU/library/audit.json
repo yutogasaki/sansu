@@ -1,0 +1,5333 @@
+{
+  "repo": "sansu",
+  "targetCommit": "eb4b907bdf5cb6e99c30c4ac6f28d2d3969cac50",
+  "at": "2026-10-16T05:00:52.942820+00:00",
+  "inputHash": "a23451705c3c23c37bed021c89c6812123ee0d2cc6eb611550a24e358800d581",
+  "candidateHash": "c212a26691b577aa9dcca1606aaa18bf03de7352810cb3870f9bb1f743f683a1",
+  "pages": 308,
+  "documents": 784,
+  "items": 82200,
+  "itemsChecked": 82200,
+  "classifications": {
+    "text": 50469,
+    "link": 10722,
+    "heading": 2000,
+    "control": 306,
+    "disclosure": 5222,
+    "code": 1192,
+    "image": 10772,
+    "video": 10,
+    "table": 599,
+    "diagram": 117,
+    "audio": 7,
+    "document": 784
+  },
+  "resources": 12518,
+  "exclusions": [],
+  "itemIssues": 6,
+  "itemIssueDetails": [
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/whole-landscape.blend",
+      "cause": "unavailable-resource"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/whole-landscape.glb",
+      "cause": "unavailable-resource"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/2026-10-11-native-owned-island/verification-a6/qa-place-whole-island-v1-768-grown-real-3d.png",
+      "cause": "unavailable-resource"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/README.md",
+      "cause": "unavailable-resource"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/2026-10-11-native-owned-island",
+      "cause": "unavailable-resource"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/viewer.bundle.js",
+      "cause": "unavailable-resource"
+    }
+  ],
+  "linksChecked": 48469,
+  "linkIssues": 7,
+  "linkIssueDetails": [
+    {
+      "source": "integrated/docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "url": "whole-landscape.blend",
+      "cause": "missing"
+    },
+    {
+      "source": "integrated/docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "url": "whole-landscape.glb",
+      "cause": "missing"
+    },
+    {
+      "source": "integrated/docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "url": "../2026-10-11-native-owned-island/verification-a6/qa-place-whole-island-v1-768-grown-real-3d.png",
+      "cause": "missing"
+    },
+    {
+      "source": "integrated/docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "url": "../2026-10-11-native-owned-island/verification-a6/qa-place-whole-island-v1-768-grown-real-3d.png",
+      "cause": "missing"
+    },
+    {
+      "source": "integrated/docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "url": "README.md",
+      "cause": "missing"
+    },
+    {
+      "source": "integrated/docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "url": "../2026-10-11-native-owned-island",
+      "cause": "missing"
+    },
+    {
+      "source": "integrated/docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "url": "viewer.bundle.js?v=landscape-owned-v5",
+      "cause": "missing"
+    }
+  ],
+  "routes": [
+    {
+      "old": ".agents/index.html",
+      "new": "portal/integrated/agents/index.html",
+      "anchors": [
+        "main",
+        "search",
+        "result"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": ".agents/map.html",
+      "new": "portal/integrated/agents/map.html",
+      "anchors": [
+        "main",
+        "search",
+        "result",
+        "overview",
+        "progress",
+        "specs",
+        "assets",
+        "legacy",
+        "evidence"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": ".agents/operations.html",
+      "new": "portal/integrated/agents/operations.html",
+      "anchors": [
+        "main",
+        "search",
+        "result"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": ".agents/plan.html",
+      "new": "portal/integrated/agents/plan.html",
+      "anchors": [
+        "main",
+        "search",
+        "result"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": ".agents/roles.html",
+      "new": "portal/integrated/agents/roles.html",
+      "anchors": [
+        "main",
+        "search",
+        "result"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": ".agents/tasks/index.html",
+      "new": "portal/integrated/agents/tasks/index.html",
+      "anchors": [
+        "main",
+        "search",
+        "result"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/index.html",
+      "new": "portal/integrated/docs/index.html",
+      "anchors": [
+        "main",
+        "search",
+        "result"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/audits/2026-10-01-learning-content-fixes/screens.html",
+      "new": "portal/integrated/docs/audits/2026-10-01-learning-content-fixes/screens.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-09-island-renewal/connected-v17/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-09-island-renewal/connected-v17/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-09-island-renewal/grass-v13/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-09-island-renewal/grass-v13/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-09-island-renewal/growth-v15/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-09-island-renewal/growth-v15/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-09-island-renewal/growth-v16/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-09-island-renewal/growth-v16/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v1/review.html",
+      "new": "portal/integrated/docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v1/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v2/review.html",
+      "new": "portal/integrated/docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v2/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v3/review.html",
+      "new": "portal/integrated/docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v3/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v4/review.html",
+      "new": "portal/integrated/docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v4/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v5/review.html",
+      "new": "portal/integrated/docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v5/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v6/review.html",
+      "new": "portal/integrated/docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v6/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v7/commit-check/review.html",
+      "new": "portal/integrated/docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v7/commit-check/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v7/main-integration/review.html",
+      "new": "portal/integrated/docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v7/main-integration/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v7/review.html",
+      "new": "portal/integrated/docs/design/2026-09-09-pokomoko-growth-keyvisual/implementation-v7/review.html",
+      "anchors": [
+        "phone",
+        "tablet",
+        "reference"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-09-pokomoko-growth-keyvisual/review.html",
+      "new": "portal/integrated/docs/design/2026-09-09-pokomoko-growth-keyvisual/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-09-pokomoko-growth-keyvisual/v2/review.html",
+      "new": "portal/integrated/docs/design/2026-09-09-pokomoko-growth-keyvisual/v2/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-10-island-life/household-production/review.html",
+      "new": "portal/integrated/docs/design/2026-09-10-island-life/household-production/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-10-island-life/interaction-v4/review.html",
+      "new": "portal/integrated/docs/design/2026-09-10-island-life/interaction-v4/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-10-island-life/runtime-v1/review.html",
+      "new": "portal/integrated/docs/design/2026-09-10-island-life/runtime-v1/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-10-island-life/runtime-v2/review.html",
+      "new": "portal/integrated/docs/design/2026-09-10-island-life/runtime-v2/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-10-island-life/runtime-v3/review.html",
+      "new": "portal/integrated/docs/design/2026-09-10-island-life/runtime-v3/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-10-island-life/runtime-v5/review.html",
+      "new": "portal/integrated/docs/design/2026-09-10-island-life/runtime-v5/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-11-island-overlay-menu/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-11-island-overlay-menu/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-11-island-resident-gestures/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-11-island-resident-gestures/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-11-resident-identity/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-11-resident-identity/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-12-island-belongings/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-12-island-belongings/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-12-island-close-v7/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-12-island-close-v7/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-12-island-discovery-bounce/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-12-island-discovery-bounce/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-12-island-moon-v8/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-12-island-moon-v8/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-12-island-motion-v9/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-12-island-motion-v9/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-12-island-roaming/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-12-island-roaming/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-canopy-runtime/comparison.html",
+      "new": "portal/integrated/docs/design/2026-09-13-canopy-runtime/comparison.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-discovery-gaze/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-discovery-gaze/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-discovery-ground/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-discovery-ground/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-discovery-memories/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-discovery-memories/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-discovery-observation/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-discovery-observation/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-economy-checkpoint/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-economy-checkpoint/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-encounters/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-encounters/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-explicit-observation/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-explicit-observation/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-facilities/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-facilities/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-facility-distance/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-facility-distance/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-facility-relations/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-facility-relations/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-facility-trips/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-facility-trips/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-footstep-magic/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-footstep-magic/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-gatherings/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-gatherings/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-groves-water/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-groves-water/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-land-expansion/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-land-expansion/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-live-relations/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-live-relations/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-picnic/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-picnic/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-placement-undo/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-placement-undo/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-plants-water/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-plants-water/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-play-tours/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-play-tours/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-reading/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-reading/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-relation-observation/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-relation-observation/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-relation-selection/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-relation-selection/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-sandbox/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-sandbox/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-shadow-magic/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-shadow-magic/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-water-bench/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-water-bench/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-water-magic/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-water-magic/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-island-wind-arch/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-13-island-wind-arch/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-13-mysterious-visual-directions/comparison.html",
+      "new": "portal/integrated/docs/design/2026-09-13-mysterious-visual-directions/comparison.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-16-nature-town-living/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-16-nature-town-living/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-19-life-startup-stills/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-19-life-startup-stills/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "new": "portal/integrated/docs/design/2026-09-19-nature-town-acting/observer.html",
+      "anchors": [
+        "observer",
+        "independent",
+        "width",
+        "download"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "new": "portal/integrated/docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "anchors": [
+        "observer",
+        "independent",
+        "width",
+        "download"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-20-home-props-production/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-20-home-props-production/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-20-island-design-v2/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-20-island-design-v2/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-20-life-scene-startup/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-20-life-scene-startup/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-20-nature-town-ground-v1/candidate-comparison.html",
+      "new": "portal/integrated/docs/design/2026-09-20-nature-town-ground-v1/candidate-comparison.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-20-nature-town-ground-v1/critical-path.html",
+      "new": "portal/integrated/docs/design/2026-09-20-nature-town-ground-v1/critical-path.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "new": "portal/integrated/docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "anchors": [
+        "observer",
+        "independent",
+        "width",
+        "download"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-20-placeable-decorations/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-20-placeable-decorations/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-27-fantasy-production/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-27-fantasy-production/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-27-living-fantasy-first-playable/index.html",
+      "new": "portal/integrated/docs/design/2026-09-27-living-fantasy-first-playable/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-27-living-fantasy-first-playable/withdrawn-v1.html",
+      "new": "portal/integrated/docs/design/2026-09-27-living-fantasy-first-playable/withdrawn-v1.html",
+      "anchors": [
+        "hero-link",
+        "hero-image",
+        "hero-caption",
+        "journey"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-27-pokomoko-art-direction/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-27-pokomoko-art-direction/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-27-pokomoko-restored/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-27-pokomoko-restored/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-28-dopa-reference-breakdown/index.html",
+      "new": "portal/integrated/docs/design/2026-09-28-dopa-reference-breakdown/index.html",
+      "anchors": [
+        "reference",
+        "listenStatus",
+        "current",
+        "currentControls"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-28-pokomoko-compact-fix/index.html",
+      "new": "portal/integrated/docs/design/2026-09-28-pokomoko-compact-fix/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-28-pokomoko-four-state-restoration/index.html",
+      "new": "portal/integrated/docs/design/2026-09-28-pokomoko-four-state-restoration/index.html",
+      "anchors": [
+        "benchmark"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-28-pokomoko-fullscreen/index.html",
+      "new": "portal/integrated/docs/design/2026-09-28-pokomoko-fullscreen/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-28-pokomoko-pop-live/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-09-28-pokomoko-pop-live/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-28-pokomoko-pop-study/index.html",
+      "new": "portal/integrated/docs/design/2026-09-28-pokomoko-pop-study/index.html",
+      "anchors": [
+        "play",
+        "reset",
+        "try",
+        "scrub",
+        "time",
+        "reference",
+        "stage",
+        "status",
+        "record",
+        "wav",
+        "frames"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-29-garden-indexed-geometry/index.html",
+      "new": "portal/integrated/docs/design/2026-09-29-garden-indexed-geometry/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-29-house-interior-restore/index.html",
+      "new": "portal/integrated/docs/design/2026-09-29-house-interior-restore/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-29-island-community/index.html",
+      "new": "portal/integrated/docs/design/2026-09-29-island-community/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-29-island-community/local.html",
+      "new": "portal/integrated/docs/design/2026-09-29-island-community/local.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-29-island-frame-performance/index.html",
+      "new": "portal/integrated/docs/design/2026-09-29-island-frame-performance/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-29-island-loading/index.html",
+      "new": "portal/integrated/docs/design/2026-09-29-island-loading/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-29-learning-progress/index.html",
+      "new": "portal/integrated/docs/design/2026-09-29-learning-progress/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-29-learning-rich-audio/index.html",
+      "new": "portal/integrated/docs/design/2026-09-29-learning-rich-audio/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-29-progress-compact/index.html",
+      "new": "portal/integrated/docs/design/2026-09-29-progress-compact/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-29-progress-stitch/index.html",
+      "new": "portal/integrated/docs/design/2026-09-29-progress-stitch/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-09-29-shadow-projection-reuse/index.html",
+      "new": "portal/integrated/docs/design/2026-09-29-shadow-projection-reuse/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-01-finish-clarity/screens.html",
+      "new": "portal/integrated/docs/design/2026-10-01-finish-clarity/screens.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-01-finish-perfect/index.html",
+      "new": "portal/integrated/docs/design/2026-10-01-finish-perfect/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-01-finish-test/index.html",
+      "new": "portal/integrated/docs/design/2026-10-01-finish-test/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-01-house-atelier/screens.html",
+      "new": "portal/integrated/docs/design/2026-10-01-house-atelier/screens.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-01-island-guidance/fixes.html",
+      "new": "portal/integrated/docs/design/2026-10-01-island-guidance/fixes.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-01-island-guidance/house-entry.html",
+      "new": "portal/integrated/docs/design/2026-10-01-island-guidance/house-entry.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-01-island-guidance/index.html",
+      "new": "portal/integrated/docs/design/2026-10-01-island-guidance/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-01-menu-atelier/screens.html",
+      "new": "portal/integrated/docs/design/2026-10-01-menu-atelier/screens.html",
+      "anchors": [
+        "contact"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-02-guidance-ux/screens.html",
+      "new": "portal/integrated/docs/design/2026-10-02-guidance-ux/screens.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-02-island-play-menu/screens.html",
+      "new": "portal/integrated/docs/design/2026-10-02-island-play-menu/screens.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-02-island-pocket-menu/screens.html",
+      "new": "portal/integrated/docs/design/2026-10-02-island-pocket-menu/screens.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-02-learning-island-integration/final/screens.html",
+      "new": "portal/integrated/docs/design/2026-10-02-learning-island-integration/final/screens.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-02-learning-island-integration/latest/navigation/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-02-learning-island-integration/latest/navigation/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-02-learning-island-integration/latest/screens.html",
+      "new": "portal/integrated/docs/design/2026-10-02-learning-island-integration/latest/screens.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-02-learning-island-integration/navigation/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-02-learning-island-integration/navigation/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-02-learning-island-integration/navigation-default-stopped/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-02-learning-island-integration/navigation-default-stopped/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-02-learning-island-integration/screens.html",
+      "new": "portal/integrated/docs/design/2026-10-02-learning-island-integration/screens.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-02-progress-clear/screens.html",
+      "new": "portal/integrated/docs/design/2026-10-02-progress-clear/screens.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-02-whole-app-atelier/battle/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-02-whole-app-atelier/battle/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-02-whole-app-atelier/battle-supported/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-02-whole-app-atelier/battle-supported/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-02-whole-app-atelier/navigation/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-02-whole-app-atelier/navigation/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-02-whole-app-atelier/screens.html",
+      "new": "portal/integrated/docs/design/2026-10-02-whole-app-atelier/screens.html",
+      "anchors": [
+        "before",
+        "current",
+        "menu-current",
+        "finish-verified",
+        "inputs-current-contract",
+        "dialogs-due-apple",
+        "production-final-focus",
+        "battle-supported",
+        "navigation"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-03-learning-flow/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-03-learning-flow/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-03-learning-flow/phone-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-03-learning-flow/phone-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-03-learning-flow/tablet-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-03-learning-flow/tablet-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-03-level-up-entry/screens.html",
+      "new": "portal/integrated/docs/design/2026-10-03-level-up-entry/screens.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-growing-place-runtime/index.html",
+      "new": "portal/integrated/docs/design/2026-10-10-growing-place-runtime/index.html",
+      "anchors": [
+        "main",
+        "title",
+        "comparison",
+        "comparison-title",
+        "places",
+        "places-title",
+        "journey",
+        "journey-title",
+        "mature",
+        "mature-title",
+        "evidence",
+        "evidence-title"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-growing-place-runtime/places-evidence/critical-path-contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-10-growing-place-runtime/places-evidence/critical-path-contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v2-failed/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v2-failed/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-autonomous-use-failed/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-autonomous-use-failed/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-goal-confirmation-failed/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-goal-confirmation-failed/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-harness-failed/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-harness-failed/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-mature-observation-failed/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-mature-observation-failed/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-move-confirmation-failed/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-move-confirmation-failed/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-natural-growth-check-failed/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-natural-growth-check-failed/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-tablet/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-tablet/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-whole-observation-failed/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-whole-observation-failed/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-whole390/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-10-growing-place-runtime/places-evidence/native-v3-whole390/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "new": "portal/integrated/docs/design/2026-10-10-island-design-strategy/index.html",
+      "anchors": [
+        "top",
+        "foundation",
+        "arrangement-title-0",
+        "arrangement-desc-0",
+        "arrangement-title-1",
+        "arrangement-desc-1",
+        "arrangement-title-2",
+        "arrangement-desc-2",
+        "places",
+        "growth-diagram",
+        "growth-svg-title",
+        "growth-svg-desc",
+        "growth-caption",
+        "strategy",
+        "library",
+        "theme-filters",
+        "kind-filter",
+        "search",
+        "notes-filter",
+        "export-notes",
+        "result-count",
+        "gallery",
+        "empty",
+        "roadmap",
+        "compare-bar",
+        "compare-selection",
+        "open-compare",
+        "clear-compare",
+        "detail-dialog",
+        "detail-image",
+        "previous-image",
+        "detail-position",
+        "next-image",
+        "detail-eyebrow",
+        "detail-title",
+        "detail-status",
+        "detail-source",
+        "detail-notes",
+        "detail-scope",
+        "detail-source-link",
+        "note-form",
+        "note-status",
+        "note-text",
+        "delete-note",
+        "note-feedback",
+        "compare-dialog",
+        "compare-title",
+        "compare-images",
+        "announcement"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-island-final-3d/history/native-01/index.html",
+      "new": "portal/integrated/docs/design/2026-10-10-island-final-3d/history/native-01/index.html",
+      "anchors": [
+        "stage",
+        "native-file",
+        "model-file",
+        "render-file"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-island-final-3d/history/native-02/index.html",
+      "new": "portal/integrated/docs/design/2026-10-10-island-final-3d/history/native-02/index.html",
+      "anchors": [
+        "stage",
+        "native-file",
+        "model-file",
+        "render-file"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-island-final-3d/history/native-04/index.html",
+      "new": "portal/integrated/docs/design/2026-10-10-island-final-3d/history/native-04/index.html",
+      "anchors": [
+        "stage",
+        "native-file",
+        "model-file",
+        "render-file"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-island-final-3d/index.html",
+      "new": "portal/integrated/docs/design/2026-10-10-island-final-3d/index.html",
+      "anchors": [
+        "stage",
+        "native-file",
+        "model-file",
+        "render-file"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-island-place-goals/index.html",
+      "new": "portal/integrated/docs/design/2026-10-10-island-place-goals/index.html",
+      "anchors": [
+        "island-heading",
+        "island-image",
+        "hotspots",
+        "goals-heading",
+        "goal-buttons",
+        "goal-detail",
+        "goal-kicker",
+        "goal-name",
+        "goal-intent",
+        "goal-art-link",
+        "goal-art",
+        "inputs",
+        "variant-buttons",
+        "layout-diagram",
+        "variant-result",
+        "terrain-note",
+        "legend",
+        "stage-buttons",
+        "stage-detail",
+        "space-rule",
+        "next-goals",
+        "relations-heading",
+        "combination-cards",
+        "principles-heading",
+        "delivery-heading",
+        "delivery-cards",
+        "load-status"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-native-art-transfer/critical-path.html",
+      "new": "portal/integrated/docs/design/2026-10-10-native-art-transfer/critical-path.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-native-art-transfer/index.html",
+      "new": "portal/integrated/docs/design/2026-10-10-native-art-transfer/index.html",
+      "anchors": [
+        "sequence",
+        "comparison",
+        "evidence"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-place-growth-art-directions/index.html",
+      "new": "portal/integrated/docs/design/2026-10-10-place-growth-art-directions/index.html",
+      "anchors": [
+        "world",
+        "PG-A",
+        "PG-B",
+        "PG-C"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-promotion-complete-v3/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-10-promotion-complete-v3/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-promotion-learning-v2/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-10-promotion-learning-v2/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-promotion-website/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-10-promotion-website/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-10-whole-island-art-directions/index.html",
+      "new": "portal/integrated/docs/design/2026-10-10-whole-island-art-directions/index.html",
+      "anchors": [
+        "mature",
+        "world-layers",
+        "WI-A",
+        "WI-B",
+        "WI-C"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-authored-flower-garden/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-authored-flower-garden/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-authored-island-runtime/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-authored-island-runtime/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-authored-water-garden/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-authored-water-garden/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-authored-water-world/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-authored-water-world/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-authored-whole-preflight/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-authored-whole-preflight/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-authored-world-foundation/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-authored-world-foundation/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-authored-world-performance/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-authored-world-performance/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-expanding-island-runtime/index.html",
+      "new": "portal/integrated/docs/design/2026-10-11-expanding-island-runtime/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-expanding-island-runtime/production/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-expanding-island-runtime/production/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-island-growth-art/critical-path.html",
+      "new": "portal/integrated/docs/design/2026-10-11-island-growth-art/critical-path.html",
+      "anchors": [
+        "build"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-island-growth-art/index.html",
+      "new": "portal/integrated/docs/design/2026-10-11-island-growth-art/index.html",
+      "anchors": [
+        "whole",
+        "places",
+        "work"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-island-landscape-art/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-island-landscape-art/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "new": "portal/integrated/docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "anchors": [
+        "stage",
+        "native-file",
+        "model-file",
+        "render-file",
+        "comparison"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-island-landscape-art/index.html",
+      "new": "portal/integrated/docs/design/2026-10-11-island-landscape-art/index.html",
+      "anchors": [
+        "stage",
+        "native-file",
+        "model-file",
+        "render-file",
+        "comparison"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-native-owned-island/critical-path.html",
+      "new": "portal/integrated/docs/design/2026-10-11-native-owned-island/critical-path.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-native-owned-island/diagnostics/court-dev-03/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-native-owned-island/diagnostics/court-dev-03/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-native-owned-island/diagnostics/mature-tree-storage-01/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-native-owned-island/diagnostics/mature-tree-storage-01/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-native-owned-island/diagnostics/whole-dev-01/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-native-owned-island/diagnostics/whole-dev-01/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-native-owned-island/diagnostics/whole-dev-02/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-native-owned-island/diagnostics/whole-dev-02/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-native-owned-island/index.html",
+      "new": "portal/integrated/docs/design/2026-10-11-native-owned-island/index.html",
+      "anchors": [
+        "comparison",
+        "whole-stage",
+        "whole-raw",
+        "whole-image",
+        "whole-caption"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-native-owned-island/verification/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-native-owned-island/verification/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-native-owned-island/verification-a6/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-native-owned-island/verification-a6/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-native-owned-island/verification-final/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-native-owned-island/verification-final/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-native-owned-island/verification-mature/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-native-owned-island/verification-mature/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-11-settings-promotion/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-11-settings-promotion/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-central-shoulder/comparison.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-central-shoulder/comparison.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-cove-runtime/c1/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-cove-runtime/c1/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-cove-runtime/c2/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-cove-runtime/c2/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-cove-runtime/c4/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-cove-runtime/c4/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-floor-shading/c2-causal-diagnostic/index.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-floor-shading/c2-causal-diagnostic/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-floor-shading/c2-causal-diagnostic/roi-review.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-floor-shading/c2-causal-diagnostic/roi-review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-flower-edge/contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-flower-edge/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-forest-crowns/review.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-forest-crowns/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-forest-crowns/stage2-shape-review.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-forest-crowns/stage2-shape-review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-forest-crowns/stage3-review.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-forest-crowns/stage3-review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-forest-crowns/stage4-review.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-forest-crowns/stage4-review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-p02-gallery/east-v2-review.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-p02-gallery/east-v2-review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-p02-gallery/east-v4-review.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-p02-gallery/east-v4-review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-p02-gallery/east-v5-review.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-p02-gallery/east-v5-review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-shoulder-runtime/c1/shape-review.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-shoulder-runtime/c1/shape-review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-shoulder-runtime/c2/visual-contact-sheet/index.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-shoulder-runtime/c2/visual-contact-sheet/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-shoulder-runtime/c3/affected-regressions/visual-contact-sheet/index.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-shoulder-runtime/c3/affected-regressions/visual-contact-sheet/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-authored-whole-rough/review.html",
+      "new": "portal/integrated/docs/design/2026-10-12-authored-whole-rough/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-core-growth-review/review.html",
+      "new": "portal/integrated/docs/design/2026-10-12-core-growth-review/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-district-assembly/runtime-contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-12-district-assembly/runtime-contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-growth-terrain-runtime/runtime-contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-12-growth-terrain-runtime/runtime-contact-sheet.html",
+      "anchors": [
+        "low-shore",
+        "young",
+        "parallel",
+        "seaward",
+        "shifted",
+        "parallel-restored",
+        "rotated",
+        "phone",
+        "tablet"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/2026-10-12-growth-variation-runtime/runtime-contact-sheet.html",
+      "new": "portal/integrated/docs/design/2026-10-12-growth-variation-runtime/runtime-contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-05-build-play-mvp/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-05-build-play-mvp/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-05-park-blender/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-05-park-blender/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-06-park-onboarding/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-06-park-onboarding/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-06-park-three/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-06-park-three/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-06-pittari/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-06-pittari/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-07-experience-corrections/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-07-experience-corrections/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-07-experience-review/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-07-experience-review/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-07-experience2/candidates/5d7be27ceacb/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-07-experience2/candidates/5d7be27ceacb/contact-sheet.html",
+      "anchors": [
+        "device",
+        "flow",
+        "extent",
+        "count"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-07-experience2/candidates/993febcf1560/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-07-experience2/candidates/993febcf1560/contact-sheet.html",
+      "anchors": [
+        "device",
+        "flow",
+        "extent",
+        "count"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-07-experience2/candidates/b155db0a54ec/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-07-experience2/candidates/b155db0a54ec/contact-sheet.html",
+      "anchors": [
+        "device",
+        "flow",
+        "extent",
+        "count"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-07-island-3d/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-07-island-3d/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-07-island-learning/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-07-island-learning/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-07-island-loop/review.html",
+      "anchors": [
+        "critical-path",
+        "learning",
+        "recovery",
+        "play",
+        "before"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-07-mystic-island/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-07-mystic-island/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-07-production-release/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-07-production-release/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "anchors": [
+        "export",
+        "import",
+        "import-file",
+        "clear",
+        "save-status",
+        "status-title",
+        "status-list",
+        "status-participant",
+        "status-immediate",
+        "status-delayed",
+        "status-replay",
+        "status-return",
+        "status-understanding",
+        "original-records",
+        "original-choice",
+        "original-raw",
+        "export-original",
+        "record-form",
+        "participant",
+        "age",
+        "participant-confirmed",
+        "planned-count",
+        "plan-status",
+        "experience",
+        "reading-policy",
+        "target",
+        "revision",
+        "delivery",
+        "candidate",
+        "device",
+        "conditions",
+        "probe-stages",
+        "starting-surface",
+        "operation-date",
+        "first-action",
+        "operation-fields",
+        "material",
+        "comprehension-event",
+        "comprehension-confusion",
+        "comprehension-notes",
+        "replay-date",
+        "replay-opportunity",
+        "replay-prompting",
+        "replay-choice",
+        "replay-quote",
+        "replay-notes",
+        "return-start",
+        "return-end",
+        "return-choice",
+        "return-notes",
+        "intervention",
+        "practice-immediate",
+        "practice-delayed",
+        "other-notes"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-07-written-arithmetic/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-07-written-arithmetic/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-adaptive-subjects/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-adaptive-subjects/review.html",
+      "anchors": [
+        "runtime-gate"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-auto-answer/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-auto-answer/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-ipad-landscape/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-ipad-landscape/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-island-balance/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-island-balance/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-island-camera/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-island-camera/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-island-chapter-upgrades/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-island-chapter-upgrades/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-island-customization/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-island-customization/review.html",
+      "anchors": [
+        "entry",
+        "themes",
+        "earn",
+        "live",
+        "fixture",
+        "catalog",
+        "navigation",
+        "provenance"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-island-home/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-island-home/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-island-home-copy/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-island-home-copy/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-island-milestones/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-island-milestones/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-island-shell/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-island-shell/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-island-shell/runtime/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-island-shell/runtime/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-island-sound-control/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-island-sound-control/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-learning-feedback/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-learning-feedback/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-learning-focus/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-learning-focus/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-learning-rhythm/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-learning-rhythm/contact-sheet.html",
+      "anchors": [
+        "onboarding-phone-math",
+        "onboarding-tablet-mix",
+        "phone-math",
+        "tablet-written",
+        "critical-path-phone",
+        "critical-path-tablet",
+        "benchmark"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-living-island/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-living-island/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-math-hints/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-math-hints/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-onboarding-math-range/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-onboarding-math-range/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-patchwork-resident/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-patchwork-resident/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-pokomoko-color-dots/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-pokomoko-color-dots/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-pokomoko-color-dots/runtime.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-pokomoko-color-dots/runtime.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-pokomoko-dots/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-pokomoko-dots/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-pokomoko-fantasy/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-pokomoko-fantasy/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-pokomoko-world/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-pokomoko-world/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-production-release/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-production-release/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-08-written-input/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-08-written-input/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-09-display-layout/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-09-display-layout/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-09-home-challenge/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-09-home-challenge/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-09-house-edges/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-09-house-edges/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-09-house-ux/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-09-house-ux/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-09-island-grounded-workshop/before-after.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-09-island-grounded-workshop/before-after.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-09-island-grounded-workshop/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-09-island-grounded-workshop/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-09-island-grounded-workshop/table-contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-09-island-grounded-workshop/table-contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-09-island-home-space/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-09-island-home-space/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-09-island-learning-milestones/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-09-island-learning-milestones/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-09-island-learning-milestones/growth-contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-09-island-learning-milestones/growth-contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-09-island-shape-photo-camera/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-09-island-shape-photo-camera/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-09-island-shared-jobs/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-09-island-shared-jobs/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-09-island-tutorial/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-09-island-tutorial/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-09-island-workshop-residents/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-09-island-workshop-residents/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-09-photo-exits/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-09-photo-exits/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-09-ui-ux-continuity/main-integration/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-09-ui-ux-continuity/main-integration/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-09-ui-ux-continuity/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-09-ui-ux-continuity/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-10-direct-panel-scale/review.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-10-direct-panel-scale/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-14-resident-cadence/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-14-resident-cadence/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-diagonal-stroll/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-diagonal-stroll/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-house-camera/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-house-camera/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-house-ui/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-house-ui/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-open-home-tools/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-open-home-tools/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-100-learning-header-title-fit-2026-09-22/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-100-learning-header-title-fit-2026-09-22/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-101-utility-screenshot-capture-2026-09-22/capture-comparison.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-101-utility-screenshot-capture-2026-09-22/capture-comparison.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-102-island-retry-error-state-2026-09-22/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-102-island-retry-error-state-2026-09-22/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-103-current-island-wide/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-103-current-island-wide/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-104-current-island-battle-wide/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-104-current-island-battle-wide/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-105-current-island-battle-scroll-cue-2026-09-22/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-105-current-island-battle-scroll-cue-2026-09-22/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-106-current-island-pwa-2026-09-22/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-106-current-island-pwa-2026-09-22/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-50-current-island/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-50-current-island/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-51-first-run-layout/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-51-first-run-layout/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-52-contrast/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-52-contrast/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-54-current-island/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-54-current-island/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-55-parent-review/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-55-parent-review/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-56-parent-review/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-56-parent-review/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-58-current-island-battle/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-58-current-island-battle/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-59-current-island-battle-runtime/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-59-current-island-battle-runtime/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-60-current-island-tug-of-war-runtime/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-60-current-island-tug-of-war-runtime/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-61-current-island-battle-visuals/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-61-current-island-battle-visuals/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-62-current-island-navigation-1024x768/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-62-current-island-navigation-1024x768/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-63-current-island-narrow-phone-320x568/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-63-current-island-narrow-phone-320x568/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-64-photo-gallery-2026-09-21/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-64-photo-gallery-2026-09-21/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-65-current-island-tablet-desktop-2026-09-21/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-65-current-island-tablet-desktop-2026-09-21/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-67-current-island-battle-setup-guidance-2026-09-21/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-67-current-island-battle-setup-guidance-2026-09-21/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-68-current-island-edge-phone-2026-09-21/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-68-current-island-edge-phone-2026-09-21/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-69-current-island-battle-edge-phone-2026-09-21/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-69-current-island-battle-edge-phone-2026-09-21/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-72-current-island-battle-scroll-cue-2026-09-21/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-72-current-island-battle-scroll-cue-2026-09-21/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-76-current-island-nav-320-2026-09-21/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-76-current-island-nav-320-2026-09-21/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-81-current-island-other-games-layout-2026-09-21/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-81-current-island-other-games-layout-2026-09-21/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-84-current-island-photo-short-landscape-2026-09-21/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-84-current-island-photo-short-landscape-2026-09-21/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-87-current-island-short-landscape-learning-layout-2026-09-22/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-87-current-island-short-landscape-learning-layout-2026-09-22/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-89-current-island-short-landscape-2026-09-22/run-480x320-touch-targets/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-89-current-island-short-landscape-2026-09-22/run-480x320-touch-targets/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-89-current-island-short-landscape-2026-09-22/run-480x400-568x320-touch-targets/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-89-current-island-short-landscape-2026-09-22/run-480x400-568x320-touch-targets/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-89-current-island-short-landscape-2026-09-22/run-480x401-boundary/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-89-current-island-short-landscape-2026-09-22/run-480x401-boundary/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-90-current-island-photo-breakpoint-2026-09-22/after-geometry/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-90-current-island-photo-breakpoint-2026-09-22/after-geometry/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-90-current-island-photo-breakpoint-2026-09-22/responsive-regression/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-90-current-island-photo-breakpoint-2026-09-22/responsive-regression/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-91-current-island-records-scroll-2026-09-22/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-91-current-island-records-scroll-2026-09-22/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-92-current-island-records-scroll-2026-09-22/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-92-current-island-records-scroll-2026-09-22/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-97-current-island-inventory-scroll-cue-2026-09-22/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-97-current-island-inventory-scroll-cue-2026-09-22/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-98-current-island-inventory-320-portrait-2026-09-22/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-98-current-island-inventory-320-portrait-2026-09-22/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-99-utility-capture-settle-2026-09-22/contact-sheet.html",
+      "new": "portal/integrated/docs/design/audits/2026-09-20-whole-app-ux/evidence/screens/live-99-utility-capture-settle-2026-09-22/contact-sheet.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/brand/patchwork-bear-icon-v1/review.html",
+      "new": "portal/integrated/docs/design/brand/patchwork-bear-icon-v1/review.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/research/2026-09-09-layout-strategy/index.html",
+      "new": "portal/integrated/docs/design/research/2026-09-09-layout-strategy/index.html",
+      "anchors": [
+        "direction",
+        "layouts",
+        "mode-panel",
+        "benchmarks",
+        "bench-body",
+        "audit",
+        "audit-grid",
+        "next",
+        "benchmark-data",
+        "audit-data"
+      ],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    },
+    {
+      "old": "docs/design/sprite-forge-comparison-2026-07-19/index.html",
+      "new": "portal/integrated/docs/design/sprite-forge-comparison-2026-07-19/index.html",
+      "anchors": [],
+      "policy": "受入前は元URLを維持。保持期限未決のURLは削除しない。"
+    }
+  ],
+  "controlInventory": [
+    {
+      "source": ".agents/index.html",
+      "key": "item-7a778367ef81a2b8c435",
+      "tag": "input",
+      "attributes": {
+        "id": "search",
+        "type": "search",
+        "placeholder": "タイトル・ファイル名・キーワード"
+      },
+      "title": "操作"
+    },
+    {
+      "source": ".agents/map.html",
+      "key": "item-f017bf012a5e26f59830",
+      "tag": "input",
+      "attributes": {
+        "id": "search",
+        "type": "search",
+        "placeholder": "タイトル・ファイル名・キーワード"
+      },
+      "title": "操作"
+    },
+    {
+      "source": ".agents/operations.html",
+      "key": "item-b5b7c1a282e634744494",
+      "tag": "input",
+      "attributes": {
+        "id": "search",
+        "type": "search",
+        "placeholder": "タイトル・ファイル名・キーワード"
+      },
+      "title": "操作"
+    },
+    {
+      "source": ".agents/plan.html",
+      "key": "item-658c79e2937128f50c4f",
+      "tag": "input",
+      "attributes": {
+        "id": "search",
+        "type": "search",
+        "placeholder": "タイトル・ファイル名・キーワード"
+      },
+      "title": "操作"
+    },
+    {
+      "source": ".agents/roles.html",
+      "key": "item-9a39824c37be099537c9",
+      "tag": "input",
+      "attributes": {
+        "id": "search",
+        "type": "search",
+        "placeholder": "タイトル・ファイル名・キーワード"
+      },
+      "title": "操作"
+    },
+    {
+      "source": ".agents/tasks/index.html",
+      "key": "item-49756f34b039b3b90492",
+      "tag": "input",
+      "attributes": {
+        "id": "search",
+        "type": "search",
+        "placeholder": "タイトル・ファイル名・キーワード"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/index.html",
+      "key": "item-a36c3b3b6945b0265383",
+      "tag": "input",
+      "attributes": {
+        "id": "search",
+        "type": "search",
+        "placeholder": "タイトル・ファイル名・キーワード"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-6efa0c3cd07305206668",
+      "tag": "input",
+      "attributes": {
+        "id": "observer",
+        "placeholder": "A〜E"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-02146caf761f9adc329e",
+      "tag": "input",
+      "attributes": {
+        "type": "checkbox",
+        "id": "independent"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-0b83433e48158aabc62b",
+      "tag": "select",
+      "attributes": {
+        "id": "width"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-d43fb08ebea03dfaa5da",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "0-0"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-c76288e22909472be8b6",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "0-1"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-722e5d2cd081c9eb5e26",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "0-2"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-80c26434cd77806c2f1d",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "0-3"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-a609ffb54dbc8771c6b1",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "1-0"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-8faa7de9743899ae9164",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "1-1"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-3f810a1cfc9d7bdd7fff",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "1-2"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-9e7a6ebf376a7054591e",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "1-3"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-a3ffb72c370e6465cf28",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "2-0"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-065067b42c6a1eb6cbd3",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "2-1"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-5ccbb52229c1b11c42f4",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "2-2"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-2097368cd12bd43ec59d",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "2-3"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-0fe58324e6feb10bacdd",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "3-0"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-6e9df8c4dfadde4956a9",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "3-1"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-7a58cd7e6f88db3ee560",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "3-2"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-1c58ab2ca9d145389078",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "3-3"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-acting/observer.html",
+      "key": "item-2563978417cd24deef34",
+      "tag": "button",
+      "attributes": {
+        "id": "download"
+      },
+      "title": "回答をファイルに保存"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-ebd495b5aaf56a154cfe",
+      "tag": "input",
+      "attributes": {
+        "id": "observer",
+        "placeholder": "A〜E"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-b28906d58a6b8c352465",
+      "tag": "input",
+      "attributes": {
+        "type": "checkbox",
+        "id": "independent"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-74044c97156b72054298",
+      "tag": "select",
+      "attributes": {
+        "id": "width"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-238d485e22f64b13403d",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "0-0"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-412895c0ee2db9ab1e8e",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "0-1"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-e9fc6323349609d5ba2e",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "0-2"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-56d77f3537349f759020",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "0-3"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-5c42018f89a66d24e3d1",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "1-0"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-235a4eea423fb319b7a3",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "1-1"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-1715a37b74b69047e148",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "1-2"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-5c205f0e0be19646a6b4",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "1-3"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-d5280050511ece406539",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "2-0"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-96c68691bd4242bd88ec",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "2-1"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-7416aa19d834eaf5c551",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "2-2"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-d80d77a3d5f1f38d0761",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "2-3"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-65ebb667201bd8cab872",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "3-0"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-6da34ac0fde1819ea257",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "3-1"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-93640aa9c69c554490a0",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "3-2"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-e1ed6672fd2d48ab4a8b",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "3-3"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-19-nature-town-silent-review/observer.html",
+      "key": "item-fafe82ff863ee82e1018",
+      "tag": "button",
+      "attributes": {
+        "id": "download"
+      },
+      "title": "回答をファイルに保存"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-0ce7667217d38cd28e88",
+      "tag": "input",
+      "attributes": {
+        "id": "observer",
+        "placeholder": "A〜E"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-3f29d6249fdb237fc1bb",
+      "tag": "input",
+      "attributes": {
+        "type": "checkbox",
+        "id": "independent"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-f17b93600982f3f83f6b",
+      "tag": "select",
+      "attributes": {
+        "id": "width"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-9be3fc3889ceea7f768a",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "0-0"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-39a97207bbf75ad3419a",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "0-1"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-c418e447689ef986c42d",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "0-2"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-c39c93008cd36e05b17d",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "0-3"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-7cd28229827086935d3f",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "1-0"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-b37c4aee790d4df91959",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "1-1"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-eec1faece6dacd8551d0",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "1-2"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-5322ea8e9f35a12e64ff",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "1-3"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-883d69890ad943eef10a",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "2-0"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-7778a437eb5335f691c4",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "2-1"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-bdb80351e7f9ead132f2",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "2-2"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-e4fd1a69bb36204f6eaf",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "2-3"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-5ff87ce38e3717ebdc1d",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "3-0"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-dbf1b2c1308958797c88",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "3-1"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-693ab7112ca607ebe242",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "3-2"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-ad54f22c2926d2a97cb6",
+      "tag": "textarea",
+      "attributes": {
+        "data-key": "3-3"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-09-20-nature-town-ground-v1/observer/observer.html",
+      "key": "item-1bedffde64b68019e5c1",
+      "tag": "button",
+      "attributes": {
+        "id": "download"
+      },
+      "title": "回答をファイルに保存"
+    },
+    {
+      "source": "docs/design/2026-09-28-dopa-reference-breakdown/index.html",
+      "key": "item-fc6b34927778d7d450d7",
+      "tag": "button",
+      "attributes": {
+        "data-listen": "3,7"
+      },
+      "title": "序盤の音 3–7秒"
+    },
+    {
+      "source": "docs/design/2026-09-28-dopa-reference-breakdown/index.html",
+      "key": "item-de36445dc587a8dc8baa",
+      "tag": "button",
+      "attributes": {
+        "data-listen": "13,17"
+      },
+      "title": "中盤の音 13–17秒"
+    },
+    {
+      "source": "docs/design/2026-09-28-dopa-reference-breakdown/index.html",
+      "key": "item-0ca1cd3c6f29415280a4",
+      "tag": "button",
+      "attributes": {
+        "data-listen": "29,33"
+      },
+      "title": "後半の音 29–33秒"
+    },
+    {
+      "source": "docs/design/2026-09-28-dopa-reference-breakdown/index.html",
+      "key": "item-ac411adeb787f718b5da",
+      "tag": "button",
+      "attributes": {
+        "data-current": "ready",
+        "aria-pressed": "true"
+      },
+      "title": "通常"
+    },
+    {
+      "source": "docs/design/2026-09-28-dopa-reference-breakdown/index.html",
+      "key": "item-d3c6753a63a8c86f3a75",
+      "tag": "button",
+      "attributes": {
+        "data-current": "correct-3",
+        "aria-pressed": "false"
+      },
+      "title": "3連続"
+    },
+    {
+      "source": "docs/design/2026-09-28-dopa-reference-breakdown/index.html",
+      "key": "item-0f24a678d97ec346b0b0",
+      "tag": "button",
+      "attributes": {
+        "data-current": "correct-5",
+        "aria-pressed": "false"
+      },
+      "title": "5連続"
+    },
+    {
+      "source": "docs/design/2026-09-28-dopa-reference-breakdown/index.html",
+      "key": "item-c06b1ed2d575972afe82",
+      "tag": "button",
+      "attributes": {
+        "data-seek": "3"
+      },
+      "title": "3秒へ"
+    },
+    {
+      "source": "docs/design/2026-09-28-dopa-reference-breakdown/index.html",
+      "key": "item-028d23961b46a841daf9",
+      "tag": "button",
+      "attributes": {
+        "data-seek": "10.5"
+      },
+      "title": "10.5秒へ"
+    },
+    {
+      "source": "docs/design/2026-09-28-dopa-reference-breakdown/index.html",
+      "key": "item-1756e28fad8edef7061c",
+      "tag": "button",
+      "attributes": {
+        "data-seek": "17.5"
+      },
+      "title": "17.5秒へ"
+    },
+    {
+      "source": "docs/design/2026-09-28-dopa-reference-breakdown/index.html",
+      "key": "item-f5f586fa78b673826c86",
+      "tag": "button",
+      "attributes": {
+        "data-seek": "22.5"
+      },
+      "title": "22.5秒へ"
+    },
+    {
+      "source": "docs/design/2026-09-28-dopa-reference-breakdown/index.html",
+      "key": "item-fbb8a1d693178a5cc9d7",
+      "tag": "button",
+      "attributes": {
+        "data-seek": "30.5"
+      },
+      "title": "30.5秒へ"
+    },
+    {
+      "source": "docs/design/2026-09-28-dopa-reference-breakdown/index.html",
+      "key": "item-5260ae2c69e683eff214",
+      "tag": "button",
+      "attributes": {
+        "data-seek": "52"
+      },
+      "title": "52秒へ"
+    },
+    {
+      "source": "docs/design/2026-09-28-pokomoko-pop-study/index.html",
+      "key": "item-f2e6d699027f3959a337",
+      "tag": "button",
+      "attributes": {
+        "id": "play",
+        "class": "primary"
+      },
+      "title": "12秒を再生"
+    },
+    {
+      "source": "docs/design/2026-09-28-pokomoko-pop-study/index.html",
+      "key": "item-701f5995bc5192811828",
+      "tag": "button",
+      "attributes": {
+        "id": "reset"
+      },
+      "title": "はじめに戻す"
+    },
+    {
+      "source": "docs/design/2026-09-28-pokomoko-pop-study/index.html",
+      "key": "item-d4e74b057f8bdccbb319",
+      "tag": "button",
+      "attributes": {
+        "id": "try",
+        "aria-pressed": "false"
+      },
+      "title": "自分で数字を押す"
+    },
+    {
+      "source": "docs/design/2026-09-28-pokomoko-pop-study/index.html",
+      "key": "item-b933d9821742784413e9",
+      "tag": "input",
+      "attributes": {
+        "id": "scrub",
+        "aria-label": "比較の時刻",
+        "type": "range",
+        "min": "0",
+        "max": "12",
+        "step": "0.01",
+        "value": "0"
+      },
+      "title": "比較の時刻"
+    },
+    {
+      "source": "docs/design/2026-09-28-pokomoko-pop-study/index.html",
+      "key": "item-3420a01f208bb7732a1c",
+      "tag": "button",
+      "attributes": {
+        "data-audio": "candidate",
+        "aria-pressed": "true"
+      },
+      "title": "ぽこもこ版"
+    },
+    {
+      "source": "docs/design/2026-09-28-pokomoko-pop-study/index.html",
+      "key": "item-47ace52f1eb8d6152825",
+      "tag": "button",
+      "attributes": {
+        "data-audio": "reference",
+        "aria-pressed": "false"
+      },
+      "title": "参考動画"
+    },
+    {
+      "source": "docs/design/2026-09-28-pokomoko-pop-study/index.html",
+      "key": "item-aa5aebad2ca2eec2ce8e",
+      "tag": "button",
+      "attributes": {
+        "data-audio": "off",
+        "aria-pressed": "false"
+      },
+      "title": "なし"
+    },
+    {
+      "source": "docs/design/2026-09-28-pokomoko-pop-study/index.html",
+      "key": "item-0bec0f51968ea3eb664f",
+      "tag": "button",
+      "attributes": {
+        "data-at": "0"
+      },
+      "title": "01 通常"
+    },
+    {
+      "source": "docs/design/2026-09-28-pokomoko-pop-study/index.html",
+      "key": "item-f8ed602c92961a343867",
+      "tag": "button",
+      "attributes": {
+        "data-at": "1.12"
+      },
+      "title": "02 数字を運ぶ"
+    },
+    {
+      "source": "docs/design/2026-09-28-pokomoko-pop-study/index.html",
+      "key": "item-f1c0ea318e3639060c2f",
+      "tag": "button",
+      "attributes": {
+        "data-at": "2.08"
+      },
+      "title": "03 3連続"
+    },
+    {
+      "source": "docs/design/2026-09-28-pokomoko-pop-study/index.html",
+      "key": "item-81ea1833a024ad9119b1",
+      "tag": "button",
+      "attributes": {
+        "data-at": "8.9"
+      },
+      "title": "04 5連続"
+    },
+    {
+      "source": "docs/design/2026-09-28-pokomoko-pop-study/index.html",
+      "key": "item-01f9323f73bf5cdb8dd7",
+      "tag": "button",
+      "attributes": {
+        "id": "record"
+      },
+      "title": "試作の動画を保存"
+    },
+    {
+      "source": "docs/design/2026-09-28-pokomoko-pop-study/index.html",
+      "key": "item-2e3c73c901bbcce58a0b",
+      "tag": "button",
+      "attributes": {
+        "id": "wav"
+      },
+      "title": "試作の音を保存"
+    },
+    {
+      "source": "docs/design/2026-09-28-pokomoko-pop-study/index.html",
+      "key": "item-455573751206b014d86a",
+      "tag": "button",
+      "attributes": {
+        "id": "frames"
+      },
+      "title": "4場面の画像を保存"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "key": "item-bd683ec816a3e4e4d52b",
+      "tag": "button",
+      "attributes": {
+        "type": "button",
+        "data-growth": "separate",
+        "aria-pressed": "true"
+      },
+      "title": "1 離れている"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "key": "item-4a17de22cfa23ec28f81",
+      "tag": "button",
+      "attributes": {
+        "type": "button",
+        "data-growth": "connected",
+        "aria-pressed": "false"
+      },
+      "title": "2 隣につながる"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "key": "item-1f1f2d456ea1e92e1297",
+      "tag": "button",
+      "attributes": {
+        "type": "button",
+        "data-growth": "grown",
+        "aria-pressed": "false"
+      },
+      "title": "3 大樹の庭になる"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "key": "item-0db7e13f903c35f83c0b",
+      "tag": "select",
+      "attributes": {
+        "id": "kind-filter"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "key": "item-a3a1d0c71c78afa0d242",
+      "tag": "input",
+      "attributes": {
+        "id": "search",
+        "type": "search",
+        "placeholder": "例：丸い岸、木、素材、LH-01"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "key": "item-e8092cb73fa6021f3ffb",
+      "tag": "button",
+      "attributes": {
+        "class": "quiet-button",
+        "id": "notes-filter",
+        "aria-pressed": "false"
+      },
+      "title": "メモがある画像"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "key": "item-0203a5a366f5283bec79",
+      "tag": "button",
+      "attributes": {
+        "class": "quiet-button",
+        "id": "export-notes"
+      },
+      "title": "判断メモを書き出す ↗"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "key": "item-b19ab88d153ea0fd1333",
+      "tag": "button",
+      "attributes": {
+        "id": "open-compare",
+        "class": "primary",
+        "disabled": null
+      },
+      "title": "2枚を並べて比較"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "key": "item-6d22cadae758a4946236",
+      "tag": "button",
+      "attributes": {
+        "id": "clear-compare",
+        "class": "quiet-button"
+      },
+      "title": "選択を解除"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "key": "item-23c6bea5d9794c90e784",
+      "tag": "button",
+      "attributes": {
+        "class": "dialog-close",
+        "data-close": null,
+        "aria-label": "拡大表示を閉じる"
+      },
+      "title": "×"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "key": "item-88b16ad027b607d83ae0",
+      "tag": "button",
+      "attributes": {
+        "id": "previous-image"
+      },
+      "title": "← 前の画像"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "key": "item-8b8ca4a4cd16ef37e914",
+      "tag": "button",
+      "attributes": {
+        "id": "next-image"
+      },
+      "title": "次の画像 →"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "key": "item-9b0320662d1945471e3d",
+      "tag": "select",
+      "attributes": {
+        "id": "note-status"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "key": "item-a064c448d5c5ccc5fa0d",
+      "tag": "textarea",
+      "attributes": {
+        "id": "note-text",
+        "rows": "3",
+        "placeholder": "取り入れたい箇所、気になる点、次の比較条件…"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "key": "item-513b01014b81d4f157e3",
+      "tag": "button",
+      "attributes": {
+        "class": "primary",
+        "type": "submit"
+      },
+      "title": "メモを保存"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "key": "item-435946f47757186416ae",
+      "tag": "button",
+      "attributes": {
+        "class": "quiet-button",
+        "id": "delete-note",
+        "type": "button",
+        "disabled": null
+      },
+      "title": "メモを消す"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-design-strategy/index.html",
+      "key": "item-bb7e366211868d325f13",
+      "tag": "button",
+      "attributes": {
+        "class": "dialog-close",
+        "data-close": null,
+        "aria-label": "比較表示を閉じる"
+      },
+      "title": "×"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-01/index.html",
+      "key": "item-3c682dca654e88770a4c",
+      "tag": "button",
+      "attributes": {
+        "data-zoom": "in",
+        "aria-label": "拡大"
+      },
+      "title": "＋"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-01/index.html",
+      "key": "item-5bc784f48d784e8b002c",
+      "tag": "button",
+      "attributes": {
+        "data-zoom": "out",
+        "aria-label": "縮小"
+      },
+      "title": "−"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-01/index.html",
+      "key": "item-097ffb7e5503f2bb1386",
+      "tag": "button",
+      "attributes": {
+        "data-view": "whole",
+        "aria-pressed": "true"
+      },
+      "title": "島全体"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-01/index.html",
+      "key": "item-060f9cbf95d4f0f27d70",
+      "tag": "button",
+      "attributes": {
+        "data-view": "grove",
+        "aria-pressed": "false"
+      },
+      "title": "森の庭"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-01/index.html",
+      "key": "item-34d6e861ee4ee6dd9258",
+      "tag": "button",
+      "attributes": {
+        "data-view": "village",
+        "aria-pressed": "false"
+      },
+      "title": "集落"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-01/index.html",
+      "key": "item-34a8751709739e20f66c",
+      "tag": "button",
+      "attributes": {
+        "data-view": "garden",
+        "aria-pressed": "false"
+      },
+      "title": "花の庭"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-02/index.html",
+      "key": "item-56a3e5fa1659ef7b3a8f",
+      "tag": "button",
+      "attributes": {
+        "data-light": "day",
+        "aria-pressed": "false"
+      },
+      "title": "昼"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-02/index.html",
+      "key": "item-e540799af8e76b3cca82",
+      "tag": "button",
+      "attributes": {
+        "data-light": "dusk",
+        "aria-pressed": "true"
+      },
+      "title": "夕"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-02/index.html",
+      "key": "item-dce79303c0c32a1b5b4b",
+      "tag": "button",
+      "attributes": {
+        "data-zoom": "in",
+        "aria-label": "拡大"
+      },
+      "title": "＋"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-02/index.html",
+      "key": "item-bae284f026a46e008691",
+      "tag": "button",
+      "attributes": {
+        "data-zoom": "out",
+        "aria-label": "縮小"
+      },
+      "title": "−"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-02/index.html",
+      "key": "item-eef2a4b8c6861b5b8945",
+      "tag": "button",
+      "attributes": {
+        "data-view": "whole",
+        "aria-pressed": "true"
+      },
+      "title": "島全体"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-02/index.html",
+      "key": "item-1a6cd8d8b37a38139424",
+      "tag": "button",
+      "attributes": {
+        "data-view": "grove",
+        "aria-pressed": "false"
+      },
+      "title": "森の庭"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-02/index.html",
+      "key": "item-675dfc6c921753bb26d0",
+      "tag": "button",
+      "attributes": {
+        "data-view": "village",
+        "aria-pressed": "false"
+      },
+      "title": "集落"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-02/index.html",
+      "key": "item-38a99d46f71c375e4894",
+      "tag": "button",
+      "attributes": {
+        "data-view": "garden",
+        "aria-pressed": "false"
+      },
+      "title": "花の庭"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-04/index.html",
+      "key": "item-fd14a4908e50273a78da",
+      "tag": "button",
+      "attributes": {
+        "data-phase": "previous",
+        "aria-pressed": "false"
+      },
+      "title": "これまで"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-04/index.html",
+      "key": "item-d1ec3558e70ec0bf01db",
+      "tag": "button",
+      "attributes": {
+        "data-phase": "grown",
+        "aria-pressed": "true"
+      },
+      "title": "育った島"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-04/index.html",
+      "key": "item-97560ba3f4f79cc695ee",
+      "tag": "button",
+      "attributes": {
+        "data-light": "day",
+        "aria-pressed": "true"
+      },
+      "title": "昼"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-04/index.html",
+      "key": "item-3c5993631c7492ff9c58",
+      "tag": "button",
+      "attributes": {
+        "data-light": "dusk",
+        "aria-pressed": "false"
+      },
+      "title": "夕"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-04/index.html",
+      "key": "item-0fc807be400b5811cab6",
+      "tag": "button",
+      "attributes": {
+        "data-zoom": "in",
+        "aria-label": "拡大"
+      },
+      "title": "＋"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-04/index.html",
+      "key": "item-5f88bfabbac94966051a",
+      "tag": "button",
+      "attributes": {
+        "data-zoom": "out",
+        "aria-label": "縮小"
+      },
+      "title": "−"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-04/index.html",
+      "key": "item-51710a2650466c7c431c",
+      "tag": "button",
+      "attributes": {
+        "data-view": "whole",
+        "aria-pressed": "true"
+      },
+      "title": "島全体"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-04/index.html",
+      "key": "item-81f44284f1ddb8f92df9",
+      "tag": "button",
+      "attributes": {
+        "data-view": "grove",
+        "aria-pressed": "false"
+      },
+      "title": "森"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-04/index.html",
+      "key": "item-fb98298e2d29f2fd904d",
+      "tag": "button",
+      "attributes": {
+        "data-view": "village",
+        "aria-pressed": "false"
+      },
+      "title": "水の庭"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-04/index.html",
+      "key": "item-96e9d962bae4296ac1e0",
+      "tag": "button",
+      "attributes": {
+        "data-view": "harbor",
+        "aria-pressed": "false"
+      },
+      "title": "入り江"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/history/native-04/index.html",
+      "key": "item-bece5a13fe0d9608f774",
+      "tag": "button",
+      "attributes": {
+        "data-view": "garden",
+        "aria-pressed": "false"
+      },
+      "title": "花の庭"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/index.html",
+      "key": "item-28cc267b09a10b41a7b9",
+      "tag": "button",
+      "attributes": {
+        "data-phase": "previous",
+        "aria-pressed": "false"
+      },
+      "title": "これまで"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/index.html",
+      "key": "item-a31afb511579d8b2dd5b",
+      "tag": "button",
+      "attributes": {
+        "data-phase": "grown",
+        "aria-pressed": "true"
+      },
+      "title": "育った島"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/index.html",
+      "key": "item-5e69e919c8f48768bcc5",
+      "tag": "button",
+      "attributes": {
+        "data-light": "day",
+        "aria-pressed": "true"
+      },
+      "title": "昼"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/index.html",
+      "key": "item-6b99b10f2966030cad9e",
+      "tag": "button",
+      "attributes": {
+        "data-light": "dusk",
+        "aria-pressed": "false"
+      },
+      "title": "夕"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/index.html",
+      "key": "item-6a93ff989d8dc9381f83",
+      "tag": "button",
+      "attributes": {
+        "data-zoom": "in",
+        "aria-label": "拡大"
+      },
+      "title": "＋"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/index.html",
+      "key": "item-9648ebc901f33547f376",
+      "tag": "button",
+      "attributes": {
+        "data-zoom": "out",
+        "aria-label": "縮小"
+      },
+      "title": "−"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/index.html",
+      "key": "item-52dafb47fb350172b057",
+      "tag": "button",
+      "attributes": {
+        "data-view": "whole",
+        "aria-pressed": "true"
+      },
+      "title": "島全体"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/index.html",
+      "key": "item-f05b9dcf23c888918325",
+      "tag": "button",
+      "attributes": {
+        "data-view": "grove",
+        "aria-pressed": "false"
+      },
+      "title": "森"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/index.html",
+      "key": "item-0778cbad77b50403cfa8",
+      "tag": "button",
+      "attributes": {
+        "data-view": "village",
+        "aria-pressed": "false"
+      },
+      "title": "水の庭"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/index.html",
+      "key": "item-7f809181155fc16e5609",
+      "tag": "button",
+      "attributes": {
+        "data-view": "harbor",
+        "aria-pressed": "false"
+      },
+      "title": "入り江"
+    },
+    {
+      "source": "docs/design/2026-10-10-island-final-3d/index.html",
+      "key": "item-9a19abe4bee1d02e676c",
+      "tag": "button",
+      "attributes": {
+        "data-view": "garden",
+        "aria-pressed": "false"
+      },
+      "title": "花の庭"
+    },
+    {
+      "source": "docs/design/2026-10-10-native-art-transfer/index.html",
+      "key": "item-1cdaacf19780e170a57d",
+      "tag": "button",
+      "attributes": {
+        "data-width": "390",
+        "aria-pressed": "true"
+      },
+      "title": "390幅"
+    },
+    {
+      "source": "docs/design/2026-10-10-native-art-transfer/index.html",
+      "key": "item-c3dd43cd89182ab68fc0",
+      "tag": "button",
+      "attributes": {
+        "data-width": "768",
+        "aria-pressed": "false"
+      },
+      "title": "768幅"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "key": "item-23a2c6e79de08e3f528f",
+      "tag": "button",
+      "attributes": {
+        "data-phase": "grown",
+        "aria-pressed": "true"
+      },
+      "title": "今回の造形"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "key": "item-d1e8575e780ff80e8c8f",
+      "tag": "button",
+      "attributes": {
+        "data-phase": "previous",
+        "aria-pressed": "false"
+      },
+      "title": "採用原本"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "key": "item-4f5a5d066beaf667ff99",
+      "tag": "button",
+      "attributes": {
+        "data-light": "day",
+        "aria-pressed": "true"
+      },
+      "title": "昼"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "key": "item-00f59ac4757f75f292e2",
+      "tag": "button",
+      "attributes": {
+        "data-light": "dusk",
+        "aria-pressed": "false"
+      },
+      "title": "夕"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "key": "item-125a35c1cc0f5eac21bd",
+      "tag": "button",
+      "attributes": {
+        "data-zoom": "in",
+        "aria-label": "拡大"
+      },
+      "title": "＋"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "key": "item-72bc3b7a4e0f0d22ee05",
+      "tag": "button",
+      "attributes": {
+        "data-zoom": "out",
+        "aria-label": "縮小"
+      },
+      "title": "−"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "key": "item-918761847e3d1bb05743",
+      "tag": "button",
+      "attributes": {
+        "data-view": "whole",
+        "aria-pressed": "true"
+      },
+      "title": "島全体"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "key": "item-cbde737d19e969970bee",
+      "tag": "button",
+      "attributes": {
+        "data-view": "grove",
+        "aria-pressed": "false"
+      },
+      "title": "大樹"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "key": "item-69d334a23e1f44881ef3",
+      "tag": "button",
+      "attributes": {
+        "data-view": "village",
+        "aria-pressed": "false"
+      },
+      "title": "水の庭"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "key": "item-ab3c344cfc04d333320d",
+      "tag": "button",
+      "attributes": {
+        "data-view": "harbor",
+        "aria-pressed": "false"
+      },
+      "title": "入り江"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/history/draft-05/index.html",
+      "key": "item-f6a8350ef86f3361310b",
+      "tag": "button",
+      "attributes": {
+        "data-view": "garden",
+        "aria-pressed": "false"
+      },
+      "title": "花の庭"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/index.html",
+      "key": "item-aa87a3cdddc74fd22019",
+      "tag": "button",
+      "attributes": {
+        "data-phase": "grown",
+        "aria-pressed": "true"
+      },
+      "title": "今回の造形"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/index.html",
+      "key": "item-febdd6a11f14a4ac9b0f",
+      "tag": "button",
+      "attributes": {
+        "data-phase": "previous",
+        "aria-pressed": "false"
+      },
+      "title": "採用原本"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/index.html",
+      "key": "item-73cdb6472c863133fb18",
+      "tag": "button",
+      "attributes": {
+        "data-light": "day",
+        "aria-pressed": "true"
+      },
+      "title": "昼"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/index.html",
+      "key": "item-dd561c61f26856bfc437",
+      "tag": "button",
+      "attributes": {
+        "data-light": "dusk",
+        "aria-pressed": "false"
+      },
+      "title": "夕"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/index.html",
+      "key": "item-3a76b64cb15efa3df62d",
+      "tag": "button",
+      "attributes": {
+        "data-zoom": "in",
+        "aria-label": "拡大"
+      },
+      "title": "＋"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/index.html",
+      "key": "item-b556e51a68b530c19026",
+      "tag": "button",
+      "attributes": {
+        "data-zoom": "out",
+        "aria-label": "縮小"
+      },
+      "title": "−"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/index.html",
+      "key": "item-9e8e7aba8d537db0a14c",
+      "tag": "button",
+      "attributes": {
+        "data-view": "whole",
+        "aria-pressed": "true"
+      },
+      "title": "島全体"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/index.html",
+      "key": "item-0d44819078a917568e91",
+      "tag": "button",
+      "attributes": {
+        "data-view": "grove",
+        "aria-pressed": "false"
+      },
+      "title": "大樹"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/index.html",
+      "key": "item-ac632561f36bc49a2c3c",
+      "tag": "button",
+      "attributes": {
+        "data-view": "village",
+        "aria-pressed": "false"
+      },
+      "title": "水の庭"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/index.html",
+      "key": "item-35952ef6154ffd88bc56",
+      "tag": "button",
+      "attributes": {
+        "data-view": "harbor",
+        "aria-pressed": "false"
+      },
+      "title": "入り江"
+    },
+    {
+      "source": "docs/design/2026-10-11-island-landscape-art/index.html",
+      "key": "item-092205b1d1f3416285e0",
+      "tag": "button",
+      "attributes": {
+        "data-view": "garden",
+        "aria-pressed": "false"
+      },
+      "title": "花の庭"
+    },
+    {
+      "source": "docs/design/2026-10-11-native-owned-island/index.html",
+      "key": "item-f4e8f17e2d40192e39b4",
+      "tag": "button",
+      "attributes": {
+        "type": "button",
+        "data-view": "new",
+        "aria-pressed": "true"
+      },
+      "title": "今回の本体"
+    },
+    {
+      "source": "docs/design/2026-10-11-native-owned-island/index.html",
+      "key": "item-4ce602d243cad172923a",
+      "tag": "button",
+      "attributes": {
+        "type": "button",
+        "data-view": "goal",
+        "aria-pressed": "false"
+      },
+      "title": "完成目標の3D"
+    },
+    {
+      "source": "docs/design/2026-10-11-native-owned-island/index.html",
+      "key": "item-701f0f5361df7ea36043",
+      "tag": "button",
+      "attributes": {
+        "type": "button",
+        "data-view": "old",
+        "aria-pressed": "false"
+      },
+      "title": "前の本体"
+    },
+    {
+      "source": "docs/design/2026-10-11-native-owned-island/index.html",
+      "key": "item-0770fadff74733d06589",
+      "tag": "button",
+      "attributes": {
+        "type": "button",
+        "data-width": "768",
+        "aria-pressed": "true"
+      },
+      "title": "タブレット"
+    },
+    {
+      "source": "docs/design/2026-10-11-native-owned-island/index.html",
+      "key": "item-f3aafab8278717a42a9e",
+      "tag": "button",
+      "attributes": {
+        "type": "button",
+        "data-width": "390",
+        "aria-pressed": "false"
+      },
+      "title": "スマホ"
+    },
+    {
+      "source": "docs/design/2026-10-12-authored-forest-crowns/review.html",
+      "key": "item-1d86f91a4c033012e48d",
+      "tag": "button",
+      "attributes": {
+        "type": "button",
+        "onclick": "document.body.classList.toggle('large');this.textContent=document.body.classList.contains('large')?'3案を並べる':'各案を大きく見る'"
+      },
+      "title": "各案を大きく見る"
+    },
+    {
+      "source": "docs/design/2026-10-12-authored-shoulder-runtime/c2/visual-contact-sheet/index.html",
+      "key": "item-384aad84d6082ad6afb7",
+      "tag": "button",
+      "attributes": {
+        "aria-pressed": "true",
+        "data-filter": "all"
+      },
+      "title": "All 20"
+    },
+    {
+      "source": "docs/design/2026-10-12-authored-shoulder-runtime/c2/visual-contact-sheet/index.html",
+      "key": "item-d856933c3339998a1061",
+      "tag": "button",
+      "attributes": {
+        "aria-pressed": "false",
+        "data-filter": "acquisition"
+      },
+      "title": "Acquisition"
+    },
+    {
+      "source": "docs/design/2026-10-12-authored-shoulder-runtime/c2/visual-contact-sheet/index.html",
+      "key": "item-1fa160b99aacbde7bbd7",
+      "tag": "button",
+      "attributes": {
+        "aria-pressed": "false",
+        "data-filter": "fixed35"
+      },
+      "title": "Fixed35 edits and views"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-experience2/candidates/5d7be27ceacb/contact-sheet.html",
+      "key": "item-341434cd7d48a83b4ed0",
+      "tag": "select",
+      "attributes": {
+        "id": "device"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-experience2/candidates/5d7be27ceacb/contact-sheet.html",
+      "key": "item-19e3b949a0ea30ac9702",
+      "tag": "select",
+      "attributes": {
+        "id": "flow"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-experience2/candidates/5d7be27ceacb/contact-sheet.html",
+      "key": "item-5f1e954559a25aa3a954",
+      "tag": "select",
+      "attributes": {
+        "id": "extent"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-experience2/candidates/993febcf1560/contact-sheet.html",
+      "key": "item-fa09f125b262accff512",
+      "tag": "select",
+      "attributes": {
+        "id": "device"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-experience2/candidates/993febcf1560/contact-sheet.html",
+      "key": "item-02296e0ecf1cd478594a",
+      "tag": "select",
+      "attributes": {
+        "id": "flow"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-experience2/candidates/993febcf1560/contact-sheet.html",
+      "key": "item-682fa89f7e4f4ac50e9b",
+      "tag": "select",
+      "attributes": {
+        "id": "extent"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-experience2/candidates/b155db0a54ec/contact-sheet.html",
+      "key": "item-596547552c736d2013b4",
+      "tag": "select",
+      "attributes": {
+        "id": "device"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-experience2/candidates/b155db0a54ec/contact-sheet.html",
+      "key": "item-f747181e749acdeccfc6",
+      "tag": "select",
+      "attributes": {
+        "id": "flow"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-experience2/candidates/b155db0a54ec/contact-sheet.html",
+      "key": "item-212db37074663645e4ef",
+      "tag": "select",
+      "attributes": {
+        "id": "extent"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-f80d104aa6721b085e0c",
+      "tag": "select",
+      "attributes": {
+        "aria-label": "画面サイズ"
+      },
+      "title": "画面サイズ"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-9c91c80a84986ac091d3",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/critical-path-phone-welcome.png",
+        "data-title": "島へ出発"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-22533ac3c5e27b412eff",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/critical-path-phone-home.png",
+        "data-title": "今日の島"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-30702a1bbdd529262713",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/critical-path-phone-learning.png",
+        "data-title": "問題に答える"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-a3c72c605dc0e431f761",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/critical-path-phone-answer-light.png",
+        "data-title": "光が届く"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-ac689dc0595065c1b652",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/critical-path-phone-reward.png",
+        "data-title": "家具を受け取る"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-85442df61b276db50195",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/critical-path-phone-placement.png",
+        "data-title": "自分で置く"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-2052ce1e307e5da8233c",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/critical-path-phone-animal-use.png",
+        "data-title": "どうぶつの暮らし"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-46540ee645e3f017bb46",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/critical-path-phone-next-learning.png",
+        "data-title": "次の学習へ"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-827bcf1b3e9bd0ccf0ee",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/critical-path-tablet-welcome.png",
+        "data-title": "島へ出発"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-a30b238147ef2e29ea0d",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/critical-path-tablet-home.png",
+        "data-title": "今日の島"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-6d84143da490209b6180",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/critical-path-tablet-learning.png",
+        "data-title": "問題に答える"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-7a178133a2c5a78e546c",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/critical-path-tablet-answer-light.png",
+        "data-title": "光が届く"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-81a444253fd0ede61bd8",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/critical-path-tablet-reward.png",
+        "data-title": "家具を受け取る"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-ff4128de8773229bb37c",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/critical-path-tablet-placement.png",
+        "data-title": "自分で置く"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-1c41aebe5a168af07204",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/critical-path-tablet-animal-use.png",
+        "data-title": "どうぶつの暮らし"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-aa7a663d503bca9c0d80",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/critical-path-tablet-next-learning.png",
+        "data-title": "次の学習へ"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-07876fda6e232e30fd02",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/learning-phone-worked-support-support.png",
+        "data-title": "10をつくる支援"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-0c01de7c1a8501078f99",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/learning-phone-worked-support-support-resumed.png",
+        "data-title": "支援を保って再開"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-9d7a9ffcf586c2183eff",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/learning-phone-hissan-support.png",
+        "data-title": "筆算の入力順"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-42c994a51fdcfc65fe0d",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/learning-phone-vocabulary-support.png",
+        "data-title": "ことばの意味"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-a11dcf85c786c8fd2763",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/learning-tablet-worked-support-support.png",
+        "data-title": "10をつくる支援"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-85d13f844915f109e8f0",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/learning-tablet-worked-support-support-resumed.png",
+        "data-title": "支援を保って再開"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-e82b035460c6b377d20c",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/learning-tablet-hissan-support.png",
+        "data-title": "筆算の入力順"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-a522db31cef090b1b5a9",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/learning-tablet-vocabulary-support.png",
+        "data-title": "ことばの意味"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-519b1930107341331cd7",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/recovery-phone-math-same-question-corrected-reloaded.png",
+        "data-title": "訂正しても再確認を残す"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-1dff64caf95381be8456",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/recovery-phone-math-bridge-section-2-slot-1.png",
+        "data-title": "次の区間で基礎を確かめる"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-62c94b609d7c9072a3e9",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/recovery-phone-math-independent-check-cleared.png",
+        "data-title": "異なる問題を独力で解く"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-50b98ca3660088deca5e",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/recovery-phone-vocab-due-2-orange-supported.png",
+        "data-title": "別のことばにも復習の番を"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-b0b9e4dd0d7a8a8c70a0",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/recovery-tablet-math-same-question-corrected-reloaded.png",
+        "data-title": "訂正しても再確認を残す"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-e8722380d5674bd0975b",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/recovery-tablet-math-bridge-section-2-slot-1.png",
+        "data-title": "次の区間で基礎を確かめる"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-1adbd0f9fa53ad9a27b9",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/recovery-tablet-math-independent-check-cleared.png",
+        "data-title": "異なる問題を独力で解く"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-78880cf8b7cc7710be17",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/recovery-tablet-vocab-due-2-orange-supported.png",
+        "data-title": "別のことばにも復習の番を"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-ec1fceb55d0eeac40fad",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/play-phone-four-gifts-home.png",
+        "data-title": "4区間で増えた暮らし"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-d37dad416d22351d586e",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/play-phone-fox-and-friends-play.png",
+        "data-title": "キツネも遊びに参加"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-3d0cefa7f9048f97bc21",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/play-phone-same-seat-replay.png",
+        "data-title": "同じ遊びをもう一度"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-6d24effc0e75d633b771",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/play-phone-blocked-recoverable.png",
+        "data-title": "道をあける入口"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-31d2cc239377beae7574",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/play-phone-moved-and-playable.png",
+        "data-title": "動かして遊び直す"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-13597c19fe8ae61a3241",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/play-phone-reloaded-home.png",
+        "data-title": "保存して再開"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-cd0c17fea804b44a6b34",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/play-phone-renderer-unavailable.png",
+        "data-title": "表示復旧へ"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-5451c752800ff47051a7",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/play-phone-next-learning.png",
+        "data-title": "遊びから学習へ"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-9f28277f21f0b81f7ca5",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/play-tablet-four-gifts-home.png",
+        "data-title": "4区間で増えた暮らし"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-09949aa80849ac8b467d",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/play-tablet-fox-and-friends-play.png",
+        "data-title": "キツネも遊びに参加"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-0158527c7ea0702925f8",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/play-tablet-same-seat-replay.png",
+        "data-title": "同じ遊びをもう一度"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-a4c139a8e5bfc4813b14",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/play-tablet-blocked-recoverable.png",
+        "data-title": "道をあける入口"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-0991b79c71443d0e3842",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/play-tablet-moved-and-playable.png",
+        "data-title": "動かして遊び直す"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-698929ebae81ae95ea2c",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/play-tablet-reloaded-home.png",
+        "data-title": "保存して再開"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-cfc8321b4e6d6425ba6c",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/play-tablet-renderer-unavailable.png",
+        "data-title": "表示復旧へ"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-c18aa9bfb6ba9db2290c",
+      "tag": "button",
+      "attributes": {
+        "class": "image",
+        "data-src": "screens/play-tablet-next-learning.png",
+        "data-title": "遊びから学習へ"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-island-loop/review.html",
+      "key": "item-e285fe5d31e5da4fec20",
+      "tag": "button",
+      "attributes": {
+        "aria-label": "画像を閉じる"
+      },
+      "title": "閉じる"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-e5e5de9cf4acb4cd9b03",
+      "tag": "button",
+      "attributes": {
+        "type": "button",
+        "id": "export"
+      },
+      "title": "記録を JSON で保存"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-723b165ee6fd036349ed",
+      "tag": "button",
+      "attributes": {
+        "type": "button",
+        "id": "import",
+        "class": "quiet"
+      },
+      "title": "JSON を開く"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-116376f0f97c335cb5d3",
+      "tag": "input",
+      "attributes": {
+        "id": "import-file",
+        "type": "file",
+        "accept": "application/json,.json",
+        "hidden": null
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-9e632126d5241391d9c6",
+      "tag": "button",
+      "attributes": {
+        "type": "button",
+        "id": "clear",
+        "class": "quiet"
+      },
+      "title": "この新記録を消去"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-3df2d3888c1c76c1d2a4",
+      "tag": "select",
+      "attributes": {
+        "id": "original-choice"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-f1347b7d611f9a9a4df9",
+      "tag": "textarea",
+      "attributes": {
+        "id": "original-raw",
+        "class": "original",
+        "readonly": null,
+        "aria-label": "保存した原記録の全文"
+      },
+      "title": "保存した原記録の全文"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-dff82c265bea5d3c1819",
+      "tag": "button",
+      "attributes": {
+        "id": "export-original",
+        "type": "button"
+      },
+      "title": "選んだ原記録をそのまま保存"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-3df08103a2bcb49625c1",
+      "tag": "input",
+      "attributes": {
+        "id": "participant",
+        "value": "P01",
+        "maxlength": "40"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-e019460283e3df2b5bc9",
+      "tag": "input",
+      "attributes": {
+        "id": "age",
+        "maxlength": "80"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-3fbd7d045520faf3f265",
+      "tag": "input",
+      "attributes": {
+        "id": "participant-confirmed",
+        "type": "checkbox"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-e179293a46c379aed3c1",
+      "tag": "select",
+      "attributes": {
+        "id": "planned-count"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-aab55d2435b4d5a8ac3c",
+      "tag": "textarea",
+      "attributes": {
+        "id": "experience"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-78b945e190b962953423",
+      "tag": "textarea",
+      "attributes": {
+        "id": "reading-policy"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-a8ee25a50d5221fbccf2",
+      "tag": "input",
+      "attributes": {
+        "id": "target"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-a0aef1c7e7fae06fe225",
+      "tag": "input",
+      "attributes": {
+        "id": "revision"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-2acc6ddaae3875ba32ee",
+      "tag": "input",
+      "attributes": {
+        "id": "delivery"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-eeba2999519c84e8a47f",
+      "tag": "input",
+      "attributes": {
+        "id": "candidate"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-bc94d2425bf1d60ca192",
+      "tag": "input",
+      "attributes": {
+        "id": "device"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-c26e219c98fd61cd39cf",
+      "tag": "input",
+      "attributes": {
+        "id": "conditions"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-ef77dccc38059375f2eb",
+      "tag": "textarea",
+      "attributes": {
+        "id": "starting-surface"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-55ad32d1166b9268cc3a",
+      "tag": "input",
+      "attributes": {
+        "id": "operation-date",
+        "type": "datetime-local"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-9d620c94444a096a7cd4",
+      "tag": "textarea",
+      "attributes": {
+        "id": "first-action"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-b7f6ba0b2161422feb78",
+      "tag": "input",
+      "attributes": {
+        "id": "material"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-8a8e770d37ebf3310e51",
+      "tag": "textarea",
+      "attributes": {
+        "id": "comprehension-event"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-ae1fc7732c17f113e485",
+      "tag": "textarea",
+      "attributes": {
+        "id": "comprehension-confusion"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-8ae65b4cb0f23dc82bbe",
+      "tag": "textarea",
+      "attributes": {
+        "id": "comprehension-notes"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-c1db40a4e3c2ddc6bc17",
+      "tag": "input",
+      "attributes": {
+        "id": "replay-date",
+        "type": "datetime-local"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-3df1cf5eb132fbc842cf",
+      "tag": "select",
+      "attributes": {
+        "id": "replay-opportunity"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-e7c1386795c9474a0a1f",
+      "tag": "select",
+      "attributes": {
+        "id": "replay-prompting"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-52d1aa3929516580f30c",
+      "tag": "select",
+      "attributes": {
+        "id": "replay-choice"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-0fa013d9c7bacbc0a696",
+      "tag": "textarea",
+      "attributes": {
+        "id": "replay-quote"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-b2e5779181979572dbb1",
+      "tag": "textarea",
+      "attributes": {
+        "id": "replay-notes"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-cdac1df1e4ac3f59a31d",
+      "tag": "input",
+      "attributes": {
+        "id": "return-start",
+        "type": "datetime-local"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-75d1d489cf6cb1c51284",
+      "tag": "input",
+      "attributes": {
+        "id": "return-end",
+        "type": "datetime-local"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-758f2402097c4b136026",
+      "tag": "select",
+      "attributes": {
+        "id": "return-choice"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-a273a3f2c713d9efdf5f",
+      "tag": "textarea",
+      "attributes": {
+        "id": "return-notes"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-10dd9e088f7c82f21cd4",
+      "tag": "textarea",
+      "attributes": {
+        "id": "intervention"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-0d197b5e7ccfd11ce442",
+      "tag": "textarea",
+      "attributes": {
+        "id": "practice-immediate"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-512c3aa39ac83c5b70d0",
+      "tag": "textarea",
+      "attributes": {
+        "id": "practice-delayed"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-single-child-study/observer.html",
+      "key": "item-92a4da1302977ac21891",
+      "tag": "textarea",
+      "attributes": {
+        "id": "other-notes"
+      },
+      "title": "操作"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/review.html",
+      "key": "item-6f436c94463aebcd64fb",
+      "tag": "button",
+      "attributes": {
+        "aria-pressed": "true",
+        "data-filter": "all"
+      },
+      "title": "すべて"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/review.html",
+      "key": "item-ca416ddb656eb3af90a2",
+      "tag": "button",
+      "attributes": {
+        "aria-pressed": "false",
+        "data-filter": "phone"
+      },
+      "title": "スマホ"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/review.html",
+      "key": "item-6988e6e1d42930986bae",
+      "tag": "button",
+      "attributes": {
+        "aria-pressed": "false",
+        "data-filter": "tablet"
+      },
+      "title": "タブレット"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/review.html",
+      "key": "item-e58be37fab1825f2c7a9",
+      "tag": "button",
+      "attributes": {
+        "aria-pressed": "false",
+        "data-filter": "routes"
+      },
+      "title": "まなぶ・Park"
+    },
+    {
+      "source": "docs/design/audits/2026-09-08-adaptive-subjects/review.html",
+      "key": "item-04a0bace1b5751aa1a82",
+      "tag": "button",
+      "attributes": {
+        "aria-pressed": "true",
+        "data-filter": "all"
+      },
+      "title": "すべて"
+    },
+    {
+      "source": "docs/design/audits/2026-09-08-adaptive-subjects/review.html",
+      "key": "item-db816700b149a4dea5aa",
+      "tag": "button",
+      "attributes": {
+        "aria-pressed": "false",
+        "data-filter": "phone"
+      },
+      "title": "スマホ"
+    },
+    {
+      "source": "docs/design/audits/2026-09-08-adaptive-subjects/review.html",
+      "key": "item-90cc3fbff6a8147aaec7",
+      "tag": "button",
+      "attributes": {
+        "aria-pressed": "false",
+        "data-filter": "tablet"
+      },
+      "title": "タブレット"
+    },
+    {
+      "source": "docs/design/audits/2026-09-09-display-layout/contact-sheet.html",
+      "key": "item-26bce224520c665aebc0",
+      "tag": "button",
+      "attributes": {
+        "data-filter": "すべて",
+        "aria-pressed": "true"
+      },
+      "title": "すべて"
+    },
+    {
+      "source": "docs/design/audits/2026-09-09-display-layout/contact-sheet.html",
+      "key": "item-066eec17098c3fc07c75",
+      "tag": "button",
+      "attributes": {
+        "data-filter": "島",
+        "aria-pressed": "false"
+      },
+      "title": "島"
+    },
+    {
+      "source": "docs/design/audits/2026-09-09-display-layout/contact-sheet.html",
+      "key": "item-96b98de03c5bf8e4d88b",
+      "tag": "button",
+      "attributes": {
+        "data-filter": "学習",
+        "aria-pressed": "false"
+      },
+      "title": "学習"
+    },
+    {
+      "source": "docs/design/audits/2026-09-09-display-layout/contact-sheet.html",
+      "key": "item-8340ad128a5e3e799d7f",
+      "tag": "button",
+      "attributes": {
+        "data-filter": "持ち物",
+        "aria-pressed": "false"
+      },
+      "title": "持ち物"
+    },
+    {
+      "source": "docs/design/audits/2026-09-09-display-layout/contact-sheet.html",
+      "key": "item-ff4f9b566bd20b98606a",
+      "tag": "button",
+      "attributes": {
+        "data-filter": "編集",
+        "aria-pressed": "false"
+      },
+      "title": "編集"
+    },
+    {
+      "source": "docs/design/audits/2026-09-09-display-layout/contact-sheet.html",
+      "key": "item-51a2af5534aff3f00d7e",
+      "tag": "button",
+      "attributes": {
+        "data-filter": "思い出",
+        "aria-pressed": "false"
+      },
+      "title": "思い出"
+    },
+    {
+      "source": "docs/design/audits/2026-09-09-display-layout/contact-sheet.html",
+      "key": "item-f15047f060a3beb728ba",
+      "tag": "button",
+      "attributes": {
+        "data-filter": "設定・記録",
+        "aria-pressed": "false"
+      },
+      "title": "設定・記録"
+    },
+    {
+      "source": "docs/design/research/2026-09-09-layout-strategy/index.html",
+      "key": "item-6417df2d726053c3f852",
+      "tag": "button",
+      "attributes": {
+        "data-mode": "world",
+        "aria-pressed": "true"
+      },
+      "title": "島で過ごす"
+    },
+    {
+      "source": "docs/design/research/2026-09-09-layout-strategy/index.html",
+      "key": "item-ba3c2d7ef2f0f121be09",
+      "tag": "button",
+      "attributes": {
+        "data-mode": "learn",
+        "aria-pressed": "false"
+      },
+      "title": "学ぶ"
+    },
+    {
+      "source": "docs/design/research/2026-09-09-layout-strategy/index.html",
+      "key": "item-7142aa33b9e866d9b42a",
+      "tag": "button",
+      "attributes": {
+        "data-mode": "choose",
+        "aria-pressed": "false"
+      },
+      "title": "選ぶ"
+    },
+    {
+      "source": "docs/design/research/2026-09-09-layout-strategy/index.html",
+      "key": "item-008f700175d2e52d0f8b",
+      "tag": "button",
+      "attributes": {
+        "data-mode": "edit",
+        "aria-pressed": "false"
+      },
+      "title": "編集する"
+    },
+    {
+      "source": "docs/design/research/2026-09-09-layout-strategy/index.html",
+      "key": "item-6383babf590dc1b7569b",
+      "tag": "button",
+      "attributes": {
+        "data-mode": "memory",
+        "aria-pressed": "false"
+      },
+      "title": "思い出"
+    },
+    {
+      "source": "docs/design/research/2026-09-09-layout-strategy/index.html",
+      "key": "item-5f8857d2f2d9893f50c9",
+      "tag": "button",
+      "attributes": {
+        "data-mode": "manage",
+        "aria-pressed": "false"
+      },
+      "title": "設定・管理"
+    },
+    {
+      "source": "docs/design/research/2026-09-09-layout-strategy/index.html",
+      "key": "item-5d700e26880abb6ceeb2",
+      "tag": "button",
+      "attributes": {
+        "data-bench": "all",
+        "aria-pressed": "true"
+      },
+      "title": "すべて 12"
+    },
+    {
+      "source": "docs/design/research/2026-09-09-layout-strategy/index.html",
+      "key": "item-da31f06edf542ce57a0e",
+      "tag": "button",
+      "attributes": {
+        "data-bench": "learning",
+        "aria-pressed": "false"
+      },
+      "title": "学習 5"
+    },
+    {
+      "source": "docs/design/research/2026-09-09-layout-strategy/index.html",
+      "key": "item-d77cd4736feede43ea4f",
+      "tag": "button",
+      "attributes": {
+        "data-bench": "world",
+        "aria-pressed": "false"
+      },
+      "title": "世界・育成 5"
+    },
+    {
+      "source": "docs/design/research/2026-09-09-layout-strategy/index.html",
+      "key": "item-85ca8525070ed5f385bb",
+      "tag": "button",
+      "attributes": {
+        "data-bench": "content",
+        "aria-pressed": "false"
+      },
+      "title": "コンテンツ 2"
+    },
+    {
+      "source": "docs/design/research/2026-09-09-layout-strategy/index.html",
+      "key": "item-a4127305f366c83cddaa",
+      "tag": "button",
+      "attributes": {
+        "data-audit": "all",
+        "aria-pressed": "true"
+      },
+      "title": "全14枚"
+    },
+    {
+      "source": "docs/design/research/2026-09-09-layout-strategy/index.html",
+      "key": "item-a1325f42afccbdbc22f6",
+      "tag": "button",
+      "attributes": {
+        "data-audit": "phone",
+        "aria-pressed": "false"
+      },
+      "title": "スマホ 10"
+    },
+    {
+      "source": "docs/design/research/2026-09-09-layout-strategy/index.html",
+      "key": "item-a3e75221b617a8f5c8ae",
+      "tag": "button",
+      "attributes": {
+        "data-audit": "tablet",
+        "aria-pressed": "false"
+      },
+      "title": "縦タブレット 2"
+    },
+    {
+      "source": "docs/design/research/2026-09-09-layout-strategy/index.html",
+      "key": "item-965088be2ca45a5d2bc7",
+      "tag": "button",
+      "attributes": {
+        "data-audit": "landscape",
+        "aria-pressed": "false"
+      },
+      "title": "横タブレット 2"
+    }
+  ],
+  "acceptance": "unverified",
+  "browser": "not-run",
+  "independentReview": "not-run"
+}
