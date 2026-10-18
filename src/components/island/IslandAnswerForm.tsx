@@ -8,6 +8,7 @@ import { playSound } from '../../utils/audio';
 import { useIslandSpeech } from './useIslandSpeech';
 import { IslandSpeechControl } from './IslandSpeechControl';
 import './IslandAnswerForm.css';
+import './BaseTenLearning.css';
 
 export function IslandAnswerForm({ slot, disabled, deferSubmission, onAnswer, answerReceiptId, retryAnswer, onInteraction, onDigitInput, englishAutoRead = false }: Pick<LearningAnswerFormProps, 'disabled' | 'deferSubmission' | 'onAnswer' | 'onInteraction' | 'onDigitInput' | 'retryAnswer'> & {
     slot: IslandLearningSlot;

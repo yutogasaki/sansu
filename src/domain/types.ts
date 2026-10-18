@@ -236,7 +236,14 @@ export interface ProblemVisualNumberCard {
     columns?: number;
 }
 
+export interface BaseTenBlocks {
+    hundreds: number;
+    tens: number;
+    ones: number;
+}
+
 export type ProblemVisual =
+    | { kind: 'base-ten-blocks'; prompt?: string; groups: { label: string; blocks: BaseTenBlocks }[] }
     | { kind: 'fraction-strips'; prompt?: string; groups: { label: string; parts: number; filled: number }[] }
     | {
         kind: "number-card";
