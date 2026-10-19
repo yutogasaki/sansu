@@ -48,3 +48,8 @@
 
 
 分離候補の型・lint・build/assets、対象6ファイル27件・classic smoke32件、320幅catalogと390幅navigationを確認。全体suiteは約11分で中断しPARTIAL（79ファイルの通過記録）。[main統合候補の入力・検証と未確認範囲](../../design/2026-10-19-island-direct-play/main-integration/README.md)。
+
+
+## 広げる入口の非表示を修正（2026-10-19）
+
+利用者の実画面で入口がない指摘を受け、島Lv条件未達でも入口と条件・正規費用を確認できるよう修正。条件や取得・価格・保存は維持。mainへの今回の差分だけを分離した候補で17テスト・型・lint・build/assetsと3幅のLv5/6の未解放/解放後を確認。[原因・入力・証拠・未確認範囲](../../design/2026-10-19-expansion-visibility/README.md)。前回のcommit/main/push依頼の範囲内のUI回帰修正。

@@ -40,6 +40,7 @@ import { allowPwaUpdateDuringReadOnlyOpening } from '../../../pwa';
 import './growing.css';
 import { GrowingIslandMenu } from './GrowingIslandMenu';
 import { GrowingHomeTools, GrowingViewControls, GrowingExpansion } from './GrowingHomeTools';
+import { growingExpansionLock } from './growingExpansion';
 import { bridgeSite } from '../../../domain/growingIsland/space';
 import type { MenuPictures } from './menuMiniatures';
 
@@ -342,7 +343,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         });
     };
     const disembark = async () => { for (const id of own.arrivals) await island.dispatch({ type: 'disembark', id }); audio.play('discovery'); setLine(undefined); };
-    const quote = landQuote(own), gifts = own.unopened.length + own.arrivals.length;
+    const quote = landQuote(own), expansionLock = growingExpansionLock(own), gifts = own.unopened.length + own.arrivals.length;
 
     const openBook = (memory?: AchievementId, source: 'menu' | 'cue' = 'cue') => {
         bookReturnFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
@@ -545,7 +546,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         {visit ? <div className="growing-hud-top"><span className="growing-chip">{visit.name}の しま・{CHARACTER_NAME[visit.state.character]}</span></div> : <GrowingHomeTools
             islandName={own.islandName ?? 'ぽこもこの しま'} drops={own.drops} quote={quote} status={placeStatus} menuRef={menuTrigger}
             visible={worldStep === 'ready' && !menu && !panel && !placing && !selected && !card && !story && !bridgeChoice && !bridgeBusy && naming === undefined && !dawn}
-            goalVisible={!firstPlay && !guide.cue && !guide.notice && !gifts} menuOpen={menu && naming === undefined}
+            goalVisible={!firstPlay && !guide.cue && !guide.notice && !gifts} expansionVisible={!firstPlay && !guide.cue && !guide.notice && !gifts} expansionLock={expansionLock} menuOpen={menu && naming === undefined}
             onName={() => { setNaming(own.islandName ?? ''); }}
             onView={() => openHomeTool('view', '.growing-home-view')}
             onExpand={() => openHomeTool('expand', '.growing-home-expand')}
@@ -554,7 +555,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             onMenu={() => { if (!menu) setMenuPictures(own.villagers.length ? camera.current?.menuPictures(own.villagers) ?? {} : {}); setMenu(!menu); }}
             onGoal={() => openPlaces(placeStatus?.id, 'cue')} />}
         {!visit && panel === 'view' && <GrowingViewControls onDistance={close => camera.current?.distance(close)} onClose={closeHomeTool} onRotate={direction => setTurn(value => value + direction)} />}
-        {!visit && panel === 'expand' && <GrowingExpansion quote={quote} drops={own.drops} busy={island.busy} onClose={closeHomeTool}
+        {!visit && panel === 'expand' && <GrowingExpansion quote={quote} expansionLock={expansionLock} drops={own.drops} busy={island.busy} onClose={closeHomeTool}
             onExpand={side => void run({ type: 'expand', side }, () => { closeHomeTool(); audio.play('assemble'); })} />}
         {naming !== undefined && <form ref={nameForm} className="growing-overlay" role="dialog" aria-modal="true" aria-label="しまの なまえ" onSubmit={event => { event.preventDefault(); if (naming.trim()) void run({ type: 'name', target: 'island', name: naming }, closeNaming); }}>
             <div className="growing-overlay-body growing-name"><label>しまの なまえ<input value={naming} maxLength={12} onChange={e => setNaming(e.target.value)} autoFocus /></label>

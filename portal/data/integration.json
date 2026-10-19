@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "currentCandidate": "37884eaef7367bd0eb0b33534fc76f6ea78921958ee5b4ac64b52fdd7c4e4204",
-  "legacyCandidate": "241f968493fcd1f4e31ad0e8b85fc8f012d9e4f1c5374edb1edfea0003b7ddce",
+  "currentCandidate": "b8c387298dadba32c5c582b7cd79e8b70a8ed3586c09f926547d6e159cea6464",
+  "legacyCandidate": "a33629604f8b10b31f9bd0002d41f456254d55a5163a51e51ea4a528fcdffe69",
   "project": {
     "schemaVersion": "1.0",
     "slug": "sansu",
@@ -946,7 +946,7 @@
     {
       "source": ".agents/map.html",
       "target": "map.html",
-      "originalSha256": "de836f403fec2a3a073f99e83acb9526f3ef567f1546e8aee8e21b214984f11d",
+      "originalSha256": "2b92938ababd1f754a67f1354cabcd7b5173b5bca1dfd3fba94f0b9f89de4142",
       "ai": "ai/map.html"
     },
     {
@@ -976,7 +976,7 @@
     {
       "source": "docs/index.html",
       "target": "documents.html",
-      "originalSha256": "5f24a583b90dab9c7b675509ad6790e87c037373fd716fac1f38167850f9e9a3",
+      "originalSha256": "bb5a8661831018c692c7f2aac620456a80db7dd84bb35c9b6ba6b886d460099e",
       "ai": "ai/documents.html"
     }
   ],
@@ -991,8 +991,8 @@
     {
       "source": "docs/tasks/active/2026-10-19-island-menu.md",
       "target": "../docs/tasks/active/2026-10-19-island-menu.md",
-      "sha256": "8661168ba386abe1e20b8330f29c6bb218c771261de4a78dffece2b36117906a",
-      "bytes": 4995,
+      "sha256": "01655fb6d7ef7acc4c01e01f8584de8c6f15f48dd23a5de97d38c625f923b951",
+      "bytes": 5552,
       "mode": "reference"
     },
     {
@@ -1607,8 +1607,8 @@
     {
       "source": "docs/product/44_display_layout_spec.md",
       "target": "../docs/product/44_display_layout_spec.md",
-      "sha256": "c16101ba6433d4fdb48c672d313d9ccd4b9091a03a94c1526586a66a20645719",
-      "bytes": 12947,
+      "sha256": "3ae9587eed6789266fea1fef6029e9f6bc5007ef17d98265c3545ee667d6d94d",
+      "bytes": 13449,
       "mode": "reference"
     },
     {
@@ -4241,6 +4241,27 @@
       "target": "../src/assets/natureTown/town-rabbit-receiving.png",
       "sha256": "b15c570189e2b6eab40818817861962a09f780b1373d8374e8fa4375f19f0832",
       "bytes": 14717,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-19-expansion-visibility/390x844-locked-6-home.png",
+      "target": "../docs/design/2026-10-19-expansion-visibility/390x844-locked-6-home.png",
+      "sha256": "17467733e3aa15e12fdbf3df7f2a6e57ea398f4c38bc4d31cd6e6402e87340f5",
+      "bytes": 201322,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-19-expansion-visibility/390x844-locked-5-home.png",
+      "target": "../docs/design/2026-10-19-expansion-visibility/390x844-locked-5-home.png",
+      "sha256": "bf9e729dd750433de65ef7ee79382f942c4f97ffe4c92efc97fcd20a0a698b09",
+      "bytes": 197180,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-19-expansion-visibility/390x844-locked-6-explanation.png",
+      "target": "../docs/design/2026-10-19-expansion-visibility/390x844-locked-6-explanation.png",
+      "sha256": "c81e1522708d3c798875a5a146e96efafe92dd494ec7f4ff030a43c00081a91a",
+      "bytes": 173240,
       "mode": "reference"
     },
     {
@@ -14051,6 +14072,13 @@
       "mode": "reference"
     },
     {
+      "source": "docs/design/2026-10-19-expansion-visibility/README.md",
+      "target": "../docs/design/2026-10-19-expansion-visibility/README.md",
+      "sha256": "c266ab664223c66c0ca59f0c7a6eee7f380904bbc7006a9d8bace4d0b2b31e48",
+      "bytes": 2704,
+      "mode": "reference"
+    },
+    {
       "source": "docs/design/2026-10-19-island-direct-play/main-integration/README.md",
       "target": "../docs/design/2026-10-19-island-direct-play/main-integration/README.md",
       "sha256": "00e9e9f821372dd2b379e2e48c25ae21fac55bcabd49b3a1c6887bc20d5986e7",
@@ -17756,6 +17784,18 @@
     {
       "source": "src/assets/natureTown/town-rabbit-receiving.png",
       "target": "../src/assets/natureTown/town-rabbit-receiving.png"
+    },
+    {
+      "source": "docs/design/2026-10-19-expansion-visibility/390x844-locked-6-home.png",
+      "target": "../docs/design/2026-10-19-expansion-visibility/390x844-locked-6-home.png"
+    },
+    {
+      "source": "docs/design/2026-10-19-expansion-visibility/390x844-locked-5-home.png",
+      "target": "../docs/design/2026-10-19-expansion-visibility/390x844-locked-5-home.png"
+    },
+    {
+      "source": "docs/design/2026-10-19-expansion-visibility/390x844-locked-6-explanation.png",
+      "target": "../docs/design/2026-10-19-expansion-visibility/390x844-locked-6-explanation.png"
     },
     {
       "source": "docs/design/2026-10-19-island-direct-play/home-768.png",
@@ -23360,6 +23400,10 @@
     {
       "source": "docs/design/2026-10-18-promotion-image-delivery-fix/README.md",
       "target": "../docs/design/2026-10-18-promotion-image-delivery-fix/README.md"
+    },
+    {
+      "source": "docs/design/2026-10-19-expansion-visibility/README.md",
+      "target": "../docs/design/2026-10-19-expansion-visibility/README.md"
     },
     {
       "source": "docs/design/2026-10-19-island-direct-play/main-integration/README.md",

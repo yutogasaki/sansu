@@ -4,11 +4,13 @@ import type { Side } from '../../../domain/growingIsland/types';
 import type { PlaceStatus } from '../../../domain/growingIsland/placeTypes';
 import { IslandToyIcon } from '../IslandToyIcon';
 import { GrowingPlaceArt } from './GrowingPlaceBook';
+import type { GrowingExpansionLock } from './growingExpansion';
 
 type Quote = { sides: Side[]; price: number };
 interface HomeToolsProps {
     islandName: string; drops: number; quote?: Quote; status?: PlaceStatus;
-    visible: boolean; goalVisible: boolean; menuOpen: boolean;
+    visible: boolean; goalVisible: boolean; expansionVisible: boolean; menuOpen: boolean;
+    expansionLock?: GrowingExpansionLock;
     menuRef: RefObject<HTMLButtonElement | null>;
     onName: () => void; onView: () => void; onExpand: () => void;
     onPlace: () => void; onStored: () => void; onMenu: () => void; onGoal: () => void;
@@ -24,8 +26,8 @@ export function GrowingHomeTools({ menuRef, ...p }: HomeToolsProps) {
         {p.visible && p.goalVisible && <button className="growing-place-current growing-home-goal" aria-label={p.status ? `${p.status.name}の ヒント` : 'そだつ場所'} onClick={p.onGoal}>
             <GrowingPlaceArt id={p.status?.id ?? 'P01'} /><span><strong>{p.status?.name ?? 'そだつ場所'}</strong><small>{!p.status ? 'どんな 場所に しよう？' : p.status.stage === 'grown' || p.status.stage === 'lived' ? 'ここで あそぼう' : p.status.hint}</small></span><ChevronRight size={17} aria-hidden="true" />
         </button>}
-        {p.visible && p.goalVisible && p.quote && <button className="growing-home-expand" aria-label="しまを ひろげる" onClick={p.onExpand} data-affordable={p.drops >= p.quote.price}>
-            <Maximize2 size={20} aria-hidden="true" /><span><strong>{p.drops >= p.quote.price ? 'ひろげられるよ' : 'ひろげる'}</strong><small>💧 {p.quote.price}</small></span>
+        {p.visible && p.expansionVisible && (p.quote || p.expansionLock) && <button className="growing-home-expand" aria-label="しまを ひろげる" onClick={p.onExpand} data-affordable={Boolean(p.quote && p.drops >= p.quote.price)}>
+            <Maximize2 size={20} aria-hidden="true" /><span><strong>{p.quote && p.drops >= p.quote.price ? 'ひろげられるよ' : 'ひろげる'}</strong><small>{p.expansionLock ? `島Lv${p.expansionLock.requiredLevel}から` : `💧 ${p.quote!.price}`}</small></span>
         </button>}
         {(p.visible || p.menuOpen) && <div className="growing-home-tools" role="toolbar" aria-label="しまの あそび">
             {!p.menuOpen && <><button className="growing-home-place" aria-label="しまに おく" onClick={p.onPlace}><IslandToyIcon kind="house" size={34} /><span>おく</span></button>
@@ -54,10 +56,15 @@ export function GrowingViewControls({ onClose, onRotate, onDistance }: { onClose
     </section>;
 }
 
-export function GrowingExpansion({ quote, drops, busy, onClose, onExpand }: { quote?: Quote; drops: number; busy: boolean; onClose: () => void; onExpand: (side: Side) => void }) {
+export function GrowingExpansion({ quote, expansionLock, drops, busy, onClose, onExpand }: { quote?: Quote; expansionLock?: GrowingExpansionLock; drops: number; busy: boolean; onClose: () => void; onExpand: (side: Side) => void }) {
     const close = usePanelExit(onClose);
     return <section className="growing-tray growing-expansion" aria-label="しまを ひろげる">
-        <header><div><h2>どちらへ ひろげる？</h2><p>いまの しまの となりに 土地が ふえるよ</p></div><button ref={close} className="growing-close" aria-label="ひろげるを とじる" onClick={onClose}><X size={20} aria-hidden="true" /></button></header>
+        <header><div><h2>{expansionLock ? 'しまを ひろげる' : 'どちらへ ひろげる？'}</h2><p>{expansionLock ? `島Lv${expansionLock.requiredLevel}で 次の土地が ひらくよ` : 'いまの しまの となりに 土地が ふえるよ'}</p></div><button ref={close} className="growing-close" aria-label="ひろげるを とじる" onClick={onClose}><X size={20} aria-hidden="true" /></button></header>
+        {expansionLock && <div className="growing-expansion-locked">
+            <p>いまの 島Lv：{expansionLock.currentLevel} ／ 次は 島Lv{expansionLock.requiredLevel}</p>
+            <p>島Lvは なかまの くらしで そだつよ。ごはん・あそび・すきなものを ととのえてみよう。</p>
+            <p className="growing-expansion-balance">ひろげるときの しずく：{expansionLock.price} ／ いま：{drops}</p>
+        </div>}
         <div className="growing-expansion-choices" data-sides={quote?.sides.length}>{quote?.sides.map(side => <button key={side} disabled={busy || drops < quote.price} onClick={() => onExpand(side)}>
             {side === 'east' ? <ArrowRight aria-hidden="true" /> : side === 'west' ? <ArrowLeft aria-hidden="true" /> : <ArrowDown aria-hidden="true" />}<strong>{side === 'east' ? 'ひがし' : side === 'west' ? 'にし' : 'みなみ'}へ ひろげる</strong><span>💧 {quote.price}</span>
         </button>)}</div>
