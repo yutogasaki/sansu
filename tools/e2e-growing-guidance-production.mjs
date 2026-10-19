@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { chromium } from 'playwright';
 import { plantProduction } from './growing-production-helpers.mjs';
-import { answerUI, openGrowingMenu, openIslandDestination, readNative, runtimeMetadata, waitReady } from './island-e2e-helpers.mjs';
+import { openGrowingUtilities, answerUI, openGrowingMenu, openIslandDestination, readNative, runtimeMetadata, waitReady } from './island-e2e-helpers.mjs';
 
 const base = process.env.SANSU_GUIDANCE_PRODUCTION_URL, out = process.env.SANSU_GUIDANCE_PRODUCTION_OUTPUT;
 assert(base && out, 'Specify a local production URL and fresh output directory');
@@ -90,6 +90,7 @@ try {
         await until(page, id, r => Boolean(r.state.guidance?.starter.steps.S4));
         await openGrowingMenu(page, { touch: true });
         await capture(page, 'menu');
+        await openGrowingUtilities(page, { touch: true });
         await page.getByRole('button', { name: 'しまの あそびかた', exact: true }).tap();
         await capture(page, 'book');
         await page.locator('.growing-guide-all summary').tap(); await page.locator('[data-guidance-goal="A3"]').first().tap();
@@ -139,6 +140,7 @@ try {
         assert.deepEqual((await read(page, id)).state.guidance.achievements.A3, remembered);
         assert.equal((await readNative(page, id)).logs.length, 23); await capture(page, 'offline-saved');
         await openGrowingMenu(page, { touch: true });
+        await openGrowingUtilities(page, { touch: true });
         await page.getByRole('button', { name: 'しまの あそびかた', exact: true }).tap();
         await page.getByRole('tab', { name: 'できたこと', exact: true }).tap();
         await capture(page, 'offline-memories');

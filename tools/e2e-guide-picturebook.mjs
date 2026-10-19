@@ -3,7 +3,7 @@ import { promises as fs } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { chromium } from 'playwright';
-import { seedDev, runtimeMetadata, readNative } from './island-e2e-helpers.mjs';
+import { openGrowingUtilities, seedDev, runtimeMetadata, readNative } from './island-e2e-helpers.mjs';
 
 const base = process.env.SANSU_GUIDE_ART_URL || 'http://127.0.0.1:5260';
 const out = process.env.SANSU_GUIDE_ART_OUTPUT;
@@ -47,6 +47,7 @@ try {
         await page.goto(`${base}/#/island`); await capture(page, 'launch');
         const id = await seedDev(page, { familiar: false }); await page.reload(); await ready(page); await capture(page, 'island');
         await page.getByRole('button', { name: 'メニュー', exact: true }).tap();
+        await openGrowingUtilities(page, { touch: true });
         await page.getByRole('button', { name: 'しまの あそびかた', exact: true }).tap();
         await capture(page, 'starter');
         await book(page).locator('summary').tap();
@@ -75,6 +76,7 @@ try {
         await page.reload(); await ready(page);
         const nativeBefore = await readNative(page, id);
         await page.getByRole('button', { name: 'メニュー', exact: true }).tap();
+        await openGrowingUtilities(page, { touch: true });
         await page.getByRole('button', { name: 'しまの あそびかた', exact: true }).tap();
         await book(page).getByRole('tab', { name: 'できたこと', exact: true }).tap();
         const snapshots = {};

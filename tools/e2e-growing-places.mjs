@@ -5,7 +5,7 @@ import { pathToFileURL } from 'node:url';
 import { chromium } from 'playwright';
 import { makePlacePack, loadPlaceDomain } from './growing-place-fixtures.mjs';
 import { hash } from './growing-fixture-data.mjs';
-import { answerUI, appRootMetadata, openGrowingMenu, readNative, runtimeMetadata, seedNative } from './island-e2e-helpers.mjs';
+import { answerUI, appRootMetadata, openGrowingAction, readNative, runtimeMetadata, seedNative } from './island-e2e-helpers.mjs';
 import { disposeProductionProjection, plantProduction, productionCellPoint } from './growing-production-helpers.mjs';
 
 const CANDIDATE = process.env.SANSU_GROWING_PLACE_CANDIDATE ?? 'native-05-place-runtime-v3';
@@ -81,8 +81,7 @@ async function ready(page) {
 }
 async function openBook(page) {
     if (await page.locator('.growing-place-book').isVisible()) return page.locator('.growing-place-book');
-    const menu = await openGrowingMenu(page, { touch: true });
-    await menu.getByRole('button', { name: 'そだつ場所', exact: true }).tap();
+    await openGrowingAction(page, 'そだつ場所');
     await page.locator('.growing-place-book').waitFor(); return page.locator('.growing-place-book');
 }
 async function layoutAudit(page) {
@@ -150,8 +149,7 @@ export async function confirmStoredPlacement(page, read, ownerId, cell, timeout 
 }
 
 async function placeLandmark(page, read, kind, cell) {
-    const menu = await openGrowingMenu(page, { touch: true }); await menu.getByRole('button', { name: 'たね', exact: true }).tap();
-    await page.getByRole('tab', { name: 'めじるし', exact: true }).tap();
+    await openGrowingAction(page, /^(しまに おく|たね)$/);
     await page.locator(`[data-growing-landmark="${kind}"]`).tap();
     await tapCell(page, (await read()).state, cell); await page.getByRole('button', { name: 'ここに おく', exact: true }).tap();
     return until(page, read, record => record.state.landmarks.some(item => item.kind === kind && item.cell?.x === cell.x && item.cell?.z === cell.z), `purchased ${kind}`);
@@ -447,7 +445,7 @@ async function diagnosticJourney(browser, options, report, pack, captureFactory)
                 await treeSheet.waitFor(); await treeSheet.getByRole('button', { name: 'しまう', exact: true }).tap();
                 const stored = await until(page, read, record => !record.state.landmarks.find(item => item.id === ownerId).cell, 'store original tree');
                 assert.deepEqual(stored.state.placeProgress.milestones.P01, originalEvidence);
-                const menu = await openGrowingMenu(page, { touch: true }); await menu.getByRole('button', { name: 'もちもの', exact: true }).tap();
+                await openGrowingAction(page, 'もちもの');
                 await page.locator(`[data-growing-stored="${ownerId}"]`).tap();
                 await page.locator('.growing-tray').waitFor({ state: 'hidden' });
                 await page.locator('.growing-placing').waitFor();

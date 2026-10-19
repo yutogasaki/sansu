@@ -53,6 +53,7 @@ export interface WorldHandlers {
 }
 /** Pictures of the island for the card and the island's story; never uploaded anywhere. */
 export interface WorldCamera {
+    distance: (close: boolean) => void;
     capture: (width: number, height: number) => HTMLCanvasElement | undefined;
     portraits: (villagers: readonly Villager[], size: number) => Record<string, string>;
     menuPictures: (villagers: readonly Villager[]) => MenuPictures;
@@ -186,6 +187,7 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
         const effects = new WorldEffects(world.scene); disposers.push(() => effects.dispose());
         const moments = new MomentEffects(world.scene); disposers.push(() => moments.dispose());
         const camera = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100), view = initialView();
+        if (node.clientWidth <= 480 && node.clientHeight > node.clientWidth) view.zoom = 1.06;
         type View = ReturnType<typeof initialView>;
         let playFocus: { at: number; from: View; to: View; returnTo: View; restoring?: boolean } | undefined;
         let interruptedOrigin: View | undefined;
@@ -372,6 +374,11 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
         };
         cameraRef.current?.({
             menuPictures: menuPictureMaker(renderer, world.m),
+            distance: close => {
+                playFocus = undefined; interruptedOrigin = undefined;
+                view.zoom = close ? 1.65 : 1; view.pan = { x: 0, z: 0 };
+                frameCamera(camera, layout, view, width / height);
+            },
             capture: (w, h) => {
                 const shot = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100);
                 frameCamera(shot, layout, initialView(), w / h);

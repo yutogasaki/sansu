@@ -78,9 +78,9 @@
 .island-shell .island-shell-nav { gap: 4px; padding-inline: max(10px, env(safe-area-inset-left)); border-top-color: var(--pokomoko-edge); }
 .island-shell .island-shell-tab { border-radius: 14px; font-size: 11px; gap: 3px; }
 .island-shell .island-shell-tab svg { width: 23px; height: 23px; }
-.island-shell .island-shell-tab[aria-current=page]:not(.island-shell-tab--learn) { border-color: var(--pokomoko-edge); background: var(--pokomoko-mint); color: var(--pokomoko-blue-deep); }
-.island-shell .island-shell-tab--learn { min-height: 48px; border-radius: 16px; background: var(--pokomoko-blue); color: var(--pokomoko-paper); border-color: var(--pokomoko-blue); font-size: 12px; font-weight: 800; box-shadow: 0 3px 0 var(--pokomoko-blue-deep); }
-.island-shell .island-shell-tab--learn[aria-current=page] { background: var(--pokomoko-blue-deep); color: var(--pokomoko-paper); }
+.island-shell .island-shell-tab[aria-current=page]:not(.island-shell-tab--learn) { border-color: var(--pokomoko-edge); background: color-mix(in srgb, var(--pokomoko-blue) 10%, var(--pokomoko-paper)); color: var(--pokomoko-blue-deep); }
+.island-shell .island-shell-tab--learn { min-height: 48px; border-radius: 16px; background: transparent; color: var(--pokomoko-blue-deep); border-color: var(--pokomoko-edge); font-size: 12px; font-weight: 800; box-shadow: none; }
+.island-shell .island-shell-tab--learn[aria-current=page] { background: color-mix(in srgb, var(--pokomoko-blue) 10%, var(--pokomoko-paper)); color: var(--pokomoko-blue-deep); }
 @media (min-width: 760px) {
     .island-shell .utility-layout-screen .settings-category-list { grid-template-columns: minmax(0, 1fr); }
     .island-shell .utility-layout-screen .settings-category-list .pokomoko-setting-trigger { grid-column: 1; grid-template-columns: 40px minmax(0, 1fr); gap: 10px; align-items: center; align-content: center; min-height: 100px; padding: 14px; }

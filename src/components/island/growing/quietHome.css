@@ -1,37 +1,77 @@
-/* Home uses the same five destinations as the other ordinary screens. */
+/* The world owns play; destination navigation stays in the separate bottom bar. */
 .island-shell .island-shell-nav--home .island-shell-tab { min-height: 48px; }
-/* The menu stays within reach above the tabs; the rest of the HUD sits above it. */
-.growing-island[data-home-ui-candidate][data-growing-island="ready"] .growing-hud-top {
-    top: auto; right: auto; left: max(12px, env(safe-area-inset-left));
-    bottom: max(12px, env(safe-area-inset-bottom)); pointer-events: none;
+.growing-home-heading { position: absolute; z-index: 5; inset: max(12px, env(safe-area-inset-top)) 12px auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; pointer-events: none; }
+.growing-home-identity { display: flex; align-items: center; min-width: 0; max-width: calc(100% - 82px); min-height: 44px; background: var(--pokomoko-paper); border: 1px solid var(--pokomoko-edge); border-radius: 22px; pointer-events: auto; }
+.growing-home-identity button { min-width: 0; min-height: 44px; padding: 6px 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; border: 0; border-radius: 22px; background: transparent; font-size: 14px; font-weight: 800; }
+.growing-home-identity > span { display: flex; flex: none; align-items: center; gap: 3px; padding: 0 12px 0 8px; border-left: 1px solid var(--pokomoko-edge); font-size: 14px; font-weight: 800; }
+.growing-island .growing-home-view { display: flex; align-items: center; justify-content: center; gap: 5px; min-height: 44px; padding: 6px 10px; border: 1px solid var(--pokomoko-edge); border-radius: 20px; background: var(--pokomoko-paper); font-size: 12px; font-weight: 700; pointer-events: auto; }
+.growing-island .growing-home-goal { position: absolute; z-index: 5; top: calc(68px + env(safe-area-inset-top)); left: 12px; max-width: min(270px, calc(100% - 24px)); min-height: 64px; gap: 7px; padding: 6px 10px 6px 6px; border-radius: 18px; box-shadow: var(--app-shadow); }
+.growing-home-goal .growing-place-art { width: 52px; }
+.growing-home-goal strong { font-size: 15px; }
+.growing-home-goal small { margin-top: 3px; font-size: 12px; max-width: 190px; line-height: 1.5; white-space: normal; }
+.growing-home-tools { position: absolute; z-index: 9; bottom: max(12px, env(safe-area-inset-bottom)); left: 12px; right: 12px; display: grid; grid-template-columns: 1.12fr 1fr .85fr; gap: 8px; max-width: 430px; pointer-events: none; }
+.growing-island .growing-home-tools > button { display: flex; align-items: center; justify-content: center; gap: 6px; min-width: 0; min-height: 64px; margin: 0; padding: 8px; border: 1px solid var(--pokomoko-edge); border-radius: 22px; background: var(--pokomoko-paper); box-shadow: 0 3px 0 color-mix(in srgb, var(--pokomoko-stitch) 25%, transparent); font-size: 15px; font-weight: 800; pointer-events: auto; }
+.growing-island .growing-home-tools > .growing-home-place { background: color-mix(in srgb, var(--pokomoko-rose) 55%, var(--pokomoko-paper)); }
+.growing-island .growing-home-tools > .growing-menu-button { grid-column: 3; flex-direction: column; gap: 0; font-size: 12px; }
+.growing-island .growing-home-tools > button:active { transform: translateY(2px); box-shadow: none; }
+.growing-island .growing-home-expand { position: absolute; z-index: 5; bottom: 94px; right: 12px; display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 8px 12px; border: 1px solid var(--pokomoko-edge); border-radius: 18px; background: var(--pokomoko-paper); text-align: left; }
+.growing-home-expand strong, .growing-home-expand small { display: block; line-height: 1.4; }
+.growing-home-expand strong { font-size: 14px; }
+.growing-home-expand small { margin-top: 2px; font-size: 12px; color: var(--pokomoko-muted); }
+.growing-home-expand[data-affordable=true] { border-color: var(--pokomoko-blue); }
+.growing-home-view-panel { position: absolute; z-index: 8; top: 12px; right: 12px; width: min(280px, calc(100% - 24px)); padding: 6px 10px 10px; border: 1px solid var(--pokomoko-edge); border-radius: 22px; background: var(--pokomoko-paper); box-shadow: var(--app-shadow); }
+.growing-home-view-panel header { display: flex; align-items: center; justify-content: space-between; }
+.growing-home-view-panel h2 { margin: 0; font-size: 16px; }
+.growing-home-view-panel > div { display: flex; gap: 8px; margin-top: 6px; }
+.growing-home-view-panel > div button { display: flex; flex: 1; align-items: center; justify-content: center; gap: 6px; min-height: 48px; border: 1px solid var(--pokomoko-edge); border-radius: 14px; background: var(--pokomoko-paper); font-size: 14px; }
+.growing-island .growing-home-view-panel .growing-close { min-height: 44px; min-width: 44px; border: 0; background: transparent; }
+.growing-island .growing-expansion { max-height: 65%; }
+.growing-expansion header > div { flex: 1; }
+.growing-expansion h2 { margin: 0; font-size: 18px; }
+.growing-expansion header p, .growing-expansion-balance { margin: 6px 0; color: var(--pokomoko-muted); font-size: 13px; }
+.growing-expansion-choices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.growing-expansion-choices button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; min-height: 104px; padding: 8px; border: 1px solid var(--pokomoko-edge); border-radius: 18px; background: var(--pokomoko-paper); font-size: 14px; }
+.growing-expansion-choices button:disabled { opacity: .6; cursor: default; }
+.growing-island :is(.growing-home-tools, .growing-home-heading, .growing-home-view-panel, .growing-expansion) button:focus-visible, .growing-home-expand:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 2px; }
+.growing-island[data-home-ui-candidate][data-growing-island=ready] .growing-hud-bottom { right: auto; left: 12px; bottom: 94px; }
+.growing-island[data-home-ui-candidate][data-growing-island=ready] .growing-bubble { bottom: 96px; max-width: min(300px, calc(100% - 24px)); }
+.growing-island[data-home-ui-candidate][data-growing-island=ready]:has(.growing-open-all) .growing-bubble { bottom: 152px; }
+.growing-island[data-home-ui-candidate] .growing-placing { bottom: 12px; }
+.island-shell:has(.growing-island[data-growing-island=show]) .island-shell-nav--home { display: none; }
+@media (max-width: 360px) {
+    .growing-island .growing-home-tools > button { flex-direction: column; gap: 0; font-size: 13px; }
+    .growing-home-tools { gap: 6px; }
 }
-.growing-island[data-home-ui-candidate] .growing-menu-button {
-    min-width: 104px; min-height: 48px; justify-content: center; padding: 10px 14px;
-    font-size: 14px; font-weight: 700; pointer-events: auto;
-}
-.growing-island[data-home-ui-candidate][data-growing-island="ready"] .growing-hud-bottom {
-    right: auto; left: max(12px, env(safe-area-inset-left));
-    bottom: max(76px, calc(env(safe-area-inset-bottom) + 64px));
-}
-.growing-island[data-home-ui-candidate][data-growing-island="ready"]:has(.growing-hud-bottom .growing-open-all) .growing-bubble {
-    bottom: max(136px, calc(env(safe-area-inset-bottom) + 124px));
-}
-.growing-island[data-home-ui-candidate][data-growing-island="ready"] .growing-bubble { bottom: 76px; max-width: min(300px, calc(100% - 24px)); }
-.growing-island[data-home-ui-candidate] .growing-placing { bottom: max(76px, calc(env(safe-area-inset-bottom) + 64px)); }
-.growing-island[data-home-ui-candidate][data-growing-island="visit"] .growing-hud-bottom { margin-bottom: max(76px, calc(env(safe-area-inset-bottom) + 64px)); }
-.island-shell:has(.growing-island[data-growing-island="show"]) .island-shell-nav--home { display: none; }
-.growing-pocket-identity { display: flex; align-items: center; gap: 8px; padding-block: 4px 8px; }
-.growing-pocket-identity button { display: flex; flex: 1; align-items: center; justify-content: space-between; gap: 8px; overflow-wrap: anywhere; text-align: left; }
-.growing-pocket-identity span { flex-shrink: 0; font-size: 14px; font-weight: 800; }
-.growing-pocket-utilities { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; border-top: 1px solid var(--pokomoko-edge); padding-block: 8px; }
-.growing-pocket-profile { flex-basis: 100%; overflow-wrap: anywhere; color: var(--pokomoko-muted); font-size: 12px; }
-.growing-pocket-utilities .island-sound-control { min-width: 0; }
-.growing-pocket-utilities :is(.island-profile-switch, .island-sound-button) { border: 1px solid var(--pokomoko-edge); }
-.island-shell .growing-island[data-home-ui-candidate] .growing-pocket-menu { top: auto; bottom: max(76px, calc(env(safe-area-inset-bottom) + 64px)); max-height: calc(100% - 140px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); width: min(340px, calc(100% - 24px)); }
 @media (max-height: 500px) and (min-width: 450px) {
-    .island-shell .growing-island[data-home-ui-candidate] .growing-pocket-menu { top: auto; bottom: 68px; max-height: calc(100% - 76px - env(safe-area-inset-top) - env(safe-area-inset-bottom)); width: min(380px, calc(100% - 124px)); }
-    .growing-pocket-identity { grid-column: 1 / -1; }
-    .growing-pocket-utilities { grid-column: 1 / -1; padding-block: 4px; }
-    .growing-pocket-profile { flex-basis: auto; }
-    .growing-pocket-primary { grid-row: 2 / 5; }
+    .growing-home-tools { max-width: 300px; }
+    .growing-island .growing-home-tools > button { min-height: 52px; }
+    .growing-island .growing-home-goal { min-height: 48px; }
+    .growing-home-goal .growing-place-art { width: 38px; }
+    .growing-home-goal small { display: none; }
+    .growing-island .growing-home-expand { bottom: 12px; }
+    .growing-island .growing-expansion { left: auto; width: min(400px, 72%); max-height: calc(100% - 12px); }
+    .growing-expansion-choices button { min-height: 80px; }
+}
+@media (prefers-reduced-motion: reduce) { .growing-island .growing-home-tools > button:active { transform: none; } }
+.growing-island[data-home-ui-candidate] .growing-catalog { max-height: 77%; }
+@media (max-height: 500px) and (min-width: 450px) {
+    .growing-island[data-home-ui-candidate] .growing-catalog { display: grid; grid-template-columns: minmax(145px, .8fr) minmax(0, 1.2fr); grid-template-rows: auto minmax(0, 1fr); max-height: calc(100% - 12px); overflow: hidden; }
+    .growing-catalog > header { gap: 4px; padding-block: 4px; }
+    .growing-catalog h2 { font-size: 15px; }
+    .growing-catalog > header p { display: none; }
+    .growing-catalog > .growing-tabs { align-self: center; margin: 0; padding: 4px 0 4px 8px; }
+    .growing-catalog > [role="tabpanel"] { grid-column: 1 / -1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding-bottom: 4px; }
+}
+
+.growing-expansion-choices[data-sides="1"] { grid-template-columns: 1fr; }
+.growing-expansion-choices[data-sides="1"] button { flex-direction: row; min-height: 72px; justify-content: flex-start; gap: 12px; padding-inline: 16px; }
+.growing-expansion-choices[data-sides="1"] button > span { margin-left: auto; white-space: nowrap; }
+
+.growing-island .growing-home-view { flex: none; white-space: nowrap; }
+.growing-pocket-memories button > span { white-space: nowrap; }
+
+.growing-expansion-choices[data-sides="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-height: 500px) and (min-width: 450px) {
+    .growing-home-tools:has(.growing-menu-button[aria-expanded=true]) { width: 128px; grid-template-columns: 1fr; }
+    .growing-island .growing-home-tools > .growing-menu-button[aria-expanded=true] { grid-column: 1; }
 }

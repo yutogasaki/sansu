@@ -1,0 +1,28 @@
+
+> pokko-fushigi-zukan-app@0.0.0 test:run
+> vitest run src/components/island/growing/GrowingHomeTools.test.tsx src/components/island/growing/GrowingIslandMenu.test.tsx src/components/island/growing/GrowingTray.test.tsx src/components/island/growing/placementName.test.ts src/components/island/growing/growingCamera.test.ts src/components/island/growing/menuMiniatures.test.ts --minWorkers=1 --maxWorkers=1
+
+
+ RUN  v2.1.9 /private/tmp/sansu-ui-main-candidate
+
+ ✓ src/components/island/growing/growingCamera.test.ts (6 tests) 6326ms
+   ✓ district coordinates and camera clipping > fits actual curved shore, houses and hero geometry at every azimuth without the uniform empty sky allowance 3916ms
+   ✓ district coordinates and camera clipping > fits an owned mature hero on the original land while preserving the original unbuilt garden frame 1873ms
+   ✓ district coordinates and camera clipping > keeps saved cells selectable and inside the clipping distance on a large island 487ms
+stderr | src/components/island/growing/menuMiniatures.test.ts > world miniatures for the optional menu > releases the actor sparkle and platform after a success render, preserving shared paint
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/menuMiniatures.test.ts (6 tests) 73ms
+ ✓ src/components/island/growing/GrowingTray.test.tsx (5 tests) 14ms
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ ✓ src/components/island/growing/GrowingIslandMenu.test.tsx (4 tests) 31ms
+ ✓ src/components/island/growing/placementName.test.ts (2 tests) 11ms
+ ✓ src/components/island/growing/GrowingHomeTools.test.tsx (4 tests) 13ms
+
+ Test Files  6 passed (6)
+      Tests  27 passed (27)
+   Start at  11:31:11
+   Duration  8.15s (transform 344ms, setup 0ms, collect 825ms, tests 6.47s, environment 0ms, prepare 205ms)
+

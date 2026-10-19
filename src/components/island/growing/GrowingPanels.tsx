@@ -29,8 +29,8 @@ export function FriendsPanel({ state, faces, onFocus, onClose }: { state: Growin
 export type ShowChoice = 'show' | 'card' | 'story' | 'visit';
 
 export function ShowPanel({ onPick, onClose }: { onPick: (choice: ShowChoice) => void; onClose: () => void }) {
-    return <section className="growing-tray" aria-label="みせる">
-        <header><strong>しまを みせる</strong><button className="growing-close" onClick={onClose} aria-label="とじる">×</button></header>
+    return <section className="growing-tray" aria-label="しゃしん・みせる">
+        <header><strong>しゃしん・みせる</strong><button className="growing-close" onClick={onClose} aria-label="とじる">×</button></header>
         <div className="growing-grid growing-grid-seeds">
             <button className="growing-card" onClick={() => onPick('show')}><span className="growing-card-icon" aria-hidden="true">🎠</span><strong>みせる モード</strong><small>しまを ぐるっと みせるよ</small></button>
             <button className="growing-card" onClick={() => onPick('card')}><span className="growing-card-icon" aria-hidden="true">🖼️</span><strong>しまカード</strong><small>がぞうに して のこせるよ</small></button>

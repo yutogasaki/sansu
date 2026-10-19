@@ -87,9 +87,9 @@ export function TracePanel({ profileId, onSave, onClose }: { profileId: string; 
         onSave(out.toDataURL('image/png'), current);
     };
 
-    return <div className="growing-overlay" role="dialog" aria-label="なぞって かざる">
+    return <div className="growing-overlay" role="dialog" aria-label="はたを つくる">
         <div className="growing-overlay-body growing-trace">
-            <strong>なぞって かざろう</strong>
+            <strong>はたを つくる</strong>
             <div className="growing-row">{choices.map(c => <button key={c} aria-pressed={c === current} onClick={() => setGlyph(c)}>{c}</button>)}</div>
             <canvas ref={canvas} width={SIZE} height={SIZE} className="growing-trace-canvas" aria-label={`${current}を なぞる`}
                 onPointerDown={event => { try { event.currentTarget.setPointerCapture(event.pointerId); } catch { /* An ended pointer cannot be captured. */ } last.current = undefined; stroke(point(event)); }}

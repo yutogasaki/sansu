@@ -15,6 +15,17 @@ export async function openGrowingMenu(page, { touch = false } = {}) {
     return menu;
 }
 
+/** Open the optional utilities disclosure, with older delivery compatibility. */
+export async function openGrowingUtilities(page, { touch = false } = {}) {
+    const menu = await openGrowingMenu(page, { touch });
+    const other = menu.locator('.growing-pocket-other');
+    if (await other.count() && await other.getAttribute('open') === null) {
+        await other.locator('summary').scrollIntoViewIfNeeded();
+        await activate(other.locator('summary'), touch);
+    }
+    return menu;
+}
+
 /** Home keeps destinations in its menu; other screens retain the shared tabs. */
 export async function openIslandDestination(page, name, { touch = false } = {}) {
     const tab = page.locator('.island-shell-nav').getByRole('button', { name, exact: true });
@@ -46,18 +57,34 @@ export async function seedDev(page, { skill = 'add_1d_1', subject = 'math', fami
     }, { skill, subject, familiar, name });
 }
 
-/** Use the real optional tools disclosure before expanding the current Growing menu. */
+/** The current home exposes play directly; retain the old menu route for update builds. */
+export async function openGrowingAction(page, name, { touch = true } = {}) {
+    if (await page.locator('[data-home-ui-candidate="island-direct-play-v2"]').count()) {
+        const close = page.locator('.growing-menu').getByRole('button', { name: 'メニューを とじる', exact: true });
+        if (await close.isVisible()) await activate(close, touch);
+        const action = name === 'そだつ場所' ? page.locator('.growing-home-goal') : page.locator('.growing-island').getByRole('button', { name, exact: true });
+        await activate(action, touch);
+    } else {
+        const menu = await openGrowingMenu(page, { touch });
+        await activate(menu.getByRole('button', { name, exact: true }), touch);
+    }
+}
+
+/** Choose a real expansion direction after viewing the regular price. */
 export async function expandGrowingIslandUI(page, side, price) {
-    const tools = page.locator('.growing-pocket-tools');
-    if (await tools.count() && await tools.getAttribute('open') === null) {
-        await tools.locator('summary').scrollIntoViewIfNeeded();
-        await tools.locator('summary').tap();
+    const direct = page.locator('[data-home-ui-candidate="island-direct-play-v2"]');
+    if (await direct.count()) await openGrowingAction(page, 'しまを ひろげる');
+    else {
+        const land = page.locator('.growing-pocket-land');
+        const tools = await land.count() ? land : page.locator('.growing-pocket-tools').first();
+        if (await tools.count() && await tools.getAttribute('open') === null) {
+            await tools.locator('summary').scrollIntoViewIfNeeded(); await tools.locator('summary').tap();
+        }
     }
     const name = { east: 'ひがし', west: 'にし', south: 'みなみ' }[side];
     if (!name) throw new Error(`Unknown expansion side: ${side}`);
     const action = page.getByRole('button', { name: new RegExp(`^${name}へ ひろげる\\s*💧\\s*${price}$`) });
-    await action.scrollIntoViewIfNeeded();
-    await action.tap();
+    await action.scrollIntoViewIfNeeded(); await action.tap();
 }
 
 export async function readNative(page, profileId) {

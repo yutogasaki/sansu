@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { build } from 'esbuild';
-import { openGrowingMenu } from './island-e2e-helpers.mjs';
+import { openGrowingAction } from './island-e2e-helpers.mjs';
 
 // Project saved cells with the actual candidate's camera/layout, without DEV imports
 // or writing credits, clock or ownership into the production database.
@@ -51,11 +51,7 @@ export async function productionCellPoint(page, state, cell, elevation = .04) {
 }
 
 export async function plantProduction(page, kind, cell, state) {
-    const seed = page.getByRole('button', { name: 'たね', exact: true });
-    if (!await seed.isVisible()) await openGrowingMenu(page, { touch: true });
-    await seed.waitFor();
-    const hit = await seed.boundingBox(); assert(hit);
-    await page.touchscreen.tap(hit.x + hit.width / 2, hit.y + hit.height / 2);
+    await openGrowingAction(page, /^(しまに おく|たね)$/);
     await page.locator(`[data-growing-seed="${kind}"]`).tap();
     const point = await productionCellPoint(page, state, cell);
     await page.touchscreen.tap(point.x, point.y);

@@ -1,8 +1,9 @@
 import { useEffect, useRef, type ReactNode } from 'react';
-import { Archive, BarChart3, BookOpen, Camera, ChevronDown, Flower2, House, PawPrint, Pencil, RotateCcw, RotateCw, Settings2, Sprout, X, Waypoints } from 'lucide-react';
-import type { Side, Villager } from '../../../domain/growingIsland/types';
+import { ChevronDown, PawPrint, X, Waypoints } from 'lucide-react';
+import type { Villager } from '../../../domain/growingIsland/types';
 import { villagerName } from './growingCopy';
 import type { MenuPictures } from './menuMiniatures';
+import { IslandToyIcon } from '../IslandToyIcon';
 import './growingIslandMenu.css';
 
 export interface GrowingIslandMenuProps {
@@ -11,79 +12,40 @@ export interface GrowingIslandMenuProps {
     pictures?: MenuPictures;
     drops: number;
     busy: boolean;
-    quote?: { sides: Side[]; price: number };
     onClose: () => void;
     onFriends: () => void;
-    onSeeds: () => void;
     onTrace: () => void;
-    onStored: () => void;
-    onHome: () => void;
     onShow: () => void;
     onFlowers: () => void;
     onGuide: () => void;
-    onPlaces?: () => void;
-    onSettings?: () => void;
-    onRecords?: () => void;
-    onName?: () => void;
-    islandName?: string;
     utilities?: ReactNode;
-    onRotate: (direction: -1 | 1) => void;
-    onExpand: (side: Side) => void;
     bridge?: { built: boolean; ready: boolean; reason: string };
     onBridge?: () => void;
 }
 
 /** A small, optional paper beside the live island; every entry opens its real destination. */
 export function GrowingIslandMenuContents(props: GrowingIslandMenuProps) {
-    const { villagers, quote, pictures } = props;
+    const { villagers, pictures } = props;
     return <div className="growing-pocket-entries">
-        {props.onName && <div className="growing-pocket-identity"><button onClick={props.onName}>{props.islandName || 'しまの なまえ'}<Pencil size={16} aria-hidden="true" /></button><span aria-label={`しずく ${props.drops}`}>💧 {props.drops}</span></div>}
-        <div className="growing-pocket-primary">
-            <button className="growing-pocket-friends" aria-label="なかま" aria-describedby="growing-menu-population" onClick={props.onFriends}>
-                <span className="growing-pocket-model" aria-hidden="true">
-                    {pictures?.friends && villagers.length ? <img src={pictures.friends} alt="" /> : <PawPrint size={48} strokeWidth={1.5} />}
-                </span>
-                <span className="growing-pocket-main-copy"><strong>{villagers.length ? 'なかまに あう' : 'なかま'}</strong><small id="growing-menu-population">{villagers.length}にん<span className="growing-pocket-names"> · {villagers.length ? villagers.slice(0, 2).map(villagerName).join('・') : 'これからの なかま'}</span></small></span>
-            </button>
-            <button className="growing-pocket-seeds" aria-label="たね" onClick={props.onSeeds}>
-                <span className="growing-pocket-model" aria-hidden="true">{pictures?.seeds ? <img src={pictures.seeds} alt="" /> : <Sprout size={48} strokeWidth={1.5} />}</span>
-                <span className="growing-pocket-main-copy"><strong>たねを おく</strong><small>すきな ばしょに</small></span>
-            </button>
-        </div>
-        <div className="growing-pocket-shortcuts">
-            <button onClick={props.onHome}><House size={21} aria-hidden="true" /><span>いえ</span></button>
-            <button onClick={props.onStored}><Archive size={21} aria-hidden="true" /><span>もちもの</span></button>
-            <button onClick={props.onTrace}><Pencil size={21} aria-hidden="true" /><span>なぞる</span></button>
-        </div>
-        <div className="growing-pocket-memories">
-            <button onClick={props.onShow}><Camera size={20} aria-hidden="true" /><span>みせる</span></button>
-            <button onClick={props.onFlowers}><Flower2 size={20} aria-hidden="true" /><span>はなずかん</span></button>
-        </div>
-        {props.onPlaces && <div className="growing-pocket-memories"><button aria-label="そだつ場所" onClick={props.onPlaces}><Waypoints size={20} aria-hidden="true" /><span>そだつ場所</span></button></div>}
-        {props.onRecords && <div className="growing-pocket-memories"><button onClick={props.onRecords}><BarChart3 size={20} aria-hidden="true" /><span>きろく</span></button><button onClick={props.onSettings}><Settings2 size={20} aria-hidden="true" /><span>設定</span></button></div>}
-        {props.utilities && <div className="growing-pocket-utilities">{props.utilities}</div>}
-        <div className="growing-pocket-footer">
-            {props.bridge && <button className="growing-pocket-bridge" disabled={!props.bridge.built && !props.bridge.ready} onClick={props.onBridge}
-                aria-label={props.bridge.built ? 'はしを みにいく' : 'はしを つくる'}>
-                <Waypoints size={19} aria-hidden="true" /><span>{props.bridge.built ? 'はしを みにいく' : props.bridge.ready ? 'はしを つくる' : props.bridge.reason}</span>
+        <button className="growing-pocket-friends" aria-label="なかま" aria-describedby="growing-menu-population" onClick={props.onFriends}>
+            <span className="growing-pocket-friend-model" aria-hidden="true">{pictures?.friends && villagers.length ? <img src={pictures.friends} alt="" /> : <PawPrint size={32} strokeWidth={1.5} />}</span>
+            <span className="growing-pocket-main-copy"><strong>なかまに あう</strong><small id="growing-menu-population">{villagers.length}にん · {villagers.length ? villagers.slice(0, 2).map(villagerName).join('・') : 'これからの なかま'}</small></span>
+        </button>
+        <div className="growing-pocket-memories" aria-label="しまの くらし">
+            <button onClick={props.onTrace}><IslandToyIcon kind="palette" size={32} /><span>はたを つくる</span></button>
+            <button aria-label="しゃしん・みせる" onClick={props.onShow}><IslandToyIcon kind="camera" size={32} /><span>しゃしん</span></button>
+            <button onClick={props.onFlowers}><IslandToyIcon kind="display" size={32} /><span>はなずかん</span></button>
+            {props.bridge && <button disabled={props.busy || (!props.bridge.built && !props.bridge.ready)} onClick={props.onBridge}
+                aria-label={props.bridge.built ? 'はしを みにいく' : 'はしを つくる'} title={!props.bridge.built && !props.bridge.ready ? props.bridge.reason : undefined}>
+                <Waypoints size={29} aria-hidden="true" /><span>{props.bridge.built ? 'はしを みる' : 'はしを つくる'}</span>
             </button>}
-            <button className="growing-pocket-guide" aria-label="しまの あそびかた" onClick={props.onGuide}><BookOpen size={20} aria-hidden="true" /><span>あそびかた</span></button>
-        <details className="growing-pocket-tools" onToggle={event => {
-            if (event.currentTarget.open) event.currentTarget.querySelector('.growing-pocket-tool-buttons')?.scrollIntoView({ block: 'nearest', behavior: 'instant' });
-        }}>
-            <summary><span>しまの そうさ</span><ChevronDown size={18} aria-hidden="true" /></summary>
-            <div className="growing-pocket-tool-buttons">
-                <button aria-label="ひだりに まわす" onClick={() => props.onRotate(-1)}><RotateCcw size={18} aria-hidden="true" /><span>ひだり</span></button>
-                <button aria-label="みぎに まわす" onClick={() => props.onRotate(1)}><RotateCw size={18} aria-hidden="true" /><span>みぎ</span></button>
-                {!props.onRecords && props.onSettings && <button onClick={props.onSettings}><Settings2 size={18} aria-hidden="true" /><span>せってい</span></button>}
-            </div>
-            {quote && <div className="growing-pocket-expansion" aria-label="しまを ひろげる">
-                {quote.sides.map(side => <button key={side} disabled={props.busy || props.drops < quote.price} onClick={() => props.onExpand(side)}>
-                    <span>{side === 'east' ? 'ひがし' : side === 'west' ? 'にし' : 'みなみ'}へ ひろげる</span><small>💧 {quote.price}</small>
-                </button>)}
-            </div>}
-        </details>
+            <button className="growing-pocket-guide" aria-label="しまの あそびかた" onClick={props.onGuide}><IslandToyIcon kind="book" size={32} /><span>あそびかた</span></button>
         </div>
+        {props.bridge && !props.bridge.built && !props.bridge.ready && <p className="growing-pocket-bridge-note">はし：{props.bridge.reason}</p>}
+        {props.utilities && <details className="growing-pocket-tools growing-pocket-other">
+            <summary><span>そのほか</span><ChevronDown size={18} aria-hidden="true" /></summary>
+            <div className="growing-pocket-utilities">{props.utilities}</div>
+        </details>}
     </div>;
 }
 
@@ -96,7 +58,7 @@ export function GrowingIslandMenu(props: GrowingIslandMenuProps) {
         window.addEventListener('keydown', escape);
         return () => window.removeEventListener('keydown', escape);
     }, [onClose]);
-    return <section className="growing-menu growing-pocket-menu" aria-label="メニュー" data-menu-candidate="island-play-diorama-v3">
+    return <section className="growing-menu growing-pocket-menu" aria-label="メニュー" data-menu-candidate="island-direct-play-v2">
         <header className="growing-pocket-heading"><h2>しまのメニュー</h2><button ref={close} className="growing-close" aria-label="メニューを とじる" onClick={props.onClose}><X size={20} aria-hidden="true" /></button></header>
         <GrowingIslandMenuContents {...props} />
     </section>;

@@ -1,0 +1,183 @@
+
+> pokko-fushigi-zukan-app@0.0.0 build
+> tsc -b && node tools/build-app.mjs && npm run assets:check
+
+vite v7.3.1 building client environment for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 3905 modules transformed.
+Generated an empty chunk: "pdf".
+rendering chunks...
+computing gzip size...
+dist/version.json                                     0.72 kB │ gzip:   0.37 kB
+dist/index.html                                       3.89 kB │ gzip:   1.72 kB
+dist/assets/NotoSansJP-C_ziqpoc.woff2                13.06 kB
+dist/assets/dela-gothic-one-tzEOUe9y.woff2           39.87 kB
+dist/assets/zen-maru-gothic-black-DnteofP1.woff2     51.44 kB
+dist/assets/syncProjection.worker-C3bgaeDg.js        61.72 kB
+dist/assets/lifeMigration.worker-DOWDZyiz.js         69.77 kB
+dist/assets/pokomoko-learning-poses-B-Jfr41M.webp    70.07 kB
+dist/assets/IslandRewardGoal-DH87ewoC.css             0.50 kB │ gzip:   0.28 kB
+dist/assets/IslandSharedMemories-CxXlpls3.css         1.54 kB │ gzip:   0.57 kB
+dist/assets/IslandFurniture-7NZ9dhCz.css              1.57 kB │ gzip:   0.55 kB
+dist/assets/IslandDiscoveryGuide-DpYKYTkf.css         2.05 kB │ gzip:   0.75 kB
+dist/assets/IslandExpression-BAzaKUz5.css             2.18 kB │ gzip:   0.68 kB
+dist/assets/Stats-Dbi260P-.css                        4.39 kB │ gzip:   1.12 kB
+dist/assets/IslandWorkshop-KxE1cutE.css               4.47 kB │ gzip:   1.24 kB
+dist/assets/IslandExperiencePanel-Cn-0xXmE.css        6.01 kB │ gzip:   1.33 kB
+dist/assets/IslandWelcome-CYL7-I3T.css                6.38 kB │ gzip:   1.82 kB
+dist/assets/IslandPhotos-Dz-XgAxv.css                 6.54 kB │ gzip:   1.60 kB
+dist/assets/IslandCustomization-BKdIHMdQ.css          7.08 kB │ gzip:   1.62 kB
+dist/assets/IslandStage-DPdoB737.css                  8.75 kB │ gzip:   2.21 kB
+dist/assets/GrowingIsland-WfIEGn_6.css                9.29 kB │ gzip:   2.28 kB
+dist/assets/Island-CyFmsZn2.css                      11.44 kB │ gzip:   2.75 kB
+dist/assets/Explore-C0qQ-HMA.css                     13.06 kB │ gzip:   2.95 kB
+dist/assets/growing-BjynXCVq.css                     20.16 kB │ gzip:   4.28 kB
+dist/assets/Island-gq6fk_DX.css                     148.34 kB │ gzip:  20.88 kB
+dist/assets/index-Bsw0RD8r.css                      292.52 kB │ gzip:  48.48 kB
+dist/assets/pdf-l0sNRNKZ.js                           0.00 kB │ gzip:   0.02 kB
+dist/assets/_native-owned-art-disabled-BiOygDaT.js    0.06 kB │ gzip:   0.08 kB
+dist/assets/utils-B-dksMZM.js                         0.37 kB │ gzip:   0.24 kB
+dist/assets/repository-yvD31AIl.js                    0.47 kB │ gzip:   0.32 kB
+dist/assets/progressRepository-8QlShI3W.js            0.65 kB │ gzip:   0.37 kB
+dist/assets/sharedRendererCache-CTZHkRqN.js           0.71 kB │ gzip:   0.45 kB
+dist/assets/authoredGrowingAssets-BcPbTt9f.js         1.03 kB │ gzip:   0.40 kB
+dist/assets/repository-C1r3rNVY.js                    1.20 kB │ gzip:   0.68 kB
+dist/assets/islandCharacters-Dhd7xbw9.js              1.24 kB │ gzip:   0.71 kB
+dist/assets/IslandWelcome-5yfq8i74.js                 1.94 kB │ gzip:   1.05 kB
+dist/assets/IslandRewardGoal-Cw4MKh_c.js              2.11 kB │ gzip:   0.96 kB
+dist/assets/Learn-DJDVP2t2.js                         2.42 kB │ gzip:   1.24 kB
+dist/assets/GrowingHouseGuide-C4evbTht.js             2.58 kB │ gzip:   1.25 kB
+dist/assets/IslandWorkReplay-BkSQjSUu.js              2.74 kB │ gzip:   1.07 kB
+dist/assets/RoundedBoxGeometry-DJvYPzSc.js            3.05 kB │ gzip:   1.46 kB
+dist/assets/guideMemoryPictures-DWUQ1ZQx.js           4.01 kB │ gzip:   2.05 kB
+dist/assets/IslandDiscoveryGuide-vSFOjHlN.js          4.08 kB │ gzip:   1.72 kB
+dist/assets/IslandFurniture-DhiD0_jY.js               4.67 kB │ gzip:   1.75 kB
+dist/assets/IslandOnboarding-G2VD44pI.js              6.65 kB │ gzip:   2.69 kB
+dist/assets/nativeAuthoredFlower-CWF3UCa1.js          8.36 kB │ gzip:   3.23 kB
+dist/assets/IslandAlbum-BmADjlVU.js                   8.42 kB │ gzip:   3.16 kB
+dist/assets/friendRig-BmRE5eHK.js                     8.75 kB │ gzip:   3.14 kB
+dist/assets/IslandCustomization-Cxaz0LOt.js           9.80 kB │ gzip:   3.30 kB
+dist/assets/IslandExpression-8BT9XBZU.js              9.81 kB │ gzip:   3.23 kB
+dist/assets/PokomokoLearningActor-B-EcSDDW.js         9.96 kB │ gzip:   4.45 kB
+dist/assets/IslandPhotos-BaQpm_B2.js                 10.07 kB │ gzip:   3.23 kB
+dist/assets/IslandExperiencePanel-DYp--uue.js        10.21 kB │ gzip:   3.17 kB
+dist/assets/IslandSharedMemories-CUZWfb3O.js         11.96 kB │ gzip:   3.58 kB
+dist/assets/IslandWorkshop-DYG0vsbu.js               12.91 kB │ gzip:   3.72 kB
+dist/assets/flowerGeometry-BkUhonAF.js               13.68 kB │ gzip:   5.54 kB
+dist/assets/useIslandWorkshopAudio-1W3Z4qxB.js       16.52 kB │ gzip:   6.72 kB
+dist/assets/IslandStage-BG-DYwHo.js                  17.27 kB │ gzip:   6.44 kB
+dist/assets/menuMiniatures-Dirw4Ty_.js               26.76 kB │ gzip:  10.66 kB
+dist/assets/icons-ByKP0exp.js                        28.81 kB │ gzip:  10.57 kB
+dist/assets/Stats-mLGaDKte.js                        32.25 kB │ gzip:  10.73 kB
+dist/assets/audio-DwtSHwBT.js                        36.13 kB │ gzip:   9.75 kB
+dist/assets/react-DcHpdqMy.js                        48.53 kB │ gzip:  17.24 kB
+dist/assets/GrowingIsland-2KTem94Z.js                80.05 kB │ gzip:  26.14 kB
+dist/assets/data-CYRvWfdS.js                         96.37 kB │ gzip:  32.45 kB
+dist/assets/motion-iLBaTeAD.js                      119.65 kB │ gzip:  39.54 kB
+dist/assets/repository-BDH-mmSx.js                  167.26 kB │ gzip:  54.71 kB
+dist/assets/growing-CwaIJ4oy.js                     188.66 kB │ gzip: 136.99 kB
+dist/assets/Explore-AOAcJYgA.js                     209.48 kB │ gzip:  59.72 kB
+dist/assets/Island-Cb8GGPWC.js                      351.42 kB │ gzip: 108.28 kB
+dist/assets/charts-B2Phfr4C.js                      371.25 kB │ gzip: 108.31 kB
+dist/assets/runtime-he2r_C0v.js                     399.03 kB │ gzip: 127.45 kB
+dist/assets/GrowingWorld-DIpPdAk0.js                443.11 kB │ gzip: 137.49 kB
+dist/assets/wonderPaint-D83UcRVg.js                 599.38 kB │ gzip: 155.45 kB
+dist/assets/index-pryzPJ8h.js                       891.65 kB │ gzip: 253.09 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 6.50s
+
+PWA v1.2.0
+mode      generateSW
+precache  143 entries (5025.96 KiB)
+files generated
+  dist/sw.js
+  dist/workbox-fc21a5da.js
+warnings
+  One of the glob patterns doesn't match any files. Please remove or fix the following: {
+  "globDirectory": "/private/tmp/sansu-ui-main-candidate/dist",
+  "globPattern": "assets/flower-bloom-original-*.png",
+  "globIgnores": [
+    "visual-tests/**/*",
+    "fonts/NotoSansJP-Japanese.woff2",
+    "sw.js",
+    "workbox-*.js"
+  ]
+}
+  One of the glob patterns doesn't match any files. Please remove or fix the following: {
+  "globDirectory": "/private/tmp/sansu-ui-main-candidate/dist",
+  "globPattern": "assets/pokomoko-original-*.png",
+  "globIgnores": [
+    "visual-tests/**/*",
+    "fonts/NotoSansJP-Japanese.woff2",
+    "sw.js",
+    "workbox-*.js"
+  ]
+}
+  One of the glob patterns doesn't match any files. Please remove or fix the following: {
+  "globDirectory": "/private/tmp/sansu-ui-main-candidate/dist",
+  "globPattern": "assets/pokomoko-arcade-poses-*.webp",
+  "globIgnores": [
+    "visual-tests/**/*",
+    "fonts/NotoSansJP-Japanese.woff2",
+    "sw.js",
+    "workbox-*.js"
+  ]
+}
+  One of the glob patterns doesn't match any files. Please remove or fix the following: {
+  "globDirectory": "/private/tmp/sansu-ui-main-candidate/dist",
+  "globPattern": "assets/pokomoko-arcade-rim-*.webp",
+  "globIgnores": [
+    "visual-tests/**/*",
+    "fonts/NotoSansJP-Japanese.woff2",
+    "sw.js",
+    "workbox-*.js"
+  ]
+}
+  One of the glob patterns doesn't match any files. Please remove or fix the following: {
+  "globDirectory": "/private/tmp/sansu-ui-main-candidate/dist",
+  "globPattern": "assets/town-*.png",
+  "globIgnores": [
+    "visual-tests/**/*",
+    "fonts/NotoSansJP-Japanese.woff2",
+    "sw.js",
+    "workbox-*.js"
+  ]
+}
+  One of the glob patterns doesn't match any files. Please remove or fix the following: {
+  "globDirectory": "/private/tmp/sansu-ui-main-candidate/dist",
+  "globPattern": "assets/native05-owned-kit*.gz",
+  "globIgnores": [
+    "visual-tests/**/*",
+    "fonts/NotoSansJP-Japanese.woff2",
+    "sw.js",
+    "workbox-*.js"
+  ]
+}
+
+vite v7.3.1 building client environment for production...
+transforming...
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+✓ 4 modules transformed.
+rendering chunks...
+computing gzip size...
+../dist-website/index.html                 16.79 kB │ gzip: 5.60 kB
+../dist-website/assets/index-DlTrl4jR.css  22.03 kB │ gzip: 5.11 kB
+../dist-website/assets/index-lSahoYHC.js    3.22 kB │ gzip: 1.66 kB
+✓ built in 184ms
+
+> pokko-fushigi-zukan-app@0.0.0 assets:check
+> node tools/check-asset-budget.mjs
+
+PASS assets:check
+- PWA precache: 143 unique files, 8.53 MiB / 12.00 MiB
+- Explore artwork: 27 production files, 2.97 MiB / 8.00 MiB
+- Production-input contract: docs/design only; absent from public and precache

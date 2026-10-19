@@ -96,7 +96,7 @@ async function put(page, name, stores, callbackData) {
     await done; db.close();
   },{name,stores,data:callbackData});
 }
-const show = async page => { await page.getByRole('button',{name:'しまのメニュー',exact:true}).click(); await page.getByRole('button',{name:'みせる',exact:true}).click(); await page.getByRole('button',{name:/みせる モード/}).click(); await page.waitForTimeout(900); };
+const show = async page => { await page.getByRole('button',{name:'しまのメニュー',exact:true}).click(); await page.getByRole('button',{name:/^(しゃしん・みせる|みせる)$/,exact:true}).click(); await page.getByRole('button',{name:/みせる モード/}).click(); await page.waitForTimeout(900); };
 const shot = async (page,file) => { const box=await page.locator('[data-growing-world] canvas').boundingBox(); await page.screenshot({path:path.join(output,file),clip:{x:box.x,y:box.y+70,width:box.width,height:box.height-140}}); };
 const ready = async page => { try { await page.locator('[data-growing-island="ready"]').waitFor(); } catch (error) { await page.screenshot({path:path.join(output,'failure.png')}); console.log(await page.locator('body').innerText()); throw error; } await page.locator('.growing-loading--overlay').waitFor({state:'hidden'}); await page.waitForTimeout(1200); };
 await fs.mkdir(output,{recursive:true});

@@ -23,7 +23,7 @@ const ready = () => page.locator('[data-growing-island="ready"] canvas').waitFor
 const capture = async name => { await page.screenshot({ path: `${out}/${name}.png` }); report.captures.push({ file: `${name}.png`, ...await runtimeMetadata(page) }); };
 async function visit(name) {
     await page.getByRole('button', { name: 'メニュー', exact: true }).tap();
-    await page.getByRole('button', { name: 'みせる', exact: true }).tap();
+    await page.getByRole('button', { name: /^(しゃしん・みせる|みせる)$/, exact: true }).tap();
     await page.getByRole('button', { name: /きょうだいの しまへ/ }).tap();
     await page.getByRole('button', { name: `${name}の しま`, exact: true }).tap();
     await page.locator('[data-growing-island="visit"] canvas').waitFor();

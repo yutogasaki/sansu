@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { promises as fs } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { chromium } from 'playwright';
-import { answerUI, expandGrowingIslandUI, openGrowingMenu, readNative, runtimeMetadata, seedDev, waitForAsync } from './island-e2e-helpers.mjs';
+import { answerUI, expandGrowingIslandUI, openGrowingAction, openGrowingMenu, readNative, runtimeMetadata, seedDev, waitForAsync } from './island-e2e-helpers.mjs';
 import { disposeProductionProjection, productionCellPoint } from './growing-production-helpers.mjs';
 
 const base = process.env.SANSU_GROWING_URL || 'http://127.0.0.1:5260';
@@ -41,12 +41,7 @@ async function capture(page, label) {
         ? await page.locator('[data-growing-world]').evaluate(e => ({ ...e.dataset })) : null });
 }
 async function tapSeed(page) {
-    // The tutorial invitation pulses continuously; use a real touch at its visible hit target.
-    const button = page.getByRole('button', { name: 'たね', exact: true });
-    if (!await button.isVisible()) await openGrowingMenu(page, { touch: true });
-    await button.waitFor();
-    const box = await button.boundingBox(); assert(box);
-    await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
+    await openGrowingAction(page, /^(しまに おく|たね)$/);
 }
 async function cellTap(page, id, cell) {
     const point = await productionCellPoint(page, (await read(page, id)).state, cell);
@@ -124,7 +119,7 @@ try {
         assert.equal((await read(page, id)).version, 4);
         // Explicit mastery fixture tests discoverability; it is not proof of learning acquisition.
         await tapSeed(page);
-        await page.getByRole('tab', { name: 'しまってある', exact: true }).tap();
+        await page.getByRole('tab', { name: /^(もちもの(?: \(\d+\))?|しまってある)$/, exact: true }).tap();
         const stored = page.locator('[data-growing-stored]');
         assert.equal(await stored.first().getAttribute('data-growing-stored'), 'qa-keepsake');
         assert.match(await stored.first().innerText(), /けいさんの ふんすい/);

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { promises as fs } from 'node:fs';
 import { chromium } from 'playwright';
 import { plantProduction } from './growing-production-helpers.mjs';
-import { answerUI, openGrowingMenu, readNative, runtimeMetadata } from './island-e2e-helpers.mjs';
+import { answerUI, openGrowingAction, readNative, runtimeMetadata } from './island-e2e-helpers.mjs';
 
 const base = process.env.SANSU_GROWING_PRODUCTION_URL, out = process.env.SANSU_GROWING_PRODUCTION_OUTPUT;
 assert(base && out, 'Specify a local production URL and fresh output directory');
@@ -53,9 +53,7 @@ try {
         while (native.logs.length < 10) native = (await answerUI(page, native.plan, { touch: true, dev: false })).state;
         await page.getByRole('button', { name: 'とじる', exact: true }).tap(); await ready(page);
         await until(page, id, r => r.state.learned.length === 10);
-        const seeds = page.getByRole('button', { name: 'たね', exact: true });
-        if (!await seeds.isVisible()) await openGrowingMenu(page, { touch: true });
-        const hit = await seeds.boundingBox(); assert(hit); await page.touchscreen.tap(hit.x + hit.width / 2, hit.y + hit.height / 2);
+        await openGrowingAction(page, /^(しまに おく|たね)$/);
         await page.locator('[data-growing-seed="home"]').tap();
         await page.waitForFunction(() => document.querySelector('.growing-placing')?.textContent.includes('しずくが あと 20こ'));
         assert.match(await page.locator('.growing-placing').innerText(), /しずくが あと 20こ/);

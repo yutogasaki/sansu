@@ -1,5 +1,8 @@
 # Shared Done Index
 
+- 2026-10-19: [島を直接触って遊ぶホーム](../../docs/design/2026-10-19-island-direct-play/verification.md)。主操作・目標・眺め・土地拡張と補助メニューを整理。関連21件・4サイズの対象操作・最終390/768の導線・build/smoke32を確認。320幅canvas黒帯と既存portal検査1件は残り、配布品質HOLD。
+
+- 2026-10-19: [島メニューと置くものの整理](../../docs/tasks/active/2026-10-19-island-menu.md)。ローカル実装と対象unit22件・4幅40画面・classic smoke32件とcore5,411件/buildを確認。育成/暮らし/眺め/ページ移動を分け、価格・所有・成長・海図を保持。公開と児童の独立理解は未確認。詳細はdocs/done/2026-10.md。
 - 2026-10-12: [元海岸の成長ラフをレビューへ引継ぎ](../../docs/design/2026-10-12-core-growth-review/README.md)。利用者指示で一時停止。原本比較3枚と限定検証を保存。統合1件FAIL、c10 core・実UI未実行、美術HOLD。実装と包括ゴールは未完。
 
 - 2026-10-12: [同じ4木の分岐・接続c9](../../docs/design/2026-10-12-growth-variation-runtime/README.md)。一本／二枝／周回を実移動で作り、収納／復元・9画面・固定core620/5,373 PASS。将来造成範囲の予約を追加。完了は一地区の機構と限定診断で、三つの全島・美術・本人保存の包括ゴールは継続。詳細: `docs/done/2026-10.md`。

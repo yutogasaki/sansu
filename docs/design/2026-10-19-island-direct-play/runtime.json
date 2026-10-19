@@ -1,0 +1,170 @@
+{
+  "at": "2026-10-18T23:02:29.790Z",
+  "target": "http://127.0.0.1:5198",
+  "scope": "DEV diagnostic profiles with one explicit resident; menu destinations, five tabs and the same untouched learning reservation. No real acquisition, PWA or participant claim.",
+  "captures": [
+    {
+      "file": "390-home.png",
+      "identity": {
+        "revision": "development-local",
+        "version": "development-local:028c538b-2401-4a0b-8da7-b248ce432c25",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "cache": "DEV modules; no production SW claim"
+    },
+    {
+      "file": "390-populated-menu.png",
+      "identity": {
+        "revision": "development-local",
+        "version": "development-local:028c538b-2401-4a0b-8da7-b248ce432c25",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "cache": "DEV modules; no production SW claim"
+    },
+    {
+      "file": "390-house.png",
+      "identity": {
+        "revision": "development-local",
+        "version": "development-local:028c538b-2401-4a0b-8da7-b248ce432c25",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "cache": "DEV modules; no production SW claim"
+    },
+    {
+      "file": "390-learning.png",
+      "identity": {
+        "revision": "development-local",
+        "version": "development-local:028c538b-2401-4a0b-8da7-b248ce432c25",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "cache": "DEV modules; no production SW claim"
+    },
+    {
+      "file": "768-home.png",
+      "identity": {
+        "revision": "development-local",
+        "version": "development-local:028c538b-2401-4a0b-8da7-b248ce432c25",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "cache": "DEV modules; no production SW claim"
+    },
+    {
+      "file": "768-populated-menu.png",
+      "identity": {
+        "revision": "development-local",
+        "version": "development-local:028c538b-2401-4a0b-8da7-b248ce432c25",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "cache": "DEV modules; no production SW claim"
+    },
+    {
+      "file": "768-house.png",
+      "identity": {
+        "revision": "development-local",
+        "version": "development-local:028c538b-2401-4a0b-8da7-b248ce432c25",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "cache": "DEV modules; no production SW claim"
+    },
+    {
+      "file": "768-learning.png",
+      "identity": {
+        "revision": "development-local",
+        "version": "development-local:028c538b-2401-4a0b-8da7-b248ce432c25",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "cache": "DEV modules; no production SW claim"
+    }
+  ],
+  "cases": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "realResidentMiniature": true,
+      "secondaryDestinations": 5,
+      "singleActiveTab": true,
+      "sameReservation": true,
+      "fullKeypad": true,
+      "sound": "off"
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "realResidentMiniature": true,
+      "secondaryDestinations": 5,
+      "singleActiveTab": true,
+      "sameReservation": true,
+      "fullKeypad": true,
+      "sound": "off"
+    }
+  ],
+  "candidate": "island-direct-play-v2",
+  "appSourceManifest": "app-sources.json",
+  "pass": true,
+  "limits": [
+    "DEV diagnostic fixtures",
+    "No real acquisition or production SW",
+    "320px black canvas band remains",
+    "No independent participant observation"
+  ]
+}

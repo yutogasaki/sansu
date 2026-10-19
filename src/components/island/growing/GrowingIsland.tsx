@@ -26,7 +26,7 @@ import { publishWaitingSeeds } from './seedBadge';
 import { noteFor, playNote, playTune, TUNES } from './notes';
 import { TracePanel } from './TracePanel';
 import { GrowingGuideBook } from './GrowingGuideBook';
-import { GrowingPlaceArt, GrowingPlaceBook } from './GrowingPlaceBook';
+import { GrowingPlaceBook } from './GrowingPlaceBook';
 import { placeStatuses } from '../../../domain/growingIsland/placeGoals';
 import type { PlaceGoalId } from '../../../domain/growingIsland/placeTypes';
 import { GrowingGuideCue } from './GrowingGuideCue';
@@ -36,16 +36,16 @@ import { ownConcertReceipt } from './concertReceipt';
 import { GrowingGuideEntry, type GrowingGuideRequest } from './GrowingGuideEntry';
 import { achievementCatalog, pendingRevisitFlower, starterStep } from '../../../domain/growingIsland/guidance';
 import type { AchievementId, GuidanceEvidence, StarterStepId } from '../../../domain/growingIsland/types';
-import { useNavigate } from 'react-router-dom';
 import { allowPwaUpdateDuringReadOnlyOpening } from '../../../pwa';
 import './growing.css';
 import { GrowingIslandMenu } from './GrowingIslandMenu';
+import { GrowingHomeTools, GrowingViewControls, GrowingExpansion } from './GrowingHomeTools';
 import { bridgeSite } from '../../../domain/growingIsland/space';
 import type { MenuPictures } from './menuMiniatures';
 
 const GrowingWorld = lazy(() => import('./GrowingWorld'));
 type Placing = { kind: SeedKind | LandmarkKind; seed: boolean; id?: string; mode: 'new' | 'move' | 'unstore'; cell?: Cell; keepsake?: string; color?: FlowerColor };
-type Panel = 'tray' | 'landmarks' | 'stored' | 'friends' | 'show' | 'visit' | 'flowers' | 'trace' | 'guide' | 'places' | undefined;
+type Panel = 'tray' | 'landmarks' | 'stored' | 'friends' | 'show' | 'visit' | 'flowers' | 'trace' | 'guide' | 'places' | 'view' | 'expand' | undefined;
 type Visit = { id: string; name: string; state: GrowingState; sent: boolean };
 
 function speak(text: string) {
@@ -101,7 +101,6 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     useEffect(() => () => { visitEpoch.current++; }, [profileId]);
     const [naming, setNaming] = useState<string>();
     const [concert, setConcert] = useState<{ cell: Cell; n: number; until: number; targetId: string; ownerId: string }>(), [song, setSong] = useState(0);
-    const navigate = useNavigate();
     const [worldStep, setWorldStep] = useState<LoadingStep | 'ready' | 'failed'>('world');
     const [worldAttempt, setWorldAttempt] = useState(0);
     const [qualityCeiling, setQualityCeiling] = useState(1.25);
@@ -119,10 +118,11 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     useEffect(() => { firstPokomokoTap.current = true; }, [profileId]);
     const clearPlayMoment = () => { window.clearTimeout(playLineTimer.current); setPlayMoment(undefined); };
     const menuTrigger = useRef<HTMLButtonElement>(null);
+    const toolReturn = useRef('.growing-menu-button');
     const nameForm = useRef<HTMLFormElement>(null);
     const bookReturnFocus = useRef<HTMLElement | null>(null);
     const bookReturnSource = useRef<'menu' | 'cue'>('menu');
-    const closeNaming = useCallback(() => { setNaming(undefined); window.requestAnimationFrame(() => menuTrigger.current?.focus({ preventScroll: true })); }, []);
+    const closeNaming = useCallback(() => { setNaming(undefined); window.requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('.growing-home-identity button')?.focus({ preventScroll: true })); }, []);
     const namingOpen = naming !== undefined;
     useEffect(() => {
         if (!namingOpen) return;
@@ -278,13 +278,20 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     </div>;
 
     const run = async (command: Command, after?: () => void) => { if (await island.dispatch(command)) { after?.(); return true; } return false; };
+    const openHomeTool = (target: Panel, source: string) => {
+        toolReturn.current = source; if (target !== 'tray') guide.pause(); setMenu(false); setSelected(undefined); setPanel(target); setLine(undefined);
+    };
+    const closeHomeTool = () => {
+        setPanel(undefined);
+        window.requestAnimationFrame(() => document.querySelector<HTMLButtonElement>(toolReturn.current)?.focus({ preventScroll: true }));
+    };
     const closeBook = () => {
         const origin = bookReturnFocus.current, source = bookReturnSource.current;
         setPanel(undefined);
         window.requestAnimationFrame(() => {
             if (source === 'menu') { menuTrigger.current?.focus({ preventScroll: true }); return; }
-            if (origin?.isConnected && origin.closest('.growing-guide-cue')) { origin.focus({ preventScroll: true }); return; }
-            const cue = document.querySelector<HTMLElement>('.growing-guide-goal, [data-guidance-starter] button:not(.growing-guide-cue-close)');
+            if (origin?.isConnected && origin.closest('.growing-guide-cue, .growing-home-goal')) { origin.focus({ preventScroll: true }); return; }
+            const cue = document.querySelector<HTMLElement>('.growing-home-goal, .growing-guide-goal, [data-guidance-starter] button:not(.growing-guide-cue-close)');
             (cue ?? menuTrigger.current)?.focus({ preventScroll: true });
         });
     };
@@ -367,7 +374,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             const item = own.landmarks.find(l => l.kind === 'bench' && l.cell) ?? own.landmarks.find(l => l.cell) ?? own.plots.find(p => p.cell);
             if (item) { setSelected(item.id); setFocus({ id: item.id, n: Date.now() }); }
             else setPanel('stored');
-        } else if (action === 'expand') setMenu(true);
+        } else if (action === 'expand') { toolReturn.current = '.growing-home-expand'; setMenu(false); setPanel('expand'); }
         else if (action === 'concert') {
             const stand = own.landmarks.find(l => l.kind === 'bandstand' && l.cell);
             if (stand) { setFocus({ id: stand.id, n: Date.now() }); setLine('ひろばを さわってみよう'); }
@@ -524,7 +531,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         <button className="growing-chip growing-show-exit" onClick={() => setShow(false)}>おわる</button>
     </div>;
 
-    return <div className="island-life growing-island" data-growing-island={visit ? 'visit' : 'ready'} data-home-ui-candidate="island-quiet-home-v1" data-garden-time={time} data-dawn={dawn ? 'true' : undefined}
+    return <div className="island-life growing-island" data-growing-island={visit ? 'visit' : 'ready'} data-home-ui-candidate="island-direct-play-v2" data-garden-time={time} data-dawn={dawn ? 'true' : undefined}
         onPointerDownCapture={event => dismissRevisitFlower(event.target)} onClickCapture={event => dismissRevisitFlower(event.target)}>
         {guideRequest && <GrowingGuideEntry request={guideRequest} ready={active && worldStep === 'ready' && !island.busy && !island.syncing && !island.error}
             onEnter={action => {
@@ -535,34 +542,35 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             }} />}
         <Suspense fallback={null}>{world}</Suspense>{worldLoading}
         {dawn > 0 && <div className="growing-dawn" aria-hidden="true"><span>☀</span></div>}
-        <div className="growing-hud-top">
-            {visit ? <span className="growing-chip">{visit.name}の しま・{CHARACTER_NAME[visit.state.character]}</span> : <>
-                <button ref={menuTrigger} className="growing-chip growing-menu-button" aria-label="しまのメニュー" aria-expanded={menu} onClick={() => { if (!menu) setMenuPictures(camera.current?.menuPictures(own.villagers) ?? {}); setMenu(!menu); }}>メニュー</button>
-                {placeStatus && !panel && !menu && !placing && !selected && !dawn && !bridgeChoice && !guide.cue && !guide.notice && <button className="growing-place-current" aria-label={`${placeStatus.name}の ヒント`} onClick={() => openPlaces(placeStatus.id, 'cue')}><GrowingPlaceArt id={placeStatus.id} /><span><strong>{placeStatus.name}</strong><small>{placeStatus.stage === 'grown' || placeStatus.stage === 'lived' ? 'ここで あそぼう' : placeStatus.stage === 'connected' ? 'つながってきたよ' : '置きかたを みる'}</small></span></button>}
-            </>}
-        </div>
+        {visit ? <div className="growing-hud-top"><span className="growing-chip">{visit.name}の しま・{CHARACTER_NAME[visit.state.character]}</span></div> : <GrowingHomeTools
+            islandName={own.islandName ?? 'ぽこもこの しま'} drops={own.drops} quote={quote} status={placeStatus} menuRef={menuTrigger}
+            visible={worldStep === 'ready' && !menu && !panel && !placing && !selected && !card && !story && !bridgeChoice && !bridgeBusy && naming === undefined && !dawn}
+            goalVisible={!firstPlay && !guide.cue && !guide.notice && !gifts} menuOpen={menu && naming === undefined}
+            onName={() => { setNaming(own.islandName ?? ''); }}
+            onView={() => openHomeTool('view', '.growing-home-view')}
+            onExpand={() => openHomeTool('expand', '.growing-home-expand')}
+            onPlace={() => { void audio.unlock(); openHomeTool('tray', '.growing-home-place'); }}
+            onStored={() => openHomeTool('stored', '.growing-home-stored')}
+            onMenu={() => { if (!menu) setMenuPictures(own.villagers.length ? camera.current?.menuPictures(own.villagers) ?? {} : {}); setMenu(!menu); }}
+            onGoal={() => openPlaces(placeStatus?.id, 'cue')} />}
+        {!visit && panel === 'view' && <GrowingViewControls onDistance={close => camera.current?.distance(close)} onClose={closeHomeTool} onRotate={direction => setTurn(value => value + direction)} />}
+        {!visit && panel === 'expand' && <GrowingExpansion quote={quote} drops={own.drops} busy={island.busy} onClose={closeHomeTool}
+            onExpand={side => void run({ type: 'expand', side }, () => { closeHomeTool(); audio.play('assemble'); })} />}
         {naming !== undefined && <form ref={nameForm} className="growing-overlay" role="dialog" aria-modal="true" aria-label="しまの なまえ" onSubmit={event => { event.preventDefault(); if (naming.trim()) void run({ type: 'name', target: 'island', name: naming }, closeNaming); }}>
             <div className="growing-overlay-body growing-name"><label>しまの なまえ<input value={naming} maxLength={12} onChange={e => setNaming(e.target.value)} autoFocus /></label>
                 <div className="growing-row"><button type="submit" className="growing-primary">きめる</button><button type="button" onClick={closeNaming}>やめる</button></div></div>
         </form>}
-        {menu && !visit && <GrowingIslandMenu villagers={own.villagers} faces={faces} pictures={menuPictures} drops={own.drops} busy={island.busy} quote={quote}
-            islandName={`${own.islandName ?? 'しま'}・${CHARACTER_NAME[own.character]}`} utilities={menuUtilities}
-            onName={() => { setMenu(false); setNaming(own.islandName ?? ''); }}
-            onRecords={firstPlay ? undefined : () => { setMenu(false); navigate('/stats'); }}
+        {menu && !visit && <GrowingIslandMenu villagers={own.villagers} faces={faces} pictures={menuPictures} drops={own.drops} busy={island.busy}
+            utilities={menuUtilities}
             bridge={{ built: Boolean(own.bridge), ready: own.villagers.some(v => !v.away && !own.arrivals.includes(v.id)) && bridgeSite(own) !== undefined,
                 reason: own.villagers.some(v => !v.away && !own.arrivals.includes(v.id)) ? 'はしの ばしょを あけてね' : 'なかまが きてから' }}
             onBridge={() => { setMenu(false); if (own.bridge) { setSelected('bridge'); setFocus({ id: 'bridge', n: Date.now() }); } else setBridgeChoice('build'); }}
-            onClose={() => { setMenu(false); menuTrigger.current?.focus({ preventScroll: true }); }}
-            onFriends={() => { guide.pause(); setMenu(false); loadFaces(); setPanel('friends'); }}
-            onSeeds={() => { void audio.unlock(); setMenu(false); setPanel('tray'); setSelected(undefined); }}
-            onTrace={() => { guide.pause(); setMenu(false); setPanel('trace'); }}
-            onStored={() => { guide.pause(); setMenu(false); setPanel('stored'); }}
-            onHome={() => { setMenu(false); setSelected(undefined); if (firstPlay) openBook(); else onHome(); }}
-            onShow={() => { guide.pause(); setMenu(false); setPanel('show'); }}
-            onFlowers={() => { guide.pause(); setMenu(false); setPanel('flowers'); }}
-            onGuide={() => openBook(undefined, 'menu')} onPlaces={() => openPlaces()} onSettings={firstPlay ? undefined : () => { setMenu(false); navigate('/settings'); }}
-            onRotate={direction => setTurn(value => value + direction)}
-            onExpand={side => void run({ type: 'expand', side }, () => { setMenu(false); audio.play('assemble'); })} />}
+            onClose={() => { setMenu(false); window.requestAnimationFrame(() => menuTrigger.current?.focus({ preventScroll: true })); }}
+            onFriends={() => { loadFaces(); openHomeTool('friends', '.growing-menu-button'); }}
+            onTrace={() => openHomeTool('trace', '.growing-menu-button')}
+            onShow={() => openHomeTool('show', '.growing-menu-button')}
+            onFlowers={() => openHomeTool('flowers', '.growing-menu-button')}
+            onGuide={() => openBook(undefined, 'menu')} />}
         {Boolean(playMoment || line || visit || showRevisitFlower) && !placing && !panel && !menu && !selected && !bridgeChoice && !bridgeBusy && !guide.cue && !guide.notice && <p className="growing-bubble" role="status"><span aria-hidden="true">ぽこもこ</span>{bubble}
             {showRevisitFlower && revisitFlower && <button type="button" className="growing-revisit-flower" data-revisit-flower-link
                 onClick={() => { acknowledgeRevisitFlower(revisitFlower.id); setRevisitOffer(undefined); setSelected(revisitFlower.id); setFocus({ id: revisitFlower.id, n: Date.now() }); }}>
@@ -582,13 +590,13 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             {firstPlay && !panel && !menu && !selected && !card && !story && !bridgeChoice && <button className="growing-seed-button first-play-learn" disabled={island.busy || island.saving} onClick={onLearn}>まなぶ</button>}
             {gifts > 0 && <button className="growing-open-all" onClick={() => void run({ type: 'open-all' }, () => { audio.play('glass'); setLine(undefined); })}>ぜんぶ ひらく</button>}
         </div>}
-        {!visit && (panel === 'tray' || panel === 'landmarks' || panel === 'stored') && !placing && <GrowingTray key={panel} state={own} onPick={pick} onClose={() => setPanel(undefined)} initialTab={panel === 'stored' ? 'stored' : panel === 'landmarks' ? 'landmarks' : 'seeds'} />}
-        {!visit && panel === 'trace' && <TracePanel profileId={profileId} onClose={() => setPanel(undefined)}
+        {!visit && (panel === 'tray' || panel === 'landmarks' || panel === 'stored') && !placing && <GrowingTray key={panel} state={own} onPick={pick} onClose={closeHomeTool} initialTab={panel === 'stored' ? 'stored' : panel === 'landmarks' ? 'landmarks' : 'seeds'} />}
+        {!visit && panel === 'trace' && <TracePanel profileId={profileId} onClose={closeHomeTool}
             onSave={(image, glyph) => void run({ type: 'emblem', image, glyph }, () => { setPanel(undefined); audio.play('discovery'); setLine(`「${glyph}」が しまの はたに なったよ！`); })} />}
-        {!visit && panel === 'friends' && <FriendsPanel state={own} faces={faces} onClose={() => setPanel(undefined)}
+        {!visit && panel === 'friends' && <FriendsPanel state={own} faces={faces} onClose={closeHomeTool}
             onFocus={id => { setPanel(undefined); setSelected(`villager:${id}`); setFocus({ id, n: Date.now() }); setLine(actorLine(own, id)); }} />}
-        {!visit && panel === 'show' && <ShowPanel onPick={choice => void showChoice(choice)} onClose={() => setPanel(undefined)} />}
-        {!visit && panel === 'flowers' && <FlowerBook state={own} onClose={() => setPanel(undefined)} />}
+        {!visit && panel === 'show' && <ShowPanel onPick={choice => void showChoice(choice)} onClose={closeHomeTool} />}
+        {!visit && panel === 'flowers' && <FlowerBook state={own} onClose={closeHomeTool} />}
         {!visit && panel === 'guide' && <GrowingGuideBook state={own} busy={island.busy} initialMemory={guideMemory} onClose={closeBook}
             onPlaces={() => openPlaces()}
             onChoose={(id, play) => void run({ type: 'choose-goal', id }, () => { guide.pause(); if (play) goalAction(id); })}

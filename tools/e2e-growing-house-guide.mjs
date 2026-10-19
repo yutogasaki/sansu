@@ -3,7 +3,7 @@ import { promises as fs } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { chromium } from 'playwright';
-import { answerUI, readNative, runtimeMetadata, seedDev } from './island-e2e-helpers.mjs';
+import { openGrowingUtilities, answerUI, readNative, runtimeMetadata, seedDev } from './island-e2e-helpers.mjs';
 
 const base = process.env.SANSU_HOUSE_GUIDE_URL || 'http://127.0.0.1:5260';
 const out = process.env.SANSU_HOUSE_GUIDE_OUTPUT;
@@ -77,6 +77,7 @@ try {
         const other = await context.newPage();
         await other.goto(`${base}/#/island`); await islandReady(other);
         await other.locator('.growing-menu-button').tap();
+        await openGrowingUtilities(other, { touch: true });
         await other.getByRole('button', { name: 'しまの あそびかた', exact: true }).tap();
         await book(other).locator('summary').tap(); await book(other).locator('[data-guidance-goal="A3"]').first().tap();
         await book(other).getByRole('button', { name: 'これを やってみる', exact: true }).tap();

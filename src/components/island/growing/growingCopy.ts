@@ -17,6 +17,8 @@ export const SEED_LABEL: Record<SeedKind, { name: string; icon: string; note: st
     festival: { name: 'おまつり ひろば', icon: '🎪', note: 'みんなで あそべるよ' },
     wonder: { name: 'ふしぎの たね', icon: '✨', note: 'なにが そだつかな？' },
 };
+export const SEED_PLACE_NAME: Record<SeedKind, string> = { home: 'おうち', farm: 'はたけ', play: 'あそびば', wild: 'しぜんの たね', market: 'いちば', festival: 'おまつり ひろば', wonder: 'ふしぎの たね' };
+
 export const LANDMARK_LABEL: Partial<Record<LandmarkKind, { name: string; icon: string }>> = {
     flower: { name: 'おはな', icon: '🌸' }, bench: { name: 'ベンチ', icon: '🪑' }, 'water-bowl': { name: '水ばち', icon: '💧' },
     sapling: { name: '木の なえ', icon: '🌱' }, 'water-channel': { name: 'みずみち', icon: '〰️' }, 'picnic-table': { name: 'テーブル', icon: '🍽️' },

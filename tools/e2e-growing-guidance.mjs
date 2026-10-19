@@ -3,7 +3,7 @@ import { promises as fs } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { chromium } from 'playwright';
-import { answerUI, expandGrowingIslandUI, readNative, runtimeMetadata, seedDev } from './island-e2e-helpers.mjs';
+import { openGrowingUtilities, openGrowingAction, answerUI, expandGrowingIslandUI, readNative, runtimeMetadata, seedDev } from './island-e2e-helpers.mjs';
 
 const base = process.env.SANSU_GROWING_GUIDANCE_URL || 'http://127.0.0.1:5260';
 const out = process.env.SANSU_GROWING_GUIDANCE_OUTPUT;
@@ -51,7 +51,7 @@ async function capture(page, label) {
         cacheState: 'DEV module cache; no production service worker claim' });
 }
 async function openBook(page) {
-    await btn(page, 'メニュー').tap(); await btn(page, 'しまの あそびかた').tap(); await book(page).waitFor();
+    await openGrowingUtilities(page, { touch: true }); await btn(page, 'しまの あそびかた').tap(); await book(page).waitFor();
 }
 async function closeBook(page) { await book(page).getByRole('button', { name: 'とじる', exact: true }).tap(); await book(page).waitFor({ state: 'hidden' }); }
 async function choose(page, goal) {
@@ -67,9 +67,7 @@ async function choose(page, goal) {
 }
 
 async function tapSeed(page) {
-    const locator = btn(page, 'たね'); await locator.waitFor();
-    const box = await locator.boundingBox(); assert(box);
-    await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2);
+    await openGrowingAction(page, /^(しまに おく|たね)$/);
 }
 async function cellTap(page, id, cell) {
     const point = await page.evaluate(async ({ id, cell }) => {

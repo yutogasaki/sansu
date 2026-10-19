@@ -148,3 +148,21 @@
 .growing-flower-note { margin: 0 0 10px; font-size: 13px; color: var(--pokomoko-muted); }
 .growing-trace-canvas { width: min(70vw, 260px); height: min(70vw, 260px); background: #fffaf0; border: 3px solid #1f1a24; border-radius: 22px; touch-action: none; box-shadow: 5px 5px 0 #ffd23f; }
 .growing-trace .growing-row button[aria-pressed] { min-width: 52px; font-size: 22px; font-weight: 900; }
+
+/* Result-first placement catalog; header/exit stay reachable while the items scroll. */
+.growing-catalog { padding-top: 0; overscroll-behavior: contain; }
+.growing-catalog > header { position: sticky; top: 0; z-index: 2; align-items: center; margin: 0; padding-block: 10px; background: var(--pokomoko-paper); }
+.growing-catalog h2 { margin: 0; font-size: 18px; }
+.growing-catalog header p { margin: 2px 0 0; color: var(--pokomoko-muted); font-size: 12px; }
+.growing-catalog .growing-close { flex: none; }
+.growing-catalog .growing-tabs { margin-bottom: 8px; }
+.growing-catalog .growing-tabs button { min-height: 44px; flex: 1; padding-inline: 6px; font-size: 13px; }
+.growing-catalog-filters { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 10px; padding: 3px 2px; scrollbar-width: thin; }
+.growing-catalog-filters button { flex: none; min-height: 44px; padding: 5px 12px; border: 1px solid var(--pokomoko-edge); border-radius: 22px; background: var(--pokomoko-paper); font-size: 12px; font-weight: 700; }
+.growing-catalog-filters button[aria-pressed="true"] { background: var(--pokomoko-lavender); border-color: var(--pokomoko-blue); }
+.growing-catalog-group { margin-top: 14px; }
+.growing-catalog-group h3 { margin: 0 0 8px; font-size: 14px; font-weight: 800; }
+.growing-catalog .growing-grid { grid-template-columns: repeat(auto-fill, minmax(126px, 1fr)); }
+.growing-catalog .growing-card { min-height: 130px; gap: 5px; padding: 12px 8px; }
+.growing-catalog .growing-catalog-growth { padding: 3px 7px; border-radius: 6px; background: var(--pokomoko-canvas); color: var(--pokomoko-ink); font-size: 11px; }
+.growing-catalog :is(button, [role="tabpanel"]):focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: -3px; }

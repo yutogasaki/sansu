@@ -1,87 +1,39 @@
-/* Two world miniatures on a cloth-edged paper. Quiet secondary tools have no competing tiles. */
+/* A compact secondary menu; the live island owns the main play actions. */
 .island-shell .growing-menu.growing-pocket-menu {
-    top: auto; bottom: 12px; right: 12px; width: min(380px, calc(100% - 24px)); max-height: 60%;
-    display: block; padding: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
-    background: var(--pokomoko-paper); border: 1px solid var(--pokomoko-edge); border-radius: 26px;
-    box-shadow: 0 4px 0 color-mix(in srgb, var(--pokomoko-stitch) 32%, transparent), 0 10px 28px #14233726;
+    inset: auto 12px 88px auto; width: min(344px, calc(100% - 24px)); max-height: 60%;
+    display: flex; flex-direction: column; padding: 0; overflow: hidden; overscroll-behavior: contain; scrollbar-width: thin;
+    background: var(--pokomoko-paper); border: 1px solid var(--pokomoko-edge); border-radius: 24px;
+    box-shadow: 0 4px 0 color-mix(in srgb, var(--pokomoko-stitch) 25%, transparent), var(--app-shadow);
 }
-.growing-pocket-heading { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; min-height: 48px; gap: 8px; padding: 2px 8px 2px 16px; background: var(--pokomoko-paper); }
+.growing-pocket-heading { position: relative; flex: none; z-index: 2; display: flex; align-items: center; justify-content: space-between; min-height: 48px; gap: 8px; padding: 2px 8px 2px 18px; background: var(--pokomoko-paper); }
 .growing-pocket-heading h2 { margin: 0; font-size: 16px; font-weight: 800; }
 .growing-pocket-heading .growing-close { min-width: 44px; min-height: 44px; display: grid; place-items: center; border: 0; border-radius: 50%; background: transparent; }
-.growing-pocket-entries { display: grid; gap: 4px; padding: 0 12px 8px; }
-.growing-pocket-entries button, .growing-pocket-tools summary {
-    min-width: 0; min-height: 44px; padding: 6px; border: 0; border-radius: 12px; background: transparent; color: var(--pokomoko-ink);
-    font-size: 13px; font-weight: 700; line-height: 1.5; cursor: pointer; transition: transform 110ms ease, background-color 110ms ease;
-}
+.growing-pocket-entries { display: grid; gap: 8px; min-height: 0; padding: 0 12px 16px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.growing-pocket-entries button, .growing-pocket-tools summary { min-width: 0; min-height: 44px; padding: 6px; border: 0; border-radius: 12px; background: transparent; color: var(--pokomoko-ink); font-size: 14px; font-weight: 700; line-height: 1.5; cursor: pointer; }
 .growing-pocket-entries :is(button, summary):focus-visible, .growing-pocket-heading button:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: -3px; }
-.growing-pocket-entries button:active:not(:disabled), .growing-pocket-tools summary:active { transform: translateY(2px); background: var(--pokomoko-canvas); }
-.growing-pocket-primary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; padding-bottom: 8px; }
-.growing-pocket-primary > button {
-    position: relative; display: flex; flex-direction: column; align-items: stretch; min-height: 152px; padding: 0 0 10px; overflow: hidden;
-    border-radius: 19px 23px 18px 22px; background: color-mix(in srgb, var(--pokomoko-mint) 68%, var(--pokomoko-paper));
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pokomoko-stitch) 42%, transparent), 0 3px 0 #30364f12;
-}
-.growing-pocket-primary > .growing-pocket-seeds { background: color-mix(in srgb, var(--pokomoko-rose) 45%, var(--pokomoko-paper)); border-radius: 23px 18px 22px 18px; }
-.growing-pocket-primary > button::after { content: ''; position: absolute; inset: 5px; border: 1px dashed color-mix(in srgb, var(--pokomoko-stitch) 44%, transparent); border-radius: 15px 19px 14px 18px; pointer-events: none; }
-.growing-pocket-model { display: flex; align-items: center; justify-content: center; height: 96px; flex-shrink: 0; color: var(--pokomoko-ink); }
-.growing-pocket-model > img { display: block; width: 100%; height: 100%; min-width: 0; min-height: 0; object-fit: contain; }
-.growing-pocket-main-copy { padding: 0 8px; min-width: 0; }
-.growing-pocket-main-copy strong { display: block; font-size: 15px; font-weight: 800; line-height: 1.6; }
-.growing-pocket-main-copy small { display: block; margin-top: 2px; font-size: 11px; font-weight: 500; line-height: 1.5; }
-.growing-pocket-names { display: none; }
-.growing-pocket-shortcuts, .growing-pocket-memories { display: grid; gap: 4px; }
-.growing-pocket-shortcuts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.growing-pocket-shortcuts button, .growing-pocket-memories button, .growing-pocket-guide { display: flex; align-items: center; justify-content: center; gap: 7px; }
-.growing-pocket-shortcuts svg, .growing-pocket-memories svg, .growing-pocket-guide svg { stroke-width: 1.7; flex-shrink: 0; }
-.growing-pocket-memories { grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--pokomoko-edge); padding-top: 2px; }
-.growing-pocket-footer { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; border-top: 1px solid var(--pokomoko-edge); padding-top: 2px; }
-.growing-pocket-bridge { grid-column: 1 / -1; display: flex; align-items: center; justify-content: center; gap: 7px; background: #e2f1e8 !important; }
-.growing-pocket-bridge:disabled { opacity: .55; cursor: default; }
-.growing-pocket-tools { min-width: 0; }
-.growing-pocket-tools summary { display: flex; align-items: center; justify-content: center; gap: 6px; list-style: none; font-size: 12px; }
+.growing-pocket-entries button:active:not(:disabled), .growing-pocket-tools summary:active { background: var(--pokomoko-canvas); }
+.growing-pocket-friends { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: color-mix(in srgb, var(--pokomoko-lavender) 35%, var(--pokomoko-paper)) !important; }
+.growing-pocket-friend-model { flex: none; display: grid; place-items: center; width: 64px; height: 56px; }
+.growing-pocket-friend-model img { width: 100%; height: 100%; object-fit: contain; }
+.growing-pocket-main-copy { min-width: 0; }
+.growing-pocket-main-copy strong { display: block; font-size: 16px; }
+.growing-pocket-main-copy small { display: block; margin-top: 3px; font-size: 12px; font-weight: 500; line-height: 1.5; color: var(--pokomoko-muted); overflow-wrap: anywhere; }
+.growing-pocket-memories { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+.growing-pocket-memories button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 76px; }
+.growing-pocket-entries button:disabled { opacity: .55; cursor: default; }
+.growing-pocket-bridge-note { margin: 0; color: var(--pokomoko-muted); font-size: 12px; }
+.growing-pocket-tools { border-top: 1px solid var(--pokomoko-edge); }
+.growing-pocket-tools summary { display: flex; align-items: center; justify-content: space-between; list-style: none; padding-inline: 10px; }
 .growing-pocket-tools summary::-webkit-details-marker { display: none; }
-.growing-pocket-tools[open] { grid-column: 1 / -1; }
 .growing-pocket-tools[open] summary > svg { transform: rotate(180deg); }
-.growing-pocket-tool-buttons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
-.growing-pocket-tool-buttons button { display: flex; align-items: center; justify-content: center; gap: 4px; border: 1px solid var(--pokomoko-edge); background: var(--pokomoko-paper); }
-.growing-pocket-expansion { display: grid; gap: 6px; margin-top: 6px; }
-.growing-pocket-expansion button { display: flex; align-items: center; justify-content: space-between; gap: 8px; text-align: left; border: 1px solid var(--pokomoko-edge); }
-.growing-pocket-expansion small { flex-shrink: 0; font-size: 12px; }
-.growing-pocket-expansion button:disabled { opacity: .5; cursor: default; }
-@media (max-height: 650px) and (max-width: 449px) {
-    .growing-pocket-heading { min-height: 44px; padding-block: 0; }
-    .growing-pocket-primary { gap: 8px; padding-bottom: 2px; }
-    .growing-pocket-primary > button { min-height: 102px; padding-bottom: 6px; }
-    .growing-pocket-model { height: 60px; }
-    .growing-pocket-main-copy strong { font-size: 13px; }
-    .growing-pocket-main-copy small { margin: 0; font-size: 10px; }
-    .growing-pocket-entries { padding-inline: 8px; gap: 2px; }
-    .growing-pocket-shortcuts button { gap: 4px; padding-inline: 3px; font-size: 12px; }
-}
+.growing-pocket-utilities { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 4px 0 8px; }
+.growing-pocket-profile { flex-basis: 100%; overflow-wrap: anywhere; color: var(--pokomoko-muted); font-size: 12px; }
+.growing-pocket-utilities .island-sound-control { min-width: 0; }
+.growing-pocket-utilities :is(.island-profile-switch, .island-sound-button) { border: 1px solid var(--pokomoko-edge); }
 @media (max-height: 500px) and (min-width: 450px) {
-    .island-shell .growing-menu.growing-pocket-menu { top: calc(56px + env(safe-area-inset-top)); bottom: 8px; width: min(380px, 62%); max-height: none; border-radius: 20px; }
-    .growing-pocket-heading { min-height: 44px; padding: 0 4px 0 10px; }
-    .growing-pocket-heading h2 { font-size: 14px; }
-    .growing-pocket-entries { grid-template-columns: .9fr 1.4fr; gap: 2px 6px; padding: 0 5px 4px; }
-    .growing-pocket-primary { grid-column: 1; grid-row: 1 / 4; grid-template-columns: 1fr; gap: 6px; padding: 0; }
-    .growing-pocket-primary > button { flex-direction: column; align-items: stretch; min-height: 64px; padding: 2px 4px; border-radius: 13px; }
-    .growing-pocket-primary > button::after { inset: 3px; border-radius: 10px; }
-    .growing-pocket-model { width: 100%; height: 42px; }
-    .growing-pocket-main-copy { padding: 0 2px; text-align: center; }
-    .growing-pocket-main-copy strong { font-size: 11px; line-height: 1.5; }
-    .growing-pocket-main-copy small { display: none; }
-    .growing-pocket-friends small { position: absolute; display: block; top: 5px; right: 5px; margin: 0; padding: 0 3px; border-radius: 6px; background: var(--pokomoko-paper); font-size: 9px; }
-    .growing-pocket-shortcuts, .growing-pocket-memories, .growing-pocket-footer { grid-column: 2; }
-    .growing-pocket-shortcuts button { flex-direction: column; gap: 1px; padding: 2px; font-size: 11px; }
-    .growing-pocket-shortcuts svg { width: 18px; height: 18px; }
-    .growing-pocket-memories { padding: 0; }
-    .growing-pocket-memories button, .growing-pocket-guide { gap: 3px; padding: 2px; font-size: 11px; }
-    .growing-pocket-memories svg, .growing-pocket-guide svg { width: 16px; height: 16px; }
-    .growing-pocket-footer { padding: 0; }
-    .growing-pocket-tools summary { gap: 3px; padding: 2px; font-size: 10px; }
-    .growing-pocket-tools summary svg { width: 14px; flex-shrink: 0; }
+    .island-shell .growing-menu.growing-pocket-menu { bottom: 8px; width: min(340px, calc(100% - 150px)); max-height: calc(100% - 16px); }
+    .growing-pocket-memories button { min-height: 64px; }
+    .growing-pocket-friend-model { height: 40px; }
 }
-@media (prefers-reduced-motion: reduce) {
-    .growing-pocket-entries button, .growing-pocket-tools summary { transition: none; }
-    .growing-pocket-entries button:active:not(:disabled), .growing-pocket-tools summary:active { transform: none; }
-}
+
+@media (max-width: 360px) { .growing-pocket-memories { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

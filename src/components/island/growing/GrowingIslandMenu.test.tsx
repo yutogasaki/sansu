@@ -10,18 +10,12 @@ function buttons(node: ReactNode): Button[] {
     return node.type === 'button' ? [node as Button] : buttons(node.props.children);
 }
 function props(overrides: Partial<GrowingIslandMenuProps> = {}): GrowingIslandMenuProps {
-    return { villagers: [], faces: {}, drops: 20, busy: false, quote: { sides: ['east', 'south'], price: 24 },
-        onClose: vi.fn(), onFriends: vi.fn(), onSeeds: vi.fn(), onTrace: vi.fn(), onStored: vi.fn(),
-        onHome: vi.fn(), onShow: vi.fn(), onFlowers: vi.fn(), onGuide: vi.fn(), onSettings: vi.fn(),
-        onRotate: vi.fn(), onExpand: vi.fn(), ...overrides };
+    return { villagers: [], faces: {}, drops: 20, busy: false,
+        onClose: vi.fn(), onFriends: vi.fn(), onTrace: vi.fn(),
+        onShow: vi.fn(), onFlowers: vi.fn(), onGuide: vi.fn(), ...overrides };
+
 }
 describe('Growing Island menu destinations and actual island identity', () => {
-    it('opens the optional place book as its own destination', () => {
-        const onPlaces = vi.fn(), p = props({ onPlaces });
-        buttons(GrowingIslandMenuContents(p)).find(button => button.props['aria-label'] === 'そだつ場所')!.props.onClick();
-        expect(onPlaces).toHaveBeenCalledTimes(1);
-        expect(renderToStaticMarkup(GrowingIslandMenuContents(p))).toContain('そだつ場所');
-    });
     it('keeps empty population honest and limits portraits while showing the actual full count', () => {
         const empty = renderToStaticMarkup(GrowingIslandMenuContents(props()));
         expect(empty).toContain('0にん'); expect(empty).toContain('これからの なかま'); expect(empty).not.toContain('<img');
@@ -32,22 +26,26 @@ describe('Growing Island menu destinations and actual island identity', () => {
         const fallback = renderToStaticMarkup(GrowingIslandMenuContents(props({ villagers })));
         expect(fallback).not.toContain('<img'); expect(fallback).toContain('8にん');
     });
-    it('forwards each destination once, preserves rotation direction and expansion side', () => {
-        const p = props({ drops: 24 }), actions = buttons(GrowingIslandMenuContents(p));
+    it('keeps primary island actions and view controls out of the secondary menu', () => {
+        const p = props(), actions = buttons(GrowingIslandMenuContents(p));
         actions.forEach(button => button.props.onClick());
-        for (const action of [p.onFriends, p.onSeeds, p.onTrace, p.onStored, p.onHome, p.onShow, p.onFlowers, p.onGuide, p.onSettings]) expect(action).toHaveBeenCalledTimes(1);
-        expect(p.onRotate).toHaveBeenCalledTimes(2);
-        expect(p.onRotate).toHaveBeenNthCalledWith(1, -1); expect(p.onRotate).toHaveBeenNthCalledWith(2, 1);
-        expect(p.onExpand).toHaveBeenCalledTimes(2);
-        expect(p.onExpand).toHaveBeenNthCalledWith(1, 'east'); expect(p.onExpand).toHaveBeenNthCalledWith(2, 'south');
+        for (const action of [p.onFriends, p.onTrace, p.onShow, p.onFlowers, p.onGuide]) expect(action).toHaveBeenCalledTimes(1);
         const html = renderToStaticMarkup(GrowingIslandMenuContents(p));
-        expect(html).toContain('<details class="growing-pocket-tools">'); expect(html).not.toContain('<details open');
-        expect(html).toContain('aria-label="しまの あそびかた"');
+        expect(html).toContain('aria-label="しまの くらし"');
+        for (const label of ['しまに おく', 'もちもの', 'そだつ場所', 'まわす', 'へ ひろげる']) expect(html).not.toContain(label);
+        for (const label of ['いえ', 'きろく', '設定']) expect(html).not.toContain(`<span>${label}</span>`);
     });
-    it.each([{ drops: 23, busy: false, disabled: true }, { drops: 24, busy: false, disabled: false }, { drops: 24, busy: true, disabled: true }])('retains the exact price and prevents unavailable expansion: %j', ({ drops, busy, disabled }) => {
-        const p = props({ drops, busy }), actions = buttons(GrowingIslandMenuContents(p));
-        expect(actions.slice(-2).every(b => b.props.disabled === disabled)).toBe(true);
-        expect(renderToStaticMarkup(GrowingIslandMenuContents(p))).toContain('24</small>');
-        expect(buttons(GrowingIslandMenuContents(props({ quote: undefined })))).toHaveLength(11);
+    it('keeps profile and sound utilities in an optional disclosure', () => {
+        const html = renderToStaticMarkup(GrowingIslandMenuContents(props({ utilities: <button>きりかえ</button> })));
+        expect(html.split('growing-pocket-other')[1]).toContain('きりかえ');
+        expect(html).not.toContain('<details open');
+    });
+    it('preserves bridge actions, including their busy locks', () => {
+        const p = props({ onBridge: vi.fn(), bridge: { built: true, ready: false, reason: '' } });
+        const actions = buttons(GrowingIslandMenuContents(p));
+        actions.find(button => button.props['aria-label'] === 'はしを みにいく')!.props.onClick();
+        expect(p.onBridge).toHaveBeenCalledTimes(1);
+        const busy = buttons(GrowingIslandMenuContents({ ...p, busy: true }));
+        expect(busy.find(button => button.props['aria-label'] === 'はしを みにいく')!.props.disabled).toBe(true);
     });
 });
