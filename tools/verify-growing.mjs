@@ -38,6 +38,10 @@ export function buildArchiveFiles(files) {
         || /^assets\/.*\.json$/.test(file) || file.startsWith('prototypes/place-qa/') || file === 'docs/product/island-place-goals.json'
         || file === 'docs/design/2026-10-10-native-art-transfer/runtime-manifest.json'
         || /^docs\/design\/2026-10-11-island-growth-art\/(small|young)-manifest\.json$/.test(file)
+        || /^docs\/design\/2026-10-11-authored-(coast-skin|flower-garden|world-foundation)\/[^/]+\.json$/.test(file)
+        || /^docs\/design\/2026-10-12-authored-cove-entrance\/[^/]+\.json$/.test(file)
+        || file === 'docs/design/2026-10-10-island-final-3d/whole-island.glb'
+        || /^docs\/design\/2026-10-11-island-growth-art\/(small|young)-island\.glb$/.test(file)
         || /^docs\/design\/2026-10-11-native-owned-island\/(kit-manifest\.json|native05-owned-kit\.glb\.gz)$/.test(file));
 }
 

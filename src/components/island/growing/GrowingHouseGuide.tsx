@@ -1,3 +1,4 @@
+import { islandIdOf } from '../../../domain/growingIsland/voyages';
 import { useEffect, useRef, useState } from 'react';
 import { commandGrowingIsland, observeGrowingIsland, type GrowingRecord } from '../../../domain/growingIsland/repository';
 import { starterStep } from '../../../domain/growingIsland/guidance';
@@ -33,7 +34,7 @@ export default function GrowingHouseGuide({ profileId, onClose, onLearn, onIslan
         try {
             for (const command of commands) {
                 if (!live.current) return;
-                const result = await commandGrowingIsland(profileId, { id: crypto.randomUUID(), command });
+                const result = await commandGrowingIsland(profileId, { id: crypto.randomUUID(), islandId: islandIdOf(record), command });
                 if (live.current) setRecord(current => current && current.revision > result.record.revision ? current : result.record);
             }
             if (live.current) { setError(undefined); after?.(); }

@@ -9,7 +9,7 @@
     "scripts/vendor/portal-ui/1.0.2/adapter.cjs": "de8f7d48d30e112d527b8709212d05763210c42ac26bae1534498d8893b8da91",
     "scripts/vendor/portal-ui/1.0.2/ui.css": "97ccae708a6ea52a2aae52b7f35da1fe6ba83b0e67d843e1252a9a868e783482",
     "scripts/vendor/portal-ui/1.0.2/ui.js": "09c39957492298cc40c615dd902afd4450ea7e92ba99cc5beea6c7f706b4bab1",
-    "scripts/standard-portal.mjs": "0e7c9701d2562d7aefae1ef04ae2f70b715b567cd70693a1a7c6abc4f49f748e"
+    "scripts/standard-portal.mjs": "985b9125006400c3ba76428304ded9e0869980aaf7018b96311d8713eb78e1cb"
   },
   "pages": [
     "index.html",
@@ -21,9 +21,8 @@
     "tasks.html",
     "documents.html",
     "read/325ab1fb2ec5d8e78e41.html",
-    "read/6b8ec557b953f9bec795.html",
-    "read/1b9aedfff1817b1b5c9c.html",
-    "read/93b46e93b549205cbf25.html",
+    "read/b669fa4da6877c57241d.html",
+    "read/b93f043d7bc553bd2058.html",
     "read/e0b2ebb0d4ad1d8dbc3b.html",
     "read/a3cc3406157ed3bfac78.html",
     "read/f1663ae31953b64bb217.html",
@@ -127,6 +126,12 @@
     "read/6c26f04be1d80acbab3c.html",
     "read/e812165d7543472b923b.html",
     "read/9b62872d2b7dac1643f7.html",
+    "read/5717a533664e9d4dd2b7.html",
+    "read/697664b2740aa9ec4388.html",
+    "read/bb028915f8d00792a616.html",
+    "read/c054bd32fb0312454402.html",
+    "read/dd3744c685b3c4bec97d.html",
+    "read/74494d2fbfda425fbdf1.html",
     "read/61d3045abc171284ea83.html",
     "read/c6fc5f3e66e2616eb3db.html",
     "read/38e838dd4b8bf50fa16d.html",
@@ -154,6 +159,7 @@
     "read/e5703f7e01a1fdd4b6b5.html",
     "read/2f241eac02eb2a51aa30.html",
     "read/f79efaf570d7185d6124.html",
+    "read/6b8ec557b953f9bec795.html",
     "read/acb84a3e0097ebf55056.html",
     "read/1a2774473f3c23c452e3.html",
     "read/e58fc285ea01edf88629.html",
@@ -565,7 +571,14 @@
     "read/10bca880c759b70d7a5f.html",
     "read/84680ffe47265bdf9852.html",
     "read/a1ff50e764108835c3d4.html",
+    "read/1b9aedfff1817b1b5c9c.html",
+    "read/93b46e93b549205cbf25.html",
+    "read/b5e78f87e9d47ef2781a.html",
     "read/5e850c7089e31b3d6e99.html",
+    "read/40f2ce5015e820970308.html",
+    "read/4f374699e53eaa2e33d2.html",
+    "read/75823c1babb4b61766c5.html",
+    "read/086804d8eb1107fceb6e.html",
     "read/9ca4a24f4e744b308242.html",
     "read/10c02ba06d46e383c910.html",
     "read/3d2d9cf6d3b58716ddb6.html",
@@ -725,6 +738,8 @@
     "read/431269ddc6a835dee9ca.html",
     "read/149b73f435620cbef911.html",
     "read/054cc8e2e65e5a049134.html",
+    "read/25c2e48b33ea31612614.html",
+    "read/f08cb18253a7d0c29044.html",
     "read/5767cabc35c1548f9cfc.html",
     "read/e111ecb1e59f035f1583.html",
     "read/e38795c906997ef6cf9d.html",
@@ -2108,6 +2123,42 @@
     {
       "path": "read/9b62872d2b7dac1643f7.html",
       "title": "つながって育つ場所 — 島の成長設計案",
+      "category": "資料・判断・手順",
+      "audience": "internal"
+    },
+    {
+      "path": "read/5717a533664e9d4dd2b7.html",
+      "title": "現行の島の体験と育成の関係",
+      "category": "資料・判断・手順",
+      "audience": "internal"
+    },
+    {
+      "path": "read/697664b2740aa9ec4388.html",
+      "title": "少ない素材から場所と暮らしを育てる仕様案",
+      "category": "資料・判断・手順",
+      "audience": "internal"
+    },
+    {
+      "path": "read/bb028915f8d00792a616.html",
+      "title": "v0.4 成長・購入統合・旧記録の詳細規則",
+      "category": "資料・判断・手順",
+      "audience": "internal"
+    },
+    {
+      "path": "read/c054bd32fb0312454402.html",
+      "title": "v0.4の育ち方と実装の対応",
+      "category": "資料・判断・手順",
+      "audience": "internal"
+    },
+    {
+      "path": "read/dd3744c685b3c4bec97d.html",
+      "title": "ぽこもこの体験と育成の完全マップ",
+      "category": "資料・判断・手順",
+      "audience": "internal"
+    },
+    {
+      "path": "read/74494d2fbfda425fbdf1.html",
+      "title": "海図と独立した島",
       "category": "資料・判断・手順",
       "audience": "internal"
     },

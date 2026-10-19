@@ -121,6 +121,16 @@ export function buildPlaceFlowerRoof(g: GardenGeometry, state: GrowingState, lay
         .filter((owner): owner is NonNullable<typeof owner> => Boolean(owner));
     if (!owners.length) return;
     const cells = owners.map(owner => owner.cell!), points = cells.map(cell => layout.point(cell));
+    if (state.growth && !place.structure) {
+        // A ground garden is not a license for an unmeasured overhead canopy.
+        for (const [i, point] of points.entries()) {
+            const group = new T.Group(); group.name = 'place-owned-flower'; group.userData.ownerId = owners[i].id; g.root.add(group);
+            g.taperedBranch([tuple(point), tuple(point.clone().add(new T.Vector3(0, .20, 0)))], .018, .012, '#73af9c', group);
+            g.pebble(TINTS[owners[i].color ?? ''] ?? PETALS[i % PETALS.length], [point.x, point.y + .22, point.z], [.18, .06, .18], group);
+        }
+        return;
+    }
+
     const grown = place.stage === 'grown' || place.stage === 'lived';
     if (!grown) {
         for (const [i, point] of points.entries()) {

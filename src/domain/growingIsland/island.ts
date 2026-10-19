@@ -1,3 +1,4 @@
+import { newGrowth } from './growth';
 import { migrateGuidance, newGuidance, noteLearning } from './guidance';
 import { newPlaceProgress } from './placeGoals';
 import type { LifeState } from '../islandLife/model';
@@ -17,7 +18,7 @@ function blank(seed: string, now: number): GrowingState {
         town: { clock: 0, bank: 0 }, nature: { hours: 0, realAt: now, lastSpread: 0 }, soil: {},
         genki: { current: 0, best: 0 }, character: 'mixed', unlocked: [], unopened: [], arrivals: [],
         tutorial: 'done', learned: [], enrolledAt: now, applied: [], nextId: 1,
-        placeProgress: newPlaceProgress(),
+        placeProgress: newPlaceProgress(), growth: newGrowth(),
     };
 }
 

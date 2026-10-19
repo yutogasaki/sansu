@@ -1,0 +1,1586 @@
+{
+  "kind": "synthetic design diagnostic; not candidate runtime acceptance",
+  "generatedAt": "2026-10-19T07:28:35.997Z",
+  "assumptions": [
+    "30 days, 6 or 20 synthetic valid completions per day split into two sessions; no user data",
+    "Housing algorithm purchases one vacancy ahead, then food if capacity is exhausted, then a bench only if comfort improves",
+    "Garden algorithm buys one flower or sapling (at most 20 drops) per session before the same housing algorithm; it may deliberately postpone housing",
+    "Two-islands alternates every seven days; one shared wallet, independent states and town banks, free initial house in each",
+    "Placement uses accessible odd rows for blocking objects and even rows for farms/flowers; this is a scripted policy, not a child or optimal play",
+    "Both policies retain existing command, geometry-free logical cell reachability and town processing; candidate uses in-memory rules/eligibility overrides only",
+    "Candidate excludes new market/bakery/planter/wild/play/festival purchases; these synthetic policies only buy home/farm/bench/flower/sapling",
+    "Cosmetics, W slots/migration, authored terrain, new place shapes, visible logistics and preference-dependent fun are not simulated",
+    "Population milestones are sampled at session end, not the exact within-session boat arrival or dawn",
+    "Current policy also does not try every current food alternative; results cannot isolate the effect of food catalog removal"
+  ],
+  "results": [
+    {
+      "rules": "current-domain",
+      "policy": "housing",
+      "dailyCompletions": 6,
+      "rows": [
+        {
+          "day": 1,
+          "population": [
+            1
+          ],
+          "totalPopulation": 1,
+          "wallet": 12,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            1
+          ],
+          "farms": [
+            0
+          ],
+          "capacity": [
+            1
+          ],
+          "food": [
+            2
+          ],
+          "clock": [
+            12
+          ],
+          "bank": [
+            0
+          ],
+          "purchases": 1
+        },
+        {
+          "day": 7,
+          "population": [
+            2
+          ],
+          "totalPopulation": 2,
+          "wallet": 24,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            2
+          ],
+          "farms": [
+            0
+          ],
+          "capacity": [
+            2
+          ],
+          "food": [
+            2
+          ],
+          "clock": [
+            84
+          ],
+          "bank": [
+            0
+          ],
+          "purchases": 3
+        },
+        {
+          "day": 30,
+          "population": [
+            5
+          ],
+          "totalPopulation": 5,
+          "wallet": 60,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            5
+          ],
+          "farms": [
+            2
+          ],
+          "capacity": [
+            9
+          ],
+          "food": [
+            6
+          ],
+          "clock": [
+            360
+          ],
+          "bank": [
+            0
+          ],
+          "purchases": 10
+        }
+      ],
+      "milestones": [
+        {
+          "populationAtLeast": 3,
+          "day": 14,
+          "session": 1,
+          "receivedCompletions": 81,
+          "receivedDrops": 162,
+          "wallet": 2,
+          "spentDrops": 160,
+          "townClocks": [
+            162
+          ]
+        },
+        {
+          "populationAtLeast": 5,
+          "day": 25,
+          "session": 2,
+          "receivedCompletions": 150,
+          "receivedDrops": 300,
+          "wallet": 0,
+          "spentDrops": 300,
+          "townClocks": [
+            300
+          ]
+        }
+      ]
+    },
+    {
+      "rules": "candidate-partial-diagnostic",
+      "policy": "housing",
+      "dailyCompletions": 6,
+      "rows": [
+        {
+          "day": 1,
+          "population": [
+            1
+          ],
+          "totalPopulation": 1,
+          "wallet": 12,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            1
+          ],
+          "farms": [
+            0
+          ],
+          "capacity": [
+            1
+          ],
+          "food": [
+            2
+          ],
+          "clock": [
+            12
+          ],
+          "bank": [
+            0
+          ],
+          "purchases": 1
+        },
+        {
+          "day": 7,
+          "population": [
+            2
+          ],
+          "totalPopulation": 2,
+          "wallet": 24,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            2
+          ],
+          "farms": [
+            0
+          ],
+          "capacity": [
+            3
+          ],
+          "food": [
+            2
+          ],
+          "clock": [
+            84
+          ],
+          "bank": [
+            0
+          ],
+          "purchases": 3
+        },
+        {
+          "day": 30,
+          "population": [
+            5
+          ],
+          "totalPopulation": 5,
+          "wallet": 100,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            4
+          ],
+          "farms": [
+            2
+          ],
+          "capacity": [
+            6
+          ],
+          "food": [
+            6
+          ],
+          "clock": [
+            360
+          ],
+          "bank": [
+            0
+          ],
+          "purchases": 9
+        }
+      ],
+      "milestones": [
+        {
+          "populationAtLeast": 3,
+          "day": 13,
+          "session": 1,
+          "receivedCompletions": 75,
+          "receivedDrops": 150,
+          "wallet": 10,
+          "spentDrops": 140,
+          "townClocks": [
+            150
+          ]
+        },
+        {
+          "populationAtLeast": 5,
+          "day": 25,
+          "session": 1,
+          "receivedCompletions": 147,
+          "receivedDrops": 294,
+          "wallet": 34,
+          "spentDrops": 260,
+          "townClocks": [
+            294
+          ]
+        }
+      ]
+    },
+    {
+      "rules": "current-domain",
+      "policy": "garden",
+      "dailyCompletions": 6,
+      "rows": [
+        {
+          "day": 1,
+          "population": [
+            1
+          ],
+          "totalPopulation": 1,
+          "wallet": 2,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            1
+          ],
+          "farms": [
+            0
+          ],
+          "capacity": [
+            1
+          ],
+          "food": [
+            2
+          ],
+          "clock": [
+            12
+          ],
+          "bank": [
+            0
+          ],
+          "purchases": 2
+        },
+        {
+          "day": 7,
+          "population": [
+            1
+          ],
+          "totalPopulation": 1,
+          "wallet": 4,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            1
+          ],
+          "farms": [
+            0
+          ],
+          "capacity": [
+            1
+          ],
+          "food": [
+            2
+          ],
+          "clock": [
+            50
+          ],
+          "bank": [
+            34
+          ],
+          "purchases": 9
+        },
+        {
+          "day": 30,
+          "population": [
+            2
+          ],
+          "totalPopulation": 2,
+          "wallet": 10,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            2
+          ],
+          "farms": [
+            0
+          ],
+          "capacity": [
+            2
+          ],
+          "food": [
+            2
+          ],
+          "clock": [
+            154
+          ],
+          "bank": [
+            206
+          ],
+          "purchases": 25
+        }
+      ],
+      "milestones": []
+    },
+    {
+      "rules": "candidate-partial-diagnostic",
+      "policy": "garden",
+      "dailyCompletions": 6,
+      "rows": [
+        {
+          "day": 1,
+          "population": [
+            1
+          ],
+          "totalPopulation": 1,
+          "wallet": 2,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            1
+          ],
+          "farms": [
+            0
+          ],
+          "capacity": [
+            1
+          ],
+          "food": [
+            2
+          ],
+          "clock": [
+            12
+          ],
+          "bank": [
+            0
+          ],
+          "purchases": 2
+        },
+        {
+          "day": 7,
+          "population": [
+            2
+          ],
+          "totalPopulation": 2,
+          "wallet": 4,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            1
+          ],
+          "farms": [
+            0
+          ],
+          "capacity": [
+            2
+          ],
+          "food": [
+            2
+          ],
+          "clock": [
+            84
+          ],
+          "bank": [
+            0
+          ],
+          "purchases": 9
+        },
+        {
+          "day": 30,
+          "population": [
+            2
+          ],
+          "totalPopulation": 2,
+          "wallet": 10,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            2
+          ],
+          "farms": [
+            0
+          ],
+          "capacity": [
+            3
+          ],
+          "food": [
+            2
+          ],
+          "clock": [
+            204
+          ],
+          "bank": [
+            156
+          ],
+          "purchases": 25
+        }
+      ],
+      "milestones": []
+    },
+    {
+      "rules": "current-domain",
+      "policy": "two-islands",
+      "dailyCompletions": 6,
+      "rows": [
+        {
+          "day": 1,
+          "population": [
+            1,
+            1
+          ],
+          "totalPopulation": 2,
+          "wallet": 12,
+          "landCells": [
+            30,
+            30
+          ],
+          "homes": [
+            1,
+            1
+          ],
+          "farms": [
+            0,
+            0
+          ],
+          "capacity": [
+            1,
+            1
+          ],
+          "food": [
+            2,
+            2
+          ],
+          "clock": [
+            12,
+            0
+          ],
+          "bank": [
+            0,
+            0
+          ],
+          "purchases": 2
+        },
+        {
+          "day": 7,
+          "population": [
+            2,
+            1
+          ],
+          "totalPopulation": 3,
+          "wallet": 24,
+          "landCells": [
+            30,
+            30
+          ],
+          "homes": [
+            2,
+            1
+          ],
+          "farms": [
+            0,
+            0
+          ],
+          "capacity": [
+            2,
+            1
+          ],
+          "food": [
+            2,
+            2
+          ],
+          "clock": [
+            84,
+            0
+          ],
+          "bank": [
+            0,
+            0
+          ],
+          "purchases": 4
+        },
+        {
+          "day": 30,
+          "population": [
+            3,
+            3
+          ],
+          "totalPopulation": 6,
+          "wallet": 0,
+          "landCells": [
+            30,
+            30
+          ],
+          "homes": [
+            3,
+            3
+          ],
+          "farms": [
+            1,
+            1
+          ],
+          "capacity": [
+            3,
+            3
+          ],
+          "food": [
+            4,
+            4
+          ],
+          "clock": [
+            192,
+            168
+          ],
+          "bank": [
+            0,
+            0
+          ],
+          "purchases": 14
+        }
+      ],
+      "milestones": [
+        {
+          "populationAtLeast": 3,
+          "day": 7,
+          "session": 1,
+          "receivedCompletions": 39,
+          "receivedDrops": 78,
+          "wallet": 18,
+          "spentDrops": 60,
+          "townClocks": [
+            78,
+            0
+          ]
+        },
+        {
+          "populationAtLeast": 5,
+          "day": 25,
+          "session": 1,
+          "receivedCompletions": 147,
+          "receivedDrops": 294,
+          "wallet": 14,
+          "spentDrops": 280,
+          "townClocks": [
+            150,
+            126
+          ]
+        }
+      ]
+    },
+    {
+      "rules": "candidate-partial-diagnostic",
+      "policy": "two-islands",
+      "dailyCompletions": 6,
+      "rows": [
+        {
+          "day": 1,
+          "population": [
+            1,
+            1
+          ],
+          "totalPopulation": 2,
+          "wallet": 12,
+          "landCells": [
+            30,
+            30
+          ],
+          "homes": [
+            1,
+            1
+          ],
+          "farms": [
+            0,
+            0
+          ],
+          "capacity": [
+            1,
+            1
+          ],
+          "food": [
+            2,
+            2
+          ],
+          "clock": [
+            12,
+            0
+          ],
+          "bank": [
+            0,
+            0
+          ],
+          "purchases": 2
+        },
+        {
+          "day": 7,
+          "population": [
+            2,
+            1
+          ],
+          "totalPopulation": 3,
+          "wallet": 24,
+          "landCells": [
+            30,
+            30
+          ],
+          "homes": [
+            2,
+            1
+          ],
+          "farms": [
+            0,
+            0
+          ],
+          "capacity": [
+            3,
+            1
+          ],
+          "food": [
+            2,
+            2
+          ],
+          "clock": [
+            84,
+            0
+          ],
+          "bank": [
+            0,
+            0
+          ],
+          "purchases": 4
+        },
+        {
+          "day": 30,
+          "population": [
+            3,
+            3
+          ],
+          "totalPopulation": 6,
+          "wallet": 100,
+          "landCells": [
+            30,
+            30
+          ],
+          "homes": [
+            3,
+            2
+          ],
+          "farms": [
+            1,
+            1
+          ],
+          "capacity": [
+            4,
+            4
+          ],
+          "food": [
+            4,
+            4
+          ],
+          "clock": [
+            192,
+            168
+          ],
+          "bank": [
+            0,
+            0
+          ],
+          "purchases": 10
+        }
+      ],
+      "milestones": [
+        {
+          "populationAtLeast": 3,
+          "day": 7,
+          "session": 1,
+          "receivedCompletions": 39,
+          "receivedDrops": 78,
+          "wallet": 18,
+          "spentDrops": 60,
+          "townClocks": [
+            78,
+            0
+          ]
+        },
+        {
+          "populationAtLeast": 5,
+          "day": 20,
+          "session": 1,
+          "receivedCompletions": 117,
+          "receivedDrops": 234,
+          "wallet": 34,
+          "spentDrops": 200,
+          "townClocks": [
+            150,
+            84
+          ]
+        }
+      ]
+    },
+    {
+      "rules": "current-domain",
+      "policy": "housing",
+      "dailyCompletions": 20,
+      "rows": [
+        {
+          "day": 1,
+          "population": [
+            1
+          ],
+          "totalPopulation": 1,
+          "wallet": 20,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            1
+          ],
+          "farms": [
+            0
+          ],
+          "capacity": [
+            1
+          ],
+          "food": [
+            2
+          ],
+          "clock": [
+            40
+          ],
+          "bank": [
+            0
+          ],
+          "purchases": 2
+        },
+        {
+          "day": 7,
+          "population": [
+            4
+          ],
+          "totalPopulation": 4,
+          "wallet": 20,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            5
+          ],
+          "farms": [
+            1
+          ],
+          "capacity": [
+            5
+          ],
+          "food": [
+            4
+          ],
+          "clock": [
+            278
+          ],
+          "bank": [
+            2
+          ],
+          "purchases": 9
+        },
+        {
+          "day": 30,
+          "population": [
+            16
+          ],
+          "totalPopulation": 16,
+          "wallet": 380,
+          "landCells": [
+            45
+          ],
+          "homes": [
+            9
+          ],
+          "farms": [
+            8
+          ],
+          "capacity": [
+            17
+          ],
+          "food": [
+            18
+          ],
+          "clock": [
+            1200
+          ],
+          "bank": [
+            0
+          ],
+          "purchases": 21
+        }
+      ],
+      "milestones": [
+        {
+          "populationAtLeast": 3,
+          "day": 4,
+          "session": 2,
+          "receivedCompletions": 80,
+          "receivedDrops": 160,
+          "wallet": 0,
+          "spentDrops": 160,
+          "townClocks": [
+            160
+          ]
+        },
+        {
+          "populationAtLeast": 5,
+          "day": 8,
+          "session": 1,
+          "receivedCompletions": 150,
+          "receivedDrops": 300,
+          "wallet": 0,
+          "spentDrops": 300,
+          "townClocks": [
+            300
+          ]
+        },
+        {
+          "populationAtLeast": 10,
+          "day": 17,
+          "session": 1,
+          "receivedCompletions": 330,
+          "receivedDrops": 660,
+          "wallet": 200,
+          "spentDrops": 460,
+          "townClocks": [
+            660
+          ]
+        }
+      ]
+    },
+    {
+      "rules": "candidate-partial-diagnostic",
+      "policy": "housing",
+      "dailyCompletions": 20,
+      "rows": [
+        {
+          "day": 1,
+          "population": [
+            1
+          ],
+          "totalPopulation": 1,
+          "wallet": 20,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            1
+          ],
+          "farms": [
+            0
+          ],
+          "capacity": [
+            1
+          ],
+          "food": [
+            2
+          ],
+          "clock": [
+            40
+          ],
+          "bank": [
+            0
+          ],
+          "purchases": 2
+        },
+        {
+          "day": 7,
+          "population": [
+            4
+          ],
+          "totalPopulation": 4,
+          "wallet": 80,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            3
+          ],
+          "farms": [
+            2
+          ],
+          "capacity": [
+            5
+          ],
+          "food": [
+            6
+          ],
+          "clock": [
+            280
+          ],
+          "bank": [
+            0
+          ],
+          "purchases": 7
+        },
+        {
+          "day": 30,
+          "population": [
+            16
+          ],
+          "totalPopulation": 16,
+          "wallet": 380,
+          "landCells": [
+            45
+          ],
+          "homes": [
+            9
+          ],
+          "farms": [
+            8
+          ],
+          "capacity": [
+            17
+          ],
+          "food": [
+            18
+          ],
+          "clock": [
+            1200
+          ],
+          "bank": [
+            0
+          ],
+          "purchases": 21
+        }
+      ],
+      "milestones": [
+        {
+          "populationAtLeast": 3,
+          "day": 4,
+          "session": 2,
+          "receivedCompletions": 80,
+          "receivedDrops": 160,
+          "wallet": 0,
+          "spentDrops": 160,
+          "townClocks": [
+            160
+          ]
+        },
+        {
+          "populationAtLeast": 5,
+          "day": 8,
+          "session": 1,
+          "receivedCompletions": 150,
+          "receivedDrops": 300,
+          "wallet": 40,
+          "spentDrops": 260,
+          "townClocks": [
+            300
+          ]
+        },
+        {
+          "populationAtLeast": 10,
+          "day": 17,
+          "session": 1,
+          "receivedCompletions": 330,
+          "receivedDrops": 660,
+          "wallet": 200,
+          "spentDrops": 460,
+          "townClocks": [
+            660
+          ]
+        }
+      ]
+    },
+    {
+      "rules": "current-domain",
+      "policy": "garden",
+      "dailyCompletions": 20,
+      "rows": [
+        {
+          "day": 1,
+          "population": [
+            1
+          ],
+          "totalPopulation": 1,
+          "wallet": 0,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            1
+          ],
+          "farms": [
+            0
+          ],
+          "capacity": [
+            1
+          ],
+          "food": [
+            2
+          ],
+          "clock": [
+            40
+          ],
+          "bank": [
+            0
+          ],
+          "purchases": 4
+        },
+        {
+          "day": 7,
+          "population": [
+            2
+          ],
+          "totalPopulation": 2,
+          "wallet": 20,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            2
+          ],
+          "farms": [
+            0
+          ],
+          "capacity": [
+            2
+          ],
+          "food": [
+            2
+          ],
+          "clock": [
+            202
+          ],
+          "bank": [
+            78
+          ],
+          "purchases": 18
+        },
+        {
+          "day": 30,
+          "population": [
+            4
+          ],
+          "totalPopulation": 4,
+          "wallet": 30,
+          "landCells": [
+            60
+          ],
+          "homes": [
+            4
+          ],
+          "farms": [
+            2
+          ],
+          "capacity": [
+            4
+          ],
+          "food": [
+            2
+          ],
+          "clock": [
+            390
+          ],
+          "bank": [
+            810
+          ],
+          "purchases": 52
+        }
+      ],
+      "milestones": [
+        {
+          "populationAtLeast": 3,
+          "day": 14,
+          "session": 2,
+          "receivedCompletions": 280,
+          "receivedDrops": 560,
+          "wallet": 0,
+          "spentDrops": 560,
+          "townClocks": [
+            276
+          ]
+        }
+      ]
+    },
+    {
+      "rules": "candidate-partial-diagnostic",
+      "policy": "garden",
+      "dailyCompletions": 20,
+      "rows": [
+        {
+          "day": 1,
+          "population": [
+            1
+          ],
+          "totalPopulation": 1,
+          "wallet": 0,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            1
+          ],
+          "farms": [
+            0
+          ],
+          "capacity": [
+            1
+          ],
+          "food": [
+            2
+          ],
+          "clock": [
+            40
+          ],
+          "bank": [
+            0
+          ],
+          "purchases": 4
+        },
+        {
+          "day": 7,
+          "population": [
+            2
+          ],
+          "totalPopulation": 2,
+          "wallet": 20,
+          "landCells": [
+            30
+          ],
+          "homes": [
+            2
+          ],
+          "farms": [
+            0
+          ],
+          "capacity": [
+            3
+          ],
+          "food": [
+            2
+          ],
+          "clock": [
+            180
+          ],
+          "bank": [
+            100
+          ],
+          "purchases": 18
+        },
+        {
+          "day": 30,
+          "population": [
+            6
+          ],
+          "totalPopulation": 6,
+          "wallet": 10,
+          "landCells": [
+            60
+          ],
+          "homes": [
+            4
+          ],
+          "farms": [
+            3
+          ],
+          "capacity": [
+            7
+          ],
+          "food": [
+            6
+          ],
+          "clock": [
+            654
+          ],
+          "bank": [
+            546
+          ],
+          "purchases": 51
+        }
+      ],
+      "milestones": [
+        {
+          "populationAtLeast": 3,
+          "day": 8,
+          "session": 2,
+          "receivedCompletions": 160,
+          "receivedDrops": 320,
+          "wallet": 0,
+          "spentDrops": 320,
+          "townClocks": [
+            320
+          ]
+        },
+        {
+          "populationAtLeast": 5,
+          "day": 16,
+          "session": 2,
+          "receivedCompletions": 320,
+          "receivedDrops": 640,
+          "wallet": 0,
+          "spentDrops": 640,
+          "townClocks": [
+            606
+          ]
+        }
+      ]
+    },
+    {
+      "rules": "current-domain",
+      "policy": "two-islands",
+      "dailyCompletions": 20,
+      "rows": [
+        {
+          "day": 1,
+          "population": [
+            1,
+            1
+          ],
+          "totalPopulation": 2,
+          "wallet": 20,
+          "landCells": [
+            30,
+            30
+          ],
+          "homes": [
+            1,
+            1
+          ],
+          "farms": [
+            0,
+            0
+          ],
+          "capacity": [
+            1,
+            1
+          ],
+          "food": [
+            2,
+            2
+          ],
+          "clock": [
+            40,
+            0
+          ],
+          "bank": [
+            0,
+            0
+          ],
+          "purchases": 3
+        },
+        {
+          "day": 7,
+          "population": [
+            4,
+            1
+          ],
+          "totalPopulation": 5,
+          "wallet": 20,
+          "landCells": [
+            30,
+            30
+          ],
+          "homes": [
+            5,
+            1
+          ],
+          "farms": [
+            1,
+            0
+          ],
+          "capacity": [
+            5,
+            1
+          ],
+          "food": [
+            4,
+            2
+          ],
+          "clock": [
+            278,
+            0
+          ],
+          "bank": [
+            2,
+            0
+          ],
+          "purchases": 10
+        },
+        {
+          "day": 30,
+          "population": [
+            9,
+            9
+          ],
+          "totalPopulation": 18,
+          "wallet": 360,
+          "landCells": [
+            30,
+            30
+          ],
+          "homes": [
+            5,
+            7
+          ],
+          "farms": [
+            4,
+            4
+          ],
+          "capacity": [
+            10,
+            13
+          ],
+          "food": [
+            10,
+            10
+          ],
+          "clock": [
+            640,
+            560
+          ],
+          "bank": [
+            0,
+            0
+          ],
+          "purchases": 26
+        }
+      ],
+      "milestones": [
+        {
+          "populationAtLeast": 3,
+          "day": 2,
+          "session": 2,
+          "receivedCompletions": 40,
+          "receivedDrops": 80,
+          "wallet": 20,
+          "spentDrops": 60,
+          "townClocks": [
+            80,
+            0
+          ]
+        },
+        {
+          "populationAtLeast": 5,
+          "day": 6,
+          "session": 2,
+          "receivedCompletions": 120,
+          "receivedDrops": 240,
+          "wallet": 20,
+          "spentDrops": 220,
+          "townClocks": [
+            240,
+            0
+          ]
+        },
+        {
+          "populationAtLeast": 10,
+          "day": 15,
+          "session": 2,
+          "receivedCompletions": 300,
+          "receivedDrops": 600,
+          "wallet": 0,
+          "spentDrops": 600,
+          "townClocks": [
+            320,
+            280
+          ]
+        }
+      ]
+    },
+    {
+      "rules": "candidate-partial-diagnostic",
+      "policy": "two-islands",
+      "dailyCompletions": 20,
+      "rows": [
+        {
+          "day": 1,
+          "population": [
+            1,
+            1
+          ],
+          "totalPopulation": 2,
+          "wallet": 20,
+          "landCells": [
+            30,
+            30
+          ],
+          "homes": [
+            1,
+            1
+          ],
+          "farms": [
+            0,
+            0
+          ],
+          "capacity": [
+            1,
+            1
+          ],
+          "food": [
+            2,
+            2
+          ],
+          "clock": [
+            40,
+            0
+          ],
+          "bank": [
+            0,
+            0
+          ],
+          "purchases": 3
+        },
+        {
+          "day": 7,
+          "population": [
+            4,
+            1
+          ],
+          "totalPopulation": 5,
+          "wallet": 80,
+          "landCells": [
+            30,
+            30
+          ],
+          "homes": [
+            3,
+            1
+          ],
+          "farms": [
+            2,
+            0
+          ],
+          "capacity": [
+            5,
+            1
+          ],
+          "food": [
+            6,
+            2
+          ],
+          "clock": [
+            280,
+            0
+          ],
+          "bank": [
+            0,
+            0
+          ],
+          "purchases": 8
+        },
+        {
+          "day": 30,
+          "population": [
+            9,
+            9
+          ],
+          "totalPopulation": 18,
+          "wallet": 360,
+          "landCells": [
+            30,
+            30
+          ],
+          "homes": [
+            6,
+            6
+          ],
+          "farms": [
+            4,
+            4
+          ],
+          "capacity": [
+            10,
+            9
+          ],
+          "food": [
+            10,
+            10
+          ],
+          "clock": [
+            640,
+            560
+          ],
+          "bank": [
+            0,
+            0
+          ],
+          "purchases": 26
+        }
+      ],
+      "milestones": [
+        {
+          "populationAtLeast": 3,
+          "day": 2,
+          "session": 2,
+          "receivedCompletions": 40,
+          "receivedDrops": 80,
+          "wallet": 20,
+          "spentDrops": 60,
+          "townClocks": [
+            80,
+            0
+          ]
+        },
+        {
+          "populationAtLeast": 5,
+          "day": 6,
+          "session": 2,
+          "receivedCompletions": 120,
+          "receivedDrops": 240,
+          "wallet": 40,
+          "spentDrops": 200,
+          "townClocks": [
+            240,
+            0
+          ]
+        },
+        {
+          "populationAtLeast": 10,
+          "day": 15,
+          "session": 1,
+          "receivedCompletions": 290,
+          "receivedDrops": 580,
+          "wallet": 60,
+          "spentDrops": 520,
+          "townClocks": [
+            300,
+            280
+          ]
+        }
+      ]
+    }
+  ]
+}

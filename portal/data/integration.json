@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "currentCandidate": "b8c387298dadba32c5c582b7cd79e8b70a8ed3586c09f926547d6e159cea6464",
-  "legacyCandidate": "a33629604f8b10b31f9bd0002d41f456254d55a5163a51e51ea4a528fcdffe69",
+  "currentCandidate": "42c42240573b8faca92547fb0b73ea3ff1df1b13e25f1db64b035cf2e4c72a7a",
+  "legacyCandidate": "4c8aec8ac34e385956b90a75d717d8fcf5d126de51f671aedd901a671e9d0623",
   "project": {
     "schemaVersion": "1.0",
     "slug": "sansu",
@@ -26,7 +26,7 @@
       "CLAUDE.md",
       "CONSTITUTION.md"
     ],
-    "status": "2026-10-19の直接依頼： 島メニューと直接遊べるホームをローカル実装。「おく／もちもの」を島へ出し、任意目標・ながめ・土地拡張と補助メニューを分けた。関連21件・build・classic smoke32件と主要画面を確認。追加レビューを受け、320幅の黒帯をメニュー内部スクロールの分離で修正し、近景/全景と配置ヒントを追加。4幅と主要往復をローカル確認。全体suiteは途中停止し、timeoutの2ファイルは個別PASS。追加改善の証拠。既存ポータル検査、実機/独立理解/配布は別に確認する。実画面と検証。下記の美術採用待ちは継続。\n開いた入り江の粗い本体を実画面まで作り、採用レビュー待ち。 2026-10-13、同じ所有物と保存形式を保ったまま、旧案の一枚の岬を二本の腕・水面・細い外周接続へ変更した。輪郭差と対象runtimeはGO/PASS、生地形の魅力と独立理解はHOLD。R3は自動開始しない。",
+    "status": "2026-10-19の育成実装依頼：育成規則v0.4。ローカル実装・技術検証を完了。購入統合・成長・自生・共有庭実利用・記念復旧・保存5隔離と案内/初回操作を接続。全体5,434件・最終場所73件・classic32、初回3幅、production2幅と実旧→新→対応復旧4ケースがPASS。実画面と検証範囲。実機/参加者/美術/公開は別受入。既存の美術採用待ちを完了へ変更しない。",
     "nextAction": "開いた入り江の旧案比較と実画面を利用者が確認し、この輪郭をR3へ進めるかを決める。採用前に装飾や通常保存の実装を先行させない。 計画・タスクの詳細：R0レビュー、R1統合失敗の診断、R2粗い本体三配置まで完了。採用後は R3成長と実利用 → R4通常取得・保存・拡張 → R5美術と配布。各項目を別の短い作業に区切る。",
     "tasks": [
       {
@@ -67,15 +67,6 @@
       }
     ],
     "decisions": [
-      {
-        "id": "queue-review",
-        "title": "共有キューの次段階を進める判断",
-        "status": "2026-10-19の直接依頼： 島メニューと直接遊べるホームをローカル実装。「おく／もちもの」を島へ出し、任意目標・ながめ・土地拡張と補助メニューを分けた。関連21件・build・classic smoke32件と主要画面を確認。追加レビューを受け、320幅の黒帯をメニュー内部スクロールの分離で修正し、近景/全景と配置ヒントを追加。4幅と主要往復をローカル確認。全体suiteは途中停止し、timeoutの2ファイルは個別PASS。追加改善の証拠。既存ポータル検査、実機/独立理解/配布は別に確認する。実画面と検証。下記の美術採用待ちは継続。\n開いた入り江の粗い本体を実画面まで作り、採用レビュー待ち。 2026-10-13、同じ所有物と保存形式を保ったまま、旧案の一枚の岬を二本の腕・水面・細い外周接続へ変更した。輪郭差と対象runtimeはGO/PASS、生地形の魅力と独立理解はHOLD。R3は自動開始しない。",
-        "owner": "Yu（採用判断）",
-        "deadline": "未設定（要相談）",
-        "risk": "未採用の輪郭や美術を、通常保存・公開へ先行させない。",
-        "notes": "根拠: .agents/tasks/TASKS.md。開いた入り江の旧案比較と実画面を利用者が確認し、この輪郭をR3へ進めるかを決める。採用前に装飾や通常保存の実装を先行させない。 計画・タスクの詳細：R0レビュー、R1統合失敗の診断、R2粗い本体三配置まで完了。採用後は R3成長と実利用 → R4通常取得・保存・拡張 → R5美術と配布。各項目を別の短い作業に区切る。"
-      },
       {
         "id": "confirmation-1",
         "title": "iPhoneホーム画面版",
@@ -864,14 +855,14 @@
     },
     "source_hashes": {
       ".agents/tasks/BLOCKED.md": "2ce9fc1e3fb45a558af66f0c1b590c23ade05b27cac4bcc75a6d0122c067e746",
-      ".agents/tasks/TASKS.md": "14310cc8663c6ae10c212c1dc71d5b84b7a93584375d7ae3a5ac4f9abdfdcf81",
+      ".agents/tasks/TASKS.md": "cf7ef50d08e7797a6ff3cdd2fb0084d04999adc70edcee6f140b7ed04698c4e4",
       "CONSTITUTION.md": "5ef2541bc4de9439200c3a0b2a80c75800443d4f9b3a9230b20be09f428e480d",
       "docs/adr/2026-10-11-authored-place-world-policy.md": "764a252c047b784b3a78516ac421f6fe9c4f2865a51bf13eb16ac1afd6347af6",
       "docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md": "be86195cb964abd5217995ce8fbf26f32264b0a8b1e7ffcf311f2172a41760a6",
       "docs/design/2026-10-13-open-inlet-rough-v1-runtime/report.json": "ac2b3643f8032d8ed85dd7ebc8ae6999ac5fec5b8c822106417566521bd38e23",
       "docs/tasks/active/2026-09-20-whole-app-ux-coherence.md": "f88ac90542d88db1a5ceea185ae482d3cf855efcc2fee74695240d73b455ba17",
       "docs/tasks/active/2026-09-23-island-performance.md": "7ad513c708ef9271c6c4ff66ca46b638e60892e627380f2bc1452d755b8a7e17",
-      "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md": "df5c25214a42012fafd8f98aa52a9820eebb7ef1b0a1bcc413e111121f785d1a",
+      "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md": "a848f6d47f1f9aef0ebb7fcd758ac085537bd8c11b9b437f1a9d961ce2ec481f",
       "docs/tasks/active/2026-10-05-growing-island-release.md": "a5b06db72a5ff7a2dd271669948df0ef503f22b81e47a56d00b1ad359518fafe"
     },
     "source_history": [
@@ -888,15 +879,15 @@
     ],
     [
       "現在地",
-      "2026-10-19の直接依頼： 島メニューと直接遊べるホームをローカル実装。"
+      "2026-10-19の育成実装依頼：育成規則v0.4。"
     ],
     [
       "止まっているものと理由",
-      "採用レビュー待ち。採用前に、次の制作や通常保存を先行しません。"
+      "確認条件待ちの項目は、端末や参加者などの準備が必要です。"
     ],
     [
       "判断",
-      "開いた入り江の旧案比較と実画面を利用者が確認し、この輪郭を成長と実利用へ進めるかを決める。"
+      "現在の台帳に採用判断の登録はありません。確認条件は別に示します。"
     ],
     [
       "判断後に進むもの",
@@ -940,19 +931,19 @@
     {
       "source": ".agents/index.html",
       "target": "overview.html",
-      "originalSha256": "e33185753e9d69b87681af67e3d30aff39c4ad9bf8de1313868beda514e75fe7",
+      "originalSha256": "e0733c0bd4d134b5b97f3aefbc2b814c26df4c3eadcccceb88efd6a55dbd2234",
       "ai": "ai/overview.html"
     },
     {
       "source": ".agents/map.html",
       "target": "map.html",
-      "originalSha256": "2b92938ababd1f754a67f1354cabcd7b5173b5bca1dfd3fba94f0b9f89de4142",
+      "originalSha256": "22db83185354cb842c5cca1fb62fde49cc585313e2473989c6d80efeff0b1843",
       "ai": "ai/map.html"
     },
     {
       "source": ".agents/plan.html",
       "target": "plan.html",
-      "originalSha256": "009fd2b673832a97ae456de1a73f769124dc41571e423dcb5764d47b5d58b055",
+      "originalSha256": "2ea901afb8536d93fa70dfeb36d6263290c73a237cbfd872776513f144616170",
       "ai": "ai/plan.html"
     },
     {
@@ -964,19 +955,19 @@
     {
       "source": ".agents/operations.html",
       "target": "operations.html",
-      "originalSha256": "a97a63c44cdae5883436222ddfbfd98ff62f39c56cec129d6d89104b250db145",
+      "originalSha256": "53e8c8cfe995977bc1d3d317b4e8c07c51eef20a2bfb1a998f2f3048f7678d62",
       "ai": "ai/operations.html"
     },
     {
       "source": ".agents/tasks/index.html",
       "target": "tasks.html",
-      "originalSha256": "053a1e8a3258a269b2594036e14c573686666f0c1065f9c35044e38816c4592b",
+      "originalSha256": "30b9545f1a54d6e9159e47cc90fe095837e8d0634a99e7c68065f5778a54dc78",
       "ai": "ai/tasks.html"
     },
     {
       "source": "docs/index.html",
       "target": "documents.html",
-      "originalSha256": "bb5a8661831018c692c7f2aac620456a80db7dd84bb35c9b6ba6b886d460099e",
+      "originalSha256": "1fa83807f09c2450b93609d03e968830c624dfd0b66ea48f2e7f72c535b92c3f",
       "ai": "ai/documents.html"
     }
   ],
@@ -989,24 +980,17 @@
       "mode": "reference"
     },
     {
-      "source": "docs/tasks/active/2026-10-19-island-menu.md",
-      "target": "../docs/tasks/active/2026-10-19-island-menu.md",
-      "sha256": "01655fb6d7ef7acc4c01e01f8584de8c6f15f48dd23a5de97d38c625f923b951",
-      "bytes": 5552,
+      "source": "docs/tasks/active/2026-10-19-island-growth-v04.md",
+      "target": "../docs/tasks/active/2026-10-19-island-growth-v04.md",
+      "sha256": "69825b972dded02e1a4e1f1888b733f284b74bec43946ac5a1138e82628b78aa",
+      "bytes": 3650,
       "mode": "reference"
     },
     {
-      "source": "docs/design/2026-10-19-island-direct-play/review-v3/README.md",
-      "target": "../docs/design/2026-10-19-island-direct-play/review-v3/README.md",
-      "sha256": "fc467a7d0cefd5e3f389da0ad0cc3ffe4bc5c5382fbef895738be50d423f4a54",
-      "bytes": 5304,
-      "mode": "reference"
-    },
-    {
-      "source": "docs/design/2026-10-19-island-direct-play/verification.md",
-      "target": "../docs/design/2026-10-19-island-direct-play/verification.md",
-      "sha256": "7010b64633fd9e7bf1c2bea5e87b52d6d6fb88ccf12e2c12169a28802542d76a",
-      "bytes": 6127,
+      "source": "docs/design/2026-10-19-island-growth-v04/README.md",
+      "target": "../docs/design/2026-10-19-island-growth-v04/README.md",
+      "sha256": "cf65f69cd537d868d8fb30b0d6264ae92d81caac1a56615013eb1232e6a172f1",
+      "bytes": 6448,
       "mode": "reference"
     },
     {
@@ -1019,15 +1003,15 @@
     {
       "source": "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
       "target": "../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
-      "sha256": "df5c25214a42012fafd8f98aa52a9820eebb7ef1b0a1bcc413e111121f785d1a",
-      "bytes": 34652,
+      "sha256": "a848f6d47f1f9aef0ebb7fcd758ac085537bd8c11b9b437f1a9d961ce2ec481f",
+      "bytes": 35507,
       "mode": "reference"
     },
     {
       "source": ".agents/tasks/TASKS.md",
       "target": "../.agents/tasks/TASKS.md",
-      "sha256": "14310cc8663c6ae10c212c1dc71d5b84b7a93584375d7ae3a5ac4f9abdfdcf81",
-      "bytes": 7630,
+      "sha256": "cf7ef50d08e7797a6ff3cdd2fb0084d04999adc70edcee6f140b7ed04698c4e4",
+      "bytes": 8220,
       "mode": "reference"
     },
     {
@@ -1453,8 +1437,8 @@
     {
       "source": "docs/product/01_app_spec.md",
       "target": "../docs/product/01_app_spec.md",
-      "sha256": "fce2cb45e94e094a51c0810202d85f9eb06d76f5c36c60c20203e67c094c77d3",
-      "bytes": 123553,
+      "sha256": "512be95a844d8651d31c715b2f55a73ea35088bd1fdb8dc723af07fa7109eac1",
+      "bytes": 124310,
       "mode": "reference"
     },
     {
@@ -1502,8 +1486,8 @@
     {
       "source": "docs/product/43_island_navigation_spec.md",
       "target": "../docs/product/43_island_navigation_spec.md",
-      "sha256": "5febdeebb5a37d367a0c0f7ced6a83256db2402968b96a45936f10bff81e72ab",
-      "bytes": 20672,
+      "sha256": "a12610d6122ba3759715c0fdd10a01d20ede1c61e3a47492c19aed3621102d3f",
+      "bytes": 20915,
       "mode": "reference"
     },
     {
@@ -1586,8 +1570,8 @@
     {
       "source": "docs/product/13_data_storage_migration_spec.md",
       "target": "../docs/product/13_data_storage_migration_spec.md",
-      "sha256": "ec3de24d9e6eaf7f5bf663e29e9b03e13c7a96fe1df022f0def07df60a55f8de",
-      "bytes": 46865,
+      "sha256": "8a51c5da335a5905caf21e876e77e45bfdf5646aab8852e43b214ae2a87bcc81",
+      "bytes": 49783,
       "mode": "reference"
     },
     {
@@ -1607,8 +1591,8 @@
     {
       "source": "docs/product/44_display_layout_spec.md",
       "target": "../docs/product/44_display_layout_spec.md",
-      "sha256": "3ae9587eed6789266fea1fef6029e9f6bc5007ef17d98265c3545ee667d6d94d",
-      "bytes": 13449,
+      "sha256": "0ba7d2437c0786d2765879f9f893084eccf9bdb61c4e18c636b27949499bb729",
+      "bytes": 13471,
       "mode": "reference"
     },
     {
@@ -1635,8 +1619,8 @@
     {
       "source": "docs/product/README.md",
       "target": "../docs/product/README.md",
-      "sha256": "064b5d9616299fea0b070d389d9b3b80c769403dec8d16399af2c4be89f37ff4",
-      "bytes": 18082,
+      "sha256": "935c21cb2d7fc306b700539fc0a73b4955a9c8d551ad5db48416deab4480b651",
+      "bytes": 18320,
       "mode": "reference"
     },
     {
@@ -4283,6 +4267,27 @@
       "target": "../docs/design/2026-10-19-island-direct-play/review-v3/768x1024-selected-goal.png",
       "sha256": "b89da288c0951c82a9461b221a4f11587841f9e460101b49dbcd3884784c27bf",
       "bytes": 303436,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-growth-v04/sw-rollback-tablet.png",
+      "target": "../docs/design/2026-10-19-island-growth-v04/sw-rollback-tablet.png",
+      "sha256": "858668fb66705f64b2048f2b74ad9b407a980b7095e3230ab32949d014ea4dad",
+      "bytes": 446638,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-growth-v04/shared-garden-tablet.png",
+      "target": "../docs/design/2026-10-19-island-growth-v04/shared-garden-tablet.png",
+      "sha256": "aaa12478988272bed74cc6096fbe816260999d48f9a22e0c669463638d057101",
+      "bytes": 401986,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-growth-v04/shared-garden-phone.png",
+      "target": "../docs/design/2026-10-19-island-growth-v04/shared-garden-phone.png",
+      "sha256": "29b18688554f5e364ac822cdc08bc14d9e3e4d8f19421f3e97931b7709a68b50",
+      "bytes": 219959,
       "mode": "reference"
     },
     {
@@ -10847,8 +10852,8 @@
     {
       "source": "docs/ai/verification_matrix.md",
       "target": "../docs/ai/verification_matrix.md",
-      "sha256": "dff16dca4e466c7bc365232df73a209154bf1dbd006ef6dc8633be5a71f85652",
-      "bytes": 85931,
+      "sha256": "1275377d53f3a9b79e620d44c2ad99bb0be4d41c0b763a9cf5d07b0f7f760b9a",
+      "bytes": 86922,
       "mode": "reference"
     },
     {
@@ -10868,15 +10873,15 @@
     {
       "source": ".agents/tasks/DONE.md",
       "target": "../.agents/tasks/DONE.md",
-      "sha256": "2a159aecf5174375b61e9b98bae01d687f7ce57d4deb0a0827eacc5e22c2db80",
-      "bytes": 38843,
+      "sha256": "ff7a95cc715bdc48a805741521b031586f5a264500e88011127ac3a61503f5b1",
+      "bytes": 39250,
       "mode": "reference"
     },
     {
       "source": "docs/index.md",
       "target": "../docs/index.md",
-      "sha256": "52714f2ab472c1cd1d0a0112234150e3540cc92578662de1bf66dd02ac0ed193",
-      "bytes": 20396,
+      "sha256": "e920a522007cf28c5e9f6ad4e90ab59a5a7323de6057197cf05fd2c2b3cb665b",
+      "bytes": 20780,
       "mode": "reference"
     },
     {
@@ -10980,8 +10985,8 @@
     {
       "source": "docs/product/52_growing_island_game_spec.md",
       "target": "../docs/product/52_growing_island_game_spec.md",
-      "sha256": "49139d597f830038f9ac52d645b1256014ae8049ca748a72844077b69f0abda4",
-      "bytes": 73556,
+      "sha256": "14ce0736face1ea0e904c476839128244e8c000be90c22026f9ed92ef6e8ebc1",
+      "bytes": 75240,
       "mode": "reference"
     },
     {
@@ -11015,8 +11020,8 @@
     {
       "source": "docs/product/island-first-play-onboarding.md",
       "target": "../docs/product/island-first-play-onboarding.md",
-      "sha256": "b65c18aa5911b8a891730fea09d8b984f0cb3535f2981c2b532f3f1baf197b0b",
-      "bytes": 4293,
+      "sha256": "7ed40b43670ad15de8f45e10729f276f0554de2e732694ec58abfc079f7593c9",
+      "bytes": 4548,
       "mode": "reference"
     },
     {
@@ -11031,6 +11036,48 @@
       "target": "../docs/product/island-place-growth-proposal.md",
       "sha256": "07067cc9bbea1acf829e0b3ce358e8aeacb23e30831c4c78214b000a5a840daf",
       "bytes": 8755,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/product/island-system/current-map.md",
+      "target": "../docs/product/island-system/current-map.md",
+      "sha256": "ca9e3e7bfbb2c2dd09270dced76fa3f4fb8322e147f58d3e9e699a7e9010c6c4",
+      "bytes": 32378,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/product/island-system/growth-proposal.md",
+      "target": "../docs/product/island-system/growth-proposal.md",
+      "sha256": "e3d6417301f11f17648582d494fb42ecc86694a11b71642d28546013f15c64fe",
+      "bytes": 33740,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/product/island-system/growth-rules.md",
+      "target": "../docs/product/island-system/growth-rules.md",
+      "sha256": "f2a46532a7fdeb3b969597536210452779cb3765e361a63bf95dfec70e2106b1",
+      "bytes": 13929,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/product/island-system/implementation-map.md",
+      "target": "../docs/product/island-system/implementation-map.md",
+      "sha256": "f624d53f471f08839d9f272a3e3c1a1300c912641193871f61ed9eef6af07838",
+      "bytes": 7206,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/product/island-system/README.md",
+      "target": "../docs/product/island-system/README.md",
+      "sha256": "ee0307a7454b7a30702176a2dc008b763dda5a3741b39310e6dd0d037a9a5080",
+      "bytes": 4185,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/product/island-voyages.md",
+      "target": "../docs/product/island-voyages.md",
+      "sha256": "8fc47dc9eb7359f8effcde0ad10ae4d9ade33ff48de9c3dda7b78286dec7589b",
+      "bytes": 4119,
       "mode": "reference"
     },
     {
@@ -11220,6 +11267,13 @@
       "target": "../docs/tasks/active/2026-10-18-promotion-cove-verification.md",
       "sha256": "beca4b4cf073ff3e39b16022084f386ec2b5977679da4e2eeb4dd7c16936d1e3",
       "bytes": 1188,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/tasks/active/2026-10-19-island-menu.md",
+      "target": "../docs/tasks/active/2026-10-19-island-menu.md",
+      "sha256": "01655fb6d7ef7acc4c01e01f8584de8c6f15f48dd23a5de97d38c625f923b951",
+      "bytes": 5552,
       "mode": "reference"
     },
     {
@@ -12800,8 +12854,8 @@
     {
       "source": "docs/design/2026-10-05-growing-bridge/production.md",
       "target": "../docs/design/2026-10-05-growing-bridge/production.md",
-      "sha256": "4a6af902a3379a3f464db025b59629b7aba55e6a23ff251d6f64418ff8377a59",
-      "bytes": 4485,
+      "sha256": "ffbcb5e29848128838d1f1ee8e71d5a23d187aaab65e194602b8e6be9532a90c",
+      "bytes": 7677,
       "mode": "reference"
     },
     {
@@ -14086,10 +14140,59 @@
       "mode": "reference"
     },
     {
+      "source": "docs/design/2026-10-19-island-direct-play/review-v3/README.md",
+      "target": "../docs/design/2026-10-19-island-direct-play/review-v3/README.md",
+      "sha256": "fc467a7d0cefd5e3f389da0ad0cc3ffe4bc5c5382fbef895738be50d423f4a54",
+      "bytes": 5304,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-direct-play/verification.md",
+      "target": "../docs/design/2026-10-19-island-direct-play/verification.md",
+      "sha256": "7010b64633fd9e7bf1c2bea5e87b52d6d6fb88ccf12e2c12169a28802542d76a",
+      "bytes": 6127,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-growth-v04/main-integration.md",
+      "target": "../docs/design/2026-10-19-island-growth-v04/main-integration.md",
+      "sha256": "3ca0920799fd1fab7a96f3a33b24df78e01950d2a052f6b7facda4e0c80ec84d",
+      "bytes": 2934,
+      "mode": "reference"
+    },
+    {
       "source": "docs/design/2026-10-19-island-menu/verification.md",
       "target": "../docs/design/2026-10-19-island-menu/verification.md",
       "sha256": "671d48d47b60237e462d9d06306be0c22b68abecad213c7887bd8fec8d2c3d03",
       "bytes": 6422,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-system-spec/pace-analysis.md",
+      "target": "../docs/design/2026-10-19-island-system-spec/pace-analysis.md",
+      "sha256": "74b8fb459389b14bac4634d9cb958ea795a740ce3cd87915816604061a3f8d62",
+      "bytes": 6442,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-system-spec/README.md",
+      "target": "../docs/design/2026-10-19-island-system-spec/README.md",
+      "sha256": "4e6e6dbb8b0f36189a61ebab8145b7660286e624b2468502107b1349b741addc",
+      "bytes": 7125,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-voyages/audit.md",
+      "target": "../docs/design/2026-10-19-island-voyages/audit.md",
+      "sha256": "383c3c97e5b74addda640fb4bf8568466e2bc94baad4b9550c4fccbce7cee856",
+      "bytes": 6323,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-voyages/verification.md",
+      "target": "../docs/design/2026-10-19-island-voyages/verification.md",
+      "sha256": "2a1276f919577af25ebb1b42a25286e8b3fa3221371d2671c62e7117378ae582",
+      "bytes": 11704,
       "mode": "reference"
     },
     {
@@ -15124,8 +15227,8 @@
     {
       "source": "docs/runbooks/growing-update.md",
       "target": "../docs/runbooks/growing-update.md",
-      "sha256": "293f33d437a8b63ccc6ecf2bceb000b2eb76d7b2cf9b33af4c3017fe75c28dd8",
-      "bytes": 3593,
+      "sha256": "12941b9f71236ec509bf4c73d85569af88dbf56eb641b3d8e2fe0cda96f6f125",
+      "bytes": 4315,
       "mode": "reference"
     },
     {
@@ -15203,6 +15306,20 @@
       "target": "../docs/adr/2026-10-11-authored-place-world-policy.md",
       "sha256": "764a252c047b784b3a78516ac421f6fe9c4f2865a51bf13eb16ac1afd6347af6",
       "bytes": 5137,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/adr/2026-10-19-growing-voyage-writer-fence.md",
+      "target": "../docs/adr/2026-10-19-growing-voyage-writer-fence.md",
+      "sha256": "4a841d4504c2197f79d4668c6a7384b5845e36bab7993e2bdbafd90c7d958ec2",
+      "bytes": 3389,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/adr/2026-10-19-island-growth-v04.md",
+      "target": "../docs/adr/2026-10-19-island-growth-v04.md",
+      "sha256": "d64d50c95505fbd088880b45f233458b867f48a0a7752f4ff62bd938b364b76c",
+      "bytes": 2448,
       "mode": "reference"
     },
     {
@@ -15733,8 +15850,8 @@
     {
       "source": "docs/done/2026-10.md",
       "target": "../docs/done/2026-10.md",
-      "sha256": "011c88de10ddb493bd3ab1d2d8942c55173d23555538ae18f382d33717aaa03c",
-      "bytes": 137527,
+      "sha256": "56be3e9a544e7f2cf4c3e0394bbf4b1f4174b04c29394da11fd2eeeb758bb7ed",
+      "bytes": 138886,
       "mode": "reference"
     },
     {
@@ -15866,8 +15983,8 @@
     {
       "source": "docs/maps/index.md",
       "target": "../docs/maps/index.md",
-      "sha256": "4d994d453644d54370abfd34380f4807e6fd62e761c62311b53f01a31931bcc8",
-      "bytes": 1758,
+      "sha256": "f69855d2083c6fcc4afa0f5b12e3c0aa7e77354749a3af9a5bcc64124c6cd4d7",
+      "bytes": 1959,
       "mode": "reference"
     },
     {
@@ -15926,16 +16043,12 @@
       "target": "../CONSTITUTION.md"
     },
     {
-      "source": "docs/tasks/active/2026-10-19-island-menu.md",
-      "target": "../docs/tasks/active/2026-10-19-island-menu.md"
+      "source": "docs/tasks/active/2026-10-19-island-growth-v04.md",
+      "target": "../docs/tasks/active/2026-10-19-island-growth-v04.md"
     },
     {
-      "source": "docs/design/2026-10-19-island-direct-play/review-v3/README.md",
-      "target": "../docs/design/2026-10-19-island-direct-play/review-v3/README.md"
-    },
-    {
-      "source": "docs/design/2026-10-19-island-direct-play/verification.md",
-      "target": "../docs/design/2026-10-19-island-direct-play/verification.md"
+      "source": "docs/design/2026-10-19-island-growth-v04/README.md",
+      "target": "../docs/design/2026-10-19-island-growth-v04/README.md"
     },
     {
       "source": "docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md",
@@ -17808,6 +17921,18 @@
     {
       "source": "docs/design/2026-10-19-island-direct-play/review-v3/768x1024-selected-goal.png",
       "target": "../docs/design/2026-10-19-island-direct-play/review-v3/768x1024-selected-goal.png"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-growth-v04/sw-rollback-tablet.png",
+      "target": "../docs/design/2026-10-19-island-growth-v04/sw-rollback-tablet.png"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-growth-v04/shared-garden-tablet.png",
+      "target": "../docs/design/2026-10-19-island-growth-v04/shared-garden-tablet.png"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-growth-v04/shared-garden-phone.png",
+      "target": "../docs/design/2026-10-19-island-growth-v04/shared-garden-phone.png"
     },
     {
       "source": "docs/design/2026-10-19-island-menu/menu-390.png",
@@ -21666,6 +21791,30 @@
       "target": "../docs/product/island-place-growth-proposal.md"
     },
     {
+      "source": "docs/product/island-system/current-map.md",
+      "target": "../docs/product/island-system/current-map.md"
+    },
+    {
+      "source": "docs/product/island-system/growth-proposal.md",
+      "target": "../docs/product/island-system/growth-proposal.md"
+    },
+    {
+      "source": "docs/product/island-system/growth-rules.md",
+      "target": "../docs/product/island-system/growth-rules.md"
+    },
+    {
+      "source": "docs/product/island-system/implementation-map.md",
+      "target": "../docs/product/island-system/implementation-map.md"
+    },
+    {
+      "source": "docs/product/island-system/README.md",
+      "target": "../docs/product/island-system/README.md"
+    },
+    {
+      "source": "docs/product/island-voyages.md",
+      "target": "../docs/product/island-voyages.md"
+    },
+    {
       "source": "docs/product/island-world-contract.md",
       "target": "../docs/product/island-world-contract.md"
     },
@@ -21772,6 +21921,10 @@
     {
       "source": "docs/tasks/active/2026-10-18-promotion-cove-verification.md",
       "target": "../docs/tasks/active/2026-10-18-promotion-cove-verification.md"
+    },
+    {
+      "source": "docs/tasks/active/2026-10-19-island-menu.md",
+      "target": "../docs/tasks/active/2026-10-19-island-menu.md"
     },
     {
       "source": "docs/tasks/active/README.md",
@@ -23410,8 +23563,36 @@
       "target": "../docs/design/2026-10-19-island-direct-play/main-integration/README.md"
     },
     {
+      "source": "docs/design/2026-10-19-island-direct-play/review-v3/README.md",
+      "target": "../docs/design/2026-10-19-island-direct-play/review-v3/README.md"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-direct-play/verification.md",
+      "target": "../docs/design/2026-10-19-island-direct-play/verification.md"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-growth-v04/main-integration.md",
+      "target": "../docs/design/2026-10-19-island-growth-v04/main-integration.md"
+    },
+    {
       "source": "docs/design/2026-10-19-island-menu/verification.md",
       "target": "../docs/design/2026-10-19-island-menu/verification.md"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-system-spec/pace-analysis.md",
+      "target": "../docs/design/2026-10-19-island-system-spec/pace-analysis.md"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-system-spec/README.md",
+      "target": "../docs/design/2026-10-19-island-system-spec/README.md"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-voyages/audit.md",
+      "target": "../docs/design/2026-10-19-island-voyages/audit.md"
+    },
+    {
+      "source": "docs/design/2026-10-19-island-voyages/verification.md",
+      "target": "../docs/design/2026-10-19-island-voyages/verification.md"
     },
     {
       "source": "docs/design/audits/2026-07-20-score-benchmark/README.md",
@@ -24048,6 +24229,14 @@
     {
       "source": "docs/adr/2026-10-11-authored-place-world-policy.md",
       "target": "../docs/adr/2026-10-11-authored-place-world-policy.md"
+    },
+    {
+      "source": "docs/adr/2026-10-19-growing-voyage-writer-fence.md",
+      "target": "../docs/adr/2026-10-19-growing-voyage-writer-fence.md"
+    },
+    {
+      "source": "docs/adr/2026-10-19-island-growth-v04.md",
+      "target": "../docs/adr/2026-10-19-island-growth-v04.md"
     },
     {
       "source": "docs/adr/README.md",

@@ -31,7 +31,7 @@ async function store(page, database, table, key) {
     }, { database, table, key });
 }
 const session = page => store(page, 'SansuDatabase', 'appData', 'island-first-play');
-const world = async page => store(page, base.includes(':5198') ? 'SansuGrowingIslandPreviewV1' : 'SansuGrowingIslandV1', 'placedIslands', (await session(page)).ownerId);
+const world = async page => store(page, base.includes(':5198') ? 'SansuGrowingIslandPreviewV1' : 'SansuGrowingIslandV1', 'cultivatedIslands', (await session(page)).ownerId);
 async function until(read, predicate) {
     for (let n = 0; n < 300; n++) { const value = await read(); if (predicate(value)) return value; await new Promise(r => setTimeout(r, 100)); }
     throw Error('Saved state did not reach expected condition');
@@ -72,8 +72,8 @@ async function enter(page) {
     await ready(page);
 }
 try {
-    for (const width of [390, 768]) {
-        const context = await browser.newContext({ viewport: { width, height: width === 390 ? 844 : 1024 }, hasTouch: true, reducedMotion: width === 768 ? 'reduce' : 'no-preference' });
+    for (const width of [320, 390, 768]) {
+        const context = await browser.newContext({ viewport: { width, height: width < 768 ? 844 : 1024 }, hasTouch: true, reducedMotion: width === 768 ? 'reduce' : 'no-preference' });
         const page = activePage = await context.newPage(); page.setDefaultTimeout(90000);
         const errors = []; page.on('pageerror', e => errors.push(e.message));
         await installOnboardingFault(page, 'abort-once');
@@ -95,10 +95,21 @@ try {
         await page.reload(); await ready(page); console.log('RELOADED home', width);
         assert.equal((await session(page)).ownerId, owner);
         assert.deepEqual((await world(page)).state.plots.map(p => ({ id: p.id, cell: p.cell })), planted.state.plots.map(p => ({ id: p.id, cell: p.cell })));
-        await page.getByRole('button', { name: 'ぜんぶ ひらく', exact: true }).click();
+        await page.locator('.first-play-learn:enabled').waitFor();
+        await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+        const homeTargets = await until(async () => {
+            try { return await onboardingControls(page, '.first-play-world .growing-hud-bottom button, .first-play-world .growing-home-tools button'); }
+            catch (error) {
+                // A real save may briefly disable the bar between observation frames.
+                // Keep obstruction/size failures fatal; measure again after saving.
+                if (!String(error.message).includes('\"disabled\":true')) throw error;
+                return undefined;
+            }
+        }, value => Boolean(value));
+        await page.getByRole('button', { name: 'ぜんぶ ひらく', exact: true }).tap();
         const welcomed = await until(() => world(page), r => Boolean(r?.state.guidance?.starter.steps.S3));
         await emptyLearning(page); await capture(page, 'first-neighbor'); console.log('READY neighbor', width);
-        await page.getByRole('button', { name: 'まなぶ', exact: true }).click();
+        await page.getByRole('button', { name: 'まなぶ', exact: true }).tap();
         await page.getByRole('textbox', { name: /なまえ/ }).fill('あお');
         await page.getByRole('button', { name: '年中', exact: true }).click();
         await page.getByRole('heading', { name: 'なにを まなぶ？' }).waitFor();
@@ -107,7 +118,7 @@ try {
         await emptyLearning(page);
         await page.getByRole('button', { name: 'しまへ もどる', exact: true }).click(); await ready(page);
         assert.equal((await world(page)).state.villagers[0].id, welcomed.state.villagers[0].id);
-        await page.getByRole('button', { name: 'まなぶ', exact: true }).click();
+        await page.getByRole('button', { name: 'まなぶ', exact: true }).tap();
         await page.getByRole('button', { name: '年中', exact: true }).click();
         await page.getByRole('button', { name: 'さんすう', exact: true }).click();
         await capture(page, 'learning-setup');
@@ -146,13 +157,13 @@ try {
         await page.goto(`${base}/#/onboarding`); await page.waitForURL('**/#/island'); await ready(page);
         assert.equal((await store(page, 'SansuDatabase', 'profiles')).length, 1);
         assert.deepEqual(errors, []);
-        report.scenarios.push({ width, owner, realAnswers: 3, guestReload: true, setupReload: true, failureRollback: width === 390,
+        report.scenarios.push({ width, owner, homeTargets, realAnswers: 3, guestReload: true, setupReload: true, failureRollback: width === 390,
             sameIsland: true, offline: !base.includes(':5198'), passed: true });
         await context.close();
     }
-    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, reducedMotion: 'reduce' });
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, reducedMotion: 'reduce' });
     const page = activePage = await context.newPage(); page.setDefaultTimeout(90000);
-    await enter(page); await page.getByRole('button', { name: 'まなぶ', exact: true }).click();
+    await enter(page); await page.getByRole('button', { name: 'まなぶ', exact: true }).tap();
     await page.getByRole('button', { name: '小学 1 年生', exact: true }).click();
     await page.getByRole('button', { name: 'えいご', exact: true }).click();
     await page.getByRole('button', { name: 'はじめて', exact: true }).click();

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { createHash } from 'node:crypto';
 import * as T from 'three';
-import { newIsland } from '../../../domain/growingIsland/island';
+import { newLegacyIsland as newIsland } from '../../../domain/growingIsland/legacy.fixture';
 import { authoredAccessWorld } from '../../../domain/growingIsland/authoredWorldAccess.fixture';
 import { compileWorldDefinition, type IslandWorld } from '../../../domain/growingIsland/worldDefinition';
 import type { Cell } from '../../../domain/growingIsland/types';

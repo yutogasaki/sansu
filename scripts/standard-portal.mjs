@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
+import { gzipSync } from 'node:zlib';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { parseTaskBoard } from '../tools/portal-content.mjs';
@@ -95,6 +96,12 @@ export function run(mode) {
     const compactRegistry = JSON.stringify(JSON.parse(registry)) + '\n';
     files.set('data/unification.json', compactRegistry);
     const manifest = JSON.parse(files.get('data/unification-manifest.json'));
+    // Derive adapter and search hashes from this final projection, independent of
+    // the previous generated files on disk.
+    manifest.sourceFiles['docs/portal/project.json'] = sha(text);
+    const searchData = 'window.__portalSearchGzip=' + JSON.stringify(gzipSync(Buffer.from(compactRegistry.trimEnd()), { level: 9 }).toString('base64')) + ';\n';
+    files.set('search-data.js', searchData);
+    manifest.outputs['search-data.js'] = sha(searchData);
     manifest.outputs['data/unification.json'] = sha(compactRegistry);
     files.set('data/unification-manifest.json', JSON.stringify(manifest, null, 2) + '\n');
   }

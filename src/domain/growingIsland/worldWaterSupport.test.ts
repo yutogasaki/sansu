@@ -35,11 +35,11 @@ describe('composed water keeps original rights separate from current support', (
 
     it('enforces wet rejection for actual plant/place/move/unstore commands without changing the previous state', () => {
         const state = newIsland('wet-commands', 0), world = compileWorldDefinition(waterSupportDefinition());
-        state.unlocked = ['seed:wild', 'landmark:bench']; state.drops = 100;
+        state.unlocked = ['seed:farm', 'landmark:bench']; state.drops = 100;
         state.landmarks = [{ id: 'bench', kind: 'bench', cell: { x: 2, z: 2 }, growth: 0 }, { id: 'stored', kind: 'bench', growth: 0 }];
         const before = structuredClone(state);
         for (const command of [
-            { type: 'plant', kind: 'wild', cell: wetCell }, { type: 'place', kind: 'bench', cell: wetCell },
+            { type: 'plant', kind: 'farm', cell: wetCell }, { type: 'place', kind: 'bench', cell: wetCell },
             { type: 'move', id: 'bench', cell: wetCell }, { type: 'unstore', id: 'stored', cell: wetCell },
         ] as const) expect(() => applyIntent(state, { id: command.type, command }, 0, world)).toThrow('ここには おけないよ');
         expect(state).toEqual(before); expect(canPlace(state, dryCell, undefined, world)).toBe(true);

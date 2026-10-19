@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { SansuDatabase } from '../src/db/index.ts';
 import { GrowingIslandDatabase } from '../src/domain/growingIsland/repository.ts';
 import { createInitialProfile } from '../src/domain/user/profile.ts';
-import { newIsland } from '../src/domain/growingIsland/island.ts';
+import { newLegacyIsland as newIsland } from '../src/domain/growingIsland/legacy.fixture.ts';
 import { parsePlacePack, preparePlacePreview } from '../src/prototypes/placeQa/pack.ts';
 import { createPlacePreview, readPlacePreview, readPlaceSelection, restorePlaceSelection } from '../src/prototypes/placeQa/store.ts';
 import { makePlacePack } from './growing-place-fixtures.mjs';
@@ -52,7 +52,7 @@ describe('dedicated DEV place fixture upload', () => {
         expect(await database.app.logs.count()).toBe(1); expect(await database.growing.guidedIslands.count()).toBe(0);
         expect(await database.growing.balancedIslands.count()).toBe(0); expect(await database.growing.legacyIslands.count()).toBe(0);
         const beforeRead = await database.growing.islands.get(id), native = await readPlacePreview(id, database);
-        expect(native.table).toBe('placedIslands'); expect(native.record.version).toBe(4); expect(native.logs).toEqual([]);
+        expect(native.table).toBe('cultivatedIslands'); expect(native.record.version).toBe(4); expect(native.logs).toEqual([]);
         expect(await database.growing.islands.get(id)).toEqual(beforeRead);
         await restorePlaceSelection(profile.id, true, database);
         expect(await readPlaceSelection(database)).toBe(profile.id); expect(localStorage.getItem('sansu_active_profile')).toBe(profile.id);

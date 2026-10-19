@@ -7,6 +7,8 @@
 
 ## 最初に知っておくこと
 
+- [体験と育成の完全マップ](island-system/README.md)：何と何をどう置くと何が育つか、全品・場所・人口・土地・別島を横断。現行地図と次期の簡素化仕様案を分離した検討資料。
+
 - アプリ全体の方向は[CONSTITUTION §1の北極星「育つ島」](../../CONSTITUTION.md)（2026-09-29改訂、[ADR](../adr/2026-09-29-north-star-growing-island.md)）。
 - 次期の遊びの規則は[52 育つ島 ゲーム仕様](52_growing_island_game_spec.md)。置くと島が育ち、学ぶと島の時間が進む。実装・公開状況は[現在のタスク](../../.agents/tasks/TASKS.md)を参照。
 - 2026-10-10の採用美術を遊びへつなぐ[育つ場所の目標と組み合わせ](island-place-goals.md)。6目標・15配置・4関係を本体v1へ統合。保存4/共有地形/実利用は[実装ADR](../adr/2026-10-10-growing-place-runtime.md)へ。

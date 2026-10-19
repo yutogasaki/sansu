@@ -40,12 +40,14 @@ describe('Growing Island menu destinations and actual island identity', () => {
         expect(html.split('growing-pocket-other')[1]).toContain('きりかえ');
         expect(html).not.toContain('<details open');
     });
-    it('preserves bridge actions, including their busy locks', () => {
-        const p = props({ onBridge: vi.fn(), bridge: { built: true, ready: false, reason: '' } });
+    it('preserves sea voyages and bridge actions, including their busy locks', () => {
+        const p = props({ onVoyages: vi.fn(), onBridge: vi.fn(), bridge: { built: true, ready: false, reason: '' } });
         const actions = buttons(GrowingIslandMenuContents(p));
+        actions.find(button => renderToStaticMarkup(button).includes('海図と ふね'))!.props.onClick();
         actions.find(button => button.props['aria-label'] === 'はしを みにいく')!.props.onClick();
-        expect(p.onBridge).toHaveBeenCalledTimes(1);
+        expect(p.onVoyages).toHaveBeenCalledTimes(1); expect(p.onBridge).toHaveBeenCalledTimes(1);
         const busy = buttons(GrowingIslandMenuContents({ ...p, busy: true }));
+        expect(busy.find(button => renderToStaticMarkup(button).includes('海図と ふね'))!.props.disabled).toBe(true);
         expect(busy.find(button => button.props['aria-label'] === 'はしを みにいく')!.props.disabled).toBe(true);
     });
 });

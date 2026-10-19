@@ -5,7 +5,7 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { chromium } from 'playwright';
 import { digestFiles } from './verify-growing.mjs';
-import { answerUI, readNative, runtimeMetadata } from './island-e2e-helpers.mjs';
+import { answerUI, readNative, runtimeMetadata, openIslandDestination } from './island-e2e-helpers.mjs';
 import { plantProduction } from './growing-production-helpers.mjs';
 
 // This driver owns only a disposable local origin. Build manifests identify the
@@ -63,7 +63,7 @@ const browser = await chromium.launch(channel ? { channel } : {}).catch(async er
     throw error;
 });
 const report = { target: base, builds, browser: browser.version(), browserChannel: channel ?? 'headless-shell', scenarios: [], captures: [], pass: false,
-    scope: 'Real onboarding/answers/ownership; real SW upgrade and safe-writer rollback on one disposable origin. Worker pin is an explicit network fault. No profile, credits, clock or update-event injection; not real-device or real-user evidence.' };
+    scope: 'Real onboarding/answers/ownership (keyboard activation for the old first-play shortcuts); real SW upgrade and safe-writer rollback on one disposable origin. Worker pin is an explicit network fault. No profile, credits, clock or update-event injection; not real-device or real-user evidence.' };
 const qaFiles = ['tools/e2e-growing-update.mjs', 'tools/island-e2e-helpers.mjs', 'tools/growing-production-helpers.mjs', 'tools/verify-growing.mjs'];
 const qaInputs = await digestFiles(process.cwd(), qaFiles);
 const ready = async page => {
@@ -75,7 +75,7 @@ const growing = page => page.evaluate(async () => {
     const req = indexedDB.open('SansuGrowingIslandV1');
     const db = await new Promise((ok, no) => { req.onsuccess = () => ok(req.result); req.onerror = () => no(req.error); });
     try {
-        const table = db.objectStoreNames.contains('placedIslands') ? 'placedIslands' : db.objectStoreNames.contains('guidedIslands') ? 'guidedIslands' : 'islands';
+        const table = db.objectStoreNames.contains('cultivatedIslands') ? 'cultivatedIslands' : db.objectStoreNames.contains('voyageIslands') ? 'voyageIslands' : db.objectStoreNames.contains('placedIslands') ? 'placedIslands' : db.objectStoreNames.contains('guidedIslands') ? 'guidedIslands' : 'islands';
         const get = db.transaction(table).objectStore(table).getAll();
         const rows = await new Promise((ok, no) => { get.onsuccess = () => ok(get.result); get.onerror = () => no(get.error); });
         return { table, schema: db.version, record: rows[0] };
@@ -94,11 +94,28 @@ function assertLearningKept(before, after) {
 }
 function assertOwnershipKept(before, after) {
     assert.equal(after.profileId, before.profileId);
-    assert.deepEqual(after.state.plots, before.state.plots);
+    for (const plot of before.state.plots) {
+        const kept = after.state.plots.find(p => p.id === plot.id);
+        assert(kept, 'Owned plot lost');
+        for (const [field, value] of Object.entries(plot)) assert.deepEqual(kept[field], value, `Plot changed: ${field}`);
+    }
+    for (const item of before.state.landmarks) {
+        const kept = after.state.landmarks.find(candidate => candidate.id === item.id); assert(kept, 'Landmark lost');
+        for (const [field, value] of Object.entries(item)) if (field !== 'growth') assert.deepEqual(kept[field], value, `Landmark changed: ${field}`);
+        assert(kept.growth >= item.growth, 'Landmark growth reset');
+    }
+    assert.deepEqual(after.state.keepsakes, before.state.keepsakes);
+    for (const key of before.state.unlocked) assert(after.state.unlocked.includes(key), 'Existing unlock lost');
     assert.deepEqual(after.state.villagers, before.state.villagers);
     assert.deepEqual(after.state.learned, before.state.learned);
     assert.equal(after.state.drops, before.state.drops);
-    assert.equal(after.state.town.level, before.state.town.level);
+    assert.equal(after.state.town.clock, before.state.town.clock);
+    assert.equal(after.state.town.bank, before.state.town.bank);
+    assert.deepEqual(after.state.land, before.state.land);
+    for (const [goal, fact] of Object.entries(before.state.placeProgress?.milestones ?? {}))
+        assert.deepEqual(after.state.placeProgress?.milestones[goal], fact);
+    for (const fact of before.state.placeProgress?.useHistory ?? [])
+        assert(after.state.placeProgress?.useHistory?.some(kept => JSON.stringify(kept) === JSON.stringify(fact)), 'Place history lost');
 }
 async function capture(page, label, build) {
     const file = `${label}.png`;
@@ -140,19 +157,48 @@ try {
         const label = `${width}-${interrupted ? 'interrupted' : 'normal'}`;
         const scenario = { width, interrupted, pass: false }; report.scenarios.push(scenario);
         try {
-            await page.goto(`${base}/#/island`);
-            await page.getByRole('button', { name: /^まなぶ/ }).first().tap();
-            for (const name of ['小学 1 年生', 'さんすう', '足し算まで']) await page.getByRole('button', { name, exact: true }).tap();
-            await ready(page); const id = (await readNative(page)).island.profileId;
+            await page.goto(`${base}/#/onboarding`);
+            await page.getByRole('button', { name: 'しまへ いく', exact: true }).tap();
+            await ready(page);
             await plantProduction(page, 'home', { x: 1, z: 3 }, (await growing(page)).record.state);
             await until(page, async () => (await growing(page)).record.state.villagers.length === 1);
-            await page.locator('.island-shell-tab--learn').tap(); await page.locator('[data-input-ready="true"]').waitFor();
+            // The genuine old phone toolbar overlaps the first-play shortcuts.
+            // Exercise their supported keyboard activation, without forcing a click
+            // or changing its DOM, clock, ownership or saved learning.
+            const openAll = page.getByRole('button', { name: 'ぜんぶ ひらく', exact: true });
+            if (await openAll.isVisible()) { await until(page, () => openAll.isEnabled()); await openAll.press('Enter'); }
+            const grade = page.getByRole('button', { name: '小学 1 年生', exact: true });
+            await page.evaluate(() => {
+                window.__oldSetupEvents = [];
+                for (const type of ['focusin', 'click', 'keydown', 'keyup']) document.addEventListener(type, event => {
+                    const target = event.target;
+                    window.__oldSetupEvents.push({ type, key: event.key, trusted: event.isTrusted, target: target?.outerHTML?.slice(0, 350), active: document.activeElement?.outerHTML?.slice(0, 350) });
+                }, true);
+            });
+            for (let attempt = 0; attempt < 4 && !await grade.isVisible(); attempt++) {
+                const learn = page.locator('.first-play-learn:enabled');
+                try {
+                    await learn.focus({ timeout: 1500 });
+                    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+                    if (await grade.isVisible()) break;
+                    await page.waitForFunction(() => document.activeElement?.classList.contains('first-play-learn'), undefined, { timeout: 1500 });
+                    await page.keyboard.press('Enter');
+                } catch (error) { if (error.name !== 'TimeoutError') throw error; }
+                scenario.setupActivations = attempt + 1;
+                await grade.waitFor({ timeout: 2000 }).catch(error => { if (error.name !== 'TimeoutError') throw error; });
+            }
+            scenario.setupEvents = await page.evaluate(() => window.__oldSetupEvents);
+            await grade.waitFor();
+            console.log(`SETUP ${label}: ${page.url()}`);
+            for (const name of ['小学 1 年生', 'さんすう', '足し算まで']) await page.getByRole('button', { name, exact: true }).tap();
+            await page.locator('[data-input-ready="true"]').waitFor();
+            const id = (await readNative(page)).island.profileId; console.log(`LEARNING ${label}`);
             let native = await readNative(page, id);
             while (native.logs.length < 4) native = (await answerUI(page, native.plan, { dev: false, touch: true })).state;
             const earnedCount = native.logs.length;
             await page.getByRole('button', { name: 'とじる', exact: true }).tap(); await ready(page);
             await untilGrowing(page, earnedCount);
-            await page.locator('.island-shell-tab--learn').tap(); await page.locator('[data-input-ready="true"]').waitFor();
+            await openIslandDestination(page, 'まなぶ', { touch: true }); await page.locator('[data-input-ready="true"]').waitFor();
             await page.evaluate(() => navigator.serviceWorker.ready);
             await page.waitForFunction(() => Boolean(navigator.serviceWorker.controller));
             const before = await readNative(page, id), reservation = { id: before.plan.id, cursor: before.plan.cursor };
@@ -178,7 +224,7 @@ try {
             await waitBuild(page, 'NEW'); await untilGrowing(page, earnedCount);
             assert.equal(reloads.length, 1, 'One reload at the safe checkpoint');
             const migrated = await growing(page); scenario.earnedCount = earnedCount;
-            assert.equal(migrated.table, 'placedIslands'); assert.equal(migrated.record.version, 4);
+            assert.equal(migrated.table, 'cultivatedIslands'); assert.equal(migrated.record.version, 5);
             assertLearningKept(before, await readNative(page, id));
             const oldCapture = report.captures.find(c => c.file === `${label}-old-learning.png`).growing;
             assertOwnershipKept(oldCapture.record, migrated.record);
@@ -193,7 +239,7 @@ try {
             await context.setOffline(true); await page.reload(); await ready(page);
             await capture(page, `${label}-new-offline`, 'NEW');
             assertLearningKept(before, await readNative(page, id));
-            await page.locator('.island-shell-tab--learn').tap(); await page.locator('[data-input-ready="true"]').waitFor();
+            await openIslandDestination(page, 'まなぶ', { touch: true }); await page.locator('[data-input-ready="true"]').waitFor();
             const resumed = await readNative(page, id); assert.deepEqual({ id: resumed.plan.id, cursor: resumed.plan.cursor }, reservation);
             const added = (await answerUI(page, resumed.plan, { dev: false, touch: true })).state;
             assert.equal(added.logs.length, before.logs.length + 1);
@@ -211,6 +257,7 @@ try {
             scenario.pass = true; console.log(`PASS ${label}: upgrade, learning/reservation retention, offline continuation, safe rollback`);
         } catch (error) {
             scenario.error = String(error.stack || error); scenario.url = page.url(); scenario.errors = errors;
+            scenario.setupEvents = await page.evaluate(() => window.__oldSetupEvents).catch(() => undefined);
             scenario.screen = await page.locator('body').innerText().catch(() => 'unavailable');
             await page.screenshot({ path: path.join(output, `${label}-failure.png`) }).catch(() => {}); throw error;
         } finally { await context.close(); }

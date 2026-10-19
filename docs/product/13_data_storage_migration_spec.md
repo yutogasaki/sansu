@@ -1,5 +1,11 @@
 # docs/product/13_data_storage_migration_spec.md — データ・保存・移行仕様
 
+## 育成規則v0.4・保存5（2026-10-19）
+
+[ADR](../adr/2026-10-19-island-growth-v04.md)と[移行詳細](island-system/growth-rules.md#wの旧枠と例外復旧)を採用。Dexie9でコピーし、10で旧写真writerを隔離する。移行は現役/休止島/写真をcultivatedIslands/cultivatedArchives/cultivatedMoments/cultivatedGiftsへ一度コピーし、旧voyage系を新版の書込み先にしない。旧写真storeは旧writerの追加/削除を拒否するsentinelへ隔離する。record5はgrowth規則版・W枠・由来別復元在庫と監査を必須にし、元snapshotを保持する。
+
+W旧根拠が一貫した版/最高げんきにある枠だけlegacy-confirmed、旧未発行はavailable、根拠不足はpending。保護者の一度の復元はreceipt/在庫/理由を同transactionで保存する。取消で復元由来を失わず返金0。学習の完了IDと共通財布、島切替のCAS、写真キー/Blob、既存所有・個体・年齢・土地は保持。通常更新/中断/offline/旧writer/復旧版の実検証を公開前に完了する。
+
 > 2026-10-18 初回導線改訂：主DB appDataの追加行 island-first-play に仮所有者・設定草稿・完了印を保存する。島はそのIDで通常Growing保存を使い、設定完了時に同じIDのプロフィール・MemoryState・active IDと完了印を一transactionで確定する。schema変更や島のDB間コピーは行わない。 詳細は[初回の島と学習設定](island-first-play-onboarding.md)。
 
 > 次期 `living-fantasy-v1` の保存境界・一度だけの財布変換・旧全品保持・完全バックアップは[51のデータ章](living-fantasy/06-data-and-migration.md)が設計正本。未実装の次期契約であり、以下の現在のschemaや既存端末を変換したという記録ではない。
@@ -345,3 +351,19 @@ owner行の1→2は同一transactionで行い、既存所有・座標・住人�
 既存島の互換地区化は読み方の追加であり、所有・全取得セル・座標・成熟・装い・住人・時計・学習・写真・贈り物・操作と達成の原本を書き換えない。診断島は通常同期や本人保存に混ぜない。地区の取得/選択を永続化する段階で、新しい保存版、原子的な移行、旧writer拒否、rollback build、offlineとtwo-buildの検証契約を本節へ追加してから本体を切り替える。
 
 M1のDEV水庭は原本床を非描画のanchor証明として保持し、取得地点の権利と現在の足場を別々に導く。water plan・切った床・水底・岸・deck・幾何revisionはすべて派生データで、保存4/schema5への列追加や本人recordの書換えを行わない。予告用のfuture worldも本人保存へ送らない。
+
+
+## 海図と独立した島（2026-10-19）
+
+島の拡張を妨げず、複数の島を船で行き来して育てる。独立座標・保存・共通資源・旧writer隔離は[海図と独立した島](island-voyages.md)を正とする。
+
+
+## 海図の写真と旧版の削除境界（2026-10-19）
+
+[保存境界の決定](../adr/2026-10-19-growing-voyage-writer-fence.md)。
+
+[海図と独立した島](island-voyages.md)の現役・退避表はschema6で追加する。schema7/8では旧 `moments` の全写真を `voyageMoments` へID・Blob・島ID・日時を保って一回コピーし、旧表を自動採番もプロフィールindexも持たない空表へ置き換える。全段階は一つのIndexedDB upgrade transactionであり、失敗時は旧表と写真を復元する。新writerは専用表のみを使用し、島別60枚を保持する。
+
+旧表の単純な削除だけではDexieのschema修復で再作成される。空表は旧版の写真追加に必要な自動採番と、本人削除に必要なプロフィールindexを欠くため、旧保存は失敗し、旧本人削除transactionもabortする。主DBの本人・学習データの削除へ進めない。旧版で削除成功したかのように扱わず、schema8対応版で本人削除を完了する。既に先行して削除される旧Life/Townの副DBは旧版の既存順序に従い、新Growing・主DBを残す。このため旧版の削除全体が無操作になるとは保証しない。
+
+通常の本人削除は現役・全退避島・旧島表・専用写真・贈り物を既存のwrite hold内で削除する。schema5/6へ戻すrollbackは保存・削除互換を持たず、復旧buildもschema8に対応する。異なる本人・学習原本・取得済み所有物をこの移行で変更しない。

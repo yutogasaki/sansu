@@ -115,3 +115,7 @@ export const FOOD_SUPPORT: Partial<Record<SeedKind, number>> = { farm: 2, market
 export const PLAY_SUPPORT: Partial<Record<SeedKind | LandmarkKind, number>> = {
     play: 4, festival: 6, wonder: 3, bench: 1, swing: 2, bandstand: 2, slide: 2, trampoline: 2, postbox: 1, sandbox: 2, 'garden-hut': 2, library: 2,
 };
+
+/** Ended purchases remain readable, movable and usable as existing property. */
+export const RETIRED_PURCHASES: ReadonlySet<string> = new Set(['seed:wild', 'seed:play', 'seed:market', 'seed:festival', 'landmark:planter', 'landmark:bakery']);
+export const INITIAL_PURCHASES: ReadonlySet<string> = new Set(['seed:home', 'landmark:flower', 'landmark:sapling', 'landmark:water-bowl', 'landmark:bench']);

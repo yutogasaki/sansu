@@ -122,6 +122,7 @@ describe('small surprises', () => {
 describe('island styles opened by level', () => {
     it('keeps clothes, hats and flag patterns for the levels that open them', () => {
         const state = started(), id = state.villagers[0].id;
+        delete state.growth; // historical cosmetic gates remain readable for legacy projections
         expect(() => act(state, { type: 'dress', id, color: 2 })).toThrow('まだ');
         expect(() => act(state, { type: 'flag', pattern: 1 })).toThrow('まだ');
         expect(act(state, { type: 'flag', color: 3 }).state.flagColor).toBe(3);

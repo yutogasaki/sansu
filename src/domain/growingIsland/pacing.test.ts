@@ -1,7 +1,8 @@
+import { newLegacyIsland as newIsland } from './legacy.fixture';
 import { describe, expect, it } from 'vitest';
 import { applyIntent, canPlace, landQuote } from './commands';
 import { foodSupport, genki, housing, islandLevel, playSupport } from './community';
-import { ingestCompletions, newIsland } from './island';
+import { ingestCompletions } from './island';
 import { advanceNature } from './nature';
 import { openTown } from './town';
 import { HOME_CELL, distance, isReachable, landCells, reachableFromHome } from './space';

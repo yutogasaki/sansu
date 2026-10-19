@@ -1,0 +1,70 @@
+{
+  "checkedAtUtc": "2026-10-19T05:57:52.131187+00:00",
+  "changeType": "docs-only candidate specification; no runtime changes",
+  "conversation": "https://chatgpt.com/g/g-p-6ad58d0857b881918e46e346350848e7/c/6ad58fdd-7f00-83e8-b262-b3cb942b0702",
+  "collaboration": {
+    "round1": "completed v0.2",
+    "round2": "completed v0.3 candidate",
+    "finalAudit": "completed; three boundary findings incorporated"
+  },
+  "coverage": {
+    "expected": {
+      "seeds": 7,
+      "newLandmarks": 17,
+      "legacyItems": 5,
+      "keepsakeShapes": 13,
+      "placeGoals": 6,
+      "placeRelations": 4,
+      "experienceDomains": 25
+    },
+    "actual": "PASS: all expected categories and identifiers present in current-map.md"
+  },
+  "inputs": {
+    "CONSTITUTION.md": "5ef2541bc4de9439200c3a0b2a80c75800443d4f9b3a9230b20be09f428e480d",
+    "docs/product/01_app_spec.md": "6ee377ef75979cd5bc67168802b07acd38671faf459fec0ead9145566708bb59",
+    "docs/product/52_growing_island_game_spec.md": "a975bf8ab113ff7d0e38a7bfee20ca1c2f066790910271a8533b4935ea503e41",
+    "docs/product/island-place-goals.md": "5af4434ef4e8cf383d76424dd1b50274d49ad7920481033c49c50d87cc46fa03",
+    "docs/product/island-place-goals.json": "c4714aae51b3b0504ee23e999276518541aa13a0c80b05768d82112f172f4424",
+    "docs/product/island-voyages.md": "8fc47dc9eb7359f8effcde0ad10ae4d9ade33ff48de9c3dda7b78286dec7589b",
+    "docs/product/island-first-play-onboarding.md": "b65c18aa5911b8a891730fea09d8b984f0cb3535f2981c2b532f3f1baf197b0b",
+    "src/domain/growingIsland/rules.ts": "0a4e0289c595318443683fcbcf330d397b532f433d3faa993900fc986a8e6727",
+    "src/domain/growingIsland/types.ts": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+    "src/domain/growingIsland/community.ts": "878c1dbc8a73f2e45e1c7960201fceaf4c272d57f1a9e803d6fbc2162ff668c6",
+    "src/domain/growingIsland/environment.ts": "e965f2cd29601e5ee10f5b6dd9861a937e6c4b6ce3f71c35ad9c330109ab97f5",
+    "src/domain/growingIsland/town.ts": "68b955dba55b4ca4447d90358e913eb6e1b1808141e12416dea32b1e47061fa1",
+    "src/domain/growingIsland/gifts.ts": "e4eab4fb70124d1228d6491ae129a26dd741d9fefbd1e754c7eca87ab36ff329",
+    "src/domain/growingIsland/voyages.ts": "beef203d2696aa34b35befdccf4a713739acc3fa27cdf7e0fc26ecb4eae891bf",
+    "src/components/island/growing/growingCopy.ts": "c483fba18d2cf669176e82eb5c07041fa6f62749d07808855e632e7fdbd9e9e9"
+  },
+  "checks": {
+    "catalogCoverage": "PASS",
+    "readThrough": "PASS: current/proposed distinction, no added current admission gate, stage-time origin, A/B and legacy/W boundaries, independent island resources",
+    "docsCheck": {
+      "command": "fnm exec --using=22 npm run docs:check",
+      "expected": "exit 0 and PASS docs:check",
+      "actual": "PASS docs:check; exit 0",
+      "warnings": "14 existing backlog/review dates in the past; not changed by this task"
+    },
+    "runtimeSetup": {
+      "requested": "nvm use (.nvmrc=22)",
+      "actual": "nvm unavailable; existing fnm Node 22 selected, no installation"
+    },
+    "inputsUnchangedDuringDocumentWork": "PASS",
+    "documentWhitespaceAndCodeFences": "PASS"
+  },
+  "notVerified": [
+    "application behavior/build/release",
+    "Mermaid visual rendering",
+    "economy simulations of proposed rules",
+    "save migration of proposed W slots",
+    "large structure art and physical tolerances",
+    "independent child comprehension and voluntary return"
+  ],
+  "runtime": "v22.23.3",
+  "artifacts": {
+    "docs/product/island-system/README.md": "dc117a7109a7e743b706b7a52a1c204c7302e212dc5059128ed79fd8984b727e",
+    "docs/product/island-system/current-map.md": "65cb384b5c2374e4c662957900e409cb6725914fbeff8c5bbef1c2194b4089d3",
+    "docs/product/island-system/growth-proposal.md": "ec54fe8237ab4baaf8bdbbeb512122cd9f2b9796bfc74a1b124138d3508cb0de",
+    "docs/design/2026-10-19-island-system-spec/README.md": "173a88e807c3041b92574cf32ad8adff964d3f12c1147e4f191df597c4818e0f"
+  }
+}

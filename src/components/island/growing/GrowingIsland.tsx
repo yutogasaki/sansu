@@ -1,9 +1,11 @@
+import VoyageChart from './VoyageChart';
+import { islandIdOf } from '../../../domain/growingIsland/voyages';
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { canPlace, landQuote, styleAt, waitingSeeds } from '../../../domain/growingIsland';
 import { HOME_CELL, landBounds, landCells } from '../../../domain/growingIsland/space';
 import { canReachHomePlacement } from '../../../domain/growingIsland/commands';
 import type { Cell, Command, FlowerColor, GrowingState, LandmarkKind, SeedKind, TownEvent } from '../../../domain/growingIsland';
-import { addMoment, flowerSentToday, listMoments, readGrowingIsland, sendFlower, type MomentRecord } from '../../../domain/growingIsland/repository';
+import { growingDb, addMoment, flowerSentToday, listMoments, readGrowingIsland, sendFlower, type MomentRecord } from '../../../domain/growingIsland/repository';
 import { getAllProfiles } from '../../../domain/user/repository';
 import { useGardenTime } from '../three/garden/useGardenTime';
 import { GrowingLoading, type LoadingStep } from './GrowingLoading';
@@ -46,7 +48,7 @@ import type { MenuPictures } from './menuMiniatures';
 
 const GrowingWorld = lazy(() => import('./GrowingWorld'));
 type Placing = { kind: SeedKind | LandmarkKind; seed: boolean; id?: string; mode: 'new' | 'move' | 'unstore'; cell?: Cell; keepsake?: string; color?: FlowerColor };
-type Panel = 'tray' | 'landmarks' | 'stored' | 'friends' | 'show' | 'visit' | 'flowers' | 'trace' | 'guide' | 'places' | 'view' | 'expand' | undefined;
+type Panel = 'tray' | 'landmarks' | 'stored' | 'friends' | 'show' | 'visit' | 'flowers' | 'trace' | 'guide' | 'places' | 'voyages' | 'view' | 'expand' | undefined;
 type Visit = { id: string; name: string; state: GrowingState; sent: boolean };
 
 function speak(text: string) {
@@ -76,6 +78,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     guideRequest?: GrowingGuideRequest; onGuideRequestConsumed?: () => void; onProfileSwitchBlockedChange?: (blocked: boolean) => void }) {
     const island = useGrowingIsland(profileId, active);
     const own = island.record?.state;
+    const ownIslandId = islandIdOf(island.record);
     const time = useGardenTime(active);
     const [panel, setPanel] = useState<Panel>(), [menu, setMenu] = useState(false), [turn, setTurn] = useState(0);
     const [guideMemory, setGuideMemory] = useState<AchievementId>();
@@ -101,9 +104,17 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     const visitEpoch = useRef(0);
     useEffect(() => () => { visitEpoch.current++; }, [profileId]);
     const [naming, setNaming] = useState<string>();
+    const namingOwner = useRef<{ profileId: string; islandId: string } | undefined>(undefined);
     const [concert, setConcert] = useState<{ cell: Cell; n: number; until: number; targetId: string; ownerId: string }>(), [song, setSong] = useState(0);
     const [worldStep, setWorldStep] = useState<LoadingStep | 'ready' | 'failed'>('world');
     const [worldAttempt, setWorldAttempt] = useState(0);
+    useEffect(() => {
+        setWorldAttempt(0); setWorldStep('world'); setSelected(undefined); setPlacing(undefined);
+        setBridgeBuild(0); setBridgeBusy(false); setBridgeChoice(undefined); setConcert(undefined);
+        setFocus(undefined); setFaces({}); setLine(undefined); setMenu(false);
+        setNaming(undefined); namingOwner.current = undefined;
+        pendingPicture.current = false;
+    }, [profileId, ownIslandId]);
     const [qualityCeiling, setQualityCeiling] = useState(1.25);
     const [graphicsFailure, setGraphicsFailure] = useState<string>();
     const waitingForWorld = Boolean(own) && worldStep !== 'ready';
@@ -123,7 +134,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     const nameForm = useRef<HTMLFormElement>(null);
     const bookReturnFocus = useRef<HTMLElement | null>(null);
     const bookReturnSource = useRef<'menu' | 'cue'>('menu');
-    const closeNaming = useCallback(() => { setNaming(undefined); window.requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('.growing-home-identity button')?.focus({ preventScroll: true })); }, []);
+    const closeNaming = useCallback(() => { setNaming(undefined); namingOwner.current = undefined; window.requestAnimationFrame(() => document.querySelector<HTMLButtonElement>('.growing-home-identity button')?.focus({ preventScroll: true })); }, []);
     const namingOpen = naming !== undefined;
     useEffect(() => {
         if (!namingOpen) return;
@@ -240,10 +251,10 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         const id = window.setTimeout(async () => {
             const shot = camera.current?.capture(480, 360); if (!shot) return;
             pendingPicture.current = false;
-            try { await addMoment(profileId, await canvasBlob(shot, 'image/jpeg', .82), shot.width, shot.height); } catch { /* The story misses one page; the island is saved. */ }
+            try { await addMoment(profileId, await canvasBlob(shot, 'image/jpeg', .82), shot.width, shot.height, Date.now(), growingDb, ownIslandId); } catch { /* The story misses one page; the island is saved. */ }
         }, 1600);
         return () => clearTimeout(id);
-    }, [own, profileId, visit]);
+    }, [own, profileId, ownIslandId, visit]);
 
     const bubble = state ? playMoment ?? line ?? (visit ? `${visit.name}の しまに きたよ。みんなに あいさつしよう` : idleLine(state)) : '';
     useEffect(() => {
@@ -466,11 +477,12 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     // camera frustum. Keep island life running; receive observations after closing.
     const placeReceiptsVisible = active && !visit && !show && !panel && !menu && !selected && !placing
         && !card && !story && !bridgeChoice && !bridgeBusy && naming === undefined;
-    const world = <GrowingWorld key={worldAttempt} active={active} compact={worldAttempt > 0} qualityCeiling={qualityCeiling} state={state} time={time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival} bridgeBuild={bridgeBuild}
+    const world = <GrowingWorld key={`${ownIslandId}:${worldAttempt}`} active={active} compact={worldAttempt > 0} qualityCeiling={qualityCeiling} state={state} time={time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival} bridgeBuild={bridgeBuild}
         hints={visit ? [] : hints} moment={visit ? undefined : moment} show={show} focus={focus} concert={concert} onCamera={c => { camera.current = c; }}
         onPop={() => audio.play('glass')} onStage={setWorldStep} onFailure={setGraphicsFailure} onQualityFallback={ceiling => {
             setQualityCeiling(previous => Math.min(previous, ceiling)); setWorldStep('world'); setWorldAttempt(value => value + 1);
         }}
+        onBridgeComplete={() => { setBridgeBuild(0); setBridgeBusy(false); }}
         onConcertStarted={receipt => { const id = ownConcertReceipt(profileId, Boolean(visit), receipt, concert); if (id) void island.acknowledge('concert-started', id); }}
         onPlaceUse={receipt => { if (placeReceiptsVisible && document.visibilityState === 'visible') return island.acknowledgePlace({ type: 'place-used', ...receipt }); return Promise.resolve(false); }}
         onPlaceShown={receipt => { if (placeReceiptsVisible && document.visibilityState === 'visible') return island.acknowledgePlace({ type: 'place-shown', ...receipt }); return Promise.resolve(false); }}
@@ -547,7 +559,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             islandName={own.islandName ?? 'ぽこもこの しま'} drops={own.drops} quote={quote} status={placeStatus} menuRef={menuTrigger}
             visible={worldStep === 'ready' && !menu && !panel && !placing && !selected && !card && !story && !bridgeChoice && !bridgeBusy && naming === undefined && !dawn}
             goalVisible={!firstPlay && !guide.cue && !guide.notice && !gifts} expansionVisible={!firstPlay && !guide.cue && !guide.notice && !gifts} expansionLock={expansionLock} menuOpen={menu && naming === undefined}
-            onName={() => { setNaming(own.islandName ?? ''); }}
+            onName={() => { namingOwner.current = { profileId, islandId: ownIslandId }; setNaming(own.islandName ?? ''); }}
             onView={() => openHomeTool('view', '.growing-home-view')}
             onExpand={() => openHomeTool('expand', '.growing-home-expand')}
             onPlace={() => { void audio.unlock(); openHomeTool('tray', '.growing-home-place'); }}
@@ -557,7 +569,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         {!visit && panel === 'view' && <GrowingViewControls onDistance={close => camera.current?.distance(close)} onClose={closeHomeTool} onRotate={direction => setTurn(value => value + direction)} />}
         {!visit && panel === 'expand' && <GrowingExpansion quote={quote} expansionLock={expansionLock} drops={own.drops} busy={island.busy} onClose={closeHomeTool}
             onExpand={side => void run({ type: 'expand', side }, () => { closeHomeTool(); audio.play('assemble'); })} />}
-        {naming !== undefined && <form ref={nameForm} className="growing-overlay" role="dialog" aria-modal="true" aria-label="しまの なまえ" onSubmit={event => { event.preventDefault(); if (naming.trim()) void run({ type: 'name', target: 'island', name: naming }, closeNaming); }}>
+        {naming !== undefined && <form ref={nameForm} className="growing-overlay" role="dialog" aria-modal="true" aria-label="しまの なまえ" onSubmit={event => { event.preventDefault(); if (namingOwner.current?.profileId !== profileId || namingOwner.current.islandId !== ownIslandId) { closeNaming(); return; } if (naming.trim()) void run({ type: 'name', target: 'island', name: naming }, closeNaming); }}>
             <div className="growing-overlay-body growing-name"><label>しまの なまえ<input value={naming} maxLength={12} onChange={e => setNaming(e.target.value)} autoFocus /></label>
                 <div className="growing-row"><button type="submit" className="growing-primary">きめる</button><button type="button" onClick={closeNaming}>やめる</button></div></div>
         </form>}
@@ -567,6 +579,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
                 reason: own.villagers.some(v => !v.away && !own.arrivals.includes(v.id)) ? 'はしの ばしょを あけてね' : 'なかまが きてから' }}
             onBridge={() => { setMenu(false); if (own.bridge) { setSelected('bridge'); setFocus({ id: 'bridge', n: Date.now() }); } else setBridgeChoice('build'); }}
             onClose={() => { setMenu(false); window.requestAnimationFrame(() => menuTrigger.current?.focus({ preventScroll: true })); }}
+            onVoyages={firstPlay ? undefined : () => openHomeTool('voyages', '.growing-menu-button')}
             onFriends={() => { loadFaces(); openHomeTool('friends', '.growing-menu-button'); }}
             onTrace={() => openHomeTool('trace', '.growing-menu-button')}
             onShow={() => openHomeTool('show', '.growing-menu-button')}
@@ -597,6 +610,8 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         {!visit && panel === 'friends' && <FriendsPanel state={own} faces={faces} onClose={closeHomeTool}
             onFocus={id => { setPanel(undefined); setSelected(`villager:${id}`); setFocus({ id, n: Date.now() }); setLine(actorLine(own, id)); }} />}
         {!visit && panel === 'show' && <ShowPanel onPick={choice => void showChoice(choice)} onClose={closeHomeTool} />}
+        {!visit && panel === 'voyages' && <VoyageChart profileId={profileId} state={own} busy={island.busy} onClose={closeHomeTool}
+            onSail={island.sail} onFocus={id => { setSelected(undefined); setFocus({ id, n: Date.now() }); }} />}
         {!visit && panel === 'flowers' && <FlowerBook state={own} onClose={closeHomeTool} />}
         {!visit && panel === 'guide' && <GrowingGuideBook state={own} busy={island.busy} initialMemory={guideMemory} onClose={closeBook}
             onPlaces={() => openPlaces()}

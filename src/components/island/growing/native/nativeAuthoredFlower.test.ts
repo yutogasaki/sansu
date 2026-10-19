@@ -12,7 +12,7 @@ import { advanceNature } from '../../../../domain/growingIsland/nature';
 import { derivePlaces } from '../../../../domain/growingIsland/places';
 import { landCells, key, approachCells, reachableFromHome, walkableCells, isReachable, HOME_CELL } from '../../../../domain/growingIsland/space';
 import { authoredAccessWorld } from '../../../../domain/growingIsland/authoredWorldAccess.fixture';
-import { newIsland } from '../../../../domain/growingIsland/island';
+import { newLegacyIsland as newIsland } from '../../../../domain/growingIsland/legacy.fixture';
 import type { Command, GrowingState } from '../../../../domain/growingIsland/types';
 import { GardenGeometry } from '../../three/garden/geometry';
 import { IslandMaterials, disposeGeometry } from '../../three/primitives';

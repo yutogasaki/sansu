@@ -39,9 +39,11 @@ describe('Growing verification candidate boundary', () => {
         const manifest = 'assets/pipeline/island-design-v2/runtime-manifest.json';
         const placeCatalog = 'docs/product/island-place-goals.json';
         const placeDiagnostics = 'prototypes/place-qa/fixtures.json';
+        const flowerProfile = 'docs/design/2026-10-11-authored-flower-garden/native-flower-support-profile.json';
+        const coastManifest = 'docs/design/2026-10-12-authored-cove-entrance/source-manifest.json';
         expect(buildArchiveFiles(['vite.config.ts', 'src/prototypes/assetLab/main.ts', manifest,
-            placeCatalog, placeDiagnostics, 'assets/pipeline/island-design-v2/raw/model.glb', 'docs/design/screenshot.png']))
-            .toEqual(['vite.config.ts', 'src/prototypes/assetLab/main.ts', manifest, placeCatalog, placeDiagnostics]);
+            placeCatalog, placeDiagnostics, flowerProfile, coastManifest, 'assets/pipeline/island-design-v2/raw/model.glb', 'docs/design/screenshot.png']))
+            .toEqual(['vite.config.ts', 'src/prototypes/assetLab/main.ts', manifest, placeCatalog, placeDiagnostics, flowerProfile, coastManifest]);
     });
 
     it('rejects source changes between fingerprint and copy', async () => {

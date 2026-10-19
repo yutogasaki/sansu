@@ -309,7 +309,7 @@ export function buildPlaceGeometry(state: GrowingState, layout: SceneLayout, pla
         else if (place.family === 'grove') grove(g, state, layout, place);
         else if (place.family === 'flowers') buildPlaceFlowerRoof(g, state, layout, place, native, flowerSupport);
         else if (place.family === 'spring') buildPlaceSpring(g, state, layout, place, places);
-        else if (place.family === 'community') {
+        else if (place.family === 'community' && place.variant !== 'garden') {
             if (layout.authoredFrameOptions?.cove) {
                 const assembly = layout.authoredCovePlan?.assemblies.find(item => item.placeId === place.id && item.placeRevision === place.revision);
                 if (assembly) {

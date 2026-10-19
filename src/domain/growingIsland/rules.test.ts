@@ -1,9 +1,10 @@
+import { newLegacyIsland as newIsland } from './legacy.fixture';
 import { describe, expect, it } from 'vitest';
 import type { LifeState } from '../islandLife/model';
 import { applyIntent } from './commands';
 import { comfort, foodSupport, housing, islandLevel } from './community';
 import { islandCharacter, styleAt } from './environment';
-import { fromLife, ingestCompletions, newIsland, waitingSeeds } from './island';
+import { fromLife, ingestCompletions, waitingSeeds } from './island';
 import { advanceNature, treeAge } from './nature';
 import { boatInterval, boatProgress, docked, rareChance, rollVisitor } from './pier';
 import { openTown } from './town';

@@ -21,10 +21,10 @@ function grow(state: GrowingState, hours: number, events: NatureEvent[], world?:
         const m = wetness(soilAt(state, l.cell));
         if (l.kind === 'flower' && l.growth < BLOOM_HOURS) {
             l.growth = Math.min(BLOOM_HOURS, l.growth + hours * (1 + .25 * m));
-            if (l.growth >= BLOOM_HOURS) events.push({ type: 'bloomed', id: l.id });
+            if (l.growth >= BLOOM_HOURS) { events.push({ type: 'bloomed', id: l.id }); if (state.growth) state.growth.matured ??= l.id; }
         } else if (l.kind === 'sapling' && l.growth < TREE_MATURE_HOURS) {
             l.growth = Math.min(TREE_MATURE_HOURS, l.growth + hours * (1 + .15 * m));
-            if (l.growth >= TREE_MATURE_HOURS) { l.maturedAt = state.nature.hours + hours; events.push({ type: 'matured', id: l.id }); }
+            if (l.growth >= TREE_MATURE_HOURS) { l.maturedAt = state.nature.hours + hours; if (state.growth) state.growth.matured ??= l.id; events.push({ type: 'matured', id: l.id }); }
         }
     }
     for (const p of state.plots) {
@@ -60,7 +60,8 @@ function spreadTargets(state: GrowingState, from: Cell, world?: IslandWorld): Ce
 
 function spread(state: GrowingState, round: number, events: NatureEvent[], world?: IslandWorld) {
     const limit = Math.floor(landCells(state, world).length * RULES.wildShare);
-    const parents = state.plots.filter(p => p.kind === 'wild' && p.cell && (!world || onLand(state, p.cell, world)) && p.stage > 0 && p.growth >= BLOOM_HOURS)
+    const parents = [...state.plots.filter(p => p.kind === 'wild' && p.cell && (!world || onLand(state, p.cell, world)) && p.stage > 0 && p.growth >= BLOOM_HOURS)
+        , ...(state.growth ? state.landmarks.filter(l => l.cell && (!world || onLand(state, l.cell, world)) && (l.kind === 'sapling' && l.growth >= TREE_MATURE_HOURS || l.kind === 'flower' && l.growth >= BLOOM_HOURS)) : [])]
         .sort((a, b) => a.id.localeCompare(b.id));
     for (const parent of parents) {
         if (state.plots.filter(p => p.kind === 'wild').length >= limit) return;

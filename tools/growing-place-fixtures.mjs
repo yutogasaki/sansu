@@ -8,7 +8,7 @@ import { EPOCH, hash, stableJSON } from './growing-fixture-data.mjs';
 export const PLACE_FIXTURE_SCHEMA = 'sansu-growing-place-fixtures-v1';
 export async function loadPlaceDomain(root = process.cwd()) {
     const compiled = await build({ stdin: { contents: `
-        export { newIsland } from './src/domain/growingIsland/island.ts';
+        export { newLegacyIsland as newIsland } from './src/domain/growingIsland/legacy.fixture.ts';
         export { applyIntent } from './src/domain/growingIsland/commands.ts';
         export { refreshUnlocks } from './src/domain/growingIsland/community.ts';
         export { landCells, occupant, key, reachableFromHome, isReachable } from './src/domain/growingIsland/space.ts';
@@ -25,7 +25,8 @@ export async function loadPlaceDomain(root = process.cwd()) {
     return { domain, sources, sourceHash: hash(stableJSON(sources)) };
 }
 
-/** Explicit diagnostic credit, land, clocks and maturity. Nothing here is earned learning. */
+/** Pre-v0.4 catalog diagnostic; current v0.4 acceptance uses its own journey.
+ * Explicit diagnostic credit, land, clocks and maturity. Nothing here is earned learning. */
 function baseState(domain, id) {
     let state = domain.newIsland(id, EPOCH);
     state.drops = 10000;

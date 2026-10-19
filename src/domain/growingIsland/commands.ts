@@ -1,3 +1,5 @@
+import { grantGrowthMilestones } from './growth';
+import { canPurchase, cosmeticsOpen } from './community';
 import { ACHIEVEMENTS, noteGuidanceIntent, noteTownBuilds } from './guidance';
 import { islandLevel, occupantsOf, refreshUnlocks } from './community';
 import { styleAt, syncSoil } from './environment';
@@ -12,7 +14,7 @@ import type { Cell, Command, GrowingState, Side, TownEvent } from './types';
 import type { IslandWorld } from './worldDefinition';
 import { hasAuthoredPlacementSupport } from './authoredPlacementSupport';
 
-export interface Intent { id: string; command: Command }
+export interface Intent { id: string; islandId?: string; command: Command }
 
 function fail(message: string): never { throw new Error(message); }
 
@@ -40,7 +42,7 @@ export function landQuote(state: GrowingState): { step: number; sides: Side[]; p
     if (step === 1) return { step, sides: ['west', 'east'], price: LAND_PRICE[0] };
     if (step === 2) return { step, sides: [state.land.expanded === 'west' ? 'east' : 'west'], price: LAND_PRICE[1] };
     if (step === 3) return { step, sides: ['south'], price: LAND_PRICE[2] };
-    if (step <= 5 && islandLevel(state) >= CAPE_LEVEL[step - 4]) {
+    if (step <= 5 && (state.growth || islandLevel(state) >= CAPE_LEVEL[step - 4])) {
         return { step, sides: (['east', 'west'] as const).filter(side => !state.land.capes.includes(side)), price: LAND_PRICE[step - 1] };
     }
     if (step >= 6) return { step, sides: ['east', 'west', 'south'], price: LAND_PRICE[4] + DISTRICT_PRICE_STEP * (step - 5) };
@@ -54,6 +56,7 @@ function expand(state: GrowingState, side: Side) {
     else if (quote.step <= 3) state.land.extra.push(side);
     else if (quote.step <= 5) state.land.capes.push(side as 'east' | 'west');
     else (state.land.districts ??= []).push(side);
+    if (state.growth) state.growth.expanded = true;
     syncSoil(state);
     if (state.bridge) {
         const x = bridgeSite(state);
@@ -103,7 +106,7 @@ function apply(state: GrowingState, command: Command, world?: IslandWorld): Town
         case 'plant': {
             if (command.kind === 'wonder') {
                 if (!state.wonderSeeds) fail('ふしぎの たねが まだ ないよ。');
-            } else if (!state.unlocked.includes(`seed:${command.kind}`)) fail('まだ えらべないよ。');
+            } else if (!canPurchase(state, `seed:${command.kind}`)) fail('まだ えらべないよ。');
             const tutorial = state.tutorial === 'first-home' && command.kind === 'home';
             if (command.kind === 'home' && !canReachHomePlacement(state, command.cell, undefined, world)) fail('ここまで いけないみたい。まわりを あけてみよう');
             claim(state, command.cell, undefined, world);
@@ -112,7 +115,11 @@ function apply(state: GrowingState, command: Command, world?: IslandWorld): Town
             const plot = { id: `p${state.nextId++}`, kind: command.kind, cell: { ...command.cell }, plantedAt: state.town.clock,
                 stage: 0 as const, growth: 0, origin: 'seed' as const, paid: price };
             state.plots.push(plot);
-            if (command.kind === 'wonder') state.wonderSeeds = state.wonderSeeds! - 1;
+            if (command.kind === 'wonder') {
+                if (state.growth && state.wonderSeeds! <= state.growth.restoredStock.length)
+                    Object.assign(plot, { restoredWonder: state.growth.restoredStock.shift() });
+                state.wonderSeeds = state.wonderSeeds! - 1;
+            }
             if (tutorial) {
                 // The first home shows the whole loop once without learning (§14).
                 Object.assign(plot, { stage: 1, builtAt: state.town.clock, stagedAt: state.town.clock, style: styleAt(state, plot.cell, undefined, world) });
@@ -126,13 +133,13 @@ function apply(state: GrowingState, command: Command, world?: IslandWorld): Town
             break;
         }
         case 'place': {
-            if (!state.unlocked.includes(`landmark:${command.kind}`)) fail('まだ えらべないよ。');
+            if (!canPurchase(state, `landmark:${command.kind}`)) fail('まだ えらべないよ。');
             const price = LANDMARK_PRICE[command.kind] ?? fail('まだ えらべないよ。');
             let color = command.color;
             if (color !== undefined) {
                 // Children plant the base colours; mixed colours only grow on the island.
                 const planted = PLANTED_COLORS.find(entry => entry.color === color);
-                if (command.kind !== 'flower' || !planted || islandLevel(state) < planted.level) fail('まだ えらべないよ。');
+                if (command.kind !== 'flower' || !planted || !cosmeticsOpen(state, planted.level)) fail('まだ えらべないよ。');
             } else if (command.kind === 'flower') color = 'red';
             claim(state, command.cell, undefined, world);
             pay(state, price);
@@ -156,7 +163,8 @@ function apply(state: GrowingState, command: Command, world?: IslandWorld): Town
             const plot = state.plots.find(p => p.id === command.id);
             if (plot?.stage === 0) {
                 state.plots = state.plots.filter(p => p.id !== plot.id);
-                state.drops += plot.paid;
+                state.drops += plot.restoredWonder ? 0 : plot.paid;
+                if (plot.restoredWonder && state.growth) state.growth.restoredStock.push(plot.restoredWonder);
                 if (plot.kind === 'wonder') state.wonderSeeds = (state.wonderSeeds ?? 0) + 1;
                 break;
             }
@@ -216,14 +224,14 @@ function apply(state: GrowingState, command: Command, world?: IslandWorld): Town
         case 'dress': {
             // Clothes colours open at Lv8 and hats at Lv9; both are free and can change any time.
             const villager = state.villagers.find(v => v.id === command.id) ?? fail('みつからないよ。');
-            const level = islandLevel(state), outfit = { ...villager.outfit };
+            const outfit = { ...villager.outfit };
             if (command.color !== undefined) {
-                if (level < STYLE_LEVEL.clothes) fail('まだ えらべないよ。');
+                if (!cosmeticsOpen(state, STYLE_LEVEL.clothes)) fail('まだ えらべないよ。');
                 if (!Number.isInteger(command.color) || command.color < 0 || command.color > 5) fail('いろを えらびなおしてね。');
                 outfit.color = command.color;
             }
             if (command.hat !== undefined) {
-                if (level < STYLE_LEVEL.hats) fail('まだ えらべないよ。');
+                if (!cosmeticsOpen(state, STYLE_LEVEL.hats)) fail('まだ えらべないよ。');
                 if (!Number.isInteger(command.hat) || command.hat < 0 || command.hat > HATS) fail('ぼうしを えらびなおしてね。');
                 outfit.hat = command.hat || undefined;
             }
@@ -267,7 +275,7 @@ function apply(state: GrowingState, command: Command, world?: IslandWorld): Town
                 state.flagColor = command.color;
             }
             if (command.pattern !== undefined) {
-                if (islandLevel(state) < STYLE_LEVEL.flagPattern) fail('まだ えらべないよ。');
+                if (!cosmeticsOpen(state, STYLE_LEVEL.flagPattern)) fail('まだ えらべないよ。');
                 if (!Number.isInteger(command.pattern) || command.pattern < 0 || command.pattern >= FLAG_PATTERNS) fail('もようを えらびなおしてね。');
                 state.flagPattern = command.pattern;
             }
@@ -295,6 +303,8 @@ export function applyIntent(previous: GrowingState, intent: Intent, at?: number,
     const now = at ?? state.nature.realAt;
     if (intent.command.type === 'place-used') recordPlaceUse(state, intent.command, now, world);
     if (intent.command.type === 'place-shown') recordPlaceShown(state, intent.command, world);
+    events.push(...grantGrowthMilestones(state, now));
+    refreshUnlocks(state);
     syncPlaceMilestones(state, now, world);
     state.applied = [...state.applied, intent.id].slice(-RULES.appliedMemory);
     return { state, events };

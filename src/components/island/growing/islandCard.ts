@@ -1,3 +1,4 @@
+import { cosmeticsOpen } from '../../../domain/growingIsland/community';
 import { islandLevel, keepsakeKind } from '../../../domain/growingIsland';
 import type { GrowingState } from '../../../domain/growingIsland';
 import { CHARACTER_NAME, villagerName } from './growingCopy';
@@ -18,7 +19,7 @@ export type CardFrame = (typeof CARD_FRAMES)[number]['id'];
 export async function drawIslandCard(state: GrowingState, island: HTMLCanvasElement, faces: Record<string, string>, owner: string, frame: CardFrame = 'dots') {
     const canvas = document.createElement('canvas'); canvas.width = CARD_WIDTH; canvas.height = CARD_HEIGHT;
     const g = canvas.getContext('2d'); if (!g) throw new Error('card unavailable');
-    const special = islandLevel(state) >= 10;
+    const special = cosmeticsOpen(state, 10);
     g.fillStyle = special ? '#fbe9b8' : '#fff8ec'; g.fillRect(0, 0, CARD_WIDTH, CARD_HEIGHT);
     g.strokeStyle = special ? '#d9a93a' : '#e3d6bf'; g.lineWidth = special ? 28 : 14;
     g.strokeRect(g.lineWidth / 2, g.lineWidth / 2, CARD_WIDTH - g.lineWidth, CARD_HEIGHT - g.lineWidth);

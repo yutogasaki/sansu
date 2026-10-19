@@ -1,7 +1,8 @@
+import { newLegacyIsland as newIsland } from './legacy.fixture';
 import { describe, expect, it } from 'vitest';
 import { applyIntent, canReachHomePlacement, landQuote } from './commands';
 import { comfort, housing, playSupport } from './community';
-import { ingestCompletions, newIsland } from './island';
+import { ingestCompletions } from './island';
 import { dayMoment, scheduleSurprise } from './moments';
 import { advanceNature } from './nature';
 import { landBounds, landCells } from './space';

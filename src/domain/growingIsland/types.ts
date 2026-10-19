@@ -1,3 +1,4 @@
+import type { GrowthProgress, WonderSlot } from './growth';
 import type { Cell, ItemKind, LifeItem } from '../islandLife/model';
 import type { RoomDecor, WallPatternId, WordGroupId } from './room';
 import type { FlowerColor } from './flowers';
@@ -42,6 +43,7 @@ export interface Plot {
     /** Verified free introduction and bank-consuming construction provenance. */
     starter?: true;
     townBuilt?: true;
+    restoredWonder?: WonderSlot;
 }
 
 export interface Landmark {
@@ -129,6 +131,7 @@ export interface GrowingState {
     guidance?: GrowingGuidance;
     /** Optional island goals and renderer receipts. Owners, clocks and rewards remain separate. */
     placeProgress?: PlaceProgress;
+    growth?: GrowthProgress;
     learned: string[];
     /** Completions at or before this time were counted and their ids pruned (§18.1). */
     learnedFloor?: number;

@@ -34,7 +34,7 @@ describe('optional growing place destinations', () => {
         const p = props(), output = html(p);
         expect(output.match(/data-place-goal=/g)).toHaveLength(6);
         expect(output).toContain('えらばなくても そだつよ');
-        expect(output).toContain('そだった姿の めやす');
+        expect(output).toContain('場所の イメージ');
         expect(output).not.toContain('あと何問');
         expect(output).not.toContain('しずく');
         expect(output).not.toContain('<details open');
@@ -59,8 +59,16 @@ describe('optional growing place destinations', () => {
         expect(p.onTarget).toHaveBeenCalledTimes(1); expect(p.onTarget).toHaveBeenCalledWith('tree-1');
         expect(JSON.stringify(state)).toBe(before);
     });
-    it('labels all three layout diagrams as examples, and keeps the live status separate', () => {
-        const p = { ...props(), initialGoal: 'P03' as const }, first = tree(p);
+    it('shows the new shared garden from two homes without the retired play seed recipe', () => {
+        const state = newIsland('new-garden-guide', 0); state.landmarks = [];
+        const before = structuredClone(state), output = html({ ...props(state), initialGoal: 'P04' });
+        expect(output).toContain('みんなの庭'); expect(output).toContain('そだった いえ 2けんから');
+        expect(output).not.toContain('あそびば'); expect(output).not.toContain('ベンチ 1');
+        expect(state).toEqual(before);
+    });
+    it('labels all three legacy layout diagrams as examples, and keeps the live status separate', () => {
+        const state = newIsland('legacy-layout', 0); delete state.growth;
+        const p = { ...props(state), initialGoal: 'P03' as const }, first = tree(p);
         for (const label of ['段につなぐ', '曲げる', '岸へ開く']) expect(buttons(first).some(button => words(button.props.children) === label)).toBe(true);
         buttons(first).find(button => words(button.props.children) === '曲げる')!.props.onClick!();
         const output = html(p);

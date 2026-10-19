@@ -13,7 +13,7 @@ export const hash = value => createHash('sha256').update(value).digest('hex');
 
 export async function loadDomain(root = process.cwd()) {
     const compiled = await build({ stdin: { contents: `
-        export { newIsland } from './src/domain/growingIsland/island.ts';
+        export { newLegacyIsland as newIsland } from './src/domain/growingIsland/legacy.fixture.ts';
         export { applyIntent } from './src/domain/growingIsland/commands.ts';
         export { refreshUnlocks } from './src/domain/growingIsland/community.ts';
         export { landCells, occupant, key, reachableFromHome, isReachable, bridgeSite } from './src/domain/growingIsland/space.ts';

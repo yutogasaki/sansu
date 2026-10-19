@@ -7,7 +7,7 @@ export type PlaceStage = 'seeded' | 'connected' | 'grown' | 'lived';
 export interface PlacePoint extends Cell { y: number }
 export interface PlaceUseTarget {
     id: string;
-    kind: 'seat' | 'play' | 'gallery' | 'shore';
+    kind: 'seat' | 'play' | 'gallery' | 'shore' | 'garden';
     cell: Cell;
     /** Physical floor route starts and ends on the same reachable ground entrance. */
     route?: PlacePoint[];
@@ -20,6 +20,7 @@ export interface DerivedPlace {
     memberIds: string[];
     mainIds: string[];
     variant: string;
+    structure?: string;
     stage: PlaceStage;
     footprint: Cell[];
     entrances: Cell[];

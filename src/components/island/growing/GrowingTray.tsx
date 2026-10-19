@@ -1,7 +1,8 @@
+import { canPurchase, cosmeticsOpen } from '../../../domain/growingIsland/community';
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 import { LANDMARK_PRICE, SEED_PRICE } from '../../../domain/growingIsland';
 import type { GrowingState, LandmarkKind, SeedKind } from '../../../domain/growingIsland';
-import { islandLevel, keepsakeKind, PLANTED_COLORS, type FlowerColor } from '../../../domain/growingIsland';
+import { keepsakeKind, PLANTED_COLORS, type FlowerColor } from '../../../domain/growingIsland';
 import { FLOWER_NAME, FLOWER_PAINT } from './flowerGeometry';
 import { HOME_STAGE, KEEPSAKE_NAME, LANDMARK_LABEL, SEED_LABEL, SEED_PLACE_NAME } from './growingCopy';
 
@@ -12,7 +13,7 @@ const SEEDS: SeedKind[] = ['home', 'farm', 'play', 'wild', 'market', 'festival',
 const LANDMARKS: LandmarkKind[] = ['flower', 'bench', 'water-bowl', 'sapling', 'water-channel', 'picnic-table', 'planter', 'swing', 'lantern', 'fence', 'lighthouse', 'bandstand', 'slide', 'trampoline', 'fountain', 'bakery', 'postbox'];
 const GROUPS: { name: string; seeds: SeedKind[]; landmarks: LandmarkKind[] }[] = [
     { name: 'おうち', seeds: ['home'], landmarks: [] },
-    { name: 'はたけ・おみせ', seeds: ['farm', 'market'], landmarks: ['bakery'] },
+    { name: 'たべもの', seeds: ['farm', 'market'], landmarks: ['bakery'] },
     { name: 'あそぶ・やすむ', seeds: ['play', 'festival'], landmarks: ['bench', 'picnic-table', 'swing', 'bandstand', 'slide', 'trampoline'] },
     { name: '花・木・水', seeds: ['wild'], landmarks: ['flower', 'sapling', 'water-bowl', 'water-channel', 'planter', 'fountain'] },
     { name: 'あかり・さく・ポスト', seeds: [], landmarks: ['lantern', 'fence', 'lighthouse', 'postbox'] },
@@ -27,8 +28,8 @@ export function GrowingTray({ state, onPick, onClose, initialTab = 'seeds' }: { 
     const id = useId();
     const tabs = useRef<HTMLDivElement>(null);
     useEffect(() => { tabs.current?.querySelector<HTMLButtonElement>('[aria-selected="true"]')?.focus({ preventScroll: true }); }, []);
-    const seeds = SEEDS.filter(kind => (kind === 'wonder' ? (state.wonderSeeds ?? 0) > 0 : state.unlocked.includes(`seed:${kind}`)) && (!tutorial || kind === 'home'));
-    const landmarks = tutorial ? [] : LANDMARKS.filter(kind => state.unlocked.includes(`landmark:${kind}`));
+    const seeds = SEEDS.filter(kind => (kind === 'wonder' ? (state.wonderSeeds ?? 0) > 0 : canPurchase(state, `seed:${kind}`)) && (!tutorial || kind === 'home'));
+    const landmarks = tutorial ? [] : LANDMARKS.filter(kind => canPurchase(state, `landmark:${kind}`));
     const groups = GROUPS.filter(group => group.seeds.some(kind => seeds.includes(kind)) || group.landmarks.some(kind => landmarks.includes(kind)));
     const stored = [
         ...state.keepsakes.filter(k => !k.cell).map(k => ({ id: k.id, kind: 'flower' as SeedKind | LandmarkKind, seed: false, keepsake: k.unitId,
@@ -73,7 +74,7 @@ export function GrowingTray({ state, onPick, onClose, initialTab = 'seeds' }: { 
                                 {cost === 0 ? <span className="growing-price growing-free">むりょう</span> : price(cost)}
                             </button>;
                         })}
-                        {group.landmarks.includes('flower') && landmarks.includes('flower') && PLANTED_COLORS.filter(p => islandLevel(state) >= p.level).map(({ color }) =>
+                        {group.landmarks.includes('flower') && landmarks.includes('flower') && PLANTED_COLORS.filter(p => cosmeticsOpen(state, p.level)).map(({ color }) =>
                             <button key={color} className="growing-card" data-growing-flower={color} onClick={() => onPick({ mode: 'landmark', kind: 'flower', color })}>
                                 <span className="growing-card-icon growing-flower-dot" aria-hidden="true" style={{ background: FLOWER_PAINT[color] }} />
                                 <strong>{FLOWER_NAME[color]}の はな</strong><small className="growing-catalog-growth">じかんで そだつ</small>{price(LANDMARK_PRICE.flower ?? 0)}

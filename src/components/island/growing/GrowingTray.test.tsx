@@ -16,8 +16,10 @@ const render = (value = state(), initialTab: 'seeds' | 'landmarks' | 'stored' = 
 describe('Growing placement catalog', () => {
     it('keeps every currently purchasable item and separates result types rather than seed mechanics', () => {
         const html = render();
-        for (const kind of ['home', 'farm', 'play', 'wild', 'market', 'festival', 'wonder']) expect(html).toContain(`data-growing-seed="${kind}"`);
-        for (const kind of ['bench', 'water-bowl', 'sapling', 'water-channel', 'picnic-table', 'planter', 'swing', 'lantern', 'fence', 'lighthouse', 'bandstand', 'slide', 'trampoline', 'fountain', 'bakery', 'postbox']) expect(html).toContain(`data-growing-landmark="${kind}"`);
+        for (const kind of ['home', 'farm', 'wonder']) expect(html).toContain(`data-growing-seed="${kind}"`);
+        for (const kind of ['bench', 'water-bowl', 'sapling', 'water-channel', 'picnic-table', 'swing', 'lantern', 'fence', 'lighthouse', 'bandstand', 'slide', 'trampoline', 'fountain', 'postbox']) expect(html).toContain(`data-growing-landmark="${kind}"`);
+        for (const kind of ['wild', 'play', 'market', 'festival']) expect(html).not.toContain(`data-growing-seed="${kind}"`);
+        for (const kind of ['planter', 'bakery']) expect(html).not.toContain(`data-growing-landmark="${kind}"`);
         expect(html).toContain('data-growing-flower=');
         const home = html.split('<section class="growing-catalog-group" aria-label="おうち">')[1].split('</section>')[0];
         expect(home).not.toContain('data-growing-seed="farm"');

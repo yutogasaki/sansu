@@ -30,7 +30,7 @@ async function owned(page) {
     return page.evaluate(async () => {
         const req = indexedDB.open('SansuGrowingIslandV1');
         const db = await new Promise((ok, no) => { req.onsuccess = () => ok(req.result); req.onerror = () => no(req.error); });
-        try { const get = db.transaction('placedIslands').objectStore('placedIslands').getAll();
+        try { const get = db.transaction('cultivatedIslands').objectStore('cultivatedIslands').getAll();
             const rows = await new Promise((ok, no) => { get.onsuccess = () => ok(get.result); get.onerror = () => no(get.error); });
             const { state, profileId, version, createdAt, migratedFrom } = rows[0];
             // Ordinary reload sync may advance the record revision/updatedAt and

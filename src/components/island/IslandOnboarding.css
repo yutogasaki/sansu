@@ -61,6 +61,6 @@
 .app-container .island-page.first-play-welcome[data-mode] { background: linear-gradient(160deg, #eee7fb 0%, #c6a9e8 100%); }
 .app-container .island-page.island-first-setup { background: var(--pokomoko-paper); }
 .first-play-world .growing-island[data-home-ui-candidate][data-growing-island="ready"] .growing-hud-top { top: auto; bottom: max(12px,env(safe-area-inset-bottom)); left: 12px; right: auto; }
-.first-play-world .growing-island[data-home-ui-candidate][data-growing-island="ready"] .growing-hud-bottom { bottom: max(12px,env(safe-area-inset-bottom)); right: 12px; left: auto; }
-.first-play-world .growing-guide-cue { bottom: max(82px,calc(env(safe-area-inset-bottom) + 70px)); width: min(310px,calc(100% - 24px)); }
+.first-play-world .growing-island[data-home-ui-candidate][data-growing-island="ready"] .growing-hud-bottom { bottom: calc(max(12px, env(safe-area-inset-bottom)) + 74px); right: 12px; left: 12px; justify-content: flex-end; }
+.first-play-world .growing-guide-cue { bottom: calc(max(12px, env(safe-area-inset-bottom)) + 148px); width: min(310px,calc(100% - 24px)); }
 .first-play-world .growing-island[data-home-ui-candidate] .growing-menu { top: auto; bottom: max(76px,calc(env(safe-area-inset-bottom) + 64px)); left: 12px; right: 12px; max-height: calc(100% - 100px); overflow-y: auto; }

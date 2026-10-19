@@ -1,3 +1,4 @@
+import { GROWTH_PLACE_GUIDES, GROWTH_RELATION_GUIDES, growthPlaceExamples } from '../../../domain/growingIsland/placeGrowthGuides';
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 import type { GrowingState } from '../../../domain/growingIsland';
 import { PLACE_CATALOG } from '../../../domain/growingIsland/placeCatalog';
@@ -52,7 +53,9 @@ export function GrowingPlaceBook({ state, busy, initialGoal, onClose, onChoose, 
     const goal = PLACE_CATALOG.goals.find(goal => goal.id === detail)!;
     const status = statuses.find(status => status.id === detail)!;
     const evidence = state.placeProgress?.milestones[detail];
-    const layout = goal.variants.find(layout => layout.id === variant) ?? goal.variants.find(layout => layout.id === status.place?.variant) ?? goal.variants[0];
+    const guide = state.growth ? GROWTH_PLACE_GUIDES[detail] : undefined;
+    const examples = state.growth ? growthPlaceExamples(detail, goal.variants) : goal.variants;
+    const layout = examples.find(layout => layout.id === variant) ?? examples.find(layout => layout.id === status.place?.variant) ?? examples[0];
     const relations = derivePlaceRelations(state, derivePlaces(state));
     const combos = PLACE_CATALOG.combinations.filter(combo => detail === 'P06' || combo.families.includes(goal.family));
     const currentReady = status.stage === 'grown' || status.stage === 'lived';
@@ -76,14 +79,14 @@ export function GrowingPlaceBook({ state, busy, initialGoal, onClose, onChoose, 
         </div>
         <div className="growing-place-page" id={`${uid}-${page}-page`} role="tabpanel" aria-labelledby={`${uid}-${page}-tab`}>
             <article className="growing-place-detail" data-place-detail={detail}>
-                <figure><GrowingPlaceArt id={detail} /><figcaption>そだった姿の めやす</figcaption></figure>
-                <div><h3>{goal.name}</h3>
+                <figure><GrowingPlaceArt id={detail} /><figcaption>{guide ? '場所の イメージ' : 'そだった姿の めやす'}</figcaption></figure>
+                <div><h3>{status.name}</h3>
                     {page === 'now' ? <>
                         <ol className="growing-place-stages" aria-label="いまの育ちかた">{STAGES.map((stage, i) => <li key={stage}
                             data-reached={STAGES.indexOf(status.stage) >= i || undefined} aria-current={status.stage === stage ? 'step' : undefined}>{STAGE_NAMES[stage]}</li>)}</ol>
                         <p className="growing-place-live" role="status">{status.hint}</p>
                         {status.missing.some(line => line !== status.hint) && <p className="growing-place-note">{status.missing.filter(line => line !== status.hint).slice(0, 2).join('・')}</p>}
-                        <p className="growing-place-note">{GROWTH_NOTES[detail]}</p>
+                        <p className="growing-place-note">{guide?.note ?? GROWTH_NOTES[detail]}</p>
                         <div className="growing-place-actions">
                             {selected === detail ? <button disabled={busy} onClick={() => onChoose()}>目標を はずす</button>
                                 : <button className="growing-place-primary" disabled={busy} onClick={() => onChoose(detail)}>ここを そだてたい</button>}
@@ -100,8 +103,8 @@ export function GrowingPlaceBook({ state, busy, initialGoal, onClose, onChoose, 
             </article>
             {page === 'now' && layout && <details className="growing-place-layouts">
                 <summary>おなじ材料で かたちが かわる</summary>
-                <p className="growing-place-inputs">{goal.inputs.map(input => `${ROLE_NAMES[input.role] ?? input.role} ${input.count}`).join('・')}</p>
-                <div className="growing-place-layout-choices" aria-label="置きかたの例">{goal.variants.map(example => <button key={example.id}
+                <p className="growing-place-inputs">{guide?.inputs ?? goal.inputs.map(input => `${ROLE_NAMES[input.role] ?? input.role} ${input.count}`).join('・')}</p>
+                <div className="growing-place-layout-choices" aria-label="置きかたの例">{examples.map(example => <button key={example.id}
                     aria-pressed={layout.id === example.id} onClick={() => setVariant(example.id)}>{example.label}</button>)}</div>
                 <GrowingPlaceLayout items={layout.demo} />
                 <p>{layout.result}</p><small>置きかたの例。いまの しまの絵では ないよ</small>
@@ -114,8 +117,8 @@ export function GrowingPlaceBook({ state, busy, initialGoal, onClose, onChoose, 
                 </button>)}
             </div>
             {page === 'now' && <details className="growing-place-combos"><summary>となりへ つなげてみよう</summary>
-                {combos.map(combo => <article key={combo.id} data-place-combo={combo.id}><strong>{combo.name}</strong>
-                    <span>{relations.some(relation => relation.id === combo.id) ? 'いま つながっているよ' : combo.visible}</span><p>{combo.play}</p></article>)}
+                {combos.map(combo => <article key={combo.id} data-place-combo={combo.id}><strong>{state.growth ? GROWTH_RELATION_GUIDES[combo.id]?.name : combo.name}</strong>
+                    <span>{relations.some(relation => relation.id === combo.id) ? 'いま つながっているよ' : state.growth ? GROWTH_RELATION_GUIDES[combo.id]?.visible : combo.visible}</span><p>{state.growth ? GROWTH_RELATION_GUIDES[combo.id]?.play : combo.play}</p></article>)}
                 <p className="growing-place-note">道と入口を あけて、となりでも あそべる場所へ。順番は じゆうだよ</p>
             </details>}
         </div>

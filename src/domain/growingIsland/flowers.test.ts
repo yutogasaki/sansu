@@ -49,6 +49,7 @@ describe('flowers that mix', () => {
 describe('the bandstand', () => {
     it('opens at island level 2, takes one cell and counts as play', () => {
         let state = act(newIsland('kid-b', T0), { type: 'plant', kind: 'home', cell: { x: 1, z: 3 } });
+        delete state.growth; state.unlocked = state.unlocked.filter(key => key !== 'landmark:bandstand');
         state.drops = 40;
         expect(() => act(state, { type: 'place', kind: 'bandstand', cell: { x: 4, z: 3 } })).toThrow('まだ');
         state.genki.best = 3; state.unlocked.push('landmark:bandstand');

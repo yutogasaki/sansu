@@ -2,8 +2,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { allowPwaUpdateDuringReadOnlyOpening, holdPwaUpdateForCriticalPersistence } from '../../../pwa';
 import { lifeDb, terminalFacts } from '../../../domain/islandLife/repository';
 import { getProfile } from '../../../domain/user/repository';
-import { commandGrowingIsland, growingDb, GuidanceReceiptConflict, readGrowingIsland, syncGrowingIsland, type GrowingRecord } from '../../../domain/growingIsland/repository';
+import { commandGrowingIsland, sailGrowingIsland, growingDb, GuidanceReceiptConflict, readGrowingIsland, syncGrowingIsland, type GrowingRecord } from '../../../domain/growingIsland/repository';
 import type { AchievementId, Command, NatureEvent, TownEvent } from '../../../domain/growingIsland';
+import { islandIdOf, type IslandStart } from '../../../domain/growingIsland/voyages';
 import type { LoadingStep } from './GrowingLoading';
 import { prepareIslandOpening } from '../../../domain/growingIsland/openingPreparation';
 
@@ -24,6 +25,8 @@ const message = (error: unknown) => error instanceof Error && /[ぁ-ん]/.test(e
  */
 export function useGrowingIsland(profileId: string, active: boolean) {
     const [record, setRecord] = useState<GrowingRecord>();
+    const displayedIslandId = islandIdOf(record);
+    const sailing = useRef(false);
     const [reveal, setReveal] = useState<Reveal>();
     const [error, setError] = useState<string>();
     const [busy, setBusy] = useState(false);
@@ -79,7 +82,7 @@ export function useGrowingIsland(profileId: string, active: boolean) {
             try {
                 for (let attempt = 0; attempt < 3 && live(); attempt++) {
                     const current = await readGrowingIsland(profileId);
-                    if (!current || !live()) return false;
+                    if (!current || !live() || islandIdOf(current) !== displayedIslandId) return false;
                     if (receipt.type === 'place-shown' && current.state.placeProgress?.shown[receipt.ruleId] === receipt.revision) return true;
                     if (receipt.type === 'place-used') {
                         const used = current.state.placeProgress?.uses[receipt.ruleId]?.[receipt.actorId === 'pokomoko' ? 'pokomoko' : 'villager'];
@@ -87,7 +90,7 @@ export function useGrowingIsland(profileId: string, active: boolean) {
                     }
                     const command: Command = { ...receipt, profileId, expectedRevision: current.revision };
                     try {
-                        const result = await commandGrowingIsland(profileId, { id: intentId, command });
+                        const result = await commandGrowingIsland(profileId, { id: intentId, islandId: displayedIslandId, command });
                         if (live()) { setRecord(current => current?.profileId === result.record.profileId && current.revision > result.record.revision ? current : result.record); setError(undefined); announce(profileId); }
                         return true;
                     } catch (error) { if (!(error instanceof GuidanceReceiptConflict)) throw error; }
@@ -99,7 +102,7 @@ export function useGrowingIsland(profileId: string, active: boolean) {
         const queued = placeReceipts.current.then(save, save);
         placeReceipts.current = queued;
         return queued;
-    }, [profileId]);
+    }, [profileId, displayedIslandId]);
 
     // Only an actually rendered foreground experience can issue these receipts. A normal
     // sync may win the revision race; refresh and retry without showing a false save error.
@@ -111,7 +114,7 @@ export function useGrowingIsland(profileId: string, active: boolean) {
         try {
             for (let attempt = 0; attempt < 3 && live(); attempt++) {
                 const current = await readGrowingIsland(profileId);
-                if (!current || !live()) return false;
+                if (!current || !live() || islandIdOf(current) !== displayedIslandId) return false;
                 if (type === 'learning-returned' && current.state.guidance?.starter.steps.S4) return true;
                 if (type === 'concert-started' && current.state.guidance?.achievements.A5) return true;
                 if (type === 'ack-achievements' && (value as AchievementId[]).every(id => current.state.guidance?.notified.includes(id))) return true;
@@ -120,7 +123,7 @@ export function useGrowingIsland(profileId: string, active: boolean) {
                     : type === 'ack-achievements' ? { type, ids: value as AchievementId[], profileId, expectedRevision: current.revision }
                         : { type, id: value as string, profileId, expectedRevision: current.revision };
                 try {
-                    const result = await commandGrowingIsland(profileId, { id: intentId, command });
+                    const result = await commandGrowingIsland(profileId, { id: intentId, islandId: displayedIslandId, command });
                     if (live()) { setRecord(current => current?.profileId === result.record.profileId && current.revision > result.record.revision ? current : result.record); setError(undefined); announce(profileId); }
                     return true;
                 } catch (e) { if (!(e instanceof GuidanceReceiptConflict)) throw e; }
@@ -128,20 +131,36 @@ export function useGrowingIsland(profileId: string, active: boolean) {
             return false;
         } catch (e) { if (live()) setError(message(e)); return false; }
         finally { release(); }
-    }, [profileId]);
+    }, [profileId, displayedIslandId]);
 
     const dispatch = useCallback(async (command: Command) => {
         if (running.current) await running.current;
         setBusy(true);
         const release = holdPwaUpdateForCriticalPersistence();
         try {
-            const result = await commandGrowingIsland(profileId, { id: crypto.randomUUID(), command });
+            const result = await commandGrowingIsland(profileId, { id: crypto.randomUUID(), islandId: displayedIslandId, command });
             setRecord(current => current?.profileId === result.record.profileId && current.revision > result.record.revision ? current : result.record); setError(undefined); announce(profileId);
             if (result.town.length) setReveal({ id: ++revealId.current, town: result.town, nature: [] });
             return true;
         } catch (e) { setError(message(e)); return false; }
         finally { release(); setBusy(false); }
-    }, [profileId]);
+    }, [profileId, displayedIslandId]);
+
+    const sail = useCallback(async (id: string, create?: { name: string; start: IslandStart }) => {
+        if (sailing.current) return false;
+        sailing.current = true; setBusy(true);
+        try {
+            if (running.current) await running.current;
+            await placeReceipts.current;
+            const next = await sailGrowingIsland(profileId, displayedIslandId, { id, create });
+            setRecord(next); setReveal(undefined); setError(undefined); announce(profileId);
+            // The voyage is committed. Refresh natural growth in the background;
+            // a slow learning scan must not keep the saved destination behind the chart.
+            void sync();
+            return true;
+        } catch (error) { setError(message(error)); return false; }
+        finally { sailing.current = false; setBusy(false); }
+    }, [profileId, displayedIslandId, sync]);
 
     useEffect(() => { setRecord(undefined); setReveal(undefined); }, [profileId]);
     useEffect(() => {
@@ -162,6 +181,6 @@ export function useGrowingIsland(profileId: string, active: boolean) {
         return () => { live = false; clearInterval(id); document.removeEventListener('visibilitychange', visible); };
     }, [active, profileId, sync]);
 
-    return { record: record?.profileId === profileId ? record : undefined, reveal, error, busy, syncing, saving, dispatch, acknowledge, acknowledgePlace, sync, step,
+    return { sail, record: record?.profileId === profileId ? record : undefined, reveal, error, busy, syncing, saving, dispatch, acknowledge, acknowledgePlace, sync, step,
         clearError: () => setError(undefined) };
 }

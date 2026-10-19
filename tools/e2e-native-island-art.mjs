@@ -43,7 +43,7 @@ const owned = page => page.evaluate(async () => {
     const request = indexedDB.open('SansuGrowingIslandV1');
     const db = await new Promise((ok, no) => { request.onsuccess = () => ok(request.result); request.onerror = () => no(request.error); });
     try {
-        return await Promise.all(['placedIslands', 'gifts', 'moments'].map(async name => {
+        return await Promise.all(['cultivatedIslands', 'gifts', 'cultivatedMoments'].map(async name => {
             const get = db.transaction(name).objectStore(name).getAll();
             return [name, await new Promise((ok, no) => { get.onsuccess = () => ok(get.result); get.onerror = () => no(get.error); })];
         }));

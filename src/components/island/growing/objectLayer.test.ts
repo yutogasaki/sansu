@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import * as T from 'three';
-import { newIsland } from '../../../domain/growingIsland/island';
+import { newLegacyIsland as newIsland } from '../../../domain/growingIsland/legacy.fixture';
 import { HOME_CELL, key } from '../../../domain/growingIsland/space';
 import { placeGoalCatalog } from '../../../domain/growingIsland/placeCatalog';
 import type { LandmarkKind } from '../../../domain/growingIsland/types';

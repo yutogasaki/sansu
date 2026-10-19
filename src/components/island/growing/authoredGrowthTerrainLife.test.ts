@@ -12,7 +12,7 @@ import { authoredAccessWorld } from '../../../domain/growingIsland/authoredWorld
 import { authoredWorldFrame } from '../../../domain/growingIsland/authoredWorldFrame';
 import { applyIntent } from '../../../domain/growingIsland/commands';
 import { TREE_MATURE_HOURS } from '../../../domain/growingIsland/environment';
-import { newIsland } from '../../../domain/growingIsland/island';
+import { newLegacyIsland as newIsland } from '../../../domain/growingIsland/legacy.fixture';
 import { HOME_CELL, key } from '../../../domain/growingIsland/space';
 import type { Cell, GrowingState } from '../../../domain/growingIsland/types';
 import { compileWorldDefinition, type IslandWorld } from '../../../domain/growingIsland/worldDefinition';

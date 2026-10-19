@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ENGLISH_WORDS } from '../../../domain/english/words';
 import { DEFAULT_DECOR, learnedWords, type LearnedWord, type RoomDecor } from '../../../domain/growingIsland/room';
 import { commandGrowingIsland, listMoments, readGrowingIsland } from '../../../domain/growingIsland/repository';
+import { islandIdOf } from '../../../domain/growingIsland/voyages';
 import { houseGuests } from './houseGuests';
 import type { Command, GrowingState } from '../../../domain/growingIsland';
 import { speakEnglish } from '../../../utils/tts';
@@ -20,6 +21,7 @@ export function todayLearned(vocab: Record<string, Memory>, math: Record<string,
 }
 
 export function useGrowingRoom(profileId: string, vocab: Record<string, Memory>, enabled: boolean, math: Record<string, Memory> = {}) {
+    const [islandId, setIslandId] = useState('main');
     const [island, setIsland] = useState<GrowingState>(), [view, setView] = useState<ImageBitmap>();
     const [room, setRoom] = useState<RoomDecor>(DEFAULT_DECOR), [mathLevel, setMathLevel] = useState(0), [vocabLevel, setVocabLevel] = useState(0), [error, setError] = useState<string>();
     const words = useMemo<LearnedWord[]>(() => enabled ? learnedWords(vocab, ENGLISH_WORDS) : [], [enabled, vocab]);
@@ -35,16 +37,16 @@ export function useGrowingRoom(profileId: string, vocab: Record<string, Memory>,
         }).catch(() => undefined);
         void readGrowingIsland(profileId).then(record => {
             if (!live || !record) return;
-            setIsland(record.state); setRoom({ ...DEFAULT_DECOR, ...record.state.room }); setMathLevel(record.state.mastery?.math ?? 0); setVocabLevel(record.state.mastery?.vocab ?? 0);
+            setIslandId(islandIdOf(record)); setIsland(record.state); setRoom({ ...DEFAULT_DECOR, ...record.state.room }); setMathLevel(record.state.mastery?.math ?? 0); setVocabLevel(record.state.mastery?.vocab ?? 0);
         }).catch(() => undefined);
         return () => { live = false; };
     }, [profileId, enabled]);
     const decorate = useCallback(async (command: Extract<Command, { type: 'decorate' }>) => {
         try {
-            const result = await commandGrowingIsland(profileId, { id: crypto.randomUUID(), command });
+            const result = await commandGrowingIsland(profileId, { id: crypto.randomUUID(), islandId, command });
             setRoom({ ...DEFAULT_DECOR, ...result.record.state.room }); setError(undefined);
         } catch { setError('もようがえを ほぞん できなかったよ。もういちど ためしてね。'); }
-    }, [profileId]);
+    }, [profileId, islandId]);
     const guests = useMemo(() => island ? houseGuests(island) : [], [island]);
     const today = useMemo(() => enabled ? todayLearned(vocab, math) : [], [enabled, vocab, math]);
     const decor = useMemo<IslandRoomDecor | undefined>(() => enabled ? { ...room, words, guests, view, today } : undefined, [enabled, room, words, guests, view, today]);

@@ -6,6 +6,8 @@
 
 メニューから「はしをつくる」を選び、確認画面で作るかやめるかを決める。建築後は橋をタップして「はしをしまう」を選べ、確認して取り消せる。試験フラグは使わない。案内を開いている間、既存のヒントカードは背後に重ねない。再読み込み時は保存された橋をすぐ描画し、建築演出を繰り返さない。
 
+建設直後は橋へ視点を向ける。建設の合図は描画の初期化が終わるまで保持し、描画の復旧中に未完了の建設があれば再開する。同じ画面で完了した演出は、描画の再初期化だけでは繰り返さない。再読み込みでは建設の合図を発行しない。
+
 検証：移行前記録、連打と同じ意図の再送、岸の衝突、撤去、南拡張、二プロフィール分離、再読み込み、住民の散歩、320/390/768px、学習記録不変。本編を使う最終画面で確認する。
 
 
@@ -22,3 +24,18 @@
 対象はDEV `http://127.0.0.1:5291/#/island`、Growing/Island flag ON、world candidate `growing-island-v1`、学習 `pokomoko-pop-live-v8`。ベースHEADは `7eda1fd9ebff9ade0dba139aa88da60fbc6aa837`、既存変更と橋パッチを含む作業ツリーで検証した。使い捨てChromiumの保存のみを使用し、実際の子どものブラウザ記録には触れていない。
 
 実画面・URL/旗/版とapp SHAはローカル証拠 `output/playwright/bridge-integration-2026-10-05/` の `result.json` / `integration-manifest.json` / `contact-sheet.html`。元パッチ付属の320px建築と390px到着画像を実画面と並べ、橋の形・位置・短い案内の一致を確認した。視覚の候補一致は確認済み、子どもの無説明理解・自発的な再訪は未評価、runtimeは上記範囲でPASS。本番SW/offline・two-build・実機の検証や公開完了を意味しない。
+
+## 描画初期化と建設の合図（2026-10-19、ローカル修正）
+
+橋は保存できても、`GrowingWorld` の非同期初期化前に `bridgeBuild` のeffectが走ると、未設定のAPIへの呼出しが捨てられて建設・渡橋が始まらなかった。未完了の合図をrender loopで受け取り、モデルと住人がそろってから建設する。完了通知で親の合図とbusyを解放し、描画復旧で完成済みの場面を再生しない。建設時の視点は既存の橋focusを使い、拡大しすぎた状態も戻す。保存・学習・橋の利用条件は変更しない。親仕様52の既存の渡橋契約への修復であり、親仕様・memory・ADRの追加変更は不要。
+
+くふう・愛着に効く修正。「作ると住人が渡る」が見えるという仮説で、本人の無説明理解・再訪は未評価。添付写真の端末状態そのものは取得しておらず、写真と同じ原因だとは断定しない。
+
+2026-10-19 JSTの検証：
+
+- 修正前HEADの実コンポーネントへ初期描画時から建設の合図を渡すと、30秒待ってもbuildingへ進まないことを再現。`output/playwright/bridge-fix-2026-10-19/baseline-failure.log`。
+- `SANSU_BRIDGE_OUTPUT=output/playwright/bridge-fix-2026-10-19/lifecycle-final node tools/e2e-growing-bridge-start.mjs`: PASS。390/768幅、通常/reduced motionで建設→渡橋→到着、橋focus、同じ合図でのrenderer再初期化時の非再生、新規合図なしの非再生。reportは開始/終了の対象source SHA・日時・viewport・candidateを持つ。合成の保存済み相当stateを実コンポーネントへ渡す描画診断であり、通常取得や保存の証拠ではない。初回harnessはCSS未読込と実行中のsource編集が混じり不成立、別出力に保持した。
+- 通常DEVの使い捨てプロフィールからメニューの建設確認→つくる→渡橋→到着もPASS。`output/playwright/bridge-fix-2026-10-19/normal.log`。子どもの実データは使わない。
+- `npx vitest run src/domain/growingIsland/bridge.test.ts src/components/island/growing/growingLife.test.ts`: PASS（2ファイル19テスト）。
+- docs:check、check:current-ui-entry、lint、typecheck、build/容量検査：PASS。lintの既存4 warningは残る。nvmはこの環境に見つからず、利用可能なNode 24.18.0でnpm ciと検証を実行した。
+- 全体 `npm run test:run`: PASS（5,397テスト、642.69秒）。全体実行中にUIの完了通知とcameraを仕上げたため、最終UIはその後の対象19テスト・実描画診断・lint・typecheck/buildで確認。固定sourceの配布検証とは扱わない。本番SW/offline、実機、写真の端末での再確認、公開は未実施。公開・push・commitは行っていない。

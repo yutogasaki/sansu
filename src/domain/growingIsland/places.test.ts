@@ -1,5 +1,5 @@
+import { newLegacyIsland as newIsland } from './legacy.fixture';
 import { describe, expect, it } from 'vitest';
-import { newIsland } from './island';
 import { placeGoalCatalog } from './placeCatalog';
 import { derivePlaces, placeConnected } from './places';
 import { derivePlaceRelations } from './placeRelations';

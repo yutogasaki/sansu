@@ -4,7 +4,7 @@ import { comfort, foodSupport, housing } from './community';
 import { features, syncSoil, waterLayout } from './environment';
 import { mixFlowers } from './flowers';
 import { receiveGifts } from './gifts';
-import { newIsland } from './island';
+import { newLegacyIsland as newIsland } from './legacy.fixture';
 import { momentCandidates } from './moments';
 import { advanceNature } from './nature';
 import { placeStatuses, recordPlaceShown, recordPlaceUse, syncPlaceMilestones } from './placeGoals';

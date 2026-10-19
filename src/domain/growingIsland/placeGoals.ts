@@ -1,3 +1,4 @@
+import { GROWTH_PLACE_GUIDES } from './placeGrowthGuides';
 import { placeGoalCatalog } from './placeCatalog';
 import { derivePlaces } from './places';
 import { HOME_CELL, isReachable, key, onLand, reachableFromHome } from './space';
@@ -146,19 +147,20 @@ export function placeStatuses(state: GrowingState, world?: IslandWorld): PlaceSt
     const places = derivePlaces(state, world);
     const score = { seeded: 0, connected: 1, grown: 2, lived: 3 };
     return placeGoalCatalog.map(goal => {
+        const guide = state.growth ? GROWTH_PLACE_GUIDES[goal.id] : undefined;
         const achieved = Boolean(state.placeProgress?.milestones[goal.id]);
         if (goal.id === 'P06') {
             const island = currentIsland(state, places, world), ready = island.families.size >= 3;
             const missing = [!ready && `ちがう ばしょを あと ${Math.max(0, 3 - island.families.size)}しゅるい そだててみよう`,
                 !island.pokomoko && 'ぽこもこが そだった ばしょで あそぶ', !island.villager && 'なかまが そだった ばしょで あそぶ'].filter((line): line is string => Boolean(line));
-            return { id: goal.id, name: goal.name, family: 'island', hint: missing[0] ?? GOAL_HINTS.P06, achieved, missing,
+            return { id: goal.id, name: guide?.name ?? goal.name, family: 'island', hint: missing[0] ?? GOAL_HINTS.P06, achieved, missing,
                 stage: ready ? island.pokomoko && island.villager ? 'lived' : 'grown' : island.families.size >= 2 ? 'connected' : 'seeded' };
         }
         const best = places.filter(place => place.ruleId === goal.id).map(place => ({ place,
             stage: grown(place) && hasCurrentUse(state, place, undefined, world) ? 'lived' as const : place.stage }))
             .sort((a, b) => score[b.stage] - score[a.stage] || a.place.id.localeCompare(b.place.id))[0];
         const place = best?.place, used = best?.stage === 'lived';
-        return { id: goal.id, name: goal.name, family: goal.family, hint: place?.missing[0] ?? (used ? 'また このばしょで あそぼう' : place && grown(place) ? 'そだった ばしょで あそんでみよう' : GOAL_HINTS[goal.id]), achieved, place,
-            stage: best?.stage ?? 'seeded', missing: place?.missing ?? goal.inputs.map(input => `${INPUT_NAMES[input.kind] ?? 'もの'}を ${input.count}こ 近くに おいてみよう`) };
+        return { id: goal.id, name: guide?.name ?? goal.name, family: goal.family, hint: place?.missing[0] ?? (used ? 'また このばしょで あそぼう' : place && grown(place) ? 'そだった ばしょで あそんでみよう' : guide?.hint ?? GOAL_HINTS[goal.id]), achieved, place,
+            stage: best?.stage ?? 'seeded', missing: place?.missing ?? guide?.missing ?? goal.inputs.map(input => `${INPUT_NAMES[input.kind] ?? 'もの'}を ${input.count}こ 近くに おいてみよう`) };
     });
 }

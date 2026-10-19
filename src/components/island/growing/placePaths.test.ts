@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { newIsland } from '../../../domain/growingIsland/island';
+import { newLegacyIsland as newIsland } from '../../../domain/growingIsland/legacy.fixture';
 import { HOME_CELL, approachCells, key, neighbors, reachableFromHome, walkableCells } from '../../../domain/growingIsland/space';
 import { authoredAccessWorld } from '../../../domain/growingIsland/authoredWorldAccess.fixture';
 import type { DerivedPlace } from '../../../domain/growingIsland/placeTypes';

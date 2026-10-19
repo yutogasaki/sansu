@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { connectedWaterChannels, waterInfluence } from '../islandLife/waterChannels';
 import { foodSupport, genki, housing, playSupport } from './community';
 import { waterLayout } from './environment';
-import { newIsland } from './island';
+import { newLegacyIsland as newIsland } from './legacy.fixture';
 import { derivePlaceRelations } from './placeRelations';
 import { derivePlaces } from './places';
 import { key, occupant, onLand, reachableFromHome } from './space';

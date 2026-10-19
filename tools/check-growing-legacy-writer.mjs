@@ -43,7 +43,7 @@ try {
     await old.syncGrowingIsland('kid', [{ id: 'answer-1', at: 1001 }, { id: 'old-tab-answer', at: 1004 }], 1005, priorDb, life);
     priorDb.close();
     await nextDb.open();
-    assert.deepEqual(await nextDb.islands.get('kid'), migrated, 'Actual old writer must not overwrite placedIslands');
+    assert.deepEqual(await nextDb.islands.get('kid'), migrated, 'Actual old writer must not overwrite voyageIslands');
     const recovered = (await current.syncGrowingIsland('kid', [{ id: 'answer-1', at: 1001 }, { id: 'old-tab-answer', at: 1004 }], 1005, nextDb, life)).record;
     assert.deepEqual(recovered.state.learned, ['answer-1', 'old-tab-answer']);
     const repeated = (await current.syncGrowingIsland('kid', [{ id: 'answer-1', at: 1001 }, { id: 'old-tab-answer', at: 1004 }], 1005, nextDb, life)).record;

@@ -3,6 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it, vi } from 'vitest';
 import { applyIntent } from '../../../domain/growingIsland/commands';
 import { newIsland } from '../../../domain/growingIsland/island';
+import { newLegacyIsland } from '../../../domain/growingIsland/legacy.fixture';
 import { GrowingPlacementControls } from './GrowingPlacementControls';
 import { placementPrice } from './placementPrice';
 
@@ -20,8 +21,8 @@ describe('placement recovery with current prices and retained owned items', () =
         const saved = applyIntent(state, { id: 'home', command: { type: 'plant', kind: 'home', cell: { x: 4, z: 2 } } }).state;
         expect(price).toBe(first ? 0 : 40); expect(state.drops - saved.drops).toBe(price); expect(state.plots).toHaveLength(0);
     });
-    it('wild seeds are still paid during the first-home state; landmarks match the command price', () => {
-        const state = newIsland('cost', T0); state.drops = 40;
+    it('retained legacy wild seeds are still paid during the first-home state; landmarks match the command price', () => {
+        const state = newLegacyIsland('cost', T0); state.drops = 40;
         const wild = applyIntent(state, { id: 'wild', command: { type: 'plant', kind: 'wild', cell: { x: 4, z: 2 } } }).state;
         expect(placementPrice(state, { mode: 'new', seed: true, kind: 'wild' })).toBe(state.drops - wild.drops);
         const bench = applyIntent(state, { id: 'bench', command: { type: 'place', kind: 'bench', cell: { x: 4, z: 2 } } }).state;

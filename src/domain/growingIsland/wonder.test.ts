@@ -1,8 +1,8 @@
+import { newLegacyIsland as newIsland } from './legacy.fixture';
 import { describe, expect, it } from 'vitest';
 import { applyIntent } from './commands';
 import { foodSupport } from './community';
 import { styleAt, wonderForm } from './environment';
-import { newIsland } from './island';
 import { momentCandidates } from './moments';
 import { rollVisitor } from './pier';
 import { levelUp } from './town';

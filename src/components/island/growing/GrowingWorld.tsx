@@ -47,6 +47,7 @@ export interface WorldHandlers {
     onStage?: (stage: 'scene' | 'ready' | 'failed') => void;
     onQualityFallback?: (ceiling: number) => void;
     onFailure?: (detail: string) => void;
+    onBridgeComplete?: () => void;
     onConcertStarted?: (receipt: number) => void;
     onPlaceShown?: (receipt: { ruleId: DerivedPlace['ruleId']; revision: string }) => boolean | void | Promise<boolean | void>;
     onPlaceUse?: (receipt: PlaceUseReceipt) => boolean | void | Promise<boolean | void>;
@@ -71,12 +72,13 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
     const handlerRef = useRef(handlers);
     useEffect(() => { handlerRef.current = handlers; });
     const api = useRef<{ rebuild: (state: GrowingState, ghost?: Ghost, selectedId?: string, hints?: readonly Cell[]) => void; setTime: (time: GardenTime) => void; turn: (by: number) => void;
-        cheer: () => void; festival: () => void; moment: (m: ShownMoment) => void; focus: (id: string) => void; concert: (cell: Cell, receipt: number) => void;
-        bridgeStart: () => void } | undefined>(undefined);
+        cheer: () => void; festival: () => void; moment: (m: ShownMoment) => void; focus: (id: string) => void; concert: (cell: Cell, receipt: number) => void } | undefined>(undefined);
     const [failed, setFailed] = useState(false);
+    const completedBridge = useRef<{ owner: string; request: number } | undefined>(undefined);
     const [bridgeStage, setBridgeStage] = useState<'building' | 'crossing' | 'arrived'>();
-    const latest = useRef({ state, ghost, selectedId, time, hints, show, active });
-    useEffect(() => { latest.current = { state, ghost, selectedId, time, hints, show, active }; });
+    const latest = useRef({ state, ghost, selectedId, time, hints, show, active, bridgeBuild });
+    useEffect(() => { latest.current = { state, ghost, selectedId, time, hints, show, active, bridgeBuild }; });
+    useEffect(() => { if (!bridgeBuild) completedBridge.current = undefined; }, [bridgeBuild]);
     const cameraRef = useRef(onCamera);
     useEffect(() => { cameraRef.current = onCamera; });
 
@@ -181,7 +183,7 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
         const world = createWorldScene(renderer, native, authoredWorld, coast, authoredWater, waterBridgeSkin, authoredCove, authoredShoulder, shoulder, authoredGrowthTerrain); disposers.push(() => world.dispose());
         const releaseSharedCache = retainSharedRendererCache(world.m.residentFabric());
         disposers.push(releaseSharedCache);
-        let bridgeWork: { at: number; resident: string; owner: string; parts: T.Object3D[]; crossing?: boolean } | undefined;
+        let bridgeWork: { at: number; resident: string; owner: string; request: number; parts: T.Object3D[]; crossing?: boolean } | undefined;
         let bridgeClear = 0;
         disposers.push(() => window.clearTimeout(bridgeClear));
         const effects = new WorldEffects(world.scene); disposers.push(() => effects.dispose());
@@ -322,18 +324,22 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
             renderer.setSize(width, height, false);
             frameCamera(camera, layout, view, width / height);
         };
+        const startBridgeBuild = () => {
+            const current = latest.current.state, request = latest.current.bridgeBuild;
+            if (!request || bridgeWork || completedBridge.current?.owner === current.seed && completedBridge.current.request === request) return;
+            const resident = current.villagers.find(v => !v.away && !current.arrivals.includes(v.id));
+            const model = layer?.objects.get('bridge')?.children[0];
+            if (!current.bridge || !resident || !model) return;
+            const parts = model.children.filter(o => o.name.startsWith('bridge-'));
+            parts.forEach(o => { o.visible = false; });
+            bridgeWork = { at: performance.now(), resident: resident.id, owner: current.seed, request, parts };
+            window.clearTimeout(bridgeClear); setBridgeStage('building');
+            // The saved request can arrive before graphics initialization. Consume
+            // it from the render loop, after the current bridge and actors exist.
+            view.zoom = 1.35; api.current?.focus('bridge');
+        };
         api.current = {
             rebuild, setTime: next => world.setTime(next),
-            bridgeStart: () => {
-                const current = latest.current.state;
-                const resident = current.villagers.find(v => !v.away && !current.arrivals.includes(v.id));
-                const model = layer?.objects.get('bridge')?.children[0];
-                if (!current.bridge || !resident || !model) return;
-                const parts = model.children.filter(o => o.name.startsWith('bridge-'));
-                parts.forEach(o => { o.visible = false; });
-                bridgeWork = { at: performance.now(), resident: resident.id, owner: current.seed, parts };
-                window.clearTimeout(bridgeClear); setBridgeStage('building');
-            },
             turn: by => { view.azimuth += by * Math.PI / 6; frameCamera(camera, layout, view, width / height); },
             cheer: () => { const now = performance.now(); world.life.hop('visitor', now); world.life.hop('pokomoko', now + 120); },
             moment: shown => {
@@ -346,7 +352,7 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
                 const flower = layout.authored && layer?.placeRoot.children.find(place => place.userData.authoredFlowerOwnerIds?.includes(id));
                 const flowerBounds = flower ? new T.Box3().setFromObject(flower) : undefined;
                 const flowerCenter = flowerBounds && !flowerBounds.isEmpty() ? flowerBounds.getCenter(new T.Vector3()) : undefined;
-                const target = world.life.focusPositionOf(id) ?? flowerCenter ?? layer?.objects.get(id)?.position.clone().add(new T.Vector3(0, 0, id === 'bridge' ? 1.1 : 0)); if (!target) return;
+                const target = (id === 'house' ? world.house.position.clone().add(new T.Vector3(0, .6, 0)) : undefined) ?? world.life.focusPositionOf(id) ?? flowerCenter ?? layer?.objects.get(id)?.position.clone().add(new T.Vector3(0, 0, id === 'bridge' ? 1.1 : 0)); if (!target) return;
                 view.zoom = Math.max(view.zoom, id === 'bridge' ? 1.35 : 2.2);
                 const home = frameCamera(camera, layout, { ...view, pan: { x: 0, z: 0 } }, width / height);
                 view.pan = panToFocus(camera, home, target);
@@ -462,6 +468,7 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
                 if (elapsed >= (playFocus.restoring ? 420 : DROP_PLAY_MS)) playFocus = undefined;
             }
             if (!world.hasWaterPreview()) world.life.tick(now, delta, reduced, latest.current.time === 'night');
+            startBridgeBuild();
             if (bridgeWork && current.bridge) {
                 const { at, resident, parts } = bridgeWork, elapsed = now - at;
                 const buildTime = reduced ? 1500 : 3000, crossTime = reduced ? 1500 : 3000;
@@ -481,7 +488,9 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
                 if (elapsed >= buildTime + crossTime) {
                     parts.forEach(o => { o.visible = true; });
                     world.life.finishBridgeBuild(resident, bridgeEnd(current));
+                    completedBridge.current = { owner: bridgeWork.owner, request: bridgeWork.request };
                     bridgeWork = undefined; setBridgeStage('arrived');
+                    handlerRef.current.onBridgeComplete?.();
                     bridgeClear = window.setTimeout(() => setBridgeStage(undefined), 2200);
                 }
             }
@@ -704,7 +713,6 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
     useEffect(() => { if (moment) api.current?.moment(moment); }, [moment]);
     useEffect(() => { if (focus) api.current?.focus(focus.id); }, [focus]);
     useEffect(() => { if (concert) api.current?.concert(concert.cell, concert.n); }, [concert]);
-    useEffect(() => { if (bridgeBuild) api.current?.bridgeStart(); }, [bridgeBuild]);
     useEffect(() => { api.current?.setTime(time); }, [time]);
     useEffect(() => { if (cheer) api.current?.cheer(); }, [cheer]);
     useEffect(() => { if (festival) api.current?.festival(); }, [festival]);

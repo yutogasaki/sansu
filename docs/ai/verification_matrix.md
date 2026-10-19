@@ -317,3 +317,8 @@ P04の低い殻・入口・共有床の制作では、編集可能な派生sourc
 同じ4本から1枝・2枝・外側周回を組み立てる検査は `node tools/e2e-authored-island-variation.mjs` を用いる。新規 `SANSU_ISLAND_VARIATION_OUTPUT`、固定 `SANSU_ISLAND_VARIATION_BUILD`、終端PASSの `SANSU_ISLAND_VARIATION_CORE_REPORT`、同candidateの `SANSU_ISLAND_VARIATION_URL` が必須。地区の診断取得と4苗の通常購入後、明示18時間を進め、同一所有・成熟・資源を保つ移動／収納／再配置で3構成、分離、同じ周回への復元を確認する。取得時の将来造成範囲予約は論理／物理の両方で他地区や入口との面積重複を拒み、表示床や新しい配置権にはしない。追加地形と実rendererの一致、元地区を通らない外側経路、通常lifeによる実住人の歩行は focused 統合検査で別に確認する。全景・回転・390／768幅の9枚を同じ候補から保存し、実canvasのGPU情報も残す。この検査は一地区の成長岸が対象であり、異なる完成島全体の美術、本人保存、自然時間、実機性能、独立した理解／安全の合格にはしない。
 
 既存全島へ同じ4成熟木と8軒を使った三構成を接続する診断は、source/domain check と `authoredCoreGrowthIntegration.test.ts` を通した後、`node tools/e2e-authored-core-growth.mjs` を用いる。新規 `SANSU_CORE_GROWTH_OUTPUT`、固定 `SANSU_CORE_GROWTH_BUILD`、終端PASSで全入力SHAを持つ `SANSU_CORE_GROWTH_CORE_REPORT`、同candidateの `SANSU_CORE_GROWTH_URL` を指定する。診断35所有物の内容を変えず、北／東／周回の各配置、分離、同じ周回への復元、回転、390／768幅を可視操作とcanvas pointerで確認する。家と木の位置が異なる構成の床を比較せず、各構成と同一状態から成長地形だけを除いたcontrol worldの実面を比較する。これはDEVの粗い輪郭判断であり、通常取得、本人保存、自然時間、住人の通行／利用、offline／更新、完成美術、実機性能、独立した理解／安全の合格にはしない。
+
+
+### 育成規則v0.4（2026-10-19）
+
+`growth.test.ts`/`growth.repository.test.ts`でA/B・購入終了・家時刻・自生・W4枠と由来/取消・並行/abort・record5/Dexie10の現役/休止島/写真/贈り物の隔離を確認。`tools/e2e-growing-v04.mjs`は固定productionをSANSU_GROWTH_V04_URLと新規SANSU_GROWTH_V04_OUTPUTへ指定し、phone/tabletで初回無料家、畑のみのカタログ、保護者ゲート、明示旧snapshotの記念復元/旧収納品、学習不変を確認する。明示した育った家2軒の配置では、UTCの昼の実描画からぽこもこ/住人のP04利用を保存する。旧snapshotの注入は移行診断であり実取得とは分ける。海図の往復/実SW offlineはvoyages、実two-build/中断/保存5対応復旧はupdate driverで別に閉じる。保存4→5の実旧writer診断は `tools/check-growing-v04-writer.mjs` を使う。初回バーを変更した場合はfirst-playの実タップも確認する。

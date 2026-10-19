@@ -8,7 +8,7 @@
 
 ## 入力を用意する
 
-旧版・候補版・復旧版を、それぞれ固定したsourceから独立にproduction buildする。Island/Growing有効、Life preview/BuildPlay/NatureTown無効の構成を明示する。root dotenvを隔離buildへ持ち込まない。復旧版は現行Growingの`guidedIslands`を読めるwriterを選び、保存形式切替前の古いdeploymentへ戻さない。
+旧版・候補版・復旧版を、それぞれ固定したsourceから独立にproduction buildする。Island/Growing有効、Life preview/BuildPlay/NatureTown無効の構成を明示する。root dotenvを隔離buildへ持ち込まない。復旧版は現行Growingのrecord5と`cultivatedIslands`/`cultivatedArchives`/`cultivatedMoments`/`cultivatedGifts`を読めるwriterを選び、保存形式切替前の古いdeploymentへ戻さない。
 
 各manifestは次を持つJSONで、三つの版のversionとentry JSは異なること。
 
@@ -45,3 +45,7 @@ SANSU_GROWING_NEW_MANIFEST=/absolute/path/new.json \
 SANSU_GROWING_LEGACY_OUTPUT=output/growing-legacy-new.json \
 node tools/check-growing-legacy-writer.mjs
 ```
+
+保存4→5の旧writer診断には同じ環境変数で `node tools/check-growing-v04-writer.mjs` を使う。実旧版の写真追加と本人削除の拒否、既存写真Blobの保持、完了事実の一度取り込みを確認する。上の旧版1〜3→4用driverと対象版を混同しない。
+
+旧版の初回ショートカットに操作バーの重なりがある場合は、元buildを変更せず通常のキーボード操作を記録する。描画後のフォーカス復元を待ち、実際の学年画面への切替を確認してから次の操作へ進む。現候補の初回導線のタップ検査は独立に行う。

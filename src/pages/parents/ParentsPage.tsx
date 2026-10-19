@@ -1,3 +1,4 @@
+import { IslandMemorialRecovery } from './IslandMemorialRecovery';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getWeakMathSkillIds, getWeakVocabIds } from '../../domain/learningRepository';
@@ -250,6 +251,7 @@ export const ParentsPage: React.FC = () => {
                 </details>
             </SurfacePanel>
 
+            <IslandMemorialRecovery key={profile.id} profileId={profile.id} />
             <ParentTools />
         </ScreenScaffold>
     );

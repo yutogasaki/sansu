@@ -6,7 +6,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import manifest from '../../../../../docs/design/2026-10-11-native-owned-island/kit-manifest.json';
 import { authoredAccessWorld } from '../../../../domain/growingIsland/authoredWorldAccess.fixture';
 import { compileWorldDefinition } from '../../../../domain/growingIsland/worldDefinition';
-import { newIsland } from '../../../../domain/growingIsland/island';
+import { newLegacyIsland as newIsland } from '../../../../domain/growingIsland/legacy.fixture';
 import { derivePlaces } from '../../../../domain/growingIsland/places';
 import { RULES } from '../../../../domain/growingIsland/rules';
 import { treeAge } from '../../../../domain/growingIsland/nature';

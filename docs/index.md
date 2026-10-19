@@ -1,5 +1,7 @@
 # Sansu 文書の入口
 
+島の全体像：[ぽこもこの体験と育成の完全マップ](product/island-system/README.md)。全品・組み合わせ・成長・住人・土地・別島について、実装前の台帳、採用した育成規則v0.4、実装後の関係マップを分けて読めます。現在の規則は親仕様と52、保存は13、検証結果は実装記録を参照します。
+
 オンボード：[ぽこもこと出会い、最初のおとなりさんを迎える](design/2026-10-18-onboarding/README.md)。Welcomeから保存する本人の島へ入り、学習設定は任意の「まなぶ」で行います。[入口と保存の契約](product/island-first-play-onboarding.md)、画面仕様・絵の制作依頼書・ローカル検証をまとめています。公開状態は別です。
 
 **現在の島制作方針：[美術で設計した場所を、配置から育てる](product/island-construction-strategy.md)。** 地形・森・水庭・集落を入口と床まで一緒に設計し、美術表示と本体が同じ世界を組み立てます。[全島の尺度・購入・成熟preflight](design/2026-10-11-authored-whole-preflight/README.md)で住人 `.45`・実高さfocus・樹種と成長を修正し、27→32所有物を確認しました。家は8軒のまま。成熟後の美術31/60 HOLD・操作性能未達でM1は未完です。[原本と実画面の比較](design/2026-10-11-authored-whole-preflight/contact-sheet.html)、[次の花庭・森・回廊の制作順](design/2026-10-11-authored-whole-preflight/next-production.md)、[決定の理由](adr/2026-10-11-authored-place-world-policy.md)。全島の粗形が揃った段階で配置差と成長への追従を先に実装し、組立て規則と対応する美術を一緒に育てます。技術検証を美術到達の代用にはしません。

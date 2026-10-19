@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { occupantsOf } from '../../../domain/growingIsland/community';
-import { FLAG_PATTERNS, HATS, islandLevel, keepsakeKind, STYLE_LEVEL } from '../../../domain/growingIsland';
+import { cosmeticsOpen, occupantsOf } from '../../../domain/growingIsland/community';
+import { FLAG_PATTERNS, HATS, keepsakeKind, STYLE_LEVEL } from '../../../domain/growingIsland';
 import type { GrowingState } from '../../../domain/growingIsland';
 import { ACCENT_COLORS } from './actors';
 import { FLAG_COLORS } from './keepsakeGeometry';
@@ -25,11 +25,11 @@ export function GrowingSheet({ state, target, onAction, onClose }: {
     const [naming, setNaming] = useState(false), [name, setName] = useState('');
     const plot = state.plots.find(p => p.id === target), landmark = state.landmarks.find(l => l.id === target);
     const villager = state.villagers.find(v => `villager:${v.id}` === target);
-    const keepsake = state.keepsakes.find(k => k.id === target), level = islandLevel(state);
+    const keepsake = state.keepsakes.find(k => k.id === target);
     let title = '', detail = '';
     const actions: { label: string; action: SheetAction }[] = [];
     if (target === 'bridge' && state.bridge) { title = 'みはらしの はし'; detail = 'なかまが わたって みはらしだいまで いくよ'; actions.push({ label: 'はしを しまう', action: { type: 'bridge-remove' } }); }
-    else if (target === 'flag') { title = 'しまの はた'; detail = level >= STYLE_LEVEL.flagPattern ? 'いろと もようを えらべるよ' : 'いろを えらべるよ'; }
+    else if (target === 'flag') { title = 'しまの はた'; detail = cosmeticsOpen(state, STYLE_LEVEL.flagPattern) ? 'いろと もようを えらべるよ' : 'いろを えらべるよ'; }
     else if (keepsake) {
         title = KEEPSAKE_NAME[keepsakeKind(keepsake.unitId)];
         detail = `${keepsake.unitId.startsWith('math') ? 'さんすう' : 'えいご'} Lv${keepsake.unitId.split(':')[1]}を みにつけた きねんだよ`;
@@ -47,7 +47,7 @@ export function GrowingSheet({ state, target, onAction, onClose }: {
             : plot.kind === 'home' ? (people.length ? `${people.map(villagerName).join('、')}が すんでいるよ` : 'だれかが すみに くるかも')
                 : plot.origin === 'spread' ? 'しぜんに ひろがった 花だよ' : 'しまが そだてたよ';
         actions.push({ label: 'うごかす', action: { type: 'move' } });
-        if (!(plot.kind === 'home' && people.length)) actions.push({ label: plot.stage === 0 ? 'やめる（しずくが もどるよ）' : 'しまう', action: { type: 'store' } });
+        if (!(plot.kind === 'home' && people.length)) actions.push({ label: plot.stage === 0 ? plot.kind === 'wonder' ? 'やめる（たねに もどるよ）' : 'やめる（しずくが もどるよ）' : 'しまう', action: { type: 'store' } });
         if (plot.kind === 'wild' && plot.stage > 0) actions.push({ label: 'つむ', action: { type: 'pluck' } });
     } else if (landmark) {
         title = LANDMARK_LABEL[landmark.kind]?.name ?? '';
@@ -65,13 +65,13 @@ export function GrowingSheet({ state, target, onAction, onClose }: {
         {target === 'flag' && <>
             <div className="growing-swatches" aria-label="はたの いろ">{FLAG_COLORS.map((color, index) => <button key={color} style={{ background: color }} aria-label={`いろ ${index + 1}`}
                 aria-pressed={(state.flagColor ?? 0) === index} onClick={() => onAction({ type: 'flag', color: index })} />)}</div>
-            {level >= STYLE_LEVEL.flagPattern && <div className="growing-row" aria-label="はたの もよう">{Array.from({ length: FLAG_PATTERNS }, (_, i) =>
+            {cosmeticsOpen(state, STYLE_LEVEL.flagPattern) && <div className="growing-row" aria-label="はたの もよう">{Array.from({ length: FLAG_PATTERNS }, (_, i) =>
                 <button key={i} aria-pressed={(state.flagPattern ?? 0) === i} onClick={() => onAction({ type: 'flag', pattern: i })}>{PATTERN_NAME[i]}</button>)}</div>}
         </>}
-        {villager && level >= STYLE_LEVEL.clothes && <div className="growing-swatches" aria-label="ふくの いろ">{ACCENT_COLORS.map((color, index) =>
+        {villager && cosmeticsOpen(state, STYLE_LEVEL.clothes) && <div className="growing-swatches" aria-label="ふくの いろ">{ACCENT_COLORS.map((color, index) =>
             <button key={color} style={{ background: color }} aria-label={`ふくの いろ ${index + 1}`}
                 aria-pressed={(villager.outfit?.color ?? villager.variant.color) === index} onClick={() => onAction({ type: 'dress', color: index })} />)}</div>}
-        {villager && level >= STYLE_LEVEL.hats && <div className="growing-row" aria-label="ぼうし">{Array.from({ length: HATS + 1 }, (_, i) =>
+        {villager && cosmeticsOpen(state, STYLE_LEVEL.hats) && <div className="growing-row" aria-label="ぼうし">{Array.from({ length: HATS + 1 }, (_, i) =>
             <button key={i} aria-pressed={(villager.outfit?.hat ?? 0) === i} onClick={() => onAction({ type: 'dress', hat: i })}>{HAT_NAME[i]}</button>)}</div>}
         {villager && villager.species !== 'girl' && villager.species !== 'boy' && (naming
             ? <form className="growing-name" onSubmit={event => { event.preventDefault(); if (name.trim()) { onAction({ type: 'name', name }); setNaming(false); } }}>

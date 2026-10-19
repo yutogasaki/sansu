@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import * as T from 'three';
-import { newIsland } from '../../../domain/growingIsland/island';
+import { newLegacyIsland as newIsland } from '../../../domain/growingIsland/legacy.fixture';
 import { derivePlaces } from '../../../domain/growingIsland/places';
 import { key, occupant, onLand, reachableFromHome, walkableCells } from '../../../domain/growingIsland/space';
 import type { Cell, GrowingState } from '../../../domain/growingIsland/types';

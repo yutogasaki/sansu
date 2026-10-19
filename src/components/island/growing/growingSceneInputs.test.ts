@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { applyIntent } from '../../../domain/growingIsland/commands';
 import { newIsland } from '../../../domain/growingIsland/island';
+import { grantGrowthMilestones } from '../../../domain/growingIsland/growth';
+import { refreshUnlocks } from '../../../domain/growingIsland/community';
 import { derivePlaces } from '../../../domain/growingIsland/places';
 import type { Cell, GrowingState } from '../../../domain/growingIsland/types';
 import type { Ghost } from './objectLayer';
@@ -16,6 +18,7 @@ function island() {
         plantedAt: 0, growth: 0, origin: 'seed', paid: 4 }];
     state.villagers = [{ id: 'friend', species: 'otter', home: 'home', arrivedAt: 0, trait: 'mellow',
         variant: { color: 0, accessory: 0, sparkle: false } }];
+    grantGrowthMilestones(state, 1000); refreshUnlocks(state);
     return state;
 }
 

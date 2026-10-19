@@ -1,7 +1,7 @@
+import { newLegacyIsland as newIsland } from './legacy.fixture';
 import { describe, expect, it } from 'vitest';
 import { applyIntent } from './commands';
 import { refreshUnlocks } from './community';
-import { newIsland } from './island';
 import { advancePier, boatInterval, boatProgress } from './pier';
 import { openTown } from './town';
 

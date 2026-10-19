@@ -28,7 +28,7 @@ async function start() {
         <p id="pack-info">ファイルはまだ読み込んでいません。</p>
         <label for="fixture-case">確認する配置</label><select id="fixture-case" disabled><option>ファイルを読み込んでください</option></select>
         <button id="create-preview" disabled>新しい診断プロフィールを作る</button>
-        <p>復元先は Preview DB の placedIslands。毎回、新しい qa-place-preview-* 所有者を作ります。</p></section>
+        <p>復元先は Preview DB の voyageIslands。毎回、新しい qa-place-preview-* 所有者を作ります。</p></section>
         <section><h2>2 · 実際のアプリで確認</h2><label for="preview-owner">作成した診断プロフィール</label><select id="preview-owner"></select>
         <div class="actions"><a id="open-app" href="/#/island">実際のアプリへ</a><button id="refresh-snapshot">保存状態を読み直す</button></div>
         <p id="native-summary" data-qa-native-summary></p><p id="provenance"></p>

@@ -2,6 +2,8 @@ import { expect, it, vi } from 'vitest';
 import * as T from 'three';
 import { applyIntent } from '../../../domain/growingIsland/commands';
 import { newIsland } from '../../../domain/growingIsland/island';
+import { grantGrowthMilestones } from '../../../domain/growingIsland/growth';
+import { refreshUnlocks } from '../../../domain/growingIsland/community';
 import { IslandMaterials } from '../three/primitives';
 import { GrowingLife } from './growingLife';
 import { growingSceneStateKey } from './growingSceneInputs';
@@ -17,6 +19,7 @@ it('adopts saved receipts without replacing actors, resetting visitor motion or 
     state.landmarks = [{ id: 't1', kind: 'sapling', cell: { x: 3, z: 2 }, growth: 18, maturedAt: 0 },
         { id: 't2', kind: 'sapling', cell: { x: 5, z: 2 }, growth: 18, maturedAt: 0 },
         { id: 'seat', kind: 'bench', cell: { x: 4, z: 3 }, growth: 0 }];
+    grantGrowthMilestones(state, 1000); refreshUnlocks(state);
     const before = structuredClone(state), m = new IslandMaterials('moon-garden'), layout = sceneLayout(state);
     const layer = buildObjectLayer(m, state, layout);
     const life = new GrowingLife(m, { id: 'pokomoko', root: new T.Group(), body: new T.Group(), feet: [] });

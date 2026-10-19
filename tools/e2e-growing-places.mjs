@@ -56,10 +56,10 @@ async function nativeRecord(page, databaseName, profileId, value) {
         const request = indexedDB.open(databaseName);
         const db = await new Promise((ok, no) => { request.onsuccess = () => ok(request.result); request.onerror = () => no(request.error); });
         try {
-            if (!db.objectStoreNames.contains('placedIslands')) throw Error('Current place-owning table is missing');
-            const tx = db.transaction('placedIslands', value ? 'readwrite' : 'readonly');
+            if (!db.objectStoreNames.contains('cultivatedIslands')) throw Error('Current place-owning table is missing');
+            const tx = db.transaction('cultivatedIslands', value ? 'readwrite' : 'readonly');
             const done = new Promise((ok, no) => { tx.oncomplete = ok; tx.onabort = () => no(tx.error); });
-            const op = value ? tx.objectStore('placedIslands').put(value) : profileId ? tx.objectStore('placedIslands').get(profileId) : tx.objectStore('placedIslands').getAll();
+            const op = value ? tx.objectStore('cultivatedIslands').put(value) : profileId ? tx.objectStore('cultivatedIslands').get(profileId) : tx.objectStore('cultivatedIslands').getAll();
             const result = await new Promise((ok, no) => { op.onsuccess = () => ok(op.result); op.onerror = () => no(op.error); });
             await done; return value ?? result;
         } finally { db.close(); }
@@ -477,7 +477,7 @@ export async function main(args = process.argv.slice(2)) {
         .flatMap(viewport => pack.cases.filter(fixture => !options['diagnostic-case'] || fixture.id === options['diagnostic-case']).map(fixture => ({ id: fixture.id, viewport })));
     if (options.plan) {
         const plan = { prepared: true, runtimeExecuted: false, schema: 'sansu-growing-place-e2e-v1', diagnosticCases: pack.cases.length, catalogLayouts: 15,
-            combinations: 4, recordVersion: 4, currentTable: 'placedIslands', diagnosticPayloadHash: pack.payloadHash, sourceHash: pack.sourceHash, selectedDiagnosticRuns,
+            combinations: 4, recordVersion: 5, currentTable: 'cultivatedIslands', diagnosticPayloadHash: pack.payloadHash, sourceHash: pack.sourceHash, selectedDiagnosticRuns,
             actualJourneys: ['Real onboarding/21 answers/2 bought young trees/free six goals/connect/split/rejoin/same-plan return at390/768/320',
                 '15 mature diagnostic layouts,4 relations,whole-island with actual rendered use at390/768; fixed Date and synthetic resources are explicit'],
             gates: { runtime: 'NOT_EXECUTED', visualAppeal: 'NOT_EVALUATED', comprehensionSafety: 'NOT_EVALUATED', naturalSevenDayGrowth: 'NOT_EVALUATED', realDevice: 'NOT_EVALUATED' } };

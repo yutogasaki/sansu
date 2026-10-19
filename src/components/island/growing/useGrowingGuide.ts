@@ -1,3 +1,4 @@
+import { canPurchase } from '../../../domain/growingIsland/community';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { pendingAchievements, starterStep } from '../../../domain/growingIsland/guidance';
 import { LANDMARK_PRICE, SEED_PRICE } from '../../../domain/growingIsland/rules';
@@ -37,7 +38,7 @@ export function starterCopy(state: GrowingState, step: StarterStepId) {
         if (waiting) return { title: 'つぎの たねを そだてよう', hint: state.unopened.includes(waiting.id) ? 'そだった つぼみを さわってみよう' : 'たねが まってるよ。いまは しまを ながめてみよう', action: 'たねを みる' };
         if (starterFlowerReady(state)) return { title: 'はなの なえを おこう', hint: `しずくは ${state.drops}こ。はなの なえは ${LANDMARK_PRICE.flower}こで おけるよ`, action: 'はなの なえを えらぶ' };
         const nextSeed = Math.min(...(['home', 'farm', 'play', 'market', 'festival'] as const)
-            .filter(kind => state.unlocked.includes(`seed:${kind}`)).map(kind => SEED_PRICE[kind]));
+            .filter(kind => canPurchase(state, `seed:${kind}`)).map(kind => SEED_PRICE[kind]));
         if (state.drops < nextSeed) return { title: 'しまを ながめよう', hint: `しずくは ${state.drops}こ。ベンチや なかまと あそべるよ`, action: 'しまへ もどる' };
     }
     return STARTER_COPY[step];

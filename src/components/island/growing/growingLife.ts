@@ -13,7 +13,7 @@ import { besideOpen, nearestOpen, walkRoute } from './walkers';
 import type { DerivedPlace, PlacePoint, PlaceUseTarget } from '../../../domain/growingIsland/placeTypes';
 import { authoredOwnerApproaches, authoredFlowerWalkSet, hasAuthoredObstructionRoots, measureAuthoredWalkingEnvelope } from './authoredFlowerObstructions';
 
-type Mode = 'idle' | 'walk' | 'seat' | 'held' | 'boat' | 'pier' | 'sailing' | 'sleep' | 'gallery' | 'shore';
+type Mode = 'idle' | 'walk' | 'seat' | 'held' | 'boat' | 'pier' | 'sailing' | 'sleep' | 'gallery' | 'shore' | 'garden';
 export interface PlaceUseReceipt { ruleId: DerivedPlace['ruleId']; placeId: string; revision: string; actorId: string; targetId: string }
 interface Walker {
     actor: Actor; at: { x: number; z: number }; path: Cell[]; mode: Mode; until: number;
@@ -192,7 +192,7 @@ export class GrowingLife {
             const choices = fresh.length ? fresh : targets;
             const chosen = choices[Math.floor(Math.random() * choices.length)];
             if (chosen) {
-                const cell = chosen.target.kind === 'gallery' || chosen.target.kind === 'shore' ? chosen.target.cell
+                const cell = chosen.target.kind === 'gallery' || chosen.target.kind === 'shore' || chosen.target.kind === 'garden' ? chosen.target.cell
                     : this.besideOwner(chosen.target.cell);
                 if (cell && this.homePaths.has(key(cell))) { walker.placeTarget = chosen; return cell; }
             }
@@ -421,7 +421,7 @@ export class GrowingLife {
         if (target.kind === 'gallery' && target.route?.length) {
             walker.mode = 'gallery'; walker.gallery = { route: target.route, index: 1, point: { ...target.route[0] } }; walker.path = []; walker.useAt = now; return true;
         }
-        if (target.kind === 'shore') { walker.mode = 'shore'; walker.path = []; walker.until = now + 4200; walker.useAt = now; return true; }
+        if (target.kind === 'shore' || target.kind === 'garden') { walker.mode = target.kind; walker.path = []; walker.until = now + 4200; walker.useAt = now; return true; }
         return false;
     }
 
@@ -541,8 +541,8 @@ export class GrowingLife {
                 this.guardPose(w, now, receiptStart);
                 continue;
             }
-            if (w.mode === 'shore' && w.useAt !== undefined && now - w.useAt >= 700 && w.placeTarget) this.observeUse(w, w.placeTarget.place, w.placeTarget.target);
-            if (w.mode === 'shore' && now > w.until) { w.mode = 'idle'; w.placeTarget = undefined; w.useAt = undefined; w.until = now + 2000; }
+            if ((w.mode === 'shore' || w.mode === 'garden') && w.useAt !== undefined && now - w.useAt >= 700 && w.placeTarget) this.observeUse(w, w.placeTarget.place, w.placeTarget.target);
+            if ((w.mode === 'shore' || w.mode === 'garden') && now > w.until) { w.mode = 'idle'; w.placeTarget = undefined; w.useAt = undefined; w.until = now + 2000; }
             if (w.mode === 'seat' && now > w.until) {
                 if (w.play) w.at = { ...w.play.exit };
                 w.mode = 'idle'; w.seat = undefined; w.play = undefined; w.placeTarget = undefined; w.useAt = undefined; w.until = now + 1500;

@@ -1,3 +1,5 @@
+import { restoreWonderSlot, type WonderSlot } from './growth';
+import { FIRST_ISLAND, carrySharedResources, islandIdOf, makeVoyageIsland, type IslandStart } from './voyages';
 import { readable, upgrade } from './syncProjection';
 import { projectGrowingSyncResponsive } from './syncProjectionClient';
 import Dexie, { liveQuery, type Table } from 'dexie';
@@ -13,7 +15,9 @@ import type { GrowingState, NatureEvent, TownEvent } from './types';
 
 export interface GrowingRecord {
     profileId: string;
-    version: 1 | 2 | 3 | 4;
+    islandId?: string;
+    islandStart?: IslandStart;
+    version: 1 | 2 | 3 | 4 | 5;
     revision: number;
     createdAt: number;
     updatedAt: number;
@@ -23,7 +27,7 @@ export interface GrowingRecord {
 }
 
 /** One small picture per opening, replayed as "しまの あゆみ" (§13). Never leaves the device. */
-export interface MomentRecord { id?: number; profileId: string; at: number; image: Blob; width: number; height: number }
+export interface MomentRecord { id?: number; islandId?: string; profileId: string; at: number; image: Blob; width: number; height: number }
 export const MOMENT_LIMIT = 60;
 
 /** Separate from the current island's database, so switching back keeps its record intact. */
@@ -37,6 +41,11 @@ export class GrowingIslandDatabase extends Dexie {
     legacyIslands!: Table<GrowingRecord, string>;
     balancedIslands!: Table<GrowingRecord, string>;
     guidedIslands!: Table<GrowingRecord, string>;
+    placedIslands!: Table<GrowingRecord, string>;
+    legacyGifts!: Table<FlowerGift, string>;
+    voyageIslands!: Table<GrowingRecord, string>;
+    voyageArchives!: Table<GrowingRecord & { islandId: string }, [string, string]>;
+    archivedIslands!: Table<GrowingRecord & { islandId: string }, [string, string]>;
     constructor(name = growingDatabaseName()) {
         super(name);
         this.version(1).stores({ islands: '&profileId' });
@@ -54,10 +63,37 @@ export class GrowingIslandDatabase extends Dexie {
         this.version(5).stores({ placedIslands: '&profileId' }).upgrade(async tx => {
             await tx.table('placedIslands').bulkAdd(await tx.table('guidedIslands').toArray());
         });
+        this.version(6).stores({ voyageIslands: '&profileId', archivedIslands: '[profileId+islandId], profileId' }).upgrade(async tx => {
+            await tx.table('voyageIslands').bulkAdd(await tx.table('placedIslands').toArray());
+        });
+        // Deleted stores remain readable during Dexie's content upgrade and are removed
+        // only after it succeeds. Preserve the photos and their keys atomically.
+        this.version(7).stores({ voyageMoments: '++id, profileId, [profileId+at]', moments: null }).upgrade(async tx => {
+            await tx.table('voyageMoments').bulkAdd(await tx.table('moments').toArray());
+        });
+        // Dexie repairs missing stores even for an older declared schema. An empty store
+        // without an automatic id or profile indexes instead rejects legacy photograph
+        // adds and aborts old owner-deletion transactions before they can report success.
+        this.version(8).stores({ moments: '&requiresVoyageWriter' });
+        this.version(9).stores({ cultivatedIslands: '&profileId', cultivatedArchives: '[profileId+islandId], profileId',
+            cultivatedMoments: '++id, profileId, [profileId+at]', cultivatedGifts: '&id, to, from', voyageMoments: null, gifts: null }).upgrade(async tx => {
+            await tx.table('cultivatedIslands').bulkAdd(await tx.table('voyageIslands').toArray());
+            await tx.table('cultivatedArchives').bulkAdd(await tx.table('archivedIslands').toArray());
+            await tx.table('cultivatedMoments').bulkAdd(await tx.table('voyageMoments').toArray());
+            await tx.table('cultivatedGifts').bulkAdd(await tx.table('gifts').toArray());
+        });
+        this.version(10).stores({ voyageMoments: '&requiresCultivatedWriter', gifts: '&requiresCultivatedWriter' });
+        this.gifts = this.table('cultivatedGifts');
+        this.legacyGifts = this.table('gifts');
+        this.moments = this.table('cultivatedMoments');
+        this.voyageIslands = this.table('voyageIslands');
+        this.voyageArchives = this.table('archivedIslands');
+        this.placedIslands = this.table('placedIslands');
+        this.archivedIslands = this.table('cultivatedArchives');
         this.legacyIslands = this.table('islands');
         this.balancedIslands = this.table('balancedIslands');
         this.guidedIslands = this.table('guidedIslands');
-        this.islands = this.table('placedIslands');
+        this.islands = this.table('cultivatedIslands');
     }
 }
 export const growingDb = new GrowingIslandDatabase();
@@ -71,14 +107,19 @@ async function withGrowingPersistence<T>(save: () => Promise<T>): Promise<T> {
 
 export async function deleteGrowingOwner(profileId: string, database = growingDb) {
     if (!await Dexie.exists(database.name)) return;
-    await withGrowingPersistence(() => database.transaction('rw', [database.islands, database.guidedIslands, database.balancedIslands, database.legacyIslands, database.moments, database.gifts], async () => {
+    await withGrowingPersistence(() => database.transaction('rw', [database.islands, database.archivedIslands, database.voyageIslands, database.voyageArchives, database.legacyGifts, database.placedIslands, database.guidedIslands, database.balancedIslands, database.legacyIslands, database.moments, database.gifts], async () => {
         await database.islands.delete(profileId);
+        await database.voyageIslands.delete(profileId);
+        await database.voyageArchives.where('profileId').equals(profileId).delete();
+        await database.placedIslands.delete(profileId);
+        await database.archivedIslands.where('profileId').equals(profileId).delete();
         await database.legacyIslands.delete(profileId);
         await database.balancedIslands.delete(profileId);
         await database.guidedIslands.delete(profileId);
         await database.moments.where('profileId').equals(profileId).delete();
         await database.gifts.where('to').equals(profileId).delete();
         await database.gifts.where('from').equals(profileId).delete();
+        await database.legacyGifts.filter(gift => gift.to === profileId || gift.from === profileId).delete();
     }));
 }
 
@@ -146,6 +187,7 @@ export async function commandGrowingIsland(profileId: string, intent: Intent, no
     return withGrowingPersistence(() => database.transaction('rw', database.islands, async () => {
         const current = await database.islands.get(profileId);
         if (!current) throw new Error('しまを よみこんでから もういちど ためしてね。');
+        if (islandIdOf(current) !== (intent.islandId ?? FIRST_ISLAND)) throw new Error('しまが かわったよ。もういちど ひらいてね。');
         const upgraded = upgrade(current, now);
         if (current.state.applied.includes(intent.id) && current.version === upgraded.version) return { record: current, town: [] };
         const command = intent.command;
@@ -200,10 +242,10 @@ export async function flowerSentToday(from: string, to: string, now = Date.now()
  * Keeps at most 60 pictures. The one closest in time to its predecessor goes first, so the
  * replay still runs from the very first day to today (§13).
  */
-export async function addMoment(profileId: string, image: Blob, width: number, height: number, now = Date.now(), database = growingDb) {
+export async function addMoment(profileId: string, image: Blob, width: number, height: number, now = Date.now(), database = growingDb, islandId = FIRST_ISLAND) {
     await withGrowingPersistence(() => database.transaction('rw', database.moments, async () => {
-        await database.moments.add({ profileId, at: now, image, width, height });
-        const all = await database.moments.where('[profileId+at]').between([profileId, Dexie.minKey], [profileId, Dexie.maxKey]).toArray();
+        await database.moments.add({ profileId, islandId, at: now, image, width, height });
+        const all = await database.moments.where('[profileId+at]').between([profileId, Dexie.minKey], [profileId, Dexie.maxKey]).filter(moment => (moment.islandId ?? FIRST_ISLAND) === islandId).toArray();
         while (all.length > MOMENT_LIMIT) {
             let drop = 1, gap = Infinity;
             for (let i = 1; i < all.length - 1; i++) {
@@ -218,5 +260,53 @@ export async function addMoment(profileId: string, image: Blob, width: number, h
 
 export async function listMoments(profileId: string, database = growingDb) {
     if (!await Dexie.exists(database.name)) return [];
-    return database.moments.where('[profileId+at]').between([profileId, Dexie.minKey], [profileId, Dexie.maxKey]).toArray();
+    const current = await database.islands.get(profileId);
+    return database.moments.where('[profileId+at]').between([profileId, Dexie.minKey], [profileId, Dexie.maxKey]).filter(moment => (moment.islandId ?? FIRST_ISLAND) === islandIdOf(current)).toArray();
+}
+
+
+/** The sea chart is indicative; no world-space coordinates connect its islands. */
+export async function listVoyageIslands(profileId: string, database = growingDb) {
+    return database.transaction('r', database.islands, database.archivedIslands, async () => {
+        const current = await database.islands.get(profileId);
+        const archived = await database.archivedIslands.where('profileId').equals(profileId).toArray();
+        return current ? [current, ...archived].map(record => ({ id: islandIdOf(record), name: record.state.islandName ?? 'はじまりのしま',
+            start: record.islandStart, land: record.state.land, villagers: record.state.villagers.length, active: islandIdOf(record) === islandIdOf(current) })) : [];
+    });
+}
+
+/** Save the old island and restore the destination atomically; no learning is minted. */
+export async function sailGrowingIsland(profileId: string, expectedIslandId: string,
+    destination: { id: string; create?: { name: string; start: IslandStart } }, now = Date.now(), database = growingDb) {
+    return withGrowingPersistence(() => database.transaction('rw', database.islands, database.archivedIslands, async () => {
+        const current = await database.islands.get(profileId);
+        if (!current) throw new Error('しまを よみこんでね。');
+        if (islandIdOf(current) === destination.id) return current;
+        if (islandIdOf(current) !== expectedIslandId) throw new Error('しまが かわったよ。海図を ひらきなおしてね。');
+        const stored = await database.archivedIslands.get([profileId, destination.id]);
+        if (!stored && !destination.create) throw new Error('しまが みつからなかったよ。海図を ひらきなおしてね。');
+        const target = stored ? upgrade(stored, now) : makeVoyageIsland(current, destination.id, destination.create!.name, destination.create!.start, now);
+        const record = { ...carrySharedResources(current, target), revision: current.revision + 1, updatedAt: now };
+        await database.archivedIslands.put({ ...current, islandId: islandIdOf(current) });
+        await database.archivedIslands.delete([profileId, destination.id]);
+        await database.islands.put(record);
+        return record;
+    }));
+}
+
+/** Parent recovery uses the same island/revision fence and persistence hold as child commands. */
+export async function restoreGrowingWonder(profileId: string, islandId: string, slot: WonderSlot, expectedRevision: number,
+    now = Date.now(), database = growingDb) {
+    return withGrowingPersistence(() => database.transaction('rw', database.islands, async () => {
+        const current = await database.islands.get(profileId);
+        if (!current || islandIdOf(current) !== islandId) throw new Error('島が変わりました。もう一度確認してください。');
+        const upgraded = upgrade(current, now);
+        if (upgraded.state.growth?.slots[slot]?.status === 'restored') return upgraded;
+        if (current.revision !== expectedRevision) throw new Error('島が変わりました。もう一度確認してください。');
+        const state = structuredClone(upgraded.state);
+        restoreWonderSlot(state, slot, now);
+        const record = { ...upgraded, state, revision: current.revision + 1, updatedAt: now };
+        await database.islands.put(record);
+        return record;
+    }));
 }

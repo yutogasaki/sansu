@@ -1,3 +1,4 @@
+import { canPurchase } from './community';
 import { LANDMARK_PRICE, SEED_PRICE } from './rules';
 import { canPlace, canReachHomePlacement, landQuote } from './commands';
 import { landCells } from './space';
@@ -149,7 +150,7 @@ export function achievementSuggestions(state: GrowingState) {
     const homeSpace = cells.some(cell => canReachHomePlacement(state, cell));
     const quote = landQuote(state);
     const normalSeed = Object.entries(SEED_PRICE).some(([kind, price]) => !['wild', 'wonder'].includes(kind)
-        && state.unlocked.includes(`seed:${kind}`) && state.drops >= price && (kind === 'home' ? homeSpace : space));
+        && canPurchase(state, `seed:${kind}`) && state.drops >= price && (kind === 'home' ? homeSpace : space));
     const hasSeed = state.plots.some(p => !p.starter && p.paid > 0 && !['wild', 'wonder'].includes(p.kind) && p.cell);
     const availability: Record<AchievementId, boolean> = {
         A1: state.arrivals.length > 0 || (state.unlocked.includes('seed:home') && (state.tutorial === 'first-home' || state.drops >= SEED_PRICE.home) && homeSpace),
@@ -161,7 +162,7 @@ export function achievementSuggestions(state: GrowingState) {
         A6: Boolean(quote && state.drops >= quote.price),
     };
     const priceLine = (thing: string, price: number, particle = 'は') => `${thing}${particle} しずく ${price}こ。いまは ${state.drops}こ あるよ`;
-    const normalPrices = Object.entries(SEED_PRICE).filter(([kind]) => !['wild', 'wonder'].includes(kind) && state.unlocked.includes(`seed:${kind}`));
+    const normalPrices = Object.entries(SEED_PRICE).filter(([kind]) => !['wild', 'wonder'].includes(kind) && canPurchase(state, `seed:${kind}`));
     const placeablePrices = normalPrices.filter(([kind]) => kind === 'home' ? homeSpace : space);
     const ordinarySpace = placeablePrices.length > 0;
     const storedStand = state.landmarks.some(p => p.kind === 'bandstand' && !p.cell);

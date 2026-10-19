@@ -14,7 +14,7 @@ test('runtime harness accepts only explicit loopback DEV or identified build tar
 test('plan prepares exact reusable diagnostics while explicitly declining to claim runtime or external gates', async () => {
     const plan = await main(['--plan']);
     assert.equal(plan.runtimeExecuted, false); assert.equal(plan.diagnosticCases, 20); assert.equal(plan.catalogLayouts, 15);
-    assert.equal(plan.combinations, 4); assert.equal(plan.currentTable, 'placedIslands'); assert.equal(plan.recordVersion, 4);
+    assert.equal(plan.combinations, 4); assert.equal(plan.currentTable, 'cultivatedIslands'); assert.equal(plan.recordVersion, 5);
     assert.equal(plan.gates.runtime, 'NOT_EXECUTED'); assert.equal(plan.gates.naturalSevenDayGrowth, 'NOT_EVALUATED');
     assert.equal(plan.gates.comprehensionSafety, 'NOT_EVALUATED');
 });

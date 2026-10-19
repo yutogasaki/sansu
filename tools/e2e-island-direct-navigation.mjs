@@ -42,7 +42,7 @@ try {
         const initial = await readNative(page, id);
         let menu = await openGrowingMenu(page, { touch: true });
         await menu.locator('.growing-pocket-friend-model img').waitFor(); await capture('populated-menu');
-        for (const [name, selector, close] of [['なかま', '.growing-friends', 'とじる'], ['はたを つくる', '.growing-trace', 'とじる'], ['しゃしん・みせる', 'section[aria-label="しゃしん・みせる"]', 'とじる'], ['はなずかん', 'section[aria-label="はなずかん"]', 'とじる']]) {
+        for (const [name, selector, close] of [['なかま', '.growing-friends', 'とじる'], ['海図と ふね', '.voyage-chart', '海図を とじる'], ['はたを つくる', '.growing-trace', 'とじる'], ['しゃしん・みせる', 'section[aria-label="しゃしん・みせる"]', 'とじる'], ['はなずかん', 'section[aria-label="はなずかん"]', 'とじる']]) {
             menu = await openGrowingMenu(page, { touch: true });
             await menu.getByRole('button', { name, exact: true }).tap();
             const panel = page.locator(selector); await panel.waitFor();

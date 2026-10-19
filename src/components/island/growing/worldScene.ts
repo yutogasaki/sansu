@@ -111,7 +111,7 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
     };
 
     return {
-        scene, m, life, hemi, sun,
+        scene, m, life, hemi, sun, house: nativeCottage ?? cottage.root,
         hasWaterPreview: () => Boolean(previewTerrain),
         shoulderSoil: () => terrain?.root.getObjectByName('authored-shoulder-soil'),
         showWaterPreview(future?: GrowingState) {

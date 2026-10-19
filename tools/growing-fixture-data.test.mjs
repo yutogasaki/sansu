@@ -34,8 +34,10 @@ describe('fixed Growing QA saves', () => {
         await database.islands.bulkPut(pack.cases.map(item => item.island));
         for (const item of pack.cases) {
             const result = await syncGrowingIsland(item.profile.id, [], EPOCH, database);
-            expect(ownedState(result.record.state)).toEqual(ownedState(item.island.state));
-            expect(result.record.version).toBe(4);
+            const before = ownedState(item.island.state), after = ownedState(result.record.state);
+            expect({ ...after, unlocked: before.unlocked }).toEqual(before);
+            expect(after.unlocked).toEqual(expect.arrayContaining(before.unlocked));
+            expect(result.record.version).toBe(5);
             expect(result.learned).toBe(0);
         }
     });

@@ -1,0 +1,78 @@
+{
+  "checkedAtUtc": "2026-10-19T07:34:03.585086+00:00",
+  "changeType": "candidate specification and standalone synthetic design diagnostic; no application source or user DB edits",
+  "conversation": "https://chatgpt.com/g/g-p-6ad58d0857b881918e46e346350848e7/c/6ad58fdd-7f00-83e8-b262-b3cb942b0702",
+  "collaboration": {
+    "totalRounds": 6,
+    "thisTurn": [
+      4,
+      5,
+      6
+    ],
+    "lastAudit": "completed; no fatal contradictions in the submitted scope; refund/provenance boundary incorporated"
+  },
+  "earlierEvidence": "verification.json records the historical v0.3 artifact hashes, not current hashes",
+  "inputs": {
+    "CONSTITUTION.md": "5ef2541bc4de9439200c3a0b2a80c75800443d4f9b3a9230b20be09f428e480d",
+    "docs/product/01_app_spec.md": "6ee377ef75979cd5bc67168802b07acd38671faf459fec0ead9145566708bb59",
+    "docs/product/52_growing_island_game_spec.md": "a975bf8ab113ff7d0e38a7bfee20ca1c2f066790910271a8533b4935ea503e41",
+    "docs/product/island-place-goals.md": "5af4434ef4e8cf383d76424dd1b50274d49ad7920481033c49c50d87cc46fa03",
+    "docs/product/island-place-goals.json": "c4714aae51b3b0504ee23e999276518541aa13a0c80b05768d82112f172f4424",
+    "docs/product/island-voyages.md": "8fc47dc9eb7359f8effcde0ad10ae4d9ade33ff48de9c3dda7b78286dec7589b",
+    "docs/product/island-first-play-onboarding.md": "b65c18aa5911b8a891730fea09d8b984f0cb3535f2981c2b532f3f1baf197b0b",
+    "src/domain/growingIsland/rules.ts": "0a4e0289c595318443683fcbcf330d397b532f433d3faa993900fc986a8e6727",
+    "src/domain/growingIsland/types.ts": "5143e59dc2589b9330e702eeb1cdf97747d30db5d24b77418ddf7c181aa5ac7a",
+    "src/domain/growingIsland/community.ts": "878c1dbc8a73f2e45e1c7960201fceaf4c272d57f1a9e803d6fbc2162ff668c6",
+    "src/domain/growingIsland/environment.ts": "e965f2cd29601e5ee10f5b6dd9861a937e6c4b6ce3f71c35ad9c330109ab97f5",
+    "src/domain/growingIsland/town.ts": "68b955dba55b4ca4447d90358e913eb6e1b1808141e12416dea32b1e47061fa1",
+    "src/domain/growingIsland/gifts.ts": "e4eab4fb70124d1228d6491ae129a26dd741d9fefbd1e754c7eca87ab36ff329",
+    "src/domain/growingIsland/voyages.ts": "beef203d2696aa34b35befdccf4a713739acc3fa27cdf7e0fc26ecb4eae891bf",
+    "src/components/island/growing/growingCopy.ts": "c483fba18d2cf669176e82eb5c07041fa6f62749d07808855e632e7fdbd9e9e9",
+    "src/domain/growingIsland/commands.ts": "bec8c2d910d83951c5226630bca7e9eb5e40a7a7e5f6fae8b69d0297a79e3db7",
+    "src/domain/growingIsland/nature.ts": "73a7a4b2d18bfaf84b7ec0b724e07e7ec13088a36eae31b54313d597949be733",
+    "src/domain/growingIsland/places.ts": "25a712391722d414b7d88dadb7ff1e7637aeee80a4397093d2c886bca8755b2a",
+    "src/domain/growingIsland/space.ts": "5c0b304c01b7a8a11bcd3a7fe0e8e38232af923432bee865ea15d198029b9792",
+    "src/domain/growingIsland/island.ts": "b8a2d70d356b5bc783df3fc678e4e3a51ae361f14c04ce140c1430479604b1e1"
+  },
+  "inputComparisonWithV03": {
+    "changedPaths": [],
+    "interpretation": "snapshot comparison only; do not attribute unrelated workspace changes to this task"
+  },
+  "checks": {
+    "docsCheck": {
+      "command": "fnm exec --using=22 npm run docs:check",
+      "expected": "exit 0 / PASS docs:check",
+      "actual": "PASS docs:check; exit 0",
+      "warnings": "14 pre-existing backlog/review-date warnings",
+      "repair": "First check found the not-yet-created verification-v04.json link; created evidence file and final check passed"
+    },
+    "paceProbe": {
+      "command": "fnm exec --using=22 node_modules/.bin/vite-node docs/design/2026-10-19-island-system-spec/pace-probe.ts",
+      "expected": "12 synthetic cases, exit 0, output JSON",
+      "actual": "PASS; exit 0, 12 cases",
+      "conservation": "PASS; clock+bank equals received town time at all 36 checkpoints; nonnegative wallets",
+      "scope": "partial in-memory candidate model, not complete candidate runtime acceptance"
+    },
+    "readThrough": "PASS: six purchase sunsets, legacy/current separation, natural parents and deterministic boundaries, finite shapes, W recovery and provenance, model limitations",
+    "markdown": "PASS: balanced code fences and no trailing whitespace"
+  },
+  "notVerified": [
+    "complete food-catalog causal comparison",
+    "new natural spread distribution",
+    "authored large component dimensions, clearance margins and physical safety",
+    "W migration/restore transactions and SW/old-writer recovery",
+    "child comprehension, appeal and voluntary return",
+    "application lint/typecheck/tests/build/release"
+  ],
+  "artifacts": {
+    "docs/design/2026-10-19-island-system-spec/README.md": "4e6e6dbb8b0f36189a61ebab8145b7660286e624b2468502107b1349b741addc",
+    "docs/design/2026-10-19-island-system-spec/pace-analysis.md": "74b8fb459389b14bac4634d9cb958ea795a740ce3cd87915816604061a3f8d62",
+    "docs/design/2026-10-19-island-system-spec/pace-probe.ts": "05e2a94d68e440a283e41ff93cda61d2fbe969e4dc861ae6a96e9bc2a3c50cf8",
+    "docs/design/2026-10-19-island-system-spec/pace-results.json": "1237269d1379f0680de0b536d63abdea6861875963390430c09482b735f4dced",
+    "docs/product/island-system/README.md": "e511f65166a3120d0d96412e59462f4ca5e67f827d060277e31ab633df896380",
+    "docs/product/island-system/current-map.md": "65cb384b5c2374e4c662957900e409cb6725914fbeff8c5bbef1c2194b4089d3",
+    "docs/product/island-system/growth-proposal.md": "9f77ab12912de31a83eb4d6bd8470af79b71f06ca62a5ce77d428721623cf892",
+    "docs/product/island-system/growth-rules.md": "efed40b27adeec2e115548e2f7afb932de05e78f01b66bdab580107eb075be60",
+    "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md": "2f9780391061d9f3aa6c75e046fdb686ae4dc46d531f623e32bfbe198d491aae"
+  }
+}

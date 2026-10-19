@@ -94,7 +94,7 @@ describe('optional place goals and actual use persistence', () => {
         const proof = structuredClone(first.record.state.placeProgress!.milestones.P01);
         const original = structuredClone(first.record.state.placeProgress!.useHistory);
         const stored = await commandGrowingIsland('kid', { id: 'store-tree', command: { type: 'store', id: 't2' } }, now + 2, db);
-        expect(placeStatuses(stored.record.state).find(goal => goal.id === 'P01')).toMatchObject({ achieved: true, stage: 'seeded' });
+        expect(placeStatuses(stored.record.state).find(goal => goal.id === 'P01')).toMatchObject({ achieved: true, stage: 'grown' });
         expect(stored.record.state.placeProgress!.milestones.P01).toEqual(proof);
         expect(stored.record.state.placeProgress!.useHistory).toEqual(original);
         const restored = await commandGrowingIsland('kid', { id: 'restore', command: { type: 'unstore', id: 't2', cell: { x: 1, z: 3 } } }, now + 3, db);
@@ -137,7 +137,7 @@ describe('optional place goals and actual use persistence', () => {
         expect(state.placeProgress!.milestones.P06).toMatchObject({ at: now + 3, ruleId: 'P06', anchorId: 'kid' });
         expect(placeStatuses(state).find(goal => goal.id === 'P06')?.stage).toBe('lived');
         state.landmarks.find(item => item.id === 't2')!.cell = undefined;
-        expect(placeStatuses(state).find(goal => goal.id === 'P06')).toMatchObject({ achieved: true, stage: 'connected' });
+        expect(placeStatuses(state).find(goal => goal.id === 'P06')).toMatchObject({ achieved: true, stage: 'grown' });
     });
 
     it('retains the present earlier actor’s current receipt when the latest visitor goes away, but rejects stale history', async () => {
@@ -200,7 +200,7 @@ describe('place-history save cutover', () => {
         expect(await readGrowingIsland('kid', db)).toEqual(source);
         expect(await db.guidedIslands.get('kid')).toEqual(source);
         const next = await commandGrowingIsland('kid', { id: 'select', command: { type: 'choose-place-goal', id: 'P02' } }, now + 1, db);
-        expect(next.record.version).toBe(4); expect(next.record.state.placeProgress!.uses).toEqual({});
+        expect(next.record.version).toBe(5); expect(next.record.state.placeProgress!.uses).toEqual({});
         expect(next.record.state.guidance).toEqual(source.state.guidance);
         await addMoment('kid', new Blob(['photo']), 4, 3, now, db); await sendFlower('kid', 'なまえ', 'sibling', now, db);
         db.close(); await old.open();

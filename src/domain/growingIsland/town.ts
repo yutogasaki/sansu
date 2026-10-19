@@ -1,3 +1,4 @@
+import { grantGrowthMilestones } from './growth';
 import { comfort, foodSupport, genki, housing, islandLevel, levelFor, occupantsOf, refreshUnlocks } from './community';
 import { features, islandCharacter, styleAt } from './environment';
 import { arrivalName } from './names';
@@ -14,8 +15,9 @@ export function levelUp(state: GrowingState, before: number, after: number): Tow
     const events: TownEvent[] = [];
     for (let level = before + 1; level <= after; level++) {
         events.push({ type: 'level', level });
-        if ((WONDER_LEVELS as readonly number[]).includes(level)) { state.wonderSeeds = (state.wonderSeeds ?? 0) + 1; events.push({ type: 'wonder-seed' }); }
+        if (!state.growth && (WONDER_LEVELS as readonly number[]).includes(level)) { state.wonderSeeds = (state.wonderSeeds ?? 0) + 1; events.push({ type: 'wonder-seed' }); }
     }
+    events.push(...grantGrowthMilestones(state, state.nature.realAt));
     return events;
 }
 
@@ -27,6 +29,7 @@ function build(state: GrowingState, hour: number, events: TownEvent[], world?: I
         if (!isReachable(plot.cell!, reached, world)) continue;
         plot.stage = 1; plot.builtAt = hour; plot.stagedAt = hour;
         plot.style = styleAt(state, plot.cell!, all, world);
+        if (state.growth && plot.paid > 0 && !['wild', 'wonder'].includes(plot.kind)) state.growth.built = true;
         events.push({ type: 'built', plotId: plot.id });
         if (!state.unopened.includes(plot.id)) state.unopened.push(plot.id);
     }
@@ -37,9 +40,9 @@ function growHomes(state: GrowingState, hour: number, events: TownEvent[], world
     for (const plot of state.plots) {
         if (plot.kind !== 'home' || !plot.cell || world && !onLand(state, plot.cell, world) || !isReachable(plot.cell, reached, world) || plot.stage < 1 || plot.stage > 3) continue;
         const rule = RULES.homeGrowth[plot.stage as 1 | 2 | 3], people = occupantsOf(state, plot.id);
-        if (!people.length || hour - (plot.stagedAt ?? plot.builtAt ?? hour) < rule.hours || level < rule.level) continue;
+        if (!people.length || hour - (plot.stagedAt ?? plot.builtAt ?? hour) < rule.hours || (!state.growth && level < rule.level)) continue;
         const average = people.reduce((sum, v) => sum + comfort(state, v, fed, reached, world), 0) / people.length;
-        if (average < rule.comfort) continue;
+        if (!state.growth && average < rule.comfort) continue;
         plot.stage = (plot.stage + 1) as Plot['stage']; plot.stagedAt = hour;
         events.push({ type: 'grew', plotId: plot.id, stage: plot.stage });
         if (!state.unopened.includes(plot.id)) state.unopened.push(plot.id);
@@ -107,8 +110,8 @@ function hasTownWork(state: GrowingState, world?: IslandWorld) {
     return state.plots.some(p => {
         if (p.kind !== 'home' || !p.cell || world && !onLand(state, p.cell, world) || !isReachable(p.cell, reached, world) || p.stage < 1 || p.stage > 3) return false;
         const rule = RULES.homeGrowth[p.stage as 1 | 2 | 3], occupants = occupantsOf(state, p.id);
-        return level >= rule.level && occupants.length > 0
-            && occupants.reduce((sum, v) => sum + comfort(state, v, fed, reached, world), 0) / occupants.length >= rule.comfort;
+        return occupants.length > 0 && (state.growth || level >= rule.level
+            && occupants.reduce((sum, v) => sum + comfort(state, v, fed, reached, world), 0) / occupants.length >= rule.comfort);
     });
 }
 
@@ -133,5 +136,6 @@ export function openTown(state: GrowingState, world?: IslandWorld): TownEvent[] 
     }
     if (!docked(state) && state.town.clock > from) events.push({ type: 'boat', hoursLeft: state.pier.dockAt - state.town.clock });
     if (!events.length && state.town.clock > from) events.push({ type: 'quiet' });
+    events.push(...grantGrowthMilestones(state, state.nature.realAt));
     return events;
 }

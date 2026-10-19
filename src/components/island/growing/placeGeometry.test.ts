@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import * as T from 'three';
-import { newIsland } from '../../../domain/growingIsland/island';
+import { newLegacyIsland as newIsland } from '../../../domain/growingIsland/legacy.fixture';
 import { placeGoalCatalog } from '../../../domain/growingIsland/placeCatalog';
 import { derivePlaces } from '../../../domain/growingIsland/places';
 import { derivePlaceRelations } from '../../../domain/growingIsland/placeRelations';

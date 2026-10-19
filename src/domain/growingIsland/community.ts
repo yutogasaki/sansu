@@ -1,3 +1,4 @@
+import { INITIAL_PURCHASES, RETIRED_PURCHASES } from './rules';
 import { growthStage } from '../islandLife/model';
 import { connectedWaterChannels } from '../islandLife/waterChannels';
 import { TREE_MATURE_HOURS, waterAt, waterLayout } from './environment';
@@ -110,6 +111,7 @@ export function levelFor(points: number) {
 export const islandLevel = (state: GrowingState) => levelFor(state.genki.best);
 
 export function unlockedKeys(state: GrowingState) {
+    if (state.growth) return UNLOCKS.filter(u => !RETIRED_PURCHASES.has(u.key) && (state.growth!.welcomed || state.villagers.length > 0 || INITIAL_PURCHASES.has(u.key))).map(u => u.key);
     const level = islandLevel(state), villagers = state.villagers.length;
     return UNLOCKS.filter(u => (u.level ?? 1) <= level && (u.villagers ?? 0) <= villagers).map(u => u.key);
 }
@@ -119,4 +121,11 @@ export function refreshUnlocks(state: GrowingState): string[] {
     const fresh = unlockedKeys(state).filter(k => !state.unlocked.includes(k));
     state.unlocked.push(...fresh);
     return fresh;
+}
+
+export function canPurchase(state: GrowingState, key: string) {
+    return !(state.growth && RETIRED_PURCHASES.has(key)) && state.unlocked.includes(key);
+}
+export function cosmeticsOpen(state: GrowingState, requiredLevel: number) {
+    return !!state.growth && (state.growth.welcomed || state.villagers.length > 0) || islandLevel(state) >= requiredLevel;
 }
