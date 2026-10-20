@@ -1,0 +1,42 @@
+2026-10-20. First scoped run overlapped the memory projection edit; retained rather than relabeled as a final stable candidate. The final three-file recheck is recorded separately.
+
+ FAIL  src/domain/growingIsland/placeMemories.test.ts > shows first family/actor facts without deleting old revisions, and keeps memory when current owners disappear
+AssertionError: expected [ { id: 'grown:grove', …(5) }, …(1) ] to deeply equal [ { id: 'grown:grove', …(3) }, …(1) ]
+
+- Expected
++ Received
+
+  Array [
+    Object {
+      "at": 10,
+      "family": "grove",
+      "id": "grown:grove",
+      "kind": "grown",
++     "memberIds": Array [
++       "tree",
++     ],
++     "variant": "lane",
+    },
+    Object {
+      "actorId": "pokomoko",
+      "at": 30,
+      "family": "grove",
+      "id": "used:grove:pokomoko",
+      "kind": "used",
++     "memberIds": Array [
++       "tree",
++     ],
++     "variant": "lane",
+    },
+  ]
+
+ ❯ src/domain/growingIsland/placeMemories.test.ts:12:22
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+ Test Files  1 failed | 110 passed (111)
+      Tests  1 failed | 735 passed (736)
+   Start at  07:29:38
+   Duration  317.60s (transform 3.73s, setup 0ms, collect 22.21s, tests 1086.65s, environment 18ms, prepare 6.79s)
+

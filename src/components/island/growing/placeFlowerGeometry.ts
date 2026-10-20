@@ -144,38 +144,49 @@ export function buildPlaceFlowerRoof(g: GardenGeometry, state: GrowingState, lay
     // Sample the complete petal extent: hills under a drooping tip require the
     // same ear/hat clearance as the middle of the real entrance.
     let maxGround = center.y - .04;
-    for (let z = -radius - .15; z <= radius + .15; z += .15) for (let x = -radius - .15; x <= radius + .15; x += .15) {
-        maxGround = Math.max(maxGround, layout.heightAt(layout.logicalAt({ x: center.x + x, z: center.z + z })));
+    const sampleCenters = place.variant === 'arch' ? [...points, ...points.slice(1).map((point, i) => point.clone().lerp(points[i], .5))] : [center];
+    const sampleRadius = place.variant === 'arch' ? 1.45 : radius;
+    for (const sample of sampleCenters) for (let z = -sampleRadius - .15; z <= sampleRadius + .15; z += .15) for (let x = -sampleRadius - .15; x <= sampleRadius + .15; x += .15) {
+        maxGround = Math.max(maxGround, layout.heightAt(layout.logicalAt({ x: sample.x + x, z: sample.z + z })));
     }
-    const roofY = maxGround + .04 + ACTOR_CLEARANCE + radius * .36 + .16;
+    const roofY = maxGround + .04 + ACTOR_CLEARANCE + sampleRadius * .36 + .16;
     const roofCenter = new T.Vector3(center.x, roofY, center.z);
     const roof = new T.Group(); roof.name = 'place-flower-canopy'; roof.userData.ownerIds = owners.map(owner => owner.id);
     roof.userData.actorClearance = ACTOR_CLEARANCE; roof.userData.roofCenter = tuple(roofCenter); g.root.add(roof);
+    const connections: [number, number][] = [];
+    if (place.variant === 'arch') {
+        const indices = new Map(cells.map((cell, i) => [key(cell), i])), world = layout.authored ? layout.world : undefined, open = walkableCells(state, world);
+        for (const [i, a] of cells.entries()) for (const [x, z] of [[1, 0], [2, 0], [0, 1], [0, 2]]) {
+            const j = indices.get(key({ x: a.x + x, z: a.z + z }));
+            if (j !== undefined && placeConnected(a, cells[j], open, world)) connections.push([i, j]);
+        }
+    }
     for (const [i, point] of points.entries()) {
         const group = new T.Group(); group.name = 'place-owned-flower'; group.userData.ownerId = owners[i].id; g.root.add(group);
         const stemTop = point.clone(); stemTop.y = maxGround + .04 + ACTOR_CLEARANCE + .13;
         g.taperedBranch([tuple(point), tuple(point.clone().lerp(stemTop, .55).add(new T.Vector3(.035, 0, 0))), tuple(stemTop)], .055, .045, '#69a891', group)
             .name = 'place-flower-owner-stem';
-        g.branch([tuple(stemTop), tuple(stemTop.clone().lerp(roofCenter, .5).add(new T.Vector3(0, .10, 0))), tuple(roofCenter)], .035, '#83bca6', roof)
+        if (place.variant !== 'arch') g.branch([tuple(stemTop), tuple(stemTop.clone().lerp(roofCenter, .5).add(new T.Vector3(0, .10, 0))), tuple(roofCenter)], .035, '#83bca6', roof)
             .name = 'place-flower-high-support';
+    }
+    if (place.variant === 'arch') for (const [i, j] of connections) {
+        const a = points[i].clone(), b = points[j].clone(), middle = a.clone().lerp(b, .5);
+        a.y = b.y = maxGround + .04 + ACTOR_CLEARANCE + .13; middle.y = roofY;
+        g.branch([tuple(a), tuple(middle), tuple(b)], .035, '#83bca6', roof).name = 'place-flower-high-support';
     }
     if (native) {
         const blossom = (at: T.Vector3, span: number) => {
             const crown = native.instance('flower-crown'); crown.position.copy(at); crown.scale.setScalar(span / 2.57); roof.add(crown);
         };
         if (place.variant === 'arch') {
-            for (let i = 0; i < cells.length; i++) for (let j = i + 1; j < cells.length; j++) {
-                const a = cells[i], b = cells[j];
-                if (Math.abs(a.x - b.x) + Math.abs(a.z - b.z) > 2 || (a.x !== b.x && a.z !== b.z)) continue;
+            for (const [i, j] of connections) {
                 const middle = points[i].clone().lerp(points[j], .5); middle.y = roofY; blossom(middle, .90);
             }
         } else blossom(roofCenter, radius * 1.1);
     } else if (place.variant === 'arch') {
         // A row remains a sequence of linked blossoms, with openings between its
         // owner stems, rather than forcing every arrangement into a round canopy.
-        for (let i = 0; i < cells.length; i++) for (let j = i + 1; j < cells.length; j++) {
-            const a = cells[i], b = cells[j];
-            if (Math.abs(a.x - b.x) + Math.abs(a.z - b.z) > 2 || (a.x !== b.x && a.z !== b.z)) continue;
+        for (const [i, j] of connections) {
             const middle = points[i].clone().lerp(points[j], .5); middle.y = roofY;
             for (let n = 0; n < 4; n++) petal(g, middle, .86, n * Math.PI / 2 + .35, TINTS[owners[(i + n) % owners.length].color ?? ''] ?? PETALS[n], 0, roof);
             g.pebble('#eccda3', [middle.x, middle.y + .10, middle.z], [.23, .12, .23], roof, 20).name = 'place-flower-centre';

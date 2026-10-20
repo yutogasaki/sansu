@@ -1,0 +1,140 @@
+.growing-world-interaction { position: absolute; inset: 0; }
+/* Shared paper tools; the live world and the established learning stage keep their own art. */
+.island-shell .growing-island {
+    --growing-panel-radius: 24px;
+    --growing-hit: 48px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+.island-shell .growing-island :is(button, summary, input, select):focus-visible {
+    outline: 3px solid var(--pokomoko-blue); outline-offset: 3px;
+}
+.island-shell .growing-island :is(.growing-action, .growing-row button, .growing-close, .growing-tabs button, .growing-name input, .growing-name button, .growing-swatches button) {
+    min-height: var(--growing-hit); min-width: var(--growing-hit);
+}
+.island-shell .growing-island .growing-close { flex: none; width: 48px; height: 48px; }
+.island-shell .growing-island :is(.growing-tray, .growing-sheet) {
+    border: 1px solid var(--pokomoko-edge); border-bottom: 0;
+    border-radius: var(--growing-panel-radius) var(--growing-panel-radius) 0 0;
+    padding: 0 16px 16px; overscroll-behavior: contain; scrollbar-width: thin;
+    max-height: 85%; scroll-padding-top: 80px;
+}
+.island-shell .growing-island :is(.growing-tray, .growing-sheet) > header {
+    position: sticky; top: 0; z-index: 3; align-items: center;
+    padding: 12px 0; margin: 0 0 12px; background: var(--pokomoko-paper);
+    border-bottom: 1px solid var(--pokomoko-edge);
+}
+.island-shell .growing-island :is(.growing-tray, .growing-sheet) > header :is(h2, strong) { font-size: 20px; line-height: 1.4; }
+.island-shell .growing-island :is(.growing-tray, .growing-sheet) :is(small, header p, .growing-flower-note, .growing-price) {
+    font-size: 14px; line-height: 1.5; overflow-wrap: anywhere;
+}
+.island-shell .growing-island .growing-sheet { max-height: 70%; }
+.island-shell .growing-island .growing-action { border-radius: 16px; padding: 10px 16px; }
+.growing-actions .growing-action[data-primary=true] { background: var(--pokomoko-blue); color: white; border-color: var(--pokomoko-blue); }
+.island-shell .growing-island .growing-sheet-details { margin-top: 16px; padding-block: 8px; border-top: 1px dashed var(--pokomoko-stitch); }
+.growing-sheet-details > summary { min-height: 48px; display: flex; align-items: center; cursor: pointer; font-weight: 700; }
+.island-shell .growing-island .growing-sheet .growing-actions { gap: 8px; }
+.island-shell .growing-island .growing-sheet .growing-actions button { flex: 1 1 130px; }
+
+/* A toy box of real destinations, with an honest portrait of the current inhabitants. */
+.island-shell .growing-menu.growing-pocket-menu { right: 16px; bottom: 88px; width: min(368px, calc(100% - 32px)); max-height: min(60%, calc(100% - 104px)); border-radius: 24px; }
+.island-shell .growing-pocket-heading { min-height: 60px; padding-inline: 16px 8px; }
+.island-shell .growing-pocket-heading h2 { font-size: 20px; }
+.island-shell .growing-pocket-heading .growing-close { width: 48px; height: 48px; min-width: 48px; }
+.island-shell .growing-pocket-entries { gap: 12px; padding-inline: 12px; }
+.island-shell .growing-pocket-entries :is(button, summary) { min-height: 48px; font-size: 14px; border-radius: 16px; }
+.island-shell .growing-pocket-friends { min-height: 88px; padding: 8px 12px; border: 1px solid var(--pokomoko-edge); }
+.island-shell .growing-pocket-friend-model { width: 88px; height: 72px; }
+.island-shell .growing-pocket-main-copy strong { font-size: 16px; }
+.island-shell .growing-pocket-main-copy small { font-size: 14px; }
+.island-shell .growing-pocket-memories { gap: 8px; }
+.island-shell .growing-pocket-memories button { min-height: 96px; gap: 8px; padding: 8px 2px; background: white; border: 1px solid var(--pokomoko-edge); }
+.island-shell .growing-pocket-memories button > svg { width: 38px; height: 38px; }
+.island-shell .growing-pocket-memories button > span { white-space: normal; overflow-wrap: anywhere; }
+.island-shell :is(.growing-pocket-bridge-note, .growing-pocket-profile) { font-size: 14px; }
+.island-shell .growing-pocket-memories button:active:not(:disabled) { background: var(--pokomoko-rose); }
+
+/* A single tap still starts placement. The optional disclosure is a sibling, never an overlay hit target. */
+.island-shell .growing-island .growing-catalog { display: flex; flex-direction: column; overflow: hidden; max-height: 85%; }
+.island-shell .growing-catalog > header { position: static; flex: none; margin-bottom: 8px; }
+.island-shell .growing-catalog > .growing-tabs { flex: none; margin-bottom: 12px; }
+.island-shell .growing-catalog > [role=tabpanel] { min-height: 0; overflow-y: auto; padding: 0 2px 16px; overscroll-behavior: contain; scrollbar-width: thin; }
+.island-shell .growing-catalog .growing-tabs button { font-size: 16px; }
+.island-shell .growing-catalog .growing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.growing-catalog-tile { display: flex; flex-direction: column; min-width: 0; border: 1px solid var(--pokomoko-edge); border-radius: 18px; background: white; overflow: clip; }
+.island-shell .growing-catalog .growing-card { width: 100%; border: 0; flex: 1; min-width: 0; min-height: 192px; padding: 12px 8px 8px; align-content: start; gap: 8px; border-radius: 18px; }
+.island-shell .growing-catalog .growing-card > strong { font-size: 16px; line-height: 1.5; overflow-wrap: anywhere; }
+.island-shell .growing-catalog .growing-card-icon { display: grid; place-items: center; width: 100%; height: 96px; font-size: 42px; }
+.growing-catalog-picture { width: 100%; height: 96px; object-fit: contain; }
+.island-shell .growing-catalog .growing-catalog-growth { padding: 4px 8px; font-size: 14px; }
+.island-shell .growing-catalog-filters button { min-height: 48px; font-size: 14px; }
+.island-shell .growing-catalog-group h3 { font-size: 16px; margin-block: 16px 12px; }
+.growing-catalog-detail { border-top: 1px dashed var(--pokomoko-edge); }
+.growing-catalog-detail summary { display: flex; align-items: center; justify-content: center; min-height: 48px; color: var(--pokomoko-blue-deep); cursor: pointer; font-size: 14px; font-weight: 700; }
+.growing-catalog-detail summary::after { content: '+'; margin-left: 8px; }
+.growing-catalog-detail[open] summary::after { content: '−'; }
+.growing-catalog-detail > div { padding: 8px 12px 16px; }
+.growing-catalog-detail img { width: 100%; height: 160px; object-fit: contain; }
+.growing-catalog-detail p { font-size: 14px; margin-block: 8px 0; }
+
+/* Albums, flowers, friends and rooms retain different protagonists on the same paper. */
+.island-shell .growing-friends ul { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.island-shell .growing-friends li { min-width: 0; }
+.island-shell .growing-friends li button { height: 100%; flex-direction: column; align-items: center; text-align: center; padding: 16px 8px; }
+.island-shell .growing-friends :is(img, .growing-face) { width: 96px; height: 96px; object-fit: contain; background: var(--pokomoko-canvas); border-radius: 24px; }
+.island-shell .growing-friends :is(small, em) { font-size: 14px; line-height: 1.6; }
+.island-shell .growing-friends li span { min-width: 0; overflow-wrap: anywhere; }
+.island-shell .growing-overlay-body { border: 1px solid var(--pokomoko-edge); border-radius: 24px; padding: 16px; overscroll-behavior: contain; }
+.island-shell .growing-overlay-body .growing-card-image { object-fit: contain; }
+.island-shell .growing-overlay-body .growing-story-image { object-fit: contain; background: var(--pokomoko-canvas); }
+.growing-place-memories { width: 100%; border-top: 1px dashed var(--pokomoko-stitch); }
+.growing-place-memories summary { min-height: 48px; display: flex; align-items: center; cursor: pointer; font-weight: 800; }
+.growing-place-memories ul { display: grid; gap: 12px; list-style: none; padding: 0; margin-block: 8px 16px; }
+.growing-place-memories li { display: grid; gap: 8px; padding: 12px; background: var(--pokomoko-canvas); border-radius: 16px; }
+.island-shell .growing-flower-card .growing-flower-dot { width: 80px; height: 80px; }
+.island-shell .growing-home-identity { min-height: 48px; }
+.island-shell .growing-home-identity button { min-height: 48px; font-size: 16px; }
+.island-shell .growing-home-identity > span { font-size: 16px; }
+.island-shell .growing-home-view { min-height: 48px; font-size: 14px; }
+.island-shell .growing-home-tools > button { min-height: 64px; font-size: 16px; border-radius: 18px; }
+.island-shell .growing-home-tools > .growing-menu-button { font-size: 14px; }
+.island-shell .growing-home-goal small, .island-shell .growing-home-expand small { font-size: 14px; }
+.island-shell .growing-island .growing-bubble { font-size: 16px; padding: 12px 16px; max-width: min(340px, calc(100% - 24px)); }
+.island-shell .growing-bubble > span { font-size: 14px; }
+
+@media (max-width: 360px) {
+    .island-shell .growing-pocket-memories { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .island-shell .growing-home-identity button { max-width: 145px; }
+    .island-shell .growing-home-identity > span { padding-inline: 6px; }
+    .island-shell .growing-friends ul { grid-template-columns: 1fr; }
+    .island-shell .growing-friends li button { flex-direction: row; text-align: left; }
+}
+@media (min-width: 760px) and (min-height: 501px) {
+    .island-shell .growing-island :is(.growing-tray, .growing-sheet) { left: auto; right: 16px; bottom: 16px; width: min(460px, calc(100% - 176px)); border-bottom: 1px solid var(--pokomoko-edge); border-radius: 24px; }
+}
+@media (max-height: 500px) and (min-width: 450px) {
+    .island-shell .growing-island :is(.growing-tray, .growing-sheet) { left: auto; right: 8px; bottom: 8px; width: min(400px, calc(100% - 160px)); max-height: calc(100% - 16px); border-bottom: 1px solid var(--pokomoko-edge); border-radius: 24px; }
+    .island-shell .growing-menu.growing-pocket-menu { bottom: 8px; right: 8px; width: min(340px, calc(100% - 160px)); max-height: calc(100% - 16px); }
+    .island-shell .growing-island .growing-catalog { display: flex; }
+    .island-shell .growing-island :is(.growing-tray, .growing-sheet) > header { padding-block: 4px; margin-bottom: 4px; }
+    .island-shell .growing-pocket-memories { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .island-shell .growing-island .growing-home-goal { max-width: 210px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .island-shell .growing-island :is(.growing-card, .growing-action, .growing-pocket-memories button) { transition: background-color 120ms, box-shadow 120ms; }
+    .island-shell .growing-island :is(.growing-card, .growing-action):active:not(:disabled) { background-color: var(--pokomoko-rose); }
+}
+
+.island-shell .growing-home-tools { grid-template-columns: 1fr 1.1fr .9fr; }
+.island-shell .growing-home-tools > button > span { white-space: nowrap; }
+.island-shell .growing-flower-picture { width: 80px; height: 80px; object-fit: contain; }
+
+.island-shell .growing-island :is(.growing-tray, .growing-sheet) > header :is(h2, strong) { font-weight: 800; }
+/* Existing menu badges are 48px; actual catalogue models need their full picture area. */
+.island-shell .growing-island .growing-catalog .growing-card > .growing-card-icon:not(.growing-flower-dot) { width: 100%; height: 96px; background: transparent; border-radius: 0; margin: 0; }
+.island-shell .growing-island .growing-place-detail > figure { width: 180px; max-width: 100%; }
+.island-shell .growing-sheet-portrait { width: 120px; height: 120px; object-fit: contain; margin: 0 auto 12px; display: block; border-radius: 24px; background: var(--pokomoko-canvas); }
+
+@media (min-width: 760px), (max-height: 500px) and (min-width: 450px) {
+    .island-shell .growing-island :is(.growing-tray, .growing-sheet) { transform: none; }
+}

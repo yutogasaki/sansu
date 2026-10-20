@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { promises as fs } from 'node:fs';
 import { createHash, randomUUID } from 'node:crypto';
 import { chromium } from 'playwright';
-import { seedNative, openGrowingAction, readNative, runtimeMetadata } from './island-e2e-helpers.mjs';
+import { seedNative, openGrowingAction, openGrowingMenu, readNative, runtimeMetadata } from './island-e2e-helpers.mjs';
 import { plantProduction } from './growing-production-helpers.mjs';
 const base = process.env.SANSU_GROWTH_V04_URL, out = process.env.SANSU_GROWTH_V04_OUTPUT;
 assert(base && out, 'Specify loopback preview and fresh evidence output');
@@ -12,6 +12,7 @@ const files = async dir => (await Promise.all((await fs.readdir(dir, { withFileT
 const inputs = [...(await files('src')).filter(name => !/\.(test|fixture)\./.test(name)), 'tools/e2e-growing-v04.mjs'];
 const hashes = async () => Object.fromEntries(await Promise.all(inputs.map(async name => [name, createHash('sha256').update(await fs.readFile(name)).digest('hex')])));
 const report = { at: new Date().toISOString(), target: base, inputs: await hashes(), cases: [], timezone: 'UTC', pass: false,
+    sceneryClock: 'Fixed UTC noon for the explicit rendered-garden diagnostic; timers and performance clock run normally. This is not evidence of naturally elapsed growth.',
     scope: 'Disposable native profile; real free home and catalog. Explicit legacy Growing snapshot for parent recovery and stored-property diagnostics. An explicit two-grown-home layout diagnoses real rendered garden use; no claim of earned paid purchases, elapsed natural growth, real two-build recovery or child comprehension.' };
 const browser = await chromium.launch();
 let active;
@@ -45,6 +46,7 @@ try {
     for (const width of [390, 768]) {
         const context = await browser.newContext({ timezoneId: 'UTC', viewport: { width, height: 900 }, hasTouch: true, reducedMotion: width === 768 ? 'reduce' : 'no-preference' });
         const page = active = await context.newPage(); page.setDefaultTimeout(30000);
+        await page.clock.setFixedTime(new Date('2026-10-20T12:00:00Z'));
         await page.goto(`${base}/#/island`); const id = await seedNative(page, randomUUID()); await page.reload(); await ready(page);
         await plantProduction(page, 'home', { x: 1, z: 3 }, (await record(page, id)).state);
         if (await page.getByRole('button', { name: 'ぜんぶ ひらく', exact: true }).isVisible()) await page.getByRole('button', { name: 'ぜんぶ ひらく', exact: true }).click();
@@ -90,8 +92,22 @@ try {
         assert(!(await page.locator('.growing-place-book').innerText()).includes('あそびば'));
         await page.locator('.growing-place-book').scrollIntoViewIfNeeded();
         await page.screenshot({ path: `${out}/${width}-garden-guide.png` });
+        await page.locator('.growing-place-book').getByRole('button', { name: 'とじる', exact: true }).click();
+        await openGrowingMenu(page);
+        await page.getByRole('button', { name: 'しゃしん・みせる', exact: true }).click();
+        await page.getByRole('button', { name: /しまの あゆみ/ }).click();
+        const story = page.getByRole('dialog', { name: 'しまの あゆみ', exact: true });
+        await story.locator('summary').getByText('しまの 思い出', { exact: true }).click();
+        const currentPlace = story.getByRole('button', { name: 'みんなの庭の 今の場所を みる', exact: true }).first();
+        await currentPlace.waitFor();
+        await page.screenshot({ path: `${out}/${width}-place-memories.png` });
+        await currentPlace.click();
+        await story.waitFor({ state: 'hidden' });
+        const gardenAnchor = garden.pokomoko.anchorId;
+        await page.waitForFunction(id => document.querySelector('[data-growing-world]')?.dataset.growingFocus === id, gardenAnchor);
+        await page.screenshot({ path: `${out}/${width}-memory-return.png` });
         assert.deepEqual(await readNative(page, id), learning);
-        report.cases.push({ width, gardenUse: garden, parentGateChecked: true, stock: restored.state.wonderSeeds, learningUnchanged: true, metadata: await runtimeMetadata(page) });
+        report.cases.push({ width, gardenUse: garden, memoryReturn: { anchorId: gardenAnchor, pass: true }, parentGateChecked: true, stock: restored.state.wonderSeeds, learningUnchanged: true, metadata: await runtimeMetadata(page) });
         await context.close();
     }
     assert.deepEqual(await hashes(), report.inputs, 'Application inputs changed during journey'); report.pass = true;

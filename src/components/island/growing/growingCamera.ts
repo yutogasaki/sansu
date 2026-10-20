@@ -16,6 +16,45 @@ export function panToFocus(camera: T.OrthographicCamera, home: T.Vector3, target
         z: target.z - home.z - height * (camera.position.z - home.z) };
 }
 
+/** Frame real entrances, floors and the actor, rather than the entire tall canopy. */
+export function framePlaceCamera(camera: T.OrthographicCamera, layout: SceneLayout, view: CameraView, points: readonly T.Vector3[], aspect: number) {
+    if (!points.length) return frameCamera(camera, layout, view, aspect);
+    const baseline = { zoom: 1, azimuth: view.azimuth, pan: { x: 0, z: 0 } };
+    frameCamera(camera, layout, baseline, aspect); camera.updateMatrixWorld();
+    const projected = points.map(point => point.clone().project(camera));
+    const bounds = new T.Box3().setFromPoints(projected);
+    const size = bounds.getSize(new T.Vector3());
+    // The top/bottom controls retain a generous clear band. Small destinations
+    // cannot produce an extreme zoom, even when their floor is a single cell.
+    view.zoom = Math.max(.8, Math.min(3.5, 1.5 / Math.max(.001, size.x), 1.1 / Math.max(.001, size.y)));
+    const center = bounds.getCenter(new T.Vector3()).unproject(camera);
+    const home = frameCamera(camera, layout, { ...view, pan: { x: 0, z: 0 } }, aspect);
+    view.pan = panToFocus(camera, home, center);
+    return frameCamera(camera, layout, view, aspect);
+}
+
+/** Choose a clear view once on entry/explicit use. Walking never spins the island. */
+export function revealPlaceCamera(camera: T.OrthographicCamera, layout: SceneLayout, view: CameraView, points: readonly T.Vector3[], subject: T.Vector3, roots: readonly T.Object3D[], aspect: number) {
+    roots.forEach(root => root.updateWorldMatrix(true, true));
+    const ray = new T.Raycaster();
+    for (const turn of [0, -Math.PI / 2, Math.PI / 2, Math.PI]) {
+        const candidate = { ...view, azimuth: view.azimuth + turn, pan: { ...view.pan } };
+        framePlaceCamera(camera, layout, candidate, points, aspect); camera.updateMatrixWorld();
+        const screen = subject.clone().project(camera);
+        ray.setFromCamera(new T.Vector2(screen.x, screen.y), camera); ray.far = Math.max(0, ray.ray.origin.distanceTo(subject) - .12);
+        const blocked = ray.intersectObjects([...roots], true).some(hit => {
+            for (let parent: T.Object3D | null = hit.object; parent; parent = parent.parent) if (!parent.visible) return false;
+            if (!(hit.object instanceof T.Mesh) || hit.object.userData.placementHitOnly) return false;
+            const materials = Array.isArray(hit.object.material) ? hit.object.material : [hit.object.material];
+            return materials.some(material => material.colorWrite && material.opacity >= .5);
+        });
+        if (blocked) continue;
+        Object.assign(view, candidate); return frameCamera(camera, layout, view, aspect);
+    }
+    // Occlusion cannot justify inventing a new floor, hiding an owner, or a spin loop.
+    return framePlaceCamera(camera, layout, view, points, aspect);
+}
+
 /** Samples visible static geometry, including curved leaves and the real shoreline.
  * The sea, boats approaching from afar and placement controls do not shrink the world. */
 export function cameraArtPoints(roots: readonly T.Object3D[]): T.Vector3[] {

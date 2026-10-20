@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { derivePlaces } from '../../../domain/growingIsland/places';
 import { cosmeticsOpen, occupantsOf } from '../../../domain/growingIsland/community';
 import { FLAG_PATTERNS, HATS, keepsakeKind, STYLE_LEVEL } from '../../../domain/growingIsland';
 import type { GrowingState } from '../../../domain/growingIsland';
@@ -8,7 +9,8 @@ import { KEEPSAKE_NAME } from './growingCopy';
 import { CHARACTER_NAME, HOME_STAGE, kindName, LANDMARK_LABEL, SEED_LABEL, villagerName } from './growingCopy';
 import { ROOF_COLORS, WONDER_ROOFS } from './plotParts';
 
-export type SheetAction = { type: 'move' } | { type: 'store' } | { type: 'pluck' } | { type: 'home' }
+export type SheetAction = { type: 'concert'; tune: boolean } | { type: 'touch' } | { type: 'move' } | { type: 'store' } | { type: 'pluck' } | { type: 'home' }
+    | { type: 'place'; placeId: string }
     | { type: 'bridge-remove' }
     | { type: 'paint'; color: number } | { type: 'name'; name: string } | { type: 'away'; away: boolean }
     | { type: 'flag'; color?: number; pattern?: number } | { type: 'dress'; color?: number; hat?: number };
@@ -19,7 +21,7 @@ const STYLE_NAME = { water: '水べの', tree: '木の', flower: '花の', light
 const TRAIT_NAME = { lively: 'げんき', mellow: 'のんびり', shy: 'はずかしがり', hungry: 'くいしんぼう' } as const;
 
 /** What a tapped thing is, and the few things a child can do with it. */
-export function GrowingSheet({ state, target, onAction, onClose }: {
+export function GrowingSheet({ state, target, onAction, onClose, portrait }: { portrait?: string;
     state: GrowingState; target: string; onAction: (action: SheetAction) => void; onClose: () => void;
 }) {
     const [naming, setNaming] = useState(false), [name, setName] = useState('');
@@ -28,6 +30,9 @@ export function GrowingSheet({ state, target, onAction, onClose }: {
     const keepsake = state.keepsakes.find(k => k.id === target);
     let title = '', detail = '';
     const actions: { label: string; action: SheetAction }[] = [];
+    const place = (plot?.cell || landmark?.cell) && derivePlaces(state).filter(place => ['grown', 'lived'].includes(place.stage) && place.mainIds.includes(target)
+        && place.useTargets.some(target => ['gallery', 'garden', 'shore'].includes(target.kind))).sort((a, b) => Number(b.ruleId === 'P02') - Number(a.ruleId === 'P02') || a.id.localeCompare(b.id))[0];
+    if (place) actions.push({ label: 'ここで すごす', action: { type: 'place', placeId: place.id } });
     if (target === 'bridge' && state.bridge) { title = 'みはらしの はし'; detail = 'なかまが わたって みはらしだいまで いくよ'; actions.push({ label: 'はしを しまう', action: { type: 'bridge-remove' } }); }
     else if (target === 'flag') { title = 'しまの はた'; detail = cosmeticsOpen(state, STYLE_LEVEL.flagPattern) ? 'いろと もようを えらべるよ' : 'いろを えらべるよ'; }
     else if (keepsake) {
@@ -52,10 +57,17 @@ export function GrowingSheet({ state, target, onAction, onClose }: {
     } else if (landmark) {
         title = LANDMARK_LABEL[landmark.kind]?.name ?? '';
         detail = landmark.from ? `${landmark.from}が くれた おはなだよ` : CHARACTER_NAME[state.character];
+        if (landmark.cell && landmark.kind === 'bandstand') actions.push({ label: 'おとで おはなし', action: { type: 'concert', tune: false } }, { label: 'えんそうかい', action: { type: 'concert', tune: true } });
+        if (landmark.cell && ['sapling', 'flower', 'water-bowl', 'water-channel'].includes(landmark.kind)) actions.push({ label: landmark.kind === 'sapling' ? '木に さわる' : landmark.kind === 'flower' ? '花に さわる' : '水に さわる', action: { type: 'touch' } });
         actions.push({ label: 'うごかす', action: { type: 'move' } }, { label: 'しまう', action: { type: 'store' } });
     } else return null;
     return <section className="growing-sheet" aria-label={title}>
         <header><div><strong>{title}</strong><p>{detail}</p></div><button className="growing-close" onClick={onClose} aria-label="とじる">×</button></header>
+        {villager && portrait && <img className="growing-sheet-portrait" src={portrait} alt="" />}
+        <div className="growing-actions">
+            {actions.map(({ label, action }) => <button key={label} className="growing-action" data-primary={action === actions[0]?.action || undefined} onClick={() => onAction(action)}>{label}</button>)}
+        </div>
+        {(target === 'flag' || plot?.kind === 'home' && plot.stage > 0 || villager) && <details className="growing-sheet-details"><summary>みため・なまえ</summary>
         {plot?.kind === 'home' && plot.stage > 0 && <div className="growing-swatches" aria-label="やねの いろ">
             {ROOF_COLORS.map((color, index) => <button key={color} style={{ background: color }} aria-label={`いろ ${index + 1}`}
                 aria-pressed={(plot.roof ?? 0) === index} onClick={() => onAction({ type: 'paint', color: index })} />)}
@@ -79,8 +91,7 @@ export function GrowingSheet({ state, target, onAction, onClose }: {
                 <button type="submit">きめる</button>
             </form>
             : <button className="growing-action" onClick={() => { setName(villager.name ?? ''); setNaming(true); }}>なまえを つける</button>)}
-        <div className="growing-actions">
-            {actions.map(({ label, action }) => <button key={label} className="growing-action" onClick={() => onAction(action)}>{label}</button>)}
-        </div>
+
+        </details>}
     </section>;
 }

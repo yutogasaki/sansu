@@ -96,3 +96,8 @@
         grid-column: 2; grid-row: 1; height: 100%; min-height: 0; border-radius: 20px 0 0 20px;
     }
 }
+
+/* The room remains the picture; its tools share the island's readable paper scale. */
+.island-page[data-house-layout] :is(.island-sound-button, .island-house-tool, .island-house-action) { min-height: 48px; min-width: 48px; }
+.island-page[data-house-layout] :is(button, summary, input):focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 3px; }
+.island-page[data-house-layout] .island-brand h1 { font-size: 18px; }

@@ -1,3 +1,4 @@
+import type { CatalogPictures } from './catalogPictures';
 import { canPurchase, cosmeticsOpen } from '../../../domain/growingIsland/community';
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 import { LANDMARK_PRICE, SEED_PRICE } from '../../../domain/growingIsland';
@@ -5,6 +6,8 @@ import type { GrowingState, LandmarkKind, SeedKind } from '../../../domain/growi
 import { keepsakeKind, PLANTED_COLORS, type FlowerColor } from '../../../domain/growingIsland';
 import { FLOWER_NAME, FLOWER_PAINT } from './flowerGeometry';
 import { HOME_STAGE, KEEPSAKE_NAME, LANDMARK_LABEL, SEED_LABEL, SEED_PLACE_NAME } from './growingCopy';
+
+export interface CatalogPosition { tab: 'new' | 'stored'; category: string; scroll: number; item?: { attr: string; value: string } }
 
 export type Pick = { mode: 'seed'; kind: SeedKind } | { mode: 'landmark'; kind: LandmarkKind; color?: FlowerColor }
     | { mode: 'unstore'; id: string; kind: SeedKind | LandmarkKind; seed: boolean; keepsake?: string };
@@ -21,13 +24,22 @@ const GROUPS: { name: string; seeds: SeedKind[]; landmarks: LandmarkKind[] }[] =
 ];
 
 /** The catalog describes the result; seed/landmark remain placement commands only. */
-export function GrowingTray({ state, onPick, onClose, initialTab = 'seeds' }: { state: GrowingState; onPick: (pick: Pick) => void; onClose: () => void; initialTab?: 'seeds' | 'landmarks' | 'stored' }) {
+export function GrowingTray({ state, onPick, onClose, initialTab = 'seeds', pictures = {}, position }: { position?: CatalogPosition; pictures?: CatalogPictures; state: GrowingState; onPick: (pick: Pick) => void; onClose: () => void; initialTab?: 'seeds' | 'landmarks' | 'stored' }) {
     const tutorial = state.tutorial === 'first-home';
-    const [tab, setTab] = useState<'new' | 'stored'>(!tutorial && initialTab === 'stored' ? 'stored' : 'new');
-    const [category, setCategory] = useState('すべて');
+    const [tab, setTab] = useState<'new' | 'stored'>(!tutorial && (position?.tab === 'stored' || initialTab === 'stored') ? 'stored' : 'new');
+    const [category, setCategory] = useState(position?.category ?? 'すべて');
     const id = useId();
     const tabs = useRef<HTMLDivElement>(null);
-    useEffect(() => { tabs.current?.querySelector<HTMLButtonElement>('[aria-selected="true"]')?.focus({ preventScroll: true }); }, []);
+    useEffect(() => {
+        const section = tabs.current?.closest('section');
+        const panel = section?.querySelector<HTMLElement>('[role="tabpanel"]');
+        if (panel && position) panel.scrollTop = position.scroll;
+        const item = position?.item;
+        const target = item ? Array.from(section?.querySelectorAll<HTMLButtonElement>('button') ?? []).find(button => button.getAttribute(item.attr) === item.value) : undefined;
+        (target ?? tabs.current?.querySelector<HTMLButtonElement>('[aria-selected="true"]'))?.focus({ preventScroll: true });
+    // Initial position belongs to this opening; later filters are the child's choice.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     const seeds = SEEDS.filter(kind => (kind === 'wonder' ? (state.wonderSeeds ?? 0) > 0 : canPurchase(state, `seed:${kind}`)) && (!tutorial || kind === 'home'));
     const landmarks = tutorial ? [] : LANDMARKS.filter(kind => canPurchase(state, `landmark:${kind}`));
     const groups = GROUPS.filter(group => group.seeds.some(kind => seeds.includes(kind)) || group.landmarks.some(kind => landmarks.includes(kind)));
@@ -38,6 +50,8 @@ export function GrowingTray({ state, onPick, onClose, initialTab = 'seeds' }: { 
         ...state.plots.filter(p => !p.cell).map(p => ({ id: p.id, kind: p.kind as SeedKind | LandmarkKind, seed: true,
             label: { name: p.kind === 'home' ? HOME_STAGE[p.stage] : SEED_PLACE_NAME[p.kind], icon: SEED_LABEL[p.kind].icon } })),
     ];
+    const art = (key: string, fallback: React.ReactNode) => pictures[key] ? <img className="growing-catalog-picture" src={pictures[key]} alt="" /> : fallback;
+    const info = (name: string, key: string, note: string) => <details className="growing-catalog-detail"><summary aria-label={`${name}を くわしく`}>くわしく</summary><div>{pictures[key] && <img src={pictures[key]} alt={name} />}<strong>{name}</strong><p>{note}</p></div></details>;
     const price = (value: number) => <span className="growing-price" aria-label={`しずく ${value}`}>💧{value}</span>;
     const switchTab = (event: KeyboardEvent<HTMLDivElement>) => {
         if (tutorial || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
@@ -66,23 +80,23 @@ export function GrowingTray({ state, onPick, onClose, initialTab = 'seeds' }: { 
                     <div className="growing-grid growing-grid-seeds">
                         {group.seeds.filter(kind => seeds.includes(kind)).map(kind => {
                             const cost = tutorial ? 0 : SEED_PRICE[kind];
-                            return <button key={kind} className="growing-card" data-growing-seed={kind} onClick={() => onPick({ mode: 'seed', kind })}>
-                                <span className="growing-card-icon" aria-hidden="true">{SEED_LABEL[kind].icon}</span>
+                            return <div key={kind} className="growing-catalog-tile"><button className="growing-card" data-growing-seed={kind} onClick={() => onPick({ mode: 'seed', kind })}>
+                                <span className="growing-card-icon" aria-hidden="true">{art(`seed:${kind}`, SEED_LABEL[kind].icon)}</span>
                                 <strong>{SEED_PLACE_NAME[kind]}{kind === 'wonder' && (state.wonderSeeds ?? 0) > 1 ? ` ×${state.wonderSeeds}` : ''}</strong>
                                 <small>{kind === 'wild' ? '花や 草に。じかんで ひろがるよ' : SEED_LABEL[kind].note}</small>
-                                <small className="growing-catalog-growth">まなぶと そだつ</small>
+                                <small className="growing-catalog-growth">まなぶと そだつ</small><small>そだった すがたの 一例</small>
                                 {cost === 0 ? <span className="growing-price growing-free">むりょう</span> : price(cost)}
-                            </button>;
+                            </button>{info(SEED_PLACE_NAME[kind], `seed:${kind}`, SEED_LABEL[kind].note)}</div>;
                         })}
                         {group.landmarks.includes('flower') && landmarks.includes('flower') && PLANTED_COLORS.filter(p => cosmeticsOpen(state, p.level)).map(({ color }) =>
-                            <button key={color} className="growing-card" data-growing-flower={color} onClick={() => onPick({ mode: 'landmark', kind: 'flower', color })}>
-                                <span className="growing-card-icon growing-flower-dot" aria-hidden="true" style={{ background: FLOWER_PAINT[color] }} />
+                            <div key={color} className="growing-catalog-tile"><button className="growing-card" data-growing-flower={color} onClick={() => onPick({ mode: 'landmark', kind: 'flower', color })}>
+                                <span className="growing-card-icon" aria-hidden="true">{art(`flower:${color}`, <span className="growing-flower-dot" style={{ background: FLOWER_PAINT[color] }} />)}</span>
                                 <strong>{FLOWER_NAME[color]}の はな</strong><small className="growing-catalog-growth">じかんで そだつ</small>{price(LANDMARK_PRICE.flower ?? 0)}
-                            </button>)}
-                        {group.landmarks.filter(kind => kind !== 'flower' && landmarks.includes(kind)).map(kind => <button key={kind} className="growing-card" data-growing-landmark={kind} onClick={() => onPick({ mode: 'landmark', kind })}>
-                            <span className="growing-card-icon" aria-hidden="true">{LANDMARK_LABEL[kind]?.icon}</span>
+                            </button>{info(`${FLOWER_NAME[color]}の はな`, `flower:${color}`, 'じかんで そだつよ。すきな ところに おいてみよう')}</div>)}
+                        {group.landmarks.filter(kind => kind !== 'flower' && landmarks.includes(kind)).map(kind => <div key={kind} className="growing-catalog-tile"><button className="growing-card" data-growing-landmark={kind} onClick={() => onPick({ mode: 'landmark', kind })}>
+                            <span className="growing-card-icon" aria-hidden="true">{art(`landmark:${kind}`, LANDMARK_LABEL[kind]?.icon)}</span>
                             <strong>{LANDMARK_LABEL[kind]?.name}</strong><small className="growing-catalog-growth">{kind === 'sapling' ? 'じかんで そだつ' : 'すぐ つかえる'}</small>{price(LANDMARK_PRICE[kind] ?? 0)}
-                        </button>)}
+                        </button>{info(LANDMARK_LABEL[kind]?.name ?? '', `landmark:${kind}`, kind === 'sapling' ? 'じかんで 木が そだつよ' : 'しまに おいて つかってみよう')}</div>)}
                     </div>
                 </section>)}
             </> : <>
@@ -90,7 +104,7 @@ export function GrowingTray({ state, onPick, onClose, initialTab = 'seeds' }: { 
                 {state.keepsakes.some(k => !k.cell) && <p className="growing-flower-note">まなびの きねんひんも、すきな ばしょに おけるよ</p>}
                 <div className="growing-grid growing-grid-seeds">
                     {stored.map(item => <button key={item.id} className="growing-card" data-growing-stored={item.id} onClick={() => onPick({ mode: 'unstore', id: item.id, kind: item.kind, seed: item.seed, keepsake: 'keepsake' in item ? item.keepsake as string : undefined })}>
-                        <span className="growing-card-icon" aria-hidden="true">{item.label?.icon}</span><strong>{item.label?.name}</strong>
+                        <span className="growing-card-icon" aria-hidden="true">{art(item.id, item.label?.icon)}</span><strong>{item.label?.name}</strong>
                         {'keepsake' in item && <small>{String(item.keepsake).startsWith('math:') ? 'さんすう' : 'えいご'} Lv{String(item.keepsake).split(':')[1]}の きねん</small>}
                     </button>)}
                 </div>

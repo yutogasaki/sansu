@@ -1,0 +1,1520 @@
+{
+  "status": "PARTIAL_KNOWN_PLACE_CONFLICT",
+  "at": "2026-10-19T21:08:27.582Z",
+  "inputSha256": "f161d9640f2fe0f68244be92ec6d36c193770ef94abadb0bb224595749585c92",
+  "compiledSourceSha256": "d758108ec4268c586c9afd7cdaafeb247d6e3b922fcd24ca0f11944000540fe6",
+  "command": "fnm exec --using=22 node docs/product/island-system/experience-design/check-layouts.mjs",
+  "expected": "Same 38 owners, land, maturity and 4 residents; unique owned cells; all owners reachable; all 6 channels supplied; food/housing sufficient; all 4 place families grown",
+  "limits": [
+    "No native 3D/world geometry or actor pose validation",
+    "No player acquisition, natural elapsed-time simulation, saved migration or browser interaction",
+    "No evidence of art quality, child understanding, replay appeal or production delivery"
+  ],
+  "reports": [
+    {
+      "id": "forest",
+      "name": "森の回廊",
+      "ownerCount": 38,
+      "landCells": 96,
+      "housing": {
+        "capacity": 4,
+        "housed": 4,
+        "vacancy": 0
+      },
+      "foodSupport": 7,
+      "wateredFarms": [
+        "A1"
+      ],
+      "reachedWaterChannels": 6,
+      "inaccessible": [],
+      "families": [
+        "community",
+        "flowers",
+        "grove",
+        "spring"
+      ],
+      "blockedFamilies": [],
+      "places": [
+        {
+          "id": "P01:T1",
+          "family": "grove",
+          "variant": "court",
+          "stage": "grown",
+          "missing": [],
+          "entrances": [
+            {
+              "x": -2,
+              "z": 0
+            },
+            {
+              "x": 0,
+              "z": 0
+            },
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": 1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 2
+            },
+            {
+              "x": -1,
+              "z": 2
+            },
+            {
+              "x": 0,
+              "z": 2
+            },
+            {
+              "x": 1,
+              "z": 2
+            },
+            {
+              "x": -3,
+              "z": 3
+            },
+            {
+              "x": -1,
+              "z": 3
+            },
+            {
+              "x": 2,
+              "z": 3
+            },
+            {
+              "x": -2,
+              "z": 4
+            },
+            {
+              "x": 0,
+              "z": 4
+            },
+            {
+              "x": 1,
+              "z": 4
+            },
+            {
+              "x": 2,
+              "z": 4
+            },
+            {
+              "x": 4,
+              "z": 4
+            },
+            {
+              "x": 6,
+              "z": 4
+            },
+            {
+              "x": -1,
+              "z": 5
+            },
+            {
+              "x": 1,
+              "z": 5
+            },
+            {
+              "x": 3,
+              "z": 5
+            },
+            {
+              "x": 5,
+              "z": 5
+            },
+            {
+              "x": 7,
+              "z": 5
+            },
+            {
+              "x": 0,
+              "z": 6
+            },
+            {
+              "x": 2,
+              "z": 6
+            },
+            {
+              "x": 4,
+              "z": 6
+            },
+            {
+              "x": 6,
+              "z": 6
+            }
+          ],
+          "useTargets": [
+            {
+              "id": "B1",
+              "kind": "seat",
+              "cell": {
+                "x": 1,
+                "z": 3
+              }
+            }
+          ]
+        },
+        {
+          "id": "P03:C1",
+          "family": "spring",
+          "variant": "curve",
+          "stage": "grown",
+          "missing": [],
+          "entrances": [
+            {
+              "x": 5,
+              "z": 1
+            },
+            {
+              "x": 7,
+              "z": 1
+            },
+            {
+              "x": 8,
+              "z": 1
+            },
+            {
+              "x": 4,
+              "z": 2
+            },
+            {
+              "x": 6,
+              "z": 2
+            },
+            {
+              "x": 7,
+              "z": 2
+            },
+            {
+              "x": 8,
+              "z": 2
+            },
+            {
+              "x": 5,
+              "z": 3
+            },
+            {
+              "x": 6,
+              "z": 3
+            },
+            {
+              "x": 7,
+              "z": 3
+            },
+            {
+              "x": 8,
+              "z": 3
+            },
+            {
+              "x": 5,
+              "z": 4
+            },
+            {
+              "x": 6,
+              "z": 4
+            },
+            {
+              "x": 7,
+              "z": 4
+            },
+            {
+              "x": 8,
+              "z": 4
+            },
+            {
+              "x": 7,
+              "z": 5
+            },
+            {
+              "x": 8,
+              "z": 5
+            }
+          ],
+          "useTargets": [
+            {
+              "id": "C1:shore",
+              "kind": "shore",
+              "cell": {
+                "x": 5,
+                "z": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "P03:C4",
+          "family": "spring",
+          "variant": "shore",
+          "stage": "grown",
+          "missing": [],
+          "entrances": [
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 2
+            },
+            {
+              "x": -3,
+              "z": 3
+            },
+            {
+              "x": -3,
+              "z": 4
+            },
+            {
+              "x": -2,
+              "z": 4
+            },
+            {
+              "x": -3,
+              "z": 5
+            },
+            {
+              "x": -2,
+              "z": 5
+            },
+            {
+              "x": -3,
+              "z": 6
+            }
+          ],
+          "useTargets": [
+            {
+              "id": "C4:shore",
+              "kind": "shore",
+              "cell": {
+                "x": -3,
+                "z": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "P04:H1",
+          "family": "community",
+          "variant": "garden",
+          "stage": "grown",
+          "missing": [],
+          "entrances": [
+            {
+              "x": 4,
+              "z": 0
+            },
+            {
+              "x": 6,
+              "z": 0
+            },
+            {
+              "x": 3,
+              "z": 1
+            },
+            {
+              "x": 5,
+              "z": 1
+            },
+            {
+              "x": 7,
+              "z": 1
+            },
+            {
+              "x": 4,
+              "z": 2
+            },
+            {
+              "x": 6,
+              "z": 2
+            }
+          ],
+          "useTargets": [
+            {
+              "id": "H1:garden",
+              "kind": "garden",
+              "cell": {
+                "x": 5,
+                "z": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "P05:F1",
+          "family": "flowers",
+          "variant": "court",
+          "stage": "grown",
+          "missing": [],
+          "entrances": [
+            {
+              "x": 6,
+              "z": 2
+            },
+            {
+              "x": 7,
+              "z": 2
+            },
+            {
+              "x": 8,
+              "z": 2
+            },
+            {
+              "x": 5,
+              "z": 3
+            },
+            {
+              "x": 6,
+              "z": 3
+            },
+            {
+              "x": 7,
+              "z": 3
+            },
+            {
+              "x": 8,
+              "z": 3
+            },
+            {
+              "x": 5,
+              "z": 4
+            },
+            {
+              "x": 6,
+              "z": 4
+            },
+            {
+              "x": 7,
+              "z": 4
+            },
+            {
+              "x": 8,
+              "z": 4
+            },
+            {
+              "x": 5,
+              "z": 5
+            },
+            {
+              "x": 7,
+              "z": 5
+            },
+            {
+              "x": 8,
+              "z": 5
+            },
+            {
+              "x": 4,
+              "z": 6
+            },
+            {
+              "x": 6,
+              "z": 6
+            },
+            {
+              "x": 7,
+              "z": 6
+            },
+            {
+              "x": 8,
+              "z": 6
+            },
+            {
+              "x": 5,
+              "z": 7
+            },
+            {
+              "x": 6,
+              "z": 7
+            },
+            {
+              "x": 7,
+              "z": 7
+            },
+            {
+              "x": 8,
+              "z": 7
+            }
+          ],
+          "useTargets": [
+            {
+              "id": "B2",
+              "kind": "seat",
+              "cell": {
+                "x": 5,
+                "z": 6
+              }
+            }
+          ]
+        }
+      ],
+      "ids": [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "F1",
+        "F10",
+        "F11",
+        "F12",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6",
+        "F7",
+        "F8",
+        "F9",
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "M1",
+        "S1",
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8",
+        "W1",
+        "W2"
+      ],
+      "listedCost": 720
+    },
+    {
+      "id": "village",
+      "name": "共有庭の集落",
+      "ownerCount": 38,
+      "landCells": 96,
+      "housing": {
+        "capacity": 4,
+        "housed": 4,
+        "vacancy": 0
+      },
+      "foodSupport": 8,
+      "wateredFarms": [
+        "A1",
+        "A2"
+      ],
+      "reachedWaterChannels": 6,
+      "inaccessible": [],
+      "families": [
+        "community",
+        "flowers",
+        "spring"
+      ],
+      "blockedFamilies": [
+        "grove"
+      ],
+      "places": [
+        {
+          "id": "P01:T1",
+          "family": "grove",
+          "variant": "freeform",
+          "stage": "seeded",
+          "missing": [
+            "この庭の ベンチを おこう"
+          ],
+          "entrances": [
+            {
+              "x": -2,
+              "z": 0
+            },
+            {
+              "x": -3,
+              "z": 1
+            },
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 2
+            },
+            {
+              "x": -3,
+              "z": 3
+            },
+            {
+              "x": -1,
+              "z": 3
+            },
+            {
+              "x": -2,
+              "z": 4
+            },
+            {
+              "x": 0,
+              "z": 4
+            },
+            {
+              "x": 2,
+              "z": 4
+            },
+            {
+              "x": 4,
+              "z": 4
+            },
+            {
+              "x": 6,
+              "z": 4
+            },
+            {
+              "x": 8,
+              "z": 4
+            },
+            {
+              "x": -3,
+              "z": 5
+            },
+            {
+              "x": -1,
+              "z": 5
+            },
+            {
+              "x": 1,
+              "z": 5
+            },
+            {
+              "x": 3,
+              "z": 5
+            },
+            {
+              "x": 5,
+              "z": 5
+            },
+            {
+              "x": 7,
+              "z": 5
+            },
+            {
+              "x": -2,
+              "z": 6
+            },
+            {
+              "x": 0,
+              "z": 6
+            },
+            {
+              "x": 2,
+              "z": 6
+            },
+            {
+              "x": 4,
+              "z": 6
+            },
+            {
+              "x": 6,
+              "z": 6
+            },
+            {
+              "x": 8,
+              "z": 6
+            }
+          ],
+          "useTargets": []
+        },
+        {
+          "id": "P03:C1",
+          "family": "spring",
+          "variant": "shore",
+          "stage": "seeded",
+          "missing": [
+            "この庭の ベンチを おこう"
+          ],
+          "entrances": [
+            {
+              "x": -3,
+              "z": 5
+            },
+            {
+              "x": -2,
+              "z": 6
+            },
+            {
+              "x": -1,
+              "z": 6
+            },
+            {
+              "x": -3,
+              "z": 7
+            },
+            {
+              "x": -2,
+              "z": 7
+            },
+            {
+              "x": -1,
+              "z": 7
+            },
+            {
+              "x": 0,
+              "z": 7
+            }
+          ],
+          "useTargets": [
+            {
+              "id": "C1:shore",
+              "kind": "shore",
+              "cell": {
+                "x": -3,
+                "z": 5
+              }
+            }
+          ]
+        },
+        {
+          "id": "P03:C4",
+          "family": "spring",
+          "variant": "shore",
+          "stage": "grown",
+          "missing": [],
+          "entrances": [
+            {
+              "x": 5,
+              "z": 5
+            },
+            {
+              "x": 7,
+              "z": 5
+            },
+            {
+              "x": 4,
+              "z": 6
+            },
+            {
+              "x": 6,
+              "z": 6
+            },
+            {
+              "x": 8,
+              "z": 6
+            },
+            {
+              "x": 4,
+              "z": 7
+            },
+            {
+              "x": 5,
+              "z": 7
+            },
+            {
+              "x": 6,
+              "z": 7
+            },
+            {
+              "x": 7,
+              "z": 7
+            },
+            {
+              "x": 8,
+              "z": 7
+            }
+          ],
+          "useTargets": [
+            {
+              "id": "B2",
+              "kind": "seat",
+              "cell": {
+                "x": 5,
+                "z": 6
+              }
+            },
+            {
+              "id": "C4:shore",
+              "kind": "shore",
+              "cell": {
+                "x": 5,
+                "z": 5
+              }
+            }
+          ]
+        },
+        {
+          "id": "P04:H1",
+          "family": "community",
+          "variant": "garden",
+          "stage": "grown",
+          "missing": [],
+          "entrances": [
+            {
+              "x": 0,
+              "z": 1
+            },
+            {
+              "x": 2,
+              "z": 1
+            },
+            {
+              "x": 4,
+              "z": 1
+            },
+            {
+              "x": 6,
+              "z": 1
+            },
+            {
+              "x": -1,
+              "z": 2
+            },
+            {
+              "x": 1,
+              "z": 2
+            },
+            {
+              "x": 3,
+              "z": 2
+            },
+            {
+              "x": 5,
+              "z": 2
+            },
+            {
+              "x": 7,
+              "z": 2
+            },
+            {
+              "x": 0,
+              "z": 3
+            },
+            {
+              "x": 2,
+              "z": 3
+            },
+            {
+              "x": 4,
+              "z": 3
+            },
+            {
+              "x": 6,
+              "z": 3
+            }
+          ],
+          "useTargets": [
+            {
+              "id": "H1:garden",
+              "kind": "garden",
+              "cell": {
+                "x": 3,
+                "z": 2
+              }
+            }
+          ]
+        },
+        {
+          "id": "P05:F1",
+          "family": "flowers",
+          "variant": "flower-bed",
+          "stage": "grown",
+          "missing": [],
+          "entrances": [
+            {
+              "x": 1,
+              "z": 2
+            },
+            {
+              "x": 3,
+              "z": 2
+            },
+            {
+              "x": 5,
+              "z": 2
+            },
+            {
+              "x": -1,
+              "z": 3
+            },
+            {
+              "x": 0,
+              "z": 3
+            },
+            {
+              "x": 1,
+              "z": 3
+            },
+            {
+              "x": 2,
+              "z": 3
+            },
+            {
+              "x": 3,
+              "z": 3
+            },
+            {
+              "x": 4,
+              "z": 3
+            },
+            {
+              "x": 5,
+              "z": 3
+            },
+            {
+              "x": 6,
+              "z": 3
+            },
+            {
+              "x": -1,
+              "z": 4
+            },
+            {
+              "x": 0,
+              "z": 4
+            },
+            {
+              "x": 1,
+              "z": 4
+            },
+            {
+              "x": 2,
+              "z": 4
+            },
+            {
+              "x": 3,
+              "z": 4
+            },
+            {
+              "x": 4,
+              "z": 4
+            },
+            {
+              "x": 5,
+              "z": 4
+            },
+            {
+              "x": 6,
+              "z": 4
+            },
+            {
+              "x": 1,
+              "z": 5
+            },
+            {
+              "x": 3,
+              "z": 5
+            },
+            {
+              "x": 5,
+              "z": 5
+            },
+            {
+              "x": 0,
+              "z": 6
+            },
+            {
+              "x": 2,
+              "z": 6
+            },
+            {
+              "x": 1,
+              "z": 7
+            }
+          ],
+          "useTargets": [
+            {
+              "id": "B1",
+              "kind": "seat",
+              "cell": {
+                "x": 1,
+                "z": 6
+              }
+            }
+          ]
+        }
+      ],
+      "ids": [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "F1",
+        "F10",
+        "F11",
+        "F12",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6",
+        "F7",
+        "F8",
+        "F9",
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "M1",
+        "S1",
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8",
+        "W1",
+        "W2"
+      ],
+      "listedCost": 720
+    },
+    {
+      "id": "water-flowers",
+      "name": "泉と花の庭",
+      "ownerCount": 38,
+      "landCells": 96,
+      "housing": {
+        "capacity": 4,
+        "housed": 4,
+        "vacancy": 0
+      },
+      "foodSupport": 8,
+      "wateredFarms": [
+        "A1",
+        "A2"
+      ],
+      "reachedWaterChannels": 6,
+      "inaccessible": [],
+      "families": [
+        "community",
+        "grove",
+        "spring"
+      ],
+      "blockedFamilies": [
+        "flowers"
+      ],
+      "places": [
+        {
+          "id": "P01:T1",
+          "family": "grove",
+          "variant": "lane",
+          "stage": "grown",
+          "missing": [],
+          "entrances": [
+            {
+              "x": -2,
+              "z": 0
+            },
+            {
+              "x": -2,
+              "z": 2
+            },
+            {
+              "x": -3,
+              "z": 3
+            },
+            {
+              "x": -2,
+              "z": 4
+            },
+            {
+              "x": -2,
+              "z": 6
+            },
+            {
+              "x": -3,
+              "z": 7
+            }
+          ],
+          "useTargets": []
+        },
+        {
+          "id": "P01:T5",
+          "family": "grove",
+          "variant": "freeform",
+          "stage": "seeded",
+          "missing": [
+            "この庭の ベンチを おこう"
+          ],
+          "entrances": [
+            {
+              "x": 1,
+              "z": 2
+            },
+            {
+              "x": 0,
+              "z": 3
+            },
+            {
+              "x": 2,
+              "z": 3
+            },
+            {
+              "x": 1,
+              "z": 4
+            },
+            {
+              "x": 2,
+              "z": 5
+            },
+            {
+              "x": 1,
+              "z": 6
+            },
+            {
+              "x": 3,
+              "z": 6
+            },
+            {
+              "x": 2,
+              "z": 7
+            },
+            {
+              "x": 4,
+              "z": 7
+            }
+          ],
+          "useTargets": []
+        },
+        {
+          "id": "P03:C1",
+          "family": "spring",
+          "variant": "curve",
+          "stage": "grown",
+          "missing": [],
+          "entrances": [
+            {
+              "x": 4,
+              "z": 0
+            },
+            {
+              "x": 5,
+              "z": 0
+            },
+            {
+              "x": 6,
+              "z": 0
+            },
+            {
+              "x": 7,
+              "z": 0
+            },
+            {
+              "x": 8,
+              "z": 0
+            },
+            {
+              "x": 3,
+              "z": 1
+            },
+            {
+              "x": 4,
+              "z": 1
+            },
+            {
+              "x": 5,
+              "z": 1
+            },
+            {
+              "x": 6,
+              "z": 1
+            },
+            {
+              "x": 7,
+              "z": 1
+            },
+            {
+              "x": 8,
+              "z": 1
+            },
+            {
+              "x": 3,
+              "z": 2
+            },
+            {
+              "x": 5,
+              "z": 2
+            },
+            {
+              "x": 6,
+              "z": 2
+            },
+            {
+              "x": 7,
+              "z": 2
+            },
+            {
+              "x": 8,
+              "z": 2
+            },
+            {
+              "x": 4,
+              "z": 3
+            },
+            {
+              "x": 5,
+              "z": 3
+            },
+            {
+              "x": 6,
+              "z": 3
+            },
+            {
+              "x": 7,
+              "z": 3
+            },
+            {
+              "x": 8,
+              "z": 3
+            },
+            {
+              "x": 3,
+              "z": 4
+            },
+            {
+              "x": 5,
+              "z": 4
+            },
+            {
+              "x": 6,
+              "z": 4
+            },
+            {
+              "x": 7,
+              "z": 4
+            },
+            {
+              "x": 8,
+              "z": 4
+            },
+            {
+              "x": 4,
+              "z": 5
+            },
+            {
+              "x": 5,
+              "z": 5
+            },
+            {
+              "x": 6,
+              "z": 5
+            },
+            {
+              "x": 8,
+              "z": 5
+            },
+            {
+              "x": 5,
+              "z": 6
+            },
+            {
+              "x": 6,
+              "z": 6
+            },
+            {
+              "x": 7,
+              "z": 6
+            },
+            {
+              "x": 8,
+              "z": 6
+            },
+            {
+              "x": 5,
+              "z": 7
+            },
+            {
+              "x": 7,
+              "z": 7
+            },
+            {
+              "x": 8,
+              "z": 7
+            }
+          ],
+          "useTargets": [
+            {
+              "id": "B1",
+              "kind": "seat",
+              "cell": {
+                "x": 4,
+                "z": 4
+              }
+            },
+            {
+              "id": "B2",
+              "kind": "seat",
+              "cell": {
+                "x": 6,
+                "z": 7
+              }
+            },
+            {
+              "id": "C1:shore",
+              "kind": "shore",
+              "cell": {
+                "x": 4,
+                "z": 0
+              }
+            }
+          ]
+        },
+        {
+          "id": "P04:H1",
+          "family": "community",
+          "variant": "garden",
+          "stage": "grown",
+          "missing": [],
+          "entrances": [
+            {
+              "x": -2,
+              "z": 0
+            },
+            {
+              "x": 0,
+              "z": 0
+            },
+            {
+              "x": -1,
+              "z": 1
+            },
+            {
+              "x": 1,
+              "z": 1
+            },
+            {
+              "x": -2,
+              "z": 2
+            },
+            {
+              "x": 0,
+              "z": 2
+            }
+          ],
+          "useTargets": [
+            {
+              "id": "H1:garden",
+              "kind": "garden",
+              "cell": {
+                "x": -1,
+                "z": 1
+              }
+            }
+          ]
+        },
+        {
+          "id": "P04:H3",
+          "family": "community",
+          "variant": "garden",
+          "stage": "grown",
+          "missing": [],
+          "entrances": [
+            {
+              "x": -2,
+              "z": 4
+            },
+            {
+              "x": 0,
+              "z": 4
+            },
+            {
+              "x": -1,
+              "z": 5
+            },
+            {
+              "x": -2,
+              "z": 6
+            },
+            {
+              "x": 0,
+              "z": 6
+            }
+          ],
+          "useTargets": [
+            {
+              "id": "H3:garden",
+              "kind": "garden",
+              "cell": {
+                "x": -1,
+                "z": 5
+              }
+            }
+          ]
+        },
+        {
+          "id": "P05:F1",
+          "family": "flowers",
+          "variant": "court",
+          "stage": "seeded",
+          "missing": [
+            "この庭の ベンチを おこう"
+          ],
+          "entrances": [
+            {
+              "x": 4,
+              "z": 0
+            },
+            {
+              "x": 5,
+              "z": 0
+            },
+            {
+              "x": 6,
+              "z": 0
+            },
+            {
+              "x": 7,
+              "z": 0
+            },
+            {
+              "x": 8,
+              "z": 0
+            },
+            {
+              "x": 3,
+              "z": 1
+            },
+            {
+              "x": 4,
+              "z": 1
+            },
+            {
+              "x": 5,
+              "z": 1
+            },
+            {
+              "x": 6,
+              "z": 1
+            },
+            {
+              "x": 7,
+              "z": 1
+            },
+            {
+              "x": 8,
+              "z": 1
+            },
+            {
+              "x": 5,
+              "z": 2
+            },
+            {
+              "x": 6,
+              "z": 2
+            },
+            {
+              "x": 7,
+              "z": 2
+            },
+            {
+              "x": 8,
+              "z": 2
+            },
+            {
+              "x": 7,
+              "z": 3
+            },
+            {
+              "x": 8,
+              "z": 3
+            },
+            {
+              "x": 7,
+              "z": 4
+            },
+            {
+              "x": 8,
+              "z": 4
+            },
+            {
+              "x": 6,
+              "z": 5
+            },
+            {
+              "x": 8,
+              "z": 5
+            },
+            {
+              "x": 5,
+              "z": 6
+            },
+            {
+              "x": 6,
+              "z": 6
+            },
+            {
+              "x": 7,
+              "z": 6
+            },
+            {
+              "x": 8,
+              "z": 6
+            },
+            {
+              "x": 7,
+              "z": 7
+            },
+            {
+              "x": 8,
+              "z": 7
+            }
+          ],
+          "useTargets": []
+        }
+      ],
+      "ids": [
+        "A1",
+        "A2",
+        "B1",
+        "B2",
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C6",
+        "F1",
+        "F10",
+        "F11",
+        "F12",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6",
+        "F7",
+        "F8",
+        "F9",
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "M1",
+        "S1",
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "T5",
+        "T6",
+        "T7",
+        "T8",
+        "W1",
+        "W2"
+      ],
+      "listedCost": 720
+    }
+  ]
+}

@@ -42,7 +42,13 @@ try {
         await ready();
         const original = await read(page, id), learning = await readNative(page, id);
         await chart();
-        await page.getByRole('button', { name: '新しい島を つくる', exact: true }).click();
+        // The dialog animates into the fixed canvas. Wait for its actual touch target
+        // to settle before starting the next step; an early mouse click can miss it.
+        await page.waitForTimeout(800);
+        const newIsland = page.getByRole('button', { name: '新しい島を つくる', exact: true });
+        await newIsland.scrollIntoViewIfNeeded();
+        await newIsland.tap();
+        await page.locator('.voyage-create').waitFor();
         await page.getByRole('button', { name: /森のしま 木の苗/ }).click();
         await page.getByLabel('島の なまえ', { exact: true }).fill('もりのわがや');
         await page.getByRole('button', { name: '新しい島を つくっていく（無料）', exact: true }).click();

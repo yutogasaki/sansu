@@ -1,0 +1,44 @@
+{
+  "inputHash": "af596a5cc9bfd3533900bdb44fb19812a0fb83cba234b2dea762e2596d9ea2b5",
+  "at": "2026-10-18T10:01:44.057Z",
+  "savedNoteState": {
+    "status": "保存した下書きを表示しています。未採用です。",
+    "verification": "verify:coreは625ファイル・5,397テスト、lint・型検査・buildが成功。最終入力のPC1440/390/320で主画面・下層・長文資料の計60表示を確認し、横はみ出し0・実エラー0。長い仕事名の要約欄だけで折り返す修正を確認。旧7画面の全文/属性/CSS/JSと移動先の全byte/ID、条件検索/URL復元、全文確認コピーとAPI未提供fixture、保存競合/版変更時の入力保持を確認。旧生成→復帰と空の生成先からの初回生成も全1,712ファイルがbyte一致。最終入力hashと画面はSansuのqa/evidence/EXPAND-003を参照する。",
+    "basis": "4d555a0f91e06e85ecc0d0980953b82d3412792537285e94bf7f63df092c63a2",
+    "height": 900,
+    "ref": "sansu:work/2026-10-18-development-portal",
+    "version": "e75f4cbc9c4c",
+    "viewport": 1440
+  },
+  "actions": [
+    "same work follows across six views; complete ref and version confirmed before acknowledged copy",
+    "previous work selection invalidates the preview; unknown ID and foreign repo ref disable handoff",
+    "copy succeeded without send; final API-unavailable fixture selected all 1507 characters for manual recovery",
+    "mobile six-entry menu: 48px rows, open/select/Escape/backdrop/Tab wrap and desktop-width restoration",
+    "name search: zero-result recovery, Enter navigation to strategy",
+    "full-text search: zero result then body-only Japanese hits",
+    "native map search: zero result, clear, reader reading/data/Escape and common navigation",
+    "faceted search: category and kind produce 446 hits; URL reload restores image; zero query then clear restores full corpus",
+    "source detail: full original record including attributes/checks/fingerprint is present",
+    "Hub save: ordinary save/reload, separate-tab conflict, input preservation, comparison/re-save",
+    "basis changed: stale save rejected with input retained; reload cancellation preserves input; explicit page reload and reviewed rebase/save/reload",
+    "closed task remains at the same complete ref through DONE; done label and copy payload verified",
+    "real legacy generation shown at the normal URL, then 1712 final files restored byte-identical"
+  ],
+  "diagnostics": [
+    "IAB clipboard permissions policy did not reject; not treated as fault-pass; explicit API-unavailable fixture used instead",
+    "viewport applies to selected tab; final measurements record innerWidth and content width separately",
+    "initial reader self-selector and search initialization errors retained in browser-first-errors.json",
+    "initial 320px brief overflow retained in browser-width-first-failure.json and constitution-320-overflow.png"
+  ],
+  "cleanup": {
+    "viewportReset": true,
+    "agentCreatedTabsClosed": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "at": "2026-10-18T10:02:03.650Z"
+  }
+}

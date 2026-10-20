@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { memoryDestination, placeMemories } from '../../../domain/growingIsland/placeMemories';
+import { derivePlaces } from '../../../domain/growingIsland/places';
+import { useEffect, useMemo, useState } from 'react';
 import { likesOf } from '../../../domain/growingIsland';
 import { wishLine } from './growingCopy';
 import type { GrowingState, Like } from '../../../domain/growingIsland';
@@ -51,7 +53,7 @@ export function CardView({ url, busy, onSave, onClose, frame, onFrame }: { url?:
 }
 
 /** しまの あゆみ: every saved picture from the first day to today, in about ten seconds. */
-export function StoryView({ moments, onClose }: { moments: MomentRecord[]; onClose: () => void }) {
+export function StoryView({ state, moments, onClose, onFocus }: { state?: GrowingState; moments: MomentRecord[]; onClose: () => void; onFocus?: (id: string) => void }) {
     const [index, setIndex] = useState(0);
     const [urls] = useState(() => moments.map(m => URL.createObjectURL(m.image)));
     useEffect(() => () => urls.forEach(url => URL.revokeObjectURL(url)), [urls]);
@@ -61,10 +63,20 @@ export function StoryView({ moments, onClose }: { moments: MomentRecord[]; onClo
         const id = window.setInterval(() => setIndex(i => Math.min(urls.length - 1, i + 1)), step);
         return () => clearInterval(id);
     }, [urls]);
+    const memories = state ? placeMemories(state) : [];
+    const places = useMemo(() => state ? derivePlaces(state) : [], [state]);
     const first = moments[0]?.at ?? 0, at = moments[index]?.at ?? 0;
     const day = Math.floor((at - first) / 86_400_000) + 1;
     return <div className="growing-overlay" role="dialog" aria-label="しまの あゆみ">
         <div className="growing-overlay-body">
+            {!!memories.length && <details className="growing-place-memories"><summary>しまの 思い出</summary><ul>{memories.map(memory => {
+                const actor = state?.villagers.find(friend => friend.id === memory.actorId);
+                const name = memory.actorId === 'pokomoko' ? 'ぽこもこ' : actor ? villagerName(actor) : 'なかま';
+                const place = { grove: '森', spring: '水べ', flowers: '花の庭', community: 'みんなの庭' }[memory.family];
+                const line = memory.kind === 'grown' ? `${place}が そだったよ` : memory.kind === 'used' ? `${name}が ${place}で すごしたよ` : `${name}と ${place}で おとを ならしたよ`;
+                const destination = memoryDestination(memory, places);
+                return <li key={memory.id}><span>{line}</span>{destination && onFocus && <button className="growing-action" onClick={() => onFocus(destination)} aria-label={`${place}の 今の場所を みる`}>今の場所を みる</button>}</li>;
+            })}</ul></details>}
             {urls.length ? <>
                 <img className="growing-story-image" src={urls[index]} alt={`${day}にちめの しま`} />
                 <p className="growing-story-day">{day}にちめ</p>

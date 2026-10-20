@@ -19,7 +19,7 @@ function literalValue(value: unknown): unknown {
  * The literal string is compared directly, with no lossy hash or numeric digest.
  */
 export function growingSceneStateKey(state: GrowingState): string {
-    const fields = Object.entries(state).filter(([name]) => name !== 'applied' && name !== 'placeProgress');
+    const fields = Object.entries(state).filter(([name]) => name !== 'applied' && name !== 'placeProgress' && name !== 'experience');
     return JSON.stringify(literalValue(fields));
 }
 

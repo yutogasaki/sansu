@@ -1,0 +1,59 @@
+{
+  "status": "COVERAGE_PASS_AND_LAYOUT_PARTIAL",
+  "at": "2026-10-19T21:20:38.867Z",
+  "scope": "Detailed design candidate only; no app source or player save changes",
+  "checks": {
+    "catalog": {
+      "expectedObjectRows": 50,
+      "expectedAttachmentRows": 8,
+      "expectedExperienceRows": 25,
+      "missing": []
+    },
+    "layout": {
+      "status": "PARTIAL_KNOWN_PLACE_CONFLICT",
+      "evidence": "layout-verification.json"
+    },
+    "documentation": {
+      "status": "PASS",
+      "at": "2026-10-19T21:20:38.867Z",
+      "command": "fnm exec --using=22 npm run docs:check",
+      "exitCode": 0,
+      "expected": "Documentation links and structure valid",
+      "actual": "PASS; 14 existing review-date warnings",
+      "warnings": 14
+    },
+    "diff": {
+      "status": "PASS",
+      "command": "git diff --check on touched tracked docs; whitespace scan of all new Markdown",
+      "exitCode": 0
+    },
+    "consultation": {
+      "rounds": 5,
+      "source": "https://chatgpt.com/g/g-p-6ad58d0857b881918e46e346350848e7/c/6ad58fdd-7f00-83e8-b262-b3cb942b0702",
+      "completed": true,
+      "finalReview": "SG1 strongest, SG2 must differ through real water effects, SG3 needs real participants and input order; all remain unimplemented candidates"
+    }
+  },
+  "inputs": {
+    "docs/product/island-system/experience-design/01-items.md": "b13cc25396c1e825a3f633443ede749d1712dd5237a32484c0f1734fd60ca501",
+    "docs/product/island-system/experience-design/02-space.md": "24cd358f7cf5d8578a83956175dcdafb09d21c494a6507c5cd63ebfe3b64affb",
+    "docs/product/island-system/experience-design/03-play-and-residents.md": "546d74e1449d2080b90bbb984361c0f78f2f931e1e69ba6f9415b48c75607a3b",
+    "docs/product/island-system/experience-design/04-progression-and-islands.md": "2102a27e94d0667685e9e9f5e043a186338c1f6af3389523d6dbc947918c46a4",
+    "docs/product/island-system/experience-design/05-experiences.md": "5978eb6b3134d1ae82a0306d086c6c685dba0df37c4a365ab689dbb478491ab6",
+    "docs/product/island-system/experience-design/06-three-islands.md": "56e9d70ee5fec405cba77d4bb2b4f83f666f430d8f867679430f0df8588cfab7",
+    "docs/product/island-system/experience-design/07-delivery.md": "d45f6b1024f61f98d032858ee9defde7273cc1093d0833ea79b39f43a43b671c",
+    "docs/product/island-system/experience-design/README.md": "c51a7398f73744c172ec9e623406da9ec42a3aeb5b0a8236561c0dc59c1f3353",
+    "docs/product/island-system/experience-design/check-layouts.mjs": "9f60b348b36241090227e43cc6716e72a8b27be78cc7625989e245e68d54c3a9",
+    "docs/product/island-system/experience-design/layout-verification.json": "93fc543438e4e9eb068752b4594449790ee923a31c5e1a2b9c051b61b6b08579",
+    "docs/product/island-system/experience-design/layouts.json": "f161d9640f2fe0f68244be92ec6d36c193770ef94abadb0bb224595749585c92",
+    "docs/product/island-system/README.md": "9f28a3e12f336857cf7569f3e3e51a42adcf83a46f4e70a43cb39ea624f27c6d",
+    "docs/design/2026-10-19-island-system-spec/README.md": "00004dd3caeb58e35dafe0fa3f780642c2330c3ab8204ea01ea6041d16295034",
+    "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md": "77c765d74257ca94b63f32460f64638e8b1e8114cf7da8864bc140e6ca83eea3"
+  },
+  "limits": [
+    "No native 3D, physical actor access, browser or release verification",
+    "New actions, resident behavior and shared memories are unimplemented candidates",
+    "No observation of children, learning choice or next-day return"
+  ],
+  "sourceRevision": "ed155377bc8e26880494b9d5b045b0d13847ebc0"
+}

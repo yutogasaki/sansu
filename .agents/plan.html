@@ -90,9 +90,14 @@
 共有キュー、関連仕様/タスク、Git履歴と未コミット一覧、10/1〜10/5の検証記録を照合した。アプリ実装・本番操作・実機/子どもの観察は行っていない。過去の検証を新しい候補の合格として記録しない。
 </pre></details></article><article class="card" data-search="現在の実行担当 .agents/tasks/tasks.md # 今進めていること
 
+2026-10-20 画角改善：近景/場所/本人の追従と手動優先を実装。正しい対象のproduction8ケースと島回帰748件がpass、長回廊の実利用保存を両幅で確認。[現在地と美術等の未受入](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md)。
+
+2026-10-20 大型形の追加はローカル実装済み、実画面受入はpartial。島回帰745件はpass、p04実利用は確認、p02長回廊の実利用記録は修正後も未確認。[現在地・失敗・次の一手](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md)。美術採用・公開・pushはしていない。
+
 2026-10-19の育成実装依頼：[育成規則v0.4](../../docs/tasks/active/2026-10-19-island-growth-v04.md)。ローカル実装・技術検証を完了。購入統合・成長・自生・共有庭実利用・記念復旧・保存5隔離と案内/初回操作を接続。全体5,434件・最終場所73件・classic32、初回3幅、production2幅と実旧→新→対応復旧4ケースがpass。[実画面と検証範囲](../../docs/design/2026-10-19-island-growth-v04/readme.md)。実機/参加者/美術/公開は別受入。既存の美術採用待ちを完了へ変更しない。
 
 2026-10-19の直接依頼： [島メニューと直接遊べるホーム](../../docs/tasks/active/2026-10-19-island-menu.md)をローカル実装。「おく／もちもの」を島へ出し、任意目標・ながめ・土地拡張と補助メニューを分けた。関連21件・build・classic smoke32件と主要画面を確認。追加レビューを受け、320幅の黒帯をメニュー内部スクロールの分離で修正し、近景/全景と配置ヒントを追加。4幅と主要往復をローカル確認。全体suiteは途中停止し、timeoutの2ファイルは個別pass。[追加改善の証拠](../../docs/design/2026-10-19-island-direct-play/review-v3/readme.md)。既存ポータル検査、実機/独立理解/配布は別に確認する。[実画面と検証](../../docs/design/2026-10-19-island-direct-play/verification.md)。下記の美術採用待ちは継続。
+
 **開いた入り江の粗い本体を実画面まで作り、採用レビュー待ち。** 2026-10-13、同じ所有物と保存形式を保ったまま、旧案の一枚の岬を二本の腕・水面・細い外周接続へ変更した。輪郭差と対象runtimeはgo/pass、生地形の魅力と独立理解はhold。r3は自動開始しない。
 
 ## 次の一手
@@ -138,11 +143,23 @@
 ## この表の約束
 
 一つの残作業に一つの担当タスクを置く。「実装」「自動検証」「git反映」「公開」「実機・利用者確認」を分ける。activeファイルの数を実行件数にしない。この一覧の更新だけで公開・実機・利用者確認済みにはしない。実施内容と検証範囲は各証拠を参照する。
-"><h2><a href="tasks/TASKS.md">現在の実行担当</a></h2><details><summary>正本・内容と版の根拠</summary><p class="path">.agents/tasks/TASKS.md · 内容SHA256 cf7ef50d08e7797a6ff3cdd2fb0084d04999adc70edcee6f140b7ed04698c4e4</p><p>生成時の正本を掲載。内容の確認日は未記録、配布版は未確認。内容hashはcommit IDではありません。</p><pre># 今進めていること
+
+## 全画面ui実装（2026-10-20）
+
+- 目的：チャッピーとの全画面設計と最新差分を一つのui候補へ実装する。
+- 対象：カメラ/品物/メニュー/場所/写真・思い出/住人/家/記録・設定の表示。学習の入力・採点と保存形式は保持。既存差分を保持し、追加エージェントなし、既定30分。
+- 検証：docs/lint/typecheck/test/build、smokeと実画面の主要旅程。実機・児童理解・既存美術holdは分離。
+- 状態：ui実装と主要操作の確認を完了。全体unit5,465件pass、更新後対象23件pass、typecheck/lint/build・現行入口guard・固定productionの縦横/狭幅/家/学習/記録/設定pass。旧exploreのsmoke1件failと別作業の親タスクflow根拠不一致を残す。実機・児童理解・美術holdは未合格。記録 `docs/design/2026-10-20-whole-app-ui/implementation.md`。
+"><h2><a href="tasks/TASKS.md">現在の実行担当</a></h2><details><summary>正本・内容と版の根拠</summary><p class="path">.agents/tasks/TASKS.md · 内容SHA256 6a2c73369eacfd6d0552d309b8f0da52e94111023096955d9b71346faa3e8fb5</p><p>生成時の正本を掲載。内容の確認日は未記録、配布版は未確認。内容hashはcommit IDではありません。</p><pre># 今進めていること
+
+2026-10-20 画角改善：近景/場所/本人の追従と手動優先を実装。正しい対象のproduction8ケースと島回帰748件がPASS、長回廊の実利用保存を両幅で確認。[現在地と美術等の未受入](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md)。
+
+2026-10-20 大型形の追加はローカル実装済み、実画面受入はPARTIAL。島回帰745件はPASS、P04実利用は確認、P02長回廊の実利用記録は修正後も未確認。[現在地・失敗・次の一手](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md)。美術採用・公開・pushはしていない。
 
 2026-10-19の育成実装依頼：[育成規則v0.4](../../docs/tasks/active/2026-10-19-island-growth-v04.md)。ローカル実装・技術検証を完了。購入統合・成長・自生・共有庭実利用・記念復旧・保存5隔離と案内/初回操作を接続。全体5,434件・最終場所73件・classic32、初回3幅、production2幅と実旧→新→対応復旧4ケースがPASS。[実画面と検証範囲](../../docs/design/2026-10-19-island-growth-v04/README.md)。実機/参加者/美術/公開は別受入。既存の美術採用待ちを完了へ変更しない。
 
 2026-10-19の直接依頼： [島メニューと直接遊べるホーム](../../docs/tasks/active/2026-10-19-island-menu.md)をローカル実装。「おく／もちもの」を島へ出し、任意目標・ながめ・土地拡張と補助メニューを分けた。関連21件・build・classic smoke32件と主要画面を確認。追加レビューを受け、320幅の黒帯をメニュー内部スクロールの分離で修正し、近景/全景と配置ヒントを追加。4幅と主要往復をローカル確認。全体suiteは途中停止し、timeoutの2ファイルは個別PASS。[追加改善の証拠](../../docs/design/2026-10-19-island-direct-play/review-v3/README.md)。既存ポータル検査、実機/独立理解/配布は別に確認する。[実画面と検証](../../docs/design/2026-10-19-island-direct-play/verification.md)。下記の美術採用待ちは継続。
+
 **開いた入り江の粗い本体を実画面まで作り、採用レビュー待ち。** 2026-10-13、同じ所有物と保存形式を保ったまま、旧案の一枚の岬を二本の腕・水面・細い外周接続へ変更した。輪郭差と対象runtimeはGO/PASS、生地形の魅力と独立理解はHOLD。R3は自動開始しない。
 
 ## 次の一手
@@ -188,6 +205,13 @@
 ## この表の約束
 
 一つの残作業に一つの担当タスクを置く。「実装」「自動検証」「Git反映」「公開」「実機・利用者確認」を分ける。activeファイルの数を実行件数にしない。この一覧の更新だけで公開・実機・利用者確認済みにはしない。実施内容と検証範囲は各証拠を参照する。
+
+## 全画面UI実装（2026-10-20）
+
+- 目的：チャッピーとの全画面設計と最新差分を一つのUI候補へ実装する。
+- 対象：カメラ/品物/メニュー/場所/写真・思い出/住人/家/記録・設定の表示。学習の入力・採点と保存形式は保持。既存差分を保持し、追加エージェントなし、既定30分。
+- 検証：docs/lint/typecheck/test/build、smokeと実画面の主要旅程。実機・児童理解・既存美術HOLDは分離。
+- 状態：UI実装と主要操作の確認を完了。全体unit5,465件PASS、更新後対象23件PASS、typecheck/lint/build・現行入口guard・固定productionの縦横/狭幅/家/学習/記録/設定PASS。旧Exploreのsmoke1件FAILと別作業の親タスクflow根拠不一致を残す。実機・児童理解・美術HOLDは未合格。記録 `docs/design/2026-10-20-whole-app-ui/implementation.md`。
 </pre></details></article><article class="card" data-search="全島制作のm0〜m5と進む条件 docs/product/island-construction-strategy.md # 島構築方針 — 美術で設計した場所を、配置から育てる
 
 制作方針 v9 / 2026-10-12。[決定の理由](../adr/2026-10-11-authored-place-world-policy.md) · [美術戦略](island-art-strategy.md) · [拡張戦略](island-expansion-art-strategy.md)。本書が体験・世界の作り方・制作順の正本。現行の遊びは[52](52_growing_island_game_spec.md)、保存は[13](13_data_storage_migration_spec.md)が正本で、新しい世界への切替は未実装。

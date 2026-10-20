@@ -1,0 +1,927 @@
+{
+  "at": "2026-10-19T22:41:46.426Z",
+  "status": "AUTOMATED_SCOPE_PASS_RELEASE_PARTIAL",
+  "baseRevision": "ed155377bc8e26880494b9d5b045b0d13847ebc0",
+  "target": "isolated local production; disposable profiles; no deployment or real user save operations",
+  "applicationInputCount": 1333,
+  "applicationInputHash": "41258fa3e6d77c87fba0caa2679e92beade078112dfde5f2c828282b1e72490d",
+  "applicationMatchesFixedBuild": true,
+  "buildVersion": {
+    "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+    "revision": "9fdff761f115-place-new",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": true,
+        "candidate": "living-fantasy-garden-v2",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "qaInputs": {
+    "tools/e2e-growing-update.mjs": "fe403a0fba1c266bc77182516a43974afc7ccec19bcb2e7e606c7326ba04ea80",
+    "tools/e2e-growing-v04.mjs": "9c710f753a79261230216b55f18c9f68b0e23c84b586623c7a31218b064a3a3a",
+    "tools/e2e-island-voyages.mjs": "98a87d1634f21263a1687a4ade5f3a8be0c243807ca620f07393bafb4ae16705",
+    "tools/growing-production-helpers.mjs": "b7fe62ddf8aa506bf16a11463b5e11afac7587e7606b80e3d4b6133358c5f56f",
+    "tools/island-e2e-helpers.mjs": "e4792544e6ea116fd6331dc6625db7b0e25c6ff468942a5ef743f2c1f2856112"
+  },
+  "checks": {
+    "memoryReturn": {
+      "pass": true,
+      "output": "output/place-experiences-20261020-memory-return/report.json",
+      "scope": "Disposable native profile; real free home and catalog. Explicit legacy Growing snapshot for parent recovery and stored-property diagnostics. An explicit two-grown-home layout diagnoses real rendered garden use; no claim of earned paid purchases, elapsed natural growth, real two-build recovery or child comprehension.",
+      "cases": [
+        {
+          "width": 390,
+          "memoryReturn": {
+            "anchorId": "garden-diagnostic-home",
+            "pass": true
+          },
+          "learningUnchanged": true
+        },
+        {
+          "width": 768,
+          "memoryReturn": {
+            "anchorId": "garden-diagnostic-home",
+            "pass": true
+          },
+          "learningUnchanged": true
+        }
+      ]
+    },
+    "voyages": {
+      "pass": true,
+      "output": "output/place-experiences-20261020-voyages-r2/report.json",
+      "scope": "Explicit native profile fixture; actual production UI creates and visits islands. No learning credits, clock changes or Growing DB injection. Offline retention checked. Human comprehension and real two-build migration remain separate.",
+      "cases": [
+        {
+          "width": 390,
+          "learningUnchanged": true
+        },
+        {
+          "width": 768,
+          "learningUnchanged": true
+        }
+      ]
+    },
+    "sameWriterRecovery": {
+      "pass": true,
+      "output": "output/place-experiences-20261020-two-build/report.json",
+      "scope": "Real onboarding/answers/ownership (keyboard activation for the old first-play shortcuts); real SW upgrade and safe-writer rollback on one disposable origin. Worker pin is an explicit network fault. No profile, credits, clock or update-event injection; not real-device or real-user evidence.",
+      "cases": [
+        {
+          "width": 390,
+          "interrupted": false,
+          "pass": true,
+          "migration": {
+            "from": 5,
+            "to": 5
+          },
+          "earnedCount": 4,
+          "reservation": {
+            "id": "[\"island-plan-v1\",\"b05a62e4-93c4-4e17-93e7-42f4ba548275\",1]",
+            "cursor": 1
+          },
+          "reloads": [
+            "http://127.0.0.1:62776/?__app-update=1792449173679",
+            "http://127.0.0.1:62776/?__app-update=1792449201465"
+          ]
+        },
+        {
+          "width": 390,
+          "interrupted": true,
+          "pass": true,
+          "migration": {
+            "from": 5,
+            "to": 5
+          },
+          "earnedCount": 4,
+          "reservation": {
+            "id": "[\"island-plan-v1\",\"064947f2-db43-42f9-b4c5-3aa3c1e9df2f\",1]",
+            "cursor": 1
+          },
+          "reloads": [
+            "http://127.0.0.1:62776/?__app-update=1792449259290",
+            "http://127.0.0.1:62776/?__app-update=1792449275517"
+          ]
+        },
+        {
+          "width": 768,
+          "interrupted": false,
+          "pass": true,
+          "migration": {
+            "from": 5,
+            "to": 5
+          },
+          "earnedCount": 4,
+          "reservation": {
+            "id": "[\"island-plan-v1\",\"2fe099bb-9e09-4134-a71c-2c45a89d4d22\",1]",
+            "cursor": 1
+          },
+          "reloads": [
+            "http://127.0.0.1:62776/?__app-update=1792449318975",
+            "http://127.0.0.1:62776/?__app-update=1792449344433"
+          ]
+        },
+        {
+          "width": 768,
+          "interrupted": true,
+          "pass": true,
+          "migration": {
+            "from": 5,
+            "to": 5
+          },
+          "earnedCount": 4,
+          "reservation": {
+            "id": "[\"island-plan-v1\",\"7c4a75b5-05ac-4a01-88f6-d0401fe5be0e\",1]",
+            "cursor": 1
+          },
+          "reloads": [
+            "http://127.0.0.1:62776/?__app-update=1792449454565",
+            "http://127.0.0.1:62776/?__app-update=1792449507450"
+          ]
+        }
+      ],
+      "captures": [
+        {
+          "file": "390-normal-old-learning.png",
+          "appRoot": {
+            "revision": "ed155377bc8e-place-old",
+            "version": "ed155377bc8e-place-old:97ff5447-979f-425f-8adc-b5d24c07184c",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-normal-new-home.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-new",
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-normal-new-offline.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-new",
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-normal-rollback-offline.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-rollback",
+            "version": "9fdff761f115-place-rollback:3f22066c-347b-4d81-b7ba-077ac798ce67",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-interrupted-old-learning.png",
+          "appRoot": {
+            "revision": "ed155377bc8e-place-old",
+            "version": "ed155377bc8e-place-old:97ff5447-979f-425f-8adc-b5d24c07184c",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-interrupted-old-offline.png",
+          "appRoot": {
+            "revision": "ed155377bc8e-place-old",
+            "version": "ed155377bc8e-place-old:97ff5447-979f-425f-8adc-b5d24c07184c",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-interrupted-new-home.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-new",
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-interrupted-new-offline.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-new",
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-interrupted-rollback-offline.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-rollback",
+            "version": "9fdff761f115-place-rollback:3f22066c-347b-4d81-b7ba-077ac798ce67",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-normal-old-learning.png",
+          "appRoot": {
+            "revision": "ed155377bc8e-place-old",
+            "version": "ed155377bc8e-place-old:97ff5447-979f-425f-8adc-b5d24c07184c",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-normal-new-home.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-new",
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-normal-new-offline.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-new",
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-normal-rollback-offline.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-rollback",
+            "version": "9fdff761f115-place-rollback:3f22066c-347b-4d81-b7ba-077ac798ce67",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-interrupted-old-learning.png",
+          "appRoot": {
+            "revision": "ed155377bc8e-place-old",
+            "version": "ed155377bc8e-place-old:97ff5447-979f-425f-8adc-b5d24c07184c",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-interrupted-old-offline.png",
+          "appRoot": {
+            "revision": "ed155377bc8e-place-old",
+            "version": "ed155377bc8e-place-old:97ff5447-979f-425f-8adc-b5d24c07184c",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-interrupted-new-home.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-new",
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-interrupted-new-offline.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-new",
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-interrupted-rollback-offline.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-rollback",
+            "version": "9fdff761f115-place-rollback:3f22066c-347b-4d81-b7ba-077ac798ce67",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        }
+      ],
+      "builds": {
+        "OLD": {
+          "sourceHash": "0780cdd64d25daeacc436373dfeb70d7e0a102e8c06dd1a4e4c4ead098542c14",
+          "version": {
+            "version": "ed155377bc8e-place-old:97ff5447-979f-425f-8adc-b5d24c07184c",
+            "revision": "ed155377bc8e-place-old",
+            "delivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "park": {
+              "enabled": false,
+              "renderer": "retired"
+            },
+            "island": {
+              "enabled": true,
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "life": {
+                "enabled": true,
+                "discovery": false,
+                "fantasy": true,
+                "candidate": "living-fantasy-garden-v2",
+                "saveVersion": 21
+              },
+              "learningCandidate": "pokomoko-pop-live-v8",
+              "nativeArtStudy": {
+                "enabled": false,
+                "candidate": "native-05-art-transfer-v1",
+                "gameplayMapped": false
+              },
+              "nativeOwnedArt": {
+                "enabled": false,
+                "candidate": "native05-expanding-runtime-v2",
+                "gameplayMapped": true
+              },
+              "residentCandidate": "patchwork-otter-v1",
+              "artDirection": "moon-garden"
+            }
+          },
+          "bundle": "/assets/index-CanDf40e.js"
+        },
+        "NEW": {
+          "sourceHash": "9fdff761f115eb38583a2252113e33d981b78597c42551acf6f74f0aaa6c80c8",
+          "version": {
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "revision": "9fdff761f115-place-new",
+            "delivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "park": {
+              "enabled": false,
+              "renderer": "retired"
+            },
+            "island": {
+              "enabled": true,
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "life": {
+                "enabled": true,
+                "discovery": false,
+                "fantasy": true,
+                "candidate": "living-fantasy-garden-v2",
+                "saveVersion": 21
+              },
+              "learningCandidate": "pokomoko-pop-live-v8",
+              "nativeArtStudy": {
+                "enabled": false,
+                "candidate": "native-05-art-transfer-v1",
+                "gameplayMapped": false
+              },
+              "nativeOwnedArt": {
+                "enabled": false,
+                "candidate": "native05-expanding-runtime-v2",
+                "gameplayMapped": true
+              },
+              "residentCandidate": "patchwork-otter-v1",
+              "artDirection": "moon-garden"
+            }
+          },
+          "bundle": "/assets/index-CG9JQdzL.js"
+        },
+        "ROLLBACK": {
+          "sourceHash": "9fdff761f115eb38583a2252113e33d981b78597c42551acf6f74f0aaa6c80c8",
+          "version": {
+            "version": "9fdff761f115-place-rollback:3f22066c-347b-4d81-b7ba-077ac798ce67",
+            "revision": "9fdff761f115-place-rollback",
+            "delivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "park": {
+              "enabled": false,
+              "renderer": "retired"
+            },
+            "island": {
+              "enabled": true,
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "life": {
+                "enabled": true,
+                "discovery": false,
+                "fantasy": true,
+                "candidate": "living-fantasy-garden-v2",
+                "saveVersion": 21
+              },
+              "learningCandidate": "pokomoko-pop-live-v8",
+              "nativeArtStudy": {
+                "enabled": false,
+                "candidate": "native-05-art-transfer-v1",
+                "gameplayMapped": false
+              },
+              "nativeOwnedArt": {
+                "enabled": false,
+                "candidate": "native05-expanding-runtime-v2",
+                "gameplayMapped": true
+              },
+              "residentCandidate": "patchwork-otter-v1",
+              "artDirection": "moon-garden"
+            }
+          },
+          "bundle": "/assets/index-CP0r0vu4.js"
+        }
+      },
+      "note": "NEW and first ROLLBACK share code inputs; independent build/version. This is compatible same-writer recovery, not older-code rollback."
+    },
+    "oldWriterRecovery": {
+      "pass": true,
+      "output": "output/place-experiences-20261020-old-writer-restore/report.json",
+      "scope": "Real onboarding/answers/ownership (keyboard activation for the old first-play shortcuts); real SW upgrade and safe-writer rollback on one disposable origin. Worker pin is an explicit network fault. No profile, credits, clock or update-event injection; not real-device or real-user evidence.",
+      "cases": [
+        {
+          "width": 390,
+          "interrupted": false,
+          "pass": true,
+          "migration": {
+            "from": 5,
+            "to": 5
+          },
+          "earnedCount": 4,
+          "reservation": {
+            "id": "[\"island-plan-v1\",\"1c1ba2b3-2922-458b-a2d8-3fb328a372b0\",1]",
+            "cursor": 1
+          },
+          "reloads": [
+            "http://127.0.0.1:63241/?__app-update=1792449378684",
+            "http://127.0.0.1:63241/?__app-update=1792449477310"
+          ]
+        },
+        {
+          "width": 390,
+          "interrupted": true,
+          "pass": true,
+          "migration": {
+            "from": 5,
+            "to": 5
+          },
+          "earnedCount": 4,
+          "reservation": {
+            "id": "[\"island-plan-v1\",\"a9b1daa6-e3df-4212-b99a-09b622016d5d\",1]",
+            "cursor": 1
+          },
+          "reloads": [
+            "http://127.0.0.1:63241/?__app-update=1792449549598",
+            "http://127.0.0.1:63241/?__app-update=1792449566955"
+          ]
+        },
+        {
+          "width": 768,
+          "interrupted": false,
+          "pass": true,
+          "migration": {
+            "from": 5,
+            "to": 5
+          },
+          "earnedCount": 4,
+          "reservation": {
+            "id": "[\"island-plan-v1\",\"f7be3047-cb4b-4721-b877-0325da88eb57\",1]",
+            "cursor": 1
+          },
+          "reloads": [
+            "http://127.0.0.1:63241/?__app-update=1792449603643",
+            "http://127.0.0.1:63241/?__app-update=1792449624168"
+          ]
+        },
+        {
+          "width": 768,
+          "interrupted": true,
+          "pass": true,
+          "migration": {
+            "from": 5,
+            "to": 5
+          },
+          "earnedCount": 4,
+          "reservation": {
+            "id": "[\"island-plan-v1\",\"405827a5-4bd2-4105-97d0-981cf8b4b8c2\",1]",
+            "cursor": 1
+          },
+          "reloads": [
+            "http://127.0.0.1:63241/?__app-update=1792449668343",
+            "http://127.0.0.1:63241/?__app-update=1792449683774"
+          ]
+        }
+      ],
+      "captures": [
+        {
+          "file": "390-normal-old-learning.png",
+          "appRoot": {
+            "revision": "ed155377bc8e-place-old",
+            "version": "ed155377bc8e-place-old:97ff5447-979f-425f-8adc-b5d24c07184c",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-normal-new-home.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-new",
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-normal-new-offline.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-new",
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-normal-rollback-offline.png",
+          "appRoot": {
+            "revision": "ed155377bc8e-place-restore",
+            "version": "ed155377bc8e-place-restore:d9863d7f-c9c0-41d0-a1ef-d8d1be6de3f6",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-interrupted-old-learning.png",
+          "appRoot": {
+            "revision": "ed155377bc8e-place-old",
+            "version": "ed155377bc8e-place-old:97ff5447-979f-425f-8adc-b5d24c07184c",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-interrupted-old-offline.png",
+          "appRoot": {
+            "revision": "ed155377bc8e-place-old",
+            "version": "ed155377bc8e-place-old:97ff5447-979f-425f-8adc-b5d24c07184c",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-interrupted-new-home.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-new",
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-interrupted-new-offline.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-new",
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "390-interrupted-rollback-offline.png",
+          "appRoot": {
+            "revision": "ed155377bc8e-place-restore",
+            "version": "ed155377bc8e-place-restore:d9863d7f-c9c0-41d0-a1ef-d8d1be6de3f6",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-normal-old-learning.png",
+          "appRoot": {
+            "revision": "ed155377bc8e-place-old",
+            "version": "ed155377bc8e-place-old:97ff5447-979f-425f-8adc-b5d24c07184c",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-normal-new-home.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-new",
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-normal-new-offline.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-new",
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-normal-rollback-offline.png",
+          "appRoot": {
+            "revision": "ed155377bc8e-place-restore",
+            "version": "ed155377bc8e-place-restore:d9863d7f-c9c0-41d0-a1ef-d8d1be6de3f6",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-interrupted-old-learning.png",
+          "appRoot": {
+            "revision": "ed155377bc8e-place-old",
+            "version": "ed155377bc8e-place-old:97ff5447-979f-425f-8adc-b5d24c07184c",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-interrupted-old-offline.png",
+          "appRoot": {
+            "revision": "ed155377bc8e-place-old",
+            "version": "ed155377bc8e-place-old:97ff5447-979f-425f-8adc-b5d24c07184c",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-interrupted-new-home.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-new",
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-interrupted-new-offline.png",
+          "appRoot": {
+            "revision": "9fdff761f115-place-new",
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        {
+          "file": "768-interrupted-rollback-offline.png",
+          "appRoot": {
+            "revision": "ed155377bc8e-place-restore",
+            "version": "ed155377bc8e-place-restore:d9863d7f-c9c0-41d0-a1ef-d8d1be6de3f6",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        }
+      ],
+      "builds": {
+        "OLD": {
+          "sourceHash": "0780cdd64d25daeacc436373dfeb70d7e0a102e8c06dd1a4e4c4ead098542c14",
+          "version": {
+            "version": "ed155377bc8e-place-old:97ff5447-979f-425f-8adc-b5d24c07184c",
+            "revision": "ed155377bc8e-place-old",
+            "delivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "park": {
+              "enabled": false,
+              "renderer": "retired"
+            },
+            "island": {
+              "enabled": true,
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "life": {
+                "enabled": true,
+                "discovery": false,
+                "fantasy": true,
+                "candidate": "living-fantasy-garden-v2",
+                "saveVersion": 21
+              },
+              "learningCandidate": "pokomoko-pop-live-v8",
+              "nativeArtStudy": {
+                "enabled": false,
+                "candidate": "native-05-art-transfer-v1",
+                "gameplayMapped": false
+              },
+              "nativeOwnedArt": {
+                "enabled": false,
+                "candidate": "native05-expanding-runtime-v2",
+                "gameplayMapped": true
+              },
+              "residentCandidate": "patchwork-otter-v1",
+              "artDirection": "moon-garden"
+            }
+          },
+          "bundle": "/assets/index-CanDf40e.js"
+        },
+        "NEW": {
+          "sourceHash": "9fdff761f115eb38583a2252113e33d981b78597c42551acf6f74f0aaa6c80c8",
+          "version": {
+            "version": "9fdff761f115-place-new:7476824c-be47-46d1-96ee-9e47af841c37",
+            "revision": "9fdff761f115-place-new",
+            "delivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "park": {
+              "enabled": false,
+              "renderer": "retired"
+            },
+            "island": {
+              "enabled": true,
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "life": {
+                "enabled": true,
+                "discovery": false,
+                "fantasy": true,
+                "candidate": "living-fantasy-garden-v2",
+                "saveVersion": 21
+              },
+              "learningCandidate": "pokomoko-pop-live-v8",
+              "nativeArtStudy": {
+                "enabled": false,
+                "candidate": "native-05-art-transfer-v1",
+                "gameplayMapped": false
+              },
+              "nativeOwnedArt": {
+                "enabled": false,
+                "candidate": "native05-expanding-runtime-v2",
+                "gameplayMapped": true
+              },
+              "residentCandidate": "patchwork-otter-v1",
+              "artDirection": "moon-garden"
+            }
+          },
+          "bundle": "/assets/index-CG9JQdzL.js"
+        },
+        "ROLLBACK": {
+          "sourceHash": "0780cdd64d25daeacc436373dfeb70d7e0a102e8c06dd1a4e4c4ead098542c14",
+          "version": {
+            "version": "ed155377bc8e-place-restore:d9863d7f-c9c0-41d0-a1ef-d8d1be6de3f6",
+            "revision": "ed155377bc8e-place-restore",
+            "delivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "park": {
+              "enabled": false,
+              "renderer": "retired"
+            },
+            "island": {
+              "enabled": true,
+              "delivery": "mystic-island-v1",
+              "candidate": "mystic-island-shore-garden-v18",
+              "life": {
+                "enabled": true,
+                "discovery": false,
+                "fantasy": true,
+                "candidate": "living-fantasy-garden-v2",
+                "saveVersion": 21
+              },
+              "learningCandidate": "pokomoko-pop-live-v8",
+              "nativeArtStudy": {
+                "enabled": false,
+                "candidate": "native-05-art-transfer-v1",
+                "gameplayMapped": false
+              },
+              "nativeOwnedArt": {
+                "enabled": false,
+                "candidate": "native05-expanding-runtime-v2",
+                "gameplayMapped": true
+              },
+              "residentCandidate": "patchwork-otter-v1",
+              "artDirection": "moon-garden"
+            }
+          },
+          "bundle": "/assets/index-BChzqbhz.js"
+        }
+      },
+      "note": "OLD and RESTORE use the actual pre-experience HEAD ed155377 source. Record5 to record5 update/rollback; not a 4-to-5 migration or proof that a shared memory was earned in this short real-acquisition journey."
+    },
+    "scopedUnit": {
+      "status": "PASS",
+      "summary": " Test Files  112 passed (112)\n      Tests  738 passed (738)\n   Start at  07:36:24\n   Duration  273.72s (transform 4.09s, setup 0ms, collect 26.97s, tests 1097.48s, environment 19ms, prepare 8.82s)\n\n",
+      "scope": "src/domain/growingIsland and src/components/island/growing; excludes **/native/**"
+    },
+    "classicSmoke": {
+      "status": "PASS",
+      "exitCode": 0,
+      "passedScenarioCount": 32,
+      "scope": "Explicit classic (Island=false) dev smoke from frozen NEW source; no simultaneous builds or source edits in that candidate. Does not certify island art or real devices."
+    },
+    "static": {
+      "docs": "PASS (14 existing review warnings)",
+      "lint": "PASS (4 existing warnings); affected TSX and QA rechecked",
+      "typecheck": "PASS",
+      "viteProduction": "PASS (isolated fixed builds)",
+      "assets": "PASS (141 precache files, 8.58 MiB)",
+      "entryGuard": "PASS"
+    }
+  },
+  "limits": [
+    "Full repository unit run remains unconfirmed; native terrain suite excluded from this scoped run. Previous interrupted full-run retained.",
+    "No newly authored hollow trunks, upstairs corridors, large flower canopies or shared roofs; finite existing capabilities and fallback retained.",
+    "No real iOS/Android, photo Blob exhaustiveness, independent child comprehension or next-day voluntary return. Art HOLD/default flags unchanged."
+  ],
+  "firstFailures": [
+    {
+      "test": "voyages",
+      "output": "output/place-experiences-20261020-voyages/report.json",
+      "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: /森のしま 木の苗/ })\u001b[22m\n\n    at /Users/yutogasaki/Projects/sansu/tools/e2e-island-voyages.mjs:46:62",
+      "body": "じぶんの島を めぐろう\n海図と ふね\n\nどの島も すきなだけ ひろげられるよ\n\nはじまりのしま\n⚑ いまここ\nなかま 0にん\n\n海図の大きさと きょりは めやすだよ\n\n新しい島を つくる\nいまの島で みる\nぽこもこの家\n花のところ\nしま\nいえ\nまなぶ\nきろく\n設定",
+      "resolution": "Used actual touch after dialog settles and target scrolls into view; corrected harness passes both widths. First failure retained; no save or source app change."
+    },
+    {
+      "test": "first scoped unit",
+      "output": "closeout-first-unit-failure.txt",
+      "reason": "Run overlapped projection/test edits; retained mixed-input result. Three-file final recheck passed 8 tests, then stable scoped suite rerun separately."
+    }
+  ]
+}

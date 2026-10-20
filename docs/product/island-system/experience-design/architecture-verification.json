@@ -1,0 +1,433 @@
+{
+  "at": "2026-10-19T23:09:27.689280+00:00",
+  "head": "ed155377bc8e26880494b9d5b045b0d13847ebc0",
+  "status": "PARTIAL",
+  "target": "local dirty working tree; ordinary Island production preview at 127.0.0.1:5282; no commit, push or deployment",
+  "expected": "finite repeated mature architecture with preserved owners, real supported paths, explicit place use and actual foreground receipts",
+  "inputs": {
+    "src/domain/growingIsland/communityRoof.ts": "8c34f517ca12fb0e3859c25b9d2017b7872dfef83d894ff5ed177d699b6d143d",
+    "src/domain/growingIsland/placeCapability.ts": "c585483d46a994fbfa312a2d0dc41d58c192f7028e5caceb5fdc179f044f0c81",
+    "src/domain/growingIsland/places.ts": "68258fd4c407bd3ab075106ede36864fefd484b263469277d13a07c840a2ff7e",
+    "src/domain/growingIsland/placeArchitecture.fixture.ts": "801ddf15563f355e7e3babd76e7f350ee8b0ac4e141b831b796c7cd2a6cb9573",
+    "src/domain/growingIsland/placeArchitecture.test.ts": "dea241b569e20be0f6e9f0fa3634106c106d236b604ece4f405c0b46387f52bf",
+    "src/components/island/growing/placeCommunityRoofGeometry.ts": "21f29892f3b6569a988921bb47e83bb935ee21e6d6587f5600402173bec9494f",
+    "src/components/island/growing/placeGeometry.ts": "46fa1c266f2e3681ae053fe696048df5181ef9ab0aa36ae1327ced9303a0efee",
+    "src/components/island/growing/placeFlowerGeometry.ts": "d29175605fb78d2323271911721589e8a4a2693410827c7bb89cc0e836886d67",
+    "src/components/island/growing/objectLayer.ts": "a390f7079172f1cbd13def46ed4ba018ab9c2a24937155a327282bcf3f40cc2f",
+    "src/components/island/growing/GrowingWorld.tsx": "08efe031741d76d1ff395229197ccf951189c9a053666ec0d2aa7c3068e140d4",
+    "src/components/island/growing/GrowingIsland.tsx": "708e20ea9a340ebabb3a7cf8d77620aa386d4e4ac8e63b45b40d76eb60331425",
+    "src/components/island/growing/GrowingSheet.tsx": "c92c563f90ae7d8c3c567d2c1339ec0376c9077a0c0ca728eff7738fbedac13b",
+    "src/components/island/growing/growingLife.ts": "e29e8d16207f89f7bc3bcf6e5a6c81ef9bbcdbae0f2147c2620cd768dc40bbe1",
+    "src/components/island/growing/placeArchitectureGeometry.test.ts": "9100e414deb326f8b248929db8a532c9db32d07e0489284dd591035645dd4513",
+    "src/components/island/growing/placeExperienceLife.test.ts": "86a73f3009e7880ad42961f6a76852fb275d6bc9862f4d2a8947dc91684ba5cf",
+    "tools/e2e-growing-architecture.mjs": "a2db8b08754a70c3de6c7e9d1f5e353a590107685220ffcb77187f3783ab8931"
+  },
+  "version": {
+    "version": "development-local:637d442d-40e9-4d15-be80-e66a01936ef7",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "checks": {
+    "focused65": {
+      "status": "PASS",
+      "summary": "   ✓ owned tree-home physical gallery > court: follows multiple connected free cells and every walking sample has a real floor 1620ms\n   ✓ owned tree-home physical gallery > court: supports both actual 0.7-scale Pokomoko feet across the high straight deck 404ms\n\n Test Files  7 passed (7)\n      Tests  65 passed (65)\n   Start at  08:03:45\n   Duration  4.30s (transform 1.08s, setup 0ms, collect 3.29s, tests 7.70s, environment 1ms, prepare 424ms)\n"
+    },
+    "scopedUnit": {
+      "summary": "   ✓ actual authored P04 cove life > retains committed shell obstruction when the initial layer starts with a disappearance preview, including after cancel 18346ms\n   ✓ actual authored P04 cove life > walks from the shared entrance to p9, earns one use and exits safely with mixed flowers=false 18468ms\n   ✓ actual authored P04 cove life > walks from the shared entrance to p9, earns one use and exits safely with mixed flowers=true 1588ms\n   ✓ actual authored P04 cove life > keeps the cove-only release and final-pose guard active when there are zero flower stocks 1448ms\n   ✓ actual authored P04 cove life > returns an occupant of removed apron to real supported ground and restores owners with mixed flowers=false 35724ms\n   ✓ actual authored P04 cove life > returns an occupant of removed apron to real supported ground and restores owners with mixed flowers=true 33093ms\n\n Test Files  114 passed (114)\n      Tests  745 passed (745)\n   Start at  08:04:15\n   Duration  272.45s (transform 3.49s, setup 0ms, collect 22.41s, tests 1003.06s, environment 17ms, prepare 6.37s)\n",
+      "boundary": "Excludes **/native/**. Camera-only TSX adjustment occurred during this run; domain/geometry/life test inputs stayed fixed. Final camera compile and browser are separate.",
+      "status": "PASS",
+      "files": 114,
+      "tests": 745
+    },
+    "typecheck": "PASS via final npm run build (tsc -b)",
+    "lint": {
+      "status": "PASS",
+      "summary": "> pokko-fushigi-zukan-app@0.0.0 lint\n> eslint .\n\n\n/Users/yutogasaki/Projects/sansu/src/components/domain/BaseTenDiagram.tsx\n  3:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components\n\n/Users/yutogasaki/Projects/sansu/src/components/island/IslandMilestone.tsx\n  16:17  warning  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components\n\n/Users/yutogasaki/Projects/sansu/src/prototypes/placeQa/authored.tsx\n  53:10  warning  Fast refresh only works when a file has exports. Move your component(s) to a separate file  react-refresh/only-export-components\n\n/Users/yutogasaki/Projects/sansu/src/prototypes/placeQa/expansion.tsx\n  10:10  warning  Fast refresh only works when a file has exports. Move your component(s) to a separate file  react-refresh/only-export-components\n\n✖ 4 problems (0 errors, 4 warnings)\n",
+      "finalCamera": ""
+    },
+    "build": {
+      "status": "PASS",
+      "summary": "✓ built in 349ms\n\n> pokko-fushigi-zukan-app@0.0.0 assets:check\n> node tools/check-asset-budget.mjs\n\nPASS assets:check\n- PWA precache: 141 unique files, 8.59 MiB / 12.00 MiB\n- Explore artwork: 27 production files, 2.97 MiB / 8.00 MiB\n- Production-input contract: docs/design only; absent from public and precache"
+    },
+    "docs": "PASS final docs:check after task/audit closeout (14 existing review warnings)",
+    "entry": "> node tools/check-current-ui-entry.mjs\n\nCurrent UI entry guard passed: dev opens Mystic Island; old Explore stays on a direct URL with an explicit classic smoke suite; Nature Town redirects home and Growing is the only island home; runtime identity is exposed.",
+    "diffWhitespace": "PASS git diff --check on scoped tracked changes"
+  },
+  "browserRuns": {
+    "place-architecture-20261020": {
+      "at": "2026-10-19T22:56:08.717Z",
+      "target": "http://127.0.0.1:5282",
+      "scope": "Explicit mature architecture fixtures in disposable production profiles. Real renderer, pointer activation, receipts and offline reload; not earned maturity, visual approval, real-device or child evidence.",
+      "cases": [],
+      "pass": false,
+      "version": {
+        "version": "development-local:df3c2aa6-83f2-4971-a29a-9d70a3fdf3b1",
+        "revision": "development-local",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": false,
+            "candidate": "island-life-v1",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "nativeArtStudy": {
+            "enabled": false,
+            "candidate": "native-05-art-transfer-v1",
+            "gameplayMapped": false
+          },
+          "nativeOwnedArt": {
+            "enabled": false,
+            "candidate": "native05-expanding-runtime-v2",
+            "gameplayMapped": true
+          },
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "inputs": {
+        "src/domain/growingIsland/communityRoof.ts": "8c34f517ca12fb0e3859c25b9d2017b7872dfef83d894ff5ed177d699b6d143d",
+        "src/domain/growingIsland/placeCapability.ts": "c585483d46a994fbfa312a2d0dc41d58c192f7028e5caceb5fdc179f044f0c81",
+        "src/domain/growingIsland/places.ts": "68258fd4c407bd3ab075106ede36864fefd484b263469277d13a07c840a2ff7e",
+        "src/components/island/growing/placeCommunityRoofGeometry.ts": "21f29892f3b6569a988921bb47e83bb935ee21e6d6587f5600402173bec9494f",
+        "src/components/island/growing/placeGeometry.ts": "46fa1c266f2e3681ae053fe696048df5181ef9ab0aa36ae1327ced9303a0efee",
+        "src/components/island/growing/placeFlowerGeometry.ts": "d29175605fb78d2323271911721589e8a4a2693410827c7bb89cc0e836886d67",
+        "src/components/island/growing/objectLayer.ts": "a390f7079172f1cbd13def46ed4ba018ab9c2a24937155a327282bcf3f40cc2f",
+        "tools/e2e-growing-architecture.mjs": "1fcb414367497dbcd3bc2332ce6afc38618dec496300705e07b670df22e105fd"
+      },
+      "error": "AssertionError [ERR_ASSERTION]: Missing real shared-roof Poko use\n    at file:///Users/yutogasaki/Projects/sansu/tools/e2e-growing-architecture.mjs:59:13",
+      "body": "ぽこもこの しま\n💧\n0\nながめ\nそだつ場所\nどんな 場所に しよう？\nひろげる\n💧 960\nおく\nもちもの\nメニュー\nしま\nいえ\nまなぶ\nきろく\n設定"
+    },
+    "place-architecture-20261020-r2": {
+      "at": "2026-10-19T22:58:08.645Z",
+      "target": "http://127.0.0.1:5282",
+      "scope": "Explicit mature architecture fixtures in disposable production profiles. Fixed UTC-noon real renderer, pointer activation, receipts and offline reload; not earned maturity, visual approval, real-device or child evidence.",
+      "cases": [],
+      "pass": false,
+      "version": {
+        "version": "development-local:df3c2aa6-83f2-4971-a29a-9d70a3fdf3b1",
+        "revision": "development-local",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": false,
+            "candidate": "island-life-v1",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "nativeArtStudy": {
+            "enabled": false,
+            "candidate": "native-05-art-transfer-v1",
+            "gameplayMapped": false
+          },
+          "nativeOwnedArt": {
+            "enabled": false,
+            "candidate": "native05-expanding-runtime-v2",
+            "gameplayMapped": true
+          },
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "inputs": {
+        "src/domain/growingIsland/communityRoof.ts": "8c34f517ca12fb0e3859c25b9d2017b7872dfef83d894ff5ed177d699b6d143d",
+        "src/domain/growingIsland/placeCapability.ts": "c585483d46a994fbfa312a2d0dc41d58c192f7028e5caceb5fdc179f044f0c81",
+        "src/domain/growingIsland/places.ts": "68258fd4c407bd3ab075106ede36864fefd484b263469277d13a07c840a2ff7e",
+        "src/components/island/growing/placeCommunityRoofGeometry.ts": "21f29892f3b6569a988921bb47e83bb935ee21e6d6587f5600402173bec9494f",
+        "src/components/island/growing/placeGeometry.ts": "46fa1c266f2e3681ae053fe696048df5181ef9ab0aa36ae1327ced9303a0efee",
+        "src/components/island/growing/placeFlowerGeometry.ts": "d29175605fb78d2323271911721589e8a4a2693410827c7bb89cc0e836886d67",
+        "src/components/island/growing/objectLayer.ts": "a390f7079172f1cbd13def46ed4ba018ab9c2a24937155a327282bcf3f40cc2f",
+        "tools/e2e-growing-architecture.mjs": "233d9e22c13500cc1d6a4095d87830a7b281e8b6ba8abf103543c6f54483bc8a"
+      },
+      "error": "AssertionError [ERR_ASSERTION]: Missing real shared-roof Poko use\n    at file:///Users/yutogasaki/Projects/sansu/tools/e2e-growing-architecture.mjs:59:13",
+      "body": "ぽこもこの しま\n💧\n0\nながめ\nそだつ場所\nどんな 場所に しよう？\nひろげる\n💧 960\nおく\nもちもの\nメニュー\nしま\nいえ\nまなぶ\nきろく\n設定"
+    },
+    "place-architecture-20261020-action": {
+      "at": "2026-10-19T23:04:14.075Z",
+      "target": "http://127.0.0.1:5282",
+      "scope": "Explicit mature architecture fixtures in disposable production profiles. Fixed UTC-noon real renderer, pointer activation, receipts and offline reload; not earned maturity, visual approval, real-device or child evidence.",
+      "cases": [
+        {
+          "width": 390,
+          "name": "shared-roof",
+          "topology": "garden",
+          "mainIds": [
+            "h1",
+            "h2"
+          ],
+          "structure": "P04:shared-roof",
+          "actualUse": {
+            "at": 1792497600000,
+            "ruleId": "P04",
+            "anchorId": "h1",
+            "memberIds": [
+              "h1",
+              "h2"
+            ],
+            "variant": "garden",
+            "revision": "[1,\"P04\",\"garden\",\"grown\",[[\"h1\",7,3],[\"h2\",10,3]],[{\"x\":7,\"z\":2},{\"x\":10,\"z\":2},{\"x\":6,\"z\":3},{\"x\":7,\"z\":3},{\"x\":8,\"z\":3},{\"x\":9,\"z\":3},{\"x\":10,\"z\":3},{\"x\":11,\"z\":3},{\"x\":7,\"z\":4},{\"x\":10,\"z\":4}],[{\"x\":7,\"z\":2},{\"x\":10,\"z\":2},{\"x\":6,\"z\":3},{\"x\":8,\"z\":3},{\"x\":9,\"z\":3},{\"x\":11,\"z\":3},{\"x\":7,\"z\":4},{\"x\":10,\"z\":4}],[],[{\"id\":\"h1:garden\",\"kind\":\"garden\",\"cell\":{\"x\":9,\"z\":4}}],[{\"ownerIds\":[\"h1\",\"h2\"],\"minX\":7.42,\"maxX\":9.58,\"minZ\":3.7,\"maxZ\":4.45,\"groundMax\":1.201683351,\"target\":{\"x\":9,\"z\":4}}]]",
+            "actorId": "pokomoko",
+            "targetId": "h1:garden"
+          },
+          "metadata": {
+            "url": "http://127.0.0.1:5282/#/island",
+            "revision": "development-local",
+            "version": "development-local:1c62f0a5-7beb-4168-b2e4-1bdcab1ba7a8",
+            "delivery": "mystic-island-v1",
+            "candidate": "mystic-island-shore-garden-v18",
+            "learningCandidate": "pokomoko-pop-live-v8",
+            "islandFeatureEnabled": true,
+            "mode": "home",
+            "drawCalls": 0,
+            "viewport": {
+              "width": 390,
+              "height": 900
+            },
+            "serviceWorkerControlled": true,
+            "reducedMotion": false,
+            "appRoot": {
+              "revision": "development-local",
+              "version": "development-local:1c62f0a5-7beb-4168-b2e4-1bdcab1ba7a8",
+              "configuredDelivery": "snap-root-v1",
+              "visualLineage": "pokko-field-v1",
+              "islandFeatureEnabled": true,
+              "natureTownFeatureEnabled": false
+            }
+          },
+          "pass": true
+        }
+      ],
+      "pass": false,
+      "version": {
+        "version": "development-local:1c62f0a5-7beb-4168-b2e4-1bdcab1ba7a8",
+        "revision": "development-local",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": false,
+            "candidate": "island-life-v1",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "nativeArtStudy": {
+            "enabled": false,
+            "candidate": "native-05-art-transfer-v1",
+            "gameplayMapped": false
+          },
+          "nativeOwnedArt": {
+            "enabled": false,
+            "candidate": "native05-expanding-runtime-v2",
+            "gameplayMapped": true
+          },
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "inputs": {
+        "src/domain/growingIsland/communityRoof.ts": "8c34f517ca12fb0e3859c25b9d2017b7872dfef83d894ff5ed177d699b6d143d",
+        "src/domain/growingIsland/placeCapability.ts": "c585483d46a994fbfa312a2d0dc41d58c192f7028e5caceb5fdc179f044f0c81",
+        "src/domain/growingIsland/places.ts": "68258fd4c407bd3ab075106ede36864fefd484b263469277d13a07c840a2ff7e",
+        "src/components/island/growing/placeCommunityRoofGeometry.ts": "21f29892f3b6569a988921bb47e83bb935ee21e6d6587f5600402173bec9494f",
+        "src/components/island/growing/placeGeometry.ts": "46fa1c266f2e3681ae053fe696048df5181ef9ab0aa36ae1327ced9303a0efee",
+        "src/components/island/growing/placeFlowerGeometry.ts": "d29175605fb78d2323271911721589e8a4a2693410827c7bb89cc0e836886d67",
+        "src/components/island/growing/objectLayer.ts": "a390f7079172f1cbd13def46ed4ba018ab9c2a24937155a327282bcf3f40cc2f",
+        "src/components/island/growing/GrowingWorld.tsx": "e89155e6147cb091d57013fcd632c17f1b44291573f3f10f1e80f9adadec8ef7",
+        "src/components/island/growing/GrowingIsland.tsx": "708e20ea9a340ebabb3a7cf8d77620aa386d4e4ac8e63b45b40d76eb60331425",
+        "src/components/island/growing/GrowingSheet.tsx": "c92c563f90ae7d8c3c567d2c1339ec0376c9077a0c0ca728eff7738fbedac13b",
+        "src/components/island/growing/growingLife.ts": "e29e8d16207f89f7bc3bcf6e5a6c81ef9bbcdbae0f2147c2620cd768dc40bbe1",
+        "tools/e2e-growing-architecture.mjs": "a2db8b08754a70c3de6c7e9d1f5e353a590107685220ffcb77187f3783ab8931"
+      },
+      "error": "AssertionError [ERR_ASSERTION]: Missing real long-grove Poko use\n    at file:///Users/yutogasaki/Projects/sansu/tools/e2e-growing-architecture.mjs:65:13",
+      "body": "ぽこもこの しま\n💧\n0\nながめ\nそだつ場所\nどんな 場所に しよう？\nひろげる\n💧 960\nおく\nもちもの\nメニュー\nしま\nいえ\nまなぶ\nきろく\n設定"
+    },
+    "place-architecture-20261020-camera": {
+      "at": "2026-10-19T23:07:14.048Z",
+      "target": "http://127.0.0.1:5282",
+      "scope": "Explicit mature architecture fixtures in disposable production profiles. Fixed UTC-noon real renderer, pointer activation, receipts and offline reload; not earned maturity, visual approval, real-device or child evidence.",
+      "cases": [
+        {
+          "width": 390,
+          "name": "shared-roof",
+          "topology": "garden",
+          "mainIds": [
+            "h1",
+            "h2"
+          ],
+          "structure": "P04:shared-roof",
+          "actualUse": {
+            "at": 1792497600000,
+            "ruleId": "P04",
+            "anchorId": "h1",
+            "memberIds": [
+              "h1",
+              "h2"
+            ],
+            "variant": "garden",
+            "revision": "[1,\"P04\",\"garden\",\"grown\",[[\"h1\",7,3],[\"h2\",10,3]],[{\"x\":7,\"z\":2},{\"x\":10,\"z\":2},{\"x\":6,\"z\":3},{\"x\":7,\"z\":3},{\"x\":8,\"z\":3},{\"x\":9,\"z\":3},{\"x\":10,\"z\":3},{\"x\":11,\"z\":3},{\"x\":7,\"z\":4},{\"x\":10,\"z\":4}],[{\"x\":7,\"z\":2},{\"x\":10,\"z\":2},{\"x\":6,\"z\":3},{\"x\":8,\"z\":3},{\"x\":9,\"z\":3},{\"x\":11,\"z\":3},{\"x\":7,\"z\":4},{\"x\":10,\"z\":4}],[],[{\"id\":\"h1:garden\",\"kind\":\"garden\",\"cell\":{\"x\":9,\"z\":4}}],[{\"ownerIds\":[\"h1\",\"h2\"],\"minX\":7.42,\"maxX\":9.58,\"minZ\":3.7,\"maxZ\":4.45,\"groundMax\":1.201683351,\"target\":{\"x\":9,\"z\":4}}]]",
+            "actorId": "pokomoko",
+            "targetId": "h1:garden"
+          },
+          "metadata": {
+            "url": "http://127.0.0.1:5282/#/island",
+            "revision": "development-local",
+            "version": "development-local:637d442d-40e9-4d15-be80-e66a01936ef7",
+            "delivery": "mystic-island-v1",
+            "candidate": "mystic-island-shore-garden-v18",
+            "learningCandidate": "pokomoko-pop-live-v8",
+            "islandFeatureEnabled": true,
+            "mode": "home",
+            "drawCalls": 0,
+            "viewport": {
+              "width": 390,
+              "height": 900
+            },
+            "serviceWorkerControlled": true,
+            "reducedMotion": false,
+            "appRoot": {
+              "revision": "development-local",
+              "version": "development-local:637d442d-40e9-4d15-be80-e66a01936ef7",
+              "configuredDelivery": "snap-root-v1",
+              "visualLineage": "pokko-field-v1",
+              "islandFeatureEnabled": true,
+              "natureTownFeatureEnabled": false
+            }
+          },
+          "pass": true
+        }
+      ],
+      "pass": false,
+      "version": {
+        "version": "development-local:637d442d-40e9-4d15-be80-e66a01936ef7",
+        "revision": "development-local",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": false,
+            "candidate": "island-life-v1",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "nativeArtStudy": {
+            "enabled": false,
+            "candidate": "native-05-art-transfer-v1",
+            "gameplayMapped": false
+          },
+          "nativeOwnedArt": {
+            "enabled": false,
+            "candidate": "native05-expanding-runtime-v2",
+            "gameplayMapped": true
+          },
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      },
+      "inputs": {
+        "src/domain/growingIsland/communityRoof.ts": "8c34f517ca12fb0e3859c25b9d2017b7872dfef83d894ff5ed177d699b6d143d",
+        "src/domain/growingIsland/placeCapability.ts": "c585483d46a994fbfa312a2d0dc41d58c192f7028e5caceb5fdc179f044f0c81",
+        "src/domain/growingIsland/places.ts": "68258fd4c407bd3ab075106ede36864fefd484b263469277d13a07c840a2ff7e",
+        "src/components/island/growing/placeCommunityRoofGeometry.ts": "21f29892f3b6569a988921bb47e83bb935ee21e6d6587f5600402173bec9494f",
+        "src/components/island/growing/placeGeometry.ts": "46fa1c266f2e3681ae053fe696048df5181ef9ab0aa36ae1327ced9303a0efee",
+        "src/components/island/growing/placeFlowerGeometry.ts": "d29175605fb78d2323271911721589e8a4a2693410827c7bb89cc0e836886d67",
+        "src/components/island/growing/objectLayer.ts": "a390f7079172f1cbd13def46ed4ba018ab9c2a24937155a327282bcf3f40cc2f",
+        "src/components/island/growing/GrowingWorld.tsx": "08efe031741d76d1ff395229197ccf951189c9a053666ec0d2aa7c3068e140d4",
+        "src/components/island/growing/GrowingIsland.tsx": "708e20ea9a340ebabb3a7cf8d77620aa386d4e4ac8e63b45b40d76eb60331425",
+        "src/components/island/growing/GrowingSheet.tsx": "c92c563f90ae7d8c3c567d2c1339ec0376c9077a0c0ca728eff7738fbedac13b",
+        "src/components/island/growing/growingLife.ts": "e29e8d16207f89f7bc3bcf6e5a6c81ef9bbcdbae0f2147c2620cd768dc40bbe1",
+        "tools/e2e-growing-architecture.mjs": "a2db8b08754a70c3de6c7e9d1f5e353a590107685220ffcb77187f3783ab8931"
+      },
+      "error": "AssertionError [ERR_ASSERTION]: Missing real long-grove Poko use\n    at file:///Users/yutogasaki/Projects/sansu/tools/e2e-growing-architecture.mjs:65:13",
+      "body": "ぽこもこの しま\n💧\n0\nながめ\nそだつ場所\nどんな 場所に しよう？\nひろげる\n💧 960\nおく\nもちもの\nメニュー\nしま\nいえ\nまなぶ\nきろく\n設定"
+    }
+  },
+  "unconfirmed": [
+    "Full repository native terrain suite did not finish. Initial original test and the diagnostic bounded comparison trial were interrupted; test-harness changes were reverted, not adopted. No PASS.",
+    "A broader full-repository run excluding the core terrain test was interrupted before final integration; not a final unit PASS.",
+    "Real devices, child understanding/voluntary revisit, art benchmark acceptance and arbitrary complex architectural forms remain outside this result.",
+    "Previous PWA old-writer rollback evidence remains in closeout-verification.json for its exact older candidate; not rerun or relabeled for this camera/geometry change.",
+    "The overview fix did not establish P02 actual use; first failure cause remains unresolved. No further retries or unrelated journeys were started."
+  ],
+  "notes": [
+    "Explicit mature fixtures are diagnostics, not normally earned growth. UTC noon is stated, actual walking timers are not accelerated.",
+    "First two browser failures lacked a real P04 hero use. Explicit user place commands were added, and P04 then passed.",
+    "The first explicit-command run passed P04 but failed to obtain P02 use within 60 seconds. Its actual screenshot showed a cropped long gallery; final camera uses overview. Retain both results without claiming the screenshot alone establishes the receipt failure cause.",
+    "No user profile was opened; disposable profiles only.",
+    "Native core test source has no changes from HEAD; debug profile does not establish its cause."
+  ],
+  "finalBrowserInputMatch": true,
+  "actualBrowserResult": "PARTIAL: P04 hero use and offline passed at 390; P02 hero use absent within 60s after camera fix. Remaining six cases not reached.",
+  "durableScreenshots": [
+    "evidence/architecture-roof-390.png",
+    "evidence/architecture-gallery-unconfirmed-390.png"
+  ],
+  "cleanup": "This turn preview 5282 and all owned interrupted Vitest workers stopped; preexisting comparison dev server preserved."
+}

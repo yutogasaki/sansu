@@ -1,0 +1,94 @@
+{
+  "id": "REVIEW-LOOP-001",
+  "recordedAt": "2026-10-19T01:49:09.318845+00:00",
+  "branch": "codex/expand-003-sansu",
+  "head": "882937581c46ec633a4e4663726385ad7e7a09f1",
+  "targetRef": "sansu:work/2026-10-19-review-loop",
+  "targetVersion": "2b7732c6af7e",
+  "inputSha256": {
+    "scripts/portal-review-loop.cjs": "328c858cbc1332dcf6a40d45e03550efd4a22a750d966ad8c9e3a47e82fde93f",
+    "scripts/portal-review-loop.js": "0d0dee362ada49d23c63a45ae8f8b927609da5f7fc344c544dc0da9170727c1e",
+    "scripts/portal-workspace.cjs": "98efa19dfb213909ea99f95727c34e0adc1c16ce16cce0738f80189d18eb54d9",
+    "scripts/portal-work-model.cjs": "99ac5ac0e4a4c06d4fce9afde79909436c13279086cd405f85622f421f6532f3",
+    "docs/runbooks/requirements-review-loop.md": "b5e53308e4ad65965c1ca9e1107569bd5252f8f4888be1a0e8d34ffb99d6b77c",
+    "docs/runbooks/README.md": "bcfbfeab619bd25086efc95f9a46bdc5efb8848339cf6e9058f2c2962f401978",
+    "docs/ai/contributor-guide.md": "6a8038064de812f8f1895164fcc06b11f84d14db6c9fdea89cc9139f7f962007",
+    "docs/portal/workspace.md": "91610f3b3e075293d10b36c4a2fcb6ef9ed32a8621594abdc708bec38cef1712",
+    "docs/tasks/active/2026-10-19-review-loop.md": "768548801d0c7cabb4da111ea0c3a1797ef76d648f779a5b4b21475444fbbb38",
+    ".agents/tasks/DONE.md": "1521fa9c0e33d7828f868786fc6eaf25531aaa972035d60288970c5396c86a3d",
+    "docs/done/2026-10.md": "7b96ac9fef188663c7323bc4e37f2502bb8b3d86b3e1c56c134ffe353736859f"
+  },
+  "criteria": [
+    {
+      "requirement": "実装前の矛盾・抜け・反例確認と同版の成果物レビュー",
+      "status": "充足",
+      "evidence": "runbookの実装前／成果物、両テンプレート、三画面での操作"
+    },
+    {
+      "requirement": "要件別の判定・指摘の条件／影響／根拠・必須／任意と対応理由",
+      "status": "充足",
+      "evidence": "runbook、両テンプレート。実作業での判定精度は未測定"
+    },
+    {
+      "requirement": "変更影響の再確認、約2往復の見直しと既存条件優先",
+      "status": "充足",
+      "evidence": "runbook成果物とartifactテンプレート"
+    },
+    {
+      "requirement": "失敗例の条件付き回帰化と同一例での比較",
+      "status": "充足",
+      "evidence": "runbook失敗と改善、artifactテンプレート。効果比較は未実施"
+    },
+    {
+      "requirement": "教訓の適用範囲／根拠／廃止条件と自動昇格防止",
+      "status": "充足",
+      "evidence": "runbook、artifactテンプレート。AGENTS変更なし"
+    },
+    {
+      "requirement": "技術／教材／理解／学習価値の別判定",
+      "status": "充足",
+      "evidence": "runbookとartifactテンプレート。児童観察は未実施"
+    }
+  ],
+  "verification": {
+    "docs:check": "PASS (expired review dates are existing warnings)",
+    "lint": "PASS: 0 errors, 4 existing warnings",
+    "syntax": "PASS",
+    "portal:build": "PASS: 1727 files",
+    "agent:index:check": "PASS including portal:verify and 12 pinned tests",
+    "workspace-check": "PASS",
+    "browser": "PASS three entries, complete ref/version, both presets, review reset, selected work change, unknown-work disable; 320px document client/scroll=320 and dialog=282; final desktop 1280 no horizontal overflow"
+  },
+  "failedAndFixed": [
+    {
+      "input": "new runbook without README entry",
+      "expected": "runbook index link",
+      "actual": "docs:check FAIL",
+      "action": "added existing README link"
+    },
+    {
+      "input": "README changed after generation",
+      "expected": "canonical SHA equals generated reference",
+      "actual": "portal:verify SHA mismatch on docs/runbooks/README.md",
+      "action": "regenerated after closeout"
+    },
+    {
+      "input": "runtime edited while intermediate verification running",
+      "expected": "fixed source during verify",
+      "actual": "3 stale runtime/model files",
+      "action": "rebuilt and reran final check without source edits; intermediate-stale.log retained"
+    }
+  ],
+  "unconfirmed": [
+    "Hub server 47860 returned connection refused; same generated output tested at temporary 5273",
+    "UI reported copy success; browser clipboard readText returned empty, OS clipboard content unconfirmed",
+    "actual review operations, adoption and measured improvement",
+    "teaching correctness and child understanding are not measured by this operational change",
+    "product full core/PWA/release not run for this scoped portal/process change"
+  ],
+  "unchangedProtectedSources": {
+    ".agents/tasks/TASKS.md": true,
+    ".agents/flow/portal-flow.json": true
+  },
+  "boundaries": "Existing uncommitted product work preserved; no product edit commands, vendor edits, commit/push/deploy, auto AGENTS promotion, new state ledger, research-body copy or external send."
+}

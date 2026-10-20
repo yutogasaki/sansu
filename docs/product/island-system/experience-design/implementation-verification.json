@@ -1,0 +1,173 @@
+{
+  "status": "TARGETED_PASS_BROAD_CHECKS_PARTIAL",
+  "at": "2026-10-19T22:16:07.671947+00:00",
+  "baseRevision": "ed155377bc8e26880494b9d5b045b0d13847ebc0",
+  "target": "local working candidate; not an exported commit or deployment",
+  "sourceFileCount": 1644,
+  "hashScope": "all src files, package/lock/Vite/TS config, comparison layouts and growing archive builder",
+  "checks": {
+    "docs": {
+      "status": "PASS",
+      "warnings": 14,
+      "command": "fnm exec --using=22 npm run docs:check"
+    },
+    "lint": {
+      "status": "PASS",
+      "scope": "full ESLint before final UI changes; affected files rechecked after changes; four existing warnings; no new warning",
+      "finalAffectedCheck": "PASS: lifeChoices, comparison entry, e2e growing harness after the final correction"
+    },
+    "typecheck": {
+      "status": "PASS",
+      "command": "fnm exec --using=22 npm run typecheck"
+    },
+    "build": {
+      "status": "PASS",
+      "command": "fnm exec --using=22 npm run build",
+      "precache": "141 files, 8.58 MiB"
+    },
+    "unitFull": {
+      "status": "INTERRUPTED_LONG_SYNC_TERRAIN_TEST_WITH_TARGETED_CORRECTION",
+      "command": "fnm exec --using=22 npm run test:run",
+      "failure": "sharedGardenLife: mellow resident selected home as preferred activity; corrected fallback classification",
+      "boundary": "full integration run plus targeted reruns; not a second complete run after the garden fix",
+      "completedFilesBeforeInterruption": 638,
+      "unconfirmedTest": "src/components/island/growing/native/authoredCoreGrowthIntegration.test.ts: synchronous single test still computing after more than 20 minutes; SIGINT sent to this task Vitest runner",
+      "separateLateTest": "placeMemories.test.ts added after full collection; independently passed in focused run",
+      "completedTestCountObserved": 5450,
+      "interruptionReport": "unit-interruption.txt",
+      "exitCode": 1
+    },
+    "gardenFixRecheck": {
+      "status": "PASS",
+      "files": 6,
+      "tests": 28
+    },
+    "lifeContinuityScaleRecheck": {
+      "status": "PASS",
+      "files": 2,
+      "tests": 8
+    },
+    "archiveInputBoundary": {
+      "status": "PASS",
+      "files": 1,
+      "tests": 17
+    },
+    "sourceProjectionAndSave": {
+      "status": "PASS",
+      "files": 4,
+      "tests": 14,
+      "scope": "first memories, shared memory CAS/history/voyages/deletion, actual walking and useGrowingIsland"
+    },
+    "layouts": {
+      "status": "PASS_LOGICAL_DIAGNOSTIC_ONLY",
+      "report": "layout-verification.json"
+    },
+    "oldWriter": {
+      "status": "PASS_OLD_V5_PURE_WRITER_COMPATIBILITY",
+      "report": "old-writer-verification.json"
+    },
+    "growingProduction": {
+      "status": "PASS",
+      "command": "SANSU_GROWTH_V04_URL=http://127.0.0.1:5280 SANSU_GROWTH_V04_OUTPUT=output/place-experiences-20261020-production-v04-r2 fnm exec --using=22 node tools/e2e-growing-v04.mjs",
+      "viewports": [
+        390,
+        768
+      ],
+      "report": "output/place-experiences-20261020-production-v04-r2/report.json",
+      "scope": "disposable native profile, actual free arrival/catalog, explicit old snapshot recovery and two-home garden diagnostic, both actual actor receipts, same learning data",
+      "clock": "explicit fixed UTC noon; original UTC night attempt lacked a visible resident; not natural growth evidence",
+      "durableSummary": "production-verification.json"
+    },
+    "smokeFirst": {
+      "status": "FAIL",
+      "report": "smoke-first-run.txt",
+      "failure": "old Explore landscape numeric input expected 10, actual 0; concurrent development changes"
+    },
+    "smokeFocused": {
+      "status": "PASS",
+      "cases": 6,
+      "command": "SANSU_E2E_ROOT_TANGLE_ONLY=1 fnm exec --using=22 npm run e2e:smoke"
+    },
+    "smokeSecond": {
+      "status": "FAIL_NOT_RELEASE_CLOSED",
+      "report": "smoke-second-run.txt",
+      "failure": "old Explore 1024x1366 next question wait exceeded 1500 ms; log also records page reload of dist-website/index.html during concurrent build",
+      "boundary": "no third attempt and no old Explore product changes; keep original evidence"
+    },
+    "agentIndex": {
+      "status": "FAIL_STALE_GENERATED_INDICES",
+      "files": [
+        ".agents/index.html",
+        ".agents/tasks/index.html",
+        "docs/index.html",
+        ".agents/map.html"
+      ],
+      "boundary": "did not regenerate shared portal/index outputs over unrelated dirty work; portal:verify was not reached"
+    },
+    "browserManual": {
+      "status": "PASS_DEVELOPMENT_AUTHOR_OBSERVATION",
+      "target": "http://127.0.0.1:5273/prototypes/place-qa/experience.html",
+      "scope": [
+        "all three real 3D layouts",
+        "8-tree reply",
+        "4 supplied water surfaces",
+        "store C2 makes C3 dry and disables water touch",
+        "explicit hero/resident taps then one shared memory",
+        "normal first-play flower sheet exposes flower touch"
+      ],
+      "limits": [
+        "not independent child observation",
+        "not installed PWA proof"
+      ],
+      "deliveryFlags": "DEV=true; native art available in the comparison. Production diagnostic used nativeOwnedArt.enabled=false."
+    }
+  },
+  "limits": [
+    "No child comprehension or revisit evidence",
+    "No new large art acceptance",
+    "No installed old/new/rollback PWA verification in this task"
+  ],
+  "earlierWorkingSnapshotSha256": "2ed15e6fc3397d0681fca608da987b88abfb46c10a0b63465b91cdb28593854e",
+  "sourceSha256": "1bf85172beda47acd0327baf989c9516ccd9f1adc4e9e82bda817056b03c8cfc",
+  "buildMetadata": {
+    "version": "development-local:70fb5a6f-95c3-4611-8ac1-dd9e1d428208",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "qaInputs": {
+    "tools/e2e-growing-v04.mjs": "dc624fe644df354b20341f4aa5892e8a3395ec4976f2136364cf31c83689c767",
+    "tools/verify-growing.mjs": "53451715b54b9afa96f0eedf822a0dc6c511759d992078d5b18ec376794a8408",
+    "tools/verify-growing.test.mjs": "1661330e89d95faa833841f20736d6132e1d4573afb45c9477e3b6608828ce13"
+  },
+  "sourceHashRechecked": true
+}

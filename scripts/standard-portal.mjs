@@ -5,7 +5,7 @@ import { gzipSync } from 'node:zlib';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { parseTaskBoard } from '../tools/portal-content.mjs';
-import { renderIntegrated } from '../tools/integrated-portal.mjs';
+import { renderIntegrated, taskPresentation } from '../tools/integrated-portal.mjs';
 import { composeLibrary } from '../tools/portal-library.mjs';
 
 const root = path.resolve(fileURLToPath(new URL('../', import.meta.url)));
@@ -93,18 +93,25 @@ export function run(mode) {
   // Keep the complete generated registry below GitHub's per-file size limit.
   const registry = files.get('data/unification.json');
   if (registry) {
-    const compactRegistry = JSON.stringify(JSON.parse(registry)) + '\n';
+    const finalRegistry = JSON.parse(registry);
+    const compactRegistry = JSON.stringify(finalRegistry) + '\n';
     files.set('data/unification.json', compactRegistry);
     const manifest = JSON.parse(files.get('data/unification-manifest.json'));
-    // Derive adapter and search hashes from this final projection, independent of
-    // the previous generated files on disk.
+    // project.json is a derived adapter, not an independent ledger input.
+    // It is written below from this same canonical projection; hashing its old
+    // disk bytes made the first build stale whenever the queue changed.
     manifest.sourceFiles['docs/portal/project.json'] = sha(text);
-    const searchData = 'window.__portalSearchGzip=' + JSON.stringify(gzipSync(Buffer.from(compactRegistry.trimEnd()), { level: 9 }).toString('base64')) + ';\n';
+    // The reader must consume this exact final registry, after the shared UI
+    // removes generated-output self references. Otherwise switching generators
+    // changes the next build's compressed search bytes.
+    const searchData = 'window.__portalSearchGzip=' + JSON.stringify(gzipSync(Buffer.from(JSON.stringify(finalRegistry)), {level:9}).toString('base64')) + ';\n';
     files.set('search-data.js', searchData);
     manifest.outputs['search-data.js'] = sha(searchData);
     manifest.outputs['data/unification.json'] = sha(compactRegistry);
     files.set('data/unification-manifest.json', JSON.stringify(manifest, null, 2) + '\n');
   }
+  if (process.env.PORTAL_WORKSPACE !== 'legacy') require('./portal-workspace.cjs').apply({root,files,taskPresentation});
+  require('./portal-shared-diagrams.cjs').apply({root,files});
   files.set('.generated-by-hub-standard', '1.0.0\n');
   const out = path.join(root, 'portal');
   common.noSymlinks(root, out);
@@ -128,7 +135,7 @@ export function run(mode) {
     const stale = [...files].filter(([file, content]) => !fs.existsSync(path.join(out, file)) || (Buffer.isBuffer(content) ? !fs.readFileSync(path.join(out,file)).equals(content) : (typeof content === 'string'
       ? fs.readFileSync(path.join(out, file), 'utf8') !== content
       : sha(fs.readFileSync(path.join(out, file))) !== content.sha256)));
-    if (stale.length || actual.some(file => !files.has(file))) throw Error(`Stale portal: ${stale.length} changed/missing or extra files`);
+    if (stale.length || actual.some(file => !files.has(file))) throw Error(`Stale portal: ${stale.length} changed/missing or extra files: ${stale.map(([name])=>name).join(', ')}`);
     return { status: 'PASS', files: files.size };
   }
   throw Error('Usage: node scripts/standard-portal.mjs build|verify');

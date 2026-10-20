@@ -9,7 +9,7 @@
     "scripts/vendor/portal-ui/1.0.2/adapter.cjs": "de8f7d48d30e112d527b8709212d05763210c42ac26bae1534498d8893b8da91",
     "scripts/vendor/portal-ui/1.0.2/ui.css": "97ccae708a6ea52a2aae52b7f35da1fe6ba83b0e67d843e1252a9a868e783482",
     "scripts/vendor/portal-ui/1.0.2/ui.js": "09c39957492298cc40c615dd902afd4450ea7e92ba99cc5beea6c7f706b4bab1",
-    "scripts/standard-portal.mjs": "985b9125006400c3ba76428304ded9e0869980aaf7018b96311d8713eb78e1cb"
+    "scripts/standard-portal.mjs": "7a8655a50c23dadcd9f4059a369d1ff99238e9dcd8234852b06839526b2fd649"
   },
   "pages": [
     "index.html",
@@ -158,8 +158,10 @@
     "read/5abcbb22bb27c63f6cfd.html",
     "read/e5703f7e01a1fdd4b6b5.html",
     "read/2f241eac02eb2a51aa30.html",
+    "read/a21c8f2ae33a8ec3ebea.html",
     "read/f79efaf570d7185d6124.html",
     "read/6b8ec557b953f9bec795.html",
+    "read/6a17eb7c91014e83f637.html",
     "read/acb84a3e0097ebf55056.html",
     "read/1a2774473f3c23c452e3.html",
     "read/e58fc285ea01edf88629.html",
@@ -573,7 +575,6 @@
     "read/a1ff50e764108835c3d4.html",
     "read/1b9aedfff1817b1b5c9c.html",
     "read/93b46e93b549205cbf25.html",
-    "read/b5e78f87e9d47ef2781a.html",
     "read/5e850c7089e31b3d6e99.html",
     "read/40f2ce5015e820970308.html",
     "read/4f374699e53eaa2e33d2.html",
@@ -730,6 +731,7 @@
     "read/f2541840676f50765627.html",
     "read/6069636cfcd135e0f375.html",
     "read/39a19900e08a52c9415e.html",
+    "read/10827d5a709b6503eda1.html",
     "read/63061981754b239043a5.html",
     "read/af9541dc8bd5dfe6c0ed.html",
     "read/3f0a3de39545759ed315.html",
@@ -830,6 +832,7 @@
     "read/b7b5b022d3829d85cfe3.html",
     "read/4f7b76619a994ebde250.html",
     "read/ba7a77100589ffd97e23.html",
+    "read/2d155c69205a14753520.html",
     "read/0b5ca119d2be595aa307.html",
     "read/e4e823c4e3c99832378b.html",
     "read/104a6450e0aee9ffb394.html",
@@ -2481,6 +2484,12 @@
       "audience": "internal"
     },
     {
+      "path": "read/10827d5a709b6503eda1.html",
+      "title": "要件レビューと改善の進め方",
+      "category": "資料・判断・手順",
+      "audience": "internal"
+    },
+    {
       "path": "read/63061981754b239043a5.html",
       "title": "差分から検証を選ぶ",
       "category": "資料・判断・手順",
@@ -2613,6 +2622,12 @@
       "audience": "internal"
     },
     {
+      "path": "read/2d155c69205a14753520.html",
+      "title": "Sansuの仕事場と読取契約",
+      "category": "資料・判断・手順",
+      "audience": "internal"
+    },
+    {
       "path": "read/0b5ca119d2be595aa307.html",
       "title": "Documentation Redirect",
       "category": "資料・判断・手順",
@@ -2626,7 +2641,7 @@
     },
     {
       "path": "read/104a6450e0aee9ffb394.html",
-      "title": "さんすうの統合ポータル",
+      "title": "現行の入口",
       "category": "資料・判断・手順",
       "audience": "internal"
     },

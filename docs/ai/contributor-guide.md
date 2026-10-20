@@ -130,3 +130,5 @@ This avoids conflicts with the repo's current documentation system and keeps Cod
 - If both agents need the same durable operational reminder, write it in `.agents/`
 - If both agents need the same durable project fact, write it in `docs/` or `design-system/MASTER.md`
 - If instructions drift, update the shared repo files first and agent-specific files second
+
+重要な仕事は[要件レビューと改善の進め方](../runbooks/requirements-review-loop.md)を使い、実装前の矛盾・抜け・反例と、成果物の同じ版の証拠を確認する。結果・対応理由は既存の仕事詳細へ戻す。ポータルの仕事・条件／成果・評価／AI開発能力から依頼文を準備できる。既存の検証・停止条件と承認境界が優先する。

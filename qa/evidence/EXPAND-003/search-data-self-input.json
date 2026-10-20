@@ -1,0 +1,19 @@
+{
+  "cause": "search compression preceded removal of generated portal resources",
+  "compressedPortalResources": [
+    {
+      "source": "portal/index.html",
+      "bytes": 16837,
+      "sha256": "4d904de9d17be036880226decc78a8fb982909f732fcf735cd8a315182cac9ae",
+      "state": "local-reference",
+      "target": "../portal/index.html",
+      "access": "元repoのアクセス条件を維持。配布可否はhubで別途選別。"
+    }
+  ],
+  "finalPortalResources": [],
+  "itemCounts": [
+    82558,
+    82558
+  ],
+  "sameItems": true
+}

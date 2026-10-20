@@ -1,3 +1,4 @@
+import { recordSharedPlay } from './experience';
 import { grantGrowthMilestones } from './growth';
 import { canPurchase, cosmeticsOpen } from './community';
 import { ACHIEVEMENTS, noteGuidanceIntent, noteTownBuilds } from './guidance';
@@ -80,7 +81,7 @@ function apply(state: GrowingState, command: Command, world?: IslandWorld): Town
             (state.placeProgress ??= newPlaceProgress()).selected = command.id;
             break;
         }
-        case 'place-used': case 'place-shown': break;
+        case 'shared-play': case 'place-used': case 'place-shown': break;
         case 'choose-goal': {
             if (!state.guidance || (command.id !== undefined && !ACHIEVEMENTS.includes(command.id))) fail('もういちど えらんでね。');
             state.guidance.selected = command.id;
@@ -301,6 +302,7 @@ export function applyIntent(previous: GrowingState, intent: Intent, at?: number,
     noteTownBuilds(state, events);
     noteGuidanceIntent(previous, state, intent.command, intent.id, at);
     const now = at ?? state.nature.realAt;
+    if (intent.command.type === 'shared-play') recordSharedPlay(state, intent.command, now, world);
     if (intent.command.type === 'place-used') recordPlaceUse(state, intent.command, now, world);
     if (intent.command.type === 'place-shown') recordPlaceShown(state, intent.command, world);
     events.push(...grantGrowthMilestones(state, now));

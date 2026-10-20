@@ -6,6 +6,8 @@ const SPECIES_NOTE: Record<Species | 'pokomoko', number> = {
     pokomoko: 0, hedgehog: 1, otter: 2, rabbit: 3, fox: 4, duck: 5, squirrel: 6, bird: 7, girl: 8, boy: 5, penguin: 1, owl: 0, frog: 6,
 };
 let context: AudioContext | undefined;
+const notes = new Set<() => void>(), tapNotes: (() => void)[] = [];
+export function stopNotes() { for (const stop of [...notes]) stop(); tapNotes.length = 0; }
 
 function audio() {
     try {
@@ -18,7 +20,9 @@ function audio() {
 
 /** One soft marimba-like note. Called from a tap, so browsers allow it to sound. */
 export function playNote(index: number, at = 0) {
-    playFrequency(SCALE[((index % SCALE.length) + SCALE.length) % SCALE.length], at);
+    if (at === 0 && tapNotes.length >= 3) tapNotes.shift()?.();
+    const stop = playFrequency(SCALE[((index % SCALE.length) + SCALE.length) % SCALE.length], at);
+    if (stop && at === 0) tapNotes.push(stop);
 }
 
 function playFrequency(frequency: number, at: number) {
@@ -26,11 +30,23 @@ function playFrequency(frequency: number, at: number) {
     const start = ctx.currentTime + at;
     const gain = ctx.createGain(); gain.connect(ctx.destination);
     gain.gain.setValueAtTime(0, start); gain.gain.linearRampToValueAtTime(.22, start + .01); gain.gain.exponentialRampToValueAtTime(.001, start + .9);
+    const oscillators: OscillatorNode[] = [], parts: GainNode[] = [];
+    let ended = false;
+    const stop = () => {
+        if (ended) return; ended = true;
+        for (const osc of oscillators) { try { osc.stop(); } catch { /* Already ended. */ } osc.disconnect(); }
+        parts.forEach(part => part.disconnect()); gain.disconnect(); notes.delete(stop);
+        const index = tapNotes.indexOf(stop); if (index >= 0) tapNotes.splice(index, 1);
+    };
+    notes.add(stop);
     for (const [ratio, level] of [[1, 1], [4, .18]] as const) {
         const osc = ctx.createOscillator(), part = ctx.createGain();
         osc.type = 'sine'; osc.frequency.value = frequency * ratio; part.gain.value = level;
+        oscillators.push(osc); parts.push(part);
+        if (ratio === 1) osc.onended = stop;
         osc.connect(part); part.connect(gain); osc.start(start); osc.stop(start + 1);
     }
+    return stop;
 }
 
 export const noteFor = (species: Species | 'pokomoko') => SPECIES_NOTE[species];

@@ -2,8 +2,8 @@
   "schemaVersion": 2,
   "title": "島づくりの作業の流れ",
   "description": "子どもが戻りたくなる島へ。いまは入り江の輪郭を選ぶ段階です。",
-  "as_of": "2026-10-16",
-  "scope_note": "共有キュー・親タスク・判断記録・保存された検査結果の閲覧用投影。進捗の正本は元の記録。計画を完了にせず、自動検査を公開や利用者の受入へ読み替えません。 三つの段階帯は親タスクの工程を閲覧用にまとめたもの。関連仕事と確認条件を最後の帯に併記するが、図の掲載位置を新しい着手順・依存にしない。",
+  "as_of": "2026-10-19",
+  "scope_note": "共有キュー・親タスク・判断記録・保存された検査結果の閲覧用投影。進捗の正本は元の記録。計画を完了にせず、自動検査を公開や利用者の受入へ読み替えません。 三つの段階帯は親タスクの工程を閲覧用にまとめたもの。関連仕事と確認条件を最後の帯に併記するが、図の掲載位置を新しい着手順・依存にしない。 育成規則v0.4の実装は共有キューの別タスクで追跡し、既存の入り江の美術採用待ちを完了に変更しない。",
   "nodes": [
     {
       "id": "recorded",
@@ -739,7 +739,7 @@
   },
   "source_hashes": {
     ".agents/tasks/BLOCKED.md": "2ce9fc1e3fb45a558af66f0c1b590c23ade05b27cac4bcc75a6d0122c067e746",
-    ".agents/tasks/TASKS.md": "cf7ef50d08e7797a6ff3cdd2fb0084d04999adc70edcee6f140b7ed04698c4e4",
+    ".agents/tasks/TASKS.md": "4a6e20d8c341c3e0f3c610a8a1ac764ad61dd68fe2321ceaffb53382c7d4715b",
     "CONSTITUTION.md": "5ef2541bc4de9439200c3a0b2a80c75800443d4f9b3a9230b20be09f428e480d",
     "docs/adr/2026-10-11-authored-place-world-policy.md": "764a252c047b784b3a78516ac421f6fe9c4f2865a51bf13eb16ac1afd6347af6",
     "docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md": "be86195cb964abd5217995ce8fbf26f32264b0a8b1e7ffcf311f2172a41760a6",

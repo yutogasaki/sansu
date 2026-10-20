@@ -16,8 +16,10 @@ export function checkIntegration() {
  checkOriginals(root,destinations);
  checkPortalFlow(root,out);
  const walk=dir=>fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(dir,e.name)):[path.join(dir,e.name)]);
+ const extraSource=path.join(out,'data/workspace-sources.json');
  const data=JSON.parse(fs.readFileSync(path.join(out,'data/integration.json'),'utf8'));
  const allowedReferences=new Set(data.resources.map(row=>path.resolve(root,row.source)));
+ if(fs.existsSync(extraSource))for(const [source,hash]of Object.entries(JSON.parse(fs.readFileSync(extraSource)))){const abs=path.resolve(root,source);assert(abs.startsWith(root+path.sep));let part=root;for(const s of source.split('/')){part=path.join(part,s);assert(!fs.lstatSync(part).isSymbolicLink());}assert.equal(createHash('sha256').update(fs.readFileSync(abs)).digest('hex'),hash);allowedReferences.add(abs);}
  for(const row of data.resources){
   assert.equal(row.target,'../'+row.source,'canonical relative reference');
   assert.equal(row.mode,'reference');
@@ -27,7 +29,9 @@ export function checkIntegration() {
   assert.equal(createHash('sha256').update(fs.readFileSync(abs)).digest('hex'),row.sha256,'referenced original SHA');
  }
  assert(!fs.existsSync(path.join(out,'resources')),'no copied original media or documents');
- const index=fs.readFileSync(path.join(out,'index.html'),'utf8');
+ const workspace=fs.existsSync(path.join(out,'data/workspace-legacy.json'));
+ const oldPath=file=>workspace?(file==='index.html'?'overview-legacy.html':fs.existsSync(path.join(out,'retained',file))?'retained/'+file:file):file;
+ const index=fs.readFileSync(path.join(out,oldPath('index.html')),'utf8');
  checkEntryCards(index);
  execFileSync('python3',[path.join(root,'tools/prepare-portal-comparison.py'),'--check'],{cwd:root,stdio:'pipe'});
  assert.deepEqual(data.project,JSON.parse(fs.readFileSync(path.join(out,'data/project.json'),'utf8')),'human and AI project inputs agree');
@@ -58,6 +62,8 @@ export function checkIntegration() {
   for(const node of elements(doc,n=>n.attrs?.href||n.attrs?.src||n.attrs?.poster)) {
    for(const key of ['href','src','poster']) {
     const value=node.attrs[key];if(!value||/^(https?:|mailto:|data:|tel:)/.test(value)||node.attrs.class==='pui-hub'||node.attrs['data-portal-project'])continue;
+    // New shared navigation crosses only the declared sibling-project boundary.
+    if(workspace&&/^(?:\.\.\/)+(?:hub|keep-going|Jishu|MMmind|ayami-ballet|noren-studio|cast-life|Business)\/(?:portal\/(?:index|work-notes)\.html|index\.html)(?:[?#]|$)/.test(value)) { links++; continue; }
     const [withQuery,anchor]=value.split('#');const raw=withQuery.split('?')[0];
     const contextFile=node.tag==='base'?file:baseFile;
     const isReference=!file.startsWith(out+path.sep);
@@ -89,7 +95,7 @@ export function checkIntegration() {
    preserved++;
   }
   // The human page must retain cards, images, disclosures, maps and local search.
-  const human=document(path.join(out,target));
+  const human=document(path.join(out,oldPath(target)));
   for(const tag of ['article','img','a'])assert(elements(human,n=>n.tag===tag).length>=elements(old,n=>n.tag===tag).length,`${target}: ${tag}`);
   assert(elements(human,n=>n.attrs?.id==='search').length,`${target}: search`);
   const surface=surfaceText(elements(human,n=>n.tag==='body')[0]);
@@ -126,14 +132,14 @@ export function checkIntegration() {
  // folder summaries. Full internal titles/records remain in AI pages/details.
  for(const sample of ['2026-10-15 公開候補','10/9固定v3のcore4,803/classic32','source/dist archive','旧writer/実SW更新','入り江 c4','育つ島v1','83210fd','最新変更：現在地と次の一手を確認'])assert(headingIssue(sample),`heading record detection: ${sample}`);
  for(const file of ['index.html',...destinations.values()]){
-  const labels=surfaceLabels(document(path.join(out,file)));
+  const labels=surfaceLabels(document(path.join(out,oldPath(file))));
   for(const label of labels)assert(!headingIssue(label),`${file}: short human heading/card name: ${label}`);
-  assert(!fs.readFileSync(path.join(out,file),'utf8').includes('<summary>根拠と詳しい内容</summary>'),'disclosures identify their contents');
+  assert(!fs.readFileSync(path.join(out,oldPath(file)),'utf8').includes('<summary>根拠と詳しい内容</summary>'),'disclosures identify their contents');
  }
  for(const task of data.project.tasks){
   const copy=taskPresentation(task);
   for(const file of ['index.html','overview.html','tasks.html']){
-   const doc=document(path.join(out,file)),surface=surfaceText(doc);
+   const doc=document(path.join(out,oldPath(file))),surface=surfaceText(doc);
    const headings=surfaceLabels(doc);
    assert(headings.includes(copy.title),`${file}: canonical short task title`);
    for(const fact of [copy.current,copy.next,copy.unchecked])assert(surface.includes(fact),`${file}: visible current/next/unconfirmed facts`);
@@ -141,7 +147,7 @@ export function checkIntegration() {
   }
  }
  assert(taskPresentation({title:'新しい仕事',notes:'まだ状態の記録がない'}).current.includes('未確認'),'unknown task state never inherits a verified status');
- const formal=elements(document(path.join(out,'overview.html')),n=>n.attrs?.id==='formal-status')[0];
+ const formal=elements(document(path.join(out,oldPath('overview.html'))),n=>n.attrs?.id==='formal-status')[0];
  assert(formal,'formal verification section');
  const formalSurface=surfaceText(formal);
  if(data.trials.length){
@@ -168,15 +174,15 @@ export function checkIntegration() {
  for(const url of ['https://sansu-seven.vercel.app/','https://sansu-seven.vercel.app/promo/'])assert(index.includes(`href="${url}"`),'known use destination');
  assert(index.includes('未接続'),'help remains unconnected');
  for(const file of ['index.html',...destinations.values()]){
-  const html=fs.readFileSync(path.join(out,file),'utf8');
+  const html=fs.readFileSync(path.join(out,oldPath(file)),'utf8');
   assert(html.includes('id="reader"')&&html.includes('id="reader-close"'),'page-local accessible document reader');
  }
- const plan=fs.readFileSync(path.join(out,'plan.html'),'utf8');
+ const plan=fs.readFileSync(path.join(out,oldPath('plan.html')),'utf8');
  assert(plan.indexOf('目標と実行順の関係')<plan.indexOf('島を作る6段階'),'explain priority before milestone cards');
  const ids=new Map();
  for(const row of parity) {
   const [file,id]=row.ai.split('#');
-  if(!ids.has(file))ids.set(file,new Set(elements(document(path.join(out,file)),n=>!!n.attrs?.id).map(n=>n.attrs.id)));
+  if(!ids.has(file))ids.set(file,new Set(elements(document(path.join(out,oldPath(file))),n=>!!n.attrs?.id).map(n=>n.attrs.id)));
   assert(ids.get(file).has(decodeURIComponent(id)),`parity anchor ${row.ai}`);
  }
  console.log(`PASS: integrated portal ${links} local links/anchors, ${preserved} original elements, all 7 pages, two layers and candidate mismatch gates`);

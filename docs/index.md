@@ -178,7 +178,7 @@
 
 ## 共通標準の入口（H-018）
 
-[標準5節ポータル](../portal/index.html) · [入力と旧入口の扱い](portal/README.md) · [正本・旧パス対応表](maps/index.md) · [2026-10-15の観測](strategy/current-state-2026-10-15.md)。
+[開発ポータルの6入口](../portal/index.html) · [入力と旧入口の扱い](portal/README.md) · [正本・旧パス対応表](maps/index.md) · [2026-10-15の観測](strategy/current-state-2026-10-15.md)。
 既存のタスク正本・番号付き仕様・品質証拠は移動しない。標準向け追加文書は新ポータルで検証し、既存7画面の専門索引の対象とは分ける。
 
 | 標準の役割 | Sansuでの実際の正本・入口 |

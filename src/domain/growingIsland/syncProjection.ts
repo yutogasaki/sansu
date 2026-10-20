@@ -1,3 +1,4 @@
+import { validateExperience } from './experience';
 import { grantGrowthMilestones, migrateGrowth, validateGrowth } from './growth';
 import { refreshUnlocks } from './community';
 import { migrateGuidance, noteTownBuilds, validateGuidance } from './guidance';
@@ -24,6 +25,7 @@ export function readable(record: GrowingRecord) {
     if (record.version === 5) validateGrowth(record.state);
     if (record.state.guidance) validateGuidance(record.state.guidance);
     if (record.state.placeProgress) validatePlaceProgress(record.state.placeProgress);
+    if (record.state.experience !== undefined) validateExperience(record.state.experience);
 }
 
 /** Preserve all rights and clocks; no old learning or missed surprises are reissued. */

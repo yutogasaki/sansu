@@ -39,7 +39,7 @@ export function checkOriginals(root,pages) {
  for(const [source,target] of pages) {
   const before=fs.readFileSync(path.join(root,source),'utf8'),after=fs.readFileSync(path.join(out,originalTarget(target)),'utf8');
   preserved+=compareOriginal(before,after,source,target,pages);
-  const human=parse(fs.readFileSync(path.join(out,target),'utf8'));
+  const human=parse(fs.readFileSync(path.join(out,fs.existsSync(path.join(out,'retained',target))?'retained/'+target:target),'utf8'));
   const frame=elements(human,n=>n.tag==='iframe'&&n.attrs.src===originalTarget(target));
   assert.equal(frame.length,1,'same-page original exists: '+target);assert(!('hidden' in frame[0].attrs));
  }

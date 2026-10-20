@@ -10,6 +10,10 @@ W旧根拠が一貫した版/最高げんきにある枠だけlegacy-confirmed�
 
 > 次期 `living-fantasy-v1` の保存境界・一度だけの財布変換・旧全品保持・完全バックアップは[51のデータ章](living-fantasy/06-data-and-migration.md)が設計正本。未実装の次期契約であり、以下の現在のschemaや既存端末を変換したという記録ではない。
 
+## 場所の共同記憶（2026-10-20）
+
+GrowingState直下の任意`experience`（version1）へ、島内の系列/住人ごとの初共同演奏のみを追記する。既存placeProgressの厳格な構造には追加しない。record5/Dexie10を維持し、旧v5のcloneによる編集・syncで未知の直下データが保持されることを互換検証する。確定は既存の本人/島ID/revisionのCAS transactionを使い、同系列/同住人はraw revisionが変わっても再発行しない。当時の所有ID・形・revision・時刻を残し、編集・収納では消さない。島の保存と休止/削除に従い、写真・共通財布・学習へ変更を加えない。読込時に新データの形式を検証し、不明版/破損を上書きしない。[ADR](../adr/2026-10-20-island-place-experiences.md)。
+
 ## 1. 基本方針
 
 ### ぽこもこの連続正解の遊び（2026-09-27）

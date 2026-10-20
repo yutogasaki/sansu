@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-19T21:48:51.161Z",
+  "status": "PASS_OLD_V5_PURE_WRITER_COMPATIBILITY",
+  "oldRevision": "ed155377bc8e26880494b9d5b045b0d13847ebc0",
+  "oldBundleSha256": "638b34451bd9ab287553e57285291efa969671e9650148c29210da6977f44237",
+  "checks": [
+    "old readable accepts additive state field",
+    "old store intent preserves shared memory",
+    "old sync projection preserves shared memory"
+  ],
+  "limits": [
+    "pure old writer only; not an installed old PWA",
+    "no database schema change; existing CAS and profile isolation tested separately"
+  ]
+}

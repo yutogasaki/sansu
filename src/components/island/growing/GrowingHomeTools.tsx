@@ -47,11 +47,12 @@ function usePanelExit(onClose: () => void) {
     return close;
 }
 
-export function GrowingViewControls({ onClose, onRotate, onDistance }: { onClose: () => void; onRotate: (direction: -1 | 1) => void; onDistance: (close: boolean) => void }) {
+export function GrowingViewControls({ onClose, onRotate, onDistance, canReturn, onReturn }: { canReturn?: boolean; onReturn?: () => void; onClose: () => void; onRotate: (direction: -1 | 1) => void; onDistance: (close: boolean) => void }) {
     const close = usePanelExit(onClose);
     return <section className="growing-home-view-panel" aria-label="ながめ">
         <header><h2>ながめ</h2><button ref={close} className="growing-close" aria-label="ながめを とじる" onClick={onClose}><X size={20} aria-hidden="true" /></button></header>
-        <div><button onClick={() => onDistance(true)}><ZoomIn size={22} aria-hidden="true" />ちかくで みる</button><button onClick={() => onDistance(false)}><Scan size={22} aria-hidden="true" />しま全体</button></div>
+        <div><button onClick={() => onDistance(true)}><ZoomIn size={22} aria-hidden="true" />見やすくする</button><button onClick={() => onDistance(false)}><Scan size={22} aria-hidden="true" />しま全体</button></div>
+        {canReturn && <div><button onClick={onReturn}><ArrowLeft size={22} aria-hidden="true" />さっきの見かた</button></div>}
         <div><button aria-label="ひだりに まわす" onClick={() => onRotate(-1)}><RotateCcw size={22} aria-hidden="true" />ひだり</button><button aria-label="みぎに まわす" onClick={() => onRotate(1)}><RotateCw size={22} aria-hidden="true" />みぎ</button></div>
     </section>;
 }

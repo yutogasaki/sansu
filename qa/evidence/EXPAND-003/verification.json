@@ -1,0 +1,187 @@
+{
+  "status": "PASS (local technical acceptance)",
+  "at": "2026-10-18T10:06:13.567Z",
+  "timezone": "Asia/Tokyo",
+  "repo": "/Users/yutogasaki/Projects/sansu",
+  "branch": "codex/expand-003-sansu",
+  "head": "882937581c46ec633a4e4663726385ad7e7a09f1",
+  "inputHash": "af596a5cc9bfd3533900bdb44fb19812a0fb83cba234b2dea762e2596d9ea2b5",
+  "appHash": "e7c783493631caea1778874404ef71f16ec90da17316042b38d6d9c4d79bb186",
+  "appInputsUnchangedThroughCloseout": true,
+  "initialDirty": false,
+  "commands": [
+    {
+      "command": "npm run verify:core",
+      "log": "core-final.log",
+      "exit": 0,
+      "logSha256": "3ff11b56924cb91b7f0505f875b0c1fb037442623e28482e18db815b3f572be5"
+    },
+    {
+      "command": "npm run docs:check",
+      "log": "closed-docs.log",
+      "exit": 0,
+      "logSha256": "f532551edebda0fda7891fd2f1aed92babcdbcf96bd6b64b3d0e2af635af02a9"
+    },
+    {
+      "command": "npm run lint",
+      "log": "lint-final-stable.log",
+      "exit": 0,
+      "logSha256": "25500cb004645afb5336c101b569c5b708b43c245f41d8805d7d7ee760410941"
+    },
+    {
+      "command": "npm run agent:index:check",
+      "log": "brief-fix-check.log",
+      "exit": 0,
+      "logSha256": "4378c42dce93242a24b3b53ed20ed7b00963a8648504269b77973f0851c37876"
+    },
+    {
+      "command": "npm run test:run -- tools/portal-entry.test.mjs",
+      "log": "portal-entry-focused.log",
+      "exit": 0,
+      "logSha256": "5a57f0127a97b14a41c2d2c95656badbcf9fba1ca62d2f988bea45c75b5493ad"
+    },
+    {
+      "command": "git diff --check",
+      "log": "diff-check.log",
+      "exit": 0,
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "recovery": [
+    {
+      "command": "npm run portal:build",
+      "env": {
+        "PORTAL_WORKSPACE": "legacy"
+      },
+      "at": "2026-10-18T09:54:38.352Z",
+      "endedAt": "2026-10-18T09:55:01.056Z",
+      "exit": 0,
+      "log": "rollback-build.log",
+      "sha256": "71df277c7ca9037f217ad855ae927bd20b1fa8406253cc04683ea7375166ff64"
+    },
+    {
+      "command": "npm run portal:verify",
+      "env": {
+        "PORTAL_WORKSPACE": "legacy"
+      },
+      "at": "2026-10-18T09:55:01.056Z",
+      "endedAt": "2026-10-18T09:55:26.382Z",
+      "exit": 0,
+      "log": "rollback-verify.log",
+      "sha256": "4dc400353ea77680f0555e21683fc53a62a7d810a480a10c400cafcf8c49f05f"
+    },
+    {
+      "command": "npm run portal:build",
+      "env": {},
+      "at": "2026-10-18T09:55:26.527Z",
+      "endedAt": "2026-10-18T09:55:48.409Z",
+      "exit": 0,
+      "log": "restored-build.log",
+      "sha256": "6a939cc4c7ebb1d46a13f52dcad639caa62fa25ed318319bcfcf822a0dc6ecc4"
+    },
+    {
+      "command": "npm run portal:verify",
+      "env": {},
+      "at": "2026-10-18T09:55:48.409Z",
+      "endedAt": "2026-10-18T09:56:17.889Z",
+      "exit": 0,
+      "log": "restored-verify.log",
+      "sha256": "a2df5904e8f9c4ebf49f69d65de4a4b589bc5676c05e0e845b2924303baecb4f"
+    },
+    {
+      "command": "npm run portal:build",
+      "env": {},
+      "at": "2026-10-18T09:56:18.048Z",
+      "endedAt": "2026-10-18T09:56:40.375Z",
+      "exit": 0,
+      "log": "fresh-build.log",
+      "sha256": "6a939cc4c7ebb1d46a13f52dcad639caa62fa25ed318319bcfcf822a0dc6ecc4"
+    },
+    {
+      "command": "npm run portal:verify",
+      "env": {},
+      "at": "2026-10-18T09:56:40.375Z",
+      "endedAt": "2026-10-18T09:57:11.591Z",
+      "exit": 0,
+      "log": "fresh-verify.log",
+      "sha256": "624c8aef38bb8307aabaa70e510095a2140ef43aa001d1e59144dad9855d77c7"
+    }
+  ],
+  "recoveryStatus": "PASS",
+  "restoreByteEqual": true,
+  "freshByteEqual": true,
+  "finalFiles": 1712,
+  "ui": {
+    "cases": 60,
+    "widths": [
+      1440,
+      390,
+      320
+    ],
+    "overflow": 0,
+    "errors": 0,
+    "sourceInputHash": "af596a5cc9bfd3533900bdb44fb19812a0fb83cba234b2dea762e2596d9ea2b5"
+  },
+  "savedNote": {
+    "ref": "sansu:work/2026-10-18-development-portal",
+    "version": "e75f4cbc9c4c",
+    "basis": "4d555a0f91e06e85ecc0d0980953b82d3412792537285e94bf7f63df092c63a2",
+    "status": "保存した下書きを表示しています。未採用です。"
+  },
+  "protectedSourceVendorFiles": 1715,
+  "pins": {
+    "portal-site": {
+      "version": "3.2.0",
+      "lockSha256": "e7fb775e158d4b8272ebcc8b4921ba28f505074d26d4b990bdb15ab3a0c57b37",
+      "provenance": {
+        "origin": "/Users/yutogasaki/Projects/hub/common-portal/site/3.2.0",
+        "hubHead": "720a032c296bf80d64a95249c57763f8956a2c2a",
+        "observed": "2026-10-18",
+        "sourceLockSha256": "e7fb775e158d4b8272ebcc8b4921ba28f505074d26d4b990bdb15ab3a0c57b37"
+      }
+    },
+    "portal-workspace": {
+      "version": "1.1.0",
+      "lockSha256": "428408e295d68502338bcdbd58b54d6c658b3966b6a610ec7d612124491f6b73",
+      "provenance": {
+        "origin": "/Users/yutogasaki/Projects/hub/common-portal/workspace/1.1.0",
+        "hubHead": "720a032c296bf80d64a95249c57763f8956a2c2a",
+        "observed": "2026-10-18",
+        "sourceLockSha256": "428408e295d68502338bcdbd58b54d6c658b3966b6a610ec7d612124491f6b73"
+      }
+    }
+  },
+  "canonicalLoader": "scripts/portal-work-model.cjs",
+  "sourceArchive": {
+    "path": "output/expand-003-recovery/source-final.tar.gz",
+    "sha256": "97176675cbbb78da0deb9ac1a5f443a1c9645d78d86f6f7408fee085e7e0239c"
+  },
+  "beforeArchive": {
+    "path": "output/expand-003-recovery/before.tar.gz",
+    "sha256": "53b1a03ac047a0269bf846c95fd2cfef6cda174c0d22b4f03e4c4e272c8eb7bf"
+  },
+  "limits": [
+    "Independent human adoption, real devices, child understanding/self-chosen learning/return and user value are unmeasured.",
+    "No product source/public/data/DB, execution/approval-consumption semantics, commit/push/deployment or other-repository implementation changes.",
+    "Clipboard fault uses an explicit API-unavailable fixture; IAB did not reject the attempted permissions-policy diagnostic.",
+    "Full application core passed on the unchanged app inputs; subsequent changes are portal assembly/limited CSS, covered by final portal/UI/recovery checks.",
+    "Component manifests describe their pinned generation stage; the final complete output hashes are recovery.json.before/restored/fresh."
+  ],
+  "history": [
+    "Baseline portal:verify failed from stale generated source parity; regenerated with the existing generator.",
+    "First core attempt failed new task naming/required metadata; corrected to the repository contract.",
+    "Intermediate test run had 2 old-entry assumptions; all old assertions retained at their moved entry, new entry test added; focused 6 passed and final core 5397 passed.",
+    "Obsolete diagnostic/full runs were interrupted with exit130; retained logs are not final passes.",
+    "Manifest old derived project input and pre-finalization compressed search self-input were reproduced and fixed; first recovery failure retained.",
+    "Browser reader/search and 320px brief failures retained with their original observations; final runtime and UI checks pass."
+  ],
+  "reportSha256": "ae7af161ee2792429f60044ee4d730fa3349ca905f565368cdf066952a5e9ed9",
+  "branchAudit": {
+    "initial": "main",
+    "created": "codex/expand-003-sansu",
+    "observedAtCloseout": "main (cause not established)",
+    "final": "codex/expand-003-sansu",
+    "sameHead": true,
+    "filesNotChanged": true
+  }
+}

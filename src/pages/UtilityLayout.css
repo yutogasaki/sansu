@@ -115,3 +115,13 @@
     .settings-category-list .pokomoko-setting-trigger > svg { display: none; }
     .stats-overview, .stats-details-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* Shared reading scale; learning inputs keep their dedicated stage contract. */
+.app-container .utility-layout-screen { font-size: 16px; line-height: 1.65; }
+.utility-layout-screen :is(button, select, input) { min-height: 48px; }
+.utility-layout-screen :is(button, input, select, summary):focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 3px; }
+.utility-layout-screen :is(.text-xs, .text-sm, .settings-empty-selection p) { font-size: 14px; line-height: 1.6; }
+.utility-layout-screen .card-surface { background: var(--pokomoko-paper); border-radius: 24px; }
+.utility-layout-screen .settings-category-list .pokomoko-setting-patch { width: 48px; height: 48px; }
+.utility-layout-screen .settings-category-list .pokomoko-setting-trigger { min-height: 88px; padding: 16px; }
+.utility-layout-screen :is(.settings-panels, .utility-layout-content) { overflow-wrap: anywhere; }

@@ -1,0 +1,8 @@
+.experience-compare main { min-height: 480px; height: 62dvh; flex: none; }
+.experience-tools { background: #fff; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.experience-tools label { display: flex; align-items: center; gap: 8px; }
+.experience-tools select { min-height: 44px; font: inherit; max-width: 230px; border: 1px solid #ccd6e0; border-radius: 8px; padding: 8px; background: #fff; color: #283344; }
+.experience-tools p { width: 100%; margin: 3px 0; font-size: 14px; }
+.experience-tools button:disabled { opacity: .45; cursor: default; }
+.experience-compare footer { padding: 16px 24px; font-size: 12px; }
+@media (max-width: 600px) { .experience-compare main { min-height: 360px; height: 53dvh; } .experience-compare nav { flex-wrap: wrap; } .experience-tools { padding: 12px; } }

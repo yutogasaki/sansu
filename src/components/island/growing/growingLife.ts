@@ -1,3 +1,5 @@
+import { likesOf } from '../../../domain/growingIsland/rules';
+import { chooseLifeTarget } from './lifeChoices';
 import * as T from 'three';
 import type { IslandMaterials } from '../three/primitives';
 import { homeCellOf } from '../../../domain/growingIsland/community';
@@ -25,6 +27,8 @@ interface Walker {
     gallery?: { route: PlacePoint[]; index: number; point: PlacePoint };
     useAt?: number;
     awaitingGround?: boolean;
+    recent?: string[];
+    choice?: string;
 }
 
 export const VISIBLE_WALKERS = 12;
@@ -45,7 +49,7 @@ export class GrowingLife {
     private layout?: SceneLayout;
     private world?: IslandWorld;
     private layer?: ObjectLayer;
-    private concert?: { cell: Cell; until: number };
+    private concert?: { cell: Cell; until: number; invited: Set<string>; touched: Set<string> };
     private uses: PlaceUseReceipt[] = [];
     private observedUses = new Set<string>();
     private flowerWalkingProof?: ReturnType<typeof authoredFlowerWalkSet>['proof'];
@@ -182,6 +186,47 @@ export class GrowingLife {
     }
 
     private chooseTarget(walker: Walker): Cell | undefined {
+        if (!this.state?.growth) return this.chooseLegacyTarget(walker);
+        walker.choice = undefined; walker.placeTarget = undefined;
+        if (!this.layer || !this.state) return;
+        const from = nearestOpen(this.homePaths, walker.at);
+        if (!from) return;
+        const friend = this.state.villagers.find(v => v.id === walker.actor.id);
+        const reserved = new Set([...this.walkers.values()].filter(other => other !== walker && ['walk', 'seat', 'gallery', 'shore', 'garden'].includes(other.mode)).map(other => other.choice));
+        const targets = this.layer.places.filter(place => place.stage === 'grown' || place.stage === 'lived')
+            .flatMap(place => place.useTargets.map(target => ({ place, target })));
+        const choices: { id: string; cell: Cell; likes: import('../../../domain/growingIsland/types').Like[]; fresh: boolean; nearHome: boolean;
+            stroll?: boolean; destination?: { place: DerivedPlace; target: PlaceUseTarget } }[] = [];
+        const add = (id: string, cell: Cell | undefined, likes: import('../../../domain/growingIsland/types').Like[], fresh: boolean,
+            destination?: { place: DerivedPlace; target: PlaceUseTarget }, stroll = false) => {
+            if (!cell || choices.some(choice => choice.id === id) || reserved.has(id) || !this.homePaths.has(key(cell)) || !walkRoute(this.homePaths, from, cell, this.world)) return;
+            choices.push({ id, cell, likes, fresh, nearHome: Math.abs(cell.x - walker.home.x) + Math.abs(cell.z - walker.home.z) <= 3, destination, stroll });
+        };
+        for (const destination of targets) {
+            const { place, target } = destination;
+            if (target.kind === 'seat' && this.seatOccupied(target.cell, walker)) continue;
+            const cell = ['gallery', 'shore', 'garden'].includes(target.kind) ? target.cell : this.besideOwner(target.cell);
+            const like = place.family === 'grove' ? 'tree' : place.family === 'spring' ? 'water' : place.family === 'flowers' ? 'flower' : 'play';
+            add(target.id, cell, [like, ...(target.kind === 'seat' ? ['quiet' as const] : [])],
+                !this.observedUses.has(this.receiptKey(place, walker.actor.id, target.id)), destination);
+        }
+        for (const [text, seat] of this.seats) {
+            const [x, z] = text.split(',').map(Number), cell = { x, z };
+            if (targets.some(({ target }) => key(target.cell) === text) || this.seatOccupied(cell, walker)) continue;
+            add(`seat:${text}`, this.besideOwner(cell), [seat === 'eat' ? 'food' : seat === 'tend' ? 'farm' : seat === 'sit' ? 'quiet' : 'play'], false);
+        }
+        add(`home:${key(walker.home)}`, this.besideOwner(walker.home), ['quiet'], false, undefined, true);
+        const open = [...this.homePaths];
+        for (let i = 0; i < Math.min(6, open.length); i++) {
+            const [x, z] = open[Math.floor(Math.random() * open.length)].split(',').map(Number);
+            add(`walk:${x},${z}`, { x, z }, [], false, undefined, true);
+        }
+        if (!this.world && this.state.bridge) add('bridge', bridgeEnd(this.state), ['quiet'], false, undefined, true);
+        const chosen = chooseLifeTarget(choices, friend ? likesOf(friend) : [], walker.actor.trait ?? 'mellow', walker.recent ?? []);
+        if (chosen) { walker.choice = chosen.id; walker.placeTarget = chosen.destination; return chosen.cell; }
+    }
+
+    private chooseLegacyTarget(walker: Walker): Cell | undefined {
         const roll = Math.random();
         if (roll < .45 && this.layer) {
             const targets = this.layer.places.filter(p => p.stage === 'grown' || p.stage === 'lived')
@@ -211,17 +256,17 @@ export class GrowingLife {
     }
 
     /** Seats next to where a walk ended: bench or swing to sit, table to eat. */
-    private seatBeside(cell: Cell) {
+    private seatBeside(cell: Cell, walker?: Walker) {
         for (const [text, kind] of this.seats) {
             const [x, z] = text.split(',').map(Number);
             const beside = this.world ? this.approaches({ x, z }).some(approach => key(approach) !== text && key(approach) === key(cell))
                 : Math.abs(x - cell.x) + Math.abs(z - cell.z) === 1;
-            if (beside && !this.seatOccupied({ x, z }) && (kind === 'tend' || this.groundClear(cell, { x, z }))) return { cell: { x, z }, kind };
+            if (beside && (!walker?.placeTarget || key(walker.placeTarget.target.cell) === text) && !this.seatOccupied({ x, z }, walker) && (kind === 'tend' || this.groundClear(cell, { x, z }))) return { cell: { x, z }, kind };
         }
     }
 
     private seatOccupied(cell: Cell, except?: Walker) {
-        return [...this.walkers.values()].some(w => w !== except && w.mode === 'seat' && w.seat && key(w.seat.cell) === key(cell));
+        return [...this.walkers.values()].some(w => w !== except && (w.mode === 'seat' && w.seat && key(w.seat.cell) === key(cell) || w.mode === 'walk' && (w.placeTarget?.target.kind === 'seat' && key(w.placeTarget.target.cell) === key(cell) || w.choice === `seat:${key(cell)}`)));
     }
 
     private playExit(cell: Cell, kind: DropPlayKind): Cell | undefined {
@@ -264,8 +309,58 @@ export class GrowingLife {
         return this.settleOnGround(w, now);
     }
 
-    /** えんそうかい: everyone visible gathers in a ring around the bandstand for a while. */
-    startConcert(cell: Cell, now: number, length = 30000) { this.concert = { cell, until: now + length }; }
+    /** Invite only nearby real actors who can walk to a distinct real ground cell. */
+    startConcert(cell: Cell, now: number, length = 30000) {
+        const invited = new Set<string>(), occupied = new Set<string>();
+        const sites = [...this.homePaths].map(text => { const [x, z] = text.split(',').map(Number); return { x, z }; })
+            .filter(at => Math.abs(at.x - cell.x) + Math.abs(at.z - cell.z) <= 2)
+            .sort((a, b) => Math.abs(a.x - cell.x) + Math.abs(a.z - cell.z) - Math.abs(b.x - cell.x) - Math.abs(b.z - cell.z) || a.z - b.z || a.x - b.x);
+        for (const [id, walker] of [...this.walkers].sort(([a], [b]) => a === 'pokomoko' ? -1 : b === 'pokomoko' ? 1 : a.localeCompare(b))) {
+            if (id === 'visitor' || ['held', 'boat', 'sailing', 'pier', 'gallery'].includes(walker.mode)) continue;
+            const from = nearestOpen(this.homePaths, walker.at); if (!from) continue;
+            const destination = sites.filter(at => !occupied.has(key(at))).map(at => ({ at, path: walkRoute(this.homePaths, from, at, this.world) }))
+                .find(entry => entry.path && (id === 'pokomoko' || entry.path.length <= 5));
+            if (!destination?.path) continue;
+            occupied.add(key(destination.at)); invited.add(id);
+            walker.path = destination.path.slice(1); walker.seat = undefined; walker.play = undefined; walker.placeTarget = undefined; walker.choice = undefined;
+            walker.mode = walker.path.length ? 'walk' : 'idle'; walker.until = now + length;
+        }
+        this.concert = { cell: { ...cell }, until: now + length, invited, touched: new Set() };
+    }
+    stopConcert() {
+        for (const id of this.concert?.invited ?? []) { const walker = this.walkers.get(id); if (walker && !['held', 'boat', 'sailing'].includes(walker.mode)) { walker.mode = 'idle'; walker.path = []; walker.until = 0; } }
+        this.concert = undefined;
+    }
+    participating(id: string, now: number) {
+        const walker = this.walkers.get(id), concert = this.concert;
+        return Boolean(walker && concert && now < concert.until && concert.invited.has(id) && walker.actor.root.visible
+            && !['boat', 'sailing', 'pier', 'held', 'gallery', 'sleep', 'walk'].includes(walker.mode)
+            && this.homePaths.has(key(walker.at)) && Math.abs(walker.at.x - concert.cell.x) + Math.abs(walker.at.z - concert.cell.z) <= 2);
+    }
+    touchConcert(id: string, now: number) {
+        if (!this.participating(id, now)) return false;
+        this.concert!.touched.add(id); return true;
+    }
+    sharedConcertActors(now: number) {
+        if (!this.concert?.touched.has('pokomoko') || !this.participating('pokomoko', now)) return [];
+        return [...this.concert.touched].filter(id => id !== 'pokomoko' && this.participating(id, now));
+    }
+    /** Explicit play approaches an owner on the existing walk graph. */
+    visitOwner(id: string, now: number) {
+        const owner = [...(this.state?.landmarks ?? []), ...(this.state?.plots ?? [])].find(item => item.id === id && item.cell);
+        const walker = this.walkers.get('pokomoko');
+        if (!owner?.cell || !walker || ['held', 'boat', 'sailing'].includes(walker.mode)) return false;
+        const to = this.besideOwner(owner.cell), from = nearestOpen(this.homePaths, walker.at);
+        const path = from && to ? walkRoute(this.homePaths, from, to, this.world) : undefined;
+        if (!path?.length) return false;
+        this.stopConcert(); walker.placeTarget = undefined; walker.gallery = undefined; walker.seat = undefined; walker.play = undefined;
+        walker.choice = `touch:${id}`; walker.path = path.slice(1); walker.mode = walker.path.length ? 'walk' : 'idle'; walker.until = now + 15000;
+        return true;
+    }
+    nearOwner(id: string) {
+        const owner = this.state?.landmarks.find(item => item.id === id && item.cell), walker = this.walkers.get('pokomoko');
+        return Boolean(owner?.cell && walker?.actor.root.visible && walker.mode === 'idle' && this.approaches(owner.cell).some(at => key(at) === key(walker.at)));
+    }
     concertActive(now: number) { return Boolean(this.concert && now < this.concert.until); }
 
     hop(id: string, now: number) {
@@ -309,6 +404,11 @@ export class GrowingLife {
 
     positionOf(id: string) { const w = this.walkers.get(id); return w?.actor.root.visible ? w.actor.root.position.clone() : undefined; }
 
+    activePlaceOf(id: string) {
+        const walker = this.walkers.get(id);
+        return walker && ['walk', 'gallery', 'garden', 'shore'].includes(walker.mode) ? walker.placeTarget?.place : undefined;
+    }
+
     /** Every real resident remains findable, including friends indoors or away. */
     focusPositionOf(id: string) {
         const actor = this.walkers.get(id)?.actor;
@@ -337,7 +437,7 @@ export class GrowingLife {
     pick(id: string) {
         const w = this.walkers.get(id);
         if (!w || id === 'visitor' || w.mode === 'boat' || w.mode === 'sailing') return false;
-        w.mode = 'held'; w.path = []; w.seat = undefined; w.play = undefined; w.placeTarget = undefined; w.gallery = undefined; w.useAt = undefined; return true;
+        w.choice = undefined; w.mode = 'held'; w.path = []; w.seat = undefined; w.play = undefined; w.placeTarget = undefined; w.gallery = undefined; w.useAt = undefined; return true;
     }
 
     drag(id: string, point: T.Vector3) {
@@ -382,6 +482,7 @@ export class GrowingLife {
     private observeUse(walker: Walker, place: DerivedPlace, target: PlaceUseTarget) {
         if (walker.actor.id === 'visitor' || !walker.actor.root.visible || !this.state) return;
         if (walker.actor.id !== 'pokomoko' && !this.state.villagers.some(v => v.id === walker.actor.id && !v.away)) return;
+        if (walker.choice) walker.recent = [...(walker.recent ?? []).filter(id => id !== walker.choice), walker.choice].slice(-3);
         const receipt = this.receiptKey(place, walker.actor.id, target.id);
         if (this.observedUses.has(receipt)) return;
         this.observedUses.add(receipt);
@@ -405,12 +506,20 @@ export class GrowingLife {
 
     /** Touching a real gallery sends the existing hero to its reachable stair foot. */
     visitGallery(actorId: string, placeId: string, now: number) {
-        const walker = this.walkers.get(actorId), place = this.layer?.places.find(p => p.id === placeId), target = place?.useTargets.find(t => t.kind === 'gallery');
+        return this.visitPlace(actorId, placeId, now, 'gallery');
+    }
+
+    /** Explicit play chooses a real existing place; arrival still follows the normal walking graph. */
+    visitPlace(actorId: string, placeId: string, now: number, kind?: 'gallery' | 'garden' | 'shore') {
+        const walker = this.walkers.get(actorId), place = this.layer?.places.find(p => p.id === placeId && ['grown', 'lived'].includes(p.stage));
+        const target = place?.useTargets.find(t => kind ? t.kind === kind : ['gallery', 'garden', 'shore'].includes(t.kind));
         if (!walker || !place || !target || walker.mode === 'boat' || walker.mode === 'sailing' || walker.mode === 'held') return false;
+        if ([...this.walkers.values()].some(other => other !== walker && other.placeTarget?.target.id === target.id && ['walk', 'gallery', 'garden', 'shore'].includes(other.mode))) return false;
         const from = nearestOpen(this.homePaths, walker.at), path = from ? walkRoute(this.homePaths, from, target.cell, this.world) : undefined;
         if (!path?.length) return false;
         walker.at = { ...from! }; walker.seat = undefined; walker.play = undefined; walker.gallery = undefined;
         walker.placeTarget = { place, target }; walker.path = path.slice(1);
+        walker.choice = target.id;
         if (walker.path.length) walker.mode = 'walk'; else this.enterPlace(walker, now);
         return true;
     }
@@ -446,29 +555,20 @@ export class GrowingLife {
             for (const w of this.walkers.values()) if (w.mode === 'seat' || w.mode === 'idle' || w.mode === 'walk') { w.mode = 'idle'; w.path = []; w.until = now + 1500; }
             this.concert = undefined;
         }
-        const players = this.concert ? [...this.walkers.entries()].filter(([id, w]) => id !== 'visitor' && w.mode !== 'boat' && w.mode !== 'sailing' && w.mode !== 'held') : [];
-        for (const [id, w] of this.walkers) {
+        const ordered = this.state?.growth ? [...this.walkers].sort(([a], [b]) => a.localeCompare(b)) : this.walkers;
+        for (const [id, w] of ordered) {
             const { actor } = w;
             const receiptStart = this.uses.length;
             if (this.flowerGuard && (w.awaitingGround || !this.homePaths.size) && !['held', 'boat', 'sailing', 'pier'].includes(w.mode)
                 && !this.settleOnGround(w, now)) continue;
             resetActorVisualContact(actor);
             actor.root.visible = true;
-            const seat = players.findIndex(([player]) => player === id);
-            if (this.concert && seat >= 0) {
-                const center = layout.point(this.concert.cell), a = seat / players.length * Math.PI * 2;
-                const ring = .75 + (players.length > 8 ? .25 : 0);
-                const at = { x: this.concert.cell.x + Math.sin(a) * ring, z: this.concert.cell.z + Math.cos(a) * ring };
-                const floor = layout.point(at), x = floor.x, z = floor.z;
-                let y = reduced ? 0 : Math.abs(Math.sin(now / 260 + seat)) * .05 * actorScale;
-                if (w.hopAt !== undefined && now >= w.hopAt) { const t = (now - w.hopAt) / 520; if (t >= 1) w.hopAt = undefined; else y += Math.sin(Math.PI * t) * (reduced ? .08 : .35) * actorScale; }
-                actor.root.position.set(x, floor.y + y, z);
-                actor.root.rotation.set(0, Math.atan2(center.x - x, center.z - z) + (reduced ? 0 : Math.sin(now / 400 + seat) * .15), 0);
+            if (this.participating(id, now) && (id === 'pokomoko' || !night)) {
+                const floor = layout.point(w.at), center = layout.point(this.concert!.cell);
+                actor.root.position.copy(floor); actor.root.rotation.set(0, Math.atan2(center.x - floor.x, center.z - floor.z), 0);
                 this.poseArms(w, now, reduced, true);
-                if (layout.authored) alignActorContact(actor, layout.point(at, 0).y + y);
-                w.at = at;
-                this.guardPose(w, now, receiptStart);
-                continue;
+                if (layout.authored) alignActorContact(actor, floor.y);
+                this.guardPose(w, now, receiptStart); continue;
             }
             if (id !== 'pokomoko' && id !== 'visitor' && night && w.mode !== 'held' && w.mode !== 'boat') { actor.root.visible = false; continue; }
             let y = 0;
@@ -514,10 +614,13 @@ export class GrowingLife {
                     if (d > 1e-6) w.heading = Math.atan2(dx, dz);
                 }
                 if (!w.path.length) {
+                    if (w.choice?.startsWith('touch:')) { w.mode = 'idle'; w.until = now + 3000; this.guardPose(w, now, receiptStart); continue; }
+                    if (this.concert?.invited.has(id)) { w.mode = 'idle'; w.until = this.concert.until; }
+                    if (w.choice && !w.placeTarget && !w.choice.startsWith('seat:')) w.recent = [...(w.recent ?? []).filter(id => id !== w.choice), w.choice].slice(-3);
                     if (this.enterPlace(w, now)) { this.guardPose(w, now, receiptStart); continue; }
-                    const seat = this.seatBeside(this.world ? w.at : { x: Math.round(w.at.x), z: Math.round(w.at.z) });
-                    if (seat && Math.random() < .6) { w.mode = 'seat'; w.seat = seat; w.until = now + 6000; w.useAt = now; }
-                    else { w.mode = 'idle'; w.until = now + 2500 + Math.random() * 5000; }
+                    const seat = this.concert?.invited.has(id) ? undefined : this.seatBeside(this.world ? w.at : { x: Math.round(w.at.x), z: Math.round(w.at.z) }, w);
+                    if (seat && (w.placeTarget?.target.kind === 'seat' || w.choice?.startsWith('seat:') || Math.random() < .6)) { w.mode = 'seat'; w.seat = seat; w.until = now + 6000; w.useAt = now; }
+                    else { w.mode = 'idle'; w.until = this.concert?.invited.has(id) ? this.concert.until : now + 2500 + Math.random() * 5000; }
                 }
             }
             if (w.mode === 'gallery' && w.gallery) {
@@ -543,6 +646,8 @@ export class GrowingLife {
             }
             if ((w.mode === 'shore' || w.mode === 'garden') && w.useAt !== undefined && now - w.useAt >= 700 && w.placeTarget) this.observeUse(w, w.placeTarget.place, w.placeTarget.target);
             if ((w.mode === 'shore' || w.mode === 'garden') && now > w.until) { w.mode = 'idle'; w.placeTarget = undefined; w.useAt = undefined; w.until = now + 2000; }
+            if (w.mode === 'seat' && w.choice?.startsWith('seat:') && w.useAt !== undefined && now - w.useAt >= 700)
+                w.recent = [...(w.recent ?? []).filter(id => id !== w.choice), w.choice].slice(-3);
             if (w.mode === 'seat' && now > w.until) {
                 if (w.play) w.at = { ...w.play.exit };
                 w.mode = 'idle'; w.seat = undefined; w.play = undefined; w.placeTarget = undefined; w.useAt = undefined; w.until = now + 1500;

@@ -39,15 +39,21 @@ function disposeModel(root: T.Object3D) {
     disposeGeometry(root);
 }
 
-/** Two cached PNGs on the same GPU; no canvas resizing, camera movement, or extra WebGL context. */
-export function menuPictureMaker(renderer: T.WebGLRenderer, m: IslandMaterials) {
-    let lastKey: string | undefined, pictures: MenuPictures = {};
-    const picture = (root: T.Group) => {
+export function miniaturePicture(renderer: T.WebGLRenderer, root: T.Group, fit = false) {
         const width = 288, height = 176;
         const scene = new T.Scene(); scene.add(root, new T.HemisphereLight('#ffffff', '#bbab8e', 2.4));
         const light = new T.DirectionalLight('#fff8e9', 2); light.position.set(-2, 4, 4); scene.add(light);
         const lens = new T.OrthographicCamera(-1.35, 1.35, .95, -.70, .1, 20);
         lens.position.set(1.4, 2.2, 4); lens.lookAt(0, .36, 0);
+        if (fit) {
+            root.updateWorldMatrix(true, true);
+            const bounds = new T.Box3().setFromObject(root), center = bounds.getCenter(new T.Vector3());
+            lens.position.copy(center).add(new T.Vector3(2, 2.6, 4)); lens.lookAt(center); lens.updateMatrixWorld();
+            const projected = new T.Box3().setFromPoints(Array.from({ length: 8 }, (_, i) => new T.Vector3(
+                i & 1 ? bounds.max.x : bounds.min.x, i & 2 ? bounds.max.y : bounds.min.y, i & 4 ? bounds.max.z : bounds.min.z).applyMatrix4(lens.matrixWorldInverse)));
+            const half = Math.max(projected.getSize(new T.Vector3()).y / 2, projected.getSize(new T.Vector3()).x / 2 / (width / height), .1) * 1.12;
+            lens.left = -half * width / height; lens.right = -lens.left; lens.top = half; lens.bottom = -half; lens.updateProjectionMatrix();
+        }
         const target = new T.WebGLRenderTarget(width, height); target.texture.colorSpace = T.SRGBColorSpace;
         const previous = renderer.getRenderTarget(), color = renderer.getClearColor(new T.Color()), alpha = renderer.getClearAlpha();
         try {
@@ -62,12 +68,16 @@ export function menuPictureMaker(renderer: T.WebGLRenderer, m: IslandMaterials) 
             context.putImageData(image, 4 - bounds.left, 4 - bounds.top); return canvas.toDataURL('image/png');
         } catch { return undefined; }
         finally { renderer.setRenderTarget(previous); renderer.setClearColor(color, alpha); target.dispose(); disposeModel(root); }
-    };
+    }
+
+/** Two cached PNGs on the same GPU; no canvas resizing, camera movement, or extra WebGL context. */
+export function menuPictureMaker(renderer: T.WebGLRenderer, m: IslandMaterials) {
+    let lastKey: string | undefined, pictures: MenuPictures = {};
     return (villagers: readonly Villager[]): MenuPictures => {
         const people = villagers.slice(0, 3);
         const key = JSON.stringify(people.map(({ id, species, variant, outfit }) => ({ id, species, variant, outfit })));
         if (key === lastKey) return pictures;
-        pictures = { seeds: pictures.seeds ?? picture(menuMiniature(m)), friends: people.length ? picture(menuMiniature(m, people)) : undefined };
+        pictures = { seeds: pictures.seeds ?? miniaturePicture(renderer, menuMiniature(m)), friends: people.length ? miniaturePicture(renderer, menuMiniature(m, people)) : undefined };
         lastKey = pictures.seeds && (!people.length || pictures.friends) ? key : undefined; return pictures;
     };
 }

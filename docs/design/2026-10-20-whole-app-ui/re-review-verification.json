@@ -1,0 +1,41 @@
+{
+  "kind": "ui-reconsultation-document-verification",
+  "at": "2026-10-20T02:00:24.591216+00:00",
+  "head": "ed155377bc8e26880494b9d5b045b0d13847ebc0",
+  "command": "fnm exec --using=22 npm run docs:check",
+  "exit_code": 0,
+  "result": "PASS",
+  "stdout": "\n> pokko-fushigi-zukan-app@0.0.0 docs:check\n> node tools/check-docs.mjs\n\nWARN\n- docs/tasks/backlog.md: 次回棚卸し目安 (2026-10-12) is in the past\n- docs/tasks/active/2026-07-21-cold-open-value-loop.md: Review By (2026-09-27) is in the past\n- docs/tasks/active/2026-07-23-whole-app-brand-coherence.md: Review By (2026-09-27) is in the past\n- docs/tasks/active/2026-09-07-experience-improvements.md: Review By (2026-10-06) is in the past\n- docs/tasks/active/2026-09-08-island-experience.md: Review By (2026-10-06) is in the past\n- docs/tasks/active/2026-09-09-home-journey-preview.md: Review By (2026-10-06) is in the past\n- docs/tasks/active/2026-09-13-mysterious-island-v3.md: Review By (2026-09-29) is in the past\n- docs/tasks/active/2026-09-20-whole-app-ux-coherence.md: Review By (2026-10-06) is in the past\n- docs/tasks/active/2026-09-22-island-nature-integration.md: Review By (2026-10-06) is in the past\n- docs/tasks/active/2026-09-23-island-performance.md: Review By (2026-09-30) is in the past\n- docs/tasks/active/2026-09-27-living-fantasy-first-playable.md: Review By (2026-10-04) is in the past\n- docs/tasks/active/2026-09-29-growing-island-v1.md: Review By (2026-10-06) is in the past\n- docs/tasks/active/2026-10-01-island-guidance.md: Review By (2026-10-08) is in the past\n- docs/tasks/active/2026-10-05-growing-island-release.md: Review By (2026-10-12) is in the past\nPASS docs:check\n",
+  "inputs_sha256": {
+    "docs/design/2026-10-20-whole-app-ui/re-review.md": "055fb140295171ef029250084f6b6a809f4fe2b28c9a4776db0aed010e942727",
+    "docs/design/2026-10-20-whole-app-ui/screens.md": "4b93069cb4085b8c09c5ce91bd77281b9ac7c6938fea11b42f754ff10b41e15c",
+    "docs/design/2026-10-20-whole-app-ui/visual-and-layout.md": "eae00813cd5b6e145b58cb2205cb44a8dbee01d9827069e29299a83cd8441954",
+    "docs/design/2026-10-20-whole-app-ui/README.md": "4dc9a3cd65ea2712df76d58ac2fefab7b9bad01bc4f4be55bd0f231320e20d96",
+    "docs/design/2026-10-20-whole-app-ui/interaction-and-states.md": "49742de8760bd44bc010cd308a90ea308dcc542697f63faca10c1bd237434aee",
+    "docs/design/2026-10-20-whole-app-ui/review-and-acceptance.md": "cd6f14760678a6bc2f6ef49178986d98d3caa96b87a293ec4347f377ddcf24fe"
+  },
+  "reference_source_sha256_at_close": {
+    "src/components/island/growing/GrowingIsland.tsx": "708e20ea9a340ebabb3a7cf8d77620aa386d4e4ac8e63b45b40d76eb60331425",
+    "src/components/island/growing/GrowingSheet.tsx": "c92c563f90ae7d8c3c567d2c1339ec0376c9077a0c0ca728eff7738fbedac13b",
+    "src/components/island/growing/GrowingPanels.tsx": "3affb76f6d61d4d464e9cfb340b06797b7d67d69db9d7cc506b5b5b41c632ce3",
+    "src/components/island/growing/growingCamera.ts": "db28b95d53474b1055aa30a49535744020c00acc890a14229267ab46a5635eba",
+    "src/domain/growingIsland/placeMemories.ts": "211f79305411ddaafcd7340651b95fee3ddbed0b3386575c139d221872ecba4b",
+    "docs/product/01_app_spec.md": "f38d9465c2c08cc1289f0f2eae8bc570076b1ea1e6abfa68800d771e9c715a6f",
+    "docs/product/island-system/experience-design/screen-review-20261020.json": "a7ace1a4b8fe13710c18f7be745833e0c2db161e181461949e14294938da6bf5"
+  },
+  "consultation": {
+    "url": "https://chatgpt.com/c/6ad6ca0c-9a0c-83ec-b4d8-469e132e4e12",
+    "first_user_message": "e57da6bb-2f13-4be5-bfbd-465b95502211",
+    "correction_user_message": "5a82e419-b0e1-4004-be0a-a2f3f8b425a0",
+    "completed_response": "60352f29-f2da-4a1a-a964-bb562074a135",
+    "confirmed": "Native Firefox visible response read; app read_thread confirms completed turn and idle",
+    "input_scope": "textual delta and summarized prior image review; no new image upload",
+    "excluded": "external illustrative stock images in initial answer"
+  },
+  "limits": [
+    "Documentation proposal only; no app changes",
+    "Runtime code hashes are references, not new runtime test results",
+    "Art HOLD, gallery runtime unresolved, child understanding and return unmeasured",
+    "Prior verification.json retained as historical inputs"
+  ]
+}

@@ -1,4 +1,5 @@
 import VoyageChart from './VoyageChart';
+import type { CatalogPictures } from './catalogPictures';
 import { islandIdOf } from '../../../domain/growingIsland/voyages';
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { canPlace, landQuote, styleAt, waitingSeeds } from '../../../domain/growingIsland';
@@ -13,7 +14,7 @@ import { useIslandWorkshopAudio } from '../useIslandWorkshopAudio';
 import { useIslandAmbience } from '../useIslandAmbience';
 import { actorLine, CHARACTER_NAME, idleLine, revealLine, villagerName } from './growingCopy';
 import { GrowingSheet, type SheetAction } from './GrowingSheet';
-import { GrowingTray, type Pick } from './GrowingTray';
+import { GrowingTray, type CatalogPosition, type Pick } from './GrowingTray';
 import { GrowingPlacementControls } from './GrowingPlacementControls';
 import { placementPrice } from './placementPrice';
 import { placementName } from './placementName';
@@ -25,7 +26,7 @@ import type { Ghost } from './objectLayer';
 import type { ShownMoment, WorldCamera } from './GrowingWorld';
 import { useGrowingIsland } from './useGrowingIsland';
 import { publishWaitingSeeds } from './seedBadge';
-import { noteFor, playNote, playTune, TUNES } from './notes';
+import { noteFor, playNote, playTune, stopNotes, TUNES } from './notes';
 import { TracePanel } from './TracePanel';
 import { GrowingGuideBook } from './GrowingGuideBook';
 import { GrowingPlaceBook } from './GrowingPlaceBook';
@@ -45,6 +46,7 @@ import { GrowingHomeTools, GrowingViewControls, GrowingExpansion } from './Growi
 import { growingExpansionLock } from './growingExpansion';
 import { bridgeSite } from '../../../domain/growingIsland/space';
 import type { MenuPictures } from './menuMiniatures';
+import './wholeAppUi.css';
 
 const GrowingWorld = lazy(() => import('./GrowingWorld'));
 type Placing = { kind: SeedKind | LandmarkKind; seed: boolean; id?: string; mode: 'new' | 'move' | 'unstore'; cell?: Cell; keepsake?: string; color?: FlowerColor };
@@ -121,6 +123,9 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     useEffect(() => {
         if (active && waitingForWorld) return allowPwaUpdateDuringReadOnlyOpening();
     }, [active, waitingForWorld]);
+    const [catalogPosition, setCatalogPosition] = useState<CatalogPosition>();
+    const [catalogPictures, setCatalogPictures] = useState<CatalogPictures>({});
+    const [viewReturn, setViewReturn] = useState(false);
     const camera = useRef<WorldCamera | undefined>(undefined), pendingPicture = useRef(false);
     const placingInFlight = useRef(false);
     const [playMoment, setPlayMoment] = useState<string>();
@@ -151,6 +156,14 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         document.addEventListener('keydown', onKeyDown, true);
         return () => document.removeEventListener('keydown', onKeyDown, true);
     }, [namingOpen, closeNaming]);
+    const playingForeground = active && !panel && !menu && !placing && !card && !story && !bridgeChoice && !bridgeBusy && naming === undefined;
+    useEffect(() => {
+        const stop = () => { if (document.visibilityState !== 'visible') { stopNotes(); setConcert(undefined); } };
+        document.addEventListener('visibilitychange', stop);
+        if (!sound || !active) stopNotes();
+        if (!playingForeground) { stopNotes(); setConcert(undefined); }
+        return () => { document.removeEventListener('visibilitychange', stop); stopNotes(); };
+    }, [active, playingForeground, sound, profileId, ownIslandId, visit?.id]);
     const audio = useIslandWorkshopAudio(sound && active);
     useIslandAmbience(show ? 'shell-three-notes' : time === 'night' ? 'evening' : 'breeze', sound, active);
     const state = visit?.state ?? own;
@@ -291,6 +304,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
 
     const run = async (command: Command, after?: () => void) => { if (await island.dispatch(command)) { after?.(); return true; } return false; };
     const openHomeTool = (target: Panel, source: string) => {
+        if (target === 'tray' || target === 'landmarks' || target === 'stored' || target === 'flowers') { setCatalogPosition(undefined); setCatalogPictures(camera.current?.catalogPictures(own) ?? {}); }
         toolReturn.current = source; if (target !== 'tray') guide.pause(); setMenu(false); setSelected(undefined); setPanel(target); setLine(undefined);
     };
     const closeHomeTool = () => {
@@ -309,6 +323,10 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     };
     const shortfall = placing ? Math.max(0, placementPrice(own, placing) - own.drops) : 0;
     const pick = (choice: Pick) => {
+        const catalog = document.querySelector('.growing-catalog');
+        const active = document.activeElement;
+        const attr = ['data-growing-seed', 'data-growing-landmark', 'data-growing-flower', 'data-growing-stored'].find(name => active?.hasAttribute(name));
+        setCatalogPosition({ tab: choice.mode === 'unstore' ? 'stored' : 'new', category: catalog?.querySelector('.growing-catalog-filters [aria-pressed="true"]')?.textContent ?? 'すべて', scroll: catalog?.querySelector('[role="tabpanel"]')?.scrollTop ?? 0, item: attr ? { attr, value: active!.getAttribute(attr)! } : undefined });
         if (choice.mode !== 'seed' || choice.kind === 'wild') guide.pause();
         setPanel(undefined); setSelected(undefined); setLine('おく ばしょを えらんでね');
         if (choice.mode === 'unstore') setPlacing({ kind: choice.kind, seed: choice.seed, id: choice.id, mode: 'unstore', keepsake: choice.keepsake });
@@ -333,6 +351,26 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     const sheetAction = (action: SheetAction) => {
         const target = selected; if (!target) return;
         const id = target.startsWith('villager:') ? target.slice(9) : target;
+        if (action.type === 'concert') {
+            const stand = own.landmarks.find(item => item.id === id && item.kind === 'bandstand' && item.cell);
+            if (!stand?.cell) return;
+            stopNotes();
+            const length = action.tune ? Math.max(30000, playTune(sound, song) + 2000) : 30000;
+            setConcert({ cell: stand.cell, targetId: stand.id, ownerId: profileId, n: Date.now(), until: Date.now() + length });
+            setSelected(undefined); setPanel(undefined); guide.pause();
+            setLine(action.tune ? `えんそうかいだよ！「${TUNES[song % TUNES.length].name}」` : 'ぽこもこと なかまを さわって おとで おはなししよう');
+            if (action.tune) setSong(song + 1); return;
+        }
+        if (action.type === 'touch') {
+            const started = camera.current?.interact(id);
+            setSelected(undefined); setConcert(undefined); stopNotes();
+            setLine(started ? 'ぽこもこと さわってみよう' : 'ここへ とどく すきまを あけてみよう'); return;
+        }
+        if (action.type === 'place') {
+            const started = camera.current?.visitPlace(action.placeId);
+            setSelected(undefined); setConcert(undefined); stopNotes();
+            setLine(started ? 'ぽこもこが そこへ いくよ' : 'いまは べつの ところで すごそう'); return;
+        }
         if (action.type === 'home') { setSelected(undefined); if (firstPlay) openBook(); else onHome(); return; }
         if (action.type === 'bridge-remove') { setSelected(undefined); setBridgeChoice('remove'); return; }
         if (action.type === 'move') {
@@ -371,7 +409,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         setPanel(undefined);
         const item = [...own.plots, ...own.landmarks].find(item => item.id === id);
         if (!item) return;
-        if (!item.cell) { setPanel('stored'); return; }
+        if (!item.cell) { openHomeTool('stored', '.growing-home-stored'); return; }
         setFocus({ id, n: Date.now() });
         setLine('ぽこもこを はこんで、ここで あそんでみよう');
     };
@@ -381,11 +419,11 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         if (action === 'flag') setSelected('flag');
         else if (action === 'move') {
             if (starterStep(own) === 'S4' && !starterBench(own)?.cell) {
-                setPanel('stored'); return;
+                openHomeTool('stored', '.growing-home-stored'); return;
             }
             const item = own.landmarks.find(l => l.kind === 'bench' && l.cell) ?? own.landmarks.find(l => l.cell) ?? own.plots.find(p => p.cell);
             if (item) { setSelected(item.id); setFocus({ id: item.id, n: Date.now() }); }
-            else setPanel('stored');
+            else openHomeTool('stored', '.growing-home-stored');
         } else if (action === 'expand') { toolReturn.current = '.growing-home-expand'; setMenu(false); setPanel('expand'); }
         else if (action === 'concert') {
             const stand = own.landmarks.find(l => l.kind === 'bandstand' && l.cell);
@@ -398,7 +436,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         } else if (id === 'A2' && growingTownSeed(own)) {
             const seed = growingTownSeed(own)!;
             setSelected(seed.id); setFocus({ id: seed.id, n: Date.now() });
-        } else setPanel('tray');
+        } else openHomeTool('tray', '.growing-home-place');
     };
     const starterAction = (wanted?: StarterStepId) => {
         const step = wanted ?? starterStep(own); setPanel(undefined); setLine(undefined);
@@ -412,7 +450,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         else if (step === 'S1' && firstPlay) pick({ mode: 'seed', kind: 'home' });
         else if (step === 'S2') { const id = own.guidance?.starter.steps.S1?.targetId; if (id) setFocus({ id, n: Date.now() }); }
         else if (step === 'S3') setLine('ふねの こを さわってみよう');
-        else if (step === 'S5' && starterFlowerReady(own)) setPanel('landmarks');
+        else if (step === 'S5' && starterFlowerReady(own)) openHomeTool('landmarks', '.growing-home-place');
         else if (step === 'S5' && starterCopy(own, step).action === 'しまへ もどる') { guide.pause(); }
         else goalAction(step === 'S1' ? 'A1' : 'A2');
     };
@@ -422,7 +460,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         if (!id) { setLine('しまを ながめてみよう'); return; }
         if (id === 'flag') { setSelected('flag'); return; }
         const item = [...own.plots, ...own.landmarks, ...own.keepsakes].find(item => item.id === id);
-        if (item && !item.cell) { setPanel('stored'); return; }
+        if (item && !item.cell) { openHomeTool('stored', '.growing-home-stored'); return; }
         const friend = own.villagers.find(v => v.id === id);
         if (friend) setSelected(`villager:${id}`); else if (item) setSelected(id);
         if (friend || item) setFocus({ id, n: Date.now() });
@@ -477,8 +515,8 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     // camera frustum. Keep island life running; receive observations after closing.
     const placeReceiptsVisible = active && !visit && !show && !panel && !menu && !selected && !placing
         && !card && !story && !bridgeChoice && !bridgeBusy && naming === undefined;
-    const world = <GrowingWorld key={`${ownIslandId}:${worldAttempt}`} active={active} compact={worldAttempt > 0} qualityCeiling={qualityCeiling} state={state} time={time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival} bridgeBuild={bridgeBuild}
-        hints={visit ? [] : hints} moment={visit ? undefined : moment} show={show} focus={focus} concert={concert} onCamera={c => { camera.current = c; }}
+    const world = <GrowingWorld viewKey={`${profileId}:${ownIslandId}:${visit?.id ?? 'own'}`} onViewReturn={setViewReturn} key={`${ownIslandId}:${worldAttempt}`} active={active} playActive={playingForeground} compact={worldAttempt > 0} qualityCeiling={qualityCeiling} state={state} time={time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival} bridgeBuild={bridgeBuild}
+        hints={visit ? [] : hints} moment={visit ? undefined : moment} show={show} focus={focus} concert={concert} onCamera={c => { camera.current = c; if (!c) setViewReturn(false); }}
         onPop={() => audio.play('glass')} onStage={setWorldStep} onFailure={setGraphicsFailure} onQualityFallback={ceiling => {
             setQualityCeiling(previous => Math.min(previous, ceiling)); setWorldStep('world'); setWorldAttempt(value => value + 1);
         }}
@@ -494,7 +532,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             // えんそうかい (§4): friends gather; each one plays their own note when touched. A
             // sibling's bandstand plays too: visiting can be shared play without changing anything.
             const stand = state.landmarks.find(l => l.id === id && l.kind === 'bandstand');
-            if (stand?.cell && !(concert && Date.now() < concert.until)) {
+            if (visit && stand?.cell && !(concert && Date.now() < concert.until)) {
                 const length = Math.max(30000, playTune(sound, song) + 2000);
                 if (!visit) guide.pause();
                 setConcert({ cell: stand.cell, targetId: stand.id, ownerId: visit?.id ?? profileId, n: Date.now(), until: Date.now() + length }); setPanel(undefined);
@@ -502,15 +540,19 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             }
             if (visit) return;
             guide.pause();
-            setSelected(id); setPanel(undefined);
+            setConcert(undefined); stopNotes(); setSelected(id); setPanel(undefined);
         }}
         onOpen={id => { if (visit) return; void run({ type: 'open', id }, () => setLine(own.unopened.length > 1 ? 'まだ つぼみが あるよ' : undefined)); }}
         onDisembark={() => { if (!visit) void disembark(); }}
-        onActorTap={id => {
+        onPlayStopped={stopNotes}
+        onPlaceReplyStep={(kind, index) => { if (sound && kind === 'leaves') playNote(3 + index % 5); }}
+        onPlaceReply={kind => { audio.play(kind === 'water' ? 'water' : 'wood'); setLine(undefined); }}
+        onSharedPlay={receipt => visit ? false : island.acknowledgePlace({ type: 'shared-play', ...receipt })}
+        onActorTap={(id, participating) => {
             clearPlayMoment();
             setMenu(false);
             void audio.unlock();
-            const playing = concert && Date.now() < concert.until;
+            const playing = concert && Date.now() < concert.until && participating;
             if (playing && sound) {
                 const species = id === 'pokomoko' ? 'pokomoko' : id === 'visitor' ? state.pier.visitor.species : state.villagers.find(v => v.id === id)?.species;
                 if (species) playNote(noteFor(species));
@@ -524,7 +566,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
                 firstPokomokoTap.current = false;
                 setLine(`ぽこもこを つまんで ベンチへ はこんでみよう${own.tutorial === 'first-home' ? '。おうちの たねも おけるよ' : ''}`);
             } else setLine(actorLine(own, id));
-            if (own.villagers.some(v => v.id === id)) setSelected(`villager:${id}`);
+            if (own.villagers.some(v => v.id === id)) { loadFaces(); setSelected(`villager:${id}`); }
         }}
         onActorDrag={clearPlayMoment}
         onActorPlay={(id, kind) => {
@@ -553,7 +595,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
                 else if (action.kind === 'memory') memoryTarget(action.evidence);
                 onGuideRequestConsumed?.();
             }} />}
-        <Suspense fallback={null}>{world}</Suspense>{worldLoading}
+        <div className="growing-world-interaction" inert={menu || Boolean(panel) || Boolean(selected) || Boolean(card) || Boolean(story) || naming !== undefined || Boolean(bridgeChoice)}><Suspense fallback={null}>{world}</Suspense></div>{worldLoading}
         {dawn > 0 && <div className="growing-dawn" aria-hidden="true"><span>☀</span></div>}
         {visit ? <div className="growing-hud-top"><span className="growing-chip">{visit.name}の しま・{CHARACTER_NAME[visit.state.character]}</span></div> : <GrowingHomeTools
             islandName={own.islandName ?? 'ぽこもこの しま'} drops={own.drops} quote={quote} status={placeStatus} menuRef={menuTrigger}
@@ -566,7 +608,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             onStored={() => openHomeTool('stored', '.growing-home-stored')}
             onMenu={() => { if (!menu) setMenuPictures(own.villagers.length ? camera.current?.menuPictures(own.villagers) ?? {} : {}); setMenu(!menu); }}
             onGoal={() => openPlaces(placeStatus?.id, 'cue')} />}
-        {!visit && panel === 'view' && <GrowingViewControls onDistance={close => camera.current?.distance(close)} onClose={closeHomeTool} onRotate={direction => setTurn(value => value + direction)} />}
+        {!visit && panel === 'view' && <GrowingViewControls canReturn={viewReturn} onReturn={() => camera.current?.restoreView()} onDistance={close => camera.current?.distance(close)} onClose={closeHomeTool} onRotate={direction => setTurn(value => value + direction)} />}
         {!visit && panel === 'expand' && <GrowingExpansion quote={quote} expansionLock={expansionLock} drops={own.drops} busy={island.busy} onClose={closeHomeTool}
             onExpand={side => void run({ type: 'expand', side }, () => { closeHomeTool(); audio.play('assemble'); })} />}
         {naming !== undefined && <form ref={nameForm} className="growing-overlay" role="dialog" aria-modal="true" aria-label="しまの なまえ" onSubmit={event => { event.preventDefault(); if (namingOwner.current?.profileId !== profileId || namingOwner.current.islandId !== ownIslandId) { closeNaming(); return; } if (naming.trim()) void run({ type: 'name', target: 'island', name: naming }, closeNaming); }}>
@@ -599,12 +641,12 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         </div> : placing ? <GrowingPlacementControls itemName={placementName(own, placing)} valid={Boolean(ghost?.valid)} shortfall={shortfall} pending={island.busy || island.syncing}
             message={ghost?.cell ? ghost.valid ? 'ここで いい？' : placing.kind === 'home' && canPlace(own, ghost.cell, placing.id)
                 ? 'ここまで いけないみたい。まわりを あけてみよう' : 'ここには おけないよ' : 'おく ばしょを さわってね'}
-            onConfirm={confirm} onChoose={() => { setPanel(placing.seed ? 'tray' : 'landmarks'); setPlacing(undefined); setLine(undefined); island.clearError(); }}
-            onCancel={() => { setPlacing(undefined); setLine(undefined); island.clearError(); }} /> : <div className="growing-hud-bottom">
+            onConfirm={confirm} onChoose={() => { setPanel(placing.mode === 'unstore' ? 'stored' : 'tray'); setPlacing(undefined); setLine(undefined); island.clearError(); }}
+            onCancel={() => { if (placing.mode === 'move') setSelected(placing.id); else setPanel(placing.mode === 'unstore' ? 'stored' : 'tray'); setPlacing(undefined); setLine(undefined); island.clearError(); }} /> : <div className="growing-hud-bottom">
             {firstPlay && !panel && !menu && !selected && !card && !story && !bridgeChoice && <button className="growing-seed-button first-play-learn" disabled={island.busy || island.saving} onClick={onLearn}>まなぶ</button>}
             {gifts > 0 && <button className="growing-open-all" onClick={() => void run({ type: 'open-all' }, () => { audio.play('glass'); setLine(undefined); })}>ぜんぶ ひらく</button>}
         </div>}
-        {!visit && (panel === 'tray' || panel === 'landmarks' || panel === 'stored') && !placing && <GrowingTray key={panel} state={own} onPick={pick} onClose={closeHomeTool} initialTab={panel === 'stored' ? 'stored' : panel === 'landmarks' ? 'landmarks' : 'seeds'} />}
+        {!visit && (panel === 'tray' || panel === 'landmarks' || panel === 'stored') && !placing && <GrowingTray position={catalogPosition} pictures={catalogPictures} key={panel} state={own} onPick={pick} onClose={closeHomeTool} initialTab={panel === 'stored' ? 'stored' : panel === 'landmarks' ? 'landmarks' : 'seeds'} />}
         {!visit && panel === 'trace' && <TracePanel profileId={profileId} onClose={closeHomeTool}
             onSave={(image, glyph) => void run({ type: 'emblem', image, glyph }, () => { setPanel(undefined); audio.play('discovery'); setLine(`「${glyph}」が しまの はたに なったよ！`); })} />}
         {!visit && panel === 'friends' && <FriendsPanel state={own} faces={faces} onClose={closeHomeTool}
@@ -612,7 +654,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         {!visit && panel === 'show' && <ShowPanel onPick={choice => void showChoice(choice)} onClose={closeHomeTool} />}
         {!visit && panel === 'voyages' && <VoyageChart profileId={profileId} state={own} busy={island.busy} onClose={closeHomeTool}
             onSail={island.sail} onFocus={id => { setSelected(undefined); setFocus({ id, n: Date.now() }); }} />}
-        {!visit && panel === 'flowers' && <FlowerBook state={own} onClose={closeHomeTool} />}
+        {!visit && panel === 'flowers' && <FlowerBook pictures={catalogPictures} state={own} onClose={closeHomeTool} />}
         {!visit && panel === 'guide' && <GrowingGuideBook state={own} busy={island.busy} initialMemory={guideMemory} onClose={closeBook}
             onPlaces={() => openPlaces()}
             onChoose={(id, play) => void run({ type: 'choose-goal', id }, () => { guide.pause(); if (play) goalAction(id); })}
@@ -636,9 +678,9 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
                     }}>{bridgeChoice === 'build' ? 'つくる' : 'しまう'}</button></div>
             </div>
         </div>}
-        {!visit && selected && !placing && <GrowingSheet state={own} target={selected} onAction={sheetAction} onClose={() => setSelected(undefined)} />}
+        {!visit && selected && !placing && <GrowingSheet portrait={selected?.startsWith('villager:') ? faces[selected.slice(9)] : undefined} state={own} target={selected} onAction={sheetAction} onClose={() => setSelected(undefined)} />}
         {card && <CardView url={card.url} busy={!card.blob} frame={card.frame} onFrame={frame => void makeCard(frame)} onSave={() => { if (card.blob) saveImage(card.blob, `${own.islandName ?? 'しま'}-card.png`); }}
             onClose={() => { if (card.url) URL.revokeObjectURL(card.url); setCard(undefined); }} />}
-        {story && <StoryView moments={story} onClose={() => setStory(undefined)} />}
+        {story && <StoryView state={own} moments={story} onClose={() => setStory(undefined)} onFocus={id => { if (visit) leaveVisit(); setStory(undefined); setSelected(undefined); setFocus({ id, n: Date.now() }); }} />}
     </div>;
 }

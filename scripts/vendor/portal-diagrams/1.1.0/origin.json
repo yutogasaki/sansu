@@ -1,0 +1,19 @@
+{
+  "repo": "Jishu",
+  "head": "dc5dc444c9c93c26c6e0abcce23818d33d68fd29",
+  "uncommitted": true,
+  "checkedAt": "2026-10-19",
+  "sourceFiles": {
+    "scripts/portal-development-flows.cjs": "92f841656cf3ce6a6100e84ec8727d939411722d6168ab3757e4877d19082892",
+    "scripts/portal-development-flows.js": "376226421b05c0196b8a20de0d6df72b9e3cf5da2d025493824d3e30775166b1",
+    "scripts/portal-development-flows.css": "2093c291fc4fe9c3469f03c2ce2ba126682a86a22ce7d0009f9c8b44886843d1",
+    "scripts/portal-diagrams.cjs": "df41f33f3668e659c5bde19e744cabded48b57d1bc49f73671206797f129b327",
+    "scripts/portal-diagrams-render.cjs": "bfc909427c1d66bdcec1cb6b18a4a2c0b5f37c9052876d8071800c0f30c54949"
+  },
+  "changes": "Generic records/sources, isolated nodes, explicit supported subset, independent local dependency; JISHU content and state engine excluded.",
+  "parent": {
+    "component": "hub/common-portal/diagrams/1.0.0",
+    "lockSha256": "262a185cb6e5518a0efbf9011e0c35c48255fa1ae94e5ab46340f52dd7296c51"
+  },
+  "extension": "JPR-004: all declared source inventory, native graph projections, Japanese states, bidirectional/dashed relationships, SVG labels/style/arrowhead verification. Original specialized engines retained."
+}

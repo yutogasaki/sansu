@@ -1,0 +1,2118 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "id": "source_0",
+      "path": "docs/product/island-system/current-map.md",
+      "href": "../docs/product/island-system/current-map.md",
+      "sha256": "ca9e3e7bfbb2c2dd09270dced76fa3f4fb8322e147f58d3e9e699a7e9010c6c4"
+    },
+    {
+      "id": "source_1",
+      "path": "docs/product/island-system/growth-proposal.md",
+      "href": "../docs/product/island-system/growth-proposal.md",
+      "sha256": "e3d6417301f11f17648582d494fb42ecc86694a11b71642d28546013f15c64fe"
+    },
+    {
+      "id": "source_2",
+      "path": "docs/product/island-system/implementation-map.md",
+      "href": "read/c054bd32fb0312454402.html",
+      "sha256": "f624d53f471f08839d9f272a3e3c1a1300c912641193871f61ed9eef6af07838"
+    },
+    {
+      "id": "source_3",
+      "path": ".agents/flow/portal-flow.json",
+      "href": "work.html",
+      "sha256": "cee70df7aceeeb301ffe0d526631837635be897958c42c9e3cdc2c55fa0d86ec"
+    }
+  ],
+  "diagrams": [
+    {
+      "id": "sansu_work",
+      "title": "Sansuの仕事・目標・仕事・成果と検査",
+      "intro": "2026-10-19時点の記録。現在の進捗は元の仕事正本で確認します。所属の線は実行順や依存を意味しません。状態・未確認・停止理由は各項目と原文を参照します。",
+      "nodes": [
+        {
+          "id": "node_0",
+          "label": "自分から学び、育つ島へまた戻りたくなる",
+          "note": "状態：進行中",
+          "sourceRecord": {
+            "id": "island",
+            "title": "自分から学び、育つ島へまた戻りたくなる",
+            "status": "active",
+            "evidence": [
+              "CONSTITUTION.md",
+              ".agents/tasks/TASKS.md"
+            ]
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_1",
+          "label": "形を比べる",
+          "note": "状態：停止中",
+          "sourceRecord": {
+            "id": "shape",
+            "goal_id": "island",
+            "title": "形を比べる",
+            "status": "stopped",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ]
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_2",
+          "label": "育ち方を作る",
+          "note": "状態：順番待ち",
+          "sourceRecord": {
+            "id": "growth",
+            "goal_id": "island",
+            "title": "育ち方を作る",
+            "status": "queued",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ]
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_3",
+          "label": "続けられる形へ",
+          "note": "状態：順番待ち",
+          "sourceRecord": {
+            "id": "continuity",
+            "goal_id": "island",
+            "title": "続けられる形へ",
+            "status": "queued",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ]
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_4",
+          "label": "入り江の方向を決める",
+          "note": "状態：完了。元の記録に沿って一件ずつ確認する。",
+          "sourceRecord": {
+            "id": "direction",
+            "title": "入り江の方向を決める",
+            "stage_id": "shape",
+            "repo": "sansu",
+            "current_node": "recorded",
+            "status": "done",
+            "why_stopped": null,
+            "next": "元の記録に沿って一件ずつ確認する。",
+            "order": 1,
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/adr/2026-10-11-authored-place-world-policy.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_5",
+          "label": "床の比較方法を直す",
+          "note": "状態：完了。元の記録に沿って一件ずつ確認する。",
+          "sourceRecord": {
+            "id": "diagnosis",
+            "title": "床の比較方法を直す",
+            "stage_id": "shape",
+            "repo": "sansu",
+            "current_node": "recorded",
+            "status": "done",
+            "why_stopped": null,
+            "next": "元の記録に沿って一件ずつ確認する。",
+            "order": 2,
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_6",
+          "label": "入り江の輪郭を採用するか決める",
+          "note": "状態：停止中。輪郭の採用が未決定。採用前に成長や通常保存の制作を先行しない。。比較の記録を確認し、進める・直して比べる・保留するを選ぶ。",
+          "sourceRecord": {
+            "id": "inlet",
+            "title": "入り江の輪郭を採用するか決める",
+            "stage_id": "shape",
+            "repo": "sansu",
+            "current_node": "decision",
+            "status": "stopped",
+            "why_stopped": "輪郭の採用が未決定。採用前に成長や通常保存の制作を先行しない。",
+            "next": "比較の記録を確認し、進める・直して比べる・保留するを選ぶ。",
+            "order": 3,
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/report.json"
+            ],
+            "needs_yu": {
+              "required": true,
+              "content": "入り江の輪郭を採り、成長と実利用の制作へ進むか。進める／直して比べる／保留する。採用で次の制作が進み、公開は別の判断。",
+              "options": [
+                {
+                  "label": "進める",
+                  "effect": "成長と実利用を一件ずつ制作",
+                  "next_work": "単独から接続・成熟・利用・分離・復元の旅程"
+                },
+                {
+                  "label": "直して比べる",
+                  "effect": "輪郭を再比較",
+                  "next_work": "気になる形を指定して粗い形を直す"
+                },
+                {
+                  "label": "保留する",
+                  "effect": "次の工程は開始しない",
+                  "next_work": "理由と再開条件を残す"
+                }
+              ],
+              "recommendation": "進める",
+              "reason": "既存の判断カードのおすすめ。所有内容を保った輪郭差と対象動作は確認済み。美術完成と理解は未確認。",
+              "evidence_href": "#decisions",
+              "confirmed": "輪郭差と診断範囲の動作",
+              "missing": "美術の仕上げと独立した理解の確認",
+              "resume_condition": "利用者が輪郭を採用する"
+            }
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_7",
+          "label": "成長と実利用を一旅程ずつ作る",
+          "note": "状態：順番待ち。元の記録に沿って一件ずつ確認する。",
+          "sourceRecord": {
+            "id": "growth-work",
+            "title": "成長と実利用を一旅程ずつ作る",
+            "stage_id": "growth",
+            "repo": "sansu",
+            "current_node": "waiting",
+            "status": "queued",
+            "why_stopped": null,
+            "next": "元の記録に沿って一件ずつ確認する。",
+            "order": 4,
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_8",
+          "label": "通常取得・保存・拡張をつなぐ",
+          "note": "状態：順番待ち。元の記録に沿って一件ずつ確認する。",
+          "sourceRecord": {
+            "id": "normal",
+            "title": "通常取得・保存・拡張をつなぐ",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "waiting",
+            "status": "queued",
+            "why_stopped": null,
+            "next": "元の記録に沿って一件ずつ確認する。",
+            "order": 5,
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_9",
+          "label": "美術と配布を仕上げる",
+          "note": "状態：順番待ち。元の記録に沿って一件ずつ確認する。",
+          "sourceRecord": {
+            "id": "finish",
+            "title": "美術と配布を仕上げる",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "waiting",
+            "status": "queued",
+            "why_stopped": null,
+            "next": "元の記録に沿って一件ずつ確認する。",
+            "order": 6,
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_10",
+          "label": "公開候補をまとめる",
+          "note": "状態：順番待ち。関連する仕事。共有キューの順で、必要な一件だけ開始する。",
+          "sourceRecord": {
+            "id": "release",
+            "title": "公開候補をまとめる",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "queue",
+            "status": "queued",
+            "why_stopped": null,
+            "next": "関連する仕事。共有キューの順で、必要な一件だけ開始する。",
+            "order": 7,
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-10-05-growing-island-release.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_11",
+          "label": "学習・島・家の往復を確かめる",
+          "note": "状態：順番待ち。関連する仕事。共有キューの順で、必要な一件だけ開始する。",
+          "sourceRecord": {
+            "id": "experience",
+            "title": "学習・島・家の往復を確かめる",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "queue",
+            "status": "queued",
+            "why_stopped": null,
+            "next": "関連する仕事。共有キューの順で、必要な一件だけ開始する。",
+            "order": 8,
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-20-whole-app-ux-coherence.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_12",
+          "label": "起動と操作を軽くする",
+          "note": "状態：順番待ち。関連する仕事。共有キューの順で、必要な一件だけ開始する。",
+          "sourceRecord": {
+            "id": "performance",
+            "title": "起動と操作を軽くする",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "queue",
+            "status": "queued",
+            "why_stopped": null,
+            "next": "関連する仕事。共有キューの順で、必要な一件だけ開始する。",
+            "order": 9,
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-23-island-performance.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_13",
+          "label": "実機の起動を確かめる",
+          "note": "状態：停止中。同じ端末と候補が必要。。同じ版で確認条件を用意し、担当タスクへ結果を戻す。",
+          "sourceRecord": {
+            "id": "device",
+            "title": "実機の起動を確かめる",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "conditions",
+            "status": "stopped",
+            "why_stopped": "同じ端末と候補が必要。",
+            "next": "同じ版で確認条件を用意し、担当タスクへ結果を戻す。",
+            "order": 10,
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_14",
+          "label": "Safariの写真保存を確かめる",
+          "note": "状態：停止中。実Safari・ホーム画面版が必要。。同じ版で確認条件を用意し、担当タスクへ結果を戻す。",
+          "sourceRecord": {
+            "id": "photo",
+            "title": "Safariの写真保存を確かめる",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "conditions",
+            "status": "stopped",
+            "why_stopped": "実Safari・ホーム画面版が必要。",
+            "next": "同じ版で確認条件を用意し、担当タスクへ結果を戻す。",
+            "order": 11,
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_15",
+          "label": "実機の音と操作を確かめる",
+          "note": "状態：停止中。実スピーカーと入力・読み上げの確認が必要。。同じ版で確認条件を用意し、担当タスクへ結果を戻す。",
+          "sourceRecord": {
+            "id": "sound",
+            "title": "実機の音と操作を確かめる",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "conditions",
+            "status": "stopped",
+            "why_stopped": "実スピーカーと入力・読み上げの確認が必要。",
+            "next": "同じ版で確認条件を用意し、担当タスクへ結果を戻す。",
+            "order": 12,
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_16",
+          "label": "保存の引き継ぎを確かめる",
+          "note": "状態：停止中。実利用者の対象端末と復旧手段が必要。。同じ版で確認条件を用意し、担当タスクへ結果を戻す。",
+          "sourceRecord": {
+            "id": "save",
+            "title": "保存の引き継ぎを確かめる",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "conditions",
+            "status": "stopped",
+            "why_stopped": "実利用者の対象端末と復旧手段が必要。",
+            "next": "同じ版で確認条件を用意し、担当タスクへ結果を戻す。",
+            "order": 13,
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_17",
+          "label": "子どもの理解と再訪を確かめる",
+          "note": "状態：停止中。参加者と観察の準備が必要。。同じ版で確認条件を用意し、担当タスクへ結果を戻す。",
+          "sourceRecord": {
+            "id": "return",
+            "title": "子どもの理解と再訪を確かめる",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "conditions",
+            "status": "stopped",
+            "why_stopped": "参加者と観察の準備が必要。",
+            "next": "同じ版で確認条件を用意し、担当タスクへ結果を戻す。",
+            "order": 14,
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_18",
+          "label": "選んだ入り江の方向",
+          "note": "状態：完了。根拠区分：recorded",
+          "sourceRecord": {
+            "id": "direction-result",
+            "item_id": "direction",
+            "title": "選んだ入り江の方向",
+            "description": "以前の三案を見直し、水面を囲む開いた入り江を選択。",
+            "status": "done",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/adr/2026-10-11-authored-place-world-policy.md"
+            ],
+            "basis": "recorded"
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_19",
+          "label": "床の比較と対象検査",
+          "note": "状態：完了。根拠区分：recorded",
+          "sourceRecord": {
+            "id": "diagnosis-result",
+            "item_id": "diagnosis",
+            "title": "床の比較と対象検査",
+            "description": "異なる配置の床を比較していた前提を直し、同じ状態の床どうしを比較。",
+            "status": "done",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md"
+            ],
+            "basis": "recorded"
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_20",
+          "label": "入り江の比較画面",
+          "note": "状態：完了。根拠区分：recorded",
+          "sourceRecord": {
+            "id": "inlet-result",
+            "item_id": "inlet",
+            "title": "入り江の比較画面",
+            "description": "同じ家と木を置いた三配置、分離・復元、回転、小画面の実画面。",
+            "status": "done",
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/report.json"
+            ],
+            "basis": "recorded"
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_21",
+          "label": "成長と編集の一旅程（計画）",
+          "note": "状態：提案・未採用。根拠区分：推測・提案",
+          "sourceRecord": {
+            "id": "growth-work-result",
+            "item_id": "growth-work",
+            "title": "成長と編集の一旅程（計画）",
+            "description": "単独→接続→成熟→住人の利用→分離→復元を一旅程ずつ成立させる計画。",
+            "status": "proposal",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ],
+            "basis": "proposal"
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_22",
+          "label": "通常体験と保存の統合（計画）",
+          "note": "状態：提案・未採用。根拠区分：推測・提案",
+          "sourceRecord": {
+            "id": "normal-result",
+            "item_id": "normal",
+            "title": "通常体験と保存の統合（計画）",
+            "description": "通常取得・学習往復・本人保存・地区拡張・通信なしの利用と更新を個別に確かめる計画。",
+            "status": "proposal",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ],
+            "basis": "proposal"
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_23",
+          "label": "美術と配布の判定（計画）",
+          "note": "状態：提案・未採用。根拠区分：推測・提案",
+          "sourceRecord": {
+            "id": "finish-result",
+            "item_id": "finish",
+            "title": "美術と配布の判定（計画）",
+            "description": "全景・近景・小画面で採用見本と比較し、実機・理解・公開を分けて判定する計画。",
+            "status": "proposal",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ],
+            "basis": "proposal"
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_24",
+          "label": "固定した公開候補の記録",
+          "note": "状態：完了。根拠区分：recorded",
+          "sourceRecord": {
+            "id": "release-result",
+            "item_id": "release",
+            "title": "固定した公開候補の記録",
+            "description": "過去の固定候補で学習・保存・更新を手元確認した記録。",
+            "status": "done",
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-10-05-growing-island-release.md"
+            ],
+            "basis": "recorded"
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_25",
+          "label": "学習・島・家を往復した記録",
+          "note": "状態：完了。根拠区分：recorded",
+          "sourceRecord": {
+            "id": "experience-result",
+            "item_id": "experience",
+            "title": "学習・島・家を往復した記録",
+            "description": "初回から取得・配置、家と本、同じ学習への復帰を大小の画面で確認した記録。",
+            "status": "done",
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-20-whole-app-ux-coherence.md"
+            ],
+            "basis": "recorded"
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_26",
+          "label": "起動と操作を軽くした記録",
+          "note": "状態：完了。根拠区分：recorded",
+          "sourceRecord": {
+            "id": "performance-result",
+            "item_id": "performance",
+            "title": "起動と操作を軽くした記録",
+            "description": "描画準備と再計算を減らした記録。",
+            "status": "done",
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-23-island-performance.md"
+            ],
+            "basis": "recorded"
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_27",
+          "label": "実端末の起動記録（予定）",
+          "note": "状態：提案・未採用。根拠区分：推測・提案",
+          "sourceRecord": {
+            "id": "device-result",
+            "item_id": "device",
+            "title": "実端末の起動記録（予定）",
+            "description": "端末・参加者などの確認条件。Yuへの回答依頼ではありません。",
+            "status": "proposal",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "basis": "proposal"
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_28",
+          "label": "Safariの写真保存記録（予定）",
+          "note": "状態：提案・未採用。根拠区分：推測・提案",
+          "sourceRecord": {
+            "id": "photo-result",
+            "item_id": "photo",
+            "title": "Safariの写真保存記録（予定）",
+            "description": "端末・参加者などの確認条件。Yuへの回答依頼ではありません。",
+            "status": "proposal",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "basis": "proposal"
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_29",
+          "label": "実機の音と操作記録（予定）",
+          "note": "状態：提案・未採用。根拠区分：推測・提案",
+          "sourceRecord": {
+            "id": "sound-result",
+            "item_id": "sound",
+            "title": "実機の音と操作記録（予定）",
+            "description": "端末・参加者などの確認条件。Yuへの回答依頼ではありません。",
+            "status": "proposal",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "basis": "proposal"
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_30",
+          "label": "保存の引き継ぎ記録（予定）",
+          "note": "状態：提案・未採用。根拠区分：推測・提案",
+          "sourceRecord": {
+            "id": "save-result",
+            "item_id": "save",
+            "title": "保存の引き継ぎ記録（予定）",
+            "description": "端末・参加者などの確認条件。Yuへの回答依頼ではありません。",
+            "status": "proposal",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "basis": "proposal"
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_31",
+          "label": "理解と再訪の観察記録（予定）",
+          "note": "状態：提案・未採用。根拠区分：推測・提案",
+          "sourceRecord": {
+            "id": "return-result",
+            "item_id": "return",
+            "title": "理解と再訪の観察記録（予定）",
+            "description": "端末・参加者などの確認条件。Yuへの回答依頼ではありません。",
+            "status": "proposal",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "basis": "proposal"
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_32",
+          "label": "確認できた範囲と残ること",
+          "note": "状態：完了。方向の選択は記録済み。最終美術の採用とは別。",
+          "sourceRecord": {
+            "id": "direction-check",
+            "artifact_id": "direction-result",
+            "title": "確認できた範囲と残ること",
+            "result": "方向の選択は記録済み。最終美術の採用とは別。",
+            "status": "done",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/adr/2026-10-11-authored-place-world-policy.md"
+            ]
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_33",
+          "label": "確認できた範囲と残ること",
+          "note": "状態：合格。対象の統合検査は合格と記録。通常保存や全島の通行は別。",
+          "sourceRecord": {
+            "id": "diagnosis-check",
+            "artifact_id": "diagnosis-result",
+            "title": "確認できた範囲と残ること",
+            "result": "対象の統合検査は合格と記録。通常保存や全島の通行は別。",
+            "status": "pass",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md"
+            ]
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_34",
+          "label": "確認できた範囲と残ること",
+          "note": "状態：未確認。輪郭の違いと診断範囲の動作は確認済み。見た目の仕上げ・説明なしの理解・通常保存・公開は未確認。",
+          "sourceRecord": {
+            "id": "inlet-check",
+            "artifact_id": "inlet-result",
+            "title": "確認できた範囲と残ること",
+            "result": "輪郭の違いと診断範囲の動作は確認済み。見た目の仕上げ・説明なしの理解・通常保存・公開は未確認。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/report.json"
+            ]
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_35",
+          "label": "確認できた範囲と残ること",
+          "note": "状態：未確認。輪郭採用後の計画。全島の実利用は未完。",
+          "sourceRecord": {
+            "id": "growth-work-check",
+            "artifact_id": "growth-work-result",
+            "title": "確認できた範囲と残ること",
+            "result": "輪郭採用後の計画。全島の実利用は未完。",
+            "status": "unknown",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ]
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_36",
+          "label": "確認できた範囲と残ること",
+          "note": "状態：未確認。前の成長と実利用の後。今回の輪郭を使った通常体験は未確認。",
+          "sourceRecord": {
+            "id": "normal-check",
+            "artifact_id": "normal-result",
+            "title": "確認できた範囲と残ること",
+            "result": "前の成長と実利用の後。今回の輪郭を使った通常体験は未確認。",
+            "status": "unknown",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ]
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_37",
+          "label": "確認できた範囲と残ること",
+          "note": "状態：未確認。後続計画。美術・実機・公開の合格は未確認。",
+          "sourceRecord": {
+            "id": "finish-check",
+            "artifact_id": "finish-result",
+            "title": "確認できた範囲と残ること",
+            "result": "後続計画。美術・実機・公開の合格は未確認。",
+            "status": "unknown",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ]
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_38",
+          "label": "確認できた範囲と残ること",
+          "note": "状態：未確認。公開時の配信先と対象版の照合、実利用者の保存・実機の確認が残る。",
+          "sourceRecord": {
+            "id": "release-check",
+            "artifact_id": "release-result",
+            "title": "確認できた範囲と残ること",
+            "result": "公開時の配信先と対象版の照合、実利用者の保存・実機の確認が残る。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-10-05-growing-island-release.md"
+            ]
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_39",
+          "label": "確認できた範囲と残ること",
+          "note": "状態：未確認。実機の音と読み上げ、子どもの理解と再訪は未確認。",
+          "sourceRecord": {
+            "id": "experience-check",
+            "artifact_id": "experience-result",
+            "title": "確認できた範囲と残ること",
+            "result": "実機の音と読み上げ、子どもの理解と再訪は未確認。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-20-whole-app-ux-coherence.md"
+            ]
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_40",
+          "label": "確認できた範囲と残ること",
+          "note": "状態：未確認。操作の待ち時間は未達。実機の起動・電池・負荷は未確認。",
+          "sourceRecord": {
+            "id": "performance-check",
+            "artifact_id": "performance-result",
+            "title": "確認できた範囲と残ること",
+            "result": "操作の待ち時間は未達。実機の起動・電池・負荷は未確認。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-23-island-performance.md"
+            ]
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_41",
+          "label": "確認できた範囲と残ること",
+          "note": "状態：未確認。以前の改善を現在の端末での解消に読み替えない。",
+          "sourceRecord": {
+            "id": "device-check",
+            "artifact_id": "device-result",
+            "title": "確認できた範囲と残ること",
+            "result": "以前の改善を現在の端末での解消に読み替えない。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ]
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_42",
+          "label": "確認できた範囲と残ること",
+          "note": "状態：未確認。過去に失敗と成功の履歴あり。最新候補は未確認。",
+          "sourceRecord": {
+            "id": "photo-check",
+            "artifact_id": "photo-result",
+            "title": "確認できた範囲と残ること",
+            "result": "過去に失敗と成功の履歴あり。最新候補は未確認。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ]
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_43",
+          "label": "確認できた範囲と残ること",
+          "note": "状態：未確認。自動確認はあるが、実機の聴感と負荷は未確認。",
+          "sourceRecord": {
+            "id": "sound-check",
+            "artifact_id": "sound-result",
+            "title": "確認できた範囲と残ること",
+            "result": "自動確認はあるが、実機の聴感と負荷は未確認。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ]
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_44",
+          "label": "確認できた範囲と残ること",
+          "note": "状態：未確認。検証用データの移行結果がある。実利用者の保存は未確認。",
+          "sourceRecord": {
+            "id": "save-check",
+            "artifact_id": "save-result",
+            "title": "確認できた範囲と残ること",
+            "result": "検証用データの移行結果がある。実利用者の保存は未確認。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ]
+          },
+          "sourceRef": "source_3"
+        },
+        {
+          "id": "node_45",
+          "label": "確認できた範囲と残ること",
+          "note": "状態：未確認。現在の島で自分から学ぶか、翌日も戻るかは未確認。",
+          "sourceRecord": {
+            "id": "return-check",
+            "artifact_id": "return-result",
+            "title": "確認できた範囲と残ること",
+            "result": "現在の島で自分から学ぶか、翌日も戻るかは未確認。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ]
+          },
+          "sourceRef": "source_3"
+        }
+      ],
+      "edges": [
+        {
+          "id": "relation_0",
+          "from": "node_0",
+          "to": "node_1",
+          "label": "所属：段階",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_1",
+          "from": "node_0",
+          "to": "node_2",
+          "label": "所属：段階",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_2",
+          "from": "node_0",
+          "to": "node_3",
+          "label": "所属：段階",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_3",
+          "from": "node_1",
+          "to": "node_4",
+          "label": "所属：仕事",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_4",
+          "from": "node_1",
+          "to": "node_5",
+          "label": "所属：仕事",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_5",
+          "from": "node_1",
+          "to": "node_6",
+          "label": "所属：仕事",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_6",
+          "from": "node_2",
+          "to": "node_7",
+          "label": "所属：仕事",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_7",
+          "from": "node_3",
+          "to": "node_8",
+          "label": "所属：仕事",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_8",
+          "from": "node_3",
+          "to": "node_9",
+          "label": "所属：仕事",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_9",
+          "from": "node_3",
+          "to": "node_10",
+          "label": "所属：仕事",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_10",
+          "from": "node_3",
+          "to": "node_11",
+          "label": "所属：仕事",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_11",
+          "from": "node_3",
+          "to": "node_12",
+          "label": "所属：仕事",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_12",
+          "from": "node_3",
+          "to": "node_13",
+          "label": "所属：仕事",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_13",
+          "from": "node_3",
+          "to": "node_14",
+          "label": "所属：仕事",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_14",
+          "from": "node_3",
+          "to": "node_15",
+          "label": "所属：仕事",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_15",
+          "from": "node_3",
+          "to": "node_16",
+          "label": "所属：仕事",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_16",
+          "from": "node_3",
+          "to": "node_17",
+          "label": "所属：仕事",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_17",
+          "from": "node_4",
+          "to": "node_18",
+          "label": "所属：成果物",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_18",
+          "from": "node_5",
+          "to": "node_19",
+          "label": "所属：成果物",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_19",
+          "from": "node_6",
+          "to": "node_20",
+          "label": "所属：成果物",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_20",
+          "from": "node_7",
+          "to": "node_21",
+          "label": "所属：成果物",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_21",
+          "from": "node_8",
+          "to": "node_22",
+          "label": "所属：成果物",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_22",
+          "from": "node_9",
+          "to": "node_23",
+          "label": "所属：成果物",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_23",
+          "from": "node_10",
+          "to": "node_24",
+          "label": "所属：成果物",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_24",
+          "from": "node_11",
+          "to": "node_25",
+          "label": "所属：成果物",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_25",
+          "from": "node_12",
+          "to": "node_26",
+          "label": "所属：成果物",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_26",
+          "from": "node_13",
+          "to": "node_27",
+          "label": "所属：成果物",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_27",
+          "from": "node_14",
+          "to": "node_28",
+          "label": "所属：成果物",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_28",
+          "from": "node_15",
+          "to": "node_29",
+          "label": "所属：成果物",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_29",
+          "from": "node_16",
+          "to": "node_30",
+          "label": "所属：成果物",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_30",
+          "from": "node_17",
+          "to": "node_31",
+          "label": "所属：成果物",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_31",
+          "from": "node_18",
+          "to": "node_32",
+          "label": "所属：検査結果",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_32",
+          "from": "node_19",
+          "to": "node_33",
+          "label": "所属：検査結果",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_33",
+          "from": "node_20",
+          "to": "node_34",
+          "label": "所属：検査結果",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_34",
+          "from": "node_21",
+          "to": "node_35",
+          "label": "所属：検査結果",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_35",
+          "from": "node_22",
+          "to": "node_36",
+          "label": "所属：検査結果",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_36",
+          "from": "node_23",
+          "to": "node_37",
+          "label": "所属：検査結果",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_37",
+          "from": "node_24",
+          "to": "node_38",
+          "label": "所属：検査結果",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_38",
+          "from": "node_25",
+          "to": "node_39",
+          "label": "所属：検査結果",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_39",
+          "from": "node_26",
+          "to": "node_40",
+          "label": "所属：検査結果",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_40",
+          "from": "node_27",
+          "to": "node_41",
+          "label": "所属：検査結果",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_41",
+          "from": "node_28",
+          "to": "node_42",
+          "label": "所属：検査結果",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_42",
+          "from": "node_29",
+          "to": "node_43",
+          "label": "所属：検査結果",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_43",
+          "from": "node_30",
+          "to": "node_44",
+          "label": "所属：検査結果",
+          "kind": "contains"
+        },
+        {
+          "id": "relation_44",
+          "from": "node_31",
+          "to": "node_45",
+          "label": "所属：検査結果",
+          "kind": "contains"
+        },
+        {
+          "sourceRecord": {
+            "to": "inlet",
+            "reason": "選んだ入り江の方向から粗い本体を比較する。",
+            "basis": "recorded",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md"
+            ],
+            "from": "direction"
+          },
+          "id": "relation_45",
+          "from": "node_4",
+          "to": "node_6",
+          "label": "選んだ入り江の方向から粗い本体を比較する。",
+          "kind": "dependency"
+        },
+        {
+          "sourceRecord": {
+            "to": "inlet",
+            "reason": "同じ所有状態の床比較を成立させてから粗い本体を評価する。",
+            "basis": "recorded",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md"
+            ],
+            "from": "diagnosis"
+          },
+          "id": "relation_46",
+          "from": "node_5",
+          "to": "node_6",
+          "label": "同じ所有状態の床比較を成立させてから粗い本体を評価する。",
+          "kind": "dependency"
+        },
+        {
+          "sourceRecord": {
+            "to": "growth-work",
+            "reason": "輪郭を採用した場合だけ、成長と実利用へ進む。",
+            "basis": "recorded",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md"
+            ],
+            "from": "inlet"
+          },
+          "id": "relation_47",
+          "from": "node_6",
+          "to": "node_7",
+          "label": "輪郭を採用した場合だけ、成長と実利用へ進む。",
+          "kind": "dependency"
+        },
+        {
+          "sourceRecord": {
+            "to": "normal",
+            "reason": "成長と実利用の後に、通常取得・保存・拡張を扱う。",
+            "basis": "recorded",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md"
+            ],
+            "from": "growth-work"
+          },
+          "id": "relation_48",
+          "from": "node_7",
+          "to": "node_8",
+          "label": "成長と実利用の後に、通常取得・保存・拡張を扱う。",
+          "kind": "dependency"
+        },
+        {
+          "sourceRecord": {
+            "to": "finish",
+            "reason": "統合後の美術と配布は後続として判定する。",
+            "basis": "recorded",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md"
+            ],
+            "from": "normal"
+          },
+          "id": "relation_49",
+          "from": "node_8",
+          "to": "node_9",
+          "label": "統合後の美術と配布は後続として判定する。",
+          "kind": "dependency"
+        }
+      ],
+      "sourceData": {
+        "schemaVersion": 2,
+        "title": "島づくりの作業の流れ",
+        "description": "子どもが戻りたくなる島へ。いまは入り江の輪郭を選ぶ段階です。",
+        "as_of": "2026-10-19",
+        "scope_note": "共有キュー・親タスク・判断記録・保存された検査結果の閲覧用投影。進捗の正本は元の記録。計画を完了にせず、自動検査を公開や利用者の受入へ読み替えません。 三つの段階帯は親タスクの工程を閲覧用にまとめたもの。関連仕事と確認条件を最後の帯に併記するが、図の掲載位置を新しい着手順・依存にしない。 育成規則v0.4の実装は共有キューの別タスクで追跡し、既存の入り江の美術採用待ちを完了に変更しない。",
+        "nodes": [
+          {
+            "id": "recorded",
+            "title": "記録を確認済み",
+            "description": "過去に完了した制作・診断の記録"
+          },
+          {
+            "id": "decision",
+            "title": "輪郭の採用待ち",
+            "description": "次の制作へ進むかを利用者が判断する"
+          },
+          {
+            "id": "waiting",
+            "title": "前の工程待ち",
+            "description": "計画として登録。着手を意味しない"
+          },
+          {
+            "id": "conditions",
+            "title": "端末・参加者の準備待ち",
+            "description": "回答依頼とは別の実物での確認"
+          },
+          {
+            "id": "queue",
+            "title": "共有キューの関連仕事",
+            "description": "関連仕事として登録。同時開始や新たな依存を意味しない。"
+          }
+        ],
+        "goals": [
+          {
+            "id": "island",
+            "title": "自分から学び、育つ島へまた戻りたくなる",
+            "status": "active",
+            "evidence": [
+              "CONSTITUTION.md",
+              ".agents/tasks/TASKS.md"
+            ]
+          }
+        ],
+        "stages": [
+          {
+            "id": "shape",
+            "goal_id": "island",
+            "title": "形を比べる",
+            "status": "stopped",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ]
+          },
+          {
+            "id": "growth",
+            "goal_id": "island",
+            "title": "育ち方を作る",
+            "status": "queued",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ]
+          },
+          {
+            "id": "continuity",
+            "goal_id": "island",
+            "title": "続けられる形へ",
+            "status": "queued",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ]
+          }
+        ],
+        "items": [
+          {
+            "id": "direction",
+            "title": "入り江の方向を決める",
+            "stage_id": "shape",
+            "repo": "sansu",
+            "current_node": "recorded",
+            "status": "done",
+            "why_stopped": null,
+            "next": "元の記録に沿って一件ずつ確認する。",
+            "order": 1,
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/adr/2026-10-11-authored-place-world-policy.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          {
+            "id": "diagnosis",
+            "title": "床の比較方法を直す",
+            "stage_id": "shape",
+            "repo": "sansu",
+            "current_node": "recorded",
+            "status": "done",
+            "why_stopped": null,
+            "next": "元の記録に沿って一件ずつ確認する。",
+            "order": 2,
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          {
+            "id": "inlet",
+            "title": "入り江の輪郭を採用するか決める",
+            "stage_id": "shape",
+            "repo": "sansu",
+            "current_node": "decision",
+            "status": "stopped",
+            "why_stopped": "輪郭の採用が未決定。採用前に成長や通常保存の制作を先行しない。",
+            "next": "比較の記録を確認し、進める・直して比べる・保留するを選ぶ。",
+            "order": 3,
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/report.json"
+            ],
+            "needs_yu": {
+              "required": true,
+              "content": "入り江の輪郭を採り、成長と実利用の制作へ進むか。進める／直して比べる／保留する。採用で次の制作が進み、公開は別の判断。",
+              "options": [
+                {
+                  "label": "進める",
+                  "effect": "成長と実利用を一件ずつ制作",
+                  "next_work": "単独から接続・成熟・利用・分離・復元の旅程"
+                },
+                {
+                  "label": "直して比べる",
+                  "effect": "輪郭を再比較",
+                  "next_work": "気になる形を指定して粗い形を直す"
+                },
+                {
+                  "label": "保留する",
+                  "effect": "次の工程は開始しない",
+                  "next_work": "理由と再開条件を残す"
+                }
+              ],
+              "recommendation": "進める",
+              "reason": "既存の判断カードのおすすめ。所有内容を保った輪郭差と対象動作は確認済み。美術完成と理解は未確認。",
+              "evidence_href": "#decisions",
+              "confirmed": "輪郭差と診断範囲の動作",
+              "missing": "美術の仕上げと独立した理解の確認",
+              "resume_condition": "利用者が輪郭を採用する"
+            }
+          },
+          {
+            "id": "growth-work",
+            "title": "成長と実利用を一旅程ずつ作る",
+            "stage_id": "growth",
+            "repo": "sansu",
+            "current_node": "waiting",
+            "status": "queued",
+            "why_stopped": null,
+            "next": "元の記録に沿って一件ずつ確認する。",
+            "order": 4,
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          {
+            "id": "normal",
+            "title": "通常取得・保存・拡張をつなぐ",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "waiting",
+            "status": "queued",
+            "why_stopped": null,
+            "next": "元の記録に沿って一件ずつ確認する。",
+            "order": 5,
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          {
+            "id": "finish",
+            "title": "美術と配布を仕上げる",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "waiting",
+            "status": "queued",
+            "why_stopped": null,
+            "next": "元の記録に沿って一件ずつ確認する。",
+            "order": 6,
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          {
+            "id": "release",
+            "title": "公開候補をまとめる",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "queue",
+            "status": "queued",
+            "why_stopped": null,
+            "next": "関連する仕事。共有キューの順で、必要な一件だけ開始する。",
+            "order": 7,
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-10-05-growing-island-release.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          {
+            "id": "experience",
+            "title": "学習・島・家の往復を確かめる",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "queue",
+            "status": "queued",
+            "why_stopped": null,
+            "next": "関連する仕事。共有キューの順で、必要な一件だけ開始する。",
+            "order": 8,
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-20-whole-app-ux-coherence.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          {
+            "id": "performance",
+            "title": "起動と操作を軽くする",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "queue",
+            "status": "queued",
+            "why_stopped": null,
+            "next": "関連する仕事。共有キューの順で、必要な一件だけ開始する。",
+            "order": 9,
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-23-island-performance.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          {
+            "id": "device",
+            "title": "実機の起動を確かめる",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "conditions",
+            "status": "stopped",
+            "why_stopped": "同じ端末と候補が必要。",
+            "next": "同じ版で確認条件を用意し、担当タスクへ結果を戻す。",
+            "order": 10,
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          {
+            "id": "photo",
+            "title": "Safariの写真保存を確かめる",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "conditions",
+            "status": "stopped",
+            "why_stopped": "実Safari・ホーム画面版が必要。",
+            "next": "同じ版で確認条件を用意し、担当タスクへ結果を戻す。",
+            "order": 11,
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          {
+            "id": "sound",
+            "title": "実機の音と操作を確かめる",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "conditions",
+            "status": "stopped",
+            "why_stopped": "実スピーカーと入力・読み上げの確認が必要。",
+            "next": "同じ版で確認条件を用意し、担当タスクへ結果を戻す。",
+            "order": 12,
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          {
+            "id": "save",
+            "title": "保存の引き継ぎを確かめる",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "conditions",
+            "status": "stopped",
+            "why_stopped": "実利用者の対象端末と復旧手段が必要。",
+            "next": "同じ版で確認条件を用意し、担当タスクへ結果を戻す。",
+            "order": 13,
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          },
+          {
+            "id": "return",
+            "title": "子どもの理解と再訪を確かめる",
+            "stage_id": "continuity",
+            "repo": "sansu",
+            "current_node": "conditions",
+            "status": "stopped",
+            "why_stopped": "参加者と観察の準備が必要。",
+            "next": "同じ版で確認条件を用意し、担当タスクへ結果を戻す。",
+            "order": 14,
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "needs_yu": {
+              "required": false,
+              "content": ""
+            }
+          }
+        ],
+        "artifacts": [
+          {
+            "id": "direction-result",
+            "item_id": "direction",
+            "title": "選んだ入り江の方向",
+            "description": "以前の三案を見直し、水面を囲む開いた入り江を選択。",
+            "status": "done",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/adr/2026-10-11-authored-place-world-policy.md"
+            ],
+            "basis": "recorded"
+          },
+          {
+            "id": "diagnosis-result",
+            "item_id": "diagnosis",
+            "title": "床の比較と対象検査",
+            "description": "異なる配置の床を比較していた前提を直し、同じ状態の床どうしを比較。",
+            "status": "done",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md"
+            ],
+            "basis": "recorded"
+          },
+          {
+            "id": "inlet-result",
+            "item_id": "inlet",
+            "title": "入り江の比較画面",
+            "description": "同じ家と木を置いた三配置、分離・復元、回転、小画面の実画面。",
+            "status": "done",
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/report.json"
+            ],
+            "basis": "recorded"
+          },
+          {
+            "id": "growth-work-result",
+            "item_id": "growth-work",
+            "title": "成長と編集の一旅程（計画）",
+            "description": "単独→接続→成熟→住人の利用→分離→復元を一旅程ずつ成立させる計画。",
+            "status": "proposal",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ],
+            "basis": "proposal"
+          },
+          {
+            "id": "normal-result",
+            "item_id": "normal",
+            "title": "通常体験と保存の統合（計画）",
+            "description": "通常取得・学習往復・本人保存・地区拡張・通信なしの利用と更新を個別に確かめる計画。",
+            "status": "proposal",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ],
+            "basis": "proposal"
+          },
+          {
+            "id": "finish-result",
+            "item_id": "finish",
+            "title": "美術と配布の判定（計画）",
+            "description": "全景・近景・小画面で採用見本と比較し、実機・理解・公開を分けて判定する計画。",
+            "status": "proposal",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ],
+            "basis": "proposal"
+          },
+          {
+            "id": "release-result",
+            "item_id": "release",
+            "title": "固定した公開候補の記録",
+            "description": "過去の固定候補で学習・保存・更新を手元確認した記録。",
+            "status": "done",
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-10-05-growing-island-release.md"
+            ],
+            "basis": "recorded"
+          },
+          {
+            "id": "experience-result",
+            "item_id": "experience",
+            "title": "学習・島・家を往復した記録",
+            "description": "初回から取得・配置、家と本、同じ学習への復帰を大小の画面で確認した記録。",
+            "status": "done",
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-20-whole-app-ux-coherence.md"
+            ],
+            "basis": "recorded"
+          },
+          {
+            "id": "performance-result",
+            "item_id": "performance",
+            "title": "起動と操作を軽くした記録",
+            "description": "描画準備と再計算を減らした記録。",
+            "status": "done",
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-23-island-performance.md"
+            ],
+            "basis": "recorded"
+          },
+          {
+            "id": "device-result",
+            "item_id": "device",
+            "title": "実端末の起動記録（予定）",
+            "description": "端末・参加者などの確認条件。Yuへの回答依頼ではありません。",
+            "status": "proposal",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "basis": "proposal"
+          },
+          {
+            "id": "photo-result",
+            "item_id": "photo",
+            "title": "Safariの写真保存記録（予定）",
+            "description": "端末・参加者などの確認条件。Yuへの回答依頼ではありません。",
+            "status": "proposal",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "basis": "proposal"
+          },
+          {
+            "id": "sound-result",
+            "item_id": "sound",
+            "title": "実機の音と操作記録（予定）",
+            "description": "端末・参加者などの確認条件。Yuへの回答依頼ではありません。",
+            "status": "proposal",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "basis": "proposal"
+          },
+          {
+            "id": "save-result",
+            "item_id": "save",
+            "title": "保存の引き継ぎ記録（予定）",
+            "description": "端末・参加者などの確認条件。Yuへの回答依頼ではありません。",
+            "status": "proposal",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "basis": "proposal"
+          },
+          {
+            "id": "return-result",
+            "item_id": "return",
+            "title": "理解と再訪の観察記録（予定）",
+            "description": "端末・参加者などの確認条件。Yuへの回答依頼ではありません。",
+            "status": "proposal",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ],
+            "basis": "proposal"
+          }
+        ],
+        "checks": [
+          {
+            "id": "direction-check",
+            "artifact_id": "direction-result",
+            "title": "確認できた範囲と残ること",
+            "result": "方向の選択は記録済み。最終美術の採用とは別。",
+            "status": "done",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/adr/2026-10-11-authored-place-world-policy.md"
+            ]
+          },
+          {
+            "id": "diagnosis-check",
+            "artifact_id": "diagnosis-result",
+            "title": "確認できた範囲と残ること",
+            "result": "対象の統合検査は合格と記録。通常保存や全島の通行は別。",
+            "status": "pass",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md"
+            ]
+          },
+          {
+            "id": "inlet-check",
+            "artifact_id": "inlet-result",
+            "title": "確認できた範囲と残ること",
+            "result": "輪郭の違いと診断範囲の動作は確認済み。見た目の仕上げ・説明なしの理解・通常保存・公開は未確認。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md",
+              "docs/design/2026-10-13-open-inlet-rough-v1-runtime/report.json"
+            ]
+          },
+          {
+            "id": "growth-work-check",
+            "artifact_id": "growth-work-result",
+            "title": "確認できた範囲と残ること",
+            "result": "輪郭採用後の計画。全島の実利用は未完。",
+            "status": "unknown",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ]
+          },
+          {
+            "id": "normal-check",
+            "artifact_id": "normal-result",
+            "title": "確認できた範囲と残ること",
+            "result": "前の成長と実利用の後。今回の輪郭を使った通常体験は未確認。",
+            "status": "unknown",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ]
+          },
+          {
+            "id": "finish-check",
+            "artifact_id": "finish-result",
+            "title": "確認できた範囲と残ること",
+            "result": "後続計画。美術・実機・公開の合格は未確認。",
+            "status": "unknown",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+              ".agents/tasks/TASKS.md"
+            ]
+          },
+          {
+            "id": "release-check",
+            "artifact_id": "release-result",
+            "title": "確認できた範囲と残ること",
+            "result": "公開時の配信先と対象版の照合、実利用者の保存・実機の確認が残る。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-10-05-growing-island-release.md"
+            ]
+          },
+          {
+            "id": "experience-check",
+            "artifact_id": "experience-result",
+            "title": "確認できた範囲と残ること",
+            "result": "実機の音と読み上げ、子どもの理解と再訪は未確認。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-20-whole-app-ux-coherence.md"
+            ]
+          },
+          {
+            "id": "performance-check",
+            "artifact_id": "performance-result",
+            "title": "確認できた範囲と残ること",
+            "result": "操作の待ち時間は未達。実機の起動・電池・負荷は未確認。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/TASKS.md",
+              "docs/tasks/active/2026-09-23-island-performance.md"
+            ]
+          },
+          {
+            "id": "device-check",
+            "artifact_id": "device-result",
+            "title": "確認できた範囲と残ること",
+            "result": "以前の改善を現在の端末での解消に読み替えない。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ]
+          },
+          {
+            "id": "photo-check",
+            "artifact_id": "photo-result",
+            "title": "確認できた範囲と残ること",
+            "result": "過去に失敗と成功の履歴あり。最新候補は未確認。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ]
+          },
+          {
+            "id": "sound-check",
+            "artifact_id": "sound-result",
+            "title": "確認できた範囲と残ること",
+            "result": "自動確認はあるが、実機の聴感と負荷は未確認。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ]
+          },
+          {
+            "id": "save-check",
+            "artifact_id": "save-result",
+            "title": "確認できた範囲と残ること",
+            "result": "検証用データの移行結果がある。実利用者の保存は未確認。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ]
+          },
+          {
+            "id": "return-check",
+            "artifact_id": "return-result",
+            "title": "確認できた範囲と残ること",
+            "result": "現在の島で自分から学ぶか、翌日も戻るかは未確認。",
+            "status": "unknown",
+            "evidence": [
+              ".agents/tasks/BLOCKED.md"
+            ]
+          }
+        ],
+        "dependencies": [
+          {
+            "to": "inlet",
+            "reason": "選んだ入り江の方向から粗い本体を比較する。",
+            "basis": "recorded",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md"
+            ],
+            "from": "direction"
+          },
+          {
+            "to": "inlet",
+            "reason": "同じ所有状態の床比較を成立させてから粗い本体を評価する。",
+            "basis": "recorded",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md"
+            ],
+            "from": "diagnosis"
+          },
+          {
+            "to": "growth-work",
+            "reason": "輪郭を採用した場合だけ、成長と実利用へ進む。",
+            "basis": "recorded",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md"
+            ],
+            "from": "inlet"
+          },
+          {
+            "to": "normal",
+            "reason": "成長と実利用の後に、通常取得・保存・拡張を扱う。",
+            "basis": "recorded",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md"
+            ],
+            "from": "growth-work"
+          },
+          {
+            "to": "finish",
+            "reason": "統合後の美術と配布は後続として判定する。",
+            "basis": "recorded",
+            "evidence": [
+              "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md"
+            ],
+            "from": "normal"
+          }
+        ],
+        "summary": {
+          "current_item": "inlet",
+          "stage_ids": [
+            "shape",
+            "growth",
+            "continuity"
+          ]
+        },
+        "source_hashes": {
+          ".agents/tasks/BLOCKED.md": "2ce9fc1e3fb45a558af66f0c1b590c23ade05b27cac4bcc75a6d0122c067e746",
+          ".agents/tasks/TASKS.md": "4a6e20d8c341c3e0f3c610a8a1ac764ad61dd68fe2321ceaffb53382c7d4715b",
+          "CONSTITUTION.md": "5ef2541bc4de9439200c3a0b2a80c75800443d4f9b3a9230b20be09f428e480d",
+          "docs/adr/2026-10-11-authored-place-world-policy.md": "764a252c047b784b3a78516ac421f6fe9c4f2865a51bf13eb16ac1afd6347af6",
+          "docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md": "be86195cb964abd5217995ce8fbf26f32264b0a8b1e7ffcf311f2172a41760a6",
+          "docs/design/2026-10-13-open-inlet-rough-v1-runtime/report.json": "ac2b3643f8032d8ed85dd7ebc8ae6999ac5fec5b8c822106417566521bd38e23",
+          "docs/tasks/active/2026-09-20-whole-app-ux-coherence.md": "f88ac90542d88db1a5ceea185ae482d3cf855efcc2fee74695240d73b455ba17",
+          "docs/tasks/active/2026-09-23-island-performance.md": "7ad513c708ef9271c6c4ff66ca46b638e60892e627380f2bc1452d755b8a7e17",
+          "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md": "a848f6d47f1f9aef0ebb7fcd758ac085537bd8c11b9b437f1a9d961ce2ec481f",
+          "docs/tasks/active/2026-10-05-growing-island-release.md": "a5b06db72a5ff7a2dd271669948df0ef503f22b81e47a56d00b1ad359518fafe"
+        },
+        "source_history": [
+          {
+            "commit": "5993ee63",
+            "fact": "直近の保存済み履歴は既存の判断カードの日本語・比較画像・確認条件の改善。今回の流れ図の完了を意味しない。"
+          }
+        ]
+      },
+      "code": "flowchart TD\n    node_0[自分から学び、育つ島へまた戻りたくなる]\n    node_1[形を比べる]\n    node_2[育ち方を作る]\n    node_3[続けられる形へ]\n    node_4[入り江の方向を決める]\n    node_5[床の比較方法を直す]\n    node_6[入り江の輪郭を採用するか決める]\n    node_7[成長と実利用を一旅程ずつ作る]\n    node_8[通常取得・保存・拡張をつなぐ]\n    node_9[美術と配布を仕上げる]\n    node_10[公開候補をまとめる]\n    node_11[学習・島・家の往復を確かめる]\n    node_12[起動と操作を軽くする]\n    node_13[実機の起動を確かめる]\n    node_14[Safariの写真保存を確かめる]\n    node_15[実機の音と操作を確かめる]\n    node_16[保存の引き継ぎを確かめる]\n    node_17[子どもの理解と再訪を確かめる]\n    node_18[選んだ入り江の方向]\n    node_19[床の比較と対象検査]\n    node_20[入り江の比較画面]\n    node_21[成長と編集の一旅程（計画）]\n    node_22[通常体験と保存の統合（計画）]\n    node_23[美術と配布の判定（計画）]\n    node_24[固定した公開候補の記録]\n    node_25[学習・島・家を往復した記録]\n    node_26[起動と操作を軽くした記録]\n    node_27[実端末の起動記録（予定）]\n    node_28[Safariの写真保存記録（予定）]\n    node_29[実機の音と操作記録（予定）]\n    node_30[保存の引き継ぎ記録（予定）]\n    node_31[理解と再訪の観察記録（予定）]\n    node_32[確認できた範囲と残ること]\n    node_33[確認できた範囲と残ること]\n    node_34[確認できた範囲と残ること]\n    node_35[確認できた範囲と残ること]\n    node_36[確認できた範囲と残ること]\n    node_37[確認できた範囲と残ること]\n    node_38[確認できた範囲と残ること]\n    node_39[確認できた範囲と残ること]\n    node_40[確認できた範囲と残ること]\n    node_41[確認できた範囲と残ること]\n    node_42[確認できた範囲と残ること]\n    node_43[確認できた範囲と残ること]\n    node_44[確認できた範囲と残ること]\n    node_45[確認できた範囲と残ること]\n    node_0[自分から学び、育つ島へまた戻りたくなる] -->|所属：段階| node_1[形を比べる]\n    node_0[自分から学び、育つ島へまた戻りたくなる] -->|所属：段階| node_2[育ち方を作る]\n    node_0[自分から学び、育つ島へまた戻りたくなる] -->|所属：段階| node_3[続けられる形へ]\n    node_1[形を比べる] -->|所属：仕事| node_4[入り江の方向を決める]\n    node_1[形を比べる] -->|所属：仕事| node_5[床の比較方法を直す]\n    node_1[形を比べる] -->|所属：仕事| node_6[入り江の輪郭を採用するか決める]\n    node_2[育ち方を作る] -->|所属：仕事| node_7[成長と実利用を一旅程ずつ作る]\n    node_3[続けられる形へ] -->|所属：仕事| node_8[通常取得・保存・拡張をつなぐ]\n    node_3[続けられる形へ] -->|所属：仕事| node_9[美術と配布を仕上げる]\n    node_3[続けられる形へ] -->|所属：仕事| node_10[公開候補をまとめる]\n    node_3[続けられる形へ] -->|所属：仕事| node_11[学習・島・家の往復を確かめる]\n    node_3[続けられる形へ] -->|所属：仕事| node_12[起動と操作を軽くする]\n    node_3[続けられる形へ] -->|所属：仕事| node_13[実機の起動を確かめる]\n    node_3[続けられる形へ] -->|所属：仕事| node_14[Safariの写真保存を確かめる]\n    node_3[続けられる形へ] -->|所属：仕事| node_15[実機の音と操作を確かめる]\n    node_3[続けられる形へ] -->|所属：仕事| node_16[保存の引き継ぎを確かめる]\n    node_3[続けられる形へ] -->|所属：仕事| node_17[子どもの理解と再訪を確かめる]\n    node_4[入り江の方向を決める] -->|所属：成果物| node_18[選んだ入り江の方向]\n    node_5[床の比較方法を直す] -->|所属：成果物| node_19[床の比較と対象検査]\n    node_6[入り江の輪郭を採用するか決める] -->|所属：成果物| node_20[入り江の比較画面]\n    node_7[成長と実利用を一旅程ずつ作る] -->|所属：成果物| node_21[成長と編集の一旅程（計画）]\n    node_8[通常取得・保存・拡張をつなぐ] -->|所属：成果物| node_22[通常体験と保存の統合（計画）]\n    node_9[美術と配布を仕上げる] -->|所属：成果物| node_23[美術と配布の判定（計画）]\n    node_10[公開候補をまとめる] -->|所属：成果物| node_24[固定した公開候補の記録]\n    node_11[学習・島・家の往復を確かめる] -->|所属：成果物| node_25[学習・島・家を往復した記録]\n    node_12[起動と操作を軽くする] -->|所属：成果物| node_26[起動と操作を軽くした記録]\n    node_13[実機の起動を確かめる] -->|所属：成果物| node_27[実端末の起動記録（予定）]\n    node_14[Safariの写真保存を確かめる] -->|所属：成果物| node_28[Safariの写真保存記録（予定）]\n    node_15[実機の音と操作を確かめる] -->|所属：成果物| node_29[実機の音と操作記録（予定）]\n    node_16[保存の引き継ぎを確かめる] -->|所属：成果物| node_30[保存の引き継ぎ記録（予定）]\n    node_17[子どもの理解と再訪を確かめる] -->|所属：成果物| node_31[理解と再訪の観察記録（予定）]\n    node_18[選んだ入り江の方向] -->|所属：検査結果| node_32[確認できた範囲と残ること]\n    node_19[床の比較と対象検査] -->|所属：検査結果| node_33[確認できた範囲と残ること]\n    node_20[入り江の比較画面] -->|所属：検査結果| node_34[確認できた範囲と残ること]\n    node_21[成長と編集の一旅程（計画）] -->|所属：検査結果| node_35[確認できた範囲と残ること]\n    node_22[通常体験と保存の統合（計画）] -->|所属：検査結果| node_36[確認できた範囲と残ること]\n    node_23[美術と配布の判定（計画）] -->|所属：検査結果| node_37[確認できた範囲と残ること]\n    node_24[固定した公開候補の記録] -->|所属：検査結果| node_38[確認できた範囲と残ること]\n    node_25[学習・島・家を往復した記録] -->|所属：検査結果| node_39[確認できた範囲と残ること]\n    node_26[起動と操作を軽くした記録] -->|所属：検査結果| node_40[確認できた範囲と残ること]\n    node_27[実端末の起動記録（予定）] -->|所属：検査結果| node_41[確認できた範囲と残ること]\n    node_28[Safariの写真保存記録（予定）] -->|所属：検査結果| node_42[確認できた範囲と残ること]\n    node_29[実機の音と操作記録（予定）] -->|所属：検査結果| node_43[確認できた範囲と残ること]\n    node_30[保存の引き継ぎ記録（予定）] -->|所属：検査結果| node_44[確認できた範囲と残ること]\n    node_31[理解と再訪の観察記録（予定）] -->|所属：検査結果| node_45[確認できた範囲と残ること]\n    node_4[入り江の方向を決める] -->|選んだ入り江の方向から粗い本体を比較する。| node_6[入り江の輪郭を採用するか決める]\n    node_5[床の比較方法を直す] -->|同じ所有状態の床比較を成立させてから粗い本体を評価する。| node_6[入り江の輪郭を採用するか決める]\n    node_6[入り江の輪郭を採用するか決める] -->|輪郭を採用した場合だけ、成長と実利用へ進む。| node_7[成長と実利用を一旅程ずつ作る]\n    node_7[成長と実利用を一旅程ずつ作る] -->|成長と実利用の後に、通常取得・保存・拡張を扱う。| node_8[通常取得・保存・拡張をつなぐ]\n    node_8[通常取得・保存・拡張をつなぐ] -->|統合後の美術と配布は後続として判定する。| node_9[美術と配布を仕上げる]\n",
+      "codeSha256": "a81a68d820de2d5cd3cec0815956ce552e57ee4e9dd4fd94dc18ce0fb1d8e45d",
+      "width": 2968,
+      "height": 1157
+    }
+  ],
+  "version": "1.1.1",
+  "sourceFingerprint": "72051b6c6d2f140a230bedd09f96699288c191b8c3e3516204b833de77c85a9a",
+  "renderer": "@viz-js/viz 3.31.0 / Graphviz 16.1.0",
+  "componentFingerprint": "fa6183527a7a60b18e5e48dc7d88add0894d4d74cd4440577eb7eca9de612cc4"
+}

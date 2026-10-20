@@ -8,6 +8,7 @@ import type { SceneLayout } from './sceneLayout';
 import { placeLeafGeometry, placeLeafSpine } from './placeLeafGeometry';
 import { buildPlaceSpring } from './placeSpringGeometry';
 import { buildPlaceShell } from './placeShellGeometry';
+import { buildCommunityRoofs } from './placeCommunityRoofGeometry';
 import { buildPlaceFlowerRoof } from './placeFlowerGeometry';
 import { buildPlaceRootRoom, ROOT_ROOM_ACTOR_HEIGHT } from './placeRootRoomGeometry';
 import { disposeGeometry } from '../three/primitives';
@@ -297,11 +298,21 @@ function buildGallery(g: GardenGeometry, state: GrowingState, layout: SceneLayou
 }
 
 
+/** A partial large grove replaces only its own main trees; every other owner stays visible. */
+export function visiblePlaceGeometry(places: readonly DerivedPlace[]): DerivedPlace[] {
+    const large = new Set(places.filter(place => place.ruleId === 'P02' && matured(place)).flatMap(place => place.mainIds));
+    return places.flatMap(place => {
+        if (place.ruleId !== 'P01' || !place.mainIds.some(id => large.has(id))) return [place];
+        const mainIds = place.mainIds.filter(id => !large.has(id));
+        return mainIds.length ? [{ ...place, mainIds, memberIds: place.memberIds.filter(id => !large.has(id)), shadeRefs: place.shadeRefs.filter(id => !large.has(id)) }] : [];
+    });
+}
+
 /** Derived structures contain no purchased objects and consume no game random draw. */
 export function buildPlaceGeometry(state: GrowingState, layout: SceneLayout, places: readonly DerivedPlace[], relations: readonly PlaceRelation[] = [], preview = false, native?: NativeGrowingKit, flowerSupport?: NativeAuthoredFlower, cove?: NativeAuthoredCove) {
     const root = new T.Group(); root.name = preview ? 'growing-place-preview' : 'growing-derived-places';
     root.userData.artCandidate = native ? 'native05-owned-runtime-v1' : 'native-05-place-runtime-v3';
-    for (const place of places) {
+    for (const place of visiblePlaceGeometry(places)) {
         const g = new GardenGeometry();
         g.root.name = `growing-place-${place.ruleId}-${place.variant}`;
         g.root.userData.placeId = place.id; g.root.userData.placeRevision = place.revision; g.root.userData.placeRule = place.ruleId;
@@ -309,6 +320,7 @@ export function buildPlaceGeometry(state: GrowingState, layout: SceneLayout, pla
         else if (place.family === 'grove') grove(g, state, layout, place);
         else if (place.family === 'flowers') buildPlaceFlowerRoof(g, state, layout, place, native, flowerSupport);
         else if (place.family === 'spring') buildPlaceSpring(g, state, layout, place, places);
+        else if (place.family === 'community' && place.variant === 'garden') buildCommunityRoofs(g, state, layout, place);
         else if (place.family === 'community' && place.variant !== 'garden') {
             if (layout.authoredFrameOptions?.cove) {
                 const assembly = layout.authoredCovePlan?.assemblies.find(item => item.placeId === place.id && item.placeRevision === place.revision);

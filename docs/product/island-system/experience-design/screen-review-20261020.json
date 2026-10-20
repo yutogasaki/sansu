@@ -1,0 +1,51 @@
+{
+  "at": "2026-10-20T01:46:37.132390+00:00",
+  "request": "チャッピーに画面みてもらって",
+  "conversation": "https://chatgpt.com/g/g-p-6ad58d0857b881918e46e346350848e7/c/6ad58fdd-7f00-83e8-b262-b3cb942b0702",
+  "requestMessage": "a331d0f3-de78-4de3-a0fb-463206fc833e",
+  "responseMessage": "de06f71f-e69c-44f2-a985-89788d71dae0",
+  "delivery": "Native Firefox attachment/send UI; app read_thread independently confirms posted user message with two image attachments and completed assistant reply. Assistant prose read from visible Firefox accessibility tree.",
+  "target": {
+    "viewport": [
+      390,
+      900
+    ],
+    "version": "development-local:637d442d-40e9-4d15-be80-e66a01936ef7",
+    "delivery": "snap-root-v1",
+    "candidate": "mystic-island-shore-garden-v18",
+    "nativeOwnedArt": false,
+    "kind": "Explicit mature diagnostics on local production; not normal acquisition or child observation"
+  },
+  "inputs": {
+    "evidence/architecture-roof-390.png": "072f548c91ea42bc4047be6a155d63cea5ea895012fa3690b48fc43704283ef7",
+    "evidence/architecture-gallery-unconfirmed-390.png": "e4fe72bcdf4ddcca29bf4eb30e44645b4d6fca97ed47deb826f3142b474ff894"
+  },
+  "replySummary": [
+    "大型建築の存在感は増したが、育てた場所に入り、遊びたいと感じる表現は未達という評価。",
+    "特に回廊全景は海の余白が強く、島・所有物・ぽこもこを識別しづらい。",
+    "共有屋根は家との支え、玄関、庭への入口と下の居場所が読めず、別の大きな建物を置いたように見える可能性。",
+    "大木は目立つが登り口・歩ける床の連続・出口が読めない。",
+    "次に直す一つとして、島/場所/人物を見渡せて、入口を発見できる標準画角を提案。"
+  ],
+  "reviewerProposals": [
+    "全景で島と地区、場所の選択で入口と床、人物の操作でぽこもこへ自然に焦点を移す。",
+    "支え・入口・実床と元の家の見た目を一致させる。",
+    "拡張など操作UIが育った場所より目立たないよう、使用中の主従を見直す。"
+  ],
+  "codexAssessment": [
+    "These are image-based design recommendations; not adopted specification or proof of child comprehension.",
+    "The small-island assessment is particularly clear for the gallery overview; do not treat both images as the same camera framing.",
+    "The reply inserted unrelated Tiny Isle/Fortnite visual examples despite the request for no references. Those images are not the app evidence and are not adopted benchmarks.",
+    "P04 actual-use validation is reported prior technical evidence, not independently reproduced by Chappy.",
+    "P02 use remains unresolved; the images establish neither camera-only causation nor a broken walking graph."
+  ],
+  "status": {
+    "externalReview": "received",
+    "artAcceptance": "HOLD",
+    "childComprehension": "unmeasured",
+    "galleryRuntime": "unresolved",
+    "applicationChangesThisTurn": false,
+    "commitPushDeployment": false
+  },
+  "screenshot": "evidence/chappy-screen-review-20261020.png"
+}

@@ -57,7 +57,7 @@
         "dev:website": "vite --config website/vite.config.js",
         "build:website": "vite build --config website/vite.config.js",
         "portal:build": "node scripts/standard-portal.mjs build",
-        "portal:verify": "node scripts/check-standard-portal.mjs && node scripts/standard-portal.mjs verify"
+        "portal:verify": "node scripts/check-standard-portal.mjs && node scripts/standard-portal.mjs verify && node scripts/check-portal-workspace.mjs && node --test scripts/vendor/portal-site/3.2.0/design.test.cjs scripts/vendor/portal-site/3.2.0/references.test.cjs"
     },
     "dependencies": {
         "@pdf-lib/fontkit": "^1.1.1",

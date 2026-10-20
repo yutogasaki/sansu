@@ -10,7 +10,7 @@ const {graphIds}=require('../scripts/vendor/hub-flow/2.0.0/flow/flow-view.cjs');
 export function checkPortalFlow(root,out) {
  const flow=loadPortalFlow(root);
  assert(!/\/(?:Users|private|tmp)\/|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i.test(JSON.stringify(flow)),'flow carries no personal paths or email');
- const doc=parse(fs.readFileSync(path.join(out,'index.html'),'utf8'));
+ const doc=parse(fs.readFileSync(path.join(out,fs.existsSync(path.join(out,'data/workspace-legacy.json'))?'overview-legacy.html':'index.html'),'utf8'));
  const graph=elements(doc,n=>n.attrs?.id==='work-flow')[0];
  assert(graph,'same-page graph');
  const embedded=elements(doc,n=>n.attrs?.id==='portal-flow-data')[0];

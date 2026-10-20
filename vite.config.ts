@@ -235,7 +235,7 @@ export default defineConfig(({ mode }) => {
             environment: "node",
             globals: true,
             // Immutable verification snapshots are evidence, not a second test suite.
-            exclude: [...configDefaults.exclude, 'output/**']
+            exclude: [...configDefaults.exclude, 'output/**', 'scripts/vendor/portal-site/3.2.0/*.test.cjs']
         },
         build: {
             rollupOptions: {

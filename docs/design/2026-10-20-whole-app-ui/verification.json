@@ -1,0 +1,38 @@
+{
+  "kind": "design-document-verification",
+  "checked_at_utc": "2026-10-19T22:02:38.737354+00:00",
+  "node": "v22.23.3",
+  "command": [
+    "fnm",
+    "exec",
+    "--using=22",
+    "npm",
+    "run",
+    "docs:check"
+  ],
+  "expected": "docs checker exit 0; local links and tables valid; screen sections 1..31",
+  "exit_code": 0,
+  "result": "PASS",
+  "stdout": "\n> pokko-fushigi-zukan-app@0.0.0 docs:check\n> node tools/check-docs.mjs\n\nWARN\n- docs/tasks/backlog.md: 次回棚卸し目安 (2026-10-12) is in the past\n- docs/tasks/active/2026-07-21-cold-open-value-loop.md: Review By (2026-09-27) is in the past\n- docs/tasks/active/2026-07-23-whole-app-brand-coherence.md: Review By (2026-09-27) is in the past\n- docs/tasks/active/2026-09-07-experience-improvements.md: Review By (2026-10-06) is in the past\n- docs/tasks/active/2026-09-08-island-experience.md: Review By (2026-10-06) is in the past\n- docs/tasks/active/2026-09-09-home-journey-preview.md: Review By (2026-10-06) is in the past\n- docs/tasks/active/2026-09-13-mysterious-island-v3.md: Review By (2026-09-29) is in the past\n- docs/tasks/active/2026-09-20-whole-app-ux-coherence.md: Review By (2026-10-06) is in the past\n- docs/tasks/active/2026-09-22-island-nature-integration.md: Review By (2026-10-06) is in the past\n- docs/tasks/active/2026-09-23-island-performance.md: Review By (2026-09-30) is in the past\n- docs/tasks/active/2026-09-27-living-fantasy-first-playable.md: Review By (2026-10-04) is in the past\n- docs/tasks/active/2026-09-29-growing-island-v1.md: Review By (2026-10-06) is in the past\n- docs/tasks/active/2026-10-01-island-guidance.md: Review By (2026-10-08) is in the past\n- docs/tasks/active/2026-10-05-growing-island-release.md: Review By (2026-10-12) is in the past\nPASS docs:check\n",
+  "stderr": "",
+  "local_document_errors": [],
+  "inputs_sha256": {
+    "docs/design/2026-10-20-whole-app-ui/README.md": "c4a12181fd28527ea85c2e1fc521a0342f15cc96cfefafc5f657310c1138a30a",
+    "docs/design/2026-10-20-whole-app-ui/interaction-and-states.md": "49742de8760bd44bc010cd308a90ea308dcc542697f63faca10c1bd237434aee",
+    "docs/design/2026-10-20-whole-app-ui/review-and-acceptance.md": "cd6f14760678a6bc2f6ef49178986d98d3caa96b87a293ec4347f377ddcf24fe",
+    "docs/design/2026-10-20-whole-app-ui/screens.md": "4b93069cb4085b8c09c5ce91bd77281b9ac7c6938fea11b42f754ff10b41e15c",
+    "docs/design/2026-10-20-whole-app-ui/visual-and-layout.md": "eae00813cd5b6e145b58cb2205cb44a8dbee01d9827069e29299a83cd8441954",
+    ".nvmrc": "f14b4987904bcb5814e4459a057ed4d20f58a633152288a761214dcd28780b56",
+    "package.json": "d95808a5a90946e79080e8e087e2938e4c61c1ee3813bdabf13ab718ce6af459",
+    "tools/check-docs.mjs": "cc563643dd38ed97d28c09a036b694c67869ba4f68e8ea21bdbeef5c5475f7d5"
+  },
+  "scope": "current working-tree documentation only",
+  "not_verified": [
+    "application runtime",
+    "visual benchmark acceptance",
+    "independent child comprehension and return",
+    "PWA update and offline journeys",
+    "release or deployment"
+  ],
+  "environment_note": "nvm unavailable; fnm provided installed Node 22.23.3 matching .nvmrc"
+}

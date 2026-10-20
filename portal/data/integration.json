@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "currentCandidate": "42c42240573b8faca92547fb0b73ea3ff1df1b13e25f1db64b035cf2e4c72a7a",
-  "legacyCandidate": "4c8aec8ac34e385956b90a75d717d8fcf5d126de51f671aedd901a671e9d0623",
+  "currentCandidate": "c1d90313ad6a44a26ffe7e8c076f868ce09eb461c72e847e61c12f8f52d4f611",
+  "legacyCandidate": "487530494899c8831b42c9a65bec44deb9ef85136968c0f0547708db9116f8bd",
   "project": {
     "schemaVersion": "1.0",
     "slug": "sansu",
@@ -118,8 +118,8 @@
     "schemaVersion": 2,
     "title": "島づくりの作業の流れ",
     "description": "子どもが戻りたくなる島へ。いまは入り江の輪郭を選ぶ段階です。",
-    "as_of": "2026-10-16",
-    "scope_note": "共有キュー・親タスク・判断記録・保存された検査結果の閲覧用投影。進捗の正本は元の記録。計画を完了にせず、自動検査を公開や利用者の受入へ読み替えません。 三つの段階帯は親タスクの工程を閲覧用にまとめたもの。関連仕事と確認条件を最後の帯に併記するが、図の掲載位置を新しい着手順・依存にしない。",
+    "as_of": "2026-10-19",
+    "scope_note": "共有キュー・親タスク・判断記録・保存された検査結果の閲覧用投影。進捗の正本は元の記録。計画を完了にせず、自動検査を公開や利用者の受入へ読み替えません。 三つの段階帯は親タスクの工程を閲覧用にまとめたもの。関連仕事と確認条件を最後の帯に併記するが、図の掲載位置を新しい着手順・依存にしない。 育成規則v0.4の実装は共有キューの別タスクで追跡し、既存の入り江の美術採用待ちを完了に変更しない。",
     "nodes": [
       {
         "id": "recorded",
@@ -855,7 +855,7 @@
     },
     "source_hashes": {
       ".agents/tasks/BLOCKED.md": "2ce9fc1e3fb45a558af66f0c1b590c23ade05b27cac4bcc75a6d0122c067e746",
-      ".agents/tasks/TASKS.md": "cf7ef50d08e7797a6ff3cdd2fb0084d04999adc70edcee6f140b7ed04698c4e4",
+      ".agents/tasks/TASKS.md": "4a6e20d8c341c3e0f3c610a8a1ac764ad61dd68fe2321ceaffb53382c7d4715b",
       "CONSTITUTION.md": "5ef2541bc4de9439200c3a0b2a80c75800443d4f9b3a9230b20be09f428e480d",
       "docs/adr/2026-10-11-authored-place-world-policy.md": "764a252c047b784b3a78516ac421f6fe9c4f2865a51bf13eb16ac1afd6347af6",
       "docs/design/2026-10-13-open-inlet-rough-v1-runtime/README.md": "be86195cb964abd5217995ce8fbf26f32264b0a8b1e7ffcf311f2172a41760a6",
@@ -894,7 +894,181 @@
       "成長と実利用 → 通常取得・保存・拡張 → 美術と配布。"
     ]
   ],
-  "trials": [],
+  "trials": [
+    {
+      "trial": 6,
+      "at": "2026-10-14T22:36:55.858Z",
+      "result": "PASS",
+      "candidate": "790680fb6bb4cc10da4c81319f5c9703ebb4cd7ef08ec7d1453014a7d9e8ff14",
+      "implementationVersion": "f8b3397c66aa8bbcb55ee3394e0f2b36fec066b30d07a9a7a1515f0a19cbc847",
+      "inputDocumentVersion": "02d6adfa2fa8e844b3e0f0e56f19def2a820e2abda560d06d855ab1601822a53",
+      "passedStages": [
+        "scope",
+        "generate",
+        "machine",
+        "browser",
+        "review",
+        "accept",
+        "report"
+      ],
+      "failedStage": null,
+      "cause": null,
+      "reason": null,
+      "receipt": "/Users/yutogasaki/Projects/sansu/output/internal-portal-evidence/sansu-common-portal-application/live/trial6-report-e26ad6e8-e253-403a-978e-ad5facb26f13.json",
+      "rawLog": "/tmp/sansu-common-portal-application/evidence/e26ad6e8-e253-403a-978e-ad5facb26f13.log",
+      "rawLogSha256": "dd00ad6e1e66702b506abc6336720115c0753db420e941e773045a9779c2ea04",
+      "originalStarted": "2026-10-11T20:35:12.917Z",
+      "repairs": 4,
+      "specialHumanRepair": 1,
+      "deadline": "2026-10-15T00:30:11.547Z",
+      "userAcceptance": false,
+      "productAcceptance": false,
+      "parentComplete": false,
+      "applies": false,
+      "accepted": false
+    },
+    {
+      "trial": 5,
+      "at": "2026-10-14T22:08:08.942Z",
+      "result": "FAIL",
+      "candidate": "790680fb6bb4cc10da4c81319f5c9703ebb4cd7ef08ec7d1453014a7d9e8ff14",
+      "implementationVersion": "f8b3397c66aa8bbcb55ee3394e0f2b36fec066b30d07a9a7a1515f0a19cbc847",
+      "inputDocumentVersion": "02d6adfa2fa8e844b3e0f0e56f19def2a820e2abda560d06d855ab1601822a53",
+      "passedStages": [
+        "scope",
+        "generate"
+      ],
+      "failedStage": "machine",
+      "cause": "environment",
+      "reason": "Command failed: [\"npm\",\"run\",\"verify:core\"] {\"code\":1,\"signal\":null}",
+      "receipt": "/Users/yutogasaki/Projects/sansu/output/internal-portal-evidence/sansu-common-portal-application/live/trial5-machine-286eed35-9e90-4620-9596-31ddf5736c5a.json",
+      "rawLog": "/tmp/sansu-common-portal-application/evidence/286eed35-9e90-4620-9596-31ddf5736c5a.log",
+      "rawLogSha256": "22b7034db0fc103b1d14f76e12118cd0be6dec086e68e71655c6c3d1473224b8",
+      "originalStarted": "2026-10-11T20:35:12.917Z",
+      "repairs": 3,
+      "specialHumanRepair": 1,
+      "deadline": "2026-10-15T00:04:14.300Z",
+      "userAcceptance": false,
+      "productAcceptance": false,
+      "parentComplete": false,
+      "firstMeaningfulError": "Repository evidence must be inside output/",
+      "failedSuites": [
+        "tools/snapshot-growing.test.mjs"
+      ],
+      "testFiles": {
+        "passed": 600,
+        "failed": 1,
+        "total": 601
+      },
+      "tests": {
+        "passed": 5230,
+        "failed": 2,
+        "total": 5232
+      },
+      "diagnosis": "The H-003b execution harness set TMPDIR=snapshot/node_modules/.tmp. Existing snapshot output-boundary tests use os.tmpdir(), so temporary outputs became repository-local paths outside snapshot/output and were rejected before the expected EEXIST/outside-input assertions. This is a new harness environment failure; the tests and boundary checks were not changed.",
+      "completedChecks": [
+        "scope",
+        "generation consistency",
+        "33 page/graph checks",
+        "docs:check",
+        "current UI entry guard",
+        "lint (3 existing warnings)",
+        "typecheck",
+        "focused 2 suites/33 tests"
+      ],
+      "notCompleted": [
+        "build",
+        "public output contamination check",
+        "320/390/768/1440 formal browser checks",
+        "independent final review",
+        "accept",
+        "report"
+      ],
+      "retryPerformed": false,
+      "trial6Created": false,
+      "applies": false,
+      "accepted": false
+    },
+    {
+      "trial": 4,
+      "at": "2026-10-11T21:15:40.280917+00:00",
+      "result": "FAIL",
+      "scope": "additional one formal local internal portal verification",
+      "candidate": "790680fb6bb4cc10da4c81319f5c9703ebb4cd7ef08ec7d1453014a7d9e8ff14",
+      "implementationVersion": "f8b3397c66aa8bbcb55ee3394e0f2b36fec066b30d07a9a7a1515f0a19cbc847",
+      "inputDocumentVersion": "02d6adfa2fa8e844b3e0f0e56f19def2a820e2abda560d06d855ab1601822a53",
+      "passedStages": [
+        "scope",
+        "generate"
+      ],
+      "failedStage": "machine",
+      "cause": "environment",
+      "reason": "Two existing fixture suites reject uuid realpath outside the copied snapshot node_modules root; snapshot dependency child symlinks resolve into live node_modules. verify:core exited 1. No repair or retry authorized.",
+      "firstMeaningfulError": "AssertionError: Unexpected fixture source: node_modules/uuid/dist-node/index.js",
+      "failedSuites": [
+        "tools/compare-growing-fixtures.test.mjs",
+        "tools/growing-fixture-data.test.mjs"
+      ],
+      "testFiles": {
+        "passed": 599,
+        "failed": 2,
+        "total": 601
+      },
+      "tests": {
+        "passed": 5199,
+        "skipped": 33,
+        "total": 5232
+      },
+      "completedChecks": [
+        "33 portal page/graph checks",
+        "docs:check",
+        "current UI entry guard",
+        "lint (3 existing warnings)",
+        "typecheck",
+        "supplemental graph negatives and history checks"
+      ],
+      "notCompleted": [
+        "build",
+        "trial4 public output contamination check",
+        "trial4 320/390/768/1440 browser checks",
+        "trial4 keyboard/back/close/repeat",
+        "trial4 final independent review",
+        "accept",
+        "report"
+      ],
+      "receipt": "/Users/yutogasaki/Projects/sansu/output/internal-portal-evidence/sansu-common-portal-application/live/trial4-machine-7c1f6188-419d-4377-965f-9ab478637419.json",
+      "rawLog": "/Users/yutogasaki/Projects/sansu/output/internal-portal-evidence/sansu-common-portal-application/live/evidence/7c1f6188-419d-4377-965f-9ab478637419.log",
+      "rawLogSha256": "2703019fe352548aac2cde2dea8656953ce017da5df56802dad92489cf5ad708",
+      "preservation": {
+        "originalStarted": "2026-10-11T20:35:12.917Z",
+        "repairsRetained": 2,
+        "additionalTrialConsumed": 1,
+        "additionalRepairs": 0,
+        "historyPrefixIntact": true,
+        "journalMatches": true,
+        "frozenSourcesUnchanged": 693,
+        "applicationSnapshotFilesUnchanged": 1672,
+        "staticEvidenceUiUnchanged": true
+      },
+      "comparison": {
+        "formalTargetEqualsFrozenCandidate": true,
+        "liveCandidateAtCloseout": "ae6036f719af68923b824c9ecd8a846efb563c963256149b9b0184c93c2bc184",
+        "liveEqualsFormalTarget": false,
+        "note": "Live canonical documents can change independently; historical trial3 PASS does not transfer to trial4 or current live inputs."
+      },
+      "downstreamRefusal": {
+        "operation": "start browser QA",
+        "exitCode": 2,
+        "message": "predecessor failed"
+      },
+      "head": "c1e7b5350ee167c30644f45b87ab9133f017ecc7",
+      "userAcceptance": false,
+      "productAcceptance": false,
+      "parentComplete": false,
+      "applies": false,
+      "accepted": false
+    }
+  ],
   "milestones": [
     {
       "name": "M0・契約",
@@ -931,25 +1105,25 @@
     {
       "source": ".agents/index.html",
       "target": "overview.html",
-      "originalSha256": "e0733c0bd4d134b5b97f3aefbc2b814c26df4c3eadcccceb88efd6a55dbd2234",
+      "originalSha256": "0ca606d796d3507330e93cff49b60b8383b5a6b9c6bb0a066816b19f0e6d14c0",
       "ai": "ai/overview.html"
     },
     {
       "source": ".agents/map.html",
       "target": "map.html",
-      "originalSha256": "22db83185354cb842c5cca1fb62fde49cc585313e2473989c6d80efeff0b1843",
+      "originalSha256": "b23bfdf499ff16324af73c8ee9897fd8ef369b7c96c83fae2e75e0a4e9423c50",
       "ai": "ai/map.html"
     },
     {
       "source": ".agents/plan.html",
       "target": "plan.html",
-      "originalSha256": "2ea901afb8536d93fa70dfeb36d6263290c73a237cbfd872776513f144616170",
+      "originalSha256": "328e8499d44da4cbac5082ef4690bf293677d05926d0d5aef437346a0a57f1cf",
       "ai": "ai/plan.html"
     },
     {
       "source": ".agents/roles.html",
       "target": "roles.html",
-      "originalSha256": "f17d66ce53438f3f0574e9e6b5731a33a5a883190e59169341ff620819399a5b",
+      "originalSha256": "fcedd9ec1c185830cbdbe5038d9d77f2a418ac5fa17f3eb0d466dbf1bdd46631",
       "ai": "ai/roles.html"
     },
     {
@@ -961,17 +1135,332 @@
     {
       "source": ".agents/tasks/index.html",
       "target": "tasks.html",
-      "originalSha256": "30b9545f1a54d6e9159e47cc90fe095837e8d0634a99e7c68065f5778a54dc78",
+      "originalSha256": "8fb938d428cffc06d4c153cdc2f036e80d6fbd171f12687616b06e9ef37e16c1",
       "ai": "ai/tasks.html"
     },
     {
       "source": "docs/index.html",
       "target": "documents.html",
-      "originalSha256": "1fa83807f09c2450b93609d03e968830c624dfd0b66ea48f2e7f72c535b92c3f",
+      "originalSha256": "e1688520c5a38da7deb7dd4b43901e3ccbbf9523b989328bc0dcfff48f0a3d45",
       "ai": "ai/documents.html"
     }
   ],
   "resources": [
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/trial6/summary.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/trial6/summary.json",
+      "sha256": "77452fbb93b39bbad1d0a0700e9bc35c78a0bb04d4111a1fa152f0623673aa1c",
+      "bytes": 1107,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/trial6/closeout.md",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/trial6/closeout.md",
+      "sha256": "b8681c68df044980b5a886e92e432446a950610ffc293c7434427fcdc780c9dd",
+      "bytes": 1683,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/trial5/summary.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/trial5/summary.json",
+      "sha256": "e7e7f4d500690ec0314354f98c23f078f3583021c4aeded3f283c9936f18a8d3",
+      "bytes": 2256,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/trial4/summary.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/trial4/summary.json",
+      "sha256": "7acd0557ee3c424246796b1c5f9a1eaa07990361ae07e94f7eef8bbec6a0d47a",
+      "bytes": 2969,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/index.html",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/index.html",
+      "sha256": "6856c272b626a2f7850aa5f530b28f335715e4d0ba0e0ddaad59d03c61d6d495",
+      "bytes": 11764,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/trial4/index.html",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/trial4/index.html",
+      "sha256": "7df39700b7bb71cec53b797ecc2d97777b40df895c9d7b23dd37b06c62e55746",
+      "bytes": 1197,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/live/run.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/live/run.json",
+      "sha256": "5596b23810bb87ed47afae06f3e0a21dfe67483d9c456b0277b598ce204dfcb5",
+      "bytes": 29580,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/trial4/authorization.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/trial4/authorization.json",
+      "sha256": "5b5814864357fb2bfab66d774f97b91075ce824e04f90174c03c75d8e4ef9516",
+      "bytes": 1127,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/trial4/frozen-manifest.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/trial4/frozen-manifest.json",
+      "sha256": "b6dcaa32fa14073613005e6e30e79d795ac556183ff9cffe83d1e8730cff9537",
+      "bytes": 116440,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/migration-closeout.md",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/migration-closeout.md",
+      "sha256": "b30bd650f1df9ffa676c6a5f1567e3018dd6248441be697bf1242fa3963495a0",
+      "bytes": 4800,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/migration-independent-review.md",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/migration-independent-review.md",
+      "sha256": "769502f8dd10388dca88afe85591941271c0aa9517a8fb6097e5751d4d984c2c",
+      "bytes": 2710,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/closeout.md",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/closeout.md",
+      "sha256": "63a6df73b1e0dd1ddd165eb5b878e0138f26ea6c2a768543d1146966cd70bc35",
+      "bytes": 5005,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/independent-final-review.md",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/independent-final-review.md",
+      "sha256": "0ab213af930569187437e922d5f0fd49a929a735917487bc967391a1834f9a6d",
+      "bytes": 4734,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/run.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/run.json",
+      "sha256": "a49d4e682833678257989557bf570203944061b609cfd106855836e8adc3430f",
+      "bytes": 12540,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/journal.jsonl",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/journal.jsonl",
+      "sha256": "caddf40c915c4f154ec035a7bc9347a58c50f4845ebf4277caf466b866f592c7",
+      "bytes": 136380,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/archive-manifest.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/archive-manifest.json",
+      "sha256": "30bff325d0ddb3aeaaa36ac17e5f1dc7a6042421cb432265977c4dfa6c512fa0",
+      "bytes": 38906,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/migration-baseline.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/migration-baseline.json",
+      "sha256": "befae57e8ce8f49d3bd922d2b47b04e1ff6ecedcfac6041e71efddff2be22ded",
+      "bytes": 3068479,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_index.html.png",
+      "sha256": "055b5357b9ea18b3d4d4ac99457089f078b55c7716f6e1255d9f8e6a0c020526",
+      "bytes": 142955,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_map.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_map.html.png",
+      "sha256": "819a8a01b0a9e6be81573ad428f0c3670541ee5c29ce51b521f1208c1c40a410",
+      "bytes": 111998,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_operations.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_operations.html.png",
+      "sha256": "cfb42a481f6bc18eb2242a01743b8a903c1ab4d4eb4b87d29d23ab4923abbd66",
+      "bytes": 101969,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_plan.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_plan.html.png",
+      "sha256": "27d758e49a9b12c2a2a2dca7dc8c55f7d6f1f8568545a73977cae22cfbbc1770",
+      "bytes": 106586,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_roles.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_roles.html.png",
+      "sha256": "6c26b8770e74525d93d82263a799b91bcc0d9fdcad1bc9f5688787220f866719",
+      "bytes": 108925,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_tasks_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_tasks_index.html.png",
+      "sha256": "4a7e6ec32b1ed008661db9f9bc65020ed11206413bee5968bf517fd147bfe744",
+      "bytes": 134105,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-docs_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-docs_index.html.png",
+      "sha256": "747d1742c7b8058803de50091b0ae7a7e887bd9f371d8b0ab3c310656598bc0c",
+      "bytes": 170788,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_index.html.png",
+      "sha256": "7baf8c32867f6f0fd1eee297d0cd84333d4570464b27edcc8367eb6719a58b7c",
+      "bytes": 69026,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_map.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_map.html.png",
+      "sha256": "40e15fdc987fb44ac07819cb2079a8089fcb923cdb89a11a71b372dae8132c11",
+      "bytes": 65427,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_operations.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_operations.html.png",
+      "sha256": "8b18b5f0f07495405f833df7f8600812a4ad0ecbfb45a5c6a826abd0d0eef301",
+      "bytes": 71225,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_plan.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_plan.html.png",
+      "sha256": "8364a8b87ab459b8aab9f0b4be1ccd6401879c2c8d48342859da2661af9589e3",
+      "bytes": 79171,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_roles.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_roles.html.png",
+      "sha256": "006923b84f61d3517fcc2f5aa1e5bfc16f9a282b7331293a78cb0eff4e32094e",
+      "bytes": 79684,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_tasks_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_tasks_index.html.png",
+      "sha256": "e76c47d39cf069574aaacdf7d4b15dc6c9ec480c54034b2dbce61397244de1c1",
+      "bytes": 95405,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-docs_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-docs_index.html.png",
+      "sha256": "478ff8381bc1df1c3b5da2fe27c6b41a020a0b66850d2ce3952c000e0bc2fcc3",
+      "bytes": 81539,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_index.html.png",
+      "sha256": "cd3cc17a0f64c7f6ad208c28e70a912d7f41e254bfd266b5677506a4c95fcb49",
+      "bytes": 72025,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_map.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_map.html.png",
+      "sha256": "66c5e0158f09316211bd82cbf7401c0a0706bdfa913a6ef4c269868bf98ed3e3",
+      "bytes": 71391,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_operations.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_operations.html.png",
+      "sha256": "c37252de73143f40d6f42fb15a42914e1850ee9077a2a469c6532df17f111631",
+      "bytes": 79819,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_plan.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_plan.html.png",
+      "sha256": "eb713d15f926ee75fdfc1b4cb5e954ab66e04fda5060fb6bdc6e5e6a77276b07",
+      "bytes": 81254,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_roles.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_roles.html.png",
+      "sha256": "69416af87c7bda803d67835aa2b55b9e188cbfcf1ccb3e835f034de72f14e3a0",
+      "bytes": 81339,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_tasks_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_tasks_index.html.png",
+      "sha256": "8540714d808da1e24a61d40d5310504daeae293834efbf50f75ba3d86a2f0ad1",
+      "bytes": 103900,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-docs_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-docs_index.html.png",
+      "sha256": "ae2d36994b9a8084fdf607f49c07e681dd80c67414f157406025fe1006676d2c",
+      "bytes": 90806,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_index.html.png",
+      "sha256": "9709930d706998bf2588d62536efa976fd4ab6b3326fcad707f8965fc26129d1",
+      "bytes": 124708,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_map.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_map.html.png",
+      "sha256": "7ac09db9444a269e0cd30febc0370bbd473dd6e969ebb7162194c8b7ea13d42f",
+      "bytes": 103651,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_operations.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_operations.html.png",
+      "sha256": "fd9e5b84c63e78ad0c8b01600bb0ba0fc712201090febe24b59b09237f8d8ec3",
+      "bytes": 96374,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_plan.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_plan.html.png",
+      "sha256": "1e6a4b8c3fdec25fea4efe7fa6654f70df0fee49fb452bba16e024588b399395",
+      "bytes": 101036,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_roles.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_roles.html.png",
+      "sha256": "cbea507a2967b189cd3990d01a3164ff1a6950b7e0d0e725c650a7b2c9725ee1",
+      "bytes": 101945,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_tasks_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_tasks_index.html.png",
+      "sha256": "157b2c9184bda63833c268303262b51c8bf05edd055ed084a2dc30600069aafd",
+      "bytes": 125111,
+      "mode": "reference"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-docs_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-docs_index.html.png",
+      "sha256": "7555e93307b5853f19f92fc3058654fc746859a9df37f8f0c687f2c27943b9e5",
+      "bytes": 158462,
+      "mode": "reference"
+    },
     {
       "source": "CONSTITUTION.md",
       "target": "../CONSTITUTION.md",
@@ -1010,8 +1499,8 @@
     {
       "source": ".agents/tasks/TASKS.md",
       "target": "../.agents/tasks/TASKS.md",
-      "sha256": "cf7ef50d08e7797a6ff3cdd2fb0084d04999adc70edcee6f140b7ed04698c4e4",
-      "bytes": 8220,
+      "sha256": "4a6e20d8c341c3e0f3c610a8a1ac764ad61dd68fe2321ceaffb53382c7d4715b",
+      "bytes": 8221,
       "mode": "reference"
     },
     {
@@ -10192,6 +10681,27 @@
       "mode": "reference"
     },
     {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/tablet-remainder-step-3.png",
+      "target": "../docs/design/audits/2026-09-07-written-arithmetic/images/tablet-remainder-step-3.png",
+      "sha256": "3d97adaa7337b2c88cf2b189beeb03ccdc4a2606359dfd5a94ee535fbc421171",
+      "bytes": 142422,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/tablet-remainder-step-1.png",
+      "target": "../docs/design/audits/2026-09-07-written-arithmetic/images/tablet-remainder-step-1.png",
+      "sha256": "46acb58bdc889d531441f4a0ca3d2561755cd7ce223cfa0e51b662fa4dc1e791",
+      "bytes": 141621,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/tablet-remainder-step-5.png",
+      "target": "../docs/design/audits/2026-09-07-written-arithmetic/images/tablet-remainder-step-5.png",
+      "sha256": "25d79cf490401101a54b08ef63b5206250f6aa9f40337d165a139dcb3ca5870e",
+      "bytes": 141090,
+      "mode": "reference"
+    },
+    {
       "source": "docs/design/audits/2026-09-06-park-onboarding/user-reported-old-welcome.png",
       "target": "../docs/design/audits/2026-09-06-park-onboarding/user-reported-old-welcome.png",
       "sha256": "f426b8b057055b8c9b4c1ccb7be65c4bf9d3d849c96c87d6d8fb2cc9b78363c2",
@@ -10766,6 +11276,13 @@
       "mode": "reference"
     },
     {
+      "source": "docs/design/references/mystic-island-goal-pack-v0.1/images/02_pastel_sunset_island.png",
+      "target": "../docs/design/references/mystic-island-goal-pack-v0.1/images/02_pastel_sunset_island.png",
+      "sha256": "f15e42104f0a05b7f8acd610207dc2fc7276d4a090e3875a5933d3aed20dadd8",
+      "bytes": 2034609,
+      "mode": "reference"
+    },
+    {
       "source": "docs/design/research/2026-09-09-layout-strategy/references/toca-editor.webp",
       "target": "../docs/design/research/2026-09-09-layout-strategy/references/toca-editor.webp",
       "sha256": "90e37a455cb9429dbc498ada95b709ff8c2e281750541057992f782c555a74fe",
@@ -10810,8 +11327,8 @@
     {
       "source": "docs/ai/contributor-guide.md",
       "target": "../docs/ai/contributor-guide.md",
-      "sha256": "50918b0497c1e5850f43064a4eb24ec1214bde7a4533c155f674642e2e7938d6",
-      "bytes": 4807,
+      "sha256": "6a8038064de812f8f1895164fcc06b11f84d14db6c9fdea89cc9139f7f962007",
+      "bytes": 5232,
       "mode": "reference"
     },
     {
@@ -10873,15 +11390,15 @@
     {
       "source": ".agents/tasks/DONE.md",
       "target": "../.agents/tasks/DONE.md",
-      "sha256": "ff7a95cc715bdc48a805741521b031586f5a264500e88011127ac3a61503f5b1",
-      "bytes": 39250,
+      "sha256": "cbc57339bc93bafa36e02f2857bd9ad7eb5def164200cc68d8561d0f4f536ee1",
+      "bytes": 39836,
       "mode": "reference"
     },
     {
       "source": "docs/index.md",
       "target": "../docs/index.md",
-      "sha256": "e920a522007cf28c5e9f6ad4e90ab59a5a7323de6057197cf05fd2c2b3cb665b",
-      "bytes": 20780,
+      "sha256": "3c1c98bb2c6e8c90db25346807ff3652f30c70861392b575b87d9485e7ce1d52",
+      "bytes": 20786,
       "mode": "reference"
     },
     {
@@ -11263,6 +11780,13 @@
       "mode": "reference"
     },
     {
+      "source": "docs/tasks/active/2026-10-18-development-portal.md",
+      "target": "../docs/tasks/active/2026-10-18-development-portal.md",
+      "sha256": "7f89e6da492841d06fb1653f34c5a90546bdaba19ae1c63ddc4c0ffa49c3adb5",
+      "bytes": 2957,
+      "mode": "reference"
+    },
+    {
       "source": "docs/tasks/active/2026-10-18-promotion-cove-verification.md",
       "target": "../docs/tasks/active/2026-10-18-promotion-cove-verification.md",
       "sha256": "beca4b4cf073ff3e39b16022084f386ec2b5977679da4e2eeb4dd7c16936d1e3",
@@ -11274,6 +11798,13 @@
       "target": "../docs/tasks/active/2026-10-19-island-menu.md",
       "sha256": "01655fb6d7ef7acc4c01e01f8584de8c6f15f48dd23a5de97d38c625f923b951",
       "bytes": 5552,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/tasks/active/2026-10-19-review-loop.md",
+      "target": "../docs/tasks/active/2026-10-19-review-loop.md",
+      "sha256": "768548801d0c7cabb4da111ea0c3a1797ef76d648f779a5b4b21475444fbbb38",
+      "bytes": 2839,
       "mode": "reference"
     },
     {
@@ -14154,13 +14685,6 @@
       "mode": "reference"
     },
     {
-      "source": "docs/design/2026-10-19-island-growth-v04/main-integration.md",
-      "target": "../docs/design/2026-10-19-island-growth-v04/main-integration.md",
-      "sha256": "3ca0920799fd1fab7a96f3a33b24df78e01950d2a052f6b7facda4e0c80ec84d",
-      "bytes": 2934,
-      "mode": "reference"
-    },
-    {
       "source": "docs/design/2026-10-19-island-menu/verification.md",
       "target": "../docs/design/2026-10-19-island-menu/verification.md",
       "sha256": "671d48d47b60237e462d9d06306be0c22b68abecad213c7887bd8fec8d2c3d03",
@@ -15248,8 +15772,15 @@
     {
       "source": "docs/runbooks/README.md",
       "target": "../docs/runbooks/README.md",
-      "sha256": "1ee2983835ad4fa9b3a0b982ff2705acef3cc629f4aca60703118c2b6454dd7d",
-      "bytes": 875,
+      "sha256": "bcfbfeab619bd25086efc95f9a46bdc5efb8848339cf6e9058f2c2962f401978",
+      "bytes": 1030,
+      "mode": "reference"
+    },
+    {
+      "source": "docs/runbooks/requirements-review-loop.md",
+      "target": "../docs/runbooks/requirements-review-loop.md",
+      "sha256": "b5e53308e4ad65965c1ca9e1107569bd5252f8f4888be1a0e8d34ffb99d6b77c",
+      "bytes": 3211,
       "mode": "reference"
     },
     {
@@ -15850,8 +16381,8 @@
     {
       "source": "docs/done/2026-10.md",
       "target": "../docs/done/2026-10.md",
-      "sha256": "56be3e9a544e7f2cf4c3e0394bbf4b1f4174b04c29394da11fd2eeeb758bb7ed",
-      "bytes": 138886,
+      "sha256": "b8c281d71734ef9b06eba0c6edb9bf8045735c8904203cda80d6c89b0fbb4b53",
+      "bytes": 141680,
       "mode": "reference"
     },
     {
@@ -15953,6 +16484,13 @@
       "mode": "reference"
     },
     {
+      "source": "docs/portal/workspace.md",
+      "target": "../docs/portal/workspace.md",
+      "sha256": "91610f3b3e075293d10b36c4a2fcb6ef9ed32a8621594abdc708bec38cef1712",
+      "bytes": 6217,
+      "mode": "reference"
+    },
+    {
       "source": "docs/README.md",
       "target": "../docs/README.md",
       "sha256": "b0be0ae1a5b4c6c253e734bfc0ce84cacbf62d627c440bbb00d82a1a933baf1f",
@@ -15976,15 +16514,15 @@
     {
       "source": "docs/portal/README.md",
       "target": "../docs/portal/README.md",
-      "sha256": "f60a20b2e73508c2089e59d84bc5b17ace784773b57cc64051b3a9467e41cfd2",
-      "bytes": 23699,
+      "sha256": "f53284f22596472e51ec9da492190d35429cb7bf8bbc863fe7c9d37b95cd1ef6",
+      "bytes": 24474,
       "mode": "reference"
     },
     {
       "source": "docs/maps/index.md",
       "target": "../docs/maps/index.md",
-      "sha256": "f69855d2083c6fcc4afa0f5b12e3c0aa7e77354749a3af9a5bcc64124c6cd4d7",
-      "bytes": 1959,
+      "sha256": "4daeaa486e1d40a5ff77a1def94039dea9ac4c6aeddc082ee1de3ebd3d0c60ea",
+      "bytes": 2278,
       "mode": "reference"
     },
     {
@@ -16038,6 +16576,186 @@
     }
   ],
   "sources": [
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/trial6/summary.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/trial6/summary.json"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/trial6/closeout.md",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/trial6/closeout.md"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/trial5/summary.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/trial5/summary.json"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/trial4/summary.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/trial4/summary.json"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/index.html",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/index.html"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/trial4/index.html",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/trial4/index.html"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/live/run.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/live/run.json"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/trial4/authorization.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/trial4/authorization.json"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/trial4/frozen-manifest.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/trial4/frozen-manifest.json"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/migration-closeout.md",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/migration-closeout.md"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/migration-independent-review.md",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/migration-independent-review.md"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/closeout.md",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/closeout.md"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/independent-final-review.md",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/independent-final-review.md"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/run.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/run.json"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/journal.jsonl",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/journal.jsonl"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/archive-manifest.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/archive-manifest.json"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/migration-baseline.json",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/migration-baseline.json"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_index.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_map.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_map.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_operations.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_operations.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_plan.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_plan.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_roles.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_roles.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_tasks_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-.agents_tasks_index.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-docs_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/1440-docs_index.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_index.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_map.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_map.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_operations.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_operations.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_plan.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_plan.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_roles.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_roles.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_tasks_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-.agents_tasks_index.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-docs_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/320-docs_index.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_index.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_map.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_map.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_operations.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_operations.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_plan.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_plan.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_roles.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_roles.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_tasks_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-.agents_tasks_index.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-docs_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/390-docs_index.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_index.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_map.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_map.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_operations.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_operations.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_plan.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_plan.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_roles.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_roles.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_tasks_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-.agents_tasks_index.html.png"
+    },
+    {
+      "source": "output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-docs_index.html.png",
+      "target": "../output/internal-portal-evidence/sansu-common-portal-application/original-tmp/sansu-common-portal-application/browser-trial3/768-docs_index.html.png"
+    },
     {
       "source": "CONSTITUTION.md",
       "target": "../CONSTITUTION.md"
@@ -21307,6 +22025,18 @@
       "target": "../docs/design/audits/2026-09-07-production-release/screens/tablet-home.png"
     },
     {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/tablet-remainder-step-3.png",
+      "target": "../docs/design/audits/2026-09-07-written-arithmetic/images/tablet-remainder-step-3.png"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/tablet-remainder-step-1.png",
+      "target": "../docs/design/audits/2026-09-07-written-arithmetic/images/tablet-remainder-step-1.png"
+    },
+    {
+      "source": "docs/design/audits/2026-09-07-written-arithmetic/images/tablet-remainder-step-5.png",
+      "target": "../docs/design/audits/2026-09-07-written-arithmetic/images/tablet-remainder-step-5.png"
+    },
+    {
       "source": "docs/design/audits/2026-09-06-park-onboarding/user-reported-old-welcome.png",
       "target": "../docs/design/audits/2026-09-06-park-onboarding/user-reported-old-welcome.png"
     },
@@ -21635,6 +22365,10 @@
       "target": "../docs/design/references/2026-09-13-canopy-dots/reference-c3.png"
     },
     {
+      "source": "docs/design/references/mystic-island-goal-pack-v0.1/images/02_pastel_sunset_island.png",
+      "target": "../docs/design/references/mystic-island-goal-pack-v0.1/images/02_pastel_sunset_island.png"
+    },
+    {
       "source": "docs/design/research/2026-09-09-layout-strategy/references/toca-editor.webp",
       "target": "../docs/design/research/2026-09-09-layout-strategy/references/toca-editor.webp"
     },
@@ -21919,12 +22653,20 @@
       "target": "../docs/tasks/active/2026-10-01-island-guidance.md"
     },
     {
+      "source": "docs/tasks/active/2026-10-18-development-portal.md",
+      "target": "../docs/tasks/active/2026-10-18-development-portal.md"
+    },
+    {
       "source": "docs/tasks/active/2026-10-18-promotion-cove-verification.md",
       "target": "../docs/tasks/active/2026-10-18-promotion-cove-verification.md"
     },
     {
       "source": "docs/tasks/active/2026-10-19-island-menu.md",
       "target": "../docs/tasks/active/2026-10-19-island-menu.md"
+    },
+    {
+      "source": "docs/tasks/active/2026-10-19-review-loop.md",
+      "target": "../docs/tasks/active/2026-10-19-review-loop.md"
     },
     {
       "source": "docs/tasks/active/README.md",
@@ -23571,10 +24313,6 @@
       "target": "../docs/design/2026-10-19-island-direct-play/verification.md"
     },
     {
-      "source": "docs/design/2026-10-19-island-growth-v04/main-integration.md",
-      "target": "../docs/design/2026-10-19-island-growth-v04/main-integration.md"
-    },
-    {
       "source": "docs/design/2026-10-19-island-menu/verification.md",
       "target": "../docs/design/2026-10-19-island-menu/verification.md"
     },
@@ -24199,6 +24937,10 @@
       "target": "../docs/runbooks/README.md"
     },
     {
+      "source": "docs/runbooks/requirements-review-loop.md",
+      "target": "../docs/runbooks/requirements-review-loop.md"
+    },
+    {
       "source": "docs/runbooks/verification-plan.md",
       "target": "../docs/runbooks/verification-plan.md"
     },
@@ -24597,6 +25339,10 @@
     {
       "source": "docs/audits/2026-10-01-learning-content-fixes/README.md",
       "target": "../docs/audits/2026-10-01-learning-content-fixes/README.md"
+    },
+    {
+      "source": "docs/portal/workspace.md",
+      "target": "../docs/portal/workspace.md"
     },
     {
       "source": "docs/README.md",

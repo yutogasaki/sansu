@@ -1,3 +1,7 @@
+import { placePlay } from '../../../domain/growingIsland/placePlay';
+import { concertPlace, type SharedPlayReceipt } from '../../../domain/growingIsland/experience';
+import { PlaceTouchEffects } from './placeTouchEffects';
+import { SharedPlayOverlap } from './sharedPlay';
 import { useEffect, useRef, useState } from 'react';
 import * as T from 'three';
 import type { GardenTime } from '../three/garden/presentation';
@@ -6,11 +10,12 @@ import type { Cell, GrowingState, Moment, Villager } from '../../../domain/growi
 import { disposeActor, makeVillagerActor } from './actors';
 import { MomentEffects } from './momentEffects';
 import { buildObjectLayer, previewGrowingState, type Ghost, type ObjectLayer } from './objectLayer';
-import { frameCamera, initialView, panFromDrag, panToFocus } from './growingCamera';
+import { frameCamera, framePlaceCamera, initialView, panFromDrag, panToFocus, revealPlaceCamera } from './growingCamera';
 import { createWorldScene } from './worldScene';
 import { WorldEffects } from './worldEffects';
 import type { SceneLayout } from './sceneLayout';
 import { menuPictureMaker, type MenuPictures } from './menuMiniatures';
+import { catalogPictureMaker, type CatalogPictures } from './catalogPictures';
 import { chooseGrowingFingerTarget, updateGrowingFingerTargets } from './growingFingerTargets';
 import type { DropPlayKind } from './growingDropPlay';
 import { DROP_PLAY_MS } from './growingDropPlay';
@@ -34,12 +39,19 @@ import type { AuthoredGrowthTerrainCatalog } from '../../../domain/growingIsland
 import type { NativeAuthoredShoulder } from './native/nativeAuthoredShoulder';
 import { AUTHORED_WHOLE_ART_CANDIDATE, type AuthoredWholeArt } from './authoredWholeArt';
 
+const sessionViews = new Map<string, ReturnType<typeof initialView>>();
+
 export interface WorldHandlers {
+    onViewReturn?: (available: boolean) => void;
     onCell: (cell: Cell) => void;
     onSelect: (id?: string) => void;
     onOpen: (plotId: string) => void;
     onDisembark: () => void;
-    onActorTap: (id: string) => void;
+    onActorTap: (id: string, playing?: boolean) => void;
+    onPlayStopped?: () => void;
+    onSharedPlay?: (receipt: SharedPlayReceipt) => boolean | void | Promise<boolean | void>;
+    onPlaceReplyStep?: (kind: 'leaves' | 'water' | 'petals', index: number) => void;
+    onPlaceReply?: (kind: 'leaves' | 'water' | 'petals', count: number) => void;
     onActorDrag?: () => void;
     onActorPlay?: (id: string, kind: DropPlayKind) => void;
     onPop?: () => void;
@@ -54,30 +66,34 @@ export interface WorldHandlers {
 }
 /** Pictures of the island for the card and the island's story; never uploaded anywhere. */
 export interface WorldCamera {
+    visitPlace: (placeId: string) => boolean;
+    interact: (id: string) => boolean;
     distance: (close: boolean) => void;
+    restoreView: () => void;
+    catalogPictures: (state: GrowingState) => CatalogPictures;
     capture: (width: number, height: number) => HTMLCanvasElement | undefined;
     portraits: (villagers: readonly Villager[], size: number) => Record<string, string>;
     menuPictures: (villagers: readonly Villager[]) => MenuPictures;
 }
 export interface ShownMoment { id: number; moment: Moment; cell?: Cell }
 /** `cheer` makes the waiting friend jump (a home seed was planted); `festival` celebrates a new level. */
-type Props = WorldHandlers & { state: GrowingState; world?: CompiledWorld; authoredWater?: boolean; authoredCove?: boolean; authoredShoulder?: AuthoredShoulderProfile; authoredGrowthTerrain?: AuthoredGrowthTerrainCatalog; authoredWholeArt?: boolean; time: GardenTime; ghost?: Ghost; selectedId?: string; turn: number; cheer: number; festival: number;
-    hints?: readonly Cell[]; moment?: ShownMoment; show?: boolean; active?: boolean; compact?: boolean; qualityCeiling?: number; focus?: { id: string; n: number }; concert?: { cell: Cell; n: number }; bridgeBuild?: number; onCamera?: (camera?: WorldCamera) => void };
+type Props = WorldHandlers & { viewKey?: string; state: GrowingState; world?: CompiledWorld; authoredWater?: boolean; authoredCove?: boolean; authoredShoulder?: AuthoredShoulderProfile; authoredGrowthTerrain?: AuthoredGrowthTerrainCatalog; authoredWholeArt?: boolean; time: GardenTime; ghost?: Ghost; selectedId?: string; turn: number; cheer: number; festival: number;
+    hints?: readonly Cell[]; moment?: ShownMoment; show?: boolean; active?: boolean; playActive?: boolean; compact?: boolean; qualityCeiling?: number; focus?: { id: string; n: number }; concert?: { cell: Cell; n: number }; bridgeBuild?: number; onCamera?: (camera?: WorldCamera) => void };
 
 const reducedMotion = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const nativeArtEnabled = import.meta.env.DEV || import.meta.env.VITE_NATIVE_GROWING_ART === 'true';
 
-export default function GrowingWorld({ state, world: authoredWorld, authoredWater = false, authoredCove = false, authoredShoulder, authoredGrowthTerrain, authoredWholeArt = false, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, compact, qualityCeiling = 1.25, focus, concert, bridgeBuild, onCamera, ...handlers }: Props) {
+export default function GrowingWorld({ viewKey, state, world: authoredWorld, authoredWater = false, authoredCove = false, authoredShoulder, authoredGrowthTerrain, authoredWholeArt = false, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, playActive = true, compact, qualityCeiling = 1.25, focus, concert, bridgeBuild, onCamera, ...handlers }: Props) {
     const host = useRef<HTMLDivElement>(null);
     const handlerRef = useRef(handlers);
     useEffect(() => { handlerRef.current = handlers; });
     const api = useRef<{ rebuild: (state: GrowingState, ghost?: Ghost, selectedId?: string, hints?: readonly Cell[]) => void; setTime: (time: GardenTime) => void; turn: (by: number) => void;
-        cheer: () => void; festival: () => void; moment: (m: ShownMoment) => void; focus: (id: string) => void; concert: (cell: Cell, receipt: number) => void } | undefined>(undefined);
+        cheer: () => void; festival: () => void; moment: (m: ShownMoment) => void; focus: (id: string) => void; concert: (cell: Cell, receipt: number) => void; endMusic: () => void } | undefined>(undefined);
     const [failed, setFailed] = useState(false);
     const completedBridge = useRef<{ owner: string; request: number } | undefined>(undefined);
     const [bridgeStage, setBridgeStage] = useState<'building' | 'crossing' | 'arrived'>();
-    const latest = useRef({ state, ghost, selectedId, time, hints, show, active, bridgeBuild });
-    useEffect(() => { latest.current = { state, ghost, selectedId, time, hints, show, active, bridgeBuild }; });
+    const latest = useRef({ state, ghost, selectedId, time, hints, show, active, playActive, bridgeBuild });
+    useEffect(() => { latest.current = { state, ghost, selectedId, time, hints, show, active, playActive, bridgeBuild }; });
     useEffect(() => { if (!bridgeBuild) completedBridge.current = undefined; }, [bridgeBuild]);
     const cameraRef = useRef(onCamera);
     useEffect(() => { cameraRef.current = onCamera; });
@@ -189,10 +205,19 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
         const effects = new WorldEffects(world.scene); disposers.push(() => effects.dispose());
         const moments = new MomentEffects(world.scene); disposers.push(() => moments.dispose());
         const camera = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100), view = initialView();
-        if (node.clientWidth <= 480 && node.clientHeight > node.clientWidth) view.zoom = 1.06;
+        const savedView = viewKey ? sessionViews.get(viewKey) : undefined;
+        Object.assign(view, savedView ? { ...savedView, pan: { ...savedView.pan } } : { zoom: 1.5 });
+        disposers.push(() => {
+            if (!viewKey) return;
+            sessionViews.set(viewKey, { ...view, pan: { ...view.pan } });
+            if (sessionViews.size > 32) sessionViews.delete(sessionViews.keys().next().value!);
+        });
+        let overviewOrigin: ReturnType<typeof initialView> | undefined;
+        const clearOverview = () => { if (overviewOrigin) { overviewOrigin = undefined; handlerRef.current.onViewReturn?.(false); } };
         type View = ReturnType<typeof initialView>;
         let playFocus: { at: number; from: View; to: View; returnTo: View; restoring?: boolean } | undefined;
         let interruptedOrigin: View | undefined;
+        let initialClose = !savedView && !authoredWorld && !native && latest.current.state.tutorial === 'done', followingPlace: string | undefined;
         const copyView = (): View => ({ zoom: view.zoom, azimuth: view.azimuth, pan: { ...view.pan } });
         const ease = (n: number) => n * n * (3 - 2 * n);
         const restoreFocus = () => {
@@ -211,10 +236,28 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
             frameCamera(camera, layout, view, width / height);
         };
         let layout: SceneLayout = world.layout(latest.current.state), layer: ObjectLayer | undefined;
+        const placeViewPoints = (place: DerivedPlace, hero: T.Vector3) => {
+            const points = [hero.clone().add(new T.Vector3(-.65, -.15, -.65)), hero.clone().add(new T.Vector3(.65, 1.2, .65))];
+            const target = place.useTargets.find(target => ['gallery', 'garden', 'shore'].includes(target.kind));
+            if (target) points.push(layout.point(target.cell, .05), layout.point(target.cell, 1.2));
+            if (target?.route?.length) points.push(...target.route.map(point => layout.floorPoint(point))
+                .sort((a, b) => a.distanceToSquared(hero) - b.distanceToSquared(hero)).slice(0, 8));
+            return points;
+        };
         let unopened = new Set<string>(), known: Set<string> | undefined, last = performance.now(), width = 1, height = 1, nextWave = 0, showing = false;
         disposers.push(() => layer?.dispose());
         const reduced = reducedMotion();
         let pendingConcert: number | undefined;
+        const touchEffects = new PlaceTouchEffects(world.scene, (kind, index) => handlerRef.current.onPlaceReplyStep?.(kind, index)); disposers.push(() => touchEffects.dispose());
+        let replySource: { id: string; at: number } | undefined;
+        let pendingTouch: { id: string; at: number } | undefined;
+        let musicPlace: DerivedPlace | undefined, musicStand: string | undefined;
+        const overlap = new SharedPlayOverlap(), sharedPending = new Map<string, number>();
+        const stopPlay = (notify = true) => {
+            if (notify && (pendingTouch || replySource || musicStand || world.life.concertActive(performance.now()))) handlerRef.current.onPlayStopped?.();
+            pendingTouch = undefined; replySource = undefined; touchEffects.clear(); overlap.clear(); sharedPending.clear(); musicPlace = undefined; musicStand = undefined; pendingConcert = undefined; world.life.stopConcert(); };
+        const hiddenPlay = () => { if (document.visibilityState !== 'visible') stopPlay(); };
+        document.addEventListener('visibilitychange', hiddenPlay); disposers.push(() => document.removeEventListener('visibilitychange', hiddenPlay));
         let publishedCamera = '';
         let rebuilt: { state: GrowingState; ghost?: Ghost; selected?: string; hints?: readonly Cell[]; stateKey: string; previewKey: string } | undefined;
         const sceneCounters = { fullLayerBuild: 0, previewUpdate: 0, receiptReuse: 0 };
@@ -251,6 +294,7 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
         };
 
         const rebuild = (next: GrowingState, nextGhost?: Ghost, selected?: string, nextHints?: readonly Cell[]) => {
+            if (nextGhost) { followingPlace = undefined; initialClose = false; stopPlay(); }
             // The first props effect follows the initial scene build with the same
             // immutable inputs. Keep that scene (and its visitor) instead of rebuilding it.
             if (rebuilt?.state === next && rebuilt.ghost === nextGhost && rebuilt.selected === selected && rebuilt.hints === nextHints) return;
@@ -280,6 +324,7 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
                 node.dataset.authoredFrameRevision = layout.key;
             }
             node.dataset.bridgeSaved = String(Boolean(next.bridge));
+            stopPlay();
             layer?.dispose();
             layer = buildObjectLayer(world.m, next, layout, nextGhost, selected, nextHints, native, flowerSupport, cove, shoulder, wholeArt);
             counted('fullLayerBuild');
@@ -340,14 +385,20 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
         };
         api.current = {
             rebuild, setTime: next => world.setTime(next),
-            turn: by => { view.azimuth += by * Math.PI / 6; frameCamera(camera, layout, view, width / height); },
+            turn: by => { clearOverview(); initialClose = false; followingPlace = undefined; view.azimuth += by * Math.PI / 6; frameCamera(camera, layout, view, width / height); },
             cheer: () => { const now = performance.now(); world.life.hop('visitor', now); world.life.hop('pokomoko', now + 120); },
             moment: shown => {
                 const at = shown.cell ? layout.point(shown.cell) : new T.Vector3(0, 0, 0);
                 moments.play(shown.moment, at, performance.now(), reduced);
             },
-            concert: (cell, receipt) => { world.life.startConcert(cell, performance.now()); pendingConcert = receipt; },
+            endMusic: () => { musicPlace = undefined; musicStand = undefined; overlap.clear(); sharedPending.clear(); pendingConcert = undefined; world.life.stopConcert(); },
+            concert: (cell, receipt) => {
+                stopPlay(false); world.life.startConcert(cell, performance.now()); pendingConcert = receipt;
+                musicStand = latest.current.state.landmarks.find(item => item.kind === 'bandstand' && item.cell?.x === cell.x && item.cell.z === cell.z)?.id;
+                musicPlace = musicStand ? concertPlace(latest.current.state, musicStand, layout.authored ? layout.world : undefined) : undefined;
+            },
             focus: id => {
+                initialClose = false; followingPlace = undefined;
                 playFocus = undefined;
                 const flower = layout.authored && layer?.placeRoot.children.find(place => place.userData.authoredFlowerOwnerIds?.includes(id));
                 const flowerBounds = flower ? new T.Box3().setFromObject(flower) : undefined;
@@ -379,10 +430,39 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
             return canvas;
         };
         cameraRef.current?.({
-            menuPictures: menuPictureMaker(renderer, world.m),
-            distance: close => {
+            visitPlace: placeId => {
+                if (!latest.current.active || document.visibilityState !== 'visible') return false;
+                const place = layer?.places.find(p => p.id === placeId);
+                stopPlay();
+                if (!place || !world.life.visitPlace('pokomoko', placeId, performance.now())) return false;
+                initialClose = false; followingPlace = place.id;
+                const hero = world.life.positionOf('pokomoko');
+                if (hero) revealPlaceCamera(camera, layout, view, placeViewPoints(place, hero), hero.clone().add(new T.Vector3(0, .5, 0)), [layer!.root, world.house], width / height);
                 playFocus = undefined; interruptedOrigin = undefined;
-                view.zoom = close ? 1.65 : 1; view.pan = { x: 0, z: 0 };
+                return true;
+            },
+            interact: id => {
+                if (!latest.current.active || document.visibilityState !== 'visible' || !placePlay(latest.current.state, id, layout.authored ? layout.world : undefined)) return false;
+                if (pendingTouch?.id === id || replySource?.id === id && performance.now() - replySource.at < 900) return true;
+                stopPlay();
+                if (!world.life.visitOwner(id, performance.now())) return false;
+                pendingTouch = { id, at: performance.now() }; api.current?.focus(id); return true;
+            },
+            menuPictures: menuPictureMaker(renderer, world.m),
+            catalogPictures: catalogPictureMaker(renderer, world.m),
+            restoreView: () => {
+                if (!overviewOrigin) return;
+                Object.assign(view, overviewOrigin); clearOverview(); initialClose = false; followingPlace = undefined;
+                playFocus = undefined; interruptedOrigin = undefined;
+                frameCamera(camera, layout, view, width / height);
+            },
+            distance: close => {
+                initialClose = false; followingPlace = undefined;
+                playFocus = undefined; interruptedOrigin = undefined;
+                if (close) clearOverview();
+                else if (!overviewOrigin) { overviewOrigin = copyView(); handlerRef.current.onViewReturn?.(true); }
+                view.zoom = close ? 1.5 : 1; view.pan = { x: 0, z: 0 };
+                if (close && !authoredWorld && !native) initialClose = true;
                 frameCamera(camera, layout, view, width / height);
             },
             capture: (w, h) => {
@@ -444,6 +524,7 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
             }
             if (latest.current.show !== showing) {
                 showing = Boolean(latest.current.show);
+                initialClose = false; followingPlace = undefined;
                 playFocus = undefined;
                 if (showing) { view.zoom = 1; view.pan = { x: 0, z: 0 }; }
             }
@@ -468,6 +549,25 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
                 if (elapsed >= (playFocus.restoring ? 420 : DROP_PLAY_MS)) playFocus = undefined;
             }
             if (!world.hasWaterPreview()) world.life.tick(now, delta, reduced, latest.current.time === 'night');
+            if (!latest.current.active || document.visibilityState !== 'visible') followingPlace = undefined;
+            const hero = world.life.positionOf('pokomoko');
+            if (hero && initialClose && !latest.current.ghost && !latest.current.selectedId) {
+                initialClose = false;
+                revealPlaceCamera(camera, layout, view, [hero.clone().add(new T.Vector3(-2.5, 0, -1.5)), hero.clone().add(new T.Vector3(2.5, 1.7, 1.5))], hero.clone().add(new T.Vector3(0, .5, 0)), [layer!.root, world.house], width / height);
+            }
+            if (hero && followingPlace) {
+                const place = world.life.activePlaceOf('pokomoko');
+                if (!place || place.id !== followingPlace) followingPlace = undefined;
+                else {
+                    const desired = copyView(); framePlaceCamera(camera, layout, desired, placeViewPoints(place, hero), width / height);
+                    const blend = reduced ? 1 : 1 - Math.exp(-delta / 180);
+                    view.zoom += (desired.zoom - view.zoom) * blend;
+                    view.pan.x += (desired.pan.x - view.pan.x) * blend; view.pan.z += (desired.pan.z - view.pan.z) * blend;
+                    frameCamera(camera, layout, view, width / height);
+                    node.dataset.growingPlaceFocus = place.id;
+                }
+            }
+            if (!followingPlace) delete node.dataset.growingPlaceFocus;
             startBridgeBuild();
             if (bridgeWork && current.bridge) {
                 const { at, resident, parts } = bridgeWork, elapsed = now - at;
@@ -494,6 +594,20 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
                     bridgeClear = window.setTimeout(() => setBridgeStage(undefined), 2200);
                 }
             }
+            if (!latest.current.active || !latest.current.playActive || document.visibilityState !== 'visible') stopPlay();
+            if (pendingTouch && now - pendingTouch.at > 15000) pendingTouch = undefined;
+            if (pendingTouch && world.life.nearOwner(pendingTouch.id)) {
+                const source = pendingTouch.id;
+                const play = placePlay(current, source, layout.authored ? layout.world : undefined);
+                pendingTouch = undefined;
+                if (play) {
+                    replySource = { id: source, at: now };
+                    const view = new T.Frustum().setFromProjectionMatrix(new T.Matrix4().multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse));
+                    const count = touchEffects.start(play, layout, now, point => view.containsPoint(point), reduced, layer?.root);
+                    handlerRef.current.onPlaceReply?.(play.kind, count);
+                }
+            }
+            touchEffects.tick(now, reduced);
             effects.tick(now, delta);
             moments.ambient(now, latest.current.time === 'night', current.landmarks.filter(l => l.cell && (l.kind === 'lantern' || l.kind === 'lighthouse')).length, camera.position.clone().setY(0), reduced);
             moments.tick(now);
@@ -531,6 +645,19 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
                         if (saved === false) { placeShown.delete(receiptKey); shownRetry.set(receiptKey, performance.now() + 1500); }
                     }).catch(() => { placeShown.delete(receiptKey); shownRetry.set(receiptKey, performance.now() + 1500); });
                 }
+                if (musicPlace && musicStand && handlerRef.current.onSharedPlay) {
+                    const hero = world.life.positionOf('pokomoko');
+                    const ids = hero && frustum.containsPoint(hero) ? world.life.sharedConcertActors(now).filter(id => {
+                        const point = world.life.positionOf(id); return point && frustum.containsPoint(point);
+                    }) : [];
+                    for (const ready of overlap.observe(now, ids)) {
+                        if ((sharedPending.get(ready.actorId) ?? 0) > now || current.experience?.shared.some(memory => memory.family === musicPlace!.family && memory.actorId === ready.actorId)) continue;
+                        const receipt = { ...ready, placeId: musicPlace.id, revision: musicPlace.revision, targetId: musicStand };
+                        sharedPending.set(ready.actorId, Infinity);
+                        const retry = () => sharedPending.set(ready.actorId, performance.now() + 1500);
+                        Promise.resolve(handlerRef.current.onSharedPlay(receipt)).then(saved => { if (saved === false) retry(); }).catch(retry);
+                    }
+                } else overlap.clear();
                 const actionHandler = handlerRef.current.onPlaceUse;
                 if (actionHandler) {
                     const due = useRetry.filter(retry => retry.at <= now); useRetry = useRetry.filter(retry => retry.at > now);
@@ -606,11 +733,13 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
             return nearest?.id;
         };
         const down = (event: PointerEvent) => {
+            initialClose = false; followingPlace = undefined;
             try { renderer.domElement.setPointerCapture(event.pointerId); } catch { /* A pointer that already ended cannot be captured. */ }
             if (playFocus) { interruptedOrigin = playFocus.returnTo; playFocus = undefined; }
             pointers.set(event.pointerId, { x: event.clientX, y: event.clientY, sx: event.clientX, sy: event.clientY });
             if (pointers.size === 1) { moved = false; pendingActor = actorAt(event); carrying = undefined; }
             if (pointers.size === 2) {
+                moved = true;
                 interruptedOrigin = undefined;
                 const [a, b] = [...pointers.values()];
                 pinch = Math.hypot(a.x - b.x, a.y - b.y); twist = Math.atan2(b.y - a.y, b.x - a.x); pendingActor = undefined;
@@ -621,6 +750,7 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
             const p = pointers.get(event.pointerId); if (!p) return;
             const dx = event.clientX - p.x, dy = event.clientY - p.y; p.x = event.clientX; p.y = event.clientY;
             if (pointers.size === 2) {
+                clearOverview();
                 interruptedOrigin = undefined;
                 const [a, b] = [...pointers.values()], distance = Math.hypot(a.x - b.x, a.y - b.y);
                 if (pinch > 0) view.zoom = Math.max(1, Math.min(4, view.zoom * distance / pinch));
@@ -636,6 +766,7 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
             pendingActor = undefined;
             if (carrying) { const point = ground(event); if (point) world.life.drag(carrying, point); return; }
             interruptedOrigin = undefined;
+            clearOverview();
             panFromDrag(camera, view, dx, dy, width, height); frameCamera(camera, layout, view, width / height);
         };
         const up = (event: PointerEvent) => {
@@ -671,12 +802,14 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
                 const data = hit.object.userData;
                 if (data.budId) { h.onOpen(data.budId); return; }
                 if (data.boat === 'arrival' && layer?.arrivalBoat.visible) { h.onDisembark(); return; }
-                if (data.actorId) { world.life.hop(data.actorId, performance.now()); h.onActorTap(data.actorId); return; }
-                if (data.galleryTarget && data.placeId && world.life.visitGallery('pokomoko', data.placeId, performance.now())) return;
+                if (data.actorId) { world.life.hop(data.actorId, performance.now()); h.onActorTap(data.actorId, world.life.touchConcert(data.actorId, performance.now())); return; }
+                if (data.galleryTarget && data.placeId && world.life.visitGallery('pokomoko', data.placeId, performance.now())) {
+                    initialClose = false; followingPlace = data.placeId; return;
+                }
                 if (data.objectId) { h.onSelect(data.objectId); return; }
             }
             const nearbyActor = actorAt(event);
-            if (nearbyActor) { world.life.hop(nearbyActor, performance.now()); h.onActorTap(nearbyActor); return; }
+            if (nearbyActor) { world.life.hop(nearbyActor, performance.now()); h.onActorTap(nearbyActor, world.life.touchConcert(nearbyActor, performance.now())); return; }
             const point = ground(event);
             if (point) { h.onSelect(undefined); h.onCell(layout.cellAt(point)); }
         };
@@ -687,6 +820,8 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
             if (!pointers.size) restoreFocus();
         };
         const wheel = (event: WheelEvent) => {
+            clearOverview();
+            initialClose = false; followingPlace = undefined;
             event.preventDefault();
             playFocus = undefined; interruptedOrigin = undefined;
             view.zoom = Math.max(1, Math.min(4, view.zoom * Math.exp(-event.deltaY * .002)));
@@ -707,12 +842,12 @@ export default function GrowingWorld({ state, world: authoredWorld, authoredWate
         return release;
     // A retry mounts a fresh world; its graphics profile is fixed for that lifetime.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [authoredWorld, authoredWater, authoredCove, authoredShoulder, authoredGrowthTerrain, authoredWholeArt]);
+    }, [viewKey, authoredWorld, authoredWater, authoredCove, authoredShoulder, authoredGrowthTerrain, authoredWholeArt]);
 
     useEffect(() => { api.current?.rebuild(state, ghost, selectedId, hints); }, [state, ghost, selectedId, hints]);
     useEffect(() => { if (moment) api.current?.moment(moment); }, [moment]);
     useEffect(() => { if (focus) api.current?.focus(focus.id); }, [focus]);
-    useEffect(() => { if (concert) api.current?.concert(concert.cell, concert.n); }, [concert]);
+    useEffect(() => { if (concert) api.current?.concert(concert.cell, concert.n); else api.current?.endMusic(); }, [concert]);
     useEffect(() => { api.current?.setTime(time); }, [time]);
     useEffect(() => { if (cheer) api.current?.cheer(); }, [cheer]);
     useEffect(() => { if (festival) api.current?.festival(); }, [festival]);

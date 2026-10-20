@@ -192,7 +192,7 @@ export async function commandGrowingIsland(profileId: string, intent: Intent, no
         if (current.state.applied.includes(intent.id) && current.version === upgraded.version) return { record: current, town: [] };
         const command = intent.command;
         if (command.type === 'concert-started' || command.type === 'learning-returned' || command.type === 'ack-achievements'
-            || command.type === 'place-used' || command.type === 'place-shown') {
+            || command.type === 'shared-play' || command.type === 'place-used' || command.type === 'place-shown') {
             if (command.profileId !== profileId || current.state.seed !== profileId) throw new Error('じぶんの しまを もういちど ひらいてね。');
             if (command.expectedRevision !== current.revision) throw new GuidanceReceiptConflict();
         }

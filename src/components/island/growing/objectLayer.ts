@@ -19,7 +19,7 @@ import { authoredWorldFrame } from '../../../domain/growingIsland/authoredWorldF
 import { buildBridge } from './bridgeGeometry';
 import { derivePlaces } from '../../../domain/growingIsland/places';
 import { derivePlaceRelations } from '../../../domain/growingIsland/placeRelations';
-import { buildPlaceGeometry } from './placeGeometry';
+import { buildPlaceGeometry, visiblePlaceGeometry } from './placeGeometry';
 import { buildPlacePaths, type PlacePathAccess } from './placePaths';
 import type { NativeGrowingKit } from './native/nativeGrowingKit';
 import type { NativeAuthoredFlower } from './native/nativeAuthoredFlower';
@@ -40,7 +40,7 @@ const OWN_MODELS: Partial<Record<LandmarkKind, (m: IslandMaterials) => T.Group>>
     slide: buildSlide, trampoline: buildTrampoline, fountain: buildFountain, bakery: buildBakery, postbox: buildPostbox,
 };
 
-function landmarkModel(m: IslandMaterials, state: GrowingState, landmark: Landmark, reached: Set<string>, native?: NativeGrowingKit, authored = false, world?: IslandWorld) {
+export function landmarkModel(m: IslandMaterials, state: GrowingState, landmark: Landmark, reached: Set<string>, native?: NativeGrowingKit, authored = false, world?: IslandWorld) {
     if (landmark.kind === 'sapling') return native ? native.tree(landmark.id, landmark.growth, authored ? .45 : undefined) : buildGrowingTree(m, landmark.id, landmark.growth);
     if (landmark.kind === 'lighthouse') return buildLighthouse(m);
     if (landmark.kind === 'bandstand') return buildBandstand(m);
@@ -144,8 +144,7 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
     const swingPivots = new Map<string, T.Object3D>(), fingerTargets: T.Mesh[] = [];
     const authoredWorld = layout.authored ? layout.world : undefined;
     const places = derivePlaces(state, authoredWorld), relations = derivePlaceRelations(state, places, authoredWorld);
-    const visiblePlaces = places.filter(place => !(place.ruleId === 'P01' && places.some(other => other.ruleId === 'P02'
-        && (other.stage === 'grown' || other.stage === 'lived') && other.mainIds.some(id => place.mainIds.includes(id)))));
+    const visiblePlaces = visiblePlaceGeometry(places);
     const grownBasins = new Set(visiblePlaces.filter(place => place.ruleId === 'P03' && (place.stage === 'grown' || place.stage === 'lived'))
         .flatMap(place => [...place.mainIds, ...place.waterRefs]));
     for (const id of layout.authoredWaterPlan?.ownerIds ?? []) grownBasins.add(id);

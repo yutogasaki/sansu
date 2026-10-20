@@ -105,3 +105,9 @@ describe('GrowingWorld preview inputs', () => {
         expect(growingScenePreviewKey(input, 'flower', undefined)).not.toBe(initial);
     });
 });
+
+it('does not rebuild physical life when only durable shared memory is recorded', () => {
+    const state = island(), next = structuredClone(state);
+    next.experience = { version: 1, shared: [{ family: 'grove', actorId: 'friend', targetId: 'music', at: 10, memberIds: ['tree'], variant: 'lane', revision: 'old' }] };
+    expect(growingSceneStateKey(next)).toBe(growingSceneStateKey(state));
+});

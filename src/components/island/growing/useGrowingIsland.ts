@@ -9,7 +9,8 @@ import type { LoadingStep } from './GrowingLoading';
 import { prepareIslandOpening } from '../../../domain/growingIsland/openingPreparation';
 
 export interface Reveal { id: number; town: TownEvent[]; nature: NatureEvent[] }
-export type PlaceReceipt = Omit<Extract<Command, { type: 'place-used' }>, 'profileId' | 'expectedRevision'>
+export type PlaceReceipt = Omit<Extract<Command, { type: 'shared-play' }>, 'profileId' | 'expectedRevision'>
+    | Omit<Extract<Command, { type: 'place-used' }>, 'profileId' | 'expectedRevision'>
     | Omit<Extract<Command, { type: 'place-shown' }>, 'profileId' | 'expectedRevision'>;
 
 /** Another tab saved this island: reload the saved state instead of showing a stale one. */

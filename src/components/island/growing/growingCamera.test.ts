@@ -1,11 +1,43 @@
 import * as T from 'three';
 import { describe, expect, it } from 'vitest';
-import { cameraArtPoints, frameCamera, initialView, panToFocus } from './growingCamera';
+import { cameraArtPoints, frameCamera, framePlaceCamera, initialView, panToFocus, revealPlaceCamera } from './growingCamera';
 import { sceneLayout } from './sceneLayout';
 import { buildPlaceGround } from './placeGround';
 import { compileWorldDefinition } from '../../../domain/growingIsland/worldDefinition';
 
 describe('district coordinates and camera clipping', () => {
+    it('selects a clear initial angle without hiding the obstructing tree or changing the subject', () => {
+        const layout = sceneLayout({ land: { expanded: 'east', extra: ['west', 'south'], capes: [] } });
+        const subject = layout.point({ x: 3, z: 1 }, .5), obstacle = new T.Mesh(new T.BoxGeometry(3, 5, 1), new T.MeshStandardMaterial());
+        obstacle.position.copy(layout.point({ x: 3, z: 3 }, 2));
+        const points = [subject.clone().add(new T.Vector3(-2, -.5, -1)), subject.clone().add(new T.Vector3(2, 1, 1))], camera = new T.OrthographicCamera();
+        const view = initialView(), before = subject.clone();
+        revealPlaceCamera(camera, layout, view, points, subject, [obstacle], 390 / 900); camera.updateMatrixWorld();
+        const p = subject.clone().project(camera), ray = new T.Raycaster(); ray.setFromCamera(new T.Vector2(p.x, p.y), camera);
+        ray.far = ray.ray.origin.distanceTo(subject) - .12;
+        expect(ray.intersectObject(obstacle)).toEqual([]); expect(obstacle.visible).toBe(true); expect(subject).toEqual(before);
+        obstacle.geometry.dispose(); (obstacle.material as T.Material).dispose();
+    });
+    it('keeps the real entrance, floor and moving person readable without fitting the whole canopy', () => {
+        const layout = sceneLayout({ land: { expanded: 'east', extra: ['west', 'south'], capes: ['east'] } }), ground = buildPlaceGround(layout);
+        layout.cameraObjects = () => [ground.root];
+        const camera = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100);
+        try {
+            for (const aspect of [390 / 900, 768 / 1024, 844 / 390]) for (const azimuth of [0, Math.PI / 2, Math.PI]) {
+                const view = { ...initialView(), azimuth };
+                const points = [{ x: 3, z: 3, y: .05 }, { x: 6, z: 3, y: 2 }, { x: 6, z: 3, y: 3 }].map(p => layout.point(p, p.y));
+                framePlaceCamera(camera, layout, view, points, aspect); camera.updateMatrixWorld();
+                for (const point of points) {
+                    const p = point.clone().project(camera);
+                    expect(Math.abs(p.x)).toBeLessThanOrEqual(.75001); expect(Math.abs(p.y)).toBeLessThanOrEqual(.55001);
+                    expect(p.z).toBeGreaterThan(-1); expect(p.z).toBeLessThan(1);
+                }
+                expect(view.zoom).toBeGreaterThan(1);
+                frameCamera(camera, layout, initialView(), aspect); camera.updateMatrixWorld();
+                expect(camera.top).toBeGreaterThan(0);
+            }
+        } finally { ground.dispose(); }
+    });
     it('keeps sea ahead of the near plane below the menu in ordinary tall island views', () => {
         const layout = sceneLayout({ land: { expanded: null, extra: [], capes: [] } });
         const room = new T.Mesh(new T.BoxGeometry(8, 7, 8), new T.MeshBasicMaterial());
