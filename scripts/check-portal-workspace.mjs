@@ -5,6 +5,7 @@ import os from 'node:os';
 import {createRequire} from 'node:module';
 import {createHash} from 'node:crypto';
 import {gunzipSync} from 'node:zlib';
+import {readRegistry} from '../tools/portal-registry.mjs';
 import {parse,elements} from '../tools/portal-html.mjs';
 const require=createRequire(import.meta.url),M=require('./portal-work-model.cjs');
 if(process.env.PORTAL_WORKSPACE==='legacy'){assert(!fs.existsSync('portal/data/workspace-work.json'));console.log('PASS: explicit legacy generation has no workspace projection; all original checks remain enabled');process.exit(0);}
@@ -29,7 +30,11 @@ try{
  fs.writeFileSync(path.join(tmp,'.agents/tasks/TASKS.md'),original);fs.unlinkSync(file);fs.symlinkSync(path.join(root,t.source.path),file);assert.throws(()=>M.load({root:tmp}),/Symlink/);
 }finally{fs.rmSync(tmp,{recursive:true,force:true});}
 assert.equal(JSON.parse(fs.readFileSync('portal/data/unification-manifest.json')).sourceFiles['docs/portal/project.json'],sha(fs.readFileSync('docs/portal/project.json')),'first generation tracks the current derived adapter, never its previous disk bytes');
-const packed=fs.readFileSync('portal/search-data.js','utf8').match(/window\.__portalSearchGzip=("[A-Za-z0-9+/=]+")/)[1];assert.deepEqual(JSON.parse(gunzipSync(Buffer.from(JSON.parse(packed),'base64'))),JSON.parse(fs.readFileSync('portal/data/unification.json')),'compressed search includes all final fields and no previous generated output input');
+const packed=fs.readFileSync('portal/search-data.js','utf8').match(/window\.__portalSearchGzip=("[A-Za-z0-9+/=]+")/)[1];
+const search=JSON.parse(gunzipSync(Buffer.from(JSON.parse(packed),'base64'))),fullRegistry=readRegistry('portal/data/unification.json');
+assert.equal(sha(JSON.stringify(fullRegistry)),JSON.parse(fs.readFileSync('portal/data/storage.json')).rawModelSha256,'all full fields, order and unknown data restore to the generated source model');
+assert.deepEqual(search.items.map(r=>r.key),fullRegistry.items.map(r=>r.key),'search and all raw records have the same order and identity');
+for(let i=0;i<search.items.length;i++)assert.equal(search.items[i].haystack,[fullRegistry.items[i].text,fullRegistry.items[i].pageTitle,fullRegistry.items[i].title,...Object.values(fullRegistry.items[i].attributes||{})].join(' ').normalize('NFKC').toLocaleLowerCase(),'full source search terms retained');
 const map=JSON.parse(fs.readFileSync('portal/data/workspace-legacy.json')).pages;
 for(const [name,p]of Object.entries(map)){assert.equal(sha(fs.readFileSync('portal/'+p.target)),p.sha256,'moved full document bytes: '+name);const old=fs.readFileSync('portal/'+p.target,'utf8'),next=fs.readFileSync('portal/'+name,'utf8');for(const id of new Set([...old.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1])))assert(next.includes('id="'+id+'"'),'old fragment: '+name+'#'+id);}
 const manifest=JSON.parse(fs.readFileSync('portal/data/workspace-preservation.json'));

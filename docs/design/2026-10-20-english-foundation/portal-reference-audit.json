@@ -1,0 +1,209 @@
+{
+  "at": "2026-10-20T08:05:18.430154+00:00",
+  "sourcesReviewed": [
+    {
+      "source": ".agents/tasks/TASKS.md",
+      "previousHash": "6a2c73369eacfd6d0552d309b8f0da52e94111023096955d9b71346faa3e8fb5",
+      "currentHash": "008c33e885f5d836b4d38a4d59d032967d2f2907401e0a5df4055a63a22266d9"
+    },
+    {
+      "source": "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+      "previousHash": "a848f6d47f1f9aef0ebb7fcd758ac085537bd8c11b9b437f1a9d961ce2ec481f",
+      "currentHash": "427bd0c1fd22adcff6382e153a4a20903f489a14cc8e91d30a89f5224308eb42"
+    }
+  ],
+  "basis": [
+    "Current parent task explicitly retains R0/R1 done, R2 candidate completed but art adoption HOLD and R3 onward queued.",
+    "Current task board retains inlet review as next step. Separate growth, camera, house, and English implementations do not approve the inlet or release.",
+    "BLOCKED source is unchanged; device/photo/sound/save/child checks remain stopped."
+  ],
+  "itemStatesPreserved": [
+    {
+      "id": "direction",
+      "status": "done",
+      "current_node": "recorded",
+      "why_stopped": null,
+      "needs_yu": {
+        "required": false,
+        "content": ""
+      },
+      "next": "元の記録に沿って一件ずつ確認する。"
+    },
+    {
+      "id": "diagnosis",
+      "status": "done",
+      "current_node": "recorded",
+      "why_stopped": null,
+      "needs_yu": {
+        "required": false,
+        "content": ""
+      },
+      "next": "元の記録に沿って一件ずつ確認する。"
+    },
+    {
+      "id": "inlet",
+      "status": "stopped",
+      "current_node": "decision",
+      "why_stopped": "輪郭の採用が未決定。採用前に成長や通常保存の制作を先行しない。",
+      "needs_yu": {
+        "required": true,
+        "content": "入り江の輪郭を採り、成長と実利用の制作へ進むか。進める／直して比べる／保留する。採用で次の制作が進み、公開は別の判断。",
+        "options": [
+          {
+            "label": "進める",
+            "effect": "成長と実利用を一件ずつ制作",
+            "next_work": "単独から接続・成熟・利用・分離・復元の旅程"
+          },
+          {
+            "label": "直して比べる",
+            "effect": "輪郭を再比較",
+            "next_work": "気になる形を指定して粗い形を直す"
+          },
+          {
+            "label": "保留する",
+            "effect": "次の工程は開始しない",
+            "next_work": "理由と再開条件を残す"
+          }
+        ],
+        "recommendation": "進める",
+        "reason": "既存の判断カードのおすすめ。所有内容を保った輪郭差と対象動作は確認済み。美術完成と理解は未確認。",
+        "evidence_href": "#decisions",
+        "confirmed": "輪郭差と診断範囲の動作",
+        "missing": "美術の仕上げと独立した理解の確認",
+        "resume_condition": "利用者が輪郭を採用する"
+      },
+      "next": "比較の記録を確認し、進める・直して比べる・保留するを選ぶ。"
+    },
+    {
+      "id": "growth-work",
+      "status": "queued",
+      "current_node": "waiting",
+      "why_stopped": null,
+      "needs_yu": {
+        "required": false,
+        "content": ""
+      },
+      "next": "元の記録に沿って一件ずつ確認する。"
+    },
+    {
+      "id": "normal",
+      "status": "queued",
+      "current_node": "waiting",
+      "why_stopped": null,
+      "needs_yu": {
+        "required": false,
+        "content": ""
+      },
+      "next": "元の記録に沿って一件ずつ確認する。"
+    },
+    {
+      "id": "finish",
+      "status": "queued",
+      "current_node": "waiting",
+      "why_stopped": null,
+      "needs_yu": {
+        "required": false,
+        "content": ""
+      },
+      "next": "元の記録に沿って一件ずつ確認する。"
+    },
+    {
+      "id": "release",
+      "status": "queued",
+      "current_node": "queue",
+      "why_stopped": null,
+      "needs_yu": {
+        "required": false,
+        "content": ""
+      },
+      "next": "関連する仕事。共有キューの順で、必要な一件だけ開始する。"
+    },
+    {
+      "id": "experience",
+      "status": "queued",
+      "current_node": "queue",
+      "why_stopped": null,
+      "needs_yu": {
+        "required": false,
+        "content": ""
+      },
+      "next": "関連する仕事。共有キューの順で、必要な一件だけ開始する。"
+    },
+    {
+      "id": "performance",
+      "status": "queued",
+      "current_node": "queue",
+      "why_stopped": null,
+      "needs_yu": {
+        "required": false,
+        "content": ""
+      },
+      "next": "関連する仕事。共有キューの順で、必要な一件だけ開始する。"
+    },
+    {
+      "id": "device",
+      "status": "stopped",
+      "current_node": "conditions",
+      "why_stopped": "同じ端末と候補が必要。",
+      "needs_yu": {
+        "required": false,
+        "content": ""
+      },
+      "next": "同じ版で確認条件を用意し、担当タスクへ結果を戻す。"
+    },
+    {
+      "id": "photo",
+      "status": "stopped",
+      "current_node": "conditions",
+      "why_stopped": "実Safari・ホーム画面版が必要。",
+      "needs_yu": {
+        "required": false,
+        "content": ""
+      },
+      "next": "同じ版で確認条件を用意し、担当タスクへ結果を戻す。"
+    },
+    {
+      "id": "sound",
+      "status": "stopped",
+      "current_node": "conditions",
+      "why_stopped": "実スピーカーと入力・読み上げの確認が必要。",
+      "needs_yu": {
+        "required": false,
+        "content": ""
+      },
+      "next": "同じ版で確認条件を用意し、担当タスクへ結果を戻す。"
+    },
+    {
+      "id": "save",
+      "status": "stopped",
+      "current_node": "conditions",
+      "why_stopped": "実利用者の対象端末と復旧手段が必要。",
+      "needs_yu": {
+        "required": false,
+        "content": ""
+      },
+      "next": "同じ版で確認条件を用意し、担当タスクへ結果を戻す。"
+    },
+    {
+      "id": "return",
+      "status": "stopped",
+      "current_node": "conditions",
+      "why_stopped": "参加者と観察の準備が必要。",
+      "needs_yu": {
+        "required": false,
+        "content": ""
+      },
+      "next": "同じ版で確認条件を用意し、担当タスクへ結果を戻す。"
+    }
+  ],
+  "changedClaims": false,
+  "note": "Reference refresh after reading the current canonical sources; no test result or acceptance was upgraded.",
+  "closeoutReferenceRefresh": [
+    {
+      "source": ".agents/tasks/TASKS.md",
+      "previousHash": "008c33e885f5d836b4d38a4d59d032967d2f2907401e0a5df4055a63a22266d9",
+      "currentHash": "98d476895de83ff89bdc90684b27082bd1518a9e98b9e9183a4aedb3ed658527",
+      "basis": "English verification summary now reflects passing tests. Construction work-item states and adoption/release decisions unchanged."
+    }
+  ]
+}

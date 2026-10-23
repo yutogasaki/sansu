@@ -6,10 +6,11 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import {chromium} from 'playwright';
+import {readRegistry} from './portal-registry.mjs';
 const root=path.resolve(fileURLToPath(new URL('../',import.meta.url)));
 const out=path.resolve(process.env.SANSU_LIBRARY_BROWSER_OUTPUT||'qa/evidence/PI-001-SANSU/library-browser');fs.mkdirSync(out,{recursive:true});
 const sha=value=>createHash('sha256').update(value).digest('hex');
-const data=JSON.parse(fs.readFileSync(path.join(root,'portal/data/unification.json')));
+const data=readRegistry(path.join(root,'portal/data/unification.json'));
 const manifest=fs.readFileSync(path.join(root,'portal/data/unification-manifest.json'));
 const report={at:new Date().toISOString(),command:'node tools/check-portal-library-browser.mjs '+process.argv.slice(2).join(' '),candidate:JSON.parse(fs.readFileSync(path.join(root,'portal/data/integration.json'))).currentCandidate,manifestSha256:sha(manifest),inputSha256:sha(fs.readFileSync(path.join(root,'portal/data/unification.json'))),groups:[],pages:[],failures:[]};
 const server=http.createServer((req,res)=>{
@@ -32,14 +33,14 @@ async function group(name,work){try{await work();report.groups.push({name,status
 try{
  await page.setViewportSize({width:390,height:844});
  await group('全項目検索・多軸・件数・0件・解除・URL復元・同項目JSON・Escape・フォーカス',async()=>{
-  await go('portal/search.html');await page.waitForFunction(()=>document.querySelectorAll('#pu-results .pu-result').length===40);
+  await go('portal/'+(fs.existsSync(path.join(root,'portal/filters.html'))?'filters':'search')+'.html');await page.waitForFunction(()=>document.querySelectorAll('#pu-results .pu-result').length===40);
   await page.locator('#pu-query').fill('島');await page.locator('#pu-category').selectOption('関連資料');await page.locator('#pu-type').selectOption('image');
   const expected=data.items.filter(row=>row.category==='関連資料'&&row.kind==='image'&&[row.text,row.pageTitle,row.title,...Object.values(row.attributes||{})].join(' ').includes('島'));
   assert(expected.length>0);await page.waitForFunction(n=>document.querySelector('#pu-count').textContent.startsWith(n.toLocaleString()+'件'),expected.length);await page.reload();await page.waitForLoadState('networkidle');
   assert.equal(await page.locator('#pu-query').inputValue(),'島');assert.equal(await page.locator('#pu-type').inputValue(),'image');
-  const button=page.locator('#pu-results button').first();await button.click();assert.deepEqual(JSON.parse(await page.locator('#pu-detail-data').innerText()),expected[0]);assert.equal(new URL(page.url()).searchParams.get('record'),expected[0].key);
+  const button=page.locator('#pu-results button').first();await button.click();await page.waitForFunction(()=>{try{return !!JSON.parse(document.querySelector('#pu-detail-data').textContent).source;}catch{return false;}});assert.deepEqual(JSON.parse(await page.locator('#pu-detail-data').innerText()),expected[0]);assert.equal(new URL(page.url()).searchParams.get('record'),expected[0].key);
   await page.keyboard.press('Escape');assert(await button.evaluate(n=>n===document.activeElement));
-  await button.click();await page.reload();await page.waitForFunction(()=>document.querySelector('#pu-detail').open);await page.keyboard.press('Escape');assert(await page.locator('#pu-query').evaluate(n=>n===document.activeElement));
+  await button.click();await page.reload();await page.waitForFunction(()=>document.querySelector('#pu-detail').open);await page.keyboard.press('Escape');await page.waitForFunction(()=>document.activeElement===document.querySelector('#pu-query'));assert(await page.locator('#pu-query').evaluate(n=>n===document.activeElement));
   await page.locator('#pu-query').fill('PI001_NO_MATCH_70039');await page.waitForFunction(()=>document.querySelector('#pu-count').textContent.startsWith('0件'));assert.match(await page.locator('#pu-results').innerText(),/条件に合う項目はありません/);await page.locator('#pu-reset').click();assert.equal(await page.locator('#pu-query').inputValue(),'');await shot('library-search-390');
  });
  const atlas='docs/design/2026-10-10-island-design-strategy/index.html';

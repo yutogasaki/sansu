@@ -2,7 +2,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
-import {gzipSync} from 'node:zlib';
 import {decode,escape,parse,elements,headingIssue,technicalSurface} from './portal-html.mjs';
 import {humanLabel} from './integrated-portal.mjs';
 import {addFolders} from './portal-library-folders.mjs';
@@ -129,7 +128,9 @@ export function composeLibrary(root,files,home){
   }
  }
  files.set('data/unification.json',JSON.stringify(registry,null,2)+'\n');
- files.set('search-data.js','window.__portalSearchGzip='+JSON.stringify(gzipSync(Buffer.from(JSON.stringify(registry)),{level:9}).toString('base64'))+';\n');
+ // No browser observes this intermediate Map. The final storage composer emits
+ // the search projection once, after all shared and native transformations.
+ files.set('search-data.js','/* Search is emitted by the final storage composer. */\n');
  // Local changes remain part of the same exact source/output manifest.
  for(const source of ['scripts/standard-portal.mjs','tools/portal-library.mjs','tools/portal-library-folders.mjs','tools/portal-native-context.js','tools/portal-library-runtime.js','tools/portal-library.css',csv])manifest.sourceFiles[source]=sha(fs.readFileSync(path.join(root,source)));
  manifest.outputs=Object.fromEntries([...files].filter(([name])=>!['.generated-by-hub-standard','data/unification-manifest.json'].includes(name)).map(([name,body])=>[name,sha(typeof body==='string'||Buffer.isBuffer(body)?body:fs.readFileSync(path.join(root,body.source)))]));

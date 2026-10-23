@@ -1,12 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { gzipSync } from 'node:zlib';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { parseTaskBoard } from '../tools/portal-content.mjs';
 import { renderIntegrated, taskPresentation } from '../tools/integrated-portal.mjs';
 import { composeLibrary } from '../tools/portal-library.mjs';
+import { compactPortal } from '../tools/portal-storage.mjs';
 
 const root = path.resolve(fileURLToPath(new URL('../', import.meta.url)));
 const vendor = 'scripts/vendor/hub-standard/1.0.0';
@@ -101,17 +101,14 @@ export function run(mode) {
     // It is written below from this same canonical projection; hashing its old
     // disk bytes made the first build stale whenever the queue changed.
     manifest.sourceFiles['docs/portal/project.json'] = sha(text);
-    // The reader must consume this exact final registry, after the shared UI
-    // removes generated-output self references. Otherwise switching generators
-    // changes the next build's compressed search bytes.
-    const searchData = 'window.__portalSearchGzip=' + JSON.stringify(gzipSync(Buffer.from(JSON.stringify(finalRegistry)), {level:9}).toString('base64')) + ';\n';
-    files.set('search-data.js', searchData);
-    manifest.outputs['search-data.js'] = sha(searchData);
+    // Search is emitted once, from the final model by compactPortal below.
+    // Intermediate adapters still consume this complete in-memory registry.
     manifest.outputs['data/unification.json'] = sha(compactRegistry);
     files.set('data/unification-manifest.json', JSON.stringify(manifest, null, 2) + '\n');
   }
   if (process.env.PORTAL_WORKSPACE !== 'legacy') require('./portal-workspace.cjs').apply({root,files,taskPresentation});
   require('./portal-shared-diagrams.cjs').apply({root,files});
+  compactPortal(root,files);
   files.set('.generated-by-hub-standard', '1.0.0\n');
   const out = path.join(root, 'portal');
   common.noSymlinks(root, out);

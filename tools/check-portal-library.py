@@ -45,9 +45,10 @@ class Inspect(HTMLParser):
                     if name=='style':self.styles.append(hashlib.sha256(''.join(parts).encode()).hexdigest())
                 self.stack=self.stack[:i];break
 
-def audit(repo,relative='portal'):
-    repo=Path(repo).resolve();portal=repo/relative;evidence=repo/'qa/evidence/PI-001-SANSU/library';evidence.mkdir(parents=True,exist_ok=True)
-    data=json.loads((portal/'data/unification.json').read_text());cache={}
+def audit(repo,relative='portal',output=None,write_parity=False):
+    repo=Path(repo).resolve();portal=repo/relative;evidence=Path(output).resolve() if output else repo/'qa/evidence/PI-001-SANSU/library';evidence.mkdir(parents=True,exist_ok=True)
+    import runpy
+    data=runpy.run_path(str(Path(__file__).with_name('portal-registry.py')))['load_registry'](portal);cache={}
     def inspect(path):
         path=path.resolve()
         if path not in cache:cache[path]=Inspect(path.read_text())
@@ -99,18 +100,19 @@ def audit(repo,relative='portal'):
             'controlInventory':[{'source':r['source'],'key':r['key'],'tag':r['tag'],'attributes':r.get('attributes',{}),'title':r.get('title','')} for r in data['items'] if r['kind']=='control'],
             'acceptance':'unverified','browser':'not-run','independentReview':'not-run'}
     (evidence/'audit.json').write_text(json.dumps(output,ensure_ascii=False,indent=2)+'\n')
-    with (evidence/'parity.md').open('w') as report:
-        report.write('# 全項目の対応表\n\n同じ入力hash: `'+output['inputHash']+'`。機械照合と受入を区別する。\n\n| 元の場所・項目 | 統合先 | 保持する情報・操作・表現 | 検証方法・証拠 | 判定・除外理由 |\n| --- | --- | --- | --- | --- |\n')
-        bad={row.get('key') for row in failures}
-        for item in data['items']:
-            old=item['source']+('#'+item['anchor'] if item.get('anchor') else ' / '+item['key'])
-            new=relative+'/'+item['target']+'?item='+item['key']
-            report.write('| '+old.replace('|','&#124;')+' | '+new+' | '+item['kindLabel']+'・本文・属性・出典（原文/識別子は同じ全件JSON） | audit.json / '+item['key']+'：本文・属性・script/CSS・アンカー | '+('機械照合NG' if item['key'] in bad else '機械照合済み')+'。表示・操作・独立審査は未受入 |\n')
-        for resource in data['resources']:
-            report.write('| '+resource['source'].replace('|','&#124;')+' | '+str(resource.get('target','')).replace('|','&#124;')+' | 元ファイル・容量・SHA・アクセス条件 | audit.json / data/unification.json / sourceFiles | 機械照合。表示/利用/配布条件は別判定 |\n')
-        for row in data['exclusions']:report.write('| '+row['source'].replace('|','&#124;')+' | 原領域を維持 | 内容を転記しない | data/unification.json の除外一覧 | '+row['reason']+' |\n')
+    if write_parity:
+      with (evidence/'parity.md').open('w') as report:
+          report.write('# 全項目の対応表\n\n同じ入力hash: `'+output['inputHash']+'`。機械照合と受入を区別する。\n\n| 元の場所・項目 | 統合先 | 保持する情報・操作・表現 | 検証方法・証拠 | 判定・除外理由 |\n| --- | --- | --- | --- | --- |\n')
+          bad={row.get('key') for row in failures}
+          for item in data['items']:
+              old=item['source']+('#'+item['anchor'] if item.get('anchor') else ' / '+item['key'])
+              new=relative+'/'+item['target']+'?item='+item['key']
+              report.write('| '+old.replace('|','&#124;')+' | '+new+' | '+item['kindLabel']+'・本文・属性・出典（原文/識別子は同じ全件JSON） | audit.json / '+item['key']+'：本文・属性・script/CSS・アンカー | '+('機械照合NG' if item['key'] in bad else '機械照合済み')+'。表示・操作・独立審査は未受入 |\n')
+          for resource in data['resources']:
+              report.write('| '+resource['source'].replace('|','&#124;')+' | '+str(resource.get('target','')).replace('|','&#124;')+' | 元ファイル・容量・SHA・アクセス条件 | audit.json / data/unification.json / sourceFiles | 機械照合。表示/利用/配布条件は別判定 |\n')
+          for row in data['exclusions']:report.write('| '+row['source'].replace('|','&#124;')+' | 原領域を維持 | 内容を転記しない | data/unification.json の除外一覧 | '+row['reason']+' |\n')
     return {key:output[key] for key in ['repo','pages','documents','items','resources','itemIssues','linksChecked','linkIssues','acceptance']}
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('repo');parser.add_argument('--portal',default='portal');args=parser.parse_args()
-    result=audit(args.repo,args.portal);print(json.dumps(result,ensure_ascii=False));raise SystemExit(bool(result['itemIssues'] or result['linkIssues']))
+    parser=argparse.ArgumentParser();parser.add_argument('repo');parser.add_argument('--portal',default='portal');parser.add_argument('--output');parser.add_argument('--write-parity',action='store_true');args=parser.parse_args()
+    result=audit(args.repo,args.portal,args.output,args.write_parity);print(json.dumps(result,ensure_ascii=False));raise SystemExit(bool(result['itemIssues'] or result['linkIssues']))

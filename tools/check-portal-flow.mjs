@@ -30,6 +30,8 @@ export function checkPortalFlow(root,out) {
  let bad=clone();bad.dependencies.push({from:flow.dependencies[0].to,to:flow.dependencies[0].from,reason:'cycle',basis:'proposal',evidence:['fixture']});assert(checkGraph(bad).includes('Dependency cycle'));
  bad=clone();bad.artifacts[0].item_id='missing';assert(checkGraph(bad).some(s=>s.includes('Unknown artifacts.item_id')));
  bad=clone();bad.items.find(i=>i.status==='stopped').why_stopped=null;assert(checkGraph(bad).length);
- bad=clone();bad.items.find(i=>i.needs_yu.required).needs_yu.content='';assert(checkGraph(bad).length);
+ // The live queue may have no pending decisions. Exercise an explicit fixture.
+ bad=clone();const decision=bad.items.find(i=>i.status!=='done');decision.needs_yu={required:true,content:'比較した案を選ぶ'};
+ assert.deepEqual(checkGraph(bad),[]);decision.needs_yu.content='';assert(checkGraph(bad).includes('Decision needs content and unfinished work'));
  console.log(`PASS: flow schema/references/cycles/stops/decisions, ${flow.items.length} work items, same-page anchors and source/embedded/bundled equality`);
 }

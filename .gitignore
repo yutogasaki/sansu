@@ -18,6 +18,9 @@ test-results
 .playwright-cli/
 output/
 
+# Reproducible internal portal. Existing index entries are handled separately.
+/portal/
+
 dist-website/
 
 # Keep promotion assets visible even when a local Images/ exclude matches.
@@ -33,3 +36,7 @@ artifacts/h-018/
 /scripts/vendor/portal-diagrams/1.1.1/node_modules/
 
 /scripts/vendor/portal-diagrams/1.1.1/.diagram-install-lock/
+
+# Local detailed portal/Git audit evidence is not approved for public distribution.
+/qa/evidence/PBUILD-001/
+/qa/evidence/GIT-001-sansu/

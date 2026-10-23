@@ -1,5 +1,7 @@
 # 今進めていること
 
+2026-10-20 [英語基礎F01/F02の包括実装](../../docs/tasks/active/2026-10-20-english-foundation.md)：専用保存/復習/報酬・2単元と固定教材を実装。2幅の実SW更新/同予約offline/音オフまで確認。ローカル機能・技術検証は完了。追加検証59件、未完native1件、入口/portalがPASS。全体は既存合格との合算648ファイル/5,506件、失敗0・未完0。人による教材/実機/児童の受入は残す。
+
 2026-10-20 画角改善：近景/場所/本人の追従と手動優先を実装。正しい対象のproduction8ケースと島回帰748件がPASS、長回廊の実利用保存を両幅で確認。[現在地と美術等の未受入](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md)。
 
 2026-10-20 大型形の追加はローカル実装済み、実画面受入はPARTIAL。島回帰745件はPASS、P04実利用は確認、P02長回廊の実利用記録は修正後も未確認。[現在地・失敗・次の一手](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md)。美術採用・公開・pushはしていない。
@@ -60,3 +62,11 @@
 - 対象：カメラ/品物/メニュー/場所/写真・思い出/住人/家/記録・設定の表示。学習の入力・採点と保存形式は保持。既存差分を保持し、追加エージェントなし、既定30分。
 - 検証：docs/lint/typecheck/test/build、smokeと実画面の主要旅程。実機・児童理解・既存美術HOLDは分離。
 - 状態：UI実装と主要操作の確認を完了。全体unit5,465件PASS、更新後対象23件PASS、typecheck/lint/build・現行入口guard・固定productionの縦横/狭幅/家/学習/記録/設定PASS。旧Exploreのsmoke1件FAILと別作業の親タスクflow根拠不一致を残す。実機・児童理解・美術HOLDは未合格。記録 `docs/design/2026-10-20-whole-app-ui/implementation.md`。
+
+## ポータルの構築と容量整理（2026-10-21）
+
+[正本から復元できる仕事場](../../docs/tasks/active/2026-10-21-portal-storage.md)をローカル実装・検証する。開始記録→重複/初回生成の再現→分割/読込→旧URL/保存/狭幅→必須検証→容量と復旧の記録の順。島・学習・素材原本と他作業を保持し、Git index操作・commit/push・Web公開・外部送信はしない。
+
+## 学習の吹き出しと文字整理（2026-10-21）
+
+ユーザー採用の全身192/172pxと丸い吹き出しをローカル実装。対象112テスト・5幅と実学習操作・build・classic smoke32件PASS。初回全体unit1件FAILは最終対象で再PASS、全体再完走・実機/児童理解/PWAは未確認。共有map staleは別件。commit/push/公開なし。[実装証拠](../../docs/design/2026-10-21-learning-header/implementation/README.md)。
