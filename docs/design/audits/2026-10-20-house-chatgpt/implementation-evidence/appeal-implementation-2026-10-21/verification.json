@@ -1,0 +1,63 @@
+{
+  "at": "2026-10-21T04:08:20.959709+00:00",
+  "scope": "Local implementation in shared dirty checkout, fixed copied build; no commit/push/deploy",
+  "build": {
+    "url": "http://127.0.0.1:5295/#/island?view=keepsakes",
+    "revision": "development-local",
+    "version": "development-local:f40bfc78-ffc8-4409-8589-46cb8902fcbe",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-shore-garden-v18",
+    "learningCandidate": "pokomoko-pop-live-v8",
+    "islandFeatureEnabled": true,
+    "mode": "keepsakes",
+    "renderer": "three",
+    "artDirection": "moon-garden",
+    "drawCalls": 85,
+    "expanded": "false",
+    "residentAction": "idle",
+    "residentItemId": "",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": true,
+    "reducedMotion": false,
+    "appRoot": {
+      "revision": "development-local",
+      "version": "development-local:f40bfc78-ffc8-4409-8589-46cb8902fcbe",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    }
+  },
+  "cameraCandidate": "island-home-interior-v7-living",
+  "sourceHashes": "source-hashes.json",
+  "fixedInputs": {
+    "count": 5688,
+    "aggregateSha256": "49f2cb58bebda82c166db0d9c2354b6a13d0d08f199ba09899526ce58ffe6858",
+    "archive": "Local fixed sources /tmp/sansu-house-appeal-20261021 and output/playwright/house-appeal-implementation-20261021/fixed-inputs.json"
+  },
+  "checks": {
+    "fullLint": "PASS, 4 existing warnings",
+    "finalTargetLint": "PASS",
+    "typecheck": "PASS shared and fixed copy; final build runs tsc again",
+    "build": "PASS final fixed copy npm run build, 8.83MiB/12 PWA assets",
+    "focused": "PASS 37: camera23, photography13, resize1; plus PASS16 stage bindings/save/receipt",
+    "fullUnitInitial": "Completed: 652 files, 5529 passed, 2 failed in photography mocks (document.createElement missing). Fixed capability guard; all 13 photography tests passed, and final focused37/16 passed. Full suite was not rerun after final local fixes.",
+    "smoke": "PASS 32 classic scenarios on preceding fixed candidate; initial incomplete-copy run had 2 failures, retained. Final Island-only camera-surface bridge separately checked with focused and production journeys.",
+    "smokeCount": 32,
+    "production": "PASS final fixed build, 4 widths: guide/save/close/immediate redraw/reopen/reload/focus; errors[]",
+    "objectTaps": "PASS final fixed build, 390/768: actual album/card taps, pause/resume same question, errors[]",
+    "cameraComparison": "PASS 16 pairs: 8 overview frames differ, 8 decorating frames equal, all resident states identical",
+    "text200": "PASS 320/390 computed-font 2x diagnostic, body/header controls do not overlap scene and buttons >=48px; not OS zoom",
+    "agentIndex": "Generated index check PASS. Full portal verification FAIL: final settled rerun stopped at tools/check-portal-integration.mjs:22 SHA mismatch (actual446a58da/expected d8890bf7). Earlier rerun also stopped because this verification JSON was updated during generation. Logs retained; no final portal PASS.",
+    "docs": "FAIL outside this implementation scope: shared docs/tasks/active/pbuild-001-portal-storage.md filename format and missing Docs To Touch."
+  },
+  "limitations": [
+    "No physical iOS/audio/OS zoom, child silent comprehension/revisit, or PWA two-build update/rollback acceptance",
+    "Mature/all-display camera scenes are explicit synthetic fixtures, not natural acquisition",
+    "No final full-suite rerun; initial two test failures fixed and affected checks rerun",
+    "Full shared checkout contains other work; copy includes existing dirty baseline without committing it"
+  ]
+}

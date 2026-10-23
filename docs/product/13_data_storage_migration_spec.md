@@ -1,5 +1,7 @@
 # docs/product/13_data_storage_migration_spec.md — データ・保存・移行仕様
 
+英語基礎のF01/F02、専用証拠・保存・報酬・復習は[英語の基礎コース](english-foundation.md)に従う。既存英単語コースの学習記録と予約は保持する。
+
 ## 育成規則v0.4・保存5（2026-10-19）
 
 [ADR](../adr/2026-10-19-island-growth-v04.md)と[移行詳細](island-system/growth-rules.md#wの旧枠と例外復旧)を採用。Dexie9でコピーし、10で旧写真writerを隔離する。移行は現役/休止島/写真をcultivatedIslands/cultivatedArchives/cultivatedMoments/cultivatedGiftsへ一度コピーし、旧voyage系を新版の書込み先にしない。旧写真storeは旧writerの追加/削除を拒否するsentinelへ隔離する。record5はgrowth規則版・W枠・由来別復元在庫と監査を必須にし、元snapshotを保持する。

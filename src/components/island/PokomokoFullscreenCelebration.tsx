@@ -24,7 +24,8 @@ export function PokomokoFullscreenCelebration({ burst, root, level }: {
         if (!context) return;
         const motion = matchMedia('(prefers-reduced-motion: reduce)');
         let frame = 0, stopped = false;
-        const actor = panel.querySelector('.pokomoko-learning-actor');
+        const actor = panel.querySelector('.pokomoko-learning-actor')
+            ?? panel.closest('.island-page')?.querySelector('.island-learning-companion .pokomoko-learning-actor');
         const origin = actor?.getBoundingClientRect();
         const card = panel.querySelector('.park-question')?.getBoundingClientRect();
         const width = innerWidth, height = innerHeight, dpr = Math.min(devicePixelRatio || 1, 2);

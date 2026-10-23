@@ -75,7 +75,7 @@ const growing = page => page.evaluate(async () => {
     const req = indexedDB.open('SansuGrowingIslandV1');
     const db = await new Promise((ok, no) => { req.onsuccess = () => ok(req.result); req.onerror = () => no(req.error); });
     try {
-        const table = db.objectStoreNames.contains('cultivatedIslands') ? 'cultivatedIslands' : db.objectStoreNames.contains('voyageIslands') ? 'voyageIslands' : db.objectStoreNames.contains('placedIslands') ? 'placedIslands' : db.objectStoreNames.contains('guidedIslands') ? 'guidedIslands' : 'islands';
+        const table = db.objectStoreNames.contains('foundationIslands') ? 'foundationIslands' : db.objectStoreNames.contains('cultivatedIslands') ? 'cultivatedIslands' : db.objectStoreNames.contains('voyageIslands') ? 'voyageIslands' : db.objectStoreNames.contains('placedIslands') ? 'placedIslands' : db.objectStoreNames.contains('guidedIslands') ? 'guidedIslands' : 'islands';
         const get = db.transaction(table).objectStore(table).getAll();
         const rows = await new Promise((ok, no) => { get.onsuccess = () => ok(get.result); get.onerror = () => no(get.error); });
         return { table, schema: db.version, record: rows[0] };
@@ -224,7 +224,7 @@ try {
             await waitBuild(page, 'NEW'); await untilGrowing(page, earnedCount);
             assert.equal(reloads.length, 1, 'One reload at the safe checkpoint');
             const migrated = await growing(page); scenario.earnedCount = earnedCount;
-            assert.equal(migrated.table, 'cultivatedIslands'); assert.equal(migrated.record.version, 5);
+            assert.equal(migrated.table, 'foundationIslands'); assert.equal(migrated.record.version, 5);
             assertLearningKept(before, await readNative(page, id));
             const oldCapture = report.captures.find(c => c.file === `${label}-old-learning.png`).growing;
             assertOwnershipKept(oldCapture.record, migrated.record);

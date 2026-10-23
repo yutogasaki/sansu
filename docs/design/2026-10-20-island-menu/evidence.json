@@ -1,0 +1,57 @@
+{
+  "recordedAt": "2026-10-20T18:36:50.121726+09:00",
+  "kind": "design-proposal-docs-only",
+  "candidate": "island-menu-consolidation-v1",
+  "head": "9355c416ed188abe686d13cc35bf74626e7ac581",
+  "workingTree": "Shared with unrelated uncommitted work; not a HEAD-only or deployed runtime audit",
+  "sources": {
+    "src/components/island/growing/GrowingIslandMenu.tsx": "bc11045b50b19bdf14fff10d786ce36003ea3e68a34ea54df5dd120e53fa01cb",
+    "src/components/island/growing/GrowingHomeTools.tsx": "b17e9f24d8911882471e152fab40435f1242aa1c5c3d43b6bde32ea0d0c29b97",
+    "src/components/island/growing/GrowingIsland.tsx": "0e15783fcf298556caaeaf6cd368ccc993baf69f69234406d7e6c27deb6fcfc5",
+    "src/components/island/growing/GrowingPanels.tsx": "ea69bc85061fe99f60091e83e990f62ef88afb89d7761538165346b5da61ef83",
+    "src/components/island/growing/GrowingTray.tsx": "4a559fd771b2662b9e6cf1ba531958ba8aa25027b215b6b4ba5b4cc327483bcf",
+    "src/components/island/growing/GrowingSheet.tsx": "f0366ee873b8757135f49d9d0abbc98d5aaaf5dc8e9c7d00c857481509b1a03c",
+    "src/components/island/growing/GrowingPlaceBook.tsx": "4525cad512e84dc104a9d65e90e22791d8bb7d760374c3e161c860c0fda1047d",
+    "src/components/island/growing/GrowingGuideBook.tsx": "d7e8703a6e3341a8d004e96ea9bfbbb0a566dd04a65548ad5305f3bed655945d",
+    "src/components/island/growing/VoyageChart.tsx": "352c5c7333904c2198cd4e4c543884292b01d0c1b5c609129b4c1007f072f393",
+    "src/components/island/growing/TracePanel.tsx": "75c2f3f890b3c97d60d7c5f947d192028bade9e6f745899d4b0aa8930e78ab68",
+    "src/components/island/growing/FlowerBook.tsx": "a1de5b22cb27f98346fbefec34e49bde147c26dbcd1bc5778a8e9b9b5b2ca248",
+    "src/components/island/IslandSession.tsx": "f38f40d946814b0de48c1d41a44f75476f79ba7e6cc969444dae12c2114b3195",
+    "src/components/island/IslandProfileSwitcher.tsx": "8380108a720219cc396a0ea7c3174a7640b14820b0e2f0c639ca9e10492ae657",
+    "src/components/island/IslandSoundControl.tsx": "d156d11825472afdad253726e115dccf71ec24fb4e7ab9698a09c7d23f6f69c4",
+    "src/components/island/IslandMilestone.tsx": "5ea025e779b8d423ea6eb2fe3b5ffb7cb14ff4c4204649a13fb977571faf7278",
+    "src/components/island/useIslandMilestoneNotice.ts": "8b08fa58a383cd9d1a16de7b36dec7631ed616bc164f89ef2f319c7358c09b1c",
+    "src/components/island/IslandDirectActions.tsx": "ebed93ed81acced0b4854d30fbeb7a15edf7c333d9906925e5ee66bc8d85f8c5"
+  },
+  "mainSourcesUnchangedSince1829Read": {
+    "src/components/island/growing/GrowingIslandMenu.tsx": true,
+    "src/components/island/growing/GrowingHomeTools.tsx": true,
+    "src/components/island/growing/GrowingPanels.tsx": true,
+    "src/components/island/growing/GrowingIsland.tsx": true,
+    "src/components/island/IslandSession.tsx": true
+  },
+  "designSha256": "6774397535e5c6ccd08f4175c1c59329ab73b18175c331fab74d59970d610a79",
+  "consultation": {
+    "url": "https://chatgpt.com/g/g-p-6ad58d0857b881918e46e346350848e7/c/6ad7323d-c320-83e8-99cd-c681ca893617",
+    "submittedDraftSha256": "b867b47ec135698dab4921cc2be556b620635c504477f7e2e890bffa6fae15a1",
+    "scope": "Full initial proposal then explicit revision summary; previous user screenshot. Replies completed. No independent source or runtime audit."
+  },
+  "verification": {
+    "command": "npm run docs:check",
+    "expected": "exit 0, valid documentation links and structure",
+    "status": "PASS",
+    "previousRun": "PASS with existing expired-review-date warnings",
+    "exitCode": 0,
+    "completedAt": "2026-10-20T18:37:06.292636+09:00",
+    "actual": "PASS docs:check; existing 14 past review-date warnings; no documentation errors",
+    "scope": "Current shared working tree, not an isolated commit/release result"
+  },
+  "notEvaluated": [
+    "new menu screenshots",
+    "implementation",
+    "runtime",
+    "actual device",
+    "child comprehension and return",
+    "public deployment"
+  ]
+}

@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, type CSSProperties } from 'react';
 import type { HissanGridProps } from './HissanGrid';
 import './WrittenArithmeticGrid.css';
+import { LearningGuidance } from './LearningGuidance';
 import { writtenAutomaticValues } from '../../domain/math/writtenInput';
 
 const phaseLabels = {
@@ -23,9 +24,29 @@ export function WrittenArithmeticGrid({ gridData, currentStepIndex, activeCellPo
         const history = historyRef.current;
         const row = currentRowRef.current;
         if (!history) return;
-        // Scroll only the written-work history, never the page or keypad.
-        if (row && history.contains(row)) history.scrollTop = Math.max(0, row.offsetTop + row.offsetHeight - history.clientHeight);
-        else history.scrollTop = history.scrollHeight;
+        // Scroll only when the current row is outside the visible history.
+        // Rotation and a reflowed header also change the available paper height.
+        const reveal = () => {
+            const outer = history.closest<HTMLElement>('.park-question');
+            const scroller = getComputedStyle(history).overflowY === 'visible' && outer ? outer : history;
+            // A quotient cell lives in the pinned block. Keep the latest
+            // brought-down row visible beneath it instead of resetting to 0.
+            const target = row && history.contains(row) ? row
+                : currentStepIndex > 0 ? history.lastElementChild : null;
+            if (target) {
+                const bounds = target.getBoundingClientRect(), viewport = scroller.getBoundingClientRect();
+                const top = viewport.top + scroller.clientTop;
+                const bottom = top + scroller.clientHeight;
+                if (bounds.bottom > bottom) scroller.scrollTop += Math.ceil(bounds.bottom - bottom);
+                else if (bounds.top < top) scroller.scrollTop -= Math.ceil(top - bounds.top);
+            } else scroller.scrollTop = 0;
+        };
+        reveal();
+        const observer = new ResizeObserver(reveal);
+        observer.observe(history);
+        const outer = history.closest('.park-question');
+        if (outer) observer.observe(outer);
+        return () => observer.disconnect();
     }, [currentStepIndex, gridData]);
     const compactDivision = layout.kind === 'division'
         && gridData.steps.every(candidate => candidate.phase === 'quotient' || candidate.phase === 'remainder');
@@ -81,18 +102,20 @@ export function WrittenArithmeticGrid({ gridData, currentStepIndex, activeCellPo
         : stepFeedback === 'incorrect'
             ? 'このだんを もういちど'
             : compactDivision ? 'けいさんの行は 自動でうまるよ' : 'マスを おすと なおせるよ';
+    const guidance = <><strong>{step?.phase ? phaseLabels[step.phase] : 'こたえ'}</strong>
+        <span>{(step?.hint || step?.description)?.replace('右から かこう', '左から いれよう').replace('右から たそう', 'たして、左から いれよう').split(/(\s+)/).map((word, index) => /\s/.test(word) ? word : <span className="written-guidance-phrase" key={index}>{word}</span>)}</span></>;
     return <section className="written-arithmetic" aria-label={`${layout.expression} のひっさん`}
         data-written-operation={layout.kind} data-written-input-mode={compactDivision ? 'compact' : 'full'}
         data-written-step={currentStepIndex} data-written-phase={step?.phase}
         data-written-correction={correcting}
         style={{ '--written-columns': gridData.columnCount - columnOffset } as CSSProperties}>
         <div className="written-heading"><span>{layout.expression}</span><span className="written-kind">ひっさん</span></div>
-        <div className="written-guidance" aria-live="polite" aria-atomic="true">
-            <strong>{step?.phase ? phaseLabels[step.phase] : 'こたえ'}</strong>
-            <span>{(step?.hint || step?.description)?.replace('右から かこう', '左から いれよう').replace('右から たそう', 'たして、左から いれよう')}</span>
-        </div>
+        <LearningGuidance>{guidance}</LearningGuidance>
         <div className="written-paper">
-            <div className="written-pinned">{pinned.map(renderRow)}</div>
+            <div className="written-pinned">
+                <div className="written-guidance written-pinned-guidance" aria-hidden="true">{guidance}</div>
+                {pinned.map(renderRow)}
+            </div>
             <div className="written-history" ref={historyRef} tabIndex={0} aria-label="ここまでの ひっさん">
                 {gridData.rows.map((_, index) => pinned.includes(index) ? null : renderRow(index))}
             </div>

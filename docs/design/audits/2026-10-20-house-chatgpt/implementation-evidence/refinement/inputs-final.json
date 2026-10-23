@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-20T09:49:28.235135+00:00",
+  "scope": "Shared dirty checkout. House source inputs only; other concurrent work is retained. Not a clean commit attestation.",
+  "sha256": {
+    "src/components/island/growing/roomSaveSession.ts": "9d77b1f7f17ee3e8a9ac9f62c83ba893a88e84fb53635bfa850c65a9f925adea",
+    "src/components/island/growing/roomSaveSession.test.ts": "30c111a2e72aaaa93551b07c1b11d63fd2ff2c14b9247b8dd9044bd5ed190ac0",
+    "src/components/island/growing/useGrowingRoom.ts": "907301e3bff4b3836ebafd2ab54ede2490e54f18fbc71aad2f051132b27f9f79",
+    "src/components/island/growing/RoomDecorPanel.tsx": "244178231dc64ec92f021f0eae1e02673d229dd01e229d52941e58db3ad72908",
+    "src/components/island/IslandHouseOverview.tsx": "f45aecb86da16f1e9d04bd743dc3d0d696c065c57bd3e2ca8ee0b7d1ffcff0f4",
+    "src/components/island/IslandLearningKeepsakes.tsx": "69faa6606b991ea3e1effe07cc8739b5dd2f05d6cb8775ee4df1bc90e2ff7d01",
+    "src/components/island/IslandSessionHouse.tsx": "91d27ee27a79ecdaca917d4e86293f9de564130409cfc03b6c2e34825a3a8daa",
+    "src/components/island/IslandRoomDecor.css": "27dcf5579e9cae68eb8b438ea6514c0d93de659a82162c541c874bdf23aa2a7a",
+    "src/components/island/three/homeInteriorCamera.ts": "15ecb85339c7e405b740b47b36d4a3fdf65e46ae75cbe1bfdf643f7226944a58",
+    "src/domain/growingIsland/repository.ts": "af91d8c3a54b6cacabf84cb104e37b178cf499751a5f316d0596cceaf5d7d58d",
+    "src/domain/growingIsland/rules.ts": "835406501ad0f6137603b15d33291be9054dfb5553c5f670a966860f5a9a9b4b",
+    "package-lock.json": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d",
+    "src/domain/growingIsland/roomReceiptWindow.test.ts": "f54b0cf274ccfc037ec921bf822f310db7b092cb070752fb841391c075d2f1c8"
+  },
+  "changedAfterFourViewportPreview": [
+    "Healthy read resets loading error",
+    "Writer checks the finite receipt window atomically; focused 11 tests, typecheck/build and a new 390 preview journey verify final deltas"
+  ]
+}

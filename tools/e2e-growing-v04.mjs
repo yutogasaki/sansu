@@ -22,7 +22,7 @@ async function record(page, id, change) {
         const request = indexedDB.open('SansuGrowingIslandV1');
         const db = await new Promise((ok, no) => { request.onsuccess = () => ok(request.result); request.onerror = () => no(request.error); });
         try {
-            const tx = db.transaction('cultivatedIslands', change ? 'readwrite' : 'readonly'), table = tx.objectStore('cultivatedIslands');
+            const tx = db.transaction('foundationIslands', change ? 'readwrite' : 'readonly'), table = tx.objectStore('foundationIslands');
             const op = table.get(id), value = await new Promise((ok, no) => { op.onsuccess = () => ok(op.result); op.onerror = () => no(op.error); });
             if (change === 'garden') {
                 const home = value.state.plots.find(p => p.kind === 'home');

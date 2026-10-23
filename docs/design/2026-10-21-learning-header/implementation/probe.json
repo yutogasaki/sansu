@@ -1,0 +1,1710 @@
+{
+  "startedAt": "2026-10-21T07:03:29.244Z",
+  "sourceStart": {
+    "src/components/island/IslandSession.tsx": "4b586e55ef4d5a26625b175c10afb7736393635a7689ef07d66c75e85cd34c79",
+    "src/components/island/IslandLearningPanel.tsx": "f235ae9a2c6994444e1113f639fc5f4fd22346c53ed2b9d75a9527564eaa603c",
+    "src/components/island/IslandAnswerFeedback.tsx": "5b1c86771a61aa97b81e0faab55b8d58994e0d627c0708690711be2ab5e09781",
+    "src/components/island/IslandLearningHeader.css": "bb5148794ffca477aa159889b9ac931e68163221f2c58e6a50bacc74567edaac",
+    "src/components/island/PokomokoLearningActor.tsx": "f76466fe93f1f17c0fa0e8c8d47e22ff05346587857935ac07c183a0840be129",
+    "src/components/island/usePokomokoFeedback.ts": "708ceeada1c6344c4a42788657fd1154cddace6e078bf2c4e777ee54a70fb931",
+    "src/components/island/PokomokoLearningEffects.tsx": "c980657290b82090e8e9e97e322834e38ea60fafd633213582528e441851a3ed",
+    "src/components/island/PokomokoFullscreenCelebration.tsx": "c68d3b7e73b4d8b1527d21b2e98c8da9d4f03950e64f926da701a4af1edb3f89",
+    "src/components/domain/WrittenArithmeticGrid.tsx": "fb37135bbea102ca2e6e3af375c50ddd3609e6cf847e685c05a44dc31526fe7d",
+    "src/components/domain/WrittenArithmeticGrid.css": "5160990c7b06e9ed7ba56f15bf2d7798cfba4b8c327dd244ad76c002abc9d8e0",
+    "src/components/domain/LearningGuidance.tsx": "73f9231edf1a2f7fd5335dabdf38304ea16f0fe5682492c4f827b8a53dfd68ee",
+    "src/components/domain/learningGuidanceHost.ts": "8b44af02304e7c9966dd364208d75fe6977b53b623d3f61dbea728da455b3025",
+    "src/components/island/IslandAnswerForm.tsx": "468cd54c8e768c12a25039a18c3c6f4a9621a0133ed5d779a892f71a6936cac2",
+    "src/components/island/IslandLearningSupport.tsx": "9ed4108e13739226e2e924e1caf63e1dd9483858e85b41bf897f694bb3d72e3a",
+    "src/components/island/useIslandLearningObservation.ts": "54d8f5782b9bd54ffaff69765bccb522e192d6384e0d40849638f35c2d3eb5ed"
+  },
+  "checks": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "geometry": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "w": 390,
+          "h": 192,
+          "right": 390,
+          "bottom": 192
+        },
+        "actor": {
+          "x": 12,
+          "y": 0,
+          "w": 184,
+          "h": 192,
+          "right": 196,
+          "bottom": 192
+        },
+        "guidance": {
+          "x": 184,
+          "y": 54,
+          "w": 194,
+          "h": 59.1875,
+          "right": 378,
+          "bottom": 113.1875
+        },
+        "question": {
+          "x": 14,
+          "y": 192,
+          "w": 362,
+          "h": 342.8125,
+          "right": 376,
+          "bottom": 534.8125
+        },
+        "rows": [
+          {
+            "row": "4",
+            "rect": {
+              "x": 107,
+              "y": 345,
+              "w": 176,
+              "h": 30,
+              "right": 283,
+              "bottom": 375
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "row": "5",
+            "rect": {
+              "x": 107,
+              "y": 375,
+              "w": 176,
+              "h": 36,
+              "right": 283,
+              "bottom": 411
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "row": "6",
+            "rect": {
+              "x": 107,
+              "y": 411,
+              "w": 176,
+              "h": 46,
+              "right": 283,
+              "bottom": 457
+            },
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "controls": [
+          {
+            "text": "おとを だす",
+            "rect": {
+              "x": 276,
+              "y": 0,
+              "w": 48,
+              "h": 48,
+              "right": 324,
+              "bottom": 48
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "とじる",
+            "rect": {
+              "x": 330,
+              "y": 0,
+              "w": 48,
+              "h": 48,
+              "right": 378,
+              "bottom": 48
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "あまり、ひだりから 3 マスめ、から",
+            "rect": {
+              "x": 239,
+              "y": 413,
+              "w": 44,
+              "h": 44,
+              "right": 283,
+              "bottom": 457
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "7",
+            "rect": {
+              "x": 14,
+              "y": 544.8125,
+              "w": 116,
+              "h": 56.546875,
+              "right": 130,
+              "bottom": 601.359375
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "8",
+            "rect": {
+              "x": 137,
+              "y": 544.8125,
+              "w": 116,
+              "h": 56.546875,
+              "right": 253,
+              "bottom": 601.359375
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "9",
+            "rect": {
+              "x": 260,
+              "y": 544.8125,
+              "w": 116,
+              "h": 56.546875,
+              "right": 376,
+              "bottom": 601.359375
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "4",
+            "rect": {
+              "x": 14,
+              "y": 608.359375,
+              "w": 116,
+              "h": 56.546875,
+              "right": 130,
+              "bottom": 664.90625
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "5",
+            "rect": {
+              "x": 137,
+              "y": 608.359375,
+              "w": 116,
+              "h": 56.546875,
+              "right": 253,
+              "bottom": 664.90625
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "6",
+            "rect": {
+              "x": 260,
+              "y": 608.359375,
+              "w": 116,
+              "h": 56.546875,
+              "right": 376,
+              "bottom": 664.90625
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "1",
+            "rect": {
+              "x": 14,
+              "y": 671.90625,
+              "w": 116,
+              "h": 56.546875,
+              "right": 130,
+              "bottom": 728.453125
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "2",
+            "rect": {
+              "x": 137,
+              "y": 671.90625,
+              "w": 116,
+              "h": 56.546875,
+              "right": 253,
+              "bottom": 728.453125
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "3",
+            "rect": {
+              "x": 260,
+              "y": 671.90625,
+              "w": 116,
+              "h": 56.546875,
+              "right": 376,
+              "bottom": 728.453125
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "ひとつ もどす",
+            "rect": {
+              "x": 14,
+              "y": 735.453125,
+              "w": 116,
+              "h": 56.546875,
+              "right": 130,
+              "bottom": 792
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "0",
+            "rect": {
+              "x": 137,
+              "y": 735.453125,
+              "w": 116,
+              "h": 56.546875,
+              "right": 253,
+              "bottom": 792
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "こたえを けす",
+            "rect": {
+              "x": 260,
+              "y": 735.453125,
+              "w": 116,
+              "h": 56.546875,
+              "right": 376,
+              "bottom": 792
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "ヒントを みる",
+            "rect": {
+              "x": 14,
+              "y": 796,
+              "w": 118.8125,
+              "h": 44,
+              "right": 132.8125,
+              "bottom": 840
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "わからない",
+            "rect": {
+              "x": 296.390625,
+              "y": 796,
+              "w": 79.609375,
+              "h": 44,
+              "right": 376,
+              "bottom": 840
+            },
+            "visible": true,
+            "hit": true
+          }
+        ]
+      },
+      "metadata": {
+        "url": "http://127.0.0.1:5198/#/island?learn=1",
+        "revision": "development-local",
+        "version": "development-local:1d3b295b-5e2a-4e71-b598-e53e1a068aec",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "renderer": "live-original",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:1d3b295b-5e2a-4e71-b598-e53e1a068aec",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "geometry": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "w": 320,
+          "h": 156,
+          "right": 320,
+          "bottom": 156
+        },
+        "actor": {
+          "x": 8,
+          "y": 0,
+          "w": 165,
+          "h": 172,
+          "right": 173,
+          "bottom": 172
+        },
+        "guidance": {
+          "x": 159,
+          "y": 52,
+          "w": 153,
+          "h": 50,
+          "right": 312,
+          "bottom": 102
+        },
+        "question": {
+          "x": 14,
+          "y": 156,
+          "w": 292,
+          "h": 163,
+          "right": 306,
+          "bottom": 319
+        },
+        "rows": [
+          {
+            "row": "4",
+            "rect": {
+              "x": 72,
+              "y": 215.25,
+              "w": 176,
+              "h": 26,
+              "right": 248,
+              "bottom": 241.25
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "row": "5",
+            "rect": {
+              "x": 72,
+              "y": 241.25,
+              "w": 176,
+              "h": 26,
+              "right": 248,
+              "bottom": 267.25
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "row": "6",
+            "rect": {
+              "x": 72,
+              "y": 267.25,
+              "w": 176,
+              "h": 46,
+              "right": 248,
+              "bottom": 313.25
+            },
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "controls": [
+          {
+            "text": "おとを だす",
+            "rect": {
+              "x": 210,
+              "y": 0,
+              "w": 48,
+              "h": 48,
+              "right": 258,
+              "bottom": 48
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "とじる",
+            "rect": {
+              "x": 264,
+              "y": 0,
+              "w": 48,
+              "h": 48,
+              "right": 312,
+              "bottom": 48
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "あまり、ひだりから 3 マスめ、から",
+            "rect": {
+              "x": 204,
+              "y": 269.25,
+              "w": 44,
+              "h": 44,
+              "right": 248,
+              "bottom": 313.25
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "7",
+            "rect": {
+              "x": 14,
+              "y": 325,
+              "w": 94,
+              "h": 44,
+              "right": 108,
+              "bottom": 369
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "8",
+            "rect": {
+              "x": 113,
+              "y": 325,
+              "w": 94,
+              "h": 44,
+              "right": 207,
+              "bottom": 369
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "9",
+            "rect": {
+              "x": 212,
+              "y": 325,
+              "w": 94,
+              "h": 44,
+              "right": 306,
+              "bottom": 369
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "4",
+            "rect": {
+              "x": 14,
+              "y": 374,
+              "w": 94,
+              "h": 44,
+              "right": 108,
+              "bottom": 418
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "5",
+            "rect": {
+              "x": 113,
+              "y": 374,
+              "w": 94,
+              "h": 44,
+              "right": 207,
+              "bottom": 418
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "6",
+            "rect": {
+              "x": 212,
+              "y": 374,
+              "w": 94,
+              "h": 44,
+              "right": 306,
+              "bottom": 418
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "1",
+            "rect": {
+              "x": 14,
+              "y": 423,
+              "w": 94,
+              "h": 44,
+              "right": 108,
+              "bottom": 467
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "2",
+            "rect": {
+              "x": 113,
+              "y": 423,
+              "w": 94,
+              "h": 44,
+              "right": 207,
+              "bottom": 467
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "3",
+            "rect": {
+              "x": 212,
+              "y": 423,
+              "w": 94,
+              "h": 44,
+              "right": 306,
+              "bottom": 467
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "ひとつ もどす",
+            "rect": {
+              "x": 14,
+              "y": 472,
+              "w": 94,
+              "h": 44,
+              "right": 108,
+              "bottom": 516
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "0",
+            "rect": {
+              "x": 113,
+              "y": 472,
+              "w": 94,
+              "h": 44,
+              "right": 207,
+              "bottom": 516
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "こたえを けす",
+            "rect": {
+              "x": 212,
+              "y": 472,
+              "w": 94,
+              "h": 44,
+              "right": 306,
+              "bottom": 516
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "ヒントを みる",
+            "rect": {
+              "x": 14,
+              "y": 520,
+              "w": 118.8125,
+              "h": 44,
+              "right": 132.8125,
+              "bottom": 564
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "わからない",
+            "rect": {
+              "x": 226.390625,
+              "y": 520,
+              "w": 79.609375,
+              "h": 44,
+              "right": 306,
+              "bottom": 564
+            },
+            "visible": true,
+            "hit": true
+          }
+        ]
+      },
+      "metadata": {
+        "url": "http://127.0.0.1:5198/#/island?learn=1",
+        "revision": "development-local",
+        "version": "development-local:1d3b295b-5e2a-4e71-b598-e53e1a068aec",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "renderer": "live-original",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 320,
+          "height": 568
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:1d3b295b-5e2a-4e71-b598-e53e1a068aec",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "geometry": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "w": 176,
+          "h": 320,
+          "right": 176,
+          "bottom": 320
+        },
+        "actor": {
+          "x": 11.5,
+          "y": 52,
+          "w": 153,
+          "h": 160,
+          "right": 164.5,
+          "bottom": 212
+        },
+        "guidance": {
+          "x": 8,
+          "y": 214,
+          "w": 160,
+          "h": 43.78125,
+          "right": 168,
+          "bottom": 257.78125
+        },
+        "question": {
+          "x": 188,
+          "y": 4,
+          "w": 197.90625,
+          "h": 262,
+          "right": 385.90625,
+          "bottom": 266
+        },
+        "rows": [
+          {
+            "row": "4",
+            "rect": {
+              "x": 202,
+              "y": 124.25,
+              "w": 169.90625,
+              "h": 26,
+              "right": 371.90625,
+              "bottom": 150.25
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "row": "5",
+            "rect": {
+              "x": 202,
+              "y": 150.25,
+              "w": 169.90625,
+              "h": 26,
+              "right": 371.90625,
+              "bottom": 176.25
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "row": "6",
+            "rect": {
+              "x": 202,
+              "y": 176.25,
+              "w": 169.90625,
+              "h": 46,
+              "right": 371.90625,
+              "bottom": 222.25
+            },
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "controls": [
+          {
+            "text": "おとを だす",
+            "rect": {
+              "x": 66,
+              "y": 2,
+              "w": 48,
+              "h": 48,
+              "right": 114,
+              "bottom": 50
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "とじる",
+            "rect": {
+              "x": 120,
+              "y": 2,
+              "w": 48,
+              "h": 48,
+              "right": 168,
+              "bottom": 50
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "あまり、ひだりから 3 マスめ、から",
+            "rect": {
+              "x": 329.265625,
+              "y": 178.25,
+              "w": 44,
+              "h": 44,
+              "right": 373.265625,
+              "bottom": 222.25
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "7",
+            "rect": {
+              "x": 389.90625,
+              "y": 8,
+              "w": 54.015625,
+              "h": 44,
+              "right": 443.921875,
+              "bottom": 52
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "8",
+            "rect": {
+              "x": 448.921875,
+              "y": 8,
+              "w": 54.03125,
+              "h": 44,
+              "right": 502.953125,
+              "bottom": 52
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "9",
+            "rect": {
+              "x": 507.953125,
+              "y": 8,
+              "w": 54.03125,
+              "h": 44,
+              "right": 561.984375,
+              "bottom": 52
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "4",
+            "rect": {
+              "x": 389.90625,
+              "y": 57,
+              "w": 54.015625,
+              "h": 44,
+              "right": 443.921875,
+              "bottom": 101
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "5",
+            "rect": {
+              "x": 448.921875,
+              "y": 57,
+              "w": 54.03125,
+              "h": 44,
+              "right": 502.953125,
+              "bottom": 101
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "6",
+            "rect": {
+              "x": 507.953125,
+              "y": 57,
+              "w": 54.03125,
+              "h": 44,
+              "right": 561.984375,
+              "bottom": 101
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "1",
+            "rect": {
+              "x": 389.90625,
+              "y": 106,
+              "w": 54.015625,
+              "h": 44,
+              "right": 443.921875,
+              "bottom": 150
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "2",
+            "rect": {
+              "x": 448.921875,
+              "y": 106,
+              "w": 54.03125,
+              "h": 44,
+              "right": 502.953125,
+              "bottom": 150
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "3",
+            "rect": {
+              "x": 507.953125,
+              "y": 106,
+              "w": 54.03125,
+              "h": 44,
+              "right": 561.984375,
+              "bottom": 150
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "ひとつ もどす",
+            "rect": {
+              "x": 389.90625,
+              "y": 155,
+              "w": 54.015625,
+              "h": 44,
+              "right": 443.921875,
+              "bottom": 199
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "0",
+            "rect": {
+              "x": 448.921875,
+              "y": 155,
+              "w": 54.03125,
+              "h": 44,
+              "right": 502.953125,
+              "bottom": 199
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "こたえを けす",
+            "rect": {
+              "x": 507.953125,
+              "y": 155,
+              "w": 54.03125,
+              "h": 44,
+              "right": 561.984375,
+              "bottom": 199
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "ヒントを みる",
+            "rect": {
+              "x": 188,
+              "y": 272,
+              "w": 96.234375,
+              "h": 44,
+              "right": 284.234375,
+              "bottom": 316
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "わからない",
+            "rect": {
+              "x": 501.390625,
+              "y": 272,
+              "w": 60.609375,
+              "h": 44,
+              "right": 562,
+              "bottom": 316
+            },
+            "visible": true,
+            "hit": true
+          }
+        ]
+      },
+      "metadata": {
+        "url": "http://127.0.0.1:5198/#/island?learn=1",
+        "revision": "development-local",
+        "version": "development-local:1d3b295b-5e2a-4e71-b598-e53e1a068aec",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "renderer": "live-original",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 568,
+          "height": 320
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:1d3b295b-5e2a-4e71-b598-e53e1a068aec",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "geometry": {
+        "header": {
+          "x": 144,
+          "y": 0,
+          "w": 480,
+          "h": 192,
+          "right": 624,
+          "bottom": 192
+        },
+        "actor": {
+          "x": 156,
+          "y": 0,
+          "w": 184,
+          "h": 192,
+          "right": 340,
+          "bottom": 192
+        },
+        "guidance": {
+          "x": 328,
+          "y": 54,
+          "w": 284,
+          "h": 56,
+          "right": 612,
+          "bottom": 110
+        },
+        "question": {
+          "x": 158,
+          "y": 192,
+          "w": 452,
+          "h": 517,
+          "right": 610,
+          "bottom": 709
+        },
+        "rows": [
+          {
+            "row": "4",
+            "rect": {
+              "x": 285,
+              "y": 349,
+              "w": 198,
+              "h": 34,
+              "right": 483,
+              "bottom": 383
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "row": "5",
+            "rect": {
+              "x": 285,
+              "y": 383,
+              "w": 198,
+              "h": 36,
+              "right": 483,
+              "bottom": 419
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "row": "6",
+            "rect": {
+              "x": 285,
+              "y": 419,
+              "w": 198,
+              "h": 50,
+              "right": 483,
+              "bottom": 469
+            },
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "controls": [
+          {
+            "text": "おとを だす",
+            "rect": {
+              "x": 510,
+              "y": 0,
+              "w": 48,
+              "h": 48,
+              "right": 558,
+              "bottom": 48
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "とじる",
+            "rect": {
+              "x": 564,
+              "y": 0,
+              "w": 48,
+              "h": 48,
+              "right": 612,
+              "bottom": 48
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "あまり、ひだりから 3 マスめ、から",
+            "rect": {
+              "x": 435,
+              "y": 421,
+              "w": 48,
+              "h": 48,
+              "right": 483,
+              "bottom": 469
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "7",
+            "rect": {
+              "x": 158,
+              "y": 719,
+              "w": 146,
+              "h": 58,
+              "right": 304,
+              "bottom": 777
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "8",
+            "rect": {
+              "x": 311,
+              "y": 719,
+              "w": 146,
+              "h": 58,
+              "right": 457,
+              "bottom": 777
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "9",
+            "rect": {
+              "x": 464,
+              "y": 719,
+              "w": 146,
+              "h": 58,
+              "right": 610,
+              "bottom": 777
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "4",
+            "rect": {
+              "x": 158,
+              "y": 784,
+              "w": 146,
+              "h": 58,
+              "right": 304,
+              "bottom": 842
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "5",
+            "rect": {
+              "x": 311,
+              "y": 784,
+              "w": 146,
+              "h": 58,
+              "right": 457,
+              "bottom": 842
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "6",
+            "rect": {
+              "x": 464,
+              "y": 784,
+              "w": 146,
+              "h": 58,
+              "right": 610,
+              "bottom": 842
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "1",
+            "rect": {
+              "x": 158,
+              "y": 849,
+              "w": 146,
+              "h": 58,
+              "right": 304,
+              "bottom": 907
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "2",
+            "rect": {
+              "x": 311,
+              "y": 849,
+              "w": 146,
+              "h": 58,
+              "right": 457,
+              "bottom": 907
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "3",
+            "rect": {
+              "x": 464,
+              "y": 849,
+              "w": 146,
+              "h": 58,
+              "right": 610,
+              "bottom": 907
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "ひとつ もどす",
+            "rect": {
+              "x": 158,
+              "y": 914,
+              "w": 146,
+              "h": 58,
+              "right": 304,
+              "bottom": 972
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "0",
+            "rect": {
+              "x": 311,
+              "y": 914,
+              "w": 146,
+              "h": 58,
+              "right": 457,
+              "bottom": 972
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "こたえを けす",
+            "rect": {
+              "x": 464,
+              "y": 914,
+              "w": 146,
+              "h": 58,
+              "right": 610,
+              "bottom": 972
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "ヒントを みる",
+            "rect": {
+              "x": 158,
+              "y": 976,
+              "w": 118.8125,
+              "h": 44,
+              "right": 276.8125,
+              "bottom": 1020
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "わからない",
+            "rect": {
+              "x": 530.390625,
+              "y": 976,
+              "w": 79.609375,
+              "h": 44,
+              "right": 610,
+              "bottom": 1020
+            },
+            "visible": true,
+            "hit": true
+          }
+        ]
+      },
+      "metadata": {
+        "url": "http://127.0.0.1:5198/#/island?learn=1",
+        "revision": "development-local",
+        "version": "development-local:1d3b295b-5e2a-4e71-b598-e53e1a068aec",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "renderer": "live-original",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:1d3b295b-5e2a-4e71-b598-e53e1a068aec",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    },
+    {
+      "viewport": {
+        "width": 1024,
+        "height": 640
+      },
+      "geometry": {
+        "header": {
+          "x": 272,
+          "y": 0,
+          "w": 480,
+          "h": 192,
+          "right": 752,
+          "bottom": 192
+        },
+        "actor": {
+          "x": 284,
+          "y": 0,
+          "w": 184,
+          "h": 192,
+          "right": 468,
+          "bottom": 192
+        },
+        "guidance": {
+          "x": 456,
+          "y": 54,
+          "w": 284,
+          "h": 56,
+          "right": 740,
+          "bottom": 110
+        },
+        "question": {
+          "x": 101,
+          "y": 192,
+          "w": 822,
+          "h": 199,
+          "right": 923,
+          "bottom": 391
+        },
+        "rows": [
+          {
+            "row": "4",
+            "rect": {
+              "x": 413,
+              "y": 281.25,
+              "w": 198,
+              "h": 26,
+              "right": 611,
+              "bottom": 307.25
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "row": "5",
+            "rect": {
+              "x": 413,
+              "y": 307.25,
+              "w": 198,
+              "h": 26,
+              "right": 611,
+              "bottom": 333.25
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "row": "6",
+            "rect": {
+              "x": 413,
+              "y": 333.25,
+              "w": 198,
+              "h": 50,
+              "right": 611,
+              "bottom": 383.25
+            },
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "controls": [
+          {
+            "text": "おとを だす",
+            "rect": {
+              "x": 638,
+              "y": 0,
+              "w": 48,
+              "h": 48,
+              "right": 686,
+              "bottom": 48
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "とじる",
+            "rect": {
+              "x": 692,
+              "y": 0,
+              "w": 48,
+              "h": 48,
+              "right": 740,
+              "bottom": 48
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "あまり、ひだりから 3 マスめ、から",
+            "rect": {
+              "x": 563,
+              "y": 335.25,
+              "w": 48,
+              "h": 48,
+              "right": 611,
+              "bottom": 383.25
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "7",
+            "rect": {
+              "x": 101,
+              "y": 397,
+              "w": 270.65625,
+              "h": 44,
+              "right": 371.65625,
+              "bottom": 441
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "8",
+            "rect": {
+              "x": 376.65625,
+              "y": 397,
+              "w": 270.671875,
+              "h": 44,
+              "right": 647.328125,
+              "bottom": 441
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "9",
+            "rect": {
+              "x": 652.328125,
+              "y": 397,
+              "w": 270.65625,
+              "h": 44,
+              "right": 922.984375,
+              "bottom": 441
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "4",
+            "rect": {
+              "x": 101,
+              "y": 446,
+              "w": 270.65625,
+              "h": 44,
+              "right": 371.65625,
+              "bottom": 490
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "5",
+            "rect": {
+              "x": 376.65625,
+              "y": 446,
+              "w": 270.671875,
+              "h": 44,
+              "right": 647.328125,
+              "bottom": 490
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "6",
+            "rect": {
+              "x": 652.328125,
+              "y": 446,
+              "w": 270.65625,
+              "h": 44,
+              "right": 922.984375,
+              "bottom": 490
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "1",
+            "rect": {
+              "x": 101,
+              "y": 495,
+              "w": 270.65625,
+              "h": 44,
+              "right": 371.65625,
+              "bottom": 539
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "2",
+            "rect": {
+              "x": 376.65625,
+              "y": 495,
+              "w": 270.671875,
+              "h": 44,
+              "right": 647.328125,
+              "bottom": 539
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "3",
+            "rect": {
+              "x": 652.328125,
+              "y": 495,
+              "w": 270.65625,
+              "h": 44,
+              "right": 922.984375,
+              "bottom": 539
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "ひとつ もどす",
+            "rect": {
+              "x": 101,
+              "y": 544,
+              "w": 270.65625,
+              "h": 44,
+              "right": 371.65625,
+              "bottom": 588
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "0",
+            "rect": {
+              "x": 376.65625,
+              "y": 544,
+              "w": 270.671875,
+              "h": 44,
+              "right": 647.328125,
+              "bottom": 588
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "こたえを けす",
+            "rect": {
+              "x": 652.328125,
+              "y": 544,
+              "w": 270.65625,
+              "h": 44,
+              "right": 922.984375,
+              "bottom": 588
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "ヒントを みる",
+            "rect": {
+              "x": 101,
+              "y": 592,
+              "w": 118.8125,
+              "h": 44,
+              "right": 219.8125,
+              "bottom": 636
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "わからない",
+            "rect": {
+              "x": 843.390625,
+              "y": 592,
+              "w": 79.609375,
+              "h": 44,
+              "right": 923,
+              "bottom": 636
+            },
+            "visible": true,
+            "hit": true
+          }
+        ]
+      },
+      "metadata": {
+        "url": "http://127.0.0.1:5198/#/island?learn=1",
+        "revision": "development-local",
+        "version": "development-local:1d3b295b-5e2a-4e71-b598-e53e1a068aec",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "renderer": "live-original",
+        "artDirection": null,
+        "drawCalls": 0,
+        "expanded": null,
+        "residentAction": null,
+        "residentItemId": null,
+        "viewport": {
+          "width": 1024,
+          "height": 640
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:1d3b295b-5e2a-4e71-b598-e53e1a068aec",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      }
+    }
+  ],
+  "sourceEnd": {
+    "src/components/island/IslandSession.tsx": "4b586e55ef4d5a26625b175c10afb7736393635a7689ef07d66c75e85cd34c79",
+    "src/components/island/IslandLearningPanel.tsx": "f235ae9a2c6994444e1113f639fc5f4fd22346c53ed2b9d75a9527564eaa603c",
+    "src/components/island/IslandAnswerFeedback.tsx": "5b1c86771a61aa97b81e0faab55b8d58994e0d627c0708690711be2ab5e09781",
+    "src/components/island/IslandLearningHeader.css": "bb5148794ffca477aa159889b9ac931e68163221f2c58e6a50bacc74567edaac",
+    "src/components/island/PokomokoLearningActor.tsx": "f76466fe93f1f17c0fa0e8c8d47e22ff05346587857935ac07c183a0840be129",
+    "src/components/island/usePokomokoFeedback.ts": "708ceeada1c6344c4a42788657fd1154cddace6e078bf2c4e777ee54a70fb931",
+    "src/components/island/PokomokoLearningEffects.tsx": "c980657290b82090e8e9e97e322834e38ea60fafd633213582528e441851a3ed",
+    "src/components/island/PokomokoFullscreenCelebration.tsx": "c68d3b7e73b4d8b1527d21b2e98c8da9d4f03950e64f926da701a4af1edb3f89",
+    "src/components/domain/WrittenArithmeticGrid.tsx": "fb37135bbea102ca2e6e3af375c50ddd3609e6cf847e685c05a44dc31526fe7d",
+    "src/components/domain/WrittenArithmeticGrid.css": "5160990c7b06e9ed7ba56f15bf2d7798cfba4b8c327dd244ad76c002abc9d8e0",
+    "src/components/domain/LearningGuidance.tsx": "73f9231edf1a2f7fd5335dabdf38304ea16f0fe5682492c4f827b8a53dfd68ee",
+    "src/components/domain/learningGuidanceHost.ts": "8b44af02304e7c9966dd364208d75fe6977b53b623d3f61dbea728da455b3025",
+    "src/components/island/IslandAnswerForm.tsx": "468cd54c8e768c12a25039a18c3c6f4a9621a0133ed5d779a892f71a6936cac2",
+    "src/components/island/IslandLearningSupport.tsx": "9ed4108e13739226e2e924e1caf63e1dd9483858e85b41bf897f694bb3d72e3a",
+    "src/components/island/useIslandLearningObservation.ts": "54d8f5782b9bd54ffaff69765bccb522e192d6384e0d40849638f35c2d3eb5ed"
+  },
+  "completedAt": "2026-10-21T07:03:42.133Z"
+}

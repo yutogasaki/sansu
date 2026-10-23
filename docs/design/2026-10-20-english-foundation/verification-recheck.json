@@ -1,0 +1,48 @@
+{
+  "at": "2026-10-20T08:02:26.566299+00:00",
+  "scope": "User-requested verification of English foundation F01/F02 and remaining checks",
+  "runtimeChangedSinceFinalBuild": false,
+  "verifiedBuild": "development-local:7202afc5-906f-42a2-833b-11bdff4460fb",
+  "checks": {
+    "focused": {
+      "result": "PASS",
+      "files": 7,
+      "tests": 59
+    },
+    "typecheck": "PASS",
+    "lint": "PASS (4 existing warnings)",
+    "docs": "PASS (existing overdue warnings)",
+    "assets": "PASS (158 files, 8.80 MiB)",
+    "runtimeAndDistFingerprint": "PASS",
+    "phoneTabletSWOfflineProofReuse": "PASS (same runtime and dist hashes)",
+    "keepsakeExpectations": "PASS (updated obsolete expectations from canonical spec42)",
+    "portal": "PASS (references audited, regenerated, full agent:index:check/portal:verify)",
+    "nativeCore": {
+      "result": "PASS",
+      "tests": 1,
+      "durationMs": 458761
+    }
+  },
+  "changes": [
+    "Only src/components/island/IslandLearningKeepsakes.test.tsx expectations corrected; product code unchanged.",
+    "Refreshed construction-flow reference metadata after reading current canonical sources; item statuses/acceptance unchanged. Regenerated portal and indexes."
+  ],
+  "limits": [
+    "Human pronunciation/naturalness and redistribution approval pending",
+    "Real-device and independent child comprehension/return observation pending",
+    "No deployment, commit or push"
+  ],
+  "logs": "output/english-foundation-verification-2026-10-20/",
+  "testSourceHashes": {
+    "src/components/island/IslandLearningKeepsakes.test.tsx": "8e891f662a975eaaedf3571b23138ba4ad1ffc509656535919ccc6931dd12716",
+    "docs/product/42_island_learning_keepsakes_spec.md": "594029a7e738099873eb578589c60254e4be40f121332b7c04373ccf084b2330"
+  },
+  "completedAt": "2026-10-20T08:08:23.949161+00:00",
+  "result": "TECHNICAL_PASS",
+  "aggregateUnit": {
+    "files": 648,
+    "tests": 5506,
+    "failed": 0,
+    "basis": "Preserved prior PASS results plus focused corrected-test reruns and the previously incomplete native test; not a new single full-suite run."
+  }
+}

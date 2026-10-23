@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type RefObject } from 'react';
 import * as T from 'three';
 import readyAtlas from '../../assets/pokomoko-learning-poses.webp';
 import type { PokomokoBurst, PokomokoInputCue } from './usePokomokoFeedback';
@@ -19,6 +19,7 @@ type Props = {
     pulse?: () => number;
     onCue?: (kind: ActorCue) => void;
     heroStyle?: Style;
+    inputRoot?: RefObject<HTMLElement | null>;
 };
 type Input = { cue: TimedInput; start: number; side: number; caught: boolean; placed: boolean };
 type Burst = { start: number; leap: boolean; big: boolean; jumped: boolean; landed: boolean };
@@ -66,7 +67,8 @@ export default function PokomokoLearningActor(props: Props) {
         let seenStyle: Style = 'original';
         let input: Input | undefined, burst: Burst | undefined;
         let bounds = element.getBoundingClientRect();
-        let panelBounds = element.closest('.island-learning')?.getBoundingClientRect() ?? bounds;
+        const inputBounds = () => latest.current.inputRoot?.current?.getBoundingClientRect() ?? element.closest('.island-learning')?.getBoundingClientRect() ?? bounds;
+        let panelBounds = inputBounds();
         const handPoint = new T.Vector3();
         const localPoint = (x: number, y: number) => ({
             x: x + panelBounds.left - bounds.left,
@@ -74,7 +76,7 @@ export default function PokomokoLearningActor(props: Props) {
         });
         const resize = () => {
             bounds = element.getBoundingClientRect();
-            panelBounds = element.closest('.island-learning')?.getBoundingClientRect() ?? bounds;
+            panelBounds = inputBounds();
             width = Math.max(1, bounds.width); height = Math.max(1, bounds.height);
             view.setSize(width, height, false);
             actor.camera.left = -.82 * width / height;
@@ -102,7 +104,7 @@ export default function PokomokoLearningActor(props: Props) {
                 seenInput = cue?.id;
                 if (cue) {
                     bounds = element.getBoundingClientRect();
-                    panelBounds = element.closest('.island-learning')?.getBoundingClientRect() ?? bounds;
+                    panelBounds = inputBounds();
                     const from = localPoint(cue.fromX ?? cue.x, cue.fromY ?? cue.y);
                     input = { cue, start: cue.startedAt ?? now, side: from.x < width / 2 ? -1 : 1, caught: false, placed: false };
                     // A new accepted digit owns the body immediately; a previous

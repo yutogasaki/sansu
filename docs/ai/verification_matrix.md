@@ -1,5 +1,7 @@
 # Verification Matrix
 
+英語基礎F01/F02：`node tools/e2e-english-foundation.mjs` は `SANSU_FOUNDATION_URL` と新規 `SANSU_FOUNDATION_OUTPUT` を指定し、実初回設定・誤答/支援・2単元・予約/コースpending・報酬・offline・音オフ/代替表示を両幅で検査する。教材cache破損は明示診断。`node tools/e2e-english-foundation-update.mjs` は実際に別々にbuildした `SANSU_FOUNDATION_OLD_DIR` / `SANSU_FOUNDATION_NEW_DIR` と新規出力先を使い、実SW更新を挟んだ同予約保持を追加する。発音/絵の人による採用と実機/子どもの理解・再訪は別ゲート。
+
 > 2026-10-06: 島のhomeはGrowingへ一本化。撤去した旧Life/Home Journey/Nature Town画面のCLIを現行候補へ実行しない。以下の旧画面検査は当時の履歴であり、現行は`verify:growing`と本番形式の本人切替、旧flag/URLの転送回帰を使う。旧保存の移行・所有保持・学習の回帰は残す。[決定](../adr/2026-10-06-single-island-runtime.md)。
 
 

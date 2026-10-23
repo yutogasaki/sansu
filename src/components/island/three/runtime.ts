@@ -1275,8 +1275,14 @@ export class IslandScene {
         const width = Math.max(1, this.host.clientWidth), height = Math.max(1, this.host.clientHeight), aspect = width / height;
         this.natureFrame = undefined;
         this.renderer.getSize(this.rendererSize);
-        if (this.rendererSize.x !== width || this.rendererSize.y !== height) this.renderer.setSize(width, height, false);
-        if (this.frameKeepsakeRoom()) { this.requestFrame(); return; }
+        const resized = this.rendererSize.x !== width || this.rendererSize.y !== height;
+        if (resized) this.renderer.setSize(width, height, false);
+        if (this.frameKeepsakeRoom()) {
+            // setSize clears the drawing buffer. ResizeObserver runs before paint;
+            // redraw the fitted room now instead of exposing black until the next RAF.
+            if (resized && !document.hidden && this.onscreen) this.renderer.render(this.scene, this.homeCamera);
+            this.requestFrame(); return;
+        }
         if (this.workshopActive) {
             if (this.state?.workshop?.mode === 'build' && this.state.workshop.residentId) {
                 fitIslandWorkshopResidentCamera(this.camera, this.workshop.group, aspect, this.workshopResultFrameProgress);
@@ -1920,6 +1926,7 @@ export class IslandScene {
         const renderedCamera = this.keepsakeRoomActive ? this.homeCamera : this.camera;
         this.renderer.render(this.scene, renderedCamera);
         this.host.dataset.homeCameraCandidate = ISLAND_HOME_CAMERA_CANDIDATE;
+        this.host.dataset.homeCameraView = this.state?.learningKeepsakes?.decorating ? 'decor-v6' : 'living';
         this.host.dataset.homeResident = JSON.stringify(this.homeResident.describe());
         this.host.dataset.keepsakeRoom = JSON.stringify(this.keepsakeRoom.describe());
         this.host.dataset.homeTargets = JSON.stringify(this.keepsakeRoomActive ? [
@@ -2153,7 +2160,7 @@ export class IslandScene {
         const aspect = Math.max(1, this.host.clientWidth) / Math.max(1, this.host.clientHeight);
         return fitIslandHomeInteriorCamera(this.homeCamera, this.keepsakeRoom, aspect, this.state?.learningKeepsakes?.closeOverview,
             this.state?.learningKeepsakes?.closeOverview && this.homeResident.group.visible
-                ? new THREE.Box3().setFromObject(this.homeResident.group) : undefined);
+                ? new THREE.Box3().setFromObject(this.homeResident.group) : undefined, !this.state?.learningKeepsakes?.decorating);
     }
     private frameOptionalFurniture() {
         if (this.state?.learning || this.state?.readOnly || this.workshopActive || this.state?.shared?.active || this.state?.preview) return false;

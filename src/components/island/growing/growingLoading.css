@@ -28,7 +28,7 @@
 .room-word {
     position: fixed; z-index: 30; left: 50%; top: 30%; display: grid; justify-items: center; gap: 2px; margin: 0; padding: 12px 22px;
     background: var(--pokomoko-paper, #fffdf9); border: 3px solid #1f1a24; border-radius: 22px; transform: translateX(-50%);
-    box-shadow: 6px 6px 0 #ffd23f; animation: room-word 2.6s ease-out forwards; pointer-events: none;
+    box-shadow: 6px 6px 0 #ffd23f; pointer-events: auto; max-width: calc(100vw - 32px); max-height: 60dvh; overflow-y: auto;
 }
 .room-word strong { font-size: 30px; letter-spacing: .02em; }
 .room-word span { font-size: 15px; font-weight: 700; color: var(--pokomoko-muted, #7a6f88); }
@@ -42,3 +42,5 @@
 .growing-loading-details { width: 100%; font-size: 12px; }
 .growing-loading-details summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; }
 .growing-loading-details pre { max-height: 120px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; user-select: text; }
+
+.room-word button { min-height: 48px; min-width: 48px; }

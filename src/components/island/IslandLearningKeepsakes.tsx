@@ -17,7 +17,9 @@ export interface IslandLearningKeepsakesProps {
     walkingAvailable?: boolean;
     challenge?: ReactNode;
     /** Redecorating the room with learned words (growing island only). */
-    decor?: ReactNode;
+    decor?: ReactNode | ((choose: (action: () => void, destinationFocus?: boolean) => void) => ReactNode);
+    roomAccess?: ReactNode | ((choose: (action: () => void, destinationFocus?: boolean) => void) => ReactNode);
+    roomSurface?: ReactNode;
     section?: IslandHouseSection;
     onSectionChange?: (section: IslandHouseSection) => void;
     island: IslandRecord;
@@ -44,7 +46,7 @@ function displayAction(keepsakeId: IslandLearningKeepsakeId, displayed: boolean)
 /** The page supplies the actual house. Reading an award never places one;
  * only the explicit display controls save the person's display selection. */
 export function IslandLearningKeepsakes({ island, controls, disabled, onClose, onLearn, onPhoto, onSelect, onShowRoom, comparisonDisabled = disabled,
-    onPhotos, onAlbum, onShared, onRewards, onGrowingGuide, section, onSectionChange, challenge, decor, walkingAvailable = true, active = true }: IslandLearningKeepsakesProps) {
+    onPhotos, onAlbum, onShared, onRewards, onGrowingGuide, section, onSectionChange, challenge, decor, roomAccess, roomSurface, walkingAvailable = true, active = true }: IslandLearningKeepsakesProps) {
     const [localSection, setLocalSection] = useState<IslandHouseSection>('home');
     const currentSection = section ?? localSection;
     const panelRef = useRef<HTMLElement>(null);
@@ -95,7 +97,7 @@ export function IslandLearningKeepsakes({ island, controls, disabled, onClose, o
     });
     return <section ref={panelRef} className="island-sheet island-panel island-learning-keepsakes" aria-label="いえ"
         data-testid="island-learning-keepsakes" data-keepsake-section={currentSection} data-keepsake-selected={selected.id}>
-        <IslandPanelHeading titleRef={headingRef} title={<><IslandToyIcon kind="house" size={30} />{currentSection === 'keepsakes' ? 'まなびの きねん' : currentSection === 'notices' ? 'おしらせ' : 'いえの なか'}</>}
+        <IslandPanelHeading titleRef={headingRef} title={<><IslandToyIcon kind="house" size={30} />{currentSection === 'keepsakes' ? 'まなびの きねん' : currentSection === 'notices' ? 'おくりもの' : 'いえの なか'}</>}
             onExit={currentSection === 'home' ? onClose : () => changeSection('home')} disabled={comparisonDisabled}
             exitLabel={currentSection === 'home' ? 'しまへ' : 'もどる'} exitAriaLabel={currentSection === 'home' ? 'しまへ もどる' : 'いえの なかへ もどる'}
             houseAction={currentSection === 'home' ? 'close' : 'home'} />
@@ -106,33 +108,42 @@ export function IslandLearningKeepsakes({ island, controls, disabled, onClose, o
                 : `${awardName(controls.pending.keepsakeId)}を ${controls.pending.displayed ? 'かざる' : 'しまう'}`} きろくを {controls.error ? 'もういちど たしかめられるよ。' : 'たしかめているよ。'}</p>}
         </div>}
         {currentSection === 'home' && <IslandHouseOverview active={active} disabled={disabled} comparisonDisabled={comparisonDisabled}
-            walkingAvailable={walkingAvailable} onAlbum={onAlbum} onPhotos={onPhotos} onGrowingGuide={onGrowingGuide}>{choose => <>
+            walkingAvailable={walkingAvailable} onAlbum={onAlbum} onPhotos={onPhotos}>{choose => <>
+            <h3 className="island-house-menu-group">くらし</h3>
+            {decor && <div className="island-house-living">{typeof decor === 'function' ? decor(choose) : decor}</div>}
+            <nav className="island-house-destinations" aria-label="くらし">
+                <button className="island-secondary" data-keepsake-action="notices" disabled={disabled} onClick={() => choose(() => changeSection('notices'))}>
+                    <IslandToyIcon kind="gift" /><strong>おくりもの</strong><small>{island.pendingRewards.length > 0 ? `おくりもの ${island.pendingRewards.length}こ` : 'いまは ないよ'}</small></button></nav>
+            <h3 className="island-house-menu-group">おもいで</h3>
             <nav className="island-house-destinations" aria-label="いえの なかで みるもの">
-                {onGrowingGuide && <button className="island-secondary" data-keepsake-action="growing-guide" disabled={disabled} onClick={() => choose(onGrowingGuide)}>
-                    <IslandToyIcon kind="book" /><strong>しまの あそびかた</strong><small>ためすことと、できたこと</small></button>}
-                {onShared && <button className="island-secondary" data-keepsake-action="shared" disabled={disabled} onClick={() => choose(onShared)}>
-                    <IslandToyIcon kind="display" /><strong>かざりと きおく</strong><small>だいじな たからもの</small></button>}
                 <button className="island-secondary" data-keepsake-action="open-keepsakes" disabled={disabled} onClick={() => choose(() => changeSection('keepsakes'))}>
                     <IslandToyIcon kind="keepsake" /><strong>まなびの きねん</strong><small>{state.displayed.length > 0 ? `${state.displayed.length}こ かざっているよ` : earned.length > 0 ? 'きねんを かざろう' : 'まなびの あゆみ'}</small></button>
-                <button className="island-secondary" data-keepsake-action="notices" disabled={disabled} onClick={() => choose(() => changeSection('notices'))}>
-                    <IslandToyIcon kind="gift" /><strong>おしらせ</strong><small>{island.pendingRewards.length > 0 ? `おくりもの ${island.pendingRewards.length}こ` : 'けいじばんを みる'}</small></button>
+                {onShared && <button className="island-secondary" data-keepsake-action="shared" disabled={disabled} onClick={() => choose(onShared)}>
+                    <IslandToyIcon kind="display" /><strong>かざりと きおく</strong><small>しまに かざる・なかまとの きおく</small></button>}
             </nav>
-            {decor && <div className="island-house-living">{decor}</div>}
+            {typeof roomAccess === 'function' ? roomAccess(choose) : roomAccess}
+            <h3 className="island-house-menu-group">あそびかた・チャレンジ</h3>
+            <nav className="island-house-destinations" aria-label="あそびかた">
+                {onGrowingGuide && <button className="island-secondary" data-keepsake-action="growing-guide" disabled={disabled} onClick={() => choose(onGrowingGuide)}>
+                    <IslandToyIcon kind="book" /><strong>しまの あそびかた</strong><small>ためすことと、できたこと</small></button>}
+            </nav>
             {challenge}
             <footer className="island-panel-footer">
                 {onPhoto && <button className="island-secondary" disabled={disabled} onClick={() => choose(onPhoto)}><Camera size={18} aria-hidden="true" />しゃしんに のこす</button>}
                 <button className="island-secondary" data-keepsake-action="learn" disabled={disabled} onClick={() => choose(onLearn)}>まなぶ<ArrowRight size={18} aria-hidden="true" /></button>
             </footer>
         </>}</IslandHouseOverview>}
-        {currentSection === 'notices' && <article className="island-house-notices" aria-label="いえの おしらせ">
-            <h3>おしらせ</h3>
+        {roomSurface}
+        {currentSection === 'notices' && <article className="island-house-notices" aria-label="いえの おくりもの">
+            <h3>おくりもの</h3>
             {island.pendingRewards.length > 0 ? <><p>おくりものが {island.pendingRewards.length}こ あるよ。</p>
                 {onRewards && <button className="island-primary" data-keepsake-action="rewards" disabled={disabled} onClick={onRewards}>
                     <Gift size={18} aria-hidden="true" />おくりものを みる<ArrowRight size={17} aria-hidden="true" /></button>}</>
-                : <p>いまは あたらしい おしらせは ないよ</p>}
+                : <p>いまは うけとる おくりものは ないよ</p>}
         </article>}
         {currentSection === 'keepsakes' && <>
-        <article className="island-keepsake-detail" aria-label="えらんだ きねんの きろく">
+        {earned.length === 0 && selectionEntry === 0 && <p className="island-keepsake-empty">まなびの きねんを ここに かざせるよ。<br />これからの きねんも みられるよ。</p>}
+        {(earned.length > 0 || selectionEntry > 0) && <article className="island-keepsake-detail" aria-label="えらんだ きねんの きろく">
             <div className="island-keepsake-selected"><SelectedIcon size={36} aria-hidden="true" /><div>
                 <p className="island-keepsake-eyebrow">{selected.slot === 'certificate' ? 'しょうじょう' : 'トロフィー'}</p><h3 ref={detailRef} tabIndex={-1}>{selected.name}</h3>
                 <p role="status">{available ? displayed ? 'いま かざっているよ' : 'もっているよ・かざってみよう' : 'これからの きねん'}</p>
@@ -148,7 +159,7 @@ export function IslandLearningKeepsakes({ island, controls, disabled, onClose, o
                 {onShowRoom && <button className="island-secondary" data-keepsake-action="room" disabled={disabled} onClick={() => { onShowRoom(); changeSection('home'); }}>
                     <House size={18} aria-hidden="true" />いえを みわたす</button>}
             </div>
-        </article>
+        </article>}
         {earned.length > 0 && <><div className="island-keepsake-collection-heading"><h3>もっている きねん</h3><p>{state.displayed.length}こ かざっているよ・{earned.length}こ もっているよ</p></div>
             <div className="island-keepsake-choices island-panel-choices" role="group" aria-label="もっている きねんを えらぶ">{choices(earned)}</div></>}
         {earned.length > 1 && <button className="island-secondary island-keepsake-display-all" data-keepsake-action="display-earned"
@@ -176,7 +187,7 @@ export function IslandLearningKeepsakes({ island, controls, disabled, onClose, o
         </>}
         {currentSection !== 'home' && <footer className="island-panel-footer">
             {onPhoto && <button className="island-secondary" disabled={disabled} onClick={onPhoto}><Camera size={18} aria-hidden="true" />しゃしんに のこす</button>}
-            {(currentSection !== 'keepsakes' || available) && <button className="island-secondary" data-keepsake-action="learn" disabled={disabled} onClick={onLearn}>まなぶ<ArrowRight size={18} aria-hidden="true" /></button>}
+            {(currentSection !== 'keepsakes' || available || earned.length === 0 && selectionEntry === 0) && <button className="island-secondary" data-keepsake-action="learn" disabled={disabled} onClick={onLearn}>まなぶ<ArrowRight size={18} aria-hidden="true" /></button>}
         </footer>}
     </section>;
 }

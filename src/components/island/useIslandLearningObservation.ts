@@ -31,9 +31,11 @@ export function readIslandLearningDOM(root: ParentNode | null): IslandRenderedLe
     const form = root?.querySelector<HTMLElement>('.park-answer');
     const mode = form?.dataset.inputType;
     if (!form?.dataset.problemId || !mode || !['number', 'multi-number', 'choice', 'hissan'].includes(mode)) return undefined;
+    const headerHint = Array.from(form.closest?.('.island-page')?.querySelectorAll<HTMLElement>('[data-support-kind=hint][data-support-problem-id]') ?? [])
+        .some(hint => hint.dataset.supportProblemId === form.dataset.problemId);
     return { problemId: form.dataset.problemId, inputMode: mode as IslandRenderedLearning['inputMode'],
         referenceVisual: form.querySelector('.park-question [data-visual-surface]') ? 'present' : 'absent',
-        hint: Boolean(form.querySelector('.island-learning-support[data-support-kind="hint"]')),
+        hint: headerHint || Boolean(form.querySelector('.island-learning-support[data-support-kind="hint"]')),
         model: Boolean(form.querySelector('.island-support-model')) };
 }
 

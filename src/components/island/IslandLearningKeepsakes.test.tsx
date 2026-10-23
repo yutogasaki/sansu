@@ -53,7 +53,10 @@ describe('real learning keepsake record and display choices', () => {
         expect(choice(html, 'completed-1000')).toContain('data-keepsake-state="locked"');
         expect(choice(html, 'completed-1000')).not.toContain('disabled');
         expect(action(html, 'display')).toBeUndefined(); expect(action(html, 'display-earned')).toBeUndefined();
-        expect(action(html, 'learn')).not.toContain('disabled'); expect(html).toContain('あと 1かい');
+        expect(action(html, 'learn')).not.toContain('disabled');
+        expect(html).toContain('まなびの きねんを ここに かざせるよ');
+        expect(html).not.toContain('あと 1かい');
+        expect(html).not.toContain('class="island-keepsake-detail"');
         expect(html).not.toContain('0こ かざっているよ');
         expect(html.match(/data-keepsake-action="learn"/g)).toHaveLength(1);
         expect(html).not.toContain('data-keepsake-earned-date'); expect(html).not.toContain('たしかめられた まなびの きろく');
@@ -129,7 +132,7 @@ describe('real learning keepsake record and display choices', () => {
             const exit = section === 'home' ? 'close' : 'home';
             expect(action(html, exit)).toBeDefined(); expect(action(html, exit)).not.toContain('disabled');
             expect(action(html, section === 'home' ? 'home' : 'close')).toBeUndefined();
-            if (section === 'notices') { expect(html).toContain('いまは あたらしい おしらせは ないよ'); expect(action(html, 'rewards')).toBeUndefined(); }
+            if (section === 'notices') { expect(html).toContain('いまは うけとる おくりものは ないよ'); expect(action(html, 'rewards')).toBeUndefined(); }
         }
         expect(p.controls.act).not.toHaveBeenCalled(); expect(p.controls.select).not.toHaveBeenCalled(); expect(p.onSectionChange).not.toHaveBeenCalled();
         expect(p.island).toEqual(before);

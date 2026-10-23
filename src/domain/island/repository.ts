@@ -100,7 +100,7 @@ export async function openIsland(profileId: string, database = db): Promise<Isla
     });
 }
 
-export async function startIslandPlan(profileId: string, database = db): Promise<IslandPlan> {
+export async function startIslandPlan(profileId: string, database = db, requestedSubject?: 'math' | 'vocab'): Promise<IslandPlan> {
     return database.transaction('rw', islandTables(database), async () => {
         const { island, profile } = await ownedIsland(database, profileId);
         if (island.pendingPlanId) {
@@ -121,7 +121,10 @@ export async function startIslandPlan(profileId: string, database = db): Promise
         const mergedMath = merge(profile.mathSkills, math), mergedVocab = merge(profile.vocabWords, vocab);
         const previousPlans = await database.islandPlans.bulkGet([1, 2].filter(offset => island.completedSets >= offset)
             .map(offset => JSON.stringify(['island-plan-v1', profileId, island.completedSets - offset])));
-        const subjectSelection = selectIslandSubject({ profile, island, math: mergedMath, vocab: mergedVocab, logs, previousPlans, now });
+        const selected = selectIslandSubject({ profile, island, math: mergedMath, vocab: mergedVocab, logs, previousPlans, now });
+        const subjectSelection = requestedSubject && requestedSubject !== selected.subject
+            && (profile.subjectMode === 'mix' || profile.subjectMode === requestedSubject)
+            ? { subject: requestedSubject, practiceItemIds: [] } : selected;
         const mathUnitPractice = subjectSelection.subject === 'math'
             ? await readRuntimeMathUnitPractice(database, profile, new Date(now).toISOString()) : undefined;
         const growingIsland = initializeIslandGrowth(island, now);

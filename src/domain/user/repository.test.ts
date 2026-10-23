@@ -44,6 +44,14 @@ const mocks = vi.hoisted(() => ({
     challengeEventsDelete: vi.fn(),
     challengeSummariesDelete: vi.fn(),
     challengeContactsDelete: vi.fn(),
+    foundationOwnersPut: vi.fn(),
+    foundationOwnersToArray: vi.fn(),
+    foundationOwnersGet: vi.fn(),
+    foundationCoursesDelete: vi.fn(),
+    foundationProgressDelete: vi.fn(),
+    foundationPlansDelete: vi.fn(),
+    foundationEventsDelete: vi.fn(),
+    foundationOutboxDelete: vi.fn(),
     getLocalActiveId: vi.fn(),
     setLocalActiveId: vi.fn(),
     clearLocalActiveId: vi.fn(),
@@ -53,6 +61,12 @@ const mocks = vi.hoisted(() => ({
 vi.mock("../../db", () => ({
     db: {
         transaction: mocks.transaction,
+        foundationOwners: { put: mocks.foundationOwnersPut, toArray: mocks.foundationOwnersToArray, get: mocks.foundationOwnersGet },
+        foundationCourses: { delete: mocks.foundationCoursesDelete },
+        foundationProgress: { where: () => ({ equals: () => ({ delete: mocks.foundationProgressDelete }) }) },
+        foundationPlans: { where: () => ({ equals: () => ({ delete: mocks.foundationPlansDelete }) }) },
+        foundationEvents: { where: () => ({ equals: () => ({ delete: mocks.foundationEventsDelete }) }) },
+        foundationOutbox: { where: () => ({ equals: () => ({ delete: mocks.foundationOutboxDelete }) }) },
         challengeRuns: { where: () => ({ equals: () => ({ delete: mocks.challengeRunsDelete }) }) },
         challengeEvents: { where: () => ({ equals: () => ({ delete: mocks.challengeEventsDelete }) }) },
         challengeSummaries: { delete: mocks.challengeSummariesDelete },
@@ -159,6 +173,8 @@ describe("getActiveProfile", () => {
             mocks.storedAppData = value;
         });
         mocks.profilesToArray.mockResolvedValue([]);
+        mocks.foundationOwnersToArray.mockResolvedValue([]);
+        mocks.foundationOwnersGet.mockResolvedValue(undefined);
         mocks.transaction.mockImplementation(async (...args: unknown[]) => {
             const callback = args.at(-1) as () => Promise<unknown>;
             return callback();
@@ -427,6 +443,12 @@ describe("getActiveProfile", () => {
         expect(mocks.challengeEventsDelete).toHaveBeenCalledOnce();
         expect(mocks.challengeSummariesDelete).toHaveBeenCalledWith(removed.id);
         expect(mocks.challengeContactsDelete).toHaveBeenCalledOnce();
+        expect(mocks.foundationOwnersPut).toHaveBeenCalledWith(expect.objectContaining({ profileId: removed.id, status: 'deleting' }));
+        expect(mocks.foundationCoursesDelete).toHaveBeenCalledWith(removed.id);
+        expect(mocks.foundationProgressDelete).toHaveBeenCalledOnce();
+        expect(mocks.foundationPlansDelete).toHaveBeenCalledOnce();
+        expect(mocks.foundationEventsDelete).toHaveBeenCalledOnce();
+        expect(mocks.foundationOutboxDelete).toHaveBeenCalledOnce();
         expect(mocks.clearProfileStorageData).toHaveBeenCalledWith(removed.id);
         expect(mocks.setLocalActiveId).toHaveBeenCalledWith(kept.id);
     });

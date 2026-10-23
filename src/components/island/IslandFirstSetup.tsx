@@ -41,7 +41,12 @@ export function IslandFirstSetup({ session, busy, error, onMove, onFinish, onNam
                     const chosen = { ...selection, mathRange: option.value };
                     if (selection.subject === 'math') onFinish(chosen); else onMove('english', chosen);
                 }}>{option.label}</button>)}
-                {step === 'english' && ONBOARDING_ENGLISH_RANGES.map(option => <button key={option.value} disabled={busy} onClick={() => onFinish({ ...selection, englishRange: option.value })}>{option.label}</button>)}
+                {step === 'english' && selection.englishCourse !== 'vocabulary' && <>
+                    <button disabled={busy} onClick={() => onFinish({ ...selection, englishRange: 'beginner', englishCourse: 'foundation' })}>もじと おとから はじめる<span>A・B・Cと、絵をえらぶ えいご</span></button>
+                    <button disabled={busy} onClick={() => onMove('english', { ...selection, englishCourse: 'vocabulary' })}>えいたんごを よむ</button>
+                    <button disabled={busy} onClick={() => onFinish({ ...selection, englishRange: 'beginner', englishCourse: undefined })}>あとで きめる</button>
+                </>}
+                {step === 'english' && selection.englishCourse === 'vocabulary' && ONBOARDING_ENGLISH_RANGES.map(option => <button key={option.value} disabled={busy} onClick={() => onFinish({ ...selection, englishRange: option.value })}>{option.label}</button>)}
             </div>
             <p className="island-setup-status" role={error ? 'alert' : 'status'}>{error ?? (busy ? 'ほぞんしているよ…' : 'あとで かえられるよ')}</p>
         </section>

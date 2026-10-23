@@ -64,7 +64,8 @@ export function usePokomokoFeedback(feedback: IslandLearningFeedback | undefined
         if (!cell) return;
         const bounds = cell.getBoundingClientRect(), stage = root.current.getBoundingClientRect();
         if (!bounds.width || !bounds.height) return;
-        const actor = root.current.querySelector('.pokomoko-learning-actor')?.getBoundingClientRect();
+        const actor = (root.current.querySelector('.pokomoko-learning-actor')
+            ?? root.current.closest('.island-page')?.querySelector('.island-learning-companion .pokomoko-learning-actor'))?.getBoundingClientRect();
         if (!actor) return;
         const key = root.current.querySelector(`.park-keypad button[aria-label="${value === '.' ? 'しょうすうてん' : value}"]`)?.getBoundingClientRect();
         const cue = { id: ++digit.current, digit: value, problemId, startedAt: performance.now(), fromX: key ? key.left + key.width / 2 - stage.left : bounds.left + bounds.width / 2 - stage.left, fromY: key ? key.top + key.height / 2 - stage.top : bounds.top + bounds.height / 2 - stage.top, x: bounds.left + bounds.width / 2 - stage.left, y: bounds.top + bounds.height / 2 - stage.top,

@@ -19,7 +19,7 @@ export const stopEnglishSpeech = () => {
 };
 
 /** Manual callers invoke this directly in the click, preserving browser activation. */
-export const speakEnglish = (text: string, callbacks: EnglishSpeechCallbacks = {}): (() => void) => {
+const speak = (text: string, lang: 'en-US' | 'ja-JP', callbacks: EnglishSpeechCallbacks = {}): (() => void) => {
     stopEnglishSpeech();
     const synth = window.speechSynthesis;
     if (!synth || typeof SpeechSynthesisUtterance === 'undefined') {
@@ -28,12 +28,12 @@ export const speakEnglish = (text: string, callbacks: EnglishSpeechCallbacks = {
     }
     if (!text.trim()) return () => {};
     const utterance = new SpeechSynthesisUtterance(text.trim());
-    utterance.lang = 'en-US';
+    utterance.lang = lang;
     utterance.rate = 0.9;
     utterance.pitch = 1;
     utterance.volume = 1;
     // Prefer installed English voices so supported devices also work offline.
-    const english = synth.getVoices().filter(voice => /^en[-_]/i.test(voice.lang));
+    const english = synth.getVoices().filter(voice => (lang === 'en-US' ? /^en[-_]/i : /^ja[-_]/i).test(voice.lang));
     const voice = english.find(voice => voice.localService && voice.name === 'Samantha')
         ?? english.find(voice => voice.localService && voice.default)
         ?? english.find(voice => voice.localService && /^en[-_]US$/i.test(voice.lang))
@@ -73,3 +73,7 @@ export const speakEnglish = (text: string, callbacks: EnglishSpeechCallbacks = {
     }
     return stop;
 };
+
+export const speakEnglish = (text: string, callbacks: EnglishSpeechCallbacks = {}) => speak(text, 'en-US', callbacks);
+/** The returned stop only cancels this utterance, never a newer owner's voice. */
+export const speakJapanese = (text: string) => speak(text, 'ja-JP');

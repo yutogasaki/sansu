@@ -150,8 +150,11 @@ describe('a perspective camera inside the same closed house', () => {
             const projected = point.clone().project(close);
             ray.setFromCamera(new THREE.Vector2(projected.x, projected.y), close);
             expect(room.selectHit(ray.ray)).toEqual({ type: 'album' });
-            if (aspect < .9) expect(close.fov).toBeLessThan(wide.fov);
-            else expect(close.projectionMatrix.elements).toEqual(wide.projectionMatrix.elements);
+            expect(close.fov).toBeLessThan(wide.fov);
+            const closeFrame = [...close.projectionMatrix.elements];
+            room.update(undefined, 0, true);
+            expect(fitIslandHomeInteriorCamera(close, room, aspect, true)).toBe(true);
+            expect(close.projectionMatrix.elements).toEqual(closeFrame);
             room.update(all, 1000, true, 'first-completion');
             const detail = fit(room, aspect);
             expect(fitIslandHomeInteriorCamera(close, room, aspect, true)).toBe(true);
@@ -160,11 +163,27 @@ describe('a perspective camera inside the same closed house', () => {
         } finally { room.dispose(); }
     });
 
-    it('keeps the whole walking resident on screen at the portrait edges and restores the close view', () => {
+    it.each([390 / 344, 320 / 218, 284 / 200, 414 / 850])('preserves the prior close camera for the decorating surface, aspect %s', aspect => {
+        const room = roomAt(true), resident = new HomeResident(), camera = new THREE.PerspectiveCamera();
+        resident.show(room.group);
+        try {
+            const bounds = new THREE.Box3().setFromObject(resident.group);
+            expect(fitIslandHomeInteriorCamera(camera, room, aspect, true, bounds, false)).toBe(true);
+            const position = room.group.worldToLocal(camera.position.clone());
+            expect(position.toArray()).toEqual(expect.arrayContaining([expect.closeTo(.4), expect.closeTo(2.65), expect.closeTo(4.62)]));
+            const album = room.group.getObjectByName('home-album')!;
+            const point = album.localToWorld(new THREE.Vector3(0, .035, 0)).project(camera);
+            const ray = new THREE.Raycaster(); ray.setFromCamera(new THREE.Vector2(point.x, point.y), camera);
+            expect(room.selectHit(ray.ray)).toEqual({ type: 'album' });
+            checkEnclosure(room, camera);
+        } finally { resident.hide(); room.dispose(); }
+    });
+
+    it.each([390 / 620, 320 / 344, 568 / 124, 768 / 800])('keeps the whole walking resident visible at reachable floor edges, aspect %s', aspect => {
         const room = roomAt(true), resident = new HomeResident(), camera = new THREE.PerspectiveCamera();
         resident.show(room.group);
         const frame = () => {
-            expect(fitIslandHomeInteriorCamera(camera, room, 390 / 620, true, new THREE.Box3().setFromObject(resident.group))).toBe(true);
+            expect(fitIslandHomeInteriorCamera(camera, room, aspect, true, new THREE.Box3().setFromObject(resident.group))).toBe(true);
             for (const point of vertices(resident.group)) {
                 const ndc = point.project(camera);
                 expect(Math.max(Math.abs(ndc.x), Math.abs(ndc.y))).toBeLessThan(.98);
@@ -174,7 +193,10 @@ describe('a perspective camera inside the same closed house', () => {
         try {
             frame(); const initial = camera.fov;
             expect(resident.walkTo({ x: 2.8, z: 1.1 }, 0, true)).toBe(true);
-            frame(); expect(camera.fov).toBeGreaterThan(initial);
+            frame(); if (aspect < 1) expect(camera.fov).toBeGreaterThan(initial);
+            for (const point of [{ x: 2.8, z: 3.6 }, { x: -2.8, z: 3.6 }, { x: -2.8, z: .9 }]) {
+                expect(resident.walkTo(point, 0, true)).toBe(true); frame();
+            }
             expect(resident.walkTo({ x: .4, z: 1.1 }, 0, true)).toBe(true);
             frame(); expect(camera.fov).toBeCloseTo(initial, 8);
         } finally { resident.hide(); room.dispose(); }

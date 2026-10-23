@@ -1,0 +1,334 @@
+{
+  "startedAt": "2026-10-21T02:01:18.720Z",
+  "sourceStart": {
+    "src/components/island/IslandSession.tsx": "858e396b6ca11f2e026da47852ab279d06a3a0725f70094c814180fc72f723fa",
+    "src/components/island/IslandLearningPanel.tsx": "60a1ac42f50568e285f69bde3d4b038915495cbcc4160733163a60c6ee6d1587",
+    "src/components/island/IslandAnswerFeedback.tsx": "5b1c86771a61aa97b81e0faab55b8d58994e0d627c0708690711be2ab5e09781",
+    "src/components/island/IslandLearningHeader.css": "77e964c9eefdd11105b32dd7bd391f8af571a805e66d802323d6528c1200814f",
+    "src/components/island/PokomokoLearningActor.tsx": "f76466fe93f1f17c0fa0e8c8d47e22ff05346587857935ac07c183a0840be129",
+    "src/components/island/usePokomokoFeedback.ts": "708ceeada1c6344c4a42788657fd1154cddace6e078bf2c4e777ee54a70fb931",
+    "src/components/island/PokomokoLearningEffects.tsx": "c980657290b82090e8e9e97e322834e38ea60fafd633213582528e441851a3ed",
+    "src/components/island/PokomokoFullscreenCelebration.tsx": "c68d3b7e73b4d8b1527d21b2e98c8da9d4f03950e64f926da701a4af1edb3f89",
+    "src/components/domain/WrittenArithmeticGrid.tsx": "f98e0e0eebcdd4274d0f14b1fe760eeaf1412384172ba9d262e5b85d8b5fe159",
+    "src/components/domain/WrittenArithmeticGrid.css": "5160990c7b06e9ed7ba56f15bf2d7798cfba4b8c327dd244ad76c002abc9d8e0"
+  },
+  "metadata": {
+    "url": "http://127.0.0.1:5198/#/island?learn=1",
+    "revision": "development-local",
+    "version": "development-local:1d3b295b-5e2a-4e71-b598-e53e1a068aec",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-shore-garden-v18",
+    "learningCandidate": "pokomoko-pop-live-v8",
+    "islandFeatureEnabled": true,
+    "mode": "learning",
+    "renderer": "live-original",
+    "artDirection": null,
+    "drawCalls": 0,
+    "expanded": null,
+    "residentAction": null,
+    "residentItemId": null,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": false,
+    "reducedMotion": false,
+    "appRoot": {
+      "revision": "development-local",
+      "version": "development-local:1d3b295b-5e2a-4e71-b598-e53e1a068aec",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    }
+  },
+  "scope": "Browser-only DOM/CSS rough, original identity. 192px normal/156px left-small or172px comparison-small. Icon sound and close. Status is a simulated collision label, not an answer.",
+  "checks": [
+    {
+      "variant": "left",
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "geometry": {
+        "actor": {
+          "x": 8,
+          "y": 0,
+          "w": 165,
+          "h": 172,
+          "right": 173,
+          "bottom": 172
+        },
+        "header": {
+          "x": 0,
+          "y": 0,
+          "w": 320,
+          "h": 156,
+          "right": 320,
+          "bottom": 156
+        },
+        "question": {
+          "x": 14,
+          "y": 156,
+          "w": 292,
+          "h": 163,
+          "right": 306,
+          "bottom": 319
+        },
+        "rows": [
+          {
+            "row": "4",
+            "visible": true,
+            "hit": true
+          },
+          {
+            "row": "5",
+            "visible": true,
+            "hit": true
+          },
+          {
+            "row": "6",
+            "visible": true,
+            "hit": true
+          }
+        ],
+        "controls": [
+          {
+            "text": "音をだす",
+            "rect": {
+              "x": 210,
+              "y": 0,
+              "w": 48,
+              "h": 48,
+              "right": 258,
+              "bottom": 48
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "とじる",
+            "rect": {
+              "x": 264,
+              "y": 0,
+              "w": 48,
+              "h": 48,
+              "right": 312,
+              "bottom": 48
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "あまり、ひだりから 3 マスめ、から",
+            "rect": {
+              "x": 204,
+              "y": 272.84375,
+              "w": 44,
+              "h": 44,
+              "right": 248,
+              "bottom": 316.84375
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "7",
+            "rect": {
+              "x": 14,
+              "y": 325,
+              "w": 94,
+              "h": 44,
+              "right": 108,
+              "bottom": 369
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "8",
+            "rect": {
+              "x": 113,
+              "y": 325,
+              "w": 94,
+              "h": 44,
+              "right": 207,
+              "bottom": 369
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "9",
+            "rect": {
+              "x": 212,
+              "y": 325,
+              "w": 94,
+              "h": 44,
+              "right": 306,
+              "bottom": 369
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "4",
+            "rect": {
+              "x": 14,
+              "y": 374,
+              "w": 94,
+              "h": 44,
+              "right": 108,
+              "bottom": 418
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "5",
+            "rect": {
+              "x": 113,
+              "y": 374,
+              "w": 94,
+              "h": 44,
+              "right": 207,
+              "bottom": 418
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "6",
+            "rect": {
+              "x": 212,
+              "y": 374,
+              "w": 94,
+              "h": 44,
+              "right": 306,
+              "bottom": 418
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "1",
+            "rect": {
+              "x": 14,
+              "y": 423,
+              "w": 94,
+              "h": 44,
+              "right": 108,
+              "bottom": 467
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "2",
+            "rect": {
+              "x": 113,
+              "y": 423,
+              "w": 94,
+              "h": 44,
+              "right": 207,
+              "bottom": 467
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "3",
+            "rect": {
+              "x": 212,
+              "y": 423,
+              "w": 94,
+              "h": 44,
+              "right": 306,
+              "bottom": 467
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "ひとつ もどす",
+            "rect": {
+              "x": 14,
+              "y": 472,
+              "w": 94,
+              "h": 44,
+              "right": 108,
+              "bottom": 516
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "0",
+            "rect": {
+              "x": 113,
+              "y": 472,
+              "w": 94,
+              "h": 44,
+              "right": 207,
+              "bottom": 516
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "こたえを けす",
+            "rect": {
+              "x": 212,
+              "y": 472,
+              "w": 94,
+              "h": 44,
+              "right": 306,
+              "bottom": 516
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "ヒントを みる",
+            "rect": {
+              "x": 14,
+              "y": 520,
+              "w": 118.8125,
+              "h": 44,
+              "right": 132.8125,
+              "bottom": 564
+            },
+            "visible": true,
+            "hit": true
+          },
+          {
+            "text": "わからない",
+            "rect": {
+              "x": 226.390625,
+              "y": 520,
+              "w": 79.609375,
+              "h": 44,
+              "right": 306,
+              "bottom": 564
+            },
+            "visible": true,
+            "hit": true
+          }
+        ]
+      }
+    }
+  ],
+  "sourceEnd": {
+    "src/components/island/IslandSession.tsx": "858e396b6ca11f2e026da47852ab279d06a3a0725f70094c814180fc72f723fa",
+    "src/components/island/IslandLearningPanel.tsx": "60a1ac42f50568e285f69bde3d4b038915495cbcc4160733163a60c6ee6d1587",
+    "src/components/island/IslandAnswerFeedback.tsx": "5b1c86771a61aa97b81e0faab55b8d58994e0d627c0708690711be2ab5e09781",
+    "src/components/island/IslandLearningHeader.css": "77e964c9eefdd11105b32dd7bd391f8af571a805e66d802323d6528c1200814f",
+    "src/components/island/PokomokoLearningActor.tsx": "f76466fe93f1f17c0fa0e8c8d47e22ff05346587857935ac07c183a0840be129",
+    "src/components/island/usePokomokoFeedback.ts": "708ceeada1c6344c4a42788657fd1154cddace6e078bf2c4e777ee54a70fb931",
+    "src/components/island/PokomokoLearningEffects.tsx": "c980657290b82090e8e9e97e322834e38ea60fafd633213582528e441851a3ed",
+    "src/components/island/PokomokoFullscreenCelebration.tsx": "c68d3b7e73b4d8b1527d21b2e98c8da9d4f03950e64f926da701a4af1edb3f89",
+    "src/components/domain/WrittenArithmeticGrid.tsx": "f98e0e0eebcdd4274d0f14b1fe760eeaf1412384172ba9d262e5b85d8b5fe159",
+    "src/components/domain/WrittenArithmeticGrid.css": "5160990c7b06e9ed7ba56f15bf2d7798cfba4b8c327dd244ad76c002abc9d8e0"
+  },
+  "completedAt": "2026-10-21T02:01:23.409Z"
+}

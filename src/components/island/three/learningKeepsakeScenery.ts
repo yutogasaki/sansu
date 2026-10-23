@@ -62,6 +62,7 @@ export class IslandLearningKeepsakeScenery {
     private guestMaterials?: GuestMaterials;
     private viewTexture?: THREE.Texture;
     private deskTexture?: THREE.CanvasTexture;
+    private albumTexture?: THREE.CanvasTexture;
     private hops = new Map<string, number>();
 
     constructor() { this.group.name = ISLAND_KEEPSAKE_SCENERY_CANDIDATE; this.group.visible = false; }
@@ -146,7 +147,9 @@ export class IslandLearningKeepsakeScenery {
         const table = cylinder(this.group, wood, [.55, .49, 2.52], .69, .09, .69, 32); table.name = 'home-coffee-table';
         cylinder(this.group, dark, [.55, .25, 2.52], .13, .46, .22, 12);
         const album = mesh(this.group, roundedBoxGeometry([.65, .07, .48], .025), blue, [.53, .58, 2.49]); album.rotation.y = -.18; album.name = 'home-album'; album.userData.homeAction = 'album';
-        mesh(this.group, roundedBoxGeometry([.31, .012, .27], .012), paper, [.53, .624, 2.49]).userData.homeAction = 'album';
+        const cover = new THREE.Mesh(new THREE.PlaneGeometry(.53, .35), this.albumCoverMaterial());
+        cover.position.set(.53, .624, 2.49); cover.rotation.set(-Math.PI / 2, 0, -.18);
+        cover.name = 'home-album-label'; cover.userData.homeAction = 'album'; this.group.add(cover);
         cylinder(this.group, coral, [2.74, .29, 1.95], .27, .5, .21, 16).name = 'home-plant-pot';
         for (let i = 0; i < 4; i++) {
             const leaf = ellipsoid(this.group, teal, [2.74 + Math.sin(i * 2) * .18, .65 + i * .12, 1.95 + Math.cos(i * 2) * .14], [.13, .32, .08], 12);
@@ -262,6 +265,18 @@ export class IslandLearningKeepsakeScenery {
         });
         return true;
     }
+    private albumCoverMaterial() {
+        if (typeof document === 'undefined' || typeof document.createElement !== 'function') return this.material('#fff4d3');
+        const canvas = document.createElement('canvas'); canvas.width = 384; canvas.height = 256;
+        const g = canvas.getContext('2d');
+        if (!g) return this.material('#fff4d3');
+        g.fillStyle = '#fff4d3'; g.fillRect(0, 0, 384, 256);
+        g.strokeStyle = '#31476a'; g.lineWidth = 8; g.strokeRect(12, 12, 360, 232);
+        g.fillStyle = '#31476a'; g.textAlign = 'center'; g.font = '900 58px "Zen Maru Gothic", sans-serif';
+        g.fillText('アルバム', 192, 112); g.font = '900 64px sans-serif'; g.fillText('↗', 192, 200);
+        this.albumTexture = new THREE.CanvasTexture(canvas);
+        const material = new THREE.MeshBasicMaterial({ map: this.albumTexture }); this.materials.add(material); return material;
+    }
     private applyGuests(decor?: IslandRoomDecor) {
         this.guests.traverse(o => { if (o instanceof THREE.Mesh) o.geometry.dispose(); });
         this.guests.clear(); this.guestMaterials?.dispose(); this.guestMaterials = undefined;
@@ -296,11 +311,12 @@ export class IslandLearningKeepsakeScenery {
         const canvas = document.createElement('canvas'); canvas.width = 256; canvas.height = 192;
         const g = canvas.getContext('2d')!;
         g.fillStyle = '#fffaf0'; g.fillRect(0, 0, 256, 192); g.strokeStyle = '#f25c8a'; g.lineWidth = 8; g.strokeRect(4, 4, 248, 184);
-        g.fillStyle = '#3a3346'; g.font = '900 26px "Zen Maru Gothic", sans-serif'; g.textAlign = 'center';
+        g.fillStyle = '#3a3346'; g.font = '900 36px "Zen Maru Gothic", sans-serif'; g.textAlign = 'center';
         const today = decor.today ?? [];
-        g.fillText(today.length ? 'きょう まなんだ' : 'ここから まなぶ', 128, 40);
+        g.fillText('▶ まなぶ', 128, 48);
         g.font = '800 24px "Zen Maru Gothic", sans-serif';
-        (today.length ? today.slice(0, 4) : ['▶']).forEach((text, i) => g.fillText(text.slice(0, 12), 128, 80 + i * 30));
+        g.fillText(today.length ? 'きょう まなんだ' : 'ここから まなぶ', 128, 88);
+        today.slice(0, 2).forEach((text, i) => g.fillText(text.slice(0, 12), 128, 126 + i * 30));
         this.deskTexture = new THREE.CanvasTexture(canvas); this.deskTexture.colorSpace = THREE.SRGBColorSpace;
         const material = new THREE.MeshBasicMaterial({ map: this.deskTexture }); this.materials.add(material);
         const card = new THREE.Mesh(new THREE.PlaneGeometry(.66, .5), material);
@@ -425,6 +441,7 @@ export class IslandLearningKeepsakeScenery {
         this.wallpaper.forEach(paper => paper.texture.dispose()); this.wallpaper = []; this.decorKey = '';
         this.guestMaterials?.dispose(); this.guestMaterials = undefined; this.guests.clear(); this.viewTexture?.dispose(); this.viewTexture = undefined;
         this.deskTexture?.dispose(); this.deskTexture = undefined; this.hops.clear();
+        this.albumTexture?.dispose(); this.albumTexture = undefined;
     }
     dispose() {
         if (this.disposed) return;

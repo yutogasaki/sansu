@@ -1,10 +1,11 @@
+import { resolveIslandLearningEntry, type IslandLearningEntry } from '../../domain/island/learningEntry';
 import { useEffect, useRef, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
 import type { IslandScreen } from '../../domain/island/navigation';
 import { db } from '../../db';
 import type { UserProfile } from '../../domain/types';
-import { assertIslandPlan, openIsland, startIslandPlan } from '../../domain/island/repository';
+import { assertIslandPlan, openIsland } from '../../domain/island/repository';
 import type { IslandPlan, IslandRecord } from '../../domain/island/types';
 import { holdPwaUpdateForCriticalPersistence } from '../../pwa';
 
@@ -28,6 +29,7 @@ export function useIslandSessionState(profile: UserProfile, hasShell: boolean) {
     const live = useLiveQuery(() => db.islands.get(profile.id), [profile.id]);
     const island = live && (!snapshot || live.revision >= snapshot.revision) ? live : snapshot;
     const [plan, setPlan] = useState<IslandPlan>();
+    const [courseEntry, setCourseEntry] = useState<Exclude<IslandLearningEntry, { kind: 'island' }>>();
     useEffect(() => {
         let mounted = true;
         const release = holdPwaUpdateForCriticalPersistence();
@@ -39,7 +41,7 @@ export function useIslandSessionState(profile: UserProfile, hasShell: boolean) {
             if (pending) assertIslandPlan(pending, profile.id);
             let reserved = pending;
             if (!hasShell && entry.start && !reserved) {
-                try { reserved = await startIslandPlan(profile.id); }
+                try { const next = await resolveIslandLearningEntry(profile.id); if (next.kind === 'island') reserved = next.plan; else if (mounted) setCourseEntry(next); }
                 catch { if (mounted) setNextPlanError(true); }
             }
             if (!mounted) return;
@@ -64,5 +66,5 @@ export function useIslandSessionState(profile: UserProfile, hasShell: boolean) {
     };
 
     return { opening, nextPlanError, setNextPlanError, snapshot, setSnapshot, island, plan, setPlan,
-        localScreen, setLocalScreen, loadError, clearEntry };
+        localScreen, setLocalScreen, loadError, clearEntry, courseEntry, setCourseEntry };
 }

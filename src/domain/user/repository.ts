@@ -1,3 +1,4 @@
+import { beginFoundationOwnerDeletion } from '../englishFoundation/repository';
 import { clearProfileTutorial } from '../island/tutorialState';
 import { db, type SansuDatabase } from "../../db";
 import { AppData, UserProfile } from "../types";
@@ -124,6 +125,7 @@ export const getProfile = async (id: string) => {
 };
 
 export const getAllProfiles = async () => {
+    await resumeFoundationOwnerDeletions();
     const appData = await getAppData();
     return Promise.all(Object.values(appData.profiles).map(hydrateProfileMemory));
 };
@@ -142,6 +144,7 @@ export const getActiveProfileId = () => {
 };
 
 export const getActiveProfile = async () => {
+    await resumeFoundationOwnerDeletions();
     // Resolve/repair against the latest committed selection. A local mirror can
     // still name the previous person while a switch is completing in this tab
     // or another tab; it must never roll the committed selection back.
@@ -173,6 +176,11 @@ export const deleteProfileOwnedIndexedDbRows = async (
     database: SansuDatabase,
     id: string,
 ) => Promise.all([
+    database.foundationCourses.delete(id),
+    database.foundationProgress.where("profileId").equals(id).delete(),
+    database.foundationPlans.where("profileId").equals(id).delete(),
+    database.foundationEvents.where("profileId").equals(id).delete(),
+    database.foundationOutbox.where("profileId").equals(id).delete(),
     database.challengeRuns.where("profileId").equals(id).delete(),
     database.challengeEvents.where("profileId").equals(id).delete(),
     database.challengeSummaries.delete(id),
@@ -196,6 +204,8 @@ export const deleteProfileOwnedIndexedDbRows = async (
 ]);
 
 export const deleteProfile = async (id: string) => {
+    // Fence source writes before deleting either physical database. This tombstone survives retries.
+    await beginFoundationOwnerDeletion(id);
     const { deleteLifeOwner } = await import('../islandLife/repository');
     await deleteLifeOwner(id);
     const { deleteTownOwner } = await import('../natureTown/repository');
@@ -207,6 +217,7 @@ export const deleteProfile = async (id: string) => {
     await db.transaction(
         "rw",
         [
+            db.foundationCourses, db.foundationProgress, db.foundationPlans, db.foundationEvents, db.foundationOutbox,
             db.challengeRuns, db.challengeEvents, db.challengeSummaries, db.challengeContacts,
             db.appData,
             db.profiles,
@@ -251,4 +262,20 @@ export const deleteProfile = async (id: string) => {
     } else {
         profileStorage.clearActiveId();
     }
+};
+
+// Complete previously authorized deletion after a crash between the source and
+// Growing databases. The durable source fence is deliberately retained afterward.
+let deletionRecovery: Promise<void> | undefined;
+export const resumeFoundationOwnerDeletions = (): Promise<void> => {
+    if (deletionRecovery) return deletionRecovery;
+    deletionRecovery = (async () => {
+        const owners = await db.foundationOwners.toArray();
+        for (const owner of owners) {
+            if (owner.status === 'deleting' && await db.profiles.get(owner.profileId)) {
+                await deleteProfile(owner.profileId);
+            }
+        }
+    })().finally(() => { deletionRecovery = undefined; });
+    return deletionRecovery;
 };

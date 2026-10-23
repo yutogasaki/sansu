@@ -1,3 +1,4 @@
+import { FoundationProgress } from '../components/progress/FoundationProgress';
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addDays } from "date-fns";
@@ -373,6 +374,7 @@ export const Stats: React.FC = () => {
         >
             <div className={navigation ? "utility-layout-content stats-layout" : "island-utility-content mx-auto w-full max-w-[22rem] space-y-8 pb-2"}>
 
+                <FoundationProgress profileId={profile.id} />
                 <LearningProgressCards profile={profile} refreshKey={learningOverlay}
                     onSettings={subject => { const path = `/settings/curriculum?subject=${subject}`; if (navigation) navigation.open(path); else navigate(path); }}
                     onLearn={() => { warmUpTTS(); if (navigation) navigation.startLearning(); else navigate('/study'); }}

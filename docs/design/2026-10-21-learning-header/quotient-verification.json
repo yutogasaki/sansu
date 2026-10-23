@@ -1,0 +1,1352 @@
+{
+  "scope": "Explicit isolated 157/6 full written presentation fixture; not planner selection or child observation",
+  "id": "60ade798-f002-4752-8f59-6e5f60337346",
+  "model": {
+    "rows": [
+      {
+        "type": "result",
+        "cells": [
+          {
+            "state": "empty",
+            "value": ""
+          },
+          {
+            "state": "empty",
+            "value": "",
+            "correctValue": "2"
+          },
+          {
+            "state": "empty",
+            "value": "",
+            "correctValue": "6"
+          }
+        ],
+        "label": "商"
+      },
+      {
+        "type": "operand",
+        "cells": [
+          {
+            "state": "fixed",
+            "value": "1"
+          },
+          {
+            "state": "fixed",
+            "value": "5"
+          },
+          {
+            "state": "fixed",
+            "value": "7"
+          }
+        ]
+      },
+      {
+        "type": "input",
+        "cells": [
+          {
+            "state": "empty",
+            "value": "",
+            "correctValue": "1"
+          },
+          {
+            "state": "empty",
+            "value": "",
+            "correctValue": "2"
+          },
+          {
+            "state": "empty",
+            "value": ""
+          }
+        ],
+        "stepIndex": 1,
+        "label": "かける",
+        "visibleFromStep": 1
+      },
+      {
+        "type": "input",
+        "cells": [
+          {
+            "state": "empty",
+            "value": ""
+          },
+          {
+            "state": "empty",
+            "value": "",
+            "correctValue": "3"
+          },
+          {
+            "state": "empty",
+            "value": ""
+          }
+        ],
+        "stepIndex": 2,
+        "label": "ひく",
+        "visibleFromStep": 2,
+        "lineAbove": true
+      },
+      {
+        "type": "operand",
+        "cells": [
+          {
+            "state": "empty",
+            "value": ""
+          },
+          {
+            "state": "fixed",
+            "value": "3"
+          },
+          {
+            "state": "fixed",
+            "value": "7"
+          }
+        ],
+        "label": "おろす",
+        "visibleFromStep": 3
+      },
+      {
+        "type": "input",
+        "cells": [
+          {
+            "state": "empty",
+            "value": ""
+          },
+          {
+            "state": "empty",
+            "value": "",
+            "correctValue": "3"
+          },
+          {
+            "state": "empty",
+            "value": "",
+            "correctValue": "6"
+          }
+        ],
+        "stepIndex": 4,
+        "label": "かける",
+        "visibleFromStep": 4
+      },
+      {
+        "type": "result",
+        "cells": [
+          {
+            "state": "empty",
+            "value": ""
+          },
+          {
+            "state": "empty",
+            "value": ""
+          },
+          {
+            "state": "empty",
+            "value": "",
+            "correctValue": "1"
+          }
+        ],
+        "stepIndex": 5,
+        "label": "あまり",
+        "visibleFromStep": 5,
+        "lineAbove": true
+      }
+    ],
+    "steps": [
+      {
+        "index": 0,
+        "rowIndex": 0,
+        "inputCellIndices": [
+          1
+        ],
+        "correctValues": [
+          "2"
+        ],
+        "phase": "quotient",
+        "description": "商を たてよう",
+        "hint": "15 に 6 は いくつ はいるかな",
+        "focusCells": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ]
+        ]
+      },
+      {
+        "index": 1,
+        "rowIndex": 2,
+        "inputCellIndices": [
+          1,
+          0
+        ],
+        "correctValues": [
+          "2",
+          "1"
+        ],
+        "phase": "multiply",
+        "description": "かけて 下に かこう",
+        "hint": "6 × 2 を、右から かこう",
+        "focusCells": [
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "index": 2,
+        "rowIndex": 3,
+        "inputCellIndices": [
+          1
+        ],
+        "correctValues": [
+          "3"
+        ],
+        "phase": "subtract",
+        "description": "ひいて のこりを かこう",
+        "hint": "15 から、いま かけた数を ひこう",
+        "focusCells": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            1
+          ]
+        ]
+      },
+      {
+        "index": 3,
+        "rowIndex": 0,
+        "inputCellIndices": [
+          2
+        ],
+        "correctValues": [
+          "6"
+        ],
+        "phase": "quotient",
+        "description": "商を たてよう",
+        "hint": "つぎの 7 を おろしたよ。37 ÷ 6 を かんがえよう",
+        "focusCells": [
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ]
+        ]
+      },
+      {
+        "index": 4,
+        "rowIndex": 5,
+        "inputCellIndices": [
+          2,
+          1
+        ],
+        "correctValues": [
+          "6",
+          "3"
+        ],
+        "phase": "multiply",
+        "description": "かけて 下に かこう",
+        "hint": "6 × 6 を、右から かこう",
+        "focusCells": [
+          [
+            0,
+            2
+          ]
+        ]
+      },
+      {
+        "index": 5,
+        "rowIndex": 6,
+        "inputCellIndices": [
+          2
+        ],
+        "correctValues": [
+          "1"
+        ],
+        "phase": "remainder",
+        "description": "ひいて あまりを かこう",
+        "hint": "37 から、いま かけた数を ひこう",
+        "focusCells": [
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            2
+          ],
+          [
+            5,
+            1
+          ],
+          [
+            5,
+            2
+          ]
+        ]
+      }
+    ],
+    "columnCount": 3,
+    "operation": "division",
+    "finalAnswer": "26 あまり 1",
+    "writtenLayout": {
+      "kind": "division",
+      "expression": "157 ÷ 6",
+      "divisor": "6",
+      "quotientRow": 0,
+      "dividendRow": 1,
+      "dividendStartColumn": 0
+    }
+  },
+  "checks": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "geometry": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "w": 390,
+          "h": 56,
+          "scroll": 56,
+          "client": 56
+        },
+        "actor": {
+          "x": 150.59375,
+          "y": 4,
+          "w": 46,
+          "h": 48,
+          "scroll": 48,
+          "client": 48
+        },
+        "question": {
+          "x": 14,
+          "y": 155.1875,
+          "w": 362,
+          "h": 373.625,
+          "scroll": 370,
+          "client": 370
+        },
+        "history": {
+          "x": 107,
+          "y": 323.15625,
+          "w": 176,
+          "h": 167.265625,
+          "scroll": 167,
+          "client": 167
+        },
+        "paper": {
+          "x": 101,
+          "y": 244.15625,
+          "w": 188,
+          "h": 246.265625,
+          "scroll": 246,
+          "client": 246
+        },
+        "keypad": {
+          "x": 14,
+          "y": 538.8125,
+          "w": 362,
+          "h": 251.1875,
+          "scroll": 251,
+          "client": 251
+        },
+        "feedback": {
+          "x": 14,
+          "y": 116,
+          "w": 362,
+          "h": 39.1875,
+          "scroll": 39,
+          "client": 39
+        },
+        "body": {
+          "x": 0,
+          "y": 0,
+          "w": 390,
+          "h": 844,
+          "scroll": 844,
+          "client": 844
+        },
+        "text": "157 ÷ 6ひっさんたてるつぎの 7 を おろしたよ。37 ÷ 6 を かんがえよう商2▏6157かける12ひく3おろす37ここに いれようマスを おすと なおせるよ"
+      },
+      "visible": [
+        {
+          "label": "おとを だす",
+          "width": 118.4375,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "とじる",
+          "width": 50.96875,
+          "height": 46.1875,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "商、ひだりから 3 マスめ、から",
+          "width": 44,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "7",
+          "width": 116,
+          "height": 56.546875,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "8",
+          "width": 116,
+          "height": 56.546875,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "9",
+          "width": 116,
+          "height": 56.546875,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "4",
+          "width": 116,
+          "height": 56.546875,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "5",
+          "width": 116,
+          "height": 56.546875,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "6",
+          "width": 116,
+          "height": 56.546875,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "1",
+          "width": 116,
+          "height": 56.546875,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "2",
+          "width": 116,
+          "height": 56.546875,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "3",
+          "width": 116,
+          "height": 56.546875,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "ひとつ もどす",
+          "width": 116,
+          "height": 56.546875,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "0",
+          "width": 116,
+          "height": 56.546875,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "こたえを けす",
+          "width": 116,
+          "height": 56.546875,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "ヒントを みる",
+          "width": 118.8125,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "わからない",
+          "width": 79.609375,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        }
+      ],
+      "rows": [
+        {
+          "row": "4",
+          "visible": true,
+          "text": "おろす37"
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 700
+      },
+      "geometry": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "w": 390,
+          "h": 56,
+          "scroll": 56,
+          "client": 56
+        },
+        "actor": {
+          "x": 150.59375,
+          "y": 4,
+          "w": 46,
+          "h": 48,
+          "scroll": 48,
+          "client": 48
+        },
+        "question": {
+          "x": 14,
+          "y": 116,
+          "w": 362,
+          "h": 335,
+          "scroll": 331,
+          "client": 331
+        },
+        "history": {
+          "x": 107,
+          "y": 276.03125,
+          "w": 176,
+          "h": 146.96875,
+          "scroll": 147,
+          "client": 147
+        },
+        "paper": {
+          "x": 101,
+          "y": 197.78125,
+          "w": 188,
+          "h": 225.21875,
+          "scroll": 225,
+          "client": 225
+        },
+        "keypad": {
+          "x": 14,
+          "y": 457,
+          "w": 362,
+          "h": 195,
+          "scroll": 195,
+          "client": 195
+        },
+        "feedback": {
+          "x": 83.28125,
+          "y": 56,
+          "w": 256.09375,
+          "h": 36,
+          "scroll": 36,
+          "client": 36
+        },
+        "body": {
+          "x": 0,
+          "y": 0,
+          "w": 390,
+          "h": 700,
+          "scroll": 700,
+          "client": 700
+        },
+        "text": "157 ÷ 6ひっさんたてるつぎの 7 を おろしたよ。37 ÷ 6 を かんがえよう商2▏6157かける12ひく3おろす37ここに いれようマスを おすと なおせるよ"
+      },
+      "visible": [
+        {
+          "label": "おとを だす",
+          "width": 118.4375,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "とじる",
+          "width": 50.96875,
+          "height": 46.1875,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "商、ひだりから 3 マスめ、から",
+          "width": 44,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "7",
+          "width": 117.328125,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "8",
+          "width": 117.328125,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "9",
+          "width": 117.34375,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "4",
+          "width": 117.328125,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "5",
+          "width": 117.328125,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "6",
+          "width": 117.34375,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "1",
+          "width": 117.328125,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "2",
+          "width": 117.328125,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "3",
+          "width": 117.34375,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "ひとつ もどす",
+          "width": 117.328125,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "0",
+          "width": 117.328125,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "こたえを けす",
+          "width": 117.34375,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "ヒントを みる",
+          "width": 118.8125,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "わからない",
+          "width": 79.609375,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        }
+      ],
+      "rows": [
+        {
+          "row": "4",
+          "visible": true,
+          "text": "おろす37"
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "geometry": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "w": 320,
+          "h": 56,
+          "scroll": 56,
+          "client": 56
+        },
+        "actor": {
+          "x": 111.59375,
+          "y": 12,
+          "w": 31,
+          "h": 32,
+          "scroll": 32,
+          "client": 32
+        },
+        "question": {
+          "x": 14,
+          "y": 116,
+          "w": 292,
+          "h": 203,
+          "scroll": 270,
+          "client": 199
+        },
+        "history": {
+          "x": 72,
+          "y": 230.03125,
+          "w": 176,
+          "h": 86,
+          "scroll": 87,
+          "client": 86
+        },
+        "paper": {
+          "x": 66,
+          "y": 151.78125,
+          "w": 188,
+          "h": 164.25,
+          "scroll": 165,
+          "client": 164
+        },
+        "keypad": {
+          "x": 14,
+          "y": 325,
+          "w": 292,
+          "h": 195,
+          "scroll": 195,
+          "client": 195
+        },
+        "feedback": {
+          "x": 83.28125,
+          "y": 56,
+          "w": 186.09375,
+          "h": 36,
+          "scroll": 36,
+          "client": 36
+        },
+        "body": {
+          "x": 0,
+          "y": 0,
+          "w": 320,
+          "h": 568,
+          "scroll": 568,
+          "client": 568
+        },
+        "text": "157 ÷ 6ひっさんたてるつぎの 7 を おろしたよ。37 ÷ 6 を かんがえよう商2▏6157かける12ひく3おろす37ここに いれようマスを おすと なおせるよ"
+      },
+      "visible": [
+        {
+          "label": "おとを だす",
+          "width": 110.4375,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "とじる",
+          "width": 50.96875,
+          "height": 46.1875,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "商、ひだりから 3 マスめ、から",
+          "width": 44,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "7",
+          "width": 94,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "8",
+          "width": 94,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "9",
+          "width": 94,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "4",
+          "width": 94,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "5",
+          "width": 94,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "6",
+          "width": 94,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "1",
+          "width": 94,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "2",
+          "width": 94,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "3",
+          "width": 94,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "ひとつ もどす",
+          "width": 94,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "0",
+          "width": 94,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "こたえを けす",
+          "width": 94,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "ヒントを みる",
+          "width": 118.8125,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "わからない",
+          "width": 79.609375,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        }
+      ],
+      "rows": [
+        {
+          "row": "4",
+          "visible": true,
+          "text": "おろす37"
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "geometry": {
+        "header": {
+          "x": 144,
+          "y": 0,
+          "w": 480,
+          "h": 56,
+          "scroll": 56,
+          "client": 56
+        },
+        "actor": {
+          "x": 384.59375,
+          "y": 4,
+          "w": 46,
+          "h": 48,
+          "scroll": 48,
+          "client": 48
+        },
+        "question": {
+          "x": 158,
+          "y": 155.1875,
+          "w": 452,
+          "h": 547.8125,
+          "scroll": 544,
+          "client": 544
+        },
+        "history": {
+          "x": 285,
+          "y": 323.578125,
+          "w": 198,
+          "h": 341.03125,
+          "scroll": 341,
+          "client": 341
+        },
+        "paper": {
+          "x": 279,
+          "y": 236.578125,
+          "w": 210,
+          "h": 428.03125,
+          "scroll": 428,
+          "client": 428
+        },
+        "keypad": {
+          "x": 158,
+          "y": 713,
+          "w": 452,
+          "h": 257,
+          "scroll": 257,
+          "client": 257
+        },
+        "feedback": {
+          "x": 158,
+          "y": 116,
+          "w": 452,
+          "h": 39.1875,
+          "scroll": 39,
+          "client": 39
+        },
+        "body": {
+          "x": 0,
+          "y": 0,
+          "w": 768,
+          "h": 1024,
+          "scroll": 1024,
+          "client": 1024
+        },
+        "text": "157 ÷ 6ひっさんたてるつぎの 7 を おろしたよ。37 ÷ 6 を かんがえよう商2▏6157かける12ひく3おろす37ここに いれようマスを おすと なおせるよ"
+      },
+      "visible": [
+        {
+          "label": "おとを だす",
+          "width": 118.4375,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "とじる",
+          "width": 50.96875,
+          "height": 46.1875,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "商、ひだりから 3 マスめ、から",
+          "width": 48,
+          "height": 48,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "7",
+          "width": 146,
+          "height": 58,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "8",
+          "width": 146,
+          "height": 58,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "9",
+          "width": 146,
+          "height": 58,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "4",
+          "width": 146,
+          "height": 58,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "5",
+          "width": 146,
+          "height": 58,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "6",
+          "width": 146,
+          "height": 58,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "1",
+          "width": 146,
+          "height": 58,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "2",
+          "width": 146,
+          "height": 58,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "3",
+          "width": 146,
+          "height": 58,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "ひとつ もどす",
+          "width": 146,
+          "height": 58,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "0",
+          "width": 146,
+          "height": 58,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "こたえを けす",
+          "width": 146,
+          "height": 58,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "ヒントを みる",
+          "width": 118.8125,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "わからない",
+          "width": 79.609375,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        }
+      ],
+      "rows": [
+        {
+          "row": "4",
+          "visible": true,
+          "text": "おろす37"
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "geometry": {
+        "header": {
+          "x": 0,
+          "y": 0,
+          "w": 568,
+          "h": 54.1875,
+          "scroll": 54,
+          "client": 54
+        },
+        "actor": {
+          "x": 336.59375,
+          "y": 7.09375,
+          "w": 38,
+          "h": 40,
+          "scroll": 40,
+          "client": 40
+        },
+        "question": {
+          "x": 14,
+          "y": 102.1875,
+          "w": 252,
+          "h": 203.8125,
+          "scroll": 287,
+          "client": 200
+        },
+        "history": {
+          "x": 52,
+          "y": 217.21875,
+          "w": 176,
+          "h": 86,
+          "scroll": 87,
+          "client": 86
+        },
+        "paper": {
+          "x": 46,
+          "y": 138.96875,
+          "w": 188,
+          "h": 164.25,
+          "scroll": 165,
+          "client": 164
+        },
+        "keypad": {
+          "x": 284,
+          "y": 77,
+          "w": 270,
+          "h": 195,
+          "scroll": 195,
+          "client": 195
+        },
+        "feedback": {
+          "x": 14,
+          "y": 54.1875,
+          "w": 252,
+          "h": 28,
+          "scroll": 28,
+          "client": 28
+        },
+        "body": {
+          "x": 0,
+          "y": 0,
+          "w": 568,
+          "h": 320,
+          "scroll": 320,
+          "client": 320
+        },
+        "text": "157 ÷ 6ひっさんたてるつぎの 7 を おろしたよ。37 ÷ 6 を かんがえよう商2▏6157かける12ひく3おろす37ここに いれようマスを おすと なおせるよ"
+      },
+      "visible": [
+        {
+          "label": "おとを だす",
+          "width": 118.4375,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "とじる",
+          "width": 50.96875,
+          "height": 46.1875,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "商、ひだりから 3 マスめ、から",
+          "width": 44,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "7",
+          "width": 86.65625,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "8",
+          "width": 86.671875,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "9",
+          "width": 86.65625,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "4",
+          "width": 86.65625,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "5",
+          "width": 86.671875,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "6",
+          "width": 86.65625,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "1",
+          "width": 86.65625,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "2",
+          "width": 86.671875,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "3",
+          "width": 86.65625,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "ひとつ もどす",
+          "width": 86.65625,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "0",
+          "width": 86.671875,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "こたえを けす",
+          "width": 86.65625,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "ヒントを みる",
+          "width": 118.8125,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        },
+        {
+          "label": "わからない",
+          "width": 79.609375,
+          "height": 44,
+          "visible": true,
+          "hit": true
+        }
+      ],
+      "rows": [
+        {
+          "row": "4",
+          "visible": true,
+          "text": "おろす37"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "url": "http://127.0.0.1:5198/#/island?learn=1",
+    "revision": "development-local",
+    "version": "development-local:1d3b295b-5e2a-4e71-b598-e53e1a068aec",
+    "delivery": "mystic-island-v1",
+    "candidate": "mystic-island-shore-garden-v18",
+    "learningCandidate": "pokomoko-pop-live-v8",
+    "islandFeatureEnabled": true,
+    "mode": "learning",
+    "renderer": "live-original",
+    "artDirection": null,
+    "drawCalls": 0,
+    "expanded": null,
+    "residentAction": null,
+    "residentItemId": null,
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "serviceWorkerControlled": false,
+    "reducedMotion": false,
+    "appRoot": {
+      "revision": "development-local",
+      "version": "development-local:1d3b295b-5e2a-4e71-b598-e53e1a068aec",
+      "configuredDelivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "islandFeatureEnabled": true,
+      "natureTownFeatureEnabled": false
+    }
+  }
+}

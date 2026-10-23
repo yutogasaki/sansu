@@ -1,4 +1,6 @@
+import type { FoundationCompletion } from '../englishFoundation/types';
 import { restoreWonderSlot, type WonderSlot } from './growth';
+import { RULES } from './rules';
 import { FIRST_ISLAND, carrySharedResources, islandIdOf, makeVoyageIsland, type IslandStart } from './voyages';
 import { readable, upgrade } from './syncProjection';
 import { projectGrowingSyncResponsive } from './syncProjectionClient';
@@ -34,6 +36,9 @@ export const MOMENT_LIMIT = 60;
 export function growingDatabaseName() { return import.meta.env.DEV ? 'SansuGrowingIslandPreviewV1' : 'SansuGrowingIslandV1'; }
 export class GrowingIslandDatabase extends Dexie {
     islands!: Table<GrowingRecord, string>;
+    /** Global across voyages: never compact these durable reward identities. */
+    foundationReceipts!: Table<FoundationCompletion & { islandId: string; receivedAt: number }, [string, string]>;
+    deletedOwners!: Table<{ profileId: string; deletedAt: number }, string>;
     moments!: Table<MomentRecord, number>;
     /** Flowers left by siblings' visits, waiting for the recipient's next opening. */
     gifts!: Table<FlowerGift, string>;
@@ -83,17 +88,32 @@ export class GrowingIslandDatabase extends Dexie {
             await tx.table('cultivatedGifts').bulkAdd(await tx.table('gifts').toArray());
         });
         this.version(10).stores({ voyageMoments: '&requiresCultivatedWriter', gifts: '&requiresCultivatedWriter' });
-        this.gifts = this.table('cultivatedGifts');
+        // Foundation delivery has a permanent ledger outside the compacted legacy facts.
+        // Fence old writers too: they cannot safely reset or overwrite a wallet whose
+        // credits were committed with receipts they do not know how to preserve.
+        this.version(11).stores({ foundationReceipts: '[profileId+completionId], profileId', deletedOwners: '&profileId',
+            foundationIslands: '&profileId', foundationArchives: '[profileId+islandId], profileId',
+            foundationMoments: '++id, profileId, [profileId+at]', foundationGifts: '&id, to, from',
+            cultivatedMoments: null, cultivatedGifts: null }).upgrade(async tx => {
+            await tx.table('foundationIslands').bulkAdd(await tx.table('cultivatedIslands').toArray());
+            await tx.table('foundationArchives').bulkAdd(await tx.table('cultivatedArchives').toArray());
+            await tx.table('foundationMoments').bulkAdd(await tx.table('cultivatedMoments').toArray());
+            await tx.table('foundationGifts').bulkAdd(await tx.table('cultivatedGifts').toArray());
+        });
+        this.version(12).stores({ cultivatedMoments: '&requiresFoundationWriter', cultivatedGifts: '&requiresFoundationWriter' });
+        this.foundationReceipts = this.table('foundationReceipts');
+        this.deletedOwners = this.table('deletedOwners');
+        this.gifts = this.table('foundationGifts');
         this.legacyGifts = this.table('gifts');
-        this.moments = this.table('cultivatedMoments');
+        this.moments = this.table('foundationMoments');
         this.voyageIslands = this.table('voyageIslands');
         this.voyageArchives = this.table('archivedIslands');
         this.placedIslands = this.table('placedIslands');
-        this.archivedIslands = this.table('cultivatedArchives');
+        this.archivedIslands = this.table('foundationArchives');
         this.legacyIslands = this.table('islands');
         this.balancedIslands = this.table('balancedIslands');
         this.guidedIslands = this.table('guidedIslands');
-        this.islands = this.table('cultivatedIslands');
+        this.islands = this.table('foundationIslands');
     }
 }
 export const growingDb = new GrowingIslandDatabase();
@@ -106,8 +126,11 @@ async function withGrowingPersistence<T>(save: () => Promise<T>): Promise<T> {
 }
 
 export async function deleteGrowingOwner(profileId: string, database = growingDb) {
-    if (!await Dexie.exists(database.name)) return;
-    await withGrowingPersistence(() => database.transaction('rw', [database.islands, database.archivedIslands, database.voyageIslands, database.voyageArchives, database.legacyGifts, database.placedIslands, database.guidedIslands, database.balancedIslands, database.legacyIslands, database.moments, database.gifts], async () => {
+    await withGrowingPersistence(() => database.transaction('rw', [database.table('cultivatedIslands'), database.table('cultivatedArchives'), database.deletedOwners, database.foundationReceipts, database.islands, database.archivedIslands, database.voyageIslands, database.voyageArchives, database.legacyGifts, database.placedIslands, database.guidedIslands, database.balancedIslands, database.legacyIslands, database.moments, database.gifts], async () => {
+        await database.deletedOwners.put({ profileId, deletedAt: Date.now() });
+        await database.foundationReceipts.where('profileId').equals(profileId).delete();
+        await database.table('cultivatedIslands').delete(profileId);
+        await database.table('cultivatedArchives').where('profileId').equals(profileId).delete();
         await database.islands.delete(profileId);
         await database.voyageIslands.delete(profileId);
         await database.voyageArchives.where('profileId').equals(profileId).delete();
@@ -121,6 +144,11 @@ export async function deleteGrowingOwner(profileId: string, database = growingDb
         await database.gifts.where('from').equals(profileId).delete();
         await database.legacyGifts.filter(gift => gift.to === profileId || gift.from === profileId).delete();
     }));
+}
+
+/** A deleted profile id can never be reused by an interrupted opening or delivery. */
+export async function assertGrowingOwnerAvailable(profileId: string, database = growingDb) {
+    if (await database.deletedOwners.get(profileId)) throw new Error('プロフィールを えらびなおしてね。');
 }
 
 export interface Completion { id: string; at: number }
@@ -158,7 +186,8 @@ export async function syncGrowingIsland(profileId: string, completions: readonly
         // Only the short compare-and-save phase can hold app updates.
         const release = holdPwaUpdateForCriticalPersistence();
         try {
-            const saved = await database.transaction('rw', database.islands, database.gifts, async () => {
+            const saved = await database.transaction('rw', database.islands, database.gifts, database.deletedOwners, async () => {
+                await assertGrowingOwnerAvailable(profileId, database);
                 const current = await database.islands.get(profileId);
                 const mailbox = await database.gifts.where('to').equals(profileId).toArray();
                 if (JSON.stringify(current) !== JSON.stringify(prepared.current)
@@ -183,11 +212,19 @@ export class GuidanceReceiptConflict extends Error {
  * that state (prices never change), so a background refresh saved first does not fail a tap.
  */
 export async function commandGrowingIsland(profileId: string, intent: Intent, now = Date.now(),
-    database = growingDb): Promise<{ record: GrowingRecord; town: TownEvent[] }> {
-    return withGrowingPersistence(() => database.transaction('rw', database.islands, async () => {
+    database = growingDb, receiptSinceRevision?: number): Promise<{ record: GrowingRecord; town: TownEvent[] }> {
+    return withGrowingPersistence(() => database.transaction('rw', database.islands, database.deletedOwners, async () => {
+        await assertGrowingOwnerAvailable(profileId, database);
         const current = await database.islands.get(profileId);
         if (!current) throw new Error('しまを よみこんでから もういちど ためしてね。');
         if (islandIdOf(current) !== (intent.islandId ?? FIRST_ISLAND)) throw new Error('しまが かわったよ。もういちど ひらいてね。');
+        // A house retry's finite receipt window must also hold INSIDE the writer.
+        // Another tab may have advanced between the UI read and this transaction.
+        if (receiptSinceRevision !== undefined && !current.state.applied.includes(intent.id)
+            && (!Number.isSafeInteger(receiptSinceRevision) || receiptSinceRevision < 0
+                || current.revision < receiptSinceRevision || current.revision - receiptSinceRevision >= RULES.appliedMemory)) {
+            throw new Error('いまの へやを みてね。えらびなおせるよ。');
+        }
         const upgraded = upgrade(current, now);
         if (current.state.applied.includes(intent.id) && current.version === upgraded.version) return { record: current, town: [] };
         const command = intent.command;
@@ -227,7 +264,9 @@ export const giftId = (from: string, to: string, at: number) => JSON.stringify([
 export async function sendFlower(from: string, fromName: string, to: string, now = Date.now(), database = growingDb) {
     if (from === to) throw new Error('じぶんの しまには おくれないよ。');
     const id = giftId(from, to, now);
-    return withGrowingPersistence(() => database.transaction('rw', database.gifts, async () => {
+    return withGrowingPersistence(() => database.transaction('rw', database.gifts, database.deletedOwners, async () => {
+        await assertGrowingOwnerAvailable(from, database);
+        await assertGrowingOwnerAvailable(to, database);
         if (await database.gifts.get(id)) return false;
         await database.gifts.put({ id, to, from, fromName: fromName.slice(0, 12), at: now });
         return true;
@@ -243,7 +282,8 @@ export async function flowerSentToday(from: string, to: string, now = Date.now()
  * replay still runs from the very first day to today (§13).
  */
 export async function addMoment(profileId: string, image: Blob, width: number, height: number, now = Date.now(), database = growingDb, islandId = FIRST_ISLAND) {
-    await withGrowingPersistence(() => database.transaction('rw', database.moments, async () => {
+    await withGrowingPersistence(() => database.transaction('rw', database.moments, database.deletedOwners, async () => {
+        await assertGrowingOwnerAvailable(profileId, database);
         await database.moments.add({ profileId, islandId, at: now, image, width, height });
         const all = await database.moments.where('[profileId+at]').between([profileId, Dexie.minKey], [profileId, Dexie.maxKey]).filter(moment => (moment.islandId ?? FIRST_ISLAND) === islandId).toArray();
         while (all.length > MOMENT_LIMIT) {
@@ -278,7 +318,8 @@ export async function listVoyageIslands(profileId: string, database = growingDb)
 /** Save the old island and restore the destination atomically; no learning is minted. */
 export async function sailGrowingIsland(profileId: string, expectedIslandId: string,
     destination: { id: string; create?: { name: string; start: IslandStart } }, now = Date.now(), database = growingDb) {
-    return withGrowingPersistence(() => database.transaction('rw', database.islands, database.archivedIslands, async () => {
+    return withGrowingPersistence(() => database.transaction('rw', database.islands, database.archivedIslands, database.deletedOwners, async () => {
+        await assertGrowingOwnerAvailable(profileId, database);
         const current = await database.islands.get(profileId);
         if (!current) throw new Error('しまを よみこんでね。');
         if (islandIdOf(current) === destination.id) return current;
@@ -297,7 +338,8 @@ export async function sailGrowingIsland(profileId: string, expectedIslandId: str
 /** Parent recovery uses the same island/revision fence and persistence hold as child commands. */
 export async function restoreGrowingWonder(profileId: string, islandId: string, slot: WonderSlot, expectedRevision: number,
     now = Date.now(), database = growingDb) {
-    return withGrowingPersistence(() => database.transaction('rw', database.islands, async () => {
+    return withGrowingPersistence(() => database.transaction('rw', database.islands, database.deletedOwners, async () => {
+        await assertGrowingOwnerAvailable(profileId, database);
         const current = await database.islands.get(profileId);
         if (!current || islandIdOf(current) !== islandId) throw new Error('島が変わりました。もう一度確認してください。');
         const upgraded = upgrade(current, now);

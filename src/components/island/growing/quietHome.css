@@ -1,4 +1,5 @@
 /* The world owns play; destination navigation stays in the separate bottom bar. */
+.growing-island { --growing-home-safe-bottom: env(safe-area-inset-bottom, 0px); --growing-home-bottom: max(12px, var(--growing-home-safe-bottom)); --growing-home-above-tools: calc(var(--growing-home-bottom) + 82px); }
 .island-shell .island-shell-nav--home .island-shell-tab { min-height: 48px; }
 .growing-home-heading { position: absolute; z-index: 5; inset: max(12px, env(safe-area-inset-top)) 12px auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; pointer-events: none; }
 .growing-home-identity { display: flex; align-items: center; min-width: 0; max-width: calc(100% - 82px); min-height: 44px; background: var(--pokomoko-paper); border: 1px solid var(--pokomoko-edge); border-radius: 22px; pointer-events: auto; }
@@ -9,12 +10,12 @@
 .growing-home-goal .growing-place-art { width: 52px; }
 .growing-home-goal strong { font-size: 15px; }
 .growing-home-goal small { margin-top: 3px; font-size: 12px; max-width: 190px; line-height: 1.5; white-space: normal; }
-.growing-home-tools { position: absolute; z-index: 9; bottom: max(12px, env(safe-area-inset-bottom)); left: 12px; right: 12px; display: grid; grid-template-columns: 1.12fr 1fr .85fr; gap: 8px; max-width: 430px; pointer-events: none; }
+.growing-home-tools { position: absolute; z-index: 9; bottom: var(--growing-home-bottom); left: 12px; right: 12px; display: grid; grid-template-columns: 1.12fr 1fr .85fr; gap: 8px; max-width: 430px; pointer-events: none; }
 .growing-island .growing-home-tools > button { display: flex; align-items: center; justify-content: center; gap: 6px; min-width: 0; min-height: 64px; margin: 0; padding: 8px; border: 1px solid var(--pokomoko-edge); border-radius: 22px; background: var(--pokomoko-paper); box-shadow: 0 3px 0 color-mix(in srgb, var(--pokomoko-stitch) 25%, transparent); font-size: 15px; font-weight: 800; pointer-events: auto; }
 .growing-island .growing-home-tools > .growing-home-place { background: color-mix(in srgb, var(--pokomoko-rose) 55%, var(--pokomoko-paper)); }
 .growing-island .growing-home-tools > .growing-menu-button { grid-column: 3; flex-direction: column; gap: 0; font-size: 12px; }
 .growing-island .growing-home-tools > button:active { transform: translateY(2px); box-shadow: none; }
-.growing-island .growing-home-expand { position: absolute; z-index: 5; bottom: 94px; right: 12px; display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 8px 12px; border: 1px solid var(--pokomoko-edge); border-radius: 18px; background: var(--pokomoko-paper); text-align: left; }
+.growing-island .growing-home-expand { position: absolute; z-index: 5; bottom: var(--growing-home-above-tools); right: 12px; display: flex; align-items: center; gap: 8px; min-height: 52px; padding: 8px 12px; border: 1px solid var(--pokomoko-edge); border-radius: 18px; background: var(--pokomoko-paper); text-align: left; }
 .growing-home-expand strong, .growing-home-expand small { display: block; line-height: 1.4; }
 .growing-home-expand strong { font-size: 14px; }
 .growing-home-expand small { margin-top: 2px; font-size: 12px; color: var(--pokomoko-muted); }
@@ -34,12 +35,13 @@
 .growing-expansion-choices button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; min-height: 104px; padding: 8px; border: 1px solid var(--pokomoko-edge); border-radius: 18px; background: var(--pokomoko-paper); font-size: 14px; }
 .growing-expansion-choices button:disabled { opacity: .6; cursor: default; }
 .growing-island :is(.growing-home-tools, .growing-home-heading, .growing-home-view-panel, .growing-expansion) button:focus-visible, .growing-home-expand:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 2px; }
-.growing-island[data-home-ui-candidate][data-growing-island=ready] .growing-hud-bottom { right: auto; left: 12px; bottom: 94px; }
-.growing-island[data-home-ui-candidate][data-growing-island=ready] .growing-bubble { bottom: 96px; max-width: min(300px, calc(100% - 24px)); }
-.growing-island[data-home-ui-candidate][data-growing-island=ready]:has(.growing-open-all) .growing-bubble { bottom: 152px; }
+.growing-island[data-home-ui-candidate][data-growing-island=ready] .growing-hud-bottom { right: auto; left: 12px; bottom: var(--growing-home-above-tools); }
+.growing-island[data-home-ui-candidate][data-growing-island=ready] .growing-bubble { bottom: calc(var(--growing-home-above-tools) + 2px); max-width: min(300px, calc(100% - 24px)); }
+.growing-island[data-home-ui-candidate][data-growing-island=ready]:has(.growing-open-all) .growing-bubble { bottom: calc(var(--growing-home-above-tools) + 58px); }
 .growing-island[data-home-ui-candidate] .growing-placing { bottom: 12px; }
 .island-shell:has(.growing-island[data-growing-island=show]) .island-shell-nav--home { display: none; }
 @media (max-width: 360px) {
+    .growing-island { --growing-home-above-tools: calc(var(--growing-home-bottom) + 96px); }
     .growing-island .growing-home-tools > button { flex-direction: column; gap: 0; font-size: 13px; }
     .growing-home-tools { gap: 6px; }
 }

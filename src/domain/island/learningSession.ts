@@ -1,11 +1,14 @@
+import { foundationTables } from '../englishFoundation/repository';
+import { resolveIslandLearningEntry, type IslandLearningEntry } from './learningEntry';
 import { db } from '../../db';
 import { commitIslandLearning } from './commit';
-import { IslandConflict, islandTables, ownedIsland, startIslandPlan } from './repository';
+import { IslandConflict, islandTables, ownedIsland } from './repository';
 import type { IslandLearningAction, IslandPlan, IslandRecord } from './types';
 
 export interface IslandLearningSessionResult {
     receipt: Awaited<ReturnType<typeof commitIslandLearning>>;
     nextPlan?: IslandPlan;
+    nextEntry?: IslandLearningEntry;
     latestIsland?: IslandRecord;
     /** The answer is saved; only opening its next section needs a retry. */
     nextPlanError?: true;
@@ -26,10 +29,12 @@ export async function commitIslandLearningSession(profileId: string, planId: str
     if (receipt.plan.status !== 'completed' || receipt.plan.revision !== revision + 1
         || isFirstIslandPlan(receipt.plan) && !receipt.plan.growthTarget) return { receipt };
     try {
-        const next = await database.transaction('rw', islandTables(database), async () => {
+        const next = await database.transaction('rw', [...islandTables(database), ...foundationTables(database)], async () => {
             // startIslandPlan joins this second transaction and prefers the
             // actual pending reservation, including another tab's progress.
-            const nextPlan = await startIslandPlan(profileId, database);
+            const nextEntry = await resolveIslandLearningEntry(profileId, database);
+            if (nextEntry.kind !== 'island') return { nextEntry };
+            const nextPlan = nextEntry.plan;
             const { island: latestIsland } = await ownedIsland(database, profileId);
             if (latestIsland.pendingPlanId !== nextPlan.id) throw new IslandConflict('Pending plan changed');
             return { nextPlan, latestIsland };

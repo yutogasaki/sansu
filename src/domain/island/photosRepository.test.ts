@@ -201,7 +201,7 @@ describe('v7 to v8 additive migration', () => {
         for (const table of legacy.tables) if (old[table.name].length) await table.bulkPut(old[table.name]);
         const schemas = Object.fromEntries(legacy.tables.map(table => [table.name, { primary: table.schema.primKey.src, indexes: table.schema.indexes.map(index => index.src) }])); legacy.close();
         const upgraded = new SansuDatabase(name, options); databases.push(upgraded); await upgraded.open();
-        expect(upgraded.verno).toBe(9);
+        expect(upgraded.verno).toBe(10);
         for (const name of Object.keys(SANSU_V7_STORES)) {
             expect(await upgraded.table(name).toArray()).toEqual(old[name]);
             const table = upgraded.table(name); expect({ primary: table.schema.primKey.src, indexes: table.schema.indexes.map(index => index.src) }).toEqual(schemas[name]);

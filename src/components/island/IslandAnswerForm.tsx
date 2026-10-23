@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { LearningGuidanceHost } from '../domain/learningGuidanceHost';
 import { LearningAnswerForm, type LearningAnswerFormProps } from '../domain/LearningAnswerForm';
 import type { IslandLearningSlot } from '../../domain/island/types';
 import { islandSupportStage } from '../../domain/island/learningSupport';
@@ -34,7 +35,7 @@ export function IslandAnswerForm({ slot, disabled, deferSubmission, onAnswer, an
         onAnswer={answer => { if (!disabled && !model) onAnswer(answer); }} className="island-answer" resetCursorOnClear
         renderPrompt={problem => <IslandProblemPrompt problem={problem}
             speechControl={problem.subject === 'vocab' ? <IslandSpeechControl speech={speech} disabled={disabled} /> : undefined} />}
-        renderSupport={() => <IslandLearningSupport slot={slot} />}
+        renderSupport={() => <LearningGuidanceHost.Provider value={null}><IslandLearningSupport slot={slot} /></LearningGuidanceHost.Provider>}
         renderSupportAnswer={(answer, problem) => <IslandChoiceLabel choice={{ label: answer, value: answer }} problem={problem} />}
         renderChoiceLabel={(choice, problem) => <IslandChoiceLabel choice={choice} problem={problem} showReferenceVisual />} />
     </div>;

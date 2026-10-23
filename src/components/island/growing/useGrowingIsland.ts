@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { allowPwaUpdateDuringReadOnlyOpening, holdPwaUpdateForCriticalPersistence } from '../../../pwa';
+import { drainFoundationRewards } from '../../../domain/growingIsland/foundationReceipts';
 import { lifeDb, terminalFacts } from '../../../domain/islandLife/repository';
 import { getProfile } from '../../../domain/user/repository';
 import { commandGrowingIsland, sailGrowingIsland, growingDb, GuidanceReceiptConflict, readGrowingIsland, syncGrowingIsland, type GrowingRecord } from '../../../domain/growingIsland/repository';
@@ -57,7 +58,18 @@ export function useGrowingIsland(profileId: string, active: boolean) {
                 const [profile, facts] = full ? await prepareIslandOpening(() => Promise.all([getProfile(profileId), terminalFacts(profileId)])) : [undefined, []];
                 const levels = profile ? { math: profile.mathMainLevel, vocab: profile.vocabMainLevel } : undefined;
                 setStep('saving'); setSaving(true);
-                const result = await syncGrowingIsland(profileId, facts, Date.now(), growingDb, lifeDb, levels);
+                let result = await syncGrowingIsland(profileId, facts, Date.now(), growingDb, lifeDb, levels);
+                // A delivery failure must not hide an island whose opening already saved.
+                setRecord(current => current?.profileId === result.record.profileId && current.revision > result.record.revision ? current : result.record);
+                if (full) {
+                    const delivered = await drainFoundationRewards(profileId);
+                    if (delivered.credited) {
+                        const opened = await syncGrowingIsland(profileId, [], Date.now(), growingDb, lifeDb, levels);
+                        const unique = <T,>(events: T[]) => events.filter((event, index) => events.findIndex(other => JSON.stringify(other) === JSON.stringify(event)) === index);
+                        result = { ...opened, learned: result.learned + delivered.credited,
+                            town: unique([...result.town, ...opened.town]), nature: unique([...result.nature, ...opened.nature]) };
+                    } else if (delivered.record) result = { ...result, record: delivered.record };
+                }
                 setRecord(current => current?.profileId === result.record.profileId && current.revision > result.record.revision ? current : result.record); setError(undefined);
                 // Only meaningful changes are announced, so two open tabs never ping-pong refreshes.
                 // A saved but unseen moment is returned again for presentation, not a new change.

@@ -97,3 +97,17 @@
     .island-house-menu .island-menu-heading { padding-block: 10px; }
 }
 @media (prefers-reduced-motion: reduce) { .island-house-menu button:active:not(:disabled) { transform: none; } }
+
+.island-house-menu-group { margin: 4px 0 0; color: var(--pokomoko-ink); font-size: 16px; }
+.island-house-menu[data-house-menu-candidate] :is(button, summary) { min-height: 48px; }
+@media (max-width: 359px) {
+    .island-house-menu .island-house-destinations, .island-house-menu .island-house-living { grid-template-columns: minmax(0, 1fr); }
+    .island-page .island-panel.island-learning-keepsakes .island-house-menu[data-house-menu-candidate] .island-house-destinations > button[data-keepsake-action] { min-height: 92px; }
+}
+
+.room-access-list { grid-column: 1 / -1; min-width: 0; }
+.room-access-list summary { display: flex; align-items: center; cursor: pointer; color: var(--pokomoko-blue-deep); }
+.room-access-list p { font-size: 14px; }
+.room-access-words { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; max-height: 240px; overflow-y: auto; }
+.room-access-words button { display: grid; gap: 3px; }
+.room-access-words small { font-size: 14px; color: var(--pokomoko-muted); }

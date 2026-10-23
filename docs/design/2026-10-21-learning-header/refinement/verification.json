@@ -1,0 +1,24 @@
+{
+  "recordedAt": "2026-10-20T23:29:57.397239+00:00",
+  "scope": "Local shared dirty checkout, UI refinement only",
+  "commands": {
+    "typecheck": "PASS",
+    "build": "PASS Node22.23.3; assets:check PASS, precache8.83MiB/12MiB",
+    "browser": "PASS 5 viewports, instruction visibility, no37 occlusion, word wrapping, quotient and remainder, controls44px+hit, retry/next/hint/resume/sound-off/reduced motion",
+    "lint": "PASS, 0 errors / 4 existing prototype Fast Refresh warnings",
+    "test:run": "PARTIAL Node22.23.3: 651 files / 5527 tests reported PASS; stopped at the task time limit while src/components/island/growing/native/authoredCoreGrowthIntegration.test.ts had not reported. No complete suite verdict.",
+    "docs:check": "PASS, existing stale task review warnings",
+    "focused": "PASS Node22.23.3, 5 files / 105 tests, includes both initial timeouts"
+  },
+  "limitations": [
+    "explicit fixture, not planner selection",
+    "local DEV Chromium, not physical iPhone/WebKit/PWA",
+    "long-name header font enlargement at844 height, not all-text200% at320x568",
+    "child understanding, attachment and return unmeasured"
+  ],
+  "earlierAttempt": "Node24.18.0 full suite stopped after two timeouts (growthRepository 5000ms, learningProgression.integration 15000ms), not a full result. Both pass in isolated Node22 run; cause is not established.",
+  "review": "Island name wraps at spaces; long words still wrap within available width. Sticky visual instruction is aria-hidden; original live instruction remains the single announcement. No grading/save/input event changes.",
+  "result": "PARTIAL: requested UI changes verified; full repository suite incomplete",
+  "remaining": "Run the unreported authoredCoreGrowthIntegration test separately under Node22 in a bounded verification task; do not treat the partial full run as release acceptance.",
+  "changedSinceCapture": []
+}

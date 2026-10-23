@@ -18,7 +18,7 @@ const report = { at: new Date().toISOString(), target: base, sources: await sour
 const read = (page, profileId) => page.evaluate(async profileId => {
     const request = indexedDB.open('SansuGrowingIslandV1');
     const db = await new Promise((resolve, reject) => { request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });
-    const transaction = db.transaction('cultivatedIslands'), get = transaction.objectStore('cultivatedIslands').get(profileId);
+    const transaction = db.transaction('foundationIslands'), get = transaction.objectStore('foundationIslands').get(profileId);
     const result = await new Promise((resolve, reject) => { get.onsuccess = () => resolve(get.result); get.onerror = () => reject(get.error); });
     db.close(); return result;
 }, profileId);

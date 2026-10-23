@@ -12,7 +12,7 @@ const compiled = await build({ stdin: { contents: `export {architectureFixture} 
 const { architectureFixture, derivePlaces } = await import(`data:text/javascript;base64,${Buffer.from(compiled.outputFiles[0].text).toString('base64')}`);
 const read = (page, id) => page.evaluate(async id => {
     const request = indexedDB.open('SansuGrowingIslandV1'); const db = await new Promise((ok, no) => { request.onsuccess = () => ok(request.result); request.onerror = () => no(request.error); });
-    try { const op = db.transaction('cultivatedIslands').objectStore('cultivatedIslands').get(id); return await new Promise((ok, no) => { op.onsuccess = () => ok(op.result); op.onerror = () => no(op.error); }); } finally { db.close(); }
+    try { const op = db.transaction('foundationIslands').objectStore('foundationIslands').get(id); return await new Promise((ok, no) => { op.onsuccess = () => ok(op.result); op.onerror = () => no(op.error); }); } finally { db.close(); }
 }, id);
 const report = { at: new Date().toISOString(), target: base, scope: 'Explicit mature architecture fixtures in disposable production profiles. Fixed UTC-noon real renderer, pointer activation, receipts and offline reload; not earned maturity, visual approval, real-device or child evidence.', cases: [], pass: false };
 report.version = await fetch(`${base}/version.json`).then(r => r.json());
@@ -44,7 +44,7 @@ try {
             if (name === 'shared-roof') assert.equal(place.structure, 'P04:shared-roof');
             await page.evaluate(async ({ id, state }) => {
                 const request = indexedDB.open('SansuGrowingIslandV1'); const db = await new Promise((ok, no) => { request.onsuccess = () => ok(request.result); request.onerror = () => no(request.error); });
-                try { const tx = db.transaction('cultivatedIslands', 'readwrite'), table = tx.objectStore('cultivatedIslands'), get = table.get(id);
+                try { const tx = db.transaction('foundationIslands', 'readwrite'), table = tx.objectStore('foundationIslands'), get = table.get(id);
                     const row = await new Promise((ok, no) => { get.onsuccess = () => ok(get.result); get.onerror = () => no(get.error); }); row.state = state; row.revision++; table.put(row);
                     await new Promise((ok, no) => { tx.oncomplete = ok; tx.onabort = () => no(tx.error); });
                 } finally { db.close(); }

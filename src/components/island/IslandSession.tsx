@@ -1,3 +1,7 @@
+import { FoundationLearning } from './FoundationLearning';
+import { FoundationCourseChoice } from './FoundationCourseChoice';
+import { resolveIslandLearningEntry, type IslandLearningEntry } from '../../domain/island/learningEntry';
+import { setFoundationCourse } from '../../domain/englishFoundation/repository';
 import { IslandSessionStage } from './IslandSessionStage';
 import { islandSessionHouseStage } from './islandSessionHouseStage';
 import { islandSessionPlacementStage } from './islandSessionPlacementStage';
@@ -23,7 +27,7 @@ import { useIslandTutorial } from './tutorial/useIslandTutorial';
 import type { TutorialId } from '../../domain/island/tutorialState';
 import { useLearningSessionLease } from '../../hooks/useLearningSessionLease';
 import { ChallengePanel } from '../../components/challenge/ChallengePanel';
-import { useEffect, useEffectEvent, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useEffectEvent, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Camera, Gift, Leaf, Settings2, X } from 'lucide-react';
@@ -32,7 +36,7 @@ import type { IslandScreen } from '../../domain/island/navigation';
 import { db } from '../../db';
 import { updateProfileAtomically } from '../../domain/user/repository';
 import type { UserProfile } from '../../domain/types';
-import { claimIslandReward, startIslandPlan } from '../../domain/island/repository';
+import { claimIslandReward } from '../../domain/island/repository';
 
 import { useIslandLearningObservation } from './useIslandLearningObservation';
 import { isFirstIslandPlan } from '../../domain/island/learningSession';
@@ -119,29 +123,50 @@ const IslandSharedMemories = lazy(() => import('./IslandSharedMemories').then(mo
 export function IslandSession({ profile }: { profile: UserProfile }) {
     const [nativeArt, setNativeArt] = useState(() => Boolean(NativeIslandArt) && new URLSearchParams(window.location.search).get('islandArt') === 'native05');
     const [growingProfileSwitchBlocked, setGrowingProfileSwitchBlocked] = useState(false);
+    const [learningCompanionHost, setLearningCompanionHost] = useState<HTMLDivElement | null>(null);
     const navigate = useNavigate();
     const location = useLocation();
     const navigation = useIslandNavigation();
     const hasShell = Boolean(navigation);
     const active = navigation?.active ?? true;
     const { opening, nextPlanError, setNextPlanError, setSnapshot, island, plan, setPlan,
-        localScreen, setLocalScreen, loadError, clearEntry } = useIslandSessionState(profile, hasShell);
+        localScreen, setLocalScreen, loadError, clearEntry, courseEntry, setCourseEntry } = useIslandSessionState(profile, hasShell);
+    const [foundationBusy, setFoundationBusy] = useState(false);
+    const [courseSwitch, setCourseSwitch] = useState(false);
+    const acceptEntry = (entry: IslandLearningEntry) => {
+        setCourseSwitch(false);
+        if (entry.kind === 'island') { setCourseEntry(undefined); setPlan(entry.plan); }
+        else { setCourseEntry(entry); setPlan(undefined); }
+    };
     const [challengeStartIntent, setChallengeStartIntent] = useState(false);
     const challengeSummary = useLiveQuery(() => db.challengeSummaries.get(profile.id), [profile.id]);
     const [houseGuideAt, setHouseGuideAt] = useState<string>();
+    const [houseDecorating, setHouseDecorating] = useState(false);
     const [growingGuideRequest, setGrowingGuideRequest] = useState<GrowingGuideRequest>();
     // An old reservation's gift is part of the same focused session. Changing
     // the route here would incorrectly allow a deferred PWA reload mid-receipt.
-    const learningScreen = plan?.status === 'completed' && isFirstIslandPlan(plan) && !plan.growthTarget ? 'reward' : 'learning';
+    const learningScreen = !courseEntry && plan?.status === 'completed' && isFirstIslandPlan(plan) && !plan.growthTarget ? 'reward' : 'learning';
     const screen = navigation ? navigation.learning ? learningScreen : navigation.view : localScreen;
     // The growing island keeps its own save; the current island's record is left untouched.
     const [roomWord, setRoomWord] = useState<{ text: string; japanese?: string; at: number }>();
-    useEffect(() => { if (!roomWord) return; const id = window.setTimeout(() => setRoomWord(undefined), 2600); return () => clearTimeout(id); }, [roomWord]);
+    const [roomSpeech] = useState(() => ({ stop: undefined as (() => void) | undefined }));
+    const setRoomSpeech = useCallback((stop?: () => void) => { roomSpeech.stop?.(); roomSpeech.stop = stop; }, [roomSpeech]);
+    useEffect(() => {
+        const clear = () => { roomSpeech.stop?.(); roomSpeech.stop = undefined; setRoomWord(undefined); };
+        clear();
+        const hidden = () => { if (document.hidden) clear(); };
+        const canvas = (event: Event) => { if (event.target instanceof Element && event.target.closest('.island-stage canvas')) clear(); };
+        document.addEventListener('visibilitychange', hidden);
+        document.addEventListener('pointerdown', canvas, true);
+        const walkingKey = (event: KeyboardEvent) => { if (event.key.startsWith('Arrow') && event.target instanceof Element && event.target.closest('.island-stage')) clear(); };
+        document.addEventListener('keydown', walkingKey);
+        return () => { roomSpeech.stop?.(); document.removeEventListener('visibilitychange', hidden); document.removeEventListener('pointerdown', canvas, true); document.removeEventListener('keydown', walkingKey); };
+    }, [profile.id, screen, active, roomSpeech]);
     const growingRoom = useGrowingRoom(profile.id, profile.vocabWords, screen === 'keepsakes', profile.mathSkills);
     const savedLife = useLiveQuery(() => lifeDb.worlds.get(profile.id), [profile.id]);
     const learningHeroStyle = useMemo(() => savedHeroStyle(savedLife), [savedLife]);
     const setScreen = navigation?.setView ?? setLocalScreen;
-    const listening = useEnglishListening(profile.id, active && screen === 'learning' && profile.subjectMode !== 'math', profile.vocabLevels ?? [], plan?.slots[plan.cursor]?.problem);
+    const listening = useEnglishListening(profile.id, active && screen === 'learning' && !courseEntry && profile.subjectMode !== 'math', profile.vocabLevels ?? [], plan?.slots[plan.cursor]?.problem);
     const learningLease = useLearningSessionLease(profile.id, active && screen === 'learning');
     useEffect(() => { if (screen === 'challenge') setChallengeStartIntent(false); }, [screen]);
     const [workshopView, setWorkshopView] = useState<IslandWorkshopView>({ mode: 'observe', selectedSpecimenId: 'driftwood', selectedPartId: 'straight', selectedToolId: 'brush' });
@@ -162,6 +187,7 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
     const [keepsakeFocus, setKeepsakeFocus] = useState<IslandLearningKeepsakeId>();
     const [localHouseSection, setLocalHouseSection] = useState<'home' | 'keepsakes' | 'notices'>('home');
     const houseSection = navigation?.houseSection ?? localHouseSection;
+    useEffect(() => { setRoomSpeech(); setRoomWord(undefined); }, [houseSection, setRoomSpeech]);
     const setHouseSection = navigation?.setHouseSection ?? setLocalHouseSection;
     useLayoutEffect(() => { setLocalHouseSection('home'); setKeepsakeFocus(undefined); }, [navigation?.houseEntry]);
     useLayoutEffect(() => { if (houseSection !== 'keepsakes') setKeepsakeFocus(undefined); }, [houseSection]);
@@ -234,7 +260,7 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
     const { answer, slot, complex, latestMilestone, setLatestMilestone, starReceipt, setStarReceipt,
         pulse, reaction, setReaction, learningFeedback, setLearningFeedback } = useIslandSessionLearning({
         profile, island, plan, setPlan, setSnapshot, setNextPlanError, screen, setScreen, navigation,
-        run, milestoneNotice, listening, observation,
+        run, milestoneNotice, listening, observation, onNextEntry: acceptEntry,
     });
     useEffect(() => { setSoundEnabled(profile.soundEnabled); }, [profile.soundEnabled]);
     const begin = async () => {
@@ -252,7 +278,7 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
         ambience.stop();
         workshopAudio.stop();
         if (screen === 'workshop') setWorkshopRequest({ id: crypto.randomUUID(), command: { type: 'stop' } });
-        const reserved = await run(() => startIslandPlan(profile.id));
+        const reserved = await run(() => resolveIslandLearningEntry(profile.id));
         setPreparingLearning(false);
         if (!reserved || reachPwaUpdateCheckpoint('island-learning', { protectNextSession: true })) return;
         clearEntry(); setNextPlanError(false);
@@ -267,10 +293,10 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
         setReturnToHouse(false);
         setPreview(undefined); setReaction(undefined);
         }
-        setPlan(reserved); setScreen('learning');
+        acceptEntry(reserved); setScreen('learning');
     };
     const home = () => {
-        if ((busy && !(['album', 'guide'].includes(screen) && busyKind === 'discovery'))
+        if (foundationBusy || (busy && !(['album', 'guide'].includes(screen) && busyKind === 'discovery'))
             || reachPwaUpdateCheckpoint('island-home', { protectNextSession: true })) return;
         if (returnToHouse && screen === 'album') focusHouseAlbumOnReturn.current = true;
         const destination = returnToHouse && ['album', 'photos', 'shared', 'reward'].includes(screen) ? 'keepsakes' : 'home';
@@ -315,10 +341,10 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
     const reportBlocked = navigation?.setBlocked;
     const reportLearningBlocked = navigation?.setLearningBlocked;
     useLayoutEffect(() => {
-        reportBlocked?.(active && (busy && busyKind !== 'discovery' || preparingLearning || opening));
-        reportLearningBlocked?.(busy || preparingLearning || opening || screen === 'challenge');
+        reportBlocked?.(active && (foundationBusy || busy && busyKind !== 'discovery' || preparingLearning || opening));
+        reportLearningBlocked?.(foundationBusy || busy || preparingLearning || opening || screen === 'challenge');
         return () => { reportBlocked?.(false); reportLearningBlocked?.(false); };
-    }, [reportBlocked, reportLearningBlocked, active, busy, busyKind, preparingLearning, opening, screen]);
+    }, [reportBlocked, reportLearningBlocked, active, busy, busyKind, preparingLearning, opening, screen, foundationBusy]);
     const enterHouse = () => {
         if (comparisonDisabled) return;
         setReturnToHouse(false);
@@ -463,6 +489,7 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
         } else setScreen(target);
     };
     const learning = screen === 'learning';
+    const foundationVisible = learning && Boolean(courseEntry || courseSwitch);
     if (loadError) return <IslandLoadingError />;
     if (opening || !island) return <GrowingLoading step="page" />;
     const valid = Boolean(preview?.position && isValidIslandPlacement(island, preview.id, preview.position, preview.rotation));
@@ -483,6 +510,9 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
         setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined); setPreview(undefined); setScreen('furniture');
     } : home;
     const houseOverview = screen === 'keepsakes' && houseSection === 'home';
+    const houseBindings = islandSessionHouseStage({ screen, setScreen, island, busy, keepsakeRoomActive, houseOverview, decorating: houseDecorating,
+                challengeSummary, keepsakeFocus, growingRoom, soundEnabled: Boolean(profile.soundEnabled), keepsakes,
+                enterHouse, begin, setReturnToHouse, setAlbumComparison, setKeepsakeFocus, setHouseSection, setRoomWord, setRoomSpeech });
     const soundControl = <IslandSoundControl key={screen} enabled={profile.soundEnabled} disabled={busy} onChange={enabled => run(async () => {
         const updated = await updateProfileAtomically(profile.id, current => ({ ...current, soundEnabled: enabled }));
         if (!updated) throw new Error('Profile unavailable');
@@ -498,24 +528,29 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
         data-house-layout={houseOverview ? 'world-first-v1' : undefined} data-house-candidate={houseOverview ? 'house-world-first-v1' : undefined}
         data-visual-candidate-id={ISLAND_VISUAL_CANDIDATE} data-delivery-id={ISLAND_DELIVERY_ID}
         data-learning-candidate={ISLAND_LEARNING_CANDIDATE}
+        data-learning-layout={learning && !foundationVisible ? 'speech-companion-v2' : undefined}
         data-island-feature-enabled={String(islandEnabled())}
         data-island-revision={island.revision} data-discovery-count={island.growth?.discoveries.length ?? 0}
         data-build-revision={__BUILD_REVISION__} data-build-version={__APP_VERSION__} data-busy={busy}>
         {!['home', 'showcase', 'placement'].includes(screen) && <header className="island-header"><div className="island-brand" data-learning-milestone={learning ? Boolean(milestoneNotice.milestone) : undefined}>
             {houseOverview ? <IslandToyIcon kind="house" size={25} /> : <Leaf size={20} />}<div>{houseOverview || screen === 'home'
                 ? <h1 title={houseOverview ? `${profile.name}の いえ` : island.experience?.islandName}>{profile.name}の {houseOverview ? 'いえ' : 'しま'}</h1>
-                : <><p>{profile.name}の</p><h1 title={island.experience?.islandName}>{island.experience?.islandName ?? 'ふしぎな しま'}</h1></>}</div>
+                : <><p>{profile.name}の</p><h1 title={island.experience?.islandName}>{learning
+                    ? (island.experience?.islandName ?? 'ふしぎな しま').split(/(\s+)/).map((word, index) =>
+                        /\s/.test(word) ? word : <span className="island-name-word" key={index}>{word}</span>)
+                    : island.experience?.islandName ?? 'ふしぎな しま'}</h1></>}</div>
             {milestoneNotice.milestone && <IslandMilestoneNotice milestone={milestoneNotice.milestone} island={island} />}</div>
+            {learning && !foundationVisible && <div className="island-learning-companion-slot" ref={setLearningCompanionHost} />}
             <div className="island-header-actions">{soundControl}
             {learning ? <div className="island-learning-return">
                 {island.pendingRewards.length > 0 && <span className="island-learning-gifts" aria-label={`おくりもの ${island.pendingRewards.length}こ`}><Gift size={15} aria-hidden="true" />{island.pendingRewards.length}</span>}
-                <button className="island-text-button island-learning-pause" disabled={busy || preparingLearning} onClick={() => {
+                <button aria-label="とじる" className="island-text-button island-learning-pause" disabled={busy || preparingLearning} onClick={() => {
                     if (navigation) navigation.back(); else home();
-                }}><X size={20} />とじる</button></div>
+                }}><X size={20} aria-hidden="true" /><span>とじる</span></button></div>
                 : navigation ? null : <button className="island-icon-button" aria-label="せってい" disabled={busy} onClick={() => navigate('/settings')}><Settings2 size={20} /></button>}</div>
         </header>}
         {(error || loadError) && <div className="island-error" role="alert"><p>{error}</p><button className="island-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
-        {roomWord && screen === 'keepsakes' && <p className="room-word" role="status" key={roomWord.at}><strong>{roomWord.text}</strong>{roomWord.japanese && <span>{roomWord.japanese}</span>}</p>}
+        {roomWord && screen === 'keepsakes' && <div className="room-word" role="status" key={roomWord.at}><strong>{roomWord.text}</strong>{roomWord.japanese && <span>{roomWord.japanese}</span>}<button className="island-secondary" onClick={() => { setRoomSpeech(); setRoomWord(undefined); }}>とじる</button></div>}
         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
         {active && screen === 'home' && <Suspense fallback={<GrowingLoading step="screen" />}>
             {nativeArt && NativeIslandArt ? <NativeIslandArt onClose={() => setNativeArt(false)} /> : <GrowingIsland onProfileSwitchBlockedChange={setGrowingProfileSwitchBlocked} key={profile.id} profileId={profile.id} profileName={profile.name} active={active} sound={Boolean(profile.soundEnabled)} onHome={enterHouse} onLearn={() => void begin()}
@@ -525,9 +560,7 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
         {/* Learning hides the world. Do not create a legacy WebGL world
             behind the questions just to destroy it when returning home. */}
         {active && screen !== 'home' && !learning && !['help', 'album', 'photos', 'inventory', 'challenge'].includes(screen) && <IslandSessionStage screen={screen}
-            house={islandSessionHouseStage({ screen, setScreen, island, busy, keepsakeRoomActive, houseOverview,
-                challengeSummary, keepsakeFocus, growingRoom, soundEnabled: Boolean(profile.soundEnabled), keepsakes,
-                enterHouse, begin, setReturnToHouse, setAlbumComparison, setKeepsakeFocus, setHouseSection, setRoomWord })}
+            house={houseBindings}
             placement={islandSessionPlacementStage({ screen, island, busy, furnitureTrial, furnitureKind,
                 furnitureResident, furniturePartner, furniturePlacementChoice, playRequest, valid,
                 controls: { preview, setPreview, placementSuggestionId, setPlacementSuggestionId, furniturePlacementSearch,
@@ -623,13 +656,13 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
                     sharedSelection={sharedSelection} sharedActions={sharedActions} workshopActions={workshopActions} workshopAudio={workshopAudio}
                     openShared={openShared} onPhoto={photograph} onClose={home} onLearn={() => void begin()} />
                 : screen === 'keepsakes' ? <IslandSessionHouse island={island} controls={keepsakes} disabled={busy} comparisonDisabled={comparisonDisabled}
-                    active={active} profileId={profile.id} room={growingRoom}
+                    key={profile.id} active={active} profileId={profile.id} room={growingRoom} onRoomAction={houseBindings.onHomeAction}
                     onChallengeResult={() => { setChallengeStartIntent(false); setScreen('challenge'); }}
                     onChallengeStart={() => { setChallengeStartIntent(true); setScreen('challenge'); }}
                     section={houseSection} onSectionChange={section => { setHouseSection(section); setKeepsakeFocus(undefined); }}
                     onSelect={setKeepsakeFocus} onShowRoom={() => setKeepsakeFocus(undefined)}
                     onClose={home} onLearn={() => void begin()} onPhoto={photograph} onPhotos={openPhotos}
-                    onGrowingGuide={() => setHouseGuideAt(location.key)}
+                    onGrowingGuide={() => setHouseGuideAt(location.key)} onDecorSurfaceChange={setHouseDecorating}
                     onAlbum={() => { setReturnToHouse(true); setAlbumComparison('garden'); setScreen('album'); }}
                     onShared={island.completedSets >= 1 ? () => { setReturnToHouse(true); openShared(); } : undefined}
                     onRewards={() => { setReturnToHouse(true); setScreen('reward'); }} />
@@ -697,8 +730,16 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
                     onSave={savePlacement} onStore={() => { setFurniturePlacementSearch(undefined); void place(true); }}
                     onCancel={cancelPlacement} onAppearance={level => void appearance(level)} /> : null}</Suspense>
         {learning && preparingLearning && learningLease === 'ready' && !nextPlanError && <Spinner overlay destination="learning" message="まなぶ じゅんびを しているよ…" />}
-        {plan && slot && <IslandLearningPanel profile={profile} plan={plan} active={active && learning && learningLease === 'ready' && !nextPlanError}
-            heroStyle={learningHeroStyle}
+        {learning && learningLease === 'ready' && (courseSwitch || courseEntry?.kind === 'course-choice') && <FoundationCourseChoice busy={busy} queued={Boolean(plan || courseEntry?.kind === 'foundation')} onLater={() => { setCourseSwitch(false); if (courseEntry?.kind === 'course-choice') home(); }} onChoose={(course, unit) => { void run(async () => {
+            await setFoundationCourse(profile.id, course, unit);
+            if (plan?.status === 'active' || courseEntry?.kind === 'foundation' && courseEntry.plan.status === 'pending') { setCourseSwitch(false); return; }
+            acceptEntry(await resolveIslandLearningEntry(profile.id));
+        }); }} />}
+        {learning && !courseSwitch && courseEntry?.kind === 'foundation' && learningLease === 'ready' && <FoundationLearning key={courseEntry.plan.id} initialPlan={courseEntry.plan} soundEnabled={Boolean(profile.soundEnabled)} onBusyChange={setFoundationBusy} active={active && !busy} onPlan={updated => setCourseEntry({kind:'foundation',plan:updated})}
+            onNext={async () => { acceptEntry(await resolveIslandLearningEntry(profile.id)); }} onClose={home} onSwitch={() => setCourseSwitch(true)} />}
+        {learning && !foundationVisible && profile.subjectMode !== 'math' && <button className="island-text-button foundation-switch" disabled={busy} onClick={() => setCourseSwitch(true)}>えいごの コースを かえる</button>}
+        {!foundationVisible && plan && slot && <IslandLearningPanel profile={profile} plan={plan} active={active && learning && learningLease === 'ready' && !nextPlanError}
+            heroStyle={learningHeroStyle} companionHost={learningCompanionHost}
             hintPending={busyKind === 'learning-hint' && active && learning && !preparingLearning}
             soundEnabled={profile.soundEnabled} intro={isFirstIslandPlan(plan)} observation={active && learning && !listening.isOpen ? observation : undefined}
             busy={busy || preparingLearning || !active || !learning || listening.isOpen} feedback={learningFeedback} party={island.learningParty} englishAutoRead={profile.englishAutoRead && !listening.isOpen} onAction={action => void answer(action)}

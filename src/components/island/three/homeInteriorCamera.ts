@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import type { IslandLearningKeepsakeScenery } from './learningKeepsakeScenery';
 
-export const ISLAND_HOME_CAMERA_CANDIDATE = 'island-home-interior-v5';
+export const ISLAND_HOME_CAMERA_CANDIDATE = 'island-home-interior-v7-living';
 export const ISLAND_HOME_CAMERA_POSITION = [0, 3, 4.62] as const;
 const livingNames = ['home-reading-seat', 'home-coffee-table', 'home-album', 'home-notice-board', 'home-plant-pot', 'home-window-frame', 'challenge-certificate', 'challenge-trophy'];
 const corners = (bounds: THREE.Box3) => [bounds.min.x, bounds.max.x].flatMap(x => [bounds.min.y, bounds.max.y].flatMap(y =>
@@ -9,11 +9,15 @@ const corners = (bounds: THREE.Box3) => [bounds.min.x, bounds.max.x].flatMap(x =
 
 /** A camera INSIDE the existing house footprint. Orthographic island framing
  * and the exterior model are untouched; only this camera sees the closed room. */
-export function fitIslandHomeInteriorCamera(camera: THREE.PerspectiveCamera, room: IslandLearningKeepsakeScenery, aspect: number, closeOverview = false, residentBounds?: THREE.Box3): boolean {
+export function fitIslandHomeInteriorCamera(camera: THREE.PerspectiveCamera, room: IslandLearningKeepsakeScenery, aspect: number, closeOverview = false, residentBounds?: THREE.Box3, livingFrame = true): boolean {
     if (!room.group.visible || !Number.isFinite(aspect) || aspect <= 0) return false;
     room.group.updateWorldMatrix(true, true);
     const scale = room.group.getWorldScale(new THREE.Vector3()).x, selected = room.selectedObject();
     let position = new THREE.Vector3(...ISLAND_HOME_CAMERA_POSITION), target = new THREE.Vector3(0, 1.40, 1.10);
+    if (closeOverview && !selected) {
+        if (livingFrame) { position.set(.85, 2.8, 4.62); target.set(.7, .75, 2.65); }
+        else { position.set(.4, 2.65, 4.62); target.set(.4, .85, 2.4); }
+    }
     let subjects: THREE.Object3D[];
     if (selected) {
         const bounds = new THREE.Box3().setFromPoints(corners(new THREE.Box3().setFromObject(selected, true)).map(point => room.group.worldToLocal(point)));
@@ -22,15 +26,15 @@ export function fitIslandHomeInteriorCamera(camera: THREE.PerspectiveCamera, roo
         position = target.clone().add(new THREE.Vector3(0, .04, distance + size.z / 2));
         subjects = [selected];
     } else {
-        subjects = livingNames.map(name => room.group.getObjectByName(name)).filter((object): object is THREE.Object3D => Boolean(object));
+        subjects = (closeOverview ? ['home-coffee-table', 'home-album'] : livingNames).map(name => room.group.getObjectByName(name)).filter((object): object is THREE.Object3D => Boolean(object));
         // Include the complete finite display area even while the child has no awards.
-        subjects.push(...room.group.children.filter(object => object.name.startsWith('keepsake-') && object.userData.keepsakeId));
+        if (!closeOverview) subjects.push(...room.group.children.filter(object => object.name.startsWith('keepsake-') && object.userData.keepsakeId));
     }
     // Portrait overview favors the central living space. Detail views still fit every object.
     const framingAspect = closeOverview && !selected ? Math.max(aspect, .9) : aspect;
     camera.position.copy(room.group.localToWorld(position)); camera.up.set(0, 1, 0).applyQuaternion(room.group.getWorldQuaternion(new THREE.Quaternion()));
     camera.lookAt(room.group.localToWorld(target)); camera.updateMatrixWorld(true);
-    let tangent = selected ? Math.tan(Math.PI / 8) : Math.tan(39 * Math.PI / 180);
+    let tangent = selected ? Math.tan(Math.PI / 8) : Math.tan((closeOverview ? 30 : 39) * Math.PI / 180);
     for (const object of subjects) for (const point of corners(new THREE.Box3().setFromObject(object, true))) {
         point.applyMatrix4(camera.matrixWorldInverse);
         if (point.z >= -.01 * scale) return false;

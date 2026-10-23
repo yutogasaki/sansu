@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-20T14:58:44.629074",
+  "target": "DEV http://127.0.0.1:5268; isolated HEAD + house files",
+  "baseline": "9355c416ed188abe686d13cc35bf74626e7ac581",
+  "cameraCandidate": "island-home-interior-v6",
+  "sourceFiles": {
+    "docs/product/01_app_spec.md": "d6c47ff97fe3ee52d49c09b80033cf8820428d3e1b6cf538738639936a31c7a6",
+    "docs/product/43_island_navigation_spec.md": "1e1b80745415ed7292eef2c9346051bbb2588d9c352e22952005affdd01ededa",
+    "docs/product/44_display_layout_spec.md": "345394b7b7454b07f4b321d7e8936e96bd0fbdc3f37f84dbf3191314dd4f5c7e",
+    "docs/product/52_growing_island_game_spec.md": "ddaf11d922b8342ad091596cfb815712449290b3c8413f1c147f0092cad42ceb",
+    "src/components/island/IslandHouseOverview.tsx": "f78058615162ff731b54fe55662da13ff85638ed7cd5009d0d47d0e7c0f7bda9",
+    "src/components/island/IslandHouseMenu.css": "73dd84cf6fd90f1a5705425c85bcb4906e0c06cf12882488457435b640157690",
+    "src/components/island/IslandLearningKeepsakes.tsx": "910cc1033f42aef581d6ff37bce60e9c00b767ecd6e7baf20aa11788a789f2ac",
+    "src/components/island/IslandSession.tsx": "36b01cd3b8f11828b377451e6bded7595fbe6dc3b60ba4a344ba226470f42d96",
+    "src/components/island/IslandSessionHouse.tsx": "83189a18a35248412bcd779e69de2b8d9e2949ddcdb69ce7b443c9bb574ab15a",
+    "src/components/island/IslandRoomDecor.css": "29903beb77895fcf3252586eb382b030e81e8d72768ca64b0e6ba681a13fd5fb",
+    "src/components/island/islandSessionHouseStage.ts": "ce3af1ae63c06f435c0bd541a56b4b39af62a3ae7cf408c7c5c313036ca3faa8",
+    "src/components/island/growing/useGrowingRoom.ts": "e4994b175ed1828459976440473cfb86e24b55f5d3b834cceb9e6713d30c0311",
+    "src/components/island/growing/RoomDecorPanel.tsx": "18ce3619e8b4822a2c781dfd58f1743c22b8726a31009081825cf4a2c23cea6e",
+    "src/components/island/growing/LettersPanel.tsx": "7832a8d79b15a298707ea1d013bf2171165640c9919532370ab68c8d80e9553a",
+    "src/components/island/growing/growingLoading.css": "21b58d285705b625f8b9f95d2962a4af2ef6af48b9e1a7e39d4b09dee5a6e705",
+    "src/components/island/three/homeInteriorCamera.ts": "15ecb85339c7e405b740b47b36d4a3fdf65e46ae75cbe1bfdf643f7226944a58",
+    "src/components/island/three/homeInteriorCamera.test.ts": "ec93e08358ae6c319e46e6bc81fa2a9629128bf53e52c72bf9bc1e4a0bbf9fcc",
+    "src/components/island/three/learningKeepsakeScenery.ts": "530295eca7dca8734ba8276ddcd51adb1b5c0c4a593a54fb43c017aedca0b8ff",
+    "src/utils/tts.ts": "19ef3f6e7b316272ddd5fae4f66351e252d4e59df938d1f013269d4ea649fafd",
+    "src/utils/tts.test.ts": "25be952ecb45d1a3b3bcf342a5f8bf15f8a8940d961b1eca8d9caa3748277c50"
+  },
+  "verification": {
+    "typecheck": "PASS shared checkout final",
+    "lint": "PASS isolated full excluding generated .vite and final affected paths",
+    "focused": "5 files / 28 tests PASS",
+    "build": "PASS final isolated production + assets",
+    "docs": "PASS existing overdue warnings",
+    "unitFull": "PARTIAL interrupted after 104+ passing files, not full PASS",
+    "smoke": "FAIL old Explore root observation retry wait timeout 1500ms; cause unconfirmed",
+    "ui": "PASS four viewport real decorate/save/reopen/Escape/reload; pageerror 0",
+    "saveFault": "PASS abort/retry/cross-tab/word persistence/learning stores unchanged"
+  }
+}

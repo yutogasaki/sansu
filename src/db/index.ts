@@ -1,3 +1,4 @@
+import type { FoundationCourseRecord, FoundationOwner, FoundationProgress, FoundationPlan, FoundationEvent, FoundationOutbox } from '../domain/englishFoundation/types';
 import type { ChallengeRun, ChallengeEvent, ChallengeSummary, ChallengeContact } from '../domain/challenge/types';
 import Dexie, { type DexieOptions, type Table } from 'dexie';
 import type { UserProfile, MemoryState, AppData } from '../domain/types';
@@ -70,7 +71,22 @@ export const SANSU_V9_STORES = { ...SANSU_V8_STORES,
     challengeContacts: '[profileId+itemId], profileId',
 } as const;
 
+export const SANSU_V10_STORES = { ...SANSU_V9_STORES,
+    foundationCourses: '&profileId',
+    foundationOwners: '&profileId',
+    foundationProgress: '[profileId+id], profileId',
+    foundationPlans: '&id, profileId, [profileId+status]',
+    foundationEvents: '&id, profileId, planId',
+    foundationOutbox: '&completionId, profileId',
+} as const;
+
 export class SansuDatabase extends Dexie {
+    foundationCourses!: Table<FoundationCourseRecord, string>;
+    foundationOwners!: Table<FoundationOwner, string>;
+    foundationProgress!: Table<FoundationProgress, [string, string]>;
+    foundationPlans!: Table<FoundationPlan, string>;
+    foundationEvents!: Table<FoundationEvent, string>;
+    foundationOutbox!: Table<FoundationOutbox, string>;
     challengeRuns!: Table<ChallengeRun, string>;
     challengeEvents!: Table<ChallengeEvent, string>;
     challengeSummaries!: Table<ChallengeSummary, string>;
@@ -135,6 +151,10 @@ export class SansuDatabase extends Dexie {
         // Additive only: existing learning, island and receipt rows are untouched.
         this.version(8).stores(SANSU_V8_STORES);
         this.version(9).stores(SANSU_V9_STORES);
+        this.version(10).stores(SANSU_V10_STORES).upgrade(async tx => {
+            const profiles = await tx.table('profiles').toArray();
+            await tx.table('foundationCourses').bulkPut(profiles.map(p => ({ profileId: p.id, course: 'vocabulary', unit: 'F01' })));
+        });
     }
 }
 

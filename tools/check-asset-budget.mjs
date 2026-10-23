@@ -1,5 +1,6 @@
 import { readdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
+import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import {
   ASSET_BUDGETS,
@@ -13,7 +14,7 @@ import {
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const PUBLIC_DIR = path.join(ROOT, "public");
-const DIST_DIR = path.join(ROOT, "dist");
+const DIST_DIR = path.resolve(process.env.SANSU_ASSET_DIST_DIR || path.join(ROOT, "dist"));
 
 const walkFiles = async (directory, prefix = "") => {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -122,6 +123,13 @@ const main = async () => {
     const file = publicFiles.find(candidate => candidate.relativePath === url);
     if (!file || (await stat(file.absolutePath)).size < 128) errors.push(`${url}: playable SE is missing or empty`);
     if (!precacheSet.has(url)) errors.push(`${url}: SE is missing from offline precache`);
+  }
+  const foundationManifest = JSON.parse(await readFile(path.join(PUBLIC_DIR, 'foundation/v1/manifest.json'), 'utf8'));
+  for (const asset of foundationManifest.assets) {
+    const url = asset.path.replace(/^\//, '');
+    const bytes = await readFile(path.join(DIST_DIR, url));
+    if (createHash('sha256').update(bytes).digest('hex') !== asset.sha256) errors.push(`${url}: foundation catalog hash mismatch`);
+    if (!precacheSet.has(url)) errors.push(`${url}: foundation stimulus missing from offline precache`);
   }
   for (const url of [...publicFiles.map(file => file.relativePath), ...precacheUrls]) {
     if (url.startsWith('assets/park/')) errors.push(`${url}: retired park artwork must not ship`);

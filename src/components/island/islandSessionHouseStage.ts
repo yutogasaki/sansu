@@ -14,25 +14,27 @@ import type { IslandHabitatId } from '../../domain/island/types';
 type Setter<T> = Dispatch<SetStateAction<T>>;
 export type HouseStageBindings = Pick<StageProps, 'challengeDisplayed' | 'learningKeepsakes' | 'onHomeEnter' | 'onHomeAction'>;
 type Inputs = { screen: IslandScreen; setScreen: (screen: IslandScreen) => void; island: IslandRecord;
-    busy: boolean; keepsakeRoomActive: boolean; houseOverview: boolean; challengeSummary?: { displayed: StageProps['challengeDisplayed'] };
+    busy: boolean; keepsakeRoomActive: boolean; houseOverview: boolean; decorating?: boolean; challengeSummary?: { displayed: StageProps['challengeDisplayed'] };
     keepsakeFocus?: IslandLearningKeepsakeId; growingRoom: ReturnType<typeof useGrowingRoom>; soundEnabled: boolean;
     keepsakes: ReturnType<typeof useIslandLearningKeepsakes>; enterHouse: () => void; begin: () => Promise<unknown>;
     setReturnToHouse: Setter<boolean>; setAlbumComparison: Setter<IslandHabitatId | 'all'>;
     setKeepsakeFocus: Setter<IslandLearningKeepsakeId | undefined>; setHouseSection: (section: 'home' | 'keepsakes' | 'notices') => void;
+    setRoomSpeech: (stop?: () => void) => void;
     setRoomWord: Setter<{ text: string; japanese?: string; at: number } | undefined>;
 };
 
-export function islandSessionHouseStage({ screen, setScreen, island, busy, keepsakeRoomActive, houseOverview,
+export function islandSessionHouseStage({ screen, setScreen, island, busy, keepsakeRoomActive, houseOverview, decorating,
     challengeSummary, keepsakeFocus, growingRoom, soundEnabled, keepsakes, enterHouse,
-    begin, setReturnToHouse, setAlbumComparison, setKeepsakeFocus, setHouseSection, setRoomWord }: Inputs): HouseStageBindings {
+    begin, setReturnToHouse, setAlbumComparison, setKeepsakeFocus, setHouseSection, setRoomWord, setRoomSpeech }: Inputs): HouseStageBindings {
     return {
         challengeDisplayed: challengeSummary?.displayed,
-        learningKeepsakes: keepsakeRoomActive ? { closeOverview: houseOverview, state: island.learningKeepsakes, selectedId: keepsakeFocus, decor: growingRoom.decor } : undefined,
+        learningKeepsakes: keepsakeRoomActive ? { closeOverview: houseOverview, decorating, state: island.learningKeepsakes, selectedId: keepsakeFocus, decor: growingRoom.decor } : undefined,
         onHomeEnter: !busy && ['home', 'play'].includes(screen) ? enterHouse : undefined,
         onHomeAction: !busy && screen === 'keepsakes' ? action => {
+            setRoomSpeech(); setRoomWord(undefined);
             if (action.type === 'album') { setReturnToHouse(true); setAlbumComparison('garden'); setScreen('album'); }
             else if (action.type === 'notices') { setKeepsakeFocus(undefined); setHouseSection('notices'); }
-            else if (action.type === 'word') { const word = readWordAloud(action.word); setRoomWord({ text: word?.surface ?? action.word.replace(/_lv\d+$/, ''), japanese: word?.japanese, at: Date.now() }); }
+            else if (action.type === 'word') { const word = readWordAloud(action.word); setRoomSpeech(word.stop); setRoomWord({ text: word?.surface ?? action.word.replace(/_lv\d+$/, ''), japanese: word?.japanese, at: Date.now() }); }
             else if (action.type === 'desk') void begin();
             else if (action.type === 'guest') {
                 const guest = growingRoom.guests.find(g => g.id === action.id);

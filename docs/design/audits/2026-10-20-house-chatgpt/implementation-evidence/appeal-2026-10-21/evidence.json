@@ -1,0 +1,75 @@
+{
+  "recordedAt": "2026-10-21T01:57:49.638484+00:00",
+  "scope": "ChatGPT appeal audit of five existing local production screenshots; synthetic new profile; no implementation or release",
+  "build": {
+    "version": "development-local:480c319f-88a0-4a4a-8892-743bc4fd6627",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "fixedAppInputsAggregate": "9149db002a989d7d757708ec23cfefe75c864d6f0b9326dc7f7ab1456bdbba2c",
+  "camera": "island-home-interior-v6",
+  "houseCandidate": "house-world-first-v1",
+  "priorFixSourcesStillMatch": {
+    "src/components/island/three/runtime.ts": true,
+    "src/components/island/three/runtimeResize.test.ts": true,
+    "src/components/island/IslandRoomDecor.css": true
+  },
+  "images": {
+    "01-390-home.png": {
+      "sha256": "c97d5a000659cc1bdc08de199a279c9ec2011c57e8df8006ef19c8b91e12fe68",
+      "captureFileMtime": "2026-10-20T23:13:13.058455+00:00"
+    },
+    "02-390-after-decor.png": {
+      "sha256": "efcd4c8583b60da82ca0b441d99152d277070832f3aaaead218cf5a0d50a38dd",
+      "captureFileMtime": "2026-10-20T23:13:28.962495+00:00"
+    },
+    "03-390-menu.png": {
+      "sha256": "b45301c1a41283288838f83211ae67243cea94a468b3848d7f15ae3d51fdd440",
+      "captureFileMtime": "2026-10-20T23:13:18.398530+00:00"
+    },
+    "04-390-decor.png": {
+      "sha256": "4c089c59ef24f00513db9a2bbd1c3e87c9bbd41a0d35e484b7adb098cafa3781",
+      "captureFileMtime": "2026-10-20T23:13:27.215533+00:00"
+    },
+    "05-768-home.png": {
+      "sha256": "b316f81d2ae6544c938e790f5f51047ea43464752c4187516263fe0cda925089",
+      "captureFileMtime": "2026-10-20T23:16:03.295881+00:00"
+    }
+  },
+  "conversation": "https://chatgpt.com/g/g-p-6ad58d0857b881918e46e346350848e7/c/6ad6dc73-3854-83ec-a14f-39bddbc0f86f",
+  "limits": [
+    "New empty profile only; no new mature-state screenshots",
+    "Static screenshots plus current code summary; ChatGPT did not operate app",
+    "No child observation or next-day revisit evidence"
+  ]
+}

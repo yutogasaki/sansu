@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { speakEnglish, stopEnglishSpeech, warmUpTTS } from './tts';
+import { speakEnglish, speakJapanese, stopEnglishSpeech, warmUpTTS } from './tts';
 
 class Utterance {
     constructor(public text: string) {}
@@ -79,4 +79,16 @@ describe('English pronunciation lifecycle', () => {
         expect(synth.cancel).toHaveBeenCalledTimes(1);
         expect(error).not.toHaveBeenCalled();
     });
+});
+
+it('keeps Japanese letter ownership separate from a later learning pronunciation', () => {
+    const voice = { name: 'Kyoko', lang: 'ja-JP', localService: true };
+    synth.getVoices.mockReturnValue([voice, { name: 'English', lang: 'en-US', localService: true }]);
+    const stopLetter = speakJapanese('こんにちは');
+    expect(latest()).toMatchObject({ text: 'こんにちは', lang: 'ja-JP', voice });
+    speakEnglish('apple');
+    const cancelled = synth.cancel.mock.calls.length;
+    stopLetter();
+    expect(synth.cancel).toHaveBeenCalledTimes(cancelled);
+    expect(latest()).toMatchObject({ text: 'apple', lang: 'en-US' });
 });

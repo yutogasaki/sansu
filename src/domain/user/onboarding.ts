@@ -15,6 +15,7 @@ export interface OnboardingSelection {
     subject: OnboardingSubject | null;
     mathRange: OnboardingMathRange | null;
     englishRange: OnboardingEnglishRange | null;
+    englishCourse?: 'foundation' | 'vocabulary';
 }
 
 export const ONBOARDING_GRADES = [
@@ -85,7 +86,7 @@ export async function completeOnboardingProfile(selection: OnboardingSelection, 
     intent: OnboardingIntent, database: SansuDatabase = db): Promise<{ profile: UserProfile; activeProfileId: string }> {
     const resolved = resolveOnboardingSelection(selection, intent);
     if (!completionId.trim()) throw new OnboardingConflict('Creation identity missing');
-    return database.transaction('rw', [database.appData, database.profiles, database.memoryMath], async () => {
+    return database.transaction('rw', [database.appData, database.profiles, database.memoryMath, database.foundationCourses, database.foundationOwners], async () => {
         const stored = await database.appData.get('app');
         const profiles = stored?.profiles ?? Object.fromEntries((await database.profiles.toArray()).map(profile => [profile.id, profile]));
         const app: AppData = stored ?? { schemaVersion: 1, activeProfileId: null, profiles };
@@ -112,6 +113,8 @@ export async function completeOnboardingProfile(selection: OnboardingSelection, 
         }
         if (firstPlay?.ownerId === completionId) await firstPlayTable(database).put({ ...firstPlay, completed: true, selection });
         await database.profiles.add(profile);
+        if (await database.foundationOwners.get(profile.id)) throw new OnboardingConflict('Profile identity unavailable');
+        await database.foundationCourses.add({ profileId: profile.id, unit: 'F01', course: selection.englishCourse });
         await database.appData.put({ ...app, id: 'app', profiles: { ...profiles, [profile.id]: profile }, activeProfileId: profile.id });
         return { profile, activeProfileId: profile.id };
     });

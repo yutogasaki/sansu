@@ -78,7 +78,7 @@ describe('challenge migration and contact boundaries', () => {
   await old.table('appData').put({ id: 'sentinel', payload: ['keep', 16] }); old.close();
   const upgraded = new SansuDatabase(name, { indexedDB, IDBKeyRange }); databases.push(upgraded);
   expect(await upgraded.appData.get('sentinel')).toEqual({ id: 'sentinel', payload: ['keep', 16] });
-  expect(upgraded.verno).toBe(9);
+  expect(upgraded.verno).toBe(10);
   const d = await setup(); await finish(d,10);
   await d.transaction('rw', d.tables, () => deleteProfileOwnedIndexedDbRows(d,profileId));
   expect(await d.challengeRuns.count()).toBe(0); expect(await d.challengeEvents.count()).toBe(0);

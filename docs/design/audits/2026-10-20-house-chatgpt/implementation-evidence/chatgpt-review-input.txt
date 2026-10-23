@@ -1,0 +1,841 @@
+Tested house implementation candidate: HEAD 9355c416 + isolated house changes. Current shared checkout also contains concurrent English-foundation work; it is NOT the same integration candidate. Review these diffs and the submitted actual DEV screenshots, not an assumed public release. No child data.
+
+（2026-10-20）
+
+追加依頼「網羅的に実装」により、相談のA/B/Cと関連する入口・空状態・音声・保存回復を実装する。正本は01・43・44・52へ先に反映。相談全文は比較の経緯として保持し、本節と正本を現在の採用範囲とする。H07の「とじる」は古い候補のmenu復帰から家overviewへの復帰に変更した。
+
+| 対象 | 今回の実装と保持する境界 |
+|---|---|
+| H01 | camera v6。中央の本人・机・アルバムを優先し、overviewだけ棚全域のfitを外す。端の全身・選択詳細・撮影の全体fitは維持。既存モデル・家具座標は不変 |
+| H02 | おもいで／くらし／あそびかた・挑戦の直接入口。menuのscroll・操作入口focusをセッション内に保持。modalの背景遮断とEscapeを保持 |
+| H03・H24 | 当日実績を残した机カードにも開始の「まなぶ」を表示。机・通常学習の予約と開始・復帰は既存経路を使用 |
+| H04・H05 | 実所有語・実来客の文字付き代替入口。単語表示は明示的に閉じるか次の操作まで保持。床操作・家内section退出・本人切替・背景化で旧表示と発話を終了 |
+| H06・H08 | 窓は保存済み写真のみ。画像の本人境界とbitmap解放。手紙は発声操作を案内し、閉じる・menu退出・背景化・unmountでその発話だけ停止 |
+| H07 | menuを閉じ、同じ実canvasと選択欄を併置。形7種・実語の色群・ラグ6色を無料で即時保存。選択印・色名、書込lock、成功/失敗/不明、正本照合、同ID再試行、安全な退出を追加 |
+| H09・H10 | 表示名「おくりもの」と実件数・空状態へ整合。notices URLと既存の受取transaction・未受取の権利を維持 |
+| H11・H12 | 0件では棚の意味を先に表示し、未取得条件は任意の折りたたみから選ぶ。取得済み優先・無料展示/収納・実記録・全16品を保持 |
+| H13〜H18 | 本、アルバム3分類、写真棚/原画/削除確認/撮影/12枚/PNG/保存receiptと既存の戻り経路を保持。今回、新しい保存形式や撮影方式は追加しない |
+| H19〜H23 | かざりと記憶の入口補足を具体化。作品・共同仕事・記憶12件と、任意挑戦の準備/中断/結果/賞の独立した保存と資格を維持 |
+
+### 検証対象と証拠の読み方
+
+共有checkoutでは同時進行の英語基礎・島safe-area・着座の変更がある。それらは今回の変更へ取り込まず、HEAD `9355c416`と今回の家のファイルだけを重ねた `/tmp/sansu-house.C1AuPL` で独立して型・lint・unit・build・画面を確認する。親仕様01の英語基礎追記は共有checkoutで保持し、隔離候補ではその別変更だけを除外した。実装のcommit/push/公開は行わない。
+
+ローカルのコマンド結果・入力hash・初回失敗は `output/house-implementation-2026-10-20/` に保存。これは再生成可能なローカル証拠で、Git配布物や実機の証拠ではない。DEVの新規合成プロフィールと4viewport、通常motion/音offとtablet reduced motionを使う。保存故障は一度のnative put abort、別tabは同じ隔離プロフィールから実decorate commandを使う。語の一覧には明示した所有語fixtureを用い、実習得の証拠にしない。
+
+初回の短横画面では音ボタンが「とじる」を覆ったためheaderを左側へ限定し、併置canvasのwidthも可変にした。初回の起動検査には条件付きhook位置の不具合があり、hookを全render共通の位置へ移して修正した。初回ログを保持し、修正後の結果と区別する。共有checkoutの未完成import、隔離作成途中のVite設定、生成cacheへのlintは環境側の初回失敗として分けた。
+
+児童の発見性・自発的学習・翌日再訪、実iOSの音声/写真、PWA更新/rollback、全既存24対象の全故障組合せは、この実装の画面検査だけで合格にしない。公開は未実施。
+
+### 今回の検証結果
+
+[実画面contact sheet](implementation-evidence/contact.jpg)、[4viewportの結果とruntime identity](implementation-evidence/report.json)、[保存故障・別tab・単語保持](implementation-evidence/fault.json)、[入力hashと検証表](implementation-evidence/verification.json)。
+
+- PASS：型チェック、lint（既存4 WARN）、関連5ファイル28テスト、最終隔離build・asset budget、docs:check（既存期限WARN）。
+- PASS：390×844／320×568／568×320／768×1024で実模様替え・保存成功・閉じる・Escape・再入場・reload保持。pageerror 0。書込一度abort後の同意図retry、別tabの反映、3秒を超える単語表示、閲覧前後の学習/旧島store不変も確認。
+- PARTIAL：全単体テストは104以上のファイルが通過した時点で作業時間枠を優先して中断。全体PASSではない。スモークは旧Exploreの「retains root observation after the first same-problem retry」が1500ms待ちでFAIL。家以外の原因を確定しておらず、負荷がない固定候補での再確認を残す。
+- 未確認：全24対象の全例外旅程、実PWA更新・offline、実機・児童理解と翌日再訪。最終リリース合格・公開・commit/pushは行っていない。
+
+次の一手は、固定した家候補で全unitと旧Exploreの失敗シナリオを完走させ、実機の入室・模様替え・翌日の再訪を観察すること。新しいUIや機能を足す前に、この検証残を閉じる。
+
+
+SOURCE DIFFS
+--- before/src/components/island/IslandHouseOverview.tsx
++++ after/src/components/island/IslandHouseOverview.tsx
+@@ -1,4 +1,4 @@
+-import { useEffect, useRef, useState, type ReactNode } from 'react';
++import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+ import { Menu, X } from 'lucide-react';
+ import { IslandToyIcon } from './IslandToyIcon';
+ import './IslandHouseMenu.css';
+@@ -18,15 +18,25 @@
+ export function IslandHouseOverview({ active, disabled, comparisonDisabled, walkingAvailable, onAlbum, onPhotos, onGrowingGuide, children }: Props) {
+     const dialog = useRef<HTMLDialogElement>(null);
+     const trigger = useRef<HTMLButtonElement>(null);
++    const [memory] = useState(() => ({ scroll: 0, focus: null as HTMLElement | null, content: null as HTMLDivElement | null }));
+     const [open, setOpen] = useState(false);
+     useEffect(() => {
+-        if (active && open) dialog.current?.showModal();
++        if (active && open) {
++            dialog.current?.showModal();
++            if (memory.content) memory.content.scrollTop = memory.scroll;
++            if (memory.focus?.isConnected) memory.focus.focus({ preventScroll: true });
++        }
+         else dialog.current?.close();
+-    }, [active, open]);
+-    const close = () => setOpen(false);
+-    const choose = (action: () => void) => { close(); action(); };
++    }, [active, open, memory]);
++    const close = useCallback(() => {
++        memory.scroll = memory.content?.scrollTop ?? 0;
++        const focus = document.activeElement;
++        if (focus instanceof HTMLElement && memory.content?.contains(focus)) memory.focus = focus;
++        setOpen(false);
++    }, [memory]);
++    const choose = useCallback((action: () => void) => { close(); action(); }, [close]);
+     return <div className="island-house-overview">
+-        <p className="island-house-hint">{walkingAvailable ? 'ゆかを タップすると ぽこもこが あるくよ。' : 'おもいでを ひらく。きねんを かざる。'}</p>
++        <p className="island-house-hint">{walkingAvailable ? 'ゆかで あるく。ものにも さわってみよう。' : 'おもいでを ひらく。きねんを かざる。'}</p>
+         {onGrowingGuide && <button type="button" className="island-house-guide-book" data-house-guide-book disabled={disabled} onClick={onGrowingGuide}>
+             <IslandToyIcon kind="book" size={64} /><span>あそびかた</span></button>}
+         <nav className="island-house-tools" aria-label="いえで できること">
+@@ -38,12 +48,13 @@
+                 onClick={() => setOpen(true)}><Menu size={28} aria-hidden="true" /><span>メニュー</span></button>
+         </nav>
+         <dialog ref={dialog} className="island-menu island-house-menu" aria-labelledby="island-house-menu-title" data-house-menu-candidate="house-paper-atelier-v1"
++            onCancel={() => close()}
+             onClose={() => { setOpen(false); if (active) trigger.current?.focus({ preventScroll: true }); }}
+             onClick={event => { if (event.target === event.currentTarget) close(); }}>
+             <div className="island-menu-surface">
+                 <header className="island-menu-heading"><div className="island-house-menu-title"><span className="island-house-menu-patch"><IslandToyIcon kind="house" size={34} /></span><div><h2 id="island-house-menu-title">いえの メニュー</h2><p>たからものと、くらしの こと。</p></div></div>
+                     <button type="button" className="island-text-button" onClick={close} aria-label="いえの メニューを とじる"><X size={20} aria-hidden="true" />とじる</button></header>
+-                <div className="island-menu-scroll island-house-menu-content">{children(choose)}</div>
++                <div ref={element => { memory.content = element; }} className="island-menu-scroll island-house-menu-content">{children(choose)}</div>
+             </div>
+         </dialog>
+     </div>;
+
+--- before/src/components/island/IslandHouseMenu.css
++++ after/src/components/island/IslandHouseMenu.css
+@@ -97,3 +97,17 @@
+     .island-house-menu .island-menu-heading { padding-block: 10px; }
+ }
+ @media (prefers-reduced-motion: reduce) { .island-house-menu button:active:not(:disabled) { transform: none; } }
++
++.island-house-menu-group { margin: 4px 0 0; color: var(--pokomoko-ink); font-size: 16px; }
++.island-house-menu[data-house-menu-candidate] :is(button, summary) { min-height: 48px; }
++@media (max-width: 359px) {
++    .island-house-menu .island-house-destinations, .island-house-menu .island-house-living { grid-template-columns: minmax(0, 1fr); }
++    .island-page .island-panel.island-learning-keepsakes .island-house-menu[data-house-menu-candidate] .island-house-destinations > button[data-keepsake-action] { min-height: 92px; }
++}
++
++.room-access-list { grid-column: 1 / -1; min-width: 0; }
++.room-access-list summary { display: flex; align-items: center; cursor: pointer; color: var(--pokomoko-blue-deep); }
++.room-access-list p { font-size: 14px; }
++.room-access-words { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; max-height: 240px; overflow-y: auto; }
++.room-access-words button { display: grid; gap: 3px; }
++.room-access-words small { font-size: 14px; color: var(--pokomoko-muted); }
+
+--- before/src/components/island/IslandLearningKeepsakes.tsx
++++ after/src/components/island/IslandLearningKeepsakes.tsx
+@@ -17,7 +17,8 @@
+     walkingAvailable?: boolean;
+     challenge?: ReactNode;
+     /** Redecorating the room with learned words (growing island only). */
+-    decor?: ReactNode;
++    decor?: ReactNode | ((choose: (action: () => void) => void) => ReactNode);
++    roomSurface?: ReactNode;
+     section?: IslandHouseSection;
+     onSectionChange?: (section: IslandHouseSection) => void;
+     island: IslandRecord;
+@@ -44,7 +45,7 @@
+ /** The page supplies the actual house. Reading an award never places one;
+  * only the explicit display controls save the person's display selection. */
+ export function IslandLearningKeepsakes({ island, controls, disabled, onClose, onLearn, onPhoto, onSelect, onShowRoom, comparisonDisabled = disabled,
+-    onPhotos, onAlbum, onShared, onRewards, onGrowingGuide, section, onSectionChange, challenge, decor, walkingAvailable = true, active = true }: IslandLearningKeepsakesProps) {
++    onPhotos, onAlbum, onShared, onRewards, onGrowingGuide, section, onSectionChange, challenge, decor, roomSurface, walkingAvailable = true, active = true }: IslandLearningKeepsakesProps) {
+     const [localSection, setLocalSection] = useState<IslandHouseSection>('home');
+     const currentSection = section ?? localSection;
+     const panelRef = useRef<HTMLElement>(null);
+@@ -95,7 +96,7 @@
+     });
+     return <section ref={panelRef} className="island-sheet island-panel island-learning-keepsakes" aria-label="いえ"
+         data-testid="island-learning-keepsakes" data-keepsake-section={currentSection} data-keepsake-selected={selected.id}>
+-        <IslandPanelHeading titleRef={headingRef} title={<><IslandToyIcon kind="house" size={30} />{currentSection === 'keepsakes' ? 'まなびの きねん' : currentSection === 'notices' ? 'おしらせ' : 'いえの なか'}</>}
++        <IslandPanelHeading titleRef={headingRef} title={<><IslandToyIcon kind="house" size={30} />{currentSection === 'keepsakes' ? 'まなびの きねん' : currentSection === 'notices' ? 'おくりもの' : 'いえの なか'}</>}
+             onExit={currentSection === 'home' ? onClose : () => changeSection('home')} disabled={comparisonDisabled}
+             exitLabel={currentSection === 'home' ? 'しまへ' : 'もどる'} exitAriaLabel={currentSection === 'home' ? 'しまへ もどる' : 'いえの なかへ もどる'}
+             houseAction={currentSection === 'home' ? 'close' : 'home'} />
+@@ -107,32 +108,41 @@
+         </div>}
+         {currentSection === 'home' && <IslandHouseOverview active={active} disabled={disabled} comparisonDisabled={comparisonDisabled}
+             walkingAvailable={walkingAvailable} onAlbum={onAlbum} onPhotos={onPhotos} onGrowingGuide={onGrowingGuide}>{choose => <>
++            <h3 className="island-house-menu-group">おもいで</h3>
+             <nav className="island-house-destinations" aria-label="いえの なかで みるもの">
++                {onShared && <button className="island-secondary" data-keepsake-action="shared" disabled={disabled} onClick={() => choose(onShared)}>
++                    <IslandToyIcon kind="display" /><strong>かざりと きおく</strong><small>しまに かざる・なかまとの きおく</small></button>}
++                <button className="island-secondary" data-keepsake-action="open-keepsakes" disabled={disabled} onClick={() => choose(() => changeSection('keepsakes'))}>
++                    <IslandToyIcon kind="keepsake" /><strong>まなびの きねん</strong><small>{state.displayed.length > 0 ? `${state.displayed.length}こ かざっているよ` : earned.length > 0 ? 'きねんを かざろう' : 'まなびの あゆみ'}</small></button>
++
++            </nav>
++            <h3 className="island-house-menu-group">くらし</h3>
++            <nav className="island-house-destinations" aria-label="くらし">
++                <button className="island-secondary" data-keepsake-action="notices" disabled={disabled} onClick={() => choose(() => changeSection('notices'))}>
++                    <IslandToyIcon kind="gift" /><strong>おくりもの</strong><small>{island.pendingRewards.length > 0 ? `おくりもの ${island.pendingRewards.length}こ` : 'いまは ないよ'}</small></button></nav>
++            {decor && <div className="island-house-living">{typeof decor === 'function' ? decor(choose) : decor}</div>}
++            <h3 className="island-house-menu-group">あそびかた・チャレンジ</h3>
++            <nav className="island-house-destinations" aria-label="あそびかた">
+                 {onGrowingGuide && <button className="island-secondary" data-keepsake-action="growing-guide" disabled={disabled} onClick={() => choose(onGrowingGuide)}>
+                     <IslandToyIcon kind="book" /><strong>しまの あそびかた</strong><small>ためすことと、できたこと</small></button>}
+-                {onShared && <button className="island-secondary" data-keepsake-action="shared" disabled={disabled} onClick={() => choose(onShared)}>
+-                    <IslandToyIcon kind="display" /><strong>かざりと きおく</strong><small>だいじな たからもの</small></button>}
+-                <button className="island-secondary" data-keepsake-action="open-keepsakes" disabled={disabled} onClick={() => choose(() => changeSection('keepsakes'))}>
+-                    <IslandToyIcon kind="keepsake" /><strong>まなびの きねん</strong><small>{state.displayed.length > 0 ? `${state.displayed.length}こ かざっているよ` : earned.length > 0 ? 'きねんを かざろう' : 'まなびの あゆみ'}</small></button>
+-                <button className="island-secondary" data-keepsake-action="notices" disabled={disabled} onClick={() => choose(() => changeSection('notices'))}>
+-                    <IslandToyIcon kind="gift" /><strong>おしらせ</strong><small>{island.pendingRewards.length > 0 ? `おくりもの ${island.pendingRewards.length}こ` : 'けいじばんを みる'}</small></button>
+             </nav>
+-            {decor && <div className="island-house-living">{decor}</div>}
+             {challenge}
+             <footer className="island-panel-footer">
+                 {onPhoto && <button className="island-secondary" disabled={disabled} onClick={() => choose(onPhoto)}><Camera size={18} aria-hidden="true" />しゃしんに のこす</button>}
+                 <button className="island-secondary" data-keepsake-action="learn" disabled={disabled} onClick={() => choose(onLearn)}>まなぶ<ArrowRight size={18} aria-hidden="true" /></button>
+             </footer>
+         </>}</IslandHouseOverview>}
+-        {currentSection === 'notices' && <article className="island-house-notices" aria-label="いえの おしらせ">
+-            <h3>おしらせ</h3>
++        {roomSurface}
++        {currentSection === 'notices' && <article className="island-house-notices" aria-label="いえの おくりもの">
++            <h3>おくりもの</h3>
+             {island.pendingRewards.length > 0 ? <><p>おくりものが {island.pendingRewards.length}こ あるよ。</p>
+                 {onRewards && <button className="island-primary" data-keepsake-action="rewards" disabled={disabled} onClick={onRewards}>
+                     <Gift size={18} aria-hidden="true" />おくりものを みる<ArrowRight size={17} aria-hidden="true" /></button>}</>
+-                : <p>いまは あたらしい おしらせは ないよ</p>}
++                : <p>いまは うけとる おくりものは ないよ</p>}
+         </article>}
+         {currentSection === 'keepsakes' && <>
+-        <article className="island-keepsake-detail" aria-label="えらんだ きねんの きろく">
++        {earned.length === 0 && selectionEntry === 0 && <p className="island-keepsake-empty">まなびの きねんを ここに かざせるよ。<br />これからの きねんも みられるよ。</p>}
++        {(earned.length > 0 || selectionEntry > 0) && <article className="island-keepsake-detail" aria-label="えらんだ きねんの きろく">
+             <div className="island-keepsake-selected"><SelectedIcon size={36} aria-hidden="true" /><div>
+                 <p className="island-keepsake-eyebrow">{selected.slot === 'certificate' ? 'しょうじょう' : 'トロフィー'}</p><h3 ref={detailRef} tabIndex={-1}>{selected.name}</h3>
+                 <p role="status">{available ? displayed ? 'いま かざっているよ' : 'もっているよ・かざってみよう' : 'これからの きねん'}</p>
+@@ -148,7 +158,7 @@
+                 {onShowRoom && <button className="island-secondary" data-keepsake-action="room" disabled={disabled} onClick={() => { onShowRoom(); changeSection('home'); }}>
+                     <House size={18} aria-hidden="true" />いえを みわたす</button>}
+             </div>
+-        </article>
++        </article>}
+         {earned.length > 0 && <><div className="island-keepsake-collection-heading"><h3>もっている きねん</h3><p>{state.displayed.length}こ かざっているよ・{earned.length}こ もっているよ</p></div>
+             <div className="island-keepsake-choices island-panel-choices" role="group" aria-label="もっている きねんを えらぶ">{choices(earned)}</div></>}
+         {earned.length > 1 && <button className="island-secondary island-keepsake-display-all" data-keepsake-action="display-earned"
+@@ -176,7 +186,7 @@
+         </>}
+         {currentSection !== 'home' && <footer className="island-panel-footer">
+             {onPhoto && <button className="island-secondary" disabled={disabled} onClick={onPhoto}><Camera size={18} aria-hidden="true" />しゃしんに のこす</button>}
+-            {(currentSection !== 'keepsakes' || available) && <button className="island-secondary" data-keepsake-action="learn" disabled={disabled} onClick={onLearn}>まなぶ<ArrowRight size={18} aria-hidden="true" /></button>}
++            {(currentSection !== 'keepsakes' || available || earned.length === 0 && selectionEntry === 0) && <button className="island-secondary" data-keepsake-action="learn" disabled={disabled} onClick={onLearn}>まなぶ<ArrowRight size={18} aria-hidden="true" /></button>}
+         </footer>}
+     </section>;
+ }
+
+--- before/src/components/island/IslandSession.tsx
++++ after/src/components/island/IslandSession.tsx
+@@ -23,7 +23,7 @@
+ import type { TutorialId } from '../../domain/island/tutorialState';
+ import { useLearningSessionLease } from '../../hooks/useLearningSessionLease';
+ import { ChallengePanel } from '../../components/challenge/ChallengePanel';
+-import { useEffect, useEffectEvent, useLayoutEffect, useMemo, useRef, useState } from 'react';
++import { useCallback, useEffect, useEffectEvent, useLayoutEffect, useMemo, useRef, useState } from 'react';
+ import { useLiveQuery } from 'dexie-react-hooks';
+ import { useLocation, useNavigate } from 'react-router-dom';
+ import { Camera, Gift, Leaf, Settings2, X } from 'lucide-react';
+@@ -136,7 +136,19 @@
+     const screen = navigation ? navigation.learning ? learningScreen : navigation.view : localScreen;
+     // The growing island keeps its own save; the current island's record is left untouched.
+     const [roomWord, setRoomWord] = useState<{ text: string; japanese?: string; at: number }>();
+-    useEffect(() => { if (!roomWord) return; const id = window.setTimeout(() => setRoomWord(undefined), 2600); return () => clearTimeout(id); }, [roomWord]);
++    const [roomSpeech] = useState(() => ({ stop: undefined as (() => void) | undefined }));
++    const setRoomSpeech = useCallback((stop?: () => void) => { roomSpeech.stop?.(); roomSpeech.stop = stop; }, [roomSpeech]);
++    useEffect(() => {
++        const clear = () => { roomSpeech.stop?.(); roomSpeech.stop = undefined; setRoomWord(undefined); };
++        clear();
++        const hidden = () => { if (document.hidden) clear(); };
++        const canvas = (event: Event) => { if (event.target instanceof Element && event.target.closest('.island-stage canvas')) clear(); };
++        document.addEventListener('visibilitychange', hidden);
++        document.addEventListener('pointerdown', canvas, true);
++        const walkingKey = (event: KeyboardEvent) => { if (event.key.startsWith('Arrow') && event.target instanceof Element && event.target.closest('.island-stage')) clear(); };
++        document.addEventListener('keydown', walkingKey);
++        return () => { roomSpeech.stop?.(); document.removeEventListener('visibilitychange', hidden); document.removeEventListener('pointerdown', canvas, true); document.removeEventListener('keydown', walkingKey); };
++    }, [profile.id, screen, active, roomSpeech]);
+     const growingRoom = useGrowingRoom(profile.id, profile.vocabWords, screen === 'keepsakes', profile.mathSkills);
+     const savedLife = useLiveQuery(() => lifeDb.worlds.get(profile.id), [profile.id]);
+     const learningHeroStyle = useMemo(() => savedHeroStyle(savedLife), [savedLife]);
+@@ -162,6 +174,7 @@
+     const [keepsakeFocus, setKeepsakeFocus] = useState<IslandLearningKeepsakeId>();
+     const [localHouseSection, setLocalHouseSection] = useState<'home' | 'keepsakes' | 'notices'>('home');
+     const houseSection = navigation?.houseSection ?? localHouseSection;
++    useEffect(() => { setRoomSpeech(); setRoomWord(undefined); }, [houseSection, setRoomSpeech]);
+     const setHouseSection = navigation?.setHouseSection ?? setLocalHouseSection;
+     useLayoutEffect(() => { setLocalHouseSection('home'); setKeepsakeFocus(undefined); }, [navigation?.houseEntry]);
+     useLayoutEffect(() => { if (houseSection !== 'keepsakes') setKeepsakeFocus(undefined); }, [houseSection]);
+@@ -483,6 +496,9 @@
+         setFurniturePlacementSearch(undefined); setFurniturePlacementResult(undefined); setPreview(undefined); setScreen('furniture');
+     } : home;
+     const houseOverview = screen === 'keepsakes' && houseSection === 'home';
++    const houseBindings = islandSessionHouseStage({ screen, setScreen, island, busy, keepsakeRoomActive, houseOverview,
++                challengeSummary, keepsakeFocus, growingRoom, soundEnabled: Boolean(profile.soundEnabled), keepsakes,
++                enterHouse, begin, setReturnToHouse, setAlbumComparison, setKeepsakeFocus, setHouseSection, setRoomWord, setRoomSpeech });
+     const soundControl = <IslandSoundControl key={screen} enabled={profile.soundEnabled} disabled={busy} onChange={enabled => run(async () => {
+         const updated = await updateProfileAtomically(profile.id, current => ({ ...current, soundEnabled: enabled }));
+         if (!updated) throw new Error('Profile unavailable');
+@@ -515,7 +531,7 @@
+                 : navigation ? null : <button className="island-icon-button" aria-label="せってい" disabled={busy} onClick={() => navigate('/settings')}><Settings2 size={20} /></button>}</div>
+         </header>}
+         {(error || loadError) && <div className="island-error" role="alert"><p>{error}</p><button className="island-text-button" onClick={() => window.location.reload()}>よみなおす</button></div>}
+-        {roomWord && screen === 'keepsakes' && <p className="room-word" role="status" key={roomWord.at}><strong>{roomWord.text}</strong>{roomWord.japanese && <span>{roomWord.japanese}</span>}</p>}
++        {roomWord && screen === 'keepsakes' && <div className="room-word" role="status" key={roomWord.at}><strong>{roomWord.text}</strong>{roomWord.japanese && <span>{roomWord.japanese}</span>}<button className="island-secondary" onClick={() => { setRoomSpeech(); setRoomWord(undefined); }}>とじる</button></div>}
+         {screen === 'placement' && preview && <IslandPlacementActions valid={valid} disabled={busy} onSave={savePlacement} onCancel={cancelPlacement} />}
+         {active && screen === 'home' && <Suspense fallback={<GrowingLoading step="screen" />}>
+             {nativeArt && NativeIslandArt ? <NativeIslandArt onClose={() => setNativeArt(false)} /> : <GrowingIsland onProfileSwitchBlockedChange={setGrowingProfileSwitchBlocked} key={profile.id} profileId={profile.id} profileName={profile.name} active={active} sound={Boolean(profile.soundEnabled)} onHome={enterHouse} onLearn={() => void begin()}
+@@ -525,9 +541,7 @@
+         {/* Learning hides the world. Do not create a legacy WebGL world
+             behind the questions just to destroy it when returning home. */}
+         {active && screen !== 'home' && !learning && !['help', 'album', 'photos', 'inventory', 'challenge'].includes(screen) && <IslandSessionStage screen={screen}
+-            house={islandSessionHouseStage({ screen, setScreen, island, busy, keepsakeRoomActive, houseOverview,
+-                challengeSummary, keepsakeFocus, growingRoom, soundEnabled: Boolean(profile.soundEnabled), keepsakes,
+-                enterHouse, begin, setReturnToHouse, setAlbumComparison, setKeepsakeFocus, setHouseSection, setRoomWord })}
++            house={houseBindings}
+             placement={islandSessionPlacementStage({ screen, island, busy, furnitureTrial, furnitureKind,
+                 furnitureResident, furniturePartner, furniturePlacementChoice, playRequest, valid,
+                 controls: { preview, setPreview, placementSuggestionId, setPlacementSuggestionId, furniturePlacementSearch,
+@@ -623,7 +637,7 @@
+                     sharedSelection={sharedSelection} sharedActions={sharedActions} workshopActions={workshopActions} workshopAudio={workshopAudio}
+                     openShared={openShared} onPhoto={photograph} onClose={home} onLearn={() => void begin()} />
+                 : screen === 'keepsakes' ? <IslandSessionHouse island={island} controls={keepsakes} disabled={busy} comparisonDisabled={comparisonDisabled}
+-                    active={active} profileId={profile.id} room={growingRoom}
++                    key={profile.id} active={active} profileId={profile.id} room={growingRoom} onRoomAction={houseBindings.onHomeAction}
+                     onChallengeResult={() => { setChallengeStartIntent(false); setScreen('challenge'); }}
+                     onChallengeStart={() => { setChallengeStartIntent(true); setScreen('challenge'); }}
+                     section={houseSection} onSectionChange={section => { setHouseSection(section); setKeepsakeFocus(undefined); }}
+
+--- before/src/components/island/IslandSessionHouse.tsx
++++ after/src/components/island/IslandSessionHouse.tsx
+@@ -1,3 +1,9 @@
++import { ENGLISH_WORDS } from '../../domain/english/words';
++import { villagerName } from './growing/growingCopy';
++import type { IslandStageProps } from './three/types';
++import './IslandRoomDecor.css';
++import { useCallback, useEffect, useState } from 'react';
++import { IslandToyIcon } from './IslandToyIcon';
+ import { ChallengeHomeCard } from '../challenge/ChallengeHomeCard';
+ import { IslandLearningKeepsakes, type IslandLearningKeepsakesProps } from './IslandLearningKeepsakes';
+ import { LettersPanel } from './growing/LettersPanel';
+@@ -5,7 +11,8 @@
+ import { islandLetters } from './growing/letters';
+ import type { useGrowingRoom } from './growing/useGrowingRoom';
+ 
+-interface Props extends Omit<IslandLearningKeepsakesProps, 'challenge' | 'decor' | 'walkingAvailable'> {
++interface Props extends Omit<IslandLearningKeepsakesProps, 'challenge' | 'decor' | 'walkingAvailable' | 'roomSurface'> {
++    onRoomAction?: IslandStageProps['onHomeAction'];
+     profileId: string;
+     room: ReturnType<typeof useGrowingRoom>;
+     onChallengeResult: () => void;
+@@ -13,13 +20,37 @@
+ }
+ 
+ /** House composition; routing and persistence stay with their existing owners. */
+-export function IslandSessionHouse({ profileId, room, onChallengeResult, onChallengeStart, ...props }: Props) {
++export function IslandSessionHouse({ profileId, room, onChallengeResult, onChallengeStart, onRoomAction, ...props }: Props) {
++    const [decorOpen, setDecorOpen] = useState(false);
++    const closeDecor = useCallback(() => {
++        setDecorOpen(false);
++        requestAnimationFrame(() => document.querySelector<HTMLElement>('[data-house-menu-trigger]')?.focus({ preventScroll: true }));
++    }, []);
++    useEffect(() => {
++        if (!decorOpen) return;
++        const escape = (event: KeyboardEvent) => { if (event.key === 'Escape' && !document.querySelector('dialog[open]')) { event.preventDefault(); closeDecor(); } };
++        window.addEventListener('keydown', escape);
++        return () => window.removeEventListener('keydown', escape);
++    }, [decorOpen, closeDecor]);
+     return <IslandLearningKeepsakes {...props} walkingAvailable
+         challenge={<ChallengeHomeCard key={profileId} profileId={profileId} disabled={props.disabled}
+             onLearn={props.onLearn} onResult={onChallengeResult} onStart={onChallengeStart} />}
+-        decor={<>
+-            <LettersPanel profileId={profileId} letters={room.island ? islandLetters(room.island) : []} />
+-            <RoomDecorPanel room={room.room} words={room.words} mathLevel={room.mathLevel} vocabLevel={room.vocabLevel}
+-                error={room.error} onDecorate={command => void room.decorate(command)} />
++        roomSurface={decorOpen && props.active !== false && (props.section ?? 'home') === 'home' ? <RoomDecorPanel room={room.room} words={room.words} mathLevel={room.mathLevel} vocabLevel={room.vocabLevel}
++            status={room.status} error={room.error} onRetry={room.retry} onClose={closeDecor} onDecorate={command => void room.decorate(command)} /> : undefined}
++        decor={choose => <>
++            <LettersPanel key={profileId} profileId={profileId} letters={room.island ? islandLetters(room.island) : []} />
++            <button className="island-secondary room-decor-open" data-room-entry="decor" onClick={() => choose(() => setDecorOpen(true))}>
++                <span className="room-entry-icon" aria-hidden="true"><IslandToyIcon kind="palette" size={32} /></span>
++                <strong>もようがえ</strong><small>かべと ラグを かえる</small>
++            </button>
++            <details className="room-access-list"><summary>へやの ことばと なかま</summary>
++                <p>かべの ことばは さわると きけるよ</p>
++                <div className="room-access-words">{room.words.filter(word => !room.room.hidden?.includes(word.group)).map(word => {
++                    const entry = ENGLISH_WORDS.find(entry => entry.id === word.id);
++                    return <button key={word.id} className="island-secondary" onClick={() => choose(() => onRoomAction?.({ type: 'word', word: word.id }))}>{entry?.surface ?? word.id}<small>{entry?.japanese}</small></button>;
++                })}</div>
++                {!room.words.length && <p>ことばが ふえると、かべの もように なるよ</p>}
++                {room.guests.map(guest => <button key={guest.id} className="island-secondary" onClick={() => choose(() => onRoomAction?.({ type: 'guest', id: guest.id }))}>{villagerName(guest)}に はなしかける</button>)}
++            </details>
+         </>} />;
+ }
+
+--- before/src/components/island/IslandRoomDecor.css
++++ after/src/components/island/IslandRoomDecor.css
+@@ -0,0 +1,38 @@
++/* One real room canvas; only the selection text scrolls. */
++.island-page[data-house-layout]:has(.room-decor-workspace) .island-house-overview { visibility: hidden; }
++.island-page[data-house-layout]:has(.room-decor-workspace) > .island-learning-keepsakes > .island-panel-heading { visibility: hidden; }
++.app-container .island-page[data-layout-version][data-mode=keepsakes][data-house-layout][data-house-candidate]:has(.room-decor-workspace) > .island-stage {
++    bottom: min(49%, 380px); width: auto;
++}
++.island-page .room-decor-workspace {
++    position: absolute; inset: auto 0 0; z-index: 9; pointer-events: auto;
++    display: flex; flex-direction: column; gap: 0; width: 100%; height: min(49%, 380px); min-height: 0;
++    padding: 0; border-radius: 22px 22px 0 0; background: var(--pokomoko-paper); color: var(--pokomoko-ink);
++}
++.room-decor-workspace header { flex: 0 0 auto; padding: 8px 14px; gap: 8px; }
++.room-decor-workspace h2 { margin: 0; font-size: 18px; }
++.room-decor-workspace .room-decor-save { flex: 0 0 auto; padding: 0 14px 8px; font-size: 14px; }
++.room-decor-save p { margin: 4px 0; }
++.room-decor-scroll { overflow-y: auto; min-height: 0; padding: 4px 14px 18px; display: grid; gap: 10px; overscroll-behavior: contain; }
++.island-page .room-decor-workspace button { min-height: 48px; min-width: 48px; }
++.room-decor-workspace .room-decor-row { gap: 8px; }
++.room-decor-workspace .room-decor-row small, .room-decor-workspace .room-decor-note { font-size: 14px; }
++.room-decor-workspace .room-decor-color[aria-pressed=false] { opacity: 1; border-style: dashed; }
++.island-page .room-decor-workspace .room-decor-swatch { display: grid; place-items: center; position: relative; width: 76px; height: 76px; border-radius: 16px; padding-bottom: 24px; color: var(--pokomoko-ink); }
++.room-decor-swatch > svg { background: var(--pokomoko-paper); border-radius: 50%; }
++.room-swatch-label { position: absolute; bottom: 0; inset-inline: 0; padding: 3px 1px; border-radius: 0 0 12px 12px; background: var(--pokomoko-paper); font-size: 13px; font-weight: 800; }
++@media (min-width: 700px), (min-width: 480px) and (max-height: 500px) {
++    .island-page .room-decor-workspace { inset: 52px 0 0 auto; width: min(46%, 370px); height: auto; border-radius: 20px 0 0 0; }
++    .app-container .island-page[data-layout-version][data-mode=keepsakes][data-house-layout][data-house-candidate]:has(.room-decor-workspace) > .island-stage { right: min(46%, 370px); bottom: 0; }
++}
++@media (min-width: 480px) and (max-height: 500px) {
++    .island-page .room-decor-workspace { inset-block-start: 0; width: 50%; }
++    .app-container .island-page[data-layout-version][data-mode=keepsakes][data-house-layout][data-house-candidate]:has(.room-decor-workspace) > .island-stage { right: 50%; }
++    .room-decor-workspace .room-decor-save { font-size: 13px; }
++}
++@media (max-height: 390px) and (max-width: 479px) {
++    .island-page .room-decor-workspace { height: 75%; }
++}
++@media (min-width: 480px) and (max-height: 500px) {
++    .app-container .island-page[data-layout-version][data-mode=keepsakes][data-house-layout][data-house-candidate]:has(.room-decor-workspace) > .island-header { right: 50%; width: auto; }
++}
+
+--- before/src/components/island/islandSessionHouseStage.ts
++++ after/src/components/island/islandSessionHouseStage.ts
+@@ -19,20 +19,22 @@
+     keepsakes: ReturnType<typeof useIslandLearningKeepsakes>; enterHouse: () => void; begin: () => Promise<unknown>;
+     setReturnToHouse: Setter<boolean>; setAlbumComparison: Setter<IslandHabitatId | 'all'>;
+     setKeepsakeFocus: Setter<IslandLearningKeepsakeId | undefined>; setHouseSection: (section: 'home' | 'keepsakes' | 'notices') => void;
++    setRoomSpeech: (stop?: () => void) => void;
+     setRoomWord: Setter<{ text: string; japanese?: string; at: number } | undefined>;
+ };
+ 
+ export function islandSessionHouseStage({ screen, setScreen, island, busy, keepsakeRoomActive, houseOverview,
+     challengeSummary, keepsakeFocus, growingRoom, soundEnabled, keepsakes, enterHouse,
+-    begin, setReturnToHouse, setAlbumComparison, setKeepsakeFocus, setHouseSection, setRoomWord }: Inputs): HouseStageBindings {
++    begin, setReturnToHouse, setAlbumComparison, setKeepsakeFocus, setHouseSection, setRoomWord, setRoomSpeech }: Inputs): HouseStageBindings {
+     return {
+         challengeDisplayed: challengeSummary?.displayed,
+         learningKeepsakes: keepsakeRoomActive ? { closeOverview: houseOverview, state: island.learningKeepsakes, selectedId: keepsakeFocus, decor: growingRoom.decor } : undefined,
+         onHomeEnter: !busy && ['home', 'play'].includes(screen) ? enterHouse : undefined,
+         onHomeAction: !busy && screen === 'keepsakes' ? action => {
++            setRoomSpeech(); setRoomWord(undefined);
+             if (action.type === 'album') { setReturnToHouse(true); setAlbumComparison('garden'); setScreen('album'); }
+             else if (action.type === 'notices') { setKeepsakeFocus(undefined); setHouseSection('notices'); }
+-            else if (action.type === 'word') { const word = readWordAloud(action.word); setRoomWord({ text: word?.surface ?? action.word.replace(/_lv\d+$/, ''), japanese: word?.japanese, at: Date.now() }); }
++            else if (action.type === 'word') { const word = readWordAloud(action.word); setRoomSpeech(word.stop); setRoomWord({ text: word?.surface ?? action.word.replace(/_lv\d+$/, ''), japanese: word?.japanese, at: Date.now() }); }
+             else if (action.type === 'desk') void begin();
+             else if (action.type === 'guest') {
+                 const guest = growingRoom.guests.find(g => g.id === action.id);
+
+--- before/src/components/island/growing/useGrowingRoom.ts
++++ after/src/components/island/growing/useGrowingRoom.ts
+@@ -1,7 +1,7 @@
+-import { useCallback, useEffect, useMemo, useState } from 'react';
++import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+ import { ENGLISH_WORDS } from '../../../domain/english/words';
+ import { DEFAULT_DECOR, learnedWords, type LearnedWord, type RoomDecor } from '../../../domain/growingIsland/room';
+-import { commandGrowingIsland, listMoments, readGrowingIsland } from '../../../domain/growingIsland/repository';
++import { commandGrowingIsland, listMoments, observeGrowingIsland, readGrowingIsland } from '../../../domain/growingIsland/repository';
+ import { islandIdOf } from '../../../domain/growingIsland/voyages';
+ import { houseGuests } from './houseGuests';
+ import type { Command, GrowingState } from '../../../domain/growingIsland';
+@@ -21,41 +21,97 @@
+ }
+ 
+ export function useGrowingRoom(profileId: string, vocab: Record<string, Memory>, enabled: boolean, math: Record<string, Memory> = {}) {
+-    const [islandId, setIslandId] = useState('main');
+     const [island, setIsland] = useState<GrowingState>(), [view, setView] = useState<ImageBitmap>();
+-    const [room, setRoom] = useState<RoomDecor>(DEFAULT_DECOR), [mathLevel, setMathLevel] = useState(0), [vocabLevel, setVocabLevel] = useState(0), [error, setError] = useState<string>();
++    const [owner, setOwner] = useState('');
++    const [reload, setReload] = useState(0);
++    const [room, setRoom] = useState<RoomDecor>(DEFAULT_DECOR), [mathLevel, setMathLevel] = useState(0), [vocabLevel, setVocabLevel] = useState(0);
++    const [error, setError] = useState<string>(), [status, setStatus] = useState<'loading' | 'ready' | 'saving' | 'saved' | 'unknown' | 'error'>('loading');
++    const attempt = useRef<{ profileId: string; islandId: string; id: string; command: Extract<Command, { type: 'decorate' }> } | undefined>(undefined);
++    const saving = useRef(false), generation = useRef(0);
++    const islandId = useRef('main'), revision = useRef(-1);
+     const words = useMemo<LearnedWord[]>(() => enabled ? learnedWords(vocab, ENGLISH_WORDS) : [], [enabled, vocab]);
+     useEffect(() => {
+         if (!enabled) return;
+-        let live = true;
+-        // The window shows the latest picture of the island's story.
++        const epoch = ++generation.current;
++        let bitmap: ImageBitmap | undefined;
++        setOwner(''); setIsland(undefined); setView(undefined); setStatus('loading'); setError(undefined);
++        saving.current = false; attempt.current = undefined; revision.current = -1;
++        const subscription = observeGrowingIsland(profileId).subscribe({
++            next: record => {
++                if (epoch !== generation.current) return;
++                if (!record) { setStatus('error'); setError('いえを よみこめなかったよ。もういちど ひらいてね。'); return; }
++                islandId.current = islandIdOf(record); revision.current = record.revision;
++                setOwner(profileId); setIsland(record.state); setRoom({ ...DEFAULT_DECOR, ...record.state.room });
++                setMathLevel(record.state.mastery?.math ?? 0); setVocabLevel(record.state.mastery?.vocab ?? 0);
++                setStatus(current => current === 'loading' ? 'ready' : current);
++            },
++            error: () => { if (epoch === generation.current) { setStatus('error'); setError('いえを よみこめなかったよ。もういちど ひらいてね。'); } },
++        });
++        // A saved picture, never a live view or another owner's previous bitmap.
+         void listMoments(profileId).then(async moments => {
+             const latest = moments[moments.length - 1];
+             if (!latest || typeof createImageBitmap !== 'function') return;
+-            const bitmap = await createImageBitmap(latest.image);
+-            if (live) setView(bitmap); else bitmap.close();
++            const image = await createImageBitmap(latest.image);
++            if (epoch === generation.current) { bitmap = image; setView(image); } else image.close();
+         }).catch(() => undefined);
+-        void readGrowingIsland(profileId).then(record => {
+-            if (!live || !record) return;
+-            setIslandId(islandIdOf(record)); setIsland(record.state); setRoom({ ...DEFAULT_DECOR, ...record.state.room }); setMathLevel(record.state.mastery?.math ?? 0); setVocabLevel(record.state.mastery?.vocab ?? 0);
+-        }).catch(() => undefined);
+-        return () => { live = false; };
+-    }, [profileId, enabled]);
+-    const decorate = useCallback(async (command: Extract<Command, { type: 'decorate' }>) => {
++        return () => { generation.current = epoch + 1; subscription.unsubscribe(); bitmap?.close(); };
++    }, [profileId, enabled, reload]);
++    const decorate = useCallback(async (command: Extract<Command, { type: 'decorate' }>, retry = false) => {
++        if (!enabled || owner !== profileId || saving.current) return;
++        const epoch = generation.current;
++        const intent = retry ? attempt.current : { profileId, islandId: islandId.current, id: crypto.randomUUID(), command };
++        if (!intent || intent.profileId !== profileId || intent.islandId !== islandId.current) return;
++        attempt.current = intent; saving.current = true; setStatus('saving'); setError(undefined);
++        // An unanswered request is not proof of a failed write; retain its id for retry.
++        const timeout = window.setTimeout(() => {
++            if (epoch === generation.current) { setStatus('unknown'); setError('のこせたか たしかめているよ。とじても だいじょうぶだよ。'); }
++        }, 8000);
+         try {
+-            const result = await commandGrowingIsland(profileId, { id: crypto.randomUUID(), islandId, command });
+-            setRoom({ ...DEFAULT_DECOR, ...result.record.state.room }); setError(undefined);
+-        } catch { setError('もようがえを ほぞん できなかったよ。もういちど ためしてね。'); }
+-    }, [profileId, islandId]);
+-    const guests = useMemo(() => island ? houseGuests(island) : [], [island]);
++            const result = await commandGrowingIsland(profileId, intent);
++            if (epoch !== generation.current) return;
++            if (islandIdOf(result.record) !== islandId.current) return;
++            if (result.record.revision >= revision.current) {
++                revision.current = result.record.revision;
++                setRoom({ ...DEFAULT_DECOR, ...result.record.state.room }); setIsland(result.record.state);
++            }
++            setStatus('saved'); setError(undefined); attempt.current = undefined;
++        } catch {
++            if (epoch !== generation.current) return;
++            try {
++                const record = await readGrowingIsland(profileId);
++                if (epoch !== generation.current) return;
++                if (record && islandIdOf(record) === intent.islandId) {
++                    setRoom({ ...DEFAULT_DECOR, ...record.state.room }); setIsland(record.state);
++                    if (record.state.applied.includes(intent.id)) { setStatus('saved'); setError(undefined); attempt.current = undefined; return; }
++                }
++                setStatus('error'); setError('もようがえを のこせなかったよ。もういちど ためせるよ。');
++            } catch {
++                if (epoch === generation.current) { setStatus('unknown'); setError('のこせたか まだ わからないよ。もういちど たしかめてね。'); }
++            }
++        } finally { clearTimeout(timeout); if (epoch === generation.current) saving.current = false; }
++    }, [profileId, enabled, owner]);
++    const retry = useCallback(async () => {
++        const intent = attempt.current, epoch = generation.current;
++        if (!intent) { setReload(value => value + 1); return; }
++        if (intent.profileId !== profileId) return;
++        try {
++            const record = await readGrowingIsland(profileId);
++            if (epoch !== generation.current || !record || islandIdOf(record) !== intent.islandId) return;
++            if (record.revision >= revision.current) { revision.current = record.revision; setRoom({ ...DEFAULT_DECOR, ...record.state.room }); setIsland(record.state); }
++            if (record.state.applied.includes(intent.id)) { setStatus('saved'); setError(undefined); attempt.current = undefined; return; }
++            if (!saving.current) void decorate(intent.command, true);
++            else setError('まだ のこしているよ。とじても だいじょうぶだよ。');
++        } catch { if (epoch === generation.current) setError('まだ たしかめられないよ。とじて ひらきなおせるよ。'); }
++    }, [decorate, profileId]);
++    const guests = useMemo(() => owner === profileId && island ? houseGuests(island) : [], [island, owner, profileId]);
+     const today = useMemo(() => enabled ? todayLearned(vocab, math) : [], [enabled, vocab, math]);
+-    const decor = useMemo<IslandRoomDecor | undefined>(() => enabled ? { ...room, words, guests, view, today } : undefined, [enabled, room, words, guests, view, today]);
+-    return { decor, room, words, mathLevel, vocabLevel, decorate, error, island, guests };
++    const decor = useMemo<IslandRoomDecor | undefined>(() => enabled && owner === profileId ? { ...room, words, guests, view, today } : undefined, [enabled, owner, profileId, room, words, guests, view, today]);
++    return { decor, room: owner === profileId ? room : DEFAULT_DECOR, words, mathLevel: owner === profileId ? mathLevel : 0, vocabLevel: owner === profileId ? vocabLevel : 0, decorate, retry, status: owner === profileId ? status : 'loading', error, island: owner === profileId ? island : undefined, guests };
+ }
+ 
+ export function readWordAloud(id: string) {
+     const word = ENGLISH_WORDS.find(w => w.id === id);
+-    speakEnglish(word?.surface ?? id.replace(/_lv\d+$/, ''));
+-    return word;
++    const surface = word?.surface ?? id.replace(/_lv\d+$/, '');
++    return { ...word, surface, stop: speakEnglish(surface) };
+ }
+ 
+
+--- before/src/components/island/growing/RoomDecorPanel.tsx
++++ after/src/components/island/growing/RoomDecorPanel.tsx
+@@ -1,43 +1,45 @@
+-import { useMemo, useState } from 'react';
+-import { IslandToyIcon } from '../IslandToyIcon';
++import { useEffect, useMemo, useRef } from 'react';
++import { Check, X } from 'lucide-react';
+ import { patternOpen, RUG_COLORS, WALL_PATTERNS, WORD_GROUPS, type LearnedWord, type RoomDecor, type WordGroupId } from '../../../domain/growingIsland/room';
+ import type { Command } from '../../../domain/growingIsland';
+ import './growingLoading.css';
+ 
+ /** もようがえ: the wall is drawn with the words the child learned; shapes open with math. */
+-export function RoomDecorPanel({ room, words, mathLevel, vocabLevel = 0, error, onDecorate }: {
+-    room: RoomDecor; words: readonly LearnedWord[]; mathLevel: number; vocabLevel?: number; error?: string;
++export function RoomDecorPanel({ room, words, mathLevel, vocabLevel = 0, error, status, onDecorate, onRetry, onClose }: {
++    room: RoomDecor; words: readonly LearnedWord[]; mathLevel: number; vocabLevel?: number; error?: string; status: string; onRetry: () => void; onClose: () => void;
+     onDecorate: (command: Extract<Command, { type: 'decorate' }>) => void;
+ }) {
+-    const [open, setOpen] = useState(false);
++    const heading = useRef<HTMLHeadingElement>(null);
++    useEffect(() => { const frame = requestAnimationFrame(() => heading.current?.focus({ preventScroll: true })); return () => cancelAnimationFrame(frame); }, []);
++    const locked = status === 'saving' || status === 'loading' || status === 'unknown';
+     const counts = useMemo(() => Object.fromEntries(WORD_GROUPS.map(g => [g.id, words.filter(w => w.group === g.id).length])) as Record<WordGroupId, number>, [words]);
+     const hidden = new Set(room.hidden ?? []);
+-    if (!open) return <button className="island-secondary room-decor-open" data-room-entry="decor" onClick={() => setOpen(true)}>
+-        <span className="room-entry-icon" aria-hidden="true"><IslandToyIcon kind="palette" size={32} /></span>
+-        <strong>もようがえ</strong><small>{words.length ? `おぼえた ことば ${words.length}こが かべの もように` : 'ことばを おぼえると かべに みずたまが ふえるよ'}</small>
+-    </button>;
+-    return <section className="room-decor" data-room-panel="decor" aria-label="もようがえ">
+-        <header><strong>もようがえ</strong><button className="island-secondary" onClick={() => setOpen(false)}>とじる</button></header>
++    return <section className="room-decor room-decor-workspace" data-room-panel="decor" aria-label="もようがえ">
++        <header><h2 ref={heading} tabIndex={-1}>もようがえ</h2><button className="island-secondary" onClick={onClose}><X size={18} aria-hidden="true" />とじる</button></header>
++        <div className="room-decor-save" role="status" aria-live="polite">{status === 'loading' ? 'いえを よみこんでいるよ' : status === 'saving' ? 'のこしているよ…' : status === 'saved' ? 'のこしたよ' : 'えらぶと へやに のこるよ'}
++            {error && <p>{error}</p>}{(error || status === 'error' || status === 'unknown') && <button className="island-secondary" onClick={onRetry}>もういちど たしかめる</button>}</div>
++        <div className="room-decor-scroll">
+         <p className="room-decor-note">かべの みずたまは、おぼえた えいごの ことば。さわると よみあげるよ</p>
+         <h3>もようの かたち</h3>
+         <div className="room-decor-row">{WALL_PATTERNS.map(pattern => {
+             const available = patternOpen(pattern.id, mathLevel, vocabLevel);
+             const need = 'vocabLevel' in pattern ? `えいご Lv${pattern.vocabLevel}で` : `さんすう Lv${pattern.mathLevel}で`;
+-            return <button key={pattern.id} className="island-secondary" aria-pressed={room.pattern === pattern.id} disabled={!available}
++            return <button key={pattern.id} className="island-secondary" aria-pressed={room.pattern === pattern.id} disabled={locked || !available}
+                 onClick={() => onDecorate({ type: 'decorate', pattern: pattern.id })}>
+                 {pattern.name}{!available && <small>{need}</small>}</button>;
+         })}</div>
+         <h3>つかう いろ</h3>
+         <div className="room-decor-row">{WORD_GROUPS.filter(g => counts[g.id] > 0).map(group =>
+-            <button key={group.id} className="island-secondary room-decor-color" aria-pressed={!hidden.has(group.id)} style={{ borderColor: group.color }}
++            <button key={group.id} className="island-secondary room-decor-color" disabled={locked} aria-pressed={!hidden.has(group.id)} style={{ borderColor: group.color }}
+                 onClick={() => {
+                     const next = new Set(hidden); if (next.has(group.id)) next.delete(group.id); else next.add(group.id);
+                     onDecorate({ type: 'decorate', hidden: [...next] });
+-                }}><span style={{ background: group.color }} aria-hidden="true" />{group.name} {counts[group.id]}</button>)}
+-            {!words.length && <small>まだ ないよ。まなぶと ふえるよ</small>}</div>
++                }}><span style={{ background: group.color }} aria-hidden="true" />{group.name} {counts[group.id]} {hidden.has(group.id) ? 'つかわない' : 'つかう'}</button>)}
++            {!words.length && <small>ことばが ふえると、かべの もように なるよ。ラグは かえられるよ</small>}</div>
+         <h3>ラグ</h3>
+         <div className="room-decor-row">{RUG_COLORS.map((color, index) => <button key={color} className="room-decor-swatch" style={{ background: color }}
+-            aria-label={`ラグの いろ ${index + 1}`} aria-pressed={room.rug === index} onClick={() => onDecorate({ type: 'decorate', rug: index })} />)}</div>
+-        {error && <p role="alert">{error}</p>}
++            disabled={locked} aria-label={`ラグの いろ ${index + 1}・${['あおみどり', 'あか', 'きいろ', 'あお', 'むらさき', 'ももいろ'][index]}`} aria-pressed={room.rug === index} onClick={() => onDecorate({ type: 'decorate', rug: index })}>
++            {room.rug === index && <Check size={24} aria-hidden="true" />}<span className="room-swatch-label">{['あおみどり', 'あか', 'きいろ', 'あお', 'むらさき', 'ももいろ'][index]}</span></button>)}</div>
++        </div>
+     </section>;
+ }
+
+--- before/src/components/island/growing/LettersPanel.tsx
++++ after/src/components/island/growing/LettersPanel.tsx
+@@ -1,4 +1,5 @@
+-import { useState } from 'react';
++import { speakJapanese } from '../../../utils/tts';
++import { useEffect, useRef, useState } from 'react';
+ import { Mail } from 'lucide-react';
+ import type { Letter } from './letters';
+ 
+@@ -7,33 +8,36 @@
+     try { return new Set(JSON.parse(localStorage.getItem(readKey(profileId)) ?? '[]')); } catch { return new Set(); }
+ }
+ 
+-function speak(text: string) {
+-    try {
+-        window.speechSynthesis.cancel();
+-        const utterance = new SpeechSynthesisUtterance(text); utterance.lang = 'ja-JP'; utterance.rate = .95;
+-        window.speechSynthesis.speak(utterance);
+-    } catch { /* The letter stays on screen. */ }
+-}
+-
+ /** Letters from island friends on Pokomoko's board; tapping one reads it aloud. */
+ export function LettersPanel({ profileId, letters }: { profileId: string; letters: Letter[] }) {
+     const [open, setOpen] = useState(false), [read, setRead] = useState(() => readIds(profileId));
++    const voice = useRef<(() => void) | undefined>(undefined);
++    useEffect(() => {
++        const stop = () => voice.current?.();
++        const hidden = () => { if (document.hidden) stop(); };
++        document.addEventListener('visibilitychange', hidden);
++        const menu = document.querySelector('dialog.island-house-menu');
++        menu?.addEventListener('close', stop);
++        return () => { document.removeEventListener('visibilitychange', hidden); menu?.removeEventListener('close', stop); stop(); };
++    }, [profileId]);
++    const entry = useRef<HTMLButtonElement>(null);
+     const unread = letters.filter(l => !read.has(l.id)).length;
+     const mark = (id: string) => {
+         const next = new Set(read).add(id); setRead(next);
+         try { localStorage.setItem(readKey(profileId), JSON.stringify([...next].slice(-400))); } catch { /* Read marks are only a convenience. */ }
+     };
+-    if (!open) return <button className="island-secondary room-decor-open" data-room-entry="letters" onClick={() => setOpen(true)}>
++    if (!open) return <button ref={entry} className="island-secondary room-decor-open" data-room-entry="letters" onClick={() => setOpen(true)}>
+         <span className="room-entry-icon" aria-hidden="true"><Mail size={28} /></span>
+         <strong>なかまの てがみ</strong>
+         {unread > 0 && <span className="room-entry-badge">あたらしい {unread}つう</span>}
+         <small>{letters.length ? 'しまの なかまから てがみが とどいているよ' : 'なかまが すむと てがみが とどくよ'}</small>
+     </button>;
+     return <section className="room-decor" data-room-panel="letters" aria-label="なかまの てがみ">
+-        <header><strong>なかまの てがみ</strong><button className="island-secondary" onClick={() => setOpen(false)}>とじる</button></header>
++        <header><strong>なかまの てがみ</strong><button className="island-secondary" onClick={() => { voice.current?.(); setOpen(false); requestAnimationFrame(() => entry.current?.focus()); }}>とじる</button></header>
++        <p className="room-decor-note">てがみに さわると きけるよ</p>
+         {!letters.length && <p className="room-decor-note">しまに なかまが すむと、てがみが とどくよ</p>}
+         <ul className="room-letters">{letters.map(letter => <li key={letter.id}>
+-            <button data-unread={!read.has(letter.id) ? 'true' : undefined} onClick={() => { mark(letter.id); speak(`${letter.from}より。${letter.text}`); }}>
++            <button data-unread={!read.has(letter.id) ? 'true' : undefined} onClick={() => { mark(letter.id); voice.current?.(); voice.current = speakJapanese(`${letter.from}より。${letter.text}`); }}>
+                 <small>{letter.from}より</small><span>{letter.text}</span>
+             </button>
+         </li>)}</ul>
+
+--- before/src/components/island/growing/growingLoading.css
++++ after/src/components/island/growing/growingLoading.css
+@@ -28,7 +28,7 @@
+ .room-word {
+     position: fixed; z-index: 30; left: 50%; top: 30%; display: grid; justify-items: center; gap: 2px; margin: 0; padding: 12px 22px;
+     background: var(--pokomoko-paper, #fffdf9); border: 3px solid #1f1a24; border-radius: 22px; transform: translateX(-50%);
+-    box-shadow: 6px 6px 0 #ffd23f; animation: room-word 2.6s ease-out forwards; pointer-events: none;
++    box-shadow: 6px 6px 0 #ffd23f; pointer-events: auto; max-width: calc(100vw - 32px); max-height: 60dvh; overflow-y: auto;
+ }
+ .room-word strong { font-size: 30px; letter-spacing: .02em; }
+ .room-word span { font-size: 15px; font-weight: 700; color: var(--pokomoko-muted, #7a6f88); }
+@@ -42,3 +42,5 @@
+ .growing-loading-details { width: 100%; font-size: 12px; }
+ .growing-loading-details summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; }
+ .growing-loading-details pre { max-height: 120px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; user-select: text; }
++
++.room-word button { min-height: 48px; min-width: 48px; }
+
+--- before/src/components/island/three/homeInteriorCamera.ts
++++ after/src/components/island/three/homeInteriorCamera.ts
+@@ -1,7 +1,7 @@
+ import * as THREE from 'three';
+ import type { IslandLearningKeepsakeScenery } from './learningKeepsakeScenery';
+ 
+-export const ISLAND_HOME_CAMERA_CANDIDATE = 'island-home-interior-v5';
++export const ISLAND_HOME_CAMERA_CANDIDATE = 'island-home-interior-v6';
+ export const ISLAND_HOME_CAMERA_POSITION = [0, 3, 4.62] as const;
+ const livingNames = ['home-reading-seat', 'home-coffee-table', 'home-album', 'home-notice-board', 'home-plant-pot', 'home-window-frame', 'challenge-certificate', 'challenge-trophy'];
+ const corners = (bounds: THREE.Box3) => [bounds.min.x, bounds.max.x].flatMap(x => [bounds.min.y, bounds.max.y].flatMap(y =>
+@@ -14,6 +14,7 @@
+     room.group.updateWorldMatrix(true, true);
+     const scale = room.group.getWorldScale(new THREE.Vector3()).x, selected = room.selectedObject();
+     let position = new THREE.Vector3(...ISLAND_HOME_CAMERA_POSITION), target = new THREE.Vector3(0, 1.40, 1.10);
++    if (closeOverview && !selected) { position.set(.4, 2.65, 4.62); target.set(.4, .85, 2.4); }
+     let subjects: THREE.Object3D[];
+     if (selected) {
+         const bounds = new THREE.Box3().setFromPoints(corners(new THREE.Box3().setFromObject(selected, true)).map(point => room.group.worldToLocal(point)));
+@@ -22,15 +23,15 @@
+         position = target.clone().add(new THREE.Vector3(0, .04, distance + size.z / 2));
+         subjects = [selected];
+     } else {
+-        subjects = livingNames.map(name => room.group.getObjectByName(name)).filter((object): object is THREE.Object3D => Boolean(object));
++        subjects = (closeOverview ? ['home-coffee-table', 'home-album'] : livingNames).map(name => room.group.getObjectByName(name)).filter((object): object is THREE.Object3D => Boolean(object));
+         // Include the complete finite display area even while the child has no awards.
+-        subjects.push(...room.group.children.filter(object => object.name.startsWith('keepsake-') && object.userData.keepsakeId));
++        if (!closeOverview) subjects.push(...room.group.children.filter(object => object.name.startsWith('keepsake-') && object.userData.keepsakeId));
+     }
+     // Portrait overview favors the central living space. Detail views still fit every object.
+     const framingAspect = closeOverview && !selected ? Math.max(aspect, .9) : aspect;
+     camera.position.copy(room.group.localToWorld(position)); camera.up.set(0, 1, 0).applyQuaternion(room.group.getWorldQuaternion(new THREE.Quaternion()));
+     camera.lookAt(room.group.localToWorld(target)); camera.updateMatrixWorld(true);
+-    let tangent = selected ? Math.tan(Math.PI / 8) : Math.tan(39 * Math.PI / 180);
++    let tangent = selected ? Math.tan(Math.PI / 8) : Math.tan((closeOverview ? 30 : 39) * Math.PI / 180);
+     for (const object of subjects) for (const point of corners(new THREE.Box3().setFromObject(object, true))) {
+         point.applyMatrix4(camera.matrixWorldInverse);
+         if (point.z >= -.01 * scale) return false;
+
+--- before/src/components/island/three/homeInteriorCamera.test.ts
++++ after/src/components/island/three/homeInteriorCamera.test.ts
+@@ -150,8 +150,11 @@
+             const projected = point.clone().project(close);
+             ray.setFromCamera(new THREE.Vector2(projected.x, projected.y), close);
+             expect(room.selectHit(ray.ray)).toEqual({ type: 'album' });
+-            if (aspect < .9) expect(close.fov).toBeLessThan(wide.fov);
+-            else expect(close.projectionMatrix.elements).toEqual(wide.projectionMatrix.elements);
++            expect(close.fov).toBeLessThan(wide.fov);
++            const closeFrame = [...close.projectionMatrix.elements];
++            room.update(undefined, 0, true);
++            expect(fitIslandHomeInteriorCamera(close, room, aspect, true)).toBe(true);
++            expect(close.projectionMatrix.elements).toEqual(closeFrame);
+             room.update(all, 1000, true, 'first-completion');
+             const detail = fit(room, aspect);
+             expect(fitIslandHomeInteriorCamera(close, room, aspect, true)).toBe(true);
+
+--- before/src/components/island/three/learningKeepsakeScenery.ts
++++ after/src/components/island/three/learningKeepsakeScenery.ts
+@@ -300,7 +300,9 @@
+         const today = decor.today ?? [];
+         g.fillText(today.length ? 'きょう まなんだ' : 'ここから まなぶ', 128, 40);
+         g.font = '800 24px "Zen Maru Gothic", sans-serif';
+-        (today.length ? today.slice(0, 4) : ['▶']).forEach((text, i) => g.fillText(text.slice(0, 12), 128, 80 + i * 30));
++        (today.length ? today.slice(0, 2) : ['▶']).forEach((text, i) => g.fillText(text.slice(0, 12), 128, 78 + i * 30));
++        g.font = '900 26px "Zen Maru Gothic", sans-serif';
++        if (today.length) g.fillText('▶ まなぶ', 128, 166);
+         this.deskTexture = new THREE.CanvasTexture(canvas); this.deskTexture.colorSpace = THREE.SRGBColorSpace;
+         const material = new THREE.MeshBasicMaterial({ map: this.deskTexture }); this.materials.add(material);
+         const card = new THREE.Mesh(new THREE.PlaneGeometry(.66, .5), material);
+
+--- before/src/utils/tts.ts
++++ after/src/utils/tts.ts
+@@ -19,7 +19,7 @@
+ };
+ 
+ /** Manual callers invoke this directly in the click, preserving browser activation. */
+-export const speakEnglish = (text: string, callbacks: EnglishSpeechCallbacks = {}): (() => void) => {
++const speak = (text: string, lang: 'en-US' | 'ja-JP', callbacks: EnglishSpeechCallbacks = {}): (() => void) => {
+     stopEnglishSpeech();
+     const synth = window.speechSynthesis;
+     if (!synth || typeof SpeechSynthesisUtterance === 'undefined') {
+@@ -28,12 +28,12 @@
+     }
+     if (!text.trim()) return () => {};
+     const utterance = new SpeechSynthesisUtterance(text.trim());
+-    utterance.lang = 'en-US';
++    utterance.lang = lang;
+     utterance.rate = 0.9;
+     utterance.pitch = 1;
+     utterance.volume = 1;
+     // Prefer installed English voices so supported devices also work offline.
+-    const english = synth.getVoices().filter(voice => /^en[-_]/i.test(voice.lang));
++    const english = synth.getVoices().filter(voice => (lang === 'en-US' ? /^en[-_]/i : /^ja[-_]/i).test(voice.lang));
+     const voice = english.find(voice => voice.localService && voice.name === 'Samantha')
+         ?? english.find(voice => voice.localService && voice.default)
+         ?? english.find(voice => voice.localService && /^en[-_]US$/i.test(voice.lang))
+@@ -73,3 +73,7 @@
+     }
+     return stop;
+ };
++
++export const speakEnglish = (text: string, callbacks: EnglishSpeechCallbacks = {}) => speak(text, 'en-US', callbacks);
++/** The returned stop only cancels this utterance, never a newer owner's voice. */
++export const speakJapanese = (text: string) => speak(text, 'ja-JP');
+
+--- before/src/utils/tts.test.ts
++++ after/src/utils/tts.test.ts
+@@ -1,5 +1,5 @@
+ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+-import { speakEnglish, stopEnglishSpeech, warmUpTTS } from './tts';
++import { speakEnglish, speakJapanese, stopEnglishSpeech, warmUpTTS } from './tts';
+ 
+ class Utterance {
+     constructor(public text: string) {}
+@@ -80,3 +80,15 @@
+         expect(error).not.toHaveBeenCalled();
+     });
+ });
++
++it('keeps Japanese letter ownership separate from a later learning pronunciation', () => {
++    const voice = { name: 'Kyoko', lang: 'ja-JP', localService: true };
++    synth.getVoices.mockReturnValue([voice, { name: 'English', lang: 'en-US', localService: true }]);
++    const stopLetter = speakJapanese('こんにちは');
++    expect(latest()).toMatchObject({ text: 'こんにちは', lang: 'ja-JP', voice });
++    speakEnglish('apple');
++    const cancelled = synth.cancel.mock.calls.length;
++    stopLetter();
++    expect(synth.cancel).toHaveBeenCalledTimes(cancelled);
++    expect(latest()).toMatchObject({ text: 'apple', lang: 'en-US' });
++});

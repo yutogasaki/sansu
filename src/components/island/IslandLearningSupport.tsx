@@ -1,3 +1,6 @@
+import { useContext } from 'react';
+import { createPortal } from 'react-dom';
+import { LearningSupportHost } from '../domain/learningGuidanceHost';
 import { baseTenVisual } from '../../domain/math/baseTenVisual';
 import { BaseTenExchangeGuide } from '../domain/BaseTenDiagram';
 import { parkHissanGrid } from '../../domain/park/learning';
@@ -25,6 +28,7 @@ const stepGuide: Record<NonNullable<HissanStep['phase']>, string> = {
 };
 
 export function IslandLearningSupport({ slot }: { slot: IslandLearningSlot }) {
+    const supportHost = useContext(LearningSupportHost);
     const problem = slot.problem;
     const grid = parkHissanGrid(problem);
     const stage = islandSupportStage(slot);
@@ -36,10 +40,13 @@ export function IslandLearningSupport({ slot }: { slot: IslandLearningSlot }) {
             : phase ? stepGuide[phase] : hissanGuide[grid.operation]
         : hissanGuide[grid.operation] } : islandLearningGuidance(problem);
     const answer = problem.displayAnswer ?? (Array.isArray(problem.correctAnswer) ? problem.correctAnswer.join(' / ') : problem.correctAnswer);
-    if (stage === 'hint') return <div className="island-learning-support" data-support-kind="hint">
+    if (stage === 'hint') {
+        const hint = <div className="island-learning-support" data-support-kind="hint" data-support-problem-id={problem.id} tabIndex={0}>
         <p><strong>ヒント</strong> {guidance?.text ?? '「おてほんを みる」で、こたえを たしかめられるよ。'}</p>
         {baseTenVisual(problem) && <BaseTenExchangeGuide />}
     </div>;
+        return supportHost ? createPortal(hint, supportHost) : hint;
+    }
     // These are presentation-only values. The child's saved/draft Hissan values
     // stay in the disabled form; none of the model's cells are submitted.
     const modelValues = new Map<string, string>();

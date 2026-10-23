@@ -1,0 +1,128 @@
+/* Full-size companion and a single instruction outlet; worksheet input stays put. */
+.app-container .island-page[data-layout-version][data-mode=learning][data-learning-layout=speech-companion-v2][data-learning-candidate] {
+    --learning-actor-height: 192px;
+    --learning-actor-width: 184px;
+    > .island-header {
+        position: relative; display: grid; flex: none;
+        grid-template-columns: 164px minmax(0, 1fr);
+        grid-template-rows: 48px auto 28px minmax(0, 1fr);
+        align-items: start; gap: 6px 8px;
+        width: min(100%, 480px); height: auto; max-height: none; min-height: 192px;
+        padding: env(safe-area-inset-top) 12px 0;
+    }
+    .island-brand, .island-light-trail, .learning-progress-cue { display: none; }
+    .island-learning-label:not([data-interactive=true]) { display: none; }
+    .island-learning-preference { grid-area: 4 / 2; min-height: 44px; }
+    .island-learning-preference .island-subject-choice { min-height: 44px; }
+    .island-learning-progress { position: absolute; top: max(4px, env(safe-area-inset-top)); left: 12px; min-height: 24px; display: block; }
+    .island-learning-count { position: absolute; top: 0; left: 0; white-space: nowrap; }
+    .island-header-actions { grid-area: 1 / 2; justify-self: end; gap: 6px; flex-wrap: nowrap; }
+    .island-sound-button, .island-learning-pause { width: 48px; min-width: 48px; height: 48px; padding: 0; justify-content: center; }
+    .island-sound-button > span, .island-learning-pause > span { display: none; }
+    .island-sound-message { z-index: 10; background: white; }
+    .island-learning-companion-slot { grid-area: 1 / 1 / 5 / 2; width: var(--learning-actor-width); height: var(--learning-actor-height); pointer-events: none; }
+    .island-learning-companion { position: relative; width: 100%; height: var(--learning-actor-height); overflow: hidden; }
+    .island-learning-companion .pokomoko-learning-actor { position: absolute; inset: 0; width: 100%; height: 100%; visibility: visible; transition: none; }
+    .island-learning-guidance-slot { position: relative; grid-area: 2 / 2; min-width: 0; --guidance-space: 90px; height: var(--guidance-space); }
+    .island-learning-guidance-slot > .island-learning-support { position: relative; z-index: 4; max-height: 42px; overflow: auto; margin: 2px 0 0; padding: 3px 6px; border-radius: 9px; background: #edf4ff; font-size: 13px; line-height: 1.35; }
+    .island-learning-guidance-slot > .island-learning-support p { margin: 0; }
+    .park-support:empty { display: none; }
+    .island-learning-bubble { position: relative; padding: 10px 10px; min-height: 56px; isolation: isolate; }
+    .island-learning-bubble-outline { position: absolute; z-index: -1; top: -3px; bottom: -3px; left: -14px; width: calc(100% + 17px); height: calc(100% + 6px); overflow: visible; pointer-events: none; }
+    .island-learning-bubble-outline path { fill: white; stroke: var(--pop-border, #b4a7c4); stroke-width: 1.5px; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+    .island-learning-bubble .written-guidance { display: block; position: static; width: auto; height: auto; overflow: visible; clip-path: none; min-height: 0; margin: 0; font-size: 14px; line-height: 1.4; overflow-wrap: anywhere; }
+    .island-learning-bubble .written-guidance strong { display: none; }
+    .island-learning-bubble .written-guidance-phrase { display: inline-block; max-width: 100%; overflow-wrap: anywhere; vertical-align: top; }
+    .island-header > .pokomoko-learning-feedback { grid-area: 3 / 2; height: 28px; min-height: 28px; width: 100%; overflow: hidden; font-size: 13px; }
+    .pokomoko-play-scene { height: 100%; position: relative; }
+    .pokomoko-play-scene::after,
+    .pokomoko-stage-colors, .pokomoko-stage-flags, .pokomoko-stage-stars,
+    .pokomoko-stage-rays, .pokomoko-stage-confetti, .pokomoko-new-stamp,
+    .pokomoko-jump-lines, .pokomoko-stamp-shelf { display: none; }
+    .pokomoko-learning-caption, [data-resting=true] .pokomoko-learning-caption { display: flex; position: absolute; inset: 0; width: 100%; height: 100%; transform: none; }
+    .pokomoko-party-headline, [data-resting=true] .pokomoko-party-headline { display: flex; flex-direction: row; justify-content: flex-start; flex-wrap: wrap; gap: 0 6px; padding: 0 6px; border: 0; border-radius: 0; background: none; box-shadow: none; font: 750 13px/1.35 PokomokoRound, sans-serif; }
+    .pokomoko-combo-label, [data-peak=true] .pokomoko-combo-label,
+    .pokomoko-combo-number, [data-peak=true] .pokomoko-combo-number { font: inherit; color: var(--pop-blue); -webkit-text-stroke: 0; filter: none; text-shadow: none; animation: none; }
+    .pokomoko-answer-receipt { position: absolute; inset: 0; display: flex; align-items: center; width: 100%; height: 100%; clip-path: none; padding: 0 6px; border: 0; background: none; font: 750 13px/1.35 PokomokoRound, sans-serif; }
+    > .island-workbench { flex: 1; display: flex; flex-direction: column; gap: 0; min-height: 0; --stage-height: 0px; overflow: visible; }
+    .island-answer-stage { flex: 1; min-height: 0; }
+    .island-learning-actions { flex: none; margin-top: 0; }
+    .pokomoko-input-sparks { overflow: visible; }
+    /* One history scroller below fixed operands. Never scroll the current row
+       behind a sticky operand block when the header reflows. */
+    .island-answer[data-input-type=hissan] .park-question:has(.written-history) { display: flex; align-items: stretch; overflow: hidden; padding: 6px; }
+    .park-question:has(.written-history) .written-arithmetic { display: flex; flex: 1; flex-direction: column; min-height: 0; }
+    .park-question .written-paper:has(.written-history) { display: flex; flex: 1; flex-direction: column; min-height: 0; }
+    .written-pinned { flex: none; position: static; }
+    .written-heading, .written-pinned-guidance { display: none; }
+    .written-input-guide { flex: none; font-size: 12px; }
+    .written-history, .written-arithmetic[data-written-operation=division] .written-history { flex: 1 1 auto; min-height: 0; max-height: none; overflow-y: auto; }
+}
+@media (max-width: 360px), (orientation: portrait) and (max-height: 660px) {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-layout=speech-companion-v2][data-learning-candidate] {
+        --learning-actor-height: 172px; --learning-actor-width: 165px;
+        > .island-header { grid-template-columns: 143px minmax(0, 1fr); min-height: 156px; grid-template-rows: 48px auto 24px; gap: 4px 8px; padding-inline: 8px; }
+        .island-learning-companion-slot { grid-area: 1 / 1 / 4 / 2; height: 156px; }
+        .island-learning-progress { left: 8px; }
+        .island-learning-guidance-slot { --guidance-space: 72px; }
+        .island-learning-bubble { padding: 7px 6px; min-height: 50px; }
+        .island-learning-bubble .written-guidance { font-size: 13px; line-height: 1.35; }
+        .island-header > .pokomoko-learning-feedback { height: 24px; min-height: 24px; }
+        .written-input-guide { display: none; }
+        .island-answer[data-input-type=hissan] .park-question:has(.written-history) { padding: 4px; }
+        .island-answer .park-keypad button { height: 44px; padding-block: 0; }
+        .island-answer .park-keypad > div { gap: 5px; }
+        .written-cell:not(button), .written-cell[data-completed=true]:not(button) { height: 28px; }
+    }
+}
+/* Short landscape: keep the companion on the left, paper and keypad beside it. */
+@media (orientation: landscape) and (max-height: 540px) {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-layout=speech-companion-v2][data-learning-candidate] {
+        display: grid; grid-template-columns: 176px minmax(0, 1fr); gap: 6px; align-items: stretch;
+        --learning-actor-height: 160px; --learning-actor-width: 153px;
+        > .island-header { width: 176px; height: 100%; min-height: 0; grid-template-columns: minmax(0, 1fr); grid-template-rows: 48px 160px auto 24px; padding: 2px 8px; gap: 2px; }
+        .island-learning-progress { left: 8px; }
+        .island-header-actions { grid-area: 1 / 1; }
+        .island-learning-companion-slot { grid-area: 2 / 1; justify-self: center; }
+        .island-learning-guidance-slot { grid-area: 3 / 1; --guidance-space: 58px; }
+        .island-learning-bubble { min-height: 0; padding: 5px 7px; }
+        .island-learning-bubble .written-guidance { font-size: 13px; line-height: 1.3; }
+        .island-learning-bubble-outline { left: -3px; width: calc(100% + 6px); }
+        .island-header > .pokomoko-learning-feedback { grid-area: 4 / 1; height: 24px; min-height: 24px; }
+        > .island-workbench { width: 100%; margin: 0; padding: 4px 6px; }
+        .island-answer { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(144px, 1fr); grid-template-rows: auto minmax(0, 1fr); gap: 4px; }
+        .island-answer .park-question { grid-area: 1 / 1 / 3 / 2; margin: 0; min-height: 0; }
+        .island-answer .park-support { grid-area: 1 / 1 / 3 / 2; overflow: auto; }
+        .island-answer .park-inputs { grid-area: 1 / 2; }
+        .island-answer .park-keypad, .island-answer .park-choices { grid-area: 2 / 2; min-height: 0; height: 100%; max-height: none; }
+        .island-answer .park-keypad button { height: 44px; padding-block: 0; }
+        .island-learning-actions { min-height: 44px; gap: 2px; }
+        .island-learning-actions .island-text-button { font-size: 11px; padding-inline: 2px; }
+        .written-cell:not(button), .written-cell[data-completed=true]:not(button) { height: 28px; }
+    }
+}
+/* Very tall text must remain reachable rather than being clipped. */
+@media (max-height: 480px) and (orientation: portrait) {
+    .app-container .island-page[data-mode=learning][data-learning-layout=speech-companion-v2][data-learning-candidate] { overflow-y: auto; }
+}
+@media (max-height: 740px) {
+    .app-container .island-page[data-layout-version][data-mode=learning][data-learning-layout=speech-companion-v2][data-learning-candidate] {
+        .written-input-guide { display: none; }
+        .island-answer[data-input-type=hissan] .park-question { margin-bottom: 6px; padding: 4px; }
+        .written-pinned .written-cell:not(button) { height: 24px; font-size: 25px; }
+        .written-history .written-cell:not(button), .written-history .written-cell[data-completed=true]:not(button) { height: 26px; font-size: 25px; }
+    }
+}
+
+.app-container .island-page[data-learning-layout=speech-companion-v2][data-learning-candidate]:has(.island-learning-guidance-slot[data-expanded=true]) {
+    overflow-y: auto;
+    .island-learning-guidance-slot[data-expanded=true] { height: auto; }
+    > .island-workbench { flex: none; min-height: 420px; }
+}
+@media (max-height: 740px) {
+    .app-container .island-page[data-learning-layout=speech-companion-v2][data-learning-candidate]:has(.island-learning-preference) {
+        overflow-y: auto;
+        > .island-workbench { flex: none; min-height: 420px; }
+    }
+}
+.app-container .island-page[data-learning-layout=speech-companion-v2][data-learning-candidate] .written-cell[data-written-input] { min-width: 44px; }

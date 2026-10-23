@@ -111,4 +111,15 @@ describe('Island bounded DOM observation and exact retry snapshots', () => {
         expect(observer.request(binding, action).observation.presentation).toBeUndefined();
         form.dataset.inputType = 'unknown'; expect(readIslandLearningDOM(root)).toBeUndefined();
     });
+    it('recognizes the header hint only when it belongs to the rendered problem', () => {
+        const hint = { dataset: { supportProblemId: 'another-problem' } };
+        const form = { dataset: { problemId: 'problem', inputType: 'hissan' },
+            querySelector: () => null,
+            closest: () => ({ querySelectorAll: () => [hint] }) };
+        const root = { querySelector: () => form } as unknown as ParentNode;
+        expect(readIslandLearningDOM(root)?.hint).toBe(false);
+        hint.dataset.supportProblemId = 'problem';
+        expect(readIslandLearningDOM(root)?.hint).toBe(true);
+    });
+
 });

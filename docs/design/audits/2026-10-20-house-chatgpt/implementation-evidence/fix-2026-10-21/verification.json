@@ -1,0 +1,116 @@
+{
+  "at": "2026-10-20T23:16:46.059748+00:00",
+  "scope": "Fixed copy of shared dirty working sources, local production preview; synthetic native profiles; no deploy",
+  "build": {
+    "version": "development-local:480c319f-88a0-4a4a-8892-743bc4fd6627",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "changedSources": {
+    "src/components/island/three/runtime.ts": "5ce16aef950e6b5ded437c9b32a5c840af93fd051720ccfcc66c1aeb97c7398e",
+    "src/components/island/three/runtimeResize.test.ts": "451dff8c4f1e97a76a339ac93ca0b6a9587eeed7100c577c8b656fd7d2214f4e",
+    "src/components/island/IslandRoomDecor.css": "baace8fcd94e73e03fb16b977e7d748642b81204994746c6046decf09a25efec"
+  },
+  "fixedAppInputsAggregate": "9149db002a989d7d757708ec23cfefe75c864d6f0b9326dc7f7ab1456bdbba2c",
+  "fixedAppSourceCount": 1668,
+  "copySourceStable": true,
+  "closePixels": [
+    {
+      "image": "final-320-close-settled.png",
+      "blackFraction": 0.00020408163265306123
+    },
+    {
+      "image": "final-390-close-rendered.png",
+      "blackFraction": 0.00015718464829934944
+    },
+    {
+      "image": "final-768-close-rendered.png",
+      "blackFraction": 0.0004919250667612591
+    },
+    {
+      "image": "final-390-close-settled.png",
+      "blackFraction": 0.00015718464829934944
+    },
+    {
+      "image": "final-768-close-settled.png",
+      "blackFraction": 0.0004919250667612591
+    },
+    {
+      "image": "final-568-close-settled.png",
+      "blackFraction": 1.920860545524395e-05
+    },
+    {
+      "image": "final-320-close-rendered.png",
+      "blackFraction": 0.00020408163265306123
+    },
+    {
+      "image": "final-390-close-immediate.png",
+      "blackFraction": 0.00015718464829934944
+    },
+    {
+      "image": "final-768-close-immediate.png",
+      "blackFraction": 0.0004919250667612591
+    },
+    {
+      "image": "final-568-close-immediate.png",
+      "blackFraction": 1.920860545524395e-05
+    },
+    {
+      "image": "final-320-close-immediate.png",
+      "blackFraction": 0.00020408163265306123
+    },
+    {
+      "image": "final-568-close-rendered.png",
+      "blackFraction": 1.920860545524395e-05
+    }
+  ],
+  "checks": {
+    "lint": "PASS, 4 existing warnings",
+    "typecheck": "PASS",
+    "build": "PASS including assets: 8.83MiB/12",
+    "runtimeResizeRegression": "PASS 1",
+    "houseFocused": "PASS 28 tests: resize1, camera16, save10, native receipt-window1",
+    "production": "PASS 4 viewports: save/close/reopen/reload/focus; black fraction<0.15 in every close screenshot",
+    "computedFont200": "PASS 568x320: body127px, room199px, all enabled options/close reachable",
+    "docs": "PASS existing review date warnings",
+    "currentUiEntry": "PASS",
+    "fullUnit": "INTERRUPTED after 90 completed files and unrelated persistence 5000ms timeouts; not full PASS. experienceRepository also timed out under standard 5000ms standalone; explicit 15000ms diagnostic passed in ~4.95s. No timeout setting or persistence implementation changed.",
+    "smokeFixed": "PASS 32 scenarios on fixed source copy; preceding shared working run had two failures (numeric input 10->1, tablet root 1500ms wait timeout), preserved locally without attribution",
+    "fullUnitCompletedFiles": 90
+  },
+  "limits": [
+    "Physical iOS/audio/OS browser zoom and child comprehension/revisit unverified",
+    "Original black screenshot persistence was not reproduced; resize empty-buffer interval fixed and redraw order regression tested",
+    "Full shared working tree has other work; full-suite failures and incomplete result retained in local logs"
+  ]
+}

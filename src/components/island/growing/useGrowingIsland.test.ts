@@ -13,12 +13,13 @@ const hooks = vi.hoisted(() => {
         commit() { for (const effect of effects.splice(0)) effect(); }, unmount() { for (const cell of cells) cell.cleanup?.(); },
     };
 });
-const mocks = vi.hoisted(() => ({ read: vi.fn(), sync: vi.fn(), command: vi.fn(), profile: vi.fn(), facts: vi.fn(), opening: 0, saving: 0 }));
+const mocks = vi.hoisted(() => ({ read: vi.fn(), sync: vi.fn(), command: vi.fn(), profile: vi.fn(), facts: vi.fn(), drain: vi.fn(), opening: 0, saving: 0 }));
 vi.mock('react', () => ({ useState: hooks.useState, useRef: hooks.useRef, useCallback: hooks.useCallback, useEffect: hooks.effect }));
 vi.mock('../../../pwa', () => ({
     allowPwaUpdateDuringReadOnlyOpening: () => { mocks.opening++; return () => { mocks.opening--; }; },
     holdPwaUpdateForCriticalPersistence: () => { mocks.saving++; return () => { mocks.saving--; }; },
 }));
+vi.mock('../../../domain/growingIsland/foundationReceipts', () => ({ drainFoundationRewards: mocks.drain }));
 vi.mock('../../../domain/user/repository', () => ({ getProfile: mocks.profile }));
 vi.mock('../../../domain/islandLife/repository', () => ({ lifeDb: {}, terminalFacts: mocks.facts }));
 vi.mock('../../../domain/growingIsland/repository', () => ({
@@ -34,6 +35,7 @@ const record = { profileId: 'kid', revision: 0 } as GrowingRecord;
 const RenderGrowing = (active = true) => { hooks.begin(); const api = useGrowingIsland('kid', active); hooks.commit(); return api; };
 beforeEach(() => {
     hooks.reset(); mocks.read.mockReset().mockReturnValue(new Promise(() => {})); mocks.sync.mockReset(); mocks.command.mockReset();
+    mocks.drain.mockReset().mockResolvedValue({ credited: 0, retryPending: false });
     mocks.profile.mockReset().mockResolvedValue(undefined); mocks.facts.mockReset().mockResolvedValue([]);
     vi.stubGlobal('document', Object.assign(new EventTarget(), { visibilityState: 'visible' }));
     vi.stubGlobal('window', { setInterval: vi.fn(() => 1), clearInterval: vi.fn() });
@@ -133,4 +135,14 @@ it('drops queued place receipts when the island leaves the foreground', async ()
     expect(await first).toBe(true); expect(await queued).toBe(false); expect(mocks.command).toHaveBeenCalledTimes(1);
     Object.assign(document, { visibilityState: 'hidden' });
     expect(await api.acknowledgePlace({ type: 'place-shown', ruleId: 'P03', revision: 'water' })).toBe(false);
+});
+
+it('keeps the durable island visible when foundation delivery needs a retry', async () => {
+    mocks.sync.mockResolvedValue({ record, town: [], nature: [], learned: 0 });
+    mocks.drain.mockRejectedValueOnce(new Error('がくしゅうを よみなおしてね。'));
+    const api = RenderGrowing(); await api.sync();
+    expect(RenderGrowing().record).toBe(record);
+    expect(RenderGrowing().error).toContain('がくしゅう');
+    await RenderGrowing().sync(); expect(RenderGrowing().record).toBe(record);
+    expect(RenderGrowing().error).toBeUndefined();
 });

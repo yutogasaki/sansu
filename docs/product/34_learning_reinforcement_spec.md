@@ -1,5 +1,7 @@
 # 初回正解・再学習・単元別確認
 
+英語基礎のF01/F02、専用証拠・保存・報酬・復習は[英語の基礎コース](english-foundation.md)に従う。既存英単語コースの学習記録と予約は保持する。
+
 親仕様は[01](01_app_spec.md)。2026-09-08の[忘却・レベル分析](../wiki/learning-strengthening-analysis.md)に対する「実装」で採用。既存[29](29_learning_progression_spec.md)と[31](31_learning_units_spec.md)を次の範囲で更新する。
 
 ## 範囲

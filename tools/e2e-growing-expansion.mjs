@@ -40,10 +40,10 @@ const ready = async page => {
 const record = async (page, value) => page.evaluate(async ({ name, value }) => {
     const req = indexedDB.open(name), db = await new Promise((ok, no) => { req.onsuccess = () => ok(req.result); req.onerror = () => no(req.error); });
     try {
-        assertTable(); function assertTable() { if (!db.objectStoreNames.contains('cultivatedIslands')) throw Error('Missing current owned table'); }
-        const tx = db.transaction('cultivatedIslands', value ? 'readwrite' : 'readonly');
+        assertTable(); function assertTable() { if (!db.objectStoreNames.contains('foundationIslands')) throw Error('Missing current owned table'); }
+        const tx = db.transaction('foundationIslands', value ? 'readwrite' : 'readonly');
         const done = new Promise((ok, no) => { tx.oncomplete = ok; tx.onabort = () => no(tx.error); });
-        const op = value ? tx.objectStore('cultivatedIslands').put(value) : tx.objectStore('cultivatedIslands').getAll();
+        const op = value ? tx.objectStore('foundationIslands').put(value) : tx.objectStore('foundationIslands').getAll();
         const result = await new Promise((ok, no) => { op.onsuccess = () => ok(op.result); op.onerror = () => no(op.error); });
         await done; return value || result[0];
     } finally { db.close(); }

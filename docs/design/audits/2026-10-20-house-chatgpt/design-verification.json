@@ -1,0 +1,55 @@
+{
+  "checkedAt": "2026-10-20T03:35:32.512748+00:00",
+  "target": "detailed-design.md",
+  "sha256": "8fa7242b710377bb4905fc9b3e31d948f5d1345de236e215474afd8185107551",
+  "checks": {
+    "localLinks": "PASS",
+    "featureIds": [
+      "H01",
+      "H02",
+      "H03",
+      "H04",
+      "H05",
+      "H06",
+      "H07",
+      "H08",
+      "H09",
+      "H10",
+      "H11",
+      "H12",
+      "H13",
+      "H14",
+      "H15",
+      "H16",
+      "H17",
+      "H18",
+      "H19",
+      "H20",
+      "H21",
+      "H22",
+      "H23",
+      "H24"
+    ],
+    "journeyIds": [
+      "J1",
+      "J2",
+      "J3",
+      "J4",
+      "J5",
+      "J6"
+    ],
+    "requiredViewports": [
+      "320x568",
+      "390x844",
+      "568x320",
+      "768x1024"
+    ],
+    "featureAndJourneyReferences": "PASS"
+  },
+  "scope": "Documentation coverage and links only. Does not verify runtime, child comprehension or actual device layout.",
+  "docsCheck": {
+    "command": "npm run docs:check",
+    "result": "PASS",
+    "warnings": "Existing overdue task review dates and backlog review date; unrelated to this design."
+  }
+}

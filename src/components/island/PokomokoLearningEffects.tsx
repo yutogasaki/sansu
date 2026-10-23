@@ -40,7 +40,8 @@ export function PokomokoInputSpark({ cue, root }: { cue?: PokomokoInputCue; root
             if (layer.current) layer.current.style.opacity = '1';
             const age = Math.max(0, performance.now() - cue.startedAt);
             const panel = root.current.getBoundingClientRect();
-            const hand = root.current.querySelector('.pokomoko-hand-anchor')?.getBoundingClientRect();
+            const hand = (root.current.querySelector('.pokomoko-hand-anchor')
+                ?? root.current.closest('.island-page')?.querySelector('.island-learning-companion .pokomoko-hand-anchor'))?.getBoundingClientRect();
             const paw = {
                 x: hand ? hand.left + hand.width / 2 - panel.left : cue.destinationX,
                 y: hand ? hand.top + hand.height / 2 - panel.top : cue.destinationY,

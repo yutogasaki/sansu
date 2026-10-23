@@ -1,0 +1,51 @@
+{
+  "conversation": "https://chatgpt.com/c/6ad6dc73-3854-83ec-a14f-39bddbc0f86f",
+  "conversationTitle": "家UI監査レポート",
+  "uploadedFile": "detailed-design.md",
+  "uploadedSha256": "0425af981f1f77db59d0d2685be3f57dbf8a1a9dd49bfd4baf16d03244b33192",
+  "uploadedBytes": 45701,
+  "recordedAt": "2026-10-20T03:32:25.465480+00:00",
+  "consultationScope": "Existing screenshots and code/spec summaries for drafting, followed by upload of complete design candidate for gap review. No new runtime screenshots, independent code execution or child observation by ChatGPT.",
+  "responseSequence": [
+    "Full design request: response stopped at section 3.4 with stream error; partial answer not treated as final.",
+    "Remaining design request: complete response observed, with audio-contract correction.",
+    "Full document gap review completed with five findings. Findings incorporated; browser Back proposal narrowed to preserve existing history; photo deletion ID corrected from H18 to H17."
+  ],
+  "featureIds": [
+    "H01",
+    "H02",
+    "H03",
+    "H04",
+    "H05",
+    "H06",
+    "H07",
+    "H08",
+    "H09",
+    "H10",
+    "H11",
+    "H12",
+    "H13",
+    "H14",
+    "H15",
+    "H16",
+    "H17",
+    "H18",
+    "H19",
+    "H20",
+    "H21",
+    "H22",
+    "H23",
+    "H24"
+  ],
+  "journeyIds": [
+    "J1",
+    "J2",
+    "J3",
+    "J4",
+    "J5",
+    "J6"
+  ],
+  "reviewCompletedAt": "2026-10-20T03:35:09.918708+00:00",
+  "finalDesignSha256": "8fa7242b710377bb4905fc9b3e31d948f5d1345de236e215474afd8185107551",
+  "reviewedFileVsFinal": "Uploaded candidate reviewed in full. Final differs by documented five review resolutions and consultation/provenance sections; final was not re-uploaded."
+}

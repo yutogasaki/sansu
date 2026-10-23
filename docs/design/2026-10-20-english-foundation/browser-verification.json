@@ -1,0 +1,85 @@
+{
+  "at": "2026-10-20T06:13:13.212Z",
+  "base": "http://127.0.0.1:59356",
+  "scenarios": [
+    {
+      "width": 390,
+      "runtime": {
+        "url": "http://127.0.0.1:59356/#/island?learn=1",
+        "revision": "development-local",
+        "version": "development-local:7202afc5-906f-42a2-833b-11bdff4460fb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "drawCalls": 0,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:7202afc5-906f-42a2-833b-11bdff4460fb",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "assetHashFailureSafe": true,
+      "firstWrongPreserved": true,
+      "supportWithoutFalseCorrect": true,
+      "F02AudioPictures": true,
+      "queuedSwitch": true,
+      "rewardsOnce": true,
+      "offlineResume": true,
+      "alternativeSupported": true,
+      "soundOffRespected": true,
+      "realTwoBuildUpdate": true,
+      "passed": true
+    },
+    {
+      "width": 768,
+      "runtime": {
+        "url": "http://127.0.0.1:59356/#/island?learn=1",
+        "revision": "development-local",
+        "version": "development-local:7202afc5-906f-42a2-833b-11bdff4460fb",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "learning",
+        "drawCalls": 0,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:7202afc5-906f-42a2-833b-11bdff4460fb",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "assetHashFailureSafe": true,
+      "firstWrongPreserved": true,
+      "supportWithoutFalseCorrect": true,
+      "F02AudioPictures": true,
+      "queuedSwitch": true,
+      "rewardsOnce": true,
+      "offlineResume": true,
+      "alternativeSupported": true,
+      "soundOffRespected": true,
+      "realTwoBuildUpdate": true,
+      "passed": true
+    }
+  ],
+  "pass": true
+}

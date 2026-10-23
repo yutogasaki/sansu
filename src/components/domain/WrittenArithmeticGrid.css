@@ -10,6 +10,7 @@
 .written-kind { font-size:11px; font-weight:500; letter-spacing:.03em; color:#586a77; }
 .written-guidance { display:flex; align-items:center; gap:8px; min-height:30px; margin-bottom:4px; font-size:12px; line-height:1.45; }
 .written-guidance strong { flex:none; padding:3px 8px; border-radius:6px; background:#e7eefb; color:#194eaa; font-weight:650; }
+.written-pinned-guidance { display: none; }
 .written-paper { width:calc(var(--written-columns) * 44px + 56px); max-width:100%; margin-inline:auto; border:1px solid var(--written-line); border-radius:12px; background:var(--written-paper); padding:5px 6px; overflow:hidden; }
 .written-row { display:grid; grid-template-columns:42px minmax(0,1fr); align-items:center; position:relative; }
 .written-row-label { padding-right:4px; font-size:10px; line-height:1.25; color:#586a77; overflow-wrap:anywhere; }

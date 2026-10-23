@@ -1,3 +1,4 @@
+import type { IslandLearningEntry } from '../../domain/island/learningEntry';
 import { useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import type { IslandScreen } from '../../domain/island/navigation';
 import { db } from '../../db';
@@ -31,11 +32,12 @@ type LearningInputs = {
     milestoneNotice: ReturnType<typeof useIslandMilestoneNotice>;
     listening: ReturnType<typeof useEnglishListening>;
     observation: ReturnType<typeof useIslandLearningObservation>;
+    onNextEntry: (entry: IslandLearningEntry) => void;
 };
 
 /** Presentation receipts follow the same atomic learning commit as before. */
 export function useIslandSessionLearning({ profile, island, plan, setPlan, setSnapshot, setNextPlanError,
-    screen, setScreen, navigation, run, milestoneNotice, listening, observation }: LearningInputs) {
+    screen, setScreen, navigation, run, milestoneNotice, listening, observation, onNextEntry }: LearningInputs) {
     const [latestMilestone, setLatestMilestone] = useState<IslandMilestone>();
     const [starReceipt, setStarReceipt] = useState<{ id: string; stars: number }>();
     const lastStarReceipt = useRef<string | undefined>(undefined);
@@ -60,6 +62,7 @@ export function useIslandSessionLearning({ profile, island, plan, setPlan, setSn
         observation.succeeded(request);
         setPlan(nextPlan ?? receipt.plan); setSnapshot(latestIsland ?? receipt.island);
         setNextPlanError(Boolean(result.nextPlanError));
+        if (result.nextEntry) onNextEntry(result.nextEntry);
         const response = islandFeedbackForReceipt(plan, receipt.plan, receipt.event);
         const earnedReceipt = islandStarReceipt(plan, receipt.plan, receipt.event, lastStarReceipt.current);
         if (earnedReceipt) { lastStarReceipt.current = earnedReceipt; setStarReceipt({ id: earnedReceipt, stars: islandPlanStars(receipt.plan) }); }
@@ -84,7 +87,7 @@ export function useIslandSessionLearning({ profile, island, plan, setPlan, setSn
         if (plan.subject === 'vocab' && response?.feedback.kind === 'step') playSound('step');
         if (receipt.plan.status === 'completed' && !nextPlan) {
             if (isFirstIslandPlan(receipt.plan) && !receipt.plan.growthTarget) { if (!navigation) setScreen('reward'); }
-            else setNextPlanError(true);
+            else if (!result.nextEntry) setNextPlanError(true);
         }
     };
     const slot = plan?.slots[plan.cursor];

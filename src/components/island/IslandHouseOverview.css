@@ -20,7 +20,7 @@
     max-height: calc(100% - 232px); overflow-y: auto; border-radius: 16px;
 }
 .app-container .island-page[data-layout-version][data-mode=keepsakes][data-house-layout][data-house-candidate] > :is(.island-stage, [data-home-journey]) {
-    position: absolute; z-index: 0; inset: calc(52px + env(safe-area-inset-top)) 0 106px;
+    position: absolute; z-index: 0; inset: var(--house-header-height, calc(52px + env(safe-area-inset-top))) 0 var(--house-controls-height, 106px);
     width: 100%; height: auto; min-height: 0; border-radius: 0;
 }
 .app-container .island-page[data-layout-version][data-mode=keepsakes][data-house-layout][data-house-candidate] > .island-stage > .island-stage__viewport {
@@ -33,7 +33,7 @@
     border: 0; border-radius: 0; background: none; box-shadow: none; backdrop-filter: none;
 }
 .app-container .island-page[data-layout-version][data-mode=keepsakes][data-house-layout][data-house-candidate] > .island-learning-keepsakes > .island-panel-heading {
-    position: absolute; top: calc(60px + env(safe-area-inset-top)); left: 12px;
+    position: absolute; top: calc(var(--house-header-height, 52px) + 8px); left: 12px;
     display: flex; width: auto; margin: 0; padding: 0; background: none; box-shadow: none; pointer-events: auto;
 }
 .island-page[data-house-layout] .island-panel-heading-copy {
@@ -45,41 +45,32 @@
     max-height: calc(100% - 232px); overflow-y: auto; margin: 0; padding: 12px;
     background: var(--pokomoko-paper); border: 1px solid var(--pokomoko-edge); border-radius: 16px; pointer-events: auto;
 }
-.island-page[data-house-layout] .island-house-overview > .island-house-hint {
-    position: absolute; bottom: 77px; inset-inline: 12px; margin: 0;
-    text-align: center; font-size: 12px; line-height: 1.6; color: var(--pokomoko-muted);
+.island-house-controls {
+    position: absolute; inset: auto 12px 12px; display: grid; gap: 8px;
+}
+.island-house-hint {
+    margin: 0; text-align: center; font-size: 14px; line-height: 1.45; color: var(--pokomoko-muted);
 }
 .island-house-tools {
-    position: absolute; inset: auto 12px 12px; max-width: 390px; margin-inline: auto;
-    display: flex; gap: 8px; pointer-events: auto;
+    width: 100%; max-width: 390px; margin-inline: auto; display: flex; gap: 8px; pointer-events: auto;
 }
-.island-house-guide-book {
-    position: absolute; bottom: 114px; right: 16px; display: grid; justify-items: center;
-    min-width: 88px; min-height: 88px; padding: 8px; pointer-events: auto;
-    border: 0; background: transparent; color: var(--pokomoko-ink); font: inherit; font-weight: 800;
-}
-.island-house-guide-book span { padding: 3px 8px; border-radius: 12px; background: var(--pokomoko-paper); font-size: 13px; }
-.island-house-guide-book:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 2px; border-radius: 16px; }
-.island-house-guide-book:disabled { opacity: .55; }
 .app-container .island-page[data-house-layout] .island-panel.island-learning-keepsakes .island-house-tools > button {
     display: flex; flex: 1; justify-content: center; align-items: center; gap: 3px;
     min-width: 0; min-height: 54px; padding: 3px 5px; border-radius: 18px;
-    border: 1px solid var(--pokomoko-edge); background: var(--pokomoko-paper); color: var(--pokomoko-blue-deep);
+    border: 1px solid var(--pokomoko-edge); background: var(--pokomoko-paper); color: var(--pokomoko-ink);
     box-shadow: 0 3px 0 color-mix(in srgb, var(--pokomoko-ink) 18%, transparent);
-    font: inherit; font-size: 13px; font-weight: 800; white-space: nowrap;
+    font: inherit; font-size: 13px; font-weight: 800; overflow-wrap: anywhere;
 }
 .island-house-tools .island-toy-icon { flex-shrink: 0; width: 36px; height: 40px; }
-.app-container .island-page[data-house-layout] .island-panel.island-learning-keepsakes .island-house-tools > [data-keepsake-action=album] {
-    background: var(--pokomoko-blue); border-color: var(--pokomoko-blue); color: var(--pokomoko-paper);
-}
+.island-house-menu-hint { margin: 0; font-size: 14px; line-height: 1.6; color: var(--pokomoko-muted); }
 @media (max-width: 359px) {
+    .island-house-hint-desk { display: none; }
     .island-house-tools { gap: 6px; }
     .app-container .island-page[data-house-layout] .island-panel.island-learning-keepsakes .island-house-tools > button { font-size: 12px; padding-inline: 2px; }
     .island-house-tools .island-toy-icon { width: 28px; height: 34px; }
 }
-@media (max-height: 500px) and (min-width: 600px) {
-    .app-container .island-page[data-layout-version][data-mode=keepsakes][data-house-layout][data-house-candidate] > :is(.island-stage, [data-home-journey]) { bottom: 78px; }
-    .island-page[data-house-layout] .island-house-overview > .island-house-hint { display: none; }
+@media (max-height: 500px) and (min-width: 480px) {
+    .island-house-hint { display: none; }
 
     /* A short screen needs a full-height reading area for the shelf/notices. */
     .app-container .island-page[data-layout-version][data-mode=keepsakes]:not([data-house-layout]):has(> .island-stage[data-keepsake-room=true]) {

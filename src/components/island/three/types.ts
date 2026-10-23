@@ -40,7 +40,7 @@ export interface IslandStageState {
     challengeDisplayed?: readonly ('certificate' | 'trophy')[];
     directInteractions?: boolean;
     directPlaySelection?: boolean;
-    learningKeepsakes?: { closeOverview?: boolean; state?: IslandLearningKeepsakesState; selectedId?: IslandLearningKeepsakeId; decor?: IslandRoomDecor };
+    learningKeepsakes?: { closeOverview?: boolean; decorating?: boolean; state?: IslandLearningKeepsakesState; selectedId?: IslandLearningKeepsakeId; decor?: IslandRoomDecor };
     shared?: IslandSharedStageState;
     sharedRequest?: IslandSharedSceneRequest;
     workshop?: WorkshopSceneState;

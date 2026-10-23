@@ -32,4 +32,11 @@ describe('earned celebrations settle back to the question', () => {
         expect(html).toContain('これだ！');
         expect(html).not.toContain('class="pokomoko-combo-number"');
     });
+    it('does not overlay the previous correct receipt on a new input response', () => {
+        const html = renderToStaticMarkup(<IslandAnswerFeedback party={party}
+            feedback={{ id: burst.id, kind: 'correct', text: 'せいかい' }} burst={{ ...burst, kind: 'answer' }}
+            inputCue={{ id: 1, digit: '2', startedAt: 0, fromX: 0, fromY: 0, x: 0, y: 0, destinationX: 0, destinationY: 0 }} />);
+        expect(html).toContain('これだ！');
+        expect(html).not.toContain('class="pokomoko-answer-receipt"');
+    });
 });

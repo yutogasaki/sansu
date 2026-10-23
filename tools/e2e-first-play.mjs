@@ -31,7 +31,7 @@ async function store(page, database, table, key) {
     }, { database, table, key });
 }
 const session = page => store(page, 'SansuDatabase', 'appData', 'island-first-play');
-const world = async page => store(page, base.includes(':5198') ? 'SansuGrowingIslandPreviewV1' : 'SansuGrowingIslandV1', 'cultivatedIslands', (await session(page)).ownerId);
+const world = async page => store(page, base.includes(':5198') ? 'SansuGrowingIslandPreviewV1' : 'SansuGrowingIslandV1', 'foundationIslands', (await session(page)).ownerId);
 async function until(read, predicate) {
     for (let n = 0; n < 300; n++) { const value = await read(); if (predicate(value)) return value; await new Promise(r => setTimeout(r, 100)); }
     throw Error('Saved state did not reach expected condition');
@@ -166,6 +166,7 @@ try {
     await enter(page); await page.getByRole('button', { name: 'まなぶ', exact: true }).tap();
     await page.getByRole('button', { name: '小学 1 年生', exact: true }).click();
     await page.getByRole('button', { name: 'えいご', exact: true }).click();
+    await page.getByRole('button', { name: 'えいたんごを よむ', exact: true }).click();
     await page.getByRole('button', { name: 'はじめて', exact: true }).click();
     await page.locator('[data-input-ready="true"]').waitFor();
     assert.deepEqual(await store(page, 'SansuDatabase', 'memoryMath'), []);
