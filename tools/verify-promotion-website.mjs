@@ -9,11 +9,22 @@ await fs.mkdir(output,{recursive:true});
 const browser = await chromium.launch();
 const report = {url,candidate:'promotion-cove-growth-v4',cases:[],pass:false};
 const errors=[];
+const allowedLinks = new Set([
+  'https://sansu-seven.vercel.app/#/island',
+  'https://support.apple.com/ja-jp/guide/iphone/iphea86e5236/ios',
+  'https://support.apple.com/ja-jp/guide/ipad/ipad8f1f7a29/ipados',
+  'https://support.google.com/chrome/answer/9658361?co=GENIE.Platform%3DAndroid&hl=ja',
+]);
 try {
   for (const width of [320,390,768,1440]) {
     const context = await browser.newContext({viewport:{width,height:width<600?844:1000},reducedMotion:width===768?'reduce':'no-preference'});
     const page=await context.newPage(); page.on('pageerror',e=>errors.push(e.message));
     await page.goto(url);
+    // Read both guides once before disclosure changes can cancel off-screen lazy loads.
+    for (const image of await page.locator('img').all()) {
+      await image.scrollIntoViewIfNeeded();
+      await image.evaluate(image => image.decode());
+    }
     await page.evaluate(()=>document.fonts.ready);
     await page.evaluate(()=>{document.documentElement.style.scrollBehavior='auto';});
     const selector=page.locator('.growth-selector');
@@ -37,12 +48,26 @@ try {
     await page.waitForFunction(()=>document.querySelector('#growth-image')?.getAttribute('src')?.includes('complete') && document.querySelector('.growth-photo')?.getAttribute('aria-busy')==='false');
     const summaries=page.locator('.faq summary');
     for(let n=0;n<await summaries.count();n++) {await summaries.nth(n).click(); assert(await page.locator('.faq details').nth(n).getAttribute('open')!==null);await summaries.nth(n).click();}
+    for (const platform of ['ios', 'android']) {
+      const panel = page.locator(`#install-${platform}`);
+      assert.equal(await panel.locator('.install-steps > li').count(), 3);
+      assert(await panel.locator('ol').isVisible());
+      await panel.locator('summary').first().focus();
+      await page.keyboard.press('Enter');
+      assert.equal(await panel.locator('ol').isVisible(), false);
+      await page.keyboard.press('Enter');
+      assert(await panel.locator('ol').isVisible());
+    }
+    assert.equal(await page.locator('#install .browser-note a').getAttribute('href'), 'https://sansu-seven.vercel.app/#/island');
+    await page.locator('#install').screenshot({path:path.join(output,`${width}-install.png`)});
     const integrity=await page.evaluate(async()=>{
-      await Promise.all([...document.images].map(i=>i.decode()));
-      return {overflow:document.documentElement.scrollWidth>innerWidth,overflowNodes:[...document.querySelectorAll('body *')].map(n=>({tag:n.tagName,class:n.className,right:n.getBoundingClientRect().right})).filter(n=>n.right>innerWidth+1),images:[...document.images].map(i=>({src:i.getAttribute('src'),width:i.naturalWidth})),links:[...document.querySelectorAll('a[href^="https"]')].map(a=>a.href),targets:[...document.querySelectorAll('button,.button,.faq summary')].map(n=>({text:n.textContent.trim(),height:n.getBoundingClientRect().height})),sw:(await navigator.serviceWorker.getRegistrations()).length,db:(await indexedDB.databases()).length,candidate:document.body.dataset.visualCandidate,anchors:[...document.querySelectorAll('a[href^="#"]')].map(a=>({href:a.hash,exists:!!document.getElementById(a.hash.slice(1))}))};
+      await Promise.all([...document.images].map(async image => {
+        try { await image.decode(); } catch { throw new Error(`Image failed to decode: ${image.src}`); }
+      }));
+      return {overflow:document.documentElement.scrollWidth>innerWidth,overflowNodes:[...document.querySelectorAll('body *')].map(n=>({tag:n.tagName,class:n.className,right:n.getBoundingClientRect().right})).filter(n=>n.right>innerWidth+1),images:[...document.images].map(i=>({src:i.getAttribute('src'),width:i.naturalWidth})),links:[...document.querySelectorAll('a[href^="https"]')].map(a=>a.href),targets:[...document.querySelectorAll('button,.button,.faq summary,#install summary,.source-link')].map(n=>({text:n.textContent.trim(),height:n.getBoundingClientRect().height})),sw:(await navigator.serviceWorker.getRegistrations()).length,db:(await indexedDB.databases()).length,candidate:document.body.dataset.visualCandidate,anchors:[...document.querySelectorAll('a[href^="#"]')].map(a=>({href:a.hash,exists:!!document.getElementById(a.hash.slice(1))}))};
     });
     report.cases.push({width,integrity});await page.evaluate(()=>{document.documentElement.style.scrollBehavior='auto';scrollTo(0,0);});await page.screenshot({path:path.join(output,`${width}-hero.png`)});
-    assert.equal(integrity.overflow,false);assert(integrity.images.every(i=>i.width>0));assert(integrity.targets.every(t=>t.height>=44));assert(integrity.links.every(u=>u==='https://sansu-seven.vercel.app/#/island'));assert(integrity.anchors.every(a=>a.exists));assert.equal(integrity.sw,0);assert.equal(integrity.db,0);assert.equal(integrity.candidate,report.candidate);
+    assert.equal(integrity.overflow,false);assert(integrity.images.every(i=>i.width>0));assert(integrity.targets.every(t=>t.height>=44));assert(integrity.links.every(u=>allowedLinks.has(u)));assert(integrity.anchors.every(a=>a.exists));assert.equal(integrity.sw,0);assert.equal(integrity.db,0);assert.equal(integrity.candidate,report.candidate);
     await page.evaluate(()=>{document.documentElement.style.scrollBehavior='auto';scrollTo(0,0);}); await page.screenshot({path:path.join(output,`${width}-hero.png`)}); await page.screenshot({path:path.join(output,`${width}-page.png`),fullPage:true});
     await page.locator('#learning').screenshot({path:path.join(output,`${width}-learning.png`)});
     await page.locator('#growth').screenshot({path:path.join(output,`${width}-growth.png`)});
@@ -64,7 +89,7 @@ try {
   assert(await failurePage.locator('#growth-image').evaluate(i=>i.naturalWidth>0));
   report.imageFailureRecovery='PASS';await failureContext.close();
   const context=await browser.newContext({viewport:{width:390,height:844},javaScriptEnabled:false});const page=await context.newPage();await page.goto(url);
-  assert.equal(await page.locator('noscript img').count(),2);assert((await page.locator('noscript').textContent()).includes('開発中のイメージ'));assert.equal(await page.locator('h1').count(),1);assert((await page.locator('#stage-source').textContent()).includes('開発中'));await page.locator('.faq summary').first().click();assert(await page.locator('.faq details').first().getAttribute('open')!==null);report.noJS='PASS';await context.close();
+  assert.equal(await page.locator('noscript img').count(),2);assert((await page.locator('noscript').textContent()).includes('開発中のイメージ'));assert.equal(await page.locator('h1').count(),1);assert((await page.locator('#stage-source').textContent()).includes('開発中'));await page.locator('.faq summary').first().click();assert(await page.locator('.faq details').first().getAttribute('open')!==null);assert.equal(await page.locator('#install .install-steps > li').count(),6);assert(await page.locator('#install-ios ol').isVisible());assert(await page.locator('#install-android ol').isVisible());report.noJS='PASS';await context.close();
   assert.deepEqual(errors,[]);report.pass=true;
 } catch(error) {report.failure=String(error.stack||error);throw error;}
 finally {report.errors=errors;await browser.close();await fs.writeFile(path.join(output,'report.json'),JSON.stringify(report,null,2));}

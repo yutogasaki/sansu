@@ -1299,7 +1299,7 @@ interface MemoryState {
 
 ## 宣伝用Webサイト
 
-島の成長、家、学習を紹介する独立した静的サイトは[仕様53](53_promotion_website_spec.md)に従う。公開buildは `/promo/` に静的サイトを追加し、ゲームの保存・学習を変更しない。SWのnavigation fallbackから宣伝ページを除外する。
+島の成長、家、学習を紹介する独立した静的サイトは[仕様53](53_promotion_website_spec.md)に従う。公開buildは `/promo/` に静的サイトを追加し、ゲームの保存・学習を変更しない。SWのnavigation fallbackから宣伝ページを除外する。紹介サイトには端末別の図付き「ホーム画面に追加」案内を置き、紹介ページから公開アプリを開いて追加する流れを示す。
 
 
 ## 海図と独立した島（2026-10-19）

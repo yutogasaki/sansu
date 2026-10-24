@@ -1,0 +1,173 @@
+{
+  "capturedAt": "2026-10-24T23:08:17.030075+00:00",
+  "revision": "83827ec10d065f9078d21bce667d584c5b1b1257",
+  "workingTree": "existing unrelated changes retained",
+  "candidate": "promotion-cove-growth-v4",
+  "app": "standalone promotion website; no game runtime or delivery flag",
+  "node": "22.23.3",
+  "files": [
+    {
+      "path": "package-lock.json",
+      "sha256": "5c476bc2c1ede88ecc98441158df82dc139464d21ca5b3b3bf3ddaf9a416b92d"
+    },
+    {
+      "path": "package.json",
+      "sha256": "d95808a5a90946e79080e8e087e2938e4c61c1ee3813bdabf13ab718ce6af459"
+    },
+    {
+      "path": "tools/verify-promotion-website.mjs",
+      "sha256": "aeae4406f7866698f3e324d10e7d71d71af2bcc72710b69ac54d5280965c4438"
+    },
+    {
+      "path": "website/index.html",
+      "sha256": "9311a35c66349290a1fad5efa2952aa734e3884e5f1909f7f01e99e94c6862de"
+    },
+    {
+      "path": "website/main.js",
+      "sha256": "15f3c73900b6c350eb25aafb78e4bff8312aa92fd84a07ebb0c67030c4227cea"
+    },
+    {
+      "path": "website/public/fonts/OFL-ZenMaruGothic.txt",
+      "sha256": "9e20355e619c79b80faa607a8fd137d07dd6e33535d1a29ac27116dfbf88b696"
+    },
+    {
+      "path": "website/public/fonts/noto-sans-jp.woff2",
+      "sha256": "539b381a6e0a5a49d299867d9ab722ad7e41d01f07bbcb6bed4518b63f8d4b0a"
+    },
+    {
+      "path": "website/public/fonts/zen-maru-gothic-black.woff2",
+      "sha256": "e3266aca5e0a680e2cc1e4fbb9d4320f6dfee22c11525b9d0e1f7acd56b02a55"
+    },
+    {
+      "path": "website/public/images/app-icon.png",
+      "sha256": "ffa0a900a780e0705653222f351724ff2492dfe40d9204d61d7ad7792b00b3ef"
+    },
+    {
+      "path": "website/public/images/complete-forest.png",
+      "sha256": "8a3b10121661f8d8ef37c2038116c4f3f077290e3d674ed47a9806098ec83d63"
+    },
+    {
+      "path": "website/public/images/complete-harbor.png",
+      "sha256": "b12dc2203dd8e14f98ef3beb355209c433d88688c9ed8e0893ad8bca6084e3d9"
+    },
+    {
+      "path": "website/public/images/complete-water.png",
+      "sha256": "37613cbf3a729cf3bae01ce7afcd62d220f4f2865c6c3c108ab34d5f86e9b1f7"
+    },
+    {
+      "path": "website/public/images/english.png",
+      "sha256": "56150b9e6c7b1799eb1c1e224025704adabf4ac94218fea1a4f4d2faff1499d4"
+    },
+    {
+      "path": "website/public/images/home.png",
+      "sha256": "5379c66aa1de3b5aa2219c8b4956114f7e78b8e0c5ede98acbb2e4be65d0eb07"
+    },
+    {
+      "path": "website/public/images/island-complete.png",
+      "sha256": "d2a3ff872e3dbff7dd9d3aa90f0476e7ad0123d53042d20fe60b1df01885ff47"
+    },
+    {
+      "path": "website/public/images/island-start-cove.jpg",
+      "sha256": "6ca1766b73fbeca346432509891ecaadc1d48c75fb47d9fb7019f4a33c7f1b85"
+    },
+    {
+      "path": "website/public/images/island-start.png",
+      "sha256": "66791cfccd817677944ff7217b9f1cbc60cf0eeaebd005622a1dc0663304a46b"
+    },
+    {
+      "path": "website/public/images/island-village-cove.jpg",
+      "sha256": "de7631e5f244fe36888274c613f4cc9d0a8ad2a48fe3efb450dcd759a468f99c"
+    },
+    {
+      "path": "website/public/images/island-village.png",
+      "sha256": "a96ac89e60b23afee3b3bdc293e186e37f68f86a9636944c3688696c16ac5947"
+    },
+    {
+      "path": "website/public/images/math.png",
+      "sha256": "958e40db13136268d47d8355ea616fd49fa251e65f386f6aadb6851370e63b5c"
+    },
+    {
+      "path": "website/style.css",
+      "sha256": "3ea8f18fd30ebc3f1528e4ce0a17192c292dab650c3410fad4a6efd12e99f5da"
+    },
+    {
+      "path": "website/vite.config.js",
+      "sha256": "611e1f50a7725472e0b9768be0a6010bee29650e4c465e3a7dabc628a7029845"
+    }
+  ],
+  "distFiles": [
+    {
+      "path": "dist-website/assets/index-BKFSI9jE.js",
+      "sha256": "8eaeaf189ddb6248aa5725ae99b4b4e612c864352a16c0fc4f60e2fc7d30f69d"
+    },
+    {
+      "path": "dist-website/assets/index-BZHo1E2h.css",
+      "sha256": "58e49f7a21084bd94fdbd918b0cebdb31fab13ca3b99899bb45c3efefa967146"
+    },
+    {
+      "path": "dist-website/fonts/OFL-ZenMaruGothic.txt",
+      "sha256": "9e20355e619c79b80faa607a8fd137d07dd6e33535d1a29ac27116dfbf88b696"
+    },
+    {
+      "path": "dist-website/fonts/noto-sans-jp.woff2",
+      "sha256": "539b381a6e0a5a49d299867d9ab722ad7e41d01f07bbcb6bed4518b63f8d4b0a"
+    },
+    {
+      "path": "dist-website/fonts/zen-maru-gothic-black.woff2",
+      "sha256": "e3266aca5e0a680e2cc1e4fbb9d4320f6dfee22c11525b9d0e1f7acd56b02a55"
+    },
+    {
+      "path": "dist-website/images/app-icon.png",
+      "sha256": "ffa0a900a780e0705653222f351724ff2492dfe40d9204d61d7ad7792b00b3ef"
+    },
+    {
+      "path": "dist-website/images/complete-forest.png",
+      "sha256": "8a3b10121661f8d8ef37c2038116c4f3f077290e3d674ed47a9806098ec83d63"
+    },
+    {
+      "path": "dist-website/images/complete-harbor.png",
+      "sha256": "b12dc2203dd8e14f98ef3beb355209c433d88688c9ed8e0893ad8bca6084e3d9"
+    },
+    {
+      "path": "dist-website/images/complete-water.png",
+      "sha256": "37613cbf3a729cf3bae01ce7afcd62d220f4f2865c6c3c108ab34d5f86e9b1f7"
+    },
+    {
+      "path": "dist-website/images/english.png",
+      "sha256": "56150b9e6c7b1799eb1c1e224025704adabf4ac94218fea1a4f4d2faff1499d4"
+    },
+    {
+      "path": "dist-website/images/home.png",
+      "sha256": "5379c66aa1de3b5aa2219c8b4956114f7e78b8e0c5ede98acbb2e4be65d0eb07"
+    },
+    {
+      "path": "dist-website/images/island-complete.png",
+      "sha256": "d2a3ff872e3dbff7dd9d3aa90f0476e7ad0123d53042d20fe60b1df01885ff47"
+    },
+    {
+      "path": "dist-website/images/island-start-cove.jpg",
+      "sha256": "6ca1766b73fbeca346432509891ecaadc1d48c75fb47d9fb7019f4a33c7f1b85"
+    },
+    {
+      "path": "dist-website/images/island-start.png",
+      "sha256": "66791cfccd817677944ff7217b9f1cbc60cf0eeaebd005622a1dc0663304a46b"
+    },
+    {
+      "path": "dist-website/images/island-village-cove.jpg",
+      "sha256": "de7631e5f244fe36888274c613f4cc9d0a8ad2a48fe3efb450dcd759a468f99c"
+    },
+    {
+      "path": "dist-website/images/island-village.png",
+      "sha256": "a96ac89e60b23afee3b3bdc293e186e37f68f86a9636944c3688696c16ac5947"
+    },
+    {
+      "path": "dist-website/images/math.png",
+      "sha256": "958e40db13136268d47d8355ea616fd49fa251e65f386f6aadb6851370e63b5c"
+    },
+    {
+      "path": "dist-website/index.html",
+      "sha256": "01ea3187b7ce3a42c4107167b7cf9c392430e835cad04a366a56acab3e860735"
+    }
+  ],
+  "excludedPreexistingOutput": "website/dist/ is ignored historical output, not a build input"
+}

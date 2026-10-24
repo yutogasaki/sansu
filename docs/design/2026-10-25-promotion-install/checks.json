@@ -1,0 +1,37 @@
+{
+  "at": "2026-10-24T23:11:37.105473+00:00",
+  "node": "22.23.3",
+  "docs": "PASS",
+  "currentUiEntry": "PASS",
+  "lint": "PASS",
+  "typecheck": "PASS",
+  "buildWebsite": "PASS",
+  "buildAppAndAssetBudget": "PASS",
+  "websiteProduction": "PASS: 320,390,768,1440; no JS; reduced motion; keyboard; no game DB/SW",
+  "verifyCore": "PARTIAL: interrupted after two unrelated 5000ms test timeouts; full unit suite did not complete",
+  "unitFailureFile": "src/domain/island/experienceRepository.test.ts",
+  "unitFailures": [
+    "rolls back a failed layout application receipt including all positions, cosmetics and optional expression state",
+    "keeps real later learning/growth, earned new items, spent stars and the saved next plan when restoring an old layout"
+  ],
+  "smoke": {
+    "passed": 31,
+    "failure": "opens /parents directly without arithmetic: range confirmation requires no arithmetic answer"
+  },
+  "commands": [
+    "fnm exec --using 22 npm run verify:core",
+    "fnm exec --using 22 npm run build",
+    "fnm exec --using 22 npm run build:website",
+    "fnm exec --using 22 npm run e2e:smoke",
+    "fnm exec --using 22 node tools/verify-promotion-website.mjs http://127.0.0.1:5201/ output/promotion-install-2026-10-25-production-v5",
+    "fnm exec --using 22 npm run docs:check"
+  ],
+  "smokeEvidence": [
+    "PASS keeps the root tangle playable on a wide portrait tablet (8897ms)",
+    "FAIL opens /parents directly without arithmetic: Error: range confirmation requires no arithmetic answer",
+    "    at assert (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:184:25)",
+    "    at scenarioParentsDirectEntry (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:3083:3)",
+    "    at async runScenario (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)",
+    "    at async main (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6751:18)"
+  ]
+}

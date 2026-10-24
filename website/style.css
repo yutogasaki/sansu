@@ -368,3 +368,78 @@ footer>a:last-child{font-size:9px}
 /* Keep concept provenance next to the artwork at every viewport. */
 .growth-photo{position:relative}
 .growth-image-note{position:absolute;right:12px;bottom:12px;z-index:1;border-radius:7px;background:#ffffffed;padding:5px 9px;font-size:11px;font-weight:700;color:var(--blue)}
+
+/* Home-screen guide, adapted from KeepGoing with the promotion site tokens. */
+.browser-note { padding: 24px 32px; border: 1px solid var(--line); border-radius: 16px; background: var(--paper); }
+.browser-note p { font-size: 14px; margin-top: 8px; }
+.browser-note p.micro { font-size: 12px; }
+.browser-note .text-link { margin-top: 12px; }
+.install-guide { margin-block: 32px 24px; }
+.install-legend { text-align: center; font-size: 12px; margin-block: 16px 24px; }
+.install-legend > span { color: var(--blue); font-weight: 800; }
+.install-platform { font-size: 18px; margin-bottom: 20px; }
+.install-panel + .install-panel { margin-top: 32px; }
+.install-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; list-style: none; padding: 0; margin: 0 0 20px; }
+.install-steps > li { min-width: 0; padding: 20px; background: var(--paper); border: 1px solid var(--line); border-radius: 16px; }
+.install-step-heading { display: flex; align-items: center; gap: 12px; min-height: 44px; margin-bottom: 20px; }
+.install-step-heading h4 { font-size: 15px; line-height: 1.6; margin: 0; }
+.install-number { display: grid; place-items: center; flex: 0 0 32px; height: 32px; border-radius: 50%; background: var(--ink); color: var(--paper); font: 700 18px Noto,sans-serif; }
+.install-steps p { font-size: 13px; line-height: 1.9; margin-top: 16px; }
+.install-steps p.micro { font-size: 12px; margin-top: 8px; }
+.install-steps strong { color: var(--ink); }
+.install-visual { height: 248px; max-width: 280px; margin-inline: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--sky); overflow: hidden; color: var(--ink); font-size: 12px; line-height: 1.5; }
+.browser-preview { height: 150px; overflow: hidden; }
+.browser-preview img { width: 100%; }
+.safari-address { margin: 8px 12px 4px; padding: 8px 4px; text-align: center; background: var(--paper); border-radius: 8px; font: 11px Noto,sans-serif; }
+.browser-toolbar { display: flex; align-items: center; justify-content: space-around; padding: 0 8px; font-size: 24px; height: 48px; }
+.tap-target { border: 2px solid var(--blue); border-radius: 8px; color: var(--blue); background: var(--paper); font-weight: 700; }
+.browser-toolbar .tap-target { display: flex; align-items: center; gap: 4px; padding: 4px 8px; }
+.tap-target svg { width: 24px; height: 24px; }
+.tap-label { font-size: 12px; }
+.inline-share { white-space: nowrap; color: var(--ink); font-weight: 700; }
+.menu-visual { padding: 12px; background: var(--sky); }
+.sheet-handle { display: block; width: 32px; height: 4px; margin: 0 auto 16px; background: var(--line); border-radius: 8px; }
+.mini-app { display: flex; gap: 12px; align-items: center; font-weight: 700; margin-bottom: 16px; }
+.mini-app img, .confirm-app img, .install-done img { border-radius: 12px; flex-shrink: 0; }
+.mini-app small { display: block; color: var(--muted); font-size: 10px; font-weight: 400; margin-top: 4px; }
+.diagram-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 12px; background: var(--paper); border-bottom: 1px solid var(--line); }
+.diagram-row.tap-target { border: 2px solid var(--blue); padding: 10px; }
+.diagram-plus { font-size: 20px; }
+.diagram-scroll, .diagram-hint { display: block; font-size: 11px; text-align: center; color: var(--muted); padding: 8px; }
+.confirm-visual { padding: 12px; }
+.confirm-header { display: flex; align-items: center; justify-content: space-between; font-size: 11px; }
+.confirm-header .tap-target { padding: 8px; font-size: 12px; }
+.confirm-app { display: grid; justify-items: center; gap: 8px; padding-block: 20px; font-weight: 700; }
+.app-toggle { font-size: 11px; gap: 4px; padding: 10px 8px; border: 0; border-radius: 8px; }
+.diagram-switch { width: 32px; height: 20px; flex-shrink: 0; border-radius: 12px; background: var(--blue); padding: 3px; }
+.diagram-switch::after { content: ''; display: block; width: 14px; height: 14px; margin-left: auto; border-radius: 50%; background: var(--paper); }
+.chrome-address { display: flex; align-items: center; gap: 8px; padding: 8px; background: var(--paper); }
+.chrome-address > span:first-child { flex: 1; min-width: 0; padding: 8px 4px; border-radius: 8px; background: var(--sky); font: 10px Noto,sans-serif; }
+.chrome-menu { flex: 0 0 32px; text-align: center; font-size: 24px; line-height: 32px; }
+.chrome-address + .browser-preview { height: 192px; }
+.chrome-sheet .diagram-row { padding-block: 14px; }
+.chrome-sheet .tap-target { margin-top: 8px; }
+.android-dialog { margin-top: 24px; padding: 16px; border-radius: 12px; background: var(--paper); }
+.android-dialog > strong { font-size: 13px; }
+.android-dialog .mini-app { margin-block: 20px; }
+.dialog-actions { display: flex; align-items: center; justify-content: flex-end; gap: 12px; font-size: 10px; }
+.dialog-actions .tap-target { padding: 8px; }
+.install-trouble { margin-bottom: 16px; font-size: 13px; }
+.install-trouble summary { cursor: pointer; min-height: 44px; padding-block: 10px; font-weight: 700; }
+.install-trouble p { max-width: 720px; margin-block: 8px 16px; }
+
+.install h4 { margin: 0; }
+.install-panel { padding: 20px 0; border-top: 1px solid var(--line); }
+.install-platform { cursor: pointer; min-height: 48px; padding: 8px 0; color: var(--blue); font-weight: 700; }
+.install summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
+.install .mini-app img { width: 40px; }
+.install .confirm-app img { width: 56px; }
+.install .android-dialog .mini-app img { width: 48px; }
+.install .browser-preview img { width: 100%; }
+.install-sources { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+.source-link { display: inline-flex; align-items: center; min-height: 44px; color: var(--blue); text-decoration: underline; font-size: 13px; }
+.install-done { display: flex; align-items: center; gap: 16px; padding: 24px; background: var(--sky); border-radius: 16px; }
+.install-done img { width: 48px; }
+.install-done p, .install .micro { font-size: 13px; }
+.closing-install { display: flex; width: fit-content; margin: 16px auto 0; }
+@media (max-width: 800px) { .install-steps { grid-template-columns: 1fr; } .install-steps > li { padding: 24px; } .browser-note { padding: 20px; } }
