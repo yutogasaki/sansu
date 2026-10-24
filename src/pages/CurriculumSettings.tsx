@@ -74,6 +74,8 @@ export const CurriculumSettings: React.FC = () => {
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [activeTab, setActiveTab] = useState<"math" | "vocab">(searchParams.get('subject') === 'vocab' ? 'vocab' : 'math');
     const [showGuard, setShowGuard] = useState(false);
+    const [password, setPassword] = useState("");
+    const [passwordError, setPasswordError] = useState(false);
     const [pendingLevel, setPendingLevel] = useState<number | null>(null);
     const [pendingAction, setPendingAction] = useState<"main" | "unlock" | "resume" | null>(null);
     const [resumeTarget, setResumeTarget] = useState<{ profileId: string; mainLevel: number; subject: 'math' | 'vocab' } | null>(null);
@@ -86,6 +88,8 @@ export const CurriculumSettings: React.FC = () => {
 
     const closeGuard = useCallback(() => {
         setShowGuard(false);
+        setPassword("");
+        setPasswordError(false);
         setPendingLevel(null);
         setPendingAction(null);
         setResumeTarget(null);
@@ -122,6 +126,10 @@ export const CurriculumSettings: React.FC = () => {
 
     const handleConfirmLevel = async () => {
         if (!profile || pendingLevel === null || !pendingAction) return;
+        if (password !== "0320") {
+            setPasswordError(true);
+            return;
+        }
 
         if (pendingAction === 'resume' && resumeTarget) {
             try {
@@ -187,9 +195,31 @@ export const CurriculumSettings: React.FC = () => {
             contentClassName="px-[var(--screen-padding-x)] pt-4 space-y-5"
         >
             <Modal isOpen={showGuard} onClose={closeGuard} title="学習範囲の変更を確認"
-                footer={<div className="flex gap-2"><Button variant="secondary" onClick={closeGuard}>やめる</Button><Button onClick={handleConfirmLevel}>変更する</Button></div>}>
+                footer={<div className="flex gap-2"><Button variant="secondary" onClick={closeGuard}>やめる</Button><Button type="submit" form="curriculum-password-form">変更する</Button></div>}>
                 <p>{activeTab === 'math' ? '算数' : '英語'}の{pendingAction === 'resume' ? '進級を再開' : pendingAction === 'unlock' ? '解放上限を変更' : '練習の中心を変更'}：Lv.{pendingLevel}</p>
                 <p className="mt-3 text-sm text-pokomoko-muted">{pendingAction === 'main' ? '出題の中心が変わり、上のレベルはオフになります。学習記録は残ります。' : pendingAction === 'unlock' ? '練習できる範囲が変わります。現在のレベルより下には設定できません。' : '次の範囲を有効にします。レベルアップの条件と学習記録はそのままです。'}</p>
+                <form id="curriculum-password-form" className="mt-4 space-y-2" onSubmit={event => {
+                    event.preventDefault();
+                    void handleConfirmLevel();
+                }}>
+                    <label htmlFor="curriculum-password" className="block text-sm font-bold">保護者のパスワード</label>
+                    <input
+                        id="curriculum-password"
+                        type="password"
+                        inputMode="numeric"
+                        autoComplete="off"
+                        maxLength={4}
+                        value={password}
+                        onChange={event => {
+                            setPassword(event.target.value);
+                            setPasswordError(false);
+                        }}
+                        aria-invalid={passwordError}
+                        aria-describedby={passwordError ? "curriculum-password-error" : undefined}
+                        className="min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3 text-base text-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
+                    />
+                    {passwordError && <p id="curriculum-password-error" role="alert" className="text-sm text-pokomoko-muted">パスワードを確認して、もう一度入力してください。</p>}
+                </form>
             </Modal>
             {profile && needsProgressionResume(profile, activeTab) && <SurfacePanel className="space-y-3" aria-label="進級の再開">
                 <SurfacePanelHeader title={`Lv.${currentLevel + 1}への進級`} />
