@@ -42,7 +42,8 @@ try {
             }, { profile, logs });
             await page.goto(`${base}/#/stats`);
             const days = page.locator('[data-activity-date]'); await days.first().waitFor();
-            assert.equal(await page.locator('.stats-layout > .card-surface').first().getAttribute('data-testid'), 'activity-summary');
+            assert.equal(await page.locator('.stats-layout > .card-surface').first().getAttribute('aria-label'), 'つぎへの道');
+            assert.equal(await page.locator('.stats-layout > .card-surface').nth(1).getAttribute('data-testid'), 'activity-summary');
             assert.equal(await days.count(), 7);
             assert.equal((await page.getByTestId('activity-count').innerText()).replace(/\s/g, ''), '4問');
             assert.equal((await page.getByTestId('activity-days').innerText()).replace(/\s/g, ''), '2日');
