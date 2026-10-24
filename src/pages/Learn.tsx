@@ -8,6 +8,7 @@ import { ScreenScaffold } from '../components/ScreenScaffold';
 import { useIslandNavigation } from '../components/island/useIslandNavigation';
 import { Spinner } from '../components/ui/Spinner';
 import { warmUpTTS } from '../utils/tts';
+import { islandLearningRoute } from '../domain/island/navigation';
 
 export function Learn() {
     const requested = new URLSearchParams(useLocation().search).get('challenge');
@@ -22,10 +23,18 @@ export function Learn() {
 function ChallengeConfirmation({ subject }: { subject: 'math' | 'vocab' }) {
     const navigate = useNavigate();
     const navigation = useIslandNavigation();
+    const location = useLocation();
+    const parent = (location.state as { islandParent?: { href?: string } } | null)?.islandParent?.href;
+    const parentUrl = parent?.startsWith('/') && !parent.startsWith('//') ? new URL(parent, 'https://local.invalid') : undefined;
+    const fromPractice = parentUrl && islandLearningRoute(parentUrl.pathname, parentUrl.search);
     const state = useFinishChallenge();
     const challenge = state.challenges.find(item => item.subject === subject);
     const open = (path: string) => navigation ? navigation.open(path) : navigate(path);
-    const practice = () => { warmUpTTS(); open(islandEnabled() ? '/island?start=learn' : '/study'); };
+    const practice = () => {
+        warmUpTTS();
+        if (navigation && fromPractice) navigation.back();
+        else open(islandEnabled() ? '/island?start=learn' : '/study');
+    };
     return <ScreenScaffold title="レベルアップ" showBack onBack={() => navigation ? navigation.back() : navigate('/stats')}
         contentClassName="finish-confirmation" containerClassName="finish-confirmation-screen">
         <div data-learning-flow-candidate="learning-flow-v5">

@@ -21,9 +21,10 @@ import { PokomokoFullscreenCelebration } from './PokomokoFullscreenCelebration';
 import { PokomokoInputSpark } from './PokomokoLearningEffects';
 import type { UserProfile } from '../../domain/types';
 import { useLearningMusic } from './useLearningMusic';
+import { LearningProgressCue } from '../progress/LearningProgressCue';
 
 /** Help preserves the current draft; saved answers and new slots reset it. */
-export function IslandLearningPanel({ plan, active = true, intro = false, busy, hintPending = false, feedback, party = EMPTY_LEARNING_PARTY, onAction, observation, englishAutoRead = false, soundEnabled = false, subjectChoice, listeningEntry, heroStyle, companionHost }: {
+export function IslandLearningPanel({ profile, plan, active = true, intro = false, busy, hintPending = false, feedback, party = EMPTY_LEARNING_PARTY, onAction, observation, englishAutoRead = false, soundEnabled = false, subjectChoice, listeningEntry, heroStyle, companionHost }: {
     plan: IslandPlan;
     profile?: UserProfile;
     active?: boolean;
@@ -47,6 +48,8 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
     const section = useRef<HTMLElement>(null);
     const problemId = slot?.problem.id;
     const [dismissedReceipt, setDismissedReceipt] = useState<string>();
+    const [practicingPlan, setPracticingPlan] = useState<string>();
+    const practice = () => setPracticingPlan(plan.id);
     const celebration = usePokomokoFeedback(feedback, active, section, problemId);
     const music = useLearningMusic({ active: active && plan.subject === 'math', enabled: soundEnabled && plan.subject === 'math', level: celebration.level / 3, reach: party.streak % 5 === 4 && party.rideRemaining === 0, feedback });
     useLayoutEffect(() => {
@@ -79,19 +82,22 @@ export function IslandLearningPanel({ plan, active = true, intro = false, busy, 
             {progressView}
             <div className="island-learning-guidance-slot" ref={setGuidanceHost} />
             {feedbackView}
+            {profile && <LearningProgressCue profile={profile} plan={plan}
+                active={active && practicingPlan !== plan.id && !stage && !slot.assisted && slot.learningEvidenceAssistance !== 'assisted' && !slot.hissanStep && !slot.completed}
+                busy={busy} onOpen={practice} />}
         </>, headerHost) : <>{progressView}{feedbackView}</>}
         <PokomokoFullscreenCelebration burst={celebration.burst} root={section} level={celebration.level} />
         <PokomokoInputSpark cue={celebration.inputCue} root={section} />
         <IslandAnswerForm key={`${plan.id}:${plan.cursor}`} slot={slot} disabled={busy && !allowHintDraft} deferSubmission={busy && allowHintDraft} answerReceiptId={answerReceiptId}
             retryAnswer={feedback?.kind === 'retry' ? feedback.retryAnswer : undefined}
-            englishAutoRead={englishAutoRead} onInteraction={() => setDismissedReceipt(feedback?.id)}
+            englishAutoRead={englishAutoRead} onInteraction={() => { practice(); setDismissedReceipt(feedback?.id); }}
             onDigitInput={value => { celebration.onDigitInput(value); music.onInput(value); }}
-            onAnswer={answer => onAction({ type: 'answer', answer })} />
+            onAnswer={answer => { practice(); onAction({ type: 'answer', answer }); }} />
         <div className="island-learning-actions">
             {listeningEntry}
             {!stage ? <>
-                <button className="island-text-button" disabled={busy} onClick={() => onAction({ type: 'support_opened' })}><Lightbulb size={16} aria-hidden="true" />ヒントを みる</button>
-                <button className="island-text-button" disabled={busy} onClick={() => onAction({ type: 'skipped' })}>わからない</button>
+                <button className="island-text-button" disabled={busy} onClick={() => { practice(); onAction({ type: 'support_opened' }); }}><Lightbulb size={16} aria-hidden="true" />ヒントを みる</button>
+                <button className="island-text-button" disabled={busy} onClick={() => { practice(); onAction({ type: 'skipped' }); }}>わからない</button>
             </> : stage === 'hint'
                 ? <button className="island-text-button" disabled={busy} onClick={() => onAction({ type: 'model_opened' })}><BookOpen size={16} aria-hidden="true" />おてほんを みる</button>
                 : <button className="island-primary" disabled={busy} onClick={() => onAction({ type: 'supported_completed' })}>つぎへ すすむ</button>}

@@ -117,6 +117,8 @@ Islandの画面captureは `tools/island-e2e-helpers.mjs` の `runtimeMetadata` �
 
 `tools/e2e-learning-music.mjs` は `SANSU_FEEDBACK_URL` と任意の新しい `SANSU_LEARNING_MUSIC_OUTPUT` を指定し、実UI6問の伴奏出力・3/6問の層・リーチ/達成・旧SE重複なし・音OFF/退出・再ON後の操作開始を検査する。analyserの終了済みcontextに残る波形を出力と誤認しない。デジタル出力と停止の確認であり、聴感の合格とは別。
 
+`node tools/e2e-learning-level-cue.mjs` は `SANSU_LEVEL_CUE_URL` と新しい `SANSU_LEVEL_CUE_OUTPUT` を指定。通常学習の区間先頭から既存の進級確認、同予約への戻り、入力/支援後の案内終了、320px/390px/短横/tabletと筆算の44px操作・位置固定、英単語/両科目/資格読取失敗、実20問の進級と通常ログ/SRS/予約/島報酬の保持を検査する。資格は隔離したnativeプロフィール・独力証拠fixtureで用意し、生成済み問題の置換やreadyのmockはしない。読取失敗は初期化完了後だけ有効にする明示診断。`SANSU_LEVEL_CUE_EXTRA_ONLY=1` と任意の `SANSU_LEVEL_CUE_MODE` は対象診断用。実機iOS・子どもの理解/再訪・2 build更新は別ゲート。
+
 ## Matrix
 
 次期 `living-fantasy-v1`（初期候補を実装、全体は継続）の追加受入は[仕様51の検証章](../product/living-fantasy/08-delivery-and-acceptance.md)に定義する。現行の検査やclassic smokeを次期候補の合格へ流用せず、このmatrixの共通checksと次期の対象ケースを両方満たす。仕様策定だけの作業はdocs-onlyとして検証し、次期の美術・理解・runtimeのPASSとは区別する。

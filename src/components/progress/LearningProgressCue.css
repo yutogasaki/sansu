@@ -1,40 +1,22 @@
-.island-workbench > .learning-progress-cue {
-    flex: none;
-    grid-column: 1 / -1;
-    position: relative;
-    min-height: 20px;
-    margin-block: 2px;
-    color: var(--pokomoko-muted);
-    font-size: 12px;
-    line-height: 20px;
-}
-.learning-progress-cue-label { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.learning-progress-cue-notice:not(:empty) {
-    position: absolute;
-    inset: 0;
-    background: var(--island-workbench-paper, #fff9e8);
-    color: var(--pokomoko-ink, #263145);
-    font-weight: 700;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
+.learning-progress-cue { min-width: 0; width: 100%; }
 .learning-progress-finish-link {
-    position: relative;
-    z-index: 1;
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
     width: 100%;
     min-height: 44px;
-    border: 1px solid var(--pokomoko-stitch);
+    border: 1px solid var(--pokomoko-blue);
     border-radius: 12px;
-    background: var(--pokomoko-mint);
-    color: var(--pokomoko-ink);
+    background: var(--pokomoko-blue);
+    color: white;
     font-size: 13px;
+    white-space: nowrap;
     font-weight: 700;
-    padding: 6px 10px;
+    line-height: 1.3;
+    padding: 6px 8px;
     text-align: left;
     cursor: pointer;
 }
-.learning-progress-finish-link:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 2px; }
+.learning-progress-finish-link:focus-visible { outline: 3px solid var(--pokomoko-ink); outline-offset: 2px; }
 .learning-progress-finish-link:disabled { opacity: .6; cursor: default; }
