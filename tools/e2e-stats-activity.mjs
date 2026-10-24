@@ -101,16 +101,16 @@ try {
             const summary = page.getByTestId('activity-summary');
             await summary.waitFor();
             const text = async testId => (await page.getByTestId(testId).innerText()).replace(/\s/g, '');
-            assert.equal(await text('activity-count'), easy ? '2かい' : '2回');
-            assert.equal(await text('activity-days'), easy ? '2にち' : '2日');
+            assert.equal(await text('activity-count'), easy ? '1もん' : '1問');
+            assert.equal(await text('activity-days'), easy ? '1にち' : '1日');
             assert.match(await summary.innerText(), /2026\/10\/18〜2026\/10\/24/);
             assert.equal(await page.locator('.stats-disclosure[open]').count(), 0);
             const before = await readStores(page);
             await summary.scrollIntoViewIfNeeded();
             await capture(page, row, 'week');
             await summary.getByRole('button', { name: easy ? '30にちかん' : 'この30日間', exact: true }).click();
-            assert.equal(await text('activity-count'), easy ? '4かい' : '4回');
-            assert.equal(await text('activity-days'), easy ? '4にち' : '4日');
+            assert.equal(await text('activity-count'), easy ? '3もん' : '3問');
+            assert.equal(await text('activity-days'), easy ? '3にち' : '3日');
             assert.match(await summary.innerText(), /2026\/9\/25〜2026\/10\/24/);
             await capture(page, row, 'month');
             const geometry = await summary.evaluate(element => ({
@@ -131,7 +131,7 @@ try {
             assert.deepEqual(await readStores(page), before, 'Viewing/toggling cannot change saved learning');
             await page.reload();
             await summary.waitFor();
-            assert.equal(await text('activity-count'), easy ? '2かい' : '2回');
+            assert.equal(await text('activity-count'), easy ? '1もん' : '1問');
             assert.equal(await page.locator('.stats-disclosure[open]').count(), 0);
 
             // Fault diagnostic: fail log reads without changing or deleting stored data.
@@ -151,7 +151,7 @@ try {
             await page.evaluate(() => window.restoreStatsRead());
             await page.getByRole('button', { name: /再読み込み|もういちど/, exact: true }).click();
             await summary.waitFor();
-            assert.equal(await text('activity-count'), easy ? '2かい' : '2回');
+            assert.equal(await text('activity-count'), easy ? '1もん' : '1問');
             assert.deepEqual(await readStores(page), before);
 
             // Only this isolated fixture is cleared to exercise empty and long-absent states.
@@ -162,7 +162,7 @@ try {
                 await new Promise(resolve => { tx.oncomplete = resolve; }); db.close();
             });
             await page.reload(); await summary.waitFor();
-            assert.equal(await text('activity-count'), easy ? '0かい' : '0回');
+            assert.equal(await text('activity-count'), easy ? '0もん' : '0問');
             await page.locator('.stats-first-record').getByRole('button', { name: 'まなぶ', exact: true }).waitFor();
             await summary.scrollIntoViewIfNeeded(); await capture(page, row, 'empty');
             await page.getByRole('button', { name: 'しま', exact: true }).click();

@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import type { AttemptLog } from '../../db';
 import { summarizeActivity, type ActivityPeriod } from '../../domain/stats/activity';
 import { InsetPanel, SegmentedControl, SurfacePanel, SurfacePanelHeader } from '../ui/SurfacePanel';
+import { DailyActivityList } from './DailyActivityList';
 
 export function ActivitySummary({ logs, profileId, now, easy }: {
     logs: AttemptLog[]; profileId: string; now: Date; easy: boolean;
@@ -22,19 +23,22 @@ export function ActivitySummary({ logs, profileId, now, easy }: {
                 <p className="text-xs text-pokomoko-muted">{date(summary.start)}〜{date(summary.lastDay)}</p>
                 <dl className="grid grid-cols-2 gap-2.5">
                     <InsetPanel className="stats-metric text-center">
-                        <dt className="text-sm font-bold text-pokomoko-muted">{t('かいとう', '回答回数')}</dt>
-                        <dd className="text-2xl font-black text-slate-800" data-testid="activity-count">{summary.count.toLocaleString('ja-JP')}<span className="ml-1 text-sm">{t('かい', '回')}</span></dd>
+                        <dt className="text-sm font-bold text-pokomoko-muted">{t('といた もんだい', '回答した問題')}</dt>
+                        <dd className="text-2xl font-black text-slate-800" data-testid="activity-count">{summary.answered.toLocaleString('ja-JP')}<span className="ml-1 text-sm">{t('もん', '問')}</span></dd>
                     </InsetPanel>
                     <InsetPanel className="stats-metric text-center">
-                        <dt className="text-sm font-bold text-pokomoko-muted">{t('まなんだ ひ', '学習した日')}</dt>
-                        <dd className="text-2xl font-black text-slate-800" data-testid="activity-days">{summary.days}<span className="ml-1 text-sm">{t('にち', '日')}</span></dd>
+                        <dt className="text-sm font-bold text-pokomoko-muted">{t('かいとうした ひ', '回答した日')}</dt>
+                        <dd className="text-2xl font-black text-slate-800" data-testid="activity-days">{summary.answeredDays}<span className="ml-1 text-sm">{t('にち', '日')}</span></dd>
                     </InsetPanel>
                 </dl>
-                <p className="text-sm text-slate-700">{t('さんすう', '算数')} {summary.math.toLocaleString('ja-JP')}{t('かい', '回')} ・ {t('えいたんご', '英単語')} {summary.vocab.toLocaleString('ja-JP')}{t('かい', '回')}</p>
+                <p className="text-sm text-slate-700">{t('さんすう', '算数')} {summary.answeredMath.toLocaleString('ja-JP')}{t('もん', '問')} ・ {t('えいたんご', '英単語')} {summary.answeredVocab.toLocaleString('ja-JP')}{t('もん', '問')}
+                    {summary.skipped > 0 && <> / スキップ {summary.skipped}{t('かい', '回')}</>}
+                </p>
                 {summary.count === 0 && <p className="text-sm text-pokomoko-muted">{t('この きかんの きろくは まだないよ。', 'この期間の記録はまだありません。')}</p>}
             </div>
             <p className="text-xs text-pokomoko-muted">{t('きょうを ふくむ きろく。1にちは あさ4じから。', '今日を含む記録です。1日は朝4時から数えます。')}</p>
-            <p className="text-xs text-pokomoko-muted">{t('スキップも ふくむよ。えいごの きそは べつの きろくだよ。', 'スキップを含む回答記録です。英語基礎の記録とは別です。')}</p>
+            <p className="text-xs text-pokomoko-muted">{t('ときなおしも ふくむよ。えいごの きそは べつの きろくだよ。', '解き直しを含む回答記録です。英語基礎の記録とは別です。')}</p>
+            <DailyActivityList days={summary.daily} easy={easy} />
         </SurfacePanel>
     );
 }

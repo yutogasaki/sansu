@@ -40,4 +40,36 @@ describe('activity summary', () => {
         expect(summarizeActivity([log(new Date(2020, 0, 1))], 'p1', '30', now))
             .toMatchObject({ count: 0, days: 0, math: 0, vocab: 0 });
     });
+
+    it('lists every date newest first and separates real answers from skips per subject', () => {
+        const now = new Date(2026, 9, 24, 12);
+        const a = log(new Date(2026, 9, 24, 8), { id: 1 });
+        const summary = summarizeActivity([a, a,
+            log(new Date(2026, 9, 24, 9), { id: 2, subject: 'vocab', result: 'incorrect' }),
+            log(new Date(2026, 9, 24, 10), { id: 3, result: 'skipped' }),
+            log(now, { profileId: 'other' })], 'p1', '7', now);
+        expect(summary.daily).toHaveLength(7);
+        expect(summary.daily[0]).toMatchObject({ dateKey: '2026-10-24', answered: 2, skipped: 1, math: 1, vocab: 1 });
+        expect(summary.daily[0].logs.map(item => item.id)).toEqual([3, 2, 1]);
+        expect(summary.daily[1]).toMatchObject({ dateKey: '2026-10-23', answered: 0, skipped: 0, logs: [] });
+        expect(summary.daily[6].dateKey).toBe('2026-10-18');
+        expect(summary).toMatchObject({ answered: 2, answeredDays: 1, skipped: 1, answeredMath: 1, answeredVocab: 1 });
+    });
+
+    it('does not present a skip-only day as answered questions or an answered day', () => {
+        const now = new Date(2026, 9, 24, 12);
+        const summary = summarizeActivity([log(now, { result: 'skipped' })], 'p1', '7', now);
+        expect(summary).toMatchObject({ answered: 0, answeredDays: 0, skipped: 1 });
+        expect(summary.daily[0]).toMatchObject({ answered: 0, skipped: 1 });
+    });
+
+    it('keeps the true timestamp when an after-midnight answer belongs to the previous learning day', () => {
+        const stamp = new Date(2026, 9, 25, 1, 32);
+        const days = summarizeActivity([log(stamp)], 'p1', '30', stamp).daily;
+        expect(days).toHaveLength(30);
+        expect(days[0].dateKey).toBe('2026-10-24');
+        expect(days[0].logs[0].timestamp).toBe(stamp.toISOString());
+        expect(days[0].answered).toBe(1);
+        expect(days.at(-1)?.dateKey).toBe('2026-09-25');
+    });
 });

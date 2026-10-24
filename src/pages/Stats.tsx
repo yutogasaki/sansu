@@ -393,13 +393,13 @@ export const Stats: React.FC = () => {
         >
             <div className={navigation ? "utility-layout-content stats-layout" : "island-utility-content mx-auto w-full max-w-[22rem] space-y-8 pb-2"}>
 
+                {activity && <ActivitySummary key={profile.id} profileId={profile.id} logs={activity.logs} now={activity.now} easy={isEasy} />}
+
                 <FoundationProgress profileId={profile.id} />
                 <LearningProgressCards profile={profile} refreshKey={learningOverlay}
                     onSettings={subject => { const path = `/settings/curriculum?subject=${subject}`; if (navigation) navigation.open(path); else navigate(path); }}
                     onLearn={() => { warmUpTTS(); if (navigation) navigation.startLearning(); else navigate('/study'); }}
                     onFinish={subject => { warmUpTTS(); const path = finishEntryPath(subject); if (navigation) navigation.open(path); else navigate(path); }} />
-
-                {activity && <ActivitySummary key={profile.id} profileId={profile.id} logs={activity.logs} now={activity.now} easy={isEasy} />}
 
                 {totalStats.count === 0 && (
                     <SurfacePanel className="stats-first-record space-y-4 p-5">
@@ -409,7 +409,7 @@ export const Stats: React.FC = () => {
                 )}
 
                 <details className="stats-disclosure">
-                    <summary>{t('ひごとの きろく', '日ごとの記録')}</summary>
+                    <summary>{t('きょうの まとめ・グラフ', '今日のまとめ・グラフ')}</summary>
                 <div className={navigation ? "stats-overview" : "space-y-8"}>
                 {totalStats.count > 0 && (
                     <SurfacePanel className="stats-today space-y-4 rounded-[28px] p-5">

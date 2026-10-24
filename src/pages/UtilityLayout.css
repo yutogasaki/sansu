@@ -109,6 +109,17 @@
 .stats-disclosure > summary:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 3px; }
 .app-container .utility-layout-screen .stats-activity button { min-height: 48px; }
 .stats-activity .stats-metric > dt { font-size: 14px; }
+.stats-daily { display: grid; gap: 12px; border-top: 1px solid var(--app-border-soft); padding-top: 16px; }
+.stats-daily-list > li { border-bottom: 1px solid var(--app-border-soft); }
+.stats-daily-detail > summary, .stats-daily-empty { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 4px 12px; padding: 12px 4px; min-height: 56px; }
+.stats-daily-detail > summary { cursor: pointer; list-style: none; border-radius: 8px; }
+.stats-daily-detail > summary::-webkit-details-marker { display: none; }
+.stats-daily-date::before { content: '＋'; margin-right: 6px; color: var(--pokomoko-blue-deep); }
+.stats-daily-detail[open] .stats-daily-date::before { content: '−'; }
+.stats-daily-breakdown, .stats-daily-empty small { grid-column: 1 / -1; color: var(--pokomoko-muted); font-size: 14px; }
+.stats-daily-detail ol { display: grid; gap: 8px; padding: 4px 4px 16px; }
+.stats-daily-detail ol li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px; font-size: 14px; }
+.stats-daily-detail summary:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 3px; }
 @media (max-width: 359px) {
     .stats-activity { padding: 16px; }
     .stats-activity button { padding-inline: 4px; }

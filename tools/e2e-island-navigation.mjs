@@ -757,13 +757,13 @@ try {
             await nav.getByRole('button', { name: 'きろく', exact: true }).click(); await ordinary('#/stats');
             await page.getByRole('heading', { name: /まなびの きろくが たまるよ|ここに学びの記録がたまります/ }).waitFor();
             await page.locator('.stats-first-record').getByRole('button', { name: 'まなぶ', exact: true }).waitFor();
-            assert.equal((await page.getByTestId('activity-count').innerText()).replace(/\s/g, ''), '0回', 'Empty activity is zero while the learning action remains available');
+            assert.equal((await page.getByTestId('activity-count').innerText()).replace(/\s/g, ''), '0問', 'Empty activity is zero while the learning action remains available');
             await learn.click(); await focus('learning'); await waitReady(page);
             const answered = await answerUI(page, (await readNative(page, id)).plan, { dev: false });
             assert.equal(answered.state.logs.length, 1);
             await button(page, 'とじる').click(); await ordinary('#/stats');
-            await page.waitForFunction(() => document.querySelector('[data-testid=activity-count]')?.textContent === '1回');
-            assert.equal((await page.getByTestId('activity-count').innerText()).replace(/\s/g, ''), '1回', 'The saved answer refreshes the activity summary');
+            await page.waitForFunction(() => document.querySelector('[data-testid=activity-count]')?.textContent === '1問');
+            assert.equal((await page.getByTestId('activity-count').innerText()).replace(/\s/g, ''), '1問', 'The saved answer refreshes the activity summary');
 
             // Review the caregiver page through its real gate on the current
             // Island-enabled app. The profile and its single answer are
