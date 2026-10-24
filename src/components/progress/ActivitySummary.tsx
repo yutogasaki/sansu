@@ -32,7 +32,7 @@ export function ActivitySummary({ logs, profileId, now, easy }: {
                     </InsetPanel>
                 </dl>
             </div>
-            <DailyActivityList days={summary.daily} easy={easy} />
+            <DailyActivityList key={period} days={summary.daily} easy={easy} />
             <details className="stats-counting-notes">
                 <summary>{t('うちわけ・かぞえかた', '内訳・数え方')}</summary>
                 <div className="space-y-2 text-sm text-pokomoko-muted">

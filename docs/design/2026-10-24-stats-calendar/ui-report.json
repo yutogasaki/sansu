@@ -1,0 +1,115 @@
+{
+  "startedAt": "2026-10-24T07:08:04.771Z",
+  "base": "http://127.0.0.1:5198",
+  "scope": "Synthetic isolated records; day/time/subject/result display and read-only preservation. Not child or device evidence.",
+  "sources": [
+    {
+      "file": "src/pages/Stats.tsx",
+      "sha256": "6241ec5423851cd737cfd2a8a7baadf9ffa0175993014ff0cc9ea158a9294e9b"
+    },
+    {
+      "file": "src/components/progress/ActivitySummary.tsx",
+      "sha256": "c8b74591c2377cc7dc17aa83c0f8c3fca8716516a2328ff3233e0501bb992e89"
+    },
+    {
+      "file": "src/components/progress/DailyActivityList.tsx",
+      "sha256": "e9313e87f79231c54b085c8d010366e61eef707ce69cfd86105e26c51c7d52ab"
+    },
+    {
+      "file": "src/domain/stats/activity.ts",
+      "sha256": "269297c594d191e38c767e5b9f8fafcec54fda32facc5f75d780034f402a9a5e"
+    },
+    {
+      "file": "src/pages/UtilityLayout.css",
+      "sha256": "486a1b32c7be32948cb31e3fa18766ae951ff90491ad8a73c1993e16138b1121"
+    },
+    {
+      "file": "tools/e2e-stats-daily.mjs",
+      "sha256": "2bac787a3cae9bec5a5eae6fe06bcc320ca2978ab2af7845601f10d9d7a8c7f3"
+    }
+  ],
+  "cases": [
+    {
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "captures": [
+        "320x568-compact.png",
+        "320x568-daily.png",
+        "320x568-month.png"
+      ],
+      "pass": true,
+      "metadata": {
+        "revision": "development-local",
+        "version": "development-local:515a386e-6c87-4f97-886d-efc5c9d38958",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "captures": [
+        "390x844-compact.png",
+        "390x844-daily.png",
+        "390x844-month.png"
+      ],
+      "pass": true,
+      "metadata": {
+        "revision": "development-local",
+        "version": "development-local:515a386e-6c87-4f97-886d-efc5c9d38958",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "viewport": {
+        "width": 568,
+        "height": 320
+      },
+      "captures": [
+        "568x320-compact.png",
+        "568x320-daily.png",
+        "568x320-month.png"
+      ],
+      "pass": true,
+      "metadata": {
+        "revision": "development-local",
+        "version": "development-local:515a386e-6c87-4f97-886d-efc5c9d38958",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "captures": [
+        "768x1024-compact.png",
+        "768x1024-daily.png",
+        "768x1024-month.png"
+      ],
+      "pass": true,
+      "metadata": {
+        "revision": "development-local",
+        "version": "development-local:515a386e-6c87-4f97-886d-efc5c9d38958",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    }
+  ],
+  "pass": true,
+  "finishedAt": "2026-10-24T07:08:15.138Z"
+}

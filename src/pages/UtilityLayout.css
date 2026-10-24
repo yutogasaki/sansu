@@ -109,18 +109,23 @@
 .stats-disclosure > summary:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 3px; }
 .app-container .utility-layout-screen .stats-activity button { min-height: 48px; }
 .stats-activity .stats-metric > dt { font-size: 14px; }
-.stats-daily { display: grid; gap: 12px; border-top: 1px solid var(--app-border-soft); padding-top: 16px; }
-.stats-daily-list > li { border-bottom: 1px solid var(--app-border-soft); }
-.stats-daily-detail > summary, .stats-daily-empty { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 4px 12px; padding: 12px 4px; min-height: 56px; }
-.stats-daily-detail > summary { cursor: pointer; list-style: none; border-radius: 8px; }
-.stats-daily-detail > summary::-webkit-details-marker { display: none; }
-.stats-daily-date::before { content: '＋'; margin-right: 6px; color: var(--pokomoko-blue-deep); }
-.stats-daily-detail[open] .stats-daily-date::before { content: '−'; }
-.stats-daily-skip { grid-column: 1 / -1; justify-self: end; color: var(--pokomoko-muted); font-size: 12px; }
-.stats-daily-breakdown { padding: 0 4px 8px; color: var(--pokomoko-muted); font-size: 14px; }
-.stats-daily-detail ol { display: grid; gap: 8px; padding: 4px 4px 16px; }
-.stats-daily-detail ol li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px; font-size: 14px; }
-.stats-daily-detail summary:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 3px; }
+.stats-calendar { display: grid; gap: 16px; border-top: 1px solid var(--app-border-soft); padding-top: 16px; }
+.stats-calendar-month { margin-bottom: 12px; font-size: 16px; font-weight: 700; color: var(--pokomoko-ink); }
+.stats-calendar-weekdays, .stats-calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.stats-calendar-weekdays { margin-bottom: 6px; text-align: center; font-size: 12px; color: var(--pokomoko-muted); }
+.stats-calendar-day { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-width: 0; min-height: 64px; padding: 6px 0; border: 1px solid transparent; border-radius: 10px; color: var(--pokomoko-muted); font-size: 13px; }
+.app-container .utility-layout-screen .stats-activity .stats-calendar-day { min-height: 64px; padding-inline: 0; }
+.stats-calendar-day strong { font-size: 14px; font-weight: 500; white-space: nowrap; }
+.stats-calendar-day small { margin-left: 1px; font-size: 10px; }
+.stats-calendar-day.has-answers { background: color-mix(in srgb, var(--pokomoko-blue) 12%, var(--pokomoko-paper)); color: var(--pokomoko-blue-deep); }
+.stats-calendar-day.has-answers strong { font-weight: 800; }
+.stats-calendar-day[aria-pressed="true"] { border-color: var(--pokomoko-blue-deep); box-shadow: inset 0 0 0 1px var(--pokomoko-blue-deep); }
+.stats-calendar-day:focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: 1px; }
+.stats-calendar-detail { padding-top: 16px; border-top: 1px solid var(--app-border-soft); }
+.stats-calendar-detail h3 { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 16px; }
+.stats-daily-breakdown { padding-bottom: 8px; color: var(--pokomoko-muted); font-size: 14px; }
+.stats-calendar-detail ol { display: grid; gap: 8px; }
+.stats-calendar-detail ol li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 8px; font-size: 14px; }
 .stats-counting-notes > summary { min-height: 48px; padding: 12px 4px; cursor: pointer; font-size: 14px; color: var(--pokomoko-muted); }
 @media (max-width: 359px) {
     .stats-activity { padding: 16px; }

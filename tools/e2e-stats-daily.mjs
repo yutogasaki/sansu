@@ -49,27 +49,60 @@ try {
             const today = page.locator('[data-activity-date="2026-10-24"]');
             assert.match(await today.innerText(), /3問/);
             assert.doesNotMatch(await today.innerText(), /算数|英単語/);
-            assert.match(await today.innerText(), /スキップ 1回/);
+            assert.match(await today.getAttribute('aria-label'), /スキップ 1回/);
+            assert.equal(await page.locator('.stats-calendar-weekdays span').count(), 7);
+            assert.equal(await days.first().getAttribute('data-activity-date'), '2026-10-18');
             assert.doesNotMatch(await page.getByTestId('activity-summary').innerText(), /朝4時|問題数にスキップ/);
             const compact = `${viewport.width}x${viewport.height}-compact.png`;
             await page.screenshot({ path: path.join(out, compact), animations: 'disabled' }); row.captures.push(compact);
             assert.match(await page.locator('[data-activity-date="2026-10-23"]').innerText(), /1問/);
             assert.match(await page.locator('[data-activity-date="2026-10-22"]').innerText(), /0問/);
-            await today.scrollIntoViewIfNeeded(); await today.locator('summary').click();
-            assert.equal(await today.locator('time').count(), 4);
-            assert.match(await today.innerText(), /算数 2問 ・ 英単語 1問/);
-            assert.match(await today.locator('time').first().innerText(), /10\/25 01:32/);
-            assert.match(await today.innerText(), /10\/24 18:42/);
+            await today.scrollIntoViewIfNeeded(); await today.click();
+            assert.equal(await today.getAttribute('aria-pressed'), 'true');
+            const detail = page.locator('#stats-calendar-detail');
+            assert.equal(await detail.locator('time').count(), 4);
+            assert.match(await detail.innerText(), /算数 2問 ・ 英単語 1問/);
+            assert.match(await detail.innerText(), /スキップ 1回/);
+            assert.match(await detail.locator('time').first().innerText(), /10\/25 01:32/);
+            assert.match(await detail.innerText(), /10\/24 18:42/);
+            await today.focus(); await page.keyboard.press('Enter');
+            assert.equal(await detail.innerText(), '');
+            await page.keyboard.press('Space');
+            assert.equal(await detail.locator('time').count(), 4);
             const file = `${viewport.width}x${viewport.height}-daily.png`; await page.screenshot({ path: path.join(out, file), animations: 'disabled' }); row.captures.push(file);
             assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
-            assert((await today.locator('summary').boundingBox()).height >= 48);
+            assert((await today.boundingBox()).height >= 64);
+            await page.locator('[data-activity-date="2026-10-22"]').click();
+            assert.match(await detail.innerText(), /記録はまだありません/);
             await page.getByRole('button', { name: 'この30日間', exact: true }).click(); assert.equal(await days.count(), 30);
+            assert.equal(await detail.innerText(), '');
+            assert.equal(await page.locator('.stats-calendar-month').count(), 2);
+            assert.equal(await days.first().getAttribute('data-activity-date'), '2026-09-25');
+            const friday = page.locator('[data-activity-date="2026-09-25"]');
+            const saturday = page.locator('[data-activity-date="2026-09-26"]');
+            const sunday = page.locator('[data-activity-date="2026-09-27"]');
+            assert((await saturday.boundingBox()).x > (await friday.boundingBox()).x);
+            assert((await sunday.boundingBox()).y > (await friday.boundingBox()).y);
+            assert((await sunday.boundingBox()).x < (await friday.boundingBox()).x);
+            await page.getByTestId('activity-summary').scrollIntoViewIfNeeded();
+            const monthFile = `${viewport.width}x${viewport.height}-month.png`;
+            await page.screenshot({ path: path.join(out, monthFile), animations: 'disabled' }); row.captures.push(monthFile);
             await page.reload(); await days.first().waitFor(); assert.equal(await days.count(), 7);
             const persisted = await page.evaluate(async () => {
                 const req = indexedDB.open('SansuDatabase'); const db = await new Promise(resolve => { req.onsuccess = () => resolve(req.result); });
                 const tx = db.transaction('logs', 'readonly'); const rows = await new Promise(resolve => { const r = tx.objectStore('logs').getAll(); r.onsuccess = () => resolve(r.result); }); db.close(); return rows;
             });
             assert.deepEqual(persisted.map(({ id, ...log }) => log), logs);
+            if (viewport.width === 390) {
+                await page.clock.setFixedTime(new Date('2027-01-05T09:00:00Z'));
+                await page.reload(); await days.first().waitFor();
+                await page.getByRole('button', { name: 'この30日間', exact: true }).click();
+                assert.equal(await days.count(), 30);
+                assert.deepEqual(await page.locator('.stats-calendar-month').allTextContents(), ['2026年12月', '2027年1月']);
+                assert.equal(await days.first().getAttribute('data-activity-date'), '2026-12-07');
+                assert.equal(await page.locator('[aria-pressed="true"][data-activity-date]').count(), 0);
+                assert.equal((await page.getByTestId('activity-count').innerText()).replace(/\s/g, ''), '0問');
+            }
             row.metadata = await appRootMetadata(page); assert.equal(row.metadata.islandFeatureEnabled, true); row.pass = true;
         } catch (error) { row.error = String(error); await page.screenshot({ path: path.join(out, `${viewport.width}-failure.png`) }); throw error; }
         finally { await context.close(); }
