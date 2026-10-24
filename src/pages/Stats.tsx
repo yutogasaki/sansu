@@ -1,4 +1,5 @@
 import { FoundationProgress } from '../components/progress/FoundationProgress';
+import { ActivitySummary } from '../components/progress/ActivitySummary';
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { addDays } from "date-fns";
@@ -22,7 +23,6 @@ import {
     DailyStats,
     TotalStats,
     WeakPoint,
-    getTodayStats,
     getTotalStats,
     getWeakPoints,
 } from "../domain/stats/repository";
@@ -188,6 +188,9 @@ export const Stats: React.FC = () => {
     const [trendData, setTrendData] = useState<WeeklyTrendPoint[]>([]);
     const [trendMode, setTrendMode] = useState<"count" | "accuracy">("count");
     const [loading, setLoading] = useState(true);
+    const [loadError, setLoadError] = useState(false);
+    const [reloadKey, setReloadKey] = useState(0);
+    const [activity, setActivity] = useState<{ logs: AttemptLog[]; now: Date } | null>(null);
 
     useEffect(() => {
         if (learningOverlay) return;
@@ -201,16 +204,15 @@ export const Stats: React.FC = () => {
                 }
 
                 const todayStart = getLearningDayStart();
-                const twoWeeksAgoStartIso = addDays(todayStart, -13).toISOString();
+                const monthStartIso = addDays(todayStart, -29).toISOString();
                 const todayEndIso = getLearningDayEnd(todayStart).toISOString();
 
-                const [daily, total, weak, mathReviews, vocabReviews, logsForCalendar, recentLogs, mathMemory, vocabMemory] = await Promise.all([
-                    getTodayStats(active.id),
+                const [total, weak, mathReviews, vocabReviews, logsForCalendar, recentLogs, mathMemory, vocabMemory] = await Promise.all([
                     getTotalStats(active.id),
                     getWeakPoints(active.id),
                     getReviewItems(active.id, "math"),
                     getReviewItems(active.id, "vocab"),
-                    db.logs.where("[profileId+timestamp]").between([active.id, twoWeeksAgoStartIso], [active.id, todayEndIso]).toArray(),
+                    db.logs.where("[profileId+timestamp]").between([active.id, monthStartIso], [active.id, todayEndIso], true, false).toArray(),
                     db.logs.where("profileId").equals(active.id).reverse().limit(100).toArray(),
                     db.memoryMath.where("profileId").equals(active.id).toArray(),
                     db.memoryVocab.where("profileId").equals(active.id).toArray(),
@@ -300,7 +302,10 @@ export const Stats: React.FC = () => {
                 }
 
                 setProfile(active);
-                setTodayStats(daily);
+                setActivity({ logs: logsForCalendar, now: todayStart });
+                setLoadError(false);
+                const todayLogs = logsForCalendar.filter(log => new Date(log.timestamp).getTime() >= todayStart.getTime());
+                setTodayStats({ count: todayLogs.length, correct: todayLogs.filter(log => log.result === 'correct').length });
                 setTotalStats(total);
                 setWeakPoints(weak);
                 setReviewItems(allReviews);
@@ -315,6 +320,7 @@ export const Stats: React.FC = () => {
 
             } catch (error) {
                 logInDev("Stats: failed to load stats", error);
+                if (!cancelled) setLoadError(true);
             } finally {
                 if (!cancelled) {
                     setLoading(false);
@@ -327,7 +333,7 @@ export const Stats: React.FC = () => {
         return () => {
             cancelled = true;
         };
-    }, [learningOverlay]);
+    }, [learningOverlay, reloadKey]);
 
     const todayAccuracy = todayStats.count > 0 ? Math.round((todayStats.correct / todayStats.count) * 100) : 0;
     const weekMinutes = weeklyDays.reduce((acc, day) => acc + day.minutes, 0);
@@ -349,6 +355,19 @@ export const Stats: React.FC = () => {
 
     if (loading) {
         return <Spinner fullScreen />;
+    }
+
+    if (loadError) {
+        return (
+            <ScreenScaffold title={t('きろく', '記録')} rightAction={closeAction}
+                containerClassName={navigation ? 'utility-layout-screen' : undefined}
+                contentClassName={navigation ? 'utility-layout-scroll' : 'px-6 pt-2'}>
+                <SurfacePanel className="mx-auto max-w-lg space-y-4 p-5">
+                    <p role="alert">{t('きろくを よみこめなかったよ。', '記録を読み込めませんでした。')}</p>
+                    <Button onClick={() => { setLoading(true); setReloadKey(key => key + 1); }}>{t('もういちど', '再読み込み')}</Button>
+                </SurfacePanel>
+            </ScreenScaffold>
+        );
     }
 
     if (!profile) {
@@ -380,13 +399,19 @@ export const Stats: React.FC = () => {
                     onLearn={() => { warmUpTTS(); if (navigation) navigation.startLearning(); else navigate('/study'); }}
                     onFinish={subject => { warmUpTTS(); const path = finishEntryPath(subject); if (navigation) navigation.open(path); else navigate(path); }} />
 
-                <div className={navigation ? "stats-overview" : "space-y-8"}>
-                {totalStats.count === 0 ? (
+                {activity && <ActivitySummary key={profile.id} profileId={profile.id} logs={activity.logs} now={activity.now} easy={isEasy} />}
+
+                {totalStats.count === 0 && (
                     <SurfacePanel className="stats-first-record space-y-4 p-5">
                         <SurfacePanelHeader title={t("まなびの きろくが たまるよ", "ここに学びの記録がたまります")} description={t("といた もんだいや、まなんだ ひを ここで ふりかえれるよ。", "解いた問題や学習した日を、ここで振り返れます。")} />
                         <Button onClick={() => { if (navigation) navigation.startLearning(); else { warmUpTTS(); navigate("/study"); } }}>まなぶ</Button>
                     </SurfacePanel>
-                ) : (
+                )}
+
+                <details className="stats-disclosure">
+                    <summary>{t('ひごとの きろく', '日ごとの記録')}</summary>
+                <div className={navigation ? "stats-overview" : "space-y-8"}>
+                {totalStats.count > 0 && (
                     <SurfacePanel className="stats-today space-y-4 rounded-[28px] p-5">
                         <SurfacePanelHeader
                             title="きょう の まとめ"
@@ -395,7 +420,7 @@ export const Stats: React.FC = () => {
                         <div className="grid grid-cols-2 gap-2.5">
                             <MetricTile label="かいとう" value={todayStats.count} />
                             <MetricTile label="せいかいりつ" value={todayStats.count > 0 ? `${todayAccuracy}%` : "—"} />
-                            <MetricTile label="ふん" value={todayMinutes} />
+                            <MetricTile label="じかんの めやす" value={`約${todayMinutes}分`} />
                             <MetricTile label="れんぞくにち" value={profile.streak || 0} />
                         </div>
                     </SurfacePanel>
@@ -426,11 +451,6 @@ export const Stats: React.FC = () => {
                         </div>
                     </SurfacePanel>
 
-                </div>
-
-
-
-                <div id="stats-learning-details" className={navigation ? "stats-details-grid" : "space-y-8"}>
                     <SurfacePanel className="space-y-5 rounded-[28px] p-5">
                         <SurfacePanelHeader
                             title={t("せいちょう グラフ", "成長グラフ")}
@@ -452,7 +472,16 @@ export const Stats: React.FC = () => {
                             </>
                         ) : <p className="text-sm leading-6 text-pokomoko-muted">{t("まなんだ ひと もんだいの かずを、グラフで ふりかえれるよ。", "学習した日と問題の数を、グラフで振り返れます。")}</p>}
 
-                        {stableSkills.length > 0 && (
+                    </SurfacePanel>
+                </div>
+                </details>
+
+                <details className="stats-disclosure">
+                    <summary>{t('まなびの くわしい きろく', '学びの詳しい記録')}</summary>
+                <div id="stats-learning-details" className={navigation ? "stats-details-grid" : "space-y-8"}>
+                    <SurfacePanel className="space-y-4 p-5">
+                        <SurfacePanelHeader title={t("さいきんの まなび", "最近の学び")} />
+                        {stableSkills.length > 0 ? (
                             <>
                                 <PanelDivider />
                                 <SectionLabel className="px-0">{t("できるように なったこと", "できるようになったこと")}</SectionLabel>
@@ -472,7 +501,7 @@ export const Stats: React.FC = () => {
                                     ))}
                                 </div>
                             </>
-                        )}
+                        ) : <p className="text-sm text-pokomoko-muted">{t("さいきんの れんしゅうを ここで ふりかえれるよ。", "最近の練習をここで振り返れます。")}</p>}
                     </SurfacePanel>
 
                     <SurfacePanel className="space-y-4 rounded-[28px] p-5">
@@ -618,9 +647,10 @@ export const Stats: React.FC = () => {
                         />
                         <div className="space-y-3 text-sm text-slate-700">
                             <SettingRow
-                                title="こんしゅう の がくしゅうじかん"
-                                action={<span className="font-bold">{weekMinutes}ふん</span>}
+                                title="この7にちかん の じかんの めやす"
+                                action={<span className="font-bold">約{weekMinutes}分</span>}
                             />
+                            <p className="text-xs text-pokomoko-muted">{t('じかんは、かいとうした じこくと かいすうからの めやすだよ。', '時間は回答時刻・回数からの推定です。')}</p>
                             <SettingRow
                                 title="ぜんたい かいとうすう"
                                 action={<span className="font-bold">{totalStats.count}かい</span>}
@@ -645,6 +675,7 @@ export const Stats: React.FC = () => {
                         </div>
                     </SurfacePanel>
                 </div>
+                </details>
             </div>
         </ScreenScaffold>
     );

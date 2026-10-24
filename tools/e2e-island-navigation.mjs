@@ -598,6 +598,7 @@ try {
             await button(page, 'もどる').click(); await ordinary('#/settings');
             await nav.getByRole('button', { name: 'きろく', exact: true }).click(); await ordinary('#/stats');
             await capture('records');
+            await page.locator('.stats-disclosure > summary').nth(1).click();
             const recordsScroll = page.locator('.utility-layout-scroll');
             const recordsScrollBefore = await recordsScroll.evaluate(element => ({
                 scrollHeight: element.scrollHeight,
@@ -756,14 +757,13 @@ try {
             await nav.getByRole('button', { name: 'きろく', exact: true }).click(); await ordinary('#/stats');
             await page.getByRole('heading', { name: /まなびの きろくが たまるよ|ここに学びの記録がたまります/ }).waitFor();
             await page.locator('.stats-first-record').getByRole('button', { name: 'まなぶ', exact: true }).waitFor();
-            assert.equal(await page.locator('.stats-metric').count(), 0, 'Empty records explain the next action instead of repeating zero metrics');
+            assert.equal((await page.getByTestId('activity-count').innerText()).replace(/\s/g, ''), '0回', 'Empty activity is zero while the learning action remains available');
             await learn.click(); await focus('learning'); await waitReady(page);
             const answered = await answerUI(page, (await readNative(page, id)).plan, { dev: false });
             assert.equal(answered.state.logs.length, 1);
             await button(page, 'とじる').click(); await ordinary('#/stats');
-            await page.waitForFunction(() => [...document.querySelectorAll('div')].some(element => element.textContent === 'かいとう' && /^1\s*かいとう$/.test(element.parentElement.textContent)));
-            const metric = page.locator('.stats-metric').filter({ has: page.getByText('かいとう', { exact: true }) });
-            assert.match(await metric.innerText(), /^1\s/, 'One saved answer replaces the empty state with the actual answer metric');
+            await page.waitForFunction(() => document.querySelector('[data-testid=activity-count]')?.textContent === '1回');
+            assert.equal((await page.getByTestId('activity-count').innerText()).replace(/\s/g, ''), '1回', 'The saved answer refreshes the activity summary');
 
             // Review the caregiver page through its real gate on the current
             // Island-enabled app. The profile and its single answer are

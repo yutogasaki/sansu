@@ -1,0 +1,122 @@
+{
+  "date": "2026-10-24",
+  "baseRevision": "68ab8a603d45aec7a52aeab31d1d045eb84bcf39",
+  "appAndToolPatchSha256": "04985570c156362d2400149f4f858b9ee33b25f90812646275b5542ab4524f67",
+  "node": "22.23.3",
+  "inputBlobCheck": {
+    "count": 2133,
+    "pass": true
+  },
+  "checks": {
+    "docs": true,
+    "currentUiEntry": true,
+    "lint": {
+      "errors": 0,
+      "existingWarnings": 4
+    },
+    "typecheck": true,
+    "focusedStats": {
+      "files": 4,
+      "tests": 10,
+      "pass": true
+    },
+    "fullSuite": {
+      "files": 653,
+      "passedFiles": 644,
+      "timeoutFiles": 9,
+      "tests": 5530,
+      "passedTests": 5517,
+      "timeouts": 13,
+      "exitCode": 1,
+      "durationSeconds": 2556.61
+    },
+    "timeoutRecheck": {
+      "maxWorkers": 1,
+      "minWorkers": 1,
+      "files": 9,
+      "tests": 111,
+      "pass": true,
+      "originalTimeoutsUnchanged": true
+    },
+    "build": {
+      "pass": true,
+      "version": {
+        "version": "development-local:6b8ce865-89fc-4180-b123-ae72372fe448",
+        "revision": "development-local",
+        "delivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "park": {
+          "enabled": false,
+          "renderer": "retired"
+        },
+        "island": {
+          "enabled": true,
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "life": {
+            "enabled": true,
+            "discovery": false,
+            "fantasy": false,
+            "candidate": "island-life-v1",
+            "saveVersion": 21
+          },
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "nativeArtStudy": {
+            "enabled": false,
+            "candidate": "native-05-art-transfer-v1",
+            "gameplayMapped": false
+          },
+          "nativeOwnedArt": {
+            "enabled": false,
+            "candidate": "native05-expanding-runtime-v2",
+            "gameplayMapped": true
+          },
+          "residentCandidate": "patchwork-otter-v1",
+          "artDirection": "moon-garden"
+        }
+      }
+    },
+    "smoke": {
+      "runs": [
+        {
+          "pass": 31,
+          "fail": 1,
+          "reason": "Changed collapsed-graph contract; harness updated."
+        },
+        {
+          "pass": 31,
+          "fail": 1,
+          "reason": "Unchanged Explore tablet physical-key entry."
+        },
+        {
+          "pass": 32,
+          "fail": 0,
+          "exitCode": 0
+        }
+      ]
+    },
+    "activityUi": {
+      "pass": true,
+      "viewports": [
+        "320x568",
+        "390x844",
+        "568x320",
+        "768x1024"
+      ],
+      "report": "ui-report.json",
+      "captureWarnings": 4
+    },
+    "navigation": {
+      "pass": false,
+      "scope": "390x844",
+      "reason": "Existing .island-welcome wait timed out before reaching records."
+    }
+  },
+  "unverified": [
+    "child comprehension/revisit",
+    "physical devices",
+    "published deployment",
+    "foundation period aggregation",
+    "full navigation/PWA acceptance"
+  ]
+}

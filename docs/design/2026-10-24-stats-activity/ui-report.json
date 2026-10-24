@@ -1,0 +1,603 @@
+{
+  "url": "http://127.0.0.1:5318",
+  "startedAt": "2026-10-24T05:15:14.489Z",
+  "source": [
+    {
+      "file": "src/pages/Stats.tsx",
+      "sha256": "6516b2e644310aa0bab05c3a7f7d487937de481cc13ad4b765368266d234d767"
+    },
+    {
+      "file": "src/pages/UtilityLayout.css",
+      "sha256": "b9ea5ddad4062345ac552fd80e44d82e50e4635505e7cf56d111845f659a91f9"
+    },
+    {
+      "file": "src/components/progress/ActivitySummary.tsx",
+      "sha256": "24ffb4f08ace47ff8152bd39251abf2bd141a126054fd96a940b7b880fea2cc7"
+    },
+    {
+      "file": "src/domain/stats/activity.ts",
+      "sha256": "ee86d6907fb017f7b7e498a3180f857a0a496241a6b35fd555600807bd0b3c4a"
+    },
+    {
+      "file": "tools/e2e-stats-activity.mjs",
+      "sha256": "39b988c2ec1385f9071131f2529adf51547e1047b45cff83aa6add99604d123e"
+    }
+  ],
+  "scope": "Explicit isolated historical log fixtures, read failure injection, current Island utility UI; no child observations or natural acquisition claims.",
+  "scenarios": [
+    {
+      "name": "320x568",
+      "easy": true,
+      "captures": [
+        {
+          "file": "320x568-launch.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "320x568-week.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "320x568-month.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "320x568-details.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "320x568-read-error.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "320x568-empty.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "320x568-return.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "destination": {
+            "url": "http://127.0.0.1:5318/#/island",
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "delivery": "mystic-island-v1",
+            "candidate": "mystic-island-shore-garden-v18",
+            "learningCandidate": "pokomoko-pop-live-v8",
+            "islandFeatureEnabled": true,
+            "mode": "home",
+            "drawCalls": 0,
+            "viewport": {
+              "width": 320,
+              "height": 568
+            },
+            "serviceWorkerControlled": false,
+            "reducedMotion": false,
+            "appRoot": {
+              "revision": "development-local",
+              "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+              "configuredDelivery": "snap-root-v1",
+              "visualLineage": "pokko-field-v1",
+              "islandFeatureEnabled": true,
+              "natureTownFeatureEnabled": false
+            }
+          },
+          "cache": {
+            "controlled": false
+          }
+        }
+      ],
+      "pass": true,
+      "captureWarnings": [
+        {
+          "file": "320x568-return.png",
+          "error": "TimeoutError: page.screenshot: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n"
+        }
+      ]
+    },
+    {
+      "name": "390x844",
+      "easy": false,
+      "captures": [
+        {
+          "file": "390x844-launch.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "390x844-week.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "390x844-month.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "390x844-details.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "390x844-read-error.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "390x844-empty.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "390x844-return.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "destination": {
+            "url": "http://127.0.0.1:5318/#/island",
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "delivery": "mystic-island-v1",
+            "candidate": "mystic-island-shore-garden-v18",
+            "learningCandidate": "pokomoko-pop-live-v8",
+            "islandFeatureEnabled": true,
+            "mode": "home",
+            "drawCalls": 0,
+            "viewport": {
+              "width": 390,
+              "height": 844
+            },
+            "serviceWorkerControlled": false,
+            "reducedMotion": true,
+            "appRoot": {
+              "revision": "development-local",
+              "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+              "configuredDelivery": "snap-root-v1",
+              "visualLineage": "pokko-field-v1",
+              "islandFeatureEnabled": true,
+              "natureTownFeatureEnabled": false
+            }
+          },
+          "cache": {
+            "controlled": false
+          }
+        }
+      ],
+      "pass": true,
+      "captureWarnings": [
+        {
+          "file": "390x844-return.png",
+          "error": "TimeoutError: page.screenshot: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n"
+        }
+      ]
+    },
+    {
+      "name": "568x320",
+      "easy": false,
+      "captures": [
+        {
+          "file": "568x320-launch.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "568x320-week.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "568x320-month.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "568x320-details.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "568x320-read-error.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "568x320-empty.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "568x320-return.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "destination": {
+            "url": "http://127.0.0.1:5318/#/island",
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "delivery": "mystic-island-v1",
+            "candidate": "mystic-island-shore-garden-v18",
+            "learningCandidate": "pokomoko-pop-live-v8",
+            "islandFeatureEnabled": true,
+            "mode": "home",
+            "drawCalls": 0,
+            "viewport": {
+              "width": 568,
+              "height": 320
+            },
+            "serviceWorkerControlled": false,
+            "reducedMotion": true,
+            "appRoot": {
+              "revision": "development-local",
+              "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+              "configuredDelivery": "snap-root-v1",
+              "visualLineage": "pokko-field-v1",
+              "islandFeatureEnabled": true,
+              "natureTownFeatureEnabled": false
+            }
+          },
+          "cache": {
+            "controlled": false
+          }
+        }
+      ],
+      "pass": true,
+      "captureWarnings": [
+        {
+          "file": "568x320-return.png",
+          "error": "TimeoutError: page.screenshot: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n"
+        }
+      ]
+    },
+    {
+      "name": "768x1024",
+      "easy": false,
+      "captures": [
+        {
+          "file": "768x1024-launch.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "768x1024-week.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "768x1024-month.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "768x1024-details.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "768x1024-read-error.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "768x1024-empty.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "cache": {
+            "controlled": false
+          }
+        },
+        {
+          "file": "768x1024-return.png",
+          "metadata": {
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          },
+          "candidate": "not-applicable: shared utility",
+          "destination": {
+            "url": "http://127.0.0.1:5318/#/island",
+            "revision": "development-local",
+            "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+            "delivery": "mystic-island-v1",
+            "candidate": "mystic-island-shore-garden-v18",
+            "learningCandidate": "pokomoko-pop-live-v8",
+            "islandFeatureEnabled": true,
+            "mode": "home",
+            "drawCalls": 0,
+            "viewport": {
+              "width": 768,
+              "height": 1024
+            },
+            "serviceWorkerControlled": false,
+            "reducedMotion": true,
+            "appRoot": {
+              "revision": "development-local",
+              "version": "development-local:4d835461-710c-4df6-93f6-cdedf118170e",
+              "configuredDelivery": "snap-root-v1",
+              "visualLineage": "pokko-field-v1",
+              "islandFeatureEnabled": true,
+              "natureTownFeatureEnabled": false
+            }
+          },
+          "cache": {
+            "controlled": false
+          }
+        }
+      ],
+      "pass": true,
+      "captureWarnings": [
+        {
+          "file": "768x1024-return.png",
+          "error": "TimeoutError: page.screenshot: Timeout 45000ms exceeded.\nCall log:\n\u001b[2m  - taking page screenshot\u001b[22m\n"
+        }
+      ]
+    }
+  ],
+  "pass": true,
+  "finishedAt": "2026-10-24T05:20:24.637Z"
+}
