@@ -47,11 +47,17 @@ try {
             assert.equal((await page.getByTestId('activity-count').innerText()).replace(/\s/g, ''), '4問');
             assert.equal((await page.getByTestId('activity-days').innerText()).replace(/\s/g, ''), '2日');
             const today = page.locator('[data-activity-date="2026-10-24"]');
-            assert.match(await today.innerText(), /3問/); assert.match(await today.innerText(), /算数 2問 ・ 英単語 1問 \/ スキップ 1回/);
+            assert.match(await today.innerText(), /3問/);
+            assert.doesNotMatch(await today.innerText(), /算数|英単語/);
+            assert.match(await today.innerText(), /スキップ 1回/);
+            assert.doesNotMatch(await page.getByTestId('activity-summary').innerText(), /朝4時|問題数にスキップ/);
+            const compact = `${viewport.width}x${viewport.height}-compact.png`;
+            await page.screenshot({ path: path.join(out, compact), animations: 'disabled' }); row.captures.push(compact);
             assert.match(await page.locator('[data-activity-date="2026-10-23"]').innerText(), /1問/);
             assert.match(await page.locator('[data-activity-date="2026-10-22"]').innerText(), /0問/);
             await today.scrollIntoViewIfNeeded(); await today.locator('summary').click();
             assert.equal(await today.locator('time').count(), 4);
+            assert.match(await today.innerText(), /算数 2問 ・ 英単語 1問/);
             assert.match(await today.locator('time').first().innerText(), /10\/25 01:32/);
             assert.match(await today.innerText(), /10\/24 18:42/);
             const file = `${viewport.width}x${viewport.height}-daily.png`; await page.screenshot({ path: path.join(out, file), animations: 'disabled' }); row.captures.push(file);

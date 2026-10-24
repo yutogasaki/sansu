@@ -103,7 +103,7 @@ try {
             const text = async testId => (await page.getByTestId(testId).innerText()).replace(/\s/g, '');
             assert.equal(await text('activity-count'), easy ? '1もん' : '1問');
             assert.equal(await text('activity-days'), easy ? '1にち' : '1日');
-            assert.match(await summary.innerText(), /2026\/10\/18〜2026\/10\/24/);
+            assert.match(await summary.innerText(), /2026\/10\/18〜10\/24/);
             assert.equal(await page.locator('.stats-disclosure[open]').count(), 0);
             const before = await readStores(page);
             await summary.scrollIntoViewIfNeeded();
@@ -111,7 +111,7 @@ try {
             await summary.getByRole('button', { name: easy ? '30にちかん' : 'この30日間', exact: true }).click();
             assert.equal(await text('activity-count'), easy ? '3もん' : '3問');
             assert.equal(await text('activity-days'), easy ? '3にち' : '3日');
-            assert.match(await summary.innerText(), /2026\/9\/25〜2026\/10\/24/);
+            assert.match(await summary.innerText(), /2026\/9\/25〜10\/24/);
             await capture(page, row, 'month');
             const geometry = await summary.evaluate(element => ({
                 width: innerWidth, right: element.getBoundingClientRect().right,
