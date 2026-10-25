@@ -155,7 +155,16 @@ export function useGrowingIsland(profileId: string, active: boolean) {
             setRecord(current => current?.profileId === result.record.profileId && current.revision > result.record.revision ? current : result.record); setError(undefined); announce(profileId);
             if (result.town.length) setReveal({ id: ++revealId.current, town: result.town, nature: [] });
             return true;
-        } catch (e) { setError(message(e)); return false; }
+        } catch (e) {
+            if (command.type === 'terrain-edit' || command.type === 'terrain-stroke' || command.type === 'terrain-undo' || command.type === 'terrain-redo') {
+                try {
+                    const latest = await readGrowingIsland(profileId);
+                    if (latest && islandIdOf(latest) === displayedIslandId)
+                        setRecord(current => current?.profileId === latest.profileId && current.revision > latest.revision ? current : latest);
+                } catch { /* Keep the original edit error; an unsuccessful read must not overwrite saved data. */ }
+            }
+            setError(message(e)); return false;
+        }
         finally { release(); setBusy(false); }
     }, [profileId, displayedIslandId]);
 

@@ -2,6 +2,8 @@ import { key, passageNeighbors, onLand, walkableCells } from './space';
 import type { Cell, GrowingState } from './types';
 import type { PlacePoint } from './placeTypes';
 import type { IslandWorld } from './worldDefinition';
+import { editableIslandWorld } from './editableTerrainWorld';
+import { supportsNativePlaceArchitecture } from './placeCapability';
 
 // Native saves and diagnostic projections share these coordinates across JS engines.
 // exp/sin/cos may differ in their final bit; sub-nanometre noise must not create a
@@ -10,8 +12,13 @@ const stableCoordinate = (value: number) => Math.round(value * 1e9) / 1e9;
 
 /** Saved coordinates keep their meaning. The original six-by-five home garden stays level;
  * newly owned districts form broad gentle banks rather than object-specific platforms. */
-export function terrainHeightAt(state: Pick<GrowingState, 'land'>, cell: Cell, world?: IslandWorld): number {
-    if (world) return world.floorAt(cell)?.point.y ?? 0;
+export function terrainHeightAt(state: Pick<GrowingState, 'land'> & Partial<Pick<GrowingState, 'bridge' | 'terrain'>>, cell: Cell, world?: IslandWorld): number {
+    const physical = world ?? editableIslandWorld(state);
+    if (physical) return physical.floorAt(cell)?.point.y ?? 0;
+    return baseTerrainHeightAt(state, cell);
+}
+
+export function baseTerrainHeightAt(state: Pick<GrowingState, 'land'>, cell: Cell): number {
     if (!state.land.expanded && !state.land.extra.length && !state.land.capes.length && !state.land.districts?.length) return 0;
     const height = (x: number, z: number) => {
         const east = Math.max(0, x - 5), west = Math.max(0, -x), south = Math.max(0, z - 4);
@@ -39,12 +46,17 @@ export function placeGalleryRoute(state: GrowingState, place: { footprint: Cell[
     // The authored owner-to-deck assembly is not implemented yet. An unrelated
     // bridge deck must not authorize a gallery above arbitrary ground.
     // Enable this only after the actual shared deck and its entrances are built.
-    if (world) return [];
-    const open = walkableCells(state);
-    const allowed = new Set(place.footprint.filter(cell => open.has(key(cell)) && onLand(state, cell)).map(key));
+    world ??= editableIslandWorld(state);
+    if (!supportsNativePlaceArchitecture(state, world)) return [];
+    const open = walkableCells(state, world);
+    const dry = (cell: Cell) => world ? Boolean(world.floorAt(cell)) : onLand(state, cell);
+    // Native gallery modules keep their established integer layout. Finer ground
+    // waypoints help residents approach them, but never resize an earned deck.
+    const integer = (cell: Cell) => Number.isInteger(cell.x) && Number.isInteger(cell.z);
+    const allowed = new Set(place.footprint.filter(cell => integer(cell) && open.has(key(cell)) && dry(cell)).map(key));
     const explore = (entrance: Cell) => {
         const queue = [entrance], previous = new Map<string, Cell | undefined>([[key(entrance), undefined]]);
-        for (let i = 0; i < queue.length; i++) for (const cell of passageNeighbors(queue[i])) {
+        for (let i = 0; i < queue.length; i++) for (const cell of passageNeighbors(queue[i], world)) {
             const id = key(cell);
             if (!allowed.has(id) || previous.has(id)) continue;
             previous.set(id, queue[i]); queue.push(cell);
@@ -53,13 +65,13 @@ export function placeGalleryRoute(state: GrowingState, place: { footprint: Cell[
     };
     // A reachable courtyard centre can be an isolated island within the narrow
     // footprint. Prefer an entrance that can actually lead to a branch walk.
-    const choices = place.entrances.filter(cell => open.has(key(cell)) && onLand(state, cell)).map(explore)
+    const choices = place.entrances.filter(cell => integer(cell) && open.has(key(cell)) && dry(cell)).map(explore)
         .sort((a, b) => b.queue.length - a.queue.length
             || Math.hypot(a.entrance.x - anchorCell.x, a.entrance.z - anchorCell.z) - Math.hypot(b.entrance.x - anchorCell.x, b.entrance.z - anchorCell.z)
             || a.entrance.z - b.entrance.z || a.entrance.x - b.entrance.x);
     const chosen = choices[0], base = chosen?.entrance;
     if (!base) return [];
-    const ground = terrainHeightAt(state, base) + .04;
+    const ground = terrainHeightAt(state, base, world) + .04;
     const rise = 1.35, radius = .275, steps = 28;
     const ascent: PlacePoint[] = [{ ...base, y: ground }];
     // Start and finish at the centre of the open entrance, so ground navigation has a
@@ -73,11 +85,12 @@ export function placeGalleryRoute(state: GrowingState, place: { footprint: Cell[
     const branch: Cell[] = [];
     let cursor: Cell | undefined = queue[queue.length - 1];
     while (cursor) { branch.unshift(cursor); cursor = previous.get(key(cursor)); }
-    const upper = branch.map(cell => ({ ...cell, y: terrainHeightAt(state, cell) + .04 + rise }));
+    const upper = branch.map(cell => ({ ...cell, y: terrainHeightAt(state, cell, world) + .04 + rise }));
     // Fit a genuine round upper court using the same open footprint. Test both
     // edges of its physical deck, not just the actor centre. A narrow lane retains
     // its existing branch walk and never receives an oversized ornamental ring.
-    const clear = (x: number, z: number) => allowed.has(key({ x: Math.round(x), z: Math.round(z) }));
+    const clear = (x: number, z: number) => (!world || dry({ x, z }))
+        && allowed.has(key({ x: Math.round(x), z: Math.round(z) }));
     let loop: { center: Cell; radius: number } | undefined;
     for (const radius of [1.2, .95, .72, .46]) {
         const center = queue.find(cell => Array.from({ length: 64 }, (_, i) => i * Math.PI * 2 / 64)
@@ -92,15 +105,25 @@ export function placeGalleryRoute(state: GrowingState, place: { footprint: Cell[
         const approach: Cell[] = [];
         let at: Cell | undefined = loop.center;
         while (at) { approach.unshift(at); at = previous.get(key(at)); }
-        roundWalk.push(...approach.map(cell => ({ ...cell, y: terrainHeightAt(state, cell) + .04 + rise })));
+        roundWalk.push(...approach.map(cell => ({ ...cell, y: terrainHeightAt(state, cell, world) + .04 + rise })));
         for (let i = 0; i <= 48; i++) {
             const a = i / 48 * Math.PI * 2;
             const point = { x: loop.center.x + Math.cos(a) * loop.radius, z: loop.center.z + Math.sin(a) * loop.radius };
-            roundWalk.push({ ...point, y: terrainHeightAt(state, point) + .04 + rise });
+            roundWalk.push({ ...point, y: terrainHeightAt(state, point, world) + .04 + rise });
         }
-        roundWalk.push(...approach.slice().reverse().map(cell => ({ ...cell, y: terrainHeightAt(state, cell) + .04 + rise })));
+        roundWalk.push(...approach.slice().reverse().map(cell => ({ ...cell, y: terrainHeightAt(state, cell, world) + .04 + rise })));
     }
     const stroll = [...roundWalk, ...upper, ...upper.slice(0, -1).reverse()];
-    return [...ascent, ...stroll, ascent[ascent.length - 1], ...ascent.slice(0, -1).reverse()]
+    const route = [...ascent, ...stroll, ascent[ascent.length - 1], ...ascent.slice(0, -1).reverse()]
         .map(point => ({ x: stableCoordinate(point.x), y: stableCoordinate(point.y), z: stableCoordinate(point.z) }));
+    // An edited inlet may cut the approach or the underside of a deck. Preserve
+    // existing modules only where their full physical width still has ground.
+    if (world) for (let i = 0; i < route.length; i++) {
+        const a = route[Math.max(0, i - 1)], b = route[i];
+        const steps = Math.max(1, Math.ceil(Math.hypot(b.x - a.x, b.z - a.z) / .08));
+        for (let step = 0; step <= steps; step++) for (const x of [-PLACE_GALLERY_WIDTH / 2, 0, PLACE_GALLERY_WIDTH / 2])
+            for (const z of [-PLACE_GALLERY_WIDTH / 2, 0, PLACE_GALLERY_WIDTH / 2])
+                if (!dry({ x: a.x + (b.x - a.x) * step / steps + x, z: a.z + (b.z - a.z) * step / steps + z })) return [];
+    }
+    return route;
 }

@@ -1,3 +1,4 @@
+import { editableIslandWorld } from './editableTerrainWorld';
 import { GROWTH_PLACE_GUIDES } from './placeGrowthGuides';
 import { placeGoalCatalog } from './placeCatalog';
 import { derivePlaces } from './places';
@@ -89,6 +90,7 @@ function currentIsland(state: GrowingState, places: DerivedPlace[], world?: Isla
 
 /** Matches the same set that the book reports; P06 has no invented owned object. */
 export function placeRevisionForGoal(state: GrowingState, id: PlaceGoalId, world?: IslandWorld): string | undefined {
+    world ??= editableIslandWorld(state);
     const places = derivePlaces(state, world);
     if (id !== 'P06') return places.filter(place => place.ruleId === id && grown(place)).sort((a, b) => a.id.localeCompare(b.id))[0]?.revision;
     const { mature, families } = currentIsland(state, places, world);
@@ -97,6 +99,7 @@ export function placeRevisionForGoal(state: GrowingState, id: PlaceGoalId, world
 
 /** Milestones retain the first exact owned snapshot, even after a garden is split or stored. */
 export function syncPlaceMilestones(state: GrowingState, now: number, world?: IslandWorld) {
+    world ??= editableIslandWorld(state);
     const progress = state.placeProgress ??= newPlaceProgress();
     validatePlaceProgress(progress);
     const places = derivePlaces(state, world);
@@ -113,6 +116,7 @@ export function syncPlaceMilestones(state: GrowingState, now: number, world?: Is
 export interface PlaceUseReceipt { ruleId: PlaceGoalId; placeId: string; revision: string; actorId: string; targetId: string }
 /** Called after the foreground actor reached a target; maturity alone never creates a use. */
 export function recordPlaceUse(state: GrowingState, receipt: PlaceUseReceipt, at: number, world?: IslandWorld) {
+    world ??= editableIslandWorld(state);
     if (!Number.isFinite(at) || at < 0) throw new Error('ばしょの いまを もういちど たしかめてね。');
     const place = derivePlaces(state, world).find(place => place.id === receipt.placeId && place.ruleId === receipt.ruleId && grown(place)
         && place.revision === receipt.revision && place.entrances.length > 0);
@@ -133,6 +137,7 @@ export function recordPlaceUse(state: GrowingState, receipt: PlaceUseReceipt, at
 
 /** A notice is acknowledged only for the grown revision rendered by the owner. */
 export function recordPlaceShown(state: GrowingState, receipt: { ruleId: PlaceGoalId; revision: string }, world?: IslandWorld) {
+    world ??= editableIslandWorld(state);
     if (!goalId(receipt.ruleId) || !text(receipt.revision)) throw new Error('ばしょの いまを もういちど たしかめてね。');
     const current = receipt.ruleId === 'P06' ? placeRevisionForGoal(state, 'P06', world)
         : derivePlaces(state, world).find(place => place.ruleId === receipt.ruleId && grown(place) && place.revision === receipt.revision)?.revision;
@@ -144,6 +149,7 @@ export function recordPlaceShown(state: GrowingState, receipt: { ruleId: PlaceGo
 
 /** Current functionality and durable achievements are independent of goal selection. */
 export function placeStatuses(state: GrowingState, world?: IslandWorld): PlaceStatus[] {
+    world ??= editableIslandWorld(state);
     const places = derivePlaces(state, world);
     const score = { seeded: 0, connected: 1, grown: 2, lived: 3 };
     return placeGoalCatalog.map(goal => {

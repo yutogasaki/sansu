@@ -11,6 +11,8 @@ import { wrapPokomoko } from './actors';
 import { GrowingLife } from './growingLife';
 import { sceneLayout, type SceneLayout } from './sceneLayout';
 import { buildPlaceGround } from './placeGround';
+import { buildEditableGround } from './editableGround';
+import { editableGroundDecorationKey, editableGroundDetailSupported } from './editableGroundDetails';
 import type { NativeGrowingKit } from './native/nativeGrowingKit';
 import { buildNativeGrowingGround } from './native/nativeGrowingGround';
 import { nativeGrowingLighting } from './native/nativeGrowingLighting';
@@ -58,7 +60,8 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
     };
 
     const setGround = (state: GrowingState, layout: SceneLayout) => {
-        if (layout.key === groundKey && ground) return;
+        const nextGroundKey = layout.editable ? `${layout.key}:owners:${editableGroundDecorationKey(state)}` : layout.key;
+        if (nextGroundKey === groundKey && ground) return;
         ground?.root.removeFromParent(); ground?.dispose();
         terrain?.root.removeFromParent(); terrain?.dispose();
         if (layout.authored) {
@@ -66,9 +69,13 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
             terrain = buildAuthoredGrowingGround(layout, coast, bridgeSkin);
             addShoulderSoil(terrain, layout);
         } else {
-            ground = buildGardenGround({ bounds: layout.bounds, moisture: cell => soilAt(state, cell), shelterTree: !native && layout.artMargin <= 1.1, heightAt: layout.heightAt }, layout.point);
+            ground = buildGardenGround({ bounds: layout.bounds, moisture: cell => soilAt(state, cell), shelterTree: !native && !layout.editable && layout.artMargin <= 1.1, heightAt: layout.heightAt,
+                ...(layout.editable ? { supportsDetail: (cell, radius) => editableGroundDetailSupported(layout, cell, radius, state) } : {}) }, layout.point);
             curveGroundGeometry(ground.root.getObjectByName('garden-ground-details')!, layout);
-            terrain = native ? buildNativeGrowingGround(layout, native.manifest.shoreProfile) : buildPlaceGround(layout);
+            terrain = layout.editable ? buildEditableGround(layout, native?.manifest.shoreProfile, state.bridge?.x) : native ? buildNativeGrowingGround(layout, native.manifest.shoreProfile) : buildPlaceGround(layout);
+            if (layout.editable) {
+                ground.root.getObjectByName('garden-island-pedestal')!.visible = false;
+            }
         }
         scene.add(terrain.root);
         if (!layout.authored && (layout.artMargin > 1.1 || native)) {
@@ -90,7 +97,7 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
             sea.material.vertexShader = sea.material.vertexShader.replace('p=uv;', 'p=position.xy/40.+.5;');
             sea.material.needsUpdate = true;
         }
-        groundKey = layout.key; scene.add(ground.root); ground.setTime(time);
+        groundKey = nextGroundKey; scene.add(ground.root); ground.setTime(time);
         nativeSeaTime();
         const house = nativeCottage ?? cottage.root;
         if (layout.authored) {

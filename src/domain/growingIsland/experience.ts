@@ -1,3 +1,4 @@
+import { editableIslandWorld } from './editableTerrainWorld';
 import { derivePlaces, placeWalkSearch } from './places';
 import { isReachable, key, reachableFromHome } from './space';
 import type { PlaceFamily } from './placeTypes';
@@ -23,6 +24,7 @@ export function validateExperience(value: IslandExperience) {
 
 /** Current, reachable music owner and place. Stored snapshots survive later editing. */
 export function concertPlace(state: GrowingState, targetId: string, world?: IslandWorld) {
+    world ??= editableIslandWorld(state);
     const stand = state.landmarks.find(item => item.id === targetId && item.kind === 'bandstand' && item.cell);
     if (!stand?.cell) return;
     const reached = reachableFromHome(state, undefined, world);
@@ -39,6 +41,7 @@ export function concertPlace(state: GrowingState, targetId: string, world?: Isla
 }
 
 export function recordSharedPlay(state: GrowingState, receipt: SharedPlayReceipt, now: number, world?: IslandWorld) {
+    world ??= editableIslandWorld(state);
     if (state.experience) validateExperience(state.experience);
     const place = concertPlace(state, receipt.targetId, world);
     const actor = state.villagers.find(friend => friend.id === receipt.actorId && !friend.away && !state.arrivals.includes(friend.id));

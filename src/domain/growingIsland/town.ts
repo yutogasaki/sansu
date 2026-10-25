@@ -1,3 +1,4 @@
+import { editableIslandWorld } from './editableTerrainWorld';
 import { grantGrowthMilestones } from './growth';
 import { comfort, foodSupport, genki, housing, islandLevel, levelFor, occupantsOf, refreshUnlocks } from './community';
 import { features, islandCharacter, styleAt } from './environment';
@@ -75,6 +76,7 @@ function chooseHome(state: GrowingState, villager: Villager, world?: IslandWorld
 }
 
 export function welcome(state: GrowingState, hour: number, home: Plot, world?: IslandWorld): Villager {
+    world ??= editableIslandWorld(state);
     if (world) {
         const owned = state.plots.find(plot => plot.id === home.id && plot.kind === 'home' && plot.stage > 0 && plot.cell && world.owns(plot.cell));
         if (!owned?.cell || occupantsOf(state, owned.id).length >= RULES.homeCapacity[owned.stage]
@@ -117,6 +119,7 @@ function hasTownWork(state: GrowingState, world?: IslandWorld) {
 
 /** Open useful banked time once, retaining the rest for the next seed or restored route. */
 export function openTown(state: GrowingState, world?: IslandWorld): TownEvent[] {
+    world ??= editableIslandWorld(state);
     const events: TownEvent[] = [], from = state.town.clock;
     while (state.town.bank > 0 && hasTownWork(state, world)) {
         state.town.clock += 1; state.town.bank -= 1;

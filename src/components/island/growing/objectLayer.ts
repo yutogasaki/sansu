@@ -21,6 +21,7 @@ import { derivePlaces } from '../../../domain/growingIsland/places';
 import { derivePlaceRelations } from '../../../domain/growingIsland/placeRelations';
 import { buildPlaceGeometry, visiblePlaceGeometry } from './placeGeometry';
 import { buildPlacePaths, type PlacePathAccess } from './placePaths';
+import { buildHabitatCover } from './habitatCover';
 import type { NativeGrowingKit } from './native/nativeGrowingKit';
 import type { NativeAuthoredFlower } from './native/nativeAuthoredFlower';
 import type { NativeAuthoredCove } from './native/nativeAuthoredCove';
@@ -142,7 +143,7 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
     const root = new T.Group(); root.name = 'growing-objects';
     const objects = new Map<string, T.Object3D>(), buds = new Map<string, T.Object3D>(), seats = new Map<string, Seat>();
     const swingPivots = new Map<string, T.Object3D>(), fingerTargets: T.Mesh[] = [];
-    const authoredWorld = layout.authored ? layout.world : undefined;
+    const authoredWorld = (layout.authored || layout.editable) ? layout.world : undefined;
     const places = derivePlaces(state, authoredWorld), relations = derivePlaceRelations(state, places, authoredWorld);
     const visiblePlaces = visiblePlaceGeometry(places);
     const grownBasins = new Set(visiblePlaces.filter(place => place.ruleId === 'P03' && (place.stage === 'grown' || place.stage === 'lived'))
@@ -230,6 +231,8 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
     // initial paths; live authored scenes replace them synchronously after the
     // actual actor/structure guard resolves the committed walking set.
     let paths = buildPlacePaths(state, layout, visiblePlaces); root.add(paths);
+    // DEV terrace form: low ground life around what the child placed, clear of the paths.
+    const habitat = buildHabitatCover(state, layout, paths.userData.groundPathEdges as [Cell, Cell][]); if (habitat) root.add(habitat);
     const pathStateKey = layout.authored ? growingSceneStateKey(state) : undefined;
     if (state.bridge) {
         const bridge = buildBridge(m), anchor = bridgeAnchor(state);

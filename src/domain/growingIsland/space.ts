@@ -1,3 +1,5 @@
+import { terrainOwnerSupported } from './terrainEditing';
+import { editableIslandWorld } from './editableTerrainWorld';
 import { occupiedCells } from '../islandLife/footprint';
 import type { ItemKind } from '../islandLife/model';
 import { OWN_LANDMARKS, type Cell, type GrowingState, type Landmark, type Plot } from './types';
@@ -65,7 +67,8 @@ export function occupant(state: GrowingState, cell: Cell, except?: string):
 }
 
 export function isVacant(state: GrowingState, cell: Cell, except?: string, world?: IslandWorld) {
-    return onLand(state, cell, world) && !occupant(state, cell, except);
+    world ??= editableIslandWorld(state);
+    return onLand(state, cell, world) && (!world || Boolean(world.floorAt(cell))) && terrainOwnerSupported(state, cell) && !occupant(state, cell, except);
 }
 
 /**
@@ -80,11 +83,25 @@ function plotBlocks(plot: Plot) {
 const OPEN_LANDMARKS: ReadonlySet<string> = new Set(['water-channel', 'flower-arch', 'flower']);
 function landmarkBlocks(landmark: Landmark) { return !OPEN_LANDMARKS.has(landmark.kind); }
 
-export function walkableCells(state: GrowingState, world?: IslandWorld): Set<string> {
+function walkingBlockedCells(state: GrowingState): Set<string> {
     const blocked = new Set<string>([key({ x: 2, z: 0 }), key({ x: 3, z: 0 })]);
     for (const l of state.landmarks) if (landmarkBlocks(l)) landmarkCells(l).forEach(c => blocked.add(key(c)));
     for (const p of state.plots) if (p.cell && plotBlocks(p)) blocked.add(key(p.cell));
     for (const k of state.keepsakes) if (k.cell) blocked.add(key(k.cell));
+    return blocked;
+}
+
+/** Continuous owner clearance for actors between navigation sites. */
+export function walkingPointBlocked(state: GrowingState, point: Cell): boolean {
+    return [...walkingBlockedCells(state)].some(text => {
+        const [x, z] = text.split(',').map(Number);
+        return authoredPointBlocked(point, { x, z });
+    });
+}
+
+export function walkableCells(state: GrowingState, world?: IslandWorld): Set<string> {
+    world ??= editableIslandWorld(state);
+    const blocked = walkingBlockedCells(state);
     if (world) {
         const ownerCells = [...blocked].map(text => { const [x, z] = text.split(',').map(Number); return { x, z }; });
         return new Set(world.walkSites.filter(site => !ownerCells.some(owner => authoredPointBlocked(site.cell, owner))).map(site => key(site.cell)));
@@ -117,6 +134,7 @@ export function bridgeSite(state: GrowingState) {
 
 /** Cells reachable on foot from Pokomoko's doorstep. */
 export function reachableFromHome(state: GrowingState, walkable?: Set<string>, world?: IslandWorld): Set<string> {
+    world ??= editableIslandWorld(state);
     walkable ??= walkableCells(state, world);
     if (world && !walkable.has(key(HOME_CELL))) return new Set();
     const start = key(HOME_CELL), seen = new Set<string>([start]), queue: Cell[] = [HOME_CELL];

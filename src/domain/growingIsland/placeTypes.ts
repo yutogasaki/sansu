@@ -21,6 +21,10 @@ export interface DerivedPlace {
     mainIds: string[];
     variant: string;
     structure?: string;
+    /** Mixed-age shade keeps the existing individual tree models, without granting new crowns to seedlings. */
+    treeForm?: 'individual';
+    /** Local flower roofs use only these mature owners, never the whole garden. */
+    flowerRoofs?: { variant: string; mainIds: string[] }[];
     stage: PlaceStage;
     footprint: Cell[];
     entrances: Cell[];

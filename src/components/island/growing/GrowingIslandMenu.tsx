@@ -1,5 +1,5 @@
 import { useEffect, useRef, type ReactNode } from 'react';
-import { ChevronDown, PawPrint, X, Waypoints } from 'lucide-react';
+import { ChevronDown, PawPrint, X, Waypoints, Shovel } from 'lucide-react';
 import type { Villager } from '../../../domain/growingIsland/types';
 import { villagerName } from './growingCopy';
 import type { MenuPictures } from './menuMiniatures';
@@ -15,6 +15,7 @@ export interface GrowingIslandMenuProps {
     onClose: () => void;
     onFriends: () => void;
     onVoyages?: () => void;
+    onTerrain?: () => void;
     onTrace: () => void;
     onShow: () => void;
     onFlowers: () => void;
@@ -33,6 +34,7 @@ export function GrowingIslandMenuContents(props: GrowingIslandMenuProps) {
             <span className="growing-pocket-main-copy"><strong>なかまに あう</strong><small id="growing-menu-population">{villagers.length}にん · {villagers.length ? villagers.slice(0, 2).map(villagerName).join('・') : 'これからの なかま'}</small></span>
         </button>
         <div className="growing-pocket-memories" aria-label="しまの くらし">
+            {props.onTerrain && <button disabled={props.busy} onClick={props.onTerrain}><Shovel size={29} aria-hidden="true" /><span>じめんを かえる</span></button>}
             {props.onVoyages && <button disabled={props.busy} onClick={props.onVoyages}><IslandToyIcon kind="boat" size={32} /><span>海図と ふね</span></button>}
             <button onClick={props.onTrace}><IslandToyIcon kind="palette" size={32} /><span>はたを つくる</span></button>
             <button aria-label="しゃしん・みせる" onClick={props.onShow}><IslandToyIcon kind="camera" size={32} /><span>しゃしん</span></button>

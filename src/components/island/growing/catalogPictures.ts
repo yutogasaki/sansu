@@ -5,6 +5,7 @@ import { buildPlot } from './plotGeometry';
 import { landmarkModel } from './objectLayer';
 import { buildKeepsake } from './keepsakeGeometry';
 import { miniaturePicture } from './menuMiniatures';
+import { storedCatalog } from './storedCatalog';
 
 export type CatalogPictures = Record<string, string>;
 
@@ -25,10 +26,11 @@ export function catalogPictureMaker(renderer: WebGLRenderer, materials: IslandMa
             add(`landmark:${kind}`, landmarkModel(materials, state, { id: `catalog:${kind}`, kind, growth: 0 }, new Set()));
         for (const color of FLOWER_COLORS)
             add(`flower:${color}`, landmarkModel(materials, state, { id: `catalog:${color}`, kind: 'flower', color, growth: 0 }, new Set()));
-        for (const plot of state.plots.filter(p => !p.cell))
+        const visible = new Set(storedCatalog(state).groups.flatMap(group => group.items.map(item => item.id)));
+        for (const plot of state.plots.filter(p => !p.cell && visible.has(p.id)))
             add(plot.id, buildPlot(materials, plot.kind, plot.stage, plot.style ?? 'plain', plot.growth, plot.roof));
-        for (const item of state.landmarks.filter(l => !l.cell)) add(item.id, landmarkModel(materials, state, item, new Set()));
-        for (const item of state.keepsakes.filter(k => !k.cell)) add(item.id, buildKeepsake(materials, keepsakeKind(item.unitId)));
+        for (const item of state.landmarks.filter(l => !l.cell && visible.has(l.id))) add(item.id, landmarkModel(materials, state, item, new Set()));
+        for (const item of state.keepsakes.filter(k => !k.cell && visible.has(k.id))) add(item.id, buildKeepsake(materials, keepsakeKind(item.unitId)));
         key = nextKey; pictures = next; return pictures;
     };
 }

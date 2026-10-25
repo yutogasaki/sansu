@@ -11,10 +11,10 @@ import { GrowingLife } from './growingLife';
 import { sceneLayout } from './sceneLayout';
 import { buildObjectLayer } from './objectLayer';
 
-function fixture() {
+function fixture(authored = true) {
     const state = newIsland('authored-actor-scale', 1000), { definition } = authoredAccessWorld();
     definition.districts[0].floors[0].vertices.forEach(vertex => { vertex.point.y = 1.5; });
-    const world = compileWorldDefinition(definition), layout = sceneLayout(state, false, world), m = new IslandMaterials('moon-garden');
+    const world = compileWorldDefinition(definition), layout = sceneLayout(state, false, authored ? world : undefined), m = new IslandMaterials('moon-garden');
     state.plots = [{ id: 'home', kind: 'home', cell: { x: 1, z: 1 }, stage: 2, plantedAt: 0, growth: 0, origin: 'seed', paid: 40 }];
     state.landmarks = [{ id: 'bench', kind: 'bench', cell: { x: 3, z: 2 }, growth: 0 }, { id: 'swing', kind: 'swing', cell: { x: 4, z: 2 }, growth: 0 }];
     state.arrivals = []; state.unopened = [];
@@ -82,6 +82,30 @@ it.each(['bench', 'swing'] as const)('uses the unchanged actual %s seat surface,
         } else expect(actor.root.position.y - center.y).toBeCloseTo(.16, 8);
         f.life.tick(4190, 0, false, false); expect(Number.isFinite(actorFootMinY(actor))).toBe(true);
         f.life.tick(4210, 0, true, false); expect(actorFootMinY(actor)).toBeCloseTo(1.5, 8);
+    } finally { random.mockRestore(); f.dispose(); }
+});
+
+it.each(['bench', 'swing'] as const)('keeps full-size residents and Pokomoko above the real %s seat in the normal island', kind => {
+    const f = fixture(false), cell = { x: kind === 'bench' ? 3 : 4, z: 2 }, before = structuredClone(f.state);
+    const random = vi.spyOn(Math, 'random').mockReturnValue(.99);
+    try {
+        for (const id of ['friend', 'pokomoko']) {
+            const actor = f.actor(id), neutral = actor.feet.map(foot => foot.position.toArray());
+            expect(actor.visual!.scale.x).toBe(1);
+            expect(f.life.pick(id)).toBe(true); f.life.drag(id, f.layout.point(cell));
+            expect(f.life.drop(id, 0)).toEqual({ kind, cell });
+            for (const [time, reduced] of [[0, true], [500, false], [1800, false], [3000, true]] as const) {
+                f.life.tick(time, 0, reduced, false);
+                const seat = actorSeatSurface(f.layer.objects.get(kind), kind === 'bench' ? 'sit' : 'swing')!;
+                const contact = actorSeatContact(actor)!;
+                expect(contact.y).toBeCloseTo(actorSurfaceY(seat, contact)!, 8);
+                assertFeetOutsideSeat(actor, seat);
+            }
+            f.life.tick(4210, 0, true, false);
+            expect(actor.feet.map(foot => foot.position.toArray())).toEqual(neutral);
+            expect(actor.visual!.position.toArray()).toEqual([0, 0, 0]);
+        }
+        expect(f.state).toEqual(before);
     } finally { random.mockRestore(); f.dispose(); }
 });
 

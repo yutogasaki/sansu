@@ -5,7 +5,7 @@ import { buildPlaceGround } from './placeGround';
 export interface CameraView { zoom: number; azimuth: number; pan: { x: number; z: number } }
 export const initialView = (): CameraView => ({ zoom: 1, azimuth: 0, pan: { x: 0, z: 0 } });
 const BASE = new T.Vector3(4.5, 7.8, 11);
-const OMIT = new Set(['life-sea', 'growing-next-boat', 'growing-boat', 'growing-ghost', 'growing-place-preview', 'growing-hint', 'growing-house-selection']);
+const OMIT = new Set(['life-sea', 'editable-underwater-bank', 'growing-next-boat', 'growing-boat', 'growing-ghost', 'growing-place-preview', 'growing-hint', 'growing-house-selection']);
 interface ArtSamples { roots: string; points: T.Vector3[]; bounds: T.Box3; projections: Map<number, { minX: number; maxX: number; minY: number; maxY: number }> }
 const artSamples = new WeakMap<SceneLayout, ArtSamples>();
 
@@ -56,7 +56,7 @@ export function revealPlaceCamera(camera: T.OrthographicCamera, layout: SceneLay
 }
 
 /** Samples visible static geometry, including curved leaves and the real shoreline.
- * The sea, boats approaching from afar and placement controls do not shrink the world. */
+ * The sea, submerged banks, approaching boats and placement controls do not shrink the world. */
 export function cameraArtPoints(roots: readonly T.Object3D[]): T.Vector3[] {
     const points: T.Vector3[] = [], local = new T.Vector3(), instance = new T.Matrix4(), matrix = new T.Matrix4();
     const visit = (object: T.Object3D) => {
@@ -103,7 +103,7 @@ export function frameCamera(camera: T.OrthographicCamera, layout: SceneLayout, v
     let fit = Math.max(halfHeight, halfWidth / aspect);
     const target = new T.Vector3(0, .2, (layout.depth - 5) / 2 + .6);
     const hasOwnedHero = layout.cameraObjects?.().some(root => root.getObjectByName('place-root-room') || root.getObjectByName('place-hollow-tree-home'));
-    if (layout.nativeArt || layout.artMargin > 1.1 || hasOwnedHero) {
+    if (layout.nativeArt || layout.editable || layout.artMargin > 1.1 || hasOwnedHero) {
         const forward = offset.clone().normalize(), right = new T.Vector3(forward.z, 0, -forward.x).normalize();
         const up = new T.Vector3().crossVectors(forward, right);
         const samples = framingSamples(layout), angle = view.azimuth;

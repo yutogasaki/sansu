@@ -301,7 +301,11 @@ function buildGallery(g: GardenGeometry, state: GrowingState, layout: SceneLayou
 /** A partial large grove replaces only its own main trees; every other owner stays visible. */
 export function visiblePlaceGeometry(places: readonly DerivedPlace[]): DerivedPlace[] {
     const large = new Set(places.filter(place => place.ruleId === 'P02' && matured(place)).flatMap(place => place.mainIds));
-    return places.flatMap(place => {
+    return places.flatMap(original => {
+        // The shade remains usable, while a mixed-age stand keeps the existing
+        // owner silhouettes and ground roots instead of adding a larger crown.
+        const place = original.ruleId === 'P01' && original.treeForm === 'individual'
+            ? { ...original, stage: 'connected' as const } : original;
         if (place.ruleId !== 'P01' || !place.mainIds.some(id => large.has(id))) return [place];
         const mainIds = place.mainIds.filter(id => !large.has(id));
         return mainIds.length ? [{ ...place, mainIds, memberIds: place.memberIds.filter(id => !large.has(id)), shadeRefs: place.shadeRefs.filter(id => !large.has(id)) }] : [];

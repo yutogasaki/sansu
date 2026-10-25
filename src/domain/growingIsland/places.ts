@@ -1,4 +1,5 @@
-import { supportedPlaceVariant } from './placeCapability';
+import { editableIslandWorld, terrainOf } from './editableTerrainWorld';
+import { supportedPlaceGroups, supportedPlaceVariant, supportsNativePlaceArchitecture } from './placeCapability';
 import { communityRoofModules } from './communityRoof';
 import { connectedWaterChannels, shadeInfluence, waterInfluence } from '../islandLife/waterChannels';
 import { BLOOM_HOURS, TREE_MATURE_HOURS, waterLayout } from './environment';
@@ -200,6 +201,8 @@ function derivePlace(state: GrowingState, ruleId: DerivedPlace['ruleId'], family
 
 /** Current shapes derive from owned objects only. No clocks/owners/rewards are changed here. */
 export function derivePlaces(state: GrowingState, world?: IslandWorld): DerivedPlace[] {
+    world ??= editableIslandWorld(state);
+    const nativeArchitecture = supportsNativePlaceArchitecture(state, world);
     const open = walkableCells(state, world), reached = reachableFromHome(state, open, world), places: DerivedPlace[] = [];
     const landmarks = stable(state.landmarks.filter((l): l is LocatedLandmark => !!l.cell && onLand(state, l.cell, world)));
     const plots = stable(state.plots.filter((p): p is LocatedPlot => !!p.cell && onLand(state, p.cell, world) && !state.unopened.includes(p.id)));
@@ -207,16 +210,24 @@ export function derivePlaces(state: GrowingState, world?: IslandWorld): DerivedP
     const trees = landmarks.filter(l => l.kind === 'sapling');
     const groves = components(trees, (a, b) => placeConnected(a, b, open, world));
     const groveSeats = attachments(groves, benches, reached, world);
+    const individualGroves = new Set<string>();
     const treeHomes = attachments(groves, plots.filter(p => p.kind === 'home' && (state.growth || p.style === 'tree')), reached, world);
     groves.forEach((component, index) => {
         const mature = component.filter(t => (t as Landmark).growth >= TREE_MATURE_HOURS);
-        const candidates = state.growth && !world ? components(mature, (a, b) => placeConnected(a, b, open, world)) : [component];
+        const ordinary = state.growth && mature.length ? components(mature, (a, b) => placeConnected(a, b, open, world)) : [component];
+        if (state.growth && nativeArchitecture && mature.length && mature.length < component.length)
+            mature.forEach(tree => individualGroves.add(tree.id));
+        const matureGroups = components(mature, (a, b) => placeConnected(a, b, open, world));
+        const candidates = state.growth && nativeArchitecture ? matureGroups.flatMap(group => supportedPlaceGroups('P02', group,
+            (a, b) => placeConnected(a, b, open, world)).map(part => part.owners)) : [component];
         const large = candidates.filter(main => state.growth
-            ? !!supportedPlaceVariant('P02', main.map(item => item.cell), !world) && main.filter(t => ['big', 'lord'].includes(treeAge(state, t.id))).length >= 2
+            ? !!supportedPlaceVariant('P02', main.map(item => item.cell), nativeArchitecture) && main.filter(t => ['big', 'lord'].includes(treeAge(state, t.id))).length >= 2
             : main.length >= count('P02', 'landmark:sapling') && treeHomes[index].length > 0);
-        for (const { id, main } of [{ id: 'P01' as const, main: component }, ...large.map(main => ({ id: 'P02' as const, main }))]) {
-            const homes = main === component ? treeHomes[index] : attachments([main], treeHomes[index], reached, world)[0];
-            const seats = main === component ? groveSeats[index] : attachments([main], groveSeats[index], reached, world)[0];
+        const largeHomes = attachments(large, treeHomes[index], reached, world);
+        const ordinarySeats = attachments(ordinary, groveSeats[index], reached, world), largeSeats = attachments(large, groveSeats[index], reached, world);
+        for (const { id, main } of [...ordinary.map(main => ({ id: 'P01' as const, main })), ...large.map(main => ({ id: 'P02' as const, main }))]) {
+            const homes = main === component ? treeHomes[index] : largeHomes[large.indexOf(main)] ?? [];
+            const seats = main === component ? groveSeats[index] : (id === 'P01' ? ordinarySeats[ordinary.indexOf(main)] : largeSeats[large.indexOf(main)]) ?? [];
             const mature = main.filter(t => (t as Landmark).growth >= TREE_MATURE_HOURS), big = main.filter(t => ['big', 'lord'].includes(treeAge(state, t.id)));
             const missing: string[] = [];
             if (main.length < (state.growth && id === 'P01' ? 1 : count(id, 'landmark:sapling'))) missing.push('木を よせてみよう');
@@ -242,7 +253,10 @@ export function derivePlaces(state: GrowingState, world?: IslandWorld): DerivedP
     });
 
     const flowers = landmarks.filter(l => l.kind === 'flower');
-    const flowerGroups = components(flowers, (a, b) => placeConnected(a, b, open, world));
+    const flowerGroups = components(flowers, (a, b) => placeConnected(a, b, open, world)).flatMap(group => {
+        const mature = group.filter(item => (item as Landmark).growth >= BLOOM_HOURS);
+        return state.growth && mature.length ? components(mature, (a, b) => placeConnected(a, b, open, world)) : [group];
+    });
     const flowerSeats = attachments(flowerGroups, benches, reached, world);
     flowerGroups.forEach((main, index) => {
         if (!state.growth && main.length < 2) return;
@@ -251,7 +265,7 @@ export function derivePlaces(state: GrowingState, world?: IslandWorld): DerivedP
         if (main.filter(f => (f as Landmark).growth >= BLOOM_HOURS).length < (state.growth ? main.length : count('P05', 'landmark:flower'))) missing.push('花が ひらくのを たのしもう');
         if (!state.growth && !seats.length) missing.push('花のそばに ベンチを おこう');
         const shape = placeShape(main, reached), variant = state.growth ? shape === 'lane' ? 'flower-path' : shape === 'cluster' ? 'flower-bed' : shape : shape === 'lane' ? 'arch' : shape === 'cluster' ? 'canopy' : shape;
-        const profile = state.growth ? supportedPlaceVariant('P05', main.map(item => item.cell), !world) : undefined;
+        const profile = state.growth ? supportedPlaceVariant('P05', main.map(item => item.cell), nativeArchitecture) : undefined;
         const place = derivePlace(state, 'P05', 'flowers', main, seats, reached, open, profile ?? variant,
             state.growth ? main.length >= 1 : main.length >= count('P05', 'landmark:flower') && seats.length > 0, missing, world);
         if (profile && place.stage === 'grown') place.structure = `P05:${profile}`;
@@ -265,7 +279,7 @@ export function derivePlaces(state: GrowingState, world?: IslandWorld): DerivedP
     const watersideFlowers = attachments(waterGroups, flowers, reached, world);
     const bounds = landBounds(state);
     const nearShore = (cell: Cell, radius: number) => world
-        ? Array.from({ length: 16 }, (_, i) => i * Math.PI / 8).some(angle => !world.anchorFloorAt({ x: cell.x + Math.cos(angle) * radius, z: cell.z + Math.sin(angle) * radius }))
+        ? Array.from({ length: 16 }, (_, i) => i * Math.PI / 8).some(angle => !(terrainOf(state) ? world.floorAt : world.anchorFloorAt)({ x: cell.x + Math.cos(angle) * radius, z: cell.z + Math.sin(angle) * radius }))
         : cell.z >= bounds.depth - radius || cell.x <= bounds.minX + radius - 1 || cell.x >= bounds.maxX - radius + 1;
     waterGroups.forEach((main, index) => {
         const bowls = main.filter(w => (w as Landmark).kind === 'water-bowl');
@@ -277,7 +291,7 @@ export function derivePlaces(state: GrowingState, world?: IslandWorld): DerivedP
         if (!state.growth && supplied.length < count('P03', 'landmark:water-channel')) missing.push('水のとおる みずみちを つなごう');
         if (!state.growth && !flowersHere.some(f => (f as Landmark).growth >= BLOOM_HOURS)) missing.push('水のそばで 花を そだてよう');
         if (!state.growth && !seats.length) missing.push('岸のそばに ベンチを おこう');
-        const waterHeight = (cell: Cell) => world?.anchorAt(cell)?.y ?? terrainHeightAt(state, cell, world);
+        const waterHeight = (cell: Cell) => terrainOf(state) ? terrainHeightAt(state, cell, world) : world?.anchorAt(cell)?.y ?? terrainHeightAt(state, cell, world);
         const heights = bowls.map(b => waterHeight(b.cell));
         const descending = Math.max(...heights) - Math.min(...heights) >= .2 && supplied.every(channel => {
             const adjacent = main.filter(other => distance(channel.cell, other.cell) === 1);
@@ -370,5 +384,15 @@ export function derivePlaces(state: GrowingState, world?: IslandWorld): DerivedP
             && !seats.some(seat => shadeInfluence(waterLayout(state, world), seat.cell) > 0)) missing.push('木陰へ ベンチを よせよう');
         return derivePlace(state, place.ruleId, place.family, main, attached, reached, open, place.variant,
             place.stage !== 'seeded' && (Boolean(state.growth) || seats.length > 0), missing, world);
+    }).map(place => {
+        if (place.ruleId === 'P01' && place.mainIds.some(id => individualGroves.has(id)))
+            return { ...place, treeForm: 'individual' as const, revision: JSON.stringify([place.revision, 'individual-trees']) };
+        if (!state.growth || !nativeArchitecture || place.ruleId !== 'P05' || place.stage !== 'grown') return place;
+        const main = place.mainIds.map(id => owners.get(id)!).filter(Boolean);
+        const parts = supportedPlaceGroups('P05', main, (a, b) => placeConnected(a, b, open, world));
+        if (!parts.length) return place;
+        const flowerRoofs = parts.map(part => ({ variant: part.variant, mainIds: stable(part.owners).map(owner => owner.id) }));
+        return { ...place, structure: `P05:${parts[0].variant}`, flowerRoofs,
+            revision: JSON.stringify([place.revision, flowerRoofs]) };
     }).sort((a, b) => a.id.localeCompare(b.id));
 }

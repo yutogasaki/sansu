@@ -10,6 +10,7 @@ import type { NativeAuthoredFlower } from './native/nativeAuthoredFlower';
 import flowerProfile from '../../../../docs/design/2026-10-11-authored-flower-garden/native-flower-support-profile.json';
 import { BLOOM_HOURS } from '../../../domain/growingIsland/environment';
 import { placeConnected } from '../../../domain/growingIsland/places';
+import { terracePlanOf } from '../../../domain/growingIsland/editableTerrainWorld';
 
 const PETALS = ['#e9a0c7', '#ae9de1', '#91cbd8', '#f1ca90'];
 const TINTS: Record<string, string> = { red: '#e69bbf', pink: '#efafcc', yellow: '#efd09b', orange: '#edb29a', blue: '#99bddf',
@@ -19,6 +20,8 @@ const tuple = (point: T.Vector3): V3 => [point.x, point.y, point.z];
 
 /** Ground colour belongs to the same open floor, never a raised garden platform. */
 function gardenFloor(g: GardenGeometry, state: GrowingState, layout: SceneLayout, place: DerivedPlace, cells: Cell[]) {
+    // DEV terrace form: the garden is the meadow itself, carpeted by the habitat cover's flowers, not a paved square.
+    if (terracePlanOf(layout.world)) return;
     const world = layout.authored ? layout.world : undefined, open = walkableCells(state, world), vertices: number[] = [], indices: number[] = [];
     const doors = new Set(state.plots.filter(plot => plot.kind === 'home' && plot.cell).flatMap(plot => world
         ? approachCells(plot.cell!, world).map(key) : [key({ x: plot.cell!.x, z: plot.cell!.z + 1 })]));
@@ -117,6 +120,15 @@ function authoredFlower(g: GardenGeometry, state: GrowingState, layout: SceneLay
 /** Same four plants grow one supported flower room; no extra owned flowers or floor. */
 export function buildPlaceFlowerRoof(g: GardenGeometry, state: GrowingState, layout: SceneLayout, place: DerivedPlace, native?: NativeGrowingKit, flowerSupport?: NativeAuthoredFlower) {
     if (layout.authored && native && flowerSupport) { authoredFlower(g, state, layout, place, native, flowerSupport); return; }
+    if (place.flowerRoofs) {
+        const covered = new Set(place.flowerRoofs.flatMap(part => part.mainIds));
+        for (const part of place.flowerRoofs) buildPlaceFlowerRoof(g, state, layout,
+            { ...place, flowerRoofs: undefined, mainIds: part.mainIds, variant: part.variant, structure: `P05:${part.variant}` }, native);
+        const rest = place.mainIds.filter(id => !covered.has(id));
+        if (rest.length) buildPlaceFlowerRoof(g, state, layout,
+            { ...place, flowerRoofs: undefined, mainIds: rest, structure: undefined }, native);
+        return;
+    }
     const owners = place.mainIds.map(id => state.landmarks.find(owner => owner.id === id && owner.kind === 'flower' && owner.cell))
         .filter((owner): owner is NonNullable<typeof owner> => Boolean(owner));
     if (!owners.length) return;

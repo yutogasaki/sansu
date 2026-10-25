@@ -3,9 +3,10 @@ import { canPurchase, cosmeticsOpen } from '../../../domain/growingIsland/commun
 import { useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 import { LANDMARK_PRICE, SEED_PRICE } from '../../../domain/growingIsland';
 import type { GrowingState, LandmarkKind, SeedKind } from '../../../domain/growingIsland';
-import { keepsakeKind, PLANTED_COLORS, type FlowerColor } from '../../../domain/growingIsland';
+import { PLANTED_COLORS, type FlowerColor } from '../../../domain/growingIsland';
 import { FLOWER_NAME, FLOWER_PAINT } from './flowerGeometry';
-import { HOME_STAGE, KEEPSAKE_NAME, LANDMARK_LABEL, SEED_LABEL, SEED_PLACE_NAME } from './growingCopy';
+import { LANDMARK_LABEL, SEED_LABEL, SEED_PLACE_NAME } from './growingCopy';
+import { CATALOG_GROUPS as GROUPS, storedCatalog } from './storedCatalog';
 
 export interface CatalogPosition { tab: 'new' | 'stored'; category: string; scroll: number; item?: { attr: string; value: string } }
 
@@ -14,14 +15,6 @@ export type Pick = { mode: 'seed'; kind: SeedKind } | { mode: 'landmark'; kind: 
 
 const SEEDS: SeedKind[] = ['home', 'farm', 'play', 'wild', 'market', 'festival', 'wonder'];
 const LANDMARKS: LandmarkKind[] = ['flower', 'bench', 'water-bowl', 'sapling', 'water-channel', 'picnic-table', 'planter', 'swing', 'lantern', 'fence', 'lighthouse', 'bandstand', 'slide', 'trampoline', 'fountain', 'bakery', 'postbox'];
-const GROUPS: { name: string; seeds: SeedKind[]; landmarks: LandmarkKind[] }[] = [
-    { name: 'おうち', seeds: ['home'], landmarks: [] },
-    { name: 'たべもの', seeds: ['farm', 'market'], landmarks: ['bakery'] },
-    { name: 'あそぶ・やすむ', seeds: ['play', 'festival'], landmarks: ['bench', 'picnic-table', 'swing', 'bandstand', 'slide', 'trampoline'] },
-    { name: '花・木・水', seeds: ['wild'], landmarks: ['flower', 'sapling', 'water-bowl', 'water-channel', 'planter', 'fountain'] },
-    { name: 'あかり・さく・ポスト', seeds: [], landmarks: ['lantern', 'fence', 'lighthouse', 'postbox'] },
-    { name: 'ふしぎ', seeds: ['wonder'], landmarks: [] },
-];
 
 /** The catalog describes the result; seed/landmark remain placement commands only. */
 export function GrowingTray({ state, onPick, onClose, initialTab = 'seeds', pictures = {}, position }: { position?: CatalogPosition; pictures?: CatalogPictures; state: GrowingState; onPick: (pick: Pick) => void; onClose: () => void; initialTab?: 'seeds' | 'landmarks' | 'stored' }) {
@@ -43,13 +36,14 @@ export function GrowingTray({ state, onPick, onClose, initialTab = 'seeds', pict
     const seeds = SEEDS.filter(kind => (kind === 'wonder' ? (state.wonderSeeds ?? 0) > 0 : canPurchase(state, `seed:${kind}`)) && (!tutorial || kind === 'home'));
     const landmarks = tutorial ? [] : LANDMARKS.filter(kind => canPurchase(state, `landmark:${kind}`));
     const groups = GROUPS.filter(group => group.seeds.some(kind => seeds.includes(kind)) || group.landmarks.some(kind => landmarks.includes(kind)));
-    const stored = [
-        ...state.keepsakes.filter(k => !k.cell).map(k => ({ id: k.id, kind: 'flower' as SeedKind | LandmarkKind, seed: false, keepsake: k.unitId,
-            label: { name: KEEPSAKE_NAME[keepsakeKind(k.unitId)], icon: '🏅' } })),
-        ...state.landmarks.filter(l => !l.cell).map(l => ({ id: l.id, kind: l.kind as SeedKind | LandmarkKind, seed: false, label: LANDMARK_LABEL[l.kind] })),
-        ...state.plots.filter(p => !p.cell).map(p => ({ id: p.id, kind: p.kind as SeedKind | LandmarkKind, seed: true,
-            label: { name: p.kind === 'home' ? HOME_STAGE[p.stage] : SEED_PLACE_NAME[p.kind], icon: SEED_LABEL[p.kind].icon } })),
-    ];
+    const stored = storedCatalog(state);
+    const filters = tab === 'new' ? groups.map(group => group.name) : stored.groups.map(group => group.name);
+    const activeCategory = filters.includes(category) ? category : 'すべて';
+    const frequent = stored.groups.find(group => group.name === 'しまに 多いもの')?.items ?? [];
+    const storedGroups = stored.groups.map(group => ({ ...group,
+        items: activeCategory === 'すべて' && group.name !== 'しまに 多いもの'
+            ? group.items.filter(item => !frequent.includes(item)) : group.items,
+    })).filter(group => group.items.length && (activeCategory === 'すべて' || activeCategory === group.name));
     const art = (key: string, fallback: React.ReactNode) => pictures[key] ? <img className="growing-catalog-picture" src={pictures[key]} alt="" /> : fallback;
     const info = (name: string, key: string, note: string) => <details className="growing-catalog-detail"><summary aria-label={`${name}を くわしく`}>くわしく</summary><div>{pictures[key] && <img src={pictures[key]} alt={name} />}<strong>{name}</strong><p>{note}</p></div></details>;
     const price = (value: number) => <span className="growing-price" aria-label={`しずく ${value}`}>💧{value}</span>;
@@ -57,7 +51,7 @@ export function GrowingTray({ state, onPick, onClose, initialTab = 'seeds', pict
         if (tutorial || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
         event.preventDefault();
         const next = event.key === 'Home' ? 'new' : event.key === 'End' ? 'stored' : tab === 'new' ? 'stored' : 'new';
-        setTab(next);
+        setTab(next); setCategory('すべて');
         tabs.current?.querySelector<HTMLButtonElement>(`[id="${id}-${next}-tab"]`)?.focus();
     };
     return <section className="growing-tray growing-catalog" aria-label="しまに おく" onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); onClose(); } }}>
@@ -66,16 +60,16 @@ export function GrowingTray({ state, onPick, onClose, initialTab = 'seeds', pict
             <button className="growing-close" onClick={onClose} aria-label="とじる">×</button>
         </header>
         <div ref={tabs} role="tablist" aria-label="置くもの" className="growing-tabs" onKeyDown={switchTab}>
-            <button id={`${id}-new-tab`} role="tab" aria-controls={`${id}-new`} tabIndex={tab === 'new' ? 0 : -1} aria-selected={tab === 'new'} onClick={() => setTab('new')}>あたらしく おく</button>
-            {!tutorial && <button id={`${id}-stored-tab`} role="tab" aria-controls={`${id}-stored`} tabIndex={tab === 'stored' ? 0 : -1} aria-selected={tab === 'stored'} onClick={() => setTab('stored')}>もちもの{stored.length > 0 ? ` (${stored.length})` : ''}</button>}
+            <button id={`${id}-new-tab`} role="tab" aria-controls={`${id}-new`} tabIndex={tab === 'new' ? 0 : -1} aria-selected={tab === 'new'} onClick={() => { setTab('new'); setCategory('すべて'); }}>あたらしく おく</button>
+            {!tutorial && <button id={`${id}-stored-tab`} role="tab" aria-controls={`${id}-stored`} tabIndex={tab === 'stored' ? 0 : -1} aria-selected={tab === 'stored'} onClick={() => { setTab('stored'); setCategory('すべて'); }}>もちもの{stored.count > 0 ? ` (${stored.count})` : ''}</button>}
         </div>
         <div role="tabpanel" id={`${id}-${tab}`} aria-labelledby={`${id}-${tab}-tab`}>
+            {!tutorial && filters.length > 0 && <div className="growing-catalog-filters" aria-label="品物の しゅるい">
+                {['すべて', ...filters].map(name => <button key={name} aria-pressed={activeCategory === name} onClick={() => setCategory(name)}>{name}</button>)}
+            </div>}
             {tab === 'new' ? <>
-                {!tutorial && <div className="growing-catalog-filters" aria-label="品物の しゅるい">
-                    {['すべて', ...groups.map(group => group.name)].map(name => <button key={name} aria-pressed={category === name} onClick={() => setCategory(name)}>{name}</button>)}
-                </div>}
                 {state.town.bank > 0 && <p className="growing-flower-note">まなびの じかんが たまっているよ。おうちや はたけが そだつよ</p>}
-                {groups.filter(group => category === 'すべて' || category === group.name).map(group => <section className="growing-catalog-group" key={group.name} aria-label={group.name}>
+                {groups.filter(group => activeCategory === 'すべて' || activeCategory === group.name).map(group => <section className="growing-catalog-group" key={group.name} aria-label={group.name}>
                     <h3>{group.name}</h3>
                     <div className="growing-grid growing-grid-seeds">
                         {group.seeds.filter(kind => seeds.includes(kind)).map(kind => {
@@ -100,14 +94,17 @@ export function GrowingTray({ state, onPick, onClose, initialTab = 'seeds', pict
                     </div>
                 </section>)}
             </> : <>
-                <p className="growing-flower-note">{stored.length ? 'しまってある ものを、しずくを つかわずに おけるよ' : 'しまってある ものは まだ ないよ'}</p>
+                <p className="growing-flower-note">{stored.count ? 'しまってある ものを、しずくを つかわずに おけるよ' : 'しまってある ものは まだ ないよ'}</p>
                 {state.keepsakes.some(k => !k.cell) && <p className="growing-flower-note">まなびの きねんひんも、すきな ばしょに おけるよ</p>}
-                <div className="growing-grid growing-grid-seeds">
-                    {stored.map(item => <button key={item.id} className="growing-card" data-growing-stored={item.id} onClick={() => onPick({ mode: 'unstore', id: item.id, kind: item.kind, seed: item.seed, keepsake: 'keepsake' in item ? item.keepsake as string : undefined })}>
-                        <span className="growing-card-icon" aria-hidden="true">{art(item.id, item.label?.icon)}</span><strong>{item.label?.name}</strong>
-                        {'keepsake' in item && <small>{String(item.keepsake).startsWith('math:') ? 'さんすう' : 'えいご'} Lv{String(item.keepsake).split(':')[1]}の きねん</small>}
-                    </button>)}
-                </div>
+                {storedGroups.map(group => <section className="growing-catalog-group" key={group.name} aria-label={group.name}>
+                    <h3>{group.name}</h3>
+                    <div className="growing-grid growing-grid-seeds">
+                        {group.items.map(item => <button key={item.id} className="growing-card" data-growing-stored={item.id} onClick={() => onPick({ mode: 'unstore', id: item.id, kind: item.kind, seed: item.seed, keepsake: item.keepsake })}>
+                            <span className="growing-card-icon" aria-hidden="true">{art(item.id, item.label.icon)}</span><strong>{item.label.name}{item.count > 1 ? ` ×${item.count}` : ''}</strong>
+                            {item.keepsake && <small>{item.keepsake.startsWith('math:') ? 'さんすう' : 'えいご'} Lv{item.keepsake.split(':')[1]}の きねん</small>}
+                        </button>)}
+                    </div>
+                </section>)}
             </>}
         </div>
     </section>;

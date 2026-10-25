@@ -5,6 +5,7 @@ import type { PlacePoint } from '../../../domain/growingIsland/placeTypes';
 import type { Cell, GrowingState } from '../../../domain/growingIsland';
 import { landscapeCell, landscapePoint, landscapeRise } from '../../../domain/growingIsland/landscape';
 import { legacyIslandWorld } from '../../../domain/growingIsland/legacyWorldDefinition';
+import { editableIslandWorld, terrainOf } from '../../../domain/growingIsland/editableTerrainWorld';
 import type { IslandWorld as CompiledWorld } from '../../../domain/growingIsland/worldDefinition';
 import type { AuthoredWaterPlan } from '../../../domain/growingIsland/authoredWaterWorld';
 import type { AuthoredCovePlan } from '../../../domain/growingIsland/authoredCoveWorld';
@@ -18,10 +19,13 @@ export interface AuthoredLayoutFrame {
 }
 
 /** The same cell-to-world mapping as the current garden, so saved coordinates look the same. */
-export function sceneLayout(state: Pick<GrowingState, 'land'> & Partial<Pick<GrowingState, 'bridge'>>, curved = false, authored?: CompiledWorld, waterPlan?: AuthoredWaterPlan, baseWorld?: CompiledWorld, frame?: AuthoredLayoutFrame) {
+export function sceneLayout(state: Pick<GrowingState, 'land'> & Partial<Pick<GrowingState, 'bridge' | 'terrain'>>, curved = false, authored?: CompiledWorld, waterPlan?: AuthoredWaterPlan, baseWorld?: CompiledWorld, frame?: AuthoredLayoutFrame) {
     if (authored) return authoredSceneLayout(authored, waterPlan, baseWorld, frame);
+    // Saved editable worlds use one physical projection even if native art failed to load.
+    if (terrainOf(state)) curved = true;
     const bounds = landBounds(state), center = (bounds.minX + bounds.maxX) / 2;
-    const world = legacyIslandWorld(state, curved);
+    const editableWorld = editableIslandWorld(state, curved);
+    const world = editableWorld ?? legacyIslandWorld(state, curved);
     const groundFloor = world.floors.find(floor => floor.kind === 'ground')!;
     const shoreCell = (cell: Cell) => state.bridge && cell.x === state.bridge.x && cell.z >= bounds.depth ? { x: cell.x, z: bounds.depth - 1 } : cell;
     const heightAt = (cell: Cell) => {
@@ -41,7 +45,7 @@ export function sceneLayout(state: Pick<GrowingState, 'land'> & Partial<Pick<Gro
     };
     const floorPoint = (floor: PlacePoint) => {
         const p = projected(floor);
-        return new T.Vector3(p.x - center, floor.y + (curved ? landscapeRise(floor) : 0), p.z - 2);
+        return new T.Vector3(p.x - center, floor.y + (curved && !editableWorld ? landscapeRise(floor) : 0), p.z - 2);
     };
     const logicalAt = (position: { x: number; z: number }): Cell => {
         const p = { x: position.x + center, z: position.z + 2 };
@@ -58,10 +62,10 @@ export function sceneLayout(state: Pick<GrowingState, 'land'> & Partial<Pick<Gro
     pierEnd.y = .09; dock.y = -.16;
     const far = dock.clone().add(new T.Vector3(3.4, 0, 3.2));
     const farther = dock.clone().add(new T.Vector3(5.6, 0, 5.2));
-    const key = `${bounds.minX},${bounds.maxX},${bounds.depth}:${curved ? 'curved-owned-v1' : 'linear'}`;
-    let maxHeight = 0;
+    const key = `${bounds.minX},${bounds.maxX},${bounds.depth}:${curved ? 'curved-owned-v1' : 'linear'}${editableWorld ? `:${editableWorld.revision}` : ''}`;
+    let maxHeight = editableWorld?.bounds.max.y ?? 0;
     for (let z = 0; z < bounds.depth; z++) maxHeight = Math.max(maxHeight, heightAt({ x: bounds.minX, z }), heightAt({ x: bounds.maxX, z }));
-    return { bounds, center, world, point, floorPoint, heightAt, maxHeight, cellAt, logicalAt, projected, curved, authored: false, actorVisualScale: 1, pierRoot, pierEnd, dock, far, farther, key, nativeArt: false,
+    return { bounds, center, world, point, floorPoint, heightAt, maxHeight, cellAt, logicalAt, projected, curved, editable: Boolean(editableWorld), authored: false, actorVisualScale: 1, pierRoot, pierEnd, dock, far, farther, key, nativeArt: false,
         // The world supplies the actual static models after rebuilding. Camera fit
         // uses their vertices rather than placing a tall imaginary tree on every shore.
         cameraObjects: undefined as (() => readonly T.Object3D[]) | undefined,
@@ -123,7 +127,7 @@ function authoredSceneLayout(world: CompiledWorld, waterPlan?: AuthoredWaterPlan
     const pierEnd = pierRoot.clone().add(new T.Vector3(0, 0, 1.2)); pierEnd.y = .09;
     const dock = pierRoot.clone().add(new T.Vector3(.62, 0, 1.3)); dock.y = -.16;
     const far = dock.clone().add(new T.Vector3(3.4, 0, 3.2)), farther = dock.clone().add(new T.Vector3(5.6, 0, 5.2));
-    return { bounds, center, world, point, floorPoint, heightAt, maxHeight: world.bounds.max.y, cellAt, logicalAt, projected, curved: false, authored: true, actorVisualScale: AUTHORED_ACTOR_VISUAL_SCALE,
+    return { bounds, center, world, point, floorPoint, heightAt, maxHeight: world.bounds.max.y, cellAt, logicalAt, projected, curved: false, editable: false, authored: true, actorVisualScale: AUTHORED_ACTOR_VISUAL_SCALE,
         pierRoot, pierEnd, dock, far, farther, key: `${world.id}:${frame?.revision ?? world.definition.revision ?? 'base'}`, nativeArt: false,
         authoredWaterPlan: waterPlan, authoredBaseWorld: baseWorld,
         authoredCovePlan: frame?.covePlan, authoredFrameOptions: frame?.options,

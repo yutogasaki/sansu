@@ -19,7 +19,7 @@ export interface GrowingRecord {
     profileId: string;
     islandId?: string;
     islandStart?: IslandStart;
-    version: 1 | 2 | 3 | 4 | 5;
+    version: 1 | 2 | 3 | 4 | 5 | 6;
     revision: number;
     createdAt: number;
     updatedAt: number;
@@ -101,19 +101,32 @@ export class GrowingIslandDatabase extends Dexie {
             await tx.table('foundationGifts').bulkAdd(await tx.table('cultivatedGifts').toArray());
         });
         this.version(12).stores({ cultivatedMoments: '&requiresFoundationWriter', cultivatedGifts: '&requiresFoundationWriter' });
-        this.foundationReceipts = this.table('foundationReceipts');
-        this.deletedOwners = this.table('deletedOwners');
-        this.gifts = this.table('foundationGifts');
+        // Terrain is gameplay state: isolate all wallets, receipts and deletion guards,
+        // not only meshes. An older tab must never acknowledge a reward in our ledger.
+        this.version(13).stores({ terrainIslands: '&profileId', terrainArchives: '[profileId+islandId], profileId',
+            terrainMoments: '++id, profileId, [profileId+at]', terrainGifts: '&id, to, from',
+            terrainFoundationReceipts: '[profileId+completionId], profileId', terrainDeletedOwners: '&profileId',
+            foundationMoments: null, foundationGifts: null, foundationReceipts: null, deletedOwners: null }).upgrade(async tx => {
+            for (const [target, source] of [['terrainIslands', 'foundationIslands'], ['terrainArchives', 'foundationArchives'],
+                ['terrainMoments', 'foundationMoments'], ['terrainGifts', 'foundationGifts'],
+                ['terrainFoundationReceipts', 'foundationReceipts'], ['terrainDeletedOwners', 'deletedOwners']])
+                await tx.table(target).bulkAdd(await tx.table(source).toArray());
+        });
+        this.version(14).stores({ foundationMoments: '&requiresTerrainWriter', foundationGifts: '&requiresTerrainWriter',
+            foundationReceipts: '&requiresTerrainWriter', deletedOwners: '&requiresTerrainWriter' });
+        this.foundationReceipts = this.table('terrainFoundationReceipts');
+        this.deletedOwners = this.table('terrainDeletedOwners');
+        this.gifts = this.table('terrainGifts');
         this.legacyGifts = this.table('gifts');
-        this.moments = this.table('foundationMoments');
+        this.moments = this.table('terrainMoments');
         this.voyageIslands = this.table('voyageIslands');
         this.voyageArchives = this.table('archivedIslands');
         this.placedIslands = this.table('placedIslands');
-        this.archivedIslands = this.table('foundationArchives');
+        this.archivedIslands = this.table('terrainArchives');
         this.legacyIslands = this.table('islands');
         this.balancedIslands = this.table('balancedIslands');
         this.guidedIslands = this.table('guidedIslands');
-        this.islands = this.table('foundationIslands');
+        this.islands = this.table('terrainIslands');
     }
 }
 export const growingDb = new GrowingIslandDatabase();
@@ -126,8 +139,11 @@ async function withGrowingPersistence<T>(save: () => Promise<T>): Promise<T> {
 }
 
 export async function deleteGrowingOwner(profileId: string, database = growingDb) {
-    await withGrowingPersistence(() => database.transaction('rw', [database.table('cultivatedIslands'), database.table('cultivatedArchives'), database.deletedOwners, database.foundationReceipts, database.islands, database.archivedIslands, database.voyageIslands, database.voyageArchives, database.legacyGifts, database.placedIslands, database.guidedIslands, database.balancedIslands, database.legacyIslands, database.moments, database.gifts], async () => {
+    const terrainSources = ['foundationIslands', 'foundationArchives'].map(name => database.table(name));
+    await withGrowingPersistence(() => database.transaction('rw', [...terrainSources, database.table('cultivatedIslands'), database.table('cultivatedArchives'), database.deletedOwners, database.foundationReceipts, database.islands, database.archivedIslands, database.voyageIslands, database.voyageArchives, database.legacyGifts, database.placedIslands, database.guidedIslands, database.balancedIslands, database.legacyIslands, database.moments, database.gifts], async () => {
         await database.deletedOwners.put({ profileId, deletedAt: Date.now() });
+        await database.table('foundationIslands').delete(profileId);
+        await database.table('foundationArchives').where('profileId').equals(profileId).delete();
         await database.foundationReceipts.where('profileId').equals(profileId).delete();
         await database.table('cultivatedIslands').delete(profileId);
         await database.table('cultivatedArchives').where('profileId').equals(profileId).delete();
@@ -234,7 +250,8 @@ export async function commandGrowingIsland(profileId: string, intent: Intent, no
             if (command.expectedRevision !== current.revision) throw new GuidanceReceiptConflict();
         }
         const { state, events } = applyIntent(upgraded.state, intent, now);
-        const record = { ...upgraded, revision: current.revision + 1, updatedAt: now, state };
+        if (state === upgraded.state) return { record: current, town: [] };
+        const record: GrowingRecord = { ...upgraded, version: state.terrain ? 6 : upgraded.version, revision: current.revision + 1, updatedAt: now, state };
         await database.islands.put(record);
         return { record, town: events };
     }));

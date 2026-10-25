@@ -2,6 +2,8 @@ import { key, onLand, reachableFromHome, walkableCells } from './space';
 import { terrainHeightAt } from './placeTerrain';
 import type { Cell, GrowingState } from './types';
 import type { IslandWorld } from './worldDefinition';
+import { editableIslandWorld } from './editableTerrainWorld';
+import { supportsNativePlaceArchitecture } from './placeCapability';
 
 export interface CommunityRoofModule {
     ownerIds: [string, string];
@@ -11,8 +13,9 @@ export interface CommunityRoofModule {
 
 /** A finite front-yard bay repeated between real houses. It grants no new floor or ownership. */
 export function communityRoofModules(state: GrowingState, ids: readonly string[], world?: IslandWorld): CommunityRoofModule[] {
-    if (!state.growth || world) return [];
-    const open = walkableCells(state), reached = reachableFromHome(state, open);
+    world ??= editableIslandWorld(state);
+    if (!state.growth || !supportsNativePlaceArchitecture(state, world)) return [];
+    const open = walkableCells(state, world), reached = reachableFromHome(state, open, world);
     const homes = state.plots.filter(home => ids.includes(home.id) && home.kind === 'home' && home.stage >= 2 && home.cell && !state.unopened.includes(home.id))
         .sort((a, b) => a.cell!.z - b.cell!.z || a.cell!.x - b.cell!.x || a.id.localeCompare(b.id));
     const used = new Set<string>(), result: CommunityRoofModule[] = [];
@@ -24,10 +27,10 @@ export function communityRoofModules(state: GrowingState, ids: readonly string[]
         if (!reached.has(key(target))) continue;
         // The entire roof and its margin stay over acquired ground. Foreign
         // plants/buildings keep their own visible space; a low bench may share it.
-        let groundMax = Math.max(terrainHeightAt(state, a), terrainHeightAt(state, b)), supported = true;
+        let groundMax = Math.max(terrainHeightAt(state, a, world), terrainHeightAt(state, b, world)), supported = true;
         for (let z = minZ - .12; z <= maxZ + .12; z += .12) for (let x = minX - .12; x <= maxX + .12; x += .12) {
-            if (!onLand(state, { x: Math.round(x), z: Math.round(z) })) supported = false;
-            groundMax = Math.max(groundMax, terrainHeightAt(state, { x, z }));
+            if (!onLand(state, { x: Math.round(x), z: Math.round(z) }, world) || world && !world.floorAt({ x, z })) supported = false;
+            groundMax = Math.max(groundMax, terrainHeightAt(state, { x, z }, world));
         }
         if (!supported || [...state.plots, ...state.landmarks].some(owner => owner.cell && owner.id !== left.id && owner.id !== right.id
             && owner.kind !== 'bench' && owner.cell.x >= minX - .35 && owner.cell.x <= maxX + .35

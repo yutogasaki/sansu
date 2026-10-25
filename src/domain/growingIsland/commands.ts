@@ -14,6 +14,9 @@ import { openTown, welcome } from './town';
 import type { Cell, Command, GrowingState, Side, TownEvent } from './types';
 import type { IslandWorld } from './worldDefinition';
 import { hasAuthoredPlacementSupport } from './authoredPlacementSupport';
+import { applyTerrainCommand, terrainOwnerSupported } from './terrainEditing';
+import { editableIslandWorld, terrainOf } from './editableTerrainWorld';
+import { TEND_LIMIT, TENDABLE, tendPrice } from './placementAdvice';
 
 export interface Intent { id: string; islandId?: string; command: Command }
 
@@ -21,7 +24,7 @@ function fail(message: string): never { throw new Error(message); }
 
 /** Seeds and landmarks may replace a spread wild plant; everything else needs an empty cell. */
 function claim(state: GrowingState, cell: Cell, except?: string, world?: IslandWorld) {
-    if (!onLand(state, cell, world) || world && !hasAuthoredPlacementSupport(world, cell)) fail('ここには おけないよ。');
+    if (!onLand(state, cell, world) || world && !hasAuthoredPlacementSupport(world, cell) || !terrainOwnerSupported(state, cell)) fail('ここには おけないよ。');
     const found = occupant(state, cell, except);
     if (!found) return;
     if (found.type === 'plot' && found.spread) { state.plots = state.plots.filter(p => p.id !== found.id); return; }
@@ -72,7 +75,7 @@ function find(state: GrowingState, id: string) {
 }
 
 function apply(state: GrowingState, command: Command, world?: IslandWorld): TownEvent[] {
-    if (world && ['expand', 'bridge-build', 'bridge-remove'].includes(command.type))
+    if (world && !terrainOf(state) && ['expand', 'bridge-build', 'bridge-remove'].includes(command.type))
         fail('この制作中の島では 土地とはしの編集を まだ使えないよ。');
     const events: TownEvent[] = [];
     switch (command.type) {
@@ -187,6 +190,13 @@ function apply(state: GrowingState, command: Command, world?: IslandWorld): Town
             state.plots = state.plots.filter(p => p.id !== plot.id);
             break;
         }
+        case 'tend': {
+            const owner = state.landmarks.find(l => l.id === command.id && l.cell && TENDABLE.includes(l.kind)) ?? fail('そだてられないよ。');
+            if ((owner.tended ?? 0) >= TEND_LIMIT) fail('もう じゅうぶん そだったよ。');
+            pay(state, tendPrice(owner.kind));
+            owner.tended = (owner.tended ?? 0) + 1;
+            break;
+        }
         case 'expand': expand(state, command.side); break;
         case 'bridge-build': {
             if (state.bridge) fail('はしは もう あるよ。');
@@ -295,7 +305,14 @@ function apply(state: GrowingState, command: Command, world?: IslandWorld): Town
 export function applyIntent(previous: GrowingState, intent: Intent, at?: number, world?: IslandWorld): { state: GrowingState; events: TownEvent[] } {
     if (previous.applied.includes(intent.id)) return { state: previous, events: [] };
     const state = structuredClone(previous);
+    if (intent.command.type === 'terrain-edit' || intent.command.type === 'terrain-stroke' || intent.command.type === 'terrain-undo' || intent.command.type === 'terrain-redo') {
+        if (!applyTerrainCommand(state, intent.command)) return { state: previous, events: [] };
+        state.applied = [...state.applied, intent.id].slice(-RULES.appliedMemory);
+        return { state, events: [] };
+    }
+    world ??= editableIslandWorld(state);
     const events = apply(state, intent.command, world);
+    if (terrainOf(state)) world = editableIslandWorld(state);
     // Previously earned time also works for the next seed or a restored route.
     if (['plant', 'place', 'move', 'store', 'unstore', 'pluck', 'expand'].includes(intent.command.type) && state.town.bank > 0)
         events.push(...openTown(state, world));
@@ -313,7 +330,8 @@ export function applyIntent(previous: GrowingState, intent: Intent, at?: number,
 }
 
 export function canPlace(state: GrowingState, cell: Cell, except?: string, world?: IslandWorld) {
-    if (!onLand(state, cell, world) || world && !hasAuthoredPlacementSupport(world, cell)) return false;
+    world ??= editableIslandWorld(state);
+    if (!onLand(state, cell, world) || world && !hasAuthoredPlacementSupport(world, cell) || !terrainOwnerSupported(state, cell)) return false;
     if (isVacant(state, cell, except, world)) return true;
     const found = occupant(state, cell, except);
     return found?.type === 'plot' && found.spread;
@@ -321,6 +339,7 @@ export function canPlace(state: GrowingState, cell: Cell, except?: string, world
 
 /** Preview a home's own blocking cell, rather than pretending it is an open path. */
 export function canReachHomePlacement(state: GrowingState, cell: Cell, id?: string, world?: IslandWorld) {
+    world ??= editableIslandWorld(state);
     if (!canPlace(state, cell, id, world)) return false;
     const preview = structuredClone(state);
     const home = preview.plots.find(p => p.id === id);

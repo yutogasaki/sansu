@@ -3,9 +3,48 @@ import { describe, expect, it } from 'vitest';
 import { cameraArtPoints, frameCamera, framePlaceCamera, initialView, panToFocus, revealPlaceCamera } from './growingCamera';
 import { sceneLayout } from './sceneLayout';
 import { buildPlaceGround } from './placeGround';
+import { buildEditableGround } from './editableGround';
 import { compileWorldDefinition } from '../../../domain/growingIsland/worldDefinition';
 
 describe('district coordinates and camera clipping', () => {
+    it('fits actual edited shoreline and raised east corners across phone/tablet rotations without resetting manual view', () => {
+        const layout = sceneLayout({ land: { expanded: null, extra: [], capes: [] },
+            terrain: { version: 1, heights: { '5,4': 12, '4,4': 8 }, undo: [], redo: [] } }, true);
+        const ground = buildEditableGround(layout);
+        layout.cameraObjects = () => [ground.root];
+        expect(layout.editable).toBe(true); expect(layout.nativeArt).toBeFalsy(); expect(layout.artMargin).toBeLessThanOrEqual(1.1);
+        const points = cameraArtPoints([ground.floor]), camera = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100);
+        const bank = ground.root.getObjectByName('editable-underwater-bank')!;
+        expect(bank.visible).toBe(true);
+        expect(cameraArtPoints(layout.cameraObjects()).length).toBe(points.length);
+        try {
+            for (const aspect of [320 / 568, 390 / 844, 768 / 1024]) for (let step = 0; step < 16; step++) {
+                const view = { ...initialView(), azimuth: step * Math.PI / 8 };
+                const aim = frameCamera(camera, layout, view, aspect); camera.updateMatrixWorld();
+                let extentX = 0, extentY = 0, extentZ = 0;
+                for (const point of points) {
+                    const p = point.clone().project(camera);
+                    extentX = Math.max(extentX, Math.abs(p.x)); extentY = Math.max(extentY, Math.abs(p.y)); extentZ = Math.max(extentZ, Math.abs(p.z));
+                }
+                expect(extentX).toBeLessThanOrEqual(.900001); expect(extentY).toBeLessThanOrEqual(.900001); expect(extentZ).toBeLessThanOrEqual(1);
+                expect(Math.max(extentX, extentY)).toBeCloseTo(.9, 5);
+                expect(view).toEqual({ ...initialView(), azimuth: step * Math.PI / 8 });
+                const overviewHalf = camera.top, manual = { ...view, zoom: 2, pan: { x: .3, z: -.2 } };
+                const pannedAim = frameCamera(camera, layout, manual, aspect);
+                expect(camera.top).toBeCloseTo(overviewHalf / 2, 10);
+                expect(manual.pan).toEqual({ x: .3, z: -.2 });
+                expect(pannedAim.x - aim.x).toBeCloseTo(.3, 10); expect(pannedAim.z - aim.z).toBeCloseTo(-.2, 10);
+            }
+            // Removing submerged banks from camera roots cannot change the framing.
+            const view = { ...initialView(), azimuth: Math.PI / 4 };
+            const withBanks = frameCamera(camera, layout, view, 768 / 1024), halfWithBanks = camera.top;
+            layout.cameraObjects = () => [ground.floor];
+            const withoutBanks = frameCamera(camera, layout, view, 768 / 1024);
+            expect(camera.top).toBeCloseTo(halfWithBanks, 10); expect(withoutBanks).toEqual(withBanks);
+            expect(bank.visible).toBe(true); expect(bank.parent).toBe(ground.root);
+        } finally { ground.dispose(); }
+    });
+
     it('selects a clear initial angle without hiding the obstructing tree or changing the subject', () => {
         const layout = sceneLayout({ land: { expanded: 'east', extra: ['west', 'south'], capes: [] } });
         const subject = layout.point({ x: 3, z: 1 }, .5), obstacle = new T.Mesh(new T.BoxGeometry(3, 5, 1), new T.MeshStandardMaterial());

@@ -12,6 +12,29 @@ import { disposeGeometry } from '../three/primitives';
 import { ROOT_ROOM_ACTOR_HEIGHT } from './placeRootRoomGeometry';
 
 describe('full-body clearance of growing architecture', () => {
+    it('keeps an established flower roof at its original extent after a fifth flower blooms', () => {
+        const state = architectureFixture(); state.plots = [];
+        state.landmarks = [[2, 2], [3, 2], [2, 3], [3, 3]].map(([x, z], i) => ({ id: `f${i}`, kind: 'flower', cell: { x, z }, growth: 6 }));
+        const layout = sceneLayout(state, true), render = () => {
+            const place = derivePlaces(state).find(p => p.ruleId === 'P05')!, g = new GardenGeometry();
+            buildPlaceFlowerRoof(g, state, layout, place); g.root.updateMatrixWorld(true); return g;
+        };
+        const original = render(), bounds = new T.Box3().setFromObject(original.root.getObjectByName('place-flower-canopy')!);
+        state.landmarks.push({ id: 'extra', kind: 'flower', cell: { x: 4, z: 3 }, growth: 6 });
+        const next = render(), roofs = next.root.getObjectsByProperty('name', 'place-flower-canopy');
+        expect(roofs).toHaveLength(1); expect(new T.Box3().setFromObject(roofs[0])).toEqual(bounds);
+        expect(roofs[0].userData.ownerIds).toEqual(['f0', 'f1', 'f2', 'f3']);
+        expect(next.root.getObjectsByProperty('name', 'place-owned-flower').map(owner => owner.userData.ownerId).sort()).toEqual(['extra', 'f0', 'f1', 'f2', 'f3']);
+        roofs[0].traverse(object => {
+            if (!(object instanceof T.Mesh)) return;
+            const positions = object.geometry.getAttribute('position');
+            for (let i = 0; i < positions.count; i++) {
+                const point = new T.Vector3().fromBufferAttribute(positions, i).applyMatrix4(object.matrixWorld);
+                expect(point.y - layout.heightAt(layout.logicalAt(point))).toBeGreaterThan(ROOT_ROOM_ACTOR_HEIGHT);
+            }
+        });
+        original.dispose(); next.dispose();
+    });
     for (const curved of [false, true]) it(`keeps the actual shared roof and supports clear of all walkable ground (curved=${curved})`, () => {
         const state = architectureFixture(), before = structuredClone(state), layout = sceneLayout(state, curved), place = derivePlaces(state).find(p => p.ruleId === 'P04')!;
         const g = new GardenGeometry(); buildCommunityRoofs(g, state, layout, place); g.root.updateMatrixWorld(true);

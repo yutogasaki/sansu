@@ -1,3 +1,4 @@
+import { editableIslandWorld } from './editableTerrainWorld';
 import { INITIAL_PURCHASES, RETIRED_PURCHASES } from './rules';
 import { growthStage } from '../islandLife/model';
 import { connectedWaterChannels } from '../islandLife/waterChannels';
@@ -13,6 +14,7 @@ export function homeCellOf(state: GrowingState, villager: Villager): Cell {
 
 /** People who can live in plot homes. Friends sharing Pokomoko's house do not use a home slot. */
 export function housing(state: GrowingState, reached?: Set<string>, world?: IslandWorld) {
+    world ??= editableIslandWorld(state);
     reached ??= reachableFromHome(state, undefined, world);
     const capacity = state.plots.filter(p => p.kind === 'home' && p.cell && (!world || onLand(state, p.cell, world)))
         .reduce((sum, p) => sum + RULES.homeCapacity[p.stage], 0);
@@ -28,6 +30,7 @@ export function occupantsOf(state: GrowingState, plotId: string) {
 
 /** Food reaches people only from plots Pokomoko's doorstep can walk to (§7.3). */
 export function foodSupport(state: GrowingState, reached?: Set<string>, world?: IslandWorld) {
+    world ??= editableIslandWorld(state);
     reached ??= reachableFromHome(state, undefined, world);
     let support: number = RULES.baseFood;
     for (const p of state.plots) {
@@ -44,6 +47,7 @@ export function foodSupport(state: GrowingState, reached?: Set<string>, world?: 
 }
 
 export function playSupport(state: GrowingState, reached?: Set<string>, world?: IslandWorld) {
+    world ??= editableIslandWorld(state);
     reached ??= reachableFromHome(state, undefined, world);
     let support: number = RULES.basePlay;
     for (const p of state.plots) if (p.cell && (!world || onLand(state, p.cell, world)) && p.stage > 0 && isReachable(p.cell, reached, world)) support += PLAY_SUPPORT[p.kind] ?? 0;
@@ -84,6 +88,7 @@ const within = (cells: Cell[], home: Cell, radius: number) => cells.some(c => di
 
 /** Comfort stars 0-3 (§7.4). Shown to children only through faces and one-line remarks. */
 export function comfort(state: GrowingState, villager: Villager, fed?: boolean, reached?: Set<string>, world?: IslandWorld) {
+    world ??= editableIslandWorld(state);
     reached ??= reachableFromHome(state, undefined, world);
     fed ??= foodSupport(state, undefined, world) >= state.villagers.length;
     if (world && villager.home !== 'pokomoko' && !state.plots.some(p => p.id === villager.home && p.kind === 'home' && p.cell && p.stage > 0 && onLand(state, p.cell, world))) return 0;
@@ -97,6 +102,7 @@ export function comfort(state: GrowingState, villager: Villager, fed?: boolean, 
 }
 
 export function genki(state: GrowingState, reached?: Set<string>, world?: IslandWorld) {
+    world ??= editableIslandWorld(state);
     reached ??= reachableFromHome(state, undefined, world);
     const fed = foodSupport(state, reached, world) >= state.villagers.length;
     return state.villagers.reduce((sum, v) => sum + comfort(state, v, fed, reached, world), 0);

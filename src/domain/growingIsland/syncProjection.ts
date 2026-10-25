@@ -10,6 +10,7 @@ import { scheduleSurprise, surpriseDay } from './moments';
 import type { Completion, GrowingRecord, SyncResult } from './repository';
 import type { GrowingState } from './types';
 import { newPlaceProgress, syncPlaceMilestones, validatePlaceProgress } from './placeGoals';
+import { validateTerrain } from './terrainEditing';
 
 export interface CreatedIsland { state: GrowingState; migratedFrom?: GrowingRecord['migratedFrom'] }
 export interface SyncProjectionRequest {
@@ -19,10 +20,13 @@ export interface SyncProjectionRequest {
 export interface SyncProjection { result: SyncResult; changed: boolean; receivedGiftIds: string[] }
 
 export function readable(record: GrowingRecord) {
-    if (![1, 2, 3, 4, 5].includes(record.version)) throw new Error('この島のデータは新しい版で開いてください。');
+    if (![1, 2, 3, 4, 5, 6].includes(record.version)) throw new Error('この島のデータは新しい版で開いてください。');
     if (record.version >= 3 && !record.state.guidance) throw new Error('この島のあそびかたは新しい版で開いてください。');
     if (record.version >= 4 && !record.state.placeProgress) throw new Error('この島の育つばしょは新しい版で開いてください。');
-    if (record.version === 5) validateGrowth(record.state);
+    if (record.version >= 5) validateGrowth(record.state);
+    if (record.version === 6 && !record.state.terrain || record.version < 6 && record.state.terrain)
+        throw new Error('この島のかたちは新しい版で開いてください。');
+    validateTerrain(record.state);
     if (record.state.guidance) validateGuidance(record.state.guidance);
     if (record.state.placeProgress) validatePlaceProgress(record.state.placeProgress);
     if (record.state.experience !== undefined) validateExperience(record.state.experience);
@@ -31,7 +35,7 @@ export function readable(record: GrowingRecord) {
 /** Preserve all rights and clocks; no old learning or missed surprises are reissued. */
 export function upgrade(record: GrowingRecord, now: number): GrowingRecord {
     readable(record);
-    if (record.version === 5) return record;
+    if (record.version >= 5) return record;
     const state = structuredClone(record.state);
     if (record.version === 1) state.surprise = { day: Math.max(surpriseDay(state), Math.floor((now - state.enrolledAt) / 86_400_000)) };
     migrateGuidance(state);

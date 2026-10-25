@@ -1,3 +1,4 @@
+import { editableIslandWorld } from './editableTerrainWorld';
 import { BLOOM_HOURS, soilAt, soilTargetAt, styleAt, syncSoil, TREE_MATURE_HOURS, waterLayout } from './environment';
 import { connectedWaterChannels } from '../islandLife/waterChannels';
 import { roll } from './random';
@@ -81,6 +82,7 @@ function spread(state: GrowingState, round: number, events: NatureEvent[], world
  * absence. A clock that moved backwards is treated as no time passing.
  */
 export function advanceNature(state: GrowingState, now: number, world?: IslandWorld): NatureEvent[] {
+    world ??= editableIslandWorld(state);
     const events: NatureEvent[] = [];
     const elapsed = Math.min(RULES.natureHourCap, Math.max(0, (now - state.nature.realAt) / HOUR_MS));
     state.nature.realAt = Math.max(state.nature.realAt, now);

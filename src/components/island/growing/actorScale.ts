@@ -82,6 +82,29 @@ export function alignActorContact(actor: Actor, footY: number, seatY?: number, s
     return true;
 }
 
+/** Each actual sole follows the edited triangle surface, including across a gentle slope. */
+export function alignActorTerrainContact(actor: Actor, floorAt: (x: number, z: number) => number | undefined, lift = 0) {
+    actor.root.updateWorldMatrix(true, true);
+    for (const foot of actor.feet) {
+        let correction = -Infinity;
+        foot.traverse(object => {
+            if (!(object instanceof T.Mesh) || !object.visible) return;
+            const positions = object.geometry.getAttribute('position'); if (!positions) return;
+            const point = new T.Vector3();
+            for (let i = 0; i < positions.count; i++) {
+                point.fromBufferAttribute(positions, i).applyMatrix4(object.matrixWorld);
+                const floor = floorAt(point.x, point.z);
+                if (floor !== undefined) correction = Math.max(correction, floor + lift - point.y);
+            }
+        });
+        if (!Number.isFinite(correction) || !foot.parent) continue;
+        const inverse = new T.Matrix3().setFromMatrix4(foot.parent.matrixWorld);
+        if (Math.abs(inverse.determinant()) < 1e-8) continue;
+        foot.position.add(new T.Vector3(0, correction, 0).applyMatrix3(inverse.invert()));
+        foot.updateWorldMatrix(false, true);
+    }
+}
+
 /** A named seat is support; its overhead beam or table top is not a seat. */
 export function actorSeatSurface(model: T.Object3D | undefined, kind: 'sit' | 'swing' | 'eat') {
     const name = kind === 'sit' ? 'life-bench-seat' : kind === 'swing' ? 'swing-seat' : 'life-picnic-seat--1';

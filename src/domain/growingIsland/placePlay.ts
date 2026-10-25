@@ -1,3 +1,4 @@
+import { editableIslandWorld } from './editableTerrainWorld';
 import { waterLayout } from './environment';
 import { connectedWaterChannels } from '../islandLife/waterChannels';
 import { placeConnected } from './places';
@@ -10,6 +11,7 @@ export interface PlacePlay { kind: 'leaves' | 'water' | 'petals'; source: string
 
 /** Read current physical connections. This never advances water, nature or learning. */
 export function placePlay(state: GrowingState, id: string, world?: IslandWorld): PlacePlay | undefined {
+    world ??= editableIslandWorld(state);
     const source = state.landmarks.find(owner => owner.id === id && owner.cell && onLand(state, owner.cell, world));
     if (!source?.cell) return;
     const water = waterLayout(state, world), wet = connectedWaterChannels(water), open = walkableCells(state, world);

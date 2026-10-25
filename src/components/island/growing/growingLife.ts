@@ -1,13 +1,15 @@
+import { editableIslandWorld, editableTerrainSegmentSupported } from '../../../domain/growingIsland/editableTerrainWorld';
+import { derivePlaces } from '../../../domain/growingIsland/places';
 import { likesOf } from '../../../domain/growingIsland/rules';
 import { chooseLifeTarget } from './lifeChoices';
 import * as T from 'three';
 import type { IslandMaterials } from '../three/primitives';
 import { homeCellOf } from '../../../domain/growingIsland/community';
-import { HOME_CELL, approachCells, bridgeEnd, key, reachableFromHome, walkableCells } from '../../../domain/growingIsland/space';
-import type { Cell, GrowingState, Villager } from '../../../domain/growingIsland';
+import { HOME_CELL, approachCells, bridgeEnd, key, reachableFromHome, walkableCells, walkingPointBlocked } from '../../../domain/growingIsland/space';
+import type { Cell, GrowingState, OccupiedPlaceTarget, Villager } from '../../../domain/growingIsland';
 import type { IslandWorld } from '../../../domain/growingIsland/worldDefinition';
 import { disposeActor, makeVillagerActor, type Actor } from './actors';
-import { actorSeatSurface, actorSurfaceY, alignActorContact, alignActorOnSeat, resetActorVisualContact, setActorVisualScale } from './actorScale';
+import { actorSeatSurface, actorSurfaceY, alignActorContact, alignActorTerrainContact, alignActorOnSeat, resetActorVisualContact, setActorVisualScale } from './actorScale';
 import { DROP_PLAY_MS, sampleDropPlay, type DropPlayKind } from './growingDropPlay';
 import type { ObjectLayer, Seat } from './objectLayer';
 import type { SceneLayout } from './sceneLayout';
@@ -26,6 +28,8 @@ interface Walker {
     placeTarget?: { place: DerivedPlace; target: PlaceUseTarget };
     gallery?: { route: PlacePoint[]; index: number; point: PlacePoint };
     useAt?: number;
+    /** A seat above the stopping point is reached along the floor (a stair ramp), not by a jump. */
+    stepUp?: { from: { x: number; z: number }; at: number };
     awaitingGround?: boolean;
     recent?: string[];
     choice?: string;
@@ -33,6 +37,9 @@ interface Walker {
 
 export const VISIBLE_WALKERS = 12;
 const SPEED = 1.15 / 1000; // cells per millisecond
+const STEP_UP_MS = 700;
+const sameGalleryRoute = (before: readonly PlacePoint[], after?: readonly PlacePoint[]) => Boolean(after && before.length === after.length
+    && before.every((point, index) => Math.abs(point.x - after[index].x) <= 1e-6 && Math.abs(point.y - after[index].y) <= 1e-6 && Math.abs(point.z - after[index].z) <= 1e-6));
 
 /**
  * The visible daily life: friends stroll between home, seats and open ground, Pokomoko
@@ -72,14 +79,41 @@ export class GrowingLife {
                 reachable: this.approaches(owner.cell!).some(cell => this.homePaths.has(key(cell))) })) };
     }
     walkingPoseProof() { return this.flowerGuard && { ...this.flowerPoses }; }
+    terrainActors(): Cell[] {
+        const points = [...this.walkers.values()].filter(w => w.actor.root.visible && !['boat', 'sailing', 'pier', 'held'].includes(w.mode))
+            .flatMap(w => [w.at, ...(w.gallery ? [...w.gallery.route, ...(w.placeTarget?.place.footprint ?? [])] : [])]);
+        return [...new Map(points.map(point => [key(point), { x: point.x, z: point.z }])).values()];
+    }
+
+    occupiedTerrainPlaceTargets(): OccupiedPlaceTarget[] {
+        return [...this.walkers.values()].flatMap(walker => walker.gallery && walker.placeTarget ? [{
+            placeId: walker.placeTarget.place.id, targetId: walker.placeTarget.target.id,
+            route: walker.gallery.route.map(point => ({ ...point })),
+        }] : []);
+    }
+
+    /** An occupied raised walk must retain its actual deck, even when an edit cuts
+     * an approach outside the pinned footprint and changes the place's stage. */
+    terrainTransitionSafe(next: GrowingState): boolean {
+        const occupied = [...this.walkers.values()].filter(w => w.gallery && w.placeTarget);
+        if (!occupied.length) return true;
+        const places = derivePlaces(next, editableIslandWorld(next));
+        return occupied.every(walker => {
+            const place = places.find(place => place.id === walker.placeTarget!.place.id);
+            const target = place?.useTargets.find(target => target.id === walker.placeTarget!.target.id && target.kind === 'gallery');
+            return sameGalleryRoute(walker.gallery!.route, target?.route);
+        });
+    }
+
     objects() { return [...this.walkers.values()].filter(w => w.actor.root.visible).map(w => w.actor.root); }
 
     /** Use only after equal scene inputs: saved receipts do not reset ongoing life. */
     adoptState(state: GrowingState) { this.state = state; }
 
     sync(state: GrowingState, layout: SceneLayout, layer: ObjectLayer) {
+        const terrainChanged = layout.editable && this.layout?.key !== layout.key;
         this.state = state; this.layout = layout; this.layer = layer;
-        this.world = layout.authored ? layout.world : undefined;
+        this.world = (layout.authored || layout.editable) ? layout.world : undefined;
         for (const walker of this.walkers.values()) setActorVisualScale(walker.actor, layout.actorVisualScale);
         this.ownerApproaches.clear();
         this.walkable = walkableCells(state, this.world); this.seats = layer.seats;
@@ -114,13 +148,25 @@ export class GrowingLife {
             if (walker.placeTarget) {
                 const current = layer.places.find(p => p.id === walker.placeTarget!.place.id && p.revision === walker.placeTarget!.place.revision);
                 if (!current) {
-                    // Exit before the old topology is closed. No actor remains on an
-                    // invisible gallery, even if its tree was moved while climbing.
-                    const oldEntry = walker.placeTarget.place.entrances[0] ?? walker.at;
-                    walker.at = nearestOpen(this.homePaths, oldEntry) ?? { ...HOME_CELL };
-                    walker.gallery = undefined; walker.placeTarget = undefined; walker.path = [];
-                    walker.seat = undefined; walker.play = undefined; walker.mode = 'idle'; walker.until = 0; walker.useAt = undefined;
-                    if (this.flowerGuard) this.settleOnGround(walker, 0);
+                    const replacement = layer.places.find(place => place.id === walker.placeTarget!.place.id);
+                    const target = replacement?.useTargets.find(target => target.id === walker.placeTarget!.target.id && target.kind === 'gallery');
+                    if (layout.editable && walker.gallery && replacement && target && sameGalleryRoute(walker.gallery.route, target.route)) {
+                        // Receipt/entrance changes may change the place revision while
+                        // the occupied deck itself remains exactly where it was.
+                        walker.placeTarget = { place: replacement, target };
+                    } else {
+                        // A grounded actor loses its destination here; owner overlap is
+                        // handled below using a supported escape from its actual position.
+                        // Atomic occupiedPlaceTargets validation rejects occupied deck changes.
+                        // Retain the legacy exit policy for other topology changes.
+                        if (!(layout.editable && !walker.gallery && this.world?.floorAt(walker.at))) {
+                            const oldEntry = walker.placeTarget.place.entrances[0] ?? walker.at;
+                            walker.at = nearestOpen(this.homePaths, oldEntry) ?? { ...HOME_CELL };
+                        }
+                        walker.gallery = undefined; walker.placeTarget = undefined; walker.path = [];
+                        walker.seat = undefined; walker.play = undefined; walker.mode = 'idle'; walker.until = 0; walker.useAt = undefined;
+                        if (this.flowerGuard) this.settleOnGround(walker, 0);
+                    }
                 }
             }
             if (walker.play && this.seats.get(key(walker.play.cell)) !== (walker.play.kind === 'bench' ? 'sit' : 'swing')) {
@@ -134,10 +180,20 @@ export class GrowingLife {
             const seatedOnExisting = walker.mode === 'seat' && walker.seat && this.seats.get(key(walker.seat.cell)) === walker.seat.kind;
             const standing = allSites ? nearestOpen(allSites, walker.at)
                 : { x: Math.round(walker.at.x), z: Math.round(walker.at.z) };
-            if ((!standing || !this.walkable.has(key(standing)) || this.world && !this.world.floorAt(walker.at)
+            if ((terrainChanged || layout.editable && walker.path.some(cell => !this.walkable.has(key(cell))))
+                && !['boat', 'sailing', 'pier', 'held', 'gallery'].includes(walker.mode)) {
+                const destination = walker.path[walker.path.length - 1];
+                if (destination) {
+                    const route = this.routeFrom(walker, destination, this.walkable);
+                    walker.path = route?.slice(1) ?? [];
+                    walker.mode = walker.path.length ? 'walk' : 'idle'; walker.until = 0;
+                }
+            }
+            const editedOwnerOverlap = layout.editable && walkingPointBlocked(state, walker.at);
+            if (!(layout.editable && this.world?.floorAt(walker.at) && !editedOwnerOverlap) && (editedOwnerOverlap || !standing || !this.walkable.has(key(standing)) || this.world && !this.world.floorAt(walker.at)
                 || walker.path.some(cell => !this.walkable.has(key(cell))))
                 && walker.mode !== 'boat' && walker.mode !== 'sailing' && walker.mode !== 'pier' && walker.mode !== 'held' && walker.mode !== 'gallery' && !seatedOnExisting) {
-                if (this.flowerGuard) this.settleOnGround(walker, 0);
+                if (this.flowerGuard || layout.editable) this.settleOnGround(walker, 0);
                 else {
                     walker.at = nearestOpen(this.world ? this.homePaths : this.walkable, walker.at) ?? { ...HOME_CELL };
                     walker.path = []; walker.mode = 'idle'; walker.until = 0;
@@ -179,9 +235,9 @@ export class GrowingLife {
         const open = nearestOpen(this.world ? this.homePaths : this.walkable, walker.at);
         if (!open && this.flowerGuard) { this.settleOnGround(walker, 0); return; }
         const from = open ?? HOME_CELL;
-        walker.at = { ...from };
+        if (!this.layout?.editable) walker.at = { ...from };
         const target = this.besideOwner(walker.home);
-        walker.path = target ? walkRoute(this.walkable, from, target, this.world) ?? [] : [];
+        walker.path = target ? (this.layout?.editable ? this.routeFrom(walker, target, this.walkable)?.slice(1) : walkRoute(this.walkable, from, target, this.world)) ?? [] : [];
         if (walker.path.length) walker.mode = 'walk';
     }
 
@@ -199,7 +255,7 @@ export class GrowingLife {
             stroll?: boolean; destination?: { place: DerivedPlace; target: PlaceUseTarget } }[] = [];
         const add = (id: string, cell: Cell | undefined, likes: import('../../../domain/growingIsland/types').Like[], fresh: boolean,
             destination?: { place: DerivedPlace; target: PlaceUseTarget }, stroll = false) => {
-            if (!cell || choices.some(choice => choice.id === id) || reserved.has(id) || !this.homePaths.has(key(cell)) || !walkRoute(this.homePaths, from, cell, this.world)) return;
+            if (!cell || choices.some(choice => choice.id === id) || reserved.has(id) || !this.homePaths.has(key(cell)) || !this.routeFrom(walker, cell, this.homePaths)) return;
             choices.push({ id, cell, likes, fresh, nearHome: Math.abs(cell.x - walker.home.x) + Math.abs(cell.z - walker.home.z) <= 3, destination, stroll });
         };
         for (const destination of targets) {
@@ -276,21 +332,40 @@ export class GrowingLife {
         return this.approaches(cell).find(at => key(at) !== key(cell) && this.groundClear(cell, at));
     }
 
-    private groundClear(from: Cell, to: Cell) { return this.flowerGuard?.clearGroundPath(from, to) ?? true; }
+    private routeFrom(walker: Walker, to: Cell, open: Set<string>): Cell[] | undefined {
+        if (!this.layout?.editable || !this.world) {
+            const from = nearestOpen(open, walker.at);
+            return from ? walkRoute(open, from, to, this.world) : undefined;
+        }
+        const starts = [...open].map(text => { const [x, z] = text.split(',').map(Number); return { x, z }; })
+            .filter(cell => Math.hypot(cell.x - walker.at.x, cell.z - walker.at.z) <= .76)
+            .sort((a, b) => Math.hypot(a.x - walker.at.x, a.z - walker.at.z) - Math.hypot(b.x - walker.at.x, b.z - walker.at.z));
+        for (const start of starts) {
+            if (!editableTerrainSegmentSupported(this.world, walker.at, start)) continue;
+            const route = walkRoute(open, start, to, this.world);
+            if (route) return key(start) === key(walker.at) ? route : [{ ...walker.at }, ...route];
+        }
+    }
+    private groundClear(from: Cell, to: Cell) {
+        return (!this.layout?.editable || !this.world || editableTerrainSegmentSupported(this.world, from, to))
+            && (this.flowerGuard?.clearGroundPath(from, to) ?? true);
+    }
 
     /** Rebuild a neutral standing pose on existing reachable ground. The source
      * floor and grants remain unchanged; an empty safe set is a reported failure. */
     private settleOnGround(w: Walker, now: number) {
         const layout = this.layout; if (!layout) return false;
-        const origin = w.placeTarget?.place.entrances[0] ?? w.at;
+        const origin = layout.editable ? w.at : w.placeTarget?.place.entrances[0] ?? w.at;
         w.mode = 'idle'; w.path = []; w.seat = undefined; w.play = undefined; w.gallery = undefined;
         w.placeTarget = undefined; w.useAt = undefined; w.hopAt = undefined; w.react = undefined; w.until = now + 1500;
         const actor = w.actor;
         resetActorVisualContact(actor); actor.root.rotation.set(0, w.heading, 0); actor.body.rotation.set(0, 0, 0);
         actor.feet.forEach(foot => foot.rotation.set(0, 0, 0)); actor.arms?.forEach(arm => arm.rotation.set(0, 0, 0));
-        const candidates = new Set(this.world ? this.homePaths : this.walkable);
+        const candidates = new Set(layout.editable ? this.walkable : this.world ? this.homePaths : this.walkable);
         for (let at = nearestOpen(candidates, origin); at; at = nearestOpen(candidates, origin)) {
-            candidates.delete(key(at)); actor.root.position.copy(layout.point(at));
+            candidates.delete(key(at));
+            if (layout.editable && this.world && !editableTerrainSegmentSupported(this.world, origin, at)) continue;
+            actor.root.position.copy(layout.point(at));
             if (layout.authored) alignActorContact(actor, layout.point(at, 0).y);
             if (!this.flowerGuard || this.flowerGuard.poseClear(actor)) { w.at = { ...at }; w.awaitingGround = false; actor.root.visible = true; return true; }
         }
@@ -318,7 +393,7 @@ export class GrowingLife {
         for (const [id, walker] of [...this.walkers].sort(([a], [b]) => a === 'pokomoko' ? -1 : b === 'pokomoko' ? 1 : a.localeCompare(b))) {
             if (id === 'visitor' || ['held', 'boat', 'sailing', 'pier', 'gallery'].includes(walker.mode)) continue;
             const from = nearestOpen(this.homePaths, walker.at); if (!from) continue;
-            const destination = sites.filter(at => !occupied.has(key(at))).map(at => ({ at, path: walkRoute(this.homePaths, from, at, this.world) }))
+            const destination = sites.filter(at => !occupied.has(key(at))).map(at => ({ at, path: this.routeFrom(walker, at, this.homePaths) }))
                 .find(entry => entry.path && (id === 'pokomoko' || entry.path.length <= 5));
             if (!destination?.path) continue;
             occupied.add(key(destination.at)); invited.add(id);
@@ -351,7 +426,7 @@ export class GrowingLife {
         const walker = this.walkers.get('pokomoko');
         if (!owner?.cell || !walker || ['held', 'boat', 'sailing'].includes(walker.mode)) return false;
         const to = this.besideOwner(owner.cell), from = nearestOpen(this.homePaths, walker.at);
-        const path = from && to ? walkRoute(this.homePaths, from, to, this.world) : undefined;
+        const path = from && to ? this.routeFrom(walker, to, this.homePaths) : undefined;
         if (!path?.length) return false;
         this.stopConcert(); walker.placeTarget = undefined; walker.gallery = undefined; walker.seat = undefined; walker.play = undefined;
         walker.choice = `touch:${id}`; walker.path = path.slice(1); walker.mode = walker.path.length ? 'walk' : 'idle'; walker.until = now + 15000;
@@ -515,9 +590,9 @@ export class GrowingLife {
         const target = place?.useTargets.find(t => kind ? t.kind === kind : ['gallery', 'garden', 'shore'].includes(t.kind));
         if (!walker || !place || !target || walker.mode === 'boat' || walker.mode === 'sailing' || walker.mode === 'held') return false;
         if ([...this.walkers.values()].some(other => other !== walker && other.placeTarget?.target.id === target.id && ['walk', 'gallery', 'garden', 'shore'].includes(other.mode))) return false;
-        const from = nearestOpen(this.homePaths, walker.at), path = from ? walkRoute(this.homePaths, from, target.cell, this.world) : undefined;
+        const from = nearestOpen(this.homePaths, walker.at), path = from ? this.routeFrom(walker, target.cell, this.homePaths) : undefined;
         if (!path?.length) return false;
-        walker.at = { ...from! }; walker.seat = undefined; walker.play = undefined; walker.gallery = undefined;
+        if (!this.layout?.editable) walker.at = { ...from! }; walker.seat = undefined; walker.play = undefined; walker.gallery = undefined;
         walker.placeTarget = { place, target }; walker.path = path.slice(1);
         walker.choice = target.id;
         if (walker.path.length) walker.mode = 'walk'; else this.enterPlace(walker, now);
@@ -559,7 +634,7 @@ export class GrowingLife {
         for (const [id, w] of ordered) {
             const { actor } = w;
             const receiptStart = this.uses.length;
-            if (this.flowerGuard && (w.awaitingGround || !this.homePaths.size) && !['held', 'boat', 'sailing', 'pier'].includes(w.mode)
+            if ((this.flowerGuard && (w.awaitingGround || !this.homePaths.size) || layout.editable && w.awaitingGround) && !['held', 'boat', 'sailing', 'pier'].includes(w.mode)
                 && !this.settleOnGround(w, now)) continue;
             resetActorVisualContact(actor);
             actor.root.visible = true;
@@ -598,7 +673,7 @@ export class GrowingLife {
             }
             if (w.mode === 'idle' && now > w.until) {
                 const target = this.chooseTarget(w), from = nearestOpen(this.world ? this.homePaths : this.walkable, w.at);
-                const path = target && from ? walkRoute(this.walkable, from, target, this.world) : undefined;
+                const path = target && from ? this.routeFrom(w, target, this.walkable) : undefined;
                 if (path && path.length > 1) {
                     if (this.flowerWalkingProof?.obstructionRootCount && from) w.at = { ...from };
                     w.path = path.slice(1); w.mode = 'walk';
@@ -608,7 +683,9 @@ export class GrowingLife {
             if (w.mode === 'walk') {
                 let budget = delta * SPEED;
                 while (budget > 0 && w.path.length) {
-                    const next = w.path[0], dx = next.x - w.at.x, dz = next.z - w.at.z, d = Math.hypot(dx, dz);
+                    const next = w.path[0];
+                    if (layout.editable && !this.groundClear(w.at, next)) { w.path = []; w.mode = 'idle'; w.until = now + 3000; w.placeTarget = undefined; break; }
+                    const dx = next.x - w.at.x, dz = next.z - w.at.z, d = Math.hypot(dx, dz);
                     if (d <= budget) { w.at = { ...next }; w.path.shift(); budget -= d; }
                     else { w.at = { x: w.at.x + dx / d * budget, z: w.at.z + dz / d * budget }; budget = 0; }
                     if (d > 1e-6) w.heading = Math.atan2(dx, dz);
@@ -619,7 +696,10 @@ export class GrowingLife {
                     if (w.choice && !w.placeTarget && !w.choice.startsWith('seat:')) w.recent = [...(w.recent ?? []).filter(id => id !== w.choice), w.choice].slice(-3);
                     if (this.enterPlace(w, now)) { this.guardPose(w, now, receiptStart); continue; }
                     const seat = this.concert?.invited.has(id) ? undefined : this.seatBeside(this.world ? w.at : { x: Math.round(w.at.x), z: Math.round(w.at.z) }, w);
-                    if (seat && (w.placeTarget?.target.kind === 'seat' || w.choice?.startsWith('seat:') || Math.random() < .6)) { w.mode = 'seat'; w.seat = seat; w.until = now + 6000; w.useAt = now; }
+                    if (seat && (w.placeTarget?.target.kind === 'seat' || w.choice?.startsWith('seat:') || Math.random() < .6)) {
+                        w.mode = 'seat'; w.seat = seat; w.until = now + 6000; w.useAt = now;
+                        w.stepUp = Math.abs(layout.heightAt(seat.cell) - layout.heightAt(w.at)) > .12 ? { from: { ...w.at }, at: now } : undefined;
+                    }
                     else { w.mode = 'idle'; w.until = this.concert?.invited.has(id) ? this.concert.until : now + 2500 + Math.random() * 5000; }
                 }
             }
@@ -652,7 +732,11 @@ export class GrowingLife {
                 if (w.play) w.at = { ...w.play.exit };
                 w.mode = 'idle'; w.seat = undefined; w.play = undefined; w.placeTarget = undefined; w.useAt = undefined; w.until = now + 1500;
             }
-            const position = w.mode === 'seat' && w.seat ? layout.point(w.seat.kind === 'tend' ? w.at : w.seat.cell) : layout.point(w.at);
+            if (w.stepUp && (w.mode !== 'seat' || now - w.stepUp.at >= STEP_UP_MS)) w.stepUp = undefined;
+            const stepping = w.stepUp && w.seat ? Math.min(1, (now - w.stepUp.at) / STEP_UP_MS) : undefined;
+            const position = w.mode === 'seat' && w.seat ? layout.point(w.seat.kind === 'tend' ? w.at
+                : stepping !== undefined && w.stepUp ? { x: w.stepUp.from.x + (w.seat.cell.x - w.stepUp.from.x) * stepping, z: w.stepUp.from.z + (w.seat.cell.z - w.stepUp.from.z) * stepping }
+                    : w.seat.cell) : layout.point(w.at);
             const play = w.play && w.mode === 'seat' ? sampleDropPlay(w.play.kind, now - w.play.at, reduced) : undefined;
             const leaving = w.play && w.mode === 'seat' ? Math.max(0, Math.min(1, (now - w.play.at - (DROP_PLAY_MS - 650)) / 650)) : 0;
             if (w.play && leaving) {
@@ -713,7 +797,9 @@ export class GrowingLife {
             const swing = w.mode === 'walk' && !reduced ? Math.sin(now / 110) * .5 : 0;
             actor.feet.forEach((foot, i) => { foot.rotation.x = play ? (i ? play.rightFoot : play.leftFoot) : i ? swing : -swing; });
             if (actor.sparkle) actor.sparkle.rotation.y = now / 600;
-            if (layout.authored) {
+            // All island renderers share the same furniture. Full-size actors
+            // also need real seat contact, rather than the legacy fixed lift.
+            if (layout.authored || w.mode === 'seat' && w.seat && ['sit', 'swing', 'eat'].includes(w.seat.kind)) {
                 const groundY = position.y - .04;
                 if (w.mode === 'seat' && w.seat && w.seat.kind !== 'tend') {
                     const owner = this.state?.landmarks.find(owner => owner.cell && key(owner.cell) === key(w.seat!.cell))
@@ -724,7 +810,7 @@ export class GrowingLife {
                     const extra = y - seatBaseY + (w.play?.kind === 'bench' ? playLift : 0);
                     const step = leaving * leaving * (3 - 2 * leaving);
                     if (seat) alignActorOnSeat(actor, seat, groundY, extra, 1 - step);
-                    else {
+                    else if (layout.authored) {
                         // A play arch's overhead beam is not a standing surface.
                         const support = w.seat.kind === 'bounce' ? model?.getObjectByName('trampoline-bed')
                             : w.seat.kind === 'slide' ? model : undefined;
@@ -733,6 +819,9 @@ export class GrowingLife {
                     }
                 } else alignActorContact(actor, groundY + y + playLift);
             }
+            if (layout.editable && !['seat', 'held'].includes(w.mode)) alignActorTerrainContact(actor, (x, z) => {
+                const cell = layout.logicalAt({ x, z }); return layout.world.floorAt(cell)?.point.y;
+            }, y + playLift);
             this.guardPose(w, now, receiptStart);
         }
     }

@@ -51,6 +51,17 @@ describe('Growing placement catalog', () => {
         expect(html).not.toContain('data-growing-stored="placed-bench"');
         expect(html).not.toContain('class="growing-price"'); expect(html).not.toContain('まなびの じかんが たまっている');
     });
+    it('shows one counted card for duplicates and retains the actual total', () => {
+        const value = state(); value.plots = [];
+        value.landmarks = [
+            ...Array.from({ length: 100 }, (_, i) => ({ id: `stored-${i}`, kind: 'bench' as const, growth: 0 })),
+            { id: 'placed', kind: 'bench', growth: 0, cell: { x: 0, z: 0 } },
+        ];
+        const html = render(value, 'stored');
+        expect(html.match(/data-growing-stored=/g)).toHaveLength(1);
+        expect(html).toContain('ベンチ ×100'); expect(html).toContain('もちもの (100)');
+        expect(html).toContain('しまに 多いもの'); expect(html).toContain('あそぶ・やすむ');
+    });
     it('keeps an empty owned collection reachable with its own explanation', () => {
         const html = render(state(), 'stored');
         expect(html).toContain('しまってある ものは まだ ないよ');

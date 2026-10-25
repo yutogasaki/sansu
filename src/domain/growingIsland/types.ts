@@ -3,7 +3,7 @@ import type { GrowthProgress, WonderSlot } from './growth';
 import type { Cell, ItemKind, LifeItem } from '../islandLife/model';
 import type { RoomDecor, WallPatternId, WordGroupId } from './room';
 import type { FlowerColor } from './flowers';
-import type { PlaceGoalId, PlaceProgress } from './placeTypes';
+import type { PlaceGoalId, PlacePoint, PlaceProgress } from './placeTypes';
 
 export type { Cell, ItemKind };
 
@@ -60,6 +60,8 @@ export interface Landmark {
     from?: string;
     /** A flower's colour (§5.1); older flowers without one are pink. */
     color?: FlowerColor;
+    /** DEV experiment: times the child chose to grow this place instead of adding a new thing (0..3). */
+    tended?: number;
 }
 
 export interface Keepsake { id: string; unitId: string; cell?: Cell }
@@ -102,6 +104,34 @@ export interface GrowingGuidance {
     firstFlower?: { id: string; seen: boolean };
 }
 
+export interface TerrainEdit {
+    cell: Cell; before: number; after: number;
+    /** Edits made by one action (raising a grove) share a group and undo or redo together. */
+    group?: string;
+}
+export interface GrowingTerrain {
+    version: 1;
+    /** Integer brush offsets; meshes and route graphs are derived, never saved. */
+    heights: Record<string, number>;
+    undo: TerrainEdit[];
+    redo: TerrainEdit[];
+}
+export interface OccupiedPlaceTarget {
+    placeId: string;
+    targetId: string;
+    /** The actual elevated deck being used by a paused resident. */
+    route: PlacePoint[];
+}
+export type TerrainCommand = ({ type: 'terrain-edit'; cell: Cell; delta: 1 | -1; group?: string }
+    /** DEV: one finger stroke shapes every cell it crossed, as one undoable action. */
+    | { type: 'terrain-stroke'; cells: Cell[]; to: 'up' | 'flat' | 'sea' }
+    | { type: 'terrain-undo' | 'terrain-redo' }) & {
+    /** Logical feet captured while the local editor pauses live walkers. */
+    actors?: Cell[];
+    occupiedPlaceTargets?: OccupiedPlaceTarget[];
+    expectedTerrainRevision?: string;
+};
+
 export interface GrowingState {
     rules: 'growing-island-v1';
     seed: string;
@@ -113,6 +143,7 @@ export interface GrowingState {
     land: { expanded?: 'east' | 'west'; extra: Side[]; capes: ('east' | 'west')[]; districts?: Side[] };
     /** One shoreline lookout bridge. Absent in every pre-bridge save. */
     bridge?: { x: number };
+    terrain?: GrowingTerrain;
     plots: Plot[];
     landmarks: Landmark[];
     keepsakes: Keepsake[];
@@ -159,12 +190,14 @@ export interface GrowingState {
 }
 
 export type Command =
+    | TerrainCommand
     | { type: 'plant'; kind: SeedKind; cell: Cell }
     | { type: 'place'; kind: LandmarkKind; cell: Cell; color?: FlowerColor }
     | { type: 'move'; id: string; cell: Cell }
     | { type: 'store'; id: string }
     | { type: 'unstore'; id: string; cell: Cell }
     | { type: 'pluck'; id: string }
+    | { type: 'tend'; id: string }
     | { type: 'expand'; side: Side }
     | { type: 'bridge-build'; x: number }
     | { type: 'bridge-remove' }

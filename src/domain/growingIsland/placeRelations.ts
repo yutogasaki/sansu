@@ -1,3 +1,4 @@
+import { editableIslandWorld } from './editableTerrainWorld';
 import { shadeInfluence, waterInfluence } from '../islandLife/waterChannels';
 import { waterLayout } from './environment';
 import { PLACE_CATALOG } from './placeCatalog';
@@ -9,6 +10,7 @@ import type { IslandWorld } from './worldDefinition';
 
 /** Existing water/shade and a real entrance path are required; effects are never added twice. */
 export function derivePlaceRelations(state: GrowingState, places: DerivedPlace[] | undefined = undefined, world?: IslandWorld): PlaceRelation[] {
+    world ??= editableIslandWorld(state);
     const grown = (places ?? derivePlaces(state, world)).filter(p => p.stage === 'grown' || p.stage === 'lived');
     const reached = reachableFromHome(state, undefined, world), layout = waterLayout(state, world), relations: PlaceRelation[] = [];
     const definitions: { id: PlaceRelation['id']; families: [DerivedPlace['family'], DerivedPlace['family']] }[] = [

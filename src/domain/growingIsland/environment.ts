@@ -1,3 +1,4 @@
+import { editableIslandWorld } from './editableTerrainWorld';
 import { growthStage, type ItemKind } from '../islandLife/model';
 import { connectedWaterChannels, shadeInfluence, waterInfluence, type WaterLayout } from '../islandLife/waterChannels';
 import { RULES } from './rules';
@@ -11,6 +12,7 @@ const empty = (): Scores => ({ water: 0, tree: 0, flower: 0, farm: 0, light: 0 }
 
 /** The shared water/shade formulas read only placed current-catalog items. */
 export function waterLayout(state: GrowingState, world?: IslandWorld): WaterLayout {
+    world ??= editableIslandWorld(state);
     return { items: state.landmarks.filter(l => !OWN_LANDMARKS.includes(l.kind) && l.cell && (!world || onLand(state, l.cell, world)))
         .map(l => ({ kind: l.kind as ItemKind, cell: l.cell, growth: l.growth })),
         ...(world ? { neighbors: (cell: Cell) => world.neighbors(cell, 'water') } : {}) };
@@ -26,6 +28,7 @@ export const BLOOM_HOURS = 6;
 
 /** Feature points of everything that stands on the island (spec 52 §3.2, §6). */
 export function features(state: GrowingState, world?: IslandWorld): { cell: Cell; feature: Feature; points: number }[] {
+    world ??= editableIslandWorld(state);
     const reached = connectedWaterChannels(waterLayout(state, world)), out: { cell: Cell; feature: Feature; points: number }[] = [];
     for (const l of state.landmarks) {
         if (!l.cell || world && !onLand(state, l.cell, world)) continue;
@@ -50,6 +53,7 @@ export function features(state: GrowingState, world?: IslandWorld): { cell: Cell
 }
 
 export function scoresNear(state: GrowingState, cell: Cell, radius = RULES.styleRadius, all?: ReturnType<typeof features>, world?: IslandWorld): Scores {
+    world ??= editableIslandWorld(state);
     const scores = empty();
     for (const f of all ?? features(state, world)) if (distance(f.cell, cell) <= radius && (!world || onLand(state, f.cell, world))) scores[f.feature] += f.points;
     return scores;
@@ -59,6 +63,7 @@ const STYLE_ORDER: readonly Exclude<PlotStyle, 'plain'>[] = ['water', 'tree', 'f
 
 /** The form a plot takes when it is built. Ties follow the table order; farms do not style. */
 export function styleAt(state: GrowingState, cell: Cell, all?: ReturnType<typeof features>, world?: IslandWorld): PlotStyle {
+    world ??= editableIslandWorld(state);
     const scores = scoresNear(state, cell, RULES.styleRadius, all, world);
     let best: PlotStyle = 'plain', bestPoints = 0;
     for (const s of STYLE_ORDER) if (scores[s] > bestPoints) { best = s; bestPoints = scores[s]; }
@@ -68,12 +73,14 @@ export function styleAt(state: GrowingState, cell: Cell, all?: ReturnType<typeof
 const CHARACTER_ORDER: readonly Feature[] = ['water', 'tree', 'flower', 'farm', 'light'];
 
 export function islandScores(state: GrowingState, world?: IslandWorld): Scores {
+    world ??= editableIslandWorld(state);
     const scores = empty();
     for (const f of features(state, world)) scores[f.feature] += f.points;
     return scores;
 }
 
 export function islandCharacter(state: GrowingState, world?: IslandWorld): Character {
+    world ??= editableIslandWorld(state);
     const scores = islandScores(state, world), total = CHARACTER_ORDER.reduce((sum, f) => sum + scores[f], 0);
     if (total < RULES.characterMinimum) return 'mixed';
     let best: Feature = 'water';
@@ -82,22 +89,26 @@ export function islandCharacter(state: GrowingState, world?: IslandWorld): Chara
 }
 
 export function richness(state: GrowingState, world?: IslandWorld) {
+    world ??= editableIslandWorld(state);
     const scores = islandScores(state, world);
     return CHARACTER_ORDER.reduce((sum, f) => sum + scores[f], 0);
 }
 
 export function soilTargetAt(state: GrowingState, cell: Cell, layout?: WaterLayout, reached?: Set<string>, world?: IslandWorld) {
+    world ??= editableIslandWorld(state);
     layout ??= waterLayout(state, world);
     reached ??= connectedWaterChannels(layout);
     return Math.max(0, Math.min(1, RULES.soilBase + .5 * waterInfluence(layout, cell, reached) + .08 * shadeInfluence(layout, cell)));
 }
 
 export function waterAt(state: GrowingState, cell: Cell, world?: IslandWorld) {
+    world ??= editableIslandWorld(state);
     return !world || onLand(state, cell, world) ? waterInfluence(waterLayout(state, world), cell) : 0;
 }
 
 export function soilAt(state: GrowingState, cell: Cell) { return state.soil[key(cell)] ?? RULES.soilBase; }
 
 export function syncSoil(state: GrowingState, world?: IslandWorld) {
+    world ??= editableIslandWorld(state);
     for (const cell of landCells(state, world)) state.soil[key(cell)] ??= RULES.soilBase;
 }

@@ -1,0 +1,19 @@
+{
+  "recordedAt": "2026-10-24T18:00+09:00",
+  "target": "DEV vite server on the branch island/terrace-ground-dev, VITE_ISLAND_ENABLED=true VITE_TERRAIN_FORM=terrace, http://127.0.0.1:5282/#/onboarding (fresh origin, first-play island of a new child)",
+  "scope": "Normal UI only for edits, moves and undo/redo; page state read from the existing [data-growing-world] dataset and the real IndexedDB record. Not a release build, not a device, not a child.",
+  "steps": [
+    { "step": "edit", "ui": "メニュー > じめんを かえる > cell (1,4) > じめんを あげる", "result": "accepted; land rendered as terrace plates, stair (0,4)->(1,4)" },
+    { "step": "edit", "ui": "cell (2,4) > じめんを あげる", "result": "accepted; two-cell terrace" },
+    { "step": "edit-rejected", "ui": "cell next to pokomoko > じめんを あげる", "result": "refused: なかまが いるよ。すこし はなれた ところを えらぼう。 (existing actor protection)" },
+    { "step": "move", "ui": "tap bench > うごかす > terrace cell (1,4) > ここに おく", "result": "accepted; game shows ばしょを かえてみた" },
+    { "step": "rule-fix", "note": "the stair landing was the bench cell; rule changed to prefer an open landing (cost 8) and allow an owned landing only as the sole way (cost 24). Stair moved to (2,3)->(2,4)." },
+    { "step": "use", "trace": "pokomoko, cell x/z with floor y: (1,2,y.04) -> (2,2.15,.074) -> (2,3.05,.088) -> ramp (2,3.36,.204) -> terrace (2,3.66,.243) -> (2,3.95,.226) -> seated on bench (1,4,y.38)", "result": "walked up the ruled stair by itself and sat on the moved bench" },
+    { "step": "undo-rejected", "ui": "じめんを かえる > もどす", "result": "refused twice: なかまが いるよ (otter near the stair, then pokomoko seated at the edge of the undone cell)" },
+    { "step": "undo", "ui": "もどす after pokomoko left", "result": "accepted; heights {1,4:1}; stair re-placed (0,4)->(1,4) onto the bench pad as the only way up" },
+    { "step": "saved-before-reload", "record": { "store": "SansuGrowingIslandPreviewV1.terrainIslands", "revision": 77, "heights": { "1,4": 1 }, "undo": [{ "cell": { "x": 1, "z": 4 }, "before": 0, "after": 1 }], "redo": [{ "cell": { "x": 2, "z": 4 }, "before": 0, "after": 1 }], "bench": { "id": "starter-bench", "cell": { "x": 1, "z": 4 } } } },
+    { "step": "reload", "proof": "performance.timeOrigin 1792832752031.7 -> 1792833008953.4", "record": { "revision": 80, "heights": { "1,4": 1 }, "undo/redo": "identical", "bench": { "x": 1, "z": 4 } }, "shown": { "heights": { "1,4": 1 }, "stairs": [{ "upper": { "x": 1, "z": 4 }, "lower": { "x": 0, "z": 4 } }] }, "note": "revision advanced by ordinary life/time saves, terrain and owners unchanged" },
+    { "step": "use-after-reload", "trace": "(0,2.54,.064) -> (0,3.44,.042) -> (0,3.74,.061) -> seated (1,4,y.38)", "note": "sat from the stair foot; it did not walk the ramp to the top before the sit transition" },
+    { "step": "redo-after-reload", "ui": "じめんを かえる > やりなおす", "result": "accepted; heights {1,4:1, 2,4:1}; stair back to (2,3)->(2,4); toast じめんを ほぞんしたよ" }
+  ]
+}

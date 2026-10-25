@@ -8,8 +8,10 @@ import { FLAG_COLORS } from './keepsakeGeometry';
 import { KEEPSAKE_NAME } from './growingCopy';
 import { CHARACTER_NAME, HOME_STAGE, kindName, LANDMARK_LABEL, SEED_LABEL, villagerName } from './growingCopy';
 import { ROOF_COLORS, WONDER_ROOFS } from './plotParts';
+import { crowded, groves, placeGrowthEnabled, TEND_LIMIT, TENDABLE, tendPrice } from '../../../domain/growingIsland/placementAdvice';
 
 export type SheetAction = { type: 'concert'; tune: boolean } | { type: 'touch' } | { type: 'move' } | { type: 'store' } | { type: 'pluck' } | { type: 'home' }
+    | { type: 'tend' } | { type: 'lift' }
     | { type: 'place'; placeId: string }
     | { type: 'bridge-remove' }
     | { type: 'paint'; color: number } | { type: 'name'; name: string } | { type: 'away'; away: boolean }
@@ -59,6 +61,10 @@ export function GrowingSheet({ state, target, onAction, onClose, portrait }: { p
         detail = landmark.from ? `${landmark.from}が くれた おはなだよ` : CHARACTER_NAME[state.character];
         if (landmark.cell && landmark.kind === 'bandstand') actions.push({ label: 'おとで おはなし', action: { type: 'concert', tune: false } }, { label: 'えんそうかい', action: { type: 'concert', tune: true } });
         if (landmark.cell && ['sapling', 'flower', 'water-bowl', 'water-channel'].includes(landmark.kind)) actions.push({ label: landmark.kind === 'sapling' ? '木に さわる' : landmark.kind === 'flower' ? '花に さわる' : '水に さわる', action: { type: 'touch' } });
+        // DEV place-growth experiment: grow this place instead of adding a new thing; raise a grown grove.
+        if (placeGrowthEnabled() && landmark.cell && TENDABLE.includes(landmark.kind) && (landmark.tended ?? 0) < TEND_LIMIT)
+            actions[crowded(state) ? 'unshift' : 'push']({ label: `そだてる（しずく ${tendPrice(landmark.kind)}）`, action: { type: 'tend' } });
+        if (placeGrowthEnabled() && landmark.kind === 'sapling' && groves(state).some(grove => grove.some(tree => tree.id === landmark.id))) actions.push({ label: 'はやしを おかに する', action: { type: 'lift' } });
         actions.push({ label: 'うごかす', action: { type: 'move' } }, { label: 'しまう', action: { type: 'store' } });
     } else return null;
     return <section className="growing-sheet" aria-label={title}>

@@ -19,7 +19,7 @@ export function gardenOutline(width: number, depth: number) {
 }
 
 /** What the garden ground needs to know: the owned rectangle and each cell's soil. */
-export interface GardenGround { bounds: { minX: number; maxX: number; depth: number }; moisture: (cell: Cell) => number; shelterTree?: boolean; heightAt?: (cell: Cell) => number }
+export interface GardenGround { bounds: { minX: number; maxX: number; depth: number }; moisture: (cell: Cell) => number; shelterTree?: boolean; heightAt?: (cell: Cell) => number; supportsDetail?: (cell: Cell, radius: number) => boolean }
 
 export function buildFantasyGarden(state: LifeState, point: (cell: Cell) => T.Vector3) {
     return buildGardenGround({ bounds: landBounds(state), moisture: cell => soilMoistureAt(state, cell) }, point);
@@ -94,7 +94,10 @@ export function buildGardenGround(ground: GardenGround, point: (cell: Cell) => T
     // Stones lead from the real doorstep, always lying below the editable objects.
     const door=point({x:2,z:1});
     for(let i=0;i<7;i++){
-        const stone=g.pebble(i%2?'#d3c6a3':'#bcae8b',[door.x+Math.sin(i*.75)*.20,.03,door.z+.40+i*.35],[.22,.033,.14],staticDetails,9);
+        const x=door.x+Math.sin(i*.75)*.20,z=door.z+.40+i*.35;
+        if(ground.supportsDetail&&!ground.supportsDetail({x:x+centreX,z:z+2},.22)) continue;
+        const y=ground.supportsDetail?floorY(x,z):0;
+        const stone=g.pebble(i%2?'#d3c6a3':'#bcae8b',[x,y+.03,z],[.22,.033,.14],staticDetails,9);
         stone.rotation.y=i*.82;
     }
     // Peripheral planting is deliberately clustered: open central ground is the child's canvas.
@@ -102,9 +105,13 @@ export function buildGardenGround(ground: GardenGround, point: (cell: Cell) => T
         const angle=Math.floor(i/7)*2.39996+(variation(i+11)-.5)*.23, edge=.88+variation(i+10)*.16;
         const inset=ground.shelterTree===false?-.35:.55;
         const x=Math.cos(angle)*(width/2+inset)*edge,z=centerZ+Math.sin(angle)*(depth/2+(ground.shelterTree===false?-.35:.57))*edge;
-        const y=floorY(x,z);
         // Keep the front centre as a breathing space and a clear shoreline.
         if(z>centerZ+depth*.32&&Math.abs(x)<width*.30) continue;
+        // A tuft's blades, flower stem/petals and rock share one real root. Decide
+        // before batching so a removed stem cannot leave floating petals behind.
+        const radius=i%11===0?Math.max(.21,.18+variation(i)*.17):.15;
+        if(ground.supportsDetail&&!ground.supportsDetail({x:x+centreX,z:z+2},radius)) continue;
+        const y=floorY(x,z);
         const height=.10+variation(i+30)*.16;
         for(let j=0;j<3;j++){
             const blade=g.pebble(['#617c47','#7f9856','#a9b675'][i%3],[x+(j-1)*.047,y+height*.55,z],[.027,height,.047],staticDetails,6);
@@ -174,5 +181,5 @@ export function buildGardenGround(ground: GardenGround, point: (cell: Cell) => T
         const seconds=reduced?0:at/1000;seaMaterial.uniforms.at.value=seconds;
         canopyLeaves.rotation.z=reduced?0:Math.sin(seconds*.29)*.005;canopyLeaves.rotation.x=reduced?0:Math.sin(seconds*.24)*.004;
         dust.position.y=reduced?0:Math.sin(seconds*.12)*.04;
-    },dispose(){g.dispose();glow.dispose();soil.dispose();seaMaterial.dispose();dustMaterial.dispose();}};
+    },dispose(){root.traverse(object=>{if(object instanceof T.Mesh||object instanceof T.Points)object.geometry.dispose();});g.dispose();glow.dispose();soil.dispose();seaMaterial.dispose();dustMaterial.dispose();}};
 }

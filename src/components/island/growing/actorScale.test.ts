@@ -4,7 +4,7 @@ import { IslandMaterials } from '../three/primitives';
 import { makePokomokoRig } from '../three/islandCharacters';
 import type { Species, Villager } from '../../../domain/growingIsland';
 import { disposeActor, makeVillagerActor, wrapPokomoko, type Actor } from './actors';
-import { actorFootMinY, actorSeatContact, actorSeatSurface, actorSurfaceY, alignActorContact, alignActorOnSeat, resetActorVisualContact, setActorVisualScale } from './actorScale';
+import { actorFootMinY, actorSeatContact, actorSeatSurface, actorSurfaceY, alignActorContact, alignActorTerrainContact, alignActorOnSeat, resetActorVisualContact, setActorVisualScale } from './actorScale';
 import { buildLifeItem } from '../life/itemGeometry';
 import { buildBoat } from './pierGeometry';
 
@@ -137,4 +137,30 @@ describe('authored visual units inside actor world anchors', () => {
             disposeActor(empty);
         } finally { disposeActor(actor); m.dispose(); }
     });
+});
+
+it('fits each actual sole to a sloped edited floor without moving the actor world anchor', () => {
+    const m = new IslandMaterials('moon-garden'), actor = hero(m);
+    setActorVisualScale(actor, 1); actor.root.position.set(2, .2, 3); actor.root.rotation.y = .7;
+    const original = actor.root.position.clone(), floor = (x: number, z: number) => .12 * (x - 2) + .08 * (z - 3);
+    try {
+        for (const angle of [0, .3, -.3, 0]) {
+            resetActorVisualContact(actor); actor.feet.forEach((foot, i) => { foot.rotation.x = i ? angle : -angle; });
+            alignActorTerrainContact(actor, floor);
+            actor.root.updateWorldMatrix(true, true);
+            expect(actor.root.position).toEqual(original);
+            for (const foot of actor.feet) {
+                let gap = Infinity;
+                foot.traverse(object => {
+                    if (!(object instanceof T.Mesh)) return;
+                    const positions = object.geometry.getAttribute('position'), point = new T.Vector3();
+                    for (let i = 0; i < positions.count; i++) {
+                        point.fromBufferAttribute(positions, i).applyMatrix4(object.matrixWorld);
+                        gap = Math.min(gap, point.y - floor(point.x, point.z));
+                    }
+                });
+                expect(gap).toBeCloseTo(0, 8);
+            }
+        }
+    } finally { disposeActor(actor); m.dispose(); }
 });
