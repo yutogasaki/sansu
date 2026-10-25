@@ -1,6 +1,6 @@
 # 段丘方式を本体の地面へ接続する（DEVフラグ）
 
-2026-10-24 17:40〜18:10 JST。ブランチ `island/terrace-ground-dev`。[段丘輪郭方式の実験](../2026-10-24-terrace-method-lab/README.md)の判断を受けて、本体の地面の層へDEVフラグ付きで接続し、通常UIで一往復した。mainの作業ツリー・ブランチは変更していない。
+2026-10-24 17:40〜18:10 JST。ブランチ `island/terrace-ground-dev`。段丘輪郭方式の実験（`docs/design/2026-10-24-terrace-method-lab/`、未commitの研究資料）の判断を受けて、本体の地面の層へDEVフラグ付きで接続し、通常UIで一往復した。mainの作業ツリー・ブランチは変更していない。
 
 ![通常UIでの一往復](evidence/journey-sheet.png)
 

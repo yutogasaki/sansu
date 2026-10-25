@@ -217,12 +217,12 @@ function applyTerrainCandidate(state: GrowingState, command: TerrainCommand, str
     } else if (command.type === 'terrain-undo') {
         entry = terrain.undo.pop(); if (!entry) return false;
         // One action, one undo: a grouped run (a raised grove) goes back together.
-        for (let step: TerrainEdit | undefined = entry; step; step = step.group && terrain.undo.at(-1)?.group === step.group ? terrain.undo.pop() : undefined) {
+        for (let step: TerrainEdit | undefined = entry; step; step = step.group && terrain.undo[terrain.undo.length - 1]?.group === step.group ? terrain.undo.pop() : undefined) {
             writeHeight(terrain.heights, step.cell, step.before); terrain.redo.push(step);
         }
     } else {
         entry = terrain.redo.pop(); if (!entry) return false;
-        for (let step: TerrainEdit | undefined = entry; step; step = step.group && terrain.redo.at(-1)?.group === step.group ? terrain.redo.pop() : undefined) {
+        for (let step: TerrainEdit | undefined = entry; step; step = step.group && terrain.redo[terrain.redo.length - 1]?.group === step.group ? terrain.redo.pop() : undefined) {
             writeHeight(terrain.heights, step.cell, step.after); terrain.undo.push(step);
         }
     }

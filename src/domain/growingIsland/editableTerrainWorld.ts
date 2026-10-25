@@ -65,7 +65,8 @@ export function editableIslandWorld(input: TerrainLand, curved = true): IslandWo
     const revision = `${curved}:${terrainRevision(state)}${plan ? `:terrace:${JSON.stringify(plan.stairs)}:${[...plan.occupied].sort().join(';')}` : ''}`, previous = cache.get(revision);
     if (previous) return previous;
     // Never feed the edited state back through the legacy adapter: original geometry proves rights.
-    const original = legacyIslandWorld({ land: state.land, bridge: state.bridge, [BARE]: true }, curved);
+    const bare = { land: state.land, bridge: state.bridge, [BARE]: true as const };
+    const original = legacyIslandWorld(bare, curved);
     const source = original.definition.districts[0], bounds = landBounds(state);
     const districtId = source.id, minX = bounds.minX - .5, maxX = bounds.maxX + .5, minZ = -.5, maxZ = bounds.depth - .5;
     const detail = 6, margin = 1.5;
