@@ -1,0 +1,24 @@
+
+> pokko-fushigi-zukan-app@0.0.0 agent:index:check
+> node tools/generate-agent-index.mjs --check && npm run portal:verify
+
+
+> pokko-fushigi-zukan-app@0.0.0 portal:verify
+> node scripts/check-standard-portal.mjs && node scripts/standard-portal.mjs verify && node scripts/check-portal-workspace.mjs && node --test scripts/vendor/portal-site/3.2.0/design.test.cjs scripts/vendor/portal-site/3.2.0/references.test.cjs
+
+PASS: adapter membership, unknown ownership/deadline, malformed/duplicate rejection, fixed date and vendor SHA
+PASS: original portal 7 pages, 43218 inventory items, 16775 elements, exact CSS/JS/text/attributes and URL destinations
+PASS: flow schema/references/cycles/stops/decisions, 15 work items, same-page anchors and source/embedded/bundled equality
+PASS: integrated portal 372945 local links/anchors, 16775 original elements, all 7 pages, two layers and candidate mismatch gates
+file:///Users/yutogasaki/Projects/sansu/scripts/standard-portal.mjs:135
+    if (stale.length || actual.some(file => !files.has(file))) throw Error(`Stale portal: ${stale.length} changed/missing or extra files: ${stale.map(([name])=>name).join(', ')}`);
+                                                                     ^
+
+Error: Stale portal: 1 changed/missing or extra files: data/unification-manifest.json
+    at run (file:///Users/yutogasaki/Projects/sansu/scripts/standard-portal.mjs:135:70)
+    at file:///Users/yutogasaki/Projects/sansu/scripts/standard-portal.mjs:142:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.18.0

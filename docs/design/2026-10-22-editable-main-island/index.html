@@ -1,0 +1,17 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>遊んでいる島の地形編集 — 実操作記録</title>
+<style>body{margin:0;background:#f3f5f8;color:#263140;font:16px/1.7 system-ui,sans-serif}main{max-width:1180px;margin:auto;padding:32px 20px}h1{font-size:clamp(24px,4vw,38px)}.meta{color:#556274;max-width:850px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-top:28px}article{background:white;border:1px solid #dbe1ea;border-radius:16px;overflow:hidden}img{display:block;width:100%;height:350px;object-fit:contain;background:#e8eff3}h2{font-size:19px;margin:16px 18px 5px}article p{margin:0 18px 20px;font-size:14px}a{color:#315cb2}footer{margin-top:30px}</style>
+<main><p>Sansu · ローカル製品ビルドの実操作</p><h1>形を変えて、同じ島で暮らす。</h1>
+<p class="meta">自分で岸を掘り、家を移し、学習して、保存した島へ戻る一往復を記録しています。01〜06は初回旅程、07は経路修正版、08〜10は最終版です。同じ保存を更新して検査しました。各版の入力SHAと未確認範囲はREADMEと検証記録に残します。</p>
+<p><a href="http://127.0.0.1:5495/#/island">本体の島を開く</a> · <a href="README.md">実装と検証範囲</a></p>
+<section class="grid">
+<article><img src="evidence/01-shore-production.png" alt="岸を掘った島"><h2>01 岸を掘る</h2><p>通常の家と入居を済ませた同じ島。3回下げて水辺にする。</p></article>
+<article><img src="evidence/02-moved-home.png" alt="住人の家を移した島"><h2>02 家を移す</h2><p>入居済みのテントを別の場所へ。重なる草だけを除き、入口を保つ。</p></article>
+<article><img src="evidence/05-phone-editor.png" alt="390幅の地形編集"><h2>03 水面から戻せる</h2><p>自分の取得地は水になっても再び盛れる。</p></article>
+<article><img src="evidence/06-editor-320.png" alt="320幅の地形編集"><h2>04 小さい画面</h2><p>全ボタン44px以上、横のはみ出しなし。</p></article>
+<article><img src="evidence/08-offline-raised-hill.png" alt="東側を盛った島"><h2>05 通信なしで盛土</h2><p>配信サーバー停止中に東側を3段盛り、同じ保存へ書き込む。</p></article>
+<article><img src="evidence/09-offline-resumed-hill.png" alt="再起動した島で遊ぶ住人"><h2>06 再開と生活</h2><p>再起動後も地形と家を保持。実際に学習し、住人の生活が続く。</p></article>
+<article><img src="evidence/10-final-rotated.png" alt="移したベンチをうさこが利用"><h2>07 移した場所で暮らす</h2><p>経路修正版。自然に歩いたうさこが、岸へ移したベンチを使う。</p></article>
+<article><img src="evidence/12-acceptance-whole-island.png" alt="盛土した岸まで収まる最終版の全景"><h2>08 回しても岸が収まる</h2><p>最終版。実際の地面を基準に全景を収め、水面下の土台は画角計算から除く。</p></article>
+<article><img src="evidence/14-acceptance-phone-near.png" alt="最終版の近景地形編集"><h2>09 近づいて編集する</h2><p>最終版。地形編集から近景/全体を切り替え、同じ島を操作する。</p></article>
+<article><img src="evidence/15-acceptance-cached-learning.png" alt="配信停止中に同じ学習の続きを開く"><h2>10 保存した続きを遊ぶ</h2><p>最終版の配信を止めて再読込。地形と所有を保ち、学習も同じ予約2/6から再開。</p></article>
+</section><footer>candidate: editable-lived-island-v1 · delivery: snap-root-v1<br>完成美術・子どもの独立理解・公開の合格とは分けます。</footer></main></html>

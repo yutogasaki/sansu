@@ -1,0 +1,42 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/components/island/growing/useGrowingIsland.test.ts (7 tests) 272ms
+stderr | src/components/island/growing/actorScale.test.ts > authored visual units inside actor world anchors > keeps every rabbit source mesh/local pose and restores exact legacy dimensions
+THREE.Material: parameter 'map' has value of undefined.
+
+stderr | src/components/island/growing/actorScale.test.ts > authored visual units inside actor world anchors > matches the actual bench torso contact and boat deck, retaining their world dimensions
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/actorScale.test.ts (23 tests) 854ms
+ ✓ src/domain/growingIsland/terrainPersistence.test.ts (5 tests) 1094ms
+   ✓ terrain saves > commits edits and history once, reloads, syncs new learning, then returns through another island 820ms
+ ✓ src/domain/growingIsland/editableTerrainWorld.test.ts (5 tests) 2823ms
+   ✓ saved editable terrain geometry > does not change the pre-edit renderer and retains acquired anchors through a carved shore 579ms
+   ✓ saved editable terrain geometry > retains the acquired bridge and its walk grants when editing elsewhere 558ms
+   ✓ saved editable terrain geometry > uses the actual curved mesh for height, inverse hits and dry support at non-grid positions 751ms
+   ✓ saved editable terrain geometry > closes steep edges, restores identical triangles on undo, and ignores undo receipt changes in the geometry identity 923ms
+ ✓ src/components/island/growing/editableGroundDetails.test.ts (3 tests) 2694ms
+   ✓ editable ground vegetation support > keeps the default decoration geometry unchanged when every root is supported 668ms
+   ✓ editable ground vegetation support > retains most existing scenery after one shore edit and removes entire unsupported flower clusters 972ms
+   ✓ editable ground vegetation support > grounds doorway stones on a raised patch and suppresses all pieces when roots are removed 1052ms
+stderr | src/components/island/growing/editableTerrainLife.test.ts > cuts a route ahead of a living actor without moving its feet, then uses only actual dry routes
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/editableTerrainLife.test.ts (1 test) 1508ms
+   ✓ cuts a route ahead of a living actor without moving its feet, then uses only actual dry routes 1508ms
+ ✓ src/domain/growingIsland/editablePlaceCapability.test.ts (3 tests) 3207ms
+   ✓ earned native architecture on edited terrain > retains an existing long tree gallery after a remote edit and samples its deck from the actual floor 1696ms
+   ✓ earned native architecture on edited terrain > does not grant gallery or roof support over an edited hole just because the land is still owned 1449ms
+ ✓ src/domain/growingIsland/terrainEditing.test.ts (6 tests) 4069ms
+   ✓ game terrain commands > changes real support, retains acquired land and all earned state, then restores exactly 2534ms
+   ✓ game terrain commands > rejects unsupported feet, fixed house/pier and stale terrain without mutating the source 674ms
+   ✓ game terrain commands > revalidates undo against newly moved owners and does not erase earned objects 577ms
+
+ Test Files  8 passed (8)
+      Tests  53 passed (53)
+   Start at  07:48:09
+   Duration  5.97s (transform 3.44s, setup 0ms, collect 9.86s, tests 16.52s, environment 1ms, prepare 1.16s)
+

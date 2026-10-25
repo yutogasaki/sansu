@@ -1,0 +1,160 @@
+
+> pokko-fushigi-zukan-app@0.0.0 test:run
+> vitest run --maxWorkers=2 --minWorkers=2
+
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/domain/explore/__tests__/persistenceRepository.test.ts (38 tests) 829ms
+ ✓ src/domain/explore/__tests__/learningPlannerSegment.test.ts (15 tests) 852ms
+ ✓ tools/expression-audio/audio-analysis.test.mjs (53 tests) 5256ms
+   ✓ insect-band classification rejects absent insects and actual wind or water even when made quiet 340ms
+   ✓ raw02 loop prefix positions are missing first-pitch evidence, not proof of an overlapping loop 377ms
+   ✓ one missing first-pitch sample or final required sample fails without shortening either window 587ms
+   ✓ one-sample and wrong-sign native offsets fail instead of choosing a better waveform lag 365ms
+   ✓ unknown, nonfinite, fractional and mismatched native metadata fail rather than falling back to signal alignment 328ms
+   ✓ real-answer cue history can exceed 256 sources, while the finite source cap still cannot block native playback or close 1076ms
+ ✓ src/components/island/three/residentRig.test.ts (38 tests) 3619ms
+   ✓ resident local rig and furniture contact > bench supports each resident at the real surface through all rotations 476ms
+   ✓ resident local rig and furniture contact > swing supports each resident at the real surface through all rotations 329ms
+   ✓ resident local rig and furniture contact > mushroom supports each resident at the real surface through all rotations 365ms
+   ✓ resident interest stays a removable layer on the real rig > otter keeps real feet, root, seat and shoulder joints on rotated ordinary objects 812ms
+ ✓ src/components/island/three/sharedActivityFraming.test.ts (26 tests) 15735ms
+   ✓ body identity keeps the actual articulated tail > otter retains tail surfaces in every held pose without borrowing head or arm surfaces 406ms
+   ✓ one side view contains the complete shared delivery > 'flower' fits all quarter-turn chair directions and phone/tablet stage shapes 1224ms
+   ✓ one side view contains the complete shared delivery > 'star' fits all quarter-turn chair directions and phone/tablet stage shapes 1021ms
+   ✓ one side view contains the complete shared delivery > 'bubble' fits all quarter-turn chair directions and phone/tablet stage shapes 1390ms
+   ✓ one side view contains the complete shared delivery > scores actual held poses for '624 star spectator' across every phase without touching the live rigs 1114ms
+   ✓ one side view contains the complete shared delivery > scores actual held poses for '484 star self-occlusion' across every phase without touching the live rigs 651ms
+   ✓ one side view contains the complete shared delivery > scores actual held poses for '484 bubble self-occlusion' across every phase without touching the live rigs 1021ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'phone star' scene 659ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'tablet star' scene 487ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'phone flower' scene 402ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'tablet flower' scene 461ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'phone bubble' scene 429ms
+   ✓ one side view contains the complete shared delivery > keeps each subject readable in the recorded 0875 'tablet bubble' scene 356ms
+   ✓ one side view contains the complete shared delivery > selects a legal fixed presentation for cdc5 phone without inventing readability 754ms
+   ✓ one side view contains the complete shared delivery > selects a legal fixed presentation for cdc5 tablet without inventing readability 531ms
+   ✓ one side view contains the complete shared delivery > selects a legal fixed presentation for cdc5 obstructed without inventing readability 1457ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'phone-flower' preserves a legal readable presentation 487ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'phone-star' preserves a legal readable presentation 362ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'phone-bubble' preserves a legal readable presentation 468ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'tablet-flower' preserves a legal readable presentation 474ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'tablet-star' preserves a legal readable presentation 340ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'tablet-bubble' preserves a legal readable presentation 430ms
+   ✓ recorded 5d7 subjects cannot borrow visibility from later poses > 'tablet-fox-flower' preserves a legal readable presentation 682ms
+ ✓ src/domain/growingIsland/authoredGrowthTerrain.test.ts (15 tests) 114ms
+ ✓ src/hooks/blockGenerators.test.ts (36 tests) 26ms
+ ✓ src/domain/growingIsland/authoredWaterWorld.test.ts (19 tests) 12761ms
+   ✓ pure authored water geometry composition > interpolates the original shading field through cuts without changing support or copying grass normals to new beds 1537ms
+   ✓ pure authored water geometry composition > cuts real source triangles and keeps fixed acquired anchors over three different water/bed floors 598ms
+   ✓ pure authored water geometry composition > retains only actually dry foot-band edges while leaving joining/water grants unchanged 554ms
+   ✓ pure authored water geometry composition > joins every organic pool mouth and adjacent channel cuts with actual continuous water 618ms
+   ✓ pure authored water geometry composition > resolves the existing cut floors at L/T junctions without duplicating water or creating support 684ms
+   ✓ pure authored water geometry composition > keeps pool mouths and the whole shared junction level before the actual falling strips 574ms
+   ✓ pure authored water geometry composition > keeps a bowl junction level when mapped arms overlap beyond the pool contour 571ms
+   ✓ pure authored water geometry composition > starts from the original ground on store/split and restores the same revision and geometry 1188ms
+   ✓ pure authored water geometry composition > derives the terminal bridge from the same cut world and removes it with its supplying owner 1282ms
+   ✓ pure authored water geometry composition > does not remove existing pools when a fourth bowl and a third fed channel join 911ms
+   ✓ pure authored water geometry composition > does not cut a distant trench for a nonadjacent explicit water grant 1047ms
+   ✓ pure authored water geometry composition > reduces a pool around another owner and its doorstep without changing acquired rights 900ms
+   ✓ pure authored water geometry composition > preserves each original anchor and floor interpolation in a rotated/translated district 437ms
+   ✓ pure authored water geometry composition > adapts only the connection axis between nearby bowls while retaining wide transverse wings 514ms
+   ✓ pure authored water geometry composition > uses an explicit original-floor carving scope without granting new placement rights or saved state 397ms
+   ✓ pure authored water geometry composition > never applies an accepted stream stencil to a different district at the same physical coordinates 466ms
+ ✓ src/domain/island/island.test.ts (19 tests) 2076ms
+   ✓ island frozen learning sets > reserves three introductory questions, then six familiar questions, and restores the exact plan 360ms
+   ✓ island frozen learning sets > supports mixed vocabulary sets and accumulates independent readiness without auto progression 580ms
+   ✓ island frozen learning sets > preserves fraction multi-input and stepwise written arithmetic in complete reserved plans 543ms
+stderr | src/components/island/growing/authoredFlowerObstructions.test.ts > actual walking source envelope > includes actual indexed clothing, hats, ears, tail, soles and continuous walking angles with bob, while excluding sparkles
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/authoredFlowerObstructions.test.ts (15 tests) 1304ms
+   ✓ actual walking source envelope > includes actual indexed clothing, hats, ears, tail, soles and continuous walking angles with bob, while excluding sparkles 758ms
+ ✓ src/domain/island/rewardGoalRepository.test.ts (14 tests) 1146ms
+   ✓ reward goals and the real island storage boundary > earns the desired furniture through ordinary learning, preserves photographs and old memories, then resumes the same reservation 496ms
+ ✓ src/domain/island/expressionRepository.test.ts (11 tests) 805ms
+   ✓ expression ownership with the existing learning and photo stores > earns ordinary stars without materializing expression, acquires separately, reloads and resumes the exact same learning plan 301ms
+ ✓ src/components/island/three/sharedDisplayScene.test.ts (13 tests) 424ms
+ ✓ src/components/island/three/optionalFurnitureTrial.test.ts (8 tests) 45695ms
+   ✓ borrowed tools choose an actually usable legal trial location > rechecks the chosen resident using the same borrowed model and retains a usable position on reselection 713ms
+   ✓ borrowed tools choose an actually usable legal trial location > uses the new connecting floor for the formerly blocked furniture-03 hammock without moving saved furniture 1516ms
+   ✓ borrowed tools choose an actually usable legal trial location > keeps the furniture-02 narrow passage blocked for the actual body, then accepts only a child-requested usable preview 6420ms
+   ✓ borrowed tools choose an actually usable legal trial location > drops an old explicit search on movement, lifecycle pause and foreground resume 303ms
+   ✓ borrowed tools choose an actually usable legal trial location > telescope preflights every selected resident then retains the same real model through sequential trials 8035ms
+   ✓ borrowed tools choose an actually usable legal trial location > hammock preflights every selected resident then retains the same real model through sequential trials 4816ms
+   ✓ borrowed tools choose an actually usable legal trial location > tea-table preflights every selected resident then retains the same real model through sequential trials 23771ms
+stderr | src/components/island/growing/native/nativeAuthoredFlower.test.ts > authored P05 comes from current owned flowers and existing ground > grounds every thick stock in its actual owned footprint and preserves the original low flower colours
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/native/nativeAuthoredFlower.test.ts (8 tests) 6464ms
+   ✓ authored P05 comes from current owned flowers and existing ground > keeps all old owners, P01/P03 conditions, clocks, source floors, anchors, 73 rights and grants unchanged by rendering 340ms
+   ✓ authored P05 comes from current owned flowers and existing ground > grounds every thick stock in its actual owned footprint and preserves the original low flower colours 834ms
+   ✓ authored P05 comes from current owned flowers and existing ground > keeps real selectable geometry for every flower ID rather than assigning the whole garden to its anchor 322ms
+   ✓ authored P05 comes from current owned flowers and existing ground > splits and stores through commands, restores the same owners and crown, and cancels a preview without changing saved geometry 1085ms
+   ✓ authored P05 comes from current owned flowers and existing ground > avoids source stocks with actual .45 actors, retains all 32 owner approaches and the real bench pose/exit, and releases stored stock 1437ms
+   ✓ authored P05 comes from current owned flowers and existing ground > grows the garden edge toward its current real seat and removes it in a move preview or storage without moving owners 633ms
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ ✓ src/components/domain/LearningAnswerForm.defer.test.tsx (35 tests) 52ms
+ ✓ src/components/island/three/natureObservationFrame.test.ts (22 tests) 32160ms
+   ✓ explicit nature observation framing > rejects qualified-03/06 saved phone cameras and a visible but subpixel frontal face (reduced=false) 1944ms
+   ✓ explicit nature observation framing > rejects qualified-03/06 saved phone cameras and a visible but subpixel frontal face (reduced=true) 1554ms
+   ✓ explicit nature observation framing > separates butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.0103626943005182/false) 1013ms
+   ✓ explicit nature observation framing > separates butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.0103626943005182/true) 810ms
+   ✓ explicit nature observation framing > separates butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.6340425531914893/false) 1001ms
+   ✓ explicit nature observation framing > separates butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.6340425531914893/true) 870ms
+   ✓ explicit nature observation framing > separates ribbon-butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.0103626943005182/false) 1091ms
+   ✓ explicit nature observation framing > separates ribbon-butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.0103626943005182/true) 842ms
+   ✓ explicit nature observation framing > separates ribbon-butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.6340425531914893/false) 896ms
+   ✓ explicit nature observation framing > separates ribbon-butterfly in the actual qualified-03 layout from the unchanged rabbit throughout its flight (1.6340425531914893/true) 755ms
+   ✓ explicit nature observation framing > holds a butterfly covered in every candidate and recovers without moving its host or residents 1656ms
+   ✓ explicit nature observation framing > shows the actual eyes and beak at the rotated mushroom from qualified-03/06 without moving any model (reduced=false) 4603ms
+   ✓ explicit nature observation framing > shows the actual eyes and beak at the rotated mushroom from qualified-03/06 without moving any model (reduced=true) 5030ms
+   ✓ explicit nature observation framing > keeps a landed or hovering bird readable at host yaw 0 in a single fixed observation camera 898ms
+   ✓ explicit nature observation framing > keeps a landed or hovering bird readable at host yaw 1.5707963267948966 in a single fixed observation camera 734ms
+   ✓ explicit nature observation framing > keeps a landed or hovering bird readable at host yaw 3.141592653589793 in a single fixed observation camera 677ms
+   ✓ explicit nature observation framing > keeps a landed or hovering bird readable at host yaw -2.356194490192345 in a single fixed observation camera 1142ms
+   ✓ explicit nature observation framing > chooses another front angle when real foreground geometry covers the face and never declares a covered face readable 6636ms
+ ✓ src/domain/explore/__tests__/reducer.test.ts (29 tests) 7ms
+ ✓ src/domain/math/generators/counting.test.ts (51 tests) 52ms
+ ✓ src/components/island/three/sharedActivities.test.ts (23 tests) 422ms
+ ✓ src/domain/island/sharedMemories.test.ts (14 tests) 82ms
+ ✓ src/components/island/three/sharedJobController.test.ts (23 tests) 2917ms
+   ✓ shared work after-render and actual object continuity > borrows the actual hand, lamp and receiver for framing without turning strict camera diagnostics into a save gate 489ms
+ ✓ src/components/island/growing/placeSpringGeometry.test.ts (7 tests) 1190ms
+ ✓ src/components/island/three/workshopScene.test.ts (22 tests) 370ms
+ ✓ src/domain/math/planner.test.ts (35 tests) 25ms
+stderr | src/components/island/growing/growingLife.test.ts > keeps actual authored actors on the quarter graph around a home and preserves their saved identity
+THREE.Material: parameter 'map' has value of undefined.
+
+stderr | src/components/island/growing/growingLife.test.ts > picking up a friend > follows the finger and sits on the bench it is dropped on
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/growingLife.test.ts (15 tests) 1148ms
+ ✓ src/domain/island/experienceRepository.test.ts (12 tests) 1361ms
+   ✓ owned atomic experience persistence > rolls back a failed layout application receipt including all positions, cosmetics and optional expression state 619ms
+   ✓ saved layout application against the current earned world > keeps real later learning/growth, earned new items, spent stars and the saved next plan when restoring an old layout 439ms
+ ✓ src/components/island/three/livingRuntime.test.ts (18 tests) 1239ms
+   ✓ runtime life cancellation and actual observations > checks a landed bird face in the actual rendered frame, preserves old records and recovers once (reduced=false) 309ms
+ ✓ src/domain/explore/__tests__/g0NumberVessel.test.ts (13 tests) 8ms
+ ✓ src/components/island/growing/placeRootRoomGeometry.test.ts (8 tests) 6489ms
+   ✓ continuous owned hollow root room > sizes the passage from real all-species standing geometry with every hat and ear 1069ms
+   ✓ continuous owned hollow root room > level: has one broad enclosed amber volume and four real bounded roots 1656ms
+   ✓ continuous owned hollow root room > sloped: has one broad enclosed amber volume and four real bounded roots 1317ms
+   ✓ continuous owned hollow root room > keeps every actual wood/window triangle outside the full-body swept gallery passage 780ms
+   ✓ continuous owned hollow root room > retains the four saved jade crowns without putting any new room or leaf triangle in the full-body gallery passage 1028ms
+   ✓ continuous owned hollow root room > uses the unchanged real gallery boards for the actual Poco soles through the room 557ms
+ ✓ src/components/island/growing/placeGallery.test.ts (8 tests) 4343ms
+   ✓ owned tree-home physical gallery > lane: follows multiple connected free cells and every walking sample has a real floor 504ms
+   ✓ owned tree-home physical gallery > lane: supports both actual 0.7-scale Pokomoko feet across the high straight deck 344ms
+   ✓ owned tree-home physical gallery > court: follows multiple connected free cells and every walking sample has a real floor 2324ms
+   ✓ owned tree-home physical gallery > court: supports both actual 0.7-scale Pokomoko feet across the high straight deck 537ms
+   ✓ owned tree-home physical gallery > court: keeps the staircase inside its free entrance and grows supports from blocked owners 323ms
+ ✓ src/domain/growingIsland/placeGoals.repository.test.ts (10 tests) 424ms
+ ✓ src/hooks/useStudySession.logic.test.ts (38 tests) 9ms
+ ✓ src/components/island/IslandAnswerForm.test.tsx (38 tests) 596ms
+   ✓ Island problem semantic presentation > has a curated equivalent for every symbol actually emitted by the current math generators 474ms
+ ✓ src/domain/island/workshop.test.ts (14 tests) 63ms

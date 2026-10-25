@@ -52,7 +52,8 @@ describe('dedicated DEV place fixture upload', () => {
         expect(await database.app.logs.count()).toBe(1); expect(await database.growing.guidedIslands.count()).toBe(0);
         expect(await database.growing.balancedIslands.count()).toBe(0); expect(await database.growing.legacyIslands.count()).toBe(0);
         const beforeRead = await database.growing.islands.get(id), native = await readPlacePreview(id, database);
-        expect(native.table).toBe('foundationIslands'); expect(native.record.version).toBe(4); expect(native.logs).toEqual([]);
+        expect(native.table).toBe('terrainIslands'); expect(native.record.version).toBe(4); expect(native.logs).toEqual([]);
+        expect(await database.growing.table('foundationIslands').count()).toBe(0);
         expect(await database.growing.islands.get(id)).toEqual(beforeRead);
         await restorePlaceSelection(profile.id, true, database);
         expect(await readPlaceSelection(database)).toBe(profile.id); expect(localStorage.getItem('sansu_active_profile')).toBe(profile.id);

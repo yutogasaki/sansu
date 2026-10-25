@@ -1,0 +1,16 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/domain/growingIsland/terrainPersistence.test.ts (5 tests) 356ms
+   ✓ terrain saves > commits edits and history once, reloads, syncs new learning, then returns through another island 305ms
+ ✓ src/domain/growingIsland/terrainEditing.test.ts (6 tests) 1110ms
+   ✓ game terrain commands > changes real support, retains acquired land and all earned state, then restores exactly 645ms
+ ✓ src/domain/growingIsland/terrainOccupiedPlace.test.ts (4 tests) 1171ms
+   ✓ atomic protection of occupied elevated places > rejects cutting external access even when every occupied deck point keeps the same floor 760ms
+   ✓ atomic protection of occupied elevated places > allows an unrelated edit while preserving the same elevated target and full XYZ route 317ms
+
+ Test Files  3 passed (3)
+      Tests  15 passed (15)
+   Start at  08:04:38
+   Duration  1.90s (transform 470ms, setup 0ms, collect 1.07s, tests 2.64s, environment 0ms, prepare 97ms)
+

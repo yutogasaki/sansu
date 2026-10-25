@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-21T23:34:47.183275+00:00",
+  "inputs": [
+    {
+      "path": "tools/check-portal-flow.mjs",
+      "sha256": "9af9116dad273e7ba9fb82c2861d6007de5ea714b314837896a6d80b8a0f0f14"
+    },
+    {
+      "path": "tools/place-qa.test.mjs",
+      "sha256": "d339f92b9d6b221dd8f3588a8b77402b8f5f500e17bc0703b1526eadf326aa17"
+    },
+    {
+      "path": "tools/e2e-smoke.mjs",
+      "sha256": "40c85b53373959b0331f2a671e8e395e76e66db4ab71080dd5ac97b19f4c8396"
+    },
+    {
+      "path": "tools/check-docs.mjs",
+      "sha256": "cc563643dd38ed97d28c09a036b694c67869ba4f68e8ea21bdbeef5c5475f7d5"
+    },
+    {
+      "path": "tools/check-current-ui-entry.mjs",
+      "sha256": "35fe233a3e498fee7d9794b6925ab7ad57343e6964d4266f911e733028cd7523"
+    },
+    {
+      "path": "tools/generate-agent-index.mjs",
+      "sha256": "e9fa4fe5c5bb3216b18c3b8b8062eab45a62c5335a5ac3ae42b9a0240dc3a10a"
+    },
+    {
+      "path": "scripts/standard-portal.mjs",
+      "sha256": "7c229148bce371fe542c139d259c85ef5694be8cfc54a8a3114ba3dd98843cef"
+    },
+    {
+      "path": "scripts/check-standard-portal.mjs",
+      "sha256": "7348d8cdb63bdca291849933166bb3765c5c44bfcd24b023db0bc25a6161a683"
+    },
+    {
+      "path": "scripts/check-portal-workspace.mjs",
+      "sha256": "55bcabc16e3f87923c86d76c656c790abfa00fd9ba7d599ccc9605d1f04e8a7b"
+    },
+    {
+      "path": ".agents/tasks/TASKS.md",
+      "sha256": "5db20bc4f9def4a13832e5aa19511e498d47355a9ad8a5f32503ff77961ca44c"
+    },
+    {
+      "path": ".agents/flow/portal-flow.json",
+      "sha256": "60ee5786f47ffdc17cb24dd880f3f8c35a7c472133328b4d8f3ed690737f6e3e"
+    }
+  ]
+}

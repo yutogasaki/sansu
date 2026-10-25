@@ -1,0 +1,34 @@
+
+> pokko-fushigi-zukan-app@0.0.0 agent:index:check
+> node tools/generate-agent-index.mjs --check && npm run portal:verify
+
+
+> pokko-fushigi-zukan-app@0.0.0 portal:verify
+> node scripts/check-standard-portal.mjs && node scripts/standard-portal.mjs verify && node scripts/check-portal-workspace.mjs && node --test scripts/vendor/portal-site/3.2.0/design.test.cjs scripts/vendor/portal-site/3.2.0/references.test.cjs
+
+PASS: adapter membership, unknown ownership/deadline, malformed/duplicate rejection, fixed date and vendor SHA
+PASS: original portal 7 pages, 43218 inventory items, 16775 elements, exact CSS/JS/text/attributes and URL destinations
+PASS: flow schema/references/cycles/stops/decisions, 15 work items, same-page anchors and source/embedded/bundled equality
+PASS: integrated portal 372954 local links/anchors, 16775 original elements, all 7 pages, two layers and candidate mismatch gates
+{"status":"PASS","files":2054}
+PASS: Sansu canonical loader/negative guards, 8 refs, all moved documents/IDs, 181 integrated original pages and six-entry navigation
+✔ IDs move out of titles instead of becoming placeholder prose (1.216ms)
+✔ free-form status text maps to the five shared states (0.290542ms)
+✔ three tiers: living documents listed, dated records linked, code omitted (0.226708ms)
+✔ front matter and document shape are read from the source (0.285333ms)
+✔ every page gets the same chrome and escapes data (0.309208ms)
+✔ the adapter turns a v1 repo into a tiered site model (15.557ms)
+✔ reference projection preserves pins, uncertainty, unresolved references and backlinks (2.458708ms)
+✔ decision display uses evaluated index state instead of raw needs-human status (0.182458ms)
+✔ stale relation remains visible and is never silently repinned (0.127416ms)
+✔ context payload and reference output escape source text and expose missing state honestly (0.309667ms)
+✔ opt-in absence preserves existing model and duplicate input is rejected (0.197291ms)
+✔ canonical decision identity binds to a prefixed legacy anchor without breaking bookmarks (0.08475ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 59.805792

@@ -1,0 +1,56 @@
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:smoke
+> node tools/e2e-smoke.mjs
+
+Starting dev server on http://127.0.0.1:4173...
+
+> pokko-fushigi-zukan-app@0.0.0 dev:test-server
+> vite --host 127.0.0.1 --port 4173 --strictPort
+
+
+  VITE v7.3.1  ready in 823 ms
+
+  ➜  Local:   http://127.0.0.1:4173/
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Dev server ready on http://127.0.0.1:4173.
+PASS redirects to onboarding when no profile (2092ms)
+PASS completes onboarding, chooses a route, and opens Makimodon (2393ms)
+PASS keeps the classic opening playable with expanded mobile browser chrome (2310ms)
+PASS keeps the direct study route working (2994ms)
+PASS keeps the direct review route working (1584ms)
+PASS keeps the direct settings route working (1589ms)
+PASS keeps legacy fuwafuwa album out of child records (2424ms)
+PASS completes confirmation test from parent settings and opens results (31382ms)
+PASS launches explore immediately and safely returns at a route break (3620ms)
+PASS keeps the 390x800 route boundary fully visible (3542ms)
+PASS runs Root Pull v2 inline with reduced motion and the numeric keypad (3392ms)
+Snap Root measured ms { firstIncorrect: 440, secondIncorrect: 539, correct: [ 135, 128 ] }
+PASS runs the Snap Root breakthrough loop at 390px (5464ms)
+PASS keeps the Snap Root breakthrough loop playable on tablet (3272ms)
+PASS can exit safely after explore start persistence fails (1990ms)
+PASS safely exits and retries from a pending explore problem (2234ms)
+PASS commits one explore answer under rapid double submit (2289ms)
+PASS retries the same explore attempt after a save failure (2210ms)
+PASS resumes fixed-ten explore across retry, route, discovery, and partial-input boundaries (8086ms)
+PASS finishes last-light rescue without blocking on an ordinary clue (2196ms)
+PASS retries voluntary return without early terminal progress (3411ms)
+PASS grows the immersive light bridge from an addition answer (5319ms)
+PASS keeps the light bridge playable on tablet (5268ms)
+PASS keeps the light bridge connected on a landscape tablet (5204ms)
+PASS keeps the light bridge playable on a 1024px portrait tablet (5072ms)
+PASS keeps the light bridge playable on a wide portrait tablet (5183ms)
+PASS retains root observation after the first same-problem retry (5910ms)
+PASS opens the root tangle with profile-near subtraction (6788ms)
+FAIL keeps the root tangle playable on tablet: Error: One physical numeric entry must preserve every digit; expected=10, actual=1
+    at assert (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:184:25)
+    at typeExploreNumericOnce (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:1672:3)
+    at async observeRootTangleMiss (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:1685:3)
+    at async scenarioRootTangleVerticalSlice (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:2864:3)
+    at async runScenario (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)
+    at async main (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6733:18)
+PASS keeps the root tangle playable on a landscape tablet (6936ms)
+PASS keeps the root tangle playable on a 1024px portrait tablet (6746ms)
+PASS keeps the root tangle playable on a wide portrait tablet (6834ms)
+PASS opens /parents directly without arithmetic (1663ms)

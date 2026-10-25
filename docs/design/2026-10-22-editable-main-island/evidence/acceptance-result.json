@@ -1,0 +1,35 @@
+{
+  "completedAt": "2026-10-21T23:43:42.331303+00:00",
+  "scope": "local normal game editable terrain integration",
+  "sourceHash": "824d85eb6fa159001c4a24392504337670c5886b810c11fcf2e38444bbb4c9ce",
+  "distHash": "ef93c1fcefc1969197a5a234be1d5eddce9a900d5be95240ef733ce6ed3ed781",
+  "unit": {
+    "files": 660,
+    "tests": 5570,
+    "failed": 0,
+    "exitCode": 0
+  },
+  "classicSmoke": {
+    "passed": 32,
+    "failed": 0,
+    "exitCode": 0
+  },
+  "build": "PASS",
+  "typecheck": "PASS",
+  "lint": {
+    "errors": 0,
+    "existingWarnings": 4
+  },
+  "docs": "PASS",
+  "entry": "PASS",
+  "agentIndexAndPortal": {
+    "result": "PASS",
+    "exitCode": 0,
+    "log": "acceptance-closeout-index.txt"
+  },
+  "productionJourney": "PASS: edit, move, life, learning, cache reload, saved undo/redo",
+  "publicDeployed": false,
+  "artAdoption": false,
+  "realDeviceAcceptance": false,
+  "childAcceptance": false
+}

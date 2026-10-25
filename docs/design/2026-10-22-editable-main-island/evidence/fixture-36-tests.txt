@@ -1,0 +1,14 @@
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/domain/growingIsland/terrainPersistence.test.ts (5 tests) 336ms
+ ✓ tools/place-qa.test.mjs (5 tests) 388ms
+   ✓ dedicated DEV place fixture upload > accepts the current 20 diagnostic cases and rejects changed payload or forged use evidence 310ms
+ ✓ src/domain/user/firstPlay.test.ts (6 tests) 99ms
+ ✓ src/domain/user/onboarding.test.ts (20 tests) 868ms
+
+ Test Files  4 passed (4)
+      Tests  36 passed (36)
+   Start at  07:57:14
+   Duration  2.11s (transform 684ms, setup 0ms, collect 3.01s, tests 1.69s, environment 0ms, prepare 219ms)
+

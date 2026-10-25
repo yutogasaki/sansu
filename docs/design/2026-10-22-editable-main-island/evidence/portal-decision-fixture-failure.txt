@@ -1,0 +1,20 @@
+
+> pokko-fushigi-zukan-app@0.0.0 agent:index:check
+> node tools/generate-agent-index.mjs --check && npm run portal:verify
+
+
+> pokko-fushigi-zukan-app@0.0.0 portal:verify
+> node scripts/check-standard-portal.mjs && node scripts/standard-portal.mjs verify && node scripts/check-portal-workspace.mjs && node --test scripts/vendor/portal-site/3.2.0/design.test.cjs scripts/vendor/portal-site/3.2.0/references.test.cjs
+
+PASS: adapter membership, unknown ownership/deadline, malformed/duplicate rejection, fixed date and vendor SHA
+PASS: original portal 7 pages, 43218 inventory items, 16775 elements, exact CSS/JS/text/attributes and URL destinations
+file:///Users/yutogasaki/Projects/sansu/tools/check-portal-flow.mjs:33
+ bad=clone();bad.items.find(i=>i.needs_yu.required).needs_yu.content='';assert(checkGraph(bad).length);
+                                                   ^
+
+TypeError: Cannot read properties of undefined (reading 'needs_yu')
+    at checkPortalFlow (file:///Users/yutogasaki/Projects/sansu/tools/check-portal-flow.mjs:33:52)
+    at checkIntegration (file:///Users/yutogasaki/Projects/sansu/tools/check-portal-integration.mjs:17:2)
+    at file:///Users/yutogasaki/Projects/sansu/scripts/check-standard-portal.mjs:37:1
+
+Node.js v24.18.0

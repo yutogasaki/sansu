@@ -1,6 +1,6 @@
 # 段丘方式を導入するときの仕様差分（案）
 
-2026-10-25。ブランチ `island/terrace-ground-dev` の作業。mainの仕様書は書き換えていない。導入が決まったら、以下を各仕様の該当節へ移す。
+2026-10-25。2026-10-26に利用者が承認し、[仕様52 §1.2・§1.3](../../product/52_growing_island_game_spec.md)・[仕様13](../../product/13_data_storage_migration_spec.md)・[仕様44](../../product/44_display_layout_spec.md)へ反映した。以下は承認時の案の記録。
 
 ## 前提
 
