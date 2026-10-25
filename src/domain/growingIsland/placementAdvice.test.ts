@@ -93,3 +93,15 @@ describe('DEV growing a place instead of adding one', () => {
     });
 });
 
+
+describe('DEV one more and it grows', () => {
+    it('names the place a tree beside a grove would grow, ahead of a lone spot far away', async () => {
+        const { growthHint } = await import('./placementAdvice');
+        const s = newIsland('hint', 0);
+        s.tutorial = 'done';
+        s.landmarks = [{ x: 0, z: 2 }, { x: 0, z: 3 }].map((cell, i) => ({ id: `t${i}`, kind: 'sapling' as const, cell, growth: 18, maturedAt: 0 }));
+        const hint = growthHint(s, 'sapling', [{ x: 0, z: 4 }, { x: 5, z: 0 }]);
+        expect(hint?.cell).toEqual({ x: 0, z: 4 });
+        expect(hint?.message).toContain('木陰の庭');
+    });
+});

@@ -1,11 +1,11 @@
 import * as T from 'three';
 import { TERRAIN_DRY_LEVEL, terracePlanOf } from '../../../domain/growingIsland/editableTerrainWorld';
-import { buildTerraceGround } from './terraceGround';
+import { buildTerraceGround, type TerraceGroundOptions } from './terraceGround';
 import type { SceneLayout } from './sceneLayout';
 import { worldFloorGeometry } from './worldFloorGeometry';
 
 /** Rendering, pointer hits and footing consume one clipped triangle mesh. */
-export function buildEditableGround(layout: SceneLayout, shoreProfile?: readonly number[], bridgeX?: number) {
+export function buildEditableGround(layout: SceneLayout, shoreProfile?: readonly number[], bridgeX?: number, options?: TerraceGroundOptions) {
     const root = new T.Group(); root.name = 'editable-island-ground';
     const geometry = worldFloorGeometry(layout.world, { x: layout.center, z: 2 });
     const positions = geometry.getAttribute('position'), colors = geometry.getAttribute('color');
@@ -32,7 +32,7 @@ export function buildEditableGround(layout: SceneLayout, shoreProfile?: readonly
     floor.userData.terrainSurface = true; root.add(floor);
     // DEV terrace form: the same floor still carries hits and footing, but the visible
     // land is the stacked terrace plates built from the same plan.
-    const plan = terracePlanOf(layout.world), terraces = plan ? buildTerraceGround(layout, plan, shoreProfile, bridgeX) : undefined;
+    const plan = terracePlanOf(layout.world), terraces = plan ? buildTerraceGround(layout, plan, shoreProfile, bridgeX, options) : undefined;
     if (terraces) { material.visible = false; root.add(terraces.root); }
     const banks: T.Mesh<T.BufferGeometry, T.MeshStandardMaterial>[] = [];
     for (const surface of layout.world.surfaces) {
@@ -41,6 +41,8 @@ export function buildEditableGround(layout: SceneLayout, shoreProfile?: readonly
         bankGeometry.setIndex([...surface.indices]); bankGeometry.computeVertexNormals();
         const bankMaterial = new T.MeshStandardMaterial({ color: surface.material.color, roughness: .96, side: T.DoubleSide });
         const bank = new T.Mesh(bankGeometry, bankMaterial); bank.name = 'editable-underwater-bank'; bank.receiveShadow = true; root.add(bank); banks.push(bank);
+        // The terrace plates draw their own shore; the flat underwater strips would show as lines.
+        if (terraces) bank.visible = false;
     }
     return { root, floor, dispose() { terraces?.dispose(); geometry.dispose(); material.dispose(); for (const bank of banks) { bank.geometry.dispose(); bank.material.dispose(); } } };
 }

@@ -12,6 +12,7 @@ import type { SceneLayout } from './sceneLayout';
 const SAMPLES = 8, MARGIN = 4;
 const C = {
     meadow: new T.Color('#a3cc88'), light: new T.Color('#b7d496'),
+    stone: new T.Color('#c9d1d4'), stoneDeep: new T.Color('#8e9db3'),
     lilac: new T.Color('#bcb8d3'), lilacDeep: new T.Color('#a29fc0'), sand: new T.Color('#e3d2ab'), sandDeep: new T.Color('#c9b48f'), stair: new T.Color('#c9c3dc'),
 };
 type Frame = { minX: number; minZ: number; cols: number; rows: number };
@@ -292,7 +293,7 @@ const tightShore = () => islandShaping() || Boolean(import.meta.env?.DEV && impo
  * never shifts between visits): corners round off, a raised or extended edge pushes the
  * coast out, and a dug cell stays open water, so the child's coves and capes are the island.
  */
-function landShore(plan: TerracePlan, bounds: { minX: number; maxX: number; depth: number }, bridgeX?: number) {
+function landShore(plan: TerracePlan, bounds: { minX: number; maxX: number; depth: number }, bridgeX?: number, keep: { x: number; z: number; r: number }[] = []) {
     const smooth = (v: number) => v * v * (3 - 2 * v);
     const noise = (x: number, z: number) => {
         const gx = x / 1.7, gz = z / 1.7, ix = Math.floor(gx), iz = Math.floor(gz), u = smooth(gx - ix), v = smooth(gz - iz);
@@ -303,6 +304,7 @@ function landShore(plan: TerracePlan, bounds: { minX: number; maxX: number; dept
     return (p: Cell) => {
         // Inside the acquired land, only the cells themselves decide: a dug cell stays water.
         if (p.x > bounds.minX - .5 && p.x < bounds.maxX + .5 && p.z > -.5 && p.z < bounds.depth - .5) return false;
+        if (keep.some(disc => Math.hypot(p.x - disc.x, p.z - disc.z) < disc.r)) return true;
         if (Math.hypot(p.x - (bounds.maxX - 1), p.z - (bounds.depth - 1)) < 1.3) return false;
         if (bridgeX !== undefined && Math.abs(p.x - bridgeX) < 1 && p.z > bounds.depth - 1) return false;
         let nearest = Infinity;
@@ -317,7 +319,6 @@ function shoreRim(layout: SceneLayout, plan: TerracePlan, profile: readonly numb
     const count = profile.length, halfX = layout.width / 2, halfZ = layout.depth / 2, centerZ = (layout.depth - 1) / 2;
     const smooth = (i: number) => [1, 2, 3, 2, 1].reduce((sum, weight, n) => sum + profile[(i + n - 2 + count * 4) % count] * weight, 0) / 9;
     const { minX, maxX, depth } = { minX: Math.round(layout.center - (layout.width - 1) / 2), maxX: Math.round(layout.center + (layout.width - 1) / 2), depth: layout.depth };
-    if (tightShore()) return landShore(plan, { minX, maxX, depth }, bridgeX);
     return (p: Cell) => {
         const dx = p.x - layout.center, dz = p.z - centerZ, a = Math.atan2(dz, dx), c = Math.cos(a), s = Math.sin(a);
         const i = Math.round((a + Math.PI) / (Math.PI * 2) * count) % count;
@@ -334,8 +335,15 @@ function shoreRim(layout: SceneLayout, plan: TerracePlan, profile: readonly numb
     };
 }
 
-export function buildTerraceGround(layout: SceneLayout, plan: TerracePlan, profile?: readonly number[], bridgeX?: number) {
-    const rim = profile?.length ? shoreRim(layout, plan, profile, bridgeX) : undefined;
+/**
+ * `stone`: the published island's pale stone shore instead of native05 sand. `keep`: discs of
+ * meadow beyond the land that carry published scenery (the old sheltering tree's roots).
+ */
+export interface TerraceGroundOptions { stone?: boolean; keep?: { x: number; z: number; r: number }[] }
+export function buildTerraceGround(layout: SceneLayout, plan: TerracePlan, profile?: readonly number[], bridgeX?: number, options: TerraceGroundOptions = {}) {
+    const bounds = { minX: Math.round(layout.center - (layout.width - 1) / 2), maxX: Math.round(layout.center + (layout.width - 1) / 2), depth: layout.depth };
+    const rim = tightShore() ? landShore(plan, bounds, bridgeX, options.keep) : profile?.length ? shoreRim(layout, plan, profile, bridgeX) : undefined;
+    const sand = options.stone ? C.stone : C.sand, sandDeep = options.stone ? C.stoneDeep : C.sandDeep;
     const root = new T.Group(); root.name = 'terrace-island-ground';
     const cells = [...plan.levels.keys()].map(k => k.split(',').map(Number));
     const frame: Frame = { minX: Math.min(...cells.map(c => c[0])), minZ: Math.min(...cells.map(c => c[1])), cols: 0, rows: 0 };
@@ -350,7 +358,7 @@ export function buildTerraceGround(layout: SceneLayout, plan: TerracePlan, profi
         // A sand foundation slightly wider than the lowest grass shows a beach ring.
         const sandField = field(plan, frame, l => l >= lowest, rim);
         geometries.push(plate(sandField, frame, .34, TERRAIN_SEA_LEVEL - .5, lowest * step - .05, .07, {
-            cap: C.sand, side: depth => C.sand.clone().lerp(C.sandDeep, T.MathUtils.smoothstep(depth, .05, .5)),
+            cap: sand, side: depth => sand.clone().lerp(sandDeep, T.MathUtils.smoothstep(depth, .05, .5)),
         }, plan.baseAt, true));
         // Each level's plate spans everything at or above it, so a terrace's foot meets the
         // meadow without a groove. Its lip and wall are drawn only where the land just inside
@@ -363,7 +371,7 @@ export function buildTerraceGround(layout: SceneLayout, plan: TerracePlan, profi
             const f = field(plan, frame, l => l >= level, rim), above = n + 1 < dryLevels.length ? field(plan, frame, l => l >= dryLevels[n + 1], rim) : undefined;
             geometries.push(plate(f, frame, .5, TERRAIN_SEA_LEVEL - .5, top, level <= 0 ? .05 : .055, {
                 cap: grass.clone().lerp(C.light, .15),
-                side: depth => level <= 0 ? C.sand.clone().lerp(C.sandDeep, T.MathUtils.smoothstep(depth, .1, .6))
+                side: depth => level <= 0 ? sand.clone().lerp(sandDeep, T.MathUtils.smoothstep(depth, .1, .6))
                     : C.lilac.clone().lerp(C.lilacDeep, T.MathUtils.smoothstep(depth, .04, .2)),
             }, plan.baseAt, true, p => !above || sample(above, frame, p) < .5, n === 0 ? undefined : {
                 // Where the land outside is exactly one step lower, the edge is a grassy bank.

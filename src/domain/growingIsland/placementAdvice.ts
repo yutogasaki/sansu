@@ -1,9 +1,12 @@
-import { TREE_MATURE_HOURS } from './environment';
+import { BLOOM_HOURS, TREE_MATURE_HOURS } from './environment';
 import { LANDMARK_PRICE } from './rules';
 import { HOME_CELL, HOUSE_CELLS, isReachable, isVacant, key, landBounds, landCells, reachableFromHome, walkableCells } from './space';
 import { editableIslandWorld } from './editableTerrainWorld';
 import { applyTerrainCommand } from './terrainEditing';
 import { islandShaping } from './terraceTerrain';
+import { derivePlaces } from './places';
+import { GROWTH_PLACE_GUIDES } from './placeGrowthGuides';
+import type { DerivedPlace } from './placeTypes';
 import type { Cell, GrowingState, Landmark, LandmarkKind, SeedKind } from './types';
 
 /** DEV switch for the place-growth experiment (advice glows, growing a place, raising a grove). */
@@ -95,14 +98,20 @@ export function placementAdvice(state: GrowingState, kind: SeedKind | LandmarkKi
     // Never advise a cell that would wall off other open land from the home.
     const world = editableIslandWorld(state), reached = reachableFromHome(state, undefined, world);
     const open = landCells(state, world).filter(c => isVacant(state, c) && isReachable(c, reached, world));
-    const keeps = (cell: Cell) => {
+    const lost = (cell: Cell) => {
         const after = { ...state, keepsakes: [...state.keepsakes, { id: 'advice-probe', unitId: 'advice-probe', cell }] };
         const r = reachableFromHome(after, walkableCells(after, world), world);
-        return open.every(c => key(c) === key(cell) || isReachable(c, r, world));
+        return open.filter(c => key(c) !== key(cell) && !isReachable(c, r, world)).length;
     };
-    const safe: Cell[] = [];
-    for (const cell of ranked) { if (safe.length >= limit) break; if (keeps(cell)) safe.push(cell); }
-    return safe;
+    // Cells that wall nothing off come first; on a crowded island one closed dead end is allowed,
+    // never more (a wall across the island is how a home once got shut in).
+    const safe: Cell[] = [], tight: Cell[] = [];
+    for (const cell of ranked.slice(0, 24)) {
+        if (safe.length >= limit) break;
+        const n = lost(cell);
+        if (n === 0) safe.push(cell); else if (n === 1) tight.push(cell);
+    }
+    return [...safe, ...tight].slice(0, limit);
 }
 
 /** Growing a place instead of adding a thing: what may be grown, how far, and its price. */
@@ -159,4 +168,39 @@ export function groveLift(state: GrowingState, treeId?: string): { cells: Cell[]
         }
     }
     return undefined;
+}
+
+const STAGE_VALUE: Record<string, number> = { seeded: 0, connected: 2, grown: 4, lived: 5 };
+const SHAPE_VALUE: Record<string, number> = { court: 3, cluster: 2, lane: 2 };
+/** How much the island's places amount to: their stages, shapes, sizes and unmet needs. */
+function placeValue(places: DerivedPlace[]) {
+    return places.reduce((sum, place) => sum + 1 + (STAGE_VALUE[place.stage] ?? 0) + (SHAPE_VALUE[place.variant] ?? 0)
+        + place.mainIds.length * .5 - place.missing.length * .5, 0);
+}
+
+/**
+ * "One more and it grows": among the best few suggested cells, the one where this thing would
+ * start, enlarge, reshape or complete a place (the same place rules the island already uses),
+ * with a line telling the child which place it grows. Only things the child places directly.
+ */
+export function growthHint(state: GrowingState, kind: SeedKind | LandmarkKind, cells: readonly Cell[]): { cell: Cell; message: string } | undefined {
+    if (kind === 'home' || kind === 'farm' || !cells.length) return undefined;
+    const before = derivePlaces(state), value = placeValue(before);
+    let best: { cell: Cell; gain: number; place?: DerivedPlace; fresh: boolean; reshaped: boolean } | undefined;
+    for (const cell of cells.slice(0, 8)) {
+        const id = 'growth-hint-probe';
+        // Judge it as it will be once grown: a young tree or a bud joins its place when it matures.
+        const grown = kind === 'sapling' ? { growth: TREE_MATURE_HOURS, maturedAt: state.nature.hours } : kind === 'flower' ? { growth: BLOOM_HOURS } : { growth: 0 };
+        const after = derivePlaces({ ...state, landmarks: [...state.landmarks, { id, kind: kind as LandmarkKind, cell: { ...cell }, ...grown }] });
+        const place = after.find(p => p.memberIds.includes(id)); if (!place) continue;
+        const previous = before.find(p => p.ruleId === place.ruleId && p.mainIds.some(m => place.mainIds.includes(m)));
+        // Growing a place the child already has always comes before starting a lone new one.
+        const gain = (placeValue(after) - value) + (previous ? 100 : 0);
+        if (gain <= (previous ? 100 : .5) || best && gain <= best.gain) continue;
+        best = { cell, gain, place, fresh: !previous, reshaped: Boolean(previous && previous.variant !== place.variant) };
+    }
+    if (!best?.place) return undefined;
+    const name = GROWTH_PLACE_GUIDES[best.place.ruleId].name, when = kind === 'sapling' || kind === 'flower' ? 'ここに おいて そだつと' : 'ここに おくと';
+    return { cell: best.cell, message: best.fresh ? `${when}「${name}」が はじまるよ`
+        : best.reshaped ? `${when}「${name}」の かたちが かわるよ` : `${when}「${name}」が ひろがるよ` };
 }

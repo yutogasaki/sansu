@@ -12,6 +12,7 @@ import { GrowingLife } from './growingLife';
 import { sceneLayout, type SceneLayout } from './sceneLayout';
 import { buildPlaceGround } from './placeGround';
 import { buildEditableGround } from './editableGround';
+import { terracePlanOf } from '../../../domain/growingIsland/editableTerrainWorld';
 import { editableGroundDecorationKey, editableGroundDetailSupported } from './editableGroundDetails';
 import type { NativeGrowingKit } from './native/nativeGrowingKit';
 import { buildNativeGrowingGround } from './native/nativeGrowingGround';
@@ -69,10 +70,13 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
             terrain = buildAuthoredGrowingGround(layout, coast, bridgeSkin);
             addShoulderSoil(terrain, layout);
         } else {
-            ground = buildGardenGround({ bounds: layout.bounds, moisture: cell => soilAt(state, cell), shelterTree: !native && !layout.editable && layout.artMargin <= 1.1, heightAt: layout.heightAt,
+            // The published island's old sheltering tree stays with the terrace ground too.
+            const terraced = Boolean(terracePlanOf(layout.world));
+            ground = buildGardenGround({ bounds: layout.bounds, moisture: cell => soilAt(state, cell), shelterTree: !native && (!layout.editable || terraced) && layout.artMargin <= 1.1, heightAt: layout.heightAt,
                 ...(layout.editable ? { supportsDetail: (cell, radius) => editableGroundDetailSupported(layout, cell, radius, state) } : {}) }, layout.point);
             curveGroundGeometry(ground.root.getObjectByName('garden-ground-details')!, layout);
-            terrain = layout.editable ? buildEditableGround(layout, native?.manifest.shoreProfile, state.bridge?.x) : native ? buildNativeGrowingGround(layout, native.manifest.shoreProfile) : buildPlaceGround(layout);
+            terrain = layout.editable ? buildEditableGround(layout, native?.manifest.shoreProfile, state.bridge?.x, native ? undefined
+                : { stone: true, keep: [{ x: layout.bounds.minX - 1.05, z: -.35, r: 1.3 }] }) : native ? buildNativeGrowingGround(layout, native.manifest.shoreProfile) : buildPlaceGround(layout);
             if (layout.editable) {
                 ground.root.getObjectByName('garden-island-pedestal')!.visible = false;
             }
