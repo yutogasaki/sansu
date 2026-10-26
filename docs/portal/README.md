@@ -1,5 +1,13 @@
 # 現行の入口
 
+## 学びと島の成長の図解
+
+`portal/learning-journey.html` は、3教科の全レベル・チュートリアル・アチーブメント・島解放の内部説明ページ。ホーム、企画・成長、知識・記憶から開ける。入力は `docs/portal/learning-journey.json`、国語のレベル定義は[国語のレベル進行](../product/kokugo-levels.md)、算数は[共通レベル設計](../product/learning-levels.md)で既存29区分を20段階へ対応付け、英単語は既存20段階を参照する。生成は `scripts/portal-learning-guide.cjs`、見本の操作は同名のJS/CSS。固定vendorや生成HTMLは手編集しない。
+
+国語のスターター46単元から採点対象41単元を重複なく20段階へ対応付け、五つの自由活動を残す。生成時に教材ID・段階・数・航路閾値の範囲と単調性を検査する。資料・生成元のhashはポータルのmanifestに含める。見本の操作はページ内だけで完結し、保存・ネットワーク・本人の学習データを使わない。
+
+`npm run portal:build`、`npm run portal:verify`、`npm run docs:check` と狭幅・通常幅の実表示/操作を確認する。2026-10-27、採用した[島の航路と まなびの節目](../product/island-journey.md)に合わせた（5系統の記録、6つの特別な島）。`portal:verify` の docs/index.html の構造数の不一致（2877と2880）は、この変更より前からある別作業の状態。
+
 ## Git管理と公開範囲
 
 [生成元のcommit範囲・内部QA・再生成](commit-scope.md)。ポータル出力はignoreし、Gitでは生成元を管理する。2026-10-26の[整理と復旧手順](../maintenance/2026-10-26-repository-cleanup.md)に従い、SHA256照合済みarchiveとローカルの実物を保持して既追跡を解除する。PBUILD時点の未commitという下記履歴と、今回のローカルcommit/main反映の許可を区別する。push・公開は行わない。

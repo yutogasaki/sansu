@@ -1,0 +1,189 @@
+{
+  "title": "学びと島の成長",
+  "updated": "2026-10-27",
+  "status": "採用・実装済み：最初の住人（S3）とどれか一教科のLv2・5・9・13・17の内容確認で航路の枠が開き、6つの特別な島を選んで育てる。固有種は環境の工夫で来る。しまの きろくは5系統。学習画面の共通Lv表示とポータルの見本以外は、島で実装済み。",
+  "sources": [
+    "docs/product/island-journey.md",
+    "docs/product/learning-levels.md",
+    "docs/product/kokugo-levels.md",
+    "docs/product/island-achievements-unlock-proposal.md",
+    "docs/product/02_math_skills.md",
+    "docs/product/05_english_words.md",
+    "docs/product/island-first-play-onboarding.md",
+    "docs/product/island-starter-achievements-proposal.md",
+    "src/domain/kokugo/curriculum.ts"
+  ],
+  "gates": [
+    {
+      "stage": 1,
+      "math": 2,
+      "english": 2,
+      "kokugo": 2
+    },
+    {
+      "stage": 2,
+      "math": 5,
+      "english": 5,
+      "kokugo": 5
+    },
+    {
+      "stage": 3,
+      "math": 9,
+      "english": 9,
+      "kokugo": 9
+    },
+    {
+      "stage": 4,
+      "math": 13,
+      "english": 13,
+      "kokugo": 13
+    },
+    {
+      "stage": 5,
+      "math": 17,
+      "english": 17,
+      "kokugo": 17
+    }
+  ],
+  "starter": [
+    "無料の家を おく",
+    "つぼみを ひらく",
+    "最初の なかまを むかえる"
+  ],
+  "tutorials": [
+    {
+      "title": "島づくり",
+      "action": "置く・動かす・ひらく",
+      "result": "最初の家と仲間"
+    },
+    {
+      "title": "家と着替え",
+      "action": "家に入る・服を選ぶ",
+      "result": "自分の暮らし"
+    },
+    {
+      "title": "学習",
+      "action": "答える・ヒント・中断再開",
+      "result": "好きな教科で学ぶ"
+    },
+    {
+      "title": "教科と記録",
+      "action": "教科を選ぶ・できたことを見る",
+      "result": "次の内容が分かる"
+    },
+    {
+      "title": "航海と発見",
+      "action": "船に乗る・帰る・種を持ち帰る",
+      "result": "新しい島との往復"
+    }
+  ],
+  "achievements": [
+    {
+      "title": "しまづくり",
+      "icon": "tree",
+      "examples": [
+        "土地を広げた",
+        "地面を変えた",
+        "場所を育てた"
+      ],
+      "reward": "記念"
+    },
+    {
+      "title": "くらし",
+      "icon": "house",
+      "examples": [
+        "なかまが3人",
+        "ふたかいだての家",
+        "はしを架けた"
+      ],
+      "reward": "記念"
+    },
+    {
+      "title": "ふしぎ",
+      "icon": "flower",
+      "examples": [
+        "滝ができた",
+        "にじの木が育った",
+        "満月の道を見た"
+      ],
+      "reward": "記念・ヒント"
+    },
+    {
+      "title": "まなび",
+      "icon": "book",
+      "examples": [
+        "さんすう Lv2を確かめた",
+        "こくご Lv5を確かめた",
+        "えいたんご Lv9を確かめた"
+      ],
+      "reward": "記念・航路の枠"
+    },
+    {
+      "title": "こうかい",
+      "icon": "boat",
+      "examples": [
+        "航路が開いた",
+        "特別な島を作った",
+        "固有種が来た"
+      ],
+      "reward": "記念・おみやげ"
+    }
+  ],
+  "islands": [
+    {
+      "id": "shore",
+      "title": "しおかぜの小島",
+      "color": "#3a83a4",
+      "plant": "貝の花",
+      "creature": "葉舟ヤドカリ",
+      "scene": "白い砂の岸・青緑の浅瀬・巨大な巻き貝",
+      "play": "貝の花を掘った水の隣へ",
+      "fixed": true
+    },
+    {
+      "id": "forest",
+      "title": "こだまの森",
+      "color": "#7669b5",
+      "plant": "鈴の実の木",
+      "creature": "こだま鳥",
+      "scene": "濃い緑・シダときのこ・島より古い大樹",
+      "play": "育った木を3本つなげる"
+    },
+    {
+      "id": "water",
+      "title": "ひかりの入り江",
+      "color": "#387baf",
+      "plant": "透ける水草",
+      "creature": "ひかり貝",
+      "scene": "ミント色の地面・透きとおる海・ガラスのアーチ",
+      "play": "段の上の水を池へ落とす（滝）"
+    },
+    {
+      "id": "cloud",
+      "title": "わたぐもの高原（空の島）",
+      "color": "#a25e86",
+      "plant": "風船花",
+      "creature": "わたげ羊",
+      "scene": "雲の海に浮かぶ島・雲の影・雲の小島",
+      "play": "丘の上に2×2の広場"
+    },
+    {
+      "id": "mineral",
+      "title": "ぜんまい島（からくりの島）",
+      "color": "#9a7a3c",
+      "plant": "ねじまきそう",
+      "creature": "ぜんまいどり",
+      "scene": "鋼と真鍮の地面・回る巨大な歯車・蒸気",
+      "play": "二段の上にあかり（とうだい）"
+    },
+    {
+      "id": "star",
+      "title": "星の島",
+      "color": "#6664a4",
+      "plant": "星の実の木",
+      "creature": "ほしくらげ",
+      "scene": "いつも夜・海に映る星・三日月のアーチ",
+      "play": "掘った水の近くにあかりを3つ"
+    }
+  ]
+}

@@ -108,6 +108,7 @@ export function run(mode) {
   }
   if (process.env.PORTAL_WORKSPACE !== 'legacy') require('./portal-workspace.cjs').apply({root,files,taskPresentation});
   require('./portal-shared-diagrams.cjs').apply({root,files});
+  require('./portal-learning-guide.cjs').apply({root,files});
   compactPortal(root,files);
   files.set('.generated-by-hub-standard', '1.0.0\n');
   const out = path.join(root, 'portal');
