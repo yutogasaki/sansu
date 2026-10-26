@@ -304,7 +304,8 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     // DEV place-growth experiment: the three cells where this thing would gather into a place glow.
     // Where it would grow a place, only that cell glows, with a line naming the place.
     const [advised, growth] = useMemo((): [Cell[], { cell: Cell; message: string; area: Cell[]; now: Cell[] } | undefined] => {
-        if (!own || !placing || !ghost || !placeGrowthEnabled()) return [[], undefined];
+        // Keepsakes and island species are not part of a place; they get no place advice.
+        if (!own || !placing || !ghost || !placeGrowthEnabled() || placing.keepsake) return [[], undefined];
         const reached = reachableFromHome(own);
         const ranked = placementAdvice(own, placing.kind, ghost.allowed.filter(cell => isReachable(cell, reached)), 8);
         const hint = growthHint(own, placing.kind, ranked);
@@ -610,7 +611,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         } finally { terrainPending.current = false; }
     };
     const world = <GrowingWorld terrainEditing={panel === 'terrain'} terrainBrush={brushing && panel === 'terrain'} terrainCell={terrainCell}
-        onPaint={(cells, done) => { if (!done) { setStroke(cells); return; } setStroke([]); void paintTerrain(cells); }} viewKey={`${profileId}:${ownIslandId}:${visit?.id ?? 'own'}`} onViewReturn={setViewReturn} key={`${ownIslandId}:${worldAttempt}`} active={active} playActive={playingForeground} compact={worldAttempt > 0} qualityCeiling={qualityCeiling} state={state} time={time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival} bridgeBuild={bridgeBuild}
+        onPaint={(cells, done) => { if (!done) { setStroke(cells); return; } setStroke([]); void paintTerrain(cells); }} viewKey={`${profileId}:${ownIslandId}:${visit?.id ?? 'own'}`} onViewReturn={setViewReturn} key={`${ownIslandId}:${worldAttempt}`} active={active} playActive={playingForeground} compact={worldAttempt > 0} qualityCeiling={qualityCeiling} state={state} time={state?.theme === 'hoshi' ? 'night' : time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival} bridgeBuild={bridgeBuild}
         hints={visit ? [] : panel === 'terrain' && stroke.length ? stroke : placing && advised.length ? advised : hints} moment={visit ? undefined : moment} show={show} focus={focus} concert={concert} onCamera={c => { camera.current = c; if (!c) setViewReturn(false); }}
         onPop={() => audio.play('glass')} onStage={setWorldStep} onFailure={setGraphicsFailure} onQualityFallback={ceiling => {
             setQualityCeiling(previous => Math.min(previous, ceiling)); setWorldStep('world'); setWorldAttempt(value => value + 1);
@@ -690,7 +691,9 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
                 else if (action.kind === 'memory') memoryTarget(action.evidence);
                 onGuideRequestConsumed?.();
             }} />}
-        <div className="growing-world-interaction" inert={menu || Boolean(panel && panel !== 'terrain') || Boolean(selected) || Boolean(card) || Boolean(story) || naming !== undefined || Boolean(bridgeChoice)}><Suspense fallback={null}>{world}</Suspense></div>{worldLoading}
+        <div className="growing-world-interaction" inert={menu || Boolean(panel && panel !== 'terrain') || Boolean(selected) || Boolean(card) || Boolean(story) || naming !== undefined || Boolean(bridgeChoice)}><Suspense fallback={null}>{world}</Suspense>
+            {/* A special island's own light over the whole view (island-journey.md §4). */}
+            {state?.theme && <div className="growing-theme-mood" data-theme={state.theme} aria-hidden="true" />}</div>{worldLoading}
         {dawn > 0 && <div className="growing-dawn" aria-hidden="true"><span>☀</span></div>}
         {visit ? <div className="growing-hud-top"><span className="growing-chip">{visit.name}の しま・{CHARACTER_NAME[visit.state.character]}</span></div> : <GrowingHomeTools
             islandName={own.islandName ?? 'ぽこもこの しま'} drops={own.drops} quote={quote} status={placeStatus} menuRef={menuTrigger}
@@ -757,7 +760,8 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         {!visit && panel === 'voyages' && <VoyageChart profileId={profileId} state={own} busy={island.busy} onClose={closeHomeTool}
             onSail={island.sail} onFocus={id => { setSelected(undefined); setFocus({ id, n: Date.now() }); }} />}
         {!visit && panel === 'flowers' && <FlowerBook pictures={catalogPictures} state={own} onClose={closeHomeTool} />}
-        {!visit && panel === 'wonders' && <WonderBook state={own} onClose={closeHomeTool} />}
+        {!visit && panel === 'wonders' && <WonderBook state={own} busy={island.busy} onClose={closeHomeTool}
+            onAdopt={species => void run({ type: 'adopt-species', species }, () => { audio.play('discovery'); setPanel(undefined); setLine('「もちもの」に きたよ。すきな ところに おいてね'); })} />}
         {!visit && panel === 'guide' && <GrowingGuideBook state={own} busy={island.busy} initialMemory={guideMemory} onClose={closeBook}
             onPlaces={() => openPlaces()}
             onChoose={(id, play) => void run({ type: 'choose-goal', id }, () => { guide.pause(); if (play) goalAction(id); })}

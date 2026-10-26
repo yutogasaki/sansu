@@ -15,7 +15,7 @@ export const CATALOG_GROUPS: { name: string; seeds: SeedKind[]; landmarks: Landm
 export function storedCatalog(state: GrowingState) {
     const entries = [
         ...state.keepsakes.map(item => ({ item, seed: false, keepsake: item.unitId, kind: 'flower' as SeedKind | LandmarkKind,
-            category: 'まなびの きねん', label: { name: KEEPSAKE_NAME[keepsakeKind(item.unitId)], icon: '🏅' }, family: `keepsake:${item.unitId}` })),
+            category: item.unitId.startsWith('species:') ? 'しまの いきもの' : 'まなびの きねん', label: { name: KEEPSAKE_NAME[keepsakeKind(item.unitId)], icon: item.unitId.startsWith('species:') ? '🐚' : '🏅' }, family: `keepsake:${item.unitId}` })),
         ...state.landmarks.map(item => ({ item, seed: false, keepsake: undefined, kind: item.kind as SeedKind | LandmarkKind,
             category: CATALOG_GROUPS.find(g => g.landmarks.includes(item.kind))!.name,
             label: { icon: LANDMARK_LABEL[item.kind]?.icon ?? '📦', name: item.kind === 'flower' ? `${FLOWER_NAME[item.color ?? 'pink']}の はな` : LANDMARK_LABEL[item.kind]?.name ?? 'もちもの' },

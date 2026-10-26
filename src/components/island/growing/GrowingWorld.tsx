@@ -222,6 +222,20 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
         let nextSplash = 0;
         const moments = new MomentEffects(world.scene); disposers.push(() => moments.dispose());
         const wonders = new WonderScenery(world.scene); disposers.push(() => wonders.dispose());
+        let species: T.Object3D[] = [];
+        /** Each island species has its own small motion (island-journey.md §4). */
+        const moveSpecies = (now: number) => species.forEach((model, i) => {
+            const t = now / 1000 + i * 1.7, id = model.userData.species as string;
+            model.position.set(0, 0, 0); model.rotation.set(0, model.rotation.y, 0);
+            if (id === 'leaf-crab') { model.position.x = Math.sin(t * 1.3) * .12; model.rotation.z = Math.sin(t * 6) * .06; }
+            else if (id === 'echo-bird') { const hop = (t % 2.6) / 2.6; model.position.y = hop < .2 ? Math.sin(hop / .2 * Math.PI) * .12 : 0; model.rotation.y = Math.sin(t * .8) * .8; }
+            else if (id === 'fluff-sheep') { model.position.y = Math.abs(Math.sin(t * 2)) * .03; model.rotation.y = Math.sin(t * .5) * .6; }
+            else if (id === 'clock-bird') { const hop = (t % 1.8) / 1.8; model.position.y = hop < .25 ? Math.sin(hop / .25 * Math.PI) * .1 : 0; model.rotation.y = Math.round(t / 1.8) * .9; }
+            else if (id === 'star-jelly') { model.position.y = .15 + Math.sin(t * 1.2) * .1; model.rotation.y = t * .6; }
+            else if (id === 'balloon-flower') { model.position.y = Math.sin(t * 1.5) * .04; model.rotation.z = Math.sin(t) * .08; }
+            else model.rotation.z = Math.sin(t * 1.1) * .05;
+            const turn = model.getObjectByName('species-turn'); if (turn) turn.rotation.y = t * 2;
+        });
         const camera = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100), view = initialView();
         const savedView = viewKey ? sessionViews.get(viewKey) : undefined;
         Object.assign(view, savedView ? { ...savedView, pan: { ...savedView.pan } } : { zoom: 1.5 });
@@ -423,6 +437,8 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             unopened = new Set(next.unopened);
             world.life.sync(next, layout, layer);
             wonders.build(next, layout);
+            species = [];
+            layer.root.traverse(o => { if (o.userData.species) species.push(o); });
             if (import.meta.env.DEV) node.dataset.wonders = JSON.stringify({ crowns: layer.root.getObjectsByProperty('name', 'rainbow-crown').length, lookouts: layer.root.getObjectsByProperty('name', 'home-lookout').length, golden: layer.root.getObjectsByProperty('name', 'golden-pumpkin').length, ship: layer.nextBoat.position.toArray().map(v => Math.round(v * 100) / 100), scenery: wonders.root.children.map(c => c.name).filter(Boolean) });
             if (wholeArt) node.dataset.authoredWholeArt = JSON.stringify({ candidate: AUTHORED_WHOLE_ART_CANDIDATE,
                 forestOwners: layer.root.getObjectsByProperty('name', 'authored-forest-tree').map(object => object.userData.ownerId),
@@ -740,6 +756,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             moments.ambient(now, latest.current.time === 'night', current.landmarks.filter(l => l.cell && (l.kind === 'lantern' || l.kind === 'lighthouse')).length, camera.position.clone().setY(0), reduced);
             moments.tick(now);
             wonders.tick(now, latest.current.time === 'night', reduced, camera);
+            if (!reduced) moveSpecies(now);
             if (import.meta.env.DEV && now >= nextTelemetry && layer) node.dataset.shipScreen = JSON.stringify([layer.nextBoat.visible, ...layer.nextBoat.getWorldPosition(new T.Vector3()).project(camera).toArray().map(v => Math.round(v * 100) / 100)]);
             if (import.meta.env.DEV && now >= nextTelemetry) { const moon = wonders.root.getObjectByName('wonder-moon'); if (moon) node.dataset.wonderMoon = JSON.stringify(moon.getWorldPosition(new T.Vector3()).project(camera).toArray().map(v => Math.round(v * 100) / 100)); }
             const editing = latest.current.terrainEditing, selectedTerrain = latest.current.terrainCell;

@@ -172,3 +172,11 @@
 .growing-story-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .growing-story-compare figure { margin: 0; text-align: center; }
 .growing-story-compare figcaption { margin-top: 4px; font-size: 13px; font-weight: 700; color: var(--pokomoko-muted); }
+/* 特別な島の空気 (island-journey.md §4): each theme tints the whole view in its own light. */
+.growing-theme-mood { position: absolute; inset: 0; pointer-events: none; mix-blend-mode: soft-light; }
+.growing-theme-mood[data-theme='shiokaze'] { background: linear-gradient(180deg, rgb(255 246 214 / 55%), rgb(110 220 232 / 40%)); }
+.growing-theme-mood[data-theme='kodama'] { background: radial-gradient(circle at 25% 0%, rgb(255 236 150 / 65%), transparent 55%), linear-gradient(180deg, rgb(70 140 80 / 35%), rgb(30 90 60 / 45%)); }
+.growing-theme-mood[data-theme='hikari'] { background: linear-gradient(180deg, rgb(170 245 255 / 55%), rgb(40 170 210 / 45%)); }
+.growing-theme-mood[data-theme='watagumo'] { background: linear-gradient(180deg, rgb(200 225 255 / 70%), rgb(255 240 250 / 55%)); }
+.growing-theme-mood[data-theme='karakuri'] { background: linear-gradient(160deg, rgb(255 205 130 / 55%), rgb(60 70 80 / 50%)); }
+.growing-theme-mood[data-theme='hoshi'] { background: radial-gradient(circle at 50% 40%, transparent 35%, rgb(20 20 70 / 70%)); }

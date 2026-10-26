@@ -23,3 +23,15 @@
 .voyage-landmarks button { display: flex; align-items: center; gap: 6px; }
 .voyage-body button:focus-visible, .voyage-body input:focus-visible { outline: 3px solid #365eac; outline-offset: 3px; }
 @media (max-width: 380px) { .voyage-starts { grid-template-columns: 1fr; } .voyage-starts button { flex-direction: row; flex-wrap: wrap; } }
+.voyage-special { margin: 14px 0 6px; padding: 12px; border-radius: 16px; background: #f4f0ff; }
+.voyage-special h3 { margin: 0 0 8px; font-size: 15px; }
+.voyage-stars { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; margin: 0; padding: 0; list-style: none; }
+.voyage-stars li { display: grid; place-items: center; aspect-ratio: 1; border-radius: 50%; background: #e6e1ef; color: #b7afc6; font-size: 14px; }
+.voyage-stars li[data-lit] { background: #ffe58a; color: #8a5a00; box-shadow: 0 0 8px #ffd23f88; }
+.voyage-stars li[data-ship] { outline: 2px solid #9b8ec4; }
+.voyage-open { margin: 6px 0; font-weight: 700; color: #4a3a8a; }
+.voyage-themes { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-top: 8px; }
+.voyage-theme { display: grid; justify-items: center; gap: 2px; min-height: 96px; padding: 8px; border: 1px solid #d8d0ea; border-radius: 14px; background: white; font: inherit; }
+.voyage-theme:disabled { opacity: .55; }
+.voyage-theme[data-made] { background: #eef8ee; opacity: .85; }
+.voyage-theme small { font-size: 11px; color: #6a6280; }

@@ -19,7 +19,8 @@ function literalValue(value: unknown): unknown {
  * The literal string is compared directly, with no lossy hash or numeric digest.
  */
 export function growingSceneStateKey(state: GrowingState): string {
-    const fields = Object.entries(state).filter(([name]) => name !== 'applied' && name !== 'placeProgress' && name !== 'experience');
+    // The record book and the journey are words and choices, never drawn: they never rebuild the scene.
+    const fields = Object.entries(state).filter(([name]) => name !== 'applied' && name !== 'placeProgress' && name !== 'experience' && name !== 'discoveries' && name !== 'journey');
     return JSON.stringify(literalValue(fields));
 }
 

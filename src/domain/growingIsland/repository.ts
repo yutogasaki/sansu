@@ -2,7 +2,8 @@ import type { KokugoCompletion } from '../kokugo/types';
 import type { FoundationCompletion } from '../englishFoundation/types';
 import { restoreWonderSlot, type WonderSlot } from './growth';
 import { RULES } from './rules';
-import { FIRST_ISLAND, carrySharedResources, islandIdOf, makeVoyageIsland, type IslandStart } from './voyages';
+import { FIRST_ISLAND, carrySharedResources, isTheme, islandIdOf, makeVoyageIsland, type IslandStart } from './voyages';
+import { chooseTheme, grantRoutes } from './journey';
 import { readable, upgrade } from './syncProjection';
 import { projectGrowingSyncResponsive } from './syncProjectionClient';
 import Dexie, { liveQuery, type Table } from 'dexie';
@@ -345,7 +346,11 @@ export async function sailGrowingIsland(profileId: string, expectedIslandId: str
         const stored = await database.archivedIslands.get([profileId, destination.id]);
         if (!stored && !destination.create) throw new Error('しまが みつからなかったよ。海図を ひらきなおしてね。');
         const target = stored ? upgrade(stored, now) : makeVoyageIsland(current, destination.id, destination.create!.name, destination.create!.start, now);
-        const record = { ...carrySharedResources(current, target), revision: current.revision + 1, updatedAt: now };
+        // A first friend already welcomed opens slot 0 even if no sync noticed it yet.
+        const source = { ...current, state: structuredClone(current.state) }; grantRoutes(source.state, undefined, now);
+        const record = { ...carrySharedResources(source, target), revision: current.revision + 1, updatedAt: now };
+        // A special island takes one opened route slot; the choice is the child's, once (island-journey.md §3).
+        if (!stored && destination.create && isTheme(destination.create.start)) chooseTheme(record.state, destination.create.start, destination.id);
         await database.archivedIslands.put({ ...current, islandId: islandIdOf(current) });
         await database.archivedIslands.delete([profileId, destination.id]);
         await database.islands.put(record);

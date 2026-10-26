@@ -10,6 +10,18 @@ import type { GrowingState } from '../../../domain/growingIsland';
 import { wrapPokomoko } from './actors';
 import { GrowingLife } from './growingLife';
 import { sceneLayout, type SceneLayout } from './sceneLayout';
+import type { GroundPalette } from './terraceGround';
+import type { ThemeId } from '../../../domain/growingIsland/journey';
+
+/** Each special island's ground (island-journey.md §4): white sand, deep moss, mint, pale haze, steel and brass, night. */
+const THEME_GROUND: Record<ThemeId, GroundPalette> = {
+    shiokaze: { meadow: '#b6d98e', light: '#cfe6a6', sand: '#f6ecd2', sandDeep: '#e6d6ad', cliff: '#d8d0e6', cliffDeep: '#bfb5d6' },
+    kodama: { meadow: '#6aa865', light: '#82bd74', sand: '#c4ad86', sandDeep: '#a99068', cliff: '#8c9c74', cliffDeep: '#6e7d58' },
+    hikari: { meadow: '#9bd6b2', light: '#b4e6c8', sand: '#eaf6f2', sandDeep: '#cfe7e2', cliff: '#a8d4de', cliffDeep: '#84b8c6' },
+    watagumo: { meadow: '#c6e09a', light: '#e0eeb6', sand: '#f2e6cc', sandDeep: '#e2d2b0', cliff: '#ead2e4', cliffDeep: '#d4b8d0' },
+    karakuri: { meadow: '#9aa6a0', light: '#b4bdb6', sand: '#c9a25a', sandDeep: '#a07c3c', cliff: '#7d6a58', cliffDeep: '#54473a' },
+    hoshi: { meadow: '#7aa58c', light: '#90b89e', sand: '#cfcae2', sandDeep: '#b2acd0', cliff: '#8480b2', cliffDeep: '#625e94' },
+};
 import { buildPlaceGround } from './placeGround';
 import { buildEditableGround } from './editableGround';
 import { terracePlanOf } from '../../../domain/growingIsland/editableTerrainWorld';
@@ -75,8 +87,9 @@ export function createWorldScene(renderer: T.WebGLRenderer, native?: NativeGrowi
             ground = buildGardenGround({ bounds: layout.bounds, moisture: cell => soilAt(state, cell), shelterTree: !native && (!layout.editable || terraced) && layout.artMargin <= 1.1, heightAt: layout.heightAt,
                 ...(layout.editable ? { supportsDetail: (cell, radius) => editableGroundDetailSupported(layout, cell, radius, state) } : {}) }, layout.point);
             curveGroundGeometry(ground.root.getObjectByName('garden-ground-details')!, layout);
-            terrain = layout.editable ? buildEditableGround(layout, native?.manifest.shoreProfile, state.bridge?.x, native ? undefined
-                : { stone: true, keep: [{ x: layout.bounds.minX - 1.05, z: -.35, r: 1.3 }] }) : native ? buildNativeGrowingGround(layout, native.manifest.shoreProfile) : buildPlaceGround(layout);
+            const palette = state.theme ? THEME_GROUND[state.theme] : undefined;
+            terrain = layout.editable ? buildEditableGround(layout, native?.manifest.shoreProfile, state.bridge?.x, native ? palette && { palette }
+                : { stone: true, keep: [{ x: layout.bounds.minX - 1.05, z: -.35, r: 1.3 }], palette }) : native ? buildNativeGrowingGround(layout, native.manifest.shoreProfile) : buildPlaceGround(layout);
             if (layout.editable) {
                 ground.root.getObjectByName('garden-island-pedestal')!.visible = false;
             }

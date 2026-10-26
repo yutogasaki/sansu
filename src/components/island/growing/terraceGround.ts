@@ -339,11 +339,16 @@ function shoreRim(layout: SceneLayout, plan: TerracePlan, profile: readonly numb
  * `stone`: the published island's pale stone shore instead of native05 sand. `keep`: discs of
  * meadow beyond the land that carry published scenery (the old sheltering tree's roots).
  */
-export interface TerraceGroundOptions { stone?: boolean; keep?: { x: number; z: number; r: number }[] }
+/** A special island's own ground colours (island-journey.md §4): grass, shore and cliff. */
+export interface GroundPalette { meadow: string; light: string; sand: string; sandDeep: string; cliff: string; cliffDeep: string }
+export interface TerraceGroundOptions { stone?: boolean; keep?: { x: number; z: number; r: number }[]; palette?: GroundPalette }
 export function buildTerraceGround(layout: SceneLayout, plan: TerracePlan, profile?: readonly number[], bridgeX?: number, options: TerraceGroundOptions = {}) {
     const bounds = { minX: Math.round(layout.center - (layout.width - 1) / 2), maxX: Math.round(layout.center + (layout.width - 1) / 2), depth: layout.depth };
     const rim = tightShore() ? landShore(plan, bounds, bridgeX, options.keep) : profile?.length ? shoreRim(layout, plan, profile, bridgeX) : undefined;
-    const sand = options.stone ? C.stone : C.sand, sandDeep = options.stone ? C.stoneDeep : C.sandDeep;
+    const tone = options.palette;
+    const sand = tone ? new T.Color(tone.sand) : options.stone ? C.stone : C.sand, sandDeep = tone ? new T.Color(tone.sandDeep) : options.stone ? C.stoneDeep : C.sandDeep;
+    const meadow = tone ? new T.Color(tone.meadow) : C.meadow, light = tone ? new T.Color(tone.light) : C.light;
+    const lilac = tone ? new T.Color(tone.cliff) : C.lilac, lilacDeep = tone ? new T.Color(tone.cliffDeep) : C.lilacDeep;
     const root = new T.Group(); root.name = 'terrace-island-ground';
     const cells = [...plan.levels.keys()].map(k => k.split(',').map(Number));
     const frame: Frame = { minX: Math.min(...cells.map(c => c[0])), minZ: Math.min(...cells.map(c => c[1])), cols: 0, rows: 0 };
@@ -367,12 +372,12 @@ export function buildTerraceGround(layout: SceneLayout, plan: TerracePlan, profi
         dryLevels.forEach((level, n) => {
             // One meadow green for every level, a touch sunnier higher up: a level reads as
             // part of the same land, not a separately painted slab.
-            const top = level * step, grass = C.meadow.clone().lerp(C.light, T.MathUtils.clamp(level, 0, 3) * .12);
+            const top = level * step, grass = meadow.clone().lerp(light, T.MathUtils.clamp(level, 0, 3) * .12);
             const f = field(plan, frame, l => l >= level, rim), above = n + 1 < dryLevels.length ? field(plan, frame, l => l >= dryLevels[n + 1], rim) : undefined;
             geometries.push(plate(f, frame, .5, TERRAIN_SEA_LEVEL - .5, top, level <= 0 ? .05 : .055, {
-                cap: grass.clone().lerp(C.light, .15),
+                cap: grass.clone().lerp(light, .15),
                 side: depth => level <= 0 ? sand.clone().lerp(sandDeep, T.MathUtils.smoothstep(depth, .1, .6))
-                    : C.lilac.clone().lerp(C.lilacDeep, T.MathUtils.smoothstep(depth, .04, .2)),
+                    : lilac.clone().lerp(lilacDeep, T.MathUtils.smoothstep(depth, .04, .2)),
             }, plan.baseAt, true, p => !above || sample(above, frame, p) < .5, n === 0 ? undefined : {
                 // Where the land outside is exactly one step lower, the edge is a grassy bank.
                 weight: (() => { const lower = field(plan, frame, l => l >= level - 1, rim); return (p: T.Vector2) => T.MathUtils.smoothstep(sample(lower, frame, p), .35, .65); })(),

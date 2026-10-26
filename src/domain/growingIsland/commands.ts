@@ -1,4 +1,5 @@
 import { cloverFound, discover, noteDiscoveries } from './discoveries';
+import { adoptSpecies, noteJourney, SPECIES } from './journey';
 import { recordSharedPlay } from './experience';
 import { grantGrowthMilestones } from './growth';
 import { canPurchase, cosmeticsOpen } from './community';
@@ -192,6 +193,11 @@ function apply(state: GrowingState, command: Command, world?: IslandWorld): Town
             if (cloverFound(state, plot.id)) discover(state, 'clover');
             break;
         }
+        case 'adopt-species': {
+            if (!(SPECIES as readonly string[]).includes(command.species)) fail('その いきものは いないよ。');
+            adoptSpecies(state, command.species);
+            break;
+        }
         case 'tend': {
             const owner = state.landmarks.find(l => l.id === command.id && l.cell && TENDABLE.includes(l.kind)) ?? fail('そだてられないよ。');
             if ((owner.tended ?? 0) >= TEND_LIMIT) fail('もう じゅうぶん そだったよ。');
@@ -309,9 +315,10 @@ export function applyIntent(previous: GrowingState, intent: Intent, at?: number,
     const state = structuredClone(previous);
     if (intent.command.type === 'terrain-edit' || intent.command.type === 'terrain-stroke' || intent.command.type === 'terrain-undo' || intent.command.type === 'terrain-redo') {
         if (!applyTerrainCommand(state, intent.command)) return { state: previous, events: [] };
+        const journeyEvents = noteJourney(state, at ?? state.nature.realAt);
         noteDiscoveries(state);
         state.applied = [...state.applied, intent.id].slice(-RULES.appliedMemory);
-        return { state, events: [] };
+        return { state, events: journeyEvents };
     }
     world ??= editableIslandWorld(state);
     const events = apply(state, intent.command, world);
@@ -328,6 +335,7 @@ export function applyIntent(previous: GrowingState, intent: Intent, at?: number,
     events.push(...grantGrowthMilestones(state, now));
     refreshUnlocks(state);
     syncPlaceMilestones(state, now, world);
+    events.push(...noteJourney(state, now));
     noteDiscoveries(state);
     state.applied = [...state.applied, intent.id].slice(-RULES.appliedMemory);
     return { state, events };

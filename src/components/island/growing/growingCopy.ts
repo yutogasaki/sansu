@@ -1,3 +1,4 @@
+import { SPECIES_NAME as ISLAND_SPECIES_NAME } from '../../../domain/growingIsland/journey';
 import { comfort, docked, keepsakeKind, foodSupport, housing, likesOf, waitingSeeds } from '../../../domain/growingIsland';
 import type { Character, GrowingState, KeepsakeKind, Like, LandmarkKind, SeedKind, Species, TownEvent, Villager } from '../../../domain/growingIsland';
 
@@ -33,6 +34,7 @@ export const KEEPSAKE_NAME: Record<KeepsakeKind, string> = {
     blocks: 'かずの つみき', balance: 'くらべっこの てんびん', fountain: 'けいさんの ふんすい', clock: 'くくの とけいとう',
     windmill: 'かけわりの ふうしゃ', star: 'しょうすうの ほし', flowerbed: 'ぶんすうの はなだん', tower: 'ちえの とう',
     book: 'ことばの ほん', globe: 'えいごの ちきゅうぎ', abc: 'ABCの つみき', balloon: 'ことばの ふうせん', telescope: 'ことばの ぼうえんきょう',
+    ...ISLAND_SPECIES_NAME,
 };
 const MOMENT_LINE = {
     rainbow: 'にじが でたよ！', butterflies: 'ちょうちょが あつまってきたよ', friends: 'なかよしの ふたりが いっしょに いるよ',
@@ -51,6 +53,13 @@ const KID_LINES = { girl: ['いっしょに あそぼう！', 'みずあそび �
 
 /** Pokomoko's single line after opening town time. One reason, never blame (§11.3). */
 export function revealLine(state: GrowingState, events: TownEvent[]) {
+    // A route slot from learning (island-journey.md §3) comes first: it is the news of the day.
+    const routes = events.filter(e => e.type === 'route');
+    if (routes.length) return routes.some(e => e.type === 'route' && e.slot === 0)
+        ? 'しおかぜの小島への こうろが ひらいたよ！ メニューの「海図と ふね」から いけるよ'
+        : 'まなびで ほしが ともって、あたらしい こうろが ひらいたよ！「海図と ふね」で しまを えらべるよ';
+    const species = events.find(e => e.type === 'species');
+    if (species?.type === 'species') return `${ISLAND_SPECIES_NAME[species.species]}が きたよ！`;
     const keepsakes = events.filter(e => e.type === 'keepsake');
     if (keepsakes.length) {
         const first = keepsakes[0];

@@ -19,7 +19,7 @@ export interface GrowingIslandMenuProps {
     onTrace: () => void;
     onShow: () => void;
     onFlowers: () => void;
-    /** ふしぎずかん (§1.4); absent where island shaping is off. */
+    /** しまの きろく (island-journey.md §5); absent where island shaping is off. */
     onWonders?: () => void;
     onGuide: () => void;
     utilities?: ReactNode;
@@ -41,7 +41,7 @@ export function GrowingIslandMenuContents(props: GrowingIslandMenuProps) {
             <button onClick={props.onTrace}><IslandToyIcon kind="palette" size={32} /><span>はたを つくる</span></button>
             <button aria-label="しゃしん・みせる" onClick={props.onShow}><IslandToyIcon kind="camera" size={32} /><span>しゃしん</span></button>
             <button onClick={props.onFlowers}><IslandToyIcon kind="display" size={32} /><span>はなずかん</span></button>
-            {props.onWonders && <button onClick={props.onWonders}><Sparkles size={29} aria-hidden="true" /><span>ふしぎずかん</span></button>}
+            {props.onWonders && <button onClick={props.onWonders}><Sparkles size={29} aria-hidden="true" /><span>しまの きろく</span></button>}
             {props.bridge && <button disabled={props.busy || (!props.bridge.built && !props.bridge.ready)} onClick={props.onBridge}
                 aria-label={props.bridge.built ? 'はしを みにいく' : 'はしを つくる'} title={!props.bridge.built && !props.bridge.ready ? props.bridge.reason : undefined}>
                 <Waypoints size={29} aria-hidden="true" /><span>{props.bridge.built ? 'はしを みる' : 'はしを つくる'}</span>

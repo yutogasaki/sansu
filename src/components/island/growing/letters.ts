@@ -24,7 +24,7 @@ export function islandLetters(state: GrowingState): Letter[] {
         if (!people.length) continue;
         letters.push({ id: `grand-${plot.id}`, from: people.map(villagerName).join('と '), text: 'おうちが ふたかいだてに なったよ！ まどから うみが みえるんだ', order: (plot.stagedAt ?? 0) * 10 + 1 });
     }
-    state.keepsakes.forEach((k, i) => letters.push({ id: `keep-${k.id}`, from: 'ぽこもこ', order: 1e9 + i,
+    state.keepsakes.filter(k => !k.unitId.startsWith('species:')).forEach((k, i) => letters.push({ id: `keep-${k.id}`, from: 'ぽこもこ', order: 1e9 + i,
         text: `${KEEPSAKE_NAME[keepsakeKind(k.unitId)]}が とどいたね。まなんだ ことが かたちに なったよ。すごいね！` }));
     state.landmarks.filter(l => l.from).forEach((l, i) => letters.push({ id: `gift-${l.id}`, from: l.from!, order: 2e9 + i,
         text: 'おはなを おいてきたよ。きれいに さいてね' }));

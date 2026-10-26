@@ -10,12 +10,43 @@ import type { Cell, GrowingState, Landmark, Moment } from './types';
  * brings about. Each one is noticed once and kept in the ふしぎずかん. Nothing here is a
  * quest, a daily reward or something that can be missed; it only records what happened.
  */
-export type DiscoveryId = 'waterfall' | 'cove-boat' | 'high-light' | 'grove-hill' | 'rainbow-tree' | 'clover' | 'floating-isle' | 'lookout-home' | 'ship-cove' | 'golden-pumpkin' | `moment:${Moment}`;
-export type DiscoveryGroup = 'ground' | 'luck' | 'sky';
+export type DiscoveryId = 'waterfall' | 'cove-boat' | 'high-light' | 'grove-hill' | 'rainbow-tree' | 'clover' | 'floating-isle' | 'lookout-home' | 'ship-cove' | 'golden-pumpkin' | `species:${string}` | `learn:${string}` | `build:${string}` | `life:${string}` | `voyage:${string}` | `moment:${Moment}`;
+export type DiscoveryGroup = 'build' | 'life' | 'ground' | 'luck' | 'sky' | 'learn' | 'voyage';
 
 export interface Discovery { id: DiscoveryId; group: DiscoveryGroup; name: string; line: string; hint: string }
 
+const SUBJECT_NAME = { math: 'さんすう', vocab: 'えいたんご', kokugo: 'こくご' } as const;
+const SPECIES_ENTRIES: Discovery[] = ([
+    ['shell-flower', 'かいの はな', 'しおかぜの小島で さいたよ', 'しおかぜの小島に いくと あえるよ'],
+    ['leaf-crab', 'はぶね ヤドカリ', 'かいの はなの そばの みずべに きたよ', 'しおかぜの小島で、かいの はなを みずの となりへ'],
+    ['bell-tree', 'すずのみの 木', 'こだまの森で りんと なったよ', 'こだまの森に いくと あえるよ'],
+    ['echo-bird', 'こだまどり', 'つながった 森に きたよ', 'こだまの森で、そだった 木を 3本 つなげよう'],
+    ['glass-weed', 'すける みずくさ', 'ひかりの入り江で ゆれているよ', 'ひかりの入り江に いくと あえるよ'],
+    ['glow-shell', 'ひかりがい', 'たきの したで ひかったよ', 'ひかりの入り江で、たきを つくろう'],
+    ['balloon-flower', 'ふうせんばな', 'わたぐもの高原で ふくらんだよ', 'わたぐもの高原に いくと あえるよ'],
+    ['fluff-sheep', 'わたげひつじ', 'おかの ひろばに きたよ', 'わたぐもの高原で、おかの うえに ひろばを'],
+    ['key-weed', 'ねじまきそう', 'ぜんまい島で くるくる まいたよ', 'ぜんまい島に いくと あえるよ'],
+    ['clock-bird', 'ぜんまいどり', 'たかい とうだいに ひかれて とんできたよ', 'ぜんまい島で、2だんの うえに あかりを'],
+    ['star-tree', 'ほしのみの 木', '星の島で みが ひかったよ', '星の島に いくと あえるよ'],
+    ['star-jelly', 'ほしくらげ', 'あかりの みずべに うかんだよ', '星の島で、みずの ちかくに あかりを 3つ'],
+] as const).map(([id, name, line, hint]) => ({ id: `species:${id}` as DiscoveryId, group: 'voyage' as const, name, line, hint }));
+const LEARN_ENTRIES: Discovery[] = (['math', 'vocab', 'kokugo'] as const).flatMap(subject => [2, 5, 9, 13, 17].map(level => ({
+    id: `learn:${subject}:${level}` as DiscoveryId, group: 'learn' as const, name: `${SUBJECT_NAME[subject]} Lv${level}`,
+    line: `${SUBJECT_NAME[subject]}の Lv${level}の ないようを たしかめたよ`, hint: `${SUBJECT_NAME[subject]}で Lv${level}の ないようを たしかめよう` })));
+
 export const DISCOVERIES: readonly Discovery[] = [
+    { id: 'build:expand', group: 'build', name: 'ひろい しま', line: 'しまの 土地を ひろげたよ', hint: 'しずくで 土地を ひろげてみよう' },
+    { id: 'build:shape', group: 'build', name: 'じめんづくり', line: 'じめんを じぶんの かたちに したよ', hint: 'メニューの「じめんを かえる」で なぞってみよう' },
+    { id: 'build:tend', group: 'build', name: 'そだてる て', line: 'ばしょを そだてたよ', hint: '木や 花の「そだてる」を つかってみよう' },
+    { id: 'life:friends', group: 'life', name: 'にぎやかな しま', line: 'なかまが 3にんに なったよ', hint: 'いえを たてて、なかまを むかえよう' },
+    { id: 'life:two-storey', group: 'life', name: 'ふたかいだて', line: 'いえが ふたかいだてに そだったよ', hint: 'なかまの すむ いえは、だんだん おおきく なるよ' },
+    { id: 'life:bridge', group: 'life', name: 'みはらしの はし', line: 'はしを かけて、なかまが わたったよ', hint: 'メニューの「はしを つくる」' },
+    { id: 'life:flag', group: 'life', name: 'じぶんの はた', line: 'はたに じを かいたよ', hint: 'メニューの「はたを つくる」で なぞってみよう' },
+    { id: 'voyage:route', group: 'voyage', name: 'はじめての こうろ', line: 'あたらしい しまへの こうろが ひらいたよ', hint: 'なかまを むかえると ひらくよ' },
+    { id: 'voyage:island', group: 'voyage', name: 'とくべつな しま', line: 'とくべつな しまを つくったよ', hint: '海図で、ひらいた こうろの しまを えらぼう' },
+    { id: 'voyage:all', group: 'voyage', name: 'ぜんぶの うみ', line: '6つの とくべつな しまを ぜんぶ つくったよ', hint: 'まなびで こうろを ひらいていこう' },
+    ...SPECIES_ENTRIES,
+    ...LEARN_ENTRIES,
     { id: 'waterfall', group: 'ground', name: 'たき', line: 'おかの みずが したの うみへ おちているよ', hint: 'おかの うえの みずみちや みずばちの となりを、うみの ふでで ほってみよう' },
     { id: 'cove-boat', group: 'ground', name: 'いりえの こぶね', line: 'ほった いりえに こぶねが うかんだよ', hint: 'うみの ふでで、つながった 3マスを ほってみよう' },
     { id: 'high-light', group: 'ground', name: 'たかだいの あかり', line: 'たかい ところの あかりは とおくまで とどくよ', hint: 'おかの うえに あかりを おいてみよう' },
@@ -155,5 +186,16 @@ export function noteDiscoveries(state: GrowingState) {
         if (shipCove(state)) discover(state, 'ship-cove');
     }
     if (state.landmarks.some(l => l.rare === 'rainbow' && l.cell)) discover(state, 'rainbow-tree');
+    // しまづくり・くらし・こうかい (island-journey.md §5): facts of the island, kept once.
+    if (state.land.extra.length || state.land.expanded || state.land.capes.length || state.land.districts?.length) discover(state, 'build:expand');
+    if (Object.values(terrainOf(state)?.heights ?? {}).some(height => height !== 0) && state.terrain) discover(state, 'build:shape');
+    if (state.landmarks.some(l => (l.tended ?? 0) > 0)) discover(state, 'build:tend');
+    if (state.villagers.filter(v => !state.arrivals.includes(v.id)).length >= 3) discover(state, 'life:friends');
+    if (state.plots.some(p => p.kind === 'home' && p.stage === 4)) discover(state, 'life:two-storey');
+    if (state.bridge) discover(state, 'life:bridge');
+    if (state.emblem) discover(state, 'life:flag');
+    if (state.journey?.routes.length) discover(state, 'voyage:route');
+    if (state.journey?.chosen.length) discover(state, 'voyage:island');
+    if ((state.journey?.chosen.length ?? 0) >= 6) discover(state, 'voyage:all');
     if (state.plots.some(p => p.rare === 'golden' && p.cell)) discover(state, 'golden-pumpkin');
 }

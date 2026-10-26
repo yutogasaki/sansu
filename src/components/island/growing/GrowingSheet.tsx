@@ -8,6 +8,7 @@ import { FLAG_COLORS } from './keepsakeGeometry';
 import { KEEPSAKE_NAME } from './growingCopy';
 import { CHARACTER_NAME, HOME_STAGE, kindName, LANDMARK_LABEL, SEED_LABEL, villagerName } from './growingCopy';
 import { ROOF_COLORS, WONDER_ROOFS } from './plotParts';
+import { THEME_INFO, themeOfSpecies, type SpeciesId } from '../../../domain/growingIsland/journey';
 import { crowded, groves, placeGrowthEnabled, TEND_LIMIT, TENDABLE, tendPrice } from '../../../domain/growingIsland/placementAdvice';
 
 export type SheetAction = { type: 'concert'; tune: boolean } | { type: 'touch' } | { type: 'move' } | { type: 'store' } | { type: 'pluck' } | { type: 'home' }
@@ -47,7 +48,11 @@ function GrowingSheetContents({ state, target, onAction, onClose, portrait }: Gr
     else if (target === 'flag') { title = 'しまの はた'; detail = cosmeticsOpen(state, STYLE_LEVEL.flagPattern) ? 'いろと もようを えらべるよ' : 'いろを えらべるよ'; }
     else if (keepsake) {
         title = KEEPSAKE_NAME[keepsakeKind(keepsake.unitId)];
-        detail = `${keepsake.unitId.startsWith('math') ? 'さんすう' : 'えいご'} Lv${keepsake.unitId.split(':')[1]}を みにつけた きねんだよ`;
+        // A special island's species tells where it came from and, on its own island, what calls its companion.
+        const species = keepsake.unitId.startsWith('species:') ? keepsake.unitId.slice(8) as SpeciesId : undefined;
+        detail = species ? `${THEME_INFO[themeOfSpecies(species)].name}の いきもの${state.theme === themeOfSpecies(species) && THEME_INFO[state.theme].first === species
+            && !state.journey?.species.includes(THEME_INFO[state.theme].second) ? `。ヒント：${THEME_INFO[state.theme].hint}` : ''}`
+            : `${keepsake.unitId.startsWith('math') ? 'さんすう' : 'えいご'} Lv${keepsake.unitId.split(':')[1]}を みにつけた きねんだよ`;
         actions.push({ label: 'うごかす', action: { type: 'move' } }, { label: 'しまう', action: { type: 'store' } });
     } else if (target === 'house') { title = 'ぽこもこの いえ'; detail = 'なかに あそびかたの ほんが あるよ。まよったら ひらいてみよう'; actions.push({ label: 'いえに はいる', action: { type: 'home' } }); }
     else if (villager) {

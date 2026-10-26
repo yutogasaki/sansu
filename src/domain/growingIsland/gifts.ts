@@ -1,3 +1,4 @@
+import { SPECIES } from './journey';
 import { refreshUnlocks } from './community';
 import { HOME_CELL, distance, isVacant, landCells } from './space';
 import type { GrowingState, TownEvent } from './types';
@@ -5,14 +6,20 @@ import type { IslandWorld } from './worldDefinition';
 
 /** Learning levels that bring a keepsake. The subject's main level is raised only by
  * independent evidence (spec 34), so a keepsake is never a prize for volume (§10). */
-export interface LearningLevels { math: number; vocab: number }
+export interface LearningLevels {
+    math: number; vocab: number;
+    /** Shared Lv1–20 whose content was confirmed (island-journey.md); read-only evidence for route slots. */
+    confirmed?: { math: number; vocab: number; kokugo: number };
+}
 
-export const KEEPSAKE_KINDS = ['blocks', 'balance', 'fountain', 'clock', 'windmill', 'star', 'flowerbed', 'tower', 'book', 'globe', 'abc', 'balloon', 'telescope'] as const;
+export const KEEPSAKE_KINDS = ['blocks', 'balance', 'fountain', 'clock', 'windmill', 'star', 'flowerbed', 'tower', 'book', 'globe', 'abc', 'balloon', 'telescope', ...SPECIES] as const;
 export type KeepsakeKind = typeof KEEPSAKE_KINDS[number];
 
 /** Each unit family has its own fixed shape: the island keeps a map of what was learned. */
 export function keepsakeKind(unitId: string): KeepsakeKind {
     const [subject, raw] = unitId.split(':'), level = Number(raw);
+    // A special island's species travels as one of the child's things (island-journey.md §4).
+    if (subject === 'species') return (SPECIES as readonly string[]).includes(raw) ? raw as KeepsakeKind : 'flowerbed';
     // English keepsakes grow with the words: letter blocks, a book, word balloons, a globe, a telescope.
     if (subject === 'vocab') return level <= 3 ? 'abc' : level <= 6 ? 'book' : level <= 9 ? 'balloon' : level <= 13 ? 'globe' : 'telescope';
     if (level <= 3) return 'blocks';

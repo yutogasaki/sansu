@@ -19,7 +19,9 @@ describe('game terrain commands', () => {
         expect(state.terrain!.heights['0,4']).toBe(-4);
         expect(editableIslandWorld(state)!.floorAt(cell)).toBeUndefined();
         expect(editableIslandWorld(state)!.owns(cell)).toBe(true);
-        expect({ ...state, terrain: undefined, applied: [] }).toEqual({ ...original, terrain: undefined });
+        // Only the record book may grow (しまの きろく keeps that the ground was shaped).
+        expect({ ...state, terrain: undefined, applied: [], discoveries: undefined }).toEqual({ ...original, terrain: undefined, discoveries: undefined });
+        expect(state.discoveries).toContain('build:shape');
         const atLimit = edit(state, { type: 'terrain-edit', cell, delta: -1 });
         expect(atLimit).toBe(state);
         for (let n = 0; n < 4; n++) state = edit(state, { type: 'terrain-undo' });

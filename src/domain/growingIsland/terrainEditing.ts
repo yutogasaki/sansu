@@ -31,7 +31,7 @@ const writeHeight = (heights: Record<string, number>, cell: Cell, value: number)
 const validGroup = (group: unknown) => group === undefined || typeof group === 'string' && group.length > 0 && group.length <= 64;
 
 /** The highest step at which this cell lies under the sea (a cove or a pond). */
-function seaLevelAt(state: GrowingState, cell: Cell) {
+export function seaLevelAt(state: GrowingState, cell: Cell) {
     const base = baseTerrainHeightAt(state, cell) + landscapeRise(cell);
     for (let level = 0; level >= TERRAIN_MIN; level--) if (base + level * TERRAIN_STEP < TERRAIN_DRY_LEVEL) return level;
     return TERRAIN_MIN;

@@ -4,6 +4,14 @@ import { allowPwaUpdateDuringReadOnlyOpening, holdPwaUpdateForCriticalPersistenc
 import { drainFoundationRewards } from '../../../domain/growingIsland/foundationReceipts';
 import { lifeDb, terminalFacts } from '../../../domain/islandLife/repository';
 import { getProfile } from '../../../domain/user/repository';
+import { db } from '../../../db';
+import { confirmedKokugoLevel } from '../../../domain/kokugo/levels';
+import { confirmedMathLevel, confirmedVocabLevel, passedLevel } from '../../../domain/growingIsland/journey';
+
+/** Kokugo unit progress, read only; a missing table or profile reads as nothing confirmed. */
+async function kokugoProgressOf(profileId: string) {
+    try { return await db.kokugoProgress.where('profileId').equals(profileId).toArray(); } catch { return []; }
+}
 import { commandGrowingIsland, sailGrowingIsland, growingDb, GuidanceReceiptConflict, readGrowingIsland, syncGrowingIsland, type GrowingRecord } from '../../../domain/growingIsland/repository';
 import type { AchievementId, Command, NatureEvent, TownEvent } from '../../../domain/growingIsland';
 import { islandIdOf, type IslandStart } from '../../../domain/growingIsland/voyages';
@@ -57,7 +65,11 @@ export function useGrowingIsland(profileId: string, active: boolean) {
         running.current = (async () => {
             try {
                 const [profile, facts] = full ? await prepareIslandOpening(() => Promise.all([getProfile(profileId), terminalFacts(profileId)])) : [undefined, []];
-                const levels = profile ? { math: profile.mathMainLevel, vocab: profile.vocabMainLevel } : undefined;
+                const kokugo = profile ? await kokugoProgressOf(profileId) : [];
+                // Learning is only read: the shared Lv1–20 whose content was confirmed opens route slots (island-journey.md §3).
+                const levels = profile ? { math: profile.mathMainLevel, vocab: profile.vocabMainLevel, confirmed: {
+                    math: confirmedMathLevel(passedLevel(profile.testHistory, 'math')), vocab: confirmedVocabLevel(passedLevel(profile.testHistory, 'vocab')),
+                    kokugo: confirmedKokugoLevel(kokugo) } } : undefined;
                 setStep('saving'); setSaving(true);
                 let result = await syncGrowingIsland(profileId, facts, Date.now(), growingDb, lifeDb, levels);
                 // A delivery failure must not hide an island whose opening already saved.

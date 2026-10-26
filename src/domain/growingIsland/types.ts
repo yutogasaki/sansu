@@ -1,3 +1,4 @@
+import type { Journey, SpeciesId, ThemeId } from './journey';
 import type { IslandExperience, SharedPlayReceipt } from './experience';
 import type { GrowthProgress, WonderSlot } from './growth';
 import type { Cell, ItemKind, LifeItem } from '../islandLife/model';
@@ -187,6 +188,10 @@ export interface GrowingState {
     wonderSeeds?: number;
     /** しまの ふしぎ the island has shown, for the ふしぎずかん (§1.4). Only ever grows. */
     discoveries?: string[];
+    /** 航路の枠・選んだ特別な島・見つけた固有種 (island-journey.md). Shared by every island. */
+    journey?: Journey;
+    /** The theme of a special island; its own species come here. */
+    theme?: ThemeId;
     /** Real-day draws and a durable result waiting to begin its presentation. */
     surprise?: { day: number; pending?: { day: number; moment: Moment; cell?: Cell } };
     /** Pokomoko's room: wallpaper drawn with learned words, chosen shapes and rug (§13.1). */
@@ -204,6 +209,8 @@ export type Command =
     | { type: 'unstore'; id: string; cell: Cell }
     | { type: 'pluck'; id: string }
     | { type: 'tend'; id: string }
+    /** Bring a species found on a special island to this island (island-journey.md §4). */
+    | { type: 'adopt-species'; species: SpeciesId }
     | { type: 'expand'; side: Side }
     | { type: 'bridge-build'; x: number }
     | { type: 'bridge-remove' }
@@ -243,6 +250,8 @@ export type TownEvent =
     | { type: 'wonder-seed' }
     | { type: 'gift'; from: string; landmarkId?: string }
     | { type: 'moment'; moment: Moment; cell?: Cell; day?: number }
+    | { type: 'route'; slot: number }
+    | { type: 'species'; species: SpeciesId }
     | { type: 'quiet' };
 
 /** Small surprises of the day (§11.2). Presentation only: none of them changes the island. */
