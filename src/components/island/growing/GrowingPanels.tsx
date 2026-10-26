@@ -56,6 +56,7 @@ export function CardView({ url, busy, onSave, onClose, frame, onFrame }: { url?:
 export function StoryView({ state, moments, onClose, onFocus }: { state?: GrowingState; moments: MomentRecord[]; onClose: () => void; onFocus?: (id: string) => void }) {
     const [index, setIndex] = useState(0);
     const [urls] = useState(() => moments.map(m => URL.createObjectURL(m.image)));
+    const [compare, setCompare] = useState(false);
     useEffect(() => () => urls.forEach(url => URL.revokeObjectURL(url)), [urls]);
     useEffect(() => {
         if (!urls.length) return;
@@ -66,7 +67,7 @@ export function StoryView({ state, moments, onClose, onFocus }: { state?: Growin
     const memories = state ? placeMemories(state) : [];
     const places = useMemo(() => state ? derivePlaces(state) : [], [state]);
     const first = moments[0]?.at ?? 0, at = moments[index]?.at ?? 0;
-    const day = Math.floor((at - first) / 86_400_000) + 1;
+    const day = Math.floor((at - first) / 86_400_000) + 1, lastDay = Math.floor(((moments[moments.length - 1]?.at ?? 0) - first) / 86_400_000) + 1;
     return <div className="growing-overlay" role="dialog" aria-label="しまの あゆみ">
         <div className="growing-overlay-body">
             {!!memories.length && <details className="growing-place-memories"><summary>しまの 思い出</summary><ul>{memories.map(memory => {
@@ -78,9 +79,19 @@ export function StoryView({ state, moments, onClose, onFocus }: { state?: Growin
                 return <li key={memory.id}><span>{line}</span>{destination && onFocus && <button className="growing-action" onClick={() => onFocus(destination)} aria-label={`${place}の 今の場所を みる`}>今の場所を みる</button>}</li>;
             })}</ul></details>}
             {urls.length ? <>
-                <img className="growing-story-image" src={urls[index]} alt={`${day}にちめの しま`} />
-                <p className="growing-story-day">{day}にちめ</p>
-                <div className="growing-row"><button onClick={() => setIndex(0)}>もういちど</button><button onClick={onClose}>とじる</button></div>
+                {compare && urls.length > 1 ? <div className="growing-story-compare">
+                    {/* まえと いま: the first picture of the island beside today's. */}
+                    <figure><img className="growing-story-image" src={urls[0]} alt="はじめの しま" /><figcaption>はじめ</figcaption></figure>
+                    <figure><img className="growing-story-image" src={urls[urls.length - 1]} alt="いまの しま" /><figcaption>いま（{lastDay}にちめ）</figcaption></figure>
+                </div> : <>
+                    <img className="growing-story-image" src={urls[index]} alt={`${day}にちめの しま`} />
+                    <p className="growing-story-day">{day}にちめ</p>
+                </>}
+                <div className="growing-row">
+                    {compare ? <button onClick={() => setCompare(false)}>あゆみを みる</button> : <button onClick={() => setIndex(0)}>もういちど</button>}
+                    {!compare && urls.length > 1 && <button onClick={() => setCompare(true)}>まえと いま</button>}
+                    <button onClick={onClose}>とじる</button>
+                </div>
             </> : <><p>しまを ひらくたびに、しゃしんが ふえていくよ</p><div className="growing-row"><button onClick={onClose}>とじる</button></div></>}
         </div>
     </div>;

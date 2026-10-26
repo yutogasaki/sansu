@@ -1,7 +1,9 @@
 import { growthStage } from '../islandLife/model';
 import { homeCellOf } from './community';
 import { BLOOM_HOURS, TREE_MATURE_HOURS } from './environment';
+import { coves } from './discoveries';
 import { roll } from './random';
+import { fullMoon } from './sky';
 import { likesOf } from './rules';
 import { distance, isReachable, landCells, key, onLand, reachableFromHome } from './space';
 import type { Cell, GrowingState, Moment, TownEvent, Villager } from './types';
@@ -51,9 +53,18 @@ export function momentCandidates(state: GrowingState, world?: IslandWorld): Cand
     // Three more one-night guests: a whale by a watery island, a rainbow bird for a flower
     // book of five colours, and the moon rabbit where many lights glow.
     const waters = state.landmarks.filter(l => l.cell && (!world || onLand(state, l.cell, world)) && (l.kind === 'water-bowl' || l.kind === 'fountain')).length;
-    if (waters >= 2 || state.landmarks.some(l => l.kind === 'lighthouse' && l.cell && (!world || onLand(state, l.cell, world)))) out.push({ moment: 'whale' });
+    // A cove of four or more dug cells brings the whale into the child's own water.
+    const cove = coves(state).find(piece => piece.length >= 4);
+    if (cove) out.push({ moment: 'whale', cell: cove[Math.floor(cove.length / 2)] });
+    else if (waters >= 2 || state.landmarks.some(l => l.kind === 'lighthouse' && l.cell && (!world || onLand(state, l.cell, world)))) out.push({ moment: 'whale' });
     if ((state.flowerBook?.length ?? 0) >= 5) out.push({ moment: 'rainbow-bird', cell: flowers[0] });
-    if (lights.length >= 3) out.push({ moment: 'moon-rabbit', cell: lights[0] });
+    // The real calendar's full moon: a path of light on the sea, and the moon rabbit comes for one light.
+    const full = fullMoon(state.nature.realAt);
+    if (lights.length >= 3 || full && lights.length >= 1) out.push({ moment: 'moon-rabbit', cell: lights[0] });
+    if (full) out.push({ moment: 'full-moon' });
+    // A grown ふしぎの品 sometimes brings a rain of coloured dots.
+    const wonder = state.plots.find(p => p.kind === 'wonder' && p.stage > 0 && p.cell && (!world || onLand(state, p.cell, world)));
+    if (wonder?.cell) out.push({ moment: 'dot-rain', cell: wonder.cell });
     return out;
 }
 

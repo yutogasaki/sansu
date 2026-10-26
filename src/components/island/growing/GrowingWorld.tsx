@@ -1,4 +1,5 @@
 import { dugWater } from '../../../domain/growingIsland/environment';
+import { WonderScenery } from './wonderScenery';
 import { TERRAIN_SEA_LEVEL } from '../../../domain/growingIsland/editableTerrainWorld';
 import { placePlay } from '../../../domain/growingIsland/placePlay';
 import { concertPlace, type SharedPlayReceipt } from '../../../domain/growingIsland/experience';
@@ -218,6 +219,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
         const effects = new WorldEffects(world.scene); disposers.push(() => effects.dispose());
         let nextSplash = 0;
         const moments = new MomentEffects(world.scene); disposers.push(() => moments.dispose());
+        const wonders = new WonderScenery(world.scene); disposers.push(() => wonders.dispose());
         const camera = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100), view = initialView();
         const savedView = viewKey ? sessionViews.get(viewKey) : undefined;
         Object.assign(view, savedView ? { ...savedView, pan: { ...savedView.pan } } : { zoom: 1.5 });
@@ -397,6 +399,8 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             known = new Set(layer.objects.keys());
             unopened = new Set(next.unopened);
             world.life.sync(next, layout, layer);
+            wonders.build(next, layout);
+            if (import.meta.env.DEV) node.dataset.wonders = JSON.stringify({ crowns: layer.root.getObjectsByProperty('name', 'rainbow-crown').length, scenery: wonders.root.children.map(c => c.name) });
             if (wholeArt) node.dataset.authoredWholeArt = JSON.stringify({ candidate: AUTHORED_WHOLE_ART_CANDIDATE,
                 forestOwners: layer.root.getObjectsByProperty('name', 'authored-forest-tree').map(object => object.userData.ownerId),
                 galleryOwners: layer.root.getObjectsByProperty('name', 'authored-gallery-structure').map(object => object.userData.ownerIds),
@@ -444,7 +448,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             cheer: () => { const now = performance.now(); world.life.hop('visitor', now); world.life.hop('pokomoko', now + 120); },
             moment: shown => {
                 const at = shown.cell ? layout.point(shown.cell) : new T.Vector3(0, 0, 0);
-                moments.play(shown.moment, at, performance.now(), reduced);
+                moments.play(shown.moment, at, performance.now(), reduced, Boolean(shown.cell));
             },
             endMusic: () => { musicPlace = undefined; musicStand = undefined; overlap.clear(); sharedPending.clear(); pendingConcert = undefined; world.life.stopConcert(); },
             concert: (cell, receipt) => {
@@ -711,6 +715,8 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             effects.tick(now, delta);
             moments.ambient(now, latest.current.time === 'night', current.landmarks.filter(l => l.cell && (l.kind === 'lantern' || l.kind === 'lighthouse')).length, camera.position.clone().setY(0), reduced);
             moments.tick(now);
+            wonders.tick(now, latest.current.time === 'night', reduced, camera);
+            if (import.meta.env.DEV && now >= nextTelemetry) { const moon = wonders.root.getObjectByName('wonder-moon'); if (moon) node.dataset.wonderMoon = JSON.stringify(moon.getWorldPosition(new T.Vector3()).project(camera).toArray().map(v => Math.round(v * 100) / 100)); }
             const editing = latest.current.terrainEditing, selectedTerrain = latest.current.terrainCell;
             terrainRing.visible = Boolean(editing && selectedTerrain);
             const ringKey = `${layout.key}:${selectedTerrain?.x},${selectedTerrain?.z}`;

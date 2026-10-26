@@ -1,6 +1,7 @@
 import { editableIslandWorld } from './editableTerrainWorld';
 import { BLOOM_HOURS, soilAt, soilTargetAt, styleAt, sunnyHill, syncSoil, TREE_MATURE_HOURS, waterLayout } from './environment';
 import { connectedWaterChannels } from '../islandLife/waterChannels';
+import { noteDiscoveries, rainbowTree } from './discoveries';
 import { roll } from './random';
 import { MIX_EVERY, mixFlowers } from './flowers';
 import { RULES } from './rules';
@@ -25,7 +26,10 @@ function grow(state: GrowingState, hours: number, events: NatureEvent[], world?:
             if (l.growth >= BLOOM_HOURS) { events.push({ type: 'bloomed', id: l.id }); if (state.growth) state.growth.matured ??= l.id; }
         } else if (l.kind === 'sapling' && l.growth < TREE_MATURE_HOURS) {
             l.growth = Math.min(TREE_MATURE_HOURS, l.growth + hours * (1 + .15 * m) * (sunnyHill(state, l.cell) ? 1.3 : 1));
-            if (l.growth >= TREE_MATURE_HOURS) { l.maturedAt = state.nature.hours + hours; if (state.growth) state.growth.matured ??= l.id; events.push({ type: 'matured', id: l.id }); }
+            if (l.growth >= TREE_MATURE_HOURS) {
+                l.maturedAt = state.nature.hours + hours; if (state.growth) state.growth.matured ??= l.id; events.push({ type: 'matured', id: l.id });
+                if (rainbowTree(state, l)) l.rare = 'rainbow';
+            }
         }
     }
     for (const p of state.plots) {
@@ -108,5 +112,6 @@ export function advanceNature(state: GrowingState, now: number, world?: IslandWo
         }
         remaining -= step;
     }
+    noteDiscoveries(state);
     return events;
 }

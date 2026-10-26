@@ -293,12 +293,15 @@ export class GrowingLife {
             if (!open(k)) continue;
             const [x, z] = k.split(',').map(Number);
             if (level >= 1) spots.push({ id: `hill:${k}`, cell: { x, z }, like: 'quiet' });
+            // At the edge of dug water, a friend sits and watches the water (fishing for nothing).
+            const water = [[1, 0], [-1, 0], [0, 1], [0, -1]].map(([dx, dz]) => ({ x: x + dx, z: z + dz })).find(c => plan.levels.has(key(c)) && !plan.dry.has(key(c)));
+            if (water) spots.push({ id: `cove:${k}:${water.x},${water.z}`, cell: { x, z }, like: 'quiet' });
             const square = [k, key({ x: x + 1, z }), key({ x, z: z + 1 }), key({ x: x + 1, z: z + 1 })];
             if (square.every(c => open(c) && plan.levels.get(c) === level)) spots.push({ id: `plaza:${k}`, cell: { x, z }, like: 'play' });
         }
         // A couple of each keep shaped ground in the day without crowding out the places.
         const pick = (kind: string) => spots.filter(s => s.id.startsWith(kind)).sort(() => Math.random() - .5).slice(0, 2);
-        return [...pick('hill:'), ...pick('plaza:')];
+        return [...pick('hill:'), ...pick('plaza:'), ...pick('cove:')];
     }
 
     private chooseLegacyTarget(walker: Walker): Cell | undefined {
@@ -712,6 +715,12 @@ export class GrowingLife {
                 if (!w.path.length) {
                     if (w.choice?.startsWith('touch:')) { w.mode = 'idle'; w.until = now + 3000; this.guardPose(w, now, receiptStart); continue; }
                     // On a hilltop, a friend turns outward and takes in the view for a while.
+                    if (w.choice?.startsWith('cove:')) {
+                        const [wx, wz] = w.choice.split(':')[2].split(',').map(Number);
+                        w.heading = Math.atan2(wx - w.at.x, wz - w.at.z); w.mode = 'idle'; w.until = now + 6000;
+                        w.recent = [...(w.recent ?? []).filter(id => id !== w.choice), w.choice].slice(-3);
+                        this.guardPose(w, now, receiptStart); continue;
+                    }
                     if (w.choice?.startsWith('hill:') && this.layout) {
                         const centre = { x: this.layout.center, z: (this.layout.bounds.depth - 1) / 2 };
                         w.heading = Math.atan2(w.at.x - centre.x, w.at.z - centre.z); w.mode = 'idle'; w.until = now + 5000;

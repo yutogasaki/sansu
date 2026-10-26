@@ -1,3 +1,4 @@
+import { cloverFound, discover, noteDiscoveries } from './discoveries';
 import { recordSharedPlay } from './experience';
 import { grantGrowthMilestones } from './growth';
 import { canPurchase, cosmeticsOpen } from './community';
@@ -188,6 +189,7 @@ function apply(state: GrowingState, command: Command, world?: IslandWorld): Town
         case 'pluck': {
             const plot = state.plots.find(p => p.id === command.id && p.kind === 'wild' && p.stage > 0) ?? fail('つめないよ。');
             state.plots = state.plots.filter(p => p.id !== plot.id);
+            if (cloverFound(state, plot.id)) discover(state, 'clover');
             break;
         }
         case 'tend': {
@@ -277,7 +279,7 @@ function apply(state: GrowingState, command: Command, world?: IslandWorld): Town
             break;
         }
         case 'ack-moment': {
-            if (state.surprise?.pending?.day === command.day) delete state.surprise.pending;
+            if (state.surprise?.pending?.day === command.day) { discover(state, `moment:${state.surprise.pending.moment}`); delete state.surprise.pending; }
             break;
         }
         case 'flag': {
@@ -307,6 +309,7 @@ export function applyIntent(previous: GrowingState, intent: Intent, at?: number,
     const state = structuredClone(previous);
     if (intent.command.type === 'terrain-edit' || intent.command.type === 'terrain-stroke' || intent.command.type === 'terrain-undo' || intent.command.type === 'terrain-redo') {
         if (!applyTerrainCommand(state, intent.command)) return { state: previous, events: [] };
+        noteDiscoveries(state);
         state.applied = [...state.applied, intent.id].slice(-RULES.appliedMemory);
         return { state, events: [] };
     }
@@ -325,6 +328,7 @@ export function applyIntent(previous: GrowingState, intent: Intent, at?: number,
     events.push(...grantGrowthMilestones(state, now));
     refreshUnlocks(state);
     syncPlaceMilestones(state, now, world);
+    noteDiscoveries(state);
     state.applied = [...state.applied, intent.id].slice(-RULES.appliedMemory);
     return { state, events };
 }

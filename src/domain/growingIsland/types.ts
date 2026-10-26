@@ -62,6 +62,8 @@ export interface Landmark {
     color?: FlowerColor;
     /** DEV experiment: times the child chose to grow this place instead of adding a new thing (0..3). */
     tended?: number;
+    /** A rare form drawn once when a tree matured (§1.4); never redrawn. */
+    rare?: 'rainbow';
 }
 
 export interface Keepsake { id: string; unitId: string; cell?: Cell }
@@ -181,6 +183,8 @@ export interface GrowingState {
     emblem?: { image: string; glyph: string };
     /** ふしぎの たね waiting to be planted; island levels 3, 5, 7 and 9 bring one each (§3.5). */
     wonderSeeds?: number;
+    /** しまの ふしぎ the island has shown, for the ふしぎずかん (§1.4). Only ever grows. */
+    discoveries?: string[];
     /** Real-day draws and a durable result waiting to begin its presentation. */
     surprise?: { day: number; pending?: { day: number; moment: Moment; cell?: Cell } };
     /** Pokomoko's room: wallpaper drawn with learned words, chosen shapes and rug (§13.1). */
@@ -240,7 +244,7 @@ export type TownEvent =
     | { type: 'quiet' };
 
 /** Small surprises of the day (§11.2). Presentation only: none of them changes the island. */
-export type Moment = 'rainbow' | 'friends' | 'butterflies' | 'guest-water' | 'guest-grove' | 'whale' | 'rainbow-bird' | 'moon-rabbit';
+export type Moment = 'rainbow' | 'friends' | 'butterflies' | 'guest-water' | 'guest-grove' | 'whale' | 'rainbow-bird' | 'moon-rabbit' | 'full-moon' | 'dot-rain';
 
 export type NatureEvent =
     | { type: 'bloomed'; id: string }

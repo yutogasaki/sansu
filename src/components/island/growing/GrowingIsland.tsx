@@ -24,6 +24,8 @@ import { placementName } from './placementName';
 import { CardView, FriendsPanel, ShowPanel, StoryView, VisitPicker, type ShowChoice } from './GrowingPanels';
 import { canvasBlob, drawIslandCard, saveImage, type CardFrame } from './islandCard';
 import { FLOWER_NAME } from './flowerGeometry';
+import { WonderBook } from './WonderBook';
+import { DISCOVERIES } from '../../../domain/growingIsland/discoveries';
 import { FlowerBook } from './FlowerBook';
 import type { Ghost } from './objectLayer';
 import type { ShownMoment, WorldCamera } from './GrowingWorld';
@@ -56,7 +58,7 @@ import './wholeAppUi.css';
 
 const GrowingWorld = lazy(() => import('./GrowingWorld'));
 type Placing = { kind: SeedKind | LandmarkKind; seed: boolean; id?: string; mode: 'new' | 'move' | 'unstore'; cell?: Cell; keepsake?: string; color?: FlowerColor };
-type Panel = 'tray' | 'landmarks' | 'stored' | 'friends' | 'show' | 'visit' | 'flowers' | 'trace' | 'guide' | 'places' | 'voyages' | 'view' | 'expand' | 'terrain' | undefined;
+type Panel = 'tray' | 'landmarks' | 'stored' | 'friends' | 'show' | 'visit' | 'flowers' | 'wonders' | 'trace' | 'guide' | 'places' | 'voyages' | 'view' | 'expand' | 'terrain' | undefined;
 type Visit = { id: string; name: string; state: GrowingState; sent: boolean };
 
 function speak(text: string) {
@@ -314,6 +316,20 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         if (adviceKey) camera.current?.showCells(advised);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [adviceKey]);
+    // A new しまの ふしぎ is said once, where the child is looking (§1.4). Surprises already speak for themselves.
+    const seenDiscoveries = useRef<{ island: string; ids: Set<string> } | undefined>(undefined);
+    useEffect(() => {
+        if (!own || visit) return;
+        const ids = own.discoveries ?? [], island = `${profileId}:${ownIslandId}`, known = seenDiscoveries.current;
+        seenDiscoveries.current = { island, ids: new Set(ids) };
+        if (!known || known.island !== island) return;
+        const fresh = DISCOVERIES.filter(d => !d.id.startsWith('moment:') && ids.includes(d.id) && !known.ids.has(d.id));
+        if (fresh.length) {
+            setLine(fresh.length > 1 ? `ふしぎずかんに「${fresh[0].name}」ほか ${fresh.length - 1}こが のったよ` : `ふしぎずかんに「${fresh[0].name}」が のったよ。${fresh[0].line}`);
+            audio.play('discovery');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [own?.discoveries, profileId, ownIslandId, visit]);
     const placeStatus = useMemo(() => own?.placeProgress?.selected ? placeStatuses(own).find(status => status.id === own.placeProgress!.selected) : undefined, [own]);
 
     const loadFaces = useCallback((limit?: number) => {
@@ -704,6 +720,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             onTrace={() => openHomeTool('trace', '.growing-menu-button')}
             onShow={() => openHomeTool('show', '.growing-menu-button')}
             onFlowers={() => openHomeTool('flowers', '.growing-menu-button')}
+            onWonders={placeGrowthEnabled() ? () => openHomeTool('wonders', '.growing-menu-button') : undefined}
             onGuide={() => openBook(undefined, 'menu')} />}
         {Boolean(playMoment || line || visit || showRevisitFlower) && !placing && !panel && !menu && !selected && !bridgeChoice && !bridgeBusy && !guide.cue && !guide.notice && <p className="growing-bubble" role="status"><span aria-hidden="true">ぽこもこ</span>{bubble}
             {showRevisitFlower && revisitFlower && <button type="button" className="growing-revisit-flower" data-revisit-flower-link
@@ -734,6 +751,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         {!visit && panel === 'voyages' && <VoyageChart profileId={profileId} state={own} busy={island.busy} onClose={closeHomeTool}
             onSail={island.sail} onFocus={id => { setSelected(undefined); setFocus({ id, n: Date.now() }); }} />}
         {!visit && panel === 'flowers' && <FlowerBook pictures={catalogPictures} state={own} onClose={closeHomeTool} />}
+        {!visit && panel === 'wonders' && <WonderBook state={own} onClose={closeHomeTool} />}
         {!visit && panel === 'guide' && <GrowingGuideBook state={own} busy={island.busy} initialMemory={guideMemory} onClose={closeBook}
             onPlaces={() => openPlaces()}
             onChoose={(id, play) => void run({ type: 'choose-goal', id }, () => { guide.pause(); if (play) goalAction(id); })}

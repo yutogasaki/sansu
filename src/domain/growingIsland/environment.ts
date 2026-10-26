@@ -46,18 +46,22 @@ export const wonderForm = (style?: PlotStyle): WonderForm => style === 'tree' ||
 const wonderFeature = (style?: PlotStyle): Feature => { const form = wonderForm(style); return form === 'heart-tree' ? 'flower' : form === 'dot-arch' ? 'light' : 'farm'; };
 export const BLOOM_HOURS = 6;
 
+/** A light on raised ground reaches one cell further (§1.4). */
+const raised = (state: GrowingState, cell: Cell) => (terrainOf(state)?.heights[key(cell)] ?? 0) >= 1 ? 1 : 0;
+
+type FeaturePoint = { cell: Cell; feature: Feature; points: number; reach?: number };
 /** Feature points of everything that stands on the island (spec 52 §3.2, §6). */
-export function features(state: GrowingState, world?: IslandWorld): { cell: Cell; feature: Feature; points: number }[] {
+export function features(state: GrowingState, world?: IslandWorld): FeaturePoint[] {
     world ??= editableIslandWorld(state);
-    const reached = connectedWaterChannels(waterLayout(state, world)), out: { cell: Cell; feature: Feature; points: number }[] = [];
+    const reached = connectedWaterChannels(waterLayout(state, world)), out: FeaturePoint[] = [];
     for (const l of state.landmarks) {
         if (!l.cell || world && !onLand(state, l.cell, world)) continue;
         if (l.kind === 'water-bowl' || l.kind === 'fountain') out.push({ cell: l.cell, feature: 'water', points: 2 });
         else if (l.kind === 'water-channel' && reached.has(key(l.cell))) out.push({ cell: l.cell, feature: 'water', points: 1 });
         else if (l.kind === 'sapling') out.push({ cell: l.cell, feature: 'tree', points: l.growth >= TREE_MATURE_HOURS ? 2 : 1 });
         else if (l.kind === 'flower' && growthStage({ kind: 'flower', growth: l.growth }) === 2) out.push({ cell: l.cell, feature: 'flower', points: 1 });
-        else if (l.kind === 'lantern') out.push({ cell: l.cell, feature: 'light', points: 2 });
-        else if (l.kind === 'lighthouse') out.push({ cell: l.cell, feature: 'light', points: 4 });
+        else if (l.kind === 'lantern') out.push({ cell: l.cell, feature: 'light', points: 2, reach: raised(state, l.cell) });
+        else if (l.kind === 'lighthouse') out.push({ cell: l.cell, feature: 'light', points: 4, reach: raised(state, l.cell) });
         else if (l.kind === 'planter') out.push({ cell: l.cell, feature: 'farm', points: 1 });
     }
     for (const p of state.plots) {
@@ -77,7 +81,7 @@ export function features(state: GrowingState, world?: IslandWorld): { cell: Cell
 export function scoresNear(state: GrowingState, cell: Cell, radius = RULES.styleRadius, all?: ReturnType<typeof features>, world?: IslandWorld): Scores {
     world ??= editableIslandWorld(state);
     const scores = empty();
-    for (const f of all ?? features(state, world)) if (distance(f.cell, cell) <= radius && (!world || onLand(state, f.cell, world))) scores[f.feature] += f.points;
+    for (const f of all ?? features(state, world)) if (distance(f.cell, cell) <= radius + (f.reach ?? 0) && (!world || onLand(state, f.cell, world))) scores[f.feature] += f.points;
     return scores;
 }
 

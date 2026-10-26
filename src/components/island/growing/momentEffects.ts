@@ -17,8 +17,11 @@ export class MomentEffects {
         this.parent.add(root); this.live.push({ root, start, life, tick });
     }
 
-    play(moment: Moment, at: T.Vector3, now: number, reduced: boolean) {
+    play(moment: Moment, at: T.Vector3, now: number, reduced: boolean, placed = false) {
         if (moment === 'rainbow') this.rainbow(at, now);
+        else if (moment === 'full-moon') this.fullMoon(now, reduced);
+        else if (moment === 'dot-rain') this.dotRain(at, now, reduced);
+        else if (moment === 'whale' && placed) this.whale(now, reduced, at);
         else if (moment === 'butterflies') this.butterflies(at, now, reduced);
         else if (moment === 'guest-water' || moment === 'guest-grove') this.guest(moment, at, now, reduced);
         else if (moment === 'whale') this.whale(now, reduced);
@@ -99,7 +102,7 @@ export class MomentEffects {
     }
 
     /** くじら: a whale rises from the sea beyond the pier and blows a spout, then dives. */
-    private whale(now: number, reduced: boolean) {
+    private whale(now: number, reduced: boolean, cove?: T.Vector3) {
         const root = new T.Group(); root.name = 'moment-whale';
         const body = new T.Mesh(new T.SphereGeometry(.9, 20, 14), new T.MeshStandardMaterial({ color: '#3d5f86', roughness: .6 }));
         body.scale.set(1.8, .55, .8); root.add(body);
@@ -108,10 +111,13 @@ export class MomentEffects {
         const tail = new T.Mesh(new T.ConeGeometry(.35, .5, 3), new T.MeshStandardMaterial({ color: '#3d5f86', roughness: .6 }));
         tail.rotation.z = Math.PI / 2; tail.position.set(-1.8, .1, 0); tail.scale.z = .3; root.add(tail);
         const spout = new T.Mesh(new T.ConeGeometry(.18, .9, 10, 1, true), basic('#e6f7ff', 0)); spout.position.set(.7, .9, 0); root.add(spout);
-        root.position.set(4.5, -1, 5.5); root.rotation.y = -.6;
+        // In a cove the child dug, a young whale comes into their own water.
+        const base = cove ? -.95 : -1.1, lift = cove ? .5 : 1.15;
+        if (cove) { root.position.set(cove.x, base, cove.z); root.scale.setScalar(.42); } else root.position.set(4.5, -1, 5.5);
+        root.rotation.y = -.6;
         this.add(root, now, 12000, t => {
             const rise = Math.sin(Math.min(1, t * 1.15) * Math.PI);
-            root.position.y = -1.1 + rise * (reduced ? .8 : 1.15);
+            root.position.y = base + rise * (reduced ? lift * .7 : lift);
             (spout.material as T.MeshBasicMaterial).opacity = t > .25 && t < .6 ? .7 * Math.sin((t - .25) / .35 * Math.PI) : 0;
             spout.scale.y = 1 + Math.sin(now / 120) * .1;
         });
@@ -155,6 +161,44 @@ export class MomentEffects {
             root.position.copy(base).add(new T.Vector3(Math.sin(age / 2200) * .6, reduced ? 0 : Math.sin(age / 900) * .1, 0));
             root.traverse(o => { if (o instanceof T.Mesh) (o.material as T.MeshBasicMaterial).opacity = .92 * fade; });
             rabbit.rotation.y = Math.sin(age / 1300) * .5;
+        });
+    }
+
+    /** まんげつの みち: the full moon rises pale over the far sea and lays a path of light toward the island. */
+    private fullMoon(now: number, reduced: boolean) {
+        const root = new T.Group(); root.name = 'moment-full-moon';
+        const moon = new T.Mesh(new T.CircleGeometry(.9, 32), basic('#fff6cf', 0)); moon.position.set(0, 1.4, -9); root.add(moon);
+        const halo = new T.Mesh(new T.RingGeometry(.95, 1.5, 32), basic('#fffbe6', 0)); halo.position.copy(moon.position); root.add(halo);
+        const path = Array.from({ length: 10 }, (_, i) => {
+            const streak = new T.Mesh(new T.PlaneGeometry(1.3 - i * .08, .1), basic('#fff6cf', 0));
+            streak.rotation.x = -Math.PI / 2; streak.position.set(0, -.38, -8 + i * .7); root.add(streak); return streak;
+        });
+        this.add(root, now, 14000, (t, age) => {
+            const fade = Math.min(1, t * 5, (1 - t) * 4);
+            (moon.material as T.MeshBasicMaterial).opacity = .95 * fade; (halo.material as T.MeshBasicMaterial).opacity = .25 * fade;
+            path.forEach((streak, i) => { (streak.material as T.MeshBasicMaterial).opacity = fade * (.35 + (reduced ? .2 : Math.max(0, Math.sin(age / 300 + i)) * .4)); });
+        });
+    }
+
+    /** みずたまの あめ: coloured polka dots fall softly around a ふしぎの品 and melt into the grass. */
+    private dotRain(center: T.Vector3, now: number, reduced: boolean) {
+        const root = new T.Group(); root.name = 'moment-dot-rain';
+        const colors = ['#e23b3b', '#ffd23f', '#3fb8e8', '#6ccf6b', '#f25c8a', '#9b6ae0'];
+        const drops = Array.from({ length: reduced ? 16 : 36 }, (_, i) => {
+            const dot = new T.Mesh(new T.SphereGeometry(.05 + (i % 3) * .02, 10, 8), basic(colors[i % colors.length], .95));
+            const a = i * 2.4, r = .4 + (i % 7) * .38;
+            dot.userData.from = new T.Vector3(center.x + Math.cos(a) * r, center.y + 3 + (i % 5) * .5, center.z + Math.sin(a) * r);
+            dot.userData.delay = (i % 9) * 450; root.add(dot); return dot;
+        });
+        this.add(root, now, 9000, (_t, age) => {
+            for (const dot of drops) {
+                const from = dot.userData.from as T.Vector3, local = Math.max(0, age - (dot.userData.delay as number));
+                const y = Math.max(center.y + .05, from.y - local * .0016);
+                dot.position.set(from.x, y, from.z);
+                const landed = y <= center.y + .05;
+                (dot.material as T.MeshBasicMaterial).opacity = local <= 0 ? 0 : landed ? Math.max(0, .95 - (local - (from.y - center.y) / .0016) / 1200) : .95;
+                if (landed) dot.scale.set(1.4, .3, 1.4);
+            }
         });
     }
 

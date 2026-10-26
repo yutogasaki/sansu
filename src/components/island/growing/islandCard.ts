@@ -59,7 +59,9 @@ export async function drawIslandCard(state: GrowingState, island: HTMLCanvasElem
         g.fillStyle = '#3a3346'; g.font = font(24, 700); g.fillText(villagerName(v).slice(0, 6), x + 60, y + 150);
     });
     g.font = font(38); g.fillStyle = '#3a3346';
-    g.fillText(`なかま ${state.villagers.length}にん ・ げんき Lv${islandLevel(state)}`, CARD_WIDTH / 2, 1240);
+    // The island's own ふしぎ (§1.4) travel with the card: how many it has shown, and a rainbow tree if it grew one.
+    const wonders = state.discoveries?.length ?? 0, rainbow = state.landmarks.some(l => l.cell && l.rare === 'rainbow');
+    g.fillText(`なかま ${state.villagers.length}にん ・ げんき Lv${islandLevel(state)}${wonders ? ` ・ ふしぎ ${wonders}` : ''}${rainbow ? ' ・ にじの木' : ''}`, CARD_WIDTH / 2, 1240);
     const keep = state.keepsakes.filter(k => k.cell).map(k => KEEPSAKE_ICON[keepsakeKind(k.unitId)]).slice(0, 10).join(' ');
     if (keep) { g.font = font(34, 700); g.fillText(`まなびの きねんひん ${keep}`, CARD_WIDTH / 2, 1295); }
     return canvas;

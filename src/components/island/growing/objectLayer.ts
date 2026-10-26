@@ -107,6 +107,26 @@ function ring(color: string, radius = .44) {
     mesh.rotation.x = Math.PI / 2; mesh.position.y = .05; mesh.userData.ownMaterial = true; return mesh;
 }
 
+/**
+ * にじの 木 (§1.4): rainbow leaf masses crown a rare tree. `drawn` is what shows the tree:
+ * its own model, or the grown place that draws it. The masses hang from the tree's holder.
+ */
+function rainbowCrown(holder: T.Object3D, drawn: T.Object3D) {
+    const colors = ['#f19a9a', '#f5c27a', '#f3e38a', '#a9d79a', '#95c6e8', '#b8a3dc'];
+    const box = new T.Box3().setFromObject(drawn);
+    if (box.isEmpty()) return;
+    const top = holder.worldToLocal(new T.Vector3((box.min.x + box.max.x) / 2, box.max.y, (box.min.z + box.max.z) / 2));
+    const spread = Math.max(.25, Math.min(.7, (box.max.x - box.min.x) * .3));
+    const crown = new T.Group(); crown.name = 'rainbow-crown'; crown.position.set(top.x, 0, top.z);
+    colors.forEach((color, i) => {
+        const a = i / colors.length * Math.PI * 2;
+        const blob = new T.Mesh(new T.IcosahedronGeometry(.2, 0), new T.MeshStandardMaterial({ color, roughness: .7, flatShading: true }));
+        blob.position.set(Math.cos(a) * spread, top.y - .12 + (i % 2) * .14, Math.sin(a) * spread);
+        blob.userData.ownMaterial = true; crown.add(blob);
+    });
+    holder.add(crown); holder.userData.rare = 'rainbow';
+}
+
 /** A big tree grows a size larger, and the island's lord tree much larger with a ring of flowers (§5). */
 function ageTree(m: IslandMaterials, state: GrowingState, landmark: Landmark, holder: T.Object3D) {
     const age = treeAge(state, landmark.id);
@@ -231,6 +251,16 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
     }
     for (const k of state.keepsakes) if (k.cell) add(k.id, buildKeepsake(m, keepsakeKind(k.unitId)), k.cell);
     const placeRoot = buildPlaceGeometry(state, layout, visiblePlaces, relations, false, native, flowerSupport, cove); root.add(placeRoot);
+    const rare = state.landmarks.filter(l => l.kind === 'sapling' && l.rare === 'rainbow' && objects.has(l.id));
+    if (rare.length) {
+        root.updateMatrixWorld(true);
+        for (const l of rare) {
+            const holder = objects.get(l.id)!;
+            const place = grownTrees.has(l.id) ? placeRoot.getObjectsByProperty('name', 'place-owned-tree').find(o => o.userData.ownerId === l.id) : undefined;
+            const drawn = place ?? holder.children[0];
+            if (drawn) rainbowCrown(holder, drawn);
+        }
+    }
     const shoulderRoots: { tree: T.Object3D; extension: T.Group; ownerId: string }[] = [];
     if (shoulder && native) {
         const trees: T.Object3D[] = [];

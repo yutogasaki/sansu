@@ -166,3 +166,9 @@
 .growing-catalog .growing-card { min-height: 130px; gap: 5px; padding: 12px 8px; }
 .growing-catalog .growing-catalog-growth { padding: 3px 7px; border-radius: 6px; background: var(--pokomoko-canvas); color: var(--pokomoko-ink); font-size: 11px; }
 .growing-catalog :is(button, [role="tabpanel"]):focus-visible { outline: 3px solid var(--pokomoko-blue); outline-offset: -3px; }
+.growing-wonder-group h3 { margin: 12px 0 6px; font-size: 14px; }
+.growing-wonder-dot { color: #fff; font-size: 20px; }
+.growing-flower-card:not([data-known]) .growing-wonder-dot { color: #a89f90; }
+.growing-story-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.growing-story-compare figure { margin: 0; text-align: center; }
+.growing-story-compare figcaption { margin-top: 4px; font-size: 13px; font-weight: 700; color: var(--pokomoko-muted); }
