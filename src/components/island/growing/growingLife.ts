@@ -119,8 +119,10 @@ export class GrowingLife {
         this.walkable = walkableCells(state, this.world); this.seats = layer.seats;
         this.homePaths = new Set([...reachableFromHome(state, this.walkable, this.world)].filter(cell => this.walkable.has(cell)));
         const allSites = this.world ? new Set(this.world.sites.map(site => key(site.cell))) : undefined;
-        const shown = [...state.villagers].filter(v => !v.away).sort((a, b) => b.arrivedAt - a.arrivedAt).slice(0, VISIBLE_WALKERS);
-        const keep = new Set(['pokomoko', 'visitor', ...shown.map(v => v.id), ...state.arrivals]);
+        const present = state.villagers.filter(v => !v.away);
+        const arrivals = new Set(state.arrivals);
+        const shown = present.filter(v => !arrivals.has(v.id)).sort((a, b) => b.arrivedAt - a.arrivedAt).slice(0, VISIBLE_WALKERS);
+        const keep = new Set(['pokomoko', 'visitor', ...shown.map(v => v.id), ...present.filter(v => arrivals.has(v.id)).map(v => v.id)]);
         for (const [id, walker] of this.walkers) if (!keep.has(id) || id === 'visitor') {
             if (id === 'pokomoko') continue;
             disposeActor(walker.actor); this.walkers.delete(id);

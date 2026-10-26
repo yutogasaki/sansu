@@ -1,0 +1,17 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>住人操作の隔離診断</title><body><div id="root"></div><script type="module">
+import React, {useState} from 'react';
+import {createRoot} from 'react-dom/client';
+import {GrowingSheet} from '/src/components/island/growing/GrowingSheet.tsx';
+import {newIsland, applyIntent} from '/src/domain/growingIsland/index.ts';
+import '/src/components/island/growing/growing.css';
+const h=React.createElement;
+function App(){
+ const [state,setState]=useState(()=>{const s=newIsland('resident-audit-synthetic',0);s.tutorial='done';s.villagers=['a','b'].map((id,i)=>({id,name:i?'つき':'ほし',species:'rabbit',variant:{color:i,accessory:0,sparkle:false},trait:'mellow',home:'pokomoko',arrivedAt:i}));return s;});
+ const [target,setTarget]=useState('villager:a');
+ const action=a=>{if(a.type==='name')setState(s=>applyIntent(s,{id:crypto.randomUUID(),command:{type:'name',target:target.slice(9),name:a.name}}).state);};
+ return h('main',null,h('p',null,'合成データでの住人切替診断・保存DBは使用しません'),h('nav',null,...['a','b'].map(id=>h('button',{key:id,onClick:()=>setTarget('villager:'+id)},'住人'+id+'を選ぶ')),h('button',{onClick:()=>setState(s=>({...s,seed:s.seed+'-other'}))},'別の本人へ')),
+ h('output',{'data-testid':'names'},JSON.stringify(state.villagers.map(v=>({id:v.id,name:v.name})))),
+ h(GrowingSheet,{state,target,onAction:action,onClose:()=>{}}));
+}
+createRoot(document.getElementById('root')).render(h(App));
+</script></body></html>

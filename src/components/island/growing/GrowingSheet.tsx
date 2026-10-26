@@ -23,9 +23,17 @@ const STYLE_NAME = { water: '水べの', tree: '木の', flower: '花の', light
 const TRAIT_NAME = { lively: 'げんき', mellow: 'のんびり', shy: 'はずかしがり', hungry: 'くいしんぼう' } as const;
 
 /** What a tapped thing is, and the few things a child can do with it. */
-export function GrowingSheet({ state, target, onAction, onClose, portrait }: { portrait?: string;
+interface GrowingSheetProps {
+    portrait?: string;
     state: GrowingState; target: string; onAction: (action: SheetAction) => void; onClose: () => void;
-}) {
+}
+
+export function GrowingSheet(props: GrowingSheetProps) {
+    // A draft belongs to this island and selection, never the next tapped friend.
+    return <GrowingSheetContents key={JSON.stringify([props.state.seed, props.target])} {...props} />;
+}
+
+function GrowingSheetContents({ state, target, onAction, onClose, portrait }: GrowingSheetProps) {
     const [naming, setNaming] = useState(false), [name, setName] = useState('');
     const plot = state.plots.find(p => p.id === target), landmark = state.landmarks.find(l => l.id === target);
     const villager = state.villagers.find(v => `villager:${v.id}` === target);

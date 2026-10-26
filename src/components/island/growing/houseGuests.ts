@@ -8,7 +8,7 @@ const localDay = (now: Date) => `${now.getFullYear()}-${now.getMonth() + 1}-${no
  * set tomorrow; えま and えいた come a little more often once they live on the island.
  */
 export function houseGuests(state: GrowingState, now = new Date()): Villager[] {
-    const day = localDay(now), present = state.villagers.filter(v => !v.away);
+    const day = localDay(now), present = state.villagers.filter(v => !v.away && !state.arrivals.includes(v.id));
     const count = Math.min(3, present.length, 1 + Math.floor(roll(state.seed, 'house-guests', day, 0) * 3));
     return present.map(v => ({ v, r: roll(state.seed, 'house-guest', day, Number(v.id.replace(/\D/g, '')) || v.arrivedAt) / (v.species === 'girl' || v.species === 'boy' ? 1.6 : 1) }))
         .sort((a, b) => a.r - b.r).slice(0, count).map(entry => entry.v);

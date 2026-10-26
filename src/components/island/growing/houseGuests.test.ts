@@ -19,3 +19,14 @@ describe('friends visiting the house', () => {
         expect(houseGuests({ ...state, villagers: [] }, new Date())).toEqual([]);
     });
 });
+
+
+it('keeps a friend on the boat out of the house until disembarking, without losing ownership', () => {
+    const state = newIsland('boat-guest', 0), arriving = friend(1);
+    state.villagers = [arriving]; state.arrivals = [arriving.id];
+    const before = structuredClone(state);
+    expect(houseGuests(state, new Date(2026, 9, 26, 12))).toEqual([]);
+    expect(state).toEqual(before);
+    state.arrivals = [];
+    expect(houseGuests(state, new Date(2026, 9, 26, 12))).toEqual([arriving]);
+});

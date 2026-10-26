@@ -347,3 +347,47 @@ describe('GrowingLife resource ownership', () => {
         } finally { life.dispose(); layer.dispose(); m.dispose(); }
     });
 });
+
+
+it('hides an away arrival, retains its boat queue and brings it back before disembarking', () => {
+    const state = newIsland('away-arrival', T0);
+    const friend = { ...state.pier.visitor, id: 'waiting-friend', home: 'pokomoko', arrivedAt: 0 };
+    state.villagers = [friend]; state.arrivals = [friend.id];
+    const m = new IslandMaterials('moon-garden'), layout = sceneLayout(state);
+    const life = new GrowingLife(m, { id: 'pokomoko', root: new T.Group(), body: new T.Group(), feet: [] });
+    const layer = buildObjectLayer(m, state, layout);
+    try {
+        life.sync(state, layout, layer);
+        expect(life.actorIds()).toContain(friend.id);
+        const away = applyIntent(state, { id: 'away', command: { type: 'away', id: friend.id, away: true } }).state;
+        life.sync(away, layout, layer);
+        expect(life.actorIds()).not.toContain(friend.id);
+        expect(away.arrivals).toEqual([friend.id]);
+        expect(away.villagers).toHaveLength(1);
+        const returned = applyIntent(away, { id: 'back', command: { type: 'away', id: friend.id, away: false } }).state;
+        life.sync(returned, layout, layer);
+        expect(life.actorIds()).toContain(friend.id);
+        expect(life.pick(friend.id)).toBe(false);
+        const landed = applyIntent(returned, { id: 'landed', command: { type: 'disembark', id: friend.id } }).state;
+        life.sync(landed, layout, layer);
+        expect(life.pick(friend.id)).toBe(true);
+    } finally { life.dispose(); layer.dispose(); m.dispose(); }
+});
+
+
+it('keeps twelve landed residents active while a newer arrival waits on the boat', () => {
+    const state = newIsland('landed-quota', T0);
+    state.villagers = Array.from({ length: VISIBLE_WALKERS + 1 }, (_, i) => ({ ...state.pier.visitor,
+        id: `quota-${i}`, home: 'pokomoko', arrivedAt: i }));
+    state.arrivals = [state.villagers[VISIBLE_WALKERS].id];
+    const before = structuredClone(state), m = new IslandMaterials('moon-garden'), layout = sceneLayout(state);
+    const life = new GrowingLife(m, { id: 'pokomoko', root: new T.Group(), body: new T.Group(), feet: [] });
+    const layer = buildObjectLayer(m, state, layout);
+    try {
+        life.sync(state, layout, layer);
+        expect(life.actorIds().filter(id => id.startsWith('quota-'))).toHaveLength(VISIBLE_WALKERS + 1);
+        for (const v of state.villagers.slice(0, VISIBLE_WALKERS)) expect(life.pick(v.id)).toBe(true);
+        expect(life.pick(state.arrivals[0])).toBe(false);
+        expect(state).toEqual(before);
+    } finally { life.dispose(); layer.dispose(); m.dispose(); }
+});
