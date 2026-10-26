@@ -1,4 +1,4 @@
-import { editableIslandWorld, editableTerrainSegmentSupported } from '../../../domain/growingIsland/editableTerrainWorld';
+import { editableIslandWorld, editableTerrainSegmentSupported, terracePlanOf } from '../../../domain/growingIsland/editableTerrainWorld';
 import { derivePlaces } from '../../../domain/growingIsland/places';
 import { likesOf } from '../../../domain/growingIsland/rules';
 import { chooseLifeTarget } from './lifeChoices';
@@ -278,8 +278,27 @@ export class GrowingLife {
             add(`walk:${x},${z}`, { x, z }, [], false, undefined, true);
         }
         if (!this.world && this.state.bridge) add('bridge', bridgeEnd(this.state), ['quiet'], false, undefined, true);
+        // Shaped ground is somewhere to go: a hilltop to look out from, a wide flat plaza to play on.
+        for (const spot of this.terrainSpots()) add(spot.id, spot.cell, [spot.like], true);
         const chosen = chooseLifeTarget(choices, friend ? likesOf(friend) : [], walker.actor.trait ?? 'mellow', walker.recent ?? []);
         if (chosen) { walker.choice = chosen.id; walker.placeTarget = chosen.destination; return chosen.cell; }
+    }
+
+    /** Open hilltops (raised terrace cells) and 2×2 flat open plazas on the terrace ground, a few at a time. */
+    private terrainSpots(): { id: string; cell: Cell; like: 'quiet' | 'play' }[] {
+        const plan = this.world ? terracePlanOf(this.world) : undefined; if (!plan) return [];
+        const open = (k: string) => plan.dry.has(k) && !plan.occupied.has(k) && this.homePaths.has(k);
+        const spots: { id: string; cell: Cell; like: 'quiet' | 'play' }[] = [];
+        for (const [k, level] of plan.levels) {
+            if (!open(k)) continue;
+            const [x, z] = k.split(',').map(Number);
+            if (level >= 1) spots.push({ id: `hill:${k}`, cell: { x, z }, like: 'quiet' });
+            const square = [k, key({ x: x + 1, z }), key({ x, z: z + 1 }), key({ x: x + 1, z: z + 1 })];
+            if (square.every(c => open(c) && plan.levels.get(c) === level)) spots.push({ id: `plaza:${k}`, cell: { x, z }, like: 'play' });
+        }
+        // A couple of each keep shaped ground in the day without crowding out the places.
+        const pick = (kind: string) => spots.filter(s => s.id.startsWith(kind)).sort(() => Math.random() - .5).slice(0, 2);
+        return [...pick('hill:'), ...pick('plaza:')];
     }
 
     private chooseLegacyTarget(walker: Walker): Cell | undefined {
@@ -692,6 +711,13 @@ export class GrowingLife {
                 }
                 if (!w.path.length) {
                     if (w.choice?.startsWith('touch:')) { w.mode = 'idle'; w.until = now + 3000; this.guardPose(w, now, receiptStart); continue; }
+                    // On a hilltop, a friend turns outward and takes in the view for a while.
+                    if (w.choice?.startsWith('hill:') && this.layout) {
+                        const centre = { x: this.layout.center, z: (this.layout.bounds.depth - 1) / 2 };
+                        w.heading = Math.atan2(w.at.x - centre.x, w.at.z - centre.z); w.mode = 'idle'; w.until = now + 5000;
+                        w.recent = [...(w.recent ?? []).filter(id => id !== w.choice), w.choice].slice(-3);
+                        this.guardPose(w, now, receiptStart); continue;
+                    }
                     if (this.concert?.invited.has(id)) { w.mode = 'idle'; w.until = this.concert.until; }
                     if (w.choice && !w.placeTarget && !w.choice.startsWith('seat:')) w.recent = [...(w.recent ?? []).filter(id => id !== w.choice), w.choice].slice(-3);
                     if (this.enterPlace(w, now)) { this.guardPose(w, now, receiptStart); continue; }

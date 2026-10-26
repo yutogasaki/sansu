@@ -1,4 +1,4 @@
-import { editableIslandWorld } from './editableTerrainWorld';
+import { editableIslandWorld, editableTerracePlan, terrainOf } from './editableTerrainWorld';
 import { growthStage, type ItemKind } from '../islandLife/model';
 import { connectedWaterChannels, shadeInfluence, waterInfluence, type WaterLayout } from '../islandLife/waterChannels';
 import { RULES } from './rules';
@@ -19,6 +19,26 @@ export function waterLayout(state: GrowingState, world?: IslandWorld): WaterLayo
 }
 
 export const TREE_MATURE_HOURS = 18;
+
+const dugCache = new Map<string, Cell[]>();
+/**
+ * Cells the child dug below the sea (a cove, a pond, a stream) on the terrace ground. They
+ * water the soil around them like a water bowl, and count toward the island's water.
+ */
+export function dugWater(state: GrowingState): Cell[] {
+    const terrain = terrainOf(state);
+    if (!terrain || !Object.values(terrain.heights).some(height => height < 0)) return [];
+    const id = JSON.stringify([state.land, terrain.heights]), known = dugCache.get(id);
+    if (known) return known;
+    const plan = editableTerracePlan(state);
+    const cells = plan ? [...plan.levels.keys()].filter(k => !plan.dry.has(k)).map(k => { const [x, z] = k.split(',').map(Number); return { x, z }; }) : [];
+    if (dugCache.size > 32) dugCache.clear();
+    dugCache.set(id, cells); return cells;
+}
+const dugInfluence = (state: GrowingState, cell: Cell) =>
+    Math.max(0, ...dugWater(state).map(water => Math.max(0, Math.min(1, 1 - Math.max(0, distance(water, cell) - 1) / 3))));
+/** Raised terrace ground: trees there catch the sun and grow a little faster. */
+export const sunnyHill = (state: GrowingState, cell: Cell) => Boolean(editableTerracePlan(state)) && (terrainOf(state)?.heights[key(cell)] ?? 0) >= 1;
 
 /** A wonder seed's form follows its surroundings (§3.5): heart tree, polka-dot arch or pumpkin. */
 export type WonderForm = 'heart-tree' | 'dot-arch' | 'pumpkin';
@@ -49,6 +69,8 @@ export function features(state: GrowingState, world?: IslandWorld): { cell: Cell
             out.push({ cell: p.cell, feature, points: 1 });
         }
     }
+    // Dug water joins the island's water, a point per cell up to six.
+    for (const cell of dugWater(state).slice(0, 6)) out.push({ cell, feature: 'water', points: 1 });
     return out;
 }
 
@@ -98,12 +120,13 @@ export function soilTargetAt(state: GrowingState, cell: Cell, layout?: WaterLayo
     world ??= editableIslandWorld(state);
     layout ??= waterLayout(state, world);
     reached ??= connectedWaterChannels(layout);
-    return Math.max(0, Math.min(1, RULES.soilBase + .5 * waterInfluence(layout, cell, reached) + .08 * shadeInfluence(layout, cell)));
+    const water = Math.max(waterInfluence(layout, cell, reached), dugInfluence(state, cell));
+    return Math.max(0, Math.min(1, RULES.soilBase + .5 * water + .08 * shadeInfluence(layout, cell)));
 }
 
 export function waterAt(state: GrowingState, cell: Cell, world?: IslandWorld) {
     world ??= editableIslandWorld(state);
-    return !world || onLand(state, cell, world) ? waterInfluence(waterLayout(state, world), cell) : 0;
+    return !world || onLand(state, cell, world) ? Math.max(waterInfluence(waterLayout(state, world), cell), dugInfluence(state, cell)) : 0;
 }
 
 export function soilAt(state: GrowingState, cell: Cell) { return state.soil[key(cell)] ?? RULES.soilBase; }

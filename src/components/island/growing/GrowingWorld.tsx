@@ -1,4 +1,6 @@
 import { landscapeCell } from '../../../domain/growingIsland/landscape';
+import { dugWater } from '../../../domain/growingIsland/environment';
+import { TERRAIN_SEA_LEVEL } from '../../../domain/growingIsland/editableTerrainWorld';
 import { placePlay } from '../../../domain/growingIsland/placePlay';
 import { concertPlace, type SharedPlayReceipt } from '../../../domain/growingIsland/experience';
 import { PlaceTouchEffects } from './placeTouchEffects';
@@ -209,6 +211,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
         let bridgeClear = 0;
         disposers.push(() => window.clearTimeout(bridgeClear));
         const effects = new WorldEffects(world.scene); disposers.push(() => effects.dispose());
+        let nextSplash = 0;
         const moments = new MomentEffects(world.scene); disposers.push(() => moments.dispose());
         const camera = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100), view = initialView();
         const savedView = viewKey ? sessionViews.get(viewKey) : undefined;
@@ -641,6 +644,13 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
                 }
             }
             touchEffects.tick(now, reduced);
+            // Coves and ponds the child dug have life in them: now and then a fish leaps.
+            if (!reduced && now > nextSplash) {
+                nextSplash = now + 3500 + Math.random() * 5000;
+                const water = layout.editable ? dugWater(current) : [];
+                const at = water[Math.floor(Math.random() * water.length)];
+                if (at) effects.splash(layout.point(at, 0).setY(TERRAIN_SEA_LEVEL + .01), now);
+            }
             effects.tick(now, delta);
             moments.ambient(now, latest.current.time === 'night', current.landmarks.filter(l => l.cell && (l.kind === 'lantern' || l.kind === 'lighthouse')).length, camera.position.clone().setY(0), reduced);
             moments.tick(now);

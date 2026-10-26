@@ -560,7 +560,9 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         try {
             const safety = { actors: camera.current.terrainActors(), occupiedPlaceTargets: camera.current.occupiedTerrainPlaceTargets(), expectedTerrainRevision: terrainEditingRevision(own) };
             await run({ type: 'terrain-stroke', cells, to: brush, ...safety }, () => {
-                setLine(brush === 'up' ? 'おかが もりあがったよ' : brush === 'sea' ? 'うみが はいってきたよ' : 'たいらに したよ');
+                // Each brush says what the shaped ground will do for the island's life.
+                setLine(brush === 'up' ? 'おかが できたよ。なかまが けしきを ながめにくるよ。おかの 木は はやく そだつよ'
+                    : brush === 'sea' ? 'うみが はいってきたよ。ちかくの 花や 木が よく そだつよ' : 'たいらに したよ。ひろい ところで なかまが あそぶよ');
                 audio.play(brush === 'sea' ? 'water' : 'sand');
             });
         } finally { terrainPending.current = false; }

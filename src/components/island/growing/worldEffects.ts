@@ -38,6 +38,22 @@ export class WorldEffects {
         }
     }
 
+    /** A little fish leaps out of a cove or pond the child dug, with a few drops. */
+    splash(surface: T.Vector3, at: number) {
+        const heading = Math.random() * Math.PI * 2, dx = Math.cos(heading), dz = Math.sin(heading);
+        const fish = new T.Mesh(new T.SphereGeometry(.05, 10, 6), new T.MeshBasicMaterial({ color: '#9fc4d8', transparent: true }));
+        fish.scale.set(1, .55, 2); fish.rotation.y = Math.atan2(dx, dz); fish.position.copy(surface);
+        this.pieces.push({ mesh: fish, start: at, velocity: new T.Vector3(dx * .0006, .0026, dz * .0006) });
+        this.parent.add(fish);
+        for (let i = 0; i < 6; i++) {
+            const drop = new T.Mesh(new T.SphereGeometry(.014, 6, 4), new T.MeshBasicMaterial({ color: '#e8f6fb', transparent: true }));
+            drop.position.copy(surface);
+            const a = i / 6 * Math.PI * 2;
+            this.pieces.push({ mesh: drop, start: at, velocity: new T.Vector3(Math.cos(a) * .0007, .0018 + (i % 2) * .0004, Math.sin(a) * .0007) });
+            this.parent.add(drop);
+        }
+    }
+
     tick(at: number, delta: number) {
         this.pops = this.pops.filter(({ object, start }) => {
             const t = Math.min(1, (at - start) / 650);
