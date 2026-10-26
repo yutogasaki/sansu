@@ -65,7 +65,7 @@ export default function IslandOnboarding() {
             const receipt = await completeOnboardingProfile(chosen, session.ownerId, 'first');
             handingOff.current = true;
             profileStorage.setActiveId(receipt.activeProfileId);
-            if (mounted.current) navigate(`/island?start=learn&profile=${encodeURIComponent(receipt.profile.id)}`, { replace: true });
+            if (mounted.current) navigate(chosen.kokugoCourse ? '/kokugo' : `/island?start=learn&profile=${encodeURIComponent(receipt.profile.id)}`, { replace: true });
         });
     };
     if (session === undefined) return <main className="island-page first-play-read" aria-busy={!error}>

@@ -176,6 +176,12 @@ export const deleteProfileOwnedIndexedDbRows = async (
     database: SansuDatabase,
     id: string,
 ) => Promise.all([
+    database.kokugoCourses.delete(id),
+    database.kokugoProgress.where('profileId').equals(id).delete(),
+    database.kokugoPlans.where('profileId').equals(id).delete(),
+    database.kokugoEvents.where('profileId').equals(id).delete(),
+    database.kokugoOutbox.where('profileId').equals(id).delete(),
+    database.kokugoWorks.where('profileId').equals(id).delete(),
     database.foundationCourses.delete(id),
     database.foundationProgress.where("profileId").equals(id).delete(),
     database.foundationPlans.where("profileId").equals(id).delete(),
@@ -217,6 +223,7 @@ export const deleteProfile = async (id: string) => {
     await db.transaction(
         "rw",
         [
+            db.kokugoCourses, db.kokugoProgress, db.kokugoPlans, db.kokugoEvents, db.kokugoOutbox, db.kokugoWorks,
             db.foundationCourses, db.foundationProgress, db.foundationPlans, db.foundationEvents, db.foundationOutbox,
             db.challengeRuns, db.challengeEvents, db.challengeSummaries, db.challengeContacts,
             db.appData,

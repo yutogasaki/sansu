@@ -180,6 +180,8 @@ export default defineConfig(({ mode }) => {
                     'foundation/v*/audio/*.mp3',
                     'foundation/v*/pictures/*.svg',
                     'foundation/v*/manifest.json',
+                    'kokugo/v*/audio/*.mp3',
+                    'kokugo/v*/manifest.json',
                     ikimonoArtworkGlob,
                     exploreArtworkGlob,
                     openingRootPullArtworkGlob,

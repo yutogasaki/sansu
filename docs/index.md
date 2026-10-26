@@ -1,5 +1,7 @@
 # Sansu 文書の入口
 
+国語の現行実装契約：[国語コース](product/kokugo.md)、[全配当漢字1,026字](product/kokugo-kanji.md)。
+
 [英語の基礎コース](product/english-foundation.md)：A・B・Cと、音から絵を選ぶ最初の2単元。
 
 
@@ -103,6 +105,8 @@
 - [画面レイアウト44](product/44_display_layout_spec.md)：各画面で何を主役にするか。
 
 ### 学習
+
+- [国語の包括仕様案](product/kokugo-proposal/README.md)：幼児〜小6の検討案。採用部分は国語コースに従う。
 
 - [算数02](product/02_math_skills.md) / [英語03](product/03_english_skills.md)：教材と技能。
 - [学習曲線29](product/29_learning_progression_spec.md)：初回難度と段階進行。

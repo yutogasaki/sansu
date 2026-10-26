@@ -1,3 +1,4 @@
+import { KokugoProgressCard } from '../../components/kokugo/KokugoProgress';
 import { FoundationProgress } from '../../components/progress/FoundationProgress';
 import { IslandMemorialRecovery } from './IslandMemorialRecovery';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -147,6 +148,7 @@ export const ParentsPage: React.FC = () => {
             </SurfacePanel>
 
             <FoundationProgress profileId={profile.id} parent />
+                    <KokugoProgressCard profileId={profile.id} parent />
             <SurfacePanel className="parent-actions">
                 <details className="parent-details parent-check-entry">
                     <summary><span><ClipboardCheck size={22} aria-hidden="true" /><span><strong>確認テスト（20問）</strong><small>理解の確認に · レベルは変わりません</small></span></span><ChevronDown size={20} aria-hidden="true" /></summary>

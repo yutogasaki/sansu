@@ -29,6 +29,7 @@ type MathCheck = OnboardingMathRange;
 type OnboardingSelections = {
     mathCheck: MathCheck | null;
     englishExp: EnglishExp | null;
+    kokugo?: boolean;
 };
 
 export const Onboarding: React.FC = () => {
@@ -136,14 +137,14 @@ const LegacyOnboarding: React.FC<{ intent: OnboardingIntent }> = ({ intent }) =>
         setStep("subject");
     };
 
-    const handleFinish = useCallback(async ({ mathCheck: selectedMathCheck, englishExp: selectedEnglishExp }: OnboardingSelections) => {
+    const handleFinish = useCallback(async ({ mathCheck: selectedMathCheck, englishExp: selectedEnglishExp, kokugo }: OnboardingSelections) => {
         const release = holdPwaUpdateForCriticalPersistence();
         try {
-            const receipt = await completeOnboardingProfile({ name: trimmedName, grade, subject: subjectMode,
-                mathRange: selectedMathCheck, englishRange: selectedEnglishExp }, completionId, intent);
+            const receipt = await completeOnboardingProfile({ name: trimmedName, grade, subject: kokugo ? 'math' : subjectMode,
+                mathRange: selectedMathCheck, englishRange: selectedEnglishExp, kokugoCourse: kokugo }, completionId, intent);
             profileStorage.setActiveId(receipt.activeProfileId);
             if (isMountedRef.current) {
-                navigate("/", { replace: true });
+                navigate(kokugo ? "/kokugo" : "/", { replace: true });
                 // Retain the existing HashRouter recovery after a completed add flow.
                 window.setTimeout(() => {
                     if (window.location.hash === "" || window.location.hash.split('?')[0] === "#/onboarding") window.location.hash = "#/";
@@ -340,6 +341,8 @@ const LegacyOnboarding: React.FC<{ intent: OnboardingIntent }> = ({ intent }) =>
                                     onClick={() => !isSubmitting && handleSubjectSelect(item.value)}
                                 />
                             ))}
+                            <SelectionCard label="こくご" description="ことば・読む・伝える" leading="📖" trailing="→" disabled={isSubmitting}
+                                onClick={() => void completeOnboarding('subject', { mathCheck: 'q_count', englishExp: null, kokugo: true })} />
                         </div>
                     </SurfacePanel>
                 )}

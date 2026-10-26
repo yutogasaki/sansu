@@ -15,6 +15,7 @@
 
 | 話題 | 正本 | 補助文書 | 更新するタイミング |
 |---|---|---|---|
+| 国語の内容・評価・保存・入口 | [product/kokugo.md](/docs/product/kokugo.md) | 01、13、43、44、52、国語検討案 | 6領域46単元の初期供給と全配当漢字1,026字、年齢の目安、独力／支援／後日の条件、専用保存と共通報酬、作品の扱いが変わるとき |
 | 育つ場所の目標と組み合わせ | [product/island-place-goals.md](/docs/product/island-place-goals.md)（規則の意味）、[product/island-place-goals.json](/docs/product/island-place-goals.json)（初期値/配置） | 01、52 §0.5、構築/美術戦略、設計ショーケース | native-05を到達方向として目標・接続・成熟・分離・場所の関係を具体化するとき。D1〜D4を52の規則/保存4/共有表示へ統合済み。ローカルの実取得・成熟診断・保存/更新の証拠は実装ADRから参照し、全景美術の完成・独立観察/実機/公開は別ゲートにする |
 | 島構築・美術の制作戦略 | [product/island-construction-strategy.md](/docs/product/island-construction-strategy.md)（体験・制作順）、[product/island-art-strategy.md](/docs/product/island-art-strategy.md)（造形）、成長系列案 | 01、52 §0.4、51の美術章、参考ショーケース、ADR | 美術で設計した地形・場所を配置から組み立てる方式と、一つの世界を美術／本体で共有する制作順を改めるとき。実装規則は52、保存は13、画面/入口は43/44へ反映し、戦略だけでruntimeを切り替えない |
 | 次期の幻想の暮らし・包括再設計 | [product/51_living_fantasy_island_spec.md](/docs/product/51_living_fantasy_island_spec.md) と担当8章 | 憲法、01、07、13、43、48、49、50、デザイン憲章、MASTER | living-fantasy-v1 の世界・経済・発見・画面・移行・共有・受入を変えるとき。現行挙動は現行正本、次期差分は51へ集約する |

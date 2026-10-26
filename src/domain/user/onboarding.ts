@@ -16,6 +16,7 @@ export interface OnboardingSelection {
     mathRange: OnboardingMathRange | null;
     englishRange: OnboardingEnglishRange | null;
     englishCourse?: 'foundation' | 'vocabulary';
+    kokugoCourse?: boolean;
 }
 
 export const ONBOARDING_GRADES = [
@@ -51,6 +52,7 @@ export class OnboardingAlreadyCompleted extends OnboardingConflict {}
 /** Parent spec 2.4 mappings apply only after the required selections exist. */
 export function resolveOnboardingSelection(selection: OnboardingSelection, intent: OnboardingIntent) {
     const { grade, subject, mathRange, englishRange } = selection;
+    if (selection.kokugoCourse && (subject !== 'math' || mathRange !== 'q_count' || englishRange !== null)) throw new OnboardingConflict('Choose the Kokugo entry');
     const mathOption = ONBOARDING_MATH_RANGES.find(option => option.value === mathRange);
     if (grade === null || !Object.prototype.hasOwnProperty.call(baseByGrade, grade) || !Number.isInteger(grade)
         || !ONBOARDING_SUBJECTS.some(option => option.value === subject)
@@ -69,10 +71,10 @@ export function resolveOnboardingSelection(selection: OnboardingSelection, inten
     }
     return {
         name: name || 'プレイヤー', grade, subject: subject!,
-        mathStartLevel: Math.max(1, Math.min(MAX_MATH_LEVEL, mathStartLevel)),
+        mathStartLevel: selection.kokugoCourse ? 1 : Math.max(1, Math.min(MAX_MATH_LEVEL, mathStartLevel)),
         vocabStartLevel: subject !== 'math' ? englishLevel[englishRange!] : 1,
         // Inactive math fields remain compatible defaults, not observed ability.
-        seedMath: intent !== 'first' || subject !== 'vocab',
+        seedMath: !selection.kokugoCourse && (intent !== 'first' || subject !== 'vocab'),
     };
 }
 
@@ -86,7 +88,7 @@ export async function completeOnboardingProfile(selection: OnboardingSelection, 
     intent: OnboardingIntent, database: SansuDatabase = db): Promise<{ profile: UserProfile; activeProfileId: string }> {
     const resolved = resolveOnboardingSelection(selection, intent);
     if (!completionId.trim()) throw new OnboardingConflict('Creation identity missing');
-    return database.transaction('rw', [database.appData, database.profiles, database.memoryMath, database.foundationCourses, database.foundationOwners], async () => {
+    return database.transaction('rw', [database.appData, database.profiles, database.memoryMath, database.foundationCourses, database.foundationOwners, database.kokugoCourses], async () => {
         const stored = await database.appData.get('app');
         const profiles = stored?.profiles ?? Object.fromEntries((await database.profiles.toArray()).map(profile => [profile.id, profile]));
         const app: AppData = stored ?? { schemaVersion: 1, activeProfileId: null, profiles };
@@ -114,8 +116,11 @@ export async function completeOnboardingProfile(selection: OnboardingSelection, 
         if (firstPlay?.ownerId === completionId) await firstPlayTable(database).put({ ...firstPlay, completed: true, selection });
         await database.profiles.add(profile);
         if (await database.foundationOwners.get(profile.id)) throw new OnboardingConflict('Profile identity unavailable');
+        if (selection.kokugoCourse) await database.kokugoCourses.add({ profileId: profile.id, preferred: true, unitId: 'K01', band: gradeBand(profile.grade) });
         await database.foundationCourses.add({ profileId: profile.id, unit: 'F01', course: selection.englishCourse });
         await database.appData.put({ ...app, id: 'app', profiles: { ...profiles, [profile.id]: profile }, activeProfileId: profile.id });
         return { profile, activeProfileId: profile.id };
     });
 }
+
+function gradeBand(grade: number) { return grade < 0 ? 0 : Math.min(7, grade + 1); }

@@ -15,12 +15,13 @@ const Island = React.lazy(() => import('../pages/Island'));
 
 export const Layout: React.FC = () => {
     const location = useLocation();
+    const isKokugo = location.pathname === '/kokugo';
     const isStudy = location.pathname === "/study";
     const isBattlePlay = location.pathname.startsWith("/battle/play");
     const isExplore = location.pathname === "/explore";
-    const supportsIslandShell = islandEnabled() && !isStudy && !isBattlePlay && !isExplore && location.pathname !== '/park';
+    const supportsIslandShell = islandEnabled() && !isKokugo && !isStudy && !isBattlePlay && !isExplore && location.pathname !== '/park';
     const navigation = useIslandNavigationState(supportsIslandShell);
-    const isFullScreen = isStudy || isBattlePlay || isExplore || location.pathname === "/park"
+    const isFullScreen = isKokugo || isStudy || isBattlePlay || isExplore || location.pathname === "/park"
         || (supportsIslandShell ? navigation.focus : location.pathname === '/island');
     const showFooter = !isFullScreen;
     const isIslandShell = supportsIslandShell && !navigation.active;

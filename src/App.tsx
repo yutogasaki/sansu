@@ -19,6 +19,7 @@ import { islandAvailable, islandEnabled } from "./domain/island/feature";
 import { islandStudyDestination } from "./domain/island/studyRoute";
 import './components/ui/WholeAppAtelier.css';
 
+const Kokugo = lazy(() => import('./pages/Kokugo'));
 const Learn = lazy(() => import('./pages/Learn'));
 const Island = lazy(() => import('./pages/Island'));
 const Explore = lazy(() => import('./pages/Explore').then(module => ({ default: module.Explore })));
@@ -242,6 +243,7 @@ function App() {
                             <PrivateRoute>{islandEnabled() ? null : <Suspense fallback={<Spinner fullScreen message="しまを じゅんびちゅう…" />}><Island /></Suspense>}</PrivateRoute>
                             : <Navigate to="/" replace />
                         } />
+                        <Route path="/kokugo" element={<PrivateRoute><Suspense fallback={<Spinner fullScreen message="国語を じゅんびしているよ…" />}><Kokugo /></Suspense></PrivateRoute>} />
                         <Route path="/learn" element={<PrivateRoute><Suspense fallback={<Spinner fullScreen message="まなぶ じゅんびを しているよ…" />}><Learn /></Suspense></PrivateRoute>} />
                         <Route path="/study" element={
                             <PrivateRoute>

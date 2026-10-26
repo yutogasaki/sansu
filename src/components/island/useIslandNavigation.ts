@@ -1,3 +1,4 @@
+import { prefersKokugo } from '../../domain/kokugo/storage';
 import { createContext, useCallback, useContext, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { islandFocusScreen, islandHouseSectionFromSearch, islandHouseUrl, islandLearningRoute, islandParentUrl, islandScreenFromSearch, islandViewUrl, withoutIslandLearning, type IslandScreen, type IslandHouseSection } from '../../domain/island/navigation';
@@ -34,6 +35,8 @@ export function useIslandNavigationState(enabled: boolean) {
     const href = location.pathname + location.search;
     const scrollPositions = useRef(new Map<string, { top: number; left: number }[]>());
     const learningTrigger = useRef<HTMLElement | null>(null);
+    const learningEntryPending = useRef(false), currentHref = useRef(href);
+    useLayoutEffect(() => { currentHref.current = href; }, [href]);
     const scrollSurfaces = () => Array.from(document.querySelectorAll<HTMLElement>('.island-shell .brand-utility-screen > .overflow-y-auto, .island-shell .island-page, .island-shell .island-page > .island-sheet, .island-shell .island-home-actions'));
     const rememberScroll = useCallback(() => {
         scrollPositions.current.set(href, scrollSurfaces().map(element => ({ top: element.scrollTop, left: element.scrollLeft })));
@@ -76,14 +79,21 @@ export function useIslandNavigationState(enabled: boolean) {
         if (view === 'camera' && state?.islandParent?.href === gallery) back();
         else open(gallery, view === 'camera');
     }, [view, state?.islandParent?.href, back, open]);
-    const startLearning = useCallback(() => {
-        if (blocked || learningBlocked || learning) return;
+    const startLearning = useCallback(async () => {
+        if (blocked || learningBlocked || learning || learningEntryPending.current) return;
+        learningEntryPending.current = true;
         learningTrigger.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
         warmUpTTS();
-        const next = new URLSearchParams(location.search);
-        next.set('learn', '1');
-        open(`${location.pathname}?${next}`);
-    }, [blocked, learningBlocked, learning, location.pathname, location.search, open]);
+        try {
+            const kokugo = await prefersKokugo();
+            if (currentHref.current !== href) return;
+            if (kokugo) { open('/kokugo'); return; }
+            const next = new URLSearchParams(location.search);
+            next.set('learn', '1');
+            open(`${location.pathname}?${next}`);
+        } catch { window.alert('保存を よみこめなかったよ。もう一度 ひらいてね。'); }
+        finally { learningEntryPending.current = false; }
+    }, [blocked, learningBlocked, learning, location.pathname, location.search, href, open]);
     const setView = useCallback((screen: IslandScreen) => {
         if (screen === 'learning') { startLearning(); return; }
         // A committed placement/reward must not leave its transient editor in forward history.

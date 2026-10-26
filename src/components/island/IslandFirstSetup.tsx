@@ -36,7 +36,8 @@ export function IslandFirstSetup({ session, busy, error, onMove, onFinish, onNam
             </label>}
             <div className={`island-setup-options${step === 'grade' ? ' island-setup-grades' : ''}`}>
                 {step === 'grade' && ONBOARDING_GRADES.map(option => <button key={option.value} disabled={busy} onClick={() => onMove('subject', { ...selection, grade: option.value })}>{option.label}</button>)}
-                {step === 'subject' && ONBOARDING_SUBJECTS.map(option => <button key={option.value} disabled={busy} onClick={() => onMove(option.value === 'vocab' ? 'english' : 'math', { ...selection, subject: option.value, mathRange: null, englishRange: null })}>{option.label}</button>)}
+                {step === 'subject' && ONBOARDING_SUBJECTS.map(option => <button key={option.value} disabled={busy} onClick={() => onMove(option.value === 'vocab' ? 'english' : 'math', { ...selection, subject: option.value, kokugoCourse: undefined, mathRange: null, englishRange: null })}>{option.label}</button>)}
+                {step === 'subject' && <button disabled={busy} onClick={() => onFinish({ ...selection, subject: 'math', mathRange: 'q_count', englishRange: null, englishCourse: undefined, kokugoCourse: true })}>こくご<span>ことば・読む・伝える</span></button>}
                 {step === 'math' && ONBOARDING_MATH_RANGES.map(option => <button key={option.value} disabled={busy} onClick={() => {
                     const chosen = { ...selection, mathRange: option.value };
                     if (selection.subject === 'math') onFinish(chosen); else onMove('english', chosen);

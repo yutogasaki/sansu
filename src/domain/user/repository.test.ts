@@ -47,6 +47,12 @@ const mocks = vi.hoisted(() => ({
     foundationOwnersPut: vi.fn(),
     foundationOwnersToArray: vi.fn(),
     foundationOwnersGet: vi.fn(),
+    kokugoCoursesDelete: vi.fn(),
+    kokugoProgressDelete: vi.fn(),
+    kokugoPlansDelete: vi.fn(),
+    kokugoEventsDelete: vi.fn(),
+    kokugoOutboxDelete: vi.fn(),
+    kokugoWorksDelete: vi.fn(),
     foundationCoursesDelete: vi.fn(),
     foundationProgressDelete: vi.fn(),
     foundationPlansDelete: vi.fn(),
@@ -62,6 +68,12 @@ vi.mock("../../db", () => ({
     db: {
         transaction: mocks.transaction,
         foundationOwners: { put: mocks.foundationOwnersPut, toArray: mocks.foundationOwnersToArray, get: mocks.foundationOwnersGet },
+        kokugoCourses: { delete: mocks.kokugoCoursesDelete },
+        kokugoProgress: { where: () => ({ equals: () => ({ delete: mocks.kokugoProgressDelete }) }) },
+        kokugoPlans: { where: () => ({ equals: () => ({ delete: mocks.kokugoPlansDelete }) }) },
+        kokugoEvents: { where: () => ({ equals: () => ({ delete: mocks.kokugoEventsDelete }) }) },
+        kokugoOutbox: { where: () => ({ equals: () => ({ delete: mocks.kokugoOutboxDelete }) }) },
+        kokugoWorks: { where: () => ({ equals: () => ({ delete: mocks.kokugoWorksDelete }) }) },
         foundationCourses: { delete: mocks.foundationCoursesDelete },
         foundationProgress: { where: () => ({ equals: () => ({ delete: mocks.foundationProgressDelete }) }) },
         foundationPlans: { where: () => ({ equals: () => ({ delete: mocks.foundationPlansDelete }) }) },
@@ -444,6 +456,12 @@ describe("getActiveProfile", () => {
         expect(mocks.challengeSummariesDelete).toHaveBeenCalledWith(removed.id);
         expect(mocks.challengeContactsDelete).toHaveBeenCalledOnce();
         expect(mocks.foundationOwnersPut).toHaveBeenCalledWith(expect.objectContaining({ profileId: removed.id, status: 'deleting' }));
+        expect(mocks.kokugoCoursesDelete).toHaveBeenCalledWith(removed.id);
+        expect(mocks.kokugoProgressDelete).toHaveBeenCalledOnce();
+        expect(mocks.kokugoPlansDelete).toHaveBeenCalledOnce();
+        expect(mocks.kokugoEventsDelete).toHaveBeenCalledOnce();
+        expect(mocks.kokugoOutboxDelete).toHaveBeenCalledOnce();
+        expect(mocks.kokugoWorksDelete).toHaveBeenCalledOnce();
         expect(mocks.foundationCoursesDelete).toHaveBeenCalledWith(removed.id);
         expect(mocks.foundationProgressDelete).toHaveBeenCalledOnce();
         expect(mocks.foundationPlansDelete).toHaveBeenCalledOnce();

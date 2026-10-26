@@ -13,12 +13,13 @@ const hooks = vi.hoisted(() => {
         commit() { for (const effect of effects.splice(0)) effect(); }, unmount() { for (const cell of cells) cell.cleanup?.(); },
     };
 });
-const mocks = vi.hoisted(() => ({ read: vi.fn(), sync: vi.fn(), command: vi.fn(), profile: vi.fn(), facts: vi.fn(), drain: vi.fn(), opening: 0, saving: 0 }));
+const mocks = vi.hoisted(() => ({ read: vi.fn(), sync: vi.fn(), command: vi.fn(), profile: vi.fn(), facts: vi.fn(), drain: vi.fn(), kokugo: vi.fn(), opening: 0, saving: 0 }));
 vi.mock('react', () => ({ useState: hooks.useState, useRef: hooks.useRef, useCallback: hooks.useCallback, useEffect: hooks.effect }));
 vi.mock('../../../pwa', () => ({
     allowPwaUpdateDuringReadOnlyOpening: () => { mocks.opening++; return () => { mocks.opening--; }; },
     holdPwaUpdateForCriticalPersistence: () => { mocks.saving++; return () => { mocks.saving--; }; },
 }));
+vi.mock('../../../domain/growingIsland/kokugoReceipts', () => ({ drainKokugoRewards: mocks.kokugo }));
 vi.mock('../../../domain/growingIsland/foundationReceipts', () => ({ drainFoundationRewards: mocks.drain }));
 vi.mock('../../../domain/user/repository', () => ({ getProfile: mocks.profile }));
 vi.mock('../../../domain/islandLife/repository', () => ({ lifeDb: {}, terminalFacts: mocks.facts }));
@@ -35,6 +36,7 @@ const record = { profileId: 'kid', revision: 0 } as GrowingRecord;
 const RenderGrowing = (active = true) => { hooks.begin(); const api = useGrowingIsland('kid', active); hooks.commit(); return api; };
 beforeEach(() => {
     hooks.reset(); mocks.read.mockReset().mockReturnValue(new Promise(() => {})); mocks.sync.mockReset(); mocks.command.mockReset();
+    mocks.kokugo.mockReset().mockResolvedValue({ credited: 0, retryPending: false });
     mocks.drain.mockReset().mockResolvedValue({ credited: 0, retryPending: false });
     mocks.profile.mockReset().mockResolvedValue(undefined); mocks.facts.mockReset().mockResolvedValue([]);
     vi.stubGlobal('document', Object.assign(new EventTarget(), { visibilityState: 'visible' }));
@@ -145,4 +147,22 @@ it('keeps the durable island visible when foundation delivery needs a retry', as
     expect(RenderGrowing().error).toContain('がくしゅう');
     await RenderGrowing().sync(); expect(RenderGrowing().record).toBe(record);
     expect(RenderGrowing().error).toBeUndefined();
+});
+
+it('refreshes the island after real Kokugo outbox delivery and combines both learning sources', async () => {
+    const opened = { ...record, revision: 2 };
+    mocks.sync.mockResolvedValueOnce({ record, town: [], nature: [], learned: 0 })
+        .mockResolvedValue({ record: opened, town: [], nature: [], learned: 0 });
+    mocks.drain.mockResolvedValue({ credited: 1, record });
+    mocks.kokugo.mockResolvedValue({ credited: 2, record: opened });
+    const api = RenderGrowing(); await api.sync();
+    expect(RenderGrowing().record).toBe(opened);
+    expect(mocks.kokugo).toHaveBeenCalledWith('kid');
+});
+it('retains a saved island when Kokugo delivery fails and retries the pending outbox', async () => {
+    mocks.sync.mockResolvedValue({ record, town: [], nature: [], learned: 0 });
+    mocks.kokugo.mockRejectedValueOnce(new Error('国語の保存を たしかめてね。'));
+    const api = RenderGrowing(); await api.sync();
+    expect(RenderGrowing().record).toBe(record); expect(RenderGrowing().error).toContain('国語');
+    await RenderGrowing().sync(); expect(RenderGrowing().error).toBeUndefined();
 });

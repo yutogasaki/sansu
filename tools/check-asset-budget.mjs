@@ -131,6 +131,13 @@ const main = async () => {
     if (createHash('sha256').update(bytes).digest('hex') !== asset.sha256) errors.push(`${url}: foundation catalog hash mismatch`);
     if (!precacheSet.has(url)) errors.push(`${url}: foundation stimulus missing from offline precache`);
   }
+  const kokugoManifest = JSON.parse(await readFile(path.join(PUBLIC_DIR, 'kokugo/v1/manifest.json'), 'utf8'));
+  for (const asset of kokugoManifest.assets) {
+    const url = asset.path.replace(/^\//, '');
+    const bytes = await readFile(path.join(DIST_DIR, url));
+    if (bytes.length < 1000 || createHash('sha256').update(bytes).digest('hex') !== asset.sha256) errors.push(`${url}: Kokugo audio missing or changed`);
+    if (!precacheSet.has(url)) errors.push(`${url}: Kokugo stimulus missing from offline precache`);
+  }
   for (const url of [...publicFiles.map(file => file.relativePath), ...precacheUrls]) {
     if (url.startsWith('assets/park/')) errors.push(`${url}: retired park artwork must not ship`);
   }

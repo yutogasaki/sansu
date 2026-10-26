@@ -1,3 +1,4 @@
+import { drainKokugoRewards } from '../../../domain/growingIsland/kokugoReceipts';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { allowPwaUpdateDuringReadOnlyOpening, holdPwaUpdateForCriticalPersistence } from '../../../pwa';
 import { drainFoundationRewards } from '../../../domain/growingIsland/foundationReceipts';
@@ -62,7 +63,9 @@ export function useGrowingIsland(profileId: string, active: boolean) {
                 // A delivery failure must not hide an island whose opening already saved.
                 setRecord(current => current?.profileId === result.record.profileId && current.revision > result.record.revision ? current : result.record);
                 if (full) {
-                    const delivered = await drainFoundationRewards(profileId);
+                    const foundation = await drainFoundationRewards(profileId);
+                    const kokugo = await drainKokugoRewards(profileId);
+                    const delivered = { credited: foundation.credited + kokugo.credited, record: kokugo.record ?? foundation.record };
                     if (delivered.credited) {
                         const opened = await syncGrowingIsland(profileId, [], Date.now(), growingDb, lifeDb, levels);
                         const unique = <T,>(events: T[]) => events.filter((event, index) => events.findIndex(other => JSON.stringify(other) === JSON.stringify(event)) === index);

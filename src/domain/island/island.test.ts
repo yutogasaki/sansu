@@ -371,7 +371,7 @@ describe('free placement and ownership', () => {
         await startIslandPlan('other', d);
         await expect(commitIslandLearning('child', plan.id, 0, correctAction(plan), d)).rejects.toBeInstanceOf(IslandConflict);
         await expect(openIsland('child', d)).rejects.toBeInstanceOf(IslandConflict);
-        await d.transaction('rw', [...islandTables(d), d.exploreRuns, d.exploreRunEvents, d.exploreDiscoveries, d.parks, d.parkPlans, d.parkEvents, d.islandPhotoAlbums, d.islandPhotos, d.islandPhotoBlobs, d.challengeRuns, d.challengeEvents, d.challengeSummaries, d.challengeContacts, d.foundationCourses, d.foundationProgress, d.foundationPlans, d.foundationEvents, d.foundationOutbox], () => deleteProfileOwnedIndexedDbRows(d, 'child'));
+        await d.transaction('rw', [...islandTables(d), d.exploreRuns, d.exploreRunEvents, d.exploreDiscoveries, d.parks, d.parkPlans, d.parkEvents, d.islandPhotoAlbums, d.islandPhotos, d.islandPhotoBlobs, d.challengeRuns, d.challengeEvents, d.challengeSummaries, d.challengeContacts, d.kokugoCourses, d.kokugoProgress, d.kokugoPlans, d.kokugoEvents, d.kokugoOutbox, d.kokugoWorks, d.foundationCourses, d.foundationProgress, d.foundationPlans, d.foundationEvents, d.foundationOutbox], () => deleteProfileOwnedIndexedDbRows(d, 'child'));
         expect(await d.islands.get('child')).toBeUndefined();
         expect(await d.islandPlans.where('profileId').equals('child').count()).toBe(0);
         expect(await d.islandEvents.where('profileId').equals('child').count()).toBe(0);
@@ -395,7 +395,7 @@ describe('free placement and ownership', () => {
         legacy.close();
         const d = new SansuDatabase(name, options); databases.push(d);
         await d.open();
-        expect(d.verno).toBe(10);
+        expect(d.verno).toBe(11);
         expect(await d.profiles.get(p.id)).toEqual(p);
         expect(await d.parks.get(p.id)).toEqual(park);
         expect(await d.parkPlans.get(parkPlan.id)).toEqual(parkPlan);

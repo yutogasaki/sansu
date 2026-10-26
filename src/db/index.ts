@@ -1,3 +1,4 @@
+import type { KokugoCourse, KokugoProgress, KokugoPlan, KokugoEvent, KokugoOutbox, KokugoWork } from '../domain/kokugo/types';
 import type { FoundationCourseRecord, FoundationOwner, FoundationProgress, FoundationPlan, FoundationEvent, FoundationOutbox } from '../domain/englishFoundation/types';
 import type { ChallengeRun, ChallengeEvent, ChallengeSummary, ChallengeContact } from '../domain/challenge/types';
 import Dexie, { type DexieOptions, type Table } from 'dexie';
@@ -80,7 +81,22 @@ export const SANSU_V10_STORES = { ...SANSU_V9_STORES,
     foundationOutbox: '&completionId, profileId',
 } as const;
 
+export const SANSU_V11_STORES = { ...SANSU_V10_STORES,
+    kokugoCourses: '&profileId',
+    kokugoProgress: '[profileId+id], profileId',
+    kokugoPlans: '&id, profileId, [profileId+status]',
+    kokugoEvents: '&id, profileId, planId',
+    kokugoOutbox: '&completionId, profileId',
+    kokugoWorks: '&id, profileId, unitId',
+} as const;
+
 export class SansuDatabase extends Dexie {
+    kokugoCourses!: Table<KokugoCourse, string>;
+    kokugoProgress!: Table<KokugoProgress, [string, string]>;
+    kokugoPlans!: Table<KokugoPlan, string>;
+    kokugoEvents!: Table<KokugoEvent, string>;
+    kokugoOutbox!: Table<KokugoOutbox, string>;
+    kokugoWorks!: Table<KokugoWork, string>;
     foundationCourses!: Table<FoundationCourseRecord, string>;
     foundationOwners!: Table<FoundationOwner, string>;
     foundationProgress!: Table<FoundationProgress, [string, string]>;
@@ -151,6 +167,7 @@ export class SansuDatabase extends Dexie {
         // Additive only: existing learning, island and receipt rows are untouched.
         this.version(8).stores(SANSU_V8_STORES);
         this.version(9).stores(SANSU_V9_STORES);
+        this.version(11).stores(SANSU_V11_STORES);
         this.version(10).stores(SANSU_V10_STORES).upgrade(async tx => {
             const profiles = await tx.table('profiles').toArray();
             await tx.table('foundationCourses').bulkPut(profiles.map(p => ({ profileId: p.id, course: 'vocabulary', unit: 'F01' })));

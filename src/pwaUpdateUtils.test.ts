@@ -39,6 +39,7 @@ describe('pwaUpdateUtils', () => {
         '#/onboarding',
         '#/onboarding?step=3',
         '#/study',
+        '#/kokugo',
         '#/study?skill=addition',
         '#/explore',
         '#/park',

@@ -1,3 +1,4 @@
+import { KokugoProgressCard } from '../components/kokugo/KokugoProgress';
 import { FoundationProgress } from '../components/progress/FoundationProgress';
 import { ActivitySummary } from '../components/progress/ActivitySummary';
 import React, { useEffect, useMemo, useState } from "react";
@@ -400,6 +401,7 @@ export const Stats: React.FC = () => {
 
                 {activity && <ActivitySummary key={profile.id} profileId={profile.id} logs={activity.logs} now={activity.now} easy={isEasy} />}
                 <FoundationProgress profileId={profile.id} />
+                    <KokugoProgressCard profileId={profile.id} />
 
                 {totalStats.count === 0 && (
                     <SurfacePanel className="stats-first-record space-y-4 p-5">

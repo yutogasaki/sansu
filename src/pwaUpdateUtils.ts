@@ -3,6 +3,7 @@ const RELOAD_MARKER_PARAM = '__app-update'
 const UPDATE_PROTECTED_HASH_ROUTES = [
     '/onboarding',
     '/study',
+    '/kokugo',
     '/explore',
     '/park',
     '/island',

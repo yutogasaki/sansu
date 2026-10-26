@@ -1,5 +1,7 @@
 # 仕様書の地図（人向け）
 
+国語の現行実装契約：[国語コース](kokugo.md)。
+
 このページは、仕様書を「番号順」ではなく「何の話か」と「今どう扱うか」で探すための入口です。
 仕様の内容を決める正本は各リンク先であり、このページは案内役です。
 
@@ -175,6 +177,8 @@
 | [45 家から店への接続](45_home_journey_preview_spec.md) | 家・学習・配達を簡易表示でつなぐ比較 | 開発版限定の試作 |
 
 ## 6. 提案・未決事項
+
+- [国語の包括仕様案](kokugo-proposal/README.md)：くもんを参考に、幼児〜小6の8入口・6系列、教材、評価、画面、保存、導入と受入を具体化した未採用案。現行の算数・英語や保存を変更する仕様ではない。
 
 島づくりの制作方式と順序は[構築方針](island-construction-strategy.md)、形・素材・光は[美術戦略](island-art-strategy.md)を使う。現在の次工程は、美術と本体が同じ地形・場所を使う一つの全島→配置差→成長→地区拡張。[制作方式の決定](../adr/2026-10-11-authored-place-world-policy.md)は次期世界の方針で、保存や取得規則の切替ではない。採用美術はnative-05、現行の接続・成熟・分離条件は[育つ場所v1](island-place-goals.md)。[成長系列](island-place-growth-proposal.md)と[32枚の参考](../design/2026-10-10-island-design-strategy/index.html#foundation)はその背景資料。
 

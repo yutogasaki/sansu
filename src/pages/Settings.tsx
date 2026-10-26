@@ -1,3 +1,4 @@
+import { leaveKokugo } from '../domain/kokugo/repository';
 import { BookOpen, ExternalLink, ShieldCheck, UserRound, Volume2 } from "lucide-react";
 import { islandEnabled } from "../domain/island/feature";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -192,6 +193,7 @@ export const Settings: React.FC = () => {
 
     const handleSubjectModeChange = async (mode: "mix" | "math" | "vocab") => {
         if (!profile) return;
+        await leaveKokugo(profile.id);
         const updated = { ...profile, subjectMode: mode };
         await persistProfileUpdate(updated);
     };
@@ -383,6 +385,7 @@ export const Settings: React.FC = () => {
                             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
                                 <div className="space-y-5 px-5 pb-5">
                                     <SurfacePanelHeader title={t("べんきょう する もの", "学習する科目")} />
+                                    <Button onClick={() => navigate('/kokugo')}>国語を まなぶ</Button>
                                     <SegmentedControl
                                         aria-label={t("べんきょう する もの", "学習する科目")}
                                         value={profile?.subjectMode ?? "mix"}

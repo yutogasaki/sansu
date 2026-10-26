@@ -1,3 +1,4 @@
+import type { KokugoCompletion } from '../kokugo/types';
 import type { FoundationCompletion } from '../englishFoundation/types';
 import { restoreWonderSlot, type WonderSlot } from './growth';
 import { RULES } from './rules';
@@ -37,7 +38,7 @@ export function growingDatabaseName() { return import.meta.env.DEV ? 'SansuGrowi
 export class GrowingIslandDatabase extends Dexie {
     islands!: Table<GrowingRecord, string>;
     /** Global across voyages: never compact these durable reward identities. */
-    foundationReceipts!: Table<FoundationCompletion & { islandId: string; receivedAt: number }, [string, string]>;
+    foundationReceipts!: Table<(FoundationCompletion | KokugoCompletion) & { islandId: string; receivedAt: number }, [string, string]>;
     deletedOwners!: Table<{ profileId: string; deletedAt: number }, string>;
     moments!: Table<MomentRecord, number>;
     /** Flowers left by siblings' visits, waiting for the recipient's next opening. */
