@@ -840,11 +840,13 @@ const submitExploreAndMeasureOperable = async (
   const submit = page.getByRole("button", { name: "こたえる" });
   if (viaKeyboard) {
     await page.evaluate(() => {
+      window.__SANSU_E2E_OPERABLE_AT__ = undefined;
       window.__SANSU_E2E_SUBMITTED_AT__ = performance.now();
     });
     await page.keyboard.press("Enter");
   } else {
     await submit.evaluate((button) => {
+      window.__SANSU_E2E_OPERABLE_AT__ = undefined;
       window.__SANSU_E2E_SUBMITTED_AT__ = performance.now();
       button.click();
     });
@@ -856,19 +858,22 @@ const submitExploreAndMeasureOperable = async (
       const digit = [...document.querySelectorAll("button")].find(
         (button) => button.textContent?.trim() === "1",
       );
-      return attempt instanceof HTMLElement
+      const operable = attempt instanceof HTMLElement
         && attempt.dataset.attemptKey
         && attempt.dataset.attemptKey !== priorKey
         && attempt.dataset.saveState === "idle"
         && encounter instanceof HTMLElement
         && digit instanceof HTMLButtonElement
         && !digit.disabled;
+      // Measure the first observed ready DOM, before returning across the browser IPC boundary.
+      if (operable && window.__SANSU_E2E_OPERABLE_AT__ === undefined) window.__SANSU_E2E_OPERABLE_AT__ = performance.now();
+      return operable;
     },
     previousAttemptKey,
     { timeout: RAPID_LOOP_CI_BUDGET_MS },
   );
   const elapsed = await page.evaluate(() => (
-    performance.now() - window.__SANSU_E2E_SUBMITTED_AT__
+    (window.__SANSU_E2E_OPERABLE_AT__ ?? performance.now()) - window.__SANSU_E2E_SUBMITTED_AT__
   ));
   assert(
     elapsed <= productBudgetMs,
@@ -3080,7 +3085,10 @@ const scenarioParentsDirectEntry = async (browser) => {
   await page.getByRole('button', { name: 'メインにする', exact: true }).first().click();
   const confirmation = page.getByRole('dialog');
   await confirmation.getByText('学習範囲の変更を確認').waitFor();
-  assert(await confirmation.getByRole('textbox').count() === 0, 'range confirmation requires no arithmetic answer');
+  const password = confirmation.getByLabel('保護者のパスワード', { exact: true });
+  assert(await confirmation.locator('input').count() === 1, 'range confirmation exposes only the existing parent password field');
+  assert(await password.getAttribute('type') === 'password', 'the range guard uses the adopted parent password');
+  assert(await password.getAttribute('inputmode') === 'numeric', 'the password keeps its numeric entry keyboard');
   await confirmation.getByRole('button', { name: 'やめる', exact: true }).click();
 
   await preserveSmokeObservation(context);
@@ -3795,7 +3803,8 @@ const readPaintedEncounterCrop = async (surface, surfaceIdentity) => {
       };
     }
 
-    await activeScene.decode();
+// Avoid yielding an already rendered payoff to the next automatic scene.
+    if (!activeScene.complete || activeScene.naturalWidth === 0) await activeScene.decode();
 
     const numberFromStyle = (value) => Number.parseFloat(value) || 0;
     const boundsOf = (target) => {
