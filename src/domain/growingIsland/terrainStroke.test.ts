@@ -29,6 +29,11 @@ describe('DEV terrain stroke: shaping the island with a finger', () => {
         for (const cell of coast) expect(editableTerracePlan(state)!.dry.has(`${cell.x},${cell.z}`)).toBe(false);
     });
 
+    it('a stroke wholly outside the child\'s land points back to the bright cells', () => {
+        expect(() => run(island(), { type: 'terrain-stroke', cells: [{ x: -9, z: 9 }, { x: -8, z: 9 }], to: 'up' }))
+            .toThrow('あかるい マスの なかを なぞってね');
+    });
+
     it('raises every crossed cell one step per stroke, and flattens them back', () => {
         let state = island();
         const ridge = [{ x: 0, z: 2 }, { x: 0, z: 3 }, { x: 1, z: 3 }, { x: 0, z: 2 }];

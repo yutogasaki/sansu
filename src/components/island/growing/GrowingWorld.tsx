@@ -1,4 +1,3 @@
-import { landscapeCell } from '../../../domain/growingIsland/landscape';
 import { dugWater } from '../../../domain/growingIsland/environment';
 import { TERRAIN_SEA_LEVEL } from '../../../domain/growingIsland/editableTerrainWorld';
 import { placePlay } from '../../../domain/growingIsland/placePlay';
@@ -76,6 +75,12 @@ export interface WorldCamera {
     visitPlace: (placeId: string) => boolean;
     interact: (id: string) => boolean;
     distance: (close: boolean) => void;
+    /** Shaping ground: the island centred at no closer than the usual view, or a closer look. */
+    terrainView: (close: boolean, inset?: number) => void;
+    /** Pans, at the same zoom, until these cells are on screen; a view that shows them stays. */
+    showCells: (cells: readonly Cell[]) => void;
+    /** Petals over a thing the child just grew, so the change is seen where it happened. */
+    celebrate: (id: string) => void;
     restoreView: () => void;
     catalogPictures: (state: GrowingState) => CatalogPictures;
     capture: (width: number, height: number) => HTMLCanvasElement | undefined;
@@ -319,8 +324,24 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
                 const [p00, p10, p01, p11] = [at(0, 0), at(1, 0), at(0, 1), at(1, 1)];
                 positions.push(...p00.toArray(), ...p01.toArray(), ...p10.toArray(), ...p10.toArray(), ...p01.toArray(), ...p11.toArray());
             }
+            // The edge of the child's own land is drawn as a bright rim, so a stroke starts inside it.
+            const land = landCells(latest.current.state), own = new Set(land.map(c => `${c.x},${c.z}`)), rim = .1, colors: number[] = [];
+            const tint = (r: number, g: number, b: number, a: number, count: number) => { for (let k = 0; k < count; k++) colors.push(r, g, b, a); };
+            tint(1, 1, 1, .28, positions.length / 3);
+            for (const cell of land) for (const [dx, dz] of [[1, 0], [-1, 0], [0, 1], [0, -1]] as const) {
+                if (own.has(`${cell.x + dx},${cell.z + dz}`)) continue;
+                for (let k = 0; k < n; k++) {
+                    // A thin strip just inside the cell's open side, split to follow the ground.
+                    const along = (t: number) => -.5 + t / n, edge = .5 - rim / 2;
+                    const at = (t: number, inset: number) => layout.point(dx ? { x: cell.x + dx * (edge + inset), z: cell.z + along(t) } : { x: cell.x + along(t), z: cell.z + dz * (edge + inset) }, .035);
+                    const [p00, p10, p01, p11] = [at(k, -rim / 2), at(k + 1, -rim / 2), at(k, rim / 2), at(k + 1, rim / 2)];
+                    positions.push(...p00.toArray(), ...p01.toArray(), ...p10.toArray(), ...p10.toArray(), ...p01.toArray(), ...p11.toArray());
+                    tint(1, .84, .3, .95, 6);
+                }
+            }
             const geometry = new T.BufferGeometry(); geometry.setAttribute('position', new T.Float32BufferAttribute(positions, 3));
-            terrainArea = new T.Mesh(geometry, new T.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: .2, depthWrite: false, side: T.DoubleSide }));
+            geometry.setAttribute('color', new T.Float32BufferAttribute(colors, 4));
+            terrainArea = new T.Mesh(geometry, new T.MeshBasicMaterial({ vertexColors: true, transparent: true, depthWrite: false, side: T.DoubleSide }));
             terrainArea.name = 'growing-terrain-area'; terrainArea.renderOrder = 3; world.scene.add(terrainArea);
         };
         disposers.push(() => showTerrainArea(false));
@@ -492,6 +513,38 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
                 playFocus = undefined; interruptedOrigin = undefined;
                 frameCamera(camera, layout, view, width / height);
             },
+            showCells: cells => {
+                if (!cells.length) return;
+                camera.updateMatrixWorld();
+                const seen = (cell: Cell) => { const p = layout.point(cell).project(camera); return Math.abs(p.x) < .85 && p.y > -.55 && p.y < .85; };
+                if (cells.every(seen)) return;
+                initialClose = false; followingPlace = undefined; playFocus = undefined; interruptedOrigin = undefined;
+                const middle = cells.reduce<T.Vector3>((sum, cell) => sum.add(layout.point(cell)), new T.Vector3()).divideScalar(cells.length);
+                const home = frameCamera(camera, layout, { ...view, pan: { x: 0, z: 0 } }, width / height);
+                // Aim a little below the cells, so they sit above the placing buttons.
+                view.pan = panToFocus(camera, home, middle.add(new T.Vector3(0, 0, .8)));
+                frameCamera(camera, layout, view, width / height);
+            },
+            celebrate: id => {
+                const target = layer?.objects.get(id); if (!target || reduced) return;
+                effects.confetti(target.getWorldPosition(new T.Vector3()), performance.now());
+            },
+            terrainView: (close, inset = 0) => {
+                // Remember the view before shaping, so finishing goes back to it.
+                initialClose = false; followingPlace = undefined; playFocus = undefined; interruptedOrigin = undefined;
+                if (!overviewOrigin) { overviewOrigin = copyView(); handlerRef.current.onViewReturn?.(true); }
+                view.zoom = close ? 2.4 : Math.min(overviewOrigin.zoom, 1.3);
+                if (close) { frameCamera(camera, layout, view, width / height); return; }
+                view.pan = { x: 0, z: 0 };
+                const home = frameCamera(camera, layout, view, width / height);
+                if (inset <= 0) return;
+                // Lift the island toward the room above the panel: aim at the ground that sits
+                // lower on the screen by half the panel's share, keeping the far shore in view.
+                camera.updateMatrixWorld();
+                const aim = new T.Raycaster(); aim.setFromCamera(new T.Vector2(0, -Math.min(.25, inset / 2)), camera);
+                const below = aim.ray.intersectPlane(new T.Plane(new T.Vector3(0, 1, 0), -home.y), new T.Vector3());
+                if (below) { view.pan = panToFocus(camera, home, below); frameCamera(camera, layout, view, width / height); }
+            },
             distance: close => {
                 initialClose = false; followingPlace = undefined;
                 playFocus = undefined; interruptedOrigin = undefined;
@@ -556,6 +609,10 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             if (layer) {
                 const pulse = .6 + Math.sin(now / 280) * .4;
                 for (const glow of layer.glows) { glow.scale.setScalar(.9 + pulse * .2); (glow.material as T.MeshBasicMaterial).opacity = pulse; (glow.material as T.MeshBasicMaterial).transparent = true; }
+                for (const light of layer.beacons) {
+                    const mark = light.getObjectByName('growing-hint-mark');
+                    if (mark && !reduced) { mark.position.y = 1.6 + Math.sin(now / 320) * .1; mark.rotation.y = now / 700; }
+                }
                 layer.flag.getObjectByName('growing-flag-cloth')!.rotation.y = reduced ? 0 : Math.sin(now / 500) * .15;
             }
             if (latest.current.show !== showing) {
@@ -765,9 +822,8 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
         const painting = () => latest.current.terrainEditing && latest.current.terrainBrush;
         const terrainCellAt = (event: Pick<PointerEvent, 'clientX' | 'clientY'>): Cell | undefined => {
             const hit = world.groundAt(cast(event)) ?? ray.ray.intersectPlane(seaPlane, new T.Vector3());
-            if (!hit) return undefined;
-            const p = { x: hit.x + layout.center, z: hit.z + 2 }, logical = layout.curved ? landscapeCell(p) : p;
-            return { x: Math.round(logical.x), z: Math.round(logical.z) };
+            // The same reading of the ground as placing, so a stroke lands where the land is drawn.
+            return hit ? layout.cellAt(hit) : undefined;
         };
         // A quick finger skips across many cells between two events: fill the path in.
         const paintAt = (event: Pick<PointerEvent, 'clientX' | 'clientY'>) => {
@@ -871,11 +927,15 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             const h = handlerRef.current;
             if (latest.current.terrainEditing) {
                 const hit = world.groundAt(cast(event)) ?? ray.ray.intersectPlane(seaPlane, new T.Vector3());
-                if (hit) { const p = { x: hit.x + layout.center, z: hit.z + 2 }; const logical = layout.curved ? landscapeCell(p) : p; h.onCell({ x: Math.round(logical.x), z: Math.round(logical.z) }); }
+                if (hit) h.onCell(layout.cellAt(hit));
                 return;
             }
             if (latest.current.ghost) {
-                // While placing, every tap chooses the cell under the finger.
+                // While placing, every tap chooses the cell under the finger; a hint's
+                // floating light chooses its own cell even when it hangs over another.
+                const beaconHit = layer?.beacons.length ? cast(event).intersectObjects(layer.beacons, true)[0] : undefined;
+                let light = beaconHit?.object; while (light && !light.userData.hintCell) light = light.parent ?? undefined;
+                if (light) { h.onCell(light.userData.hintCell as Cell); return; }
                 const point = ground(event);
                 if (point) h.onCell(layout.cellAt(point));
                 else if (authoredWorld) h.onCell({ x: Number.NaN, z: Number.NaN });

@@ -84,6 +84,24 @@ function ghostModel(m: IslandMaterials, ghost: Ghost, state: GrowingState, nativ
     return model;
 }
 
+/**
+ * A hint has to be found among grown trees and roofs: a light that floats over the
+ * cell and draws through everything, so "ひかる ところ" is always visible.
+ */
+function beacon() {
+    const group = new T.Group(); group.name = 'growing-hint-beacon';
+    const see = (material: T.MeshBasicMaterial) => { material.depthTest = false; material.transparent = true; return material; };
+    const beam = new T.Mesh(new T.CylinderGeometry(.05, .1, 1.3, 12, 1, true), see(new T.MeshBasicMaterial({ color: '#fff2a8', opacity: .5, side: T.DoubleSide })));
+    beam.position.y = .72; beam.renderOrder = 9;
+    const mark = new T.Mesh(new T.OctahedronGeometry(.24), see(new T.MeshBasicMaterial({ color: '#ffd23f' })));
+    mark.scale.y = 1.4; mark.position.y = 1.6; mark.name = 'growing-hint-mark'; mark.renderOrder = 10;
+    // A finger-sized target over the beam and the floating mark.
+    const target = new T.Mesh(new T.CylinderGeometry(.42, .42, 1.9, 10), new T.MeshBasicMaterial({ visible: false }));
+    target.position.y = 1; target.name = 'growing-hint-target';
+    group.add(beam, mark, target); group.traverse(o => { o.userData.ownMaterial = true; });
+    return group;
+}
+
 function ring(color: string, radius = .44) {
     const mesh = new T.Mesh(new T.TorusGeometry(radius, .03, 8, 40), new T.MeshBasicMaterial({ color }));
     mesh.rotation.x = Math.PI / 2; mesh.position.y = .05; mesh.userData.ownMaterial = true; return mesh;
@@ -249,7 +267,7 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
         const cap = new T.Mesh(new T.SphereGeometry(.16 * size, 14, 10, 0, Math.PI * 2, 0, Math.PI / 2), wonder(size > 1.3 ? 'dots-red' : 'dots-yellow'));
         cap.position.y = .18 * size; shroom.add(stem, cap); shroom.name = 'wonder-mushroom'; root.add(shroom);
     }
-    const glows: T.Mesh[] = [];
+    const glows: T.Mesh[] = [], beacons: T.Object3D[] = [];
     const arrivalBoat = buildBoat(m); arrivalBoat.position.copy(layout.dock); arrivalBoat.visible = state.arrivals.length > 0;
     arrivalBoat.traverse(o => { o.userData.boat = 'arrival'; }); root.add(arrivalBoat);
     const visitorBoat = buildBoat(m); visitorBoat.visible = false; root.add(visitorBoat);
@@ -264,7 +282,7 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
         disposeRoots([paths]); paths = next; root.add(paths);
     };
     const clearPreview = () => {
-        disposeRoots(previews); previews.length = 0; glows.length = 0;
+        disposeRoots(previews); previews.length = 0; glows.length = 0; beacons.length = 0;
         for (const saved of hiddenStructures) {
             saved.object.visible = saved.visible;
             delete saved.object.userData.authoredPreviewHidden;
@@ -295,6 +313,8 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
         for (const cell of nextHints) {
             // "ここ" — the place a friend could not reach or a home is needed (§11.3).
             const glow = ring('#ffe27a', .46); glow.position.copy(layout.point(cell, .08)); glow.name = 'growing-hint'; addPreview(glow); glows.push(glow);
+            // While placing, a few hints are where to put it; other hints stay quiet rings.
+            if (nextGhost && nextHints.length <= 3) { const light = beacon(); light.position.copy(layout.point(cell, .08)); light.userData.hintCell = cell; addPreview(light); beacons.push(light); }
         }
         if (nextGhost) {
             for (const cell of nextGhost.allowed) {
@@ -386,7 +406,7 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
     };
     updatePreview(ghost, selectedId, hints);
     return {
-        root, objects, buds, seats, swingPivots, fingerTargets, arrivalBoat, visitorBoat, nextBoat, glows, flag, places, relations, placeRoot, updatePreview, updatePaths,
+        root, objects, buds, seats, swingPivots, fingerTargets, arrivalBoat, visitorBoat, nextBoat, glows, beacons, flag, places, relations, placeRoot, updatePreview, updatePaths,
         dispose() {
             if (disposed) return;
             disposed = true;

@@ -49,7 +49,7 @@ import { GrowingHomeTools, GrowingViewControls, GrowingExpansion } from './Growi
 import { growingExpansionLock } from './growingExpansion';
 import { bridgeSite } from '../../../domain/growingIsland/space';
 import { isReachable, reachableFromHome } from '../../../domain/growingIsland/space';
-import { groveLift, growthHint, placeGrowthEnabled, placementAdvice } from '../../../domain/growingIsland/placementAdvice';
+import { groveLift, growthHint, placeGrowthEnabled, placementAdvice, TEND_LIMIT } from '../../../domain/growingIsland/placementAdvice';
 import { terrainForm } from '../../../domain/growingIsland/terraceTerrain';
 import type { MenuPictures } from './menuMiniatures';
 import './wholeAppUi.css';
@@ -308,6 +308,12 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         const hint = growthHint(own, placing.kind, ranked);
         return [hint ? [hint.cell] : ranked.slice(0, 3), hint];
     }, [own, placing, ghost]);
+    // "ひかる ところ" must be on screen: when a thing is picked, bring its glowing cells into view.
+    const adviceKey = placing && !placing.cell ? advised.map(cell => `${cell.x},${cell.z}`).join(';') : '';
+    useEffect(() => {
+        if (adviceKey) camera.current?.showCells(advised);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [adviceKey]);
     const placeStatus = useMemo(() => own?.placeProgress?.selected ? placeStatuses(own).find(status => status.id === own.placeProgress!.selected) : undefined, [own]);
 
     const loadFaces = useCallback((limit?: number) => {
@@ -398,7 +404,8 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             setSelected(undefined);
             void (async () => {
                 for (const edit of lift.edits) if (!await island.dispatch(edit)) { await island.sync(false); return; }
-                audio.play('sand'); setLine('はやしが おかに なったよ');
+                audio.play('sand'); setFocus({ id, n: Date.now() }); camera.current?.celebrate(id);
+                setLine('はやしが おかに なったよ。おかの 木は はやく そだつよ');
             })();
             return;
         }
@@ -414,6 +421,14 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
                         : action.type === 'dress' ? { type: 'dress', id, color: action.color, hat: action.hat }
                             : { type: 'away', id, away: action.away };
         void run(command, () => {
+            if (action.type === 'tend') {
+                // Show what grew: close the sheet, look at the thing, and say what spread.
+                const landmark = own.landmarks.find(l => l.id === id), times = (landmark?.tended ?? 0) + 1;
+                setSelected(undefined); setFocus({ id, n: Date.now() }); camera.current?.celebrate(id); audio.play('discovery');
+                setLine(`${landmark?.kind === 'sapling' ? 'まわりに わかい 木が そだってきたよ' : landmark?.kind === 'flower' ? 'はなの むれが ひろがったよ' : 'みずべの くさが ひろがったよ'}。${
+                    times >= TEND_LIMIT ? 'これで いちばん おおきく なったよ' : `あと ${TEND_LIMIT - times}かい そだてられるよ`}`);
+                return;
+            }
             audio.play('pick');
             if (action.type === 'store' || action.type === 'pluck'
                 || (action.type === 'flag' && own.guidance?.selected === 'A3' && starterStep(own) === 'S4'
@@ -554,9 +569,14 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             await run(command, () => { setLine('じめんを ほぞんしたよ'); audio.play('wood'); });
         } finally { terrainPending.current = false; }
     };
+    /** The share of the island view the ground panel covers, measured from the bottom. */
+    const terrainInset = () => {
+        const panel = document.querySelector('.growing-terrain-controls')?.getBoundingClientRect(), view = document.querySelector('.growing-world-interaction')?.getBoundingClientRect();
+        return panel && view && view.height > 0 ? Math.max(0, view.bottom - panel.top) / view.height : 0;
+    };
     const paintTerrain = async (cells: Cell[]) => {
         if (terrainPending.current || island.busy || visit || panel !== 'terrain' || !camera.current || !cells.length) return;
-        terrainPending.current = true;
+        terrainPending.current = true; setLine(undefined); island.clearError();
         try {
             const safety = { actors: camera.current.terrainActors(), occupiedPlaceTargets: camera.current.occupiedTerrainPlaceTargets(), expectedTerrainRevision: terrainEditingRevision(own) };
             await run({ type: 'terrain-stroke', cells, to: brush, ...safety }, () => {
@@ -661,9 +681,10 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             onStored={() => openHomeTool('stored', '.growing-home-stored')}
             onMenu={() => { if (!menu) setMenuPictures(own.villagers.length ? camera.current?.menuPictures(own.villagers) ?? {} : {}); setMenu(!menu); }}
             onGoal={() => openPlaces(placeStatus?.id, 'cue')} />}
-        {!visit && panel === 'terrain' && <GrowingTerrainControls onDistance={close => camera.current?.distance(close)} cell={terrainCell} busy={island.busy} canUndo={Boolean(own.terrain?.undo.length)} canRedo={Boolean(own.terrain?.redo.length)}
-            brush={brushing ? brush : undefined} onBrush={setBrush}
-            onEdit={delta => void changeTerrain('terrain-edit', delta)} onUndo={() => void changeTerrain('terrain-undo')} onRedo={() => void changeTerrain('terrain-redo')} onClose={closeHomeTool} />}
+        {!visit && panel === 'terrain' && <GrowingTerrainControls onDistance={close => camera.current?.terrainView(close, terrainInset())} cell={terrainCell} busy={island.busy} canUndo={Boolean(own.terrain?.undo.length)} canRedo={Boolean(own.terrain?.redo.length)}
+            brush={brushing ? brush : undefined} onBrush={next => { setBrush(next); setLine(undefined); island.clearError(); }} note={island.error ?? line} warn={Boolean(island.error)}
+            onEdit={delta => void changeTerrain('terrain-edit', delta)} onUndo={() => void changeTerrain('terrain-undo')} onRedo={() => void changeTerrain('terrain-redo')}
+            onClose={() => { camera.current?.restoreView(); island.clearError(); closeHomeTool(); }} />}
         {!visit && panel === 'view' && <GrowingViewControls canReturn={viewReturn} onReturn={() => camera.current?.restoreView()} onDistance={close => camera.current?.distance(close)} onClose={closeHomeTool} onRotate={direction => setTurn(value => value + direction)} />}
         {!visit && panel === 'expand' && <GrowingExpansion quote={quote} expansionLock={expansionLock} drops={own.drops} busy={island.busy} onClose={closeHomeTool}
             onExpand={side => void run({ type: 'expand', side }, () => { closeHomeTool(); audio.play('assemble'); })} />}
@@ -677,7 +698,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
                 reason: own.villagers.some(v => !v.away && !own.arrivals.includes(v.id)) ? 'はしの ばしょを あけてね' : 'なかまが きてから' }}
             onBridge={() => { setMenu(false); if (own.bridge) { setSelected('bridge'); setFocus({ id: 'bridge', n: Date.now() }); } else setBridgeChoice('build'); }}
             onClose={() => { setMenu(false); window.requestAnimationFrame(() => menuTrigger.current?.focus({ preventScroll: true })); }}
-            onTerrain={() => { setTerrainCell(undefined); openHomeTool('terrain', '.growing-menu-button'); }}
+            onTerrain={() => { setTerrainCell(undefined); openHomeTool('terrain', '.growing-menu-button'); window.requestAnimationFrame(() => camera.current?.terrainView(false, terrainInset())); }}
             onVoyages={firstPlay ? undefined : () => openHomeTool('voyages', '.growing-menu-button')}
             onFriends={() => { loadFaces(); openHomeTool('friends', '.growing-menu-button'); }}
             onTrace={() => openHomeTool('trace', '.growing-menu-button')}
@@ -691,7 +712,8 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             </button>}</p>}
         {guideSafe && <GrowingGuideCue state={own} cue={firstPlay && guide.cue?.id === 'S1' ? { ...guide.cue, hint: 'ここに すみたいって', action: 'おうちを つくる' } : guide.cue} notice={guide.notice} selected={guide.selected} onAction={() => starterAction()}
             onClose={guide.notice ? guide.dismissNotice : guide.pause} onBook={memory => openBook(memory)} />}
-        {(island.error || visitError) && <div className="growing-error" role="alert"><p>{island.error || visitError}</p><button onClick={() => { island.clearError(); setVisitError(undefined); }}>とじる</button></div>}
+        {/* While shaping ground, the panel says why a stroke did not change anything. */}
+        {((island.error && panel !== 'terrain') || visitError) && <div className="growing-error" role="alert"><p>{island.error || visitError}</p><button onClick={() => { island.clearError(); setVisitError(undefined); }}>とじる</button></div>}
         {visit ? <div className="growing-hud-bottom">
             <button className="growing-open-all" disabled={visit.sent || visitSaving} onClick={() => void leaveFlower()}>{visit.sent ? 'おはなを おいたよ' : 'おはなを おいてくる 🌸'}</button>
             <button className="growing-seed-button" onClick={leaveVisit}>かえる</button>

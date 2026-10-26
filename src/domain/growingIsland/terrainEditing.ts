@@ -198,7 +198,7 @@ function applyTerrainCandidate(state: GrowingState, command: TerrainCommand, str
         // ground, or down below the sea. Things standing there keep their ground.
         // A finger may wander past the shore; only the child's own land is shaped.
         if (!Array.isArray(command.cells) || !command.cells.length || command.cells.length > 64 || !['up', 'flat', 'sea'].includes(command.to)
-            || !command.cells.some(cell => acquired(state, cell))) fail('じぶんの 土地を えらんでね。');
+            || !command.cells.some(cell => acquired(state, cell))) fail('あかるい マスの なかを なぞってね。そこが じぶんの 土地だよ。');
         const group = strokeGroup ?? `stroke:${terrain.undo.length}`, seen = new Set<string>(), held = heldCells(state);
         let kept = false;
         terrain.redo = [];

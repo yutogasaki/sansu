@@ -16,3 +16,6 @@
 .growing-terrain-brushes { grid-template-columns:repeat(3, 1fr); }
 .growing-island .growing-terrain-brushes button { background:white; }
 .growing-island .growing-terrain-brushes button[data-active] { background:#dfe9ff; border-color:var(--pokomoko-blue); box-shadow:inset 0 0 0 2px var(--pokomoko-blue); }
+.growing-terrain-controls p[data-note] { padding:6px 9px; border-radius:10px; background:#eaf7e6; color:#2f5a2a; font-weight:700; }
+.growing-island .growing-terrain-controls header > button { flex:none; white-space:nowrap; }
+.growing-terrain-controls p[data-warn] { padding:6px 9px; border-radius:10px; background:#fff1dc; color:#7a4a12; font-weight:700; }

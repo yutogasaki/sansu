@@ -8,8 +8,10 @@ const BRUSHES: { id: Brush; label: string; icon: typeof Mountain }[] = [
     { id: 'up', label: 'おか', icon: Mountain }, { id: 'flat', label: 'たいら', icon: Minus }, { id: 'sea', label: 'うみ', icon: Waves },
 ];
 
-export function GrowingTerrainControls({ cell, busy, canUndo, canRedo, onEdit, onUndo, onRedo, onClose, onDistance, brush, onBrush }: {
+export function GrowingTerrainControls({ cell, busy, canUndo, canRedo, onEdit, onUndo, onRedo, onClose, onDistance, brush, onBrush, note, warn }: {
     cell?: Cell; busy: boolean; canUndo: boolean; canRedo: boolean;
+    /** What the last change did for the island; the bubble is hidden while this panel is open. */
+    note?: string; warn?: boolean;
     /** DEV terrace form: choose a brush and stroke the island with one finger. */
     brush?: Brush; onBrush?: (brush: Brush) => void;
     onEdit: (delta: 1 | -1) => void; onUndo: () => void; onRedo: () => void; onClose: () => void; onDistance: (close: boolean) => void;
@@ -22,7 +24,7 @@ export function GrowingTerrainControls({ cell, busy, canUndo, canRedo, onEdit, o
         window.addEventListener('keydown', escape); return () => window.removeEventListener('keydown', escape);
     }, [busy, onClose]);
     return <section className="growing-terrain-controls" aria-label="じめんを かえる" aria-busy={busy}>
-        <header><div><h2>じめんを かえる</h2><p role="status">{busy ? 'しまに ほぞんしているよ' : brush ? 'ゆびで なぞると かわるよ。2ほんゆびで うごかせるよ' : cell ? 'わっかの ところを かえるよ' : 'かえたい じめんを さわってね'}</p></div>
+        <header><div><h2>じめんを かえる</h2><p role="status" data-note={note && !warn ? true : undefined} data-warn={note && warn ? true : undefined}>{busy ? 'しまに ほぞんしているよ' : note ? note : brush ? 'ゆびで なぞると かわるよ。2ほんゆびで うごかせるよ' : cell ? 'わっかの ところを かえるよ' : 'かえたい じめんを さわってね'}</p></div>
             <button ref={close} onClick={onClose} disabled={busy}><X size={18} aria-hidden="true" />おわる</button></header>
         {brush ? <div className="growing-terrain-height growing-terrain-brushes" role="radiogroup" aria-label="ふで">
             {BRUSHES.map(({ id, label, icon: Icon }) => <button key={id} role="radio" aria-checked={brush === id} data-active={brush === id || undefined}

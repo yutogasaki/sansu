@@ -159,13 +159,17 @@ describe('growing object previews', () => {
         layer.updatePreview(ghost(), 'starter-bench', [{ x: 0, z: 4 }]);
         expect(layer.root.getObjectByName('growing-ghost')?.position).toEqual(layout.point({ x: 0, z: 2 }));
         expect(layer.glows).toHaveLength(1);
+        // A hint floats a light over its own cell, which a tap can choose.
+        expect(layer.beacons).toHaveLength(1); expect(layer.beacons[0].userData.hintCell).toEqual({ x: 0, z: 4 });
+        layer.updatePreview(ghost(), undefined, [0, 1, 2, 3].map(x => ({ x, z: 4 })));
+        expect(layer.glows).toHaveLength(4); expect(layer.beacons).toHaveLength(0);
         layer.updatePreview(ghost(1, false), 'flag');
         const preview = layer.root.getObjectByName('growing-ghost')!;
         expect(preview.position).toEqual(layout.point({ x: 1, z: 2 }));
         expect((outline(preview)!.material as T.MeshBasicMaterial).color.getHexString()).toBe('8a5a3a');
         layer.updatePreview();
 
-        expect(layer.root.getObjectByName('growing-ghost')).toBeUndefined(); expect(layer.glows).toHaveLength(0);
+        expect(layer.root.getObjectByName('growing-ghost')).toBeUndefined(); expect(layer.glows).toHaveLength(0); expect(layer.beacons).toHaveLength(0);
         expect([...layer.objects]).toEqual(objects); expect([...layer.buds]).toEqual(buds); expect([...layer.seats]).toEqual(seats); expect([...layer.swingPivots]).toEqual(pivots);
         for (const [id, object] of objects) expect(layer.objects.get(id)).toBe(object);
         [layer.arrivalBoat, layer.visitorBoat, layer.nextBoat].forEach((boat, index) => expect(boat).toBe(boats[index]));
