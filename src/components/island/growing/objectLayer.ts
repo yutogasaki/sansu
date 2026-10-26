@@ -15,6 +15,8 @@ import { wonder } from './wonderPaint';
 import { buildColorFlower } from './flowerGeometry';
 import { buildBoat, buildPier } from './pierGeometry';
 import { sceneLayout, type SceneLayout } from './sceneLayout';
+import { boatCell, lookoutHome, shipCove } from '../../../domain/growingIsland/discoveries';
+import { TERRAIN_SEA_LEVEL } from '../../../domain/growingIsland/editableTerrainWorld';
 import { authoredWorldFrame } from '../../../domain/growingIsland/authoredWorldFrame';
 import { buildBridge } from './bridgeGeometry';
 import { derivePlaces } from '../../../domain/growingIsland/places';
@@ -125,6 +127,31 @@ function rainbowCrown(holder: T.Object3D, drawn: T.Object3D) {
         blob.userData.ownMaterial = true; crown.add(blob);
     });
     holder.add(crown); holder.userData.rare = 'rainbow';
+}
+
+/** きんの かぼちゃ (§1.4): three golden pumpkins ripen among a rare field's crops. */
+function goldenPumpkins(model: T.Object3D) {
+    const gold = new T.MeshStandardMaterial({ color: '#f2c230', metalness: .45, roughness: .35, emissive: '#5a3a00', emissiveIntensity: .25 });
+    [[-.22, -.18], [.2, -.05], [-.02, .22]].forEach(([x, z], i) => {
+        const pumpkin = new T.Mesh(new T.SphereGeometry(.12 + (i % 2) * .03, 14, 10), i ? gold.clone() : gold);
+        pumpkin.scale.y = .72; pumpkin.position.set(x, .1, z); pumpkin.name = 'golden-pumpkin'; pumpkin.userData.ownMaterial = true;
+        const stem = new T.Mesh(new T.CylinderGeometry(.015, .02, .07, 6), new T.MeshStandardMaterial({ color: '#6b8a3a' }));
+        stem.position.y = .1; stem.userData.ownMaterial = true; pumpkin.add(stem); model.add(pumpkin);
+    });
+}
+
+/** みはらしの いえ (§1.4): a home on raised ground gets a small deck with a telescope at its front corner. */
+function lookout(model: T.Object3D) {
+    const wood = new T.MeshStandardMaterial({ color: '#c49a6c', roughness: .8 });
+    const deck = new T.Group(); deck.name = 'home-lookout'; deck.position.set(.5, 0, .5); deck.scale.setScalar(1.3);
+    const floor = new T.Mesh(new T.BoxGeometry(.3, .04, .3), wood); floor.position.y = .05; deck.add(floor);
+    for (const [x, z] of [[-.14, -.14], [.14, -.14], [.14, .14], [-.14, .14]]) {
+        const post = new T.Mesh(new T.CylinderGeometry(.012, .012, .16, 5), wood); post.position.set(x, .14, z); deck.add(post);
+    }
+    const scope = new T.Mesh(new T.CylinderGeometry(.025, .04, .22, 10), new T.MeshStandardMaterial({ color: '#3f6fa8', metalness: .3, roughness: .4 }));
+    scope.rotation.z = Math.PI / 2.8; scope.position.set(0, .22, 0); deck.add(scope);
+    deck.traverse(o => { o.userData.ownMaterial = true; });
+    model.add(deck);
 }
 
 /** A big tree grows a size larger, and the island's lord tree much larger with a ring of flowers (§5). */
@@ -245,6 +272,8 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
             hit.position.y = .32; hit.userData.ownMaterial = true; hit.userData.placementHitOnly = true; model.add(hit);
         }
         add(p.id, model, p.cell);
+        if (p.kind === 'farm' && p.stage > 0 && p.rare === 'golden') goldenPumpkins(model);
+        if (p.kind === 'home' && p.stage > 0 && lookoutHome(state, p.cell)) lookout(objects.get(p.id) ?? model);
         // Friends stop by built fields to tend them.
         if ((p.kind === 'farm' || p.kind === 'market') && p.stage > 0 && !seats.has(key(p.cell))) seats.set(key(p.cell), 'tend');
         if (p.kind === 'play' && p.stage > 0) seats.set(key(p.cell), 'play');
@@ -301,7 +330,14 @@ export function buildObjectLayer(m: IslandMaterials, state: GrowingState, layout
     const arrivalBoat = buildBoat(m); arrivalBoat.position.copy(layout.dock); arrivalBoat.visible = state.arrivals.length > 0;
     arrivalBoat.traverse(o => { o.userData.boat = 'arrival'; }); root.add(arrivalBoat);
     const visitorBoat = buildBoat(m); visitorBoat.visible = false; root.add(visitorBoat);
-    const nextBoat = buildBoat(m, true); nextBoat.position.copy(layout.farther); nextBoat.scale.setScalar(.8); root.add(nextBoat);
+    // いりえの みなと (§1.4): with a cove of four dug cells, the next ship waits in it in its own colours.
+    const harbour = layout.editable ? shipCove(state) : undefined;
+    const nextBoat = buildBoat(m, !harbour); nextBoat.position.copy(layout.farther); nextBoat.scale.setScalar(.8); root.add(nextBoat);
+    if (harbour) {
+        const berth = boatCell(state) ?? harbour[0];
+        nextBoat.position.copy(layout.point(berth, 0)).setY(TERRAIN_SEA_LEVEL + .1); nextBoat.scale.setScalar(.5); nextBoat.rotation.y = .9;
+    }
+    nextBoat.userData.baseY = nextBoat.position.y;
     nextBoat.traverse(o => { if (o instanceof T.Mesh) o.userData.ownMaterial = true; });
     const previews: T.Object3D[] = [];
     const hiddenStructures: { object: T.Object3D; visible: boolean }[] = [];

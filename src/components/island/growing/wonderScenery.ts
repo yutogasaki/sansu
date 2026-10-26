@@ -1,7 +1,7 @@
 import * as T from 'three';
 import { BLOOM_HOURS } from '../../../domain/growingIsland/environment';
 import { TERRAIN_SEA_LEVEL } from '../../../domain/growingIsland/editableTerrainWorld';
-import { boatCell, floatingIsle, waterfalls } from '../../../domain/growingIsland/discoveries';
+import { boatCell, floatingIsle, shipCove, waterfalls } from '../../../domain/growingIsland/discoveries';
 import { moonPhase } from '../../../domain/growingIsland/sky';
 import type { GrowingState } from '../../../domain/growingIsland';
 import type { SceneLayout } from './sceneLayout';
@@ -106,7 +106,8 @@ export class WonderScenery {
                 this.root.add(mesh, foam); this.falls.push({ mesh, texture: map });
             }
             texture?.dispose();
-            const cell = boatCell(state);
+            // Where the next ship already waits in the cove, the little boat gives it room.
+            const cell = shipCove(state) ? undefined : boatCell(state);
             if (cell) { const object = boat(), base = layout.point(cell, 0).setY(TERRAIN_SEA_LEVEL + .06); object.position.copy(base); object.rotation.y = .6; this.root.add(object); this.bobber = { object, base }; }
             const lord = floatingIsle(state);
             if (lord) {

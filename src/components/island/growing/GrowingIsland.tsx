@@ -303,13 +303,19 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     }, [own, placing]);
     // DEV place-growth experiment: the three cells where this thing would gather into a place glow.
     // Where it would grow a place, only that cell glows, with a line naming the place.
-    const [advised, growth] = useMemo((): [Cell[], { cell: Cell; message: string } | undefined] => {
+    const [advised, growth] = useMemo((): [Cell[], { cell: Cell; message: string; area: Cell[]; now: Cell[] } | undefined] => {
         if (!own || !placing || !ghost || !placeGrowthEnabled()) return [[], undefined];
         const reached = reachableFromHome(own);
         const ranked = placementAdvice(own, placing.kind, ghost.allowed.filter(cell => isReachable(cell, reached)), 8);
         const hint = growthHint(own, placing.kind, ranked);
         return [hint ? [hint.cell] : ranked.slice(0, 3), hint];
     }, [own, placing, ghost]);
+    // あと1つ: the ground the place will cover once this grows, laid on the island while placing.
+    const futureKey = placing && growth ? growth.area.map(cell => `${cell.x},${cell.z}`).join(';') : '';
+    useEffect(() => {
+        camera.current?.showFuture(futureKey && growth ? growth.area : [], growth?.now ?? []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [futureKey]);
     // "ひかる ところ" must be on screen: when a thing is picked, bring its glowing cells into view.
     const adviceKey = placing && !placing.cell ? advised.map(cell => `${cell.x},${cell.z}`).join(';') : '';
     useEffect(() => {
@@ -736,7 +742,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             <button className="growing-seed-button" onClick={leaveVisit}>かえる</button>
         </div> : placing ? <GrowingPlacementControls itemName={placementName(own, placing)} valid={Boolean(ghost?.valid)} shortfall={shortfall} pending={island.busy || island.syncing}
             message={ghost?.cell ? ghost.valid ? 'ここで いい？' : placing.kind === 'home' && canPlace(own, ghost.cell, placing.id)
-                ? 'ここまで いけないみたい。まわりを あけてみよう' : 'ここには おけないよ' : growth ? growth.message.replace('ここに', 'ひかる ところに') : advised.length ? 'ひかる ところに おくと、まとまって みえるよ' : 'おく ばしょを さわってね'}
+                ? 'ここまで いけないみたい。まわりを あけてみよう' : 'ここには おけないよ' : growth ? `${growth.message.replace('ここに', 'ひかる ところに')}。きいろい ところが そだった あとの ばしょだよ` : advised.length ? 'ひかる ところに おくと、まとまって みえるよ' : 'おく ばしょを さわってね'}
             onConfirm={confirm} onChoose={() => { setPanel(placing.mode === 'unstore' ? 'stored' : 'tray'); setPlacing(undefined); setLine(undefined); island.clearError(); }}
             onCancel={() => { if (placing.mode === 'move') setSelected(placing.id); else setPanel(placing.mode === 'unstore' ? 'stored' : 'tray'); setPlacing(undefined); setLine(undefined); island.clearError(); }} /> : <div className="growing-hud-bottom">
             {firstPlay && !panel && !menu && !selected && !card && !story && !bridgeChoice && <button className="growing-seed-button first-play-learn" disabled={island.busy || island.saving} onClick={onLearn}>まなぶ</button>}

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { applyIntent } from './commands';
-import { boatCell, cloverFound, coves, floatingIsle, rainbowChance, waterfalls } from './discoveries';
+import { boatCell, cloverFound, coves, floatingIsle, goldenChance, lookoutHome, noteDiscoveries, rainbowChance, shipCove, waterfalls } from './discoveries';
 import { scoresNear } from './environment';
 import { newIsland } from './island';
 import { momentCandidates } from './moments';
@@ -45,6 +45,31 @@ describe('しまの ふしぎ: what the child\'s arrangement brings about', () =
         // A cove of four brings the whale into the child's own water.
         state = stroke(state, [{ x: 1, z: 3 }], 'sea');
         expect(momentCandidates(state).find(c => c.moment === 'whale')?.cell).toBeDefined();
+    });
+
+    it('a cove of four is where the next ship waits', () => {
+        let state = stroke(island(), [{ x: 0, z: 4 }, { x: 1, z: 4 }, { x: 0, z: 3 }], 'sea');
+        expect(shipCove(state)).toBeUndefined();
+        state = stroke(state, [{ x: 1, z: 3 }], 'sea');
+        expect(shipCove(state)).toHaveLength(4);
+        expect(state.discoveries).toContain('ship-cove');
+    });
+
+    it('a home on raised ground gets a lookout', () => {
+        let state = island();
+        expect(lookoutHome(state, { x: 4, z: 2 })).toBe(false);
+        state = stroke(state, [{ x: 4, z: 2 }], 'up');
+        expect(lookoutHome(state, { x: 4, z: 2 })).toBe(true);
+        state.plots.push({ id: 'h', kind: 'home', cell: { x: 4, z: 2 }, stage: 1, growth: 0, plantedAt: 0, origin: 'seed', paid: 40 });
+        noteDiscoveries(state);
+        expect(state.discoveries).toContain('lookout-home');
+    });
+
+    it('golden fields are likelier by water', () => {
+        const state = island();
+        expect(goldenChance(state, { x: 4, z: 2 })).toBeCloseTo(.06);
+        state.landmarks.push({ id: 'b', kind: 'water-bowl', cell: { x: 4, z: 3 }, growth: 0 });
+        expect(goldenChance(state, { x: 4, z: 2 })).toBeCloseTo(.18);
     });
 
     it('a light on raised ground reaches one cell further', () => {

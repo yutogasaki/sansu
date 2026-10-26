@@ -49,6 +49,7 @@ export async function drawIslandCard(state: GrowingState, island: HTMLCanvasElem
     const scale = Math.max(w / island.width, h / island.height);
     g.drawImage(island, 60 + (w - island.width * scale) / 2, top + (h - island.height * scale) / 2, island.width * scale, island.height * scale);
     g.restore();
+    wonderBadges(g, state, 60 + 24, top + h - 24);
     const people = [...state.villagers].sort((a, b) => a.arrivedAt - b.arrivedAt).slice(0, 12);
     const images = await Promise.all(people.map(v => faces[v.id] ? load(faces[v.id]) : Promise.resolve(undefined)));
     people.forEach((v, i) => {
@@ -65,6 +66,47 @@ export async function drawIslandCard(state: GrowingState, island: HTMLCanvasElem
     const keep = state.keepsakes.filter(k => k.cell).map(k => KEEPSAKE_ICON[keepsakeKind(k.unitId)]).slice(0, 10).join(' ');
     if (keep) { g.font = font(34, 700); g.fillText(`まなびの きねんひん ${keep}`, CARD_WIDTH / 2, 1295); }
     return canvas;
+}
+
+// The island's own ふしぎ (§1.4) as small round pictures, the rarest first.
+const BADGE_ORDER = ['rainbow-tree', 'floating-isle', 'golden-pumpkin', 'waterfall', 'ship-cove', 'cove-boat', 'clover', 'lookout-home', 'high-light', 'grove-hill'] as const;
+function wonderBadges(g: CanvasRenderingContext2D, state: GrowingState, left: number, bottom: number) {
+    const found = new Set(state.discoveries ?? []);
+    const shown: string[] = BADGE_ORDER.filter(id => found.has(id));
+    if ([...found].some(id => id.startsWith('moment:'))) shown.push('moment');
+    shown.slice(0, 7).forEach((id, i) => {
+        const r = 40, x = left + r + i * (r * 2 + 14), y = bottom - r;
+        g.save(); g.translate(x, y);
+        g.fillStyle = '#fffaf0'; g.strokeStyle = '#3a3346'; g.lineWidth = 5;
+        g.beginPath(); g.arc(0, 0, r, 0, Math.PI * 2); g.fill(); g.stroke();
+        const fill = (color: string) => { g.fillStyle = color; g.fill(); };
+        g.beginPath();
+        if (id === 'rainbow-tree') {
+            ['#f19a9a', '#f5c27a', '#f3e38a', '#a9d79a', '#95c6e8', '#b8a3dc'].forEach((c, k) => { g.beginPath(); g.arc(0, 8, 26 - k * 4, Math.PI, 0); g.lineWidth = 4; g.strokeStyle = c; g.stroke(); });
+        } else if (id === 'floating-isle') {
+            g.moveTo(-22, -2); g.lineTo(22, -2); g.lineTo(0, 24); g.closePath(); fill('#b8a6cf');
+            g.beginPath(); g.ellipse(0, -4, 24, 8, 0, 0, Math.PI * 2); fill('#a8d68f');
+            g.beginPath(); g.arc(4, -18, 10, 0, Math.PI * 2); fill('#7cc49a');
+        } else if (id === 'golden-pumpkin') {
+            g.ellipse(0, 4, 22, 16, 0, 0, Math.PI * 2); fill('#f2c230'); g.fillStyle = '#6b8a3a'; g.fillRect(-2, -18, 5, 9);
+        } else if (id === 'waterfall') {
+            g.fillStyle = '#9fd8f4'; g.fillRect(-12, -24, 24, 38); g.beginPath(); g.ellipse(0, 18, 24, 7, 0, 0, Math.PI * 2); fill('#cdeeff');
+        } else if (id === 'ship-cove' || id === 'cove-boat') {
+            g.moveTo(-24, 4); g.lineTo(24, 4); g.lineTo(14, 18); g.lineTo(-14, 18); g.closePath(); fill('#b97a4f');
+            if (id === 'ship-cove') { g.beginPath(); g.moveTo(0, 2); g.lineTo(0, -24); g.lineTo(18, 0); g.closePath(); fill('#f6c6d4'); }
+        } else if (id === 'clover') {
+            for (const [dx, dy] of [[-8, -8], [8, -8], [-8, 8], [8, 8]]) { g.beginPath(); g.arc(dx, dy, 9, 0, Math.PI * 2); fill('#6ccf6b'); }
+        } else if (id === 'lookout-home') {
+            g.moveTo(-20, 0); g.lineTo(0, -20); g.lineTo(20, 0); g.closePath(); fill('#e07a5f'); g.fillStyle = '#f3e3c3'; g.fillRect(-15, 0, 30, 20);
+        } else if (id === 'high-light') {
+            g.arc(0, 0, 14, 0, Math.PI * 2); fill('#ffd23f'); g.beginPath(); g.arc(0, 0, 24, 0, Math.PI * 2); g.lineWidth = 3; g.strokeStyle = '#ffe89a'; g.stroke();
+        } else if (id === 'grove-hill') {
+            g.moveTo(-26, 18); g.lineTo(0, -10); g.lineTo(26, 18); g.closePath(); fill('#8fc77a'); g.beginPath(); g.arc(0, -14, 10, 0, Math.PI * 2); fill('#4f9a6a');
+        } else {
+            g.font = '900 40px sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillStyle = '#9b6ae0'; g.fillText('★', 0, 2);
+        }
+        g.restore();
+    });
 }
 
 function roundRect(g: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {

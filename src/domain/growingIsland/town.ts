@@ -1,3 +1,4 @@
+import { goldenField } from './discoveries';
 import { editableIslandWorld } from './editableTerrainWorld';
 import { grantGrowthMilestones } from './growth';
 import { comfort, foodSupport, genki, housing, islandLevel, levelFor, occupantsOf, refreshUnlocks } from './community';
@@ -30,6 +31,7 @@ function build(state: GrowingState, hour: number, events: TownEvent[], world?: I
         if (!isReachable(plot.cell!, reached, world)) continue;
         plot.stage = 1; plot.builtAt = hour; plot.stagedAt = hour;
         plot.style = styleAt(state, plot.cell!, all, world);
+        if (plot.kind === 'farm' && goldenField(state, plot.id, plot.cell!)) plot.rare = 'golden';
         if (state.growth && plot.paid > 0 && !['wild', 'wonder'].includes(plot.kind)) state.growth.built = true;
         events.push({ type: 'built', plotId: plot.id });
         if (!state.unopened.includes(plot.id)) state.unopened.push(plot.id);

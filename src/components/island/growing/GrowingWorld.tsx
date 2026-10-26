@@ -80,6 +80,8 @@ export interface WorldCamera {
     terrainView: (close: boolean, inset?: number) => void;
     /** Pans, at the same zoom, until these cells are on screen; a view that shows them stays. */
     showCells: (cells: readonly Cell[]) => void;
+    /** あと1つ: warm tiles where a place will reach once the picked thing grows; pale where it is now. */
+    showFuture: (area: readonly Cell[], now: readonly Cell[]) => void;
     /** Petals over a thing the child just grew, so the change is seen where it happened. */
     celebrate: (id: string) => void;
     restoreView: () => void;
@@ -347,6 +349,27 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             terrainArea.name = 'growing-terrain-area'; terrainArea.renderOrder = 3; world.scene.add(terrainArea);
         };
         disposers.push(() => showTerrainArea(false));
+        let future: T.Mesh | undefined;
+        const showFuture = (area: readonly Cell[], now: readonly Cell[]) => {
+            if (future) { future.removeFromParent(); future.geometry.dispose(); (future.material as T.Material).dispose(); future = undefined; }
+            if (import.meta.env.DEV) node.dataset.placeFuture = JSON.stringify({ area: area.length, now: now.length });
+            if (!area.length) return;
+            const positions: number[] = [], colors: number[] = [], had = new Set(now.map(c => `${c.x},${c.z}`)), n = 3, size = .86;
+            for (const cell of area) {
+                const fresh = !had.has(`${cell.x},${cell.z}`);
+                for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) {
+                    const at = (a: number, b: number) => layout.point({ x: cell.x - size / 2 + (i + a) * size / n, z: cell.z - size / 2 + (j + b) * size / n }, .03);
+                    const [p00, p10, p01, p11] = [at(0, 0), at(1, 0), at(0, 1), at(1, 1)];
+                    positions.push(...p00.toArray(), ...p01.toArray(), ...p10.toArray(), ...p10.toArray(), ...p01.toArray(), ...p11.toArray());
+                    for (let k = 0; k < 6; k++) colors.push(...(fresh ? [1, .93, .45, .7] : [1, 1, 1, .32]));
+                }
+            }
+            const geometry = new T.BufferGeometry(); geometry.setAttribute('position', new T.Float32BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new T.Float32BufferAttribute(colors, 4));
+            future = new T.Mesh(geometry, new T.MeshBasicMaterial({ vertexColors: true, transparent: true, depthWrite: false, side: T.DoubleSide }));
+            future.name = 'growing-place-future'; future.renderOrder = 3; world.scene.add(future);
+        };
+        disposers.push(() => showFuture([], []));
         const rebuild = (next: GrowingState, nextGhost?: Ghost, selected?: string, nextHints?: readonly Cell[]) => {
             if (nextGhost) { followingPlace = undefined; initialClose = false; stopPlay(); }
             // The first props effect follows the initial scene build with the same
@@ -400,7 +423,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             unopened = new Set(next.unopened);
             world.life.sync(next, layout, layer);
             wonders.build(next, layout);
-            if (import.meta.env.DEV) node.dataset.wonders = JSON.stringify({ crowns: layer.root.getObjectsByProperty('name', 'rainbow-crown').length, scenery: wonders.root.children.map(c => c.name) });
+            if (import.meta.env.DEV) node.dataset.wonders = JSON.stringify({ crowns: layer.root.getObjectsByProperty('name', 'rainbow-crown').length, lookouts: layer.root.getObjectsByProperty('name', 'home-lookout').length, golden: layer.root.getObjectsByProperty('name', 'golden-pumpkin').length, ship: layer.nextBoat.position.toArray().map(v => Math.round(v * 100) / 100), scenery: wonders.root.children.map(c => c.name).filter(Boolean) });
             if (wholeArt) node.dataset.authoredWholeArt = JSON.stringify({ candidate: AUTHORED_WHOLE_ART_CANDIDATE,
                 forestOwners: layer.root.getObjectsByProperty('name', 'authored-forest-tree').map(object => object.userData.ownerId),
                 galleryOwners: layer.root.getObjectsByProperty('name', 'authored-gallery-structure').map(object => object.userData.ownerIds),
@@ -529,6 +552,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
                 view.pan = panToFocus(camera, home, middle.add(new T.Vector3(0, 0, .8)));
                 frameCamera(camera, layout, view, width / height);
             },
+            showFuture,
             celebrate: id => {
                 const target = layer?.objects.get(id); if (!target || reduced) return;
                 effects.confetti(target.getWorldPosition(new T.Vector3()), performance.now());
@@ -604,7 +628,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
                 if (sailing) layer.visitorBoat.position.lerpVectors(layout.far, layout.dock, boatProgress(current));
                 const bob = reduced ? 0 : Math.sin(now / 700) * .03;
                 layer.visitorBoat.position.y = layout.dock.y + bob; layer.arrivalBoat.position.y = layout.dock.y + bob;
-                layer.nextBoat.position.y = layout.farther.y + (reduced ? 0 : Math.sin(now / 900 + 1) * .03);
+                layer.nextBoat.position.y = (layer.nextBoat.userData.baseY ?? layout.farther.y) + (reduced ? 0 : Math.sin(now / 900 + 1) * .03);
                 for (const bud of layer.buds.values()) {
                     const inner = bud.children[0];
                     if (inner && !reduced) { inner.position.y = .42 + Math.sin(now / 420) * .05; inner.rotation.y = now / 1400; }
@@ -716,6 +740,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             moments.ambient(now, latest.current.time === 'night', current.landmarks.filter(l => l.cell && (l.kind === 'lantern' || l.kind === 'lighthouse')).length, camera.position.clone().setY(0), reduced);
             moments.tick(now);
             wonders.tick(now, latest.current.time === 'night', reduced, camera);
+            if (import.meta.env.DEV && now >= nextTelemetry && layer) node.dataset.shipScreen = JSON.stringify([layer.nextBoat.visible, ...layer.nextBoat.getWorldPosition(new T.Vector3()).project(camera).toArray().map(v => Math.round(v * 100) / 100)]);
             if (import.meta.env.DEV && now >= nextTelemetry) { const moon = wonders.root.getObjectByName('wonder-moon'); if (moon) node.dataset.wonderMoon = JSON.stringify(moon.getWorldPosition(new T.Vector3()).project(camera).toArray().map(v => Math.round(v * 100) / 100)); }
             const editing = latest.current.terrainEditing, selectedTerrain = latest.current.terrainCell;
             terrainRing.visible = Boolean(editing && selectedTerrain);

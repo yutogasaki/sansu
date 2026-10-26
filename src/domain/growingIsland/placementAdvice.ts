@@ -183,10 +183,14 @@ function placeValue(places: DerivedPlace[]) {
  * start, enlarge, reshape or complete a place (the same place rules the island already uses),
  * with a line telling the child which place it grows. Only things the child places directly.
  */
-export function growthHint(state: GrowingState, kind: SeedKind | LandmarkKind, cells: readonly Cell[]): { cell: Cell; message: string } | undefined {
+/**
+ * The cell where this thing would grow a place, what to say, and the place's ground once
+ * grown (`area`) beside what it covers now (`now`), so the child sees the shape to come.
+ */
+export function growthHint(state: GrowingState, kind: SeedKind | LandmarkKind, cells: readonly Cell[]): { cell: Cell; message: string; area: Cell[]; now: Cell[] } | undefined {
     if (kind === 'home' || kind === 'farm' || !cells.length) return undefined;
     const before = derivePlaces(state), value = placeValue(before);
-    let best: { cell: Cell; gain: number; place?: DerivedPlace; fresh: boolean; reshaped: boolean } | undefined;
+    let best: { cell: Cell; gain: number; place?: DerivedPlace; previous?: DerivedPlace; fresh: boolean; reshaped: boolean } | undefined;
     for (const cell of cells.slice(0, 8)) {
         const id = 'growth-hint-probe';
         // Judge it as it will be once grown: a young tree or a bud joins its place when it matures.
@@ -197,10 +201,10 @@ export function growthHint(state: GrowingState, kind: SeedKind | LandmarkKind, c
         // Growing a place the child already has always comes before starting a lone new one.
         const gain = (placeValue(after) - value) + (previous ? 100 : 0);
         if (gain <= (previous ? 100 : .5) || best && gain <= best.gain) continue;
-        best = { cell, gain, place, fresh: !previous, reshaped: Boolean(previous && previous.variant !== place.variant) };
+        best = { cell, gain, place, previous, fresh: !previous, reshaped: Boolean(previous && previous.variant !== place.variant) };
     }
     if (!best?.place) return undefined;
     const name = GROWTH_PLACE_GUIDES[best.place.ruleId].name, when = kind === 'sapling' || kind === 'flower' ? 'ここに おいて そだつと' : 'ここに おくと';
-    return { cell: best.cell, message: best.fresh ? `${when}「${name}」が はじまるよ`
+    return { cell: best.cell, area: best.place.footprint.map(c => ({ x: c.x, z: c.z })), now: (best.previous?.footprint ?? []).map(c => ({ x: c.x, z: c.z })), message: best.fresh ? `${when}「${name}」が はじまるよ`
         : best.reshaped ? `${when}「${name}」の かたちが かわるよ` : `${when}「${name}」が ひろがるよ` };
 }

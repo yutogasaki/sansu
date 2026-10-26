@@ -45,6 +45,8 @@ export interface Plot {
     starter?: true;
     townBuilt?: true;
     restoredWonder?: WonderSlot;
+    /** A field drawn golden once when it was built (§1.4); never redrawn. */
+    rare?: 'golden';
 }
 
 export interface Landmark {

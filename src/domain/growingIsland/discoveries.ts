@@ -10,7 +10,7 @@ import type { Cell, GrowingState, Landmark, Moment } from './types';
  * brings about. Each one is noticed once and kept in the ふしぎずかん. Nothing here is a
  * quest, a daily reward or something that can be missed; it only records what happened.
  */
-export type DiscoveryId = 'waterfall' | 'cove-boat' | 'high-light' | 'grove-hill' | 'rainbow-tree' | 'clover' | 'floating-isle' | `moment:${Moment}`;
+export type DiscoveryId = 'waterfall' | 'cove-boat' | 'high-light' | 'grove-hill' | 'rainbow-tree' | 'clover' | 'floating-isle' | 'lookout-home' | 'ship-cove' | 'golden-pumpkin' | `moment:${Moment}`;
 export type DiscoveryGroup = 'ground' | 'luck' | 'sky';
 
 export interface Discovery { id: DiscoveryId; group: DiscoveryGroup; name: string; line: string; hint: string }
@@ -21,6 +21,9 @@ export const DISCOVERIES: readonly Discovery[] = [
     { id: 'high-light', group: 'ground', name: 'たかだいの あかり', line: 'たかい ところの あかりは とおくまで とどくよ', hint: 'おかの うえに あかりを おいてみよう' },
     { id: 'grove-hill', group: 'ground', name: 'もりの おか', line: 'おかの うえに もりが できたよ', hint: 'そだった 木を 3本 ならべて、おかに してみよう' },
     { id: 'floating-isle', group: 'ground', name: 'うかぶ こじま', line: 'たかい おかの ぬしの木の そらに、こじまが うかんだよ', hint: '2だんの おかで、木を ぬしの木まで そだててみよう' },
+    { id: 'lookout-home', group: 'ground', name: 'みはらしの いえ', line: 'おかの うえの いえに、ぼうえんきょうの ある みはらしだいが ついたよ', hint: 'おかの うえに いえを たててみよう' },
+    { id: 'ship-cove', group: 'ground', name: 'いりえの みなと', line: 'つぎの ふねが、ほった いりえで まっているよ', hint: 'うみの ふでで、4マスの いりえを ほってみよう' },
+    { id: 'golden-pumpkin', group: 'luck', name: 'きんの かぼちゃ', line: 'きんいろの かぼちゃが みのったよ', hint: 'みずの ちかくに はたけを つくると、たまに…' },
     { id: 'rainbow-tree', group: 'luck', name: 'にじの 木', line: 'にじいろの はっぱの 木が そだったよ', hint: 'みずと 花の ちかくで 木を そだてると、たまに…' },
     { id: 'clover', group: 'luck', name: 'よつば', line: 'のはらで よつばを みつけたよ', hint: 'のはらの 花を つんでいると、たまに…' },
     { id: 'moment:rainbow', group: 'sky', name: 'にじ', line: 'あめあがりに にじが でたよ', hint: 'みずの ちかくを しめらせてみよう' },
@@ -121,6 +124,16 @@ export function rainbowChance(state: GrowingState, tree: Landmark) {
 }
 export const rainbowTree = (state: GrowingState, tree: Landmark) => roll(state.seed, 'rainbow-tree', tree.id, 0) < rainbowChance(state, tree);
 
+/** A field built near water is sometimes golden; the draw belongs to the field. */
+export function goldenChance(state: GrowingState, cell: Cell) { return .06 + (scoresNear(state, cell, 2).water > 0 ? .12 : 0); }
+export const goldenField = (state: GrowingState, plotId: string, cell: Cell) => roll(state.seed, 'golden-field', plotId, 0) < goldenChance(state, cell);
+
+/** A home on raised ground gets a lookout. */
+export const lookoutHome = (state: GrowingState, cell: Cell) => heightAt(state, cell) >= 1;
+
+/** A cove of four or more dug cells is where the next ship waits. */
+export const shipCove = (state: GrowingState) => coves(state).find(piece => piece.length >= 4);
+
 /** A plucked wild flower sometimes leaves a four-leaf clover. */
 export const cloverFound = (state: GrowingState, plotId: string) => roll(state.seed, 'clover', plotId, 0) < .15;
 
@@ -138,6 +151,9 @@ export function noteDiscoveries(state: GrowingState) {
         if (state.landmarks.some(l => l.cell && (l.kind === 'lantern' || l.kind === 'lighthouse') && highLight(state, l.cell))) discover(state, 'high-light');
         if (groveOnHill(state)) discover(state, 'grove-hill');
         if (floatingIsle(state)) discover(state, 'floating-isle');
+        if (state.plots.some(p => p.kind === 'home' && p.stage > 0 && p.cell && lookoutHome(state, p.cell))) discover(state, 'lookout-home');
+        if (shipCove(state)) discover(state, 'ship-cove');
     }
     if (state.landmarks.some(l => l.rare === 'rainbow' && l.cell)) discover(state, 'rainbow-tree');
+    if (state.plots.some(p => p.rare === 'golden' && p.cell)) discover(state, 'golden-pumpkin');
 }
