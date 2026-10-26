@@ -30,6 +30,8 @@ export function makeVoyageIsland(current: GrowingRecord, id: string, name: strin
     else state.landmarks.push(
         { id: 'voyage-flower-1', kind: 'flower', cell: { x: 0, z: 2 }, growth: 0 },
         { id: 'voyage-flower-2', kind: 'flower', cell: { x: 0, z: 3 }, growth: 0 });
+    // The first steps and the firsts are the child's, not one island's (island-journey.md §5).
+    if (current.state.guidance) { state.guidance = structuredClone(current.state.guidance); delete state.guidance.firstFlower; }
     syncSoil(state); state.character = islandCharacter(state);
     // A special island starts with its own ground, which is a version 6 island (spec 13).
     return { profileId: current.profileId, islandId: id, islandStart: start, version: state.terrain ? 6 : 5,

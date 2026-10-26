@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Anchor, Cloud, Cog, Droplets, Flower2, House, Leaf, Sailboat, Shell, Star, Trees, Waves, X } from 'lucide-react';
+import { Cloud, Cog, Droplets, Flower2, House, Leaf, Sailboat, Shell, Star, Trees, Waves, X } from 'lucide-react';
 import { listVoyageIslands } from '../../../domain/growingIsland/repository';
 import { ISLAND_STARTS, isTheme, type IslandStart } from '../../../domain/growingIsland/voyages';
 import { ROUTE_LEVELS, starsLit, slotForTheme, THEME_INFO, THEMES, freeSlots, type ThemeId } from '../../../domain/growingIsland/journey';
@@ -19,14 +19,15 @@ const startName = (start: IslandStart) => isTheme(start) ? THEME_INFO[start].nam
  * special island the child chooses. Choosing is never forced.
  */
 function SpecialIslands({ state, locked, onChoose }: { state: GrowingState; locked: boolean; onChoose: (theme: ThemeId) => void }) {
-    const lit = starsLit(state), free = freeSlots(state), next = ROUTE_LEVELS.find(level => level > lit);
+    // Routes open one at a time (island-journey.md §3), so the next ship is the one after the opened routes.
+    const lit = starsLit(state), free = freeSlots(state), opened = state.journey?.routes.length ?? 0, next = opened ? ROUTE_LEVELS[opened - 1] : undefined;
     return <section className="voyage-special" aria-label="とくべつな しま">
         <h3>とくべつな しまへの こうろ</h3>
         <ol className="voyage-stars" aria-label={`ともった ほし ${lit}こ`}>{Array.from({ length: 20 }, (_, i) => {
             const level = i + 1, ship = (ROUTE_LEVELS as readonly number[]).includes(level);
             return <li key={level} data-lit={level <= lit || undefined} data-ship={ship || undefined} aria-label={`Lv${level}${ship ? '・こうろ' : ''}${level <= lit ? '・ともった' : ''}`}>{ship ? '⛵' : '★'}</li>;
         })}</ol>
-        <p className="voyage-note">まなびで ないようを たしかめると ほしが ともるよ。{next ? `Lv${next}の ⛵で つぎの こうろが ひらくよ` : 'ぜんぶの こうろが ひらいたよ'}</p>
+        <p className="voyage-note">まなびで ないようを たしかめると ほしが ともるよ。{!opened ? 'はじめての なかまが くると、さいしょの こうろが ひらくよ' : next ? `Lv${next}の ⛵で つぎの こうろが ひらくよ` : 'ぜんぶの こうろが ひらいたよ'}</p>
         {free.length > 0 && <p className="voyage-open" role="status">ひらいている こうろ {free.length}つ。いきたい しまを えらんでね</p>}
         <div className="voyage-themes">{THEMES.map(theme => {
             const info = THEME_INFO[theme], made = state.journey?.chosen.some(choice => choice.theme === theme), slot = slotForTheme(state, theme), Icon = icons[theme];
@@ -41,8 +42,7 @@ function SpecialIslands({ state, locked, onChoose }: { state: GrowingState; lock
 
 export default function VoyageChart({ profileId, state, busy, onClose, onSail, onFocus }: Props) {
     const [islands, setIslands] = useState<Awaited<ReturnType<typeof listVoyageIslands>>>([]);
-    const [error, setError] = useState<string>(), [creating, setCreating] = useState(false);
-    const [start, setStart] = useState<keyof typeof ISLAND_STARTS>('garden'), [name, setName] = useState('');
+    const [error, setError] = useState<string>();
     const [loading, setLoading] = useState(true), [sailing, setSailing] = useState(false), [retry, setRetry] = useState(0);
     const request = useRef<string | undefined>(undefined), dialog = useRef<HTMLElement>(null);
     const locked = busy || sailing;
@@ -97,19 +97,7 @@ export default function VoyageChart({ profileId, state, busy, onClose, onSail, o
             {!loading && <SpecialIslands state={state} locked={locked || Boolean(error)} onChoose={theme => {
                 request.current = crypto.randomUUID(); void sail(request.current, { name: THEME_INFO[theme].name, start: theme });
             }} />}
-            {creating ? <form className="voyage-create" onSubmit={event => {
-                event.preventDefault(); request.current ??= crypto.randomUUID();
-                void sail(request.current, { name: name.trim() || ISLAND_STARTS[start].name, start });
-            }}>
-                <h3>どんな はじまりにする？</h3>
-                <div className="voyage-starts">{(Object.keys(ISLAND_STARTS) as (keyof typeof ISLAND_STARTS)[]).map(id => {
-                    const Icon = icons[id]; return <button type="button" key={id} disabled={locked} aria-pressed={start === id} onClick={() => setStart(id)}>
-                        <Icon aria-hidden="true" /><strong>{ISLAND_STARTS[id].name}</strong><small>{ISLAND_STARTS[id].hint}</small></button>;
-                })}</div>
-                <label>島の なまえ<input value={name} maxLength={12} placeholder={ISLAND_STARTS[start].name} disabled={locked} onChange={event => setName(event.target.value)} /></label>
-                <p>あとから ちがう そだて方も できるよ。しずくは みんなの島で いっしょ。</p>
-                <div className="growing-row"><button type="button" disabled={locked} onClick={() => setCreating(false)}>やめる</button><button className="growing-primary" type="submit" disabled={locked || loading}>{sailing ? '出発しているよ…' : '新しい島を つくっていく（無料）'}</button></div>
-            </form> : <button className="voyage-new" disabled={locked || loading || Boolean(error)} onClick={() => { request.current = undefined; setCreating(true); }}><Anchor aria-hidden="true" />新しい島を つくる</button>}
+            {/* New islands are the special islands opened by the routes; islands made before stay on the chart (island-journey.md §3.1). */}
             <nav className="voyage-landmarks" aria-label="いまの島の めじるし"><h3>いまの島で みる</h3>{landmarks.map(({ id, name: title, Icon }) =>
                 <button key={id} disabled={locked} onClick={() => { onFocus(id); onClose(); }}><Icon size={18} aria-hidden="true" />{title}</button>)}</nav>
             <div role="status" aria-live="polite">{sailing && 'ふねで 出発しているよ…'}</div>

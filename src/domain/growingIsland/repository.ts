@@ -350,7 +350,11 @@ export async function sailGrowingIsland(profileId: string, expectedIslandId: str
         const source = { ...current, state: structuredClone(current.state) }; grantRoutes(source.state, undefined, now);
         const record = { ...carrySharedResources(source, target), revision: current.revision + 1, updatedAt: now };
         // A special island takes one opened route slot; the choice is the child's, once (island-journey.md §3).
-        if (!stored && destination.create && isTheme(destination.create.start)) chooseTheme(record.state, destination.create.start, destination.id);
+        if (!stored && destination.create && isTheme(destination.create.start)) {
+            chooseTheme(record.state, destination.create.start, destination.id);
+            // Choosing an island lets the next learning slot open from levels already confirmed.
+            grantRoutes(record.state, undefined, now);
+        }
         await database.archivedIslands.put({ ...current, islandId: islandIdOf(current) });
         await database.archivedIslands.delete([profileId, destination.id]);
         await database.islands.put(record);

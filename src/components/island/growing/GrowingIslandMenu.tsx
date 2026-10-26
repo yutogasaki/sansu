@@ -16,9 +16,10 @@ export interface GrowingIslandMenuProps {
     onFriends: () => void;
     onVoyages?: () => void;
     onTerrain?: () => void;
-    onTrace: () => void;
-    onShow: () => void;
-    onFlowers: () => void;
+    /** Tools appear when they are needed (island-journey.md §5.1); an absent one is not shown. */
+    onTrace?: () => void;
+    onShow?: () => void;
+    onFlowers?: () => void;
     /** しまの きろく (island-journey.md §5); absent where island shaping is off. */
     onWonders?: () => void;
     onGuide: () => void;
@@ -38,9 +39,9 @@ export function GrowingIslandMenuContents(props: GrowingIslandMenuProps) {
         <div className="growing-pocket-memories" aria-label="しまの くらし">
             {props.onTerrain && <button disabled={props.busy} onClick={props.onTerrain}><Shovel size={29} aria-hidden="true" /><span>じめんを かえる</span></button>}
             {props.onVoyages && <button disabled={props.busy} onClick={props.onVoyages}><IslandToyIcon kind="boat" size={32} /><span>海図と ふね</span></button>}
-            <button onClick={props.onTrace}><IslandToyIcon kind="palette" size={32} /><span>はたを つくる</span></button>
-            <button aria-label="しゃしん・みせる" onClick={props.onShow}><IslandToyIcon kind="camera" size={32} /><span>しゃしん</span></button>
-            <button onClick={props.onFlowers}><IslandToyIcon kind="display" size={32} /><span>はなずかん</span></button>
+            {props.onTrace && <button onClick={props.onTrace}><IslandToyIcon kind="palette" size={32} /><span>はたを つくる</span></button>}
+            {props.onShow && <button aria-label="しゃしん・みせる" onClick={props.onShow}><IslandToyIcon kind="camera" size={32} /><span>しゃしん</span></button>}
+            {props.onFlowers && <button onClick={props.onFlowers}><IslandToyIcon kind="display" size={32} /><span>はなずかん</span></button>}
             {props.onWonders && <button onClick={props.onWonders}><Sparkles size={29} aria-hidden="true" /><span>しまの きろく</span></button>}
             {props.bridge && <button disabled={props.busy || (!props.bridge.built && !props.bridge.ready)} onClick={props.onBridge}
                 aria-label={props.bridge.built ? 'はしを みにいく' : 'はしを つくる'} title={!props.bridge.built && !props.bridge.ready ? props.bridge.reason : undefined}>

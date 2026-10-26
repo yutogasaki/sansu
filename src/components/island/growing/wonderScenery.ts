@@ -5,6 +5,7 @@ import { TERRAIN_SEA_LEVEL } from '../../../domain/growingIsland/editableTerrain
 import { boatCell, floatingIsle, shipCove, waterfalls } from '../../../domain/growingIsland/discoveries';
 import { moonPhase } from '../../../domain/growingIsland/sky';
 import type { ThemeId } from '../../../domain/growingIsland/journey';
+import { constellations, echoGroves, gearChain, lightFlows, mechanismProgress, tideLevel, windAngle } from '../../../domain/growingIsland/mechanisms';
 
 /** A toothed gear wheel, flat in its own XY plane (ぜんまい島). */
 function gear(radius: number, thick: number, color: string, teeth = 12) {
@@ -23,7 +24,7 @@ function gear(radius: number, thick: number, color: string, teeth = 12) {
 const THEME_SEA: Record<ThemeId, { deep: string; shallow: string }> = {
     shiokaze: { deep: '#25c2c6', shallow: '#c2f7ec' }, kodama: { deep: '#2c8c8a', shallow: '#93d6c2' },
     hikari: { deep: '#14d4f4', shallow: '#dcfdff' }, watagumo: { deep: '#cfdcf2', shallow: '#ffffff' },
-    karakuri: { deep: '#1f4a52', shallow: '#5e9a90' }, hoshi: { deep: '#18286a', shallow: '#4c62b0' },
+    karakuri: { deep: '#2a2c24', shallow: '#7a6e44' }, hoshi: { deep: '#18286a', shallow: '#4c62b0' },
 };
 import type { GrowingState } from '../../../domain/growingIsland';
 import type { SceneLayout } from './sceneLayout';
@@ -112,6 +113,94 @@ export class WonderScenery {
     private ambience: ((now: number, night: boolean, reduced: boolean) => void)[] = [];
     private seaMesh?: T.Mesh<T.BufferGeometry, T.ShaderMaterial>;
     private seaTone?: { deep: string; shallow: string };
+    /** Where the ぜんまい島's clock tower shows its face; the bell rings there. */
+    private towerFace?: T.Vector3;
+    /** Played when a forest grove rings (こだま); set by the world, which owns the sound. */
+    chime?: () => void;
+
+    /**
+     * その島だけの仕掛け made visible (island-journey.md §4): the tide, ringing groves, shining
+     * water, the wind, power running through joined things, and constellations of lights.
+     */
+    private mechanism(state: GrowingState, layout: SceneLayout) {
+        const done = Boolean(mechanismProgress(state)?.done), sprite = glow();
+        const add = <O extends T.Object3D>(object: O, name: string) => { object.name = name; this.root.add(object); return object; };
+        switch (state.theme) {
+            case 'shiokaze': {
+                // The sea itself breathes with the tide; shells lie on the shore only at low tide.
+                this.ambience.push((_now, _n, reduced) => {
+                    const tide = tideLevel(Date.now());
+                    if (this.seaMesh && !reduced) this.seaMesh.position.y = (this.seaMesh.userData.baseY ??= this.seaMesh.position.y) + (tide - .5) * .12;
+                    this.root.children.forEach(o => { if (o.name === 'theme-shell') o.visible = tide < .55; });
+                });
+                break;
+            }
+            case 'kodama': {
+                // Each grove of three or more grown trees lights up tree by tree and rings like bells.
+                echoGroves(state).forEach((grove, g) => {
+                    const tops = grove.map(cell => layout.point(cell, 2));
+                    if (!sprite) return;
+                    const lights = add(new T.Points(new T.BufferGeometry().setFromPoints(tops), new T.PointsMaterial({ map: sprite, color: '#fff2a0', size: 70, sizeAttenuation: false, transparent: true, depthWrite: false, depthTest: false, blending: T.AdditiveBlending, opacity: 0 })), 'mechanism-echo');
+                    let rang = -1;
+                    this.ambience.push((now, _n, reduced) => {
+                        const round = Math.floor((now / 1000 + g * 3) / 7), t = (now / 1000 + g * 3) % 7;
+                        // A soft glow always marks a ringing grove; every few seconds it swells as the bells ring.
+                        (lights.material as T.PointsMaterial).opacity = .25 + (t < 3 ? (reduced ? .4 : Math.sin(t / 3 * Math.PI)) * .7 : 0);
+                        if (t < .2 && round !== rang) { rang = round; this.chime?.(); }
+                    });
+                });
+                break;
+            }
+            case 'hikari': {
+                // Water shines; the longer a joined flow, the brighter it is.
+                lightFlows(state).forEach((flow, f) => {
+                    if (!sprite) return;
+                    const at = flow.map(cell => layout.point(cell, .08));
+                    const shine = add(new T.Points(new T.BufferGeometry().setFromPoints(at), new T.PointsMaterial({ map: sprite, color: flow.length >= 4 ? '#bff8ff' : '#8fe6ff', size: 18 + Math.min(30, flow.length * 5), sizeAttenuation: false, transparent: true, depthWrite: false, blending: T.AdditiveBlending })), 'mechanism-light-water');
+                    this.ambience.push((now, _n, reduced) => { (shine.material as T.PointsMaterial).opacity = .45 + (reduced ? 0 : Math.sin(now / 700 + f) * .2) + Math.min(.3, flow.length * .04); });
+                });
+                break;
+            }
+            case 'watagumo': {
+                // A weathervane on the island's back corner points where today's wind blows.
+                const vane = add(new T.Group(), 'mechanism-weathervane');
+                vane.position.copy(layout.point({ x: 0, z: 0 }, 1.1));
+                const pole = new T.Mesh(new T.CylinderGeometry(.02, .02, .8, 6), new T.MeshStandardMaterial({ color: '#8a6a4a' })); pole.position.y = -.4; vane.add(pole);
+                const arrow = new T.Mesh(new T.ConeGeometry(.12, .5, 8), new T.MeshStandardMaterial({ color: '#f2c230', metalness: .4 })); arrow.rotation.z = -Math.PI / 2; vane.add(arrow);
+                this.ambience.push(() => { vane.rotation.y = -windAngle(state, Date.now()); });
+                break;
+            }
+            case 'karakuri': {
+                // Every thing the power reaches wears a turning gear; all joined, the clock tower rings.
+                gearChain(state).forEach((cell, i) => {
+                    const cog = new T.Group(); const metal = new T.MeshStandardMaterial({ color: i % 2 ? '#c9a24a' : '#9aa3a8', metalness: .6, roughness: .3 });
+                    const disc = new T.Mesh(new T.CylinderGeometry(.22, .22, .04, 16), metal); disc.rotation.x = Math.PI / 2; cog.add(disc);
+                    for (let k = 0; k < 10; k++) { const tooth = new T.Mesh(new T.BoxGeometry(.08, .08, .04), metal); const a = k / 10 * Math.PI * 2; tooth.position.set(Math.cos(a) * .25, Math.sin(a) * .25, 0); cog.add(tooth); }
+                    cog.position.copy(layout.point(cell, .95)); add(cog, 'mechanism-cog');
+                    this.ambience.push((now, _n, reduced) => { if (!reduced) cog.rotation.z = (i % 2 ? -1 : 1) * now / 600; });
+                });
+                if (done && sprite) {
+                    const bell = add(new T.Points(new T.BufferGeometry().setFromPoints([this.towerFace ?? new T.Vector3(layout.width / 2 + 2.6, 2.6, -2 - 2.3)]), new T.PointsMaterial({ map: sprite, color: '#ffe27a', size: 90, sizeAttenuation: false, transparent: true, depthWrite: false, blending: T.AdditiveBlending })), 'mechanism-bell');
+                    this.ambience.push((now, _n, reduced) => { (bell.material as T.PointsMaterial).opacity = reduced ? .5 : .35 + Math.max(0, Math.sin(now / 500)) * .5; });
+                }
+                break;
+            }
+            case 'hoshi': {
+                // The lights' constellations are drawn above the island in lines of starlight.
+                constellations(state).forEach(group => {
+                    const stars = group.map(cell => layout.point(cell, 2.3));
+                    const lines: T.Vector3[] = [];
+                    for (let i = 1; i < stars.length; i++) {
+                        const nearest = stars.slice(0, i).sort((a, b) => a.distanceTo(stars[i]) - b.distanceTo(stars[i]))[0];
+                        lines.push(nearest, stars[i]);
+                    }
+                    add(new T.LineSegments(new T.BufferGeometry().setFromPoints(lines), new T.LineBasicMaterial({ color: '#fff2b0', transparent: true, opacity: .7 })), 'mechanism-constellation');
+                    if (sprite) add(new T.Points(new T.BufferGeometry().setFromPoints(stars), new T.PointsMaterial({ map: sprite, color: '#fff6c8', size: 26, sizeAttenuation: false, transparent: true, depthWrite: false, blending: T.AdditiveBlending })), 'mechanism-stars');
+                });
+                break;
+            }
+        }
+    }
 
     /**
      * Each special island's big sign on the far side of its sea, seen the moment the island
@@ -152,16 +241,11 @@ export class WonderScenery {
                 this.ambience.push((now, _n, reduced) => { if (!reduced) islet.position.y = 3.2 + (i % 2) * .7 + Math.sin(now / 1800 + i) * .2; });
             }
         } else if (theme === 'karakuri') {
-            // Giant brass gears rising out of the sea, meshing and turning, with a clock tower.
+            // Giant brass gears rising out of the sea, meshing and turning (the clock tower stands on the island).
             [[left, 1.7, '#c9a24a', 1], [left + 2.6, 1.1, '#8f9aa4', -1.55], [right + .3, 1.4, '#b8863c', 1.2]].forEach(([x, r, color, turn], i) => {
                 const wheel = gear(r as number, .35, color as string, 14); wheel.position.set(x as number, sea + (r as number) * .55, far - i * .2); group.add(wheel);
                 this.ambience.push((now, _n, reduced) => { if (!reduced) wheel.rotation.z = now / 1500 * (turn as number); });
             });
-            put(new T.BoxGeometry(.7, 3, .7), solid('#8a6a4a'), right + 2.2, 1.5, far - .6);
-            const face = put(new T.CylinderGeometry(.32, .32, .05, 24), solid('#fff6e0'), right + 2.2, 2.6, far - .24); face.rotation.x = Math.PI / 2;
-            put(new T.ConeGeometry(.55, .7, 4), solid('#5f6f7a'), right + 2.2, 3.35, far - .6).rotation.y = Math.PI / 4;
-            const hand = put(new T.BoxGeometry(.04, .26, .02), solid('#3a2a22'), right + 2.2, 2.6, far - .2);
-            this.ambience.push((now, _n, reduced) => { if (!reduced) { hand.rotation.z = -now / 2000; hand.position.set(right + 2.2 + Math.sin(-now / 2000) * -.11, 2.6 + Math.cos(now / 2000) * .11, far - .2); } });
         } else if (theme === 'hoshi') {
             // A crescent moon arch standing in the sea, with star lanterns hanging from it.
             const moon = put(new T.TorusGeometry(1.6, .3, 12, 40, Math.PI * 1.3), new T.MeshStandardMaterial({ color: '#fff2b0', emissive: '#ffd860', emissiveIntensity: .8, roughness: .3 }), right, sea + 1.6, far);
@@ -225,7 +309,7 @@ export class WonderScenery {
                 object.position.copy(base); this.root.add(object); this.floater = { object, base };
             }
         }
-        if (state.theme) this.themeAmbience(state, layout);
+        if (state.theme) { this.themeAmbience(state, layout); this.mechanism(state, layout); }
         // Fireflies over bloomed flowers and wild plants; ふしぎの品 glow warmly at night.
         const sprite = glow();
         const blooms = [...state.landmarks.filter(l => l.cell && l.kind === 'flower' && l.growth >= BLOOM_HOURS).map(l => l.cell!),
@@ -331,11 +415,53 @@ export class WonderScenery {
                 }
                 const base = land.slice(0, 14).map((cell, i) => layout.point(cell, .2 + seeded(i) * .3));
                 drift(points(base.map(p => p.clone()), '#ffffff', 10, 'theme-fluff'), base, (p, i, now) => {
-                    const rise = (now / 5200 + seeded(i)) % 1; p.y += rise * 2.2; p.x += rise * 1.2 + Math.sin(now / 900 + i) * .1;
+                    const rise = (now / 5200 + seeded(i)) % 1, wind = windAngle(state, Date.now());
+                    p.y += rise * 2.2; p.x += Math.cos(wind) * rise * 1.6 + Math.sin(now / 900 + i) * .1; p.z += Math.sin(wind) * rise * 1.6;
                 });
                 break;
             }
             case 'karakuri': {
+                // The ground is riveted steel plate: a seam around every cell and a rivet at each corner.
+                const seams: T.Vector3[] = [], rivets: T.Vector3[] = [];
+                land.forEach(c => {
+                    const corners = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([dx, dz]) => layout.point({ x: c.x + dx * .47, z: c.z + dz * .47 }, .015));
+                    corners.forEach((at, i) => { seams.push(at, corners[(i + 1) % 4]); rivets.push(at); });
+                });
+                const plate = new T.LineSegments(new T.BufferGeometry().setFromPoints(seams), new T.LineBasicMaterial({ color: '#3a3430', transparent: true, opacity: .55 }));
+                plate.name = 'theme-plate-seams'; this.root.add(plate);
+                const studs = new T.InstancedMesh(new T.SphereGeometry(.028, 8, 6), new T.MeshStandardMaterial({ color: '#d9a845', metalness: .7, roughness: .3 }), rivets.length);
+                rivets.forEach((at, i) => studs.setMatrixAt(i, new T.Matrix4().makeTranslation(at.x, at.y, at.z)));
+                studs.name = 'theme-rivets'; this.root.add(studs);
+                // Big gears turn half sunk in the island's sides, and brass pipes run down into the sea.
+                const outward = (c: { x: number; z: number }) => [[1, 0], [-1, 0], [0, 1], [0, -1]].find(([dx, dz]) => !own.has(`${c.x + dx},${c.z + dz}`))!;
+                edge.forEach((cell, i) => {
+                    const [dx, dz] = outward(cell), at = layout.point(cell, 0);
+                    if (i % 4 === 0) {
+                        const wheel = gear(.46, .14, i % 8 ? '#8f9aa4' : '#c9a24a', 12); wheel.name = 'theme-edge-gear';
+                        wheel.position.set(at.x + dx * .56, at.y - .3, at.z + dz * .56); wheel.rotation.y = Math.atan2(dx, dz); this.root.add(wheel);
+                        const turn = (i % 8 ? -1 : 1) / 1300; this.ambience.push((now, _n, reduced) => { if (!reduced) wheel.rotation.z = now * turn; });
+                    } else if (i % 4 === 2) {
+                        const height = at.y - TERRAIN_SEA_LEVEL + .25, pipe = new T.Mesh(new T.CylinderGeometry(.06, .06, height, 10), new T.MeshStandardMaterial({ color: '#c08a3e', metalness: .6, roughness: .3 }));
+                        pipe.position.set(at.x + dx * .52, TERRAIN_SEA_LEVEL + height / 2 - .1, at.z + dz * .52); pipe.name = 'theme-pipe'; this.root.add(pipe);
+                    }
+                });
+                // The clock tower stands on a steel pier behind the house, off the back edge, where it hides nothing.
+                const corner = [...land].sort((a, b) => a.z - a.x - (b.z - b.x))[0], foot = layout.point(corner, 0).add(new T.Vector3(-1.6, 0, -1.15));
+                const tower = new T.Group(); tower.name = 'theme-clock-tower'; tower.position.set(foot.x, TERRAIN_SEA_LEVEL, foot.z); this.root.add(tower);
+                const steel = new T.MeshStandardMaterial({ color: '#6c767d', metalness: .6, roughness: .35 }), brass = new T.MeshStandardMaterial({ color: '#d0a04a', metalness: .65, roughness: .3 });
+                const top = foot.y - TERRAIN_SEA_LEVEL;
+                const pier = new T.Mesh(new T.CylinderGeometry(.42, .5, top, 12), steel); pier.position.y = top / 2; tower.add(pier);
+                const body = new T.Mesh(new T.BoxGeometry(.7, 2, .7), brass); body.position.y = top + 1; tower.add(body);
+                const roof = new T.Mesh(new T.ConeGeometry(.6, .8, 4), steel); roof.position.y = top + 2.4; roof.rotation.y = Math.PI / 4; tower.add(roof);
+                const hands: T.Mesh[] = [];
+                for (const [x, z, turn] of [[0, .36, 0], [.36, 0, Math.PI / 2]] as const) {
+                    const face = new T.Mesh(new T.CylinderGeometry(.27, .27, .04, 24), new T.MeshStandardMaterial({ color: '#fff6e0', emissive: '#ffe6a8', emissiveIntensity: .3 }));
+                    face.rotation.set(Math.PI / 2, 0, turn); face.position.set(x, top + 1.45, z); tower.add(face);
+                    const hand = new T.Mesh(new T.BoxGeometry(.035, .22, .02), new T.MeshStandardMaterial({ color: '#2e2622' }));
+                    hand.position.set(x * 1.06, top + 1.45, z * 1.06); hand.rotation.y = turn; tower.add(hand); hands.push(hand);
+                }
+                this.towerFace = new T.Vector3(foot.x, top + TERRAIN_SEA_LEVEL + 1.45, foot.z);
+                this.ambience.push((now, _n, reduced) => { if (!reduced) hands.forEach(hand => { hand.rotation.z = -now / 2000; }); });
                 // Small cogs turn in the ground, and steam puffs from the vents along the edge.
                 this.ambience.push((now, _n, reduced) => { if (!reduced) this.root.traverse(o => { if (o.name === 'theme-cog') o.rotation.z = now / 900; }); });
                 const vents = edge.filter((_, i) => i % 3 === 1).slice(0, 5).map(cell => layout.point(cell, .1));
@@ -416,7 +542,7 @@ export class WonderScenery {
         for (const child of [...this.root.children]) {
             child.removeFromParent();
             child.traverse(o => {
-                if (o instanceof T.Mesh || o instanceof T.Points) {
+                if (o instanceof T.Mesh || o instanceof T.Points || o instanceof T.Line) {
                     o.geometry.dispose();
                     const material = o.material as T.Material & { map?: T.Texture | null };
                     if (material.map && material.map !== glowTexture) material.map.dispose();
@@ -424,7 +550,7 @@ export class WonderScenery {
                 }
             });
         }
-        this.falls = []; this.ambience = []; this.seaMesh = undefined; this.seaTone = undefined; this.floater = undefined; this.bobber = undefined; this.flies = undefined; this.halos = undefined; this.moon = undefined;
+        this.falls = []; this.ambience = []; this.seaMesh = undefined; this.seaTone = undefined; this.towerFace = undefined; this.floater = undefined; this.bobber = undefined; this.flies = undefined; this.halos = undefined; this.moon = undefined;
     }
 
     dispose() { this.clear(); this.root.removeFromParent(); }

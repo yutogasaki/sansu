@@ -284,10 +284,11 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
 
     const bubble = state ? playMoment ?? line ?? (visit ? `${visit.name}の しまに きたよ。みんなに あいさつしよう` : idleLine(state)) : '';
     useEffect(() => {
-        if (!line || placing || selected || panel || menu || bridgeChoice || visit) return;
+        // A line hidden behind a guide card keeps waiting; it only fades once it was on screen.
+        if (!line || placing || selected || panel || menu || bridgeChoice || visit || guide.notice || guide.cue) return;
         const timer = window.setTimeout(() => setLine(undefined), 7000);
         return () => window.clearTimeout(timer);
-    }, [line, placing, selected, panel, menu, bridgeChoice, visit]);
+    }, [line, placing, selected, panel, menu, bridgeChoice, visit, guide.notice, guide.cue]);
     const waiting = own ? waitingSeeds(own) : 0;
     useEffect(() => { publishWaitingSeeds(waiting); }, [waiting]);
     const spoken = playMoment ?? guide.cue?.hint ?? bubble;
@@ -326,7 +327,8 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     // A new しまの ふしぎ is said once, where the child is looking (§1.4). Surprises already speak for themselves.
     const seenDiscoveries = useRef<{ island: string; ids: Set<string> } | undefined>(undefined);
     useEffect(() => {
-        if (!own || visit) return;
+        // A guide card speaks first; the island's news waits until it is closed (island-journey.md §5).
+        if (!own || visit || guide.notice) return;
         const ids = own.discoveries ?? [], island = `${profileId}:${ownIslandId}`, known = seenDiscoveries.current;
         seenDiscoveries.current = { island, ids: new Set(ids) };
         if (!known || known.island !== island) return;
@@ -336,7 +338,15 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             audio.play('discovery');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [own?.discoveries, profileId, ownIslandId, visit]);
+    }, [own?.discoveries, profileId, ownIslandId, visit, guide.notice]);
+    // Which tools the menu shows (island-journey.md §5.1). Without island shaping, everything shows as before.
+    const tools = useMemo(() => {
+        if (!own || !placeGrowthEnabled()) return { chart: true, terrain: true, social: true };
+        const welcomed = own.villagers.some(v => !own.arrivals.includes(v.id)), friends = own.villagers.length;
+        const special = (own.journey?.chosen.length ?? 0) > 0, shaped = Object.keys(own.terrain?.heights ?? {}).length > 0;
+        const veteran = friends >= 3 || special || shaped || Boolean(own.bridge);
+        return { chart: welcomed || veteran, terrain: special || veteran, social: veteran };
+    }, [own]);
     const placeStatus = useMemo(() => own?.placeProgress?.selected ? placeStatuses(own).find(status => status.id === own.placeProgress!.selected) : undefined, [own]);
 
     const loadFaces = useCallback((limit?: number) => {
@@ -717,19 +727,20 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             <div className="growing-overlay-body growing-name"><label>しまの なまえ<input value={naming} maxLength={12} onChange={e => setNaming(e.target.value)} autoFocus /></label>
                 <div className="growing-row"><button type="submit" className="growing-primary">きめる</button><button type="button" onClick={closeNaming}>やめる</button></div></div>
         </form>}
+        {/* Tools appear when they are needed (island-journey.md §5.1); a child past that point sees them all. */}
         {menu && !visit && <GrowingIslandMenu villagers={own.villagers} faces={faces} pictures={menuPictures} drops={own.drops} busy={island.busy}
             utilities={menuUtilities}
-            bridge={{ built: Boolean(own.bridge), ready: own.villagers.some(v => !v.away && !own.arrivals.includes(v.id)) && bridgeSite(own) !== undefined,
+            bridge={!tools.social ? undefined : { built: Boolean(own.bridge), ready: own.villagers.some(v => !v.away && !own.arrivals.includes(v.id)) && bridgeSite(own) !== undefined,
                 reason: own.villagers.some(v => !v.away && !own.arrivals.includes(v.id)) ? 'はしの ばしょを あけてね' : 'なかまが きてから' }}
             onBridge={() => { setMenu(false); if (own.bridge) { setSelected('bridge'); setFocus({ id: 'bridge', n: Date.now() }); } else setBridgeChoice('build'); }}
             onClose={() => { setMenu(false); window.requestAnimationFrame(() => menuTrigger.current?.focus({ preventScroll: true })); }}
-            onTerrain={() => { setTerrainCell(undefined); openHomeTool('terrain', '.growing-menu-button'); window.requestAnimationFrame(() => camera.current?.terrainView(false, terrainInset())); }}
-            onVoyages={firstPlay ? undefined : () => openHomeTool('voyages', '.growing-menu-button')}
+            onTerrain={!tools.terrain ? undefined : () => { setTerrainCell(undefined); openHomeTool('terrain', '.growing-menu-button'); window.requestAnimationFrame(() => camera.current?.terrainView(false, terrainInset())); }}
+            onVoyages={firstPlay || !tools.chart ? undefined : () => openHomeTool('voyages', '.growing-menu-button')}
             onFriends={() => { loadFaces(); openHomeTool('friends', '.growing-menu-button'); }}
-            onTrace={() => openHomeTool('trace', '.growing-menu-button')}
-            onShow={() => openHomeTool('show', '.growing-menu-button')}
-            onFlowers={() => openHomeTool('flowers', '.growing-menu-button')}
-            onWonders={placeGrowthEnabled() ? () => openHomeTool('wonders', '.growing-menu-button') : undefined}
+            onTrace={tools.social ? () => openHomeTool('trace', '.growing-menu-button') : undefined}
+            onShow={tools.social ? () => openHomeTool('show', '.growing-menu-button') : undefined}
+            onFlowers={placeGrowthEnabled() ? undefined : () => openHomeTool('flowers', '.growing-menu-button')}
+            onWonders={placeGrowthEnabled() && tools.chart ? () => openHomeTool('wonders', '.growing-menu-button') : undefined}
             onGuide={() => openBook(undefined, 'menu')} />}
         {Boolean(playMoment || line || visit || showRevisitFlower) && !placing && !panel && !menu && !selected && !bridgeChoice && !bridgeBusy && !guide.cue && !guide.notice && <p className="growing-bubble" role="status"><span aria-hidden="true">ぽこもこ</span>{bubble}
             {showRevisitFlower && revisitFlower && <button type="button" className="growing-revisit-flower" data-revisit-flower-link
@@ -761,6 +772,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             onSail={island.sail} onFocus={id => { setSelected(undefined); setFocus({ id, n: Date.now() }); }} />}
         {!visit && panel === 'flowers' && <FlowerBook pictures={catalogPictures} state={own} onClose={closeHomeTool} />}
         {!visit && panel === 'wonders' && <WonderBook state={own} busy={island.busy} onClose={closeHomeTool}
+            onChart={firstPlay ? undefined : () => openHomeTool('voyages', '.growing-menu-button')}
             onAdopt={species => void run({ type: 'adopt-species', species }, () => { audio.play('discovery'); setPanel(undefined); setLine('「もちもの」に きたよ。すきな ところに おいてね'); })} />}
         {!visit && panel === 'guide' && <GrowingGuideBook state={own} busy={island.busy} initialMemory={guideMemory} onClose={closeBook}
             onPlaces={() => openPlaces()}

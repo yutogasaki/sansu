@@ -180,3 +180,13 @@
 .growing-theme-mood[data-theme='watagumo'] { background: linear-gradient(180deg, rgb(200 225 255 / 70%), rgb(255 240 250 / 55%)); }
 .growing-theme-mood[data-theme='karakuri'] { background: linear-gradient(160deg, rgb(255 205 130 / 55%), rgb(60 70 80 / 50%)); }
 .growing-theme-mood[data-theme='hoshi'] { background: radial-gradient(circle at 50% 40%, transparent 35%, rgb(20 20 70 / 70%)); }
+.growing-record-tabs { display: flex; gap: 6px; overflow-x: auto; margin: 4px 0 10px; padding-bottom: 2px; }
+.growing-record-tabs button { flex: none; min-height: 40px; padding: 6px 12px; border: 1px solid #d8d0ea; border-radius: 999px; background: white; font: inherit; font-weight: 700; font-size: 13px; }
+.growing-record-tabs button[aria-selected='true'] { background: #ece6ff; border-color: #8f80c8; }
+.growing-record-next { padding: 16px; border-radius: 16px; background: #fff8e6; text-align: center; }
+.growing-record-next strong { font-size: 18px; }
+.growing-record-routes { display: grid; gap: 8px; }
+.growing-route-card { padding: 10px 12px; border: 1px solid #e2dcef; border-radius: 14px; background: white; }
+.growing-route-card[data-open] { background: #f1fbef; border-color: #9fd18f; }
+.growing-route-card p { margin: 4px 0; font-size: 13px; }
+.growing-wonder-book h3 { margin: 12px 0 6px; font-size: 14px; }

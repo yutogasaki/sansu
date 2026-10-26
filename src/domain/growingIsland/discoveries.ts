@@ -10,8 +10,8 @@ import type { Cell, GrowingState, Landmark, Moment } from './types';
  * brings about. Each one is noticed once and kept in the ふしぎずかん. Nothing here is a
  * quest, a daily reward or something that can be missed; it only records what happened.
  */
-export type DiscoveryId = 'waterfall' | 'cove-boat' | 'high-light' | 'grove-hill' | 'rainbow-tree' | 'clover' | 'floating-isle' | 'lookout-home' | 'ship-cove' | 'golden-pumpkin' | `species:${string}` | `learn:${string}` | `build:${string}` | `life:${string}` | `voyage:${string}` | `moment:${Moment}`;
-export type DiscoveryGroup = 'build' | 'life' | 'ground' | 'luck' | 'sky' | 'learn' | 'voyage';
+export type DiscoveryId = 'waterfall' | 'cove-boat' | 'high-light' | 'grove-hill' | 'rainbow-tree' | 'clover' | 'floating-isle' | 'lookout-home' | 'ship-cove' | 'golden-pumpkin' | `species:${string}` | `learn:${string}` | `build:${string}` | `life:${string}` | `voyage:${string}` | `island:${string}` | `moment:${Moment}`;
+export type DiscoveryGroup = 'build' | 'life' | 'ground' | 'luck' | 'sky' | 'learn' | 'voyage' | 'island';
 
 export interface Discovery { id: DiscoveryId; group: DiscoveryGroup; name: string; line: string; hint: string }
 
@@ -26,9 +26,9 @@ const SPECIES_ENTRIES: Discovery[] = ([
     ['balloon-flower', 'ふうせんばな', 'わたぐもの高原で ふくらんだよ', 'わたぐもの高原に いくと あえるよ'],
     ['fluff-sheep', 'わたげひつじ', 'おかの ひろばに きたよ', 'わたぐもの高原で、おかの うえに ひろばを'],
     ['key-weed', 'ねじまきそう', 'ぜんまい島で くるくる まいたよ', 'ぜんまい島に いくと あえるよ'],
-    ['clock-bird', 'ぜんまいどり', 'たかい とうだいに ひかれて とんできたよ', 'ぜんまい島で、2だんの うえに あかりを'],
+    ['clock-bird', 'ぜんまいどり', 'とけいとうの かねに ひかれて とんできたよ', 'ぜんまい島で、みずみちから ものを 5つ つなげよう'],
     ['star-tree', 'ほしのみの 木', '星の島で みが ひかったよ', '星の島に いくと あえるよ'],
-    ['star-jelly', 'ほしくらげ', 'あかりの みずべに うかんだよ', '星の島で、みずの ちかくに あかりを 3つ'],
+    ['star-jelly', 'ほしくらげ', 'あかりの せいざに ひかれて うかんだよ', '星の島で、あかりを 3つ ならべて せいざを'],
 ] as const).map(([id, name, line, hint]) => ({ id: `species:${id}` as DiscoveryId, group: 'voyage' as const, name, line, hint }));
 const LEARN_ENTRIES: Discovery[] = (['math', 'vocab', 'kokugo'] as const).flatMap(subject => [2, 5, 9, 13, 17].map(level => ({
     id: `learn:${subject}:${level}` as DiscoveryId, group: 'learn' as const, name: `${SUBJECT_NAME[subject]} Lv${level}`,
@@ -45,6 +45,12 @@ export const DISCOVERIES: readonly Discovery[] = [
     { id: 'voyage:route', group: 'voyage', name: 'はじめての こうろ', line: 'あたらしい しまへの こうろが ひらいたよ', hint: 'なかまを むかえると ひらくよ' },
     { id: 'voyage:island', group: 'voyage', name: 'とくべつな しま', line: 'とくべつな しまを つくったよ', hint: '海図で、ひらいた こうろの しまを えらぼう' },
     { id: 'voyage:all', group: 'voyage', name: 'ぜんぶの うみ', line: '6つの とくべつな しまを ぜんぶ つくったよ', hint: 'まなびで こうろを ひらいていこう' },
+    { id: 'island:shiokaze', group: 'island', name: 'しおだまり', line: 'しおかぜの小島の しかけが そろったよ', hint: 'かいの はなを ほった みずの となりへ' },
+    { id: 'island:kodama', group: 'island', name: 'こだまの がっそう', line: 'こだまの森の 林が うたったよ', hint: 'そだった 木を 3本 つなげよう' },
+    { id: 'island:hikari', group: 'island', name: 'ひかりの たき', line: 'ひかりの入り江に ひかる たきが おちたよ', hint: 'おかの うえの みずを いけへ おとそう' },
+    { id: 'island:watagumo', group: 'island', name: 'そらの ひろば', line: '空の島の おかに ひろばが できたよ', hint: 'おかの うえに 2×2の ひろばを' },
+    { id: 'island:karakuri', group: 'island', name: 'とけいとうの かね', line: 'ぜんまい島の からくりが ぜんぶ つながったよ', hint: 'みずみちから 5つ つなげよう' },
+    { id: 'island:hoshi', group: 'island', name: 'じぶんの せいざ', line: '星の島の そらに せいざが うかんだよ', hint: 'あかりを 3つ ちかくに ならべよう' },
     ...SPECIES_ENTRIES,
     ...LEARN_ENTRIES,
     { id: 'waterfall', group: 'ground', name: 'たき', line: 'おかの みずが したの うみへ おちているよ', hint: 'おかの うえの みずみちや みずばちの となりを、うみの ふでで ほってみよう' },

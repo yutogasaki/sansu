@@ -1,7 +1,6 @@
-import { discover, waterfalls } from './discoveries';
-import { terrainOf } from './editableTerrainWorld';
-import { dugWater, TREE_MATURE_HOURS } from './environment';
-import { HOME_CELL, distance, isVacant, key, landCells } from './space';
+import { discover } from './discoveries';
+import { mechanismProgress } from './mechanisms';
+import { HOME_CELL, distance, isVacant, landCells } from './space';
 import type { Cell, GrowingState, TownEvent } from './types';
 
 /**
@@ -20,8 +19,8 @@ export const THEME_INFO: Record<ThemeId, ThemeInfo> = {
     kodama: { name: 'こだまの森', mood: 'たいじゅと こもれび', first: 'bell-tree', second: 'echo-bird', hint: 'そだった 木を 3本 つなげてみよう' },
     hikari: { name: 'ひかりの入り江', mood: 'すきとおる みず', first: 'glass-weed', second: 'glow-shell', hint: 'おかの うえの みずを、いけへ おとしてみよう' },
     watagumo: { name: 'わたぐもの高原', mood: 'まるい おかと ひろい そら', first: 'balloon-flower', second: 'fluff-sheep', hint: 'おかの うえに、2×2の たいらな ひろばを つくろう' },
-    karakuri: { name: 'ぜんまい島', mood: 'はぐるまと じょうき', first: 'key-weed', second: 'clock-bird', hint: '2だんの うえに あかりを おくと、とうだいが ともるよ' },
-    hoshi: { name: '星の島', mood: 'いつも よるの そら', first: 'star-tree', second: 'star-jelly', hint: 'ほった みずの ちかくに、あかりを 3つ' },
+    karakuri: { name: 'ぜんまい島', mood: 'はぐるまと じょうき', first: 'key-weed', second: 'clock-bird', hint: 'みずみちから ものを 5つ つなげると、はぐるまが まわるよ' },
+    hoshi: { name: '星の島', mood: 'いつも よるの そら', first: 'star-tree', second: 'star-jelly', hint: 'あかりを ちかくに 3つ ならべて、せいざを つくろう' },
 };
 export const SPECIES_NAME: Record<SpeciesId, string> = {
     'shell-flower': 'かいの はな', 'leaf-crab': 'はぶね ヤドカリ', 'bell-tree': 'すずのみの 木', 'echo-bird': 'こだまどり',
@@ -68,14 +67,24 @@ function openRoute(state: GrowingState, slot: number, reason: string, at: number
     events.push({ type: 'route', slot });
 }
 
-/** Route slots from what really happened; a slot never closes and never opens twice. */
+/**
+ * Route slots from what really happened; a slot never closes and never opens twice. A
+ * learning slot opens only once the previous slot became an island, so one opens at a time
+ * even for a child who started high (island-journey.md §3); the right to it is kept.
+ */
 export function grantRoutes(state: GrowingState, levels: ConfirmedLevels | undefined, at: number): TownEvent[] {
     const events: TownEvent[] = [];
     if (welcomed(state)) openRoute(state, 0, 'first-friend', at, events);
-    if (levels) ROUTE_LEVELS.forEach((level, index) => {
-        const subject = (['math', 'vocab', 'kokugo'] as const).find(name => (levels[name] ?? 0) >= level);
-        if (subject) openRoute(state, index + 1, `${subject}:${level}`, at, events);
-    });
+    const known = levels ?? state.journey?.levels;
+    if (known) for (const [index, level] of ROUTE_LEVELS.entries()) {
+        const slot = index + 1, journey = state.journey;
+        if (journey?.routes.some(route => route.slot === slot)) continue;
+        if (!journey?.chosen.some(choice => choice.slot === slot - 1)) break;
+        const subject = (['math', 'vocab', 'kokugo'] as const).find(name => (known[name] ?? 0) >= level);
+        if (!subject) break;
+        openRoute(state, slot, `${subject}:${level}`, at, events);
+        break;
+    }
     return events;
 }
 
@@ -112,50 +121,12 @@ export function chooseTheme(state: GrowingState, theme: ThemeId, islandId: strin
     return slot;
 }
 
-const heightAt = (state: GrowingState, cell: Cell) => terrainOf(state)?.heights[key(cell)] ?? 0;
 const SPECIES_KEEPSAKE = (id: SpeciesId) => `species:${id}`;
 const placed = (state: GrowingState, id: SpeciesId) => state.keepsakes.filter(k => k.unitId === SPECIES_KEEPSAKE(id) && k.cell).map(k => k.cell!);
-const mature = (state: GrowingState) => state.landmarks.filter(l => l.kind === 'sapling' && l.cell && l.growth >= TREE_MATURE_HOURS);
 
-function connectedGrove(cells: Cell[]) {
-    const left = new Set(cells.map(key));
-    for (const start of cells) {
-        if (!left.delete(key(start))) continue;
-        let size = 1; const queue = [start];
-        while (queue.length) {
-            const cell = queue.pop()!;
-            for (const [dx, dz] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
-                const next = { x: cell.x + dx, z: cell.z + dz };
-                if (left.delete(key(next))) { size++; queue.push(next); }
-            }
-        }
-        if (size >= 3) return true;
-    }
-    return false;
-}
 
-/** Whether the arranged island now calls its theme's second species (island-journey.md §4). */
-export function secondSpeciesReady(state: GrowingState): boolean {
-    const dug = new Set(dugWater(state).map(key)), lights = state.landmarks.filter(l => l.cell && (l.kind === 'lantern' || l.kind === 'lighthouse')).map(l => l.cell!);
-    switch (state.theme) {
-        case 'shiokaze': return placed(state, 'shell-flower').some(cell => [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dz]) => dug.has(key({ x: cell.x + dx, z: cell.z + dz }))));
-        case 'kodama': return connectedGrove(mature(state).map(l => l.cell!));
-        case 'hikari': return waterfalls(state).length > 0;
-        case 'watagumo': {
-            const heights = terrainOf(state)?.heights ?? {};
-            return Object.entries(heights).some(([id, h]) => {
-                if (h < 1) return false;
-                const [x, z] = id.split(',').map(Number);
-                const square = [{ x, z }, { x: x + 1, z }, { x, z: z + 1 }, { x: x + 1, z: z + 1 }];
-                return square.every(c => heightAt(state, c) === h && !state.landmarks.some(l => l.cell && l.cell.x === c.x && l.cell.z === c.z)
-                    && !state.plots.some(p => p.cell && p.cell.x === c.x && p.cell.z === c.z));
-            });
-        }
-        case 'karakuri': return lights.some(cell => heightAt(state, cell) >= 2);
-        case 'hoshi': return dug.size > 0 && lights.filter(cell => [...dug].some(id => { const [x, z] = id.split(',').map(Number); return distance(cell, { x, z }) <= 2; })).length >= 3;
-        default: return false;
-    }
-}
+/** Whether the arranged island now calls its theme's second species: its own play is complete. */
+export const secondSpeciesReady = (state: GrowingState) => Boolean(mechanismProgress(state)?.done);
 
 function findSpecies(state: GrowingState, id: SpeciesId) {
     const journey = journeyOf(state);
@@ -190,6 +161,7 @@ export function noteJourney(state: GrowingState, at: number): TownEvent[] {
             const cell = landCells(state).filter(c => isVacant(state, c)).sort((a, b) => distance(a, anchor) - distance(b, anchor) || a.x - b.x || a.z - b.z)[0];
             state.keepsakes.push({ id: `k${state.nextId++}`, unitId: SPECIES_KEEPSAKE(second), ...(cell ? { cell } : {}) });
             events.push({ type: 'species', species: second });
+            discover(state, `island:${state.theme}`);
         }
     }
     return events;

@@ -2,6 +2,7 @@ import 'fake-indexeddb/auto';
 import Dexie from 'dexie';
 import { afterEach, describe, expect, it } from 'vitest';
 import { applyIntent } from './commands';
+import { starterStep } from './guidance';
 import { editableTerracePlan } from './editableTerrainWorld';
 import { newIsland } from './island';
 import { adoptSpecies, chooseTheme, confirmedMathLevel, confirmedVocabLevel, passedLevel, freeSlots, grantRoutes, noteJourney, noteLevels, secondSpeciesReady, slotForTheme, THEMES } from './journey';
@@ -47,36 +48,45 @@ describe('confirmed learning levels (read only)', () => {
 });
 
 describe('route slots', () => {
-    it('open from the first friend and from Lv2/5/9/13/17 in any subject, once each', () => {
-        const state = newIsland('child', now);
-        expect(grantRoutes(state, undefined, now)).toEqual([]);
+    it('slot 0 opens with the first friend; each learning slot waits for the previous island', () => {
+        const state = newIsland('child', now), levels = { math: 5, vocab: 0, kokugo: 0 };
+        expect(grantRoutes(state, levels, now)).toEqual([]);
         welcomed(state);
-        expect(grantRoutes(state, { math: 5, vocab: 0, kokugo: 0 }, now)).toEqual([{ type: 'route', slot: 0 }, { type: 'route', slot: 1 }, { type: 'route', slot: 2 }]);
-        // The same milestone in another subject never opens a second slot.
-        expect(grantRoutes(state, { math: 5, vocab: 5, kokugo: 2 }, now + 1)).toEqual([]);
+        expect(grantRoutes(state, levels, now)).toEqual([{ type: 'route', slot: 0 }]);
+        // Lv2 and Lv5 are met, but nothing more opens until slot 0 becomes an island.
+        expect(grantRoutes(state, levels, now)).toEqual([]);
+        chooseTheme(state, 'shiokaze', 'a');
+        expect(grantRoutes(state, levels, now)).toEqual([{ type: 'route', slot: 1 }]);
+        expect(grantRoutes(state, levels, now)).toEqual([]);
+        chooseTheme(state, 'kodama', 'b');
+        expect(grantRoutes(state, { math: 5, vocab: 5, kokugo: 2 }, now)).toEqual([{ type: 'route', slot: 2 }]);
         expect(state.journey!.routes.map(route => route.reason)).toEqual(['first-friend', 'math:2', 'math:5']);
-        // Levels never close a slot.
-        expect(grantRoutes(state, { math: 0, vocab: 0, kokugo: 0 }, now + 2)).toEqual([]);
-        expect(freeSlots(state)).toEqual([0, 1, 2]);
+        // Levels never close a slot, and Lv9 is not met yet.
+        chooseTheme(state, 'hoshi', 'c');
+        expect(grantRoutes(state, { math: 0, vocab: 0, kokugo: 0 }, now)).toEqual([]);
+        expect(freeSlots(state)).toEqual([]);
     });
 
-    it('learning before the first friend keeps the slot for later', () => {
-        const state = newIsland('child', now);
-        grantRoutes(state, { math: 0, vocab: 2, kokugo: 0 }, now);
-        expect(freeSlots(state)).toEqual([1]);
-        expect(slotForTheme(state, 'shiokaze')).toBeUndefined();
-        expect(slotForTheme(state, 'kodama')).toBe(1);
-    });
-
-    it('a theme takes one free slot and is chosen once; the record book keeps learning milestones', () => {
+    it('a child who started high gets the routes one island at a time, from the kept levels', () => {
         const state = welcomed(newIsland('child', now));
-        grantRoutes(state, { math: 2, vocab: 0, kokugo: 0 }, now);
+        grantRoutes(state, undefined, now); noteLevels(state, { math: 13, vocab: 0, kokugo: 0 });
+        expect(freeSlots(state)).toEqual([0]);
+        for (const [theme, slot] of [['shiokaze', 1], ['kodama', 2], ['hikari', 3], ['watagumo', 4]] as const) {
+            chooseTheme(state, theme, theme);
+            expect(grantRoutes(state, undefined, now)).toEqual([{ type: 'route', slot }]);
+        }
+        chooseTheme(state, 'karakuri', 'k');
+        expect(grantRoutes(state, undefined, now)).toEqual([]);
+        expect(state.discoveries).toContain('learn:math:13');
+    });
+
+    it('a theme takes one free slot and is chosen once', () => {
+        const state = welcomed(newIsland('child', now));
+        grantRoutes(state, undefined, now);
+        expect(slotForTheme(state, 'kodama')).toBeUndefined();
         expect(chooseTheme(state, 'shiokaze', 'a')).toBe(0);
         expect(() => chooseTheme(state, 'shiokaze', 'b')).toThrow();
-        expect(chooseTheme(state, 'hoshi', 'c')).toBe(1);
         expect(() => chooseTheme(state, 'kodama', 'd')).toThrow();
-        noteLevels(state, { math: 2, vocab: 0, kokugo: 0 });
-        expect(state.discoveries).toContain('learn:math:2');
     });
 });
 
@@ -93,6 +103,17 @@ describe('special islands and their species', () => {
             expect(island.state.keepsakes.filter(k => k.unitId.startsWith('species:') && k.cell)).toHaveLength(1);
             expect(island.state.journey!.species).toHaveLength(1);
         }
+    });
+
+    it('a new island keeps the child\'s first steps and firsts', () => {
+        const home = welcomed(newIsland('child', now));
+        home.guidance!.starter.steps = { S1: { source: 'test' }, S2: { source: 'test' }, S3: { source: 'test' } } as never;
+        home.guidance!.achievements.A1 = { source: 'test' } as never;
+        home.guidance!.firstFlower = { id: 'f1', seen: false };
+        const island = makeVoyageIsland(record(home), 'kodama', 'x', 'kodama', now).state;
+        expect(starterStep(island)).toBe('S4');
+        expect(island.guidance!.achievements.A1).toBeDefined();
+        expect(island.guidance!.firstFlower).toBeUndefined();
     });
 
     it('on the shiokaze island, the shell flower beside dug water brings the leaf crab', () => {

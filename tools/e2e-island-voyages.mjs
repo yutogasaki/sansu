@@ -1,3 +1,5 @@
+// Retired 2026-10-27: it makes ordinary islands from the chart, which island-journey.md §3.1 ended.
+// Kept as the evidence of that round; special islands are checked in src/domain/growingIsland/journey.test.ts.
 import assert from 'node:assert/strict';
 import { promises as fs } from 'node:fs';
 import { createHash, randomUUID } from 'node:crypto';

@@ -1,5 +1,6 @@
 import { dugWater } from '../../../domain/growingIsland/environment';
 import { WonderScenery } from './wonderScenery';
+import { skinTheme, toneLight } from './themeSkin';
 import { TERRAIN_SEA_LEVEL } from '../../../domain/growingIsland/editableTerrainWorld';
 import { placePlay } from '../../../domain/growingIsland/placePlay';
 import { concertPlace, type SharedPlayReceipt } from '../../../domain/growingIsland/experience';
@@ -222,6 +223,11 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
         let nextSplash = 0;
         const moments = new MomentEffects(world.scene); disposers.push(() => moments.dispose());
         const wonders = new WonderScenery(world.scene); disposers.push(() => wonders.dispose());
+        wonders.chime = () => { if (latest.current.active && document.visibilityState === 'visible') handlerRef.current.onPop?.(); };
+        // A special island's own light over the time of day; setting the time resets the lights, so it is laid again after.
+        let theme: GrowingState['theme'], untone: (() => void) | undefined;
+        const tone = (time: typeof latest.current.time) => { untone = toneLight(theme, time, world.scene, world.hemi, world.sun); };
+        const setTime = (time: typeof latest.current.time) => { untone = undefined; world.setTime(time); tone(time); };
         let species: T.Object3D[] = [];
         /** Each island species has its own small motion (island-journey.md §4). */
         const moveSpecies = (now: number) => species.forEach((model, i) => {
@@ -437,9 +443,11 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             unopened = new Set(next.unopened);
             world.life.sync(next, layout, layer);
             wonders.build(next, layout);
+            skinTheme(layer.root, next.theme); skinTheme(world.house, next.theme);
+            if (theme !== next.theme) { untone?.(); theme = next.theme; tone(latest.current.time); }
             species = [];
             layer.root.traverse(o => { if (o.userData.species) species.push(o); });
-            if (import.meta.env.DEV) node.dataset.wonders = JSON.stringify({ crowns: layer.root.getObjectsByProperty('name', 'rainbow-crown').length, lookouts: layer.root.getObjectsByProperty('name', 'home-lookout').length, golden: layer.root.getObjectsByProperty('name', 'golden-pumpkin').length, ship: layer.nextBoat.position.toArray().map(v => Math.round(v * 100) / 100), scenery: wonders.root.children.map(c => c.name).filter(Boolean) });
+            if (import.meta.env.DEV) node.dataset.wonders = JSON.stringify({ crowns: layer.root.getObjectsByProperty('name', 'rainbow-crown').length, lookouts: layer.root.getObjectsByProperty('name', 'home-lookout').length, golden: layer.root.getObjectsByProperty('name', 'golden-pumpkin').length, ship: layer.nextBoat.position.toArray().map(v => Math.round(v * 100) / 100), scenery: wonders.root.children.map(c => c.name).filter(Boolean), echo: (() => { const o = wonders.root.getObjectByName('mechanism-echo') as T.Points | undefined; return o ? [o.geometry.getAttribute('position').count, ...(o.geometry.getAttribute('position').array as Float32Array).slice(0, 3)] : null; })() });
             if (wholeArt) node.dataset.authoredWholeArt = JSON.stringify({ candidate: AUTHORED_WHOLE_ART_CANDIDATE,
                 forestOwners: layer.root.getObjectsByProperty('name', 'authored-forest-tree').map(object => object.userData.ownerId),
                 galleryOwners: layer.root.getObjectsByProperty('name', 'authored-gallery-structure').map(object => object.userData.ownerIds),
@@ -482,7 +490,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             view.zoom = 1.35; api.current?.focus('bridge');
         };
         api.current = {
-            rebuild, setTime: next => world.setTime(next), terrainArea: showTerrainArea,
+            rebuild, setTime, terrainArea: showTerrainArea,
             turn: by => { clearOverview(); initialClose = false; followingPlace = undefined; view.azimuth += by * Math.PI / 6; frameCamera(camera, layout, view, width / height); },
             cheer: () => { const now = performance.now(); world.life.hop('visitor', now); world.life.hop('pokomoko', now + 120); },
             moment: shown => {
@@ -619,7 +627,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
                 return out;
             },
         });
-        world.setTime(latest.current.time);
+        setTime(latest.current.time);
         resize();
         const observer = new ResizeObserver(resize); disposers.push(() => observer.disconnect()); observer.observe(node);
         const shaderBank = makeGrowingInteractionWarmBank(layer!.root);
