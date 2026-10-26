@@ -643,6 +643,10 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
         const loop = () => {
             if (lost) return;
             frame = requestAnimationFrame(loop);
+            // A frame that throws would otherwise repeat forever behind the 88% card; show the failure and its detail instead.
+            try { draw(); } catch (error) { fail('frame', error); }
+        };
+        const draw = () => {
             const now = performance.now(), delta = Math.min(64, now - last); last = now;
             const current = latest.current.state;
             if (layer) {
