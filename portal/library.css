@@ -1,8 +1,0 @@
-.pu-meta,.pu-document pre,.pu-result pre,.pu-detail pre{font-size:16px}
-.pu-bar nav>*{min-width:0;overflow-wrap:anywhere}
-.pu-document table:focus-visible{outline:3px solid #625599;outline-offset:3px}
-.library-files{padding-left:24px}.library-files li{overflow-wrap:anywhere;padding:6px 0}
-.pu-viewer[open]{display:grid;grid-template-rows:auto minmax(0,1fr)}
-.pu-viewer header{height:auto;min-height:64px;flex-wrap:wrap;gap:8px}
-.pu-viewer iframe{height:100%;min-height:0}
-@media(max-width:300px){.pu-bar nav{display:grid}.pu-viewer header button{max-width:100%;white-space:normal}}

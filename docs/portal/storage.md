@@ -18,7 +18,7 @@ Nodeの読取は `tools/portal-registry.mjs`、Pythonは `tools/portal-registry.
 
 ## 容量とGit
 
-`/portal/` はignoreする。既存追跡ファイルは今回indexを操作しないので残る。解除対象と追跡/現物の容量は `qa/evidence/PBUILD-001/` に記録し、後のGit整理で判断する。docs/design・qaの唯一の素材・判断・失敗/受入履歴をまとめてignore/削除しない。
+`/portal/` はignoreし、Gitでは生成元を管理する。2026-10-26の[Git整理](../maintenance/2026-10-26-repository-cleanup.md)で、現存する全出力の復旧archiveとSHA256往復一致を確認して既追跡を解除する。ローカル出力は保持し、歴史資料の欠損を復元済みとは扱わない。PBUILD-001時点の追跡/現物の容量は `qa/evidence/PBUILD-001/` に保持する。docs/design・qaの唯一の素材・判断・失敗/受入履歴をまとめてignore/削除しない。
 
 outputは実行用build/cachesと唯一の試行証拠を含む。今回一括削除せず、所在・役割・復元可能性で分類する。新規証拠は小さい要約/manifestと代表撮影を基本とし、全件対応表の巨大な反復は明示オプションでだけ生成する。
 

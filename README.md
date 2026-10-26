@@ -3,7 +3,7 @@
 Child-friendly math and English learning PWA.
 
 作業入口は[元ポータル](.agents/index.html)です。
-[統合ポータル](portal/index.html)は確認中です。全件の受入が完了するまで元の入口を維持します。
+[統合ポータルの生成・開き方](docs/portal/README.md#生成と正本)。生成後は `portal/index.html` から開きます。ポータルは確認中です。全件の受入が完了するまで元の入口を維持します。
 
 Generate the integrated portal with
 `npm run portal:build`, verify with `npm run portal:verify` (Node.js 24+).

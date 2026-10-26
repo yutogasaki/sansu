@@ -2,7 +2,7 @@
 
 ## Git管理と公開範囲
 
-[生成元のcommit範囲・内部QA・再生成](commit-scope.md)。新規ポータル出力はignoreし、既追跡はGit外依存の復元/公開区分の確認まで解除を保留する。PBUILD時点の未commitという下記履歴と、今回のローカルcommit/main反映の許可を区別する。push・公開は行わない。
+[生成元のcommit範囲・内部QA・再生成](commit-scope.md)。ポータル出力はignoreし、Gitでは生成元を管理する。2026-10-26の[整理と復旧手順](../maintenance/2026-10-26-repository-cleanup.md)に従い、SHA256照合済みarchiveとローカルの実物を保持して既追跡を解除する。PBUILD時点の未commitという下記履歴と、今回のローカルcommit/main反映の許可を区別する。push・公開は行わない。
 
 ## 大量資料と容量の整理（2026-10-21）
 

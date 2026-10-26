@@ -6,7 +6,7 @@
 
 - 原文の分割・検索投影・素材台帳・明示メモimportの生成元、読取helper、固有検査。
 - 固定vendorの既存版と既存正本は維持。別作業の製品変更や素材を、生成を通すためだけに取り込まない。
-- `portal/` は正本から再生成する内部出力。新規出力はignoreする。既追跡の解除は、Git外依存の復元/公開区分が揃うまで保留し、ローカルの実物を保持する。`npm run agent:index` で作り、`npm run agent:index:check` で照合する。
+- `portal/` は正本から再生成する内部出力としてignoreし、Gitでは生成元を管理する。2026-10-26の整理ではローカルの全出力をSHA256照合済みの復旧archiveへ保持したうえで既追跡を解除する。現在のローカル出力は消さない。`npm run agent:index` で作り、`npm run agent:index:check` で照合する。再生成と、過去の欠損資料を含む完全復元の未達は区別する。[整理と復旧手順](../maintenance/2026-10-26-repository-cleanup.md)。
 
 ## ローカルだけで保持するもの
 
