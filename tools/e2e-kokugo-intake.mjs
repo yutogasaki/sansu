@@ -41,7 +41,9 @@ try {
         await page.touchscreen.tap(box.x + (point.x + 1) * box.width / 2, box.y + (1 - point.y) * box.height / 2);
         await page.getByRole('button', { name: 'ここに おく', exact: true }).click();
         await page.getByRole('button', { name: 'ぜんぶ ひらく', exact: true }).click();
-        await page.getByRole('button', { name: 'まなぶ', exact: true }).click();
+        await page.locator('.growing-open-all').waitFor({ state: 'hidden' });
+        await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+        await page.locator('button.first-play-learn').click();
         await page.getByRole('button', { name: '小学 2 年生', exact: true }).click();
         await page.getByRole('button', { name: /^こくご/ }).click();
         await page.getByRole('heading', { name: '国語を まなぼう' }).waitFor();

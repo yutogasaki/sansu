@@ -10,7 +10,7 @@
 .asset-size{text-align:right}.asset-size small{display:block;color:var(--muted);font-size:11px;line-height:1.45}@media(max-width:640px){.asset-size{text-align:left}}
 .evidence-gallery{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:16px}.evidence-gallery .asset-item{display:block!important;padding:10px!important;border:1px solid var(--line);border-radius:9px;background:#f7f9f4}.evidence-gallery .asset-thumb{width:100%;height:250px;margin-bottom:8px}.evidence-gallery .asset-name{display:block;font-weight:700}.evidence-gallery .asset-size{display:block;text-align:left;font-size:14px}@media(max-width:640px){.evidence-gallery{grid-template-columns:1fr}.evidence-gallery .asset-thumb{height:260px}}
 .destinations{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:16px}nav a{min-height:44px;display:inline-flex;align-items:center}pre{tab-size:2}.skip{position:absolute;left:12px;top:-90px;background:white;padding:12px}.skip:focus{top:0}
-</style></head><body><a class="skip" href="#main">本文へ</a><header><nav aria-label="メインナビゲーション"><strong>SANSU</strong><a href="../index.html">概要</a><a href="../plan.html">計画</a><a href="index.html" aria-current="page">仕事</a><a href="../../docs/index.html">知識・仕様</a><a href="../roles.html">役割・手順</a><a href="../operations.html">運用</a></nav></header><main id="main"><h1>タスク</h1><p class="subtitle">Sansu repository · Markdownから生成した閲覧用ポータル</p><label for="search">このページを検索</label><input id="search" type="search" placeholder="タイトル・ファイル名・キーワード"><p id="result" role="status" hidden></p><p>関連する仕事（同時に開始しない）に登録された 4 件。同時に開始する件数ではありません。実装済みの参照項目は除外しています。「何の話か／現在地／次の一手」で分類しています。</p><section class="doc-group"><h2 class="section-title">1・統合と公開準備</h2><div class="grid"><article class="card" data-search="最新変更を一つの公開候補へまとめる：10/9固定v3のcore4,803/classic32、主要旅程・保存失敗/再試行・旧writer/実sw更新をlocal確認。source/dist archiveと実画面を保持 次：公開依頼時にurl/版/配信を照合。実利用者の保存・実機/子どもは別。確認した旧版以外の保存・全写真は未評価 docs/tasks/active/2026-10-05-growing-island-release.md # 最新変更を一つの公開候補へまとめる
+</style></head><body><a class="skip" href="#main">本文へ</a><header><nav aria-label="メインナビゲーション"><strong>SANSU</strong><a href="../index.html">概要</a><a href="../plan.html">計画</a><a href="index.html" aria-current="page">仕事</a><a href="../../docs/index.html">知識・仕様</a><a href="../roles.html">役割・手順</a><a href="../operations.html">運用</a></nav></header><main id="main"><h1>タスク</h1><p class="subtitle">Sansu repository · Markdownから生成した閲覧用ポータル</p><label for="search">このページを検索</label><input id="search" type="search" placeholder="タイトル・ファイル名・キーワード"><p id="result" role="status" hidden></p><p>関連する仕事（同時に開始しない）に登録された 5 件。同時に開始する件数ではありません。実装済みの参照項目は除外しています。「何の話か／現在地／次の一手」で分類しています。</p><section class="doc-group"><h2 class="section-title">1・統合と公開準備</h2><div class="grid"><article class="card" data-search="最新変更を一つの公開候補へまとめる：10/9固定v3のcore4,803/classic32、主要旅程・保存失敗/再試行・旧writer/実sw更新をlocal確認。source/dist archiveと実画面を保持 次：公開依頼時にurl/版/配信を照合。実利用者の保存・実機/子どもは別。確認した旧版以外の保存・全写真は未評価 docs/tasks/active/2026-10-05-growing-island-release.md # 最新変更を一つの公開候補へまとめる
 
 - 更新日: 2026-10-09
 - review by: 2026-10-12
@@ -1426,6 +1426,102 @@ B方向の実3D地形・家・曲がった枝葉・相棒・昼夕夜、通常�
 ## 2026-09-27 本番統合
 
 元のぽこもこを保つv2を、自然の育成・運搬・食事・水路・土とともに家庭内本番へ統合。[公開記録](../../design/2026-09-27-fantasy-production/README.md)に固定build・旧→新/中断/互換復旧・実購入/offline・三ゲートを保存した。全v1の完成とは区別し、入口・家の美術統一、30品時の軽量化、実機・子どもの観察は継続する。
+</pre></details></article></div></section><section class="doc-group"><h2 class="section-title">5・開発環境</h2><div class="grid"><article class="card" data-search="正本から復元できる軽いポータル：原文分割・素材個別台帳・明示メモ移行をローカル実装。技術確認は今回の終了記録へ 次：元6参照の復元・全体の独立受入は残す。公開とgitは別承認 docs/tasks/active/2026-10-21-portal-storage.md # ポータルを軽く、正本から復元できる仕事場にする
+
+- id: pbuild-001
+- status: レビュー待ち（内部ポータルのローカル構築。元6資源と独立受入は未達）
+- review by: 2026-10-28
+- owner: codex（ローカル実装・検証）、yu（採用）
+- scope: sansuの生成元、内部ポータル、全文/検索、保存互換、容量分類と復旧。製品アプリ・素材原本・hub/他repo・公開は変更しない。
+- dependencies: 使用中の固定site/workspace/ui/diagrams。固定vendorは直接変更しない。
+
+## 目的と順序
+
+現在の仕事・判断・成果・専門知識を読む入口を維持し、大量の資料がある状態で初回生成、検索、原文への往復を成立させる。
+開始branch/head、未commit差分、現物/indexの容量と入力hashは `qa/evidence/pbuild-001/start.json`。既存mainを切り替えず、他作業を保持する。
+
+1. 現在の正本→生成→閲覧→旧url/保存→復旧を確認する。過去の欠損6件は現在版で判定する。
+2. 全文/検索の重複と自己入力依存を再現し、生成元で分割・必要時読込を実装する。
+3. 既存の実仕事の観測・評価・改善理由・採否・後続利用を同じ証拠へつなぐ。導入と実効果を分ける。
+4. 空出力からの一致、旧url・保存、pc/390/320・拡大・キーボードと必須検証を確認する。
+5. 正本/生成物/復旧/一時物を分類し、容量前後・追跡解除の対象案・復旧・未確認を記録して再生成する。
+
+## 完了条件
+
+- 未知フィールド・全項目・原文・図・固有の比較/編集/保存を保持し、必要な詳細へ到達できる。
+- 既存出力なしで一度の生成とverifyが一致する。容量の削減を実測し、機械データの復元一致を示す。
+- 機械検証と実操作・見た目・独立理解を分け、未達を明記する。
+- 元画面・唯一の素材・判断/承認/失敗証拠を消さず、git index操作・commit/push・外部送信・公開を行わない。
+
+## verification
+
+verify:core（test:runを内包）、agent:index:check、portal:verify、固有保持/分割復元/空生成、同じ候補の実画面と匿名保存操作。証拠は `qa/evidence/pbuild-001/`。固定版の旧passを現在へ転用しない。
+
+## 停止条件と残課題
+
+唯一性や復元先が不明な資料は削除せず分類と案を残す。欠損を別版3dや創作物で埋めない。共有部品の不足は自repoで具体的な再現と変更案を記録する。実機・児童/初見理解・独立受入・実ユーザー保存・公開は未確認として分離する。
+
+## docs to touch
+
+共有tasks、仕事詳細、docs/portalの生成/復旧手順、固有scripts/tools、.gitignore、qa要約とmanifest。正本の製品仕様や素材は対象外。
+
+## 使用する方法と知識
+
+[全文と検索の分割・適用条件・撤回](../../portal/storage.md)を今回の素材棚卸しと復旧検査で使う。判断/測定の原証拠はqaへ保存し、人の理解や別仕事の能力改善を合格にしない。
+
+## ローカル実装と検証の終了記録
+
+原文の分割保存・検索索引との分離・選択項目だけの読込、素材個別台帳、file/http間の明示メモ読込、狭幅フォームを実装した。巨大な対応表の反復出力は既定で生成せず、固定vendorと元画面/素材/承認・判断履歴は保持。生成途中の全文gzipの重複も除いた。
+
+対象版・実測容量・全件復元・空生成・コマンド/画面・原文6欠損と未確認は `qa/evidence/pbuild-001/verification.md` に集約する。過去の合格を現在版へ転用しない。git index操作・commit/push・外部送信・公開は行っていない。
+"><h2><a href="../../docs/tasks/active/2026-10-21-portal-storage.md">正本から復元できる軽いポータル：原文分割・素材個別台帳・明示メモ移行をローカル実装。技術確認は今回の終了記録へ 次：元6参照の復元・全体の独立受入は残す。公開とGitは別承認</a></h2><p class="path">docs/tasks/active/2026-10-21-portal-storage.md</p><p>- ID: PBUILD-001 - Status: レビュー待ち（内部ポータルのローカル構築。元6資源と独立受入は未達）</p><details><summary>詳細を読む</summary><pre># ポータルを軽く、正本から復元できる仕事場にする
+
+- ID: PBUILD-001
+- Status: レビュー待ち（内部ポータルのローカル構築。元6資源と独立受入は未達）
+- Review By: 2026-10-28
+- Owner: Codex（ローカル実装・検証）、Yu（採用）
+- Scope: Sansuの生成元、内部ポータル、全文/検索、保存互換、容量分類と復旧。製品アプリ・素材原本・Hub/他repo・公開は変更しない。
+- Dependencies: 使用中の固定site/workspace/UI/diagrams。固定vendorは直接変更しない。
+
+## 目的と順序
+
+現在の仕事・判断・成果・専門知識を読む入口を維持し、大量の資料がある状態で初回生成、検索、原文への往復を成立させる。
+開始branch/HEAD、未commit差分、現物/indexの容量と入力hashは `qa/evidence/PBUILD-001/start.json`。既存mainを切り替えず、他作業を保持する。
+
+1. 現在の正本→生成→閲覧→旧URL/保存→復旧を確認する。過去の欠損6件は現在版で判定する。
+2. 全文/検索の重複と自己入力依存を再現し、生成元で分割・必要時読込を実装する。
+3. 既存の実仕事の観測・評価・改善理由・採否・後続利用を同じ証拠へつなぐ。導入と実効果を分ける。
+4. 空出力からの一致、旧URL・保存、PC/390/320・拡大・キーボードと必須検証を確認する。
+5. 正本/生成物/復旧/一時物を分類し、容量前後・追跡解除の対象案・復旧・未確認を記録して再生成する。
+
+## 完了条件
+
+- 未知フィールド・全項目・原文・図・固有の比較/編集/保存を保持し、必要な詳細へ到達できる。
+- 既存出力なしで一度の生成とverifyが一致する。容量の削減を実測し、機械データの復元一致を示す。
+- 機械検証と実操作・見た目・独立理解を分け、未達を明記する。
+- 元画面・唯一の素材・判断/承認/失敗証拠を消さず、Git index操作・commit/push・外部送信・公開を行わない。
+
+## Verification
+
+verify:core（test:runを内包）、agent:index:check、portal:verify、固有保持/分割復元/空生成、同じ候補の実画面と匿名保存操作。証拠は `qa/evidence/PBUILD-001/`。固定版の旧PASSを現在へ転用しない。
+
+## 停止条件と残課題
+
+唯一性や復元先が不明な資料は削除せず分類と案を残す。欠損を別版3Dや創作物で埋めない。共有部品の不足は自repoで具体的な再現と変更案を記録する。実機・児童/初見理解・独立受入・実ユーザー保存・公開は未確認として分離する。
+
+## Docs To Touch
+
+共有TASKS、仕事詳細、docs/portalの生成/復旧手順、固有scripts/tools、.gitignore、QA要約とmanifest。正本の製品仕様や素材は対象外。
+
+## 使用する方法と知識
+
+[全文と検索の分割・適用条件・撤回](../../portal/storage.md)を今回の素材棚卸しと復旧検査で使う。判断/測定の原証拠はQAへ保存し、人の理解や別仕事の能力改善を合格にしない。
+
+## ローカル実装と検証の終了記録
+
+原文の分割保存・検索索引との分離・選択項目だけの読込、素材個別台帳、file/HTTP間の明示メモ読込、狭幅フォームを実装した。巨大な対応表の反復出力は既定で生成せず、固定vendorと元画面/素材/承認・判断履歴は保持。生成途中の全文gzipの重複も除いた。
+
+対象版・実測容量・全件復元・空生成・コマンド/画面・原文6欠損と未確認は `qa/evidence/PBUILD-001/verification.md` に集約する。過去の合格を現在版へ転用しない。Git index操作・commit/push・外部送信・公開は行っていない。
 </pre></details></article></div></section><h2 class="section-title">保留・計画・完了記録</h2><section class="grid"><article class="card" data-search="確認条件が必要なもの .agents/tasks/blocked.md # 確認条件が必要なもの
 
 更新: 2026-10-05。端末・利用者の保存・参加者が必要な確認。担当タスク全体を止める意味ではない。ローカルの固定候補・更新検証は共有キューで進める。

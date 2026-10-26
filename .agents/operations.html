@@ -120,6 +120,12 @@ HTMLは生成時点のスナップショットであり、公開・検証完了�
 今回の原証拠を gitignored `output/internal-portal-evidence/sansu-common-portal-application/` へ内容不変で保全。通常概要の「今回の検証証拠」からローカル閲覧できる。原文の `/tmp/` は取得時の記録として残し、保存先 `archive-manifest.json` の対応で解決する。`node output/internal-portal-evidence/sansu-common-portal-application/validate-archive.mjs` は保存先だけを検査する。別checkoutで保存先が無ければ未取得表示、公開配布へコピーしない。証拠導線追加後は別候補となるため、旧正式PASSは旧13成果とrunの歴史的結果として保持し、現候補へ再受入せず転記しない。
 </pre></details></article><article class="card" data-search="変更ごとの必須検証 docs/ai/verification_matrix.md # verification matrix
 
+国語の全配当漢字：`node tools/e2e-kokugo-kanji.mjs` を固定buildの `sansu_kokugo_url` と新規 `sansu_kokugo_output` へ実行する。全学年の件数、字の選択／検索／別読み／手本の接触と支援扱い、紙の手本の閉鎖／再表示／作品保存、同じ字の再開と実swのofflineを390/768/320幅で確認する。校閲・増量では追加場面文の読み／表記伏字、12音声の実再生も確認する。`sansu_kokugo_audit_output` を指定した `node tools/audit-kokugo-editorial.mjs` で全字・用例・場面文と音声hashを出力し、`src/domain/kokugo/editorial.test.ts` で既知例復習と未見例・24時間・旧予約の境界を検査する。字の被覆は `src/domain/kokugo/kanji/kanji.test.ts` で公式配当の全1,026字へ照合する。
+
+国語：`node tools/e2e-kokugo.mjs` を `sansu_kokugo_url` と新しい `sansu_kokugo_output` で実行。390/768/320幅で教科選択、初答・支援・完了、同予約の再読込、作品・並べ替え下書き、島への配送を確認する。productionでは `sansu_kokugo_offline=1` で実swのoffline再開も確認する。nativeプロフィールは明示fixtureで、別タブの設定から実際に本人を削除し、専用表の削除と学習画面の退出も確認する。`node tools/e2e-kokugo-update.mjs` は固定した2つの実buildで更新保護と同予約／offlineを照合し、`node tools/e2e-kokugo-intake.mjs` は空の状態から初回の国語だけの選択と3問・再訪を確認する。教材審査・実児童の理解・学習効果は別判定。
+
+英語基礎f01/f02：`node tools/e2e-english-foundation.mjs` は `sansu_foundation_url` と新規 `sansu_foundation_output` を指定し、実初回設定・誤答/支援・2単元・予約/コースpending・報酬・offline・音オフ/代替表示を両幅で検査する。教材cache破損は明示診断。`node tools/e2e-english-foundation-update.mjs` は実際に別々にbuildした `sansu_foundation_old_dir` / `sansu_foundation_new_dir` と新規出力先を使い、実sw更新を挟んだ同予約保持を追加する。発音/絵の人による採用と実機/子どもの理解・再訪は別ゲート。
+
 &gt; 2026-10-06: 島のhomeはgrowingへ一本化。撤去した旧life/home journey/nature town画面のcliを現行候補へ実行しない。以下の旧画面検査は当時の履歴であり、現行は`verify:growing`と本番形式の本人切替、旧flag/urlの転送回帰を使う。旧保存の移行・所有保持・学習の回帰は残す。[決定](../adr/2026-10-06-single-island-runtime.md)。
 
 
@@ -234,6 +240,8 @@ islandの画面captureは `tools/island-e2e-helpers.mjs` の `runtimemetadata` �
 `tools/e2e-pokomoko-feedback.mjs` と `tools/e2e-pokomoko-party.mjs` は `sansu_feedback_url`、新しい `sansu_pokomoko_output` / `sansu_party_output` を指定する。実モデル描画、足と全tenkey、入力数字の実移動・次問時の打切り、誤答/支援/筆算、3/6/9問の舞台進行と5連続の既存報酬、reduced motion、退出・再開を検査する。feedbackは既存筆算ヘルパーがdev専用。partyはproductionで `sansu_party_offline=1` を加えると実swとactorコード/画像cache、offline再読込を確認できる。通常描画と明示的なwebgl context loss診断を分ける。固定10問の速度、聴感・実機・子どもの評価の代わりにはしない。
 
 `tools/e2e-learning-music.mjs` は `sansu_feedback_url` と任意の新しい `sansu_learning_music_output` を指定し、実ui6問の伴奏出力・3/6問の層・リーチ/達成・旧se重複なし・音off/退出・再on後の操作開始を検査する。analyserの終了済みcontextに残る波形を出力と誤認しない。デジタル出力と停止の確認であり、聴感の合格とは別。
+
+`node tools/e2e-learning-level-cue.mjs` は `sansu_level_cue_url` と新しい `sansu_level_cue_output` を指定。通常学習の区間先頭から既存の進級確認、同予約への戻り、入力/支援後の案内終了、320px/390px/短横/tabletと筆算の44px操作・位置固定、英単語/両科目/資格読取失敗、実20問の進級と通常ログ/srs/予約/島報酬の保持を検査する。資格は隔離したnativeプロフィール・独力証拠fixtureで用意し、生成済み問題の置換やreadyのmockはしない。読取失敗は初期化完了後だけ有効にする明示診断。`sansu_level_cue_extra_only=1` と任意の `sansu_level_cue_mode` は対象診断用。実機ios・子どもの理解/再訪・2 build更新は別ゲート。
 
 ## matrix
 
@@ -442,7 +450,13 @@ p04の低い殻・入口・共有床の制作では、編集可能な派生sourc
 ### 育成規則v0.4（2026-10-19）
 
 `growth.test.ts`/`growth.repository.test.ts`でa/b・購入終了・家時刻・自生・w4枠と由来/取消・並行/abort・record5/dexie10の現役/休止島/写真/贈り物の隔離を確認。`tools/e2e-growing-v04.mjs`は固定productionをsansu_growth_v04_urlと新規sansu_growth_v04_outputへ指定し、phone/tabletで初回無料家、畑のみのカタログ、保護者ゲート、明示旧snapshotの記念復元/旧収納品、学習不変を確認する。明示した育った家2軒の配置では、utcの昼の実描画からぽこもこ/住人のp04利用を保存する。旧snapshotの注入は移行診断であり実取得とは分ける。海図の往復/実sw offlineはvoyages、実two-build/中断/保存5対応復旧はupdate driverで別に閉じる。保存4→5の実旧writer診断は `tools/check-growing-v04-writer.mjs` を使う。初回バーを変更した場合はfirst-playの実タップも確認する。
-"><h2><a href="../docs/ai/verification_matrix.md">変更ごとの必須検証</a></h2><details><summary>正本・内容と版の根拠</summary><p class="path">docs/ai/verification_matrix.md · 内容SHA256 1275377d53f3a9b79e620d44c2ad99bb0be4d41c0b763a9cf5d07b0f7f760b9a</p><p>生成時の正本を掲載。内容の確認日は未記録、配布版は未確認。内容hashはcommit IDではありません。</p><pre># Verification Matrix
+"><h2><a href="../docs/ai/verification_matrix.md">変更ごとの必須検証</a></h2><details><summary>正本・内容と版の根拠</summary><p class="path">docs/ai/verification_matrix.md · 内容SHA256 665965a12ede1399f9d16ec263447126cce1451b4b49f7abdbf913fdcb9bf7b3</p><p>生成時の正本を掲載。内容の確認日は未記録、配布版は未確認。内容hashはcommit IDではありません。</p><pre># Verification Matrix
+
+国語の全配当漢字：`node tools/e2e-kokugo-kanji.mjs` を固定buildの `SANSU_KOKUGO_URL` と新規 `SANSU_KOKUGO_OUTPUT` へ実行する。全学年の件数、字の選択／検索／別読み／手本の接触と支援扱い、紙の手本の閉鎖／再表示／作品保存、同じ字の再開と実SWのofflineを390/768/320幅で確認する。校閲・増量では追加場面文の読み／表記伏字、12音声の実再生も確認する。`SANSU_KOKUGO_AUDIT_OUTPUT` を指定した `node tools/audit-kokugo-editorial.mjs` で全字・用例・場面文と音声hashを出力し、`src/domain/kokugo/editorial.test.ts` で既知例復習と未見例・24時間・旧予約の境界を検査する。字の被覆は `src/domain/kokugo/kanji/kanji.test.ts` で公式配当の全1,026字へ照合する。
+
+国語：`node tools/e2e-kokugo.mjs` を `SANSU_KOKUGO_URL` と新しい `SANSU_KOKUGO_OUTPUT` で実行。390/768/320幅で教科選択、初答・支援・完了、同予約の再読込、作品・並べ替え下書き、島への配送を確認する。productionでは `SANSU_KOKUGO_OFFLINE=1` で実SWのoffline再開も確認する。nativeプロフィールは明示fixtureで、別タブの設定から実際に本人を削除し、専用表の削除と学習画面の退出も確認する。`node tools/e2e-kokugo-update.mjs` は固定した2つの実buildで更新保護と同予約／offlineを照合し、`node tools/e2e-kokugo-intake.mjs` は空の状態から初回の国語だけの選択と3問・再訪を確認する。教材審査・実児童の理解・学習効果は別判定。
+
+英語基礎F01/F02：`node tools/e2e-english-foundation.mjs` は `SANSU_FOUNDATION_URL` と新規 `SANSU_FOUNDATION_OUTPUT` を指定し、実初回設定・誤答/支援・2単元・予約/コースpending・報酬・offline・音オフ/代替表示を両幅で検査する。教材cache破損は明示診断。`node tools/e2e-english-foundation-update.mjs` は実際に別々にbuildした `SANSU_FOUNDATION_OLD_DIR` / `SANSU_FOUNDATION_NEW_DIR` と新規出力先を使い、実SW更新を挟んだ同予約保持を追加する。発音/絵の人による採用と実機/子どもの理解・再訪は別ゲート。
 
 &gt; 2026-10-06: 島のhomeはGrowingへ一本化。撤去した旧Life/Home Journey/Nature Town画面のCLIを現行候補へ実行しない。以下の旧画面検査は当時の履歴であり、現行は`verify:growing`と本番形式の本人切替、旧flag/URLの転送回帰を使う。旧保存の移行・所有保持・学習の回帰は残す。[決定](../adr/2026-10-06-single-island-runtime.md)。
 
@@ -558,6 +572,8 @@ Islandの画面captureは `tools/island-e2e-helpers.mjs` の `runtimeMetadata` �
 `tools/e2e-pokomoko-feedback.mjs` と `tools/e2e-pokomoko-party.mjs` は `SANSU_FEEDBACK_URL`、新しい `SANSU_POKOMOKO_OUTPUT` / `SANSU_PARTY_OUTPUT` を指定する。実モデル描画、足と全TenKey、入力数字の実移動・次問時の打切り、誤答/支援/筆算、3/6/9問の舞台進行と5連続の既存報酬、reduced motion、退出・再開を検査する。feedbackは既存筆算ヘルパーがDEV専用。partyはproductionで `SANSU_PARTY_OFFLINE=1` を加えると実SWとactorコード/画像cache、offline再読込を確認できる。通常描画と明示的なWebGL context loss診断を分ける。固定10問の速度、聴感・実機・子どもの評価の代わりにはしない。
 
 `tools/e2e-learning-music.mjs` は `SANSU_FEEDBACK_URL` と任意の新しい `SANSU_LEARNING_MUSIC_OUTPUT` を指定し、実UI6問の伴奏出力・3/6問の層・リーチ/達成・旧SE重複なし・音OFF/退出・再ON後の操作開始を検査する。analyserの終了済みcontextに残る波形を出力と誤認しない。デジタル出力と停止の確認であり、聴感の合格とは別。
+
+`node tools/e2e-learning-level-cue.mjs` は `SANSU_LEVEL_CUE_URL` と新しい `SANSU_LEVEL_CUE_OUTPUT` を指定。通常学習の区間先頭から既存の進級確認、同予約への戻り、入力/支援後の案内終了、320px/390px/短横/tabletと筆算の44px操作・位置固定、英単語/両科目/資格読取失敗、実20問の進級と通常ログ/SRS/予約/島報酬の保持を検査する。資格は隔離したnativeプロフィール・独力証拠fixtureで用意し、生成済み問題の置換やreadyのmockはしない。読取失敗は初期化完了後だけ有効にする明示診断。`SANSU_LEVEL_CUE_EXTRA_ONLY=1` と任意の `SANSU_LEVEL_CUE_MODE` は対象診断用。実機iOS・子どもの理解/再訪・2 build更新は別ゲート。
 
 ## Matrix
 

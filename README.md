@@ -7,6 +7,7 @@ Child-friendly math and English learning PWA.
 
 Generate the integrated portal with
 `npm run portal:build`, verify with `npm run portal:verify` (Node.js 24+).
+Before `npm run verify:core` on a fresh checkout, run `npm run agent:index` with Node.js 24, then switch back to the application Node.js 22. CI performs these steps automatically.
 The app's existing runtime requirements and build commands remain unchanged.
 Source roles and retained specialist pages: [portal guide](docs/portal/README.md).
 

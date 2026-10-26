@@ -1,0 +1,97 @@
+{
+  "smoke": {
+    "pass": true,
+    "scenarios": 32
+  },
+  "kanji": {
+    "pass": true,
+    "scenarios": 3
+  },
+  "auditFixes": {
+    "pass": true,
+    "scenarios": 3
+  },
+  "resident": {
+    "pass": true,
+    "scenarios": 2
+  },
+  "twoBuildUpdate": {
+    "pass": true,
+    "scenarios": 3
+  },
+  "intake": {
+    "pass": true,
+    "scenarios": 2
+  },
+  "productInputHash": "e0d2b868894c21efbc19dc6000dcaf85a9c1c4c10c74f8717c8e9741142950b1",
+  "testedAppCommit": "4af7a9afef24ba688eede448874edf28f76de273",
+  "version": {
+    "version": "main-ready-4af7a9af:1c646db4-9a9c-4efc-be98-5d46ebfb614d",
+    "revision": "main-ready-4af7a9af",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "firstFailuresPreservedLocally": [
+    "Full unit 2 timeouts; targeted reruns with original limits",
+    "Initial intake action during opening-state changes; saved-state/paint synchronization retry",
+    "Portal evidence hash and existing missing anchor",
+    "Portal check isolated directory must keep project slug and Git history"
+  ],
+  "at": "2026-10-26T08:39:06.408993+00:00",
+  "unit": {
+    "files": 677,
+    "tests": 5686,
+    "passBySplitExecution": true,
+    "initialFullRunFailures": [
+      "src/hooks/learningProgression.integration.test.ts",
+      "src/domain/growingIsland/repository.test.ts"
+    ],
+    "initialFailedTests": 2,
+    "originalTimeoutsPreserved": true,
+    "note": "Full run excludes only two portal files pending generated inputs; these seven tests ran separately. Initial two timeouts retained. Same-limit targeted reruns complete the original test set; this was not a single clean full run."
+  },
+  "checks": {
+    "docs": "PASS",
+    "currentEntry": "PASS",
+    "lint": "PASS; 0 errors, 4 existing warnings",
+    "build": "PASS; tsc -b and assets; 9.37MiB/12MiB",
+    "materials": "PASS; 0 machine-audit issues",
+    "portal": "PASS after evidence hash and existing goal-anchor alignment, on isolated project-slug path with Git history",
+    "ciSetup": "Generate ignored portal under Node24 then restore Node22 for app checks"
+  },
+  "notVerified": [
+    "Actual iOS/Android devices",
+    "Human educational material acceptance",
+    "Child understanding, learning effect and return",
+    "Completion of post-push hosted checks"
+  ]
+}

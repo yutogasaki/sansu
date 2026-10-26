@@ -90,6 +90,8 @@
 共有キュー、関連仕様/タスク、Git履歴と未コミット一覧、10/1〜10/5の検証記録を照合した。アプリ実装・本番操作・実機/子どもの観察は行っていない。過去の検証を新しい候補の合格として記録しない。
 </pre></details></article><article class="card" data-search="現在の実行担当 .agents/tasks/tasks.md # 今進めていること
 
+2026-10-20 [英語基礎f01/f02の包括実装](../../docs/tasks/active/2026-10-20-english-foundation.md)：専用保存/復習/報酬・2単元と固定教材を実装。2幅の実sw更新/同予約offline/音オフまで確認。ローカル機能・技術検証は完了。追加検証59件、未完native1件、入口/portalがpass。全体は既存合格との合算648ファイル/5,506件、失敗0・未完0。人による教材/実機/児童の受入は残す。
+
 2026-10-20 画角改善：近景/場所/本人の追従と手動優先を実装。正しい対象のproduction8ケースと島回帰748件がpass、長回廊の実利用保存を両幅で確認。[現在地と美術等の未受入](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md)。
 
 2026-10-20 大型形の追加はローカル実装済み、実画面受入はpartial。島回帰745件はpass、p04実利用は確認、p02長回廊の実利用記録は修正後も未確認。[現在地・失敗・次の一手](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md)。美術採用・公開・pushはしていない。
@@ -118,6 +120,11 @@
 | 2・体験 | [学習・島・家の一続きの体験](../../docs/tasks/active/2026-09-20-whole-app-ux-coherence.md) | v3で実初回→取得/配置→家/本→学習・同予約復帰・本人切替を両幅確認。案内対象・本人一覧の同期競合・study重なりを修正 | 実機の音/読み上げ、利用者の無説明理解・再訪はblockedへ。確認済み経路の再実装はしない |
 | 3・性能 | [起動と物が増えた島の軽量化](../../docs/tasks/active/2026-09-23-island-performance.md) | m1の形・床・道を保持しnode全layer7,386→174 ms。receiptだけの再構築を省きshaderをready前準備。花庭c6のcore5,232と編集／通常島の回帰はpass | preflight時のbrowser購入予告9〜23秒、成熟後focus約20〜35秒で操作性能は未達。p05反復冠の削減効果とrendererの内訳は未測定。headless回帰の通過を実機性能へ読み替えず、実時計同期・起動/電池/gpuを別確認 |
 | 4・美術と成長 | [島の育ち方と全景](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md) | 開いた入り江のr0〜r2を完了。輪郭差go、対象runtime pass、美術と独立理解hold | 利用者が輪郭を採用した場合だけr3へ。単独→接続→成熟→実利用→分離→復元を一旅程ずつ扱う |
+| 5・開発環境 | [正本から復元できる軽いポータル](../../docs/tasks/active/2026-10-21-portal-storage.md) | 原文分割・素材個別台帳・明示メモ移行をローカル実装。技術確認は今回の終了記録へ | 元6参照の復元・全体の独立受入は残す。公開とgitは別承認 |
+
+## ポータルの構築と容量整理（2026-10-21）
+
+[正本から復元できる仕事場](../../docs/tasks/active/2026-10-21-portal-storage.md)をローカル実装・検証する。開始記録→重複/初回生成の再現→分割/読込→旧url/保存/狭幅→必須検証→容量と復旧の記録の順。島・学習・素材原本と他作業を保持し、git index操作・commit/push・web公開・外部送信はしない。
 
 ## 実装済みとして扱うもの
 
@@ -150,7 +157,13 @@
 - 対象：カメラ/品物/メニュー/場所/写真・思い出/住人/家/記録・設定の表示。学習の入力・採点と保存形式は保持。既存差分を保持し、追加エージェントなし、既定30分。
 - 検証：docs/lint/typecheck/test/build、smokeと実画面の主要旅程。実機・児童理解・既存美術holdは分離。
 - 状態：ui実装と主要操作の確認を完了。全体unit5,465件pass、更新後対象23件pass、typecheck/lint/build・現行入口guard・固定productionの縦横/狭幅/家/学習/記録/設定pass。旧exploreのsmoke1件failと別作業の親タスクflow根拠不一致を残す。実機・児童理解・美術holdは未合格。記録 `docs/design/2026-10-20-whole-app-ui/implementation.md`。
-"><h2><a href="tasks/TASKS.md">現在の実行担当</a></h2><details><summary>正本・内容と版の根拠</summary><p class="path">.agents/tasks/TASKS.md · 内容SHA256 6a2c73369eacfd6d0552d309b8f0da52e94111023096955d9b71346faa3e8fb5</p><p>生成時の正本を掲載。内容の確認日は未記録、配布版は未確認。内容hashはcommit IDではありません。</p><pre># 今進めていること
+
+## 学習の吹き出しと文字整理（2026-10-21）
+
+ユーザー採用の全身192/172pxと丸い吹き出しをローカル実装。対象112テスト・5幅と実学習操作・build・classic smoke32件pass。初回全体unit1件failは最終対象で再pass、全体再完走・実機/児童理解/pwaは未確認。共有map staleは別件。commit/push/公開なし。[実装証拠](../../docs/design/2026-10-21-learning-header/implementation/readme.md)。
+"><h2><a href="tasks/TASKS.md">現在の実行担当</a></h2><details><summary>正本・内容と版の根拠</summary><p class="path">.agents/tasks/TASKS.md · 内容SHA256 f8a53392bd5d2180f9dc140bfa2123e65cf6096c2aed4c66ac7453152ad0fd48</p><p>生成時の正本を掲載。内容の確認日は未記録、配布版は未確認。内容hashはcommit IDではありません。</p><pre># 今進めていること
+
+2026-10-20 [英語基礎F01/F02の包括実装](../../docs/tasks/active/2026-10-20-english-foundation.md)：専用保存/復習/報酬・2単元と固定教材を実装。2幅の実SW更新/同予約offline/音オフまで確認。ローカル機能・技術検証は完了。追加検証59件、未完native1件、入口/portalがPASS。全体は既存合格との合算648ファイル/5,506件、失敗0・未完0。人による教材/実機/児童の受入は残す。
 
 2026-10-20 画角改善：近景/場所/本人の追従と手動優先を実装。正しい対象のproduction8ケースと島回帰748件がPASS、長回廊の実利用保存を両幅で確認。[現在地と美術等の未受入](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md)。
 
@@ -180,6 +193,11 @@
 | 2・体験 | [学習・島・家の一続きの体験](../../docs/tasks/active/2026-09-20-whole-app-ux-coherence.md) | v3で実初回→取得/配置→家/本→学習・同予約復帰・本人切替を両幅確認。案内対象・本人一覧の同期競合・Study重なりを修正 | 実機の音/読み上げ、利用者の無説明理解・再訪はBLOCKEDへ。確認済み経路の再実装はしない |
 | 3・性能 | [起動と物が増えた島の軽量化](../../docs/tasks/active/2026-09-23-island-performance.md) | M1の形・床・道を保持しNode全layer7,386→174 ms。receiptだけの再構築を省きshaderをready前準備。花庭c6のcore5,232と編集／通常島の回帰はPASS | preflight時のbrowser購入予告9〜23秒、成熟後focus約20〜35秒で操作性能は未達。P05反復冠の削減効果とrendererの内訳は未測定。headless回帰の通過を実機性能へ読み替えず、実時計同期・起動/電池/GPUを別確認 |
 | 4・美術と成長 | [島の育ち方と全景](../../docs/tasks/active/2026-09-27-living-fantasy-first-playable.md) | 開いた入り江のR0〜R2を完了。輪郭差GO、対象runtime PASS、美術と独立理解HOLD | 利用者が輪郭を採用した場合だけR3へ。単独→接続→成熟→実利用→分離→復元を一旅程ずつ扱う |
+| 5・開発環境 | [正本から復元できる軽いポータル](../../docs/tasks/active/2026-10-21-portal-storage.md) | 原文分割・素材個別台帳・明示メモ移行をローカル実装。技術確認は今回の終了記録へ | 元6参照の復元・全体の独立受入は残す。公開とGitは別承認 |
+
+## ポータルの構築と容量整理（2026-10-21）
+
+[正本から復元できる仕事場](../../docs/tasks/active/2026-10-21-portal-storage.md)をローカル実装・検証する。開始記録→重複/初回生成の再現→分割/読込→旧URL/保存/狭幅→必須検証→容量と復旧の記録の順。島・学習・素材原本と他作業を保持し、Git index操作・commit/push・Web公開・外部送信はしない。
 
 ## 実装済みとして扱うもの
 
@@ -212,6 +230,10 @@
 - 対象：カメラ/品物/メニュー/場所/写真・思い出/住人/家/記録・設定の表示。学習の入力・採点と保存形式は保持。既存差分を保持し、追加エージェントなし、既定30分。
 - 検証：docs/lint/typecheck/test/build、smokeと実画面の主要旅程。実機・児童理解・既存美術HOLDは分離。
 - 状態：UI実装と主要操作の確認を完了。全体unit5,465件PASS、更新後対象23件PASS、typecheck/lint/build・現行入口guard・固定productionの縦横/狭幅/家/学習/記録/設定PASS。旧Exploreのsmoke1件FAILと別作業の親タスクflow根拠不一致を残す。実機・児童理解・美術HOLDは未合格。記録 `docs/design/2026-10-20-whole-app-ui/implementation.md`。
+
+## 学習の吹き出しと文字整理（2026-10-21）
+
+ユーザー採用の全身192/172pxと丸い吹き出しをローカル実装。対象112テスト・5幅と実学習操作・build・classic smoke32件PASS。初回全体unit1件FAILは最終対象で再PASS、全体再完走・実機/児童理解/PWAは未確認。共有map staleは別件。commit/push/公開なし。[実装証拠](../../docs/design/2026-10-21-learning-header/implementation/README.md)。
 </pre></details></article><article class="card" data-search="全島制作のm0〜m5と進む条件 docs/product/island-construction-strategy.md # 島構築方針 — 美術で設計した場所を、配置から育てる
 
 制作方針 v9 / 2026-10-12。[決定の理由](../adr/2026-10-11-authored-place-world-policy.md) · [美術戦略](island-art-strategy.md) · [拡張戦略](island-expansion-art-strategy.md)。本書が体験・世界の作り方・制作順の正本。現行の遊びは[52](52_growing_island_game_spec.md)、保存は[13](13_data_storage_migration_spec.md)が正本で、新しい世界への切替は未実装。
@@ -221,6 +243,8 @@
 美術模型を作った後で別の簡易モデルへ置き換える制作を終える。地形、森、水庭、集落、入口、歩ける床を同時に設計し、その同じ世界の定義を本体で使う。まず一つの島全体で成立させ、配置差と成長を通してから、大規模な拡張へ進む。
 
 ## 完成ゴールと最初の到達点
+
+### ゲーム中の自由編集と完成の条件
 
 **承認した[native-05の明るく丸い全島3d](../design/2026-10-10-island-final-3d/readme.md)の造形と素材を、本人が配置して育て、歩いて使える島として本体で成立させる。** 青紫の大樹と幹の内側、鉱石の泉から下る水庭、色を透かす殻と入り江、森と家のまとまりを、一つの地形と暮らしとして作る。幻想性は昼の形・素材・高低差・空間で読み取れるものにする。
 
@@ -429,7 +453,7 @@ m1の島は診断用であることを明示し、模型の家や住人を本人
 水庭の機能完了は包括ゴールとm1の完了ではない。以前の[拡張runtime契約](island-expanding-runtime.md)と[実画面・検証](../design/2026-10-11-expanding-island-runtime/readme.md)は旧土地の互換と履歴として有効で、新工程の通過証拠へ置き換えない。三配置・成長・地区拡張、次期の本人保存/配布、m0〜m5全体、美術の再採用、独立観察、実機、公開は未完。
 
 以前の制作順と判断は[2026-10-10 adr](../adr/2026-10-10-place-first-island-strategy.md)、[成長美術](../design/2026-10-11-island-growth-art/readme.md)、[自由造形の全島](../design/2026-10-11-island-landscape-art/readme.md)、拡張候補とgit履歴に残す。現在の次工程はm0→m1であり、これらの完成ファイルの数から先へ繰り上げない。
-"><h2><a href="../docs/product/island-construction-strategy.md">全島制作のM0〜M5と進む条件</a></h2><details><summary>正本・内容と版の根拠</summary><p class="path">docs/product/island-construction-strategy.md · 内容SHA256 704915e13689349cfa37de2689236bdfcb4fdc86f45d03f03f57732aebb8f87e</p><p>生成時の正本を掲載。内容の確認日は未記録、配布版は未確認。内容hashはcommit IDではありません。</p><pre># 島構築方針 — 美術で設計した場所を、配置から育てる
+"><h2><a href="../docs/product/island-construction-strategy.md">全島制作のM0〜M5と進む条件</a></h2><details><summary>正本・内容と版の根拠</summary><p class="path">docs/product/island-construction-strategy.md · 内容SHA256 04108d659abd28476ad17369672ac86238976cb6f90d9423b1888eb21a002eb8</p><p>生成時の正本を掲載。内容の確認日は未記録、配布版は未確認。内容hashはcommit IDではありません。</p><pre># 島構築方針 — 美術で設計した場所を、配置から育てる
 
 制作方針 v9 / 2026-10-12。[決定の理由](../adr/2026-10-11-authored-place-world-policy.md) · [美術戦略](island-art-strategy.md) · [拡張戦略](island-expansion-art-strategy.md)。本書が体験・世界の作り方・制作順の正本。現行の遊びは[52](52_growing_island_game_spec.md)、保存は[13](13_data_storage_migration_spec.md)が正本で、新しい世界への切替は未実装。
 
@@ -438,6 +462,8 @@ m1の島は診断用であることを明示し、模型の家や住人を本人
 美術模型を作った後で別の簡易モデルへ置き換える制作を終える。地形、森、水庭、集落、入口、歩ける床を同時に設計し、その同じ世界の定義を本体で使う。まず一つの島全体で成立させ、配置差と成長を通してから、大規模な拡張へ進む。
 
 ## 完成ゴールと最初の到達点
+
+### ゲーム中の自由編集と完成の条件
 
 **承認した[native-05の明るく丸い全島3D](../design/2026-10-10-island-final-3d/README.md)の造形と素材を、本人が配置して育て、歩いて使える島として本体で成立させる。** 青紫の大樹と幹の内側、鉱石の泉から下る水庭、色を透かす殻と入り江、森と家のまとまりを、一つの地形と暮らしとして作る。幻想性は昼の形・素材・高低差・空間で読み取れるものにする。
 

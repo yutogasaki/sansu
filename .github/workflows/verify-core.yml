@@ -55,5 +55,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Setup Node for portal generation
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Generate ignored portal inputs
+        run: npm run agent:index
+
+      - name: Restore application Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
       - name: Verify core
         run: npm run verify:core
