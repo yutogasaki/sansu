@@ -100,8 +100,15 @@ export function noteLevels(state: GrowingState, levels: ConfirmedLevels) {
     journey.levels = { math: Math.max(was.math, levels.math | 0), vocab: Math.max(was.vocab, levels.vocab | 0), kokugo: Math.max(was.kokugo, levels.kokugo | 0) };
     for (const subject of ['math', 'vocab', 'kokugo'] as const)
         for (const level of ROUTE_LEVELS) if (journey.levels[subject] >= level) discover(state, `learn:${subject}:${level}`);
+    if (finaleLit(state)) discover(state, 'learn:finale');
 }
 export const starsLit = (state: GrowingState) => Math.max(0, ...Object.values(state.journey?.levels ?? { math: 0 }));
+/** Which subjects confirmed a star (island-journey.md §3.3): only colour, never another route. */
+export const starSubjects = (state: GrowingState, level: number) =>
+    (['math', 'vocab', 'kokugo'] as const).filter(subject => (state.journey?.levels?.[subject] ?? 0) >= level);
+/** Lv20 in any subject: every special island's sign shines; scenery only (§3.3). */
+export const FINALE_LEVEL = 20;
+export const finaleLit = (state: GrowingState) => starsLit(state) >= FINALE_LEVEL;
 
 /** Slots opened but not yet given a theme; slot 0 always means the shiokaze island. */
 export function freeSlots(state: GrowingState) {

@@ -53,6 +53,7 @@ export const DISCOVERIES: readonly Discovery[] = [
     { id: 'island:hoshi', group: 'island', name: 'じぶんの せいざ', line: '星の島の そらに せいざが うかんだよ', hint: 'あかりを 3つ ちかくに ならべよう' },
     ...SPECIES_ENTRIES,
     ...LEARN_ENTRIES,
+    { id: 'learn:finale', group: 'learn', name: 'しあげの ほし', line: 'Lv20の ないようを たしかめて、とくべつな しまの しるしが ひかったよ', hint: 'どれかの きょうかで Lv20の ないようを たしかめよう' },
     { id: 'waterfall', group: 'ground', name: 'たき', line: 'おかの みずが したの うみへ おちているよ', hint: 'おかの うえの みずみちや みずばちの となりを、うみの ふでで ほってみよう' },
     { id: 'cove-boat', group: 'ground', name: 'いりえの こぶね', line: 'ほった いりえに こぶねが うかんだよ', hint: 'うみの ふでで、つながった 3マスを ほってみよう' },
     { id: 'high-light', group: 'ground', name: 'たかだいの あかり', line: 'たかい ところの あかりは とおくまで とどくよ', hint: 'おかの うえに あかりを おいてみよう' },

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { DISCOVERIES, type DiscoveryGroup } from '../../../domain/growingIsland/discoveries';
-import { freeSlots, ROUTE_LEVELS, SPECIES, THEME_INFO, THEMES, type SpeciesId } from '../../../domain/growingIsland/journey';
+import { FINALE_LEVEL, finaleLit, freeSlots, ROUTE_LEVELS, SPECIES, THEME_INFO, THEMES, type SpeciesId } from '../../../domain/growingIsland/journey';
 import { mechanismProgress } from '../../../domain/growingIsland/mechanisms';
 import { achievementCatalog, starterStep } from '../../../domain/growingIsland/guidance';
 import { FLOWER_COLORS, type GrowingState } from '../../../domain/growingIsland';
@@ -24,6 +24,7 @@ function nextJoy(state: GrowingState): { title: string; hint: string; chart?: bo
     if (progress && !progress.done) return { title: `${THEME_INFO[progress.theme].name}の しかけ`, hint: progress.next };
     const opened = state.journey?.routes.length ?? 0, level = ROUTE_LEVELS[opened - 1];
     if (opened && level) return { title: `${SLOT_NAME[opened]}まで あと すこし`, hint: `どれかの きょうかで、Lv${level}の ないようを たしかめよう` };
+    if (opened === SLOT_NAME.length && !finaleLit(state)) return { title: 'しあげの ほしまで あと すこし', hint: `どれかの きょうかで、Lv${FINALE_LEVEL}の ないようを たしかめると、しまの しるしが ひかるよ` };
     return { title: 'しまを そだてよう', hint: 'おいた ものは、すこしずつ そだっていくよ' };
 }
 

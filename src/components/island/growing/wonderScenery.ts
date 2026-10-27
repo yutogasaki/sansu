@@ -4,7 +4,7 @@ import { landCells } from '../../../domain/growingIsland/space';
 import { TERRAIN_SEA_LEVEL } from '../../../domain/growingIsland/editableTerrainWorld';
 import { boatCell, floatingIsle, shipCove, waterfalls } from '../../../domain/growingIsland/discoveries';
 import { moonPhase } from '../../../domain/growingIsland/sky';
-import type { ThemeId } from '../../../domain/growingIsland/journey';
+import { finaleLit, type ThemeId } from '../../../domain/growingIsland/journey';
 import { constellations, echoGroves, gearChain, lightFlows, mechanismProgress, tideLevel, windAngle } from '../../../domain/growingIsland/mechanisms';
 
 /** A toothed gear wheel, flat in its own XY plane (ぜんまい島). */
@@ -25,6 +25,10 @@ const THEME_SEA: Record<ThemeId, { deep: string; shallow: string }> = {
     shiokaze: { deep: '#25c2c6', shallow: '#c2f7ec' }, kodama: { deep: '#2c8c8a', shallow: '#93d6c2' },
     hikari: { deep: '#14d4f4', shallow: '#dcfdff' }, watagumo: { deep: '#cfdcf2', shallow: '#ffffff' },
     karakuri: { deep: '#2a2c24', shallow: '#7a6e44' }, hoshi: { deep: '#18286a', shallow: '#4c62b0' },
+};
+/** The light each sign shines with after Lv20 (island-journey.md §3.3). */
+const FINALE_TINT: Record<ThemeId, string> = {
+    shiokaze: '#ffd6e4', kodama: '#fff2a0', hikari: '#bff8ff', watagumo: '#ffe8f6', karakuri: '#ffe27a', hoshi: '#fff6c8',
 };
 import type { GrowingState } from '../../../domain/growingIsland';
 import type { SceneLayout } from './sceneLayout';
@@ -206,7 +210,7 @@ export class WonderScenery {
      * Each special island's big sign on the far side of its sea, seen the moment the island
      * opens: a giant conch, an ancient tree, a glowing arch, cloud islets, rock spires, a moon arch.
      */
-    private landmark(theme: ThemeId, layout: SceneLayout) {
+    private landmark(theme: ThemeId, layout: SceneLayout, finale = false) {
         const far = -2 - 1.7, left = -layout.width / 2 - .6, right = layout.width / 2 + .4, sea = TERRAIN_SEA_LEVEL;
         const group = new T.Group(); group.name = `theme-landmark-${theme}`; this.root.add(group);
         const solid = (color: string, emissive?: string) => new T.MeshStandardMaterial({ color, roughness: .7, ...(emissive ? { emissive, emissiveIntensity: .6 } : {}) });
@@ -253,6 +257,35 @@ export class WonderScenery {
             for (let i = 0; i < 5; i++) put(new T.OctahedronGeometry(.12), solid('#fff6c8', '#ffe27a'), right - 1.2 + i * .6, sea + .8 + Math.sin(i) * .4, far + .5);
         }
         group.traverse(o => { if (o instanceof T.Mesh) o.castShadow = false; });
+        // しあげ (island-journey.md §3.3): after Lv20 the sign shines, a pillar of light rising from the sea behind it.
+        const sprite = glow();
+        if (!finale || !sprite) return;
+        group.updateMatrixWorld(true);
+        // The sky island's cloud sea surrounds the land, so its sign is the cloud islets above the far sea.
+        const box = new T.Box3();
+        (theme === 'watagumo' ? group.children.filter(child => child instanceof T.Group) : [group]).forEach(part => box.expandByObject(part));
+        const center = box.getCenter(new T.Vector3()), top = box.max.y;
+        const tint = FINALE_TINT[theme];
+        const halo = new T.Points(new T.BufferGeometry().setFromPoints([center]), new T.PointsMaterial({ map: sprite, color: tint, size: 260, sizeAttenuation: false, transparent: true, depthWrite: false, blending: T.AdditiveBlending }));
+        halo.name = 'theme-finale-halo'; this.root.add(halo);
+        const pillar = new T.Mesh(new T.CylinderGeometry(.18, .55, 9, 18, 1, true), new T.MeshBasicMaterial({ color: tint, transparent: true, opacity: .18, depthWrite: false, side: T.DoubleSide, blending: T.AdditiveBlending }));
+        pillar.position.set(center.x, top + 4.5 - 1, center.z - .3); pillar.name = 'theme-finale-pillar'; this.root.add(pillar);
+        // Sparks of the same light rise around the sign, so it reads as shining even from far away.
+        const radius = Math.max(.8, box.getSize(new T.Vector3()).x / 2), seeds = Array.from({ length: 28 }, (_, i) => i);
+        const sparks = new T.Points(new T.BufferGeometry().setFromPoints(seeds.map(() => center.clone())), new T.PointsMaterial({ map: sprite, color: tint, size: 16, sizeAttenuation: false, transparent: true, depthWrite: false, blending: T.AdditiveBlending }));
+        sparks.name = 'theme-finale-sparks'; this.root.add(sparks);
+        this.ambience.push((now, _n, reduced) => {
+            const pulse = reduced ? .5 : .5 + Math.sin(now / 900) * .5;
+            (halo.material as T.PointsMaterial).opacity = .45 + pulse * .35;
+            (pillar.material as T.MeshBasicMaterial).opacity = .12 + pulse * .12;
+            const position = sparks.geometry.getAttribute('position') as T.BufferAttribute;
+            seeds.forEach(i => {
+                const rise = reduced ? (i % 7) / 7 : (now / 3200 + i * .137) % 1, a = i * 2.4 + rise * 1.5;
+                position.setXYZ(i, center.x + Math.cos(a) * radius * (1 - rise * .4), box.min.y + rise * (top - box.min.y + 2.5), center.z + Math.sin(a) * radius * .6);
+            });
+            position.needsUpdate = true;
+            (sparks.material as T.PointsMaterial).opacity = .55 + pulse * .4;
+        });
     }
 
     /**
@@ -416,7 +449,7 @@ export class WonderScenery {
             });
         };
         const sea = TERRAIN_SEA_LEVEL + .03;
-        this.landmark(state.theme!, layout);
+        this.landmark(state.theme!, layout, finaleLit(state));
         this.flora(state, layout, seeded);
         this.edges(state.theme!, edge, own, layout, seeded);
         // The default meadow tufts belong to the home island; a special island grows its own plants.

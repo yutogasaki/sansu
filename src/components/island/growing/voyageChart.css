@@ -5,33 +5,78 @@
 .voyage-body h3 { margin: 12px 0 8px; font-size: 16px; }
 .voyage-body button { min-height: 44px; }
 .voyage-body header button { min-width: 44px; }
-.voyage-intro { margin: 8px 0 12px; }
-.voyage-sea { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; padding: 16px; border-radius: 20px; background: #e9f4fb; }
-.voyage-sea .voyage-island { display: flex; flex-direction: column; align-items: center; justify-content: end; gap: 4px; padding: 12px 6px; background: #fff; border: 2px solid transparent; border-radius: 16px; color: var(--pokomoko-ink); overflow-wrap: anywhere; }
-.voyage-sea .is-current { border-color: var(--pokomoko-accent, #365eac); opacity: 1; }
-.voyage-land { display: grid; place-items: center; width: 76px; min-height: 44px; max-height: 72px; border-radius: 45% 52% 40% 42%; background: #edf0f6; color: #365eac; box-shadow: 0 4px 0 #d7e3ef; margin-bottom: 8px; }
-.voyage-note, .voyage-create p { font-size: 12px; line-height: 1.6; }
-.voyage-new { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; }
-.voyage-starts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-.voyage-starts button { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 10px 5px; }
-.voyage-starts button[aria-pressed='true'] { border: 2px solid var(--pokomoko-accent, #365eac); background: #eef3fd; }
-.voyage-starts small { font-size: 11px; }
-.voyage-create label { display: grid; gap: 6px; margin-top: 14px; }
-.voyage-create input { min-height: 44px; padding: 8px 12px; border: 1px solid var(--pokomoko-edge, #c9cfdb); border-radius: 12px; background: #fff; color: inherit; font: inherit; }
+.voyage-note { font-size: 12px; line-height: 1.6; }
+.voyage-open { margin: 6px 0 10px; font-weight: 700; color: #4a3a8a; }
+
+/* The chart (island-journey.md §3.2): one map, home in the middle, each special island always in its own place.
+   The far north is night sky where the star island lies. */
+.voyage-map { position: relative; width: 100%; aspect-ratio: 1 / 1.02; margin-inline: auto; border-radius: 22px; overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 52%, rgba(255,255,255,.55) 0 9%, transparent 26%),
+    radial-gradient(1.2px 1.2px at 18% 6%, #fff 99%, transparent), radial-gradient(1px 1px at 34% 12%, #fff 99%, transparent),
+    radial-gradient(1.4px 1.4px at 66% 5%, #fff 99%, transparent), radial-gradient(1px 1px at 83% 13%, #fff 99%, transparent),
+    linear-gradient(180deg, #1f2a66 0%, #4a5fae 13%, #9fd2ec 30%, #bfe8f3 62%, #a8e4e6 100%);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.5); }
+.voyage-map::after { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: .35;
+  background: repeating-radial-gradient(circle at 50% 52%, transparent 0 22px, rgba(255,255,255,.35) 23px 24px); }
+.voyage-routes { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; }
+.voyage-routes line { stroke: rgba(255,255,255,.9); stroke-width: 2.4; vector-effect: non-scaling-stroke; stroke-linecap: round; }
+.voyage-routes line[data-mode='made'] { stroke-dasharray: 1 7; }
+.voyage-routes line[data-mode='open'] { stroke: #fff6b8; stroke-width: 3.2; stroke-dasharray: 8 6; animation: voyage-sail 1.4s linear infinite; }
+.voyage-routes .voyage-ring { stroke: #ffe58a; stroke-width: 3; filter: drop-shadow(0 0 3px #ffd23f); }
+@keyframes voyage-sail { to { stroke-dashoffset: -14; } }
+
+.voyage-map .voyage-island { position: absolute; z-index: 2; transform: translate(-50%, -50%); width: 104px; min-height: 0; padding: 0;
+  display: grid; justify-items: center; gap: 1px; border: 0; background: none; color: #23324a; font: inherit; text-align: center; overflow-wrap: anywhere; }
+.voyage-map .voyage-island strong { font-size: 11.5px; white-space: nowrap; line-height: 1.25; padding: 1px 6px; border-radius: 8px; background: rgba(255,255,255,.86); }
+.voyage-map .voyage-island small { font-size: 10.5px; line-height: 1.3; color: #3a4a62; padding: 0 5px; border-radius: 6px; background: rgba(255,255,255,.62); }
+.voyage-land { display: grid; place-items: center; width: 54px; height: 40px; border-radius: 46% 54% 42% 48% / 55% 50% 50% 45%;
+  background: #d9efc6; color: #2f6a3a; box-shadow: 0 5px 0 #b9a57e, 0 7px 10px rgba(30,60,90,.18); margin-bottom: 4px; }
+.voyage-map .voyage-island[data-island='home'] .voyage-land { width: 70px; height: 50px; background: #cfeab4; }
+.voyage-map .voyage-island.is-small { width: 74px; }
+.voyage-map .voyage-island.is-small .voyage-land { width: 38px; height: 28px; }
+.voyage-map .voyage-island[data-island='shiokaze'] .voyage-land { background: #fff1d6; color: #d0607a; }
+.voyage-map .voyage-island[data-island='kodama'] .voyage-land { background: #6fae6a; color: #fff6c0; }
+.voyage-map .voyage-island[data-island='hikari'] .voyage-land { background: #c8f6f2; color: #1aa6c0; }
+.voyage-map .voyage-island[data-island='watagumo'] .voyage-land { background: #ffffff; color: #8a74c8; box-shadow: 0 5px 0 #dfe6f6, 0 7px 10px rgba(30,60,90,.12); }
+.voyage-map .voyage-island[data-island='karakuri'] .voyage-land { background: #8f9aa4; color: #f2cf6a; box-shadow: 0 5px 0 #b08a3c, 0 7px 10px rgba(30,30,30,.25); }
+.voyage-map .voyage-island[data-island='hoshi'] .voyage-land { background: #2c3a7a; color: #ffe58a; box-shadow: 0 5px 0 #18235a, 0 0 14px rgba(255,230,140,.5); }
+.voyage-map .voyage-island.is-current .voyage-land { outline: 3px solid #ffffff; outline-offset: 3px; }
+.voyage-map .voyage-island.is-current strong { background: #365eac; color: #fff; }
+/* Not yet reachable: a silhouette in the mist with the very next condition. */
+.voyage-map .voyage-island[data-mode='fog'] .voyage-land { background: rgba(255,255,255,.45); color: rgba(60,80,110,.45); box-shadow: 0 0 18px 10px rgba(255,255,255,.55); filter: blur(.4px); }
+.voyage-map .voyage-island[data-mode='fog'] strong { background: rgba(255,255,255,.55); color: #5a6a82; }
+.voyage-map .voyage-island[data-mode='fog']:disabled { opacity: 1; }
+/* A route is open: the island glows and invites. */
+.voyage-map .voyage-island[data-mode='open'] .voyage-land { box-shadow: 0 0 0 4px #fff6b8, 0 0 22px 8px rgba(255,226,120,.85); animation: voyage-call 1.8s ease-in-out infinite; }
+.voyage-map .voyage-island[data-mode='open'] small { background: #ffe58a; color: #6a4a00; font-weight: 700; }
+@keyframes voyage-call { 50% { transform: translateY(-3px) scale(1.05); } }
+/* しあげ (§3.3): every special island made shines. */
+.voyage-map[data-finale] .voyage-island:not([data-mode]):not([data-island='home']):not(.is-small) .voyage-land { box-shadow: 0 5px 0 rgba(0,0,0,.12), 0 0 20px 6px rgba(255,226,120,.8); }
+.voyage-map .voyage-island:focus-visible { outline: 3px solid #365eac; outline-offset: 2px; border-radius: 12px; }
+@media (prefers-reduced-motion: reduce) { .voyage-routes line, .voyage-map .voyage-island .voyage-land { animation: none !important; } }
+@media (max-width: 380px) { .voyage-map .voyage-island { width: 96px; } .voyage-map .voyage-island strong { font-size: 10.5px; } .voyage-land { width: 46px; height: 34px; } .voyage-map .voyage-island[data-island='home'] .voyage-land { width: 58px; height: 42px; } }
+
+.voyage-more { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.voyage-more .voyage-island { display: grid; justify-items: start; padding: 6px 12px; border-radius: 12px; border: 1px solid #d0dbe8; background: #fff; }
+.voyage-more .voyage-island small { font-size: 11px; color: #6a7488; }
 .voyage-landmarks { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
 .voyage-landmarks h3 { flex-basis: 100%; }
 .voyage-landmarks button { display: flex; align-items: center; gap: 6px; }
 .voyage-body button:focus-visible, .voyage-body input:focus-visible { outline: 3px solid #365eac; outline-offset: 3px; }
-@media (max-width: 380px) { .voyage-starts { grid-template-columns: 1fr; } .voyage-starts button { flex-direction: row; flex-wrap: wrap; } }
+
 .voyage-special { margin: 14px 0 6px; padding: 12px; border-radius: 16px; background: #f4f0ff; }
 .voyage-special h3 { margin: 0 0 8px; font-size: 15px; }
 .voyage-stars { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; margin: 0; padding: 0; list-style: none; }
-.voyage-stars li { display: grid; place-items: center; aspect-ratio: 1; border-radius: 50%; background: #e6e1ef; color: #b7afc6; font-size: 14px; }
+.voyage-stars li { position: relative; display: grid; place-items: center; aspect-ratio: 1; border-radius: 50%; background: #e6e1ef; color: #b7afc6; font-size: 14px; }
 .voyage-stars li[data-lit] { background: #ffe58a; color: #8a5a00; box-shadow: 0 0 8px #ffd23f88; }
 .voyage-stars li[data-ship] { outline: 2px solid #9b8ec4; }
-.voyage-open { margin: 6px 0; font-weight: 700; color: #4a3a8a; }
-.voyage-themes { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-top: 8px; }
-.voyage-theme { display: grid; justify-items: center; gap: 2px; min-height: 96px; padding: 8px; border: 1px solid #d8d0ea; border-radius: 14px; background: white; font: inherit; }
-.voyage-theme:disabled { opacity: .55; }
-.voyage-theme[data-made] { background: #eef8ee; opacity: .85; }
-.voyage-theme small { font-size: 11px; color: #6a6280; }
+.voyage-stars li[data-finale] { outline: 2px dashed #d0a020; }
+.voyage-stars li i { position: absolute; bottom: -3px; left: 50%; transform: translateX(-50%); display: flex; gap: 1px; }
+.voyage-stars b, .voyage-legend b { display: inline-block; width: 6px; height: 6px; border-radius: 50%; border: 1px solid #fff; }
+.voyage-legend { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 10px 0 0; font-size: 11px; color: #5a5470; }
+.voyage-legend span { display: inline-flex; align-items: center; gap: 4px; }
+.voyage-legend b { width: 9px; height: 9px; }
+.voyage-chart [data-subject='math'] { background: #ff8a3d; }
+.voyage-chart [data-subject='vocab'] { background: #3d8bff; }
+.voyage-chart [data-subject='kokugo'] { background: #2fa866; }
