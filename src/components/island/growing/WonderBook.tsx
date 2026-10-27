@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { DISCOVERIES, type DiscoveryGroup } from '../../../domain/growingIsland/discoveries';
-import { FINALE_LEVEL, finaleLit, freeSlots, ROUTE_LEVELS, SPECIES, THEME_INFO, THEMES, type SpeciesId } from '../../../domain/growingIsland/journey';
+import { FINALE_LEVEL, finaleLit, GIFT_NAME, freeSlots, ROUTE_LEVELS, SPECIES, THEME_INFO, THEMES, type SpeciesId } from '../../../domain/growingIsland/journey';
 import { mechanismProgress } from '../../../domain/growingIsland/mechanisms';
 import { achievementCatalog, starterStep } from '../../../domain/growingIsland/guidance';
 import { FLOWER_COLORS, type GrowingState } from '../../../domain/growingIsland';
@@ -79,7 +79,7 @@ export function WonderBook({ state, onClose, onAdopt, onChart, busy }: { state: 
                 return <div key={theme} className="growing-card growing-flower-card" data-known={made ? 'true' : undefined}>
                     <span className="growing-flower-dot growing-wonder-dot" aria-hidden="true" style={{ background: done ? '#ffd23f' : made ? '#b8a3dc' : '#e8e2d6' }}>{done ? '★' : made ? '◎' : '?'}</span>
                     <strong>{made ? THEME_INFO[theme].name : 'まだ'}</strong>
-                    <small>{done ? 'しかけが そろったよ' : made ? THEME_INFO[theme].hint : THEME_INFO[theme].mood}</small>
+                    <small>{done ? `しかけが そろったよ。とくさんの「${GIFT_NAME[theme]}」が ほかの しまに とどいているよ` : made ? THEME_INFO[theme].hint : THEME_INFO[theme].mood}</small>
                 </div>;
             })}</div>
             <Entries state={state} groups={['island']} mark="#ffd23f" />

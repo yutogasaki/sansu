@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Cloud, Cog, Droplets, Flower2, House, Leaf, Sailboat, Shell, Star, Trees, Waves, X } from 'lucide-react';
 import { listVoyageIslands } from '../../../domain/growingIsland/repository';
 import { FIRST_ISLAND, ISLAND_STARTS, isTheme, type IslandStart } from '../../../domain/growingIsland/voyages';
-import { finaleLit, ROUTE_LEVELS, starsLit, starSubjects, slotForTheme, THEME_INFO, THEMES, freeSlots, type ThemeId } from '../../../domain/growingIsland/journey';
+import { finaleLit, HOME_PLACE, ISLAND_PLACE, ROUTE_LEVELS, waitingFor, starsLit, starSubjects, slotForTheme, THEME_INFO, THEMES, freeSlots, type ThemeId } from '../../../domain/growingIsland/journey';
 import type { GrowingState } from '../../../domain/growingIsland';
 import './voyageChart.css';
 
@@ -13,26 +13,10 @@ const icons: Record<IslandStart, typeof Flower2> = { garden: Flower2, grove: Tre
     shiokaze: Shell, kodama: Trees, hikari: Droplets, watagumo: Cloud, karakuri: Cog, hoshi: Star };
 const startName = (start: IslandStart) => isTheme(start) ? THEME_INFO[start].name : ISLAND_STARTS[start].name;
 
-/**
- * Where each island always sits on the chart (island-journey.md §3.2), in % of the map: the home
- * island in the middle, each special island by its nature, not by the order it is chosen.
- */
-const HOME: [number, number] = [50, 52];
-const PLACE: Record<ThemeId, [number, number]> = {
-    shiokaze: [50, 87], kodama: [18, 60], hikari: [82, 60], watagumo: [22, 28], karakuri: [78, 29], hoshi: [50, 10],
-};
+const HOME = HOME_PLACE as [number, number], PLACE = ISLAND_PLACE as Record<ThemeId, [number, number]>;
 /** Islands made before the special islands (花・森・水辺) sit around home as small isles. */
 const NEAR: [number, number][] = [[31, 70], [69, 70], [32, 40], [68, 40]];
 const SUBJECT_NAME = { math: 'さんすう', vocab: 'えいたんご', kokugo: 'こくご' } as const;
-
-/** What still has to happen before a special island can be chosen: the very next condition only. */
-function waitingFor(state: GrowingState, theme: ThemeId) {
-    const opened = state.journey?.routes.length ?? 0;
-    if (theme === 'shiokaze' || !opened) return 'なかまを むかえると';
-    if (freeSlots(state).includes(0)) return 'しおかぜの小島の あとで';
-    const next = ROUTE_LEVELS[opened - 1];
-    return next ? `Lv${next}の ⛵で` : 'つぎの ⛵で';
-}
 
 export function SeaMap({ state, islands, locked, onSail, onChoose }: { state: GrowingState; islands: Island[]; locked: boolean;
     onSail: (id: string) => void; onChoose: (theme: ThemeId) => void }) {

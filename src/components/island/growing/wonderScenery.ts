@@ -4,7 +4,7 @@ import { landCells } from '../../../domain/growingIsland/space';
 import { TERRAIN_SEA_LEVEL } from '../../../domain/growingIsland/editableTerrainWorld';
 import { boatCell, floatingIsle, shipCove, waterfalls } from '../../../domain/growingIsland/discoveries';
 import { moonPhase } from '../../../domain/growingIsland/sky';
-import { finaleLit, type ThemeId } from '../../../domain/growingIsland/journey';
+import { finaleLit, islandGifts, type ThemeId } from '../../../domain/growingIsland/journey';
 import { constellations, echoGroves, gearChain, lightFlows, mechanismProgress, tideLevel, windAngle } from '../../../domain/growingIsland/mechanisms';
 
 /** A toothed gear wheel, flat in its own XY plane (ぜんまい島). */
@@ -344,6 +344,63 @@ export class WonderScenery {
         });
     }
 
+    /**
+     * とくさん (island-journey.md §3.5): what each completed special island sends to every other
+     * island. Scenery only: shells on the shore, bells on grown trees, glinting water, fluff on the
+     * wind, little water wheels on channels, and stars over the lights.
+     */
+    private gifts(state: GrowingState, layout: SceneLayout) {
+        const from = islandGifts(state), sprite = glow();
+        if (!from.length) return;
+        const land = landCells(state), own = new Set(land.map(c => `${c.x},${c.z}`));
+        const edge = land.filter(c => [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dz]) => !own.has(`${c.x + dx},${c.z + dz}`)));
+        const seeded = (i: number) => { const x = Math.sin(i * 78.233 + 1.7) * 43758.5453; return x - Math.floor(x); };
+        const add = <O extends T.Object3D>(object: O, name: string) => { object.name = name; this.root.add(object); return object; };
+        for (const theme of from) {
+            if (theme === 'shiokaze') edge.filter((_, i) => i % 2 === 0).slice(0, 12).forEach((cell, i) => {
+                const shell = add(new T.Mesh(new T.ConeGeometry(.05, .09, 7), basic(i % 2 ? '#fbe3ec' : '#fff7ea')), 'gift-shell');
+                shell.position.copy(layout.point({ x: cell.x + (seeded(i) - .5) * .6, z: cell.z + (seeded(i + 5) - .5) * .6 }, .04)); shell.rotation.set(0, seeded(i) * 6, Math.PI / 2);
+            });
+            if (theme === 'kodama') state.landmarks.filter(l => l.cell && l.kind === 'sapling' && l.maturedAt !== undefined).slice(0, 12).forEach((tree, t) => {
+                for (let k = 0; k < 3; k++) {
+                    const bell = add(new T.Mesh(new T.SphereGeometry(.06, 10, 8), new T.MeshStandardMaterial({ color: '#f2c230', emissive: '#8a6a00', emissiveIntensity: .5, metalness: .4, roughness: .3 })), 'gift-bell');
+                    bell.position.copy(layout.point(tree.cell!, 1.25 + k * .12)).add(new T.Vector3(Math.cos(k * 2.1 + t) * .32, 0, Math.sin(k * 2.1 + t) * .32));
+                    const base = bell.position.y; this.ambience.push((now, _n, reduced) => { if (!reduced) bell.position.y = base + Math.sin(now / 600 + k + t) * .02; });
+                }
+            });
+            if (theme === 'hikari' && sprite) {
+                const water = [...dugWater(state), ...state.landmarks.filter(l => l.cell && (l.kind === 'water-channel' || l.kind === 'water-bowl' || l.kind === 'fountain')).map(l => l.cell!)];
+                const at = water.map((cell, i) => layout.point({ x: cell.x + (seeded(i) - .5) * .5, z: cell.z + (seeded(i + 3) - .5) * .5 }, .1));
+                if (at.length) {
+                    const glints = add(new T.Points(new T.BufferGeometry().setFromPoints(at), new T.PointsMaterial({ map: sprite, color: '#bff8ff', size: 16, sizeAttenuation: false, transparent: true, depthWrite: false, blending: T.AdditiveBlending })), 'gift-glints');
+                    this.ambience.push((now, _n, reduced) => { (glints.material as T.PointsMaterial).opacity = reduced ? .6 : .4 + Math.max(0, Math.sin(now / 450)) * .5; });
+                }
+            }
+            if (theme === 'watagumo' && sprite) {
+                const base = land.filter((_, i) => i % 3 === 1).slice(0, 12).map(cell => layout.point(cell, .2));
+                if (base.length) {
+                    const fluff = add(new T.Points(new T.BufferGeometry().setFromPoints(base.map(p => p.clone())), new T.PointsMaterial({ map: sprite, color: '#ffffff', size: 9, sizeAttenuation: false, transparent: true, depthWrite: false })), 'gift-fluff');
+                    this.ambience.push((now, _n, reduced) => {
+                        if (reduced) return;
+                        const position = fluff.geometry.getAttribute('position') as T.BufferAttribute, wind = windAngle(state, Date.now());
+                        base.forEach((p, i) => { const rise = (now / 5600 + seeded(i)) % 1; position.setXYZ(i, p.x + Math.cos(wind) * rise * 1.4, p.y + rise * 1.8, p.z + Math.sin(wind) * rise * 1.4); });
+                        position.needsUpdate = true;
+                    });
+                }
+            }
+            if (theme === 'karakuri') state.landmarks.filter(l => l.cell && l.kind === 'water-channel').slice(0, 10).forEach((channel, i) => {
+                const wheel = gear(.16, .05, i % 2 ? '#c9a24a' : '#9aa3a8', 8); wheel.position.copy(layout.point(channel.cell!, .22)).add(new T.Vector3(.36, 0, 0));
+                wheel.rotation.y = Math.PI / 2; add(wheel, 'gift-wheel');
+                this.ambience.push((now, _n, reduced) => { if (!reduced) wheel.rotation.x = now / 700; });
+            });
+            if (theme === 'hoshi') state.landmarks.filter(l => l.cell && (l.kind === 'lantern' || l.kind === 'lighthouse')).slice(0, 10).forEach((light, i) => {
+                const star = add(new T.Mesh(new T.OctahedronGeometry(.08), new T.MeshStandardMaterial({ color: '#fff3b0', emissive: '#ffd860', emissiveIntensity: .9, flatShading: true })), 'gift-star');
+                star.scale.set(1, 1.6, 1); star.position.copy(layout.point(light.cell!, light.kind === 'lighthouse' ? 2.1 : 1.3));
+                const base = star.position.y; this.ambience.push((now, _n, reduced) => { if (!reduced) { star.rotation.y = now / 900 + i; star.position.y = base + Math.sin(now / 800 + i) * .05; } });
+            });
+        }
+    }
+
     /** The island's own plants in place of the home meadow's tufts, on open land only. */
     private flora(state: GrowingState, layout: SceneLayout, seeded: (i: number) => number) {
         const taken = new Set([...state.plots, ...state.landmarks, ...state.keepsakes].filter(o => o.cell).map(o => `${o.cell!.x},${o.cell!.z}`));
@@ -399,6 +456,7 @@ export class WonderScenery {
             }
         }
         if (state.theme) { this.themeAmbience(state, layout); this.mechanism(state, layout); }
+        this.gifts(state, layout);
         // Fireflies over bloomed flowers and wild plants; ふしぎの品 glow warmly at night.
         const sprite = glow();
         const blooms = [...state.landmarks.filter(l => l.cell && l.kind === 'flower' && l.growth >= BLOOM_HOURS).map(l => l.cell!),

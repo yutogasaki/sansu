@@ -106,6 +106,40 @@ export const starsLit = (state: GrowingState) => Math.max(0, ...Object.values(st
 /** Which subjects confirmed a star (island-journey.md §3.3): only colour, never another route. */
 export const starSubjects = (state: GrowingState, level: number) =>
     (['math', 'vocab', 'kokugo'] as const).filter(subject => (state.journey?.levels?.[subject] ?? 0) >= level);
+/**
+ * Where each island always sits in the archipelago (island-journey.md §3.2), in % of the chart:
+ * home in the middle, each special island by its nature. The chart and the scene share it.
+ */
+export const HOME_PLACE: readonly [number, number] = [50, 52];
+export const ISLAND_PLACE: Record<ThemeId, readonly [number, number]> = {
+    shiokaze: [50, 87], kodama: [18, 60], hikari: [82, 60], watagumo: [22, 28], karakuri: [78, 29], hoshi: [50, 10],
+};
+export type IslandKey = ThemeId | 'home';
+export type NeighborMode = 'made' | 'open' | 'fog';
+/** The islands seen from here (§3.4): home sees all six; a special island sees home and the others. */
+export function neighbors(state: GrowingState, here: IslandKey): { key: IslandKey; mode: NeighborMode; islandId?: string }[] {
+    const others: IslandKey[] = here === 'home' ? [...THEMES] : ['home', ...THEMES.filter(theme => theme !== here)];
+    return others.map(key => {
+        if (key === 'home') return { key, mode: 'made' };
+        const chosen = state.journey?.chosen.find(choice => choice.theme === key);
+        return chosen ? { key, mode: 'made', islandId: chosen.islandId } : { key, mode: slotForTheme(state, key) !== undefined ? 'open' : 'fog' };
+    });
+}
+/** What still has to happen before a special island can be chosen: the very next condition only. */
+export function waitingFor(state: GrowingState, theme: ThemeId) {
+    const opened = state.journey?.routes.length ?? 0;
+    if (theme === 'shiokaze' || !opened) return 'なかまを むかえると';
+    if (freeSlots(state).includes(0)) return 'しおかぜの小島の あとで';
+    const next = ROUTE_LEVELS[opened - 1];
+    return next ? `Lv${next}の ⛵で` : 'つぎの ⛵で';
+}
+/** とくさん (§3.5): each special island whose play was completed sends its gift to every other island. */
+export const GIFT_NAME: Record<ThemeId, string> = {
+    shiokaze: 'はまの かいがら', kodama: 'きんの すずのみ', hikari: 'きらめく みず', watagumo: 'かぜの わたげ', karakuri: 'ちいさな すいしゃ', hoshi: 'あかりの ほし',
+};
+export const islandGifts = (state: GrowingState) =>
+    THEMES.filter(theme => theme !== state.theme && state.discoveries?.includes(`island:${theme}`));
+
 /** Lv20 in any subject: every special island's sign shines; scenery only (§3.3). */
 export const FINALE_LEVEL = 20;
 export const finaleLit = (state: GrowingState) => starsLit(state) >= FINALE_LEVEL;

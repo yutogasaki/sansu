@@ -3,7 +3,8 @@ import { terrainEditingRevision } from '../../../domain/growingIsland/terrainEdi
 import { onLand } from '../../../domain/growingIsland/space';
 import VoyageChart from './VoyageChart';
 import type { CatalogPictures } from './catalogPictures';
-import { islandIdOf } from '../../../domain/growingIsland/voyages';
+import { FIRST_ISLAND, islandIdOf, isTheme } from '../../../domain/growingIsland/voyages';
+import { THEME_INFO, waitingFor } from '../../../domain/growingIsland/journey';
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { canPlace, landQuote, styleAt, waitingSeeds } from '../../../domain/growingIsland';
 import { HOME_CELL, landBounds, landCells } from '../../../domain/growingIsland/space';
@@ -654,6 +655,16 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         onPlaceReplyStep={(kind, index) => { if (sound && kind === 'leaves') playNote(3 + index % 5); }}
         onPlaceReply={kind => { audio.play(kind === 'water' ? 'water' : 'wood'); setLine(undefined); }}
         onSharedPlay={receipt => visit ? false : island.acknowledgePlace({ type: 'shared-play', ...receipt })}
+        place={visit ? undefined : !island.record?.islandStart ? 'home' : isTheme(island.record.islandStart) ? island.record.islandStart : undefined}
+        onNeighbor={({ key, mode, islandId }) => {
+            // ひとつの群島 (island-journey.md §3.4): cross the bridge, make an island a route opened for, or hear what it waits for.
+            clearPlayMoment(); setMenu(false); void audio.unlock();
+            if (visit || island.busy) return;
+            const name = key === 'home' ? 'はじまりのしま' : THEME_INFO[key].name;
+            if (mode === 'made') { setLine(`${name}へ わたるよ`); void island.sail(key === 'home' ? FIRST_ISLAND : islandId!); return; }
+            if (mode === 'open' && key !== 'home') { setLine(`${name}を つくりに いくよ`); void island.sail(crypto.randomUUID(), { name: THEME_INFO[key].name, start: key }); return; }
+            if (key !== 'home') setLine(`${name}は まだ きりの なか。${waitingFor(own!, key)} いけるよ`);
+        }}
         onActorTap={(id, participating) => {
             clearPlayMoment();
             setMenu(false);

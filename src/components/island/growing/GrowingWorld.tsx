@@ -1,5 +1,7 @@
 import { dugWater } from '../../../domain/growingIsland/environment';
 import { WonderScenery } from './wonderScenery';
+import { Archipelago, type NeighborHit } from './archipelago';
+import type { IslandKey } from '../../../domain/growingIsland/journey';
 import { skinTheme, toneLight } from './themeSkin';
 import { TERRAIN_SEA_LEVEL } from '../../../domain/growingIsland/editableTerrainWorld';
 import { placePlay } from '../../../domain/growingIsland/placePlay';
@@ -69,6 +71,8 @@ export interface WorldHandlers {
     onConcertStarted?: (receipt: number) => void;
     onPlaceShown?: (receipt: { ruleId: DerivedPlace['ruleId']; revision: string }) => boolean | void | Promise<boolean | void>;
     onPlaceUse?: (receipt: PlaceUseReceipt) => boolean | void | Promise<boolean | void>;
+    /** ひとつの群島 (island-journey.md §3.4): a neighboring island was touched. */
+    onNeighbor?: (hit: NeighborHit) => void;
 }
 /** Pictures of the island for the card and the island's story; never uploaded anywhere. */
 export interface WorldCamera {
@@ -94,12 +98,14 @@ export interface WorldCamera {
 export interface ShownMoment { id: number; moment: Moment; cell?: Cell }
 /** `cheer` makes the waiting friend jump (a home seed was planted); `festival` celebrates a new level. */
 type Props = WorldHandlers & { terrainEditing?: boolean; terrainBrush?: boolean; terrainCell?: Cell; viewKey?: string; state: GrowingState; world?: CompiledWorld; authoredWater?: boolean; authoredCove?: boolean; authoredShoulder?: AuthoredShoulderProfile; authoredGrowthTerrain?: AuthoredGrowthTerrainCatalog; authoredWholeArt?: boolean; time: GardenTime; ghost?: Ghost; selectedId?: string; turn: number; cheer: number; festival: number;
-    hints?: readonly Cell[]; moment?: ShownMoment; show?: boolean; active?: boolean; playActive?: boolean; compact?: boolean; qualityCeiling?: number; focus?: { id: string; n: number }; concert?: { cell: Cell; n: number }; bridgeBuild?: number; onCamera?: (camera?: WorldCamera) => void };
+    hints?: readonly Cell[]; moment?: ShownMoment; show?: boolean; active?: boolean; playActive?: boolean; compact?: boolean; qualityCeiling?: number; focus?: { id: string; n: number }; concert?: { cell: Cell; n: number }; bridgeBuild?: number; onCamera?: (camera?: WorldCamera) => void;
+    /** Which island of the archipelago this is; none for older ordinary islands and visits. */
+    place?: IslandKey };
 
 const reducedMotion = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const nativeArtEnabled = import.meta.env.DEV || import.meta.env.VITE_NATIVE_GROWING_ART === 'true';
 
-export default function GrowingWorld({ terrainEditing = false, terrainBrush = false, terrainCell, viewKey, state, world: authoredWorld, authoredWater = false, authoredCove = false, authoredShoulder, authoredGrowthTerrain, authoredWholeArt = false, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, playActive = true, compact, qualityCeiling = 1.25, focus, concert, bridgeBuild, onCamera, ...handlers }: Props) {
+export default function GrowingWorld({ terrainEditing = false, terrainBrush = false, terrainCell, viewKey, state, world: authoredWorld, authoredWater = false, authoredCove = false, authoredShoulder, authoredGrowthTerrain, authoredWholeArt = false, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, playActive = true, compact, qualityCeiling = 1.25, focus, concert, bridgeBuild, onCamera, place, ...handlers }: Props) {
     const host = useRef<HTMLDivElement>(null);
     const handlerRef = useRef(handlers);
     useEffect(() => { handlerRef.current = handlers; });
@@ -109,8 +115,8 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
     const [failed, setFailed] = useState(false);
     const completedBridge = useRef<{ owner: string; request: number } | undefined>(undefined);
     const [bridgeStage, setBridgeStage] = useState<'building' | 'crossing' | 'arrived'>();
-    const latest = useRef({ state, ghost, selectedId, time, hints, show, active, playActive, bridgeBuild, terrainEditing, terrainBrush, terrainCell });
-    useEffect(() => { latest.current = { state, ghost, selectedId, time, hints, show, active, playActive, bridgeBuild, terrainEditing, terrainBrush, terrainCell }; });
+    const latest = useRef({ state, ghost, selectedId, time, hints, show, active, playActive, bridgeBuild, terrainEditing, terrainBrush, terrainCell, place });
+    useEffect(() => { latest.current = { state, ghost, selectedId, time, hints, show, active, playActive, bridgeBuild, terrainEditing, terrainBrush, terrainCell, place }; });
     useEffect(() => { if (!bridgeBuild) completedBridge.current = undefined; }, [bridgeBuild]);
     const cameraRef = useRef(onCamera);
     useEffect(() => { cameraRef.current = onCamera; });
@@ -234,6 +240,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
         let nextSplash = 0;
         const moments = new MomentEffects(world.scene); disposers.push(() => moments.dispose());
         const wonders = new WonderScenery(world.scene); disposers.push(() => wonders.dispose());
+        const archipelago = new Archipelago(world.scene); disposers.push(() => archipelago.dispose());
         wonders.chime = () => { if (latest.current.active && document.visibilityState === 'visible') handlerRef.current.onPop?.(); };
         // A special island's own light over the time of day; setting the time resets the lights, so it is laid again after.
         let theme: GrowingState['theme'], untone: (() => void) | undefined;
@@ -467,6 +474,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             unopened = new Set(next.unopened);
             world.life.sync(next, layout, layer);
             wonders.build(next, layout);
+            archipelago.build(next, layout, latest.current.place);
             skinTheme(layer.root, next.theme); skinTheme(world.house, next.theme);
             if (theme !== next.theme) { untone?.(); theme = next.theme; tone(latest.current.time); }
             species = [];
@@ -793,6 +801,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             moments.ambient(now, latest.current.time === 'night', current.landmarks.filter(l => l.cell && (l.kind === 'lantern' || l.kind === 'lighthouse')).length, camera.position.clone().setY(0), reduced);
             moments.tick(now);
             wonders.tick(now, latest.current.time === 'night', reduced, camera);
+            archipelago.tick(now, reduced);
             if (!reduced) moveSpecies(now);
             if (import.meta.env.DEV && now >= nextTelemetry && layer) node.dataset.shipScreen = JSON.stringify([layer.nextBoat.visible, ...layer.nextBoat.getWorldPosition(new T.Vector3()).project(camera).toArray().map(v => Math.round(v * 100) / 100)]);
             if (import.meta.env.DEV && now >= nextTelemetry) { const moon = wonders.root.getObjectByName('wonder-moon'); if (moon) node.dataset.wonderMoon = JSON.stringify(moon.getWorldPosition(new T.Vector3()).project(camera).toArray().map(v => Math.round(v * 100) / 100)); }
@@ -1027,6 +1036,9 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
                 else if (authoredWorld) h.onCell({ x: Number.NaN, z: Number.NaN });
                 return;
             }
+            // Another island of the archipelago: cross to it (or hear what it still waits for).
+            const neighbor = archipelago.pick(cast(event));
+            if (neighbor) { h.onNeighbor?.(neighbor); return; }
             const hits = cast(event).intersectObjects([...(layer ? [layer.root] : []), ...world.life.objects(), world.scene], true);
             // The invisible finger target of a tiny seed must never steal a visible
             // neighboring flower, bench, home, friend, or bud at an oblique angle.
