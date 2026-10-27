@@ -4,7 +4,7 @@ import { onLand } from '../../../domain/growingIsland/space';
 import VoyageChart from './VoyageChart';
 import type { CatalogPictures } from './catalogPictures';
 import { FIRST_ISLAND, islandIdOf, isTheme } from '../../../domain/growingIsland/voyages';
-import { THEME_INFO, waitingFor } from '../../../domain/growingIsland/journey';
+import { nextIsland, THEME_INFO } from '../../../domain/growingIsland/journey';
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { canPlace, landQuote, styleAt, waitingSeeds } from '../../../domain/growingIsland';
 import { HOME_CELL, landBounds, landCells } from '../../../domain/growingIsland/space';
@@ -656,14 +656,17 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         onPlaceReply={kind => { audio.play(kind === 'water' ? 'water' : 'wood'); setLine(undefined); }}
         onSharedPlay={receipt => visit ? false : island.acknowledgePlace({ type: 'shared-play', ...receipt })}
         place={visit ? undefined : !island.record?.islandStart ? 'home' : isTheme(island.record.islandStart) ? island.record.islandStart : undefined}
-        onNeighbor={({ key, mode, islandId }) => {
-            // ひとつの群島 (island-journey.md §3.4): cross the bridge, make an island a route opened for, or hear what it waits for.
+        onNeighbor={({ key, islandId, stage }) => {
+            // ひとつの群島 (island-journey.md §3.4, §3.6): cross the bridge, or the grown shoal, which names itself only on arrival.
             clearPlayMoment(); setMenu(false); void audio.unlock();
             if (visit || island.busy) return;
+            if (key === 'shoal') {
+                const theme = stage === 3 ? nextIsland(own!) : undefined;
+                if (!theme) { setLine(stage === 2 ? 'すなの みちが みえてきたよ' : 'うみの いろが すこし ちがうみたい'); return; }
+                setLine('きりの むこうへ わたってみよう'); void island.sail(crypto.randomUUID(), { name: THEME_INFO[theme].name, start: theme }); return;
+            }
             const name = key === 'home' ? 'はじまりのしま' : THEME_INFO[key].name;
-            if (mode === 'made') { setLine(`${name}へ わたるよ`); void island.sail(key === 'home' ? FIRST_ISLAND : islandId!); return; }
-            if (mode === 'open' && key !== 'home') { setLine(`${name}を つくりに いくよ`); void island.sail(crypto.randomUUID(), { name: THEME_INFO[key].name, start: key }); return; }
-            if (key !== 'home') setLine(`${name}は まだ きりの なか。${waitingFor(own!, key)} いけるよ`);
+            setLine(`${name}へ わたるよ`); void island.sail(key === 'home' ? FIRST_ISLAND : islandId!);
         }}
         onActorTap={(id, participating) => {
             clearPlayMoment();

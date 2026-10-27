@@ -1,7 +1,7 @@
 import * as T from 'three';
 import { describe, expect, it } from 'vitest';
 import { newIsland } from '../../../domain/growingIsland/island';
-import { chooseTheme, grantRoutes, islandGifts, neighbors } from '../../../domain/growingIsland/journey';
+import { islandGifts, neighbors, noteLevels, grantRoutes } from '../../../domain/growingIsland/journey';
 import type { GrowingState } from '../../../domain/growingIsland';
 import { Archipelago } from './archipelago';
 import { sceneLayout } from './sceneLayout';
@@ -9,35 +9,37 @@ import { WonderScenery } from './wonderScenery';
 
 const now = 1_800_000_000_000;
 const welcomed = (state: GrowingState) => { state.villagers.push({ ...state.pier.visitor, id: 'v1', arrivedAt: 0 } as never); state.arrivals = []; return state; };
-/** Home with the shore island made and a route open for the next one. */
+/** Home with the old shore island made, and a shoal begun by learning. */
 const journeyed = () => {
     const state = welcomed(newIsland('child', now));
-    grantRoutes(state, undefined, now); chooseTheme(state, 'shiokaze', 'shore-id');
-    grantRoutes(state, { math: 2, vocab: 0, kokugo: 0 }, now);
+    state.journey = { routes: [{ slot: 0, reason: 'first-friend', at: 0 }], chosen: [{ slot: 0, theme: 'shiokaze', islandId: 'shore-id' }], species: [] };
+    noteLevels(state, { math: 2, vocab: 0, kokugo: 0 }); grantRoutes(state, undefined, now);
     return state;
 };
 const named = (root: T.Object3D, name: string) => root.getObjectsByProperty('name', name).length;
 
-describe('one archipelago (island-journey.md §3.4)', () => {
-    it('sees every island from home, and home plus the others from a special island', () => {
+describe('one archipelago (island-journey.md §3.4, §3.6)', () => {
+    it('sees only the islands made and the growing shoal; islands still to come are not there at all', () => {
         const state = journeyed();
-        expect(neighbors(state, 'home').map(n => [n.key, n.mode])).toEqual([
-            ['shiokaze', 'made'], ['kodama', 'open'], ['hikari', 'open'], ['watagumo', 'open'], ['karakuri', 'open'], ['hoshi', 'open']]);
+        expect(neighbors(state, 'home').map(n => [n.key, n.mode, n.stage])).toEqual([['shiokaze', 'made', undefined], ['shoal', 'shoal', 1]]);
         expect(neighbors(state, 'home')[0].islandId).toBe('shore-id');
-        expect(neighbors(state, 'shiokaze').map(n => n.key)).toEqual(['home', 'kodama', 'hikari', 'watagumo', 'karakuri', 'hoshi']);
-        expect(neighbors(welcomed(newIsland('child', now)), 'home').every(n => n.mode === 'fog')).toBe(true);
+        expect(neighbors(state, 'shiokaze').map(n => n.key)).toEqual(['home', 'shoal']);
+        expect(neighbors(welcomed(newIsland('child', now)), 'home')).toEqual([]);
     });
 
-    it('joins home to made islands by bridges and to open ones by stepping stones; mist has neither', () => {
+    it('joins home to made islands by bridges; the shoal grows from a shadow to sand to a misty islet', () => {
         const state = journeyed(), scene = new T.Scene(), archipelago = new Archipelago(scene);
         archipelago.build(state, sceneLayout(state), 'home');
-        expect(archipelago.targets).toHaveLength(6);
-        expect(named(archipelago.root, 'archipelago-bridge')).toBe(1);
-        expect(named(archipelago.root, 'archipelago-stone')).toBeGreaterThan(5 * 2);
-        // From the shore island only the way home has a bridge.
-        archipelago.build(state, sceneLayout(state), 'shiokaze');
+        expect(archipelago.targets).toHaveLength(2);
         expect(named(archipelago.root, 'archipelago-bridge')).toBe(1);
         expect(named(archipelago.root, 'archipelago-stone')).toBe(0);
+        expect([named(archipelago.root, 'shoal-shadow'), named(archipelago.root, 'shoal-sand'), named(archipelago.root, 'shoal-grass')]).toEqual([1, 0, 0]);
+        state.journey!.shoal!.land = true;
+        archipelago.build(state, sceneLayout(state), 'home');
+        expect([named(archipelago.root, 'shoal-sand'), named(archipelago.root, 'shoal-grass')]).toEqual([1, 0]);
+        state.journey!.shoal!.life = true;
+        archipelago.build(state, sceneLayout(state), 'home');
+        expect([named(archipelago.root, 'shoal-sand'), named(archipelago.root, 'shoal-grass')]).toEqual([1, 1]);
         // Older ordinary islands and visits show no archipelago.
         archipelago.build(state, sceneLayout(state), undefined);
         expect(archipelago.targets).toHaveLength(0);
@@ -50,7 +52,7 @@ describe('one archipelago (island-journey.md §3.4)', () => {
         scene.updateMatrixWorld(true);
         const shore = archipelago.root.getObjectByName('archipelago-shiokaze')!, at = shore.getWorldPosition(new T.Vector3());
         const ray = new T.Raycaster(at.clone().add(new T.Vector3(0, 10, 0)), new T.Vector3(0, -1, 0));
-        expect(archipelago.pick(ray)).toEqual({ key: 'shiokaze', mode: 'made', islandId: 'shore-id' });
+        expect(archipelago.pick(ray)).toEqual({ key: 'shiokaze', mode: 'made', islandId: 'shore-id', stage: undefined });
     });
 });
 

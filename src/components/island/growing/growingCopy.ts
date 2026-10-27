@@ -53,11 +53,8 @@ const KID_LINES = { girl: ['いっしょに あそぼう！', 'みずあそび �
 
 /** Pokomoko's single line after opening town time. One reason, never blame (§11.3). */
 export function revealLine(state: GrowingState, events: TownEvent[]) {
-    // A route slot from learning (island-journey.md §3) comes first: it is the news of the day.
-    const routes = events.filter(e => e.type === 'route');
-    if (routes.length) return routes.some(e => e.type === 'route' && e.slot === 0)
-        ? 'しおかぜの小島への こうろが ひらいたよ！ メニューの「海図と ふね」から いけるよ'
-        : 'まなびで ほしが ともって、あたらしい こうろが ひらいたよ！「海図と ふね」で しまを えらべるよ';
+    // A shoal grown into an island (island-journey.md §3.6) is the news of the day, but never says which island.
+    if (events.some(e => e.type === 'route')) return 'おきの ほうで、なにかが そだったみたい';
     const species = events.find(e => e.type === 'species');
     if (species?.type === 'species') return `${ISLAND_SPECIES_NAME[species.species]}が きたよ！`;
     const keepsakes = events.filter(e => e.type === 'keepsake');

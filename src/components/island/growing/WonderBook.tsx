@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { DISCOVERIES, type DiscoveryGroup } from '../../../domain/growingIsland/discoveries';
-import { FINALE_LEVEL, finaleLit, GIFT_NAME, freeSlots, ROUTE_LEVELS, SPECIES, THEME_INFO, THEMES, type SpeciesId } from '../../../domain/growingIsland/journey';
+import { GIFT_NAME, shoalStage, SPECIES, THEME_INFO, type SpeciesId } from '../../../domain/growingIsland/journey';
 import { mechanismProgress } from '../../../domain/growingIsland/mechanisms';
 import { achievementCatalog, starterStep } from '../../../domain/growingIsland/guidance';
 import { FLOWER_COLORS, type GrowingState } from '../../../domain/growingIsland';
@@ -13,18 +13,16 @@ const PAGES: { id: Page; name: string }[] = [
     { id: 'book', name: 'ずかん' }, { id: 'firsts', name: 'はじめて・くらし' }, { id: 'learn', name: 'まなび' },
 ];
 const SUBJECTS = [['math', 'さんすう'], ['vocab', 'えいたんご'], ['kokugo', 'こくご']] as const;
-const SLOT_NAME = ['しおかぜの小島への こうろ', '2つめの こうろ', '3つめの こうろ', '4つめの こうろ', '5つめの こうろ', '6つめの こうろ'];
+/** What the sea off the newest island looks like (island-journey.md §3.6); never what it will become. */
+const SHOAL_LINE = ['', 'おきの うみの いろが、すこし ちがうみたい', 'おきに すなの みちが みえてきたよ', 'おきの きりの むこうに、なにかが そだったよ'] as const;
 
 /** The one nearest thing to look forward to (island-journey.md §5). */
 function nextJoy(state: GrowingState): { title: string; hint: string; chart?: boolean } {
     const step = starterStep(state);
     if (step === 'S1' || step === 'S2' || step === 'S3') return { title: STARTER_COPY[step].title, hint: STARTER_COPY[step].hint };
-    if (freeSlots(state).length) return { title: 'こうろが ひらいているよ', hint: '海図で、いきたい しまを えらぼう', chart: true };
+    if (shoalStage(state) === 3) return { title: SHOAL_LINE[3], hint: 'わたってみよう', chart: true };
     const progress = mechanismProgress(state);
     if (progress && !progress.done) return { title: `${THEME_INFO[progress.theme].name}の しかけ`, hint: progress.next };
-    const opened = state.journey?.routes.length ?? 0, level = ROUTE_LEVELS[opened - 1];
-    if (opened && level) return { title: `${SLOT_NAME[opened]}まで あと すこし`, hint: `どれかの きょうかで、Lv${level}の ないようを たしかめよう` };
-    if (opened === SLOT_NAME.length && !finaleLit(state)) return { title: 'しあげの ほしまで あと すこし', hint: `どれかの きょうかで、Lv${FINALE_LEVEL}の ないようを たしかめると、しまの しるしが ひかるよ` };
     return { title: 'しまを そだてよう', hint: 'おいた ものは、すこしずつ そだっていくよ' };
 }
 
@@ -51,7 +49,6 @@ export function WonderBook({ state, onClose, onAdopt, onChart, busy }: { state: 
     const [page, setPage] = useState<Page>('next');
     const found = new Set(state.discoveries ?? []), journey = state.journey, levels = journey?.levels ?? { math: 0, vocab: 0, kokugo: 0 };
     const joy = nextJoy(state), progress = mechanismProgress(state);
-    const steps = (['S1', 'S2', 'S3'] as const).filter(id => state.guidance?.starter.steps[id] || state.guidance?.starter.legacy).length;
     return <section className="growing-tray growing-wonder-book" aria-label="しまの きろく">
         <header><strong>しまの きろく</strong><button className="growing-close" onClick={onClose} aria-label="とじる">×</button></header>
         <div className="growing-record-tabs" role="tablist" aria-label="ページ">{PAGES.map(item =>
@@ -60,26 +57,22 @@ export function WonderBook({ state, onClose, onAdopt, onChart, busy }: { state: 
             <strong>{joy.title}</strong><p>{joy.hint}</p>
             {joy.chart && onChart && <button type="button" className="growing-primary" onClick={onChart}>海図を ひらく</button>}
         </div>}
-        {page === 'routes' && <div className="growing-record-routes" role="tabpanel">{SLOT_NAME.map((name, slot) => {
-            const route = journey?.routes.find(r => r.slot === slot), choice = journey?.chosen.find(c => c.slot === slot), level = ROUTE_LEVELS[slot - 1];
-            const waiting = slot > 0 && !journey?.chosen.some(c => c.slot === slot - 1);
-            return <article key={slot} className="growing-route-card" data-open={route ? true : undefined}>
-                <strong>{name}</strong>
-                {slot === 0 ? <p>おうちを おく・ひらく・なかまを むかえる（{route ? 3 : Math.min(3, steps)}/3）</p>
-                    : <p>どれか ひとつ：{SUBJECTS.map(([id, label]) => `${label} Lv${levels[id]}`).join('・')} → Lv{level}</p>}
-                {route ? <small>ひらいたよ{route.reason.includes(':') ? `（${SUBJECTS.find(([id]) => route.reason.startsWith(id))?.[1] ?? ''} Lv${route.reason.split(':')[1]}）` : ''}{choice ? `・${THEME_INFO[choice.theme].name}` : ''}</small>
-                    : <small>{waiting ? 'まえの こうろで しまを えらぶと ひらくよ' : 'まだ'}</small>}
-                {route && !choice && onChart && <button type="button" className="growing-action" onClick={onChart}>海図で えらぶ</button>}
-            </article>;
-        })}</div>}
+        {page === 'routes' && <div className="growing-record-routes" role="tabpanel">
+            {(journey?.chosen ?? []).map((choice, i) => <article key={choice.islandId} className="growing-route-card" data-open>
+                <strong>{i + 1}つめの しま</strong><small>{THEME_INFO[choice.theme].name}</small>
+            </article>)}
+            {(() => { const stage = shoalStage(state); return stage ? <article className="growing-route-card" data-shoal={stage}><strong>おきの うみ</strong><small>{SHOAL_LINE[stage]}</small></article> : null; })()}
+            {!journey?.chosen.length && !shoalStage(state) && <p className="growing-flower-note">しまを そだてていると、おきの うみが かわってくるかも</p>}
+        </div>}
         {page === 'islands' && <div className="growing-record-islands" role="tabpanel">
             {progress && <p className="growing-flower-note">いまの しま：{progress.done ? 'しかけが そろったよ' : `${progress.have}/${progress.need}・${progress.next}`}</p>}
-            <div className="growing-grid">{THEMES.map(theme => {
-                const made = journey?.chosen.some(c => c.theme === theme), done = found.has(`island:${theme}`);
-                return <div key={theme} className="growing-card growing-flower-card" data-known={made ? 'true' : undefined}>
-                    <span className="growing-flower-dot growing-wonder-dot" aria-hidden="true" style={{ background: done ? '#ffd23f' : made ? '#b8a3dc' : '#e8e2d6' }}>{done ? '★' : made ? '◎' : '?'}</span>
-                    <strong>{made ? THEME_INFO[theme].name : 'まだ'}</strong>
-                    <small>{done ? `しかけが そろったよ。とくさんの「${GIFT_NAME[theme]}」が ほかの しまに とどいているよ` : made ? THEME_INFO[theme].hint : THEME_INFO[theme].mood}</small>
+            {/* Only islands the child reached; the ones still to come stay unknown (§3.6). */}
+            <div className="growing-grid">{(journey?.chosen ?? []).map(({ theme }) => {
+                const done = found.has(`island:${theme}`);
+                return <div key={theme} className="growing-card growing-flower-card" data-known="true">
+                    <span className="growing-flower-dot growing-wonder-dot" aria-hidden="true" style={{ background: done ? '#ffd23f' : '#b8a3dc' }}>{done ? '★' : '◎'}</span>
+                    <strong>{THEME_INFO[theme].name}</strong>
+                    <small>{done ? `しかけが そろったよ。とくさんの「${GIFT_NAME[theme]}」が ほかの しまに とどいているよ` : THEME_INFO[theme].hint}</small>
                 </div>;
             })}</div>
             <Entries state={state} groups={['island']} mark="#ffd23f" />

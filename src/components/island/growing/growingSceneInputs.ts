@@ -1,3 +1,4 @@
+import { shoalStage } from '../../../domain/growingIsland/journey';
 import type { Cell, GrowingState } from '../../../domain/growingIsland/types';
 import type { Ghost } from './objectLayer';
 
@@ -19,9 +20,12 @@ function literalValue(value: unknown): unknown {
  * The literal string is compared directly, with no lossy hash or numeric digest.
  */
 export function growingSceneStateKey(state: GrowingState): string {
-    // The record book and the journey are words and choices, never drawn: they never rebuild the scene.
+    // The record book and the journey are mostly words and choices: only what the sea shows rebuilds the
+    // scene — the islands made, the shoal's step and place, and the specialties sent (island-journey.md §3.4–§3.6).
     const fields = Object.entries(state).filter(([name]) => name !== 'applied' && name !== 'placeProgress' && name !== 'experience' && name !== 'discoveries' && name !== 'journey');
-    return JSON.stringify(literalValue(fields));
+    const sea = [(state.journey?.chosen ?? []).map(choice => [choice.theme, choice.at]), shoalStage(state), state.journey?.shoal?.at,
+        (state.discoveries ?? []).filter(id => id.startsWith('island:'))];
+    return JSON.stringify(literalValue([...fields, ['sea', sea]]));
 }
 
 /** A fresh but equivalent preview object should not recreate its GPU resources. */

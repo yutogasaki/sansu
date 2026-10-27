@@ -23,6 +23,17 @@ function island() {
 }
 
 describe('GrowingWorld saved scene inputs', () => {
+    it('redraws when the sea changes (island-journey.md §3.6), not when only levels or words change', () => {
+        const state = island(), before = growingSceneStateKey(state);
+        state.journey = { routes: [], chosen: [], species: [], levels: { math: 1, vocab: 0, kokugo: 0 } };
+        expect(growingSceneStateKey(state)).toBe(before);
+        state.journey.shoal = { land: true, at: [20, 30] };
+        const shoal = growingSceneStateKey(state);
+        expect(shoal).not.toBe(before);
+        state.journey.shoal.life = true;
+        expect(growingSceneStateKey(state)).not.toBe(shoal);
+    });
+
     it('keeps the same scene key after validated shown/use receipts while saving their evidence', () => {
         const state = island(), before = structuredClone(state), sceneKey = growingSceneStateKey(state);
         const place = derivePlaces(state).find(place => place.ruleId === 'P01' && place.stage === 'grown')!;

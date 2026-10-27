@@ -73,8 +73,9 @@ describe('growing island persistence', () => {
         put.mockRestore();
         const next = await commandGrowingIsland('migrate', intent, T0 + 24 * HOUR, db);
         expect(next.record).toMatchObject({ version: 5, revision: 8, createdAt: T0 });
-        // The record book notices what the old island already had; nothing else changes.
-        expect(next.record.state).toEqual({ ...state, placeProgress: next.record.state.placeProgress, islandName: 'みなと', applied: ['rename'], surprise: { day: 1 }, discoveries: ['build:expand'] });
+        // The record book notices what the old island already had, and so does the shoal (island-journey.md §3.6): it was widened enough. Nothing else changes.
+        expect(next.record.state).toEqual({ ...state, placeProgress: next.record.state.placeProgress, islandName: 'みなと', applied: ['rename'], surprise: { day: 1 }, discoveries: ['build:expand'],
+            journey: { routes: [], chosen: [], species: [], shoal: { land: true, at: next.record.state.journey!.shoal!.at } } });
         expect(await db.moments.toArray()).toEqual(images);
         expect(await db.gifts.toArray()).toEqual(gifts);
         const again = await commandGrowingIsland('migrate', intent, T0 + 25 * HOUR, db);

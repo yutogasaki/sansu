@@ -5,10 +5,12 @@ import { applyIntent } from './commands';
 import { starterStep } from './guidance';
 import { editableTerracePlan } from './editableTerrainWorld';
 import { newIsland } from './island';
-import { adoptSpecies, chooseTheme, confirmedMathLevel, confirmedVocabLevel, passedLevel, freeSlots, grantRoutes, noteJourney, noteLevels, secondSpeciesReady, slotForTheme, THEMES } from './journey';
+import { adoptSpecies, chooseTheme, confirmedMathLevel, confirmedVocabLevel, passedLevel, grantRoutes, neighbors, nextIsland, noteJourney, noteLevels, placeOf, secondSpeciesReady, shoalStage, themesLeft, THEMES, type ThemeId } from './journey';
 import { GrowingIslandDatabase, sailGrowingIsland, type GrowingRecord } from './repository';
 import { setTerrainForm } from './terraceTerrain';
 import { carrySharedResources, makeVoyageIsland } from './voyages';
+import { THEME_INFO } from './journey';
+const THEME_INFO_FIRST = (theme: ThemeId) => THEME_INFO[theme].first;
 import { readable } from './syncProjection';
 import { confirmedKokugoLevel, unitConfirmed } from '../kokugo/levels';
 import { itemsForUnit } from '../kokugo/catalog';
@@ -47,46 +49,93 @@ describe('confirmed learning levels (read only)', () => {
     });
 });
 
-describe('route slots', () => {
-    it('slot 0 opens with the first friend; each learning slot waits for the previous island', () => {
-        const state = newIsland('child', now), levels = { math: 5, vocab: 0, kokugo: 0 };
-        expect(grantRoutes(state, levels, now)).toEqual([]);
-        welcomed(state);
-        expect(grantRoutes(state, levels, now)).toEqual([{ type: 'route', slot: 0 }]);
-        // Lv2 and Lv5 are met, but nothing more opens until slot 0 becomes an island.
-        expect(grantRoutes(state, levels, now)).toEqual([]);
-        chooseTheme(state, 'shiokaze', 'a');
-        expect(grantRoutes(state, levels, now)).toEqual([{ type: 'route', slot: 1 }]);
-        expect(grantRoutes(state, levels, now)).toEqual([]);
-        chooseTheme(state, 'kodama', 'b');
-        expect(grantRoutes(state, { math: 5, vocab: 5, kokugo: 2 }, now)).toEqual([{ type: 'route', slot: 2 }]);
-        expect(state.journey!.routes.map(route => route.reason)).toEqual(['first-friend', 'math:2', 'math:5']);
-        // Levels never close a slot, and Lv9 is not met yet.
-        chooseTheme(state, 'hoshi', 'c');
-        expect(grantRoutes(state, { math: 0, vocab: 0, kokugo: 0 }, now)).toEqual([]);
-        expect(freeSlots(state)).toEqual([]);
-    });
+const friends = (state: GrowingState, n: number) => { for (let i = 0; i < n; i++) state.villagers.push({ ...state.pier.visitor, id: `f${i}`, arrivedAt: 0 } as never); state.arrivals = []; return state; };
+const widened = (state: GrowingState) => { state.land.expanded = 'west'; state.land.extra = ['east', 'south']; return state; };
+const grove = (state: GrowingState, n = 3) => { for (let i = 0; i < n; i++) state.landmarks.push({ id: `t${i}`, kind: 'sapling', cell: { x: i, z: 4 }, growth: 99 }); return state; };
+const grown = (state: GrowingState) => grove(widened(friends(state, 5)));
 
-    it('a child who started high gets the routes one island at a time, from the kept levels', () => {
+describe('the shoal and the next island (island-journey.md §3.6)', () => {
+    it('grows one step for each of learning, land and life, and becomes an island only with all three', () => {
         const state = welcomed(newIsland('child', now));
-        grantRoutes(state, undefined, now); noteLevels(state, { math: 13, vocab: 0, kokugo: 0 });
-        expect(freeSlots(state)).toEqual([0]);
-        for (const [theme, slot] of [['shiokaze', 1], ['kodama', 2], ['hikari', 3], ['watagumo', 4]] as const) {
-            chooseTheme(state, theme, theme);
-            expect(grantRoutes(state, undefined, now)).toEqual([{ type: 'route', slot }]);
-        }
-        chooseTheme(state, 'karakuri', 'k');
+        // The first friend no longer opens a route.
         expect(grantRoutes(state, undefined, now)).toEqual([]);
-        expect(state.discoveries).toContain('learn:math:13');
+        expect(shoalStage(state)).toBe(0);
+        expect(grantRoutes(state, { math: 2, vocab: 0, kokugo: 0 }, now)).toEqual([]);
+        noteLevels(state, { math: 2, vocab: 0, kokugo: 0 });
+        expect(shoalStage(state)).toBe(1);
+        expect(state.journey!.shoal!.at).toBeDefined();
+        widened(state);
+        expect(grantRoutes(state, undefined, now)).toEqual([]);
+        expect(shoalStage(state)).toBe(2);
+        friends(grove(state), 5);
+        expect(grantRoutes(state, undefined, now)).toEqual([{ type: 'route', slot: 1 }]);
+        expect(shoalStage(state)).toBe(3);
+        expect(state.journey!.routes.map(route => route.reason)).toEqual(['math:2']);
+        expect(nextIsland(state)).not.toBe('shiokaze');
+        expect(grantRoutes(state, undefined, now)).toEqual([]);
     });
 
-    it('a theme takes one free slot and is chosen once', () => {
-        const state = welcomed(newIsland('child', now));
+    it('counts land and life only on the newest island, and keeps them once met', () => {
+        const state = grown(welcomed(newIsland('child', now)));
+        noteLevels(state, { math: 13, vocab: 0, kokugo: 0 });
         grantRoutes(state, undefined, now);
-        expect(slotForTheme(state, 'kodama')).toBeUndefined();
-        expect(chooseTheme(state, 'shiokaze', 'a')).toBe(0);
-        expect(() => chooseTheme(state, 'shiokaze', 'b')).toThrow();
-        expect(() => chooseTheme(state, 'kodama', 'd')).toThrow();
+        const first = nextIsland(state)!;
+        chooseTheme(state, first, 'one');
+        expect(state.journey!.shoal).toBeUndefined();
+        // Home is big and lively, but the newest island is now the special one: only learning counts here.
+        grantRoutes(state, undefined, now);
+        expect(shoalStage(state)).toBe(1);
+        const there = { ...structuredClone(state), theme: first, land: { extra: [], capes: [] }, villagers: [], landmarks: [] } as GrowingState;
+        grantRoutes(widened(there), undefined, now);
+        expect(shoalStage(there)).toBe(2);
+        there.land = { extra: [], capes: [] };
+        grantRoutes(there, undefined, now);
+        expect(shoalStage(there)).toBe(2);
+    });
+
+    it('becomes the island the newest island grew toward; ties follow the child\'s own order', () => {
+        const trees = grown(welcomed(newIsland('child', now)));
+        grove(trees, 8);
+        noteLevels(trees, { math: 2, vocab: 0, kokugo: 0 });
+        grantRoutes(trees, undefined, now);
+        expect(nextIsland(trees)).toBe('kodama');
+        const picks = new Set(['a', 'b', 'c', 'd', 'e', 'f'].map(seed => {
+            const state = welcomed(newIsland(seed, now)); state.seed = seed;
+            state.journey = { routes: [{ slot: 1, reason: 'math:2', at: now }], chosen: [], species: [] };
+            return nextIsland(state);
+        }));
+        expect(picks.size).toBeGreaterThan(1);
+    });
+
+    it('turns an old open slot into a ready shoal, never brings the shiokaze island, and brings five at most', () => {
+        const state = welcomed(newIsland('child', now));
+        state.journey = { routes: [{ slot: 0, reason: 'first-friend', at: now }], chosen: [], species: [] };
+        expect(shoalStage(state)).toBe(3);
+        expect(() => chooseTheme(state, 'shiokaze', 'x')).toThrow();
+        const made: ThemeId[] = [];
+        noteLevels(state, { math: 20, vocab: 0, kokugo: 0 });
+        for (let i = 0; i < 5; i++) {
+            const theme = nextIsland(state) ?? (grantRoutes(grown(state), undefined, now), nextIsland(state))!;
+            chooseTheme(state, theme, `i${i}`); made.push(theme);
+            state.theme = theme; state.land = { extra: [], capes: [] }; state.villagers = []; state.landmarks = [];
+        }
+        expect(new Set(made).size).toBe(5);
+        expect(made).not.toContain('shiokaze');
+        expect(themesLeft(state)).toEqual([]);
+        expect(shoalStage(state)).toBeUndefined();
+        // Wherever the shoals grew, the islands never sit on each other.
+        const places = [placeOf(state, 'home'), ...made.map(theme => placeOf(state, theme))];
+        for (const [i, a] of places.entries()) for (const b of places.slice(i + 1)) expect(Math.hypot(a[0] - b[0], a[1] - b[1])).toBeGreaterThan(14);
+        expect(neighbors(state, 'home').map(n => n.key)).toEqual(made);
+    });
+
+    it('keeps an island made before: the shiokaze island stays, in its old place', () => {
+        const state = welcomed(newIsland('child', now));
+        state.journey = { routes: [{ slot: 0, reason: 'first-friend', at: now }], chosen: [{ slot: 0, theme: 'shiokaze', islandId: 'sea' }], species: [] };
+        expect(placeOf(state, 'shiokaze')).toEqual([50, 87]);
+        expect(neighbors(state, 'home').map(n => [n.key, n.mode])).toEqual([['shiokaze', 'made']]);
+        noteLevels(state, { math: 2, vocab: 0, kokugo: 0 });
+        expect(shoalStage(state)).toBe(1);
     });
 });
 
@@ -140,17 +189,22 @@ describe('special islands and their species', () => {
         expect(other.state.journey!.species).toEqual(['shell-flower']);
     });
 
-    it('sailing to a special island needs an open slot and spends it once', async () => {
+    it('sailing to a special island needs the ready shoal, and only as the island it became', async () => {
         const db = new GrowingIslandDatabase(`journey-${crypto.randomUUID()}`); dbs.push(db);
-        const state = welcomed(newIsland('child', now));
+        const state = grown(welcomed(newIsland('child', now)));
         await db.islands.put(record(state));
         await expect(sailGrowingIsland('child', 'main', { id: 'forest', create: { name: 'もり', start: 'kodama' } }, now, db)).rejects.toThrow();
-        const shiokaze = await sailGrowingIsland('child', 'main', { id: 'sea', create: { name: 'しおかぜ', start: 'shiokaze' } }, now, db);
-        expect(shiokaze.state.journey!.chosen).toEqual([{ slot: 0, theme: 'shiokaze', islandId: 'sea' }]);
-        expect(shiokaze.state.theme).toBe('shiokaze');
-        const back = await sailGrowingIsland('child', 'sea', { id: 'main' }, now, db);
+        noteLevels(state, { math: 2, vocab: 0, kokugo: 0 }); grantRoutes(state, undefined, now);
+        await db.islands.put(record(state));
+        const theme = nextIsland(state)!, other = THEMES.find(t => t !== theme && t !== 'shiokaze')!;
+        await expect(sailGrowingIsland('child', 'main', { id: 'wrong', create: { name: 'x', start: other } }, now, db)).rejects.toThrow();
+        const there = await sailGrowingIsland('child', 'main', { id: 'new', create: { name: 'x', start: theme } }, now, db);
+        expect(there.state.journey!.chosen).toEqual([{ slot: 1, theme, islandId: 'new', at: state.journey!.shoal!.at }]);
+        expect(there.state.journey!.here).toBe('new');
+        expect(there.state.theme).toBe(theme);
+        const back = await sailGrowingIsland('child', 'new', { id: 'main' }, now, db);
         expect(back.state.journey!.chosen).toHaveLength(1);
-        expect(back.state.journey!.species).toEqual(['shell-flower']);
-        expect(back.state.discoveries).toContain('species:shell-flower');
+        expect(back.state.journey!.here).toBe('main');
+        expect(back.state.journey!.species).toEqual([THEME_INFO_FIRST(theme)]);
     });
 });

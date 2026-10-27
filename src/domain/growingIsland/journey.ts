@@ -1,12 +1,15 @@
 import { discover } from './discoveries';
+import { islandScores, TREE_MATURE_HOURS } from './environment';
 import { mechanismProgress } from './mechanisms';
+import { roll } from './random';
 import { HOME_CELL, distance, isVacant, landCells } from './space';
 import type { Cell, GrowingState, TownEvent } from './types';
 
 /**
- * 島の航路と まなびの節目 (island-journey.md): route slots open from the first friend and from
- * learning levels the child confirmed; each slot becomes a themed island the child chooses and
- * grows. Its own species come by arranging the island, never by searching or by luck.
+ * 島の航路と まなびの節目 (island-journey.md): once the newest island has grown well and the
+ * child confirmed the next learning level, a shoal off its shore becomes the next special island
+ * (§3.6). Which island it becomes follows how the island grew, and is not told before arrival.
+ * Its own species come by arranging the island, never by searching or by luck.
  */
 export const THEMES = ['shiokaze', 'kodama', 'hikari', 'watagumo', 'karakuri', 'hoshi'] as const;
 export type ThemeId = typeof THEMES[number];
@@ -54,16 +57,33 @@ export const confirmedMathLevel = (passed: number) => MATH_LEVEL_ENDS.filter(end
 /** Words: the shared Lv is the word level itself. */
 export const confirmedVocabLevel = (passed: number) => Math.max(0, Math.min(20, passed | 0));
 
+/** A place in the archipelago, in % of the chart's first frame; it may lie outside it as islands grow. */
+export type Place = readonly [number, number];
+/** The shoal growing off the newest island (§3.6). */
+export interface Shoal {
+    at?: Place;
+    /** The newest island was widened enough / became lively enough while the child was on it; kept once met. */
+    land?: true;
+    life?: true;
+    /** Which island its growth leans to, read on the newest island; and the island once the shoal is ready. */
+    leaning?: ThemeId;
+    theme?: ThemeId;
+}
 export interface Journey {
     /** The highest confirmed Lv seen per subject, for the chart's stars; never goes down. */
     levels?: ConfirmedLevels;
-    /** Slot 0 opens with the first friend; slots 1–5 with a confirmed Lv2/5/9/13/17 in any subject. */
+    /** Opened slots. Slot 0 (the old first-friend route) is only ever an old one; slots 1–5 open with the shoal. */
     routes: { slot: number; reason: string; at: number }[];
-    chosen: { slot: number; theme: ThemeId; islandId: string }[];
+    chosen: { slot: number; theme: ThemeId; islandId: string; at?: Place }[];
     species: SpeciesId[];
+    shoal?: Shoal;
+    /** The island this state is, set when sailing; absent means the home island. */
+    here?: string;
 }
 const journeyOf = (state: GrowingState): Journey => state.journey ??= { routes: [], chosen: [], species: [] };
-const welcomed = (state: GrowingState) => state.villagers.some(v => !state.arrivals.includes(v.id));
+const HOME_ISLAND = 'main';
+/** §3.6 initial values, tuned by play: the newest island widened 3 times, 5 friends and 3 grown trees. */
+export const SHOAL_NEEDS = { landSteps: 3, friends: 5, grownTrees: 3 } as const;
 
 function openRoute(state: GrowingState, slot: number, reason: string, at: number, events: TownEvent[]) {
     const journey = journeyOf(state);
@@ -73,24 +93,70 @@ function openRoute(state: GrowingState, slot: number, reason: string, at: number
     events.push({ type: 'route', slot });
 }
 
+/** Special islands made since the shiokaze island stopped coming; each needs the next learning milestone. */
+const specialsMade = (state: GrowingState) => (state.journey?.chosen ?? []).filter(choice => choice.theme !== 'shiokaze').length;
+/** The island the shoal grows beside: the newest special island, or home. */
+export function frontier(state: GrowingState): IslandKey {
+    const chosen = state.journey?.chosen ?? [];
+    return chosen[chosen.length - 1]?.theme ?? 'home';
+}
+function onFrontier(state: GrowingState) {
+    const newest = frontier(state);
+    return newest === 'home' ? !state.theme && (state.journey?.here ?? HOME_ISLAND) === HOME_ISLAND : state.theme === newest;
+}
+function learnedFor(state: GrowingState, known = state.journey?.levels) {
+    const level = ROUTE_LEVELS[specialsMade(state)], subject = level && known && (['math', 'vocab', 'kokugo'] as const).find(name => (known[name] ?? 0) >= level);
+    return subject ? `${subject}:${level}` : undefined;
+}
+const landSteps = (state: GrowingState) =>
+    (state.land.expanded ? 1 : 0) + state.land.extra.length + state.land.capes.length + (state.land.districts?.length ?? 0);
+const lively = (state: GrowingState) =>
+    state.villagers.filter(v => !state.arrivals.includes(v.id)).length >= SHOAL_NEEDS.friends
+    && state.landmarks.filter(l => l.kind === 'sapling' && l.cell && l.growth >= TREE_MATURE_HOURS).length >= SHOAL_NEEDS.grownTrees;
+
 /**
- * Route slots from what really happened; a slot never closes and never opens twice. A
- * learning slot opens only once the previous slot became an island, so one opens at a time
- * even for a child who started high (island-journey.md §3); the right to it is kept.
+ * How far the shoal has grown (§3.6): 0 nothing yet, then one step for each of learning, land
+ * and life, in any order; 3 is an island the child can cross to. Undefined once every island came.
+ */
+export function shoalStage(state: GrowingState): 0 | 1 | 2 | 3 | undefined {
+    if (!themesLeft(state).length) return undefined;
+    if (freeSlots(state).length) return 3;
+    const shoal = state.journey?.shoal;
+    return ((learnedFor(state) ? 1 : 0) + (shoal?.land ? 1 : 0) + (shoal?.life ? 1 : 0)) as 0 | 1 | 2;
+}
+
+/** What each island's growth leans to; flowers and raised ground lift the cloud highland. */
+function leaningOf(state: GrowingState): ThemeId {
+    const scores = islandScores(state), raised = Object.values(state.terrain?.heights ?? {}).filter(h => typeof h === 'number' && h >= 1).length;
+    const weight: Record<ThemeId, number> = { shiokaze: 0, kodama: scores.tree, hikari: scores.water, hoshi: scores.light, karakuri: scores.farm, watagumo: scores.flower + raised };
+    return byLeaning(state, weight);
+}
+/** The strongest of the islands still to come; ties fall to an order of the child's own island, never to learning. */
+function byLeaning(state: GrowingState, weight?: Record<ThemeId, number>) {
+    const left = themesLeft(state), made = specialsMade(state);
+    return [...left].sort((a, b) => (weight ? weight[b] - weight[a] : 0) || roll(state.seed, 'shoal', a, made) - roll(state.seed, 'shoal', b, made))[0];
+}
+
+/**
+ * Notice the shoal growing (§3.6). Learning counts wherever the child is; land and life only
+ * on the newest island, and once met they stay. A slot opens when all three are there.
  */
 export function grantRoutes(state: GrowingState, levels: ConfirmedLevels | undefined, at: number): TownEvent[] {
     const events: TownEvent[] = [];
-    if (welcomed(state)) openRoute(state, 0, 'first-friend', at, events);
-    const known = levels ?? state.journey?.levels;
-    if (known) for (const [index, level] of ROUTE_LEVELS.entries()) {
-        const slot = index + 1, journey = state.journey;
-        if (journey?.routes.some(route => route.slot === slot)) continue;
-        if (!journey?.chosen.some(choice => choice.slot === slot - 1)) break;
-        const subject = (['math', 'vocab', 'kokugo'] as const).find(name => (known[name] ?? 0) >= level);
-        if (!subject) break;
-        openRoute(state, slot, `${subject}:${level}`, at, events);
-        break;
-    }
+    if (!themesLeft(state).length) return events;
+    const here = onFrontier(state), learned = learnedFor(state, levels ?? state.journey?.levels);
+    const before = state.journey?.shoal;
+    const land = Boolean(before?.land) || (here && landSteps(state) >= SHOAL_NEEDS.landSteps);
+    const life = Boolean(before?.life) || (here && lively(state));
+    if (!freeSlots(state).length && !learned && !land && !life) return events;
+    const shoal = journeyOf(state).shoal ??= {};
+    if (land) shoal.land = true;
+    if (life) shoal.life = true;
+    // Read the island's lean only near the end, where it decides something.
+    if (here && !shoal.theme && (freeSlots(state).length || [learned, land, life].filter(Boolean).length >= 2)) shoal.leaning = leaningOf(state);
+    shoal.at ??= placeNext(state);
+    if (!freeSlots(state).length && learned && land && life) openRoute(state, specialsMade(state) + 1, learned, at, events);
+    if (freeSlots(state).length) shoal.theme ??= shoal.leaning ?? byLeaning(state);
     return events;
 }
 
@@ -107,31 +173,47 @@ export const starsLit = (state: GrowingState) => Math.max(0, ...Object.values(st
 export const starSubjects = (state: GrowingState, level: number) =>
     (['math', 'vocab', 'kokugo'] as const).filter(subject => (state.journey?.levels?.[subject] ?? 0) >= level);
 /**
- * Where each island always sits in the archipelago (island-journey.md §3.2), in % of the chart:
- * home in the middle, each special island by its nature. The chart and the scene share it.
+ * Places in the archipelago (§3.2, §3.6), in % of the chart: home in the middle. Islands made
+ * before 2026-10-28 keep their old fixed place; later ones are born where their shoal grew.
  */
-export const HOME_PLACE: readonly [number, number] = [50, 52];
-export const ISLAND_PLACE: Record<ThemeId, readonly [number, number]> = {
+export const HOME_PLACE: Place = [50, 52];
+export const LEGACY_PLACE: Record<ThemeId, Place> = {
     shiokaze: [50, 87], kodama: [18, 60], hikari: [82, 60], watagumo: [22, 28], karakuri: [78, 29], hoshi: [50, 10],
 };
 export type IslandKey = ThemeId | 'home';
-export type NeighborMode = 'made' | 'open' | 'fog';
-/** The islands seen from here (§3.4): home sees all six; a special island sees home and the others. */
-export function neighbors(state: GrowingState, here: IslandKey): { key: IslandKey; mode: NeighborMode; islandId?: string }[] {
-    const others: IslandKey[] = here === 'home' ? [...THEMES] : ['home', ...THEMES.filter(theme => theme !== here)];
-    return others.map(key => {
-        if (key === 'home') return { key, mode: 'made' };
-        const chosen = state.journey?.chosen.find(choice => choice.theme === key);
-        return chosen ? { key, mode: 'made', islandId: chosen.islandId } : { key, mode: slotForTheme(state, key) !== undefined ? 'open' : 'fog' };
-    });
+export function placeOf(state: GrowingState, key: IslandKey): Place {
+    if (key === 'home') return HOME_PLACE;
+    const choice = state.journey?.chosen.find(c => c.theme === key);
+    return choice?.at ?? LEGACY_PLACE[key];
 }
-/** What still has to happen before a special island can be chosen: the very next condition only. */
-export function waitingFor(state: GrowingState, theme: ThemeId) {
-    const opened = state.journey?.routes.length ?? 0;
-    if (theme === 'shiokaze' || !opened) return 'なかまを むかえると';
-    if (freeSlots(state).includes(0)) return 'しおかぜの小島の あとで';
-    const next = ROUTE_LEVELS[opened - 1];
-    return next ? `Lv${next}の ⛵で` : 'つぎの ⛵で';
+/**
+ * Off the newest island, toward the most open sea, so any number of islands never overlap; and
+ * in a direction from home no other island takes, so from home it never hides behind another.
+ */
+function placeNext(state: GrowingState): Place {
+    const from = placeOf(state, frontier(state)), taken = [HOME_PLACE, ...(state.journey?.chosen ?? []).map(c => placeOf(state, c.theme))];
+    const middle = taken.reduce(([x, y], p) => [x + p[0] / taken.length, y + p[1] / taken.length], [0, 0]);
+    const start = roll(state.seed, 'shoal', 'angle', specialsMade(state)) * Math.PI * 2;
+    let best: Place = from, score = -Infinity;
+    for (let i = 0; i < 16; i++) {
+        const angle = start + i / 16 * Math.PI * 2, at: Place = [from[0] + Math.cos(angle) * 26, from[1] + Math.sin(angle) * 22];
+        const room = Math.min(...taken.map(p => Math.hypot(p[0] - at[0], p[1] - at[1]))), away = Math.hypot(at[0] - middle[0], at[1] - middle[1]);
+        const bearing = Math.atan2(at[1] - HOME_PLACE[1], at[0] - HOME_PLACE[0]);
+        const gap = Math.min(Math.PI, ...taken.slice(1).map(p => Math.abs(((Math.atan2(p[1] - HOME_PLACE[1], p[0] - HOME_PLACE[0]) - bearing + Math.PI * 3) % (Math.PI * 2)) - Math.PI)));
+        const value = Math.min(room, 30) + away * .15 + Math.min(gap, Math.PI / 3) / (Math.PI / 3) * 14;
+        if (value > score + 1e-9) { score = value; best = at; }
+    }
+    return [Math.round(best[0] * 10) / 10, Math.round(best[1] * 10) / 10];
+}
+export type NeighborMode = 'made' | 'shoal';
+export interface Neighbor { key: IslandKey | 'shoal'; mode: NeighborMode; at: Place; islandId?: string; stage?: 1 | 2 | 3 }
+/** What is seen from here (§3.4, §3.6): the islands made, and a shoal once it began to grow. Nothing else. */
+export function neighbors(state: GrowingState, here: IslandKey): Neighbor[] {
+    const made: Neighbor[] = (state.journey?.chosen ?? []).map(c => ({ key: c.theme, mode: 'made' as const, at: placeOf(state, c.theme), islandId: c.islandId }));
+    const home: Neighbor = { key: 'home', mode: 'made', at: HOME_PLACE }, all = [home, ...made].filter(n => n.key !== here);
+    const stage = shoalStage(state), at = state.journey?.shoal?.at;
+    if (stage && at) all.push({ key: 'shoal', mode: 'shoal', at, stage });
+    return all;
 }
 /** とくさん (§3.5): each special island whose play was completed sends its gift to every other island. */
 export const GIFT_NAME: Record<ThemeId, string> = {
@@ -144,27 +226,28 @@ export const islandGifts = (state: GrowingState) =>
 export const FINALE_LEVEL = 20;
 export const finaleLit = (state: GrowingState) => starsLit(state) >= FINALE_LEVEL;
 
-/** Slots opened but not yet given a theme; slot 0 always means the shiokaze island. */
+/** Slots opened but not yet made into an island; an old open slot 0 counts like any other. */
 export function freeSlots(state: GrowingState) {
     const journey = state.journey; if (!journey) return [];
     return journey.routes.map(route => route.slot).filter(slot => !journey.chosen.some(choice => choice.slot === slot));
 }
+/** The special islands still to come; the shiokaze island no longer comes (§3.1), at most five. */
 export function themesLeft(state: GrowingState): ThemeId[] {
     const taken = new Set(state.journey?.chosen.map(choice => choice.theme) ?? []);
-    return THEMES.filter(theme => theme !== 'shiokaze' && !taken.has(theme));
+    return specialsMade(state) >= ROUTE_LEVELS.length ? [] : THEMES.filter(theme => theme !== 'shiokaze' && !taken.has(theme));
 }
-/** Which slot a theme would take now, or undefined if it cannot be chosen. */
-export function slotForTheme(state: GrowingState, theme: ThemeId) {
-    const free = freeSlots(state);
-    if (state.journey?.chosen.some(choice => choice.theme === theme)) return undefined;
-    if (theme === 'shiokaze') return free.includes(0) ? 0 : undefined;
-    return themesLeft(state).includes(theme) ? free.find(slot => slot > 0) : undefined;
+/** The island the ready shoal will turn out to be, decided when it became ready; not shown before arrival. */
+export function nextIsland(state: GrowingState): ThemeId | undefined {
+    if (!freeSlots(state).length || !themesLeft(state).length) return undefined;
+    return state.journey?.shoal?.theme ?? byLeaning(state);
 }
-/** Record the choice when the themed island is made. Throws if no slot is open for it. */
+/** Record the island made from the ready shoal. Throws unless the shoal is ready and it is that island. */
 export function chooseTheme(state: GrowingState, theme: ThemeId, islandId: string) {
-    const slot = slotForTheme(state, theme);
-    if (slot === undefined) throw new Error('まだ その しまへの こうろは ひらいていないよ。');
-    journeyOf(state).chosen.push({ slot, theme, islandId });
+    const slot = freeSlots(state)[0];
+    if (slot === undefined || nextIsland(state) !== theme) throw new Error('まだ その しまへは わたれないよ。');
+    const journey = journeyOf(state), at = journey.shoal?.at ?? placeNext(state);
+    journey.chosen.push({ slot, theme, islandId, at });
+    delete journey.shoal;
     return slot;
 }
 

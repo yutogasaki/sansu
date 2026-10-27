@@ -349,10 +349,12 @@ export async function sailGrowingIsland(profileId: string, expectedIslandId: str
         // A first friend already welcomed opens slot 0 even if no sync noticed it yet.
         const source = { ...current, state: structuredClone(current.state) }; grantRoutes(source.state, undefined, now);
         const record = { ...carrySharedResources(source, target), revision: current.revision + 1, updatedAt: now };
-        // A special island takes one opened route slot; the choice is the child's, once (island-journey.md §3).
+        // Which island this is, so the shoal knows whether the child stands on the newest one (island-journey.md §3.6).
+        (record.state.journey ??= { routes: [], chosen: [], species: [] }).here = destination.id;
+        // A special island takes the ready shoal's slot, and is the island the shoal turned out to be (island-journey.md §3.6).
         if (!stored && destination.create && isTheme(destination.create.start)) {
             chooseTheme(record.state, destination.create.start, destination.id);
-            // Choosing an island lets the next learning slot open from levels already confirmed.
+            // The next shoal starts off the new island.
             grantRoutes(record.state, undefined, now);
         }
         await database.archivedIslands.put({ ...current, islandId: islandIdOf(current) });
