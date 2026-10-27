@@ -241,9 +241,20 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
         const setTime = (time: typeof latest.current.time) => { untone = undefined; world.setTime(time); tone(time); };
         let species: T.Object3D[] = [];
         /** Each island species has its own small motion (island-journey.md §4). */
-        const moveSpecies = (now: number) => species.forEach((model, i) => {
+        let pickedSpecies: string | undefined;
+        const moveSpecies = (now: number) => {
+            // A touched species answers: a happy hop and a spin, once per touch.
+            const picked = latest.current.selectedId;
+            if (picked !== pickedSpecies) {
+                pickedSpecies = picked;
+                const hit = species.find(model => model.userData.objectId === picked);
+                if (hit) { hit.userData.cheerAt = now; handlerRef.current.onPop?.(); }
+            }
+            species.forEach((model, i) => moveOne(model, i, now));
+        };
+        const moveOne = (model: T.Object3D, i: number, now: number) => {
             const t = now / 1000 + i * 1.7, id = model.userData.species as string;
-            model.position.set(0, 0, 0); model.rotation.set(0, model.rotation.y, 0);
+            model.position.set(0, 0, 0); model.rotation.set(0, model.userData.yaw ??= model.rotation.y, 0);
             if (id === 'leaf-crab') { model.position.x = Math.sin(t * 1.3) * .12; model.rotation.z = Math.sin(t * 6) * .06; }
             else if (id === 'echo-bird') { const hop = (t % 2.6) / 2.6; model.position.y = hop < .2 ? Math.sin(hop / .2 * Math.PI) * .12 : 0; model.rotation.y = Math.sin(t * .8) * .8; }
             else if (id === 'fluff-sheep') { model.position.y = Math.abs(Math.sin(t * 2)) * .03; model.rotation.y = Math.sin(t * .5) * .6; }
@@ -252,7 +263,9 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             else if (id === 'balloon-flower') { model.position.y = Math.sin(t * 1.5) * .04; model.rotation.z = Math.sin(t) * .08; }
             else model.rotation.z = Math.sin(t * 1.1) * .05;
             const turn = model.getObjectByName('species-turn'); if (turn) turn.rotation.y = t * 2;
-        });
+            const since = now - (model.userData.cheerAt ?? -Infinity);
+            if (since < 900) { const k = since / 900; model.position.y += Math.sin(k * Math.PI) * .28; model.rotation.y += k * Math.PI * 2; }
+        };
         const camera = new T.OrthographicCamera(-5, 5, 5, -5, .1, 100), view = initialView();
         const savedView = viewKey ? sessionViews.get(viewKey) : undefined;
         Object.assign(view, savedView ? { ...savedView, pan: { ...savedView.pan } } : { zoom: 1.5 });

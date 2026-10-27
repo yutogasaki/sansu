@@ -18,26 +18,44 @@ export function buildSpecies(m: IslandMaterials, id: SpeciesId) {
         if (typeof material !== 'string') part.userData.ownMaterial = true;
         return part;
     };
+    // A creature's face: round eyes with a shine, and soft cheeks, so it reads as someone, not a prop.
+    const shine = new T.MeshBasicMaterial({ color: '#ffffff' });
+    const face = (y: number, z: number, spread: number, size: number, cheeks = true) => {
+        for (const side of [-1, 1]) {
+            add(new T.SphereGeometry(size, 12, 10), '#2d2a33', [side * spread, y, z]);
+            add(new T.SphereGeometry(size * .38, 8, 6), shine, [side * spread + size * .3, y + size * .35, z + size * .75]);
+            if (cheeks) add(new T.SphereGeometry(size * .9, 10, 8), '#ff9fb4', [side * (spread + size * 1.5), y - size * 1.4, z - size * .3]).scale.set(1, .55, .45);
+        }
+    };
+    /** Polka dots over a round shape (the ふしぎカラフル accent). */
+    const dots = (center: [number, number, number], radius: number, count: number, color: string, size: number, squash = 1) => {
+        for (let i = 0; i < count; i++) {
+            const y = 1 - (i + .5) / count * 1.4, r = Math.sqrt(Math.max(0, 1 - y * y)), a = i * 2.4;
+            add(new T.SphereGeometry(size, 8, 6), color, [center[0] + Math.cos(a) * r * radius, center[1] + y * radius * squash, center[2] + Math.sin(a) * r * radius]);
+        }
+    };
     const stem = (h: number, color = '#6f9a5a') => add(new T.CylinderGeometry(.018, .025, h, 6), color, [0, h / 2, 0]);
     switch (id) {
         case 'shell-flower': stem(.3);
             for (let i = 0; i < 5; i++) { const a = i / 5 * Math.PI * 2; const petal = add(new T.ConeGeometry(.06, .16, 8), '#f7c7d6', [Math.cos(a) * .08, .34, Math.sin(a) * .08]); petal.rotation.set(Math.sin(a) * .9, 0, -Math.cos(a) * .9); }
-            add(new T.SphereGeometry(.05, 10, 8), '#fff3e0', [0, .36, 0]); break;
+            add(new T.SphereGeometry(.05, 10, 8), '#fff3e0', [0, .36, 0]); dots([0, .36, 0], .05, 6, '#ff7fa8', .012); break;
         case 'leaf-crab': add(new T.SphereGeometry(.12, 12, 8), '#e58b5a', [0, .09, 0]).scale.set(1.3, .6, 1);
             { const leaf = add(new T.SphereGeometry(.16, 12, 8), '#7cbf6a', [0, .2, -.02]); leaf.scale.set(.6, .45, 1.2); leaf.rotation.x = -.3; }
-            for (const side of [-1, 1]) { add(new T.SphereGeometry(.035, 8, 6), '#e58b5a', [side * .14, .1, .12]); add(new T.SphereGeometry(.018, 6, 6), '#2d2a33', [side * .05, .17, .1]); } break;
-        case 'bell-tree': add(new T.CylinderGeometry(.035, .05, .45, 8), '#8a6146', [0, .22, 0]); add(new T.IcosahedronGeometry(.24, 0), '#86c08a', [0, .58, 0]);
+            for (const side of [-1, 1]) { add(new T.SphereGeometry(.035, 8, 6), '#e58b5a', [side * .14, .1, .12]); add(new T.CylinderGeometry(.012, .012, .08, 6), '#e58b5a', [side * .05, .15, .09]); }
+            face(.2, .1, .05, .032, false);
+            for (const side of [-1, 1]) add(new T.SphereGeometry(.03, 10, 8), '#ff9fb4', [side * .1, .1, .13]).scale.set(1, .55, .45); break;
+        case 'bell-tree': add(new T.CylinderGeometry(.035, .05, .45, 8), '#8a6146', [0, .22, 0]); add(new T.IcosahedronGeometry(.24, 0), '#86c08a', [0, .58, 0]); dots([0, .58, 0], .22, 10, '#f6ffe8', .028);
             for (let i = 0; i < 5; i++) { const a = i * 1.26; add(new T.ConeGeometry(.04, .07, 10), '#f2c230', [Math.cos(a) * .2, .44, Math.sin(a) * .2]); } break;
         case 'echo-bird': add(new T.CylinderGeometry(.02, .025, .35, 6), '#8a6146', [0, .17, 0]); add(new T.BoxGeometry(.24, .025, .03), '#8a6146', [0, .35, 0]);
             add(new T.SphereGeometry(.09, 12, 10), '#6fb2e0', [0, .45, 0]); add(new T.ConeGeometry(.025, .06, 6), '#f2c230', [0, .46, .1]).rotation.x = Math.PI / 2;
-            for (const side of [-1, 1]) add(new T.SphereGeometry(.015, 6, 6), '#2d2a33', [side * .04, .49, .08]); break;
+            face(.48, .072, .04, .022); break;
         case 'glass-weed': for (let i = 0; i < 6; i++) { const blade = add(new T.ConeGeometry(.03, .5 + (i % 3) * .1, 6), glow('#bfefff', .6), [Math.cos(i) * .08, .28, Math.sin(i) * .08]); blade.rotation.z = Math.sin(i * 2) * .25; } break;
         case 'glow-shell': { const shell = add(new T.SphereGeometry(.14, 14, 10, 0, Math.PI * 2, 0, Math.PI / 2), glow('#ffe8f6', .9), [0, .02, 0]); shell.scale.set(1.2, .7, 1); }
-            add(new T.SphereGeometry(.05, 10, 8), glow('#fff6c8', .95), [0, .1, .02]); break;
-        case 'balloon-flower': stem(.42); add(new T.SphereGeometry(.13, 16, 12), '#b9a3ec', [0, .55, 0]).scale.y = 1.15;
+            add(new T.SphereGeometry(.05, 10, 8), glow('#fff6c8', .95), [0, .1, .02]); face(.065, .15, .05, .02); break;
+        case 'balloon-flower': stem(.42); add(new T.SphereGeometry(.13, 16, 12), '#b9a3ec', [0, .55, 0]).scale.y = 1.15; dots([0, .55, 0], .13, 9, '#fff7fd', .022, 1.15);
             add(new T.ConeGeometry(.04, .06, 8), '#b9a3ec', [0, .41, 0]).rotation.x = Math.PI; break;
         case 'fluff-sheep': for (const [x, y, z, r] of [[0, .2, 0, .17], [.12, .22, .05, .12], [-.12, .22, -.03, .12], [0, .3, -.06, .12]]) add(new T.SphereGeometry(r, 12, 10), '#fbf8f2', [x, y, z]);
-            add(new T.SphereGeometry(.08, 10, 8), '#5a4c46', [0, .2, .17]);
+            add(new T.SphereGeometry(.08, 10, 8), '#f3d9c4', [0, .2, .17]); face(.22, .235, .033, .018);
             for (const x of [-.08, .08]) for (const z of [-.06, .08]) add(new T.CylinderGeometry(.02, .02, .1, 6), '#5a4c46', [x, .05, z]); break;
         case 'key-weed': { stem(.36, '#7a8a6a');
             // A wind-up key blooms at the top of a brass stem and slowly turns.
@@ -51,7 +69,8 @@ export function buildSpecies(m: IslandMaterials, id: SpeciesId) {
             const brass = new T.MeshStandardMaterial({ color: '#c9a24a', metalness: .55, roughness: .3 });
             add(new T.SphereGeometry(.12, 14, 10), brass, [0, .2, 0]); add(new T.SphereGeometry(.08, 12, 10), brass, [0, .32, .07]);
             add(new T.ConeGeometry(.025, .07, 6), '#e07a3c', [0, .32, .16]).rotation.x = Math.PI / 2;
-            for (const side of [-1, 1]) { add(new T.SphereGeometry(.018, 6, 6), '#2d2a33', [side * .035, .35, .13]); const wing = add(new T.CylinderGeometry(.07, .07, .015, 8), '#8f9aa4', [side * .12, .21, 0]); wing.rotation.z = Math.PI / 2; }
+            face(.35, .135, .035, .02);
+            for (const side of [-1, 1]) { const wing = add(new T.CylinderGeometry(.07, .07, .015, 8), '#8f9aa4', [side * .12, .21, 0]); wing.rotation.z = Math.PI / 2; }
             const key = new T.Group(); key.name = 'species-turn'; key.position.set(0, .22, -.14); root.add(key);
             for (const side of [-1, 1]) { const loop = new T.Mesh(new T.TorusGeometry(.04, .012, 6, 14), brass); loop.position.x = side * .045; key.add(loop); }
             for (const x of [-.04, .04]) add(new T.CylinderGeometry(.01, .01, .1, 4), '#5a4a3c', [x, .05, 0]); break; }
@@ -59,7 +78,7 @@ export function buildSpecies(m: IslandMaterials, id: SpeciesId) {
             for (let i = 0; i < 5; i++) { const a = i * 1.26; add(new T.OctahedronGeometry(.045), glow('#ffe27a', .95), [Math.cos(a) * .21, .5 + (i % 2) * .1, Math.sin(a) * .21]); } break;
         case 'star-jelly': { const bell = add(new T.SphereGeometry(.14, 14, 10, 0, Math.PI * 2, 0, Math.PI / 2), glow('#cfe8ff', .7), [0, .45, 0]); bell.scale.y = .8; }
             for (let i = 0; i < 5; i++) add(new T.CylinderGeometry(.008, .004, .25, 4), glow('#e6f3ff', .6), [Math.cos(i * 1.26) * .08, .32, Math.sin(i * 1.26) * .08]);
-            add(new T.OctahedronGeometry(.035), glow('#ffe27a', .95), [0, .5, 0]); break;
+            add(new T.OctahedronGeometry(.035), glow('#ffe27a', .95), [0, .5, 0]); face(.46, .122, .045, .02); break;
     }
     // Species are the stars of their island: a size larger than a keepsake, and each one moves.
     root.scale.setScalar(1.7); root.userData.species = id;

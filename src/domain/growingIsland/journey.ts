@@ -27,6 +27,12 @@ export const SPECIES_NAME: Record<SpeciesId, string> = {
     'glass-weed': 'すける みずくさ', 'glow-shell': 'ひかりがい', 'balloon-flower': 'ふうせんばな', 'fluff-sheep': 'わたげひつじ',
     'key-weed': 'ねじまきそう', 'clock-bird': 'ぜんまいどり', 'star-tree': 'ほしのみの 木', 'star-jelly': 'ほしくらげ',
 };
+/** What each species seems to say when touched: its own small personality. */
+export const SPECIES_VOICE: Record<SpeciesId, string> = {
+    'shell-flower': 'みみを すますと うみの おとが するよ', 'leaf-crab': 'はっぱの おうち、すてきでしょ', 'bell-tree': 'かぜが ふくと りんりん なるよ', 'echo-bird': 'よんだら こたえて くれるよ',
+    'glass-weed': 'ひかりが すけて きらきら ゆれるよ', 'glow-shell': 'よるに なると ぽっと ひかるよ', 'balloon-flower': 'いまにも ふわっと うきそう', 'fluff-sheep': 'もこもこで あったかいよ',
+    'key-weed': 'ねじを まくと くるくる まわるよ', 'clock-bird': 'ちくたく、いっしょに あるこう', 'star-tree': 'ほしの みが ひとつずつ ひかるよ', 'star-jelly': 'そらを ゆっくり およいでいるよ',
+};
 export const themeOfSpecies = (id: SpeciesId) => THEMES.find(theme => THEME_INFO[theme].first === id || THEME_INFO[theme].second === id)!;
 
 /** Learning levels (shared Lv1–20) whose content the child confirmed, per subject. */
