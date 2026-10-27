@@ -66,7 +66,9 @@ async function validatePrograms(renderer: T.WebGLRenderer, signal?: AbortSignal)
     requireReviewedShaderInterface(renderer);
     const gl = renderer.getContext(), parallel = gl.getExtension('KHR_parallel_shader_compile') as ParallelCompile | null;
     const programs = [...(renderer.info.programs ?? [])];
-    const deadline = performance.now() + 60000;
+    // Polling only keeps the page responsive. Some phones never report completion, so after
+    // a short wait fall through to the blocking link check below instead of waiting behind 88%.
+    const deadline = performance.now() + 8000;
     const handles = programs.map(program => {
         const handle = program.program as WebGLProgram;
         if (typeof program.getUniforms !== 'function' || !handle || !gl.isProgram(handle)) throw Error('Growing shader program interface or lifetime differs');
@@ -76,7 +78,7 @@ async function validatePrograms(renderer: T.WebGLRenderer, signal?: AbortSignal)
         signal?.throwIfAborted();
         if (gl.isContextLost()) throw Error('WebGL context lost during growing shader preparation');
         if (!parallel || handles.every(({ handle }) => gl.getProgramParameter(handle, parallel.COMPLETION_STATUS_KHR))) break;
-        if (performance.now() >= deadline) throw Error('Growing shader preparation timed out');
+        if (performance.now() >= deadline) break;
         await new Promise(resolve => setTimeout(resolve, 10));
     }
     for (const { program, handle } of handles) {

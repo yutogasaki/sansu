@@ -158,6 +158,17 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
         renderer.domElement.style.touchAction = 'none';
         node.append(renderer.domElement);
         handlerRef.current.onStage?.('scene');
+        // 88% must end: a step that never finishes shows the failure card with the step it stopped at.
+        let phase = 'assets';
+        let watchdog = 0;
+        const watch = (ms: number) => { watchdog = window.setTimeout(() => {
+            if (phase === 'shown') return;
+            // A hidden page draws no frames; wait until it is seen again.
+            if (document.visibilityState !== 'visible') { watch(5_000); return; }
+            fail('scene-timeout', Error(`stopped at ${phase}`));
+        }, ms); };
+        watch(45_000);
+        disposers.push(() => window.clearTimeout(watchdog));
         let native: NativeGrowingKit | undefined;
         if (nativeArtEnabled) {
             const { loadNativeGrowingKit } = await import('./native/nativeGrowingAssets');
@@ -634,6 +645,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
         disposers.push(() => shaderBank.dispose());
         const shaderWarmStarted = performance.now(), shaderWarmMeshes = shaderBank.root.children.length;
         if (import.meta.env.DEV) node.dataset.growingShaderWarmup = JSON.stringify({ status: 'warming', meshes: shaderWarmMeshes });
+        phase = `shaders (${shaderWarmMeshes} meshes)`;
         await warmGrowingShaders(renderer, camera, world.scene, shaderBank.root, abort.signal);
         if (released) return;
         shaderBank.releaseMeshes();
@@ -865,12 +877,13 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
                 const receipt = pendingConcert; pendingConcert = undefined;
                 if (world.life.concertActive(now)) handlerRef.current.onConcertStarted?.(receipt);
             }
-            if (!shown) { shown = true; handlerRef.current.onStage?.('ready'); }
+            if (!shown) { shown = true; phase = 'shown'; handlerRef.current.onStage?.('ready'); }
         };
         let shown = false;
         const placeShown = new Set<string>(), shownRetry = new Map<string, number>();
         let useRetry: { receipt: PlaceUseReceipt; at: number }[] = [];
         let nextTelemetry = 0;
+        phase = 'first-frame';
         loop();
         if (lost) return release;
 

@@ -155,6 +155,15 @@ describe('growing interaction shader preparation', () => {
         expect(mock.raw.render).not.toHaveBeenCalled();
     });
 
+    it('moves on to the blocking link check when a phone never reports completion', async () => {
+        vi.useFakeTimers({ toFake: ['setTimeout', 'performance'] });
+        const stuck = program('never-ready'), mock = rendererMock([stuck]), { scene, camera, interaction } = inputs();
+        mock.ready.set(stuck.program, false);
+        const warming = warmGrowingShaders(mock.renderer, camera, scene, interaction);
+        await vi.advanceTimersByTimeAsync(3 * 8010); await warming;
+        expect(stuck.getUniforms).toHaveBeenCalled(); expect(mock.raw.render).toHaveBeenCalledTimes(2);
+    });
+
     it('requires explicit review when the installed Three revision changes', async () => {
         expect(T.REVISION).toBe('185');
         vi.resetModules();
