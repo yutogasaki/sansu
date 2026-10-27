@@ -255,6 +255,62 @@ export class WonderScenery {
         group.traverse(o => { if (o instanceof T.Mesh) o.castShadow = false; });
     }
 
+    /**
+     * Each special island's sides change its outline (island-journey.md §4): coral and shells,
+     * arching roots and moss, crystal, a bed of cloud, star crystals. (The ぜんまい島's gears and pipes are with its ambience.)
+     */
+    private edges(theme: ThemeId, edge: { x: number; z: number }[], own: Set<string>, layout: SceneLayout, seeded: (i: number) => number) {
+        const outward = (cell: { x: number; z: number }) => [[1, 0], [-1, 0], [0, 1], [0, -1]].find(([dx, dz]) => !own.has(`${cell.x + dx},${cell.z + dz}`))!;
+        const mat = (color: string, emissive?: string, extra: T.MeshStandardMaterialParameters = {}) => new T.MeshStandardMaterial({ color, roughness: .6, ...(emissive ? { emissive, emissiveIntensity: .8 } : {}), ...extra });
+        const at = (cell: { x: number; z: number }, out: number, drop: number) => { const [dx, dz] = outward(cell), p = layout.point(cell, 0); return { p: new T.Vector3(p.x + dx * out, p.y - drop, p.z + dz * out), dx, dz }; };
+        const place = (object: T.Object3D, name: string) => { object.name = name; this.root.add(object); return object; };
+        edge.forEach((cell, i) => {
+            if (theme === 'shiokaze') {
+                if (i % 3 === 0) {
+                    const coral = new T.Group(), { p } = at(cell, .52, .2), color = i % 2 ? '#ff8a7a' : '#ffb35c';
+                    for (let k = 0; k < 4; k++) { const arm = new T.Mesh(new T.CylinderGeometry(.03, .05, .35 + seeded(i + k) * .25, 6), mat(color)); arm.position.set((k - 1.5) * .08, .18, (k % 2) * .06); arm.rotation.z = (k - 1.5) * .35; coral.add(arm); const tip = new T.Mesh(new T.SphereGeometry(.05, 8, 6), mat(color)); tip.position.set((k - 1.5) * .16, .38, (k % 2) * .06); coral.add(tip); }
+                    coral.position.copy(p); place(coral, 'theme-coral');
+                } else if (i % 3 === 1) {
+                    const { p, dx, dz } = at(cell, .5, .25), shell = new T.Mesh(new T.SphereGeometry(.26, 16, 8, 0, Math.PI * 2, 0, Math.PI / 2), mat('#fff0f2', undefined, { roughness: .25, metalness: .2 }));
+                    shell.scale.set(1, .5, 1); shell.position.copy(p); shell.rotation.set(dz * .9, 0, -dx * .9); place(shell, 'theme-big-shell');
+                }
+            } else if (theme === 'kodama') {
+                if (i % 3 === 0) {
+                    // A root arches out over the edge and back into the sea.
+                    const { p, dx, dz } = at(cell, .3, -.02), root = new T.Mesh(new T.TorusGeometry(.42, .08, 8, 18, Math.PI), mat('#5a3e2a', undefined, { roughness: .95 }));
+                    root.position.copy(p).setY(p.y - .25); root.rotation.y = Math.atan2(dx, dz) + Math.PI / 2; place(root, 'theme-root');
+                } else if (i % 3 === 1) {
+                    const { p } = at(cell, .47, .2), moss = new T.Mesh(new T.SphereGeometry(.3, 12, 8), mat('#4f8f3e', undefined, { roughness: 1 }));
+                    moss.scale.set(1, .55, 1); moss.position.copy(p); place(moss, 'theme-moss');
+                }
+            } else if (theme === 'hikari') {
+                if (i % 2 === 0) {
+                    const cluster = new T.Group(), { p, dx, dz } = at(cell, .5, .1);
+                    for (let k = 0; k < 3; k++) {
+                        const shard = new T.Mesh(new T.OctahedronGeometry(.13), mat('#b8fff8', '#38d0d8', { transparent: true, opacity: .8, roughness: .05, metalness: .1 }));
+                        shard.scale.set(.6, 2 + seeded(i + k) * 1.4, .6); shard.position.set((k - 1) * .12, .15 + k * .03, 0); shard.rotation.set(dz * .5, 0, -dx * .5 + (k - 1) * .3); cluster.add(shard);
+                    }
+                    cluster.position.copy(p); place(cluster, 'theme-crystal');
+                    this.ambience.push((now, _n, reduced) => { if (!reduced) cluster.children.forEach((shard, k) => { ((shard as T.Mesh).material as T.MeshStandardMaterial).emissiveIntensity = .6 + Math.sin(now / 800 + i + k) * .3; }); });
+                }
+            } else if (theme === 'watagumo') {
+                // The island sits on a bed of cloud that hides its sides.
+                const { p } = at(cell, .42, .35);
+                for (let k = 0; k < 2; k++) {
+                    const puff = new T.Mesh(new T.SphereGeometry(.34 + seeded(i * 2 + k) * .18, 14, 10), mat('#ffffff', undefined, { roughness: 1 }));
+                    puff.position.copy(p).add(new T.Vector3((seeded(i + k) - .5) * .5, -k * .18, (seeded(i + k + 7) - .5) * .5)); place(puff, 'theme-cloud-bed');
+                    const base = puff.position.y; this.ambience.push((now, _n, reduced) => { if (!reduced) puff.position.y = base + Math.sin(now / 2400 + i + k) * .04; });
+                }
+            } else if (theme === 'hoshi') {
+                if (i % 2 === 0) {
+                    const { p } = at(cell, .5, -.12 - seeded(i) * .25), star = new T.Mesh(new T.OctahedronGeometry(.15), mat('#fff3b0', '#ffd860', { flatShading: true }));
+                    star.scale.set(1, 1.7, 1); star.position.copy(p); place(star, 'theme-star-crystal');
+                    this.ambience.push((now, _n, reduced) => { if (!reduced) { star.rotation.y = now / 1500 + i; (star.material as T.MeshStandardMaterial).emissiveIntensity = .6 + Math.sin(now / 500 + i) * .4; } });
+                }
+            }
+        });
+    }
+
     /** The island's own plants in place of the home meadow's tufts, on open land only. */
     private flora(state: GrowingState, layout: SceneLayout, seeded: (i: number) => number) {
         const taken = new Set([...state.plots, ...state.landmarks, ...state.keepsakes].filter(o => o.cell).map(o => `${o.cell!.x},${o.cell!.z}`));
@@ -362,6 +418,7 @@ export class WonderScenery {
         const sea = TERRAIN_SEA_LEVEL + .03;
         this.landmark(state.theme!, layout);
         this.flora(state, layout, seeded);
+        this.edges(state.theme!, edge, own, layout, seeded);
         // The default meadow tufts belong to the home island; a special island grows its own plants.
         const details = this.root.parent?.getObjectByName('garden-ground-details'); if (details) details.visible = false;
         this.seaMesh = this.root.parent?.getObjectByName('life-sea') as T.Mesh<T.BufferGeometry, T.ShaderMaterial> | undefined;

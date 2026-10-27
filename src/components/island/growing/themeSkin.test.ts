@@ -17,8 +17,9 @@ describe('special island skin', () => {
         const dressed = wood.material; skinTheme(root, 'karakuri'); expect(wood.material).toBe(dressed);
         skinTheme(root, undefined);
         expect(wood.material).toBe(original);
-        // Islands without their own skin leave things as they are.
-        skinTheme(root, 'shiokaze'); expect(wood.material).toBe(original);
+        // Every special island has its own skin.
+        skinTheme(root, 'kodama'); expect(wood.material).not.toBe(original);
+        skinTheme(root, undefined); expect(wood.material).toBe(original);
     });
 
     it('leans the light toward the island and puts it back', () => {
@@ -29,6 +30,6 @@ describe('special island skin', () => {
         back();
         expect(sun.color.getHexString()).toBe('ffffff');
         expect((scene.background as T.Color).getHexString()).toBe('b4d4e7');
-        expect(toneLight('kodama', 'day', scene, hemi, sun)).toBeUndefined();
+        expect(toneLight(undefined, 'day', scene, hemi, sun)).toBeUndefined();
     });
 });
