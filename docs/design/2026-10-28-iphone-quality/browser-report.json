@@ -1,0 +1,149 @@
+{
+  "at": "2026-10-28T05:31:53.549Z",
+  "base": "http://127.0.0.1:5297",
+  "initial": 1,
+  "ceiling": 1.5,
+  "inputs": {
+    "src/components/island/three/adaptiveIslandQuality.ts": "2a129939dd27d670df47476f9d5ce945df4cec62593fdc2dff4f38be829dcdf8",
+    "src/components/island/growing/GrowingWorld.tsx": "eb5402c1faa39570f8bc5a61447451ec82609fed690b281abf76e09ee76ac661",
+    "src/components/island/growing/GrowingIsland.tsx": "047398159311d75bb1d7e38c61c988d7a3b1876d7aef6bd75d6ab3e8d3c6981d",
+    "tools/e2e-growing-quality.mjs": "c7c74e065dc2f3fa855087c59cf603754c15b6f79d29397fcf0f2f3d51e53f63"
+  },
+  "scope": "Production browser with simulated Apple device detection and DPR 3. Actual renderer and frames, disposable saved profile. Invalid shader is explicit fault injection. Not physical iPhone performance or battery evidence.",
+  "cases": [
+    {
+      "engine": "webkit",
+      "version": "26.0",
+      "pass": true,
+      "starts": [
+        {
+          "ratio": 1,
+          "ceiling": 1.5,
+          "quality": "compact",
+          "width": 390,
+          "cssWidth": 390
+        }
+      ],
+      "metadata": {
+        "url": "http://127.0.0.1:5297/#/island",
+        "revision": "e718c3e3-iphone-quality",
+        "version": "e718c3e3-iphone-quality:ab03ec60-3a05-4b31-aa2d-93b588f039b7",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "drawCalls": 0,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "e718c3e3-iphone-quality",
+          "version": "e718c3e3-iphone-quality:ab03ec60-3a05-4b31-aa2d-93b588f039b7",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "settledRatio": 1.5,
+      "failure": "build: e718c3e3-iphone-quality\nscene-initialization (recovery): Growing shader failed to link: patchwork-otter-v1\nprogram: Fragment shader is not compiled.\nvertex: (empty)\nfragment: ERROR: 0:1985: 'QA_INVALID_SHADER' : syntax error\nMozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 Version/26.6.1 Mobile/15E148 Safari/604.1",
+      "failedStarts": [
+        {
+          "ratio": 1,
+          "ceiling": 1.5,
+          "quality": "compact",
+          "width": 390,
+          "cssWidth": 390
+        },
+        {
+          "ratio": 0.65,
+          "ceiling": 0.8,
+          "quality": "recovery",
+          "width": 253,
+          "cssWidth": 390
+        }
+      ],
+      "recovery": {
+        "ratio": 0.65,
+        "ceiling": 0.8,
+        "quality": "recovery",
+        "width": 253,
+        "cssWidth": 390
+      }
+    },
+    {
+      "engine": "chromium",
+      "version": "145.0.7632.6",
+      "pass": true,
+      "starts": [
+        {
+          "ratio": 1,
+          "ceiling": 1.5,
+          "quality": "compact",
+          "width": 390,
+          "cssWidth": 390
+        }
+      ],
+      "metadata": {
+        "url": "http://127.0.0.1:5297/#/island",
+        "revision": "e718c3e3-iphone-quality",
+        "version": "e718c3e3-iphone-quality:ab03ec60-3a05-4b31-aa2d-93b588f039b7",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "drawCalls": 0,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "e718c3e3-iphone-quality",
+          "version": "e718c3e3-iphone-quality:ab03ec60-3a05-4b31-aa2d-93b588f039b7",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "settledRatio": 0.65,
+      "failure": "build: e718c3e3-iphone-quality\nscene-initialization (recovery): Growing shader failed to link: patchwork-otter-v1\nprogram: Fragment shader is not compiled.\n\u0000\nvertex: (empty)\nfragment: ERROR: 0:1985: 'QA_INVALID_SHADER' : syntax error\n\u0000\nMozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 Version/26.6.1 Mobile/15E148 Safari/604.1",
+      "failedStarts": [
+        {
+          "ratio": 1,
+          "ceiling": 1.5,
+          "quality": "compact",
+          "width": 390,
+          "cssWidth": 390
+        },
+        {
+          "ratio": 0.65,
+          "ceiling": 0.8,
+          "quality": "recovery",
+          "width": 253,
+          "cssWidth": 390
+        }
+      ],
+      "recovery": {
+        "ratio": 0.65,
+        "ceiling": 0.8,
+        "quality": "recovery",
+        "width": 253,
+        "cssWidth": 390
+      }
+    }
+  ],
+  "pass": true,
+  "limits": [
+    "No physical iPhone heat, battery or FPS measurement.",
+    "The core suite runs concurrently; browser cadence is not a performance benchmark.",
+    "No antialiasing, shadows, model or saved-data changes."
+  ]
+}

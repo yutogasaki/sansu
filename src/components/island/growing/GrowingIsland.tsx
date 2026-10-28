@@ -131,7 +131,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         setNaming(undefined); namingOwner.current = undefined;
         pendingPicture.current = false;
     }, [profileId, ownIslandId]);
-    const [qualityCeiling, setQualityCeiling] = useState(1.25);
+    const [qualityCeiling, setQualityCeiling] = useState(1.5);
     const [graphicsFailure, setGraphicsFailure] = useState<string>();
     const waitingForWorld = Boolean(own) && worldStep !== 'ready';
     useEffect(() => {

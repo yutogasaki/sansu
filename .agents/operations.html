@@ -247,6 +247,8 @@ islandの画面captureは `tools/island-e2e-helpers.mjs` の `runtimemetadata` �
 
 ## matrix
 
+軽量描画の画質変更は `sansu_quality_url` と新規 `sansu_quality_output` を指定して `node tools/e2e-growing-quality.mjs` を実行する。apple判定・dpr 3を明示したwebkit/chromiumで、最初の実canvasが通常1倍・上限1.5倍、更新url・保存保持、真のshader失敗で下位上限へ一度だけ復旧し、手動再試行は0.65倍で始まることを確認する。昇降・密度上限・中断・再昇格禁止はadaptiveislandqualityのunitで決定的に検証する。browserの実測fpsや実機の発熱・電池の保証にはしない。
+
 育つ島のシェーダー起動：`node tools/e2e-growing-shader-startup.mjs` は固定production previewの `sansu_shader_url` と新規 `sansu_shader_output` を指定。390幅のwebkitと768幅のchromiumで、破棄済みprogramの照会0・最初のcontextでの通常起動/更新url起動・所有と学習保持を検査する。khr対応engineでは保存済みの島の通常同期と明示した完了待ちを重ね、非対応engineでは同期コンパイル経路を検査する。本物の不正shaderを入れた別ケースで、失敗詳細と手動再試行も確認する。旧buildのwebkit原因再現だけ `sansu_shader_expect_failure=1` を指定する。実swを許可するが、二つの版への更新・実iphone・実通信速度の検証ではない。
 
 次期 `living-fantasy-v1`（初期候補を実装、全体は継続）の追加受入は[仕様51の検証章](../product/living-fantasy/08-delivery-and-acceptance.md)に定義する。現行の検査やclassic smokeを次期候補の合格へ流用せず、このmatrixの共通checksと次期の対象ケースを両方満たす。仕様策定だけの作業はdocs-onlyとして検証し、次期の美術・理解・runtimeのpassとは区別する。
@@ -454,7 +456,7 @@ p04の低い殻・入口・共有床の制作では、編集可能な派生sourc
 ### 育成規則v0.4（2026-10-19）
 
 `growth.test.ts`/`growth.repository.test.ts`でa/b・購入終了・家時刻・自生・w4枠と由来/取消・並行/abort・record5/dexie10の現役/休止島/写真/贈り物の隔離を確認。`tools/e2e-growing-v04.mjs`は固定productionをsansu_growth_v04_urlと新規sansu_growth_v04_outputへ指定し、phone/tabletで初回無料家、畑のみのカタログ、保護者ゲート、明示旧snapshotの記念復元/旧収納品、学習不変を確認する。明示した育った家2軒の配置では、utcの昼の実描画からぽこもこ/住人のp04利用を保存する。旧snapshotの注入は移行診断であり実取得とは分ける。海図の往復/実sw offlineはvoyages、実two-build/中断/保存5対応復旧はupdate driverで別に閉じる。保存4→5の実旧writer診断は `tools/check-growing-v04-writer.mjs` を使う。初回バーを変更した場合はfirst-playの実タップも確認する。
-"><h2><a href="../docs/ai/verification_matrix.md">変更ごとの必須検証</a></h2><details><summary>正本・内容と版の根拠</summary><p class="path">docs/ai/verification_matrix.md · 内容SHA256 1e53551da894374adffebf51eef0c5ca8e67feed146ea150c65bfbc867a623a6</p><p>生成時の正本を掲載。内容の確認日は未記録、配布版は未確認。内容hashはcommit IDではありません。</p><pre># Verification Matrix
+"><h2><a href="../docs/ai/verification_matrix.md">変更ごとの必須検証</a></h2><details><summary>正本・内容と版の根拠</summary><p class="path">docs/ai/verification_matrix.md · 内容SHA256 f170cf717325d81885a9f0d9a055e87fc54bb20bfb282753d96a67cae56126e2</p><p>生成時の正本を掲載。内容の確認日は未記録、配布版は未確認。内容hashはcommit IDではありません。</p><pre># Verification Matrix
 
 国語の全配当漢字：`node tools/e2e-kokugo-kanji.mjs` を固定buildの `SANSU_KOKUGO_URL` と新規 `SANSU_KOKUGO_OUTPUT` へ実行する。全学年の件数、字の選択／検索／別読み／手本の接触と支援扱い、紙の手本の閉鎖／再表示／作品保存、同じ字の再開と実SWのofflineを390/768/320幅で確認する。校閲・増量では追加場面文の読み／表記伏字、12音声の実再生も確認する。`SANSU_KOKUGO_AUDIT_OUTPUT` を指定した `node tools/audit-kokugo-editorial.mjs` で全字・用例・場面文と音声hashを出力し、`src/domain/kokugo/editorial.test.ts` で既知例復習と未見例・24時間・旧予約の境界を検査する。字の被覆は `src/domain/kokugo/kanji/kanji.test.ts` で公式配当の全1,026字へ照合する。
 
@@ -582,6 +584,8 @@ Islandの画面captureは `tools/island-e2e-helpers.mjs` の `runtimeMetadata` �
 `node tools/e2e-learning-level-cue.mjs` は `SANSU_LEVEL_CUE_URL` と新しい `SANSU_LEVEL_CUE_OUTPUT` を指定。通常学習の区間先頭から既存の進級確認、同予約への戻り、入力/支援後の案内終了、320px/390px/短横/tabletと筆算の44px操作・位置固定、英単語/両科目/資格読取失敗、実20問の進級と通常ログ/SRS/予約/島報酬の保持を検査する。資格は隔離したnativeプロフィール・独力証拠fixtureで用意し、生成済み問題の置換やreadyのmockはしない。読取失敗は初期化完了後だけ有効にする明示診断。`SANSU_LEVEL_CUE_EXTRA_ONLY=1` と任意の `SANSU_LEVEL_CUE_MODE` は対象診断用。実機iOS・子どもの理解/再訪・2 build更新は別ゲート。
 
 ## Matrix
+
+軽量描画の画質変更は `SANSU_QUALITY_URL` と新規 `SANSU_QUALITY_OUTPUT` を指定して `node tools/e2e-growing-quality.mjs` を実行する。Apple判定・DPR 3を明示したWebKit/Chromiumで、最初の実canvasが通常1倍・上限1.5倍、更新URL・保存保持、真のshader失敗で下位上限へ一度だけ復旧し、手動再試行は0.65倍で始まることを確認する。昇降・密度上限・中断・再昇格禁止はadaptiveIslandQualityのunitで決定的に検証する。browserの実測fpsや実機の発熱・電池の保証にはしない。
 
 育つ島のシェーダー起動：`node tools/e2e-growing-shader-startup.mjs` は固定production previewの `SANSU_SHADER_URL` と新規 `SANSU_SHADER_OUTPUT` を指定。390幅のWebKitと768幅のChromiumで、破棄済みprogramの照会0・最初のcontextでの通常起動/更新URL起動・所有と学習保持を検査する。KHR対応engineでは保存済みの島の通常同期と明示した完了待ちを重ね、非対応engineでは同期コンパイル経路を検査する。本物の不正shaderを入れた別ケースで、失敗詳細と手動再試行も確認する。旧buildのWebKit原因再現だけ `SANSU_SHADER_EXPECT_FAILURE=1` を指定する。実SWを許可するが、二つの版への更新・実iPhone・実通信速度の検証ではない。
 

@@ -127,6 +127,8 @@ Islandの画面captureは `tools/island-e2e-helpers.mjs` の `runtimeMetadata` �
 
 ## Matrix
 
+軽量描画の画質変更は `SANSU_QUALITY_URL` と新規 `SANSU_QUALITY_OUTPUT` を指定して `node tools/e2e-growing-quality.mjs` を実行する。Apple判定・DPR 3を明示したWebKit/Chromiumで、最初の実canvasが通常1倍・上限1.5倍、更新URL・保存保持、真のshader失敗で下位上限へ一度だけ復旧し、手動再試行は0.65倍で始まることを確認する。昇降・密度上限・中断・再昇格禁止はadaptiveIslandQualityのunitで決定的に検証する。browserの実測fpsや実機の発熱・電池の保証にはしない。
+
 育つ島のシェーダー起動：`node tools/e2e-growing-shader-startup.mjs` は固定production previewの `SANSU_SHADER_URL` と新規 `SANSU_SHADER_OUTPUT` を指定。390幅のWebKitと768幅のChromiumで、破棄済みprogramの照会0・最初のcontextでの通常起動/更新URL起動・所有と学習保持を検査する。KHR対応engineでは保存済みの島の通常同期と明示した完了待ちを重ね、非対応engineでは同期コンパイル経路を検査する。本物の不正shaderを入れた別ケースで、失敗詳細と手動再試行も確認する。旧buildのWebKit原因再現だけ `SANSU_SHADER_EXPECT_FAILURE=1` を指定する。実SWを許可するが、二つの版への更新・実iPhone・実通信速度の検証ではない。
 
 次期 `living-fantasy-v1`（初期候補を実装、全体は継続）の追加受入は[仕様51の検証章](../product/living-fantasy/08-delivery-and-acceptance.md)に定義する。現行の検査やclassic smokeを次期候補の合格へ流用せず、このmatrixの共通checksと次期の対象ケースを両方満たす。仕様策定だけの作業はdocs-onlyとして検証し、次期の美術・理解・runtimeのPASSとは区別する。

@@ -105,7 +105,7 @@ type Props = WorldHandlers & { terrainEditing?: boolean; terrainBrush?: boolean;
 const reducedMotion = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const nativeArtEnabled = import.meta.env.DEV || import.meta.env.VITE_NATIVE_GROWING_ART === 'true';
 
-export default function GrowingWorld({ terrainEditing = false, terrainBrush = false, terrainCell, viewKey, state, world: authoredWorld, authoredWater = false, authoredCove = false, authoredShoulder, authoredGrowthTerrain, authoredWholeArt = false, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, playActive = true, compact, qualityCeiling = 1.25, focus, concert, bridgeBuild, onCamera, place, ...handlers }: Props) {
+export default function GrowingWorld({ terrainEditing = false, terrainBrush = false, terrainCell, viewKey, state, world: authoredWorld, authoredWater = false, authoredCove = false, authoredShoulder, authoredGrowthTerrain, authoredWholeArt = false, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, playActive = true, compact, qualityCeiling = 1.5, focus, concert, bridgeBuild, onCamera, place, ...handlers }: Props) {
     const host = useRef<HTMLDivElement>(null);
     const handlerRef = useRef(handlers);
     useEffect(() => { handlerRef.current = handlers; });
@@ -130,7 +130,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             handlerRef.current.onFailure?.(`initialization: ${error instanceof Error ? error.message : String(error)}`);
             setFailed(true); handlerRef.current.onStage?.('failed'); return;
         }
-        const quality = light ? new AdaptiveIslandQuality(Math.min(qualityCeiling, window.devicePixelRatio || 1)) : undefined;
+        const quality = light ? new AdaptiveIslandQuality(Math.min(qualityCeiling, window.devicePixelRatio || 1), recovery) : undefined;
         let frame = 0, lost = false, released = false;
         const abort = new AbortController();
         const disposers: (() => void)[] = [() => { renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove(); }];

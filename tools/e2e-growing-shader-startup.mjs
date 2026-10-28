@@ -114,7 +114,8 @@ try {
                 await page.evaluate(() => sessionStorage.setItem('qa-shader-startup', 'invalid')); await page.reload(); await failure.waitFor();
                 result.trueFailure = await failure.locator('pre').textContent();
                 assert.match(result.trueFailure, /Growing shader failed to link:/); assert.match(result.trueFailure, /program:/); assert.match(result.trueFailure, /QA_INVALID_SHADER/);
-                await page.waitForTimeout(500); assert.equal(await page.evaluate(() => window.__shaderStartup.contexts), 1);
+                // The normal 1x start can fall back once to 0.65x with a lower ceiling.
+                await page.waitForTimeout(500); assert.equal(await page.evaluate(() => window.__shaderStartup.contexts), 2);
                 assert.deepEqual(await readNative(page, id), learning); assert.deepEqual(await owned(page, id), ownership);
                 await failure.locator('summary').click(); await page.screenshot({ path: `${out}/${name}-real-shader-error.png` });
                 await page.evaluate(() => sessionStorage.removeItem('qa-shader-startup'));
