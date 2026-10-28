@@ -1,5 +1,7 @@
 # Project Memory
 
+国語の現行契約は[国語コース](../product/kokugo.md)と[全配当漢字](../product/kokugo-kanji.md)。配当字の被覆と筆記技能・全音訓の習得を分け、同じ語を形式違いで独立文脈に増やさない。既出例の後日復習は未見例の独力確認と別記録にし、支援・手本の直後24時間は新場面でも独力確認へ進めない。教科の選択・保存・評価は既存math/vocabの記録を再分類せず専用境界で扱い、島への報酬だけを検証済み完了で共通台帳へ渡す。検討案の全教材供給・3教科mixは現行の実装済み範囲と分ける。
+
 ## Purpose
 
 This file stores durable project memory only.
@@ -20,6 +22,9 @@ If the information would still matter after several unrelated tasks, it belongs 
 - Raw chat transcripts
 
 ## Durable Memory
+
+- 島制作の到達目標は[構築方針](../product/island-construction-strategy.md#ゲーム中の自由編集と完成の条件)を正とする。通常ゲーム中の地形/配置編集、美術と暮らしの追従、育成・保存・再読込までが必要。独立viewerの仕上げや固定条件の技術PASSは中間証拠であり、製品の完成目標を狭めない。
+- ゲーム中の地形編集は[仕様52 §1.1](../product/52_growing_island_game_spec.md#11-遊んでいる島の地形編集2026-10-22-実装契約)と保存13を正本とする。表示・タップ・配置・住人の接地と経路は同じ床を使い、undoで所有/学習を巻き戻さない。古いwriterを新正本へ混ぜず、足場と滞在中の回廊を保存時に再検査する。本体接続の成立と美術/独立理解/配布の合格は別。
 
 - Island production method (2026-10-11): [decision](../adr/2026-10-11-authored-place-world-policy.md), [canonical construction policy](../product/island-construction-strategy.md). Art authors terrain/place forms with floors, entrances and connection rules; player land choices, placement and maturity assemble the world. Art and gameplay read the same world definition. Establish one whole island before arrangement variants, growth and expansion. This supersedes the earlier single-family-first production order; current mechanics and save contracts remain valid until their own specifications are revised.
 

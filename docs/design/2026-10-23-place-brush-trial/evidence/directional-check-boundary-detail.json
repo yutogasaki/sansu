@@ -1,0 +1,623 @@
+{
+  "at": "2026-10-24T01:08:33.796Z",
+  "scope": "Directional field diagnostic with actual transformed world/model/move/route; no persistence, browser, or actor-use claim",
+  "constraints": {
+    "sameFixture": true,
+    "bounds": {
+      "minX": -3,
+      "maxX": 8,
+      "depth": 8
+    },
+    "actors": "empty static precondition; live UI must still check residents",
+    "noAutomaticHeightOrRadiusChanges": true
+  },
+  "scalarChecks": {
+    "paritySamples": 11570,
+    "shortSpaceRejected": true,
+    "wetLandingRejected": true,
+    "wetBodyRimRejected": true,
+    "sourceWaterStripRejected": true,
+    "nonFiniteLandingRejected": true
+  },
+  "reports": [
+    {
+      "name": "existing-low-north",
+      "shape": {
+        "center": {
+          "x": 5,
+          "z": 5
+        },
+        "radius": 1.6,
+        "height": 0.5,
+        "entrance": 1.2,
+        "flatRadius": 1.75
+      },
+      "placeAccepted": true,
+      "plan": "north delegates exact existing field",
+      "moves": [
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 5,
+            "z": 5
+          },
+          "accepted": true
+        },
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 6,
+            "z": 5
+          },
+          "accepted": true
+        }
+      ],
+      "owners": [
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 6,
+            "z": 5
+          },
+          "routes": [
+            {
+              "target": {
+                "x": 6,
+                "z": 5
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 4,
+                  "z": 1
+                },
+                {
+                  "x": 5,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 2
+                },
+                {
+                  "x": 6,
+                  "z": 3
+                },
+                {
+                  "x": 6,
+                  "z": 4
+                },
+                {
+                  "x": 6,
+                  "z": 5
+                }
+              ],
+              "bodySupported": true
+            },
+            {
+              "target": {
+                "x": 6,
+                "z": 6
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 4,
+                  "z": 1
+                },
+                {
+                  "x": 5,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 2
+                },
+                {
+                  "x": 6,
+                  "z": 3
+                },
+                {
+                  "x": 6,
+                  "z": 4
+                },
+                {
+                  "x": 6,
+                  "z": 5
+                },
+                {
+                  "x": 6,
+                  "z": 6
+                }
+              ],
+              "bodySupported": true
+            },
+            {
+              "target": {
+                "x": 7,
+                "z": 5
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 4,
+                  "z": 1
+                },
+                {
+                  "x": 5,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 1
+                },
+                {
+                  "x": 7,
+                  "z": 1
+                },
+                {
+                  "x": 7,
+                  "z": 2
+                },
+                {
+                  "x": 7,
+                  "z": 3
+                },
+                {
+                  "x": 7,
+                  "z": 4
+                },
+                {
+                  "x": 7,
+                  "z": 5
+                }
+              ],
+              "bodySupported": true
+            },
+            {
+              "target": {
+                "x": 6,
+                "z": 4
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 4,
+                  "z": 1
+                },
+                {
+                  "x": 5,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 2
+                },
+                {
+                  "x": 6,
+                  "z": 3
+                },
+                {
+                  "x": 6,
+                  "z": 4
+                }
+              ],
+              "bodySupported": true
+            }
+          ]
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 5,
+            "z": 5
+          },
+          "routes": [
+            {
+              "target": {
+                "x": 5,
+                "z": 6
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 2
+                },
+                {
+                  "x": 3,
+                  "z": 3
+                },
+                {
+                  "x": 3,
+                  "z": 4
+                },
+                {
+                  "x": 4,
+                  "z": 4
+                },
+                {
+                  "x": 4,
+                  "z": 5
+                },
+                {
+                  "x": 4,
+                  "z": 6
+                },
+                {
+                  "x": 5,
+                  "z": 6
+                }
+              ],
+              "bodySupported": true
+            },
+            {
+              "target": {
+                "x": 4,
+                "z": 5
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 2
+                },
+                {
+                  "x": 3,
+                  "z": 3
+                },
+                {
+                  "x": 3,
+                  "z": 4
+                },
+                {
+                  "x": 4,
+                  "z": 4
+                },
+                {
+                  "x": 4,
+                  "z": 5
+                }
+              ],
+              "bodySupported": true
+            },
+            {
+              "target": {
+                "x": 6,
+                "z": 5
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 4,
+                  "z": 1
+                },
+                {
+                  "x": 5,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 2
+                },
+                {
+                  "x": 6,
+                  "z": 3
+                },
+                {
+                  "x": 6,
+                  "z": 4
+                },
+                {
+                  "x": 6,
+                  "z": 5
+                }
+              ],
+              "bodySupported": true
+            },
+            {
+              "target": {
+                "x": 5,
+                "z": 4
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 4,
+                  "z": 1
+                },
+                {
+                  "x": 5,
+                  "z": 1
+                },
+                {
+                  "x": 5,
+                  "z": 2
+                },
+                {
+                  "x": 5,
+                  "z": 3
+                },
+                {
+                  "x": 5,
+                  "z": 4
+                }
+              ],
+              "bodySupported": true
+            }
+          ]
+        }
+      ],
+      "bothMoved": true,
+      "bothUsable": true
+    },
+    {
+      "name": "high-north",
+      "shape": {
+        "center": {
+          "x": 5,
+          "z": 5
+        },
+        "radius": 1.6,
+        "height": 0.9,
+        "entrance": 1.2,
+        "flatRadius": 1.75,
+        "rampDirection": "north"
+      },
+      "error": "Error: この高さへ登る坂をつくる広さが足りないよ。低くするか、場所を変えてね。"
+    },
+    {
+      "name": "high-west",
+      "shape": {
+        "center": {
+          "x": 5,
+          "z": 5
+        },
+        "radius": 1.6,
+        "height": 0.9,
+        "entrance": 1.2,
+        "flatRadius": 1.75,
+        "rampDirection": "west"
+      },
+      "placeAccepted": true,
+      "plan": {
+        "direction": "west",
+        "topDistance": 1.75,
+        "length": 1.25,
+        "end": {
+          "x": 2,
+          "z": 5
+        },
+        "endZ": 5,
+        "endHeight": 0.559827091,
+        "endpointHeights": [
+          0.575390686,
+          0.559827091,
+          0.54785805
+        ],
+        "availableLength": 5.75,
+        "designSlope": 0.45
+      },
+      "boundary": {
+        "checkedVertices": 47826,
+        "changedOutside": [
+          {
+            "cell": {
+              "x": 3.916666667,
+              "z": 6.747307879
+            },
+            "after": {
+              "x": 4.221835426,
+              "y": -0.375,
+              "z": 6.956505394
+            }
+          },
+          {
+            "cell": {
+              "x": 3.919738435,
+              "z": 6.746928232
+            },
+            "after": {
+              "x": 4.225012884,
+              "y": -0.375,
+              "z": 6.956071263
+            }
+          },
+          {
+            "cell": {
+              "x": 5.107172729,
+              "z": 6.976160605
+            },
+            "after": {
+              "x": 5.342819913,
+              "y": -0.375,
+              "z": 7.074487999
+            }
+          },
+          {
+            "cell": {
+              "x": 3.916666667,
+              "z": 6.747307879
+            },
+            "after": {
+              "x": 4.221835426,
+              "y": -0.375,
+              "z": 6.956505394
+            }
+          },
+          {
+            "cell": {
+              "x": 3.919738435,
+              "z": 6.746928232
+            },
+            "after": {
+              "x": 4.225012884,
+              "y": -0.375,
+              "z": 6.956071263
+            }
+          },
+          {
+            "cell": {
+              "x": 5.107172729,
+              "z": 6.976160605
+            },
+            "after": {
+              "x": 5.342819913,
+              "y": -0.375,
+              "z": 7.074487999
+            }
+          },
+          {
+            "cell": {
+              "x": 5.108579851,
+              "z": 6.974753482
+            },
+            "before": {
+              "x": 5.344561286,
+              "y": -0.375,
+              "z": 7.072891878
+            },
+            "after": {
+              "x": 5.344561104,
+              "y": -0.373988365,
+              "z": 7.072884195
+            }
+          },
+          {
+            "cell": {
+              "x": 5.108579851,
+              "z": 6.974753482
+            },
+            "before": {
+              "x": 5.344561286,
+              "y": -0.375,
+              "z": 7.072891878
+            },
+            "after": {
+              "x": 5.344561104,
+              "y": -0.373988365,
+              "z": 7.072884195
+            }
+          }
+        ]
+      },
+      "error": "AssertionError [ERR_ASSERTION]: high-west: changed geometry outside declared influence\n\n8 !== 0\n"
+    },
+    {
+      "name": "high-east",
+      "shape": {
+        "center": {
+          "x": 5,
+          "z": 5
+        },
+        "radius": 1.6,
+        "height": 0.9,
+        "entrance": 1.2,
+        "flatRadius": 1.75,
+        "rampDirection": "east"
+      },
+      "error": "Error: この向きには、乾いた足場へ登る坂をつくる広さが足りないよ。"
+    },
+    {
+      "name": "high-south",
+      "shape": {
+        "center": {
+          "x": 5,
+          "z": 5
+        },
+        "radius": 1.6,
+        "height": 0.9,
+        "entrance": 1.2,
+        "flatRadius": 1.75,
+        "rampDirection": "south"
+      },
+      "error": "Error: この向きには、乾いた足場へ登る坂をつくる広さが足りないよ。"
+    }
+  ],
+  "metadata": {
+    "node": "v22.23.3",
+    "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-brush-trial/directional-check.mjs",
+    "actualTransforms": "current place trial Vite transform; field imports replaced only in this diagnostic bundle",
+    "inputSHA256": {
+      "field.ts": "993e27865fe225e21837500938259097983e79da38b40d55489b68e384f40c5e",
+      "directional-field.ts": "bc860c959bd9a5c4fd4ba5227711c6e12901a0943d4ad3771c2a8f46a78ea2db",
+      "directional-check.ts": "ebc7b3a89daf42150e1d332ba78dc718c42591a6730ef4d95b6cf90331f76969",
+      "directional-check.mjs": "fcfdbb176c2e05a5a7b9a7bfd138345baf4862421774dfad43dfdec95637dc60",
+      "model.ts": "4778b0ebd4d2bd249d41facc151cf49492b3bc643526122e904c1638c473dfc1",
+      "vite.config.ts": "f8e83964b88a4ce2d3e47afcc7abaffb8c97b772b4cf083600db554b0f595bb1"
+    },
+    "bundleSHA256": "12eb0ee32d811e9a20224469293b6dfd852954517f6b5820fe49ddfbd359d729"
+  }
+}

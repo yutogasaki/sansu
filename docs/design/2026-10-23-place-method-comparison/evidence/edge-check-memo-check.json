@@ -1,0 +1,1172 @@
+{
+  "status": "PASS",
+  "date": "2026-10-22T22:14:57.074Z",
+  "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-method-comparison/edge-check-memo-check.mjs",
+  "hashes": {
+    "edge-check-memo-transform.mjs": "29b408a7d918e13df82ee19a664492386438c0762f9def857527826286256616",
+    "edge-check-memo-check.ts": "e2958a4f67927ae1138ff4c012f5e46f31839f19064f303c55b9a2cb8a9f2205",
+    "edge-check-memo-check.mjs": "3b6903770bf8d7bba2d4c46ccb710cdffb0009a65d7e959bb7b824365cd19e00",
+    "evidence/69-H-wide-shore-final-state.json": "0c810ef159d5d7eef074f410ee3740a22b6be1de13579f9723b120f9544bb26a",
+    "single-compile-transform.mjs": "49153200a6e556015937f9a02352cd51390504440099788e6bafb2bd0632e8d6",
+    "frozen-query.ts": "92fdc7bcccb3b78c2c31fd45285f5a2401fa17b9c0bc4a4fd9814f7e05f1002a"
+  },
+  "transformedSourceHashes": {
+    "src/domain/growingIsland/editableTerrainWorld.ts": "a6ce270dbe047b5415c3799bdba3e6f4370ce166046eaffa40357f1f28a94af2",
+    "src/domain/growingIsland/worldDefinition.ts": "e538703b9b07410e4615625c7ed13ffa60aadce005b092b1b5acda0f044d0735"
+  },
+  "reports": [
+    {
+      "enabled": false,
+      "benchmark": {
+        "coldEditMs": 357.77120900000006,
+        "compileMs": 221.045,
+        "worldMs": 355.157,
+        "cpu": {
+          "status": "stopped",
+          "clock": "performance.now milliseconds from CPU measurement start",
+          "startedPerformanceMs": 489.132,
+          "startedEpochMs": 1792707284742.99,
+          "endedPerformanceMs": 846.939,
+          "elapsedMs": 357.807,
+          "retainedLimit": 400,
+          "dropped": 0,
+          "filteredFastTerrainCalls": 4,
+          "incompleteSpans": 0,
+          "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+          "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+          "aggregates": {
+            "editableIslandWorld:cache-hit": {
+              "calls": 4,
+              "inclusiveMs": 0.131,
+              "selfMs": 0.131,
+              "maxMs": 0.042,
+              "failed": 0
+            },
+            "compileWorldDefinition:derived-edges": {
+              "calls": 1,
+              "inclusiveMs": 221.045,
+              "selfMs": 221.045,
+              "maxMs": 221.045,
+              "failed": 0
+            },
+            "editableIslandWorld:cold": {
+              "calls": 1,
+              "inclusiveMs": 355.157,
+              "selfMs": 134.112,
+              "maxMs": 355.157,
+              "failed": 0
+            },
+            "applyIntent:terrain-edit": {
+              "calls": 1,
+              "inclusiveMs": 357.694,
+              "selfMs": 2.407,
+              "maxMs": 357.694,
+              "failed": 0
+            }
+          },
+          "spans": [
+            {
+              "id": 1,
+              "parentId": null,
+              "name": "applyIntent",
+              "detail": "terrain-edit",
+              "startMs": 0.101,
+              "endMs": 357.795,
+              "inclusiveMs": 357.694,
+              "selfMs": 2.407,
+              "failed": false
+            },
+            {
+              "id": 3,
+              "parentId": 1,
+              "name": "editableIslandWorld",
+              "detail": "cold",
+              "startMs": 0.801,
+              "endMs": 355.958,
+              "inclusiveMs": 355.157,
+              "selfMs": 134.112,
+              "failed": false
+            },
+            {
+              "id": 4,
+              "parentId": 3,
+              "name": "compileWorldDefinition",
+              "detail": "derived-edges",
+              "startMs": 134.866,
+              "endMs": 355.911,
+              "inclusiveMs": 221.045,
+              "selfMs": 221.045,
+              "failed": false
+            }
+          ]
+        },
+        "resultHash": "4fe509f3c4a0135f2e7ef3465195a41b8aa631a1df18a17e4b94d9e6a677070d"
+      },
+      "reports": [
+        {
+          "name": "initial",
+          "coldMs": 153.72675000000004,
+          "cacheState": "cold",
+          "sites": 99,
+          "edges": 227,
+          "nonemptyNeighbors": 159,
+          "hashes": {
+            "definition": "d0df30bf8d7333dd887ad2d12ed3d8d76107664e02a38996fb3c672f79655564",
+            "floors": "269352fa351f6a0d41d55fd9321bfaae36d2daf8c52acc4a906fe433f1b8e0b0",
+            "anchors": "bcd3955e77ffe9a4fa829c7c07609f073a1c82785320a2668d91841a01253e8b",
+            "surfaces": "4dbbc5d6c4d7bbec018877a0df809433f9c96d6f5513d6b7896a0a906192e872",
+            "sites": "867438540b7819b1d53bffe3771e11b6dec6eb4c1662d8f3eba00c9413d1b096",
+            "walkSites": "867438540b7819b1d53bffe3771e11b6dec6eb4c1662d8f3eba00c9413d1b096",
+            "bounds": "e8bce891aa6a7a14e0479a0961b8f705899eef3e8da044397e0983ecc2e37e2f",
+            "floorHitOwnershipQueries": "08f067aeebc2bdc8dd0adae1411fa738cca1e225431389d818a473162f559c60",
+            "graphs": "6a17d11400b43c6ea9536285755f0027f203914828c323690cfe444f4920d9c7",
+            "routes": "dca173000ffaa55974eb65518baac127e326cf8eb2d7d4438ca3da769e0de157"
+          },
+          "queryCount": 1369,
+          "routeCount": 2970
+        },
+        {
+          "name": "negative-cut",
+          "coldMs": 188.44274999999993,
+          "cacheState": "cold",
+          "sites": 98,
+          "edges": 200,
+          "nonemptyNeighbors": 148,
+          "hashes": {
+            "definition": "dfb3bc76d22d93b8835b2cd9fc621ef0beb8f13251f8fa005d078dfe05a379e5",
+            "floors": "5c99c14652ccc6fc641b92ce8dbb866a7b0caf717ca607eb4e0561a58419732c",
+            "anchors": "bcd3955e77ffe9a4fa829c7c07609f073a1c82785320a2668d91841a01253e8b",
+            "surfaces": "b1a108884017e3050cafa34e5858e0cb935373072e6fb52acbc36fdfc156084a",
+            "sites": "a49d5485ac89b99bdfd9a37123063775147b72cb1d5d169d9d22d6a4c2af716f",
+            "walkSites": "d6d405e80e5dbfc47d3a39a460c1eb307e28a790f3eb3fb50dfad78596e23048",
+            "bounds": "e65aefdfc85a9a99abb93d25ad2319194c7bf90e43b8ad3f3e6f8a19a4c0191e",
+            "floorHitOwnershipQueries": "e892f272e161ea2f8d8c9091de586d4115fcf945c1dd3c8719f7193968bf059b",
+            "graphs": "a43b9bfc139463eb8c86d4d1292e95b966fb74a0278c736f9af0a7e894127acb",
+            "routes": "b6d2b10bcfc7d657578cab5613bb98556659eb5a2d7290e82cfcd7c42e434807"
+          },
+          "queryCount": 1369,
+          "routeCount": 2940
+        },
+        {
+          "name": "actual-shore69",
+          "coldMs": 0.11962500000004184,
+          "cacheState": "warm from benchmark previous world",
+          "sites": 340,
+          "edges": 747,
+          "nonemptyNeighbors": 514,
+          "hashes": {
+            "definition": "8126b9b558a6148b2e37a5910d1893cc29cbad7867a3206c1094d5016f13ed2a",
+            "floors": "c2d3fe90daa980d3025d1d6d9d7da3f270456efdf570e1f5273627f0639dbf72",
+            "anchors": "639cc5ce2f4fb323d75836fad0364106857105f9734740d3440fa1aafd722754",
+            "surfaces": "0d6fac2b1b764cd58c181bd437d27b0e2d0d18629cdb37ebffe975a1eb3a627c",
+            "sites": "ccff3e3f6d5bda5ae78c5e1ea6c540799ebc1d3bbda9e2ddc49bd9399758257f",
+            "walkSites": "9df4a4d9aa6bd24c71f4d93bee5a5cf66421c6f8b7eda21608c3ec395d070e70",
+            "bounds": "0c9d460fa0483bc857d4aba8e9571c47db34817dd90b4dba2d4bebf6e512da56",
+            "floorHitOwnershipQueries": "5d3c3572c10dbe421688de511b82c22a0b034771adf7272b34cff20249336f55",
+            "graphs": "43f06981f92cd4ccad187c18e39aeb20e22cff6cbbf1dfa80d11dc08676eca0b",
+            "routes": "4437d89af7b77b6a585e9368f95222f44cf84ee8cdf2f7324edea5411105d904"
+          },
+          "queryCount": 2989,
+          "routeCount": 8160
+        },
+        {
+          "name": "bridge",
+          "coldMs": 170.31908399999975,
+          "cacheState": "cold",
+          "sites": 101,
+          "edges": 229,
+          "nonemptyNeighbors": 161,
+          "hashes": {
+            "definition": "c90518bd10185f9db5c115333562170995f7874b6abfcc133c4ccd6fd3eb2fdb",
+            "floors": "6783ac0d6580b52c2e8f71ba6b4974eb9f69f629aae4f710fabb4c5473228331",
+            "anchors": "68a1d13b2ee2019ba26ce3942c892d3d041edb72a4258a5ef41c2cee95a5de52",
+            "surfaces": "4dbbc5d6c4d7bbec018877a0df809433f9c96d6f5513d6b7896a0a906192e872",
+            "sites": "17754793501510623b0fc6ed4570ac132f75f866e8b4334ee2383f15f4be1bdf",
+            "walkSites": "17754793501510623b0fc6ed4570ac132f75f866e8b4334ee2383f15f4be1bdf",
+            "bounds": "a716714e4969c2ea065ec1697983397187cef181bd10129d1f9a414d44af507a",
+            "floorHitOwnershipQueries": "c7173b506a6e14c013a90877ae4c5ec58e923012e8308700b3afc24569f83c4f",
+            "graphs": "cf29a947dfab1ba5dd9c6b4511a6b171b798b070c512ea536b6c024cdde8d5ac",
+            "routes": "cb81259cc7755aaef24ff7bf210ea4a9df1551301b9fed68386defbb591c3a37"
+          },
+          "queryCount": 1369,
+          "routeCount": 3030
+        }
+      ],
+      "timings": [
+        {
+          "delta": -1,
+          "status": "rejected",
+          "message": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+          "ms": 1.06899999999996
+        },
+        {
+          "delta": 1,
+          "status": "rejected",
+          "message": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+          "ms": 342.0562500000001
+        },
+        {
+          "delta": -1,
+          "status": "rejected",
+          "message": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+          "ms": 1.143999999999778
+        }
+      ],
+      "errors": [
+        {
+          "name": "duplicate",
+          "error": "Invalid island world: duplicate edge or unknown endpoint"
+        },
+        {
+          "name": "unknown",
+          "error": "Invalid island world: duplicate edge or unknown endpoint"
+        },
+        {
+          "name": "invalid-right",
+          "error": "Invalid island world: edge passage rights"
+        },
+        {
+          "name": "empty-right",
+          "error": "Invalid island world: edge passage rights"
+        },
+        {
+          "name": "duplicate-right",
+          "error": "Invalid island world: edge passage rights"
+        },
+        {
+          "name": "nonarray-callback",
+          "error": "Invalid island world: derived edges must be an array"
+        },
+        {
+          "name": "cached-unsafe-forward",
+          "error": "Invalid island world: walk edge endpoint has no actual dry floor"
+        },
+        {
+          "name": "unsafe-reverse",
+          "error": "Invalid island world: walk edge endpoint has no actual dry floor"
+        }
+      ],
+      "directionalQueries": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "optionalAPI": {
+        "callbackOnce": true,
+        "geometryFrozen": true,
+        "graphCloned": true,
+        "badEdgesRejected": true,
+        "thrownCallbackPropagated": true,
+        "inputUnchanged": true
+      },
+      "scope": "Node actual Vite H + stable base + linear + single + frozen query. Same input69, candidate edit cold. CPU only, not browser/GPU. Directed local edge error memo only; all safety checks retained."
+    },
+    {
+      "enabled": true,
+      "benchmark": {
+        "coldEditMs": 332.434833,
+        "compileMs": 194.376,
+        "worldMs": 330.234,
+        "cpu": {
+          "status": "stopped",
+          "clock": "performance.now milliseconds from CPU measurement start",
+          "startedPerformanceMs": 459.673,
+          "startedEpochMs": 1792707288578.478,
+          "endedPerformanceMs": 792.142,
+          "elapsedMs": 332.469,
+          "retainedLimit": 400,
+          "dropped": 0,
+          "filteredFastTerrainCalls": 4,
+          "incompleteSpans": 0,
+          "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+          "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+          "aggregates": {
+            "editableIslandWorld:cache-hit": {
+              "calls": 4,
+              "inclusiveMs": 0.128,
+              "selfMs": 0.128,
+              "maxMs": 0.043,
+              "failed": 0
+            },
+            "compileWorldDefinition:derived-edges": {
+              "calls": 1,
+              "inclusiveMs": 194.376,
+              "selfMs": 194.376,
+              "maxMs": 194.376,
+              "failed": 0
+            },
+            "editableIslandWorld:cold": {
+              "calls": 1,
+              "inclusiveMs": 330.234,
+              "selfMs": 135.858,
+              "maxMs": 330.234,
+              "failed": 0
+            },
+            "applyIntent:terrain-edit": {
+              "calls": 1,
+              "inclusiveMs": 332.359,
+              "selfMs": 1.997,
+              "maxMs": 332.359,
+              "failed": 0
+            }
+          },
+          "spans": [
+            {
+              "id": 1,
+              "parentId": null,
+              "name": "applyIntent",
+              "detail": "terrain-edit",
+              "startMs": 0.098,
+              "endMs": 332.458,
+              "inclusiveMs": 332.359,
+              "selfMs": 1.997,
+              "failed": false
+            },
+            {
+              "id": 3,
+              "parentId": 1,
+              "name": "editableIslandWorld",
+              "detail": "cold",
+              "startMs": 0.754,
+              "endMs": 330.989,
+              "inclusiveMs": 330.234,
+              "selfMs": 135.858,
+              "failed": false
+            },
+            {
+              "id": 4,
+              "parentId": 3,
+              "name": "compileWorldDefinition",
+              "detail": "derived-edges",
+              "startMs": 136.569,
+              "endMs": 330.945,
+              "inclusiveMs": 194.376,
+              "selfMs": 194.376,
+              "failed": false
+            }
+          ]
+        },
+        "resultHash": "4fe509f3c4a0135f2e7ef3465195a41b8aa631a1df18a17e4b94d9e6a677070d"
+      },
+      "reports": [
+        {
+          "name": "initial",
+          "coldMs": 141.97733300000004,
+          "cacheState": "cold",
+          "sites": 99,
+          "edges": 227,
+          "nonemptyNeighbors": 159,
+          "hashes": {
+            "definition": "d0df30bf8d7333dd887ad2d12ed3d8d76107664e02a38996fb3c672f79655564",
+            "floors": "269352fa351f6a0d41d55fd9321bfaae36d2daf8c52acc4a906fe433f1b8e0b0",
+            "anchors": "bcd3955e77ffe9a4fa829c7c07609f073a1c82785320a2668d91841a01253e8b",
+            "surfaces": "4dbbc5d6c4d7bbec018877a0df809433f9c96d6f5513d6b7896a0a906192e872",
+            "sites": "867438540b7819b1d53bffe3771e11b6dec6eb4c1662d8f3eba00c9413d1b096",
+            "walkSites": "867438540b7819b1d53bffe3771e11b6dec6eb4c1662d8f3eba00c9413d1b096",
+            "bounds": "e8bce891aa6a7a14e0479a0961b8f705899eef3e8da044397e0983ecc2e37e2f",
+            "floorHitOwnershipQueries": "08f067aeebc2bdc8dd0adae1411fa738cca1e225431389d818a473162f559c60",
+            "graphs": "6a17d11400b43c6ea9536285755f0027f203914828c323690cfe444f4920d9c7",
+            "routes": "dca173000ffaa55974eb65518baac127e326cf8eb2d7d4438ca3da769e0de157"
+          },
+          "queryCount": 1369,
+          "routeCount": 2970
+        },
+        {
+          "name": "negative-cut",
+          "coldMs": 177.7203750000001,
+          "cacheState": "cold",
+          "sites": 98,
+          "edges": 200,
+          "nonemptyNeighbors": 148,
+          "hashes": {
+            "definition": "dfb3bc76d22d93b8835b2cd9fc621ef0beb8f13251f8fa005d078dfe05a379e5",
+            "floors": "5c99c14652ccc6fc641b92ce8dbb866a7b0caf717ca607eb4e0561a58419732c",
+            "anchors": "bcd3955e77ffe9a4fa829c7c07609f073a1c82785320a2668d91841a01253e8b",
+            "surfaces": "b1a108884017e3050cafa34e5858e0cb935373072e6fb52acbc36fdfc156084a",
+            "sites": "a49d5485ac89b99bdfd9a37123063775147b72cb1d5d169d9d22d6a4c2af716f",
+            "walkSites": "d6d405e80e5dbfc47d3a39a460c1eb307e28a790f3eb3fb50dfad78596e23048",
+            "bounds": "e65aefdfc85a9a99abb93d25ad2319194c7bf90e43b8ad3f3e6f8a19a4c0191e",
+            "floorHitOwnershipQueries": "e892f272e161ea2f8d8c9091de586d4115fcf945c1dd3c8719f7193968bf059b",
+            "graphs": "a43b9bfc139463eb8c86d4d1292e95b966fb74a0278c736f9af0a7e894127acb",
+            "routes": "b6d2b10bcfc7d657578cab5613bb98556659eb5a2d7290e82cfcd7c42e434807"
+          },
+          "queryCount": 1369,
+          "routeCount": 2940
+        },
+        {
+          "name": "actual-shore69",
+          "coldMs": 0.10779099999990649,
+          "cacheState": "warm from benchmark previous world",
+          "sites": 340,
+          "edges": 747,
+          "nonemptyNeighbors": 514,
+          "hashes": {
+            "definition": "8126b9b558a6148b2e37a5910d1893cc29cbad7867a3206c1094d5016f13ed2a",
+            "floors": "c2d3fe90daa980d3025d1d6d9d7da3f270456efdf570e1f5273627f0639dbf72",
+            "anchors": "639cc5ce2f4fb323d75836fad0364106857105f9734740d3440fa1aafd722754",
+            "surfaces": "0d6fac2b1b764cd58c181bd437d27b0e2d0d18629cdb37ebffe975a1eb3a627c",
+            "sites": "ccff3e3f6d5bda5ae78c5e1ea6c540799ebc1d3bbda9e2ddc49bd9399758257f",
+            "walkSites": "9df4a4d9aa6bd24c71f4d93bee5a5cf66421c6f8b7eda21608c3ec395d070e70",
+            "bounds": "0c9d460fa0483bc857d4aba8e9571c47db34817dd90b4dba2d4bebf6e512da56",
+            "floorHitOwnershipQueries": "5d3c3572c10dbe421688de511b82c22a0b034771adf7272b34cff20249336f55",
+            "graphs": "43f06981f92cd4ccad187c18e39aeb20e22cff6cbbf1dfa80d11dc08676eca0b",
+            "routes": "4437d89af7b77b6a585e9368f95222f44cf84ee8cdf2f7324edea5411105d904"
+          },
+          "queryCount": 2989,
+          "routeCount": 8160
+        },
+        {
+          "name": "bridge",
+          "coldMs": 153.411834,
+          "cacheState": "cold",
+          "sites": 101,
+          "edges": 229,
+          "nonemptyNeighbors": 161,
+          "hashes": {
+            "definition": "c90518bd10185f9db5c115333562170995f7874b6abfcc133c4ccd6fd3eb2fdb",
+            "floors": "6783ac0d6580b52c2e8f71ba6b4974eb9f69f629aae4f710fabb4c5473228331",
+            "anchors": "68a1d13b2ee2019ba26ce3942c892d3d041edb72a4258a5ef41c2cee95a5de52",
+            "surfaces": "4dbbc5d6c4d7bbec018877a0df809433f9c96d6f5513d6b7896a0a906192e872",
+            "sites": "17754793501510623b0fc6ed4570ac132f75f866e8b4334ee2383f15f4be1bdf",
+            "walkSites": "17754793501510623b0fc6ed4570ac132f75f866e8b4334ee2383f15f4be1bdf",
+            "bounds": "a716714e4969c2ea065ec1697983397187cef181bd10129d1f9a414d44af507a",
+            "floorHitOwnershipQueries": "c7173b506a6e14c013a90877ae4c5ec58e923012e8308700b3afc24569f83c4f",
+            "graphs": "cf29a947dfab1ba5dd9c6b4511a6b171b798b070c512ea536b6c024cdde8d5ac",
+            "routes": "cb81259cc7755aaef24ff7bf210ea4a9df1551301b9fed68386defbb591c3a37"
+          },
+          "queryCount": 1369,
+          "routeCount": 3030
+        }
+      ],
+      "timings": [
+        {
+          "delta": -1,
+          "status": "rejected",
+          "message": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+          "ms": 1.2216249999996762
+        },
+        {
+          "delta": 1,
+          "status": "rejected",
+          "message": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+          "ms": 323.4510830000004
+        },
+        {
+          "delta": -1,
+          "status": "rejected",
+          "message": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+          "ms": 0.9223749999996471
+        }
+      ],
+      "errors": [
+        {
+          "name": "duplicate",
+          "error": "Invalid island world: duplicate edge or unknown endpoint"
+        },
+        {
+          "name": "unknown",
+          "error": "Invalid island world: duplicate edge or unknown endpoint"
+        },
+        {
+          "name": "invalid-right",
+          "error": "Invalid island world: edge passage rights"
+        },
+        {
+          "name": "empty-right",
+          "error": "Invalid island world: edge passage rights"
+        },
+        {
+          "name": "duplicate-right",
+          "error": "Invalid island world: edge passage rights"
+        },
+        {
+          "name": "nonarray-callback",
+          "error": "Invalid island world: derived edges must be an array"
+        },
+        {
+          "name": "cached-unsafe-forward",
+          "error": "Invalid island world: walk edge endpoint has no actual dry floor"
+        },
+        {
+          "name": "unsafe-reverse",
+          "error": "Invalid island world: walk edge endpoint has no actual dry floor"
+        }
+      ],
+      "directionalQueries": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "optionalAPI": {
+        "callbackOnce": true,
+        "geometryFrozen": true,
+        "graphCloned": true,
+        "badEdgesRejected": true,
+        "thrownCallbackPropagated": true,
+        "inputUnchanged": true
+      },
+      "scope": "Node actual Vite H + stable base + linear + single + frozen query. Same input69, candidate edit cold. CPU only, not browser/GPU. Directed local edge error memo only; all safety checks retained."
+    }
+  ],
+  "benchmarks": [
+    {
+      "enabled": true,
+      "benchmark": {
+        "coldEditMs": 330.94375,
+        "compileMs": 194.627,
+        "worldMs": 328.726,
+        "cpu": {
+          "status": "stopped",
+          "clock": "performance.now milliseconds from CPU measurement start",
+          "startedPerformanceMs": 459.711,
+          "startedEpochMs": 1792707292164.941,
+          "endedPerformanceMs": 790.696,
+          "elapsedMs": 330.985,
+          "retainedLimit": 400,
+          "dropped": 0,
+          "filteredFastTerrainCalls": 4,
+          "incompleteSpans": 0,
+          "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+          "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+          "aggregates": {
+            "editableIslandWorld:cache-hit": {
+              "calls": 4,
+              "inclusiveMs": 0.144,
+              "selfMs": 0.144,
+              "maxMs": 0.045,
+              "failed": 0
+            },
+            "compileWorldDefinition:derived-edges": {
+              "calls": 1,
+              "inclusiveMs": 194.627,
+              "selfMs": 194.627,
+              "maxMs": 194.627,
+              "failed": 0
+            },
+            "editableIslandWorld:cold": {
+              "calls": 1,
+              "inclusiveMs": 328.726,
+              "selfMs": 134.099,
+              "maxMs": 328.726,
+              "failed": 0
+            },
+            "applyIntent:terrain-edit": {
+              "calls": 1,
+              "inclusiveMs": 330.868,
+              "selfMs": 1.997,
+              "maxMs": 330.868,
+              "failed": 0
+            }
+          },
+          "spans": [
+            {
+              "id": 1,
+              "parentId": null,
+              "name": "applyIntent",
+              "detail": "terrain-edit",
+              "startMs": 0.1,
+              "endMs": 330.967,
+              "inclusiveMs": 330.868,
+              "selfMs": 1.997,
+              "failed": false
+            },
+            {
+              "id": 3,
+              "parentId": 1,
+              "name": "editableIslandWorld",
+              "detail": "cold",
+              "startMs": 0.831,
+              "endMs": 329.557,
+              "inclusiveMs": 328.726,
+              "selfMs": 134.099,
+              "failed": false
+            },
+            {
+              "id": 4,
+              "parentId": 3,
+              "name": "compileWorldDefinition",
+              "detail": "derived-edges",
+              "startMs": 134.889,
+              "endMs": 329.517,
+              "inclusiveMs": 194.627,
+              "selfMs": 194.627,
+              "failed": false
+            }
+          ]
+        },
+        "resultHash": "4fe509f3c4a0135f2e7ef3465195a41b8aa631a1df18a17e4b94d9e6a677070d"
+      }
+    },
+    {
+      "enabled": false,
+      "benchmark": {
+        "coldEditMs": 354.890375,
+        "compileMs": 216.619,
+        "worldMs": 352.436,
+        "cpu": {
+          "status": "stopped",
+          "clock": "performance.now milliseconds from CPU measurement start",
+          "startedPerformanceMs": 489.436,
+          "startedEpochMs": 1792707293002.428,
+          "endedPerformanceMs": 844.398,
+          "elapsedMs": 354.962,
+          "retainedLimit": 400,
+          "dropped": 0,
+          "filteredFastTerrainCalls": 4,
+          "incompleteSpans": 0,
+          "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+          "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+          "aggregates": {
+            "editableIslandWorld:cache-hit": {
+              "calls": 4,
+              "inclusiveMs": 0.152,
+              "selfMs": 0.152,
+              "maxMs": 0.058,
+              "failed": 0
+            },
+            "compileWorldDefinition:derived-edges": {
+              "calls": 1,
+              "inclusiveMs": 216.619,
+              "selfMs": 216.619,
+              "maxMs": 216.619,
+              "failed": 0
+            },
+            "editableIslandWorld:cold": {
+              "calls": 1,
+              "inclusiveMs": 352.436,
+              "selfMs": 135.817,
+              "maxMs": 352.436,
+              "failed": 0
+            },
+            "applyIntent:terrain-edit": {
+              "calls": 1,
+              "inclusiveMs": 354.805,
+              "selfMs": 2.218,
+              "maxMs": 354.805,
+              "failed": 0
+            }
+          },
+          "spans": [
+            {
+              "id": 1,
+              "parentId": null,
+              "name": "applyIntent",
+              "detail": "terrain-edit",
+              "startMs": 0.142,
+              "endMs": 354.947,
+              "inclusiveMs": 354.805,
+              "selfMs": 2.218,
+              "failed": false
+            },
+            {
+              "id": 3,
+              "parentId": 1,
+              "name": "editableIslandWorld",
+              "detail": "cold",
+              "startMs": 1.07,
+              "endMs": 353.506,
+              "inclusiveMs": 352.436,
+              "selfMs": 135.817,
+              "failed": false
+            },
+            {
+              "id": 4,
+              "parentId": 3,
+              "name": "compileWorldDefinition",
+              "detail": "derived-edges",
+              "startMs": 136.845,
+              "endMs": 353.464,
+              "inclusiveMs": 216.619,
+              "selfMs": 216.619,
+              "failed": false
+            }
+          ]
+        },
+        "resultHash": "4fe509f3c4a0135f2e7ef3465195a41b8aa631a1df18a17e4b94d9e6a677070d"
+      }
+    },
+    {
+      "enabled": false,
+      "benchmark": {
+        "coldEditMs": 360.6475,
+        "compileMs": 212.632,
+        "worldMs": 358.388,
+        "cpu": {
+          "status": "stopped",
+          "clock": "performance.now milliseconds from CPU measurement start",
+          "startedPerformanceMs": 471.593,
+          "startedEpochMs": 1792707293846.413,
+          "endedPerformanceMs": 832.275,
+          "elapsedMs": 360.682,
+          "retainedLimit": 400,
+          "dropped": 0,
+          "filteredFastTerrainCalls": 4,
+          "incompleteSpans": 0,
+          "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+          "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+          "aggregates": {
+            "editableIslandWorld:cache-hit": {
+              "calls": 4,
+              "inclusiveMs": 0.152,
+              "selfMs": 0.152,
+              "maxMs": 0.05,
+              "failed": 0
+            },
+            "compileWorldDefinition:derived-edges": {
+              "calls": 1,
+              "inclusiveMs": 212.632,
+              "selfMs": 212.632,
+              "maxMs": 212.632,
+              "failed": 0
+            },
+            "editableIslandWorld:cold": {
+              "calls": 1,
+              "inclusiveMs": 358.388,
+              "selfMs": 145.756,
+              "maxMs": 358.388,
+              "failed": 0
+            },
+            "applyIntent:terrain-edit": {
+              "calls": 1,
+              "inclusiveMs": 360.574,
+              "selfMs": 2.034,
+              "maxMs": 360.574,
+              "failed": 0
+            }
+          },
+          "spans": [
+            {
+              "id": 1,
+              "parentId": null,
+              "name": "applyIntent",
+              "detail": "terrain-edit",
+              "startMs": 0.097,
+              "endMs": 360.671,
+              "inclusiveMs": 360.574,
+              "selfMs": 2.034,
+              "failed": false
+            },
+            {
+              "id": 3,
+              "parentId": 1,
+              "name": "editableIslandWorld",
+              "detail": "cold",
+              "startMs": 0.835,
+              "endMs": 359.223,
+              "inclusiveMs": 358.388,
+              "selfMs": 145.756,
+              "failed": false
+            },
+            {
+              "id": 4,
+              "parentId": 3,
+              "name": "compileWorldDefinition",
+              "detail": "derived-edges",
+              "startMs": 146.542,
+              "endMs": 359.174,
+              "inclusiveMs": 212.632,
+              "selfMs": 212.632,
+              "failed": false
+            }
+          ]
+        },
+        "resultHash": "4fe509f3c4a0135f2e7ef3465195a41b8aa631a1df18a17e4b94d9e6a677070d"
+      }
+    },
+    {
+      "enabled": true,
+      "benchmark": {
+        "coldEditMs": 350.20891700000004,
+        "compileMs": 206.522,
+        "worldMs": 347.894,
+        "cpu": {
+          "status": "stopped",
+          "clock": "performance.now milliseconds from CPU measurement start",
+          "startedPerformanceMs": 500.088,
+          "startedEpochMs": 1792707294724.519,
+          "endedPerformanceMs": 850.336,
+          "elapsedMs": 350.248,
+          "retainedLimit": 400,
+          "dropped": 0,
+          "filteredFastTerrainCalls": 4,
+          "incompleteSpans": 0,
+          "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+          "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+          "aggregates": {
+            "editableIslandWorld:cache-hit": {
+              "calls": 4,
+              "inclusiveMs": 0.15,
+              "selfMs": 0.15,
+              "maxMs": 0.053,
+              "failed": 0
+            },
+            "compileWorldDefinition:derived-edges": {
+              "calls": 1,
+              "inclusiveMs": 206.522,
+              "selfMs": 206.522,
+              "maxMs": 206.522,
+              "failed": 0
+            },
+            "editableIslandWorld:cold": {
+              "calls": 1,
+              "inclusiveMs": 347.894,
+              "selfMs": 141.371,
+              "maxMs": 347.894,
+              "failed": 0
+            },
+            "applyIntent:terrain-edit": {
+              "calls": 1,
+              "inclusiveMs": 350.133,
+              "selfMs": 2.089,
+              "maxMs": 350.133,
+              "failed": 0
+            }
+          },
+          "spans": [
+            {
+              "id": 1,
+              "parentId": null,
+              "name": "applyIntent",
+              "detail": "terrain-edit",
+              "startMs": 0.098,
+              "endMs": 350.231,
+              "inclusiveMs": 350.133,
+              "selfMs": 2.089,
+              "failed": false
+            },
+            {
+              "id": 3,
+              "parentId": 1,
+              "name": "editableIslandWorld",
+              "detail": "cold",
+              "startMs": 0.871,
+              "endMs": 348.765,
+              "inclusiveMs": 347.894,
+              "selfMs": 141.371,
+              "failed": false
+            },
+            {
+              "id": 4,
+              "parentId": 3,
+              "name": "compileWorldDefinition",
+              "detail": "derived-edges",
+              "startMs": 142.198,
+              "endMs": 348.72,
+              "inclusiveMs": 206.522,
+              "selfMs": 206.522,
+              "failed": false
+            }
+          ]
+        },
+        "resultHash": "4fe509f3c4a0135f2e7ef3465195a41b8aa631a1df18a17e4b94d9e6a677070d"
+      }
+    },
+    {
+      "enabled": true,
+      "benchmark": {
+        "coldEditMs": 430.57925,
+        "compileMs": 282.773,
+        "worldMs": 428.293,
+        "cpu": {
+          "status": "stopped",
+          "clock": "performance.now milliseconds from CPU measurement start",
+          "startedPerformanceMs": 502.38,
+          "startedEpochMs": 1792707295596.007,
+          "endedPerformanceMs": 933,
+          "elapsedMs": 430.62,
+          "retainedLimit": 400,
+          "dropped": 0,
+          "filteredFastTerrainCalls": 4,
+          "incompleteSpans": 0,
+          "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+          "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+          "aggregates": {
+            "editableIslandWorld:cache-hit": {
+              "calls": 4,
+              "inclusiveMs": 0.141,
+              "selfMs": 0.141,
+              "maxMs": 0.043,
+              "failed": 0
+            },
+            "compileWorldDefinition:derived-edges": {
+              "calls": 1,
+              "inclusiveMs": 282.773,
+              "selfMs": 282.773,
+              "maxMs": 282.773,
+              "failed": 0
+            },
+            "editableIslandWorld:cold": {
+              "calls": 1,
+              "inclusiveMs": 428.293,
+              "selfMs": 145.52,
+              "maxMs": 428.293,
+              "failed": 0
+            },
+            "applyIntent:terrain-edit": {
+              "calls": 1,
+              "inclusiveMs": 430.497,
+              "selfMs": 2.063,
+              "maxMs": 430.497,
+              "failed": 0
+            }
+          },
+          "spans": [
+            {
+              "id": 1,
+              "parentId": null,
+              "name": "applyIntent",
+              "detail": "terrain-edit",
+              "startMs": 0.105,
+              "endMs": 430.602,
+              "inclusiveMs": 430.497,
+              "selfMs": 2.063,
+              "failed": false
+            },
+            {
+              "id": 3,
+              "parentId": 1,
+              "name": "editableIslandWorld",
+              "detail": "cold",
+              "startMs": 0.813,
+              "endMs": 429.106,
+              "inclusiveMs": 428.293,
+              "selfMs": 145.52,
+              "failed": false
+            },
+            {
+              "id": 4,
+              "parentId": 3,
+              "name": "compileWorldDefinition",
+              "detail": "derived-edges",
+              "startMs": 146.288,
+              "endMs": 429.061,
+              "inclusiveMs": 282.773,
+              "selfMs": 282.773,
+              "failed": false
+            }
+          ]
+        },
+        "resultHash": "4fe509f3c4a0135f2e7ef3465195a41b8aa631a1df18a17e4b94d9e6a677070d"
+      }
+    },
+    {
+      "enabled": false,
+      "benchmark": {
+        "coldEditMs": 371.630125,
+        "compileMs": 232.615,
+        "worldMs": 369.227,
+        "cpu": {
+          "status": "stopped",
+          "clock": "performance.now milliseconds from CPU measurement start",
+          "startedPerformanceMs": 644.987,
+          "startedEpochMs": 1792707296691.943,
+          "endedPerformanceMs": 1016.661,
+          "elapsedMs": 371.674,
+          "retainedLimit": 400,
+          "dropped": 0,
+          "filteredFastTerrainCalls": 4,
+          "incompleteSpans": 0,
+          "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+          "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+          "aggregates": {
+            "editableIslandWorld:cache-hit": {
+              "calls": 4,
+              "inclusiveMs": 0.176,
+              "selfMs": 0.176,
+              "maxMs": 0.081,
+              "failed": 0
+            },
+            "compileWorldDefinition:derived-edges": {
+              "calls": 1,
+              "inclusiveMs": 232.615,
+              "selfMs": 232.615,
+              "maxMs": 232.615,
+              "failed": 0
+            },
+            "editableIslandWorld:cold": {
+              "calls": 1,
+              "inclusiveMs": 369.227,
+              "selfMs": 136.612,
+              "maxMs": 369.227,
+              "failed": 0
+            },
+            "applyIntent:terrain-edit": {
+              "calls": 1,
+              "inclusiveMs": 371.554,
+              "selfMs": 2.151,
+              "maxMs": 371.554,
+              "failed": 0
+            }
+          },
+          "spans": [
+            {
+              "id": 1,
+              "parentId": null,
+              "name": "applyIntent",
+              "detail": "terrain-edit",
+              "startMs": 0.097,
+              "endMs": 371.651,
+              "inclusiveMs": 371.554,
+              "selfMs": 2.151,
+              "failed": false
+            },
+            {
+              "id": 3,
+              "parentId": 1,
+              "name": "editableIslandWorld",
+              "detail": "cold",
+              "startMs": 0.766,
+              "endMs": 369.993,
+              "inclusiveMs": 369.227,
+              "selfMs": 136.612,
+              "failed": false
+            },
+            {
+              "id": 4,
+              "parentId": 3,
+              "name": "compileWorldDefinition",
+              "detail": "derived-edges",
+              "startMs": 137.334,
+              "endMs": 369.949,
+              "inclusiveMs": 232.615,
+              "selfMs": 232.615,
+              "failed": false
+            }
+          ]
+        },
+        "resultHash": "4fe509f3c4a0135f2e7ef3465195a41b8aa631a1df18a17e4b94d9e6a677070d"
+      }
+    }
+  ],
+  "checks": {
+    "fourFixtureHashesExactlyEqual": true,
+    "sameColdCommandResult": true,
+    "invalidErrorMessagesExactlyEqual": true,
+    "callbackExceptionIdentity": true,
+    "immutablePublishedAPI": true,
+    "callbackOnce": true,
+    "callbackEdgesCloned": true,
+    "directedChecksPreserved": true,
+    "publishedWalkCheckUncached": true,
+    "duplicateTransformRejected": true
+  },
+  "limitations": [
+    "Node CPU with frozen query; not browser frame/GPU timing.",
+    "Same UI69 raw input is used, but process isolation and fixture initialization are diagnostic.",
+    "No safety check removed. Body corridor check remains separate. No claim that all compile cost is eliminated."
+  ]
+}

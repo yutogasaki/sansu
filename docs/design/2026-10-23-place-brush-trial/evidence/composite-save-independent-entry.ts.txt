@@ -1,0 +1,130 @@
+import 'fake-indexeddb/auto';
+import assert from 'node:assert/strict';
+import { GrowingIslandDatabase, commandGrowingIsland, readGrowingIsland, observeGrowingIsland } from '../../../src/domain/growingIsland/repository';
+import { compositeDatabase, compositeInitialRecord, openCompositeTrial, COMPOSITE_DATABASE, COMPOSITE_PROFILE } from './composite-store';
+import { compositeEditingRevision } from './composite-model';
+import { trialDatabase, openSavedTrial } from './trial-store';
+const fullQuery=location.search;
+const reports:any[]=[];
+const safe={actors:[],occupiedPlaceTargets:[]};
+const west={center:{x:-1,z:4},radius:1.6,height:.5,entrance:1.2,flatRadius:1.75};
+const east={center:{x:5,z:5},radius:1.6,height:.9,entrance:1.2,flatRadius:1.75,rampDirection:'west'};
+const normal={type:'move',id:'starter-bench',cell:{x:-1,z:4}};
+const setCommand={type:'place-set',action:'apply',slot:'west',shape:west,safety:safe,expectedPlaceRevision:'unused-pretransaction'};
+const queryWith=(changes:Record<string,string|null>)=>{const q=new URLSearchParams(fullQuery);for(const [k,v]of Object.entries(changes)){if(v===null)q.delete(k);else q.set(k,v);}return '?'+q.toString();};
+const memoryOnly=new GrowingIslandDatabase(COMPOSITE_DATABASE);
+let tx=0,opens=0;
+const rawOpen=indexedDB.open.bind(indexedDB); indexedDB.open=((...args:any[])=>{opens++;return rawOpen(...args as [string,number]);}) as typeof indexedDB.open;
+const noTx=(db:any)=>{db.transaction=()=>{tx++;throw Error('INDEPENDENT_TX_REACHED');};return db;};
+const expectPreTx=async(label:string,fn:()=>unknown)=>{const before={tx,opens};let error;try{await fn();}catch(e){error=String(e);}assert(error,label+' must reject');assert(!error.includes('INDEPENDENT_TX_REACHED'),label+' reached tx');assert.equal(tx,before.tx,label+' transaction count');assert.equal(opens,before.opens,label+' IDB open count');return error;};
+const guarded=noTx(memoryOnly);
+for(const [label,changes]of Object.entries({memory:{trialSave:null},wrongSave:{trialSave:'local'},unknownSave:{trialSave:'unexpected'},missingTwo:{placeSetTrial:null},unknownTwo:{placeSetTrial:'other'},missingScene:{trialScene:null},otherScene:{trialScene:'expanded'},wrongH:{terrainTrial:'G'},wrongBase:{baseTrial:'other'},wrongGrowth:{growthTrial:'other'},wrongRamp:{rampTrial:'other'},wrongCompile:{compileTrial:'other'},wrongQuery:{queryTrial:'other'},wrongMemo:{memoTrial:'other'},wrongEdge:{edgeTrial:'other'},shore:{shoreTrial:'bay08'}})){
+ location.search=queryWith(changes);
+ await expectPreTx(label+' accessor',()=>compositeDatabase());
+ await expectPreTx(label+' opener',()=>openCompositeTrial(guarded));
+ await expectPreTx(label+' reader',()=>readGrowingIsland(COMPOSITE_PROFILE,guarded));
+ await expectPreTx(label+' observer',()=>observeGrowingIsland(COMPOSITE_PROFILE,guarded));
+ await expectPreTx(label+' ordinary writer',()=>commandGrowingIsland(COMPOSITE_PROFILE,{id:'bad-mode-'+label,islandId:'main',command:normal} as any,1000,guarded));
+ await expectPreTx(label+' shape writer',()=>commandGrowingIsland(COMPOSITE_PROFILE,{id:'bad-mode-shape-'+label,islandId:'main',command:setCommand} as any,1000,guarded));
+}
+location.search=fullQuery;
+for(const name of ['SansuGrowingIslandV1','SansuPlaceOutlineTrialV1','SansuPlaceSetTrialV1-typo']){
+ const bad=noTx(new GrowingIslandDatabase(name));
+ await expectPreTx('wrong DB opener '+name,()=>openCompositeTrial(bad));
+ await expectPreTx('wrong DB reader '+name,()=>readGrowingIsland(COMPOSITE_PROFILE,bad));
+ await expectPreTx('wrong DB observer '+name,()=>observeGrowingIsland(COMPOSITE_PROFILE,bad));
+ for(const command of [normal,setCommand])await expectPreTx('wrong DB writer '+name+command.type,()=>commandGrowingIsland(COMPOSITE_PROFILE,{id:'wrong-db',islandId:'main',command} as any,1000,bad));
+}
+await expectPreTx('forged DB opener',()=>openCompositeTrial(noTx({name:COMPOSITE_DATABASE}) as any));
+await expectPreTx('forged DB writer',()=>commandGrowingIsland(COMPOSITE_PROFILE,{id:'forged',command:normal} as any,1000,noTx({name:COMPOSITE_DATABASE}) as any));
+for(const command of [normal,setCommand]){
+ await expectPreTx('wrong profile '+command.type,()=>commandGrowingIsland('real-child-profile',{id:'wrong-profile',command} as any,1000,guarded));
+ await expectPreTx('wrong island '+command.type,()=>commandGrowingIsland(COMPOSITE_PROFILE,{id:'wrong-island',islandId:'different-island',command} as any,1000,guarded));
+}
+await expectPreTx('wrong reader profile',()=>readGrowingIsland('real-child-profile',guarded));
+await expectPreTx('wrong observer profile',()=>observeGrowingIsland('real-child-profile',guarded));
+await expectPreTx('single accessor in two-local',()=>trialDatabase());
+await expectPreTx('single opener in two-local',()=>openSavedTrial(guarded));
+reports.push({name:'16 incompatible modes, 3 wrong DBs, forged DB, wrong owner/island and old accessor reject before transaction/open',tx,opens});
+
+const db=new GrowingIslandDatabase(COMPOSITE_DATABASE);
+const protectedDbs=[new GrowingIslandDatabase('SansuGrowingIslandV1'),new GrowingIslandDatabase('SansuPlaceOutlineTrialV1')];
+for(const p of protectedDbs)await p.islands.put({profileId:'protected-sentinel',islandId:'main',version:6,revision:7,createdAt:1,updatedAt:1,state:{sentinel:p.name}} as any);
+const protectedBefore=await Promise.all(protectedDbs.map(p=>p.islands.toArray()));
+const foreignRecord=structuredClone(compositeInitialRecord());foreignRecord.profileId='unexpected-stored-owner';
+await db.islands.put(foreignRecord);
+await assert.rejects(openCompositeTrial(db,1000),undefined,'nonempty wrong-key DB is not an empty fixture destination');
+assert.deepEqual(await db.islands.toArray(),[foreignRecord],'foreign record remains, no new fixture appears');
+await db.islands.clear();
+const initialDiskFull=()=>{throw Error('INDEPENDENT_INITIAL_DISK_FULL');};db.islands.hook('creating',initialDiskFull);
+try{await assert.rejects(openCompositeTrial(db,1000),/INDEPENDENT_INITIAL_DISK_FULL/);}finally{db.islands.hook('creating').unsubscribe(initialDiskFull);}
+assert.equal(await db.islands.count(),0,'failed first save creates no partial fixture');
+reports.push({name:'nonempty wrong-key DB rejects without fixture reset; failed first creation leaves no partial record'});
+let current=await openCompositeTrial(db,1000);
+assert.deepEqual(current,compositeInitialRecord());assert.deepEqual(await openCompositeTrial(db,2000),current);
+const saved=async()=>{const r=await readGrowingIsland(COMPOSITE_PROFILE,db);assert(r);return r;};
+let serial=0;
+const shape=async(action:string,slot:string,s?:any)=>{const before=await saved();return (await commandGrowingIsland(COMPOSITE_PROFILE,{id:'independent-shape-'+(++serial),islandId:'main',command:{type:'place-set',action,slot,shape:s,safety:safe,expectedPlaceRevision:compositeEditingRevision(before.state)}} as any,3000+serial,db)).record;};
+const ordinary=async(command:any,id='independent-ordinary-'+(++serial))=>(await commandGrowingIsland(COMPOSITE_PROFILE,{id,islandId:'main',command},4000+serial,db)).record;
+await shape('apply','west',west);await shape('apply','east',east);
+current=await shape('apply','west',{...west,entrance:2});
+const beforeFailure=structuredClone(current);
+const diskFull=()=>{throw Error('INDEPENDENT_DISK_FULL');};
+db.islands.hook('updating',diskFull);
+try{
+ await assert.rejects(shape('apply','west',west),/INDEPENDENT_DISK_FULL/);
+ await assert.rejects(ordinary({type:'place',kind:'flower',cell:{x:-1,z:4}},'retry-purchase-id'),/INDEPENDENT_DISK_FULL/);
+}finally{db.islands.hook('updating').unsubscribe(diskFull);}
+assert.deepEqual(await saved(),beforeFailure,'failed shape/history and failed wallet purchase retain exact record');
+assert.deepEqual(current,beforeFailure,'caller record also remains unchanged');
+const bought=await ordinary({type:'place',kind:'flower',cell:{x:-1,z:4}},'retry-purchase-id');
+assert(bought.state.drops<beforeFailure.state.drops);assert.equal(bought.state.landmarks.length,beforeFailure.state.landmarks.length+1);
+const stable=(r:any)=>{const s=structuredClone(r.state);delete s.trialPlaceSet;delete s.trialPlaceSetHistory;delete s.trialPlaceSetRecipe;s.applied=[];return s;};
+const undo=await shape('undo','west');assert.deepEqual((undo.state as any).trialPlaceSet.west,west);assert.deepEqual(stable(undo),stable(bought));
+db.close();await db.open();assert.deepEqual(await openCompositeTrial(db,9000),undo);
+const redo=await shape('redo','west');assert.equal((redo.state as any).trialPlaceSet.west.entrance,2);assert.deepEqual(stable(redo),stable(bought));
+reports.push({name:'failed actual puts retain exact shape/history/wallet; same purchase intent retries; saved Undo/Redo after purchase preserves all ordinary state',owners:redo.state.landmarks.map(x=>({id:x.id,kind:x.kind,cell:x.cell})),drops:redo.state.drops});
+
+const pristine=structuredClone(redo);
+const corruptions:[string,(r:any)=>void][]=[
+ ['wrong recipe',r=>r.state.trialPlaceSetRecipe='future-recipe'],
+ ['missing recipe',r=>delete r.state.trialPlaceSetRecipe],
+ ['all composite markers missing',r=>{delete r.state.trialPlaceSet;delete r.state.trialPlaceSetHistory;delete r.state.trialPlaceSetRecipe;}],
+ ['missing history',r=>delete r.state.trialPlaceSetHistory],
+ ['broken undo chain',r=>r.state.trialPlaceSetHistory.undo.at(-1).after.west.entrance=1.9],
+ ['corrupt redo entry',r=>r.state.trialPlaceSetHistory.redo.push({before:{},after:{west}})],
+ ['future history key',r=>r.state.trialPlaceSetHistory.futureOwner=[]],
+ ['future history entry key',r=>r.state.trialPlaceSetHistory.undo[0].futureWallet=999],
+ ['unknown shape',r=>r.state.trialPlaceSet.west.futureShape=true],
+ ['invalid finite shape',r=>r.state.trialPlaceSet.east.height=Infinity],
+ ['unknown slot',r=>r.state.trialPlaceSet.middle=west],
+ ['foreign single shape',r=>r.state.trialPlace=west],
+ ['foreign single history',r=>r.state.trialPlaceHistory={version:1,undo:[],redo:[]}],
+ ['mismatched seed',r=>r.state.seed='other-owner'],
+ ['invalid revision',r=>r.revision=-1],
+ ['clock before creation',r=>{r.createdAt=30;r.updatedAt=20;}],
+ ['future record version',r=>r.version=7],
+];
+for(const [name,mutate]of corruptions){
+ const broken=structuredClone(pristine);mutate(broken);await db.islands.put(broken);
+ await assert.rejects(openCompositeTrial(db,10000),undefined,name+' opener rejects');
+ assert.deepEqual(await db.islands.get(COMPOSITE_PROFILE),broken,name+' opener never fixture-resets');
+ await assert.rejects(readGrowingIsland(COMPOSITE_PROFILE,db),undefined,name+' reader rejects');
+ await assert.rejects(commandGrowingIsland(COMPOSITE_PROFILE,{id:'corrupt-'+name,islandId:'main',command:{type:'flag',color:1}} as any,10000,db),undefined,name+' normal writer rejects');
+ assert.deepEqual(await db.islands.get(COMPOSITE_PROFILE),broken,name+' writer never repairs silently');
+}
+await db.islands.put(pristine);
+reports.push({name:'17 malformed save variants reject opener, reader and ordinary writer without replacing any bytes',cases:corruptions.map(([name])=>name)});
+
+const base=await saved();const rev=compositeEditingRevision(base.state);
+const stale={id:'stale-after-write',islandId:'main',command:{type:'place-set',action:'apply',slot:'west',shape:west,safety:safe,expectedPlaceRevision:rev}} as any;
+const winner=await shape('apply','west',west);
+await assert.rejects(commandGrowingIsland(COMPOSITE_PROFILE,stale,12000,db),/かわった/);assert.deepEqual(await saved(),winner);
+await db.deletedOwners.put({profileId:COMPOSITE_PROFILE,deletedAt:15000});
+await assert.rejects(openCompositeTrial(db,16000),/プロフィール/);
+await assert.rejects(commandGrowingIsland(COMPOSITE_PROFILE,{id:'deleted-owner',command:normal} as any,16000,db),/プロフィール/);
+assert.deepEqual(await db.islands.get(COMPOSITE_PROFILE),winner);
+assert.deepEqual(await Promise.all(protectedDbs.map(p=>p.islands.toArray())),protectedBefore,'main and single DB remain byte-identical');
+reports.push({name:'stale cursor and deleted owner reject without writes; protected main and single DB sentinel records unchanged'});
+for(const p of [db,...protectedDbs])p.close();
+console.log(JSON.stringify({at:new Date().toISOString(),actual:'pass',scope:'Independent actual Vite-transform fake IndexedDB checks. No browser, real IndexedDB persistence, PWA, natural sync or art acceptance.',reports},null,2));

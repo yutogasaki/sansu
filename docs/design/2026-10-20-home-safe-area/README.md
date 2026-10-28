@@ -14,7 +14,7 @@
 - 320×568、390×844、768×1024、568×320の各3条件、計12条件でボタン矩形の重なりなし、画面内、左右/中央のhit成功を確認。縦並びになる画面では操作列との間に16.609〜18.406pxを確保し、focus outlineを含めて実画面を確認した。
 - 拡張面を開く→Escapeで閉じる操作も確認。購入は実行していない。[観測値と条件](verification.json)。
 - [390幅・下端34px](390-safe-34.png)、[320幅・下端59px](320-safe-59.png)、[横長568幅・下端34px](568-safe-34.png)。
-- `npm run build`と付随する`assets:check`：PASS。対象TSコードのlint/typecheck、着座47件と全体suiteの未完範囲は同時に確認した着座修正（別作業のローカル記録 `../2026-10-20-seat-contact/README.md`、今回のcommit対象外）へ記録する。CSSの振る舞いは上記の実ブラウザ検査で確認し、形だけのCSS単体テストは追加しない。
+- `npm run build`と付随する`assets:check`：PASS。対象TSコードのlint/typecheck、着座47件と全体suiteの未完範囲は[同時に確認した着座修正](../2026-10-20-seat-contact/README.md)へ記録する。CSSの振る舞いは上記の実ブラウザ検査で確認し、形だけのCSS単体テストは追加しない。
 
 ## 入力と未確認
 

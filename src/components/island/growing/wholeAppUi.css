@@ -1,4 +1,7 @@
 .growing-world-interaction { position: absolute; inset: 0; }
+.growing-flower-unknown p { margin: 12px 0 8px; font-size: 14px; }
+.growing-flower-unknown ul { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
+.growing-flower-unknown li { display: grid; place-items: center; width: 36px; height: 36px; border: 1px dashed var(--pokomoko-edge); border-radius: 50%; color: var(--pokomoko-muted); background: var(--pokomoko-paper); }
 /* Shared paper tools; the live world and the established learning stage keep their own art. */
 .island-shell .growing-island {
     --growing-panel-radius: 24px;

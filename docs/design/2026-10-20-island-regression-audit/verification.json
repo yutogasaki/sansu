@@ -1,0 +1,329 @@
+{
+  "at": "2026-10-20T11:51:04.621061+00:00",
+  "head": "9355c416ed188abe686d13cc35bf74626e7ac581",
+  "target": "current dirty working tree; not isolated HEAD or public deployment",
+  "node": "v24.18.0",
+  "source_sha256": {
+    "src/domain/growingIsland/places.ts": "68258fd4c407bd3ab075106ede36864fefd484b263469277d13a07c840a2ff7e",
+    "src/domain/growingIsland/placeCapability.ts": "c585483d46a994fbfa312a2d0dc41d58c192f7028e5caceb5fdc179f044f0c81",
+    "src/domain/growingIsland/placeGoals.ts": "96d6e747efbab5e7532683f969a95381731bdfbeb06e88eca10118d4c679e742",
+    "src/domain/growingIsland/placeMemories.ts": "211f79305411ddaafcd7340651b95fee3ddbed0b3386575c139d221872ecba4b",
+    "src/domain/growingIsland/placeRelations.ts": "70f261a0db7aa279a75307fd7adbb77bd0f77188209d3d88beacdfe6f1b53f09",
+    "src/domain/growingIsland/communityRoof.ts": "8c34f517ca12fb0e3859c25b9d2017b7872dfef83d894ff5ed177d699b6d143d",
+    "src/domain/growingIsland/repository.ts": "af91d8c3a54b6cacabf84cb104e37b178cf499751a5f316d0596cceaf5d7d58d",
+    "src/components/island/growing/placeFlowerGeometry.ts": "d29175605fb78d2323271911721589e8a4a2693410827c7bb89cc0e836886d67",
+    "src/components/island/growing/objectLayer.ts": "c64d51df3d86c4389927eb126acacde9b50268928f1c2b2370d0fcb276f53f2f",
+    "src/components/island/growing/growingLife.ts": "a3713bfaf9a83b7b556b9a9eae5fd925e4302d8160515ace36972ea70fe3d145",
+    "src/components/island/growing/GrowingWorld.tsx": "e02e123176e24bc819ab3681b98093951053f9004cb2306c007e431ecbe05f65",
+    "src/components/island/growing/growingCamera.ts": "db28b95d53474b1055aa30a49535744020c00acc890a14229267ab46a5635eba"
+  },
+  "consultation": "https://chatgpt.com/g/g-p-6ad58d0857b881918e46e346350848e7/c/6ad75387-38ac-83e8-8111-6f6e7b652fe8",
+  "consultation_scope": "Code excerpts and diagnostic summaries; no images or full repository sent",
+  "runs": [
+    {
+      "scope": "domain and selected camera/object/life components",
+      "files": 60,
+      "passed": 443,
+      "diagnostics_included": 1,
+      "duration_s": 82.27
+    },
+    {
+      "scope": "extended diagnostic; repeats initial probe",
+      "files": 1,
+      "passed": 2,
+      "duration_s": 0.772
+    },
+    {
+      "scope": "UI/placement/paths/life/room/navigation",
+      "files": 21,
+      "passed": 127,
+      "duration_s": 2.75
+    },
+    {
+      "scope": "focused checks after correcting diagonal fixture",
+      "files": 6,
+      "passed": 21,
+      "duration_s": 1.15
+    }
+  ],
+  "observations": [
+    {
+      "label": "flower-square-4",
+      "roof": true,
+      "places": [
+        {
+          "rule": "P05",
+          "stage": "grown",
+          "structure": "P05:canopy",
+          "owners": 4,
+          "targets": [
+            "garden"
+          ],
+          "missing": []
+        }
+      ]
+    },
+    {
+      "label": "flower-square-plus-mature",
+      "roof": false,
+      "places": [
+        {
+          "rule": "P05",
+          "stage": "grown",
+          "structure": null,
+          "owners": 5,
+          "targets": [
+            "garden"
+          ],
+          "missing": []
+        }
+      ]
+    },
+    {
+      "label": "flower-store-extra",
+      "roof": true,
+      "places": [
+        {
+          "rule": "P05",
+          "stage": "grown",
+          "structure": "P05:canopy",
+          "owners": 4,
+          "targets": [
+            "garden"
+          ],
+          "missing": []
+        }
+      ]
+    },
+    {
+      "label": "flower-row-4",
+      "roof": true,
+      "places": [
+        {
+          "rule": "P05",
+          "stage": "grown",
+          "structure": "P05:arch",
+          "owners": 4,
+          "targets": [
+            "garden"
+          ],
+          "missing": []
+        }
+      ]
+    },
+    {
+      "label": "flower-row-plus-young",
+      "roof": false,
+      "places": [
+        {
+          "rule": "P05",
+          "stage": "connected",
+          "structure": null,
+          "owners": 5,
+          "targets": [],
+          "missing": [
+            "花が ひらくのを たのしもう"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "flower-row-extra-blooms",
+      "roof": true,
+      "places": [
+        {
+          "rule": "P05",
+          "stage": "grown",
+          "structure": "P05:arch",
+          "owners": 5,
+          "targets": [
+            "garden"
+          ],
+          "missing": []
+        }
+      ]
+    },
+    {
+      "label": "flower-row-plus-side",
+      "roof": false,
+      "places": [
+        {
+          "rule": "P05",
+          "stage": "grown",
+          "structure": null,
+          "owners": 5,
+          "targets": [
+            "garden"
+          ],
+          "missing": []
+        }
+      ]
+    },
+    {
+      "label": "flower-two-rows-connected",
+      "roof": true,
+      "places": [
+        {
+          "rule": "P05",
+          "stage": "grown",
+          "structure": "P05:arch",
+          "owners": 8,
+          "targets": [
+            "garden"
+          ],
+          "missing": []
+        }
+      ]
+    },
+    {
+      "label": "tree-row-4",
+      "roof": false,
+      "places": [
+        {
+          "rule": "P01",
+          "stage": "grown",
+          "structure": null,
+          "owners": 4,
+          "targets": [
+            "garden"
+          ],
+          "missing": []
+        },
+        {
+          "rule": "P02",
+          "stage": "grown",
+          "structure": null,
+          "owners": 4,
+          "targets": [
+            "gallery"
+          ],
+          "missing": []
+        }
+      ]
+    },
+    {
+      "label": "tree-row-plus-young-side",
+      "roof": false,
+      "places": [
+        {
+          "rule": "P01",
+          "stage": "connected",
+          "structure": null,
+          "owners": 5,
+          "targets": [],
+          "missing": [
+            "木が そだつのを たのしもう"
+          ]
+        },
+        {
+          "rule": "P02",
+          "stage": "grown",
+          "structure": null,
+          "owners": 4,
+          "targets": [
+            "gallery"
+          ],
+          "missing": []
+        }
+      ]
+    },
+    {
+      "label": "tree-extra-matures",
+      "roof": false,
+      "places": [
+        {
+          "rule": "P01",
+          "stage": "grown",
+          "structure": null,
+          "owners": 5,
+          "targets": [
+            "garden"
+          ],
+          "missing": []
+        }
+      ]
+    },
+    {
+      "label": "world-parameter-profile",
+      "horizontal": "arch",
+      "vertical": null
+    },
+    {
+      "label": "ordinary-shade-young-addition",
+      "before": "grown",
+      "after": "connected",
+      "useTargets": [],
+      "memoryDestination": null
+    },
+    {
+      "label": "water-remote-dry-channel",
+      "stage": "grown",
+      "unchanged": true
+    },
+    {
+      "label": "community-roof-controls",
+      "youngAdditionRetained": true,
+      "obstructionSafelyDisables": true
+    },
+    {
+      "label": "water-flower-relation-after-young-addition",
+      "before": [
+        "C02"
+      ],
+      "after": []
+    },
+    {
+      "label": "two-flower-gardens-join",
+      "beforeRoofs": 2,
+      "afterRoofs": 0,
+      "owners": 9
+    }
+  ],
+  "initial_failure": {
+    "type": "diagnostic fixture error",
+    "detail": "Added (6,3) beside row ending (5,2) was diagonal; correctly formed separate component. Corrected diagnostic to (5,3). Product unchanged."
+  },
+  "limitations": [
+    "No new browser journey, PWA update, device check or public revision verification.",
+    "JSON serialize/rederive is not database reload proof.",
+    "Actor retreat for these specific additions and full-body geometry safety of retained old structures remain unmeasured.",
+    "Diagnostic PASS means observed regression reproduced, not product acceptance.",
+    "Some tested repository/room/life inputs have unrelated uncommitted edits.",
+    "Node 24.18.0 used; nvm unavailable, .nvmrc requests 22.",
+    "Existing UI/life fixtures emitted Three.Material map=undefined warnings."
+  ],
+  "log_sha256": {
+    "tests.txt": "1af3be82da223f44a9955ba869f506af06069ec8a2c79f8d1b9e8707d4df8ea9",
+    "broad-tests.txt": "9a60c3bb091e8f04f1fcdc89daa25ec9fcf58bbb08b781a305c46759f7b4aef0",
+    "extended-probe.txt": "5c982615edf2be7ef33be4fa03d8c8b38ff13ddc342f7512b3fb539380148844",
+    "ui-tests.txt": "27a5d5188ab4d6d6d0e6add91c65a88d9bdf870380cc87a717eb6cd6a98bb91d"
+  },
+  "commands": {
+    "focused": "npx vitest run src/domain/growingIsland/placeArchitecture.test.ts src/domain/growingIsland/placeMemories.test.ts src/domain/growingIsland/placeRelations.test.ts src/domain/growingIsland/placePlay.test.ts src/components/island/growing/placeFlowerGeometry.test.ts",
+    "domain": "npx vitest run src/domain/growingIsland src/components/island/growing/objectLayer.test.ts src/components/island/growing/placeExperienceLife.test.ts src/components/island/growing/placeArchitectureGeometry.test.ts src/components/island/growing/growingCamera.test.ts src/components/island/growing/authoredFlowerLife.test.ts",
+    "extended": "npx vitest run src/domain/growingIsland/placeRegression.audit.test.ts",
+    "ui": "npx vitest run src/components/island/growing/roomSaveSession.test.ts src/components/island/growing/growingSceneInputs.test.ts src/components/island/growing/GrowingPlaceBook.test.tsx src/components/island/growing/GrowingGuideBook.test.tsx src/components/island/growing/useGrowingIsland.test.ts src/components/island/growing/placePaths.test.ts src/components/island/growing/GrowingPlacementControls.test.tsx src/components/island/growing/GrowingTray.test.tsx src/components/island/growing/placePathsSupport.test.ts src/components/island/growing/GrowingIslandMenu.test.tsx src/components/island/growing/lifeChoices.test.ts src/components/island/growing/GrowingHomeTools.test.tsx src/components/island/growing/placePathsSync.test.ts src/components/island/growing/growingLife.test.ts src/components/island/growing/growingLifeScale.test.ts"
+  },
+  "source_hash_capture": "Closeout snapshot after test runs; not an atomic pre-run snapshot of the shared dirty tree.",
+  "sources_unchanged_from_head": {
+    "src/domain/growingIsland/places.ts": true,
+    "src/domain/growingIsland/placeCapability.ts": true,
+    "src/domain/growingIsland/placeGoals.ts": true,
+    "src/domain/growingIsland/placeMemories.ts": true,
+    "src/domain/growingIsland/placeRelations.ts": true,
+    "src/domain/growingIsland/communityRoof.ts": true,
+    "src/domain/growingIsland/repository.ts": false,
+    "src/components/island/growing/placeFlowerGeometry.ts": true,
+    "src/components/island/growing/objectLayer.ts": true,
+    "src/components/island/growing/growingLife.ts": false,
+    "src/components/island/growing/GrowingWorld.tsx": true,
+    "src/components/island/growing/growingCamera.ts": true
+  },
+  "source_changed_since_capture": [],
+  "docs_check": {
+    "command": "npm run docs:check",
+    "result": "PASS",
+    "notes": "Existing stale Review By warnings; no new documentation failure."
+  },
+  "consultation_final": "Completed. Corrected double-counting and distinction between code inspection and exact-scenario actor safety measurement; final response acknowledged those corrections."
+}

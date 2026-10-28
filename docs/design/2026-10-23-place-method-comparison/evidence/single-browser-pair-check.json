@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-22T21:52:54.323Z",
+  "status": "PASS",
+  "scope": "Read-only equality of captured resulting state. Previous heights reconstructed from final Undo entry match actual69. Runtime actor position and all browser environment conditions are not proven equal by saved state.",
+  "hashes": {
+    "70-H-single-cold-edit-state.json": "3427119ae302cd32001174aa3558bfcca706d2cd4148d90aeb78f187a82acbb3",
+    "71-H-double-cold-edit-state.json": "7b48f03594414f63545ce5f74b766991e02fad98b1d9905776c11e410f2a7666",
+    "70-H-single-cold-edit-cadence.json": "182362c420a4313498546e33125c0a516e82fb27fdff67816c83e3d7ae3b1550",
+    "71-H-double-cold-edit-cadence.json": "1874cb9b65a78487d1bf6af06becab206c6ed65c01913ba0753f66f9021b885b",
+    "69-H-wide-shore-final-state.json": "0c810ef159d5d7eef074f410ee3740a22b6be1de13579f9723b120f9544bb26a"
+  },
+  "equal": {
+    "fixture": true,
+    "land": true,
+    "terrain": true,
+    "plots": true,
+    "landmarks": true,
+    "keepsakes": true,
+    "villagers": true,
+    "character": true
+  },
+  "rawBeforeMatches69": true,
+  "lastAcceptedEdit": {
+    "cell": {
+      "x": 4,
+      "z": 4
+    },
+    "before": 0,
+    "after": -1
+  },
+  "measured": [
+    {
+      "mode": "single",
+      "record": "70-H-single-cold-edit-cadence.json",
+      "longtaskMs": 1687,
+      "rafMaxMs": 1684.4
+    },
+    {
+      "mode": "double",
+      "record": "71-H-double-cold-edit-cadence.json",
+      "longtaskMs": 1841,
+      "rafMaxMs": 1832.6
+    }
+  ],
+  "differenceMs": {
+    "longtask": 154,
+    "rafMax": 148.19999999999982
+  },
+  "replicatesPerMode": 1
+}

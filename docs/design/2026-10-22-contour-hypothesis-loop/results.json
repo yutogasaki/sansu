@@ -1,0 +1,229 @@
+{
+  "at": "2026-10-21T20:39:59.150Z",
+  "sourceSha256": "edab5d252121d880750121a4764a393ad58683844dc92d18c13a8da67aabe9e6",
+  "scope": "observed topology plus local engineering counterexamples, not artwork acceptance",
+  "iterations": [
+    {
+      "method": "hard",
+      "rows": [
+        {
+          "name": "single",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        },
+        {
+          "name": "pair",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        },
+        {
+          "name": "ell",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        },
+        {
+          "name": "square",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": false,
+          "pass": false
+        },
+        {
+          "name": "diagonal",
+          "components": 2,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": false
+        },
+        {
+          "name": "reverse",
+          "components": 2,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": 0.5,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": false
+        },
+        {
+          "name": "gap",
+          "components": 2,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": 0.5,
+          "samples": 14641,
+          "expectedComponents": 2,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        },
+        {
+          "name": "hole",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": 0.5,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        }
+      ],
+      "pass": false
+    },
+    {
+      "method": "blend",
+      "rows": [
+        {
+          "name": "single",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        },
+        {
+          "name": "pair",
+          "components": 1,
+          "centerDistance": -0.057306997675519694,
+          "originDistance": -0.5045374819794525,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        },
+        {
+          "name": "ell",
+          "components": 1,
+          "centerDistance": -0.15867327470256076,
+          "originDistance": -0.5057693109167373,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        },
+        {
+          "name": "square",
+          "components": 1,
+          "centerDistance": -0.23059379281550602,
+          "originDistance": -0.5102041919902925,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        },
+        {
+          "name": "diagonal",
+          "components": 1,
+          "centerDistance": -0.057306997675519694,
+          "originDistance": -0.5012543341650598,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        },
+        {
+          "name": "reverse",
+          "components": 1,
+          "centerDistance": -0.057306997675519694,
+          "originDistance": 0.32671320486001365,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        },
+        {
+          "name": "gap",
+          "components": 2,
+          "centerDistance": 0.1096101434191212,
+          "originDistance": 0.32671320486001365,
+          "samples": 14641,
+          "expectedComponents": 2,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        },
+        {
+          "name": "hole",
+          "components": 1,
+          "centerDistance": -0.16741186777984013,
+          "originDistance": 0.09276327420724834,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "H1 is falsified by diagonal observation",
+      "pass": true
+    },
+    {
+      "name": "H2 matches topology and preserves gap/hole counterexamples",
+      "pass": true
+    },
+    {
+      "name": "90-degree rotational symmetry and edit ordering",
+      "pass": true
+    },
+    {
+      "name": "Independent material then height; undo/redo input and geometry reproducible",
+      "pass": true
+    },
+    {
+      "name": "All eight meshes finite; actual triangle floor supports cell centers",
+      "pass": true
+    },
+    {
+      "name": "Two-level increase keeps same contour at each occupied upper level",
+      "pass": true
+    },
+    {
+      "name": "Over-blending falsifies the hole requirement",
+      "pass": true
+    },
+    {
+      "name": "Actual triangle floor supports a 0.17-radius diagnostic footprint on both diagonal paths",
+      "pass": true
+    }
+  ]
+}

@@ -1,5 +1,9 @@
 # Island / iPhone PWA performance
 
+## 2026-10-28 保存済みの島の88%停止を修正
+
+報告された `Growing shader failed to link: 2` をproduction形式のWebKitで再現。通常同期が景色を差し替えた後も、シェーダー準備が破棄済みprogramを照会する競合を修正した。最初のcontextで通常起動・更新URL起動が完了し、所有と学習保持、本当のshaderエラーの検出を確認した。GPU設定や画質・保存同期を変えず、再試行追加で済ませない。[対象版・原因・検証・限界](../../design/2026-10-28-shader-startup/README.md)。共有ツリーの5,745 testsと、公開版と同じコミットへ今回の変更だけを載せた候補の対象61件・build・実ブラウザー検査はPASS。公開と本人のiPhoneでの解消は未確認で、タスク全体の性能達成とは分ける。
+
 ## 2026-10-11 水庭の岸検索と実browser待ち
 
 [水庭b6](../../design/2026-10-11-authored-water-garden/README.md)で同じ実島のcomposeはNode診断78,710→7,478ms、岸の5回検索70,508→1,375ms。全world定義・state・art planが一致し、旧oracleとの36境界例で順序/EPS/内部水域/高い床/cache identityの結果を保った。nested instrumentationなので内訳の単純加算や実機性能への読み替えをしない。

@@ -1,0 +1,58 @@
+{
+  "capturedAt": "2026-10-22T21:58:53.068606+00:00",
+  "preservedAt": "2026-10-22T22:03:41.466697+00:00",
+  "status": "CALL_COUNTS_ONLY",
+  "input": "69-H-wide-shore-final-state.json",
+  "inputSha256": "0c810ef159d5d7eef074f410ee3740a22b6be1de13579f9723b120f9544bb26a",
+  "fallbackState": "expanded-place-recipe-flower-flat-wide-fixture.json",
+  "fallbackSha256": "aebbfcaceec10e52b1d092a5bb33b938ab09002b5aa62e5ee53691223be203b2",
+  "commandAtCapture": [
+    "fnm exec --using=22.23.3 node /private/tmp/sansu-hotpath-count-build.mjs",
+    "fnm exec --using=22.23.3 node /private/tmp/sansu-hotpath-count-bundle.mjs > /private/tmp/sansu-hotpath-count.json"
+  ],
+  "reproduce": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-method-comparison/evidence/hotpath-call-count.mjs",
+  "captureBundleSha256": "da25cc80d4a20f637bf1677d519c06bcab20b5f06636b7a3eb0aa66ed4427210",
+  "captureEntrySha256": "c6518ef1944a294900fefc15dd21242de567295ea913702ef7e6882e67e5135d",
+  "captureBuildSha256": "cff768505da5d6321d745130a78b69d67af5601c740f633ddedc75b5cc66dfb3",
+  "reproducerSha256": "5bc62b86e5083f24d6fcc6447e3be398a8badc368c877d5543e17e205ee530da",
+  "operation": {
+    "type": "terrain-edit",
+    "cell": {
+      "x": 4,
+      "z": 4
+    },
+    "delta": -1,
+    "previousWorld": "warmed before counters reset",
+    "actors": "absent in command; actual UI has separate actor guards"
+  },
+  "query": "?terrainTrial=H&baseTrial=stable&rampTrial=linear&compileTrial=single&trialScene=shore&trialEvidence",
+  "outcome": "accepted",
+  "counts": {
+    "location.search": 632097,
+    "URLSearchParams": 632097,
+    "query:terrainTrial": 504026,
+    "query:rampTrial": 64035,
+    "query:baseTrial": 64035,
+    "baselineSurfaceHeight": 64030,
+    "rawHeight": 64030,
+    "physical": 74039,
+    "landscapePoint": 504021,
+    "query:compileTrial": 1
+  },
+  "unique": {
+    "baselineSurfaceHeight": 14464,
+    "rawHeight": 11785,
+    "physical": 25257,
+    "landscapePoint": 14576
+  },
+  "scope": "Temporary Node diagnostic with browser query branch and warmed previous world; call counts only, not timing proof.",
+  "uniqueCoordinatePrecision": "toFixed(9), approximate diagnostic uniqueness; exact memo hit count is not established",
+  "limitations": [
+    "Counts instrument temporary bundled code only; no runtime source or database mutation.",
+    "Window/location and URLSearchParams are Node shims following the dynamic browser branches, not actual browser objects.",
+    "No elapsed-time attribution: counter overhead and host differences forbid using this as browser timing.",
+    "Only one accepted edit on observed69 with a warmed previous world.",
+    "The existing Node single-compile benchmark used alwaysH/alwaysStable/alwaysLinear flags, so it omitted dynamic query parsing.",
+    "Frozen-query browser causal comparison was not available at capture."
+  ]
+}

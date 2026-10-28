@@ -1,0 +1,15 @@
+# CPU timing observer
+
+The trial measures five synchronous intervals: `applyIntent`, `editableIslandWorld`, `compileWorldDefinition`, `GrowingWorld.rebuild`, and `worldScene.layout`. It does not change game state, save payloads, terrain, scheduling, or results. Existing return values and thrown error objects pass through a `try/catch/finally` wrapper. Entries live only in the module and are displayed after an explicit 10-second capture.
+
+Apply `trialTimingTransform(source, id)` **last** to the five modules, after the existing growth seam, live use, curved scene/ground and single-compile transforms. The transform requires exactly one AST function/body match and fails on duplicate application. `TrialTiming` can be placed inside the existing read-only evidence details.
+
+Start CPU capture, then perform one ordinary edit. The existing cadence measurement can run concurrently. `startedPerformanceMs` and `startedEpochMs` allow alignment with the browser timeline; per-span start/end values are relative to the CPU capture start. A timer can complete late when the main thread is blocked, so elapsed duration is reported rather than assumed to be exactly ten seconds.
+
+The three roots are action application, the scene rebuild effect/callback, and scene layout. Domain calls only record when nested in one of those roots. Standalone domain evaluation during component render does not mutate the timing buffer. This deliberately excludes render-derived work outside those roots. The observer also excludes GPU execution, browser style/layout/paint, asynchronous persistence, and uninstrumented callbacks. Their time must remain unattributed rather than being assigned to the measured compilation.
+
+Every retained span has an ID, parent ID, inclusive and self duration. **Do not add inclusive durations:** compile time sits inside cold-world time, which sits inside an action/rebuild. Self duration subtracts instrumented direct child intervals and retains uninstrumented work. `compileWorldDefinition:derived-edges` includes its edge-builder callback. Cold/cache/no-terrain cases have separate aggregates. Tiny cache/no-terrain calls retain aggregate counts and durations but omit per-call JSON. The detail buffer retains at most 400 entries and reports dropped entries.
+
+Node `timing-check.mjs` verifies all five source transformations parse, duplicate transforms reject, enabled/disabled state results and rejected messages match, rejected actions record exceptions, standalone domain calls do not record, and nested exception identity is retained. Node starts with a fresh cold fixture; its elapsed values are **not a browser performance result** or an apples-to-apples comparison with a browser that already warmed the previous world. Focused ESLint and TypeScript compilation cover the new observer and check files. `evidence/timing-check.json` preserves transformed source hashes and the diagnostic output.
+
+The observer itself has small CPU/allocation overhead. No log is emitted for each call and no React state update is performed for each span. React state changes only in explicit start/stop handlers or the one completion timer.

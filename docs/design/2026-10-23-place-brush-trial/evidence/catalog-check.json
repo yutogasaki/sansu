@@ -1,0 +1,161 @@
+{
+  "status": "PASS",
+  "at": "2026-10-24T02:14:19.820Z",
+  "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-brush-trial/catalog-check.mjs",
+  "scope": "SSR catalog against unmodified GrowingTray reference plus actual domain purchase; no application build or browser claim",
+  "inputSHA256": {
+    "catalog-check.ts": "f87ade0333dd18375e39a873cf9ad3f01509a67c35956d914395a9dbd649ad3c",
+    "catalog-check.mjs": "740baf769e8cda009155a29ac51ffa4862a91e8fa777031b8f03817b1187267d",
+    "vite.config.ts": "1a2a58ce6380419ca3b1e50da1799264610760de46d64d053b2a517844260c09"
+  },
+  "productionTraySHA256": "62cfde1372dfa005491a4464c0b831de5974459ebf9e4ff682fe0a81eb8f3ea6",
+  "changedInputs": [],
+  "reports": [
+    {
+      "at": "2026-10-24T02:14:17.575Z",
+      "status": "PASS",
+      "transformedCatalog": false,
+      "results": [
+        {
+          "name": "product-like",
+          "htmlSHA256": "6815968ad81d73b1a5af22540823416d783491295b15ee54c0dbf73decf44a84",
+          "seedIds": [
+            "home"
+          ],
+          "bench": false,
+          "flower": false,
+          "stateUnchanged": true
+        },
+        {
+          "name": "single-memory",
+          "htmlSHA256": "6815968ad81d73b1a5af22540823416d783491295b15ee54c0dbf73decf44a84",
+          "seedIds": [
+            "home"
+          ],
+          "bench": false,
+          "flower": false,
+          "stateUnchanged": true
+        },
+        {
+          "name": "single-saved",
+          "htmlSHA256": "6815968ad81d73b1a5af22540823416d783491295b15ee54c0dbf73decf44a84",
+          "seedIds": [
+            "home"
+          ],
+          "bench": false,
+          "flower": false,
+          "stateUnchanged": true
+        },
+        {
+          "name": "two-memory",
+          "htmlSHA256": "6815968ad81d73b1a5af22540823416d783491295b15ee54c0dbf73decf44a84",
+          "seedIds": [
+            "home"
+          ],
+          "bench": false,
+          "flower": false,
+          "stateUnchanged": true
+        }
+      ],
+      "limitation": "Research catalog presentation bypass only; first-home fixture is retained. SSR and real commands do not prove ordinary onboarding or browser interaction. New flower is not mature.",
+      "bundleSHA256": "fe6d8a6a5906ea4d60b6201def2b67c13ad73fe4e1e4ec320d46e53cab801e37"
+    },
+    {
+      "at": "2026-10-24T02:14:19.708Z",
+      "status": "PASS",
+      "transformedCatalog": true,
+      "results": [
+        {
+          "name": "product-like",
+          "htmlSHA256": "6815968ad81d73b1a5af22540823416d783491295b15ee54c0dbf73decf44a84",
+          "seedIds": [
+            "home"
+          ],
+          "bench": false,
+          "flower": false,
+          "stateUnchanged": true
+        },
+        {
+          "name": "single-memory",
+          "htmlSHA256": "6815968ad81d73b1a5af22540823416d783491295b15ee54c0dbf73decf44a84",
+          "seedIds": [
+            "home"
+          ],
+          "bench": false,
+          "flower": false,
+          "stateUnchanged": true
+        },
+        {
+          "name": "single-saved",
+          "htmlSHA256": "6815968ad81d73b1a5af22540823416d783491295b15ee54c0dbf73decf44a84",
+          "seedIds": [
+            "home"
+          ],
+          "bench": false,
+          "flower": false,
+          "stateUnchanged": true
+        },
+        {
+          "name": "two-memory",
+          "htmlSHA256": "f72b14b008700e0a53a298377664142453b8f00e687d218a4b7722fc9cf3d1a5",
+          "seedIds": [
+            "home"
+          ],
+          "bench": true,
+          "flower": true,
+          "stateUnchanged": true
+        }
+      ],
+      "purchase": {
+        "beforeDrops": 9160,
+        "afterDrops": 9130,
+        "bought": [
+          {
+            "id": "l1",
+            "kind": "bench",
+            "cell": {
+              "x": 5,
+              "z": 5
+            },
+            "growth": 0
+          },
+          {
+            "id": "l2",
+            "kind": "flower",
+            "cell": {
+              "x": 6,
+              "z": 5
+            },
+            "growth": 0,
+            "color": "red"
+          }
+        ],
+        "tutorial": "first-home",
+        "learnedUnchanged": true,
+        "growthUnchanged": true,
+        "preexistingOwners": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "growth": 6
+          },
+          {
+            "id": "starter-bench",
+            "kind": "bench",
+            "cell": {
+              "x": -1,
+              "z": 4
+            },
+            "growth": 0
+          }
+        ]
+      },
+      "limitation": "Research catalog presentation bypass only; first-home fixture is retained. SSR and real commands do not prove ordinary onboarding or browser interaction. New flower is not mature.",
+      "bundleSHA256": "142c8f7aefc460f6b58661c9253f11602a335a307eee828779fc1c81dd93e304"
+    }
+  ]
+}

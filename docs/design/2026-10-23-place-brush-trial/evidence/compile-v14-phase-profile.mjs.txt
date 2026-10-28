@@ -1,0 +1,50 @@
+import { build } from '/Users/yutogasaki/Projects/sansu/node_modules/esbuild/lib/main.js';
+import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+const profile = !process.argv.includes('--baseline');
+const root = '/Users/yutogasaki/Projects/sansu';
+const overlay = '/private/tmp/sansu-place-trial-types-1feefK';
+const worldPath = `${overlay}/src/domain/growingIsland/worldDefinition.ts`;
+const original = await readFile(worldPath, 'utf8');
+let code = original;
+function once(before, after) { if(code.split(before).length!==2) throw Error(before); code=code.replace(before,after); }
+once('    const definition = structuredClone(input);', `    let __phaseAt = performance.now(); const __phases = [];
+    const __lap = (name) => { const now=performance.now(); __phases.push({name,ms:now-__phaseAt}); __phaseAt=now; };
+    const definition = structuredClone(input); __lap('clone-definition');`);
+once('    const sample = createSampler(triangles, true), sampleAnchor = createSampler(anchorTriangles, false);', `    __lap('compile-geometry-and-sampler-factory');
+    const sample = createSampler(triangles, true), sampleAnchor = createSampler(anchorTriangles, false);`);
+once('    for (const district of definition.districts) {\n        for (const site of district.sites) {', `    __lap('create-sampler-indices');
+    for (const district of definition.districts) {
+        for (const site of district.sites) {`);
+once('    let edgeCheckMemo =', `    __lap('compile-sites');
+    let edgeCheckMemo =`);
+once('    const graphs = Object.fromEntries', `    __lap('derive-edges');
+    const graphs = Object.fromEntries`);
+once('    edgeCheckMemo?.clear();', `    __lap('validate-edges-and-graphs');
+    edgeCheckMemo?.clear();`);
+once('    const points = floors.filter', `    __lap('shore-access');
+    const points = floors.filter`);
+once('    return Object.freeze({ id: definition.id,', `    __lap('bounds');
+    globalThis.__compilePhases.push({id:input.id,derived:!!edgeBuilder,vertices:floors.reduce((n,f)=>n+f.vertices.length,0),phases:__phases});
+    return Object.freeze({ id: definition.id,`);
+const entry = `import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { applyIntent } from '${overlay}/src/domain/growingIsland/commands.ts';
+import { editableIslandWorld } from '${overlay}/src/domain/growingIsland/editableTerrainWorld.ts';
+import { compositeEditingRevision } from '${overlay}/docs/design/2026-10-23-place-brush-trial/composite-model.ts';
+const before=JSON.parse(readFileSync('${root}/docs/design/2026-10-23-place-brush-trial/evidence/composite-v14-purchase.json','utf8')).purchased.state;
+globalThis.__compilePhases=[]; editableIslandWorld(before); globalThis.__compilePhases=[];
+const begin=performance.now(); const next=applyIntent(before,{id:'phase-profile',command:{type:'place-set',action:'apply',slot:'west',shape:{...before.trialPlaceSet.west,entrance:2},safety:{actors:[],occupiedPlaceTargets:[]},expectedPlaceRevision:compositeEditingRevision(before)}},1000).state;
+const elapsed=performance.now()-begin; const world=editableIslandWorld(next);
+console.log(JSON.stringify({elapsedMs:elapsed,compiles:globalThis.__compilePhases,hash:createHash('sha256').update(JSON.stringify(world.floors)).digest('hex')}));`;
+await writeFile('/private/tmp/sansu-v14-phase-entry.ts',entry);
+const outfile='/private/tmp/sansu-v14-phase-bundle.mjs';
+await build({entryPoints:['/private/tmp/sansu-v14-phase-entry.ts'],outfile,bundle:true,platform:'node',format:'esm',logLevel:'silent',
+ define:{'import.meta.env.DEV':'false','import.meta.env.BASE_URL':'"/"','__APP_VERSION__':'"phase-profile"','__LIFE_REPLAY_VERSION__':'"phase-profile"'},
+ plugins:[{name:'profile-only',setup(b){b.onLoad({filter:/worldDefinition\.ts$/},async a=>a.path===worldPath?{contents:profile?code:original,loader:'ts'}:undefined)}}]});
+const query='?terrainTrial=H&baseTrial=stable&rampTrial=linear&growthTrial=inherit&compileTrial=single&trialScene=shore&queryTrial=frozen&memoTrial=samples&edgeTrial=memo&placeSetTrial=two';
+const runs=[]; for(let i=0;i<3;i++) runs.push(JSON.parse(execFileSync(process.execPath,['--input-type=module','-e',`globalThis.window=globalThis;globalThis.location={search:${JSON.stringify(query)},hash:'#/island'};await import(${JSON.stringify(outfile)});`],{encoding:'utf8',timeout:30000})));
+const result={recordedAt:new Date().toISOString(),scope:'Node diagnostic using frozen actual v14 typecheck overlay; phase instrumentation only; no browser/GPU/save/child acceptance. Concurrent engineering work may affect timings. Final freeze cost is outside named phases.',worldSourceSHA256:createHash('sha256').update(original).digest('hex'),runs};
+await writeFile(`/private/tmp/sansu-v14-phase-${profile?'result':'baseline'}.json`,JSON.stringify(result,null,2));
+console.log(JSON.stringify(result,null,2));

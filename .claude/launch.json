@@ -4,20 +4,115 @@
     {
       "name": "dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 5173
     },
     {
       "name": "growing-island",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev:growing-island"],
+      "runtimeArgs": [
+        "run",
+        "dev:growing-island"
+      ],
       "port": 5260
+    },
+    {
+      "name": "terrace-lab",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8241",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "docs"
+      ],
+      "port": 8241
+    },
+    {
+      "name": "terrace-ground-dev",
+      "runtimeExecutable": "/usr/bin/env",
+      "runtimeArgs": [
+        "VITE_ISLAND_ENABLED=true",
+        "VITE_TERRAIN_FORM=terrace",
+        "/Users/yutogasaki/Projects/sansu-terrace-ground/node_modules/.bin/vite",
+        "/Users/yutogasaki/Projects/sansu-terrace-ground",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "5281",
+        "--strictPort"
+      ],
+      "port": 5281
     },
     {
       "name": "prod-preview",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["vite", "preview", "--host", "127.0.0.1", "--port", "5270", "--strictPort"],
+      "runtimeArgs": [
+        "vite",
+        "preview",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "5270",
+        "--strictPort"
+      ],
       "port": 5270
+    },
+    {
+      "name": "island-shaping-5282",
+      "runtimeExecutable": "/usr/bin/env",
+      "runtimeArgs": [
+        "VITE_ISLAND_ENABLED=true",
+        "VITE_ISLAND_SHAPING=on",
+        "/Users/yutogasaki/Projects/sansu-terrace-ground/node_modules/.bin/vite",
+        "/Users/yutogasaki/Projects/sansu-terrace-ground",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "5282",
+        "--strictPort"
+      ],
+      "port": 5282
+    },
+    {
+      "name": "island-ux-build-5284",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "5284",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "/private/tmp/claude-501/-Users-yutogasaki--claude-spares-spare-eu5nb3/4c137fbe-3b28-4a38-897c-e9b3178fdd04/scratchpad/dist-ux"
+      ],
+      "port": 5284
+    },
+    {
+      "name": "island-prodflags-5282",
+      "runtimeExecutable": "/usr/bin/env",
+      "runtimeArgs": [
+        "VITE_ISLAND_ENABLED=true",
+        "VITE_ISLAND_LIFE_ENABLED=true",
+        "VITE_ISLAND_LIFE_DISCOVERY_ENABLED=true",
+        "VITE_ISLAND_FANTASY_ENABLED=true",
+        "VITE_NATURE_TOWN_ENABLED=false",
+        "VITE_GROWING_ISLAND_ENABLED=true",
+        "VITE_ISLAND_SHAPING=on",
+        "/Users/yutogasaki/Projects/sansu-terrace-ground/node_modules/.bin/vite",
+        "/Users/yutogasaki/Projects/sansu-terrace-ground",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "5282",
+        "--strictPort"
+      ],
+      "port": 5282
     }
   ]
 }

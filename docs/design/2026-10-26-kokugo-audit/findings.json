@@ -1,0 +1,76 @@
+{
+  "at": "2026-10-25T23:21:26.413388+00:00",
+  "scope": "直前の国語実装全体（教材・保存・評価・互換）。無関係な島・ポータルの変更は監査対象外。",
+  "sourceHash": "f80f926967d362952653a0cae601c44983ad87be69d272c225be21c5c1447d38",
+  "revision": "editorial-f80f926967d3",
+  "ownedInputComparison": {
+    "files": 61,
+    "changed": []
+  },
+  "findings": [
+    {
+      "id": "KOKUGO-A01",
+      "priority": "P1",
+      "title": "お題切替時に別のお題の文章を上書き保存できる",
+      "file": "src/components/kokugo/KokugoActivities.tsx",
+      "line": 24,
+      "reproduction": "E05-1へ文A保存→E05-2へ切替（文Aが残る）→文B保存→E05-1へ戻る（文Bが表示）→編集せず保存。E05-1の現在本文が文Bへ書き換わる。",
+      "cause": "useLiveQueryは依存変更直後に旧結果を返す。旧workで新しいloadedIdを確定し、新しい問い合わせ結果は早期returnで読み込まれない。",
+      "minimumFix": "問い合わせ結果にworkIdを付け、一致する結果を受け取るまで編集と保存を許可しない。お題間の往復と未作成のお題への遷移を回帰検査する。",
+      "evidence": "ui-repro.json"
+    },
+    {
+      "id": "KOKUGO-A02",
+      "priority": "P2",
+      "title": "熟語・語句の読みを字単独の音訓として出題する",
+      "file": "src/domain/kokugo/kanji/catalog.ts",
+      "line": 55,
+      "reproduction": "HS5-685c-2は「音読み・訓読みが『さくらいろ』の漢字は？」、正答は桜。HS2-982d-1-r2は「あたまのうえ」、正答は頭。",
+      "cause": "同じ露出にまとめるisolatedフラグを、その素材自体が単字であることと兼用する。",
+      "minimumFix": "素材が単字かどうかと露出の同一性を別属性で保持し、語は□色・□の上の形式で出題する。",
+      "evidence": "content-repro.json"
+    },
+    {
+      "id": "KOKUGO-A03",
+      "priority": "P2",
+      "title": "H06の手本表示で漢字の24時間制限が設定されない",
+      "file": "src/components/kokugo/KokugoActivities.tsx",
+      "line": 13,
+      "reproduction": "H06-1の川の手本を表示→kokugoProgressは0件→直後にHS1の川へ進み正答→completionKind=independent。",
+      "cause": "H06教材にはkanji属性がなく、手本接触を記録するpreviewKanjiが早期returnで呼ばれない。",
+      "minimumFix": "従来のH06も字ごとの手本接触へ接続し、読み・短答・表記の全形式へ24時間制限を共有する。",
+      "evidence": "ui-repro.json"
+    },
+    {
+      "id": "KOKUGO-A04",
+      "priority": "P2",
+      "title": "文脈に合わない別読みでも正答になる",
+      "file": "src/domain/kokugo/kanji/catalog.ts",
+      "line": 24,
+      "reproduction": "HT2-4f55-scene-s2「かいに 何人くるか かぞえる。」へ「なにじん」と答えてもgradeはtrue。人数の読みはなんにん。",
+      "cause": "場面文でも単語全体の全ての別読みを無条件にacceptedAnswersへ渡す。",
+      "minimumFix": "場面文ごとの許容読みを定義する。文脈なしの単語問題では正当な別読みを引き続き認める。",
+      "evidence": "content-repro.json"
+    }
+  ],
+  "limitations": [
+    "今回の教材意味の再現検査は具体例を抽出。全語義の専門家審査ではない。",
+    "ブラウザ再現は390x844、隔離した合成本人。実利用者の保存は変更していない。",
+    "修正は行っていない。"
+  ],
+  "firstDiagnostic": "初回ブラウザ再現ではH06後の導入表示待ちが不足して終了。作文の取り違えとH06接触0件は既に記録。待機を追加した2回目で直後の独力完了まで再現。",
+  "evidenceFiles": [
+    "content-repro.json",
+    "ui-repro.json",
+    "topic1-after-switch.png",
+    "topic2-after-switch.png",
+    "H06-river-model.png"
+  ],
+  "verification": {
+    "existingDomainTests": "5 files / 50 tests PASS",
+    "docsCheck": "PASS",
+    "semanticReproductions": "2 incorrect single-character prompts and 1 contextual alias accepted",
+    "browserReproductions": "wrong-topic display and actual overwrite; H06 model followed by independent HS1 completion",
+    "implementationChanges": false
+  }
+}

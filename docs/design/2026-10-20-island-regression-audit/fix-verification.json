@@ -1,0 +1,46 @@
+{
+  "at": "2026-10-20T12:30:11.364069+00:00",
+  "head": "9355c416ed188abe686d13cc35bf74626e7ac581",
+  "scope": "Current shared dirty working tree. No commit, push, deploy or production database changes.",
+  "inputs": {
+    "src/domain/growingIsland/placeCapability.ts": "a313f57a00e25ac5aded19070402e510ee9b3a5a2b3c7b6dba159f52854e91c1",
+    "src/domain/growingIsland/places.ts": "397cb452a332f0cf8fb036948aaed3c810e7f673e209bb9aa19da1771d1cae4e",
+    "src/domain/growingIsland/placeTypes.ts": "603ccfb67da58852074d5356623aa3352dacc96b1c606fc0d827fb602352b939",
+    "src/domain/growingIsland/placeAdditions.test.ts": "238c0f1f53bee2fa412d425579fae3ac3985daa88a60bef179a85782a3b8ef74",
+    "src/components/island/growing/placeFlowerGeometry.ts": "7d63e4918fdb65cb98748de7fa38b58249444af9b89da9dbe0e89043636292be",
+    "src/components/island/growing/placeArchitectureGeometry.test.ts": "3526f811b24da83606d7cb725740ab9236ded63f0dcb70e9443d3826b644f24f",
+    "tools/e2e-growing-architecture.mjs": "ac259f3c9044feeb2ff7e3e4abaa81cf768d21ea22c22201020ae0fc9b76ea66",
+    "docs/product/island-system/growth-rules.md": "1fea07a78de7cb9f6d589108e309729d36aec7586f2434ab78012947aa393749",
+    "docs/product/52_growing_island_game_spec.md": "4ff7e02b45f5ccd0a5f8080bfacf189f95126d1ea480e78f88228c8be4a4ab86"
+  },
+  "checks": {
+    "focused": "44 tests / 4 files PASS; Node 22; 2026-10-20T21:08 JST",
+    "build": "PASS; Node 22; 21:11 JST; assets budget PASS",
+    "smoke": "PASS; Node 22; 21:14 JST",
+    "core": "Initial pre-fix run observed the old arch-support failure; stopped obsolete run after 648 file passes. docs/current-ui-entry/typecheck/lint had passed. Final affected 44 tests and build passed; full final unit run in progress.",
+    "browser": "4 cases PASS on pre-withdrawal candidate; final P01 withdrawal not browser-retested; evidence metadata retained for that candidate",
+    "lint": "PASS; final source; 0 errors, 4 existing fast-refresh warnings",
+    "typecheck": "PASS; final source; Node 22",
+    "docs": "PASS; final documentation; existing overdue-review warnings",
+    "full_final": "PARTIAL: 649 passing files observed and seedHitPriority failure on pre-withdrawal candidate. HEAD places mock passes same seed test. Withdrew P01 mature partition to remove introduced regression; full final run stopped for 30-minute bound. Not release acceptance.",
+    "final_scoped": "PASS: 47 tests / 5 files, including seedHitPriority (2) and one expected-failure test documenting unresolved P01. Final build/typecheck/assets PASS; 21:29 JST. Final full unit/smoke/browser not completed."
+  },
+  "unverified": [
+    "本人端末の保存・対象revisionとの照合",
+    "新規fixtureでのoffline/PWA更新",
+    "子どもの無説明理解・楽しさ・再訪",
+    "公開版への反映",
+    "P01木陰・思い出案内の若木追加退行は未解決（it.failsで明示）",
+    "最終候補の全体unit/smoke/browser再検査"
+  ],
+  "commands": [
+    "fnm exec --using 22 npm run verify:core (obsolete pre-fix run, stopped)",
+    "fnm exec --using 22 npm run test:run -- --maxWorkers=4 --minWorkers=4 (final full unit)",
+    "fnm exec --using 22 npm run lint",
+    "fnm exec --using 22 npm run typecheck",
+    "fnm exec --using 22 npm run build",
+    "fnm exec --using 22 npm run docs:check",
+    "fnm exec --using 22 npm run e2e:smoke",
+    "SANSU_ARCHITECTURE_CASE=flower-canopy-addition / grove-side-addition; SANSU_ARCHITECTURE_URL=http://127.0.0.1:5286; fnm exec --using 22 node tools/e2e-growing-architecture.mjs"
+  ]
+}

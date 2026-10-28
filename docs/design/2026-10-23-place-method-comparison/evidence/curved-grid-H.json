@@ -1,0 +1,552 @@
+{
+  "mode": "H",
+  "revision": "fixed-two-shear-grid-v1",
+  "at": "2026-10-22T21:03:39.822Z",
+  "runs": [
+    {
+      "name": "zero",
+      "owners": [
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 1,
+            "z": 2
+          },
+          "legal": true,
+          "contact": {
+            "vertices": 1152,
+            "dry": 1152,
+            "absent": 0,
+            "minGap": 0.007000000178813935,
+            "maxGap": 0.06300000004470349
+          }
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 3,
+            "z": 3
+          },
+          "legal": true,
+          "contact": {
+            "vertices": 24,
+            "dry": 24,
+            "absent": 0,
+            "minGap": 0.04000000268220902,
+            "maxGap": 0.04000000268220902
+          }
+        }
+      ],
+      "houseContact": {
+        "vertices": 1018,
+        "dry": 1018,
+        "absent": 0,
+        "minGap": 0.017600017674267297,
+        "maxGap": 0.11039999723434447
+      },
+      "housePosition": [
+        -0.582492236,
+        0.035,
+        -1.649474401
+      ],
+      "pierJoin": [
+        {
+          "dx": -0.31,
+          "dry": true,
+          "floorY": 0,
+          "logical": {
+            "x": 3.655622094,
+            "z": 4.463600779
+          }
+        },
+        {
+          "dx": -0.155,
+          "dry": true,
+          "floorY": 0,
+          "logical": {
+            "x": 3.810411834,
+            "z": 4.472485529
+          }
+        },
+        {
+          "dx": 0,
+          "dry": true,
+          "floorY": 0,
+          "logical": {
+            "x": 3.965106784,
+            "z": 4.485375603
+          }
+        },
+        {
+          "dx": 0.155,
+          "dry": true,
+          "floorY": -0.001579649,
+          "logical": {
+            "x": 4.119811533,
+            "z": 4.502148346
+          }
+        },
+        {
+          "dx": 0.31,
+          "dry": true,
+          "floorY": -0.016192427,
+          "logical": {
+            "x": 4.275296614,
+            "z": 4.522645782
+          }
+        }
+      ],
+      "pinError": 1.000000082740371e-9,
+      "maxHitError": 2.517410405966647e-7,
+      "maxPointerError": 1.414213640133339e-9,
+      "maxAnalyticProjectionError": 0.0011644663141124325,
+      "probes": 550,
+      "minTriangleRatio": 0.982817753758185,
+      "triangles": 12120,
+      "walkEdges": 454
+    },
+    {
+      "name": "observed-input",
+      "owners": [
+        {
+          "id": "p1",
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "legal": true,
+          "contact": {
+            "vertices": 110,
+            "dry": 110,
+            "absent": 0,
+            "minGap": -0.05629637105215404,
+            "maxGap": 0.03999998807907104
+          }
+        }
+      ],
+      "houseContact": {
+        "vertices": 1018,
+        "dry": 1018,
+        "absent": 0,
+        "minGap": 0.017600017674267297,
+        "maxGap": 0.11039999723434447
+      },
+      "housePosition": [
+        -0.582492236,
+        0.035,
+        -1.649474401
+      ],
+      "pierJoin": [
+        {
+          "dx": -0.31,
+          "dry": true,
+          "floorY": 0,
+          "logical": {
+            "x": 3.655622094,
+            "z": 4.463600779
+          }
+        },
+        {
+          "dx": -0.155,
+          "dry": true,
+          "floorY": 0,
+          "logical": {
+            "x": 3.810411834,
+            "z": 4.472485529
+          }
+        },
+        {
+          "dx": 0,
+          "dry": true,
+          "floorY": 0,
+          "logical": {
+            "x": 3.965106784,
+            "z": 4.485375603
+          }
+        },
+        {
+          "dx": 0.155,
+          "dry": true,
+          "floorY": -0.001579649,
+          "logical": {
+            "x": 4.119811533,
+            "z": 4.502148346
+          }
+        },
+        {
+          "dx": 0.31,
+          "dry": true,
+          "floorY": -0.016192427,
+          "logical": {
+            "x": 4.275296614,
+            "z": 4.522645782
+          }
+        }
+      ],
+      "pinError": 1.000000082740371e-9,
+      "maxHitError": 2.517410405966647e-7,
+      "maxPointerError": 1.414213640133339e-9,
+      "maxAnalyticProjectionError": 0.0011644663141124325,
+      "probes": 502,
+      "minTriangleRatio": 0.9822374667973314,
+      "triangles": 10990,
+      "walkEdges": 342
+    },
+    {
+      "name": "normal-F2-recipe",
+      "owners": [
+        {
+          "id": "p1",
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "legal": true,
+          "contact": {
+            "vertices": 110,
+            "dry": 110,
+            "absent": 0,
+            "minGap": -0.05629637105215404,
+            "maxGap": 0.03999998807907104
+          }
+        },
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 2,
+            "z": 3
+          },
+          "legal": true,
+          "contact": {
+            "vertices": 1152,
+            "dry": 1152,
+            "absent": 0,
+            "minGap": 0.007000000178813914,
+            "maxGap": 0.07246999129073484
+          }
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 2,
+            "z": 4
+          },
+          "legal": true,
+          "contact": {
+            "vertices": 24,
+            "dry": 24,
+            "absent": 0,
+            "minGap": 0.04032812568220906,
+            "maxGap": 0.08363452268220906
+          }
+        }
+      ],
+      "houseContact": {
+        "vertices": 1018,
+        "dry": 1018,
+        "absent": 0,
+        "minGap": 0.017600017674267297,
+        "maxGap": 0.11039999723434447
+      },
+      "housePosition": [
+        -0.582492236,
+        0.035,
+        -1.649474401
+      ],
+      "pierJoin": [
+        {
+          "dx": -0.31,
+          "dry": true,
+          "floorY": 0,
+          "logical": {
+            "x": 3.655622094,
+            "z": 4.463600779
+          }
+        },
+        {
+          "dx": -0.155,
+          "dry": true,
+          "floorY": 0,
+          "logical": {
+            "x": 3.810411834,
+            "z": 4.472485529
+          }
+        },
+        {
+          "dx": 0,
+          "dry": true,
+          "floorY": 0,
+          "logical": {
+            "x": 3.965106784,
+            "z": 4.485375603
+          }
+        },
+        {
+          "dx": 0.155,
+          "dry": true,
+          "floorY": -0.001579649,
+          "logical": {
+            "x": 4.119811533,
+            "z": 4.502148346
+          }
+        },
+        {
+          "dx": 0.31,
+          "dry": true,
+          "floorY": -0.016192427,
+          "logical": {
+            "x": 4.275296614,
+            "z": 4.522645782
+          }
+        }
+      ],
+      "pinError": 1.000000082740371e-9,
+      "maxHitError": 3.4076822312545385e-7,
+      "maxPointerError": 1.414213640133339e-9,
+      "maxAnalyticProjectionError": 0.0011644663141124325,
+      "probes": 502,
+      "minTriangleRatio": 0.9781287615353976,
+      "triangles": 11074,
+      "walkEdges": 372
+    },
+    {
+      "name": "current-UI-33",
+      "owners": [
+        {
+          "id": "p1",
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "legal": true,
+          "contact": {
+            "vertices": 110,
+            "dry": 110,
+            "absent": 0,
+            "minGap": -0.05629637105215404,
+            "maxGap": 0.03999998807907104
+          }
+        },
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 2,
+            "z": 3
+          },
+          "legal": true,
+          "contact": {
+            "vertices": 1152,
+            "dry": 1152,
+            "absent": 0,
+            "minGap": 0.007000000178813914,
+            "maxGap": 0.07246999129073484
+          }
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 2,
+            "z": 4
+          },
+          "legal": true,
+          "contact": {
+            "vertices": 24,
+            "dry": 24,
+            "absent": 0,
+            "minGap": 0.04032812568220906,
+            "maxGap": 0.08363452268220906
+          }
+        }
+      ],
+      "houseContact": {
+        "vertices": 1018,
+        "dry": 1018,
+        "absent": 0,
+        "minGap": 0.017600017674267297,
+        "maxGap": 0.11039999723434447
+      },
+      "housePosition": [
+        -0.582492236,
+        0.035,
+        -1.649474401
+      ],
+      "pierJoin": [
+        {
+          "dx": -0.31,
+          "dry": true,
+          "floorY": 0,
+          "logical": {
+            "x": 3.655622094,
+            "z": 4.463600779
+          }
+        },
+        {
+          "dx": -0.155,
+          "dry": true,
+          "floorY": 0,
+          "logical": {
+            "x": 3.810411834,
+            "z": 4.472485529
+          }
+        },
+        {
+          "dx": 0,
+          "dry": true,
+          "floorY": 0,
+          "logical": {
+            "x": 3.965106784,
+            "z": 4.485375603
+          }
+        },
+        {
+          "dx": 0.155,
+          "dry": true,
+          "floorY": -0.001579649,
+          "logical": {
+            "x": 4.119811533,
+            "z": 4.502148346
+          }
+        },
+        {
+          "dx": 0.31,
+          "dry": true,
+          "floorY": -0.016192427,
+          "logical": {
+            "x": 4.275296614,
+            "z": 4.522645782
+          }
+        }
+      ],
+      "pinError": 1.000000082740371e-9,
+      "maxHitError": 3.4076822312545385e-7,
+      "maxPointerError": 1.414213640133339e-9,
+      "maxAnalyticProjectionError": 0.0011644663141124325,
+      "probes": 502,
+      "minTriangleRatio": 0.9781287615353976,
+      "triangles": 11074,
+      "walkEdges": 372
+    },
+    {
+      "name": "expanded",
+      "owners": [
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 1,
+            "z": 2
+          },
+          "legal": true,
+          "contact": {
+            "vertices": 1152,
+            "dry": 1152,
+            "absent": 0,
+            "minGap": 0.007000000178813935,
+            "maxGap": 0.06300000004470349
+          }
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 3,
+            "z": 3
+          },
+          "legal": true,
+          "contact": {
+            "vertices": 24,
+            "dry": 24,
+            "absent": 0,
+            "minGap": 0.04000000268220902,
+            "maxGap": 0.04000000268220902
+          }
+        }
+      ],
+      "houseContact": {
+        "vertices": 1018,
+        "dry": 1018,
+        "absent": 0,
+        "minGap": 0.017600017674267297,
+        "maxGap": 0.11039999723434447
+      },
+      "housePosition": [
+        -0.582492236,
+        0.035,
+        -1.649474401
+      ],
+      "pierJoin": [
+        {
+          "dx": -0.31,
+          "dry": true,
+          "floorY": 0.343524142,
+          "logical": {
+            "x": 6.755063147,
+            "z": 7.463810686
+          }
+        },
+        {
+          "dx": -0.155,
+          "dry": true,
+          "floorY": 0.359207161,
+          "logical": {
+            "x": 6.927376562,
+            "z": 7.461892058
+          }
+        },
+        {
+          "dx": 0,
+          "dry": true,
+          "floorY": 0.377776636,
+          "logical": {
+            "x": 7.101774936,
+            "z": 7.448218852
+          }
+        },
+        {
+          "dx": 0.155,
+          "dry": true,
+          "floorY": 0.398438529,
+          "logical": {
+            "x": 7.277543024,
+            "z": 7.425421989
+          }
+        },
+        {
+          "dx": 0.31,
+          "dry": true,
+          "floorY": 0.419065393,
+          "logical": {
+            "x": 7.452862672,
+            "z": 7.401257189
+          }
+        }
+      ],
+      "pinError": 1.000000082740371e-9,
+      "maxHitError": 8.82948391539573e-7,
+      "maxPointerError": 1.41421367938565e-9,
+      "maxAnalyticProjectionError": 0.0016264687888976935,
+      "probes": 1678,
+      "minTriangleRatio": 0.8847609796852267,
+      "triangles": 34690,
+      "walkEdges": 1648
+    }
+  ],
+  "limits": [
+    "CPU geometry and real native mesh footing only; no WebGL image",
+    "near-ground model vertices are a contact diagnostic, not proof of every continuous face",
+    "pier join uses real first-plank edge samples; seaward pier is intentionally over water"
+  ],
+  "hashes": {
+    "curved-grid.ts": "21535d59d055dad92ef2640334b3587d5fac529d21bdcc5565cf70f7ef279b1d",
+    "curved-grid-transform.mjs": "85ee92ca649f26f0286c3036e57e33a1aef990265e440107d74d0b6c8a55cfbc",
+    "curved-grid-check.ts": "83e005f5d562b0c1eb13406ee8595e8bd106b1f73c69fb0bc4230a01dc3bd489",
+    "curved-grid-check.mjs": "949970c719f42202e3c0d94c03c676c0ffdf254e336fd5b5fee39b851c7403be",
+    "terrain-transform.mjs": "484e7be00bcb3224df7aca50f6af6f33ed80bd3c4f8f3c5fb2dee6286c658122",
+    "terrace-convex-recipe.ts": "6727da9e0b1b8243d338a739f6242d2b7e4c11e05f1d91d5d3a594c9e8434237",
+    "evidence/18-terrace-input-state.json": "31aedb4b82e10c64c6f33ea5b81d6d3e76d698198ca450f4dd43aacd52007b57",
+    "evidence/terrace-F2-recipe.json": "05bb3224e9b676a50db582dfaa8b0d301fcaa1427fd76db8a5b653f2510e43d3",
+    "evidence/33-F2-used-state.json": "081e357da5da782ed1dcdd0edcf91153ecb300c1192c2d546784e0e639643bcd"
+  },
+  "status": "PASS",
+  "contactRegressions": [],
+  "integration": "actual terrainMethodTransform F/H plus explicit alwaysH landscape and fixed-cottage transforms",
+  "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-method-comparison/curved-grid-check.mjs"
+}

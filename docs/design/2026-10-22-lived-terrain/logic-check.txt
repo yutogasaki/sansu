@@ -1,0 +1,70 @@
+{
+  "at": "2026-10-21T22:23:15.534Z",
+  "results": [
+    {
+      "name": "future path cut keeps both endpoint supports but removes the route",
+      "pass": true
+    },
+    {
+      "name": "route restores with the exact original cells",
+      "pass": true
+    },
+    {
+      "name": "route reaches the requested point rather than a substitute nearby bank",
+      "pass": true
+    },
+    {
+      "name": "full footprint rejects a dry centre with water beside the foot",
+      "pass": true
+    },
+    {
+      "name": "real root set is mandatory and an unsupported point fails the owner",
+      "pass": true
+    },
+    {
+      "name": "vertical wall cannot be stepped over by a coarse graph edge",
+      "pass": true
+    },
+    {
+      "name": "physical obstacles block the body even with dry support",
+      "pass": true
+    },
+    {
+      "name": "all three replay inputs produce finite nonempty triangle worlds without mutating the start",
+      "pass": true
+    },
+    {
+      "name": "a shore target connects from a nearby safe graph node rather than failing at a rounded index",
+      "pass": true
+    },
+    {
+      "name": "deleting a cell leaves an actual water hole instead of soft-union phantom land",
+      "pass": true
+    },
+    {
+      "name": "curved world mapping remains invertible throughout the editable area",
+      "pass": true
+    },
+    {
+      "name": "standing at the requested destination never creates a tiny walking detour",
+      "pass": true
+    },
+    {
+      "name": "normal smoothing is independent of triangle area at a material seam",
+      "pass": true
+    },
+    {
+      "name": "resting visible foot vertices touch sloped ground without penetrating it at any yaw",
+      "pass": true
+    },
+    {
+      "name": "rounded walking corners keep exact endpoints and never cut across forbidden ground",
+      "pass": true
+    },
+    {
+      "name": "digging empty water does not create a fake edit or undo entry",
+      "pass": true
+    }
+  ],
+  "scope": "Targeted geometry/navigation diagnostics; actual owners and continuous UI are checked in the browser separately."
+}

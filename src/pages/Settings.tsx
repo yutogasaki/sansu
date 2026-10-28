@@ -1,4 +1,6 @@
 import { leaveKokugo } from '../domain/kokugo/repository';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { db } from '../db';
 import { BookOpen, ExternalLink, ShieldCheck, UserRound, Volume2 } from "lucide-react";
 import { islandEnabled } from "../domain/island/feature";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -32,6 +34,7 @@ export const Settings: React.FC = () => {
     const learningOverlay = navigation?.learning ?? false;
     const [sound, setSound] = useState(true);
     const [profile, setProfile] = useState<UserProfile | null>(null);
+    const kokugoPreferred = useLiveQuery(async () => profile ? Boolean((await db.kokugoCourses.get(profile.id))?.preferred) : false, [profile?.id]);
     const [profiles, setProfiles] = useState<UserProfile[]>([]);
     const switchingRef = useRef(false);
     const [switchingId, setSwitchingId] = useState<string | null>(null);
@@ -204,7 +207,8 @@ export const Settings: React.FC = () => {
         await persistProfileUpdate(updated);
     };
 
-    const subjectLabel = profile?.subjectMode === "math" ? t("さんすう", "算数") : profile?.subjectMode === "vocab" ? t("えいご", "英語") : t("さんすう+えいご", "算数+英語");
+    const subjectLabel = kokugoPreferred ? t("こくご", "国語") : profile?.subjectMode === "math" ? t("さんすう", "算数") : profile?.subjectMode === "vocab" ? t("えいご", "英語") : t("さんすう+えいご", "算数+英語");
+    const mathSelected = !kokugoPreferred && profile?.subjectMode !== "vocab";
     const hissanLabel = profile?.hissanModeEnabled !== false ? t("ひっさんON", "筆算ON") : t("ひっさんOFF", "筆算OFF");
     const soundLabel = sound ? t("おとON", "サウンドON") : t("おとOFF", "サウンドOFF");
     const textLabel = isEasy ? t("やさしい", "やさしい") : t("ふつう", "標準");
@@ -315,7 +319,7 @@ export const Settings: React.FC = () => {
                 </SurfacePanel>}
                 {navigation && <nav className="settings-category-list" aria-label={t("せっていの こうもく", "設定の項目")}>
                     {sectionButton("profile", "プロフィール", `${profile?.name || "ゲスト"} · ${GRADES[profile?.grade ?? 1] || "???"}`)}
-                    {sectionButton("learning", t("べんきょう", "学習"), `${subjectLabel} · ${hissanLabel}`)}
+                    {sectionButton("learning", t("べんきょう", "学習"), mathSelected ? `${subjectLabel} · ${hissanLabel}` : subjectLabel)}
                     {sectionButton("display", t("みため と おと", "表示とサウンド"), `${soundLabel} · ${textLabel} · ${kanjiLabel}`)}
                     {sectionButton("parent", t("ほごしゃ", "保護者"), t("きろく · はんい · テスト", "学習記録 · 範囲変更 · 確認テスト"))}
                     {promotionLink}
@@ -379,29 +383,32 @@ export const Settings: React.FC = () => {
 
                 {/* ── 学習 ── */}
                 <SurfacePanel id="settings-panel-learning" hidden={Boolean(navigation && openSection !== "learning")} className="overflow-hidden rounded-[28px] p-0">
-                    {!navigation && sectionButton("learning", t("べんきょう", "学習"), `${subjectLabel} · ${hissanLabel}`)}
+                    {!navigation && sectionButton("learning", t("べんきょう", "学習"), mathSelected ? `${subjectLabel} · ${hissanLabel}` : subjectLabel)}
                     <AnimatePresence>
                         {openSection === "learning" && (
                             <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
                                 <div className="space-y-5 px-5 pb-5">
                                     <SurfacePanelHeader title={t("べんきょう する もの", "学習する科目")} />
-                                    <Button onClick={() => navigate('/kokugo')}>国語を まなぶ</Button>
                                     <SegmentedControl
                                         aria-label={t("べんきょう する もの", "学習する科目")}
-                                        value={profile?.subjectMode ?? "mix"}
-                                        onChange={handleSubjectModeChange}
+                                        value={kokugoPreferred ? "kokugo" : profile?.subjectMode ?? "mix"}
+                                        onChange={(mode: "mix" | "math" | "vocab" | "kokugo") => {
+                                            if (mode === "kokugo") navigate('/kokugo');
+                                            else void handleSubjectModeChange(mode);
+                                        }}
                                         options={[
                                             { value: "mix", label: t("さんすう+えいご", "算数+英語") },
                                             { value: "math", label: t("さんすう", "算数") },
                                             { value: "vocab", label: t("えいご", "英語") },
+                                            { value: "kokugo", label: t("こくご", "国語") },
                                         ]}
                                     />
-                                    <PanelDivider />
+                                    {mathSelected && <><PanelDivider />
                                     <SettingRow
                                         title={t("ひっさん モード", "筆算モード")}
                                         description={t("おおきい すうじ の とき ひっさん で とける", "大きい数の計算で筆算UIを表示")}
                                         action={<Button aria-label={t("ひっさん モード", "筆算モード")} aria-pressed={profile?.hissanModeEnabled !== false} size="sm" variant={profile?.hissanModeEnabled !== false ? "primary" : "secondary"} onClick={async () => { if (!profile) return; await persistProfileUpdate({ ...profile, hissanModeEnabled: !profile.hissanModeEnabled }); }} className="w-20">{profile?.hissanModeEnabled !== false ? "ON" : "OFF"}</Button>}
-                                    />
+                                    /></>}
 
                                 </div>
                             </motion.div>

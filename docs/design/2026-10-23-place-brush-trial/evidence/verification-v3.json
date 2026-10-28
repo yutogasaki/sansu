@@ -1,0 +1,37 @@
+{
+  "recordedAt": "2026-10-23T01:01:57.952392+00:00",
+  "scope": "30-minute bounded trial, one geometry correction, no production adoption",
+  "build": "place-outline-v3",
+  "inputSHA256": "ae859f89629364635791146fc8cfce9a556bc8394138a4d845500116cd59458a",
+  "unchangedRuntimeInputs": true,
+  "verdict": "PARTIAL_HIGH_PLACE_ROUTE_FAIL",
+  "checks": {
+    "build": "PASS",
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "docs": "PASS",
+    "ui": "PASS_LIMITED_UI",
+    "geometry": "PARTIAL"
+  },
+  "limitations": [
+    "new origin opened onboarding GrowingIsland, memory-only",
+    "high place remains inaccessible",
+    "no save/offline/child/full-island or release acceptance",
+    "UI centre 5,5 only",
+    "first transient boot error cause unknown"
+  ],
+  "startedAt": "2026-10-23T00:44:20Z",
+  "stoppedAt": "2026-10-23T01:03:00.296063+00:00",
+  "browserReport": {
+    "result": "PASS",
+    "checks": [
+      "high/narrow/wide switches load expected images",
+      "wide final image loaded",
+      "trial and report tabs retained",
+      "temporary viewport reset"
+    ],
+    "evidence": "20-report.png"
+  },
+  "artVerdict": "HOLD: rounded inlet improves silhouette locally, but long walls, central hole and vertical wall banding remain",
+  "stopReason": "One geometric correction did not restore the high-place route; bounded trial is complete with the counterexample retained."
+}

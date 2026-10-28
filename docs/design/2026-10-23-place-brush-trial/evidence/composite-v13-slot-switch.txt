@@ -1,0 +1,18 @@
+2026-10-24T02:03:34.898Z
+Browser tab: 14, Title: "ぽこもこと不思議な島", URL: "http://127.0.0.1:5508/?terrainTrial=H&groundTrial=continuous&trialEvidence=1&trialScene=shore&growthTrial=inherit&rampTrial=linear&baseTrial=stable&compileTrial=single&queryTrial=frozen&memoTrial=samples&edgeTrial=memo&placeSetTrial=two#/onboarding".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~			14 pop up button (collapsed, settable) Description: 編集する場所, Value: 東, Secondary Actions: Expand
+~					16 西
+~					17 (selected) 東
+~			19 text 選択位置： 5 ,  5 （地面をタップで変更）
+~			22 pop up button (collapsed, settable) Description: 場所の高さ, Value: 高台, Secondary Actions: Expand
+~					24 (selected) 高台
+~					25 低い丘
+~			48 pop up button (collapsed, settable) Description: 坂の向き, Value: 西, Secondary Actions: Expand
+~					50 北
+~					51 (selected) 西
+~		58 text {"shapes":{},"slot":"east","undo":0,"redo":0,"persisted":false,"revision":5,"history":{"version":1,"undo":[],"redo":[]}}
+~				63 text かえたい じめんを さわってね
+~			65 button (disabled) じめんを あげる
+~			66 button (disabled) じめんを さげる
+The focused UI element is 54 button 場所をまとめて変える

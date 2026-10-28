@@ -1,0 +1,520 @@
+{
+  "mode": "A",
+  "enabled": false,
+  "query": "?terrainTrial=A&baseTrial=stable&rampTrial=linear&growthTrial=inherit&compileTrial=single&queryTrial=frozen&trialScene=shore",
+  "date": "2026-10-22T22:09:54.329Z",
+  "inputHashes": {
+    "docs/design/2026-10-23-place-method-comparison/memo-samples-check.ts": "354db4825520bc7b986ebe3ba3380b568021c04b47bbd5c6bd3c2549094ca5bc",
+    "src/domain/growingIsland/island.ts": "dc4add763c9e3b88d14155a5cd4f56555c46f9fd71f6d28bf96d8afaadc50f96",
+    "src/domain/growingIsland/commands.ts": "1aa5ba1443ddeb1e8bce8155bb1ed8a6f8b2de5902b7a341ac61d299efe8aace",
+    "docs/design/2026-10-23-place-method-comparison/section-profile.ts": "1dc7f55c40ebb1321afe0cfce46e573292af987e4e147b532a0c4bbff7b6098b",
+    "src/domain/growingIsland/space.ts": "16e3d555627ce43f2337cee98f36b79bab912e02277b214af13c854bd0a52b35",
+    "src/domain/growingIsland/editableTerrainWorld.ts": "7606a6d2be402e90ef85154cd28e8cf3c07dd5d690538b37bbfbfd700e1fc324",
+    "src/domain/growingIsland/environment.ts": "c6718f37bbbbeb850e9201d8841d98c0567ee114677b2de9049adefe50ecbae0",
+    "src/domain/growingIsland/placeGoals.ts": "ae141fc95e02a30d66b86e6128a7396b50277aee87e3cd0d2a8116f151c327af",
+    "src/domain/growingIsland/pier.ts": "67a3e80f4d49bd8d8109992a7f9c12e88588ec5a86959c669f02d326c83c1bef",
+    "src/domain/growingIsland/random.ts": "2d3e35f0f26da88acc2228454193fda88b759ac9f58ce8cc96d96b2234c01175",
+    "src/domain/growingIsland/growth.ts": "a759a6dd9ba8beeb38fe6277d83dded7c03dd71430081ec7c5030ae4e7030b12",
+    "src/domain/islandLife/footprint.ts": "756e569dff83698e12dc6401fb96be06a23b950b003df4b1af21b8a1aa38916b",
+    "src/domain/growingIsland/guidance.ts": "87888c03b2aaf5a4d365dae7ad84cb71d1ed4cdbde29c610438dbb4dfba9daff",
+    "src/domain/growingIsland/community.ts": "4db64f4c14bd9a34d326fa99dbba9c19fb6a83d48530ce1219e7d078f1b72031",
+    "src/domain/growingIsland/rules.ts": "835406501ad0f6137603b15d33291be9054dfb5553c5f670a966860f5a9a9b4b",
+    "src/domain/growingIsland/authoredPlacementSupport.ts": "e26fadea87bc473299da8e0ad5e791cd25745ea6e9ae199eb28161b0647018a4",
+    "src/domain/growingIsland/room.ts": "f1cfb631a26122546043ec3859926faba565e148802f498bd01fb346fa66d576",
+    "src/domain/growingIsland/placeTypes.ts": "d28cfe5f886afd56b02b3a1a7ca4b53056af2f5511bdb825d3b2fac54f528976",
+    "src/domain/growingIsland/experience.ts": "8f1fde97edeab617a46bf2f8f869f3564079b6e2b6b2e7b4b82af167063798ef",
+    "src/domain/growingIsland/types.ts": "2e27a9dfdffe84f8fa5a84b4d7200f03a994fcf2b129673b35bcc4c563486ff6",
+    "src/domain/growingIsland/authoredWorldAccess.ts": "a5f1d8369583b8ddbf3448390067123ff38bd41fee1af635bc8ec7a885775ea6",
+    "docs/design/2026-10-23-place-method-comparison/frozen-query.ts": "92fdc7bcccb3b78c2c31fd45285f5a2401fa17b9c0bc4a4fd9814f7e05f1002a",
+    "src/domain/growingIsland/terrainEditing.ts": "a1f51959aa3639d15dcb19fa7f1eb289592a6682deda523a181b42b2591c04ac",
+    "src/domain/growingIsland/flowers.ts": "74c38a6ae4239e97831e2707a4a8f75ab0e0b39f113038bc65626d6c424b561d",
+    "docs/design/2026-10-23-place-method-comparison/growth-seam.ts": "afd12cb5f5a8a4df9e559fe76c6a27c5fbcaa839db0be1d13536df561116fb64",
+    "src/domain/growingIsland/town.ts": "dbfd6423c3235b84107456ad4435be1df9a7cbe147387b08785af3ae96e1b32d",
+    "docs/design/2026-10-23-place-method-comparison/timing-store.ts": "11becb353e0bc2bdb4575469da1940063fd388f9e99fc214c8ffedf91d08ad65",
+    "docs/design/2026-10-23-place-method-comparison/ramp-plane-field.ts": "f3bea67eab97a6c393a6c43cfb6ca02568479fa5ff3ef31d63b7bde0b5bf64e0",
+    "docs/design/2026-10-23-place-method-comparison/curved-grid.ts": "21535d59d055dad92ef2640334b3587d5fac529d21bdcc5565cf70f7ef279b1d",
+    "docs/design/2026-10-23-place-method-comparison/stable-base-field.ts": "3c73c3d5cbaac7c65c647a7772ff4f999d385e90448eb1ed4ed602182d27faca",
+    "docs/design/2026-10-23-place-method-comparison/coastal-base-field.ts": "a35df99fbf53b5f13b592ca540c6587cf586fdae0f2e0052c4b715d389545346",
+    "src/domain/growingIsland/legacyWorldDefinition.ts": "511879416f7aab4667d02d2d1554c2b5ad2e555a950b8340ee2e35f996662dc9",
+    "docs/design/2026-10-22-place-strategy-trial/foundation.ts": "00a11d9deb61d240c757352a711b53ec3dc8cd2359d9ba652683b6f979df21f2",
+    "src/domain/growingIsland/placeTerrain.ts": "dd8ab725d6079a07c82cfc32d5b00f85b7d3c485ec04ef1147f1ee6ef99c7673",
+    "src/domain/growingIsland/worldDefinition.ts": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+    "docs/design/2026-10-23-place-method-comparison/terrace-field.ts": "78d771322aca07395e36c94de4526c63025934e161907409a15358e74583e3dc",
+    "docs/design/2026-10-23-place-method-comparison/coastal-field.ts": "3ff22c3c6a20d4e0235e171dbf372d7a81c726457516a26e810acba3da9d2cc8",
+    "docs/design/2026-10-23-place-method-comparison/terrace-convex-field.ts": "9f2ab0880f502ee399866577f8dc041381a60a215ff6cece7a4625c002773ccc",
+    "src/domain/growingIsland/landscape.ts": "c4238f02498719722449772456001e457a0d02b2f82e7b389eae99d3021b6c96",
+    "src/domain/islandLife/waterChannels.ts": "b98fef9f0eea7ed48e79890826689db3cbc0cd4a763c8d43eae95254a146f988",
+    "src/domain/islandLife/model.ts": "c373f5a532347d3f030420f40774a85e8a9434b095cb763138a34b45cd925ea3",
+    "src/domain/natureTown/random.ts": "45919ef8e7eb46920e60fe20b7992b96621fb9c1f889c81ddcce8d12496cbce9",
+    "src/domain/growingIsland/authoredWaterGeometry.ts": "e9359bfb5f2195834b416ebb633c728ab0974e492edc66b768ea25090777170d",
+    "src/domain/growingIsland/places.ts": "42a2ebfd4e9c3e668bf7d079e9f51a343b7be000a85512698a9b3fc2c9f0e502",
+    "src/domain/growingIsland/placeCatalog.ts": "af31b65939c6c58fd4471ef55de8bab4f2a792287caebd648bb7de37282bbb47",
+    "src/domain/growingIsland/placeGrowthGuides.ts": "d927e5201ee27232a85235767103e07fd722ce616b34d0d1a1b92325a91566c0",
+    "src/domain/growingIsland/placeCapability.ts": "d24931bdb4883f049c122776dde4495691d3ee1a6e0fd3fd420edea998f9b4ad",
+    "src/domain/growingIsland/names.ts": "56c4b4015d07f65733b373431ef6316a3ec908f6461929f5af10f4f0d6f078fc",
+    "src/domain/islandLife/space.ts": "699f197c86b4e7142b20a1790a6adefd3287445848c708990dc9c5c1423fff55",
+    "src/domain/islandLife/economyRules.ts": "2feb596641a89a83ff6fb7cd915548f3bcf9a8212ddafa75ddc05910e4091272",
+    "src/domain/islandLife/landRules.ts": "db73f083a1e73dbfa280401898a406afe9a8294d51d7aaaa5cf57140942dd774",
+    "src/domain/islandLife/decorations.ts": "5cfbccce407f289411af0f7317fa15ad96eea8f6abfb52b79a89203f4195ecb1",
+    "src/domain/islandLife/walkingSpace.ts": "5143cdea48aa648b4b2b34f8920168d61b0ea0ed4034b3890e0a76a1c7b85827",
+    "src/domain/growingIsland/communityRoof.ts": "5134661a9ca111a5eb92d5ee30dc34a97d72d97bd139a85bac0c5aa2dddb76f8",
+    "src/domain/growingIsland/nature.ts": "d9d00a72df302f7770bf13f5a1758580ebe2d8856417a70a86071c197214ab69",
+    "memo-samples-transform.mjs": "ef9638b22a8b033609fe97256a454432839490683b3de651d30fc903fc1a657e"
+  },
+  "reports": [
+    {
+      "name": "initial30",
+      "coldMs": 123.416875,
+      "counts": {
+        "landscapePoint": 11230,
+        "surfaceRequests": 2764,
+        "surfaceHeight": 2764,
+        "rawHeight": 2764
+      },
+      "heapBytes": {
+        "before": 5119104,
+        "afterCold": 33163304,
+        "afterGc": 19186512,
+        "coldDelta": 28044200,
+        "retainedDelta": 14067408
+      },
+      "hashes": {
+        "definition": "7da436b28076c97cdc32707874ffe038662e6e31e003a78664e9c9a8d0643c6b",
+        "floors": "049674c5a2109724cb49a1130d3b53840b57badaf75884e6f7222381c9d7f8a0",
+        "anchors": "79a3536f21810edc8bf44c3cb89bd400657b3739b14f82afe83170eb9310f878",
+        "surfaces": "11601945db7c34b208b6dc005f09662c97cf54aa2b7d6b82e274516bc5a55e43",
+        "sites": "2c762ffb4e62fc3f48f9662fb469c878b6009d55a9f44033dc091c5ac4d32530",
+        "walkSites": "2c762ffb4e62fc3f48f9662fb469c878b6009d55a9f44033dc091c5ac4d32530",
+        "bounds": "f7543bdef77a87e01ef5e5f56484c43ec5a3a43ec81467079bf60f222d1a3518",
+        "queries": "f34d53adeebafee165c7f4012a8ee975a872567ef125a4e56140db3511154deb",
+        "graphs": "6a17d11400b43c6ea9536285755f0027f203914828c323690cfe444f4920d9c7",
+        "routes": "dca173000ffaa55974eb65518baac127e326cf8eb2d7d4438ca3da769e0de157",
+        "commands": "58d96b44f5e4032eff6fdc6992658df5c33c25776bf6214dd399225999116d77"
+      },
+      "queries": 1369,
+      "routes": 2970,
+      "ordinaryCycleAccepted": true,
+      "commands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 1,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": true,
+          "hashes": [
+            "375b037644b388bc4526173111e33f48e64732796a6254b89bb1001c37b929c2",
+            "a4008ad32c0a5f3e41639f4ef22d281963ee236a02940ada176a29e8d4484b42",
+            "12c45666c54aa2a4300da6f75042533412a6340552105a5d2f943db434bbafee"
+          ],
+          "worldHashes": [
+            "96e53d7126cbec8cbf5da8a81a8d724e68fac791c9e17934d19f8edd3ede3b21",
+            "7da436b28076c97cdc32707874ffe038662e6e31e003a78664e9c9a8d0643c6b",
+            "96e53d7126cbec8cbf5da8a81a8d724e68fac791c9e17934d19f8edd3ede3b21"
+          ]
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        }
+      ]
+    },
+    {
+      "name": "expanded96",
+      "coldMs": 185.64125,
+      "counts": {
+        "landscapePoint": 19707,
+        "surfaceRequests": 6346,
+        "surfaceHeight": 6346,
+        "rawHeight": 6346
+      },
+      "heapBytes": {
+        "before": 35046128,
+        "afterCold": 83226512,
+        "afterGc": 64388192,
+        "coldDelta": 48180384,
+        "retainedDelta": 29342064
+      },
+      "hashes": {
+        "definition": "ce9f2b9c4993ce9bc0a77f2472405c9c98932cf5fe1558dead39ee648d34070e",
+        "floors": "275f67811f86dffa4d4afde1ca501fb8708f35b0a9127ca33681ac20a949b041",
+        "anchors": "0e43028fc8886839479b752b9c1d13af70242a19cd55265422e348e925cb4a9d",
+        "surfaces": "3103e28554ad5604089ebc57b7378f4191f92b2d7b16c115bce9ff2dacc363b4",
+        "sites": "542a7f6b6d4ce732bc521b52e7239cb870da4249c6958793003b5e7f62445b06",
+        "walkSites": "f25743b5198ebd82440a9f09fd39225263afcc7e39dd193516640e7b8b432176",
+        "bounds": "a4ab98feaea02499de8f31887eb3373e3a282e7bce65e8688b630d6bbe9eb0ba",
+        "queries": "60742b752d5afcca6c1aeb9b2d97c3e325ef81fb9952a5876ec9350aa4b0f615",
+        "graphs": "9efbd25280c484637b82d819a91900df1ad50402abc831c09ad76a60d30b320f",
+        "routes": "b92215b07ecc23ecd179a031785aab164bad65eee28c901d86b25a351fe92815",
+        "commands": "46c5cd913d0849a1e64509ee23d43da4071df57f5e5fffe9eeec6a2138533348"
+      },
+      "queries": 2989,
+      "routes": 10350,
+      "ordinaryCycleAccepted": false,
+      "commands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 1,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        }
+      ]
+    },
+    {
+      "name": "shore96",
+      "coldMs": 192.8182079999997,
+      "counts": {
+        "surfaceRequests": 6346,
+        "surfaceHeight": 6346,
+        "rawHeight": 6346,
+        "landscapePoint": 20429
+      },
+      "heapBytes": {
+        "before": 213683024,
+        "afterCold": 264023464,
+        "afterGc": 242717584,
+        "coldDelta": 50340440,
+        "retainedDelta": 29034560
+      },
+      "hashes": {
+        "definition": "5b2b679cc6cef8454a3b82faa252ab3278525ec7dbd3941be22b5085a99df0e1",
+        "floors": "879673ed8d3e291c9ffcfa427c80c096a171bf115be3015f67e1b8239a6e397c",
+        "anchors": "0e43028fc8886839479b752b9c1d13af70242a19cd55265422e348e925cb4a9d",
+        "surfaces": "e8f30b2484669e87ba1580bba154df60056b9120f58806c20ee4a24e3acdb8ae",
+        "sites": "9894de06de2945eebbe9193626a0f7b4e79625951c9fd6458dc95f3d260d57cd",
+        "walkSites": "e27af849f7d23343249bc6ab45ff926535b72117f7cfdac3e3c8748b25eff5bc",
+        "bounds": "a4ab98feaea02499de8f31887eb3373e3a282e7bce65e8688b630d6bbe9eb0ba",
+        "queries": "6304192bd7ddcf82c6905f02f503475b232326103e758b77f837b17960e20529",
+        "graphs": "dfe5fc78d86848d27a4610610efe9c010bc0172aede7776650d7723ab290b426",
+        "routes": "2bbde3597bca56c3938f7f61c040af239290412eba23621e4ff0d717f9a0d967",
+        "commands": "0c2be9aa7f6e4b2cd99c04f1a187857c1ba17c85efa6c6a24f1f3556fb88fd39"
+      },
+      "queries": 2989,
+      "routes": 8160,
+      "ordinaryCycleAccepted": true,
+      "commands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": true,
+          "hashes": [
+            "2ecf5a361226776cae3b9a00cf39f06be1f0cdbf74feb7dd0a5c36a60b94f5f0",
+            "c8b5c5af796463bc4b32eadc205bf0b2770f539dc1a420f0de0fec388db26635",
+            "8e812553d5058255c93206b89f79568c93a5539ca28b754e8d5f323dd3242dad"
+          ],
+          "worldHashes": [
+            "8c7cdde8676dea1a07ca01414f6f269c63c9b051e65d655db5df139fb5dcef1a",
+            "5b2b679cc6cef8454a3b82faa252ab3278525ec7dbd3941be22b5085a99df0e1",
+            "8c7cdde8676dea1a07ca01414f6f269c63c9b051e65d655db5df139fb5dcef1a"
+          ]
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。"
+        }
+      ]
+    },
+    {
+      "name": "signed-extreme30",
+      "coldMs": 63.88599999999997,
+      "counts": {
+        "surfaceRequests": 2764,
+        "surfaceHeight": 2764,
+        "rawHeight": 2764,
+        "landscapePoint": 11774
+      },
+      "heapBytes": {
+        "before": 244701392,
+        "afterCold": 268988576,
+        "afterGc": 229181480,
+        "coldDelta": 24287184,
+        "retainedDelta": -15519912
+      },
+      "hashes": {
+        "definition": "d50dcdc3fb2382e31b6b8eef3256b3caedff4713d86f60ab8f083f87e073cfff",
+        "floors": "dbbd7bb446ebcb53487f006174277a53c47de367b2dcbe1ef8eded2e4ba484af",
+        "anchors": "79a3536f21810edc8bf44c3cb89bd400657b3739b14f82afe83170eb9310f878",
+        "surfaces": "a44adc2cc007f6db96bd18c64a06cf699cd921b8c689883822ac3905e477b180",
+        "sites": "e5cd187ba93010087ffb89e632c409c9cbb78af7f3ceb16095bdf1ba6b8c5566",
+        "walkSites": "35e5e57db7f6791ddb0c7180b498d894cdf93cc00e40bbffecc977aa90151dd8",
+        "bounds": "08903e58c0b90a067a1660e86069d1b385474186bbed14f4bd9ae219b15a5e79",
+        "queries": "0644f5eb84958f271b5725e309116eb43dc2f0e2f4bcc7c8f585657970de4bdd",
+        "graphs": "d05bb3ce0c160ab2c3af94b21aad7c9fa4e73bb1cb2d90205b5017caa58df1c1",
+        "routes": "9814f81afe13dd9c47be931a9c973024cb967a555bccc17c986f69e7669d86e5",
+        "commands": "e60b9e99fd76fcc128583e5e13e50d0e1fb277b5229637fa67a2872cf768d290"
+      },
+      "queries": 1369,
+      "routes": 2940,
+      "ordinaryCycleAccepted": false,
+      "commands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 1,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        }
+      ]
+    },
+    {
+      "name": "bridge30",
+      "coldMs": 70.67524999999978,
+      "counts": {
+        "landscapePoint": 11234,
+        "surfaceRequests": 2764,
+        "surfaceHeight": 2764,
+        "rawHeight": 2764
+      },
+      "heapBytes": {
+        "before": 178833624,
+        "afterCold": 205844600,
+        "afterGc": 163345920,
+        "coldDelta": 27010976,
+        "retainedDelta": -15487704
+      },
+      "hashes": {
+        "definition": "2148279453d2ea451e451940f2a9488bcdd03c9a9b899c82612e060d877d000d",
+        "floors": "33089a83273ac12fafcc1fb66bda8a12236b3aedd41a15d7c5654b9ec2a2d193",
+        "anchors": "c836a08bbe93dcdafdce7746b42df7cb40b002f5de9b4c38db466e6267d25d88",
+        "surfaces": "11601945db7c34b208b6dc005f09662c97cf54aa2b7d6b82e274516bc5a55e43",
+        "sites": "e1215461b7f272494508621db3081b9e3cbf5f022b65b562291e22aa62524b31",
+        "walkSites": "e1215461b7f272494508621db3081b9e3cbf5f022b65b562291e22aa62524b31",
+        "bounds": "ec5fa8f1a8be17b8699a0001bee9012ba4534b437656d0ccf5aa877b3d6fcbf0",
+        "queries": "915282970ca8d00a35c96cd24826f83b84e54bb61a6055e0e0b9399b90835bf4",
+        "graphs": "cf29a947dfab1ba5dd9c6b4511a6b171b798b070c512ea536b6c024cdde8d5ac",
+        "routes": "cb81259cc7755aaef24ff7bf210ea4a9df1551301b9fed68386defbb591c3a37",
+        "commands": "e1876cf4a045161a6af98a9285acd648768c38354022dea7617ba4a09d5ffa99"
+      },
+      "queries": 1369,
+      "routes": 3030,
+      "ordinaryCycleAccepted": true,
+      "commands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 1,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": true,
+          "hashes": [
+            "7365dc9e14a03976415c89304f162256de0791b36d6ce47fe29cdb144f4a9d8d",
+            "280c444efe41fcc72821fb2dcadbf456b1992d03caf6f76ec3699e3887558e4d",
+            "85ab56ed34e58dc3f34e07502e0a7c7344916d40f41baa1d2a4cd4ca6beb930b"
+          ],
+          "worldHashes": [
+            "149693a05763d95f45a2bfcedaa7057cb4f46be732263a20bc708b8871bb5106",
+            "2148279453d2ea451e451940f2a9488bcdd03c9a9b899c82612e060d877d000d",
+            "149693a05763d95f45a2bfcedaa7057cb4f46be732263a20bc708b8871bb5106"
+          ]
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        }
+      ]
+    }
+  ],
+  "pureChecks": {
+    "signedZero": true,
+    "adjacentDoubles": true,
+    "separateFactories": true
+  },
+  "scope": "Node with actual browser flag branches. CPU and heap observations include diagnostic counters; afterCold heap is not a peak measurement. No browser/GPU claim."
+}

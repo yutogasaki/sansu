@@ -1,0 +1,178 @@
+{
+  "status": "DIAGNOSTIC",
+  "scope": "Actual UI snapshot pair audit, same land/inventory/balance; route resampling not live animation proof",
+  "reports": [
+    {
+      "label": "A",
+      "landCells": 96,
+      "beforeReachable": 86,
+      "afterReachable": 85,
+      "lost": [
+        {
+          "x": -3,
+          "z": 0
+        }
+      ],
+      "lostDry": [],
+      "targets": [
+        {
+          "place": "P05:starter-flower",
+          "target": "starter-bench",
+          "cell": {
+            "x": -1,
+            "z": 4
+          },
+          "allSegmentsSupported": false
+        },
+        {
+          "place": "P05:starter-flower",
+          "target": "starter-flower:garden",
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "route": [
+            {
+              "x": 2,
+              "z": 1
+            },
+            {
+              "x": 1,
+              "z": 1
+            },
+            {
+              "x": 1,
+              "z": 2
+            },
+            {
+              "x": 0,
+              "z": 2
+            },
+            {
+              "x": 0,
+              "z": 3
+            },
+            {
+              "x": 0,
+              "z": 4
+            }
+          ],
+          "allSegmentsSupported": true
+        }
+      ]
+    },
+    {
+      "label": "B",
+      "landCells": 96,
+      "beforeReachable": 82,
+      "afterReachable": 78,
+      "lost": [
+        {
+          "x": 8,
+          "z": 2
+        },
+        {
+          "x": 7,
+          "z": 3
+        },
+        {
+          "x": 8,
+          "z": 3
+        },
+        {
+          "x": 8,
+          "z": 4
+        }
+      ],
+      "lostDry": [
+        {
+          "x": 8,
+          "z": 4
+        }
+      ],
+      "targets": [
+        {
+          "place": "P05:starter-flower",
+          "target": "starter-bench",
+          "cell": {
+            "x": 5,
+            "z": 5
+          },
+          "allSegmentsSupported": false
+        },
+        {
+          "place": "P05:starter-flower",
+          "target": "starter-flower:garden",
+          "cell": {
+            "x": 6,
+            "z": 5
+          },
+          "route": [
+            {
+              "x": 2,
+              "z": 1
+            },
+            {
+              "x": 3,
+              "z": 1
+            },
+            {
+              "x": 4,
+              "z": 1
+            },
+            {
+              "x": 5,
+              "z": 1
+            },
+            {
+              "x": 6,
+              "z": 1
+            },
+            {
+              "x": 6,
+              "z": 2
+            },
+            {
+              "x": 6,
+              "z": 3
+            },
+            {
+              "x": 6,
+              "z": 4
+            },
+            {
+              "x": 6,
+              "z": 5
+            }
+          ],
+          "allSegmentsSupported": true
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "node": "v22.23.3",
+    "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-brush-trial/two-bay-pair-check.mjs route-diagnostic",
+    "inputSHA256": {
+      "composite-field.ts": "0a63b64afeae4cfd78fef2eda0ad1f69e85f0e566bfac70eb51f7bfcd36a5f0f",
+      "composite-model.ts": "e4a1b014ca21c18d93b6bed5974667783536ab1e885462085994b4474cd3d6c3",
+      "two-bay-pair-check.ts": "141d5dfc4043e1b99107b0301eed221163f3f38162a44cab13463f9a59a99190",
+      "two-bay-pair-check.mjs": "1115b206b01dc6a92392f78095dac7f44df8db0f460fcbf20f63fd301aeab740",
+      "vite.config.ts": "cce0e9e67ee2963efd2d31cb9eb46bbd19eb8e705b6416256bad8414ad7a4150",
+      "TrialIsland.ts": "50ee145cb8167339f55f18f27f6160e9032cae3956f22d09b1c4aa5c89bce013",
+      "Controls.tsx": "5292b7281dc6bc2ab1e435a290d5492b848d069c091a4393c579d11cdc2a8ebc",
+      "PlaceEvidence.tsx": "c08d2fc708ca59e29c2b9aee4f30de3f684541177c5a5c286a1bfea069cbbb81",
+      "directional-field.ts": "0dc03ed7b2dbbf87ef79973405f72c5d762c26dff2e3aa462ea5c85e73f7e54b",
+      "assembly-mode.ts": "654aef8d680b79df6237c81b0f8af454daa4d7e78ccc68ea70d5672e2c214610",
+      "assembly-section.ts": "15b05cd87fee9db17e54f81d0cd3ab029bffc1f8a624d022561c6409cef0a054",
+      "coastal-section.ts": "75170b31383e59e8874b8aa8290b549fb7ffd278e7313092b0118e06d36b22f3",
+      "bay-section.ts": "72dfb86624b77625406c00b4a055ba9b0ffd114668a102c44739c435d53115b0",
+      "evidence/two-bay-v21-A-one-state.json": "aa889e3b17e89523dceab9993ca7d6ef1131012b30511685689e80434c20cf10",
+      "evidence/two-bay-v21-A-two-state.json": "bb95473797fb19721ed9d5b51ea4fd6940de4029885803cbaa937fcf1ffb968c",
+      "evidence/two-bay-v21-B-one-state.json": "852a3fbf1e4577790a88ddce1725eb781e48ccbdd51627dbc7b006f6304f2af3",
+      "evidence/two-bay-v21-B-two-state.json": "6d28aa548882410aa4f251a9065ae2e391d165781530157e79ecf8b8035a6fa1"
+    },
+    "changedInputs": [],
+    "bundleSHA256": "f93273849d7ab46b41c981045b3d41b5a125eb419aa4d2a6527963ddf83db153"
+  }
+}

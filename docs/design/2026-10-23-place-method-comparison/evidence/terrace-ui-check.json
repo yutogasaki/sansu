@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-22T20:46:00.748Z",
+  "scope": "D2 limited two-step terrace: normal inventory placement, natural resident use, reload",
+  "observations": [
+    {
+      "name": "04-A-initial-state",
+      "sha256": "263b3e8d87efc61a14ee94eb657930e31f8196e1c47d1af540f790ac9d493d71"
+    },
+    {
+      "name": "18-terrace-input-state",
+      "sha256": "31aedb4b82e10c64c6f33ea5b81d6d3e76d698198ca450f4dd43aacd52007b57"
+    },
+    {
+      "name": "22-D2-placed-state",
+      "sha256": "4a94dff52a8c667501612599e0a1b0486e84c8bff3d68fc0efd7151a68a0d361"
+    },
+    {
+      "name": "23-D2-used-state",
+      "sha256": "30ec85fef3ce73027c1d442debe66430a89bc8bd21a1037d90638f4f19948bf9"
+    },
+    {
+      "name": "24-D2-reloaded-state",
+      "sha256": "189d3f4a833551363ee1dbca7587c49ab7ce334c744aa266b6b3560a9e088969"
+    }
+  ],
+  "checks": [
+    "same acquired land, owners, maturity, currency and villagers",
+    "two ordinary placements on edited land",
+    "both actors used the new place revision",
+    "reload retained all prior use facts and the terrain/owners"
+  ],
+  "addedUseFactsAfterObservation": 1,
+  "occupiedUndo": "Observed rejection, unchanged terrain, screenshot 25-D2-occupied-undo.png. Not counted as successful Undo.",
+  "excluded": [
+    "D2 general edit acceptance: independently rejected for threshold jumps",
+    "visual acceptance",
+    "child comprehension",
+    "production/offline/update acceptance"
+  ]
+}

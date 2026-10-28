@@ -1,0 +1,343 @@
+{
+  "status": "PASS",
+  "scope": "Retained home-reachable walk-site guard, actual before/after floor graph, atomic rejection; candidate sweep does not claim all arrangements safe",
+  "reports": [
+    {
+      "label": "A",
+      "knownUnsafeRejected": true,
+      "unchangedOnReject": true,
+      "knownLostSites": [
+        "-3,0.5",
+        "-2.5,1"
+      ],
+      "baselineUnreachable": [
+        "-2,7",
+        "4,3.5",
+        "-1.5,6",
+        "-0.5,6",
+        "0,6.5",
+        "4,6.5",
+        "4.5,6.5",
+        "5,6.5",
+        "5.5,6.5",
+        "5.5,7"
+      ],
+      "accepted": 1,
+      "trials": [
+        {
+          "shape": {
+            "bayDepth": 0.8,
+            "center": {
+              "x": -2,
+              "z": 0
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 1.2
+          },
+          "accepted": true,
+          "removed": [],
+          "reintroduced": [],
+          "routeChanged": [],
+          "floorHash": "ae16d5890964591a90e33751a05f87935647938deca122b10568592b86448e30",
+          "reachable": 296
+        },
+        {
+          "shape": {
+            "bayDepth": 1.6,
+            "center": {
+              "x": -2,
+              "z": 0
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 1.2
+          },
+          "accepted": false,
+          "error": "Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。"
+        },
+        {
+          "shape": {
+            "bayDepth": 2.4,
+            "center": {
+              "x": -2,
+              "z": 0
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 1.2
+          },
+          "accepted": false,
+          "error": "Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。"
+        },
+        {
+          "shape": {
+            "bayDepth": 0.8,
+            "center": {
+              "x": -2,
+              "z": 0
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 1.6
+          },
+          "accepted": false,
+          "error": "Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。"
+        },
+        {
+          "shape": {
+            "bayDepth": 1.6,
+            "center": {
+              "x": -2,
+              "z": 0
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 1.6
+          },
+          "accepted": false,
+          "error": "Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。"
+        },
+        {
+          "shape": {
+            "bayDepth": 2.4,
+            "center": {
+              "x": -2,
+              "z": 0
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 1.6
+          },
+          "accepted": false,
+          "error": "Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。"
+        },
+        {
+          "shape": {
+            "bayDepth": 0.8,
+            "center": {
+              "x": -2,
+              "z": 0
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 2
+          },
+          "accepted": false,
+          "error": "Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。"
+        },
+        {
+          "shape": {
+            "bayDepth": 1.6,
+            "center": {
+              "x": -2,
+              "z": 0
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 2
+          },
+          "accepted": false,
+          "error": "Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。"
+        },
+        {
+          "shape": {
+            "bayDepth": 2.4,
+            "center": {
+              "x": -2,
+              "z": 0
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 2
+          },
+          "accepted": false,
+          "error": "Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。"
+        }
+      ]
+    },
+    {
+      "label": "B",
+      "knownUnsafeRejected": true,
+      "unchangedOnReject": true,
+      "knownLostSites": [
+        "8,4",
+        "7.5,2",
+        "7,2.5",
+        "6.5,3",
+        "7,3.5"
+      ],
+      "baselineUnreachable": [
+        "1,4",
+        "3,5",
+        "0,6",
+        "2,6",
+        "4,3.5",
+        "0.5,5.5",
+        "1,5.5",
+        "3.5,6",
+        "4,6.5",
+        "4.5,6.5",
+        "5,6.5",
+        "5.5,6.5",
+        "5.5,7"
+      ],
+      "accepted": 0,
+      "trials": [
+        {
+          "shape": {
+            "bayDepth": 0.8,
+            "center": {
+              "x": 8,
+              "z": 3
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 1.2
+          },
+          "accepted": false,
+          "error": "Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。"
+        },
+        {
+          "shape": {
+            "bayDepth": 1.6,
+            "center": {
+              "x": 8,
+              "z": 3
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 1.2
+          },
+          "accepted": false,
+          "error": "Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。"
+        },
+        {
+          "shape": {
+            "bayDepth": 2.4,
+            "center": {
+              "x": 8,
+              "z": 3
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 1.2
+          },
+          "accepted": false,
+          "error": "Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。"
+        },
+        {
+          "shape": {
+            "bayDepth": 0.8,
+            "center": {
+              "x": 8,
+              "z": 3
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 1.6
+          },
+          "accepted": false,
+          "error": "Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。"
+        },
+        {
+          "shape": {
+            "bayDepth": 1.6,
+            "center": {
+              "x": 8,
+              "z": 3
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 1.6
+          },
+          "accepted": false,
+          "error": "Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。"
+        },
+        {
+          "shape": {
+            "bayDepth": 2.4,
+            "center": {
+              "x": 8,
+              "z": 3
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 1.6
+          },
+          "accepted": false,
+          "error": "Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。"
+        },
+        {
+          "shape": {
+            "bayDepth": 0.8,
+            "center": {
+              "x": 8,
+              "z": 3
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 2
+          },
+          "accepted": false,
+          "error": "Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。"
+        },
+        {
+          "shape": {
+            "bayDepth": 1.6,
+            "center": {
+              "x": 8,
+              "z": 3
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 2
+          },
+          "accepted": false,
+          "error": "Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。"
+        },
+        {
+          "shape": {
+            "bayDepth": 2.4,
+            "center": {
+              "x": 8,
+              "z": 3
+            },
+            "entrance": 1.2,
+            "height": -0.55,
+            "radius": 2
+          },
+          "accepted": false,
+          "error": "Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "node": "v22.23.3",
+    "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-brush-trial/connectivity-check.mjs sweep",
+    "inputSHA256": {
+      "composite-field.ts": "0a63b64afeae4cfd78fef2eda0ad1f69e85f0e566bfac70eb51f7bfcd36a5f0f",
+      "composite-model.ts": "d36e05de7b43cc050d9087cdb3f584b06dc07b153f32652ea242407b9e205e57",
+      "connectivity-check.ts": "e2b89aa11bc01918077d22178c8e67855f5c24408015989f455c6fd48cabcc8e",
+      "connectivity-check.mjs": "b651656bed9de301e783eb2ade5a832a95dd6102d5a0bc0fdd127d55ded4be44",
+      "vite.config.ts": "17049b9c75645e3bc59753cc0650eea06cd403c01ae780b97d222140e8d41708",
+      "TrialIsland.ts": "50ee145cb8167339f55f18f27f6160e9032cae3956f22d09b1c4aa5c89bce013",
+      "Controls.tsx": "5292b7281dc6bc2ab1e435a290d5492b848d069c091a4393c579d11cdc2a8ebc",
+      "PlaceEvidence.tsx": "c08d2fc708ca59e29c2b9aee4f30de3f684541177c5a5c286a1bfea069cbbb81",
+      "directional-field.ts": "0dc03ed7b2dbbf87ef79973405f72c5d762c26dff2e3aa462ea5c85e73f7e54b",
+      "assembly-mode.ts": "963aa17fab9ef70d097a2e5cceb88faff478c8378a0671aebaa07b4c63a0fe99",
+      "assembly-section.ts": "15b05cd87fee9db17e54f81d0cd3ab029bffc1f8a624d022561c6409cef0a054",
+      "coastal-section.ts": "75170b31383e59e8874b8aa8290b549fb7ffd278e7313092b0118e06d36b22f3",
+      "bay-section.ts": "72dfb86624b77625406c00b4a055ba9b0ffd114668a102c44739c435d53115b0",
+      "evidence/two-bay-v21-A-one-state.json": "aa889e3b17e89523dceab9993ca7d6ef1131012b30511685689e80434c20cf10",
+      "evidence/two-bay-v21-A-two-state.json": "bb95473797fb19721ed9d5b51ea4fd6940de4029885803cbaa937fcf1ffb968c",
+      "evidence/two-bay-v21-B-one-state.json": "852a3fbf1e4577790a88ddce1725eb781e48ccbdd51627dbc7b006f6304f2af3",
+      "evidence/two-bay-v21-B-two-state.json": "6d28aa548882410aa4f251a9065ae2e391d165781530157e79ecf8b8035a6fa1"
+    },
+    "changedInputs": [
+      "PlaceEvidence.tsx"
+    ],
+    "bundleSHA256": "2a86ac865371c63072c5e0f65f057e90db703daa885bb9fdae9a6283c96a56c3"
+  }
+}

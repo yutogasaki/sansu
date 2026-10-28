@@ -1,0 +1,115 @@
+{
+  "status": "stopped",
+  "clock": "performance.now milliseconds from CPU measurement start",
+  "startedPerformanceMs": 32624.7,
+  "startedEpochMs": 1792706186022.6,
+  "endedPerformanceMs": 42625.2,
+  "elapsedMs": 10000.5,
+  "retainedLimit": 400,
+  "dropped": 0,
+  "filteredCacheHits": 7,
+  "incompleteSpans": 0,
+  "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+  "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+  "aggregates": {
+    "editableIslandWorld:cache-hit": {
+      "calls": 7,
+      "inclusiveMs": 0.2,
+      "selfMs": 0.2,
+      "maxMs": 0.1,
+      "failed": 0
+    },
+    "compileWorldDefinition:derived-edges": {
+      "calls": 1,
+      "inclusiveMs": 288.3,
+      "selfMs": 288.3,
+      "maxMs": 288.3,
+      "failed": 0
+    },
+    "editableIslandWorld:cold": {
+      "calls": 1,
+      "inclusiveMs": 1653.2,
+      "selfMs": 1364.9,
+      "maxMs": 1653.2,
+      "failed": 0
+    },
+    "applyIntent:terrain-edit": {
+      "calls": 1,
+      "inclusiveMs": 1655.3,
+      "selfMs": 2,
+      "maxMs": 1655.3,
+      "failed": 0
+    },
+    "worldScene.layout:": {
+      "calls": 1,
+      "inclusiveMs": 44.6,
+      "selfMs": 44.6,
+      "maxMs": 44.6,
+      "failed": 0
+    },
+    "GrowingWorld.rebuild:": {
+      "calls": 1,
+      "inclusiveMs": 57.9,
+      "selfMs": 13.2,
+      "maxMs": 57.9,
+      "failed": 0
+    }
+  },
+  "spans": [
+    {
+      "id": 1,
+      "parentId": null,
+      "name": "applyIntent",
+      "detail": "terrain-edit",
+      "startMs": 568.4,
+      "endMs": 2223.7,
+      "inclusiveMs": 1655.3,
+      "selfMs": 2,
+      "failed": false
+    },
+    {
+      "id": 3,
+      "parentId": 1,
+      "name": "editableIslandWorld",
+      "detail": "cold",
+      "startMs": 569.4,
+      "endMs": 2222.6,
+      "inclusiveMs": 1653.2,
+      "selfMs": 1364.9,
+      "failed": false
+    },
+    {
+      "id": 4,
+      "parentId": 3,
+      "name": "compileWorldDefinition",
+      "detail": "derived-edges",
+      "startMs": 1934.3,
+      "endMs": 2222.6,
+      "inclusiveMs": 288.3,
+      "selfMs": 288.3,
+      "failed": false
+    },
+    {
+      "id": 8,
+      "parentId": null,
+      "name": "GrowingWorld.rebuild",
+      "detail": "",
+      "startMs": 2225.7,
+      "endMs": 2283.6,
+      "inclusiveMs": 57.9,
+      "selfMs": 13.2,
+      "failed": false
+    },
+    {
+      "id": 9,
+      "parentId": 8,
+      "name": "worldScene.layout",
+      "detail": "",
+      "startMs": 2225.8,
+      "endMs": 2270.4,
+      "inclusiveMs": 44.6,
+      "selfMs": 44.6,
+      "failed": false
+    }
+  ]
+}

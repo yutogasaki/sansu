@@ -1,3 +1,4 @@
+import { kokugoUnitButton } from './island-e2e-helpers.mjs';
 import assert from 'node:assert/strict';
 import { promises as fs } from 'node:fs';
 import { chromium } from 'playwright';
@@ -53,7 +54,7 @@ try {
         assert.deepEqual(await rows('islandPlans'), []); assert.deepEqual(await rows('logs'), []);
         await page.screenshot({ path: `${output}/${width}-first-national-choice.png` });
         await page.getByRole('button', { name: '読む', exact: true }).click();
-        await page.getByRole('button', { name: /R01 ·/ }).click();
+        await kokugoUnitButton(page, 'R01').click();
         await page.getByRole('button', { name: '3もん やってみる', exact: true }).click();
         for (let cursor = 0; cursor < 3; cursor++) {
             const plan = await until(pending, plan => plan?.cursor === cursor && !!plan.slots[cursor].presentation);
@@ -67,6 +68,20 @@ try {
         await page.getByRole('button', { name: 'まなぶ', exact: true }).click();
         await page.getByRole('heading', { name: '国語を まなぼう' }).waitFor();
         await page.screenshot({ path: `${output}/${width}-first-return.png` });
+        const selectedCourse = (await rows('kokugoCourses'))[0];
+        await page.getByLabel('学年の めやす', { exact: true }).selectOption('0');
+        await page.getByRole('button', { name: 'この続きから練習する', exact: true }).click();
+        await page.locator('.kokugo-question').waitFor();
+        const resumed = await until(pending, plan => plan?.unitId === 'R01' && !!plan.slots[0].presentation);
+        assert.equal((await rows('kokugoCourses'))[0].band, selectedCourse.band);
+        await page.reload(); await page.locator('.kokugo-question').waitFor(); assert.equal((await pending()).id, resumed.id);
+
+        await page.goto(`${base}/#/stats`);
+        await until(() => page.getByTestId('activity-count').innerText(), text => Number(text.replace(/[^0-9]/g, '')) === 3);
+        assert.equal(await page.locator('.stats-first-record').count(), 0);
+        assert.deepEqual(await rows('memoryMath'), []); assert.deepEqual(await rows('logs'), []);
+        await page.screenshot({ path: `${output}/${width}-national-only-records.png` });
+
         assert.deepEqual(errors, []);
         report.scenarios.push({ width, owner: profile.id, pass: true, realFirstHomePlaced: true, noMathAbilitySeeded: true, firstThreeCompleted: true, preferredCourseResumed: true, runtime: await appRootMetadata(page) });
         await context.close();

@@ -1,0 +1,317 @@
+{
+  "at": "2026-10-27T22:49:23.330357+00:00",
+  "base": {
+    "base": "0358c72a03eec1b19004931077acb25cf53d0de8",
+    "changed": [
+      "src/components/island/growing/growingShaderWarmup.test.ts",
+      "src/components/island/growing/growingShaderWarmup.ts"
+    ],
+    "added": [
+      "tools/e2e-growing-shader-startup.mjs"
+    ]
+  },
+  "sourceSha256": {
+    "src/components/island/growing/growingShaderWarmup.ts": "a0d79ae49c0ada69f13d85debc4eea0c9ed225d44d10a752329242b7109c4594",
+    "src/components/island/growing/growingShaderWarmup.test.ts": "b437f85e919b316b7a40b70411974d30121b67e3f6273243404df33ec0788e0a",
+    "tools/e2e-growing-shader-startup.mjs": "25627171f034fa72e0ef330ec58f114d63d2aee28a54bb5f4b73ca6a7c88e942"
+  },
+  "isolatedVersion": {
+    "version": "0358c72-shader-startup-isolated-a0d79ae49c0a:7a34bada-543f-450c-9326-a839383f4da3",
+    "revision": "0358c72-shader-startup-isolated-a0d79ae49c0a",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "checks": {
+    "focusedUnit": {
+      "pass": true,
+      "files": 4,
+      "tests": 61
+    },
+    "sharedTreeFullUnit": {
+      "pass": true,
+      "files": 689,
+      "tests": 5745,
+      "seconds": 846.45
+    },
+    "sharedTreeLint": {
+      "pass": true,
+      "warnings": 5
+    },
+    "isolatedLint": {
+      "pass": true,
+      "warnings": 4
+    },
+    "sharedTreeTypecheck": {
+      "pass": true
+    },
+    "sharedTreeBuild": {
+      "pass": true
+    },
+    "isolatedBuild": {
+      "pass": true
+    },
+    "currentEntry": {
+      "pass": true
+    },
+    "classicSmoke": {
+      "pass": true,
+      "cases": 32,
+      "target": "isolated HEAD + shader fix",
+      "rawReport": "output/2026-10-28-shader-startup/smoke-isolated/smoke-report.json"
+    },
+    "documentationAndPortal": {
+      "pass": true,
+      "commands": [
+        "npm run docs:check",
+        "npm run agent:index:check (includes npm run portal:verify)"
+      ],
+      "notes": [
+        "Existing review-date warnings only. Node 24.18.0 used for the portal."
+      ],
+      "rawLogs": [
+        "output/2026-10-28-shader-startup/docs-check-final.log",
+        "output/2026-10-28-shader-startup/index-check-final.log"
+      ]
+    },
+    "scopeReview": {
+      "pass": true,
+      "trackedApplicationInputsChangedSinceStart": [
+        "src/components/island/growing/growingShaderWarmup.test.ts",
+        "src/components/island/growing/growingShaderWarmup.ts"
+      ],
+      "existingUncommittedChangesPreserved": true
+    }
+  },
+  "limits": [
+    "Physical user iPhone has not been retested.",
+    "No commit, push or publication.",
+    "No two-build update or human/child outcome measurement.",
+    "Full unit suite was run on the shared working tree; isolated candidate has focused unit and browser checks."
+  ],
+  "baseline": {
+    "pass": true,
+    "at": "2026-10-27T22:40:59.341Z",
+    "scope": "Disposable saved profile, real production renderer/SW and normal opening sync. Explicit delayed KHR completion and invalid-shader diagnostics; not a physical iPhone.",
+    "cases": [
+      {
+        "engine": "webkit",
+        "browser": "26.0",
+        "pass": true,
+        "detail": "build: development-local\nscene-initialization (compact): Growing shader failed to link: 2\nMozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 Version/26.6.1 Mobile/15E148 Safari/604.1",
+        "trace": {
+          "delayed": 107,
+          "deletedWhileLoading": 19,
+          "staleQueries": 468,
+          "contexts": 1,
+          "parallel": true
+        }
+      }
+    ],
+    "rawReport": "output/2026-10-28-shader-startup/baseline-regression-v3/report.json",
+    "reportSha256": "7973525d83e027c2007a58b8e2ede53a37c055b863fdb25607080efbbc5f4ace"
+  },
+  "sharedTreeBrowser": {
+    "pass": true,
+    "at": "2026-10-27T22:42:06.645Z",
+    "scope": "Disposable saved profile, real production renderer/SW and normal opening sync. Explicit delayed KHR completion and invalid-shader diagnostics; not a physical iPhone.",
+    "cases": [
+      {
+        "engine": "webkit",
+        "browser": "26.0",
+        "pass": true,
+        "trace": {
+          "delayed": 106,
+          "deletedWhileLoading": 2,
+          "staleQueries": 0,
+          "contexts": 1,
+          "parallel": true
+        },
+        "metadata": {
+          "url": "http://127.0.0.1:5297/#/island",
+          "revision": "0358c72-shader-startup-a0d79ae49c0a",
+          "version": "0358c72-shader-startup-a0d79ae49c0a:caa1a634-ce12-4962-8296-915351846220",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "0358c72-shader-startup-a0d79ae49c0a",
+            "version": "0358c72-shader-startup-a0d79ae49c0a:caa1a634-ce12-4962-8296-915351846220",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        "trueFailure": "build: 0358c72-shader-startup-a0d79ae49c0a\nscene-initialization (compact): Growing shader failed to link: patchwork-otter-v1\nprogram: Fragment shader is not compiled.\nvertex: (empty)\nfragment: ERROR: 0:1985: 'QA_INVALID_SHADER' : syntax error\nMozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 Version/26.6.1 Mobile/15E148 Safari/604.1"
+      },
+      {
+        "engine": "chromium",
+        "browser": "145.0.7632.6",
+        "pass": true,
+        "trace": {
+          "delayed": 0,
+          "deletedWhileLoading": 0,
+          "staleQueries": 0,
+          "contexts": 1,
+          "parallel": false
+        },
+        "metadata": {
+          "url": "http://127.0.0.1:5297/#/island",
+          "revision": "0358c72-shader-startup-a0d79ae49c0a",
+          "version": "0358c72-shader-startup-a0d79ae49c0a:caa1a634-ce12-4962-8296-915351846220",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "0358c72-shader-startup-a0d79ae49c0a",
+            "version": "0358c72-shader-startup-a0d79ae49c0a:caa1a634-ce12-4962-8296-915351846220",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        "trueFailure": "build: 0358c72-shader-startup-a0d79ae49c0a\nscene-initialization (compact): Growing shader failed to link: patchwork-otter-v1\nprogram: Fragment shader is not compiled.\n\u0000\nvertex: (empty)\nfragment: ERROR: 0:1985: 'QA_INVALID_SHADER' : syntax error\n\u0000\nMozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 Version/26.6.1 Mobile/15E148 Safari/604.1"
+      }
+    ],
+    "rawReport": "output/2026-10-28-shader-startup/candidate-regression/report.json",
+    "reportSha256": "21ecb64fb204d8a479f99a146dd809cc28ed02b3c67c318b4a6eb43fab6ddc98"
+  },
+  "isolatedBrowser": {
+    "pass": true,
+    "at": "2026-10-27T22:45:54.267Z",
+    "scope": "Disposable saved profile, real production renderer/SW and normal opening sync. Explicit delayed KHR completion and invalid-shader diagnostics; not a physical iPhone.",
+    "cases": [
+      {
+        "engine": "webkit",
+        "browser": "26.0",
+        "pass": true,
+        "trace": {
+          "delayed": 102,
+          "deletedWhileLoading": 2,
+          "staleQueries": 0,
+          "contexts": 1,
+          "parallel": true
+        },
+        "metadata": {
+          "url": "http://127.0.0.1:5296/#/island",
+          "revision": "0358c72-shader-startup-isolated-a0d79ae49c0a",
+          "version": "0358c72-shader-startup-isolated-a0d79ae49c0a:7a34bada-543f-450c-9326-a839383f4da3",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "0358c72-shader-startup-isolated-a0d79ae49c0a",
+            "version": "0358c72-shader-startup-isolated-a0d79ae49c0a:7a34bada-543f-450c-9326-a839383f4da3",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        "trueFailure": "build: 0358c72-shader-startup-isolated-a0d79ae49c0a\nscene-initialization (compact): Growing shader failed to link: patchwork-otter-v1\nprogram: Fragment shader is not compiled.\nvertex: (empty)\nfragment: ERROR: 0:1985: 'QA_INVALID_SHADER' : syntax error\nMozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 Version/26.6.1 Mobile/15E148 Safari/604.1"
+      },
+      {
+        "engine": "chromium",
+        "browser": "145.0.7632.6",
+        "pass": true,
+        "trace": {
+          "delayed": 0,
+          "deletedWhileLoading": 0,
+          "staleQueries": 0,
+          "contexts": 1,
+          "parallel": false
+        },
+        "metadata": {
+          "url": "http://127.0.0.1:5296/#/island",
+          "revision": "0358c72-shader-startup-isolated-a0d79ae49c0a",
+          "version": "0358c72-shader-startup-isolated-a0d79ae49c0a:7a34bada-543f-450c-9326-a839383f4da3",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "0358c72-shader-startup-isolated-a0d79ae49c0a",
+            "version": "0358c72-shader-startup-isolated-a0d79ae49c0a:7a34bada-543f-450c-9326-a839383f4da3",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        "trueFailure": "build: 0358c72-shader-startup-isolated-a0d79ae49c0a\nscene-initialization (compact): Growing shader failed to link: patchwork-otter-v1\nprogram: Fragment shader is not compiled.\n\u0000\nvertex: (empty)\nfragment: ERROR: 0:1985: 'QA_INVALID_SHADER' : syntax error\n\u0000\nMozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 Version/26.6.1 Mobile/15E148 Safari/604.1"
+      }
+    ],
+    "rawReport": "output/2026-10-28-shader-startup/isolated-regression/report.json",
+    "reportSha256": "04500fe669960c63b97dcdc603f7845754ea3bbfd8f50bf7873bcb289f25df4d"
+  },
+  "isolatedBuildArchive": {
+    "path": "output/2026-10-28-shader-startup/isolated-dist.tar.gz",
+    "sha256": "9b6376d846ed7c44f770d03be8176cb254eb1eea37087ce6131f369448db831c"
+  },
+  "finalizedAt": "2026-10-27T22:55:02.669905+00:00"
+}

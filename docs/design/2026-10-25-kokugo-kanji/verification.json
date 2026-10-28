@@ -1,0 +1,148 @@
+{
+  "at": "2026-10-25T12:59:20.600209+00:00",
+  "result": "local implementation complete; shared-tree/release gates remain",
+  "sourceHash": "f0a384caf98df60a101109ee9ef5a3fe60254702abf3777805ba590dfde2d335",
+  "buildBase": "kokugo-0941574eae48",
+  "runtime": {
+    "version": "kanji-f0a384caf98d:750d0829-a4a4-432e-83e1-2e5210992aad",
+    "revision": "kanji-f0a384caf98d",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "checks": [
+    {
+      "command": "SANSU_BUILD_REVISION=kanji-f0a384caf98d npm run build",
+      "cwd": "fixed candidate 3",
+      "result": "PASS",
+      "log": "logs/build-final.log",
+      "precache": "167 files, 9.16 MiB / 12 MiB"
+    },
+    {
+      "command": "npm run lint",
+      "cwd": "shared tree",
+      "result": "PASS, 5 existing warnings",
+      "log": "logs/full-lint.log"
+    },
+    {
+      "command": "npx eslint modified Kokugo files and QA tools",
+      "result": "PASS",
+      "logs": [
+        "logs/focused-lint.log",
+        "logs/final-qa-lint.log"
+      ]
+    },
+    {
+      "command": "npm run typecheck",
+      "cwd": "shared tree",
+      "result": "FAIL: 3 unrelated terrain-edit errors",
+      "log": "logs/shared-tree-typecheck.log"
+    },
+    {
+      "command": "vitest full suite candidate 1, failed and affected files candidate 3, portal-entry after completing test fixtures",
+      "result": "PASS (split execution)",
+      "files": 668,
+      "tests": 5630,
+      "ledger": "unit-suite.json",
+      "logs": [
+        "logs/suite-1.log",
+        "logs/rerun.log",
+        "logs/portal-unit-3.log"
+      ]
+    },
+    {
+      "command": "npx vitest run src/domain/kokugo",
+      "result": "PASS: all affected tests included in 39 focused checks",
+      "log": "logs/focused-tests.log"
+    },
+    {
+      "command": "SANSU_KOKUGO_URL=http://127.0.0.1:5292 SANSU_KOKUGO_OUTPUT=/tmp/sansu-kanji-production-02 node tools/e2e-kokugo-kanji.mjs",
+      "result": "PASS",
+      "widths": [
+        390,
+        768,
+        320
+      ],
+      "report": "production/report.json"
+    },
+    {
+      "command": "SANSU_KOKUGO_OLD_DIR=/tmp/sansu-kokugo-final-dist SANSU_KOKUGO_NEW_DIR=/tmp/sansu-kanji-candidate-3/dist SANSU_KOKUGO_OUTPUT=/tmp/sansu-kanji-update-03 node tools/e2e-kokugo-update.mjs",
+      "result": "PASS",
+      "widths": [
+        390,
+        768,
+        320
+      ],
+      "report": "update/report.json"
+    },
+    {
+      "command": "npm run e2e:smoke",
+      "result": "PARTIAL: final full run 31/32; failed existing Explore scenario passed targeted retry; intermittent checkpoint/input contention retained",
+      "log": "logs/smoke-final.log",
+      "retry": "logs/resume-targeted.log",
+      "failure": "diagnostics/smoke-final-details/smoke-report.json"
+    },
+    {
+      "command": "npm run docs:check",
+      "result": "PASS, 15 preexisting review-deadline warnings",
+      "log": "logs/docs-final.log"
+    },
+    {
+      "command": "node tools/check-current-ui-entry.mjs",
+      "result": "PASS",
+      "log": "logs/entry-final.log"
+    },
+    {
+      "command": "node scripts/standard-portal.mjs verify",
+      "result": "BLOCKED: existing stale flow evidence in another island task",
+      "log": "logs/portal.log"
+    },
+    {
+      "command": "node tools/generate-agent-index.mjs --check",
+      "result": "PASS",
+      "log": "logs/agent-index-check.log"
+    }
+  ],
+  "isolation": "Shared root has concurrent terrain edits and a later independent HEAD. No foreign app edits were adopted into this fixed preview. Additional sources in test-fixtures.json are test-only and do not modify the built application.",
+  "unverified": [
+    "human curriculum proofreading",
+    "physical devices",
+    "real child learning and return",
+    "all word meanings and all readings as teaching material",
+    "handwriting/stroke recognition"
+  ],
+  "actions": {
+    "commit": false,
+    "push": false,
+    "deploy": false
+  },
+  "runtimeInputsMatchFinalCandidate": true
+}

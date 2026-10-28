@@ -1,0 +1,22 @@
+import fixture from './docs/design/2026-10-23-place-method-comparison/evidence/expanded-place-recipe-flower-flat-wide-fixture.json';
+import { replacePlace } from './docs/design/2026-10-23-place-brush-trial/model';
+import { editableIslandWorld } from './src/domain/growingIsland/editableTerrainWorld';
+import { applyIntent } from './src/domain/growingIsland/commands';
+import { HOME_CELL,walkableCells,approachCells } from './src/domain/growingIsland/space';
+const original=structuredClone(fixture.state),source=JSON.stringify(original);
+const candidates=[
+{id:'west-low-plateau',shape:{center:{x:-1,z:4},radius:1.6,height:.5,entrance:1.2,flatRadius:1.75},before:[],after:[['starter-bench',{x:-1,z:4}],['starter-flower',{x:0,z:4}]]},
+{id:'south-high-terrace-repositioned',shape:{center:{x:0,z:6},radius:1.6,height:.9,entrance:1.2,flatRadius:1.75},before:[],after:[['starter-bench',{x:0,z:6}],['starter-flower',{x:1,z:6}]]},
+{id:'south-inlet-away-from-dock',shape:{center:{x:4,z:6},radius:1.6,height:-.55,entrance:1.2},before:[],after:[['starter-bench',{x:1,z:5}]]}
+];
+const reports=candidates.map(candidate=>{
+ let state=original;const steps=[];let failed=false;
+ const move=(id,cell)=>{try{state=applyIntent(state,{id:candidate.id+'-'+steps.length,command:{type:'move',id,cell}},state.nature.realAt).state;steps.push({action:'move',id,cell,accepted:true});}catch(e){steps.push({action:'move',id,cell,accepted:false,error:String(e)});failed=true;}};
+ for(const [id,cell]of candidate.before)move(id,cell);
+ if(!failed)try{state=replacePlace(state,candidate.shape,{actors:[],occupiedPlaceTargets:[]});steps.push({action:'place',accepted:true});}catch(e){steps.push({action:'place',accepted:false,error:String(e)});failed=true;}
+ if(!failed)for(const [id,cell]of candidate.after)move(id,cell);
+ const world=editableIslandWorld(state),open=walkableCells(state,world);
+ const owners=state.landmarks.filter(o=>['starter-bench','starter-flower'].includes(o.id)).map(o=>({id:o.id,cell:o.cell,approaches:approachCells(o.cell,world).filter(c=>open.has(c.x+','+c.z)).map(c=>{const route=world.route(HOME_CELL,c,open);return{cell:c,path:route};}).filter(a=>a.path)}));
+ return{candidate,steps,accepted:!failed,owners,revision:world.revision,sourceUnchanged:JSON.stringify(original)===source};
+});
+console.log(JSON.stringify({at:new Date().toISOString(),scope:'Domain diagnostic; actors empty only as explicit static precondition, actual actor/UI validation still required',reports},null,2));

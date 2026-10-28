@@ -1,0 +1,1042 @@
+{
+  "status": "PASS",
+  "mode": "F",
+  "existingIslandUsable": true,
+  "runs": [
+    {
+      "mode": "F",
+      "existingHeights": false,
+      "heightSteps": 2,
+      "rampCells": false,
+      "topCells": [
+        {
+          "x": 1,
+          "z": 3
+        },
+        {
+          "x": 2,
+          "z": 3
+        }
+      ],
+      "location": "opening",
+      "fixture": "same initial owners; ordinary store/edit/unstore commands",
+      "supported": [
+        false,
+        false
+      ],
+      "topMin": 0.140875001,
+      "topMax": 0.36,
+      "topVariation": 0.219124999,
+      "pinError": 0,
+      "topConnected": [
+        false,
+        false
+      ],
+      "placedBoth": false,
+      "actualUse": false,
+      "actualClimb": 0,
+      "receiptAfterMs": 0,
+      "placementError": "ここには おけないよ。",
+      "maxRaiseCommandDrop": 0,
+      "maxRaiseCommandRise": 0.18,
+      "negativeCenters": [],
+      "surfaceComparison": {
+        "sampled": 4331,
+        "wetA": 320,
+        "newlyDry": 0,
+        "outsideChanged": 0,
+        "outsideMaxDifference": 1.0000000272292198e-9,
+        "maxDifference": 0.13424392400000001
+      }
+    },
+    {
+      "mode": "F",
+      "existingHeights": false,
+      "heightSteps": 2,
+      "rampCells": true,
+      "topCells": [
+        {
+          "x": 1,
+          "z": 3
+        },
+        {
+          "x": 2,
+          "z": 3
+        }
+      ],
+      "location": "opening",
+      "fixture": "same initial owners; ordinary store/edit/unstore commands",
+      "supported": [
+        true,
+        true
+      ],
+      "topMin": 0.230875,
+      "topMax": 0.36,
+      "topVariation": 0.129125,
+      "pinError": 0,
+      "topConnected": [
+        true,
+        true
+      ],
+      "placedBoth": true,
+      "actualUse": true,
+      "actualClimb": 0.17999999999999997,
+      "receiptAfterMs": 2440,
+      "placementError": "",
+      "maxRaiseCommandDrop": 0,
+      "maxRaiseCommandRise": 0.18,
+      "negativeCenters": [],
+      "surfaceComparison": {
+        "sampled": 4331,
+        "wetA": 316,
+        "newlyDry": 0,
+        "outsideChanged": 0,
+        "outsideMaxDifference": 1.0000000272292198e-9,
+        "maxDifference": 0.07575
+      }
+    },
+    {
+      "mode": "F",
+      "existingHeights": false,
+      "heightSteps": 2,
+      "rampCells": "shoulder",
+      "topCells": [
+        {
+          "x": 1,
+          "z": 3
+        },
+        {
+          "x": 2,
+          "z": 3
+        }
+      ],
+      "location": "opening",
+      "fixture": "same initial owners; ordinary store/edit/unstore commands",
+      "supported": [
+        true,
+        true
+      ],
+      "topMin": 0.230875,
+      "topMax": 0.36,
+      "topVariation": 0.129125,
+      "pinError": 0,
+      "topConnected": [
+        true,
+        true
+      ],
+      "placedBoth": true,
+      "actualUse": true,
+      "actualClimb": 0.17999999999999997,
+      "receiptAfterMs": 2440,
+      "placementError": "",
+      "maxRaiseCommandDrop": 0,
+      "maxRaiseCommandRise": 0.18,
+      "negativeCenters": [],
+      "surfaceComparison": {
+        "sampled": 4331,
+        "wetA": 316,
+        "newlyDry": 0,
+        "outsideChanged": 0,
+        "outsideMaxDifference": 1.9999999989472883e-9,
+        "maxDifference": 0.131830536
+      }
+    },
+    {
+      "mode": "F",
+      "existingHeights": false,
+      "heightSteps": 3,
+      "rampCells": false,
+      "topCells": [
+        {
+          "x": 1,
+          "z": 3
+        },
+        {
+          "x": 2,
+          "z": 3
+        }
+      ],
+      "location": "opening",
+      "fixture": "same initial owners; ordinary store/edit/unstore commands",
+      "supported": [
+        false,
+        false
+      ],
+      "topMin": 0.2113125,
+      "topMax": 0.54,
+      "topVariation": 0.3286875,
+      "pinError": 0,
+      "topConnected": [
+        false,
+        false
+      ],
+      "placedBoth": false,
+      "actualUse": false,
+      "actualClimb": 0,
+      "receiptAfterMs": 0,
+      "placementError": "ここには おけないよ。",
+      "maxRaiseCommandDrop": 0,
+      "maxRaiseCommandRise": 0.18000000000000005,
+      "negativeCenters": [],
+      "surfaceComparison": {
+        "sampled": 4331,
+        "wetA": 320,
+        "newlyDry": 0,
+        "outsideChanged": 0,
+        "outsideMaxDifference": 1.0000000272292198e-9,
+        "maxDifference": 0.201365886
+      }
+    },
+    {
+      "mode": "F",
+      "existingHeights": false,
+      "heightSteps": 4,
+      "rampCells": false,
+      "topCells": [
+        {
+          "x": 1,
+          "z": 3
+        },
+        {
+          "x": 2,
+          "z": 3
+        }
+      ],
+      "location": "opening",
+      "fixture": "same initial owners; ordinary store/edit/unstore commands",
+      "supported": [
+        false,
+        false
+      ],
+      "topMin": 0.28175,
+      "topMax": 0.72,
+      "topVariation": 0.43825,
+      "pinError": 0,
+      "topConnected": [
+        false,
+        false
+      ],
+      "placedBoth": false,
+      "actualUse": false,
+      "actualClimb": 0,
+      "receiptAfterMs": 0,
+      "placementError": "ここには おけないよ。",
+      "maxRaiseCommandDrop": 0,
+      "maxRaiseCommandRise": 0.18000000000000005,
+      "negativeCenters": [],
+      "surfaceComparison": {
+        "sampled": 4331,
+        "wetA": 320,
+        "newlyDry": 0,
+        "outsideChanged": 0,
+        "outsideMaxDifference": 1.0000000272292198e-9,
+        "maxDifference": 0.26848784700000006
+      }
+    },
+    {
+      "mode": "F",
+      "existingHeights": false,
+      "heightSteps": 8,
+      "rampCells": false,
+      "topCells": [
+        {
+          "x": 1,
+          "z": 3
+        },
+        {
+          "x": 2,
+          "z": 3
+        }
+      ],
+      "location": "opening",
+      "fixture": "same initial owners; ordinary store/edit/unstore commands",
+      "supported": [
+        false,
+        false
+      ],
+      "topMin": 0.563500001,
+      "topMax": 1.44,
+      "topVariation": 0.876499999,
+      "pinError": 0,
+      "topConnected": [
+        false,
+        false
+      ],
+      "placedBoth": false,
+      "actualUse": false,
+      "actualClimb": 0,
+      "receiptAfterMs": 0,
+      "placementError": "ここには おけないよ。",
+      "maxRaiseCommandDrop": 0,
+      "maxRaiseCommandRise": 0.18000000000000005,
+      "negativeCenters": [],
+      "surfaceComparison": {
+        "sampled": 4331,
+        "wetA": 320,
+        "newlyDry": 0,
+        "outsideChanged": 0,
+        "outsideMaxDifference": 1.0000000272292198e-9,
+        "maxDifference": 0.536975695
+      }
+    },
+    {
+      "mode": "F",
+      "existingHeights": true,
+      "heightSteps": 2,
+      "rampCells": false,
+      "topCells": [
+        {
+          "x": 1,
+          "z": 3
+        },
+        {
+          "x": 2,
+          "z": 3
+        }
+      ],
+      "location": "opening",
+      "fixture": "same initial owners; ordinary store/edit/unstore commands",
+      "supported": [
+        false,
+        false
+      ],
+      "topMin": 0.074698306,
+      "topMax": 0.36,
+      "topVariation": 0.285301694,
+      "pinError": 0,
+      "topConnected": [
+        false,
+        false
+      ],
+      "placedBoth": false,
+      "actualUse": false,
+      "actualClimb": 0,
+      "receiptAfterMs": 0,
+      "placementError": "ここには おけないよ。",
+      "maxRaiseCommandDrop": 0,
+      "maxRaiseCommandRise": 0.18,
+      "negativeCenters": [
+        {
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "height": -1,
+          "expectedY": -0.18,
+          "actualY": -0.18
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 1
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 2
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        }
+      ],
+      "surfaceComparison": {
+        "sampled": 4331,
+        "wetA": 701,
+        "newlyDry": 0,
+        "outsideChanged": 0,
+        "outsideMaxDifference": 1.9999999989472883e-9,
+        "maxDifference": 0.28186660900000005
+      }
+    },
+    {
+      "mode": "F",
+      "existingHeights": true,
+      "heightSteps": 2,
+      "rampCells": true,
+      "topCells": [
+        {
+          "x": 1,
+          "z": 3
+        },
+        {
+          "x": 2,
+          "z": 3
+        }
+      ],
+      "location": "opening",
+      "fixture": "same initial owners; ordinary store/edit/unstore commands",
+      "supported": [
+        false,
+        true
+      ],
+      "topMin": 0.149719917,
+      "topMax": 0.36,
+      "topVariation": 0.21028008299999998,
+      "pinError": 0,
+      "topConnected": [
+        true,
+        true
+      ],
+      "placedBoth": false,
+      "actualUse": false,
+      "actualClimb": 0,
+      "receiptAfterMs": 0,
+      "placementError": "ここには おけないよ。",
+      "maxRaiseCommandDrop": 0,
+      "maxRaiseCommandRise": 0.18,
+      "negativeCenters": [
+        {
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "height": -1,
+          "expectedY": -0.18,
+          "actualY": -0.18
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 1
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 2
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        }
+      ],
+      "surfaceComparison": {
+        "sampled": 4331,
+        "wetA": 687,
+        "newlyDry": 0,
+        "outsideChanged": 0,
+        "outsideMaxDifference": 1.9999999989472883e-9,
+        "maxDifference": 0.28186660900000005
+      }
+    },
+    {
+      "mode": "F",
+      "existingHeights": true,
+      "heightSteps": 2,
+      "rampCells": "shoulder",
+      "topCells": [
+        {
+          "x": 1,
+          "z": 3
+        },
+        {
+          "x": 2,
+          "z": 3
+        }
+      ],
+      "location": "opening",
+      "fixture": "same initial owners; ordinary store/edit/unstore commands",
+      "supported": [
+        false,
+        true
+      ],
+      "topMin": 0.224741528,
+      "topMax": 0.36,
+      "topVariation": 0.135258472,
+      "pinError": 0,
+      "topConnected": [
+        true,
+        true
+      ],
+      "placedBoth": false,
+      "actualUse": false,
+      "actualClimb": 0,
+      "receiptAfterMs": 0,
+      "placementError": "ここには おけないよ。",
+      "maxRaiseCommandDrop": 0,
+      "maxRaiseCommandRise": 0.18,
+      "negativeCenters": [
+        {
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "height": -1,
+          "expectedY": -0.18,
+          "actualY": -0.18
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 1
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 2
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        }
+      ],
+      "surfaceComparison": {
+        "sampled": 4331,
+        "wetA": 667,
+        "newlyDry": 0,
+        "outsideChanged": 0,
+        "outsideMaxDifference": 1.9999999989472883e-9,
+        "maxDifference": 0.28186660900000005
+      }
+    },
+    {
+      "mode": "F",
+      "existingHeights": true,
+      "heightSteps": 2,
+      "rampCells": "shoulder3",
+      "topCells": [
+        {
+          "x": 1,
+          "z": 3
+        },
+        {
+          "x": 2,
+          "z": 3
+        }
+      ],
+      "location": "opening",
+      "fixture": "same initial owners; ordinary store/edit/unstore commands",
+      "supported": [
+        true,
+        true
+      ],
+      "topMin": 0.230875,
+      "topMax": 0.4245625,
+      "topVariation": 0.1936875,
+      "pinError": 0,
+      "topConnected": [
+        true,
+        true
+      ],
+      "placedBoth": true,
+      "actualUse": true,
+      "actualClimb": 0.17999999999999997,
+      "receiptAfterMs": 2440,
+      "placementError": "",
+      "maxRaiseCommandDrop": 0,
+      "maxRaiseCommandRise": 0.18,
+      "negativeCenters": [
+        {
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "height": -1,
+          "expectedY": -0.18,
+          "actualY": -0.18
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 1
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 2
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        }
+      ],
+      "surfaceComparison": {
+        "sampled": 4331,
+        "wetA": 664,
+        "newlyDry": 0,
+        "outsideChanged": 0,
+        "outsideMaxDifference": 2.0000000024167353e-9,
+        "maxDifference": 0.304936017
+      }
+    },
+    {
+      "mode": "F",
+      "existingHeights": true,
+      "heightSteps": 3,
+      "rampCells": false,
+      "topCells": [
+        {
+          "x": 1,
+          "z": 3
+        },
+        {
+          "x": 2,
+          "z": 3
+        }
+      ],
+      "location": "opening",
+      "fixture": "same initial owners; ordinary store/edit/unstore commands",
+      "supported": [
+        false,
+        false
+      ],
+      "topMin": 0.152625001,
+      "topMax": 0.54,
+      "topVariation": 0.38737499900000005,
+      "pinError": 0,
+      "topConnected": [
+        false,
+        false
+      ],
+      "placedBoth": false,
+      "actualUse": false,
+      "actualClimb": 0,
+      "receiptAfterMs": 0,
+      "placementError": "ここには おけないよ。",
+      "maxRaiseCommandDrop": 0,
+      "maxRaiseCommandRise": 0.18000000000000005,
+      "negativeCenters": [
+        {
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "height": -1,
+          "expectedY": -0.18,
+          "actualY": -0.18
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 1
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 2
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        }
+      ],
+      "surfaceComparison": {
+        "sampled": 4331,
+        "wetA": 701,
+        "newlyDry": 0,
+        "outsideChanged": 0,
+        "outsideMaxDifference": 1.9999999989472883e-9,
+        "maxDifference": 0.28186660900000005
+      }
+    },
+    {
+      "mode": "F",
+      "existingHeights": true,
+      "heightSteps": 4,
+      "rampCells": false,
+      "topCells": [
+        {
+          "x": 1,
+          "z": 3
+        },
+        {
+          "x": 2,
+          "z": 3
+        }
+      ],
+      "location": "opening",
+      "fixture": "same initial owners; ordinary store/edit/unstore commands",
+      "supported": [
+        false,
+        false
+      ],
+      "topMin": 0.230551695,
+      "topMax": 0.72,
+      "topVariation": 0.489448305,
+      "pinError": 0,
+      "topConnected": [
+        false,
+        false
+      ],
+      "placedBoth": false,
+      "actualUse": false,
+      "actualClimb": 0,
+      "receiptAfterMs": 0,
+      "placementError": "ここには おけないよ。",
+      "maxRaiseCommandDrop": 0,
+      "maxRaiseCommandRise": 0.18000000000000005,
+      "negativeCenters": [
+        {
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "height": -1,
+          "expectedY": -0.18,
+          "actualY": -0.18
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 1
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 2
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        }
+      ],
+      "surfaceComparison": {
+        "sampled": 4331,
+        "wetA": 701,
+        "newlyDry": 0,
+        "outsideChanged": 0,
+        "outsideMaxDifference": 1.9999999989472883e-9,
+        "maxDifference": 0.293165268
+      }
+    },
+    {
+      "mode": "F",
+      "existingHeights": true,
+      "heightSteps": 8,
+      "rampCells": false,
+      "topCells": [
+        {
+          "x": 1,
+          "z": 3
+        },
+        {
+          "x": 2,
+          "z": 3
+        }
+      ],
+      "location": "opening",
+      "fixture": "same initial owners; ordinary store/edit/unstore commands",
+      "supported": [
+        false,
+        false
+      ],
+      "topMin": 0.542258474,
+      "topMax": 1.44,
+      "topVariation": 0.8977415259999999,
+      "pinError": 0,
+      "topConnected": [
+        false,
+        false
+      ],
+      "placedBoth": false,
+      "actualUse": false,
+      "actualClimb": 0,
+      "receiptAfterMs": 0,
+      "placementError": "ここには おけないよ。",
+      "maxRaiseCommandDrop": 0,
+      "maxRaiseCommandRise": 0.18000000000000005,
+      "negativeCenters": [
+        {
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "height": -1,
+          "expectedY": -0.18,
+          "actualY": -0.18
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 1
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 2
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        }
+      ],
+      "surfaceComparison": {
+        "sampled": 4331,
+        "wetA": 701,
+        "newlyDry": 0,
+        "outsideChanged": 0,
+        "outsideMaxDifference": 1.9999999989472883e-9,
+        "maxDifference": 0.5568263410000001
+      }
+    },
+    {
+      "mode": "F",
+      "existingHeights": true,
+      "heightSteps": 2,
+      "rampCells": true,
+      "topCells": [
+        {
+          "x": 2,
+          "z": 3
+        },
+        {
+          "x": 2,
+          "z": 4
+        }
+      ],
+      "location": "south-central",
+      "fixture": "same initial owners; ordinary store/edit/unstore commands",
+      "supported": [
+        true,
+        true
+      ],
+      "topMin": 0.230875,
+      "topMax": 0.36,
+      "topVariation": 0.129125,
+      "pinError": 0,
+      "topConnected": [
+        true,
+        true
+      ],
+      "placedBoth": true,
+      "actualUse": true,
+      "actualClimb": 0.17999999999999997,
+      "receiptAfterMs": 1580,
+      "placementError": "",
+      "maxRaiseCommandDrop": 0,
+      "maxRaiseCommandRise": 0.18,
+      "negativeCenters": [
+        {
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "height": -1,
+          "expectedY": -0.18,
+          "actualY": -0.18
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 1
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 2
+          },
+          "height": -3,
+          "expectedY": -0.54,
+          "actualY": null
+        }
+      ],
+      "surfaceComparison": {
+        "sampled": 4331,
+        "wetA": 692,
+        "newlyDry": 0,
+        "outsideChanged": 0,
+        "outsideMaxDifference": 1.9999999989472883e-9,
+        "maxDifference": 0.28186660900000005
+      }
+    }
+  ],
+  "rejectedRecipes": [
+    {
+      "top": [
+        {
+          "x": 2,
+          "z": 2
+        },
+        {
+          "x": 3,
+          "z": 2
+        }
+      ],
+      "blockedRamp": {
+        "x": 2,
+        "z": 1
+      },
+      "reason": "おうちと ふなつきばの 足もとは そのままに しよう。"
+    }
+  ],
+  "validHeights": [
+    2,
+    2,
+    2,
+    2
+  ],
+  "counterexamples": {
+    "centerError": 0,
+    "maxCoefficientResponse": 0.18,
+    "thresholdJoin": {
+      "maxRise": 0.18,
+      "maxDrop": 0,
+      "changedSamples": 157
+    },
+    "thresholdSplit": {
+      "maxRise": 0,
+      "maxDrop": 0.18,
+      "changedSamples": 157
+    },
+    "bridgeMerge": {
+      "maxRise": 0.18,
+      "maxDrop": 0,
+      "changedSamples": 157
+    },
+    "bridgeSplit": {
+      "maxRise": 0,
+      "maxDrop": 0.18,
+      "changedSamples": 157
+    },
+    "openingRecovery": [
+      {
+        "from": -4,
+        "to": -3,
+        "maxRise": 0.14968749899999997,
+        "maxDrop": 0,
+        "changedSamples": 85
+      },
+      {
+        "from": -3,
+        "to": -2,
+        "maxRise": 0.149687499,
+        "maxDrop": 0,
+        "changedSamples": 86
+      },
+      {
+        "from": -2,
+        "to": -1,
+        "maxRise": 0.18,
+        "maxDrop": 0,
+        "changedSamples": 157
+      },
+      {
+        "from": -1,
+        "to": 0,
+        "maxRise": 0.18,
+        "maxDrop": 0,
+        "changedSamples": 157
+      }
+    ]
+  },
+  "limitation": "Not all heights are reachable; all signed coefficient response bounded; arbitrary steep transitions may remain inaccessible; lightweight actor, no WebGL/UI proof",
+  "integration": "actual terrainMethodTransform(mode F); exact diagnostic equality PASS",
+  "date": "2026-10-22T20:54:01.228Z",
+  "inputHashes": {
+    "docs/design/2026-10-23-place-method-comparison/terrace-convex-field.ts": "9f2ab0880f502ee399866577f8dc041381a60a215ff6cece7a4625c002773ccc",
+    "docs/design/2026-10-23-place-method-comparison/terrace-convex-check.ts": "fc475c40183fb5b88f8189a98ea7b502ef9cbd76dbb90af8df2aada429e4d72b",
+    "docs/design/2026-10-23-place-method-comparison/terrace-convex-check.mjs": "11ce7b7789ac7761acd77dc2df7ad2c96b0562c32d668a8c7def25fbb7cb46ff",
+    "docs/design/2026-10-23-place-method-comparison/terrain-transform.mjs": "20122fe8e877e17663b23c32066e6da29bdd85b1179fdb49f067dc5dd24cfe67",
+    "docs/design/2026-10-23-place-method-comparison/section-profile.ts": "5703365c6ab7adf3fc54a13de4964038ebd17d0d874f549e2f9d12f6a1a37601",
+    "docs/design/2026-10-22-place-strategy-trial/foundation-transform.mjs": "32073beec4b3246225424f8524fbd2e1aa96cfdeac9f41425fef46fe164f4a41",
+    "docs/design/2026-10-22-place-strategy-trial/foundation.ts": "00a11d9deb61d240c757352a711b53ec3dc8cd2359d9ba652683b6f979df21f2",
+    "src/domain/growingIsland/editableTerrainWorld.ts": "7606a6d2be402e90ef85154cd28e8cf3c07dd5d690538b37bbfbfd700e1fc324",
+    "src/domain/growingIsland/terrainEditing.ts": "a1f51959aa3639d15dcb19fa7f1eb289592a6682deda523a181b42b2591c04ac",
+    "src/components/island/growing/growingLife.ts": "2955e5bc3713e8b209745751bb5c1ef2c52bfc24c4091b6d4a2c44e9abbb2d92"
+  },
+  "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-method-comparison/terrace-convex-check.mjs"
+}

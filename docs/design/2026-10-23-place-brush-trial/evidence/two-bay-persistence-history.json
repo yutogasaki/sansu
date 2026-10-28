@@ -1,0 +1,100 @@
+{
+  "at": "2026-10-24T04:29:56.395Z",
+  "status": "PASS",
+  "database": "SansuAssemblyTrialV2",
+  "recipe": "assembly-save-v2:independent-two-bays-v1:platforms-then-protected-bay-memory-v1:depth-0.4-2.4:H:fixed-two-shear-grid-v1:fixed-core-base-v1:fixed-bilinear-interior-ramp-v1:directional-ramp-v1:flat-owner-v1",
+  "scope": "Fake IndexedDB actual production transaction/read/observe dependencies under the trial transform; no browser or release claim",
+  "results": [
+    {
+      "name": "second bay Undo persists across reopen; Redo restores identical floor; V1 DB is never opened"
+    },
+    {
+      "name": "two platforms, a deep bay and later ordinary moves/purchases survive actual writer close/reopen",
+      "detail": {
+        "drops": 9130,
+        "geometry": {
+          "floor": "047f1964275ccb2c606c2b3fb1f3a8b57932b81e0b66dae94be2b966a594448a",
+          "routes": "3cb1c5f4cd7ef6f7d243ddc0a4c8873eef77ab08d489d6445fb4f5a7dbaf4a22"
+        },
+        "owners": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "growth": 6
+          },
+          {
+            "id": "starter-bench",
+            "kind": "bench",
+            "cell": {
+              "x": -1,
+              "z": 4
+            },
+            "growth": 0
+          },
+          {
+            "id": "l1",
+            "kind": "bench",
+            "cell": {
+              "x": 5,
+              "z": 5
+            },
+            "growth": 0
+          },
+          {
+            "id": "l2",
+            "kind": "flower",
+            "cell": {
+              "x": 6,
+              "z": 5
+            },
+            "growth": 0,
+            "color": "red"
+          }
+        ]
+      }
+    },
+    {
+      "name": "reopened Undo/Redo changes only shapes, preserving purchases, wallet, clocks, progress and owners"
+    },
+    {
+      "name": "duplicate intent is idempotent; stale cursor rejects; concurrent same-cursor edits commit once"
+    },
+    {
+      "name": "actual writer failure rolls back every saved byte; same intent retries once"
+    },
+    {
+      "name": "bay depth survives reload and reopened Undo/Redo, without changing owners or wallet"
+    },
+    {
+      "name": "invalid bay depth and foreign DB/profile reject before mutation or foreign DB open"
+    },
+    {
+      "name": "bad recipe and foreign-key record reject without fixture substitution"
+    }
+  ],
+  "metadata": {
+    "node": "v22.23.3",
+    "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-brush-trial/assembly-persistence-check.mjs history",
+    "inputSHA256": {
+      "assembly-store.ts": "4650befff962c7debbc67773ae5d79d46d64d4b669e8baf59f98a29f09884ccd",
+      "assembly-mode.ts": "654aef8d680b79df6237c81b0f8af454daa4d7e78ccc68ea70d5672e2c214610",
+      "assembly-section.ts": "15b05cd87fee9db17e54f81d0cd3ab029bffc1f8a624d022561c6409cef0a054",
+      "coastal-section.ts": "75170b31383e59e8874b8aa8290b549fb7ffd278e7313092b0118e06d36b22f3",
+      "bay-section.ts": "72dfb86624b77625406c00b4a055ba9b0ffd114668a102c44739c435d53115b0",
+      "directional-field.ts": "0dc03ed7b2dbbf87ef79973405f72c5d762c26dff2e3aa462ea5c85e73f7e54b",
+      "composite-store.ts": "708b2b1cbdd90ff1d1b3feff2eec19a25f0ec9c3051b02dce9f9dfd4b32b2536",
+      "composite-field.ts": "0a63b64afeae4cfd78fef2eda0ad1f69e85f0e566bfac70eb51f7bfcd36a5f0f",
+      "composite-model.ts": "e4a1b014ca21c18d93b6bed5974667783536ab1e885462085994b4474cd3d6c3",
+      "two-bay-persistence-check.ts": "0eaab5c03e72fb16bdb5e3a1c1351ca408f34ad8db4fa4ed9721a1c862cd099b",
+      "two-bay-persistence-check.mjs": "9e561e3b6e99f77bf10fe78ae270d8c985dd35b9a68fb42ee22a880d4ed9552f",
+      "TrialIsland.ts": "50ee145cb8167339f55f18f27f6160e9032cae3956f22d09b1c4aa5c89bce013",
+      "vite.config.ts": "cce0e9e67ee2963efd2d31cb9eb46bbd19eb8e705b6416256bad8414ad7a4150"
+    },
+    "changedInputs": [],
+    "bundleSHA256": "2f8228a13d07ef8e61b2d6ff673dd014fab2fa9a206cc731d32def2249930a08"
+  }
+}

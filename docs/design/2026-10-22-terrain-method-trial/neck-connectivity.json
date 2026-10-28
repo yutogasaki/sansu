@@ -1,0 +1,47 @@
+{
+  "scope": "Geometry only; start below blocking tree; owner obstruction excluded to isolate connectivity. Not home-to-shore runtime journey.",
+  "rows": [
+    {
+      "method": "a-soft",
+      "neckBefore": false,
+      "neckAfter": false,
+      "diagonalRoute": false
+    },
+    {
+      "method": "a-shoulder",
+      "neckBefore": true,
+      "neckAfter": false,
+      "diagonalRoute": false
+    },
+    {
+      "method": "a-spline",
+      "neckBefore": false,
+      "neckAfter": false,
+      "diagonalRoute": false
+    },
+    {
+      "method": "b-crisp",
+      "neckBefore": true,
+      "neckAfter": false,
+      "diagonalRoute": true
+    },
+    {
+      "method": "b-soft",
+      "neckBefore": true,
+      "neckAfter": false,
+      "diagonalRoute": true
+    },
+    {
+      "method": "b-curved",
+      "neckBefore": true,
+      "neckAfter": false,
+      "diagonalRoute": true
+    },
+    {
+      "method": "b-decider",
+      "neckBefore": true,
+      "neckAfter": false,
+      "diagonalRoute": false
+    }
+  ]
+}

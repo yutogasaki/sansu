@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-26T04:05:20.078755+00:00",
+  "sourceHash": "f7464dd16ad19bbe5e7506d696a740aebb230097c2bfc127e6ae73e5ae044d55",
+  "revision": "resident-fix-f7464dd16ad1",
+  "appInputsUnchanged": true,
+  "appMismatches": [],
+  "allInputChanges": [
+    "tools/e2e-resident-audit.mjs",
+    "tools/fixtures/resident-audit.html"
+  ],
+  "note": "QA labels and production diagnostic were corrected after the unchanged application build. New QA file is recorded separately."
+}

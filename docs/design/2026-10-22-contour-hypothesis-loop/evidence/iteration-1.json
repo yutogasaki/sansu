@@ -1,0 +1,102 @@
+{
+  "at": "2026-10-21T20:39:59.150Z",
+  "sourceSha256": "edab5d252121d880750121a4764a393ad58683844dc92d18c13a8da67aabe9e6",
+  "scope": "observed topology plus local engineering counterexamples, not artwork acceptance",
+  "iterations": [
+    {
+      "method": "hard",
+      "rows": [
+        {
+          "name": "single",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        },
+        {
+          "name": "pair",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        },
+        {
+          "name": "ell",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        },
+        {
+          "name": "square",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": false,
+          "pass": false
+        },
+        {
+          "name": "diagonal",
+          "components": 2,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": false
+        },
+        {
+          "name": "reverse",
+          "components": 2,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": 0.5,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": false
+        },
+        {
+          "name": "gap",
+          "components": 2,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": 0.5,
+          "samples": 14641,
+          "expectedComponents": 2,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        },
+        {
+          "name": "hole",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": 0.5,
+          "samples": 14641,
+          "expectedComponents": 1,
+          "holePreserved": true,
+          "solidSquare": true,
+          "pass": true
+        }
+      ],
+      "pass": false
+    }
+  ],
+  "checks": []
+}

@@ -1,0 +1,563 @@
+{
+  "at": "2026-10-23T12:57:53.718Z",
+  "command": "npm run test:run -- --maxWorkers=4 --minWorkers=1",
+  "result": "PARTIAL",
+  "reason": "Stopped at the local work budget; full suite did not complete. This is not a whole-suite PASS.",
+  "completedFiles": 137,
+  "completedTests": 2402,
+  "files": [
+    {
+      "file": "src/domain/explore/__tests__/persistenceRepository.test.ts",
+      "tests": 38
+    },
+    {
+      "file": "src/domain/explore/__tests__/learningPlannerSegment.test.ts",
+      "tests": 15
+    },
+    {
+      "file": "tools/expression-audio/audio-analysis.test.mjs",
+      "tests": 53
+    },
+    {
+      "file": "src/domain/growingIsland/authoredGrowthTerrain.test.ts",
+      "tests": 15
+    },
+    {
+      "file": "src/components/island/three/residentRig.test.ts",
+      "tests": 38
+    },
+    {
+      "file": "src/hooks/blockGenerators.test.ts",
+      "tests": 36
+    },
+    {
+      "file": "src/domain/island/island.test.ts",
+      "tests": 19
+    },
+    {
+      "file": "src/components/island/growing/authoredFlowerObstructions.test.ts",
+      "tests": 15
+    },
+    {
+      "file": "src/domain/island/rewardGoalRepository.test.ts",
+      "tests": 14
+    },
+    {
+      "file": "src/domain/island/expressionRepository.test.ts",
+      "tests": 11
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWaterWorld.test.ts",
+      "tests": 19
+    },
+    {
+      "file": "src/components/island/three/sharedDisplayScene.test.ts",
+      "tests": 13
+    },
+    {
+      "file": "src/components/island/three/sharedActivityFraming.test.ts",
+      "tests": 26
+    },
+    {
+      "file": "src/components/domain/LearningAnswerForm.defer.test.tsx",
+      "tests": 35
+    },
+    {
+      "file": "src/components/island/growing/native/nativeAuthoredFlower.test.ts",
+      "tests": 8
+    },
+    {
+      "file": "src/domain/explore/__tests__/reducer.test.ts",
+      "tests": 29
+    },
+    {
+      "file": "src/domain/math/generators/counting.test.ts",
+      "tests": 51
+    },
+    {
+      "file": "src/components/island/three/sharedActivities.test.ts",
+      "tests": 23
+    },
+    {
+      "file": "src/domain/island/sharedMemories.test.ts",
+      "tests": 14
+    },
+    {
+      "file": "src/components/island/three/sharedJobController.test.ts",
+      "tests": 23
+    },
+    {
+      "file": "src/components/island/growing/placeSpringGeometry.test.ts",
+      "tests": 7
+    },
+    {
+      "file": "src/components/island/three/workshopScene.test.ts",
+      "tests": 22
+    },
+    {
+      "file": "src/domain/math/planner.test.ts",
+      "tests": 35
+    },
+    {
+      "file": "src/components/island/growing/growingLife.test.ts",
+      "tests": 15
+    },
+    {
+      "file": "src/domain/island/experienceRepository.test.ts",
+      "tests": 12
+    },
+    {
+      "file": "src/components/island/three/livingRuntime.test.ts",
+      "tests": 18
+    },
+    {
+      "file": "src/domain/explore/__tests__/g0NumberVessel.test.ts",
+      "tests": 13
+    },
+    {
+      "file": "src/components/island/growing/placeRootRoomGeometry.test.ts",
+      "tests": 8
+    },
+    {
+      "file": "src/components/island/growing/placeGallery.test.ts",
+      "tests": 8
+    },
+    {
+      "file": "src/domain/growingIsland/placeGoals.repository.test.ts",
+      "tests": 10
+    },
+    {
+      "file": "src/hooks/useStudySession.logic.test.ts",
+      "tests": 38
+    },
+    {
+      "file": "src/components/island/three/natureObservationFrame.test.ts",
+      "tests": 22
+    },
+    {
+      "file": "src/domain/island/workshop.test.ts",
+      "tests": 14
+    },
+    {
+      "file": "src/components/island/IslandAnswerForm.test.tsx",
+      "tests": 38
+    },
+    {
+      "file": "src/components/island/three/optionalFurnitureTrial.test.ts",
+      "tests": 8
+    },
+    {
+      "file": "src/domain/growingIsland/authoredDistrictWorld.test.ts",
+      "tests": 21
+    },
+    {
+      "file": "src/domain/user/repository.test.ts",
+      "tests": 14
+    },
+    {
+      "file": "src/components/island/growing/placeGeometry.test.ts",
+      "tests": 25
+    },
+    {
+      "file": "src/domain/logic.test.ts",
+      "tests": 26
+    },
+    {
+      "file": "src/components/island/growing/authoredFlowerLife.test.ts",
+      "tests": 5
+    },
+    {
+      "file": "src/domain/island/photosRepository.test.ts",
+      "tests": 11
+    },
+    {
+      "file": "src/domain/algorithms/srs.test.ts",
+      "tests": 60
+    },
+    {
+      "file": "src/domain/island/learningObservationCommit.test.ts",
+      "tests": 28
+    },
+    {
+      "file": "src/domain/island/learningContinuity.test.ts",
+      "tests": 13
+    },
+    {
+      "file": "src/domain/learning/independentProgress.integration.test.ts",
+      "tests": 18
+    },
+    {
+      "file": "src/components/island/useIslandCustomization.test.ts",
+      "tests": 27
+    },
+    {
+      "file": "src/components/island/growing/objectLayer.test.ts",
+      "tests": 9
+    },
+    {
+      "file": "src/domain/island/sharedMemoriesRepository.test.ts",
+      "tests": 9
+    },
+    {
+      "file": "src/components/island/three/runtimeExpressionEnvironment.test.ts",
+      "tests": 10
+    },
+    {
+      "file": "src/components/island/growing/authoredGroveLife.test.ts",
+      "tests": 5
+    },
+    {
+      "file": "src/components/island/islandWorkshopQueue.test.ts",
+      "tests": 20
+    },
+    {
+      "file": "src/components/island/useIslandExperience.test.ts",
+      "tests": 16
+    },
+    {
+      "file": "src/domain/island/learningKeepsakesRepository.test.ts",
+      "tests": 10
+    },
+    {
+      "file": "src/domain/island/growthRepository.test.ts",
+      "tests": 11
+    },
+    {
+      "file": "src/domain/island/workshopRepository.test.ts",
+      "tests": 9
+    },
+    {
+      "file": "src/domain/island/workshopLayout.test.ts",
+      "tests": 17
+    },
+    {
+      "file": "src/components/island/growing/authoredGrowthTerrainLife.test.ts",
+      "tests": 2
+    },
+    {
+      "file": "src/domain/island/customizationRepository.test.ts",
+      "tests": 16
+    },
+    {
+      "file": "src/components/island/useIslandSharedMemories.test.ts",
+      "tests": 13
+    },
+    {
+      "file": "src/components/island/three/cosmeticScenery.test.ts",
+      "tests": 19
+    },
+    {
+      "file": "src/components/island/three/homeInteriorCamera.test.ts",
+      "tests": 23
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWaterBridge.test.ts",
+      "tests": 11
+    },
+    {
+      "file": "src/components/island/growing/native/authoredCoveIntegration.test.ts",
+      "tests": 7
+    },
+    {
+      "file": "src/components/island/growing/growingCamera.test.ts",
+      "tests": 9
+    },
+    {
+      "file": "src/domain/island/expression.test.ts",
+      "tests": 16
+    },
+    {
+      "file": "src/domain/englishFoundation/repository.test.ts",
+      "tests": 17
+    },
+    {
+      "file": "src/domain/park/park.test.ts",
+      "tests": 140
+    },
+    {
+      "file": "src/domain/growingIsland/worldDefinition.test.ts",
+      "tests": 20
+    },
+    {
+      "file": "src/domain/learning/attemptPersistence.test.ts",
+      "tests": 24
+    },
+    {
+      "file": "src/components/island/three/connectedTerrain.test.ts",
+      "tests": 10
+    },
+    {
+      "file": "src/domain/explore/__tests__/learningSegmentPersistence.test.ts",
+      "tests": 7
+    },
+    {
+      "file": "src/components/island/growing/authoredCoveLife.test.ts",
+      "tests": 8
+    },
+    {
+      "file": "src/components/island/growing/native/authoredGrowthTerrainIntegration.test.ts",
+      "tests": 4
+    },
+    {
+      "file": "src/domain/island/furnitureRepository.test.ts",
+      "tests": 11
+    },
+    {
+      "file": "src/components/island/three/residentInteraction.test.ts",
+      "tests": 21
+    },
+    {
+      "file": "src/components/island/three/growthVisuals.test.ts",
+      "tests": 21
+    },
+    {
+      "file": "src/hooks/learningProgression.integration.test.ts",
+      "tests": 12
+    },
+    {
+      "file": "src/components/island/useIslandPhotos.test.ts",
+      "tests": 15
+    },
+    {
+      "file": "src/domain/growingIsland/worldWaterSupport.test.ts",
+      "tests": 10
+    },
+    {
+      "file": "src/components/island/three/navigation.test.ts",
+      "tests": 19
+    },
+    {
+      "file": "src/domain/growingIsland/voyages.test.ts",
+      "tests": 10
+    },
+    {
+      "file": "src/domain/explore/__tests__/learningPlanner.test.ts",
+      "tests": 8
+    },
+    {
+      "file": "src/domain/explore/__tests__/problemAdapter.test.ts",
+      "tests": 38
+    },
+    {
+      "file": "src/components/island/growing/native/nativeAuthoredShoulder.test.ts",
+      "tests": 6
+    },
+    {
+      "file": "src/components/island/growing/native/nativeAuthoredFlowerFoliage.test.ts",
+      "tests": 8
+    },
+    {
+      "file": "src/domain/island/learningSession.test.ts",
+      "tests": 10
+    },
+    {
+      "file": "src/components/island/three/sharedActivityController.test.ts",
+      "tests": 20
+    },
+    {
+      "file": "src/components/island/three/sharedJobFraming.test.ts",
+      "tests": 6
+    },
+    {
+      "file": "src/components/island/growing/native/nativeAuthoredForestDelivery.test.ts",
+      "tests": 6
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWorldAccessParity.test.ts",
+      "tests": 5
+    },
+    {
+      "file": "src/domain/explore/__tests__/g0NumberSuika.test.ts",
+      "tests": 32
+    },
+    {
+      "file": "src/components/island/three/sharedDisplayFraming.test.ts",
+      "tests": 11
+    },
+    {
+      "file": "src/domain/growingIsland/rules.test.ts",
+      "tests": 24
+    },
+    {
+      "file": "src/domain/growingIsland/repository.test.ts",
+      "tests": 13
+    },
+    {
+      "file": "src/components/island/useIslandExpression.test.ts",
+      "tests": 9
+    },
+    {
+      "file": "src/components/explore/ExploreProblemPanel.test.tsx",
+      "tests": 16
+    },
+    {
+      "file": "src/domain/test/printability.test.ts",
+      "tests": 22
+    },
+    {
+      "file": "src/domain/island/customizationAppearanceRepository.test.ts",
+      "tests": 8
+    },
+    {
+      "file": "src/components/island/growing/native/authoredShoulderIntegration.test.ts",
+      "tests": 5
+    },
+    {
+      "file": "src/components/island/three/appearanceRendering.test.ts",
+      "tests": 11
+    },
+    {
+      "file": "src/components/island/three/runtimeFurnitureClearance.test.ts",
+      "tests": 5
+    },
+    {
+      "file": "src/domain/explore/__tests__/g0Whitebox.test.ts",
+      "tests": 13
+    },
+    {
+      "file": "src/components/island/learningMusic.test.ts",
+      "tests": 15
+    },
+    {
+      "file": "src/domain/islandLife/discoveryJournal.test.ts",
+      "tests": 14
+    },
+    {
+      "file": "src/components/island/three/sharedDisplayFrameBoundary.test.ts",
+      "tests": 5
+    },
+    {
+      "file": "src/components/island/three/optionalFurnitureController.test.ts",
+      "tests": 37
+    },
+    {
+      "file": "src/domain/island/appearance.test.ts",
+      "tests": 12
+    },
+    {
+      "file": "src/domain/island/progressiveSupport.test.ts",
+      "tests": 13
+    },
+    {
+      "file": "src/domain/learning/evidence.test.ts",
+      "tests": 16
+    },
+    {
+      "file": "src/domain/island/experience.test.ts",
+      "tests": 19
+    },
+    {
+      "file": "src/domain/island/growth.test.ts",
+      "tests": 11
+    },
+    {
+      "file": "src/components/island/three/treeCanopyGeometry.test.ts",
+      "tests": 10
+    },
+    {
+      "file": "src/components/island/three/flagFraming.test.ts",
+      "tests": 7
+    },
+    {
+      "file": "src/components/island/growing/growingShaderWarmup.test.ts",
+      "tests": 11
+    },
+    {
+      "file": "src/components/island/three/roofSurface.test.ts",
+      "tests": 6
+    },
+    {
+      "file": "src/domain/growingIsland/places.test.ts",
+      "tests": 30
+    },
+    {
+      "file": "src/components/island/useIslandLearningKeepsakes.test.ts",
+      "tests": 11
+    },
+    {
+      "file": "src/components/island/IslandLearningKeepsakes.test.tsx",
+      "tests": 15
+    },
+    {
+      "file": "src/domain/math/numberSenseProgress.test.ts",
+      "tests": 32
+    },
+    {
+      "file": "src/components/island/three/grassSurface.test.ts",
+      "tests": 9
+    },
+    {
+      "file": "src/components/island/three/personalScenery.test.ts",
+      "tests": 11
+    },
+    {
+      "file": "src/domain/learningRepository.test.ts",
+      "tests": 15
+    },
+    {
+      "file": "src/domain/island/rewardGoal.test.ts",
+      "tests": 13
+    },
+    {
+      "file": "src/components/island/growing/actorScale.test.ts",
+      "tests": 23
+    },
+    {
+      "file": "src/components/island/islandWorkshopAudio.test.ts",
+      "tests": 12
+    },
+    {
+      "file": "src/domain/islandLife/repository.test.ts",
+      "tests": 10
+    },
+    {
+      "file": "src/pwa.test.ts",
+      "tests": 21
+    },
+    {
+      "file": "src/domain/user/onboarding.test.ts",
+      "tests": 20
+    },
+    {
+      "file": "src/domain/math/writtenArithmetic.test.ts",
+      "tests": 38
+    },
+    {
+      "file": "src/domain/growingIsland/foundationReceipts.test.ts",
+      "tests": 9
+    },
+    {
+      "file": "src/domain/islandLife/relationObservation.test.ts",
+      "tests": 13
+    },
+    {
+      "file": "src/domain/growingIsland/guidance.test.ts",
+      "tests": 14
+    },
+    {
+      "file": "tools/compare-growing-fixtures.test.mjs",
+      "tests": 25
+    },
+    {
+      "file": "src/components/island/growing/placePondGeometry.test.ts",
+      "tests": 6
+    },
+    {
+      "file": "tools/island-expression-audio-focused-audit.test.mjs",
+      "tests": 12
+    },
+    {
+      "file": "src/components/island/three/runtimePhotography.test.ts",
+      "tests": 13
+    },
+    {
+      "file": "src/components/island/growing/native/nativeAuthoredCove.test.ts",
+      "tests": 6
+    }
+  ],
+  "currentChangeFocusedTests": {
+    "files": 3,
+    "tests": 11,
+    "pass": true
+  }
+}

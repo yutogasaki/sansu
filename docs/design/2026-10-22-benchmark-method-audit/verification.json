@@ -1,0 +1,77 @@
+{
+  "recordedAt": "2026-10-22T19:37:28.362847+00:00",
+  "scope": "research documents and independent diagnostic; no product acceptance",
+  "checks": [
+    {
+      "command": "fnm exec --using=22.23.3 node docs/design/2026-10-22-benchmark-method-audit/check.mjs",
+      "expected": "Detect material-order and route counterexamples; assert candidate canonical ordering and shared boundary continuity",
+      "actual": "exit 0; results.json contains measurements; failing hypotheses reproduced as expected",
+      "result": "PASS for diagnostic execution, not product quality"
+    },
+    {
+      "command": "fnm exec --using=22.23.3 npm run docs:check",
+      "expected": "No broken document links or structure errors",
+      "attempt": 1,
+      "actual": "exit 1: new README referenced verification.json before it was written; existing stale review-date warnings also reported",
+      "result": "REPAIRED; second run PASS"
+    },
+    {
+      "method": "CUA real browser report controls",
+      "expected": "Initial color diff216; canonical ordering diff0; blend width selection changes visible field",
+      "actual": "216 → 0 / 24912; width0.35 visibly fills central hole; evidence/report-tests.png",
+      "result": "PASS within visible diagnostic scope"
+    },
+    {
+      "method": "CUA Townscaper official browser demo",
+      "expected": "Observe response to place/remove",
+      "actual": "Platform → house → platform → original two-building outline; 5 screenshots saved",
+      "result": "OBSERVED; no pixel identity or save claim"
+    },
+    {
+      "method": "CUA Little Habitats existing garden",
+      "expected": "Additional controlled reference observations",
+      "actual": "Time, discovery and animation confounds; hole/gap controls not completed; final state not proven identical",
+      "result": "INCONCLUSIVE"
+    },
+    {
+      "command": "fnm exec --using=22.23.3 npm run docs:check",
+      "attempt": 2,
+      "expected": "No broken document links or structure errors",
+      "actual": "exit 0; PASS docs:check. Existing past review-date warnings remain.",
+      "result": "PASS",
+      "completedAt": "2026-10-22T19:38:08.517607+00:00"
+    }
+  ],
+  "unverified": [
+    "Product integration and real NPC navigation",
+    "Equivalent A/B art and additional-case production effort",
+    "Mobile device performance",
+    "Save/offline/update in product",
+    "Child comprehension and return"
+  ],
+  "artifactHashes": {
+    "check.mjs": "7271f56fd172f92ca970dae492936a1435abe8af52c4e0f22379e9e499860a2e",
+    "results.json": "27db1cc3bb87664ddc7c4435fe14725372de35de80f679011a06b2f611495f82",
+    "sources.json": "5bc452ec6f1d124b86da130eff6c039ae0cf6b170a05d6fc54c71d48aebc0ac4",
+    "index.html": "32f7aba9a9684a115c00a905d6e1237c80cb286bcaa395b54769ed0dc35b251d",
+    "README.md": "c7c682d20e8585da16346c8d29e352aacea8b5a4951d4aa1eddd8071c54c1d51"
+  },
+  "screenshotSHA256": {
+    "consultation.png": "b577c8fea3d25e647bd88cf026591d99e788bc51eb55fc9806319a7ace156dd8",
+    "lh-after-undo.png": "b2abf8feacfe59813cdc5efef7c5545dd491d915fd70a0164101dc9090b0eebd",
+    "lh-before.png": "aabb145b6166fe6f9cb55ab41fff88905eee30c65bf6317013fbe7f436353085",
+    "lh-final.png": "ee9f94790265ecd39169d54a10c5ac52c75ffcce58a980656c32ab45c3fd3666",
+    "lh-isolated-soil.png": "2840e00e0d429b7bef597b440ca05b786d00b1ecd17a984f2bef05429ab74290",
+    "lh-restored-baseline.png": "9adfb4c330ee8d5edded31cf4de1a75e9c3a4db4c10b18fa96459945ee20c066",
+    "lh-stone-shrine.png": "eb24a7664f9104cb51aa75ce39d13b8fe207466f53b0cb4a79689e9e2870fcea",
+    "report-overview.png": "a733e411af0c063ab25d3c5a9257c1a2791a608dc12ed711915ce378ad10029f",
+    "report-tests.png": "836091336e497fe449da4290a8e182962064d7ca2580a075c1a2bd997e4d99d7",
+    "town-before.png": "081dd9e312971d35a20e47077945c08b177a3599ce22a18c6e63df3348859edf",
+    "town-house.png": "55680dbc66806ece43ee76d7e16ee1ab239eb3a21a64622f6513039b01044f5e",
+    "town-platform.png": "a7da74f19f8ac01466e1881ae2f72ea1f8dcf3aed044ffed9ec012ed67c651be",
+    "town-remove-house.png": "3666125b3b02ef2c876599ba7ff72a5827967569ea915f345da41fde7fcfbb9c",
+    "town-restored.png": "9c2a8d79c258d0eb39f31554349cc2cc5175ce0d824e1a28b20f06811c4968cf"
+  },
+  "sourceHashAtCloseout": "edab5d252121d880750121a4764a393ad58683844dc92d18c13a8da67aabe9e6",
+  "sourceUnchangedSinceExperiment": true
+}

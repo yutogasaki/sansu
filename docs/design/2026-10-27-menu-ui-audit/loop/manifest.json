@@ -1,0 +1,111 @@
+{
+  "capturedAt": "2026-10-27T05:47:27.716584+00:00",
+  "phase": "closeout source snapshot; DEV screenshots are not a frozen build and focus effect was added after capture",
+  "head": "2e06dc9a1f0c83bda700fc3b8caf115693d044b4",
+  "target": "http://127.0.0.1:5299 DEV",
+  "viewportCSS": {
+    "width": 390,
+    "height": 844
+  },
+  "flags": {
+    "VITE_ISLAND_ENABLED": "true",
+    "VITE_ISLAND_SHAPING": "unset"
+  },
+  "candidate": "house-paper-atelier-v2",
+  "inputs": [
+    {
+      "path": "src/components/island/IslandHouseOverview.tsx",
+      "sha256": "74a025a501c3fef74e8fc1b809f941a13cbda57dc024a66b1aac863a142500c7",
+      "bytes": 5707,
+      "modifiedAt": "2026-10-27T05:30:11.915500+00:00"
+    },
+    {
+      "path": "src/components/island/IslandLearningKeepsakes.tsx",
+      "sha256": "473b19aa3382f595708857ca6b55262f87e792d1cb2dc8a6ce6c29c937953d48",
+      "bytes": 17023,
+      "modifiedAt": "2026-10-27T05:30:11.915835+00:00"
+    },
+    {
+      "path": "src/components/island/IslandHouseMenu.css",
+      "sha256": "b41fca5ceb2ba8a5746e63219ea1c89115c7a9b9521ef041df26c9fd01f83c05",
+      "bytes": 10497,
+      "modifiedAt": "2026-10-27T05:35:04.371555+00:00"
+    },
+    {
+      "path": "src/components/island/growing/LettersPanel.tsx",
+      "sha256": "18e6d610c7ea0988454ee5e7ba5cf77d0666ce64b09d93fb41b79eff10889ea4",
+      "bytes": 4607,
+      "modifiedAt": "2026-10-27T05:41:08.012397+00:00"
+    },
+    {
+      "path": "src/components/island/growing/FlowerBook.tsx",
+      "sha256": "c43164b699b11bc55604a3a41efc5242a20aea45018c98ec14a83275f8417f08",
+      "bytes": 2573,
+      "modifiedAt": "2026-10-27T05:33:51.047892+00:00"
+    },
+    {
+      "path": "src/components/island/growing/wholeAppUi.css",
+      "sha256": "59fa261a2d9e277c2c00f02d2d54e85dad11e5020d9fd04b3e07f1fca5f38ad3",
+      "bytes": 12111,
+      "modifiedAt": "2026-10-27T05:30:38.013472+00:00"
+    },
+    {
+      "path": "src/components/island/growing/LettersPanel.test.tsx",
+      "sha256": "9fe7b16507f1dc8907cebdd1f154ca6e9ea90787ca5601e45502ccf04c2cb18d",
+      "bytes": 5209,
+      "modifiedAt": "2026-10-27T05:34:34.715971+00:00"
+    },
+    {
+      "path": "src/components/island/growing/FlowerBook.test.tsx",
+      "sha256": "1b50b22a62266029020328d76cf31e3ee9f4dd14b1f69399590678fc34a0de5f",
+      "bytes": 1643,
+      "modifiedAt": "2026-10-27T05:42:36.009880+00:00"
+    },
+    {
+      "path": "docs/product/01_app_spec.md",
+      "sha256": "85489887886f43f29ff4b0cf0542f1bdf4127f6ca04abf1be732a4dd74aac8a7",
+      "bytes": 131004,
+      "modifiedAt": "2026-10-27T05:30:11.915045+00:00"
+    },
+    {
+      "path": "docs/product/44_display_layout_spec.md",
+      "sha256": "c826884f9614b0644644d8aa70ced9e8905d328ec4d22cb5c5ee5f9c138b7343",
+      "bytes": 25426,
+      "modifiedAt": "2026-10-27T05:30:11.914646+00:00"
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "docs/design/2026-10-27-menu-ui-audit/loop/03-saved-photo-reloaded.jpg",
+      "sha256": "eb1fdaae5a447dec0935fb49be64b2e0f706a376077c39c5e384cdbe1527d850",
+      "bytes": 24850,
+      "modifiedAt": "2026-10-27T05:27:51.448212+00:00"
+    },
+    {
+      "path": "docs/design/2026-10-27-menu-ui-audit/loop/01-current-island.jpg",
+      "sha256": "1e0a357c63d6e1b0c773054d9b0fdd69ebee2e307dc1995017d0fbdac7992694",
+      "bytes": 39508,
+      "modifiedAt": "2026-10-27T05:26:43.664669+00:00"
+    },
+    {
+      "path": "docs/design/2026-10-27-menu-ui-audit/loop/02-current-camera.jpg",
+      "sha256": "56936dd9926abba3629e60084f685ec99b33313d5fb27bf8f44af8298d331dfb",
+      "bytes": 37940,
+      "modifiedAt": "2026-10-27T05:27:09.307436+00:00"
+    },
+    {
+      "path": "docs/design/2026-10-27-menu-ui-audit/loop/05-letters-empty-after.jpg",
+      "sha256": "7369c43a2512892c370331521f16f2058593cc137afbd0bc8b2a48daca193676",
+      "bytes": 27138,
+      "modifiedAt": "2026-10-27T05:34:47.722672+00:00"
+    },
+    {
+      "path": "docs/design/2026-10-27-menu-ui-audit/loop/04-house-after.jpg",
+      "sha256": "6891e63b71db1a79dfa4db7aedeb07d7315fa401c2bdb479ce0d72e328b8b475",
+      "bytes": 28022,
+      "modifiedAt": "2026-10-27T05:35:16.714316+00:00"
+    }
+  ],
+  "closedAt": "2026-10-27T05:51:55.503231+00:00",
+  "verification": "PARTIAL: see README; no release acceptance"
+}

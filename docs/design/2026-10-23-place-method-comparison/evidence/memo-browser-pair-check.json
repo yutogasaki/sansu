@@ -1,0 +1,263 @@
+{
+  "status": "COMPARABLE_N1",
+  "createdAt": "2026-10-22T22:15:34.684Z",
+  "sourceSHA256": {
+    "77-H-memo-before-state.json": "8b1a205295a1065c906cb3c6699913d582c00d27d8aba55f4276c4da27cefe47",
+    "77-H-memo-cold-state.json": "604b58ecce6c37b36a499a6779772a8e748de90e05e57e416195a3ead66d1c04",
+    "77-H-memo-cold-app-dom.json": "f72b07ea73480c4dd1e42143d91aad262b58cbdb9e56c662ef26e1e09dd3187e",
+    "77-H-memo-cold-cpu.json": "7552248aad97d65940c5350eaf5b079298ca963ea165b4bc82c1574200db5dcf",
+    "77-H-memo-cold-cadence.json": "8938c1c02fb4b01d4a9fc3d2eca4a0a3ea370873f26f760b6ca49291256987b5",
+    "78-H-no-memo-before-state.json": "3f309a1241d0ece40184d611027a3856cd1af5e3bed7fcf71a5c3240bb71d889",
+    "78-H-no-memo-cold-state.json": "57acaaaa9780331a4a7676f8fcb26a121c4b7cc193ac28e7947611f4710c3227",
+    "78-H-no-memo-cold-app-dom.json": "f72b07ea73480c4dd1e42143d91aad262b58cbdb9e56c662ef26e1e09dd3187e",
+    "78-H-no-memo-cold-cpu.json": "747a31246e4d9755684f4b7913d26b69c60223d38f59f10cbcf81405bb77b70b",
+    "78-H-no-memo-cold-cadence.json": "dac2e3c776b55df6ac041db517d13dac8cc22e6d34904a75b6307cea07f790aa",
+    "build-place-method-comparison-v16.json": "070f39a73205690e8ab88d6f9b253623b17c4b42a9564c71d99284b6bdc9473a"
+  },
+  "build": {
+    "data-build-revision": "place-method-comparison-v16",
+    "data-build-version": "place-method-comparison-v16:bc207cca-374e-4605-9b52-46f842d2665d",
+    "data-configured-delivery-id": "snap-root-v1",
+    "data-delivery-id": "snap-root-v1",
+    "data-island-feature-enabled": "true",
+    "data-nature-town-feature-enabled": "false",
+    "data-ui-style-candidate": "whole-app-atelier-v1",
+    "data-visual-lineage-id": "pokko-field-v1"
+  },
+  "operation": {
+    "type": "terrain-edit",
+    "cell": {
+      "x": 4,
+      "z": 4
+    },
+    "delta": -1,
+    "before": 0,
+    "after": -1,
+    "undo": "append one entry; retain final 64; redo empty"
+  },
+  "controls": {
+    "sameBuildAndDelivery": true,
+    "sameBeforeTerrainIncludingUndo": true,
+    "sameAfterTerrainIncludingUndo": true,
+    "sameLandAndOwnerState": true,
+    "sameOtherRecordedMaterialState": true,
+    "onlyCandidateSuffixDifference": "memo-samples-v1",
+    "oneSuccessfulColdGenerationEach": true,
+    "oneSuccessfulCompileEach": true,
+    "oneSuccessfulSceneRebuildEach": true,
+    "visibleThroughoutBoth": true
+  },
+  "observations": {
+    "on": {
+      "number": 77,
+      "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1",
+      "metrics": {
+        "coldWorldMs": 370.6,
+        "worldSelfMs": 77.3,
+        "compileMs": 293.3,
+        "commandMs": 372.6,
+        "sceneRebuildMs": 59.9,
+        "frameMaxMs": 435.1,
+        "frameMedianMs": 16.7,
+        "frameP95Ms": 18.3,
+        "over50Ms": 1,
+        "longTasks": [
+          {
+            "startMs": 567.5,
+            "endMs": 1003.5,
+            "durationMs": 436
+          }
+        ]
+      },
+      "clickCpuDeltaMs": 0.5,
+      "usesBefore": {
+        "P05": {
+          "pokomoko": {
+            "actorId": "pokomoko",
+            "targetId": "starter-flower:garden",
+            "at": 1792707150722,
+            "revisionSHA256": "e9f5259b434e1a2c761a09d180610104fef04542cb99362b593da45b2fcac49f"
+          },
+          "villager": {
+            "actorId": "v2",
+            "targetId": "starter-flower:garden",
+            "at": 1792707165206,
+            "revisionSHA256": "e9f5259b434e1a2c761a09d180610104fef04542cb99362b593da45b2fcac49f"
+          }
+        }
+      },
+      "usesAfter": {
+        "P05": {
+          "pokomoko": {
+            "actorId": "pokomoko",
+            "targetId": "starter-flower:garden",
+            "at": 1792707150722,
+            "revisionSHA256": "e9f5259b434e1a2c761a09d180610104fef04542cb99362b593da45b2fcac49f"
+          },
+          "villager": {
+            "actorId": "v2",
+            "targetId": "starter-flower:garden",
+            "at": 1792707165206,
+            "revisionSHA256": "e9f5259b434e1a2c761a09d180610104fef04542cb99362b593da45b2fcac49f"
+          }
+        }
+      }
+    },
+    "off": {
+      "number": 78,
+      "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1",
+      "metrics": {
+        "coldWorldMs": 427.7,
+        "worldSelfMs": 137.4,
+        "compileMs": 290.3,
+        "commandMs": 429,
+        "sceneRebuildMs": 66.9,
+        "frameMaxMs": 500,
+        "frameMedianMs": 16.7,
+        "frameP95Ms": 18.5,
+        "over50Ms": 1,
+        "longTasks": [
+          {
+            "startMs": 566.7,
+            "endMs": 1065.7,
+            "durationMs": 499
+          }
+        ]
+      },
+      "clickCpuDeltaMs": 0.599853515625,
+      "usesBefore": {
+        "P05": {
+          "pokomoko": {
+            "actorId": "pokomoko",
+            "targetId": "starter-flower:garden",
+            "at": 1792707240988,
+            "revisionSHA256": "e9f5259b434e1a2c761a09d180610104fef04542cb99362b593da45b2fcac49f"
+          },
+          "villager": {
+            "actorId": "v2",
+            "targetId": "starter-bench",
+            "at": 1792707232504,
+            "revisionSHA256": "e9f5259b434e1a2c761a09d180610104fef04542cb99362b593da45b2fcac49f"
+          }
+        }
+      },
+      "usesAfter": {
+        "P05": {
+          "pokomoko": {
+            "actorId": "pokomoko",
+            "targetId": "starter-flower:garden",
+            "at": 1792707240988,
+            "revisionSHA256": "e9f5259b434e1a2c761a09d180610104fef04542cb99362b593da45b2fcac49f"
+          },
+          "villager": {
+            "actorId": "v2",
+            "targetId": "starter-bench",
+            "at": 1792707232504,
+            "revisionSHA256": "e9f5259b434e1a2c761a09d180610104fef04542cb99362b593da45b2fcac49f"
+          }
+        }
+      }
+    }
+  },
+  "metrics": {
+    "coldWorldMs": {
+      "off": 427.7,
+      "on": 370.6,
+      "reductionMs": 57.1,
+      "reductionPercent": 13.35,
+      "unit": "ms"
+    },
+    "worldSelfMs": {
+      "off": 137.4,
+      "on": 77.3,
+      "reductionMs": 60.1,
+      "reductionPercent": 43.74,
+      "unit": "ms"
+    },
+    "compileMs": {
+      "off": 290.3,
+      "on": 293.3,
+      "reductionMs": -3,
+      "reductionPercent": -1.03,
+      "unit": "ms"
+    },
+    "commandMs": {
+      "off": 429,
+      "on": 372.6,
+      "reductionMs": 56.4,
+      "reductionPercent": 13.15,
+      "unit": "ms"
+    },
+    "sceneRebuildMs": {
+      "off": 66.9,
+      "on": 59.9,
+      "reductionMs": 7,
+      "reductionPercent": 10.46,
+      "unit": "ms"
+    },
+    "frameMaxMs": {
+      "off": 500,
+      "on": 435.1,
+      "reductionMs": 64.9,
+      "reductionPercent": 12.98,
+      "unit": "ms"
+    },
+    "frameMedianMs": {
+      "off": 16.7,
+      "on": 16.7,
+      "reductionMs": 0,
+      "reductionPercent": 0,
+      "unit": "ms"
+    },
+    "frameP95Ms": {
+      "off": 18.5,
+      "on": 18.3,
+      "reductionMs": 0.2,
+      "reductionPercent": 1.08,
+      "unit": "ms"
+    },
+    "over50Ms": {
+      "off": 1,
+      "on": 1,
+      "reductionPercent": 0,
+      "unit": "count",
+      "reductionCount": 0
+    }
+  },
+  "differences": {
+    "before": [
+      "candidate",
+      "placeProgress.uses.P05.pokomoko.at",
+      "placeProgress.uses.P05.villager.at",
+      "placeProgress.uses.P05.villager.targetId",
+      "placeProgress.useHistory.31.at",
+      "placeProgress.useHistory.31.actorId",
+      "placeProgress.useHistory.31.targetId",
+      "placeProgress.useHistory.32.at",
+      "placeProgress.useHistory.32.actorId",
+      "placeProgress.useHistory.32.targetId",
+      "placeProgress.useHistory.33"
+    ],
+    "after": [
+      "candidate",
+      "placeProgress.uses.P05.pokomoko.at",
+      "placeProgress.uses.P05.villager.at",
+      "placeProgress.uses.P05.villager.targetId",
+      "placeProgress.useHistory.31.at",
+      "placeProgress.useHistory.31.actorId",
+      "placeProgress.useHistory.31.targetId",
+      "placeProgress.useHistory.32.at",
+      "placeProgress.useHistory.32.actorId",
+      "placeProgress.useHistory.32.targetId",
+      "placeProgress.useHistory.33"
+    ]
+  },
+  "limits": [
+    "One cold edit per condition, fixed order memo ON then OFF; not randomized or repeated.",
+    "Natural place usage/receipt timing differs; full state equality is not claimed.",
+    "Same app DOM build/delivery is recorded; these files do not independently capture viewport/camera matrices or actor instantaneous positions.",
+    "CPU spans are synchronous measured roots; GPU, async saves and browser paint are excluded. rAF maximum is an observed interval, not a GPU time.",
+    "Both are shore-memory-only fixtures. This does not test persisted DB saves or production release behavior."
+  ],
+  "verificationMethod": "Deep canonical comparisons of recorded material fields before and after; exact one-cell height delta and one-entry 64-limit undo transition; matching app build/delivery DOM; one successful command/cold compile/scene rebuild; CPU-click epoch alignment; full list of all remaining state difference paths retained."
+}

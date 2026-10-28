@@ -1,0 +1,144 @@
+{
+  "at": "2026-10-24T01:58:00.396Z",
+  "build": "place-outline-v12",
+  "inputSHA256": "09dd47af755b5b65bc8c780ca3beb5f04bbd9f9eccadfb5344fd7ab6044b8871",
+  "result": "accepted",
+  "shape": {
+    "center": {
+      "x": 5,
+      "z": 5
+    },
+    "radius": 1.6,
+    "height": 0.9,
+    "entrance": 2,
+    "flatRadius": 1.75,
+    "rampDirection": "west"
+  },
+  "timing": {
+    "status": "stopped",
+    "clock": "performance.now milliseconds from CPU measurement start",
+    "startedPerformanceMs": 445276.8,
+    "startedEpochMs": 1792807049453,
+    "endedPerformanceMs": 455278.4,
+    "elapsedMs": 10001.6,
+    "retainedLimit": 400,
+    "dropped": 0,
+    "filteredFastTerrainCalls": 7,
+    "incompleteSpans": 0,
+    "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+    "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+    "aggregates": {
+      "editableIslandWorld:cache-hit": {
+        "calls": 8,
+        "inclusiveMs": 0.1,
+        "selfMs": 0.1,
+        "maxMs": 0.1,
+        "failed": 0
+      },
+      "compileWorldDefinition:derived-edges": {
+        "calls": 1,
+        "inclusiveMs": 178.7,
+        "selfMs": 178.7,
+        "maxMs": 178.7,
+        "failed": 0
+      },
+      "editableIslandWorld:cold": {
+        "calls": 1,
+        "inclusiveMs": 270.9,
+        "selfMs": 92.2,
+        "maxMs": 270.9,
+        "failed": 0
+      },
+      "applyIntent:place-outline": {
+        "calls": 1,
+        "inclusiveMs": 286.5,
+        "selfMs": 15.6,
+        "maxMs": 286.5,
+        "failed": 0
+      },
+      "worldScene.layout:": {
+        "calls": 1,
+        "inclusiveMs": 62.7,
+        "selfMs": 62.6,
+        "maxMs": 62.7,
+        "failed": 0
+      },
+      "GrowingWorld.rebuild:": {
+        "calls": 1,
+        "inclusiveMs": 83.2,
+        "selfMs": 20.5,
+        "maxMs": 83.2,
+        "failed": 0
+      }
+    },
+    "spans": [
+      {
+        "id": 1,
+        "parentId": null,
+        "name": "applyIntent",
+        "detail": "place-outline",
+        "startMs": 859.5,
+        "endMs": 1146,
+        "inclusiveMs": 286.5,
+        "selfMs": 15.6,
+        "failed": false
+      },
+      {
+        "id": 3,
+        "parentId": 1,
+        "name": "editableIslandWorld",
+        "detail": "cold",
+        "startMs": 859.9,
+        "endMs": 1130.8,
+        "inclusiveMs": 270.9,
+        "selfMs": 92.2,
+        "failed": false
+      },
+      {
+        "id": 4,
+        "parentId": 3,
+        "name": "compileWorldDefinition",
+        "detail": "derived-edges",
+        "startMs": 952.1,
+        "endMs": 1130.8,
+        "inclusiveMs": 178.7,
+        "selfMs": 178.7,
+        "failed": false
+      },
+      {
+        "id": 9,
+        "parentId": null,
+        "name": "GrowingWorld.rebuild",
+        "detail": "",
+        "startMs": 1147.7,
+        "endMs": 1230.9,
+        "inclusiveMs": 83.2,
+        "selfMs": 20.5,
+        "failed": false
+      },
+      {
+        "id": 10,
+        "parentId": 9,
+        "name": "worldScene.layout",
+        "detail": "",
+        "startMs": 1147.9,
+        "endMs": 1210.6,
+        "inclusiveMs": 62.7,
+        "selfMs": 62.6,
+        "failed": false
+      },
+      {
+        "id": 11,
+        "parentId": 10,
+        "name": "editableIslandWorld",
+        "detail": "cache-hit",
+        "startMs": 1148,
+        "endMs": 1148.1,
+        "inclusiveMs": 0.1,
+        "selfMs": 0.1,
+        "failed": false
+      }
+    ]
+  },
+  "scope": "One desktop IAB observation. Synchronous CPU segments only, not frame, GPU, async save or device acceptance."
+}

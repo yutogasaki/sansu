@@ -1,0 +1,18 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>同じ庭・三つの編集の比較</title>
+<style>*{box-sizing:border-box}body{font-family:system-ui;margin:0;padding:24px;color:#30374f;background:#f6f7fb}main{max-width:1400px;margin:auto}h1{font-size:25px}p{line-height:1.8;font-size:14px}a{color:#4052b3}section{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}figure{margin:0;background:white;border-radius:12px;overflow:hidden}figure img{display:block;width:100%;height:auto}figcaption{padding:12px;font-size:13px}h2{margin-top:30px;font-size:20px}.meta{font-size:12px;color:#606980}video{display:block;width:100%;max-width:768px;max-height:650px}@media(max-width:700px){body{padding:16px}section{grid-template-columns:repeat(2,minmax(0,1fr))}}</style></head>
+<body><main><h1>岸を変えると、歩く先も変わるか</h1><p>同じ家と六本の木を保ったまま、三つの変更を重ねた実画面です。位置・向き・尺度を保ち、ぽこもこは今の岸から行き先を探しています。</p><p><a href="index.html">実際に試す →</a>　<a href="README.md">検証結果を読む</a></p><p id="metadata" class="meta"></p><div id="comparisons"></div></main>
+<script type="module">
+const data=await(await fetch('./evidence-final/report.json')).json();
+document.querySelector('#metadata').textContent=`本体と保存を共有しない隔離試作 / ${data.candidate} / ${data.revision} / ${data.delivery}。児童理解・美術採用・本体配布の合格ではありません。`;
+const labels={initial:'はじめの岸',E1:'① 湾を奥へ掘る',E2:'② 岬を作る（①を保持）',E3:'③ 手前を削る（①②を保持）',undo:'ひとつ戻す',redo:'やり直す'};
+const container=document.querySelector('#comparisons');
+for(const row of data.scenarios){
+ for(const mode of ['overview','near']){
+  const title=document.createElement('h2');title.textContent=`${row.width}幅 · ${mode==='overview'?'全景':'近景'}`;container.append(title);
+  const grid=document.createElement('section');container.append(grid);
+  for(const state of row.states){const capture=state.captures.find(c=>c.file.includes(mode));const figure=document.createElement('figure'),img=document.createElement('img'),caption=document.createElement('figcaption');img.src='./evidence-final/'+capture.file;img.alt=labels[state.label];caption.textContent=labels[state.label];figure.append(img,caption);grid.append(figure);}
+ }
+ const title=document.createElement('h2');title.textContent=`${row.width}幅 · 操作記録`;const note=document.createElement('p');note.className='meta';note.textContent=row.motion==='no-preference'?'通常の歩行。拒否・回復・地図の操作も含む未編集の検査録画。':'動きを減らす設定。検査済みの到着点へ直接移動。';const video=document.createElement('video');video.controls=true;video.preload='metadata';video.src='./evidence-final/'+row.video;container.append(title,note,video);
+}
+document.body.dataset.ready='true';
+</script></body></html>

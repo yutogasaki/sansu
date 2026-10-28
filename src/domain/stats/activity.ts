@@ -1,6 +1,7 @@
 import { addDays } from 'date-fns';
 import type { AttemptLog } from '../../db';
 import { getLearningDayStart, toLocaleDateKey } from '../../utils/learningDay';
+import type { KokugoActivityEntry } from './kokugoActivity';
 
 export type ActivityPeriod = '7' | '30';
 
@@ -17,6 +18,11 @@ export interface ActivitySummary {
     answeredMath: number;
     answeredVocab: number;
     skipped: number;
+    answeredKokugo: number;
+    savedWorks: number;
+    savedBooks: number;
+    supported: number;
+    activeDays: number;
 }
 
 export interface DailyActivity {
@@ -27,10 +33,15 @@ export interface DailyActivity {
     math: number;
     vocab: number;
     logs: AttemptLog[];
+    kokugo?: number;
+    works?: number;
+    books?: number;
+    practice?: number;
+    entries?: KokugoActivityEntry[];
 }
 
-/** Read-only activity counts; this does not infer mastery or combine foundation events. */
-export function summarizeActivity(logs: AttemptLog[], profileId: string, period: ActivityPeriod, now: Date): ActivitySummary {
+/** Read-only activity counts; this does not infer mastery or combine foundation events. National-language entries remain typed activities. */
+export function summarizeActivity(logs: AttemptLog[], profileId: string, period: ActivityPeriod, now: Date, entries: readonly KokugoActivityEntry[] = []): ActivitySummary {
     const lastDay = getLearningDayStart(now);
     const start = addDays(lastDay, 1 - Number(period));
     const end = addDays(lastDay, 1).getTime();
@@ -64,11 +75,31 @@ export function summarizeActivity(logs: AttemptLog[], profileId: string, period:
         }
     }
     for (const day of daily) day.logs.sort((a, b) => b.timestamp.localeCompare(a.timestamp));
-    return { start, lastDay, count: math + vocab, days: days.size, math, vocab, daily,
+    const seenEntries = new Set<string>();
+    for (const entry of entries) {
+        if (entry.profileId !== profileId || !Number.isFinite(entry.at) || entry.at < start.getTime() || entry.at >= end) continue;
+        if (seenEntries.has(entry.id)) continue;
+        seenEntries.add(entry.id);
+        const day = byDate.get(toLocaleDateKey(getLearningDayStart(new Date(entry.at))))!;
+        days.add(day.dateKey);
+        (day.entries ??= []).push(entry);
+        if (entry.kind === 'answer') { day.answered++; day.kokugo = (day.kokugo ?? 0) + 1; }
+        else if (entry.kind === 'skip') day.skipped++;
+        else if (entry.kind === 'work') day.works = (day.works ?? 0) + 1;
+        else if (entry.kind === 'reading') day.books = (day.books ?? 0) + 1;
+        else day.practice = (day.practice ?? 0) + 1;
+    }
+    for (const day of daily) day.entries?.sort((a, b) => b.at - a.at);
+    return { start, lastDay, count: math + vocab + seenEntries.size, days: days.size, math, vocab, daily,
         answered: daily.reduce((sum, day) => sum + day.answered, 0),
         answeredDays: daily.filter(day => day.answered > 0).length,
         answeredMath: daily.reduce((sum, day) => sum + day.math, 0),
         answeredVocab: daily.reduce((sum, day) => sum + day.vocab, 0),
         skipped: daily.reduce((sum, day) => sum + day.skipped, 0),
+        answeredKokugo: daily.reduce((sum, day) => sum + (day.kokugo ?? 0), 0),
+        savedWorks: daily.reduce((sum, day) => sum + (day.works ?? 0), 0),
+        savedBooks: daily.reduce((sum, day) => sum + (day.books ?? 0), 0),
+        supported: daily.reduce((sum, day) => sum + (day.practice ?? 0), 0),
+        activeDays: daily.filter(day => day.answered > 0 || day.works || day.books || day.practice).length,
     };
 }

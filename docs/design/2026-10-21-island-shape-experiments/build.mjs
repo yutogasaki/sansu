@@ -1,0 +1,11 @@
+import { build } from 'esbuild';
+import { createHash } from 'node:crypto';
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
+const folder=fileURLToPath(new URL('./',import.meta.url));
+const sources=['index.html','style.css','terrain.mjs','viewer.js','habitats.js','experiments.mjs','sounds.mjs','build.mjs'];
+const hashes=Object.fromEntries(sources.map(name=>[name,createHash('sha256').update(fs.readFileSync(folder+name)).digest('hex')]));
+const revision=createHash('sha256').update(JSON.stringify(hashes)).digest('hex').slice(0,16);
+await build({entryPoints:[folder+'viewer.js'],outfile:folder+'viewer.bundle.js',bundle:true,format:'esm',minify:true,define:{STUDY_REVISION:JSON.stringify(revision)}});
+fs.writeFileSync(folder+'source-manifest.json',JSON.stringify({candidate:'island-shape-experiments-v1',delivery:'standalone-study-only',revision,sourceHashes:hashes,bundleSha256:createHash('sha256').update(fs.readFileSync(folder+'viewer.bundle.js')).digest('hex')},null,2)+'\n');
+console.log('Built island-shape-experiments-v1',revision);

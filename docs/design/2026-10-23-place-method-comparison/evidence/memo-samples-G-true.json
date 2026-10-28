@@ -1,0 +1,477 @@
+{
+  "date": "2026-10-22T22:12:06.099Z",
+  "mode": "G",
+  "enabled": true,
+  "query": "?terrainTrial=G&baseTrial=stable&rampTrial=linear&growthTrial=inherit&compileTrial=single&queryTrial=frozen&trialScene=shore&memoTrial=samples",
+  "scope": "Node with actual browser flag branches. CPU and heap observations include diagnostic counters; afterCold heap is not a peak measurement. No browser/GPU claim.",
+  "reports": [
+    {
+      "name": "initial30",
+      "coldMs": 168.80545899999998,
+      "counts": {
+        "landscapePoint": 4634,
+        "factories": 3,
+        "surfaceRequests": 8292,
+        "surfaceHeight": 5390,
+        "rawHeight": 5390,
+        "entries": 9950,
+        "hits": 10459
+      },
+      "heapBytes": {
+        "before": 5121152,
+        "afterCold": 37070256,
+        "afterGc": 19435968,
+        "coldDelta": 31949104,
+        "retainedDelta": 14314816
+      },
+      "hashes": {
+        "definition": "38fb88e6d886dcfbe4d832f4c8eae4f34c335ecfe21f57c987f0520829d0b9e9",
+        "floors": "3bb28f1a98623a056d6b63c214bea4b30fcd0fcc3fa0a75e4779a3c7b96fa32e",
+        "anchors": "79a3536f21810edc8bf44c3cb89bd400657b3739b14f82afe83170eb9310f878",
+        "surfaces": "c4099819a9b39ae79a598673b34f6c80310dc83f5b58a7d5a768418c96327423",
+        "sites": "72a4a990dd1521ce939baae7a540ad623f74c77cee4f6563b4d200a3ec32ae63",
+        "walkSites": "72a4a990dd1521ce939baae7a540ad623f74c77cee4f6563b4d200a3ec32ae63",
+        "bounds": "4ae627c48c1128ac4a65509bef8d0f922aff3486c0b57020de9c4a35d0b50d9a",
+        "queries": "a8ff47cdb9ab2530f458ce92538d57ed715d186c417dd385f538ecb577e28be0",
+        "graphs": "b49265c3785ac94a998df9a4eed2b21faa9bf0641a15fba387e03a3ef969f600",
+        "routes": "9e9851a83da94f530a0029dcd6ed3488e3235c514e28b04be7b0b09a14dee426",
+        "commands": "e403bbef33a95caba42f7e5f74ed501bd630512a1ee3bcc5ec45c6b70e5348b8"
+      },
+      "queries": 1369,
+      "routes": 2970,
+      "ordinaryCycleAccepted": true,
+      "commands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 1,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": true,
+          "hashes": [
+            "375b037644b388bc4526173111e33f48e64732796a6254b89bb1001c37b929c2",
+            "a4008ad32c0a5f3e41639f4ef22d281963ee236a02940ada176a29e8d4484b42",
+            "12c45666c54aa2a4300da6f75042533412a6340552105a5d2f943db434bbafee"
+          ],
+          "worldHashes": [
+            "94e67cf66c53dcf11d0a10ba72be3ccde0aab630078026db00729876a0afdd18",
+            "38fb88e6d886dcfbe4d832f4c8eae4f34c335ecfe21f57c987f0520829d0b9e9",
+            "94e67cf66c53dcf11d0a10ba72be3ccde0aab630078026db00729876a0afdd18"
+          ]
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        }
+      ]
+    },
+    {
+      "name": "expanded96",
+      "coldMs": 195.99208400000003,
+      "counts": {
+        "landscapePoint": 9228,
+        "factories": 3,
+        "surfaceRequests": 19038,
+        "surfaceHeight": 12194,
+        "rawHeight": 12194,
+        "entries": 21246,
+        "hits": 18473
+      },
+      "heapBytes": {
+        "before": 35458216,
+        "afterCold": 96872960,
+        "afterGc": 65046984,
+        "coldDelta": 61414744,
+        "retainedDelta": 29588768
+      },
+      "hashes": {
+        "definition": "a8dd59beed5db5568c21fa32e664b6759b27de4851f8f28f1f5e6b50b024622b",
+        "floors": "7c696527d6fe77ebefb5ff005145566ed80b6ccd32e62698246b5f0bcfc23b8a",
+        "anchors": "0e43028fc8886839479b752b9c1d13af70242a19cd55265422e348e925cb4a9d",
+        "surfaces": "6725d6d51c35152a1a714175feaae12603e741dd200659315ec987a54eea32f6",
+        "sites": "d6ddc5169da05278c41dc3c1c8a0fa16034d6e82f228d926fa8f1fb706e6b604",
+        "walkSites": "0ade02bba507571ba74448f04a511daa91f26febc7a01b04e8ca8be1fbeb227b",
+        "bounds": "7b2f8804fa36c33edceb521b0e512aa9205ccd31ab2497ba0aaf5f9828a51f17",
+        "queries": "3de60ddb6eb8ad45dd2879918da6d6c92bce4481e430933949c582b62e91b11a",
+        "graphs": "9ae30dcf3d8c6fe198f136cef3e744e4af7e9f9dedc45dff6fe867f33039bc3f",
+        "routes": "62ff880ce60f6ce984f33a227070e06318abd05fe842392d3920e456e5d365bb",
+        "commands": "46c5cd913d0849a1e64509ee23d43da4071df57f5e5fffe9eeec6a2138533348"
+      },
+      "queries": 2989,
+      "routes": 10350,
+      "ordinaryCycleAccepted": false,
+      "commands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 1,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        }
+      ]
+    },
+    {
+      "name": "shore96",
+      "coldMs": 178.18929200000002,
+      "counts": {
+        "factories": 3,
+        "surfaceRequests": 19038,
+        "surfaceHeight": 12194,
+        "rawHeight": 12194,
+        "entries": 21433,
+        "hits": 19152,
+        "landscapePoint": 9239
+      },
+      "heapBytes": {
+        "before": 215586920,
+        "afterCold": 269913448,
+        "afterGc": 244876096,
+        "coldDelta": 54326528,
+        "retainedDelta": 29289176
+      },
+      "hashes": {
+        "definition": "edb72934833d42ab26e01811ded98fb6af20a96203e337056015716496a201e2",
+        "floors": "55e5a3ee23f6ba4b74414403dfcb1c47db2cae3ba2e44bcabafbfa0e01d89cc0",
+        "anchors": "0e43028fc8886839479b752b9c1d13af70242a19cd55265422e348e925cb4a9d",
+        "surfaces": "ec93641c69fc4982efd6564e5c87122d7ed7a818d58675495cd8deac4d377fbd",
+        "sites": "e495c7a9c243fd217ecee4ef9ff23b36465e95a4df66d637c0c3687e35acfc48",
+        "walkSites": "597085e6b10ce00196bf0d41d536caf3cc25a8ce65714c735d7a47fdb3d78681",
+        "bounds": "7b2f8804fa36c33edceb521b0e512aa9205ccd31ab2497ba0aaf5f9828a51f17",
+        "queries": "b5b7715db2584b3fca314c91a870ba67ed3f3c706c5098acb77a049664ad1798",
+        "graphs": "ab8e91f5450ec27bdabf31c8ff8dde362d9092562973328ba2f094f3404c2e8e",
+        "routes": "f51de83be4810565d56ae574d1059b1992351f290c33d55b959eda1c5267cf24",
+        "commands": "348d609b4c5d0ca1053eb8827e069bf3f693ddd67000067baf186b459dbb0e28"
+      },
+      "queries": 2989,
+      "routes": 8160,
+      "ordinaryCycleAccepted": true,
+      "commands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": true,
+          "hashes": [
+            "2ecf5a361226776cae3b9a00cf39f06be1f0cdbf74feb7dd0a5c36a60b94f5f0",
+            "c8b5c5af796463bc4b32eadc205bf0b2770f539dc1a420f0de0fec388db26635",
+            "8e812553d5058255c93206b89f79568c93a5539ca28b754e8d5f323dd3242dad"
+          ],
+          "worldHashes": [
+            "3a9040cbee896b54d42310ab2643418bdec993e268632eafbc297931618cf44f",
+            "edb72934833d42ab26e01811ded98fb6af20a96203e337056015716496a201e2",
+            "3a9040cbee896b54d42310ab2643418bdec993e268632eafbc297931618cf44f"
+          ]
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。"
+        }
+      ]
+    },
+    {
+      "name": "signed-extreme30",
+      "coldMs": 74.35200000000032,
+      "counts": {
+        "factories": 3,
+        "surfaceRequests": 8292,
+        "surfaceHeight": 5390,
+        "rawHeight": 5390,
+        "entries": 10029,
+        "hits": 10670,
+        "landscapePoint": 4639
+      },
+      "heapBytes": {
+        "before": 246667136,
+        "afterCold": 267885864,
+        "afterGc": 231015992,
+        "coldDelta": 21218728,
+        "retainedDelta": -15651144
+      },
+      "hashes": {
+        "definition": "0231bde82ad6d0a09ff26109051c18e699f6a9299fca8ba7c4f87eafb103ec01",
+        "floors": "9b5e8bd62642f00f2d96362fa2e73fde39d2f58df8c77d9256620ffd86bffd9f",
+        "anchors": "79a3536f21810edc8bf44c3cb89bd400657b3739b14f82afe83170eb9310f878",
+        "surfaces": "afa82b7339bcee59ba25b86342f0c7ed52adc399b25d596ae26646e5ab5f1386",
+        "sites": "e83e345d19c0cb95b8b9360946004124fcb6d9dae315322408ba3a1c92b2cc3d",
+        "walkSites": "e30e5bdcbde746f540c870ebd23428edd4adde1f0f99f4183e0e7d2f05244253",
+        "bounds": "4455297a8caf0ef4c414f3621964ec3217bb40a14d8efc4f3f528751165e2c5f",
+        "queries": "0f9cbfb58acb21d1b7e555a0a2ee3c5f4ff05542427553e3f68f276d07089f59",
+        "graphs": "6d35dc32c9615ae066a668943e8ba9ecd608123c68e55a2c57b73ce5cb969ae9",
+        "routes": "8c357c3d76a40fc70393aa569ae9a34f11ab752424c7aeb5a9596d444a964b60",
+        "commands": "e60b9e99fd76fcc128583e5e13e50d0e1fb277b5229637fa67a2872cf768d290"
+      },
+      "queries": 1369,
+      "routes": 2304,
+      "ordinaryCycleAccepted": false,
+      "commands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 1,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        }
+      ]
+    },
+    {
+      "name": "bridge30",
+      "coldMs": 69.80674999999974,
+      "counts": {
+        "landscapePoint": 4635,
+        "factories": 3,
+        "surfaceRequests": 8292,
+        "surfaceHeight": 5390,
+        "rawHeight": 5390,
+        "entries": 9947,
+        "hits": 10432
+      },
+      "heapBytes": {
+        "before": 180141736,
+        "afterCold": 204566160,
+        "afterGc": 164612216,
+        "coldDelta": 24424424,
+        "retainedDelta": -15529520
+      },
+      "hashes": {
+        "definition": "a06a3d5f73aa8efd1d6e4c08915040ecc27c7a2caa7aaf1e5b4f3bb48482cc0d",
+        "floors": "3f7fec88959451c9c3f53d88db55a0331131ed523a9a807efaedf3e9aef15c66",
+        "anchors": "c836a08bbe93dcdafdce7746b42df7cb40b002f5de9b4c38db466e6267d25d88",
+        "surfaces": "8d3a639552044917c690bbce31fdf050120cb330ea4bb64f62298251249a0048",
+        "sites": "acc064f68f19a9b7b0a7aa6f9551e68f4652b85f1f35801877de032b8e1f4ac2",
+        "walkSites": "acc064f68f19a9b7b0a7aa6f9551e68f4652b85f1f35801877de032b8e1f4ac2",
+        "bounds": "c6e91b526bb6f14a7078cf13acb5fccb31eca6f706e653d65bc6a58b145c8a3d",
+        "queries": "222c97a7dbb5a698d28bebb62a4cb4ea2f35e1e95ecefa9f914c3405f572762e",
+        "graphs": "b61201a52a24882f56781ca0851e70b102aa68733414e5162fbd8c011aa45d94",
+        "routes": "ba2ac11af6ef7233d569070acee0afd296418a1842ea3611cd883201568c7aaa",
+        "commands": "db977733e283c5a5293814283843833ce5c735ee936acfc28ceeaf3cc110a475"
+      },
+      "queries": 1369,
+      "routes": 3030,
+      "ordinaryCycleAccepted": true,
+      "commands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 1,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": true,
+          "hashes": [
+            "7365dc9e14a03976415c89304f162256de0791b36d6ce47fe29cdb144f4a9d8d",
+            "280c444efe41fcc72821fb2dcadbf456b1992d03caf6f76ec3699e3887558e4d",
+            "85ab56ed34e58dc3f34e07502e0a7c7344916d40f41baa1d2a4cd4ca6beb930b"
+          ],
+          "worldHashes": [
+            "ef785f1d27e3d09d86383c17841e130a650a25e8cfc51fb2b166d6398325959f",
+            "a06a3d5f73aa8efd1d6e4c08915040ecc27c7a2caa7aaf1e5b4f3bb48482cc0d",
+            "ef785f1d27e3d09d86383c17841e130a650a25e8cfc51fb2b166d6398325959f"
+          ]
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        }
+      ]
+    }
+  ],
+  "pureChecks": {
+    "signedZero": true,
+    "adjacentDoubles": true,
+    "separateFactories": true
+  }
+}

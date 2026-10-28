@@ -1,0 +1,8 @@
+
+> pokko-fushigi-zukan-app@0.0.0 agent:index:check
+> node tools/generate-agent-index.mjs --check && npm run portal:verify
+
+Stale: .agents/index.html — npm run agent:index
+Stale: .agents/tasks/index.html — npm run agent:index
+Stale: docs/index.html — npm run agent:index
+Stale: .agents/map.html — npm run agent:index

@@ -131,7 +131,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
         setNaming(undefined); namingOwner.current = undefined;
         pendingPicture.current = false;
     }, [profileId, ownIslandId]);
-    const [qualityCeiling, setQualityCeiling] = useState(1.25);
+    const [qualityCeiling, setQualityCeiling] = useState(1.5);
     const [graphicsFailure, setGraphicsFailure] = useState<string>();
     const waitingForWorld = Boolean(own) && worldStep !== 'ready';
     useEffect(() => {
@@ -626,7 +626,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             : brush === 'sea' ? 'うみが はいってきたよ。ちかくの 花や 木が よく そだつよ' : 'たいらに したよ。ひろい ところで なかまが あそぶよ');
         audio.play(brush === 'sea' ? 'water' : 'sand');
     };
-    const world = <GrowingWorld terrainEditing={panel === 'terrain'} terrainBrush={brushing && panel === 'terrain'} terrainCell={terrainCell}
+    const world = <GrowingWorld terrainEditing={panel === 'terrain'} terrainBrush={brushing && panel === 'terrain'} terrainTo={brush} terrainWide={wideBrush} terrainCell={terrainCell}
         onPaint={(cells, done) => { if (!done) { setStroke(cells); return; } setStroke([]); paintTerrain(cells); }} viewKey={`${profileId}:${ownIslandId}:${visit?.id ?? 'own'}`} onViewReturn={setViewReturn} key={`${ownIslandId}:${worldAttempt}`} active={active} playActive={playingForeground} compact={worldAttempt > 0} qualityCeiling={qualityCeiling} state={state} time={state?.theme === 'hoshi' ? 'night' : time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival} bridgeBuild={bridgeBuild}
         hints={visit ? [] : panel === 'terrain' && stroke.length ? stroke : placing && advised.length ? advised : hints} moment={visit ? undefined : moment} show={show} focus={focus} concert={concert} onCamera={c => { camera.current = c; if (!c) setViewReturn(false); }}
         onPop={() => audio.play('glass')} onStage={setWorldStep} onFailure={setGraphicsFailure} onQualityFallback={ceiling => {

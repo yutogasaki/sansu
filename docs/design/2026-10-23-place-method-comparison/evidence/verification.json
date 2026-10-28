@@ -1,0 +1,171 @@
+{
+  "status": "PAUSED_BY_USER_TIMEBOX_GOAL_NOT_MET",
+  "recordedAt": "2026-10-22T22:54:24.616585+00:00",
+  "timebox": {
+    "startedAt": "2026-10-22T19:56:39Z",
+    "plannedStopAt": "2026-10-22T22:56:39Z",
+    "stoppedAt": "2026-10-22T22:54:24.616585+00:00",
+    "trialStoppedAt": "2026-10-22T22:51:02.990943+00:00",
+    "closeoutAt": "2026-10-22T22:54:24.616585+00:00"
+  },
+  "goalResult": "NOT_MET",
+  "releaseAdoption": false,
+  "runtimeRevision": "place-method-comparison-v17",
+  "inputSHA256": "8d381b47dd3d8b8aba720104d66962c32b8cf3ae320c0594970222f345fcbc8d",
+  "checks": [
+    {
+      "id": "build",
+      "evidence": "build-place-method-comparison-v17.json",
+      "sha256": "48a3791a05b270c5788bd29c1da31339395689d08f3e28648629490c3260eb1e",
+      "actual": "PASS",
+      "scope": "See linked evidence. Limited local trial, not release acceptance.",
+      "expected": "Pass the stated limited check while retaining explicit limitations"
+    },
+    {
+      "id": "types",
+      "evidence": "typecheck-v17.json",
+      "sha256": "e06c8b2cf0869a6d40e693df8f0e23c80811b85152b6a8973da8d141b0e3f8fa",
+      "actual": "PASS",
+      "scope": "See linked evidence. Limited local trial, not release acceptance.",
+      "expected": "Pass the stated limited check while retaining explicit limitations"
+    },
+    {
+      "id": "runtime_identity",
+      "evidence": "final-runtime-fingerprint.json",
+      "sha256": "69897a7643799f1f622c5c9113e5a90a4ecf997ad5746ea5481cb5f9358b9430",
+      "actual": "PASS",
+      "scope": "See linked evidence. Limited local trial, not release acceptance.",
+      "expected": "Pass the stated limited check while retaining explicit limitations"
+    },
+    {
+      "id": "edge_equivalence",
+      "evidence": "edge-check-memo-check.json",
+      "sha256": "146b05154789a29e8fc5520573771df7cfe7c86694f00a869a8b6086decc0b2f",
+      "actual": "PASS",
+      "scope": "See linked evidence. Limited local trial, not release acceptance.",
+      "expected": "Pass the stated limited check while retaining explicit limitations"
+    },
+    {
+      "id": "frozen_query_equivalence",
+      "evidence": "frozen-query-check.json",
+      "sha256": "bf91ddf6964501b2d22da5695023cd41963e5ebba7dcb26bc4bd5d5a5f143007",
+      "actual": "PASS",
+      "scope": "See linked evidence. Limited local trial, not release acceptance.",
+      "expected": "Pass the stated limited check while retaining explicit limitations"
+    },
+    {
+      "id": "memo_replay",
+      "evidence": "checkers/memo-checkers-validation.json",
+      "sha256": "e8c11656fa563fec63b8e7508767e238c251cddc96ad66ed9b0ee8b1ca9a3d39",
+      "actual": "PASS",
+      "scope": "See linked evidence. Limited local trial, not release acceptance.",
+      "expected": "Pass the stated limited check while retaining explicit limitations"
+    },
+    {
+      "id": "edit_undo_redo",
+      "evidence": "final-ui-check.json",
+      "sha256": "d78e614990dbaaf6d6888b001008d7862b4e4d3291fcc920e9b2caa80cd05271",
+      "actual": "PASS_EDIT_UNDO_REDO_RAW_RESTORATION_WITH_HISTORY_CAP",
+      "scope": "See linked evidence. Limited local trial, not release acceptance.",
+      "expected": "Pass the stated limited check while retaining explicit limitations"
+    },
+    {
+      "id": "ordinary_save_return",
+      "evidence": "ordinary-final-restoration-check.json",
+      "sha256": "2459ac6d9759f6682d270987f26fd76298c7ad7aeec81ac0ba78c9808a2e8b44",
+      "actual": "PASS_ORDINARY_SAVED_CORE_RESTORED_WITH_PROGRESS_DIFFERENCES",
+      "scope": "See linked evidence. Limited local trial, not release acceptance.",
+      "expected": "Pass the stated limited check while retaining explicit limitations"
+    },
+    {
+      "id": "new_session_life_and_post_edit_observation",
+      "evidence": "post-edit-life-check.json",
+      "sha256": "0226a085283a935a2c08721dab44a658d9cbaafa0f75466adb8b118e319045e3",
+      "expected": "Confirm 85 fresh four actor/target uses, separate 81/82 domain receipt changes from visible evidence",
+      "actual": "PASS_FRESH_SESSION_VISIBLE_USES_POST_UNDO_VISIBLE_USES_UNCONFIRMED",
+      "scope": "New-session v17 memory fixture. Does not prove visible use immediately following 81 Undo."
+    },
+    {
+      "id": "one_step_undo_continuity_state",
+      "evidence": "final-continuity-check.json",
+      "sha256": "b1f0aed6ae6b489035e47e2ee22bc694803947024544293830e4e333adbf1497",
+      "actual": "PASS_SAME_SESSION_EDIT_UNDO_STATE_AND_DOM_CONTINUITY",
+      "expected": "Original core/raw/places and camera retained, same session, editing false; visual position changes assessed separately",
+      "scope": "One edit then Undo, capped history: 63 Undo and 1 Redo"
+    }
+  ],
+  "textChecks": [
+    {
+      "id": "eslint",
+      "command": "fnm exec --using=22.23.3 node node_modules/eslint/bin/eslint.js docs/design/2026-10-23-place-method-comparison --no-warn-ignored",
+      "exitCode": 0,
+      "errors": 0,
+      "warnings": 1,
+      "evidence": "eslint-final.txt",
+      "warning": "LiveUse.tsx react-refresh/only-export-components"
+    },
+    {
+      "id": "docs",
+      "command": "fnm exec --using=22.23.3 npm run docs:check",
+      "exitCode": 0,
+      "result": "PASS",
+      "existingReviewDateWarnings": 14,
+      "evidence": "docs-check-closeout.txt",
+      "recordedAt": "2026-10-22T22:54:24.616585+00:00"
+    },
+    {
+      "id": "agent_index_first_full_attempt",
+      "command": "fnm exec --using=22.23.3 npm run agent:index:check",
+      "exitCode": 130,
+      "result": "INTERRUPTED",
+      "reason": "Legacy generation passed after sync. Full standard portal requires Node 24+, so restarted under installed Node 24.18.0. No pass claim."
+    },
+    {
+      "id": "agent_index_node24",
+      "command": "fnm exec --using=24.18.0 npm run agent:index:check",
+      "exitCode": 137,
+      "result": "INCOMPLETE_PROCESS_KILLED",
+      "evidence": "agent-index-node24-final.txt",
+      "observed": "Legacy generated pages passed. During portal:verify, check-standard-portal.mjs was killed by signal 9 after the initial adapter checks. Cause not established; no full portal pass claim."
+    },
+    {
+      "id": "agent_index_legacy_final",
+      "command": "fnm exec --using=22.23.3 node tools/generate-agent-index.mjs --check",
+      "exitCode": 0,
+      "result": "PASS",
+      "evidence": "agent-index-legacy-final.txt",
+      "recordedAt": "2026-10-22T22:54:24.616585+00:00",
+      "scope": "Generated legacy guide synchronization only; full portal verification remains incomplete."
+    }
+  ],
+  "browserReport": {
+    "result": "PASS",
+    "actions": [
+      "switch first comparison to single view",
+      "select final82",
+      "open original image dialog",
+      "close",
+      "restore side by side"
+    ],
+    "loadedImages": "No failed loaded images with src",
+    "evidence": "84-report-comparison.png",
+    "recordedAt": "2026-10-22T22:36:00.206546+00:00"
+  },
+  "limitations": [
+    "Art goal not met: long walls, central hole, rectangular waterline",
+    "About 400ms initial edit stalls remain in final trial",
+    "Most large speedup removes repeated trial query parsing; not product performance improvement",
+    "96 cells are memory-only fixture, not earned land or DB persistence",
+    "No new visible use receipt verified after final Undo",
+    "No new normal DB write/reload roundtrip performed on v17",
+    "No device/child/revisit/offline/PWA/all-save-compatibility/release acceptance",
+    "Full standard portal verification did not finish: process killed by signal 9, cause not established. Legacy guide sync is checked separately."
+  ],
+  "consultation": "consult-chatgpt: public generic technical advice only; not image or product audit",
+  "changes": "Trial folder, current parent-task entry and four generated repository guide pages. No src/public edits, commit, push or deployment.",
+  "visualContinuity": {
+    "evidence": "86-visible-continuity.md",
+    "result": "Two actors change position after a separate one-step edit and Undo",
+    "limitation": "Three screenshots, no continuous route/safety/new-use completion claim"
+  }
+}

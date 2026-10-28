@@ -1,0 +1,172 @@
+{
+  "at": "2026-10-25T08:46:33.942733+00:00",
+  "head": "349763b1072ff84896aae5ff1e6383ff89ae9cf9",
+  "sourceHash": "0941574eae4880829601994193da9e590107c6ca1e9e77c1f19eed5d122e9fb1",
+  "runtime": {
+    "version": "kokugo-0941574eae48:7292e113-cc89-4208-b8fb-18ec1418ef9c",
+    "revision": "kokugo-0941574eae48",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "environment": {
+    "node": "22.23.3",
+    "vitest": "2.1.9",
+    "browser": "headless Chromium via pinned Playwright",
+    "deviceWidths": [
+      320,
+      390,
+      768
+    ]
+  },
+  "dirtyWorkingTree": true,
+  "runtimeInputsMatchFinalC": true,
+  "qaChangesAfterFreeze": [
+    "actual Settings deletion in second tab replaces native IDB deletion diagnostic",
+    "smoke asserts labeled password input with numeric inputmode"
+  ],
+  "checks": [
+    {
+      "command": "npm run build",
+      "result": "PASS",
+      "cwd": "immutable final C snapshot",
+      "log": "logs/build.log",
+      "includes": [
+        "typecheck",
+        "game build",
+        "promo build",
+        "asset budget"
+      ],
+      "precacheFiles": 167,
+      "precacheMiB": 9.01
+    },
+    {
+      "command": "npm run lint",
+      "result": "PASS",
+      "warnings": 5,
+      "log": "logs/lint.log"
+    },
+    {
+      "command": "npx eslint src/pages/Kokugo.tsx src/components/kokugo src/domain/kokugo src/domain/growingIsland/kokugoReceipts.ts tools/e2e-kokugo*.mjs",
+      "result": "PASS",
+      "log": "logs/focused-lint.log"
+    },
+    {
+      "command": "npm run test:run -- --maxWorkers=2 --minWorkers=1 --testTimeout=30000; then vitest run --maxWorkers=6 --minWorkers=1 --testTimeout=30000 with 95 retained files excluded",
+      "result": "PASS (split execution)",
+      "files": 667,
+      "tests": 5614,
+      "coverage": "unit-suite.json",
+      "initialLog": "logs/first-suite-diagnostic.log",
+      "remainingLog": "logs/remaining-suite.log"
+    },
+    {
+      "command": "npm run e2e:smoke",
+      "result": "PASS",
+      "cases": 32,
+      "log": "logs/standard-smoke.log"
+    },
+    {
+      "command": "npm run check:current-ui-entry",
+      "result": "PASS",
+      "log": "logs/current-ui-entry.log"
+    },
+    {
+      "command": "SANSU_KOKUGO_OLD_DIR=/tmp/sansu-kokugo-stable-b SANSU_KOKUGO_NEW_DIR=/tmp/sansu-kokugo-final-dist SANSU_KOKUGO_OUTPUT=/tmp/sansu-kokugo-production-update-04 node tools/e2e-kokugo-update.mjs",
+      "result": "PASS",
+      "widths": [
+        390,
+        768,
+        320
+      ],
+      "report": "production-update/report.json"
+    },
+    {
+      "command": "SANSU_KOKUGO_URL=http://127.0.0.1:5290 SANSU_KOKUGO_OUTPUT=/tmp/sansu-kokugo-intake-production-04 node tools/e2e-kokugo-intake.mjs",
+      "result": "PASS",
+      "widths": [
+        390,
+        768
+      ],
+      "report": "production-intake/report.json"
+    },
+    {
+      "command": "npm run docs:check",
+      "result": "PASS",
+      "warnings": "15 preexisting review deadlines",
+      "log": "logs/docs-check.log"
+    },
+    {
+      "command": "npm run agent:index:check",
+      "result": "PARTIAL: legacy index check PASS; standard portal blocked",
+      "log": "logs/agent-index-check.log",
+      "reason": "same stale flow evidence as portal:verify"
+    },
+    {
+      "command": "npm run portal:verify",
+      "result": "BLOCKED",
+      "reason": "preexisting stale flow evidence for docs/tasks/active/2026-09-27-living-fantasy-first-playable.md; generated portal also differs from current canonical docs",
+      "diagnostic": "node scripts/standard-portal.mjs verify",
+      "log": "logs/portal-render.log",
+      "integrationProbe": "check-standard-portal adapter assertions passed; heavy integration probe stopped after direct render reproduced the blocking error; downstream checks not run"
+    },
+    {
+      "command": "node tools/generate-agent-index.mjs --check",
+      "result": "PASS",
+      "log": "logs/agent-index-check.log"
+    },
+    {
+      "command": "node scripts/check-portal-workspace.mjs",
+      "result": "FAIL: generated portal canonical snapshot is stale",
+      "log": "logs/portal-workspace.log"
+    }
+  ],
+  "unverified": [
+    "human content adoption and proofreading",
+    "human listening to all audio",
+    "physical devices",
+    "real children understanding, safety, learning effect and voluntary return",
+    "all grade kanji coverage",
+    "production release"
+  ],
+  "publication": {
+    "commit": false,
+    "push": false,
+    "deploy": false
+  },
+  "closedAt": "2026-10-25T08:48:53.407884+00:00",
+  "runtimeInputComparison": {
+    "at": "2026-10-25T08:48:53.407884+00:00",
+    "checked": "all manifest src/public/build configuration inputs excluding tests; no differences",
+    "finalBuild": "C",
+    "sourceHash": "0941574eae4880829601994193da9e590107c6ca1e9e77c1f19eed5d122e9fb1"
+  }
+}

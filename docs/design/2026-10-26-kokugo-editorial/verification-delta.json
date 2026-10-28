@@ -1,0 +1,21 @@
+{
+  "fullUnitSourceHash": "05b6ed4848b5aa979218c385fc4d60f97aa9bd339835d4f0e78eb08191ddfed4",
+  "finalSourceHash": "f80f926967d362952653a0cae601c44983ad87be69d272c225be21c5c1447d38",
+  "unchangedInputs": 3533,
+  "changedInputs": [
+    "docs/product/kokugo-kanji.md",
+    "docs/product/kokugo.md",
+    "src/components/kokugo/KokugoQuestion.tsx",
+    "src/domain/kokugo/actions.ts",
+    "src/domain/kokugo/curriculum.ts",
+    "src/domain/kokugo/editorial.test.ts",
+    "src/domain/kokugo/evaluation.ts",
+    "src/domain/kokugo/kanji/data.ts",
+    "src/domain/kokugo/kanji/progress.ts",
+    "src/domain/kokugo/repository.ts",
+    "tools/audit-kokugo-editorial.mjs",
+    "tools/e2e-kokugo-kanji.mjs",
+    "tools/e2e-kokugo.mjs"
+  ],
+  "verification": "Full unit run at candidate2 plus final50 focused tests/build/lint and final-browser/update journeys. This does not assert a single final-source full run."
+}

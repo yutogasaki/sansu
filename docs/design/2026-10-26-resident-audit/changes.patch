@@ -1,0 +1,68 @@
+--- a/src/components/island/growing/GrowingSheet.tsx
++++ b/src/components/island/growing/GrowingSheet.tsx
+@@ -23,9 +23,17 @@
+ const TRAIT_NAME = { lively: 'げんき', mellow: 'のんびり', shy: 'はずかしがり', hungry: 'くいしんぼう' } as const;
+ 
+ /** What a tapped thing is, and the few things a child can do with it. */
+-export function GrowingSheet({ state, target, onAction, onClose, portrait }: { portrait?: string;
++interface GrowingSheetProps {
++    portrait?: string;
+     state: GrowingState; target: string; onAction: (action: SheetAction) => void; onClose: () => void;
+-}) {
++}
++
++export function GrowingSheet(props: GrowingSheetProps) {
++    // A draft belongs to this island and selection, never the next tapped friend.
++    return <GrowingSheetContents key={JSON.stringify([props.state.seed, props.target])} {...props} />;
++}
++
++function GrowingSheetContents({ state, target, onAction, onClose, portrait }: GrowingSheetProps) {
+     const [naming, setNaming] = useState(false), [name, setName] = useState('');
+     const plot = state.plots.find(p => p.id === target), landmark = state.landmarks.find(l => l.id === target);
+     const villager = state.villagers.find(v => `villager:${v.id}` === target);
+--- a/src/components/island/growing/growingLife.ts
++++ b/src/components/island/growing/growingLife.ts
+@@ -119,8 +119,10 @@
+         this.walkable = walkableCells(state, this.world); this.seats = layer.seats;
+         this.homePaths = new Set([...reachableFromHome(state, this.walkable, this.world)].filter(cell => this.walkable.has(cell)));
+         const allSites = this.world ? new Set(this.world.sites.map(site => key(site.cell))) : undefined;
+-        const shown = [...state.villagers].filter(v => !v.away).sort((a, b) => b.arrivedAt - a.arrivedAt).slice(0, VISIBLE_WALKERS);
+-        const keep = new Set(['pokomoko', 'visitor', ...shown.map(v => v.id), ...state.arrivals]);
++        const present = state.villagers.filter(v => !v.away);
++        const arrivals = new Set(state.arrivals);
++        const shown = present.filter(v => !arrivals.has(v.id)).sort((a, b) => b.arrivedAt - a.arrivedAt).slice(0, VISIBLE_WALKERS);
++        const keep = new Set(['pokomoko', 'visitor', ...shown.map(v => v.id), ...present.filter(v => arrivals.has(v.id)).map(v => v.id)]);
+         for (const [id, walker] of this.walkers) if (!keep.has(id) || id === 'visitor') {
+             if (id === 'pokomoko') continue;
+             disposeActor(walker.actor); this.walkers.delete(id);
+--- a/src/components/island/growing/houseGuests.ts
++++ b/src/components/island/growing/houseGuests.ts
+@@ -8,7 +8,7 @@
+  * set tomorrow; えま and えいた come a little more often once they live on the island.
+  */
+ export function houseGuests(state: GrowingState, now = new Date()): Villager[] {
+-    const day = localDay(now), present = state.villagers.filter(v => !v.away);
++    const day = localDay(now), present = state.villagers.filter(v => !v.away && !state.arrivals.includes(v.id));
+     const count = Math.min(3, present.length, 1 + Math.floor(roll(state.seed, 'house-guests', day, 0) * 3));
+     return present.map(v => ({ v, r: roll(state.seed, 'house-guest', day, Number(v.id.replace(/\D/g, '')) || v.arrivedAt) / (v.species === 'girl' || v.species === 'boy' ? 1.6 : 1) }))
+         .sort((a, b) => a.r - b.r).slice(0, count).map(entry => entry.v);
+--- a/docs/product/52_growing_island_game_spec.md
++++ b/docs/product/52_growing_island_game_spec.md
+@@ -354,6 +354,8 @@
+ - 引っ越しは船が島に着いた状態で止まり、**子どもが船を触ると降りて家へ歩く**（§11）。
+ - 退去はない。「おでかけ中」にはできる。
+ 
++入居が記録済みでも、船から降りる前の子は家へ遊びに来る候補にしない。おでかけ中は、船待ちの子も外の表示から除く。おでかけで住人の所有・住まい・未下船の記録を消さず、帰島後も船を触って降りる。屋外の12人枠は下船済みでおでかけ中でない住人から選ぶ。
++
+ ### 7.4 すみごこち（★0〜3。夜明けに判定）
+ 
+ - ★ 好きなものの1つが、家から3マス以内にある（「ごはん」は、ごはんに余裕があること）
+@@ -361,6 +363,8 @@
+ - ★ あそびば・ベンチ・ブランコ・きねんひんのどれかが家から3マス以内にある（「しずか」好きは、あそびばがないこと）
+ 
+ ★は画面に数字で出さない。住人の表情と、触ったときのひとことで伝える（「おはなが ちかくに あったら うれしいな」）。低くても出て行かない、悲しまない。
++
++住人の名前の編集中に別の住人・別の島へ選択が切り替わった場合、未確定の入力を切替先へ持ち越さない。保存する名前は現在の本人の入力だけを使う。既に確定した名前と住まいは保持する。
+ 
+ ### 7.5 くらし（島を開いている間）
+ 

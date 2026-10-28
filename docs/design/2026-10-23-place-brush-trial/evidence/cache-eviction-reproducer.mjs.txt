@@ -1,0 +1,23 @@
+import { build } from '/Users/yutogasaki/Projects/sansu/node_modules/esbuild/lib/main.js';
+import { loadConfigFromFile } from '/Users/yutogasaki/Projects/sansu/node_modules/vite/dist/node/index.js';
+import { readFile, writeFile } from 'node:fs/promises';
+const dir='/Users/yutogasaki/Projects/sansu/docs/design/2026-10-23-place-brush-trial';
+const loaded=await loadConfigFromFile({command:'build',mode:'production'},dir+'/vite.config.ts');
+const plugin=loaded.config.plugins.find(p=>p?.name==='place-method-comparison');
+const source=`import fixture from '../2026-10-23-place-method-comparison/evidence/expanded-place-recipe-flower-flat-wide-fixture.json';
+import { editableIslandWorld } from '../../../src/domain/growingIsland/editableTerrainWorld';
+import { applyIntent } from '../../../src/domain/growingIsland/commands';
+import { TRIAL_PLACE_RECIPE,placeEditingRevision } from './persistent-model';
+import { diagnosticPlanFor } from './directional-field';
+const state=structuredClone(fixture.state);
+state.trialPlace={center:{x:5,z:5},radius:1.6,height:.5,entrance:1.2,flatRadius:1.75,rampDirection:'west'};
+state.trialPlaceHistory={version:1,recipe:TRIAL_PLACE_RECIPE,undo:[{after:structuredClone(state.trialPlace)}],redo:[]};
+const shape={...state.trialPlace,height:.9};
+const result=applyIntent(state,{id:'independent-cache-review',command:{type:'place-outline',action:'apply',shape,safety:{actors:[],occupiedPlaceTargets:[]},expectedPlaceRevision:placeEditingRevision(state)}},1000).state;
+const expected=editableIslandWorld(result); const cachedPlan=diagnosticPlanFor(result);
+for(let i=0;i<10;i++){const other=structuredClone(fixture.state); other.terrain.heights['-3,0']=i+1; editableIslandWorld(other);}
+const actual=editableIslandWorld(result);
+const diffs=[];
+for(const f of expected.floors)for(const v of f.vertices){const a=expected.floorAt(v.cell)?.point,b=actual.floorAt(v.cell)?.point;if(a&&b&&Math.abs(a.y-b.y)>1e-8)diffs.push({cell:v.cell,before:a.y,after:b.y});else if(Boolean(a)!==Boolean(b))diffs.push({cell:v.cell,before:a,after:b});}
+console.log(JSON.stringify({shape:result.trialPlace,cachedPlan,sameWorld:expected===actual,differences:diffs.length,examples:diffs.slice(0,8)},null,2));`;
+await build({stdin:{contents:source,resolveDir:dir,loader:'ts'},outfile:'/private/tmp/sansu-direction-review-bundle.mjs',bundle:true,platform:'node',format:'esm',logLevel:'silent',define:{'import.meta.env.DEV':'false'},plugins:[{name:'actual-review',setup(b){b.onLoad({filter:/\.(?:ts|tsx)$/},async args=>{const raw=await readFile(args.path,'utf8'),r=await plugin.transform.call({},raw,args.path); return{contents:typeof r==='string'?r:r?.code??raw,loader:args.path.endsWith('.tsx')?'tsx':'ts'};});}}]});

@@ -9,9 +9,11 @@ export class AdaptiveIslandQuality {
     private slow = 0;
     private fast = 0;
 
-    constructor(maxRatio: number) {
-        this.levels = [.65, .8, 1, 1.25].filter(value => value <= Math.max(.65, Math.min(1.25, Number.isFinite(maxRatio) ? maxRatio : .65)));
+    constructor(maxRatio: number, recovery = false) {
+        this.levels = [.65, .8, 1, 1.25, 1.5].filter(value => value <= Math.max(.65, Math.min(1.5, Number.isFinite(maxRatio) ? maxRatio : .65)));
         this.ceiling = this.levels.length - 1;
+        // Normal opening stays legible; recovery starts at the known safe floor.
+        this.index = recovery ? 0 : this.levels.filter(value => value <= 1).length - 1;
     }
     get ratio() { return this.levels[this.index]; }
     get ceilingRatio() { return this.levels[this.ceiling]; }

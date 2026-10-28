@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-22T22:29:36.839Z",
+  "files": [
+    {
+      "source": "/private/tmp/memo-browser-pair.mjs",
+      "target": "docs/design/2026-10-23-place-method-comparison/evidence/checkers/sansu-memo-browser-pair-check.mjs",
+      "originalSHA256": "44c5fa782cbc15e8e32c333270934ae62acf67392e8b5d09578719b237f60c8f",
+      "savedSHA256": "51ef03978ac27c33ae95ff8e37de837dd528e7300e9a5b762b08cc39e0a251e2",
+      "changes": "Resolve evidence path relative to checker; assert against saved report instead of overwriting it. Comparison logic unchanged."
+    },
+    {
+      "source": "/private/tmp/sansu-memo-samples-check.mjs",
+      "target": "docs/design/2026-10-23-place-method-comparison/evidence/checkers/memo-samples-historical-bundle.mjs",
+      "originalSHA256": "e7d3c8d13be753760cad4e99bcc040b1afd5b29d2054f976590968b8330353c2",
+      "savedSHA256": "e7d3c8d13be753760cad4e99bcc040b1afd5b29d2054f976590968b8330353c2",
+      "changes": "Byte-identical frozen esbuild bundle used for A/H tests and supplemental C/G tests. Contains fixtures and diagnostic counters; does not represent a shipped app."
+    }
+  ]
+}

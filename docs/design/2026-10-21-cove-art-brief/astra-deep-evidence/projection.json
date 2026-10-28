@@ -1,0 +1,632 @@
+{
+  "capturedAt": "2026-10-21T08:38:18.476Z",
+  "probe": "astra-prior-layout-projection-v1",
+  "delivery": "standalone-diagnostic-only",
+  "data": [
+    {
+      "width": 390,
+      "height": 570,
+      "mode": "overview",
+      "yaw": 0,
+      "elevation": 37,
+      "camera": {
+        "position": [
+          -0.030881047248840332,
+          13.574402856191295,
+          15.929654547373774
+        ],
+        "target": [
+          -0.030881047248840332,
+          1.5381023931503295,
+          -0.04305565357208252
+        ],
+        "horizontalSpan": 7.7347029590606695,
+        "verticalSpan": 11.304565863242516
+      },
+      "actor": {
+        "alone": {
+          "pixels": 241,
+          "bbox": [
+            198,
+            325,
+            14,
+            29
+          ]
+        },
+        "visible": {
+          "pixels": 241,
+          "bbox": [
+            198,
+            325,
+            14,
+            29
+          ]
+        },
+        "visibleFraction": 1,
+        "aabbHeightPx": 33.52942096603828
+      },
+      "home": {
+        "aabbHeightPx": 77.23495785562547
+      },
+      "scope": "static projection diagnosis; flat support y=.42; no back hill, navigation, terrain editing, application UI or saved owner fixture; asset choices explicitly follow prior diagram; actor faces +x toward bay",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "390-overview-0.png"
+    },
+    {
+      "width": 390,
+      "height": 570,
+      "mode": "overview",
+      "yaw": 30,
+      "elevation": 37,
+      "camera": {
+        "position": [
+          7.955474053224087,
+          13.574402856191295,
+          13.789717147733876
+        ],
+        "target": [
+          -0.030881047248840332,
+          1.5381023931503295,
+          -0.04305565357208252
+        ],
+        "horizontalSpan": 9.78394925041219,
+        "verticalSpan": 14.299618135217816
+      },
+      "actor": {
+        "alone": {
+          "pixels": 167,
+          "bbox": [
+            182,
+            317,
+            10,
+            23
+          ]
+        },
+        "visible": {
+          "pixels": 167,
+          "bbox": [
+            182,
+            317,
+            10,
+            23
+          ]
+        },
+        "visibleFraction": 1,
+        "aabbHeightPx": 28.61885671579452
+      },
+      "home": {
+        "aabbHeightPx": 68.54352261224984
+      },
+      "scope": "static projection diagnosis; flat support y=.42; no back hill, navigation, terrain editing, application UI or saved owner fixture; asset choices explicitly follow prior diagram; actor faces +x toward bay",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "390-overview-30.png"
+    },
+    {
+      "width": 390,
+      "height": 570,
+      "mode": "overview",
+      "yaw": 60,
+      "elevation": 37,
+      "camera": {
+        "position": [
+          13.801891754057117,
+          13.574402856191295,
+          7.943299446900848
+        ],
+        "target": [
+          -0.030881047248840332,
+          1.5381023931503295,
+          -0.04305565357208252
+        ],
+        "horizontalSpan": 9.211594241328683,
+        "verticalSpan": 13.463099275788075
+      },
+      "actor": {
+        "alone": {
+          "pixels": 222,
+          "bbox": [
+            166,
+            315,
+            13,
+            23
+          ]
+        },
+        "visible": {
+          "pixels": 222,
+          "bbox": [
+            166,
+            315,
+            13,
+            23
+          ]
+        },
+        "visibleFraction": 1,
+        "aabbHeightPx": 29.612267859909426
+      },
+      "home": {
+        "aabbHeightPx": 72.07008389758415
+      },
+      "scope": "static projection diagnosis; flat support y=.42; no back hill, navigation, terrain editing, application UI or saved owner fixture; asset choices explicitly follow prior diagram; actor faces +x toward bay",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "390-overview-60.png"
+    },
+    {
+      "width": 390,
+      "height": 570,
+      "mode": "near",
+      "yaw": 0,
+      "elevation": 32,
+      "camera": {
+        "position": [
+          -0.3,
+          11.248385284664097,
+          17.51096192312852
+        ],
+        "target": [
+          -0.3,
+          0.65,
+          0.55
+        ],
+        "horizontalSpan": 3.1,
+        "verticalSpan": 4.530769230769231
+      },
+      "actor": {
+        "alone": {
+          "pixels": 1524,
+          "bbox": [
+            236,
+            249,
+            34,
+            74
+          ]
+        },
+        "visible": {
+          "pixels": 1524,
+          "bbox": [
+            236,
+            249,
+            34,
+            74
+          ]
+        },
+        "visibleFraction": 1,
+        "aabbHeightPx": 83.95334506074387
+      },
+      "home": {
+        "aabbHeightPx": 191.45236488558194
+      },
+      "scope": "static projection diagnosis; flat support y=.42; no back hill, navigation, terrain editing, application UI or saved owner fixture; asset choices explicitly follow prior diagram; actor faces +x toward bay",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "390-near-0.png"
+    },
+    {
+      "width": 390,
+      "height": 570,
+      "mode": "near",
+      "yaw": 30,
+      "elevation": 32,
+      "camera": {
+        "position": [
+          8.180480961564257,
+          11.248385284664097,
+          15.238623898049866
+        ],
+        "target": [
+          -0.3,
+          0.65,
+          0.55
+        ],
+        "horizontalSpan": 3.1,
+        "verticalSpan": 4.530769230769231
+      },
+      "actor": {
+        "alone": {
+          "pixels": 1663,
+          "bbox": [
+            220,
+            264,
+            34,
+            74
+          ]
+        },
+        "visible": {
+          "pixels": 1663,
+          "bbox": [
+            220,
+            264,
+            34,
+            74
+          ]
+        },
+        "visibleFraction": 1,
+        "aabbHeightPx": 89.82319957193644
+      },
+      "home": {
+        "aabbHeightPx": 212.25483374304355
+      },
+      "scope": "static projection diagnosis; flat support y=.42; no back hill, navigation, terrain editing, application UI or saved owner fixture; asset choices explicitly follow prior diagram; actor faces +x toward bay",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "390-near-30.png"
+    },
+    {
+      "width": 390,
+      "height": 570,
+      "mode": "near",
+      "yaw": 60,
+      "elevation": 32,
+      "camera": {
+        "position": [
+          14.388623898049863,
+          11.248385284664097,
+          9.030480961564262
+        ],
+        "target": [
+          -0.3,
+          0.65,
+          0.55
+        ],
+        "horizontalSpan": 3.1,
+        "verticalSpan": 4.530769230769231
+      },
+      "actor": {
+        "alone": {
+          "pixels": 1980,
+          "bbox": [
+            189,
+            275,
+            39,
+            70
+          ]
+        },
+        "visible": {
+          "pixels": 1980,
+          "bbox": [
+            189,
+            275,
+            39,
+            70
+          ]
+        },
+        "visibleFraction": 1,
+        "aabbHeightPx": 87.76977871136641
+      },
+      "home": {
+        "aabbHeightPx": 210.33868226948502
+      },
+      "scope": "static projection diagnosis; flat support y=.42; no back hill, navigation, terrain editing, application UI or saved owner fixture; asset choices explicitly follow prior diagram; actor faces +x toward bay",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "file": "390-near-60.png"
+    },
+    {
+      "width": 768,
+      "height": 780,
+      "mode": "overview",
+      "yaw": 0,
+      "elevation": 37,
+      "camera": {
+        "position": [
+          -0.030881047248840332,
+          13.574402856191295,
+          15.929654547373774
+        ],
+        "target": [
+          -0.030881047248840332,
+          1.5381023931503295,
+          -0.04305565357208252
+        ],
+        "horizontalSpan": 7.7347029590606695,
+        "verticalSpan": 7.855557692795992
+      },
+      "actor": {
+        "alone": {
+          "pixels": 935,
+          "bbox": [
+            390,
+            469,
+            27,
+            57
+          ]
+        },
+        "visible": {
+          "pixels": 935,
+          "bbox": [
+            390,
+            469,
+            27,
+            57
+          ]
+        },
+        "visibleFraction": 1,
+        "aabbHeightPx": 66.02716744081384
+      },
+      "home": {
+        "aabbHeightPx": 152.09345546953938
+      },
+      "scope": "static projection diagnosis; flat support y=.42; no back hill, navigation, terrain editing, application UI or saved owner fixture; asset choices explicitly follow prior diagram; actor faces +x toward bay",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "file": "768-overview-0.png"
+    },
+    {
+      "width": 768,
+      "height": 780,
+      "mode": "overview",
+      "yaw": 30,
+      "elevation": 37,
+      "camera": {
+        "position": [
+          7.955474053224087,
+          13.574402856191295,
+          13.789717147733876
+        ],
+        "target": [
+          -0.030881047248840332,
+          1.5381023931503295,
+          -0.04305565357208252
+        ],
+        "horizontalSpan": 9.78394925041219,
+        "verticalSpan": 9.936823457449881
+      },
+      "actor": {
+        "alone": {
+          "pixels": 638,
+          "bbox": [
+            358,
+            453,
+            21,
+            45
+          ]
+        },
+        "visible": {
+          "pixels": 638,
+          "bbox": [
+            358,
+            453,
+            21,
+            45
+          ]
+        },
+        "visibleFraction": 1,
+        "aabbHeightPx": 56.357133224949216
+      },
+      "home": {
+        "aabbHeightPx": 134.97801375950738
+      },
+      "scope": "static projection diagnosis; flat support y=.42; no back hill, navigation, terrain editing, application UI or saved owner fixture; asset choices explicitly follow prior diagram; actor faces +x toward bay",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "file": "768-overview-30.png"
+    },
+    {
+      "width": 768,
+      "height": 780,
+      "mode": "overview",
+      "yaw": 60,
+      "elevation": 37,
+      "camera": {
+        "position": [
+          13.801891754057117,
+          13.574402856191295,
+          7.943299446900848
+        ],
+        "target": [
+          -0.030881047248840332,
+          1.5381023931503295,
+          -0.04305565357208252
+        ],
+        "horizontalSpan": 9.211594241328683,
+        "verticalSpan": 9.355525401349443
+      },
+      "actor": {
+        "alone": {
+          "pixels": 844,
+          "bbox": [
+            326,
+            449,
+            26,
+            46
+          ]
+        },
+        "visible": {
+          "pixels": 844,
+          "bbox": [
+            326,
+            449,
+            26,
+            46
+          ]
+        },
+        "visibleFraction": 1,
+        "aabbHeightPx": 58.313389016437036
+      },
+      "home": {
+        "aabbHeightPx": 141.92262675216574
+      },
+      "scope": "static projection diagnosis; flat support y=.42; no back hill, navigation, terrain editing, application UI or saved owner fixture; asset choices explicitly follow prior diagram; actor faces +x toward bay",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "file": "768-overview-60.png"
+    },
+    {
+      "width": 768,
+      "height": 780,
+      "mode": "near",
+      "yaw": 0,
+      "elevation": 32,
+      "camera": {
+        "position": [
+          -0.3,
+          11.248385284664097,
+          17.51096192312852
+        ],
+        "target": [
+          -0.3,
+          0.65,
+          0.55
+        ],
+        "horizontalSpan": 3.1,
+        "verticalSpan": 3.1484375
+      },
+      "actor": {
+        "alone": {
+          "pixels": 5901,
+          "bbox": [
+            465,
+            319,
+            68,
+            145
+          ]
+        },
+        "visible": {
+          "pixels": 5901,
+          "bbox": [
+            465,
+            319,
+            68,
+            145
+          ]
+        },
+        "visibleFraction": 1,
+        "aabbHeightPx": 165.32351027346485
+      },
+      "home": {
+        "aabbHeightPx": 377.01388777468446
+      },
+      "scope": "static projection diagnosis; flat support y=.42; no back hill, navigation, terrain editing, application UI or saved owner fixture; asset choices explicitly follow prior diagram; actor faces +x toward bay",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "file": "768-near-0.png"
+    },
+    {
+      "width": 768,
+      "height": 780,
+      "mode": "near",
+      "yaw": 30,
+      "elevation": 32,
+      "camera": {
+        "position": [
+          8.180480961564257,
+          11.248385284664097,
+          15.238623898049866
+        ],
+        "target": [
+          -0.3,
+          0.65,
+          0.55
+        ],
+        "horizontalSpan": 3.1,
+        "verticalSpan": 3.1484375
+      },
+      "actor": {
+        "alone": {
+          "pixels": 6464,
+          "bbox": [
+            432,
+            348,
+            67,
+            145
+          ]
+        },
+        "visible": {
+          "pixels": 6464,
+          "bbox": [
+            432,
+            348,
+            67,
+            145
+          ]
+        },
+        "visibleFraction": 1,
+        "aabbHeightPx": 176.8826083878133
+      },
+      "home": {
+        "aabbHeightPx": 417.97874952476275
+      },
+      "scope": "static projection diagnosis; flat support y=.42; no back hill, navigation, terrain editing, application UI or saved owner fixture; asset choices explicitly follow prior diagram; actor faces +x toward bay",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "file": "768-near-30.png"
+    },
+    {
+      "width": 768,
+      "height": 780,
+      "mode": "near",
+      "yaw": 60,
+      "elevation": 32,
+      "camera": {
+        "position": [
+          14.388623898049863,
+          11.248385284664097,
+          9.030480961564262
+        ],
+        "target": [
+          -0.3,
+          0.65,
+          0.55
+        ],
+        "horizontalSpan": 3.1,
+        "verticalSpan": 3.1484375
+      },
+      "actor": {
+        "alone": {
+          "pixels": 7708,
+          "bbox": [
+            372,
+            370,
+            78,
+            139
+          ]
+        },
+        "visible": {
+          "pixels": 7708,
+          "bbox": [
+            372,
+            370,
+            78,
+            139
+          ]
+        },
+        "visibleFraction": 1,
+        "aabbHeightPx": 172.83894884699848
+      },
+      "home": {
+        "aabbHeightPx": 414.2054050845244
+      },
+      "scope": "static projection diagnosis; flat support y=.42; no back hill, navigation, terrain editing, application UI or saved owner fixture; asset choices explicitly follow prior diagram; actor faces +x toward bay",
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "file": "768-near-60.png"
+    }
+  ],
+  "errors": []
+}

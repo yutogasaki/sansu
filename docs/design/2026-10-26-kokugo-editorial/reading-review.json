@@ -1,0 +1,1376 @@
+{
+  "basis": "音訓割り振り表の表面不一致をAIで再読。不一致件数は誤読件数ではない。語全体の読みと単字音訓・配当学年を区別する。",
+  "source": "../2026-10-25-kokugo-kanji/sources.json",
+  "rows": [
+    {
+      "character": "花",
+      "grade": 1,
+      "word": "草花",
+      "reading": "くさばな",
+      "elementaryReadings": [
+        "カ",
+        "はな"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "玉",
+      "grade": 1,
+      "word": "毛玉",
+      "reading": "けだま",
+      "elementaryReadings": [
+        "ギョク",
+        "たま"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "空",
+      "grade": 1,
+      "word": "青空",
+      "reading": "あおぞら",
+      "elementaryReadings": [
+        "クウ",
+        "そら",
+        "あく",
+        "あける",
+        "から"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "口",
+      "grade": 1,
+      "word": "入口",
+      "reading": "いりぐち",
+      "elementaryReadings": [
+        "コウ",
+        "ク",
+        "くち"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "山",
+      "grade": 1,
+      "word": "火山",
+      "reading": "かざん",
+      "elementaryReadings": [
+        "サン",
+        "やま"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "出",
+      "grade": 1,
+      "word": "出口",
+      "reading": "でぐち",
+      "elementaryReadings": [
+        "シュツ",
+        "でる",
+        "だす"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "生",
+      "grade": 1,
+      "word": "生き物",
+      "reading": "いきもの",
+      "elementaryReadings": [
+        "セイ",
+        "ショウ",
+        "いきる",
+        "いかす",
+        "いける",
+        "うまれる",
+        "うむ",
+        "はえる",
+        "はやす",
+        "なま"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": true
+    },
+    {
+      "character": "川",
+      "grade": 1,
+      "word": "小川",
+      "reading": "おがわ",
+      "elementaryReadings": [
+        "かわ"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "早",
+      "grade": 1,
+      "word": "早起き",
+      "reading": "はやおき",
+      "elementaryReadings": [
+        "ソウ",
+        "はやい",
+        "はやまる",
+        "はやめる"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "入",
+      "grade": 1,
+      "word": "入口",
+      "reading": "いりぐち",
+      "elementaryReadings": [
+        "ニュウ",
+        "いる",
+        "いれる",
+        "はいる"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "本",
+      "grade": 1,
+      "word": "一本",
+      "reading": "いっぽん",
+      "elementaryReadings": [
+        "ホン",
+        "もと"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "林",
+      "grade": 1,
+      "word": "松林",
+      "reading": "まつばやし",
+      "elementaryReadings": [
+        "リン",
+        "はやし"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "雲",
+      "grade": 2,
+      "word": "雨雲",
+      "reading": "あまぐも",
+      "elementaryReadings": [
+        "ウン",
+        "くも"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "顔",
+      "grade": 2,
+      "word": "笑顔",
+      "reading": "えがお",
+      "elementaryReadings": [
+        "ガン",
+        "かお"
+      ],
+      "disposition": "熟字訓・慣用音・特殊な語全体の読みとして維持。単字の代表音訓とは別に問う",
+      "laterReading": false
+    },
+    {
+      "character": "兄",
+      "grade": 2,
+      "word": "お兄さん",
+      "reading": "おにいさん",
+      "elementaryReadings": [
+        "キョウ",
+        "あに"
+      ],
+      "disposition": "親族呼称の慣用の読みとして維持（兄・姉・父の字単独の代表読みとは別）",
+      "laterReading": false
+    },
+    {
+      "character": "今",
+      "grade": 2,
+      "word": "今朝",
+      "reading": "けさ",
+      "elementaryReadings": [
+        "コン",
+        "いま"
+      ],
+      "disposition": "熟字訓・慣用音・特殊な語全体の読みとして維持。単字の代表音訓とは別に問う",
+      "laterReading": false
+    },
+    {
+      "character": "姉",
+      "grade": 2,
+      "word": "姉妹",
+      "reading": "しまい",
+      "elementaryReadings": [
+        "あね"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "姉",
+      "grade": 2,
+      "word": "お姉さん",
+      "reading": "おねえさん",
+      "elementaryReadings": [
+        "あね"
+      ],
+      "disposition": "親族呼称の慣用の読みとして維持（兄・姉・父の字単独の代表読みとは別）",
+      "laterReading": false
+    },
+    {
+      "character": "寺",
+      "grade": 2,
+      "word": "山寺",
+      "reading": "やまでら",
+      "elementaryReadings": [
+        "ジ",
+        "てら"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "時",
+      "grade": 2,
+      "word": "時計",
+      "reading": "とけい",
+      "elementaryReadings": [
+        "ジ",
+        "とき"
+      ],
+      "disposition": "熟字訓・慣用音・特殊な語全体の読みとして維持。単字の代表音訓とは別に問う",
+      "laterReading": false
+    },
+    {
+      "character": "声",
+      "grade": 2,
+      "word": "大声",
+      "reading": "おおごえ",
+      "elementaryReadings": [
+        "セイ",
+        "こえ"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "刀",
+      "grade": 2,
+      "word": "小刀",
+      "reading": "こがたな",
+      "elementaryReadings": [
+        "トウ",
+        "かたな"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "買",
+      "grade": 2,
+      "word": "買い物",
+      "reading": "かいもの",
+      "elementaryReadings": [
+        "バイ",
+        "かう"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "父",
+      "grade": 2,
+      "word": "お父さん",
+      "reading": "おとうさん",
+      "elementaryReadings": [
+        "フ",
+        "ちち"
+      ],
+      "disposition": "親族呼称の慣用の読みとして維持（兄・姉・父の字単独の代表読みとは別）",
+      "laterReading": false
+    },
+    {
+      "character": "歩",
+      "grade": 2,
+      "word": "散歩",
+      "reading": "さんぽ",
+      "elementaryReadings": [
+        "ホ",
+        "あるく",
+        "あゆむ"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "方",
+      "grade": 2,
+      "word": "夕方",
+      "reading": "ゆうがた",
+      "elementaryReadings": [
+        "ホウ",
+        "かた"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "妹",
+      "grade": 2,
+      "word": "姉妹",
+      "reading": "しまい",
+      "elementaryReadings": [
+        "いもうと"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "苦",
+      "grade": 3,
+      "word": "苦手",
+      "reading": "にがて",
+      "elementaryReadings": [
+        "ク",
+        "くるしい",
+        "くるしむ",
+        "くるしめる",
+        "にがい",
+        "にがる"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "血",
+      "grade": 3,
+      "word": "鼻血",
+      "reading": "はなぢ",
+      "elementaryReadings": [
+        "ケツ",
+        "ち"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "皿",
+      "grade": 3,
+      "word": "小皿",
+      "reading": "こざら",
+      "elementaryReadings": [
+        "さら"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "事",
+      "grade": 3,
+      "word": "仕事",
+      "reading": "しごと",
+      "elementaryReadings": [
+        "ジ",
+        "こと"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "事",
+      "grade": 3,
+      "word": "物事",
+      "reading": "ものごと",
+      "elementaryReadings": [
+        "ジ",
+        "こと"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "持",
+      "grade": 3,
+      "word": "気持ち",
+      "reading": "きもち",
+      "elementaryReadings": [
+        "ジ",
+        "もつ"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "拾",
+      "grade": 3,
+      "word": "拾い物",
+      "reading": "ひろいもの",
+      "elementaryReadings": [
+        "ひろう"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "申",
+      "grade": 3,
+      "word": "申しこむ",
+      "reading": "もうしこむ",
+      "elementaryReadings": [
+        "もうす"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "波",
+      "grade": 3,
+      "word": "電波",
+      "reading": "でんぱ",
+      "elementaryReadings": [
+        "ハ",
+        "なみ"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "配",
+      "grade": 3,
+      "word": "心配",
+      "reading": "しんぱい",
+      "elementaryReadings": [
+        "ハイ",
+        "くばる"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "箱",
+      "grade": 3,
+      "word": "本箱",
+      "reading": "ほんばこ",
+      "elementaryReadings": [
+        "はこ"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "畑",
+      "grade": 3,
+      "word": "花畑",
+      "reading": "はなばたけ",
+      "elementaryReadings": [
+        "はた",
+        "はたけ"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "発",
+      "grade": 3,
+      "word": "出発",
+      "reading": "しゅっぱつ",
+      "elementaryReadings": [
+        "ハツ"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "部",
+      "grade": 3,
+      "word": "部屋",
+      "reading": "へや",
+      "elementaryReadings": [
+        "ブ"
+      ],
+      "disposition": "熟字訓・慣用音・特殊な語全体の読みとして維持。単字の代表音訓とは別に問う",
+      "laterReading": false
+    },
+    {
+      "character": "面",
+      "grade": 3,
+      "word": "面白い",
+      "reading": "おもしろい",
+      "elementaryReadings": [
+        "メン"
+      ],
+      "disposition": "熟字訓・慣用音・特殊な語全体の読みとして維持。単字の代表音訓とは別に問う",
+      "laterReading": true
+    },
+    {
+      "character": "印",
+      "grade": 4,
+      "word": "目印",
+      "reading": "めじるし",
+      "elementaryReadings": [
+        "イン",
+        "しるし"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "果",
+      "grade": 4,
+      "word": "果物",
+      "reading": "くだもの",
+      "elementaryReadings": [
+        "カ",
+        "はたす",
+        "はてる",
+        "はて"
+      ],
+      "disposition": "熟字訓・慣用音・特殊な語全体の読みとして維持。単字の代表音訓とは別に問う",
+      "laterReading": false
+    },
+    {
+      "character": "潟",
+      "grade": 4,
+      "word": "新潟",
+      "reading": "にいがた",
+      "elementaryReadings": [
+        "かた"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "潟",
+      "grade": 4,
+      "word": "干潟",
+      "reading": "ひがた",
+      "elementaryReadings": [
+        "かた"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "泣",
+      "grade": 4,
+      "word": "泣き声",
+      "reading": "なきごえ",
+      "elementaryReadings": [
+        "なく"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "競",
+      "grade": 4,
+      "word": "競う",
+      "reading": "きそう",
+      "elementaryReadings": [
+        "キョウ",
+        "ケイ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "景",
+      "grade": 4,
+      "word": "景色",
+      "reading": "けしき",
+      "elementaryReadings": [
+        "ケイ"
+      ],
+      "disposition": "熟字訓・慣用音・特殊な語全体の読みとして維持。単字の代表音訓とは別に問う",
+      "laterReading": false
+    },
+    {
+      "character": "建",
+      "grade": 4,
+      "word": "建物",
+      "reading": "たてもの",
+      "elementaryReadings": [
+        "ケン",
+        "たてる",
+        "たつ"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "好",
+      "grade": 4,
+      "word": "好き",
+      "reading": "すき",
+      "elementaryReadings": [
+        "コウ",
+        "このむ",
+        "すく"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "崎",
+      "grade": 4,
+      "word": "宮崎",
+      "reading": "みやざき",
+      "elementaryReadings": [
+        "さき"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "昨",
+      "grade": 4,
+      "word": "昨日",
+      "reading": "きのう",
+      "elementaryReadings": [
+        "サク"
+      ],
+      "disposition": "熟字訓・慣用音・特殊な語全体の読みとして維持。単字の代表音訓とは別に問う",
+      "laterReading": false
+    },
+    {
+      "character": "氏",
+      "grade": 4,
+      "word": "氏",
+      "reading": "うじ",
+      "elementaryReadings": [
+        "シ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "試",
+      "grade": 4,
+      "word": "試す",
+      "reading": "ためす",
+      "elementaryReadings": [
+        "シ",
+        "こころみる"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "笑",
+      "grade": 4,
+      "word": "笑顔",
+      "reading": "えがお",
+      "elementaryReadings": [
+        "わらう"
+      ],
+      "disposition": "熟字訓・慣用音・特殊な語全体の読みとして維持。単字の代表音訓とは別に問う",
+      "laterReading": false
+    },
+    {
+      "character": "焼",
+      "grade": 4,
+      "word": "夕焼け",
+      "reading": "ゆうやけ",
+      "elementaryReadings": [
+        "やく",
+        "やける"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "浅",
+      "grade": 4,
+      "word": "浅瀬",
+      "reading": "あさせ",
+      "elementaryReadings": [
+        "あさい"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "達",
+      "grade": 4,
+      "word": "友達",
+      "reading": "ともだち",
+      "elementaryReadings": [
+        "タツ"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "兆",
+      "grade": 4,
+      "word": "兆し",
+      "reading": "きざし",
+      "elementaryReadings": [
+        "チョウ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "敗",
+      "grade": 4,
+      "word": "失敗",
+      "reading": "しっぱい",
+      "elementaryReadings": [
+        "ハイ",
+        "やぶれる"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "博",
+      "grade": 4,
+      "word": "博士",
+      "reading": "はかせ",
+      "elementaryReadings": [
+        "ハク"
+      ],
+      "disposition": "熟字訓・慣用音・特殊な語全体の読みとして維持。単字の代表音訓とは別に問う",
+      "laterReading": false
+    },
+    {
+      "character": "票",
+      "grade": 4,
+      "word": "伝票",
+      "reading": "でんぴょう",
+      "elementaryReadings": [
+        "ヒョウ"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "法",
+      "grade": 4,
+      "word": "文法",
+      "reading": "ぶんぽう",
+      "elementaryReadings": [
+        "ホウ"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "勇",
+      "grade": 4,
+      "word": "勇ましい",
+      "reading": "いさましい",
+      "elementaryReadings": [
+        "ユウ",
+        "いさむ"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "要",
+      "grade": 4,
+      "word": "要る",
+      "reading": "いる",
+      "elementaryReadings": [
+        "ヨウ",
+        "かなめ"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": true
+    },
+    {
+      "character": "例",
+      "grade": 4,
+      "word": "例えば",
+      "reading": "たとえば",
+      "elementaryReadings": [
+        "レイ",
+        "たとえる"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "型",
+      "grade": 5,
+      "word": "大型",
+      "reading": "おおがた",
+      "elementaryReadings": [
+        "ケイ",
+        "かた"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "厚",
+      "grade": 5,
+      "word": "厚紙",
+      "reading": "あつがみ",
+      "elementaryReadings": [
+        "あつい"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "財",
+      "grade": 5,
+      "word": "財布",
+      "reading": "さいふ",
+      "elementaryReadings": [
+        "ザイ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "似",
+      "grade": 5,
+      "word": "類似",
+      "reading": "るいじ",
+      "elementaryReadings": [
+        "にる"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "勢",
+      "grade": 5,
+      "word": "大勢",
+      "reading": "おおぜい",
+      "elementaryReadings": [
+        "セイ",
+        "いきおい"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "素",
+      "grade": 5,
+      "word": "素直",
+      "reading": "すなお",
+      "elementaryReadings": [
+        "ソ"
+      ],
+      "disposition": "熟字訓・慣用音・特殊な語全体の読みとして維持。単字の代表音訓とは別に問う",
+      "laterReading": true
+    },
+    {
+      "character": "貸",
+      "grade": 5,
+      "word": "貸出",
+      "reading": "かしだし",
+      "elementaryReadings": [
+        "かす"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "版",
+      "grade": 5,
+      "word": "出版",
+      "reading": "しゅっぱん",
+      "elementaryReadings": [
+        "ハン"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "貧",
+      "grade": 5,
+      "word": "貧血",
+      "reading": "ひんけつ",
+      "elementaryReadings": [
+        "ビン",
+        "まずしい"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "迷",
+      "grade": 5,
+      "word": "迷路",
+      "reading": "めいろ",
+      "elementaryReadings": [
+        "まよう"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "我",
+      "grade": 6,
+      "word": "我が家",
+      "reading": "わがや",
+      "elementaryReadings": [
+        "われ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "灰",
+      "grade": 6,
+      "word": "石灰",
+      "reading": "せっかい",
+      "elementaryReadings": [
+        "はい"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "革",
+      "grade": 6,
+      "word": "革",
+      "reading": "かわ",
+      "elementaryReadings": [
+        "カク"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "机",
+      "grade": 6,
+      "word": "机上",
+      "reading": "きじょう",
+      "elementaryReadings": [
+        "つくえ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "皇",
+      "grade": 6,
+      "word": "天皇",
+      "reading": "てんのう",
+      "elementaryReadings": [
+        "コウ",
+        "オウ"
+      ],
+      "disposition": "熟字訓・慣用音・特殊な語全体の読みとして維持。単字の代表音訓とは別に問う",
+      "laterReading": false
+    },
+    {
+      "character": "鋼",
+      "grade": 6,
+      "word": "鋼",
+      "reading": "はがね",
+      "elementaryReadings": [
+        "コウ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "座",
+      "grade": 6,
+      "word": "座る",
+      "reading": "すわる",
+      "elementaryReadings": [
+        "ザ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "済",
+      "grade": 6,
+      "word": "経済",
+      "reading": "けいざい",
+      "elementaryReadings": [
+        "サイ",
+        "すむ",
+        "すます"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "若",
+      "grade": 6,
+      "word": "若者",
+      "reading": "わかもの",
+      "elementaryReadings": [
+        "わかい"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "就",
+      "grade": 6,
+      "word": "就く",
+      "reading": "つく",
+      "elementaryReadings": [
+        "シュウ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "除",
+      "grade": 6,
+      "word": "掃除",
+      "reading": "そうじ",
+      "elementaryReadings": [
+        "ジョ",
+        "のぞく"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "承",
+      "grade": 6,
+      "word": "承る",
+      "reading": "うけたまわる",
+      "elementaryReadings": [
+        "ショウ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "蒸",
+      "grade": 6,
+      "word": "蒸す",
+      "reading": "むす",
+      "elementaryReadings": [
+        "ジョウ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "仁",
+      "grade": 6,
+      "word": "仁王",
+      "reading": "におう",
+      "elementaryReadings": [
+        "ジン"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "推",
+      "grade": 6,
+      "word": "推す",
+      "reading": "おす",
+      "elementaryReadings": [
+        "スイ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "盛",
+      "grade": 6,
+      "word": "盛り付け",
+      "reading": "もりつけ",
+      "elementaryReadings": [
+        "もる"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "誠",
+      "grade": 6,
+      "word": "誠",
+      "reading": "まこと",
+      "elementaryReadings": [
+        "セイ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "染",
+      "grade": 6,
+      "word": "染色",
+      "reading": "せんしょく",
+      "elementaryReadings": [
+        "そめる",
+        "そまる"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "銭",
+      "grade": 6,
+      "word": "小銭",
+      "reading": "こぜに",
+      "elementaryReadings": [
+        "セン"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "奏",
+      "grade": 6,
+      "word": "奏でる",
+      "reading": "かなでる",
+      "elementaryReadings": [
+        "ソウ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "装",
+      "grade": 6,
+      "word": "装う",
+      "reading": "よそおう",
+      "elementaryReadings": [
+        "ソウ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "操",
+      "grade": 6,
+      "word": "操る",
+      "reading": "あやつる",
+      "elementaryReadings": [
+        "ソウ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "蔵",
+      "grade": 6,
+      "word": "蔵",
+      "reading": "くら",
+      "elementaryReadings": [
+        "ゾウ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "担",
+      "grade": 6,
+      "word": "担ぐ",
+      "reading": "かつぐ",
+      "elementaryReadings": [
+        "タン"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "著",
+      "grade": 6,
+      "word": "著しい",
+      "reading": "いちじるしい",
+      "elementaryReadings": [
+        "チョ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "認",
+      "grade": 6,
+      "word": "確認",
+      "reading": "かくにん",
+      "elementaryReadings": [
+        "みとめる"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "納",
+      "grade": 6,
+      "word": "納得",
+      "reading": "なっとく",
+      "elementaryReadings": [
+        "ノウ",
+        "おさめる",
+        "おさまる"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "否",
+      "grade": 6,
+      "word": "安否",
+      "reading": "あんぴ",
+      "elementaryReadings": [
+        "ヒ"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "秘",
+      "grade": 6,
+      "word": "神秘",
+      "reading": "しんぴ",
+      "elementaryReadings": [
+        "ヒ"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "俵",
+      "grade": 6,
+      "word": "米俵",
+      "reading": "こめだわら",
+      "elementaryReadings": [
+        "ヒョウ",
+        "たわら"
+      ],
+      "disposition": "連濁・半濁音化・促音化または語に固有の結合形。語全体の読みとして維持",
+      "laterReading": false
+    },
+    {
+      "character": "並",
+      "grade": 6,
+      "word": "並行",
+      "reading": "へいこう",
+      "elementaryReadings": [
+        "なみ",
+        "ならべる",
+        "ならぶ",
+        "ならびに"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "片",
+      "grade": 6,
+      "word": "破片",
+      "reading": "はへん",
+      "elementaryReadings": [
+        "かた"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "暮",
+      "grade": 6,
+      "word": "夕暮れ",
+      "reading": "ゆうぐれ",
+      "elementaryReadings": [
+        "くれる",
+        "くらす"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "亡",
+      "grade": 6,
+      "word": "亡くなる",
+      "reading": "なくなる",
+      "elementaryReadings": [
+        "ボウ"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "忘",
+      "grade": 6,
+      "word": "忘れ物",
+      "reading": "わすれもの",
+      "elementaryReadings": [
+        "わすれる"
+      ],
+      "disposition": "送り仮名・活用・語の結合形の違い。見出し音訓の文字列との単純一致を要求しない",
+      "laterReading": false
+    },
+    {
+      "character": "優",
+      "grade": 6,
+      "word": "優しい",
+      "reading": "やさしい",
+      "elementaryReadings": [
+        "ユウ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "欲",
+      "grade": 6,
+      "word": "欲しい",
+      "reading": "ほしい",
+      "elementaryReadings": [
+        "ヨク"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "卵",
+      "grade": 6,
+      "word": "卵白",
+      "reading": "らんぱく",
+      "elementaryReadings": [
+        "たまご"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "臨",
+      "grade": 6,
+      "word": "臨む",
+      "reading": "のぞむ",
+      "elementaryReadings": [
+        "リン"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    },
+    {
+      "character": "朗",
+      "grade": 6,
+      "word": "朗らか",
+      "reading": "ほがらか",
+      "elementaryReadings": [
+        "ロウ"
+      ],
+      "disposition": "中高段階の音訓を含む語。語全体の読みとして維持し、配当学年の全音訓習得とは扱わない",
+      "laterReading": true
+    }
+  ]
+}

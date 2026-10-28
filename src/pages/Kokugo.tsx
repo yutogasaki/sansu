@@ -1,3 +1,7 @@
+import { isSafeIslandReturnHref } from '../domain/island/navigation';
+import { Header } from '../components/Header';
+import { Button } from '../components/ui/Button';
+import { StudySubjectSwitch } from '../components/progress/StudySubjectSwitch';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -24,6 +28,8 @@ export default function Kokugo() {
             pending: await db.kokugoPlans.where('[profileId+status]').equals([profile.id, 'pending']).first() };
     });
     const profileId = data?.profile.id;
+    const easy = data?.profile.uiTextMode === 'easy';
+    const t = (simple: string, normal: string) => easy ? simple : normal;
     const lease = useLearningSessionLease(profileId);
     const [plan, setPlan] = useState<KokugoPlan | null>(null), [band, setBand] = useState(1);
     const [view, setView] = useState<'catalog' | 'learn' | 'activity' | 'read'>('catalog');
@@ -83,38 +89,34 @@ export default function Kokugo() {
             }
         });
     };
-    const choose = async (unitId: string, target?: string) => {
+    const choose = async (unitId: string, target?: string, selectedBand = band) => {
         if (!profileId || lease !== 'ready') return;
         await run(async () => {
-            await chooseKokugo(profileId, unitId, band, true, db, { focusTarget: target });
-            setUnitId(unitId); setFocusTarget(target);
+            await chooseKokugo(profileId, unitId, selectedBand, true, db, { focusTarget: target });
+            setBand(selectedBand); setUnitId(unitId); setFocusTarget(target);
             if (itemsForUnit(unitId, target)[0]?.form === 'activity') { setView('activity'); return; }
             setPlan(await reserveKokugo(profileId, unitId)); setView('learn');
         });
     };
     const state = location.state as { returnTo?: string; islandParent?: { href?: string } } | null;
     const parent = state?.returnTo ?? state?.islandParent?.href;
-    const returnTo = parent?.startsWith('/') && !parent.startsWith('//') ? parent : '/island';
+    const returnTo = isSafeIslandReturnHref(parent) ? parent : '/island';
     const returnLabel = returnTo.split('?')[0] === '/island' ? 'しまへ 戻る' : 'もどる';
-    const locked = busy || (data !== null && lease !== 'ready') || activitySaving;
-    const legacy = async () => {
-        if (!profileId || locked) return;
-        await run(async () => {
-            await chooseKokugo(profileId, data?.pending?.unitId ?? data?.course?.unitId ?? 'K01', band, false);
-            navigate('/island?learn=1', { replace: true });
-        });
-    };
-    return <div className="kokugo-screen" data-kokugo-version="kokugo-v1">
-        <header className="kokugo-header"><button disabled={locked} onClick={() => navigate(returnTo, { replace: true })}>{returnLabel}</button>
-            <span>国語</span>{view !== 'catalog' && <button disabled={locked} onClick={() => { setView('catalog'); setError(''); }}>コースへ</button>}</header>
+    const exitLocked = busy || activitySaving;
+    const locked = exitLocked || (data !== null && lease !== 'ready');
+    return <div className="kokugo-screen island-shell" data-kokugo-version="kokugo-v1">
+        <div className="kokugo-header"><Header title={t('こくご', '国語')} showBack backLabel={returnLabel} backDisabled={exitLocked}
+            onBack={() => navigate(returnTo, { replace: true })}
+            rightAction={<StudySubjectSwitch disabled={exitLocked} easy={easy} returnTo={returnTo} />} /></div>
         <main className="kokugo-content">
             {data === null ? <section><h1>プロフィールを えらんでね</h1><button onClick={() => navigate('/onboarding', { replace: true })}>はじめの画面へ</button></section> : !data ? <p role="status">国語を よみこんでいるよ…</p> : <>
                 {lease === 'loading' && <p role="status">つづきを たしかめているよ…</p>}
                 {lease === 'blocked' && <p role="alert">ほかの画面で 学習中だよ。そちらを 閉じてから、ここを 開きなおしてね。</p>}
-                {error && <div className="kokugo-error" role="alert">{error}<button onClick={() => { void run(async () => { await chooseKokugo(data.profile.id, data.pending?.unitId ?? data.course?.unitId ?? 'K01', band); if (plan) setPlan(await db.kokugoPlans.get(plan.id) ?? null); }); }}>保存した つづきを 読む</button></div>}
-                {view === 'catalog' && <><KokugoCatalog profileId={data.profile.id} band={band} onBand={setBand} busy={locked} pending={data.pending}
+                {error && <div className="kokugo-error" role="alert">{error}<button disabled={locked} onClick={() => { void run(async () => { await chooseKokugo(data.profile.id, data.pending?.unitId ?? data.course?.unitId ?? 'K01', band); if (plan) setPlan(await db.kokugoPlans.get(plan.id) ?? null); }); }}>保存した つづきを 読む</button></div>}
+                {view !== 'catalog' && <Button variant="secondary" size="sm" disabled={locked} onClick={() => { setView('catalog'); setError(''); }}>{t('ないようを えらぶ', 'コースへ')}</Button>}
+                {view === 'catalog' && <><KokugoCatalog profileId={data.profile.id} easy={easy} course={data.course} onSaving={setActivitySaving} onContinue={() => { if (data.course) void choose(data.course.unitId, data.course.focusTarget, data.course.band); }} band={band} onBand={setBand} busy={locked} pending={data.pending}
                     onResume={() => { setPlan(data.pending ?? null); setView('learn'); }} onChoose={(unit, target) => void choose(unit, target)} onRead={() => setView('read')} />
-                    <KokugoProgressCard profileId={profileId} /></>}
+                    <KokugoProgressCard profileId={profileId} easy={easy} /></>}
                 {view === 'learn' && plan && (plan.status === 'completed' ? <section className="kokugo-finished"><p className="kokugo-eyebrow">ひとくぎり</p><h1>ここまで できたね</h1>
                     <p>自分でできた問題と、たしかめた問題を きろくしたよ。</p><p>つづきは、また 好きなときに。</p>
                     <button className="kokugo-primary" disabled={locked} onClick={() => setView('catalog')}>内容を えらぶ</button>
@@ -124,8 +126,8 @@ export default function Kokugo() {
                         <button className="kokugo-primary" disabled={locked} onClick={() => void action('intro')}>{plan.slots.length}もん やってみる</button></section>
                         : <><p className="kokugo-review-note">{plan.repeatedPractice ? 'いまは 同じ例で れんしゅうするよ。新しい例での 確認は またあとで。' : ''}</p><KokugoQuestion key={`${plan.id}:${plan.cursor}`} plan={plan} busy={locked} soundEnabled={data.profile.soundEnabled} onAction={action} onDraft={saveDraft} /></>)}
                 {view === 'activity' && <KokugoActivities key={`${profileId}:${unitId}:${focusTarget}`} focusTarget={focusTarget} profileId={data.profile.id} unitId={unitId} busy={busy || lease !== 'ready'} onError={onError} onSaving={setActivitySaving} />}
-                {view === 'read' && <KokugoReading profileId={data.profile.id} busy={locked} onError={onError} />}
-                <footer className="kokugo-footer"><button disabled={locked} onClick={() => void legacy()}>算数・英語を まなぶ</button><small>とちゅうの問題は そのまま のこるよ。</small></footer>
+                {view === 'read' && <KokugoReading profileId={data.profile.id} busy={locked} onError={onError} onSaving={setActivitySaving} />}
+
             </>}
         </main>
     </div>;

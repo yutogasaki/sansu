@@ -1,0 +1,4690 @@
+{
+  "at": "2026-10-25T12:59:20.600209+00:00",
+  "status": "PASS (split execution)",
+  "files": 668,
+  "tests": 5630,
+  "method": "retain passed files from first fixed candidate; rerun all failed files with complete test fixtures and all affected Kokugo files on final candidate; retain every initial failure",
+  "initialFailures": {
+    "missingTestFixtures": 11,
+    "existingIntegrationTimeout": 1
+  },
+  "applicationSourceChangedForFixtureFix": false,
+  "results": [
+    {
+      "file": "src/pwa.test.ts",
+      "status": "passed",
+      "tests": 21,
+      "passed": 21,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/pwaUpdateRecovery.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/pwaUpdateUtils.test.ts",
+      "status": "passed",
+      "tests": 44,
+      "passed": 44,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/asset-policy.test.mjs",
+      "status": "passed",
+      "tests": 19,
+      "passed": 19,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/build-env.test.mjs",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/compare-growing-fixtures.test.mjs",
+      "status": "passed",
+      "tests": 25,
+      "passed": 25,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/current-ui-entry-guard.test.mjs",
+      "status": "passed",
+      "tests": 23,
+      "passed": 23,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/e2e-growing-places.test.mjs",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/growing-fixture-data.test.mjs",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/growing-place-fixtures.test.mjs",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/island-e2e-helpers.test.mjs",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/island-expression-audio-focused-audit.test.mjs",
+      "status": "passed",
+      "tests": 12,
+      "passed": 12,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/island-expression-visual-matrix-audit.test.mjs",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/island-qualified-audit.test.mjs",
+      "status": "passed",
+      "tests": 12,
+      "passed": 12,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/island-reward-goal-audit.test.mjs",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/learning-unit-report.test.mjs",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/life-replay-version.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/place-qa.test.mjs",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/portal-entry.test.mjs",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "portal-unit-3"
+    },
+    {
+      "file": "tools/portal-storage.test.mjs",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/snapshot-growing.test.mjs",
+      "status": "passed",
+      "tests": 12,
+      "passed": 12,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/verification-plan.test.mjs",
+      "status": "passed",
+      "tests": 13,
+      "passed": 13,
+      "sourceRun": "rerun"
+    },
+    {
+      "file": "tools/verify-growing.test.mjs",
+      "status": "passed",
+      "tests": 17,
+      "passed": 17,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/finishCoverage.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/finishRecovery.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/finishRecoveryPractice.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/finishTest.test.ts",
+      "status": "passed",
+      "tests": 15,
+      "passed": 15,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/finishTestRepository.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/learningRepository.test.ts",
+      "status": "passed",
+      "tests": 15,
+      "passed": 15,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/levelProgression.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/logic.test.ts",
+      "status": "passed",
+      "tests": 26,
+      "passed": 26,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/Footer.test.tsx",
+      "status": "passed",
+      "tests": 12,
+      "passed": 12,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/LaunchRoute.test.tsx",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/utils/audio.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/utils/learningDay.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/utils/pdfGenerator.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/utils/theme.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/utils/tts.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/hooks/blockGenerators.progression.test.ts",
+      "status": "passed",
+      "tests": 13,
+      "passed": 13,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/hooks/blockGenerators.test.ts",
+      "status": "passed",
+      "tests": 36,
+      "passed": 36,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/hooks/learningProgression.integration.test.ts",
+      "status": "passed",
+      "tests": 12,
+      "passed": 12,
+      "sourceRun": "rerun"
+    },
+    {
+      "file": "src/hooks/useLearningSessionLease.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/hooks/useStudySession.logic.test.ts",
+      "status": "passed",
+      "tests": 38,
+      "passed": 38,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/pages/Explore.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/pages/Island.startup.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/pages/OnboardingNameStep.test.tsx",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/pages/StatsCloseAction.test.tsx",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/asset-pipeline/run_batch.test.mjs",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "tools/expression-audio/audio-analysis.test.mjs",
+      "status": "passed",
+      "tests": 53,
+      "passed": 53,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/algorithms/srs.test.ts",
+      "status": "passed",
+      "tests": 60,
+      "passed": 60,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/battle/engine.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/benchmark/coldOpenFixedTen.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/challenge/engine.test.ts",
+      "status": "passed",
+      "tests": 17,
+      "passed": 17,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/challenge/repository.test.ts",
+      "status": "passed",
+      "tests": 14,
+      "passed": 14,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/english/examples.test.ts",
+      "status": "passed",
+      "tests": 23,
+      "passed": 23,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/english/generator.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/english/listening.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/english/planner.test.ts",
+      "status": "passed",
+      "tests": 14,
+      "passed": 14,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/englishFoundation/catalog.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/englishFoundation/repository.test.ts",
+      "status": "passed",
+      "tests": 17,
+      "passed": 17,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredCoveWorld.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredDistrictKit.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredDistrictWorld.test.ts",
+      "status": "passed",
+      "tests": 21,
+      "passed": 21,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredGrowth.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredGrowthTerrain.test.ts",
+      "status": "passed",
+      "tests": 15,
+      "passed": 15,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredPlacementSupport.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredPlaces.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredShoulderWorld.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWaterBridge.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWaterCarving.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWaterCarvingParity.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWaterContour.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWaterRim.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWaterWorld.test.ts",
+      "status": "passed",
+      "tests": 19,
+      "passed": 19,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWorldAccess.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWorldAccessParity.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/authoredWorldFrame.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/balance.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/bridge.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/economy.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/editablePlaceCapability.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/editableTerrainWorld.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/expansion.integration.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/experience.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/flowers.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/foundationReceipts.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/friends.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/growth.repository.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/growth.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/growthBalance.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/guidance.repository.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/guidance.test.ts",
+      "status": "passed",
+      "tests": 14,
+      "passed": 14,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/landscape.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/lifeMigration.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/lifeMigrationClient.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/nativeWorldSource.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "rerun"
+    },
+    {
+      "file": "src/domain/growingIsland/openingPreparation.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/pacing.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/placeAdditions.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/placeArchitecture.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/placeGoals.repository.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/placeMemories.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/placePlay.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/placeRelations.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/placeTerrain.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/places.test.ts",
+      "status": "passed",
+      "tests": 30,
+      "passed": 30,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/repository.test.ts",
+      "status": "passed",
+      "tests": 13,
+      "passed": 13,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/room.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/roomReceiptWindow.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/rules.test.ts",
+      "status": "passed",
+      "tests": 24,
+      "passed": 24,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/syncConcurrency.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/syncUpdateProtection.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/terrainEditing.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/terrainOccupiedPlace.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/terrainPersistence.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/voyages.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/wonder.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/worldDefinition.test.ts",
+      "status": "passed",
+      "tests": 20,
+      "passed": 20,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/growingIsland/worldFloorIndex.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "rerun"
+    },
+    {
+      "file": "src/domain/growingIsland/worldWaterSupport.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/appearance.test.ts",
+      "status": "passed",
+      "tests": 12,
+      "passed": 12,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/catalogExpansion.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/customization.test.ts",
+      "status": "passed",
+      "tests": 20,
+      "passed": 20,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/customizationAppearanceRepository.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/customizationRepository.test.ts",
+      "status": "passed",
+      "tests": 16,
+      "passed": 16,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/expansion.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/experience.test.ts",
+      "status": "passed",
+      "tests": 19,
+      "passed": 19,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/experienceAppearance.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/experienceRepository.test.ts",
+      "status": "passed",
+      "tests": 12,
+      "passed": 12,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/expression.test.ts",
+      "status": "passed",
+      "tests": 16,
+      "passed": 16,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/expressionRepository.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/feature.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/furniture.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/furnitureRepository.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/growth.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/growthRepository.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/homeJourney.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/island.test.ts",
+      "status": "passed",
+      "tests": 19,
+      "passed": 19,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/landGeometry.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/learningChecks.test.ts",
+      "status": "passed",
+      "tests": 14,
+      "passed": 14,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/learningContinuity.test.ts",
+      "status": "passed",
+      "tests": 13,
+      "passed": 13,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/learningEntry.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/learningKeepsakes.test.ts",
+      "status": "passed",
+      "tests": 32,
+      "passed": 32,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/learningKeepsakesRepository.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/learningObservation.test.ts",
+      "status": "passed",
+      "tests": 19,
+      "passed": 19,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/learningObservationCommit.test.ts",
+      "status": "passed",
+      "tests": 28,
+      "passed": 28,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/learningParty.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/learningPartyRepository.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/learningSession.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/livingSettings.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/navigation.test.ts",
+      "status": "passed",
+      "tests": 15,
+      "passed": 15,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/pacing.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/photos.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/photosRepository.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/progressiveSupport.test.ts",
+      "status": "passed",
+      "tests": 13,
+      "passed": 13,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/rewardGoal.test.ts",
+      "status": "passed",
+      "tests": 13,
+      "passed": 13,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/rewardGoalRepository.test.ts",
+      "status": "passed",
+      "tests": 14,
+      "passed": 14,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/sceneStyle.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/sharedMemories.test.ts",
+      "status": "passed",
+      "tests": 14,
+      "passed": 14,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/sharedMemoriesRepository.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/studyRoute.test.ts",
+      "status": "passed",
+      "tests": 16,
+      "passed": 16,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/subjectPreference.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/subjectSelection.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/tutorialState.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/visitors.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/workshop.test.ts",
+      "status": "passed",
+      "tests": 14,
+      "passed": 14,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/workshopLayout.test.ts",
+      "status": "passed",
+      "tests": 17,
+      "passed": 17,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/island/workshopRepository.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/activities.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/cadence.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/cadenceMigration.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/capabilities.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/commandPerformance.test.ts",
+      "status": "passed",
+      "tests": 20,
+      "passed": 20,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/creditPerformance.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/decorations.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/diagonalMigration.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/discovery.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/discoveryJournal.test.ts",
+      "status": "passed",
+      "tests": 14,
+      "passed": 14,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/discoveryRecall.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/economyMigration.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/economyRepository.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/economyRules.test.ts",
+      "status": "passed",
+      "tests": 12,
+      "passed": 12,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/extendedGatherings.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/facilities.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/facilityTrips.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/foodLoop.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/footstepMagic.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/groupEncounters.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/growthIntegration.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/heroVisit.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/heroVisitMigration.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/isolation.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/landRules.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/observationVisit.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/picnicTable.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/placementClearance.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/placementMigration.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/placementUndo.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/plantsWater.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/playTourSimulation.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/playTours.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/production.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/purchases.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/readingEncounter.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/relationObservation.test.ts",
+      "status": "passed",
+      "tests": 13,
+      "passed": 13,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/relationSelection.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/replaySnapshot.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/repository.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/residency.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/roaming.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/sandbox.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/savedHeroStyle.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/shadowMagic.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/simulation.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/soilMoisture.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/terminalFacts.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/tourMigration.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/visitPerformance.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/walkingSpace.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/waterBench.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/waterChannels.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/waterMagic.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/islandLife/windArch.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/kokugo/kokugo.test.ts",
+      "status": "passed",
+      "tests": 15,
+      "passed": 15,
+      "sourceRun": "rerun"
+    },
+    {
+      "file": "src/domain/kokugo/onboarding.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "rerun"
+    },
+    {
+      "file": "src/domain/kokugo/rewards.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "rerun"
+    },
+    {
+      "file": "src/domain/learning/attemptPersistence.test.ts",
+      "status": "passed",
+      "tests": 24,
+      "passed": 24,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/learning/context.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/learning/englishCatalog.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/learning/evaluationContacts.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/learning/evidence.test.ts",
+      "status": "passed",
+      "tests": 16,
+      "passed": 16,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/learning/independentProgress.integration.test.ts",
+      "status": "passed",
+      "tests": 18,
+      "passed": 18,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/learning/independentProgress.test.ts",
+      "status": "passed",
+      "tests": 17,
+      "passed": 17,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/learning/mathCatalog.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/learning/pilotRepository.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/learning/progressView.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/learning/reviewBudget.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/learning/reviewPolicy.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/learning/runtimeUnitPractice.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/learning/unitPlanning.integration.test.ts",
+      "status": "passed",
+      "tests": 14,
+      "passed": 14,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/learning/unitPractice.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/additionProgress.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/answerCompletion.test.ts",
+      "status": "passed",
+      "tests": 13,
+      "passed": 13,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/comparisonProgress.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/contentIntegrity.test.ts",
+      "status": "passed",
+      "tests": 21,
+      "passed": 21,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/deterministicGeneration.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/followups.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/foundations.test.ts",
+      "status": "passed",
+      "tests": 14,
+      "passed": 14,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/fractionInput.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/hissanEngine.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/hissanTypes.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/numberEntry.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/numberSenseProgress.test.ts",
+      "status": "passed",
+      "tests": 32,
+      "passed": 32,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/placeValueFoundation.test.tsx",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/planner.test.ts",
+      "status": "passed",
+      "tests": 35,
+      "passed": 35,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/profileProgress.test.ts",
+      "status": "passed",
+      "tests": 67,
+      "passed": 67,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/sequenceProgress.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/studyPresentation.test.ts",
+      "status": "passed",
+      "tests": 15,
+      "passed": 15,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/subtractionProgress.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/writtenArithmetic.test.ts",
+      "status": "passed",
+      "tests": 38,
+      "passed": 38,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/writtenInput.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/writtenPlaceValue.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/natureTown/acceptanceGrowthRandom.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/natureTown/acceptanceSimulation.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/natureTown/growthJourney.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/natureTown/learning.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/natureTown/repository.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/natureTown/routing.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/natureTown/simulation.test.ts",
+      "status": "passed",
+      "tests": 14,
+      "passed": 14,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/park/englishPlanning.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/park/learningContinuation.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/park/park.test.ts",
+      "status": "passed",
+      "tests": 140,
+      "passed": 140,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/park/writtenArithmeticIntegration.test.ts",
+      "status": "passed",
+      "tests": 25,
+      "passed": 25,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/stats/activity.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/stats/aggregation.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/stats/repository.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/test/paperTest.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/test/paperTestRepository.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/test/printability.test.ts",
+      "status": "passed",
+      "tests": 22,
+      "passed": 22,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/test/testSet.test.ts",
+      "status": "passed",
+      "tests": 34,
+      "passed": 34,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/test/trigger.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/user/firstPlay.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/user/onboarding.test.ts",
+      "status": "passed",
+      "tests": 20,
+      "passed": 20,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/user/repository.test.ts",
+      "status": "passed",
+      "tests": 14,
+      "passed": 14,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/user/resumeProgression.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/battle/BattleSetup.test.tsx",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/challenge/useChallengeSession.test.tsx",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/charts/SkillRadarChart.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/charts/WeeklyTrendChart.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/domain/FractionStrips.test.tsx",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/domain/LearningAnswerForm.defer.test.tsx",
+      "status": "passed",
+      "tests": 35,
+      "passed": 35,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/domain/NumberFieldsLayout.test.tsx",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/domain/PaperTestScoreModal.test.tsx",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/domain/PrintableTestPreview.test.tsx",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/domain/TenKey.compact.test.tsx",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/domain/WrittenArithmeticGrid.test.tsx",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/domain/answerCompletion.test.tsx",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/domain/answerConfirmGuidance.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/AuthoredEncounterArt.test.tsx",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/DiscoveryPageArt.test.tsx",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/DiscoveryReveal.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/ExploreHud.test.tsx",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/ExplorePathChoice.test.tsx",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/ExploreProblemPanel.test.tsx",
+      "status": "passed",
+      "tests": 16,
+      "passed": 16,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/FireflyFlowerEncounterArt.test.tsx",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/MakimodonEncounterArt.test.tsx",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/MakimodonResearchArt.test.tsx",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/PaintedEncounterLineage.test.tsx",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/PokkoBaseArt.test.tsx",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/PokkoVisualLineage.test.tsx",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/ResearchBookStage.test.tsx",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/ReturnSummary.test.tsx",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/RootPullDiscoveryReveal.test.tsx",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/RootPullOpeningArt.test.tsx",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/exploreAnswerInput.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/makimodonPresentation.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/rapidTrailPresentation.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/rootPullPresentation.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/explore/snapRootPresentation.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/dev/devStudySelection.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/finish/FinishChallenge.test.tsx",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/gate/ArithmeticGateAnswerField.test.tsx",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/gate/arithmeticGate.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/home/homeMagicEnergy.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/ikimono/IkimonoArtwork.test.tsx",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/ikimono/NameModal.test.tsx",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/ikimono/fuwafuwaAlbumCopy.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/ikimono/fuwafuwaDailyConversation.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/ikimono/fuwafuwaMilestones.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/ikimono/fuwafuwaSpeech.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/ikimono/hitokoto.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/ikimono/ikimonoMotion.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/ikimono/lifecycle.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/ikimono/sceneText.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandAlbum.test.tsx",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandAnswerFeedback.test.tsx",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandAnswerForm.test.tsx",
+      "status": "passed",
+      "tests": 38,
+      "passed": 38,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandCustomization.test.tsx",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandDirectActions.test.tsx",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandExperiencePanel.test.tsx",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandExpression.test.tsx",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandExpressionFlag.test.tsx",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandFurniturePlacement.test.tsx",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandGrowth.test.tsx",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandHomeActions.test.tsx",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandLearningKeepsakes.test.tsx",
+      "status": "passed",
+      "tests": 15,
+      "passed": 15,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandLearningSupport.test.tsx",
+      "status": "passed",
+      "tests": 18,
+      "passed": 18,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandMilestone.test.tsx",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandPhotos.test.tsx",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandProfileSwitcher.test.tsx",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandProsePrompt.test.tsx",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandRewardGoal.test.tsx",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandRewards.test.tsx",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/IslandWelcome.test.tsx",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/foundationAudio.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandAlbumMemory.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandAlbumPresentation.test.tsx",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandAmbienceAudio.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandCustomizationPreview.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandCustomizationRequest.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandDirectTargets.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandDiscoveryGuide.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandDistrictView.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandExpansionPreview.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandExperienceRequest.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandFurnitureTrial.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandGrowthPreview.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandPhotoCapture.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandPlayScroll.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandSessionStageBindings.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandStarReceiptEligibility.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandWorkshopAudio.test.ts",
+      "status": "passed",
+      "tests": 12,
+      "passed": 12,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandWorkshopQueue.test.ts",
+      "status": "passed",
+      "tests": 20,
+      "passed": 20,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/islandWorkshopRequest.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/learningFeedback.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/learningGuidance.test.ts",
+      "status": "passed",
+      "tests": 13,
+      "passed": 13,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/learningMusic.test.ts",
+      "status": "passed",
+      "tests": 15,
+      "passed": 15,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/learningMusicGesture.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/learningShow.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/useIslandCustomization.test.ts",
+      "status": "passed",
+      "tests": 27,
+      "passed": 27,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/useIslandDiscoveries.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/useIslandExperience.test.ts",
+      "status": "passed",
+      "tests": 16,
+      "passed": 16,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/useIslandExpression.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/useIslandFurniture.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/useIslandLearningKeepsakes.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/useIslandLearningObservation.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/useIslandMilestoneNotice.test.ts",
+      "status": "passed",
+      "tests": 15,
+      "passed": 15,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/useIslandPhotos.test.ts",
+      "status": "passed",
+      "tests": 15,
+      "passed": 15,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/useIslandRewardGoal.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/useIslandSessionPlacement.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/useIslandSharedMemories.test.ts",
+      "status": "passed",
+      "tests": 13,
+      "passed": 13,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/visualLearningGuidance.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/progress/FinishPreparation.test.tsx",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/progress/LearningProgressCue.test.tsx",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/ui/Button.test.tsx",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/ui/SegmentedControl.test.tsx",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/ui/modalFocus.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/ui/modalLayerManager.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/pages/parents/parentAttemptLabel.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/pages/parents/parentReviewCopy.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/attemptIdentity.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/discoveryPage.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/encounterPhase.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/encounters.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/fixedTenBenchmark.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/g0ChainShot.test.ts",
+      "status": "passed",
+      "tests": 12,
+      "passed": 12,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/g0MechanicMetrics.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/g0NumberSuika.test.ts",
+      "status": "passed",
+      "tests": 32,
+      "passed": 32,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/g0NumberVessel.test.ts",
+      "status": "passed",
+      "tests": 13,
+      "passed": 13,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/g0Whitebox.test.ts",
+      "status": "passed",
+      "tests": 13,
+      "passed": 13,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/generator.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/learningPlanner.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/learningPlannerSegment.test.ts",
+      "status": "passed",
+      "tests": 15,
+      "passed": 15,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/learningSegment.test.ts",
+      "status": "passed",
+      "tests": 20,
+      "passed": 20,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/learningSegmentPersistence.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/observation.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/openingExperience.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/persistenceRepository.test.ts",
+      "status": "passed",
+      "tests": 38,
+      "passed": 38,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/problemAdapter.test.ts",
+      "status": "passed",
+      "tests": 38,
+      "passed": 38,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/rapidLoop.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/rapidLoopEligibility.test.ts",
+      "status": "passed",
+      "tests": 27,
+      "passed": 27,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/reducer.test.ts",
+      "status": "passed",
+      "tests": 29,
+      "passed": 29,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/replay.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/rewardPresentation.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/rewards.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/runCheckpoint.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/runStructure.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/suikaQuantity.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/explore/__tests__/wagerRun.test.ts",
+      "status": "passed",
+      "tests": 19,
+      "passed": 19,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/kokugo/kanji/kanji.test.ts",
+      "status": "passed",
+      "tests": 16,
+      "passed": 16,
+      "sourceRun": "rerun"
+    },
+    {
+      "file": "src/domain/math/generators/addition.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/generators/advanced.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/generators/counting.test.ts",
+      "status": "passed",
+      "tests": 51,
+      "passed": 51,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/generators/division.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/generators/fraction.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/domain/math/generators/subtraction.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/dev/g0/G0WhiteboxStage.test.tsx",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/dev/suika/NumberSuikaStage.test.tsx",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/dev/g0v2/G0MechanicRemixStage.test.tsx",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/GrowingGuideArt.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/GrowingGuideBook.test.tsx",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/GrowingHomeTools.test.tsx",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/GrowingIslandMenu.test.tsx",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/GrowingPlaceBook.test.tsx",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/GrowingPlacementControls.test.tsx",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/GrowingStory.test.tsx",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/GrowingTray.test.tsx",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/actorScale.test.ts",
+      "status": "passed",
+      "tests": 23,
+      "passed": 23,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/authoredCoveLife.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/authoredFlowerLife.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/authoredFlowerObstructions.test.ts",
+      "status": "passed",
+      "tests": 15,
+      "passed": 15,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/authoredGroveLife.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/authoredGrowthTerrainLife.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/authoredPlaceSurfaces.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/authoredSceneLayout.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/authoredWholeArt.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/catalogPictures.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/concertReceipt.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/curvedLandscape.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/editableGroundDetails.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/editableTerrainLife.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/growingCamera.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/growingCopy.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/growingDropPlay.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/growingExpansion.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/growingFingerTargets.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/growingHitTarget.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/growingLife.test.ts",
+      "status": "passed",
+      "tests": 15,
+      "passed": 15,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/growingLifeContinuity.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/growingLifeScale.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/growingSceneInputs.test.ts",
+      "status": "passed",
+      "tests": 25,
+      "passed": 25,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/growingShaderWarmup.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/growthRendering.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/homeGeometry.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/homeSurfaceGeometry.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/houseGuests.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/letters.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/lifeChoices.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/menuMiniatures.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/notes.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/objectLayer.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/placeArchitectureGeometry.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/placeExperienceLife.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/placeFlowerGeometry.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/placeGallery.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/placeGeometry.test.ts",
+      "status": "passed",
+      "tests": 25,
+      "passed": 25,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/placeLeafGeometry.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/placePaths.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/placePathsSupport.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/placePathsSync.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/placePondGeometry.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/placeRootRoomGeometry.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/placeShellGeometry.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/placeSpringGeometry.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/placeTouchEffects.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/placementName.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/roomSaveSession.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/seedHitPriority.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/sharedGardenLife.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/storedCatalog.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/treeSilhouettes.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/useGrowingIsland.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "rerun"
+    },
+    {
+      "file": "src/components/island/growing/useGrowingRoom.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/walkers.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/worldFloorGeometry.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/worldScene.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/learningActor/motion.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/canopyAtmosphereStudy.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/canopyGroundStudy.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/canopyMaterialStudy.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/canopySculptStudy.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "rerun"
+    },
+    {
+      "file": "src/components/island/life/canopyShoreStudy.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/decorationGeometry.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/encounterObservation.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/encounterVisual.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/extendedGround.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/facilities.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/facilityRelations.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/facilityTrips.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/foodScene.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/footstepPresentation.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/gatheringCollector.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/gatheringVisibility.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/growthCue.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/growthStatus.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/homeProps.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/identity.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/landscape.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/lifePersistenceMessage.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/lifeUpdateClient.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/liveRelations.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/observationCue.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/picnicMotion.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/placement.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/placementWait.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/plantMagic.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/plantsWaterGeometry.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/presentationClock.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/readingBookPose.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/readingObservation.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/relationGaze.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/relationObservation.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/residentMotion.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/residentShadow.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/residentWalk.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/rewardCue.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/roamingPresentation.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/runtimeAssetLod.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/runtimeAssetSlots.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/runtimeAssets.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/sandbox.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/sceneBudget.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/sceneReuse.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/startupTiming.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/stateProjection.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/useLiveDiscovery.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/waterMagic.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/windArch.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/life/worldShadowPresentation.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/adaptiveIslandQuality.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/appearanceFraming.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/appearanceRendering.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/cameraPanFraming.test.ts",
+      "status": "passed",
+      "tests": 12,
+      "passed": 12,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/connectedScenery.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/connectedTerrain.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/cosmeticScenery.test.ts",
+      "status": "passed",
+      "tests": 19,
+      "passed": 19,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/createIslandRenderer.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/expressionEnvironment.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/expressionFootTrails.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/expressionResidentVisuals.test.ts",
+      "status": "passed",
+      "tests": 12,
+      "passed": 12,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/expressionResidentWalk.test.ts",
+      "status": "passed",
+      "tests": 16,
+      "passed": 16,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/flagFraming.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/furniture.test.ts",
+      "status": "passed",
+      "tests": 17,
+      "passed": 17,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/furnitureClearance.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/furnitureClearanceController.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/geometry.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/grassSurface.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/growthNavigation.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/growthVisuals.test.ts",
+      "status": "passed",
+      "tests": 21,
+      "passed": 21,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/homeInteriorCamera.test.ts",
+      "status": "passed",
+      "tests": 23,
+      "passed": 23,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/homePresentation.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/homeViewFraming.test.ts",
+      "status": "passed",
+      "tests": 16,
+      "passed": 16,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/homeWalk.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/islandCameraAnchor.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/islandCameraControls.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/learningKeepsakeScenery.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/learningReaction.test.ts",
+      "status": "passed",
+      "tests": 12,
+      "passed": 12,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/livingActivities.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/livingRuntime.test.ts",
+      "status": "passed",
+      "tests": 18,
+      "passed": 18,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/natureObservationFrame.test.ts",
+      "status": "passed",
+      "tests": 22,
+      "passed": 22,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/natureVisuals.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/navigation.test.ts",
+      "status": "passed",
+      "tests": 19,
+      "passed": 19,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/optionalFurnitureController.test.ts",
+      "status": "passed",
+      "tests": 37,
+      "passed": 37,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/optionalFurnitureFraming.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/optionalFurnitureRuntime.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/optionalFurnitureTrial.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/personalScenery.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/placementOcclusion.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/placementPreview.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/residentFabric.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/residentInteraction.test.ts",
+      "status": "passed",
+      "tests": 21,
+      "passed": 21,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/residentInterest.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/residentOutfit.test.ts",
+      "status": "passed",
+      "tests": 13,
+      "passed": 13,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/residentPortraitFraming.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/residentRig.test.ts",
+      "status": "passed",
+      "tests": 38,
+      "passed": 38,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/residentRoaming.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/residentTail.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/roofSurface.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/runtimeExpressionEnvironment.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/runtimeExpressionResidents.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/runtimeFurnitureClearance.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/runtimePhotography.test.ts",
+      "status": "passed",
+      "tests": 13,
+      "passed": 13,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/runtimeResize.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/sceneFraming.test.ts",
+      "status": "passed",
+      "tests": 15,
+      "passed": 15,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/sharedActivities.test.ts",
+      "status": "passed",
+      "tests": 23,
+      "passed": 23,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/sharedActivityContinuity.test.ts",
+      "status": "passed",
+      "tests": 12,
+      "passed": 12,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/sharedActivityController.test.ts",
+      "status": "passed",
+      "tests": 20,
+      "passed": 20,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/sharedActivityFraming.test.ts",
+      "status": "passed",
+      "tests": 26,
+      "passed": 26,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/sharedActivityOcclusion.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/sharedActivityVisuals.test.ts",
+      "status": "passed",
+      "tests": 12,
+      "passed": 12,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/sharedCarryRoute.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/sharedDisplayFrameBoundary.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/sharedDisplayFraming.test.ts",
+      "status": "passed",
+      "tests": 11,
+      "passed": 11,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/sharedDisplayScene.test.ts",
+      "status": "passed",
+      "tests": 13,
+      "passed": 13,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/sharedJobActor.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/sharedJobController.test.ts",
+      "status": "passed",
+      "tests": 23,
+      "passed": 23,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/sharedJobFraming.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/sharedRendererCache.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/terrainProfile.test.ts",
+      "status": "passed",
+      "tests": 9,
+      "passed": 9,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/treeCanopyGeometry.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/usualPlaceRuntime.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/waterSurface.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/westNavigation.test.ts",
+      "status": "passed",
+      "tests": 10,
+      "passed": 10,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/westScenery.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/workshopGround.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/workshopPresentation.test.ts",
+      "status": "passed",
+      "tests": 14,
+      "passed": 14,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/workshopResidentFraming.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/workshopScene.test.ts",
+      "status": "passed",
+      "tests": 22,
+      "passed": 22,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/worldPalette.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/homeJourney/contacts.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/homeJourney/delivery.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/homeJourney/growthReveal.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/homeJourney/interior.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/homeJourney/scene.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/tutorial/useIslandTutorial.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/native/authoredCoreGrowthIntegration.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/native/authoredCoveIntegration.test.ts",
+      "status": "passed",
+      "tests": 7,
+      "passed": 7,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/native/authoredGrowingGround.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "rerun"
+    },
+    {
+      "file": "src/components/island/growing/native/authoredGrowthTerrainIntegration.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/native/authoredShoulderIntegration.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/native/authoredWaterIntegration.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/native/authoredWholeIntegration.test.ts",
+      "status": "passed",
+      "tests": 5,
+      "passed": 5,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/native/decodeNativeGrowingKit.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/native/nativeAuthoredCompactGrove.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "rerun"
+    },
+    {
+      "file": "src/components/island/growing/native/nativeAuthoredCove.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "rerun"
+    },
+    {
+      "file": "src/components/island/growing/native/nativeAuthoredFlower.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/native/nativeAuthoredFlowerFoliage.test.ts",
+      "status": "passed",
+      "tests": 8,
+      "passed": 8,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/native/nativeAuthoredForest.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/growing/native/nativeAuthoredForestDelivery.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "rerun"
+    },
+    {
+      "file": "src/components/island/growing/native/nativeAuthoredGallery.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "rerun"
+    },
+    {
+      "file": "src/components/island/growing/native/nativeAuthoredShoulder.test.ts",
+      "status": "passed",
+      "tests": 6,
+      "passed": 6,
+      "sourceRun": "rerun"
+    },
+    {
+      "file": "src/components/island/growing/native/nativeOwnedGeometry.test.ts",
+      "status": "passed",
+      "tests": 16,
+      "passed": 16,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/garden/cottageProportions.test.ts",
+      "status": "passed",
+      "tests": 1,
+      "passed": 1,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/garden/garden.test.ts",
+      "status": "passed",
+      "tests": 4,
+      "passed": 4,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/garden/gardenTime.test.ts",
+      "status": "passed",
+      "tests": 12,
+      "passed": 12,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/garden/indexedBatch.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/garden/staticBatch.test.ts",
+      "status": "passed",
+      "tests": 2,
+      "passed": 2,
+      "sourceRun": "suite-1"
+    },
+    {
+      "file": "src/components/island/three/garden/staticRaycast.test.ts",
+      "status": "passed",
+      "tests": 3,
+      "passed": 3,
+      "sourceRun": "suite-1"
+    }
+  ]
+}

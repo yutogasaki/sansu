@@ -1,0 +1,30 @@
+{
+  "retrievedAt": "2026-10-25",
+  "sources": [
+    {
+      "url": "https://www.mext.go.jp/content/1413522_001.pdf",
+      "sha256": "8417add84ba4b78f865142d3ba89051d2ddb469ae872828a97e95ad5474239f9"
+    },
+    {
+      "url": "https://www.mext.go.jp/a_menu/shotou/new-cs/__icsFiles/afieldfile/2017/05/15/1385768.pdf",
+      "sha256": "0bc189982a50122f1e35dd6a751bfdff0ec5a0ad67e99eda916d012f859a5ae4"
+    }
+  ],
+  "allocationSource": "2017-03 音訓割り振り表の漢字欄に付く配当学年。付表の地名読みを別用例として採用。",
+  "counts": [
+    80,
+    160,
+    200,
+    202,
+    193,
+    191
+  ],
+  "extraction": "pdfplumber by page, three columns, elementary school ○ only; no OCR guessing",
+  "prefectureOnlyIsolatedReadingsOmitted": [
+    "媛",
+    "岐",
+    "滋",
+    "阪"
+  ],
+  "distractorReadingScope": "全校段階の常用音訓。出題の代表音訓・表示は小学校段階のまま、他段階の正しい読みも誤答候補から除く。"
+}

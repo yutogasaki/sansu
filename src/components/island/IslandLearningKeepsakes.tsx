@@ -125,7 +125,7 @@ export function IslandLearningKeepsakes({ island, controls, disabled, onClose, o
             <h3 className="island-house-menu-group">あそびかた・チャレンジ</h3>
             <nav className="island-house-destinations" aria-label="あそびかた">
                 {onGrowingGuide && <button className="island-secondary" data-keepsake-action="growing-guide" disabled={disabled} onClick={() => choose(onGrowingGuide)}>
-                    <IslandToyIcon kind="book" /><strong>しまの あそびかた</strong><small>ためすことと、できたこと</small></button>}
+                    <IslandToyIcon kind="book" /><strong>しまの あそびかた</strong></button>}
             </nav>
             {challenge}
             <footer className="island-panel-footer">

@@ -1,0 +1,31 @@
+{
+  "status": "PASS_LIMITED_UI",
+  "at": "2026-10-23T00:59:19.887Z",
+  "build": "place-outline-v3",
+  "viewport": {
+    "width": 640,
+    "height": 774
+  },
+  "target": "http://127.0.0.1:5501/?terrainTrial=H&groundTrial=material&trialEvidence=1&trialScene=shore&growthTrial=inherit&rampTrial=linear&baseTrial=stable&compileTrial=single&queryTrial=frozen&memoTrial=samples&edgeTrial=memo#/onboarding",
+  "ownershipAndOriginalTerrainUnchanged": true,
+  "undoRedoShapeAndWorldExact": true,
+  "fullRemovalRestoresOriginalWorld": true,
+  "afterRedoVisibleUses": [
+    {
+      "actor": "pokomoko",
+      "target": "starter-bench",
+      "at": "2026-10-23T00:57:17.341Z"
+    },
+    {
+      "actor": "v2",
+      "target": "starter-flower:garden",
+      "at": "2026-10-23T00:57:20.808Z"
+    }
+  ],
+  "limitations": [
+    "Memory-only onboarding instance of the real GrowingIsland renderer",
+    "Existing bench/garden uses, not entry into the new high place",
+    "Default centre 5,5 only in UI journey; no arbitrary-location acceptance",
+    "No normal save, offline, child or full-world acceptance"
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "status": "PASS_FRESH_SESSION_VISIBLE_USES_POST_UNDO_VISIBLE_USES_UNCONFIRMED",
+  "checkedAt": "2026-10-22T22:36:11.186215+00:00",
+  "sourceSHA256": {
+    "81-H-final-restored-state.json": "884a5e14591a5d1f0b341c88fa8ba6328361ba6d0a64fbefda9dc97c6d7d2aa7",
+    "81-H-final-step2-live.json": "3f0f17990a432e5a394a9ffbf7323269c561ce35e23aafb92d957c0b6c4f4eb2",
+    "82-H-final-restored-state.json": "ea4b84a62c461d87e9ce36ad77af107dde05c6c00d53e24a7c3e6878afc21f66",
+    "82-H-final-restored-live.json": "3f0f17990a432e5a394a9ffbf7323269c561ce35e23aafb92d957c0b6c4f4eb2",
+    "82-H-final-restored-world.json": "202c0e269b8b2d8d187345bff5ab6b5869a0ef936fc4494496940e5f6b69de3a",
+    "85-H-final-new-session-state.json": "c394a36c3e722c009c60e2c3966d5710fb8027d392374cdf9311e933617e6b7a",
+    "85-H-final-new-session-live.json": "543f238955e91731caca582830612a934fd1844045ee5c8b56252084c0fd26ed",
+    "85-H-final-new-session-app.json": "b969a04381fcc4b1eb85785091a455d64f93f2378463f3f54da11211711304a2",
+    "85-H-final-new-session-world.json": "ae77a43ce1102c6dfa40f7fe96682fb92fc203f25ae2ac3860bc61860eba2a42",
+    "81-H-final-app-dom.json": "b969a04381fcc4b1eb85785091a455d64f93f2378463f3f54da11211711304a2"
+  },
+  "checkerSHA256": "4a96125a352a5fa8e9f2bf36d82a375b15d5492c387ab42d419ec6c83b0084bd",
+  "postUndo": {
+    "restoredCoreAndTerrainUnchanged": true,
+    "historyCountBefore": 33,
+    "historyCountAfter": 35,
+    "newDomainAcceptedFacts": [
+      {
+        "actorId": "v2",
+        "targetId": "starter-flower:garden",
+        "at": 1792707850973,
+        "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",1,6],[\"starter-flower\",2,5]],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":1,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":1,\"z\":6}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":5}}]]",
+        "atUTC": "2026-10-22T22:24:10.973000+00:00"
+      },
+      {
+        "actorId": "pokomoko",
+        "targetId": "starter-bench",
+        "at": 1792707851125,
+        "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",1,6],[\"starter-flower\",2,5]],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":1,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":1,\"z\":6}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":5}}]]",
+        "atUTC": "2026-10-22T22:24:11.125000+00:00"
+      }
+    ],
+    "newFreshVisibleEvents": 0,
+    "sameLiveCaptureExactly": true,
+    "cause": "Unknown. Existing UI rejection/retry and observer exclusion of retries can produce this mismatch; no retry trace was captured."
+  },
+  "newSession85": {
+    "sessionChanged": true,
+    "build": {
+      "class": "app-container",
+      "data-build-revision": "place-method-comparison-v17",
+      "data-build-version": "place-method-comparison-v17:5b6010bc-bffc-4422-81d0-dbe64f42da87",
+      "data-configured-delivery-id": "snap-root-v1",
+      "data-delivery-id": "snap-root-v1",
+      "data-island-feature-enabled": "true",
+      "data-nature-town-feature-enabled": "false",
+      "data-ui-style-candidate": "whole-app-atelier-v1",
+      "data-visual-lineage-id": "pokko-field-v1"
+    },
+    "sameCoreAndRawTerrainAs82": true,
+    "fullTerrainHistoryEqualTo82": false,
+    "newSessionUndoCount": 64,
+    "newSessionRedoCount": 0,
+    "worldDOMDifferencesFrom82": [
+      "data-terrain-selection"
+    ],
+    "geometryRevisionAndCameraUnchanged": true,
+    "verifiedFreshVisibleUses": [
+      {
+        "actorId": "pokomoko",
+        "targetId": "starter-bench",
+        "observedAt": "2026-10-22T22:33:31.511Z",
+        "afterPageStartMs": 7145,
+        "delivery": "fresh-life-receipt",
+        "allVisibleAcceptanceFlagsTrue": true,
+        "worldAndPlaceRevisionMatch": true
+      },
+      {
+        "actorId": "v2",
+        "targetId": "starter-bench",
+        "observedAt": "2026-10-22T22:33:44.930Z",
+        "afterPageStartMs": 20564,
+        "delivery": "fresh-life-receipt",
+        "allVisibleAcceptanceFlagsTrue": true,
+        "worldAndPlaceRevisionMatch": true
+      },
+      {
+        "actorId": "pokomoko",
+        "targetId": "starter-flower:garden",
+        "observedAt": "2026-10-22T22:33:55.880Z",
+        "afterPageStartMs": 31514,
+        "delivery": "fresh-life-receipt",
+        "allVisibleAcceptanceFlagsTrue": true,
+        "worldAndPlaceRevisionMatch": true
+      },
+      {
+        "actorId": "v2",
+        "targetId": "starter-flower:garden",
+        "observedAt": "2026-10-22T22:34:06.263Z",
+        "afterPageStartMs": 41897,
+        "delivery": "fresh-life-receipt",
+        "allVisibleAcceptanceFlagsTrue": true,
+        "worldAndPlaceRevisionMatch": true
+      }
+    ],
+    "inputMethod": "Operator reports fresh ordinary navigation to memory-only shore; no terrain edit or actor destination command. Capture-time hint close/panel open was later than all four events."
+  },
+  "limitations": [
+    "Two new history facts corroborate domain acceptance, not an observed fresh visible action at that exact time.",
+    "85 proves the final candidate can produce four visible actor/target uses on fresh startup, not post-Undo continuity in81/82.",
+    "A fresh memory-only scene reload resets history from fixture; it is not persistence proof.",
+    "No runtime code or original captures changed."
+  ]
+}

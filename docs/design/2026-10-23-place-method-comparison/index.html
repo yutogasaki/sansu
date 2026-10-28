@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>編集して、使えて、続く島 — 制作方式の実比較</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;color:#25313d;background:#f7f8fa;line-height:1.8;font-size:16px;color-scheme:light}
+    *{box-sizing:border-box}[hidden]{display:none!important}body{margin:0}main{max-width:1040px;margin:auto;padding:40px 24px 72px}h1,h2,h3,p{margin:0 0 16px}h1{font-size:clamp(26px,5vw,42px);line-height:1.4;letter-spacing:-.025em}h2{font-size:24px;line-height:1.5}h3{font-size:18px}section{margin-top:48px;border-top:1px solid #dbe0e6;padding-top:28px}a{color:#265b9a;text-underline-offset:3px}button,select{font:inherit}button{cursor:pointer;border:1px solid #bac5d1;background:white;color:inherit;padding:8px 14px;border-radius:7px;line-height:1.4}button:hover{background:#f0f4fa}button[aria-pressed=true]{background:#e5edf9;border-color:#7f9fc8;color:#153e73}button:focus-visible,a:focus-visible{outline:3px solid #86ace0;outline-offset:3px}.eyebrow,.muted{color:#586879}.eyebrow{font-size:13px;letter-spacing:.06em}.lead{font-size:19px;max-width:800px}.notice{border-left:4px solid #4877ac;padding:12px 18px;background:#edf2f9;margin:22px 0}.notice.reject{border-color:#a14a47;background:#f7eeee}.small{font-size:13px}.tag{display:inline-block;border:1px solid #cbd3dd;padding:2px 8px;border-radius:4px;font-size:12px;white-space:nowrap}.tag.reject{color:#8e3434;border-color:#d6abaa;background:#fff5f4}.links{display:flex;gap:10px 22px;flex-wrap:wrap;font-size:14px}.status{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0 24px}.goal{max-width:780px}.criteria{padding-left:22px;margin:14px 0}.criteria li{padding:3px 0}.table-scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}th,td{padding:12px 10px;border-bottom:1px solid #dbe0e6;text-align:left;vertical-align:top}th{background:#eef1f5;font-weight:600}td:first-child{white-space:nowrap;font-weight:650}.compare{margin:28px 0 36px;background:#fff;border:1px solid #dce2e9;border-radius:10px;padding:22px}.compare-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}.compare-head h3{margin-bottom:6px}.controls{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.choice-controls{display:flex;gap:8px;flex-wrap:wrap}.panes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}.panes.single{grid-template-columns:minmax(0,1fr)}figure{margin:0;min-width:0}figure[hidden]{display:none}.image-link{display:block;width:fit-content;margin:0 auto;background:#f3f5f7;line-height:0}.phone-image{display:block;width:100%;max-width:390px;height:auto}.figure-title{font-weight:650;margin-bottom:9px}.figure-title span{margin-left:8px}figcaption{max-width:390px;margin:12px auto 0;font-size:14px}.comparison-note{font-size:13px;color:#586879;margin:16px 0 0}.findings{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:22px}.findings p{font-size:14px}.reference{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:24px;align-items:start}.reference img{display:block;width:100%;height:auto}.reference p{font-size:14px}.evidence-strip{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;margin:22px 0}.evidence-strip img{display:block;width:100%;max-width:300px;margin:auto}.pending{padding:18px;border:1px dashed #aebbc9;border-radius:8px;background:#f3f6fa}.pending p:last-child{margin-bottom:0}footer{border-top:1px solid #dbe0e6;margin-top:44px;padding-top:20px;color:#586879;font-size:13px}dialog{border:1px solid #aebbc9;border-radius:10px;padding:16px;max-width:min(96vw,1280px);max-height:94vh;background:#fff;color:inherit}dialog::backdrop{background:#172333b8}.dialog-bar{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:10px}.dialog-bar p{font-size:14px;margin:0}.dialog-image{display:block;max-width:100%;height:auto;margin:auto;max-height:77vh;object-fit:contain}.dialog-original{margin:10px 0 0;text-align:center;font-size:14px}noscript p{padding:12px;background:#fff4e0}
+    @media(max-width:620px){main{padding:24px 16px 48px}section{margin-top:34px;padding-top:22px}h2{font-size:21px}.lead{font-size:17px}.compare{padding:15px;margin:22px 0}.panes{gap:12px}.figure-title{font-size:14px}.figure-title span{margin-left:0;display:table;margin-top:4px}figcaption{font-size:13px}.findings,.reference{grid-template-columns:1fr;gap:12px}.evidence-strip{gap:12px}.controls button{padding:8px 10px;font-size:14px}td,th{padding:9px 7px}.comparison-note{font-size:12px}.dialog-bar{align-items:flex-start}.dialog-bar button{white-space:nowrap}}
+    .panes{grid-template-columns:repeat(var(--pane-count,2),minmax(0,1fr))}.panes.single{grid-template-columns:minmax(0,1fr)}
+    @media print{body{background:#fff}main{max-width:none;padding:12px}.controls,dialog{display:none}.compare{break-inside:avoid}.phone-image{max-height:500px;width:auto;max-width:100%}a{color:inherit}section{margin-top:26px}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">SANSU / 3時間検証の記録 / 2026-10-23</p>
+    <h1>編集して、使えて、<br>続く島へ。</h1>
+    <div class="status"><span class="tag reject" id="run-status">目標未達・製品未採用</span><span class="small muted">04:56 JST 開始 ／ 07:51 JST 試行終了 ／ 約3時間でいったん停止</span></div>
+    <p class="lead"><strong>編集して住人が使える庭と湾は作れました。美しい島を自在に、滑らかに編集する目標には届いていません。</strong></p>
+    <ul class="criteria">
+      <li><strong>仕組み：</strong>通常の島で配置・利用・保存再開を確認。96区画の湾は保存しない診断です。</li>
+      <li><strong>美術：</strong>大きな側壁と穴が残り、参考の自然な場所の構成に未達です。</li>
+      <li><strong>操作：</strong>処理の重複を減らしましたが、最終試験版でも初回編集時に約0.4秒の画面更新の空きが残りました。</li>
+    </ul>
+    <p class="small muted">性能短縮の大半は、比較実装が試験設定を大量に読み直す負担を、起動時の一度へ移した効果です。製品そのものを1.7→0.4秒へ改善した報告ではありません。今回はローカル試験のみで、src/・public/は変更していません。</p>
+    <p><strong>次の一手：</strong>上面の輪郭と入口を持つ「場所」を、一つの編集単位にする仮説。同じ所有物で高い庭と低い入り江を作り分けられるかを試します。<a href="#interaction">未実装の提案と判定条件</a></p>
+    <p><a href="http://127.0.0.1:5495/?terrainTrial=H&amp;groundTrial=material&amp;trialEvidence=1&amp;trialScene=shore&amp;growthTrial=inherit&amp;rampTrial=linear&amp;baseTrial=stable&amp;compileTrial=single&amp;queryTrial=frozen&amp;memoTrial=samples&amp;edgeTrial=memo#/island" target="_blank" rel="noopener">試作を触る（保存されません）</a> <span class="small muted">v17・96区画の診断用の島。再読込で初期状態に戻ります。</span></p>
+    <p class="goal">最終目標は、子どもがゲームの中で島を自由に変え、美しい景色と住人の暮らしが一緒に育ち、翌日も続けたくなること。小島での比較は、その仕組みを確かめるための実験です。</p>
+    <nav class="links" aria-label="レポート内の案内"><a href="#comparison">実画像で比較</a><a href="#decisions">候補ごとの判断</a><a href="#runtime">動作の確認範囲</a><a href="#reference">採用参考</a><a href="#evidence">記録と根拠</a></nav>
+  </header>
+
+  <section id="comparison" aria-labelledby="comparison-title">
+    <h2 id="comparison-title">小物の数を増やさず、地形の作り方を比べる</h2>
+    <p>同じ取得土地・所有物・成熟を保ち、地形の生成方法を変更しています。岸の形、使える上面、低地とのつながりを見ます。画像を押すと拡大できます。</p>
+    <div id="comparisons"></div>
+    <div id="pending-comparisons" class="pending">
+      <h3>庭と湾は作れた。美術と操作性能は未達。</h3>
+      <p>通常の30区画では、Hの高庭を再開後に2人が利用。保存しない96区画の診断では、既存の花とベンチを置き、16回の高さ変更で海へつながる幅のある湾を作りました。ただし大きな側壁と穴が残り、上の庭・登り口・低い水際が一つの自然な景色には届いていません。最終の湾を持つfixtureの新規起動でも、2人が庭とベンチを使う新しい4件を確認しました。これは通常DBからの保存再開とは別です。</p>
+    </div>
+    <noscript><p>比較の切り替えにはJavaScriptが必要です。<a href="evidence/05-A-overview.png">A</a>・<a href="evidence/06-B-overview.png">B</a>・<a href="evidence/14-A-moved-overview.png">移動後A</a>・<a href="evidence/13-C-overview.png">C1</a>の原画像は直接開けます。</p></noscript>
+  </section>
+
+  <section id="decisions" aria-labelledby="decisions-title">
+    <h2 id="decisions-title">候補ごとに、採否を分ける</h2>
+    <div class="table-scroll"><table>
+      <thead><tr><th scope="col">候補</th><th scope="col">変えたこと</th><th scope="col">現時点の判断</th></tr></thead>
+      <tbody>
+        <tr><td>A</td><td>既存の連続地表。比較の基準。</td><td>動作比較の基準として維持。平たい台と単独の丘という構成は、美術の目標に未達。</td></tr>
+        <tr><td>B</td><td>高さの間を、肩・斜面・裾の断面でつなぐ。</td><td>丘の裾は局所的に改善。島全体の構成差は小さく、採用は保留。</td></tr>
+        <tr><td>C1</td><td>連続した海岸帯を作り、入り江と岸を整える初版。</td><td><span class="tag reject">棄却</span> 上げる操作で地面が下がる反例を確認。見た目にも薄く尖った岸が生じた。</td></tr>
+        <tr><td>C2</td><td>高さ編集の意図を保つため、C1の岸処理を修正。</td><td>正の高さ編集の逆転を解消。固定視点でも、薄い尖りと直線的な台が残る。美術は保留。</td></tr>
+        <tr><td>D2</td><td>物を置ける上面と、そこへ登れる裾を持つ段丘。</td><td><span class="tag reject">採用不可</span> 上面は明確になったが美術未達。群の接続で最大約1.424mの形状変位が生じる反例がある。</td></tr>
+        <tr><td>F2</td><td>入力した高さを守り、群接続による急な形の切替を除いた段丘。</td><td>限定ケースで通常編集・配置・2人の利用・保存再開を確認。上面のある庭は前進だが、直線・角張りが残り、美術は保留。</td></tr>
+        <tr><td>G2</td><td>取得土地から基面と海岸を作り直す。</td><td>外周は柔らかくなったが、配置可能面が減少。海上に残るように見える装飾もあり、採用保留。</td></tr>
+        <tr><td>H</td><td>土地・所有物・高さから独立した、可逆な曲がった格子とF2。</td><td>高庭の通常編集・Undo/Redo・配置・再読込と、新しい利用4件を確認。テントの埋まりは通常操作53で修正。大きな前壁が残り、美術・全接地は未受入。</td></tr>
+        <tr><td>H＋linear／stable</td><td>内側を連続した斜面にし、基面を取得状態から独立させる試験。</td><td>96区画で配置・Undo/Redo・湾の開口を通常UIで確認。診断では庭から低地への支持と海との接続が成立。大きな台と穴は残り美術未達。最終地形のfixture新規起動で2人×庭/ベンチの新しい4件も確認。保存しないfixtureで、保存合格ではない。</td></tr>
+        <tr><td>一度compile</td><td>同じ地形の検証と索引を再利用し、二度の構築を一度にまとめる。</td><td>実UIの長い処理は1841→1687ms（各1回）。形状を保つ性能改善候補だが、操作時の停止は解消していない。</td></tr>
+        <tr><td>方式設定の固定</td><td>頂点ごとに繰り返していた試験設定の読み取りを、起動時の1回へまとめる。</td><td>同じv15・同じ地形編集の比較で、world生成1600→433ms、最大rAF間隔1667→500ms。各1回の限定比較。約0.5秒の停止は残る。</td></tr>
+        <tr><td>地表計算の再利用</td><td>同じ地形の構築中に、同じ地点の床計算を再利用する。</td><td>同じv16のOFF→ON比較値はworld生成428→371ms、最大rAF間隔500→435ms。各1回・ON→OFFの固定測定順。一般的な改善率は未確認。</td></tr>
+        <tr><td>経路検査の再利用</td><td>同じ構築内の同じ床・方向の検査結果を再利用する。</td><td>同じv17のOFF→ON比較値はworld生成355→345ms、最大rAF間隔433→401ms。各1回の小差で優位性を断定しない。滑らかな編集は未達。</td></tr>
+        <tr><td>粗い地表</td><td>線形斜面の分割を12→6へ減らす。</td><td><span class="tag reject">今回棄却</span> 計算は軽くなるが、床に最大5.83cmの差と水域の変化が生じた。同じ島の軽量化としては扱わない。</td></tr>
+      </tbody>
+    </table></div>
+    <div class="notice reject">
+      <h3>C1は「上げる → 下がる」で棄却</h3>
+      <p>座標 (0, 1) を2段目へ上げる診断で、中心の実床が <strong>0.180 → −0.031</strong> へ下がりました。基準Aなら0.360になる入力です。地形の仕上げが操作の意図を壊すため、係数調整による見た目の改善として扱いません。</p>
+      <p class="small">根拠：<a href="evidence/performance-C1-height-failure.json">C1の高さ応答の診断</a>。初期所有物を保持した通常ドメインcommandによる検査で、人物がいない診断fixtureです。通常UIの全操作や実機の描画速度を検証した結果ではありません。</p>
+    </div>
+    <p class="small muted">C2には外縁の8サンプルで最大約4.13cmの逆方向変位が残ります。すべて取得footprintの外側で、従来も物を支持しない場所です。正の高さ編集の逆転を解消したことと、この外縁の残差は区別します。<a href="evidence/performance-C2-locality.json">C2の局所性診断</a></p>
+    <div class="notice reject"><h3>D2：限定ケースは正常。自由編集は反例で不合格。</h3><p>2段の支持・利用はドメイン診断で通過し、通常UIからの配置と新しい場所での住人利用も確認。一方、単独の編集領域が2セルの群へつながる境界で最大約<strong>1.424m</strong>、橋渡しして群を結ぶケースで約<strong>1.216m</strong>の形状変位が出ました。群の合体を契機に生成形状全体が切り替わるため、この版の正式採用はできません。</p><p class="small">根拠：<a href="evidence/terrace-D2.json">D2の診断結果・入力hash</a>。小ケースの成功は、任意の編集操作や美術の合格を保証しません。</p></div>
+  </section>
+
+  <section id="runtime" aria-labelledby="runtime-title">
+    <h2 id="runtime-title">動作は確認した範囲まで。美術とは別判定。</h2>
+    <p>390×844のローカル実アプリで、既存の花とベンチを通常UIから移動しました。取得土地・所有物・成熟・通貨を保ったまま、配置と場所のrevisionが変わることを確認しています。</p>
+    <ul class="criteria">
+      <li>移動後の場所を、2人の住人が実際に利用した記録がある。</li>
+      <li>再読み込み後も、配置と利用履歴全体が保持された。</li>
+      <li>地形Undoは地形だけを戻し、Redoで同じ地形へ戻った。</li>
+    </ul>
+    <p class="small">根拠：<a href="evidence/ui-check.json">通常UIの検査記録</a>（2026-10-23 05:20 JST）。この確認を、C2/Dの美術・全条件での利用・全保存経路の合格へ引き継ぎません。</p>
+    <div class="evidence-strip">
+      <figure><a class="image-link zoomable" href="evidence/08-B-moved-use.png" data-caption="B：通常UIで移動した後の場所と利用"><img src="evidence/08-B-moved-use.png" alt="Bの実画面。通常操作で所有物を移動した後の場所と住人" loading="lazy"></a><figcaption>通常操作で移動した後の実画面。静止画だけで利用完了を断定せず、保存された記録と照合。</figcaption></figure>
+      <figure><a class="image-link zoomable" href="evidence/09-B-moved-book.png" data-caption="B：移動した場所の記録"><img src="evidence/09-B-moved-book.png" alt="移動した場所の利用を確認する記録画面" loading="lazy"></a><figcaption>場所の記録。過去の利用と今回の利用を、場所のrevision・対象・住人で区別。</figcaption></figure>
+    </div>
+    <h3>D2の小さな段丘でも、通常操作から場所を作れた</h3>
+    <div class="reference">
+      <figure><a class="image-link zoomable" href="evidence/22-D2-placed.png" data-caption="D2：通常の持ち物から花・ベンチを配置した直後"><img class="phone-image" src="evidence/22-D2-placed.png" alt="D2の段丘に、通常の持ち物から花とベンチを置いた直後の実画面" loading="lazy"></a><figcaption>配置直後の実画面。この写真そのものは、住人が利用を完了した瞬間の証拠ではありません。</figcaption></figure>
+      <div><p>通常の持ち物から、花を (1,3)、ベンチを (2,3) へ配置できました。その後、2人の住人に新しいplace revisionでgardenの利用記録が発生しました。DBへの注入は行っていません。</p><p>再読み込み後も家具と地形は完全一致し、再開前の利用履歴24件をすべて保持。25件目には、ぽこもこによるベンチの自然な利用が追加されました。履歴件数が増えたことを保存不一致とは判定しません。</p><p>上面に物が載ることで、低い庭とは異なる場所が現れました。ただし直線的な前壁と角張った端は残ります。<strong>使えることの前進と、美術の未達を両方記録します。</strong></p><p class="small">根拠：<a href="evidence/22-D2-placed-state.json">配置後</a> · <a href="evidence/23-D2-used-state.json">利用後</a> · <a href="evidence/24-D2-reloaded-state.json">再読み込み後</a>。過去24件がそのまま残ることと、新しい利用1件を個別に照合しました。</p></div>
+    </div>
+    <div class="notice"><h3>家具を置いた後のUndoには制約がある</h3><p>家具の支持を崩す地形Undoは「ものの足もとだよ。さきにうごかしてみよう」と拒否され、状態は変わりませんでした。これは支持を守る動作であり、好きな順番で自由にUndoできる証明ではありません。</p><p class="small"><a href="evidence/25-D2-occupied-undo.png">拒否メッセージの実画面</a></p></div>
+    <h3>H：高庭を使った「今の利用」を、過去の履歴と分けて確認</h3>
+    <p>通常の島で高庭を作り、Undo/Redoを経て花とベンチを再配置。その後、v8 buildで通常のDBから再読み込みました。49と50の地形・土地・家・花・ベンチ・記念品は完全一致しています。再開後は誘導や地形編集をせず、06:19:10〜06:19:43 JSTに、ぽこもこと住人v2がそれぞれベンチと庭を利用する<strong>4件の新しい描画後の観測</strong>を得ました。</p>
+    <p>この観測は、正常に描画され、カメラ内にいる住人の利用を、通常のUIが受理した直後に記録します。再送は除外し、日時・対象・住人・実world revisionを付けています。同じ場所の利用履歴は保存側で重複排除されるため、古い履歴の再表示や保存件数の増分を新しい利用証拠には使いません。</p>
+    <p class="small">根拠：<a href="evidence/46-H-high-shaped-state.json">編集後</a> · <a href="evidence/47-H-high-undo-state.json">Undo後</a> · <a href="evidence/48-H-high-redo-state.json">Redo後</a> · <a href="evidence/49-H-high-placed-state.json">配置後</a> · <a href="evidence/50-H-high-reloaded-state.json">通常DBからの再開後</a> · <a href="evidence/50-H-high-live-uses.json">4件のlive利用観測</a> · <a href="live-use-notes.md">観測位置と限界</a>。編集後46とRedo後48のterrain全体は一致。静止画49は配置直後で、4件の利用中の写真ではありません。</p>
+    <div class="notice reject"><h3>テントの埋まりは修正。全モデルの接地合格とは分ける。</h3><p>旧高庭の診断では、p1テントの底付近に最大約<strong>5.63cm</strong>の埋まりがありました。これは高庭を作る前の入力にも存在した問題です。通常操作53で (0,1) を−1→0に戻し、同じ修正のモデル頂点診断ではこの埋まりが解消しました。96区画の診断後に通常の島へ戻った76でも、修正後53と地形・土地・所有物・成熟が一致しています。</p><p>一方、後の96区画・湾の診断には花の土の底付近で約<strong>6mm</strong>の埋まりが残ります。テントの修正や住人利用だけで全接地を合格にしません。<strong>利用は限定成立、美術は未達、全接地は未受入</strong>です。</p><p class="small"><a href="evidence/high-garden-audit.json">旧状態・修正の頂点診断</a> · <a href="evidence/53-H-footing-repaired-state.json">通常操作53の修正後</a> · <a href="evidence/ordinary-restoration-check.json">通常の島76への復帰照合</a> · <a href="evidence/expanded-place-recipe-flower-flat-wide.json">湾の花に残る差</a>。CPUの頂点サンプル診断であり、連続衝突・実機・全編集の保証ではありません。</p></div>
+    <p class="small muted">モデルの同一性も分けて確認しています。テント・花・ベンチ・住人は実アプリと同じ生成器です。一方、接地診断内の <code>nativeCottage</code> はnative-05候補の小屋で、現画面の固定小屋とは別モデルです。その数値を実画面の小屋の接地証明には使いません。</p>
+    <h3>96区画の診断：通常操作で、庭から海へ開く湾を作る</h3>
+    <p>同じ実アプリ内で、花を (2,5)、ベンチを (1,6) へ移動。地形の下降・Undo・Redoを試し、元の高さと下降後の高さへ戻ることを確認しました。その後、細い溝を掘り、幅を広げ、庭側の上面を整える<strong>16回の高さ変更</strong>で最終69の地形へ進みました。家・花・ベンチの所有と配置は60→69で不変です。</p>
+    <p>最終の高さは独立したドメイン診断の入力と一致し、その診断では庭から低地へ続く3区間の支持と、湾の海への接続が成立しました。実UIでも同じ形を作れたことは前進です。一方、診断での住人利用は、最終69の実画面で新たに自然利用した証拠とは区別します。69の既存live logには以前の地形の利用が含まれるため、最終地形の利用証明へ流用しません。</p>
+    <p><strong>その後、最終の湾と同じ地形で新しい自然利用を確認しました。</strong> v13のshore fixtureを新規起動し、06:55:59〜06:56:16 JSTに、ぽこもこ・住人v2がそれぞれ庭とベンチを使う4件を観測。4件の実world revision内の高さは、最終69とすべて一致し、描画成功・カメラ内・visible・通常handler受理も確認しました。<a href="evidence/73-H-shore-reloaded-live.json">新しい利用4件の原記録</a>。<strong>診断fixtureの新規起動であり、通常DBの保存再開の合格ではありません。</strong></p>
+    <p class="small">根拠：<a href="evidence/60-H-linear-stable-placed-state.json">配置60</a> · <a href="evidence/62-H-linear-stable-undo.json">Undo62</a> · <a href="evidence/63-H-linear-stable-redo.json">Redo63</a> · <a href="evidence/69-H-wide-shore-final-state.json">最終69</a> · <a href="evidence/shore-ui-check.json">状態照合・hash</a> · <a href="evidence/expanded-place-recipe-flower-flat-wide.json">支持・海との接続・利用のドメイン診断</a>。16回は最終形に必要な受理された高さ変更の数で、地点選択や拒否された操作、Undo/Redoを含む総クリック数ではありません。</p>
+    <p>診断後は通常の保存島へ戻り、さらに最終v17の83でも通常保存を再読み込みました。53・76・83で土地・地形の全Undo/Redo・家・花・ベンチ・住人・character・しずく8・town・導出された場所が一致し、96区画や診断通貨に置き換わっていません。利用履歴33件も配列全体が一致し、代表利用の時刻と対象だけが変化しています。この差を新しい可視の利用証拠にはしません。<strong>既存の通常保存を読み直した確認であり、v17で新しく書き込んで再読込する往復は未実施です。</strong> <a href="evidence/ordinary-final-restoration-check.json">最終の復帰照合</a> · <a href="evidence/final-audit-addendum.md">81〜83の監査追記</a>。offline・版更新・すべての保存経路の合格ではありません。</p>
+    <p class="small muted">96区画は追加地形と診断用通貨を含むmemory-only fixtureです。DBに保存しません。旧画像69の「じめんを ほぞんしたよ」はfixtureに不適切な既存文言であり、DB保存の証拠にはしません。後続の試験版では診断中と分かる文言へ修正しています。</p>
+    <h3>最終v17：二段の下降とUndo/Redoで、高さと場所を復元</h3>
+    <p>通常UIで (4,4) を0→−1→−2へ下げ、Undo→Redo→Undo→Undoを実行。高さと導出された場所が元へ戻り、土地と所有物は不変でした。ただし履歴は64件の上限で古い2件が押し出され、最終はUndo62件・Redo2件です。<strong>高さの復元を、履歴全体の完全復元とは扱いません。</strong> 2回の新しい地形構築は339.2／347.6ms、対応する長い描画間隔は399.1／416.7msでした。</p>
+    <p class="small"><a href="evidence/final-ui-check.json">v17操作・状態・CPUの照合</a> · <a href="evidence/82-H-final-shore.png">復元後の最終実画面82</a>。81/82の利用観測は編集前の2件で、この復元後の新しい可視利用を証明しません。ゲーム側の受理は別targetの2件が増えていましたが、画面の記録との差の原因は未確定です。この操作は保存しない96区画の診断で、通常保存の再読み込み83とは別です。</p>
+    <p><strong>最終v17の新規起動85では、2人×庭/ベンチの4組を確認。</strong> 07:33:31〜07:34:06 JSTに、同じ地形で新しい描画後の利用が4件成立しました。目的地指定や地形操作は行っていません。これは新規起動時の成立であり、前のUndo後の連続利用とは別の証拠です。<a href="evidence/life-continuity-audit.md">記録の食い違いと生活継続の監査</a> · <a href="evidence/post-edit-life-check.json">独立照合</a> · <a href="evidence/85-H-final-new-session.png">最終版の実画面</a></p>
+    <p>続く同じsessionの一段編集・Undo後には、3静止画で2体の位置変化も確認しました。家前・花前・水際へ動く様子は見えますが、フレーム間の歩行安全や新しい利用完了の証明とは分けます。<a href="evidence/86-visible-continuity.md">3画面と独立目視の記録</a></p>
+    <div class="notice reject"><h3>最終試験版も約0.4秒の空き。滑らかな編集は未達。</h3><p>初回編集の約1.7秒の停止を、関数別の計測で追いました。試験設定を頂点ごとに読み直す負担と、同じ床の計算・検査の重複を減らしました。最終v17でもworld生成344.9ms、うちcompile277.8ms、最大rAF間隔400.7msです。描画間隔の中央値が約16.7msでも、操作時の長い停止を合格にはしません。</p>
+      <div class="table-scroll"><table><thead><tr><th scope="col">同じ版での比較</th><th scope="col">world生成 OFF→ON</th><th scope="col">最大rAF間隔 OFF→ON</th></tr></thead><tbody><tr><td>v15 設定の固定</td><td>1600.1→432.6ms</td><td>1666.7→500.4ms</td></tr><tr><td>v16 地表計算の再利用</td><td>427.7→370.6ms</td><td>500.0→435.1ms</td></tr><tr><td>v17 経路検査の再利用</td><td>355.3→344.9ms</td><td>433.4→400.7ms</td></tr></tbody></table></div>
+      <p>各組は同じ版で同じ地点 (4,4) を0→−1へ下げた、各1回の初回編集です。測定順はON→OFFで固定。地形・Undo/Redo・所有物は一致しますが、自然利用の時刻・対象・履歴は異なり、住人位置・GCなども統制していません。特にv17の小差を一般的な改善率とは扱いません。v17のカメラとworldのDOMは候補IDを除いて一致しましたが、ブラウザーの実メッシュやGPU性能の同値証明ではありません。</p><p class="small"><a href="evidence/frozen-browser-pair-check.json">v15対照</a> · <a href="evidence/memo-browser-pair-check.json">v16対照</a> · <a href="evidence/edge-browser-pair-check.json">v17対照</a> · <a href="evidence/frozen-query-check.json">Nodeでのworld同値診断</a> · <a href="performance-findings.md">停止原因を追った経過</a>。96区画のmemory-only診断で、実機全体・公開版・美術の合格ではありません。</p></div>
+    <div class="notice"><p><strong>まだ証明していないこと：</strong>任意の高台への配置と到達、すべての保存経路、offline・版更新、子どもの無説明理解・愛着・再訪、公開版の美術合格。配置が合法でも、住人が到達できるとは限りません。</p></div>
+    <p class="small"><a href="life-audit.md">利用記録・支持・歩行・保存の監査範囲を読む</a></p>
+  </section>
+
+  <section id="reference" aria-labelledby="reference-title">
+    <h2 id="reference-title">採用参考から移すのは、場所を作る大きな形</h2>
+    <div class="reference">
+      <figure><a class="image-link zoomable" href="../2026-10-10-island-final-3d/whole-island-render.png" data-caption="採用参考：native-05 全島の原本レンダー"><img src="../2026-10-10-island-final-3d/whole-island-render.png" alt="採用参考native-05。大小の地形、水辺、経路と家が連続する成熟した島" loading="lazy"></a><figcaption>native-05：美術方向の採用参考。今回の実ゲーム画面ではありません。</figcaption></figure>
+      <div><p>移す条件は、大小のまとまり、用途のある高低差、厚みのある岸、入口から居場所へ続く余白と接地です。多数の家や森を初期島へ増やすことは要求しません。</p><p>次に確かめたいのは、同じ花とベンチで<strong>低い庭と、登って使う庭</strong>を作り分けられるか。上げた地面を残し、実床が物を支え、住人がそこへ行けることを同時に見ます。</p><p><a href="../2026-10-10-island-final-3d/whole-island-render.png">原本を開く</a> · <a href="../2026-10-10-island-final-3d/verification.md">採用参考の確認記録</a></p></div>
+    </div>
+    <p>初期30セルと成熟した参考の地区数・密度は直接比較できません。ただし、岸の厚み、使える上面、登り口、余白と接地は小島でも必要です。同じ所有物のまま96区画へ広げた診断でも、今回の入力は広い台と段差に留まりました。<strong>広さを与えるだけで届く、という根拠は得られていません。</strong><a href="expanded-fixture-notes.md">診断の入力案</a> · <a href="strategy-assessment.md">届かない理由と次の最小実証</a></p>
+    <div class="notice"><h3>96区画は、保存しない診断用の島</h3><p>v10の比較fixture v2は、49の所有ID・配置・成熟を引き継ぎ、通常の拡張commandを3回実行した96区画（x=-3..8、z=0..7）です。追加地形と診断用の通貨も与えているため、面積だけを変えた因果比較ではありません。画面内の通貨は本人の残高ではなく、操作はDBへ保存していません。通常取得・学習経済・保存再開の合格にも使いません。</p><p>全景のため家が小さく表示されることと、地形が良くなることを分けて見ます。A/F/H間は同じ画角ですが、初期30区画の画像と同じ家の見かけの大きさではありません。</p></div>
+  </section>
+
+  <section id="interaction" aria-labelledby="interaction-title">
+    <h2 id="interaction-title">作れる形と、子どもが作れる操作は別</h2>
+    <p>F2では実際の島に合う追加手順を見つけ、通常UIで実行できました。2点を各2段上げた入力から、5地点に対して計6回上げる操作を追加。地点選択を合わせて<strong>追加11操作</strong>です。花を (2,3)、ベンチを (2,4) へ配置でき、家具を置く前のUndo/Redoは地形を復元しました。</p>
+    <p class="small muted">当初の診断fixtureは上げ10回・地点選択8回の18操作でしたが、これは最小手順ではありませんでした。今回の6回は既存の2段入力からの追加であり、初期状態からの全工程ではありません。道具を開く、収納・配置、画角調整もこの数には含みません。</p>
+    <p>現UIは選んだ地点の輪と「上げる／下げる」を示しますが、必要な斜面の範囲や高さの関係は示しません。command列を実行できることは、子どもが自分でこの形へ到達できる証拠になりません。ここは本人による理解の確認ではなく、コードと操作構造からの設計推定です。</p>
+    <div class="notice"><h3>次の仮説：上面の輪郭と入口を持つ「場所」の編集</h3><p>使いたい範囲を短くなぞると、上面と近くの低地へつながる幅のある坂を自動で予告し、一回で戻せる編集を次の仮説にします。高さや入口の向きは必要なときだけ変えます。これは任意の遊びであり、初期の島は彫刻をしなくても美しく使える必要があります。</p><p>同じ家・花・ベンチで「海へ張り出す高い庭」と「海を囲む低い庭」を、同じ生成器と普通の移動操作で作り分けます。両方とも台と穴に見えたら美術不合格。入口横を狭める・Undo・新しい住人利用・再読込までが次の反証です。新方式はまだ未実装で、製品の保存形式も変更していません。<a href="strategy-assessment.md">具体的な入力と二場面の判定条件</a></p></div>
+    <p>F2のこのケースは、実UIで2人の住人が新しい場所を自然に利用し、再読み込み後も家具・地形・既存の利用履歴29件を保持しました。<strong>編集・配置・利用・保存再開の限定合格</strong>です。成功したUndo/Redoは家具を置く前で、任意の編集や美術・子どもの理解の合格ではありません。</p>
+    <p>また、同じ最終入力ではAの住人利用も成立する診断があります。利用成功だけからFの必要性・優越性は導けません。Aでは花の支持判定が不成立となる別の差があり、住人の到達と物の支持を分けて比較します。</p>
+    <p class="small">手順の根拠：<a href="evidence/terrace-F2-recipe.json">F2のドメイン診断</a> · <a href="evidence/convex-ui-check.json">実UIの照合結果・hash</a> · 実UIの<a href="evidence/29-F2-shaped-state.json">編集後</a>・<a href="evidence/30-F2-undo-state.json">Undo後</a>・<a href="evidence/31-F2-redo-state.json">Redo後</a>・<a href="evidence/32-F2-placed-state.json">配置後</a>・<a href="evidence/33-F2-used-state.json">利用後</a>・<a href="evidence/34-F2-reloaded-state.json">再開後</a>。編集後とRedo後のterrain全体は一致。</p>
+    <p class="small">既存benchmarkとの照合：<a href="../2026-10-22-little-habitats-geometry-probe/README.md">Little Habitatsの実操作</a>では隣を同じ高さへ盛ると接続した上面になり、<a href="../2026-10-22-benchmark-method-audit/README.md">Townscaperの実操作</a>では追加・削除に応じて縁・柵・屋根が組み替わりました。「単純な入力から接続造形が生まれる」点を参考にします。これらで住人の支持・登坂・子どもの理解まで確認したわけではなく、上記の場所編集はSansu向けの未実装の仮説です。</p>
+  </section>
+
+  <section id="evidence" aria-labelledby="evidence-title">
+    <h2 id="evidence-title">記録と、次の判定条件</h2>
+    <div class="notice small"><h3>凍結した試験版と範囲</h3><p><strong>place-method-comparison-v17</strong> ／ delivery: <code>snap-root-v1</code><br>ローカル試験buildと、実際の変換後コードの型検査はPASS。候補の追加はここで凍結しました。通常30区画の保存再開と、保存しない96区画の診断は別々の証拠です。製品採用・公開・配布の合格にはしていません。</p><p style="overflow-wrap:anywhere">入力SHA-256：<code>8d381b47dd3d8b8aba720104d66962c32b8cf3ae320c0594970222f345fcbc8d</code><br><a href="evidence/build-place-method-comparison-v17.json">build・入力hash一覧</a> · <a href="evidence/typecheck-v17.json">変換後コードの型検査</a> · <a href="evidence/final-runtime-fingerprint.json">現在のruntime・出力との一致</a></p><details style="overflow-wrap:anywhere"><summary>最終候補ID</summary><code>place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1</code></details></div>
+    <p>同じ入力でも、方式の変更で描画・足場・経路が食い違わないこと。入力順、Undo/Redo、保存再開を経ても同じ形になること。そして未調整の配置でも美しいこと。この三つを別々に確認します。</p>
+    <p><strong>次に効く構造：</strong>群接続で形が飛ぶ規則は除きましたが、それだけで景色は成立しませんでした。次の証明は、輪郭と入口を持つ一つの地形パッチから、同じ所有物で「高く見渡す庭」と「低く水を囲む庭」を作り分け、隣を編集しても形と支持を保つこと。見た目がまだ大きな台と穴なら、美術は合格にしません。操作停止は、地形生成・検証・画面更新のどこで時間がかかるかを分けて改善します。</p>
+    <p>チャッピーへは、<strong>文章による一般的な技術検討</strong>を依頼しました。特定のゲーム実装・実画像・実機の独立監査ではありません。回答を採用の証明にはせず、反証すべき入力の選定に利用しています。<a href="https://chatgpt.com/g/g-p-6ad58d0857b881918e46e346350848e7-hokomoko/c/6ad97a75-aff4-83e8-9a26-9424ac213a0d" target="_blank" rel="noopener noreferrer">実際の相談会話</a></p>
+    <nav class="links" aria-label="根拠資料"><a href="README.md">今回の契約と範囲</a><a href="../../product/island-construction-strategy.md">全島の最終目標</a><a href="life-audit.md">通常利用の監査</a><a href="performance-findings.md">操作停止の調査</a><a href="strategy-assessment.md">未達の構造と次の証明</a><a href="evidence/ui-check.json">UI検査JSON</a><a href="evidence/performance-C1-height-failure.json">C1反例</a><a href="evidence/performance-C2-locality.json">C2診断</a><a href="evidence/terrace-D2.json">D2の結果と反例</a><a href="evidence/18-terrace-input-state.json">固定比較の共通入力</a><a href="evidence/19-A-fixed-dom.json">Aのカメラ記録</a><a href="evidence/20-C2-fixed-dom.json">C2のカメラ記録</a><a href="evidence/21-D2-fixed-dom.json">D2のカメラ記録</a></nav>
+  </section>
+  <p class="small">最終候補のbuild・実変換後型検査・対象検査と文書検査は通過。標準ポータルの総合検査はプロセスの強制終了で未完です。<a href="evidence/verification.json">検証一覧と未確認範囲</a></p>
+  <footer>3時間検証の記録。目標未達・製品未採用。2026-10-23 07:51 JSTで試行を終了し、終了記録と案内同期を行いました。技術検査の合格を美術の合格や公開版の受入へ読み替えません。</footer>
+</main>
+
+<dialog id="image-dialog" aria-labelledby="dialog-caption">
+  <div class="dialog-bar"><p id="dialog-caption"></p><button type="button" id="dialog-close">閉じる</button></div>
+  <img class="dialog-image" id="dialog-image" alt="">
+  <p class="dialog-original"><a id="dialog-original" target="_blank" rel="noopener">原寸画像を別タブで開く</a></p>
+</dialog>
+
+<script>
+  // Add a new fixed-camera comparison here only after its image and audit exist.
+  // Keep a rejected version's evidence separate from a later revision.
+  const comparisons = [
+    {
+      id: 'shore-final', title: '通常操作で、高い庭の隣に海へ開く湾を作る',
+      images: [
+        { label: '配置後60', src: 'evidence/60-H-linear-stable-placed.png', width: 640, height: 774, status: '配置確認', caption: '同じ花とベンチを広い前庭へ移動。上面は使えるが、庭と低い水際の関係は弱い。' },
+        { label: '最終v17 / 高さ復元後82', src: 'evidence/82-H-final-shore.png', width: 640, height: 774, status: '美術未達', caption: '16回の高さ変更で作った湾と同じ高さを、最終版の編集・Undo/Redo後に復元。側壁・中央の穴・四角い水際は残る。' }
+      ],
+      note: '640×774の実アプリ。H＋linear＋stableの操作経過で、方式だけの固定視点比較ではない。家・花・ベンチの所有と配置は60→69→復元後81/82で一致。最終の高さは69と81で一致する。完成模型の貼付けではなく通常の上げ下げによる実床の編集。保存しない96区画の診断で、82は診断中の表示に修正した最終版。',
+      findings: [ ['部分的に成立したこと', '庭の上面と海水の入り込みが隣接し、単に広げた台より場所の違いが読める。ドメイン診断では庭から低地への支持と湾の海への接続も成立した。'], ['美術としては未達', '長い側壁と大きな穴が造形の中心に見える。登り口の幅と向き、水際の曲がりがまだ一組の自然な景色にまとまらない。花とベンチを置けたこと、過去の利用履歴では相殺しない。'] ]
+    },
+    {
+      id: 'shore-width', title: '細い溝から、幅を持つ水際へ',
+      images: [
+        { label: '細い溝66', src: 'evidence/66-H-south-inlet.png', width: 640, height: 774, status: '編集中', caption: '桟橋の横に海から続く細い切れ込みができた。ただし溝に見え、水際の場所としての幅は不足。' },
+        { label: '幅を広げた68', src: 'evidence/68-H-wide-inlet.png', width: 640, height: 774, status: '局所改善', caption: '水面の幅が増え、庭と桟橋の間に海の入り込みが現れた。直線的な水面輪郭と岸の急な壁は残る。' }
+      ],
+      note: '同じ方式の通常編集の経過。66→68で高さ入力が変化するため方式だけの比較ではない。68は編集中の画面で、最終69では庭側の上面も調整した。人物・水面の時刻差は評価から除く。',
+      findings: [ ['効いたのは幅と隣接関係', '岸の丸め係数だけでなく、水が入る幅を確保したことで見た目にも空間の関係が変わった。'], ['残る操作の課題', '7地点に対する計16回の高さ変更を、制作側が手順を考えて実行した。子どもが生成の条件を知らずに同じ場所を作れる証拠にはならない。'] ]
+    },
+    {
+      id: 'expanded-linear-stable', title: '同じ96区画：連続した斜面と固定した基面を試す',
+      images: [
+        { label: 'H / 拡張の基準', src: 'evidence/58-H-expanded-v2.png', status: '美術未達', caption: '外周は曲がるが、内側には細い段壁と溝が繰り返される。家と庭の周囲に平地が広がる。' },
+        { label: 'H＋linear／stable', src: 'evidence/59-H-linear-stable-expanded.png', status: '美術未達', caption: '細い段差が減り、面のつながりは滑らかになった。一方、高庭と低地の区別も弱く、場所の構成はまだ読めない。' }
+      ],
+      note: '58はv10、59はv11。同じfixture v2でcamera matrixWorld・projectionMatrix、bounds、34地点の高さ入力が一致。59のactual revisionはfixed-bilinear-interior-ramp-v1＋fixed-core-base-v1を含む。二つを同時変更しているため、見た目への寄与は分離できない。保存しない診断で、配置・住人利用・支持の合格はこの画像から判定しない。',
+      findings: [ ['滑らかさは局所改善', '段々の細い壁は減り、等差の高さを面としてつなぐ方向は画面に現れた。これを技術的な斜面の成立や全経路の合格と取り違えない。'], ['場所の成立は未達', '広い薄い台という全体構成は変わらない。上面の広さ、登る場所、低い水際が一組として見えることを次の最低条件にする。'] ]
+    },
+    {
+      id: 'expanded-afh', title: '96区画の同じ診断入力：A / F2 / H',
+      images: [
+        { label: 'A / 連続地表', src: 'evidence/57-A-expanded-v2.png', status: '美術未達', caption: '段差は柔らかいが、広い平面に地形が溶け込み、居場所の差が弱い。' },
+        { label: 'F2 / 段丘', src: 'evidence/56-F-expanded-v2.png', status: '美術未達', caption: '高い上面の端は分かるが、長い直線の段壁と溝が並ぶ。島は広い四角い台のまま。' },
+        { label: 'H / 曲がった格子', src: 'evidence/58-H-expanded-v2.png', status: '美術未達', caption: '前岸の方向は変わるが、台の構成と段差の繰り返しは同じ。曲がりだけで美術の質が上がったとは判断しない。' }
+      ],
+      note: 'v10・fixture v2・390×844。56/57/58で固定カメラの両matrix、取得bounds、全34地点の高さ入力が一致。同じ所有ID・配置・成熟を維持。追加地形・診断通貨があり、土地面積だけの比較ではない。H55は案内表示あり、58は案内を閉じた同じ地形で、camera・bounds・heights・candidateは一致。左端が切れた旧54はこの全景比較から外した。',
+      findings: [ ['面積を与えても残った差', '広さが増えても、上の庭から低い水際へ続く場所の関係は成立していない。初期島の狭さだけが原因とは説明できず、生成する面の役割に不足が残る。'], ['この試行の限界', '一つの診断入力であり、全ての編集で良い形が作れないという証明ではない。小さくfitされた家や、増えた既存の地表装飾を、native-05の空間構成の再現とは数えない。'] ]
+    },
+    {
+      id: 'h-high-garden', title: 'Hの通常操作：同じ花とベンチで、高い庭を作る',
+      images: [
+        { label: 'H / 2段の庭', src: 'evidence/38-H-fixed-same-recipe.png', status: '美術未達', caption: '低い庭と右の孤立丘。前岸は低いが、広い上面と登り口の関係は弱い。' },
+        { label: 'H / 広い3段の庭', src: 'evidence/49-H-high-placed.png', status: '美術・全接地未合格', caption: '花とベンチが一つの高い上面へまとまった。右は低地に戻った一方、手前の大きな茶色の壁が箱台の印象を強める。' }
+      ],
+      note: '同じHで通常編集した経過であり、地形入力は異なる。49は配置直後。38と49の再開後50のcamera matrixWorld・projectionMatrixは一致するが、49自体のDOMは別途採っていない。再開後のlive観測で4件の利用を確認した。人物と水面の時刻差を造形の評価へ混ぜない。',
+      findings: [ ['場所としては前進', '広い高庭と低い水際に役割の差ができ、同じ花とベンチでも異なる場所になった。右端の孤立した岩のような丘も弱まった。'], ['美術と接地は残る', '大きな前壁と折れ目状の斜面が残り、上面・登り口・岸が一体の自然な地形には届かない。別の実モデル診断ではテントの接地も未合格。住人利用4件では相殺しない。'] ]
+    },
+    {
+      id: 'same-recipe-af', title: '同じ庭の入力・固定視点：A / F2 / H',
+      images: [
+        { label: 'A / 同じ最終入力', src: 'evidence/36-A-fixed-same-recipe.png', status: '比較基準', caption: '丘と裾のつながりは柔らかいが、庭の上面の区別は弱い。住人利用は成立しても、花の支持判定は別に不成立。' },
+        { label: 'F2 / 同じ最終入力', src: 'evidence/32-F2-placed.png', status: '美術は保留', caption: '庭の上面はやや水平にまとまる一方、右丘の肩と側面は硬く角張る。全体としてAを上回ったとは判断できない。' },
+        { label: 'H / 曲がった格子＋F2', src: 'evidence/38-H-fixed-same-recipe.png', status: '美術不採用', caption: '左岸と前岸の直交感は弱まったが、長い平面の台を曲げた印象が強い。右の孤立丘と細い湾壁も残る。' }
+      ],
+      note: '地形・所有物配置は同じ最終recipe。A36のDOM heightsはF32のstateと一致し、A36のcameraは先に記録したF27の固定cameraと一致。A36/H38はcamera・heights・取得boundsが完全一致。Hはcardinal-convex-terrace-v2＋fixed-two-shear-grid-v1。人物・水面は時刻で変わる。人物が接地部を隠すため、静止画だけで花の支持不成立を断定せず、支持判定の診断と分ける。',
+      findings: [ ['格子への変更は輪郭に効く', 'Hは同じ保存入力で岸の方向と距離関係を変えられた。しかし家・庭・桟橋が曲がった台の上に並ぶ構成は変わらず、native-05の幅の異なる居場所、高低差、登り口のまとまりには届かない。'], ['支持と利用も別々に見る', '同じ入力ではAでも住人が場所を利用するため、Fの利用成功だけで優越性は言えない。Hのこの画角に明瞭な浮遊は見えないが、物の実幅と曲がった床の支持、経路、保存は別途確認が必要。'] ]
+    },
+    {
+      id: 'f2-recipe', title: 'F2：通常操作で斜面を足し、同じ所有物を置く',
+      images: [
+        { label: 'F2 / 2段だけ', src: 'evidence/27-F2-fixed-terrace.png', status: '美術未達', caption: '上面を保つ代わりに、直角の壁と溝が目立つ。単に2点を上げるだけでは使える庭の構成にならない。' },
+        { label: 'F2 / 斜面を追加', src: 'evidence/31-F2-shaped.png', status: '局所改善', caption: '5地点に計6回の上げ操作を追加。左前の断崖が丸い斜面へつながり、上面が一つの場所として現れた。' },
+        { label: 'F2 / 花とベンチを配置', src: 'evidence/32-F2-placed.png', status: '配置確認', caption: '花(2,3)・ベンチ(2,4)を通常操作で置けた。高低差のある庭に見えるが、前岸の直線と右の角張った丘は残る。' }
+      ],
+      note: '同じF2の操作経過。27→31では地形入力が変わり、31→32では所有物の配置が変わるため、方式だけを変えた同一入力比較ではない。31は保存メッセージ表示中。静止画は住人の利用完了を証明しない。',
+      findings: [ ['美術として進んだ点', '斜面を付けたことで、硬い段差が低地から続く地形へ変わった。家具が上面を使い、単独の丸い丘とは違う「庭」のまとまりが見える。'], ['操作と美術に残る問題', '必要な斜面は生成器の条件を読んで手順を探したもの。子どもが発見できる証拠ではない。島全体の直交した輪郭と孤立した丘も残り、native-05の美術には未達。'] ]
+    },
+    {
+      id: 'fixed-fg', title: '同じ入力・固定カメラ：A / F2 / G2',
+      images: [
+        { label: 'A / 連続地表', src: 'evidence/19-A-fixed-terrace.png', status: '比較基準', caption: '比較の共通入力。物を収納し、2点を各2段上げた状態。' },
+        { label: 'F2 / 高さを守る段丘', src: 'evidence/27-F2-fixed-terrace.png', status: '保留', caption: '上げた形は保持するが、この入力では硬い段差と溝が目立つ。周辺斜面を作る追加操作が必要。' },
+        { label: 'G2 / 基面から作る海岸', src: 'evidence/28-G2-fixed-terrace.png', status: '保留', caption: '外周の流れは柔らかくなる。一方、左の黄色い装飾が海上に浮いて見え、床と装飾の接続に疑問が残る。' }
+      ],
+      note: '18-terrace-input-state.jsonを共通入力とし、19/27/28のDOMでcamera matrixWorld・projectionMatrix・地形heightsの一致を確認。実装revisionはF=cardinal-convex-terrace-v2、G=land-derived-coastal-base-v2。G2は配置可能地点が現入力で14→11、初期状態で30→22となる診断結果があり、輪郭の改善と引き換えに減る利用面も評価する。黄色い装飾の支持不良は画像上の疑いで、実床との接続は要確認。',
+      findings: [ ['G2の見た目', '前岸の外周はAより柔らかい。ただし全体は平たい台と右の丘という構成のままで、まとまりの改善は限定的。'], ['次に確かめる構造', '岸や格子を曲げるだけでなく、庭の広い上面・低地へ続く斜面・水辺のくびれを一緒に設計する。形状を変えた後も、支持と静的装飾が同じ床へ追従する必要がある。'] ]
+    },
+    {
+      id: 'fixed-terrace', title: '同じ入力・固定カメラ：A / C2 / D2',
+      images: [
+        { label: 'A / 連続地表', src: 'evidence/19-A-fixed-terrace.png', status: '比較基準', caption: '2点を上げても、上面と裾の境界は弱く、使える高台の形としては読み取りにくい。' },
+        { label: 'C2 / 岸の修正版', src: 'evidence/20-C2-fixed-terrace.png', status: '保留', caption: '右の丘の量感は戻った。左岸の薄い尖りと前岸の直線的な台は残り、全体の美術改善は未達。' },
+        { label: 'D2 / 段丘', src: 'evidence/21-D2-fixed-terrace.png', status: '採用不可', caption: '高い上面と低地が初めて明確になった。一方、長い直線の壁と四角い角が目立ち、登り口はこの画像から読めない。' }
+      ],
+      note: '390×844。18-terrace-input-state.jsonを共通入力とし、花・ベンチは収納したまま。(1,3)・(2,3)を各+2段に編集。対応するDOM JSONでcamera matrixWorld・projectionMatrix・地形heights・取得boundsの完全一致を確認。人物と水面の時間差は評価から除外。物がないこの3枚だけでは支持・住人利用を証明しない。画面内の表示はC/Dだが、ここに掲載した実装版はC2/D2。',
+      findings: [ ['前進したところ', 'D2で「上面に居場所を作る」という大きな造形単位が見えた。色や小物の追加による差ではなく、実床の高低差が空間を分けている。'], ['まだ採用しない理由', '現状は二段の台に近く、自然な前縁と登り口が一体になっていない。加えてD2は群接続で大きく形が飛ぶため、美術の局所改善だけで採用できない。'] ]
+    },
+    {
+      id: 'coast-c1', title: '海岸帯の初版：A と C1',
+      images: [
+        { label: 'A / 移動後', src: 'evidence/14-A-moved-overview.png', status: '比較基準', caption: '同じ地形高さ・所有物配置を使った基準。右側に独立した丸い丘が残る。' },
+        { label: 'C1 / 海岸帯', src: 'evidence/13-C-overview.png', status: '棄却', caption: '入り江は明確になったが、上げた丘が低い岬へ変わり、薄く尖った岸が生じた。' }
+      ],
+      note: 'どちらも390×844・同じ「しま全体」操作。同じ地形入力だが、自動fitによるcamera matrixの微差があるため、厳密な画素差比較には使わない。人物の移動・水面の時間差は美術比較から除外。これはC1の記録であり、修正版C2の画像ではない。',
+      findings: [ ['改善したところ', '右側の水辺に入り江と張り出しの関係が現れ、海と陸の境界が読み取りやすくなった。'], ['残った問題', '前岸の厚い直線的な台と、薄い岬の形がまとまらない。高さ編集の意図を岸処理が消す反例も見つかったため、採用しない。'] ]
+    },
+    {
+      id: 'section-ab', title: '断面の変更：A と B',
+      images: [
+        { label: 'A / 連続地表', src: 'evidence/05-A-overview.png', status: '比較基準', caption: '平たい角丸の台と、右端の丸い丘という構成。' },
+        { label: 'B / 肩・斜面・裾', src: 'evidence/06-B-overview.png', status: '保留', caption: '丘の裾のつながりに局所的な改善はあるが、島全体の構成は大きく変わらない。' }
+      ],
+      note: '同じ地形入力・所有物・画面寸法・材質による比較。人物と水面は時間で動く。通常の全景表示で取得した画像で、後続の固定camera matrixの比較とは区別する。',
+      findings: [ ['改善したところ', '右の丘と本島のつながりが少し自然になり、別の丸い山を置いた感じは弱まった。'], ['まだ届かないところ', '使える上面と低地の関係が読み取れず、異なる美しい場所を作れる方式という証拠は不足している。'] ]
+    }
+  ];
+
+  const host = document.getElementById('comparisons');
+  const element = (tag, className, text) => { const node = document.createElement(tag); if (className) node.className = className; if (text !== undefined) node.textContent = text; return node; };
+  comparisons.forEach(data => {
+    const article = element('article', 'compare'); article.id = data.id;
+    const heading = element('h3', '', data.title); article.append(heading);
+    const controls = element('div', 'controls'); controls.setAttribute('aria-label', data.title + 'の表示方法');
+    const side = element('button', '', '並べて見る'), single = element('button', '', '切り替えて見る');
+    [side, single].forEach(button => button.type = 'button'); controls.append(side, single);
+    const choices = element('div', 'choice-controls'); controls.append(choices); article.append(controls);
+    const panes = element('div', 'panes'); panes.style.setProperty('--pane-count', String(data.images.length)); let selected = 0, one = window.matchMedia('(max-width:620px)').matches;
+    const figures = [], tabs = [];
+    data.images.forEach((entry, index) => {
+      const figure = element('figure'), title = element('p', 'figure-title', entry.label), tag = element('span', 'tag' + (['棄却', '採用不可'].includes(entry.status) ? ' reject' : ''), entry.status);
+      title.append(tag); figure.append(title);
+      const link = element('a', 'image-link zoomable'); link.href = entry.src; link.dataset.caption = data.title + ' — ' + entry.label;
+      const img = element('img', 'phone-image'); img.src = entry.src; img.alt = entry.label + 'の実画面。' + entry.caption; img.width = entry.width || 390; img.height = entry.height || 844; img.loading = 'lazy';
+      link.append(img); figure.append(link, element('figcaption', '', entry.caption)); figures.push(figure); panes.append(figure);
+      const tab = element('button', '', entry.label); tab.type = 'button'; tab.addEventListener('click', () => { selected = index; paint(); }); tabs.push(tab); choices.append(tab);
+    });
+    function paint() { panes.classList.toggle('single', one); side.setAttribute('aria-pressed', String(!one)); single.setAttribute('aria-pressed', String(one)); choices.hidden = !one; figures.forEach((figure, i) => figure.hidden = one && selected !== i); tabs.forEach((tab, i) => tab.setAttribute('aria-pressed', String(selected === i))); }
+    side.addEventListener('click', () => { one = false; paint(); }); single.addEventListener('click', () => { one = true; paint(); });
+    article.append(panes, element('p', 'comparison-note', data.note));
+    const findings = element('div', 'findings'); data.findings.forEach(([label, text]) => { const block = element('div'); block.append(element('h3', '', label), element('p', '', text)); findings.append(block); }); article.append(findings); host.append(article); paint();
+  });
+
+  const dialog = document.getElementById('image-dialog'), caption = document.getElementById('dialog-caption'), image = document.getElementById('dialog-image'), original = document.getElementById('dialog-original');
+  document.addEventListener('click', event => { const link = event.target.closest('a.zoomable'); if (!link || typeof dialog.showModal !== 'function') return; if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return; event.preventDefault(); image.src = link.href; image.alt = link.querySelector('img')?.alt || ''; caption.textContent = link.dataset.caption || image.alt; original.href = link.href; dialog.showModal(); });
+  document.getElementById('dialog-close').addEventListener('click', () => dialog.close());
+  dialog.addEventListener('click', event => { if (event.target === dialog) { const box = dialog.getBoundingClientRect(); if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) dialog.close(); } });
+</script>
+</body>
+</html>

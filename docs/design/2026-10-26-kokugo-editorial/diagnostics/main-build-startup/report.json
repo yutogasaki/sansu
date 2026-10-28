@@ -1,0 +1,11 @@
+{
+  "at": "2026-10-25T22:38:38.542Z",
+  "base": "http://127.0.0.1:5289",
+  "fixture": "isolated native profile; learning and rewards use actual UI",
+  "captures": [],
+  "scenarios": [],
+  "pass": false,
+  "error": "locator.waitFor: Timeout 90000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'しまへ いく', exact: true }) to be visible\u001b[22m\n\n    at /private/tmp/sansu-editorial-candidate-3/tools/e2e-kokugo.mjs:54:73",
+  "url": "http://127.0.0.1:5289/#/onboarding",
+  "body": ""
+}

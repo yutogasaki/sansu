@@ -1,0 +1,350 @@
+[
+  {
+    "at": "2026-10-20T12:35:21.939Z",
+    "target": "http://127.0.0.1:5287",
+    "scope": "最終候補の明示成熟fixture。390/768幅の実描画・選択・実利用receipt・カメラと学習正本保持。新規ケースのoffline/PWA更新・実取得・実機・子どもの観察は未検証。",
+    "cases": [
+      {
+        "width": 390,
+        "name": "flower-canopy-addition",
+        "selectionTitle": "おはな",
+        "commandFocus": "P05:source-0",
+        "manualCameraPreserved": true,
+        "topology": "flower-bed",
+        "mainIds": [
+          "source-0",
+          "source-1",
+          "source-2",
+          "source-3",
+          "source-4"
+        ],
+        "structure": "P05:canopy",
+        "actualUse": {
+          "at": 1792497600000,
+          "ruleId": "P05",
+          "anchorId": "source-0",
+          "memberIds": [
+            "source-0",
+            "source-1",
+            "source-2",
+            "source-3",
+            "source-4"
+          ],
+          "variant": "flower-bed",
+          "actorId": "pokomoko",
+          "targetId": "source-0:garden"
+        },
+        "metadata": {
+          "url": "http://127.0.0.1:5287/#/island",
+          "revision": "development-local",
+          "version": "development-local:6f8d57a6-f251-40d1-b094-1bbd8f4915b0",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 900
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:6f8d57a6-f251-40d1-b094-1bbd8f4915b0",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        "pass": true
+      },
+      {
+        "width": 768,
+        "name": "flower-canopy-addition",
+        "selectionTitle": "おはな",
+        "commandFocus": "P05:source-0",
+        "manualCameraPreserved": true,
+        "topology": "flower-bed",
+        "mainIds": [
+          "source-0",
+          "source-1",
+          "source-2",
+          "source-3",
+          "source-4"
+        ],
+        "structure": "P05:canopy",
+        "actualUse": {
+          "at": 1792497600000,
+          "ruleId": "P05",
+          "anchorId": "source-0",
+          "memberIds": [
+            "source-0",
+            "source-1",
+            "source-2",
+            "source-3",
+            "source-4"
+          ],
+          "variant": "flower-bed",
+          "actorId": "pokomoko",
+          "targetId": "source-0:garden"
+        },
+        "metadata": {
+          "url": "http://127.0.0.1:5287/#/island",
+          "revision": "development-local",
+          "version": "development-local:6f8d57a6-f251-40d1-b094-1bbd8f4915b0",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:6f8d57a6-f251-40d1-b094-1bbd8f4915b0",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        "pass": true
+      }
+    ],
+    "pass": true,
+    "version": {
+      "version": "development-local:6f8d57a6-f251-40d1-b094-1bbd8f4915b0",
+      "revision": "development-local",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": false,
+        "renderer": "retired"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "life": {
+          "enabled": true,
+          "discovery": false,
+          "fantasy": false,
+          "candidate": "island-life-v1",
+          "saveVersion": 21
+        },
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "nativeArtStudy": {
+          "enabled": false,
+          "candidate": "native-05-art-transfer-v1",
+          "gameplayMapped": false
+        },
+        "nativeOwnedArt": {
+          "enabled": false,
+          "candidate": "native05-expanding-runtime-v2",
+          "gameplayMapped": true
+        },
+        "residentCandidate": "patchwork-otter-v1",
+        "artDirection": "moon-garden"
+      }
+    },
+    "inputs": {
+      "src/domain/growingIsland/communityRoof.ts": "8c34f517ca12fb0e3859c25b9d2017b7872dfef83d894ff5ed177d699b6d143d",
+      "src/domain/growingIsland/placeCapability.ts": "a313f57a00e25ac5aded19070402e510ee9b3a5a2b3c7b6dba159f52854e91c1",
+      "src/domain/growingIsland/places.ts": "4929964659bcf2a8522ae19667d463299cd66a0b6e0a5280e74af76c97674153",
+      "src/components/island/growing/placeCommunityRoofGeometry.ts": "21f29892f3b6569a988921bb47e83bb935ee21e6d6587f5600402173bec9494f",
+      "src/components/island/growing/placeGeometry.ts": "0003624ddb712fdc3be3876d50533b7ec4758b113cd0685e205e931af8a07e5d",
+      "src/components/island/growing/placeFlowerGeometry.ts": "7d63e4918fdb65cb98748de7fa38b58249444af9b89da9dbe0e89043636292be",
+      "src/components/island/growing/objectLayer.ts": "c64d51df3d86c4389927eb126acacde9b50268928f1c2b2370d0fcb276f53f2f",
+      "src/components/island/growing/GrowingWorld.tsx": "e02e123176e24bc819ab3681b98093951053f9004cb2306c007e431ecbe05f65",
+      "src/components/island/growing/GrowingIsland.tsx": "0e15783fcf298556caaeaf6cd368ccc993baf69f69234406d7e6c27deb6fcfc5",
+      "src/components/island/growing/GrowingSheet.tsx": "f0366ee873b8757135f49d9d0abbc98d5aaaf5dc8e9c7d00c857481509b1a03c",
+      "src/components/island/growing/growingLife.ts": "a3713bfaf9a83b7b556b9a9eae5fd925e4302d8160515ace36972ea70fe3d145",
+      "src/components/island/growing/growingCamera.ts": "db28b95d53474b1055aa30a49535744020c00acc890a14229267ab46a5635eba",
+      "src/domain/growingIsland/placeArchitecture.fixture.ts": "801ddf15563f355e7e3babd76e7f350ee8b0ac4e141b831b796c7cd2a6cb9573",
+      "tools/e2e-growing-architecture.mjs": "2ce01a30b96b108a55c17cf16737a4c05bcc2a5f9d9001d885e47ecc339c214f"
+    },
+    "requestedCases": [
+      "flower-canopy-addition"
+    ]
+  },
+  {
+    "at": "2026-10-20T12:37:17.691Z",
+    "target": "http://127.0.0.1:5287",
+    "scope": "最終候補の明示成熟fixture。390/768幅の実描画・選択・実利用receipt・カメラと学習正本保持。新規ケースのoffline/PWA更新・実取得・実機・子どもの観察は未検証。",
+    "cases": [
+      {
+        "width": 390,
+        "name": "grove-side-addition",
+        "selectionTitle": "木の なえ",
+        "commandFocus": "P02:h2",
+        "manualCameraPreserved": true,
+        "topology": "lane",
+        "mainIds": [
+          "source-0",
+          "source-1",
+          "source-2",
+          "source-3"
+        ],
+        "actualUse": {
+          "at": 1792497600000,
+          "ruleId": "P02",
+          "anchorId": "h2",
+          "memberIds": [
+            "h2",
+            "source-0",
+            "source-1",
+            "source-2",
+            "source-3"
+          ],
+          "variant": "lane",
+          "actorId": "pokomoko",
+          "targetId": "h2:gallery"
+        },
+        "metadata": {
+          "url": "http://127.0.0.1:5287/#/island",
+          "revision": "development-local",
+          "version": "development-local:6f8d57a6-f251-40d1-b094-1bbd8f4915b0",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 390,
+            "height": 900
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": false,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:6f8d57a6-f251-40d1-b094-1bbd8f4915b0",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        "pass": true
+      },
+      {
+        "width": 768,
+        "name": "grove-side-addition",
+        "selectionTitle": "木の なえ",
+        "commandFocus": "P02:h2",
+        "manualCameraPreserved": true,
+        "topology": "lane",
+        "mainIds": [
+          "source-0",
+          "source-1",
+          "source-2",
+          "source-3"
+        ],
+        "actualUse": {
+          "at": 1792497600000,
+          "ruleId": "P02",
+          "anchorId": "h2",
+          "memberIds": [
+            "h2",
+            "source-0",
+            "source-1",
+            "source-2",
+            "source-3"
+          ],
+          "variant": "lane",
+          "actorId": "pokomoko",
+          "targetId": "h2:gallery"
+        },
+        "metadata": {
+          "url": "http://127.0.0.1:5287/#/island",
+          "revision": "development-local",
+          "version": "development-local:6f8d57a6-f251-40d1-b094-1bbd8f4915b0",
+          "delivery": "mystic-island-v1",
+          "candidate": "mystic-island-shore-garden-v18",
+          "learningCandidate": "pokomoko-pop-live-v8",
+          "islandFeatureEnabled": true,
+          "mode": "home",
+          "drawCalls": 0,
+          "viewport": {
+            "width": 768,
+            "height": 1024
+          },
+          "serviceWorkerControlled": true,
+          "reducedMotion": true,
+          "appRoot": {
+            "revision": "development-local",
+            "version": "development-local:6f8d57a6-f251-40d1-b094-1bbd8f4915b0",
+            "configuredDelivery": "snap-root-v1",
+            "visualLineage": "pokko-field-v1",
+            "islandFeatureEnabled": true,
+            "natureTownFeatureEnabled": false
+          }
+        },
+        "pass": true
+      }
+    ],
+    "pass": true,
+    "version": {
+      "version": "development-local:6f8d57a6-f251-40d1-b094-1bbd8f4915b0",
+      "revision": "development-local",
+      "delivery": "snap-root-v1",
+      "visualLineage": "pokko-field-v1",
+      "park": {
+        "enabled": false,
+        "renderer": "retired"
+      },
+      "island": {
+        "enabled": true,
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "life": {
+          "enabled": true,
+          "discovery": false,
+          "fantasy": false,
+          "candidate": "island-life-v1",
+          "saveVersion": 21
+        },
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "nativeArtStudy": {
+          "enabled": false,
+          "candidate": "native-05-art-transfer-v1",
+          "gameplayMapped": false
+        },
+        "nativeOwnedArt": {
+          "enabled": false,
+          "candidate": "native05-expanding-runtime-v2",
+          "gameplayMapped": true
+        },
+        "residentCandidate": "patchwork-otter-v1",
+        "artDirection": "moon-garden"
+      }
+    },
+    "inputs": {
+      "src/domain/growingIsland/communityRoof.ts": "8c34f517ca12fb0e3859c25b9d2017b7872dfef83d894ff5ed177d699b6d143d",
+      "src/domain/growingIsland/placeCapability.ts": "a313f57a00e25ac5aded19070402e510ee9b3a5a2b3c7b6dba159f52854e91c1",
+      "src/domain/growingIsland/places.ts": "4929964659bcf2a8522ae19667d463299cd66a0b6e0a5280e74af76c97674153",
+      "src/components/island/growing/placeCommunityRoofGeometry.ts": "21f29892f3b6569a988921bb47e83bb935ee21e6d6587f5600402173bec9494f",
+      "src/components/island/growing/placeGeometry.ts": "0003624ddb712fdc3be3876d50533b7ec4758b113cd0685e205e931af8a07e5d",
+      "src/components/island/growing/placeFlowerGeometry.ts": "7d63e4918fdb65cb98748de7fa38b58249444af9b89da9dbe0e89043636292be",
+      "src/components/island/growing/objectLayer.ts": "c64d51df3d86c4389927eb126acacde9b50268928f1c2b2370d0fcb276f53f2f",
+      "src/components/island/growing/GrowingWorld.tsx": "e02e123176e24bc819ab3681b98093951053f9004cb2306c007e431ecbe05f65",
+      "src/components/island/growing/GrowingIsland.tsx": "0e15783fcf298556caaeaf6cd368ccc993baf69f69234406d7e6c27deb6fcfc5",
+      "src/components/island/growing/GrowingSheet.tsx": "f0366ee873b8757135f49d9d0abbc98d5aaaf5dc8e9c7d00c857481509b1a03c",
+      "src/components/island/growing/growingLife.ts": "a3713bfaf9a83b7b556b9a9eae5fd925e4302d8160515ace36972ea70fe3d145",
+      "src/components/island/growing/growingCamera.ts": "db28b95d53474b1055aa30a49535744020c00acc890a14229267ab46a5635eba",
+      "src/domain/growingIsland/placeArchitecture.fixture.ts": "801ddf15563f355e7e3babd76e7f350ee8b0ac4e141b831b796c7cd2a6cb9573",
+      "tools/e2e-growing-architecture.mjs": "2ce01a30b96b108a55c17cf16737a4c05bcc2a5f9d9001d885e47ecc339c214f"
+    },
+    "requestedCases": [
+      "grove-side-addition"
+    ]
+  }
+]

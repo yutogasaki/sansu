@@ -1,0 +1,53 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  {
++   x: -1.25,
+-   x: -1.285512419,
+    z: 7.25
+  }
+
+    at file:///private/tmp/sansu-assembly-check.mjs:10828:10
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async file:///Users/yutogasaki/Projects/sansu/[eval1]:1:271 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: { x: -1.25, z: 7.25 },
+  expected: { x: -1.285512419, z: 7.25 },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.23.3
+Command failed: /Users/yutogasaki/.local/share/fnm/node-versions/v22.23.3/installation/bin/node --input-type=module -e globalThis.window=globalThis;globalThis.location={search:"?terrainTrial=H&baseTrial=stable&rampTrial=linear&growthTrial=inherit&compileTrial=single&trialScene=shore&queryTrial=frozen&memoTrial=samples&edgeTrial=memo&placeSetTrial=two&assemblyTrial=bay",hash:'#/island'};await import("/private/tmp/sansu-assembly-check.mjs");
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  {
++   x: -1.25,
+-   x: -1.285512419,
+    z: 7.25
+  }
+
+    at file:///private/tmp/sansu-assembly-check.mjs:10828:10
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async file:///Users/yutogasaki/Projects/sansu/[eval1]:1:271 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: { x: -1.25, z: 7.25 },
+  expected: { x: -1.285512419, z: 7.25 },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v22.23.3

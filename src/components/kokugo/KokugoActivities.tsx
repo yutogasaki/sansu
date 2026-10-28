@@ -54,12 +54,25 @@ export function KokugoActivities({ profileId, unitId, focusTarget, busy, onError
         <p>話した音や、紙の文字は 送信・録音しないよ。</p>
     </section>;
 }
-export function KokugoReading({ profileId, busy, onError }: { profileId: string; busy: boolean; onError: (message: string) => void }) {
+export function KokugoReading({ profileId, busy, onError, onSaving }: { profileId: string; busy: boolean; onError: (message: string) => void; onSaving: (saving: boolean) => void }) {
     const [index, setIndex] = useState(0), [message, setMessage] = useState('');
+    const [saving, setSaving] = useState(false);
+    const savingRef = useRef(false);
+    useEffect(() => { onSaving(saving); }, [saving, onSaving]);
+    useEffect(() => () => onSaving(false), [onSaving]);
     const book = READING_BOOKS[index];
+    const save = async () => {
+        if (busy || savingRef.current) return;
+        savingRef.current = true; setSaving(true); setMessage('');
+        try {
+            await saveKokugoWork({ id: `${profileId}:reading:${book.id}`, profileId, unitId: 'R01', text: `読んだ本：${book.title}`, saved: true, updatedAt: Date.now() });
+            setMessage('読んだ本に のこしたよ。');
+        } catch (error) { onError(String(error)); }
+        finally { savingRef.current = false; setSaving(false); }
+    };
     return <section><p className="kokugo-eyebrow">お話を よむ</p><h1>{book.title}</h1>
-        <label htmlFor="kokugo-book">お話</label> <select id="kokugo-book" value={index} onChange={e => { setIndex(Number(e.target.value)); setMessage(''); }}>{READING_BOOKS.map((book, i) => <option key={book.id} value={i}>{book.title}</option>)}</select>
+        <label htmlFor="kokugo-book">お話</label> <select id="kokugo-book" value={index} disabled={busy || saving} onChange={e => { setIndex(Number(e.target.value)); setMessage(''); }}>{READING_BOOKS.map((book, i) => <option key={book.id} value={i}>{book.title}</option>)}</select>
         <div className="kokugo-passage kokugo-book">{book.text}</div>
-        <button disabled={busy} onClick={() => { void saveKokugoWork({ id: `${profileId}:reading:${book.id}`, profileId, unitId: 'R01', text: `読んだ本：${book.title}`, saved: true, updatedAt: Date.now() }).then(() => setMessage('読んだ本に のこしたよ。')).catch(error => onError(String(error))); }}>読んだ本に のこす</button>
+        <button disabled={busy || saving} onClick={() => void save()}>読んだ本に のこす</button>
         <p aria-live="polite">{message || '何度でも、すきな ところから 読めるよ。'}</p></section>;
 }

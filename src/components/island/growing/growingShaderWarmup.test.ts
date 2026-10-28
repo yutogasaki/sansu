@@ -13,7 +13,8 @@ function rendererMock(programs: Program[] = [program('base')], parallel = true) 
     const gl = {
         LINK_STATUS: 35714,
         getExtension: vi.fn((name: string) => name === 'KHR_parallel_shader_compile' && parallel ? { COMPLETION_STATUS_KHR: 37297 } : null),
-        isProgram: vi.fn(() => true), isContextLost: vi.fn(() => false),
+        isProgram: vi.fn<(handle: unknown) => boolean>(() => true), isContextLost: vi.fn(() => false),
+        getProgramInfoLog: vi.fn(() => ''), getShaderInfoLog: vi.fn(() => ''),
         getProgramParameter: vi.fn((handle: unknown, parameter: number) => parameter === 37297 ? ready.get(handle) !== false : linked.get(handle) !== false),
     };
     const renderer = {
@@ -125,6 +126,40 @@ describe('growing interaction shader preparation', () => {
         await expect(warmGrowingShaders(mock.renderer, camera, scene, interaction)).rejects.toThrow('failed-native-shell');
         expect(bad.getUniforms).toHaveBeenCalledTimes(1); expect(mock.raw.debug.checkShaderErrors).toBe(true); expect(mock.raw.debug.onShaderError).toBe(callback);
         expect(mock.raw.render).not.toHaveBeenCalled();
+    });
+
+    it('follows live programs when the saved island sync replaces scenery during preparation', async () => {
+        vi.useFakeTimers();
+        const old = program('retired-scenery'), current = program('current-scenery');
+        const mock = rendererMock([old]), { scene, camera, interaction } = inputs();
+        const oldHandle = old.program;
+        mock.ready.set(oldHandle, false);
+        const warming = warmGrowingShaders(mock.renderer, camera, scene, interaction);
+        // Three removes the last material's program from info.programs and
+        // destroys its GL handle while React applies the newly synced island.
+        mock.raw.info.programs.splice(0, 1, current); old.program = undefined;
+        mock.linked.set(oldHandle, false); mock.ready.set(current.program, false);
+        mock.gl.isProgram.mockImplementation(handle => handle !== oldHandle);
+        mock.gl.getProgramParameter.mockClear();
+        await vi.advanceTimersByTimeAsync(20);
+        expect(mock.raw.render).not.toHaveBeenCalled();
+        expect(old.getUniforms).not.toHaveBeenCalled();
+        expect(mock.gl.getProgramParameter.mock.calls.some(([handle]) => handle === oldHandle)).toBe(false);
+        mock.ready.set(current.program, true); await vi.advanceTimersByTimeAsync(10); await warming;
+        expect(current.getUniforms).toHaveBeenCalled(); expect(mock.raw.render).toHaveBeenCalledTimes(2);
+    });
+
+    it('still rejects a failed replacement program and includes its driver log', async () => {
+        vi.useFakeTimers();
+        const old = program('old'), current = program('replacement');
+        const mock = rendererMock([old]), { scene, camera, interaction } = inputs();
+        mock.ready.set(old.program, false);
+        const warming = warmGrowingShaders(mock.renderer, camera, scene, interaction);
+        const rejected = expect(warming).rejects.toThrow('replacement\nprogram: QA link incompatibility');
+        mock.raw.info.programs.splice(0, 1, current); old.program = undefined;
+        mock.linked.set(current.program, false); mock.gl.getProgramInfoLog.mockReturnValue('QA link incompatibility');
+        await vi.advanceTimersByTimeAsync(10); await rejected;
+        expect(current.getUniforms).toHaveBeenCalled(); expect(mock.raw.render).not.toHaveBeenCalled();
     });
 
     it('rejects a lost/destroyed program and aborts pending preparation while releasing its target', async () => {

@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-22T03:22:48.248485+00:00",
+  "scope": "Local strategy experiments, not product adoption",
+  "result": "PARTIAL",
+  "v1BrowserEvidence": "04–11 state/screenshots; version foundation-version.json",
+  "finalSourceDelta": [
+    "docs/design/2026-10-22-place-strategy-trial/foundation.ts"
+  ],
+  "finalDeltaReason": "Narrow state type accepted by physical floor; inline equivalent bridge anchor formula instead of full-save typed helper",
+  "v2Verification": "focused typecheck, same logic and support checks, production build; browser journey remains v1 evidence",
+  "ordinaryPreviewRestored": "12-production-restored.json",
+  "confirmed": [
+    "initial one-step editing 13/30 -> 24/30, actor-free fixture",
+    "7056 fixed support samples unchanged",
+    "v1 actual game dig, undo, redo, reload",
+    "courtyard placement follows actual route but visual/life hypothesis rejected"
+  ],
+  "unverified": [
+    "final v2 browser journey",
+    "bridge and expanded worlds",
+    "old edit history",
+    "new candidate full regression and offline update",
+    "performance and physical devices",
+    "child comprehension and return motivation",
+    "whole island art"
+  ],
+  "checks": {
+    "focused lint": "PASS",
+    "focused typecheck": "PASS after narrow-state correction",
+    "logic and support": "PASS",
+    "comparison production builds": "PASS v1 and v2",
+    "docs:check": "PASS with existing overdue-review warnings",
+    "agent index generation": "PASS",
+    "portal integration": "INCOMPLETE: process killed by signal 9, exit 137; cause unconfirmed",
+    "portal workspace": "PASS",
+    "portal vendor tests": "12 PASS",
+    "portal output identity": "First check stale after adding evidence files; final regeneration/check recorded in /private/tmp/sansu-strategy-final-portal.txt"
+  }
+}

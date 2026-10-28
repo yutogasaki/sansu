@@ -60,3 +60,9 @@ export function islandParentUrl(pathname: string, search: string) {
     }
     return '/island';
 }
+
+/** Only an internal absolute path can be used as an explicit return destination. */
+export function isSafeIslandReturnHref(href: unknown): href is string {
+    return typeof href === 'string' && href.startsWith('/') && !href.startsWith('//')
+        && !href.includes('\\') && !Array.from(href).some(character => character.charCodeAt(0) <= 32);
+}

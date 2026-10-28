@@ -1,0 +1,57 @@
+{
+  "status": "completed",
+  "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+  "queryCandidate": "H",
+  "targetMs": 10000,
+  "startedAt": "2026-10-22T22:16:49.859Z",
+  "endedAt": "2026-10-22T22:16:59.870Z",
+  "elapsedMs": 10010.4,
+  "samples": 577,
+  "frameCallbacks": 578,
+  "intervalMs": {
+    "median": 16.7,
+    "p95": 18.4,
+    "max": 400.7
+  },
+  "over50Ms": 1,
+  "visibility": {
+    "started": "visible",
+    "ended": "visible",
+    "hiddenObserved": false
+  },
+  "timeline": {
+    "clock": "milliseconds-from-measurement-start",
+    "clicks": [
+      {
+        "atMs": 283,
+        "tag": "summary",
+        "id": null,
+        "label": "比較の記録 · H"
+      },
+      {
+        "atMs": 566.9,
+        "tag": "button",
+        "id": null,
+        "label": "じめんを さげる"
+      }
+    ],
+    "clickCount": 2,
+    "longTasks": [
+      {
+        "startMs": 566.8,
+        "endMs": 973.8,
+        "durationMs": 407
+      }
+    ],
+    "longTaskCount": 1,
+    "longTaskSupport": "supported",
+    "slowFrames": [
+      {
+        "startMs": 575.9,
+        "endMs": 976.6,
+        "intervalMs": 400.7
+      }
+    ],
+    "retainedLimit": 40
+  }
+}

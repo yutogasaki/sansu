@@ -337,3 +337,18 @@ export async function waitForAsync(page, predicate, argument, timeoutMs = 45000)
     } while (Date.now() < deadline);
     throw new Error('Async island condition did not become true before the deadline');
 }
+
+/** The unit's editor ID stays diagnostic data, not a child-facing label. Retain old-build update coverage. */
+export function kokugoUnitButton(page, id) {
+    assert(/^[A-Z]\d{2}$/.test(id));
+    return page.locator(`[data-kokugo-unit="${id}"]`).or(page.getByRole('button', { name: new RegExp(`${id} ·`) }));
+}
+
+export async function openKokugoFromLearning(page) {
+    const old = page.getByRole('button', { name: '国語を まなぶ', exact: true });
+    if (await old.isVisible()) await old.click();
+    else {
+        await page.getByRole('button', { name: /^(教科を えらぶ|きょうかを えらぶ)$/ }).click();
+        await page.getByRole('group', { name: /^(学習する科目|べんきょう する もの)$/ }).getByRole('button', { name: /^(国語|こくご)$/ }).click();
+    }
+}

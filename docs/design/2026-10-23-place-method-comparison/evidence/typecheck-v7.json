@@ -1,0 +1,94 @@
+{
+  "status": "FAIL",
+  "date": "2026-10-22T21:04:39.410Z",
+  "node": "v22.23.3",
+  "overlay": "/private/tmp/sansu-place-trial-types-AVisr0",
+  "checker": "TypeScript tsc --noEmit via tsconfig.trial.json; actual browser transform outputs",
+  "scope": "Trial TS/TSX plus their production imports, transformed floor/domain/scene/UI; no build or test claim",
+  "inputHashes": {
+    "docs/design/2026-10-22-place-strategy-trial/foundation-transform.mjs": "32073beec4b3246225424f8524fbd2e1aa96cfdeac9f41425fef46fe164f4a41",
+    "docs/design/2026-10-22-place-strategy-trial/foundation.ts": "00a11d9deb61d240c757352a711b53ec3dc8cd2359d9ba652683b6f979df21f2",
+    "docs/design/2026-10-23-place-method-comparison/TrialCadence.tsx": "93eeaccfcf56b0bbc05f84f630af62ffe7e9e149b11516578b9c9a61907b51de",
+    "docs/design/2026-10-23-place-method-comparison/TrialEvidence.tsx": "376aa3babcb26dc0b2a5fc5dcd6c1eb03cd53e248e33e1cca59891130d1574f4",
+    "docs/design/2026-10-23-place-method-comparison/build.mjs": "ccaf33e7ac1836562a213f5103aca3e873c19a497ec5e5323c51db17eea24d45",
+    "docs/design/2026-10-23-place-method-comparison/candidate.ts": "5160210b9f4cced0a10f5d9b299d7d9d761e6a5aad7abcbe2c40bbf445073b44",
+    "docs/design/2026-10-23-place-method-comparison/check.mjs": "8c28c76186437296c9166e510fbdee94dd3a4ed367dad31ff0f6edbcd4a3b949",
+    "docs/design/2026-10-23-place-method-comparison/coastal-base-check.mjs": "8098d55f7c96129958902c4ddccca499e88129d6ab08aa5f1e9833a2545e703c",
+    "docs/design/2026-10-23-place-method-comparison/coastal-base-check.ts": "453891b3ccf721ddc92a75f0b4602589d7cd24ee3e1787ffdd854c89b118b7cd",
+    "docs/design/2026-10-23-place-method-comparison/coastal-base-field.ts": "a35df99fbf53b5f13b592ca540c6587cf586fdae0f2e0052c4b715d389545346",
+    "docs/design/2026-10-23-place-method-comparison/coastal-base-transform.mjs": "a1b99e1e9695eedeab81bfc2d2e843fff6fef14eb7ff46313bbcd90345e1c0bb",
+    "docs/design/2026-10-23-place-method-comparison/coastal-check.ts": "a21cfe140a7197df9f2b792d5b498cb41f58ed3d053fd5029c8584315e17db5f",
+    "docs/design/2026-10-23-place-method-comparison/coastal-field.ts": "3ff22c3c6a20d4e0235e171dbf372d7a81c726457516a26e810acba3da9d2cc8",
+    "docs/design/2026-10-23-place-method-comparison/comparison-camera.ts": "7a9229a582c9aa822145c5afbffdae7943372ceecd7abe470edc0ebbd408e5e4",
+    "docs/design/2026-10-23-place-method-comparison/convex-ui-check.mjs": "7196bce069417b3d281e3a74a04d9bfb88ceecff089ee6b9e6c9f54622cb30cc",
+    "docs/design/2026-10-23-place-method-comparison/curved-grid-check.mjs": "949970c719f42202e3c0d94c03c676c0ffdf254e336fd5b5fee39b851c7403be",
+    "docs/design/2026-10-23-place-method-comparison/curved-grid-check.ts": "83e005f5d562b0c1eb13406ee8595e8bd106b1f73c69fb0bc4230a01dc3bd489",
+    "docs/design/2026-10-23-place-method-comparison/curved-grid-pure-check.mjs": "afea71d28c79a5eb341c7703d616d3a43ba8e8ad4b6145aea034c18ce5f44f9a",
+    "docs/design/2026-10-23-place-method-comparison/curved-grid-pure-check.ts": "3cfba0bd12e7c73a18a0d919d0dfd6cd6622790c3eaa782f75fa8295ec9b4c8d",
+    "docs/design/2026-10-23-place-method-comparison/curved-grid-transform.mjs": "85ee92ca649f26f0286c3036e57e33a1aef990265e440107d74d0b6c8a55cfbc",
+    "docs/design/2026-10-23-place-method-comparison/curved-grid.ts": "21535d59d055dad92ef2640334b3587d5fac529d21bdcc5565cf70f7ef279b1d",
+    "docs/design/2026-10-23-place-method-comparison/geometry-check.ts": "1ed55963bf5810ac5f1d29cd7ed7c324a6ba19863dacaedc558bc3a485375026",
+    "docs/design/2026-10-23-place-method-comparison/ground.ts": "32be3659f10a3c12525a7c9e2ce36d686f52e577ff15956c7cdeca62a076cf74",
+    "docs/design/2026-10-23-place-method-comparison/life-check.ts": "c89bc997142d913df417d2731b55cae34c8e5e7723728cb22774ed22e3fc18a4",
+    "docs/design/2026-10-23-place-method-comparison/performance-check.mjs": "ed2ae327eda4bfc14bc7bf78ca346111287bbf8d389e776970745e4b78108185",
+    "docs/design/2026-10-23-place-method-comparison/performance-check.ts": "69cb4dcb76b76f2ddabaf3622e4a04fb36529a1949bd14b3c71c2d0e59965b07",
+    "docs/design/2026-10-23-place-method-comparison/section-profile.ts": "1dc7f55c40ebb1321afe0cfce46e573292af987e4e147b532a0c4bbff7b6098b",
+    "docs/design/2026-10-23-place-method-comparison/terrace-check.mjs": "7ec20dc6646f0852074887941de524f086b313d418d93902b9c6189ad2884cbe",
+    "docs/design/2026-10-23-place-method-comparison/terrace-check.ts": "bc94e0b32e22309c66528fb08f14ec109106ebcc37173b0fc6d72c6b40fe58ef",
+    "docs/design/2026-10-23-place-method-comparison/terrace-convex-check.mjs": "11ce7b7789ac7761acd77dc2df7ad2c96b0562c32d668a8c7def25fbb7cb46ff",
+    "docs/design/2026-10-23-place-method-comparison/terrace-convex-check.ts": "fc475c40183fb5b88f8189a98ea7b502ef9cbd76dbb90af8df2aada429e4d72b",
+    "docs/design/2026-10-23-place-method-comparison/terrace-convex-field.ts": "9f2ab0880f502ee399866577f8dc041381a60a215ff6cece7a4625c002773ccc",
+    "docs/design/2026-10-23-place-method-comparison/terrace-convex-recipe.mjs": "fea37f5df698b421a174ea5270772ca7ef34ae05fdb298d7f5d77c8c0bbae397",
+    "docs/design/2026-10-23-place-method-comparison/terrace-convex-recipe.ts": "6727da9e0b1b8243d338a739f6242d2b7e4c11e05f1d91d5d3a594c9e8434237",
+    "docs/design/2026-10-23-place-method-comparison/terrace-field.ts": "78d771322aca07395e36c94de4526c63025934e161907409a15358e74583e3dc",
+    "docs/design/2026-10-23-place-method-comparison/terrace-local-check.mjs": "8ec12ee98a4b9406480eec51af78091de6a100f44f7e7b4d41bcd0db24168555",
+    "docs/design/2026-10-23-place-method-comparison/terrace-local-check.ts": "ab284c93e9f0a5177c4a5634b28cf1d712788b77ffe28164656de5ef0f29c234",
+    "docs/design/2026-10-23-place-method-comparison/terrace-local-field.ts": "eb1982d1979542735f2dfbcb383cbef39ebccb970da5962c0634a72f8c514640",
+    "docs/design/2026-10-23-place-method-comparison/terrace-ui-check.mjs": "fe3104739c67a659f2898c6e39af1172fed327c542c559b8123964e6f2ffda29",
+    "docs/design/2026-10-23-place-method-comparison/terrain-transform.mjs": "484e7be00bcb3224df7aca50f6af6f33ed80bd3c4f8f3c5fb2dee6286c658122",
+    "docs/design/2026-10-23-place-method-comparison/tsconfig.trial.json": "ce4782d0919b41eb92432de4065ef07e1f7b9ea9d6cabd4b9a4986491c2b44fc",
+    "docs/design/2026-10-23-place-method-comparison/typecheck.mjs": "c744228e8a05dbf977e73b9d0c706ee722fd3beec42a520458aab34bf36337b5",
+    "docs/design/2026-10-23-place-method-comparison/ui-check.mjs": "9218290d6cb0cf87ef6421f8fd3fa11effc0503af9ef76c64c9ce9df61cf7ec1",
+    "docs/design/2026-10-23-place-method-comparison/vite.config.ts": "f301747776fade211a34eee522eb967b01a07eeffb648f367d152a1b0fe7de93",
+    "src/components/island/growing/GrowingIsland.tsx": "c8d785cd7fc937226a31fad408a4ac71a31b33c43776102670e8afce7001d406",
+    "src/components/island/growing/growingCamera.ts": "d44547cdada7e8b7348c838b2d44bf38c864f9b867c6a2813a0adeb6dbc76d22",
+    "src/components/island/growing/worldScene.ts": "8eb09980977ea2144110d2b5d3d176d5d8189e8f73cd38faebee9a2834c42563",
+    "src/domain/growingIsland/editableTerrainWorld.ts": "7606a6d2be402e90ef85154cd28e8cf3c07dd5d690538b37bbfbfd700e1fc324",
+    "src/domain/growingIsland/landscape.ts": "c4238f02498719722449772456001e457a0d02b2f82e7b389eae99d3021b6c96",
+    "src/domain/growingIsland/terrainEditing.ts": "a1f51959aa3639d15dcb19fa7f1eb289592a6682deda523a181b42b2591c04ac"
+  },
+  "changedInputs": [],
+  "transformations": [
+    {
+      "path": "src/domain/growingIsland/editableTerrainWorld.ts",
+      "inputSHA256": "7606a6d2be402e90ef85154cd28e8cf3c07dd5d690538b37bbfbfd700e1fc324",
+      "transformedSHA256": "e2b55f1831761bb74a57de332146aef4cbd0974d53c8fa33f4bc43509613468d"
+    },
+    {
+      "path": "src/domain/growingIsland/terrainEditing.ts",
+      "inputSHA256": "a1f51959aa3639d15dcb19fa7f1eb289592a6682deda523a181b42b2591c04ac",
+      "transformedSHA256": "9bc1f596e8f74f3984751b5c391c556f5aa3bb249ea8c06f39aa48d2cc8340d3"
+    },
+    {
+      "path": "src/domain/growingIsland/landscape.ts",
+      "inputSHA256": "c4238f02498719722449772456001e457a0d02b2f82e7b389eae99d3021b6c96",
+      "transformedSHA256": "7f428a3f61e53468a61ecd80f52e03549ae564e9b3be09327446cad0b2d059a8"
+    },
+    {
+      "path": "src/components/island/growing/worldScene.ts",
+      "inputSHA256": "8eb09980977ea2144110d2b5d3d176d5d8189e8f73cd38faebee9a2834c42563",
+      "transformedSHA256": "f32f99e800f377852d2a87fda8bf0b7c7ffc272da40c06243f45150c16d8581b"
+    },
+    {
+      "path": "src/components/island/growing/GrowingIsland.tsx",
+      "inputSHA256": "c8d785cd7fc937226a31fad408a4ac71a31b33c43776102670e8afce7001d406",
+      "transformedSHA256": "ea39dd20d294a46414beb69bf4aa74a2759df4586ea5a17ba73eba255f040c73"
+    },
+    {
+      "path": "src/components/island/growing/growingCamera.ts",
+      "inputSHA256": "d44547cdada7e8b7348c838b2d44bf38c864f9b867c6a2813a0adeb6dbc76d22",
+      "transformedSHA256": "05145d29a40f09450ad0d0c34d1ef5a1e7ad247853f8f9535972a0876d5a39f2"
+    }
+  ],
+  "output": "docs/design/2026-10-23-place-method-comparison/curved-grid-check.ts(7,26): error TS2307: Cannot find module './evidence/18-terrace-input-state.json' or its corresponding type declarations.\ndocs/design/2026-10-23-place-method-comparison/curved-grid-check.ts(8,24): error TS2307: Cannot find module './evidence/terrace-F2-recipe.json' or its corresponding type declarations.\ndocs/design/2026-10-23-place-method-comparison/terrace-convex-recipe.ts(3,26): error TS2307: Cannot find module './evidence/18-terrace-input-state.json' or its corresponding type declarations.\nsrc/domain/growingIsland/editableTerrainWorld.ts(28,160): error TS2367: This comparison appears to be unintentional because the types '\"A\" | \"B\" | \"C\" | \"D\"' and '\"H\"' have no overlap.\nCommand failed: /Users/yutogasaki/.local/share/fnm/node-versions/v22.23.3/installation/bin/node /Users/yutogasaki/Projects/sansu/node_modules/typescript/bin/tsc --project /private/tmp/sansu-place-trial-types-AVisr0/docs/design/2026-10-23-place-method-comparison/tsconfig.trial.json --pretty false\n"
+}

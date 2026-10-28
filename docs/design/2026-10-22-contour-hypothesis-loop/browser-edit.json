@@ -1,0 +1,1153 @@
+{
+  "materialKeepsHeight": true,
+  "secondClickRaises": true,
+  "undoExact": true,
+  "redoExact": true,
+  "states": {
+    "editStart": {
+      "revision": "e2493ca3a47905f3",
+      "candidate": "contour-hypothesis-loop",
+      "delivery": "standalone-study-only",
+      "preset": "single",
+      "cells": [
+        {
+          "x": -1,
+          "z": -2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": -2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": -2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -2,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 2,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -2,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": 0,
+          "h": 2,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 2,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -2,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 2,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": 2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": 2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": 2,
+          "h": 1,
+          "material": "soil"
+        }
+      ],
+      "undo": 0,
+      "redo": 0,
+      "finish": true,
+      "clay": false,
+      "methods": [
+        {
+          "method": "hard",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": [
+            {
+              "x": 0,
+              "z": 0,
+              "cpu": 0.6900000000000001,
+              "visible": 0.6899999976158142,
+              "error": 2.3841858487472223e-9
+            },
+            {
+              "x": 1,
+              "z": 0,
+              "cpu": 0.15388330734633457,
+              "visible": 0.15388330817222595,
+              "error": 8.258913830605508e-10
+            },
+            {
+              "x": 0,
+              "z": 1,
+              "cpu": 0.13827828281206977,
+              "visible": 0.1382782757282257,
+              "error": 7.0838440668907765e-9
+            },
+            {
+              "x": 1,
+              "z": 1,
+              "cpu": 0.13470238253284453,
+              "visible": 0.1347023844718933,
+              "error": 1.939048782650943e-9
+            },
+            {
+              "x": 0.5,
+              "z": 0.5,
+              "cpu": null,
+              "error": null
+            }
+          ],
+          "triangles": 56784,
+          "buildMs": 106
+        },
+        {
+          "method": "blend",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": [
+            {
+              "x": 0,
+              "z": 0,
+              "cpu": 0.6900000000000001,
+              "visible": 0.6899999976158142,
+              "error": 2.3841858487472223e-9
+            },
+            {
+              "x": 1,
+              "z": 0,
+              "cpu": 0.15388330734633457,
+              "visible": 0.15388330817222595,
+              "error": 8.258913830605508e-10
+            },
+            {
+              "x": 0,
+              "z": 1,
+              "cpu": 0.13827828281206977,
+              "visible": 0.1382782757282257,
+              "error": 7.0838440668907765e-9
+            },
+            {
+              "x": 1,
+              "z": 1,
+              "cpu": 0.13470238253284453,
+              "visible": 0.1347023844718933,
+              "error": 1.939048782650943e-9
+            },
+            {
+              "x": 0.5,
+              "z": 0.5,
+              "cpu": 0.14636508198777978,
+              "visible": 0.14636507630348206,
+              "error": 5.684297726959997e-9
+            }
+          ],
+          "triangles": 40240,
+          "buildMs": 96
+        }
+      ]
+    },
+    "stoneOnly": {
+      "revision": "e2493ca3a47905f3",
+      "candidate": "contour-hypothesis-loop",
+      "delivery": "standalone-study-only",
+      "preset": "single",
+      "cells": [
+        {
+          "x": -1,
+          "z": -2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": -2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": -2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -2,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 2,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -2,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": 0,
+          "h": 2,
+          "material": "stone"
+        },
+        {
+          "x": 1,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 2,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -2,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 2,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": 2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": 2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": 2,
+          "h": 1,
+          "material": "soil"
+        }
+      ],
+      "undo": 1,
+      "redo": 0,
+      "finish": true,
+      "clay": false,
+      "methods": [
+        {
+          "method": "hard",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": [
+            {
+              "x": 0,
+              "z": 0,
+              "cpu": 0.6900000000000001,
+              "visible": 0.6899999976158142,
+              "error": 2.3841858487472223e-9
+            },
+            {
+              "x": 1,
+              "z": 0,
+              "cpu": 0.15388330734633457,
+              "visible": 0.15388330817222595,
+              "error": 8.258913830605508e-10
+            },
+            {
+              "x": 0,
+              "z": 1,
+              "cpu": 0.13827828281206977,
+              "visible": 0.1382782757282257,
+              "error": 7.0838440668907765e-9
+            },
+            {
+              "x": 1,
+              "z": 1,
+              "cpu": 0.13470238253284453,
+              "visible": 0.1347023844718933,
+              "error": 1.939048782650943e-9
+            },
+            {
+              "x": 0.5,
+              "z": 0.5,
+              "cpu": null,
+              "error": null
+            }
+          ],
+          "triangles": 56784,
+          "buildMs": 109
+        },
+        {
+          "method": "blend",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": [
+            {
+              "x": 0,
+              "z": 0,
+              "cpu": 0.6900000000000001,
+              "visible": 0.6899999976158142,
+              "error": 2.3841858487472223e-9
+            },
+            {
+              "x": 1,
+              "z": 0,
+              "cpu": 0.15388330734633457,
+              "visible": 0.15388330817222595,
+              "error": 8.258913830605508e-10
+            },
+            {
+              "x": 0,
+              "z": 1,
+              "cpu": 0.13827828281206977,
+              "visible": 0.1382782757282257,
+              "error": 7.0838440668907765e-9
+            },
+            {
+              "x": 1,
+              "z": 1,
+              "cpu": 0.13470238253284453,
+              "visible": 0.1347023844718933,
+              "error": 1.939048782650943e-9
+            },
+            {
+              "x": 0.5,
+              "z": 0.5,
+              "cpu": 0.14636508198777978,
+              "visible": 0.14636507630348206,
+              "error": 5.684297726959997e-9
+            }
+          ],
+          "triangles": 40240,
+          "buildMs": 105
+        }
+      ]
+    },
+    "stoneRaised": {
+      "revision": "e2493ca3a47905f3",
+      "candidate": "contour-hypothesis-loop",
+      "delivery": "standalone-study-only",
+      "preset": "single",
+      "cells": [
+        {
+          "x": -1,
+          "z": -2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": -2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": -2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -2,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 2,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -2,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": 0,
+          "h": 3,
+          "material": "stone"
+        },
+        {
+          "x": 1,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 2,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -2,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 2,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": 2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": 2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": 2,
+          "h": 1,
+          "material": "soil"
+        }
+      ],
+      "undo": 2,
+      "redo": 0,
+      "finish": true,
+      "clay": false,
+      "methods": [
+        {
+          "method": "hard",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": [
+            {
+              "x": 0,
+              "z": 0,
+              "cpu": 1.2400000000000002,
+              "visible": 1.2400000095367432,
+              "error": 9.53674295089968e-9
+            },
+            {
+              "x": 1,
+              "z": 0,
+              "cpu": 0.15388330734633457,
+              "visible": 0.15388330817222595,
+              "error": 8.258913830605508e-10
+            },
+            {
+              "x": 0,
+              "z": 1,
+              "cpu": 0.13827828281206977,
+              "visible": 0.1382782757282257,
+              "error": 7.0838440668907765e-9
+            },
+            {
+              "x": 1,
+              "z": 1,
+              "cpu": 0.13470238253284453,
+              "visible": 0.1347023844718933,
+              "error": 1.939048782650943e-9
+            },
+            {
+              "x": 0.5,
+              "z": 0.5,
+              "cpu": null,
+              "error": null
+            }
+          ],
+          "triangles": 59512,
+          "buildMs": 110
+        },
+        {
+          "method": "blend",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": [
+            {
+              "x": 0,
+              "z": 0,
+              "cpu": 1.2400000000000002,
+              "visible": 1.2400000095367432,
+              "error": 9.53674295089968e-9
+            },
+            {
+              "x": 1,
+              "z": 0,
+              "cpu": 0.15388330734633457,
+              "visible": 0.15388330817222595,
+              "error": 8.258913830605508e-10
+            },
+            {
+              "x": 0,
+              "z": 1,
+              "cpu": 0.13827828281206977,
+              "visible": 0.1382782757282257,
+              "error": 7.0838440668907765e-9
+            },
+            {
+              "x": 1,
+              "z": 1,
+              "cpu": 0.13470238253284453,
+              "visible": 0.1347023844718933,
+              "error": 1.939048782650943e-9
+            },
+            {
+              "x": 0.5,
+              "z": 0.5,
+              "cpu": 0.14636508198777978,
+              "visible": 0.14636507630348206,
+              "error": 5.684297726959997e-9
+            }
+          ],
+          "triangles": 42968,
+          "buildMs": 109
+        }
+      ]
+    },
+    "undone": {
+      "revision": "e2493ca3a47905f3",
+      "candidate": "contour-hypothesis-loop",
+      "delivery": "standalone-study-only",
+      "preset": "single",
+      "cells": [
+        {
+          "x": -1,
+          "z": -2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": -2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": -2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -2,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 2,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -2,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": 0,
+          "h": 2,
+          "material": "stone"
+        },
+        {
+          "x": 1,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 2,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -2,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 2,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": 2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": 2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": 2,
+          "h": 1,
+          "material": "soil"
+        }
+      ],
+      "undo": 1,
+      "redo": 1,
+      "finish": true,
+      "clay": false,
+      "methods": [
+        {
+          "method": "hard",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": [
+            {
+              "x": 0,
+              "z": 0,
+              "cpu": 0.6900000000000001,
+              "visible": 0.6899999976158142,
+              "error": 2.3841858487472223e-9
+            },
+            {
+              "x": 1,
+              "z": 0,
+              "cpu": 0.15388330734633457,
+              "visible": 0.15388330817222595,
+              "error": 8.258913830605508e-10
+            },
+            {
+              "x": 0,
+              "z": 1,
+              "cpu": 0.13827828281206977,
+              "visible": 0.1382782757282257,
+              "error": 7.0838440668907765e-9
+            },
+            {
+              "x": 1,
+              "z": 1,
+              "cpu": 0.13470238253284453,
+              "visible": 0.1347023844718933,
+              "error": 1.939048782650943e-9
+            },
+            {
+              "x": 0.5,
+              "z": 0.5,
+              "cpu": null,
+              "error": null
+            }
+          ],
+          "triangles": 56784,
+          "buildMs": 115
+        },
+        {
+          "method": "blend",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": [
+            {
+              "x": 0,
+              "z": 0,
+              "cpu": 0.6900000000000001,
+              "visible": 0.6899999976158142,
+              "error": 2.3841858487472223e-9
+            },
+            {
+              "x": 1,
+              "z": 0,
+              "cpu": 0.15388330734633457,
+              "visible": 0.15388330817222595,
+              "error": 8.258913830605508e-10
+            },
+            {
+              "x": 0,
+              "z": 1,
+              "cpu": 0.13827828281206977,
+              "visible": 0.1382782757282257,
+              "error": 7.0838440668907765e-9
+            },
+            {
+              "x": 1,
+              "z": 1,
+              "cpu": 0.13470238253284453,
+              "visible": 0.1347023844718933,
+              "error": 1.939048782650943e-9
+            },
+            {
+              "x": 0.5,
+              "z": 0.5,
+              "cpu": 0.14636508198777978,
+              "visible": 0.14636507630348206,
+              "error": 5.684297726959997e-9
+            }
+          ],
+          "triangles": 40240,
+          "buildMs": 112
+        }
+      ]
+    },
+    "redone": {
+      "revision": "e2493ca3a47905f3",
+      "candidate": "contour-hypothesis-loop",
+      "delivery": "standalone-study-only",
+      "preset": "single",
+      "cells": [
+        {
+          "x": -1,
+          "z": -2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": -2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": -2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -2,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 2,
+          "z": -1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -2,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": 0,
+          "h": 3,
+          "material": "stone"
+        },
+        {
+          "x": 1,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 2,
+          "z": 0,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -2,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 2,
+          "z": 1,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": -1,
+          "z": 2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 0,
+          "z": 2,
+          "h": 1,
+          "material": "soil"
+        },
+        {
+          "x": 1,
+          "z": 2,
+          "h": 1,
+          "material": "soil"
+        }
+      ],
+      "undo": 2,
+      "redo": 0,
+      "finish": true,
+      "clay": false,
+      "methods": [
+        {
+          "method": "hard",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": [
+            {
+              "x": 0,
+              "z": 0,
+              "cpu": 1.2400000000000002,
+              "visible": 1.2400000095367432,
+              "error": 9.53674295089968e-9
+            },
+            {
+              "x": 1,
+              "z": 0,
+              "cpu": 0.15388330734633457,
+              "visible": 0.15388330817222595,
+              "error": 8.258913830605508e-10
+            },
+            {
+              "x": 0,
+              "z": 1,
+              "cpu": 0.13827828281206977,
+              "visible": 0.1382782757282257,
+              "error": 7.0838440668907765e-9
+            },
+            {
+              "x": 1,
+              "z": 1,
+              "cpu": 0.13470238253284453,
+              "visible": 0.1347023844718933,
+              "error": 1.939048782650943e-9
+            },
+            {
+              "x": 0.5,
+              "z": 0.5,
+              "cpu": null,
+              "error": null
+            }
+          ],
+          "triangles": 59512,
+          "buildMs": 117
+        },
+        {
+          "method": "blend",
+          "components": 1,
+          "centerDistance": 0.11597979746446663,
+          "originDistance": -0.5,
+          "samples": [
+            {
+              "x": 0,
+              "z": 0,
+              "cpu": 1.2400000000000002,
+              "visible": 1.2400000095367432,
+              "error": 9.53674295089968e-9
+            },
+            {
+              "x": 1,
+              "z": 0,
+              "cpu": 0.15388330734633457,
+              "visible": 0.15388330817222595,
+              "error": 8.258913830605508e-10
+            },
+            {
+              "x": 0,
+              "z": 1,
+              "cpu": 0.13827828281206977,
+              "visible": 0.1382782757282257,
+              "error": 7.0838440668907765e-9
+            },
+            {
+              "x": 1,
+              "z": 1,
+              "cpu": 0.13470238253284453,
+              "visible": 0.1347023844718933,
+              "error": 1.939048782650943e-9
+            },
+            {
+              "x": 0.5,
+              "z": 0.5,
+              "cpu": 0.14636508198777978,
+              "visible": 0.14636507630348206,
+              "error": 5.684297726959997e-9
+            }
+          ],
+          "triangles": 42968,
+          "buildMs": 108
+        }
+      ]
+    }
+  }
+}

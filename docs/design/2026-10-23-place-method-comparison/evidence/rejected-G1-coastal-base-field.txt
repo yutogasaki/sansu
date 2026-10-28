@@ -1,0 +1,50 @@
+import type { Cell, GrowingState } from '../../../src/domain/growingIsland/types';
+import { foundationEditWeight } from '../2026-10-22-place-strategy-trial/foundation';
+
+/** A land-derived zero-edit surface. Owners, current heights and placement
+ * legality cannot participate in this generator. Add the signed edit offset
+ * after this field, using a position-only foundation weight. */
+export const COASTAL_BASE_REVISION = 'land-derived-coastal-base-v1';
+type LandState = Pick<GrowingState, 'land'> & Partial<Pick<GrowingState, 'bridge'>>;
+export interface CoastalBaseOptions { minX: number; maxX: number; minZ: number; maxZ: number; seaLevel: number }
+const clamp = (value: number) => Math.max(0, Math.min(1, value));
+const smooth = (value: number) => { const t = clamp(value); return t * t * (3 - 2 * t); };
+const bump = (value: number) => Math.abs(value) >= 1 ? 0 : (1 - value * value) ** 3;
+
+export function createCoastalBaseField(state: LandState, sourceZeroHeight: (cell: Cell) => number, options: CoastalBaseOptions) {
+    const width = options.maxX - options.minX, depth = options.maxZ - options.minZ;
+    if (!(width > 0 && depth > 0 && Number.isFinite(options.seaLevel))) throw Error('Invalid coastal base bounds');
+    const centerX = (options.minX + options.maxX) / 2, centerZ = (options.minZ + options.maxZ) / 2;
+    const cornerRadius = Math.min(1.25, width * .22, depth * .24);
+    const sectionWidth = .78, shoreToe = .12;
+    // Broad, unequal bays are part of the acquired island's base, not responses
+    // to edits or objects. Their finite influence leaves a substantial core.
+    const bays = [
+        { side: 'west' as const, center: options.minZ + depth * .73, halfWidth: Math.min(1.7, depth * .34), depth: .72 },
+        { side: 'east' as const, center: options.minZ + depth * .29, halfWidth: Math.min(1.55, depth * .31), depth: .61 },
+        { side: 'south' as const, center: options.minX + width * .47, halfWidth: Math.min(1.65, width * .28), depth: .28 },
+    ];
+    const signedDistance = (point: Cell) => {
+        const qx = Math.abs(point.x - centerX) - (width / 2 - cornerRadius);
+        const qz = Math.abs(point.z - centerZ) - (depth / 2 - cornerRadius);
+        const roundedRectangle = -(Math.hypot(Math.max(qx, 0), Math.max(qz, 0)) + Math.min(Math.max(qx, qz), 0) - cornerRadius);
+        const retreat = bays.reduce((sum, bay) => {
+            const along = bay.side === 'south' ? point.x : point.z;
+            const edgeDistance = bay.side === 'west' ? point.x - options.minX : bay.side === 'east' ? options.maxX - point.x : options.maxZ - point.z;
+            return sum + bay.depth * bump((along - bay.center) / bay.halfWidth) * (1 - smooth(Math.max(0, edgeDistance) / 2));
+        }, 0);
+        return roundedRectangle - retreat;
+    };
+    const heightAt = (point: Cell) => {
+        const original = sourceZeroHeight(point);
+        const t = smooth((signedDistance(point) + shoreToe) / (sectionWidth + shoreToe));
+        const coast = options.seaLevel - .12 + (original - (options.seaLevel - .12)) * t;
+        // Inward-only change means this base cannot create new dry unowned
+        // triangles. Fixed supports and their triangulation neighbourhood stay
+        // exact. Both masks depend only on acquired land and position.
+        return original - Math.max(0, original - coast) * foundationEditWeight(state, point);
+    };
+    return { heightAt, signedDistance, proof: { revision: COASTAL_BASE_REVISION, cornerRadius, sectionWidth, shoreToe, bays,
+        ownerIndependent: true, editIndependent: true, offsetPolicy: 'add signed physical offset after base, without input-dependent masks',
+        limitation: 'zero-edit centre heights and available placement area may differ from A; acquisition may reshape the base; existing owners and fixed supports require measurement' } };
+}

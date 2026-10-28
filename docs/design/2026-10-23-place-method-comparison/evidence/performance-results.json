@@ -1,0 +1,4410 @@
+{
+  "at": "2026-10-22T20:26:50.481Z",
+  "node": "v22.23.3",
+  "scope": "Fresh Node process per cold trial; all compilation and graph work included; no browser frame/GPU measurements",
+  "hashes": {
+    "src/domain/growingIsland/editableTerrainWorld.ts": "7606a6d2be402e90ef85154cd28e8cf3c07dd5d690538b37bbfbfd700e1fc324",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-23-place-method-comparison/section-profile.ts": "02bdb9e0867e2da27f82784e1e2d4860e0aea3f4163a08859bbaf90c08990b47",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-23-place-method-comparison/coastal-field.ts": "3ff22c3c6a20d4e0235e171dbf372d7a81c726457516a26e810acba3da9d2cc8",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-23-place-method-comparison/terrain-transform.mjs": "27462c35eaa819fc3880254f107aba1fac79b75c9abd49598e00cd82da99957f",
+    "/Users/yutogasaki/Projects/sansu/docs/design/2026-10-23-place-method-comparison/performance-check.ts": "969395eec2a4953f12ab1ac1470d11c30d9ce7f58ac8effddb3337961e84c857"
+  },
+  "entries": [
+    {
+      "kind": "initial",
+      "method": "C",
+      "coldMs": 147.62170799999998,
+      "cacheHitMedianMs": 0.0005829999999775737,
+      "cacheHitMaxMs": 0.0715420000000222,
+      "heapDeltaBytes": 46929152,
+      "sites": 99,
+      "floorTriangles": 3002,
+      "fixture": "explicit same initial/expanded/bay input; not acquired via browser",
+      "revision": "true:[\"connected-coast-band-v2\",\"C\",{\"extra\":[],\"capes\":[]},null,[]]",
+      "trial": 1
+    },
+    {
+      "kind": "initial",
+      "method": "C",
+      "coldMs": 150.279167,
+      "cacheHitMedianMs": 0.0004999999999881766,
+      "cacheHitMaxMs": 0.057999999999992724,
+      "heapDeltaBytes": 36498672,
+      "sites": 99,
+      "floorTriangles": 3002,
+      "fixture": "explicit same initial/expanded/bay input; not acquired via browser",
+      "revision": "true:[\"connected-coast-band-v2\",\"C\",{\"extra\":[],\"capes\":[]},null,[]]",
+      "trial": 2
+    },
+    {
+      "kind": "initial",
+      "method": "C",
+      "coldMs": 143.632833,
+      "cacheHitMedianMs": 0.0004589999999780048,
+      "cacheHitMaxMs": 0.06475000000000364,
+      "heapDeltaBytes": 49249224,
+      "sites": 99,
+      "floorTriangles": 3002,
+      "fixture": "explicit same initial/expanded/bay input; not acquired via browser",
+      "revision": "true:[\"connected-coast-band-v2\",\"C\",{\"extra\":[],\"capes\":[]},null,[]]",
+      "trial": 3
+    },
+    {
+      "kind": "expanded",
+      "method": "C",
+      "coldMs": 336.698834,
+      "cacheHitMedianMs": 0.0006250000000136424,
+      "cacheHitMaxMs": 0.07437500000003183,
+      "heapDeltaBytes": 83828864,
+      "sites": 435,
+      "floorTriangles": 10662,
+      "fixture": "explicit same initial/expanded/bay input; not acquired via browser",
+      "revision": "true:[\"connected-coast-band-v2\",\"C\",{\"extra\":[\"west\",\"south\"],\"capes\":[\"east\"],\"expanded\":\"east\"},null,[]]",
+      "trial": 1
+    },
+    {
+      "kind": "expanded",
+      "method": "C",
+      "coldMs": 334.541083,
+      "cacheHitMedianMs": 0.0006250000000136424,
+      "cacheHitMaxMs": 0.09258299999999053,
+      "heapDeltaBytes": 84612088,
+      "sites": 435,
+      "floorTriangles": 10662,
+      "fixture": "explicit same initial/expanded/bay input; not acquired via browser",
+      "revision": "true:[\"connected-coast-band-v2\",\"C\",{\"extra\":[\"west\",\"south\"],\"capes\":[\"east\"],\"expanded\":\"east\"},null,[]]",
+      "trial": 2
+    },
+    {
+      "kind": "expanded",
+      "method": "C",
+      "coldMs": 330.503583,
+      "cacheHitMedianMs": 0.0006250000000136424,
+      "cacheHitMaxMs": 0.06987500000002456,
+      "heapDeltaBytes": 90981312,
+      "sites": 435,
+      "floorTriangles": 10662,
+      "fixture": "explicit same initial/expanded/bay input; not acquired via browser",
+      "revision": "true:[\"connected-coast-band-v2\",\"C\",{\"extra\":[\"west\",\"south\"],\"capes\":[\"east\"],\"expanded\":\"east\"},null,[]]",
+      "trial": 3
+    },
+    {
+      "kind": "multiple-bays",
+      "method": "C",
+      "coldMs": 350.840125,
+      "cacheHitMedianMs": 0.004000000000019099,
+      "cacheHitMaxMs": 0.0830829999999878,
+      "heapDeltaBytes": 99682864,
+      "sites": 428,
+      "floorTriangles": 10356,
+      "fixture": "explicit same initial/expanded/bay input; not acquired via browser",
+      "revision": "true:[\"connected-coast-band-v2\",\"C\",{\"extra\":[\"west\",\"south\"],\"capes\":[\"east\"],\"expanded\":\"east\"},null,[[\"-2,3\",-3],[\"-3,2\",-4],[\"-3,3\",-4],[\"1,5\",8],[\"10,3\",-3],[\"11,2\",-4],[\"11,3\",-4],[\"2,5\",8],[\"3,7\",-4],[\"4,6\",-3],[\"4,7\",-4]]]",
+      "trial": 1
+    },
+    {
+      "kind": "multiple-bays",
+      "method": "C",
+      "coldMs": 384.929167,
+      "cacheHitMedianMs": 0.004124999999987722,
+      "cacheHitMaxMs": 0.083500000000015,
+      "heapDeltaBytes": 97300440,
+      "sites": 428,
+      "floorTriangles": 10356,
+      "fixture": "explicit same initial/expanded/bay input; not acquired via browser",
+      "revision": "true:[\"connected-coast-band-v2\",\"C\",{\"extra\":[\"west\",\"south\"],\"capes\":[\"east\"],\"expanded\":\"east\"},null,[[\"-2,3\",-3],[\"-3,2\",-4],[\"-3,3\",-4],[\"1,5\",8],[\"10,3\",-3],[\"11,2\",-4],[\"11,3\",-4],[\"2,5\",8],[\"3,7\",-4],[\"4,6\",-3],[\"4,7\",-4]]]",
+      "trial": 2
+    },
+    {
+      "kind": "multiple-bays",
+      "method": "C",
+      "coldMs": 348.11820800000004,
+      "cacheHitMedianMs": 0.004082999999980075,
+      "cacheHitMaxMs": 0.08908400000001393,
+      "heapDeltaBytes": 88402232,
+      "sites": 428,
+      "floorTriangles": 10356,
+      "fixture": "explicit same initial/expanded/bay input; not acquired via browser",
+      "revision": "true:[\"connected-coast-band-v2\",\"C\",{\"extra\":[\"west\",\"south\"],\"capes\":[\"east\"],\"expanded\":\"east\"},null,[[\"-2,3\",-3],[\"-3,2\",-4],[\"-3,3\",-4],[\"1,5\",8],[\"10,3\",-3],[\"11,2\",-4],[\"11,3\",-4],[\"2,5\",8],[\"3,7\",-4],[\"4,6\",-3],[\"4,7\",-4]]]",
+      "trial": 3
+    },
+    {
+      "kind": "scan",
+      "method": "C",
+      "fixture": "normal applyIntent commands on explicit newIsland; initial owners retained; actor-free diagnostic",
+      "warningCriteria": "C response beyond A > .10m or actual dry-to-dry change > .23m for one .18m input step",
+      "warnings": [
+        {
+          "target": {
+            "x": 0,
+            "z": 1
+          },
+          "delta": -1,
+          "step": 3,
+          "center": {
+            "before": -0.36,
+            "delta": -0.040000000000000036,
+            "suppressionVsA": 0
+          },
+          "reversedRaiseProbes": 0,
+          "maxRaiseReversal": 0,
+          "inputHeight": -3,
+          "accepted": true,
+          "commandMs": 82.88708299999996,
+          "lostProtected": [],
+          "maxDryHeightJump": 0.19204504100000003,
+          "maxChangeIncludingWater": 0.22000000000000003,
+          "maxExtraResponse": 0.13,
+          "worst": {
+            "cell": {
+              "x": 0.5,
+              "z": 1
+            },
+            "before": -0.18,
+            "after": -0.4,
+            "deltaA": -0.09000000000000002
+          },
+          "changedOver2cm": 406,
+          "lostDryProbes": 86,
+          "supportedOwners": 2
+        },
+        {
+          "target": {
+            "x": 0,
+            "z": 1
+          },
+          "delta": 1,
+          "step": 1,
+          "center": {
+            "after": -0.36,
+            "expectedAfterA": -0.36,
+            "delta": 0.040000000000000036,
+            "suppressionVsA": 0
+          },
+          "reversedRaiseProbes": 0,
+          "maxRaiseReversal": 0,
+          "inputHeight": -2,
+          "accepted": true,
+          "commandMs": 0.4996249999999236,
+          "lostProtected": [],
+          "maxDryHeightJump": 0.19204504100000003,
+          "maxChangeIncludingWater": 0.22000000000000003,
+          "maxExtraResponse": 0.13,
+          "worst": {
+            "cell": {
+              "x": 0.5,
+              "z": 1
+            },
+            "before": -0.4,
+            "after": -0.18,
+            "deltaA": 0.09000000000000002
+          },
+          "changedOver2cm": 406,
+          "lostDryProbes": 0,
+          "supportedOwners": 2
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 0
+          },
+          "delta": -1,
+          "step": 4,
+          "center": {
+            "delta": 0,
+            "suppressionVsA": 0
+          },
+          "reversedRaiseProbes": 0,
+          "maxRaiseReversal": 0,
+          "inputHeight": -4,
+          "accepted": true,
+          "commandMs": 79.42279099999996,
+          "lostProtected": [
+            "4,1"
+          ],
+          "maxDryHeightJump": 0.17011271500000003,
+          "maxChangeIncludingWater": 0.202342232,
+          "maxExtraResponse": 0.163922479,
+          "worst": {
+            "cell": {
+              "x": 4.9,
+              "z": 0.7
+            },
+            "before": -0.197657768,
+            "after": -0.4,
+            "deltaA": -0.038419753
+          },
+          "changedOver2cm": 213,
+          "lostDryProbes": 56,
+          "supportedOwners": 2
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 0
+          },
+          "delta": 1,
+          "step": 1,
+          "center": {
+            "delta": 0,
+            "suppressionVsA": 0
+          },
+          "reversedRaiseProbes": 0,
+          "maxRaiseReversal": 0,
+          "inputHeight": -3,
+          "accepted": true,
+          "commandMs": 0.4458329999997659,
+          "lostProtected": [],
+          "maxDryHeightJump": 0.17011271500000003,
+          "maxChangeIncludingWater": 0.202342232,
+          "maxExtraResponse": 0.163922479,
+          "worst": {
+            "cell": {
+              "x": 4.9,
+              "z": 0.7
+            },
+            "before": -0.4,
+            "after": -0.197657768,
+            "deltaA": 0.038419753
+          },
+          "changedOver2cm": 213,
+          "lostDryProbes": 0,
+          "supportedOwners": 2
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 1
+          },
+          "delta": -1,
+          "step": 3,
+          "center": {
+            "before": -0.36,
+            "delta": -0.040000000000000036,
+            "suppressionVsA": 0
+          },
+          "reversedRaiseProbes": 0,
+          "maxRaiseReversal": 0,
+          "inputHeight": -3,
+          "accepted": true,
+          "commandMs": 62.666541999999936,
+          "lostProtected": [],
+          "maxDryHeightJump": 0.19209955900000003,
+          "maxChangeIncludingWater": 0.22000000000000003,
+          "maxExtraResponse": 0.13,
+          "worst": {
+            "cell": {
+              "x": 4.5,
+              "z": 1
+            },
+            "before": -0.18,
+            "after": -0.4,
+            "deltaA": -0.09000000000000002
+          },
+          "changedOver2cm": 424,
+          "lostDryProbes": 91,
+          "supportedOwners": 2
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 1
+          },
+          "delta": -1,
+          "step": 4,
+          "center": {
+            "delta": 0,
+            "suppressionVsA": 0
+          },
+          "reversedRaiseProbes": 0,
+          "maxRaiseReversal": 0,
+          "inputHeight": -4,
+          "accepted": true,
+          "commandMs": 62.2523340000007,
+          "lostProtected": [
+            "4,0",
+            "4,2"
+          ],
+          "maxDryHeightJump": 0.20349379300000003,
+          "maxChangeIncludingWater": 0.20349379300000003,
+          "maxExtraResponse": 0.18349379300000002,
+          "worst": {
+            "cell": {
+              "x": 4.2,
+              "z": 1
+            },
+            "before": -0.171349602,
+            "after": -0.374843395,
+            "deltaA": -0.020000000000000004
+          },
+          "changedOver2cm": 347,
+          "lostDryProbes": 78,
+          "supportedOwners": 2
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 1
+          },
+          "delta": 1,
+          "step": 1,
+          "center": {
+            "delta": 0,
+            "suppressionVsA": 0
+          },
+          "reversedRaiseProbes": 0,
+          "maxRaiseReversal": 0,
+          "inputHeight": -3,
+          "accepted": true,
+          "commandMs": 0.46050000000104774,
+          "lostProtected": [],
+          "maxDryHeightJump": 0.20349379300000003,
+          "maxChangeIncludingWater": 0.20349379300000003,
+          "maxExtraResponse": 0.18349379300000002,
+          "worst": {
+            "cell": {
+              "x": 4.2,
+              "z": 1
+            },
+            "before": -0.374843395,
+            "after": -0.171349602,
+            "deltaA": 0.020000000000000004
+          },
+          "changedOver2cm": 347,
+          "lostDryProbes": 0,
+          "supportedOwners": 2
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 1
+          },
+          "delta": 1,
+          "step": 2,
+          "center": {
+            "after": -0.36,
+            "expectedAfterA": -0.36,
+            "delta": 0.040000000000000036,
+            "suppressionVsA": 0
+          },
+          "reversedRaiseProbes": 0,
+          "maxRaiseReversal": 0,
+          "inputHeight": -2,
+          "accepted": true,
+          "commandMs": 0.46200000000135333,
+          "lostProtected": [],
+          "maxDryHeightJump": 0.19209955900000003,
+          "maxChangeIncludingWater": 0.22000000000000003,
+          "maxExtraResponse": 0.13,
+          "worst": {
+            "cell": {
+              "x": 4.5,
+              "z": 1
+            },
+            "before": -0.4,
+            "after": -0.18,
+            "deltaA": 0.09000000000000002
+          },
+          "changedOver2cm": 424,
+          "lostDryProbes": 0,
+          "supportedOwners": 2
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 3
+          },
+          "delta": -1,
+          "step": 3,
+          "center": {
+            "before": -0.36,
+            "delta": -0.040000000000000036,
+            "suppressionVsA": 0
+          },
+          "reversedRaiseProbes": 0,
+          "maxRaiseReversal": 0,
+          "inputHeight": -3,
+          "accepted": true,
+          "commandMs": 63.72408400000131,
+          "lostProtected": [],
+          "maxDryHeightJump": 0.187776944,
+          "maxChangeIncludingWater": 0.19506172800000002,
+          "maxExtraResponse": 0.117751931,
+          "worst": {
+            "cell": {
+              "x": 4.8,
+              "z": 3.2
+            },
+            "before": -0.135818569,
+            "after": -0.317136689,
+            "deltaA": -0.06356618900000002
+          },
+          "changedOver2cm": 391,
+          "lostDryProbes": 78,
+          "supportedOwners": 2
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 3
+          },
+          "delta": -1,
+          "step": 4,
+          "center": {
+            "delta": 0,
+            "suppressionVsA": 0
+          },
+          "reversedRaiseProbes": 0,
+          "maxRaiseReversal": 0,
+          "inputHeight": -4,
+          "accepted": true,
+          "commandMs": 80.02995799999917,
+          "lostProtected": [
+            "4,2"
+          ],
+          "maxDryHeightJump": 0.19028298999999999,
+          "maxChangeIncludingWater": 0.19761736600000002,
+          "maxExtraResponse": 0.17136941,
+          "worst": {
+            "cell": {
+              "x": 4.2,
+              "z": 2.9
+            },
+            "before": -0.1635414,
+            "after": -0.35382439,
+            "deltaA": -0.01891358
+          },
+          "changedOver2cm": 340,
+          "lostDryProbes": 74,
+          "supportedOwners": 2
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 3
+          },
+          "delta": 1,
+          "step": 1,
+          "center": {
+            "delta": 0,
+            "suppressionVsA": 0
+          },
+          "reversedRaiseProbes": 0,
+          "maxRaiseReversal": 0,
+          "inputHeight": -3,
+          "accepted": true,
+          "commandMs": 0.5092920000006416,
+          "lostProtected": [],
+          "maxDryHeightJump": 0.19028298999999999,
+          "maxChangeIncludingWater": 0.19761736600000002,
+          "maxExtraResponse": 0.17136941,
+          "worst": {
+            "cell": {
+              "x": 4.2,
+              "z": 2.9
+            },
+            "before": -0.35382439,
+            "after": -0.1635414,
+            "deltaA": 0.01891358
+          },
+          "changedOver2cm": 340,
+          "lostDryProbes": 0,
+          "supportedOwners": 2
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 3
+          },
+          "delta": 1,
+          "step": 2,
+          "center": {
+            "after": -0.36,
+            "expectedAfterA": -0.36,
+            "delta": 0.040000000000000036,
+            "suppressionVsA": 0
+          },
+          "reversedRaiseProbes": 0,
+          "maxRaiseReversal": 0,
+          "inputHeight": -2,
+          "accepted": true,
+          "commandMs": 0.7751250000001164,
+          "lostProtected": [],
+          "maxDryHeightJump": 0.187776944,
+          "maxChangeIncludingWater": 0.19506172800000002,
+          "maxExtraResponse": 0.117751931,
+          "worst": {
+            "cell": {
+              "x": 4.8,
+              "z": 3.2
+            },
+            "before": -0.317136689,
+            "after": -0.135818569,
+            "deltaA": 0.06356618900000002
+          },
+          "changedOver2cm": 391,
+          "lostDryProbes": 0,
+          "supportedOwners": 2
+        }
+      ],
+      "tracks": [
+        {
+          "target": {
+            "x": 0,
+            "z": 1
+          },
+          "delta": -1,
+          "scenario": "dig",
+          "startHeight": 0,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "before": 0,
+                "after": -0.18,
+                "expectedAfterA": -0.18,
+                "delta": -0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -1,
+              "accepted": true,
+              "commandMs": 86.76566600000001,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.02647227799999996,
+              "worst": {
+                "cell": {
+                  "x": -0.8,
+                  "z": 1.6
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": -0.02647227799999996
+              },
+              "changedOver2cm": 224,
+              "lostDryProbes": 8,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "center": {
+                "before": -0.18,
+                "after": -0.36,
+                "expectedAfterA": -0.36,
+                "delta": -0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -2,
+              "accepted": true,
+              "commandMs": 77.56345900000002,
+              "lostProtected": [
+                "0,0",
+                "0,1",
+                "1,1",
+                "0,2"
+              ],
+              "maxDryHeightJump": 0.19949548300000003,
+              "maxChangeIncludingWater": 0.22800000000000004,
+              "maxExtraResponse": 0.05600000000000005,
+              "worst": {
+                "cell": {
+                  "x": -0.5,
+                  "z": 0.9
+                },
+                "before": -0.172,
+                "after": -0.4,
+                "deltaA": -0.172
+              },
+              "changedOver2cm": 237,
+              "lostDryProbes": 18,
+              "supportedOwners": 2
+            },
+            {
+              "step": 3,
+              "center": {
+                "before": -0.36,
+                "delta": -0.040000000000000036,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -3,
+              "accepted": true,
+              "commandMs": 82.88708299999996,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.19204504100000003,
+              "maxChangeIncludingWater": 0.22000000000000003,
+              "maxExtraResponse": 0.13,
+              "worst": {
+                "cell": {
+                  "x": 0.5,
+                  "z": 1
+                },
+                "before": -0.18,
+                "after": -0.4,
+                "deltaA": -0.09000000000000002
+              },
+              "changedOver2cm": 406,
+              "lostDryProbes": 86,
+              "supportedOwners": 2
+            },
+            {
+              "step": 4,
+              "accepted": false,
+              "reason": "ものの 足もとだよ。さきに うごかしてみよう。",
+              "commandMs": 69.11425000000008
+            }
+          ]
+        },
+        {
+          "target": {
+            "x": 0,
+            "z": 1
+          },
+          "delta": 1,
+          "scenario": "raise",
+          "startHeight": 0,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "before": 0,
+                "after": 0.18,
+                "expectedAfterA": 0.18,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 1,
+              "accepted": true,
+              "commandMs": 70.77191600000003,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.023504167999999992,
+              "worst": {
+                "cell": {
+                  "x": -0.8,
+                  "z": 1.6
+                },
+                "before": -0.4,
+                "after": -0.350023555,
+                "deltaA": 0.026472277000000044
+              },
+              "changedOver2cm": 228,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "center": {
+                "before": 0.18,
+                "after": 0.36,
+                "expectedAfterA": 0.36,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 2,
+              "accepted": true,
+              "commandMs": 67.05600000000004,
+              "lostProtected": [
+                "0,0",
+                "0,1",
+                "1,1",
+                "0,2"
+              ],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 2.0000000544584395e-9,
+              "worst": {
+                "cell": {
+                  "x": -0.8,
+                  "z": 1.3
+                },
+                "before": -0.31651264,
+                "after": -0.270691794,
+                "deltaA": 0.04582084399999997
+              },
+              "changedOver2cm": 227,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 3,
+              "center": {
+                "before": 0.36,
+                "after": 0.54,
+                "expectedAfterA": 0.54,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 3,
+              "accepted": true,
+              "commandMs": 68.5155830000001,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 1.999999943436137e-9,
+              "worst": {
+                "cell": {
+                  "x": -0.8,
+                  "z": 1.9
+                },
+                "before": -0.349609307,
+                "after": -0.345577273,
+                "deltaA": 0.004032032000000019
+              },
+              "changedOver2cm": 227,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 4,
+              "accepted": false,
+              "reason": "ものの 足もとだよ。さきに うごかしてみよう。",
+              "commandMs": 80.7165829999999
+            }
+          ]
+        },
+        {
+          "target": {
+            "x": 0,
+            "z": 1
+          },
+          "delta": 1,
+          "scenario": "recover",
+          "startHeight": -3,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "after": -0.36,
+                "expectedAfterA": -0.36,
+                "delta": 0.040000000000000036,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -2,
+              "accepted": true,
+              "commandMs": 0.4996249999999236,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.19204504100000003,
+              "maxChangeIncludingWater": 0.22000000000000003,
+              "maxExtraResponse": 0.13,
+              "worst": {
+                "cell": {
+                  "x": 0.5,
+                  "z": 1
+                },
+                "before": -0.4,
+                "after": -0.18,
+                "deltaA": 0.09000000000000002
+              },
+              "changedOver2cm": 406,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "center": {
+                "before": -0.36,
+                "after": -0.18,
+                "expectedAfterA": -0.18,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 1,
+              "maxRaiseReversal": 0.03369565500000005,
+              "inputHeight": -1,
+              "accepted": true,
+              "commandMs": 0.7051249999999527,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.19949548300000003,
+              "maxChangeIncludingWater": 0.22800000000000004,
+              "maxExtraResponse": 0.05600000000000005,
+              "worst": {
+                "cell": {
+                  "x": -0.5,
+                  "z": 0.9
+                },
+                "before": -0.4,
+                "after": -0.172,
+                "deltaA": 0.172
+              },
+              "changedOver2cm": 237,
+              "lostDryProbes": 1,
+              "supportedOwners": 2
+            },
+            {
+              "step": 3,
+              "center": {
+                "before": -0.18,
+                "after": 0,
+                "expectedAfterA": 0,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 0,
+              "accepted": true,
+              "commandMs": 0.45308399999998983,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.02647227799999996,
+              "worst": {
+                "cell": {
+                  "x": -0.8,
+                  "z": 1.6
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.02647227799999996
+              },
+              "changedOver2cm": 224,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 4,
+              "center": {
+                "before": 0,
+                "after": 0.18,
+                "expectedAfterA": 0.18,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 1,
+              "accepted": true,
+              "commandMs": 64.4748340000001,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.023504167999999992,
+              "worst": {
+                "cell": {
+                  "x": -0.8,
+                  "z": 1.6
+                },
+                "before": -0.4,
+                "after": -0.350023555,
+                "deltaA": 0.026472277000000044
+              },
+              "changedOver2cm": 228,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 5,
+              "center": {
+                "before": 0.18,
+                "after": 0.36,
+                "expectedAfterA": 0.36,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 2,
+              "accepted": true,
+              "commandMs": 65.4626659999999,
+              "lostProtected": [
+                "0,0",
+                "0,1",
+                "1,1",
+                "0,2"
+              ],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 2.0000000544584395e-9,
+              "worst": {
+                "cell": {
+                  "x": -0.8,
+                  "z": 1.3
+                },
+                "before": -0.31651264,
+                "after": -0.270691794,
+                "deltaA": 0.04582084399999997
+              },
+              "changedOver2cm": 227,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 6,
+              "center": {
+                "before": 0.36,
+                "after": 0.54,
+                "expectedAfterA": 0.54,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 3,
+              "accepted": true,
+              "commandMs": 75.1159160000002,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 1.999999943436137e-9,
+              "worst": {
+                "cell": {
+                  "x": -0.8,
+                  "z": 1.9
+                },
+                "before": -0.349609307,
+                "after": -0.345577273,
+                "deltaA": 0.004032032000000019
+              },
+              "changedOver2cm": 227,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 7,
+              "accepted": false,
+              "reason": "ものの 足もとだよ。さきに うごかしてみよう。",
+              "commandMs": 63.51666699999987
+            }
+          ]
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 0
+          },
+          "delta": -1,
+          "scenario": "dig",
+          "startHeight": 0,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "before": 0,
+                "after": -0.18,
+                "expectedAfterA": -0.18,
+                "delta": -0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -1,
+              "accepted": true,
+              "commandMs": 122.58750000000009,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.08675610100000003,
+              "worst": {
+                "cell": {
+                  "x": 5.8,
+                  "z": -0.5
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": -0.08675610100000003
+              },
+              "changedOver2cm": 240,
+              "lostDryProbes": 16,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "center": {
+                "before": -0.18,
+                "after": -0.36,
+                "expectedAfterA": -0.36,
+                "delta": -0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -2,
+              "accepted": true,
+              "commandMs": 62.940833999999995,
+              "lostProtected": [
+                "4,0",
+                "5,0",
+                "5,1"
+              ],
+              "maxDryHeightJump": 0.196084333,
+              "maxChangeIncludingWater": 0.22800000000000004,
+              "maxExtraResponse": 0.08362217500000002,
+              "worst": {
+                "cell": {
+                  "x": 4.7,
+                  "z": -0.8
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": -0.08362217500000002
+              },
+              "changedOver2cm": 246,
+              "lostDryProbes": 61,
+              "supportedOwners": 2
+            },
+            {
+              "step": 3,
+              "center": {
+                "before": -0.36,
+                "delta": -0.040000000000000036,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -3,
+              "accepted": true,
+              "commandMs": 70.37887499999988,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.16734938300000002,
+              "maxChangeIncludingWater": 0.19185185200000002,
+              "maxExtraResponse": 0.092291952,
+              "worst": {
+                "cell": {
+                  "x": 5.5,
+                  "z": 1
+                },
+                "before": -0.008934681,
+                "after": -0.101226633,
+                "deltaA": 0
+              },
+              "changedOver2cm": 292,
+              "lostDryProbes": 86,
+              "supportedOwners": 2
+            },
+            {
+              "step": 4,
+              "center": {
+                "delta": 0,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -4,
+              "accepted": true,
+              "commandMs": 79.42279099999996,
+              "lostProtected": [
+                "4,1"
+              ],
+              "maxDryHeightJump": 0.17011271500000003,
+              "maxChangeIncludingWater": 0.202342232,
+              "maxExtraResponse": 0.163922479,
+              "worst": {
+                "cell": {
+                  "x": 4.9,
+                  "z": 0.7
+                },
+                "before": -0.197657768,
+                "after": -0.4,
+                "deltaA": -0.038419753
+              },
+              "changedOver2cm": 213,
+              "lostDryProbes": 56,
+              "supportedOwners": 2
+            }
+          ]
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 0
+          },
+          "delta": 1,
+          "scenario": "raise",
+          "startHeight": 0,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "before": 0,
+                "after": 0.18,
+                "expectedAfterA": 0.18,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 1,
+              "accepted": true,
+              "commandMs": 61.272665999999845,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.06965154600000001,
+              "worst": {
+                "cell": {
+                  "x": 5.3,
+                  "z": -0.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.06965154600000001
+              },
+              "changedOver2cm": 253,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "center": {
+                "before": 0.18,
+                "after": 0.36,
+                "expectedAfterA": 0.36,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 2,
+              "accepted": true,
+              "commandMs": 61.4170409999997,
+              "lostProtected": [
+                "4,0",
+                "5,0",
+                "5,1"
+              ],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.04196449100000005,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": -0.5
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.04196449100000005
+              },
+              "changedOver2cm": 262,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 3,
+              "center": {
+                "before": 0.36,
+                "after": 0.54,
+                "expectedAfterA": 0.54,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 3,
+              "accepted": true,
+              "commandMs": 61.70204199999989,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.030932921999999974,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": -0.4
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.030932921999999974
+              },
+              "changedOver2cm": 267,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 4,
+              "center": {
+                "before": 0.54,
+                "after": 0.72,
+                "expectedAfterA": 0.72,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 4,
+              "accepted": true,
+              "commandMs": 67.28137500000003,
+              "lostProtected": [
+                "4,1"
+              ],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.024903438000000055,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": -0.6
+                },
+                "before": -0.4,
+                "after": -0.3450255,
+                "deltaA": 0.030071061999999982
+              },
+              "changedOver2cm": 286,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 5,
+              "center": {
+                "before": 0.72,
+                "after": 0.9,
+                "expectedAfterA": 0.9,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 5,
+              "accepted": true,
+              "commandMs": 62.81037500000002,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.024548309000000046,
+              "worst": {
+                "cell": {
+                  "x": 4.2,
+                  "z": -0.9
+                },
+                "before": -0.4,
+                "after": -0.369583944,
+                "deltaA": 0.005867746999999979
+              },
+              "changedOver2cm": 292,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 6,
+              "center": {
+                "before": 0.9,
+                "after": 1.08,
+                "expectedAfterA": 1.08,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 6,
+              "accepted": true,
+              "commandMs": 78.24279200000001,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.0021986370000000033,
+              "worst": {
+                "cell": {
+                  "x": 4.1,
+                  "z": -0.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.0021986370000000033
+              },
+              "changedOver2cm": 276,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 7,
+              "center": {
+                "before": 1.08,
+                "after": 1.26,
+                "expectedAfterA": 1.26,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 7,
+              "accepted": true,
+              "commandMs": 66.93379199999981,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.0021986350000000043,
+              "worst": {
+                "cell": {
+                  "x": 4.1,
+                  "z": -0.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.0021986350000000043
+              },
+              "changedOver2cm": 288,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 8,
+              "center": {
+                "before": 1.26,
+                "after": 1.44,
+                "expectedAfterA": 1.44,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 8,
+              "accepted": true,
+              "commandMs": 61.06616600000052,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.002198635999999976,
+              "worst": {
+                "cell": {
+                  "x": 4.1,
+                  "z": -0.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.002198635999999976
+              },
+              "changedOver2cm": 275,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 9,
+              "center": {
+                "before": 1.44,
+                "after": 1.62,
+                "expectedAfterA": 1.62,
+                "delta": 0.18000000000000016,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 9,
+              "accepted": true,
+              "commandMs": 60.90916600000037,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000016,
+              "maxChangeIncludingWater": 0.18000000000000016,
+              "maxExtraResponse": 0.0021986360000000316,
+              "worst": {
+                "cell": {
+                  "x": 4.1,
+                  "z": -0.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.0021986360000000316
+              },
+              "changedOver2cm": 273,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 10,
+              "center": {
+                "before": 1.62,
+                "after": 1.8,
+                "expectedAfterA": 1.8,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 10,
+              "accepted": true,
+              "commandMs": 61.376249999999345,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.0021986370000000033,
+              "worst": {
+                "cell": {
+                  "x": 4.1,
+                  "z": -0.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.0021986370000000033
+              },
+              "changedOver2cm": 275,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 11,
+              "center": {
+                "before": 1.8,
+                "after": 1.98,
+                "expectedAfterA": 1.98,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 11,
+              "accepted": true,
+              "commandMs": 61.22383400000035,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.024902134999999992,
+              "worst": {
+                "cell": {
+                  "x": 4.1,
+                  "z": -0.9
+                },
+                "before": -0.4,
+                "after": -0.37289923,
+                "deltaA": 0.0021986350000000043
+              },
+              "changedOver2cm": 288,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 12,
+              "center": {
+                "before": 1.98,
+                "after": 2.16,
+                "expectedAfterA": 2.16,
+                "delta": 0.18000000000000016,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 12,
+              "accepted": true,
+              "commandMs": 78.13116700000046,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000016,
+              "maxChangeIncludingWater": 0.18000000000000016,
+              "maxExtraResponse": 2.9999999845431446e-9,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": -0.6
+                },
+                "before": -0.134528062,
+                "after": -0.104457001,
+                "deltaA": 0.030071063999999995
+              },
+              "changedOver2cm": 272,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            }
+          ]
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 0
+          },
+          "delta": 1,
+          "scenario": "recover",
+          "startHeight": -4,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "delta": 0,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -3,
+              "accepted": true,
+              "commandMs": 0.4458329999997659,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17011271500000003,
+              "maxChangeIncludingWater": 0.202342232,
+              "maxExtraResponse": 0.163922479,
+              "worst": {
+                "cell": {
+                  "x": 4.9,
+                  "z": 0.7
+                },
+                "before": -0.4,
+                "after": -0.197657768,
+                "deltaA": 0.038419753
+              },
+              "changedOver2cm": 213,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "center": {
+                "after": -0.36,
+                "expectedAfterA": -0.36,
+                "delta": 0.040000000000000036,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -2,
+              "accepted": true,
+              "commandMs": 0.4647500000000946,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.16734938300000002,
+              "maxChangeIncludingWater": 0.19185185200000002,
+              "maxExtraResponse": 0.092291952,
+              "worst": {
+                "cell": {
+                  "x": 5.5,
+                  "z": 1
+                },
+                "before": -0.101226633,
+                "after": -0.008934681,
+                "deltaA": 0
+              },
+              "changedOver2cm": 292,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 3,
+              "center": {
+                "before": -0.36,
+                "after": -0.18,
+                "expectedAfterA": -0.18,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -1,
+              "accepted": true,
+              "commandMs": 0.4219999999995707,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.196084333,
+              "maxChangeIncludingWater": 0.22800000000000004,
+              "maxExtraResponse": 0.08362217500000002,
+              "worst": {
+                "cell": {
+                  "x": 4.7,
+                  "z": -0.8
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.08362217500000002
+              },
+              "changedOver2cm": 246,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 4,
+              "center": {
+                "before": -0.18,
+                "after": 0,
+                "expectedAfterA": 0,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 0,
+              "accepted": true,
+              "commandMs": 64.1611670000002,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.08675610100000003,
+              "worst": {
+                "cell": {
+                  "x": 5.8,
+                  "z": -0.5
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.08675610100000003
+              },
+              "changedOver2cm": 240,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 5,
+              "center": {
+                "before": 0,
+                "after": 0.18,
+                "expectedAfterA": 0.18,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 1,
+              "accepted": true,
+              "commandMs": 63.35920800000076,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.06965154600000001,
+              "worst": {
+                "cell": {
+                  "x": 5.3,
+                  "z": -0.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.06965154600000001
+              },
+              "changedOver2cm": 253,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 6,
+              "center": {
+                "before": 0.18,
+                "after": 0.36,
+                "expectedAfterA": 0.36,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 2,
+              "accepted": true,
+              "commandMs": 77.50016700000015,
+              "lostProtected": [
+                "4,0",
+                "5,0",
+                "5,1"
+              ],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.04196449100000005,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": -0.5
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.04196449100000005
+              },
+              "changedOver2cm": 262,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 7,
+              "center": {
+                "before": 0.36,
+                "after": 0.54,
+                "expectedAfterA": 0.54,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 3,
+              "accepted": true,
+              "commandMs": 61.26841599999989,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.030932921999999974,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": -0.4
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.030932921999999974
+              },
+              "changedOver2cm": 267,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 8,
+              "center": {
+                "before": 0.54,
+                "after": 0.72,
+                "expectedAfterA": 0.72,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 4,
+              "accepted": true,
+              "commandMs": 62.34758299999976,
+              "lostProtected": [
+                "4,1"
+              ],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.024903438000000055,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": -0.6
+                },
+                "before": -0.4,
+                "after": -0.3450255,
+                "deltaA": 0.030071061999999982
+              },
+              "changedOver2cm": 286,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 9,
+              "center": {
+                "before": 0.72,
+                "after": 0.9,
+                "expectedAfterA": 0.9,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 5,
+              "accepted": true,
+              "commandMs": 60.87424999999985,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.024548309000000046,
+              "worst": {
+                "cell": {
+                  "x": 4.2,
+                  "z": -0.9
+                },
+                "before": -0.4,
+                "after": -0.369583944,
+                "deltaA": 0.005867746999999979
+              },
+              "changedOver2cm": 292,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 10,
+              "center": {
+                "before": 0.9,
+                "after": 1.08,
+                "expectedAfterA": 1.08,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 6,
+              "accepted": true,
+              "commandMs": 61.89825000000019,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.0021986370000000033,
+              "worst": {
+                "cell": {
+                  "x": 4.1,
+                  "z": -0.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.0021986370000000033
+              },
+              "changedOver2cm": 276,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 11,
+              "center": {
+                "before": 1.08,
+                "after": 1.26,
+                "expectedAfterA": 1.26,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 7,
+              "accepted": true,
+              "commandMs": 65.51416700000027,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.0021986350000000043,
+              "worst": {
+                "cell": {
+                  "x": 4.1,
+                  "z": -0.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.0021986350000000043
+              },
+              "changedOver2cm": 288,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 12,
+              "center": {
+                "before": 1.26,
+                "after": 1.44,
+                "expectedAfterA": 1.44,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 8,
+              "accepted": true,
+              "commandMs": 79.546875,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.002198635999999976,
+              "worst": {
+                "cell": {
+                  "x": 4.1,
+                  "z": -0.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.002198635999999976
+              },
+              "changedOver2cm": 275,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 13,
+              "center": {
+                "before": 1.44,
+                "after": 1.62,
+                "expectedAfterA": 1.62,
+                "delta": 0.18000000000000016,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 9,
+              "accepted": true,
+              "commandMs": 60.49208399999952,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000016,
+              "maxChangeIncludingWater": 0.18000000000000016,
+              "maxExtraResponse": 0.0021986360000000316,
+              "worst": {
+                "cell": {
+                  "x": 4.1,
+                  "z": -0.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.0021986360000000316
+              },
+              "changedOver2cm": 273,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 14,
+              "center": {
+                "before": 1.62,
+                "after": 1.8,
+                "expectedAfterA": 1.8,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 10,
+              "accepted": true,
+              "commandMs": 61.93095799999992,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.0021986370000000033,
+              "worst": {
+                "cell": {
+                  "x": 4.1,
+                  "z": -0.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.0021986370000000033
+              },
+              "changedOver2cm": 275,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 15,
+              "center": {
+                "before": 1.8,
+                "after": 1.98,
+                "expectedAfterA": 1.98,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 11,
+              "accepted": true,
+              "commandMs": 61.06104099999993,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.024902134999999992,
+              "worst": {
+                "cell": {
+                  "x": 4.1,
+                  "z": -0.9
+                },
+                "before": -0.4,
+                "after": -0.37289923,
+                "deltaA": 0.0021986350000000043
+              },
+              "changedOver2cm": 288,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 16,
+              "center": {
+                "before": 1.98,
+                "after": 2.16,
+                "expectedAfterA": 2.16,
+                "delta": 0.18000000000000016,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 12,
+              "accepted": true,
+              "commandMs": 62.92504199999985,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000016,
+              "maxChangeIncludingWater": 0.18000000000000016,
+              "maxExtraResponse": 2.9999999845431446e-9,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": -0.6
+                },
+                "before": -0.134528062,
+                "after": -0.104457001,
+                "deltaA": 0.030071063999999995
+              },
+              "changedOver2cm": 272,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            }
+          ]
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 1
+          },
+          "delta": -1,
+          "scenario": "dig",
+          "startHeight": 0,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "before": 0,
+                "after": -0.18,
+                "expectedAfterA": -0.18,
+                "delta": -0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -1,
+              "accepted": true,
+              "commandMs": 83.35562500000015,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.08968503500000008,
+              "worst": {
+                "cell": {
+                  "x": 5.8,
+                  "z": 1.2
+                },
+                "before": -0.4,
+                "after": -0.373059836,
+                "deltaA": -0.06274487100000004
+              },
+              "changedOver2cm": 227,
+              "lostDryProbes": 10,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "center": {
+                "before": -0.18,
+                "after": -0.36,
+                "expectedAfterA": -0.36,
+                "delta": -0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -2,
+              "accepted": true,
+              "commandMs": 63.35408300000017,
+              "lostProtected": [
+                "5,0",
+                "4,1",
+                "5,1",
+                "5,2"
+              ],
+              "maxDryHeightJump": 0.19371836000000003,
+              "maxChangeIncludingWater": 0.22800000000000004,
+              "maxExtraResponse": 0.08472737200000008,
+              "worst": {
+                "cell": {
+                  "x": 5.8,
+                  "z": 1.5
+                },
+                "before": -0.4,
+                "after": -0.358711727,
+                "deltaA": -0.04343909900000004
+              },
+              "changedOver2cm": 240,
+              "lostDryProbes": 19,
+              "supportedOwners": 2
+            },
+            {
+              "step": 3,
+              "center": {
+                "before": -0.36,
+                "delta": -0.040000000000000036,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -3,
+              "accepted": true,
+              "commandMs": 62.666541999999936,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.19209955900000003,
+              "maxChangeIncludingWater": 0.22000000000000003,
+              "maxExtraResponse": 0.13,
+              "worst": {
+                "cell": {
+                  "x": 4.5,
+                  "z": 1
+                },
+                "before": -0.18,
+                "after": -0.4,
+                "deltaA": -0.09000000000000002
+              },
+              "changedOver2cm": 424,
+              "lostDryProbes": 91,
+              "supportedOwners": 2
+            },
+            {
+              "step": 4,
+              "center": {
+                "delta": 0,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -4,
+              "accepted": true,
+              "commandMs": 62.2523340000007,
+              "lostProtected": [
+                "4,0",
+                "4,2"
+              ],
+              "maxDryHeightJump": 0.20349379300000003,
+              "maxChangeIncludingWater": 0.20349379300000003,
+              "maxExtraResponse": 0.18349379300000002,
+              "worst": {
+                "cell": {
+                  "x": 4.2,
+                  "z": 1
+                },
+                "before": -0.171349602,
+                "after": -0.374843395,
+                "deltaA": -0.020000000000000004
+              },
+              "changedOver2cm": 347,
+              "lostDryProbes": 78,
+              "supportedOwners": 2
+            }
+          ]
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 1
+          },
+          "delta": 1,
+          "scenario": "raise",
+          "startHeight": 0,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "before": 0,
+                "after": 0.18,
+                "expectedAfterA": 0.18,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 1,
+              "accepted": true,
+              "commandMs": 62.73841600000014,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.04393970800000002,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.5
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.04393970800000002
+              },
+              "changedOver2cm": 228,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "center": {
+                "before": 0.18,
+                "after": 0.36,
+                "expectedAfterA": 0.36,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 2,
+              "accepted": true,
+              "commandMs": 77.63287499999933,
+              "lostProtected": [
+                "5,0",
+                "4,1",
+                "5,1",
+                "5,2"
+              ],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.048155804999999996,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.2
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.048155804999999996
+              },
+              "changedOver2cm": 229,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 3,
+              "center": {
+                "before": 0.36,
+                "after": 0.54,
+                "expectedAfterA": 0.54,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 3,
+              "accepted": true,
+              "commandMs": 61.76400000000103,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.03163758900000002,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.1
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.03163758900000002
+              },
+              "changedOver2cm": 235,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 4,
+              "center": {
+                "before": 0.54,
+                "after": 0.72,
+                "expectedAfterA": 0.72,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 4,
+              "accepted": true,
+              "commandMs": 61.88799999999901,
+              "lostProtected": [
+                "4,0",
+                "4,2"
+              ],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.020443029,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.1
+                },
+                "before": -0.4,
+                "after": -0.347919381,
+                "deltaA": 0.03163758999999999
+              },
+              "changedOver2cm": 257,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 5,
+              "center": {
+                "before": 0.72,
+                "after": 0.9,
+                "expectedAfterA": 0.9,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 5,
+              "accepted": true,
+              "commandMs": 61.64133299999958,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.00537915299999997,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.8
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.00537915299999997
+              },
+              "changedOver2cm": 254,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 6,
+              "center": {
+                "before": 0.9,
+                "after": 1.08,
+                "expectedAfterA": 1.08,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 6,
+              "accepted": true,
+              "commandMs": 62.61058299999968,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.02037868599999998,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.8
+                },
+                "before": -0.4,
+                "after": -0.374242159,
+                "deltaA": 0.005379155000000024
+              },
+              "changedOver2cm": 238,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 7,
+              "center": {
+                "before": 1.08,
+                "after": 1.26,
+                "expectedAfterA": 1.26,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 7,
+              "accepted": true,
+              "commandMs": 62.201333000000886,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.002137280999999991,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.002137280999999991
+              },
+              "changedOver2cm": 255,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 8,
+              "center": {
+                "before": 1.26,
+                "after": 1.44,
+                "expectedAfterA": 1.44,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 8,
+              "accepted": true,
+              "commandMs": 68.7206669999996,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.002137280999999991,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.002137280999999991
+              },
+              "changedOver2cm": 238,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 9,
+              "center": {
+                "before": 1.44,
+                "after": 1.62,
+                "expectedAfterA": 1.62,
+                "delta": 0.18000000000000016,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 9,
+              "accepted": true,
+              "commandMs": 72.38337499999943,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000016,
+              "maxChangeIncludingWater": 0.18000000000000016,
+              "maxExtraResponse": 0.002137280999999991,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.002137280999999991
+              },
+              "changedOver2cm": 237,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 10,
+              "center": {
+                "before": 1.62,
+                "after": 1.8,
+                "expectedAfterA": 1.8,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 10,
+              "accepted": true,
+              "commandMs": 61.65550000000076,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.002137280999999991,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.002137280999999991
+              },
+              "changedOver2cm": 241,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 11,
+              "center": {
+                "before": 1.8,
+                "after": 1.98,
+                "expectedAfterA": 1.98,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 11,
+              "accepted": true,
+              "commandMs": 60.78220800000054,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.024330997999999993,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.9
+                },
+                "before": -0.4,
+                "after": -0.37353172,
+                "deltaA": 0.002137282000000018
+              },
+              "changedOver2cm": 251,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 12,
+              "center": {
+                "before": 1.98,
+                "after": 2.16,
+                "expectedAfterA": 2.16,
+                "delta": 0.18000000000000016,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 12,
+              "accepted": true,
+              "commandMs": 61.39020799999889,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000016,
+              "maxChangeIncludingWater": 0.18000000000000016,
+              "maxExtraResponse": 1.000000082740371e-9,
+              "worst": {
+                "cell": {
+                  "x": 5.7,
+                  "z": 0.7
+                },
+                "before": 0.771366633,
+                "after": 0.860167861,
+                "deltaA": 0.08880122900000009
+              },
+              "changedOver2cm": 238,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            }
+          ]
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 1
+          },
+          "delta": 1,
+          "scenario": "recover",
+          "startHeight": -4,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "delta": 0,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -3,
+              "accepted": true,
+              "commandMs": 0.46050000000104774,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.20349379300000003,
+              "maxChangeIncludingWater": 0.20349379300000003,
+              "maxExtraResponse": 0.18349379300000002,
+              "worst": {
+                "cell": {
+                  "x": 4.2,
+                  "z": 1
+                },
+                "before": -0.374843395,
+                "after": -0.171349602,
+                "deltaA": 0.020000000000000004
+              },
+              "changedOver2cm": 347,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "center": {
+                "after": -0.36,
+                "expectedAfterA": -0.36,
+                "delta": 0.040000000000000036,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -2,
+              "accepted": true,
+              "commandMs": 0.46200000000135333,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.19209955900000003,
+              "maxChangeIncludingWater": 0.22000000000000003,
+              "maxExtraResponse": 0.13,
+              "worst": {
+                "cell": {
+                  "x": 4.5,
+                  "z": 1
+                },
+                "before": -0.4,
+                "after": -0.18,
+                "deltaA": 0.09000000000000002
+              },
+              "changedOver2cm": 424,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 3,
+              "center": {
+                "before": -0.36,
+                "after": -0.18,
+                "expectedAfterA": -0.18,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 2,
+              "maxRaiseReversal": 0.04128827300000004,
+              "inputHeight": -1,
+              "accepted": true,
+              "commandMs": 0.45220900000094844,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.19371836000000003,
+              "maxChangeIncludingWater": 0.22800000000000004,
+              "maxExtraResponse": 0.08472737200000008,
+              "worst": {
+                "cell": {
+                  "x": 5.8,
+                  "z": 1.5
+                },
+                "before": -0.358711727,
+                "after": -0.4,
+                "deltaA": 0.04343909900000004
+              },
+              "changedOver2cm": 240,
+              "lostDryProbes": 2,
+              "supportedOwners": 2
+            },
+            {
+              "step": 4,
+              "center": {
+                "before": -0.18,
+                "after": 0,
+                "expectedAfterA": 0,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 1,
+              "maxRaiseReversal": 0.026940164000000044,
+              "inputHeight": 0,
+              "accepted": true,
+              "commandMs": 68.60245799999939,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.08968503500000008,
+              "worst": {
+                "cell": {
+                  "x": 5.8,
+                  "z": 1.2
+                },
+                "before": -0.373059836,
+                "after": -0.4,
+                "deltaA": 0.06274487100000004
+              },
+              "changedOver2cm": 227,
+              "lostDryProbes": 1,
+              "supportedOwners": 2
+            },
+            {
+              "step": 5,
+              "center": {
+                "before": 0,
+                "after": 0.18,
+                "expectedAfterA": 0.18,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 1,
+              "accepted": true,
+              "commandMs": 61.91529100000116,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.04393970800000002,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.5
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.04393970800000002
+              },
+              "changedOver2cm": 228,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 6,
+              "center": {
+                "before": 0.18,
+                "after": 0.36,
+                "expectedAfterA": 0.36,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 2,
+              "accepted": true,
+              "commandMs": 68.1362079999999,
+              "lostProtected": [
+                "5,0",
+                "4,1",
+                "5,1",
+                "5,2"
+              ],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.048155804999999996,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.2
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.048155804999999996
+              },
+              "changedOver2cm": 229,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 7,
+              "center": {
+                "before": 0.36,
+                "after": 0.54,
+                "expectedAfterA": 0.54,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 3,
+              "accepted": true,
+              "commandMs": 64.74066700000003,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.03163758900000002,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.1
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.03163758900000002
+              },
+              "changedOver2cm": 235,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 8,
+              "center": {
+                "before": 0.54,
+                "after": 0.72,
+                "expectedAfterA": 0.72,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 4,
+              "accepted": true,
+              "commandMs": 80.17370800000026,
+              "lostProtected": [
+                "4,0",
+                "4,2"
+              ],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.020443029,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.1
+                },
+                "before": -0.4,
+                "after": -0.347919381,
+                "deltaA": 0.03163758999999999
+              },
+              "changedOver2cm": 257,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 9,
+              "center": {
+                "before": 0.72,
+                "after": 0.9,
+                "expectedAfterA": 0.9,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 5,
+              "accepted": true,
+              "commandMs": 67.92399999999907,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.00537915299999997,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.8
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.00537915299999997
+              },
+              "changedOver2cm": 254,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 10,
+              "center": {
+                "before": 0.9,
+                "after": 1.08,
+                "expectedAfterA": 1.08,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 6,
+              "accepted": true,
+              "commandMs": 61.365334000000075,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.02037868599999998,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.8
+                },
+                "before": -0.4,
+                "after": -0.374242159,
+                "deltaA": 0.005379155000000024
+              },
+              "changedOver2cm": 238,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 11,
+              "center": {
+                "before": 1.08,
+                "after": 1.26,
+                "expectedAfterA": 1.26,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 7,
+              "accepted": true,
+              "commandMs": 62.58137499999975,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.002137280999999991,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.002137280999999991
+              },
+              "changedOver2cm": 255,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 12,
+              "center": {
+                "before": 1.26,
+                "after": 1.44,
+                "expectedAfterA": 1.44,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 8,
+              "accepted": true,
+              "commandMs": 63.25575000000026,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.002137280999999991,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.002137280999999991
+              },
+              "changedOver2cm": 238,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 13,
+              "center": {
+                "before": 1.44,
+                "after": 1.62,
+                "expectedAfterA": 1.62,
+                "delta": 0.18000000000000016,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 9,
+              "accepted": true,
+              "commandMs": 62.38575000000128,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000016,
+              "maxChangeIncludingWater": 0.18000000000000016,
+              "maxExtraResponse": 0.002137280999999991,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.002137280999999991
+              },
+              "changedOver2cm": 237,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 14,
+              "center": {
+                "before": 1.62,
+                "after": 1.8,
+                "expectedAfterA": 1.8,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 10,
+              "accepted": true,
+              "commandMs": 87.5625,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.002137280999999991,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.002137280999999991
+              },
+              "changedOver2cm": 241,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 15,
+              "center": {
+                "before": 1.8,
+                "after": 1.98,
+                "expectedAfterA": 1.98,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 11,
+              "accepted": true,
+              "commandMs": 66.50795800000014,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.024330997999999993,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 1.9
+                },
+                "before": -0.4,
+                "after": -0.37353172,
+                "deltaA": 0.002137282000000018
+              },
+              "changedOver2cm": 251,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 16,
+              "center": {
+                "before": 1.98,
+                "after": 2.16,
+                "expectedAfterA": 2.16,
+                "delta": 0.18000000000000016,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 12,
+              "accepted": true,
+              "commandMs": 60.89312499999869,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000016,
+              "maxChangeIncludingWater": 0.18000000000000016,
+              "maxExtraResponse": 1.000000082740371e-9,
+              "worst": {
+                "cell": {
+                  "x": 5.7,
+                  "z": 0.7
+                },
+                "before": 0.771366633,
+                "after": 0.860167861,
+                "deltaA": 0.08880122900000009
+              },
+              "changedOver2cm": 238,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            }
+          ]
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 3
+          },
+          "delta": -1,
+          "scenario": "dig",
+          "startHeight": 0,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "before": 0,
+                "after": -0.18,
+                "expectedAfterA": -0.18,
+                "delta": -0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -1,
+              "accepted": true,
+              "commandMs": 62.205958999998984,
+              "lostProtected": [
+                "5,3"
+              ],
+              "maxDryHeightJump": 0.187729101,
+              "maxChangeIncludingWater": 0.187729101,
+              "maxExtraResponse": 0.08864327500000002,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 2.6
+                },
+                "before": -0.4,
+                "after": -0.374061963,
+                "deltaA": -0.062705238
+              },
+              "changedOver2cm": 223,
+              "lostDryProbes": 13,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "center": {
+                "before": -0.18,
+                "after": -0.36,
+                "expectedAfterA": -0.36,
+                "delta": -0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -2,
+              "accepted": true,
+              "commandMs": 64.29429199999868,
+              "lostProtected": [
+                "5,2",
+                "4,3",
+                "5,4"
+              ],
+              "maxDryHeightJump": 0.18346337599999998,
+              "maxChangeIncludingWater": 0.21968724500000003,
+              "maxExtraResponse": 0.08946997000000001,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 3.3
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": -0.08946997000000001
+              },
+              "changedOver2cm": 229,
+              "lostDryProbes": 29,
+              "supportedOwners": 2
+            },
+            {
+              "step": 3,
+              "center": {
+                "before": -0.36,
+                "delta": -0.040000000000000036,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -3,
+              "accepted": true,
+              "commandMs": 63.72408400000131,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.187776944,
+              "maxChangeIncludingWater": 0.19506172800000002,
+              "maxExtraResponse": 0.117751931,
+              "worst": {
+                "cell": {
+                  "x": 4.8,
+                  "z": 3.2
+                },
+                "before": -0.135818569,
+                "after": -0.317136689,
+                "deltaA": -0.06356618900000002
+              },
+              "changedOver2cm": 391,
+              "lostDryProbes": 78,
+              "supportedOwners": 2
+            },
+            {
+              "step": 4,
+              "center": {
+                "delta": 0,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -4,
+              "accepted": true,
+              "commandMs": 80.02995799999917,
+              "lostProtected": [
+                "4,2"
+              ],
+              "maxDryHeightJump": 0.19028298999999999,
+              "maxChangeIncludingWater": 0.19761736600000002,
+              "maxExtraResponse": 0.17136941,
+              "worst": {
+                "cell": {
+                  "x": 4.2,
+                  "z": 2.9
+                },
+                "before": -0.1635414,
+                "after": -0.35382439,
+                "deltaA": -0.01891358
+              },
+              "changedOver2cm": 340,
+              "lostDryProbes": 74,
+              "supportedOwners": 2
+            }
+          ]
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 3
+          },
+          "delta": 1,
+          "scenario": "raise",
+          "startHeight": 0,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "before": 0,
+                "after": 0.18,
+                "expectedAfterA": 0.18,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 1,
+              "accepted": true,
+              "commandMs": 62.36249999999927,
+              "lostProtected": [
+                "5,3"
+              ],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.04817083499999997,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 2.7
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.04817083499999997
+              },
+              "changedOver2cm": 230,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "center": {
+                "before": 0.18,
+                "after": 0.36,
+                "expectedAfterA": 0.36,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 2,
+              "accepted": true,
+              "commandMs": 63.8526669999992,
+              "lostProtected": [
+                "5,2",
+                "4,3",
+                "5,4"
+              ],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.02824549700000001,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 2.5
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.02824549700000001
+              },
+              "changedOver2cm": 235,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 3,
+              "center": {
+                "before": 0.36,
+                "after": 0.54,
+                "expectedAfterA": 0.54,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 3,
+              "accepted": true,
+              "commandMs": 62.47383300000001,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.025771971000000005,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 2.2
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.025771971000000005
+              },
+              "changedOver2cm": 235,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 4,
+              "center": {
+                "before": 0.54,
+                "after": 0.72,
+                "expectedAfterA": 0.72,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 4,
+              "accepted": true,
+              "commandMs": 63.36437500000102,
+              "lostProtected": [
+                "4,2"
+              ],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.022033678999999973,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 3.7
+                },
+                "before": -0.4,
+                "after": -0.363570685,
+                "deltaA": 0.014395636000000045
+              },
+              "changedOver2cm": 252,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 5,
+              "center": {
+                "before": 0.72,
+                "after": 0.9,
+                "expectedAfterA": 0.9,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 5,
+              "accepted": true,
+              "commandMs": 66.21083299999918,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.011146935000000024,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 2.3
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.011146935000000024
+              },
+              "changedOver2cm": 250,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 6,
+              "center": {
+                "before": 0.9,
+                "after": 1.08,
+                "expectedAfterA": 1.08,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 6,
+              "accepted": true,
+              "commandMs": 72.75845800000025,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.011146935000000024,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 2.3
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.011146935000000024
+              },
+              "changedOver2cm": 235,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 7,
+              "center": {
+                "before": 1.08,
+                "after": 1.26,
+                "expectedAfterA": 1.26,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 7,
+              "accepted": true,
+              "commandMs": 62.72308300000077,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.024594987999999984,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 2.2
+                },
+                "before": -0.4,
+                "after": -0.370193141,
+                "deltaA": 0.0052118710000000346
+              },
+              "changedOver2cm": 252,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 8,
+              "center": {
+                "before": 1.26,
+                "after": 1.44,
+                "expectedAfterA": 1.44,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 8,
+              "accepted": true,
+              "commandMs": 62.157916000000114,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.024563280999999992,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 3.8
+                },
+                "before": -0.4,
+                "after": -0.368369761,
+                "deltaA": 0.007066958000000012
+              },
+              "changedOver2cm": 236,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 9,
+              "center": {
+                "before": 1.44,
+                "after": 1.62,
+                "expectedAfterA": 1.62,
+                "delta": 0.18000000000000016,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 9,
+              "accepted": true,
+              "commandMs": 62.36333299999933,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000016,
+              "maxChangeIncludingWater": 0.18000000000000016,
+              "maxExtraResponse": 0.002774438999999962,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 3.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.002774438999999962
+              },
+              "changedOver2cm": 235,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 10,
+              "center": {
+                "before": 1.62,
+                "after": 1.8,
+                "expectedAfterA": 1.8,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 10,
+              "accepted": true,
+              "commandMs": 62.20641699999942,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.0027744390000000174,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 3.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.0027744390000000174
+              },
+              "changedOver2cm": 237,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 11,
+              "center": {
+                "before": 1.8,
+                "after": 1.98,
+                "expectedAfterA": 1.98,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 11,
+              "accepted": true,
+              "commandMs": 64.17612499999996,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.002774439999999989,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 3.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.002774439999999989
+              },
+              "changedOver2cm": 248,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 12,
+              "center": {
+                "before": 1.98,
+                "after": 2.16,
+                "expectedAfterA": 2.16,
+                "delta": 0.18000000000000016,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 12,
+              "accepted": true,
+              "commandMs": 71.81195900000057,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000016,
+              "maxChangeIncludingWater": 0.18000000000000016,
+              "maxExtraResponse": 0.0027744390000000174,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 3.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.0027744390000000174
+              },
+              "changedOver2cm": 235,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            }
+          ]
+        },
+        {
+          "target": {
+            "x": 5,
+            "z": 3
+          },
+          "delta": 1,
+          "scenario": "recover",
+          "startHeight": -4,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "delta": 0,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -3,
+              "accepted": true,
+              "commandMs": 0.5092920000006416,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.19028298999999999,
+              "maxChangeIncludingWater": 0.19761736600000002,
+              "maxExtraResponse": 0.17136941,
+              "worst": {
+                "cell": {
+                  "x": 4.2,
+                  "z": 2.9
+                },
+                "before": -0.35382439,
+                "after": -0.1635414,
+                "deltaA": 0.01891358
+              },
+              "changedOver2cm": 340,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "center": {
+                "after": -0.36,
+                "expectedAfterA": -0.36,
+                "delta": 0.040000000000000036,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -2,
+              "accepted": true,
+              "commandMs": 0.7751250000001164,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.187776944,
+              "maxChangeIncludingWater": 0.19506172800000002,
+              "maxExtraResponse": 0.117751931,
+              "worst": {
+                "cell": {
+                  "x": 4.8,
+                  "z": 3.2
+                },
+                "before": -0.317136689,
+                "after": -0.135818569,
+                "deltaA": 0.06356618900000002
+              },
+              "changedOver2cm": 391,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 3,
+              "center": {
+                "before": -0.36,
+                "after": -0.18,
+                "expectedAfterA": -0.18,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -1,
+              "accepted": true,
+              "commandMs": 0.46420800000123563,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18346337599999998,
+              "maxChangeIncludingWater": 0.21968724500000003,
+              "maxExtraResponse": 0.08946997000000001,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 3.3
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.08946997000000001
+              },
+              "changedOver2cm": 229,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 4,
+              "center": {
+                "before": -0.18,
+                "after": 0,
+                "expectedAfterA": 0,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 4,
+              "maxRaiseReversal": 0.027221393000000038,
+              "inputHeight": 0,
+              "accepted": true,
+              "commandMs": 80.50591700000041,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.187729101,
+              "maxChangeIncludingWater": 0.187729101,
+              "maxExtraResponse": 0.08864327500000002,
+              "worst": {
+                "cell": {
+                  "x": 5.9,
+                  "z": 2.6
+                },
+                "before": -0.374061963,
+                "after": -0.4,
+                "deltaA": 0.062705238
+              },
+              "changedOver2cm": 223,
+              "lostDryProbes": 4,
+              "supportedOwners": 2
+            },
+            {
+              "step": 5,
+              "center": {
+                "before": 0,
+                "after": 0.18,
+                "expectedAfterA": 0.18,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 1,
+              "accepted": true,
+              "commandMs": 68.4932919999992,
+              "lostProtected": [
+                "5,3"
+              ],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.04817083499999997,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 2.7
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.04817083499999997
+              },
+              "changedOver2cm": 230,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 6,
+              "center": {
+                "before": 0.18,
+                "after": 0.36,
+                "expectedAfterA": 0.36,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 2,
+              "accepted": true,
+              "commandMs": 63.04516700000022,
+              "lostProtected": [
+                "5,2",
+                "4,3",
+                "5,4"
+              ],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.02824549700000001,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 2.5
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.02824549700000001
+              },
+              "changedOver2cm": 235,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 7,
+              "center": {
+                "before": 0.36,
+                "after": 0.54,
+                "expectedAfterA": 0.54,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 3,
+              "accepted": true,
+              "commandMs": 62.06770800000049,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.025771971000000005,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 2.2
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.025771971000000005
+              },
+              "changedOver2cm": 235,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 8,
+              "center": {
+                "before": 0.54,
+                "after": 0.72,
+                "expectedAfterA": 0.72,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 4,
+              "accepted": true,
+              "commandMs": 62.49462499999936,
+              "lostProtected": [
+                "4,2"
+              ],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.022033678999999973,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 3.7
+                },
+                "before": -0.4,
+                "after": -0.363570685,
+                "deltaA": 0.014395636000000045
+              },
+              "changedOver2cm": 252,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 9,
+              "center": {
+                "before": 0.72,
+                "after": 0.9,
+                "expectedAfterA": 0.9,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 5,
+              "accepted": true,
+              "commandMs": 63.38579200000095,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.011146935000000024,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 2.3
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.011146935000000024
+              },
+              "changedOver2cm": 250,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 10,
+              "center": {
+                "before": 0.9,
+                "after": 1.08,
+                "expectedAfterA": 1.08,
+                "delta": 0.18000000000000005,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 6,
+              "accepted": true,
+              "commandMs": 64.13025000000198,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000005,
+              "maxChangeIncludingWater": 0.18000000000000005,
+              "maxExtraResponse": 0.011146935000000024,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 2.3
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.011146935000000024
+              },
+              "changedOver2cm": 235,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 11,
+              "center": {
+                "before": 1.08,
+                "after": 1.26,
+                "expectedAfterA": 1.26,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 7,
+              "accepted": true,
+              "commandMs": 81.07895900000221,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.024594987999999984,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 2.2
+                },
+                "before": -0.4,
+                "after": -0.370193141,
+                "deltaA": 0.0052118710000000346
+              },
+              "changedOver2cm": 252,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 12,
+              "center": {
+                "before": 1.26,
+                "after": 1.44,
+                "expectedAfterA": 1.44,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 8,
+              "accepted": true,
+              "commandMs": 66.71637499999997,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.024563280999999992,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 3.8
+                },
+                "before": -0.4,
+                "after": -0.368369761,
+                "deltaA": 0.007066958000000012
+              },
+              "changedOver2cm": 236,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 13,
+              "center": {
+                "before": 1.44,
+                "after": 1.62,
+                "expectedAfterA": 1.62,
+                "delta": 0.18000000000000016,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 9,
+              "accepted": true,
+              "commandMs": 61.90662499999962,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000016,
+              "maxChangeIncludingWater": 0.18000000000000016,
+              "maxExtraResponse": 0.002774438999999962,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 3.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.002774438999999962
+              },
+              "changedOver2cm": 235,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 14,
+              "center": {
+                "before": 1.62,
+                "after": 1.8,
+                "expectedAfterA": 1.8,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 10,
+              "accepted": true,
+              "commandMs": 63.34049999999843,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.0027744390000000174,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 3.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.0027744390000000174
+              },
+              "changedOver2cm": 237,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 15,
+              "center": {
+                "before": 1.8,
+                "after": 1.98,
+                "expectedAfterA": 1.98,
+                "delta": 0.17999999999999994,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 11,
+              "accepted": true,
+              "commandMs": 62.12758399999802,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.17999999999999994,
+              "maxChangeIncludingWater": 0.17999999999999994,
+              "maxExtraResponse": 0.002774439999999989,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 3.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.002774439999999989
+              },
+              "changedOver2cm": 248,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 16,
+              "center": {
+                "before": 1.98,
+                "after": 2.16,
+                "expectedAfterA": 2.16,
+                "delta": 0.18000000000000016,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 12,
+              "accepted": true,
+              "commandMs": 63.06287499999962,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18000000000000016,
+              "maxChangeIncludingWater": 0.18000000000000016,
+              "maxExtraResponse": 0.0027744390000000174,
+              "worst": {
+                "cell": {
+                  "x": 6,
+                  "z": 3.9
+                },
+                "before": -0.4,
+                "after": -0.4,
+                "deltaA": 0.0027744390000000174
+              },
+              "changedOver2cm": 235,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            }
+          ]
+        },
+        {
+          "target": {
+            "x": 1,
+            "z": 1
+          },
+          "delta": -1,
+          "scenario": "dig",
+          "startHeight": 0,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "before": 0,
+                "after": -0.18,
+                "expectedAfterA": -0.18,
+                "delta": -0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -1,
+              "accepted": true,
+              "commandMs": 67.83550000000105,
+              "lostProtected": [
+                "1,1"
+              ],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.02505324200000003,
+              "worst": {
+                "cell": {
+                  "x": 0.2,
+                  "z": -0.9
+                },
+                "before": -0.374946758,
+                "after": -0.4,
+                "deltaA": 0
+              },
+              "changedOver2cm": 139,
+              "lostDryProbes": 1,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "accepted": false,
+              "reason": "ものの 足もとだよ。さきに うごかしてみよう。",
+              "commandMs": 62.93583299999955
+            }
+          ]
+        },
+        {
+          "target": {
+            "x": 1,
+            "z": 1
+          },
+          "delta": 1,
+          "scenario": "raise",
+          "startHeight": 0,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "before": 0,
+                "after": 0.18,
+                "expectedAfterA": 0.18,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 1,
+              "accepted": true,
+              "commandMs": 62.74295799999891,
+              "lostProtected": [
+                "1,1"
+              ],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0,
+              "changedOver2cm": 138,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "accepted": false,
+              "reason": "ものの 足もとだよ。さきに うごかしてみよう。",
+              "commandMs": 65.04220899999927
+            }
+          ]
+        },
+        {
+          "target": {
+            "x": 1,
+            "z": 1
+          },
+          "delta": 1,
+          "scenario": "recover",
+          "startHeight": -1,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "before": -0.18,
+                "after": 0,
+                "expectedAfterA": 0,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 0,
+              "accepted": true,
+              "commandMs": 0.4459160000005795,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0.02505324200000003,
+              "worst": {
+                "cell": {
+                  "x": 0.2,
+                  "z": -0.9
+                },
+                "before": -0.4,
+                "after": -0.374946758,
+                "deltaA": 0
+              },
+              "changedOver2cm": 139,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "center": {
+                "before": 0,
+                "after": 0.18,
+                "expectedAfterA": 0.18,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 1,
+              "accepted": true,
+              "commandMs": 0.5283329999983835,
+              "lostProtected": [
+                "1,1"
+              ],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0,
+              "changedOver2cm": 138,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 3,
+              "accepted": false,
+              "reason": "ものの 足もとだよ。さきに うごかしてみよう。",
+              "commandMs": 0.3889579999995476
+            }
+          ]
+        },
+        {
+          "target": {
+            "x": 2,
+            "z": 2
+          },
+          "delta": -1,
+          "scenario": "dig",
+          "startHeight": 0,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "before": 0,
+                "after": -0.18,
+                "expectedAfterA": -0.18,
+                "delta": -0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": -1,
+              "accepted": true,
+              "commandMs": 63.694250000000466,
+              "lostProtected": [
+                "2,2"
+              ],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0,
+              "changedOver2cm": 138,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "accepted": false,
+              "reason": "ものの 足もとだよ。さきに うごかしてみよう。",
+              "commandMs": 62.71504199999981
+            }
+          ]
+        },
+        {
+          "target": {
+            "x": 2,
+            "z": 2
+          },
+          "delta": 1,
+          "scenario": "raise",
+          "startHeight": 0,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "before": 0,
+                "after": 0.18,
+                "expectedAfterA": 0.18,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 1,
+              "accepted": true,
+              "commandMs": 64.99866699999984,
+              "lostProtected": [
+                "2,2"
+              ],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0,
+              "changedOver2cm": 138,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "accepted": false,
+              "reason": "ものの 足もとだよ。さきに うごかしてみよう。",
+              "commandMs": 72.43050000000221
+            }
+          ]
+        },
+        {
+          "target": {
+            "x": 2,
+            "z": 2
+          },
+          "delta": 1,
+          "scenario": "recover",
+          "startHeight": -1,
+          "steps": [
+            {
+              "step": 1,
+              "center": {
+                "before": -0.18,
+                "after": 0,
+                "expectedAfterA": 0,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 0,
+              "accepted": true,
+              "commandMs": 0.3098329999993439,
+              "lostProtected": [],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0,
+              "changedOver2cm": 138,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 2,
+              "center": {
+                "before": 0,
+                "after": 0.18,
+                "expectedAfterA": 0.18,
+                "delta": 0.18,
+                "suppressionVsA": 0
+              },
+              "reversedRaiseProbes": 0,
+              "maxRaiseReversal": 0,
+              "inputHeight": 1,
+              "accepted": true,
+              "commandMs": 0.45558299999902374,
+              "lostProtected": [
+                "2,2"
+              ],
+              "maxDryHeightJump": 0.18,
+              "maxChangeIncludingWater": 0.18,
+              "maxExtraResponse": 0,
+              "changedOver2cm": 138,
+              "lostDryProbes": 0,
+              "supportedOwners": 2
+            },
+            {
+              "step": 3,
+              "accepted": false,
+              "reason": "ものの 足もとだよ。さきに うごかしてみよう。",
+              "commandMs": 0.4153340000011667
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

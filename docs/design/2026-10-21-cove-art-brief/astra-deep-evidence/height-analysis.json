@@ -1,0 +1,40 @@
+{
+  "source": "docs/design/2026-10-21-living-cove/terrain.mjs + walk.mjs",
+  "flatHeight": 0.42000000000000004,
+  "water": 0.08,
+  "coastDrop": 0.9,
+  "upperStep": 0.57,
+  "oneDimensionalSmoothstepBands": [
+    {
+      "dy": 0.9,
+      "spacing": 0.7,
+      "maxSlope": 1.9285714285714288,
+      "maxSlopeDegrees": 62.59242456218161,
+      "centerToFootSampleHeightDifference": 0.2391848396501458,
+      "canStandHeightToleranceStrict": 0.13
+    },
+    {
+      "dy": 0.57,
+      "spacing": 0.7,
+      "maxSlope": 1.2214285714285715,
+      "maxSlopeDegrees": 50.69235188389339,
+      "centerToFootSampleHeightDifference": 0.15148373177842567,
+      "canStandHeightToleranceStrict": 0.13
+    }
+  ],
+  "hypotheticalUniformLowering": [
+    {
+      "step": 0.14,
+      "tapsToStrictlyBelowWater": 3
+    },
+    {
+      "step": 0.16,
+      "tapsToStrictlyBelowWater": 3
+    },
+    {
+      "step": 0.18,
+      "tapsToStrictlyBelowWater": 2
+    }
+  ],
+  "limits": "Analytic one-dimensional isolated band, not a measured route or implemented new brush. Rounded decimal comparisons must be handled by actual runtime."
+}

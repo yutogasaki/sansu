@@ -1,0 +1,97 @@
+{
+  "at": "2026-10-24T01:54:59.228Z",
+  "build": "place-outline-v12",
+  "inputSHA256": "09dd47af755b5b65bc8c780ca3beb5f04bbd9f9eccadfb5344fd7ab6044b8871",
+  "input": {
+    "center": {
+      "x": 5,
+      "z": 5
+    },
+    "height": 0.9,
+    "radius": 1.6,
+    "flatRadius": 1.75,
+    "entrance": 1.2,
+    "rampDirection": "west"
+  },
+  "result": "rejected: actor footing",
+  "timing": {
+    "status": "stopped",
+    "clock": "performance.now milliseconds from CPU measurement start",
+    "startedPerformanceMs": 220138.9,
+    "startedEpochMs": 1792806824315.1,
+    "endedPerformanceMs": 230140.8,
+    "elapsedMs": 10001.9,
+    "retainedLimit": 400,
+    "dropped": 0,
+    "filteredFastTerrainCalls": 4,
+    "incompleteSpans": 0,
+    "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+    "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+    "aggregates": {
+      "editableIslandWorld:cache-hit": {
+        "calls": 4,
+        "inclusiveMs": 0,
+        "selfMs": 0,
+        "maxMs": 0,
+        "failed": 0
+      },
+      "compileWorldDefinition:derived-edges": {
+        "calls": 1,
+        "inclusiveMs": 220.4,
+        "selfMs": 220.4,
+        "maxMs": 220.4,
+        "failed": 0
+      },
+      "editableIslandWorld:cold": {
+        "calls": 1,
+        "inclusiveMs": 304.8,
+        "selfMs": 84.4,
+        "maxMs": 304.8,
+        "failed": 0
+      },
+      "applyIntent:place-outline": {
+        "calls": 1,
+        "inclusiveMs": 306.5,
+        "selfMs": 1.7,
+        "maxMs": 306.5,
+        "failed": 1
+      }
+    },
+    "spans": [
+      {
+        "id": 1,
+        "parentId": null,
+        "name": "applyIntent",
+        "detail": "place-outline",
+        "startMs": 848.8,
+        "endMs": 1155.3,
+        "inclusiveMs": 306.5,
+        "selfMs": 1.7,
+        "failed": true
+      },
+      {
+        "id": 3,
+        "parentId": 1,
+        "name": "editableIslandWorld",
+        "detail": "cold",
+        "startMs": 849.3,
+        "endMs": 1154.1,
+        "inclusiveMs": 304.8,
+        "selfMs": 84.4,
+        "failed": false
+      },
+      {
+        "id": 4,
+        "parentId": 3,
+        "name": "compileWorldDefinition",
+        "detail": "derived-edges",
+        "startMs": 933.7,
+        "endMs": 1154.1,
+        "inclusiveMs": 220.4,
+        "selfMs": 220.4,
+        "failed": false
+      }
+    ]
+  },
+  "scope": "One IAB desktop observation of synchronous CPU intervals. Rejection still compiles a candidate floor. Not device/GPU/paint/input-latency acceptance."
+}

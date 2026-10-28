@@ -34,6 +34,7 @@ import { IslandPersonalScenery } from './personalScenery';
 import { IslandLearningKeepsakeScenery } from './learningKeepsakeScenery';
 import { IslandHomePresentation, ISLAND_HOME_INTERIOR } from './homePresentation';
 import { HomeResident } from './homeResident';
+import { HomeCameraControls, canControlHomeCamera, type HomeCameraAction, type HomeCameraView } from './homeCameraControls';
 import { fitIslandHomeInteriorCamera, ISLAND_HOME_CAMERA_CANDIDATE } from './homeInteriorCamera';
 import { IslandExpressionEnvironment } from './expressionEnvironment';
 import { canRunLivingActivities, canStartGrownSharing, livingCandidates, livingVisitHasSetting, livingVisitsForItem, sharedLivingDiscovery, type LivingVisit } from './livingActivities';
@@ -76,6 +77,7 @@ interface RuntimeCallbacks {
     failure: () => void;
     ready?: () => void;
     cameraView?: (view: IslandCameraView) => void;
+    homeCameraView?: (view: HomeCameraView) => void;
     playResult?: (result: IslandPlayResult) => void;
     placementSuggestion?: (suggestion: IslandPlacementSuggestion) => void;
     furniturePlacement?: IslandStageProps['onFurniturePlacement'];
@@ -222,6 +224,12 @@ export class IslandScene {
         this.resize();
         this.callbacks.cameraView?.(this.cameraControls.view);
     });
+    private indoorControls?: HomeCameraControls;
+    private get homeCameraControls() {
+        return this.indoorControls ??= new HomeCameraControls(view => {
+            this.frameKeepsakeRoom(); this.requestFrame(); this.callbacks.homeCameraView?.(view);
+        });
+    }
     private readonly rendererSize = new THREE.Vector2();
     private liftedResidents?: { item: IslandStageItem; seated: IslandResident[]; walking: IslandResident[] };
     private livingVisit?: LivingVisit;
@@ -466,6 +474,8 @@ export class IslandScene {
             || (previous && savedResidentLayoutChanged(previous.items, state.items))) this.placementOcclusion.restore();
         const previousHome = this.keepsakeRoomActive;
         this.state = state;
+        if (previousHome !== this.keepsakeRoomActive) this.homeCameraControls.reset();
+        if (canControlHomeCamera(previous) !== canControlHomeCamera(state)) this.homeCameraControls.cancel();
         if (previousHome !== this.keepsakeRoomActive && previous && !state.learning) this.homePresentation.begin(this.camera, performance.now(), this.motion.matches);
         if (state.learning) this.homePresentation.cancel();
         const keepsakesChanged = this.keepsakeRoom.update(state.learningKeepsakes?.state, state.completedSets,
@@ -1569,8 +1579,10 @@ export class IslandScene {
     }
     private pointerDown = (event: PointerEvent) => {
         if (event.button === 0 && this.keepsakeRoomActive && !this.state?.photographing) {
-            this.cameraControls.down(event.pointerId, { x: event.clientX, y: event.clientY });
-            this.pointerStart = { id: event.pointerId, x: event.clientX, y: event.clientY }; return;
+            this.homeCameraControls.prepare(this.homeCamera, this.keepsakeRoom.group);
+            this.homeCameraControls.down(event.pointerId, { x: event.clientX, y: event.clientY });
+            this.renderer.domElement.setPointerCapture(event.pointerId);
+            return;
         }
         if (event.button !== 0 || this.state?.readOnly || this.state?.learning || this.state?.photographing || this.sharedJobs.active && this.sharedJobs.phase !== 'settled') return;
         if (this.workshopActive) {
@@ -1598,13 +1610,19 @@ export class IslandScene {
     };
     private pointerCancel = (event?: PointerEvent) => {
         if (event && this.workshopActive && event.pointerId !== this.workshopPointerId) return;
-        this.pointerStart = undefined; this.cameraControls.cancel();
+        this.pointerStart = undefined; this.cameraControls.cancel(); this.homeCameraControls.cancel();
         this.workshop.pointerCancel(this.workshopPointerId); this.workshopPointerId = undefined; this.workshopSourcePointer = undefined;
     };
     private pointerCaptureLost = (event: PointerEvent) => {
-        if (this.workshopPointerId === event.pointerId || this.pointerStart?.id === event.pointerId || this.cameraControls.hasPointer(event.pointerId)) this.pointerCancel();
+        if (this.workshopPointerId === event.pointerId || this.pointerStart?.id === event.pointerId || this.cameraControls.hasPointer(event.pointerId) || this.homeCameraControls.hasPointer(event.pointerId)) this.pointerCancel();
     };
     private wheel = (event: WheelEvent) => {
+        if (canControlHomeCamera(this.state)) {
+            this.homeCameraControls.prepare(this.homeCamera, this.keepsakeRoom.group);
+            const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? this.host.clientHeight : 1);
+            if (this.homeCameraControls.wheel(delta)) event.preventDefault();
+            return;
+        }
         if (this.state?.photographing || !canControlIslandCamera(this.state)) return;
         this.homePresentation.cancel();
         const delta = event.deltaY * (event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? this.host.clientHeight : 1);
@@ -1614,6 +1632,11 @@ export class IslandScene {
         if (!this.keepsakeRoomActive || this.state?.photographing || this.state?.learningKeepsakes?.selectedId) return;
         const position = this.homeResident.describe().position;
         if (position && this.homeResident.walkTo({ x: position[0] + dx, z: position[2] + dz }, performance.now(), this.motion.matches)) this.requestFrame();
+    }
+    controlHomeCamera(action: HomeCameraAction) {
+        if (this.disposed || this.lost || !canControlHomeCamera(this.state)) return;
+        this.homeCameraControls.prepare(this.homeCamera, this.keepsakeRoom.group);
+        this.homeCameraControls.action(action);
     }
     controlCamera(action: IslandCameraAction) {
         if (!this.disposed && !this.lost && !this.state?.photographing && canControlIslandCamera(this.state)) {
@@ -1629,6 +1652,10 @@ export class IslandScene {
     }
     private pointerMove = (event: PointerEvent) => {
         if (this.state?.photographing) return;
+        if (this.keepsakeRoomActive) {
+            if (canControlHomeCamera(this.state)) this.homeCameraControls.move(event.pointerId, { x: event.clientX, y: event.clientY }, this.host.clientHeight);
+            return;
+        }
         if (this.workshopActive) {
             if (event.pointerId !== this.workshopPointerId) return;
             if (this.workshopSourcePointer?.id === event.pointerId) {
@@ -1646,9 +1673,9 @@ export class IslandScene {
     };
     private pointerUp = (event: PointerEvent) => {
         if (this.keepsakeRoomActive && !this.state?.photographing) {
-            const start = this.pointerStart; this.pointerStart = undefined;
-            const tap = this.cameraControls.up(event.pointerId, { x: event.clientX, y: event.clientY });
-            if (!tap || !start || event.button !== 0 || start.id !== event.pointerId || Math.hypot(event.clientX - start.x, event.clientY - start.y) >= 8) return;
+            const tap = this.homeCameraControls.up(event.pointerId, { x: event.clientX, y: event.clientY });
+            if (this.renderer.domElement.hasPointerCapture(event.pointerId)) this.renderer.domElement.releasePointerCapture(event.pointerId);
+            if (!tap || event.button !== 0) return;
             const rect = this.renderer.domElement.getBoundingClientRect();
             this.raycaster.setFromCamera(new THREE.Vector2((event.clientX - rect.left) / rect.width * 2 - 1,
                 -(event.clientY - rect.top) / rect.height * 2 + 1), this.homeCamera);
@@ -1926,6 +1953,7 @@ export class IslandScene {
         const renderedCamera = this.keepsakeRoomActive ? this.homeCamera : this.camera;
         this.renderer.render(this.scene, renderedCamera);
         this.host.dataset.homeCameraCandidate = ISLAND_HOME_CAMERA_CANDIDATE;
+        this.host.dataset.homeCameraControls = JSON.stringify(this.homeCameraControls.view);
         this.host.dataset.homeCameraView = this.state?.learningKeepsakes?.decorating ? 'decor-v6' : 'living';
         this.host.dataset.homeResident = JSON.stringify(this.homeResident.describe());
         this.host.dataset.keepsakeRoom = JSON.stringify(this.keepsakeRoom.describe());
@@ -2158,6 +2186,7 @@ export class IslandScene {
     private frameKeepsakeRoom() {
         if (!this.keepsakeRoomActive) return false;
         const aspect = Math.max(1, this.host.clientWidth) / Math.max(1, this.host.clientHeight);
+        if (canControlHomeCamera(this.state) && this.homeCameraControls.apply(this.homeCamera, this.keepsakeRoom.group, aspect)) return true;
         return fitIslandHomeInteriorCamera(this.homeCamera, this.keepsakeRoom, aspect, this.state?.learningKeepsakes?.closeOverview,
             this.state?.learningKeepsakes?.closeOverview && this.homeResident.group.visible
                 ? new THREE.Box3().setFromObject(this.homeResident.group) : undefined, !this.state?.learningKeepsakes?.decorating);

@@ -1,0 +1,16 @@
+import {build} from 'esbuild';
+import {createHash} from 'node:crypto';
+import fs from 'node:fs';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+const folder=fileURLToPath(new URL('./',import.meta.url));
+const root=path.resolve(folder,'../../..');
+const options={entryPoints:[folder+'viewer.js'],bundle:true,format:'esm',minify:true,metafile:true,write:false,define:{'import.meta.env':'{}'}};
+const scan=await build({...options,define:{...options.define,STUDY_REVISION:'"scan"'}});
+const inputs=[...new Set([...Object.keys(scan.metafile.inputs).filter(f=>!f.startsWith('<')).map(f=>path.resolve(f)),...['index.html','style.css','build.mjs','../2026-10-11-native-owned-island/kit-manifest.json','../2026-10-11-native-owned-island/native05-owned-kit.glb.gz'].map(f=>folder+f)])].sort();
+const sourceHashes=Object.fromEntries(inputs.map(f=>[path.relative(root,f),createHash('sha256').update(fs.readFileSync(f)).digest('hex')]));
+const revision=createHash('sha256').update(JSON.stringify(sourceHashes)).digest('hex').slice(0,16);
+const result=await build({...options,define:{...options.define,STUDY_REVISION:JSON.stringify(revision)}});
+fs.writeFileSync(folder+'viewer.bundle.js',result.outputFiles[0].contents);
+fs.writeFileSync(folder+'source-manifest.json',JSON.stringify({candidate:'cove-mechanism-v2',delivery:'standalone-study-only',revision,sourceHashes,bundleSha256:createHash('sha256').update(result.outputFiles[0].contents).digest('hex')},null,2)+'\n');
+console.log('Built cove-mechanism-v2',revision,result.outputFiles[0].contents.length,'bytes');

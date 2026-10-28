@@ -1,0 +1,471 @@
+{
+  "recordedAt": "2026-10-21T10:16:32.293848+00:00",
+  "startedAt": "2026-10-21T10:00:04Z",
+  "scope": "One isolated mechanism study. No main application integration or publishing.",
+  "candidate": "cove-mechanism-v1",
+  "delivery": "standalone-study-only",
+  "revision": "0e93f4f69abad405",
+  "bundleSha256": "ac50d5222037656939e5488e52eb1cb393398c8c8c4be06d3c6f01eede5932c2",
+  "captureURL": "http://127.0.0.1:5276/docs/design/2026-10-21-cove-mechanism/",
+  "sourceManifest": "source-manifest.json",
+  "originalInputChecks": [
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/README.md",
+      "expected": "76777470b4a342b2cb36a2789f2bea9bb62f6d7eead2962b3f5fbe3105ce33c7",
+      "actual": "76777470b4a342b2cb36a2789f2bea9bb62f6d7eead2962b3f5fbe3105ce33c7",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/index.html",
+      "expected": "67a22390b92c4e64312ffe5ba174d204e2381bd6366991555f7f01cac555fb88",
+      "actual": "67a22390b92c4e64312ffe5ba174d204e2381bd6366991555f7f01cac555fb88",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/capture-motion.mjs",
+      "expected": "8981e0e023d01b263d62d6fd7e8a8526791ff9873594e43eaad54db4d0256ff1",
+      "actual": "8981e0e023d01b263d62d6fd7e8a8526791ff9873594e43eaad54db4d0256ff1",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/reference/day-provenance.json",
+      "expected": "d9e6a90c2d117e2608caef8939e87e2f97bea03562eef7c86fd9c603285b7cba",
+      "actual": "d9e6a90c2d117e2608caef8939e87e2f97bea03562eef7c86fd9c603285b7cba",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/reference/little-habitats-day.jpg",
+      "expected": "e3131e4e6b087ec332f3dd92c6f8468ac988fd9d832b1a51a36dd856ecdb9848",
+      "actual": "e3131e4e6b087ec332f3dd92c6f8468ac988fd9d832b1a51a36dd856ecdb9848",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/reference/little-habitats-evening.jpg",
+      "expected": "4fd1f602a9832412931c267a03c5487a98b3b8f3c245b129f014bd68b3e25daf",
+      "actual": "4fd1f602a9832412931c267a03c5487a98b3b8f3c245b129f014bd68b3e25daf",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/reference/provenance.json",
+      "expected": "44af16be7cb1353a7a205810ac41a4006ea0806c0850683a0040ae4050afd606",
+      "actual": "44af16be7cb1353a7a205810ac41a4006ea0806c0850683a0040ae4050afd606",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/01-ready.png",
+      "expected": "cfc3c9d05e9521905806d061376c76cb968fdc1583ef6e4c48a383d89b338bd1",
+      "actual": "cfc3c9d05e9521905806d061376c76cb968fdc1583ef6e4c48a383d89b338bd1",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/02-open.png",
+      "expected": "a3ab5c606585b6d8fb72b99a7cd6ce92c4b8775f92059bd1b1dadc7a3f561bf7",
+      "actual": "a3ab5c606585b6d8fb72b99a7cd6ce92c4b8775f92059bd1b1dadc7a3f561bf7",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/03-walking.png",
+      "expected": "8e42d8a3f0a5167457009f6dcafa702e467da78923b06ec08c4f785dad489218",
+      "actual": "8e42d8a3f0a5167457009f6dcafa702e467da78923b06ec08c4f785dad489218",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/04-observing.png",
+      "expected": "e01b108233ae52a9df70de2d68c46e9d51369c71e38ed8a3c8ca626c4da7818f",
+      "actual": "e01b108233ae52a9df70de2d68c46e9d51369c71e38ed8a3c8ca626c4da7818f",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/05-edited.png",
+      "expected": "91be79b6c25c42f6d0373a23a143f8c127faed52a337e1227101246789878fe9",
+      "actual": "91be79b6c25c42f6d0373a23a143f8c127faed52a337e1227101246789878fe9",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/06-undo.png",
+      "expected": "57c05da5c6b43d2d7b0767c073c58d1d08caf7639a08ffaa5a80b625e403cf07",
+      "actual": "57c05da5c6b43d2d7b0767c073c58d1d08caf7639a08ffaa5a80b625e403cf07",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/07-home.png",
+      "expected": "6f31f41f9dcbbfb058f711689695314da7d98f4f13d9489959d25b5aa7fd6cc7",
+      "actual": "6f31f41f9dcbbfb058f711689695314da7d98f4f13d9489959d25b5aa7fd6cc7",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/current-cove.webm",
+      "expected": "6bc4c27fdea6a3a1e6413624191ec37031b0f247feb0f3ff07409d6806845262",
+      "actual": "6bc4c27fdea6a3a1e6413624191ec37031b0f247feb0f3ff07409d6806845262",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/report.json",
+      "expected": "f9d04fa13a8c86501bcf4c3a920bf3771d87b279a2cc981e3df6264bee1044f4",
+      "actual": "f9d04fa13a8c86501bcf4c3a920bf3771d87b279a2cc981e3df6264bee1044f4",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-10-island-final-3d/whole-island-render.png",
+      "expected": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "actual": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/source-manifest.json",
+      "expected": "f135d8f670d5fb7a0c4b58feb29f4f8658cfab93bced64af81bbc55406ae4ead",
+      "actual": "f135d8f670d5fb7a0c4b58feb29f4f8658cfab93bced64af81bbc55406ae4ead",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/report.json",
+      "expected": "8050af8fdf391fc1b4f46be2fb7c7e739493130299ad6e353ab8ab9270c0eeb1",
+      "actual": "8050af8fdf391fc1b4f46be2fb7c7e739493130299ad6e353ab8ab9270c0eeb1",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-evening.png",
+      "expected": "75ad51db69f0ac0502f3c9931d4158d57379c49b1acbe6a03c6e619fef8c8f45",
+      "actual": "75ad51db69f0ac0502f3c9931d4158d57379c49b1acbe6a03c6e619fef8c8f45",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-new-tree-near.png",
+      "expected": "f75172ad38b17470541ea6af551874e0771dc7be9191fd65ecadecaf4f857573",
+      "actual": "f75172ad38b17470541ea6af551874e0771dc7be9191fd65ecadecaf4f857573",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-observing.png",
+      "expected": "4f2ee3416a5550463fcecebeec812763b8e24eccff94999ffae17383a364e850",
+      "actual": "4f2ee3416a5550463fcecebeec812763b8e24eccff94999ffae17383a364e850",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-old-tree-near.png",
+      "expected": "00f2d5c0a241209b228031f2e34d2d401517092f3bc72517c05a7ad17daeb661",
+      "actual": "00f2d5c0a241209b228031f2e34d2d401517092f3bc72517c05a7ad17daeb661",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-old-tree-overview.png",
+      "expected": "7e3204491bd7320224532b1f5b274a2546a994ad73e4c9bc62ae005df6f0ff98",
+      "actual": "7e3204491bd7320224532b1f5b274a2546a994ad73e4c9bc62ae005df6f0ff98",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-open.png",
+      "expected": "73e02ad000a2d6a6aeedd8bb9a0ffb2069cfd510885c42a6d44fca0959f83cf1",
+      "actual": "73e02ad000a2d6a6aeedd8bb9a0ffb2069cfd510885c42a6d44fca0959f83cf1",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-overview.png",
+      "expected": "2aea0cc42bc1ff73768a5ae4e333b496b7935ec10f2bf1ddc367d78d4fd96ee3",
+      "actual": "2aea0cc42bc1ff73768a5ae4e333b496b7935ec10f2bf1ddc367d78d4fd96ee3",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-ready.png",
+      "expected": "a06670c993275aafb1d7bc7b589d46a18d03c970abbc108e54be6a8773214183",
+      "actual": "a06670c993275aafb1d7bc7b589d46a18d03c970abbc108e54be6a8773214183",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/768-observing.png",
+      "expected": "e75ab732ae7dbb896e7deaa65e67b2bc6800a24fbfe74e39b729eb7230658aa8",
+      "actual": "e75ab732ae7dbb896e7deaa65e67b2bc6800a24fbfe74e39b729eb7230658aa8",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/verify-brief.mjs",
+      "expected": "6fa6b496aeb42535c73273df713076a9a3a076fc7fb71429ff336ed4ffcd0d03",
+      "actual": "6fa6b496aeb42535c73273df713076a9a3a076fc7fb71429ff336ed4ffcd0d03",
+      "pass": true
+    }
+  ],
+  "checks": {
+    "logic": {
+      "command": "fnm exec --using=22.23.3 node docs/design/2026-10-21-cove-mechanism/check.mjs",
+      "status": "PASS",
+      "expected": "Cumulative terrain edits and exact reversible history; support and unreachable-path refusal",
+      "count": 7,
+      "log": "logic-check.json"
+    },
+    "browser": {
+      "command": "SANSU_MECHANISM_OUTPUT=docs/design/2026-10-21-cove-mechanism/evidence-final node docs/design/2026-10-21-cove-mechanism/browser-check.mjs",
+      "status": "PASS",
+      "expected": "Three real UI edits produce distinct current shore destinations; owners fixed; grounded walking/return and safe history",
+      "scenarios": 2,
+      "checks": 21,
+      "captures": 24,
+      "log": "evidence-final/report.json"
+    },
+    "inputAndComparison": {
+      "command": "node /tmp/sansu-cove-mechanism/ui-check.mjs",
+      "status": "PASS",
+      "checks": [
+        "actual canvas touch ray picks E2 water and raises the same cell",
+        "arrow selection and Enter edit the adjacent cell",
+        "390: comparison loads all 24 images and two video elements without horizontal overflow",
+        "1440: comparison loads all 24 images and two video elements without horizontal overflow"
+      ],
+      "log": "evidence-final/ui-check.json"
+    },
+    "syntaxLintBuild": {
+      "status": "PASS",
+      "commands": [
+        "node --check docs/design/2026-10-21-cove-mechanism/viewer.js",
+        "node --check docs/design/2026-10-21-cove-mechanism/browser-check.mjs",
+        "ESLint Node API with recommended JS rules, browser+node globals and STUDY_REVISION readonly; six JS/MJS files",
+        "fnm exec --using=22.23.3 node docs/design/2026-10-21-cove-mechanism/build.mjs"
+      ],
+      "actual": "No syntax/lint errors; Node22 rebuild identical to captured bundle and revision"
+    },
+    "docs": {
+      "status": "PASS",
+      "command": "fnm exec --using=22.23.3 npm run docs:check",
+      "expected": "No broken links or documentation contract errors",
+      "actual": "PASS; 14 pre-existing overdue review/backlog warnings",
+      "log": "docs-check.txt"
+    },
+    "diffWhitespace": {
+      "status": "PASS",
+      "command": "git diff --check -- docs/tasks/active/2026-09-27-living-fantasy-first-playable.md"
+    }
+  },
+  "failuresRetained": [
+    {
+      "path": "evidence-initial/failure.json",
+      "cause": "Initial fixture tree-3 too close to coast; moved from 9,4 to 9,5 before final capture"
+    },
+    {
+      "path": "evidence/report.json",
+      "cause": "Camera locator matched body and button; constrained to buttons and reran complete journey"
+    }
+  ],
+  "review": {
+    "dataAndLearning": "No changes to src/public/storage/learning/PWA; original 29 input hashes retained",
+    "scope": "Isolated local prototype with current character and kit; not product adoption",
+    "tone": "No punishment or false success; failed history retains position and state",
+    "limits": [
+      "Conservative triangle band envelopes can over-restrict passage",
+      "Root support and terrain geometry remain simplified",
+      "Straight shoreline and disconnected canopy/home composition remain art HOLD",
+      "Other arrangements, growth, arbitrary isolation recovery, real devices and child understanding untested",
+      "No audio or animated terrain transition"
+    ]
+  },
+  "verdicts": {
+    "mechanism": "PASS for documented fixture and inputs",
+    "art": "HOLD",
+    "childUnderstandingSafety": "NOT_EVALUATED, N=0",
+    "mainAppAndRelease": "NOT_EVALUATED"
+  },
+  "outputs": {
+    "docs/design/2026-10-21-cove-mechanism/README.md": {
+      "sha256": "977df8fcda95a4d993fe8011a9ad7968f53f62a0cccc0d9b78b972b668172bbf",
+      "bytes": 8638
+    },
+    "docs/design/2026-10-21-cove-mechanism/browser-check.mjs": {
+      "sha256": "81a8207f75c99720135ca10eb04dab46897aeb37fc2fcbe7f2cc4af64bbbee5c",
+      "bytes": 8609
+    },
+    "docs/design/2026-10-21-cove-mechanism/build.mjs": {
+      "sha256": "cbbb269d43d03a2017cff2a018992f18c8e64d988d96ee58b24a55f5b82fca86",
+      "bytes": 1577
+    },
+    "docs/design/2026-10-21-cove-mechanism/check.mjs": {
+      "sha256": "5aa38b7ffc3ddfa5ea50b5d5a5f47a39b69c1ec53b8f0751ab20866e6539217e",
+      "bytes": 3355
+    },
+    "docs/design/2026-10-21-cove-mechanism/comparison.html": {
+      "sha256": "17e2ddb22b8214c95ff285088f2584a1f901acb94e88136693b88ec439302489",
+      "bytes": 3142
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence/report.json": {
+      "sha256": "27d0ae5edf81167e2148491165b023d3633f320f1793fbd75e7bada8b2b2940d",
+      "bytes": 6979
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence/video/e6c8cfb8f20f546d2c5b8a19592e40a6.webm": {
+      "sha256": "d7bf8191b5ca3f939202167614d9a8d2467d4888c653a1375a57e4ce03311fa0",
+      "bytes": 38918
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/390-E1-near.png": {
+      "sha256": "844fa4d16b0a507197c88b0a1e2e3e5c8f73eb8aed482de94f19b07b67856680",
+      "bytes": 92117
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/390-E1-overview.png": {
+      "sha256": "df829020edf615e2ccba8b233aa707d687f60c5e8520b7aaeaf651f243e2696e",
+      "bytes": 68735
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/390-E2-near.png": {
+      "sha256": "e72cde78e02c1567c3432e7d048dbe9cbb94ea14700e59e1c8baf4ab6c8fdf01",
+      "bytes": 94571
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/390-E2-overview.png": {
+      "sha256": "a84c1a7ec5dd23f7f5fec2b2fc8f4fd5d9ed8707f89764f865d8ebbde0bf49e0",
+      "bytes": 69715
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/390-E3-near.png": {
+      "sha256": "502f0365a38ab55a9c0582db0b9739abb5809e9e3f73c765acbdd777bf42d09b",
+      "bytes": 95933
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/390-E3-overview.png": {
+      "sha256": "794fd28453ec6ffc432d8bd36e9faf1936848607f6211d5d22e0dfd2ab705d0d",
+      "bytes": 70081
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/390-initial-near.png": {
+      "sha256": "031779f2e03b6c4867677028e25213edb0e51b89a837166c6826d51a1272d35c",
+      "bytes": 89877
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/390-initial-overview.png": {
+      "sha256": "92a864808d6139209d09b775928731ebc3b03c8cb2a09a6015b31959e989936e",
+      "bytes": 67681
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/390-redo-near.png": {
+      "sha256": "3a03c2c38cc87963d1c4a8dd7d4555f0af827b6062e3fc46cff4502dbb9ae4a7",
+      "bytes": 95382
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/390-redo-overview.png": {
+      "sha256": "588648891f8c7ab429d275600af996999982145d08d88564f7935e67064f97d7",
+      "bytes": 69830
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/390-undo-near.png": {
+      "sha256": "86d29d04424f9019e04c0ef992105c0d7204e67c0211f5a0fa6cda8e05fd42c2",
+      "bytes": 94264
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/390-undo-overview.png": {
+      "sha256": "d6c6a80e93b2455ee1fca31c17f1a20e3dc48152b30596f9af5ab7dae3f5b2e3",
+      "bytes": 69428
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/768-E1-near.png": {
+      "sha256": "45467633c45ecffce598acec8bb2112eee629d9ecd37175546eb02670b14622d",
+      "bytes": 176276
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/768-E1-overview.png": {
+      "sha256": "ecf057c51fac4c3f6d7f79aa679e8e015b1ca86d06e2ce8228d3229ae9df6d55",
+      "bytes": 171013
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/768-E2-near.png": {
+      "sha256": "fbe5b40770b51270dedd5fbb95e8e27204c97489a81fa61e7f54cdd5f307736a",
+      "bytes": 182030
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/768-E2-overview.png": {
+      "sha256": "380f2d8aa208fca3e743ee3484e15d7102b3a29a67937225ec37e082dc737117",
+      "bytes": 173386
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/768-E3-near.png": {
+      "sha256": "62e7bdf677bc091fa02916c69ac2eb7b8da44b39878b6b43fd7a7b1215afb3d3",
+      "bytes": 187046
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/768-E3-overview.png": {
+      "sha256": "437550390220811857c321edf979f51298ea55eece8f5de6c32be586213e27ff",
+      "bytes": 175104
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/768-initial-near.png": {
+      "sha256": "91f3a2b139f1b502823fc15da997a96d4cf80fb32adff3105ae6ccb6f6d8455e",
+      "bytes": 171528
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/768-initial-overview.png": {
+      "sha256": "b77c76e88e45d86ba0b3870093c0979bfc2f1f72f2624a23ee0b0358ad3d52fc",
+      "bytes": 168894
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/768-redo-near.png": {
+      "sha256": "ae0d873626a85421d18a177921a4f7b0dd32db24d29a0fa45906beef3e8976c6",
+      "bytes": 185044
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/768-redo-overview.png": {
+      "sha256": "1ee874982f1f50fb434fc0a548775e5ad4a599e6856eb22e30d379beeeda83a3",
+      "bytes": 174341
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/768-undo-near.png": {
+      "sha256": "45c7183f8e445b166a721060407fa83b8a1671dd31092a08c23190a29c4fd583",
+      "bytes": 181931
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/768-undo-overview.png": {
+      "sha256": "a71d7e31918214abfa67e115119cc8d745c0b7321483c59e5fb45dff62e80396",
+      "bytes": 173095
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/contact-sheet-390-overview.png": {
+      "sha256": "6a5daecffa49cbdeb158ee04da8260624df0913df61c8f7a187229ef5ad01016",
+      "bytes": 410573
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/report.json": {
+      "sha256": "03fb802c1b071b02489e34d27f6a0f6179577c309719695ac7865e37ced9dbe5",
+      "bytes": 927758
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/ui-check-source.mjs.txt": {
+      "sha256": "0aff35b803694858010a8c8042e78af76a15677cd0a75de1f185b2fdc3eeb70c",
+      "bytes": 2771
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/ui-check.json": {
+      "sha256": "dc43989d6c4b3f710a6474792fc11763c4788f16b31c6748853f3f2750665262",
+      "bytes": 457
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/video/69591d29cca870cc4e0b111d39c1473e.webm": {
+      "sha256": "263079d38bd4906aa85cf3999e2bbde9553324a374210be5d65acca90daaf092",
+      "bytes": 502047
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-final/video/8139b31aaefb4d16442daaf67408abaa.webm": {
+      "sha256": "c3f62d20674a7119ef3ace734ed228265b7b7c8f0677438f81d7884810313d05",
+      "bytes": 740093
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-initial/failure.json": {
+      "sha256": "e19963bc8423d861aa790d02276264b55949ec2f03f236e8c2e1b11bc04d44f9",
+      "bytes": 299
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-initial/initial.png": {
+      "sha256": "35df25924c69af9d0cb62eea8db50e6e99c9cdc31d7f2bcb907b7ad3af0e9b67",
+      "bytes": 69257
+    },
+    "docs/design/2026-10-21-cove-mechanism/evidence-initial/source-manifest.json": {
+      "sha256": "7ac5801688b43916beceb8c3231bc7650f5c2efd79b7ce19fb1a3d241e1bfc68",
+      "bytes": 3838
+    },
+    "docs/design/2026-10-21-cove-mechanism/index.html": {
+      "sha256": "4b0298282139bcc1f5b3970c0112dad3ec36adafab6e5a9f27db7e12cd55d84c",
+      "bytes": 2476
+    },
+    "docs/design/2026-10-21-cove-mechanism/logic-check.json": {
+      "sha256": "0a541ea8e1956f8ef781054ebe54f53033ea6e8cca569ee1700df1b61ffbfbc4",
+      "bytes": 743
+    },
+    "docs/design/2026-10-21-cove-mechanism/source-manifest.json": {
+      "sha256": "2885a5c4b10c6d43b32a9b79a0af3afa14cb4e5e1396688b41456ec67bf6f10c",
+      "bytes": 3838
+    },
+    "docs/design/2026-10-21-cove-mechanism/style.css": {
+      "sha256": "c65e108d65f11b665e3ff70ddbbbb2855d2a1cc4bffc725dc4ff1228b458c9dd",
+      "bytes": 2395
+    },
+    "docs/design/2026-10-21-cove-mechanism/terrain.mjs": {
+      "sha256": "f5539128d2ded9c69123ca58d40b13aaad4703c57d800df18b757efab91050da",
+      "bytes": 4309
+    },
+    "docs/design/2026-10-21-cove-mechanism/viewer.bundle.js": {
+      "sha256": "ac50d5222037656939e5488e52eb1cb393398c8c8c4be06d3c6f01eede5932c2",
+      "bytes": 663363
+    },
+    "docs/design/2026-10-21-cove-mechanism/viewer.js": {
+      "sha256": "2a2ee9075ce2112b6a3762b0127b6c0eed92029a047116cc74606a9036a07fda",
+      "bytes": 17632
+    },
+    "docs/design/2026-10-21-cove-mechanism/walk.mjs": {
+      "sha256": "31a79de578dbcf3dc9822c6f5283f634e2bce558371d0510c02f08e909beb6f0",
+      "bytes": 3276
+    },
+    "docs/design/2026-10-21-cove-mechanism/docs-check.txt": {
+      "sha256": "f532551edebda0fda7891fd2f1aed92babcdbcf96bd6b64b3d0e2af635af02a9",
+      "bytes": 1404
+    }
+  },
+  "closeout": {
+    "parentTask": "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+    "productFilesChanged": false,
+    "originalPrototypeChanged": false,
+    "published": false,
+    "committedOrPushed": false
+  },
+  "completedAt": "2026-10-21T10:16:43.702833+00:00"
+}

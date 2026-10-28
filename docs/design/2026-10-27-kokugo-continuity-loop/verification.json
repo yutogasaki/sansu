@@ -1,0 +1,113 @@
+{
+  "at": "2026-10-27T06:25:03.441021+00:00",
+  "head": "2e06dc9a",
+  "worktree": "dirty; local-only; no commit or push",
+  "appVersion": {
+    "version": "development-local:38e8b02f-e46c-47b6-8258-e098ee653e7b",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "inputMapSha256": "31b43b40775393857854db73f75c4d8a7345e34b9f326673c2353caaf8c90386",
+  "inputMapLocal": "output/kokugo-loop-20261027/inputs-final-text.json",
+  "checks": [
+    {
+      "command": "npm run typecheck",
+      "actual": "PASS",
+      "evidence": "typecheck-delivery.log",
+      "scope": "最終TS変更後。以後は狭幅CSSの折返しだけ変更"
+    },
+    {
+      "command": "npm run lint; eslint affected paths; eslint new files",
+      "actual": "全体の2 errorを修正し、対象と新規ファイルのlint PASS。全体の既存5 warningは保持",
+      "evidence": "lint.log / lint-affected.log / lint-new-files.log"
+    },
+    {
+      "command": "vitest run (対象18ファイル、maxWorkers=1)",
+      "actual": "18 files / 157 tests PASS",
+      "evidence": "affected.log",
+      "scope": "国語・記録・共通ナビ・写真・footerと全体実行でtimeoutした島の3ファイル"
+    },
+    {
+      "command": "npm run test:run; vitest run --maxWorkers=2 --minWorkers=1",
+      "actual": "2回とも既存の島の保存テストで5秒timeoutが出て中断。全体完走のPASSなし",
+      "evidence": "tests.log / tests-limited.log"
+    },
+    {
+      "command": "npm run build; vite build --outDir .../build-final-text; assets:check",
+      "actual": "PASS。最終PWA 175 files / 9.45MiB、artwork 2.97MiB",
+      "evidence": "build.log / build-final-text.log / assets-final-text.log",
+      "scope": "初回npm build後、狭幅UIとlint修正を含む本体の再build。promotionサイトは初回のみ"
+    },
+    {
+      "command": "e2e-kokugo.mjs (real SW offline)",
+      "actual": "390 / 768 / 320 PASS",
+      "evidence": "kokugo/report.json",
+      "version": "development-local:4dce8465-19e5-4cd2-98a8-f7b0038e8baf",
+      "scope": "最後の狭幅CSSと、意味を保持した戻り先チェック書換えの前"
+    },
+    {
+      "command": "e2e-kokugo-kanji.mjs",
+      "actual": "390 / 768 / 320 PASS、errors=[]",
+      "evidence": "kanji-delivery/report.json",
+      "version": "development-local:a212a514-96c0-4024-a58f-ff7cb856843b",
+      "scope": "狭幅ボタンの語中折返し抑制CSSだけを足す前"
+    },
+    {
+      "command": "e2e-kokugo-continuity.mjs",
+      "actual": "390 / 320 / 768 PASS、errors=[]",
+      "evidence": "continuity-final-text/report.json",
+      "version": "development-local:38e8b02f-e46c-47b6-8258-e098ee653e7b",
+      "scope": "最終版。教科名非省略を含む4件の再現と修正を検査"
+    },
+    {
+      "command": "npm run e2e:smoke (32 scenarios)",
+      "actual": "初回29 PASS / 3 FAIL。HMRを止めた再実行28 PASS / 4 FAIL。全体smoke未合格",
+      "evidence": "smoke.log / smoke-stable.log",
+      "unresolved": [
+        "Snap Root 390px popped image visibility",
+        "fixed-ten resume numeric input expected 10 actual 0",
+        "last-light rescue 60s timeout",
+        "Root Tangle wide portrait numeric input expected 2 actual ?"
+      ]
+    }
+  ],
+  "externalConsultation": "Automatic approval rejected entering implementation summary into ChatGPT. Specific transmission approval pending; no new answer obtained.",
+  "unverified": [
+    "実児童の理解・再訪・教材の教育審査",
+    "実iPhone",
+    "公開・配布",
+    "同一最終sourceでの全単体suite完走",
+    "ChatGPTによる今回の要約監査",
+    "全体smokeの合格と探索系4失敗の根因"
+  ]
+}

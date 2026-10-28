@@ -1,0 +1,68 @@
+{
+  "status": "PASS",
+  "scope": "Specification 52 §1.1: actual actor support, legal route cuts, atomic writer and undo safety, actual floor restoration. Explicit fake-IDB diagnostic, no browser actor injection or general safety certification.",
+  "reports": [
+    {
+      "label": "A",
+      "lostSites": [
+        "-3,0.5",
+        "-2.5,1"
+      ],
+      "rejectedOccupiedEdits": 2,
+      "rejectedUndoActor": {
+        "x": -3,
+        "z": 1
+      },
+      "atomicRecordPreserved": true,
+      "safeUndoRedoFloorEqual": true,
+      "reloadEqual": true,
+      "revision": 3
+    },
+    {
+      "label": "B",
+      "lostSites": [
+        "8,4",
+        "7.5,2",
+        "7,2.5",
+        "6.5,3",
+        "7,3.5"
+      ],
+      "rejectedOccupiedEdits": 5,
+      "rejectedUndoActor": {
+        "x": 7,
+        "z": 4
+      },
+      "atomicRecordPreserved": true,
+      "safeUndoRedoFloorEqual": true,
+      "reloadEqual": true,
+      "revision": 3
+    }
+  ],
+  "metadata": {
+    "node": "v22.23.3",
+    "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-brush-trial/assembly-contract-check.mjs footing",
+    "inputSHA256": {
+      "composite-field.ts": "0a63b64afeae4cfd78fef2eda0ad1f69e85f0e566bfac70eb51f7bfcd36a5f0f",
+      "composite-model.ts": "d36e05de7b43cc050d9087cdb3f584b06dc07b153f32652ea242407b9e205e57",
+      "assembly-contract-check.ts": "ba4403142ab232839f6826349c12c8125dc3e14e8f5779c96538ef82814cebc7",
+      "assembly-contract-check.mjs": "e6faf803a3ff9aa026e41407ce18ccff8cdc16899efd444dda4111e6649f4778",
+      "vite.config.ts": "17049b9c75645e3bc59753cc0650eea06cd403c01ae780b97d222140e8d41708",
+      "TrialIsland.ts": "50ee145cb8167339f55f18f27f6160e9032cae3956f22d09b1c4aa5c89bce013",
+      "Controls.tsx": "5292b7281dc6bc2ab1e435a290d5492b848d069c091a4393c579d11cdc2a8ebc",
+      "PlaceEvidence.tsx": "2078cc7c8d0c149efd4a4b51fd7590e865a619a274e66b59541c7877a2f40ef1",
+      "directional-field.ts": "0dc03ed7b2dbbf87ef79973405f72c5d762c26dff2e3aa462ea5c85e73f7e54b",
+      "assembly-mode.ts": "4199e840f84d8462ce56810a20d9045b5b9d95dac1ab0eb105ff4bba458c9ca4",
+      "assembly-store.ts": "67ced96d5c40ed70f86ae5082b93a730c9034aecb0db6a184224320797eacfa4",
+      "composite-store.ts": "708b2b1cbdd90ff1d1b3feff2eec19a25f0ec9c3051b02dce9f9dfd4b32b2536",
+      "assembly-section.ts": "15b05cd87fee9db17e54f81d0cd3ab029bffc1f8a624d022561c6409cef0a054",
+      "coastal-section.ts": "75170b31383e59e8874b8aa8290b549fb7ffd278e7313092b0118e06d36b22f3",
+      "bay-section.ts": "72dfb86624b77625406c00b4a055ba9b0ffd114668a102c44739c435d53115b0",
+      "evidence/two-bay-v21-A-one-state.json": "aa889e3b17e89523dceab9993ca7d6ef1131012b30511685689e80434c20cf10",
+      "evidence/two-bay-v21-A-two-state.json": "bb95473797fb19721ed9d5b51ea4fd6940de4029885803cbaa937fcf1ffb968c",
+      "evidence/two-bay-v21-B-one-state.json": "852a3fbf1e4577790a88ddce1725eb781e48ccbdd51627dbc7b006f6304f2af3",
+      "evidence/two-bay-v21-B-two-state.json": "6d28aa548882410aa4f251a9065ae2e391d165781530157e79ecf8b8035a6fa1"
+    },
+    "changedInputs": [],
+    "bundleSHA256": "039a03e184216d06c8210ac4dfb71b677186fc940264a871f8726e1f9e590c98"
+  }
+}

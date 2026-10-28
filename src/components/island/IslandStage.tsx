@@ -10,6 +10,8 @@ import type { ReactNode } from 'react';
 import { IslandCameraToolbar } from './IslandCameraToolbar';
 import { canControlIslandCamera, hasChangedIslandCameraView, initialIslandCameraView, type IslandCameraView } from './three/islandCameraControls';
 import './IslandStage.css';
+import { HomeCameraToolbar } from './HomeCameraToolbar';
+import { canControlHomeCamera, initialHomeCameraView } from './three/homeCameraControls';
 
 const DEFAULT_CAPTION = 'カワウソと ウサギが くらす しま';
 const deliveredState = (props: IslandStageProps, sharedId?: string): IslandStageProps => ({ ...props,
@@ -36,6 +38,8 @@ export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready
     const [attempt, setAttempt] = useState(0);
     const [cameraView, setCameraView] = useState<IslandCameraView>(initialIslandCameraView);
     const cameraEnabled = canControlIslandCamera(props);
+    const homeCameraEnabled = canControlHomeCamera(props);
+    const [homeCameraView, setHomeCameraView] = useState(initialHomeCameraView);
     const onTutorialReady = props.onTutorialReady;
     useEffect(() => { onTutorialReady?.(ready && !failed); return () => onTutorialReady?.(false); }, [ready, failed, onTutorialReady]);
     const workshopActive = Boolean(props.workshop?.active && !failed);
@@ -44,7 +48,7 @@ export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready
     const sharedEnabled = props.shared?.active;
     const sceneLabel = workshopActive
         ? props.workshop?.mode === 'build' ? 'みぞと 水車を つなぐ いりえ' : 'ものを しらべる いりえ'
-        : props.learningKeepsakes && !props.learning ? 'しまの いえ。ゆかを タップ、または やじるしキーで ぽこもこが あるくよ'
+        : props.learningKeepsakes && !props.learning ? 'しまの いえ。なぞって 移動、2本指で 拡大と回転。ゆかを タップ、または やじるしキーで ぽこもこが あるくよ'
         : sharedActive ? 'しまの かざりと なかま'
         : props.expressionFlagFocus && !props.learning ? 'しまの はたと かざり'
         : props.preview ? 'しまの ものを おく ばしょを えらんでいるよ'
@@ -153,6 +157,7 @@ export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready
                     sharedFeedback: value => current.current.onSharedFeedback?.(value),
                     caption: value => { if (!disposed && !failedThisAttempt) setCaption({ text: value, context: current.current.expressionCaptionKey }); },
                     failure: fail,
+                    homeCameraView: view => setHomeCameraView(previous => previous.manual === view.manual && previous.zoom === view.zoom ? previous : view),
                     cameraView: view => { setCameraView(view); if (view.manual) current.current.onCameraPractice?.(); },
                     ready: () => {
                         if (disposed || failedThisAttempt) return;
@@ -170,7 +175,7 @@ export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready
         return () => { disposed = true; runtime.current?.dispose(); runtime.current = null; };
     }, [attempt]);
 
-    return <figure className={`island-stage${props.learning ? ' island-stage--learning' : ''}${props.preview ? ' island-stage--placing' : ''}${cameraEnabled ? ' island-stage--viewing' : ''}${props.workshop?.active ? ' island-stage--workshop' : ''}`}
+    return <figure className={`island-stage${props.learning ? ' island-stage--learning' : ''}${props.preview ? ' island-stage--placing' : ''}${cameraEnabled || homeCameraEnabled ? ' island-stage--viewing' : ''}${props.workshop?.active ? ' island-stage--workshop' : ''}`}
         onPointerDownCapture={props.workshop?.active ? props.onWorkshopGesture : undefined} onKeyDownCapture={props.workshop?.active ? props.onWorkshopGesture : undefined}
         data-art-candidate={ISLAND_VISUAL_CANDIDATE} data-visual-candidate={ISLAND_VISUAL_CANDIDATE}
         data-island-theme={props.cosmetics?.themeId ?? 'moon-garden'} data-island-accent={props.cosmetics?.accentId ?? 'none'}
@@ -215,6 +220,7 @@ export function IslandStage(props: IslandStageProps & { onTutorialReady?: (ready
                         }}><Icon size={17} aria-hidden="true" />{label}</button>;
                 })}
             </div>}
+            {!failed && ready && homeCameraEnabled && <HomeCameraToolbar view={homeCameraView} onAction={action => runtime.current?.controlHomeCamera(action)} />}
             {!failed && !directOpen && cameraEnabled && hasChangedIslandCameraView(cameraView) && <button type="button"
                 className="island-stage__quick-reset" disabled={props.photographing}
                 onClick={() => runtime.current?.controlCamera('reset')}>もとの ながめ</button>}

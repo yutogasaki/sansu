@@ -1,0 +1,26 @@
+import * as T from 'three';
+import {mergeVertices} from 'three/addons/utils/BufferGeometryUtils.js';
+import {initial,presets,label,edit,build,metrics} from './terrain.mjs';
+const $=s=>document.querySelector(s);let name='diagonal',cells=initial(name),past=[],future=[];document.body.dataset.revision=LOOP_REVISION;
+const refBase='../2026-10-22-little-habitats-geometry-probe/evidence/';
+const references={single:'01-one-raised.jpg',pair:'03-adjacent-joined.jpg',ell:'04-l-concave.jpg',square:'05-square-filled.jpg',diagonal:'15-diagonal-clear.jpg',reverse:'evidence/reference-reverse-diagonal.jpg',gap:null,hole:'16-adjacent-water.jpg'};
+const scenes=['hard','blend'].map(method=>{const canvas=$('#'+method),renderer=new T.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputColorSpace=T.SRGBColorSpace;renderer.toneMapping=T.ACESFilmicToneMapping;renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.PCFShadowMap;
+ const scene=new T.Scene();scene.background=new T.Color('#b3d8df');scene.add(new T.HemisphereLight('#e7f3ff','#6f6553',1.5));const light=new T.DirectionalLight('#fff4dd',2.1);light.position.set(-3,7,5);light.castShadow=true;Object.assign(light.shadow.camera,{left:-5,right:5,top:5,bottom:-5,near:.1,far:20});light.shadow.mapSize.set(1024,1024);light.shadow.normalBias=.014;scene.add(light);
+ const water=new T.Mesh(new T.PlaneGeometry(50,50),new T.MeshStandardMaterial({color:'#52b1c0',roughness:.35}));water.rotation.x=-Math.PI/2;water.position.y=0;water.receiveShadow=true;scene.add(water);
+ const ground=new T.Mesh(new T.BufferGeometry(),new T.MeshStandardMaterial({vertexColors:true,roughness:.88,side:T.DoubleSide}));ground.castShadow=true;ground.receiveShadow=true;scene.add(ground);
+ const camera=new T.OrthographicCamera(-3.15,3.15,3, -3,.1,40);camera.position.set(.7,6.2,9);camera.lookAt(0,.45,0);return{method,canvas,renderer,scene,water,ground,camera};});
+function draw(s){const b=s.canvas.parentElement.getBoundingClientRect();s.camera.top=3.15*b.height/b.width;s.camera.bottom=-s.camera.top;s.camera.updateProjectionMatrix();s.renderer.setSize(b.width,b.height,false);s.renderer.render(s.scene,s.camera);}
+function rebuild(){const facts={revision:LOOP_REVISION,candidate:'contour-hypothesis-loop',delivery:'standalone-study-only',preset:name,cells:structuredClone(cells),undo:past.length,redo:future.length,finish:$('#finish').checked,clay:$('#clay').checked,methods:[]};
+ for(const s of scenes){const mesh=build(cells,s.method,{finish:$('#finish').checked});let geo=new T.BufferGeometry();geo.setAttribute('position',new T.Float32BufferAttribute(mesh.positions,3));geo.setAttribute('color',new T.Float32BufferAttribute(mesh.colors,3));geo=mergeVertices(geo,1e-5);geo.computeVertexNormals();s.ground.geometry.dispose();s.ground.geometry=geo;const clay=$('#clay').checked;s.ground.material.vertexColors=!clay;s.ground.material.color.set(clay?'#bfc5cd':'#ffffff');s.ground.material.needsUpdate=true;s.water.visible=!clay;s.scene.background.set(clay?'#e5e7eb':'#b3d8df');s.scene.updateMatrixWorld(true);
+  const m=metrics(cells,s.method),samples=[[0,0],[1,0],[0,1],[1,1],[.5,.5]].map(([x,z])=>{const hit=new T.Raycaster(new T.Vector3(x,8,z),new T.Vector3(0,-1,0)).intersectObject(s.ground)[0]?.point.y;return{x,z,cpu:mesh.floor(x,z),visible:hit,error:Number.isFinite(hit)?Math.abs(hit-mesh.floor(x,z)):null};});
+  facts.methods.push({method:s.method,...m,triangles:mesh.triangles.length,buildMs:Math.round(mesh.buildMs),samples});$('#'+s.method+'-result').textContent=`高台のまとまり：${m.components}か所 / 中央の高さ ${Number.isFinite(mesh.floor(.5,.5))?mesh.floor(.5,.5).toFixed(2):'水域'}`;draw(s);
+ }
+ $('#facts').textContent=JSON.stringify(facts,null,2);$('#undo').disabled=!past.length;$('#redo').disabled=!future.length;document.body.dataset.ready='true';document.body.dataset.preset=name;$('#status').textContent=past.length?`編集 ${past.length}回。両方に同じ高さ・材質を入力しています。`:'同じ入力・同じカメラ・同じ仕上げで比較しています。';
+}
+for(const key of Object.keys(presets))$('#case').add(new Option(label[key],key));$('#case').value=name;
+function reference(){const ref=references[name],url=ref?(ref.startsWith('evidence/')?ref:refBase+ref):refBase+'09-isolated-land.jpg';$('#reference').src=url;$('#ref-link').href=url;$('#ref-caption').textContent=name==='gap'?'参考に同一配置の実測なし：誤結合を防ぐ反例':name==='hole'?'参考は水の穴。こちらは高台の穴を試す反例':label[name]+'の観察と照合';}
+function reset(){cells=initial(name);past=[];future=[];reference();rebuild();}
+$('#case').addEventListener('change',()=>{name=$('#case').value;reset();});$('#reset').addEventListener('click',reset);$('#finish').addEventListener('change',rebuild);$('#clay').addEventListener('change',rebuild);
+document.querySelectorAll('[data-x]').forEach(b=>b.addEventListener('click',()=>{past.push(structuredClone(cells));future=[];cells=edit(cells,Number(b.dataset.x),Number(b.dataset.z),$('#tool').value);rebuild();}));
+$('#undo').addEventListener('click',()=>{if(!past.length)return;future.push(structuredClone(cells));cells=past.pop();rebuild();});$('#redo').addEventListener('click',()=>{if(!future.length)return;past.push(structuredClone(cells));cells=future.pop();rebuild();});
+new ResizeObserver(()=>scenes.forEach(draw)).observe($('.panels'));reference();rebuild();

@@ -51,6 +51,18 @@ export function makeGrowingInteractionWarmBank(owners: T.Object3D) {
 }
 
 type ParallelCompile = { COMPLETION_STATUS_KHR: number };
+type PreparedProgram = NonNullable<T.WebGLRenderer['info']['programs']>[number];
+
+function shaderLinkFailure(gl: WebGLRenderingContext | WebGL2RenderingContext, program: PreparedProgram, handle: WebGLProgram) {
+    const log = (value: string | null) => value?.trim().slice(0, 2000) || '(empty)';
+    return Error([
+        `Growing shader failed to link: ${program.name || program.id}`,
+        `program: ${log(gl.getProgramInfoLog(handle))}`,
+        ...(program.vertexShader ? [`vertex: ${log(gl.getShaderInfoLog(program.vertexShader))}`] : []),
+        ...(program.fragmentShader ? [`fragment: ${log(gl.getShaderInfoLog(program.fragmentShader))}`] : []),
+    ].join('\n'));
+}
+
 const transmissive = (material: T.Material) => material instanceof T.MeshPhysicalMaterial && material.transmission > 0;
 const meshMaterials = (root: T.Object3D) => {
     const materials = new Set<T.Material>();
@@ -65,18 +77,23 @@ const meshMaterials = (root: T.Object3D) => {
 async function validatePrograms(renderer: T.WebGLRenderer, signal?: AbortSignal) {
     requireReviewedShaderInterface(renderer);
     const gl = renderer.getContext(), parallel = gl.getExtension('KHR_parallel_shader_compile') as ParallelCompile | null;
-    const programs = [...(renderer.info.programs ?? [])];
     // Polling only keeps the page responsive. Some phones never report completion, so after
     // a short wait fall through to the blocking link check below instead of waiting behind 88%.
     const deadline = performance.now() + 8000;
-    const handles = programs.map(program => {
+    const liveHandles = () => (renderer.info.programs ?? []).map(program => {
         const handle = program.program as WebGLProgram;
         if (typeof program.getUniforms !== 'function' || !handle || !gl.isProgram(handle)) throw Error('Growing shader program interface or lifetime differs');
         return { program, handle };
     });
+    let handles: ReturnType<typeof liveHandles>;
     for (;;) {
         signal?.throwIfAborted();
         if (gl.isContextLost()) throw Error('WebGL context lost during growing shader preparation');
+        // Opening first shows the saved island, then sync may replace its scenery
+        // while this wait yields. Three destroys unowned programs immediately.
+        // Never poll a snapshot across an await: a deleted handle returns null,
+        // which used to become a false "failed to link" at 88% on a slow start.
+        handles = liveHandles();
         if (!parallel || handles.every(({ handle }) => gl.getProgramParameter(handle, parallel.COMPLETION_STATUS_KHR))) break;
         if (performance.now() >= deadline) break;
         await new Promise(resolve => setTimeout(resolve, 10));
@@ -86,7 +103,7 @@ async function validatePrograms(renderer: T.WebGLRenderer, signal?: AbortSignal)
         // Keep Three's original onShaderError callback/log checks intact. This
         // also caches attributes. Without KHR this can block, while still loading.
         program.getUniforms();
-        if (!gl.getProgramParameter(handle, gl.LINK_STATUS)) throw Error(`Growing shader failed to link: ${program.name || program.id}`);
+        if (!gl.getProgramParameter(handle, gl.LINK_STATUS)) throw shaderLinkFailure(gl, program, handle);
     }
 }
 

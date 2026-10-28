@@ -1,0 +1,294 @@
+{
+  "at": "2026-10-25T23:18:30.561Z",
+  "scope": "isolated synthetic profile; no real user data",
+  "results": [
+    {
+      "case": "switch to empty topic2",
+      "expected": "",
+      "actual": "お題一の保存文",
+      "works": [
+        {
+          "id": "audit-995ff6ef-5488-4201-a45a-39e60283bcbd:E05-1",
+          "profileId": "audit-995ff6ef-5488-4201-a45a-39e60283bcbd",
+          "unitId": "E05",
+          "text": "お題一の保存文",
+          "saved": true,
+          "updatedAt": 1792970312544,
+          "revisions": [
+            {
+              "text": "お題一の保存文",
+              "at": 1792970312544
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "switch back to saved topic1",
+      "expected": "お題一の保存文",
+      "actual": "お題二の保存文",
+      "works": [
+        {
+          "id": "audit-995ff6ef-5488-4201-a45a-39e60283bcbd:E05-1",
+          "profileId": "audit-995ff6ef-5488-4201-a45a-39e60283bcbd",
+          "unitId": "E05",
+          "text": "お題一の保存文",
+          "saved": true,
+          "updatedAt": 1792970312544,
+          "revisions": [
+            {
+              "text": "お題一の保存文",
+              "at": 1792970312544
+            }
+          ]
+        },
+        {
+          "id": "audit-995ff6ef-5488-4201-a45a-39e60283bcbd:E05-2",
+          "profileId": "audit-995ff6ef-5488-4201-a45a-39e60283bcbd",
+          "unitId": "E05",
+          "text": "お題二の保存文",
+          "saved": true,
+          "updatedAt": 1792970312625,
+          "revisions": [
+            {
+              "text": "お題二の保存文",
+              "at": 1792970312625
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "save after switching back without editing",
+      "works": [
+        {
+          "id": "audit-995ff6ef-5488-4201-a45a-39e60283bcbd:E05-1",
+          "profileId": "audit-995ff6ef-5488-4201-a45a-39e60283bcbd",
+          "unitId": "E05",
+          "text": "お題二の保存文",
+          "saved": true,
+          "updatedAt": 1792970312691,
+          "revisions": [
+            {
+              "text": "お題一の保存文",
+              "at": 1792970312544
+            },
+            {
+              "text": "お題二の保存文",
+              "at": 1792970312691
+            }
+          ]
+        },
+        {
+          "id": "audit-995ff6ef-5488-4201-a45a-39e60283bcbd:E05-2",
+          "profileId": "audit-995ff6ef-5488-4201-a45a-39e60283bcbd",
+          "unitId": "E05",
+          "text": "お題二の保存文",
+          "saved": true,
+          "updatedAt": 1792970312625,
+          "revisions": [
+            {
+              "text": "お題二の保存文",
+              "at": 1792970312625
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "after original H06 river model",
+      "progress": []
+    },
+    {
+      "case": "immediate answer after original H06 model",
+      "plan": {
+        "id": "551739f3-e07a-447d-82cb-80fc1735280c",
+        "profileId": "audit-995ff6ef-5488-4201-a45a-39e60283bcbd",
+        "unitId": "HS1",
+        "version": "kokugo-v1",
+        "status": "pending",
+        "focusTarget": "kanji:5ddd",
+        "createdAt": 1792970313061,
+        "revision": 3,
+        "cursor": 0,
+        "repeatedPractice": false,
+        "introDone": true,
+        "slots": [
+          {
+            "item": {
+              "unitId": "HS1",
+              "version": "kokugo-kanji-2",
+              "target": "kanji:5ddd",
+              "kanji": "川",
+              "condition": "基本例",
+              "id": "HS1-5ddd-0",
+              "family": "字と音",
+              "exposureGroup": "kanji:5ddd:isolated",
+              "mode": "expression-structured",
+              "form": "choice",
+              "choices": [
+                "旅",
+                "川",
+                "流"
+              ],
+              "answer": "川",
+              "prompt": "音読み・訓読みが「かわ」の漢字は？",
+              "hint": "送りがなのある読みは、送りがなも 入れるよ。音読み・訓読みを たしかめよう。",
+              "model": "「川」と書くよ。読みは「かわ」。"
+            },
+            "support": "none",
+            "draft": "",
+            "heard": false,
+            "presentation": {
+              "at": 1792970313112,
+              "contactRevision": 4,
+              "delayedEligible": false,
+              "reviewEligible": false,
+              "novel": true
+            },
+            "firstAnswer": {
+              "answer": "川",
+              "correct": true,
+              "at": 1792970313176
+            },
+            "completedAt": 1792970313176,
+            "completionKind": "independent"
+          },
+          {
+            "item": {
+              "unitId": "HS1",
+              "version": "kokugo-kanji-2",
+              "target": "kanji:5ddd",
+              "kanji": "川",
+              "condition": "基本例",
+              "id": "HS1-5ddd-1",
+              "family": "ことばの読み",
+              "exposureGroup": "kanji:5ddd:川原",
+              "mode": "expression-structured",
+              "form": "choice",
+              "choices": [
+                "賀",
+                "芽",
+                "川"
+              ],
+              "answer": "川",
+              "prompt": "「かわら」と読む「□原」。□に 入る漢字は？",
+              "hint": "ことば全体を たしかめて、合う字を さがそう。",
+              "model": "「川原」と書くよ。読みは「かわら」。"
+            },
+            "support": "none",
+            "draft": "",
+            "heard": false
+          },
+          {
+            "item": {
+              "unitId": "HS1",
+              "version": "kokugo-kanji-2",
+              "target": "kanji:5ddd",
+              "kanji": "川",
+              "condition": "基本例",
+              "id": "HS1-5ddd-2-r2",
+              "family": "ことばの読み",
+              "exposureGroup": "kanji:5ddd:小川",
+              "mode": "expression-structured",
+              "form": "choice",
+              "choices": [
+                "川",
+                "機",
+                "議"
+              ],
+              "answer": "川",
+              "prompt": "「おがわ」と読む「小□」。□に 入る漢字は？",
+              "hint": "ことば全体を たしかめて、合う字を さがそう。",
+              "model": "「小川」と書くよ。読みは「おがわ」。"
+            },
+            "support": "none",
+            "draft": "",
+            "heard": false
+          }
+        ]
+      },
+      "progress": [
+        {
+          "profileId": "audit-995ff6ef-5488-4201-a45a-39e60283bcbd",
+          "id": "kanji:5ddd:choice:decoding",
+          "unitId": "HR1",
+          "target": "kanji:5ddd",
+          "form": "choice",
+          "mode": "decoding",
+          "evidencePolicy": "editorial-2",
+          "independentAfter": 0,
+          "introduced": false,
+          "contactRevision": 2,
+          "seenExposures": [
+            "kanji:5ddd:isolated"
+          ],
+          "independentItems": [],
+          "independentFamilies": [],
+          "independentConditions": [],
+          "delayedCount": 0,
+          "strength": 0,
+          "lastContactAt": 1792970313176
+        },
+        {
+          "profileId": "audit-995ff6ef-5488-4201-a45a-39e60283bcbd",
+          "id": "kanji:5ddd:choice:expression-structured",
+          "unitId": "HS1",
+          "target": "kanji:5ddd",
+          "form": "choice",
+          "mode": "expression-structured",
+          "evidencePolicy": "editorial-2",
+          "independentAfter": 0,
+          "introduced": true,
+          "contactRevision": 5,
+          "seenExposures": [
+            "kanji:5ddd:isolated"
+          ],
+          "independentItems": [
+            "HS1-5ddd-0"
+          ],
+          "independentFamilies": [
+            "字と音"
+          ],
+          "independentConditions": [
+            "基本例"
+          ],
+          "delayedCount": 0,
+          "strength": 1,
+          "lastContactAt": 1792970313176,
+          "nextReview": 1793056713176
+        },
+        {
+          "profileId": "audit-995ff6ef-5488-4201-a45a-39e60283bcbd",
+          "id": "kanji:5ddd:short:decoding",
+          "unitId": "HT1",
+          "target": "kanji:5ddd",
+          "form": "short",
+          "mode": "decoding",
+          "evidencePolicy": "editorial-2",
+          "independentAfter": 0,
+          "introduced": false,
+          "contactRevision": 2,
+          "seenExposures": [
+            "kanji:5ddd:isolated"
+          ],
+          "independentItems": [],
+          "independentFamilies": [],
+          "independentConditions": [],
+          "delayedCount": 0,
+          "strength": 0,
+          "lastContactAt": 1792970313176
+        }
+      ]
+    }
+  ],
+  "owner": "audit-995ff6ef-5488-4201-a45a-39e60283bcbd",
+  "metadata": {
+    "revision": "editorial-f80f926967d3",
+    "version": "editorial-f80f926967d3:012a5b52-3f09-4220-a50b-14665248bf33",
+    "configuredDelivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "islandFeatureEnabled": true,
+    "natureTownFeatureEnabled": false
+  }
+}

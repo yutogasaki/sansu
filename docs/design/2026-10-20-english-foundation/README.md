@@ -37,4 +37,4 @@ F01「A・B・Cに あおう」とF02「えいごの おとを きこう」を�
 
 ## 利用者の「検証」による再確認
 
-実行コードと最終build全ファイルのhash不変を確認し、同じ版の実画面/SW/offline証拠を再利用。対象59件、型/lint/docs/素材検査、native coreと入口/portalを検査した。対象テスト（ローカル記録 `recheck-focused.log`）・native実行（ローカル記録 `recheck-native-core.log`）・portal実行（ローカル記録 `recheck-portal.log`）。初回の文言FAILとportalの古い参照は初回記録として保持し、仕様へ合わせた期待値と[参照版の監査](portal-reference-audit.json)を別に残した。製品コードの変更、公開、採用判断の引上げは行っていない。
+実行コードと最終build全ファイルのhash不変を確認し、同じ版の実画面/SW/offline証拠を再利用。対象59件、型/lint/docs/素材検査、native coreと入口/portalを検査した。対象テスト（ローカルログ：`recheck-focused.log`）・native実行（ローカルログ：`recheck-native-core.log`）・portal実行（ローカルログ：`recheck-portal.log`）。初回の文言FAILとportalの古い参照は初回記録として保持し、仕様へ合わせた期待値と[参照版の監査](portal-reference-audit.json)を別に残した。製品コードの変更、公開、採用判断の引上げは行っていない。

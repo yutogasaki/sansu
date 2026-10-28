@@ -1,0 +1,113 @@
+{
+  "status": "PASS_SAME_SESSION_EDIT_UNDO_STATE_AND_DOM_CONTINUITY",
+  "checkedAt": "2026-10-22T22:41:44.678365+00:00",
+  "sourceSHA256": {
+    "85-H-final-new-session-state.json": "c394a36c3e722c009c60e2c3966d5710fb8027d392374cdf9311e933617e6b7a",
+    "85-H-final-new-session-live.json": "543f238955e91731caca582830612a934fd1844045ee5c8b56252084c0fd26ed",
+    "85-H-final-new-session-world.json": "ae77a43ce1102c6dfa40f7fe96682fb92fc203f25ae2ac3860bc61860eba2a42",
+    "85-H-final-new-session-app.json": "b969a04381fcc4b1eb85785091a455d64f93f2378463f3f54da11211711304a2",
+    "86-H-continuity-edit-world.json": "f8b4c03c9050a790384dfaa90d26777cc0e2cc51209393e28895b9e013af6f71",
+    "86-H-continuity-restored-world.json": "61e30a32f1bf288f25cf392a13ba962fe93babaa8042c48bdcb6fb10f073c808",
+    "86-H-continuity-final-world.json": "202c0e269b8b2d8d187345bff5ab6b5869a0ef936fc4494496940e5f6b69de3a",
+    "86-H-continuity-final-state.json": "d9e9d5996dc88eb5fc10d0a0910d785064b23d6182b153b9460d9a02d71a1fe9",
+    "86-H-continuity-final-live.json": "543f238955e91731caca582830612a934fd1844045ee5c8b56252084c0fd26ed",
+    "86-H-continuity-frames.json": "1208ec3b7f2703ef1f3c01c2ae96e80dd5667a97c6cb00adfa1a7305377cbcd1",
+    "86-H-continuity-frame-a.png": "5b5877b43cc1d5732c6788ed28ef43aacaf19e362efeab47e9740a18c34c4469",
+    "86-H-continuity-frame-b.png": "6cee4ab834d0222055f4d55596b02d2c0844a10d4a056ca6f56ca4f527ab863d",
+    "86-H-continuity-frame-c.png": "77cece52e7513cd7082ede21f33938544ccd55ee51ff4dc10e69bdd31bffaa15"
+  },
+  "checkerSHA256": "1552d7fc4cb69bb0f928902d6455c9433786e05c5e5e80bb81acc8568be05132",
+  "referenceBuild85": {
+    "class": "app-container",
+    "data-build-revision": "place-method-comparison-v17",
+    "data-build-version": "place-method-comparison-v17:5b6010bc-bffc-4422-81d0-dbe64f42da87",
+    "data-configured-delivery-id": "snap-root-v1",
+    "data-delivery-id": "snap-root-v1",
+    "data-island-feature-enabled": "true",
+    "data-nature-town-feature-enabled": "false",
+    "data-ui-style-candidate": "whole-app-atelier-v1",
+    "data-visual-lineage-id": "pokko-field-v1"
+  },
+  "sameSessionId": "299cca91-38b0-41a4-92f9-0e86c07d9565",
+  "equalCoreFields": {
+    "candidate": true,
+    "fixture": true,
+    "land": true,
+    "plots": true,
+    "landmarks": true,
+    "keepsakes": true,
+    "villagers": true,
+    "character": true,
+    "drops": true,
+    "town": true,
+    "places": true
+  },
+  "rawHeightsExactlyRestored": true,
+  "derivedPlacesExactlyRestored": true,
+  "history": {
+    "initialUndo": 64,
+    "finalUndo": 63,
+    "finalRedo": 1,
+    "exactTransition": "Append 0→-1 with cap64, then Undo: finalUndo=initialUndo[1:], finalRedo=[0→-1].",
+    "redoEntry": {
+      "cell": {
+        "x": 4,
+        "z": 4
+      },
+      "before": 0,
+      "after": -1
+    },
+    "fullTerrainEqualsInitial": false
+  },
+  "worldChecks": {
+    "editHeight": -1,
+    "restoredHeight": 0,
+    "editingAtEdit": true,
+    "editingAtRestoreAndFinal": false,
+    "restoredAndFinalDOMExactlyEqual": true,
+    "restoredRevisionEquals85": true,
+    "cameraAndCandidateEqual85": true,
+    "onlyFinalWorldDifferenceFrom85": [
+      "data-terrain-selection"
+    ]
+  },
+  "liveChecks": {
+    "exactCaptureEquality85To86": true,
+    "count": 4,
+    "newFreshUsesAfterEdit": 0,
+    "postEditFreshUseClaim": false
+  },
+  "frames": {
+    "metadata": {
+      "scope": "Three screenshots at recorded capture start times, not continuous video; no target commands or reload between frames",
+      "operation": "In same 85 session: select 4,4, lower 0 to -1, Undo to 0, close edit panel, observe",
+      "frames": [
+        {
+          "at": "2026-10-22T22:38:56.879Z",
+          "file": "86-H-continuity-frame-a.png"
+        },
+        {
+          "at": "2026-10-22T22:39:25.343Z",
+          "file": "86-H-continuity-frame-b.png"
+        },
+        {
+          "at": "2026-10-22T22:40:13.304Z",
+          "file": "86-H-continuity-frame-c.png"
+        }
+      ]
+    },
+    "totalSpanSeconds": 76.425,
+    "timestampsAfterRestore": true,
+    "filesHashed": true,
+    "visualPositionReview": "Handled independently by the parent/visual reviewer; this checker verifies metadata and file hashes, not actor pixels."
+  },
+  "placeProgressExactlyEqual85": true,
+  "scope": "Ordinary UI edit/Undo reported in same85 session, corroborated by state/DOM/history/live captures. No runtime changes or DB injection.",
+  "limitations": [
+    "Position changes in three screenshots can show continued motion; they do not prove a new fresh place-use receipt, continuous route safety, or every intermediate frame.",
+    "No separate full state at the -1 edit; world DOM records edited heights and editing flag. Final full state verifies exact expected undo stack.",
+    "Reference build is85 app capture plus identical page session, not a separate86 app capture.",
+    "Undo cap intentionally discards one old history entry. Raw geometry restoration is not full history restoration.",
+    "Memory-only diagnostic fixture, not persistence or release verification."
+  ]
+}

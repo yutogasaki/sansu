@@ -1,0 +1,211 @@
+{
+  "recordedAt": "2026-10-21T10:26:37.657139+00:00",
+  "startedAt": "2026-10-21T10:18:54Z",
+  "candidate": "cove-mechanism-v2",
+  "revision": "2c62b411e3278989",
+  "delivery": "standalone-study-only",
+  "bundleSha256": "8b92a37190d2eeb6519446f37b937242b7c0e6499b4da8d75bae4784f13220dd",
+  "scope": "Four local study thresholds, not full product or art acceptance",
+  "target": "http://127.0.0.1:5276/docs/design/2026-10-21-cove-mechanism-v2/",
+  "originalInputChecks": [
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/README.md",
+      "expected": "76777470b4a342b2cb36a2789f2bea9bb62f6d7eead2962b3f5fbe3105ce33c7",
+      "actual": "76777470b4a342b2cb36a2789f2bea9bb62f6d7eead2962b3f5fbe3105ce33c7",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/index.html",
+      "expected": "67a22390b92c4e64312ffe5ba174d204e2381bd6366991555f7f01cac555fb88",
+      "actual": "67a22390b92c4e64312ffe5ba174d204e2381bd6366991555f7f01cac555fb88",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/capture-motion.mjs",
+      "expected": "8981e0e023d01b263d62d6fd7e8a8526791ff9873594e43eaad54db4d0256ff1",
+      "actual": "8981e0e023d01b263d62d6fd7e8a8526791ff9873594e43eaad54db4d0256ff1",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/reference/day-provenance.json",
+      "expected": "d9e6a90c2d117e2608caef8939e87e2f97bea03562eef7c86fd9c603285b7cba",
+      "actual": "d9e6a90c2d117e2608caef8939e87e2f97bea03562eef7c86fd9c603285b7cba",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/reference/little-habitats-day.jpg",
+      "expected": "e3131e4e6b087ec332f3dd92c6f8468ac988fd9d832b1a51a36dd856ecdb9848",
+      "actual": "e3131e4e6b087ec332f3dd92c6f8468ac988fd9d832b1a51a36dd856ecdb9848",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/reference/little-habitats-evening.jpg",
+      "expected": "4fd1f602a9832412931c267a03c5487a98b3b8f3c245b129f014bd68b3e25daf",
+      "actual": "4fd1f602a9832412931c267a03c5487a98b3b8f3c245b129f014bd68b3e25daf",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/reference/provenance.json",
+      "expected": "44af16be7cb1353a7a205810ac41a4006ea0806c0850683a0040ae4050afd606",
+      "actual": "44af16be7cb1353a7a205810ac41a4006ea0806c0850683a0040ae4050afd606",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/01-ready.png",
+      "expected": "cfc3c9d05e9521905806d061376c76cb968fdc1583ef6e4c48a383d89b338bd1",
+      "actual": "cfc3c9d05e9521905806d061376c76cb968fdc1583ef6e4c48a383d89b338bd1",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/02-open.png",
+      "expected": "a3ab5c606585b6d8fb72b99a7cd6ce92c4b8775f92059bd1b1dadc7a3f561bf7",
+      "actual": "a3ab5c606585b6d8fb72b99a7cd6ce92c4b8775f92059bd1b1dadc7a3f561bf7",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/03-walking.png",
+      "expected": "8e42d8a3f0a5167457009f6dcafa702e467da78923b06ec08c4f785dad489218",
+      "actual": "8e42d8a3f0a5167457009f6dcafa702e467da78923b06ec08c4f785dad489218",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/04-observing.png",
+      "expected": "e01b108233ae52a9df70de2d68c46e9d51369c71e38ed8a3c8ca626c4da7818f",
+      "actual": "e01b108233ae52a9df70de2d68c46e9d51369c71e38ed8a3c8ca626c4da7818f",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/05-edited.png",
+      "expected": "91be79b6c25c42f6d0373a23a143f8c127faed52a337e1227101246789878fe9",
+      "actual": "91be79b6c25c42f6d0373a23a143f8c127faed52a337e1227101246789878fe9",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/06-undo.png",
+      "expected": "57c05da5c6b43d2d7b0767c073c58d1d08caf7639a08ffaa5a80b625e403cf07",
+      "actual": "57c05da5c6b43d2d7b0767c073c58d1d08caf7639a08ffaa5a80b625e403cf07",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/07-home.png",
+      "expected": "6f31f41f9dcbbfb058f711689695314da7d98f4f13d9489959d25b5aa7fd6cc7",
+      "actual": "6f31f41f9dcbbfb058f711689695314da7d98f4f13d9489959d25b5aa7fd6cc7",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/current-cove.webm",
+      "expected": "6bc4c27fdea6a3a1e6413624191ec37031b0f247feb0f3ff07409d6806845262",
+      "actual": "6bc4c27fdea6a3a1e6413624191ec37031b0f247feb0f3ff07409d6806845262",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/report.json",
+      "expected": "f9d04fa13a8c86501bcf4c3a920bf3771d87b279a2cc981e3df6264bee1044f4",
+      "actual": "f9d04fa13a8c86501bcf4c3a920bf3771d87b279a2cc981e3df6264bee1044f4",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-10-island-final-3d/whole-island-render.png",
+      "expected": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "actual": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/source-manifest.json",
+      "expected": "f135d8f670d5fb7a0c4b58feb29f4f8658cfab93bced64af81bbc55406ae4ead",
+      "actual": "f135d8f670d5fb7a0c4b58feb29f4f8658cfab93bced64af81bbc55406ae4ead",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/report.json",
+      "expected": "8050af8fdf391fc1b4f46be2fb7c7e739493130299ad6e353ab8ab9270c0eeb1",
+      "actual": "8050af8fdf391fc1b4f46be2fb7c7e739493130299ad6e353ab8ab9270c0eeb1",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-evening.png",
+      "expected": "75ad51db69f0ac0502f3c9931d4158d57379c49b1acbe6a03c6e619fef8c8f45",
+      "actual": "75ad51db69f0ac0502f3c9931d4158d57379c49b1acbe6a03c6e619fef8c8f45",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-new-tree-near.png",
+      "expected": "f75172ad38b17470541ea6af551874e0771dc7be9191fd65ecadecaf4f857573",
+      "actual": "f75172ad38b17470541ea6af551874e0771dc7be9191fd65ecadecaf4f857573",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-observing.png",
+      "expected": "4f2ee3416a5550463fcecebeec812763b8e24eccff94999ffae17383a364e850",
+      "actual": "4f2ee3416a5550463fcecebeec812763b8e24eccff94999ffae17383a364e850",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-old-tree-near.png",
+      "expected": "00f2d5c0a241209b228031f2e34d2d401517092f3bc72517c05a7ad17daeb661",
+      "actual": "00f2d5c0a241209b228031f2e34d2d401517092f3bc72517c05a7ad17daeb661",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-old-tree-overview.png",
+      "expected": "7e3204491bd7320224532b1f5b274a2546a994ad73e4c9bc62ae005df6f0ff98",
+      "actual": "7e3204491bd7320224532b1f5b274a2546a994ad73e4c9bc62ae005df6f0ff98",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-open.png",
+      "expected": "73e02ad000a2d6a6aeedd8bb9a0ffb2069cfd510885c42a6d44fca0959f83cf1",
+      "actual": "73e02ad000a2d6a6aeedd8bb9a0ffb2069cfd510885c42a6d44fca0959f83cf1",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-overview.png",
+      "expected": "2aea0cc42bc1ff73768a5ae4e333b496b7935ec10f2bf1ddc367d78d4fd96ee3",
+      "actual": "2aea0cc42bc1ff73768a5ae4e333b496b7935ec10f2bf1ddc367d78d4fd96ee3",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-ready.png",
+      "expected": "a06670c993275aafb1d7bc7b589d46a18d03c970abbc108e54be6a8773214183",
+      "actual": "a06670c993275aafb1d7bc7b589d46a18d03c970abbc108e54be6a8773214183",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/768-observing.png",
+      "expected": "e75ab732ae7dbb896e7deaa65e67b2bc6800a24fbfe74e39b729eb7230658aa8",
+      "actual": "e75ab732ae7dbb896e7deaa65e67b2bc6800a24fbfe74e39b729eb7230658aa8",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/verify-brief.mjs",
+      "expected": "6fa6b496aeb42535c73273df713076a9a3a076fc7fb71429ff336ed4ffcd0d03",
+      "actual": "6fa6b496aeb42535c73273df713076a9a3a076fc7fb71429ff336ed4ffcd0d03",
+      "pass": true
+    }
+  ],
+  "evidence": {
+    "logic": "logic-check.json",
+    "browser": "evidence-final/report.json",
+    "ui": "evidence-final/ui-check.json",
+    "docs": "docs-check.txt"
+  },
+  "verdicts": {
+    "localFourCriteria": "PARTIAL/HOLD: author all-pass claim retracted after image audit; targeted runtime PASS remains",
+    "formalArt": "HOLD: benchmark not reached",
+    "observerUnderstanding": "UNTESTED",
+    "targetedRuntime": "PASS",
+    "productionIntegration": "UNTESTED"
+  },
+  "priorLocalFourCriteriaVerdict": "PASS: author visual screening and targeted runtime tests",
+  "externalAudit": {
+    "date": "2026-10-21",
+    "record": "chappy-audit.md",
+    "scope": "5 images and implementation/test summary; no code or video",
+    "criteria": [
+      "PARTIAL",
+      "HOLD",
+      "PARTIAL",
+      "NOT_INDEPENDENTLY_VERIFIED"
+    ]
+  }
+}

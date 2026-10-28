@@ -1,0 +1,57 @@
+{
+  "status": "completed",
+  "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1",
+  "queryCandidate": "H",
+  "targetMs": 10000,
+  "startedAt": "2026-10-22T22:14:23.107Z",
+  "endedAt": "2026-10-22T22:14:33.121Z",
+  "elapsedMs": 10014,
+  "samples": 571,
+  "frameCallbacks": 572,
+  "intervalMs": {
+    "median": 16.7,
+    "p95": 18.5,
+    "max": 500
+  },
+  "over50Ms": 1,
+  "visibility": {
+    "started": "visible",
+    "ended": "visible",
+    "hiddenObserved": false
+  },
+  "timeline": {
+    "clock": "milliseconds-from-measurement-start",
+    "clicks": [
+      {
+        "atMs": 283.6,
+        "tag": "summary",
+        "id": null,
+        "label": "比較の記録 · H"
+      },
+      {
+        "atMs": 566.8,
+        "tag": "button",
+        "id": null,
+        "label": "じめんを さげる"
+      }
+    ],
+    "clickCount": 2,
+    "longTasks": [
+      {
+        "startMs": 566.7,
+        "endMs": 1065.7,
+        "durationMs": 499
+      }
+    ],
+    "longTaskCount": 1,
+    "longTaskSupport": "supported",
+    "slowFrames": [
+      {
+        "startMs": 578.8,
+        "endMs": 1078.8,
+        "intervalMs": 500
+      }
+    ],
+    "retainedLimit": 40
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1",
+  "queryCandidate": "H",
+  "targetMs": 10000,
+  "startedAt": "2026-10-22T21:39:47.696Z",
+  "endedAt": "2026-10-22T21:39:57.708Z",
+  "elapsedMs": 10012.1,
+  "samples": 497,
+  "frameCallbacks": 498,
+  "intervalMs": {
+    "median": 16.7,
+    "p95": 17.5,
+    "max": 1732.5
+  },
+  "over50Ms": 1,
+  "visibility": {
+    "started": "visible",
+    "ended": "visible",
+    "hiddenObserved": false
+  }
+}

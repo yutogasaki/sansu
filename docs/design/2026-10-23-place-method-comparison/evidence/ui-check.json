@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-10-22T20:20:44.530Z",
+  "status": "PASS",
+  "observations": [
+    {
+      "name": "04-A-initial-state",
+      "sha256": "263b3e8d87efc61a14ee94eb657930e31f8196e1c47d1af540f790ac9d493d71"
+    },
+    {
+      "name": "07-B-moved-state",
+      "sha256": "e74cfa071756f6d52c19ec2708a5fe7cbc53ccedcfba47b64739b91f563de960"
+    },
+    {
+      "name": "10-B-reloaded-state",
+      "sha256": "59e1b075becc30a06c14e8b9a4f155a274dacfad6b3c2b6784e004946d1cdf3a"
+    },
+    {
+      "name": "11-B-undo-state",
+      "sha256": "8922da1206a40dc5e11c9e8d9cf18310169d2cdfe6a51ecf754e0853ee4768fe"
+    },
+    {
+      "name": "12-B-redo-state",
+      "sha256": "59e1b075becc30a06c14e8b9a4f155a274dacfad6b3c2b6784e004946d1cdf3a"
+    }
+  ],
+  "scope": "390×844, real local app, existing owner save. Normal UI moves, natural resident use, real reload, terrain Undo/Redo.",
+  "checks": [
+    "same acquired land/owners/maturity/currency",
+    "new arrangement and place revision",
+    "both actors used the current place",
+    "reload retained positions and complete useHistory",
+    "Undo changed terrain only; Redo restored it"
+  ],
+  "excluded": [
+    "new acquisition",
+    "every store",
+    "offline or two-build update",
+    "child comprehension",
+    "visual acceptance"
+  ],
+  "receiptNote": "The latest target slot may point to an earlier fact after another natural use. useHistory is immutable and is compared in full; latest at is not a monotonic counter."
+}

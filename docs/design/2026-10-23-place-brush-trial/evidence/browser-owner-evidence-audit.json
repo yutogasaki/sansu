@@ -1,0 +1,88 @@
+{
+  "at": "2026-10-24T01:52:16.727582+00:00",
+  "status": "PASS",
+  "scope": "Independent comparison of explicitly present owner and land fields in captured browser snapshots. Not a new browser execution or proof of visual quality.",
+  "reports": [
+    {
+      "input": "coast-v11-west-three.json",
+      "sha256": "daf9db7e2a12f8a853444809490bcad8729c2319898b5c90784edc58b7be14a7",
+      "variants": [
+        "off",
+        "soft08",
+        "soft12"
+      ],
+      "requiredFieldsPresent": true,
+      "equalities": {
+        "land": true,
+        "landmarks": true,
+        "plots": true,
+        "keepsakes": true,
+        "pier": true
+      }
+    },
+    {
+      "input": "material-v10-high-pair.json",
+      "sha256": "531855f662220a400b82c1ad863f1ff0c0b514ef5ba56e0e62a0bc659af25e11",
+      "variants": [
+        "material",
+        "continuous"
+      ],
+      "requiredFieldsPresent": true,
+      "equalities": {
+        "land": true,
+        "landmarks": true,
+        "plots": true,
+        "keepsakes": true,
+        "pier": true
+      }
+    },
+    {
+      "input": "saved-v11-fixed-reopen.json",
+      "sha256": "1b80cd60e7482ddd1a83821755c1d0319d067433cd3c912e3278afd49de69e99",
+      "variants": [
+        "before",
+        "after"
+      ],
+      "requiredFieldsPresent": true,
+      "equalities": {
+        "land": true,
+        "landmarks": true,
+        "plots": true,
+        "keepsakes": true,
+        "pier": true
+      }
+    },
+    {
+      "input": "saved-v10-high-reload.json",
+      "sha256": "f4a08fd5fccfcd5d7e9d941d50a09de6b637796db39991c0debc7cfadbcc5d2c",
+      "variants": [
+        "before",
+        "after"
+      ],
+      "requiredFieldsPresent": true,
+      "equalities": {
+        "land": true,
+        "landmarks": true,
+        "plots": true,
+        "keepsakes": true,
+        "pier": true
+      }
+    },
+    {
+      "input": "coast-v12-west-contour-pair.json",
+      "sha256": "774da37237fb3d9ab5e5c4755531bafac45bd656118068bd67814436f8dbb485",
+      "variants": [
+        "baseline",
+        "contour"
+      ],
+      "requiredFieldsPresent": true,
+      "equalities": {
+        "land": true,
+        "landmarks": true,
+        "plots": true,
+        "keepsakes": true,
+        "pier": true
+      }
+    }
+  ]
+}

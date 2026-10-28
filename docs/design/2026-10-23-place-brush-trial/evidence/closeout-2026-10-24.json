@@ -1,0 +1,71 @@
+{
+  "recordedAt": "2026-10-24T03:13:10.048867+00:00",
+  "scope": "User-requested approximately three-hour research window; work frozen, final generated index refresh follows this evidence addition. No whole-goal completion or release claim.",
+  "timebox": {
+    "startedJST": "2026-10-24 09:17",
+    "stopRequestedJST": "2026-10-24 around 12:17"
+  },
+  "mainPush": {
+    "commit": "68ab8a603d45aec7a52aeab31d1d045eb84bcf39",
+    "verifiedBy": "git ls-remote origin refs/heads/main",
+    "islandResearchExcluded": true
+  },
+  "build": {
+    "revision": "place-outline-v17",
+    "inputSHA256": "e4ddab03761987548678e3754d77ba7b127891b48be255edf0a67d9d6052b895",
+    "status": "PASS"
+  },
+  "checks": [
+    {
+      "command": "node typecheck.mjs (actual transformed trial)",
+      "node": "22.23.3",
+      "result": "PASS",
+      "evidence": "typecheck-platform-v17.json"
+    },
+    {
+      "command": "targeted eslint for changed trial modules",
+      "result": "PASS"
+    },
+    {
+      "command": "npm run docs:check",
+      "node": "22.23.3",
+      "result": "PASS, existing review-date warnings",
+      "evidence": "closeout-docs-check.txt"
+    },
+    {
+      "command": "npm run agent:index:check (includes portal:verify)",
+      "node": "24.18.0",
+      "result": "PASS",
+      "evidence": "closeout-agent-check.txt"
+    },
+    {
+      "command": "actual CUA UI comparison",
+      "result": "11/11 comparisons true; Undo/Redo and 3 camera pairs",
+      "evidence": "shoulder-v17-ui-comparison.json"
+    },
+    {
+      "command": "actual dedicated DB save/reopen and repeated live-use check",
+      "result": "PASS for declared journey, live aggregate field changes reproduced without history loss",
+      "evidence": "composite-v15-second-reopen.json"
+    }
+  ],
+  "goalAchieved": false,
+  "unmet": [
+    "whole-island art benchmark",
+    "two mature places used together in actual browser gameplay",
+    "normal learning/nature sync with explicit terrain settings and protected save writer",
+    "smooth editing / physical-device performance",
+    "child comprehension and return",
+    "production/PWA release acceptance"
+  ],
+  "inputs": {
+    "docs/design/2026-10-23-place-brush-trial/README.md": "71b71b9250e4579d5c8f123fa61971f12b7fa0533e7d58eff7a5ae5fe03a13cf",
+    "docs/design/2026-10-23-place-brush-trial/current-review.html": "fe8a371a71bedd16322788397d307eb2ede8c6d1fd6a4ab5b8fb9fe64fb36212",
+    "docs/design/2026-10-23-place-brush-trial/platform-notes.md": "25877101af922b5cf2f08849bdc3087e47d6c4b8df3ef573f1c74c447ac39407",
+    "docs/design/2026-10-23-place-brush-trial/shoulder-section.ts": "ea19b31c937ff210555ffe35d97150dd8c9f7b85d903da40998696ec6bb5fdab",
+    "docs/design/2026-10-23-place-brush-trial/directional-field.ts": "d198ec55d5f373e419eaf1850de239ffff14c64aaae4a772f78ccd84de7df52d",
+    "docs/design/2026-10-23-place-brush-trial/composite-field.ts": "52593e862d889018835973ab4abd1f8380a5cfdf22551b89a58054cf69eb1cc6",
+    "docs/design/2026-10-23-place-brush-trial/composite-store.ts": "b03f019af15fd974ea082579bc095365517187f76956ea95b052d39109e190c1",
+    "docs/design/2026-10-23-place-brush-trial/PlaceEvidence.tsx": "edd1d73e3cd0dc59cef946f3b7e896c6a1e090e1d78876c46d7567b16e0c160d"
+  }
+}

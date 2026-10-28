@@ -1,0 +1,31 @@
+file:///private/tmp/sansu-place-persistence-check.mjs:5613
+              var req = _this._deps.indexedDB.deleteDatabase(_this.name);
+                                              ^
+
+TypeError: Cannot read properties of undefined (reading 'deleteDatabase')
+    at doDelete (file:///private/tmp/sansu-place-persistence-check.mjs:5613:47)
+    at file:///private/tmp/sansu-place-persistence-check.mjs:5626:15
+    at executePromiseTask (file:///private/tmp/sansu-place-persistence-check.mjs:812:11)
+    at new DexiePromise (file:///private/tmp/sansu-place-persistence-check.mjs:613:9)
+    at Dexie3.delete (file:///private/tmp/sansu-place-persistence-check.mjs:5610:18)
+    at file:///private/tmp/sansu-place-persistence-check.mjs:17192:54
+    at Array.map (<anonymous>)
+    at file:///private/tmp/sansu-place-persistence-check.mjs:17192:31
+
+Node.js v22.23.3
+Command failed: /Users/yutogasaki/.local/share/fnm/node-versions/v22.23.3/installation/bin/node --input-type=module -e globalThis.window={location:{search:"?terrainTrial=H&baseTrial=stable&rampTrial=linear&growthTrial=inherit&compileTrial=single&trialScene=shore&queryTrial=frozen&memoTrial=samples&edgeTrial=memo",hash:'#/island'}};globalThis.location=window.location;await import("/private/tmp/sansu-place-persistence-check.mjs");
+file:///private/tmp/sansu-place-persistence-check.mjs:5613
+              var req = _this._deps.indexedDB.deleteDatabase(_this.name);
+                                              ^
+
+TypeError: Cannot read properties of undefined (reading 'deleteDatabase')
+    at doDelete (file:///private/tmp/sansu-place-persistence-check.mjs:5613:47)
+    at file:///private/tmp/sansu-place-persistence-check.mjs:5626:15
+    at executePromiseTask (file:///private/tmp/sansu-place-persistence-check.mjs:812:11)
+    at new DexiePromise (file:///private/tmp/sansu-place-persistence-check.mjs:613:9)
+    at Dexie3.delete (file:///private/tmp/sansu-place-persistence-check.mjs:5610:18)
+    at file:///private/tmp/sansu-place-persistence-check.mjs:17192:54
+    at Array.map (<anonymous>)
+    at file:///private/tmp/sansu-place-persistence-check.mjs:17192:31
+
+Node.js v22.23.3

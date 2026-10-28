@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-22T20:19:45.529Z",
+  "node": "v22.23.3",
+  "sourceSHA256": "7606a6d2be402e90ef85154cd28e8cf3c07dd5d690538b37bbfbfd700e1fc324",
+  "scope": "Independent labelled fixtures using real domain/life logic. UI, DB reload, native actor, and art are separate.",
+  "checks": [
+    {
+      "entry": "geometry-check",
+      "method": "A/B (explicit arguments)",
+      "status": "PASS"
+    },
+    {
+      "entry": "coastal-check",
+      "method": "A/C (explicit arguments)",
+      "status": "PASS"
+    },
+    {
+      "entry": "life-check",
+      "method": "A",
+      "status": "PASS"
+    },
+    {
+      "entry": "life-check",
+      "method": "B",
+      "status": "PASS"
+    },
+    {
+      "entry": "life-check",
+      "method": "C",
+      "status": "PASS"
+    }
+  ]
+}

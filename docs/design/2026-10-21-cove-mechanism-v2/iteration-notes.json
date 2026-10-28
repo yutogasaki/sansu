@@ -1,0 +1,16 @@
+{
+  "scope": "Diagnostic failures observed in terminal, not acceptance evidence. Intermediate source hashes were not captured.",
+  "failures": [
+    {
+      "change": "Curved bay with centre .9+.22*sin(depth*1.7), variable width",
+      "assertion": "assert(!canStand(h.past.at(-1),end.x,end.z))",
+      "meaning": "E2 destination remained supported before raising, so occupied-land Undo scenario no longer held."
+    },
+    {
+      "change": "Quintic rather than cubic delta interpolation",
+      "assertion": "2 !== 3 distinct shore endpoints",
+      "meaning": "Did not retain required three distinct outcomes."
+    }
+  ],
+  "resolution": "Restore cubic interpolation and align curved bay at E2 connection; unchanged acceptance assertions pass."
+}

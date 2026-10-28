@@ -1,0 +1,29 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>島の形と景色・6条件を比べる</title>
+<style>*{box-sizing:border-box}body{margin:0;background:#f6f7fb;color:#30374f;font:16px/1.85 system-ui,sans-serif}main{max-width:1440px;margin:auto;padding:30px 24px}h1{font-size:clamp(24px,3vw,36px);margin:6px 0 16px}h2{font-size:23px;margin:40px 0 14px}p{max-width:85ch}a{color:#4052b3;text-underline-offset:4px}.eyebrow{color:#606980;font-size:13px}.try{display:inline-block;background:#4052b3;color:white;padding:10px 18px;border-radius:12px;text-decoration:none}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.pair{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}figure{margin:0;background:white;border:1px solid #e0e4ed;border-radius:16px;padding:12px;overflow:hidden}figure img{width:100%;display:block;border-radius:8px}figcaption{font-size:13px;line-height:1.8;padding:12px 2px 0}.label{display:block;font-size:14px;font-weight:750;margin-bottom:4px}.finding{background:white;padding:16px 20px;border-left:4px solid #9f90c9;border-radius:8px;font-size:14px}table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:12px;border:1px solid #dde1eb;text-align:left}th{background:white}details{margin-top:20px}summary{cursor:pointer;padding:10px 0}code{background:#eceef5;padding:2px 5px}@media(max-width:700px){main{padding:22px 14px}.grid{grid-template-columns:1fr 1fr;gap:8px}.grid figure:last-child{grid-column:1/-1;max-width:390px;justify-self:center}.pair{grid-template-columns:1fr 1fr;gap:8px}figure{padding:6px;border-radius:10px}figcaption{font-size:11px;padding:8px 3px}.label{font-size:12px}td,th{padding:8px;font-size:12px}.finding{font-size:13px;padding:12px}h2{font-size:20px}}</style></head><body><main>
+<p class="eyebrow">ぽこもこの島づくり · 実際に操作して作った比較</p><h1>形を変えたら、何が生まれる？</h1>
+<p>同じ初期島・家1軒・土の正味増分12段・木10本から、3つの形を編集して作りました。「環境の反応なし／あり」の6条件、緑寄りと紫を残す配色、全景と近景を試しています。</p>
+<p><a class="try" href="index.html">自分で試す</a>　<a href="README.md">契約と検証記録</a></p>
+<p>下の各行は同じ地形・木の位置・昼の光です。左と中央は同じカメラ。「近くで見る」だけは、その場所へカメラを寄せています。画像を開くと元の実画面が見られます。</p>
+<h2>1. 入り江 — 水際で木と草が変わる</h2><div class="grid">
+<figure><a href="evidence-final/390-cove-off.png"><img src="evidence-final/390-cove-off.png" alt="入り江・環境反応なし"></a><figcaption><span class="label">反応を外す</span>木は同じ広い樹冠。土地の形だけが変わります。</figcaption></figure>
+<figure><a href="evidence-final/390-cove-on.png"><img src="evidence-final/390-cove-on.png" alt="入り江・環境反応あり"></a><figcaption><span class="label">形に応じた景色</span>水際では枝葉が垂れ、葦が付き、入り江の奥に睡蓮が出ます。</figcaption></figure>
+<figure><a href="evidence-final/390-cove-detail.png"><img src="evidence-final/390-cove-detail.png" alt="入り江の水庭を近くから"></a><figcaption><span class="label">近くで見る</span>奥の水庭が読めます。外海とのつながりは、樹冠に隠れやすさが残ります。</figcaption></figure></div>
+<p class="finding">画面からの判断：地形に沿う植生は有効。ただし、水面の余白と岸の見え方を詰める必要があります。睡蓮を増やすだけで全景の弱さは埋まりません。</p>
+<h2>2. 段の庭 — 高さが、見晴らしになる</h2><div class="grid">
+<figure><a href="evidence-final/390-terrace-off.png"><img src="evidence-final/390-terrace-off.png" alt="段の庭・環境反応なし"></a><figcaption><span class="label">反応を外す</span>高くなっても樹形が同じで、見どころの違いが弱い状態です。</figcaption></figure>
+<figure><a href="evidence-final/390-terrace-on.png"><img src="evidence-final/390-terrace-on.png" alt="段の庭・環境反応あり"></a><figcaption><span class="label">形に応じた景色</span>高台の木が背の高い形になり、空いた地面に見晴らしと石段が生まれます。</figcaption></figure>
+<figure><a href="evidence-final/390-terrace-detail.png"><img src="evidence-final/390-terrace-detail.png" alt="高台の石段と見晴らし"></a><figcaption><span class="label">近くで見る</span>低地・段・高台の重なりと、上へ行く場所が読み取れます。住人の通行は未実装です。</figcaption></figure></div>
+<p class="finding">画面からの判断：今回、形の違いが最も読み取りやすい案。盛る操作が、樹形と見晴らしの両方へ返る方向を残します。建築・滝・住人の使い方はまだ不足しています。</p>
+<h2>3. 小島の森 — 木の間に、入れる場所を残す</h2><div class="grid">
+<figure><a href="evidence-final/390-forest-off.png"><img src="evidence-final/390-forest-off.png" alt="小島の森・環境反応なし"></a><figcaption><span class="label">反応を外す</span>木を集めただけでは、樹冠の塊に見えやすくなります。</figcaption></figure>
+<figure><a href="evidence-final/390-forest-on.png"><img src="evidence-final/390-forest-on.png" alt="小島の森・環境反応あり"></a><figcaption><span class="label">形に応じた景色</span>同じ陸で木が集まり、空き地もあると、枝葉の門と小さな木陰が現れます。</figcaption></figure>
+<figure><a href="evidence-final/390-forest-detail.png"><img src="evidence-final/390-forest-detail.png" alt="小島の木陰の場"></a><figcaption><span class="label">近くで見る</span>手前を空けると、小島が一つの行き先に見えます。現在は橋や実歩行がありません。</figcaption></figure></div>
+<p class="finding">画面からの判断：木の本数だけでは足りず、木のまとまりと空いた地面を一緒に扱う必要があります。通り道と利用の接続は次の別検証です。</p>
+<h2>配色も試した — 環境色を強める／紫を残す</h2><div class="pair">
+<figure><img src="evidence/390-cove-on.png" alt="水辺を緑寄りにした初期試行"><figcaption><span class="label">緑寄りの試行</span>水際の違いは出るものの、木全体が緑へ寄り、島の紫のまとまりが弱く見えました。</figcaption></figure>
+<figure><img src="evidence-final/390-cove-on.png" alt="紫を残した最終試行"><figcaption><span class="label">紫を残す試行</span>場所に応じて形を変えつつ、紫を残しました。葦・睡蓮・針葉形の局所色で違いを作ります。</figcaption></figure></div>
+<p>地形・植生支持位置のソースhashは両試行で一致。家の屋根と水面の同じ小領域を比較し、RGB差が0であることを確認しました。独立した利用者の好みを測った結果ではありません。</p>
+<h2>目標の美術との距離</h2><figure><img loading="lazy" src="../2026-10-10-island-final-3d/whole-island-render.png" alt="採用native-05の全島3D原本"><figcaption>採用native-05の原本。今回の試作の実画面ではありません。縮尺・戸数・カメラが異なるため、機能や美術の同条件合格比較とは扱いません。</figcaption></figure>
+<p>今回残す方向は、地形・植生・空地の組合せと、全景から場所へ寄れる見方です。固有の大樹・回廊・建物、水の流れ、素材の細部、住人の行動はまだ足りません。美術は未採用、子どもの無説明理解・遊び続けるかは未観察です。</p>
+<details><summary>検証の範囲と版</summary><p>候補 island-shape-experiments-v1 / 配布 standalone-study-only / revision 798b289f611c04b7。390×844・768×1024、空のChromium context、reduced motion、音初期off、service workerなし。14項目のモデル検査、6旅程×9項目のブラウザ検査がPASS。<a href="evidence-final/report.json">検証記録</a> · <a href="source-manifest.json">入力hash</a></p><p>音はページの「土・水・葉」で試せます。発音制御と信号の有限性を確認しましたが、実スピーカーの聴感は評価していません。通常保存・学習・所有・住人・PWA・本番公開の検証ではありません。</p></details>
+</main></body></html>

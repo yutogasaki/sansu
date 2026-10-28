@@ -4,14 +4,13 @@ function run(q: AdaptiveIslandQuality, start: number, count: number, gap = 16) {
     for (let i = 0; i < count; i++) q.sample(start + i * gap, true);
     return start + count * gap;
 }
-it('opens at the proven floor, then earns every step with sustained frames', () => {
+it('opens at CSS resolution, then earns sharper steps with sustained frames', () => {
     const q = new AdaptiveIslandQuality(2);
-    expect(q.ratio).toBe(.65);
-    let now = run(q, 0, 180); expect(q.ratio).toBe(.65);
-    now = run(q, now, 20); expect(q.ratio).toBe(.8);
-    now = run(q, now, 200); expect(q.ratio).toBe(1);
-    now = run(q, now, 200); expect(q.ratio).toBe(1.25);
-    run(q, now, 500); expect(q.ratio).toBe(1.25);
+    expect(q.ratio).toBe(1);
+    let now = run(q, 0, 180); expect(q.ratio).toBe(1);
+    now = run(q, now, 20); expect(q.ratio).toBe(1.25);
+    now = run(q, now, 200); expect(q.ratio).toBe(1.5);
+    run(q, now, 500); expect(q.ratio).toBe(1.5);
 });
 it('allows a stable 30fps device and caps at device density', () => {
     const q = new AdaptiveIslandQuality(1);
@@ -21,18 +20,18 @@ it('does not treat a single slow frame as persistent overload', () => {
     const q = new AdaptiveIslandQuality(1.25);
     let now = run(q, 0, 200);
     q.sample(now + 80, true); now = run(q, now + 96, 200);
-    expect(q.ratio).toBe(1);
+    expect(q.ratio).toBe(1.25);
     run(q, now, 200); expect(q.ratio).toBe(1.25);
 });
 it('steps back after sustained overload and never repeatedly promotes into it', () => {
     const q = new AdaptiveIslandQuality(1.25);
-    let now = run(q, 0, 400); expect(q.ratio).toBe(1);
-    while (q.ratio === 1) { q.sample(now, true); now += 60; }
-    expect(q.ratio).toBe(.8);
-    run(q, now, 1000); expect(q.ratio).toBe(.8);
+    let now = run(q, 0, 400); expect(q.ratio).toBe(1.25);
+    while (q.ratio === 1.25) { q.sample(now, true); now += 60; }
+    expect(q.ratio).toBe(1);
+    run(q, now, 1000); expect(q.ratio).toBe(1);
 });
 it('waits while startup is slow, then reevaluates after it warms up', () => {
-    const q = new AdaptiveIslandQuality(1.25);
+    const q = new AdaptiveIslandQuality(1.25, true);
     const now = run(q, 0, 100, 60); expect(q.ratio).toBe(.65);
     run(q, now, 1000); expect(q.ratio).toBe(1.25);
 });
@@ -41,14 +40,14 @@ it.each(['hidden', 'suspended', 'resized'] as const)('requires fresh stability a
     run(q, 0, 180);
     if (reason === 'hidden') q.sample(3000, false);
     if (reason === 'resized') q.reset();
-    const now = run(q, 6000, 100); expect(q.ratio).toBe(.65);
-    run(q, now, 100); expect(q.ratio).toBe(.8);
+    const now = run(q, 6000, 100); expect(q.ratio).toBe(1);
+    run(q, now, 100); expect(q.ratio).toBe(1.25);
 });
 it('bounds automatic context recovery by lowering its ceiling on every failure', () => {
     const q = new AdaptiveIslandQuality(1.25);
-    expect(q.fallbackCeiling()).toBeUndefined();
+    expect(q.fallbackCeiling()).toBe(.8);
     run(q, 0, 600); expect(q.fallbackCeiling()).toBe(1);
-    const retry = new AdaptiveIslandQuality(q.fallbackCeiling()!);
+    const retry = new AdaptiveIslandQuality(q.fallbackCeiling()!, true);
     run(retry, 0, 800); expect(retry.ratio).toBe(1); expect(retry.fallbackCeiling()).toBe(.8);
     const last = new AdaptiveIslandQuality(.65);
     run(last, 0, 800); expect(last.ratio).toBe(.65); expect(last.fallbackCeiling()).toBeUndefined();
@@ -57,9 +56,29 @@ it('bounds automatic context recovery by lowering its ceiling on every failure',
 it('responds to very slow visible frames instead of treating every one as suspension', () => {
     const q = new AdaptiveIslandQuality(1.25);
     const now = run(q, 0, 400);
-    run(q, now, 22, 500); expect(q.ratio).toBe(.8);
+    run(q, now, 22, 500); expect(q.ratio).toBe(1);
 });
 it('uses the safe floor for invalid density limits', () => {
     const q = new AdaptiveIslandQuality(Number.NaN);
     run(q, 0, 600); expect(q.ratio).toBe(.65);
+});
+
+it.each([.65, .8, 1, 1.25, 1.5, 3])('respects density/failed-level ceiling %s at normal startup', max => {
+    const q = new AdaptiveIslandQuality(max);
+    expect(q.ratio).toBe(Math.min(1, max));
+    run(q, 0, 1200); expect(q.ratio).toBe(Math.min(1.5, max));
+});
+it('can lower a normal start all the way to the floor and never restore a failed level', () => {
+    const q = new AdaptiveIslandQuality(1.5);
+    let now = run(q, 0, 22, 60); expect(q.ratio).toBe(.8);
+    now = run(q, now, 22, 60); expect(q.ratio).toBe(.65);
+    run(q, now, 1200); expect(q.ratio).toBe(.65);
+});
+it('keeps recovery at the floor until every higher step is earned', () => {
+    const q = new AdaptiveIslandQuality(1.5, true);
+    expect(q.ratio).toBe(.65);
+    let now = run(q, 0, 200); expect(q.ratio).toBe(.8);
+    now = run(q, now, 200); expect(q.ratio).toBe(1);
+    now = run(q, now, 200); expect(q.ratio).toBe(1.25);
+    run(q, now, 200); expect(q.ratio).toBe(1.5);
 });

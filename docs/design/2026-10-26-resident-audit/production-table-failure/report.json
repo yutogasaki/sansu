@@ -1,0 +1,44 @@
+{
+  "at": "2026-10-26T04:03:55.388Z",
+  "version": {
+    "version": "resident-fix-f7464dd16ad1:69a28f6a-2526-4c46-bdb7-dd24c4df4c12",
+    "revision": "resident-fix-f7464dd16ad1",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "scope": "Production build with real UI saves/reload/offline and synthetic two-resident save; not earned residency or actual-child acceptance.",
+  "scenarios": [],
+  "captures": [],
+  "pass": false,
+  "error": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(fixture)\n\n    at file:///Users/yutogasaki/Projects/sansu/tools/e2e-resident-production.mjs:39:43",
+  "failureBody": "ぽこもこの しま\n💧\n0\nながめ\nおく\nもちもの\nメニュー\nぽこもこ\nすむの たねを おいてみよう\nたねを えらぶ\n×\nしま\nいえ\nまなぶ\nきろく\n設定"
+}

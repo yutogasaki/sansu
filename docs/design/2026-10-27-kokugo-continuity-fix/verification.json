@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-27T04:36:26.293332+00:00",
+  "target": "local production http://127.0.0.1:5312",
+  "build": "PASS; 174 precache files, 9.44 MiB / 12 MiB",
+  "sourceInputSha256": "36fce9eac4b75df6c22ab77aefbf8c89e1e4d5265e87ba82e16ec732fea155ef",
+  "productInputs": 1881,
+  "unit": {
+    "files": 682,
+    "tests": 5715,
+    "result": "PASS"
+  },
+  "finalAffectedTests": {
+    "files": 13,
+    "tests": 83,
+    "result": "PASS",
+    "reason": "latest persisted resave-time projection and later presentation refinements"
+  },
+  "lint": "PASS; 5 pre-existing warnings outside changed code",
+  "typecheck": "PASS",
+  "docs": "PASS",
+  "kokugoJourney": "390/320/768 PASS; actual answers, works, shared records/parent totals, easy display, switch/resume/deletion, real SW offline",
+  "kanji": "390/320/768 PASS",
+  "firstIntake": "390/768 PASS; actual first home/profile/three answers, selected unit continuation after changing the displayed age band, same reservation reload, national-only shared records, no math memory/log seeding",
+  "finalUi": "390/320/768 PASS on recorded build; real three answers and book save, matching totals and no empty-record message",
+  "smoke": {
+    "firstFull": "30/32; numeric immediate read and renamed parent action failures",
+    "secondFull": "30/32; 1500ms root readiness timeout and renamed parent action failures",
+    "resolution": "restored original parent action name, kept subject scope in description; parent 2/2 PASS; unchanged root 6/6 PASS",
+    "note": "No claim of one clean full smoke pass. Initial failures and observations retained locally."
+  },
+  "limits": [
+    "Chromium synthetic owners; no real iPhone or child usability/learning-effect verification",
+    "No source schema, mastery threshold, reward or question text changes",
+    "Separate English foundation records retain their explicit scope; graphs scoped to math/vocabulary",
+    "A separate island-art commit landed during work; its source edits were present before the full suite/build, not part of this change",
+    "No commit, push or deployment performed"
+  ],
+  "currentEntry": "PASS"
+}

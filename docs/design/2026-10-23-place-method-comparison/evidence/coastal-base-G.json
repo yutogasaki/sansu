@@ -1,0 +1,3397 @@
+{
+  "mode": "G",
+  "revision": "land-derived-coastal-base-v2",
+  "at": "2026-10-22T20:54:32.927Z",
+  "pureProbes": 4331,
+  "baseProof": {
+    "revision": "land-derived-coastal-base-v2",
+    "cornerRadius": 1.2,
+    "sectionWidth": 0.78,
+    "shoreToe": 0.12,
+    "outwardAllowance": 0.78,
+    "bays": [
+      {
+        "side": "west",
+        "center": 3.15,
+        "halfWidth": 1.7,
+        "depth": 1.3
+      },
+      {
+        "side": "east",
+        "center": 0.95,
+        "halfWidth": 1.55,
+        "depth": 0.61
+      },
+      {
+        "side": "south",
+        "center": 2.32,
+        "halfWidth": 1.65,
+        "depth": 0.28
+      }
+    ],
+    "ownerIndependent": true,
+    "editIndependent": true,
+    "offsetPolicy": "add signed physical offset after base, without input-dependent masks",
+    "limitation": "zero-edit centre heights and available placement area may differ from A; acquisition may reshape the base; existing owners and fixed supports require measurement"
+  },
+  "runs": [
+    {
+      "name": "zero",
+      "bounds": {
+        "minX": 0,
+        "maxX": 5,
+        "depth": 5
+      },
+      "compileMs": 142.6895,
+      "geometryHash": "5063b01562f147adc0624b8221d348978e8ec1c25b50ba5503090ee60db19aed",
+      "walkGraphHash": "2a940ddce246c84194ff8ce66a3b05cec8da3ffbe635954c0b1444873aa65480",
+      "owners": [
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 1,
+            "z": 2
+          },
+          "supported": true
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 3,
+            "z": 3
+          },
+          "supported": true
+        }
+      ],
+      "centers": [
+        {
+          "cell": {
+            "x": 0,
+            "z": 0
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 0
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 1
+          },
+          "height": -0.000326429,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 2
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 2
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 3
+          },
+          "height": -0.36270496,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "height": -0.099959094,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 4
+          },
+          "height": 0,
+          "supported": false
+        }
+      ],
+      "pinSamples": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rayError": 6.392308661562485e-8,
+      "rayProbes": 112,
+      "walkEdges": 436,
+      "comparison": {
+        "newlyDry": 0,
+        "unownedNewlyDry": 0,
+        "newlyWet": 458,
+        "approximateRemovedArea": 4.58,
+        "maxLowering": 0.374597944,
+        "changedOver2cm": 726,
+        "legalA": 30,
+        "legalG": 22,
+        "centerDifferences": [
+          {
+            "cell": {
+              "x": 5,
+              "z": 1
+            },
+            "height": -0.000326429,
+            "supported": false,
+            "aHeight": 0,
+            "delta": -0.000326429
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 3
+            },
+            "height": -0.36270496,
+            "supported": false,
+            "aHeight": 0,
+            "delta": -0.36270496
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "height": -0.099959094,
+            "supported": false,
+            "aHeight": 0,
+            "delta": -0.099959094
+          }
+        ]
+      }
+    },
+    {
+      "name": "expanded",
+      "bounds": {
+        "minX": -3,
+        "maxX": 8,
+        "depth": 8
+      },
+      "compileMs": 214.402,
+      "geometryHash": "c726aeb907ef5d160691553ad0a21dbbdcbbe87dd94e872ce112de4bd6cc67cf",
+      "walkGraphHash": "1d46ac49f6726964da07f6908d926e219bafac1b5ab03dd9634aff32ba20b9ca",
+      "owners": [
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 1,
+            "z": 2
+          },
+          "supported": true
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 3,
+            "z": 3
+          },
+          "supported": true
+        }
+      ],
+      "centers": [
+        {
+          "cell": {
+            "x": -3,
+            "z": 0
+          },
+          "height": 0.823859573,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": -2,
+            "z": 0
+          },
+          "height": 0.588693782,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": -1,
+            "z": 0
+          },
+          "height": 0.316063433,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 6,
+            "z": 0
+          },
+          "height": 0.316063433,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 7,
+            "z": 0
+          },
+          "height": 0.588693782,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 8,
+            "z": 0
+          },
+          "height": 0.823859573,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": -3,
+            "z": 1
+          },
+          "height": 0.823859573,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": -2,
+            "z": 1
+          },
+          "height": 0.588693782,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": -1,
+            "z": 1
+          },
+          "height": 0.316063433,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 6,
+            "z": 1
+          },
+          "height": 0.316063433,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 7,
+            "z": 1
+          },
+          "height": 0.588693782,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 8,
+            "z": 1
+          },
+          "height": 0.823859573,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": -3,
+            "z": 2
+          },
+          "height": 0.823859573,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": -2,
+            "z": 2
+          },
+          "height": 0.588693782,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": -1,
+            "z": 2
+          },
+          "height": 0.316063433,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 6,
+            "z": 2
+          },
+          "height": 0.316063433,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 7,
+            "z": 2
+          },
+          "height": 0.588693782,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 8,
+            "z": 2
+          },
+          "height": 0.823859573,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": -3,
+            "z": 3
+          },
+          "height": 0.823859573,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": -2,
+            "z": 3
+          },
+          "height": 0.588693782,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": -1,
+            "z": 3
+          },
+          "height": 0.316063433,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 6,
+            "z": 3
+          },
+          "height": 0.316063433,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 7,
+            "z": 3
+          },
+          "height": 0.588693782,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 8,
+            "z": 3
+          },
+          "height": 0.823859573,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": -3,
+            "z": 4
+          },
+          "height": 0.770807771,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": -2,
+            "z": 4
+          },
+          "height": 0.547933173,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": -1,
+            "z": 4
+          },
+          "height": 0.292575356,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 6,
+            "z": 4
+          },
+          "height": 0.292575356,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 7,
+            "z": 4
+          },
+          "height": 0.547933173,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 8,
+            "z": 4
+          },
+          "height": 0.770807771,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": -3,
+            "z": 5
+          },
+          "height": 0.036402509,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": -2,
+            "z": 5
+          },
+          "height": 0.485393256,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": -1,
+            "z": 5
+          },
+          "height": 0.274749703,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 5
+          },
+          "height": 0.039654182,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 5
+          },
+          "height": 0.039654182,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 5
+          },
+          "height": 0.039654182,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 5
+          },
+          "height": 0.039654182,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 5
+          },
+          "height": 0.039654182,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 5
+          },
+          "height": 0.039654182,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 6,
+            "z": 5
+          },
+          "height": 0.274749703,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 7,
+            "z": 5
+          },
+          "height": 0.485393256,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 8,
+            "z": 5
+          },
+          "height": 0.674128057,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": -3,
+            "z": 6
+          },
+          "height": 0.464878266,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": -2,
+            "z": 6
+          },
+          "height": 0.418829732,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": -1,
+            "z": 6
+          },
+          "height": 0.255792282,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 6
+          },
+          "height": 0.078624687,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 6
+          },
+          "height": 0.078624687,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 6
+          },
+          "height": 0.078624687,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 6
+          },
+          "height": 0.078624687,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 6
+          },
+          "height": 0.078624687,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 6
+          },
+          "height": 0.078624687,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 6,
+            "z": 6
+          },
+          "height": 0.255792282,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 7,
+            "z": 6
+          },
+          "height": 0.418829732,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 8,
+            "z": 6
+          },
+          "height": 0.568863997,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": -3,
+            "z": 7
+          },
+          "height": 0.487478573,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": -2,
+            "z": 7
+          },
+          "height": 0.371534988,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": -1,
+            "z": 7
+          },
+          "height": 0.248174709,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 7
+          },
+          "height": 0.116923305,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 7
+          },
+          "height": 0.116923305,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 7
+          },
+          "height": 0.116923305,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 7
+          },
+          "height": 0.116923305,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 7
+          },
+          "height": 0.116923305,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 7
+          },
+          "height": 0.116923305,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 6,
+            "z": 7
+          },
+          "height": 0.248174709,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 7,
+            "z": 7
+          },
+          "height": 0.371534988,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 8,
+            "z": 7
+          },
+          "height": 0.487478573,
+          "supported": false
+        }
+      ],
+      "pinSamples": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0.336544842,
+        0.325667051,
+        0.314789259,
+        0.319408246,
+        0.324027232,
+        0.364917706,
+        0.354039915,
+        0.343162124,
+        0.34778111,
+        0.344928807,
+        0.39329057,
+        0.382412779,
+        0.371534988,
+        0.368682685,
+        0.365830383,
+        0.427798451,
+        0.41692066,
+        0.398202013,
+        0.395349709,
+        0.392497407,
+        0.462306332,
+        0.443587685,
+        0.424869038,
+        0.422016734,
+        0.419164432
+      ],
+      "rayError": 6.1384917704465636e-9,
+      "rayProbes": 126,
+      "walkEdges": 1620,
+      "comparison": {
+        "newlyDry": 0,
+        "unownedNewlyDry": 0,
+        "newlyWet": 502,
+        "approximateRemovedArea": 5.0200000000000005,
+        "maxLowering": 1.109716318,
+        "changedOver2cm": 1651,
+        "legalA": 96,
+        "legalG": 86,
+        "centerDifferences": [
+          {
+            "cell": {
+              "x": -3,
+              "z": 5
+            },
+            "height": 0.036402509,
+            "supported": false,
+            "aHeight": 0.674128057,
+            "delta": -0.637725548
+          },
+          {
+            "cell": {
+              "x": -3,
+              "z": 6
+            },
+            "height": 0.464878266,
+            "supported": false,
+            "aHeight": 0.568863997,
+            "delta": -0.10398573100000003
+          }
+        ]
+      }
+    },
+    {
+      "name": "negative-west-opening",
+      "bounds": {
+        "minX": 0,
+        "maxX": 5,
+        "depth": 5
+      },
+      "compileMs": 87.05408299999999,
+      "geometryHash": "f7597bcf1376581f1d62f7b5ff070b2cda87481fcb57933b9f18287317e5718b",
+      "walkGraphHash": "5bbce7e261a3caf16f59542b04469ebff886ad6d49203db974981c1c485a080a",
+      "owners": [
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 1,
+            "z": 2
+          },
+          "supported": false
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 3,
+            "z": 3
+          },
+          "supported": true
+        }
+      ],
+      "centers": [
+        {
+          "cell": {
+            "x": 0,
+            "z": 0
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 0
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 1
+          },
+          "height": -0.000326429,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 2
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 2
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 2
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 3
+          },
+          "height": null,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 3
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "height": null,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 4
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 4
+          },
+          "height": 0,
+          "supported": false
+        }
+      ],
+      "pinSamples": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rayError": 6.392308661562485e-8,
+      "rayProbes": 108,
+      "walkEdges": 418,
+      "comparison": {
+        "newlyDry": 0,
+        "unownedNewlyDry": 0,
+        "newlyWet": 268,
+        "approximateRemovedArea": 2.68,
+        "maxLowering": 0.35406088,
+        "changedOver2cm": 595,
+        "legalA": 24,
+        "legalG": 19,
+        "centerDifferences": [
+          {
+            "cell": {
+              "x": 5,
+              "z": 1
+            },
+            "height": -0.000326429,
+            "supported": false,
+            "aHeight": 0,
+            "delta": -0.000326429
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 3
+            },
+            "height": null,
+            "supported": false,
+            "aHeight": null,
+            "delta": null
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "height": null,
+            "supported": false,
+            "aHeight": null,
+            "delta": null
+          }
+        ]
+      }
+    },
+    {
+      "name": "positive-corner",
+      "bounds": {
+        "minX": 0,
+        "maxX": 5,
+        "depth": 5
+      },
+      "compileMs": 64.83924999999999,
+      "geometryHash": "ab5300bfe1d6f7471c843e83b208b3c5c07abab32edee20da5d777c6296828e5",
+      "walkGraphHash": "2a940ddce246c84194ff8ce66a3b05cec8da3ffbe635954c0b1444873aa65480",
+      "owners": [
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 1,
+            "z": 2
+          },
+          "supported": true
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 3,
+            "z": 3
+          },
+          "supported": true
+        }
+      ],
+      "centers": [
+        {
+          "cell": {
+            "x": 0,
+            "z": 0
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 0
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 0
+          },
+          "height": 0.54,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 1
+          },
+          "height": -0.000326429,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 2
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 2
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 3
+          },
+          "height": -0.36270496,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "height": -0.099959094,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 4
+          },
+          "height": 0,
+          "supported": false
+        }
+      ],
+      "pinSamples": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rayError": 6.392308661562485e-8,
+      "rayProbes": 112,
+      "walkEdges": 436,
+      "comparison": {
+        "newlyDry": 0,
+        "unownedNewlyDry": 0,
+        "newlyWet": 416,
+        "approximateRemovedArea": 4.16,
+        "maxLowering": 0.38752045500000004,
+        "changedOver2cm": 782,
+        "legalA": 27,
+        "legalG": 21,
+        "centerDifferences": [
+          {
+            "cell": {
+              "x": 5,
+              "z": 1
+            },
+            "height": -0.000326429,
+            "supported": false,
+            "aHeight": 0,
+            "delta": -0.000326429
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 3
+            },
+            "height": -0.36270496,
+            "supported": false,
+            "aHeight": 0,
+            "delta": -0.36270496
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "height": -0.099959094,
+            "supported": false,
+            "aHeight": 0,
+            "delta": -0.099959094
+          }
+        ]
+      }
+    },
+    {
+      "name": "mixed-coast",
+      "bounds": {
+        "minX": 0,
+        "maxX": 5,
+        "depth": 5
+      },
+      "compileMs": 66.55679199999997,
+      "geometryHash": "65cfa5f641818cc6dccec2523a80ed9013453998443a78eb8a7b76ea325a74f3",
+      "walkGraphHash": "b7e6154ebe5bb3a0a3fc024d01b09ef0618ad58c28698d8b27c96a02fadbe3e9",
+      "owners": [
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 1,
+            "z": 2
+          },
+          "supported": false
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 3,
+            "z": 3
+          },
+          "supported": true
+        }
+      ],
+      "centers": [
+        {
+          "cell": {
+            "x": 0,
+            "z": 0
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 0
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 0
+          },
+          "height": 0.54,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 1
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 1
+          },
+          "height": -0.000326429,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 2
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 2
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 2
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 2
+          },
+          "height": null,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 3
+          },
+          "height": null,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 3
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 3
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 3
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "height": -0.099959094,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 4
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 4
+          },
+          "height": 0,
+          "supported": false
+        }
+      ],
+      "pinSamples": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rayError": 1.0201618660943268e-7,
+      "rayProbes": 105,
+      "walkEdges": 402,
+      "comparison": {
+        "newlyDry": 0,
+        "unownedNewlyDry": 0,
+        "newlyWet": 334,
+        "approximateRemovedArea": 3.34,
+        "maxLowering": 0.38752045500000004,
+        "changedOver2cm": 677,
+        "legalA": 16,
+        "legalG": 14,
+        "centerDifferences": [
+          {
+            "cell": {
+              "x": 5,
+              "z": 1
+            },
+            "height": -0.000326429,
+            "supported": false,
+            "aHeight": 0,
+            "delta": -0.000326429
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 2
+            },
+            "height": null,
+            "supported": false,
+            "aHeight": null,
+            "delta": null
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 3
+            },
+            "height": null,
+            "supported": false,
+            "aHeight": null,
+            "delta": null
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "height": -0.099959094,
+            "supported": false,
+            "aHeight": 0,
+            "delta": -0.099959094
+          }
+        ]
+      }
+    },
+    {
+      "name": "recorded-UI-input",
+      "bounds": {
+        "minX": 0,
+        "maxX": 5,
+        "depth": 5
+      },
+      "compileMs": 67.64912500000003,
+      "geometryHash": "6b1c634b49e173fb44e6499b5576b26cee54ca8b047fa81a1a1bea73932c3bf7",
+      "walkGraphHash": "23179f09245bafaa33aea39fd9a8e0e97cfc634dc5eaa3436dec28f15b6c768f",
+      "owners": [
+        {
+          "id": "p1",
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "supported": true
+        }
+      ],
+      "centers": [
+        {
+          "cell": {
+            "x": 0,
+            "z": 0
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 0
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 0
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 0
+          },
+          "height": 0.54,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "height": -0.18,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 1
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 1
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 1
+          },
+          "height": null,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 2
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 2
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 2
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 2
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 2
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 2
+          },
+          "height": null,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 3
+          },
+          "height": -0.36270496,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 3
+          },
+          "height": 0.36,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 3
+          },
+          "height": 0.36,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 3
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 3
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 3
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "height": null,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 1,
+            "z": 4
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 2,
+            "z": 4
+          },
+          "height": 0,
+          "supported": false
+        },
+        {
+          "cell": {
+            "x": 3,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 4,
+            "z": 4
+          },
+          "height": 0,
+          "supported": true
+        },
+        {
+          "cell": {
+            "x": 5,
+            "z": 4
+          },
+          "height": 0,
+          "supported": false
+        }
+      ],
+      "pinSamples": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "rayError": 6.392308661562485e-8,
+      "rayProbes": 105,
+      "walkEdges": 392,
+      "comparison": {
+        "newlyDry": 0,
+        "unownedNewlyDry": 0,
+        "newlyWet": 305,
+        "approximateRemovedArea": 3.0500000000000003,
+        "maxLowering": 0.370221353,
+        "changedOver2cm": 600,
+        "legalA": 14,
+        "legalG": 11,
+        "centerDifferences": [
+          {
+            "cell": {
+              "x": 5,
+              "z": 1
+            },
+            "height": null,
+            "supported": false,
+            "aHeight": null,
+            "delta": null
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 2
+            },
+            "height": null,
+            "supported": false,
+            "aHeight": null,
+            "delta": null
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 3
+            },
+            "height": -0.36270496,
+            "supported": false,
+            "aHeight": 0,
+            "delta": -0.36270496
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "height": null,
+            "supported": false,
+            "aHeight": null,
+            "delta": null
+          }
+        ]
+      }
+    }
+  ],
+  "transitions": [
+    {
+      "cell": {
+        "x": 0,
+        "z": 3
+      },
+      "delta": -1,
+      "accepted": true,
+      "center": null,
+      "maxRise": 0,
+      "maxDrop": 0.164592592,
+      "dryLost": 10,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 0,
+        "z": 3
+      },
+      "delta": -1,
+      "accepted": true,
+      "center": null,
+      "maxRise": 0,
+      "maxDrop": 0.14320987599999999,
+      "dryLost": 10,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 0,
+        "z": 3
+      },
+      "delta": -1,
+      "accepted": true,
+      "center": null,
+      "maxRise": 0,
+      "maxDrop": 0.11599999999999996,
+      "dryLost": 13,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 0,
+        "z": 3
+      },
+      "delta": -1,
+      "accepted": false,
+      "error": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": -1,
+      "accepted": true,
+      "center": -0.18,
+      "maxRise": 0,
+      "maxDrop": 0.18,
+      "dryLost": 0,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": -1,
+      "accepted": true,
+      "center": -0.36,
+      "maxRise": 0,
+      "maxDrop": 0.18,
+      "dryLost": 0,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": -1,
+      "accepted": true,
+      "center": null,
+      "maxRise": 0,
+      "maxDrop": 0.12469135799999997,
+      "dryLost": 13,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": -1,
+      "accepted": true,
+      "center": null,
+      "maxRise": 0,
+      "maxDrop": 0.09086419799999995,
+      "dryLost": 9,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": 1,
+      "accepted": true,
+      "center": null,
+      "maxRise": 0.09086419799999995,
+      "maxDrop": 0,
+      "dryLost": 0,
+      "dryGained": 9
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": 1,
+      "accepted": true,
+      "center": -0.36,
+      "maxRise": 0.12469135799999997,
+      "maxDrop": 0,
+      "dryLost": 0,
+      "dryGained": 13
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": 1,
+      "accepted": true,
+      "center": -0.18,
+      "maxRise": 0.18,
+      "maxDrop": 0,
+      "dryLost": 0,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": 1,
+      "accepted": true,
+      "center": 0,
+      "maxRise": 0.18,
+      "maxDrop": 0,
+      "dryLost": 0,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": 1,
+      "accepted": true,
+      "center": 0.18,
+      "maxRise": 0.18,
+      "maxDrop": 0,
+      "dryLost": 0,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": 1,
+      "accepted": true,
+      "center": 0.36,
+      "maxRise": 0.18,
+      "maxDrop": 0,
+      "dryLost": 0,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": 1,
+      "accepted": true,
+      "center": 0.54,
+      "maxRise": 0.18000000000000005,
+      "maxDrop": 0,
+      "dryLost": 0,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": 1,
+      "accepted": true,
+      "center": 0.72,
+      "maxRise": 0.17999999999999994,
+      "maxDrop": 0,
+      "dryLost": 0,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": 1,
+      "accepted": true,
+      "center": 0.9,
+      "maxRise": 0.18000000000000005,
+      "maxDrop": 0,
+      "dryLost": 0,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": 1,
+      "accepted": true,
+      "center": 1.08,
+      "maxRise": 0.18000000000000005,
+      "maxDrop": 0,
+      "dryLost": 0,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": 1,
+      "accepted": true,
+      "center": 1.26,
+      "maxRise": 0.17999999999999994,
+      "maxDrop": 0,
+      "dryLost": 0,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": 1,
+      "accepted": true,
+      "center": 1.44,
+      "maxRise": 0.17999999999999994,
+      "maxDrop": 0,
+      "dryLost": 0,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": 1,
+      "accepted": true,
+      "center": 1.62,
+      "maxRise": 0.18000000000000016,
+      "maxDrop": 0,
+      "dryLost": 0,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": 1,
+      "accepted": true,
+      "center": 1.8,
+      "maxRise": 0.17999999999999994,
+      "maxDrop": 0,
+      "dryLost": 0,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": 1,
+      "accepted": true,
+      "center": 1.98,
+      "maxRise": 0.17999999999999994,
+      "maxDrop": 0,
+      "dryLost": 0,
+      "dryGained": 0
+    },
+    {
+      "cell": {
+        "x": 5,
+        "z": 0
+      },
+      "delta": 1,
+      "accepted": true,
+      "center": 2.16,
+      "maxRise": 0.18000000000000016,
+      "maxDrop": 0,
+      "dryLost": 0,
+      "dryGained": 0
+    }
+  ],
+  "hashes": {
+    "coastal-base-field.ts": "a35df99fbf53b5f13b592ca540c6587cf586fdae0f2e0052c4b715d389545346",
+    "coastal-base-check.ts": "453891b3ccf721ddc92a75f0b4602589d7cd24ee3e1787ffdd854c89b118b7cd",
+    "coastal-base-transform.mjs": "a1b99e1e9695eedeab81bfc2d2e843fff6fef14eb7ff46313bbcd90345e1c0bb",
+    "coastal-base-check.mjs": "8098d55f7c96129958902c4ddccca499e88129d6ab08aa5f1e9833a2545e703c",
+    "recorded-UI-input": "31aedb4b82e10c64c6f33ea5b81d6d3e76d698198ca450f4dd43aacd52007b57",
+    "actual-terrain-transform": "96b7a5fdcac711ef1b6e803800471eb8e247e84a933426fbb57f4a3f54530c8f"
+  },
+  "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-method-comparison/coastal-base-check.mjs",
+  "scope": "Actual shared triangles/domain commands; labelled diagnostic fixtures, not UI/art/child usability evidence"
+}

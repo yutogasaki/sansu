@@ -1,0 +1,306 @@
+
+> pokko-fushigi-zukan-app@0.0.0 test:run
+> vitest run
+
+
+ RUN  v2.1.9 /Users/yutogasaki/Projects/sansu
+
+ ✓ src/domain/growingIsland/authoredGrowthTerrain.test.ts (15 tests) 4628ms
+   ✓ growth changes real terrain from current owned trees > uses maturity, current join direction and position to choose actual relief and coastline 462ms
+   ✓ growth changes real terrain from current owned trees > keeps rights, full old supports and original floors while making the added real ground reachable 455ms
+   ✓ mature groups assemble branches and an authored two-mouth shore > derives single, split and joined real ground from the same four owners, then separates and restores it 2045ms
+   ✓ mature groups assemble branches and an authored two-mouth shore > rejects invalid connection rights, bank references, disconnected sites and overlapping real floors 727ms
+ ✓ src/hooks/blockGenerators.test.ts (36 tests) 970ms
+ ✓ src/domain/explore/__tests__/learningPlannerSegment.test.ts (15 tests) 27371ms
+   ✓ Explore immutable learning-segment planner integration > atomically reserves three full Problems while applying the review cap per candidate 3695ms
+   ✓ Explore immutable learning-segment planner integration > fills a rapid-ineligible segment with a separate game-only identity without consuming Due 2292ms
+   ✓ Explore immutable learning-segment planner integration > leaves a rapid-safe but locked Due untouched while reserving unlocked slots 1194ms
+   ✓ Explore immutable learning-segment planner integration > rolls back all segment slots and assignments when the single run-row write fails 1492ms
+   ✓ Explore immutable learning-segment planner integration > restores Q2 byte-for-byte from the saved slot after profile progression changes 2473ms
+   ✓ Explore immutable learning-segment planner integration > rejects a stale expected checkpoint revision without reserving anything 694ms
+   ✓ Explore immutable learning-segment planner integration > does not let future Q2/Q3 assignments cool down Q1's representation retry 1954ms
+   ✓ Explore immutable learning-segment planner integration > uses a separate rapid-safe game-only identity when a new retry has no eligible learning candidate 2069ms
+   ✓ Explore immutable learning-segment planner integration > checkpoints and resumes a full-reserved retry selected from the main source 1905ms
+   ✓ Explore immutable learning-segment planner integration > writes no retry assignment when its expected checkpoint revision is stale 2185ms
+   ✓ Explore immutable learning-segment planner integration > restores a retry's full Problem and visual after mathSkills changes at the same revision 3183ms
+   ✓ Explore immutable learning-segment planner integration > adopts a legacy pending full Problem as the fixed current slot without changing it 829ms
+   ✓ Explore immutable learning-segment planner integration > restores a saved v2 segment byte-for-byte without retroactively rejecting its current Problem 404ms
+   ✓ Explore immutable learning-segment planner integration > adopts a legacy current Problem after one incorrect attempt before reserving later slots 762ms
+   ✓ Explore immutable learning-segment planner integration > adopts a displayed legacy retry only when its reserved full Problem stays exact 2211ms
+ ✓ src/domain/explore/__tests__/persistenceRepository.test.ts (38 tests) 32638ms
+   ✓ SansuDatabase version 5 migration > keeps every representative version 4 row while adding empty explore stores 1043ms
+   ✓ exploration persistence repository > does not leave an assignment when a timed-out reservation is aborted 1325ms
+   ✓ exploration persistence repository > rolls back an assignment when cancellation arrives during its update 801ms
+   ✓ exploration persistence repository > starts a run and its event atomically without touching learning stores 901ms
+   ✓ exploration persistence repository > returns the existing run for the same start data without duplicating its event 684ms
+   ✓ exploration persistence repository > rejects the same runId with conflicting profile data 1301ms
+   ✓ exploration persistence repository > rejects the same runId with conflicting seed data 544ms
+   ✓ exploration persistence repository > rejects the same runId with conflicting startedAt data 810ms
+   ✓ exploration persistence repository > commits one answer event and run aggregate, using the generated problem category 1177ms
+   ✓ exploration persistence repository > atomically commits a reserved learning answer to explore and learning state 1840ms
+   ✓ exploration persistence repository > does not duplicate learning state for a sequential learning resend 1550ms
+   ✓ exploration persistence repository > does not duplicate learning state for concurrent learning resends 1355ms
+   ✓ exploration persistence repository > returns the same receipt for a sequential resend without double counting 336ms
+   ✓ exploration persistence repository > rejects a conflicting resend and preserves the first committed answer 1465ms
+   ✓ exploration persistence repository > updates only the incorrect aggregate 789ms
+   ✓ exploration persistence repository > updates only the skipped aggregate 677ms
+   ✓ exploration persistence repository > returns one receipt for concurrent resends and increments exactly once 1442ms
+   ✓ exploration persistence repository > rolls back the run aggregate when the answer event cannot be written 498ms
+   ✓ exploration persistence repository > rolls back explore and learning state when a learning store write fails 443ms
+   ✓ exploration persistence repository > rejects unreserved or mismatched problems before any answer state is written 321ms
+   ✓ exploration persistence repository > rejects a conflicting reservation and keeps the original assignment 819ms
+   ✓ exploration persistence repository > rejects caller-controlled affectsSrs values that contradict the reserved source 498ms
+   ✓ exploration persistence repository > rejects cross-profile attempts before writing an event or aggregate 913ms
+   ✓ exploration persistence repository > finishes a run atomically with its terminal snapshot and event 526ms
+   ✓ exploration persistence repository > returns the first finish for the same status and rejects another terminal status 726ms
+   ✓ exploration persistence repository > rejects finishing a run through another profile 571ms
+   ✓ exploration persistence repository > abandons an older active run when starting a new run for the same profile 301ms
+   ✓ exploration persistence repository > starts with a versioned checkpoint and returns the same active run for resume 1093ms
+   ✓ exploration persistence repository > keeps a saved classic opening on its active run while new runs use the new default 527ms
+   ✓ exploration persistence repository > saves checkpoints with revision compare-and-swap 776ms
+   ✓ exploration persistence repository > commits an answer and reducer checkpoint atomically when revision is supplied 655ms
+   ✓ exploration persistence repository > rejects an old idempotent answer resend after a later checkpoint 1374ms
+   ✓ exploration persistence repository > rejects skipped attempts at a checkpointed reducer boundary 838ms
+   ✓ exploration persistence repository > checks terminal retry revisions and persists checkpoint-owned discoveries 771ms
+   ✓ exploration persistence repository > folds one legacy answer tail during resume and rejects checkpoint-less legacy rows 449ms
+   ✓ exploration persistence repository > isolates profiles and deletes only the selected profile's explore rows 2128ms
+stderr | src/components/island/growing/authoredFlowerObstructions.test.ts > actual walking source envelope > includes actual indexed clothing, hats, ears, tail, soles and continuous walking angles with bob, while excluding sparkles
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/authoredFlowerObstructions.test.ts (15 tests) 32189ms
+   ✓ actual walking source envelope > includes actual indexed clothing, hats, ears, tail, soles and continuous walking angles with bob, while excluding sparkles 17581ms
+   ✓ actual walking source envelope > is independent of held, seat and react transforms, restores every transform/contact, and never accumulates .45 scaling 830ms
+   ✓ source flower obstruction restricts renderer walking only > blocks a cove-only edge with no flower stock and ignores a supporting floor outside the source shell root 1085ms
+   ✓ source flower obstruction restricts renderer walking only > keeps the same EPS clearance in the broad point box and exact cylinder predicate 1125ms
+   ✓ source flower obstruction restricts renderer walking only > rejects supplied bands outside the declared aggregate before they can bypass obstruction checks 827ms
+   ✓ source flower obstruction restricts renderer walking only > rejects a thin mid-edge collision with clear endpoints and preserves all rights, grants and the caller Set 1678ms
+   ✓ source flower obstruction restricts renderer walking only > keeps a high crown clear but refuses its underside at the real walking head/bob height 1335ms
+   ✓ source flower obstruction restricts renderer walking only > includes nonidentity mapped ground within arbitrary paths and tests the actual current posed actor separately 808ms
+   ✓ source flower obstruction restricts renderer walking only > does not apply head width to low roots and checks each actual pose mesh instead of the space between feet and head 1049ms
+   ✓ source flower obstruction restricts renderer walking only > uses cached indexed local bounds far from support, refreshes uploaded geometry/index changes and keeps live mesh transforms 1151ms
+   ✓ source flower obstruction restricts renderer walking only > retains legacy/support-free walking, validates enabled envelopes, and does not infer physical stock from ordinary flowers or preview siblings 1734ms
+   ✓ committed native grove guard and runtime owner endpoints > counts native tree, shared trunk and branch triangles once, excluding replaced, prospective and hit-only shapes 1540ms
+   ✓ committed native grove guard and runtime owner endpoints > discovers a safe second ring through real neighbors without authorizing the rejected first ring 1333ms
+ ❯ src/domain/island/island.test.ts (19 tests | 4 failed) 45747ms
+   × island frozen learning sets > reserves three introductory questions, then six familiar questions, and restores the exact plan 5240ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ✓ island frozen learning sets > rolls back a failed reservation and leaves the same set identity available for retry 618ms
+   × island frozen learning sets > keeps wrong answers on the same problem and assistance sticky without fabricating mastery 5040ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ✓ island frozen learning sets > records a real skip then opens persisted support on the same slot, preserving its later growth 4118ms
+   × island frozen learning sets > supports mixed vocabulary sets and accumulates independent readiness without auto progression 5409ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × island frozen learning sets > preserves fraction multi-input and stepwise written arithmetic in complete reserved plans 5215ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ✓ legacy frozen-plan atomic completion and deferred rewards > serializes final answers across tabs and gives one entitlement with exactly one final log 3771ms
+   ✓ legacy frozen-plan atomic completion and deferred rewards > rolls back the last answer, learning, cursor and entitlement if its completion event fails 3820ms
+   ✓ legacy frozen-plan atomic completion and deferred rewards > lets new sets continue with rewards deferred and persists exactly one selected object across retries 4317ms
+   ✓ legacy frozen-plan atomic completion and deferred rewards > rolls back a reward claim when its receipt fails, retaining the saved choices 1642ms
+   ✓ free placement and ownership > opens substantial outer land without invalidating any position from the earlier shore 706ms
+   ✓ free placement and ownership > supports moving, rotating, storing and restoring a unique item without adding any learning 847ms
+   ✓ free placement and ownership > keeps the saved island and event history intact after an invalid placement or stale edit 1270ms
+   ✓ free placement and ownership > rejects stale profile actions and deletes only the removed profile island rows 2816ms
+   ✓ free placement and ownership > adds v7 island tables without changing v6 profiles, park plans or old exploration checkpoints 480ms
+ ✓ src/components/island/three/sharedDisplayScene.test.ts (13 tests) 24920ms
+   ✓ shared display physical identity and immutable captures > allocates no display for old islands, then follows the same three specimens without revealing unknown names 3681ms
+   ✓ shared display physical identity and immutable captures > keeps displayed A after its saved slot and draft become B or are deleted, including every cell and rotation 1267ms
+   ✓ shared display physical identity and immutable captures > displays unfinished placed frames and omits absent parts, without inventing assembled materials or changing the snapshot 699ms
+   ✓ shared display physical identity and immutable captures > requires explicit historical specimen appearance rather than silently taking the current cleaned state 609ms
+   ✓ shared display geometry, anchors and lifecycle > exposes one opaque tabletop surface after batching while retaining the actual support and contact heights 3371ms
+   ✓ shared display geometry, anchors and lifecycle > keeps every real table, tray, object, petal and selection vertex inside the shared placement footprint 9100ms
+   ✓ shared display geometry, anchors and lifecycle > anchors three real petals, wells and material surfaces in world space and selects only visible actual geometry 648ms
+   ✓ shared display geometry, anchors and lifecycle > places both hand anchors on real front handles and leaves the preparation wells behind the owned tray 2930ms
+   ✓ shared display geometry, anchors and lifecycle > retains the transported UUID when the atomic saved placement changes slots, then restores onto the new actual table 1023ms
+   ✓ shared display geometry, anchors and lifecycle > releases a preview object with its world pose intact and transfers disposal responsibility to the saved scene 1381ms
+ ❯ src/domain/island/rewardGoalRepository.test.ts (14 tests | 4 failed) 42983ms
+   × reward goals and the real island storage boundary > reads without migration, chooses an unqualified free item and clears with only a goal receipt and revision 6053ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × reward goals and the real island storage boundary > earns the desired furniture through ordinary learning, preserves photographs and old memories, then resumes the same reservation 5702ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ✓ reward goals and the real island storage boundary > rolls back the acquisition and its goal clearing together after native abort: 'customization' 2401ms
+   ✓ reward goals and the real island storage boundary > rolls back the acquisition and its goal clearing together after native abort: 'furniture' 1585ms
+   ✓ reward goals and the real island storage boundary > rolls back the acquisition and its goal clearing together after native abort: 'expression' 1333ms
+   ✓ reward goals and the real island storage boundary > a native abort of replacement cannot clear the older category goal; exact same intent retries once 3156ms
+   ✓ reward goals and the real island storage boundary > lost choose/clear completion and old desire receipts return the latest goal without reselecting or clearing it 2149ms
+   ✓ reward goals and the real island storage boundary > old acquisition retry cannot clear a later goal after ownership changes: 'furniture' 1374ms
+   ✓ reward goals and the real island storage boundary > old acquisition retry cannot clear a later goal after ownership changes: 'expression' 1299ms
+   ✓ reward goals and the real island storage boundary > CAS serializes goal choice against a different purchase; clear with the stale revision cannot erase the winner 1694ms
+   ✓ reward goals and the real island storage boundary > coalesces the same canonical choice across connections and keeps all other profiles isolated 1901ms
+   ✓ reward goals and the real island storage boundary > ordinary writers reject corrupted or simultaneous goals without deleting them as recovery 2981ms
+   × reward goals and the real island storage boundary > a saved butterfly observation changes eligibility but not the goal or ownership, then only the selected acquisition clears it 5376ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × reward goals and the real island storage boundary > bell construction alone is not qualification, and real saved observation with sound off preserves the target until acquisition 5976ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ✓ tools/expression-audio/audio-analysis.test.mjs (53 tests) 153580ms
+   ✓ source analysis requires all three pitches and a truly silent long gap 2762ms
+   ✓ a free buffer accepts both exact signed zeros but rejects any nonzero endpoint 1271ms
+   ✓ evening acceptance measures its insect band and all three 2-second calls at native sample rates 4880ms
+   ✓ insect-band classification rejects absent insects and actual wind or water even when made quiet 6982ms
+   ✓ an uninterrupted high tone, wrong cadence or missing call cannot impersonate evening insects 5360ms
+   ✓ periodic broadband noise or adjacent high tones fail even with the expected call windows 1126ms
+   ✓ delivered-output test rejects silence, missing repeated phrase and an audible phrase gap 2609ms
+   ✓ DC pulses cannot impersonate the delivered shell, and a different waveform with the right pitches is rejected 737ms
+   ✓ every retained pitch, correspondence, silence and end window uses the same native source clock 5029ms
+   ✓ raw02 loop prefix positions are missing first-pitch evidence, not proof of an overlapping loop 11226ms
+   ✓ one missing first-pitch sample or final required sample fails without shortening either window 16229ms
+   ✓ the complete native silence window rejects contamination in its first sample that a shifted range misses 5103ms
+   ✓ one-sample and wrong-sign native offsets fail instead of choosing a better waveform lag 7139ms
+   ✓ whole-loop aliases cannot substitute another cycle for either of the two native source windows 1173ms
+   ✓ unknown, nonfinite, fractional and mismatched native metadata fail rather than falling back to signal alignment 7479ms
+   ✓ a missing source correspondence interval cannot be borrowed from another measured interval or padded 2939ms
+   ✓ global mute retains the collected selection; same free off clears it with exactly one experience receipt 599ms
+   ✓ event overflow never prevents native stop/disconnect/close or changes their returns and exceptions 705ms
+   ✓ real-answer cue history can exceed 256 sources, while the finite source cap still cannot block native playback or close 44862ms
+   ✓ same-outlet unclassified source is detected even when it disconnects before the output callback 1123ms
+   ✓ repeated connect/disconnect does not retain released processors or live graph paths 454ms
+   ✓ late worklet loading never delays native playback or reconnects a released destination 498ms
+   ✓ asynchronous worklet readiness attaches only the passive branch without touching the existing source 1466ms
+   ✓ source start copies original bits but defers long PCM encoding until the first real render block 3521ms
+   ✓ deferred exact deduplication still preserves source identities and never borrows a later mutated buffer 436ms
+   ✓ malformed blocks outside a measurement remain fatal through later valid windows without changing native operations 5250ms
+   ✓ unknown or missing worklet message types are global errors both outside and inside a measurement 3179ms
+   ✓ serialized render processor retains each sample and frame independently of main-thread delivery timing 413ms
+   ✓ every analysis failure retains raw PCM/events/DB and a failed report before rethrowing the original cause 1557ms
+   ✓ failed entry prerequisites and validator failures after a checkpoint also produce reviewable evidence 663ms
+   ✓ public save persists a diagnostic FAIL and may collect again without erasing the failure or earlier raw evidence 1078ms
+   ✓ native port ordinals and first valid metadata survive unmeasured delivery and later snapshot copies 478ms
+   ✓ an unmeasured ordered startup gap followed by captured sequence zero retains native PCM and full onset range 1150ms
+   ✓ finite port-message budget includes nonmeasurement traffic and cannot prevent native retirement 2482ms
+ ❯ src/domain/island/expressionRepository.test.ts (11 tests | 4 failed) 44164ms
+   × expression ownership with the existing learning and photo stores > earns ordinary stars without materializing expression, acquires separately, reloads and resumes the exact same learning plan 5759ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × expression ownership with the existing learning and photo stores > old saved butterfly observations qualify both products without auto-granting or rewriting learning and photographs 5748ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   × expression ownership with the existing learning and photo stores > accepts a persisted bell result while sound is off, but never a merely completed draft or failed observation transaction 5270ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+   ✓ expression ownership with the existing learning and photo stores > rejects invalid saved versions through both expression and ordinary writers, without dropping the damaged extension 3915ms
+   ✓ native atomicity, CAS, exact receipts and owner boundaries > rolls back all tables after the island write and before the receipt, then retries the same purchase once 2918ms
+   ✓ native atomicity, CAS, exact receipts and owner boundaries > after native commit and lost completion returns the newest island without recharging or replaying later equipment 3206ms
+   ✓ native atomicity, CAS, exact receipts and owner boundaries > an old free-look receipt does not erase an outfit acquired and equipped after it, including legacy combined actions 1863ms
+   ✓ native atomicity, CAS, exact receipts and owner boundaries > keeps the free-look change and override removal atomic on abort 2149ms
+   ✓ native atomicity, CAS, exact receipts and owner boundaries > deduplicates two connections using the same receipt and serializes a competing existing cosmetic purchase 4695ms
+   ✓ native atomicity, CAS, exact receipts and owner boundaries > does not cross an inactive owner, manufacture a missing island, or alter state for invalid, unqualified or unaffordable input 2803ms
+   × full scene receipts capture confirmed selection exactly once > retains the original capture after a lost response and later appearance/pose changes, then restores selection with immutable photos 5799ms
+     → Test timed out in 5000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ✓ src/components/island/three/residentRig.test.ts (38 tests) 115906ms
+   ✓ resident local rig and furniture contact > blends the flower lean out before carrying and restores it without accumulation 3490ms
+   ✓ resident local rig and furniture contact > blends the fountain lean out before carrying and restores it without accumulation 1861ms
+   ✓ resident local rig and furniture contact > walks a safe point route across the bridge, arrives idle, and never acquires furniture ownership 867ms
+   ✓ resident local rig and furniture contact > stops a live walk at the visible position and settles feet without restarting the path 1055ms
+   ✓ resident local rig and furniture contact > settles reduced point walks immediately but rejects malformed routes 1926ms
+   ✓ resident local rig and furniture contact > can leave a cancelled seat approach without claiming its seat or changing the stopped position 2054ms
+   ✓ resident local rig and furniture contact > retains a true seat departure through an immediately stopped point walk and clears it after escape 1929ms
+   ✓ resident local rig and furniture contact > does not retain a target that the interrupted walk has not yet reached 2377ms
+   ✓ resident local rig and furniture contact > otter shared poses use real paw contacts and do not change soles or seat contact 2376ms
+   ✓ resident local rig and furniture contact > otter presents either actual outer paw without stretching or moving the planted rig 1697ms
+   ✓ resident local rig and furniture contact > restores a single-handed seated pose before base motion, learning, and release 515ms
+   ✓ resident local rig and furniture contact > otter soles rest on the ground and the shoulder stays attached when waving 1408ms
+   ✓ resident local rig and furniture contact > bench supports each resident at the real surface through all rotations 12849ms
+   ✓ resident local rig and furniture contact > swing supports each resident at the real surface through all rotations 8439ms
+   ✓ resident local rig and furniture contact > mushroom supports each resident at the real surface through all rotations 10732ms
+   ✓ resident local rig and furniture contact > swings resident and real seat together using the same phase, pivot and rotated contact 922ms
+   ✓ resident local rig and furniture contact > keeps the old bridge path and deck height while visibly lifting feet 2782ms
+   ✓ resident local rig and furniture contact > releasing a lifted seat returns the full rig to grounded standing without stale learning offsets 3624ms
+   ✓ resident local rig and furniture contact > keeps retry/support neutral, additive learning poses reversible, and reduced furniture stationary 494ms
+   ✓ resident local rig and furniture contact > replays from a settled seat without a fake walk or losing physical contact 377ms
+   ✓ resident local rig and furniture contact > does not restart an ongoing approach when the same invitation is repeated 2101ms
+   ✓ resident interest stays a removable layer on the real rig > otter keeps real feet, root, seat and shoulder joints on rotated ordinary objects 30928ms
+   ✓ resident interest stays a removable layer on the real rig > rabbit keeps real feet, root, seat and shoulder joints on rotated ordinary objects 4292ms
+   ✓ resident interest stays a removable layer on the real rig > fox keeps real feet, root, seat and shoulder joints on rotated ordinary objects 7383ms
+   ✓ resident interest stays a removable layer on the real rig > uses the same visible head and paw transforms for a visit and a saved-light reply, preserving the base sniff 2154ms
+   ✓ resident interest stays a removable layer on the real rig > selects only the target-side low fox paw, without crossing the face or moving either shoulder joint 908ms
+   ✓ resident interest stays a removable layer on the real rig > looks toward the real target height and yaw from a rotated body without doubling the base gaze 2110ms
+   ✓ resident interest stays a removable layer on the real rig > clears interest before retry/support, shared holding, reduced changes and release without stale pose offsets 3019ms
+   ✓ runtime owns the ordinary-interest window > does not pose a walker or a shared source, and clears the actual flower after context cancellation 364ms
+   ✓ runtime owns the ordinary-interest window > shows a single reduced state and removes it for learning, preview and an invalidated model 432ms
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+ ✓ src/domain/explore/__tests__/reducer.test.ts (29 tests) 24ms
+ ✓ src/domain/math/generators/counting.test.ts (51 tests) 1209ms
+ ✓ src/components/domain/LearningAnswerForm.defer.test.tsx (35 tests) 2065ms
+   ✓ written draft during a hint save > accepts native keys and submits a full row once through the latest receipt callback 675ms
+   ✓ natural fraction correction > accepts a single integer 1 for a frozen 1/1 answer 379ms
+   ✓ leaves Enter on a focused A to the native action 389ms
+stderr | src/components/island/growing/growingLife.test.ts > keeps actual authored actors on the quarter graph around a home and preserves their saved identity
+THREE.Material: parameter 'map' has value of undefined.
+
+stderr | src/components/island/growing/growingLife.test.ts > picking up a friend > follows the finger and sits on the bench it is dropped on
+THREE.Material: parameter 'map' has value of undefined.
+THREE.Material: parameter 'map' has value of undefined.
+
+ ✓ src/components/island/growing/growingLife.test.ts (17 tests) 55478ms
+   ✓ keeps actual authored actors on the quarter graph around a home and preserves their saved identity 7432ms
+   ✓ picking up a friend > follows the finger and sits on the bench it is dropped on 2515ms
+   ✓ picking up a friend > lands on open ground when dropped anywhere else, and never picks the friend on the boat 992ms
+   ✓ picking up a friend > plays only on an actual seat, cancels without a false use, and can repeat 883ms
+   ✓ picking up a friend > moves the existing swing seat with its passenger and resets after play 1222ms
+   ✓ picking up a friend > uses one swing seat at a time, without a false play for a second friend 1254ms
+   ✓ picking up a friend > keeps an ordinary hand-placed table seat for its previous seven seconds 1248ms
+   ✓ picking up a friend > sends friends home to sleep at night, while Pokomoko stays out 417ms
+   ✓ finds the home of a resident outside the walker budget or asleep without adding actors or saving changes 6868ms
+   ✓ starts residents on the doorstep-connected side of a reachable home, not an isolated neighbour 2188ms
+   ✓ lets a resident walk to the saved lookout in ordinary life and brings them ashore when removed 2750ms
+   ✓ GrowingLife resource ownership > releases each replaced visitor while keeping the resident, hero and shared paint across 20 syncs 8550ms
+   ✓ GrowingLife resource ownership > releases a removed resident and its sparkle without releasing shared materials 3981ms
+   ✓ GrowingLife resource ownership > releases a away resident and its sparkle without releasing shared materials 5752ms
+   ✓ GrowingLife resource ownership > releases final walkers and the reparented Pokomoko exactly once without disposing shared materials 3650ms
+   ✓ hides an away arrival, retains its boat queue and brings it back before disembarking 2761ms
+   ✓ keeps twelve landed residents active while a newer arrival waits on the boat 2793ms
+ ✓ src/domain/island/sharedMemories.test.ts (14 tests) 1959ms
+   ✓ shared display and memory identities > uses unlocked connecting floor for exhibits and keeps both furniture and exhibit collisions 414ms
+   ✓ prepared requests and visible physical outcomes > keeps immutable first names, physical snapshot, order and time after curation and re-enactment 560ms
+   ✓ prepared requests and visible physical outcomes > limits the visible shelf to twelve without blocking a thirteenth job or losing its retrievable first fact 647ms
+ ✓ src/components/island/three/sharedActivities.test.ts (23 tests) 13426ms
+   ✓ two residents share a saved furniture combination > replays settled flower with the same visible roles and newly preflighted routes 1622ms
+   ✓ two residents share a saved furniture combination > replays settled star with the same visible roles and newly preflighted routes 1744ms
+   ✓ two residents share a saved furniture combination > replays settled bubble with the same visible roles and newly preflighted routes 1240ms
+   ✓ two residents share a saved furniture combination > rejects mismatched saved IDs, kinds, positions and rotations before applying the replay preference 1126ms
+   ✓ two residents share a saved furniture combination > uses ordinary roles when the previous roles are hidden, invalid, or no longer physically reachable 770ms
+   ✓ two residents share a saved furniture combination > does not prefer the old roles when selecting a different matching furniture item 716ms
+   ✓ two residents share a saved furniture combination > preflights the remaining cdc5 handoff routes without changing the selected actors or initial routes 1518ms
+   ✓ two residents share a saved furniture combination > preflights three physical routes for flower from either selected item 311ms
+   ✓ two residents share a saved furniture combination > keeps a seated occupant as receiver ahead of round-robin order 433ms
+   ✓ two residents share a saved furniture combination > prefers the source occupant as carrier without sharing a body or ignoring the third resident 369ms
+   ✓ two residents share a saved furniture combination > chooses distance independently of item-array order and does not mutate any inputs 386ms
+   ✓ two residents share a saved furniture combination > breaks equally near partner ties by stable IDs 720ms
+   ✓ two residents share a saved furniture combination > tries a different pair of residents when the first round-robin actor cannot leave 361ms
+   ✓ two residents share a saved furniture combination > tries the next matching pair when the nearest legal seat has no safe handoff route 1566ms
+ ✓ src/components/island/three/workshopScene.test.ts (22 tests) 12649ms
+   ✓ workshop physical specimens and rendered observation boundary > owns three distinct objects with six removable surfaces, preserving object identity across saved cleaning 1259ms
+   ✓ workshop physical specimens and rendered observation boundary > brushing finishes after placing even when requested during travel, then changes only the rendered section 1157ms
+   ✓ workshop physical specimens and rendered observation boundary > does not brush without the brush tool or while busy; an interrupted clean reveal can resume 555ms
+   ✓ workshop physical specimens and rendered observation boundary > captures a fast stroke through six real ray contacts, then visibly sweeps each once across save latency 778ms
+   ✓ workshop physical specimens and rendered observation boundary > discards a cancelled sand stroke without changing any section or moving its owned specimen 1097ms
+   ✓ workshop physical specimens and rendered observation boundary > uses the same glass body for blocked light and visibly transmitted light after cleaning 953ms
+   ✓ workshop physical specimens and rendered observation boundary > driftwood physically floats or sinks before its water observation 658ms
+   ✓ workshop physical specimens and rendered observation boundary > seaglass physically floats or sinks before its water observation 461ms
+   ✓ workshop physical specimens and rendered observation boundary > striped-shell physically floats or sinks before its water observation 478ms
+   ✓ workshop sockets, typed mechanical run and direct manipulation > tapping the visible center of the elbow cavity fits its material 342ms
+   ✓ workshop sockets, typed mechanical run and direct manipulation > tapping the visible center of the wheel cavity fits its material 637ms
+   ✓ workshop sockets, typed mechanical run and direct manipulation > inserts discovered material into a socket before emitting assembly, and cancels without consuming it 419ms
+   ✓ workshop sockets, typed mechanical run and direct manipulation > runs layout A along actual anchors, renders wheel then bell, and retains the completed run diagnostic 304ms
+   ✓ workshop sockets, typed mechanical run and direct manipulation > holds a hidden run beat, stops on draft change, and performs the same causal sequence with reduced motion 675ms
+   ✓ workshop sockets, typed mechanical run and direct manipulation > replays immutable A over draft B without edits or first observations (reduced=true) 734ms
+   ✓ workshop sockets, typed mechanical run and direct manipulation > cancels invalid or interrupted drags and prevents a second pointer taking ownership 456ms
+   ✓ workshop sockets, typed mechanical run and direct manipulation > reuses its geometry during updates and disposes every owned geometry exactly once 808ms
+ ✓ src/components/island/growing/placeSpringGeometry.test.ts (7 tests) 37436ms
+   ✓ wide owned stone springs > makes broad organic water, a closed stone hollow and a bottom inside each owner cell 9921ms
+   ✓ wide owned stone springs > concentrates crystals at the highest owned source and retains stable owner selection 5218ms
+   ✓ wide owned stone springs > keeps wide curved water and stone banks on the same real terrain; flat pools add no waterfall 7550ms
+   ✓ wide owned stone springs > keeps young owners small and never paints an unsupplied channel from stale references 1341ms
+   ✓ wide owned stone springs > opens low rim joins only toward actual adjacent supplied owners in the current place 2036ms
+   ✓ wide owned stone springs > joins supplied walkable tiles into broad shallow inlets beneath their real crossing floor 3613ms
+   ✓ wide owned stone springs > supports real Pokomoko feet on shallow channel stones above shared water without changing navigation or owners 7654ms

@@ -1,0 +1,120 @@
+{
+  "at": "2026-10-25T12:28:07.443Z",
+  "base": "http://127.0.0.1:51236",
+  "fixture": "isolated native profile; learning and rewards use actual UI",
+  "captures": [
+    {
+      "file": "390-catalog.png",
+      "route": "http://127.0.0.1:51236/#/kokugo",
+      "candidate": "kokugo-v1",
+      "metadata": {
+        "revision": "kokugo-0941574eae48",
+        "version": "kokugo-0941574eae48:7292e113-cc89-4208-b8fb-18ec1418ef9c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "swControlled": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "390-reading.png",
+      "route": "http://127.0.0.1:51236/#/kokugo",
+      "candidate": "kokugo-v1",
+      "metadata": {
+        "revision": "kokugo-0941574eae48",
+        "version": "kokugo-0941574eae48:7292e113-cc89-4208-b8fb-18ec1418ef9c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "swControlled": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "390-retry.png",
+      "route": "http://127.0.0.1:51236/#/kokugo",
+      "candidate": "kokugo-v1",
+      "metadata": {
+        "revision": "kokugo-0941574eae48",
+        "version": "kokugo-0941574eae48:7292e113-cc89-4208-b8fb-18ec1418ef9c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "swControlled": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "390-two-build-restored.png",
+      "route": "http://127.0.0.1:51236/#/kokugo",
+      "candidate": "kokugo-v1",
+      "metadata": {
+        "revision": "kanji-f0a384caf98d",
+        "version": "kanji-f0a384caf98d:750d0829-a4a4-432e-83e1-2e5210992aad",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "swControlled": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "390-completed.png",
+      "route": "http://127.0.0.1:51236/#/kokugo",
+      "candidate": "kokugo-v1",
+      "metadata": {
+        "revision": "kanji-f0a384caf98d",
+        "version": "kanji-f0a384caf98d:750d0829-a4a4-432e-83e1-2e5210992aad",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "swControlled": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "390-writing.png",
+      "route": "http://127.0.0.1:51236/#/kokugo",
+      "candidate": "kokugo-v1",
+      "metadata": {
+        "revision": "kanji-f0a384caf98d",
+        "version": "kanji-f0a384caf98d:750d0829-a4a4-432e-83e1-2e5210992aad",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "swControlled": true,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    }
+  ],
+  "scenarios": [],
+  "pass": false,
+  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ ''\n- '今日は 川で 小さな石を 見つけました。'\n\n    at file:///Users/yutogasaki/Projects/sansu/tools/e2e-kokugo.mjs:120:16",
+  "url": "http://127.0.0.1:51236/#/kokugo",
+  "body": "しまへ 戻る\n国語\nコースへ\n\n書く・話す 活動\n\n自分のことばで まとめる\nお題 \n1. 今日 読んだ文を、自分のことばで 短く まとめよう。\n2. 昨日 あったことを 二文で まとめよう。\n3. 好きな本を まだ読んでいない人に 紹介しよう。\n今日 読んだ文を、自分のことばで 短く まとめよう。\n\n何についての文か、大切だと 思うことを 残してみよう。\n\n書いたことや、やってみたことを のこせるよ。自動で まる・ばつは つけないよ。\n\n作品・メモ\n\n作品に 保存済み\n\n作品に のこす\n\n話した音や、紙の文字は 送信・録音しないよ。\n\n算数・英語を まなぶ\nとちゅうの問題は そのまま のこるよ。"
+}

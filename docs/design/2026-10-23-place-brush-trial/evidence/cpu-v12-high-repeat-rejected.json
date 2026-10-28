@@ -1,0 +1,48 @@
+{
+  "at": "2026-10-24T01:55:34.652Z",
+  "build": "place-outline-v12",
+  "result": "repeated request while actor remained in affected area",
+  "timing": {
+    "status": "stopped",
+    "clock": "performance.now milliseconds from CPU measurement start",
+    "startedPerformanceMs": 295976.2,
+    "startedEpochMs": 1792806900152.4,
+    "endedPerformanceMs": 305977.9,
+    "elapsedMs": 10001.7,
+    "retainedLimit": 400,
+    "dropped": 0,
+    "filteredFastTerrainCalls": 5,
+    "incompleteSpans": 0,
+    "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+    "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+    "aggregates": {
+      "editableIslandWorld:cache-hit": {
+        "calls": 5,
+        "inclusiveMs": 0.1,
+        "selfMs": 0.1,
+        "maxMs": 0.1,
+        "failed": 0
+      },
+      "applyIntent:place-outline": {
+        "calls": 1,
+        "inclusiveMs": 1.4,
+        "selfMs": 1.3,
+        "maxMs": 1.4,
+        "failed": 1
+      }
+    },
+    "spans": [
+      {
+        "id": 1,
+        "parentId": null,
+        "name": "applyIntent",
+        "detail": "place-outline",
+        "startMs": 845.9,
+        "endMs": 847.3,
+        "inclusiveMs": 1.4,
+        "selfMs": 1.3,
+        "failed": true
+      }
+    ]
+  }
+}

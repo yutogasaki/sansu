@@ -2,6 +2,8 @@
 
 国語の全配当漢字：`node tools/e2e-kokugo-kanji.mjs` を固定buildの `SANSU_KOKUGO_URL` と新規 `SANSU_KOKUGO_OUTPUT` へ実行する。全学年の件数、字の選択／検索／別読み／手本の接触と支援扱い、紙の手本の閉鎖／再表示／作品保存、同じ字の再開と実SWのofflineを390/768/320幅で確認する。校閲・増量では追加場面文の読み／表記伏字、12音声の実再生も確認する。`SANSU_KOKUGO_AUDIT_OUTPUT` を指定した `node tools/audit-kokugo-editorial.mjs` で全字・用例・場面文と音声hashを出力し、`src/domain/kokugo/editorial.test.ts` で既知例復習と未見例・24時間・旧予約の境界を検査する。字の被覆は `src/domain/kokugo/kanji/kanji.test.ts` で公式配当の全1,026字へ照合する。
 
+国語の共通UI：`node tools/e2e-kokugo-continuity.mjs` を固定buildの `SANSU_KOKUGO_URL` と新規 `SANSU_KOKUGO_OUTPUT` へ実行する。390/320/768幅で別タブの学習書込み制限と退出、記録→教科設定→科目変更→記録への復帰、通常設定の履歴、筆算設定の表示対象と保存値の保持、漢字一覧・詳細・記録のやさしい操作案内と対象字・手本の保持を確認する。合成本人fixtureでの操作検査であり、子どもの理解や実機・公開の合格とは分ける。
+
 国語：`node tools/e2e-kokugo.mjs` を `SANSU_KOKUGO_URL` と新しい `SANSU_KOKUGO_OUTPUT` で実行。390/768/320幅で教科選択、初答・支援・完了、同予約の再読込、作品・並べ替え下書き、島への配送を確認する。productionでは `SANSU_KOKUGO_OFFLINE=1` で実SWのoffline再開も確認する。nativeプロフィールは明示fixtureで、別タブの設定から実際に本人を削除し、専用表の削除と学習画面の退出も確認する。`node tools/e2e-kokugo-update.mjs` は固定した2つの実buildで更新保護と同予約／offlineを照合し、`node tools/e2e-kokugo-intake.mjs` は空の状態から初回の国語だけの選択と3問・再訪を確認する。教材審査・実児童の理解・学習効果は別判定。
 
 英語基礎F01/F02：`node tools/e2e-english-foundation.mjs` は `SANSU_FOUNDATION_URL` と新規 `SANSU_FOUNDATION_OUTPUT` を指定し、実初回設定・誤答/支援・2単元・予約/コースpending・報酬・offline・音オフ/代替表示を両幅で検査する。教材cache破損は明示診断。`node tools/e2e-english-foundation-update.mjs` は実際に別々にbuildした `SANSU_FOUNDATION_OLD_DIR` / `SANSU_FOUNDATION_NEW_DIR` と新規出力先を使い、実SW更新を挟んだ同予約保持を追加する。発音/絵の人による採用と実機/子どもの理解・再訪は別ゲート。
@@ -124,6 +126,10 @@ Islandの画面captureは `tools/island-e2e-helpers.mjs` の `runtimeMetadata` �
 `node tools/e2e-learning-level-cue.mjs` は `SANSU_LEVEL_CUE_URL` と新しい `SANSU_LEVEL_CUE_OUTPUT` を指定。通常学習の区間先頭から既存の進級確認、同予約への戻り、入力/支援後の案内終了、320px/390px/短横/tabletと筆算の44px操作・位置固定、英単語/両科目/資格読取失敗、実20問の進級と通常ログ/SRS/予約/島報酬の保持を検査する。資格は隔離したnativeプロフィール・独力証拠fixtureで用意し、生成済み問題の置換やreadyのmockはしない。読取失敗は初期化完了後だけ有効にする明示診断。`SANSU_LEVEL_CUE_EXTRA_ONLY=1` と任意の `SANSU_LEVEL_CUE_MODE` は対象診断用。実機iOS・子どもの理解/再訪・2 build更新は別ゲート。
 
 ## Matrix
+
+軽量描画の画質変更は `SANSU_QUALITY_URL` と新規 `SANSU_QUALITY_OUTPUT` を指定して `node tools/e2e-growing-quality.mjs` を実行する。Apple判定・DPR 3を明示したWebKit/Chromiumで、最初の実canvasが通常1倍・上限1.5倍、更新URL・保存保持、真のshader失敗で下位上限へ一度だけ復旧し、手動再試行は0.65倍で始まることを確認する。昇降・密度上限・中断・再昇格禁止はadaptiveIslandQualityのunitで決定的に検証する。browserの実測fpsや実機の発熱・電池の保証にはしない。
+
+育つ島のシェーダー起動：`node tools/e2e-growing-shader-startup.mjs` は固定production previewの `SANSU_SHADER_URL` と新規 `SANSU_SHADER_OUTPUT` を指定。390幅のWebKitと768幅のChromiumで、破棄済みprogramの照会0・最初のcontextでの通常起動/更新URL起動・所有と学習保持を検査する。KHR対応engineでは保存済みの島の通常同期と明示した完了待ちを重ね、非対応engineでは同期コンパイル経路を検査する。本物の不正shaderを入れた別ケースで、失敗詳細と手動再試行も確認する。旧buildのWebKit原因再現だけ `SANSU_SHADER_EXPECT_FAILURE=1` を指定する。実SWを許可するが、二つの版への更新・実iPhone・実通信速度の検証ではない。
 
 次期 `living-fantasy-v1`（初期候補を実装、全体は継続）の追加受入は[仕様51の検証章](../product/living-fantasy/08-delivery-and-acceptance.md)に定義する。現行の検査やclassic smokeを次期候補の合格へ流用せず、このmatrixの共通checksと次期の対象ケースを両方満たす。仕様策定だけの作業はdocs-onlyとして検証し、次期の美術・理解・runtimeのPASSとは区別する。
 

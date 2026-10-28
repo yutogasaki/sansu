@@ -1,0 +1,181 @@
+{
+  "status": "stopped",
+  "clock": "performance.now milliseconds from CPU measurement start",
+  "startedPerformanceMs": 40573.8,
+  "startedEpochMs": 1792707793744.1,
+  "endedPerformanceMs": 50575,
+  "elapsedMs": 10001.2,
+  "retainedLimit": 400,
+  "dropped": 0,
+  "filteredFastTerrainCalls": 13,
+  "incompleteSpans": 0,
+  "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+  "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+  "aggregates": {
+    "editableIslandWorld:cache-hit": {
+      "calls": 14,
+      "inclusiveMs": 0.2,
+      "selfMs": 0.2,
+      "maxMs": 0.1,
+      "failed": 0
+    },
+    "compileWorldDefinition:derived-edges": {
+      "calls": 2,
+      "inclusiveMs": 551.8,
+      "selfMs": 551.8,
+      "maxMs": 278.1,
+      "failed": 0
+    },
+    "editableIslandWorld:cold": {
+      "calls": 2,
+      "inclusiveMs": 686.8,
+      "selfMs": 135,
+      "maxMs": 347.6,
+      "failed": 0
+    },
+    "applyIntent:terrain-edit": {
+      "calls": 2,
+      "inclusiveMs": 689.4,
+      "selfMs": 2.5,
+      "maxMs": 348.7,
+      "failed": 0
+    },
+    "worldScene.layout:": {
+      "calls": 2,
+      "inclusiveMs": 99.1,
+      "selfMs": 99.1,
+      "maxMs": 51.2,
+      "failed": 0
+    },
+    "GrowingWorld.rebuild:": {
+      "calls": 2,
+      "inclusiveMs": 130.1,
+      "selfMs": 30.9,
+      "maxMs": 65.6,
+      "failed": 0
+    }
+  },
+  "spans": [
+    {
+      "id": 1,
+      "parentId": null,
+      "name": "applyIntent",
+      "detail": "terrain-edit",
+      "startMs": 849.5,
+      "endMs": 1190.2,
+      "inclusiveMs": 340.7,
+      "selfMs": 1.5,
+      "failed": false
+    },
+    {
+      "id": 3,
+      "parentId": 1,
+      "name": "editableIslandWorld",
+      "detail": "cold",
+      "startMs": 850,
+      "endMs": 1189.2,
+      "inclusiveMs": 339.2,
+      "selfMs": 65.5,
+      "failed": false
+    },
+    {
+      "id": 4,
+      "parentId": 3,
+      "name": "compileWorldDefinition",
+      "detail": "derived-edges",
+      "startMs": 915.5,
+      "endMs": 1189.2,
+      "inclusiveMs": 273.7,
+      "selfMs": 273.7,
+      "failed": false
+    },
+    {
+      "id": 8,
+      "parentId": null,
+      "name": "GrowingWorld.rebuild",
+      "detail": "",
+      "startMs": 1192.2,
+      "endMs": 1257.8,
+      "inclusiveMs": 65.6,
+      "selfMs": 17.6,
+      "failed": false
+    },
+    {
+      "id": 9,
+      "parentId": 8,
+      "name": "worldScene.layout",
+      "detail": "",
+      "startMs": 1192.3,
+      "endMs": 1240.2,
+      "inclusiveMs": 47.9,
+      "selfMs": 47.9,
+      "failed": false
+    },
+    {
+      "id": 13,
+      "parentId": null,
+      "name": "applyIntent",
+      "detail": "terrain-edit",
+      "startMs": 9017.8,
+      "endMs": 9366.5,
+      "inclusiveMs": 348.7,
+      "selfMs": 1,
+      "failed": false
+    },
+    {
+      "id": 14,
+      "parentId": 13,
+      "name": "editableIslandWorld",
+      "detail": "cache-hit",
+      "startMs": 9018.1,
+      "endMs": 9018.2,
+      "inclusiveMs": 0.1,
+      "selfMs": 0.1,
+      "failed": false
+    },
+    {
+      "id": 15,
+      "parentId": 13,
+      "name": "editableIslandWorld",
+      "detail": "cold",
+      "startMs": 9018.2,
+      "endMs": 9365.8,
+      "inclusiveMs": 347.6,
+      "selfMs": 69.5,
+      "failed": false
+    },
+    {
+      "id": 16,
+      "parentId": 15,
+      "name": "compileWorldDefinition",
+      "detail": "derived-edges",
+      "startMs": 9087.7,
+      "endMs": 9365.8,
+      "inclusiveMs": 278.1,
+      "selfMs": 278.1,
+      "failed": false
+    },
+    {
+      "id": 20,
+      "parentId": null,
+      "name": "GrowingWorld.rebuild",
+      "detail": "",
+      "startMs": 9368.5,
+      "endMs": 9433,
+      "inclusiveMs": 64.5,
+      "selfMs": 13.3,
+      "failed": false
+    },
+    {
+      "id": 21,
+      "parentId": 20,
+      "name": "worldScene.layout",
+      "detail": "",
+      "startMs": 9368.6,
+      "endMs": 9419.8,
+      "inclusiveMs": 51.2,
+      "selfMs": 51.2,
+      "failed": false
+    }
+  ]
+}

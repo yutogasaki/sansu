@@ -66,7 +66,7 @@ export function IslandHouseOverview({ active, disabled, comparisonDisabled, walk
                 onClick={() => setOpen(true)}><Menu size={28} aria-hidden="true" /><span>メニュー</span></button>
         </nav>
         </div>
-        <dialog ref={dialog} className="island-menu island-house-menu" aria-labelledby="island-house-menu-title" data-house-menu-candidate="house-paper-atelier-v1"
+        <dialog ref={dialog} className="island-menu island-house-menu" aria-labelledby="island-house-menu-title" data-house-menu-candidate="house-paper-atelier-v2"
             onCancel={event => { event.preventDefault(); close(); }}
             onClose={() => {
                 if (dialog.current?.open) return;
@@ -76,10 +76,10 @@ export function IslandHouseOverview({ active, disabled, comparisonDisabled, walk
             }}
             onClick={event => { if (event.target === event.currentTarget) close(); }}>
             <div className="island-menu-surface">
-                <header className="island-menu-heading"><div className="island-house-menu-title"><span className="island-house-menu-patch"><IslandToyIcon kind="house" size={34} /></span><div><h2 ref={title} tabIndex={-1} id="island-house-menu-title">いえの メニュー</h2><p>たからものと、くらしの こと。</p></div></div>
+                <header className="island-menu-heading"><div className="island-house-menu-title"><span className="island-house-menu-patch"><IslandToyIcon kind="house" size={34} /></span><div><h2 ref={title} tabIndex={-1} id="island-house-menu-title">いえの メニュー</h2></div></div>
                     <button type="button" className="island-text-button" onClick={() => close()} aria-label="いえの メニューを とじる"><X size={20} aria-hidden="true" />とじる</button></header>
                 <div ref={element => { memory.content = element; }} className="island-menu-scroll island-house-menu-content">
-                    <p className="island-house-menu-hint">ゆかで あるく。つくえの カードで まなぶ</p>{children(choose)}</div>
+                    {children(choose)}</div>
             </div>
         </dialog>
     </div>;

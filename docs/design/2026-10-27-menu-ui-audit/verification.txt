@@ -1,0 +1,34 @@
+Menu UI audit verification
+Date: 2026-10-27T13:00:40.732507+09:00
+Expected: documentation links and structural checks pass.
+Initial docs:check failed because this verification.txt had not yet been created. Created it and reran.
+Product code unchanged; runtime observations and untested states are in README.md.
+
+Command: npm run docs:check
+Exit: 0
+
+> pokko-fushigi-zukan-app@0.0.0 docs:check
+> node tools/check-docs.mjs
+
+WARN
+- docs/tasks/backlog.md: 次回棚卸し目安 (2026-10-12) is in the past
+- docs/tasks/active/2026-07-21-cold-open-value-loop.md: Review By (2026-09-27) is in the past
+- docs/tasks/active/2026-07-23-whole-app-brand-coherence.md: Review By (2026-09-27) is in the past
+- docs/tasks/active/2026-09-07-experience-improvements.md: Review By (2026-10-06) is in the past
+- docs/tasks/active/2026-09-08-island-experience.md: Review By (2026-10-06) is in the past
+- docs/tasks/active/2026-09-09-home-journey-preview.md: Review By (2026-10-06) is in the past
+- docs/tasks/active/2026-09-13-mysterious-island-v3.md: Review By (2026-09-29) is in the past
+- docs/tasks/active/2026-09-20-whole-app-ux-coherence.md: Review By (2026-10-06) is in the past
+- docs/tasks/active/2026-09-22-island-nature-integration.md: Review By (2026-10-06) is in the past
+- docs/tasks/active/2026-09-23-island-performance.md: Review By (2026-09-30) is in the past
+- docs/tasks/active/2026-09-27-living-fantasy-first-playable.md: Review By (2026-10-04) is in the past
+- docs/tasks/active/2026-09-29-growing-island-v1.md: Review By (2026-10-06) is in the past
+- docs/tasks/active/2026-10-01-island-guidance.md: Review By (2026-10-08) is in the past
+- docs/tasks/active/2026-10-05-growing-island-release.md: Review By (2026-10-12) is in the past
+- docs/tasks/active/2026-10-18-development-portal.md: Review By (2026-10-25) is in the past
+- docs/tasks/active/2026-10-18-promotion-cove-verification.md: Review By (2026-10-25) is in the past
+- docs/tasks/active/2026-10-19-island-growth-v04.md: Review By (2026-10-26) is in the past
+- docs/tasks/active/2026-10-19-island-menu.md: Review By (2026-10-26) is in the past
+- docs/tasks/active/2026-10-19-review-loop.md: Review By (2026-10-26) is in the past
+- docs/tasks/active/h-018.md: Review By (2026-10-22) is in the past
+PASS docs:check

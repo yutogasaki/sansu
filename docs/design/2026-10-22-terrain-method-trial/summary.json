@@ -1,0 +1,90 @@
+{
+  "revision": "beba3793a1b0d73d",
+  "methods": [
+    {
+      "method": "a-soft",
+      "supportedConfigurations": 6,
+      "totalConfigurations": 6,
+      "buildMsMin": 56,
+      "buildMsMax": 63,
+      "trianglesCove": 32768,
+      "walk": true,
+      "redoExact": true,
+      "walkSamples": 149,
+      "floorError": 1.3113021835042815e-08
+    },
+    {
+      "method": "a-shoulder",
+      "supportedConfigurations": 6,
+      "totalConfigurations": 6,
+      "buildMsMin": 55,
+      "buildMsMax": 58,
+      "trianglesCove": 32768,
+      "walk": true,
+      "redoExact": true,
+      "walkSamples": 149,
+      "floorError": 1.3113021835042815e-08
+    },
+    {
+      "method": "a-spline",
+      "supportedConfigurations": 5,
+      "totalConfigurations": 6,
+      "buildMsMin": 58,
+      "buildMsMax": 62,
+      "trianglesCove": 32768,
+      "walk": true,
+      "redoExact": true,
+      "walkSamples": 149,
+      "floorError": 1.3113021835042815e-08
+    },
+    {
+      "method": "b-crisp",
+      "supportedConfigurations": 6,
+      "totalConfigurations": 6,
+      "buildMsMin": 4,
+      "buildMsMax": 5,
+      "trianglesCove": 1506,
+      "walk": true,
+      "redoExact": true,
+      "walkSamples": 149,
+      "floorError": 1.3113021835042815e-08
+    },
+    {
+      "method": "b-soft",
+      "supportedConfigurations": 6,
+      "totalConfigurations": 6,
+      "buildMsMin": 3,
+      "buildMsMax": 4,
+      "trianglesCove": 1506,
+      "walk": true,
+      "redoExact": true,
+      "walkSamples": 149,
+      "floorError": 1.3113021835042815e-08
+    },
+    {
+      "method": "b-curved",
+      "supportedConfigurations": 6,
+      "totalConfigurations": 6,
+      "buildMsMin": 9,
+      "buildMsMax": 11,
+      "trianglesCove": 5106,
+      "walk": true,
+      "redoExact": true,
+      "walkSamples": 149,
+      "floorError": 1.3113021835042815e-08
+    },
+    {
+      "method": "b-decider",
+      "supportedConfigurations": 6,
+      "totalConfigurations": 6,
+      "buildMsMin": 9,
+      "buildMsMax": 13,
+      "trianglesCove": 5106,
+      "walk": true,
+      "redoExact": true,
+      "walkSamples": 149,
+      "floorError": 1.3113021835042815e-08
+    }
+  ],
+  "interpretation": "Limited prototype results, not production acceptance"
+}

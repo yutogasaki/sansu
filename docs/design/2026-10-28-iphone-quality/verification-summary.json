@@ -1,0 +1,69 @@
+{
+  "at": "2026-10-28T05:45:26.618335+00:00",
+  "base": "e718c3e3a23d2537b44b7d19c443d77989c56004",
+  "checks": {
+    "focused": {
+      "pass": true,
+      "tests": 43
+    },
+    "fullUnit": {
+      "pass": true,
+      "files": 689,
+      "tests": 5753,
+      "seconds": 834.53
+    },
+    "typecheck": {
+      "pass": true
+    },
+    "lint": {
+      "pass": true,
+      "existingWarnings": 5,
+      "firstFailure": "Vite temporary config disappeared while ESLint was reading it; repeated after build."
+    },
+    "buildAndAssets": {
+      "pass": true,
+      "revision": "e718c3e3-iphone-quality"
+    },
+    "browser": {
+      "pass": true,
+      "report": "browser-report.json"
+    },
+    "entry": {
+      "pass": true
+    },
+    "smoke": {
+      "initialPass": 31,
+      "initialTotal": 32,
+      "failedCase": "resumes fixed-ten explore across retry, route, discovery, and partial-input boundaries",
+      "failure": "Physical numeric entry expected 12, observed 1 in unchanged classic Explore code.",
+      "focusedRetryPass": true,
+      "note": "No application/harness edits between first failure and focused retry; do not relabel as one 32/32 run."
+    }
+  },
+  "inputManifestSha256": "ad1a70bbf5f2a4e62a9a4df454194333873251aac2ed3658aaa5f1a54db80106",
+  "changedSources": {
+    "src/components/island/growing/GrowingWorld.tsx": "eb5402c1faa39570f8bc5a61447451ec82609fed690b281abf76e09ee76ac661",
+    "src/components/island/growing/GrowingIsland.tsx": "047398159311d75bb1d7e38c61c988d7a3b1876d7aef6bd75d6ab3e8d3c6981d",
+    "src/components/island/three/adaptiveIslandQuality.test.ts": "b5fbbf2d868c200b130b5e562fbc0927c8c10611ba559515c50075d7925c0d0c",
+    "src/components/island/three/adaptiveIslandQuality.ts": "2a129939dd27d670df47476f9d5ce945df4cec62593fdc2dff4f38be829dcdf8",
+    "tools/e2e-growing-quality.mjs": "c7c74e065dc2f3fa855087c59cf603754c15b6f79d29397fcf0f2f3d51e53f63",
+    "tools/e2e-growing-shader-startup.mjs": "cbb3fedb977276a7a10fa1bc34a2ecc5a521f5a18609ab449370dbc1103fb1d4"
+  },
+  "rawLogs": {
+    "output/2026-10-28-iphone-quality/focused.log": "9ff8bddb291795d7523c85f74197d13848f0f4506363096a32f2c07c21ed8461",
+    "output/2026-10-28-iphone-quality/unit.log": "1fdc6fbd92a382c58910e4a6163b85c8a810c1b3a37982ac226e56d8a354323c",
+    "output/2026-10-28-iphone-quality/typecheck.log": "9e59605fb9172da9759b4feeda0238f5bc35ea2d1abb67d3392904705d025041",
+    "output/2026-10-28-iphone-quality/lint.log": "363629fd6513a95019f0ab8d462c965b43e82f7d996b30d3fd4f83fb09eb6518",
+    "output/2026-10-28-iphone-quality/lint-final.log": "fcf568733d65b0fa494c4569dce68b0092cebc856be74e5700f10704dc52aa4e",
+    "output/2026-10-28-iphone-quality/build-final.log": "51e62a2a7c0e306bbc28a3d1b494bc401d7a4af90b435bccd1d50911f509cef9",
+    "output/2026-10-28-iphone-quality/browser.log": "9edd630d33654e9185a7dcd45a3dbc82ecf28585918a75e22ecdb3d4ae16b138",
+    "output/2026-10-28-iphone-quality/smoke.log": "9e71729bf9f4e4788fdb12b8847f0b210a85ae1c3bcf5b5ae331caec2561beb6",
+    "output/2026-10-28-iphone-quality/smoke-retry.log": "63daa299ab540fac0a4d4c6bb8524a7f65ecc6be950e5b1fb39fedf5d12af6f0",
+    "output/2026-10-28-iphone-quality/entry.log": "db49097b560a234a9fd11c4cb95697b26617aceb49fac62954132c34737e6c12"
+  },
+  "limits": [
+    "Physical iPhone heat, battery and frame rate unverified.",
+    "Browser ran alongside full unit suite and is not a performance benchmark.",
+    "Other ongoing portal work excluded from the intended commit."
+  ]
+}
