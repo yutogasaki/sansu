@@ -1,0 +1,149 @@
+{
+  "at": "2026-10-24T01:24:49.514Z",
+  "status": "FAIL",
+  "scope": "Actual transformed applyIntent, real eight-entry world-cache eviction, exact serialized floor and all acquired-site route equality; no browser claim",
+  "reports": [
+    {
+      "name": "west-height-0.5-to-0.9",
+      "before": {
+        "floorSHA256": "0e3dbda170df638ba5ce9e2a3fbb4cfb18c898fa20e37e71cd7820a1f853e9ff",
+        "routeSHA256": "382ba6475e917e0090fab2291280c34fbf59e5e5b19fc4dfec2c4f1ed1464b85",
+        "vertices": 26357,
+        "reachable": 89,
+        "routeTargets": 96
+      },
+      "after": {
+        "floorSHA256": "e99d4a47e8812d14a043ac60e49052724ebf172d6b229cf7a826a66f14ff91f1",
+        "routeSHA256": "382ba6475e917e0090fab2291280c34fbf59e5e5b19fc4dfec2c4f1ed1464b85",
+        "vertices": 26357,
+        "reachable": 89,
+        "routeTargets": 96
+      },
+      "clone": {
+        "floorSHA256": "0e3dbda170df638ba5ce9e2a3fbb4cfb18c898fa20e37e71cd7820a1f853e9ff",
+        "routeSHA256": "382ba6475e917e0090fab2291280c34fbf59e5e5b19fc4dfec2c4f1ed1464b85",
+        "vertices": 26357,
+        "reachable": 89,
+        "routeTargets": 96
+      },
+      "beforePlan": {
+        "direction": "west",
+        "topDistance": 1.75,
+        "length": 0.75,
+        "end": {
+          "x": 2.5,
+          "z": 5
+        },
+        "endZ": 5,
+        "endHeight": 0.559827091,
+        "endpointHeights": [
+          0.575390686,
+          0.559827091,
+          0.54785805
+        ],
+        "availableLength": 5.75,
+        "designSlope": 0.45
+      },
+      "afterPlan": {
+        "direction": "west",
+        "topDistance": 1.75,
+        "length": 0.75,
+        "end": {
+          "x": 2.5,
+          "z": 5
+        },
+        "endZ": 5,
+        "endHeight": 0.559827091,
+        "endpointHeights": [
+          0.575390686,
+          0.559827091,
+          0.54785805
+        ],
+        "availableLength": 5.75,
+        "designSlope": 0.45
+      },
+      "rebuilt": true,
+      "floorEqual": false,
+      "routesEqual": true,
+      "unchanged": true,
+      "cloneEqual": true,
+      "shape": {
+        "center": {
+          "x": 5,
+          "z": 5
+        },
+        "radius": 1.6,
+        "height": 0.9,
+        "entrance": 1.2,
+        "flatRadius": 1.75,
+        "rampDirection": "west"
+      },
+      "shapeHistorySHA256": "0946c986b821d437b63f38db46ba9abec30c176cf67a5d0b34c018e173c96c65",
+      "terrainHistorySHA256": "c20eeb8940c8a4d9651ae5476d4fa26ae85f010c701dee426df01a7f51259a41",
+      "pass": false
+    },
+    {
+      "name": "inherited-north-height-0.3-to-0.5",
+      "before": {
+        "floorSHA256": "3f752163b3bad06e11c9154af358198188a323b10e84dcea535568abf0238e75",
+        "routeSHA256": "afcf43c02f6810c8fc28372eb422d5dea69e3a5b3a4204925f45948706a74a28",
+        "vertices": 26357,
+        "reachable": 89,
+        "routeTargets": 96
+      },
+      "after": {
+        "floorSHA256": "586d000f7dc41fcf2e0877a20673a49ca8cc08405fd4e7820e158617b71371ce",
+        "routeSHA256": "7828aef9f05c29cd504d674298ddccf2b416dc134d40b947375f8a482a1eaf62",
+        "vertices": 26357,
+        "reachable": 89,
+        "routeTargets": 96
+      },
+      "clone": {
+        "floorSHA256": "3f752163b3bad06e11c9154af358198188a323b10e84dcea535568abf0238e75",
+        "routeSHA256": "afcf43c02f6810c8fc28372eb422d5dea69e3a5b3a4204925f45948706a74a28",
+        "vertices": 26357,
+        "reachable": 89,
+        "routeTargets": 96
+      },
+      "rebuilt": true,
+      "floorEqual": false,
+      "routesEqual": false,
+      "unchanged": true,
+      "cloneEqual": true,
+      "shape": {
+        "center": {
+          "x": 5,
+          "z": 5
+        },
+        "radius": 1.6,
+        "height": 0.5,
+        "entrance": 1.2,
+        "flatRadius": 1.75
+      },
+      "shapeHistorySHA256": "9f9699717273de561fb2c687eef424a0b3edb15dd2796baa1f3b293d5b83f5b0",
+      "terrainHistorySHA256": "c20eeb8940c8a4d9651ae5476d4fa26ae85f010c701dee426df01a7f51259a41",
+      "pass": false
+    },
+    {
+      "name": "west-underlying-terrain-2-5-down",
+      "error": "Error: ものの 足もとだよ。さきに うごかしてみよう。",
+      "pass": false
+    }
+  ],
+  "metadata": {
+    "node": "v22.23.3",
+    "mode": "without-reset",
+    "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-brush-trial/plan-cache-check.mjs without-reset",
+    "inputSHA256": {
+      "plan-cache-check.ts": "3db613d93c355cb91d46bebabd060db0f7b4769132f2337286ab5653f400ef8c",
+      "plan-cache-check.mjs": "23e0cbe1934c859254a43a1e287ba94d00d3535cd8de059b03c0db296334d5ae",
+      "field.ts": "049dc0a6d5347da3b88429739ed2259c32b1517ae5288e76eee7d1ea49e0b48e",
+      "directional-field.ts": "970bd170952dd67fa7d33bac5aa5587ee94ed728b5c0eb710dc55e2d3cb67da4",
+      "persistent-model.ts": "f2d9c25c3fa47b895b2a7de44e81513821cd712eac14f750b621b1ad3400b419",
+      "model.ts": "0dfb6b15d57c68faf9546399a26a150ec0846f5b33b0b49b031744de43a12063",
+      "vite.config.ts": "f8524e4451575d29691a56c7301a7758c29cdaa8028c5d166101e730e516f8ee"
+    },
+    "changedInputs": [],
+    "bundleSHA256": "32778a7cd2d38d306ebc197cb794125580ea26dd59ff88d6ba4cb796c3e6f869"
+  }
+}

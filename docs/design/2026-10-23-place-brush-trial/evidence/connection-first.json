@@ -1,0 +1,66 @@
+{
+  "status": "PASS",
+  "at": "2026-10-24T06:56:55.541Z",
+  "reports": [
+    {
+      "layout": "A",
+      "entrance": {
+        "x": -3,
+        "y": 0.863859573,
+        "z": 3
+      },
+      "entranceDistance": 1,
+      "routePoints": 63,
+      "supportedMaterialVertices": 4488
+    },
+    {
+      "layout": "B",
+      "entrance": {
+        "x": -1,
+        "y": 0.198031717,
+        "z": 3
+      },
+      "entranceDistance": 1,
+      "routePoints": 65,
+      "supportedMaterialVertices": 4584
+    },
+    {
+      "layout": "A",
+      "entrance": {
+        "x": -3,
+        "y": 0.863859573,
+        "z": 3
+      },
+      "entranceDistance": 1,
+      "routePoints": 63,
+      "supportedMaterialVertices": 4488
+    }
+  ],
+  "scope": "actual transformed domain routes and material supports; not full mesh/body collision or child acceptance",
+  "metadata": {
+    "node": "v22.23.3",
+    "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-brush-trial/connection-check.mjs first",
+    "inputSHA256": {
+      "composite-field.ts": "0a63b64afeae4cfd78fef2eda0ad1f69e85f0e566bfac70eb51f7bfcd36a5f0f",
+      "composite-model.ts": "d36e05de7b43cc050d9087cdb3f584b06dc07b153f32652ea242407b9e205e57",
+      "connection-check.ts": "49b7b6bf80b94a7a398b1f742a4754157950dca90c60aa7f92938cb68868bcd1",
+      "connection-check.mjs": "112549e5f9e102009fe83812cf11188399d8dbdccee08495f6f0aabda31ad949",
+      "vite.config.ts": "5db98941db26104ba308395e0c7b3588fcc374b0445d9d19e689455f8b0a5a5a",
+      "TrialIsland.ts": "0d1b485cb3585e582dbaab6de02c48db2ad66e7d6bb973d07146af82738de27d",
+      "Controls.tsx": "5292b7281dc6bc2ab1e435a290d5492b848d069c091a4393c579d11cdc2a8ebc",
+      "PlaceEvidence.tsx": "2078cc7c8d0c149efd4a4b51fd7590e865a619a274e66b59541c7877a2f40ef1",
+      "directional-field.ts": "0dc03ed7b2dbbf87ef79973405f72c5d762c26dff2e3aa462ea5c85e73f7e54b",
+      "assembly-mode.ts": "4199e840f84d8462ce56810a20d9045b5b9d95dac1ab0eb105ff4bba458c9ca4",
+      "assembly-section.ts": "15b05cd87fee9db17e54f81d0cd3ab029bffc1f8a624d022561c6409cef0a054",
+      "coastal-section.ts": "75170b31383e59e8874b8aa8290b549fb7ffd278e7313092b0118e06d36b22f3",
+      "bay-section.ts": "72dfb86624b77625406c00b4a055ba9b0ffd114668a102c44739c435d53115b0",
+      "connection-seams.ts": "d32b8a085205c9e400d1a826eaf61c6ec75392a01bde2886de8c2b999971ddd9",
+      "connection-transform.mjs": "33e34fe488a203c662e96e3802123d71be3eda6a713f879eaecb11e997d2963c",
+      "mature-composition.ts": "e3083342f3ac0837388489a82ebcd7033fd31508d253c0574dcfb0fa5cfc52dc",
+      "MatureControls.tsx": "5c2a087d342aef66e47c4b9249ddea546d5940d36385c5db4bb8fb73462ebeca",
+      "trial-store.ts": "d922002961abb9929fbd491ea2ebcbafcb4300b8840f4f1380d2109ef29f3e1f"
+    },
+    "changedInputs": [],
+    "bundleSHA256": "1bda88ae2f8a96f0ddb299821ab2595d2faf2d684c32d63f41163463dc2a473f"
+  }
+}

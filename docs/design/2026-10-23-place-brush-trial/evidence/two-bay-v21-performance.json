@@ -1,0 +1,643 @@
+{
+  "measuredAt": "2026-10-24T05:07:02.493Z",
+  "scope": "One normal persisted bay-depth edit on local desktop, visible tab, no concurrent task build or Blender render; other system load not controlled. Not phone/GPU certification.",
+  "build": "place-outline-v21",
+  "cadence": {
+    "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+    "elapsedMs": 10003,
+    "endedAt": "2026-10-24T05:06:38.989Z",
+    "frameCallbacks": 515,
+    "intervalMs": {
+      "max": 1316.7,
+      "median": 16.7,
+      "p95": 17.6
+    },
+    "over50Ms": 2,
+    "queryCandidate": "H",
+    "samples": 514,
+    "startedAt": "2026-10-24T05:06:28.986Z",
+    "status": "completed",
+    "targetMs": 10000,
+    "timeline": {
+      "clickCount": 3,
+      "clicks": [
+        {
+          "atMs": 462.8,
+          "id": null,
+          "label": "比較の記録 · 場所v21",
+          "tag": "summary"
+        },
+        {
+          "atMs": 724.4,
+          "id": null,
+          "label": "場所の編集試作",
+          "tag": "summary"
+        },
+        {
+          "atMs": 1109.9,
+          "id": null,
+          "label": "場所をまとめて変える",
+          "tag": "button"
+        }
+      ],
+      "clock": "milliseconds-from-measurement-start",
+      "longTaskCount": 3,
+      "longTaskSupport": "supported",
+      "longTasks": [
+        {
+          "durationMs": 1333,
+          "endMs": 2470.9,
+          "startMs": 1137.9
+        },
+        {
+          "durationMs": 111,
+          "endMs": 2621.5,
+          "startMs": 2510.5
+        },
+        {
+          "durationMs": 58,
+          "endMs": 2679.8,
+          "startMs": 2621.8
+        }
+      ],
+      "retainedLimit": 40,
+      "slowFrames": [
+        {
+          "endMs": 2467.3,
+          "intervalMs": 1316.7,
+          "startMs": 1150.6
+        },
+        {
+          "endMs": 2666.4,
+          "intervalMs": 149.1,
+          "startMs": 2517.3
+        }
+      ]
+    },
+    "visibility": {
+      "ended": "visible",
+      "hiddenObserved": false,
+      "started": "visible"
+    }
+  },
+  "cpu": {
+    "status": "stopped",
+    "clock": "performance.now milliseconds from CPU measurement start",
+    "startedPerformanceMs": 1880237.7,
+    "startedEpochMs": 1792818388669.5,
+    "endedPerformanceMs": 1890239.9,
+    "elapsedMs": 10002.2,
+    "retainedLimit": 400,
+    "dropped": 0,
+    "filteredFastTerrainCalls": 5,
+    "incompleteSpans": 0,
+    "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+    "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+    "aggregates": {
+      "editableIslandWorld:cache-hit": {
+        "calls": 9,
+        "inclusiveMs": 0.9,
+        "selfMs": 0.9,
+        "maxMs": 0.3,
+        "failed": 0
+      },
+      "compileWorldDefinition:derived-edges": {
+        "calls": 1,
+        "inclusiveMs": 684.4,
+        "selfMs": 684.4,
+        "maxMs": 684.4,
+        "failed": 0
+      },
+      "editableIslandWorld:cold": {
+        "calls": 1,
+        "inclusiveMs": 1116.4,
+        "selfMs": 432,
+        "maxMs": 1116.4,
+        "failed": 0
+      },
+      "applyIntent:place-set": {
+        "calls": 1,
+        "inclusiveMs": 1324.7,
+        "selfMs": 207.6,
+        "maxMs": 1324.7,
+        "failed": 0
+      },
+      "worldScene.layout:": {
+        "calls": 1,
+        "inclusiveMs": 85,
+        "selfMs": 84.9,
+        "maxMs": 85,
+        "failed": 0
+      },
+      "GrowingWorld.rebuild:": {
+        "calls": 2,
+        "inclusiveMs": 111.2,
+        "selfMs": 26.1,
+        "maxMs": 111.1,
+        "failed": 0
+      }
+    },
+    "spans": [
+      {
+        "id": 1,
+        "parentId": null,
+        "name": "applyIntent",
+        "detail": "place-set",
+        "startMs": 1460.6,
+        "endMs": 2785.3,
+        "inclusiveMs": 1324.7,
+        "selfMs": 207.6,
+        "failed": false
+      },
+      {
+        "id": 2,
+        "parentId": 1,
+        "name": "editableIslandWorld",
+        "detail": "cache-hit",
+        "startMs": 1463.5,
+        "endMs": 1463.7,
+        "inclusiveMs": 0.2,
+        "selfMs": 0.2,
+        "failed": false
+      },
+      {
+        "id": 3,
+        "parentId": 1,
+        "name": "editableIslandWorld",
+        "detail": "cold",
+        "startMs": 1463.8,
+        "endMs": 2580.2,
+        "inclusiveMs": 1116.4,
+        "selfMs": 432,
+        "failed": false
+      },
+      {
+        "id": 4,
+        "parentId": 3,
+        "name": "compileWorldDefinition",
+        "detail": "derived-edges",
+        "startMs": 1895.8,
+        "endMs": 2580.2,
+        "inclusiveMs": 684.4,
+        "selfMs": 684.4,
+        "failed": false
+      },
+      {
+        "id": 5,
+        "parentId": 1,
+        "name": "editableIslandWorld",
+        "detail": "cache-hit",
+        "startMs": 2581,
+        "endMs": 2581.3,
+        "inclusiveMs": 0.3,
+        "selfMs": 0.3,
+        "failed": false
+      },
+      {
+        "id": 9,
+        "parentId": null,
+        "name": "GrowingWorld.rebuild",
+        "detail": "",
+        "startMs": 2828,
+        "endMs": 2939.1,
+        "inclusiveMs": 111.1,
+        "selfMs": 26,
+        "failed": false
+      },
+      {
+        "id": 10,
+        "parentId": 9,
+        "name": "worldScene.layout",
+        "detail": "",
+        "startMs": 2828.2,
+        "endMs": 2913.2,
+        "inclusiveMs": 85,
+        "selfMs": 84.9,
+        "failed": false
+      },
+      {
+        "id": 11,
+        "parentId": 10,
+        "name": "editableIslandWorld",
+        "detail": "cache-hit",
+        "startMs": 2828.2,
+        "endMs": 2828.3,
+        "inclusiveMs": 0.1,
+        "selfMs": 0.1,
+        "failed": false
+      },
+      {
+        "id": 14,
+        "parentId": 9,
+        "name": "editableIslandWorld",
+        "detail": "cache-hit",
+        "startMs": 2922.5,
+        "endMs": 2922.6,
+        "inclusiveMs": 0.1,
+        "selfMs": 0.1,
+        "failed": false
+      },
+      {
+        "id": 15,
+        "parentId": null,
+        "name": "GrowingWorld.rebuild",
+        "detail": "",
+        "startMs": 3019.6,
+        "endMs": 3019.7,
+        "inclusiveMs": 0.1,
+        "selfMs": 0.1,
+        "failed": false
+      }
+    ]
+  },
+  "shapes": {
+    "history": {
+      "redo": [],
+      "undo": [
+        {
+          "after": {
+            "east": {
+              "center": {
+                "x": 5,
+                "z": 5
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            }
+          },
+          "before": {}
+        },
+        {
+          "after": {
+            "east": {
+              "center": {
+                "x": 5,
+                "z": 5
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            },
+            "west": {
+              "center": {
+                "x": -1,
+                "z": 4
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            }
+          },
+          "before": {
+            "east": {
+              "center": {
+                "x": 5,
+                "z": 5
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            }
+          }
+        },
+        {
+          "after": {
+            "bay": {
+              "bayDepth": 2.4,
+              "center": {
+                "x": -1,
+                "z": 7
+              },
+              "entrance": 1.2,
+              "height": -0.55,
+              "radius": 2
+            },
+            "east": {
+              "center": {
+                "x": 5,
+                "z": 5
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            },
+            "west": {
+              "center": {
+                "x": -1,
+                "z": 4
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            }
+          },
+          "before": {
+            "east": {
+              "center": {
+                "x": 5,
+                "z": 5
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            },
+            "west": {
+              "center": {
+                "x": -1,
+                "z": 4
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            }
+          }
+        },
+        {
+          "after": {
+            "bay": {
+              "bayDepth": 2.4,
+              "center": {
+                "x": 1,
+                "z": 6
+              },
+              "entrance": 1.2,
+              "height": -0.55,
+              "radius": 3
+            },
+            "east": {
+              "center": {
+                "x": 5,
+                "z": 5
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            },
+            "west": {
+              "center": {
+                "x": -1,
+                "z": 4
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            }
+          },
+          "before": {
+            "bay": {
+              "bayDepth": 2.4,
+              "center": {
+                "x": -1,
+                "z": 7
+              },
+              "entrance": 1.2,
+              "height": -0.55,
+              "radius": 2
+            },
+            "east": {
+              "center": {
+                "x": 5,
+                "z": 5
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            },
+            "west": {
+              "center": {
+                "x": -1,
+                "z": 4
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            }
+          }
+        },
+        {
+          "after": {
+            "bay": {
+              "bayDepth": 2.4,
+              "center": {
+                "x": 1,
+                "z": 6
+              },
+              "entrance": 1.2,
+              "height": -0.55,
+              "radius": 3
+            },
+            "bay2": {
+              "bayDepth": 2.4,
+              "center": {
+                "x": 8,
+                "z": 3
+              },
+              "entrance": 1.2,
+              "height": -0.55,
+              "radius": 2
+            },
+            "east": {
+              "center": {
+                "x": 5,
+                "z": 5
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            },
+            "west": {
+              "center": {
+                "x": -1,
+                "z": 4
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            }
+          },
+          "before": {
+            "bay": {
+              "bayDepth": 2.4,
+              "center": {
+                "x": 1,
+                "z": 6
+              },
+              "entrance": 1.2,
+              "height": -0.55,
+              "radius": 3
+            },
+            "east": {
+              "center": {
+                "x": 5,
+                "z": 5
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            },
+            "west": {
+              "center": {
+                "x": -1,
+                "z": 4
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            }
+          }
+        },
+        {
+          "after": {
+            "bay": {
+              "bayDepth": 2.4,
+              "center": {
+                "x": 1,
+                "z": 6
+              },
+              "entrance": 1.2,
+              "height": -0.55,
+              "radius": 3
+            },
+            "bay2": {
+              "bayDepth": 1.6,
+              "center": {
+                "x": 8,
+                "z": 3
+              },
+              "entrance": 1.2,
+              "height": -0.55,
+              "radius": 2
+            },
+            "east": {
+              "center": {
+                "x": 5,
+                "z": 5
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            },
+            "west": {
+              "center": {
+                "x": -1,
+                "z": 4
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            }
+          },
+          "before": {
+            "bay": {
+              "bayDepth": 2.4,
+              "center": {
+                "x": 1,
+                "z": 6
+              },
+              "entrance": 1.2,
+              "height": -0.55,
+              "radius": 3
+            },
+            "bay2": {
+              "bayDepth": 2.4,
+              "center": {
+                "x": 8,
+                "z": 3
+              },
+              "entrance": 1.2,
+              "height": -0.55,
+              "radius": 2
+            },
+            "east": {
+              "center": {
+                "x": 5,
+                "z": 5
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            },
+            "west": {
+              "center": {
+                "x": -1,
+                "z": 4
+              },
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "height": 0.5,
+              "radius": 1.6
+            }
+          }
+        }
+      ],
+      "version": 1
+    },
+    "persisted": true,
+    "redo": 0,
+    "revision": 72,
+    "shapes": {
+      "bay": {
+        "bayDepth": 2.4,
+        "center": {
+          "x": 1,
+          "z": 6
+        },
+        "entrance": 1.2,
+        "height": -0.55,
+        "radius": 3
+      },
+      "bay2": {
+        "bayDepth": 1.6,
+        "center": {
+          "x": 8,
+          "z": 3
+        },
+        "entrance": 1.2,
+        "height": -0.55,
+        "radius": 2
+      },
+      "east": {
+        "center": {
+          "x": 5,
+          "z": 5
+        },
+        "entrance": 1.2,
+        "flatRadius": 1.75,
+        "height": 0.5,
+        "radius": 1.6
+      },
+      "west": {
+        "center": {
+          "x": -1,
+          "z": 4
+        },
+        "entrance": 1.2,
+        "flatRadius": 1.75,
+        "height": 0.5,
+        "radius": 1.6
+      }
+    },
+    "slot": "bay2",
+    "undo": 6
+  }
+}

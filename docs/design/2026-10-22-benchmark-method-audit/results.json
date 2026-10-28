@@ -1,0 +1,139 @@
+{
+  "date": "2026-10-22T19:28:19.571Z",
+  "sourceSHA256": "edab5d252121d880750121a4764a393ad58683844dc92d18c13a8da67aabe9e6",
+  "environment": {
+    "node": "v22.23.3"
+  },
+  "scope": "independent hypothesis tests; not benchmark engine identification or product acceptance",
+  "results": [
+    {
+      "test": "same cells, reversed order",
+      "geometryEqual": true,
+      "changedColorComponents": 216,
+      "totalColorComponents": 24912,
+      "verdict": "H2 material determinism FAIL; geometry PASS"
+    },
+    {
+      "test": "canonical coordinate order repair",
+      "verdict": "PASS for held-out pair; production integration untested"
+    },
+    {
+      "test": "remote contribution",
+      "remoteCellDistance": 2,
+      "boundaryFieldDelta": -0.004537481979452445,
+      "verdict": "global tail exists; magnitude must be evaluated, not automatically visible failure"
+    },
+    {
+      "test": "remote contribution",
+      "remoteCellDistance": 3,
+      "boundaryFieldDelta": -0.0000838515932239156,
+      "verdict": "global tail exists; magnitude must be evaluated, not automatically visible failure"
+    },
+    {
+      "test": "remote contribution",
+      "remoteCellDistance": 4,
+      "boundaryFieldDelta": -0.000001536048369436858,
+      "verdict": "global tail exists; magnitude must be evaluated, not automatically visible failure"
+    },
+    {
+      "test": "remote contribution",
+      "remoteCellDistance": 8,
+      "boundaryFieldDelta": -1.7286172493407712e-13,
+      "verdict": "global tail exists; magnitude must be evaluated, not automatically visible failure"
+    },
+    {
+      "test": "blend parameter trade-off",
+      "width": 0.15,
+      "holeOpen": true,
+      "gapOpen": true,
+      "diagonalConnected": false,
+      "hole": 0.2755892467840838,
+      "gap": 0.3960279229160082,
+      "diagonal": 0.012007720380474832
+    },
+    {
+      "test": "blend parameter trade-off",
+      "width": 0.25,
+      "holeOpen": true,
+      "gapOpen": true,
+      "diagonalConnected": true,
+      "hole": 0.09276327420724834,
+      "gap": 0.32671320486001365,
+      "diagonal": -0.057306997675519694
+    },
+    {
+      "test": "blend parameter trade-off",
+      "width": 0.35,
+      "holeOpen": false,
+      "gapOpen": true,
+      "diagonalConnected": true,
+      "hole": -0.10228858786599737,
+      "gap": 0.25739848680401917,
+      "diagonal": -0.1266217157315142
+    },
+    {
+      "test": "blend parameter trade-off",
+      "width": 0.5,
+      "holeOpen": false,
+      "gapOpen": true,
+      "diagonalConnected": true,
+      "hole": -0.4038319572834621,
+      "gap": 0.15342640972002736,
+      "diagonal": -0.23059379281550602
+    },
+    {
+      "test": "four-corner state inventory",
+      "statesPerCorner": 2,
+      "rawCases": 16,
+      "rotationFamilies": 6,
+      "note": "combinatorial states, NOT required authored model count; excludes materials, topology, decoration"
+    },
+    {
+      "test": "four-corner state inventory",
+      "statesPerCorner": 3,
+      "rawCases": 81,
+      "rotationFamilies": 24,
+      "note": "combinatorial states, NOT required authored model count; excludes materials, topology, decoration"
+    },
+    {
+      "test": "four-corner state inventory",
+      "statesPerCorner": 4,
+      "rawCases": 256,
+      "rotationFamilies": 70,
+      "note": "combinatorial states, NOT required authored model count; excludes materials, topology, decoration"
+    },
+    {
+      "test": "shared corner contract",
+      "seamSamples": 12393,
+      "maxSeamError": 0,
+      "affectedTilesPerCornerEdit": 4,
+      "verdict": "positional continuity/locality PASS; normal continuity, cliffs, nav, artwork NOT established"
+    },
+    {
+      "test": "connected shape versus usable route",
+      "heights": [
+        1,
+        1
+      ],
+      "supportedSamples": 101,
+      "totalSamples": 101,
+      "maxJump": 0,
+      "experimentalMaxStep": 0.2,
+      "routePass": true,
+      "note": "independent point-walker proxy; 0.2 is a declared experiment threshold, not Sansu or benchmark specification; actor radius/slope/time not tested"
+    },
+    {
+      "test": "connected shape versus usable route",
+      "heights": [
+        1,
+        2
+      ],
+      "supportedSamples": 101,
+      "totalSamples": 101,
+      "maxJump": 0.55,
+      "experimentalMaxStep": 0.2,
+      "routePass": false,
+      "note": "independent point-walker proxy; 0.2 is a declared experiment threshold, not Sansu or benchmark specification; actor radius/slope/time not tested"
+    }
+  ]
+}

@@ -307,3 +307,5 @@ body.app-mode-island-shell .app-container { max-width: 1120px; }
         line-height: 1.25;
     }
 }
+
+.island-subject-switch { position:relative; z-index:6; display:flex; justify-content:flex-end; padding:6px 16px; }

@@ -1,0 +1,211 @@
+{
+  "accessed": "2026-10-22/23 JST",
+  "scope": "Targeted author searches and relevant threads; no claim of exhaustive social sentiment or all production history",
+  "xSearches": [
+    {
+      "query": "from:OskSta (\"Townscaper\" OR \"Bad North\") (\"tiles\" OR \"modules\" OR \"constraints\") until:2022-01-01",
+      "sort": "Top",
+      "limit": 20
+    },
+    {
+      "query": "from:OskSta (Townscaper OR tiles) (mesh OR 256 OR deform OR marching OR constraint)",
+      "sort": "Top",
+      "limit": 20
+    },
+    {
+      "query": "from:DannyLimanseta (\"Little Habitats\" OR \"Townscaper\" OR \"prompts\" OR \"terrain\") since:2026-09-25 until:2026-10-23",
+      "sort": "Latest",
+      "limit": 25
+    }
+  ],
+  "additionalScope": "Direct relevant OskSta and anastasiaopara threads, including Tiny Glade Undo/Redo thread; limits are requested search caps, not total matching posts. Duplicate and unrelated results omitted.",
+  "posts": [
+    {
+      "project": "Townscaper",
+      "url": "https://x.com/OskSta/status/1189109278361165825",
+      "date": "2019-10-29T09:18:39Z",
+      "evidence": "author self-report; inspected via x-read",
+      "summary": "作者が当時378モジュールと説明。完成版総数や必要最低数ではない。"
+    },
+    {
+      "project": "Townscaper",
+      "url": "https://x.com/OskSta/status/1189122653048717312",
+      "date": "2019-10-29T10:11:47Z",
+      "evidence": "author self-report; inspected via x-read",
+      "summary": "ランダムな形を作り、不足する接続ケースを追加した制作過程。"
+    },
+    {
+      "project": "Townscaper",
+      "url": "https://x.com/OskSta/status/1189154686210891777",
+      "date": "2019-10-29T12:19:05Z",
+      "evidence": "author self-report; inspected via x-read",
+      "summary": "Marching Cubes由来の候補とWFCで接続を解決するという作者説明。"
+    },
+    {
+      "project": "Townscaper",
+      "url": "https://x.com/OskSta/status/1189113603913388034",
+      "date": "2019-10-29T09:35:50Z",
+      "evidence": "author self-report; inspected via x-read",
+      "summary": "コピー等も使いつつ手作業の制作が多かったという説明。"
+    },
+    {
+      "project": "Townscaper",
+      "url": "https://x.com/OskSta/status/1189115920498745344",
+      "date": "2019-10-29T09:45:02Z",
+      "evidence": "author self-report; inspected via x-read",
+      "summary": "対話的な編集が要求するケースと非対話型の違い。"
+    },
+    {
+      "project": "Townscaper",
+      "url": "https://x.com/OskSta/status/1189110582810726400",
+      "date": "2019-10-29T09:23:50Z",
+      "evidence": "author self-report; inspected via x-read",
+      "summary": "大構造では解決が複数フレームに及び得るという当時の説明。"
+    },
+    {
+      "project": "Townscaper",
+      "url": "https://x.com/OskSta/status/1305467415627812865",
+      "date": "2020-09-14T11:24:20Z",
+      "evidence": "author self-report; inspected via x-read",
+      "summary": "操作する格子とメッシュを載せる四角形のdual gridの説明。"
+    },
+    {
+      "project": "Townscaper",
+      "url": "https://x.com/OskSta/status/1438953660852187139",
+      "date": "2021-09-17T19:51:01Z",
+      "evidence": "author self-report; inspected via x-read",
+      "summary": "メッシュのインポート解析の組合せコスト。実行中の編集待ち時間と混同しない。"
+    },
+    {
+      "project": "Townscaper",
+      "url": "https://x.com/OskSta/status/1448248658865049605",
+      "date": "2021-10-13T11:26:02Z",
+      "evidence": "author self-report; inspected via x-read",
+      "summary": "main gridとdual gridの役割の説明。"
+    },
+    {
+      "project": "Townscaper / Bad North",
+      "url": "https://x.com/OskSta/status/1661698985894060033",
+      "date": "2023-05-25",
+      "evidence": "author self-report; inspected via x-read",
+      "summary": "過去作品の海岸に押し出したメッシュを使う説明。別の新作の方式と区別。"
+    },
+    {
+      "project": "Tiny Glade",
+      "url": "https://x.com/anastasiaopara/status/1530473522224582656",
+      "date": "2022-05-28T08:58:17Z",
+      "evidence": "author self-report; inspected via x-read",
+      "summary": "Undo/Redoの開発スレッド。手続き的な形と壁分割等の操作を戻す仕組み。"
+    },
+    {
+      "project": "Tiny Glade",
+      "url": "https://x.com/anastasiaopara/status/1617925842163863554",
+      "date": "2023-01-24T16:42:35Z",
+      "evidence": "author self-report; inspected via x-read",
+      "summary": "既存地形への集中的な制作期間と崖・階段の課題。総工数ではない。"
+    },
+    {
+      "project": "Tiny Glade",
+      "url": "https://x.com/anastasiaopara/status/1472627194409230343",
+      "date": "2021-12-19T17:57:37Z",
+      "evidence": "author self-report; inspected via x-read",
+      "summary": "道と壁の重なりからアーチを作る試作。速度値は作者の当時の環境の申告。"
+    },
+    {
+      "project": "Little Habitats",
+      "url": "https://x.com/DannyLimanseta/status/2104122809484214376",
+      "date": "2026-09-27T08:15:45Z",
+      "evidence": "author self-report; inspected via x-read",
+      "summary": "Townscaper技術調査を先に行い、100以上の素材・50回以上のプロンプトと作者が説明。"
+    },
+    {
+      "project": "Little Habitats",
+      "url": "https://x.com/DannyLimanseta/status/2104126569409347705",
+      "date": "2026-09-27T08:30:41Z",
+      "evidence": "author self-report; inspected via x-read",
+      "summary": "最初の指示を記憶から紹介。全制作ログではない。"
+    },
+    {
+      "project": "Little Habitats",
+      "url": "https://x.com/DannyLimanseta/status/2103880199276499102",
+      "date": "2026-09-26T16:11:42Z",
+      "evidence": "author self-report; inspected via x-read",
+      "summary": "作者自身もプロンプト回数を正確には数えていないと説明。"
+    },
+    {
+      "project": "Little Habitats",
+      "url": "https://x.com/DannyLimanseta/status/2103493389778125083",
+      "date": "2026-09-25T14:34:39Z",
+      "evidence": "author self-report; inspected via x-read",
+      "summary": "制作のある段階での時間の説明。全制作時間の独立検証ではない。"
+    }
+  ],
+  "web": [
+    {
+      "title": "Townscaper公式デモ",
+      "url": "https://oskarstalberg.com/Townscaper/",
+      "evidence": "live UI observed",
+      "date": "2026-10-23"
+    },
+    {
+      "title": "Townscaper公式製品説明",
+      "url": "https://store.steampowered.com/app/1291340/Townscaper/",
+      "evidence": "official product page",
+      "date": null
+    },
+    {
+      "title": "Tiny Glade公式製品説明",
+      "url": "https://store.steampowered.com/app/2198150/Tiny_Glade/",
+      "evidence": "official product page",
+      "date": null
+    },
+    {
+      "title": "Tiny Glade開発者インタビュー",
+      "url": "https://80.lv/articles/exclusive-tiny-glade-developers-discuss-bevy-proceduralism-publishers-cozy-games",
+      "evidence": "developer interview",
+      "date": "2024-05-30"
+    },
+    {
+      "title": "Tiny Glade公式FAQ",
+      "url": "https://steamcommunity.com/app/2198150/discussions/0/3709306945109116212/",
+      "evidence": "developer FAQ; historical statements not assumed current",
+      "date": null
+    },
+    {
+      "title": "Foundation Building Asset Processor",
+      "url": "https://polymorph.games/foundation/modding/building-asset-processor",
+      "evidence": "official authoring documentation; last modified",
+      "date": "2025-06-27"
+    },
+    {
+      "title": "Foundation Construction Steps",
+      "url": "https://polymorph.games/foundation/modding/construction-steps",
+      "evidence": "official authoring documentation; last modified",
+      "date": "2021-10-21"
+    },
+    {
+      "title": "Foundation Buildings",
+      "url": "https://wiki.polymorph.games/foundation/Buildings",
+      "evidence": "official hosted wiki, not an engine implementation",
+      "date": null
+    },
+    {
+      "title": "MesoGen",
+      "url": "https://eliemichel.github.io/MesoGen/",
+      "evidence": "primary research project",
+      "date": null
+    },
+    {
+      "title": "MesoGen paper",
+      "url": "https://eliemichel.github.io/MesoGen/documents/michel23mesogen_lowres.pdf",
+      "evidence": "primary paper; text inspected",
+      "date": "2023"
+    },
+    {
+      "title": "TownBuilder",
+      "url": "https://github.com/eliemichel/TownBuilder",
+      "evidence": "public educational implementation; README inspection is not full source audit",
+      "date": null
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: the wider shoulder must not remove any existing home destination
+    at file:///private/tmp/sansu-shoulder-check-false.mjs:17920:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async file:///Users/yutogasaki/Projects/sansu/[eval1]:1:253 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.23.3
+Command failed: /Users/yutogasaki/.local/share/fnm/node-versions/v22.23.3/installation/bin/node --input-type=module -e globalThis.window=globalThis;globalThis.location={search:"?terrainTrial=H&baseTrial=stable&rampTrial=linear&growthTrial=inherit&compileTrial=single&trialScene=shore&queryTrial=frozen&memoTrial=samples&edgeTrial=memo&placeSetTrial=two",hash:'#/island'};await import("/private/tmp/sansu-shoulder-check-false.mjs");
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: the wider shoulder must not remove any existing home destination
+    at file:///private/tmp/sansu-shoulder-check-false.mjs:17920:3
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async file:///Users/yutogasaki/Projects/sansu/[eval1]:1:253 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.23.3

@@ -1,0 +1,88 @@
+
+> pokko-fushigi-zukan-app@0.0.0 e2e:smoke
+> node tools/e2e-smoke.mjs
+
+Starting dev server on http://127.0.0.1:4173...
+
+> pokko-fushigi-zukan-app@0.0.0 dev:test-server
+> vite --host 127.0.0.1 --port 4173 --strictPort
+
+
+  VITE v7.3.1  ready in 1253 ms
+
+  ➜  Local:   http://127.0.0.1:4173/
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+Dev server ready on http://127.0.0.1:4173.
+PASS redirects to onboarding when no profile (4115ms)
+PASS completes onboarding, chooses a route, and opens Makimodon (2557ms)
+2:34:34 PM [vite] (client) page reload output/menu-audit/harness.html
+PASS keeps the classic opening playable with expanded mobile browser chrome (2651ms)
+PASS keeps the direct study route working (3131ms)
+PASS keeps the direct review route working (2018ms)
+PASS keeps the direct settings route working (1663ms)
+2:34:45 PM [vite] (client) hmr update /src/index.css
+PASS keeps legacy fuwafuwa album out of child records (2606ms)
+2:35:03 PM [vite] (client) hmr update /src/index.css, /src/components/kokugo/KokugoKanjiProgress.tsx
+2:35:03 PM [vite] (client) hmr update /src/index.css
+2:35:05 PM [vite] (client) hmr update /src/index.css
+PASS completes confirmation test from parent settings and opens results (26028ms)
+PASS launches explore immediately and safely returns at a route break (3847ms)
+PASS keeps the 390x800 route boundary fully visible (3615ms)
+2:35:20 PM [vite] (client) hmr update /src/index.css, /src/components/Layout.tsx, /src/pages/parents/ParentsPage.tsx, /src/pages/Settings.tsx, /src/components/Footer.tsx, /src/components/Header.tsx, /src/pages/parents/ParentTools.tsx, /src/pages/Stats.tsx
+2:35:20 PM [vite] (client) hmr update /src/index.css
+2:35:20 PM [vite] (client) hmr update /src/index.css
+PASS runs Root Pull v2 inline with reduced motion and the numeric keypad (6074ms)
+Snap Root measured ms { firstIncorrect: 439, secondIncorrect: 530, correct: [ 135, 121 ] }
+PASS runs the Snap Root breakthrough loop at 390px (7066ms)
+PASS keeps the Snap Root breakthrough loop playable on tablet (5635ms)
+PASS can exit safely after explore start persistence fails (4547ms)
+PASS safely exits and retries from a pending explore problem (5648ms)
+PASS commits one explore answer under rapid double submit (5086ms)
+PASS retries the same explore attempt after a save failure (10441ms)
+PASS resumes fixed-ten explore across retry, route, discovery, and partial-input boundaries (36117ms)
+PASS finishes last-light rescue without blocking on an ordinary clue (8143ms)
+PASS retries voluntary return without early terminal progress (12004ms)
+FAIL grows the immersive light bridge from an addition answer: Error: the connected bridge and painted latch must stay visible at the authored action point at 390x844: {"applied":true,"pass":false,"sourceFocals":{"actorFace":[310,440],"actorFeet":[258,540],"actionPayoff":[665,550]},"activeScene":{"src":"/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.webp","currentSrc":"http://127.0.0.1:4173/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.webp","className":"explore-immersive-scene explore-immersive-scene-complete is-visible","complete":true,"decoded":true,"naturalWidth":1280,"naturalHeight":720,"display":"","visibility":"","opacity":1,"objectFit":"","objectPosition":"","bounds":{"left":0,"right":0,"top":0,"bottom":0,"width":0,"height":0},"contentBox":{"left":0,"top":0,"width":0,"height":0,"right":0,"bottom":0}},"shelf":{"present":true,"bounds":{"left":0,"right":0,"top":0,"bottom":0,"width":0,"height":0},"overlapsImage":false,"backgroundColor":"","backgroundAlpha":1,"opacity":null,"effectiveAlpha":null,"opaque":false},"fade":{"startToken":"","startPercent":null,"startY":null,"safeMargin":16,"scrimBackgroundImage":"","expectedScrimStops":["52%","62%","73%"],"scrimContractPass":false},"hud":{"present":true,"bounds":{"left":0,"right":390,"top":0,"bottom":56,"width":390,"height":56}},"overlays":[{"selector":"explore-immersive-brief","bounds":{"left":0,"right":390,"top":464.203125,"bottom":592.0625,"width":390,"height":127.859375}},{"selector":"explore-immersive-keypad-shell","bounds":{"left":0,"right":390,"top":592.0625,"bottom":844,"width":390,"height":251.9375}}],"physicalPayoff":{"required":true,"kind":"baked-raster","id":"bridge-leaf-clasp","present":true,"expectedAsset":"/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.webp","sourcePoint":{"x":665,"y":550},"projectedPoint":{"x":0,"y":0},"pass":false},"projection":{"valid":false,"objectFitSupported":false,"objectPositionSupported":false,"scaleX":0,"scaleY":0,"renderedWidth":0,"renderedHeight":0,"freeSpaceX":0,"freeSpaceY":0,"offsetX":0,"offsetY":0,"positionX":{"supported":false,"token":"","kind":"unsupported","offset":0},"positionY":{"supported":true,"token":"50%","kind":"percentage","offset":0}},"viewport":{"width":390,"height":844},"surfaceBounds":{"left":0,"right":0,"top":0,"bottom":0,"width":0,"height":0},"storyViewportRect":{"left":0,"right":0,"top":56,"bottom":null,"width":0,"height":null},"storySourceRect":{"left":null,"right":null,"top":720,"bottom":null,"width":null,"height":null,"area":null},"points":{"actorFace":{"source":{"x":310,"y":440},"viewport":{"x":0,"y":0},"withinViewport":true,"withinSurface":true,"aboveShelf":false,"aboveFade":false,"fadeClearance":null,"belowHud":false,"occludingOverlays":[],"unobscured":false,"pass":false},"actorFeet":{"source":{"x":258,"y":540},"viewport":{"x":0,"y":0},"withinViewport":true,"withinSurface":true,"aboveShelf":false,"aboveFade":false,"fadeClearance":null,"belowHud":false,"occludingOverlays":[],"unobscured":false,"pass":false},"actionPayoff":{"source":{"x":665,"y":550},"viewport":{"x":0,"y":0},"withinViewport":true,"withinSurface":true,"aboveShelf":false,"aboveFade":false,"fadeClearance":null,"belowHud":false,"occludingOverlays":[],"unobscured":false,"pass":false}}}
+    at assert (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:184:25)
+    at scenarioLightBridgeVerticalSlice (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:2645:3)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:472:9)
+    at async runScenario (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)
+    at async main (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6722:18)
+FAIL keeps the light bridge playable on tablet: Error: return should stay disabled during incorrect feedback
+    at assert (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:184:25)
+    at scenarioLightBridgeVerticalSlice (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:2606:3)
+    at async runScenario (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)
+    at async main (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6723:18)
+FAIL keeps the light bridge connected on a landscape tablet: Error: the connected bridge and painted latch must stay visible at the authored action point at 1024x768: {"applied":true,"pass":false,"sourceFocals":{"actorFace":[310,440],"actorFeet":[258,540],"actionPayoff":[665,550]},"activeScene":{"src":"/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.webp","currentSrc":"http://127.0.0.1:4173/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.webp","className":"explore-immersive-scene explore-immersive-scene-complete is-visible","complete":true,"decoded":true,"naturalWidth":1280,"naturalHeight":720,"display":"","visibility":"","opacity":1,"objectFit":"","objectPosition":"","bounds":{"left":0,"right":0,"top":0,"bottom":0,"width":0,"height":0},"contentBox":{"left":0,"top":0,"width":0,"height":0,"right":0,"bottom":0}},"shelf":{"present":true,"bounds":{"left":0,"right":0,"top":0,"bottom":0,"width":0,"height":0},"overlapsImage":false,"backgroundColor":"","backgroundAlpha":1,"opacity":null,"effectiveAlpha":null,"opaque":false},"fade":{"startToken":"","startPercent":null,"startY":null,"safeMargin":24,"scrimBackgroundImage":"","expectedScrimStops":["72%","100%"],"scrimContractPass":false},"hud":{"present":true,"bounds":{"left":0,"right":1024,"top":0,"bottom":68,"width":1024,"height":68}},"overlays":[{"selector":"explore-immersive-brief","bounds":{"left":471.234375,"right":1004,"top":392.3125,"bottom":523.515625,"width":532.765625,"height":131.203125}},{"selector":"explore-immersive-keypad-shell","bounds":{"left":471.234375,"right":1004,"top":523.515625,"bottom":758,"width":532.765625,"height":234.484375}}],"physicalPayoff":{"required":true,"kind":"baked-raster","id":"bridge-leaf-clasp","present":true,"expectedAsset":"/assets/explore/light-bridge/scene-complete-leaf-carry-bloom-pokko-v7.webp","sourcePoint":{"x":665,"y":550},"projectedPoint":{"x":0,"y":0},"pass":false},"projection":{"valid":false,"objectFitSupported":false,"objectPositionSupported":false,"scaleX":0,"scaleY":0,"renderedWidth":0,"renderedHeight":0,"freeSpaceX":0,"freeSpaceY":0,"offsetX":0,"offsetY":0,"positionX":{"supported":false,"token":"","kind":"unsupported","offset":0},"positionY":{"supported":true,"token":"50%","kind":"percentage","offset":0}},"viewport":{"width":1024,"height":768},"surfaceBounds":{"left":0,"right":0,"top":0,"bottom":0,"width":0,"height":0},"storyViewportRect":{"left":0,"right":0,"top":68,"bottom":null,"width":0,"height":null},"storySourceRect":{"left":null,"right":null,"top":720,"bottom":null,"width":null,"height":null,"area":null},"points":{"actorFace":{"source":{"x":310,"y":440},"viewport":{"x":0,"y":0},"withinViewport":true,"withinSurface":true,"aboveShelf":false,"aboveFade":false,"fadeClearance":null,"belowHud":false,"occludingOverlays":[],"unobscured":false,"pass":false},"actorFeet":{"source":{"x":258,"y":540},"viewport":{"x":0,"y":0},"withinViewport":true,"withinSurface":true,"aboveShelf":false,"aboveFade":false,"fadeClearance":null,"belowHud":false,"occludingOverlays":[],"unobscured":false,"pass":false},"actionPayoff":{"source":{"x":665,"y":550},"viewport":{"x":0,"y":0},"withinViewport":true,"withinSurface":true,"aboveShelf":false,"aboveFade":false,"fadeClearance":null,"belowHud":false,"occludingOverlays":[],"unobscured":false,"pass":false}}}
+    at assert (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:184:25)
+    at scenarioLightBridgeVerticalSlice (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:2645:3)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:472:9)
+    at async runScenario (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)
+    at async main (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6727:18)
+FAIL keeps the light bridge playable on a 1024px portrait tablet: locator.waitFor: Timeout 15000ms exceeded.
+Call log:
+[2m  - waiting for getByText(/せいかい！ 葉っぱが ぱちんと つながった/) to be visible[22m
+
+    at scenarioLightBridgeVerticalSlice (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:2624:49)
+    at async runScenario (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)
+    at async main (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6731:18)
+FAIL keeps the light bridge playable on a wide portrait tablet: Error: return should stay disabled during incorrect feedback
+    at assert (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:184:25)
+    at scenarioLightBridgeVerticalSlice (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:2606:3)
+    at async runScenario (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)
+    at async main (file:///Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6735:18)
+PASS retains root observation after the first same-problem retry (26286ms)
+FAIL opens the root tangle with profile-near subtraction: locator.waitFor: Target page, context or browser has been closed
+Call log:
+[2m  - waiting for locator('#return-summary-title') to be visible[22m
+
+    at scenarioRootTangleVerticalSlice (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:3033:47)
+    at async runScenario (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:418:5)
+    at async main (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6743:18)
+browserContext.close: Target page, context or browser has been closed
+    at async runScenario (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:457:19)
+    at async main (/Users/yutogasaki/Projects/sansu/tools/e2e-smoke.mjs:6743:18)

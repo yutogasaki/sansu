@@ -1,0 +1,183 @@
+{
+  "at": "2026-10-25T23:06:29.332031+00:00",
+  "preview": "http://127.0.0.1:5289/#/kokugo",
+  "finalVersion": {
+    "version": "editorial-f80f926967d3:012a5b52-3f09-4220-a50b-14665248bf33",
+    "revision": "editorial-f80f926967d3",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "finalSourceHash": "f80f926967d362952653a0cae601c44983ad87be69d272c225be21c5c1447d38",
+  "base": "kanji-f0a384caf98d",
+  "boundary": "Fixed prior Kanji source plus only the authorized Kokugo implementation. Concurrent unrelated shared-tree changes excluded. No commit/push/deploy or writes to a real user database.",
+  "checks": [
+    {
+      "command": "npm run build (includes tsc -b and assets:check)",
+      "result": "PASS",
+      "candidate": 6,
+      "precacheMiB": 9.3,
+      "precacheBudgetMiB": 12
+    },
+    {
+      "command": "npm run lint",
+      "result": "PASS (0 errors, 4 pre-existing warnings outside Kokugo)",
+      "candidate": 6
+    },
+    {
+      "command": "npm run lint",
+      "result": "PASS",
+      "candidate": 6
+    },
+    {
+      "command": "npx eslint tools/audit-kokugo-editorial.mjs",
+      "result": "PASS",
+      "scope": "final candidate6 audit harness"
+    },
+    {
+      "command": "npx vitest run src/domain/kokugo",
+      "result": "PASS",
+      "candidate": 6,
+      "files": 5,
+      "tests": 50
+    },
+    {
+      "command": "npm run test:run -- --reporter=default --reporter=json --outputFile=/tmp/sansu-editorial-unit-suite.json",
+      "status": "PASS",
+      "sourceHash": "05b6ed4848b5aa979218c385fc4d60f97aa9bd339835d4f0e78eb08191ddfed4",
+      "sourceCandidate": 2,
+      "testFiles": 669,
+      "passedFiles": 669,
+      "tests": 5638,
+      "passedTests": 5638,
+      "startedAt": 1792967428012
+    },
+    {
+      "command": "npm run e2e:smoke",
+      "result": "PASS",
+      "candidate": 3,
+      "scenarios": 32,
+      "scope": "flag-off classic regression; no claim about current Island UX"
+    },
+    {
+      "command": "node tools/e2e-kokugo-kanji.mjs",
+      "result": "PASS",
+      "candidate": 6,
+      "widths": [
+        390,
+        768,
+        320
+      ],
+      "evidence": "kanji/report.json"
+    },
+    {
+      "command": "node tools/e2e-kokugo-update.mjs",
+      "result": "PASS",
+      "candidate": 6,
+      "widths": [
+        390,
+        768,
+        320
+      ],
+      "evidence": "update/report.json"
+    },
+    {
+      "command": "node tools/e2e-kokugo.mjs",
+      "result": "PASS",
+      "candidate": 4,
+      "widths": [
+        390,
+        768,
+        320
+      ],
+      "evidence": "main/report.json"
+    },
+    {
+      "command": "npm run typecheck",
+      "result": "PASS",
+      "scope": "current shared working tree, separate from fixed build"
+    },
+    {
+      "command": "node tools/audit-kokugo-editorial.mjs",
+      "result": "PASS",
+      "scope": "61 owned implementation/QA inputs match final candidate6; static authored material audit",
+      "auditScriptSha256": "56a67eb66cd7d9bd6a90a72691b644bd975de80113ef0be00dca46ab59261c07",
+      "issues": 0
+    },
+    {
+      "command": "node scripts/standard-portal.mjs verify",
+      "result": "FAIL (existing unrelated prerequisite)",
+      "reason": "Stale flow evidence: docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+      "runtime": "Node22.23.3"
+    },
+    {
+      "command": "npm run docs:check",
+      "result": "PASS",
+      "scope": "final shared documentation"
+    },
+    {
+      "command": "node tools/generate-agent-index.mjs --check",
+      "result": "PASS",
+      "scope": "regenerated legacy index only; full portal not passed"
+    }
+  ],
+  "splitExecution": "Full unit run uses candidate2. Subsequent changes are the question scroll/focus reset, two introductory examples, cooldown after completing a long-open model, and comparison of legacy/current lexical exposure roots. Final candidate6 rebuild/typecheck, affected50 tests, browser material checks and real old→new SW update cover these changes. This is not a single final-candidate full-suite run.",
+  "diagnostics": [
+    "Earlier unit assumptions about 2-question prefecture pools, novel slots after preview and same-day independence after support were updated to the explicit second-edition contract.",
+    "Initial audit flagged duplicate passages across targets and six empty sandbox-generated audio clips. Scenes were made distinct and valid local audio was regenerated; final checks have zero findings.",
+    "First browser extension attempted K01 after catalog remount without reselecting the track/handling an already-seen introduction. Corrected harness preserves the first failure.",
+    "First main QA expected two independent answers immediately after a model; the new 24h teaching boundary intentionally yields zero. Harness assertion now reads the recorded evidence policy, also during old→new update.",
+    "Two browser attempts started before the production build finished and timed out at onboarding; rerun only after confirmed build completion.",
+    "Audit CLI originally loaded the full app Vite config, creating irrelevant WebSocket/closing dependency-scan diagnostics. Final read-only CLI disables app config, WebSocket and discovery; clean audit passes."
+  ],
+  "notVerified": [
+    "Human subject-specialist adoption review",
+    "Human listening judgment",
+    "Physical devices and installation",
+    "Actual child understanding, retention and voluntary return",
+    "Natural elapsed-day learning outcomes; scheduling tests use explicit clocks",
+    "Every possible word meaning/reading or textbook",
+    "Automatic handwriting grading or stroke-order animation"
+  ],
+  "portalEntryResult": {
+    "command": "npm run agent:index:check",
+    "status": "INCOMPLETE",
+    "legacyIndex": "PASS after regeneration",
+    "portalStage": "node scripts/check-standard-portal.mjs ended with SIGKILL (9); remaining stages not run",
+    "independentPrecondition": "node scripts/standard-portal.mjs verify independently fails on pre-existing flow source hash"
+  },
+  "deliveryActions": {
+    "commit": false,
+    "push": false,
+    "publicDeploy": false,
+    "realUserDatabaseWrites": false
+  }
+}

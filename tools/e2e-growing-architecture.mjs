@@ -21,7 +21,7 @@ const hashes = async () => Object.fromEntries(await Promise.all(inputFiles.map(a
 report.inputs = await hashes();
 const browser = await chromium.launch(); let active;
 const names = process.env.SANSU_ARCHITECTURE_CASE ? [process.env.SANSU_ARCHITECTURE_CASE] : ['shared-roof', 'long-grove', 'hollow-court', 'flower-arch'];
-assert(names.every(name => ['shared-roof', 'long-grove', 'hollow-court', 'flower-arch'].includes(name)));
+assert(names.every(name => ['shared-roof', 'long-grove', 'hollow-court', 'flower-arch', 'flower-canopy-addition', 'grove-side-addition', 'shade-young-addition'].includes(name)));
 report.requestedCases = names;
 const ready = async page => { await page.locator('[data-growing-island="ready"] [data-growing-world] canvas').waitFor(); await page.locator('.growing-loading--overlay').waitFor({ state: 'hidden' }); };
 try {
@@ -36,10 +36,17 @@ try {
             state.villagers = []; // Explicit hero-operation fixture; shared residents have separate coverage.
             if (name !== 'shared-roof') {
                 state.plots[0].cell = { x: 0, z: 5 }; state.plots[1].cell = { x: 3, z: 5 };
-                const cells = name === 'hollow-court' ? [[7, 1], [9, 1], [7, 3], [9, 3]] : Array.from({ length: 6 }, (_, x) => [x + 1, 3]);
-                state.landmarks = cells.map(([x, z], i) => ({ id: `source-${i}`, kind: name === 'flower-arch' ? 'flower' : 'sapling', cell: { x, z }, growth: name === 'flower-arch' ? 6 : 18, maturedAt: 0, ...(name === 'flower-arch' ? { color: i % 2 ? 'blue' : 'red' } : {}) }));
+                const flower = name.startsWith('flower-');
+                const cells = name === 'shade-young-addition' ? [[4, 3], [5, 3]] : name === 'flower-canopy-addition' ? [[2, 2], [3, 2], [2, 3], [3, 3], [4, 3]]
+                    : name === 'grove-side-addition' ? [[2, 2], [3, 2], [4, 2], [5, 2], [5, 3]]
+                    : name === 'hollow-court' ? [[7, 1], [9, 1], [7, 3], [9, 3]] : Array.from({ length: 6 }, (_, x) => [x + 1, 3]);
+                state.landmarks = cells.map(([x, z], i) => ({ id: `source-${i}`, kind: flower ? 'flower' : 'sapling', cell: { x, z }, growth: flower ? 6 : 18, maturedAt: 0, ...(flower ? { color: i % 2 ? 'blue' : 'red' } : {}) }));
             }
-            const places = derivePlaces(state), place = places.find(p => p.ruleId === (name === 'shared-roof' ? 'P04' : name === 'flower-arch' ? 'P05' : 'P02'));
+            if (name === 'shade-young-addition') { state.landmarks[1].growth = 0; delete state.landmarks[1].maturedAt; }
+            const places = derivePlaces(state), place = places.find(p => p.ruleId === (name === 'shared-roof' ? 'P04' : name.startsWith('flower-') ? 'P05' : name === 'shade-young-addition' ? 'P01' : 'P02'));
+            if (name === 'flower-canopy-addition') assert.deepEqual(place.flowerRoofs, [{ variant: 'canopy', mainIds: ['source-0', 'source-1', 'source-2', 'source-3'] }]);
+            if (name === 'grove-side-addition') assert.deepEqual(place.mainIds, ['source-0', 'source-1', 'source-2', 'source-3']);
+            if (name === 'shade-young-addition') { assert.deepEqual(place.mainIds, ['source-0']); assert.equal(place.treeForm, 'individual'); }
             assert.equal(place?.stage, 'grown');
             if (name === 'shared-roof') assert.equal(place.structure, 'P04:shared-roof');
             await page.evaluate(async ({ id, state }) => {
@@ -58,7 +65,7 @@ try {
             await page.screenshot({ path: `${out}/${width}-${name}-overview.png` });
             const owners = [...state.plots, ...state.landmarks].filter(owner => place.mainIds.includes(owner.id));
             const sheet = page.locator('.growing-sheet');
-            const expectedTitle = place.ruleId === 'P02' ? '木の なえ' : place.ruleId === 'P05' ? 'おはな' : undefined;
+            const expectedTitle = ['P01', 'P02'].includes(place.ruleId) ? '木の なえ' : place.ruleId === 'P05' ? 'おはな' : undefined;
             const isCorrectSheet = async () => await sheet.isVisible() && (!expectedTitle || await sheet.getAttribute('aria-label') === expectedTitle)
                 && await sheet.getByRole('button', { name: 'ここで すごす', exact: true }).isVisible();
             const selectionEnd = Date.now() + 20000; let attempt = 0;
@@ -99,4 +106,4 @@ try {
     assert.deepEqual(await hashes(), report.inputs); report.pass = true;
 } catch (error) { report.error = error.stack; if (active && !active.isClosed()) { report.body = await active.locator('body').innerText().catch(() => undefined); await active.screenshot({ path: `${out}/failure.png` }).catch(() => {}); } throw error;
 } finally { await fs.writeFile(`${out}/report.json`, JSON.stringify(report, null, 2)); await browser.close(); disposeProductionProjection(); }
-console.log('PASS architecture renderer, actual use and offline:', report.cases.length, 'cases');
+console.log('PASS architecture renderer and actual use:', report.cases.length, 'cases; offline reload only for shared-roof');

@@ -1,0 +1,165 @@
+{
+  "at": "2026-10-24T01:13:01.033Z",
+  "recipe": "place-outline-platform-v3:H:fixed-two-shear-grid-v1:fixed-core-base-v1:fixed-bilinear-interior-ramp-v1:directional-ramp-v1:flat-owner-v1",
+  "scope": "Actual commandGrowingIsland/readGrowingIsland/openSavedTrial on fake IndexedDB, transformed trial code, isolated v2-to-v3 trial recipe migration; not browser, SW, worker sync, production-save migration or live-use proof",
+  "results": [
+    {
+      "name": "actual repository save/reopen; duplicate intent and semantic no-op unchanged"
+    },
+    {
+      "name": "reopened Undo/Redo preserves later normal moves and purchase",
+      "detail": {
+        "purchaseCell": {
+          "x": -1,
+          "z": 2
+        },
+        "drops": 9150,
+        "owners": [
+          {
+            "id": "starter-flower",
+            "cell": {
+              "x": 5,
+              "z": 4
+            }
+          },
+          {
+            "id": "starter-bench",
+            "cell": {
+              "x": 6,
+              "z": 5
+            }
+          },
+          {
+            "id": "l1",
+            "cell": {
+              "x": -1,
+              "z": 2
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "actual opener atomically upgrades v2 recipe to v3, preserving both history chains, owners, wallet and clocks",
+      "detail": {
+        "oldRecipe": "place-outline-platform-v2:H:fixed-two-shear-grid-v1:fixed-core-base-v1:fixed-bilinear-interior-ramp-v1:flat-owner-v1",
+        "newRecipe": "place-outline-platform-v3:H:fixed-two-shear-grid-v1:fixed-core-base-v1:fixed-bilinear-interior-ramp-v1:directional-ramp-v1:flat-owner-v1",
+        "oldRevision": 6,
+        "migratedRevision": 7,
+        "version": 6,
+        "northFloor": {
+          "points": 11305,
+          "sha256": "34ff745b0eaabb2bcd29ac0a6b29673dd82128548dbd41f6e50627d9999bd137"
+        }
+      }
+    },
+    {
+      "name": "migration write failure rolls back atomically and retries; deleted owner cannot migrate"
+    },
+    {
+      "name": "legacy migration strictly rejects unrecognized old keys, corrupt history and invalid record without repair",
+      "detail": [
+        "v2 current shape has explicit north",
+        "v2 history has a west direction",
+        "v2 direction key is undefined",
+        "v2 extra shape key",
+        "v2 broken chain",
+        "v2 unsupported record version",
+        "v2 mismatched owner",
+        "v2 invalid revision",
+        "v2 invalid production growth"
+      ]
+    },
+    {
+      "name": "omitted north height is exactly old v2, including low inlet; explicit hill north is exact",
+      "detail": {
+        "samples": 48279
+      }
+    },
+    {
+      "name": "direction-only edit, Undo/Redo and actual opener preserve shape parameters and later moved owners after reopen",
+      "detail": {
+        "shape": {
+          "center": {
+            "x": 5,
+            "z": 5
+          },
+          "radius": 1.6,
+          "height": 0.5,
+          "entrance": 1.2,
+          "flatRadius": 1.75,
+          "rampDirection": "west"
+        },
+        "floor": {
+          "points": 11305,
+          "sha256": "8898a94998a7e314f857e7f1f1360d92fb8c620b87529e02edb4762855cd48cb"
+        },
+        "owners": [
+          {
+            "id": "starter-flower",
+            "cell": {
+              "x": 6,
+              "z": 5
+            }
+          },
+          {
+            "id": "starter-bench",
+            "cell": {
+              "x": 5,
+              "z": 5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "stale cursor rejected; simultaneous edits commit exactly once"
+    },
+    {
+      "name": "write failure rolls back shape, history, revision and intent; retry succeeds"
+    },
+    {
+      "name": "new furniture prevents unsafe Undo; live actor footing remains guarded"
+    },
+    {
+      "name": "synthetic current-revision receipt passes real writer and survives reopen; wrong identity rejected",
+      "detail": "This is not evidence of a rendered or naturally occurring use."
+    },
+    {
+      "name": "independent grid edits and place history survive one another; grid edits invalidate stale place input"
+    },
+    {
+      "name": "66 real writes retain the newest 64 edits after reopen; a new branch clears redo"
+    },
+    {
+      "name": "corrupt/future saves rejected and retained unchanged",
+      "detail": [
+        "unknown recipe",
+        "unknown history version",
+        "unknown v3 direction",
+        "null v3 direction",
+        "direction on negative inlet",
+        "infinite coordinate",
+        "out of acquired land",
+        "radius below supported range",
+        "height above supported range",
+        "entrance below supported range",
+        "platform above supported range",
+        "broken undo chain",
+        "broken redo chain",
+        "missing history",
+        "oversized history"
+      ]
+    }
+  ],
+  "command": "node docs/design/2026-10-23-place-brush-trial/persistence-check.mjs v10-direction-migration",
+  "runtime": "v22.23.3",
+  "expected": "Every assertion passes through the actual trial-transformed repository writer and reader",
+  "actual": "pass",
+  "inputs": {
+    "fixture": "docs/design/2026-10-23-place-method-comparison/evidence/expanded-place-recipe-flower-flat-wide-fixture.json",
+    "fixtureSha256": "aebbfcaceec10e52b1d092a5bb33b938ab09002b5aa62e5ee53691223be203b2",
+    "transformedBundleSha256": "4cb99935e3fc19308f709a44c9c1235300ff1161a1ee250861871acb4146e5f9",
+    "transformConfigSha256": "daec9d4979eb791731653fb15083150f2c8ddcf48c00f42faceea77e099f8bbd"
+  }
+}

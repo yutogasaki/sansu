@@ -1,0 +1,97 @@
+{
+  "at": "2026-10-24T04:28:57.774Z",
+  "status": "PASS",
+  "database": "SansuAssemblyTrialV1",
+  "recipe": "assembly-save-v1:platforms-then-protected-bay-memory-v1:depth-0.4-2.4:H:fixed-two-shear-grid-v1:fixed-core-base-v1:fixed-bilinear-interior-ramp-v1:directional-ramp-v1:flat-owner-v1",
+  "scope": "Fake IndexedDB actual production transaction/read/observe dependencies under the trial transform; no browser or release claim",
+  "results": [
+    {
+      "name": "two platforms, a deep bay and later ordinary moves/purchases survive actual writer close/reopen",
+      "detail": {
+        "drops": 9130,
+        "geometry": {
+          "floor": "752464da829e4feca37bd0d8184c94248502175d2c812d579946deb169b0d942",
+          "routes": "29989b091b3880ebc4a62366c2187ae64635b389e249b8892e0ab42c55862a82"
+        },
+        "owners": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "growth": 6
+          },
+          {
+            "id": "starter-bench",
+            "kind": "bench",
+            "cell": {
+              "x": -1,
+              "z": 4
+            },
+            "growth": 0
+          },
+          {
+            "id": "l1",
+            "kind": "bench",
+            "cell": {
+              "x": 5,
+              "z": 5
+            },
+            "growth": 0
+          },
+          {
+            "id": "l2",
+            "kind": "flower",
+            "cell": {
+              "x": 6,
+              "z": 5
+            },
+            "growth": 0,
+            "color": "red"
+          }
+        ]
+      }
+    },
+    {
+      "name": "reopened Undo/Redo changes only shapes, preserving purchases, wallet, clocks, progress and owners"
+    },
+    {
+      "name": "duplicate intent is idempotent; stale cursor rejects; concurrent same-cursor edits commit once"
+    },
+    {
+      "name": "actual writer failure rolls back every saved byte; same intent retries once"
+    },
+    {
+      "name": "bay depth survives reload and reopened Undo/Redo, without changing owners or wallet"
+    },
+    {
+      "name": "invalid bay depth and foreign DB/profile reject before mutation or foreign DB open"
+    },
+    {
+      "name": "bad recipe and foreign-key record reject without fixture substitution"
+    }
+  ],
+  "metadata": {
+    "node": "v22.23.3",
+    "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-brush-trial/assembly-persistence-check.mjs two-bay-compat",
+    "inputSHA256": {
+      "assembly-store.ts": "4650befff962c7debbc67773ae5d79d46d64d4b669e8baf59f98a29f09884ccd",
+      "assembly-mode.ts": "654aef8d680b79df6237c81b0f8af454daa4d7e78ccc68ea70d5672e2c214610",
+      "assembly-section.ts": "15b05cd87fee9db17e54f81d0cd3ab029bffc1f8a624d022561c6409cef0a054",
+      "coastal-section.ts": "75170b31383e59e8874b8aa8290b549fb7ffd278e7313092b0118e06d36b22f3",
+      "bay-section.ts": "72dfb86624b77625406c00b4a055ba9b0ffd114668a102c44739c435d53115b0",
+      "directional-field.ts": "0dc03ed7b2dbbf87ef79973405f72c5d762c26dff2e3aa462ea5c85e73f7e54b",
+      "composite-store.ts": "708b2b1cbdd90ff1d1b3feff2eec19a25f0ec9c3051b02dce9f9dfd4b32b2536",
+      "composite-field.ts": "0a63b64afeae4cfd78fef2eda0ad1f69e85f0e566bfac70eb51f7bfcd36a5f0f",
+      "composite-model.ts": "e4a1b014ca21c18d93b6bed5974667783536ab1e885462085994b4474cd3d6c3",
+      "assembly-persistence-check.ts": "a3aec9c153f2f23aee1c92161b1b230f30856de4a5df60be23b09a03d5e052fc",
+      "assembly-persistence-check.mjs": "c894750833e15fa760d0613d456f9ed178af94666e8c8c1879e70d5aa3ef6800",
+      "TrialIsland.ts": "50ee145cb8167339f55f18f27f6160e9032cae3956f22d09b1c4aa5c89bce013",
+      "vite.config.ts": "cce0e9e67ee2963efd2d31cb9eb46bbd19eb8e705b6416256bad8414ad7a4150"
+    },
+    "changedInputs": [],
+    "bundleSHA256": "0e3e9e6e8d7147e08933bcd15c54e082deb295429fb8a36c59943a09a9657e62"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-25T12:46:16.055595+00:00",
+  "scripts": {
+    "tools/e2e-kokugo-kanji.mjs": "3fea39363f5ec6c366703d8a4e9dc7d310455cbee00fa5d5cf41fc748f60e7b5",
+    "tools/e2e-kokugo.mjs": "1dec9e6b8de1533e2061052983761d864218f3bf8f6617d637695d5ced6b2376",
+    "tools/e2e-kokugo-update.mjs": "3b23c1c85e8fc726e1ce713ccd01b91e59bf6991351168dd987b82d07501a248",
+    "tools/e2e-smoke.mjs": "5c0b96c1987dc60be8876884c29a243ea6596a41e9ad5a9a27ef64b62c601752"
+  },
+  "afterBuildChanges": "QA only: wait for enabled saved-work editor, measure ready DOM before IPC, avoid decoding an already rendered transient image. Application inputs unchanged."
+}

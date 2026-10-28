@@ -1,0 +1,85 @@
+{
+  "at": "2026-10-24T00:46:00.214Z",
+  "scope": "strict physical flat support; no route or pinned-footing grant",
+  "heightTolerance": 0.000001,
+  "uncoveredAreaTolerance": 1e-12,
+  "cases": [
+    {
+      "name": "whole flat rectangle",
+      "accepted": true
+    },
+    {
+      "name": "opposite triangle winding",
+      "accepted": true
+    },
+    {
+      "name": "translated physical floor uses actual center",
+      "accepted": true
+    },
+    {
+      "name": "wide sheared floor covers physical rectangle",
+      "accepted": true
+    },
+    {
+      "name": "logical square support does not cover rigid physical corners after shear",
+      "accepted": false
+    },
+    {
+      "name": "tilted floor",
+      "accepted": false
+    },
+    {
+      "name": "shore boundary within footprint",
+      "accepted": false
+    },
+    {
+      "name": "raised overlapping deck",
+      "accepted": false
+    },
+    {
+      "name": "same-level overlapping deck",
+      "accepted": false
+    },
+    {
+      "name": "water covers edge of otherwise flat ground",
+      "accepted": false
+    },
+    {
+      "name": "water below solid ground",
+      "accepted": true
+    },
+    {
+      "name": "small hole between the old 25 sample points",
+      "accepted": false
+    },
+    {
+      "name": "overlap cannot pay for a hole by area sum",
+      "accepted": false
+    },
+    {
+      "name": "narrow seam is still a real hole",
+      "accepted": false
+    },
+    {
+      "name": "shared seam without gap",
+      "accepted": true
+    },
+    {
+      "name": "flat center with steep outer rim",
+      "accepted": false
+    }
+  ],
+  "actual": {
+    "eastOld": false,
+    "eastFlat": true,
+    "centerFlat": true,
+    "southFlat": false,
+    "originalAccepted": 52,
+    "newlyFlat": [
+      {
+        "x": 6,
+        "z": 5
+      }
+    ]
+  }
+}

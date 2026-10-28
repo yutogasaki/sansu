@@ -1,0 +1,72 @@
+{
+  "at": "2026-10-23T12:51:28.846Z",
+  "base": "http://127.0.0.1:5198",
+  "source": {
+    "src/components/island/growing/GrowingTray.tsx": "62cfde1372dfa005491a4464c0b831de5974459ebf9e4ff682fe0a81eb8f3ea6",
+    "src/components/island/growing/storedCatalog.ts": "eefa0551a636e527ed4a6c3fed5c86e6aeda608f803be63c341b07308cf03b00",
+    "src/components/island/growing/catalogPictures.ts": "0fc5acbbf74b8b03e09ba292c6b5019837795c5db3821224b7e4e178d6c0a6a1",
+    "tools/e2e-growing-inventory.mjs": "2d8f2ef90ad14a7fe79a4adc852e8f888f82597ff0e243923bd2f09ff0f1d069"
+  },
+  "scope": "Disposable DEV fixture with 100 stored benches, variants and awards; UI grouping, filters, cancel, one-owner placement and reload. Not earned acquisition, release/PWA or child observation.",
+  "cases": [
+    {
+      "width": 390,
+      "metadata": {
+        "url": "http://127.0.0.1:5198/#/island",
+        "revision": "development-local",
+        "version": "development-local:7554d847-56f5-4efb-a8d8-bb12880419e0",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "drawCalls": 0,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:7554d847-56f5-4efb-a8d8-bb12880419e0",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 768,
+      "metadata": {
+        "url": "http://127.0.0.1:5198/#/island",
+        "revision": "development-local",
+        "version": "development-local:7554d847-56f5-4efb-a8d8-bb12880419e0",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "drawCalls": 0,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": false,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:7554d847-56f5-4efb-a8d8-bb12880419e0",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "pass": true
+    }
+  ],
+  "pass": true
+}

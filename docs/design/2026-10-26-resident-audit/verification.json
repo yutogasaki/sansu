@@ -1,0 +1,61 @@
+{
+  "at": "2026-10-26T04:07:53.275382+00:00",
+  "revision": "resident-fix-f7464dd16ad1",
+  "resolved": [
+    {
+      "id": "RESIDENT-A01",
+      "severity": "P1",
+      "problem": "Another resident receives a pending name draft when selection changes",
+      "before": "before-ui/report.json",
+      "fix": "Key the stateful sheet body by owner seed and target; existing island-owner lifecycle also clears selected target on island switch",
+      "after": "fixed-ui/report.json"
+    },
+    {
+      "id": "RESIDENT-A02",
+      "severity": "P2",
+      "problem": "A resident still on the boat can visit the house",
+      "before": "logs/sansu-resident-before-tests.log",
+      "fix": "Exclude pending arrivals from houseGuests without mutating ownership or queue",
+      "after": "logs/sansu-resident-related-tests.log"
+    },
+    {
+      "id": "RESIDENT-A03",
+      "severity": "P2",
+      "problem": "Away arrivals are kept as visible boat actors; waiting arrivals consume landed actor slots",
+      "before": "logs/sansu-resident-before-tests.log",
+      "fix": "Filter away residents before building the actor set; select twelve landed residents separately from pending boat actors",
+      "after": "logs/sansu-resident-related-tests.log"
+    }
+  ],
+  "verification": {
+    "focused": "79 PASS / 10 files",
+    "componentUI": "PASS at 390/768/320; real React component with synthetic props",
+    "productionUI": "PASS at 390/768; synthetic resident save, actual UI name/away/return, reload, actual SW offline, owned and learning data comparison",
+    "typecheck": "PASS",
+    "lint": "PASS; 0 errors / 5 pre-existing warnings outside changed files",
+    "build": "PASS; precache 9.34MiB / 12MiB",
+    "smoke": "32/32 PASS",
+    "fullUnit": "NOT RUN: prior complete source took about 20 minutes; 30-minute bounded task uses focused tests and records full-suite gap",
+    "twoBuildUpdate": "NOT RUN; no storage schema or SW code changed",
+    "docs": "PASS",
+    "index": "PASS: legacy generated index only; full portal not run",
+    "portal": "NOT RUN in this bounded resident audit",
+    "lintFinal": "PASS; all changed code and final QA files, no errors or warnings"
+  },
+  "diagnostics": {
+    "firstProductionAttempt": "Harness waited for a learning button on the initial intro page; actual entry is しまへ いく. Original failure retained.",
+    "secondProductionAttempt": "Harness referenced obsolete foundationIslands. Current schema14 uses terrainIslands. Retained failure and corrected final driver.",
+    "consultation": "UNAVAILABLE. No substantive ChatGPT opinion obtained; see consultation.json."
+  },
+  "notVerified": [
+    "Real devices",
+    "Human child comprehension / voluntary return",
+    "Earned arrival acquisition in this two-resident fixture",
+    "Full unit suite on this revision",
+    "Two-build PWA update",
+    "Independent ChatGPT co-audit"
+  ],
+  "noDataMigration": true,
+  "publication": "No commit, push, public deployment or real-profile modifications. Fixed review build is served separately on port5297.",
+  "closedAt": "2026-10-26T04:09:01.909255+00:00"
+}

@@ -1,3 +1,4 @@
+import { useKokugoOverview } from '../components/progress/useKokugoOverview';
 import { KokugoProgressCard } from '../components/kokugo/KokugoProgress';
 import { FoundationProgress } from '../components/progress/FoundationProgress';
 import { ActivitySummary } from '../components/progress/ActivitySummary';
@@ -348,6 +349,7 @@ export const Stats: React.FC = () => {
             .slice(0, 10);
     }, [profile?.testHistory]);
 
+    const kokugoOverview = useKokugoOverview(profile?.id);
     const isEasy = profile?.uiTextMode === "easy";
     const t = (easy: string, standard: string) => (isEasy ? easy : standard);
     const closeAction = navigation ? undefined : (
@@ -399,11 +401,11 @@ export const Stats: React.FC = () => {
                     onLearn={() => { warmUpTTS(); if (navigation) navigation.startLearning(); else navigate('/study'); }}
                     onFinish={subject => { warmUpTTS(); const path = finishEntryPath(subject); if (navigation) navigation.open(path); else navigate(path); }} />
 
-                {activity && <ActivitySummary key={profile.id} profileId={profile.id} logs={activity.logs} now={activity.now} easy={isEasy} />}
+                {activity && <ActivitySummary key={profile.id} profileId={profile.id} logs={activity.logs} now={activity.now} easy={isEasy} entries={kokugoOverview?.activities} />}
                 <FoundationProgress profileId={profile.id} />
-                    <KokugoProgressCard profileId={profile.id} />
+                    <KokugoProgressCard profileId={profile.id} easy={isEasy} />
 
-                {totalStats.count === 0 && (
+                {totalStats.count === 0 && kokugoOverview && !kokugoOverview.error && !kokugoOverview.activities.length && (
                     <SurfacePanel className="stats-first-record space-y-4 p-5">
                         <SurfacePanelHeader title={t("まなびの きろくが たまるよ", "ここに学びの記録がたまります")} description={t("といた もんだいや、まなんだ ひを ここで ふりかえれるよ。", "解いた問題や学習した日を、ここで振り返れます。")} />
                         <Button onClick={() => { if (navigation) navigation.startLearning(); else { warmUpTTS(); navigate("/study"); } }}>まなぶ</Button>
@@ -411,7 +413,7 @@ export const Stats: React.FC = () => {
                 )}
 
                 <details className="stats-disclosure">
-                    <summary>{t('きょうの まとめ・グラフ', '今日のまとめ・グラフ')}</summary>
+                    <summary>{t('さんすう・えいたんごの グラフ', '算数・英単語のまとめ・グラフ')}</summary>
                 <div className={navigation ? "stats-overview" : "space-y-8"}>
                 {totalStats.count > 0 && (
                     <SurfacePanel className="stats-today space-y-4 rounded-[28px] p-5">
@@ -479,7 +481,7 @@ export const Stats: React.FC = () => {
                 </details>
 
                 <details className="stats-disclosure">
-                    <summary>{t('まなびの くわしい きろく', '学びの詳しい記録')}</summary>
+                    <summary>{t('さんすう・えいたんごの くわしい きろく', '算数・英単語の詳しい記録')}</summary>
                 <div id="stats-learning-details" className={navigation ? "stats-details-grid" : "space-y-8"}>
                     <SurfacePanel className="space-y-4 p-5">
                         <SurfacePanelHeader title={t("さいきんの まなび", "最近の学び")} />

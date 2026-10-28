@@ -1,0 +1,1981 @@
+{
+  "startedAt": "2026-10-21T17:01:43.833Z",
+  "scope": "Pure geometry/footprint diagnostic, not rendered-model collision or browser evidence",
+  "rows": [
+    {
+      "method": "a-soft",
+      "fixture": "cove",
+      "triangles": 32768,
+      "buildMs": 42.52524999999999,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 251,
+      "maxResidual": 2.2065682614424986e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "a-soft",
+      "fixture": "tree",
+      "triangles": 32768,
+      "buildMs": 21.955416999999983,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 251,
+      "maxResidual": 2.2065682614424986e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "a-soft",
+      "fixture": "house",
+      "triangles": 32768,
+      "buildMs": 22.242166999999995,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 7,
+      "samples": 251,
+      "maxResidual": 2.2065682614424986e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "a-soft",
+      "fixture": "neck",
+      "triangles": 32768,
+      "buildMs": 21.816958,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": false
+        }
+      ],
+      "pathLength": 8,
+      "samples": 251,
+      "maxResidual": 2.2065682614424986e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "a-soft",
+      "fixture": "diagonal",
+      "triangles": 32768,
+      "buildMs": 22.67591600000003,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 251,
+      "maxResidual": 2.2065682614424986e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "a-soft",
+      "fixture": "steps",
+      "triangles": 32768,
+      "buildMs": 21.761124999999993,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 251,
+      "maxResidual": 2.2065682614424986e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "a-shoulder",
+      "fixture": "cove",
+      "triangles": 32768,
+      "buildMs": 26.705458999999905,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 251,
+      "maxResidual": 2.6922908347160046e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "a-shoulder",
+      "fixture": "tree",
+      "triangles": 32768,
+      "buildMs": 25.8900000000001,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 251,
+      "maxResidual": 2.6922908347160046e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "a-shoulder",
+      "fixture": "house",
+      "triangles": 32768,
+      "buildMs": 26.11345899999992,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 251,
+      "maxResidual": 2.6922908347160046e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "a-shoulder",
+      "fixture": "neck",
+      "triangles": 32768,
+      "buildMs": 25.92012499999987,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 251,
+      "maxResidual": 2.6922908347160046e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "a-shoulder",
+      "fixture": "diagonal",
+      "triangles": 32768,
+      "buildMs": 27.141208000000006,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 251,
+      "maxResidual": 2.6922908347160046e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "a-shoulder",
+      "fixture": "steps",
+      "triangles": 32768,
+      "buildMs": 26.683291999999938,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 251,
+      "maxResidual": 2.7430314963883262e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "a-spline",
+      "fixture": "cove",
+      "triangles": 32768,
+      "buildMs": 47.25783299999989,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 251,
+      "maxResidual": 1.1934897514720433e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "a-spline",
+      "fixture": "tree",
+      "triangles": 32768,
+      "buildMs": 45.20429100000001,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 251,
+      "maxResidual": 1.1934897514720433e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "a-spline",
+      "fixture": "house",
+      "triangles": 32768,
+      "buildMs": 32.3895829999999,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 251,
+      "maxResidual": 1.1934897514720433e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "a-spline",
+      "fixture": "neck",
+      "triangles": 32768,
+      "buildMs": 44.204125000000204,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": false
+        }
+      ],
+      "pathLength": 8,
+      "samples": 251,
+      "maxResidual": 1.1934897514720433e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "a-spline",
+      "fixture": "diagonal",
+      "triangles": 32768,
+      "buildMs": 32.36612500000001,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 251,
+      "maxResidual": 1.1934897514720433e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "a-spline",
+      "fixture": "steps",
+      "triangles": 32768,
+      "buildMs": 31.781333999999788,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 251,
+      "maxResidual": 1.1934897514720433e-15,
+      "families": {
+        "flat": 0,
+        "edge": 0,
+        "convex": 0,
+        "concave": 0,
+        "saddle": 0
+      },
+      "cutTriangles": 32768
+    },
+    {
+      "method": "b-crisp",
+      "fixture": "cove",
+      "triangles": 1506,
+      "buildMs": 3.9958330000004025,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 151,
+      "maxResidual": 1.8318679906315083e-15,
+      "families": {
+        "flat": 79,
+        "edge": 38,
+        "convex": 28,
+        "concave": 16,
+        "saddle": 0
+      },
+      "cutTriangles": 1520
+    },
+    {
+      "method": "b-crisp",
+      "fixture": "tree",
+      "triangles": 1506,
+      "buildMs": 2.5002080000003843,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 151,
+      "maxResidual": 1.8318679906315083e-15,
+      "families": {
+        "flat": 79,
+        "edge": 38,
+        "convex": 28,
+        "concave": 16,
+        "saddle": 0
+      },
+      "cutTriangles": 1520
+    },
+    {
+      "method": "b-crisp",
+      "fixture": "house",
+      "triangles": 1506,
+      "buildMs": 2.5587500000001455,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 151,
+      "maxResidual": 1.8318679906315083e-15,
+      "families": {
+        "flat": 79,
+        "edge": 38,
+        "convex": 28,
+        "concave": 16,
+        "saddle": 0
+      },
+      "cutTriangles": 1520
+    },
+    {
+      "method": "b-crisp",
+      "fixture": "neck",
+      "triangles": 1548,
+      "buildMs": 3.594583000000057,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 154,
+      "maxResidual": 1.8318679906315083e-15,
+      "families": {
+        "flat": 72,
+        "edge": 44,
+        "convex": 26,
+        "concave": 14,
+        "saddle": 0
+      },
+      "cutTriangles": 1526
+    },
+    {
+      "method": "b-crisp",
+      "fixture": "diagonal",
+      "triangles": 1740,
+      "buildMs": 3.1672920000000886,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 173,
+      "maxResidual": 2.609024107869118e-15,
+      "families": {
+        "flat": 75,
+        "edge": 36,
+        "convex": 34,
+        "concave": 16,
+        "saddle": 11
+      },
+      "cutTriangles": 1740
+    },
+    {
+      "method": "b-crisp",
+      "fixture": "steps",
+      "triangles": 1962,
+      "buildMs": 3.4229589999999916,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 165,
+      "maxResidual": 1.6653345369377348e-15,
+      "families": {
+        "flat": 92,
+        "edge": 56,
+        "convex": 35,
+        "concave": 15,
+        "saddle": 0
+      },
+      "cutTriangles": 2048
+    },
+    {
+      "method": "b-soft",
+      "fixture": "cove",
+      "triangles": 1506,
+      "buildMs": 2.02212499999996,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": false
+        },
+        {
+          "id": "t3",
+          "supported": false
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 145,
+      "maxResidual": 6.106226635438361e-16,
+      "families": {
+        "flat": 79,
+        "edge": 38,
+        "convex": 28,
+        "concave": 16,
+        "saddle": 0
+      },
+      "cutTriangles": 1520
+    },
+    {
+      "method": "b-soft",
+      "fixture": "tree",
+      "triangles": 1506,
+      "buildMs": 2.2557080000001406,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": false
+        },
+        {
+          "id": "t3",
+          "supported": false
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 145,
+      "maxResidual": 6.106226635438361e-16,
+      "families": {
+        "flat": 79,
+        "edge": 38,
+        "convex": 28,
+        "concave": 16,
+        "saddle": 0
+      },
+      "cutTriangles": 1520
+    },
+    {
+      "method": "b-soft",
+      "fixture": "house",
+      "triangles": 1506,
+      "buildMs": 2.1692920000000413,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": false
+        },
+        {
+          "id": "t3",
+          "supported": false
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 145,
+      "maxResidual": 6.106226635438361e-16,
+      "families": {
+        "flat": 79,
+        "edge": 38,
+        "convex": 28,
+        "concave": 16,
+        "saddle": 0
+      },
+      "cutTriangles": 1520
+    },
+    {
+      "method": "b-soft",
+      "fixture": "neck",
+      "triangles": 1548,
+      "buildMs": 2.4071249999997235,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": false
+        },
+        {
+          "id": "t3",
+          "supported": false
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 148,
+      "maxResidual": 6.106226635438361e-16,
+      "families": {
+        "flat": 72,
+        "edge": 44,
+        "convex": 26,
+        "concave": 14,
+        "saddle": 0
+      },
+      "cutTriangles": 1526
+    },
+    {
+      "method": "b-soft",
+      "fixture": "diagonal",
+      "triangles": 1740,
+      "buildMs": 2.571875000000091,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": false
+        },
+        {
+          "id": "t3",
+          "supported": false
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 167,
+      "maxResidual": 8.326672684688674e-16,
+      "families": {
+        "flat": 75,
+        "edge": 36,
+        "convex": 34,
+        "concave": 16,
+        "saddle": 11
+      },
+      "cutTriangles": 1740
+    },
+    {
+      "method": "b-soft",
+      "fixture": "steps",
+      "triangles": 1962,
+      "buildMs": 2.883874999999989,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": false
+        },
+        {
+          "id": "t3",
+          "supported": false
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 159,
+      "maxResidual": 1.1102230246251565e-15,
+      "families": {
+        "flat": 92,
+        "edge": 56,
+        "convex": 35,
+        "concave": 15,
+        "saddle": 0
+      },
+      "cutTriangles": 2048
+    },
+    {
+      "method": "b-curved",
+      "fixture": "cove",
+      "triangles": 5106,
+      "buildMs": 8.122875000000022,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 141,
+      "maxResidual": 1.3877787807814457e-15,
+      "families": {
+        "flat": 79,
+        "edge": 38,
+        "convex": 28,
+        "concave": 16,
+        "saddle": 0
+      },
+      "cutTriangles": 5176
+    },
+    {
+      "method": "b-curved",
+      "fixture": "tree",
+      "triangles": 5106,
+      "buildMs": 6.462875000000167,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 141,
+      "maxResidual": 1.3877787807814457e-15,
+      "families": {
+        "flat": 79,
+        "edge": 38,
+        "convex": 28,
+        "concave": 16,
+        "saddle": 0
+      },
+      "cutTriangles": 5176
+    },
+    {
+      "method": "b-curved",
+      "fixture": "house",
+      "triangles": 5106,
+      "buildMs": 5.927374999999756,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 141,
+      "maxResidual": 1.3877787807814457e-15,
+      "families": {
+        "flat": 79,
+        "edge": 38,
+        "convex": 28,
+        "concave": 16,
+        "saddle": 0
+      },
+      "cutTriangles": 5176
+    },
+    {
+      "method": "b-curved",
+      "fixture": "neck",
+      "triangles": 5322,
+      "buildMs": 5.8720839999996315,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 140,
+      "maxResidual": 1.27675647831893e-15,
+      "families": {
+        "flat": 72,
+        "edge": 44,
+        "convex": 26,
+        "concave": 14,
+        "saddle": 0
+      },
+      "cutTriangles": 5248
+    },
+    {
+      "method": "b-curved",
+      "fixture": "diagonal",
+      "triangles": 6038,
+      "buildMs": 6.531165999999757,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 90,
+      "maxResidual": 6.661338147750939e-16,
+      "families": {
+        "flat": 75,
+        "edge": 36,
+        "convex": 34,
+        "concave": 16,
+        "saddle": 11
+      },
+      "cutTriangles": 6038
+    },
+    {
+      "method": "b-curved",
+      "fixture": "steps",
+      "triangles": 6758,
+      "buildMs": 6.832417000000078,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 138,
+      "maxResidual": 1.3322676295501878e-15,
+      "families": {
+        "flat": 92,
+        "edge": 56,
+        "convex": 35,
+        "concave": 15,
+        "saddle": 0
+      },
+      "cutTriangles": 7120
+    },
+    {
+      "method": "b-decider",
+      "fixture": "cove",
+      "triangles": 5106,
+      "buildMs": 6.025583999999981,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 141,
+      "maxResidual": 1.3877787807814457e-15,
+      "families": {
+        "flat": 79,
+        "edge": 38,
+        "convex": 28,
+        "concave": 16,
+        "saddle": 0
+      },
+      "cutTriangles": 5248
+    },
+    {
+      "method": "b-decider",
+      "fixture": "tree",
+      "triangles": 5106,
+      "buildMs": 7.954125000000204,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 141,
+      "maxResidual": 1.3877787807814457e-15,
+      "families": {
+        "flat": 79,
+        "edge": 38,
+        "convex": 28,
+        "concave": 16,
+        "saddle": 0
+      },
+      "cutTriangles": 5248
+    },
+    {
+      "method": "b-decider",
+      "fixture": "house",
+      "triangles": 5106,
+      "buildMs": 6.235584000000017,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 141,
+      "maxResidual": 1.3877787807814457e-15,
+      "families": {
+        "flat": 79,
+        "edge": 38,
+        "convex": 28,
+        "concave": 16,
+        "saddle": 0
+      },
+      "cutTriangles": 5248
+    },
+    {
+      "method": "b-decider",
+      "fixture": "neck",
+      "triangles": 5322,
+      "buildMs": 15.14212499999985,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 140,
+      "maxResidual": 1.27675647831893e-15,
+      "families": {
+        "flat": 72,
+        "edge": 44,
+        "convex": 26,
+        "concave": 14,
+        "saddle": 0
+      },
+      "cutTriangles": 5248
+    },
+    {
+      "method": "b-decider",
+      "fixture": "diagonal",
+      "triangles": 6820,
+      "buildMs": 14.788582999999562,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 133,
+      "maxResidual": 1.3877787807814457e-15,
+      "families": {
+        "flat": 75,
+        "edge": 36,
+        "convex": 34,
+        "concave": 16,
+        "saddle": 11
+      },
+      "cutTriangles": 6820
+    },
+    {
+      "method": "b-decider",
+      "fixture": "steps",
+      "triangles": 6758,
+      "buildMs": 7.14633399999957,
+      "owners": [
+        {
+          "id": "home",
+          "supported": true
+        },
+        {
+          "id": "t1",
+          "supported": true
+        },
+        {
+          "id": "t2",
+          "supported": true
+        },
+        {
+          "id": "t3",
+          "supported": true
+        },
+        {
+          "id": "t4",
+          "supported": true
+        },
+        {
+          "id": "t5",
+          "supported": true
+        },
+        {
+          "id": "t6",
+          "supported": true
+        }
+      ],
+      "pathLength": 8,
+      "samples": 138,
+      "maxResidual": 1.3322676295501878e-15,
+      "families": {
+        "flat": 92,
+        "edge": 56,
+        "convex": 35,
+        "concave": 15,
+        "saddle": 0
+      },
+      "cutTriangles": 7192
+    }
+  ],
+  "completedAt": "2026-10-21T17:01:47.212Z"
+}

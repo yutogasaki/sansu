@@ -1,0 +1,16 @@
+
+> pokko-fushigi-zukan-app@0.0.0 agent:index
+> node tools/generate-agent-index.mjs && npm run portal:build
+
+Unchanged: .agents/index.html
+Unchanged: .agents/tasks/index.html
+Unchanged: docs/index.html
+Unchanged: .agents/map.html
+Unchanged: .agents/plan.html
+Unchanged: .agents/roles.html
+Unchanged: .agents/operations.html
+
+> pokko-fushigi-zukan-app@0.0.0 portal:build
+> node scripts/standard-portal.mjs build
+
+{"status":"PASS","files":2056}

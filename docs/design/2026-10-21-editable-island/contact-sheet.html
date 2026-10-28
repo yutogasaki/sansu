@@ -1,0 +1,20 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>土地の直接編集・実操作の画面</title>
+<style>body{margin:30px auto;padding:0 20px;max-width:1500px;font:16px/1.8 system-ui;color:#30374f;background:#f6f7fb}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}figure{margin:0;background:white;padding:10px;border-radius:14px}img{max-width:100%;height:auto;display:block}h1{font-size:26px}h2{font-size:21px}a{color:#4052b3}figcaption{font-size:13px}.comparison{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}</style>
+<h1>同じ島を盛る・掘る・つなぐ</h1><p><a href="index.html">操作する試作</a> · <a href="README.md">契約と確認結果</a></p>
+<p>2026-10-21。候補 editable-island-study-v1 / 配布 standalone-study-only / revision e1ab65f479640180。空のChromium環境・service workerなし・音offを初期状態とし、reduced motionで確認。同じviewportでは同じ初期camera。本体ではなく専用試作の実画面。</p>
+<h2>390 × 844</h2><div class="grid">
+<figure><img src="evidence-attempt-05/390-start.png" alt="はじめの島"><figcaption>1. はじめの島</figcaption></figure>
+<figure><img src="evidence-attempt-05/390-hill.png" alt="同じ場所を2回盛った丘"><figcaption>2. 同じ場所を2回盛る</figcaption></figure>
+<figure><img src="evidence-attempt-05/390-islet.png" alt="入り江と離れ小島"><figcaption>3. 入り江と離れ小島</figcaption></figure>
+<figure><img src="evidence-attempt-05/390-undo.png" alt="接続を戻して再び小島"><figcaption>4. 接続をUndo</figcaption></figure>
+<figure><img src="evidence-attempt-05/390-inlet-linked.png" alt="つなぎ直して植える"><figcaption>5. つなぎ直し、木を植える</figcaption></figure>
+<figure><img src="evidence-attempt-05/390-evening.png" alt="同じ島の夕方"><figcaption>6. 同じ島の夕方</figcaption></figure></div>
+<h2>768 × 1024</h2><div class="grid">
+<figure><img src="evidence-attempt-05/768-start.png" alt="はじめの島・タブレット幅"><figcaption>1. はじめの島</figcaption></figure>
+<figure><img src="evidence-attempt-05/768-hill.png" alt="丘・タブレット幅"><figcaption>2. 同じ場所を2回盛る</figcaption></figure>
+<figure><img src="evidence-attempt-05/768-islet.png" alt="小島・タブレット幅"><figcaption>3. 入り江と離れ小島</figcaption></figure>
+<figure><img src="evidence-attempt-05/768-undo.png" alt="Undo・タブレット幅"><figcaption>4. 接続をUndo</figcaption></figure>
+<figure><img src="evidence-attempt-05/768-inlet-linked.png" alt="つなぎ直し・タブレット幅"><figcaption>5. つなぎ直し、木を植える</figcaption></figure>
+<figure><img src="evidence-attempt-05/768-evening.png" alt="夕方・タブレット幅"><figcaption>6. 同じ島の夕方</figcaption></figure></div>
+<h2>目標の美術との距離</h2><div class="comparison"><figure><img src="../2026-10-10-island-final-3d/whole-island-render.png" alt="採用native-05の全島3D原本"><figcaption>目標側：採用native-05の原本レンダー。今回の実画面や同条件の機能比較ではない。</figcaption></figure><figure><img src="evidence-attempt-05/768-inlet-linked.png" alt="今回の操作試作"><figcaption>今回：直接編集と反応を確かめる粗形。縮尺・カメラ・戸数が異なるため、目標美術の達成とは扱わない。</figcaption></figure></div>
+<p>目標にある固有の大樹・回廊・建物、水路・滝、密度の対比や素材の細部は未再現。美術：HOLD。子どもの無説明理解・再訪：未観察。機能：専用試作の対象範囲のみPASS。</p></html>

@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "at": "2026-10-24T00:50:22.123Z",
+  "scope": "Actual transformed floor geometry and shader source composition; no GPU/visual claim",
+  "geometrySHA256": {
+    "position": "1b6c7b0e7abc3d7b7113e25332942dee0d885c02b3dcc4c04bf8687bd94f80d6",
+    "color": "931a1e04fb6a8c1525155f370c2255a46b17b27f2ab4cae0f78ef9d13a5d4ab9",
+    "normal": "1a0bd694d95ffc7821c73f8b09a844bcb340e7da5eb0e8b3d1c3ae5f24b15284",
+    "index": "baf43bd56ddaa73f2ae14238c6b925b1c570bda6b9ba4cd9ce868ca776c926d8"
+  },
+  "geometryIdentityUnchanged": true,
+  "floorAndChildrenUnchanged": true,
+  "existingGrainRetained": true,
+  "duplicateApplicationIsNoop": true,
+  "wrongShaderAnchorsReject": true,
+  "cacheKey": "editable-contour-ground-v1:continuous-ground-v1",
+  "material": {
+    "mode": "continuous",
+    "gardens": [],
+    "materialRevision": "continuous-ground-v1"
+  },
+  "node": "v22.23.3",
+  "command": "node docs/design/2026-10-23-place-brush-trial/material-check.mjs continuous",
+  "bundleSHA256": "cc13257db56c9960758ff038459ffdb151f2a6302071b5f788a2c434dad6cde3",
+  "inputSHA256": {
+    "continuous-material.ts": "1fb891d2a9d982e9a57fb721a23dba4c240ffae0b2420e7174304912f8e0f7b7",
+    "material-check.ts": "b5ce503bfa4adc4d61f193ca528e9a4ebe5b32f6c79425fdda002afdd4b94bca",
+    "material-check.mjs": "6e452f525404f716878c0c0759d852dc5d2b251f4c996b2ce126ddea4ca525db",
+    "vite.config.ts": "09be777ecda00a288cb57ddf4296419035c9d443ef8c09faab4010fc0e39a68d"
+  }
+}

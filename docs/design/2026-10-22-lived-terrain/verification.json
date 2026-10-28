@@ -1,0 +1,68 @@
+{
+  "at": "2026-10-21T21:46:47.184526+00:00",
+  "candidate": "lived-terrain",
+  "revision": "5c5ed935e657af07",
+  "delivery": "standalone-study-only",
+  "node": "22.23.3",
+  "checks": {
+    "sourceAndBundleHashes": "PASS",
+    "targetLogic": {
+      "command": "node docs/design/2026-10-22-lived-terrain/check.mjs",
+      "expected": "11 target diagnostics pass",
+      "actual": "PASS 11",
+      "source": "logic-results.json"
+    },
+    "syntax": "node --check viewer.js/world.mjs/terrain.mjs/water.js PASS",
+    "docs": "npm run docs:check PASS; existing overdue warnings 14",
+    "browser": {
+      "journeysRevision": "b37ce43457f9cd9f",
+      "summary": "evidence/journey-summary.json",
+      "finalDelta": "Selection ring follows actual edited floor; no terrain/navigation/ownership code change",
+      "finalChecks": [
+        "3 replay states and owner supports",
+        "390 CSS width",
+        "new inner-shore destination",
+        "3 raised levels and exact undo"
+      ],
+      "consoleWarningsErrors": []
+    }
+  },
+  "screenshots": {
+    "flat": {
+      "revision": "5c5ed935e657af07",
+      "viewport": {
+        "width": 1280,
+        "height": 960
+      },
+      "owners": 7,
+      "editCount": 0
+    },
+    "ell": {
+      "revision": "5c5ed935e657af07",
+      "viewport": {
+        "width": 1280,
+        "height": 960
+      },
+      "owners": 7,
+      "editCount": 2
+    },
+    "cove": {
+      "revision": "5c5ed935e657af07",
+      "viewport": {
+        "width": 1280,
+        "height": 960
+      },
+      "owners": 7,
+      "editCount": 4
+    }
+  },
+  "unverified": [
+    "full product integration/save/PWA",
+    "independent child comprehension/return",
+    "physical touch/GPU devices",
+    "reduced-motion setting interaction",
+    "full visual benchmark adoption",
+    "new ChatGPT audit of this candidate"
+  ],
+  "supersededBy": "detail-verification.json"
+}

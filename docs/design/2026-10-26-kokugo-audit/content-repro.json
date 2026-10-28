@@ -1,0 +1,66 @@
+{
+  "at": "2026-10-25T23:15:44.576Z",
+  "numberContext": [
+    {
+      "id": "HT2-4f55-scene-s2",
+      "passage": "かいに 何人くるか かぞえる。",
+      "prompt": "「何人」を ひらがなで 書こう？",
+      "accepted": [
+        "なんにん",
+        "なにじん"
+      ],
+      "answer": "なんにん",
+      "nationalityAccepted": true
+    }
+  ],
+  "handwriting": [
+    {
+      "id": "H06-1",
+      "target": "H06",
+      "prompt": "「川」を 紙に 書いてみよう。",
+      "model": "書いたら「川」と 見くらべよう。線の数や 向きを 見てみよう。"
+    },
+    {
+      "id": "H06-2",
+      "target": "H06",
+      "prompt": "「花」を 紙に 書いてみよう。",
+      "model": "書いたら「花」と 見くらべよう。上と下の まとまりを 見てみよう。"
+    },
+    {
+      "id": "H06-3",
+      "target": "H06",
+      "prompt": "「空」を 紙に 書いてみよう。",
+      "model": "書いたら「空」と 見くらべよう。大きさや 位置を 見てみよう。"
+    }
+  ],
+  "singleCharacterPromptErrors": [
+    {
+      "id": "HS5-685c-2",
+      "prompt": "音読み・訓読みが「さくらいろ」の漢字は？",
+      "answer": "桜",
+      "group": "kanji:685c:isolated"
+    },
+    {
+      "id": "HS2-982d-1-r2",
+      "prompt": "音読み・訓読みが「あたまのうえ」の漢字は？",
+      "answer": "頭",
+      "group": "kanji:982d:isolated"
+    }
+  ],
+  "scenePromptsForComparison": [
+    {
+      "id": "HS5-685c-scene-s2",
+      "prompt": "「さくらいろ」と読む「□色」。□に 入る漢字は？",
+      "answer": "桜",
+      "passage": "□色の おりがみで はなを つくる。",
+      "group": "kanji:685c:scene:s2"
+    },
+    {
+      "id": "HS2-982d-scene-s1",
+      "prompt": "「あたまのうえ」と読む「□の上」。□に 入る漢字は？",
+      "answer": "頭",
+      "passage": "たまが □の上を とおった。",
+      "group": "kanji:982d:scene:s1"
+    }
+  ]
+}

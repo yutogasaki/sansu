@@ -1,0 +1,536 @@
+{
+  "reviewDateJST": "2026-10-21",
+  "recordedAt": "2026-10-21T08:46:50.911806+00:00",
+  "startedAt": "2026-10-21T08:31:56Z",
+  "scope": "Deeper review of previous conclusions, with a static projection diagnostic and analytic terrain cross-section. Not a production or playable candidate.",
+  "priorReview": "astra-review.md",
+  "review": "astra-deep-review.md",
+  "probe": {
+    "candidate": "astra-prior-layout-projection-v1",
+    "delivery": "standalone-diagnostic-only",
+    "captureURL": "http://127.0.0.1:5274/",
+    "captureAt": "2026-10-21T08:38:18.476Z",
+    "applicationTarget": false,
+    "bundleSha256": "1fd437c93766d71935747bb794aa4d4b55a6c32529cb64892be7a81bc68c94b2",
+    "inputSourceSha256": "53266069f90effde68da436c630332193bcede115dd936c8736348f837a46490",
+    "viewports": [
+      {
+        "width": 390,
+        "height": 844,
+        "canvasHeight": 570
+      },
+      {
+        "width": 768,
+        "height": 1024,
+        "canvasHeight": 780
+      }
+    ],
+    "dpr": 1,
+    "views": 12,
+    "browser": "Chrome via Playwright",
+    "limitations": [
+      "Flat y=.42 support; no back hill or authored surface finish",
+      "Diagram-picked parts and explicit diagnostic placements, not saved owners or growth",
+      "No application UI, navigation, terrain edits or movement",
+      "Mask visibility measures silhouette geometry, not face recognition or child comprehension",
+      "Three camera angles, not three alternative layout candidates; no full orbit guarantee"
+    ]
+  },
+  "originalInputChecks": [
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/README.md",
+      "expected": "76777470b4a342b2cb36a2789f2bea9bb62f6d7eead2962b3f5fbe3105ce33c7",
+      "actual": "76777470b4a342b2cb36a2789f2bea9bb62f6d7eead2962b3f5fbe3105ce33c7",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/index.html",
+      "expected": "67a22390b92c4e64312ffe5ba174d204e2381bd6366991555f7f01cac555fb88",
+      "actual": "67a22390b92c4e64312ffe5ba174d204e2381bd6366991555f7f01cac555fb88",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/capture-motion.mjs",
+      "expected": "8981e0e023d01b263d62d6fd7e8a8526791ff9873594e43eaad54db4d0256ff1",
+      "actual": "8981e0e023d01b263d62d6fd7e8a8526791ff9873594e43eaad54db4d0256ff1",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/reference/day-provenance.json",
+      "expected": "d9e6a90c2d117e2608caef8939e87e2f97bea03562eef7c86fd9c603285b7cba",
+      "actual": "d9e6a90c2d117e2608caef8939e87e2f97bea03562eef7c86fd9c603285b7cba",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/reference/little-habitats-day.jpg",
+      "expected": "e3131e4e6b087ec332f3dd92c6f8468ac988fd9d832b1a51a36dd856ecdb9848",
+      "actual": "e3131e4e6b087ec332f3dd92c6f8468ac988fd9d832b1a51a36dd856ecdb9848",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/reference/little-habitats-evening.jpg",
+      "expected": "4fd1f602a9832412931c267a03c5487a98b3b8f3c245b129f014bd68b3e25daf",
+      "actual": "4fd1f602a9832412931c267a03c5487a98b3b8f3c245b129f014bd68b3e25daf",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/reference/provenance.json",
+      "expected": "44af16be7cb1353a7a205810ac41a4006ea0806c0850683a0040ae4050afd606",
+      "actual": "44af16be7cb1353a7a205810ac41a4006ea0806c0850683a0040ae4050afd606",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/01-ready.png",
+      "expected": "cfc3c9d05e9521905806d061376c76cb968fdc1583ef6e4c48a383d89b338bd1",
+      "actual": "cfc3c9d05e9521905806d061376c76cb968fdc1583ef6e4c48a383d89b338bd1",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/02-open.png",
+      "expected": "a3ab5c606585b6d8fb72b99a7cd6ce92c4b8775f92059bd1b1dadc7a3f561bf7",
+      "actual": "a3ab5c606585b6d8fb72b99a7cd6ce92c4b8775f92059bd1b1dadc7a3f561bf7",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/03-walking.png",
+      "expected": "8e42d8a3f0a5167457009f6dcafa702e467da78923b06ec08c4f785dad489218",
+      "actual": "8e42d8a3f0a5167457009f6dcafa702e467da78923b06ec08c4f785dad489218",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/04-observing.png",
+      "expected": "e01b108233ae52a9df70de2d68c46e9d51369c71e38ed8a3c8ca626c4da7818f",
+      "actual": "e01b108233ae52a9df70de2d68c46e9d51369c71e38ed8a3c8ca626c4da7818f",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/05-edited.png",
+      "expected": "91be79b6c25c42f6d0373a23a143f8c127faed52a337e1227101246789878fe9",
+      "actual": "91be79b6c25c42f6d0373a23a143f8c127faed52a337e1227101246789878fe9",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/06-undo.png",
+      "expected": "57c05da5c6b43d2d7b0767c073c58d1d08caf7639a08ffaa5a80b625e403cf07",
+      "actual": "57c05da5c6b43d2d7b0767c073c58d1d08caf7639a08ffaa5a80b625e403cf07",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/07-home.png",
+      "expected": "6f31f41f9dcbbfb058f711689695314da7d98f4f13d9489959d25b5aa7fd6cc7",
+      "actual": "6f31f41f9dcbbfb058f711689695314da7d98f4f13d9489959d25b5aa7fd6cc7",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/current-cove.webm",
+      "expected": "6bc4c27fdea6a3a1e6413624191ec37031b0f247feb0f3ff07409d6806845262",
+      "actual": "6bc4c27fdea6a3a1e6413624191ec37031b0f247feb0f3ff07409d6806845262",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/motion/report.json",
+      "expected": "f9d04fa13a8c86501bcf4c3a920bf3771d87b279a2cc981e3df6264bee1044f4",
+      "actual": "f9d04fa13a8c86501bcf4c3a920bf3771d87b279a2cc981e3df6264bee1044f4",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-10-island-final-3d/whole-island-render.png",
+      "expected": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "actual": "9de26a7f8a83176df37a7848cae4beea7962eb782247d07cf7e3b970a856f9c6",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/source-manifest.json",
+      "expected": "f135d8f670d5fb7a0c4b58feb29f4f8658cfab93bced64af81bbc55406ae4ead",
+      "actual": "f135d8f670d5fb7a0c4b58feb29f4f8658cfab93bced64af81bbc55406ae4ead",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/report.json",
+      "expected": "8050af8fdf391fc1b4f46be2fb7c7e739493130299ad6e353ab8ab9270c0eeb1",
+      "actual": "8050af8fdf391fc1b4f46be2fb7c7e739493130299ad6e353ab8ab9270c0eeb1",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-evening.png",
+      "expected": "75ad51db69f0ac0502f3c9931d4158d57379c49b1acbe6a03c6e619fef8c8f45",
+      "actual": "75ad51db69f0ac0502f3c9931d4158d57379c49b1acbe6a03c6e619fef8c8f45",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-new-tree-near.png",
+      "expected": "f75172ad38b17470541ea6af551874e0771dc7be9191fd65ecadecaf4f857573",
+      "actual": "f75172ad38b17470541ea6af551874e0771dc7be9191fd65ecadecaf4f857573",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-observing.png",
+      "expected": "4f2ee3416a5550463fcecebeec812763b8e24eccff94999ffae17383a364e850",
+      "actual": "4f2ee3416a5550463fcecebeec812763b8e24eccff94999ffae17383a364e850",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-old-tree-near.png",
+      "expected": "00f2d5c0a241209b228031f2e34d2d401517092f3bc72517c05a7ad17daeb661",
+      "actual": "00f2d5c0a241209b228031f2e34d2d401517092f3bc72517c05a7ad17daeb661",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-old-tree-overview.png",
+      "expected": "7e3204491bd7320224532b1f5b274a2546a994ad73e4c9bc62ae005df6f0ff98",
+      "actual": "7e3204491bd7320224532b1f5b274a2546a994ad73e4c9bc62ae005df6f0ff98",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-open.png",
+      "expected": "73e02ad000a2d6a6aeedd8bb9a0ffb2069cfd510885c42a6d44fca0959f83cf1",
+      "actual": "73e02ad000a2d6a6aeedd8bb9a0ffb2069cfd510885c42a6d44fca0959f83cf1",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-overview.png",
+      "expected": "2aea0cc42bc1ff73768a5ae4e333b496b7935ec10f2bf1ddc367d78d4fd96ee3",
+      "actual": "2aea0cc42bc1ff73768a5ae4e333b496b7935ec10f2bf1ddc367d78d4fd96ee3",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/390-ready.png",
+      "expected": "a06670c993275aafb1d7bc7b589d46a18d03c970abbc108e54be6a8773214183",
+      "actual": "a06670c993275aafb1d7bc7b589d46a18d03c970abbc108e54be6a8773214183",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-living-cove/evidence-final/768-observing.png",
+      "expected": "e75ab732ae7dbb896e7deaa65e67b2bc6800a24fbfe74e39b729eb7230658aa8",
+      "actual": "e75ab732ae7dbb896e7deaa65e67b2bc6800a24fbfe74e39b729eb7230658aa8",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/verify-brief.mjs",
+      "expected": "6fa6b496aeb42535c73273df713076a9a3a076fc7fb71429ff336ed4ffcd0d03",
+      "actual": "6fa6b496aeb42535c73273df713076a9a3a076fc7fb71429ff336ed4ffcd0d03",
+      "pass": true
+    }
+  ],
+  "priorOutputChecks": [
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/astra-review.md",
+      "expected": "f5754a13565f5d46d87890fbd39fb8da9939a059c67b8c8f486bd894737aba70",
+      "actual": "f5754a13565f5d46d87890fbd39fb8da9939a059c67b8c8f486bd894737aba70",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/astra-evidence/capture-source.mjs.txt",
+      "expected": "8443e3c03806077c3516372b716ae27eef5330c94021df5551758d42cfad67d5",
+      "actual": "8443e3c03806077c3516372b716ae27eef5330c94021df5551758d42cfad67d5",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/astra-evidence/corner-plan.png",
+      "expected": "aee002a8072d7d9f1b2724bdfe6a6d7c1969960267398eaf7c2dadb9c5442382",
+      "actual": "aee002a8072d7d9f1b2724bdfe6a6d7c1969960267398eaf7c2dadb9c5442382",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/astra-evidence/corner-plan.svg",
+      "expected": "23541745234b46d476d0fda49c82cddc8152a85c5a2e8b0e3d3b0cd701e79e78",
+      "actual": "23541745234b46d476d0fda49c82cddc8152a85c5a2e8b0e3d3b0cd701e79e78",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/astra-evidence/docs-check.txt",
+      "expected": "f532551edebda0fda7891fd2f1aed92babcdbcf96bd6b64b3d0e2af635af02a9",
+      "actual": "f532551edebda0fda7891fd2f1aed92babcdbcf96bd6b64b3d0e2af635af02a9",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/astra-evidence/kit-home-trees.png",
+      "expected": "56972f5412444f9058fa4c58564f60f10ff0ac1d0098ecb53c28b23a0dfddf4c",
+      "actual": "56972f5412444f9058fa4c58564f60f10ff0ac1d0098ecb53c28b23a0dfddf4c",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/astra-evidence/kit-houses.png",
+      "expected": "b7a9cf0d177859a4a0a66f68f49c39d96a576273d731f6d4638e5053fce95920",
+      "actual": "b7a9cf0d177859a4a0a66f68f49c39d96a576273d731f6d4638e5053fce95920",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/astra-evidence/kit-inspection-source.js.txt",
+      "expected": "fd620ed4f463512f1a56d9d372f250888060004bcc1d8099c7f832ad8e4d022c",
+      "actual": "fd620ed4f463512f1a56d9d372f250888060004bcc1d8099c7f832ad8e4d022c",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/astra-evidence/kit-inspection.json",
+      "expected": "6aa875071e20ba6eb97e58102913de08c0310a7b52e00ad74b2fe463924a6cae",
+      "actual": "6aa875071e20ba6eb97e58102913de08c0310a7b52e00ad74b2fe463924a6cae",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/astra-evidence/kit-large-parts.png",
+      "expected": "431b0a1a15658fc2dc983b71978929ac0bb39464872420155e720483bdbb3b93",
+      "actual": "431b0a1a15658fc2dc983b71978929ac0bb39464872420155e720483bdbb3b93",
+      "pass": true
+    },
+    {
+      "path": "docs/design/2026-10-21-cove-art-brief/astra-evidence/motion-samples.jpg",
+      "expected": "f1b69e87182800aaf4df3cdffa57cb252e3074fc2eb68279946ad3d356586693",
+      "actual": "f1b69e87182800aaf4df3cdffa57cb252e3074fc2eb68279946ad3d356586693",
+      "pass": true
+    }
+  ],
+  "additionalInputHashes": {
+    "CONSTITUTION.md": "5ef2541bc4de9439200c3a0b2a80c75800443d4f9b3a9230b20be09f428e480d",
+    "docs/product/island-construction-strategy.md": "704915e13689349cfa37de2689236bdfcb4fdc86f45d03f03f57732aebb8f87e",
+    "docs/product/island-native-owned-art.md": "b0651c7db5dd63296f385297db4e16bf5bca40f409da79710f6a30194a90e8d4",
+    "docs/product/island-expanding-runtime.md": "4338991068b9c385467c53850c1b77cc019adc3d15a819198c777563a2eac24c",
+    "docs/design/2026-10-10-island-final-3d/build-final-scene.py": "007cb5dbaee09aa8f235641409729a71409910c9f24c03f139258af47b135234",
+    "docs/design/2026-10-11-native-owned-island/kit-manifest.json": "0653ef4cd09a34102235e92726f77db772391b66d27e01da8175b8a6fd7eea8e",
+    "docs/design/2026-10-11-native-owned-island/native05-owned-kit.glb.gz": "79b8ae671444bf0c4869bd8e185f8d5ac140a1d7ee3e5709c5d39e4a6735e615",
+    "src/components/island/growing/native/nativeGrowingKit.ts": "9b303133edd83ce2c86372fa5eeb959c51d4e7ea7915d6ef93f39b9a4d18bab9",
+    "src/components/island/growing/native/nativePlaceGrove.ts": "c1843fea02c193a124ef39299ef3b3f0821a4afe4a4d88a25da7d8964f200b46",
+    "src/components/island/growing/sceneLayout.ts": "c3eae6bd41be149148f7234cf07b50bd5e9ab995196fd395f342f14afa79e72a",
+    "src/components/island/growing/worldFloorGeometry.ts": "21f3e911046344d7b1b3f195d267601ae4f43f1587f6ca97e178d70f4e4b5b87",
+    "src/components/island/three/islandCharacters.ts": "378bbc8127df7e0d7db61ad5428dbf412f35f6221ef16110a0d20fc329ff6da9",
+    "src/components/island/three/primitives.ts": "024f55cd70eeb753dccc5610613221c29e3fddae05385b2403ee53d85dce1e24",
+    "docs/design/2026-10-21-living-cove/terrain.mjs": "9fbb9e85bf34d4662b40e5c62cd964d546d847ea275dfcc79b9163da11f574e6",
+    "docs/design/2026-10-21-living-cove/walk.mjs": "5113f296a081369569c76daf75110ee9a0662d80d2babbffba4b891118df8f96",
+    "docs/design/2026-10-21-living-cove/viewer.js": "98bb335a159ef07aea3629e56a6f33dbdb6f1901a463603cf288568c3fd15a5e",
+    "docs/design/2026-10-21-island-shape-experiments/README.md": "d5323f27ee4e6993bc3b4267bdbc89ccd8f87052bbb179ca8829353bf8572f5a"
+  },
+  "checks": {
+    "originalInputs": {
+      "status": "PASS",
+      "count": 29
+    },
+    "priorOutputsUnchanged": {
+      "status": "PASS",
+      "count": 11
+    },
+    "projection": {
+      "status": "PASS",
+      "expected": "12 controlled views render without page error; record actual mask visibility without asserting aesthetic quality",
+      "actual": {
+        "views": 12,
+        "pageErrors": [],
+        "actorVisibleFractions": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      }
+    },
+    "heightAnalysis": {
+      "status": "COMPLETE",
+      "scope": "Analytic isolated one-dimensional smoothstep band; hypothetical uniform edit steps, not implemented brush"
+    },
+    "localLinks": {
+      "status": "PASS",
+      "count": 19,
+      "details": [
+        {
+          "target": "astra-review.md",
+          "exists": true
+        },
+        {
+          "target": "astra-evidence/corner-plan.png",
+          "exists": true
+        },
+        {
+          "target": "astra-deep-evidence/390-overview-0.png",
+          "exists": true
+        },
+        {
+          "target": "astra-deep-evidence/390-overview-30.png",
+          "exists": true
+        },
+        {
+          "target": "astra-deep-evidence/390-near-0.png",
+          "exists": true
+        },
+        {
+          "target": "astra-deep-evidence/390-near-30.png",
+          "exists": true
+        },
+        {
+          "target": "astra-deep-evidence/768-overview-60.png",
+          "exists": true
+        },
+        {
+          "target": "astra-deep-evidence/projection.json",
+          "exists": true
+        },
+        {
+          "target": "../2026-10-10-island-final-3d/whole-island-render.png",
+          "exists": true
+        },
+        {
+          "target": "../../../src/components/island/growing/native/nativePlaceGrove.ts",
+          "exists": true
+        },
+        {
+          "target": "../2026-10-10-island-final-3d/build-final-scene.py",
+          "exists": true
+        },
+        {
+          "target": "../../product/island-construction-strategy.md",
+          "exists": true
+        },
+        {
+          "target": "../../../src/components/island/growing/sceneLayout.ts",
+          "exists": true
+        },
+        {
+          "target": "../../../src/components/island/growing/worldFloorGeometry.ts",
+          "exists": true
+        },
+        {
+          "target": "../../../CONSTITUTION.md",
+          "exists": true
+        },
+        {
+          "target": "../2026-10-21-island-shape-experiments/README.md",
+          "exists": true
+        },
+        {
+          "target": "../2026-10-21-living-cove/terrain.mjs",
+          "exists": true
+        },
+        {
+          "target": "astra-deep-evidence/height-analysis.json",
+          "exists": true
+        },
+        {
+          "target": "astra-deep-verification.json",
+          "exists": true
+        }
+      ]
+    },
+    "docsCheck": {
+      "status": "PASS",
+      "command": "fnm exec --using=22.23.3 npm run docs:check",
+      "expected": "No broken Markdown links or documentation contract errors",
+      "actual": "PASS; 14 existing overdue review/backlog warnings",
+      "recordedAt": "2026-10-21T08:46:50.911806+00:00",
+      "log": "astra-deep-evidence/docs-check.txt",
+      "initialFailure": {
+        "reason": "Self-referenced verification manifest had not yet been written when link validation ran",
+        "repair": "Created the manifest, then reran once successfully",
+        "log": "astra-deep-evidence/docs-check-initial.txt"
+      }
+    }
+  },
+  "commands": [
+    "esbuild via Node JS API: /tmp/sansu-astra-deep/probe.js -> bundle.js",
+    "python3 -m http.server 5274 --bind 127.0.0.1 --directory /tmp/sansu-astra-deep",
+    "node /tmp/sansu-astra-deep/capture.mjs",
+    "Node analytic terrain cross-section using elevation() from existing terrain.mjs",
+    "python3 /tmp/sansu-astra-deep/record.py",
+    "fnm exec --using=22.23.3 npm run docs:check"
+  ],
+  "outputs": {
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-review.md": {
+      "sha256": "62169d03cc261eae8847a29448d3c25fa37e4d12a2ab93d71a1df409abb0f0b4",
+      "bytes": 21688
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/768-overview-0.png": {
+      "sha256": "c133907e1af3ffb880e2a35fb628b037c1d497cc2182502639d5feca202ad54e",
+      "bytes": 156694
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/390-overview-60.png": {
+      "sha256": "7f74f8392d700a7f36c8c1a0b326a7251c64e5dae1d8a6e73a9b731075f9f3ef",
+      "bytes": 59498
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/390-near-0.png": {
+      "sha256": "22a8a65b8a09613be7ddb824ee350d36560a93ed0af44a9922146fdc88130d18",
+      "bytes": 64929
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/768-near-60.png": {
+      "sha256": "72d2b138390030a5ece9e00cffc3802f181ee500af8598ba360148bd6d30ee83",
+      "bytes": 136249
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/390-near-60.png": {
+      "sha256": "f66b8e38dfb754aa61a72fb6259ef9ffcb6702604eb412bf8d963ef9ad143202",
+      "bytes": 70855
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/768-overview-60.png": {
+      "sha256": "7fcc8e845b90e6d7c4c08142ec4c2b60d3539e871a8f2bbfc8840ff3c8d09028",
+      "bytes": 129292
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/390-overview-0.png": {
+      "sha256": "708e4f2fb78bfbe39f5a3064ce0805011cc61514d5166c9e89b40651af6ed53c",
+      "bytes": 68697
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/probe-source.js.txt": {
+      "sha256": "53266069f90effde68da436c630332193bcede115dd936c8736348f837a46490",
+      "bytes": 6226
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/projection.json": {
+      "sha256": "3d88b977e60ae19e3922372fe7db5a2d4723439fc4b268a1d1b8f30044f6a146",
+      "bytes": 15128
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/390-near-30.png": {
+      "sha256": "df21b9819365fdb38ee964707e6185057f1c493d6c6a016c4a33fb0396e09347",
+      "bytes": 66527
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/768-overview-30.png": {
+      "sha256": "21defdfec29e3999f6263cdb6b8d5fd766534b55ec2bace9033f2c238623d2ca",
+      "bytes": 121536
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/height-analysis.json": {
+      "sha256": "590e8b01247a5ce7f4e28c01ee1ed9667182c37b022bc82cc85af5f7d8c88720",
+      "bytes": 1109
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/768-near-0.png": {
+      "sha256": "d153258634b491e89c5046f7262b6366316d0a0bb0035eeb2de7a303d0d83686",
+      "bytes": 111452
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/390-overview-30.png": {
+      "sha256": "42868a7d661e18a804998fbdcc985f5aaeec0a5f8f1f11fb7d45b95be07de525",
+      "bytes": 56528
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/768-near-30.png": {
+      "sha256": "62fb5cbf504a026ca055a66a5d43c2e9e6bcba04ad766ced6a4701ad0976fbe6",
+      "bytes": 119826
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/capture-source.mjs.txt": {
+      "sha256": "71937436430e4db9ae6bc68ee2f0077c44870c97da3d56654d731327e261dbbe",
+      "bytes": 1517
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/docs-check-initial.txt": {
+      "sha256": "c543be20fb01aec94a0dd5620279aeed30eee1d0cec0aaf9d9b41314ba157bf1",
+      "bytes": 1505
+    },
+    "docs/design/2026-10-21-cove-art-brief/astra-deep-evidence/docs-check.txt": {
+      "sha256": "f532551edebda0fda7891fd2f1aed92babcdbcf96bd6b64b3d0e2af635af02a9",
+      "bytes": 1404
+    }
+  },
+  "verdicts": {
+    "productionMethod": "Existing kit and authoritative world; author ground, supports, entry, traversable space and canopy relationship together",
+    "priorLayout": "Control only; not approved",
+    "art": "HOLD, new playable place unbuilt",
+    "silentUnderstandingSafety": "NOT_EVALUATED, child N=0",
+    "runtime": "Static diagnostic only; no new product or prototype navigation verdict",
+    "release": "NOT_EVALUATED"
+  },
+  "closeout": {
+    "parentTask": "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+    "productImplementationChanged": false,
+    "existingPrototypeChanged": false,
+    "published": false,
+    "committedOrPushed": false,
+    "externalMessagesOrUploads": false,
+    "parentTaskSha256": "fdd934fd2add2fbbc14e9f6bcd707445efc8887ba95a15359fc53d30889d900e"
+  }
+}

@@ -1,0 +1,329 @@
+{
+  "status": "FAIL_CONNECTIVITY",
+  "scope": "Actual UI snapshot pair audit, same land/inventory/balance; ground route resampling to runtime owner approaches; full rendered-obstacle collision and live animation are separate evidence",
+  "reports": [
+    {
+      "label": "A",
+      "landCells": 96,
+      "beforeReachable": 86,
+      "afterReachable": 85,
+      "lost": [
+        {
+          "x": -3,
+          "z": 0
+        }
+      ],
+      "lostDry": [],
+      "newlyDisconnected": [
+        "-3,0.5",
+        "-2.5,1"
+      ],
+      "actorProtection": [
+        {
+          "id": "-3,0.5",
+          "error": "なかまが いるよ。すこし はなれた ところを えらぼう。"
+        },
+        {
+          "id": "-2.5,1",
+          "error": "なかまが いるよ。すこし はなれた ところを えらぼう。"
+        }
+      ],
+      "targets": [
+        {
+          "place": "P05:starter-flower",
+          "target": "starter-bench",
+          "kind": "seat",
+          "cell": {
+            "x": -1,
+            "z": 4
+          },
+          "endpoint": {
+            "x": -1,
+            "z": 5
+          },
+          "route": [
+            {
+              "x": 2,
+              "z": 1
+            },
+            {
+              "x": 1,
+              "z": 1
+            },
+            {
+              "x": 1,
+              "z": 2
+            },
+            {
+              "x": 0,
+              "z": 2
+            },
+            {
+              "x": 0,
+              "z": 3
+            },
+            {
+              "x": 0,
+              "z": 4
+            },
+            {
+              "x": 0,
+              "z": 5
+            },
+            {
+              "x": -1,
+              "z": 5
+            }
+          ],
+          "allSegmentsSupported": true
+        },
+        {
+          "place": "P05:starter-flower",
+          "target": "starter-flower:garden",
+          "kind": "garden",
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "endpoint": {
+            "x": 0,
+            "z": 4
+          },
+          "route": [
+            {
+              "x": 2,
+              "z": 1
+            },
+            {
+              "x": 1,
+              "z": 1
+            },
+            {
+              "x": 1,
+              "z": 2
+            },
+            {
+              "x": 0,
+              "z": 2
+            },
+            {
+              "x": 0,
+              "z": 3
+            },
+            {
+              "x": 0,
+              "z": 4
+            }
+          ],
+          "allSegmentsSupported": true
+        }
+      ]
+    },
+    {
+      "label": "B",
+      "landCells": 96,
+      "beforeReachable": 82,
+      "afterReachable": 78,
+      "lost": [
+        {
+          "x": 8,
+          "z": 2
+        },
+        {
+          "x": 7,
+          "z": 3
+        },
+        {
+          "x": 8,
+          "z": 3
+        },
+        {
+          "x": 8,
+          "z": 4
+        }
+      ],
+      "lostDry": [
+        {
+          "cell": {
+            "x": 8,
+            "z": 4
+          },
+          "point": {
+            "x": 8.713132227,
+            "y": -0.215660201,
+            "z": 4.064643906
+          },
+          "walkable": true
+        }
+      ],
+      "newlyDisconnected": [
+        "8,4",
+        "7.5,2",
+        "7,2.5",
+        "6.5,3",
+        "7,3.5"
+      ],
+      "actorProtection": [
+        {
+          "id": "8,4",
+          "error": "なかまが いるよ。すこし はなれた ところを えらぼう。"
+        },
+        {
+          "id": "7.5,2",
+          "error": "なかまが いるよ。すこし はなれた ところを えらぼう。"
+        },
+        {
+          "id": "7,2.5",
+          "error": "なかまが いるよ。すこし はなれた ところを えらぼう。"
+        },
+        {
+          "id": "6.5,3",
+          "error": "なかまが いるよ。すこし はなれた ところを えらぼう。"
+        },
+        {
+          "id": "7,3.5",
+          "error": "なかまが いるよ。すこし はなれた ところを えらぼう。"
+        }
+      ],
+      "targets": [
+        {
+          "place": "P05:starter-flower",
+          "target": "starter-bench",
+          "kind": "seat",
+          "cell": {
+            "x": 5,
+            "z": 5
+          },
+          "endpoint": {
+            "x": 5,
+            "z": 6
+          },
+          "route": [
+            {
+              "x": 2,
+              "z": 1
+            },
+            {
+              "x": 3,
+              "z": 1
+            },
+            {
+              "x": 4,
+              "z": 1
+            },
+            {
+              "x": 5,
+              "z": 1
+            },
+            {
+              "x": 6,
+              "z": 1
+            },
+            {
+              "x": 6,
+              "z": 2
+            },
+            {
+              "x": 6,
+              "z": 3
+            },
+            {
+              "x": 6,
+              "z": 4
+            },
+            {
+              "x": 6,
+              "z": 5
+            },
+            {
+              "x": 6,
+              "z": 6
+            },
+            {
+              "x": 5,
+              "z": 6
+            }
+          ],
+          "allSegmentsSupported": true
+        },
+        {
+          "place": "P05:starter-flower",
+          "target": "starter-flower:garden",
+          "kind": "garden",
+          "cell": {
+            "x": 6,
+            "z": 5
+          },
+          "endpoint": {
+            "x": 6,
+            "z": 5
+          },
+          "route": [
+            {
+              "x": 2,
+              "z": 1
+            },
+            {
+              "x": 3,
+              "z": 1
+            },
+            {
+              "x": 4,
+              "z": 1
+            },
+            {
+              "x": 5,
+              "z": 1
+            },
+            {
+              "x": 6,
+              "z": 1
+            },
+            {
+              "x": 6,
+              "z": 2
+            },
+            {
+              "x": 6,
+              "z": 3
+            },
+            {
+              "x": 6,
+              "z": 4
+            },
+            {
+              "x": 6,
+              "z": 5
+            }
+          ],
+          "allSegmentsSupported": true
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "node": "v22.23.3",
+    "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-brush-trial/two-bay-pair-check.mjs actor-support",
+    "inputSHA256": {
+      "composite-field.ts": "0a63b64afeae4cfd78fef2eda0ad1f69e85f0e566bfac70eb51f7bfcd36a5f0f",
+      "composite-model.ts": "d36e05de7b43cc050d9087cdb3f584b06dc07b153f32652ea242407b9e205e57",
+      "two-bay-pair-check.ts": "e1e0bfa159e5bc06e464756ab371e9d36ff707e232c4625312ec4d688b318ab5",
+      "two-bay-pair-check.mjs": "115b35d09fec6936f8254319507a5fa65f253eb4f07fa1be733efb7f1c714444",
+      "vite.config.ts": "17049b9c75645e3bc59753cc0650eea06cd403c01ae780b97d222140e8d41708",
+      "TrialIsland.ts": "50ee145cb8167339f55f18f27f6160e9032cae3956f22d09b1c4aa5c89bce013",
+      "Controls.tsx": "5292b7281dc6bc2ab1e435a290d5492b848d069c091a4393c579d11cdc2a8ebc",
+      "PlaceEvidence.tsx": "bb5143017514d1946d52b7cf011c8ccc3856b1f54e8542900152919dc680a0f1",
+      "directional-field.ts": "0dc03ed7b2dbbf87ef79973405f72c5d762c26dff2e3aa462ea5c85e73f7e54b",
+      "assembly-mode.ts": "963aa17fab9ef70d097a2e5cceb88faff478c8378a0671aebaa07b4c63a0fe99",
+      "assembly-section.ts": "15b05cd87fee9db17e54f81d0cd3ab029bffc1f8a624d022561c6409cef0a054",
+      "coastal-section.ts": "75170b31383e59e8874b8aa8290b549fb7ffd278e7313092b0118e06d36b22f3",
+      "bay-section.ts": "72dfb86624b77625406c00b4a055ba9b0ffd114668a102c44739c435d53115b0",
+      "evidence/two-bay-v21-A-one-state.json": "aa889e3b17e89523dceab9993ca7d6ef1131012b30511685689e80434c20cf10",
+      "evidence/two-bay-v21-A-two-state.json": "bb95473797fb19721ed9d5b51ea4fd6940de4029885803cbaa937fcf1ffb968c",
+      "evidence/two-bay-v21-B-one-state.json": "852a3fbf1e4577790a88ddce1725eb781e48ccbdd51627dbc7b006f6304f2af3",
+      "evidence/two-bay-v21-B-two-state.json": "6d28aa548882410aa4f251a9065ae2e391d165781530157e79ecf8b8035a6fa1"
+    },
+    "changedInputs": [],
+    "bundleSHA256": "9b3bc46a19a46298c967fdcaa56e396d3726e500d240ab4c32e7bf462e49eeb7"
+  }
+}

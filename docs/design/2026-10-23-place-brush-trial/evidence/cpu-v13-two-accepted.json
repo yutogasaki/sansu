@@ -1,0 +1,155 @@
+{
+  "at": "2026-10-24T02:05:02.690Z",
+  "build": "place-outline-v13",
+  "shapes": {
+    "west": {
+      "center": {
+        "x": -1,
+        "z": 4
+      },
+      "radius": 1.6,
+      "height": 0.5,
+      "entrance": 1.2,
+      "flatRadius": 1.75
+    },
+    "east": {
+      "center": {
+        "x": 5,
+        "z": 5
+      },
+      "radius": 1.6,
+      "height": 0.9,
+      "entrance": 1.2,
+      "flatRadius": 1.75,
+      "rampDirection": "west"
+    }
+  },
+  "inputAction": "Add west to existing east",
+  "timing": {
+    "status": "stopped",
+    "clock": "performance.now milliseconds from CPU measurement start",
+    "startedPerformanceMs": 157585.5,
+    "startedEpochMs": 1792807477659.4,
+    "endedPerformanceMs": 167587.1,
+    "elapsedMs": 10001.6,
+    "retainedLimit": 400,
+    "dropped": 0,
+    "filteredFastTerrainCalls": 7,
+    "incompleteSpans": 0,
+    "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+    "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+    "aggregates": {
+      "editableIslandWorld:cache-hit": {
+        "calls": 8,
+        "inclusiveMs": 0.3,
+        "selfMs": 0.3,
+        "maxMs": 0.1,
+        "failed": 0
+      },
+      "compileWorldDefinition:derived-edges": {
+        "calls": 1,
+        "inclusiveMs": 223.3,
+        "selfMs": 223.3,
+        "maxMs": 223.3,
+        "failed": 0
+      },
+      "editableIslandWorld:cold": {
+        "calls": 1,
+        "inclusiveMs": 309.9,
+        "selfMs": 86.6,
+        "maxMs": 309.9,
+        "failed": 0
+      },
+      "applyIntent:place-set": {
+        "calls": 1,
+        "inclusiveMs": 335.6,
+        "selfMs": 25.6,
+        "maxMs": 335.6,
+        "failed": 0
+      },
+      "worldScene.layout:": {
+        "calls": 1,
+        "inclusiveMs": 50.8,
+        "selfMs": 50.8,
+        "maxMs": 50.8,
+        "failed": 0
+      },
+      "GrowingWorld.rebuild:": {
+        "calls": 1,
+        "inclusiveMs": 71.2,
+        "selfMs": 20.2,
+        "maxMs": 71.2,
+        "failed": 0
+      }
+    },
+    "spans": [
+      {
+        "id": 1,
+        "parentId": null,
+        "name": "applyIntent",
+        "detail": "place-set",
+        "startMs": 848.1,
+        "endMs": 1183.7,
+        "inclusiveMs": 335.6,
+        "selfMs": 25.6,
+        "failed": false
+      },
+      {
+        "id": 3,
+        "parentId": 1,
+        "name": "editableIslandWorld",
+        "detail": "cold",
+        "startMs": 848.4,
+        "endMs": 1158.3,
+        "inclusiveMs": 309.9,
+        "selfMs": 86.6,
+        "failed": false
+      },
+      {
+        "id": 4,
+        "parentId": 3,
+        "name": "compileWorldDefinition",
+        "detail": "derived-edges",
+        "startMs": 934.9,
+        "endMs": 1158.2,
+        "inclusiveMs": 223.3,
+        "selfMs": 223.3,
+        "failed": false
+      },
+      {
+        "id": 9,
+        "parentId": null,
+        "name": "GrowingWorld.rebuild",
+        "detail": "",
+        "startMs": 1185.6,
+        "endMs": 1256.8,
+        "inclusiveMs": 71.2,
+        "selfMs": 20.2,
+        "failed": false
+      },
+      {
+        "id": 10,
+        "parentId": 9,
+        "name": "worldScene.layout",
+        "detail": "",
+        "startMs": 1185.7,
+        "endMs": 1236.5,
+        "inclusiveMs": 50.8,
+        "selfMs": 50.8,
+        "failed": false
+      },
+      {
+        "id": 12,
+        "parentId": 9,
+        "name": "editableIslandWorld",
+        "detail": "cache-hit",
+        "startMs": 1236.6,
+        "endMs": 1236.7,
+        "inclusiveMs": 0.1,
+        "selfMs": 0.1,
+        "failed": false
+      }
+    ]
+  },
+  "scope": "Single IAB desktop CPU sample with build and domain workers idle. Different shape/action from v12 observations, so not a controlled speed comparison. GPU, paint, async saves and device comfort excluded."
+}

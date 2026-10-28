@@ -1,0 +1,74 @@
+{
+  "target": "http://127.0.0.1:5264/docs/design/2026-10-21-editable-island/",
+  "startedAt": "2026-10-20T23:00:43.213Z",
+  "candidate": "editable-island-study-v1",
+  "revision": "9c02dd5edae9e086",
+  "sourceHashes": {
+    "index.html": "a4e63e5fa358dcb044a786b47772ea1d61d233c9483ac67302f1e4e3fd532276",
+    "style.css": "12bcd7b707773b0678a0168ee4b32efb6d9df238ee01657dfa3449522130c964",
+    "terrain.mjs": "2cf22171b3310c40eec999c0a204bbf9fbcf672ba1c94d4b3bec6ca1fc892661",
+    "viewer.js": "07aafec999ff1a9a950e6720f880e362f1140c7e4d0c3b30a2df239b4e538be9",
+    "build.mjs": "d5683e458e7f92d502ac76a0d03505985ee900dac6701c1071a3f2314474aca4"
+  },
+  "scenarios": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "captures": [
+        "390-start.png",
+        "390-hill.png",
+        "390-islet.png",
+        "390-undo.png",
+        "390-inlet-linked.png",
+        "390-evening.png"
+      ],
+      "checks": [
+        "actual canvas tap + keyboard raise the same location twice",
+        "inlet and visible waterbird state",
+        "isolated island connects to main land",
+        "Undo and Redo restore connectivity",
+        "house support protected",
+        "evening and sound toggle returns to off (not a listening test)",
+        "view drag does not edit",
+        "two-finger pinch changes view without editing land",
+        "unrelated storage intact, no DB and no service worker",
+        "reload returns prototype to initial memory state"
+      ],
+      "consoleErrors": [],
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "captures": [
+        "768-start.png",
+        "768-hill.png",
+        "768-islet.png",
+        "768-undo.png",
+        "768-inlet-linked.png",
+        "768-evening.png"
+      ],
+      "checks": [
+        "actual canvas tap + keyboard raise the same location twice",
+        "inlet and visible waterbird state",
+        "isolated island connects to main land",
+        "Undo and Redo restore connectivity",
+        "house support protected",
+        "evening and sound toggle returns to off (not a listening test)",
+        "view drag does not edit",
+        "two-finger pinch changes view without editing land",
+        "unrelated storage intact, no DB and no service worker",
+        "reload returns prototype to initial memory state"
+      ],
+      "consoleErrors": [],
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "scope": "Standalone static prototype, fresh Chromium contexts, no app route/save/PWA. Not physical device, art approval, audio listening or child observation.",
+  "completedAt": "2026-10-20T23:00:56.584Z"
+}

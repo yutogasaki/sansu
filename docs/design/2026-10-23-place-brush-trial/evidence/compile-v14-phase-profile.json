@@ -1,0 +1,163 @@
+{
+  "recordedAt": "2026-10-24T02:24:42.857Z",
+  "scope": "Node diagnostic using frozen actual v14 typecheck overlay; phase instrumentation only; no browser/GPU/save/child acceptance. Concurrent engineering work may affect timings. Final freeze cost is outside named phases.",
+  "worldSourceSHA256": "e538703b9b07410e4615625c7ed13ffa60aadce005b092b1b5acda0f044d0735",
+  "runs": [
+    {
+      "elapsedMs": 984.7138749999999,
+      "compiles": [
+        {
+          "id": "legacy-world-v1:-3,8,8:curved-owned-v1:no-bridge",
+          "derived": true,
+          "vertices": 26301,
+          "phases": [
+            {
+              "name": "clone-definition",
+              "ms": 84.28916700000013
+            },
+            {
+              "name": "compile-geometry-and-sampler-factory",
+              "ms": 60.32029199999988
+            },
+            {
+              "name": "create-sampler-indices",
+              "ms": 124.76966600000014
+            },
+            {
+              "name": "compile-sites",
+              "ms": 11.336166999999932
+            },
+            {
+              "name": "derive-edges",
+              "ms": 92.81958299999997
+            },
+            {
+              "name": "validate-edges-and-graphs",
+              "ms": 1.9407500000002074
+            },
+            {
+              "name": "shore-access",
+              "ms": 0.026374999999916326
+            },
+            {
+              "name": "bounds",
+              "ms": 0.7286249999997381
+            }
+          ]
+        }
+      ],
+      "hash": "46809236f3ddab198f8db145746d3d99a9d3ac7d2e4380d5c5f113a332942a72"
+    },
+    {
+      "elapsedMs": 777.3229580000001,
+      "compiles": [
+        {
+          "id": "legacy-world-v1:-3,8,8:curved-owned-v1:no-bridge",
+          "derived": true,
+          "vertices": 26301,
+          "phases": [
+            {
+              "name": "clone-definition",
+              "ms": 81.13858400000004
+            },
+            {
+              "name": "compile-geometry-and-sampler-factory",
+              "ms": 69.452
+            },
+            {
+              "name": "create-sampler-indices",
+              "ms": 110.30316600000015
+            },
+            {
+              "name": "compile-sites",
+              "ms": 12.592249999999922
+            },
+            {
+              "name": "derive-edges",
+              "ms": 88.25187499999993
+            },
+            {
+              "name": "validate-edges-and-graphs",
+              "ms": 1.7206250000001546
+            },
+            {
+              "name": "shore-access",
+              "ms": 0.01891699999987395
+            },
+            {
+              "name": "bounds",
+              "ms": 0.811542000000145
+            }
+          ]
+        }
+      ],
+      "hash": "46809236f3ddab198f8db145746d3d99a9d3ac7d2e4380d5c5f113a332942a72"
+    },
+    {
+      "elapsedMs": 834.649167,
+      "compiles": [
+        {
+          "id": "legacy-world-v1:-3,8,8:curved-owned-v1:no-bridge",
+          "derived": true,
+          "vertices": 26301,
+          "phases": [
+            {
+              "name": "clone-definition",
+              "ms": 94.82745899999986
+            },
+            {
+              "name": "compile-geometry-and-sampler-factory",
+              "ms": 93.148958
+            },
+            {
+              "name": "create-sampler-indices",
+              "ms": 105.35029200000008
+            },
+            {
+              "name": "compile-sites",
+              "ms": 14.301457999999911
+            },
+            {
+              "name": "derive-edges",
+              "ms": 109.40475000000015
+            },
+            {
+              "name": "validate-edges-and-graphs",
+              "ms": 1.8449169999998958
+            },
+            {
+              "name": "shore-access",
+              "ms": 0.03329099999996288
+            },
+            {
+              "name": "bounds",
+              "ms": 2.4890000000000327
+            }
+          ]
+        }
+      ],
+      "hash": "46809236f3ddab198f8db145746d3d99a9d3ac7d2e4380d5c5f113a332942a72"
+    }
+  ],
+  "baseline": [
+    {
+      "elapsedMs": 780.1705,
+      "compiles": [],
+      "hash": "46809236f3ddab198f8db145746d3d99a9d3ac7d2e4380d5c5f113a332942a72"
+    },
+    {
+      "elapsedMs": 889.8643749999999,
+      "compiles": [],
+      "hash": "46809236f3ddab198f8db145746d3d99a9d3ac7d2e4380d5c5f113a332942a72"
+    },
+    {
+      "elapsedMs": 858.115209,
+      "compiles": [],
+      "hash": "46809236f3ddab198f8db145746d3d99a9d3ac7d2e4380d5c5f113a332942a72"
+    }
+  ],
+  "checks": {
+    "instrumentedAndBaselineFloorHashesIdentical": true,
+    "v14FrozenWorldSourceSame": true
+  }
+}

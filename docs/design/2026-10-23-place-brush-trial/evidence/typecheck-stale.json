@@ -1,0 +1,139 @@
+{
+  "status": "STALE",
+  "date": "2026-10-23T00:55:31.121Z",
+  "node": "v22.23.3",
+  "overlay": "/private/tmp/sansu-place-trial-types-Fy0hQR",
+  "checker": "TypeScript tsc --noEmit via tsconfig.trial.json; actual browser transform outputs",
+  "scope": "Trial TS/TSX plus their production imports, transformed floor/domain/scene/UI; no build or test claim",
+  "inputHashes": {
+    "docs/design/2026-10-22-place-strategy-trial/foundation-transform.mjs": "32073beec4b3246225424f8524fbd2e1aa96cfdeac9f41425fef46fe164f4a41",
+    "docs/design/2026-10-22-place-strategy-trial/foundation.ts": "00a11d9deb61d240c757352a711b53ec3dc8cd2359d9ba652683b6f979df21f2",
+    "docs/design/2026-10-23-place-brush-trial/Controls.tsx": "0513928bed5cb6a781a47204e6765728b156970cf4a06197b0f8017072b79275",
+    "docs/design/2026-10-23-place-brush-trial/TrialIsland.ts": "f0714da8a57955d3c7ba03d1ca44177a5b974470e6cd5595df193f251fa459f4",
+    "docs/design/2026-10-23-place-brush-trial/build.mjs": "56f5cd569d7a8102f886aec9f1d0f19a9793dc9f66387475c9d1a1f851fb637d",
+    "docs/design/2026-10-23-place-brush-trial/check.mjs": "039eb798928d701c1163ddcccc5238e6d58d3a0f9bdbad17e6270015bb7c5058",
+    "docs/design/2026-10-23-place-brush-trial/check.ts": "d258fed4002ad1a956fca2c9f7ebc9c3cf2254d5c426b6032856369903537f52",
+    "docs/design/2026-10-23-place-brush-trial/evidence/02-high.json": "5ca9d52946542eb229e6f395c675e6426c6cda93bd61ae944296c0a316b35c8d",
+    "docs/design/2026-10-23-place-brush-trial/evidence/03-inlet.json": "a2717fda8aef345aec7663380043991fe7609d705ad10be305eec76319eb2f09",
+    "docs/design/2026-10-23-place-brush-trial/evidence/04-narrow.json": "ab55fe7fc98e0037ae51ab4f90e15a21f282d965a04ac0f8d0442ee382421f5a",
+    "docs/design/2026-10-23-place-brush-trial/evidence/build-place-outline-v2.json": "aff57365d8ae141e1befb502c88046d94c22087f8c815b97a29f8d67983e2522",
+    "docs/design/2026-10-23-place-brush-trial/evidence/build-place-outline-v3.json": "548ba5668fddaec0242713a80a874dde8e3ba7e4e8b3ae388165a1903a91e7cf",
+    "docs/design/2026-10-23-place-brush-trial/evidence/check-first-route-failure.json": "d62c5f82f33e65d2ada964a94e4e8b3a20617f87e6eef1ede32fd2e93cda73fa",
+    "docs/design/2026-10-23-place-brush-trial/evidence/check-second-route-failure.json": "08544f5829326f20f27b856f6cbbcfb0f00983975f135da4e8c4a43c4748e12b",
+    "docs/design/2026-10-23-place-brush-trial/evidence/check.json": "08544f5829326f20f27b856f6cbbcfb0f00983975f135da4e8c4a43c4748e12b",
+    "docs/design/2026-10-23-place-brush-trial/evidence/typecheck-first.json": "86e2d4c008c742120ce19f5b8e52e2b0e4e0677054776b1967f3f699c1cc00a3",
+    "docs/design/2026-10-23-place-brush-trial/field.ts": "a58d7fe467baa68142229690b1ed82d79fb468f73b7be3d8906db5d6a9e253a2",
+    "docs/design/2026-10-23-place-brush-trial/model.ts": "8237649bb4e16fca9eaf1ae9ecda4720674eb95862171cddb57e32f6830c0143",
+    "docs/design/2026-10-23-place-brush-trial/tsconfig.trial.json": "ce4782d0919b41eb92432de4065ef07e1f7b9ea9d6cabd4b9a4986491c2b44fc",
+    "docs/design/2026-10-23-place-brush-trial/typecheck.mjs": "f448c8aa39b09e4fc5a2fa1fd3d6ad14e41cf6fccca1e4bc61556421ef0c0f96",
+    "docs/design/2026-10-23-place-brush-trial/vite.config.ts": "50cfd842852616b864ed15b1d90a23ac3d675c1f8a8027f29d56e60092f5980a",
+    "docs/design/2026-10-23-place-method-comparison/LiveUse.tsx": "a620ec52044162030d7a799133cdfed38082bc99c080cba6edde8cb7f082588f",
+    "docs/design/2026-10-23-place-method-comparison/TrialCadence.tsx": "895b7b2701ec534adc6e6bb51255d02bb802ef823e2159af80940012a2b30556",
+    "docs/design/2026-10-23-place-method-comparison/TrialEvidence.tsx": "3d263d59505fbd2986fa9374f59ba39717649abdb46c2568bf08e7bee56ead74",
+    "docs/design/2026-10-23-place-method-comparison/TrialIsland.ts": "12b167757beecb82c938a417bea0b404bd8e8f7b5d32aa3046fe80d9206d68ab",
+    "docs/design/2026-10-23-place-method-comparison/candidate.ts": "31a7f80376982640b43eef73f483f32a999d82aec8b77b9c09fdd794f4780311",
+    "docs/design/2026-10-23-place-method-comparison/comparison-camera.ts": "85618ebdc538706f8fe42e60cd1de52cf71d9a84506792106089fb3731464340",
+    "docs/design/2026-10-23-place-method-comparison/section-profile.ts": "1dc7f55c40ebb1321afe0cfce46e573292af987e4e147b532a0c4bbff7b6098b",
+    "src/components/island/growing/GrowingIsland.tsx": "c8d785cd7fc937226a31fad408a4ac71a31b33c43776102670e8afce7001d406",
+    "src/components/island/growing/GrowingWorld.tsx": "282638721eeddbe2ab413f875cbdd440c099b4eae1fe21f50b7e51a26452cb47",
+    "src/components/island/growing/growingCamera.ts": "d44547cdada7e8b7348c838b2d44bf38c864f9b867c6a2813a0adeb6dbc76d22",
+    "src/components/island/growing/worldScene.ts": "8eb09980977ea2144110d2b5d3d176d5d8189e8f73cd38faebee9a2834c42563",
+    "src/domain/growingIsland/commands.ts": "1aa5ba1443ddeb1e8bce8155bb1ed8a6f8b2de5902b7a341ac61d299efe8aace",
+    "src/domain/growingIsland/editableTerrainWorld.ts": "7606a6d2be402e90ef85154cd28e8cf3c07dd5d690538b37bbfbfd700e1fc324",
+    "src/domain/growingIsland/landscape.ts": "c4238f02498719722449772456001e457a0d02b2f82e7b389eae99d3021b6c96",
+    "src/domain/growingIsland/placeTerrain.ts": "dd8ab725d6079a07c82cfc32d5b00f85b7d3c485ec04ef1147f1ee6ef99c7673",
+    "src/domain/growingIsland/terrainEditing.ts": "a1f51959aa3639d15dcb19fa7f1eb289592a6682deda523a181b42b2591c04ac",
+    "src/domain/growingIsland/worldDefinition.ts": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338"
+  },
+  "changedInputs": [
+    "docs/design/2026-10-23-place-brush-trial/evidence/check.json"
+  ],
+  "transformations": [
+    {
+      "path": "src/domain/growingIsland/worldDefinition.ts",
+      "inputSHA256": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+      "transformedSHA256": "e538703b9b07410e4615625c7ed13ffa60aadce005b092b1b5acda0f044d0735"
+    },
+    {
+      "path": "src/domain/growingIsland/placeTerrain.ts",
+      "inputSHA256": "dd8ab725d6079a07c82cfc32d5b00f85b7d3c485ec04ef1147f1ee6ef99c7673",
+      "transformedSHA256": "d2894d86f258394357a899a0c0997f07b85ee359ce18d5e0cf708f1119c1d024"
+    },
+    {
+      "path": "src/domain/growingIsland/editableTerrainWorld.ts",
+      "inputSHA256": "7606a6d2be402e90ef85154cd28e8cf3c07dd5d690538b37bbfbfd700e1fc324",
+      "transformedSHA256": "ea0794857753ba505861a8c02d628f385f42e5fa1215c7bc27a3bcedffe2a907"
+    },
+    {
+      "path": "src/domain/growingIsland/terrainEditing.ts",
+      "inputSHA256": "a1f51959aa3639d15dcb19fa7f1eb289592a6682deda523a181b42b2591c04ac",
+      "transformedSHA256": "9bc1f596e8f74f3984751b5c391c556f5aa3bb249ea8c06f39aa48d2cc8340d3"
+    },
+    {
+      "path": "src/domain/growingIsland/landscape.ts",
+      "inputSHA256": "c4238f02498719722449772456001e457a0d02b2f82e7b389eae99d3021b6c96",
+      "transformedSHA256": "74d7338b518587186f4fce99dc695c19286292be7e2c0b41050c7a546cc4f50f"
+    },
+    {
+      "path": "src/domain/growingIsland/commands.ts",
+      "inputSHA256": "1aa5ba1443ddeb1e8bce8155bb1ed8a6f8b2de5902b7a341ac61d299efe8aace",
+      "transformedSHA256": "2deba065926b4d948380084f979193da124fa0b3effae66336efd0e8b6093e20"
+    },
+    {
+      "path": "src/components/island/growing/GrowingWorld.tsx",
+      "inputSHA256": "282638721eeddbe2ab413f875cbdd440c099b4eae1fe21f50b7e51a26452cb47",
+      "transformedSHA256": "b0ef2b9092d7fce552e3ecc5c6730b8a087d92533a12eb1f3e4216d744d64b9f"
+    },
+    {
+      "path": "src/components/island/growing/worldScene.ts",
+      "inputSHA256": "8eb09980977ea2144110d2b5d3d176d5d8189e8f73cd38faebee9a2834c42563",
+      "transformedSHA256": "0afcb01a9f6b52f8aac46b070fcc2350dd7779ff8cc206757cee61a35b09cac6"
+    },
+    {
+      "path": "src/components/island/growing/GrowingIsland.tsx",
+      "inputSHA256": "c8d785cd7fc937226a31fad408a4ac71a31b33c43776102670e8afce7001d406",
+      "transformedSHA256": "410e6c363198f375778f93258e17e75021d900e7167ed21264a200608da2986b"
+    },
+    {
+      "path": "src/components/island/growing/growingCamera.ts",
+      "inputSHA256": "d44547cdada7e8b7348c838b2d44bf38c864f9b867c6a2813a0adeb6dbc76d22",
+      "transformedSHA256": "05145d29a40f09450ad0d0c34d1ef5a1e7ad247853f8f9535972a0876d5a39f2"
+    },
+    {
+      "path": "docs/design/2026-10-23-place-method-comparison/section-profile.ts",
+      "inputSHA256": "1dc7f55c40ebb1321afe0cfce46e573292af987e4e147b532a0c4bbff7b6098b",
+      "transformedSHA256": "3f46fb555dbbd50588ede2713320dfb9aa44386c783d98bc261a33f033bae6e8"
+    },
+    {
+      "path": "docs/design/2026-10-23-place-method-comparison/candidate.ts",
+      "inputSHA256": "31a7f80376982640b43eef73f483f32a999d82aec8b77b9c09fdd794f4780311",
+      "transformedSHA256": "2d55a1bd3099d85b2507d97f4d24d20ab3169dd7f503c1efce384819b8d5f97a"
+    },
+    {
+      "path": "docs/design/2026-10-23-place-method-comparison/comparison-camera.ts",
+      "inputSHA256": "85618ebdc538706f8fe42e60cd1de52cf71d9a84506792106089fb3731464340",
+      "transformedSHA256": "10ce3d2ace2e448ec526a3dbcc6ede4282fa39774a346593a162c2c27e93b6a0"
+    },
+    {
+      "path": "docs/design/2026-10-23-place-method-comparison/TrialIsland.ts",
+      "inputSHA256": "12b167757beecb82c938a417bea0b404bd8e8f7b5d32aa3046fe80d9206d68ab",
+      "transformedSHA256": "d43b661d77d63bdd6c3638a487ba864cf83b68f5f6361e947ed93a9c3e336e5e"
+    },
+    {
+      "path": "docs/design/2026-10-23-place-method-comparison/TrialEvidence.tsx",
+      "inputSHA256": "3d263d59505fbd2986fa9374f59ba39717649abdb46c2568bf08e7bee56ead74",
+      "transformedSHA256": "5b527cf352eacab23d5ed97bf3648f1e7e2aff0c7865068594d78b5757df95bd"
+    },
+    {
+      "path": "docs/design/2026-10-23-place-method-comparison/TrialCadence.tsx",
+      "inputSHA256": "895b7b2701ec534adc6e6bb51255d02bb802ef823e2159af80940012a2b30556",
+      "transformedSHA256": "083418bd1b185fe6412b9240379ff4e8ead6bb43b152c30563d7a915d62152d0"
+    },
+    {
+      "path": "docs/design/2026-10-23-place-method-comparison/LiveUse.tsx",
+      "inputSHA256": "a620ec52044162030d7a799133cdfed38082bc99c080cba6edde8cb7f082588f",
+      "transformedSHA256": "461723f19d4956bb83d75e8c7668a6035b2fd5b1498dba007ecdcd36bff63564"
+    }
+  ],
+  "output": ""
+}

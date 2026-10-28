@@ -1,0 +1,1047 @@
+{
+  "at": "2026-10-24T01:13:49.425Z",
+  "status": "PASS",
+  "scope": "Directional field diagnostic with actual transformed world/model/move/route; no persistence, browser, or actor-use claim",
+  "constraints": {
+    "sameFixture": true,
+    "bounds": {
+      "minX": -3,
+      "maxX": 8,
+      "depth": 8
+    },
+    "actors": "empty static precondition; live UI must still check residents",
+    "noAutomaticHeightOrRadiusChanges": true
+  },
+  "scalarChecks": {
+    "paritySamples": 11570,
+    "shortSpaceRejected": true,
+    "wetLandingRejected": true,
+    "wetBodyRimRejected": true,
+    "sourceWaterStripRejected": true,
+    "nonFiniteLandingRejected": true
+  },
+  "reports": [
+    {
+      "name": "existing-low-north",
+      "shape": {
+        "center": {
+          "x": 5,
+          "z": 5
+        },
+        "radius": 1.6,
+        "height": 0.5,
+        "entrance": 1.2,
+        "flatRadius": 1.75
+      },
+      "placeAccepted": true,
+      "plan": "north delegates exact existing field",
+      "moves": [
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 5,
+            "z": 5
+          },
+          "accepted": true
+        },
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 6,
+            "z": 5
+          },
+          "accepted": true
+        }
+      ],
+      "owners": [
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 6,
+            "z": 5
+          },
+          "routes": [
+            {
+              "target": {
+                "x": 6,
+                "z": 5
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 4,
+                  "z": 1
+                },
+                {
+                  "x": 5,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 2
+                },
+                {
+                  "x": 6,
+                  "z": 3
+                },
+                {
+                  "x": 6,
+                  "z": 4
+                },
+                {
+                  "x": 6,
+                  "z": 5
+                }
+              ],
+              "bodySupported": true
+            },
+            {
+              "target": {
+                "x": 6,
+                "z": 6
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 4,
+                  "z": 1
+                },
+                {
+                  "x": 5,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 2
+                },
+                {
+                  "x": 6,
+                  "z": 3
+                },
+                {
+                  "x": 6,
+                  "z": 4
+                },
+                {
+                  "x": 6,
+                  "z": 5
+                },
+                {
+                  "x": 6,
+                  "z": 6
+                }
+              ],
+              "bodySupported": true
+            },
+            {
+              "target": {
+                "x": 7,
+                "z": 5
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 4,
+                  "z": 1
+                },
+                {
+                  "x": 5,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 1
+                },
+                {
+                  "x": 7,
+                  "z": 1
+                },
+                {
+                  "x": 7,
+                  "z": 2
+                },
+                {
+                  "x": 7,
+                  "z": 3
+                },
+                {
+                  "x": 7,
+                  "z": 4
+                },
+                {
+                  "x": 7,
+                  "z": 5
+                }
+              ],
+              "bodySupported": true
+            },
+            {
+              "target": {
+                "x": 6,
+                "z": 4
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 4,
+                  "z": 1
+                },
+                {
+                  "x": 5,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 2
+                },
+                {
+                  "x": 6,
+                  "z": 3
+                },
+                {
+                  "x": 6,
+                  "z": 4
+                }
+              ],
+              "bodySupported": true
+            }
+          ]
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 5,
+            "z": 5
+          },
+          "routes": [
+            {
+              "target": {
+                "x": 5,
+                "z": 6
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 2
+                },
+                {
+                  "x": 3,
+                  "z": 3
+                },
+                {
+                  "x": 3,
+                  "z": 4
+                },
+                {
+                  "x": 4,
+                  "z": 4
+                },
+                {
+                  "x": 4,
+                  "z": 5
+                },
+                {
+                  "x": 4,
+                  "z": 6
+                },
+                {
+                  "x": 5,
+                  "z": 6
+                }
+              ],
+              "bodySupported": true
+            },
+            {
+              "target": {
+                "x": 4,
+                "z": 5
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 2
+                },
+                {
+                  "x": 3,
+                  "z": 3
+                },
+                {
+                  "x": 3,
+                  "z": 4
+                },
+                {
+                  "x": 4,
+                  "z": 4
+                },
+                {
+                  "x": 4,
+                  "z": 5
+                }
+              ],
+              "bodySupported": true
+            },
+            {
+              "target": {
+                "x": 6,
+                "z": 5
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 4,
+                  "z": 1
+                },
+                {
+                  "x": 5,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 2
+                },
+                {
+                  "x": 6,
+                  "z": 3
+                },
+                {
+                  "x": 6,
+                  "z": 4
+                },
+                {
+                  "x": 6,
+                  "z": 5
+                }
+              ],
+              "bodySupported": true
+            },
+            {
+              "target": {
+                "x": 5,
+                "z": 4
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 4,
+                  "z": 1
+                },
+                {
+                  "x": 5,
+                  "z": 1
+                },
+                {
+                  "x": 5,
+                  "z": 2
+                },
+                {
+                  "x": 5,
+                  "z": 3
+                },
+                {
+                  "x": 5,
+                  "z": 4
+                }
+              ],
+              "bodySupported": true
+            }
+          ]
+        }
+      ],
+      "bothMoved": true,
+      "bothUsable": true
+    },
+    {
+      "name": "high-north",
+      "shape": {
+        "center": {
+          "x": 5,
+          "z": 5
+        },
+        "radius": 1.6,
+        "height": 0.9,
+        "entrance": 1.2,
+        "flatRadius": 1.75,
+        "rampDirection": "north"
+      },
+      "error": "Error: この高さへ登る坂をつくる広さが足りないよ。低くするか、場所を変えてね。"
+    },
+    {
+      "name": "high-west",
+      "shape": {
+        "center": {
+          "x": 5,
+          "z": 5
+        },
+        "radius": 1.6,
+        "height": 0.9,
+        "entrance": 1.2,
+        "flatRadius": 1.75,
+        "rampDirection": "west"
+      },
+      "placeAccepted": true,
+      "plan": {
+        "direction": "west",
+        "topDistance": 1.75,
+        "length": 1.25,
+        "end": {
+          "x": 2,
+          "z": 5
+        },
+        "endZ": 5,
+        "endHeight": 0.559827091,
+        "endpointHeights": [
+          0.575390686,
+          0.559827091,
+          0.54785805
+        ],
+        "availableLength": 5.75,
+        "designSlope": 0.45
+      },
+      "boundary": {
+        "checkedAnalyticOutsideVertices": 47826,
+        "analyticBoundaryHalo": [
+          {
+            "cell": {
+              "x": 3.916666667,
+              "z": 6.747307879
+            },
+            "after": {
+              "x": 4.221835426,
+              "y": -0.375,
+              "z": 6.956505394
+            }
+          },
+          {
+            "cell": {
+              "x": 3.919738435,
+              "z": 6.746928232
+            },
+            "after": {
+              "x": 4.225012884,
+              "y": -0.375,
+              "z": 6.956071263
+            }
+          },
+          {
+            "cell": {
+              "x": 5.107172729,
+              "z": 6.976160605
+            },
+            "after": {
+              "x": 5.342819913,
+              "y": -0.375,
+              "z": 7.074487999
+            }
+          },
+          {
+            "cell": {
+              "x": 3.916666667,
+              "z": 6.747307879
+            },
+            "after": {
+              "x": 4.221835426,
+              "y": -0.375,
+              "z": 6.956505394
+            }
+          },
+          {
+            "cell": {
+              "x": 3.919738435,
+              "z": 6.746928232
+            },
+            "after": {
+              "x": 4.225012884,
+              "y": -0.375,
+              "z": 6.956071263
+            }
+          },
+          {
+            "cell": {
+              "x": 5.107172729,
+              "z": 6.976160605
+            },
+            "after": {
+              "x": 5.342819913,
+              "y": -0.375,
+              "z": 7.074487999
+            }
+          },
+          {
+            "cell": {
+              "x": 5.108579851,
+              "z": 6.974753482
+            },
+            "before": {
+              "x": 5.344561286,
+              "y": -0.375,
+              "z": 7.072891878
+            },
+            "after": {
+              "x": 5.344561104,
+              "y": -0.373988365,
+              "z": 7.072884195
+            }
+          },
+          {
+            "cell": {
+              "x": 5.108579851,
+              "z": 6.974753482
+            },
+            "before": {
+              "x": 5.344561286,
+              "y": -0.375,
+              "z": 7.072891878
+            },
+            "after": {
+              "x": 5.344561104,
+              "y": -0.373988365,
+              "z": 7.072884195
+            }
+          }
+        ],
+        "meshClosure": "containing cells of the fixed 1/12 sampling lattice",
+        "outsideMeshClosure": []
+      },
+      "moves": [
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 5,
+            "z": 5
+          },
+          "accepted": true
+        },
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 6,
+            "z": 5
+          },
+          "accepted": true
+        }
+      ],
+      "owners": [
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 6,
+            "z": 5
+          },
+          "routes": [
+            {
+              "target": {
+                "x": 6,
+                "z": 5
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 4,
+                  "z": 1
+                },
+                {
+                  "x": 5,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 1
+                },
+                {
+                  "x": 7,
+                  "z": 1
+                },
+                {
+                  "x": 7,
+                  "z": 2
+                },
+                {
+                  "x": 7,
+                  "z": 3
+                },
+                {
+                  "x": 7,
+                  "z": 4
+                },
+                {
+                  "x": 6,
+                  "z": 4
+                },
+                {
+                  "x": 6,
+                  "z": 5
+                }
+              ],
+              "bodySupported": true
+            },
+            {
+              "target": {
+                "x": 6,
+                "z": 6
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 1,
+                  "z": 1
+                },
+                {
+                  "x": 1,
+                  "z": 2
+                },
+                {
+                  "x": 1,
+                  "z": 3
+                },
+                {
+                  "x": 2,
+                  "z": 3
+                },
+                {
+                  "x": 2,
+                  "z": 4
+                },
+                {
+                  "x": 2,
+                  "z": 5
+                },
+                {
+                  "x": 3,
+                  "z": 5
+                },
+                {
+                  "x": 4,
+                  "z": 5
+                },
+                {
+                  "x": 4,
+                  "z": 6
+                },
+                {
+                  "x": 5,
+                  "z": 6
+                },
+                {
+                  "x": 6,
+                  "z": 6
+                }
+              ],
+              "bodySupported": true
+            },
+            {
+              "target": {
+                "x": 6,
+                "z": 4
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 4,
+                  "z": 1
+                },
+                {
+                  "x": 5,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 1
+                },
+                {
+                  "x": 7,
+                  "z": 1
+                },
+                {
+                  "x": 7,
+                  "z": 2
+                },
+                {
+                  "x": 7,
+                  "z": 3
+                },
+                {
+                  "x": 7,
+                  "z": 4
+                },
+                {
+                  "x": 6,
+                  "z": 4
+                }
+              ],
+              "bodySupported": true
+            }
+          ]
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 5,
+            "z": 5
+          },
+          "routes": [
+            {
+              "target": {
+                "x": 5,
+                "z": 6
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 1,
+                  "z": 1
+                },
+                {
+                  "x": 1,
+                  "z": 2
+                },
+                {
+                  "x": 1,
+                  "z": 3
+                },
+                {
+                  "x": 2,
+                  "z": 3
+                },
+                {
+                  "x": 2,
+                  "z": 4
+                },
+                {
+                  "x": 2,
+                  "z": 5
+                },
+                {
+                  "x": 3,
+                  "z": 5
+                },
+                {
+                  "x": 4,
+                  "z": 5
+                },
+                {
+                  "x": 4,
+                  "z": 6
+                },
+                {
+                  "x": 5,
+                  "z": 6
+                }
+              ],
+              "bodySupported": true
+            },
+            {
+              "target": {
+                "x": 4,
+                "z": 5
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 1,
+                  "z": 1
+                },
+                {
+                  "x": 1,
+                  "z": 2
+                },
+                {
+                  "x": 1,
+                  "z": 3
+                },
+                {
+                  "x": 2,
+                  "z": 3
+                },
+                {
+                  "x": 2,
+                  "z": 4
+                },
+                {
+                  "x": 2,
+                  "z": 5
+                },
+                {
+                  "x": 3,
+                  "z": 5
+                },
+                {
+                  "x": 4,
+                  "z": 5
+                }
+              ],
+              "bodySupported": true
+            },
+            {
+              "target": {
+                "x": 6,
+                "z": 5
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 3,
+                  "z": 1
+                },
+                {
+                  "x": 4,
+                  "z": 1
+                },
+                {
+                  "x": 5,
+                  "z": 1
+                },
+                {
+                  "x": 6,
+                  "z": 1
+                },
+                {
+                  "x": 7,
+                  "z": 1
+                },
+                {
+                  "x": 7,
+                  "z": 2
+                },
+                {
+                  "x": 7,
+                  "z": 3
+                },
+                {
+                  "x": 7,
+                  "z": 4
+                },
+                {
+                  "x": 6,
+                  "z": 4
+                },
+                {
+                  "x": 6,
+                  "z": 5
+                }
+              ],
+              "bodySupported": true
+            },
+            {
+              "target": {
+                "x": 5,
+                "z": 4
+              },
+              "route": [
+                {
+                  "x": 2,
+                  "z": 1
+                },
+                {
+                  "x": 1,
+                  "z": 1
+                },
+                {
+                  "x": 1,
+                  "z": 2
+                },
+                {
+                  "x": 1,
+                  "z": 3
+                },
+                {
+                  "x": 2,
+                  "z": 3
+                },
+                {
+                  "x": 2,
+                  "z": 4
+                },
+                {
+                  "x": 2,
+                  "z": 5
+                },
+                {
+                  "x": 3,
+                  "z": 5
+                },
+                {
+                  "x": 4,
+                  "z": 5
+                },
+                {
+                  "x": 4,
+                  "z": 4
+                },
+                {
+                  "x": 5,
+                  "z": 4
+                }
+              ],
+              "bodySupported": true
+            }
+          ]
+        }
+      ],
+      "bothMoved": true,
+      "bothUsable": true
+    },
+    {
+      "name": "high-east",
+      "shape": {
+        "center": {
+          "x": 5,
+          "z": 5
+        },
+        "radius": 1.6,
+        "height": 0.9,
+        "entrance": 1.2,
+        "flatRadius": 1.75,
+        "rampDirection": "east"
+      },
+      "error": "Error: この向きには、乾いた足場へ登る坂をつくる広さが足りないよ。"
+    },
+    {
+      "name": "high-south",
+      "shape": {
+        "center": {
+          "x": 5,
+          "z": 5
+        },
+        "radius": 1.6,
+        "height": 0.9,
+        "entrance": 1.2,
+        "flatRadius": 1.75,
+        "rampDirection": "south"
+      },
+      "error": "Error: この向きには、乾いた足場へ登る坂をつくる広さが足りないよ。"
+    }
+  ],
+  "guardReports": [
+    {
+      "name": "fixed-house",
+      "rejected": true,
+      "error": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+    },
+    {
+      "name": "fixed-dock",
+      "rejected": true,
+      "error": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+    },
+    {
+      "name": "actor-on-changing-floor",
+      "rejected": true,
+      "error": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。"
+    }
+  ],
+  "metadata": {
+    "node": "v22.23.3",
+    "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-brush-trial/directional-check.mjs",
+    "actualTransforms": "current place trial Vite transform; field imports replaced only in this diagnostic bundle",
+    "inputSHA256": {
+      "field.ts": "993e27865fe225e21837500938259097983e79da38b40d55489b68e384f40c5e",
+      "directional-field.ts": "3c8d2ca8b7c1463a37dccc03bba4e73aea44b9514f1d3749dfe55baa85f33a35",
+      "directional-check.ts": "5a9ba92e8af42c9c1a8c0555057ac52610cec76c12b1c5e1319b27f8fb8c28ac",
+      "directional-check.mjs": "35c4c84465129c65107aa6c4d00440a2d8d9d99ff531638bc3ef2644c630ac20",
+      "model.ts": "0dfb6b15d57c68faf9546399a26a150ec0846f5b33b0b49b031744de43a12063",
+      "vite.config.ts": "daec9d4979eb791731653fb15083150f2c8ddcf48c00f42faceea77e099f8bbd",
+      "flat-support.ts": "864666aa82db99cbf3b4286c62d939dfb36c69814332a4d7723efe79ec08faf3"
+    },
+    "changedInputs": [],
+    "bundleSHA256": "edd950ae0b7863fcce31d1fd489a0799a4476fede38ca3c71044c4050f137909"
+  }
+}

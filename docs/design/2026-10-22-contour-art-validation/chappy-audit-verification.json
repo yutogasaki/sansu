@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-21T21:17:12.467278+00:00",
+  "candidate": "contour-art-validation",
+  "runtimeRevision": "ff435073e65b43a6",
+  "delivery": "standalone-study-only",
+  "command": "npm run docs:check",
+  "expected": "PASS",
+  "actual": "PASS; 14 existing overdue review warnings",
+  "changes": "Audit documents only; runtime code unchanged",
+  "auditInput": "2 current runtime images + implementation/testing summary",
+  "replyCompleted": true,
+  "followupSent": false,
+  "unverified": [
+    "Independent external source/video/runtime audit",
+    "Common-world integration",
+    "Full product acceptance"
+  ],
+  "inputs": {
+    "chappy-audit-status.md": "6e708c2741e22b52826ea914320c80b95a8493b07c3ddc8312affba8a88fadba",
+    "chappy-audit-request.md": "c17edf1acf09585089589c12d2f3d5455880d694ceb86d1e135f722d0944ae03",
+    "chappy-audit-response-1.txt": "9bc8600b92fbb278388abe12ba89a674304a37c7654ab3b0bd409573ecfee41d",
+    "chappy-audit-followup.txt": "dff0b06e38ab8f7b3109a4472d4a7e71c859ccc3ea78a13b9aa874aacefa556d",
+    "README.md": "28ee41557cb5bfed3421d776c224f6de193b278c055d5467e48f861244e4c6a4"
+  }
+}

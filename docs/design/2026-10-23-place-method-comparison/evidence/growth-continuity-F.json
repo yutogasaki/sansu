@@ -1,0 +1,1996 @@
+{
+  "mode": "F",
+  "status": "DIAGNOSTIC",
+  "fixture": "input33 read-only UI snapshot; drops=10000 is an explicit economy fixture; each acquisition uses ordinary expand; no UI purchase proof",
+  "initial": {
+    "bounds": {
+      "minX": 0,
+      "maxX": 5,
+      "depth": 5
+    },
+    "owners": [
+      {
+        "id": "p1",
+        "cell": {
+          "x": 0,
+          "z": 1
+        },
+        "supported": true,
+        "canPlaceAgain": true,
+        "centerY": -0.18,
+        "maxAdditionalTilt": 0.1095625,
+        "worstPoint": {
+          "x": 0.46,
+          "z": 1.46
+        },
+        "wetProbes": 0
+      },
+      {
+        "id": "starter-flower",
+        "cell": {
+          "x": 2,
+          "z": 3
+        },
+        "supported": true,
+        "canPlaceAgain": true,
+        "centerY": 0.36,
+        "maxAdditionalTilt": 0.129125,
+        "worstPoint": {
+          "x": 2.46,
+          "z": 2.54
+        },
+        "wetProbes": 0
+      },
+      {
+        "id": "starter-bench",
+        "cell": {
+          "x": 2,
+          "z": 4
+        },
+        "supported": true,
+        "canPlaceAgain": true,
+        "centerY": 0.36,
+        "maxAdditionalTilt": 0.0796,
+        "worstPoint": {
+          "x": 1.54,
+          "z": 4
+        },
+        "wetProbes": 0
+      }
+    ],
+    "places": [
+      {
+        "id": "P05:starter-flower",
+        "ruleId": "P05",
+        "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",2,4],[\"starter-flower\",2,3]],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":2,\"z\":4},{\"x\":3,\"z\":4}],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":3}}]]",
+        "targets": [
+          {
+            "id": "starter-bench",
+            "kind": "seat",
+            "cell": {
+              "x": 2,
+              "z": 4
+            }
+          },
+          {
+            "id": "starter-flower:garden",
+            "kind": "garden",
+            "cell": {
+              "x": 2,
+              "z": 3
+            }
+          }
+        ]
+      }
+    ],
+    "visits": [
+      {
+        "actorId": "pokomoko",
+        "placeId": "P05:starter-flower",
+        "accepted": true,
+        "arrivalAt": 880,
+        "receiptAt": 1580,
+        "climbed": 0.17999999999999997,
+        "unsupportedSteps": 0
+      },
+      {
+        "actorId": "v2",
+        "placeId": "P05:starter-flower",
+        "accepted": true,
+        "arrivalAt": 2620,
+        "receiptAt": 3320,
+        "climbed": 0.36,
+        "unsupportedSteps": 0
+      }
+    ]
+  },
+  "branches": [
+    {
+      "order": [
+        "west",
+        "east",
+        "south"
+      ],
+      "steps": [
+        {
+          "side": "west",
+          "cost": 120,
+          "delta": {
+            "sampledPreviousBounds": {
+              "minX": 0,
+              "maxX": 5,
+              "depth": 5
+            },
+            "changedMoreThan2cm": 437,
+            "lostDry": 3,
+            "lostDryExamples": [
+              {
+                "cell": {
+                  "x": -0.2,
+                  "z": 3.6
+                },
+                "before": -0.348
+              },
+              {
+                "cell": {
+                  "x": -0.1,
+                  "z": 3.6
+                },
+                "before": -0.348
+              },
+              {
+                "cell": {
+                  "x": 0,
+                  "z": 3.6
+                },
+                "before": -0.348
+              }
+            ],
+            "becameDry": 41,
+            "maxRise": 0.295167736,
+            "maxDrop": 0.03787499999999999,
+            "maxRiseAt": {
+              "x": -0.5,
+              "z": 3.4
+            },
+            "maxDropAt": {
+              "x": 0,
+              "z": 0.7
+            },
+            "examples": [
+              {
+                "cell": {
+                  "x": -0.5,
+                  "z": -0.5
+                },
+                "before": 0,
+                "after": 0.158031717
+              },
+              {
+                "cell": {
+                  "x": -0.4,
+                  "z": -0.5
+                },
+                "before": 0,
+                "after": 0.126425374
+              },
+              {
+                "cell": {
+                  "x": -0.3,
+                  "z": -0.5
+                },
+                "before": 0,
+                "after": 0.09481903
+              },
+              {
+                "cell": {
+                  "x": -0.2,
+                  "z": -0.5
+                },
+                "before": 0,
+                "after": 0.063212687
+              },
+              {
+                "cell": {
+                  "x": -0.1,
+                  "z": -0.5
+                },
+                "before": 0,
+                "after": 0.031606343
+              },
+              {
+                "cell": {
+                  "x": 5.1,
+                  "z": -0.5
+                },
+                "before": 0.54,
+                "after": 0.571606344
+              },
+              {
+                "cell": {
+                  "x": 5.2,
+                  "z": -0.5
+                },
+                "before": 0.54,
+                "after": 0.603212687
+              },
+              {
+                "cell": {
+                  "x": 5.3,
+                  "z": -0.5
+                },
+                "before": 0.54,
+                "after": 0.63481903
+              }
+            ],
+            "initialCenters": [],
+            "lostReachableCount": 1,
+            "lostReachableExamples": [
+              "0,3.5"
+            ],
+            "pierBefore": {
+              "x": 4,
+              "z": 4
+            },
+            "pierAfter": {
+              "x": 4,
+              "z": 4
+            }
+          },
+          "bounds": {
+            "minX": -3,
+            "maxX": 5,
+            "depth": 5
+          },
+          "owners": [
+            {
+              "id": "p1",
+              "cell": {
+                "x": 0,
+                "z": 1
+              },
+              "supported": true,
+              "canPlaceAgain": true,
+              "centerY": -0.18,
+              "maxAdditionalTilt": 0.1095625,
+              "worstPoint": {
+                "x": 0.46,
+                "z": 1.46
+              },
+              "wetProbes": 0
+            },
+            {
+              "id": "starter-flower",
+              "cell": {
+                "x": 2,
+                "z": 3
+              },
+              "supported": true,
+              "canPlaceAgain": true,
+              "centerY": 0.36,
+              "maxAdditionalTilt": 0.129125,
+              "worstPoint": {
+                "x": 2.46,
+                "z": 2.54
+              },
+              "wetProbes": 0
+            },
+            {
+              "id": "starter-bench",
+              "cell": {
+                "x": 2,
+                "z": 4
+              },
+              "supported": true,
+              "canPlaceAgain": true,
+              "centerY": 0.36,
+              "maxAdditionalTilt": 0.0796,
+              "worstPoint": {
+                "x": 1.54,
+                "z": 4
+              },
+              "wetProbes": 0
+            }
+          ],
+          "places": [
+            {
+              "id": "P05:starter-flower",
+              "ruleId": "P05",
+              "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",2,4],[\"starter-flower\",2,3]],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":2,\"z\":4},{\"x\":3,\"z\":4}],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":3}}]]",
+              "targets": [
+                {
+                  "id": "starter-bench",
+                  "kind": "seat",
+                  "cell": {
+                    "x": 2,
+                    "z": 4
+                  }
+                },
+                {
+                  "id": "starter-flower:garden",
+                  "kind": "garden",
+                  "cell": {
+                    "x": 2,
+                    "z": 3
+                  }
+                }
+              ]
+            }
+          ],
+          "visits": [
+            {
+              "actorId": "pokomoko",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 880,
+              "receiptAt": 1580,
+              "climbed": 0.17999999999999997,
+              "unsupportedSteps": 0
+            },
+            {
+              "actorId": "v2",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 2620,
+              "receiptAt": 3320,
+              "climbed": 0.36,
+              "unsupportedSteps": 0
+            }
+          ],
+          "newlyUnsupported": [],
+          "liveGardenTransition": [
+            {
+              "actorId": "pokomoko",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 880,
+              "receiptAt": 1580,
+              "climbed": 0.17999999999999997,
+              "unsupportedSteps": 0,
+              "transition": {
+                "beforeCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "afterCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "logicalDisplacement": 0,
+                "yChange": 0,
+                "floorChange": 0,
+                "remainsOnFloor": true,
+                "transitionSafe": true
+              }
+            },
+            {
+              "actorId": "v2",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 2620,
+              "receiptAt": 3320,
+              "climbed": 0.36,
+              "unsupportedSteps": 0,
+              "transition": {
+                "beforeCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "afterCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "logicalDisplacement": 0,
+                "yChange": 0,
+                "floorChange": 0,
+                "remainsOnFloor": true,
+                "transitionSafe": true
+              }
+            }
+          ],
+          "savedTerrainUnchanged": true,
+          "serializationRestored": true
+        },
+        {
+          "side": "east",
+          "cost": 240,
+          "delta": {
+            "sampledPreviousBounds": {
+              "minX": -3,
+              "maxX": 5,
+              "depth": 5
+            },
+            "changedMoreThan2cm": 235,
+            "lostDry": 11,
+            "lostDryExamples": [
+              {
+                "cell": {
+                  "x": 5,
+                  "z": 0.7
+                },
+                "before": -0.3
+              },
+              {
+                "cell": {
+                  "x": 5.1,
+                  "z": 0.7
+                },
+                "before": -0.268393656
+              },
+              {
+                "cell": {
+                  "x": 5.2,
+                  "z": 0.7
+                },
+                "before": -0.236787313
+              },
+              {
+                "cell": {
+                  "x": 5.3,
+                  "z": 0.7
+                },
+                "before": -0.205180969
+              },
+              {
+                "cell": {
+                  "x": 5.2,
+                  "z": 0.8
+                },
+                "before": -0.356787313
+              },
+              {
+                "cell": {
+                  "x": 5.3,
+                  "z": 0.8
+                },
+                "before": -0.32518097
+              },
+              {
+                "cell": {
+                  "x": 5.2,
+                  "z": 2.3
+                },
+                "before": -0.356787313
+              },
+              {
+                "cell": {
+                  "x": 5.3,
+                  "z": 2.3
+                },
+                "before": -0.32518097
+              }
+            ],
+            "becameDry": 23,
+            "maxRise": 0.246,
+            "maxDrop": 0.27,
+            "maxRiseAt": {
+              "x": 5.5,
+              "z": 2.1
+            },
+            "maxDropAt": {
+              "x": 5.5,
+              "z": -0.5
+            },
+            "examples": [
+              {
+                "cell": {
+                  "x": 5.1,
+                  "z": -0.5
+                },
+                "before": 0.571606344,
+                "after": 0.547606344
+              },
+              {
+                "cell": {
+                  "x": 5.2,
+                  "z": -0.5
+                },
+                "before": 0.603212687,
+                "after": 0.543212687
+              },
+              {
+                "cell": {
+                  "x": 5.3,
+                  "z": -0.5
+                },
+                "before": 0.63481903,
+                "after": 0.51481903
+              },
+              {
+                "cell": {
+                  "x": 5.4,
+                  "z": -0.5
+                },
+                "before": 0.666425374,
+                "after": 0.474425374
+              },
+              {
+                "cell": {
+                  "x": 5.5,
+                  "z": -0.5
+                },
+                "before": 0.698031717,
+                "after": 0.428031717
+              },
+              {
+                "cell": {
+                  "x": 5.1,
+                  "z": -0.4
+                },
+                "before": 0.571606344,
+                "after": 0.547606344
+              },
+              {
+                "cell": {
+                  "x": 5.2,
+                  "z": -0.4
+                },
+                "before": 0.603212687,
+                "after": 0.543212687
+              },
+              {
+                "cell": {
+                  "x": 5.3,
+                  "z": -0.4
+                },
+                "before": 0.63481903,
+                "after": 0.51481903
+              }
+            ],
+            "initialCenters": [],
+            "lostReachableCount": 1,
+            "lostReachableExamples": [
+              "5,2.5"
+            ],
+            "pierBefore": {
+              "x": 4,
+              "z": 4
+            },
+            "pierAfter": {
+              "x": 7,
+              "z": 4
+            }
+          },
+          "bounds": {
+            "minX": -3,
+            "maxX": 8,
+            "depth": 5
+          },
+          "owners": [
+            {
+              "id": "p1",
+              "cell": {
+                "x": 0,
+                "z": 1
+              },
+              "supported": true,
+              "canPlaceAgain": true,
+              "centerY": -0.18,
+              "maxAdditionalTilt": 0.1095625,
+              "worstPoint": {
+                "x": 0.46,
+                "z": 1.46
+              },
+              "wetProbes": 0
+            },
+            {
+              "id": "starter-flower",
+              "cell": {
+                "x": 2,
+                "z": 3
+              },
+              "supported": true,
+              "canPlaceAgain": true,
+              "centerY": 0.36,
+              "maxAdditionalTilt": 0.129125,
+              "worstPoint": {
+                "x": 2.46,
+                "z": 2.54
+              },
+              "wetProbes": 0
+            },
+            {
+              "id": "starter-bench",
+              "cell": {
+                "x": 2,
+                "z": 4
+              },
+              "supported": true,
+              "canPlaceAgain": true,
+              "centerY": 0.36,
+              "maxAdditionalTilt": 0.0796,
+              "worstPoint": {
+                "x": 1.54,
+                "z": 4
+              },
+              "wetProbes": 0
+            }
+          ],
+          "places": [
+            {
+              "id": "P05:starter-flower",
+              "ruleId": "P05",
+              "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",2,4],[\"starter-flower\",2,3]],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":2,\"z\":4},{\"x\":3,\"z\":4}],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":3}}]]",
+              "targets": [
+                {
+                  "id": "starter-bench",
+                  "kind": "seat",
+                  "cell": {
+                    "x": 2,
+                    "z": 4
+                  }
+                },
+                {
+                  "id": "starter-flower:garden",
+                  "kind": "garden",
+                  "cell": {
+                    "x": 2,
+                    "z": 3
+                  }
+                }
+              ]
+            }
+          ],
+          "visits": [
+            {
+              "actorId": "pokomoko",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 880,
+              "receiptAt": 1580,
+              "climbed": 0.17999999999999997,
+              "unsupportedSteps": 0
+            },
+            {
+              "actorId": "v2",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 2620,
+              "receiptAt": 3320,
+              "climbed": 0.36,
+              "unsupportedSteps": 0
+            }
+          ],
+          "newlyUnsupported": [],
+          "liveGardenTransition": [
+            {
+              "actorId": "pokomoko",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 880,
+              "receiptAt": 1580,
+              "climbed": 0.17999999999999997,
+              "unsupportedSteps": 0,
+              "transition": {
+                "beforeCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "afterCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "logicalDisplacement": 0,
+                "yChange": 0,
+                "floorChange": 0,
+                "remainsOnFloor": true,
+                "transitionSafe": true
+              }
+            },
+            {
+              "actorId": "v2",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 2620,
+              "receiptAt": 3320,
+              "climbed": 0.36,
+              "unsupportedSteps": 0,
+              "transition": {
+                "beforeCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "afterCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "logicalDisplacement": 0,
+                "yChange": 0,
+                "floorChange": 0,
+                "remainsOnFloor": true,
+                "transitionSafe": true
+              }
+            }
+          ],
+          "savedTerrainUnchanged": true,
+          "serializationRestored": true
+        },
+        {
+          "side": "south",
+          "cost": 480,
+          "delta": {
+            "sampledPreviousBounds": {
+              "minX": -3,
+              "maxX": 8,
+              "depth": 5
+            },
+            "changedMoreThan2cm": 196,
+            "lostDry": 12,
+            "lostDryExamples": [
+              {
+                "cell": {
+                  "x": 0.4,
+                  "z": 3.9
+                },
+                "before": -0.361389227
+              },
+              {
+                "cell": {
+                  "x": -0.3,
+                  "z": 4
+                },
+                "before": -0.332227393
+              },
+              {
+                "cell": {
+                  "x": 0.4,
+                  "z": 4
+                },
+                "before": -0.284
+              },
+              {
+                "cell": {
+                  "x": -0.3,
+                  "z": 4.1
+                },
+                "before": -0.334009959
+              },
+              {
+                "cell": {
+                  "x": 0.4,
+                  "z": 4.1
+                },
+                "before": -0.280034582
+              },
+              {
+                "cell": {
+                  "x": -0.3,
+                  "z": 4.2
+                },
+                "before": -0.335792524
+              },
+              {
+                "cell": {
+                  "x": 0.3,
+                  "z": 4.2
+                },
+                "before": -0.372069163
+              },
+              {
+                "cell": {
+                  "x": 0.4,
+                  "z": 4.2
+                },
+                "before": -0.276069164
+              }
+            ],
+            "becameDry": 5,
+            "maxRise": 0.15318749900000003,
+            "maxDrop": 0.18,
+            "maxRiseAt": {
+              "x": -0.3,
+              "z": 4.5
+            },
+            "maxDropAt": {
+              "x": 2,
+              "z": 4.5
+            },
+            "examples": [
+              {
+                "cell": {
+                  "x": -0.8,
+                  "z": 3.9
+                },
+                "before": 0.214024912,
+                "after": 0.234060285
+              },
+              {
+                "cell": {
+                  "x": -0.7,
+                  "z": 3.9
+                },
+                "before": 0.156560706,
+                "after": 0.198427749
+              },
+              {
+                "cell": {
+                  "x": -0.6,
+                  "z": 3.9
+                },
+                "before": 0.045511867,
+                "after": 0.084607714
+              },
+              {
+                "cell": {
+                  "x": -0.4,
+                  "z": 3.9
+                },
+                "before": -0.292537278,
+                "after": -0.332032358
+              },
+              {
+                "cell": {
+                  "x": 0.4,
+                  "z": 3.9
+                },
+                "before": -0.361389227,
+                "after": null
+              },
+              {
+                "cell": {
+                  "x": 0.6,
+                  "z": 3.9
+                },
+                "before": 0.012107446,
+                "after": 0.058750001
+              },
+              {
+                "cell": {
+                  "x": 0.7,
+                  "z": 3.9
+                },
+                "before": 0.11057827,
+                "after": 0.1715
+              },
+              {
+                "cell": {
+                  "x": 0.8,
+                  "z": 3.9
+                },
+                "before": 0.148576293,
+                "after": 0.18
+              }
+            ],
+            "initialCenters": [],
+            "lostReachableCount": 0,
+            "lostReachableExamples": [],
+            "pierBefore": {
+              "x": 7,
+              "z": 4
+            },
+            "pierAfter": {
+              "x": 7,
+              "z": 7
+            }
+          },
+          "bounds": {
+            "minX": -3,
+            "maxX": 8,
+            "depth": 8
+          },
+          "owners": [
+            {
+              "id": "p1",
+              "cell": {
+                "x": 0,
+                "z": 1
+              },
+              "supported": true,
+              "canPlaceAgain": true,
+              "centerY": -0.18,
+              "maxAdditionalTilt": 0.1095625,
+              "worstPoint": {
+                "x": 0.46,
+                "z": 1.46
+              },
+              "wetProbes": 0
+            },
+            {
+              "id": "starter-flower",
+              "cell": {
+                "x": 2,
+                "z": 3
+              },
+              "supported": true,
+              "canPlaceAgain": true,
+              "centerY": 0.36,
+              "maxAdditionalTilt": 0.129125,
+              "worstPoint": {
+                "x": 2.46,
+                "z": 2.54
+              },
+              "wetProbes": 0
+            },
+            {
+              "id": "starter-bench",
+              "cell": {
+                "x": 2,
+                "z": 4
+              },
+              "supported": false,
+              "canPlaceAgain": false,
+              "centerY": 0.36,
+              "maxAdditionalTilt": 0.17412499999999997,
+              "worstPoint": {
+                "x": 2.46,
+                "z": 4.46
+              },
+              "wetProbes": 0
+            }
+          ],
+          "places": [
+            {
+              "id": "P05:starter-flower",
+              "ruleId": "P05",
+              "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",2,4],[\"starter-flower\",2,3]],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":2,\"z\":4},{\"x\":3,\"z\":4},{\"x\":2,\"z\":5}],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":3,\"z\":4},{\"x\":2,\"z\":5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":3}}]]",
+              "targets": [
+                {
+                  "id": "starter-bench",
+                  "kind": "seat",
+                  "cell": {
+                    "x": 2,
+                    "z": 4
+                  }
+                },
+                {
+                  "id": "starter-flower:garden",
+                  "kind": "garden",
+                  "cell": {
+                    "x": 2,
+                    "z": 3
+                  }
+                }
+              ]
+            }
+          ],
+          "visits": [
+            {
+              "actorId": "pokomoko",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 880,
+              "receiptAt": 1580,
+              "climbed": 0.17999999999999997,
+              "unsupportedSteps": 0
+            },
+            {
+              "actorId": "v2",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 2620,
+              "receiptAt": 3320,
+              "climbed": 0.36,
+              "unsupportedSteps": 0
+            }
+          ],
+          "newlyUnsupported": [
+            {
+              "id": "starter-bench",
+              "cell": {
+                "x": 2,
+                "z": 4
+              },
+              "supported": false,
+              "canPlaceAgain": false,
+              "centerY": 0.36,
+              "maxAdditionalTilt": 0.17412499999999997,
+              "worstPoint": {
+                "x": 2.46,
+                "z": 4.46
+              },
+              "wetProbes": 0
+            }
+          ],
+          "liveGardenTransition": [
+            {
+              "actorId": "pokomoko",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 880,
+              "receiptAt": 1580,
+              "climbed": 0.17999999999999997,
+              "unsupportedSteps": 0,
+              "transition": {
+                "beforeCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "afterCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "logicalDisplacement": 0,
+                "yChange": 0,
+                "floorChange": 0,
+                "remainsOnFloor": true,
+                "transitionSafe": true
+              }
+            },
+            {
+              "actorId": "v2",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 2620,
+              "receiptAt": 3320,
+              "climbed": 0.36,
+              "unsupportedSteps": 0,
+              "transition": {
+                "beforeCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "afterCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "logicalDisplacement": 0,
+                "yChange": 0,
+                "floorChange": 0,
+                "remainsOnFloor": true,
+                "transitionSafe": true
+              }
+            }
+          ],
+          "savedTerrainUnchanged": true,
+          "serializationRestored": true
+        }
+      ]
+    },
+    {
+      "order": [
+        "east",
+        "west",
+        "south"
+      ],
+      "steps": [
+        {
+          "side": "east",
+          "cost": 120,
+          "delta": {
+            "sampledPreviousBounds": {
+              "minX": 0,
+              "maxX": 5,
+              "depth": 5
+            },
+            "changedMoreThan2cm": 532,
+            "lostDry": 7,
+            "lostDryExamples": [
+              {
+                "cell": {
+                  "x": 5,
+                  "z": 0.7
+                },
+                "before": -0.3
+              },
+              {
+                "cell": {
+                  "x": 5.1,
+                  "z": 0.7
+                },
+                "before": -0.3
+              },
+              {
+                "cell": {
+                  "x": 5.2,
+                  "z": 0.7
+                },
+                "before": -0.3
+              },
+              {
+                "cell": {
+                  "x": 5.3,
+                  "z": 0.7
+                },
+                "before": -0.3
+              },
+              {
+                "cell": {
+                  "x": 5,
+                  "z": 2.4
+                },
+                "before": -0.348
+              },
+              {
+                "cell": {
+                  "x": 5.1,
+                  "z": 2.4
+                },
+                "before": -0.348
+              },
+              {
+                "cell": {
+                  "x": 5.2,
+                  "z": 2.4
+                },
+                "before": -0.348
+              }
+            ],
+            "becameDry": 43,
+            "maxRise": 0.315777653,
+            "maxDrop": 0.20212500000000003,
+            "maxRiseAt": {
+              "x": 5.3,
+              "z": 0.3
+            },
+            "maxDropAt": {
+              "x": 5,
+              "z": 0.6
+            },
+            "examples": [
+              {
+                "cell": {
+                  "x": -0.5,
+                  "z": -0.5
+                },
+                "before": 0,
+                "after": 0.158031717
+              },
+              {
+                "cell": {
+                  "x": -0.4,
+                  "z": -0.5
+                },
+                "before": 0,
+                "after": 0.126425374
+              },
+              {
+                "cell": {
+                  "x": -0.3,
+                  "z": -0.5
+                },
+                "before": 0,
+                "after": 0.09481903
+              },
+              {
+                "cell": {
+                  "x": -0.2,
+                  "z": -0.5
+                },
+                "before": 0,
+                "after": 0.063212687
+              },
+              {
+                "cell": {
+                  "x": -0.1,
+                  "z": -0.5
+                },
+                "before": 0,
+                "after": 0.031606343
+              },
+              {
+                "cell": {
+                  "x": 5.3,
+                  "z": -0.5
+                },
+                "before": 0.54,
+                "after": 0.51481903
+              },
+              {
+                "cell": {
+                  "x": 5.4,
+                  "z": -0.5
+                },
+                "before": 0.54,
+                "after": 0.474425374
+              },
+              {
+                "cell": {
+                  "x": 5.5,
+                  "z": -0.5
+                },
+                "before": 0.54,
+                "after": 0.428031717
+              }
+            ],
+            "initialCenters": [],
+            "lostReachableCount": 1,
+            "lostReachableExamples": [
+              "5,2.5"
+            ],
+            "pierBefore": {
+              "x": 4,
+              "z": 4
+            },
+            "pierAfter": {
+              "x": 7,
+              "z": 4
+            }
+          },
+          "bounds": {
+            "minX": 0,
+            "maxX": 8,
+            "depth": 5
+          },
+          "owners": [
+            {
+              "id": "p1",
+              "cell": {
+                "x": 0,
+                "z": 1
+              },
+              "supported": true,
+              "canPlaceAgain": true,
+              "centerY": -0.18,
+              "maxAdditionalTilt": 0.1095625,
+              "worstPoint": {
+                "x": 0.46,
+                "z": 1.46
+              },
+              "wetProbes": 0
+            },
+            {
+              "id": "starter-flower",
+              "cell": {
+                "x": 2,
+                "z": 3
+              },
+              "supported": true,
+              "canPlaceAgain": true,
+              "centerY": 0.36,
+              "maxAdditionalTilt": 0.129125,
+              "worstPoint": {
+                "x": 2.46,
+                "z": 2.54
+              },
+              "wetProbes": 0
+            },
+            {
+              "id": "starter-bench",
+              "cell": {
+                "x": 2,
+                "z": 4
+              },
+              "supported": true,
+              "canPlaceAgain": true,
+              "centerY": 0.36,
+              "maxAdditionalTilt": 0.0796,
+              "worstPoint": {
+                "x": 1.54,
+                "z": 4
+              },
+              "wetProbes": 0
+            }
+          ],
+          "places": [
+            {
+              "id": "P05:starter-flower",
+              "ruleId": "P05",
+              "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",2,4],[\"starter-flower\",2,3]],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":2,\"z\":4},{\"x\":3,\"z\":4}],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":3}}]]",
+              "targets": [
+                {
+                  "id": "starter-bench",
+                  "kind": "seat",
+                  "cell": {
+                    "x": 2,
+                    "z": 4
+                  }
+                },
+                {
+                  "id": "starter-flower:garden",
+                  "kind": "garden",
+                  "cell": {
+                    "x": 2,
+                    "z": 3
+                  }
+                }
+              ]
+            }
+          ],
+          "visits": [
+            {
+              "actorId": "pokomoko",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 880,
+              "receiptAt": 1580,
+              "climbed": 0.17999999999999997,
+              "unsupportedSteps": 0
+            },
+            {
+              "actorId": "v2",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 2620,
+              "receiptAt": 3320,
+              "climbed": 0.36,
+              "unsupportedSteps": 0
+            }
+          ],
+          "newlyUnsupported": [],
+          "liveGardenTransition": [
+            {
+              "actorId": "pokomoko",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 880,
+              "receiptAt": 1580,
+              "climbed": 0.17999999999999997,
+              "unsupportedSteps": 0,
+              "transition": {
+                "beforeCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "afterCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "logicalDisplacement": 0,
+                "yChange": 0,
+                "floorChange": 0,
+                "remainsOnFloor": true,
+                "transitionSafe": true
+              }
+            },
+            {
+              "actorId": "v2",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 2620,
+              "receiptAt": 3320,
+              "climbed": 0.36,
+              "unsupportedSteps": 0,
+              "transition": {
+                "beforeCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "afterCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "logicalDisplacement": 0,
+                "yChange": 0,
+                "floorChange": 0,
+                "remainsOnFloor": true,
+                "transitionSafe": true
+              }
+            }
+          ],
+          "savedTerrainUnchanged": true,
+          "serializationRestored": true
+        },
+        {
+          "side": "west",
+          "cost": 240,
+          "delta": {
+            "sampledPreviousBounds": {
+              "minX": 0,
+              "maxX": 8,
+              "depth": 5
+            },
+            "changedMoreThan2cm": 124,
+            "lostDry": 5,
+            "lostDryExamples": [
+              {
+                "cell": {
+                  "x": -0.2,
+                  "z": 3.6
+                },
+                "before": -0.289484929
+              },
+              {
+                "cell": {
+                  "x": -0.1,
+                  "z": 3.6
+                },
+                "before": -0.318742464
+              },
+              {
+                "cell": {
+                  "x": 0,
+                  "z": 3.6
+                },
+                "before": -0.348
+              },
+              {
+                "cell": {
+                  "x": -0.3,
+                  "z": 3.7
+                },
+                "before": -0.332227393
+              },
+              {
+                "cell": {
+                  "x": -0.2,
+                  "z": 3.7
+                },
+                "before": -0.361484929
+              }
+            ],
+            "becameDry": 19,
+            "maxRise": 0.24812499999999998,
+            "maxDrop": 0.09560304500000005,
+            "maxRiseAt": {
+              "x": -0.5,
+              "z": 3.9
+            },
+            "maxDropAt": {
+              "x": -0.3,
+              "z": 3.6
+            },
+            "examples": [
+              {
+                "cell": {
+                  "x": -0.2,
+                  "z": 0.2
+                },
+                "before": 0.043212687,
+                "after": 0.063212687
+              },
+              {
+                "cell": {
+                  "x": -0.1,
+                  "z": 0.2
+                },
+                "before": 0.011606343,
+                "after": 0.031606343
+              },
+              {
+                "cell": {
+                  "x": 0,
+                  "z": 0.2
+                },
+                "before": -0.02,
+                "after": 0
+              },
+              {
+                "cell": {
+                  "x": -0.5,
+                  "z": 0.3
+                },
+                "before": 0.118031717,
+                "after": 0.156969217
+              },
+              {
+                "cell": {
+                  "x": -0.4,
+                  "z": 0.3
+                },
+                "before": 0.086425373,
+                "after": 0.12473724
+              },
+              {
+                "cell": {
+                  "x": -0.3,
+                  "z": 0.3
+                },
+                "before": 0.05481903,
+                "after": 0.092735841
+              },
+              {
+                "cell": {
+                  "x": -0.2,
+                  "z": 0.3
+                },
+                "before": 0.023212686,
+                "after": 0.061087686
+              },
+              {
+                "cell": {
+                  "x": -0.1,
+                  "z": 0.3
+                },
+                "before": -0.008393657,
+                "after": 0.029481343
+              }
+            ],
+            "initialCenters": [],
+            "lostReachableCount": 1,
+            "lostReachableExamples": [
+              "0,3.5"
+            ],
+            "pierBefore": {
+              "x": 7,
+              "z": 4
+            },
+            "pierAfter": {
+              "x": 7,
+              "z": 4
+            }
+          },
+          "bounds": {
+            "minX": -3,
+            "maxX": 8,
+            "depth": 5
+          },
+          "owners": [
+            {
+              "id": "p1",
+              "cell": {
+                "x": 0,
+                "z": 1
+              },
+              "supported": true,
+              "canPlaceAgain": true,
+              "centerY": -0.18,
+              "maxAdditionalTilt": 0.1095625,
+              "worstPoint": {
+                "x": 0.46,
+                "z": 1.46
+              },
+              "wetProbes": 0
+            },
+            {
+              "id": "starter-flower",
+              "cell": {
+                "x": 2,
+                "z": 3
+              },
+              "supported": true,
+              "canPlaceAgain": true,
+              "centerY": 0.36,
+              "maxAdditionalTilt": 0.129125,
+              "worstPoint": {
+                "x": 2.46,
+                "z": 2.54
+              },
+              "wetProbes": 0
+            },
+            {
+              "id": "starter-bench",
+              "cell": {
+                "x": 2,
+                "z": 4
+              },
+              "supported": true,
+              "canPlaceAgain": true,
+              "centerY": 0.36,
+              "maxAdditionalTilt": 0.0796,
+              "worstPoint": {
+                "x": 1.54,
+                "z": 4
+              },
+              "wetProbes": 0
+            }
+          ],
+          "places": [
+            {
+              "id": "P05:starter-flower",
+              "ruleId": "P05",
+              "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",2,4],[\"starter-flower\",2,3]],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":2,\"z\":4},{\"x\":3,\"z\":4}],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":3}}]]",
+              "targets": [
+                {
+                  "id": "starter-bench",
+                  "kind": "seat",
+                  "cell": {
+                    "x": 2,
+                    "z": 4
+                  }
+                },
+                {
+                  "id": "starter-flower:garden",
+                  "kind": "garden",
+                  "cell": {
+                    "x": 2,
+                    "z": 3
+                  }
+                }
+              ]
+            }
+          ],
+          "visits": [
+            {
+              "actorId": "pokomoko",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 880,
+              "receiptAt": 1580,
+              "climbed": 0.17999999999999997,
+              "unsupportedSteps": 0
+            },
+            {
+              "actorId": "v2",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 2620,
+              "receiptAt": 3320,
+              "climbed": 0.36,
+              "unsupportedSteps": 0
+            }
+          ],
+          "newlyUnsupported": [],
+          "liveGardenTransition": [
+            {
+              "actorId": "pokomoko",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 880,
+              "receiptAt": 1580,
+              "climbed": 0.17999999999999997,
+              "unsupportedSteps": 0,
+              "transition": {
+                "beforeCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "afterCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "logicalDisplacement": 0,
+                "yChange": 0,
+                "floorChange": 0,
+                "remainsOnFloor": true,
+                "transitionSafe": true
+              }
+            },
+            {
+              "actorId": "v2",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 2620,
+              "receiptAt": 3320,
+              "climbed": 0.36,
+              "unsupportedSteps": 0,
+              "transition": {
+                "beforeCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "afterCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "logicalDisplacement": 0,
+                "yChange": 0,
+                "floorChange": 0,
+                "remainsOnFloor": true,
+                "transitionSafe": true
+              }
+            }
+          ],
+          "savedTerrainUnchanged": true,
+          "serializationRestored": true
+        },
+        {
+          "side": "south",
+          "cost": 480,
+          "delta": {
+            "sampledPreviousBounds": {
+              "minX": -3,
+              "maxX": 8,
+              "depth": 5
+            },
+            "changedMoreThan2cm": 196,
+            "lostDry": 12,
+            "lostDryExamples": [
+              {
+                "cell": {
+                  "x": 0.4,
+                  "z": 3.9
+                },
+                "before": -0.361389227
+              },
+              {
+                "cell": {
+                  "x": -0.3,
+                  "z": 4
+                },
+                "before": -0.332227393
+              },
+              {
+                "cell": {
+                  "x": 0.4,
+                  "z": 4
+                },
+                "before": -0.284
+              },
+              {
+                "cell": {
+                  "x": -0.3,
+                  "z": 4.1
+                },
+                "before": -0.334009959
+              },
+              {
+                "cell": {
+                  "x": 0.4,
+                  "z": 4.1
+                },
+                "before": -0.280034582
+              },
+              {
+                "cell": {
+                  "x": -0.3,
+                  "z": 4.2
+                },
+                "before": -0.335792524
+              },
+              {
+                "cell": {
+                  "x": 0.3,
+                  "z": 4.2
+                },
+                "before": -0.372069163
+              },
+              {
+                "cell": {
+                  "x": 0.4,
+                  "z": 4.2
+                },
+                "before": -0.276069164
+              }
+            ],
+            "becameDry": 5,
+            "maxRise": 0.15318749900000003,
+            "maxDrop": 0.18,
+            "maxRiseAt": {
+              "x": -0.3,
+              "z": 4.5
+            },
+            "maxDropAt": {
+              "x": 2,
+              "z": 4.5
+            },
+            "examples": [
+              {
+                "cell": {
+                  "x": -0.8,
+                  "z": 3.9
+                },
+                "before": 0.214024912,
+                "after": 0.234060285
+              },
+              {
+                "cell": {
+                  "x": -0.7,
+                  "z": 3.9
+                },
+                "before": 0.156560706,
+                "after": 0.198427749
+              },
+              {
+                "cell": {
+                  "x": -0.6,
+                  "z": 3.9
+                },
+                "before": 0.045511867,
+                "after": 0.084607714
+              },
+              {
+                "cell": {
+                  "x": -0.4,
+                  "z": 3.9
+                },
+                "before": -0.292537278,
+                "after": -0.332032358
+              },
+              {
+                "cell": {
+                  "x": 0.4,
+                  "z": 3.9
+                },
+                "before": -0.361389227,
+                "after": null
+              },
+              {
+                "cell": {
+                  "x": 0.6,
+                  "z": 3.9
+                },
+                "before": 0.012107446,
+                "after": 0.058750001
+              },
+              {
+                "cell": {
+                  "x": 0.7,
+                  "z": 3.9
+                },
+                "before": 0.11057827,
+                "after": 0.1715
+              },
+              {
+                "cell": {
+                  "x": 0.8,
+                  "z": 3.9
+                },
+                "before": 0.148576293,
+                "after": 0.18
+              }
+            ],
+            "initialCenters": [],
+            "lostReachableCount": 0,
+            "lostReachableExamples": [],
+            "pierBefore": {
+              "x": 7,
+              "z": 4
+            },
+            "pierAfter": {
+              "x": 7,
+              "z": 7
+            }
+          },
+          "bounds": {
+            "minX": -3,
+            "maxX": 8,
+            "depth": 8
+          },
+          "owners": [
+            {
+              "id": "p1",
+              "cell": {
+                "x": 0,
+                "z": 1
+              },
+              "supported": true,
+              "canPlaceAgain": true,
+              "centerY": -0.18,
+              "maxAdditionalTilt": 0.1095625,
+              "worstPoint": {
+                "x": 0.46,
+                "z": 1.46
+              },
+              "wetProbes": 0
+            },
+            {
+              "id": "starter-flower",
+              "cell": {
+                "x": 2,
+                "z": 3
+              },
+              "supported": true,
+              "canPlaceAgain": true,
+              "centerY": 0.36,
+              "maxAdditionalTilt": 0.129125,
+              "worstPoint": {
+                "x": 2.46,
+                "z": 2.54
+              },
+              "wetProbes": 0
+            },
+            {
+              "id": "starter-bench",
+              "cell": {
+                "x": 2,
+                "z": 4
+              },
+              "supported": false,
+              "canPlaceAgain": false,
+              "centerY": 0.36,
+              "maxAdditionalTilt": 0.17412499999999997,
+              "worstPoint": {
+                "x": 2.46,
+                "z": 4.46
+              },
+              "wetProbes": 0
+            }
+          ],
+          "places": [
+            {
+              "id": "P05:starter-flower",
+              "ruleId": "P05",
+              "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",2,4],[\"starter-flower\",2,3]],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":2,\"z\":4},{\"x\":3,\"z\":4},{\"x\":2,\"z\":5}],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":3,\"z\":4},{\"x\":2,\"z\":5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":3}}]]",
+              "targets": [
+                {
+                  "id": "starter-bench",
+                  "kind": "seat",
+                  "cell": {
+                    "x": 2,
+                    "z": 4
+                  }
+                },
+                {
+                  "id": "starter-flower:garden",
+                  "kind": "garden",
+                  "cell": {
+                    "x": 2,
+                    "z": 3
+                  }
+                }
+              ]
+            }
+          ],
+          "visits": [
+            {
+              "actorId": "pokomoko",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 880,
+              "receiptAt": 1580,
+              "climbed": 0.17999999999999997,
+              "unsupportedSteps": 0
+            },
+            {
+              "actorId": "v2",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 2620,
+              "receiptAt": 3320,
+              "climbed": 0.36,
+              "unsupportedSteps": 0
+            }
+          ],
+          "newlyUnsupported": [
+            {
+              "id": "starter-bench",
+              "cell": {
+                "x": 2,
+                "z": 4
+              },
+              "supported": false,
+              "canPlaceAgain": false,
+              "centerY": 0.36,
+              "maxAdditionalTilt": 0.17412499999999997,
+              "worstPoint": {
+                "x": 2.46,
+                "z": 4.46
+              },
+              "wetProbes": 0
+            }
+          ],
+          "liveGardenTransition": [
+            {
+              "actorId": "pokomoko",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 880,
+              "receiptAt": 1580,
+              "climbed": 0.17999999999999997,
+              "unsupportedSteps": 0,
+              "transition": {
+                "beforeCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "afterCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "logicalDisplacement": 0,
+                "yChange": 0,
+                "floorChange": 0,
+                "remainsOnFloor": true,
+                "transitionSafe": true
+              }
+            },
+            {
+              "actorId": "v2",
+              "placeId": "P05:starter-flower",
+              "accepted": true,
+              "arrivalAt": 2620,
+              "receiptAt": 3320,
+              "climbed": 0.36,
+              "unsupportedSteps": 0,
+              "transition": {
+                "beforeCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "afterCell": {
+                  "x": 2,
+                  "z": 3
+                },
+                "logicalDisplacement": 0,
+                "yChange": 0,
+                "floorChange": 0,
+                "remainsOnFloor": true,
+                "transitionSafe": true
+              }
+            }
+          ],
+          "savedTerrainUnchanged": true,
+          "serializationRestored": true
+        }
+      ]
+    }
+  ],
+  "outsideScope": [
+    "real UI acquisition",
+    "learning/economy eligibility",
+    "DB transaction",
+    "offscreen actor positions"
+  ],
+  "date": "2026-10-22T21:09:29.973Z",
+  "inputHashes": {
+    "growth-continuity-check.ts": "c7eb681c1267e51cdda712192aef1287378fea7595d353b28e4b2ee938513afa",
+    "growth-continuity-check.mjs": "c6570ff56d8733e5e57cd74e3d3101abd1658cbe07b9cf60e43b296afdb04f65",
+    "terrace-convex-field.ts": "9f2ab0880f502ee399866577f8dc041381a60a215ff6cece7a4625c002773ccc",
+    "terrain-transform.mjs": "087f297d4454bcff192340c2fc3fc0f296bbfd9e9641ce5ecbc5d1a4fe4949e4",
+    "section-profile.ts": "1dc7f55c40ebb1321afe0cfce46e573292af987e4e147b532a0c4bbff7b6098b",
+    "../2026-10-22-place-strategy-trial/foundation.ts": "00a11d9deb61d240c757352a711b53ec3dc8cd2359d9ba652683b6f979df21f2",
+    "evidence/33-F2-used-state.json": "081e357da5da782ed1dcdd0edcf91153ecb300c1192c2d546784e0e639643bcd"
+  },
+  "integration": "actual terrainMethodTransform mode F",
+  "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-method-comparison/growth-continuity-check.mjs"
+}

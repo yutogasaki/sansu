@@ -1,0 +1,34 @@
+{
+  "checkedAt": "2026-10-22T22:44:38.857851+00:00",
+  "initialCheck": {
+    "exitCode": 1,
+    "stale": [
+      ".agents/index.html",
+      ".agents/tasks/index.html",
+      "docs/index.html",
+      ".agents/map.html"
+    ],
+    "evidence": "agent-index-before.txt"
+  },
+  "readOnlyBaseline": {
+    "exitCode": 0,
+    "stale": [],
+    "method": "In-memory fs read adapter excluded this trial directory from docs/design listing and removed only the new parent-task paragraph. Ran the same generator --check with no writes."
+  },
+  "repair": {
+    "command": "fnm exec --using=22.23.3 node tools/generate-agent-index.mjs",
+    "exitCode": 0,
+    "generated": [
+      ".agents/index.html",
+      ".agents/tasks/index.html",
+      "docs/index.html",
+      ".agents/map.html"
+    ],
+    "unchanged": [
+      ".agents/plan.html",
+      ".agents/roles.html",
+      ".agents/operations.html"
+    ]
+  },
+  "scope": "The generated page mismatch was caused by this trial addition. Existing other work was already represented by the generated pages in the read-only baseline."
+}

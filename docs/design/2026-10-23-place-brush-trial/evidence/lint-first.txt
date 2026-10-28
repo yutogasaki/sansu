@@ -1,0 +1,42 @@
+
+/Users/yutogasaki/Projects/sansu/docs/design/2026-10-23-place-brush-trial/TrialIsland.ts
+  41:12  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/yutogasaki/Projects/sansu/docs/design/2026-10-23-place-brush-trial/TrialIsland.ts:41:12
+  39 |     const acknowledgePlace = useCallback((receipt: PlaceReceipt) => dispatch({ ...receipt, profileId, expectedRevision: current.current.revision } as Command), [dispatch, profileId]);
+  40 |     if (!fixture) return { ...real, place, placeUndo: 0, placeRedo: 0 };
+> 41 |     return { record, reveal: undefined, error, busy: false, syncing: false, saving: false, dispatch, acknowledgePlace,
+     |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 42 |         acknowledge: async () => false, sync: async () => {}, sail: async () => false, step: 'saving' as const,
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 43 |         clearError: () => setError(undefined), place, placeUndo: undo.current.length, placeRedo: redo.current.length };
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  44 | }
+  45 |  react-hooks/refs
+  43:66  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/yutogasaki/Projects/sansu/docs/design/2026-10-23-place-brush-trial/TrialIsland.ts:43:66
+  41 |     return { record, reveal: undefined, error, busy: false, syncing: false, saving: false, dispatch, acknowledgePlace,
+  42 |         acknowledge: async () => false, sync: async () => {}, sail: async () => false, step: 'saving' as const,
+> 43 |         clearError: () => setError(undefined), place, placeUndo: undo.current.length, placeRedo: redo.current.length };
+     |                                                                  ^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  44 | }
+  45 |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         react-hooks/refs
+  43:98  error  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/yutogasaki/Projects/sansu/docs/design/2026-10-23-place-brush-trial/TrialIsland.ts:43:98
+  41 |     return { record, reveal: undefined, error, busy: false, syncing: false, saving: false, dispatch, acknowledgePlace,
+  42 |         acknowledge: async () => false, sync: async () => {}, sail: async () => false, step: 'saving' as const,
+> 43 |         clearError: () => setError(undefined), place, placeUndo: undo.current.length, placeRedo: redo.current.length };
+     |                                                                                                  ^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  44 | }
+  45 |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         react-hooks/refs
+
+✖ 3 problems (3 errors, 0 warnings)
+

@@ -1,0 +1,65 @@
+{
+  "at": "2026-10-26T04:06:28.862Z",
+  "scope": "Isolated real GrowingSheet with synthetic props. Component diagnostics, not full-app/PWA acceptance; no user DB.",
+  "inputs": {
+    "src/components/island/growing/GrowingSheet.tsx": "f29906adc5f18d4d58cedddc9eb3ca532aeb409cdb47b99c648dded7ff5e58fc",
+    "src/components/island/growing/houseGuests.ts": "9658d50d4d11627f15000530df68266dee5a0ad63d7c6c96f5488dab497aaf12",
+    "src/components/island/growing/growingLife.ts": "3cd1738578318e1ee6458b9454a37b584c253acc6be587409f37b23ba040c30f",
+    "tools/fixtures/resident-audit.html": "a15413a05f9d93d6d0cd0e02625b17fb93fb40ee67b98b662c68d9ac75909cea",
+    "tools/e2e-resident-audit.mjs": "17951df9f8b2ba76abe000edd76c0da2611b8ab960a7136d7956b2a0e6e1cabd"
+  },
+  "scenarios": [
+    {
+      "width": 390,
+      "targetSwitch": true,
+      "ownerSwitch": true,
+      "distinctNames": [
+        {
+          "id": "a",
+          "name": "ほし"
+        },
+        {
+          "id": "b",
+          "name": "そら"
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "width": 768,
+      "targetSwitch": true,
+      "ownerSwitch": true,
+      "distinctNames": [
+        {
+          "id": "a",
+          "name": "ほし"
+        },
+        {
+          "id": "b",
+          "name": "そら"
+        }
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "width": 320,
+      "targetSwitch": true,
+      "ownerSwitch": true,
+      "distinctNames": [
+        {
+          "id": "a",
+          "name": "ほし"
+        },
+        {
+          "id": "b",
+          "name": "そら"
+        }
+      ],
+      "errors": [],
+      "pass": true
+    }
+  ],
+  "pass": true
+}

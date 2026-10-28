@@ -1,0 +1,1661 @@
+{
+  "title": "ぽこもこと不思議な島",
+  "checkedAt": "2026-10-27",
+  "purpose": "全機能の企画を図と根拠で読む内部資料。挙動の正本と公開判定を置き換えない。",
+  "sources": {
+    "core": "CONSTITUTION.md",
+    "app": "docs/product/01_app_spec.md",
+    "nav": "docs/product/43_island_navigation_spec.md",
+    "ui": "docs/product/44_display_layout_spec.md",
+    "island": "docs/product/52_growing_island_game_spec.md",
+    "growth": "docs/product/island-system/growth-rules.md",
+    "terrain": "docs/product/island-construction-strategy.md",
+    "place": "docs/product/island-place-goals.md",
+    "journey": "docs/product/island-journey.md",
+    "start": "docs/product/island-first-play-onboarding.md",
+    "guide": "docs/product/island-starter-achievements-proposal.md",
+    "math": "docs/product/02_math_skills.md",
+    "english": "docs/product/03_english_skills.md",
+    "foundation": "docs/product/english-foundation.md",
+    "kokugo": "docs/product/kokugo.md",
+    "kanji": "docs/product/kokugo-kanji.md",
+    "level": "docs/product/29_learning_progression_spec.md",
+    "reinforce": "docs/product/34_learning_reinforcement_spec.md",
+    "units": "docs/product/31_learning_units_spec.md",
+    "screen": "docs/product/06_screen_specs.md",
+    "storage": "docs/product/13_data_storage_migration_spec.md",
+    "challenge": "docs/product/46_home_learning_challenge_spec.md",
+    "voyage": "docs/product/island-voyages.md",
+    "legacy": "docs/product/16_legacy_feature_decision.md",
+    "pwa": "docs/runbooks/pwa-release.md",
+    "plan": "docs/tasks/backlog.md",
+    "tasks": ".agents/tasks/TASKS.md",
+    "blocked": ".agents/tasks/BLOCKED.md",
+    "workshop": "docs/product/37_island_workshop_spec.md",
+    "expression": "docs/product/41_island_expression_collection_spec.md",
+    "shared": "docs/product/38_island_shared_memories_spec.md",
+    "appearance": "docs/product/35_island_customization_spec.md",
+    "refinement": "docs/product/island-simple-depth-plan.md",
+    "artStrategy": "docs/product/island-art-strategy.md",
+    "benchmarkAudit": "docs/design/2026-10-22-benchmark-method-audit/README.md",
+    "benchmarkResearch": "docs/design/2026-10-21-little-habitats-research/README.md",
+    "benchmarkReferences": "docs/design/2026-10-10-island-design-strategy/references.json",
+    "benchmarkOrigins": "docs/product/30_living_island_growth_spec.md"
+  },
+  "assets": {
+    "hero": {
+      "path": "docs/design/2026-10-10-island-final-3d/whole-island-render.png",
+      "label": "完成目標の3D美術模型",
+      "date": "2026-10-10",
+      "note": "native-05系の造形目標。家や住人を並べた模型で、現在の本人の取得状態・本体の完成画面ではありません。",
+      "source": "docs/design/2026-10-10-island-final-3d/README.md"
+    },
+    "island": {
+      "path": "docs/design/2026-10-27-menu-ui-audit/loop/01-current-island.jpg",
+      "label": "本体の実画面・ローカルDEV",
+      "date": "2026-10-27",
+      "note": "390px幅。island-direct-play-v2。本人用の合成入力を含む監査の場面で、実利用者の到達例ではありません。",
+      "source": "docs/design/2026-10-27-menu-ui-audit/loop/README.md"
+    },
+    "house": {
+      "path": "docs/design/2026-10-27-menu-ui-audit/loop/04-house-after.jpg",
+      "label": "本体の実画面・ローカルDEV",
+      "date": "2026-10-27",
+      "note": "家のメニューを含む監査画面。house-world-first-v1。",
+      "source": "docs/design/2026-10-27-menu-ui-audit/loop/README.md"
+    },
+    "math": {
+      "path": "docs/design/2026-10-10-promotion-website/learning.png",
+      "label": "実画面を使った紹介構成",
+      "date": "2026-10-10",
+      "note": "算数・英語の学習面を使った紹介資料。最新の表示状態を保証する画像ではありません。",
+      "source": "docs/design/2026-10-10-promotion-website/README.md"
+    },
+    "english": {
+      "path": "docs/design/2026-10-20-english-foundation/390-F02-listening.png",
+      "label": "本体の実画面・検証用入力",
+      "date": "2026-10-20",
+      "note": "英語基礎F02、音と絵の選択。実児童の理解の測定ではありません。",
+      "source": "docs/design/2026-10-20-english-foundation/README.md"
+    },
+    "kokugo": {
+      "path": "docs/design/2026-10-27-kokugo-continuity-fix/catalog-390.png",
+      "label": "本体の実画面・検証用入力",
+      "date": "2026-10-27",
+      "note": "国語の教材選択画面。専用の検証用入力による表示。",
+      "source": "docs/design/2026-10-27-kokugo-continuity-fix/README.md"
+    },
+    "records": {
+      "path": "docs/design/2026-10-27-kokugo-continuity-loop/easy-records-390.png",
+      "label": "本体の実画面・検証用入力",
+      "date": "2026-10-27",
+      "note": "共通記録の教科表示。実利用者の記録ではありません。",
+      "source": "docs/design/2026-10-27-kokugo-continuity-loop/README.md"
+    },
+    "parents": {
+      "path": "docs/design/2026-10-27-kokugo-continuity-fix/parents-390.png",
+      "label": "本体の実画面・検証用入力",
+      "date": "2026-10-27",
+      "note": "保護者の学習状況。実利用者の記録ではありません。",
+      "source": "docs/design/2026-10-27-kokugo-continuity-fix/README.md"
+    },
+    "benchmarkLittle": {
+      "path": "docs/design/2026-10-10-island-design-strategy/assets/lh-spring-day.jpg",
+      "source": "docs/design/2026-10-10-island-design-strategy/references.json",
+      "label": "Little Habitats · サンプル庭の実画面",
+      "note": "外部参考作品。岸と段丘、水辺、木のまとまりを観察したLittle Habitatsの春昼。ぽこもこの画面ではありません。",
+      "date": "2026-10-10収集"
+    },
+    "benchmarkTown": {
+      "path": "docs/design/2026-10-10-island-design-strategy/assets/town-1.jpg",
+      "source": "docs/design/2026-10-10-island-design-strategy/references.json",
+      "label": "Townscaper · 公式掲載画像",
+      "note": "外部参考作品。色の違う家がつながって一つの街になるTownscaperの公式画像。ぽこもこの画面ではありません。",
+      "date": "2026-10-10収集"
+    },
+    "benchmarkTiny": {
+      "path": "docs/design/2026-10-10-island-design-strategy/assets/tiny-2.jpg",
+      "source": "docs/design/2026-10-10-island-design-strategy/references.json",
+      "label": "Tiny Glade · 公式掲載画像",
+      "note": "外部参考作品。石壁と植物、羊がいるTiny Gladeの昼の庭。ぽこもこの画面ではありません。",
+      "date": "2026-10-10収集"
+    }
+  },
+  "features": [
+    {
+      "id": "F001",
+      "category": "entry",
+      "group": "はじめる",
+      "title": "Welcomeと最初の島",
+      "detail": "名前や学習の設定より先に、自分の島で遊び始める。",
+      "source": "docs/product/island-first-play-onboarding.md",
+      "state": "current",
+      "experience": "島に入り、同じ続きを再開する"
+    },
+    {
+      "id": "F002",
+      "category": "entry",
+      "group": "はじめる",
+      "title": "任意の学習設定",
+      "detail": "名前・取り組む内容を選び、あとで島へ戻ることもできる。年齢だけで教材をロックしない。",
+      "source": "docs/product/island-first-play-onboarding.md",
+      "state": "current",
+      "experience": "島に入り、同じ続きを再開する"
+    },
+    {
+      "id": "F003",
+      "category": "entry",
+      "group": "はじめる",
+      "title": "最初の一周の案内",
+      "detail": "置く・家を開く・住人を迎える。実際に行った操作を記録し、案内を飛ばしても達成できる。",
+      "source": "docs/product/island-starter-achievements-proposal.md",
+      "state": "current",
+      "experience": "島に入り、同じ続きを再開する"
+    },
+    {
+      "id": "F004",
+      "category": "entry",
+      "group": "はじめる",
+      "title": "必要な時に出る道具",
+      "detail": "海図・地形・写真などは暮らしの節目で増える。既に進んだ本人の道具は保持する。",
+      "source": "docs/product/island-journey.md",
+      "state": "adopted",
+      "experience": "島に入り、同じ続きを再開する",
+      "improvement": {
+        "action": "維持",
+        "detail": "すでに採用した、必要な時に出る道具を維持。3動詞を3ボタンや3タブに置き換えない。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F005",
+      "category": "entry",
+      "group": "はじめる",
+      "title": "5タブと同じ場所への復帰",
+      "detail": "しま・いえ・まなぶ・きろく・設定を行き来し、途中の学習と戻り先を保つ。",
+      "source": "docs/product/43_island_navigation_spec.md",
+      "state": "current",
+      "experience": "島に入り、同じ続きを再開する",
+      "improvement": {
+        "action": "維持",
+        "detail": "5タブと戻り先を保持。3動詞は遊びを理解する入口とする。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F006",
+      "category": "island",
+      "group": "島づくり",
+      "title": "品物を選ぶ・取得する",
+      "detail": "木・花・水・家・食べ物と、遊具や飾りを選ぶ。新しい食の供給は畑へ統合。旧所有は残る。",
+      "source": "docs/product/island-system/growth-rules.md",
+      "state": "current",
+      "experience": "置く・動かす・眺める"
+    },
+    {
+      "id": "F007",
+      "category": "island",
+      "group": "島づくり",
+      "title": "配置予告と確定・取消",
+      "detail": "置いた後の姿と影響を確認してから決める。不足時は選び直せ、取消は購入の確定にしない。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "置く・動かす・眺める",
+      "improvement": {
+        "action": "説明整理",
+        "detail": "価格と、まなぶと建つ／時間で育つ／すぐ遊べるを購入前に示す。今直せる妨げは一件と実対象で伝える。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F008",
+      "category": "island",
+      "group": "島づくり",
+      "title": "移動・回転・収納・再配置",
+      "detail": "持っている物を無料で試し直す。取得済みの段階・外見・住人を失わせない。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "置く・動かす・眺める"
+    },
+    {
+      "id": "F009",
+      "category": "island",
+      "group": "島づくり",
+      "title": "地形のふで",
+      "detail": "取得した地面を盛る・掘る・ならす。今いる人や物の足場を守り、元へ戻す操作もできる。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "置く・動かす・眺める"
+    },
+    {
+      "id": "F010",
+      "category": "island",
+      "group": "島づくり",
+      "title": "水辺・滝と通れる床",
+      "detail": "低い地形は水辺に、条件が合う高低差は滝に。見える地面と実際の通行をそろえる。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "置く・動かす・眺める"
+    },
+    {
+      "id": "F011",
+      "category": "island",
+      "group": "島づくり",
+      "title": "方向を選ぶ土地拡張",
+      "detail": "同じ島をしずくで広げる。別島を開く航路の枠とは別の仕組み。",
+      "source": "docs/product/island-system/growth-rules.md",
+      "state": "current",
+      "experience": "置く・動かす・眺める"
+    },
+    {
+      "id": "F012",
+      "category": "island",
+      "group": "島づくり",
+      "title": "カメラと眺め",
+      "detail": "全景・近景・回転・拡大縮小で島を見る。配置や撮影と見る操作を両立させる。",
+      "source": "docs/product/44_display_layout_spec.md",
+      "state": "current",
+      "experience": "置く・動かす・眺める"
+    },
+    {
+      "id": "F013",
+      "category": "island",
+      "group": "島づくり",
+      "title": "名前・屋根色・旗",
+      "detail": "自分の島と住人に名前を付け、屋根と旗を選ぶ。未命名でも始められる。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "置く・動かす・眺める"
+    },
+    {
+      "id": "F014",
+      "category": "nature",
+      "group": "自然と暮らし",
+      "title": "実際に届く水",
+      "detail": "水源からつながる水路が土地を湿らせ、植物や畑に影響する。切れた先へ架空の供給はしない。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "置き方から、暮らしと遊びを変える",
+      "improvement": {
+        "action": "深さを確認",
+        "detail": "同じ水路を別の場所へ回し、実給水先と水辺の使われ方を比較する。水圧など新しい計算は足さない。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F015",
+      "category": "nature",
+      "group": "自然と暮らし",
+      "title": "木・花の成熟と自生",
+      "detail": "自然時間で植物が育ち、条件の合う空地へ広がる。不在で枯れたり維持費を取られたりしない。",
+      "source": "docs/product/island-system/growth-rules.md",
+      "state": "current",
+      "experience": "置き方から、暮らしと遊びを変える",
+      "improvement": {
+        "action": "前提を明確化",
+        "detail": "若木の反応と成熟後の配置を分ける。短時間の比較に成熟を飛ばす約束をしない。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F016",
+      "category": "nature",
+      "group": "自然と暮らし",
+      "title": "花の交配と花図鑑",
+      "detail": "花の組み合わせから新しい花と出会い、見つけた花を図鑑で見返す。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "置き方から、暮らしと遊びを変える"
+    },
+    {
+      "id": "F017",
+      "category": "nature",
+      "group": "自然と暮らし",
+      "title": "畑・運搬・食卓",
+      "detail": "食べ物の供給と歩ける経路がそろうと、実在する住人が運び、集まって食べる。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "置き方から、暮らしと遊びを変える"
+    },
+    {
+      "id": "F018",
+      "category": "nature",
+      "group": "自然と暮らし",
+      "title": "家が建つ・育つ",
+      "detail": "まち時間と入居・到達の条件で家が育つ。本人が選んだ家と屋根の姿を引き継ぐ。",
+      "source": "docs/product/island-system/growth-rules.md",
+      "state": "current",
+      "experience": "置き方から、暮らしと遊びを変える"
+    },
+    {
+      "id": "F019",
+      "category": "nature",
+      "group": "自然と暮らし",
+      "title": "船と迎え入れ",
+      "detail": "船で来た住人は、空き住居と食の余裕がそろった時に本人が迎える。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "置き方から、暮らしと遊びを変える"
+    },
+    {
+      "id": "F020",
+      "category": "nature",
+      "group": "自然と暮らし",
+      "title": "住人の性格とお気に入り",
+      "detail": "住人ごとの好みから散歩・休憩・遊具の利用が変わる。おでかけを退去と取り違えない。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "置き方から、暮らしと遊びを変える",
+      "improvement": {
+        "action": "深さを確認",
+        "detail": "実際の経路・空席・好みが使われ方に出ることを比べる。見せかけの住人や新しい友情ゲージは足さない。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F021",
+      "category": "nature",
+      "group": "自然と暮らし",
+      "title": "つまんで遊ぶ",
+      "detail": "ぽこもこや住人を持ち上げ、空いているベンチやブランコへ運ぶと、そこで遊ぶ。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "置き方から、暮らしと遊びを変える"
+    },
+    {
+      "id": "F022",
+      "category": "nature",
+      "group": "自然と暮らし",
+      "title": "無料の橋",
+      "detail": "条件を満たすと橋を作り、住人が渡る。しまって作り直せ、学習のノルマにはしない。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "置き方から、暮らしと遊びを変える"
+    },
+    {
+      "id": "F023",
+      "category": "nature",
+      "group": "自然と暮らし",
+      "title": "配置から育つ場所",
+      "detail": "木陰・花庭・水辺・家々の庭が、並び・成熟・実床と入口から形を変える。",
+      "source": "docs/product/island-system/growth-rules.md",
+      "state": "current",
+      "experience": "置き方から、暮らしと遊びを変える",
+      "improvement": {
+        "action": "深さを確認",
+        "detail": "同じ材料の二つ以上の配置に、違う景色と実利用があることを確認する。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F024",
+      "category": "nature",
+      "group": "自然と暮らし",
+      "title": "6つの場所目標",
+      "detail": "選んで試せる任意の目標。できた場所を見返す。特別な6島の航路とは別体系。",
+      "source": "docs/product/island-place-goals.md",
+      "state": "current",
+      "experience": "置き方から、暮らしと遊びを変える",
+      "improvement": {
+        "action": "維持",
+        "detail": "任意の場所目標を、並列のノルマや新しい進行ゲージにしない。今の楽しみ一件から辿れる。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F025",
+      "category": "nature",
+      "group": "自然と暮らし",
+      "title": "巨大な場所と景観",
+      "detail": "大樹・空中回廊・花天蓋などの完成美術へ育てる。任意配置での全自動成立は保証しない。",
+      "source": "docs/product/island-construction-strategy.md",
+      "state": "developing",
+      "experience": "置き方から、暮らしと遊びを変える",
+      "improvement": {
+        "action": "維持",
+        "detail": "未対応の巨大形は通常の成熟形で遊べる。席や追加購入を必須条件に戻さない。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F026",
+      "category": "nature",
+      "group": "自然と暮らし",
+      "title": "3つの時間と朝夕",
+      "detail": "まち時間・自然時間・画面を開いている間の暮らしを区別。朝夕の光は端末時刻の景色。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "置き方から、暮らしと遊びを変える",
+      "improvement": {
+        "action": "説明整理",
+        "detail": "時計は残し、操作した物の次の変化を短く示す。朝夕の景色と成長条件を混同しない。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F027",
+      "category": "wonder",
+      "group": "発見と航海",
+      "title": "環境で起きる不思議",
+      "detail": "にじの木・金のかぼちゃ・よつば・夜の光など。条件と保存した乱数で決まり、開き直しで引き直さない。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "触れる・工夫する・旅する"
+    },
+    {
+      "id": "F028",
+      "category": "wonder",
+      "group": "発見と航海",
+      "title": "小さな出来事と訪問",
+      "detail": "島の環境や暦で出会いの傾向が変わる。今回来なくても持ち物や学習を失わない。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "触れる・工夫する・旅する"
+    },
+    {
+      "id": "F029",
+      "category": "wonder",
+      "group": "発見と航海",
+      "title": "ふしぎ図鑑",
+      "detail": "見た不思議と出来事を残し、まだのものはヒントを見られる。地形を戻しても記録は残る。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "触れる・工夫する・旅する",
+      "improvement": {
+        "action": "維持",
+        "detail": "すでに採用した「しまのきろく」1冊の整理を活かす。別の収集ゲージを増やさない。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F030",
+      "category": "wonder",
+      "group": "発見と航海",
+      "title": "海図と島の往復",
+      "detail": "家の島と独立した島を行き来する。島ごとの配置・住人と共通のしずく・学習を区別する。",
+      "source": "docs/product/island-voyages.md",
+      "state": "current",
+      "experience": "触れる・工夫する・旅する"
+    },
+    {
+      "id": "F031",
+      "category": "wonder",
+      "group": "発見と航海",
+      "title": "最初の航路",
+      "detail": "最初の住人を迎えると、しおかぜの小島への枠が開く。初回学習を必須にしない。",
+      "source": "docs/product/island-journey.md",
+      "state": "adopted",
+      "experience": "触れる・工夫する・旅する",
+      "improvement": {
+        "action": "維持",
+        "detail": "最初の航路に学習を必須にせず、しおかぜへ到着したら固有種を触れる。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F032",
+      "category": "wonder",
+      "group": "発見と航海",
+      "title": "学びの5つの航路枠",
+      "detail": "どれか一教科で確認Lv2・5・9・13・17に届くと資格を得る。一つ選んでから次の枠が開く。",
+      "source": "docs/product/island-journey.md",
+      "state": "adopted",
+      "experience": "触れる・工夫する・旅する",
+      "improvement": {
+        "action": "維持",
+        "detail": "現行の航路枠・学習の確認条件は変更しない。全教科の同じ節目で重複させない。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F033",
+      "category": "wonder",
+      "group": "発見と航海",
+      "title": "特別な6島と固有種",
+      "detail": "しおかぜ・こだま・ひかり・わたぐも・ぜんまい・星。着いた時と環境を工夫した時に出会う種を分ける。",
+      "source": "docs/product/island-journey.md",
+      "state": "adopted",
+      "experience": "触れる・工夫する・旅する",
+      "improvement": {
+        "action": "再訪設計",
+        "detail": "6島ごとに到着直後／初回の工夫／獲得後の二配置を具体化。家・畑・入居の再建を追加条件にしない。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F034",
+      "category": "wonder",
+      "group": "発見と航海",
+      "title": "おみやげを持ち帰る",
+      "detail": "固有種との出会いから自分の島へ種を持ち帰る。島の往復で資格や通貨を重複発行しない。",
+      "source": "docs/product/island-journey.md",
+      "state": "adopted",
+      "experience": "触れる・工夫する・旅する",
+      "improvement": {
+        "action": "維持",
+        "detail": "獲得済み種は配置条件を崩しても保持。往復や再接続でおみやげを再発行しない。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F035",
+      "category": "wonder",
+      "group": "発見と航海",
+      "title": "5系統のアチーブメント",
+      "detail": "しまづくり・くらし・ふしぎ・まなび・こうかいの達成を記録。学習の量を習得と同じにしない。",
+      "source": "docs/product/island-journey.md",
+      "state": "adopted",
+      "experience": "触れる・工夫する・旅する",
+      "improvement": {
+        "action": "入口整理",
+        "detail": "統合済みの1冊で実際の達成をまとめる。写真数や賞状数の別の進行体系を加えない。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F036",
+      "category": "home",
+      "group": "家と思い出",
+      "title": "室内で歩く・見回す",
+      "detail": "床を触ってぽこもこが歩く。カメラで室内を見回し、本や棚の実物に触る。",
+      "source": "docs/product/43_island_navigation_spec.md",
+      "state": "current",
+      "experience": "自分らしく暮らし、思い出す"
+    },
+    {
+      "id": "F037",
+      "category": "home",
+      "group": "家と思い出",
+      "title": "着替え",
+      "detail": "元のぽこもこの顔・耳・布を保ち、持っている服や装いを選ぶ。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "自分らしく暮らし、思い出す"
+    },
+    {
+      "id": "F038",
+      "category": "home",
+      "group": "家と思い出",
+      "title": "部屋の模様替え",
+      "detail": "持っている壁・床・部屋の見た目を選び、自分の家を整える。",
+      "source": "docs/product/44_display_layout_spec.md",
+      "state": "current",
+      "experience": "自分らしく暮らし、思い出す"
+    },
+    {
+      "id": "F039",
+      "category": "home",
+      "group": "家と思い出",
+      "title": "学んだ英語が壁の模様に",
+      "detail": "学びと結びつく壁紙を飾り、ことばを聞き直す。装飾の利用を新しい習得証拠にしない。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "自分らしく暮らし、思い出す"
+    },
+    {
+      "id": "F040",
+      "category": "home",
+      "group": "家と思い出",
+      "title": "なかまの手紙と訪問",
+      "detail": "届いた手紙を読み、家で仲間とのつながりを見返す。0通の時は待ち時間を罰にしない。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "自分らしく暮らし、思い出す"
+    },
+    {
+      "id": "F041",
+      "category": "home",
+      "group": "家と思い出",
+      "title": "まなびの記念品",
+      "detail": "算数・英単語の主レベルの節目に届く記念品を、本人が好きな場所へ置く。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "自分らしく暮らし、思い出す"
+    },
+    {
+      "id": "F042",
+      "category": "home",
+      "group": "家と思い出",
+      "title": "なぞって飾る",
+      "detail": "なぞったものを家に飾り、作品として残す。独力で書けたことの自動認定にはしない。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "自分らしく暮らし、思い出す"
+    },
+    {
+      "id": "F043",
+      "category": "home",
+      "group": "家と思い出",
+      "title": "任意の1分チャレンジ",
+      "detail": "初版は10までの足し算。自己ベストと記念を家で見る。通常学習の出題・SRSとは分離する。",
+      "source": "docs/product/46_home_learning_challenge_spec.md",
+      "state": "current",
+      "experience": "自分らしく暮らし、思い出す",
+      "improvement": {
+        "action": "補助として維持",
+        "detail": "任意チャレンジを島や学習進級の条件にしない。好きな時に遊ぶ直接入口は残す。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F044",
+      "category": "home",
+      "group": "家と思い出",
+      "title": "写真とアルバム",
+      "detail": "自分で写真を撮り、島の記録として保存し、あとから選んで見る。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "自分らしく暮らし、思い出す",
+      "improvement": {
+        "action": "入口整理",
+        "detail": "家の思い出から同じ写真を選ぶ。撮影への直接操作と、元の一覧へ戻る経路を保つ。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F045",
+      "category": "home",
+      "group": "家と思い出",
+      "title": "島カードと見せるモード",
+      "detail": "操作UIを控えて島を見せ、島カードで今の姿を伝える。オンライン共有を前提にしない。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "自分らしく暮らし、思い出す",
+      "improvement": {
+        "action": "入口整理",
+        "detail": "同じ選択資料から使える見せ方へ。別の収集や新しいオンライン共有を加えない。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F046",
+      "category": "home",
+      "group": "家と思い出",
+      "title": "島のあゆみ・まえといま",
+      "detail": "保存した過去と今の景色を比べ、自分で育てた変化を見る。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "自分らしく暮らし、思い出す",
+      "improvement": {
+        "action": "入口整理",
+        "detail": "当時の姿を残し、同じ資料から今との比較へ進む。写真や履歴のDB統合はしない。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F047",
+      "category": "home",
+      "group": "家と思い出",
+      "title": "きょうだいの島へ",
+      "detail": "同じ端末の本人別の島を見に行く。相手の学習や持ち物を書き換えない。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "自分らしく暮らし、思い出す"
+    },
+    {
+      "id": "F048",
+      "category": "home",
+      "group": "家と思い出",
+      "title": "遊び方の本",
+      "detail": "家の本と島メニューから、任意の目標・試し方・達成を読む。読むだけで購入や学習を始めない。",
+      "source": "docs/product/island-starter-achievements-proposal.md",
+      "state": "current",
+      "experience": "自分らしく暮らし、思い出す",
+      "improvement": {
+        "action": "維持",
+        "detail": "既存の本と次の楽しみ一件を活かす。読ませることを操作や進行の条件にしない。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F049",
+      "category": "math",
+      "group": "算数",
+      "title": "数量・形・空間の基礎",
+      "detail": "未就学の数量・比較・位置などから始める基礎導入9教材。学校算数の全領域対応とはしない。",
+      "source": "docs/product/02_math_skills.md",
+      "state": "current",
+      "experience": "算数をまなぶ"
+    },
+    {
+      "id": "F050",
+      "category": "math",
+      "group": "算数",
+      "title": "四則演算・小数・分数",
+      "detail": "118スキルを内部29レベルで扱う計算中心の教材。割合・平均・比・速さも限定した形式を含む。",
+      "source": "docs/product/02_math_skills.md",
+      "state": "current",
+      "experience": "算数をまなぶ"
+    },
+    {
+      "id": "F051",
+      "category": "math",
+      "group": "算数",
+      "title": "数直線・まとまり・複数表現",
+      "detail": "同じ内容を式・図・数量などで確かめる。見せる表現と確認する力の対応を保つ。",
+      "source": "docs/product/31_learning_units_spec.md",
+      "state": "current",
+      "experience": "算数をまなぶ"
+    },
+    {
+      "id": "F052",
+      "category": "math",
+      "group": "算数",
+      "title": "テンキーと筆算",
+      "detail": "整数・小数・分数・途中の段など、問題に合う入力を使う。物理キーと筆算表示設定も支える。",
+      "source": "docs/product/02_math_skills.md",
+      "state": "current",
+      "experience": "算数をまなぶ"
+    },
+    {
+      "id": "F053",
+      "category": "english",
+      "group": "英語",
+      "title": "A・B・Cの基礎",
+      "detail": "F01で形の照合と文字名の聴取を分ける。A〜Z全体やフォニックス全課程の実装とはしない。",
+      "source": "docs/product/english-foundation.md",
+      "state": "current",
+      "experience": "英語をまなぶ"
+    },
+    {
+      "id": "F054",
+      "category": "english",
+      "group": "英語",
+      "title": "音と絵を結ぶ",
+      "detail": "F02でapple・cat・dogの音から絵を選ぶ。文字や日本語訳をまだ読めない子の入口。",
+      "source": "docs/product/english-foundation.md",
+      "state": "current",
+      "experience": "英語をまなぶ"
+    },
+    {
+      "id": "F055",
+      "category": "english",
+      "group": "英語",
+      "title": "英単語1,184項目",
+      "detail": "20レベルの語彙を英語→日本語の4択で練習。訳語の認識を発話・綴りの習得へ拡大解釈しない。",
+      "source": "docs/product/03_english_skills.md",
+      "state": "current",
+      "experience": "英語をまなぶ"
+    },
+    {
+      "id": "F056",
+      "category": "english",
+      "group": "英語",
+      "title": "例文・任意の短文リスニング",
+      "detail": "単語の例文を読み、任意で短い文を聞く。聞くだけの体験に採点や追加報酬を付けない。",
+      "source": "docs/product/03_english_skills.md",
+      "state": "current",
+      "experience": "英語をまなぶ"
+    },
+    {
+      "id": "F057",
+      "category": "english",
+      "group": "英語",
+      "title": "基礎と語彙の切替",
+      "detail": "本人のコースを選ぶ。途中予約は完了まで保持し、切替を次の区切りへ反映する。",
+      "source": "docs/product/english-foundation.md",
+      "state": "current",
+      "experience": "英語をまなぶ"
+    },
+    {
+      "id": "F058",
+      "category": "kokugo",
+      "group": "国語",
+      "title": "年齢目安と6領域",
+      "detail": "幼児3〜4歳・5〜6歳から小6までの目安。かな・漢字・語彙・文・読解・表現を年齢ロックなしで選ぶ。",
+      "source": "docs/product/kokugo.md",
+      "state": "current",
+      "experience": "国語をまなぶ"
+    },
+    {
+      "id": "F059",
+      "category": "kokugo",
+      "group": "国語",
+      "title": "46単元のスターター",
+      "detail": "採点41単元と自由活動5単元。導入の例から通常3問へ進む。教科書全範囲の網羅とは区別する。",
+      "source": "docs/product/kokugo.md",
+      "state": "current",
+      "experience": "国語をまなぶ"
+    },
+    {
+      "id": "F060",
+      "category": "kokugo",
+      "group": "国語",
+      "title": "全配当漢字1,026字",
+      "detail": "学年別の字・読みの例・場面文を探し、練習する。手本を見た記録と独力の読みを分ける。",
+      "source": "docs/product/kokugo-kanji.md",
+      "state": "current",
+      "experience": "国語をまなぶ"
+    },
+    {
+      "id": "F061",
+      "category": "kokugo",
+      "group": "国語",
+      "title": "読解と読書",
+      "detail": "同じ文章を表示したまま問いに答える。読書6作品と活動は、回答数や正解率に足さない。",
+      "source": "docs/product/kokugo.md",
+      "state": "current",
+      "experience": "国語をまなぶ"
+    },
+    {
+      "id": "F062",
+      "category": "kokugo",
+      "group": "国語",
+      "title": "作品・紙に書く・表現",
+      "detail": "作文や紙の活動を作品として保存。下書きと保存した版を区別し、自動の正誤判定はしない。",
+      "source": "docs/product/kokugo.md",
+      "state": "current",
+      "experience": "国語をまなぶ"
+    },
+    {
+      "id": "F063",
+      "category": "kokugo",
+      "group": "国語",
+      "title": "ヒント・見本・音声",
+      "detail": "支援を使って先へ進める。読みを示す音声を使った回答を、独力の読みの証拠にしない。",
+      "source": "docs/product/kokugo.md",
+      "state": "current",
+      "experience": "国語をまなぶ"
+    },
+    {
+      "id": "F064",
+      "category": "kokugo",
+      "group": "国語",
+      "title": "内容の確認と後日復習",
+      "detail": "独力初答・異なる文脈・必要形式の被覆を確かめる。既知例の復習と未見例での確認は別の証拠。",
+      "source": "docs/product/kokugo.md",
+      "state": "current",
+      "experience": "国語をまなぶ"
+    },
+    {
+      "id": "F065",
+      "category": "learning",
+      "group": "学習のしくみ",
+      "title": "教科を選ぶ・混合学習",
+      "detail": "算数＋英語・算数・英語・国語を選ぶ。途中の予約を消さず、選んだ教科へ戻る。",
+      "source": "docs/product/kokugo.md",
+      "state": "current",
+      "experience": "本人が選ぶ学びを続ける"
+    },
+    {
+      "id": "F066",
+      "category": "learning",
+      "group": "学習のしくみ",
+      "title": "短い区切りと直接再開",
+      "detail": "「まなぶ」で通常の練習を直接開始・再開。長い設定の選び直しを挟まない。",
+      "source": "docs/product/43_island_navigation_spec.md",
+      "state": "current",
+      "experience": "本人が選ぶ学びを続ける"
+    },
+    {
+      "id": "F067",
+      "category": "learning",
+      "group": "学習のしくみ",
+      "title": "独力・訂正・支援・スキップ",
+      "detail": "初めの答えと助けを使った完了を分け、スキップを架空の正解にしない。",
+      "source": "docs/product/34_learning_reinforcement_spec.md",
+      "state": "current",
+      "experience": "本人が選ぶ学びを続ける"
+    },
+    {
+      "id": "F068",
+      "category": "learning",
+      "group": "学習のしくみ",
+      "title": "復習期限と苦手のフォロー",
+      "detail": "覚え直し・Due・表現の不足に沿って練習を組む。同じ問題の反復だけで独力習得を作らない。",
+      "source": "docs/product/34_learning_reinforcement_spec.md",
+      "state": "current",
+      "experience": "本人が選ぶ学びを続ける"
+    },
+    {
+      "id": "F069",
+      "category": "learning",
+      "group": "学習のしくみ",
+      "title": "しあげと進級",
+      "detail": "準備が整った区切りで進級の確認へ。設定で選んだ難度と実際に確認できた内容を分ける。",
+      "source": "docs/product/29_learning_progression_spec.md",
+      "state": "current",
+      "experience": "本人が選ぶ学びを続ける"
+    },
+    {
+      "id": "F070",
+      "category": "learning",
+      "group": "学習のしくみ",
+      "title": "学習からしずく・まち時間",
+      "detail": "有効な1問完了で2しずくと2まち時間。独力・支援とも対象で、同じ完了は二重に数えない。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "current",
+      "experience": "本人が選ぶ学びを続ける",
+      "improvement": {
+        "action": "維持",
+        "detail": "2しずく＋2まち時間と余剰保持は変更しない。受取時の追加支払い・新しい時間消費ボタンは作らない。",
+        "source": "docs/product/island-simple-depth-plan.md"
+      }
+    },
+    {
+      "id": "F071",
+      "category": "learning",
+      "group": "学習のしくみ",
+      "title": "ぽこもこの応援・音楽",
+      "detail": "入力の手応え、短い正解・連続・区切りの演出。次の入力を演出待ちにしない。",
+      "source": "docs/product/01_app_spec.md",
+      "state": "current",
+      "experience": "本人が選ぶ学びを続ける"
+    },
+    {
+      "id": "F072",
+      "category": "learning",
+      "group": "学習のしくみ",
+      "title": "共通20段階の表示",
+      "detail": "算数内部29区分を20段階へ対応付け、英単語・国語もLv1〜20で読む。学習画面全体への表示統一は継続。",
+      "source": "docs/product/island-journey.md",
+      "state": "developing",
+      "experience": "本人が選ぶ学びを続ける"
+    },
+    {
+      "id": "F073",
+      "category": "record",
+      "group": "記録と保護者",
+      "title": "つぎへの道",
+      "detail": "今の内容・次の内容と、独力で確認できた進み具合を分けて見る。",
+      "source": "docs/product/06_screen_specs.md",
+      "state": "current",
+      "experience": "確かめる・見守る"
+    },
+    {
+      "id": "F074",
+      "category": "record",
+      "group": "記録と保護者",
+      "title": "7日・30日の活動記録",
+      "detail": "日ごとの回答・スキップ・活動を確認。国語の読書と作品は問題数や正解率へ合算しない。",
+      "source": "docs/product/kokugo.md",
+      "state": "current",
+      "experience": "確かめる・見守る"
+    },
+    {
+      "id": "F075",
+      "category": "record",
+      "group": "記録と保護者",
+      "title": "単元・技能の記録",
+      "detail": "回答履歴、復習予定と学習範囲を見る。算数・英単語だけの分析は対象教科を明記する。",
+      "source": "docs/product/06_screen_specs.md",
+      "state": "current",
+      "experience": "確かめる・見守る"
+    },
+    {
+      "id": "F076",
+      "category": "record",
+      "group": "記録と保護者",
+      "title": "保護者の学習状況",
+      "detail": "子どもの練習面から離れ、内容と進み具合を確認する。単なる問題数を習得率と呼ばない。",
+      "source": "docs/product/06_screen_specs.md",
+      "state": "current",
+      "experience": "確かめる・見守る"
+    },
+    {
+      "id": "F077",
+      "category": "record",
+      "group": "記録と保護者",
+      "title": "任意の確認テスト",
+      "detail": "保護者が理解を確かめるために開始。通常の進級確認と役割を分ける。",
+      "source": "docs/product/06_screen_specs.md",
+      "state": "current",
+      "experience": "確かめる・見守る"
+    },
+    {
+      "id": "F078",
+      "category": "record",
+      "group": "記録と保護者",
+      "title": "紙のテスト",
+      "detail": "問題を印刷し、結果の採点・取消・再印刷を扱う。画面内の独力証拠とは区別する。",
+      "source": "docs/product/06_screen_specs.md",
+      "state": "current",
+      "experience": "確かめる・見守る"
+    },
+    {
+      "id": "F079",
+      "category": "record",
+      "group": "記録と保護者",
+      "title": "出題範囲とレベル調整",
+      "detail": "保護者が取り組む範囲を調整する。手動解放を自動の習得記録に変えない。",
+      "source": "docs/product/06_screen_specs.md",
+      "state": "current",
+      "experience": "確かめる・見守る"
+    },
+    {
+      "id": "F080",
+      "category": "record",
+      "group": "記録と保護者",
+      "title": "本人の追加・切替・削除",
+      "detail": "きょうだい別に本人を管理。本人に属する学習・島・作品を分け、削除は明示操作で扱う。",
+      "source": "docs/product/13_data_storage_migration_spec.md",
+      "state": "current",
+      "experience": "確かめる・見守る"
+    },
+    {
+      "id": "F081",
+      "category": "trust",
+      "group": "設定と保存",
+      "title": "音・表示・筆算の設定",
+      "detail": "音のオンオフ、やさしい操作案内、対象教科の筆算を調整。教材本文や正答を勝手に変えない。",
+      "source": "docs/product/44_display_layout_spec.md",
+      "state": "current",
+      "experience": "安心して続きを残す"
+    },
+    {
+      "id": "F082",
+      "category": "trust",
+      "group": "設定と保存",
+      "title": "PWAとオフライン",
+      "detail": "ホーム画面から起動し、必要な素材が準備された範囲で通信なしでも続ける。音声未準備などの制約は伝える。",
+      "source": "docs/runbooks/pwa-release.md",
+      "state": "current",
+      "experience": "安心して続きを残す"
+    },
+    {
+      "id": "F083",
+      "category": "trust",
+      "group": "設定と保存",
+      "title": "端末内・本人別の保存",
+      "detail": "学習、所有、住人、作品、写真を端末内に保持。ログインとクラウド同期は範囲外。",
+      "source": "docs/product/13_data_storage_migration_spec.md",
+      "state": "current",
+      "experience": "安心して続きを残す"
+    },
+    {
+      "id": "F084",
+      "category": "trust",
+      "group": "設定と保存",
+      "title": "中断・更新後の再開",
+      "detail": "予約した問題・選択肢・初答・支援・下書きを保持。保存中や回答中の更新を保護する。",
+      "source": "docs/product/13_data_storage_migration_spec.md",
+      "state": "current",
+      "experience": "安心して続きを残す"
+    },
+    {
+      "id": "F085",
+      "category": "trust",
+      "group": "設定と保存",
+      "title": "旧保存と復旧",
+      "detail": "旧所有・旧写真を保護し、版の違う書込みを隔離する。バックアップの保護と復旧は保存契約の機能で説明する。",
+      "source": "docs/product/13_data_storage_migration_spec.md",
+      "state": "current",
+      "experience": "安心して続きを残す"
+    },
+    {
+      "id": "F086",
+      "category": "trust",
+      "group": "設定と保存",
+      "title": "読込・失敗・再試行",
+      "detail": "準備中と失敗を区別。保存失敗は消える通知だけにせず、状態を保って再試行できる。",
+      "source": "docs/product/43_island_navigation_spec.md",
+      "state": "current",
+      "experience": "安心して続きを残す"
+    },
+    {
+      "id": "F087",
+      "category": "trust",
+      "group": "設定と保存",
+      "title": "利用者向け全データ書出し",
+      "detail": "今回確認した通常設定には全データの書出し・取込みを確認できていない。使える機能として約束しない。",
+      "source": "docs/product/13_data_storage_migration_spec.md",
+      "state": "unconfirmed",
+      "experience": "安心して続きを残す"
+    },
+    {
+      "id": "F088",
+      "category": "trust",
+      "group": "設定と保存",
+      "title": "読みやすさと操作支援",
+      "detail": "44px以上の操作、キーボード、狭幅・文字拡大・動き抑制を考慮。音や色だけで結果を伝えない。",
+      "source": "docs/product/44_display_layout_spec.md",
+      "state": "current",
+      "experience": "安心して続きを残す"
+    },
+    {
+      "id": "F089",
+      "category": "legacy",
+      "group": "旧モードと対象外",
+      "title": "旧Explore・2人ゲーム",
+      "detail": "直接URLと既存データを保つ任意の旧モード。現行の島メニューには混ぜない。",
+      "source": "docs/product/43_island_navigation_spec.md",
+      "state": "legacy",
+      "experience": "互換と対象外を区別する"
+    },
+    {
+      "id": "F090",
+      "category": "legacy",
+      "group": "旧モードと対象外",
+      "title": "旧Park・終了した試作",
+      "detail": "旧遊園地は通常ホームへ転送。旧Nature Townや終了試作の実績を現行の完成へ流用しない。",
+      "source": "docs/product/01_app_spec.md",
+      "state": "legacy",
+      "experience": "互換と対象外を区別する"
+    },
+    {
+      "id": "F091",
+      "category": "legacy",
+      "group": "旧モードと対象外",
+      "title": "ログイン・クラウド同期",
+      "detail": "端末を越えた自動同期は現在の範囲外。端末内保存を前提にする。",
+      "source": "CONSTITUTION.md",
+      "state": "excluded",
+      "experience": "互換と対象外を区別する"
+    },
+    {
+      "id": "F092",
+      "category": "legacy",
+      "group": "旧モードと対象外",
+      "title": "学習効果・再訪の実測",
+      "detail": "児童・保護者による理解や翌日再訪は自動検査と別に確認する。効果や継続率を未測定のまま断定しない。",
+      "source": "CONSTITUTION.md",
+      "state": "unconfirmed",
+      "experience": "互換と対象外を区別する"
+    },
+    {
+      "id": "F093",
+      "category": "legacy",
+      "group": "旧モードと対象外",
+      "title": "旧工作・物理実験",
+      "detail": "観察・組立・水車などの旧工作機能。旧島の保存と再演の契約を保持し、育つ島の通常メニューの新機能とは扱わない。",
+      "source": "docs/product/37_island_workshop_spec.md",
+      "state": "legacy",
+      "experience": "互換と対象外を区別する"
+    },
+    {
+      "id": "F094",
+      "category": "legacy",
+      "group": "旧モードと対象外",
+      "title": "旧表現コレクション",
+      "detail": "服・動作・旗・音などの旧表現と取得条件。現行の育つ島の装いへ、旧解放条件を無断で合算しない。",
+      "source": "docs/product/41_island_expression_collection_spec.md",
+      "state": "legacy",
+      "experience": "互換と対象外を区別する"
+    },
+    {
+      "id": "F095",
+      "category": "legacy",
+      "group": "旧モードと対象外",
+      "title": "旧共有思い出と再演",
+      "detail": "旧版の作品や場面の記録・再演を保持する。端末外へのオンライン共有の実装とは区別する。",
+      "source": "docs/product/38_island_shared_memories_spec.md",
+      "state": "legacy",
+      "experience": "互換と対象外を区別する"
+    },
+    {
+      "id": "F096",
+      "category": "legacy",
+      "group": "旧モードと対象外",
+      "title": "旧島の外観と環境音",
+      "detail": "外観・景色・環境音のプレビューと過去の姿を保つ。現行の育つ島への対応範囲は親仕様を優先する。",
+      "source": "docs/product/35_island_customization_spec.md",
+      "state": "legacy",
+      "experience": "互換と対象外を区別する"
+    },
+    {
+      "id": "F097",
+      "category": "legacy",
+      "group": "旧モードと対象外",
+      "title": "課金・広告・ガチャ・ログイン報酬",
+      "detail": "現在の企画に課金・広告・ガチャ・連続ログイン報酬や時間短縮の購入は含めない。",
+      "source": "docs/product/52_growing_island_game_spec.md",
+      "state": "excluded",
+      "experience": "互換と対象外を区別する"
+    }
+  ],
+  "consultation": "https://chatgpt.com/g/g-p-6ad58d0857b881918e46e346350848e7/c/6ae073ac-6278-83e8-ae2e-f73d78ad68ea",
+  "refinement": {
+    "source": "docs/product/island-simple-depth-plan.md",
+    "title": "少ない操作から、深く遊べる島へ。",
+    "status": "今回採用した改善方針。企画書へ反映済み／アプリの改修・児童の観察はこれから。",
+    "core": "置いてみる。さわってみる。学んで育てる。昨日の続きを、自分の島で。3つの動詞を入口に、眺める・迎える・旅する楽しさまでつなぎます。",
+    "verbs": [
+      {
+        "title": "置く",
+        "detail": "位置・つながり・高低差を変える。同じ持ち物から、違う良さのある場所をつくる。",
+        "example": "木を列にして通る。囲んで、内側で過ごす。"
+      },
+      {
+        "title": "さわる",
+        "detail": "今そこにある水や木、仲間から返事が返る。使われ方を見て、また試したくなる。",
+        "example": "水を触り、届く先を確かめる。空いた席で仲間と過ごす。"
+      },
+      {
+        "title": "まなぶ",
+        "detail": "本人が選ぶ短い練習。島の材料と建築の時間が届き、作りたい場所の続きを育てる。",
+        "example": "学習しない日も、今ある島を眺め、動かし、遊べる。"
+      }
+    ],
+    "decisions": [
+      {
+        "title": "いま触った場所を、主役にする",
+        "action": "焦点を絞る",
+        "before": "家・土地・住人・場所・レベル・航路・達成が並ぶと、何をしたかったかが散る。",
+        "after": "自分が変えた場所と、その結果を先に見せる。「つぎのたのしみ」は既存どおり任意の1件。閉じても、自分の構想の続きを遊べる。",
+        "guard": "学習と島の進行を一つの総合レベルへ合算しない。人口や成長を小さい固定上限で止めない。"
+      },
+      {
+        "title": "待つ理由を、置く前から見せる",
+        "action": "理由をつなぐ",
+        "before": "しずくで買えても建築は待つ。植物は別の時計で育ち、理由が見えにくい。",
+        "after": "価格と一緒に「まなぶと建つ／時間で育つ／すぐ遊べる」を短く伝える。止まる時は、今直せる理由と実際の対象を一件示す。",
+        "guard": "2しずく＋2まち時間、自然時間、余りの時間と価格を維持。学習の催促や二重の支払いを加えない。"
+      },
+      {
+        "title": "獲得したあとも、工夫が続く",
+        "action": "遊びを深める",
+        "before": "条件を一度満たして固有種を受け取るだけでは、置き直す理由が弱い。",
+        "after": "初回の獲得条件はそのまま。同じ所有物を並べ替え、光・音・水・高低差の違う風景を楽しむ。通常の島では実給水・歩ける道・利用先まで比べる。",
+        "guard": "取得済みの種は失わない。切れた接続や乾いた水に、成立していない反応を描かない。"
+      },
+      {
+        "title": "別島で、同じ準備を繰り返させない",
+        "action": "反復を減らす",
+        "before": "7島とも家・畑・入居を同じ順に整えると、景色が違っても作業が繰り返される。",
+        "after": "到着した種をまず触る。その島の仕掛けを試すために、家・畑・入居の再建を追加条件にしない。望めば、その先の町や土地を大きく育てられる。",
+        "guard": "家の島＋特別6島を維持。成熟や材料取得を飛ばさず、新しい無料材料・資源は足さない。"
+      },
+      {
+        "title": "思い出は、同じ資料から使う",
+        "action": "入口をまとめる",
+        "before": "写真・カード・あゆみ・賞状・記念品が、別々の進行や一覧に見えやすい。",
+        "after": "家を主入口に、同じ資料を選んで「見る・飾る・見せる」へ進む。すでに統合した「しまのきろく」1冊も活かす。",
+        "guard": "写真・作品・履歴・記念品は保持。学習記録は既存のきろくへ。任意チャレンジや直接撮影は消さない。"
+      }
+    ],
+    "experiments": [
+      {
+        "id": "wood",
+        "title": "木陰の道にする？ 庭を囲む？",
+        "materials": "同じ成熟木4本 ＋ 任意のベンチ1つ。",
+        "precondition": "材料を既に持つ場面の設計例。初回から成熟木があることや、3分で育つことは約束しません。",
+        "steps": [
+          "離して、独立した木陰を選ぶ。",
+          "列にして触る。つながる返事と、通る場所を比べる。",
+          "入口を残して囲む。内側で過ごし、好みの形を選ぶ。"
+        ],
+        "boundary": "木陰や場所にベンチを必須にしません。大型形が成立しない配置も、通常の成熟した景色として遊べます。",
+        "views": [
+          {
+            "id": "open",
+            "title": "離す",
+            "now": "それぞれの木に返事。つながっていない木へは伝わらない。",
+            "consequence": "独立した木陰と広い余白。どの陰で休むかを選べる。",
+            "next": "木を近づけて、返事の届く先を変える。"
+          },
+          {
+            "id": "row",
+            "title": "列にする",
+            "now": "実際につながる木に沿って、葉と短い音が返る。",
+            "consequence": "通れる床と入口があれば、木陰を通り抜ける場所になる。",
+            "next": "列を曲げる、分ける、入口を変える。"
+          },
+          {
+            "id": "court",
+            "title": "囲む",
+            "now": "実接続に沿って返事が周囲へ届く。取得済みの成熟は残る。",
+            "consequence": "入口と内側の空床があれば、内側に滞在できる庭になる。",
+            "next": "入口を広げ、ベンチがあれば見る景色を変える。"
+          }
+        ]
+      },
+      {
+        "id": "water",
+        "title": "畑へ届ける？ 水辺をつくる？",
+        "materials": "同じ水源1つ・水路4つ・畑1つ。ベンチは任意。",
+        "precondition": "取得済みの材料の並べ方を比較。水量・水圧・新しい燃料の計算は追加しません。",
+        "steps": [
+          "畑までつなぎ、通水済みの水を触る。",
+          "同じ水路を岸へ回し、給水先と景色を変える。",
+          "好きな配置を選ぶか、畑へ戻して確かめ直す。"
+        ],
+        "boundary": "波紋はすぐ返る表現。土の湿りと植物は自然時間の変化です。供給が変わっても、今いる住人は取り上げません。",
+        "views": [
+          {
+            "id": "farm",
+            "title": "畑へ届ける",
+            "now": "通水済みの範囲に波紋が返り、給水先を確かめられる。",
+            "consequence": "実給水に応じて畑の供給が変わる。土は時間をかけて湿る。",
+            "next": "どこで食べるか、歩ける経路と席の位置も試す。"
+          },
+          {
+            "id": "shore",
+            "title": "岸へ回す",
+            "now": "水路の輪郭と波紋の届く先が変わる。切れた畑へ給水したことにはしない。",
+            "consequence": "岸の形と眺めを楽しむ。実際に届く岸や空席があれば、そこを利用する。",
+            "next": "畑へ戻す。後日材料が増えたら、両方の場所をつなぐ。"
+          }
+        ]
+      }
+    ],
+    "experimentNote": "約3分で二つの配置を試せることを目指す設計例です。所要時間や説明なしの理解は未実測。既存の木・水の返事は新機能として数えません。",
+    "islands": [
+      {
+        "title": "しおかぜの小島",
+        "first": "貝の花を触り、今ある浜を眺める。",
+        "change": "貝の花を掘った水の隣へ。葉舟ヤドカリに出会う。",
+        "return": "花と水を、細長い岸辺／囲まれた入り江へ置き直す。同じヤドカリのいる、違う眺めを選ぶ。",
+        "status": "獲得は現行条件。配置で楽しむ見せ方は改善計画。"
+      },
+      {
+        "title": "こだまの森",
+        "first": "鈴の実の木を鳴らし、若木の姿を見る。",
+        "change": "育った木3本以上をつなぎ、こだま鳥に出会う。",
+        "return": "取得済みの成熟木を列／囲いへ。光と鈴の返る順を比べ、鳥のいる森を作り直す。",
+        "status": "成熟待ちは保持。木を無料で追加したり、若木を即成熟させたりしない。"
+      },
+      {
+        "title": "ひかりの入り江",
+        "first": "透ける水草を触り、池の光を見る。",
+        "change": "段上の水を池へ落とす滝で、ひかり貝に出会う。",
+        "return": "水路を曲げ、滝が見える岸／池を囲む岸へ。実通水の波紋と光の道を比べる。",
+        "status": "乾いた水路へ波紋を出さない。獲得後も現在の通水を別に判定。"
+      },
+      {
+        "title": "わたぐもの高原",
+        "first": "風船花を触り、高低差と雲を見る。",
+        "change": "1段以上の上の2×2広場で、わたげ羊に出会う。",
+        "return": "花を広場の縁／中央へ。空の広い眺めと、花に囲まれた眺めを比べる。",
+        "status": "その日の風向きは景色。新しい風量・天気・成長条件は加えない。"
+      },
+      {
+        "title": "ぜんまい島",
+        "first": "ねじまきそうの鍵と動きを触って楽しむ。",
+        "change": "水路から5つ以上をつなぎ、ぜんまいどりに出会う。",
+        "return": "同じ品を長い列／曲がる列へ。接続が届く枝と歯車の動きを作り直す。",
+        "status": "追加の電力・燃料・人口条件は作らない。切れた枝の反応は止める。"
+      },
+      {
+        "title": "星の島",
+        "first": "星の実の木を触り、常夜の景色を見る。",
+        "change": "あかり3つ以上の星座で、ほしくらげに出会う。",
+        "return": "同じ灯りを三角／長い列へ。夜空の線と海に映る構図を自分好みにする。",
+        "status": "取得済みの種と記録を保持。常夜は成長や学習の時計を変えない。"
+      }
+    ],
+    "routeBoundary": "到着種への即時反応、材料と成熟がそろってからの獲得、獲得後の再配置を分けます。各反応の固有種への対応と、二つの配置の楽しさは今後の確認対象。家・畑・入居の再建を追加条件にしません。",
+    "memory": {
+      "summary": "家を主入口に、写真・作品・あゆみ・記念を選ぶ。入口を共有しても、資料の種類と当時の状態は残します。",
+      "actions": [
+        {
+          "title": "見る",
+          "detail": "選んだ写真や作品を大きく。あゆみは当時の姿と今を確かめる。"
+        },
+        {
+          "title": "飾る",
+          "detail": "飾れる既得の記念や作品だけを、家や島の好きな場所へ。"
+        },
+        {
+          "title": "見せる",
+          "detail": "同じ資料を島カードや端末内の表示へ。外部への共有は追加しない。"
+        }
+      ],
+      "boundary": "「しまのきろく」1冊は達成のまとめ。学習の活動と進捗は既存のきろくへ。写真DBの統合、既存の近道や撮影・手紙・着替えの削除はしません。"
+    },
+    "delivery": [
+      {
+        "id": "P1",
+        "title": "待つ理由と、今の楽しみをそろえる",
+        "scope": "既存の価格・状態・つぎのたのしみ1件を、操作の場所で理解できる説明へ。",
+        "acceptance": "購入前に何が変わるかを確認でき、待つ間も今ある島で遊べる。報酬・時計・保存値の差分ゼロ。"
+      },
+      {
+        "id": "P2",
+        "title": "同じ材料で、木と水の違う良さを試す",
+        "scope": "既存の返事と実床・給水・住人利用から、二つの配置を通常操作で比べる。",
+        "acceptance": "追加購入や時間加速なしの準備済み材料で、二つ以上の配置と元への復帰。反応だけでなく使われ方が違う。"
+      },
+      {
+        "id": "P3",
+        "title": "6島で、獲得した先の遊びを確かめる",
+        "scope": "到着種と今の仕掛けを使い、初回獲得と、その後の配置遊びを分ける。",
+        "acceptance": "各島の二配置を比較。既得の種を保持し、通貨・種・資格を二重に発行しない。"
+      },
+      {
+        "id": "P4",
+        "title": "同じ思い出から、使える行為へ進む",
+        "scope": "家を主入口に、見る・飾る・見せると既存の戻り先を整える。",
+        "acceptance": "0件・満杯・保存失敗でも選択と全既存記録を保持。同じ資料へ戻れ、使えない行為を並べない。"
+      },
+      {
+        "id": "P5",
+        "title": "子どもの理解と、翌日の再訪を観察する",
+        "scope": "何を変えて何が変わったか、自分で次を試したくなるかを実際に確かめる。",
+        "acceptance": "説明なしの理解と、後日の自発再訪を別に記録。自動テストや作者の感想で置き換えない。"
+      }
+    ],
+    "recovery": [
+      {
+        "state": "0件",
+        "behavior": "実際の空を短く伝え、撮る・作品を残すなど任意の既存入口と閉じるを残す。架空の所持品を作らない。"
+      },
+      {
+        "state": "満杯",
+        "behavior": "写真枠・空地・住居や食の余裕のどれかを示す。既存の移動・収納などへ進み、自動削除・自動購入しない。"
+      },
+      {
+        "state": "未到達・使用中",
+        "behavior": "届かない実対象や空席なしを一件示す。別対象や配置の見直しを選べ、使ったことにはしない。"
+      },
+      {
+        "state": "保存失敗",
+        "behavior": "成功演出を出さず、入力・選択・既存所有を保持して再試行。本人と島を照合し、反復で複製しない。"
+      },
+      {
+        "state": "未対応の大型形",
+        "behavior": "成熟した通常形で遊べる。没収や、追加の席・品の必須購入へ戻さない。"
+      }
+    ]
+  },
+  "updatedAt": "2026-10-28",
+  "benchmarks": {
+    "checkedAt": "2026-10-28",
+    "title": "少ない操作で、景色が育つゲームから。",
+    "intro": "美術・操作の主参考3作品、成長と制作の参考2作品に加え、暮らし・育成・学びの発想源5件を紹介します。何を参考にして、ぽこもこのどの遊びへつなげるかを整理しました。",
+    "scope": "実操作・画像観察は2026-10-10〜23の記録。2026-10-28に公式資料とリンクを再確認しました。今回、新たなゲーム実操作は行っていません。",
+    "games": [
+      {
+        "id": "little-habitats",
+        "name": "Little Habitats",
+        "creator": "Danny Limanseta",
+        "role": "島・自然・発見の主参考",
+        "asset": "benchmarkLittle",
+        "referenceId": "LH-01",
+        "evidence": "実操作＋公式説明",
+        "studyDate": "2026-10-10 / 21〜23",
+        "observation": "地面を盛る・掘る操作から岸と高低差が変わり、環境に合う植物や生き物が現れる。形によるランドマーク、季節と昼夜が、同じ島に違う表情をつくる。",
+        "translation": "同じ材料を置き直して、岸・木陰・水辺に異なる良さをつくる。自分で変えた場所の返事と、条件に応じた出会いをつなぐ。",
+        "boundary": "通常の全獲得過程・全祭り・音の聴取は未確認。内部アルゴリズムは未取得で、見た目から方式を断定しない。",
+        "source": "docs/design/2026-10-21-little-habitats-research/README.md",
+        "links": [
+          {
+            "label": "公式ゲーム",
+            "url": "https://wavedash.com/games/little-habitats"
+          }
+        ]
+      },
+      {
+        "id": "townscaper",
+        "name": "Townscaper",
+        "creator": "Oskar Stålberg / Raw Fury",
+        "role": "配置から形が生まれる手触り",
+        "asset": "benchmarkTown",
+        "referenceId": "TS-01",
+        "evidence": "公式デモ実操作＋画像観察",
+        "studyDate": "2026-10-10 / 23",
+        "observation": "建物のブロックを置くと、隣との関係に応じて屋根やアーチ、足場の形が変わる。公式デモで足場と家の追加・除去、縁と柵の変化を確認した。",
+        "translation": "品を並べるだけでなく、つながりから大きな場所の姿が変わる設計へ。配置だけを変えた比較で、異なる良さを確かめる。",
+        "boundary": "画面は公式掲載画像。実操作の記録は別資料に残す。住人の生活・保存復元・モバイル性能を確認した証拠ではない。",
+        "source": "docs/design/2026-10-22-benchmark-method-audit/README.md",
+        "links": [
+          {
+            "label": "公式製品ページ",
+            "url": "https://store.steampowered.com/app/1291340/Townscaper/"
+          },
+          {
+            "label": "公式デモ",
+            "url": "https://oskarstalberg.com/Townscaper/"
+          }
+        ]
+      },
+      {
+        "id": "tiny-glade",
+        "name": "Tiny Glade",
+        "creator": "Pounce Light",
+        "role": "造形・光・やり直す楽しさ",
+        "asset": "benchmarkTiny",
+        "referenceId": "TG-02",
+        "evidence": "公式画像・説明と開発資料",
+        "studyDate": "2026-10-10 / 22〜23",
+        "observation": "建物・道の関係に応じた造形と細部、植物と石の接地、窓から面へ届く光を参考にした。公式には管理・戦闘・目標を課さないジオラマづくりと説明される。",
+        "translation": "明るい昼でも、形と素材から入りたくなる場所をつくる。置き直しに返事があり、試して戻せる操作を大切にする。",
+        "boundary": "実ゲームは未操作。公式画像の完成度を、ぽこもこの現在の美術・動作性能や子どもの理解の合格にはしない。",
+        "source": "docs/design/2026-10-22-benchmark-method-audit/README.md",
+        "links": [
+          {
+            "label": "公式製品ページ",
+            "url": "https://store.steampowered.com/app/2198150/Tiny_Glade/"
+          }
+        ]
+      },
+      {
+        "id": "simcity",
+        "name": "SimCity（2013）",
+        "creator": "Maxis / Electronic Arts",
+        "role": "周囲の条件から町が育つ",
+        "evidence": "公式マニュアル",
+        "studyDate": "2026-10-10の設計資料 / 10-28再確認",
+        "observation": "道路・地区、建物の密度や価値などの条件に応じて、小さな家や店舗が大きな建物へ育つ仕組み。",
+        "translation": "成長を戸数だけで見せず、配置と周囲の条件が場所の姿・流れ・使われ方に表れる設計の参考にする。",
+        "boundary": "実操作による比較ではない。税金・維持費・災害・退去の管理を、ぽこもこへ持ち込む提案ではない。",
+        "source": "docs/product/island-art-strategy.md",
+        "links": [
+          {
+            "label": "公式マニュアル · 冊子12〜13ページ",
+            "url": "https://akamai.cdn.ea.com/eadownloads/u/f/manuals/GAME-SIMCITY/SimCity_2013.pdf"
+          }
+        ]
+      },
+      {
+        "id": "foundation",
+        "name": "Foundation",
+        "creator": "Polymorph Games",
+        "role": "形と入口・経路を一緒につくる",
+        "evidence": "公式の制作資料",
+        "studyDate": "2026-10-22〜23 / 10-28再確認",
+        "observation": "公式の制作資料では、建物部品に接続点・入口と出口・順序付き経路・建築中の見た目を定義する。",
+        "translation": "岸・段・建物の見た目と、支える床・入口・通路・利用地点を一緒に設計する。住人が実際に使える場所へつなげる。",
+        "boundary": "ゲームを操作した評価ではなく制作契約の参考。エンジンや経済規則を採用したことは意味しない。",
+        "source": "docs/design/2026-10-22-benchmark-method-audit/README.md",
+        "links": [
+          {
+            "label": "公式の部品・経路資料",
+            "url": "https://polymorph.games/foundation/modding/building-asset-processor"
+          },
+          {
+            "label": "公式の建築段階資料",
+            "url": "https://polymorph.games/foundation/modding/construction-steps"
+          }
+        ]
+      }
+    ],
+    "synthesis": [
+      {
+        "title": "同じ材料から、多彩な場所へ",
+        "detail": "少ない操作でも、位置・接続・高低差を変えると違う良さが生まれる。",
+        "target": "#depth-experiments",
+        "label": "木と水の配置比較へ"
+      },
+      {
+        "title": "景色と、実際の暮らしをつなぐ",
+        "detail": "見た目の変化を、実給水・通れる床・仲間の到達と利用へ結びつける。",
+        "target": "#island",
+        "label": "島のしくみへ"
+      },
+      {
+        "title": "学びと、明日の続きがある",
+        "detail": "3教科の短い練習、同じ相棒と所有、育てた島の保存が、ぽこもこの軸。",
+        "target": "#trust",
+        "label": "記録と保存へ"
+      }
+    ],
+    "reading": [
+      {
+        "label": "32枚の参考画像と設計への翻訳",
+        "source": "docs/design/2026-10-10-island-design-strategy/index.html"
+      },
+      {
+        "label": "Little Habitatsの実操作調査",
+        "source": "docs/design/2026-10-21-little-habitats-research/README.md"
+      },
+      {
+        "label": "制作方式の監査と比較",
+        "source": "docs/design/2026-10-22-benchmark-method-audit/README.md"
+      },
+      {
+        "label": "暮らし・発見・育成の発想源の記録（旧仕様30）",
+        "source": "docs/product/30_living_island_growth_spec.md"
+      }
+    ],
+    "note": "参考作品の画像は比較のための引用資料で、各作品の権利はそれぞれの権利者に帰属します。ぽこもこの実画面・共同制作・推奨を示すものではありません。",
+    "methodNote": "MesoGen・TownBuilderは接続設計の研究・実装資料として既存の監査に記録しています。遊んだゲームの数には含めていません。",
+    "inspirationIntro": "企画段階の仕様に記録された発想源です。ここに挙げた5件の実操作記録はなく、公式紹介と設計上の比較として扱います。現在の成長・報酬の規則は現行仕様に従います。",
+    "inspirations": [
+      {
+        "id": "animal-crossing",
+        "name": "どうぶつの森",
+        "kind": "ゲームシリーズ",
+        "axis": "暮らしと、任意の模様替え",
+        "translation": "仲間と暮らし、自分の好きな場所へ整える。家・家具・写真を、本人の愛着につなげる。",
+        "boundary": "日課や時刻限定の取り逃しを必須にしない。",
+        "source": "docs/product/30_living_island_growth_spec.md",
+        "url": "https://www.nintendo.com/jp/switch/acbaa/index.html",
+        "linkLabel": "公式紹介 · あつまれ どうぶつの森"
+      },
+      {
+        "id": "pokopia",
+        "name": "ぽこ あ ポケモン",
+        "kind": "ゲーム",
+        "axis": "環境づくりと、生息地",
+        "translation": "環境を変えると、出会いや暮らし方が変わる。実際の水・食・住む場所と仲間の関係を読みやすくする。",
+        "boundary": "キャラクターや外観を模倣せず、既存のぽこもこを守る。",
+        "source": "docs/product/30_living_island_growth_spec.md",
+        "url": "https://www.pocoapokemon.jp/ja/",
+        "linkLabel": "公式サイト"
+      },
+      {
+        "id": "yoshi",
+        "name": "ヨッシーとフカシギの図鑑",
+        "kind": "ゲーム",
+        "axis": "さわって、性質を発見する",
+        "translation": "図鑑を埋めるだけでなく、実物をさわった返事から「こんなことが起きる」を知る。",
+        "boundary": "未観察の出来事を、見た・発見した記録にしない。",
+        "source": "docs/product/30_living_island_growth_spec.md",
+        "url": "https://www.nintendo.com/jp/games/switch2/aakga/index.html",
+        "linkLabel": "公式サイト"
+      },
+      {
+        "id": "pokemon",
+        "name": "ポケットモンスター",
+        "kind": "ゲームシリーズ",
+        "axis": "育成と、同じ仲間への愛着",
+        "translation": "一緒に過ごした仲間と、積み重ねた記録が残る。所有や個性を、数値だけの成長へまとめない。",
+        "boundary": "バトルや対戦上の優劣を、学習の評価へ持ち込まない。",
+        "source": "docs/product/30_living_island_growth_spec.md",
+        "url": "https://www.nintendo.com/jp/games/feature/pokemon_sword_shield/index.html",
+        "linkLabel": "公式紹介例 · ソード・シールド"
+      },
+      {
+        "id": "forest",
+        "name": "Forest",
+        "kind": "集中アプリ",
+        "axis": "取り組みの積み重ねが、景色になる",
+        "translation": "練習したことが同じ島に残り、過ごした時間を景色から感じられる。",
+        "boundary": "中断で木が失われる仕組みは採らず、欠席や中断で所有・成長を失わない。",
+        "source": "docs/product/30_living_island_growth_spec.md",
+        "url": "https://www.forestapp.cc/",
+        "linkLabel": "公式サイト"
+      }
+    ]
+  }
+}

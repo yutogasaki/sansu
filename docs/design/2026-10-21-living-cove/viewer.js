@@ -1,0 +1,263 @@
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { SIZE, SPACING, WATER, world, protectedCell, sampleHeight, TerrainHistory, countIslands } from './terrain.mjs';
+import { recipeActions, experimentNames, soilAmount, derivePlaces } from './experiments.mjs';
+import { drawTree } from './habitats.js';
+import { playStudySound } from './sounds.mjs';
+import { makeWaterTree } from './water-tree.js';
+import { makePokomokoRig } from '../../../src/components/island/three/islandCharacters.ts';
+import { IslandMaterials } from '../../../src/components/island/three/primitives.ts';
+import { canStand, shoreRoute, homeRoute } from './walk.mjs';
+
+const canvas=document.querySelector('canvas'), stage=document.querySelector('#stage');
+const reaction=document.querySelector('#reaction'), history=new TerrainHistory();
+document.body.dataset.revision=STUDY_REVISION;
+let inTick=false;
+let actor, actorRoute=null, walking=false, routeDistance=0, walked=0, lastTime=0, terrainMotion=null, displayState=structuredClone(history.state), specialTree=null;
+const actorHome={x:world(6),z:world(9)};
+let reactive=true,replayToken=0,playing=false,savedShape=null,previewToken=0;
+let tool='raise', selected={x:9,z:8}, evening=false, sound=false, audio=null, visible=true;
+const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+let renderer;
+try { renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false}); }
+catch { document.querySelector('#loading').textContent='3Dをひらけませんでした。ブラウザの3D表示を確認して、再読み込みしてみてください。'; throw new Error('WebGL unavailable'); }
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.0;
+renderer.shadowMap.enabled=true; renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.shadowMap.autoUpdate=true;
+const scene=new THREE.Scene(); scene.background=new THREE.Color('#a9d8eb'); scene.fog=new THREE.Fog('#a9d8eb',25,60);
+const camera=new THREE.OrthographicCamera(-9,9,7, -7,0.1,100);
+camera.position.set(11,12,15);
+const controls=new OrbitControls(camera,canvas); controls.target.set(-0.2,0.15,0);
+controls.enablePan=false; controls.enableDamping=false; controls.minZoom=.65; controls.maxZoom=2.3;
+controls.minPolarAngle=.22; controls.maxPolarAngle=1.15; controls.update();
+controls.mouseButtons.LEFT=THREE.MOUSE.ROTATE; controls.touches.ONE=THREE.TOUCH.ROTATE; controls.touches.TWO=THREE.TOUCH.DOLLY_ROTATE;
+const sky=new THREE.HemisphereLight('#e9f5ff','#9380a4',1.8); scene.add(sky);
+const sun=new THREE.DirectionalLight('#fff0db',2.6); sun.position.set(-7,14,8); sun.castShadow=true;
+sun.shadow.mapSize.set(1024,1024); Object.assign(sun.shadow.camera,{left:-9,right:9,top:9,bottom:-9,near:1,far:35});
+sun.shadow.normalBias=.035; sun.shadow.bias=-.0002; scene.add(sun);
+const fill=new THREE.DirectionalLight('#b3c9ff',.7); fill.position.set(8,5,-7); scene.add(fill);
+const seaMaterial=new THREE.MeshStandardMaterial({color:'#72bdd8',roughness:.34,metalness:.08});
+const sea=new THREE.Mesh(new THREE.PlaneGeometry(160,160),seaMaterial); sea.rotation.x=-Math.PI/2; sea.position.y=WATER; sea.receiveShadow=true; scene.add(sea);
+const terrain=new THREE.Mesh(new THREE.BufferGeometry(),new THREE.MeshStandardMaterial({vertexColors:true,roughness:.98}));
+terrain.castShadow=true; terrain.receiveShadow=true; scene.add(terrain);
+const shore=new THREE.LineSegments(new THREE.BufferGeometry(),new THREE.LineBasicMaterial({color:'#e1f4ec',transparent:true,opacity:.72}));scene.add(shore);
+const nature=new THREE.Group(); scene.add(nature);
+const authoredTree=makeWaterTree();
+const materials={trunk:mat('#967365'),purple:mat('#9e82c7'),lilac:mat('#b397d7'),leaf:mat('#c6d6ac'),flower:mat('#e4a3c8'),stone:mat('#b8b4bf'),pine:mat('#728ca7'),pineLight:mat('#8ea6ba'),willow:mat('#a293c5'),willowLight:mat('#c0addc'),reed:mat('#93ad81'),reedTip:mat('#b3a279'),lily:mat('#82b5a4'),lilyFlower:mat('#f2c0d3'),roof:mat('#d28c75'),wall:mat('#f4e6d0'),wood:mat('#9b766a'),window:mat('#e7be77'),duck:mat('#fff2ca'),beak:mat('#e9a65c'),eye:mat('#403e58')};
+const geometries={ball:new THREE.IcosahedronGeometry(1,2), trunk:new THREE.CylinderGeometry(.06,.09,1,7),box:new THREE.BoxGeometry(1,1,1),cone:new THREE.ConeGeometry(.85,.65,4),ring:new THREE.RingGeometry(.33,.35,48),pine:new THREE.ConeGeometry(1,1,8),platform:new THREE.CylinderGeometry(1,1,1,32)};
+function mat(color) { return new THREE.MeshStandardMaterial({color,roughness:.9}); }
+function mesh(parent,geo,material,position,scale=[1,1,1]) {const m=new THREE.Mesh(geo,material);m.position.set(...position);m.scale.set(...scale);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m;}
+const rig=makePokomokoRig(new IslandMaterials('moon-garden'));actor=rig.hero;actor.scale.setScalar(.62);actor.position.set(actorHome.x,sampleHeight(history.state,actorHome.x,actorHome.z),actorHome.z);scene.add(actor);actor.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}});
+history.guard=next=>canStand(next,actor.position.x,actor.position.z);
+const routeLine=new THREE.Line(new THREE.BufferGeometry(),new THREE.LineDashedMaterial({color:'#f5e6c8',dashSize:.09,gapSize:.07,depthTest:false}));routeLine.renderOrder=3;scene.add(routeLine);
+const home=new THREE.Group(); home.position.set(world(6),sampleHeight(history.state,world(6),world(7.3)),world(7.3));scene.add(home);
+mesh(home,geometries.box,materials.wall,[0,.39,0],[.95,.78,.87]);
+const roof=mesh(home,geometries.cone,materials.roof,[0,.95,0],[1.02,1,1]);roof.rotation.y=Math.PI/4;
+mesh(home,geometries.box,materials.wood,[.2,.24,.445],[.22,.48,.035]);
+mesh(home,geometries.box,materials.window,[-.23,.46,.448],[.22,.22,.04]);
+for(let i=0;i<3;i++) mesh(home,geometries.box,materials.stone,[.2,.018,.7+i*.28],[.26,.036,.22]);
+const lamp=new THREE.PointLight('#ffc97d',0,3);lamp.position.set(world(6),1.15,world(8));scene.add(lamp);
+const cursor=new THREE.Mesh(new THREE.TorusGeometry(.28,.025,8,48),new THREE.MeshBasicMaterial({color:'#fff7d2',depthTest:false}));cursor.rotation.x=Math.PI/2;cursor.renderOrder=5;scene.add(cursor);
+const bird=new THREE.Group(); scene.add(bird);bird.visible=false;
+mesh(bird,geometries.ball,materials.duck,[0,.15,0],[.24,.16,.16]);
+mesh(bird,geometries.ball,materials.duck,[.17,.29,0],[.13,.13,.12]);
+mesh(bird,geometries.ball,materials.beak,[.29,.27,0],[.1,.035,.06]);
+mesh(bird,geometries.ball,materials.eye,[.21,.32,.105],[.018,.018,.018]);
+const rippleMaterial=new THREE.MeshBasicMaterial({color:'#d9f3fa',transparent:true,opacity:.7,side:THREE.DoubleSide});
+const ripple=new THREE.Mesh(geometries.ring,rippleMaterial);ripple.rotation.x=-Math.PI/2;ripple.position.y=.015;bird.add(ripple);
+const waveLines=new THREE.Group();scene.add(waveLines);
+for(let i=0;i<17;i++) {const points=[];for(let j=0;j<=20;j++)points.push(new THREE.Vector3(-12+j*.16,WATER+.012,4+i*.36+Math.sin(j*.18+i)*.04));const line=new THREE.Line(new THREE.BufferGeometry().setFromPoints(points),new THREE.LineBasicMaterial({color:'#b7e1ea',transparent:true,opacity:.34}));line.position.x=(i%5)*4.5;waveLines.add(line);}
+function rebuildTerrain(animated=false) {
+  if(animated && !reduced.matches){terrainMotion={from:[...displayState.heights],to:[...history.state.heights],start:performance.now()};}
+  else {terrainMotion=null;displayState=structuredClone(history.state);}
+  renderTerrain();
+}
+function renderTerrain() {
+  const n=(SIZE-1)*6, length=world(SIZE-1)-world(0);
+  const geo=new THREE.PlaneGeometry(length,length,n,n);geo.rotateX(-Math.PI/2);
+  const pos=geo.attributes.position;
+  for(let i=0;i<pos.count;i++)pos.setY(i,sampleHeight(displayState,pos.getX(i),pos.getZ(i)));
+  pos.needsUpdate=true;geo.computeVertexNormals();geo.computeBoundingSphere();geo.computeBoundingBox();const colors=[],sand=new THREE.Color('#ddc6b0'),grass=new THREE.Color('#b9c9ab'),cliff=new THREE.Color('#b2a8a3');
+  for(let i=0;i<pos.count;i++) {
+    const y=pos.getY(i),normal=geo.attributes.normal.getY(i),c=y<.26?sand.clone():normal<.73?cliff.clone():grass.clone();
+    c.multiplyScalar(.97+Math.sin(pos.getX(i)*33+pos.getZ(i)*21)*.023+Math.sin(y*62)*.018);colors.push(c.r,c.g,c.b);
+  }
+  geo.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));terrain.geometry.dispose();terrain.geometry=geo;
+  const points=[],idx=geo.index.array;
+  for(let i=0;i<idx.length;i+=3){const crossing=[];for(let e=0;e<3;e++){const a=idx[i+e],b=idx[i+(e+1)%3],ya=pos.getY(a),yb=pos.getY(b);if((ya<WATER)!==(yb<WATER)){const t=(WATER-ya)/(yb-ya);crossing.push(pos.getX(a)+(pos.getX(b)-pos.getX(a))*t,WATER+.014,pos.getZ(a)+(pos.getZ(b)-pos.getZ(a))*t);}}if(crossing.length===6)points.push(...crossing);}
+  shore.geometry.dispose();shore.geometry=new THREE.BufferGeometry();shore.geometry.setAttribute('position',new THREE.Float32BufferAttribute(points,3));
+  nature.clear();
+  specialTree=null;
+  for(const index of history.state.plants)if(history.state.heights[index]>0){
+    if(index===10*SIZE+9 && reactive){specialTree=authoredTree;specialTree.position.set(world(9),sampleHeight(displayState,world(9),world(10)),world(10));nature.add(specialTree);}
+    else drawTree(nature,index,displayState,false,mesh,geometries,materials);
+  }
+  renderer.shadowMap.needsUpdate=true;
+  for(let z=2;z<SIZE-2;z++) for(let x=2;x<SIZE-2;x++) {
+    if(history.state.heights[z*SIZE+x]===0||protectedCell(x,z)||(x*7+z*3)%11)continue;
+    const wx=world(x)+.1,wz=world(z)-.12,y=sampleHeight(history.state,wx,wz);
+    for(let i=0;i<3;i++)mesh(nature,geometries.ball,materials.flower,[wx+i*.09,y+.07,wz+i*.04],[.065,.07,.06]);
+  }
+  bird.visible=!!history.state.bird;
+  if(history.state.bird)bird.position.set(world(history.state.bird.x),WATER+.015,world(history.state.bird.z));
+  actor.position.y=sampleHeight(displayState,actor.position.x,actor.position.z);
+  document.body.dataset.transition=String(!!terrainMotion);updateActorFacts();
+  updateUI(); positionCursor(); if(!inTick){draw();animationState();}
+}
+function positionCursor() {cursor.position.set(world(selected.x),Math.max(WATER,sampleHeight(displayState,world(selected.x),world(selected.z)))+.05,world(selected.z));}
+const map=document.querySelector('#map'),cells=[];
+for(let z=1;z<SIZE-1;z++) for(let x=1;x<SIZE-1;x++) {
+  const button=document.createElement('button');button.dataset.x=x;button.dataset.z=z;
+  button.addEventListener('click',()=>{selected={x,z};apply();});
+  map.append(button);cells.push(button);
+}
+function updateUI() {
+  document.querySelector('#undo').disabled=!history.past.length;document.querySelector('#redo').disabled=!history.future.length;
+  const islands=countIslands(history.state);document.querySelector('#islands').textContent=islands===1?'ひとつの島':`${islands}つの島`;
+  const places=derivePlaces(history.state);const names=[];if(places.water.length)names.push('水辺の庭');if(places.high)names.push('段の見晴らし');if(places.forest)names.push('木陰の輪');
+  document.body.dataset.water=places.water.length;document.body.dataset.high=String(!!places.high);document.body.dataset.forest=String(!!places.forest);
+  document.body.dataset.soil=soilAmount(history.state);document.body.dataset.trees=history.state.plants.length;
+  document.querySelector('#budget').textContent=`土 +${soilAmount(history.state)} / 木 ${history.state.plants.length}本`;
+
+  document.querySelector('#place-facts').textContent=reactive?'同じ木1本を、枝の間から水面が見える形へ。':'同じ地形・位置で、前の丸い木と比べています。';
+  document.body.dataset.islands=islands;document.body.dataset.bird=String(!!history.state.bird);document.body.dataset.edits=history.past.length;
+  for(const cell of cells) {
+    const x=Number(cell.dataset.x),z=Number(cell.dataset.z),level=history.state.heights[z*SIZE+x];
+    cell.dataset.height=level;cell.className=protectedCell(x,z)?'home':level===0?'sea':level>1?'hill':'land';
+    cell.setAttribute('aria-label',`地点 ${x},${z}、${protectedCell(x,z)?'家の足場':level===0?'海':`高さ${level}の陸`}`);
+    cell.setAttribute('aria-current',String(x===selected.x&&z===selected.z));
+    cell.textContent=protectedCell(x,z)&&x===6&&z===7?'⌂':'';
+  }
+}
+function say(text){reaction.textContent=text;}
+function apply(){
+  if(playing)stopReplay();
+  const result=history.edit(selected.x,selected.z,tool);say(result.message);
+  if(result.changed)cancelWalk();
+  if(result.changed) {rebuildTerrain(true);ping(tool==='lower'?290:tool==='plant'?620:430);}
+  else {positionCursor();updateUI();draw();}
+}
+function undo(){if(playing)stopReplay();if(history.undo()){cancelWalk();const moved=restoreSupport();say(moved?'形を戻したので、ぽこもこも家の前へ戻したよ。':'ひとつ前の地形と景色に戻った。');rebuildTerrain();updateActorFacts();}}
+function redo(){if(playing)stopReplay();if(history.redo()){cancelWalk();const moved=restoreSupport();say(moved?'形を変えたので、ぽこもこを家の前へ戻したよ。':'さっきの地形と景色を、もう一度。');rebuildTerrain();updateActorFacts();}}
+function setTool(next){
+  if(playing)stopReplay();
+  tool=next;document.querySelectorAll('[data-tool]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.tool===tool)));
+  controls.enableRotate=tool==='view';controls.enableZoom=true;
+  controls.touches.ONE=tool==='view'?THREE.TOUCH.ROTATE:null;
+  canvas.style.cursor=tool==='view'?'grab':'crosshair';cursor.visible=tool!=='view';
+  say(tool==='view'?'島をドラッグして、ちがう角度からながめよう。':tool==='lower'?'陸をタップ。低くすると、水が入り込む。':tool==='plant'?'陸をタップ。同じ地面に木が根をおろす。':'陸や海をタップ。同じ場所を重ねて、丘にしてみよう。');draw();
+}
+document.querySelectorAll('[data-tool]').forEach(button=>button.addEventListener('click',()=>setTool(button.dataset.tool)));
+document.querySelector('#undo').addEventListener('click',undo);document.querySelector('#redo').addEventListener('click',redo);
+document.querySelector('#reset').addEventListener('click',()=>{if(playing)stopReplay();cancelWalk();history.restart();actor.position.set(actorHome.x,sampleHeight(history.state,actorHome.x,actorHome.z),actorHome.z);say('はじめの島へ。戻すボタンで、さっきの景色にも戻れるよ。');rebuildTerrain();});
+document.querySelector('#light').addEventListener('click',()=>{
+  evening=!evening;const button=document.querySelector('#light');button.setAttribute('aria-pressed',String(evening));button.textContent=evening?'昼にする':'夕方にする';
+  scene.background.set(evening?'#c2a7ce':'#a9d8eb');scene.fog.color.copy(scene.background);
+  sky.intensity=evening?1.2:1.8;sun.intensity=evening?1.9:2.6;sun.color.set(evening?'#ffd1ab':'#fff0db');sun.position.set(evening?-12:-7,evening?6:14,8);
+  seaMaterial.color.set(evening?'#938dc1':'#72bdd8');lamp.intensity=evening?3:0;materials.window.emissive.set(evening?'#ffb95c':'#000000');renderer.shadowMap.needsUpdate=true;draw();
+});
+document.querySelector('#sound').addEventListener('click',async()=>{
+  try {
+    sound=!sound;
+    if(sound){audio??=new AudioContext();await audio.resume();if(audio.state!=='running')throw new Error('Audio unavailable');}
+    else if(audio)await audio.suspend();
+  }catch{sound=false;say('今は音をひらけないので、音なしで遊べるよ。');}
+  const b=document.querySelector('#sound');b.setAttribute('aria-pressed',String(sound));b.textContent=sound?'音を消す':'音をつける';if(sound)ping(520);
+});
+function ping(hz){if(!sound||!audio||audio.state!=='running'||document.hidden)return;playStudySound(audio,hz===290?'water':hz===620?'leaf':'soil');}
+function stopReplay(){replayToken++;playing=false;document.body.dataset.playing='false';document.querySelector('#stop-replay').disabled=true;}
+async function runRecipe(id){
+  stopReplay();const token=replayToken;savedShape=structuredClone({state:history.state,past:history.past,future:history.future,actor:{x:actor.position.x,z:actor.position.z}});
+  cancelWalk();history.restart();actor.position.set(actorHome.x,sampleHeight(history.state,actorHome.x,actorHome.z),actorHome.z);playing=true;document.body.dataset.playing='true';document.body.dataset.experiment=id;document.querySelector('#stop-replay').disabled=false;document.querySelector('#return-shape').disabled=false;rebuildTerrain();
+  setCamera('overview',false);
+  const actions=recipeActions(id).filter(a=>a.tool!=='plant');
+  for(let i=0;i<actions.length;i++){
+    if(token!==replayToken)return;const {x,z,tool:action}=actions[i];selected={x,z};history.edit(x,z,action);rebuildTerrain(true);
+    say(`${experimentNames[id]}の作り方 ${i+1}/${actions.length}：${action==='raise'?'盛る':action==='lower'?'掘る':'植える'}`);
+    await new Promise(resolve=>setTimeout(resolve,reduced.matches?45:190));
+  }
+  if(token!==replayToken)return;stopReplay();selected={x:8,z:8};setCamera('place',false);say(`${experimentNames[id]}ができました。ここから、自由に変えてみよう。`);
+}
+for(const b of document.querySelectorAll('[data-experiment]'))b.addEventListener('click',()=>runRecipe(b.dataset.experiment));
+ document.querySelector('#stop-replay').addEventListener('click',()=>{stopReplay();say('ここで止めました。続きは自分で変えられるよ。');});
+ document.querySelector('#return-shape').addEventListener('click',()=>{stopReplay();if(!savedShape)return;history.state=savedShape.state;history.past=savedShape.past;history.future=savedShape.future;cancelWalk();actor.position.x=savedShape.actor.x;actor.position.z=savedShape.actor.z;savedShape=null;document.querySelector('#return-shape').disabled=true;document.body.dataset.experiment='custom';rebuildTerrain();say('再生する前の形へ戻りました。');});
+function setCamera(mode,announce=true){
+  const places=derivePlaces(history.state),water=places.water.length>0;
+  const spot={x:8.2,z:7.6};
+  if(mode==='overview'){controls.target.set(-.2,.15,0);camera.position.set(10,13,16);camera.zoom=1.25;}
+  else {const x=world(spot.x),z=world(spot.z),y=Math.max(WATER,sampleHeight(history.state,x,z));controls.target.set(x,y+.45,z);camera.position.set(x-4,y+10,z+11);camera.zoom=1.32;}
+  camera.updateProjectionMatrix();controls.update();document.body.dataset.camera=mode;
+  document.querySelectorAll('button[data-camera]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.camera===mode)));
+  if(announce)say(mode==='overview'?'島全体へ戻りました。':places.high?'石段と見晴らしを、近くから。':places.forest?'木陰の場を、近くから。':water?'水辺の庭を、近くから。':'選んだ場所を、近くから。');
+  draw();
+}
+for(const b of document.querySelectorAll('button[data-camera]'))b.addEventListener('click',()=>setCamera(b.dataset.camera));
+ document.querySelector('#ecology').addEventListener('click',()=>{reactive=!reactive;document.body.dataset.reactive=String(reactive);document.querySelector('#ecology').setAttribute('aria-pressed',String(reactive));document.querySelector('#ecology').textContent=reactive?'水辺の木：新しい形':'水辺の木：前の形';rebuildTerrain();});
+ for(const b of document.querySelectorAll('[data-sound]'))b.addEventListener('click',async()=>{
+   const token=++previewToken;try{audio??=new AudioContext();await audio.resume();playStudySound(audio,b.dataset.sound);say(`${b.textContent}を試しています。`);setTimeout(()=>{if(token===previewToken&&!sound&&audio)audio.suspend();},850);}catch{say('音をひらけませんでした。景色はそのまま試せます。');}
+ });
+
+const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();let down=null,pinching=false;
+const activePointers=new Set();
+canvas.addEventListener('pointerdown',event=>{activePointers.add(event.pointerId);if(activePointers.size>1){pinching=true;down=null;}else down={x:event.clientX,y:event.clientY,id:event.pointerId};});
+canvas.addEventListener('pointerup',event=>{
+  activePointers.delete(event.pointerId);
+  if(pinching){if(!activePointers.size)pinching=false;down=null;return;}
+  if(tool==='view'||!down||down.id!==event.pointerId||Math.hypot(event.clientX-down.x,event.clientY-down.y)>9){down=null;return;}
+  down=null;const rect=canvas.getBoundingClientRect();pointer.set((event.clientX-rect.left)/rect.width*2-1,-(event.clientY-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);
+  const hit=raycaster.intersectObjects([terrain,sea])[0];if(!hit)return;
+  const x=Math.round(hit.point.x/SPACING+(SIZE-1)/2),z=Math.round(hit.point.z/SPACING+(SIZE-1)/2);
+  if(x<1||z<1||x>SIZE-2||z>SIZE-2){say('少し島の近くをタップしてみよう。');return;}
+  selected={x,z};apply();
+});
+canvas.addEventListener('pointercancel',event=>{activePointers.delete(event.pointerId);if(!activePointers.size)pinching=false;down=null;});
+canvas.addEventListener('keydown',event=>{
+  const deltas={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]};
+  if(deltas[event.key]){event.preventDefault();selected.x=Math.max(1,Math.min(SIZE-2,selected.x+deltas[event.key][0]));selected.z=Math.max(1,Math.min(SIZE-2,selected.z+deltas[event.key][1]));positionCursor();updateUI();say(`選んだ場所：${selected.x},${selected.z}。Enterで${tool==='lower'?'掘る':tool==='plant'?'植える':'盛る'}。`);draw();}
+  if(event.key==='Enter'||event.key===' '){event.preventDefault();apply();}
+});
+document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='z'){event.preventDefault();if(event.shiftKey)redo();else undo();}});
+function resize(){const w=stage.clientWidth,h=stage.clientHeight,aspect=w/h;const span=aspect<1?4.6:4.3;camera.left=-span*aspect;camera.right=span*aspect;camera.top=span;camera.bottom=-span;camera.updateProjectionMatrix();renderer.setSize(w,h,false);draw();}
+function draw(){renderer.render(scene,camera);}
+controls.addEventListener('change',draw);
+new ResizeObserver(resize).observe(stage);
+let frame=0;
+function restoreSupport(){if(canStand(history.state,actor.position.x,actor.position.z))return false;actor.position.x=actorHome.x;actor.position.z=actorHome.z;return true;}
+function cancelWalk(){walking=false;actorRoute=null;routeDistance=0;rig.heroBody.rotation.set(0,0,0);rig.heroBody.position.y=0;for(const foot of rig.heroFeet)foot.position.y=.10;routeLine.visible=false;cursor.visible=tool!=='view';document.body.dataset.actorMode='idle';}
+function drawRoute(path){const pts=path.map(p=>new THREE.Vector3(p.x,sampleHeight(history.state,p.x,p.z)+.03,p.z));routeLine.geometry.dispose();routeLine.geometry=new THREE.BufferGeometry().setFromPoints(pts);routeLine.computeLineDistances();routeLine.visible=true;}
+function callActor(home=false){
+  if(playing)stopReplay();terrainMotion=null;displayState=structuredClone(history.state);renderTerrain();cancelWalk();
+  const start={x:actor.position.x,z:actor.position.z};
+  const route=home?homeRoute(history.state,start,actorHome):shoreRoute(history.state,start,selected);
+  if(!route){say(home?'家までの道がつながっていないよ。岸をつなぎ直してみよう。':'この水辺へ歩ける道がまだないよ。低くて乾いた道をつないでみよう。');document.body.dataset.actorMode='unreachable';return;}
+  actorRoute=route;cursor.visible=false;drawRoute(route.path);routeDistance=0;walked=0;
+  for(let i=1;i<route.path.length;i++)routeDistance+=Math.hypot(route.path[i].x-route.path[i-1].x,route.path[i].z-route.path[i-1].z);
+  document.body.dataset.routeLength=routeDistance.toFixed(3);document.body.dataset.routeSafe='true';
+  if(reduced.matches){const last=route.path.at(-1);actor.position.x=last.x;actor.position.z=last.z;arrive(home);draw();}
+  else {walking=true;actorRoute.home=home;document.body.dataset.actorMode='walking';say(home?'乾いた道を通って、家の前へ。':'水辺まで、歩いて見にいくよ。');animationState();}
+}
+function arrive(home=false){walking=false;document.body.dataset.actorMode=home?'home':'observing';const target=actorRoute.look;actor.rotation.y=Math.atan2(target.x-actor.position.x,target.z-actor.position.z);rig.heroBody.rotation.x=home?0:.20;for(const foot of rig.heroFeet)foot.position.y=.1;actor.position.y=sampleHeight(history.state,actor.position.x,actor.position.z);say(home?'家の前へ戻ったよ。':'ここから水面が見えるね。岸を変えて、別の場所ものぞいてみよう。');updateActorFacts();}
+function updateActorFacts(){document.body.dataset.actorX=actor.position.x.toFixed(5);document.body.dataset.actorZ=actor.position.z.toFixed(5);document.body.dataset.actorGround=sampleHeight(history.state,actor.position.x,actor.position.z).toFixed(5);document.body.dataset.actorY=actor.position.y.toFixed(5);document.body.dataset.actorSafe=String(canStand(history.state,actor.position.x,actor.position.z));}
+document.querySelector('#call-water').addEventListener('click',()=>callActor());
+document.querySelector('#call-home').addEventListener('click',()=>callActor(true));
+function animate(time){
+  frame=0;if(!visible)return;inTick=true;const dt=Math.min(.25,Math.max(0,(time-lastTime)/1000));lastTime=time;
+  if(terrainMotion){const t=Math.max(0,Math.min(1,(time-terrainMotion.start)/260)),u=t*t*(3-2*t);displayState={...history.state,heights:terrainMotion.to.map((h,i)=>terrainMotion.from[i]+(h-terrainMotion.from[i])*u)};if(t===1)terrainMotion=null;renderTerrain();}
+  if(walking&&actorRoute){
+    walked=Math.min(routeDistance,walked+dt*1.25);let remain=walked,path=actorRoute.path;
+    for(let i=1;i<path.length;i++){const a=path[i-1],b=path[i],d=Math.hypot(a.x-b.x,a.z-b.z);if(remain>d){remain-=d;continue;}const t=d?Math.min(1,remain/d):1;actor.position.x=a.x+(b.x-a.x)*t;actor.position.z=a.z+(b.z-a.z)*t;actor.rotation.y=Math.atan2(b.x-a.x,b.z-a.z);break;}
+    rig.heroBody.rotation.z=Math.sin(walked*19)*.035;rig.heroFeet.forEach((foot,i)=>foot.position.y=.10+Math.max(0,Math.sin(walked*19+i*Math.PI))*.035);
+    if(walked>=routeDistance){const end=path.at(-1);actor.position.x=end.x;actor.position.z=end.z;rig.heroBody.rotation.z=0;arrive(actorRoute.home);}
+  }
+  actor.position.y=sampleHeight(displayState,actor.position.x,actor.position.z);updateActorFacts();
+  if(specialTree&&!reduced.matches&&terrainMotion){const elapsed=(time-terrainMotion.start)/260;specialTree.userData.crown.rotation.z=Math.sin(elapsed*Math.PI*2)*.025*(1-elapsed);}
+  if(bird.visible&&!reduced.matches){bird.rotation.y=Math.sin(time*.00055)*.28;bird.position.y=WATER+.02+Math.sin(time*.002)*.012;}
+  draw();inTick=false;if(terrainMotion||walking)frame=requestAnimationFrame(animate);
+}
+function animationState(){if(frame)cancelAnimationFrame(frame);frame=0;if(!document.hidden&&(terrainMotion||walking)){lastTime=performance.now();frame=requestAnimationFrame(animate);}else draw();}
+document.addEventListener('visibilitychange',()=>{visible=!document.hidden;if(document.hidden&&audio)audio.suspend();else if(sound&&audio)audio.resume().catch(()=>{});animationState();});
+reduced.addEventListener('change',()=>{if(reduced.matches){terrainMotion=null;displayState=structuredClone(history.state);if(walking)cancelWalk();renderTerrain();}animationState();});
+canvas.addEventListener('webglcontextlost',event=>{event.preventDefault();say('3Dの表示が休んでいます。再読み込みで島をひらけます。');});
+setTool('lower');rebuildTerrain();resize();setCamera('place',false);updateActorFacts();document.querySelector('#loading').hidden=true;
+document.body.dataset.ready='true';animationState();

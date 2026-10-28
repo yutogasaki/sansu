@@ -1,0 +1,85 @@
+{
+  "status": "PASS",
+  "date": "2026-10-22T22:02:56.430Z",
+  "touched": [
+    "docs/design/2026-10-23-place-method-comparison/candidate.ts",
+    "docs/design/2026-10-23-place-method-comparison/section-profile.ts",
+    "src/domain/growingIsland/editableTerrainWorld.ts",
+    "src/domain/growingIsland/placeTerrain.ts",
+    "src/domain/growingIsland/landscape.ts",
+    "src/domain/growingIsland/commands.ts"
+  ],
+  "reports": [
+    {
+      "enabled": false,
+      "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1",
+      "mode": "H",
+      "coldMs": 625.954875,
+      "hash": "acfb788437ab05fa6e4b1d8230458b293d8a635aea1cb1eb614d612008404cd1",
+      "queryFlags": [
+        [
+          "terrainTrial",
+          "H"
+        ],
+        [
+          "baseTrial",
+          "stable"
+        ],
+        [
+          "rampTrial",
+          "linear"
+        ],
+        [
+          "growthTrial",
+          "inherit"
+        ],
+        [
+          "compileTrial",
+          "single"
+        ],
+        [
+          "trialScene",
+          "shore"
+        ]
+      ],
+      "reads": 632932,
+      "parses": 632943
+    },
+    {
+      "enabled": true,
+      "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1",
+      "mode": "H",
+      "coldMs": 442.83229200000005,
+      "hash": "acfb788437ab05fa6e4b1d8230458b293d8a635aea1cb1eb614d612008404cd1",
+      "queryFlags": [
+        [
+          "terrainTrial",
+          "H"
+        ],
+        [
+          "baseTrial",
+          "stable"
+        ],
+        [
+          "rampTrial",
+          "linear"
+        ],
+        [
+          "growthTrial",
+          "inherit"
+        ],
+        [
+          "compileTrial",
+          "single"
+        ],
+        [
+          "trialScene",
+          "shore"
+        ]
+      ],
+      "reads": 1,
+      "parses": 12
+    }
+  ],
+  "scope": "Actual Vite transforms, same 69 input and query flags. Node simulated location/parse counts; browser timing must be measured separately."
+}

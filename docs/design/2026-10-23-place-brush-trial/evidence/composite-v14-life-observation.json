@@ -1,0 +1,2080 @@
+{
+  "recordedAt": "2026-10-24T02:29:57.791Z",
+  "runtime": {
+    "delivery": "snap-root-v1",
+    "revision": "place-outline-v14",
+    "version": "place-outline-v14:7cfe2347-ee61-4abe-8330-bb606b997800"
+  },
+  "baselineSequence": 4,
+  "liveUses": {
+    "scope": "rendered-live-receipts-not-save-history",
+    "sessionId": "54b34080-420f-48e8-98f1-c8ed14ff63a4",
+    "pageStartedAtMs": 1792808199504.7,
+    "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+    "queryCandidate": "H",
+    "count": 6,
+    "retained": 6,
+    "latest": [
+      {
+        "observedAtMs": 1792808214317,
+        "observedFrameTimeMs": 14807.899999976158,
+        "delivery": "fresh-life-receipt",
+        "receipt": {
+          "ruleId": "P05",
+          "placeId": "P05:starter-flower",
+          "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",1,6],[\"starter-flower\",2,5]],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":1,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":1,\"z\":6}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":5}}]]",
+          "actorId": "v2",
+          "targetId": "starter-flower:garden"
+        },
+        "worldId": "legacy-world-v1:-3,8,8:curved-owned-v1:no-bridge",
+        "worldRevision": "true:[\"[\\\"disjoint-two-platform-memory-v1\\\",{}]\",\"fixed-bilinear-interior-ramp-v1\",\"fixed-core-base-v1\",\"cardinal-convex-terrace-v2+fixed-two-shear-grid-v1\",\"H\",{\"extra\":[\"west\",\"south\"],\"capes\":[],\"expanded\":\"east\"},null,[[\"-1,5\",2],[\"-1,6\",2],[\"-2,5\",1],[\"-2,6\",1],[\"0,3\",2],[\"0,4\",-3],[\"0,5\",3],[\"0,6\",3],[\"0,7\",2],[\"1,2\",1],[\"1,3\",3],[\"1,4\",3],[\"1,5\",3],[\"1,6\",3],[\"1,7\",2],[\"2,2\",2],[\"2,3\",3],[\"2,4\",3],[\"2,5\",3],[\"2,6\",3],[\"2,7\",2],[\"3,2\",1],[\"3,3\",2],[\"3,4\",3],[\"3,5\",3],[\"3,6\",3],[\"4,5\",1],[\"4,6\",-3],[\"4,7\",-3],[\"5,0\",1],[\"5,1\",-1],[\"5,2\",-1],[\"5,6\",-3],[\"5,7\",-3],[\"8,4\",-1],[\"8,5\",-1],[\"8,6\",-1]]]",
+        "actorPosition": {
+          "x": 0.18476069199999978,
+          "y": 0.5998270910000001,
+          "z": 3.041900386
+        },
+        "target": {
+          "id": "starter-flower:garden",
+          "kind": "garden",
+          "cell": {
+            "x": 2,
+            "z": 5
+          }
+        },
+        "currentPlaceRevisionMatches": true,
+        "documentVisibility": "visible",
+        "active": true,
+        "playActive": true,
+        "inFrustum": true,
+        "renderSucceeded": true,
+        "sequence": 1,
+        "observedAt": "2026-10-24T02:16:54.317Z",
+        "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+        "handlerAccepted": true
+      },
+      {
+        "observedAtMs": 1792808223147,
+        "observedFrameTimeMs": 23641,
+        "delivery": "fresh-life-receipt",
+        "receipt": {
+          "ruleId": "P05",
+          "placeId": "P05:starter-flower",
+          "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",1,6],[\"starter-flower\",2,5]],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":1,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":1,\"z\":6}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":5}}]]",
+          "actorId": "v2",
+          "targetId": "starter-bench"
+        },
+        "worldId": "legacy-world-v1:-3,8,8:curved-owned-v1:no-bridge",
+        "worldRevision": "true:[\"[\\\"disjoint-two-platform-memory-v1\\\",{}]\",\"fixed-bilinear-interior-ramp-v1\",\"fixed-core-base-v1\",\"cardinal-convex-terrace-v2+fixed-two-shear-grid-v1\",\"H\",{\"extra\":[\"west\",\"south\"],\"capes\":[],\"expanded\":\"east\"},null,[[\"-1,5\",2],[\"-1,6\",2],[\"-2,5\",1],[\"-2,6\",1],[\"0,3\",2],[\"0,4\",-3],[\"0,5\",3],[\"0,6\",3],[\"0,7\",2],[\"1,2\",1],[\"1,3\",3],[\"1,4\",3],[\"1,5\",3],[\"1,6\",3],[\"1,7\",2],[\"2,2\",2],[\"2,3\",3],[\"2,4\",3],[\"2,5\",3],[\"2,6\",3],[\"2,7\",2],[\"3,2\",1],[\"3,3\",2],[\"3,4\",3],[\"3,5\",3],[\"3,6\",3],[\"4,5\",1],[\"4,6\",-3],[\"4,7\",-3],[\"5,0\",1],[\"5,1\",-1],[\"5,2\",-1],[\"5,6\",-3],[\"5,7\",-3],[\"8,4\",-1],[\"8,5\",-1],[\"8,6\",-1]]]",
+        "actorPosition": {
+          "x": -1.01123442,
+          "y": 0.818624687,
+          "z": 3.732497218
+        },
+        "target": {
+          "id": "starter-bench",
+          "kind": "seat",
+          "cell": {
+            "x": 1,
+            "z": 6
+          }
+        },
+        "currentPlaceRevisionMatches": true,
+        "documentVisibility": "visible",
+        "active": true,
+        "playActive": true,
+        "inFrustum": true,
+        "renderSucceeded": true,
+        "sequence": 2,
+        "observedAt": "2026-10-24T02:17:03.147Z",
+        "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+        "handlerAccepted": true
+      },
+      {
+        "observedAtMs": 1792808258014,
+        "observedFrameTimeMs": 58505.19999998808,
+        "delivery": "fresh-life-receipt",
+        "receipt": {
+          "ruleId": "P05",
+          "placeId": "P05:starter-flower",
+          "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",1,6],[\"starter-flower\",2,5]],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":1,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":1,\"z\":6}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":5}}]]",
+          "actorId": "pokomoko",
+          "targetId": "starter-flower:garden"
+        },
+        "worldId": "legacy-world-v1:-3,8,8:curved-owned-v1:no-bridge",
+        "worldRevision": "true:[\"[\\\"disjoint-two-platform-memory-v1\\\",{}]\",\"fixed-bilinear-interior-ramp-v1\",\"fixed-core-base-v1\",\"cardinal-convex-terrace-v2+fixed-two-shear-grid-v1\",\"H\",{\"extra\":[\"west\",\"south\"],\"capes\":[],\"expanded\":\"east\"},null,[[\"-1,5\",2],[\"-1,6\",2],[\"-2,5\",1],[\"-2,6\",1],[\"0,3\",2],[\"0,4\",-3],[\"0,5\",3],[\"0,6\",3],[\"0,7\",2],[\"1,2\",1],[\"1,3\",3],[\"1,4\",3],[\"1,5\",3],[\"1,6\",3],[\"1,7\",2],[\"2,2\",2],[\"2,3\",3],[\"2,4\",3],[\"2,5\",3],[\"2,6\",3],[\"2,7\",2],[\"3,2\",1],[\"3,3\",2],[\"3,4\",3],[\"3,5\",3],[\"3,6\",3],[\"4,5\",1],[\"4,6\",-3],[\"4,7\",-3],[\"5,0\",1],[\"5,1\",-1],[\"5,2\",-1],[\"5,6\",-3],[\"5,7\",-3],[\"8,4\",-1],[\"8,5\",-1],[\"8,6\",-1]]]",
+        "actorPosition": {
+          "x": 0.18476069199999978,
+          "y": 0.5998270910000001,
+          "z": 3.041900386
+        },
+        "target": {
+          "id": "starter-flower:garden",
+          "kind": "garden",
+          "cell": {
+            "x": 2,
+            "z": 5
+          }
+        },
+        "currentPlaceRevisionMatches": true,
+        "documentVisibility": "visible",
+        "active": true,
+        "playActive": true,
+        "inFrustum": true,
+        "renderSucceeded": true,
+        "sequence": 3,
+        "observedAt": "2026-10-24T02:17:38.014Z",
+        "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+        "handlerAccepted": true
+      },
+      {
+        "observedAtMs": 1792808302154,
+        "observedFrameTimeMs": 102617.29999995232,
+        "delivery": "fresh-life-receipt",
+        "receipt": {
+          "ruleId": "P05",
+          "placeId": "P05:starter-flower",
+          "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",-1,4],[\"starter-flower\",0,4]],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":-1,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":-1,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":0,\"z\":4}}]]",
+          "actorId": "v2",
+          "targetId": "starter-bench"
+        },
+        "worldId": "legacy-world-v1:-3,8,8:curved-owned-v1:no-bridge",
+        "worldRevision": "true:[\"[\\\"disjoint-two-platform-memory-v1\\\",{\\\"west\\\":{\\\"center\\\":{\\\"x\\\":-1,\\\"z\\\":4},\\\"radius\\\":1.6,\\\"height\\\":0.5,\\\"entrance\\\":1.2,\\\"flatRadius\\\":1.75},\\\"east\\\":{\\\"center\\\":{\\\"x\\\":5,\\\"z\\\":5},\\\"radius\\\":1.6,\\\"height\\\":0.9,\\\"entrance\\\":1.2,\\\"flatRadius\\\":1.75,\\\"rampDirection\\\":\\\"west\\\"}}]\",\"fixed-bilinear-interior-ramp-v1\",\"fixed-core-base-v1\",\"cardinal-convex-terrace-v2+fixed-two-shear-grid-v1\",\"H\",{\"extra\":[\"west\",\"south\"],\"capes\":[],\"expanded\":\"east\"},null,[[\"-1,5\",2],[\"-1,6\",2],[\"-2,5\",1],[\"-2,6\",1],[\"0,3\",2],[\"0,4\",-3],[\"0,5\",3],[\"0,6\",3],[\"0,7\",2],[\"1,2\",1],[\"1,3\",3],[\"1,4\",3],[\"1,5\",3],[\"1,6\",3],[\"1,7\",2],[\"2,2\",2],[\"2,3\",3],[\"2,4\",3],[\"2,5\",3],[\"2,6\",3],[\"2,7\",2],[\"3,2\",1],[\"3,3\",2],[\"3,4\",3],[\"3,5\",3],[\"3,6\",3],[\"4,5\",1],[\"4,6\",-3],[\"4,7\",-3],[\"5,0\",1],[\"5,1\",-1],[\"5,2\",-1],[\"5,6\",-3],[\"5,7\",-3],[\"8,4\",-1],[\"8,5\",-1],[\"8,6\",-1]]]",
+        "actorPosition": {
+          "x": -2.80492522,
+          "y": 0.7000000000000001,
+          "z": 1.4379770609999998
+        },
+        "target": {
+          "id": "starter-bench",
+          "kind": "seat",
+          "cell": {
+            "x": -1,
+            "z": 4
+          }
+        },
+        "currentPlaceRevisionMatches": true,
+        "documentVisibility": "visible",
+        "active": true,
+        "playActive": true,
+        "inFrustum": true,
+        "renderSucceeded": true,
+        "sequence": 4,
+        "observedAt": "2026-10-24T02:18:22.154Z",
+        "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+        "handlerAccepted": true
+      },
+      {
+        "observedAtMs": 1792808375049,
+        "observedFrameTimeMs": 175542.39999997616,
+        "delivery": "fresh-life-receipt",
+        "receipt": {
+          "ruleId": "P05",
+          "placeId": "P05:starter-flower",
+          "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",-1,4],[\"starter-flower\",0,4]],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":-1,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":-1,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":0,\"z\":4}}]]",
+          "actorId": "v2",
+          "targetId": "starter-flower:garden"
+        },
+        "worldId": "legacy-world-v1:-3,8,8:curved-owned-v1:no-bridge",
+        "worldRevision": "true:[\"[\\\"disjoint-two-platform-memory-v1\\\",{\\\"west\\\":{\\\"center\\\":{\\\"x\\\":-1,\\\"z\\\":4},\\\"radius\\\":1.6,\\\"height\\\":0.5,\\\"entrance\\\":1.2,\\\"flatRadius\\\":1.75},\\\"east\\\":{\\\"center\\\":{\\\"x\\\":5,\\\"z\\\":5},\\\"radius\\\":1.6,\\\"height\\\":0.9,\\\"entrance\\\":1.2,\\\"flatRadius\\\":1.75,\\\"rampDirection\\\":\\\"west\\\"}}]\",\"fixed-bilinear-interior-ramp-v1\",\"fixed-core-base-v1\",\"cardinal-convex-terrace-v2+fixed-two-shear-grid-v1\",\"H\",{\"extra\":[\"west\",\"south\"],\"capes\":[],\"expanded\":\"east\"},null,[[\"-1,5\",2],[\"-1,6\",2],[\"-2,5\",1],[\"-2,6\",1],[\"0,3\",2],[\"0,4\",-3],[\"0,5\",3],[\"0,6\",3],[\"0,7\",2],[\"1,2\",1],[\"1,3\",3],[\"1,4\",3],[\"1,5\",3],[\"1,6\",3],[\"1,7\",2],[\"2,2\",2],[\"2,3\",3],[\"2,4\",3],[\"2,5\",3],[\"2,6\",3],[\"2,7\",2],[\"3,2\",1],[\"3,3\",2],[\"3,4\",3],[\"3,5\",3],[\"3,6\",3],[\"4,5\",1],[\"4,6\",-3],[\"4,7\",-3],[\"5,0\",1],[\"5,1\",-1],[\"5,2\",-1],[\"5,6\",-3],[\"5,7\",-3],[\"8,4\",-1],[\"8,5\",-1],[\"8,6\",-1]]]",
+        "actorPosition": {
+          "x": -1.815239308,
+          "y": 0.54,
+          "z": 1.5250182689999998
+        },
+        "target": {
+          "id": "starter-flower:garden",
+          "kind": "garden",
+          "cell": {
+            "x": 0,
+            "z": 4
+          }
+        },
+        "currentPlaceRevisionMatches": true,
+        "documentVisibility": "visible",
+        "active": true,
+        "playActive": true,
+        "inFrustum": true,
+        "renderSucceeded": true,
+        "sequence": 5,
+        "observedAt": "2026-10-24T02:19:35.049Z",
+        "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+        "handlerAccepted": true
+      },
+      {
+        "observedAtMs": 1792808401598,
+        "observedFrameTimeMs": 202092.79999995232,
+        "delivery": "fresh-life-receipt",
+        "receipt": {
+          "ruleId": "P05",
+          "placeId": "P05:starter-flower",
+          "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",-1,4],[\"starter-flower\",0,4]],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":-1,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":-1,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":0,\"z\":4}}]]",
+          "actorId": "pokomoko",
+          "targetId": "starter-bench"
+        },
+        "worldId": "legacy-world-v1:-3,8,8:curved-owned-v1:no-bridge",
+        "worldRevision": "true:[\"[\\\"disjoint-two-platform-memory-v1\\\",{\\\"west\\\":{\\\"center\\\":{\\\"x\\\":-1,\\\"z\\\":4},\\\"radius\\\":1.6,\\\"height\\\":0.5,\\\"entrance\\\":1.2,\\\"flatRadius\\\":1.75},\\\"east\\\":{\\\"center\\\":{\\\"x\\\":5,\\\"z\\\":5},\\\"radius\\\":1.6,\\\"height\\\":0.9,\\\"entrance\\\":1.2,\\\"flatRadius\\\":1.75,\\\"rampDirection\\\":\\\"west\\\"}}]\",\"fixed-bilinear-interior-ramp-v1\",\"fixed-core-base-v1\",\"cardinal-convex-terrace-v2+fixed-two-shear-grid-v1\",\"H\",{\"extra\":[\"west\",\"south\"],\"capes\":[],\"expanded\":\"east\"},null,[[\"-1,5\",2],[\"-1,6\",2],[\"-2,5\",1],[\"-2,6\",1],[\"0,3\",2],[\"0,4\",-3],[\"0,5\",3],[\"0,6\",3],[\"0,7\",2],[\"1,2\",1],[\"1,3\",3],[\"1,4\",3],[\"1,5\",3],[\"1,6\",3],[\"1,7\",2],[\"2,2\",2],[\"2,3\",3],[\"2,4\",3],[\"2,5\",3],[\"2,6\",3],[\"2,7\",2],[\"3,2\",1],[\"3,3\",2],[\"3,4\",3],[\"3,5\",3],[\"3,6\",3],[\"4,5\",1],[\"4,6\",-3],[\"4,7\",-3],[\"5,0\",1],[\"5,1\",-1],[\"5,2\",-1],[\"5,6\",-3],[\"5,7\",-3],[\"8,4\",-1],[\"8,5\",-1],[\"8,6\",-1]]]",
+        "actorPosition": {
+          "x": -2.80492522,
+          "y": 0.7000000000000001,
+          "z": 1.4379770609999998
+        },
+        "target": {
+          "id": "starter-bench",
+          "kind": "seat",
+          "cell": {
+            "x": -1,
+            "z": 4
+          }
+        },
+        "currentPlaceRevisionMatches": true,
+        "documentVisibility": "visible",
+        "active": true,
+        "playActive": true,
+        "inFrustum": true,
+        "renderSucceeded": true,
+        "sequence": 6,
+        "observedAt": "2026-10-24T02:20:01.598Z",
+        "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+        "handlerAccepted": true
+      }
+    ]
+  },
+  "state": {
+    "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+    "fixture": "two-memory-only",
+    "database": null,
+    "shoreMode": "off",
+    "shapes": {
+      "west": {
+        "center": {
+          "x": -1,
+          "z": 4
+        },
+        "radius": 1.6,
+        "height": 0.5,
+        "entrance": 2,
+        "flatRadius": 1.75
+      },
+      "east": {
+        "center": {
+          "x": 5,
+          "z": 5
+        },
+        "radius": 1.6,
+        "height": 0.9,
+        "entrance": 1.2,
+        "flatRadius": 1.75,
+        "rampDirection": "west"
+      }
+    },
+    "history": {
+      "version": 1,
+      "undo": [
+        {
+          "before": {},
+          "after": {
+            "west": {
+              "center": {
+                "x": -1,
+                "z": 4
+              },
+              "radius": 1.6,
+              "height": 0.5,
+              "entrance": 1.2,
+              "flatRadius": 1.75
+            }
+          }
+        },
+        {
+          "before": {
+            "west": {
+              "center": {
+                "x": -1,
+                "z": 4
+              },
+              "radius": 1.6,
+              "height": 0.5,
+              "entrance": 1.2,
+              "flatRadius": 1.75
+            }
+          },
+          "after": {
+            "west": {
+              "center": {
+                "x": -1,
+                "z": 4
+              },
+              "radius": 1.6,
+              "height": 0.5,
+              "entrance": 1.2,
+              "flatRadius": 1.75
+            },
+            "east": {
+              "center": {
+                "x": 5,
+                "z": 5
+              },
+              "radius": 1.6,
+              "height": 0.9,
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "rampDirection": "west"
+            }
+          }
+        },
+        {
+          "before": {
+            "west": {
+              "center": {
+                "x": -1,
+                "z": 4
+              },
+              "radius": 1.6,
+              "height": 0.5,
+              "entrance": 1.2,
+              "flatRadius": 1.75
+            },
+            "east": {
+              "center": {
+                "x": 5,
+                "z": 5
+              },
+              "radius": 1.6,
+              "height": 0.9,
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "rampDirection": "west"
+            }
+          },
+          "after": {
+            "west": {
+              "center": {
+                "x": -1,
+                "z": 4
+              },
+              "radius": 1.6,
+              "height": 0.5,
+              "entrance": 2,
+              "flatRadius": 1.75
+            },
+            "east": {
+              "center": {
+                "x": 5,
+                "z": 5
+              },
+              "radius": 1.6,
+              "height": 0.9,
+              "entrance": 1.2,
+              "flatRadius": 1.75,
+              "rampDirection": "west"
+            }
+          }
+        }
+      ],
+      "redo": []
+    },
+    "state": {
+      "rules": "growing-island-v1",
+      "seed": "expanded-comparison-fixture",
+      "drops": 9130,
+      "land": {
+        "extra": [
+          "west",
+          "south"
+        ],
+        "capes": [],
+        "expanded": "east"
+      },
+      "plots": [
+        {
+          "id": "p1",
+          "kind": "home",
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "plantedAt": 0,
+          "stage": 1,
+          "growth": 0,
+          "origin": "seed",
+          "paid": 0,
+          "builtAt": 0,
+          "stagedAt": 0,
+          "style": "flower",
+          "starter": true
+        }
+      ],
+      "landmarks": [
+        {
+          "id": "starter-flower",
+          "kind": "flower",
+          "cell": {
+            "x": 0,
+            "z": 4
+          },
+          "growth": 6
+        },
+        {
+          "id": "starter-bench",
+          "kind": "bench",
+          "cell": {
+            "x": -1,
+            "z": 4
+          },
+          "growth": 0
+        },
+        {
+          "id": "l1",
+          "kind": "bench",
+          "cell": {
+            "x": 5,
+            "z": 5
+          },
+          "growth": 0
+        },
+        {
+          "id": "l2",
+          "kind": "flower",
+          "cell": {
+            "x": 6,
+            "z": 5
+          },
+          "growth": 0,
+          "color": "red"
+        }
+      ],
+      "keepsakes": [],
+      "villagers": [
+        {
+          "id": "v2",
+          "species": "rabbit",
+          "variant": {
+            "color": 5,
+            "accessory": 1,
+            "sparkle": false
+          },
+          "trait": "mellow",
+          "home": "p1",
+          "arrivedAt": 0,
+          "name": "うさこ"
+        }
+      ],
+      "pier": {
+        "visitor": {
+          "ordinal": 0,
+          "species": "otter",
+          "variant": {
+            "color": 3,
+            "accessory": 1,
+            "sparkle": false
+          },
+          "trait": "shy"
+        },
+        "next": {
+          "ordinal": 1,
+          "species": "boy",
+          "variant": {
+            "color": 1,
+            "accessory": 1,
+            "sparkle": false
+          },
+          "trait": "lively"
+        },
+        "rolled": 1,
+        "dockAt": 0
+      },
+      "town": {
+        "clock": 8,
+        "bank": 0
+      },
+      "nature": {
+        "hours": 0,
+        "realAt": 1000,
+        "lastSpread": 0
+      },
+      "soil": {
+        "0,0": 0.2,
+        "1,0": 0.2,
+        "2,0": 0.2,
+        "3,0": 0.2,
+        "4,0": 0.2,
+        "5,0": 0.2,
+        "0,1": 0.2,
+        "1,1": 0.2,
+        "2,1": 0.2,
+        "3,1": 0.2,
+        "4,1": 0.2,
+        "5,1": 0.2,
+        "0,2": 0.2,
+        "1,2": 0.2,
+        "2,2": 0.2,
+        "3,2": 0.2,
+        "4,2": 0.2,
+        "5,2": 0.2,
+        "0,3": 0.2,
+        "1,3": 0.2,
+        "2,3": 0.2,
+        "3,3": 0.2,
+        "4,3": 0.2,
+        "5,3": 0.2,
+        "0,4": 0.2,
+        "1,4": 0.2,
+        "2,4": 0.2,
+        "3,4": 0.2,
+        "4,4": 0.2,
+        "5,4": 0.2,
+        "6,0": 0.2,
+        "7,0": 0.2,
+        "8,0": 0.2,
+        "6,1": 0.2,
+        "7,1": 0.2,
+        "8,1": 0.2,
+        "6,2": 0.2,
+        "7,2": 0.2,
+        "8,2": 0.2,
+        "6,3": 0.2,
+        "7,3": 0.2,
+        "8,3": 0.2,
+        "6,4": 0.2,
+        "7,4": 0.2,
+        "8,4": 0.2,
+        "-3,0": 0.2,
+        "-2,0": 0.2,
+        "-1,0": 0.2,
+        "-3,1": 0.2,
+        "-2,1": 0.2,
+        "-1,1": 0.2,
+        "-3,2": 0.2,
+        "-2,2": 0.2,
+        "-1,2": 0.2,
+        "-3,3": 0.2,
+        "-2,3": 0.2,
+        "-1,3": 0.2,
+        "-3,4": 0.2,
+        "-2,4": 0.2,
+        "-1,4": 0.2,
+        "-3,5": 0.2,
+        "-2,5": 0.2,
+        "-1,5": 0.2,
+        "0,5": 0.2,
+        "1,5": 0.2,
+        "2,5": 0.2,
+        "3,5": 0.2,
+        "4,5": 0.2,
+        "5,5": 0.2,
+        "6,5": 0.2,
+        "7,5": 0.2,
+        "8,5": 0.2,
+        "-3,6": 0.2,
+        "-2,6": 0.2,
+        "-1,6": 0.2,
+        "0,6": 0.2,
+        "1,6": 0.2,
+        "2,6": 0.2,
+        "3,6": 0.2,
+        "4,6": 0.2,
+        "5,6": 0.2,
+        "6,6": 0.2,
+        "7,6": 0.2,
+        "8,6": 0.2,
+        "-3,7": 0.2,
+        "-2,7": 0.2,
+        "-1,7": 0.2,
+        "0,7": 0.2,
+        "1,7": 0.2,
+        "2,7": 0.2,
+        "3,7": 0.2,
+        "4,7": 0.2,
+        "5,7": 0.2,
+        "6,7": 0.2,
+        "7,7": 0.2,
+        "8,7": 0.2
+      },
+      "genki": {
+        "current": 0,
+        "best": 0
+      },
+      "character": "mixed",
+      "unlocked": [
+        "seed:home",
+        "landmark:flower",
+        "landmark:bench",
+        "landmark:water-bowl",
+        "landmark:sapling",
+        "seed:farm",
+        "landmark:water-channel",
+        "landmark:picnic-table",
+        "landmark:swing",
+        "landmark:bandstand",
+        "landmark:slide",
+        "landmark:postbox",
+        "landmark:lantern",
+        "landmark:fence",
+        "landmark:trampoline",
+        "landmark:fountain",
+        "landmark:lighthouse"
+      ],
+      "unopened": [],
+      "arrivals": [],
+      "tutorial": "first-home",
+      "learned": [],
+      "enrolledAt": 1000,
+      "applied": [
+        "expanded-fixture-0",
+        "expanded-fixture-1",
+        "expanded-fixture-2",
+        "expanded-fixture-3",
+        "expanded-fixture-4",
+        "expanded-fixture-5",
+        "expanded-fixture-6",
+        "expanded-fixture-7",
+        "expanded-fixture-8",
+        "expanded-fixture-9",
+        "expanded-fixture-10",
+        "expanded-fixture-11",
+        "expanded-fixture-12",
+        "expanded-fixture-13",
+        "expanded-fixture-14",
+        "expanded-fixture-15",
+        "expanded-fixture-16",
+        "expanded-fixture-17",
+        "expanded-fixture-18",
+        "expanded-fixture-19",
+        "expanded-fixture-20",
+        "expanded-fixture-21",
+        "expanded-fixture-22",
+        "expanded-fixture-23",
+        "expanded-fixture-24",
+        "expanded-fixture-25",
+        "expanded-fixture-26",
+        "expanded-fixture-27",
+        "expanded-fixture-28",
+        "expanded-fixture-29",
+        "expanded-fixture-30",
+        "expanded-fixture-31",
+        "expanded-fixture-32",
+        "expanded-fixture-33",
+        "expanded-fixture-34",
+        "expanded-fixture-35",
+        "expanded-fixture-36",
+        "expanded-fixture-37",
+        "expanded-fixture-38",
+        "expanded-fixture-39",
+        "expanded-fixture-40",
+        "expanded-fixture-41",
+        "expanded-fixture-42",
+        "expanded-fixture-43",
+        "expanded-fixture-44",
+        "expanded-fixture-45",
+        "expanded-fixture-46",
+        "expanded-fixture-47",
+        "expanded-fixture-48",
+        "expanded-fixture-v2-p1-ground",
+        "expanded-coast-0",
+        "expanded-coast-1",
+        "expanded-coast-2",
+        "expanded-coast-3",
+        "expanded-coast-4",
+        "expanded-coast-5",
+        "expanded-coast-6",
+        "expanded-coast-7",
+        "expanded-coast-8",
+        "expanded-coast-9",
+        "expanded-coast-10",
+        "expanded-coast-11",
+        "expanded-coast-12",
+        "flat-flower-4",
+        "flat-flower-5",
+        "flat-flower-6",
+        "0172adc9-334a-4f7d-86d9-47193186475d",
+        "3dc55876-29b4-4163-9927-ef311d60b7bd",
+        "7d6c3986-0689-4902-8fdf-9ea993941308",
+        "9ebdb8af-4782-404c-b3fa-59144c433b3b",
+        "463bae20-93b7-4169-b831-9463ec33f96c",
+        "abb15d24-f1e5-484e-8299-74821535f2c0",
+        "cf2013e2-20fb-47f4-89f5-30f97cfbc014",
+        "e8e2b853-e5e3-4797-8abb-fd34709a2aa4",
+        "3b023ba1-5133-4fa6-93bf-82646c469d5d",
+        "fdc2bb2f-e515-4295-91db-2d3332fea8b3",
+        "a4601715-96e9-4dd7-b5eb-3a49410a36ce",
+        "cb557a20-0561-45d7-b710-09c7cd3a462a",
+        "6c609b3e-c215-4def-aae4-6c54c0b11d64",
+        "1a211da0-cf0b-4226-83a8-804aa86313bd",
+        "8b0dad00-5585-4288-a7b8-6f73d8986c29",
+        "6336721a-d0d1-4a0c-a489-2882b46ffcaa",
+        "f4cd67e0-3353-4156-bd28-5cfb72fd378f",
+        "17b4c365-8c39-4beb-bb36-283cdaf46f32",
+        "b5c2c723-d750-4778-abe9-1f96d869282b",
+        "02b4c4d9-90f2-47ec-8b96-ea9202310ebc",
+        "5d871cdf-a039-46e4-8fd5-e25a8070e542"
+      ],
+      "nextId": 3,
+      "placeProgress": {
+        "version": 1,
+        "milestones": {
+          "P05": {
+            "at": 1792623259507,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",3,3],[\"starter-flower\",1,2]],[{\"x\":1,\"z\":1},{\"x\":0,\"z\":2},{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":3,\"z\":2},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[{\"x\":1,\"z\":1},{\"x\":0,\"z\":2},{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":3,\"z\":2},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":3,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":1,\"z\":2}}]]"
+          }
+        },
+        "uses": {
+          "P05": {
+            "pokomoko": {
+              "at": 1792808401598,
+              "ruleId": "P05",
+              "anchorId": "starter-flower",
+              "memberIds": [
+                "starter-bench",
+                "starter-flower"
+              ],
+              "variant": "flower-path",
+              "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",-1,4],[\"starter-flower\",0,4]],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":-1,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":-1,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":0,\"z\":4}}]]",
+              "actorId": "pokomoko",
+              "targetId": "starter-bench"
+            },
+            "villager": {
+              "at": 1792808375049,
+              "ruleId": "P05",
+              "anchorId": "starter-flower",
+              "memberIds": [
+                "starter-bench",
+                "starter-flower"
+              ],
+              "variant": "flower-path",
+              "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",-1,4],[\"starter-flower\",0,4]],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":-1,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":-1,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":0,\"z\":4}}]]",
+              "actorId": "v2",
+              "targetId": "starter-flower:garden"
+            }
+          }
+        },
+        "shown": {
+          "P05": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",-1,4],[\"starter-flower\",0,4]],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":-1,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":-1,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":0,\"z\":4}}]]"
+        },
+        "useHistory": [
+          {
+            "at": 1792623284552,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",3,3],[\"starter-flower\",1,2]],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":3,\"z\":2},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":3,\"z\":2},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":3,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":1,\"z\":2}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792623330386,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",3,3],[\"starter-flower\",1,2]],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":1.5},{\"x\":1.5,\"z\":1.5},{\"x\":0,\"z\":2},{\"x\":0.5,\"z\":2},{\"x\":1,\"z\":2},{\"x\":1.5,\"z\":2},{\"x\":2,\"z\":2},{\"x\":3,\"z\":2},{\"x\":0.5,\"z\":2.5},{\"x\":1,\"z\":2.5},{\"x\":1.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":1.5},{\"x\":1.5,\"z\":1.5},{\"x\":0,\"z\":2},{\"x\":0.5,\"z\":2},{\"x\":1,\"z\":2},{\"x\":1.5,\"z\":2},{\"x\":2,\"z\":2},{\"x\":3,\"z\":2},{\"x\":0.5,\"z\":2.5},{\"x\":1,\"z\":2.5},{\"x\":1.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":3,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":1,\"z\":2}}]]",
+            "actorId": "v2",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792623349424,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",3,3],[\"starter-flower\",1,2]],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":1.5},{\"x\":1.5,\"z\":1.5},{\"x\":0,\"z\":2},{\"x\":0.5,\"z\":2},{\"x\":1,\"z\":2},{\"x\":1.5,\"z\":2},{\"x\":2,\"z\":2},{\"x\":3,\"z\":2},{\"x\":0.5,\"z\":2.5},{\"x\":1,\"z\":2.5},{\"x\":1.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":1.5},{\"x\":1.5,\"z\":1.5},{\"x\":0,\"z\":2},{\"x\":0.5,\"z\":2},{\"x\":1,\"z\":2},{\"x\":1.5,\"z\":2},{\"x\":2,\"z\":2},{\"x\":3,\"z\":2},{\"x\":0.5,\"z\":2.5},{\"x\":1,\"z\":2.5},{\"x\":1.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":3,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":1,\"z\":2}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792623499103,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",3,3],[\"starter-flower\",1,2]],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":1.5},{\"x\":1.5,\"z\":1.5},{\"x\":0,\"z\":2},{\"x\":0.5,\"z\":2},{\"x\":1,\"z\":2},{\"x\":1.5,\"z\":2},{\"x\":2,\"z\":2},{\"x\":3,\"z\":2},{\"x\":0.5,\"z\":2.5},{\"x\":1,\"z\":2.5},{\"x\":1.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":1.5},{\"x\":1.5,\"z\":1.5},{\"x\":0,\"z\":2},{\"x\":0.5,\"z\":2},{\"x\":1,\"z\":2},{\"x\":1.5,\"z\":2},{\"x\":2,\"z\":2},{\"x\":3,\"z\":2},{\"x\":0.5,\"z\":2.5},{\"x\":1,\"z\":2.5},{\"x\":1.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":3,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":1,\"z\":2}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792623559954,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",3,3],[\"starter-flower\",1,2]],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":1.5},{\"x\":1.5,\"z\":1.5},{\"x\":0,\"z\":2},{\"x\":0.5,\"z\":2},{\"x\":1,\"z\":2},{\"x\":1.5,\"z\":2},{\"x\":2,\"z\":2},{\"x\":3,\"z\":2},{\"x\":0.5,\"z\":2.5},{\"x\":1,\"z\":2.5},{\"x\":1.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":1.5},{\"x\":1.5,\"z\":1.5},{\"x\":0,\"z\":2},{\"x\":0.5,\"z\":2},{\"x\":1,\"z\":2},{\"x\":1.5,\"z\":2},{\"x\":2,\"z\":2},{\"x\":3,\"z\":2},{\"x\":0.5,\"z\":2.5},{\"x\":1,\"z\":2.5},{\"x\":1.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":3,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":1,\"z\":2}}]]",
+            "actorId": "v2",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792624171760,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",1,3],[\"starter-flower\",1,2]],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":1.5},{\"x\":1.5,\"z\":1.5},{\"x\":0,\"z\":2},{\"x\":0.5,\"z\":2},{\"x\":1,\"z\":2},{\"x\":1.5,\"z\":2},{\"x\":2,\"z\":2},{\"x\":0,\"z\":3},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":1,\"z\":4}],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":1.5},{\"x\":1.5,\"z\":1.5},{\"x\":0,\"z\":2},{\"x\":0.5,\"z\":2},{\"x\":1,\"z\":2},{\"x\":1.5,\"z\":2},{\"x\":2,\"z\":2},{\"x\":0,\"z\":3},{\"x\":2,\"z\":3},{\"x\":1,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":1,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":1,\"z\":2}}]]",
+            "actorId": "v2",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792624188479,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",1,3],[\"starter-flower\",1,2]],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":1.5},{\"x\":1.5,\"z\":1.5},{\"x\":0,\"z\":2},{\"x\":0.5,\"z\":2},{\"x\":1,\"z\":2},{\"x\":1.5,\"z\":2},{\"x\":2,\"z\":2},{\"x\":0,\"z\":3},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":1,\"z\":4}],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":1.5},{\"x\":1.5,\"z\":1.5},{\"x\":0,\"z\":2},{\"x\":0.5,\"z\":2},{\"x\":1,\"z\":2},{\"x\":1.5,\"z\":2},{\"x\":2,\"z\":2},{\"x\":0,\"z\":3},{\"x\":2,\"z\":3},{\"x\":1,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":1,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":1,\"z\":2}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792624202094,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",1,3],[\"starter-flower\",1,2]],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":1.5},{\"x\":1.5,\"z\":1.5},{\"x\":0,\"z\":2},{\"x\":0.5,\"z\":2},{\"x\":1,\"z\":2},{\"x\":1.5,\"z\":2},{\"x\":2,\"z\":2},{\"x\":0,\"z\":3},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":1,\"z\":4}],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":1.5},{\"x\":1.5,\"z\":1.5},{\"x\":0,\"z\":2},{\"x\":0.5,\"z\":2},{\"x\":1,\"z\":2},{\"x\":1.5,\"z\":2},{\"x\":2,\"z\":2},{\"x\":0,\"z\":3},{\"x\":2,\"z\":3},{\"x\":1,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":1,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":1,\"z\":2}}]]",
+            "actorId": "v2",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792624213243,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",1,3],[\"starter-flower\",1,2]],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":1.5},{\"x\":1.5,\"z\":1.5},{\"x\":0,\"z\":2},{\"x\":0.5,\"z\":2},{\"x\":1,\"z\":2},{\"x\":1.5,\"z\":2},{\"x\":2,\"z\":2},{\"x\":0,\"z\":3},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":1,\"z\":4}],[{\"x\":1,\"z\":1},{\"x\":1,\"z\":1.5},{\"x\":1.5,\"z\":1.5},{\"x\":0,\"z\":2},{\"x\":0.5,\"z\":2},{\"x\":1,\"z\":2},{\"x\":1.5,\"z\":2},{\"x\":2,\"z\":2},{\"x\":0,\"z\":3},{\"x\":2,\"z\":3},{\"x\":1,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":1,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":1,\"z\":2}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792700079030,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",1,3],[\"starter-flower\",3,2]],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2.5,\"z\":2.5},{\"x\":3,\"z\":2.5},{\"x\":3.5,\"z\":2.5},{\"x\":0,\"z\":3},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4}],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2.5,\"z\":2.5},{\"x\":3,\"z\":2.5},{\"x\":3.5,\"z\":2.5},{\"x\":0,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":1,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":3,\"z\":2}}]]",
+            "actorId": "v2",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792700091179,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",1,3],[\"starter-flower\",3,2]],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2.5,\"z\":2.5},{\"x\":3,\"z\":2.5},{\"x\":3.5,\"z\":2.5},{\"x\":0,\"z\":3},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4}],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2.5,\"z\":2.5},{\"x\":3,\"z\":2.5},{\"x\":3.5,\"z\":2.5},{\"x\":0,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":1,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":3,\"z\":2}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792700104196,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",1,3],[\"starter-flower\",3,2]],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2.5,\"z\":2.5},{\"x\":3,\"z\":2.5},{\"x\":3.5,\"z\":2.5},{\"x\":0,\"z\":3},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4}],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2.5,\"z\":2.5},{\"x\":3,\"z\":2.5},{\"x\":3.5,\"z\":2.5},{\"x\":0,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":1,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":3,\"z\":2}}]]",
+            "actorId": "v2",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792700117945,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",1,3],[\"starter-flower\",3,2]],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2.5,\"z\":2.5},{\"x\":3,\"z\":2.5},{\"x\":3.5,\"z\":2.5},{\"x\":0,\"z\":3},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4}],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2.5,\"z\":2.5},{\"x\":3,\"z\":2.5},{\"x\":3.5,\"z\":2.5},{\"x\":0,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":1,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":3,\"z\":2}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792700158080,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",3,3],[\"starter-flower\",3,2]],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":3,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":3,\"z\":2}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792700167298,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",3,3],[\"starter-flower\",3,2]],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":3,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":3,\"z\":2}}]]",
+            "actorId": "v2",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792700176965,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",3,3],[\"starter-flower\",3,2]],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":3,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":3,\"z\":2}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792700191413,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",3,3],[\"starter-flower\",3,2]],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":3,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":3,\"z\":2}}]]",
+            "actorId": "v2",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792700467964,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",3,3],[\"starter-flower\",3,2]],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":2,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":3,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":3,\"z\":2}}]]",
+            "actorId": "v2",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792700473681,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",3,3],[\"starter-flower\",3,2]],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":2,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":3,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":3,\"z\":2}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792700483364,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",3,3],[\"starter-flower\",3,2]],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":2,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":3,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":3,\"z\":2}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792700485731,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",3,3],[\"starter-flower\",3,2]],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":4,\"z\":2},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[{\"x\":3,\"z\":1},{\"x\":2.5,\"z\":1.5},{\"x\":3,\"z\":1.5},{\"x\":3.5,\"z\":1.5},{\"x\":2,\"z\":2},{\"x\":2.5,\"z\":2},{\"x\":3,\"z\":2},{\"x\":3.5,\"z\":2},{\"x\":2,\"z\":3},{\"x\":4,\"z\":3},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":3,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":3,\"z\":2}}]]",
+            "actorId": "v2",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792701748899,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",2,3],[\"starter-flower\",1,3]],[{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":0.5,\"z\":2.5},{\"x\":1,\"z\":2.5},{\"x\":0,\"z\":3},{\"x\":0.5,\"z\":3},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":0.5,\"z\":3.5},{\"x\":1,\"z\":3.5},{\"x\":1,\"z\":4},{\"x\":2,\"z\":4}],[{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":0.5,\"z\":2.5},{\"x\":1,\"z\":2.5},{\"x\":0.5,\"z\":3},{\"x\":1,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":3.5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":1,\"z\":3}}]]",
+            "actorId": "v2",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792701749530,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",2,3],[\"starter-flower\",1,3]],[{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":0.5,\"z\":2.5},{\"x\":1,\"z\":2.5},{\"x\":0,\"z\":3},{\"x\":0.5,\"z\":3},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":0.5,\"z\":3.5},{\"x\":1,\"z\":3.5},{\"x\":1,\"z\":4},{\"x\":2,\"z\":4}],[{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":0.5,\"z\":2.5},{\"x\":1,\"z\":2.5},{\"x\":0.5,\"z\":3},{\"x\":1,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":3.5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":1,\"z\":3}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792701756415,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",2,3],[\"starter-flower\",1,3]],[{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":0.5,\"z\":2.5},{\"x\":1,\"z\":2.5},{\"x\":0,\"z\":3},{\"x\":0.5,\"z\":3},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":0.5,\"z\":3.5},{\"x\":1,\"z\":3.5},{\"x\":1,\"z\":4},{\"x\":2,\"z\":4}],[{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":0.5,\"z\":2.5},{\"x\":1,\"z\":2.5},{\"x\":0.5,\"z\":3},{\"x\":1,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":3.5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":1,\"z\":3}}]]",
+            "actorId": "v2",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792701799416,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",2,3],[\"starter-flower\",1,3]],[{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":0.5,\"z\":2.5},{\"x\":1,\"z\":2.5},{\"x\":0,\"z\":3},{\"x\":0.5,\"z\":3},{\"x\":1,\"z\":3},{\"x\":2,\"z\":3},{\"x\":3,\"z\":3},{\"x\":0.5,\"z\":3.5},{\"x\":1,\"z\":3.5},{\"x\":1,\"z\":4},{\"x\":2,\"z\":4}],[{\"x\":1,\"z\":2},{\"x\":2,\"z\":2},{\"x\":0.5,\"z\":2.5},{\"x\":1,\"z\":2.5},{\"x\":0.5,\"z\":3},{\"x\":1,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":3.5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":3}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":1,\"z\":3}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792702829237,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",2,4],[\"starter-flower\",2,3]],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":2,\"z\":4},{\"x\":3,\"z\":4}],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":3}}]]",
+            "actorId": "v2",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792702833606,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",2,4],[\"starter-flower\",2,3]],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":2,\"z\":4},{\"x\":3,\"z\":4}],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":3}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792702841555,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",2,4],[\"starter-flower\",2,3]],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":2,\"z\":4},{\"x\":3,\"z\":4}],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":3}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792702847572,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",2,4],[\"starter-flower\",2,3]],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":2,\"z\":4},{\"x\":3,\"z\":4}],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":3,\"z\":4}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":3}}]]",
+            "actorId": "v2",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792705072510,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",2,4],[\"starter-flower\",2,3]],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":2,\"z\":4},{\"x\":3,\"z\":4},{\"x\":2,\"z\":5}],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":3,\"z\":4},{\"x\":2,\"z\":5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":3}}]]",
+            "actorId": "v2",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792705074259,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",2,4],[\"starter-flower\",2,3]],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":1,\"z\":4},{\"x\":2,\"z\":4},{\"x\":3,\"z\":4},{\"x\":2,\"z\":5}],[{\"x\":2,\"z\":2},{\"x\":1.5,\"z\":2.5},{\"x\":2,\"z\":2.5},{\"x\":2.5,\"z\":2.5},{\"x\":1,\"z\":3},{\"x\":1.5,\"z\":3},{\"x\":2,\"z\":3},{\"x\":2.5,\"z\":3},{\"x\":3,\"z\":3},{\"x\":3,\"z\":4},{\"x\":2,\"z\":5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":2,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":3}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792808214317,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",1,6],[\"starter-flower\",2,5]],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":1,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":1,\"z\":6}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":5}}]]",
+            "actorId": "v2",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792808223148,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",1,6],[\"starter-flower\",2,5]],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":1,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":1,\"z\":6}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":5}}]]",
+            "actorId": "v2",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792808258014,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",1,6],[\"starter-flower\",2,5]],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":1,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":1,\"z\":6}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":5}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792808258515,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",1,6],[\"starter-flower\",2,5]],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":1,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[{\"x\":2,\"z\":4},{\"x\":1.5,\"z\":4.5},{\"x\":2,\"z\":4.5},{\"x\":2.5,\"z\":4.5},{\"x\":1,\"z\":5},{\"x\":1.5,\"z\":5},{\"x\":2,\"z\":5},{\"x\":2.5,\"z\":5},{\"x\":3,\"z\":5},{\"x\":2,\"z\":5.5},{\"x\":2.5,\"z\":5.5},{\"x\":0,\"z\":6},{\"x\":2,\"z\":6},{\"x\":1,\"z\":7}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":1,\"z\":6}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":2,\"z\":5}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792808302158,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",-1,4],[\"starter-flower\",0,4]],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":-1,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":-1,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":0,\"z\":4}}]]",
+            "actorId": "v2",
+            "targetId": "starter-bench"
+          },
+          {
+            "at": 1792808356316,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",-1,4],[\"starter-flower\",0,4]],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":-1,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":-1,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":0,\"z\":4}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792808375049,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",-1,4],[\"starter-flower\",0,4]],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":-1,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":-1,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":0,\"z\":4}}]]",
+            "actorId": "v2",
+            "targetId": "starter-flower:garden"
+          },
+          {
+            "at": 1792808401598,
+            "ruleId": "P05",
+            "anchorId": "starter-flower",
+            "memberIds": [
+              "starter-bench",
+              "starter-flower"
+            ],
+            "variant": "flower-path",
+            "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",-1,4],[\"starter-flower\",0,4]],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":-1,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":-1,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":0,\"z\":4}}]]",
+            "actorId": "pokomoko",
+            "targetId": "starter-bench"
+          }
+        ]
+      },
+      "growth": {
+        "version": 1,
+        "welcomed": true,
+        "built": false,
+        "expanded": true,
+        "slots": {
+          "W1": {
+            "status": "granted",
+            "at": 1000,
+            "reason": "island-milestone"
+          },
+          "W2": {
+            "status": "available"
+          },
+          "W3": {
+            "status": "available"
+          },
+          "W4": {
+            "status": "granted",
+            "at": 1000,
+            "reason": "island-milestone"
+          }
+        },
+        "restoredStock": []
+      },
+      "guidance": {
+        "version": 1,
+        "starter": {
+          "automatic": false,
+          "steps": {}
+        },
+        "achievements": {
+          "A6": {
+            "source": "expanded-fixture-0",
+            "at": 1000,
+            "snapshot": {
+              "flagColor": 0,
+              "land": {
+                "extra": [],
+                "capes": [],
+                "expanded": "east"
+              }
+            }
+          },
+          "A4": {
+            "source": "3b023ba1-5133-4fa6-93bf-82646c469d5d",
+            "at": 1792808295153,
+            "targetId": "starter-bench",
+            "snapshot": {
+              "flagColor": 0,
+              "target": {
+                "id": "starter-bench",
+                "kind": "bench",
+                "cell": {
+                  "x": -1,
+                  "z": 4
+                },
+                "growth": 0
+              }
+            }
+          }
+        },
+        "notified": [],
+        "firstFlower": {
+          "id": "l2",
+          "seen": false
+        }
+      },
+      "terrain": {
+        "version": 1,
+        "heights": {
+          "0,4": -3,
+          "5,0": 1,
+          "5,2": -1,
+          "5,1": -1,
+          "1,3": 3,
+          "2,3": 3,
+          "2,2": 2,
+          "3,3": 2,
+          "1,4": 3,
+          "3,4": 3,
+          "2,4": 3,
+          "3,2": 1,
+          "0,3": 2,
+          "1,2": 1,
+          "1,5": 3,
+          "2,5": 3,
+          "3,5": 3,
+          "8,4": -1,
+          "-2,5": 1,
+          "-1,5": 2,
+          "0,5": 3,
+          "4,5": 1,
+          "8,5": -1,
+          "-2,6": 1,
+          "-1,6": 2,
+          "0,6": 3,
+          "1,6": 3,
+          "2,6": 3,
+          "3,6": 3,
+          "8,6": -1,
+          "0,7": 2,
+          "1,7": 2,
+          "2,7": 2,
+          "5,6": -3,
+          "5,7": -3,
+          "4,6": -3,
+          "4,7": -3
+        },
+        "undo": [
+          {
+            "cell": {
+              "x": 2,
+              "z": 4
+            },
+            "before": 2,
+            "after": 3
+          },
+          {
+            "cell": {
+              "x": 6,
+              "z": 0
+            },
+            "before": 1,
+            "after": 0
+          },
+          {
+            "cell": {
+              "x": -1,
+              "z": 1
+            },
+            "before": -1,
+            "after": 0
+          },
+          {
+            "cell": {
+              "x": 6,
+              "z": 1
+            },
+            "before": -1,
+            "after": 0
+          },
+          {
+            "cell": {
+              "x": 6,
+              "z": 2
+            },
+            "before": -1,
+            "after": 0
+          },
+          {
+            "cell": {
+              "x": -1,
+              "z": 3
+            },
+            "before": 2,
+            "after": 1
+          },
+          {
+            "cell": {
+              "x": -1,
+              "z": 3
+            },
+            "before": 1,
+            "after": 0
+          },
+          {
+            "cell": {
+              "x": -1,
+              "z": 4
+            },
+            "before": -3,
+            "after": -2
+          },
+          {
+            "cell": {
+              "x": -1,
+              "z": 4
+            },
+            "before": -2,
+            "after": -1
+          },
+          {
+            "cell": {
+              "x": -1,
+              "z": 4
+            },
+            "before": -1,
+            "after": 0
+          },
+          {
+            "cell": {
+              "x": 8,
+              "z": 4
+            },
+            "before": 0,
+            "after": -1
+          },
+          {
+            "cell": {
+              "x": -2,
+              "z": 5
+            },
+            "before": 0,
+            "after": 1
+          },
+          {
+            "cell": {
+              "x": -1,
+              "z": 5
+            },
+            "before": -3,
+            "after": -2
+          },
+          {
+            "cell": {
+              "x": -1,
+              "z": 5
+            },
+            "before": -2,
+            "after": -1
+          },
+          {
+            "cell": {
+              "x": -1,
+              "z": 5
+            },
+            "before": -1,
+            "after": 0
+          },
+          {
+            "cell": {
+              "x": -1,
+              "z": 5
+            },
+            "before": 0,
+            "after": 1
+          },
+          {
+            "cell": {
+              "x": -1,
+              "z": 5
+            },
+            "before": 1,
+            "after": 2
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 5
+            },
+            "before": -3,
+            "after": -2
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 5
+            },
+            "before": -2,
+            "after": -1
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 5
+            },
+            "before": -1,
+            "after": 0
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 5
+            },
+            "before": 0,
+            "after": 1
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 5
+            },
+            "before": 1,
+            "after": 2
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 5
+            },
+            "before": 2,
+            "after": 3
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 5
+            },
+            "before": 0,
+            "after": 1
+          },
+          {
+            "cell": {
+              "x": 8,
+              "z": 5
+            },
+            "before": 0,
+            "after": -1
+          },
+          {
+            "cell": {
+              "x": -2,
+              "z": 6
+            },
+            "before": 0,
+            "after": 1
+          },
+          {
+            "cell": {
+              "x": -1,
+              "z": 6
+            },
+            "before": 0,
+            "after": 1
+          },
+          {
+            "cell": {
+              "x": -1,
+              "z": 6
+            },
+            "before": 1,
+            "after": 2
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 6
+            },
+            "before": 0,
+            "after": 1
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 6
+            },
+            "before": 1,
+            "after": 2
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 6
+            },
+            "before": 2,
+            "after": 3
+          },
+          {
+            "cell": {
+              "x": 1,
+              "z": 6
+            },
+            "before": 0,
+            "after": 1
+          },
+          {
+            "cell": {
+              "x": 1,
+              "z": 6
+            },
+            "before": 1,
+            "after": 2
+          },
+          {
+            "cell": {
+              "x": 1,
+              "z": 6
+            },
+            "before": 2,
+            "after": 3
+          },
+          {
+            "cell": {
+              "x": 2,
+              "z": 6
+            },
+            "before": 0,
+            "after": 1
+          },
+          {
+            "cell": {
+              "x": 2,
+              "z": 6
+            },
+            "before": 1,
+            "after": 2
+          },
+          {
+            "cell": {
+              "x": 2,
+              "z": 6
+            },
+            "before": 2,
+            "after": 3
+          },
+          {
+            "cell": {
+              "x": 3,
+              "z": 6
+            },
+            "before": 0,
+            "after": 1
+          },
+          {
+            "cell": {
+              "x": 3,
+              "z": 6
+            },
+            "before": 1,
+            "after": 2
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 6
+            },
+            "before": 0,
+            "after": 1
+          },
+          {
+            "cell": {
+              "x": 8,
+              "z": 6
+            },
+            "before": 0,
+            "after": -1
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 7
+            },
+            "before": 0,
+            "after": 1
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 7
+            },
+            "before": 1,
+            "after": 2
+          },
+          {
+            "cell": {
+              "x": 1,
+              "z": 7
+            },
+            "before": 0,
+            "after": 1
+          },
+          {
+            "cell": {
+              "x": 1,
+              "z": 7
+            },
+            "before": 1,
+            "after": 2
+          },
+          {
+            "cell": {
+              "x": 2,
+              "z": 7
+            },
+            "before": 0,
+            "after": 1
+          },
+          {
+            "cell": {
+              "x": 2,
+              "z": 7
+            },
+            "before": 1,
+            "after": 2
+          },
+          {
+            "cell": {
+              "x": 0,
+              "z": 1
+            },
+            "before": -1,
+            "after": 0
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 6
+            },
+            "before": 0,
+            "after": -1
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 6
+            },
+            "before": -1,
+            "after": -2
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 6
+            },
+            "before": -2,
+            "after": -3
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "before": 0,
+            "after": -1
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "before": -1,
+            "after": -2
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "before": -2,
+            "after": -3
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 6
+            },
+            "before": 1,
+            "after": 0
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 6
+            },
+            "before": 0,
+            "after": -1
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 6
+            },
+            "before": -1,
+            "after": -2
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 6
+            },
+            "before": -2,
+            "after": -3
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 7
+            },
+            "before": 0,
+            "after": -1
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 7
+            },
+            "before": -1,
+            "after": -2
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 7
+            },
+            "before": -2,
+            "after": -3
+          },
+          {
+            "cell": {
+              "x": 3,
+              "z": 4
+            },
+            "before": 2,
+            "after": 3
+          },
+          {
+            "cell": {
+              "x": 3,
+              "z": 5
+            },
+            "before": 2,
+            "after": 3
+          },
+          {
+            "cell": {
+              "x": 3,
+              "z": 6
+            },
+            "before": 2,
+            "after": 3
+          }
+        ],
+        "redo": []
+      },
+      "wonderSeeds": 2,
+      "trialPlaceHistory": {
+        "version": 1,
+        "recipe": "place-outline-platform-v3:H:fixed-two-shear-grid-v1:fixed-core-base-v1:fixed-bilinear-interior-ramp-v1:directional-ramp-v1:flat-owner-v1",
+        "undo": [],
+        "redo": []
+      },
+      "trialPlaceSet": {
+        "west": {
+          "center": {
+            "x": -1,
+            "z": 4
+          },
+          "radius": 1.6,
+          "height": 0.5,
+          "entrance": 2,
+          "flatRadius": 1.75
+        },
+        "east": {
+          "center": {
+            "x": 5,
+            "z": 5
+          },
+          "radius": 1.6,
+          "height": 0.9,
+          "entrance": 1.2,
+          "flatRadius": 1.75,
+          "rampDirection": "west"
+        }
+      },
+      "trialPlaceSetHistory": {
+        "version": 1,
+        "undo": [
+          {
+            "before": {},
+            "after": {
+              "west": {
+                "center": {
+                  "x": -1,
+                  "z": 4
+                },
+                "radius": 1.6,
+                "height": 0.5,
+                "entrance": 1.2,
+                "flatRadius": 1.75
+              }
+            }
+          },
+          {
+            "before": {
+              "west": {
+                "center": {
+                  "x": -1,
+                  "z": 4
+                },
+                "radius": 1.6,
+                "height": 0.5,
+                "entrance": 1.2,
+                "flatRadius": 1.75
+              }
+            },
+            "after": {
+              "west": {
+                "center": {
+                  "x": -1,
+                  "z": 4
+                },
+                "radius": 1.6,
+                "height": 0.5,
+                "entrance": 1.2,
+                "flatRadius": 1.75
+              },
+              "east": {
+                "center": {
+                  "x": 5,
+                  "z": 5
+                },
+                "radius": 1.6,
+                "height": 0.9,
+                "entrance": 1.2,
+                "flatRadius": 1.75,
+                "rampDirection": "west"
+              }
+            }
+          },
+          {
+            "before": {
+              "west": {
+                "center": {
+                  "x": -1,
+                  "z": 4
+                },
+                "radius": 1.6,
+                "height": 0.5,
+                "entrance": 1.2,
+                "flatRadius": 1.75
+              },
+              "east": {
+                "center": {
+                  "x": 5,
+                  "z": 5
+                },
+                "radius": 1.6,
+                "height": 0.9,
+                "entrance": 1.2,
+                "flatRadius": 1.75,
+                "rampDirection": "west"
+              }
+            },
+            "after": {
+              "west": {
+                "center": {
+                  "x": -1,
+                  "z": 4
+                },
+                "radius": 1.6,
+                "height": 0.5,
+                "entrance": 2,
+                "flatRadius": 1.75
+              },
+              "east": {
+                "center": {
+                  "x": 5,
+                  "z": 5
+                },
+                "radius": 1.6,
+                "height": 0.9,
+                "entrance": 1.2,
+                "flatRadius": 1.75,
+                "rampDirection": "west"
+              }
+            }
+          }
+        ],
+        "redo": []
+      },
+      "flowerBook": [
+        "red"
+      ]
+    },
+    "places": [
+      {
+        "id": "P05:l2",
+        "ruleId": "P05",
+        "revision": "[1,\"P05\",\"flower-path\",\"connected\",[[\"l1\",5,5],[\"l2\",6,5]],[{\"x\":5,\"z\":4},{\"x\":6,\"z\":4},{\"x\":6,\"z\":4.5},{\"x\":6.5,\"z\":4.5},{\"x\":4,\"z\":5},{\"x\":5,\"z\":5},{\"x\":6,\"z\":5},{\"x\":6.5,\"z\":5},{\"x\":7,\"z\":5},{\"x\":6,\"z\":5.5},{\"x\":6.5,\"z\":5.5},{\"x\":5,\"z\":6},{\"x\":6,\"z\":6}],[{\"x\":5,\"z\":4},{\"x\":6,\"z\":4},{\"x\":6,\"z\":4.5},{\"x\":6.5,\"z\":4.5},{\"x\":4,\"z\":5},{\"x\":6,\"z\":5},{\"x\":6.5,\"z\":5},{\"x\":7,\"z\":5},{\"x\":6,\"z\":5.5},{\"x\":6.5,\"z\":5.5},{\"x\":5,\"z\":6},{\"x\":6,\"z\":6}],[],[{\"id\":\"l1\",\"kind\":\"seat\",\"cell\":{\"x\":5,\"z\":5}}]]",
+        "stage": "connected",
+        "useTargets": [
+          {
+            "id": "l1",
+            "kind": "seat",
+            "cell": {
+              "x": 5,
+              "z": 5
+            }
+          }
+        ]
+      },
+      {
+        "id": "P05:starter-flower",
+        "ruleId": "P05",
+        "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",-1,4],[\"starter-flower\",0,4]],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":-1,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[{\"x\":-1,\"z\":3},{\"x\":0,\"z\":3},{\"x\":0,\"z\":3.5},{\"x\":0.5,\"z\":3.5},{\"x\":-2,\"z\":4},{\"x\":0,\"z\":4},{\"x\":0.5,\"z\":4},{\"x\":1,\"z\":4},{\"x\":0,\"z\":4.5},{\"x\":0.5,\"z\":4.5},{\"x\":-1,\"z\":5},{\"x\":0,\"z\":5}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":-1,\"z\":4}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":0,\"z\":4}}]]",
+        "stage": "grown",
+        "useTargets": [
+          {
+            "id": "starter-bench",
+            "kind": "seat",
+            "cell": {
+              "x": -1,
+              "z": 4
+            }
+          },
+          {
+            "id": "starter-flower:garden",
+            "kind": "garden",
+            "cell": {
+              "x": 0,
+              "z": 4
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "visualObservation": "The CUA screenshot immediately before the saved image showed Pokomoko seated on the new east bench while west owners remained. The following saved image already shows departure; it is not a seating-frame proof.",
+  "limitation": "East P05 connected stage is not eligible for fresh mature-place receipts. Do not call this two mature places or persisted use."
+}

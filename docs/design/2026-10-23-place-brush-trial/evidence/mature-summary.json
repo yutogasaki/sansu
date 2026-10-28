@@ -1,0 +1,217 @@
+{
+  "scope": "Explicit memory-only mature fixture; not earned growth, normal saves, all collisions or release acceptance",
+  "candidate": "mature-composition-v1",
+  "build": "place-outline-v26",
+  "at": "2026-10-24T06:17:00Z",
+  "ownershipReturned": true,
+  "terrainUnchanged": true,
+  "landUnchanged": true,
+  "walletUnchanged": true,
+  "performance": {
+    "initialBatch": "30 store/unstore commands, 3498ms; click tool timed out but app completed",
+    "AtoB": "B・13操作・3132ms・描画24回・最大間隔300ms。所有・成熟を保持。",
+    "BtoA": "A・13操作・2677ms・描画23回・最大間隔250ms。所有・成熟を保持。",
+    "limitation": "Single observed runs; total command batch duration and max rAF gap differ; no isolated device benchmark. Does not solve prior terrain recomputation latency."
+  },
+  "liveUses": [
+    {
+      "build": "v25",
+      "layout": "A",
+      "at": "2026-10-24T06:11:06.505Z",
+      "rule": "P02",
+      "target": "mature-home:gallery",
+      "accepted": true,
+      "currentRevision": true
+    },
+    {
+      "build": "v25",
+      "layout": "A",
+      "at": "2026-10-24T06:11:07.620Z",
+      "rule": "P03",
+      "target": "c1:shore",
+      "accepted": true,
+      "currentRevision": true
+    },
+    {
+      "build": "v25",
+      "layout": "A",
+      "at": "2026-10-24T06:11:22.357Z",
+      "rule": "P05",
+      "target": "f1:garden",
+      "accepted": true,
+      "currentRevision": true
+    },
+    {
+      "build": "v25",
+      "layout": "A",
+      "at": "2026-10-24T06:11:32.904Z",
+      "rule": "P01",
+      "target": "b1",
+      "accepted": true,
+      "currentRevision": true
+    },
+    {
+      "build": "v25",
+      "layout": "A",
+      "at": "2026-10-24T06:11:32.904Z",
+      "rule": "P02",
+      "target": "b1",
+      "accepted": true,
+      "currentRevision": true
+    },
+    {
+      "build": "v25",
+      "layout": "B",
+      "at": "2026-10-24T06:11:56.656Z",
+      "rule": "P01",
+      "target": "t1:garden",
+      "accepted": true,
+      "currentRevision": true
+    },
+    {
+      "build": "v25",
+      "layout": "B",
+      "at": "2026-10-24T06:11:59.521Z",
+      "rule": "P02",
+      "target": "mature-home:gallery",
+      "accepted": true,
+      "currentRevision": true
+    },
+    {
+      "build": "v25",
+      "layout": "B",
+      "at": "2026-10-24T06:12:08.954Z",
+      "rule": "P03",
+      "target": "c1:shore",
+      "accepted": true,
+      "currentRevision": true
+    },
+    {
+      "build": "v25",
+      "layout": "B",
+      "at": "2026-10-24T06:12:16.538Z",
+      "rule": "P05",
+      "target": "f1:garden",
+      "accepted": true,
+      "currentRevision": true
+    },
+    {
+      "build": "v25",
+      "layout": "B",
+      "at": "2026-10-24T06:12:22.063Z",
+      "rule": "P02",
+      "target": "mature-home:gallery",
+      "accepted": true,
+      "currentRevision": true
+    },
+    {
+      "build": "v26",
+      "layout": "A",
+      "at": "2026-10-24T06:14:21.940Z",
+      "rule": "P03",
+      "target": "c1:shore",
+      "accepted": true,
+      "currentRevision": true
+    },
+    {
+      "build": "v26",
+      "layout": "A",
+      "at": "2026-10-24T06:14:24.556Z",
+      "rule": "P01",
+      "target": "t1:garden",
+      "accepted": true,
+      "currentRevision": true
+    },
+    {
+      "build": "v26",
+      "layout": "A",
+      "at": "2026-10-24T06:14:31.740Z",
+      "rule": "P05",
+      "target": "f1:garden",
+      "accepted": true,
+      "currentRevision": true
+    },
+    {
+      "build": "v26",
+      "layout": "B",
+      "at": "2026-10-24T06:14:46.456Z",
+      "rule": "P05",
+      "target": "f1:garden",
+      "accepted": true,
+      "currentRevision": true
+    },
+    {
+      "build": "v26",
+      "layout": "B",
+      "at": "2026-10-24T06:14:53.372Z",
+      "rule": "P03",
+      "target": "b2",
+      "accepted": true,
+      "currentRevision": true
+    },
+    {
+      "build": "v26",
+      "layout": "B",
+      "at": "2026-10-24T06:14:55.888Z",
+      "rule": "P02",
+      "target": "mature-home:gallery",
+      "accepted": true,
+      "currentRevision": true
+    },
+    {
+      "build": "v26",
+      "layout": "B",
+      "at": "2026-10-24T06:15:36.523Z",
+      "rule": "P01",
+      "target": "b1",
+      "accepted": true,
+      "currentRevision": true
+    },
+    {
+      "build": "v26",
+      "layout": "B",
+      "at": "2026-10-24T06:15:36.523Z",
+      "rule": "P02",
+      "target": "b1",
+      "accepted": true,
+      "currentRevision": true
+    }
+  ],
+  "visualVerdict": "HOLD: coherent large places emerge, but detached stairs/roots, gridlike flower ground, hard shoreline and empty composition remain",
+  "functionalVerdict": "LIMITED_PASS: same owners reconfigure, fresh gallery/water use, remote bay edit/undo/redo with occupied-gallery rejection",
+  "validation": {
+    "domain": "PASS A/B/A, 26 commands total",
+    "typecheck": "PASS actual transformed sources",
+    "lint": "PASS targeted sources",
+    "build": "PASS unchanged inputs",
+    "docs": "PASS",
+    "portalBuild": "PASS",
+    "agentIndexCheck": "FAIL: shared map file differs only in displayed size of docs/product/06_screen_specs.md (39.9 to 40.0 KiB), not modified by this task."
+  },
+  "evidence": {
+    "mature-verified.json": {
+      "sha256": "12e924776aed2cb287c65da4683b4ca3761cf531cbdd83486d99969fdb88c609"
+    },
+    "mature-typecheck-v26.json": {
+      "sha256": "fe1ceecc0ac277530136df30d5c3ea89d20d5cccb4dca1102ab7c58a60afd6fe"
+    },
+    "mature-v26-B.json": {
+      "sha256": "ad0776438260f8fd8480618c4ae033953ebd012c5381e644d9f86c18bb001c32"
+    },
+    "mature-v26-A-return.json": {
+      "sha256": "565bb6b14b3d94d8c861fd3a20f1500796c28e32a52c6ca77bfc72dba449a7c3"
+    },
+    "mature-v26-live.json": {
+      "sha256": "7e08be4de76a356fdab4fb9821cc01b02ca17600492e76d23d56516d9c3bb4e0"
+    },
+    "mature-v25-live.json": {
+      "sha256": "265b40f3b419bc8f19beded7db029d70c8ffe3da608eca076f3847c333df4059"
+    },
+    "mature-v26-bay-history.json": {
+      "sha256": "c164522258a52ff957165a1318f66e81c8400bcd132c2d0d7c691ba09670dd6a"
+    },
+    "build-place-outline-v26.json": {
+      "sha256": "c24ced1644545fbf7611a7cf5e2750a5cb380b7384e2a6fbe364de40c1fb1a23"
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "status": "completed",
+  "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1",
+  "queryCandidate": "H",
+  "targetMs": 10000,
+  "startedAt": "2026-10-22T21:52:02.672Z",
+  "endedAt": "2026-10-22T21:52:12.682Z",
+  "elapsedMs": 10009.2,
+  "samples": 491,
+  "frameCallbacks": 492,
+  "intervalMs": {
+    "median": 16.7,
+    "p95": 17.5,
+    "max": 1832.6
+  },
+  "over50Ms": 1,
+  "visibility": {
+    "started": "visible",
+    "ended": "visible",
+    "hiddenObserved": false
+  },
+  "timeline": {
+    "clock": "milliseconds-from-measurement-start",
+    "clicks": [
+      {
+        "atMs": 281.7,
+        "tag": "summary",
+        "id": null,
+        "label": "比較の記録 · H"
+      },
+      {
+        "atMs": 567.2,
+        "tag": "button",
+        "id": null,
+        "label": "じめんを さげる"
+      }
+    ],
+    "clickCount": 2,
+    "longTasks": [
+      {
+        "startMs": 567.1,
+        "endMs": 2408.1,
+        "durationMs": 1841
+      }
+    ],
+    "longTaskCount": 1,
+    "longTaskSupport": "supported",
+    "slowFrames": [
+      {
+        "startMs": 574.9,
+        "endMs": 2407.5,
+        "intervalMs": 1832.6
+      }
+    ],
+    "retainedLimit": 40
+  }
+}

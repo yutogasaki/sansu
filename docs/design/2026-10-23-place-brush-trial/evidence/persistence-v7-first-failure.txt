@@ -1,0 +1,91 @@
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Missing expected rejection.
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at process.processImmediate (node:internal/timers:452:9)
+    at async file:///private/tmp/sansu-place-persistence-check.mjs:17137:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: /なかま|道が/,
+  operator: 'rejects',
+  diff: 'simple'
+}
+
+Node.js v22.23.3
+node:internal/errors:983
+  const err = new Error(message);
+              ^
+
+Error: Command failed: /Users/yutogasaki/.local/share/fnm/node-versions/v22.23.3/installation/bin/node --input-type=module -e globalThis.window=globalThis;globalThis.location={search:"?terrainTrial=H&baseTrial=stable&rampTrial=linear&growthTrial=inherit&compileTrial=single&trialScene=shore&queryTrial=frozen&memoTrial=samples&edgeTrial=memo",hash:'#/island'};await import("/private/tmp/sansu-place-persistence-check.mjs");
+node:internal/modules/run_main:123
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Missing expected rejection.
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at process.processImmediate (node:internal/timers:452:9)
+    at async file:///private/tmp/sansu-place-persistence-check.mjs:17137:3 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: undefined,
+  expected: /なかま|道が/,
+  operator: 'rejects',
+  diff: 'simple'
+}
+
+Node.js v22.23.3
+
+    at genericNodeError (node:internal/errors:983:15)
+    at wrappedFn (node:internal/errors:537:14)
+    at checkExecSyncError (node:child_process:916:11)
+    at execFileSync (node:child_process:952:15)
+    at file:///Users/yutogasaki/Projects/sansu/docs/design/2026-10-23-place-brush-trial/persistence-check.mjs:37:16
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5) {
+  status: 1,
+  signal: null,
+  output: [
+    null,
+    '',
+    'node:internal/modules/run_main:123\n' +
+      '    triggerUncaughtException(\n' +
+      '    ^\n' +
+      '\n' +
+      'AssertionError [ERR_ASSERTION]: Missing expected rejection.\n' +
+      '    at runNextTicks (node:internal/process/task_queues:64:5)\n' +
+      '    at process.processImmediate (node:internal/timers:452:9)\n' +
+      '    at async file:///private/tmp/sansu-place-persistence-check.mjs:17137:3 {\n' +
+      '  generatedMessage: false,\n' +
+      "  code: 'ERR_ASSERTION',\n" +
+      '  actual: undefined,\n' +
+      '  expected: /なかま|道が/,\n' +
+      "  operator: 'rejects',\n" +
+      "  diff: 'simple'\n" +
+      '}\n' +
+      '\n' +
+      'Node.js v22.23.3\n'
+  ],
+  pid: 69506,
+  stdout: '',
+  stderr: 'node:internal/modules/run_main:123\n' +
+    '    triggerUncaughtException(\n' +
+    '    ^\n' +
+    '\n' +
+    'AssertionError [ERR_ASSERTION]: Missing expected rejection.\n' +
+    '    at runNextTicks (node:internal/process/task_queues:64:5)\n' +
+    '    at process.processImmediate (node:internal/timers:452:9)\n' +
+    '    at async file:///private/tmp/sansu-place-persistence-check.mjs:17137:3 {\n' +
+    '  generatedMessage: false,\n' +
+    "  code: 'ERR_ASSERTION',\n" +
+    '  actual: undefined,\n' +
+    '  expected: /なかま|道が/,\n' +
+    "  operator: 'rejects',\n" +
+    "  diff: 'simple'\n" +
+    '}\n' +
+    '\n' +
+    'Node.js v22.23.3\n'
+}
+
+Node.js v22.23.3

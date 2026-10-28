@@ -1,0 +1,80 @@
+{
+  "passed": true,
+  "at": "2026-10-22T20:19:47.721Z",
+  "revision": "connected-coast-band-v1",
+  "ownerIndependent": true,
+  "locality": {
+    "remoteSamples": 5246,
+    "maxRemoteDelta": 0
+  },
+  "runs": [
+    {
+      "name": "flat-coast",
+      "fixture": "diagnostic heights; initial owners preserved, not an ordinary UI journey",
+      "legalA": 30,
+      "lostLegalCells": 0,
+      "supportedOwners": 2,
+      "maxPreservedError": 0,
+      "wetA": 320,
+      "newlyDry": 0,
+      "newlyWet": 161,
+      "sampledAreaRemovedApprox": 1.61,
+      "changedOver2cm": 411,
+      "maxLowering": 0.12403942599999998,
+      "maxRayError": 1.2079534974715478e-8,
+      "hitProbes": 117,
+      "walkEdges": 454
+    },
+    {
+      "name": "open-west-cove",
+      "fixture": "diagnostic heights; initial owners preserved, not an ordinary UI journey",
+      "legalA": 22,
+      "lostLegalCells": 0,
+      "supportedOwners": 1,
+      "maxPreservedError": 0,
+      "wetA": 815,
+      "newlyDry": 0,
+      "newlyWet": 277,
+      "sampledAreaRemovedApprox": 2.77,
+      "changedOver2cm": 607,
+      "maxLowering": 0.342430185,
+      "maxRayError": 1.2720322295489694e-8,
+      "hitProbes": 99,
+      "walkEdges": 346
+    },
+    {
+      "name": "cape-and-bay",
+      "fixture": "diagnostic heights; initial owners preserved, not an ordinary UI journey",
+      "legalA": 20,
+      "lostLegalCells": 0,
+      "supportedOwners": 1,
+      "maxPreservedError": 0,
+      "wetA": 666,
+      "newlyDry": 0,
+      "newlyWet": 297,
+      "sampledAreaRemovedApprox": 2.97,
+      "changedOver2cm": 913,
+      "maxLowering": 1.173676587,
+      "maxRayError": 1.760037970921502e-8,
+      "hitProbes": 105,
+      "walkEdges": 330
+    },
+    {
+      "name": "closed-inland-hole",
+      "fixture": "diagnostic heights; initial owners preserved, not an ordinary UI journey",
+      "legalA": 21,
+      "lostLegalCells": 0,
+      "supportedOwners": 0,
+      "maxPreservedError": 0,
+      "wetA": 389,
+      "newlyDry": 0,
+      "newlyWet": 183,
+      "sampledAreaRemovedApprox": 1.83,
+      "changedOver2cm": 638,
+      "maxLowering": 0.274930796,
+      "maxRayError": 2.859200431970521e-8,
+      "hitProbes": 115,
+      "walkEdges": 414
+    }
+  ]
+}

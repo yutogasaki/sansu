@@ -1,0 +1,128 @@
+{
+  "status": "PASS_ORDINARY_SAVED_CORE_RESTORED_WITH_PROGRESS_DIFFERENCES",
+  "checkedAt": "2026-10-22T22:28:56.581855+00:00",
+  "command": "python3 docs/design/2026-10-23-place-method-comparison/evidence/checkers/ordinary-final-restoration-check.py",
+  "checkerSHA256": "954f9e213018036afe88457b8ee1a7fdf127164b6f5c49917f965e14c5fae402",
+  "sourceSHA256": {
+    "53-H-footing-repaired-state.json": "a490e5202f60e55d5c30930ba4a5546815f4b25803c779f61965633d3bd66bfa",
+    "76-H-ordinary-restored-state.json": "f07a155b7ccf8e01eaad57db077c79a6ffe89c4e90a9ab599d2b13b3ddb98508",
+    "83-H-final-ordinary-state.json": "5727a202e8c9187102c86ac4a5fc087d0c7c64eb70b190c0003376b0af39ed07",
+    "83-H-final-ordinary-app.json": "b969a04381fcc4b1eb85785091a455d64f93f2378463f3f54da11211711304a2",
+    "83-H-final-ordinary-world.json": "dde59eeb6ea6b2295737dc190ca1ce6974d1628666a6233d3810b027c702313c"
+  },
+  "comparisons": [
+    {
+      "reference": "53-H-footing-repaired-state.json",
+      "equalCoreFields": {
+        "land": true,
+        "terrain": true,
+        "plots": true,
+        "landmarks": true,
+        "keepsakes": true,
+        "villagers": true,
+        "character": true,
+        "drops": true,
+        "town": true,
+        "places": true
+      },
+      "progressEqualFields": {
+        "useHistory": true,
+        "milestones": true,
+        "uses": false,
+        "version": true,
+        "shown": true
+      },
+      "progressDifferencePaths": [
+        "placeProgress.uses.P05.pokomoko.at",
+        "placeProgress.uses.P05.pokomoko.targetId",
+        "placeProgress.uses.P05.villager.at",
+        "placeProgress.uses.P05.villager.targetId"
+      ],
+      "historyCounts": [
+        33,
+        33
+      ]
+    },
+    {
+      "reference": "76-H-ordinary-restored-state.json",
+      "equalCoreFields": {
+        "land": true,
+        "terrain": true,
+        "plots": true,
+        "landmarks": true,
+        "keepsakes": true,
+        "villagers": true,
+        "character": true,
+        "drops": true,
+        "town": true,
+        "places": true
+      },
+      "progressEqualFields": {
+        "useHistory": true,
+        "milestones": true,
+        "uses": false,
+        "version": true,
+        "shown": true
+      },
+      "progressDifferencePaths": [
+        "placeProgress.uses.P05.villager.at",
+        "placeProgress.uses.P05.villager.targetId"
+      ],
+      "historyCounts": [
+        33,
+        33
+      ]
+    }
+  ],
+  "finalFixture": "ordinary-saved-island",
+  "drops": 8,
+  "land": {
+    "extra": [],
+    "capes": []
+  },
+  "build": {
+    "class": "app-container",
+    "data-build-revision": "place-method-comparison-v17",
+    "data-build-version": "place-method-comparison-v17:5b6010bc-bffc-4422-81d0-dbe64f42da87",
+    "data-configured-delivery-id": "snap-root-v1",
+    "data-delivery-id": "snap-root-v1",
+    "data-island-feature-enabled": "true",
+    "data-nature-town-feature-enabled": "false",
+    "data-ui-style-candidate": "whole-app-atelier-v1",
+    "data-visual-lineage-id": "pokko-field-v1"
+  },
+  "worldDOM": {
+    "class": "growing-world",
+    "data-art-candidate": "editable-lived-island-v1",
+    "data-authored-cove-enabled": "false",
+    "data-authored-shoulder-enabled": "false",
+    "data-authored-whole-art-enabled": "false",
+    "data-bridge-saved": "false",
+    "data-growing-bounds": "{\"minX\":0,\"maxX\":5,\"depth\":5}",
+    "data-growing-camera": "{\"matrixWorld\":[0.9255469562056767,0,-0.3786328457205041,0,-0.2077497339430649,0.8360299122352683,-0.5078326829719364,0,0.31654838477710295,0.5486838669469785,0.7737849405662516,0,3.5313407471178415,8.228135051860939,9.728383853621386,1],\"projectionMatrix\":[0.4295734093013752,0,0,0,0,0.3872211013420847,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":2.5,\"curved\":true}",
+    "data-growing-feature-enabled": "true",
+    "data-growing-world": "true",
+    "data-landscape-projection": "editable-common-floor-v1",
+    "data-method-candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+    "data-native-growing-art": "false",
+    "data-place-count": "1",
+    "data-place-relations": "",
+    "data-place-topology": "P05:flower-path:grown",
+    "data-strategy-gardens": "[]",
+    "data-strategy-trial": "material",
+    "data-terrain-editing": "false",
+    "data-terrain-heights": "{\"0,4\":-3,\"5,0\":1,\"5,2\":-1,\"5,1\":-1,\"1,3\":3,\"2,3\":3,\"2,2\":2,\"3,3\":2,\"1,4\":3,\"3,4\":2,\"2,4\":3,\"3,2\":1,\"0,3\":2,\"1,2\":1}",
+    "data-terrain-revision": "true:[\"fixed-bilinear-interior-ramp-v1\",\"fixed-core-base-v1\",\"cardinal-convex-terrace-v2+fixed-two-shear-grid-v1\",\"H\",{\"extra\":[],\"capes\":[]},null,[[\"0,3\",2],[\"0,4\",-3],[\"1,2\",1],[\"1,3\",3],[\"1,4\",3],[\"2,2\",2],[\"2,3\",3],[\"2,4\",3],[\"3,2\",1],[\"3,3\",2],[\"3,4\",2],[\"5,0\",1],[\"5,1\",-1],[\"5,2\",-1]]]",
+    "data-terrain-selection": "",
+    "data-visual-candidate": "growing-island-v1",
+    "data-world-definition": "legacy-world-v1:0,5,5:curved-owned-v1:no-bridge"
+  },
+  "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+  "scope": "Observed ordinary UI link return to saved island. Core saved fields and complete terrain Undo/Redo match53/76. Candidate rendering differs; placeProgress differences reported without inventing event timing.",
+  "limitations": [
+    "No direct database read or write. Captured fields, not all internal record fields, are compared.",
+    "No offline, multi-device conflict, arbitrary-save compatibility or deployment claim.",
+    "Restored ordinary geometry input is unchanged; this is not byte-identical renderer output across different candidate revisions.",
+    "The memory-only 96-cell diagnostic fixture and its diagnostic currency did not replace captured ordinary land/terrain/owners/drops8."
+  ]
+}

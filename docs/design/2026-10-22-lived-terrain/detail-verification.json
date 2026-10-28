@@ -1,0 +1,195 @@
+{
+  "at": "2026-10-21T22:22:37.153497+00:00",
+  "candidate": "lived-terrain",
+  "revision": "1dfbf01cee89df92",
+  "delivery": "standalone-study-only",
+  "sourceManifest": "source-manifest.json",
+  "hashCheck": "PASS",
+  "journeys": [
+    {
+      "case": "flat",
+      "target": "shade",
+      "frames": 121,
+      "frameP95": 18.099999999998545,
+      "footGaps": [
+        -9.705729997477874e-09,
+        -3.6203422482117276e-09
+      ],
+      "evidence": "evidence/detail/final/flat-shade.json"
+    },
+    {
+      "case": "flat",
+      "target": "shore",
+      "frames": 224,
+      "frameP95": 17.5,
+      "footGaps": [
+        -6.38511282735621e-09,
+        3.8895892062740245e-09
+      ],
+      "evidence": "evidence/detail/final/flat-shore.json"
+    },
+    {
+      "case": "flat",
+      "target": "home",
+      "frames": 162,
+      "frameP95": 17.799999999999272,
+      "footGaps": [
+        -9.342956963642735e-10,
+        -1.170377317283311e-08
+      ],
+      "evidence": "evidence/detail/final/flat-home.json"
+    },
+    {
+      "case": "ell",
+      "target": "shade",
+      "frames": 120,
+      "frameP95": 17.5,
+      "footGaps": [
+        -9.705729997477874e-09,
+        -3.6203421927005763e-09
+      ],
+      "evidence": "evidence/detail/final/ell-shade.json"
+    },
+    {
+      "case": "ell",
+      "target": "shore",
+      "frames": 187,
+      "frameP95": 17.700000000000728,
+      "footGaps": [
+        -1.182518594156079e-08,
+        -2.188896619514935e-09
+      ],
+      "evidence": "evidence/detail/final/ell-shore.json"
+    },
+    {
+      "case": "ell",
+      "target": "home",
+      "frames": 188,
+      "frameP95": 18.200000000000728,
+      "footGaps": [
+        -1.279609085358402e-09,
+        4.099849570948777e-09
+      ],
+      "evidence": "evidence/detail/final/ell-home.json"
+    },
+    {
+      "case": "cove",
+      "target": "shade",
+      "frames": 120,
+      "frameP95": 17.900000000001455,
+      "footGaps": [
+        -5.336818931223064e-09,
+        -6.076316616532296e-09
+      ],
+      "evidence": "evidence/detail/final/cove-shade.json"
+    },
+    {
+      "case": "cove",
+      "target": "shore",
+      "frames": 96,
+      "frameP95": 17.5,
+      "footGaps": [
+        3.7056621104980536e-09,
+        6.159900367563864e-10
+      ],
+      "evidence": "evidence/detail/final/cove-shore.json"
+    },
+    {
+      "case": "cove",
+      "target": "home",
+      "frames": 110,
+      "frameP95": 17.5,
+      "footGaps": [
+        -1.0211885781430396e-09,
+        6.092136239921331e-10
+      ],
+      "evidence": "evidence/detail/final/cove-home.json"
+    }
+  ],
+  "maximumArrivalFootRaycastError": 1.182518594156079e-08,
+  "sameOwnersAcrossJourneys": true,
+  "checks": {
+    "logic": "16 targeted cases",
+    "cutAndResume": "PASS: same XZ at edit, first resumed sample equals stop point",
+    "strandedBankAndRecovery": "PASS",
+    "ownerAndActorRejection": "PASS: exact cells/history retained",
+    "emptyDig": "PASS: no cells/history change",
+    "height1to3AndLimit": "PASS",
+    "unclimbableCliff": "PASS: no teleport",
+    "heightUndo": "PASS: exact input restored",
+    "phonePointerEditUndoRedo": "PASS: logical (-2,3), exact undo and redo",
+    "layout": "PASS: CSS390/320, no horizontal overflow, min button height44",
+    "console": "PASS: fresh final revision, zero warning/error",
+    "docs": "PASS: npm run docs:check; 14 existing overdue warnings",
+    "syntax": "PASS: viewer.js, surface.mjs, contact.mjs, water.js"
+  },
+  "notes": [
+    "First phone click used a screen position invalidated by the controls scrolling into view; it hit water (0,5), correctly produced no edit, and was retained in phone-edit.json. The next click used the fresh screenshot and edited (-2,3).",
+    "Some individual browser arrival waits expired before the animation finished. The final run waits for actual arrival and retains all 9 full traces.",
+    "One intermediate shading choice used deprecated PCFSoftShadowMap; final uses the installed PCFShadowMap implementation.",
+    "Edit time 224ms in the before sample and 136ms in an intermediate after sample are local observations, not a controlled benchmark or product latency guarantee."
+  ],
+  "unverified": [
+    "child silent understanding/revisit",
+    "physical mobile touch and GPU",
+    "reduced-motion OS setting",
+    "different ownership layouts",
+    "full island growth/save/PWA integration",
+    "external ChatGPT review of this revision"
+  ],
+  "logicEvidence": "logic-results.json",
+  "docsEvidence": "docs-check.txt",
+  "completedAt": "2026-10-21T22:23:56.879817+00:00",
+  "evidenceHashes": {
+    "evidence/detail/final/actor-edit-position.json": "b7732bf474b939e4e515e24d87789cc6e9f033995e1806e3b2d5f537f6d764cb",
+    "evidence/detail/final/actor-reject.json": "afce708b418939117cc41f31a77859fc217377c4677162737cddb7c9eca1eeee",
+    "evidence/detail/final/before-actor-reject.json": "b7732bf474b939e4e515e24d87789cc6e9f033995e1806e3b2d5f537f6d764cb",
+    "evidence/detail/final/before-empty-dig.json": "38745ea782c9cbfb68e5596ff9a5f2ec1991e5ba27dbaa540afa7e65c28ef56d",
+    "evidence/detail/final/before-height-limit.json": "e648b44e97c20dfc4b9ff768161b423fac09f47eadbe143417fcf5252d66fcb5",
+    "evidence/detail/final/before-owner-reject.json": "10a06c6e0c2be8bffc2aef819dd75a64ee92e45a2baf7f13fced04a832dd846b",
+    "evidence/detail/final/before-raise.json": "2eb44caa9e47c78fdaf04e43ce8fe1a42f8076d7b2f7844d3bc71c7e8d1a1402",
+    "evidence/detail/final/cliff-unreachable.json": "6a37e685b70cf134ec30c77d79d7baabd63bb25a8a623f47f29f0846e0bfce07",
+    "evidence/detail/final/comparison.jpg": "4d09895b7199916c64bda1fa381acc4568ccaced2341c59cbab3087d88d71fd5",
+    "evidence/detail/final/console.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "evidence/detail/final/cove-home.json": "28144f88ba47570614f2cec00ed68b4bbe0e7c13a5713c06dd6c53602f1e9b6f",
+    "evidence/detail/final/cove-near.jpg": "b95aee50ba80762d116ce8440f34ae2131bf23f452a045af18a36c99f31c446d",
+    "evidence/detail/final/cove-near.json": "9306f6dc4de2ca7af80d68ba4353a2a1aa1948f6c4ffdb92cda119677c669f55",
+    "evidence/detail/final/cove-overview.jpg": "01108f068fdf4248553366844d4998590b809e872e39ea7d9a793503f501f1df",
+    "evidence/detail/final/cove-overview.json": "912f6e33a52ab002afa74f6ac41cd15287baaf344b31c9bc310ba7b1b78b76b6",
+    "evidence/detail/final/cove-shade.json": "9cfeedec56ecf1785f72a5185915aaf45745cafcd7bcf4d87669f83d04fec063",
+    "evidence/detail/final/cove-shore.json": "5fd8251cd0f8458178a976d8ae481ea8b625605233882a29f62023be81f1e9dc",
+    "evidence/detail/final/cut.jpg": "0e703e3d8467a1a315c791d929785f81fd8782fe74e80f9e1b7eef6e2f06edcf",
+    "evidence/detail/final/cut.json": "cbf8e93c69cc55638d058a27e846c1064055cf5a1dd9fcc6dc0e17a719872c04",
+    "evidence/detail/final/ell-home.json": "5df653dc51640af5aa4ea9d196f67afc7d213c810cda2a4c68eeb2eeceb708f8",
+    "evidence/detail/final/ell-overview.jpg": "e214cdc6e6251e1b4a9df57f1f2efc2f8b8a9567b982984c40ac82434d475eb6",
+    "evidence/detail/final/ell-overview.json": "94b6fcb7bb201efea71329b7d3b503a168c0fdba8a27741810da95c8ac354e4f",
+    "evidence/detail/final/ell-shade.json": "de02567357a0a84f1a8768ab85e919373e7ead048c21c1fb8eb379dcbe067a5a",
+    "evidence/detail/final/ell-shore.json": "4efb46070100bfeffba32419a869d8b180ed3d120d1f302aa375d6e4cc4c9c53",
+    "evidence/detail/final/empty-dig.json": "38745ea782c9cbfb68e5596ff9a5f2ec1991e5ba27dbaa540afa7e65c28ef56d",
+    "evidence/detail/final/flat-home.json": "8eae09069e74cf7a384a94b6969f5b6cc4952f3fd1e4476aa25b0190331c8ffa",
+    "evidence/detail/final/flat-overview.jpg": "e6920f08513826642413cb1c5133f475f05a3bde3b627a37b4b6d2a959ea878b",
+    "evidence/detail/final/flat-overview.json": "7a01fafd939ea650e9055ac53a96ef0da1c5a716171ea74d35718fccb64d532e",
+    "evidence/detail/final/flat-shade.json": "3c487e9c3c853471388746f79f0370a646beae45086469c4585b0d4d169ddbf3",
+    "evidence/detail/final/flat-shore.json": "47622caf6338badc86d4baad9207ad183b89794f47006f1d55f3d55fe77f2bd3",
+    "evidence/detail/final/height-limit.json": "e648b44e97c20dfc4b9ff768161b423fac09f47eadbe143417fcf5252d66fcb5",
+    "evidence/detail/final/height-restored.json": "c948a76b80f0f1dccea5e559b0d1a74328ebd47c80ab2007c06a0a0e6ee5f21d",
+    "evidence/detail/final/home-before-edit.json": "310342264f0eb250210ab5879140b67e8e87130ffba67fa5d34245cbe2f53cca",
+    "evidence/detail/final/home-before-height-undo.json": "b5542890c191d312cab4b336b48a272f91c514f3edfab111ceb9873a76d64863",
+    "evidence/detail/final/isolated.json": "7b6df5deddb8fe263616e60fc4a480ffe75c80fe589189b223dde3a932b002a5",
+    "evidence/detail/final/owner-reject.jpg": "87ffbda2a3ae9601386f70fa814de39838e54fbe4b2177df928d32c5bfe04494",
+    "evidence/detail/final/owner-reject.json": "54c78b73e7a2682d86a9a37aefdccc81aa2fba005235fa45185fda112c51cb89",
+    "evidence/detail/final/phone-before.json": "11eaa6a778ca6015ee9dd3a5f087658a805e1a3e91a948198b2abc22604c416d",
+    "evidence/detail/final/phone-edit-accepted.json": "0214bcba029f9966dd05c6ea2525fde644d5af6b23d5d5ac4fb9186a33b81f7b",
+    "evidence/detail/final/phone-edit.jpg": "80f6961f2e53f25efa5945eb15fbb2320bfe4ae4126daf009668630df83cf91d",
+    "evidence/detail/final/phone-edit.json": "47caf19bc59f568e6aafb9c7d7a78748146d45b4e53e966a0be80aad38dfeb2c",
+    "evidence/detail/final/phone-layout.json": "b43cec37aa124c650b9d0562e9f1549a3cf770df1cce0e701bdc5f7e187550b6",
+    "evidence/detail/final/phone-near.jpg": "e6d91f53074dbb9cd4971e6ce24cfc8ed3c96c875b93078e8e509b61f9153412",
+    "evidence/detail/final/phone-redo.json": "07751dd3332298e4d669f6dea7a49289b8a66ffe3dc603e7739ebd4c4a301438",
+    "evidence/detail/final/phone-undo.json": "6924b9ede30f47e35444b38ea016f8b57834b5a40c38a6c7638e948e64016f67",
+    "evidence/detail/final/raise-1.json": "6568475d70e08474d50e7f0da3bf03c0c10dda4fc812bc5ab2ca52adc274252c",
+    "evidence/detail/final/raise-2.json": "17316df30ab556f34d4203dcf4f67f81296c88ccc8d852d6a051bb23e85a8173",
+    "evidence/detail/final/raise-3.json": "e648b44e97c20dfc4b9ff768161b423fac09f47eadbe143417fcf5252d66fcb5",
+    "evidence/detail/final/recovered-home.json": "573646827811b993064cf0f2246f1aa32161d2afc05dd0feca8b2e6f6898d322",
+    "evidence/detail/final/resumed.json": "32e489d43b0cc8bdf9137ef0c093b6675be5312566e90b4fc779a844e3503585"
+  }
+}

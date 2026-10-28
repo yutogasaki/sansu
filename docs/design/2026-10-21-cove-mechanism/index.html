@@ -1,0 +1,10 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="data:,"><link rel="stylesheet" href="style.css"><title>岸を変えて、会いに行こう</title></head><body data-candidate="cove-mechanism-v1" data-delivery="standalone-study-only">
+<header><p>ぽこもこの島づくり · しくみの試作</p><h1>岸を変えて、会いに行こう</h1><p>同じ家と六本の木。変えた水辺へ、歩いていけるかな。</p></header>
+<main><section id="stage" aria-label="編集できる入り江"><canvas tabindex="0" aria-label="入り江。矢印で場所を選び、Enterで編集"></canvas><p id="loading" role="status">家と木をひらいています…</p><div class="view"><button data-camera="overview" aria-pressed="true">全体</button><button data-camera="near" aria-pressed="false">近く</button></div><span id="scene-state">はじめの岸</span></section>
+<p id="reaction" role="status" aria-live="polite">岸を変えて、ぽこもこを呼んでみよう。</p>
+<section class="panel"><div class="edits" aria-label="三つの岸を試す"><button data-edit="E1">① 湾を奥へ掘る</button><button data-edit="E2">② 岬を作る</button><button data-edit="E3">③ 手前を削る</button></div><p class="hint">順に押すと、同じ庭に変更が重なります。自由な編集もできます。</p>
+<div class="actions"><button id="call-water">この水辺へ呼ぶ</button><button id="call-home">家の前へ呼ぶ</button></div>
+<div class="tools" role="group" aria-label="道具"><button data-tool="lower" aria-pressed="true">掘る</button><button data-tool="raise" aria-pressed="false">盛る</button><button data-tool="view" aria-pressed="false">回して見る</button></div>
+<div class="history"><button id="undo" disabled>ひとつ戻す</button><button id="redo" disabled>やり直す</button><button id="reset">はじめから</button></div>
+<details><summary>地図から正確に場所を選ぶ</summary><p class="hint">選んだ道具で編集します。家・木・足元の支持は守ります。</p><div id="map" aria-label="編集する地点"></div></details></section></main>
+<footer>このページだけの試作です。保存・音はなく、再読み込みで初期状態に戻ります。<a href="README.md">検証の目的と結果</a></footer><script type="module" src="viewer.bundle.js"></script></body></html>

@@ -1,0 +1,88 @@
+{
+  "status": "PASS",
+  "date": "2026-10-22T21:56:18.046Z",
+  "hashes": {
+    "60-H-linear-stable-placed-state.json": "b2223b6e625377e8ba504a491bfebc8f98edc0ce0c10037cc5e9d457cf196932",
+    "62-H-linear-stable-undo.json": "fe6fabefec8b5ed2307f1f018b82db6cf122099ea8e55567fb3f2be1e78291a7",
+    "63-H-linear-stable-redo.json": "129035deb34247d710118d10717e6cc0df3c643bfc4213f87e92fa62d8c36224",
+    "69-H-wide-shore-final-state.json": "0c810ef159d5d7eef074f410ee3740a22b6be1de13579f9723b120f9544bb26a",
+    "expanded-place-recipe-flower-flat-wide.json": "82402dd9ffb0928ef27d3da0e3d8a159bf306662e0e22db54afebf65be01d56d"
+  },
+  "matches": {
+    "undoHeightsRestored": true,
+    "redoHeightsExpected": true,
+    "landUnchanged": true,
+    "plotsUnchanged": true,
+    "landmarksUnchanged": true,
+    "keepsakesUnchanged": true,
+    "finalHeightsMatchPure": true
+  },
+  "unitHeightDeltaTotal": 16,
+  "deltas": [
+    {
+      "cell": "3,4",
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    },
+    {
+      "cell": "3,5",
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    },
+    {
+      "cell": "3,6",
+      "before": 2,
+      "after": 3,
+      "delta": 1
+    },
+    {
+      "cell": "4,6",
+      "before": 1,
+      "after": -3,
+      "delta": -4
+    },
+    {
+      "cell": "5,6",
+      "before": 0,
+      "after": -3,
+      "delta": -3
+    },
+    {
+      "cell": "5,7",
+      "before": 0,
+      "after": -3,
+      "delta": -3
+    },
+    {
+      "cell": "4,7",
+      "before": 0,
+      "after": -3,
+      "delta": -3
+    }
+  ],
+  "limits": [
+    "Deltas count accepted changes needed for the final shape, not every click, selection, rejected edit or Undo/Redo.",
+    "Fixture is memory-only, not a persistence acceptance.",
+    "Existing live log is not fresh final-world use evidence."
+  ],
+  "freshFinalFixtureUse": {
+    "record": "73-H-shore-reloaded-live.json",
+    "sha256": "565b6997eaa25ded13d5153c5579f1e91ab8106751f26fd162d7e1a9afb7293b",
+    "checkedAt": "2026-10-22T21:58:58.091Z",
+    "allWorldHeightsEqual69": true,
+    "actors": [
+      "pokomoko",
+      "v2"
+    ],
+    "targets": [
+      "starter-flower:garden",
+      "starter-bench"
+    ],
+    "events": 4,
+    "from": "2026-10-22T21:55:59.270Z",
+    "to": "2026-10-22T21:56:16.567Z",
+    "scope": "fresh start of memory-only fixture, not ordinary DB reload"
+  }
+}

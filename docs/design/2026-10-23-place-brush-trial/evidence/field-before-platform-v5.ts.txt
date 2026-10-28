@@ -1,0 +1,52 @@
+import type { Cell } from '../../../src/domain/growingIsland/types';
+
+export interface PlaceShape { center: Cell; radius: number; height: number; entrance: number }
+export type ShapeState = { trialPlace?: PlaceShape };
+const smooth = (x: number) => { const t = Math.max(0, Math.min(1, x)); return t * t * (3 - 2 * t); };
+export const shapeOf = (state: object) => (state as ShapeState).trialPlace;
+export const placeRevision = (state: object) => JSON.stringify(['place-outline-grade-ramp-v2', shapeOf(state) ?? null]);
+export interface RampPlan { topDistance: number; length: number; endZ: number; endHeight: number; designSlope: number }
+const plans = new WeakMap<object, Map<string, RampPlan>>();
+export function planRamp(place: PlaceShape, sample: (cell: Cell) => number): RampPlan {
+    const topDistance = place.radius * .45, startZ = place.center.z - topDistance;
+    // Smoothstep has maximum derivative 1.5. Reserve margin below the actual
+    // body-corridor limit for curved coordinates, triangles and lateral slope.
+    for (let length = .75; length <= startZ - .5 + 1e-8; length += .25) {
+        const endZ = startZ - length, endHeight = sample({ x: place.center.x, z: endZ });
+        if (endHeight > -.375 && Math.abs(place.height - endHeight) * 1.5 / length <= .45)
+            return { topDistance, length, endZ, endHeight, designSlope: .45 };
+    }
+    throw Error('この高さへ登る坂をつくる広さが足りないよ。低くするか、場所を変えてね。');
+}
+
+/** One continuous outline supplies the visible triangles and the actual floor.
+ * High places get a north ramp; low places continue south to the shore.
+ * We do not quantize the outline back to square cell heights. */
+export function placeHeight(state: object, cell: Cell, baseline: number, sample: (cell: Cell) => number = () => baseline, cacheTag = 'default'): number {
+    const place = shapeOf(state);
+    if (!place) return baseline;
+    const dx = cell.x - place.center.x, dz = cell.z - place.center.z;
+    const radius = Math.hypot(dx / place.radius, dz / (place.radius * .8));
+    const outline = 1 - smooth((radius - .68) / .42);
+    const towardEntry = place.height < 0 ? dz : -dz;
+    const mouth = (1 - smooth((Math.abs(dx) - place.entrance / 2) / .45)) * smooth((towardEntry + .1) / .6);
+    if (place.height < 0) {
+        const weight = Math.max(outline, mouth);
+        return baseline * (1 - weight) + place.height * weight;
+    }
+    let map = plans.get(state);
+    if (!map) { map = new Map(); plans.set(state, map); }
+    let plan = map.get(cacheTag);
+    if (!plan) { plan = planRamp(place, sample); map.set(cacheTag, plan); }
+    const ordinary = baseline * (1 - outline) + place.height * outline;
+    const north = -dz;
+    if (north < 0) return ordinary;
+    // Across the whole central corridor there is exactly one longitudinal
+    // profile. Do not multiply it by a second outline fade (the v1 failure).
+    const side = 1 - smooth((Math.abs(dx) - place.entrance / 2) / .5);
+    const end = sample({ x: cell.x, z: plan.endZ });
+    const t = (north - plan.topDistance) / plan.length;
+    const profile = t > 1 ? baseline : place.height * (1 - smooth(t)) + end * smooth(t);
+    const begin = smooth(north / Math.max(.2, plan.topDistance));
+    return ordinary * (1 - side * begin) + profile * side * begin;
+}

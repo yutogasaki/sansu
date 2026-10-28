@@ -1,0 +1,42 @@
+import { defineConfig, type Plugin, type PluginOption } from 'vite';
+import parent from '../2026-10-23-place-method-comparison/vite.config';
+
+function once(source: string, before: string, after: string) {
+    if (source.split(before).length !== 2) throw Error(`Place outline integration changed: ${before}`);
+    return source.replace(before, after);
+}
+export function placeTransform(source: string, id: string) {
+    if (id.endsWith('/src/domain/growingIsland/editableTerrainWorld.ts')) {
+        source = once(source, 'return JSON.stringify([', 'return JSON.stringify([placeRevision(state), ');
+        source = once(source, 'return baseTerrainHeightAt(state, cell) + (curved ? landscapeRise(cell) : 0) + offset * TERRAIN_STEP * foundationEditWeight(state, cell);',
+            'const baseline = baseTerrainHeightAt(state, cell) + (curved ? landscapeRise(cell) : 0) + offset * TERRAIN_STEP * foundationEditWeight(state, cell);\n    return placeHeight(state, cell, baseline);');
+        return "import { placeRevision, placeHeight } from '../../../docs/design/2026-10-23-place-brush-trial/field';\n" + source;
+    }
+    if (id.endsWith('/src/components/island/growing/GrowingIsland.tsx')) {
+        source = once(source, "from '../../../../docs/design/2026-10-23-place-method-comparison/TrialIsland';", "from '../../../../docs/design/2026-10-23-place-brush-trial/TrialIsland';");
+        source = once(source, '<TrialEvidence state={own} />', `<TrialEvidence state={own} />
+        {expandedTrialEnabled() && <PlaceControls state={own} cell={terrainCell} editing={panel === 'terrain'} enter={() => openHomeTool('terrain', '.growing-menu-button')}
+            safety={() => camera.current ? { actors: camera.current.terrainActors(), occupiedPlaceTargets: camera.current.occupiedTerrainPlaceTargets() } : undefined}
+            act={island.place} undo={island.placeUndo} redo={island.placeRedo} />}`);
+        return "import { PlaceControls } from '../../../../docs/design/2026-10-23-place-brush-trial/Controls';\n" + source;
+    }
+    return source;
+}
+export default defineConfig(async env => {
+    const config = typeof parent === 'function' ? await parent(env) : await parent;
+    const plugins: Plugin[] = [];
+    async function flatten(input: PluginOption): Promise<void> {
+        const value = await input;
+        if (Array.isArray(value)) { for (const item of value) await flatten(item); }
+        else if (value) plugins.push(value);
+    }
+    for (const entry of config.plugins ?? []) await flatten(entry);
+    const comparison = plugins.find(p => p.name === 'place-method-comparison');
+    if (!comparison || typeof comparison.transform !== 'function') throw Error('Comparison transform missing');
+    const old = comparison.transform;
+    comparison.transform = async function(source, id, options) {
+        const result = await old.call(this, source, id, options);
+        return placeTransform(typeof result === 'string' ? result : result?.code ?? source, id);
+    };
+    return { ...config, plugins, build: { ...config.build, outDir: '/private/tmp/sansu-place-outline-build', emptyOutDir: true } };
+});

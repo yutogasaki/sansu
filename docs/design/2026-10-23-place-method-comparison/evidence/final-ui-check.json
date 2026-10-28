@@ -1,0 +1,254 @@
+{
+  "status": "PASS_EDIT_UNDO_REDO_RAW_RESTORATION_WITH_HISTORY_CAP",
+  "checkedAt": "2026-10-22T22:26:00.976651+00:00",
+  "command": "python3 /private/tmp/sansu-final-ui-check.py",
+  "checkerSHA256": "3abb0ab94ee6d63bd5535b89262ba8ab11c46180d8ab2d08a7f4b108151dbf75",
+  "sourceSHA256": {
+    "81-H-final-app-dom.json": "b969a04381fcc4b1eb85785091a455d64f93f2378463f3f54da11211711304a2",
+    "81-H-final-before-state.json": "ca80ed24b49bcbf49752c9b77c3cdc52a659c55710f1b20b2ccd99c723c2bc51",
+    "81-H-final-redo-state.json": "ab1ef19b0d4607936a5cdf23837ed4db4646b571d7cda8dbc7a99389c444435d",
+    "81-H-final-redo-world.json": "3c7545a76668606ba76e0c9fab212e6722cdb8269d38c3b7273e9150e10799a2",
+    "81-H-final-restored-state.json": "884a5e14591a5d1f0b341c88fa8ba6328361ba6d0a64fbefda9dc97c6d7d2aa7",
+    "81-H-final-restored-world.json": "ad03e0794c395aaf03d921cc392aa245aa4c021a824c3af131e49ddce0fc87e6",
+    "81-H-final-step1-world.json": "7c3a41cd98b4b50318433e4dd874d69a6d1758ba6afdef49abc6071d1e11628f",
+    "81-H-final-step2-cadence.json": "8c1f6069f21963fa465ca2ca977c4d3e98449e22370099f4ad8e1c85844c485e",
+    "81-H-final-step2-cpu.json": "c72c7a9b99ce2670656e0bcc59232b0574784d6b6d03bc95d05cddf4a6538e56",
+    "81-H-final-step2-live.json": "3f0f17990a432e5a394a9ffbf7323269c561ce35e23aafb92d957c0b6c4f4eb2",
+    "81-H-final-step2-state.json": "ab1ef19b0d4607936a5cdf23837ed4db4646b571d7cda8dbc7a99389c444435d",
+    "81-H-final-step2-world.json": "3c7545a76668606ba76e0c9fab212e6722cdb8269d38c3b7273e9150e10799a2",
+    "81-H-final-undo-state.json": "cf70c5549acafc1a7cdad5c32fdddd0ed8a360693f37cedf072fc4805b3fc8ca",
+    "81-H-final-undo-world.json": "7c3a41cd98b4b50318433e4dd874d69a6d1758ba6afdef49abc6071d1e11628f"
+  },
+  "build": {
+    "class": "app-container",
+    "data-build-revision": "place-method-comparison-v17",
+    "data-build-version": "place-method-comparison-v17:5b6010bc-bffc-4422-81d0-dbe64f42da87",
+    "data-configured-delivery-id": "snap-root-v1",
+    "data-delivery-id": "snap-root-v1",
+    "data-island-feature-enabled": "true",
+    "data-nature-town-feature-enabled": "false",
+    "data-ui-style-candidate": "whole-app-atelier-v1",
+    "data-visual-lineage-id": "pokko-field-v1"
+  },
+  "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+  "fixture": "shore-memory-only",
+  "operationSequence": [
+    {
+      "edit": {
+        "cell": {
+          "x": 4,
+          "z": 4
+        },
+        "before": 0,
+        "after": -1
+      }
+    },
+    {
+      "edit": {
+        "cell": {
+          "x": 4,
+          "z": 4
+        },
+        "before": -1,
+        "after": -2
+      }
+    },
+    "undo",
+    "redo",
+    "undo",
+    "undo"
+  ],
+  "transitionChecks": [
+    {
+      "stage": "step1",
+      "height": -1,
+      "worldHeightsMatchExpected": true,
+      "fullStateTerrainCompared": false,
+      "undoCount": 64,
+      "redoCount": 0
+    },
+    {
+      "stage": "step2",
+      "height": -2,
+      "worldHeightsMatchExpected": true,
+      "fullStateTerrainCompared": true,
+      "undoCount": 64,
+      "redoCount": 0
+    },
+    {
+      "stage": "undo",
+      "height": -1,
+      "worldHeightsMatchExpected": true,
+      "fullStateTerrainCompared": true,
+      "undoCount": 63,
+      "redoCount": 1
+    },
+    {
+      "stage": "redo",
+      "height": -2,
+      "worldHeightsMatchExpected": true,
+      "fullStateTerrainCompared": true,
+      "undoCount": 64,
+      "redoCount": 0
+    },
+    {
+      "stage": "restored",
+      "height": 0,
+      "worldHeightsMatchExpected": true,
+      "fullStateTerrainCompared": true,
+      "undoCount": 62,
+      "redoCount": 2
+    }
+  ],
+  "unchangedCoreFields": {
+    "before": {
+      "fixture": true,
+      "land": true,
+      "plots": true,
+      "landmarks": true,
+      "keepsakes": true,
+      "villagers": true,
+      "character": true,
+      "drops": true,
+      "town": true
+    },
+    "step2": {
+      "fixture": true,
+      "land": true,
+      "plots": true,
+      "landmarks": true,
+      "keepsakes": true,
+      "villagers": true,
+      "character": true,
+      "drops": true,
+      "town": true
+    },
+    "undo": {
+      "fixture": true,
+      "land": true,
+      "plots": true,
+      "landmarks": true,
+      "keepsakes": true,
+      "villagers": true,
+      "character": true,
+      "drops": true,
+      "town": true
+    },
+    "redo": {
+      "fixture": true,
+      "land": true,
+      "plots": true,
+      "landmarks": true,
+      "keepsakes": true,
+      "villagers": true,
+      "character": true,
+      "drops": true,
+      "town": true
+    },
+    "restored": {
+      "fixture": true,
+      "land": true,
+      "plots": true,
+      "landmarks": true,
+      "keepsakes": true,
+      "villagers": true,
+      "character": true,
+      "drops": true,
+      "town": true
+    }
+  },
+  "restoration": {
+    "rawHeightsExactlyRestored": true,
+    "derivedPlacesExactlyRestored": true,
+    "redoTerrainExactlyMatchesSecondEdit": true,
+    "fullTerrainEqualsInitial": false,
+    "initialUndoCount": 64,
+    "finalUndoCount": 62,
+    "finalRedoCount": 2,
+    "reason": "64-entry history cap discards the two oldest initial entries when two edits are appended. Undo restores heights and moves these two new edits to redo; it cannot recreate discarded old history. Final undo is exactly initial undo[2:], final redo is [secondEdit,firstEdit]."
+  },
+  "renderedDOM": {
+    "scope": "These five captures contain heights and selection only. No camera or full world DOM comparison is possible.",
+    "selectionUnchanged": true,
+    "candidateUnchangedInState": true,
+    "heightJSONMatchesStateAndExpectedTransitions": true
+  },
+  "timing": {
+    "visibleTenSecondWindow": true,
+    "twoSuccessfulColdBuildsAndCompiles": true,
+    "incompleteSpans": 0,
+    "dropped": 0,
+    "edits": [
+      {
+        "edit": 1,
+        "actionMs": 340.7,
+        "worldColdMs": 339.2,
+        "compileMs": 273.7,
+        "sceneMs": 65.6,
+        "nonOverlappingRootSumMs": 406.3,
+        "clickToActionStartMs": 0.4
+      },
+      {
+        "edit": 2,
+        "actionMs": 348.7,
+        "worldColdMs": 347.6,
+        "compileMs": 278.1,
+        "sceneMs": 64.5,
+        "nonOverlappingRootSumMs": 413.2,
+        "clickToActionStartMs": 0.4
+      }
+    ],
+    "longTasks": [
+      {
+        "startMs": 567.1,
+        "endMs": 977.1,
+        "durationMs": 410
+      },
+      {
+        "startMs": 8735.4,
+        "endMs": 9150.4,
+        "durationMs": 415
+      }
+    ],
+    "slowFrames": [
+      {
+        "startMs": 579.4,
+        "endMs": 978.5,
+        "intervalMs": 399.1
+      },
+      {
+        "startMs": 8746,
+        "endMs": 9162.7,
+        "intervalMs": 416.7
+      }
+    ],
+    "maxFrameMs": 416.7
+  },
+  "liveReceiptScope": {
+    "count": 2,
+    "allReceiptsBeforeFirstEdit": true,
+    "receiptTimes": [
+      "2026-10-22T22:22:37.743Z",
+      "2026-10-22T22:22:45.140Z"
+    ],
+    "firstEditEpochMs": 1792707794593.6,
+    "postEditUseProvedBy81": false,
+    "note": "81 live capture contains earlier rendered receipts, not post-edit use. Await separate82 evidence."
+  },
+  "placeProgressEqualToInitial": {
+    "before": true,
+    "step2": true,
+    "undo": true,
+    "redo": true,
+    "restored": true
+  },
+  "limitations": [
+    "State and DOM snapshots corroborate the stated UI sequence; this is not an independent recording of every pointer action.",
+    "Step1 has world DOM only, no full state; final two Undos have a combined final state, no separate penultimate state.",
+    "Undo/Redo latency was not included in the two-edit CPU window.",
+    "400ms-scale long tasks persist; successful editing is not smooth interactive performance.",
+    "This is a shore-memory-only fixture. No DB persistence, reload, offline or release safety claim.",
+    "81 live receipts predate editing. Post-restoration resident use is not established by81.",
+    "World captures contain only heights/selection, not camera matrices or complete flags. State/DOM consistency is not a GPU mesh or visual-art quality comparison."
+  ]
+}

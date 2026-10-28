@@ -1,0 +1,6 @@
+{
+  "failure": "Initial support invalid",
+  "cause": "tree-3 at cell 9,4 is too close to the outer shore: lowest sampled root support .157609 < water+.12 (.20)",
+  "repair": "Move tree-3 to cell 9,5 in the explicit initial fixture; no user save is involved",
+  "priorRevision": "ac506d142d837074"
+}

@@ -1,0 +1,19 @@
+{
+  "status": "PASS_LIMITED_UI",
+  "build": "place-outline-v4",
+  "inputSHA256": "aa3641fb10e3978a0747f24b73fd7473cde01eb25d6396c0bf77db22ce0eda48",
+  "target": "http://127.0.0.1:5502/?terrainTrial=H&groundTrial=material&trialEvidence=1&trialScene=shore&growthTrial=inherit&rampTrial=linear&baseTrial=stable&compileTrial=single&queryTrial=frozen&memoTrial=samples&edgeTrial=memo#/onboarding",
+  "ownershipAndOriginalTerrainUnchanged": true,
+  "undoRedoShapeAndWorldExact": true,
+  "benchMovedViaNormalUI": {
+    "x": 5,
+    "z": 5
+  },
+  "limitations": [
+    "Memory-only onboarding fixture",
+    "No fresh high-place P05 receipt; seating observed visually only",
+    "Adjacent flower rejected; occupied resize correctly rejected",
+    "No normal save or full visual acceptance"
+  ],
+  "visualObservation": "Resident v2 seated on moved bench at 5,5 observed in CUA screenshot at about 03:50–03:51 UTC; subsequent saved screenshot shows departure, not seated pose."
+}

@@ -1,0 +1,46 @@
+{
+  "mode": "F",
+  "status": "PASS",
+  "fixture": "Fault injection only: disable inheritance while retaining real final guard in normal applyIntent; prove known south bench failure is rejected before commit. Economy fixture, no DB proof.",
+  "results": [
+    {
+      "sides": [
+        "west",
+        "east"
+      ],
+      "rejectedSouthTwice": true,
+      "fullInputPreserved": true,
+      "drops": 9640,
+      "benchSupported": true,
+      "preExistingFlowerSupported": true,
+      "errors": [
+        "Error: ものの 足もとを たしかめよう。ひろげる前の 島は そのままだよ。",
+        "Error: ものの 足もとを たしかめよう。ひろげる前の 島は そのままだよ。"
+      ]
+    },
+    {
+      "sides": [
+        "east",
+        "west"
+      ],
+      "rejectedSouthTwice": true,
+      "fullInputPreserved": true,
+      "drops": 9640,
+      "benchSupported": true,
+      "preExistingFlowerSupported": true,
+      "errors": [
+        "Error: ものの 足もとを たしかめよう。ひろげる前の 島は そのままだよ。",
+        "Error: ものの 足もとを たしかめよう。ひろげる前の 島は そのままだよ。"
+      ]
+    }
+  ],
+  "date": "2026-10-22T21:15:21.295Z",
+  "inputHashes": {
+    "growth-seam-guard-check.ts": "4654515de27365d2aa458113e8b9fb32ce49581332508aeffd5d48a90b6bb1d0",
+    "growth-seam-guard-check.mjs": "4f184f4ee14aef28bc0018a82db1b2d3ea6cf25809bd18ccbee4c3036e11d188",
+    "growth-seam-transform.mjs": "8917df6ef483347328f13144baa7fc0d3639b179e136c69d862f974427d187ef",
+    "growth-seam.ts": "afd12cb5f5a8a4df9e559fe76c6a27c5fbcaa839db0be1d13536df561116fb64",
+    "evidence/33-F2-used-state.json": "081e357da5da782ed1dcdd0edcf91153ecb300c1192c2d546784e0e639643bcd"
+  },
+  "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-method-comparison/growth-seam-guard-check.mjs"
+}

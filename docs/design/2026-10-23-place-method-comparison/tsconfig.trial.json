@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "useDefineForClassFields": true,
+    "allowImportingTsExtensions": true,
+    "allowJs": true,
+    "checkJs": false,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": ["node", "vite/client"],
+    "baseUrl": "../../..",
+    "paths": { "@/*": ["src/*"] }
+  },
+  "include": [
+    "../../../src/vite-env.d.ts",
+    "../../../src/domain/growingIsland/editableTerrainWorld.ts",
+    "../../../src/domain/growingIsland/terrainEditing.ts",
+    "../../../src/components/island/growing/worldScene.ts",
+    "../../../src/components/island/growing/GrowingIsland.tsx",
+    "./*.ts",
+    "./*.tsx"
+  ],
+  "exclude": ["./evidence"]
+}

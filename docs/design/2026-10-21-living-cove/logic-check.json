@@ -1,0 +1,13 @@
+{
+  "pass": true,
+  "checks": 7,
+  "results": [
+    "interpolated land crosses sea continuously, keeping original integer elevations",
+    "same six trees and protected house floor survive the cove editing recipe",
+    "shore path uses dry support and every traversed segment is safe",
+    "water, tree trunk, house volume, and steep slope are not walkable",
+    "unreachable isolated island never becomes a route across water",
+    "support guard rejects the edit atomically with unchanged history",
+    "every edit Undo/Redo restores geometry and derived reachability"
+  ]
+}

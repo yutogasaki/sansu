@@ -1,0 +1,295 @@
+{
+  "at": "2026-10-26T01:43:11.638Z",
+  "base": "http://127.0.0.1:5295",
+  "fixture": "isolated synthetic native profile; real topic/answer/save operations; no real user data",
+  "scenarios": [
+    {
+      "width": 390,
+      "owner": "audit-fixes-390",
+      "topicSwitchAndReload": true,
+      "threeDistinctWorks": true,
+      "h06GlyphOnlyContact": true,
+      "h06ImmediateAssisted": true,
+      "phrasePrompts": [
+        "桜",
+        "頭"
+      ],
+      "lexicalAlternativeAccepted": true,
+      "contextualAlternativeNotIndependent": true,
+      "pass": true
+    },
+    {
+      "width": 768,
+      "owner": "audit-fixes-768",
+      "topicSwitchAndReload": true,
+      "threeDistinctWorks": true,
+      "h06GlyphOnlyContact": true,
+      "h06ImmediateAssisted": true,
+      "phrasePrompts": [
+        "桜",
+        "頭"
+      ],
+      "lexicalAlternativeAccepted": true,
+      "contextualAlternativeNotIndependent": true,
+      "pass": true
+    },
+    {
+      "width": 320,
+      "owner": "audit-fixes-320",
+      "topicSwitchAndReload": true,
+      "threeDistinctWorks": true,
+      "h06GlyphOnlyContact": true,
+      "h06ImmediateAssisted": true,
+      "phrasePrompts": [
+        "桜",
+        "頭"
+      ],
+      "lexicalAlternativeAccepted": true,
+      "contextualAlternativeNotIndependent": true,
+      "pass": true
+    }
+  ],
+  "captures": [
+    {
+      "file": "390-topic-one-retained.png",
+      "metadata": {
+        "revision": "kokugo-fix-1087d7bd1ad6",
+        "version": "kokugo-fix-1087d7bd1ad6:b6b18873-3abd-4323-83e1-969a77d982c3",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "route": "http://127.0.0.1:5295/#/kokugo"
+    },
+    {
+      "file": "390-h06-contact.png",
+      "metadata": {
+        "revision": "kokugo-fix-1087d7bd1ad6",
+        "version": "kokugo-fix-1087d7bd1ad6:b6b18873-3abd-4323-83e1-969a77d982c3",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "route": "http://127.0.0.1:5295/#/kokugo"
+    },
+    {
+      "file": "390-word-桜.png",
+      "metadata": {
+        "revision": "kokugo-fix-1087d7bd1ad6",
+        "version": "kokugo-fix-1087d7bd1ad6:b6b18873-3abd-4323-83e1-969a77d982c3",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "route": "http://127.0.0.1:5295/#/kokugo"
+    },
+    {
+      "file": "390-word-頭.png",
+      "metadata": {
+        "revision": "kokugo-fix-1087d7bd1ad6",
+        "version": "kokugo-fix-1087d7bd1ad6:b6b18873-3abd-4323-83e1-969a77d982c3",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "route": "http://127.0.0.1:5295/#/kokugo"
+    },
+    {
+      "file": "390-number-context-alternative.png",
+      "metadata": {
+        "revision": "kokugo-fix-1087d7bd1ad6",
+        "version": "kokugo-fix-1087d7bd1ad6:b6b18873-3abd-4323-83e1-969a77d982c3",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "route": "http://127.0.0.1:5295/#/kokugo"
+    },
+    {
+      "file": "768-topic-one-retained.png",
+      "metadata": {
+        "revision": "kokugo-fix-1087d7bd1ad6",
+        "version": "kokugo-fix-1087d7bd1ad6:b6b18873-3abd-4323-83e1-969a77d982c3",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "route": "http://127.0.0.1:5295/#/kokugo"
+    },
+    {
+      "file": "768-h06-contact.png",
+      "metadata": {
+        "revision": "kokugo-fix-1087d7bd1ad6",
+        "version": "kokugo-fix-1087d7bd1ad6:b6b18873-3abd-4323-83e1-969a77d982c3",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "route": "http://127.0.0.1:5295/#/kokugo"
+    },
+    {
+      "file": "768-word-桜.png",
+      "metadata": {
+        "revision": "kokugo-fix-1087d7bd1ad6",
+        "version": "kokugo-fix-1087d7bd1ad6:b6b18873-3abd-4323-83e1-969a77d982c3",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "route": "http://127.0.0.1:5295/#/kokugo"
+    },
+    {
+      "file": "768-word-頭.png",
+      "metadata": {
+        "revision": "kokugo-fix-1087d7bd1ad6",
+        "version": "kokugo-fix-1087d7bd1ad6:b6b18873-3abd-4323-83e1-969a77d982c3",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "route": "http://127.0.0.1:5295/#/kokugo"
+    },
+    {
+      "file": "768-number-context-alternative.png",
+      "metadata": {
+        "revision": "kokugo-fix-1087d7bd1ad6",
+        "version": "kokugo-fix-1087d7bd1ad6:b6b18873-3abd-4323-83e1-969a77d982c3",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "route": "http://127.0.0.1:5295/#/kokugo"
+    },
+    {
+      "file": "320-topic-one-retained.png",
+      "metadata": {
+        "revision": "kokugo-fix-1087d7bd1ad6",
+        "version": "kokugo-fix-1087d7bd1ad6:b6b18873-3abd-4323-83e1-969a77d982c3",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "route": "http://127.0.0.1:5295/#/kokugo"
+    },
+    {
+      "file": "320-h06-contact.png",
+      "metadata": {
+        "revision": "kokugo-fix-1087d7bd1ad6",
+        "version": "kokugo-fix-1087d7bd1ad6:b6b18873-3abd-4323-83e1-969a77d982c3",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "route": "http://127.0.0.1:5295/#/kokugo"
+    },
+    {
+      "file": "320-word-桜.png",
+      "metadata": {
+        "revision": "kokugo-fix-1087d7bd1ad6",
+        "version": "kokugo-fix-1087d7bd1ad6:b6b18873-3abd-4323-83e1-969a77d982c3",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "route": "http://127.0.0.1:5295/#/kokugo"
+    },
+    {
+      "file": "320-word-頭.png",
+      "metadata": {
+        "revision": "kokugo-fix-1087d7bd1ad6",
+        "version": "kokugo-fix-1087d7bd1ad6:b6b18873-3abd-4323-83e1-969a77d982c3",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "route": "http://127.0.0.1:5295/#/kokugo"
+    },
+    {
+      "file": "320-number-context-alternative.png",
+      "metadata": {
+        "revision": "kokugo-fix-1087d7bd1ad6",
+        "version": "kokugo-fix-1087d7bd1ad6:b6b18873-3abd-4323-83e1-969a77d982c3",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      },
+      "viewport": {
+        "width": 320,
+        "height": 568
+      },
+      "route": "http://127.0.0.1:5295/#/kokugo"
+    }
+  ],
+  "pass": true
+}

@@ -1,0 +1,130 @@
+{
+  "singleCompile": true,
+  "reports": [
+    {
+      "name": "initial",
+      "coldMs": 224.83212500000002,
+      "sites": 99,
+      "edges": 227,
+      "nonemptyNeighbors": 159,
+      "hashes": {
+        "definition": "d0df30bf8d7333dd887ad2d12ed3d8d76107664e02a38996fb3c672f79655564",
+        "floors": "269352fa351f6a0d41d55fd9321bfaae36d2daf8c52acc4a906fe433f1b8e0b0",
+        "anchors": "bcd3955e77ffe9a4fa829c7c07609f073a1c82785320a2668d91841a01253e8b",
+        "surfaces": "4dbbc5d6c4d7bbec018877a0df809433f9c96d6f5513d6b7896a0a906192e872",
+        "sites": "867438540b7819b1d53bffe3771e11b6dec6eb4c1662d8f3eba00c9413d1b096",
+        "walkSites": "867438540b7819b1d53bffe3771e11b6dec6eb4c1662d8f3eba00c9413d1b096",
+        "bounds": "e8bce891aa6a7a14e0479a0961b8f705899eef3e8da044397e0983ecc2e37e2f",
+        "floorHitOwnershipQueries": "08f067aeebc2bdc8dd0adae1411fa738cca1e225431389d818a473162f559c60",
+        "graphs": "6a17d11400b43c6ea9536285755f0027f203914828c323690cfe444f4920d9c7",
+        "routes": "dca173000ffaa55974eb65518baac127e326cf8eb2d7d4438ca3da769e0de157"
+      },
+      "queryCount": 1369,
+      "routeCount": 2970
+    },
+    {
+      "name": "negative-cut",
+      "coldMs": 196.60062499999998,
+      "sites": 98,
+      "edges": 200,
+      "nonemptyNeighbors": 148,
+      "hashes": {
+        "definition": "dfb3bc76d22d93b8835b2cd9fc621ef0beb8f13251f8fa005d078dfe05a379e5",
+        "floors": "5c99c14652ccc6fc641b92ce8dbb866a7b0caf717ca607eb4e0561a58419732c",
+        "anchors": "bcd3955e77ffe9a4fa829c7c07609f073a1c82785320a2668d91841a01253e8b",
+        "surfaces": "b1a108884017e3050cafa34e5858e0cb935373072e6fb52acbc36fdfc156084a",
+        "sites": "a49d5485ac89b99bdfd9a37123063775147b72cb1d5d169d9d22d6a4c2af716f",
+        "walkSites": "d6d405e80e5dbfc47d3a39a460c1eb307e28a790f3eb3fb50dfad78596e23048",
+        "bounds": "e65aefdfc85a9a99abb93d25ad2319194c7bf90e43b8ad3f3e6f8a19a4c0191e",
+        "floorHitOwnershipQueries": "e892f272e161ea2f8d8c9091de586d4115fcf945c1dd3c8719f7193968bf059b",
+        "graphs": "a43b9bfc139463eb8c86d4d1292e95b966fb74a0278c736f9af0a7e894127acb",
+        "routes": "b6d2b10bcfc7d657578cab5613bb98556659eb5a2d7290e82cfcd7c42e434807"
+      },
+      "queryCount": 1369,
+      "routeCount": 2940
+    },
+    {
+      "name": "actual-expanded61",
+      "coldMs": 399.9228750000001,
+      "sites": 345,
+      "edges": 787,
+      "nonemptyNeighbors": 532,
+      "hashes": {
+        "definition": "f6c69b0dbacfcbb3765812ceb56a716d3ed5b438312f81e02e41e702af2f76fc",
+        "floors": "38c623bca77ae178c45db94033c0a23c3e4751f8682559132e522f71c3f0160a",
+        "anchors": "639cc5ce2f4fb323d75836fad0364106857105f9734740d3440fa1aafd722754",
+        "surfaces": "e641b7ebe9af49aee402b101fd7d3560c6a1618cecf6c9d903a24708f077b7b1",
+        "sites": "5eafc800f7bfbb3f4593ac1b0d28ab09004d9488777d7c3d66f437e5d633fac4",
+        "walkSites": "38cd9a2b554384f127a517d7c7a4b9a42cbc235923e4c87f46389f7ed0a4e171",
+        "bounds": "0c9d460fa0483bc857d4aba8e9571c47db34817dd90b4dba2d4bebf6e512da56",
+        "floorHitOwnershipQueries": "1a732e243aa4891dc6176eab4ff182a3f0d3a5193f2a8202b87e1cb6b22259bf",
+        "graphs": "da7025c4158935d54d4957dbf86fee1afcca924dcb5d6e41b7f7a4966e86e211",
+        "routes": "f848357de80774641c3188924bc3edc848de4b86c5b697f431c902fb62936248"
+      },
+      "queryCount": 2989,
+      "routeCount": 10350
+    },
+    {
+      "name": "bridge",
+      "coldMs": 168.63741700000014,
+      "sites": 101,
+      "edges": 229,
+      "nonemptyNeighbors": 161,
+      "hashes": {
+        "definition": "c90518bd10185f9db5c115333562170995f7874b6abfcc133c4ccd6fd3eb2fdb",
+        "floors": "6783ac0d6580b52c2e8f71ba6b4974eb9f69f629aae4f710fabb4c5473228331",
+        "anchors": "68a1d13b2ee2019ba26ce3942c892d3d041edb72a4258a5ef41c2cee95a5de52",
+        "surfaces": "4dbbc5d6c4d7bbec018877a0df809433f9c96d6f5513d6b7896a0a906192e872",
+        "sites": "17754793501510623b0fc6ed4570ac132f75f866e8b4334ee2383f15f4be1bdf",
+        "walkSites": "17754793501510623b0fc6ed4570ac132f75f866e8b4334ee2383f15f4be1bdf",
+        "bounds": "a716714e4969c2ea065ec1697983397187cef181bd10129d1f9a414d44af507a",
+        "floorHitOwnershipQueries": "c7173b506a6e14c013a90877ae4c5ec58e923012e8308700b3afc24569f83c4f",
+        "graphs": "cf29a947dfab1ba5dd9c6b4511a6b171b798b070c512ea536b6c024cdde8d5ac",
+        "routes": "cb81259cc7755aaef24ff7bf210ea4a9df1551301b9fed68386defbb591c3a37"
+      },
+      "queryCount": 1369,
+      "routeCount": 3030
+    }
+  ],
+  "timings": [
+    {
+      "delta": -1,
+      "status": "rejected",
+      "message": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+      "ms": 389.25466700000015
+    },
+    {
+      "delta": 1,
+      "status": "rejected",
+      "message": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+      "ms": 334.59370800000033
+    },
+    {
+      "delta": -1,
+      "status": "rejected",
+      "message": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+      "ms": 0.986417000000074
+    }
+  ],
+  "optionalAPI": {
+    "callbackOnce": true,
+    "geometryFrozen": true,
+    "graphCloned": true,
+    "badEdgesRejected": true,
+    "thrownCallbackPropagated": true,
+    "inputUnchanged": true
+  },
+  "scope": "Node actual H + stable base + linear. CPU timings, not browser/GPU. Ordinary source graph and validation remain unchanged.",
+  "date": "2026-10-22T21:52:13.722Z",
+  "hashes": {
+    "single-compile-transform.mjs": "49153200a6e556015937f9a02352cd51390504440099788e6bafb2bd0632e8d6",
+    "single-compile-check.ts": "6a93cb76af9cdeb30e95594e0c292790f0b2182d7c45669144b6690e5baffbc1",
+    "single-compile-check.mjs": "b68bbe9632c2009378895070544e7eaca0897fe935a8754ef76fa34e88b2dcbe",
+    "terrain-transform.mjs": "087f297d4454bcff192340c2fc3fc0f296bbfd9e9641ce5ecbc5d1a4fe4949e4",
+    "stable-base-transform.mjs": "aec96e9cd86c343726a0c96c0eae68439908d5deb22febce4bd0dc27b5a31afb",
+    "ramp-plane-transform.mjs": "4d4871f49a5ced65bdf97510ca93784915d717408c9fe91968d64b858274310b",
+    "evidence/61-H-linear-stable-before-edit.json": "32644ef8205f073c3a8c1850afb684ded6252a1790644d9388367428fd585657",
+    "../../../src/domain/growingIsland/worldDefinition.ts": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+    "../../../src/domain/growingIsland/editableTerrainWorld.ts": "7606a6d2be402e90ef85154cd28e8cf3c07dd5d690538b37bbfbfd700e1fc324"
+  }
+}

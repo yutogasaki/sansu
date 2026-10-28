@@ -1,0 +1,137 @@
+{
+  "status": "stopped",
+  "clock": "performance.now milliseconds from CPU measurement start",
+  "startedPerformanceMs": 37825.2,
+  "startedEpochMs": 1792707183959.5,
+  "endedPerformanceMs": 47825.7,
+  "elapsedMs": 10000.5,
+  "retainedLimit": 400,
+  "dropped": 0,
+  "filteredFastTerrainCalls": 5,
+  "incompleteSpans": 0,
+  "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+  "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+  "aggregates": {
+    "editableIslandWorld:cache-hit": {
+      "calls": 7,
+      "inclusiveMs": 0.3,
+      "selfMs": 0.3,
+      "maxMs": 0.1,
+      "failed": 0
+    },
+    "compileWorldDefinition:derived-edges": {
+      "calls": 1,
+      "inclusiveMs": 293.3,
+      "selfMs": 293.3,
+      "maxMs": 293.3,
+      "failed": 0
+    },
+    "editableIslandWorld:cold": {
+      "calls": 1,
+      "inclusiveMs": 370.6,
+      "selfMs": 77.3,
+      "maxMs": 370.6,
+      "failed": 0
+    },
+    "applyIntent:terrain-edit": {
+      "calls": 1,
+      "inclusiveMs": 372.6,
+      "selfMs": 1.8,
+      "maxMs": 372.6,
+      "failed": 0
+    },
+    "worldScene.layout:": {
+      "calls": 1,
+      "inclusiveMs": 45.4,
+      "selfMs": 45.4,
+      "maxMs": 45.4,
+      "failed": 0
+    },
+    "GrowingWorld.rebuild:": {
+      "calls": 1,
+      "inclusiveMs": 59.9,
+      "selfMs": 14.4,
+      "maxMs": 59.9,
+      "failed": 0
+    }
+  },
+  "spans": [
+    {
+      "id": 1,
+      "parentId": null,
+      "name": "applyIntent",
+      "detail": "terrain-edit",
+      "startMs": 851.6,
+      "endMs": 1224.2,
+      "inclusiveMs": 372.6,
+      "selfMs": 1.8,
+      "failed": false
+    },
+    {
+      "id": 3,
+      "parentId": 1,
+      "name": "editableIslandWorld",
+      "detail": "cold",
+      "startMs": 852.5,
+      "endMs": 1223.1,
+      "inclusiveMs": 370.6,
+      "selfMs": 77.3,
+      "failed": false
+    },
+    {
+      "id": 4,
+      "parentId": 3,
+      "name": "compileWorldDefinition",
+      "detail": "derived-edges",
+      "startMs": 929.8,
+      "endMs": 1223.1,
+      "inclusiveMs": 293.3,
+      "selfMs": 293.3,
+      "failed": false
+    },
+    {
+      "id": 6,
+      "parentId": 1,
+      "name": "editableIslandWorld",
+      "detail": "cache-hit",
+      "startMs": 1223.8,
+      "endMs": 1223.9,
+      "inclusiveMs": 0.1,
+      "selfMs": 0.1,
+      "failed": false
+    },
+    {
+      "id": 8,
+      "parentId": null,
+      "name": "GrowingWorld.rebuild",
+      "detail": "",
+      "startMs": 1225.9,
+      "endMs": 1285.8,
+      "inclusiveMs": 59.9,
+      "selfMs": 14.4,
+      "failed": false
+    },
+    {
+      "id": 9,
+      "parentId": 8,
+      "name": "worldScene.layout",
+      "detail": "",
+      "startMs": 1226.1,
+      "endMs": 1271.5,
+      "inclusiveMs": 45.4,
+      "selfMs": 45.4,
+      "failed": false
+    },
+    {
+      "id": 11,
+      "parentId": 8,
+      "name": "editableIslandWorld",
+      "detail": "cache-hit",
+      "startMs": 1271.7,
+      "endMs": 1271.8,
+      "inclusiveMs": 0.1,
+      "selfMs": 0.1,
+      "failed": false
+    }
+  ]
+}

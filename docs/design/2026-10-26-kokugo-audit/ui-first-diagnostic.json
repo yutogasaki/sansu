@@ -1,0 +1,76 @@
+{
+  "at": "2026-10-25T23:16:42.613Z",
+  "scope": "isolated synthetic profile; no real user data",
+  "results": [
+    {
+      "case": "switch to empty topic2",
+      "expected": "",
+      "actual": "お題一の保存文",
+      "works": [
+        {
+          "id": "audit-d4779bb1-0b30-48e3-b754-96e6193dfbf2:E05-1",
+          "profileId": "audit-d4779bb1-0b30-48e3-b754-96e6193dfbf2",
+          "unitId": "E05",
+          "text": "お題一の保存文",
+          "saved": true,
+          "updatedAt": 1792970204724,
+          "revisions": [
+            {
+              "text": "お題一の保存文",
+              "at": 1792970204724
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "switch back to saved topic1",
+      "expected": "お題一の保存文",
+      "actual": "お題二の保存文",
+      "works": [
+        {
+          "id": "audit-d4779bb1-0b30-48e3-b754-96e6193dfbf2:E05-1",
+          "profileId": "audit-d4779bb1-0b30-48e3-b754-96e6193dfbf2",
+          "unitId": "E05",
+          "text": "お題一の保存文",
+          "saved": true,
+          "updatedAt": 1792970204724,
+          "revisions": [
+            {
+              "text": "お題一の保存文",
+              "at": 1792970204724
+            }
+          ]
+        },
+        {
+          "id": "audit-d4779bb1-0b30-48e3-b754-96e6193dfbf2:E05-2",
+          "profileId": "audit-d4779bb1-0b30-48e3-b754-96e6193dfbf2",
+          "unitId": "E05",
+          "text": "お題二の保存文",
+          "saved": true,
+          "updatedAt": 1792970204811,
+          "revisions": [
+            {
+              "text": "お題二の保存文",
+              "at": 1792970204811
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "after original H06 river model",
+      "progress": []
+    }
+  ],
+  "owner": "audit-d4779bb1-0b30-48e3-b754-96e6193dfbf2",
+  "metadata": {
+    "revision": "editorial-f80f926967d3",
+    "version": "editorial-f80f926967d3:012a5b52-3f09-4220-a50b-14665248bf33",
+    "configuredDelivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "islandFeatureEnabled": true,
+    "natureTownFeatureEnabled": false
+  },
+  "error": "Error: state did not settle\n    at until (file:///private/tmp/sansu-kokugo-audit-ui.mjs:9:140)\n    at async file:///private/tmp/sansu-kokugo-audit-ui.mjs:30:13"
+}

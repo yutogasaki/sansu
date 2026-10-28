@@ -1,0 +1,50 @@
+{
+  "status": "PASS_SAVED_GEOMETRY_WITH_USE_SUMMARY_DIFFERENCE",
+  "checkedAt": "2026-10-22T22:10:40.432940+00:00",
+  "scope": "Read-only comparison of ordinary saved island UI captures after memory-only expanded/shore experiments. No offline or all-save compatibility claim.",
+  "files": {
+    "53-H-footing-repaired-state.json": "a490e5202f60e55d5c30930ba4a5546815f4b25803c779f61965633d3bd66bfa",
+    "76-H-ordinary-restored-state.json": "f07a155b7ccf8e01eaad57db077c79a6ffe89c4e90a9ab599d2b13b3ddb98508",
+    "76-H-ordinary-restored-app-dom.json": "66eead8d5aca1199f4264dc3e58b72fd4d425322d59322b20b2364fadac9e9a5"
+  },
+  "equalFields": {
+    "land": true,
+    "terrain": true,
+    "plots": true,
+    "landmarks": true,
+    "keepsakes": true,
+    "villagers": true,
+    "character": true,
+    "drops": true,
+    "town": true,
+    "placeProgress": false,
+    "places": true
+  },
+  "fixture": "ordinary-saved-island",
+  "drops": 8,
+  "progressDifference": {
+    "compactDiff": [
+      {
+        "path": "placeProgress.uses.P05.pokomoko.at",
+        "before": 1792703900414,
+        "restored": 1792703927919
+      },
+      {
+        "path": "placeProgress.uses.P05.pokomoko.targetId",
+        "before": "starter-flower:garden",
+        "restored": "starter-bench"
+      }
+    ],
+    "milestonesUnchanged": true,
+    "shownUnchanged": true,
+    "useHistoryExactlyEqual": true,
+    "historyCounts": [
+      33,
+      33
+    ],
+    "bothRepresentativeRecordsAlreadyInBothHistories": true,
+    "newHistoryEntries": [],
+    "note": "Only the Pokomoko P05 representative uses record changed from garden to bench (targetId and its retained timestamp). Both records already exist in both exactly equal history arrays. These captures do not prove a newly added history event or when/why the representative changed. recordPlaceUse can select an existing receipt as the representative without adding history; this is a compatible mechanism, not an observed causal trace."
+  },
+  "limitedConclusion": "Visible land, complete terrain including Undo/Redo, owners, residents, character, drops 8, town and derived places were restored unchanged. The 96-cell memory fixture did not replace these visible ordinary fields. Full placeProgress is not identical; retained useHistory is exactly identical."
+}

@@ -1,0 +1,35 @@
+/** Apply after the common foundation transform. Every splice is guarded so a
+ * changed production generator cannot silently produce a partly transformed B. */
+export function terrainMethodTransform(source, options = {}) {
+    if (options.mode !== undefined && options.mode !== 'A' && options.mode !== 'B' && options.mode !== 'C') throw Error('Unknown explicit terrain method');
+    const replacements = [
+        ['export function terrainRevision(state: TerrainLand): string {',
+            'export function terrainRevision(state: TerrainLand, mode: TerrainMethod = terrainMethod()): string {'],
+        ['return JSON.stringify([state.land, state.bridge?.x ?? null, heights]);',
+            "return JSON.stringify([mode === 'C' ? COASTAL_FIELD_REVISION : SECTION_PROFILE_REVISION, mode, state.land, state.bridge?.x ?? null, heights]);"],
+        ['function rawHeight(state: TerrainLand, cell: Cell, curved: boolean): number {',
+            'function rawHeight(state: TerrainLand, cell: Cell, curved: boolean, mode: TerrainMethod): number {'],
+        ['const x = Math.floor(sx), z = Math.floor(sz), u = smooth(sx - x), v = smooth(sz - z);',
+            'const x = Math.floor(sx), z = Math.floor(sz);'],
+        ['const offset = ((1 - u) * height(0, 0) + u * height(1, 0)) * (1 - v)\n        + ((1 - u) * height(0, 1) + u * height(1, 1)) * v;',
+            'const offset = sectionOffset([height(0, 0), height(1, 0), height(0, 1), height(1, 1)], sx - x, sz - z, mode,\n        sectionRaiseWeight(cell, bounds));'],
+        ['export function editableIslandWorld(state: TerrainLand, curved = true): IslandWorld | undefined {',
+            'export function editableIslandWorld(state: TerrainLand, curved = true, mode: TerrainMethod = terrainMethod()): IslandWorld | undefined {'],
+        ['const revision = `${curved}:${terrainRevision(state)}`, previous = cache.get(revision);',
+            'const revision = `${curved}:${terrainRevision(state, mode)}`, previous = cache.get(revision);'],
+        ['rawHeight(state, clamped, curved) * (1 - fade)', 'rawHeight(state, clamped, curved, mode) * (1 - fade)'],
+        ['const surfaceHeight = (cell: Cell) => {', 'const baselineSurfaceHeight = (cell: Cell) => {'],
+        ['    type Sample = Cell & { y: number };',
+            "    const surfaceHeight = mode === 'C' ? createCoastalField(state, baselineSurfaceHeight, { minX, maxX, minZ, maxZ, detail, margin, dryLevel: TERRAIN_DRY_LEVEL, curved }).heightAt : baselineSurfaceHeight;\n    type Sample = Cell & { y: number };"],
+    ];
+    if (!source.includes('offset * TERRAIN_STEP * foundationEditWeight(state, cell);'))
+        throw Error('Terrain method trial requires the common foundation transform first');
+    for (const [before, after] of replacements) {
+        if (source.split(before).length !== 2) throw Error(`Terrain method source mismatch: ${before.slice(0, 100)}`);
+        source = source.replace(before, after);
+    }
+    // Node integration tests can select one explicit method for every internal
+    // domain call, rather than mutating a browser/global flag.
+    if (options.mode) source = source.replaceAll('mode: TerrainMethod = terrainMethod()', `mode: TerrainMethod = '${options.mode}'`);
+    return "import { createCoastalField, COASTAL_FIELD_REVISION } from '../../../docs/design/2026-10-23-place-method-comparison/coastal-field';\nimport { terrainMethod, sectionOffset, sectionRaiseWeight, SECTION_PROFILE_REVISION, type TerrainMethod } from '../../../docs/design/2026-10-23-place-method-comparison/section-profile';\n" + source;
+}

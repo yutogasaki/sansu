@@ -12,9 +12,11 @@ interface HeaderProps {
     onBack?: () => void;
     rightAction?: React.ReactNode;
     center?: React.ReactNode;
+    backDisabled?: boolean;
+    backLabel?: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({ title, subtitle, showBack, onBack, rightAction, center }) => {
+export const Header: React.FC<HeaderProps> = ({ title, subtitle, showBack, onBack, rightAction, center, backDisabled, backLabel = 'もどる' }) => {
     const navigate = useNavigate();
     const navigation = useIslandNavigation();
     const { pathname } = useLocation();
@@ -38,7 +40,8 @@ export const Header: React.FC<HeaderProps> = ({ title, subtitle, showBack, onBac
                     <button
                         type="button"
                         onClick={handleBack}
-                        aria-label="もどる"
+                        aria-label={backLabel}
+                        disabled={backDisabled}
                         className={cn("app-pill flex h-11 min-w-11 items-center justify-center rounded-full border-white/80 bg-white/72 text-slate-700 shadow-[0_16px_28px_-24px_rgba(15,23,42,0.34)] transition-all duration-150 hover:bg-white/84 active:scale-95", isIslandHeader && "island-shell-back")}
                     >
                         <Icons.Back className="w-5 h-5" />

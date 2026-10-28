@@ -1,9 +1,24 @@
 # Sansu 文書の入口
 
+[少ない操作から、深く遊べる島へ](product/island-simple-depth-plan.md)：同じ材料の配置差、6島の再訪、待つ理由と思い出の入口を整理した改善方針。全体企画書に反映し、本体の改修・実測はこれから。
+
+学びと島の成長を図で見る（生成後のローカルページ：`../portal/learning-journey.html`）：3教科の全レベル、アプリ全体のチュートリアル、多様なアチーブメント、島の解放条件を一覧と操作できる見本で確認する。[国語Lv1〜20](product/kokugo-levels.md)は設計方針、航路の数値は検討案。アプリへの反映・公開とは区別する。
+
 国語の現行実装契約：[国語コース](product/kokugo.md)、[全配当漢字1,026字](product/kokugo-kanji.md)。
 
-[英語の基礎コース](product/english-foundation.md)：A・B・Cと、音から絵を選ぶ最初の2単元。
+一角の美術の制作方法を見直す：[アストラ向けの画像・実動作動画・既存kitと質問](design/2026-10-21-cove-art-brief/index.html)。目標native-05、参考ゲームの公開実画面、現在試作を条件とともに比較するレビュー資料です。アストラへの相談実行・新美術の採用ではありません。
 
+入り江の美術と動作：[同じ木6本で、岸と水面の抜けを比べる](design/2026-10-21-living-cove/comparison.html)。既存1本の枝ぶりを作り込み、盛る・掘るから、既存モデルのぽこもこが乾いた経路を歩いて水辺をのぞくまでの隔離試作。本体の保存・所有・学習と美術採用は別です。[制作契約と検証](design/2026-10-21-living-cove/README.md)。
+
+島の形と景色を試す：[同じ材料の3案・環境反応6条件・配色と近景の比較](design/2026-10-21-island-shape-experiments/comparison.html)。盛る・掘る・植えるの操作列から入り江／段の庭／小島の森を作る隔離実験。機能検査と美術・楽しさの判定を分け、採用仕様とは扱いません。[検証と分かったこと](design/2026-10-21-island-shape-experiments/README.md)。
+
+地形を直接さわる試作：[同じ島を盛る・掘る・つなぐ](design/2026-10-21-editable-island/README.md)。既存保存から分けた操作試作で、水際・植物・水鳥とUndoを確認します。目標美術の採用とは別です。
+
+参考ゲーム調査：[Little Habitatsの実操作・X・ChatGPT相談](design/2026-10-21-little-habitats-research/README.md)。地形の盛る・掘る、植物・動物・季節・発見・訪問、美術、制作情報を記録。採用仕様とは区別し、音の聴取など未確認事項も残しています。
+
+島のメニュー整理の設計候補：[常設入口とメニュー全項目の具体案](design/2026-10-20-island-menu/README.md)。機能の対応、下位画面、戻り先、例外と受入条件。相談段階で、現行仕様や実装の変更ではありません。
+
+[英語の基礎コース](product/english-foundation.md)：A・B・Cと、音から絵を選ぶ最初の2単元。
 
 島の全体像：[ぽこもこの体験と育成の完全マップ](product/island-system/README.md)。全品・組み合わせ・成長・住人・土地・別島について、実装前の台帳、採用した育成規則v0.4、実装後の関係マップを分けて読めます。現在の規則は親仕様と52、保存は13、検証結果は実装記録を参照します。
 
@@ -106,7 +121,7 @@
 
 ### 学習
 
-- [国語の包括仕様案](product/kokugo-proposal/README.md)：幼児〜小6の検討案。採用部分は国語コースに従う。
+- [国語の包括仕様案](product/kokugo-proposal/README.md)：幼児〜小6の年齢別体系、問題形式、独力/音声/別教材の評価、画面・保存・導入条件。未採用・未実装の提案。
 
 - [算数02](product/02_math_skills.md) / [英語03](product/03_english_skills.md)：教材と技能。
 - [学習曲線29](product/29_learning_progression_spec.md)：初回難度と段階進行。

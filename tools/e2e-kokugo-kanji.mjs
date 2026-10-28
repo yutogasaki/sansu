@@ -1,3 +1,4 @@
+import { kokugoUnitButton } from './island-e2e-helpers.mjs';
 import assert from 'node:assert/strict';
 import { promises as fs } from 'node:fs';
 import { chromium } from 'playwright';
@@ -18,7 +19,7 @@ async function until(readValue, predicate) {
     for (let n = 0; n < 600; n++) { const value = await readValue(); if (predicate(value)) return value; await new Promise(ok => setTimeout(ok, 100)); }
     throw new Error('Persisted kanji state did not become ready');
 }
-const click = (page, name) => page.locator('.kokugo-screen').getByRole('button', { name, exact: true }).click();
+const click = (page, name) => name instanceof RegExp && name.source === 'K01 ·' ? kokugoUnitButton(page, 'K01').click() : page.locator('.kokugo-screen').getByRole('button', { name, exact: true }).click();
 async function capture(page, name) {
     const file = `${page.viewportSize().width}-${name}.png`, metadata = await appRootMetadata(page);
     assert.equal(metadata.islandFeatureEnabled, true); assert(metadata.version && metadata.revision);

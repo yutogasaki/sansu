@@ -1,0 +1,124 @@
+{
+  "passed": true,
+  "revision": "fixed-two-shear-grid-v1",
+  "at": "2026-10-22T20:58:25.024Z",
+  "design": {
+    "xAmplitude": 0.72,
+    "zAmplitude": 0.44,
+    "frequency": 0.6283185307179586,
+    "phase": 0.55,
+    "pivot": {
+      "x": 2.5,
+      "z": 2
+    },
+    "xSlopeBound": 0.4523893421169302,
+    "zSlopeBound": 0.2764601535159018,
+    "limitation": "analytic map preserves area; rendered triangles approximate it. Real world inverse and physical model footprints must be tested separately."
+  },
+  "probes": 231361,
+  "maxInverseError": 7.944109290391274e-15,
+  "maxDeterminantError": 1.1102230246251565e-16,
+  "maxInitialDisplacement": 0.9828831235207094,
+  "meshes": [
+    {
+      "detail": 6,
+      "triangles": 18144,
+      "minTriangleRatio": 0.99051680030461,
+      "maxTriangleRatio": 1.009483199695397,
+      "initialArea": 29.999217934095576,
+      "initialAreaRelativeError": -0.000026068863480806688
+    },
+    {
+      "detail": 12,
+      "triangles": 72576,
+      "minTriangleRatio": 0.995248055217063,
+      "maxTriangleRatio": 1.0047519447829227,
+      "initialArea": 29.999804546627924,
+      "initialAreaRelativeError": -0.000006515112402520155
+    }
+  ],
+  "anchors": [
+    {
+      "cell": {
+        "x": 2,
+        "z": 0
+      },
+      "point": {
+        "x": 1.3152393082674894,
+        "z": -0.31498370809101073
+      },
+      "inverse": {
+        "x": 2,
+        "z": 0
+      }
+    },
+    {
+      "cell": {
+        "x": 3,
+        "z": 0
+      },
+      "point": {
+        "x": 2.3152393082674894,
+        "z": -0.04499627672063448
+      },
+      "inverse": {
+        "x": 3,
+        "z": 0
+      }
+    },
+    {
+      "cell": {
+        "x": 2,
+        "z": 1
+      },
+      "point": {
+        "x": 1.5767946183494193,
+        "z": 0.7567901109479703
+      },
+      "inverse": {
+        "x": 2,
+        "z": 1
+      }
+    },
+    {
+      "cell": {
+        "x": 0,
+        "z": 1
+      },
+      "point": {
+        "x": -0.42320538165058064,
+        "z": 0.34765436484603596
+      },
+      "inverse": {
+        "x": 0,
+        "z": 1
+      }
+    },
+    {
+      "cell": {
+        "x": 4,
+        "z": 4
+      },
+      "point": {
+        "x": 4.68476069173251,
+        "z": 4.18304976050923
+      },
+      "inverse": {
+        "x": 3.9999999999999996,
+        "z": 4
+      }
+    }
+  ],
+  "notProven": [
+    "actual shared world renderer/hit",
+    "rigid owner footprint",
+    "fixed house/pier whole mesh contact",
+    "actual walking and mobile art"
+  ],
+  "hashes": {
+    "curved-grid.ts": "21535d59d055dad92ef2640334b3587d5fac529d21bdcc5565cf70f7ef279b1d",
+    "curved-grid-pure-check.ts": "3cfba0bd12e7c73a18a0d919d0dfd6cd6622790c3eaa782f75fa8295ec9b4c8d",
+    "curved-grid-pure-check.mjs": "afea71d28c79a5eb341c7703d616d3a43ba8e8ad4b6145aea034c18ce5f44f9a"
+  },
+  "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-method-comparison/curved-grid-pure-check.mjs"
+}

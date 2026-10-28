@@ -1,0 +1,20 @@
+import * as T from 'three';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
+import {makeNativeGrowingKit} from '/Users/yutogasaki/Projects/sansu/src/components/island/growing/native/nativeGrowingKit.ts';
+import {makePokomokoRig} from '/Users/yutogasaki/Projects/sansu/src/components/island/three/islandCharacters.ts';
+import {IslandMaterials} from '/Users/yutogasaki/Projects/sansu/src/components/island/three/primitives.ts';
+const manifest=await(await fetch('./kit-manifest.json')).json();
+const zipped=await(await fetch('./kit.gz')).arrayBuffer();
+const buffer=await new Response(new Blob([zipped]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
+const gltf=await new GLTFLoader().parseAsync(buffer,'');gltf.scene.updateMatrixWorld(true);
+const raw=[];gltf.scene.traverse(o=>{if(o.isMesh&&/entry|doorway|grounding|planted trunk/.test(o.name)){const b=new T.Box3().setFromObject(o);raw.push({name:o.name,min:b.min.toArray(),max:b.max.toArray()});}});
+const kit=makeNativeGrowingKit(gltf.scene,manifest);
+const renderer=new T.WebGLRenderer({antialias:true});renderer.setSize(1200,850);renderer.setPixelRatio(1);renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.PCFSoftShadowMap;renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1;renderer.outputColorSpace=T.SRGBColorSpace;document.body.append(renderer.domElement);
+const scene=new T.Scene();scene.background=new T.Color('#eef0f3');scene.add(new T.HemisphereLight('#f0f6ff','#ada8a0',2));const light=new T.DirectionalLight('#fff1dc',2.4);light.position.set(-8,12,8);light.castShadow=true;light.shadow.mapSize.set(2048,2048);light.shadow.normalBias=.03;light.shadow.bias=-.0002;Object.assign(light.shadow.camera,{left:-10,right:10,top:10,bottom:-10,near:1,far:40});scene.add(light);
+const ground=new T.Mesh(new T.PlaneGeometry(60,60),new T.MeshStandardMaterial({color:'#e2e5ea',roughness:1}));ground.rotation.x=-Math.PI/2;ground.position.y=-.04;ground.receiveShadow=true;scene.add(ground);
+const group=new T.Group();scene.add(group);const camera=new T.OrthographicCamera(-5,5,3.5,-3.5,.1,100);camera.position.set(8,8,13);camera.lookAt(0,1,0);
+const dims=[];for(const id of Object.keys(manifest.parts)){const p=kit.instance(id);p.scale.setScalar(.45);const b=new T.Box3().setFromObject(p),s=b.getSize(new T.Vector3());dims.push({part:id,scale:.45,size:s.toArray(),min:b.min.toArray(),max:b.max.toArray(),batchedMeshes:p.children.length});}
+const rig=makePokomokoRig(new IslandMaterials('moon-garden'));rig.hero.scale.setScalar(.45);const actorBounds=new T.Box3().setFromObject(rig.hero),actorSize=actorBounds.getSize(new T.Vector3()).toArray();
+window.audit={scope:'isolated kit inspection, not application or proposed scene',kitCandidate:manifest.candidate,scale:.45,dimensions:dims,actorSize,raw};
+window.showParts=(ids)=>{group.clear();for(let i=0;i<ids.length;i++){let p=ids[i]==='pokomoko'?rig.hero:kit.instance(ids[i]);p.scale.setScalar(.45);p.position.set((i-(ids.length-1)/2)*2.6,0,0);group.add(p);}const b=new T.Box3().setFromObject(group),size=b.getSize(new T.Vector3()),center=b.getCenter(new T.Vector3());const w=Math.max(size.x+1.5,(size.y+2.5)*1200/850);camera.left=-w/2;camera.right=w/2;camera.top=w*850/1200/2;camera.bottom=-camera.top;camera.position.copy(center).add(new T.Vector3(3,5,13));camera.lookAt(center);camera.updateProjectionMatrix();renderer.render(scene,camera);document.querySelector('#label').textContent=ids.join('  /  ')+' — all parts ×0.45; inspection lighting';return true;};
+window.showParts(['home','willow','birch','spire','pokomoko']);window.ready=true;

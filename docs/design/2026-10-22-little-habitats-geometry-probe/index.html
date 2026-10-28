@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>触って分かった、丸い地形の作り方</title>
+<style>
+*{box-sizing:border-box}body{margin:0;color:#242a32;background:#f5f6f8;font:16px/1.8 system-ui,sans-serif}main{max-width:1040px;margin:auto;padding:32px 20px 64px}h1{font-size:clamp(26px,4vw,38px);line-height:1.4}h2{font-size:21px}.meta,figcaption{color:#647080;font-size:13px}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:24px 0}.steps div{background:white;border:1px solid #dce1e8;border-radius:10px;padding:14px}.steps b{display:block;color:#305d94}.study,.reason{background:white;border:1px solid #dce1e8;border-radius:14px;padding:18px;margin:24px 0}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}button{border:1px solid #c9d1dc;border-radius:6px;background:white;color:#334357;padding:8px 12px;font:14px system-ui;cursor:pointer}button[aria-pressed=true]{background:#254d82;color:white}.view{display:grid;grid-template-columns:minmax(0,480px) 1fr;gap:24px;align-items:start}figure{margin:0}img{width:100%;height:auto;display:block;border-radius:8px}.note{border-left:3px solid #5479ab;padding:4px 16px}a{color:#28578f}li{margin-bottom:8px}@media(max-width:700px){.steps{grid-template-columns:1fr 1fr}.view{grid-template-columns:1fr}.view aside{grid-row:1}main{padding:20px 14px}.study{padding:12px}}
+</style>
+<main><p class="meta">Little Habitats 実操作調査・2026年10月22日・観察からの推定</p>
+<h1>段差があっても、<br>岸と崖は丸くつながる。</h1>
+<p>小さな庭で、単独・隣接・L字・四角・斜め・材質変更・Undoを試した。最も説明しやすい仕組みは、下の4段階。<strong>丸いブロックを並べるだけでは、隣接時の変化を説明できない。</strong></p>
+<div class="steps"><div><b>1 編集の情報</b>地点ごとの高さ・材質</div><div><b>2 輪郭</b>隣の陸とつながる境界</div><div><b>3 厚み</b>肩・土の胴・裾</div><div><b>4 見せ方</b>草の縁・石・水際</div></div>
+<section class="study"><div class="tabs" role="group" aria-label="観察した操作"></div><div class="view"><figure><a id="full"><img id="shot" alt=""></a><figcaption>公開ゲームの実画面・未加工。編集アニメーションや生き物の変化を含む。</figcaption></figure><aside><h2 id="name"></h2><p id="desc" aria-live="polite"></p><p class="meta">主な試験は時計停止。単独〜四角はぼかしON、斜めの再観察と石はOFF。CSS 640×774。</p><p class="note">観察できるのは形と操作の結果。格子の種類、曲線の計算法、局所更新か全体更新かは未確定。</p></aside></div></section>
+<section class="reason"><h2>今回、見直せること</h2><ul><li><strong>格子や段差を捨てる必要があるとは言えない。</strong>参考作も段階的な高さを使う。輪郭と断面の作り方を直接比べる。</li><li><strong>斜め接続は実例に合わせて検討する。</strong>今回の配置では細い接続が見える。前のB4案の対角分離が参考作の正解とは言えない。</li><li><strong>小物を増やす前に地形で比較する。</strong>単独・隣接・L字・対角の4入力で、草の縁、崖のふくらみ、水際まで並べる。</li></ul><p>再現候補：隣接状態から境界を選ぶ → 曲線で接合 → 厚みを付ける → 材質を重ねる。Marching Squaresや部品表など複数の実装で実現可能。Little Habitatsがどれを使うかは未確定。</p></section>
+<p><a href="README.md">操作記録・推定の確度・実装候補を読む</a> · <a href="https://little-habitats.vercel.app/">参考ゲーム</a> · <a href="../2026-10-22-terrain-method-trial/comparison.html">直前の7案</a></p>
+<p class="meta">検証後は大枠の地形とぼかしを戻し、時計を再開。発見履歴は3/46になり残る。Sansu本体の変更・美術合格・配布ではない。</p></main>
+<script>
+const cases=[
+['1か所だけ盛る','01-one-raised.jpg','四角い編集単位から、丸い肩と土の胴が現れる。'],
+['隣も盛る','03-adjacent-joined.jpg','2本の独立した柱ではなく、一続きの上面と外壁になる。'],
+['L字にする','04-l-concave.jpg','外側の丸みだけでなく、へこんだ角もつながる。'],
+['四角く埋める','05-square-filled.jpg','内側の継ぎ目が消え、一枚の高台に見える。'],
+['斜めに残す','15-diagonal-clear.jpg','この配置では細い斜めの陸がつながって見える。歩ける幅かは未確認。'],
+['石に変える','11-stone-painted.jpg','1回目は高さを概ね保ち、材質が変わる。'],
+['石をもう一度','12-stone-level2.jpg','2回目は高さが増え、石積みの側面が現れる。'],
+['Undo','13-undo-stone-level1.jpg','石を保ったままlevel 1に戻る。Redoでlevel 2へ戻ることも確認。']
+];
+const tabs=document.querySelector('.tabs');
+function show(i){const [name,file,desc]=cases[i];document.querySelector('#name').textContent=name;document.querySelector('#desc').textContent=desc;document.querySelector('#shot').src='evidence/'+file;document.querySelector('#shot').alt=name+'：'+desc;document.querySelector('#full').href='evidence/'+file;tabs.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed',String(i===j)));}
+cases.forEach(([name],i)=>{const b=document.createElement('button');b.textContent=name;b.addEventListener('click',()=>show(i));tabs.append(b)});show(0);
+</script></html>

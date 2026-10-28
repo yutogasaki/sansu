@@ -1,0 +1,11 @@
+import { build } from 'esbuild';
+import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+const dir = new URL('.', import.meta.url).pathname, outfile = '/private/tmp/sansu-curved-grid-pure.mjs';
+await build({ entryPoints: [`${dir}curved-grid-pure-check.ts`], outfile, bundle: true, platform: 'node', format: 'esm', logLevel: 'silent' });
+const result = JSON.parse(execFileSync(process.execPath, [outfile], { encoding: 'utf8' }));
+result.hashes = Object.fromEntries(await Promise.all(['curved-grid.ts', 'curved-grid-pure-check.ts', 'curved-grid-pure-check.mjs'].map(async file => [file, createHash('sha256').update(await readFile(`${dir}${file}`)).digest('hex')])));
+result.command = 'fnm exec --using=22.23.3 node docs/design/2026-10-23-place-method-comparison/curved-grid-pure-check.mjs';
+await writeFile(`${dir}evidence/curved-grid-pure.json`, JSON.stringify(result, null, 2));
+console.log(JSON.stringify(result, null, 2));

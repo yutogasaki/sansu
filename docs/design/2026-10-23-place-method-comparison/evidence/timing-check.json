@@ -1,0 +1,212 @@
+{
+  "date": "2026-10-22T21:55:11.363Z",
+  "status": "PASS",
+  "transformed": [
+    {
+      "file": "src/domain/growingIsland/commands.ts",
+      "sourceSha256": "face0378caecb7222d1fc0eb80a212c38bf934c50b6b48cd2b241fa736b10708"
+    },
+    {
+      "file": "src/domain/growingIsland/editableTerrainWorld.ts",
+      "sourceSha256": "597b0d3273e082affedd831b141f65f067ee609347d6227645e1073c63e56ac0"
+    },
+    {
+      "file": "src/domain/growingIsland/worldDefinition.ts",
+      "sourceSha256": "7cee65aeded962a0b781824cfb34e733166212b5aee1eaf2f31a54a322100557"
+    },
+    {
+      "file": "src/components/island/growing/GrowingWorld.tsx",
+      "sourceSha256": "b0ef2b9092d7fce552e3ecc5c6730b8a087d92533a12eb1f3e4216d744d64b9f"
+    },
+    {
+      "file": "src/components/island/growing/worldScene.ts",
+      "sourceSha256": "3741486f66e772e29f6ab3e4a592c2154730fcece50e6d2552947a40a8da0000"
+    }
+  ],
+  "enabledDisabledStateEquality": true,
+  "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-method-comparison/timing-check.mjs",
+  "results": [
+    {
+      "enabled": false,
+      "rejectedMessage": "Error: じぶんの 土地を えらんでね。",
+      "snapshot": {
+        "status": "idle",
+        "clock": "performance.now milliseconds from CPU measurement start",
+        "startedPerformanceMs": 0,
+        "startedEpochMs": 0,
+        "endedPerformanceMs": 869.799,
+        "elapsedMs": 0,
+        "retainedLimit": 400,
+        "dropped": 0,
+        "filteredFastTerrainCalls": 0,
+        "incompleteSpans": 0,
+        "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+        "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+        "aggregates": {},
+        "spans": []
+      },
+      "limits": [
+        "Node timing is not browser timing",
+        "No renderer or React mounted in this diagnostic; transform syntax checked separately"
+      ],
+      "stateSha256": "91d3f4f721b8e0a925401f8950a62f1a1cafa6d863cc47213f03e2385dc9d37a"
+    },
+    {
+      "enabled": true,
+      "rejectedMessage": "Error: じぶんの 土地を えらんでね。",
+      "snapshot": {
+        "status": "stopped",
+        "clock": "performance.now milliseconds from CPU measurement start",
+        "startedPerformanceMs": 16.473,
+        "startedEpochMs": 1792706110486.239,
+        "endedPerformanceMs": 882.607,
+        "elapsedMs": 866.134,
+        "retainedLimit": 400,
+        "dropped": 0,
+        "filteredFastTerrainCalls": 178,
+        "incompleteSpans": 0,
+        "scope": "applyIntent / GrowingWorld.rebuild / worldScene.layout synchronous roots and their domain descendants; standalone render computations, GPU, async saves, browser layout and paint excluded",
+        "aggregation": "inclusive intervals nest: do not add inclusive totals. selfMs subtracts measured direct child intervals; uninstrumented work stays in parent selfMs.",
+        "aggregates": {
+          "editableIslandWorld:no-terrain": {
+            "calls": 176,
+            "inclusiveMs": 0.069,
+            "selfMs": 0.069,
+            "maxMs": 0.036,
+            "failed": 0
+          },
+          "compileWorldDefinition:supplied-edges": {
+            "calls": 1,
+            "inclusiveMs": 18.687,
+            "selfMs": 18.687,
+            "maxMs": 18.687,
+            "failed": 0
+          },
+          "compileWorldDefinition:derived-edges": {
+            "calls": 2,
+            "inclusiveMs": 531.477,
+            "selfMs": 531.477,
+            "maxMs": 281.272,
+            "failed": 0
+          },
+          "editableIslandWorld:cold": {
+            "calls": 2,
+            "inclusiveMs": 860.273,
+            "selfMs": 310.04,
+            "maxMs": 473.976,
+            "failed": 0
+          },
+          "editableIslandWorld:cache-hit": {
+            "calls": 3,
+            "inclusiveMs": 0.172,
+            "selfMs": 0.172,
+            "maxMs": 0.105,
+            "failed": 0
+          },
+          "applyIntent:terrain-edit": {
+            "calls": 2,
+            "inclusiveMs": 864.357,
+            "selfMs": 3.911,
+            "maxMs": 864.01,
+            "failed": 1
+          }
+        },
+        "spans": [
+          {
+            "id": 1,
+            "parentId": null,
+            "name": "applyIntent",
+            "detail": "terrain-edit",
+            "startMs": 0.085,
+            "endMs": 864.096,
+            "inclusiveMs": 864.01,
+            "selfMs": 3.565,
+            "failed": false
+          },
+          {
+            "id": 2,
+            "parentId": 1,
+            "name": "editableIslandWorld",
+            "detail": "cold",
+            "startMs": 1.372,
+            "endMs": 475.347,
+            "inclusiveMs": 473.976,
+            "selfMs": 173.947,
+            "failed": false
+          },
+          {
+            "id": 179,
+            "parentId": 2,
+            "name": "compileWorldDefinition",
+            "detail": "supplied-edges",
+            "startMs": 8.689,
+            "endMs": 27.376,
+            "inclusiveMs": 18.687,
+            "selfMs": 18.687,
+            "failed": false
+          },
+          {
+            "id": 180,
+            "parentId": 2,
+            "name": "compileWorldDefinition",
+            "detail": "derived-edges",
+            "startMs": 194.017,
+            "endMs": 475.289,
+            "inclusiveMs": 281.272,
+            "selfMs": 281.272,
+            "failed": false
+          },
+          {
+            "id": 181,
+            "parentId": 1,
+            "name": "editableIslandWorld",
+            "detail": "cold",
+            "startMs": 475.368,
+            "endMs": 861.665,
+            "inclusiveMs": 386.297,
+            "selfMs": 136.093,
+            "failed": false
+          },
+          {
+            "id": 182,
+            "parentId": 181,
+            "name": "compileWorldDefinition",
+            "detail": "derived-edges",
+            "startMs": 611.442,
+            "endMs": 861.646,
+            "inclusiveMs": 250.204,
+            "selfMs": 250.204,
+            "failed": false
+          },
+          {
+            "id": 183,
+            "parentId": 1,
+            "name": "editableIslandWorld",
+            "detail": "cache-hit",
+            "startMs": 862.483,
+            "endMs": 862.587,
+            "inclusiveMs": 0.105,
+            "selfMs": 0.105,
+            "failed": false
+          },
+          {
+            "id": 186,
+            "parentId": null,
+            "name": "applyIntent",
+            "detail": "terrain-edit",
+            "startMs": 865.735,
+            "endMs": 866.081,
+            "inclusiveMs": 0.347,
+            "selfMs": 0.347,
+            "failed": true
+          }
+        ]
+      },
+      "limits": [
+        "Node timing is not browser timing",
+        "No renderer or React mounted in this diagnostic; transform syntax checked separately"
+      ],
+      "stateSha256": "91d3f4f721b8e0a925401f8950a62f1a1cafa6d863cc47213f03e2385dc9d37a"
+    }
+  ]
+}

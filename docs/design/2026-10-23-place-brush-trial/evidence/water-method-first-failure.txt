@@ -1,0 +1,29 @@
+file:///private/tmp/sansu-water-method-check.mjs:26488
+  throw new Error(text3);
+        ^
+
+Error: ものの 足もとだよ。さきに うごかしてみよう。
+    at fail (file:///private/tmp/sansu-water-method-check.mjs:26488:9)
+    at applyTerrainCommand (file:///private/tmp/sansu-water-method-check.mjs:26607:15)
+    at applyIntent (file:///private/tmp/sansu-water-method-check.mjs:28125:12)
+    at file:///private/tmp/sansu-water-method-check.mjs:30883:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async file:///Users/yutogasaki/Projects/sansu/[eval1]:1:347
+
+Node.js v22.23.3
+Command failed: /Users/yutogasaki/.local/share/fnm/node-versions/v22.23.3/installation/bin/node --input-type=module -e globalThis.window=globalThis;globalThis.location={search:"?terrainTrial=H&baseTrial=stable&rampTrial=linear&growthTrial=inherit&compileTrial=single&trialScene=shore&queryTrial=frozen&memoTrial=samples&edgeTrial=memo&placeSetTrial=two&assemblyTrial=bay&coastSetTrial=two&matureTrial=paired&connectionTrial=joined&waterMethod=kit",hash:'#/island'};await import("/private/tmp/sansu-water-method-check.mjs");
+file:///private/tmp/sansu-water-method-check.mjs:26488
+  throw new Error(text3);
+        ^
+
+Error: ものの 足もとだよ。さきに うごかしてみよう。
+    at fail (file:///private/tmp/sansu-water-method-check.mjs:26488:9)
+    at applyTerrainCommand (file:///private/tmp/sansu-water-method-check.mjs:26607:15)
+    at applyIntent (file:///private/tmp/sansu-water-method-check.mjs:28125:12)
+    at file:///private/tmp/sansu-water-method-check.mjs:30883:9
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async file:///Users/yutogasaki/Projects/sansu/[eval1]:1:347
+
+Node.js v22.23.3

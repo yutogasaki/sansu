@@ -1,0 +1,88 @@
+import { it, expect } from 'vitest';
+import { architectureFixture } from './placeArchitecture.fixture';
+import { derivePlaces } from './places';
+import { supportedPlaceVariant } from './placeCapability';
+import { GardenGeometry } from '../../components/island/three/garden/geometry';
+import { buildPlaceFlowerRoof } from '../../components/island/growing/placeFlowerGeometry';
+import { sceneLayout } from '../../components/island/growing/sceneLayout';
+import { communityRoofModules } from './communityRoof';
+import { memoryDestination } from './placeMemories';
+import { derivePlaceRelations } from './placeRelations';
+
+it('records addition, maturation, storage and reconstruction transitions without changing the state', () => {
+    const state = architectureFixture(); state.plots = [];
+    const set = (kind: 'flower' | 'sapling', coords: number[][]) => {
+        state.landmarks = coords.map(([x,z,growth = kind === 'flower' ? 6 : 18], i) => ({ id: `owner-${i}`, kind, cell: { x, z }, growth, maturedAt: 0 }));
+    };
+    const record = (label: string) => {
+        const before = JSON.stringify(state), places = derivePlaces(state);
+        expect(JSON.stringify(state)).toBe(before);
+        expect(derivePlaces(JSON.parse(before))).toEqual(places);
+        const flowers = places.find(p => p.ruleId === 'P05');
+        let roof = false;
+        if (flowers) {
+            const geometry = new GardenGeometry();
+            buildPlaceFlowerRoof(geometry, state, sceneLayout(state), flowers);
+            roof = !!geometry.root.getObjectByName('place-flower-canopy'); geometry.dispose();
+        }
+        console.log(JSON.stringify({ label, roof, places: places.map(p => ({ rule: p.ruleId, stage: p.stage, structure: p.structure ?? null, owners: p.mainIds.length, targets: p.useTargets.map(t => t.kind), missing: p.missing })) }));
+        return { roof, places };
+    };
+    const square = [[2,2],[3,2],[2,3],[3,3]];
+    set('flower', square); expect(record('flower-square-4').roof).toBe(true);
+    set('flower', [...square,[4,3]]); expect(record('flower-square-plus-mature').roof).toBe(false);
+    state.landmarks.at(-1)!.cell = undefined; expect(record('flower-store-extra').roof).toBe(true);
+    set('flower', [[2,2],[3,2],[4,2],[5,2]]); expect(record('flower-row-4').roof).toBe(true);
+    set('flower', [[2,2],[3,2],[4,2],[5,2],[6,2,0]]); expect(record('flower-row-plus-young').roof).toBe(false);
+    state.landmarks.at(-1)!.growth = 6; expect(record('flower-row-extra-blooms').roof).toBe(true);
+    set('flower', [[2,2],[3,2],[4,2],[5,2],[5,3]]); expect(record('flower-row-plus-side').roof).toBe(false);
+    set('flower', [[2,2],[3,2],[4,2],[5,2],[6,2],[7,2],[8,2],[9,2]]); expect(record('flower-two-rows-connected').roof).toBe(true);
+    set('sapling', [[2,2],[3,2],[4,2],[5,2]]); expect(record('tree-row-4').places.some(p => p.ruleId === 'P02')).toBe(true);
+    set('sapling', [[2,2],[3,2],[4,2],[5,2],[5,3,0]]); expect(record('tree-row-plus-young-side').places.some(p => p.ruleId === 'P02')).toBe(true);
+    state.landmarks.at(-1)!.growth = 18; expect(record('tree-extra-matures').places.some(p => p.ruleId === 'P02')).toBe(false);
+    console.log(JSON.stringify({ label: 'world-parameter-profile', horizontal: supportedPlaceVariant('P05', [[2,2],[3,2],[4,2],[5,2]].map(([x,z])=>({x,z})), false), vertical: supportedPlaceVariant('P05', [[2,2],[2,3],[2,4],[2,5]].map(([x,z])=>({x,z})), false) ?? null }));
+});
+
+it('records consequences beyond large flowers, and checks home/water controls', () => {
+    const state = architectureFixture(); state.plots = [];
+    state.landmarks = [{ id: 'tree-a', kind: 'sapling', cell: { x: 4, z: 3 }, growth: 18, maturedAt: 0 }];
+    const old = derivePlaces(state).find(p => p.ruleId === 'P01')!;
+    expect(old.useTargets.map(t=>t.kind)).toContain('garden');
+    const memory = { id: 'memory', kind: 'grown' as const, family: 'grove' as const, at: 0, memberIds: ['tree-a'], variant: old.variant };
+    expect(memoryDestination(memory, [old])).toBeDefined();
+    state.landmarks.push({ id: 'tree-young', kind: 'sapling', cell: { x: 5, z: 3 }, growth: 0 });
+    const young = derivePlaces(state).find(p => p.ruleId === 'P01')!;
+    expect(young.stage).toBe('connected'); expect(young.useTargets).toEqual([]);
+    expect(memoryDestination(memory, [young])).toBeUndefined();
+    console.log(JSON.stringify({ label: 'ordinary-shade-young-addition', before: old.stage, after: young.stage, useTargets: young.useTargets, memoryDestination: memoryDestination(memory,[young]) ?? null }));
+
+    state.landmarks = [{id:'water',kind:'water-bowl',cell:{x:4,z:3},growth:0}];
+    const waterBefore = derivePlaces(state).find(p=>p.ruleId==='P03')!;
+    state.landmarks.push({id:'dry',kind:'water-channel',cell:{x:9,z:5},growth:0});
+    expect(derivePlaces(state).find(p=>p.ruleId==='P03')).toEqual(waterBefore);
+    console.log(JSON.stringify({label:'water-remote-dry-channel', stage:waterBefore.stage, unchanged:true}));
+
+    const homes = architectureFixture(), ids = homes.plots.map(p=>p.id), roof = communityRoofModules(homes,ids);
+    homes.plots.push({...homes.plots[1],id:'young-home',cell:{x:11,z:3},stage:1});
+    expect(communityRoofModules(homes,homes.plots.map(p=>p.id))).toEqual(roof);
+    homes.landmarks.push({id:'foreign',kind:'sapling',cell:{x:8,z:4},growth:0});
+    expect(communityRoofModules(homes,homes.plots.map(p=>p.id))).toEqual([]);
+    console.log(JSON.stringify({label:'community-roof-controls', youngAdditionRetained:true, obstructionSafelyDisables:true}));
+
+    const relations = architectureFixture(); relations.plots = [];
+    relations.landmarks = [{id:'water',kind:'water-bowl',cell:{x:4,z:3},growth:0}, {id:'flower',kind:'flower',cell:{x:5,z:3},growth:6}];
+    const beforeRelations = derivePlaceRelations(relations);
+    expect(beforeRelations.some(r=>r.id==='C02')).toBe(true);
+    relations.landmarks.push({id:'young-flower',kind:'flower',cell:{x:6,z:3},growth:0});
+    const afterRelations = derivePlaceRelations(relations);
+    expect(afterRelations.some(r=>r.id==='C02')).toBe(false);
+    console.log(JSON.stringify({label:'water-flower-relation-after-young-addition',before:beforeRelations.map(r=>r.id),after:afterRelations.map(r=>r.id)}));
+
+    const gardens=architectureFixture(); gardens.plots=[];
+    gardens.landmarks=[[2,2],[3,2],[2,3],[3,3],[6,2],[7,2],[6,3],[7,3]].map(([x,z],i)=>({id:`f${i}`,kind:'flower',cell:{x,z},growth:6}));
+    expect(derivePlaces(gardens).filter(p=>p.structure==='P05:canopy')).toHaveLength(2);
+    gardens.landmarks.push({id:'bridge-flower',kind:'flower',cell:{x:4,z:2},growth:6});
+    const joined=derivePlaces(gardens).filter(p=>p.ruleId==='P05');
+    expect(joined).toHaveLength(1); expect(joined[0].structure).toBeUndefined();
+    console.log(JSON.stringify({label:'two-flower-gardens-join',beforeRoofs:2,afterRoofs:0,owners:joined[0].mainIds.length}));
+});

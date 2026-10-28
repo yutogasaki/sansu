@@ -1,5 +1,16 @@
 # 現行の入口
 
+## ビジュアル付き全体企画書
+
+`portal/product-proposal.html` は、製品の目的、初回体験、5タブ、島づくり、家、算数・英語・国語、復習・進級、航海・達成、記録・保護者、設定・保存をまとめた内部説明ページです。ホーム・企画/成長・知識/記憶から開け、ページ名検索にも登録します。全機能の索引は12領域97項目（現行仕様・採用方針・改善/制作中・未確認・旧モード・対象外を含む）。数は生成データから表示し、各項目から挙動の正本へ進めます。
+
+「少ない操作から深く遊べる」整理版は[改善方針](../product/island-simple-depth-plan.md)を正本に、冒頭の3動詞と五つの判断、木/水の配置比較、6島の初回/工夫/獲得後、思い出の3行為、実装順と回復を表示する。97項目は保持し、全項目に体験での役割、22項目に今回の整理と出典を添える。現行の挙動と未反映の改善計画は別ラベル。配置図は本体の成長・通水・歩行を計算しない。JavaScriptなしでは全配置を比較できる。図のrendererは `scripts/portal-proposal-refinement.cjs`。
+
+入力は `docs/portal/product-proposal.json`、固有生成器は `scripts/portal-product-proposal.cjs` と同名のCSS/JS。`scripts/standard-portal.mjs` から共通枠に追加し、生成HTMLや固定vendorは手編集しません。掲載画像は既存の実画面と完成目標の模型を参照し、日付・対象・出典を分けます。製品の挙動の正本や、実装/検証/公開/実機/児童確認の判定は置き換えません。
+
+JavaScriptなしでも全文・全機能・仕様リンクを読めます。検索・領域/区分フィルター・0件・リセット・直接リンクはページ内で完結し、本人の保存や学習データを使いません。再生成は `npm run portal:build`、一致は `npm run portal:verify`、文書は `npm run docs:check`。全体検査に加え、生成ページを320/390/768/1440pxで実表示し、検索と戻り操作を確認します。作業範囲・相談・検証は[2026-10-27の制作記録](../design/2026-10-27-portal-product-proposal/README.md)へ。
+
+
 ## 学びと島の成長の図解
 
 `portal/learning-journey.html` は、3教科の全レベル・チュートリアル・アチーブメント・島解放の内部説明ページ。ホーム、企画・成長、知識・記憶から開ける。入力は `docs/portal/learning-journey.json`、国語のレベル定義は[国語のレベル進行](../product/kokugo-levels.md)、算数は[共通レベル設計](../product/learning-levels.md)で既存29区分を20段階へ対応付け、英単語は既存20段階を参照する。生成は `scripts/portal-learning-guide.cjs`、見本の操作は同名のJS/CSS。固定vendorや生成HTMLは手編集しない。
@@ -155,3 +166,9 @@ SANSU_PORTAL_QA_REPORT=/tmp/codex/S-005/browser.json SANSU_PORTAL_QA_SCREENSHOTS
 ```
 
 最後の検査は320・390・768・1440幅、DPR 1。390×844で要約→利用先・成果→元入口が画面内に収まること、比較画像の枠寸法、判断文の可視性、横はみ出し、検索・キーボード・資料のページ内表示を確認する。`entry-*`、`decision-*`、`confirmations-*` のPNGを保存する。失敗時も取得できた画面と生の起動エラーを残す。元7ページの左右比較は従来の `node tools/qa-portal-originals.mjs` を使う。OS権限などで起動できない時は実画面未確認と記録し、静的合格を見た目の審査合格へ読み替えない。
+
+## 企画書の参考ゲーム（2026-10-28）
+
+全体企画書に `#benchmarks` の参考資料節を追加。主参考のLittle Habitats、Townscaper、Tiny Gladeは既存の参考台帳にある3画像を原寸リンク・収集日・作者表示付きで参照する。SimCity（2013）とFoundationは公式の成長・制作資料から説明し、企画段階の発想源だったどうぶつの森、ぽこ あ ポケモン、ヨッシーとフカシギの図鑑、ポケットモンスター、Forestも別に記す。各作品の特徴、ぽこもこへの取り入れ方、公式出典と調査記録、実操作か資料参照かの違いを示す。
+
+入力は同じ `product-proposal.json` の `benchmarks`、表示は `scripts/portal-proposal-benchmarks.cjs`。画像は既存の `references.json` のID・元URL・保存先・SHAと照合し、無関係な画像への差し替えを拒む。保存済みの外部参考画像を再利用し、新規ダウンロードや生成・加工は行わない。10章・全97項目と配置比較を保持し、表紙・目次・ページ検索に参考ゲームへの入口を追加する。今回の更新は内部企画書への既存調査の整理で、製品仕様・本体・公開を変更しない。

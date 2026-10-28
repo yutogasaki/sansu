@@ -1,0 +1,25 @@
+import { build } from '/Users/yutogasaki/Projects/sansu/node_modules/esbuild/lib/main.js';
+import { loadConfigFromFile } from '/Users/yutogasaki/Projects/sansu/node_modules/vite/dist/node/index.js';
+import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+const root='/Users/yutogasaki/Projects/sansu';
+const dir=root+'/docs/design/2026-10-23-place-brush-trial';
+const entry='/private/tmp/sansu-composite-save-independent-entry.ts';
+const outfile='/private/tmp/sansu-composite-save-independent-bundle.mjs';
+const inputs=['composite-store.ts','composite-field.ts','composite-model.ts','TrialIsland.ts','vite.config.ts','trial-store.ts'];
+const sha=async p=>createHash('sha256').update(await readFile(p)).digest('hex');
+const before=Object.fromEntries(await Promise.all(inputs.map(async f=>[f,await sha(dir+'/'+f)])));
+const loaded=await loadConfigFromFile({command:'build',mode:'production'},dir+'/vite.config.ts');
+const plugin=loaded.config.plugins.find(p=>p?.name==='place-method-comparison');
+const transformed={}, loadedInputHashes={};
+await build({stdin:{contents:await readFile(entry,'utf8'),resolveDir:dir,sourcefile:entry,loader:'ts'},outfile,bundle:true,platform:'node',format:'esm',logLevel:'silent',define:{'import.meta.env.DEV':'false','import.meta.env.BASE_URL':'"/"','__APP_VERSION__':'"independent-composite-save"','__LIFE_REPLAY_VERSION__':'"independent-composite-save"'},plugins:[{name:'actual-independent-composite-save',setup(b){b.onLoad({filter:/\.(?:ts|tsx)$/},async args=>{const raw=await readFile(args.path,'utf8');loadedInputHashes[args.path]=createHash('sha256').update(raw).digest('hex');const r=await plugin.transform.call({},raw,args.path);const contents=typeof r==='string'?r:r?.code??raw;if(args.path.endsWith('/src/domain/growingIsland/repository.ts')||args.path.endsWith('/src/domain/growingIsland/syncProjection.ts')){transformed[args.path.slice(root.length+1)]=createHash('sha256').update(contents).digest('hex');await writeFile('/private/tmp/sansu-composite-save-independent-'+args.path.split('/').at(-1),contents);}return{contents,loader:args.path.endsWith('.tsx')?'tsx':'ts'};});}}]});
+const query='?terrainTrial=H&baseTrial=stable&rampTrial=linear&growthTrial=inherit&compileTrial=single&trialScene=shore&queryTrial=frozen&memoTrial=samples&edgeTrial=memo&placeSetTrial=two&trialSave=two-local';
+let output;
+try { output=execFileSync(process.execPath,['--input-type=module','-e',`globalThis.window=globalThis;globalThis.location={search:${JSON.stringify(query)},hash:'#/island'};await import(${JSON.stringify(outfile)});`],{encoding:'utf8',timeout:150000,maxBuffer:4*1024*1024}); }
+catch(e){await writeFile('/private/tmp/sansu-composite-save-independent-failure.txt',String(e.stdout??'')+String(e.stderr??'')+'\n'+e.message);throw e;}
+const after=Object.fromEntries(await Promise.all(inputs.map(async f=>[f,await sha(dir+'/'+f)])));
+const changedLoadedInputs=[];for(const [file,digest] of Object.entries(loadedInputHashes))if(await sha(file)!==digest)changedLoadedInputs.push(file);
+const result={...JSON.parse(output),runtime:process.version,inputHashes:before,loadedInputHashes,changedInputs:[...inputs.filter(f=>before[f]!==after[f]),...changedLoadedInputs],transformed,bundleSha256:await sha(outfile)};
+await writeFile('/private/tmp/sansu-composite-save-independent-result.json',JSON.stringify(result,null,2)+'\n');
+console.log(JSON.stringify({...result,loadedInputHashes:undefined,loadedInputCount:Object.keys(loadedInputHashes).length},null,2));

@@ -1,0 +1,711 @@
+{
+  "startedAt": "2026-10-24T08:18:27.165Z",
+  "url": "http://127.0.0.1:8241/design/2026-10-24-terrace-method-lab/",
+  "bundleSHA256": "15a33fade1687337d2702242b6f06a2dfdd6b943c68149373d674fd4b4d886be",
+  "steps": [
+    {
+      "shot": "sample-T-whole.png",
+      "method": "T",
+      "view": "whole",
+      "state": {
+        "method": "T",
+        "owners": 39,
+        "stairs": 6,
+        "bridges": 1,
+        "unreachable": 16,
+        "lost": []
+      }
+    },
+    {
+      "shot": "sample-T-near.png",
+      "method": "T",
+      "view": "near",
+      "state": {
+        "method": "T",
+        "owners": 39,
+        "stairs": 6,
+        "bridges": 1,
+        "unreachable": 16,
+        "lost": []
+      }
+    },
+    {
+      "shot": "sample-T-hill.png",
+      "method": "T",
+      "view": "hill",
+      "state": {
+        "method": "T",
+        "owners": 39,
+        "stairs": 6,
+        "bridges": 1,
+        "unreachable": 16,
+        "lost": []
+      }
+    },
+    {
+      "shot": "sample-T-scale.png",
+      "method": "T",
+      "view": "scale",
+      "state": {
+        "method": "T",
+        "owners": 39,
+        "stairs": 6,
+        "bridges": 1,
+        "unreachable": 16,
+        "lost": []
+      }
+    },
+    {
+      "shot": "sample-G-whole.png",
+      "method": "G",
+      "view": "whole",
+      "state": {
+        "method": "G",
+        "owners": 39,
+        "stairs": 0,
+        "bridges": 1,
+        "unreachable": 16,
+        "lost": []
+      }
+    },
+    {
+      "shot": "sample-G-near.png",
+      "method": "G",
+      "view": "near",
+      "state": {
+        "method": "G",
+        "owners": 39,
+        "stairs": 0,
+        "bridges": 1,
+        "unreachable": 16,
+        "lost": []
+      }
+    },
+    {
+      "shot": "sample-G-hill.png",
+      "method": "G",
+      "view": "hill",
+      "state": {
+        "method": "G",
+        "owners": 39,
+        "stairs": 0,
+        "bridges": 1,
+        "unreachable": 16,
+        "lost": []
+      }
+    },
+    {
+      "shot": "native05-whole.png",
+      "method": "N",
+      "view": "whole",
+      "state": {
+        "method": "N",
+        "owners": 39,
+        "stairs": 0,
+        "bridges": 1,
+        "unreachable": 16,
+        "lost": []
+      }
+    },
+    {
+      "shot": "native05-near.png",
+      "method": "N",
+      "view": "near",
+      "state": {
+        "method": "N",
+        "owners": 39,
+        "stairs": 0,
+        "bridges": 1,
+        "unreachable": 16,
+        "lost": []
+      }
+    },
+    {
+      "edits": [
+        {
+          "type": "height",
+          "cell": [
+            4,
+            8
+          ],
+          "delta": -1
+        },
+        {
+          "type": "height",
+          "cell": [
+            4,
+            7
+          ],
+          "delta": -1
+        },
+        {
+          "type": "height",
+          "cell": [
+            7,
+            8
+          ],
+          "delta": 1
+        },
+        {
+          "type": "height",
+          "cell": [
+            8,
+            8
+          ],
+          "delta": 1
+        },
+        {
+          "type": "height",
+          "cell": [
+            7,
+            9
+          ],
+          "delta": 1
+        },
+        {
+          "type": "height",
+          "cell": [
+            8,
+            9
+          ],
+          "delta": 1
+        },
+        {
+          "type": "move",
+          "id": "b1",
+          "cell": [
+            8,
+            8
+          ],
+          "rot": 2
+        },
+        {
+          "type": "move",
+          "id": "h2",
+          "cell": [
+            7,
+            9
+          ],
+          "rot": 1
+        },
+        {
+          "type": "move",
+          "id": "t7",
+          "cell": [
+            2,
+            7
+          ]
+        },
+        {
+          "type": "move",
+          "id": "h4",
+          "cell": [
+            1,
+            6
+          ],
+          "rot": 1
+        },
+        {
+          "type": "height",
+          "cell": [
+            6,
+            1
+          ],
+          "delta": -1
+        },
+        {
+          "type": "height",
+          "cell": [
+            6,
+            2
+          ],
+          "delta": -1
+        },
+        {
+          "type": "height",
+          "cell": [
+            3,
+            6
+          ],
+          "delta": 1
+        }
+      ],
+      "accepted": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        false,
+        true,
+        false,
+        true,
+        true,
+        true
+      ],
+      "state": {
+        "method": "T",
+        "owners": 39,
+        "stairs": 12,
+        "bridges": 1,
+        "unreachable": 15,
+        "lost": [],
+        "timing": {
+          "derive": 0.8999999761581421,
+          "terrain": 35.5,
+          "total": 67.5
+        }
+      }
+    },
+    {
+      "shot": "edited-T-whole.png",
+      "method": "T",
+      "view": "whole",
+      "state": {
+        "method": "T",
+        "owners": 39,
+        "stairs": 12,
+        "bridges": 1,
+        "unreachable": 15,
+        "lost": [],
+        "timing": {
+          "derive": 0.8999999761581421,
+          "terrain": 35.5,
+          "total": 67.5
+        }
+      }
+    },
+    {
+      "shot": "edited-T-near.png",
+      "method": "T",
+      "view": "near",
+      "state": {
+        "method": "T",
+        "owners": 39,
+        "stairs": 12,
+        "bridges": 1,
+        "unreachable": 15,
+        "lost": [],
+        "timing": {
+          "derive": 0.8999999761581421,
+          "terrain": 35.5,
+          "total": 67.5
+        }
+      }
+    },
+    {
+      "shot": "edited-G-whole.png",
+      "method": "G",
+      "view": "whole",
+      "state": {
+        "method": "G",
+        "owners": 39,
+        "stairs": 0,
+        "bridges": 1,
+        "unreachable": 15,
+        "lost": [],
+        "timing": {
+          "derive": 0.8999999761581421,
+          "terrain": 35.5,
+          "total": 67.5
+        }
+      }
+    },
+    {
+      "shot": "edited-G-near.png",
+      "method": "G",
+      "view": "near",
+      "state": {
+        "method": "G",
+        "owners": 39,
+        "stairs": 0,
+        "bridges": 1,
+        "unreachable": 15,
+        "lost": [],
+        "timing": {
+          "derive": 0.8999999761581421,
+          "terrain": 35.5,
+          "total": 67.5
+        }
+      }
+    },
+    {
+      "resident": {
+        "started": true,
+        "arrived": {
+          "at": "08:18:49",
+          "target": "b1",
+          "via": 1,
+          "ms": 3
+        },
+        "stairs": [
+          {
+            "upper": [
+              9,
+              6
+            ],
+            "lower": [
+              8,
+              6
+            ]
+          },
+          {
+            "upper": [
+              7,
+              8
+            ],
+            "lower": [
+              7,
+              7
+            ]
+          },
+          {
+            "upper": [
+              7,
+              3
+            ],
+            "lower": [
+              7,
+              4
+            ]
+          },
+          {
+            "upper": [
+              3,
+              6
+            ],
+            "lower": [
+              4,
+              6
+            ]
+          },
+          {
+            "upper": [
+              10,
+              5
+            ],
+            "lower": [
+              9,
+              5
+            ]
+          },
+          {
+            "upper": [
+              3,
+              6
+            ],
+            "lower": [
+              3,
+              7
+            ]
+          },
+          {
+            "upper": [
+              3,
+              6
+            ],
+            "lower": [
+              3,
+              5
+            ]
+          },
+          {
+            "upper": [
+              8,
+              9
+            ],
+            "lower": [
+              9,
+              9
+            ]
+          },
+          {
+            "upper": [
+              11,
+              5
+            ],
+            "lower": [
+              12,
+              5
+            ]
+          },
+          {
+            "upper": [
+              10,
+              2
+            ],
+            "lower": [
+              11,
+              2
+            ]
+          },
+          {
+            "upper": [
+              4,
+              3
+            ],
+            "lower": [
+              3,
+              3
+            ]
+          },
+          {
+            "upper": [
+              4,
+              3
+            ],
+            "lower": [
+              4,
+              4
+            ]
+          }
+        ],
+        "bridges": [
+          {
+            "a": [
+              6,
+              6
+            ],
+            "b": [
+              4,
+              6
+            ],
+            "water": [
+              5,
+              6
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "stress": {
+        "method": "G",
+        "accepted": 24,
+        "rejected": 65,
+        "reasons": {
+          "これより ふかくは できないよ": 7,
+          "ものが のっているよ。さきに うごかそう": 28,
+          "ほかの ものが あるよ": 16,
+          "いえや ベンチに いけなくなるよ": 9,
+          "みずの うえには おけないよ": 4,
+          "たいらな ところに おこう": 1
+        }
+      },
+      "state": {
+        "method": "G",
+        "owners": 39,
+        "stairs": 0,
+        "bridges": 2,
+        "unreachable": 13,
+        "lost": [],
+        "timing": {
+          "derive": 0.5,
+          "terrain": 8.899999976158142,
+          "total": 42.300000071525574
+        }
+      }
+    },
+    {
+      "shot": "random24-G-whole.png",
+      "method": "G",
+      "view": "whole",
+      "state": {
+        "method": "G",
+        "owners": 39,
+        "stairs": 0,
+        "bridges": 2,
+        "unreachable": 13,
+        "lost": [],
+        "timing": {
+          "derive": 0.5,
+          "terrain": 8.899999976158142,
+          "total": 42.300000071525574
+        }
+      }
+    },
+    {
+      "stress": {
+        "method": "T",
+        "accepted": 24,
+        "rejected": 67,
+        "reasons": {
+          "これより ふかくは できないよ": 7,
+          "ものが のっているよ。さきに うごかそう": 29,
+          "ほかの ものが あるよ": 16,
+          "いえや ベンチに いけなくなるよ": 9,
+          "みずの うえには おけないよ": 4,
+          "かいだんの ばしょだよ": 1,
+          "たいらな ところに おこう": 1
+        }
+      },
+      "state": {
+        "method": "T",
+        "owners": 39,
+        "stairs": 13,
+        "bridges": 2,
+        "unreachable": 9,
+        "lost": [],
+        "timing": {
+          "derive": 1.2999999523162842,
+          "terrain": 43.799999952316284,
+          "total": 58.5
+        }
+      }
+    },
+    {
+      "shot": "random24-T-whole.png",
+      "method": "T",
+      "view": "whole",
+      "state": {
+        "method": "T",
+        "owners": 39,
+        "stairs": 13,
+        "bridges": 2,
+        "unreachable": 9,
+        "lost": [],
+        "timing": {
+          "derive": 1.2999999523162842,
+          "terrain": 43.799999952316284,
+          "total": 58.5
+        }
+      }
+    },
+    {
+      "shot": "random24-T-near.png",
+      "method": "T",
+      "view": "near",
+      "state": {
+        "method": "T",
+        "owners": 39,
+        "stairs": 13,
+        "bridges": 2,
+        "unreachable": 9,
+        "lost": [],
+        "timing": {
+          "derive": 1.2999999523162842,
+          "terrain": 43.799999952316284,
+          "total": 58.5
+        }
+      }
+    },
+    {
+      "timing": {
+        "T": {
+          "ms": [
+            52.3,
+            52.6,
+            59,
+            57.5,
+            53.4
+          ],
+          "max": 59
+        },
+        "G": {
+          "ms": [
+            20.3,
+            19.1,
+            20.3,
+            19.1,
+            19.6
+          ],
+          "max": 20.3
+        }
+      },
+      "allRebuildsMs": [
+        88.9,
+        67.3,
+        78.1,
+        68.3,
+        64.3,
+        64.2,
+        52.3,
+        47.3,
+        64.2,
+        82.1,
+        67.5,
+        47.1,
+        45.4,
+        41,
+        41.6,
+        25.8,
+        41.2,
+        47.6,
+        38.8,
+        45,
+        42,
+        25.7,
+        41.8,
+        42,
+        40.2,
+        39.4,
+        39.5,
+        39.3,
+        40.4,
+        38.7,
+        23.7,
+        38.5,
+        42,
+        39.7,
+        42.3,
+        67.2,
+        65.7,
+        68.5,
+        71.2,
+        49.2,
+        67.2,
+        68.2,
+        67.4,
+        74.4,
+        72.5,
+        51.9,
+        67.8,
+        77.2,
+        68,
+        67.5,
+        67.4,
+        67.7,
+        78.8,
+        54.1,
+        70.7,
+        80,
+        72.7,
+        75.4,
+        58.5,
+        52.3,
+        52.6,
+        59,
+        57.5,
+        53.4,
+        20.3,
+        19.1,
+        20.3,
+        19.1,
+        19.6
+      ]
+    },
+    {
+      "reload": {
+        "islandSame": true,
+        "stairsSame": true,
+        "bridgesSame": true
+      }
+    },
+    {
+      "shot": "reloaded-T-whole.png",
+      "method": "T",
+      "view": "whole",
+      "state": {
+        "method": "T",
+        "owners": 39,
+        "stairs": 13,
+        "bridges": 2,
+        "unreachable": 9,
+        "lost": []
+      }
+    }
+  ],
+  "completedAt": "2026-10-24T08:18:55.349Z"
+}

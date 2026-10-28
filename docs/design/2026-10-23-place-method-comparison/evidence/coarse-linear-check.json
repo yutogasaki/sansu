@@ -1,0 +1,1090 @@
+{
+  "date": "2026-10-22T21:49:55.694Z",
+  "command": "node docs/design/2026-10-23-place-method-comparison/coarse-linear-check.mjs",
+  "hashes": {
+    "evidence/60-H-linear-stable-placed-state.json": "b2223b6e625377e8ba504a491bfebc8f98edc0ce0c10037cc5e9d457cf196932",
+    "evidence/69-H-wide-shore-final-state.json": "0c810ef159d5d7eef074f410ee3740a22b6be1de13579f9723b120f9544bb26a",
+    "coarse-linear-transform.mjs": "6388ba74f672a2a0290f136c52d6c702f82e9705d90c5ed20db00adda1694be7",
+    "coarse-linear-check.mjs": "81b5faf39987dbe7ca51ec43448a97d80f3900b59bbf63b92f05fc9144b30432",
+    "terrain-transform.mjs": "087f297d4454bcff192340c2fc3fc0f296bbfd9e9641ce5ecbc5d1a4fe4949e4",
+    "stable-base-transform.mjs": "aec96e9cd86c343726a0c96c0eae68439908d5deb22febce4bd0dc27b5a31afb",
+    "ramp-plane-transform.mjs": "4d4871f49a5ced65bdf97510ca93784915d717408c9fe91968d64b858274310b",
+    "curved-grid-transform.mjs": "85ee92ca649f26f0286c3036e57e33a1aef990265e440107d74d0b6c8a55cfbc",
+    "../../../src/domain/growingIsland/editableTerrainWorld.ts": "7606a6d2be402e90ef85154cd28e8cf3c07dd5d690538b37bbfbfd700e1fc324",
+    "../../../src/domain/growingIsland/worldDefinition.ts": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338"
+  },
+  "scope": "Node CPU only; H + linear + stable, two actual UI input states, plus synthetic single-cell extrema at4,4 with cleared undo/redo. No UI, DB, natural-use or visual acceptance. Original double compile used equally in both mesh densities.",
+  "comparisons": [
+    {
+      "input": "evidence/60-H-linear-stable-placed-state.json",
+      "extreme": null,
+      "coldMs": {
+        "detail12": 528.097042,
+        "detail6": 263.86683300000004
+      },
+      "counts": {
+        "detail12": {
+          "sites": 345,
+          "edges": 787,
+          "triangles": 49696
+        },
+        "detail6": {
+          "sites": 345,
+          "edges": 789,
+          "triangles": 12960
+        }
+      },
+      "sameSitesAndAnchors": true,
+      "siteSupportChanges": [],
+      "ownerSupportChanges": [],
+      "owners": [
+        {
+          "id": "p1",
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "supported": true
+        },
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 2,
+            "z": 5
+          },
+          "supported": true
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 1,
+            "z": 6
+          },
+          "supported": true
+        }
+      ],
+      "edgesLost": [],
+      "edgesGained": [
+        "1.5,1.5|1.5,2|walk",
+        "2.5,1.5|2.5,2|walk"
+      ],
+      "sameConnectivity": {
+        "walk": true,
+        "join": true,
+        "water": true
+      },
+      "sampling": {
+        "step": 0.05,
+        "count": 47241,
+        "maxHeightDelta": 0.058287003999999996,
+        "maxPositionDelta": 0.0017985006013480453,
+        "worst": {
+          "x": 2.75,
+          "z": 1.75
+        },
+        "dryLost": {
+          "count": 0,
+          "examples": []
+        },
+        "dryGained": {
+          "count": 0,
+          "examples": []
+        },
+        "waterLost": {
+          "count": 0,
+          "examples": []
+        },
+        "waterGained": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "commandDifferences": [],
+      "commands": {
+        "detail12": [
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 482.1077919999999
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 435.31987500000014
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 419.7292909999999
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 398.7570410000001
+          }
+        ],
+        "detail6": [
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 174.423792
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 187.60737499999993
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 216.34020899999996
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 168.473167
+          }
+        ]
+      }
+    },
+    {
+      "input": "evidence/60-H-linear-stable-placed-state.json",
+      "extreme": -4,
+      "coldMs": {
+        "detail12": 527.1279169999999,
+        "detail6": 233.577125
+      },
+      "counts": {
+        "detail12": {
+          "sites": 345,
+          "edges": 765,
+          "triangles": 49820
+        },
+        "detail6": {
+          "sites": 345,
+          "edges": 767,
+          "triangles": 13020
+        }
+      },
+      "sameSitesAndAnchors": true,
+      "siteSupportChanges": [],
+      "ownerSupportChanges": [],
+      "owners": [
+        {
+          "id": "p1",
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "supported": true
+        },
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 2,
+            "z": 5
+          },
+          "supported": true
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 1,
+            "z": 6
+          },
+          "supported": true
+        }
+      ],
+      "edgesLost": [],
+      "edgesGained": [
+        "1.5,1.5|1.5,2|walk",
+        "2.5,1.5|2.5,2|walk"
+      ],
+      "sameConnectivity": {
+        "walk": true,
+        "join": true,
+        "water": true
+      },
+      "sampling": {
+        "step": 0.05,
+        "count": 47241,
+        "maxHeightDelta": 0.058287003999999996,
+        "maxPositionDelta": 0.0017985006013480453,
+        "worst": {
+          "x": 2.75,
+          "z": 1.75
+        },
+        "dryLost": {
+          "count": 2,
+          "examples": [
+            {
+              "x": 4.2,
+              "z": 3.65
+            },
+            {
+              "x": 4.35,
+              "z": 3.8
+            }
+          ]
+        },
+        "dryGained": {
+          "count": 2,
+          "examples": [
+            {
+              "x": 4.4,
+              "z": 4.1
+            },
+            {
+              "x": 4.3,
+              "z": 4.2
+            }
+          ]
+        },
+        "waterLost": {
+          "count": 2,
+          "examples": [
+            {
+              "x": 4.4,
+              "z": 4.1
+            },
+            {
+              "x": 4.3,
+              "z": 4.2
+            }
+          ]
+        },
+        "waterGained": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "commandDifferences": [],
+      "commands": {
+        "detail12": [
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 0.41858300000001236
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 488.2512079999999
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 423.22749999999996
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 406.231
+          }
+        ],
+        "detail6": [
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 0.47579200000001265
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 182.459583
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 175.07329099999998
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 186.504458
+          }
+        ]
+      }
+    },
+    {
+      "input": "evidence/60-H-linear-stable-placed-state.json",
+      "extreme": 12,
+      "coldMs": {
+        "detail12": 517.194208,
+        "detail6": 229.658625
+      },
+      "counts": {
+        "detail12": {
+          "sites": 345,
+          "edges": 739,
+          "triangles": 49696
+        },
+        "detail6": {
+          "sites": 345,
+          "edges": 741,
+          "triangles": 12960
+        }
+      },
+      "sameSitesAndAnchors": true,
+      "siteSupportChanges": [],
+      "ownerSupportChanges": [],
+      "owners": [
+        {
+          "id": "p1",
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "supported": true
+        },
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 2,
+            "z": 5
+          },
+          "supported": true
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 1,
+            "z": 6
+          },
+          "supported": true
+        }
+      ],
+      "edgesLost": [],
+      "edgesGained": [
+        "1.5,1.5|1.5,2|walk",
+        "2.5,1.5|2.5,2|walk"
+      ],
+      "sameConnectivity": {
+        "walk": true,
+        "join": true,
+        "water": true
+      },
+      "sampling": {
+        "step": 0.05,
+        "count": 47241,
+        "maxHeightDelta": 0.058287003999999996,
+        "maxPositionDelta": 0.0017985006013480453,
+        "worst": {
+          "x": 2.75,
+          "z": 1.75
+        },
+        "dryLost": {
+          "count": 0,
+          "examples": []
+        },
+        "dryGained": {
+          "count": 0,
+          "examples": []
+        },
+        "waterLost": {
+          "count": 0,
+          "examples": []
+        },
+        "waterGained": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "commandDifferences": [],
+      "commands": {
+        "detail12": [
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 438.795792
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 0.14212499999985084
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 447.3414580000001
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 412.07775000000015
+          }
+        ],
+        "detail6": [
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 183.84666700000002
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 0.12387499999999818
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 173.00833299999994
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 183.147833
+          }
+        ]
+      }
+    },
+    {
+      "input": "evidence/69-H-wide-shore-final-state.json",
+      "extreme": null,
+      "coldMs": {
+        "detail12": 520.0382079999999,
+        "detail6": 242.157375
+      },
+      "counts": {
+        "detail12": {
+          "sites": 340,
+          "edges": 747,
+          "triangles": 49888
+        },
+        "detail6": {
+          "sites": 340,
+          "edges": 749,
+          "triangles": 13052
+        }
+      },
+      "sameSitesAndAnchors": true,
+      "siteSupportChanges": [],
+      "ownerSupportChanges": [],
+      "owners": [
+        {
+          "id": "p1",
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "supported": true
+        },
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 2,
+            "z": 5
+          },
+          "supported": true
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 1,
+            "z": 6
+          },
+          "supported": true
+        }
+      ],
+      "edgesLost": [],
+      "edgesGained": [
+        "1.5,1.5|1.5,2|walk",
+        "2.5,1.5|2.5,2|walk"
+      ],
+      "sameConnectivity": {
+        "walk": true,
+        "join": true,
+        "water": true
+      },
+      "sampling": {
+        "step": 0.05,
+        "count": 47241,
+        "maxHeightDelta": 0.058287003999999996,
+        "maxPositionDelta": 0.0017985006013480453,
+        "worst": {
+          "x": 2.75,
+          "z": 1.75
+        },
+        "dryLost": {
+          "count": 0,
+          "examples": []
+        },
+        "dryGained": {
+          "count": 1,
+          "examples": [
+            {
+              "x": 5.1,
+              "z": 6.95
+            }
+          ]
+        },
+        "waterLost": {
+          "count": 1,
+          "examples": [
+            {
+              "x": 5.1,
+              "z": 6.95
+            }
+          ]
+        },
+        "waterGained": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "commandDifferences": [],
+      "commands": {
+        "detail12": [
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 484.56337500000006
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 423.57945900000004
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 405.71849999999995
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 413.8028750000001
+          }
+        ],
+        "detail6": [
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 183.28658299999995
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 166.10562500000003
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 163.63149999999996
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 185.2115829999999
+          }
+        ]
+      }
+    },
+    {
+      "input": "evidence/69-H-wide-shore-final-state.json",
+      "extreme": -4,
+      "coldMs": {
+        "detail12": 519.030666,
+        "detail6": 235.71325
+      },
+      "counts": {
+        "detail12": {
+          "sites": 340,
+          "edges": 723,
+          "triangles": 50012
+        },
+        "detail6": {
+          "sites": 340,
+          "edges": 725,
+          "triangles": 13112
+        }
+      },
+      "sameSitesAndAnchors": true,
+      "siteSupportChanges": [],
+      "ownerSupportChanges": [],
+      "owners": [
+        {
+          "id": "p1",
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "supported": true
+        },
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 2,
+            "z": 5
+          },
+          "supported": true
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 1,
+            "z": 6
+          },
+          "supported": true
+        }
+      ],
+      "edgesLost": [],
+      "edgesGained": [
+        "1.5,1.5|1.5,2|walk",
+        "2.5,1.5|2.5,2|walk"
+      ],
+      "sameConnectivity": {
+        "walk": true,
+        "join": true,
+        "water": true
+      },
+      "sampling": {
+        "step": 0.05,
+        "count": 47241,
+        "maxHeightDelta": 0.058287003999999996,
+        "maxPositionDelta": 0.0017985006013480453,
+        "worst": {
+          "x": 2.75,
+          "z": 1.75
+        },
+        "dryLost": {
+          "count": 2,
+          "examples": [
+            {
+              "x": 4.2,
+              "z": 3.65
+            },
+            {
+              "x": 4.35,
+              "z": 3.8
+            }
+          ]
+        },
+        "dryGained": {
+          "count": 3,
+          "examples": [
+            {
+              "x": 4.4,
+              "z": 4.1
+            },
+            {
+              "x": 4.3,
+              "z": 4.2
+            },
+            {
+              "x": 5.1,
+              "z": 6.95
+            }
+          ]
+        },
+        "waterLost": {
+          "count": 3,
+          "examples": [
+            {
+              "x": 4.4,
+              "z": 4.1
+            },
+            {
+              "x": 4.3,
+              "z": 4.2
+            },
+            {
+              "x": 5.1,
+              "z": 6.95
+            }
+          ]
+        },
+        "waterGained": {
+          "count": 1,
+          "examples": [
+            {
+              "x": 3.75,
+              "z": 4.05
+            }
+          ]
+        }
+      },
+      "commandDifferences": [],
+      "commands": {
+        "detail12": [
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 0.4130000000000109
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 468.24520899999993
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 428.431458
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 406.0632079999998
+          }
+        ],
+        "detail6": [
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 0.5951660000000061
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 185.10108299999996
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 174.94020800000004
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 195.44208300000003
+          }
+        ]
+      }
+    },
+    {
+      "input": "evidence/69-H-wide-shore-final-state.json",
+      "extreme": 12,
+      "coldMs": {
+        "detail12": 550.517625,
+        "detail6": 268.340417
+      },
+      "counts": {
+        "detail12": {
+          "sites": 340,
+          "edges": 700,
+          "triangles": 49888
+        },
+        "detail6": {
+          "sites": 340,
+          "edges": 702,
+          "triangles": 13052
+        }
+      },
+      "sameSitesAndAnchors": true,
+      "siteSupportChanges": [],
+      "ownerSupportChanges": [],
+      "owners": [
+        {
+          "id": "p1",
+          "cell": {
+            "x": 0,
+            "z": 1
+          },
+          "supported": true
+        },
+        {
+          "id": "starter-flower",
+          "cell": {
+            "x": 2,
+            "z": 5
+          },
+          "supported": true
+        },
+        {
+          "id": "starter-bench",
+          "cell": {
+            "x": 1,
+            "z": 6
+          },
+          "supported": true
+        }
+      ],
+      "edgesLost": [],
+      "edgesGained": [
+        "1.5,1.5|1.5,2|walk",
+        "2.5,1.5|2.5,2|walk"
+      ],
+      "sameConnectivity": {
+        "walk": true,
+        "join": true,
+        "water": true
+      },
+      "sampling": {
+        "step": 0.05,
+        "count": 47241,
+        "maxHeightDelta": 0.058287003999999996,
+        "maxPositionDelta": 0.0017985006013480453,
+        "worst": {
+          "x": 2.75,
+          "z": 1.75
+        },
+        "dryLost": {
+          "count": 0,
+          "examples": []
+        },
+        "dryGained": {
+          "count": 1,
+          "examples": [
+            {
+              "x": 5.1,
+              "z": 6.95
+            }
+          ]
+        },
+        "waterLost": {
+          "count": 1,
+          "examples": [
+            {
+              "x": 5.1,
+              "z": 6.95
+            }
+          ]
+        },
+        "waterGained": {
+          "count": 0,
+          "examples": []
+        }
+      },
+      "commandDifferences": [],
+      "commands": {
+        "detail12": [
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 578.660959
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 2.2076250000000073
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 620.6759999999999
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 518.0477500000002
+          }
+        ],
+        "detail6": [
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 199.01895799999994
+          },
+          {
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 0.29483300000003965
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": -1,
+            "accepted": true,
+            "elapsedMs": 169.8380830000001
+          },
+          {
+            "cell": {
+              "x": 5,
+              "z": 7
+            },
+            "delta": 1,
+            "accepted": true,
+            "elapsedMs": 187.27658299999996
+          }
+        ]
+      }
+    }
+  ]
+}

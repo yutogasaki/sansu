@@ -1,0 +1,302 @@
+{
+  "status": "COMPARABLE_N1_WITH_NATURAL_USE_DIFFERENCES",
+  "createdAt": "2026-10-22T22:22:35.371236+00:00",
+  "command": "python3 /private/tmp/sansu-edge-browser-pair-check.py",
+  "checkerSHA256": "0c85ccf5ee7749a753a56475b41e13c462471ef5ece6d3a1e6c5f1278010ea1a",
+  "sourceSHA256": {
+    "79-H-edge-memo-before-state.json": "7b2ca7a2eb1b1781ae8d82a965d7051282cc988abb466a1093cc3ff114044f0f",
+    "79-H-edge-memo-cold-state.json": "3a52849573fc068e34097a806485726340269e7c2ad78784716163c4f6ceecff",
+    "79-H-edge-memo-cold-cpu.json": "24bf32124b91cdac2b9eef09b27e00aa2a432fa85dddc3bdd31b232706e173a0",
+    "79-H-edge-memo-cold-cadence.json": "b37e2b385a6956da2ff975da57d58c964d071d1e22208196f449cba8abb2761e",
+    "79-H-edge-memo-cold-app-dom.json": "b5ce3d26ff83048f7ebdafa7b0231ca9dfc38b85caafc0ef62b1e81ba7dbfe2f",
+    "79-H-edge-memo-cold-world-dom.json": "2fe3c15d4daa8db0ab12988e62a5e863b7dddfc2a6b24811931823b1a7699b09",
+    "80-H-no-edge-before-state.json": "11094a835c2e658169fa231e2aa0ccdb0b6ce65e13214e6a5088449265454a33",
+    "80-H-no-edge-cold-after-state.json": "f4a6fbb6d4dd3b1f40c0f2b30e8b5dc5f807e550070ee9d1c42406a11f30e242",
+    "80-H-no-edge-cold-cpu.json": "5eef2000a820aa92a3f11b59ec900e90f0f6e7a4c780dcaa6a20e739ffa550ce",
+    "80-H-no-edge-cold-cadence.json": "56ba58c434a72c02f6cb248162ac7862c026f68a77075cd9c3e1c2caa28fe4ef",
+    "80-H-no-edge-cold-app-dom.json": "b969a04381fcc4b1eb85785091a455d64f93f2378463f3f54da11211711304a2",
+    "80-H-no-edge-cold-world-dom.json": "756c8cecf8207a7fd7a4f51f528f745947726436e11e471765a4719687620855"
+  },
+  "build": {
+    "data-build-revision": "place-method-comparison-v17",
+    "data-build-version": "place-method-comparison-v17:5b6010bc-bffc-4422-81d0-dbe64f42da87",
+    "data-configured-delivery-id": "snap-root-v1",
+    "data-delivery-id": "snap-root-v1",
+    "data-island-feature-enabled": "true",
+    "data-nature-town-feature-enabled": "false",
+    "data-ui-style-candidate": "whole-app-atelier-v1",
+    "data-visual-lineage-id": "pokko-field-v1"
+  },
+  "captureAttributeDifferences": {
+    "app": [
+      ".class"
+    ],
+    "world": [
+      ".class",
+      "data-method-candidate"
+    ],
+    "note": "80 captures also include CSS class attributes; 79 captures only data attributes. All shared data fields compared."
+  },
+  "controls": {
+    "before": {
+      "fixture": true,
+      "land": true,
+      "terrain": true,
+      "plots": true,
+      "landmarks": true,
+      "keepsakes": true,
+      "villagers": true,
+      "character": true,
+      "drops": true,
+      "town": true,
+      "places": true
+    },
+    "after": {
+      "fixture": true,
+      "land": true,
+      "terrain": true,
+      "plots": true,
+      "landmarks": true,
+      "keepsakes": true,
+      "villagers": true,
+      "character": true,
+      "drops": true,
+      "town": true,
+      "places": true
+    }
+  },
+  "cameraAndWorldDOM": {
+    "equalExceptCandidateSuffix": true,
+    "differences": [
+      "data-method-candidate"
+    ],
+    "camera": {
+      "matrixWorld": [
+        0.9255469562056767,
+        1.3877787807814457e-17,
+        -0.3786328457205041,
+        0,
+        -0.2077497339430649,
+        0.8360299122352683,
+        -0.5078326829719364,
+        0,
+        0.31654838477710295,
+        0.5486838669469785,
+        0.7737849405662516,
+        0,
+        5.244711976940932,
+        10.12454270627072,
+        16.246042915770417,
+        1
+      ],
+      "projectionMatrix": [
+        0.17920890479395285,
+        0,
+        0,
+        0,
+        0,
+        0.16154042122271806,
+        0,
+        0,
+        0,
+        0,
+        -0.02002002002002002,
+        0,
+        0,
+        0,
+        -1.002002002002002,
+        1
+      ],
+      "center": 2.5,
+      "curved": true
+    },
+    "terrainRevisionEqual": true,
+    "fullDOM": {
+      "data-art-candidate": "editable-lived-island-v1",
+      "data-authored-cove-enabled": "false",
+      "data-authored-shoulder-enabled": "false",
+      "data-authored-whole-art-enabled": "false",
+      "data-bridge-saved": "false",
+      "data-growing-bounds": "{\"minX\":-3,\"maxX\":8,\"depth\":8}",
+      "data-growing-camera": "{\"matrixWorld\":[0.9255469562056767,1.3877787807814457e-17,-0.3786328457205041,0,-0.2077497339430649,0.8360299122352683,-0.5078326829719364,0,0.31654838477710295,0.5486838669469785,0.7737849405662516,0,5.244711976940932,10.12454270627072,16.246042915770417,1],\"projectionMatrix\":[0.17920890479395285,0,0,0,0,0.16154042122271806,0,0,0,0,-0.02002002002002002,0,0,0,-1.002002002002002,1],\"center\":2.5,\"curved\":true}",
+      "data-growing-feature-enabled": "true",
+      "data-growing-world": "true",
+      "data-landscape-projection": "editable-common-floor-v1",
+      "data-method-candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+      "data-native-growing-art": "false",
+      "data-place-count": "1",
+      "data-place-relations": "",
+      "data-place-topology": "P05:flower-path:grown",
+      "data-strategy-gardens": "[]",
+      "data-strategy-trial": "material",
+      "data-terrain-editing": "true",
+      "data-terrain-heights": "{\"0,4\":-3,\"5,0\":1,\"5,2\":-1,\"5,1\":-1,\"1,3\":3,\"2,3\":3,\"2,2\":2,\"3,3\":2,\"1,4\":3,\"3,4\":3,\"2,4\":3,\"3,2\":1,\"0,3\":2,\"1,2\":1,\"1,5\":3,\"2,5\":3,\"3,5\":3,\"8,4\":-1,\"-2,5\":1,\"-1,5\":2,\"0,5\":3,\"4,5\":1,\"8,5\":-1,\"-2,6\":1,\"-1,6\":2,\"0,6\":3,\"1,6\":3,\"2,6\":3,\"3,6\":3,\"8,6\":-1,\"0,7\":2,\"1,7\":2,\"2,7\":2,\"5,6\":-3,\"5,7\":-3,\"4,6\":-3,\"4,7\":-3,\"4,4\":-1}",
+      "data-terrain-revision": "true:[\"fixed-bilinear-interior-ramp-v1\",\"fixed-core-base-v1\",\"cardinal-convex-terrace-v2+fixed-two-shear-grid-v1\",\"H\",{\"extra\":[\"west\",\"south\"],\"capes\":[],\"expanded\":\"east\"},null,[[\"-1,5\",2],[\"-1,6\",2],[\"-2,5\",1],[\"-2,6\",1],[\"0,3\",2],[\"0,4\",-3],[\"0,5\",3],[\"0,6\",3],[\"0,7\",2],[\"1,2\",1],[\"1,3\",3],[\"1,4\",3],[\"1,5\",3],[\"1,6\",3],[\"1,7\",2],[\"2,2\",2],[\"2,3\",3],[\"2,4\",3],[\"2,5\",3],[\"2,6\",3],[\"2,7\",2],[\"3,2\",1],[\"3,3\",2],[\"3,4\",3],[\"3,5\",3],[\"3,6\",3],[\"4,4\",-1],[\"4,5\",1],[\"4,6\",-3],[\"4,7\",-3],[\"5,0\",1],[\"5,1\",-1],[\"5,2\",-1],[\"5,6\",-3],[\"5,7\",-3],[\"8,4\",-1],[\"8,5\",-1],[\"8,6\",-1]]]",
+      "data-terrain-selection": "4,4",
+      "data-visual-candidate": "growing-island-v1",
+      "data-world-definition": "legacy-world-v1:-3,8,8:curved-owned-v1:no-bridge"
+    }
+  },
+  "operationChecks": [
+    {
+      "mode": "on",
+      "operation": {
+        "cell": {
+          "x": 4,
+          "z": 4
+        },
+        "before": 0,
+        "after": -1
+      },
+      "exactRawHeightsTransition": true,
+      "exactAppendAndCap64UndoTransition": true,
+      "redoEmpty": true,
+      "unrelatedCoreFieldsUnchanged": {
+        "fixture": true,
+        "land": true,
+        "plots": true,
+        "landmarks": true,
+        "keepsakes": true,
+        "villagers": true,
+        "character": true,
+        "drops": true,
+        "town": true
+      },
+      "placeProgressUnchangedDuringOperation": true,
+      "onlySelectedCellHeightChanged": true
+    },
+    {
+      "mode": "off",
+      "operation": {
+        "cell": {
+          "x": 4,
+          "z": 4
+        },
+        "before": 0,
+        "after": -1
+      },
+      "exactRawHeightsTransition": true,
+      "exactAppendAndCap64UndoTransition": true,
+      "redoEmpty": true,
+      "unrelatedCoreFieldsUnchanged": {
+        "fixture": true,
+        "land": true,
+        "plots": true,
+        "landmarks": true,
+        "keepsakes": true,
+        "villagers": true,
+        "character": true,
+        "drops": true,
+        "town": true
+      },
+      "placeProgressUnchangedDuringOperation": true,
+      "onlySelectedCellHeightChanged": true
+    }
+  ],
+  "observations": [
+    {
+      "mode": "on",
+      "worldMs": 344.9,
+      "worldSelfMs": 67.1,
+      "compileMs": 277.8,
+      "actionMs": 346.5,
+      "sceneMs": 57.3,
+      "sceneLayoutMs": 44.9,
+      "nonOverlappingRootSumMs": 403.8,
+      "longtaskMs": 407,
+      "rafMaxMs": 400.7,
+      "rafMedianMs": 16.7,
+      "rafP95Ms": 18.4,
+      "clickToActionStartMs": 1.0,
+      "startedAt": "2026-10-22T22:16:49.859Z",
+      "clicks": [
+        {
+          "atMs": 283,
+          "tag": "summary",
+          "id": null,
+          "label": "比較の記録 · H"
+        },
+        {
+          "atMs": 566.9,
+          "tag": "button",
+          "id": null,
+          "label": "じめんを さげる"
+        }
+      ]
+    },
+    {
+      "mode": "off",
+      "worldMs": 355.3,
+      "worldSelfMs": 71.7,
+      "compileMs": 283.6,
+      "actionMs": 356.6,
+      "sceneMs": 85.4,
+      "sceneLayoutMs": 66.5,
+      "nonOverlappingRootSumMs": 442.0,
+      "longtaskMs": 445,
+      "rafMaxMs": 433.4,
+      "rafMedianMs": 16.7,
+      "rafP95Ms": 18.2,
+      "clickToActionStartMs": 0.2,
+      "startedAt": "2026-10-22T22:18:26.110Z",
+      "clicks": [
+        {
+          "atMs": 283.7,
+          "tag": "summary",
+          "id": null,
+          "label": "比較の記録 · H"
+        },
+        {
+          "atMs": 566.4,
+          "tag": "button",
+          "id": null,
+          "label": "じめんを さげる"
+        }
+      ]
+    }
+  ],
+  "offMinusOnMs": {
+    "worldMs": 10.4,
+    "worldSelfMs": 4.6,
+    "compileMs": 5.8,
+    "actionMs": 10.1,
+    "sceneMs": 28.1,
+    "longtaskMs": 38,
+    "rafMaxMs": 32.7
+  },
+  "remainingStateDifferences": {
+    "before": [
+      "candidate",
+      "placeProgress.useHistory[31].actorId",
+      "placeProgress.useHistory[31].at",
+      "placeProgress.useHistory[31].targetId",
+      "placeProgress.useHistory[32]",
+      "placeProgress.useHistory[33]",
+      "placeProgress.uses.P05.pokomoko.at",
+      "placeProgress.uses.P05.pokomoko.targetId",
+      "placeProgress.uses.P05.villager.at",
+      "placeProgress.uses.P05.villager.revision"
+    ],
+    "after": [
+      "candidate",
+      "placeProgress.useHistory[31].actorId",
+      "placeProgress.useHistory[31].at",
+      "placeProgress.useHistory[31].targetId",
+      "placeProgress.useHistory[32]",
+      "placeProgress.useHistory[33]",
+      "placeProgress.uses.P05.pokomoko.at",
+      "placeProgress.uses.P05.pokomoko.targetId",
+      "placeProgress.uses.P05.villager.at",
+      "placeProgress.uses.P05.villager.revision"
+    ]
+  },
+  "replicatesPerMode": 1,
+  "limitations": [
+    "One visible cold edit per condition, fixed ON then OFF order. No randomized repetitions or control of GC/thermal state.",
+    "Natural use records differ between conditions; full state equality and identical actor positions are not claimed.",
+    "Camera/world/build DOM and material geometry inputs match; actual GPU mesh or rendered pixels are not hashed.",
+    "CPU spans are inclusive and nested; only separate action and scene roots are added.",
+    "Shore memory-only fixture, not a persisted DB/offline save or production release test.",
+    "No claim all compile cost is removed or that remaining frame gap is smooth direct editing."
+  ]
+}

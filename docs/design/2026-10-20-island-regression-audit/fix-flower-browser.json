@@ -1,0 +1,176 @@
+{
+  "at": "2026-10-20T12:11:42.938Z",
+  "target": "http://127.0.0.1:5286",
+  "scope": "明示した成熟fixtureのproduction preview。390/768幅の実描画・選択・利用receipt。追加/成熟の遷移はdomain回帰テスト。新規2ケースのoffline再読込・実取得・実機・子どもの観察は未検証。",
+  "cases": [
+    {
+      "width": 390,
+      "name": "flower-canopy-addition",
+      "selectionTitle": "おはな",
+      "commandFocus": "P05:source-0",
+      "manualCameraPreserved": true,
+      "topology": "flower-bed",
+      "mainIds": [
+        "source-0",
+        "source-1",
+        "source-2",
+        "source-3",
+        "source-4"
+      ],
+      "structure": "P05:canopy",
+      "actualUse": {
+        "at": 1792497600000,
+        "ruleId": "P05",
+        "anchorId": "source-0",
+        "memberIds": [
+          "source-0",
+          "source-1",
+          "source-2",
+          "source-3",
+          "source-4"
+        ],
+        "variant": "flower-bed",
+        "actorId": "pokomoko",
+        "targetId": "source-0:garden"
+      },
+      "metadata": {
+        "url": "http://127.0.0.1:5286/#/island",
+        "revision": "development-local",
+        "version": "development-local:ce865660-48b0-4154-8a60-1b69404f6206",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "drawCalls": 0,
+        "viewport": {
+          "width": 390,
+          "height": 900
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": false,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:ce865660-48b0-4154-8a60-1b69404f6206",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "pass": true
+    },
+    {
+      "width": 768,
+      "name": "flower-canopy-addition",
+      "selectionTitle": "おはな",
+      "commandFocus": "P05:source-0",
+      "manualCameraPreserved": true,
+      "topology": "flower-bed",
+      "mainIds": [
+        "source-0",
+        "source-1",
+        "source-2",
+        "source-3",
+        "source-4"
+      ],
+      "structure": "P05:canopy",
+      "actualUse": {
+        "at": 1792497600000,
+        "ruleId": "P05",
+        "anchorId": "source-0",
+        "memberIds": [
+          "source-0",
+          "source-1",
+          "source-2",
+          "source-3",
+          "source-4"
+        ],
+        "variant": "flower-bed",
+        "actorId": "pokomoko",
+        "targetId": "source-0:garden"
+      },
+      "metadata": {
+        "url": "http://127.0.0.1:5286/#/island",
+        "revision": "development-local",
+        "version": "development-local:ce865660-48b0-4154-8a60-1b69404f6206",
+        "delivery": "mystic-island-v1",
+        "candidate": "mystic-island-shore-garden-v18",
+        "learningCandidate": "pokomoko-pop-live-v8",
+        "islandFeatureEnabled": true,
+        "mode": "home",
+        "drawCalls": 0,
+        "viewport": {
+          "width": 768,
+          "height": 1024
+        },
+        "serviceWorkerControlled": true,
+        "reducedMotion": true,
+        "appRoot": {
+          "revision": "development-local",
+          "version": "development-local:ce865660-48b0-4154-8a60-1b69404f6206",
+          "configuredDelivery": "snap-root-v1",
+          "visualLineage": "pokko-field-v1",
+          "islandFeatureEnabled": true,
+          "natureTownFeatureEnabled": false
+        }
+      },
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "version": {
+    "version": "development-local:ce865660-48b0-4154-8a60-1b69404f6206",
+    "revision": "development-local",
+    "delivery": "snap-root-v1",
+    "visualLineage": "pokko-field-v1",
+    "park": {
+      "enabled": false,
+      "renderer": "retired"
+    },
+    "island": {
+      "enabled": true,
+      "delivery": "mystic-island-v1",
+      "candidate": "mystic-island-shore-garden-v18",
+      "life": {
+        "enabled": true,
+        "discovery": false,
+        "fantasy": false,
+        "candidate": "island-life-v1",
+        "saveVersion": 21
+      },
+      "learningCandidate": "pokomoko-pop-live-v8",
+      "nativeArtStudy": {
+        "enabled": false,
+        "candidate": "native-05-art-transfer-v1",
+        "gameplayMapped": false
+      },
+      "nativeOwnedArt": {
+        "enabled": false,
+        "candidate": "native05-expanding-runtime-v2",
+        "gameplayMapped": true
+      },
+      "residentCandidate": "patchwork-otter-v1",
+      "artDirection": "moon-garden"
+    }
+  },
+  "inputs": {
+    "src/domain/growingIsland/communityRoof.ts": "8c34f517ca12fb0e3859c25b9d2017b7872dfef83d894ff5ed177d699b6d143d",
+    "src/domain/growingIsland/placeCapability.ts": "a313f57a00e25ac5aded19070402e510ee9b3a5a2b3c7b6dba159f52854e91c1",
+    "src/domain/growingIsland/places.ts": "9aef0b31ea483c03caaf8a0eb59308573e56f7820b3139bbcfbbf20a2da59fac",
+    "src/components/island/growing/placeCommunityRoofGeometry.ts": "21f29892f3b6569a988921bb47e83bb935ee21e6d6587f5600402173bec9494f",
+    "src/components/island/growing/placeGeometry.ts": "46fa1c266f2e3681ae053fe696048df5181ef9ab0aa36ae1327ced9303a0efee",
+    "src/components/island/growing/placeFlowerGeometry.ts": "7d63e4918fdb65cb98748de7fa38b58249444af9b89da9dbe0e89043636292be",
+    "src/components/island/growing/objectLayer.ts": "c64d51df3d86c4389927eb126acacde9b50268928f1c2b2370d0fcb276f53f2f",
+    "src/components/island/growing/GrowingWorld.tsx": "e02e123176e24bc819ab3681b98093951053f9004cb2306c007e431ecbe05f65",
+    "src/components/island/growing/GrowingIsland.tsx": "0e15783fcf298556caaeaf6cd368ccc993baf69f69234406d7e6c27deb6fcfc5",
+    "src/components/island/growing/GrowingSheet.tsx": "f0366ee873b8757135f49d9d0abbc98d5aaaf5dc8e9c7d00c857481509b1a03c",
+    "src/components/island/growing/growingLife.ts": "a3713bfaf9a83b7b556b9a9eae5fd925e4302d8160515ace36972ea70fe3d145",
+    "src/components/island/growing/growingCamera.ts": "db28b95d53474b1055aa30a49535744020c00acc890a14229267ab46a5635eba",
+    "src/domain/growingIsland/placeArchitecture.fixture.ts": "801ddf15563f355e7e3babd76e7f350ee8b0ac4e141b831b796c7cd2a6cb9573",
+    "tools/e2e-growing-architecture.mjs": "ac259f3c9044feeb2ff7e3e4abaa81cf768d21ea22c22201020ae0fc9b76ea66"
+  },
+  "requestedCases": [
+    "flower-canopy-addition"
+  ]
+}

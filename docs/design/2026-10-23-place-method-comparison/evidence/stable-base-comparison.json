@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-22T21:32:13.664Z",
+  "hashes": {
+    "stable-base-field.ts": "3c73c3d5cbaac7c65c647a7772ff4f999d385e90448eb1ed4ed602182d27faca",
+    "stable-base-transform.mjs": "aec96e9cd86c343726a0c96c0eae68439908d5deb22febce4bd0dc27b5a31afb",
+    "stable-base-check.ts": "c581f27732ed8b7c946ff0c82f2e55414fe4ec8e01210324a956069e41be7887",
+    "stable-base-check.mjs": "d425d43a6fc12d934d397e22d092ae661b6d637bc82b71e039fd7e3b4755e912",
+    "terrain-transform.mjs": "087f297d4454bcff192340c2fc3fc0f296bbfd9e9641ce5ecbc5d1a4fe4949e4",
+    "growth-seam.ts": "afd12cb5f5a8a4df9e559fe76c6a27c5fbcaa839db0be1d13536df561116fb64",
+    "evidence/expanded-fixture-v2.json": "003656d76e6f429fb870851b85f3047200f3dabccb127c0bcfa37a8beefb15f0",
+    "evidence/33-F2-used-state.json": "081e357da5da782ed1dcdd0edcf91153ecb300c1192c2d546784e0e639643bcd"
+  },
+  "comparisons": [
+    {
+      "mode": "F",
+      "initialNewExteriorDry": 0,
+      "expandedLostReachable": [
+        "-1,4.5"
+      ]
+    },
+    {
+      "mode": "H",
+      "initialNewExteriorDry": 0,
+      "expandedLostReachable": [
+        "-1,4.5"
+      ]
+    }
+  ]
+}

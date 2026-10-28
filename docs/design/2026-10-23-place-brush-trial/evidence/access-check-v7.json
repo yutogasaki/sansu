@@ -1,0 +1,112 @@
+{
+  "at": "2026-10-24T00:45:27.075Z",
+  "status": "PASS",
+  "scope": "Actual transformed domain; empty actor precondition, not browser proof",
+  "oldBlockedCore": [
+    {
+      "x": 5,
+      "z": 5
+    },
+    {
+      "x": 5,
+      "z": 4.5
+    },
+    {
+      "x": 4.5,
+      "z": 5
+    },
+    {
+      "x": 5.5,
+      "z": 5
+    },
+    {
+      "x": 5,
+      "z": 5.5
+    }
+  ],
+  "reachablePlatform": {
+    "x": 5,
+    "z": 4
+  },
+  "route": [
+    {
+      "x": 2,
+      "z": 1
+    },
+    {
+      "x": 3,
+      "z": 1
+    },
+    {
+      "x": 4,
+      "z": 1
+    },
+    {
+      "x": 5,
+      "z": 1
+    },
+    {
+      "x": 5,
+      "z": 2
+    },
+    {
+      "x": 5,
+      "z": 3
+    },
+    {
+      "x": 5,
+      "z": 4
+    }
+  ],
+  "history": {
+    "version": 1,
+    "recipe": "place-outline-platform-v2:H:fixed-two-shear-grid-v1:fixed-core-base-v1:fixed-bilinear-interior-ramp-v1:flat-owner-v1",
+    "undo": [
+      {
+        "after": {
+          "center": {
+            "x": 5,
+            "z": 5
+          },
+          "radius": 1.6,
+          "height": 0.5,
+          "entrance": 1.2,
+          "flatRadius": 1.75
+        }
+      },
+      {
+        "before": {
+          "center": {
+            "x": 5,
+            "z": 5
+          },
+          "radius": 1.6,
+          "height": 0.5,
+          "entrance": 1.2,
+          "flatRadius": 1.75
+        },
+        "after": {
+          "center": {
+            "x": 5,
+            "z": 5
+          },
+          "radius": 1.6,
+          "height": 0.5,
+          "entrance": 2,
+          "flatRadius": 1.75
+        }
+      }
+    ],
+    "redo": []
+  },
+  "cases": [
+    "occupied-centre entrance edit",
+    "Undo/Redo preserves owners",
+    "outer rim only rejected",
+    "disconnected top rejected",
+    "different/wet height rejected",
+    "short high ramp rejected",
+    "unsafe owner Undo rejected",
+    "original state immutable"
+  ]
+}

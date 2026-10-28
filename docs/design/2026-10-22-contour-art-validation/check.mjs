@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict';
+import {shoreTexture,vegetation,disposeGroup} from './finish.js';
+import {writeFileSync,readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {initial,metrics,field,build,edit,presets,walkingProbe} from './terrain.mjs';
+const revision=createHash('sha256').update(readFileSync(new URL('./terrain.mjs',import.meta.url))).digest('hex');
+const expectations={single:1,pair:1,ell:1,square:1,diagonal:1,reverse:1,gap:2,hole:1};
+const report={at:new Date().toISOString(),sourceSha256:revision,scope:'observed topology plus local engineering counterexamples, not artwork acceptance',iterations:[],checks:[]};
+for(const method of ['hard','blend']){
+ const rows=Object.keys(presets).map(name=>{const cells=initial(name),m=metrics(cells,method),f=field(cells,method);const holePreserved=name!=='hole'||f(0,0)>0,solidSquare=name!=='square'||f(.5,.5)<0;return{name,...m,expectedComponents:expectations[name],holePreserved,solidSquare,pass:m.components===expectations[name]&&holePreserved&&solidSquare};});
+ report.iterations.push({method,rows,pass:rows.every(r=>r.pass)});
+}
+writeFileSync(new URL('./evidence/iteration-1.json',import.meta.url),JSON.stringify({...report,iterations:report.iterations.slice(0,1)},null,2)+'\n');
+function check(name,fn){fn();report.checks.push({name,pass:true});}
+check('H1 is falsified by diagonal observation',()=>assert.equal(report.iterations[0].rows.find(r=>r.name==='diagonal').pass,false));
+check('H2 matches topology and preserves gap/hole counterexamples',()=>assert.equal(report.iterations[1].pass,true));
+check('90-degree rotational symmetry and edit ordering',()=>{const cells=initial('ell').filter(c=>c.h>=2),rot=cells.map(c=>({...c,x:-c.z,z:c.x})),f=field(cells,'blend'),g=field(rot,'blend'),r=field([...cells].reverse(),'blend');for(let z=-2;z<2;z+=.17)for(let x=-2;x<2;x+=.13){assert.ok(Math.abs(f(x,z)-g(-z,x))<1e-10);assert.ok(Math.abs(f(x,z)-r(x,z))<1e-10);}});
+check('Independent material then height; undo/redo input and geometry reproducible',()=>{const a=initial('single'),b=edit(a,0,0,'stone'),c=edit(b,0,0,'stone');assert.equal(b.find(c=>c.x===0&&c.z===0).h,2);assert.equal(c.find(c=>c.x===0&&c.z===0).h,3);assert.equal(a.find(c=>c.x===0&&c.z===0).material,'soil');const past=[a,b],future=[c],undo=past.pop(),redo=future.pop();assert.deepEqual(undo,b);assert.deepEqual(redo,c);assert.deepEqual(build(b,'blend').positions,build(undo,'blend').positions);});
+check('All eight meshes finite; actual triangle floor supports cell centers',()=>{for(const name of Object.keys(presets)){const cells=initial(name),mesh=build(cells,'blend');assert.ok(mesh.positions.every(Number.isFinite));for(const c of cells.filter(c=>c.h===2)){for(const [dx,dz]of[[0,0],[.12,0],[-.12,0],[0,.12],[0,-.12]])assert.ok(Math.abs(mesh.floor(c.x+dx,c.z+dz)-.69)<.03);}const center=mesh.floor(.5,.5);if(name==='diagonal'||name==='reverse')assert.ok(center>.65);if(name==='square')assert.ok(center>.65);if(name==='hole'||name==='gap')assert.ok(mesh.floor(0,0)<.3);}});
+check('Two-level increase keeps same contour at each occupied upper level',()=>{const cells=initial('single');cells.find(c=>c.x===0&&c.z===0).h=3;const f=field(cells,'blend',2),g=field(cells,'blend',3);for(let x=-1;x<=1;x+=.07)assert.equal(f(x,.4),g(x,.4));});
+check('Over-blending falsifies the hole requirement',()=>{const cells=initial('hole');assert.ok(field(cells,'blend',2,.25)(0,0)>0);assert.ok(field(cells,'blend',2,.5)(0,0)<0);});
+check('Rounded shoulders support a 0.17-radius footprint with bounded local slope; disconnected gap rejects crossing',()=>{for(const name of ['diagonal','reverse']){const probe=walkingProbe(build(initial(name),'blend'),name==='reverse');assert.ok(probe.pass);assert.ok(probe.maxSpread<.08);}assert.equal(walkingProbe(build(initial('gap'),'blend')).pass,false);});
+check('Visible rounded meshes preserve interior land and exterior gaps on a dense independent floor grid',()=>{for(const name of Object.keys(presets)){const cells=initial(name),mesh=build(cells,'blend'),f=field(cells,'blend');for(let z=-2.5;z<=2.5;z+=.1)for(let x=-2.5;x<=2.5;x+=.1){const d=f(x,z),h=mesh.floor(x,z);if(d<-.1)assert.ok(h>.57,`${name}: missing visible top at ${x},${z}`);if(d>.16)assert.ok(!Number.isFinite(h)||h<.3,`${name}: phantom high bridge at ${x},${z}`);}}});
+check('Undo reproduces shoreline pixels and grass roots; digging changes the shoreline',()=>{const a=initial('diagonal'),b=edit(a,2,0,'lower'),ta=shoreTexture(a),tb=shoreTexture(b),tu=shoreTexture(structuredClone(a));assert.notDeepEqual(ta.image.data,tb.image.data);assert.deepEqual(ta.image.data,tu.image.data);const ma=build(a,'blend'),ga=vegetation(ma,a),gu=vegetation(build(structuredClone(a),'blend'),structuredClone(a));assert.deepEqual(ga.roots,gu.roots);assert.ok(ga.roots.length>0);for(const r of ga.roots)assert.ok(Math.abs(ma.floor(r.x,r.z)-r.y)<1e-10);for(const t of [ta,tb,tu])t.dispose();disposeGroup(ga.group);disposeGroup(gu.group);});
+writeFileSync(new URL('./results.json',import.meta.url),JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify({iterations:report.iterations.map(r=>({method:r.method,pass:r.pass,failed:r.rows.filter(x=>!x.pass).map(x=>x.name)})),checks:report.checks},null,2));

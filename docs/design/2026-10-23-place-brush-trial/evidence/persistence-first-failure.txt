@@ -1,0 +1,23 @@
+file:///private/tmp/sansu-place-persistence-check.mjs:16708
+var build2 = __LIFE_REPLAY_VERSION__;
+             ^
+
+ReferenceError: __LIFE_REPLAY_VERSION__ is not defined
+    at file:///private/tmp/sansu-place-persistence-check.mjs:16708:14
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async file:///Users/yutogasaki/Projects/sansu/[eval1]:1:251
+
+Node.js v22.23.3
+Command failed: /Users/yutogasaki/.local/share/fnm/node-versions/v22.23.3/installation/bin/node --input-type=module -e globalThis.window={location:{search:"?terrainTrial=H&baseTrial=stable&rampTrial=linear&growthTrial=inherit&compileTrial=single&trialScene=shore&queryTrial=frozen&memoTrial=samples&edgeTrial=memo",hash:'#/island'}};globalThis.location=window.location;await import("/private/tmp/sansu-place-persistence-check.mjs");
+file:///private/tmp/sansu-place-persistence-check.mjs:16708
+var build2 = __LIFE_REPLAY_VERSION__;
+             ^
+
+ReferenceError: __LIFE_REPLAY_VERSION__ is not defined
+    at file:///private/tmp/sansu-place-persistence-check.mjs:16708:14
+    at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:681:26)
+    at async file:///Users/yutogasaki/Projects/sansu/[eval1]:1:251
+
+Node.js v22.23.3

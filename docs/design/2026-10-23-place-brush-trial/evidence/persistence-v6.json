@@ -1,0 +1,89 @@
+{
+  "at": "2026-10-24T00:37:20.982Z",
+  "recipe": "place-outline-platform-v2:H:fixed-two-shear-grid-v1:fixed-core-base-v1:fixed-bilinear-interior-ramp-v1:flat-owner-v1",
+  "scope": "Actual commandGrowingIsland/readGrowingIsland on fake IndexedDB, transformed trial code; not browser, SW, worker sync, production-save migration or live-use proof",
+  "results": [
+    {
+      "name": "actual repository save/reopen; duplicate intent and semantic no-op unchanged"
+    },
+    {
+      "name": "reopened Undo/Redo preserves later normal moves and purchase",
+      "detail": {
+        "purchaseCell": {
+          "x": -1,
+          "z": 2
+        },
+        "drops": 9150,
+        "owners": [
+          {
+            "id": "starter-flower",
+            "cell": {
+              "x": 5,
+              "z": 4
+            }
+          },
+          {
+            "id": "starter-bench",
+            "cell": {
+              "x": 6,
+              "z": 5
+            }
+          },
+          {
+            "id": "l1",
+            "cell": {
+              "x": -1,
+              "z": 2
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "stale cursor rejected; simultaneous edits commit exactly once"
+    },
+    {
+      "name": "write failure rolls back shape, history, revision and intent; retry succeeds"
+    },
+    {
+      "name": "new furniture prevents unsafe Undo; live actor footing remains guarded"
+    },
+    {
+      "name": "synthetic current-revision receipt passes real writer and survives reopen; wrong identity rejected",
+      "detail": "This is not evidence of a rendered or naturally occurring use."
+    },
+    {
+      "name": "independent grid edits and place history survive one another; grid edits invalidate stale place input"
+    },
+    {
+      "name": "66 real writes retain the newest 64 edits after reopen; a new branch clears redo"
+    },
+    {
+      "name": "corrupt/future saves rejected and retained unchanged",
+      "detail": [
+        "unknown recipe",
+        "unknown history version",
+        "infinite coordinate",
+        "out of acquired land",
+        "radius below supported range",
+        "height above supported range",
+        "entrance below supported range",
+        "platform above supported range",
+        "broken undo chain",
+        "broken redo chain",
+        "missing history",
+        "oversized history"
+      ]
+    }
+  ],
+  "command": "node docs/design/2026-10-23-place-brush-trial/persistence-check.mjs v6",
+  "runtime": "v22.23.3",
+  "expected": "Every assertion passes through the actual trial-transformed repository writer and reader",
+  "actual": "pass",
+  "inputs": {
+    "fixture": "docs/design/2026-10-23-place-method-comparison/evidence/expanded-place-recipe-flower-flat-wide-fixture.json",
+    "fixtureSha256": "aebbfcaceec10e52b1d092a5bb33b938ab09002b5aa62e5ee53691223be203b2",
+    "transformedBundleSha256": "e035274c35f896d04acfd991ac7ed32e765323d5768833e4eed419ffebe7ea6a",
+    "transformConfigSha256": "09be777ecda00a288cb57ddf4296419035c9d443ef8c09faab4010fc0e39a68d"
+  }
+}

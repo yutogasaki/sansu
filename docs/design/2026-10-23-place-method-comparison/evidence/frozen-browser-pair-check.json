@@ -1,0 +1,203 @@
+{
+  "date": "2026-10-22T22:07:45.402643+00:00",
+  "status": "PASS_GEOMETRY_AND_OPERATION_COMPARABILITY_WITH_FULL_STATE_DIFFERENCES",
+  "command": "python3 /private/tmp/sansu-frozen-browser-pair-check.py",
+  "checkerSha256": "7cd4bbeaccb3c6b6fc83cbd6214733a27b515764cef5f082cf6bb6c99d0f0270",
+  "hashes": {
+    "74-H-frozen-cold-state.json": "1a9b31070ece0f659274a2073db0de2b0cf922526c9a631e7de7517db91a68d5",
+    "74-H-frozen-cold-cpu.json": "6c73dee100ad37e771fa97ddf3991aa59d988057e73f2759534838a4712429d3",
+    "74-H-frozen-cold-cadence.json": "1206747a810a643642247db00d5e4b71d8d9ae67db9f7ec8f1b8a378920fc038",
+    "74-H-frozen-cold-app-dom.json": "66eead8d5aca1199f4264dc3e58b72fd4d425322d59322b20b2364fadac9e9a5",
+    "75-H-dynamic-cold-state.json": "9206365aa172724d9c687c5f6302b5e9bab6ad6c9c51ddaafabb8e2eb6fb058a",
+    "75-H-dynamic-cold-cpu.json": "d5baeab91d16e05c4265f24cb6179b0d70e773d0b1419d5f1b1e3ae4ca3ce121",
+    "75-H-dynamic-cold-cadence.json": "73acd604c0597c5a418c8b1de1dd3b43c9e00039c13449abd3891815f549a945",
+    "75-H-dynamic-cold-app-dom.json": "66eead8d5aca1199f4264dc3e58b72fd4d425322d59322b20b2364fadac9e9a5",
+    "69-H-wide-shore-final-state.json": "0c810ef159d5d7eef074f410ee3740a22b6be1de13579f9723b120f9544bb26a",
+    "expanded-place-recipe-flower-flat-wide-fixture.json": "aebbfcaceec10e52b1d092a5bb33b938ab09002b5aa62e5ee53691223be203b2",
+    "frozen-query-check.json": "bf91ddf6964501b2d22da5695023cd41963e5ebba7dcb26bc4bd5d5a5f143007"
+  },
+  "buildDom": {
+    "data-build-revision": "place-method-comparison-v15",
+    "data-build-version": "place-method-comparison-v15:e94ac8d5-eb28-4460-96c2-1210ff575946",
+    "data-configured-delivery-id": "snap-root-v1",
+    "data-delivery-id": "snap-root-v1",
+    "data-island-feature-enabled": "true",
+    "data-nature-town-feature-enabled": "false",
+    "data-ui-style-candidate": "whole-app-atelier-v1",
+    "data-visual-lineage-id": "pokko-field-v1"
+  },
+  "allBuildDomFieldsEqual": true,
+  "candidateBaseEqual": true,
+  "effectiveCandidateDifference": "frozen-query-v1 only; original URL strings were not captured in these artifacts",
+  "equalCapturedFields": {
+    "candidate": false,
+    "character": true,
+    "drops": true,
+    "fixture": true,
+    "keepsakes": true,
+    "land": true,
+    "landmarks": true,
+    "placeProgress": false,
+    "places": true,
+    "plots": true,
+    "terrain": true,
+    "town": true,
+    "villagers": true
+  },
+  "fullCapturedStateEqualExcludingCandidate": false,
+  "placeProgressDifferences": [
+    {
+      "path": "placeProgress.useHistory[31].at",
+      "frozen": 1792706617751,
+      "dynamic": 1792706696220
+    },
+    {
+      "path": "placeProgress.useHistory[31].targetId",
+      "frozen": "starter-bench",
+      "dynamic": "starter-flower:garden"
+    },
+    {
+      "path": "placeProgress.useHistory[32].at",
+      "frozen": 1792706622918,
+      "dynamic": 1792706700569
+    },
+    {
+      "path": "placeProgress.useHistory[32].targetId",
+      "frozen": "starter-flower:garden",
+      "dynamic": "starter-bench"
+    },
+    {
+      "path": "placeProgress.uses.P05.pokomoko.at",
+      "frozen": 1792706617751,
+      "dynamic": 1792706696220
+    },
+    {
+      "path": "placeProgress.uses.P05.pokomoko.targetId",
+      "frozen": "starter-bench",
+      "dynamic": "starter-flower:garden"
+    },
+    {
+      "path": "placeProgress.uses.P05.villager.at",
+      "frozen": 1792706622918,
+      "dynamic": 1792706700569
+    },
+    {
+      "path": "placeProgress.uses.P05.villager.targetId",
+      "frozen": "starter-flower:garden",
+      "dynamic": "starter-bench"
+    }
+  ],
+  "inputAndHistoryChecks": [
+    {
+      "lastAcceptedEdit": {
+        "cell": {
+          "x": 4,
+          "z": 4
+        },
+        "before": 0,
+        "after": -1
+      },
+      "reconstructedBeforeRawMatches69": true,
+      "reconstructedBeforeRawMatchesLoadedFixture": true,
+      "remainingUndoMatchesFixtureTail63": true,
+      "remainingUndoMatches69Tail63": false,
+      "redoMatchesFixture": true
+    },
+    {
+      "lastAcceptedEdit": {
+        "cell": {
+          "x": 4,
+          "z": 4
+        },
+        "before": 0,
+        "after": -1
+      },
+      "reconstructedBeforeRawMatches69": true,
+      "reconstructedBeforeRawMatchesLoadedFixture": true,
+      "remainingUndoMatchesFixtureTail63": true,
+      "remainingUndoMatches69Tail63": false,
+      "redoMatchesFixture": true
+    }
+  ],
+  "measured": [
+    {
+      "mode": "frozen",
+      "worldColdMs": 432.6,
+      "worldSelfMs": 144.1,
+      "compileMs": 288.5,
+      "actionMs": 434.9,
+      "sceneMs": 57.3,
+      "sceneLayoutMs": 44.9,
+      "nonOverlappingRootSumMs": 492.2,
+      "longtaskMs": 496,
+      "rafMaxMs": 500.4,
+      "clicks": [
+        {
+          "atMs": 283.1,
+          "tag": "summary",
+          "id": null,
+          "label": "比較の記録 · H"
+        },
+        {
+          "atMs": 566.9,
+          "tag": "button",
+          "id": null,
+          "label": "じめんを さげる"
+        }
+      ],
+      "startedAt": "2026-10-22T22:04:09.590Z"
+    },
+    {
+      "mode": "dynamic",
+      "worldColdMs": 1600.1,
+      "worldSelfMs": 1312.2,
+      "compileMs": 287.9,
+      "actionMs": 1601.8,
+      "sceneMs": 67.1,
+      "sceneLayoutMs": 43.5,
+      "nonOverlappingRootSumMs": 1668.9,
+      "longtaskMs": 1672,
+      "rafMaxMs": 1666.7,
+      "clicks": [
+        {
+          "atMs": 282.9,
+          "tag": "summary",
+          "id": null,
+          "label": "比較の記録 · H"
+        },
+        {
+          "atMs": 565.5,
+          "tag": "button",
+          "id": null,
+          "label": "じめんを さげる"
+        }
+      ],
+      "startedAt": "2026-10-22T22:05:17.658Z"
+    }
+  ],
+  "dynamicMinusFrozenMs": {
+    "worldColdMs": 1167.5,
+    "worldSelfMs": 1168.1,
+    "compileMs": -0.6,
+    "actionMs": 1166.9,
+    "sceneMs": 9.8,
+    "longtaskMs": 1176,
+    "rafMaxMs": 1166.3
+  },
+  "replicatesPerMode": 1,
+  "renderedMeshDirectlyCompared": false,
+  "separateNodeGeometryProof": {
+    "record": "frozen-query-check.json",
+    "status": "PASS",
+    "worldHashEqual": true
+  },
+  "limitations": [
+    "No separately captured full pre-edit state: raw heights reconstructed from final Undo and matched both69 and loaded shore fixture.",
+    "74/75 terrain including full Undo/Redo is equal. Their pre-edit history follows the imported recipe fixture, not69 actual UI operation ordering.",
+    "placeProgress differs in eight timestamp/target leaves from natural use before editing. Thus full captured state and live actor/browser conditions are not identical.",
+    "Browser geometry inputs and derived places are equal; actual rendered mesh/GPU output was not hashed. Separate Node frozen-query proof checks exact world/floor/site/query hashes.",
+    "One visible cold edit per mode on same v15 build; ordering, GC, thermal state and live actor pose are uncontrolled.",
+    "CPU inclusive spans nest. Only the two non-overlapping top-level action and scene spans are added.",
+    "Frozen query improvement is supported for this paired operation; roughly500ms maximum frame gap remains and does not satisfy smooth direct editing."
+  ]
+}

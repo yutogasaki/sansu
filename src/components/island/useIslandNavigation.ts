@@ -1,11 +1,11 @@
 import { prefersKokugo } from '../../domain/kokugo/storage';
 import { createContext, useCallback, useContext, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { islandFocusScreen, islandHouseSectionFromSearch, islandHouseUrl, islandLearningRoute, islandParentUrl, islandScreenFromSearch, islandViewUrl, withoutIslandLearning, type IslandScreen, type IslandHouseSection } from '../../domain/island/navigation';
+import { isSafeIslandReturnHref, islandFocusScreen, islandHouseSectionFromSearch, islandHouseUrl, islandLearningRoute, islandParentUrl, islandScreenFromSearch, islandViewUrl, withoutIslandLearning, type IslandScreen, type IslandHouseSection } from '../../domain/island/navigation';
 import { warmUpTTS } from '../../utils/tts';
 
 export type IslandTab = 'island' | 'house' | 'stats' | 'settings';
-type NavigationState = { islandParent?: { href: string; key: string }; islandTab?: IslandTab };
+type NavigationState = { islandParent?: { href: string; key?: string }; islandTab?: IslandTab };
 export const islandTabUrl = (tab: IslandTab) => tab === 'house' ? islandViewUrl('keepsakes') : `/${tab}`;
 
 /** One live Island instance serves both its ordinary pages and focused learning.
@@ -66,7 +66,11 @@ export function useIslandNavigationState(enabled: boolean) {
     }, [blocked, navigate, tab, href, location.key, rememberScroll, state?.islandParent]);
     const back = useCallback(() => {
         if (blocked) return;
-        if (state?.islandParent?.key && state.islandParent.href.startsWith('/') && !state.islandParent.href.startsWith('//')) navigate(-1);
+        const parent = state?.islandParent;
+        if (isSafeIslandReturnHref(parent?.href)) {
+            if (parent?.key) navigate(-1);
+            else navigate(parent.href, { replace: true });
+        }
         else navigate(islandParentUrl(location.pathname, location.search), { replace: true, state: { islandTab: tab } });
     }, [blocked, navigate, state, location.pathname, location.search, tab]);
     const setHouseSection = useCallback((next: IslandHouseSection) => {

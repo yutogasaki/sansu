@@ -1,0 +1,97 @@
+{
+  "status": "PASS",
+  "date": "2026-10-22T21:52:13.723Z",
+  "hashes": {
+    "single-compile-transform.mjs": "49153200a6e556015937f9a02352cd51390504440099788e6bafb2bd0632e8d6",
+    "single-compile-check.ts": "6a93cb76af9cdeb30e95594e0c292790f0b2182d7c45669144b6690e5baffbc1",
+    "single-compile-check.mjs": "b68bbe9632c2009378895070544e7eaca0897fe935a8754ef76fa34e88b2dcbe",
+    "terrain-transform.mjs": "087f297d4454bcff192340c2fc3fc0f296bbfd9e9641ce5ecbc5d1a4fe4949e4",
+    "stable-base-transform.mjs": "aec96e9cd86c343726a0c96c0eae68439908d5deb22febce4bd0dc27b5a31afb",
+    "ramp-plane-transform.mjs": "4d4871f49a5ced65bdf97510ca93784915d717408c9fe91968d64b858274310b",
+    "evidence/61-H-linear-stable-before-edit.json": "32644ef8205f073c3a8c1850afb684ded6252a1790644d9388367428fd585657",
+    "../../../src/domain/growingIsland/worldDefinition.ts": "f7ca62c2568699d04be20806fdf5240f3d3a46eaa49c8b069aa695b041818338",
+    "../../../src/domain/growingIsland/editableTerrainWorld.ts": "7606a6d2be402e90ef85154cd28e8cf3c07dd5d690538b37bbfbfd700e1fc324"
+  },
+  "compared": [
+    {
+      "name": "initial",
+      "queries": 1369,
+      "routes": 2970,
+      "allHashesEqual": true,
+      "baselineColdMs": 333.683292,
+      "singleColdMs": 224.83212500000002
+    },
+    {
+      "name": "negative-cut",
+      "queries": 1369,
+      "routes": 2940,
+      "allHashesEqual": true,
+      "baselineColdMs": 259.601583,
+      "singleColdMs": 196.60062499999998
+    },
+    {
+      "name": "actual-expanded61",
+      "queries": 2989,
+      "routes": 10350,
+      "allHashesEqual": true,
+      "baselineColdMs": 546.2164170000001,
+      "singleColdMs": 399.9228750000001
+    },
+    {
+      "name": "bridge",
+      "queries": 1369,
+      "routes": 3030,
+      "allHashesEqual": true,
+      "baselineColdMs": 224.48929100000032,
+      "singleColdMs": 168.63741700000014
+    }
+  ],
+  "timings": [
+    {
+      "single": false,
+      "edits": [
+        {
+          "delta": -1,
+          "status": "rejected",
+          "message": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+          "ms": 533.3892079999996
+        },
+        {
+          "delta": 1,
+          "status": "rejected",
+          "message": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+          "ms": 466.63145799999984
+        },
+        {
+          "delta": -1,
+          "status": "rejected",
+          "message": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+          "ms": 1.3917500000002292
+        }
+      ]
+    },
+    {
+      "single": true,
+      "edits": [
+        {
+          "delta": -1,
+          "status": "rejected",
+          "message": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+          "ms": 389.25466700000015
+        },
+        {
+          "delta": 1,
+          "status": "rejected",
+          "message": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+          "ms": 334.59370800000033
+        },
+        {
+          "delta": -1,
+          "status": "rejected",
+          "message": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+          "ms": 0.986417000000074
+        }
+      ]
+    }
+  ]
+}

@@ -1,3 +1,10 @@
+import { KokugoLevelSummary } from '../../components/progress/KokugoLevelSummary';
+import { useKokugoOverview } from '../../components/progress/useKokugoOverview';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { db } from '../../db';
+import { summarizeActivity } from '../../domain/stats/activity';
+import { getLearningDayStart } from '../../utils/learningDay';
+import { addDays } from 'date-fns';
 import { KokugoProgressCard } from '../../components/kokugo/KokugoProgress';
 import { FoundationProgress } from '../../components/progress/FoundationProgress';
 import { IslandMemorialRecovery } from './IslandMemorialRecovery';
@@ -28,6 +35,10 @@ export const ParentsPage: React.FC = () => {
     const learningOverlay = navigation?.learning ?? false;
     const settingsReturnUrl = '/settings';
     const [profile, setProfile] = useState<UserProfile | null>(null);
+    const kokugo = useKokugoOverview(profile?.id);
+    const ownerId = profile?.id;
+    const activityLogs = useLiveQuery(async () => ownerId ? { ownerId, logs: await db.logs.where('[profileId+timestamp]').between(
+        [ownerId, addDays(getLearningDayStart(), -29).toISOString()], [ownerId, addDays(getLearningDayStart(), 1).toISOString()], true, false).toArray() } : undefined, [ownerId]);
     const [weakMathIds, setWeakMathIds] = useState<string[]>([]);
     const [weakVocabIds, setWeakVocabIds] = useState<string[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -105,6 +116,9 @@ export const ParentsPage: React.FC = () => {
         );
     }
 
+    const activities = activityLogs?.ownerId === profile.id && kokugo && !kokugo.error
+        ? summarizeActivity(activityLogs.logs, profile.id, '30', new Date(), kokugo.activities) : undefined;
+    const today = activities?.daily[0];
     const recentAttempts = profile.recentAttempts?.slice(-5).reverse() ?? [];
     const weakTotal = weakMathIds.length + weakVocabIds.length;
 
@@ -139,12 +153,14 @@ export const ParentsPage: React.FC = () => {
                         const level = subject === 'math' ? profile.mathMainLevel : profile.vocabMainLevel;
                         return <div key={subject}><span>{subject === 'math' ? '算数' : '英語'} · Lv{level}</span><strong>{learningLevelTitle(subject, level)}</strong></div>;
                     })}
+                    <KokugoLevelSummary profileId={profile.id} compact />
                 </div>
                 <div className="parent-activity">
-                    <span>今日の学習 <strong>{profile.todayCount || 0}回</strong></span>
-                    <span>連続学習 <strong>{profile.streak || 0}日</strong></span>
+                    {activities ? <><span>今日の回答 <strong>{today?.answered ?? 0}問</strong></span><span>この30日の学習 <strong>{activities.activeDays}日</strong></span>
+                        <span>今日の国語活動 <strong>読書の保存 {today?.books ?? 0}回・作品の保存 {today?.works ?? 0}回・手本で確認 {today?.practice ?? 0}回</strong></span></>
+                        : <p role={kokugo?.error ? 'alert' : 'status'}>{kokugo?.error ? '国語の活動を読みこめませんでした。開き直してください。' : '学習の活動を読みこんでいます…'}</p>}
                 </div>
-                <p className="parent-purpose">{PARENT_REVIEW_COPY.summary(weakTotal)}</p>
+                <p className="parent-purpose">算数・英単語 · {PARENT_REVIEW_COPY.summary(weakTotal)}</p>
             </SurfacePanel>
 
             <FoundationProgress profileId={profile.id} parent />
@@ -155,7 +171,7 @@ export const ParentsPage: React.FC = () => {
                     <ParentAssessment key={profile.id} profile={profile} onUpdate={setProfile} />
                 </details>
                 <button className="parent-range-action" type="button" onClick={() => navigation ? navigation.open('/settings/curriculum') : navigate('/settings/curriculum')}>
-                    <span><SlidersHorizontal size={22} aria-hidden="true" /><span><strong>学習範囲を変更</strong><small>出題する内容・難しさを調整</small></span></span><ArrowRight size={20} aria-hidden="true" />
+                    <span><SlidersHorizontal size={22} aria-hidden="true" /><span><strong>学習範囲を変更</strong><small>算数・英語の出題内容・難しさを調整</small></span></span><ArrowRight size={20} aria-hidden="true" />
                 </button>
             </SurfacePanel>
 
@@ -209,7 +225,7 @@ export const ParentsPage: React.FC = () => {
 
             <SurfacePanel>
                 <details className="parent-details">
-                <summary>最近の学習・確認結果<ChevronDown size={18} aria-hidden="true" /></summary>
+                <summary>算数・英単語の学習・確認結果<ChevronDown size={18} aria-hidden="true" /></summary>
                 <div className="parent-test-history">
                     <h3>確認テストの記録</h3>
                     {(profile.testHistory ?? []).filter(item => item.kind !== 'finish').slice(-3).reverse().map(item => <InsetPanel key={item.id}>
@@ -219,7 +235,7 @@ export const ParentsPage: React.FC = () => {
                     {!(profile.testHistory ?? []).some(item => item.kind !== 'finish') && <p className="parent-purpose">確認テストの記録はまだありません。</p>}
                 </div>
                 <SurfacePanelHeader
-                    title="学習履歴"
+                    title="算数・英単語の学習履歴"
                     description="直近 5 件の回答を ふり返れます"
                 />
                 {recentAttempts.length > 0 ? (

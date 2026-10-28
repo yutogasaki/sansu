@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>島の制作方式 — 2026-10-24の比較</title>
+<style>
+:root{color-scheme:light;font:16px/1.75 system-ui,sans-serif;color:#293246;background:#f4f6f8}*{box-sizing:border-box}body{margin:0}main{max-width:1400px;margin:auto;padding:40px 24px}h1{font-size:clamp(24px,4vw,40px);line-height:1.3;margin:8px 0 16px}h2{font-size:22px;margin:36px 0 12px}p{max-width:900px}a{color:#2d58a1}small,.meta{color:#5a667a}.label{font-size:13px;letter-spacing:.08em}section{margin:24px 0;padding:24px;background:white;border:1px solid #d9e0e8;border-radius:14px}.choices{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}button{font:inherit;padding:8px 18px;border:1px solid #b5bfce;border-radius:7px;background:#fff;color:#26344c;cursor:pointer}button[aria-pressed=true]{background:#315aa5;color:white;border-color:#315aa5}figure{margin:0}img{display:block;width:100%;height:auto;border-radius:8px}figcaption{font-size:14px;margin-top:10px;color:#4e5b70}table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:12px;border-bottom:1px solid #e1e5ec;text-align:left;vertical-align:top}th{background:#f5f7fa}.status{font-weight:700;white-space:nowrap}.links{display:flex;gap:16px;flex-wrap:wrap}.warning{border-left:4px solid #b4733b;padding-left:16px}@media(max-width:600px){main{padding:24px 12px}section{padding:14px}td,th{padding:8px}}
+</style><main>
+<p><strong>前の3時間枠の記録です。</strong> 最新は <a href="two-island-review.html">二構成の比較と参考の分解</a> を開いてください。</p><div class="label">SANSU · 制作方式の検証 · 2026-10-24</div>
+<h1>ゲームで使える形と、<br>目指す美術を分けて確かめる。</h1>
+<p>同じ土地と所有物を使い、通常操作で場所を作り、住人が使い、保存から再開できるか。さらに、その仕組みで魅力的な島へ育てられるかを検証しています。3時間枠は09:17〜12:17 JST頃。この枠での実装・比較はいったん停止し、結果を保存しています。</p>
+<p class="warning"><strong>全体は未達。約3時間枠を一区切り。</strong>v15では、二つの地形と4つの品物を専用DBへ保存し、再読込後も形・履歴・所有物・残高を保持。再開後のやり直し操作と、西の成熟した場所の新しい利用4件も確認しました。湾の曲がり方を分散する追加案は、明確な美術改善が見えず不採用です。成熟した場所二つの同時成立、全島の美術、通常の学習・自然同期への接続は未達です。v17では北肩の二段の帯を解消しましたが、元の比較元に対する美術改善は小さいままです。利用者指定の時間枠でいったん停止しています。</p>
+<div class="links"><a href="platform-notes.md">詳細と失敗の記録</a><a href="README.md">試作の契約</a><a href="../2026-10-10-island-final-3d/index.html">採用した美術の方向</a></div>
+
+<section id="composite-v15"><h2>v15：二つの地形と4つの品物を保存し、再開する</h2>
+<figure><a href="evidence/composite-v15-saved-overview.png"><img src="evidence/composite-v15-saved-overview.png" alt="専用DBから再開した西と東の地形、それぞれの花とベンチ"></a><figcaption>西は成熟した花壇とベンチ。東は新しく購入した成長前の花とベンチ。二つの形と4つの品物を保存から再開しました。</figcaption></figure>
+<p>西の入口を編集して元に戻した状態で保存し、ページを再読込。二つの形・Undo/Redo履歴・4つの品物・土地・残高9130が一致しました。再開後の「やり直す」でも西の編集が復元され、東の形・所有物・残高を保持しました。<a href="evidence/composite-v15-save-reopen.json">保存・再開・やり直しの照合</a>。</p>
+<p>再開後、西のベンチと花壇に住人2人の新しい利用を計4件受理しました。東の花は成長0のままなので、<strong>成熟した場所二つの同時成立は未達</strong>です。通常の学習・自然同期は未接続で、全島の美術と製品版・オフラインでの成立も未達です。<a href="evidence/composite-v15-reopened-life.json">再開後の実描画・利用記録</a>。</p>
+<p class="meta">build: place-outline-v15 / input SHA256: 548cfce5c64652cce7a8b7e1801bd43508186fa1f0605e1a03b9ae1ca3ee1c89 / 二場所専用DB SansuPlaceSetTrialV1 / 試作の対象旅程で成立・配布採用なし</p></section>
+
+<section><h2>南岸の湾：編集前と奥行の異なる2案</h2>
+<p>v13では、岸を内側へ削って湾を作る方法を試しました。編集前・奥行0.8・奥行1.2を同じカメラで比較します。土地の所有と元の家具は3画面で一致し、湾の2案は同じ中心(-1,7)・半径2の編集形を使っています。住人の瞬間位置は異なります。</p>
+<div class="choices" aria-label="南岸の湾の比較"><button type="button" data-bay="baseline" aria-pressed="true">編集前</button><button type="button" data-bay="south08" aria-pressed="false">湾の奥行0.8</button><button type="button" data-bay="south12" aria-pressed="false">湾の奥行1.2</button></div>
+<figure><a id="bay-full-image" href="evidence/bay-v13-baseline.png"><img id="bay-comparison" src="evidence/bay-v13-baseline.png" alt="湾を作る前の南岸の実画面"></a><figcaption id="bay-caption" aria-live="polite">場所v13 / 編集前。クリックすると元の画像を開きます。</figcaption></figure>
+<p>手前左の海岸線にくぼみを作れました。独立画像レビューは<strong>奥行0.8を湾曲部品として部分採用</strong>、1.2は右肩の折れと左の陸の細さが課題と判定。長い崖の壁と広い上面は残り、全島の美術は未達です。新しい湾へ家具を移して住人が使う旅程、保存再開、子どもの理解は未確認です。</p>
+<p class="meta">build: place-outline-v13 / input SHA256: a592c75581e9fc4fd6e8d1b69de179afb260adec163fd95e819d92d971d895e6 / メモリ内の明示試作・保存なし・配布採用なし</p>
+<div class="links"><a href="evidence/bay-v13-south-three.json">3画面の比較条件と保持の照合</a><a href="evidence/bay-check-entry-guard.json">共有床・操作・保存入口の検査</a></div>
+<h3>v15：曲がり方を分散する追加案は不採用</h3>
+<p>奥行0.8の湾を基準に、曲がる部分を周囲へ分散する案を追加比較しました。同じ版・形・土地・所有物で2つの画角を照合。独立画像レビューでは<strong>差が小さく、明確な美術改善は認められないため不採用</strong>と判定しました。奥行0.8の基準案を維持します。長い崖面と広い上面、船着場脇の四角い水面は残っています。</p>
+<div class="links"><a href="evidence/bay-v15-control.png">基準案・全景</a><a href="evidence/bay-v15-spread.png">分散案・全景</a><a href="evidence/bay-v15-control-side.png">基準案・横から</a><a href="evidence/bay-v15-spread-side.png">分散案・横から</a><a href="evidence/bay-v15-spread-comparison.json">同一条件の照合</a></div>
+<p class="meta">build: place-outline-v15 / input SHA256: 548cfce5c64652cce7a8b7e1801bd43508186fa1f0605e1a03b9ae1ca3ee1c89 / 住人の瞬間位置は異なる・湾の比較は保存なし</p></section>
+
+<section><h2>v13時点：二つの地形を同時に保ち、それぞれ編集する</h2>
+<p>以下はv13時点の記録です。西の低い場所と東の高台を同じ実画面に作成しました。この時点は<strong>メモリ内の試作</strong>で、保存機能は未接続でした。現在は上の<a href="#composite-v15">v15の専用DBで保存再開を確認</a>しています。</p>
+<table><thead><tr><th>確かめたこと</th><th>判定</th><th>証拠・限界</th></tr></thead><tbody>
+<tr><td>二つの地形の共存</td><td class="status">実UIで成立</td><td>東の高台を保ったまま西の場所を追加。土地・元の所有物も保持。<a href="evidence/composite-v13-created.json">作成時の照合</a>。</td></tr>
+<tr><td>片方だけの編集・Undo/Redo</td><td class="status">対象操作成立</td><td>西の入口幅を1.2→2へ変更し、元に戻す・やり直す操作を実施。東の形と所有物は変わらない。<a href="evidence/composite-v13-history.json">編集前後と履歴の照合</a>。</td></tr>
+<tr><td>元の家具を二場所へ分ける</td><td class="status">通常移動で成立</td><td>ベンチを西(-1,4)、花壇を東(5,5)へ配置。二つの地形を保持したまま、同じ所有物を移動。<a href="evidence/composite-v13-split-owners.json">配置と実利用の記録</a>。</td></tr>
+<tr><td>住人が新しい場所を使う</td><td class="status">順番に確認</td><td>西のベンチに新しい利用2件、花壇を東へ移した後に東の花壇へ新しい利用2件を受理。西の利用時は花壇も西にあり、最終状態の成熟場所は1つ。<strong>成熟した場所二つの同時成立は未達。</strong></td></tr>
+<tr><td>二場所の保存再開</td><td class="status">当時は未接続</td><td>v13のこのモードはDBを開く前に保存を拒否。v15の専用DB接続より前の検査です。<a href="evidence/composite-release.json">メモリ内の機能・保護の検査</a>。</td></tr>
+</tbody></table>
+<p class="meta">build: place-outline-v13 / input SHA256: a592c75581e9fc4fd6e8d1b69de179afb260adec163fd95e819d92d971d895e6 / 実UIの確認も製品全体・美術・保存の合格を意味しません。</p>
+<p>動作の軽さは未判定です。東に西を追加した1回の計測で、操作処理はCPU時間335.6msでした。GPU描画や画面更新、非同期保存は含みません。また、新しいローカルURLの初回表示でCSS読込エラーを1件記録し、原因は未確定です。<a href="evidence/cpu-v13-two-accepted.json">CPU計測</a>／<a href="evidence/v13-first-boot-console.json">初回エラー</a>／<a href="evidence/typecheck-platform-v13.json">変換後ソースの型検査</a>。型検査の成功を快適さ・配布の合格には数えません。</p></section>
+
+<section><h2>二組の品物を残して、片方の地形だけを変える</h2>
+<figure><a href="evidence/composite-v14-purchased-overview.png"><img src="evidence/composite-v14-purchased-overview.png" alt="西に元の花壇とベンチ、東に新しい花とベンチを配置した二つの場所"></a><figcaption>場所v14。西は元の成熟した花壇とベンチ。東は通常の購入処理で追加したベンチと、成長前の花。地形も家具も同時に残しています。</figcaption></figure>
+<p>追加分の代金30しずくを払い、残高9160→9130。元の品物・学習・成長時計を保持しました。購入後に西の入口を変え、Undo/Redoをしても、東の形・4つの品物・残高は変わりません。<a href="evidence/composite-v14-purchase.json">購入照合</a>／<a href="evidence/composite-v14-purchase-history.json">再編集と履歴</a>。</p>
+<p>研究データは家を持つ一方で初回案内中の状態だったため、試作用画面だけで購入可能な品物の非表示を解除しています。価格・足場・購入権の検査は本体の処理を使います。東の花は成長0で、成熟した場所の新規利用記録の対象にはなりません。自然な成長や製品の初回案内の合格とは分けます。</p>
+<p>参考画像との独立比較では、東の高台が「丘」より「丸い台」に見える点が課題。次に変える候補は、高台の平面と高さを保ちながら周囲へつなぐ肩の幅です。物を追加するだけで全景の造形が改善したとは判定しません。</p>
+<p class="meta">build: place-outline-v14 / input SHA256: 7ae7490d80c11b454c27d486ec7726f15dd9156832ecc66b2896a6f82e5e7380 / この画像は保存なしの比較</p>
+<p>編集時の待ちも残っています。固定したv14の追加診断では、経路の計算に加え、地面全体の複製・三角形の編成・接地点を探す索引づくりが主要な処理でした。<a href="evidence/compile-v14-phase-profile.json">区間ごとの診断</a>。Nodeでの診断値を実機の快適さへ読み替えていません。</p>
+</section>
+
+<section><h2>高台の北の肩：二段に見える原因を直した3案比較</h2>
+<p>v16は西の低台と東の高台を同時に保ち、東高台の北の肩だけを広げました。同じ2形状・土地・元の家具2点・材質・3画角で比較しています。住人の瞬間位置は異なります。下は差が見える裏側からの画角です。</p>
+<div class="choices" aria-label="高台の北肩の方式"><button type="button" data-shoulder="control" aria-pressed="true">比較元</button><button type="button" data-shoulder="north-wide" aria-pressed="false">北の肩を広げる</button><button type="button" data-shoulder="hermite" aria-pressed="false">断面をつなぎ直す</button></div>
+<div class="choices" aria-label="高台の北肩の画角"><button type="button" data-shoulder-view="rear" aria-pressed="true">裏から</button><button type="button" data-shoulder-view="overview" aria-pressed="false">全景</button><button type="button" data-shoulder-view="side" aria-pressed="false">横から</button></div>
+<figure><a id="shoulder-full-image" href="evidence/shoulder-v16-control-rear.png"><img id="shoulder-comparison" src="evidence/shoulder-v16-control-rear.png" alt="北肩の比較元を裏から見た実画面"></a><figcaption id="shoulder-caption" aria-live="polite">場所v16 / 比較元 / 裏から。</figcaption></figure>
+<p><strong>v16の幅拡張だけの案は採用保留。</strong>独立画像レビューは、裏の大きい茶色の壁が薄くなり、周囲につながる緑の面が増えた点を改善と判定。一方、その下に細い茶色の帯が現れ「二段の棚」に見えます。全景と横では丸い上面と南の壁が残り、「丘へ馴染んだ」とはいえません。幅を増やすだけで解決せず、現在の範囲で断面と材質の寄与を切り分ける必要があります。</p>
+<p>通常UIで2形状を作成し、東をUndo/Redoして復元。11照合が一致。住人が予定地にいる間は編集を拒否し、通常の花壇利用で離れた後に受理しました。平面・入口と既存90目的地への到達性を守る数値検査は通っていますが、美術の合格とは別です。</p>
+<p><strong>v17は二段の帯を解消する断面候補として採用。</strong>幅の増やし方によって急斜面が2回現れる原因を、実際の地面と描画用法線で確認しました。同じ保護範囲・外縁のまま断面のつなぎ方を変えると、5本の断面の二つ目のピークと、裏側の細い茶色の帯が消えました。独立レビューもv16拡張案に対する局所改善を確認。一方、元の比較元に対する差は小さく、自然な丘や全島の美術の達成とは判定していません。</p>
+<p>v17も通常UIの2回Undo→2回Redo、3画角、土地・所有物・形の11照合が成立。試作sourceだけを変更し、肩の保存・製品採用はしていません。<a href="evidence/shoulder-v17-ui-comparison.json">v17の実UI照合</a>／<a href="evidence/shoulder-v17-section-profile.json">断面と描画法線</a>／<a href="evidence/shoulder-hermite-first.json">既存条件・歩行・保護の検査</a>／<a href="evidence/typecheck-platform-v17.json">型検査</a>。</p>
+<p class="meta">断面候補 build: place-outline-v17 / input SHA256: e4ddab03761987548678e3754d77ba7b127891b48be255edf0a67d9d6052b895</p>
+<p class="meta">build: place-outline-v16 / input SHA256: 4fdf7e38628695138025a6e4b4d95d02b0db9cb1d48009bddfe067e0d93b82d9 / 肩比較はメモリ内限定・保存非対応</p>
+<div class="links"><a href="evidence/shoulder-v16-ui-comparison.json">比較条件と履歴</a><a href="evidence/shoulder-guarded.json">平面・歩行・影響域の診断</a><a href="evidence/composite-save-independent-shoulder-result.json">保存入口への独立監査</a><a href="evidence/typecheck-platform-v16.json">変換後の型検査</a></div>
+</section>
+
+<section><h2>海岸：同じ条件の4案</h2>
+<p>同じ西岸、同じ形・所有物・材質・カメラ。住人の瞬間位置は異なります。地形は操作で生成し、描画と歩行が同じ三角形を使います。</p>
+<div class="choices" aria-label="海岸の比較"><button type="button" data-mode="off" aria-pressed="true">裾なし</button><button type="button" data-mode="soft08" aria-pressed="false">裾幅0.8</button><button type="button" data-mode="soft12" aria-pressed="false">裾幅1.2</button><button type="button" data-mode="contour" aria-pressed="false">輪郭から崖を作る</button></div>
+<figure><a id="full-image" href="evidence/coast-v11-west-off.png"><img id="comparison" src="evidence/coast-v11-west-off.png" alt="裾を加えない西岸の実画面"></a><figcaption id="caption">場所v11 / 裾なし。クリックすると元の画像を開きます。</figcaption></figure>
+<p><strong>全4案とも、美術の目標には未達。</strong>裾を広げても長い外壁が残り、左の岸は横から削った形に見えます。使える平面を守るため、中央の実効幅はどちらも約0.50。輪郭から崖を作るv12は草・崖・水の境界が明瞭になりましたが、既存岸との両端が角のある切り込みに見えます。手前と右の長い壁、広い上面の区切り不足も残るため、独立画像レビューも「要再設計」と判定しました。</p>
+<p>東側のv12は船着場の足場を壊すため、通常UIで拒否。形・履歴・家具は保持されました。この課題を受け、上のv13では南岸の平面輪郭を変える湾を試しています。縦の断面と島全体の構成を含め、全景の改善は引き続き検証中です。</p>
+<p class="meta">build: place-outline-v11 / input SHA256: 3d43824a976ff15954ad0a7aca379b2871315967740b182727fd494784f1da25 / 明示試作・保存なし・配布採用なし</p>
+<p class="meta">輪郭案: place-outline-v12 / input SHA256: 09dd47af755b5b65bc8c780ca3beb5f04bbd9f9eccadfb5344fd7ab6044b8871 / 同じ形・家具・材質・カメラを照合</p>
+<div class="links"><a href="evidence/coast-v11-west-three.json">裾3案の比較条件</a><a href="evidence/coast-v12-west-contour-pair.json">輪郭案の比較条件</a><a href="evidence/coastal-section-contour-final.json">共有床と保護の検査</a><a href="evidence/coast-v12-east-rejection.json">東側での通常操作の拒否</a></div></section>
+
+<section><h2>単一の高台をゲーム中に作り、使い、保存する</h2>
+<figure><a href="evidence/material-v10-high-continuous.png"><img src="evidence/material-v10-high-continuous.png" alt="通常編集で作った西向きの坂と高台、ベンチ、花壇"></a><figcaption>場所v10。高台の平面と西向きの坂を指定し、元のベンチと花壇を通常UIで移動。連続材質で表示。</figcaption></figure>
+<table><thead><tr><th>確かめたこと</th><th>判定</th><th>証拠・限界</th></tr></thead><tbody>
+<tr><td>坂の向き</td><td class="status">限定成立</td><td>同じ高さ0.9で北は長さ不足、西は既存陸へ接続。<a href="evidence/saved-v10-high-west-history.json">Undo/Redoで方向を復元</a>。</td></tr>
+<tr><td>通常配置・住人利用</td><td class="status">対象旅程成立</td><td>ベンチ(5,5)、花壇(6,5)へ通常移動。配置後に住人2人の新しい利用を受理。<a href="evidence/saved-v10-high-live-before-reload.json">実描画の利用記録</a>。</td></tr>
+<tr><td>実writer・保存再開</td><td class="status">専用DBで成立</td><td>単一場所の旧v2→v3で形と所有を保持。再読込で方向・履歴・家具一致。<a href="evidence/saved-v10-high-reload.json">v10復元照合</a>／<a href="evidence/saved-v11-fixed-reopen.json">キャッシュ修正後のv11再開</a>。二場所・湾の保存は含まず、通常学習・自然同期は停止中。</td></tr>
+<tr><td>再計算しても同じ床</td><td class="status">欠陥を修正</td><td>旧坂の計算が残る欠陥を独立監査で再現。v11で再計算時に破棄。3条件の26,357頂点と96地点への経路が一致。<a href="evidence/plan-cache-fixed.json">修正後</a>／<a href="evidence/plan-cache-without-reset.json">修正を外した比較</a>。</td></tr>
+<tr><td>全島の美術・自由編集</td><td class="status">未達</td><td>長い外壁・既存地形との継ぎ目・場所の区切りが課題。二場所の共存・個別編集・専用DBでの保存再開はv15までに確認。成熟した場所二つの同時成立、全島の美術、通常の学習・自然同期への接続は残っています。</td></tr>
+</tbody></table></section>
+<section><h2>残った課題と次の一手</h2>
+<p>編集時の待ちは残っています。v17の入口変更1回は、同期処理338.9msと描画側の再構築62.5msでした。GPUや保存待ちは含まず、過去版との速度向上率は主張しません。<a href="evidence/shoulder-v17-runtime-observation.json">実UIのCPU観測</a>。</p>
+<p>新しい花の成長についても、古い試作時計を今の時刻につなぐと即開花することが判明しました。時計起点を明示した実domainの診断では、経過時間で二つの成熟場所になりましたが、ブラウザで自然に育てて住人が使った証拠ではありません。<a href="evidence/nature-clock-independent-v17.json">時計入力の診断</a>。</p>
+<ol><li><strong>同じ島で全景を作る。</strong>現在は別モードの湾と二高台を、同じ共有床・所有・通常編集で組み合わせ、長い壁と広い空面を解く。南湾と西低台の外肩には重なりがあるため、支持面・入口を守る合成条件を先に検査する。</li><li><strong>自然成長を安全につなぐ。</strong>専用の同期保存入口と、描画・同期workerで共通の地形設定を作り、通常購入から成長・新しい実利用・保存再開まで検証する。</li><li><strong>編集の待ちを減らす。</strong>全床の再構築を分けて計測し、再計算しても床と経路が一致する条件を守って部分更新を試す。</li></ol>
+<p>これらは次回再開時の候補です。今回の時間枠を延長せず、全島の美術・自由編集・成長は未達として残します。</p>
+</section>
+<p>島研究・関連実装はmainへのcommit/pushから除外したままです。それ以外の確定変更はmainの68ab8a60までpush済みです。</p>
+</main><script>
+const bayCaptions={baseline:'編集前',south08:'湾の奥行0.8',south12:'湾の奥行1.2'};
+for(const button of document.querySelectorAll('[data-bay]')) button.addEventListener('click',()=>{
+ const mode=button.dataset.bay,src=`evidence/bay-v13-${mode}.png`;
+ for(const other of document.querySelectorAll('[data-bay]'))other.setAttribute('aria-pressed',String(other===button));
+ document.querySelector('#bay-comparison').src=src;document.querySelector('#bay-comparison').alt=`${bayCaptions[mode]}の南岸の実画面`;
+ document.querySelector('#bay-full-image').href=src;document.querySelector('#bay-caption').textContent=`場所v13 / ${bayCaptions[mode]}。同じ土地の所有・元の家具・カメラ。湾の2案は同じ編集形。`;
+});
+const captions={off:'裾なし',soft08:'裾幅0.8',soft12:'裾幅1.2',contour:'輪郭から崖を作る'};
+for(const button of document.querySelectorAll('[data-mode]')) button.addEventListener('click',()=>{
+ const mode=button.dataset.mode,version=mode==='contour'?'v12':'v11',src=`evidence/coast-${version}-west-${mode}.png`;
+ for(const other of document.querySelectorAll('[data-mode]'))other.setAttribute('aria-pressed',String(other===button));
+ document.querySelector('#comparison').src=src;document.querySelector('#comparison').alt=`${captions[mode]}の西岸の実画面`;
+ document.querySelector('#full-image').href=src;document.querySelector('#caption').textContent=`場所${version} / ${captions[mode]}。同じ形・所有物・材質・カメラ。`;
+});
+let shoulderMode='control',shoulderView='rear';
+const shoulderNames={control:'比較元','north-wide':'北の肩を広げる',hermite:'断面をつなぎ直す'},shoulderViews={rear:'裏から',overview:'全景',side:'横から'};
+function showShoulder(){
+ const version=shoulderMode==='hermite'?'v17':'v16',src=`evidence/shoulder-${version}-${shoulderMode}-${shoulderView}.png`;
+ document.querySelector('#shoulder-comparison').src=src;document.querySelector('#shoulder-comparison').alt=`${shoulderNames[shoulderMode]} / ${shoulderViews[shoulderView]}の実画面`;
+ document.querySelector('#shoulder-full-image').href=src;document.querySelector('#shoulder-caption').textContent=`場所${version} / ${shoulderNames[shoulderMode]} / ${shoulderViews[shoulderView]}。同じ2形状・土地・所有物・材質・カメラ。`;
+ for(const b of document.querySelectorAll('[data-shoulder]'))b.setAttribute('aria-pressed',String(b.dataset.shoulder===shoulderMode));
+ for(const b of document.querySelectorAll('[data-shoulder-view]'))b.setAttribute('aria-pressed',String(b.dataset.shoulderView===shoulderView));
+}
+for(const b of document.querySelectorAll('[data-shoulder]'))b.addEventListener('click',()=>{shoulderMode=b.dataset.shoulder;showShoulder()});
+for(const b of document.querySelectorAll('[data-shoulder-view]'))b.addEventListener('click',()=>{shoulderView=b.dataset.shoulderView;showShoulder()});
+</script></html>

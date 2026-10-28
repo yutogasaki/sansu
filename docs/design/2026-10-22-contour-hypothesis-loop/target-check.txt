@@ -1,0 +1,52 @@
+{
+  "iterations": [
+    {
+      "method": "hard",
+      "pass": false,
+      "failed": [
+        "square",
+        "diagonal",
+        "reverse"
+      ]
+    },
+    {
+      "method": "blend",
+      "pass": true,
+      "failed": []
+    }
+  ],
+  "checks": [
+    {
+      "name": "H1 is falsified by diagonal observation",
+      "pass": true
+    },
+    {
+      "name": "H2 matches topology and preserves gap/hole counterexamples",
+      "pass": true
+    },
+    {
+      "name": "90-degree rotational symmetry and edit ordering",
+      "pass": true
+    },
+    {
+      "name": "Independent material then height; undo/redo input and geometry reproducible",
+      "pass": true
+    },
+    {
+      "name": "All eight meshes finite; actual triangle floor supports cell centers",
+      "pass": true
+    },
+    {
+      "name": "Two-level increase keeps same contour at each occupied upper level",
+      "pass": true
+    },
+    {
+      "name": "Over-blending falsifies the hole requirement",
+      "pass": true
+    },
+    {
+      "name": "Actual triangle floor supports a 0.17-radius diagnostic footprint on both diagonal paths",
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
+import { build } from 'esbuild';
+import { readFile } from 'node:fs/promises';
+import {foundationTransform,foundationCommandTransform}from '../../2026-10-22-place-strategy-trial/foundation-transform.mjs';
+import {terrainMethodTransform}from '../terrain-transform.mjs';
+import {stableBaseTerrainTransform,stableBaseWorldTransform}from '../stable-base-transform.mjs';
+import {rampPlaneTerrainTransform}from '../ramp-plane-transform.mjs';
+import {curvedGridLandscapeTransform}from '../curved-grid-transform.mjs';
+import {singleCompileTerrainTransform,singleCompileWorldTransform}from '../single-compile-transform.mjs';
+const root = fileURLToPath(new URL('../../../../', import.meta.url));
+const entry = "import fixture from '__PROJECT_ROOT__/docs/design/2026-10-23-place-method-comparison/evidence/expanded-place-recipe-flower-flat-wide-fixture.json';\nimport observed from '__PROJECT_ROOT__/docs/design/2026-10-23-place-method-comparison/evidence/69-H-wide-shore-final-state.json';\nimport { applyIntent } from '__PROJECT_ROOT__/src/domain/growingIsland/commands.ts';\nimport { editableIslandWorld } from '__PROJECT_ROOT__/src/domain/growingIsland/editableTerrainWorld.ts';\nlet counts={}, unique={};\nglobalThis.__hotCount=(name,p)=>{counts[name]=(counts[name]??0)+1;if(p)(unique[name]??=new Set()).add(`${p.x.toFixed(9)},${p.z.toFixed(9)}`);};\nconst OriginalParams=URLSearchParams;\nglobalThis.URLSearchParams=class extends OriginalParams {constructor(...args){super(...args);globalThis.__hotCount('URLSearchParams');}get(name){globalThis.__hotCount(`query:${name}`);return super.get(name);}};\nglobalThis.window={location:{get search(){globalThis.__hotCount('location.search');return '?terrainTrial=H&baseTrial=stable&rampTrial=linear&compileTrial=single&trialScene=shore&trialEvidence';}}};\nconst state=structuredClone(fixture.state);\nfor(const field of ['land','terrain','plots','landmarks','villagers','keepsakes','placeProgress','town','drops','character'])state[field]=structuredClone(observed[field]);\neditableIslandWorld(state);counts={};unique={};\nlet outcome='accepted';try {applyIntent(state,{id:'hotpath-count-one',command:{type:'terrain-edit',cell:{x:4,z:4},delta:-1}},8000);}catch(e){outcome=String(e);}\nconsole.log(JSON.stringify({outcome,counts,unique:Object.fromEntries(Object.entries(unique).map(([k,v])=>[k,v.size])),scope:'Temporary Node diagnostic with browser query branch and warmed previous world; call counts only, not timing proof.'},null,2));\n".replaceAll('__PROJECT_ROOT__/',root);
+const outfile = `/private/tmp/sansu-hotpath-call-count-${process.pid}.mjs`;
+await build({stdin:{contents:entry,resolveDir:root,sourcefile:'hotpath-call-count-entry.mjs',loader:'js'},outfile,bundle:true,platform:'node',format:'esm',define:{'import.meta.env.DEV':'false'},logLevel:'silent',plugins:[{name:'count-only',setup(b){b.onLoad({filter:/src\/domain\/growingIsland\/(editableTerrainWorld|worldDefinition|terrainEditing|placeTerrain|landscape)\.ts$/},async a=>{let s=await readFile(a.path,'utf8');
+if(a.path.endsWith('/editableTerrainWorld.ts')){s=singleCompileTerrainTransform(rampPlaneTerrainTransform(stableBaseWorldTransform(terrainMethodTransform(foundationTransform(s)))));s=s.replace('function rawHeight(state: TerrainLand, cell: Cell, curved: boolean, mode: TerrainMethod): number {',"function rawHeight(state: TerrainLand, cell: Cell, curved: boolean, mode: TerrainMethod): number { globalThis.__hotCount('rawHeight',cell);");s=s.replace('const baselineSurfaceHeightFor = (input: TerrainLand, cell: Cell) => {',"const baselineSurfaceHeightFor = (input: TerrainLand, cell: Cell) => { globalThis.__hotCount('baselineSurfaceHeight',cell);");s=s.replace('const physical = (cell: Cell) => { const sample',"const physical = (cell: Cell) => { globalThis.__hotCount('physical',cell); const sample");}
+if(a.path.endsWith('/worldDefinition.ts'))s=singleCompileWorldTransform(s);
+if(a.path.endsWith('/terrainEditing.ts'))s=foundationCommandTransform(s);
+if(a.path.endsWith('/placeTerrain.ts'))s=stableBaseTerrainTransform(s);
+if(a.path.endsWith('/landscape.ts'))s=curvedGridLandscapeTransform(s).replace('export function landscapePoint(cell: Cell): Cell { const point',"export function landscapePoint(cell: Cell): Cell { globalThis.__hotCount('landscapePoint',cell); const point");
+return{loader:'ts',contents:s};});}}]});
+
+const result=JSON.parse(execFileSync(process.execPath,[outfile],{encoding:'utf8',timeout:120000}));
+const input='docs/design/2026-10-23-place-method-comparison/evidence/69-H-wide-shore-final-state.json';
+console.log(JSON.stringify({date:new Date().toISOString(),command:'node docs/design/2026-10-23-place-method-comparison/evidence/hotpath-call-count.mjs',input,inputSha256:createHash('sha256').update(await readFile(root+input)).digest('hex'),generatedBundleSha256:createHash('sha256').update(await readFile(outfile)).digest('hex'),...result,uniqueCoordinatePrecision:'toFixed(9), diagnostic approximate unique counts; exact memo reuse count is not established'},null,2));

@@ -1,0 +1,35 @@
+file:///private/tmp/sansu-composite-check.mjs:11469
+  if (values.length > 1) throw Error("\u5834\u6240\u306E\u5F71\u97FF\u7BC4\u56F2\u304C\u91CD\u306A\u3063\u3066\u3044\u307E\u3059\u3002");
+                               ^
+
+Error: 場所の影響範囲が重なっています。
+    at placeHeight3 (file:///private/tmp/sansu-composite-check.mjs:11469:32)
+    at rawHeight (file:///private/tmp/sansu-composite-check.mjs:14333:10)
+    at calculateSurfaceHeightFor (file:///private/tmp/sansu-composite-check.mjs:14177:22)
+    at file:///private/tmp/sansu-composite-check.mjs:14184:48
+    at file:///private/tmp/sansu-composite-check.mjs:14323:19
+    at baselineSurfaceHeightFor (file:///private/tmp/sansu-composite-check.mjs:14187:14)
+    at baselineSurfaceHeight (file:///private/tmp/sansu-composite-check.mjs:14189:45)
+    at createTerraceField.minX.minX (file:///private/tmp/sansu-composite-check.mjs:14193:244)
+    at editableIslandWorld (file:///private/tmp/sansu-composite-check.mjs:14229:34)
+    at terrainFootingError (file:///private/tmp/sansu-composite-check.mjs:15277:17)
+
+Node.js v22.23.3
+Command failed: /Users/yutogasaki/.local/share/fnm/node-versions/v22.23.3/installation/bin/node --input-type=module -e globalThis.window=globalThis;globalThis.location={search:"?terrainTrial=H&baseTrial=stable&rampTrial=linear&growthTrial=inherit&compileTrial=single&trialScene=shore&queryTrial=frozen&memoTrial=samples&edgeTrial=memo&placeSetTrial=two",hash:'#/island'};await import("/private/tmp/sansu-composite-check.mjs");
+file:///private/tmp/sansu-composite-check.mjs:11469
+  if (values.length > 1) throw Error("\u5834\u6240\u306E\u5F71\u97FF\u7BC4\u56F2\u304C\u91CD\u306A\u3063\u3066\u3044\u307E\u3059\u3002");
+                               ^
+
+Error: 場所の影響範囲が重なっています。
+    at placeHeight3 (file:///private/tmp/sansu-composite-check.mjs:11469:32)
+    at rawHeight (file:///private/tmp/sansu-composite-check.mjs:14333:10)
+    at calculateSurfaceHeightFor (file:///private/tmp/sansu-composite-check.mjs:14177:22)
+    at file:///private/tmp/sansu-composite-check.mjs:14184:48
+    at file:///private/tmp/sansu-composite-check.mjs:14323:19
+    at baselineSurfaceHeightFor (file:///private/tmp/sansu-composite-check.mjs:14187:14)
+    at baselineSurfaceHeight (file:///private/tmp/sansu-composite-check.mjs:14189:45)
+    at createTerraceField.minX.minX (file:///private/tmp/sansu-composite-check.mjs:14193:244)
+    at editableIslandWorld (file:///private/tmp/sansu-composite-check.mjs:14229:34)
+    at terrainFootingError (file:///private/tmp/sansu-composite-check.mjs:15277:17)
+
+Node.js v22.23.3

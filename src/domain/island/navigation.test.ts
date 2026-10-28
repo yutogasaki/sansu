@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { islandFocusScreen, islandHouseSectionFromSearch, islandHouseUrl, islandLearningRequested, islandLearningRoute, islandParentUrl, islandScreenFromSearch, withoutIslandLearning } from './navigation';
+import { isSafeIslandReturnHref, islandFocusScreen, islandHouseSectionFromSearch, islandHouseUrl, islandLearningRequested, islandLearningRoute, islandParentUrl, islandScreenFromSearch, withoutIslandLearning } from './navigation';
 
 describe('island navigation contract', () => {
     it('opens ordinary learning directly and isolates explicit challenge confirmation', () => {
@@ -56,5 +56,15 @@ describe('island navigation contract', () => {
         ['/island', '?view=photos&photo=a', '/island?view=photos'],
     ])('has an in-app fallback for direct entry %s%s', (path, search, parent) => {
         expect(islandParentUrl(path, search)).toBe(parent);
+    });
+});
+
+// Return destinations supplied without a history key must remain in the app.
+describe('explicit return destinations', () => {
+    it('preserves ordinary pages and focused internal destinations', () => {
+        for (const href of ['/stats', '/settings?section=learning', '/island?view=keepsakes&house=notices', '/']) expect(isSafeIslandReturnHref(href)).toBe(true);
+    });
+    it('rejects external, relative and ambiguous destinations', () => {
+        for (const href of [undefined, null, 1, '', 'https://example.com', '//example.com', '/\\example.com', '/stats\n', 'stats']) expect(isSafeIslandReturnHref(href)).toBe(false);
     });
 });

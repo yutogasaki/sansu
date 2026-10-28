@@ -1,0 +1,1 @@
+Initial focused typecheck failed at foundation.ts(8,113): TS2345. Pick<GrowingState, land | bridge> was passed to bridgeAnchor, whose signature requires GrowingState. Corrected in v2 by accepting the physical floor narrow state and spelling the identical anchor formula locally. v2 focused typecheck, support/coverage checks, and build passed; original browser evidence remains v1.

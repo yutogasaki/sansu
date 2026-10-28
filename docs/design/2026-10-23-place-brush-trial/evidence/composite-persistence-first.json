@@ -1,0 +1,85 @@
+{
+  "at": "2026-10-24T02:27:55.874Z",
+  "status": "PASS",
+  "database": "SansuPlaceSetTrialV1",
+  "recipe": "place-set-save-v1:disjoint-two-platform-memory-v1:H:fixed-two-shear-grid-v1:fixed-core-base-v1:fixed-bilinear-interior-ramp-v1:directional-ramp-v1:flat-owner-v1",
+  "scope": "Fake IndexedDB actual production transaction/read/observe dependencies under the trial transform; no browser or release claim",
+  "results": [
+    {
+      "name": "two places and later ordinary moves/purchases survive actual writer close/reopen",
+      "detail": {
+        "drops": 9130,
+        "geometry": {
+          "floor": "6e308a885e6e0f033adc6151caf72151ba4b745aa42997e64e069cb544247cca",
+          "routes": "e1941fa6859f8558cf33d64de342223c5b9455283d59556b1a9c1e070294d915"
+        },
+        "owners": [
+          {
+            "id": "starter-flower",
+            "kind": "flower",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "growth": 6
+          },
+          {
+            "id": "starter-bench",
+            "kind": "bench",
+            "cell": {
+              "x": -1,
+              "z": 4
+            },
+            "growth": 0
+          },
+          {
+            "id": "l1",
+            "kind": "bench",
+            "cell": {
+              "x": 5,
+              "z": 5
+            },
+            "growth": 0
+          },
+          {
+            "id": "l2",
+            "kind": "flower",
+            "cell": {
+              "x": 6,
+              "z": 5
+            },
+            "growth": 0,
+            "color": "red"
+          }
+        ]
+      }
+    },
+    {
+      "name": "reopened Undo/Redo changes only shapes, preserving purchases, wallet, clocks, progress and owners"
+    },
+    {
+      "name": "duplicate intent is idempotent; stale cursor rejects; concurrent same-cursor edits commit once"
+    },
+    {
+      "name": "actual writer failure rolls back every saved byte; same intent retries once"
+    },
+    {
+      "name": "bad recipe and foreign-key record reject without fixture substitution"
+    }
+  ],
+  "metadata": {
+    "node": "v22.23.3",
+    "command": "fnm exec --using=22.23.3 node docs/design/2026-10-23-place-brush-trial/composite-persistence-check.mjs first",
+    "inputSHA256": {
+      "composite-store.ts": "500ba695a7a44cefd6090ec397106500fc3fbc89612f31e15f456bd54d339b01",
+      "composite-field.ts": "09359e5df48ec80601c5b6e55569e76358c31aa8826da68941642954720ac8f9",
+      "composite-model.ts": "a41a26c237ae43a83d8f9aaa6a7c17dffab1425d5408b4142d1b002bf6a08ead",
+      "composite-persistence-check.ts": "d5d3d6dee9c142dc6edaf399454b137ee9d2d633b7a2bf79df86b2ea7bf91028",
+      "composite-persistence-check.mjs": "8ff29bf3254590e7a26d8c9d938b544640164f97411d4b0eece9aac9829f1cd0",
+      "TrialIsland.ts": "dcc161c6c08b39a18ad898c32d16ad2ac3f3d64f5a6b9e502670d4c4020240df",
+      "vite.config.ts": "110c9f61b2ebbeaba7cba97d8d7e5395159c7dd142179da5264b6cb031cdd4fa"
+    },
+    "changedInputs": [],
+    "bundleSHA256": "0f2e41e53f53fc3b29fcb7d821a095bb5c97607bf9e3b5457c064ed68a7da3c9"
+  }
+}

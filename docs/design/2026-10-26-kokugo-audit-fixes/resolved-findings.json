@@ -1,0 +1,25 @@
+{
+  "at": "2026-10-26T02:00:28.237188+00:00",
+  "originalAudit": "../2026-10-26-kokugo-audit/findings.json",
+  "revision": "kokugo-fix-1087d7bd1ad6",
+  "sourceHash": "1087d7bd1ad6ae486af7c9f44daa512a26224f86c34c178c45f02df10635a602",
+  "resolved": {
+    "KOKUGO-A01": {
+      "fix": "Tag async reads with workId and gate editor/save by matching identity",
+      "evidence": "regressions/report.json"
+    },
+    "KOKUGO-A02": {
+      "fix": "Separate actual single-character materials from canonical exposure identity",
+      "evidence": "regressions/report.json"
+    },
+    "KOKUGO-A03": {
+      "fix": "Atomically record only the three disclosed H06 menu characters before showing the model; share 24h across response forms",
+      "evidence": "regressions/report.json"
+    },
+    "KOKUGO-A04": {
+      "fix": "Author scene-specific accepted readings for ambiguous words, preserving unrestricted lexical alternatives",
+      "evidence": "regressions/report.json"
+    }
+  },
+  "scope": "New reservations use kokugo-kanji-3; frozen old reservations and past facts remain unchanged"
+}

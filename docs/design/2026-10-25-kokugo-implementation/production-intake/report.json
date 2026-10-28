@@ -1,0 +1,44 @@
+{
+  "at": "2026-10-25T08:34:25.491Z",
+  "base": "http://127.0.0.1:5290",
+  "fixture": "empty browser, real first-play UI, no inserted profile",
+  "scenarios": [
+    {
+      "width": 390,
+      "owner": "ce8e603f-aa6f-4b3e-afbd-21ce30f33702",
+      "pass": true,
+      "realFirstHomePlaced": true,
+      "noMathAbilitySeeded": true,
+      "firstThreeCompleted": true,
+      "preferredCourseResumed": true,
+      "runtime": {
+        "revision": "kokugo-0941574eae48",
+        "version": "kokugo-0941574eae48:7292e113-cc89-4208-b8fb-18ec1418ef9c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    },
+    {
+      "width": 768,
+      "owner": "847faf77-5a33-403c-b2fb-1133706860fa",
+      "pass": true,
+      "realFirstHomePlaced": true,
+      "noMathAbilitySeeded": true,
+      "firstThreeCompleted": true,
+      "preferredCourseResumed": true,
+      "runtime": {
+        "revision": "kokugo-0941574eae48",
+        "version": "kokugo-0941574eae48:7292e113-cc89-4208-b8fb-18ec1418ef9c",
+        "configuredDelivery": "snap-root-v1",
+        "visualLineage": "pokko-field-v1",
+        "islandFeatureEnabled": true,
+        "natureTownFeatureEnabled": false
+      }
+    }
+  ],
+  "browserErrors": [],
+  "requestFailures": [],
+  "pass": true
+}

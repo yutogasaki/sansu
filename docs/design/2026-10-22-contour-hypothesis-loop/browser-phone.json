@@ -1,0 +1,229 @@
+{
+  "revision": "e2493ca3a47905f3",
+  "candidate": "contour-hypothesis-loop",
+  "delivery": "standalone-study-only",
+  "preset": "diagonal",
+  "cells": [
+    {
+      "x": -1,
+      "z": -2,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": 0,
+      "z": -2,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": 1,
+      "z": -2,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": -2,
+      "z": -1,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": -1,
+      "z": -1,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": 0,
+      "z": -1,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": 1,
+      "z": -1,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": 2,
+      "z": -1,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": -2,
+      "z": 0,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": -1,
+      "z": 0,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": 0,
+      "z": 0,
+      "h": 2,
+      "material": "soil"
+    },
+    {
+      "x": 1,
+      "z": 0,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": 2,
+      "z": 0,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": -2,
+      "z": 1,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": -1,
+      "z": 1,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": 0,
+      "z": 1,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": 1,
+      "z": 1,
+      "h": 2,
+      "material": "soil"
+    },
+    {
+      "x": 2,
+      "z": 1,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": -1,
+      "z": 2,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": 0,
+      "z": 2,
+      "h": 1,
+      "material": "soil"
+    },
+    {
+      "x": 1,
+      "z": 2,
+      "h": 1,
+      "material": "soil"
+    }
+  ],
+  "undo": 0,
+  "redo": 0,
+  "finish": true,
+  "clay": false,
+  "methods": [
+    {
+      "method": "hard",
+      "components": 2,
+      "centerDistance": 0.11597979746446663,
+      "originDistance": -0.5,
+      "samples": [
+        {
+          "x": 0,
+          "z": 0,
+          "cpu": 0.6900000000000001,
+          "visible": 0.6899999976158142,
+          "error": 2.3841858487472223e-9
+        },
+        {
+          "x": 1,
+          "z": 0,
+          "cpu": 0.15388330734633457,
+          "visible": 0.15388330817222595,
+          "error": 8.258913830605508e-10
+        },
+        {
+          "x": 0,
+          "z": 1,
+          "cpu": 0.13827828281206977,
+          "visible": 0.1382782757282257,
+          "error": 7.0838440668907765e-9
+        },
+        {
+          "x": 1,
+          "z": 1,
+          "cpu": 0.6847023825328445,
+          "visible": 0.6847023963928223,
+          "error": 1.3859977721075722e-8
+        },
+        {
+          "x": 0.5,
+          "z": 0.5,
+          "cpu": null,
+          "error": null
+        }
+      ],
+      "triangles": 59512,
+      "buildMs": 297
+    },
+    {
+      "method": "blend",
+      "components": 1,
+      "centerDistance": -0.057306997675519694,
+      "originDistance": -0.5012543341650598,
+      "samples": [
+        {
+          "x": 0,
+          "z": 0,
+          "cpu": 0.6900000000000001,
+          "visible": 0.6899999976158142,
+          "error": 2.3841858487472223e-9
+        },
+        {
+          "x": 1,
+          "z": 0,
+          "cpu": 0.15388330734633457,
+          "visible": 0.15388330817222595,
+          "error": 8.258913830605508e-10
+        },
+        {
+          "x": 0,
+          "z": 1,
+          "cpu": 0.13827828281206977,
+          "visible": 0.1382782757282257,
+          "error": 7.0838440668907765e-9
+        },
+        {
+          "x": 1,
+          "z": 1,
+          "cpu": 0.6847023825328445,
+          "visible": 0.6847023963928223,
+          "error": 1.3859977721075722e-8
+        },
+        {
+          "x": 0.5,
+          "z": 0.5,
+          "cpu": 0.691823818693391,
+          "visible": 0.6918238401412964,
+          "error": 2.1447905340643558e-8
+        }
+      ],
+      "triangles": 44776,
+      "buildMs": 252
+    }
+  ]
+}

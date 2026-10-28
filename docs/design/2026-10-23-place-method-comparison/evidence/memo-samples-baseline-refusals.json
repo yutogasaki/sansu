@@ -1,0 +1,575 @@
+{
+  "date": "2026-10-22T22:11:22.795Z",
+  "initialTestFailures": [
+    "expanded96: at least one ordinary edit/undo/redo cycle must succeed",
+    "signed-extreme30: at least one ordinary edit/undo/redo cycle must succeed"
+  ],
+  "initialAssumption": "Every projected fixture permits a successful ordinary edit/undo/redo. Both failures occurred in the memo-disabled first process before the enabled process ran.",
+  "correction": "Existing expanded-v2 owner locations and synthetic extreme heights need not be legal in every projected method. Their baseline refusals must remain refusals with identical reasons/state; no functional acceptance is claimed. H initial30/actual shore96/bridge30 retain mandatory accepted edit/undo/redo assertions. Assertion failures inside a cycle are rethrown, never converted to domain refusals.",
+  "records": [
+    {
+      "mode": "A",
+      "name": "expanded96",
+      "baselineCommands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 1,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        }
+      ],
+      "memoCommands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 1,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        }
+      ],
+      "commandHashEqual": true
+    },
+    {
+      "mode": "A",
+      "name": "signed-extreme30",
+      "baselineCommands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 1,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        }
+      ],
+      "memoCommands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 1,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        }
+      ],
+      "commandHashEqual": true
+    },
+    {
+      "mode": "H",
+      "name": "expanded96",
+      "baselineCommands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 1,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        }
+      ],
+      "memoCommands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 1,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        }
+      ],
+      "commandHashEqual": true
+    },
+    {
+      "mode": "H",
+      "name": "signed-extreme30",
+      "baselineCommands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 1,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        }
+      ],
+      "memoCommands": [
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 1,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 0,
+              "z": 4
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "command": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 3
+            },
+            "delta": 1
+          },
+          "accepted": false,
+          "reason": "Error: ものの 足もとだよ。さきに うごかしてみよう。"
+        },
+        {
+          "protectedCommand": {
+            "type": "terrain-edit",
+            "cell": {
+              "x": 4,
+              "z": 4
+            },
+            "delta": -1,
+            "actors": [
+              {
+                "x": 4,
+                "z": 4
+              }
+            ]
+          },
+          "accepted": false,
+          "reason": "Error: おうちと ふなつきばの 足もとは そのままに しよう。"
+        }
+      ],
+      "commandHashEqual": true
+    }
+  ]
+}

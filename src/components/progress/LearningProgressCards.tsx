@@ -1,3 +1,5 @@
+import { KokugoLevelSummary } from './KokugoLevelSummary';
+import { useKokugoOverview } from './useKokugoOverview';
 import { useEffect, useState } from 'react';
 import { ArrowRight, ChevronDown, Flag, Settings2 } from 'lucide-react';
 import type { SubjectKey, UserProfile } from '../../domain/types';
@@ -27,7 +29,8 @@ export function LearningProgressCards({ profile, refreshKey, onLearn, onFinish, 
         return () => { cancelled = true; };
     }, [profile, refreshKey, retry]);
     const data = result?.owner === profile.id ? result.data : undefined;
-    const subjects: SubjectKey[] = profile.subjectMode === 'mix' ? ['math', 'vocab'] : [profile.subjectMode];
+    const kokugo = useKokugoOverview(profile.id);
+    const subjects: SubjectKey[] = kokugo?.course?.preferred ? [] : profile.subjectMode === 'mix' ? ['math', 'vocab'] : [profile.subjectMode];
     return <SurfacePanel className="learning-progress-card space-y-0 rounded-[28px] p-5" aria-label="つぎへの道" data-progress-candidate="progress-level-up-v4">
         <header><IslandToyIcon kind="island" size={28} /><h2>つぎへの 道</h2></header>
         {result?.owner === profile.id && result.error ? <div role="alert">きろくを 読みこめなかったよ。
@@ -70,6 +73,7 @@ export function LearningProgressCards({ profile, refreshKey, onLearn, onFinish, 
                     </details>
                 </section>;
             })}</div>}
+        {(kokugo?.course || kokugo?.progress.length || kokugo?.works.length) ? <KokugoLevelSummary profileId={profile.id} easy={profile.uiTextMode === 'easy'} /> : null}
         <Button variant="secondary" className="min-h-11 w-full" onClick={onLearn}>れんしゅうを つづける</Button>
     </SurfacePanel>;
 }

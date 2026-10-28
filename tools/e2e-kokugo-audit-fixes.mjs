@@ -1,3 +1,4 @@
+import { kokugoUnitButton } from './island-e2e-helpers.mjs';
 import assert from 'node:assert/strict';
 import { promises as fs } from 'node:fs';
 import { chromium } from 'playwright';
@@ -62,7 +63,7 @@ try {
         const context = await browser.newContext({ viewport: { width, height: width === 768 ? 1024 : width === 320 ? 568 : 844 }, hasTouch: true, reducedMotion: width === 768 ? 'reduce' : 'no-preference' });
         const page = currentPage = await context.newPage(); page.setDefaultTimeout(60000); const errors = []; page.on('pageerror', e => errors.push(e.message));
         await page.goto(`${base}/#/onboarding`); await page.getByRole('button', { name: 'しまへ いく', exact: true }).waitFor(); const owner = await seedNative(page, `audit-fixes-${width}`);
-        await page.goto(`${base}/#/kokugo`); await page.getByRole('heading', { name: '国語を まなぼう', exact: true }).waitFor(); await click(page, '伝える'); await page.getByRole('button', { name: /E05 ·/ }).click();
+        await page.goto(`${base}/#/kokugo`); await page.getByRole('heading', { name: '国語を まなぼう', exact: true }).waitFor(); await click(page, '伝える'); await kokugoUnitButton(page, 'E05').click();
         const input = page.getByLabel('作品・メモ', { exact: true }), topic = page.locator('#kokugo-topic');
         const waitEditor = () => until(() => input.isEnabled(), Boolean);
         const save = async text => { await input.fill(text); await click(page, '作品に のこす'); await page.getByText('作品に のこしたよ。', { exact: true }).waitFor(); await until(() => topic.isEnabled(), Boolean); };
@@ -72,11 +73,11 @@ try {
         await click(page, '作品に のこす'); await page.getByText('作品に のこしたよ。', { exact: true }).waitFor(); await capture(page, 'topic-one-retained');
         await until(() => topic.isEnabled(), Boolean); await topic.selectOption('2'); await waitEditor(); assert.equal(await input.inputValue(), '');
         await input.fill('お題三の下書き'); await until(() => read(page, 'kokugoWorks'), rows => rows.some(w => w.id === `${owner}:E05-3` && w.text === 'お題三の下書き'));
-        await page.reload(); await page.getByRole('heading', { name: '国語を まなぼう', exact: true }).waitFor(); await click(page, '伝える'); await page.getByRole('button', { name: /E05 ·/ }).click();
+        await page.reload(); await page.getByRole('heading', { name: '国語を まなぼう', exact: true }).waitFor(); await click(page, '伝える'); await kokugoUnitButton(page, 'E05').click();
         await waitEditor(); assert.equal(await input.inputValue(), 'お題一の保存文'); await topic.selectOption('1'); await waitEditor(); assert.equal(await input.inputValue(), 'お題二の保存文');
         await topic.selectOption('2'); await waitEditor(); assert.equal(await input.inputValue(), 'お題三の下書き');
         const works = await read(page, 'kokugoWorks'); assert.equal(works.find(w => w.id === `${owner}:E05-1`).text, 'お題一の保存文'); assert.equal(works.find(w => w.id === `${owner}:E05-2`).text, 'お題二の保存文');
-        await catalog(page); await click(page, '漢字'); const modelStart = Date.now(); await page.getByRole('button', { name: /H06 ·/ }).click();
+        await catalog(page); await click(page, '漢字'); const modelStart = Date.now(); await kokugoUnitButton(page, 'H06').click();
         await page.getByText('書いたら「川」と 見くらべよう。線の数や 向きを 見てみよう。', { exact: true }).waitFor();
         const contact = await read(page, 'kokugoProgress'); assert.equal(contact.length, 9);
         for (const row of contact) { assert(row.independentAfter >= modelStart + 86400000); assert.deepEqual(row.seenExposures, [`${row.target}:isolated`]); assert.equal(row.independentItems.length, 0); }

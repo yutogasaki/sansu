@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-22T21:04:23.466Z",
+  "scope": "F2 local actual app: six normal height commands, Undo/Redo, inventory placement, natural uses and reload",
+  "observations": [
+    {
+      "name": "18-terrace-input-state",
+      "sha256": "31aedb4b82e10c64c6f33ea5b81d6d3e76d698198ca450f4dd43aacd52007b57"
+    },
+    {
+      "name": "29-F2-shaped-state",
+      "sha256": "69f8e2f148deae1332338b36ae82dad582bc6cd96eabd3312a8029b927bb4900"
+    },
+    {
+      "name": "30-F2-undo-state",
+      "sha256": "3442753a67c2e78a525475ed00943bacef65e6d80048c1b62ac75bafb47db3cd"
+    },
+    {
+      "name": "31-F2-redo-state",
+      "sha256": "69f8e2f148deae1332338b36ae82dad582bc6cd96eabd3312a8029b927bb4900"
+    },
+    {
+      "name": "32-F2-placed-state",
+      "sha256": "2dc08689b84025f57b6e4c96b975e68fcd84ba64f2881acb3698f9b306e58306"
+    },
+    {
+      "name": "33-F2-used-state",
+      "sha256": "081e357da5da782ed1dcdd0edcf91153ecb300c1192c2d546784e0e639643bcd"
+    },
+    {
+      "name": "34-F2-reloaded-state",
+      "sha256": "0135f5cf062234e7cad0c990e87484b48da419e407c5a39ca0bc56d87e2a6792"
+    }
+  ],
+  "checks": [
+    "six expected height changes only",
+    "existing acquired land, owners, tent, villager and funds retained",
+    "Undo then Redo restored the complete terrain history",
+    "both actual actors used the current new place",
+    "reload retained owners, terrain and every prior use fact"
+  ],
+  "limits": [
+    "successful Undo was before furniture placement",
+    "not a proof that F is better than A with identical inputs",
+    "not visual acceptance or independent child comprehension",
+    "not production/offline/update acceptance"
+  ]
+}

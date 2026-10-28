@@ -1,0 +1,14 @@
+{
+  "pass": true,
+  "scope": "isolated terrain/route logic; actual asset envelopes are verified in the browser",
+  "checks": 7,
+  "tests": [
+    "initial six fixed identities have supported roots and home approach",
+    "three cumulative edits each change the real state and produce different current shore destinations",
+    "all cumulative edits undo and redo to exact states and destinations",
+    "undo that removes occupied new land is rejected without changing history, then succeeds from home",
+    "home, trunk and adjacent root support cannot be removed; rejected edits do not enter history",
+    "detached land does not grant an invisible route over water",
+    "a new successful edit after undo discards only the redo branch"
+  ]
+}

@@ -1,0 +1,10 @@
+
+> pokko-fushigi-zukan-app@0.0.0 agent:index:check
+> node tools/generate-agent-index.mjs --check && npm run portal:verify
+
+
+> pokko-fushigi-zukan-app@0.0.0 portal:verify
+> node scripts/check-standard-portal.mjs && node scripts/standard-portal.mjs verify && node scripts/check-portal-workspace.mjs && node --test scripts/vendor/portal-site/3.2.0/design.test.cjs scripts/vendor/portal-site/3.2.0/references.test.cjs
+
+PASS: adapter membership, unknown ownership/deadline, malformed/duplicate rejection, fixed date and vendor SHA
+sh: line 1: 24948 Killed: 9               node scripts/check-standard-portal.mjs

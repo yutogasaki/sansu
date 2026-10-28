@@ -1,0 +1,12 @@
+import { build } from 'esbuild';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { foundationTransform, foundationCommandTransform } from './foundation-transform.mjs';
+const original = JSON.parse(readFileSync('docs/design/2026-10-22-place-strategy-trial/evidence/logic.json', 'utf8'));
+await build({entryPoints:['docs/design/2026-10-22-place-strategy-trial/check.ts'],bundle:true,platform:'node',format:'esm',outfile:'/private/tmp/sansu-place-foundation-check.mjs',plugins:[{name:'foundation-floor',setup(build){build.onLoad({filter:/(editableTerrainWorld|terrainEditing)\.ts$/},args=>({contents:(args.path.endsWith('/terrainEditing.ts')?foundationCommandTransform:foundationTransform)(readFileSync(args.path,'utf8')),loader:'ts',resolveDir:args.path.slice(0,args.path.lastIndexOf('/'))}));}}]});
+await import('/private/tmp/sansu-place-foundation-check.mjs');
+const next = JSON.parse(readFileSync('docs/design/2026-10-22-place-strategy-trial/evidence/logic.json', 'utf8'));
+writeFileSync('docs/design/2026-10-22-place-strategy-trial/evidence/foundation-logic.json',JSON.stringify(next,null,2));
+writeFileSync('docs/design/2026-10-22-place-strategy-trial/evidence/logic.json',JSON.stringify(original,null,2));
+console.log(JSON.stringify({original:original.acceptedCells,foundation:next.acceptedCells}));
+await build({entryPoints:['docs/design/2026-10-22-place-strategy-trial/foundation-proof.ts'],bundle:true,platform:'node',format:'esm',outfile:'/private/tmp/sansu-place-foundation-proof.mjs',plugins:[{name:'foundation-floor',setup(build){build.onLoad({filter:/(editableTerrainWorld|terrainEditing)\.ts$/},args=>({contents:(args.path.endsWith('/terrainEditing.ts')?foundationCommandTransform:foundationTransform)(readFileSync(args.path,'utf8')),loader:'ts',resolveDir:args.path.slice(0,args.path.lastIndexOf('/'))}));}}]});
+await import('/private/tmp/sansu-place-foundation-proof.mjs');

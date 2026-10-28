@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>島の追加・成長に伴う退行の調査</title>
+<style>
+body{font-family:system-ui,sans-serif;color:#263244;background:#f5f6f8;margin:0;line-height:1.8}main{max-width:940px;margin:auto;padding:36px 24px 80px}h1{font-size:28px;line-height:1.4}h2{font-size:21px;margin-top:36px}table{border-collapse:collapse;background:white;width:100%}td,th{padding:18px;text-align:left;border:1px solid #dce1e7;vertical-align:top}p{margin:10px 0}.muted{color:#596576}a{color:#2459b2}code{overflow-wrap:anywhere}li{margin:8px 0}
+</style>
+<main>
+<p>Sansu / 調査記録 / 2026-10-20</p>
+<h1>花以外にも、植物の追加・成長で場所が失われる退行を確認</h1>
+<p>このページは修正前の調査記録。続報：<a href="fix.html">植物を増やしても育った場所が残る修正と検証</a>。</p>
+<p>対象はHEAD 9355c416を基点とする、未commit変更を含む作業ツリー。調査のみで、製品コード・仕様・本人保存・公開設定は変更していない。</p>
+<p>主な原因は「全成分の形照合」と「全成分の成熟要求」の2つ。以下は診断fixtureでの観測であり、本人端末の原因確定や、旧構造を維持した場合の空間安全の合格ではない。</p>
+<table>
+<tr><th>ID</th><th>確認した現象・根拠</th></tr>
+<tr><td>F1</td><td><strong>植物を追加すると大型構造が失われる</strong><p>成熟花2×2の4株 (2,2)(3,2)(2,3)(3,3) に (4,3) を追加すると、実geometryの屋根あり→なし。追加株の収納で復活。別々の2庭8株を1株でつなぐと、屋根2つ→0。</p><p class="muted">places.tsのprofile判定、placeCapability.tsの全座標照合、placeFlowerGeometry.tsの早期return。元の株の削除ではなく、派生構造の消失。</p></td></tr>
+<tr><td>F2</td><td><strong>追加した木が育つと回廊がなくなる</strong><p>成熟木4本 (2,2)〜(5,2) と若木 (5,3)。若木の間はP02と回廊routeが存在。追加木が成熟すると5本のL字になりP02自体がなくなる。</p><p class="muted">P02は成熟木だけを成分化するが、その全成分を形照合する。追加直後の維持だけでは、この遅れて起こる退行を検出できない。今回確認したのは導出・route消失で、同じ場面の実画面は未撮影。</p></td></tr>
+<tr><td>F3</td><td><strong>若い植物を足すと成熟済みの場所まで段階が戻る</strong><p>成熟木 (4,3) に若木 (5,3) を追加：P01 grown→connected、garden利用先なし。成熟花4株の直線の端に若花1株を追加：同様に段階と利用先が戻り、屋根も消失。5株目開花で直線アーチは復活。</p><p class="muted">全接続成分の全株成熟を要求するため。F1/F2の形照合とは独立した原因。</p></td></tr>
+<tr><td>F4</td><td><strong>水辺との関係・思い出の案内へ波及</strong><p>F3の木陰ではmemoryDestinationが有効→なし。水ばち (4,3)、成熟花 (5,3) のC02関係へ若花 (6,3) を足すとC02がなくなる。</p><p class="muted">memoryDestinationとderivePlaceRelationsはgrown/livedだけを扱う。保存済み思い出の削除は再現しておらず、今の場所への行先がなくなる。F3からの派生影響。</p></td></tr>
+</table>
+<h2>花以外を含む調査範囲</h2>
+<ul>
+<li>木陰・大樹と回廊・花庭・水辺・共同屋根：導出処理、支持と入口の境界、追加/成熟/収納の変化を確認。</li>
+<li>住人：利用対象、revision変更時の行動解除と地面への退避コードを確認。今回の追加/成長の瞬間を実住人で操作する新規旅程は未実施。</li>
+<li>正常対照：遠い未給水水路を足してもP03は不変。未成熟家を足しても既存共同屋根は維持。屋根下に木を置くと安全側へ失効。</li>
+<li>保存・島切替/航海・記念品・土地拡張・時計/給水：growingIslandドメイン全体の既存テストを実行。未知の不具合なしという保証ではない。</li>
+<li>配置予告/操作・道・室内保存・メニュー・カメラ：関連UIテストを追加実行。写真の近景化はコードに明示された初期zoom1.5で、拡大差だけをバグと扱わない。</li>
+</ul>
+<h2>検証結果</h2>
+<ul>
+<li>ドメイン全体＋選定した描画/住人/カメラ：60ファイル443件PASS（現状を確認する診断1件を含む）。</li>
+<li>拡張した診断：2件PASS。初版1件の再実行を含むため上の443件に単純加算しない。</li>
+<li>追加UI/配置/歩行/室内保存/メニュー：21ファイル127件PASS。</li>
+<li>初回の限定実行では診断座標が斜め接続になっていたため期待値が失敗。直交接続に修正し再実行。製品の失敗とは区別する。</li>
+<li>実行Nodeは24.18.0。nvmがなく、指定Node22での実行証拠ではない。既存Three.js fixtureにmap=undefined警告あり。</li>
+</ul>
+<p>テストのPASSは既知の退行が直った意味ではない。診断は現在の退行が再現することを確認している。入力hash・日時・実行コマンド・観測値は<a href="verification.json">検証記録</a>へ保存。生ログはローカルの output/place-regression-audit-2026-10-20/ にあり、配布証拠として扱わない。</p>
+<h2>修正候補</h2>
+<ol>
+<li>庭全体、成熟済み部分、大型部品の支持所有株、利用先を別々に導出する。</li>
+<li>対応した成熟株の部分集合ごとに、支持・入口・実床・全身通過・他物との干渉を確認する。周辺に株が増えただけで既存候補を無効にしない。</li>
+<li>描画の中心/半径/支持枝も、実際の部品の支持集合を使う。「4株を探す判定だけ」に変えて屋根を全株へ広げない。</li>
+<li>通常庭と大型部品のrevision/利用先の安定性、複数部品の干渉調停、保存後の決定的な再導出を設計する。安全未検証の形を無条件に大型化しない。</li>
+</ol>
+<h2>修正前後で優先する未確認境界</h2>
+<ol>
+<li>P01/P05の利用中に若い植物を追加し、誤記録・不自然な退避・再成立後の利用を実住人で確認。</li>
+<li>P02の成熟直前→成熟→追加木収納→再配置を、実床/頭高/回廊/入口と合わせて検証。</li>
+<li>複数庭・複数森の合流/分離と、C01〜C04・思い出・利用先への波及。</li>
+<li>IndexedDB保存→再読込、旧保存/通常/native/authoredの各分岐、島/本人切替。</li>
+<li>水の実給水断絶/未給水延長、家の成熟/収納/成分合流、屋根下障害物。正常対照を全配置の合格へ広げない。</li>
+<li>本人端末の対象revision・保存状態・実際の描画分岐とPWA更新状態を照合し、写真の直接原因を確定。</li>
+</ol>
+<h2>チャッピーとの照合</h2>
+<p><a href="https://chatgpt.com/g/g-p-6ad58d0857b881918e46e346350848e7/c/6ad75387-38ac-83e8-8111-6f6e7b652fe8">ぽこもこプロジェクト「場所生成バグ調査」</a>へ実コード抜粋と診断結果を共有。全リポジトリ/本人画像の独立監査ではなく、抜粋と結果のレビュー。2原因の区別、木・関係・再訪導線への波及、支持所有株を分離する修正案を採用候補へ反映した。ChatGPTのP0表記は検証順序で、重大度確定には使わない。テストの重複集計と安全退避の実測範囲の過大表現は訂正を共有。</p>
+<p><a href="probe.test.ts.txt">診断ソース（自動実行対象外）</a>。再実行する場合は元の src/domain/growingIsland/placeRegression.audit.test.ts へ一時コピーし、npx vitest run src/domain/growingIsland/placeRegression.audit.test.ts。この診断を、不具合を固定する通常の回帰テストとして残さない。</p>
+<p class="muted">文書同期判断：調査記録のみ。規則・保存・画面の変更は未採用なので正本更新なし。追加エージェントなし。commit/push/公開なし。未commitの別作業がある保存/room/life関連の結果を、それらの独立監査済みという意味にはしない。新規ブラウザ旅程・PWA更新・実端末検証なし。診断のJSON復元はDB再読込の証拠ではない。</p>
+</main>
+</html>

@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-22T22:31:53.601Z",
+  "status": "PASS",
+  "node": "22.23.3",
+  "browser": {
+    "status": "PASS",
+    "comparison": "COMPARABLE_N1"
+  },
+  "nodeReplay": {
+    "status": "PASS",
+    "conditions": 20,
+    "queries": 40340,
+    "routes": 108954,
+    "output": "/var/folders/0z/bq5m0r1x4_59p55yrw1mx6fr0000gn/T/sansu-memo-replay-WmadDJ",
+    "bundleSHA256": "e7d3c8d13be753760cad4e99bcc040b1afd5b29d2054f976590968b8330353c2"
+  },
+  "eslint": "PASS: the two newly saved checker entrypoints",
+  "scope": "Only new checker artifacts and README. Main evidence JSON and final v17 runtime/transform files were not written.",
+  "files": {
+    "sansu-memo-browser-pair-check.mjs": "51ef03978ac27c33ae95ff8e37de837dd528e7300e9a5b762b08cc39e0a251e2",
+    "sansu-memo-node-replay.mjs": "a9507df068e1b53d49087f0b2e025523f83a0a6f606367e65960f3226592fb2a",
+    "memo-samples-historical-bundle.mjs": "e7d3c8d13be753760cad4e99bcc040b1afd5b29d2054f976590968b8330353c2",
+    "memo-checker-provenance.json": "e3785effdd79dd2d0d5205377da725cb7ab76cdfa222ce9e0c77ad4fcd9e402d",
+    "README-memo.md": "e7e8c959ed48b7ce2ae09f4167fdecc7e21fe2c02541975ef2f2ba07ebce0027"
+  }
+}

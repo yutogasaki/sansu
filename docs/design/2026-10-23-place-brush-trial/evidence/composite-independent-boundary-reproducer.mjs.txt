@@ -1,0 +1,15 @@
+import { build } from '/Users/yutogasaki/Projects/sansu/node_modules/esbuild/lib/main.js';
+import { loadConfigFromFile } from '/Users/yutogasaki/Projects/sansu/node_modules/vite/dist/node/index.js';
+import { readFile } from 'node:fs/promises';
+const dir='/Users/yutogasaki/Projects/sansu/docs/design/2026-10-23-place-brush-trial';
+const loaded=await loadConfigFromFile({command:'build',mode:'production'},dir+'/vite.config.ts');
+const plugin=loaded.config.plugins.find(p=>p?.name==='place-method-comparison');
+const source=`import 'fake-indexeddb/auto';
+import { openSavedTrial,trialDatabase } from './trial-store';
+import { compositeEnabled } from './composite-field';
+const results={composite:compositeEnabled(),databaseAccessor:false,transactions:0,error:null};
+try{trialDatabase();results.databaseAccessor=true;}catch(error){results.accessorError=String(error);}
+const db={transaction:()=>{results.transactions++;throw Error('Reached database transaction');}};
+try{await openSavedTrial(db);}catch(error){results.error=String(error);}
+console.log(JSON.stringify(results,null,2));`;
+await build({stdin:{contents:source,resolveDir:dir,loader:'ts'},outfile:'/private/tmp/sansu-composite-review-bundle.mjs',bundle:true,platform:'node',format:'esm',logLevel:'silent',define:{'import.meta.env.DEV':'false','import.meta.env.BASE_URL':'"/"','__APP_VERSION__':'"review"','__LIFE_REPLAY_VERSION__':'"review"'},plugins:[{name:'actual-review',setup(b){b.onLoad({filter:/\.(?:ts|tsx)$/},async args=>{const raw=await readFile(args.path,'utf8'),r=await plugin.transform.call({},raw,args.path);return{contents:typeof r==='string'?r:r?.code??raw,loader:args.path.endsWith('.tsx')?'tsx':'ts'};});}}]});

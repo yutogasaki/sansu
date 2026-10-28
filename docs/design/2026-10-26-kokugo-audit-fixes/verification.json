@@ -1,0 +1,142 @@
+{
+  "at": "2026-10-26T02:04:33.464864+00:00",
+  "sourceHash": "1087d7bd1ad6ae486af7c9f44daa512a26224f86c34c178c45f02df10635a602",
+  "revision": "kokugo-fix-1087d7bd1ad6",
+  "source": "inputs.json",
+  "base": "editorial-f80f926967d3",
+  "preview": "http://127.0.0.1:5289/#/kokugo",
+  "scope": "Four authorized national-language audit fixes. Concurrent unrelated Island and portal edits excluded from the fixed application build. No commit, push, public deploy or writes to a real user profile.",
+  "checks": [
+    {
+      "command": "npm run build",
+      "result": "PASS",
+      "includes": "tsc -b and assets:check",
+      "precacheFiles": 173,
+      "precacheMiB": 9.3,
+      "budgetMiB": 12
+    },
+    {
+      "command": "npm run lint",
+      "result": "PASS",
+      "errors": 0,
+      "warnings": 4,
+      "warningScope": "pre-existing components outside Kokugo"
+    },
+    {
+      "command": "npx vitest run src/domain/kokugo",
+      "result": "PASS",
+      "files": 6,
+      "tests": 56
+    },
+    {
+      "command": "npm run test:run -- --reporter=default --reporter=json",
+      "result": "FULL RUN: 1 timeout; same-source targeted rerun PASS",
+      "fullRun": {
+        "success": false,
+        "files": 670,
+        "passedTests": 5646,
+        "failedTests": 1,
+        "tests": 5647
+      },
+      "combined": {
+        "pass": true,
+        "files": 670,
+        "tests": 5647
+      },
+      "evidence": "unit-suite.json"
+    },
+    {
+      "command": "node tools/e2e-kokugo-audit-fixes.mjs",
+      "result": "PASS",
+      "widths": [
+        390,
+        768,
+        320
+      ],
+      "evidence": "regressions/report.json"
+    },
+    {
+      "command": "node tools/e2e-kokugo-kanji.mjs",
+      "result": "PASS",
+      "widths": [
+        390,
+        768,
+        320
+      ],
+      "evidence": "kanji/report.json"
+    },
+    {
+      "command": "node tools/e2e-kokugo-update.mjs",
+      "result": "PASS",
+      "widths": [
+        390,
+        768,
+        320
+      ],
+      "evidence": "update/report.json"
+    },
+    {
+      "command": "node tools/audit-kokugo-editorial.mjs",
+      "result": "PASS",
+      "issues": 0,
+      "evidence": "materials.json"
+    },
+    {
+      "command": "npm run e2e:smoke",
+      "result": "31/32",
+      "failure": "existing classic Explore physical entry: expected10 actual1",
+      "targetedRerun": "PASS",
+      "baselineTargetedControl": "PASS",
+      "priorSameFailure": "../2026-10-25-kokugo-kanji/diagnostics/smoke-final-details/smoke-report.json",
+      "evidence": "smoke/smoke-report.json",
+      "interpretation": "Targeted passes do not turn the full run into a clean pass. Existing intermittent input loss remains outside this change."
+    },
+    {
+      "command": "node scripts/standard-portal.mjs verify",
+      "runtime": "Node24.18.0",
+      "result": "FAIL: pre-existing stale flow evidence",
+      "failure": "docs/tasks/active/2026-09-27-living-fantasy-first-playable.md",
+      "interpretation": "Full portal entry blocked by this independent prerequisite; unrelated source hashes were not changed."
+    },
+    {
+      "command": "npm run typecheck",
+      "result": "PASS",
+      "scope": "shared workspace; fixed candidate separately passes tsc -b in build",
+      "evidence": "logs/sansu-audit-fix-typecheck.log"
+    },
+    {
+      "command": "npm run docs:check",
+      "result": "PASS",
+      "scope": "shared workspace closeout",
+      "warnings": "existing task review dates",
+      "evidence": "logs/docs-final.log"
+    },
+    {
+      "command": "node tools/generate-agent-index.mjs --check",
+      "result": "PASS",
+      "scope": "legacy generated index only; complete agent:index:check remains blocked by portal prerequisite",
+      "evidence": "logs/index-final.log"
+    },
+    {
+      "command": "SHA256 input comparison",
+      "result": "PASS",
+      "candidateInputs": 3549,
+      "ownedWorkspaceInputs": 64,
+      "evidence": "input-integrity.json"
+    },
+    {
+      "command": "GET http://127.0.0.1:5289/version.json",
+      "result": "PASS",
+      "evidence": "served-version.json"
+    }
+  ],
+  "compatibility": "Same work/item/exposure IDs; new kanji materials use kokugo-kanji-3. Existing frozen reservations keep their original prompts, accepted readings, drafts and facts. No DB schema migration or retrospective correction of user work.",
+  "notVerified": [
+    "Human subject-specialist review",
+    "Physical devices / installation",
+    "Human audio listening judgment",
+    "Actual child understanding, retention or voluntary return"
+  ],
+  "resolvedAudit": "resolved-findings.json",
+  "closedAt": "2026-10-26T02:09:17.353798+00:00"
+}

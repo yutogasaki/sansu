@@ -1,0 +1,172 @@
+{
+  "target": "http://127.0.0.1:5264/docs/design/2026-10-21-island-shape-experiments/",
+  "candidate": "island-shape-experiments-v1",
+  "revision": "d014de3366c28752",
+  "sourceHashes": {
+    "index.html": "4fed94d5e260b5766630fdae40d8356de22e2c2a70381265f1eea4479394111c",
+    "style.css": "999be7e7d22114c592f6cd89f82322d4be464fbfe1b8b701d96823d7bccfdf35",
+    "terrain.mjs": "426ef1dd05860cf04d30c50ce8b694dfd402dd499dbf6920205e57d457d9b935",
+    "viewer.js": "e971b0b8f2f34d01260ebf10460cb4c4e055cd0a3590074d3a4d05728e2290bd",
+    "habitats.js": "3010120d5830bf31d0164644f3616ba7d8c24f4ca975e419070263fa07ab73f6",
+    "experiments.mjs": "aa743b8e2436929bc6d3708afbcb94d0c17b58db45f1dd948d730da60fdcc0f7",
+    "sounds.mjs": "416e814551d07828b39efefead69ba9df61c561463a4fd98ae24d2a1a9964a90",
+    "build.mjs": "d6d6f197525e4e8d8fa5c04da866283d006d7d3735dc857781076f79e0a4f83f"
+  },
+  "runnerHash": "77559d3e4431bfe83770e2d7658bce702526a83073a82dd4908bf687f435f915",
+  "startedAt": "2026-10-21T02:02:49.549Z",
+  "scenarios": [
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "id": "cove",
+      "checks": [
+        "replayed valid edits reach different intended topology/place with soil +12 and 10 trees",
+        "environment toggle changes real image while preserving every height and material budget",
+        "Undo/Redo includes trees and recalculated places",
+        "house support remains protected",
+        "three preview controls activate without enabling ongoing edit sounds; not a listening test",
+        "return restores the real custom shape from before playback",
+        "cancel prevents pending replay edits and restores custom state",
+        "no horizontal page overflow, no DB/SW, unrelated storage preserved, no page errors"
+      ],
+      "captures": [
+        "390-cove-on.png",
+        "390-cove-context.png",
+        "390-cove-off.png",
+        "390-cove-evening.png"
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "id": "terrace",
+      "checks": [
+        "replayed valid edits reach different intended topology/place with soil +12 and 10 trees",
+        "environment toggle changes real image while preserving every height and material budget",
+        "Undo/Redo includes trees and recalculated places",
+        "house support remains protected",
+        "three preview controls activate without enabling ongoing edit sounds; not a listening test",
+        "return restores the real custom shape from before playback",
+        "cancel prevents pending replay edits and restores custom state",
+        "no horizontal page overflow, no DB/SW, unrelated storage preserved, no page errors"
+      ],
+      "captures": [
+        "390-terrace-on.png",
+        "390-terrace-context.png",
+        "390-terrace-off.png",
+        "390-terrace-evening.png"
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "id": "forest",
+      "checks": [
+        "replayed valid edits reach different intended topology/place with soil +12 and 10 trees",
+        "environment toggle changes real image while preserving every height and material budget",
+        "Undo/Redo includes trees and recalculated places",
+        "house support remains protected",
+        "three preview controls activate without enabling ongoing edit sounds; not a listening test",
+        "return restores the real custom shape from before playback",
+        "cancel prevents pending replay edits and restores custom state",
+        "no horizontal page overflow, no DB/SW, unrelated storage preserved, no page errors"
+      ],
+      "captures": [
+        "390-forest-on.png",
+        "390-forest-context.png",
+        "390-forest-off.png",
+        "390-forest-evening.png"
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "id": "cove",
+      "checks": [
+        "replayed valid edits reach different intended topology/place with soil +12 and 10 trees",
+        "environment toggle changes real image while preserving every height and material budget",
+        "Undo/Redo includes trees and recalculated places",
+        "house support remains protected",
+        "three preview controls activate without enabling ongoing edit sounds; not a listening test",
+        "return restores the real custom shape from before playback",
+        "cancel prevents pending replay edits and restores custom state",
+        "no horizontal page overflow, no DB/SW, unrelated storage preserved, no page errors"
+      ],
+      "captures": [
+        "768-cove-on.png",
+        "768-cove-context.png",
+        "768-cove-off.png",
+        "768-cove-evening.png"
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "id": "terrace",
+      "checks": [
+        "replayed valid edits reach different intended topology/place with soil +12 and 10 trees",
+        "environment toggle changes real image while preserving every height and material budget",
+        "Undo/Redo includes trees and recalculated places",
+        "house support remains protected",
+        "three preview controls activate without enabling ongoing edit sounds; not a listening test",
+        "return restores the real custom shape from before playback",
+        "cancel prevents pending replay edits and restores custom state",
+        "no horizontal page overflow, no DB/SW, unrelated storage preserved, no page errors"
+      ],
+      "captures": [
+        "768-terrace-on.png",
+        "768-terrace-context.png",
+        "768-terrace-off.png",
+        "768-terrace-evening.png"
+      ],
+      "errors": [],
+      "pass": true
+    },
+    {
+      "viewport": {
+        "width": 768,
+        "height": 1024
+      },
+      "id": "forest",
+      "checks": [
+        "replayed valid edits reach different intended topology/place with soil +12 and 10 trees",
+        "environment toggle changes real image while preserving every height and material budget",
+        "Undo/Redo includes trees and recalculated places",
+        "house support remains protected",
+        "three preview controls activate without enabling ongoing edit sounds; not a listening test",
+        "return restores the real custom shape from before playback",
+        "cancel prevents pending replay edits and restores custom state",
+        "no horizontal page overflow, no DB/SW, unrelated storage preserved, no page errors"
+      ],
+      "captures": [
+        "768-forest-on.png",
+        "768-forest-context.png",
+        "768-forest-off.png",
+        "768-forest-evening.png"
+      ],
+      "errors": [],
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "scope": "Isolated static prototype, new Chromium contexts, reduced motion, sound initially off. Not child/physical-device observation, audio listening, art approval, main-app save/PWA verification.",
+  "completedAt": "2026-10-21T02:03:23.984Z"
+}

@@ -1,0 +1,142 @@
+{
+  "target": "http://127.0.0.1:5264/docs/design/2026-10-21-living-cove/",
+  "candidate": "living-cove-v1",
+  "delivery": "standalone-study-only",
+  "revision": "749d7591c1a6dde6",
+  "sourceHashes": {
+    "docs/design/2026-10-21-living-cove/build.mjs": "40cc8754f58e666ddd25412d97bafdf2686509730e570f004c4d305ccc2637c4",
+    "docs/design/2026-10-21-living-cove/experiments.mjs": "aa743b8e2436929bc6d3708afbcb94d0c17b58db45f1dd948d730da60fdcc0f7",
+    "docs/design/2026-10-21-living-cove/habitats.js": "3010120d5830bf31d0164644f3616ba7d8c24f4ca975e419070263fa07ab73f6",
+    "docs/design/2026-10-21-living-cove/index.html": "96f8633a08a0978cb5c4beb6174c33fbc699ca8a77c542e7ff6c408613b6ff16",
+    "docs/design/2026-10-21-living-cove/sounds.mjs": "416e814551d07828b39efefead69ba9df61c561463a4fd98ae24d2a1a9964a90",
+    "docs/design/2026-10-21-living-cove/style.css": "b7b8fa4f2ef44df71284da7bddd957a3582344ccce569156075a48bf9973550c",
+    "docs/design/2026-10-21-living-cove/terrain.mjs": "9fbb9e85bf34d4662b40e5c62cd964d546d847ea275dfcc79b9163da11f574e6",
+    "docs/design/2026-10-21-living-cove/viewer.js": "98bb335a159ef07aea3629e56a6f33dbdb6f1901a463603cf288568c3fd15a5e",
+    "docs/design/2026-10-21-living-cove/walk.mjs": "5113f296a081369569c76daf75110ee9a0662d80d2babbffba4b891118df8f96",
+    "docs/design/2026-10-21-living-cove/water-tree.js": "c2e77d6ff1935f7f3ff204dbee1c9fd3e2a2c49b110a8b449be75ba916d81767",
+    "node_modules/three/build/three.core.js": "3718df126d69c125362a03340913204470d8c50238605150e57f808840fb7759",
+    "node_modules/three/build/three.module.js": "bbf5ed13fe4373f5bd38b14ea8e62e9f157327da5638edc6d3863e08b167c9c7",
+    "node_modules/three/examples/jsm/controls/OrbitControls.js": "faabb4e8dfd9235ee4a9fd7c9a3d75f90f1689dbd4944bd6fd32117dacec5f93",
+    "node_modules/three/examples/jsm/utils/BufferGeometryUtils.js": "5c552223a9309883743b80538d6e9cdb45e3227f30d3ec56fb2c39b46e78d595",
+    "src/components/island/three/islandCharacters.ts": "378bbc8127df7e0d7db61ad5428dbf412f35f6221ef16110a0d20fc329ff6da9",
+    "src/components/island/three/primitives.ts": "024f55cd70eeb753dccc5610613221c29e3fddae05385b2403ee53d85dce1e24",
+    "src/components/island/three/residentFabric.ts": "94aac1f3650bb7ffe82f395519370e91664d173efa868c97b95b943144ea0f87",
+    "src/components/island/three/residentRig.ts": "efbebea3ae6b3235301dd96c66598294c6deb2ae5dbdad33bd31dfb97afd9b51",
+    "src/components/island/three/worldPalette.ts": "00ad2759a32e5664ab88d4bde483fa261d54401ce37228368763a41b4c8b24e6"
+  },
+  "bundleSha256": "1ba7ae7a503a6fbb1155fe1dd89c9060a28ae0e6e50befd18f60b175d18a4f87",
+  "browser": "installed Chrome / Playwright isolated contexts",
+  "runnerHash": "966d93d8eeca4f2ca2314ae7ef0e1eb5ab7858944534d5e9bc30b04ed5b9bb02",
+  "startedAt": "2026-10-21T04:08:01.392Z",
+  "scope": "Standalone study, empty Chromium contexts, no PWA or main-app storage. Author art inspection, physical device, child observation and audio listening are separate.",
+  "scenarios": [
+    {
+      "width": 390,
+      "height": 844,
+      "motion": "no-preference",
+      "checks": [
+        "correct candidate/revision and original actor supported at launch",
+        "same six trees and soil +12; old/new tree comparison preserves every height",
+        "real walking samples remain grounded and dry before observing",
+        "return to house follows supported route",
+        "Undo during real walking cancels old route; Redo cannot resume it or move the grounded actor",
+        "tree/house support protected; rapid edits settle; Undo/Redo restores terrain and stops stale acting",
+        "return restores actual pre-replay shape and actor",
+        "stopping replay prevents late edits",
+        "sound-off, page width, no DB/SW, unrelated storage retained and no page errors"
+      ],
+      "captures": [
+        "390-ready.png",
+        "390-open.png",
+        "390-overview.png",
+        "390-old-tree-overview.png",
+        "390-old-tree-near.png",
+        "390-new-tree-near.png",
+        "390-observing.png",
+        "390-evening.png"
+      ],
+      "errors": [],
+      "walkSamples": [
+        {
+          "x": "-1.40000",
+          "z": "0.70000",
+          "y": "0.42000",
+          "safe": "true"
+        },
+        {
+          "x": "-1.24650",
+          "z": "0.70000",
+          "y": "0.42000",
+          "safe": "true"
+        },
+        {
+          "x": "-1.07988",
+          "z": "0.70000",
+          "y": "0.42000",
+          "safe": "true"
+        },
+        {
+          "x": "-0.93388",
+          "z": "0.70000",
+          "y": "0.42000",
+          "safe": "true"
+        },
+        {
+          "x": "-0.76738",
+          "z": "0.70000",
+          "y": "0.42000",
+          "safe": "true"
+        },
+        {
+          "x": "-0.53825",
+          "z": "0.70000",
+          "y": "0.42000",
+          "safe": "true"
+        },
+        {
+          "x": "-0.52500",
+          "z": "0.56738",
+          "y": "0.40677",
+          "safe": "true"
+        },
+        {
+          "x": "-0.52500",
+          "z": "0.40075",
+          "y": "0.36487",
+          "safe": "true"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "width": 768,
+      "height": 1024,
+      "motion": "reduce",
+      "checks": [
+        "correct candidate/revision and original actor supported at launch",
+        "same six trees and soil +12; old/new tree comparison preserves every height",
+        "reduced motion shows validated endpoint/path without movement animation",
+        "return to house follows supported route",
+        "tree/house support protected; rapid edits settle; Undo/Redo restores terrain and stops stale acting",
+        "return restores actual pre-replay shape and actor",
+        "stopping replay prevents late edits",
+        "sound-off, page width, no DB/SW, unrelated storage retained and no page errors"
+      ],
+      "captures": [
+        "768-ready.png",
+        "768-open.png",
+        "768-overview.png",
+        "768-old-tree-overview.png",
+        "768-old-tree-near.png",
+        "768-new-tree-near.png",
+        "768-observing.png",
+        "768-evening.png"
+      ],
+      "errors": [],
+      "walkSamples": [],
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "completedAt": "2026-10-21T04:08:16.252Z"
+}

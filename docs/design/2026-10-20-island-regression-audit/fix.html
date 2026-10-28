@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>植物を増やしても育った場所が残る修正</title>
+<style>body{font-family:system-ui,sans-serif;background:#f5f6f8;color:#263244;line-height:1.8;margin:0}main{max-width:960px;margin:auto;padding:32px 24px}h1{font-size:28px;line-height:1.4}h2{font-size:21px;margin-top:32px}a{color:#2459b2}code{overflow-wrap:anywhere}.shots{display:flex;gap:20px;flex-wrap:wrap}figure{margin:0;max-width:390px}img{width:100%;height:auto}li{margin:8px 0}</style>
+<main>
+<p>Sansu / ローカル修正記録 / 2026-10-20</p>
+<h1>花の5株目や、追加した木の成長で、育った場所が消える問題を修正</h1>
+<p>続報：<a href="shade-fix.html">残っていた木陰・思い出の案内と、種のタップ領域を両立する修正</a>。以下は初回修正時点の記録。</p>
+<p>4株だけ許される仕様ではない。つながった植物全体を一つの固定形として照合していたため、株を増やすと以前の屋根や回廊まで失効していた。成熟済みの部分と、屋根・回廊を実際に支える株を分けて導出するよう変更した。</p>
+<ul>
+<li>2×2の花庭へ5株目を追加・開花させても元の屋根を維持。屋根の中心・大きさ・支持枝は元の4株から作る。</li>
+<li>2つの花庭を別の花でつないでも、それぞれの屋根を維持。同じ株を複数屋根の支持へ使わない。</li>
+<li>成熟した木の列へ脇の木を足しても、追加木の成熟後まで元の大樹・回廊を維持。</li>
+<li>若い花の追加で、成熟した花庭の段階・利用先と水辺との関係が巻き戻らない。木陰とその思い出の案内の維持は未解決。</li>
+<li>複数の森がつながった際、近くの家を重複割当して同一の場所IDを作らない。</li>
+</ul>
+<p>支持株を実際に収納した場合や、接続を障害物で遮った場合は成立条件を再判定する。既存の有限形と描画を再利用し、保存形式と新規美術は追加していない。authored専用構造には今回の部分集合抽出を適用していない。</p>
+<h2>実画面</h2>
+<p>固定fixtureを入れた使い捨てプロフィールで、production previewの実描画・選択・「ここで すごす」・利用receiptを390/768幅で確認。画像は390幅。本人の保存データの画像ではない。</p>
+<div class="shots">
+<figure><img src="fix-flower-390.png" alt="5株の花庭で大きな花屋根が残り、ぽこもこが利用する画面"><figcaption>花：5株目があっても元の4株の屋根が残る。</figcaption></figure>
+<figure><img src="fix-grove-390.png" alt="脇の木が追加された森で回廊を使うぽこもこ"><figcaption>森：追加木があっても元の回廊が残る。</figcaption></figure>
+</div>
+<h2>検証と適用範囲</h2>
+<p>Node 22で対象44テスト・build・classic smokeは初期候補でPASS。全体検査で種タップ領域の退行を検出したため木陰の成熟部分抽出を撤回し、対象・種タップ・buildを再検証した。最終候補は47件/5ファイルPASS（木陰の既知問題を示す期待失敗1件を含む）、build/型/アセット容量PASS。検証記録を参照。ブラウザは撤回前候補の花/森×390/768幅の4ケースがPASS。最終ソースの再撮影は未実施。入力hash・共通検査の最終結果は<a href="fix-verification.json">検証記録</a>、ブラウザの対象版・delivery flag・candidate ID・実利用は<a href="fix-flower-browser.json">花</a>と<a href="fix-grove-browser.json">森</a>の記録を参照。</p>
+<p>追加→成熟→収納とJSON復元はdomain検査、実画面は成熟後fixtureの利用を確認した証拠。新規2ケースではoffline再読込を実行していない。実取得、本人端末の原因確定、PWA更新、子どもの理解・楽しさ・再訪は未確認。ローカル作業ツリーの修正で、commit・push・公開は行っていない。</p>
+<h2>仕様と残課題</h2><p>全体検査は未完。最終候補の全体検査・smoke・ブラウザ再確認が残る。通常の木陰に若木を足すと段階と案内が戻る既知問題は残し、it.failsで明示した。タップ領域の退行を起こした変更は採用していない。作業手順の30分上限で停止。</p>
+<p>正本は<a href="../../product/island-system/growth-rules.md">成長規則</a>と<a href="../../product/52_growing_island_game_spec.md">仕様52</a>へ反映。過去の<a href="index.html">調査結果</a>は修正前の観測として保持する。保存schema・運用手順の変更はないため、その正本・長期memoryは変更しない。</p>
+<p><a href="fun-consultation.html">チャッピーとの楽しさの相談</a>で出た追加案は今回の不具合修正とは分けており、未実装。今回の結果を、全機能に未知の不具合がない証拠や、遊びの魅力が確認できた証拠にはしない。</p>
+<p>生ログ：output/island-place-addition-fix/（ローカルのみ）。初期検査で見つけた新規屋根候補による既存アーチの支持株横取りは候補の優先順で修正。fixtureのID/距離条件とArray.atの対応環境も訂正し、対象検査・型検査・buildを再実行した。共通検査の初回は修正前ソースのアーチ検査で失敗し、最終ソースを固定して全unitを再実行。初回ログも保持。既存の未commit別作業は保持。</p>
+</main>
+</html>

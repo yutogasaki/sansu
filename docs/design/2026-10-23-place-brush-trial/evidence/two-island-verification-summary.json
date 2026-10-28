@@ -1,0 +1,60 @@
+{
+  "scope": "Two constructed layouts in the explicit local assembly trial, not full product/release acceptance",
+  "methodDecision": "CONTINUE_AS_FOUNDATION_NOT_FULL_ART_OR_INTERACTION_ACCEPTANCE",
+  "mechanicalAcceptance": "LIMITED_PASS",
+  "artAcceptance": "HOLD",
+  "interactionAcceptance": "HOLD",
+  "rejectedHypothesis": "Monotonic reachability of every prior walk site is not required by spec52 section1.1; it blocked lawful undo. Guarded/V3 remains an opt-in rejected experiment.",
+  "evidence": {
+    "assembly-life-replan.json": {
+      "sha256": "21c66cc344007faf69051b091106ceae385ffac92f40e9ebaf2a4f09208bc818"
+    },
+    "assembly-contract-footing.json": {
+      "sha256": "a2187e37d38afb20582c698d8dfe48948b81b5a9a5e17f77c3f598e8f3dfd971"
+    },
+    "two-bay-persistence-history.json": {
+      "sha256": "da80b6b80cfa15769a149bf6f45e181adbe999bdde4b4a30a1b70c028977e8e1"
+    },
+    "assembly-persistence-two-bay-compat.json": {
+      "sha256": "4db82f49d5c72f50710cfc012469b01aeecd7a7272bd5cadc150fc0e443989b0"
+    },
+    "two-bay-v21-A-reload.json": {
+      "sha256": "04a3359328674f9822b347aaa5c36d70d8d4006302e027cb632d310ac13749c9"
+    },
+    "two-bay-v21-B-reload.json": {
+      "sha256": "f4418f01377d525c27d1ad9f5afa391e7f383ed0e38247466a59b8806a169f2d"
+    },
+    "two-bay-v21-A-live.json": {
+      "sha256": "a914f1a600451c28181f77119313d9f4f46ac3e4e800614ac224439883060324"
+    },
+    "two-bay-v21-B-live.json": {
+      "sha256": "420e58ef854b0435b8857f962d4b300f4224afde72c06c8a573eb4c911b89c82"
+    },
+    "two-bay-v21-performance.json": {
+      "sha256": "b3118e6baf3a6fd99ac7a13c5725b7be0c1a3d39a511268d8c9ed0f3858414fb"
+    },
+    "native05-decomposition.json": {
+      "sha256": "a6b8aa3033c5efbd79391b34c2d3ce9cdcfb51d4dc5cdc4df22de960aaed1f81"
+    },
+    "chappy-contract-correction-2026-10-24.txt": {
+      "sha256": "8dc7ac9e92e1ae1e5cbe32a544102c6060141b03adf097b8150355a01fd64efa"
+    },
+    "typecheck-assembly-final.json": {
+      "sha256": "8332a7b89fe113daad0a7491195102944f6c67ea1c323c2952e259b3b7281279"
+    },
+    "build-place-outline-v24.json": {
+      "sha256": "d63cf4fabbd0973667baf719a06c68c514afaaf3a86b1aa6469f60334e49a203"
+    },
+    "two-bay-v21-final-B-reload.json": {
+      "sha256": "f272a52585dfe049cde57e8d7535f305cdbbed5f27a26ec7ed677229e8f59ec7"
+    }
+  },
+  "experimentStoppedAt": "2026-10-24T05:28:00Z",
+  "validation": {
+    "buildV24": "PASS; unchanged input hashes",
+    "targetTypecheck": "PASS with extended timeout",
+    "targetLint": "PASS",
+    "browserJourney": "frozen v21, not v24",
+    "fullProductRelease": "not rerun in this window"
+  }
+}

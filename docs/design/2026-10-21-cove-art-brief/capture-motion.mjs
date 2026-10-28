@@ -1,0 +1,32 @@
+import {chromium} from 'playwright';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {createHash} from 'node:crypto';
+import assert from 'node:assert/strict';
+const folder=fileURLToPath(new URL('./',import.meta.url)),out=folder+'motion/';
+await fs.mkdir(out,{recursive:true});
+const manifest=JSON.parse(await fs.readFile(folder+'../2026-10-21-living-cove/source-manifest.json','utf8'));
+const report={candidate:manifest.candidate,revision:manifest.revision,delivery:manifest.delivery,target:'http://127.0.0.1:5264/docs/design/2026-10-21-living-cove/',viewport:{width:900,height:1300},motion:'no-preference',sound:false,startedAt:new Date().toISOString(),scope:'Actual UI in a fresh desktop Chrome context, silent video. A demonstration for visual review, not a latency benchmark, physical device test, independent review or child observation.',events:[],errors:[],pass:false};
+const browser=await chromium.launch({channel:'chrome'});
+let video;
+try{
+  const context=await browser.newContext({viewport:report.viewport,reducedMotion:'no-preference',recordVideo:{dir:out,size:report.viewport}});
+  const page=await context.newPage();video=page.video();page.on('pageerror',e=>report.errors.push(e.message));
+  const start=performance.now();
+  const capture=async name=>{const data=await page.locator('body').evaluate(b=>({...b.dataset}));report.events.push({name,elapsedMs:Math.round(performance.now()-start),data});await page.locator('#stage').screenshot({path:out+name+'.png'});};
+  await page.goto(report.target,{waitUntil:'networkidle'});await page.locator('body[data-ready="true"]').waitFor();assert.equal(await page.locator('body').getAttribute('data-revision'),manifest.revision);
+  assert.equal(await page.locator('#sound').getAttribute('aria-pressed'),'false');await capture('01-ready');
+  await page.locator('[data-experiment="cove"]').click();await page.locator('body[data-playing="false"][data-transition="false"]').waitFor();await capture('02-open');
+  await page.locator('#call-water').click();await page.waitForTimeout(300);await capture('03-walking');
+  await page.locator('body[data-actor-mode="observing"]').waitFor();await capture('04-observing');await page.waitForTimeout(1000);
+  await page.locator('canvas').focus();await page.locator('canvas').press('ArrowDown');await page.locator('canvas').press('Enter');await page.locator('body[data-transition="false"]').waitFor();await capture('05-edited');
+  await page.locator('#undo').click();await capture('06-undo');await page.waitForTimeout(500);
+  await page.locator('#call-home').click();await page.locator('body[data-actor-mode="home"]').waitFor();await capture('07-home');await page.waitForTimeout(1000);
+  assert.deepEqual(report.errors,[]);assert.equal(await page.locator('body').getAttribute('data-actor-safe'),'true');
+  assert.equal(createHash('sha256').update(await fs.readFile(folder+'../2026-10-21-living-cove/viewer.bundle.js')).digest('hex'),manifest.bundleSha256);
+  await context.close();await video.saveAs(out+'current-cove.webm');
+  const original=await video.path();if(path.resolve(original)!==path.resolve(out+'current-cove.webm'))await fs.unlink(original);
+  report.pass=true;
+}finally{report.completedAt=new Date().toISOString();await fs.writeFile(out+'report.json',JSON.stringify(report,null,2)+'\n');await browser.close();}
+console.log(JSON.stringify({pass:report.pass,revision:report.revision,events:report.events.map(e=>({name:e.name,mode:e.data.actorMode})),video:out+'current-cove.webm'}));

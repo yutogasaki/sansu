@@ -1,0 +1,30 @@
+{
+  "at": "2026-10-26T03:56:47.042Z",
+  "scope": "Isolated real GrowingSheet with synthetic props. Component diagnostics, not full-app/PWA acceptance; no user DB.",
+  "inputs": {
+    "src/components/island/growing/GrowingSheet.tsx": "2231103fd99fe9ada6690fb43cbd00a8220f1b643f16dd32a6869c305bdde10b",
+    "src/components/island/growing/houseGuests.ts": "dd725b37c929727005eb18cf831313a23e89f5024d9493414bc864f8a4ab7498",
+    "src/components/island/growing/growingLife.ts": "6d4a1702a2947c3e9b8d1c13b85b2f33765f14e0eda7ddf291edc4b0146e85de",
+    "tools/fixtures/resident-audit.html": "cc6ff0d3479a3ed06a0da236d09ed1029761e08c19e02670a8caecb43250b3b9",
+    "tools/e2e-resident-audit.mjs": "1d0016f6703f515799b02222d19266b53a1e686ec73ef71e03949b5d3f8b8469"
+  },
+  "scenarios": [
+    {
+      "width": 390,
+      "leakedDraft": "Aだけの下書き",
+      "saved": [
+        {
+          "id": "a",
+          "name": "ほし"
+        },
+        {
+          "id": "b",
+          "name": "Aだけの下書き"
+        }
+      ],
+      "pass": false
+    }
+  ],
+  "pass": false,
+  "error": "AssertionError [ERR_ASSERTION]: Draft from resident a was submitted as resident b\n    at file:///Users/yutogasaki/Projects/sansu/tools/e2e-resident-audit.mjs:34:11"
+}

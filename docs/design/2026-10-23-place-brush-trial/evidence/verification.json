@@ -1,0 +1,23 @@
+{
+  "recordedAt": "2026-10-23T03:53:14.422931+00:00",
+  "startedAt": "2026-10-23T03:36:30Z",
+  "scope": "Bounded grade-ramp trial; memory-only; no product adoption",
+  "build": "place-outline-v4",
+  "inputSHA256": "aa3641fb10e3978a0747f24b73fd7473cde01eb25d6396c0bf77db22ce0eda48",
+  "unchangedRuntimeInputs": true,
+  "checks": {
+    "build": "PASS",
+    "typecheck": "PASS",
+    "lint": "PASS",
+    "docs": "PASS_WITH_EXISTING_REVIEW_DATE_WARNINGS",
+    "geometry": "PASS_7_CASES",
+    "ui": "PASS_LIMITED_UI",
+    "life": "VISUAL_SEATING_OBSERVED_NO_NEW_P05_RECEIPT"
+  },
+  "limitations": [
+    "Adjacent flower placement rejected",
+    "Occupied resize blocked by safety guard",
+    "No normal save, offline, device, child or full-island acceptance"
+  ],
+  "browser": "5502 actual grade-ramp-v2; stale 5501 excluded"
+}

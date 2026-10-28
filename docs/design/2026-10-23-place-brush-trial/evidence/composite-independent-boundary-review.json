@@ -1,0 +1,62 @@
+[
+  {
+    "name": "two",
+    "databaseAccessor": false,
+    "transactions": 0,
+    "openCalls": 0,
+    "composite": true,
+    "accessorError": "Error: この比較はメモリ内専用です。保存DBは開けません。",
+    "injectedOpenError": "Error: この比較はメモリ内専用です。保存DBは開けません。",
+    "defaultOpenError": "Error: この比較はメモリ内専用です。保存DBは開けません。"
+  },
+  {
+    "name": "two missing scene",
+    "databaseAccessor": false,
+    "transactions": 0,
+    "openCalls": 0,
+    "entryError": "Error: 2つの場所の比較は専用の岸の初期データで開いてください。",
+    "accessorError": "Error: 2つの場所の比較は専用の岸の初期データで開いてください。",
+    "injectedOpenError": "Error: 2つの場所の比較は専用の岸の初期データで開いてください。",
+    "defaultOpenError": "Error: 2つの場所の比較は専用の岸の初期データで開いてください。"
+  },
+  {
+    "name": "two unknown scene",
+    "databaseAccessor": false,
+    "transactions": 0,
+    "openCalls": 0,
+    "entryError": "Error: 2つの場所の比較は専用の岸の初期データで開いてください。",
+    "accessorError": "Error: 2つの場所の比較は専用の岸の初期データで開いてください。",
+    "injectedOpenError": "Error: 2つの場所の比較は専用の岸の初期データで開いてください。",
+    "defaultOpenError": "Error: 2つの場所の比較は専用の岸の初期データで開いてください。"
+  },
+  {
+    "name": "two saving",
+    "databaseAccessor": false,
+    "transactions": 0,
+    "openCalls": 0,
+    "entryError": "Error: 2つの場所の比較は保存できません。trialSave=localを外して開いてください。",
+    "accessorError": "Error: 2つの場所の比較は保存できません。trialSave=localを外して開いてください。",
+    "injectedOpenError": "Error: 2つの場所の比較は保存できません。trialSave=localを外して開いてください。",
+    "defaultOpenError": "Error: 2つの場所の比較は保存できません。trialSave=localを外して開いてください。"
+  },
+  {
+    "name": "coast",
+    "databaseAccessor": false,
+    "transactions": 0,
+    "openCalls": 0,
+    "composite": false,
+    "accessorError": "Error: この比較はメモリ内専用です。保存DBは開けません。",
+    "injectedOpenError": "Error: この比較はメモリ内専用です。保存DBは開けません。",
+    "defaultOpenError": "Error: この比較はメモリ内専用です。保存DBは開けません。"
+  },
+  {
+    "name": "coast missing scene",
+    "databaseAccessor": false,
+    "transactions": 0,
+    "openCalls": 0,
+    "entryError": "Error: 岸の比較は専用の地形H・shore画面で開いてね。",
+    "accessorError": "Error: 岸の比較は専用の地形H・shore画面で開いてね。",
+    "injectedOpenError": "Error: 岸の比較は専用の地形H・shore画面で開いてね。",
+    "defaultOpenError": "Error: 岸の比較は専用の地形H・shore画面で開いてね。"
+  }
+]

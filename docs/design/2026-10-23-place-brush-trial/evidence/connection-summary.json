@@ -1,0 +1,150 @@
+{
+  "at": "2026-10-24T07:03:17.766Z",
+  "candidate": "matureTrial=paired&connectionTrial=joined",
+  "buildSHA256": "5effcba87bd580171b792884cd63717524ab261c4cf180288767fc112199964b",
+  "nativeKitSHA256": "7a02fb27a0dfad8d1cb4b2700074b9de42dddb052611354176bddf4bf69f6a34",
+  "art": "PARTIAL: garden grid removed and gallery connected; water/shore/scale/sidewall HOLD",
+  "runtime": "limited pass; no full mesh collision or release acceptance",
+  "ownershipRestored": true,
+  "landRestored": true,
+  "terrainRestored": true,
+  "walletRestored": true,
+  "forward": "B・13操作・3196ms・描画24回・最大間隔283ms。所有・成熟を保持。",
+  "back": "A・13操作・2602ms・描画23回・最大間隔250ms。所有・成熟を保持。",
+  "occupiedGalleryGuardObserved": true,
+  "uses": [
+    {
+      "layout": "A",
+      "uses": [
+        {
+          "rule": "P01",
+          "at": "2026-10-24T07:00:24.065Z",
+          "handlerAccepted": true,
+          "renderSucceeded": true,
+          "currentPlaceRevisionMatches": true
+        },
+        {
+          "rule": "P05",
+          "at": "2026-10-24T07:00:24.932Z",
+          "handlerAccepted": true,
+          "renderSucceeded": true,
+          "currentPlaceRevisionMatches": true
+        },
+        {
+          "rule": "P01",
+          "at": "2026-10-24T07:00:35.481Z",
+          "handlerAccepted": true,
+          "renderSucceeded": true,
+          "currentPlaceRevisionMatches": true
+        },
+        {
+          "rule": "P02",
+          "at": "2026-10-24T07:00:35.481Z",
+          "handlerAccepted": true,
+          "renderSucceeded": true,
+          "currentPlaceRevisionMatches": true
+        },
+        {
+          "rule": "P03",
+          "at": "2026-10-24T07:00:44.164Z",
+          "handlerAccepted": true,
+          "renderSucceeded": true,
+          "currentPlaceRevisionMatches": true
+        },
+        {
+          "rule": "P03",
+          "at": "2026-10-24T07:00:49.097Z",
+          "handlerAccepted": true,
+          "renderSucceeded": true,
+          "currentPlaceRevisionMatches": true
+        },
+        {
+          "rule": "P05",
+          "at": "2026-10-24T07:00:54.495Z",
+          "handlerAccepted": true,
+          "renderSucceeded": true,
+          "currentPlaceRevisionMatches": true
+        }
+      ]
+    },
+    {
+      "layout": "B",
+      "uses": [
+        {
+          "rule": "P05",
+          "at": "2026-10-24T07:01:11.265Z",
+          "handlerAccepted": true,
+          "renderSucceeded": true,
+          "currentPlaceRevisionMatches": true
+        },
+        {
+          "rule": "P01",
+          "at": "2026-10-24T07:01:23.297Z",
+          "handlerAccepted": true,
+          "renderSucceeded": true,
+          "currentPlaceRevisionMatches": true
+        },
+        {
+          "rule": "P02",
+          "at": "2026-10-24T07:01:23.297Z",
+          "handlerAccepted": true,
+          "renderSucceeded": true,
+          "currentPlaceRevisionMatches": true
+        },
+        {
+          "rule": "P03",
+          "at": "2026-10-24T07:01:37.181Z",
+          "handlerAccepted": true,
+          "renderSucceeded": true,
+          "currentPlaceRevisionMatches": true
+        },
+        {
+          "rule": "P01",
+          "at": "2026-10-24T07:01:51.664Z",
+          "handlerAccepted": true,
+          "renderSucceeded": true,
+          "currentPlaceRevisionMatches": true
+        },
+        {
+          "rule": "P02",
+          "at": "2026-10-24T07:01:51.664Z",
+          "handlerAccepted": true,
+          "renderSucceeded": true,
+          "currentPlaceRevisionMatches": true
+        },
+        {
+          "rule": "P03",
+          "at": "2026-10-24T07:01:57.548Z",
+          "handlerAccepted": true,
+          "renderSucceeded": true,
+          "currentPlaceRevisionMatches": true
+        },
+        {
+          "rule": "P03",
+          "at": "2026-10-24T07:02:09.848Z",
+          "handlerAccepted": true,
+          "renderSucceeded": true,
+          "currentPlaceRevisionMatches": true
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "evidence": [
+    "connection-v27-A.json",
+    "connection-v27-B.json",
+    "connection-v27-A-return.json",
+    "connection-v27-live-B.json",
+    "connection-first.json",
+    "connection-typecheck.json",
+    "build-place-outline-v27.json"
+  ],
+  "unverified": [
+    "normal growth",
+    "user save",
+    "full mesh collision",
+    "real device",
+    "child comprehension",
+    "release"
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "at": "2026-10-24T04:27:59.424Z",
+  "uses": {
+    "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+    "count": 4,
+    "latest": [
+      {
+        "active": true,
+        "actorPosition": {
+          "x": 4.168962175,
+          "y": 0.54,
+          "z": 2.8606251900000004
+        },
+        "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+        "currentPlaceRevisionMatches": true,
+        "delivery": "fresh-life-receipt",
+        "documentVisibility": "visible",
+        "handlerAccepted": true,
+        "inFrustum": true,
+        "observedAt": "2026-10-24T04:25:54.115Z",
+        "observedAtMs": 1792815954115,
+        "observedFrameTimeMs": 10917.400000035765,
+        "playActive": true,
+        "receipt": {
+          "actorId": "pokomoko",
+          "placeId": "P05:starter-flower",
+          "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",5,5],[\"starter-flower\",6,5]],[{\"x\":5,\"z\":4},{\"x\":6,\"z\":4},{\"x\":6,\"z\":4.5},{\"x\":6.5,\"z\":4.5},{\"x\":4,\"z\":5},{\"x\":5,\"z\":5},{\"x\":6,\"z\":5},{\"x\":6.5,\"z\":5},{\"x\":7,\"z\":5},{\"x\":6,\"z\":5.5},{\"x\":6.5,\"z\":5.5},{\"x\":5,\"z\":6},{\"x\":6,\"z\":6}],[{\"x\":5,\"z\":4},{\"x\":6,\"z\":4},{\"x\":6,\"z\":4.5},{\"x\":6.5,\"z\":4.5},{\"x\":4,\"z\":5},{\"x\":6,\"z\":5},{\"x\":6.5,\"z\":5},{\"x\":7,\"z\":5},{\"x\":6,\"z\":5.5},{\"x\":6.5,\"z\":5.5},{\"x\":5,\"z\":6},{\"x\":6,\"z\":6}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":5,\"z\":5}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":6,\"z\":5}}]]",
+          "ruleId": "P05",
+          "targetId": "starter-flower:garden"
+        },
+        "renderSucceeded": true,
+        "sequence": 1,
+        "target": {
+          "cell": {
+            "x": 6,
+            "z": 5
+          },
+          "id": "starter-flower:garden",
+          "kind": "garden"
+        },
+        "worldId": "legacy-world-v1:-3,8,8:curved-owned-v1:no-bridge",
+        "worldRevision": "true:[\"[\\\"platforms-then-protected-bay-memory-v1\\\",{\\\"west\\\":{\\\"center\\\":{\\\"x\\\":-1,\\\"z\\\":4},\\\"radius\\\":1.6,\\\"height\\\":0.5,\\\"entrance\\\":1.2,\\\"flatRadius\\\":1.75},\\\"east\\\":{\\\"center\\\":{\\\"x\\\":5,\\\"z\\\":5},\\\"radius\\\":1.6,\\\"height\\\":0.5,\\\"entrance\\\":1.2,\\\"flatRadius\\\":1.75},\\\"bay\\\":{\\\"center\\\":{\\\"x\\\":1,\\\"z\\\":6},\\\"radius\\\":3,\\\"height\\\":-0.55,\\\"entrance\\\":1.2,\\\"bayDepth\\\":2.4}}]\",\"fixed-bilinear-interior-ramp-v1\",\"fixed-core-base-v1\",\"cardinal-convex-terrace-v2+fixed-two-shear-grid-v1\",\"H\",{\"extra\":[\"west\",\"south\"],\"capes\":[],\"expanded\":\"east\"},null,[[\"-1,5\",2],[\"-1,6\",2],[\"-2,5\",1],[\"-2,6\",1],[\"0,3\",2],[\"0,4\",-3],[\"0,5\",3],[\"0,6\",3],[\"0,7\",2],[\"1,2\",1],[\"1,7\",2],[\"2,2\",2],[\"2,7\",2],[\"3,2\",1],[\"4,5\",1],[\"4,6\",-3],[\"4,7\",-3],[\"5,0\",1],[\"5,1\",-1],[\"5,2\",-1],[\"5,6\",-3],[\"5,7\",-3],[\"8,4\",-1],[\"8,5\",-1],[\"8,6\",-1]]]:local-lower-shore-v1:bay08"
+      },
+      {
+        "active": true,
+        "actorPosition": {
+          "x": 3.184760692,
+          "y": 0.7000000000000001,
+          "z": 3.0150169699999996
+        },
+        "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+        "currentPlaceRevisionMatches": true,
+        "delivery": "fresh-life-receipt",
+        "documentVisibility": "visible",
+        "handlerAccepted": true,
+        "inFrustum": true,
+        "observedAt": "2026-10-24T04:25:57.564Z",
+        "observedAtMs": 1792815957564,
+        "observedFrameTimeMs": 14367.5,
+        "playActive": true,
+        "receipt": {
+          "actorId": "v2",
+          "placeId": "P05:starter-flower",
+          "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",5,5],[\"starter-flower\",6,5]],[{\"x\":5,\"z\":4},{\"x\":6,\"z\":4},{\"x\":6,\"z\":4.5},{\"x\":6.5,\"z\":4.5},{\"x\":4,\"z\":5},{\"x\":5,\"z\":5},{\"x\":6,\"z\":5},{\"x\":6.5,\"z\":5},{\"x\":7,\"z\":5},{\"x\":6,\"z\":5.5},{\"x\":6.5,\"z\":5.5},{\"x\":5,\"z\":6},{\"x\":6,\"z\":6}],[{\"x\":5,\"z\":4},{\"x\":6,\"z\":4},{\"x\":6,\"z\":4.5},{\"x\":6.5,\"z\":4.5},{\"x\":4,\"z\":5},{\"x\":6,\"z\":5},{\"x\":6.5,\"z\":5},{\"x\":7,\"z\":5},{\"x\":6,\"z\":5.5},{\"x\":6.5,\"z\":5.5},{\"x\":5,\"z\":6},{\"x\":6,\"z\":6}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":5,\"z\":5}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":6,\"z\":5}}]]",
+          "ruleId": "P05",
+          "targetId": "starter-bench"
+        },
+        "renderSucceeded": true,
+        "sequence": 2,
+        "target": {
+          "cell": {
+            "x": 5,
+            "z": 5
+          },
+          "id": "starter-bench",
+          "kind": "seat"
+        },
+        "worldId": "legacy-world-v1:-3,8,8:curved-owned-v1:no-bridge",
+        "worldRevision": "true:[\"[\\\"platforms-then-protected-bay-memory-v1\\\",{\\\"west\\\":{\\\"center\\\":{\\\"x\\\":-1,\\\"z\\\":4},\\\"radius\\\":1.6,\\\"height\\\":0.5,\\\"entrance\\\":1.2,\\\"flatRadius\\\":1.75},\\\"east\\\":{\\\"center\\\":{\\\"x\\\":5,\\\"z\\\":5},\\\"radius\\\":1.6,\\\"height\\\":0.5,\\\"entrance\\\":1.2,\\\"flatRadius\\\":1.75},\\\"bay\\\":{\\\"center\\\":{\\\"x\\\":1,\\\"z\\\":6},\\\"radius\\\":3,\\\"height\\\":-0.55,\\\"entrance\\\":1.2,\\\"bayDepth\\\":2.4}}]\",\"fixed-bilinear-interior-ramp-v1\",\"fixed-core-base-v1\",\"cardinal-convex-terrace-v2+fixed-two-shear-grid-v1\",\"H\",{\"extra\":[\"west\",\"south\"],\"capes\":[],\"expanded\":\"east\"},null,[[\"-1,5\",2],[\"-1,6\",2],[\"-2,5\",1],[\"-2,6\",1],[\"0,3\",2],[\"0,4\",-3],[\"0,5\",3],[\"0,6\",3],[\"0,7\",2],[\"1,2\",1],[\"1,7\",2],[\"2,2\",2],[\"2,7\",2],[\"3,2\",1],[\"4,5\",1],[\"4,6\",-3],[\"4,7\",-3],[\"5,0\",1],[\"5,1\",-1],[\"5,2\",-1],[\"5,6\",-3],[\"5,7\",-3],[\"8,4\",-1],[\"8,5\",-1],[\"8,6\",-1]]]:local-lower-shore-v1:bay08"
+      },
+      {
+        "active": true,
+        "actorPosition": {
+          "x": 4.168962175,
+          "y": 0.54,
+          "z": 2.8606251900000004
+        },
+        "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+        "currentPlaceRevisionMatches": true,
+        "delivery": "fresh-life-receipt",
+        "documentVisibility": "visible",
+        "handlerAccepted": true,
+        "inFrustum": true,
+        "observedAt": "2026-10-24T04:26:06.817Z",
+        "observedAtMs": 1792815966817,
+        "observedFrameTimeMs": 23617.60000002384,
+        "playActive": true,
+        "receipt": {
+          "actorId": "v2",
+          "placeId": "P05:starter-flower",
+          "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",5,5],[\"starter-flower\",6,5]],[{\"x\":5,\"z\":4},{\"x\":6,\"z\":4},{\"x\":6,\"z\":4.5},{\"x\":6.5,\"z\":4.5},{\"x\":4,\"z\":5},{\"x\":5,\"z\":5},{\"x\":6,\"z\":5},{\"x\":6.5,\"z\":5},{\"x\":7,\"z\":5},{\"x\":6,\"z\":5.5},{\"x\":6.5,\"z\":5.5},{\"x\":5,\"z\":6},{\"x\":6,\"z\":6}],[{\"x\":5,\"z\":4},{\"x\":6,\"z\":4},{\"x\":6,\"z\":4.5},{\"x\":6.5,\"z\":4.5},{\"x\":4,\"z\":5},{\"x\":6,\"z\":5},{\"x\":6.5,\"z\":5},{\"x\":7,\"z\":5},{\"x\":6,\"z\":5.5},{\"x\":6.5,\"z\":5.5},{\"x\":5,\"z\":6},{\"x\":6,\"z\":6}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":5,\"z\":5}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":6,\"z\":5}}]]",
+          "ruleId": "P05",
+          "targetId": "starter-flower:garden"
+        },
+        "renderSucceeded": true,
+        "sequence": 3,
+        "target": {
+          "cell": {
+            "x": 6,
+            "z": 5
+          },
+          "id": "starter-flower:garden",
+          "kind": "garden"
+        },
+        "worldId": "legacy-world-v1:-3,8,8:curved-owned-v1:no-bridge",
+        "worldRevision": "true:[\"[\\\"platforms-then-protected-bay-memory-v1\\\",{\\\"west\\\":{\\\"center\\\":{\\\"x\\\":-1,\\\"z\\\":4},\\\"radius\\\":1.6,\\\"height\\\":0.5,\\\"entrance\\\":1.2,\\\"flatRadius\\\":1.75},\\\"east\\\":{\\\"center\\\":{\\\"x\\\":5,\\\"z\\\":5},\\\"radius\\\":1.6,\\\"height\\\":0.5,\\\"entrance\\\":1.2,\\\"flatRadius\\\":1.75},\\\"bay\\\":{\\\"center\\\":{\\\"x\\\":1,\\\"z\\\":6},\\\"radius\\\":3,\\\"height\\\":-0.55,\\\"entrance\\\":1.2,\\\"bayDepth\\\":2.4}}]\",\"fixed-bilinear-interior-ramp-v1\",\"fixed-core-base-v1\",\"cardinal-convex-terrace-v2+fixed-two-shear-grid-v1\",\"H\",{\"extra\":[\"west\",\"south\"],\"capes\":[],\"expanded\":\"east\"},null,[[\"-1,5\",2],[\"-1,6\",2],[\"-2,5\",1],[\"-2,6\",1],[\"0,3\",2],[\"0,4\",-3],[\"0,5\",3],[\"0,6\",3],[\"0,7\",2],[\"1,2\",1],[\"1,7\",2],[\"2,2\",2],[\"2,7\",2],[\"3,2\",1],[\"4,5\",1],[\"4,6\",-3],[\"4,7\",-3],[\"5,0\",1],[\"5,1\",-1],[\"5,2\",-1],[\"5,6\",-3],[\"5,7\",-3],[\"8,4\",-1],[\"8,5\",-1],[\"8,6\",-1]]]:local-lower-shore-v1:bay08"
+      },
+      {
+        "active": true,
+        "actorPosition": {
+          "x": 3.184760692,
+          "y": 0.7000000000000001,
+          "z": 3.0150169699999996
+        },
+        "candidate": "place-method-H:cardinal-convex-terrace-v2+fixed-two-shear-grid-v1+fixed-core-base-v1+fixed-bilinear-interior-ramp-v1+single-compile-v1+frozen-query-v1+memo-samples-v1+memo-edge-check-v1",
+        "currentPlaceRevisionMatches": true,
+        "delivery": "fresh-life-receipt",
+        "documentVisibility": "visible",
+        "handlerAccepted": true,
+        "inFrustum": true,
+        "observedAt": "2026-10-24T04:26:29.031Z",
+        "observedAtMs": 1792815989031,
+        "observedFrameTimeMs": 45834.5,
+        "playActive": true,
+        "receipt": {
+          "actorId": "pokomoko",
+          "placeId": "P05:starter-flower",
+          "revision": "[1,\"P05\",\"flower-path\",\"grown\",[[\"starter-bench\",5,5],[\"starter-flower\",6,5]],[{\"x\":5,\"z\":4},{\"x\":6,\"z\":4},{\"x\":6,\"z\":4.5},{\"x\":6.5,\"z\":4.5},{\"x\":4,\"z\":5},{\"x\":5,\"z\":5},{\"x\":6,\"z\":5},{\"x\":6.5,\"z\":5},{\"x\":7,\"z\":5},{\"x\":6,\"z\":5.5},{\"x\":6.5,\"z\":5.5},{\"x\":5,\"z\":6},{\"x\":6,\"z\":6}],[{\"x\":5,\"z\":4},{\"x\":6,\"z\":4},{\"x\":6,\"z\":4.5},{\"x\":6.5,\"z\":4.5},{\"x\":4,\"z\":5},{\"x\":6,\"z\":5},{\"x\":6.5,\"z\":5},{\"x\":7,\"z\":5},{\"x\":6,\"z\":5.5},{\"x\":6.5,\"z\":5.5},{\"x\":5,\"z\":6},{\"x\":6,\"z\":6}],[],[{\"id\":\"starter-bench\",\"kind\":\"seat\",\"cell\":{\"x\":5,\"z\":5}},{\"id\":\"starter-flower:garden\",\"kind\":\"garden\",\"cell\":{\"x\":6,\"z\":5}}]]",
+          "ruleId": "P05",
+          "targetId": "starter-bench"
+        },
+        "renderSucceeded": true,
+        "sequence": 4,
+        "target": {
+          "cell": {
+            "x": 5,
+            "z": 5
+          },
+          "id": "starter-bench",
+          "kind": "seat"
+        },
+        "worldId": "legacy-world-v1:-3,8,8:curved-owned-v1:no-bridge",
+        "worldRevision": "true:[\"[\\\"platforms-then-protected-bay-memory-v1\\\",{\\\"west\\\":{\\\"center\\\":{\\\"x\\\":-1,\\\"z\\\":4},\\\"radius\\\":1.6,\\\"height\\\":0.5,\\\"entrance\\\":1.2,\\\"flatRadius\\\":1.75},\\\"east\\\":{\\\"center\\\":{\\\"x\\\":5,\\\"z\\\":5},\\\"radius\\\":1.6,\\\"height\\\":0.5,\\\"entrance\\\":1.2,\\\"flatRadius\\\":1.75},\\\"bay\\\":{\\\"center\\\":{\\\"x\\\":1,\\\"z\\\":6},\\\"radius\\\":3,\\\"height\\\":-0.55,\\\"entrance\\\":1.2,\\\"bayDepth\\\":2.4}}]\",\"fixed-bilinear-interior-ramp-v1\",\"fixed-core-base-v1\",\"cardinal-convex-terrace-v2+fixed-two-shear-grid-v1\",\"H\",{\"extra\":[\"west\",\"south\"],\"capes\":[],\"expanded\":\"east\"},null,[[\"-1,5\",2],[\"-1,6\",2],[\"-2,5\",1],[\"-2,6\",1],[\"0,3\",2],[\"0,4\",-3],[\"0,5\",3],[\"0,6\",3],[\"0,7\",2],[\"1,2\",1],[\"1,7\",2],[\"2,2\",2],[\"2,7\",2],[\"3,2\",1],[\"4,5\",1],[\"4,6\",-3],[\"4,7\",-3],[\"5,0\",1],[\"5,1\",-1],[\"5,2\",-1],[\"5,6\",-3],[\"5,7\",-3],[\"8,4\",-1],[\"8,5\",-1],[\"8,6\",-1]]]:local-lower-shore-v1:bay08"
+      }
+    ],
+    "pageStartedAtMs": 1792815943195.7,
+    "queryCandidate": "H",
+    "retained": 4,
+    "scope": "rendered-live-receipts-not-save-history",
+    "sessionId": "a198955b-a681-4b6e-ba26-5a5d075f55b8"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-24T01:34:30.207Z",
+  "build": "place-outline-v11",
+  "logs": [
+    {
+      "level": "error",
+      "message": "TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5506/assets/GrowingIsland-CUW0IZeq.js",
+      "timestamp": "2026-10-24T01:33:42.131Z",
+      "url": "http://127.0.0.1:5506/assets/index-D5xR2PWG.js"
+    }
+  ],
+  "note": "同じoriginのローカル静的ビルドを差し替えた直後、旧chunk取得エラーを記録。画面はv11へ回復し形・履歴・所有物一致。通常配布/PWAの合格とは扱わない。"
+}

@@ -1,0 +1,20 @@
+✔ IDs move out of titles instead of becoming placeholder prose (2.44375ms)
+✔ free-form status text maps to the five shared states (0.349208ms)
+✔ three tiers: living documents listed, dated records linked, code omitted (0.260542ms)
+✔ front matter and document shape are read from the source (0.322208ms)
+✔ every page gets the same chrome and escapes data (0.316208ms)
+✔ the adapter turns a v1 repo into a tiered site model (17.075042ms)
+✔ reference projection preserves pins, uncertainty, unresolved references and backlinks (3.928583ms)
+✔ decision display uses evaluated index state instead of raw needs-human status (0.227875ms)
+✔ stale relation remains visible and is never silently repinned (0.135083ms)
+✔ context payload and reference output escape source text and expose missing state honestly (0.385792ms)
+✔ opt-in absence preserves existing model and duplicate input is rejected (0.224083ms)
+✔ canonical decision identity binds to a prefixed legacy anchor without breaking bookmarks (0.103833ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 68.23825

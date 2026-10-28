@@ -1,0 +1,12 @@
+file:///Users/yutogasaki/Projects/sansu/scripts/standard-portal.mjs:135
+    if (stale.length || actual.some(file => !files.has(file))) throw Error(`Stale portal: ${stale.length} changed/missing or extra files: ${stale.map(([name])=>name).join(', ')}`);
+                                                                     ^
+
+Error: Stale portal: 17 changed/missing or extra files: ai/map.html, map.html, data/integration.json, data/parity.json, ai/index.html, data/unification.json, pages.html, data/unification-manifest.json, library.html, knowledge.html, retained/map.html, data/workspace-preservation.json, data/assets.json, assets-data.js, data/records/ed99095066a92d0601ebc223.js, registry-index.js, data/storage.json
+    at run (file:///Users/yutogasaki/Projects/sansu/scripts/standard-portal.mjs:135:70)
+    at file:///Users/yutogasaki/Projects/sansu/scripts/standard-portal.mjs:142:30
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.18.0

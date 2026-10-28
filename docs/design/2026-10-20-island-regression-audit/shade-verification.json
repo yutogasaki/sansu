@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-20T12:34:34.299328+00:00",
+  "head": "9355c416ed188abe686d13cc35bf74626e7ac581",
+  "scope": "shared dirty working tree, local only; no commit/push/deploy",
+  "inputs": {
+    "src/domain/growingIsland/places.ts": "4929964659bcf2a8522ae19667d463299cd66a0b6e0a5280e74af76c97674153",
+    "src/domain/growingIsland/placeTypes.ts": "d28cfe5f886afd56b02b3a1a7ca4b53056af2f5511bdb825d3b2fac54f528976",
+    "src/domain/growingIsland/placeAdditions.test.ts": "d76bf44f2560c0e19814356241cb210797916b8943da6a67daf2632a9984a42d",
+    "src/components/island/growing/placeGeometry.ts": "0003624ddb712fdc3be3876d50533b7ec4758b113cd0685e205e931af8a07e5d",
+    "src/components/island/growing/seedHitPriority.test.ts": "c4812fc0a805ff32b383701dbcaf541e746401cb8cfb748f0718ced70d81c942",
+    "tools/e2e-growing-architecture.mjs": "2ce01a30b96b108a55c17cf16737a4c05bcc2a5f9d9001d885e47ecc339c214f",
+    "docs/product/island-system/growth-rules.md": "216486aa1c77f141034afa2bc996c694a30d2d14a4d0f82f920ce1183a932f2e",
+    "docs/product/52_growing_island_game_spec.md": "384ed1b962430ec008ce7f2057aadc6af090ed99f6241549f0a59c8793482253"
+  },
+  "checks": {
+    "focused": "PASS: 50 tests / 6 files; no expected-failure test; 21:33 JST, Node 22",
+    "build": "PASS: typecheck, production build and assets budget; 21:33 JST, Node 22",
+    "browser_shade": "PASS: 390 and 768; source guard; actual P01 use receipt; metadata in shade-browser.json",
+    "core": "PASS: npm run verify:core; Node 22; docs/current-ui-entry/lint/typecheck/651 test files/5526 tests/build/assets; 21:50 JST. 4 existing lint fast-refresh warnings and existing docs review-date/Three.js fixture warnings.",
+    "smoke": "PASS: complete retry, original 1500ms budget; Node 22; diagnostic report output/island-shade-fix/smoke-retry/smoke-report.json. Initial wide-portrait light-bridge timeout retained; its cause is not proven.",
+    "flower_grove": "PASS: 390/768 x flower/grove; final candidate source guard; metadata in shade-related-browser.json",
+    "docs": "PASS; final documentation; existing overdue-review warnings"
+  },
+  "finishedAt": "2026-10-20T12:50:38.329865+00:00",
+  "result": "PASS for local implementation verification; unpublished; real-device/child/offline-update checks not performed.",
+  "commands": [
+    "fnm exec --using 22 npm run verify:core",
+    "fnm exec --using 22 npm run build",
+    "fnm exec --using 22 npx vitest run src/domain/growingIsland/placeAdditions.test.ts src/domain/growingIsland/placeArchitecture.test.ts src/domain/growingIsland/places.test.ts src/components/island/growing/placeArchitectureGeometry.test.ts src/components/island/growing/seedHitPriority.test.ts src/components/island/growing/native/nativeAuthoredForest.test.ts",
+    "fnm exec --using 22 npm run e2e:smoke (first run: one classic timeout; retry: PASS)",
+    "SANSU_ARCHITECTURE_URL=http://127.0.0.1:5287; SANSU_ARCHITECTURE_CASE=shade-young-addition / flower-canopy-addition / grove-side-addition; fnm exec --using 22 node tools/e2e-growing-architecture.mjs",
+    "fnm exec --using 22 npm run docs:check"
+  ],
+  "unverified": [
+    "実取得・本人端末と元写真の保存状態との照合",
+    "新規旅程のoffline/PWA更新",
+    "子どもの無説明理解・楽しさ・翌日再訪",
+    "公開・配布"
+  ]
+}

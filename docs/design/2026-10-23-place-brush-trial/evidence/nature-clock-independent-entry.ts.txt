@@ -1,0 +1,76 @@
+import 'fake-indexeddb/auto';
+import assert from 'node:assert/strict';
+import evidence from './evidence/composite-v15-save-reopen.json';
+import { applyIntent } from '../../../src/domain/growingIsland/commands';
+import { advanceNature } from '../../../src/domain/growingIsland/nature';
+import { projectGrowingSync } from '../../../src/domain/growingIsland/syncProjection';
+import { derivePlaces } from '../../../src/domain/growingIsland/places';
+import { soilAt, soilTargetAt } from '../../../src/domain/growingIsland/environment';
+import { COMPOSITE_PROFILE, assertCompositeSavedRecord } from './composite-store';
+import { editableIslandWorld } from '../../../src/domain/growingIsland/editableTerrainWorld';
+const HOUR=3600000,T0=Date.parse('2026-10-24T03:00:00.000Z');
+let opens=0;const rawOpen=indexedDB.open.bind(indexedDB);indexedDB.open=((...args:any[])=>{opens++;return rawOpen(...args as [string,number]);}) as typeof indexedDB.open;
+const snapshot=(x:any)=>JSON.stringify(x);
+const record=(state:any,at=T0)=>({profileId:COMPOSITE_PROFILE,islandId:'main',version:6,revision:0,createdAt:at,updatedAt:at,state:structuredClone(state)}) as any;
+const run=(current:any,now:number,completions:any[]=[])=>{const projection=projectGrowingSync({profileId:COMPOSITE_PROFILE,current:structuredClone(current),now,completions,mailbox:[]});return {...projection.result,changed:projection.changed};};
+const chosen=(s:any)=>s.landmarks.filter((l:any)=>l.kind==='flower');
+const digest=(r:any)=>({nature:r.state.nature,drops:r.state.drops,town:r.state.town,flowers:chosen(r.state),owners:r.state.landmarks.map(({growth,...x}:any)=>x),plots:r.state.plots.length,shapes:r.state.trialPlaceSet,history:r.state.trialPlaceSetHistory,learned:r.state.learned,places:derivePlaces(r.state).filter(p=>p.ruleId==='P05').map(p=>({id:p.id,stage:p.stage,memberIds:p.memberIds,missing:p.missing,revision:p.revision}))});
+const reports:any[]=[];
+const savedFixture=record((evidence as any).redo.state,0), savedBefore=snapshot(savedFixture);
+const retro=run(savedFixture,T0);
+assert.equal(savedFixture.state.nature.realAt,1000);assert.equal(retro.record.state.nature.hours,168);
+assert.equal(retro.record.state.landmarks.find((x:any)=>x.id==='l2').growth,6);
+assert.equal(snapshot(savedFixture),savedBefore);
+reports.push({name:'unsafe direct Date.now connection to saved synthetic-clock fixture',inputClock:1000,now:T0,at:new Date(T0).toISOString(),elapsedCappedHours:168,before:digest(savedFixture),after:digest(retro.record),events:retro.nature,changed:retro.changed});
+
+// A NEW diagnostic copy only. Establish its declared clock origin before any
+// ordinary purchase; never rewrite a saved/browser record or flower growth.
+const freshState=structuredClone((evidence as any).westOwners.state);freshState.nature.realAt=T0;
+let fresh=record(freshState);assertCompositeSavedRecord(fresh);
+const act=(r:any,command:any,id:string)=>({...r,state:applyIntent(r.state,{id,islandId:'main',command},T0).state,revision:r.revision+1,updatedAt:T0});
+fresh=act(fresh,{type:'place',kind:'bench',cell:{x:5,z:5}},'clock-bench');
+fresh=act(fresh,{type:'place',kind:'flower',cell:{x:6,z:5}},'clock-flower');
+const flowerId=fresh.state.landmarks.find((l:any)=>l.kind==='flower'&&l.cell?.x===6&&l.cell?.z===5).id;
+assert.equal(fresh.state.landmarks.find((l:any)=>l.id===flowerId).growth,0);
+const ownerSignature=(s:any)=>snapshot(s.landmarks.map(({growth,maturedAt,...x}:any)=>x));
+const shapeSignature=(s:any)=>snapshot([s.trialPlaceSet,s.trialPlaceSetHistory]);
+function measure(base:any,offset:number){const p=run(base,T0+offset),s=p.record.state;assert.equal(s.drops,base.state.drops);assert.equal(ownerSignature(s),ownerSignature(base.state));assert.equal(shapeSignature(s),shapeSignature(base.state));assert.deepEqual(s.learned,base.state.learned);return {offsetMs:offset,at:new Date(T0+offset).toISOString(),growth:s.landmarks.find((l:any)=>l.id===flowerId).growth,soil:soilAt(s,{x:6,z:5}),nature:s.nature,events:p.nature,grownPlaces:derivePlaces(s).filter(p=>p.ruleId==='P05'&&p.stage==='grown').map(p=>({id:p.id,members:p.memberIds,revision:p.revision})),result:p};}
+const offsets=[0,4.8*HOUR,6*HOUR-1,6*HOUR,6*HOUR+1,7*HOUR];
+const dry=offsets.map(t=>measure(fresh,t));
+assert.equal(dry[0].growth,0);assert(dry[2].growth<6);assert.equal(dry[3].growth,6);assert.equal(dry[3].grownPlaces.length,2);
+assert.equal(dry[4].growth,6);assert.equal(dry[5].growth,6);
+const done=dry[3].result.record;
+const duplicate=run(done,T0+6*HOUR);assert.deepEqual(duplicate.record,done);assert.equal(duplicate.changed,false);assert.deepEqual(duplicate.nature,[]);
+const backwards=run(done,T0+5*HOUR);assert.deepEqual(backwards.record,done);assert.equal(backwards.changed,false);assert.deepEqual(backwards.nature,[]);
+const fact={id:'diagnostic-normal-completion',at:T0};
+const learningSameTime=run(fresh,T0,[fact]);assert.equal(learningSameTime.record.state.landmarks.find((l:any)=>l.id===flowerId).growth,0);assert.equal(learningSameTime.record.state.drops,fresh.state.drops+2);assert.equal(learningSameTime.learned,1);
+const duplicateFact=run(learningSameTime.record,T0,[fact]);assert.equal(duplicateFact.learned,0);assert.equal(duplicateFact.record.state.drops,learningSameTime.record.state.drops);
+reports.push({name:'new clock-anchored copy, normal bench and flower purchase, dry elapsed-time boundaries',clockInitialization:{newCopyOnly:true,natureRealAt:T0,iso:new Date(T0).toISOString(),growthNeverAssigned:true},purchase:{flowerId,dropsBefore:freshState.drops,dropsAfter:fresh.state.drops,owners:fresh.state.landmarks},soilTarget:soilTargetAt(fresh.state,{x:6,z:5}),samples:dry.map(({result,...x})=>x),duplicateAt6h:{changed:duplicate.changed,natureEvents:duplicate.nature},backwardsFrom6hTo5h:{changed:backwards.changed,natureEvents:backwards.nature},sameTimeLearning:{flowerGrowth:0,deltaDrops:2,learned:learningSameTime.learned,town:learningSameTime.record.state.town,duplicateLearned:duplicateFact.learned}});
+
+let wet:any,waterCell:any;const failures:any[]=[];
+for(const cell of [{x:5,z:4},{x:6,z:4},{x:7,z:5},{x:5,z:6},{x:4,z:5}]){
+ try{const candidate=act(fresh,{type:'place',kind:'water-bowl',cell},'clock-water');if(soilTargetAt(candidate.state,{x:6,z:5})>soilTargetAt(fresh.state,{x:6,z:5})){wet=candidate;waterCell=cell;break;}}
+ catch(e){failures.push({cell,error:String(e)});}
+}
+assert(wet,'one ordinary supported water-bowl position must affect the east flower');
+const wetSamples=offsets.map(t=>measure(wet,t));
+let lo=0,hi=6*HOUR;while(hi-lo>1){const mid=Math.floor((lo+hi)/2);if(measure(wet,mid).growth>=6)hi=mid;else lo=mid;}
+const justBefore=measure(wet,lo),firstBloom=measure(wet,hi);assert(justBefore.growth<6);assert.equal(firstBloom.growth,6);assert(hi<6*HOUR);assert(hi>=4.8*HOUR);
+reports.push({name:'ordinary water-bowl purchase accelerates bloom through real soil relaxation formula',waterCell,purchaseCost:fresh.state.drops-wet.state.drops,failedPlacementCandidates:failures,soilStart:soilAt(wet.state,{x:6,z:5}),soilTarget:soilTargetAt(wet.state,{x:6,z:5}),samples:wetSamples.map(({result,...x})=>x),firstBloomBoundaryForOneSyncFromT0:{lastUnbloomedMs:lo,firstBloomedMs:hi,lastGrowth:justBefore.growth,firstGrowth:firstBloom.growth,firstBloomedAt:new Date(T0+hi).toISOString(),hours:hi/HOUR},limitation:'The 1-hour integration scheme depends slightly on sync cadence. This boundary is for one elapsed-time projection from T0, not a universal wet bloom time.'});
+function cadenceBoundary(base:any,label:string){
+ const state=structuredClone(base.state),world=editableIslandWorld(state)!;let elapsed=0,prior:any,lastUnbloomed=0,steps=0;const events:any[]=[];
+ while(state.landmarks.find((l:any)=>l.id===flowerId).growth<6 && elapsed<7*HOUR){
+  prior=structuredClone(state);lastUnbloomed=elapsed;elapsed+=15000;steps++;events.push(...advanceNature(state,T0+elapsed,world));
+ }
+ assert.equal(state.landmarks.find((l:any)=>l.id===flowerId).growth,6,label+' blooms within 7h');
+ let lo=lastUnbloomed,hi=elapsed;
+ while(hi-lo>1){const mid=Math.floor((lo+hi)/2),copy=structuredClone(prior);advanceNature(copy,T0+mid,world);if(copy.landmarks.find((l:any)=>l.id===flowerId).growth>=6)hi=mid;else lo=mid;}
+ const final=run({...base,state},T0+elapsed).record;
+ assert.equal(final.state.drops,base.state.drops);assert.equal(ownerSignature(final.state),ownerSignature(base.state));assert.equal(shapeSignature(final.state),shapeSignature(base.state));
+ assert.equal(derivePlaces(final.state).filter(p=>p.ruleId==='P05'&&p.stage==='grown').length,2);
+ return {label,steps,intervalMs:15000,lastUnbloomedTickMs:lastUnbloomed,firstObservedBloomTickMs:elapsed,firstObservedBloomAt:new Date(T0+elapsed).toISOString(),lastUnbloomedGrowth:prior.landmarks.find((l:any)=>l.id===flowerId).growth,withinFinalIntervalFirstBloomMs:hi,soil:soilAt(state,{x:6,z:5}),growth:6,events:events.map(e=>e.type),grownPlaces:2,scope:'advanceNature is called at each 15s diagnostic timestamp with the actual shared world; final full projectGrowingSync confirms the two derived mature places. Not browser scheduling or DB writes.'};
+}
+const cadence=[cadenceBoundary(fresh,'dry'),cadenceBoundary(wet,'ordinary water-bowl')];
+reports.push({name:'15-second nature-clock cadence compared with one delayed sync',samples:cadence,oneSyncWetBoundaryMs:hi,cadenceWetBoundaryMs:cadence[1].withinFinalIntervalFirstBloomMs,differenceMs:cadence[1].withinFinalIntervalFirstBloomMs-hi});
+assert.equal(opens,0);
+console.log(JSON.stringify({at:new Date().toISOString(),status:'PASS',scope:'Pure domain projection on copied evidence state, explicit diagnostic time inputs, actual trial transform. No source edits, DB access, browser natural growth or live use claim.',dbOpenCalls:opens,sourceEvidence:'composite-v15-save-reopen.json: redo and westOwners',reports},null,2));

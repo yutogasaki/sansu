@@ -1,3 +1,4 @@
+import { StudySubjectSwitch } from '../progress/StudySubjectSwitch';
 import { FoundationLearning } from './FoundationLearning';
 import { FoundationCourseChoice } from './FoundationCourseChoice';
 import { resolveIslandLearningEntry, type IslandLearningEntry } from '../../domain/island/learningEntry';
@@ -730,7 +731,7 @@ export function IslandSession({ profile }: { profile: UserProfile }) {
                     onSave={savePlacement} onStore={() => { setFurniturePlacementSearch(undefined); void place(true); }}
                     onCancel={cancelPlacement} onAppearance={level => void appearance(level)} /> : null}</Suspense>
         {learning && preparingLearning && learningLease === 'ready' && !nextPlanError && <Spinner overlay destination="learning" message="まなぶ じゅんびを しているよ…" />}
-        {learning && learningLease === 'ready' && <button className="island-chip" disabled={busy} onClick={() => navigate('/kokugo', { state: { returnTo: navigation?.ordinaryHref ?? '/island' } })}>国語を まなぶ</button>}
+        {learning && learningLease === 'ready' && <div className="island-subject-switch"><StudySubjectSwitch disabled={busy || foundationBusy} easy={profile.uiTextMode === 'easy'} returnTo={navigation?.ordinaryHref ?? '/island'} /></div>}
         {learning && learningLease === 'ready' && (courseSwitch || courseEntry?.kind === 'course-choice') && <FoundationCourseChoice busy={busy} queued={Boolean(plan || courseEntry?.kind === 'foundation')} onLater={() => { setCourseSwitch(false); if (courseEntry?.kind === 'course-choice') home(); }} onChoose={(course, unit) => { void run(async () => {
             await setFoundationCourse(profile.id, course, unit);
             if (plan?.status === 'active' || courseEntry?.kind === 'foundation' && courseEntry.plan.status === 'pending') { setCourseSwitch(false); return; }

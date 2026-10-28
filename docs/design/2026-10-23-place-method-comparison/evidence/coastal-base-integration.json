@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "at": "2026-10-22T20:54:35.591Z",
+  "hashes": {
+    "coastal-base-field.ts": "a35df99fbf53b5f13b592ca540c6587cf586fdae0f2e0052c4b715d389545346",
+    "coastal-base-check.ts": "453891b3ccf721ddc92a75f0b4602589d7cd24ee3e1787ffdd854c89b118b7cd",
+    "coastal-base-transform.mjs": "a1b99e1e9695eedeab81bfc2d2e843fff6fef14eb7ff46313bbcd90345e1c0bb",
+    "coastal-base-check.mjs": "8098d55f7c96129958902c4ddccca499e88129d6ab08aa5f1e9833a2545e703c",
+    "recorded-UI-input": "31aedb4b82e10c64c6f33ea5b81d6d3e76d698198ca450f4dd43aacd52007b57",
+    "actual-terrain-transform": "96b7a5fdcac711ef1b6e803800471eb8e247e84a933426fbb57f4a3f54530c8f"
+  },
+  "compared": "all geometry/surface vertices/indices, graph edges, dense floor samples, ownership support, fixed support and command transitions; revision strings and timing excluded",
+  "runs": [
+    {
+      "name": "zero",
+      "geometryHash": "5063b01562f147adc0624b8221d348978e8ec1c25b50ba5503090ee60db19aed",
+      "walkGraphHash": "2a940ddce246c84194ff8ce66a3b05cec8da3ffbe635954c0b1444873aa65480"
+    },
+    {
+      "name": "expanded",
+      "geometryHash": "c726aeb907ef5d160691553ad0a21dbbdcbbe87dd94e872ce112de4bd6cc67cf",
+      "walkGraphHash": "1d46ac49f6726964da07f6908d926e219bafac1b5ab03dd9634aff32ba20b9ca"
+    },
+    {
+      "name": "negative-west-opening",
+      "geometryHash": "f7597bcf1376581f1d62f7b5ff070b2cda87481fcb57933b9f18287317e5718b",
+      "walkGraphHash": "5bbce7e261a3caf16f59542b04469ebff886ad6d49203db974981c1c485a080a"
+    },
+    {
+      "name": "positive-corner",
+      "geometryHash": "ab5300bfe1d6f7471c843e83b208b3c5c07abab32edee20da5d777c6296828e5",
+      "walkGraphHash": "2a940ddce246c84194ff8ce66a3b05cec8da3ffbe635954c0b1444873aa65480"
+    },
+    {
+      "name": "mixed-coast",
+      "geometryHash": "65cfa5f641818cc6dccec2523a80ed9013453998443a78eb8a7b76ea325a74f3",
+      "walkGraphHash": "b7e6154ebe5bb3a0a3fc024d01b09ef0618ad58c28698d8b27c96a02fadbe3e9"
+    },
+    {
+      "name": "recorded-UI-input",
+      "geometryHash": "6b1c634b49e173fb44e6499b5576b26cee54ca8b047fa81a1a1bea73932c3bf7",
+      "walkGraphHash": "23179f09245bafaa33aea39fd9a8e0e97cfc634dc5eaa3436dec28f15b6c768f"
+    }
+  ]
+}

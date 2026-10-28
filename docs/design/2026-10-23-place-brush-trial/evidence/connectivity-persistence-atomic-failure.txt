@@ -1,0 +1,29 @@
+file:///private/tmp/sansu-connectivity-persistence-check.mjs:14575
+    throw Error("\u3053\u306E\u304B\u305F\u3061\u3060\u3068\u3001\u884C\u3051\u306A\u304F\u306A\u308B\u5730\u9762\u304C\u3042\u308B\u3088\u3002\u9053\u3092\u6B8B\u3059\u304B\u3001\u5834\u6240\u3084\u5927\u304D\u3055\u3092\u5909\u3048\u3066\u306D\u3002");
+          ^
+
+Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。
+    at assertCompositeConnectivity (file:///private/tmp/sansu-connectivity-persistence-check.mjs:14575:11)
+    at replaceComposite (file:///private/tmp/sansu-connectivity-persistence-check.mjs:14562:3)
+    at applyCompositeCommand (file:///private/tmp/sansu-connectivity-persistence-check.mjs:14590:16)
+    at applyIntent (file:///private/tmp/sansu-connectivity-persistence-check.mjs:15432:12)
+    at Transaction2.<anonymous> (file:///private/tmp/sansu-connectivity-persistence-check.mjs:17919:31)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at process.processImmediate (node:internal/timers:452:9)
+
+Node.js v22.23.3
+Command failed: /Users/yutogasaki/.local/share/fnm/node-versions/v22.23.3/installation/bin/node --input-type=module -e globalThis.window=globalThis;globalThis.location={search:"?terrainTrial=H&baseTrial=stable&rampTrial=linear&growthTrial=inherit&compileTrial=single&trialScene=shore&queryTrial=frozen&memoTrial=samples&edgeTrial=memo&placeSetTrial=two&assemblyTrial=bay&coastSetTrial=two&connectivityTrial=guarded&trialSave=assembly-local",hash:'#/island'};await import("/private/tmp/sansu-connectivity-persistence-check.mjs");
+file:///private/tmp/sansu-connectivity-persistence-check.mjs:14575
+    throw Error("\u3053\u306E\u304B\u305F\u3061\u3060\u3068\u3001\u884C\u3051\u306A\u304F\u306A\u308B\u5730\u9762\u304C\u3042\u308B\u3088\u3002\u9053\u3092\u6B8B\u3059\u304B\u3001\u5834\u6240\u3084\u5927\u304D\u3055\u3092\u5909\u3048\u3066\u306D\u3002");
+          ^
+
+Error: このかたちだと、行けなくなる地面があるよ。道を残すか、場所や大きさを変えてね。
+    at assertCompositeConnectivity (file:///private/tmp/sansu-connectivity-persistence-check.mjs:14575:11)
+    at replaceComposite (file:///private/tmp/sansu-connectivity-persistence-check.mjs:14562:3)
+    at applyCompositeCommand (file:///private/tmp/sansu-connectivity-persistence-check.mjs:14590:16)
+    at applyIntent (file:///private/tmp/sansu-connectivity-persistence-check.mjs:15432:12)
+    at Transaction2.<anonymous> (file:///private/tmp/sansu-connectivity-persistence-check.mjs:17919:31)
+    at runNextTicks (node:internal/process/task_queues:64:5)
+    at process.processImmediate (node:internal/timers:452:9)
+
+Node.js v22.23.3

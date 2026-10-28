@@ -1,0 +1,48 @@
+{
+  "startedAt": "2026-10-21T07:22:18.939Z",
+  "target": "http://127.0.0.1:5264/docs/design/2026-10-21-cove-art-brief/",
+  "checks": [
+    "all declared source images, video, observations and prototype evidence match their SHA",
+    "every relative HTML link/media/poster target exists",
+    "390/1440 widths load every image, decode the real silent video, show no horizontal overflow or page errors"
+  ],
+  "scenarios": [
+    {
+      "width": 390,
+      "height": 1000,
+      "images": 9,
+      "media": {
+        "duration": 10.76,
+        "width": 900,
+        "height": 1300,
+        "muted": true
+      },
+      "overflow": false,
+      "pageErrors": [],
+      "pass": true
+    },
+    {
+      "width": 1440,
+      "height": 1000,
+      "images": 9,
+      "media": {
+        "duration": 10.76,
+        "width": 900,
+        "height": 1300,
+        "muted": true
+      },
+      "overflow": false,
+      "pageErrors": [],
+      "pass": true
+    }
+  ],
+  "pass": true,
+  "scope": "Comparison document and real media/links only. No new art, Astra execution, main app or PWA acceptance.",
+  "completedAt": "2026-10-21T07:22:51.186Z",
+  "commands": {
+    "capture-motion.mjs": "PASS: existing revision, 7 captured events, no page error",
+    "verify-brief.mjs": "PASS: source/media/links and 2 viewport checks",
+    "npm run docs:check": "PASS with existing overdue warnings",
+    "npm run agent:index": "PARTIAL: document entry generated; portal build blocked by stale flow evidence for .agents/tasks/TASKS.md"
+  }
+}

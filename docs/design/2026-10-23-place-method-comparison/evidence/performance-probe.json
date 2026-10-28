@@ -1,0 +1,177 @@
+{
+  "date": "2026-10-22T21:42:13.923Z",
+  "command": "node docs/design/2026-10-23-place-method-comparison/performance-probe.mjs",
+  "hashes": {
+    "performance-probe.mjs": "ece01daaec3f6f21adcf6b01d484af8600073cda7390cd0764e08cf0c147cb9d",
+    "terrain-transform.mjs": "087f297d4454bcff192340c2fc3fc0f296bbfd9e9641ce5ecbc5d1a4fe4949e4",
+    "stable-base-transform.mjs": "aec96e9cd86c343726a0c96c0eae68439908d5deb22febce4bd0dc27b5a31afb",
+    "ramp-plane-transform.mjs": "4d4871f49a5ced65bdf97510ca93784915d717408c9fe91968d64b858274310b",
+    "curved-grid-transform.mjs": "85ee92ca649f26f0286c3036e57e33a1aef990265e440107d74d0b6c8a55cfbc",
+    "evidence/61-H-linear-stable-before-edit.json": "32644ef8205f073c3a8c1850afb684ded6252a1790644d9388367428fd585657"
+  },
+  "samples": [
+    {
+      "label": "initial current world cold",
+      "status": "accepted",
+      "elapsedMs": 602.3646659999999,
+      "builds": [
+        {
+          "kind": "cold-build",
+          "revision": "true:[\"fixed-bilinear-interior-ramp-v1\",\"fixed-core-base-v1\",\"cardinal-convex-terrace-v2+fixed-two-shear-grid-v1\",\"H\",{\"extra\":[\"west\",\"south\"],\"capes\":[],\"expanded\":\"east\"},null,[[\"-1,5\",2],[\"-1,6\",2],[\"-2,5\",1],[\"-2,6\",1],[\"0,3\",2],[\"0,4\",-3],[\"0,5\",3],[\"0,6\",3],[\"0,7\",2],[\"1,2\",1],[\"1,3\",3],[\"1,4\",3],[\"1,5\",3],[\"1,6\",3],[\"1,7\",2],[\"2,2\",2],[\"2,3\",3],[\"2,4\",3],[\"2,5\",3],[\"2,6\",3],[\"2,7\",2],[\"3,2\",1],[\"3,3\",2],[\"3,4\",2],[\"3,5\",2],[\"3,6\",2],[\"4,5\",1],[\"4,6\",1],[\"5,0\",1],[\"5,1\",-1],[\"5,2\",-1],[\"8,4\",-1],[\"8,5\",-1],[\"8,6\",-1]]]",
+          "totalMs": 597.738583,
+          "phases": [
+            {
+              "name": "legacy-world",
+              "ms": 19.841915999999998
+            },
+            {
+              "name": "height-mesh-sites",
+              "ms": 153.88433400000002
+            },
+            {
+              "name": "compile-geometry",
+              "ms": 202.039291
+            },
+            {
+              "name": "derive-walk-edges",
+              "ms": 54.262541999999996
+            },
+            {
+              "name": "compile-final-world",
+              "ms": 167.67395800000003
+            }
+          ],
+          "detail": 12,
+          "nx": 180,
+          "nz": 132,
+          "samples": 24073,
+          "groundTriangles": 34658,
+          "waterTriangles": 15038,
+          "sites": 345,
+          "edges": 787
+        }
+      ],
+      "cacheHits": 0
+    },
+    {
+      "label": "initial current world cache hit",
+      "status": "accepted",
+      "elapsedMs": 0.20508299999994506,
+      "builds": [],
+      "cacheHits": 1
+    },
+    {
+      "label": "same actor-guard rejected command 0",
+      "status": "rejected",
+      "error": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+      "elapsedMs": 515.859542,
+      "builds": [
+        {
+          "kind": "cold-build",
+          "revision": "true:[\"fixed-bilinear-interior-ramp-v1\",\"fixed-core-base-v1\",\"cardinal-convex-terrace-v2+fixed-two-shear-grid-v1\",\"H\",{\"extra\":[\"west\",\"south\"],\"capes\":[],\"expanded\":\"east\"},null,[[\"-1,5\",2],[\"-1,6\",2],[\"-2,5\",1],[\"-2,6\",1],[\"0,3\",2],[\"0,4\",-3],[\"0,5\",3],[\"0,6\",3],[\"0,7\",2],[\"1,2\",1],[\"1,3\",3],[\"1,4\",3],[\"1,5\",3],[\"1,6\",3],[\"1,7\",2],[\"2,2\",2],[\"2,3\",3],[\"2,4\",3],[\"2,5\",3],[\"2,6\",3],[\"2,7\",2],[\"3,2\",1],[\"3,3\",2],[\"3,4\",2],[\"3,5\",2],[\"3,6\",2],[\"4,4\",-1],[\"4,5\",1],[\"4,6\",1],[\"5,0\",1],[\"5,1\",-1],[\"5,2\",-1],[\"8,4\",-1],[\"8,5\",-1],[\"8,6\",-1]]]",
+          "totalMs": 513.7515000000001,
+          "phases": [
+            {
+              "name": "legacy-world",
+              "ms": 0.007334000000014385
+            },
+            {
+              "name": "height-mesh-sites",
+              "ms": 137.907875
+            },
+            {
+              "name": "compile-geometry",
+              "ms": 152.85191600000007
+            },
+            {
+              "name": "derive-walk-edges",
+              "ms": 56.09658400000001
+            },
+            {
+              "name": "compile-final-world",
+              "ms": 166.867791
+            }
+          ],
+          "detail": 12,
+          "nx": 180,
+          "nz": 132,
+          "samples": 24073,
+          "groundTriangles": 34658,
+          "waterTriangles": 15038,
+          "sites": 345,
+          "edges": 787
+        }
+      ],
+      "cacheHits": 4
+    },
+    {
+      "label": "same actor-guard rejected command 1",
+      "status": "rejected",
+      "error": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+      "elapsedMs": 1.1259999999999764,
+      "builds": [],
+      "cacheHits": 5
+    },
+    {
+      "label": "same actor-guard rejected command 2",
+      "status": "rejected",
+      "error": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+      "elapsedMs": 0.7755409999999756,
+      "builds": [],
+      "cacheHits": 5
+    },
+    {
+      "label": "same candidate accepted without actor snapshot",
+      "status": "accepted",
+      "elapsedMs": 0.7790410000000065,
+      "builds": [],
+      "cacheHits": 5
+    },
+    {
+      "label": "different candidate actor-guard cold",
+      "status": "rejected",
+      "error": "Error: なかまが いるよ。すこし はなれた ところを えらぼう。",
+      "elapsedMs": 520.805292,
+      "builds": [
+        {
+          "kind": "cold-build",
+          "revision": "true:[\"fixed-bilinear-interior-ramp-v1\",\"fixed-core-base-v1\",\"cardinal-convex-terrace-v2+fixed-two-shear-grid-v1\",\"H\",{\"extra\":[\"west\",\"south\"],\"capes\":[],\"expanded\":\"east\"},null,[[\"-1,5\",2],[\"-1,6\",2],[\"-2,5\",1],[\"-2,6\",1],[\"0,3\",2],[\"0,4\",-3],[\"0,5\",3],[\"0,6\",3],[\"0,7\",2],[\"1,2\",1],[\"1,3\",3],[\"1,4\",3],[\"1,5\",3],[\"1,6\",3],[\"1,7\",2],[\"2,2\",2],[\"2,3\",3],[\"2,4\",3],[\"2,5\",3],[\"2,6\",3],[\"2,7\",2],[\"3,2\",1],[\"3,3\",2],[\"3,4\",2],[\"3,5\",2],[\"3,6\",2],[\"4,4\",1],[\"4,5\",1],[\"4,6\",1],[\"5,0\",1],[\"5,1\",-1],[\"5,2\",-1],[\"8,4\",-1],[\"8,5\",-1],[\"8,6\",-1]]]",
+          "totalMs": 519.7482909999999,
+          "phases": [
+            {
+              "name": "legacy-world",
+              "ms": 0.014208000000053289
+            },
+            {
+              "name": "height-mesh-sites",
+              "ms": 124.11079199999995
+            },
+            {
+              "name": "compile-geometry",
+              "ms": 171.078166
+            },
+            {
+              "name": "derive-walk-edges",
+              "ms": 42.13904200000002
+            },
+            {
+              "name": "compile-final-world",
+              "ms": 182.39916700000003
+            }
+          ],
+          "detail": 12,
+          "nx": 180,
+          "nz": 132,
+          "samples": 24073,
+          "groundTriangles": 34658,
+          "waterTriangles": 15038,
+          "sites": 345,
+          "edges": 787
+        }
+      ],
+      "cacheHits": 4
+    }
+  ],
+  "unchangedInput": true,
+  "scope": "Node CPU diagnostic with actual H + stable + linear transforms; explicit actor at edited4,4 is a test fixture, not browser actor telemetry. No renderer/GPU/DB. Results are not browser frame timing."
+}

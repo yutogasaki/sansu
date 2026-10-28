@@ -1,0 +1,66 @@
+{
+  "dateJST": "2026-10-24T13:30:44+09:00",
+  "candidate": "island-material-plan-v1",
+  "type": "制作計画・参考選定。アプリ／ゲーム挙動の変更なし",
+  "datasetRevisionObserved": "55b4c002b4c1529fc48da3dff98516c3069bfa3f",
+  "metadataSource": "datasets-server / default / train / offsets 0–1300 / length 100",
+  "datasetRows": 1342,
+  "nonEmptyPrompts": 370,
+  "missingPrompts": 972,
+  "visuallyReviewedDatasetPreviews": 18,
+  "existingImages": 6,
+  "allImagesReviewed": false,
+  "datasetPreviewHashesMatch": true,
+  "originalModelsDownloaded": false,
+  "sources": [
+    {
+      "path": "CONSTITUTION.md",
+      "sha256": "5ef2541bc4de9439200c3a0b2a80c75800443d4f9b3a9230b20be09f428e480d"
+    },
+    {
+      "path": "docs/product/01_app_spec.md",
+      "sha256": "b1d56cc0353e50a547a6613f20ab5588894faa23dc99af2321a103353a11c135"
+    },
+    {
+      "path": "docs/product/island-construction-strategy.md",
+      "sha256": "13bf8577cf810a9ef0cea13f8adddb7379eff8ec1a9bcc7fdf8f7ed6a771fef4"
+    },
+    {
+      "path": "docs/product/island-art-strategy.md",
+      "sha256": "3a4e2d81f6d44d28a6950dfb35a758a43f573dd2bad8fd47b3f71e6fddd325cd"
+    },
+    {
+      "path": "docs/product/island-expansion-art-strategy.md",
+      "sha256": "dbe1a92ffee6685a49b79eab293f8334974760ba7d089b5a11acf76e68ddf1d3"
+    },
+    {
+      "path": "docs/product/living-fantasy/01-world-and-art.md",
+      "sha256": "752224180d2328a87e5ad73c6263855f32ff52a32f6f4021926ae341bbc906cf"
+    },
+    {
+      "path": "docs/design/2026-10-22-making-methods/README.md",
+      "sha256": "ed7effe75035632fb1dfd0dcbd0d19f60ec9bcdcd52befcfc49cf3422e63e6e1"
+    },
+    {
+      "path": "docs/design/2026-10-23-place-method-comparison/strategy-assessment.md",
+      "sha256": "7998d2076ae602be01805428833bbad861eaffc9a7fbcc9cfd8a8d5d751f7f3b"
+    },
+    {
+      "path": "docs/design/2026-10-23-place-brush-trial/README.md",
+      "sha256": "71b71b9250e4579d5c8f123fa61971f12b7fa0533e7d58eff7a5ae5fe03a13cf"
+    },
+    {
+      "path": "src/components/island/growing/objectLayer.ts",
+      "sha256": "b68a8a77900fd918f8ba2e802fb2fdb34d2e1ce32bcdca47b1df2f47fdc660c3"
+    },
+    {
+      "path": "src/components/island/growing/placeGeometry.ts",
+      "sha256": "0003624ddb712fdc3be3876d50533b7ec4758b113cd0685e205e931af8a07e5d"
+    },
+    {
+      "path": "src/components/island/growing/native/nativeGrowingKit.ts",
+      "sha256": "9b303133edd83ce2c86372fa5eeb959c51d4e7ea7915d6ef93f39b9a4d18bab9"
+    }
+  ],
+  "sourceScope": "ローカル未commit変更を含む現在の資料。参考画像は保存済みで新規runtime captureではない。"
+}

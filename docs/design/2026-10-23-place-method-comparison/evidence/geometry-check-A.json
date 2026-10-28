@@ -1,0 +1,111 @@
+{
+  "passed": true,
+  "profile": "shoulder-slope-toe-v1",
+  "at": "2026-10-22T20:19:46.457Z",
+  "runs": [
+    {
+      "name": "unchanged-flat",
+      "fixture": "explicit synthetic heights, no user data injection or normal-journey claim",
+      "pinSamples": 968,
+      "maxPinnedError": 0,
+      "outsideA": 10.014515360054837,
+      "outsideB": 10.014515360054837,
+      "maxHeightDifference": 0,
+      "drySamples": 3809,
+      "samplesChangedOver2cm": 0,
+      "wetSamples": 0,
+      "methods": [
+        {
+          "mode": "A",
+          "hitSamples": 6,
+          "maxRayError": 1.3764748285627348e-8,
+          "walkEdges": 454
+        },
+        {
+          "mode": "B",
+          "hitSamples": 6,
+          "maxRayError": 1.3764748285627348e-8,
+          "walkEdges": 454
+        }
+      ]
+    },
+    {
+      "name": "raised-east-shoulder",
+      "fixture": "explicit synthetic heights, no user data injection or normal-journey claim",
+      "pinSamples": 968,
+      "maxPinnedError": 0,
+      "outsideA": 10.139509001570296,
+      "outsideB": 10.129877191587898,
+      "maxHeightDifference": 0.2511515340000001,
+      "drySamples": 3809,
+      "samplesChangedOver2cm": 414,
+      "wetSamples": 0,
+      "methods": [
+        {
+          "mode": "A",
+          "hitSamples": 6,
+          "maxRayError": 1.4243845658512555e-7,
+          "walkEdges": 366
+        },
+        {
+          "mode": "B",
+          "hitSamples": 6,
+          "maxRayError": 2.210174910310947e-7,
+          "walkEdges": 366
+        }
+      ]
+    },
+    {
+      "name": "open-west-cove",
+      "fixture": "explicit synthetic heights, no user data injection or normal-journey claim",
+      "pinSamples": 968,
+      "maxPinnedError": 0,
+      "outsideA": 7.886814801356428,
+      "outsideB": 7.886397799267439,
+      "maxHeightDifference": 0.03431157499999998,
+      "drySamples": 3371,
+      "samplesChangedOver2cm": 6,
+      "wetSamples": 445,
+      "methods": [
+        {
+          "mode": "A",
+          "hitSamples": 4,
+          "maxRayError": 0,
+          "walkEdges": 398
+        },
+        {
+          "mode": "B",
+          "hitSamples": 4,
+          "maxRayError": 0,
+          "walkEdges": 398
+        }
+      ]
+    },
+    {
+      "name": "mixed-ridge-and-cut",
+      "fixture": "explicit synthetic heights, no user data injection or normal-journey claim",
+      "pinSamples": 968,
+      "maxPinnedError": 0,
+      "outsideA": 8.36961057225221,
+      "outsideB": 8.36124606478661,
+      "maxHeightDifference": 0.24730666699999992,
+      "drySamples": 3517,
+      "samplesChangedOver2cm": 451,
+      "wetSamples": 0,
+      "methods": [
+        {
+          "mode": "A",
+          "hitSamples": 4,
+          "maxRayError": 1.0300232222704153e-8,
+          "walkEdges": 340
+        },
+        {
+          "mode": "B",
+          "hitSamples": 4,
+          "maxRayError": 1.1042999181753999e-8,
+          "walkEdges": 340
+        }
+      ]
+    }
+  ]
+}

@@ -1,3 +1,5 @@
+import { openKokugoFromLearning } from './island-e2e-helpers.mjs';
+import { kokugoUnitButton } from './island-e2e-helpers.mjs';
 import assert from 'node:assert/strict';
 import { promises as fs } from 'node:fs';
 import { chromium } from 'playwright';
@@ -55,11 +57,11 @@ try {
         const profileId = await seedNative(page, `kokugo-${width}`);
         await page.goto(`${base}/#/island`); await waitReady(page);
         await page.getByRole('button', { name: 'まなぶ', exact: true }).click();
-        await page.getByRole('button', { name: '国語を まなぶ', exact: true }).click();
+        await openKokugoFromLearning(page);
         await page.getByRole('heading', { name: '国語を まなぼう', exact: true }).waitFor();
         const legacy = await store(page, 'islandPlans');
         await capture(page, 'catalog');
-        await click(page, '読む'); await page.getByRole('button', { name: /R01 ·/ }).click();
+        await click(page, '読む'); await kokugoUnitButton(page, 'R01').click();
         await click(page, '3もん やってみる');
         let plan = await until(() => pending(page), p => !!p?.slots[0].presentation);
         await capture(page, 'reading');
@@ -110,20 +112,20 @@ try {
         const island = (await store(page, 'terrainIslands', 'growing'))[0]; assert.equal(island.state.drops, 6);
         await page.getByRole('button', { name: 'まなぶ', exact: true }).click();
         await page.getByRole('heading', { name: '国語を まなぼう' }).waitFor();
-        await click(page, '伝える'); await page.getByRole('button', { name: /E05 ·/ }).click();
+        await click(page, '伝える'); await kokugoUnitButton(page, 'E05').click();
         await page.getByLabel('作品・メモ', { exact: true }).fill('今日は 川で 小さな石を 見つけました。');
         await page.getByRole('button', { name: '作品に のこす' }).click();
         await page.getByText('作品に のこしたよ。', { exact: true }).waitFor();
         await capture(page, 'writing');
         const works = await store(page, 'kokugoWorks'); assert.equal(works[0].saved, true);
         await page.reload(); await page.getByRole('heading', { name: '国語を まなぼう' }).waitFor();
-        await click(page, '伝える'); await page.getByRole('button', { name: /E05 ·/ }).click();
+        await click(page, '伝える'); await kokugoUnitButton(page, 'E05').click();
         await until(() => page.getByLabel('作品・メモ', { exact: true }).isEnabled(), ready => ready);
         assert.equal(await page.getByLabel('作品・メモ', { exact: true }).inputValue(), works[0].text);
         await click(page, 'コースへ'); await click(page, 'お話を えらぶ'); await capture(page, 'book');
         await click(page, '読んだ本に のこす'); await page.getByText('読んだ本に のこしたよ。', { exact: true }).waitFor();
         await click(page, 'コースへ');
-        await click(page, 'かな'); await page.getByRole('button', { name: /K05 ·/ }).click(); await click(page, '3もん やってみる');
+        await click(page, 'かな'); await kokugoUnitButton(page, 'K05').click(); await click(page, '3もん やってみる');
         plan = await until(() => pending(page), p => !!p?.slots[0].presentation);
         const input = page.getByLabel('こたえ', { exact: true });
         await input.fill(plan.slots[0].item.answer);
@@ -138,7 +140,7 @@ try {
             await click(page, 'あとで やる'); await click(page, i === 2 ? 'ここまで おわる' : 'つぎへ');
         }
         await click(page, '内容を えらぶ'); await click(page, 'かな');
-        await page.getByRole('button', { name: /K01 ·/ }).click(); await click(page, '3もん やってみる');
+        await kokugoUnitButton(page, 'K01').click(); await click(page, '3もん やってみる');
         plan = await until(() => pending(page), p => !!p?.slots[0].presentation);
         assert.equal(await page.locator('.kokugo-choices button').first().isDisabled(), true);
         await click(page, '▶ ことばを きく');
@@ -149,15 +151,18 @@ try {
             await click(page, 'あとで やる'); await click(page, i === 2 ? 'ここまで おわる' : 'つぎへ');
         }
         await click(page, '内容を えらぶ');
-        await click(page, '文'); await page.getByRole('button', { name: /S05 ·/ }).click(); await click(page, '3もん やってみる');
+        await click(page, '文'); await kokugoUnitButton(page, 'S05').click(); await click(page, '3もん やってみる');
         plan = await until(() => pending(page), p => !!p?.slots[0].presentation);
         await click(page, plan.slots[0].item.answer.split('｜')[0]);
         await until(() => pending(page), p => !!p?.slots[0].draft);
         await page.reload(); await page.locator('.kokugo-order').waitFor();
         assert.equal(await page.locator('.kokugo-order').innerText(), plan.slots[0].item.answer.split('｜')[0]);
         await capture(page, 'order-restored');
-        await click(page, '算数・英語を まなぶ');
-        await page.getByRole('button', { name: '国語を まなぶ', exact: true }).waitFor();
+        await page.getByRole('button', { name: '教科を えらぶ', exact: true }).click();
+        await page.getByRole('group', { name: '学習する科目', exact: true }).getByRole('button', { name: '算数', exact: true }).click();
+        await until(() => store(page, 'kokugoCourses'), rows => rows[0]?.preferred === false);
+        await page.locator('.island-shell-nav').getByRole('button', { name: 'まなぶ', exact: true }).click();
+        await page.getByRole('button', { name: '教科を えらぶ', exact: true }).waitFor();
         assert.equal((await store(page, 'kokugoCourses'))[0].preferred, false);
         assert.equal((await pending(page)).unitId, 'S05');
         if (process.env.SANSU_KOKUGO_OFFLINE === '1') {
@@ -168,9 +173,37 @@ try {
             await capture(page, 'offline-resume'); await context.setOffline(false);
         }
         // Reopening the explicit subject must select it again even with a pending unit.
-        if (!await page.locator('.kokugo-screen').isVisible()) await page.getByRole('button', { name: '国語を まなぶ', exact: true }).click();
+        if (!await page.locator('.kokugo-screen').isVisible()) await openKokugoFromLearning(page);
         await page.locator('.kokugo-question').waitFor();
         await until(() => store(page, 'kokugoCourses'), rows => rows[0]?.preferred === true);
+        await page.goto(`${base}/#/stats`);
+        const nationalAnswers = (await store(page, 'kokugoEvents')).filter(event => event.action === 'answer').length;
+        const ordinaryAnswers = (await store(page, 'logs')).filter(log => log.result !== 'skipped' && !log.skipped).length;
+        await until(() => page.getByTestId('activity-count').innerText(), text => Number(text.replace(/[^0-9]/g, '')) === nationalAnswers + ordinaryAnswers);
+        assert.equal(await page.locator('.stats-first-record').count(), 0, 'National-language activity is not an empty record');
+        assert(Number((await page.getByTestId('activity-days').innerText()).replace(/[^0-9]/g, '')) > 0);
+        await page.locator('.stats-calendar-day.has-answers').first().click();
+        await page.locator('#stats-calendar-detail').getByText('国語', { exact: true }).first().waitFor();
+        await page.screenshot({ path: `${output}/${width}-shared-records.png`, animations: 'disabled' });
+        await page.goto(`${base}/#/parents`);
+        await page.locator('.parent-current-ranges .kokugo-range').waitFor();
+        assert((await page.locator('.parent-current-ranges .kokugo-range').innerText()).includes('確認できたレベル'));
+        await until(() => page.locator('.parent-activity').innerText(), text => text.includes(`今日の回答`) && text.includes(`${nationalAnswers + ordinaryAnswers}問`));
+        await page.screenshot({ path: `${output}/${width}-shared-parents.png`, animations: 'disabled' });
+        if (width === 320) {
+            await page.goto(`${base}/#/settings?section=display`);
+            await page.getByRole('group', { name: '表示テキスト', exact: true }).getByRole('button', { name: 'やさしい', exact: true }).click();
+            await page.getByRole('group', { name: 'ひょうじ テキスト', exact: true }).waitFor();
+            await page.goto(`${base}/#/kokugo`); await page.locator('.kokugo-question').waitFor();
+            await click(page, 'ないようを えらぶ'); await page.getByRole('heading', { name: 'こくごを まなぼう', exact: true }).waitFor();
+            await page.getByRole('button', { name: 'きょうかを えらぶ', exact: true }).waitFor();
+            await page.getByRole('button', { name: 'かんじ', exact: true }).waitFor();
+            await page.screenshot({ path: `${output}/${width}-shared-easy.png`, animations: 'disabled' });
+            assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+            await page.goto(`${base}/#/settings?section=display`);
+            await page.getByRole('group', { name: 'ひょうじ テキスト', exact: true }).getByRole('button', { name: 'ふつう', exact: true }).click();
+            await page.getByRole('group', { name: '表示テキスト', exact: true }).waitFor();
+        }
         await page.goto(`${base}/#/stats`);
         await page.locator('.island-shell-nav').getByRole('button', { name: 'まなぶ', exact: true }).click();
         await page.locator('.kokugo-question').waitFor();

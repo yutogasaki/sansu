@@ -1,0 +1,105 @@
+{
+  "revision": "b37ce43457f9cd9f",
+  "source": "Summarized from completed CUA collectArrival tool observations; all nine calls asserted visible/supported actor, no unsafe trace sample, and all owners supported. Aggregated array export failed in the CUA recorder; this summary is not a replacement full trace. Retained full traces are separately named.",
+  "results": [
+    {
+      "case": "flat",
+      "destination": "shade",
+      "samples": 99,
+      "frameP95": 17.2,
+      "arrived": true,
+      "actorVisible": true,
+      "actorSafe": true,
+      "allOwnersSupported": true,
+      "allTraceSamplesSafe": true
+    },
+    {
+      "case": "flat",
+      "destination": "shore",
+      "samples": 200,
+      "frameP95": 17.3,
+      "arrived": true,
+      "actorVisible": true,
+      "actorSafe": true,
+      "allOwnersSupported": true,
+      "allTraceSamplesSafe": true
+    },
+    {
+      "case": "flat",
+      "destination": "home",
+      "samples": 138,
+      "frameP95": 18.1,
+      "arrived": true,
+      "actorVisible": true,
+      "actorSafe": true,
+      "allOwnersSupported": true,
+      "allTraceSamplesSafe": true
+    },
+    {
+      "case": "ell",
+      "destination": "shade",
+      "samples": 99,
+      "frameP95": 18.4,
+      "arrived": true,
+      "actorVisible": true,
+      "actorSafe": true,
+      "allOwnersSupported": true,
+      "allTraceSamplesSafe": true
+    },
+    {
+      "case": "ell",
+      "destination": "shore",
+      "samples": 169,
+      "frameP95": 17.8,
+      "arrived": true,
+      "actorVisible": true,
+      "actorSafe": true,
+      "allOwnersSupported": true,
+      "allTraceSamplesSafe": true
+    },
+    {
+      "case": "ell",
+      "destination": "home",
+      "samples": 167,
+      "frameP95": 18.4,
+      "arrived": true,
+      "actorVisible": true,
+      "actorSafe": true,
+      "allOwnersSupported": true,
+      "allTraceSamplesSafe": true
+    },
+    {
+      "case": "cove",
+      "destination": "shade",
+      "samples": 99,
+      "frameP95": 18,
+      "arrived": true,
+      "actorVisible": true,
+      "actorSafe": true,
+      "allOwnersSupported": true,
+      "allTraceSamplesSafe": true
+    },
+    {
+      "case": "cove",
+      "destination": "shore",
+      "samples": 77,
+      "frameP95": 18,
+      "arrived": true,
+      "actorVisible": true,
+      "actorSafe": true,
+      "allOwnersSupported": true,
+      "allTraceSamplesSafe": true
+    },
+    {
+      "case": "cove",
+      "destination": "home",
+      "samples": 93,
+      "frameP95": 17.8,
+      "arrived": true,
+      "actorVisible": true,
+      "actorSafe": true,
+      "allOwnersSupported": true,
+      "allTraceSamplesSafe": true
+    }
+  ]
+}
