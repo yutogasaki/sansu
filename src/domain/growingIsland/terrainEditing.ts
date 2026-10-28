@@ -120,10 +120,15 @@ export function terrainFootingError(previous: GrowingState, next: GrowingState, 
     const fixed = [...HOUSE_CELLS, { x: bounds.maxX - 1, z: bounds.depth - 1 }, ...(next.bridge ? [bridgeAnchor(next)] : [])];
     if (fixed.some(cell => !supported(before, after, cell, .46, true)))
         return 'おうちと ふなつきばの 足もとは そのままに しよう。';
+    // Only the ground that changed (and its edge) can move a footing; owners further away stand as they did.
+    const was = previous.terrain?.heights ?? {}, now = next.terrain?.heights ?? {};
+    const changed = [...new Set([...Object.keys(was), ...Object.keys(now)])].filter(id => (was[id] ?? 0) !== (now[id] ?? 0))
+        .map(id => { const [x, z] = id.split(',').map(Number); return { x, z }; });
+    const near = (cell: Cell) => changed.some(c => Math.abs(c.x - cell.x) <= 1 && Math.abs(c.z - cell.z) <= 1);
     const owned = [...next.plots.flatMap(plot => plot.cell ? [plot.cell] : []),
         ...next.landmarks.flatMap(owner => !owner.cell ? [] : OWN_LANDMARKS.includes(owner.kind) ? [owner.cell]
             : occupiedCells({ kind: owner.kind as ItemKind, cell: owner.cell })),
-        ...next.keepsakes.flatMap(owner => owner.cell ? [owner.cell] : [])];
+        ...next.keepsakes.flatMap(owner => owner.cell ? [owner.cell] : [])].filter(near);
     if (owned.some(cell => !terrainOwnerSupported(next, cell)))
         return 'ものの 足もとだよ。さきに うごかしてみよう。';
     if (actors.some(cell => !finiteCell(cell) || !supported(before, after, cell, .18, true)))
@@ -195,17 +200,26 @@ function applyTerrainCandidate(state: GrowingState, command: TerrainCommand, str
         writeHeight(terrain.heights, entry.cell, entry.after);
     } else if (command.type === 'terrain-stroke') {
         // A finger stroke shapes every cell it crossed in one action: up a step, back to the
-        // ground, or down below the sea. Things standing there keep their ground.
+        // ground, or down below the sea. A thing rises with its hill and comes back down with it
+        // (the footing rules below still guard the home, the pier and reach); only the sea keeps
+        // its hands off the ground under a thing.
         // A finger may wander past the shore; only the child's own land is shaped.
         if (!Array.isArray(command.cells) || !command.cells.length || command.cells.length > 64 || !['up', 'flat', 'sea'].includes(command.to)
             || !command.cells.some(cell => acquired(state, cell))) fail('あかるい マスの なかを なぞってね。そこが じぶんの 土地だよ。');
         const group = strokeGroup ?? `stroke:${terrain.undo.length}`, seen = new Set<string>(), held = heldCells(state);
         let kept = false;
         terrain.redo = [];
-        for (const cell of command.cells) {
+        // A building on four cells moves as one: touch one of its cells and all four go (spec 52 §1.5).
+        const cells = [...command.cells];
+        if (command.to !== 'sea') for (const owner of state.landmarks) {
+            if (!owner.cell || OWN_LANDMARKS.includes(owner.kind)) continue;
+            const footprint = occupiedCells({ kind: owner.kind as ItemKind, cell: owner.cell });
+            if (footprint.length > 1 && footprint.some(c => command.cells.some(d => d.x === c.x && d.z === c.z))) cells.push(...footprint);
+        }
+        for (const cell of cells) {
             const id = key(cell); if (seen.has(id) || !acquired(state, cell)) continue; seen.add(id);
             const before = terrain.heights[id] ?? 0;
-            if (command.to !== 'up' && held.has(id)) { kept = true; continue; }
+            if (command.to === 'sea' && held.has(id)) { kept = true; continue; }
             const after = command.to === 'up' ? before + 1 : command.to === 'flat' ? 0 : seaLevelAt(state, cell);
             if (after === before || !validHeight(after)) continue;
             entry = { cell: { x: cell.x, z: cell.z }, before, after, group };

@@ -1,4 +1,4 @@
-import { editableIslandWorld, editableTerrainSegmentSupported, terracePlanOf } from '../../../domain/growingIsland/editableTerrainWorld';
+import { editableIslandWorld, editableTerrainSegmentSupported, terraceJump, terracePlanOf } from '../../../domain/growingIsland/editableTerrainWorld';
 import { derivePlaces } from '../../../domain/growingIsland/places';
 import { likesOf } from '../../../domain/growingIsland/rules';
 import { chooseLifeTarget } from './lifeChoices';
@@ -35,6 +35,8 @@ interface Walker {
     choice?: string;
     /** Sliding down a one-step bank, quick and gleeful (§1.4). */
     sled?: boolean;
+    /** The leg being walked; a two-step cliff on it is jumped (spec 52 §1.5). */
+    leg?: { from: { x: number; z: number }; to: Cell; jump: boolean };
 }
 
 export const VISIBLE_WALKERS = 12;
@@ -375,8 +377,14 @@ export class GrowingLife {
             if (route) return key(start) === key(walker.at) ? route : [{ ...walker.at }, ...route];
         }
     }
+    /** A two-step cliff between neighbouring cells, jumped rather than walked. */
+    private jumpable(from: { x: number; z: number }, to: Cell) {
+        const plan = terracePlanOf(this.world);
+        return Boolean(plan && terraceJump(plan, { x: Math.round(from.x), z: Math.round(from.z) }, to));
+    }
+
     private groundClear(from: Cell, to: Cell) {
-        return (!this.layout?.editable || !this.world || editableTerrainSegmentSupported(this.world, from, to))
+        return (!this.layout?.editable || !this.world || editableTerrainSegmentSupported(this.world, from, to) || this.jumpable(from, to))
             && (this.flowerGuard?.clearGroundPath(from, to) ?? true);
     }
 
@@ -466,6 +474,11 @@ export class GrowingLife {
         return Boolean(owner?.cell && walker?.actor.root.visible && walker.mode === 'idle' && this.approaches(owner.cell).some(at => key(at) === key(walker.at)));
     }
     concertActive(now: number) { return Boolean(this.concert && now < this.concert.until); }
+
+    /** Whoever stands on ground the child just shaped rides it and gives a little hop (spec 52 §1.5). */
+    hopOn(cells: ReadonlySet<string>, now: number) {
+        for (const [id, w] of this.walkers) if (w.actor.root.visible && cells.has(key({ x: Math.round(w.at.x), z: Math.round(w.at.z) }))) this.hop(id, now);
+    }
 
     hop(id: string, now: number) {
         const w = this.walkers.get(id); if (!w) return;
@@ -713,7 +726,8 @@ export class GrowingLife {
                 let budget = delta * SPEED * (w.sled ? 3.2 : 1);
                 while (budget > 0 && w.path.length) {
                     const next = w.path[0];
-                    if (layout.editable && !this.groundClear(w.at, next)) { w.path = []; w.mode = 'idle'; w.until = now + 3000; w.placeTarget = undefined; break; }
+                    if (w.leg?.to !== next) w.leg = { from: { ...w.at }, to: next, jump: this.jumpable(w.at, next) };
+                    if (layout.editable && !w.leg.jump && !this.groundClear(w.at, next)) { w.path = []; w.mode = 'idle'; w.until = now + 3000; w.placeTarget = undefined; break; }
                     const dx = next.x - w.at.x, dz = next.z - w.at.z, d = Math.hypot(dx, dz);
                     if (d <= budget) { w.at = { ...next }; w.path.shift(); budget -= d; }
                     else { w.at = { x: w.at.x + dx / d * budget, z: w.at.z + dz / d * budget }; budget = 0; }
@@ -818,6 +832,15 @@ export class GrowingLife {
             if (play) { const remaining = 1 - leaving * leaving * (3 - 2 * leaving); y *= remaining; seatBaseY *= remaining; }
             if (w.mode === 'held') y = (.55 + (reduced ? 0 : Math.sin(now / 120) * .03)) * actorScale;
             if (w.mode === 'walk' && !reduced) y = Math.abs(Math.sin(now / 110)) * .035 * actorScale;
+            // ぴょん: over a two-step cliff the body follows an arc from one level to the other.
+            const leg = w.mode === 'walk' && w.leg?.jump && w.path[0] === w.leg.to ? w.leg : undefined;
+            if (leg) {
+                const total = Math.hypot(leg.to.x - leg.from.x, leg.to.z - leg.from.z) || 1;
+                const t = Math.max(0, Math.min(1, 1 - Math.hypot(leg.to.x - w.at.x, leg.to.z - w.at.z) / total));
+                const low = layout.heightAt(leg.from), high = layout.heightAt(leg.to), ease = t * t * (3 - 2 * t);
+                position.y = low + (high - low) * ease + .04;
+                y = Math.sin(Math.PI * t) * (reduced ? .12 : .32) * actorScale;
+            }
             if (w.hopAt !== undefined && now >= w.hopAt) {
                 const t = (now - w.hopAt) / 520;
                 if (t >= 1) w.hopAt = undefined; else y += Math.sin(Math.PI * t) * (reduced ? .08 : .35) * actorScale;
@@ -869,7 +892,8 @@ export class GrowingLife {
                     }
                 } else alignActorContact(actor, groundY + y + playLift);
             }
-            if (layout.editable && !['seat', 'held'].includes(w.mode)) alignActorTerrainContact(actor, (x, z) => {
+            // Mid-jump the feet are in the air; the arc, not the floor below, places them.
+            if (layout.editable && !leg && !['seat', 'held'].includes(w.mode)) alignActorTerrainContact(actor, (x, z) => {
                 const cell = layout.logicalAt({ x, z }); return layout.world.floorAt(cell)?.point.y;
             }, y + playLift);
             this.guardPose(w, now, receiptStart);

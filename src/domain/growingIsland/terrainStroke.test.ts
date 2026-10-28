@@ -52,6 +52,27 @@ describe('DEV terrain stroke: shaping the island with a finger', () => {
         expect(Object.keys(state.terrain!.heights)).toEqual(['0,1']);
     });
 
+    it('flattens a hill that rose with a thing on it, the thing coming down with the ground', () => {
+        let state = island();
+        state.landmarks = [{ id: 'bench', kind: 'bench', cell: { x: 1, z: 2 }, growth: 0 }];
+        state = run(state, { type: 'terrain-stroke', cells: [{ x: 0, z: 2 }, { x: 1, z: 2 }], to: 'up' });
+        expect(state.terrain!.heights).toEqual({ '0,2': 1, '1,2': 1 });
+        state = run(state, { type: 'terrain-stroke', cells: [{ x: 1, z: 2 }], to: 'flat' }, 'flat');
+        expect(state.terrain!.heights).toEqual({ '0,2': 1 });
+        expect(state.landmarks[0].cell).toEqual({ x: 1, z: 2 });
+    });
+
+    it('moves a building on four cells as one, up and back down', () => {
+        let state = island();
+        state.landmarks = [{ id: 'hut', kind: 'garden-hut', cell: { x: 0, z: 2 }, growth: 0 }];
+        state = run(state, { type: 'terrain-stroke', cells: [{ x: 1, z: 3 }], to: 'up' });
+        expect(state.terrain!.heights).toEqual({ '1,3': 1, '0,2': 1, '1,2': 1, '0,3': 1 });
+        state = run(state, { type: 'terrain-stroke', cells: [{ x: 0, z: 2 }], to: 'flat' }, 'flat');
+        expect(state.terrain!.heights).toEqual({});
+        state = run(state, { type: 'terrain-undo' }, 'undo');
+        expect(Object.keys(state.terrain!.heights)).toHaveLength(4);
+    });
+
     it('keeps the cells the rules allow when one cell of a stroke may not change, all in one undo', () => {
         let state = island();
         // (4,0) is the home's footing; the rest of the stroke still rises.

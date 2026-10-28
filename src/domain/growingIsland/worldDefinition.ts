@@ -70,6 +70,9 @@ const interpolate = (points: readonly WorldPoint[], weights: readonly number[]):
     z: stable(points.reduce((value, point, i) => value + point.z * weights[i], 0)),
 });
 
+/** The highest cliff a resident jumps: two terrace steps, on base hills that may lean a little more. */
+export const JUMP_HEIGHT = .7;
+
 /** Returns the same rejection reason for authoring pruning and explicit edge validation. */
 function walkEdgeError(from: CompiledWorldSite | undefined, to: CompiledWorldSite | undefined,
     floorAt: (cell: Cell) => WorldFloorSample | undefined): string | undefined {
@@ -305,26 +308,6 @@ export function compileWorldDefinition(input: WorldDefinition) {
             requireWorld(port.id && !ports.has(port.id) && refs.has(refKey({ districtId: district.id, siteId: port.siteId })), 'port ID or site'); ports.add(port.id);
         }
     }
-    const graphs = Object.fromEntries((['walk', 'join', 'water'] as const).map(kind => [kind, new Map<string, Set<string>>()]));
-    const edgeIds = new Set<string>();
-    for (const edge of definition.edges) {
-        const a = refKey(edge.from), b = refKey(edge.to), edgeId = JSON.stringify([a, b].sort());
-        requireWorld(a !== b && refs.has(a) && refs.has(b) && !edgeIds.has(edgeId), 'duplicate edge or unknown endpoint'); edgeIds.add(edgeId);
-        requireWorld(edge.allows.length > 0 && new Set(edge.allows).size === edge.allows.length
-            && edge.allows.every(kind => ['walk', 'join', 'water'].includes(kind)), 'edge passage rights');
-        if (edge.allows.includes('walk')) {
-            const error = walkEdgeError(refs.get(a), refs.get(b), cell => sample(cell, false));
-            requireWorld(!error, error!);
-        }
-        for (const kind of edge.allows) {
-            const graph = graphs[kind];
-            for (const [from, to] of [[a, b], [b, a]]) { const next = graph.get(from) ?? new Set<string>(); next.add(to); graph.set(from, next); }
-        }
-    }
-    const neighbors = (cell: Cell, passage: WorldPassage = 'walk'): Cell[] => {
-        const site = cells.get(cellKey(cell)); if (!site) return [];
-        return [...(graphs[passage].get(refKey(site.ref)) ?? [])].map(id => ({ ...refs.get(id)!.cell }));
-    };
     const owns = (cell: Cell) => cells.get(cellKey(cell))?.placement === true;
     const floorKinds = new Map(floors.map(floor => [floor.id, floor.kind]));
     const walkSites = sites.filter(site => site.support), shoreApproaches = new Map<string, Cell[]>();
@@ -355,21 +338,6 @@ export function compileWorldDefinition(input: WorldDefinition) {
         return site?.placement && site.support && JSON.parse(floor.floorId)[0] === site.ref.districtId
             && floorKinds.get(floor.floorId) === floorKinds.get(site.support.floorId) ? site : undefined;
     };
-    const route = (from: Cell, to: Cell, open: ReadonlySet<string>, passage: WorldPassage = 'walk'): Cell[] | undefined => {
-        if (!cells.has(cellKey(from)) || !cells.has(cellKey(to)) || !open.has(cellKey(from)) || !open.has(cellKey(to))) return undefined;
-        if (passage === 'walk' && (!cells.get(cellKey(from))?.support || !cells.get(cellKey(to))?.support)) return undefined;
-        const queue = [from], previous = new Map<string, Cell | undefined>([[cellKey(from), undefined]]);
-        for (let i = 0; i < queue.length; i++) {
-            const cell = queue[i];
-            if (cellKey(cell) === cellKey(to)) {
-                const result: Cell[] = []; let at: Cell | undefined = cell;
-                while (at) { result.unshift({ ...at }); at = previous.get(cellKey(at)); } return result;
-            }
-            for (const next of neighbors(cell, passage)) if (open.has(cellKey(next)) && !previous.has(cellKey(next))) {
-                previous.set(cellKey(next), cell); queue.push(next);
-            }
-        }
-    };
     const points = floors.filter(floor => floor.kind !== 'water').flatMap(floor => floor.vertices.map(v => v.point));
     requireWorld(points.length > 0, 'world has no dry floor');
     const bounds = points.reduce((box, point) => ({
@@ -377,14 +345,65 @@ export function compileWorldDefinition(input: WorldDefinition) {
         max: { x: Math.max(box.max.x, point.x), y: Math.max(box.max.y, point.y), z: Math.max(box.max.z, point.z) },
     }), { min: { ...points[0] }, max: { ...points[0] } });
     const isWalkEdgeSupported = (from: Cell, to: Cell) => !walkEdgeError(cells.get(cellKey(from)), cells.get(cellKey(to)), cell => sample(cell, false));
-    return Object.freeze({ id: definition.id, revision: definition.revision, definition: freeze(definition), floors: freeze(floors), anchorFloors: freeze(anchorFloors), surfaces: freeze(surfaces),
-        sites: freeze(sites), walkSites: freeze(walkSites), bounds: freeze(bounds), owns, neighbors, route, siteAt, isWalkEdgeSupported,
-        shoreApproachCells: (cell: Cell) => shoreApproaches.get(cellKey(cell))?.map(entry => ({ ...entry })),
-        anchorAt: (cell: Cell) => { const point = cells.get(cellKey(cell))?.point; return point ? { ...point } : undefined; },
-        anchorFloorAt: (cell: Cell) => sampleOriginal(cell, false),
-        sampleFloorAt: (cell: Cell, floorId: string) => allFloors.has(floorId) ? sample(cell, false, floorId, undefined, true) : undefined,
-        floorAt: (cell: Cell, floorId?: string) => sample(cell, false, floorId),
-        logicalAt: (point: Cell & Partial<Pick<WorldPoint, 'y'>>) => sample(point, true, undefined, point.y)?.cell });
+    /**
+     * Passage rights over this geometry. Edges already measured on the same compiled floors can be
+     * attached without compiling the floors again (`withEdges`), which ground shaping does per stroke.
+     */
+    const attach = (edges: readonly WorldDefinition['edges'][number][], checked: boolean) => {
+        const withDefinition = edges === definition.edges ? definition : { ...definition, edges: structuredClone(edges) };
+        const graphs = Object.fromEntries((['walk', 'join', 'water'] as const).map(kind => [kind, new Map<string, Set<string>>()]));
+        const edgeIds = new Set<string>();
+        for (const edge of edges) {
+            const a = refKey(edge.from), b = refKey(edge.to), edgeId = JSON.stringify([a, b].sort());
+            requireWorld(a !== b && refs.has(a) && refs.has(b) && !edgeIds.has(edgeId), 'duplicate edge or unknown endpoint'); edgeIds.add(edgeId);
+            requireWorld(edge.allows.length > 0 && new Set(edge.allows).size === edge.allows.length
+                && edge.allows.every(kind => ['walk', 'join', 'water'].includes(kind)), 'edge passage rights');
+            if (edge.allows.includes('walk') && edge.jump) {
+                // A jump needs dry ground at both ends, side by side, at most a jump's height apart.
+                const from = refs.get(a), to = refs.get(b);
+                requireWorld(Boolean(from?.support && to?.support) && Math.hypot(to!.cell.x - from!.cell.x, to!.cell.z - from!.cell.z) <= 1
+                    && Math.abs(to!.support!.point.y - from!.support!.point.y) <= JUMP_HEIGHT, 'jump edge');
+            } else if (edge.allows.includes('walk') && !checked) {
+                const error = walkEdgeError(refs.get(a), refs.get(b), cell => sample(cell, false));
+                requireWorld(!error, error!);
+            }
+            for (const kind of edge.allows) {
+                const graph = graphs[kind];
+                for (const [from, to] of [[a, b], [b, a]]) { const next = graph.get(from) ?? new Set<string>(); next.add(to); graph.set(from, next); }
+            }
+        }
+        const neighbors = (cell: Cell, passage: WorldPassage = 'walk'): Cell[] => {
+            const site = cells.get(cellKey(cell)); if (!site) return [];
+            return [...(graphs[passage].get(refKey(site.ref)) ?? [])].map(id => ({ ...refs.get(id)!.cell }));
+        };
+        const route = (from: Cell, to: Cell, open: ReadonlySet<string>, passage: WorldPassage = 'walk'): Cell[] | undefined => {
+            if (!cells.has(cellKey(from)) || !cells.has(cellKey(to)) || !open.has(cellKey(from)) || !open.has(cellKey(to))) return undefined;
+            if (passage === 'walk' && (!cells.get(cellKey(from))?.support || !cells.get(cellKey(to))?.support)) return undefined;
+            const queue = [from], previous = new Map<string, Cell | undefined>([[cellKey(from), undefined]]);
+            for (let i = 0; i < queue.length; i++) {
+                const cell = queue[i];
+                if (cellKey(cell) === cellKey(to)) {
+                    const result: Cell[] = []; let at: Cell | undefined = cell;
+                    while (at) { result.unshift({ ...at }); at = previous.get(cellKey(at)); } return result;
+                }
+                for (const next of neighbors(cell, passage)) if (open.has(cellKey(next)) && !previous.has(cellKey(next))) {
+                    previous.set(cellKey(next), cell); queue.push(next);
+                }
+            }
+        };
+        return Object.freeze({ id: definition.id, revision: definition.revision, definition: freeze(withDefinition), floors: freeze(floors), anchorFloors: freeze(anchorFloors), surfaces: freeze(surfaces),
+            sites: freeze(sites), walkSites: freeze(walkSites), bounds: freeze(bounds), owns, neighbors, route, siteAt, isWalkEdgeSupported,
+            shoreApproachCells: (cell: Cell) => shoreApproaches.get(cellKey(cell))?.map(entry => ({ ...entry })),
+            anchorAt: (cell: Cell) => { const point = cells.get(cellKey(cell))?.point; return point ? { ...point } : undefined; },
+            anchorFloorAt: (cell: Cell) => sampleOriginal(cell, false),
+            sampleFloorAt: (cell: Cell, floorId: string) => allFloors.has(floorId) ? sample(cell, false, floorId, undefined, true) : undefined,
+            floorAt: (cell: Cell, floorId?: string) => sample(cell, false, floorId),
+            logicalAt: (point: Cell & Partial<Pick<WorldPoint, 'y'>>) => sample(point, true, undefined, point.y)?.cell,
+            /** The same floors with other passage rights, measured by this world's own `isWalkEdgeSupported`. */
+            withEdges: (next: readonly WorldDefinition['edges'][number][]): CompiledWorld => attach(next, true) });
+    };
+    type CompiledWorld = ReturnType<typeof attach>;
+    return attach(definition.edges, false);
 }
 export type IslandWorld = ReturnType<typeof compileWorldDefinition>;
 

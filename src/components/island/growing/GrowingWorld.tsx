@@ -3,7 +3,7 @@ import { WonderScenery } from './wonderScenery';
 import { Archipelago, type NeighborHit } from './archipelago';
 import type { IslandKey } from '../../../domain/growingIsland/journey';
 import { skinTheme, toneLight } from './themeSkin';
-import { TERRAIN_SEA_LEVEL } from '../../../domain/growingIsland/editableTerrainWorld';
+import { TERRAIN_SEA_LEVEL, TERRAIN_STEP } from '../../../domain/growingIsland/editableTerrainWorld';
 import { placePlay } from '../../../domain/growingIsland/placePlay';
 import { concertPlace, type SharedPlayReceipt } from '../../../domain/growingIsland/experience';
 import { PlaceTouchEffects } from './placeTouchEffects';
@@ -97,7 +97,7 @@ export interface WorldCamera {
 }
 export interface ShownMoment { id: number; moment: Moment; cell?: Cell }
 /** `cheer` makes the waiting friend jump (a home seed was planted); `festival` celebrates a new level. */
-type Props = WorldHandlers & { terrainEditing?: boolean; terrainBrush?: boolean; terrainCell?: Cell; viewKey?: string; state: GrowingState; world?: CompiledWorld; authoredWater?: boolean; authoredCove?: boolean; authoredShoulder?: AuthoredShoulderProfile; authoredGrowthTerrain?: AuthoredGrowthTerrainCatalog; authoredWholeArt?: boolean; time: GardenTime; ghost?: Ghost; selectedId?: string; turn: number; cheer: number; festival: number;
+type Props = WorldHandlers & { terrainEditing?: boolean; terrainBrush?: boolean; terrainTo?: 'up' | 'flat' | 'sea'; terrainWide?: boolean; terrainCell?: Cell; viewKey?: string; state: GrowingState; world?: CompiledWorld; authoredWater?: boolean; authoredCove?: boolean; authoredShoulder?: AuthoredShoulderProfile; authoredGrowthTerrain?: AuthoredGrowthTerrainCatalog; authoredWholeArt?: boolean; time: GardenTime; ghost?: Ghost; selectedId?: string; turn: number; cheer: number; festival: number;
     hints?: readonly Cell[]; moment?: ShownMoment; show?: boolean; active?: boolean; playActive?: boolean; compact?: boolean; qualityCeiling?: number; focus?: { id: string; n: number }; concert?: { cell: Cell; n: number }; bridgeBuild?: number; onCamera?: (camera?: WorldCamera) => void;
     /** Which island of the archipelago this is; none for older ordinary islands and visits. */
     place?: IslandKey };
@@ -105,7 +105,7 @@ type Props = WorldHandlers & { terrainEditing?: boolean; terrainBrush?: boolean;
 const reducedMotion = () => typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const nativeArtEnabled = import.meta.env.DEV || import.meta.env.VITE_NATIVE_GROWING_ART === 'true';
 
-export default function GrowingWorld({ terrainEditing = false, terrainBrush = false, terrainCell, viewKey, state, world: authoredWorld, authoredWater = false, authoredCove = false, authoredShoulder, authoredGrowthTerrain, authoredWholeArt = false, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, playActive = true, compact, qualityCeiling = 1.25, focus, concert, bridgeBuild, onCamera, place, ...handlers }: Props) {
+export default function GrowingWorld({ terrainEditing = false, terrainBrush = false, terrainTo = 'up', terrainWide = false, terrainCell, viewKey, state, world: authoredWorld, authoredWater = false, authoredCove = false, authoredShoulder, authoredGrowthTerrain, authoredWholeArt = false, time, ghost, selectedId, turn, cheer, festival, hints, moment, show, active = true, playActive = true, compact, qualityCeiling = 1.25, focus, concert, bridgeBuild, onCamera, place, ...handlers }: Props) {
     const host = useRef<HTMLDivElement>(null);
     const handlerRef = useRef(handlers);
     useEffect(() => { handlerRef.current = handlers; });
@@ -115,8 +115,8 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
     const [failed, setFailed] = useState(false);
     const completedBridge = useRef<{ owner: string; request: number } | undefined>(undefined);
     const [bridgeStage, setBridgeStage] = useState<'building' | 'crossing' | 'arrived'>();
-    const latest = useRef({ state, ghost, selectedId, time, hints, show, active, playActive, bridgeBuild, terrainEditing, terrainBrush, terrainCell, place });
-    useEffect(() => { latest.current = { state, ghost, selectedId, time, hints, show, active, playActive, bridgeBuild, terrainEditing, terrainBrush, terrainCell, place }; });
+    const latest = useRef({ state, ghost, selectedId, time, hints, show, active, playActive, bridgeBuild, terrainEditing, terrainBrush, terrainTo, terrainWide, terrainCell, place });
+    useEffect(() => { latest.current = { state, ghost, selectedId, time, hints, show, active, playActive, bridgeBuild, terrainEditing, terrainBrush, terrainTo, terrainWide, terrainCell, place }; });
     useEffect(() => { if (!bridgeBuild) completedBridge.current = undefined; }, [bridgeBuild]);
     const cameraRef = useRef(onCamera);
     useEffect(() => { cameraRef.current = onCamera; });
@@ -311,6 +311,34 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
         disposers.push(() => { terrainRingGeometry.dispose(); terrainRingMaterial.dispose(); });
         let terrainRingKey = '';
         let layout: SceneLayout = world.layout(latest.current.state), layer: ObjectLayer | undefined;
+        // Under the finger each shaped cell answers at once (spec 52 §1.5): a slab pops up for おか, a tile
+        // is painted for たいら/うみ. It stays until the new ground is drawn, or briefly when nothing changed.
+        const proxies = new T.Group(); proxies.name = 'terrain-brush-proxy'; world.scene.add(proxies);
+        const proxyBox = new T.BoxGeometry(.9, 1, .9), proxyPaint = {
+            up: new T.MeshStandardMaterial({ color: '#a6d884', roughness: .9, transparent: true, opacity: .9 }),
+            flat: new T.MeshBasicMaterial({ color: '#fff3c4', transparent: true, opacity: .75, depthWrite: false }),
+            sea: new T.MeshBasicMaterial({ color: '#7fd6ea', transparent: true, opacity: .75, depthWrite: false }),
+        };
+        let proxyUntil = 0;
+        const clearProxies = () => { proxies.clear(); proxyUntil = 0; };
+        const addProxy = (cell: Cell, now: number) => {
+            const to = latest.current.terrainTo, cells = latest.current.terrainWide ? [cell, { x: cell.x + 1, z: cell.z }, { x: cell.x, z: cell.z + 1 }, { x: cell.x + 1, z: cell.z + 1 }] : [cell];
+            for (const at of cells) {
+                if (proxies.children.some(o => o.userData.cell === `${at.x},${at.z}`)) continue;
+                const slab = new T.Mesh(proxyBox, proxyPaint[to]); slab.position.copy(layout.point(at, 0)); slab.scale.set(1, .02, 1);
+                slab.userData = { cell: `${at.x},${at.z}`, born: now, rise: to === 'up' ? TERRAIN_STEP : .03 };
+                proxies.add(slab);
+            }
+        };
+        const animateProxies = (now: number) => {
+            if (proxyUntil && now > proxyUntil) clearProxies();
+            for (const slab of proxies.children) {
+                const t = Math.min(1, (now - slab.userData.born) / 140), ease = 1 - (1 - t) * (1 - t), rise = slab.userData.rise as number;
+                slab.scale.set(1 + .08 * Math.sin(Math.PI * t), Math.max(.02, rise * ease), 1 + .08 * Math.sin(Math.PI * t));
+                slab.position.y = layout.point({ x: Number(slab.userData.cell.split(',')[0]), z: Number(slab.userData.cell.split(',')[1]) }, 0).y + slab.scale.y / 2;
+            }
+        };
+        disposers.push(() => { clearProxies(); proxies.removeFromParent(); proxyBox.dispose(); Object.values(proxyPaint).forEach(m => m.dispose()); });
         const placeViewPoints = (place: DerivedPlace, hero: T.Vector3) => {
             const points = [hero.clone().add(new T.Vector3(-.65, -.15, -.65)), hero.clone().add(new T.Vector3(.65, 1.2, .65))];
             const target = place.useTargets.find(target => ['gallery', 'garden', 'shore'].includes(target.kind));
@@ -335,7 +363,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
         document.addEventListener('visibilitychange', hiddenPlay); disposers.push(() => document.removeEventListener('visibilitychange', hiddenPlay));
         let publishedCamera = '';
         let rebuilt: { state: GrowingState; ghost?: Ghost; selected?: string; hints?: readonly Cell[]; stateKey: string; previewKey: string } | undefined;
-        const sceneCounters = { fullLayerBuild: 0, previewUpdate: 0, receiptReuse: 0 };
+        const sceneCounters = { fullLayerBuild: 0, previewUpdate: 0, receiptReuse: 0, groundOnlyBuild: 0 };
         const counted = (kind: keyof typeof sceneCounters) => {
             if (!import.meta.env.DEV) return;
             sceneCounters[kind] = Math.min(1000000, sceneCounters[kind] + 1);
@@ -421,6 +449,43 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             future.name = 'growing-place-future'; future.renderOrder = 3; world.scene.add(future);
         };
         disposers.push(() => showFuture([], []));
+        /**
+         * Ground shaping while editing (like a toy): only the ground is drawn again, and what stands
+         * on it — owners and residents — moves with it. Paths and other derived pieces wait for the
+         * whole island to be drawn again when editing ends, so shaping never stops for a full redraw.
+         */
+        let stale = false, settling = false;
+        const groundOf = (state: GrowingState) => JSON.stringify(state.terrain?.heights ?? {});
+        const reground = (next: GrowingState) => {
+            const before = layout, current = layer!;
+            clearProxies();
+            layout = world.layout(next);
+            node.dataset.terrainHeights = JSON.stringify(next.terrain?.heights ?? {});
+            const owners = new Map<string, Cell>();
+            for (const owner of [...next.plots, ...next.landmarks, ...next.keepsakes]) if (owner.cell) owners.set(owner.id, owner.cell);
+            for (const [id, object] of current.objects) {
+                const cell = owners.get(id);
+                if (cell) object.position.copy(layout.point(cell));
+            }
+            const holders = new Set(current.objects.values());
+            for (const child of current.root.children) if (!holders.has(child)) child.visible = false;
+            for (const actor of world.life.objects()) {
+                const cell = before.logicalAt(actor.position);
+                if (Number.isFinite(cell.x)) actor.position.y += layout.heightAt(cell) - before.heightAt(cell);
+            }
+            world.life.sync(next, layout, current);
+            const was = rebuilt?.state.terrain?.heights ?? {}, now = next.terrain?.heights ?? {};
+            world.life.hopOn(new Set([...Object.keys(was), ...Object.keys(now)].filter(id => (was[id] ?? 0) !== (now[id] ?? 0))), performance.now());
+            wonders.build(next, layout);
+            archipelago.build(next, layout, latest.current.place);
+            showTerrainArea(latest.current.terrainEditing);
+            counted('groundOnlyBuild');
+        };
+        const settleGround = () => {
+            if (!stale) return;
+            stale = false; rebuilt = undefined; settling = true;
+            try { rebuild(latest.current.state, latest.current.ghost, latest.current.selectedId, latest.current.hints); } finally { settling = false; }
+        };
         const rebuild = (next: GrowingState, nextGhost?: Ghost, selected?: string, nextHints?: readonly Cell[]) => {
             if (nextGhost) { followingPlace = undefined; initialClose = false; stopPlay(); }
             // The first props effect follows the initial scene build with the same
@@ -440,6 +505,16 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
                 rebuilt = { state: next, ghost: nextGhost, selected, hints: nextHints, stateKey, previewKey };
                 return;
             }
+            // While shaping, any change waits for the finger to rest; only new ground is drawn at once.
+            if (layer && rebuilt && !settling && latest.current.terrainEditing && !nextGhost) {
+                if (groundOf(next) !== groundOf(rebuilt.state)) reground(next);
+                // The stroke's trail of hints clears on release, in the same frame as the new ground.
+                if (rebuilt.previewKey !== previewKey) { layer.updatePreview(nextGhost, selected, nextHints); counted('previewUpdate'); }
+                stale = true;
+                rebuilt = { state: next, ghost: nextGhost, selected, hints: nextHints, stateKey, previewKey };
+                return;
+            }
+            stale = false;
             layout = world.layout(next);
             node.dataset.growingBounds = JSON.stringify(layout.bounds);
             node.dataset.worldDefinition = layout.world.id;
@@ -522,7 +597,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             view.zoom = 1.35; api.current?.focus('bridge');
         };
         api.current = {
-            rebuild, setTime, terrainArea: showTerrainArea,
+            rebuild, setTime, terrainArea: (on: boolean) => { showTerrainArea(on); if (!on) settleGround(); },
             turn: by => { clearOverview(); initialClose = false; followingPlace = undefined; view.azimuth += by * Math.PI / 6; frameCamera(camera, layout, view, width / height); },
             cheer: () => { const now = performance.now(); world.life.hop('visitor', now); world.life.hop('pokomoko', now + 120); },
             moment: shown => {
@@ -730,7 +805,8 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
                 frameCamera(camera, layout, view, width / height);
                 if (elapsed >= (playFocus.restoring ? 420 : DROP_PLAY_MS)) playFocus = undefined;
             }
-            if (!world.hasWaterPreview() && !latest.current.terrainEditing) world.life.tick(now, delta, reduced, latest.current.time === 'night');
+            // Residents keep living while the child shapes the ground; they ride and hop over it (spec 52 §1.5).
+            if (!world.hasWaterPreview()) world.life.tick(now, delta, reduced, latest.current.time === 'night');
             if (!latest.current.active || document.visibilityState !== 'visible') followingPlace = undefined;
             const hero = world.life.positionOf('pokomoko');
             if (hero && initialClose && !latest.current.ghost && !latest.current.selectedId) {
@@ -802,6 +878,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             moments.tick(now);
             wonders.tick(now, latest.current.time === 'night', reduced, camera);
             archipelago.tick(now, reduced);
+            animateProxies(now);
             if (!reduced) moveSpecies(now);
             if (import.meta.env.DEV && now >= nextTelemetry && layer) node.dataset.shipScreen = JSON.stringify([layer.nextBoat.visible, ...layer.nextBoat.getWorldPosition(new T.Vector3()).project(camera).toArray().map(v => Math.round(v * 100) / 100)]);
             if (import.meta.env.DEV && now >= nextTelemetry) { const moon = wonders.root.getObjectByName('wonder-moon'); if (moon) node.dataset.wonderMoon = JSON.stringify(moon.getWorldPosition(new T.Vector3()).project(camera).toArray().map(v => Math.round(v * 100) / 100)); }
@@ -927,7 +1004,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             for (let i = 1; i <= steps; i++) {
                 const cell = terrainCellAt({ clientX: from.x + (event.clientX - from.x) * i / steps, clientY: from.y + (event.clientY - from.y) * i / steps });
                 if (!cell || stroke.some(c => c.x === cell.x && c.z === cell.z)) continue;
-                stroke.push(cell); grew = true;
+                stroke.push(cell); grew = true; addProxy(cell, performance.now());
             }
             lastPaint = { x: event.clientX, y: event.clientY };
             if (grew && import.meta.env.DEV) node.dataset.terrainStroke = JSON.stringify(stroke);
@@ -969,7 +1046,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             if (pointers.size === 1) { moved = false; pendingActor = latest.current.terrainEditing ? undefined : actorAt(event); carrying = undefined; }
             if (pointers.size === 1 && painting()) { stroke = []; lastPaint = undefined; paintAt(event); }
             if (pointers.size === 2) {
-                if (stroke.length) { stroke = []; handlerRef.current.onPaint?.([], false); }
+                if (stroke.length) { stroke = []; clearProxies(); handlerRef.current.onPaint?.([], false); }
                 moved = true;
                 interruptedOrigin = undefined;
                 const [a, b] = [...pointers.values()];
@@ -1015,6 +1092,8 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             }
             if (stroke.length && !pointers.size) {
                 const done = stroke; stroke = []; restoreFocus();
+                // The slabs wait for the new ground; if nothing changes they fade out on their own.
+                proxyUntil = performance.now() + 2500;
                 handlerRef.current.onPaint?.(done, true); return;
             }
             if (moved || pointers.size) { restoreFocus(); return; }
@@ -1064,7 +1143,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
         const cancel = (event: PointerEvent) => {
             if (!pointers.delete(event.pointerId)) return;
             if (carrying) { world.life.cancelCarry(carrying, performance.now()); carrying = undefined; }
-            if (stroke.length) { stroke = []; handlerRef.current.onPaint?.([], false); }
+            if (stroke.length) { stroke = []; clearProxies(); handlerRef.current.onPaint?.([], false); }
             pendingActor = undefined; moved = true;
             if (!pointers.size) restoreFocus();
         };

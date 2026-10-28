@@ -2,7 +2,7 @@ import { landscapePoint, landscapeRise } from './landscape';
 import { legacyIslandWorld } from './legacyWorldDefinition';
 import { baseTerrainHeightAt } from './placeTerrain';
 import { landBounds } from './space';
-import { TERRACE_BANK, terracePlan, terrainForm, type TerracePlan } from './terraceTerrain';
+import { JUMP_RISE, TERRACE_BANK, terracePlan, terrainForm, type TerracePlan } from './terraceTerrain';
 import type { Cell, GrowingState } from './types';
 import { compileWorldDefinition, type IslandWorld } from './worldDefinition';
 import type { WorldDefinition, WorldFloor, WorldFloorVertex, WorldSite, WorldSurface } from './worldTypes';
@@ -155,9 +155,11 @@ export function editableIslandWorld(input: TerrainLand, curved = true): IslandWo
     const addEdge = (a: WorldSite, b: WorldSite) => {
         const allows: ('walk' | 'join' | 'water')[] = [];
         const supported = geometry.isWalkEdgeSupported(a.cell, b.cell) && editableTerrainSegmentSupported(geometry, a.cell, b.cell);
-        if (supported) allows.push('walk');
+        // Two steps up or down between neighbouring cells: a resident jumps it (spec 52 §1.5).
+        const jump = !supported && Boolean(plan && terraceJump(plan, a.cell, b.cell));
+        if (supported || jump) allows.push('walk');
         if (a.placement && b.placement && supported) allows.push('join', 'water');
-        if (allows.length) edges.push({ from: { districtId, siteId: a.id }, to: { districtId, siteId: b.id }, allows });
+        if (allows.length) edges.push({ from: { districtId, siteId: a.id }, to: { districtId, siteId: b.id }, allows, ...(jump ? { jump: true as const } : {}) });
     };
     const byCell = new Map(sites.map(site => [key(site.cell), site]));
     for (const site of sites) for (const d of [{ x: .5, z: 0 }, { x: 0, z: .5 }, { x: 1, z: 0 }, { x: 0, z: 1 }]) {
@@ -166,10 +168,20 @@ export function editableIslandWorld(input: TerrainLand, curved = true): IslandWo
             && site.cell.z >= bounds.depth - 1;
         if (other && (d.x + d.z === .5 || site.placement && other.placement || existingBridge)) addEdge(site, other);
     }
-    const world = compileWorldDefinition({ ...definition, edges });
+    // The passages were measured on these very floors; attach them without compiling the floors twice.
+    const world = geometry.withEdges(edges);
     if (plan) terraces.set(world, plan);
     if (cache.size >= 8) cache.delete(cache.keys().next().value!);
     cache.set(revision, world); return world;
+}
+
+/** Two neighbouring dry cells exactly a jump apart, with no stair between them. */
+export function terraceJump(plan: TerracePlan, from: Cell, to: Cell) {
+    if (![from.x, from.z, to.x, to.z].every(Number.isInteger) || Math.abs(from.x - to.x) + Math.abs(from.z - to.z) !== 1) return false;
+    const a = key(from), b = key(to);
+    if (!plan.dry.has(a) || !plan.dry.has(b)) return false;
+    if (plan.stairs.some(s => key(s.lower) === a || key(s.lower) === b)) return false;
+    return Math.abs((plan.levels.get(a) ?? 0) - (plan.levels.get(b) ?? 0)) === JUMP_RISE;
 }
 
 /** Tests the actual corridor beneath a moving body, including its width and slope.

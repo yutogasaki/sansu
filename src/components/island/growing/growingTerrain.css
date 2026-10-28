@@ -19,3 +19,15 @@
 .growing-terrain-controls p[data-note] { padding:6px 9px; border-radius:10px; background:#eaf7e6; color:#2f5a2a; font-weight:700; }
 .growing-island .growing-terrain-controls header > button { flex:none; white-space:nowrap; }
 .growing-terrain-controls p[data-warn] { padding:6px 9px; border-radius:10px; background:#fff1dc; color:#7a4a12; font-weight:700; }
+
+/* The small brush panel (spec 52 §1.5): two short rows, so the island stays in view. */
+.growing-terrain-compact { padding:8px; border-radius:18px; }
+.growing-terrain-compact > p { margin:0 0 6px; }
+.growing-terrain-row { display:flex; gap:6px; align-items:stretch; }
+.growing-terrain-row + .growing-terrain-row { margin-top:6px; }
+.growing-terrain-compact .growing-terrain-brushes { display:grid; flex:1; gap:6px; }
+.growing-island .growing-terrain-compact button { min-height:42px; padding:6px 8px; }
+.growing-island .growing-terrain-compact .growing-terrain-size { flex:none; min-width:68px; background:#f4f1ea; font-size:12px; }
+.growing-island .growing-terrain-compact .growing-terrain-size[aria-pressed='true'] { background:#fff1c9; border-color:#e0b54a; }
+.growing-terrain-tools > button { flex:1; }
+.growing-island .growing-terrain-tools > button:first-child, .growing-island .growing-terrain-tools > button:last-child { flex:2; }

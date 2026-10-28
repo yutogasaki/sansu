@@ -41,15 +41,25 @@ describe('DEV terrace form over the same saved heights', () => {
         }
         expect(landCells(state).filter(cell => !terrainOwnerSupported(state, cell))).toEqual([]);
     });
+    it('lets residents jump a two-step cliff with no stair (spec 52 §1.5)', () => {
+        setTerrainForm('terrace');
+        const { cells, x } = plateau(), state = holding(island(Object.fromEntries(cells.map(([a, b]) => [`${a},${b}`, 2]))), { x: x + 1, z: 2 });
+        const world = editableIslandWorld(state)!, plan = terracePlanOf(world)!;
+        expect(plan.stairs).toEqual([]);
+        expect(plan.stranded).toBe(0);
+        // The cliff itself is no slope, but the neighbouring cells are joined by a jump.
+        expect(editableTerrainSegmentSupported(world, { x: x - 1, z: 3 }, { x, z: 3 })).toBe(false);
+        expect(world.neighbors({ x, z: 3 }, 'walk')).toContainEqual({ x: x - 1, z: 3 });
+    });
     it('gives an empty terrace no stair, and an occupied one exactly one', () => {
         setTerrainForm('terrace');
-        const { cells, x } = plateau(), heights = Object.fromEntries(cells.map(([a, b]) => [`${a},${b}`, 2]));
+        const { cells, x } = plateau(), heights = Object.fromEntries(cells.map(([a, b]) => [`${a},${b}`, 3]));
         expect(terracePlanOf(editableIslandWorld(island(heights))!)!.stairs).toEqual([]);
         expect(terracePlanOf(editableIslandWorld(holding(island(heights), { x: x + 1, z: 2 }))!)!.stairs).toHaveLength(1);
     });
     it('blocks walking up a cliff and reaches the terrace only by a ruled stair ramp', () => {
         setTerrainForm('terrace');
-        const { cells, x } = plateau(), state = holding(island(Object.fromEntries(cells.map(([a, b]) => [`${a},${b}`, 2]))), { x: x + 1, z: 2 });
+        const { cells, x } = plateau(), state = holding(island(Object.fromEntries(cells.map(([a, b]) => [`${a},${b}`, 3]))), { x: x + 1, z: 2 });
         const world = editableIslandWorld(state)!, plan = terracePlanOf(world)!;
         expect(plan.stairs).toHaveLength(1);
         const { upper, lower } = plan.stairs[0];
@@ -62,7 +72,7 @@ describe('DEV terrace form over the same saved heights', () => {
     });
     it('moves the stair off a landing that an owner takes, keeping the terrace reachable', () => {
         setTerrainForm('terrace');
-        const { cells, x } = plateau(), state = holding(island(Object.fromEntries(cells.map(([a, b]) => [`${a},${b}`, 2]))), { x: x + 1, z: 2 });
+        const { cells, x } = plateau(), state = holding(island(Object.fromEntries(cells.map(([a, b]) => [`${a},${b}`, 3]))), { x: x + 1, z: 2 });
         const first = terracePlanOf(editableIslandWorld(state)!)!.stairs[0];
         const owned = structuredClone(state);
         owned.keepsakes = [...owned.keepsakes, { id: 'landing-owner', unitId: 'landing-owner', cell: { ...first.upper } }];
@@ -73,14 +83,14 @@ describe('DEV terrace form over the same saved heights', () => {
     });
     it('keeps a stair on the edge nearest the home when something elsewhere moves', () => {
         setTerrainForm('terrace');
-        const state = holding(island({ '1,4': 2, '2,4': 2 }), { x: 1, z: 4 });
+        const state = holding(island({ '1,4': 3, '2,4': 3 }), { x: 1, z: 4 });
         const before = terracePlanOf(editableIslandWorld(state)!)!.stairs;
         const after = terracePlanOf(editableIslandWorld(holding(state, { x: 4, z: 1 }))!)!.stairs;
         expect(after).toEqual(before);
         expect(after).toEqual([{ upper: { x: 2, z: 4 }, lower: { x: 2, z: 3 } }]);
     });
     it('draws stacked plates while the hidden floor still carries hits, and leaves the default form untouched', () => {
-        const { cells, x } = plateau(), heights = Object.fromEntries(cells.map(([a, b]) => [`${a},${b}`, 2]));
+        const { cells, x } = plateau(), heights = Object.fromEntries(cells.map(([a, b]) => [`${a},${b}`, 3]));
         const continuous = editableIslandWorld(island(heights))!;
         expect(terracePlanOf(continuous)).toBeUndefined();
         setTerrainForm('terrace');
@@ -120,13 +130,13 @@ describe('DEV terrace form over the same saved heights', () => {
     it('never strands something the child placed: no edit or placement out of walking reach', () => {
         setTerrainForm('terrace');
         const pad = { x: 4, z: 3 };
-        const state = holding(island({ '4,3': 2 }), pad);
+        const state = holding(island({ '4,3': 4 }), pad);
         expect(terracePlanOf(editableIslandWorld(state)!)!.stranded).toBe(0);
-        // A third step would leave the pad beyond any stair.
+        // A fifth step would leave the pad beyond any stair.
         expect(() => applyTerrainCommand(structuredClone(state), { type: 'terrain-edit', cell: pad, delta: 1 })).toThrow('のぼれない');
-        // An empty pad three steps up cannot take an owner either.
-        const high = island({ '4,3': 3 });
+        // An empty pad five steps up cannot take an owner either.
+        const high = island({ '4,3': 5 });
         expect(terrainOwnerSupported(high, pad)).toBe(false);
-        expect(terrainOwnerSupported(island({ '4,3': 2 }), pad)).toBe(true);
+        expect(terrainOwnerSupported(island({ '4,3': 4 }), pad)).toBe(true);
     });
 });

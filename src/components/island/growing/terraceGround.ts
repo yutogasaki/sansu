@@ -395,14 +395,14 @@ export function buildTerraceGround(layout: SceneLayout, plan: TerracePlan, profi
     details.forEach(g => g.dispose());
     const cover = detailGeometry ? new T.Mesh(project(detailGeometry, layout), material) : undefined;
     if (cover) { cover.name = 'terrace-ground-cover'; cover.castShadow = cover.receiveShadow = true; root.add(cover); }
-    // Stair module: stone treads inside the lower cell, rising along the floor's ramp.
+    // Stair module: stone treads across the whole lower cell, rising along the floor's ramp.
     const treads: T.BufferGeometry[] = [];
     for (const stair of plan.stairs) {
         const dx = stair.upper.x - stair.lower.x, dz = stair.upper.z - stair.lower.z;
-        const low = plan.heightAt(stair.lower), high = plan.heightAt({ x: stair.lower.x + dx * .5, z: stair.lower.z + dz * .5 });
+        const low = plan.heightAt({ x: stair.lower.x - dx * .5, z: stair.lower.z - dz * .5 }), high = plan.heightAt({ x: stair.lower.x + dx * .5, z: stair.lower.z + dz * .5 });
         const count = Math.max(2, Math.round((high - low) / .09));
         for (let t = 0; t < count; t++) {
-            const h = (high - low) * (t + 1) / count, run = .5 / count, along = run * (t + .5);
+            const h = (high - low) * (t + 1) / count, run = 1 / count, along = -.5 + run * (t + .5);
             const box = new T.BoxGeometry(dx ? run + .01 : .62, h + .04, dz ? run + .01 : .62);
             box.translate(stair.lower.x + dx * along, low + h / 2 - .02, stair.lower.z + dz * along); box.deleteAttribute('uv');
             const tread = box.toNonIndexed(), count3 = tread.getAttribute('position').count;

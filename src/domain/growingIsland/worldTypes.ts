@@ -62,6 +62,8 @@ export interface WorldEdge {
     from: WorldSiteRef;
     to: WorldSiteRef;
     allows: readonly WorldPassage[];
+    /** A short cliff between neighbouring cells that residents jump instead of walking a slope. */
+    jump?: true;
 }
 /** Geometry belongs to the authoring/runtime definition, never to an owner's save. */
 export interface WorldDefinition {

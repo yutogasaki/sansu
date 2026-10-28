@@ -42,7 +42,9 @@ export interface TerracePlan {
 
 type TerraceState = Pick<GrowingState, 'land'> & Partial<Pick<GrowingState, 'bridge' | 'terrain' | 'plots' | 'landmarks' | 'keepsakes'>>;
 const DIRS: Cell[] = [{ x: 1, z: 0 }, { x: -1, z: 0 }, { x: 0, z: 1 }, { x: 0, z: -1 }];
-const MAX_STAIR_RISE = 2;
+/** Residents walk a one-step bank and jump two steps; a stair takes three or four (spec 52 §1.5). */
+export const JUMP_RISE = 2;
+const MAX_STAIR_RISE = 4;
 /** Half width of the grassy bank between cells one step apart. Narrow enough that an
  * owner's footing probes (.46, corners included) stay within the support tolerance, wide
  * enough that the bank stays under the .8 walking slope. */
@@ -79,8 +81,8 @@ export function terracePlan(state: TerraceState, baseAt: (cell: Cell) => number,
     const lv = (k: string) => levels.get(k)!;
     const edges = new Map<string, Set<string>>(cells.map(k => [k, new Set<string>()]));
     const link = (a: string, b: string) => { edges.get(a)!.add(b); edges.get(b)!.add(a); };
-    // One step is a walkable grassy bank; two steps are a cliff that needs a stair.
-    for (const k of cells) for (const n of neighbours(k)) if (Math.abs(lv(k) - lv(n)) <= 1) link(k, n);
+    // One step is a walkable grassy bank; two steps a cliff residents jump; more needs a stair.
+    for (const k of cells) for (const n of neighbours(k)) if (Math.abs(lv(k) - lv(n)) <= JUMP_RISE) link(k, n);
     const home = cells.includes(key(HOUSE_CELLS[2])) ? key(HOUSE_CELLS[2]) : cells[0];
     const flood = () => {
         const seen = new Set<string>(home ? [home] : []), queue = home ? [home] : [];
@@ -90,7 +92,7 @@ export function terracePlan(state: TerraceState, baseAt: (cell: Cell) => number,
     const stairs: { upper: string; lower: string }[] = [], feet = new Set<string>();
     const legal = (upper: string, lower: string) => {
         const rise = lv(upper) - lv(lower);
-        return rise >= 2 && rise <= MAX_STAIR_RISE && !feet.has(lower) && !claimed.has(lower);
+        return rise > JUMP_RISE && rise <= MAX_STAIR_RISE && !feet.has(lower) && !claimed.has(lower);
     };
     // An owner on the landing walls off the rest of the terrace, so an open landing is
     // preferred; a claimed one is used only when it is the sole way up (a pad holding a bench).
@@ -162,9 +164,9 @@ export function terracePlan(state: TerraceState, baseAt: (cell: Cell) => number,
         }
         const offset = (lv(k) + bank) * step;
         if (!stair) return base + offset;
-        // The ramp rises across the half of the foot cell that faces the terrace.
+        // The ramp rises across the whole foot cell toward the terrace, gentle enough to walk.
         const u = parse(stair.upper), along = (cell.x - x) * (u.x - x) + (cell.z - z) * (u.z - z);
-        return base + offset + (along <= 0 ? 0 : (lv(stair.upper) * step - offset) * Math.min(1, along / .5));
+        return base + offset + (lv(stair.upper) * step - offset) * Math.max(0, Math.min(1, along + .5));
     };
     return { levels, dry, stairs: stairs.map(s => ({ upper: parse(s.upper), lower: parse(s.lower) })), reachable: reachable.size, reached: reachable, stranded: needed.size - neededReached(reachable),
         occupied: new Set([...claimed, ...stairs.flatMap(s => [s.upper, s.lower])]), baseAt, heightAt, step };

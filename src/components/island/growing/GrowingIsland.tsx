@@ -99,7 +99,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     // DEV terrace form: the ground tool is a brush; a one-finger stroke shapes what it crosses.
     const brushing = terrainForm() === 'terrace';
     const [brush, setBrush] = useState<'up' | 'flat' | 'sea'>('up'), [stroke, setStroke] = useState<Cell[]>([]);
-    const terrainPending = useRef(false);
+    const [wideBrush, setWideBrush] = useState(false);
     const [bridgeChoice, setBridgeChoice] = useState<'build' | 'remove'>();
     const [bridgeBuild, setBridgeBuild] = useState(0), [bridgeBusy, setBridgeBusy] = useState(false);
     useEffect(() => { if (!bridgeBusy) return; const timer = window.setTimeout(() => setBridgeBusy(false), 8500); return () => window.clearTimeout(timer); }, [bridgeBusy, bridgeBuild]);
@@ -593,36 +593,41 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
     // camera frustum. Keep island life running; receive observations after closing.
     const placeReceiptsVisible = active && !visit && !show && !panel && !menu && !selected && !placing
         && !card && !story && !bridgeChoice && !bridgeBusy && naming === undefined;
-    const changeTerrain = async (type: 'terrain-edit' | 'terrain-undo' | 'terrain-redo', delta?: 1 | -1) => {
-        if (terrainPending.current || island.busy || visit || panel !== 'terrain' || !camera.current) return;
+    // Ground shaping answers at once (shown before it is saved); saves follow in order behind it.
+    // Residents on the ground ride it and hop (spec 52 §1.5); only one on a raised walk still holds it.
+    const terrainSafety = () => ({ occupiedPlaceTargets: camera.current!.occupiedTerrainPlaceTargets(), expectedTerrainRevision: terrainEditingRevision(own) });
+    const changeTerrain = (type: 'terrain-edit' | 'terrain-undo' | 'terrain-redo', delta?: 1 | -1) => {
+        if (visit || panel !== 'terrain' || !camera.current) return;
         if (type === 'terrain-edit' && (!terrainCell || delta === undefined)) return;
-        terrainPending.current = true;
-        try {
-            const safety = { actors: camera.current.terrainActors(), occupiedPlaceTargets: camera.current.occupiedTerrainPlaceTargets(), expectedTerrainRevision: terrainEditingRevision(own) };
-            const command: Command = type === 'terrain-edit' ? { type, cell: terrainCell!, delta: delta!, ...safety } : { type, ...safety };
-            await run(command, () => { setLine('じめんを ほぞんしたよ'); audio.play('wood'); });
-        } finally { terrainPending.current = false; }
+        const command: Command = type === 'terrain-edit' ? { type, cell: terrainCell!, delta: delta!, ...terrainSafety() } : { type, ...terrainSafety() };
+        const refused = island.shapeTerrain(command);
+        if (refused) { setLine(refused); return; }
+        setLine(undefined); audio.play('wood');
     };
     /** The share of the island view the ground panel covers, measured from the bottom. */
     const terrainInset = () => {
         const panel = document.querySelector('.growing-terrain-controls')?.getBoundingClientRect(), view = document.querySelector('.growing-world-interaction')?.getBoundingClientRect();
         return panel && view && view.height > 0 ? Math.max(0, view.bottom - panel.top) / view.height : 0;
     };
-    const paintTerrain = async (cells: Cell[]) => {
-        if (terrainPending.current || island.busy || visit || panel !== 'terrain' || !camera.current || !cells.length) return;
-        terrainPending.current = true; setLine(undefined); island.clearError();
-        try {
-            const safety = { actors: camera.current.terrainActors(), occupiedPlaceTargets: camera.current.occupiedTerrainPlaceTargets(), expectedTerrainRevision: terrainEditingRevision(own) };
-            await run({ type: 'terrain-stroke', cells, to: brush, ...safety }, () => {
-                // Each brush says what the shaped ground will do for the island's life.
-                setLine(brush === 'up' ? 'おかが できたよ。なかまが けしきを ながめにくるよ。おかの 木は はやく そだつよ'
-                    : brush === 'sea' ? 'うみが はいってきたよ。ちかくの 花や 木が よく そだつよ' : 'たいらに したよ。ひろい ところで なかまが あそぶよ');
-                audio.play(brush === 'sea' ? 'water' : 'sand');
-            });
-        } finally { terrainPending.current = false; }
+    const paintTerrain = (cells: Cell[]) => {
+        if (visit || panel !== 'terrain' || !camera.current || !cells.length) return;
+        // Let the slabs under the finger reach the screen first; the new ground follows right after.
+        window.requestAnimationFrame(() => window.setTimeout(() => shapeStroke(cells), 0));
+    };
+    const shapeStroke = (cells: Cell[]) => {
+        if (visit || panel !== 'terrain' || !camera.current) return;
+        island.clearError();
+        // The wide brush shapes 2×2 at each touched cell (spec 52 §1.5); only the child's own land changes.
+        const touched = wideBrush ? [...new Map(cells.flatMap(c => [c, { x: c.x + 1, z: c.z }, { x: c.x, z: c.z + 1 }, { x: c.x + 1, z: c.z + 1 }]).map(c => [`${c.x},${c.z}`, c])).values()].slice(0, 64) : cells;
+        const refused = island.shapeTerrain({ type: 'terrain-stroke', cells: touched, to: brush, ...terrainSafety() });
+        if (refused) { setLine(refused); return; }
+        // Each brush says what the shaped ground will do for the island's life.
+        setLine(brush === 'up' ? 'おかが できたよ。なかまが けしきを ながめにくるよ。おかの 木は はやく そだつよ'
+            : brush === 'sea' ? 'うみが はいってきたよ。ちかくの 花や 木が よく そだつよ' : 'たいらに したよ。ひろい ところで なかまが あそぶよ');
+        audio.play(brush === 'sea' ? 'water' : 'sand');
     };
     const world = <GrowingWorld terrainEditing={panel === 'terrain'} terrainBrush={brushing && panel === 'terrain'} terrainCell={terrainCell}
-        onPaint={(cells, done) => { if (!done) { setStroke(cells); return; } setStroke([]); void paintTerrain(cells); }} viewKey={`${profileId}:${ownIslandId}:${visit?.id ?? 'own'}`} onViewReturn={setViewReturn} key={`${ownIslandId}:${worldAttempt}`} active={active} playActive={playingForeground} compact={worldAttempt > 0} qualityCeiling={qualityCeiling} state={state} time={state?.theme === 'hoshi' ? 'night' : time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival} bridgeBuild={bridgeBuild}
+        onPaint={(cells, done) => { if (!done) { setStroke(cells); return; } setStroke([]); paintTerrain(cells); }} viewKey={`${profileId}:${ownIslandId}:${visit?.id ?? 'own'}`} onViewReturn={setViewReturn} key={`${ownIslandId}:${worldAttempt}`} active={active} playActive={playingForeground} compact={worldAttempt > 0} qualityCeiling={qualityCeiling} state={state} time={state?.theme === 'hoshi' ? 'night' : time} ghost={visit ? undefined : ghost} selectedId={visit ? undefined : selected} turn={turn} cheer={cheer} festival={festival} bridgeBuild={bridgeBuild}
         hints={visit ? [] : panel === 'terrain' && stroke.length ? stroke : placing && advised.length ? advised : hints} moment={visit ? undefined : moment} show={show} focus={focus} concert={concert} onCamera={c => { camera.current = c; if (!c) setViewReturn(false); }}
         onPop={() => audio.play('glass')} onStage={setWorldStep} onFailure={setGraphicsFailure} onQualityFallback={ceiling => {
             setQualityCeiling(previous => Math.min(previous, ceiling)); setWorldStep('world'); setWorldAttempt(value => value + 1);
@@ -731,7 +736,7 @@ export default function GrowingIsland({ profileId, profileName = '', active, sou
             onMenu={() => { if (!menu) setMenuPictures(own.villagers.length ? camera.current?.menuPictures(own.villagers) ?? {} : {}); setMenu(!menu); }}
             onGoal={() => openPlaces(placeStatus?.id, 'cue')} />}
         {!visit && panel === 'terrain' && <GrowingTerrainControls onDistance={close => camera.current?.terrainView(close, terrainInset())} cell={terrainCell} busy={island.busy} canUndo={Boolean(own.terrain?.undo.length)} canRedo={Boolean(own.terrain?.redo.length)}
-            brush={brushing ? brush : undefined} onBrush={next => { setBrush(next); setLine(undefined); island.clearError(); }} note={island.error ?? line} warn={Boolean(island.error)}
+            brush={brushing ? brush : undefined} onBrush={next => { setBrush(next); setLine(undefined); island.clearError(); }} wide={wideBrush} onWide={setWideBrush} note={island.error ?? line} warn={Boolean(island.error)}
             onEdit={delta => void changeTerrain('terrain-edit', delta)} onUndo={() => void changeTerrain('terrain-undo')} onRedo={() => void changeTerrain('terrain-redo')}
             onClose={() => { camera.current?.restoreView(); island.clearError(); closeHomeTool(); }} />}
         {!visit && panel === 'view' && <GrowingViewControls canReturn={viewReturn} onReturn={() => camera.current?.restoreView()} onDistance={close => camera.current?.distance(close)} onClose={closeHomeTool} onRotate={direction => setTurn(value => value + direction)} />}

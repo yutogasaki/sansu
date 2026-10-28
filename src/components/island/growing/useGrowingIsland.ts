@@ -13,7 +13,7 @@ async function kokugoProgressOf(profileId: string) {
     try { return await db.kokugoProgress.where('profileId').equals(profileId).toArray(); } catch { return []; }
 }
 import { commandGrowingIsland, sailGrowingIsland, growingDb, GuidanceReceiptConflict, readGrowingIsland, syncGrowingIsland, type GrowingRecord } from '../../../domain/growingIsland/repository';
-import type { AchievementId, Command, NatureEvent, TownEvent } from '../../../domain/growingIsland';
+import { applyIntent, type AchievementId, type Command, type NatureEvent, type TownEvent } from '../../../domain/growingIsland';
 import { islandIdOf, type IslandStart } from '../../../domain/growingIsland/voyages';
 import type { LoadingStep } from './GrowingLoading';
 import { prepareIslandOpening } from '../../../domain/growingIsland/openingPreparation';
@@ -36,6 +36,10 @@ const message = (error: unknown) => error instanceof Error && /[ぁ-ん]/.test(e
  */
 export function useGrowingIsland(profileId: string, active: boolean) {
     const [record, setRecord] = useState<GrowingRecord>();
+    // Ground shaping is shown at once and saved behind, one stroke after another (the newest shown state is here).
+    const shown = useRef<GrowingRecord | undefined>(undefined);
+    useEffect(() => { shown.current = record; }, [record]);
+    const terrainSaves = useRef<Promise<void>>(Promise.resolve()), terrainWaiting = useRef(0), terrainRound = useRef(0);
     const displayedIslandId = islandIdOf(record);
     const sailing = useRef(false);
     const [reveal, setReveal] = useState<Reveal>();
@@ -64,6 +68,8 @@ export function useGrowingIsland(profileId: string, active: boolean) {
         setSyncing(true);
         running.current = (async () => {
             try {
+                // A stroke still being saved is part of the island; read after it.
+                await terrainSaves.current;
                 const [profile, facts] = full ? await prepareIslandOpening(() => Promise.all([getProfile(profileId), terminalFacts(profileId)])) : [undefined, []];
                 const kokugo = profile ? await kokugoProgressOf(profileId) : [];
                 // Learning is only read: the shared Lv1–20 whose content was confirmed opens route slots (island-journey.md §3).
@@ -73,7 +79,7 @@ export function useGrowingIsland(profileId: string, active: boolean) {
                 setStep('saving'); setSaving(true);
                 let result = await syncGrowingIsland(profileId, facts, Date.now(), growingDb, lifeDb, levels);
                 // A delivery failure must not hide an island whose opening already saved.
-                setRecord(current => current?.profileId === result.record.profileId && current.revision > result.record.revision ? current : result.record);
+                if (!terrainWaiting.current) setRecord(current => current?.profileId === result.record.profileId && current.revision > result.record.revision ? current : result.record);
                 if (full) {
                     const foundation = await drainFoundationRewards(profileId);
                     const kokugo = await drainKokugoRewards(profileId);
@@ -85,7 +91,7 @@ export function useGrowingIsland(profileId: string, active: boolean) {
                             town: unique([...result.town, ...opened.town]), nature: unique([...result.nature, ...opened.nature]) };
                     } else if (delivered.record) result = { ...result, record: delivered.record };
                 }
-                setRecord(current => current?.profileId === result.record.profileId && current.revision > result.record.revision ? current : result.record); setError(undefined);
+                if (!terrainWaiting.current) setRecord(current => current?.profileId === result.record.profileId && current.revision > result.record.revision ? current : result.record); setError(undefined);
                 // Only meaningful changes are announced, so two open tabs never ping-pong refreshes.
                 // A saved but unseen moment is returned again for presentation, not a new change.
                 if (result.learned > 0 || result.town.some(event => event.type !== 'moment')) announce(profileId);
@@ -183,6 +189,41 @@ export function useGrowingIsland(profileId: string, active: boolean) {
         finally { release(); setBusy(false); }
     }, [profileId, displayedIslandId]);
 
+    /**
+     * Shape the ground (terrain stroke / undo / redo) like a toy: the island changes on the
+     * finger's release, and the save follows in order behind it. A refused stroke says why and
+     * changes nothing; a save that fails afterwards puts back the saved island and says so.
+     */
+    const shapeTerrain = useCallback((command: Command): string | undefined => {
+        const current = shown.current;
+        if (!current) return 'しまを よみこんでね。';
+        const intent = { id: crypto.randomUUID(), command };
+        let state;
+        try { state = applyIntent(current.state, intent, Date.now()).state; } catch (e) { return message(e); }
+        if (state === current.state) return undefined;
+        const next = { ...current, state };
+        shown.current = next; setRecord(next); setError(undefined);
+        terrainWaiting.current += 1;
+        const round = terrainRound.current;
+        terrainSaves.current = terrainSaves.current.then(async () => {
+            // After a failed save the strokes shown after it were already put back.
+            if (round !== terrainRound.current) return;
+            const release = holdPwaUpdateForCriticalPersistence();
+            try {
+                const result = await commandGrowingIsland(profileId, { ...intent, islandId: displayedIslandId });
+                terrainWaiting.current -= 1;
+                // Later strokes are already shown; only the last save replaces what is on screen.
+                if (!terrainWaiting.current) { shown.current = result.record; setRecord(result.record); announce(profileId); }
+            } catch (e) {
+                terrainWaiting.current = 0; terrainRound.current += 1;
+                const latest = await readGrowingIsland(profileId).catch(() => undefined);
+                if (latest && islandIdOf(latest) === displayedIslandId) { shown.current = latest; setRecord(latest); }
+                setError(message(e));
+            } finally { release(); }
+        });
+        return undefined;
+    }, [profileId, displayedIslandId]);
+
     const sail = useCallback(async (id: string, create?: { name: string; start: IslandStart }) => {
         if (sailing.current) return false;
         sailing.current = true; setBusy(true);
@@ -218,6 +259,6 @@ export function useGrowingIsland(profileId: string, active: boolean) {
         return () => { live = false; clearInterval(id); document.removeEventListener('visibilitychange', visible); };
     }, [active, profileId, sync]);
 
-    return { sail, record: record?.profileId === profileId ? record : undefined, reveal, error, busy, syncing, saving, dispatch, acknowledge, acknowledgePlace, sync, step,
+    return { sail, record: record?.profileId === profileId ? record : undefined, reveal, error, busy, syncing, saving, dispatch, shapeTerrain, acknowledge, acknowledgePlace, sync, step,
         clearError: () => setError(undefined) };
 }
