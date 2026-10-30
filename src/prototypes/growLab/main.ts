@@ -54,6 +54,8 @@ let drawn: XZ[] = [];
 const PER_SESSION = 6;
 let sessions = 0;
 let base: Heights = blank ? smallIsland() : sampleIsland();
+// Let the shore settle once, so it starts with its beaches already formed.
+settleSlopes(base, 0, 0, SIZE, 120);
 // Otherwise the island starts from the child's own house on the hill; the roads come to it.
 let specials: Special[] = blank ? [] : [{ x: -1, z: -1.5, kind: 'home', stage: 3 }];
 /** The ground the island has settled on: roads cut in, plots levelled. */
@@ -394,7 +396,7 @@ uniform float uTime; uniform vec3 uDeep; uniform vec3 uShallow; uniform vec3 uFo
     // A thin line of surf a little way out, rolling in towards the beach.
     float roll = fract(uTime * 0.18 + sin(vSeaWorld.x * 0.9 + vSeaWorld.z * 0.6) * 0.08);
     float surf = 1.0 - smoothstep(0.0, 0.05, abs(depth - (0.75 - roll * 0.6)));
-    water = mix(water, uFoam, surf * (1.0 - roll) * 0.55 * step(0.02, depth));
+    water = mix(water, uFoam, surf * (1.0 - roll) * 0.4 * step(0.02, depth));
     // Sun glints: tiny bright specks that come and go.
     // A few at a time, gathered in drifting patches rather than everywhere.
     float g = sin(vSeaWorld.x * 7.0 + uTime * 1.3) * sin(vSeaWorld.z * 6.0 - uTime * 1.1) * sin((vSeaWorld.x + vSeaWorld.z) * 3.3 + uTime * .7);
@@ -1331,8 +1333,10 @@ function settle() {
     shaped = padHouses(cut, [...houses, ...specials.filter(s => heightAt(cut, s.x, s.z) > .45).map(plot)]);
     for (let k = 0; k < N * N; k++) offset[k] = shaped[k] - base[k];
     target = shaped;
-    paintGround();
-    scatterMeadow();
+    let t = performance.now();
+    const lap = (name: string) => { const n = performance.now(); (perf.parts[name] ??= []).push(n - t); t = n; };
+    paintGround(); lap('paint');
+    scatterMeadow(); lap('meadow');
     placeGlimmers();
 }
 
@@ -1596,7 +1600,9 @@ function scatterMeadow() {
     place(tufts, (y, sl) => y > .45 && sl < 1.3, () => .8 + r() * .7, i => GRASS_TONES[i % GRASS_TONES.length]);
     place(flowers, (y, sl) => y > .5 && sl < .9, () => .8 + r() * .6, i => FLOWER_TONES[i % FLOWER_TONES.length]);
     place(rocks, y => y > -.25 && y < .22, () => .6 + r() * 1.1, () => new THREE.Color(0xffffff));
+    const t = performance.now();
     dressBeach(clear);
+    (perf.parts.beach ??= []).push(performance.now() - t);
 }
 // ---------- the beach ----------
 // On flat sand the island sets out parasols and towels, now and then a
@@ -1609,34 +1615,43 @@ const BEACH = {
     castle: new THREE.CylinderGeometry(.09, .11, .12, 8), shell: new THREE.IcosahedronGeometry(.035, 0), ball: new THREE.SphereGeometry(.08, 12, 8),
 };
 const SANDY = mat(0xe8d4a4), SHELL = [mat(0xffe4ec), mat(0xfff8ee), mat(0xffd2b8)];
+let beachKey = '';
 function dressBeach(clear: (x: number, z: number) => boolean) {
+    // Choose the spots first; the beach is rebuilt only when they change.
+    const r = rng(23), [hx, hz] = harbour(), spots: XZ[] = [], shells: P3[] = [];
+    for (let tries = 0; tries < 1500 && spots.length < 5; tries++) {
+        const a = r() * Math.PI * 2, d = 3 + r() * 6.8, x = Math.cos(a) * d, z = Math.sin(a) * d, y = heightAt(shaped, x, z);
+        if (y < .1 || y > .48 || spots.some(([sx, sz]) => Math.hypot(sx - x, sz - z) < 2.2) || Math.hypot(x - hx, z - hz) < 2.2) continue;
+        if (slopeAt(shaped, x, z) > .9 || !clear(x, z)) continue;
+        spots.push([x, z]);
+    }
+    for (let tries = 0; tries < 600 && shells.length < 24; tries++) {
+        const a = r() * Math.PI * 2, d = 4 + r() * 6, x = Math.cos(a) * d, z = Math.sin(a) * d, y = heightAt(shaped, x, z);
+        if (y < .02 || y > .14 || !clear(x, z)) continue;
+        shells.push([x, y, z]);
+    }
+    const key = [...spots.map(([x, z]) => [x, heightAt(shaped, x, z), z]), ...shells].map(p => p.map(v => v.toFixed(2)).join(',')).join(';');
+    if (key === beachKey) return;
+    beachKey = key;
+    beachSpots = spots;
     for (const o of beach.children) release(o);
     beach.clear();
-    const r = rng(23), g = new THREE.Group(), [hx, hz] = harbour(), spots: XZ[] = [];
-    for (let tries = 0; tries < 2500 && spots.length < 5; tries++) {
-        const a = r() * Math.PI * 2, d = 3 + r() * 6.8, x = Math.cos(a) * d, z = Math.sin(a) * d, y = heightAt(shaped, x, z);
-        if (y < .1 || y > .48 || slopeAt(shaped, x, z) > .9 || !clear(x, z) || Math.hypot(x - hx, z - hz) < 2.2) continue;
-        if (spots.some(([sx, sz]) => Math.hypot(sx - x, sz - z) < 2.2)) continue;
-        spots.push([x, z]);
-        const spot = new THREE.Group(), k = spots.length;
-        beachSpots = spots;
-        spot.position.set(x, y, z);
+    const g = new THREE.Group();
+    spots.forEach(([x, z], i) => {
+        const spot = new THREE.Group(), k = i + 1;
+        spot.position.set(x, heightAt(shaped, x, z), z);
         spot.rotation.y = Math.atan2(x, z);
         const pole = new THREE.Mesh(PILLAR, M.curb); pole.scale.set(.25, .62, .25); pole.position.y = .31; pole.rotation.z = .12;
         const top = new THREE.Mesh(BEACH.parasol, BRIGHT[k % 6]); top.position.set(.04, .64, 0); top.rotation.z = .12;
         const towel = new THREE.Mesh(BEACH.towel, BRIGHT[(k + 2) % 6]); towel.position.set(.32, .01, .05); towel.rotation.y = .3;
         const tip = new THREE.Mesh(BEACH.parasol, M.curb); tip.scale.setScalar(.45); tip.position.set(.05, .7, 0); tip.rotation.z = .12;
         spot.add(pole, top, tip, towel);
-        if (k % 2) for (let i = 0; i < 3; i++) {
-            const c = new THREE.Mesh(BEACH.castle, SANDY); c.position.set(-.4 + i * .1, .06 + (i === 1 ? .1 : 0), .3); c.scale.setScalar(i === 1 ? .8 : 1); spot.add(c);
+        if (k % 2) for (let c = 0; c < 3; c++) {
+            const castle = new THREE.Mesh(BEACH.castle, SANDY); castle.position.set(-.4 + c * .1, .06 + (c === 1 ? .1 : 0), .3); castle.scale.setScalar(c === 1 ? .8 : 1); spot.add(castle);
         } else { const b = new THREE.Mesh(BEACH.ball, W.patch[k % 2]); b.position.set(-.35, .08, .25); spot.add(b); }
         g.add(spot);
-    }
-    for (let n = 0, tries = 0; tries < 600 && n < 24; tries++) {
-        const a = r() * Math.PI * 2, d = 4 + r() * 6, x = Math.cos(a) * d, z = Math.sin(a) * d, y = heightAt(shaped, x, z);
-        if (y < .02 || y > .14 || !clear(x, z)) continue;
-        const sh = new THREE.Mesh(BEACH.shell, SHELL[n % 3]); sh.position.set(x, y + .01, z); sh.scale.set(1, .5, 1.3); g.add(sh); n++;
-    }
+    });
+    shells.forEach(([x, y, z], n) => { const sh = new THREE.Mesh(BEACH.shell, SHELL[n % 3]); sh.position.set(x, y + .01, z); sh.scale.set(1, .5, 1.3); g.add(sh); });
     beach.add(shadowy(merge(g)));
 }
 const CLOUD = mat(0xffffff, { roughness: 1, transparent: true, opacity: .92 });
@@ -1662,17 +1677,17 @@ const birds = Array.from({ length: 4 }, (_, i) => {
     return { g, radius: 6 + i * 1.6, height: 6.5 + i * .7, speed: .18 + i * .04, phase: i * 1.7 };
 });
 // Out at sea: sailing boats going round the island, and buoys bobbing.
-const sailboats = [0, 1].map(i => {
+const sailboats = [0, 1, 2, 3, 4].map(i => {
     const g = new THREE.Group();
-    const hull = new THREE.Mesh(new RoundedBoxGeometry(.36, .16, .9, 2, .06), BRIGHT[i * 2 + 2]); hull.position.y = .06;
+    const hull = new THREE.Mesh(new RoundedBoxGeometry(.36, .16, .9, 2, .06), BRIGHT[(i * 2 + 2) % 6]); hull.position.y = .06;
     const deck = new THREE.Mesh(new THREE.BoxGeometry(.3, .02, .7), M.wood); deck.position.y = .15;
     const mast = new THREE.Mesh(PILLAR, M.curb); mast.scale.set(.3, 1.2, .3); mast.position.y = .75;
     const sailShape = new THREE.Shape([new THREE.Vector2(0, 0), new THREE.Vector2(0, 1), new THREE.Vector2(.55, 0)]);
-    const sail = new THREE.Mesh(new THREE.ShapeGeometry(sailShape).rotateY(Math.PI / 2), mat(i ? 0xffffff : 0xfff1d6, { side: THREE.DoubleSide }));
+    const sail = new THREE.Mesh(new THREE.ShapeGeometry(sailShape).rotateY(Math.PI / 2), mat(0xffffff, { map: i > 1 ? (W.patch[i % 2] as THREE.MeshStandardMaterial).map : null, color: i === 0 ? 0xfff1d6 : 0xffffff, side: THREE.DoubleSide }));
     sail.position.set(0, .22, -.05);
     g.add(hull, deck, mast, sail);
     scene.add(shadowy(g));
-    return { g, radius: 10.6 + i * 1.4, speed: .05 - i * .012, angle: i * 2.6 + 1 };
+    return { g, radius: 10.4 + (i % 3) * 1.2, speed: .05 - (i % 3) * .012, angle: i * 2.6 + 1 };
 });
 const buoys = [0, 1, 2, 3].map(i => {
     const g = new THREE.Group();
@@ -1685,7 +1700,10 @@ const buoys = [0, 1, 2, 3].map(i => {
     return { g, x: Math.cos(a) * 10.5, z: Math.sin(a) * 10.5, phase: i * 1.3 };
 });
 function moveSky(dt: number, now: number) {
-    for (const b of sailboats) {
+    // Learning brings boats: one more sails round the island each session, up to five.
+    const afloat = byLearning ? Math.min(sailboats.length, 1 + sessions) : 2;
+    for (const [i, b] of sailboats.entries()) {
+        b.g.visible = i < afloat;
         b.angle += b.speed * dt;
         b.g.position.set(Math.cos(b.angle) * b.radius, Math.sin(now / 800 + b.angle * 9) * .04, Math.sin(b.angle) * b.radius);
         b.g.rotation.set(0, -b.angle, Math.sin(now / 1000 + b.radius) * .06);
@@ -1710,7 +1728,7 @@ function moveSky(dt: number, now: number) {
 
 // ---------- きらきら ----------
 // A small pool of sparkles: they fly up from whatever just happened and fade.
-const SPARKS = 220;
+const SPARKS = 420;
 const sparkPos = new Float32Array(SPARKS * 3), sparkCol = new Float32Array(SPARKS * 3);
 const sparkVel = new Float32Array(SPARKS * 3), sparkLife = new Float32Array(SPARKS);
 const sparkGeo = new THREE.BufferGeometry();
@@ -1722,7 +1740,7 @@ const GLOW_DOT = canvasTexture((c, s) => {
     g.addColorStop(0, '#ffffff'); g.addColorStop(.35, '#ffffffcc'); g.addColorStop(1, '#ffffff00');
     c.fillStyle = g; c.fillRect(0, 0, s, s);
 }, 64);
-const sparks = new THREE.Points(sparkGeo, new THREE.PointsMaterial({ size: .45, map: GLOW_DOT, vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+const sparks = new THREE.Points(sparkGeo, new THREE.PointsMaterial({ size: .6, map: GLOW_DOT, vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
 sparks.frustumCulled = false;
 scene.add(sparks);
 let nextSpark = 0;
@@ -1735,6 +1753,30 @@ function burst(x: number, y: number, z: number, count: number, spread = 1) {
         const c = SPARK_COLOURS[k % SPARK_COLOURS.length];
         sparkCol.set([c.r, c.g, c.b], k * 3);
         sparkLife[k] = 1;
+    }
+}
+/** A firework: one colour flung out in a sphere, high over the sea. */
+function firework(x: number, y: number, z: number, colour: THREE.Color) {
+    for (let i = 0; i < 90; i++) {
+        const k = nextSpark++ % SPARKS, a = Math.random() * Math.PI * 2, up = Math.random() * 2 - 1, flat = Math.sqrt(1 - up * up), speed = 3 + Math.random() * .6;
+        sparkPos.set([x, y, z], k * 3);
+        sparkVel.set([Math.cos(a) * flat * speed, up * speed + 1.2, Math.sin(a) * flat * speed], k * 3);
+        sparkCol.set([colour.r, colour.g, colour.b], k * 3);
+        sparkLife[k] = 1.2;
+    }
+}
+/**
+ * When every bud of a learning session has been opened, fireworks go up
+ * beyond the island: a rising spark, then a burst, three times.
+ */
+function celebrate() {
+    const away = new THREE.Vector3().subVectors(controls.target, camera.position).setY(0).normalize();
+    for (let n = 0; n < 3; n++) {
+        const side = new THREE.Vector3(-away.z, 0, away.x).multiplyScalar((n - 1) * 4);
+        const at = controls.target.clone().addScaledVector(away, 5).add(side);
+        const top = 5 + n % 2 * 1.2, colour = SPARK_COLOURS[(n * 2 + sessions) % SPARK_COLOURS.length];
+        for (let t = 0; t < 6; t++) window.setTimeout(() => burst(at.x, 1 + t * (top - 1) / 6, at.z, 2, .05), 700 * n + t * 70);
+        window.setTimeout(() => { firework(at.x, top, at.z, colour); chime(880 + n * 120, .03, .4); }, 700 * n + 450);
     }
 }
 function moveSparks(dt: number) {
@@ -1816,8 +1858,51 @@ function moveOpening(now: number) {
         return true;
     });
 }
+// ---------- ひかりのたね ----------
+// Every bud the child opens leaves a little paper lantern floating where it
+// was. They stay, so an island that has been learned on a lot is dotted with
+// them, and after dark they glow.
+interface Lantern { x: number; z: number; phase: number }
+const LANTERNS = 48;
+const lanterns: Lantern[] = [];
+const LANTERN_TONES = ['#ffd6e8', '#fff1b0', '#c9f0dc', '#d9c6ff', '#ffd9b0', '#c6e6ff'].map(c => new THREE.Color(c));
+// Their glow is the same colour, deeper, so it does not wash out to white.
+const LANTERN_GLOWS = ['#ff6fa8', '#ffcf3a', '#4fe0a0', '#a07cff', '#ff9a4a', '#5ab8ff'].map(c => new THREE.Color(c));
+const lanternMesh = new THREE.InstancedMesh(lathe([[0, 0], [.05, 0], [.1, .05], [.115, .12], [.1, .19], [.05, .23], [0, .23]], 12), new THREE.MeshBasicMaterial({ color: 0xffffff }), LANTERNS);
+lanternMesh.count = 0;
+lanternMesh.frustumCulled = false;
+const lanternGlow = new THREE.Points(new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(LANTERNS * 3), 3)).setAttribute('color', new THREE.BufferAttribute(new Float32Array(LANTERNS * 3), 3)),
+    new THREE.PointsMaterial({ size: .9, map: GLOW_DOT, vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+lanternGlow.frustumCulled = false;
+scene.add(lanternMesh, lanternGlow);
+function leaveLantern(x: number, z: number) {
+    lanterns.push({ x, z, phase: Math.random() * 6 });
+    if (lanterns.length > LANTERNS) lanterns.shift();
+    lanternMesh.count = lanterns.length;
+    const col = lanternGlow.geometry.attributes.color as THREE.BufferAttribute;
+    lanterns.forEach((_, i) => { const c = LANTERN_GLOWS[i % LANTERN_GLOWS.length]; lanternMesh.setColorAt(i, LANTERN_TONES[i % LANTERN_TONES.length]); col.setXYZ(i, c.r * .8, c.g * .8, c.b * .8); });
+    if (lanternMesh.instanceColor) lanternMesh.instanceColor.needsUpdate = true;
+    col.needsUpdate = true;
+    lanternGlow.geometry.setDrawRange(0, lanterns.length);
+}
+const lanternAt = new THREE.Matrix4();
+function moveLanterns(now: number) {
+    const pos = lanternGlow.geometry.attributes.position as THREE.BufferAttribute;
+    lanterns.forEach((l, i) => {
+        const y = heightAt(shown, l.x, l.z) + 1.5 + Math.sin(now / 900 + l.phase) * .12;
+        lanternAt.makeRotationY(now / 3000 + l.phase).setPosition(l.x + Math.sin(now / 2100 + l.phase) * .1, y, l.z);
+        lanternMesh.setMatrixAt(i, lanternAt);
+        pos.setXYZ(i, l.x + Math.sin(now / 2100 + l.phase) * .1, y + .12, l.z);
+    });
+    lanternMesh.instanceMatrix.needsUpdate = true;
+    pos.needsUpdate = true;
+}
+
 function openBud(b: Bud) {
     buds = buds.filter(o => o !== b);
+    // One lantern for each thing the bud grows, in a little ring round where it stood.
+    for (let i = 0; i < b.steps; i++) { const a = b.phase + i / b.steps * Math.PI * 2; leaveLantern(b.x + Math.cos(a) * .6, b.z + Math.sin(a) * .6); }
+    if (!buds.length) window.setTimeout(celebrate, 400 + b.steps * 380);
     opening.push({ g: b.g, t0: performance.now() });
     burst(b.x, b.g.position.y + .9, b.z, 40, 1.2);
     // A little burst: the ring under it, and a rising chime for each thing that grows.
@@ -2442,6 +2527,7 @@ function light() {
     for (const h of [...Object.values(HALO), POOL]) { h.opacity = l.halo; h.visible = l.halo > 0; }
     POOL.opacity = l.halo * .3;
     glimmers.visible = time === 'night';
+    lanternGlow.visible = time !== 'day';
     BEAM.opacity = l.beam;
     BEAM.visible = l.beam > 0;
     CLOUD.color.set(l.clouds);
@@ -2564,6 +2650,7 @@ renderer.setAnimationLoop(now => {
     moveSparks(dt);
     moveSky(dt, now);
     moveGlimmers(now);
+    moveLanterns(now);
     if (BEAM.visible) for (const g of specialsGroup.children) { const beam = g.getObjectByName('beam'); if (beam) beam.rotation.y = now / 1400; }
     partner.g.visible = !!home;
     if (home) {
@@ -2604,6 +2691,9 @@ Object.assign(window, {
         get cameraAt() { return camera.position.toArray().map(v => +v.toFixed(2)); },
         get folk() { return folk.filter(f => f.g.visible).map(f => f.mode); },
         get beachSpots() { return beachSpots; },
+        get lanterns() { return lanterns.length; },
+        get boats() { return sailboats.filter(b => b.g.visible).length; },
+        get sparks() { return Array.from(sparkLife).filter(l => l > 0).length; },
         get chatAt() { const f = folk.find(q => q.mode === 'chat' && q.g.visible); return f ? [f.g.position.x, f.g.position.z] : null; },
         get beach() { return { parasols: beachSpots.length, benches: benches.length, sitting: benches.filter(b => b.by).length, chatting: folk.filter(f => f.mode === "chat").length }; },
         get folkDebug() { return folk.slice(0, townsfolk()).map(f => ({ m: f.mode, home: f.home, s: +f.s.toFixed(1), hs: f.homeS, rest: +f.rest.toFixed(1), road: f.road % Math.max(1, roads.length) })); },

@@ -76,6 +76,13 @@ export function brush(h: Heights, x: number, z: number, amount: number, radius =
  * wider, not a spike, and leaves slopes gentle enough for houses and roads.
  */
 export const TALUS = 1.1;
+/**
+ * Sand at the water's edge lies much flatter than earth on the hill, as real
+ * beaches do: between a little under the sea and a little above it, ground
+ * steeper than this slides, so shores open into wide beaches and shallows.
+ */
+export const BEACH_TALUS = .38;
+export const BEACH_LOW = -.8, BEACH_HIGH = .55;
 
 /**
  * Piled earth slides like sand until no slope is steeper than TALUS, so a hill
@@ -98,8 +105,9 @@ export function settleSlopes(h: Heights, x: number, z: number, reach: number, pa
             for (const [di, dj] of pairs) {
                 if (i + di > i1 || j + dj > j1 || j + dj < j0) continue;
                 const nk = k + di + dj * N;
-                const most = TALUS * RES * Math.hypot(di, dj);
                 const diff = h[k] - h[nk];
+                const sand = Math.max(h[k], h[nk]) < BEACH_HIGH && Math.min(h[k], h[nk]) > BEACH_LOW;
+                const most = (sand ? BEACH_TALUS : TALUS) * RES * Math.hypot(di, dj);
                 // A hair over the limit is left alone, so the sliding comes to rest.
                 if (Math.abs(diff) <= most + .005) continue;
                 const shift = (Math.abs(diff) - most) / 2 * Math.sign(diff);
