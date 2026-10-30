@@ -5,7 +5,7 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { houseFits, houseSpot, moveHouse, padHouses, rng, treeFits, treeSpot, type House, type Tree } from './growth';
 import { ROAD_HALF, cutRoads, network, type P3, type Road, type XZ } from './roads';
 import { busySpot, graphOf, newFootfall, nodeNear, pathBetween, stagesAlong, walkTrips } from './traffic';
-import { N, RES, SIZE, brush, heightAt, sampleIsland, settleSlopes, slopeAt, smallIsland, type Heights } from './terrain';
+import { N, RES, SIZE, brush, heightAt, sampleIsland, settleSlopes, slopeAt, smallIsland, worldX, type Heights } from './terrain';
 import { IslandMaterials } from '../../components/island/three/primitives';
 import { makeResidentRig, type ResidentSpecies } from '../../components/island/three/residentRig';
 import './style.css';
@@ -395,8 +395,10 @@ uniform float uTime; uniform vec3 uDeep; uniform vec3 uShallow; uniform vec3 uFo
     water = mix(water, uFoam, edge * 0.9);
     // A thin line of surf a little way out, rolling in towards the beach.
     float roll = fract(uTime * 0.18 + sin(vSeaWorld.x * 0.9 + vSeaWorld.z * 0.6) * 0.08);
-    float surf = 1.0 - smoothstep(0.0, 0.05, abs(depth - (0.75 - roll * 0.6)));
-    water = mix(water, uFoam, surf * (1.0 - roll) * 0.4 * step(0.02, depth));
+    // It breaks in pieces, never one whole ring round the island.
+    float surf = 1.0 - smoothstep(0.0, 0.09, abs(depth - (0.75 - roll * 0.6)));
+    float pieces = smoothstep(0.1, 0.7, sin(vSeaWorld.x * 1.7 + vSeaWorld.z * 1.1 + uTime * 0.4) * sin(vSeaWorld.x * 0.9 - vSeaWorld.z * 1.4 - uTime * 0.3) + 0.35);
+    water = mix(water, uFoam, surf * pieces * (1.0 - roll) * 0.35 * step(0.02, depth));
     // Sun glints: tiny bright specks that come and go.
     // A few at a time, gathered in drifting patches rather than everywhere.
     float g = sin(vSeaWorld.x * 7.0 + uTime * 1.3) * sin(vSeaWorld.z * 6.0 - uTime * 1.1) * sin((vSeaWorld.x + vSeaWorld.z) * 3.3 + uTime * .7);
@@ -1320,6 +1322,7 @@ function recompute() {
     redrawSpecials();
     lap('specials');
     // Which places no road reaches now, so residents can look towards them.
+    measureLand();
     unreached = walkTrips(footfall, roads, homesOf(), placesOf(), 0, rand).unreached;
     lookTowards();
     const b0 = { ...builds };
@@ -2539,6 +2542,44 @@ function light() {
 }
 
 // ---------- loop ----------
+// The camera stands back as far as the island reaches, so a small new island
+// fills the screen like a big one, and the view eases out as the land grows.
+// Once the child pinches to zoom themselves, the camera is theirs.
+let fullDistance = 30, framing = true;
+const framed = { x: 0, z: 0, reach: 10 };
+function measureLand() {
+    let sx = 0, sz = 0, n = 0;
+    for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) if (base[i + j * N] > -.3) { sx += worldX(i); sz += worldX(j); n++; }
+    if (!n) return;
+    const cx = sx / n, cz = sz / n;
+    let reach = 0;
+    for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) if (base[i + j * N] > -.3) reach = Math.max(reach, Math.hypot(worldX(i) - cx, worldX(j) - cz));
+    // Small changes do not nudge the camera.
+    if (Math.abs(reach - framed.reach) > .4 || Math.hypot(cx - framed.x, cz - framed.z) > .4) Object.assign(framed, { x: cx, z: cz, reach });
+}
+/** How much bigger than the full island this land is, 0.5 to 1. */
+const share = () => Math.max(.5, Math.min(1, (framed.reach + 2) / 11.5));
+/** Far enough that the land's whole width fits the narrower side of the screen. */
+const wantDistance = () => {
+    const half = Math.atan(Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * Math.min(1, camera.aspect));
+    return Math.min(fullDistance, Math.max(fullDistance * .6, (framed.reach + 1) / Math.tan(half)));
+};
+/** Where the camera looks: the middle of the land, a little above it on a big island. */
+const wantTarget = () => new THREE.Vector3(framed.x * .8, .6 + (share() - .5) * 2, framed.z * .8);
+/** How far the camera was left last frame: a pinch or the wheel changes it in between. */
+let left = 0;
+function frameIsland(dt: number) {
+    if (framing && left && Math.abs(camera.position.distanceTo(controls.target) - left) > .01) framing = false;
+    if (!framing || painting || orbiting) return;
+    const k = 1 - Math.exp(-dt / .7);
+    const away = new THREE.Vector3().subVectors(camera.position, controls.target);
+    const distance = away.length();
+    controls.target.lerp(wantTarget(), k);
+    camera.position.copy(controls.target).addScaledVector(away.normalize(), distance + (wantDistance() - distance) * k);
+}
+let orbiting = false;
+controls.addEventListener('start', () => { orbiting = true; });
+controls.addEventListener('end', () => { orbiting = false; });
 function resize() {
     const w = viewport.clientWidth, h = viewport.clientHeight;
     renderer.setSize(w, h, false);
@@ -2547,10 +2588,16 @@ function resize() {
     // The camera looks down steeply, so on a tall phone the island fills the
     // height instead of leaving sky above and sea below.
     // On a wide screen the island's height is what must fit, so stand further back.
+    fullDistance = camera.aspect < 1 ? 22 * Math.max(1, 1.25 / camera.aspect * .66) : 30;
     const away = new THREE.Vector3(.54, .95, .84).normalize();
-    camera.position.copy(controls.target).addScaledVector(away, camera.aspect < 1 ? 22 * Math.max(1, 1.25 / camera.aspect * .66) : 30);
+    if (framing) {
+        controls.target.copy(wantTarget());
+        camera.position.copy(controls.target).addScaledVector(away, wantDistance());
+    } else camera.position.copy(controls.target).addScaledVector(away, fullDistance);
+    left = 0;
 }
 addEventListener('resize', resize);
+measureLand();
 resize();
 light();
 recompute();
@@ -2659,7 +2706,9 @@ renderer.setAnimationLoop(now => {
         partner.g.rotation.y = .5 + Math.sin(now / 1400) * .5;
         partner.rig.head.rotation.z = Math.sin(now / 700) * .12;
     }
+    frameIsland(dt);
     controls.update();
+    left = camera.position.distanceTo(controls.target);
     const tr = performance.now();
     renderer.render(scene, camera);
     perf.render.push(performance.now() - tr);
@@ -2688,6 +2737,7 @@ Object.assign(window, {
         },
         get muted() { return muted; },
         shownAt: (x: number, z: number) => heightAt(shown, x, z),
+        get framing() { return { ...framed, on: framing, want: +wantDistance().toFixed(1) }; },
         get cameraAt() { return camera.position.toArray().map(v => +v.toFixed(2)); },
         get folk() { return folk.filter(f => f.g.visible).map(f => f.mode); },
         get beachSpots() { return beachSpots; },
@@ -2749,6 +2799,7 @@ Object.assign(window, {
         view(x: number, z: number, distance: number) {
             const out = new THREE.Vector3(x, 0, z).normalize();
             const away = new THREE.Vector3(out.x * .7, .75, out.z * .7).normalize();
+            framing = false;
             controls.target.set(x, heightAt(shaped, x, z), z);
             camera.position.copy(controls.target).addScaledVector(away, distance);
         },
