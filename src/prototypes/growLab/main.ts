@@ -130,6 +130,9 @@ const M = {
     bus: mat(0xef9a2a), busTop: mat(0xf7f3ea), wheel: mat(0x2b2b2b),
 };
 
+// Toy-bright colours for parasols, boats, fruit and washing.
+const BRIGHT = [0xef5b6b, 0xf3c63f, 0x41a8d8, 0x7bc36a, 0x9a6fc4, 0xf29b38].map(c => mat(c));
+
 // ---------- ふしぎカラフル ----------
 // Most of the island keeps calm village colours. Here and there a thing is
 // painted like a Kusama dot field or a Britto patchwork of black-edged colour,
@@ -386,8 +389,12 @@ uniform float uTime; uniform vec3 uDeep; uniform vec3 uShallow; uniform vec3 uFo
     vec3 water = mix(uShallow, uDeep, smoothstep(0.05, 1.4, depth));
     // Waves lap the shore: a white band that breathes in and out.
     float wave = 0.5 + 0.5 * sin(uTime * 1.6 - depth * 22.0 + sin(vSeaWorld.x * 1.3 + vSeaWorld.z) * 1.5);
-    float edge = 1.0 - smoothstep(0.0, 0.16 + 0.08 * wave, depth);
-    water = mix(water, uFoam, edge * 0.85);
+    float edge = 1.0 - smoothstep(0.0, 0.2 + 0.12 * wave, depth);
+    water = mix(water, uFoam, edge * 0.9);
+    // A thin line of surf a little way out, rolling in towards the beach.
+    float roll = fract(uTime * 0.18 + sin(vSeaWorld.x * 0.9 + vSeaWorld.z * 0.6) * 0.08);
+    float surf = 1.0 - smoothstep(0.0, 0.05, abs(depth - (0.75 - roll * 0.6)));
+    water = mix(water, uFoam, surf * (1.0 - roll) * 0.55 * step(0.02, depth));
     // Sun glints: tiny bright specks that come and go.
     // A few at a time, gathered in drifting patches rather than everywhere.
     float g = sin(vSeaWorld.x * 7.0 + uTime * 1.3) * sin(vSeaWorld.z * 6.0 - uTime * 1.1) * sin((vSeaWorld.x + vSeaWorld.z) * 3.3 + uTime * .7);
@@ -466,7 +473,7 @@ function release(o: THREE.Object3D) {
 const shadowy = <T extends THREE.Object3D>(o: T) => { o.traverse(c => { if ((c as THREE.Mesh).isMesh) c.castShadow = c.receiveShadow = true; }); return o; };
 
 // ---------- ground ----------
-const SAND = new THREE.Color(0xe4d3a8), ROCK = new THREE.Color(0xb7a993), MOSS = new THREE.Color(0x4f7a3c), GRASS = [new THREE.Color(0x7fae55), new THREE.Color(0x6d9e4a), new THREE.Color(0x93b862)];
+const WET = new THREE.Color(0xb59f74), COVE = new THREE.Color(0xa49a8c), SAND = new THREE.Color(0xeedfb6), ROCK = new THREE.Color(0xb7a993), MOSS = new THREE.Color(0x4f7a3c), GRASS = [new THREE.Color(0x7fae55), new THREE.Color(0x6d9e4a), new THREE.Color(0x93b862)];
 /** Colours follow where the ground is going, so they never lag behind a stroke. */
 function paintGround() {
     seaKnowsGround(target);
@@ -480,9 +487,14 @@ function paintGround() {
         const g = GRASS[Math.abs(Math.floor(x * 1.7 + z * 2.3)) % 3];
         // Sand by the water, green on the slopes, deep green where it is steep;
         // only a true cliff shows pale rock, and even that keeps some green.
-        if (y < .4) c.copy(SAND);
-        else c.copy(g).lerp(MOSS, Math.min(1, Math.max(0, (steep - .9) / .8))).lerp(ROCK, Math.min(.6, Math.max(0, (steep - 2.4) / 1.2)));
-        if (y < .1) c.lerp(new THREE.Color(0xc9b98f), .5);
+        c.copy(g).lerp(MOSS, Math.min(1, Math.max(0, (steep - .9) / .8))).lerp(ROCK, Math.min(.6, Math.max(0, (steep - 2.4) / 1.2)));
+        // The beach fades into the grass along a wavy line, not a hard edge.
+        const wobble = Math.sin(x * 1.9 + z * .7) * .06 + Math.sin(z * 2.6 - x) * .04;
+        c.lerp(SAND, Math.min(1, Math.max(0, (.6 + wobble - y) / .22)));
+        // Where the shore is steep it is rocky instead: a little cove of stone.
+        if (y < .7 && steep > 1.1) c.lerp(COVE, Math.min(.85, (steep - 1.1) / .8) * Math.min(1, (.7 - y) / .3));
+        // Darker wet sand where the waves reach.
+        if (y < .12) c.lerp(WET, Math.min(1, (.12 - y) / .12) * .7);
         col.setXYZ(k, c.r, c.g, c.b);
     }
     col.needsUpdate = true;
@@ -675,6 +687,11 @@ function pavedRun(line: P3[], stage: number, pv: Paving) {
     if (stage >= 2) parapets(line, width + .1, .03, .16);
     if (stage === 3) lamps(line, pv);
 }
+interface Bench { road: number; s: number; g: THREE.Group; by: object | null }
+let benches: Bench[] = [];
+const BENCH = { seat: new THREE.BoxGeometry(.5, .04, .16), back: new THREE.BoxGeometry(.5, .14, .03), leg: new THREE.BoxGeometry(.04, .12, .14) };
+const STALL = { table: new THREE.BoxGeometry(.6, .05, .3), crate: new THREE.BoxGeometry(.14, .08, .14), awning: new THREE.BoxGeometry(.7, .03, .42) };
+const STRIPES = mat(0xffffff, { map: canvasTexture((c, s) => { for (let i = 0; i < 8; i++) { c.fillStyle = i % 2 ? '#ffffff' : '#e8578f'; c.fillRect(i * s / 8, 0, s / 8, s); } }, 64) });
 function drawRoads() {
     for (const o of roadsGroup.children) release(o);
     roadsGroup.clear();
@@ -776,6 +793,43 @@ function drawRoads() {
         square.receiveShadow = true;
         roadsGroup.add(square);
     }
+    // Benches beside the roads, where residents stop and sit for a while.
+    benches = [];
+    roads.forEach((r, ri) => {
+        for (let k = 4; k < r.line.length - 3; k += 9) {
+            const a = r.line[k - 1], p = r.line[k], b = r.line[k + 1];
+            const len = Math.hypot(b[0] - a[0], b[2] - a[2]) || 1, side = (k / 9) % 2 < 1 ? 1 : -1;
+            const nx = -(b[2] - a[2]) / len * side, nz = (b[0] - a[0]) / len * side;
+            const x = p[0] + nx * (ROAD_HALF + .3), z = p[2] + nz * (ROAD_HALF + .3), y = heightAt(shaped, x, z);
+            if (Math.abs(y - p[1]) > .3 || houses.some(o => Math.hypot(o.x - x, o.z - z) < Math.max(o.w, o.d) * .7)) continue;
+            const g = new THREE.Group();
+            g.position.set(x, Math.max(y, p[1]), z);
+            // Facing away from the road, towards the view.
+            g.rotation.y = Math.atan2(nx, nz);
+            const seat = new THREE.Mesh(BENCH.seat, M.wood); seat.position.y = .13;
+            const back = new THREE.Mesh(BENCH.back, M.wood); back.position.set(0, .24, -.07); back.rotation.x = -.15;
+            g.add(seat, back);
+            for (const lx of [-.2, .2]) { const leg = new THREE.Mesh(BENCH.leg, M.rail); leg.position.set(lx, .06, 0); g.add(leg); }
+            roadsGroup.add(shadowy(g));
+            benches.push({ road: ri, s: k, g, by: null });
+        }
+    });
+    // A market stall on the quay once the town has a road: a striped awning over boxes of fruit.
+    if (roads.length) {
+        const st = new THREE.Group();
+        st.position.set(hx + .75, quay.position.y, hz - .2);
+        st.rotation.y = -.5;
+        const table = new THREE.Mesh(STALL.table, M.wood); table.position.y = .18;
+        st.add(table);
+        for (const [i, px] of [-.16, 0, .16].entries()) {
+            const crate = new THREE.Mesh(STALL.crate, M.trunk); crate.position.set(px, .3, .03); st.add(crate);
+            for (let f = 0; f < 3; f++) { const fruit = new THREE.Mesh(R.pot, BRIGHT[[0, 1, 3][i]]); fruit.scale.setScalar(.45); fruit.position.set(px + (f - 1) * .04, .36, .03 + (f % 2) * .03); st.add(fruit); }
+        }
+        for (const lx of [-.28, .28]) { const post = new THREE.Mesh(PILLAR, M.curb); post.scale.set(.25, .7, .25); post.position.set(lx, .35, -.12); st.add(post); }
+        const awning = new THREE.Mesh(STALL.awning, STRIPES); awning.position.set(0, .68, 0); awning.rotation.x = .3;
+        st.add(awning);
+        roadsGroup.add(shadowy(st));
+    }
     const cars = new Set(lifts.map(l => l.car));
     ribbons = []; pieces = [];
     for (const o of roadsGroup.children) {
@@ -841,6 +895,7 @@ const WINDOW = {
 // Shutters, doors and trims in the colours painted villages use, one set per house.
 const TRIMS = [0x4e8a5c, 0x3a74c9, 0x2fa3a0, 0xe0663f, 0x6b5fb5, 0xf2b630].map(c => mat(c));
 type Roof = 'terrace' | 'dome' | 'vault' | 'turret';
+const LAUNDRY = { line: new THREE.BoxGeometry(1, .01, .01), cloth: new THREE.BoxGeometry(.12, .14, .01) };
 /** A town house takes after the child's house nearest to it. */
 function themeOf(o: { x: number; z: number }): number {
     let best = 0, bestD = Infinity;
@@ -968,8 +1023,19 @@ function buildHouse(o: House): THREE.Group {
         for (const [px, pz] of [[-.25, .2], [.25, .22], [-.2, -.2]]) {
             const pot = new THREE.Mesh(R.pot, M.bush); pot.position.set(px * rad * 1.6, .1, pz * rad * 1.6); top.add(pot);
         }
-        const pole = new THREE.Mesh(PILLAR, M.base); pole.scale.set(.25, .35, .25); pole.position.set(.1, .22, 0); top.add(pole);
-        const para = new THREE.Mesh(R.parasol, trim); para.position.set(.1, .42, 0); top.add(para);
+        if (r() < .5) {
+            const pole = new THREE.Mesh(PILLAR, M.base); pole.scale.set(.25, .35, .25); pole.position.set(.1, .22, 0); top.add(pole);
+            const para = new THREE.Mesh(R.parasol, trim); para.position.set(.1, .42, 0); top.add(para);
+        } else {
+            // Washing hung out to dry on a line across the roof.
+            const reach = Math.max(.2, w / 2 - .12);
+            for (const lx of [-reach, reach]) { const post = new THREE.Mesh(PILLAR, M.curb); post.scale.set(.18, .32, .18); post.position.set(lx, .2, -.05); top.add(post); }
+            const line = new THREE.Mesh(LAUNDRY.line, M.curb); line.scale.x = reach * 2; line.position.set(0, .34, -.05); top.add(line);
+            for (let i = 0; i < 3; i++) {
+                const cloth = new THREE.Mesh(LAUNDRY.cloth, i === 1 ? M.curb : BRIGHT[(o.id + i) % 6]);
+                cloth.position.set(-reach * .6 + i * reach * .6, .26, -.05); cloth.scale.y = .8 + (i % 2) * .4; top.add(cloth);
+            }
+        }
     }
     if (r() < .45) {
         // Bougainvillea spilling down a corner.
@@ -1440,6 +1506,23 @@ const SPECIES: ResidentSpecies[] = ['otter', 'rabbit', 'fox'];
 const townsfolk = () => Math.min(quality >= 2 ? 8 : 18, 3 + Math.floor(houses.length / 3) + movedIn);
 /** Travellers who came by boat and now live in a house the child grew. */
 let movedIn = 0;
+// What a resident says when two meet: a little picture in a bubble, no words.
+const SAYS = ['♪', '♥', '!', '☀', '★', '?'];
+const BUBBLES = SAYS.map(say => new THREE.SpriteMaterial({ map: canvasTexture((c, s) => {
+    c.fillStyle = '#ffffff'; c.beginPath(); c.ellipse(s / 2, s * .44, s * .42, s * .36, 0, 0, Math.PI * 2); c.fill();
+    c.beginPath(); c.moveTo(s * .4, s * .74); c.lineTo(s * .5, s * .95); c.lineTo(s * .56, s * .72); c.fill();
+    c.fillStyle = say === '♥' ? '#e8578f' : say === '★' || say === '☀' ? '#f2b630' : '#3a74c9';
+    c.font = `bold ${s * .48}px system-ui, sans-serif`; c.textAlign = 'center'; c.textBaseline = 'middle';
+    c.fillText(say, s / 2, s * .46);
+}, 96), depthTest: false, transparent: true }));
+function makeBubble(i: number) {
+    const b = new THREE.Sprite(BUBBLES[i % BUBBLES.length]);
+    b.scale.setScalar(.55);
+    b.visible = false;
+    b.renderOrder = 3;
+    scene.add(b);
+    return b;
+}
 const folk = Array.from({ length: 18 }, (_, i) => {
     const g = new THREE.Group();
     const rig = makeResidentRig(SPECIES[i % 3], poko);
@@ -1451,7 +1534,9 @@ const folk = Array.from({ length: 18 }, (_, i) => {
     return {
         g, rig, feet: rig.feet.map(f => f.position.z), road: i, s: i * 7 + 3, dir: i % 2 ? 1 : -1, side: i % 2 ? .25 : -.25, speed: 1.8 + (i % 3) * .5,
         // Each resident has a house to go home to now and then.
-        home: -1, homeS: 0, mode: 'walk' as 'walk' | 'in' | 'out', t: 0, rest: 4 + i % 5, from: new THREE.Vector3(), door: new THREE.Vector3(),
+        home: -1, homeS: 0, mode: 'walk' as 'walk' | 'in' | 'out' | 'sit' | 'chat', t: 0, rest: 4 + i % 5, from: new THREE.Vector3(), door: new THREE.Vector3(),
+        // Sitting on a bench or chatting with a neighbour met on the road; `cool` keeps it from happening every few steps.
+        bench: null as Bench | null, cool: 3 + i % 6, bubble: makeBubble(i),
     };
 });
 // The child's partner waits by the door of the first house.
@@ -1511,6 +1596,48 @@ function scatterMeadow() {
     place(tufts, (y, sl) => y > .45 && sl < 1.3, () => .8 + r() * .7, i => GRASS_TONES[i % GRASS_TONES.length]);
     place(flowers, (y, sl) => y > .5 && sl < .9, () => .8 + r() * .6, i => FLOWER_TONES[i % FLOWER_TONES.length]);
     place(rocks, y => y > -.25 && y < .22, () => .6 + r() * 1.1, () => new THREE.Color(0xffffff));
+    dressBeach(clear);
+}
+// ---------- the beach ----------
+// On flat sand the island sets out parasols and towels, now and then a
+// sandcastle or a ball, and shells along the wet sand.
+const beach = new THREE.Group();
+scene.add(beach);
+let beachSpots: XZ[] = [];
+const BEACH = {
+    parasol: new THREE.ConeGeometry(.42, .16, 10), towel: new THREE.BoxGeometry(.3, .015, .55),
+    castle: new THREE.CylinderGeometry(.09, .11, .12, 8), shell: new THREE.IcosahedronGeometry(.035, 0), ball: new THREE.SphereGeometry(.08, 12, 8),
+};
+const SANDY = mat(0xe8d4a4), SHELL = [mat(0xffe4ec), mat(0xfff8ee), mat(0xffd2b8)];
+function dressBeach(clear: (x: number, z: number) => boolean) {
+    for (const o of beach.children) release(o);
+    beach.clear();
+    const r = rng(23), g = new THREE.Group(), [hx, hz] = harbour(), spots: XZ[] = [];
+    for (let tries = 0; tries < 2500 && spots.length < 5; tries++) {
+        const a = r() * Math.PI * 2, d = 3 + r() * 6.8, x = Math.cos(a) * d, z = Math.sin(a) * d, y = heightAt(shaped, x, z);
+        if (y < .1 || y > .48 || slopeAt(shaped, x, z) > .9 || !clear(x, z) || Math.hypot(x - hx, z - hz) < 2.2) continue;
+        if (spots.some(([sx, sz]) => Math.hypot(sx - x, sz - z) < 2.2)) continue;
+        spots.push([x, z]);
+        const spot = new THREE.Group(), k = spots.length;
+        beachSpots = spots;
+        spot.position.set(x, y, z);
+        spot.rotation.y = Math.atan2(x, z);
+        const pole = new THREE.Mesh(PILLAR, M.curb); pole.scale.set(.25, .62, .25); pole.position.y = .31; pole.rotation.z = .12;
+        const top = new THREE.Mesh(BEACH.parasol, BRIGHT[k % 6]); top.position.set(.04, .64, 0); top.rotation.z = .12;
+        const towel = new THREE.Mesh(BEACH.towel, BRIGHT[(k + 2) % 6]); towel.position.set(.32, .01, .05); towel.rotation.y = .3;
+        const tip = new THREE.Mesh(BEACH.parasol, M.curb); tip.scale.setScalar(.45); tip.position.set(.05, .7, 0); tip.rotation.z = .12;
+        spot.add(pole, top, tip, towel);
+        if (k % 2) for (let i = 0; i < 3; i++) {
+            const c = new THREE.Mesh(BEACH.castle, SANDY); c.position.set(-.4 + i * .1, .06 + (i === 1 ? .1 : 0), .3); c.scale.setScalar(i === 1 ? .8 : 1); spot.add(c);
+        } else { const b = new THREE.Mesh(BEACH.ball, W.patch[k % 2]); b.position.set(-.35, .08, .25); spot.add(b); }
+        g.add(spot);
+    }
+    for (let n = 0, tries = 0; tries < 600 && n < 24; tries++) {
+        const a = r() * Math.PI * 2, d = 4 + r() * 6, x = Math.cos(a) * d, z = Math.sin(a) * d, y = heightAt(shaped, x, z);
+        if (y < .02 || y > .14 || !clear(x, z)) continue;
+        const sh = new THREE.Mesh(BEACH.shell, SHELL[n % 3]); sh.position.set(x, y + .01, z); sh.scale.set(1, .5, 1.3); g.add(sh); n++;
+    }
+    beach.add(shadowy(merge(g)));
 }
 const CLOUD = mat(0xffffff, { roughness: 1, transparent: true, opacity: .92 });
 const clouds = Array.from({ length: 5 }, (_, i) => {
@@ -1534,7 +1661,39 @@ const birds = Array.from({ length: 4 }, (_, i) => {
     scene.add(g);
     return { g, radius: 6 + i * 1.6, height: 6.5 + i * .7, speed: .18 + i * .04, phase: i * 1.7 };
 });
+// Out at sea: sailing boats going round the island, and buoys bobbing.
+const sailboats = [0, 1].map(i => {
+    const g = new THREE.Group();
+    const hull = new THREE.Mesh(new RoundedBoxGeometry(.36, .16, .9, 2, .06), BRIGHT[i * 2 + 2]); hull.position.y = .06;
+    const deck = new THREE.Mesh(new THREE.BoxGeometry(.3, .02, .7), M.wood); deck.position.y = .15;
+    const mast = new THREE.Mesh(PILLAR, M.curb); mast.scale.set(.3, 1.2, .3); mast.position.y = .75;
+    const sailShape = new THREE.Shape([new THREE.Vector2(0, 0), new THREE.Vector2(0, 1), new THREE.Vector2(.55, 0)]);
+    const sail = new THREE.Mesh(new THREE.ShapeGeometry(sailShape).rotateY(Math.PI / 2), mat(i ? 0xffffff : 0xfff1d6, { side: THREE.DoubleSide }));
+    sail.position.set(0, .22, -.05);
+    g.add(hull, deck, mast, sail);
+    scene.add(shadowy(g));
+    return { g, radius: 10.6 + i * 1.4, speed: .05 - i * .012, angle: i * 2.6 + 1 };
+});
+const buoys = [0, 1, 2, 3].map(i => {
+    const g = new THREE.Group();
+    const body = new THREE.Mesh(BEACH.ball, i % 2 ? BRIGHT[0] : BRIGHT[1]); body.scale.set(1.6, 1.2, 1.6);
+    const band = new THREE.Mesh(new THREE.TorusGeometry(.12, .025, 6, 14).rotateX(Math.PI / 2), M.curb); band.position.y = .02;
+    const pole = new THREE.Mesh(PILLAR, M.rail); pole.scale.set(.2, .3, .2); pole.position.y = .18;
+    g.add(body, band, pole);
+    scene.add(g);
+    const a = i / 4 * Math.PI * 2 + .6;
+    return { g, x: Math.cos(a) * 10.5, z: Math.sin(a) * 10.5, phase: i * 1.3 };
+});
 function moveSky(dt: number, now: number) {
+    for (const b of sailboats) {
+        b.angle += b.speed * dt;
+        b.g.position.set(Math.cos(b.angle) * b.radius, Math.sin(now / 800 + b.angle * 9) * .04, Math.sin(b.angle) * b.radius);
+        b.g.rotation.set(0, -b.angle, Math.sin(now / 1000 + b.radius) * .06);
+    }
+    for (const b of buoys) {
+        b.g.position.set(b.x, .03 + Math.sin(now / 700 + b.phase) * .05, b.z);
+        b.g.rotation.z = Math.sin(now / 900 + b.phase) * .15;
+    }
     for (const c of clouds) {
         c.angle += c.speed * dt;
         c.g.position.set(Math.cos(c.angle) * c.radius, c.height, Math.sin(c.angle) * c.radius);
@@ -1805,6 +1964,43 @@ function walk(f: typeof folk[number], road: Road, dt: number, now: number) {
         if (f.mode !== 'walk') { f.mode = 'walk'; f.g.scale.setScalar(FOLK_SCALE); }
     }
     f.rest -= dt;
+    f.cool -= dt;
+    f.bubble.visible = false;
+    if (f.mode === 'sit' || f.mode === 'chat') {
+        f.t += dt;
+        const bench = f.bench;
+        if (f.mode === 'sit' && bench && benches.includes(bench)) {
+            // Sitting on the bench, swinging the feet, looking at the view.
+            f.g.position.copy(bench.g.position); f.g.position.y += .06;
+            f.g.rotation.y = bench.g.rotation.y;
+            f.rig.feet.forEach((foot, k) => { foot.position.z = f.feet[k] + Math.sin(now / 300 + k * Math.PI) * .05; });
+            f.rig.body.rotation.z = 0;
+            if (f.t < 5 + (f.road % 4)) { f.g.visible = true; return; }
+        } else if (f.mode === 'chat' && f.t < 3.2) {
+            // Standing face to face with a neighbour, a bubble over one head.
+            f.bubble.visible = f.dir > 0;
+            f.bubble.position.copy(f.g.position); f.bubble.position.y += .62 + Math.sin(now / 250) * .03;
+            f.rig.body.rotation.z = Math.sin(now / 200 + f.road) * .08;
+            f.g.visible = true;
+            return;
+        }
+        if (bench) bench.by = null;
+        f.bench = null; f.mode = 'walk'; f.cool = 6 + (f.road % 5) * 2;
+    }
+    if (f.mode === 'walk' && f.cool < 0) {
+        // Passing a free bench now and then, sit down for a while.
+        const ri = roads.indexOf(road);
+        const bench = benches.find(b => b.road === ri && !b.by && Math.abs(b.s - f.s) < .2);
+        if (bench && f.rest > 0 && (f.road + bench.s) % 2 === 0) { bench.by = f; f.bench = bench; f.mode = 'sit'; f.t = 0; f.g.visible = true; return; }
+        // Meeting a neighbour coming the other way: both stop to chat.
+        const other = folk.find(q => q !== f && q.g.visible && q.mode === 'walk' && q.cool < 0 && q.dir !== f.dir && q.road % Math.max(1, roads.length) === f.road % Math.max(1, roads.length) && Math.abs(q.s - f.s) < .7);
+        if (other) {
+            for (const q of [f, other]) { q.mode = 'chat'; q.t = 0; }
+            const face = Math.atan2(other.g.position.x - f.g.position.x, other.g.position.z - f.g.position.z);
+            f.g.rotation.y = face; other.g.rotation.y = face + Math.PI;
+            return;
+        }
+    }
     if (f.mode === 'walk') {
         // Time to go home: turn towards the house.
         if (house && f.rest < 0 && Math.abs(f.s - f.homeS) > 1) f.dir = Math.sign(f.homeS - f.s);
@@ -2341,6 +2537,7 @@ renderer.setAnimationLoop(now => {
     const tf = performance.now();
     folk.forEach((f, i) => {
         const road = roads[f.road % Math.max(1, roads.length)];
+        f.bubble.visible = false;
         if (i >= living || !road || road.line.length < 3) { f.g.visible = false; return; }
         // The first residents stand where the road comes nearest a place it
         // does not reach, looking that way: a hint, with no words.
@@ -2406,6 +2603,9 @@ Object.assign(window, {
         shownAt: (x: number, z: number) => heightAt(shown, x, z),
         get cameraAt() { return camera.position.toArray().map(v => +v.toFixed(2)); },
         get folk() { return folk.filter(f => f.g.visible).map(f => f.mode); },
+        get beachSpots() { return beachSpots; },
+        get chatAt() { const f = folk.find(q => q.mode === 'chat' && q.g.visible); return f ? [f.g.position.x, f.g.position.z] : null; },
+        get beach() { return { parasols: beachSpots.length, benches: benches.length, sitting: benches.filter(b => b.by).length, chatting: folk.filter(f => f.mode === "chat").length }; },
         get folkDebug() { return folk.slice(0, townsfolk()).map(f => ({ m: f.mode, home: f.home, s: +f.s.toFixed(1), hs: f.homeS, rest: +f.rest.toFixed(1), road: f.road % Math.max(1, roads.length) })); },
         get harbour() { return harbour(); },
         folkMeshes() { let n = 0; folk[0].g.traverse(o => { if ((o as THREE.Mesh).isMesh) n++; }); return n; },
