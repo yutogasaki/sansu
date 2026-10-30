@@ -112,7 +112,8 @@ export function treeSpot(h: Heights, roads: Road[], houses: House[], trees: Tree
             : y < 1.1 ? (rand() < .7 ? 'palm' : 'bush')
             : y > 3.2 && rand() < .6 ? 'cypress'
             : rand() < .3 ? 'olive' : rand() < .15 ? 'bush' : 'pine';
-        return { id, x, z, kind, size: .65 + rand() * .75, born };
+        // Every tree starts young and grows with the island (see grow in main).
+        return { id, x, z, kind, size: .45 + rand() * .3, born };
     }
 }
 

@@ -4,7 +4,7 @@ import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.j
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { houseFits, houseSpot, moveHouse, padHouses, rng, treeFits, treeSpot, type House, type Tree } from './growth';
 import { ROAD_HALF, cutRoads, network, type P3, type Road, type XZ } from './roads';
-import { busySpot, newFootfall, stagesAlong, walkTrips } from './traffic';
+import { busySpot, graphOf, newFootfall, nodeNear, pathBetween, stagesAlong, walkTrips } from './traffic';
 import { N, RES, SIZE, brush, heightAt, sampleIsland, settleSlopes, slopeAt, smallIsland, type Heights } from './terrain';
 import { IslandMaterials } from '../../components/island/three/primitives';
 import { makeResidentRig, type ResidentSpecies } from '../../components/island/three/residentRig';
@@ -20,7 +20,7 @@ type Tool = 'stack' | 'carve' | 'road';
 type Time = 'day' | 'dusk';
 type SpecialKind = 'home' | 'chapel' | 'lighthouse' | 'tower';
 /** `stage` is how far a child's house has grown from its seed (0 seed … 3 full). */
-interface Special { x: number; z: number; kind: SpecialKind; stage?: number; theme?: number }
+interface Special { x: number; z: number; kind: SpecialKind; stage?: number; theme?: number; lived?: boolean }
 
 const root = document.querySelector<HTMLDivElement>('#app')!;
 root.innerHTML = `<div id="viewport"></div>
@@ -272,11 +272,22 @@ const tiles = (a: string, b: string, mark: string, ring: boolean, seed: number) 
     }
 }, seed);
 /** `plaza` is the ふしぎ floor of the little square in front of the child's house. */
+/** A worn path fades into the grass at its edges instead of ending in a hard line. */
+const SOFT_EDGE = canvasTexture((c, s) => {
+    const r = rng(91);
+    const g = c.createLinearGradient(0, 0, s, 0);
+    g.addColorStop(0, '#000'); g.addColorStop(.3, '#fff'); g.addColorStop(.7, '#fff'); g.addColorStop(1, '#000');
+    c.fillStyle = g; c.fillRect(0, 0, s, s);
+    // A few bare patches, so the path looks trodden rather than painted.
+    for (let i = 0; i < 18; i++) { c.fillStyle = '#0006'; c.beginPath(); c.arc(s * (.3 + r() * .4), r() * s, s * .04, 0, Math.PI * 2); c.fill(); }
+});
+SOFT_EDGE.wrapT = THREE.RepeatWrapping;
+const worn = (color: number) => mat(color, { alphaMap: SOFT_EDGE, transparent: true, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -3, side: THREE.DoubleSide });
 interface Paving { path: THREE.Material; stages: THREE.Material[]; edge: THREE.Material; step: THREE.Material; plaza: THREE.Material; lamp: THREE.Material }
 const PAVING: Paving[] = [
     {
         // しろ: pale limestone setts, then white and blue tiles.
-        path: mat(0xc8b48c, { polygonOffset: true, polygonOffsetFactor: -3, side: THREE.DoubleSide }),
+        path: worn(0xc8b48c),
         stages: [
             gravel('#d8cdb2', ['#b9ab8c', '#efe7d4', '#a39575'], 31),
             setts(['#ece5d3', '#e0d6bf', '#f4efe2', '#d6cbb2'], '#b7aa8f', 6, 4, 32),
@@ -287,7 +298,7 @@ const PAVING: Paving[] = [
     },
     {
         // ゆうやけ: terracotta bricks, then orange and yellow tiles.
-        path: mat(0xc39a6e, { polygonOffset: true, polygonOffsetFactor: -3, side: THREE.DoubleSide }),
+        path: worn(0xc39a6e),
         stages: [
             gravel('#d9b48a', ['#b98a5e', '#ecd0a8', '#a0704a'], 41),
             setts(['#c8643c', '#d4774c', '#b85a36', '#dc8a5c'], '#e8cfae', 8, 3, 42, .08),
@@ -298,7 +309,7 @@ const PAVING: Paving[] = [
     },
     {
         // みずたま: pastel mosaic, then big dotted tiles.
-        path: mat(0xd8c4a8, { polygonOffset: true, polygonOffsetFactor: -3, side: THREE.DoubleSide }),
+        path: worn(0xd8c4a8),
         stages: [
             gravel('#efe2d6', ['#f4c6d9', '#c9ecdc', '#d7dcf7', '#fff1b0'], 51),
             mosaic(['#fbd3e4', '#cdeedd', '#dbe3fb', '#fff1b0', '#f6d9c9'], '#ffffff', 8, 52),
@@ -309,7 +320,7 @@ const PAVING: Paving[] = [
     },
     {
         // もり: a needle-strewn path, then boards across, then green and cream tiles.
-        path: mat(0xa98f68, { polygonOffset: true, polygonOffsetFactor: -3, side: THREE.DoubleSide }),
+        path: worn(0xa98f68),
         stages: [
             gravel('#b7a27c', ['#8a7553', '#cdbb94', '#6f8a52'], 61),
             boards(['#b08a5e', '#a07c52', '#bf9868'], '#6e5638', 62),
@@ -516,6 +527,8 @@ const curbs = (line: P3[], width: number, lift: number, height: number) => {
     }
 };
 const STEP = new THREE.BoxGeometry(ROAD_HALF * 2 - .1, .06, .1), PILLAR = new THREE.CylinderGeometry(.07, .09, 1, 8), CAR = new RoundedBoxGeometry(.3, .26, .42, 2, .05);
+/** Where the pier ends, out at sea: the traveller waits there. */
+let pierEnd: XZ = [0, 9];
 const PIER = new THREE.BoxGeometry(.7, .07, 1), CAR_GLASS = new THREE.BoxGeometry(.31, .08, .34);
 const boat = new THREE.Group();
 {
@@ -575,7 +588,7 @@ function pavedRun(line: P3[], stage: number, pv: Paving) {
     if (line.length < 2) return;
     if (stage === 0) {
         // A worn path: narrower, the colour of earth, no kerb.
-        const path = new THREE.Mesh(ribbon(line, ROAD_HALF * 1.3, .05), pv.path);
+        const path = new THREE.Mesh(ribbon(line, ROAD_HALF * 1.7, .05), pv.path);
         path.receiveShadow = true;
         roadsGroup.add(path);
         return;
@@ -669,6 +682,7 @@ function drawRoads() {
         roadsGroup.add(post);
     }
     boat.position.set(hx + .75, 0, hz + length * .7);
+    pierEnd = [hx, hz + length - .1];
     // A little square where the road reaches each child's house, floored ふしぎ.
     for (const home of specials) {
         if (home.kind !== 'home') continue;
@@ -705,7 +719,7 @@ const G = {
 const lathe = (pts: [number, number][], segments = 28) => new THREE.LatheGeometry(pts.map(([x, y]) => new THREE.Vector2(x, y)), segments);
 const floorGeo = (w: number, h: number, d: number) => {
     const k = `${w.toFixed(2)},${h},${d.toFixed(2)}`;
-    if (!G.floor.has(k)) G.floor.set(k, new RoundedBoxGeometry(w, h, d, 3, Math.min(.14, Math.min(w, h, d) * .3)));
+    if (!G.floor.has(k)) G.floor.set(k, new RoundedBoxGeometry(w, h, d, 4, Math.min(.2, Math.min(w, h, d) * .36)));
     return G.floor.get(k)!;
 };
 
@@ -752,22 +766,29 @@ function buildHouse(o: House): THREE.Group {
     // About one house in five is a ふしぎ house: a patchwork wall or a dotted dome.
     const wonder = th.wonder(o.id);
     const roof: Roof = wonder === 'dots' ? 'dome' : (['terrace', 'dome', 'vault', 'turret', 'terrace'] as const)[Math.floor(r() * 5)];
-    let y = 0, w = o.w, d = o.d, dx = 0, dz = 0;
+    let y = 0, w = o.w, d = o.d, dx = 0, dz = 0, turn = 0;
     for (let f = 0; f < o.floors; f++) {
         const wall = wonder === 'patch' && f === 0 ? W.patch[o.id % 2] : th.walls[o.tint];
         const rad = Math.min(w, d) / 2;
+        // Each storey turns a little on the one below, so a tall house looks
+        // grown rather than stacked.
+        const storey = new THREE.Group();
+        storey.position.set(dx, y, dz);
+        storey.rotation.y = turn;
+        g.add(storey);
         const body = new THREE.Mesh(round ? roundGeo(rad) : floorGeo(w, .55, d), wall);
-        body.position.set(dx, y + (round ? 0 : .275), dz);
-        g.add(body);
+        body.position.y = round ? 0 : .275;
+        storey.add(body);
         // Windows with green shutters on the front, the door on the ground floor.
         const front = (round ? rad : d / 2) + .01, span = round ? rad * .9 : w;
-        if (f === 0) { const door = new THREE.Mesh(G.door, M.door); door.position.set(span * .18 + dx, y + .17, front + dz); g.add(door); }
+        if (f === 0) { const door = new THREE.Mesh(G.door, M.door); door.position.set(span * .18, .17, front); storey.add(door); }
         for (const wx of f === 0 ? [-span * .22] : [-span * .24, span * .24]) {
-            const gl = new THREE.Mesh(G.glass, M.glass); gl.position.set(wx + dx, y + .32, front + dz);
-            const l = new THREE.Mesh(G.shutter, M.shutter); l.position.set(wx - .1 + dx, y + .32, front + .01 + dz);
-            const rr = new THREE.Mesh(G.shutter, M.shutter); rr.position.set(wx + .1 + dx, y + .32, front + .01 + dz);
-            g.add(gl, l, rr);
+            const gl = new THREE.Mesh(G.glass, M.glass); gl.position.set(wx, .32, front);
+            const l = new THREE.Mesh(G.shutter, M.shutter); l.position.set(wx - .1, .32, front + .01);
+            const rr = new THREE.Mesh(G.shutter, M.shutter); rr.position.set(wx + .1, .32, front + .01);
+            storey.add(gl, l, rr);
         }
+        turn += (r() - .5) * .3;
         y += .55;
         // Upper floors step back and sit a little off centre, as if grown.
         w *= .86 + r() * .1; d *= .82 + r() * .1;
@@ -775,6 +796,7 @@ function buildHouse(o: House): THREE.Group {
     }
     const top = new THREE.Group();
     top.position.set(dx, y, dz);
+    top.rotation.y = turn;
     g.add(top);
     const rad = Math.min(w, d) / 2 / .84;
     const slab = round ? new THREE.Mesh(R.slab, M.roof) : new THREE.Mesh(floorGeo(w / .84 + .05, .07, d / .8 + .05), M.roof);
@@ -1085,6 +1107,8 @@ function syncOne<T extends { id: number; x: number; z: number }>(list: T[], view
             views.set(o.id, { g, x: o.x, z: o.z, rot, from: { x: o.x, z: o.z, rot }, t0: now, size, key });
             continue;
         }
+        // A tree that has grown is drawn bigger; the view eases to it.
+        v.size = size;
         if (v.key !== key) {
             // Same house, new footing: rebuild its body in place.
             const g = build(o); g.position.copy(v.g.position); g.rotation.y = v.g.rotation.y; g.scale.copy(v.g.scale);
@@ -1181,6 +1205,12 @@ function grow(now: number) {
     for (let k = 0; k < N * N; k++) if (shaped[k] > .35) land++;
     const room = Math.min(70, Math.round(land * RES * RES * .5));
     if (trees.length > room) trees = trees.slice(0, room);
+    // Trees keep growing: a sapling planted early is a big tree many steps later.
+    for (let i = 0; i < 3 && trees.length; i++) {
+        const k = Math.floor(rand() * trees.length), t = trees[k];
+        const most = t.kind === 'pine' || t.kind === 'olive' ? 1.8 : t.kind === 'cypress' ? 1.5 : 1.2;
+        if (t.size < most) trees[k] = { ...t, size: Math.min(most, t.size + .07) };
+    }
     for (let i = 0; i < 2 && trees.length < room; i++) {
         const t = treeSpot(shaped, roads, houses, trees, rand, nextId++, now);
         if (t && specials.every(s => Math.hypot(s.x - t.x, s.z - t.z) > .9)) trees.push(t);
@@ -1191,7 +1221,7 @@ function grow(now: number) {
 function updateStat() {
     const kinds = new Set(roads.flatMap(r => r.parts.map(p => p.kind)));
     const extra = [kinds.has('stair') && 'かいだん', kinds.has('bridge') && 'はし', kinds.has('lift') && 'ケーブルカー'].filter(Boolean).join('・');
-    stat.textContent = `${byLearning ? `まなんだ ${sessions}かい · ` : ''}みち ${roads.length}${extra ? `（${extra}）` : ''} · いえ ${houses.length} · き ${trees.length} · すむ ${townsfolk()}${placing ? ` · ${placing === 'home' ? 'たね' : '★'}を おく ばしょを タップ` : ''}`;
+    stat.textContent = `${byLearning ? `まなんだ ${sessions}かい${buds.length ? ` · つぼみ ${buds.length}` : ''} · ` : ''}みち ${roads.length}${extra ? `（${extra}）` : ''} · いえ ${houses.length} · き ${trees.length} · すむ ${townsfolk()}${placing ? ` · ${placing === 'home' ? 'たね' : '★'}を おく ばしょを タップ` : ''}`;
 }
 
 // ---------- bus and residents ----------
@@ -1223,7 +1253,9 @@ function along(line: [number, number, number][], s: number, side: number): [THRE
 const poko = new IslandMaterials();
 const FOLK_SCALE = .4;
 const SPECIES: ResidentSpecies[] = ['otter', 'rabbit', 'fox'];
-const townsfolk = () => Math.min(18, 3 + Math.floor(houses.length / 3));
+const townsfolk = () => Math.min(18, 3 + Math.floor(houses.length / 3) + movedIn);
+/** Travellers who came by boat and now live in a house the child grew. */
+let movedIn = 0;
 const folk = Array.from({ length: 18 }, (_, i) => {
     const g = new THREE.Group();
     const rig = makeResidentRig(SPECIES[i % 3], poko);
@@ -1247,6 +1279,139 @@ const partner = (() => {
     scene.add(g);
     return { g, rig };
 })();
+
+// ---------- つぼみ: what learning brings, opened by the child's own finger ----------
+// Finishing a learning session does not change the island by itself. Buds
+// come up where it is ready to grow (the young seed, the busiest roadside),
+// and the child taps each one open; then that growth happens, one thing after
+// another, in front of them.
+interface Bud { g: THREE.Group; x: number; z: number; steps: number; phase: number }
+let buds: Bud[] = [];
+const budsGroup = new THREE.Group();
+scene.add(budsGroup);
+const BUD = {
+    bulb: new THREE.SphereGeometry(.2, 16, 12).scale(1, 1.25, 1),
+    sepal: new THREE.ConeGeometry(.09, .28, 6).translate(0, .14, 0),
+    stem: new THREE.CylinderGeometry(.025, .03, .3, 6).translate(0, .15, 0),
+    reach: new THREE.SphereGeometry(.55, 8, 6),
+    unseen: new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false }),
+    // Dotted like a ふしぎな木, and glowing a little, so it is found from far off.
+    glow: mat(0xffffff, { map: (W.crown as THREE.MeshStandardMaterial).map, emissive: 0xffc8ec, emissiveIntensity: .45 }),
+};
+function makeBud(x: number, z: number, steps: number): Bud {
+    const g = new THREE.Group();
+    const stem = new THREE.Mesh(BUD.stem, M.bush);
+    const bulb = new THREE.Mesh(BUD.bulb, BUD.glow); bulb.position.y = .45; bulb.name = 'bulb';
+    g.add(stem, bulb);
+    for (let i = 0; i < 4; i++) {
+        const sepal = new THREE.Mesh(BUD.sepal, M.bush);
+        sepal.position.y = .3; sepal.rotation.set(.5, i * Math.PI / 2, 0, 'YXZ');
+        g.add(sepal);
+    }
+    // A generous invisible ball around it, so a small finger finds it.
+    const reach = new THREE.Mesh(BUD.reach, BUD.unseen); reach.position.y = .4; g.add(reach);
+    shadowy(g);
+    // About as tall as a two-storey house: a bud is the thing to find on the island.
+    g.scale.setScalar(2);
+    g.position.set(x, heightAt(shown, x, z), z);
+    budsGroup.add(g);
+    return { g, x, z, steps, phase: Math.random() * 6 };
+}
+/** Where the next learning session's growth shows up, as up to two buds. */
+function sprout(steps: number) {
+    const young = specials.find(s => s.kind === 'home' && (s.stage ?? 3) < 3);
+    const spots: XZ[] = [];
+    if (young) spots.push([young.x + .9, young.z + .5]);
+    const busy = busySpot(footfall, roads, rand);
+    const line = roads.length ? roads[Math.floor(rand() * roads.length)].line : [];
+    const any = line.length ? line[Math.floor(rand() * line.length)] : undefined;
+    if (busy) spots.push([busy[0] + .7, busy[1] + .7]);
+    else if (any) spots.push([any[0] + .7, any[2] + .7]);
+    if (!spots.length) spots.push(landNear(0, 0));
+    const share = Math.ceil(steps / spots.length);
+    for (const [x, z] of spots.slice(0, 2)) { const [lx, lz] = landNear(x, z); buds.push(makeBud(lx, lz, share)); }
+    updateStat();
+}
+function openBud(b: Bud) {
+    buds = buds.filter(o => o !== b);
+    budsGroup.remove(b.g);
+    // A little burst: the ring under it, and a rising chime for each thing that grows.
+    cursor.x = b.x; cursor.z = b.z; cursor.shown = 1; cursor.pulse = 1;
+    navigator.vibrate?.(12);
+    for (let i = 0; i < b.steps; i++) window.setTimeout(() => { chime(620 + i * 90, .035, .25); grow(performance.now()); }, 120 + i * 380);
+    window.setTimeout(() => { cursor.shown = 0; updateStat(); }, 300);
+}
+
+// ---------- the traveller at the pier ----------
+// One resident who would like to live here waits at the end of the pier, a
+// little house floating over their head. When a house the child grew from a
+// seed stands empty, the house bobs to show it, and a tap sends the traveller
+// walking up the roads to move in. Nobody hurries and nobody leaves.
+const traveller = (() => {
+    const g = new THREE.Group();
+    const rig = makeResidentRig('rabbit', poko);
+    g.add(rig.pose);
+    g.scale.setScalar(FOLK_SCALE);
+    const sign = new THREE.Group();
+    const walls = new THREE.Mesh(new THREE.BoxGeometry(.45, .35, .4), M.walls[1]); walls.position.y = .18;
+    const roof = new THREE.Mesh(new THREE.ConeGeometry(.38, .3, 4).rotateY(Math.PI / 4), M.walls[4]); roof.position.y = .5;
+    sign.add(walls, roof);
+    sign.position.y = 2.1;
+    sign.scale.setScalar(2.2);
+    g.add(sign);
+    const reach = new THREE.Mesh(BUD.reach, BUD.unseen); reach.scale.setScalar(2.2); reach.position.y = 1; g.add(reach);
+    scene.add(g);
+    return { g, rig, sign, here: false, path: null as P3[] | null, s: 0, home: null as Special | null, next: 1 };
+})();
+/** A house grown from a seed (not the first, which is ぽこもこ's own) that nobody lives in yet. */
+const emptyHome = () => specials.find((s, i) => s.kind === 'home' && i > specials.findIndex(o => o.kind === 'home') && (s.stage ?? 0) >= 1 && !s.lived);
+function sendTraveller() {
+    const home = emptyHome();
+    if (!home || !traveller.here) { traveller.g.position.y += .1; chime(520, .03, .15); return; }
+    // Up the roads, node by node, from the harbour to the house.
+    const g = graphOf(roads);
+    const a = nodeNear(g, harbour(), 2.4), b = nodeNear(g, [home.x, home.z], 2.4);
+    const nodes = a !== undefined && b !== undefined ? pathBetween(g, a, b) ?? [] : [];
+    const at = (k: number): P3 => { const x = -SIZE / 2 + (k % N) * RES, z = -SIZE / 2 + Math.floor(k / N) * RES; return [x, heightAt(shaped, x, z), z]; };
+    traveller.path = [[pierEnd[0], .32, pierEnd[1]], ...nodes.map(at), [home.x, heightAt(shaped, home.x, home.z), home.z]];
+    traveller.s = 0;
+    traveller.home = home;
+    traveller.here = false;
+    chime(660, .04, .3);
+}
+function moveTraveller(dt: number, now: number) {
+    if (!traveller.here && !traveller.path && sessions >= traveller.next) traveller.here = true;
+    const t = traveller;
+    t.g.visible = t.here || !!t.path;
+    t.sign.visible = t.here;
+    if (t.path) {
+        // Walking: along the path at a stroll, then in at the door.
+        t.s += dt * 2.2;
+        const i = Math.floor(t.s), p = t.path;
+        if (i >= p.length - 1) {
+            t.home!.lived = true;
+            movedIn++;
+            t.path = null; t.home = null;
+            t.next = sessions + 1;
+            chime(880, .04, .4);
+            updateStat();
+            return;
+        }
+        const u = t.s - i, a = p[i], b = p[i + 1];
+        t.g.position.set(a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u, a[2] + (b[2] - a[2]) * u);
+        t.g.rotation.y = Math.atan2(b[0] - a[0], b[2] - a[2]);
+        t.rig.feet.forEach((foot, k) => { foot.position.z = .12 + Math.sin(now / 120 + k * Math.PI) * .12; });
+        return;
+    }
+    if (!t.here) return;
+    // Waiting at the pier end, looking at the island. When a house is ready,
+    // the little house over their head hops.
+    t.g.position.set(pierEnd[0], .32 + Math.abs(Math.sin(now / 600)) * .02, pierEnd[1]);
+    t.g.rotation.y = Math.PI;
+    const ready = !!emptyHome();
+    t.sign.position.y = 2.6 + (ready ? Math.abs(Math.sin(now / 220)) * .6 : Math.sin(now / 900) * .1);
+    t.sign.rotation.y = now / 1500;
+}
 
 const ENTER = .9;
 /** A house's front door in the world: houses face their road. */
@@ -1427,6 +1592,10 @@ function think() {
 renderer.domElement.addEventListener('pointerdown', e => {
     if (!e.isPrimary) return;
     const p = hit(e);
+    // A bud or the traveller under the finger answers before the ground does.
+    const bud = buds.find(b => ray.intersectObject(b.g, true).length);
+    if (bud) { if (audio?.state === 'suspended') void audio.resume(); openBud(bud); return; }
+    if (traveller.g.visible && ray.intersectObject(traveller.g, true).length) { if (audio?.state === 'suspended') void audio.resume(); sendTraveller(); return; }
     if (!p) { controls.enabled = true; return; }
     controls.enabled = false;
     if (audio?.state === 'suspended') void audio.resume();
@@ -1531,13 +1700,12 @@ swatches.addEventListener('click', e => {
     showSwatches();
 });
 /**
- * Stands in for finishing a learning session in the app: the island grows a
- * few steps, one after another, so the child sees each new thing appear.
+ * Stands in for finishing a learning session in the app: buds come up, and
+ * the island grows when the child opens them.
  */
-function learn(spread = 450) {
+function learn() {
     sessions++;
-    for (let i = 0; i < PER_SESSION; i++) window.setTimeout(() => grow(performance.now()), spread * i);
-    updateStat();
+    sprout(PER_SESSION);
 }
 const learnButton = root.querySelector<HTMLButtonElement>('#learn')!;
 learnButton.hidden = !byLearning;
@@ -1658,6 +1826,12 @@ renderer.setAnimationLoop(now => {
     });
     perf.folk.push(performance.now() - tf);
     const home = specials.find(s => s.kind === 'home');
+    for (const b of buds) {
+        b.g.position.y = heightAt(shown, b.x, b.z) + Math.sin(now / 500 + b.phase) * .04;
+        const bulb = b.g.getObjectByName('bulb')!;
+        bulb.scale.setScalar(1 + Math.sin(now / 350 + b.phase) * .06);
+    }
+    moveTraveller(dt, now);
     partner.g.visible = !!home;
     if (home) {
         const x = home.x + .55, z = home.z + .75;
@@ -1671,6 +1845,10 @@ renderer.setAnimationLoop(now => {
     perf.render.push(performance.now() - tr);
 });
 
+const onScreen = (v: THREE.Vector3) => {
+    const p = v.project(camera), r = renderer.domElement.getBoundingClientRect();
+    return [r.left + (p.x + 1) / 2 * r.width, r.top + (1 - p.y) / 2 * r.height];
+};
 // For checks from the outside: the same strokes and taps a finger makes.
 Object.assign(window, {
     growLab: {
@@ -1720,6 +1898,14 @@ Object.assign(window, {
         undo() { root.querySelector<HTMLButtonElement>('#undo')!.click(); },
         grow(n: number) { for (let i = 0; i < n; i++) grow(-1e6); },
         /** n learning sessions, all at once. */
+        /** One learning session as the app would end it: buds come up, nothing grows yet. */
+        study() { learn(); },
+        get buds() { return buds.map(b => ({ x: b.x, z: b.z, steps: b.steps })); },
+        get budScale() { return buds[0]?.g.scale.x ?? 0; },
+        get traveller() { return { here: traveller.here, walking: !!traveller.path, movedIn, ready: !!emptyHome() }; },
+        /** Where the traveller and each bud show on screen, in page pixels, to aim a real tap. */
+        travellerOnScreen() { return onScreen(traveller.g.position.clone().add(new THREE.Vector3(0, .35, 0))); },
+        budsOnScreen() { return buds.map(b => onScreen(b.g.position.clone().add(new THREE.Vector3(0, .8, 0)))); },
         learn(n = 1) { for (let i = 0; i < n; i++) { sessions++; for (let k = 0; k < PER_SESSION; k++) grow(-1e6); } updateStat(); },
         get sessions() { return sessions; },
         /** Show every road at one stage of use (0 worn path … 3 tiles), to compare. */
