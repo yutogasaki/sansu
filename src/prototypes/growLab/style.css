@@ -21,3 +21,6 @@ button[aria-pressed=true]{background:#284d45;color:#fff}
 .swatches button[aria-pressed=true]{outline:3px solid #284d45;outline-offset:2px;transform:scale(1.08)}
 .pill{height:46px;border-radius:23px;background:#fff3d6;box-shadow:0 2px 10px #0002;font-size:14px;font-weight:650;padding:0 12px;white-space:nowrap}.pill[hidden]{display:none}
 @media (max-width:360px){.top span{display:none}.top{justify-content:flex-end}.right{gap:6px}.pill{padding:0 10px;font-size:13px}#time button{padding:6px 8px}}
+.seg.big.three button{min-width:70px;padding:6px 8px}
+@media (max-width:360px){.seg.big.three button{min-width:56px;font-size:15px}}
+@media (max-width:360px){.seg.big.three button{min-width:48px;padding:6px 4px}.tools:has(.three){gap:4px}.tools:has(.three)>button{width:42px;height:42px}}

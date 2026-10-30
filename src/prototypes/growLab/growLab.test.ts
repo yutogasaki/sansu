@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { houseSpot, moveHouse, rng, treeSpot, type House } from './growth';
 import { MAX_GRADE, cutRoads, findWay, network, node } from './roads';
 import { N, RES, brush, heightAt, sampleIsland } from './terrain';
+import { graphOf, newFootfall, nodeNear, pathBetween, stageFor, walkTrips } from './traffic';
 
 describe('grow lab terrain', () => {
     it('raises the middle of a brush stroke more than its edge', () => {
@@ -103,5 +104,31 @@ describe('grow lab growth', () => {
         expect(next.tint).toBe(3);
         expect([next.w, next.d]).toEqual([o.w, o.d]);
         expect(Math.hypot(next.x - o.x, next.z - o.z)).toBeLessThan(5);
+    });
+});
+
+describe('grow lab traffic', () => {
+    it('counts footsteps along the road between a house and a place, and nowhere else', () => {
+        const h = sampleIsland();
+        const { roads } = network(h, [0, 8], [[-1, -1.5], [4.5, 3]]);
+        const fall = newFootfall();
+        const { trips } = walkTrips(fall, roads, [[0, 8]], [[-1, -1.5]], 5, rng(1));
+        expect(trips).toBe(5);
+        const g = graphOf(roads);
+        const path = pathBetween(g, nodeNear(g, [0, 8], 2.4)!, nodeNear(g, [-1, -1.5], 1.6)!)!;
+        for (const k of path) expect(fall[k]).toBe(5);
+        // The branch to the other place was not walked.
+        expect(roads[1].nodes.slice(1).every(k => fall[k] === 0)).toBe(true);
+    });
+
+    it('leaves out places no road reaches, so the island can hint at them', () => {
+        const h = sampleIsland();
+        const { roads } = network(h, [0, 8], [[-1, -1.5]]);
+        const { unreached } = walkTrips(newFootfall(), roads, [[0, 8]], [[-1, -1.5], [6, -6]], 3, rng(2));
+        expect(unreached).toEqual([[6, -6]]);
+    });
+
+    it('paves a road better the more it is walked', () => {
+        expect([0, 4, 5, 23, 24, 69, 70, 200].map(stageFor)).toEqual([0, 0, 1, 1, 2, 2, 3, 3]);
     });
 });

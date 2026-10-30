@@ -4,6 +4,7 @@ import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.j
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { houseFits, houseSpot, moveHouse, padHouses, rng, treeFits, treeSpot, type House, type Tree } from './growth';
 import { ROAD_HALF, cutRoads, network, type P3, type Road, type XZ } from './roads';
+import { busySpot, newFootfall, stagesAlong, walkTrips } from './traffic';
 import { N, RES, SIZE, brush, heightAt, sampleIsland, settleSlopes, slopeAt, smallIsland, type Heights } from './terrain';
 import { IslandMaterials } from '../../components/island/three/primitives';
 import { makeResidentRig, type ResidentSpecies } from '../../components/island/three/residentRig';
@@ -15,7 +16,7 @@ import './style.css';
 // Nothing the child does is refused: where the rules would say no, the island
 // finds another way (steps, a bridge, a funicular, a house that moves next door).
 
-type Tool = 'stack' | 'carve';
+type Tool = 'stack' | 'carve' | 'road';
 type Time = 'day' | 'dusk';
 type SpecialKind = 'home' | 'chapel' | 'lighthouse' | 'tower';
 /** `stage` is how far a child's house has grown from its seed (0 seed … 3 full). */
@@ -26,7 +27,7 @@ root.innerHTML = `<div id="viewport"></div>
 <div class="top"><span>試作 · そだつ島</span><div class="right"><button id="learn" class="pill" hidden>📖 まなぶ</button><button id="sound" class="round" aria-label="おと">🔈</button><div class="seg" id="time"><button data-time="day">ひる</button><button data-time="dusk">ゆうがた</button></div></div></div>
 <p class="stat" id="stat" aria-live="polite"></p>
 <div class="swatches" id="swatches" hidden></div>
-<div class="tools"><button id="undo" aria-label="もどす">↶</button><div class="seg big" id="tool"><button data-tool="stack">つむ</button><button data-tool="carve">けずる</button></div><button id="seed" aria-label="おうちの たね">🌱</button><button id="special" aria-label="とくべつな たてもの">★</button></div>`;
+<div class="tools"><button id="undo" aria-label="もどす">↶</button><div class="seg big" id="tool"><button data-tool="stack">つむ</button><button data-tool="carve">けずる</button><button data-tool="road" hidden>みち</button></div><button id="seed" aria-label="おうちの たね">🌱</button><button id="special" aria-label="とくべつな たてもの">★</button></div>`;
 const viewport = root.querySelector<HTMLDivElement>('#viewport')!;
 const stat = root.querySelector<HTMLParagraphElement>('#stat')!;
 const params = new URLSearchParams(location.search);
@@ -43,6 +44,11 @@ const blank = params.get('start') === 'blank';
 // ?pace=learn (the default for a blank start): the island grows only when the
 // child finishes a learning session, as it would in the app, not by the clock.
 const byLearning = params.get('pace') === 'learn' || (blank && params.get('pace') !== 'time');
+// ?roads=draw: the child lays the roads with a みち stroke. The island still
+// runs one road from the harbour to each child's house, so nobody is stuck.
+const drawMode = params.get('roads') === 'draw';
+/** Points along the roads the child has drawn, in the order drawn. */
+let drawn: XZ[] = [];
 /** Growth steps one learning session gives the island. */
 const PER_SESSION = 6;
 let sessions = 0;
@@ -62,7 +68,7 @@ const offset = new Float32Array(N * N);
 let roads: Road[] = [];
 let houses: House[] = [];
 let trees: Tree[] = [];
-const history: { base: Heights; specials: Special[]; houses: House[]; trees: Tree[] }[] = [];
+const history: { base: Heights; specials: Special[]; houses: House[]; trees: Tree[]; drawn: XZ[] }[] = [];
 const rand = rng(7);
 let nextId = 1;
 
@@ -313,8 +319,21 @@ const PAVING: Paving[] = [
         step: mat(0xa07c52), plaza: W.patch[1], lamp: mat(0x3f7a5a),
     },
 ];
-/** How busy the roads look until residents' footsteps decide it (?road=0..3 to compare). */
-let roadStage = Math.max(0, Math.min(3, Number(params.get('road') ?? 2)));
+/** ?road=0..3 shows every road at one stage, to compare; otherwise footsteps decide. */
+let roadStage: number | null = params.has('road') ? Math.max(0, Math.min(3, Number(params.get('road')))) : null;
+/** Footsteps on each road node, from residents' trips. They stay when roads move: the ground remembers. */
+const footfall = newFootfall();
+/** Places no road reaches yet; residents gather at the nearest road end and look that way. */
+let unreached: XZ[] = [];
+/** Where along the roads residents stand to look at an unreached place. */
+let gazing: { at: P3; look: XZ }[] = [];
+function lookTowards() {
+    gazing = unreached.slice(0, 2).flatMap(look => {
+        let best: P3 | undefined, bestD = Infinity;
+        for (const r of roads) for (const p of r.line) { const d = Math.hypot(p[0] - look[0], p[2] - look[1]); if (d < bestD) { bestD = d; best = p; } }
+        return best ? [{ at: best, look }] : [];
+    });
+}
 
 const sea = new THREE.Mesh(new THREE.CircleGeometry(90, 64), M.sea);
 sea.rotation.x = -Math.PI / 2;
@@ -551,31 +570,45 @@ function lamps(line: P3[], pv: Paving) {
         roadsGroup.add(shadowy(g));
     });
 }
+/** One stretch of road at one stage of use. */
+function pavedRun(line: P3[], stage: number, pv: Paving) {
+    if (line.length < 2) return;
+    if (stage === 0) {
+        // A worn path: narrower, the colour of earth, no kerb.
+        const path = new THREE.Mesh(ribbon(line, ROAD_HALF * 1.3, .05), pv.path);
+        path.receiveShadow = true;
+        roadsGroup.add(path);
+        return;
+    }
+    // Paving with a darker kerb line, so the road reads against the grass.
+    const width = ROAD_HALF * 2 * (stage === 1 ? .85 : 1);
+    const edge = new THREE.Mesh(ribbon(line, width + .1, .02), pv.edge);
+    const road = new THREE.Mesh(ribbon(line, width, .07), pv.stages[stage - 1]);
+    edge.receiveShadow = road.receiveShadow = true;
+    roadsGroup.add(edge, road);
+    if (stage >= 2) parapets(line, width + .1, .03, .16);
+    if (stage === 3) lamps(line, pv);
+}
 function drawRoads() {
     for (const o of roadsGroup.children) release(o);
     roadsGroup.clear();
     lifts = [];
     roadGround = shaped;
-    for (const r of roads) for (const part of r.parts) {
+    for (const r of roads) for (const [pi, part] of r.parts.entries()) {
         const line = part.line;
+        // Where this part starts on the whole road's line (later parts drop their shared first point).
+        const offset = r.parts.slice(0, pi).reduce((n, q, qi) => n + q.line.length - (qi ? 1 : 0), 0) - (pi ? 1 : 0);
         if (line.length < 2) continue;
         const mid = line[line.length >> 1];
         const pv = PAVING[themeOf({ x: mid[0], z: mid[2] })];
         if (part.kind === 'road') {
-            if (roadStage === 0) {
-                // A worn path: narrower, the colour of earth, no kerb.
-                const path = new THREE.Mesh(ribbon(line, ROAD_HALF * 1.3, .05), pv.path);
-                path.receiveShadow = true;
-                roadsGroup.add(path);
-            } else {
-                // Paving with a darker kerb line, so the road reads against the grass.
-                const width = ROAD_HALF * 2 * (roadStage === 1 ? .85 : 1);
-                const edge = new THREE.Mesh(ribbon(line, width + .1, .02), pv.edge);
-                const road = new THREE.Mesh(ribbon(line, width, .07), pv.stages[roadStage - 1]);
-                edge.receiveShadow = road.receiveShadow = true;
-                roadsGroup.add(edge, road);
-                if (roadStage >= 2) parapets(line, width + .1, .03, .16);
-                if (roadStage === 3) lamps(line, pv);
+            // Each stretch is paved for the footsteps it has had.
+            const stages = roadStage === null ? stagesAlong(footfall, r).slice(offset, offset + line.length) : line.map(() => roadStage!);
+            for (let a = 0; a < line.length - 1;) {
+                let b = a + 1;
+                while (b < line.length - 1 && stages[b] === stages[a]) b++;
+                pavedRun(line.slice(a, b + 1), stages[a], pv);
+                a = b;
             }
         } else if (part.kind === 'stair') {
             // Steps up the slope in the island's paving, a tread every quarter unit.
@@ -984,7 +1017,10 @@ function recompute() {
     keepSandbars(base);
     (perf.parts.slide ??= []).push(performance.now() - ts);
     const tn = performance.now();
-    const net = network(base, harbour(), [...specials.map(s => [s.x, s.z] as XZ), ...lookout()]);
+    const places: XZ[] = drawMode
+        ? [...specials.filter(s => s.kind === 'home').map(s => [s.x, s.z] as XZ), ...drawn]
+        : [...specials.map(s => [s.x, s.z] as XZ), ...lookout()];
+    const net = network(base, harbour(), places);
     perf.network.push(performance.now() - tn);
     roads = net.roads;
     let tp = performance.now();
@@ -1014,6 +1050,9 @@ function recompute() {
     lap('drawRoads');
     redrawSpecials();
     lap('specials');
+    // Which places no road reaches now, so residents can look towards them.
+    unreached = walkTrips(footfall, roads, homesOf(), placesOf(), 0, rand).unreached;
+    lookTowards();
     const b0 = { ...builds };
     sync(performance.now());
     lap('sync');
@@ -1090,7 +1129,18 @@ function moveViews(views: Map<number, View>, group: THREE.Group, now: number) {
 }
 
 let ticks = 0;
+/** Where trips start: every house, the town's and the child's. */
+const homesOf = (): XZ[] => [...houses.map(o => [o.x, o.z] as XZ), ...specials.filter(s => s.kind === 'home').map(s => [s.x, s.z] as XZ)];
+/** Where residents like to go: everything the child placed, and the harbour. */
+const placesOf = (): XZ[] => [...specials.map(s => [s.x, s.z] as XZ), harbour()];
+/** A road's look, stage by stage, so it is redrawn only when its paving changes. */
+const paving = () => (roadStage === null ? roads.map(r => stagesAlong(footfall, r).join('')).join('|') : '');
 function grow(now: number) {
+    // Residents go about: a third of them make a trip each step.
+    const before = paving();
+    unreached = walkTrips(footfall, roads, homesOf(), placesOf(), Math.ceil(townsfolk() / 3), rand).unreached;
+    lookTowards();
+    if (paving() !== before) drawRoads();
     // In the app the child's house grows with learning time; here, every few ticks.
     const young = specials.find(s => s.kind === 'home' && (s.stage ?? 3) < 3);
     if (young && ++ticks % 5 === 0) {
@@ -1101,7 +1151,10 @@ function grow(now: number) {
     const length = roads.reduce((s, r) => s + r.line.length * .25, 0);
     let built = false;
     if (houses.length < Math.min(60, length * .9)) {
-        const o = houseSpot(cut, roads, houses, rand, nextId++, now);
+        // New houses go up where people pass, if anyone has passed yet.
+        const busy = busySpot(footfall, roads, rand);
+        const o = (busy && houseSpot(cut, roads, houses, rand, nextId, now, { x: busy[0], z: busy[1], reach: 2.5 })) || houseSpot(cut, roads, houses, rand, nextId, now);
+        nextId++;
         if (o && specials.every(s => Math.hypot(s.x - o.x, s.z - o.z) > 1)) {
             houses.push(o);
             built = true;
@@ -1317,6 +1370,16 @@ function drawRing(dt: number) {
 const ray = new THREE.Raycaster();
 const ndc = new THREE.Vector2();
 let painting = false, lastPaint = 0, lastSound = 0, rethink = 0;
+/** The みち stroke being drawn, as a dotted line on the ground. */
+let draft: XZ[] | null = null;
+const draftLine = new THREE.Points(new THREE.BufferGeometry(), new THREE.PointsMaterial({ color: 0xffffff, size: .18, depthTest: false }));
+draftLine.renderOrder = 5;
+scene.add(draftLine);
+function showDraft() {
+    const pts = draft ?? [];
+    draftLine.geometry.setAttribute('position', new THREE.Float32BufferAttribute(pts.flatMap(([x, z]) => [x, heightAt(shown, x, z) + .15, z]), 3));
+    draftLine.visible = !!draft;
+}
 const builds = { house: 0, tree: 0 };
 const perf = { rethink: [] as number[], stroke: [] as number[], folk: [] as number[], render: [] as number[], network: [] as number[], parts: {} as Record<string, number[]> };
 function hit(e: PointerEvent) {
@@ -1327,7 +1390,7 @@ function hit(e: PointerEvent) {
 }
 function remember() {
     // One undo puts back the ground and everything the island moved because of it.
-    history.push({ base: base.slice(), specials: specials.map(s => ({ ...s })), houses: houses.slice(), trees: trees.slice() });
+    history.push({ base: base.slice(), specials: specials.map(s => ({ ...s })), houses: houses.slice(), trees: trees.slice(), drawn: drawn.slice() });
     if (history.length > 40) history.shift();
 }
 const live = new Float32Array(N * N);
@@ -1375,6 +1438,12 @@ renderer.domElement.addEventListener('pointerdown', e => {
         place(placing, x, z);
         return;
     }
+    if (tool === 'road') {
+        draft = [[p.x, p.z]];
+        showDraft();
+        renderer.domElement.setPointerCapture(e.pointerId);
+        return;
+    }
     painting = true;
     cursor.shown = 1;
     paint(p, .5);
@@ -1382,6 +1451,12 @@ renderer.domElement.addEventListener('pointerdown', e => {
     renderer.domElement.setPointerCapture(e.pointerId);
 }, { capture: true });
 renderer.domElement.addEventListener('pointermove', e => {
+    if (draft) {
+        const p = hit(e);
+        const last = draft[draft.length - 1];
+        if (p && Math.hypot(p.x - last[0], p.z - last[1]) > .3) { draft.push([p.x, p.z]); showDraft(); }
+        return;
+    }
     const now = performance.now();
     if (!painting || now - lastPaint < 16) return;
     const p = hit(e);
@@ -1390,6 +1465,21 @@ renderer.domElement.addEventListener('pointermove', e => {
     if (p) { paint(p, .22 * Math.min(1, (now - lastPaint) / 90)); lastPaint = now; }
 });
 const end = () => {
+    if (draft) {
+        // The drawn line becomes stops for a road, about every 1.3 units; the
+        // island finds the way between them (zigzags, steps, bridges).
+        const stops: XZ[] = [];
+        let gone = 0;
+        draft.forEach((q, i) => {
+            if (i) gone += Math.hypot(q[0] - draft![i - 1][0], q[1] - draft![i - 1][1]);
+            if (!i || gone >= 1.3 || i === draft!.length - 1) { stops.push(q); gone = 0; }
+        });
+        draft = null;
+        showDraft();
+        drawn.push(...stops);
+        chime(440, .03, .2);
+        think();
+    }
     if (painting) {
         // Let the frame with the finger lifted draw first, then rethink.
         clearTimeout(rethink);
@@ -1410,7 +1500,7 @@ root.querySelector('#tool')!.addEventListener('click', e => {
 root.querySelector('#undo')!.addEventListener('click', () => {
     const prev = history.pop();
     if (!prev) return;
-    base = prev.base; specials = prev.specials; houses = prev.houses; trees = prev.trees;
+    base = prev.base; specials = prev.specials; houses = prev.houses; trees = prev.trees; drawn = prev.drawn;
     recompute();
 });
 // In the app this would be earned by learning; here a button hands one over.
@@ -1462,6 +1552,8 @@ root.querySelector('#time')!.addEventListener('click', e => {
     if (b) { time = b.dataset.time as Time; light(); }
 });
 root.querySelector<HTMLButtonElement>('[data-tool="stack"]')!.setAttribute('aria-pressed', 'true');
+root.querySelector<HTMLButtonElement>('[data-tool="road"]')!.hidden = !drawMode;
+root.querySelector('#tool')!.classList.toggle('three', drawMode);
 
 function light() {
     const dusk = time === 'dusk';
@@ -1552,6 +1644,16 @@ renderer.setAnimationLoop(now => {
     folk.forEach((f, i) => {
         const road = roads[f.road % Math.max(1, roads.length)];
         if (i >= living || !road || road.line.length < 3) { f.g.visible = false; return; }
+        // The first residents stand where the road comes nearest a place it
+        // does not reach, looking that way: a hint, with no words.
+        const spot = gazing[i >> 1];
+        if (spot && f.mode === 'walk') {
+            f.g.visible = true;
+            f.g.position.set(spot.at[0] + (i % 2 ? .25 : -.25), spot.at[1] + rise(spot.at[0], spot.at[2]) - .05, spot.at[2]);
+            f.g.rotation.y = Math.atan2(spot.look[0] - spot.at[0], spot.look[1] - spot.at[2]);
+            f.g.position.y += Math.abs(Math.sin(now / 400 + i)) * .03;
+            return;
+        }
         walk(f, road, dt, now);
     });
     perf.folk.push(performance.now() - tf);
@@ -1602,7 +1704,9 @@ Object.assign(window, {
             let land = 0, top = -9;
             for (let k = 0; k < N * N; k++) { if (base[k] > .3) land++; top = Math.max(top, base[k]); }
             const kinds = [...new Set(roads.flatMap(r => r.parts.map(p => p.kind)))];
-            return { land: +(land * RES * RES).toFixed(0), top: +top.toFixed(1), roads: roads.length, kinds, houses: houses.length, trees: trees.length, folk: townsfolk(), specials: specials.map(s => `${s.kind}${s.stage ?? ''}`) };
+            const paved = [0, 0, 0, 0];
+            for (const r of roads) for (const st of stagesAlong(footfall, r)) paved[st]++;
+            return { land: +(land * RES * RES).toFixed(0), top: +top.toFixed(1), roads: roads.length, kinds, houses: houses.length, trees: trees.length, folk: townsfolk(), specials: specials.map(s => `${s.kind}${s.stage ?? ''}`), paved };
         },
         stroke(x: number, z: number, amount: number, times = 1, carve = false) {
             remember();
@@ -1619,7 +1723,11 @@ Object.assign(window, {
         learn(n = 1) { for (let i = 0; i < n; i++) { sessions++; for (let k = 0; k < PER_SESSION; k++) grow(-1e6); } updateStat(); },
         get sessions() { return sessions; },
         /** Show every road at one stage of use (0 worn path … 3 tiles), to compare. */
-        roadStage(n: number) { roadStage = n; drawRoads(); },
+        roadStage(n: number | null) { roadStage = n; drawRoads(); },
+        /** A みち stroke through these points, as the finger would draw it. */
+        drawRoad(path: [number, number][]) { remember(); drawn.push(...path); recompute(); },
+        get gazing() { return gazing.length; },
+        get footfall() { return Array.from(footfall).reduce((a, b) => a + b, 0); },
         heightAt: (x: number, z: number) => heightAt(base, x, z),
         groundAt: (x: number, z: number) => heightAt(shaped, x, z),
         /** Look at a point from the sea side of it, from above. */
