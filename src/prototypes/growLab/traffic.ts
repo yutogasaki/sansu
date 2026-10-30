@@ -47,24 +47,27 @@ export function pathBetween(g: Map<number, number[]>, from: number, to: number):
  * Sends `count` residents on trips from the given homes to the given places,
  * adding a footstep to every road node they cross. Places nobody can reach
  * by road are left out (they are returned, so the island can hint at them).
+ * The routes walked are returned too, so some can be shown walking.
  */
-export function walkTrips(fall: Footfall, roads: Road[], homes: XZ[], places: XZ[], count: number, rand: () => number): { trips: number; unreached: XZ[] } {
+export function walkTrips(fall: Footfall, roads: Road[], homes: XZ[], places: XZ[], count: number, rand: () => number): { trips: number; unreached: XZ[]; routes: number[][] } {
     const g = graphOf(roads);
     const from = homes.map(h => nodeNear(g, h, 2.4)).filter((k): k is number => k !== undefined);
     const to = places.map(p => ({ p, k: nodeNear(g, p, 1.6) }));
     const unreached = to.filter(t => t.k === undefined).map(t => t.p);
     const open = to.filter(t => t.k !== undefined).map(t => t.k!);
     let trips = 0;
-    if (!from.length || !open.length) return { trips, unreached };
+    const routes: number[][] = [];
+    if (!from.length || !open.length) return { trips, unreached, routes };
     for (let i = 0; i < count; i++) {
         const a = from[Math.floor(rand() * from.length)], b = open[Math.floor(rand() * open.length)];
         if (a === b) continue;
         const path = pathBetween(g, a, b);
         if (!path) continue;
         for (const k of path) fall[k] += 1;
+        routes.push(path);
         trips++;
     }
-    return { trips, unreached };
+    return { trips, unreached, routes };
 }
 
 /** How a road looks for the footsteps it has had: 0 worn path, 1 gravel, 2 stones, 3 tiles. */

@@ -24,9 +24,10 @@ interface Special { x: number; z: number; kind: SpecialKind; stage?: number; the
 
 const root = document.querySelector<HTMLDivElement>('#app')!;
 root.innerHTML = `<div id="viewport"></div>
-<div class="top"><span>試作 · そだつ島</span><div class="right"><button id="learn" class="pill" hidden>📖 まなぶ</button><button id="sound" class="round" aria-label="おと">🔈</button><div class="seg" id="time"><button data-time="day">ひる</button><button data-time="dusk">ゆうがた</button></div></div></div>
+<div class="top"><span>試作 · そだつ島</span><div class="right"><button id="learn" class="pill" hidden aria-label="まなぶ">📖<span> まなぶ</span></button><button id="photo" class="round" aria-label="しゃしん">📷</button><button id="sound" class="round" aria-label="おと">🔈</button><div class="seg" id="time"><button data-time="day">ひる</button><button data-time="dusk">ゆうがた</button></div></div></div>
 <p class="stat" id="stat" aria-live="polite"></p>
 <div class="swatches" id="swatches" hidden></div>
+<div class="card" id="card" hidden><img alt="しまの しゃしん"><div class="card-buttons"><a id="save" download="shima.png">ほぞん</a><button id="close">とじる</button></div></div>
 <div class="tools"><button id="undo" aria-label="もどす">↶</button><div class="seg big" id="tool"><button data-tool="stack">つむ</button><button data-tool="carve">けずる</button><button data-tool="road" hidden>みち</button></div><button id="seed" aria-label="おうちの たね">🌱</button><button id="special" aria-label="とくべつな たてもの">★</button></div>`;
 const viewport = root.querySelector<HTMLDivElement>('#viewport')!;
 const stat = root.querySelector<HTMLParagraphElement>('#stat')!;
@@ -76,6 +77,12 @@ let nextId = 1;
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 // Start sharp enough and cheap; the loop raises the resolution while frames stay quick.
 let pixelRatio = 1;
+/**
+ * How much the island draws: 0 everything; 1 no shadows; 2 also fewer residents
+ * and nobody out walking. It only steps down, when frames stay slow at the
+ * lowest resolution, so a weak phone stays smooth without asking anyone.
+ */
+let quality = 0;
 renderer.setPixelRatio(pixelRatio);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -1162,14 +1169,17 @@ const paving = () => (roadStage === null ? roads.map(r => stagesAlong(footfall, 
 function grow(now: number) {
     // Residents go about: a third of them make a trip each step.
     const before = paving();
-    unreached = walkTrips(footfall, roads, homesOf(), placesOf(), Math.ceil(townsfolk() / 3), rand).unreached;
+    const went = walkTrips(footfall, roads, homesOf(), placesOf(), Math.ceil(townsfolk() / 3), rand);
+    unreached = went.unreached;
     lookTowards();
+    // One of those trips is seen: a resident sets off along the roads to the place.
+    if (now > 0 && went.routes.length) setOff(went.routes[0]);
     if (paving() !== before) drawRoads();
     // In the app the child's house grows with learning time; here, every few ticks.
     const young = specials.find(s => s.kind === 'home' && (s.stage ?? 3) < 3);
     if (young && ++ticks % 5 === 0) {
         young.stage = (young.stage ?? 0) + 1;
-        if (now > 0) chime(520 + young.stage * 130, .04, .35);
+        if (now > 0) { chime(520 + young.stage * 130, .04, .35); burst(young.x, heightAt(shaped, young.x, young.z) + 1, young.z, 30, .8); }
         redrawSpecials();
     }
     const length = roads.reduce((s, r) => s + r.line.length * .25, 0);
@@ -1182,7 +1192,7 @@ function grow(now: number) {
         if (o && specials.every(s => Math.hypot(s.x - o.x, s.z - o.z) > 1)) {
             houses.push(o);
             built = true;
-            if (now > 0) chime(780 + rand() * 240, .025, .22);
+            if (now > 0) { chime(780 + rand() * 240, .025, .22); burst(o.x, heightAt(shaped, o.x, o.z) + .6, o.z, 14, .6); }
             // The new house levels its plot; trees in the way make room.
             settle();
             trees = trees.filter(t => treeFits(shaped, roads, houses, trees, t));
@@ -1197,7 +1207,7 @@ function grow(now: number) {
         if (low.length) {
             const i = houses.indexOf(low[Math.floor(rand() * low.length)]);
             houses[i] = { ...houses[i], floors: houses[i].floors + 1 };
-            if (now > 0) chime(660 + rand() * 200, .02, .2);
+            if (now > 0) { chime(660 + rand() * 200, .02, .2); burst(houses[i].x, heightAt(shaped, houses[i].x, houses[i].z) + houses[i].floors * .55, houses[i].z, 10, .4); }
         }
     }
     // As many trees as the land has room for: a small island is not a jungle.
@@ -1253,7 +1263,7 @@ function along(line: [number, number, number][], s: number, side: number): [THRE
 const poko = new IslandMaterials();
 const FOLK_SCALE = .4;
 const SPECIES: ResidentSpecies[] = ['otter', 'rabbit', 'fox'];
-const townsfolk = () => Math.min(18, 3 + Math.floor(houses.length / 3) + movedIn);
+const townsfolk = () => Math.min(quality >= 2 ? 8 : 18, 3 + Math.floor(houses.length / 3) + movedIn);
 /** Travellers who came by boat and now live in a house the child grew. */
 let movedIn = 0;
 const folk = Array.from({ length: 18 }, (_, i) => {
@@ -1280,6 +1290,50 @@ const partner = (() => {
     return { g, rig };
 })();
 
+// ---------- きらきら ----------
+// A small pool of sparkles: they fly up from whatever just happened and fade.
+const SPARKS = 220;
+const sparkPos = new Float32Array(SPARKS * 3), sparkCol = new Float32Array(SPARKS * 3);
+const sparkVel = new Float32Array(SPARKS * 3), sparkLife = new Float32Array(SPARKS);
+const sparkGeo = new THREE.BufferGeometry();
+sparkGeo.setAttribute('position', new THREE.BufferAttribute(sparkPos, 3));
+sparkGeo.setAttribute('color', new THREE.BufferAttribute(sparkCol, 3));
+// Each sparkle is a soft round glow, big enough to see from the whole-island view.
+const GLOW_DOT = canvasTexture((c, s) => {
+    const g = c.createRadialGradient(s / 2, s / 2, 0, s / 2, s / 2, s / 2);
+    g.addColorStop(0, '#ffffff'); g.addColorStop(.35, '#ffffffcc'); g.addColorStop(1, '#ffffff00');
+    c.fillStyle = g; c.fillRect(0, 0, s, s);
+}, 64);
+const sparks = new THREE.Points(sparkGeo, new THREE.PointsMaterial({ size: .45, map: GLOW_DOT, vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+sparks.frustumCulled = false;
+scene.add(sparks);
+let nextSpark = 0;
+const SPARK_COLOURS = ['#ffe066', '#ff8fc4', '#7ff0c0', '#ffffff', '#c7a6ff'].map(c => new THREE.Color(c));
+function burst(x: number, y: number, z: number, count: number, spread = 1) {
+    for (let i = 0; i < count; i++) {
+        const k = nextSpark++ % SPARKS, a = Math.random() * Math.PI * 2, up = .6 + Math.random();
+        sparkPos.set([x, y, z], k * 3);
+        sparkVel.set([Math.cos(a) * spread * (.4 + Math.random()), up * 2.2, Math.sin(a) * spread * (.4 + Math.random())], k * 3);
+        const c = SPARK_COLOURS[k % SPARK_COLOURS.length];
+        sparkCol.set([c.r, c.g, c.b], k * 3);
+        sparkLife[k] = 1;
+    }
+}
+function moveSparks(dt: number) {
+    for (let k = 0; k < SPARKS; k++) {
+        if (sparkLife[k] <= 0) continue;
+        sparkLife[k] -= dt * 1.1;
+        sparkVel[k * 3 + 1] -= dt * 3.2;
+        for (let a = 0; a < 3; a++) sparkPos[k * 3 + a] += sparkVel[k * 3 + a] * dt;
+        // Fading: colour toward black, which adds nothing.
+        const f = Math.max(0, sparkLife[k]) / (sparkLife[k] + dt * 1.1 || 1);
+        for (let a = 0; a < 3; a++) sparkCol[k * 3 + a] *= f;
+        if (sparkLife[k] <= 0) sparkPos.set([0, -50, 0], k * 3);
+    }
+    sparkGeo.attributes.position.needsUpdate = true;
+    sparkGeo.attributes.color.needsUpdate = true;
+}
+
 // ---------- つぼみ: what learning brings, opened by the child's own finger ----------
 // Finishing a learning session does not change the island by itself. Buds
 // come up where it is ready to grow (the young seed, the busiest roadside),
@@ -1305,7 +1359,7 @@ function makeBud(x: number, z: number, steps: number): Bud {
     g.add(stem, bulb);
     for (let i = 0; i < 4; i++) {
         const sepal = new THREE.Mesh(BUD.sepal, M.bush);
-        sepal.position.y = .3; sepal.rotation.set(.5, i * Math.PI / 2, 0, 'YXZ');
+        sepal.position.y = .3; sepal.rotation.set(.5, i * Math.PI / 2, 0, 'YXZ'); sepal.name = 'sepal';
         g.add(sepal);
     }
     // A generous invisible ball around it, so a small finger finds it.
@@ -1332,9 +1386,22 @@ function sprout(steps: number) {
     for (const [x, z] of spots.slice(0, 2)) { const [lx, lz] = landNear(x, z); buds.push(makeBud(lx, lz, share)); }
     updateStat();
 }
+/** Buds that have been tapped and are opening: the petals part, the bulb swells and is gone. */
+let opening: { g: THREE.Group; t0: number }[] = [];
+function moveOpening(now: number) {
+    opening = opening.filter(o => {
+        const t = (now - o.t0) / 650;
+        if (t >= 1) { budsGroup.remove(o.g); return false; }
+        for (const c of o.g.children) if (c.name === 'sepal') c.rotation.x = .5 + t * 1.6;
+        const bulb = o.g.getObjectByName('bulb')!;
+        bulb.scale.setScalar(t < .4 ? 1 + t * 1.2 : Math.max(.01, 1.48 * (1 - (t - .4) / .6)));
+        return true;
+    });
+}
 function openBud(b: Bud) {
     buds = buds.filter(o => o !== b);
-    budsGroup.remove(b.g);
+    opening.push({ g: b.g, t0: performance.now() });
+    burst(b.x, b.g.position.y + .9, b.z, 40, 1.2);
     // A little burst: the ring under it, and a rising chime for each thing that grows.
     cursor.x = b.x; cursor.z = b.z; cursor.shown = 1; cursor.pulse = 1;
     navigator.vibrate?.(12);
@@ -1411,6 +1478,49 @@ function moveTraveller(dt: number, now: number) {
     const ready = !!emptyHome();
     t.sign.position.y = 2.6 + (ready ? Math.abs(Math.sin(now / 220)) * .6 : Math.sin(now / 900) * .1);
     t.sign.rotation.y = now / 1500;
+}
+
+// ---------- residents out and about ----------
+// Some of the trips residents make are walked where the child can see: from
+// a house along the roads to the lighthouse, the harbour, the child's house.
+// They hop when they arrive and go back in, so the roads they make busy are
+// the roads the child sees them on.
+const trippers = Array.from({ length: 4 }, (_, i) => {
+    const g = new THREE.Group();
+    const rig = makeResidentRig(SPECIES[(i + 1) % 3], poko);
+    merge(rig.body);
+    g.add(rig.pose);
+    g.scale.setScalar(FOLK_SCALE);
+    g.visible = false;
+    scene.add(g);
+    return { g, rig, path: null as P3[] | null, s: 0, arrived: 0 };
+});
+function setOff(route: number[]) {
+    const t = trippers.find(o => !o.path && !o.arrived);
+    if (!t || route.length < 3 || quality >= 2) return;
+    t.path = route.map(k => { const x = -SIZE / 2 + (k % N) * RES, z = -SIZE / 2 + Math.floor(k / N) * RES; return [x, heightAt(shaped, x, z), z] as P3; });
+    t.s = 0;
+    t.g.visible = true;
+}
+function moveTrippers(dt: number, now: number) {
+    for (const t of trippers) {
+        if (t.arrived) {
+            // A happy hop at the place, then back indoors.
+            const a = (now - t.arrived) / 900;
+            t.g.position.y = t.path![t.path!.length - 1][1] + Math.sin(Math.min(1, a) * Math.PI * 2) ** 2 * .25;
+            t.g.scale.setScalar(FOLK_SCALE * (a > .7 ? Math.max(.01, 1 - (a - .7) / .3) : 1));
+            if (a >= 1) { t.arrived = 0; t.path = null; t.g.visible = false; t.g.scale.setScalar(FOLK_SCALE); }
+            continue;
+        }
+        if (!t.path) continue;
+        t.s += dt * 4.5;
+        const i = Math.floor(t.s), p = t.path;
+        if (i >= p.length - 1) { t.arrived = now; burst(p[p.length - 1][0], p[p.length - 1][1] + .5, p[p.length - 1][2], 8, .4); continue; }
+        const u = t.s - i, a = p[i], b = p[i + 1];
+        t.g.position.set(a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u + rise(a[0], a[2]), a[2] + (b[2] - a[2]) * u);
+        t.g.rotation.y = Math.atan2(b[0] - a[0], b[2] - a[2]);
+        t.rig.feet.forEach((foot, k) => { foot.position.z = .12 + Math.sin(now / 110 + k * Math.PI) * .12; });
+    }
 }
 
 const ENTER = .9;
@@ -1707,6 +1817,45 @@ function learn() {
     sessions++;
     sprout(PER_SESSION);
 }
+// ---------- しまの しゃしん ----------
+// A card to show someone: the island as it is now, in a dotted frame, with
+// how far it has come. Saved as a picture, nothing else is kept or sent.
+const card = root.querySelector<HTMLDivElement>('#card')!;
+function photo() {
+    renderer.render(scene, camera);
+    const shot = new Image();
+    shot.onload = () => {
+        const c = document.createElement('canvas');
+        c.width = 1080; c.height = 1350;
+        const x = c.getContext('2d')!;
+        x.fillStyle = '#fffdf9'; x.fillRect(0, 0, c.width, c.height);
+        // The ふしぎ frame: pokomoko dots all round the edge.
+        const r = rng(sessions + houses.length);
+        for (let i = 0; i < 90; i++) {
+            const t = i / 90, side = Math.floor(t * 4), u = (t * 4) % 1;
+            const [px, py] = [[u * 1080, 22], [1058, u * 1350], [(1 - u) * 1080, 1328], [22, (1 - u) * 1350]][side];
+            x.fillStyle = POKO[i % POKO.length]; x.beginPath(); x.arc(px + (r() - .5) * 10, py + (r() - .5) * 10, 9 + r() * 9, 0, Math.PI * 2); x.fill();
+        }
+        // The island, cropped to fill the picture window.
+        const w = 960, h = 980, scale = Math.max(w / shot.width, h / shot.height);
+        const sw = w / scale, sh = h / scale;
+        x.save(); x.beginPath(); x.roundRect(60, 60, w, h, 36); x.clip();
+        x.drawImage(shot, (shot.width - sw) / 2, (shot.height - sh) / 2, sw, sh, 60, 60, w, h);
+        x.restore();
+        x.fillStyle = '#30364f'; x.font = '700 64px system-ui, sans-serif'; x.fillText('わたしの しま', 70, 1130);
+        x.fillStyle = '#606980'; x.font = '500 38px system-ui, sans-serif';
+        x.fillText(`いえ ${houses.length}  ·  すむ ${townsfolk()}  ·  き ${trees.length}${byLearning ? `  ·  まなんだ ${sessions}かい` : ''}`, 70, 1200);
+        x.fillText(new Date().toLocaleDateString('ja-JP'), 70, 1260);
+        const url = c.toDataURL('image/png');
+        card.querySelector('img')!.src = url;
+        card.querySelector<HTMLAnchorElement>('#save')!.href = url;
+        card.hidden = false;
+        chime(990, .03, .3);
+    };
+    shot.src = renderer.domElement.toDataURL('image/png');
+}
+root.querySelector('#photo')!.addEventListener('click', photo);
+root.querySelector('#close')!.addEventListener('click', () => { card.hidden = true; });
 const learnButton = root.querySelector<HTMLButtonElement>('#learn')!;
 learnButton.hidden = !byLearning;
 learnButton.addEventListener('click', () => learn());
@@ -1764,17 +1913,27 @@ for (let i = 0; i < 60; i++) grow(-1e6);
 easeGround(10);
 rideRoads();
 
-let last = performance.now(), lastGrow = 0, frames = 0, frameSum = 0;
+let last = performance.now(), lastGrow = 0, frames = 0, frameSum = 0, slowChecks = 0, checkedAt = performance.now();
 renderer.setAnimationLoop(now => {
     const frame = now - last;
     const dt = Math.min(.05, frame / 1000);
     last = now;
     // Raise the resolution while frames stay quick; drop it back if they do not.
     frames++; frameSum += frame;
-    if (frames === 90) {
+    // Judged every second and a half (and at least ten frames), so even a very slow phone is noticed soon.
+    if (frames >= 10 && now - checkedAt > 1500) {
+        checkedAt = now;
         const avg = frameSum / frames, most = Math.min(devicePixelRatio, 1.5);
         const next = avg < 18 && pixelRatio < most ? Math.min(most, pixelRatio + .25) : avg > 30 && pixelRatio > 1 ? Math.max(1, pixelRatio - .25) : pixelRatio;
         if (next !== pixelRatio) { pixelRatio = next; renderer.setPixelRatio(next); renderer.setSize(viewport.clientWidth, viewport.clientHeight, false); }
+        // Still slow at the lowest resolution twice running: draw less.
+        slowChecks = avg > 30 && pixelRatio <= 1 ? slowChecks + 1 : 0;
+        if (slowChecks >= 2 && quality < 2) {
+            quality++;
+            slowChecks = 0;
+            if (quality >= 1) sun.castShadow = false;
+            if (quality >= 2) for (const t of trippers) { t.path = null; t.arrived = 0; t.g.visible = false; }
+        }
         frames = 0; frameSum = 0;
     }
     // While a finger strokes, the island waits; it grows again once the hand is off.
@@ -1832,6 +1991,9 @@ renderer.setAnimationLoop(now => {
         bulb.scale.setScalar(1 + Math.sin(now / 350 + b.phase) * .06);
     }
     moveTraveller(dt, now);
+    moveOpening(now);
+    moveTrippers(dt, now);
+    moveSparks(dt);
     partner.g.visible = !!home;
     if (home) {
         const x = home.x + .55, z = home.z + .75;
@@ -1856,6 +2018,9 @@ Object.assign(window, {
         get moved() { return lastMoved; },
         get pixelRatio() { return pixelRatio; },
         get drawCalls() { return renderer.info.render.calls; },
+        get quality() { return quality; },
+        get walkingOut() { return trippers.filter(t => t.path).length; },
+        get sparkling() { let n = 0; for (const l of sparkLife) if (l > 0) n++; return n; },
         get memory() { return { ...renderer.info.memory }; },
         /** Where a point on the ground shows on screen, in page pixels, to aim a real tap at it. */
         screenOf(x: number, z: number) {
