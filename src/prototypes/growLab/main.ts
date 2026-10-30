@@ -17,14 +17,14 @@ import './style.css';
 // finds another way (steps, a bridge, a funicular, a house that moves next door).
 
 type Tool = 'stack' | 'carve' | 'road';
-type Time = 'day' | 'dusk';
+type Time = 'day' | 'dusk' | 'night';
 type SpecialKind = 'home' | 'chapel' | 'lighthouse' | 'tower';
 /** `stage` is how far a child's house has grown from its seed (0 seed … 3 full). */
 interface Special { x: number; z: number; kind: SpecialKind; stage?: number; theme?: number; lived?: boolean }
 
 const root = document.querySelector<HTMLDivElement>('#app')!;
 root.innerHTML = `<div id="viewport"></div>
-<div class="top"><span>試作 · そだつ島</span><div class="right"><button id="learn" class="pill" hidden aria-label="まなぶ">📖<span> まなぶ</span></button><button id="photo" class="round" aria-label="しゃしん">📷</button><button id="sound" class="round" aria-label="おと">🔈</button><div class="seg" id="time"><button data-time="day">ひる</button><button data-time="dusk">ゆうがた</button></div></div></div>
+<div class="top"><span>試作 · そだつ島</span><div class="right"><button id="learn" class="pill" hidden aria-label="まなぶ">📖<span> まなぶ</span></button><button id="photo" class="round" aria-label="しゃしん">📷</button><button id="sound" class="round" aria-label="おと">🔈</button><button id="time" class="round" aria-label="じかん">☀️</button></div></div>
 <p class="stat" id="stat" aria-live="polite"></p>
 <div class="swatches" id="swatches" hidden></div>
 <div class="card" id="card" hidden><img alt="しまの しゃしん"><div class="card-buttons"><a id="save" download="shima.png">ほぞん</a><button id="close">とじる</button></div></div>
@@ -32,7 +32,7 @@ root.innerHTML = `<div id="viewport"></div>
 const viewport = root.querySelector<HTMLDivElement>('#viewport')!;
 const stat = root.querySelector<HTMLParagraphElement>('#stat')!;
 const params = new URLSearchParams(location.search);
-let time: Time = params.get('time') === 'dusk' ? 'dusk' : 'day';
+let time: Time = (['dusk', 'night'] as const).find(t => t === params.get('time')) ?? 'day';
 let tool: Tool = 'stack';
 let placing: SpecialKind | null = null;
 /** The colour the next house seed will be. */
@@ -611,6 +611,25 @@ function rideRoads() {
     for (const p of pieces) p.o.position.y = p.y0 + rise(p.o.position.x, p.o.position.z);
 }
 const LAMP_HEAD = new THREE.SphereGeometry(.07, 10, 8), LAMP_GLOW = mat(0xffe6a0, { emissive: 0xffc860, emissiveIntensity: .7 });
+// A soft warm glow round each lamp, seen once the sun goes down.
+const WARM_DOT = canvasTexture((c, s) => {
+    const g = c.createRadialGradient(s / 2, s / 2, 0, s / 2, s / 2, s / 2);
+    g.addColorStop(0, '#fff4d0'); g.addColorStop(.2, '#ffd27acc'); g.addColorStop(.55, '#ffb24a33'); g.addColorStop(1, '#ffa03000');
+    c.fillStyle = g; c.fillRect(0, 0, s, s);
+}, 64);
+const HALO = {
+    lamp: new THREE.PointsMaterial({ size: 1.3, map: WARM_DOT, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }),
+    door: new THREE.PointsMaterial({ size: .7, map: WARM_DOT, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }),
+};
+// The warm patch of light a lamp throws on the paving below it.
+const POOL_GEO = new THREE.PlaneGeometry(1.8, 1.8).rotateX(-Math.PI / 2);
+const POOL = new THREE.MeshBasicMaterial({ map: WARM_DOT, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, polygonOffset: true, polygonOffsetFactor: -4 });
+const ONE_POINT = new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute([0, 0, 0], 3));
+const halo = (material: THREE.PointsMaterial, x: number, y: number, z: number) => {
+    const p = new THREE.Points(ONE_POINT, material);
+    p.position.set(x, y, z);
+    return p;
+};
 /** Along the busiest roads: lamps and flower pots in turn, on alternate sides. */
 function lamps(line: P3[], pv: Paving) {
     let next = 1, side = 1, gone = 0;
@@ -626,7 +645,8 @@ function lamps(line: P3[], pv: Paving) {
         if (side > 0) {
             const post = new THREE.Mesh(PILLAR, pv.lamp); post.scale.set(.3, .62, .3); post.position.y = .31;
             const head = new THREE.Mesh(LAMP_HEAD, LAMP_GLOW); head.position.y = .66;
-            g.add(post, head);
+            const pool = new THREE.Mesh(POOL_GEO, POOL); pool.position.y = .04;
+            g.add(post, head, halo(HALO.lamp, 0, .66, 0), pool);
         } else {
             const pot = new THREE.Mesh(R.pot, pv.lamp); pot.scale.set(1.2, .9, 1.2); pot.position.y = .07;
             const leaves = new THREE.Mesh(R.pot, M.bush); leaves.position.y = .18;
@@ -724,7 +744,15 @@ function drawRoads() {
     const [hx, hz] = harbour();
     const quay = new THREE.Mesh(R.slab, PAVING[themeOf({ x: hx, z: hz })].stages[1]); quay.scale.set(1.1, 1, 1.1);
     quay.position.set(hx, heightAt(shaped, hx, hz) + .04, hz);
-    if (roads.length) roadsGroup.add(quay);
+    if (roads.length) {
+        roadsGroup.add(quay);
+        // A lamp on the quay, so the harbour shows at night.
+        const q = new THREE.Group(); q.position.set(hx - .7, quay.position.y, hz - .3);
+        const post = new THREE.Mesh(PILLAR, M.rail); post.scale.set(.35, .8, .35); post.position.y = .4;
+        const head = new THREE.Mesh(LAMP_HEAD, LAMP_GLOW); head.scale.setScalar(1.3); head.position.y = .85;
+        q.add(shadowy(post), head, halo(HALO.lamp, 0, .85, 0));
+        roadsGroup.add(q);
+    }
     let end = hz;
     while (end < hz + 6 && heightAt(base, hx, end) > -.6) end += .25;
     const length = end - hz + 1.2;
@@ -763,16 +791,25 @@ function drawRoads() {
 // ---------- houses ----------
 const G = {
     floor: new Map<string, THREE.BufferGeometry>(),
-    shutter: new THREE.BoxGeometry(.09, .2, .03),
-    glass: new THREE.BoxGeometry(.12, .2, .02),
-    door: new RoundedBoxGeometry(.18, .32, .04, 2, .02),
+    shutter: new THREE.BoxGeometry(.08, .22, .025),
+    glass: new THREE.BoxGeometry(.13, .22, .02),
+    arch: new THREE.CylinderGeometry(.065, .065, .02, 12, 1, false, -Math.PI / 2, Math.PI).rotateX(Math.PI / 2),
+    sill: new THREE.BoxGeometry(.2, .03, .06),
+    box: new THREE.BoxGeometry(.22, .06, .07),
+    door: new RoundedBoxGeometry(.2, .28, .04, 2, .02),
+    doorArch: new THREE.CylinderGeometry(.1, .1, .04, 14, 1, false, -Math.PI / 2, Math.PI).rotateX(Math.PI / 2),
+    balcony: new THREE.BoxGeometry(.56, .04, .22),
+    rail: new THREE.BoxGeometry(.56, .12, .02),
+    railSide: new THREE.BoxGeometry(.02, .12, .22),
+    awning: new THREE.BoxGeometry(.34, .025, .2),
     dome: new THREE.SphereGeometry(.2, 18, 10, 0, Math.PI * 2, 0, Math.PI / 2),
     bloom: new THREE.IcosahedronGeometry(.1, 1),
 };
 const lathe = (pts: [number, number][], segments = 28) => new THREE.LatheGeometry(pts.map(([x, y]) => new THREE.Vector2(x, y)), segments);
+// Crisp whitewashed corners, softened just enough to stay toy-like.
 const floorGeo = (w: number, h: number, d: number) => {
     const k = `${w.toFixed(2)},${h},${d.toFixed(2)}`;
-    if (!G.floor.has(k)) G.floor.set(k, new RoundedBoxGeometry(w, h, d, 4, Math.min(.2, Math.min(w, h, d) * .36)));
+    if (!G.floor.has(k)) G.floor.set(k, new RoundedBoxGeometry(w, h, d, 3, Math.min(.09, Math.min(w, h, d) * .3)));
     return G.floor.get(k)!;
 };
 
@@ -781,10 +818,9 @@ function footing(o: { x: number; z: number; w: number; d: number }) {
     return { low: Math.min(...ys), high: Math.max(...ys) };
 }
 
-/** A house, built at the origin; `userData.lift` is how far its floor sits above the ground at its middle. */
 const roundGeo = (rad: number) => {
     const k = `round${rad.toFixed(2)}`;
-    if (!G.floor.has(k)) G.floor.set(k, lathe([[0, 0], [rad, 0], [rad * 1.05, .2], [rad * 1.02, .42], [rad * .95, .55], [0, .55]], 22));
+    if (!G.floor.has(k)) G.floor.set(k, lathe([[0, 0], [rad, 0], [rad * 1.03, .25], [rad, .5], [rad * .97, .55], [0, .55]], 22));
     return G.floor.get(k)!;
 };
 const R = {
@@ -794,6 +830,16 @@ const R = {
     pot: new THREE.IcosahedronGeometry(.08, 1),
     parasol: new THREE.ConeGeometry(.26, .1, 12),
 };
+/**
+ * Window glass is shared by every house, so evening can light the whole town
+ * at once: most windows light at dusk, the rest once it is night.
+ */
+const WINDOW = {
+    early: mat(0x2f4a5c, { roughness: .35, emissive: 0xffb45a, emissiveIntensity: 0 }),
+    late: mat(0x2f4a5c, { roughness: .35, emissive: 0xffc878, emissiveIntensity: 0 }),
+};
+// Shutters, doors and trims in the colours painted villages use, one set per house.
+const TRIMS = [0x4e8a5c, 0x3a74c9, 0x2fa3a0, 0xe0663f, 0x6b5fb5, 0xf2b630].map(c => mat(c));
 type Roof = 'terrace' | 'dome' | 'vault' | 'turret';
 /** A town house takes after the child's house nearest to it. */
 function themeOf(o: { x: number; z: number }): number {
@@ -806,9 +852,31 @@ function themeOf(o: { x: number; z: number }): number {
 }
 
 /**
+ * One window on a wall facing +z: arched glass between shutters on a sill,
+ * sometimes with a box of flowers.
+ */
+function addWindow(to: THREE.Object3D, x: number, y: number, z: number, turn: number, trim: THREE.Material, r: () => number) {
+    const w = new THREE.Group();
+    w.position.set(x, y, z);
+    w.rotation.y = turn;
+    const glass = r() < .7 ? WINDOW.early : WINDOW.late;
+    const gl = new THREE.Mesh(G.glass, glass);
+    const top = new THREE.Mesh(G.arch, glass); top.position.y = .11;
+    const sill = new THREE.Mesh(G.sill, M.curb); sill.position.set(0, -.12, .02);
+    w.add(gl, top, sill);
+    for (const side of [-1, 1]) { const s = new THREE.Mesh(G.shutter, trim); s.position.set(side * .11, 0, .01); w.add(s); }
+    if (r() < .3) {
+        const box = new THREE.Mesh(G.box, trim); box.position.set(0, -.15, .05); w.add(box);
+        for (const bx of [-.07, 0, .07]) { const b = new THREE.Mesh(G.bloom, r() < .5 ? M.bloom : M.bush); b.scale.setScalar(.45); b.position.set(bx, -.1, .06); w.add(b); }
+    }
+    to.add(w);
+}
+
+/**
  * A house, built at the origin; `userData.lift` is how far its floor sits above the ground at its middle.
- * Houses are soft-cornered blocks or round like a grown tower, two or three
- * storeys stepping back and leaning a little, each topped differently.
+ * Houses are whitewashed or coloured blocks, or round like a grown tower, two
+ * or three storeys stepping back and leaning a little, each topped differently.
+ * Windows look out on every side, so the town lights up all round at night.
  */
 function buildHouse(o: House): THREE.Group {
     builds.house++;
@@ -816,12 +884,13 @@ function buildHouse(o: House): THREE.Group {
     const r = rng(o.id * 31);
     const round = o.id % 3 === 0;
     const th = THEMES[themeOf(o)];
+    const trim = TRIMS[(o.id * 7 + o.tint) % TRIMS.length];
     // About one house in five is a ふしぎ house: a patchwork wall or a dotted dome.
     const wonder = th.wonder(o.id);
     const roof: Roof = wonder === 'dots' ? 'dome' : (['terrace', 'dome', 'vault', 'turret', 'terrace'] as const)[Math.floor(r() * 5)];
     let y = 0, w = o.w, d = o.d, dx = 0, dz = 0, turn = 0;
     for (let f = 0; f < o.floors; f++) {
-        const wall = wonder === 'patch' && f === 0 ? W.patch[o.id % 2] : th.walls[o.tint];
+        const wall = wonder === 'patch' && f === 0 ? W.patch[o.id % 2] : th.walls[(o.tint + f * (r() < .3 ? 1 : 0)) % 5];
         const rad = Math.min(w, d) / 2;
         // Each storey turns a little on the one below, so a tall house looks
         // grown rather than stacked.
@@ -832,14 +901,36 @@ function buildHouse(o: House): THREE.Group {
         const body = new THREE.Mesh(round ? roundGeo(rad) : floorGeo(w, .55, d), wall);
         body.position.y = round ? 0 : .275;
         storey.add(body);
-        // Windows with green shutters on the front, the door on the ground floor.
+        // A thin ledge where one storey meets the next.
+        const ledge = round ? new THREE.Mesh(R.slab, M.curb) : new THREE.Mesh(floorGeo(w + .06, .045, d + .06), M.curb);
+        if (round) ledge.scale.set(rad + .03, .65, rad + .03);
+        ledge.position.y = .55;
+        storey.add(ledge);
         const front = (round ? rad : d / 2) + .01, span = round ? rad * .9 : w;
-        if (f === 0) { const door = new THREE.Mesh(G.door, M.door); door.position.set(span * .18, .17, front); storey.add(door); }
-        for (const wx of f === 0 ? [-span * .22] : [-span * .24, span * .24]) {
-            const gl = new THREE.Mesh(G.glass, M.glass); gl.position.set(wx, .32, front);
-            const l = new THREE.Mesh(G.shutter, M.shutter); l.position.set(wx - .1, .32, front + .01);
-            const rr = new THREE.Mesh(G.shutter, M.shutter); rr.position.set(wx + .1, .32, front + .01);
-            storey.add(gl, l, rr);
+        const balcony = f > 0 && !round && w > .75 && r() < .4;
+        if (f === 0) {
+            // An arched door in the house's own colour, a lamp beside it, sometimes an awning.
+            const door = new THREE.Mesh(G.door, trim); door.position.set(span * .18, .14, front);
+            const arch = new THREE.Mesh(G.doorArch, trim); arch.position.set(span * .18, .28, front);
+            const lamp = new THREE.Mesh(LAMP_HEAD, LAMP_GLOW); lamp.scale.setScalar(.6); lamp.position.set(span * .18 + .17, .33, front + .04);
+            storey.add(door, arch, lamp);
+            g.userData.doorLamp = [span * .18 + .17, .33, front + .04];
+            if (r() < .45) { const a = new THREE.Mesh(G.awning, trim); a.position.set(span * .18, .42, front + .08); a.rotation.x = .35; storey.add(a); }
+            addWindow(storey, -span * .22, .3, front, 0, trim, r);
+        } else if (balcony) {
+            // A balcony with a railing, its glass door behind.
+            const slab = new THREE.Mesh(G.balcony, M.curb); slab.position.set(0, .02, front + .1);
+            const rail = new THREE.Mesh(G.rail, trim); rail.position.set(0, .1, front + .2);
+            storey.add(slab, rail);
+            for (const side of [-1, 1]) { const rs = new THREE.Mesh(G.railSide, trim); rs.position.set(side * .27, .1, front + .1); storey.add(rs); }
+            const glass = new THREE.Mesh(G.glass, WINDOW.early); glass.scale.set(1.2, 1.4, 1); glass.position.set(0, .2, front); storey.add(glass);
+            if (r() < .6) for (const bx of [-.2, .2]) { const b = new THREE.Mesh(R.pot, M.bush); b.position.set(bx, .09, front + .1); storey.add(b); }
+        } else for (const wx of [-span * .24, span * .24]) addWindow(storey, wx, .3, front, 0, trim, r);
+        // The sides and back, so the house is never blank from the other side.
+        if (round) for (const a of [Math.PI / 2, Math.PI, -Math.PI / 2]) addWindow(storey, Math.sin(a) * (rad + .01), .3, Math.cos(a) * (rad + .01), a, trim, r);
+        else {
+            for (const side of [-1, 1]) if (d > .7) addWindow(storey, side * (w / 2 + .01), .3, 0, side * Math.PI / 2, trim, r);
+            addWindow(storey, (r() - .5) * w * .4, .3, -d / 2 - .01, Math.PI, trim, r);
         }
         turn += (r() - .5) * .3;
         y += .55;
@@ -873,16 +964,16 @@ function buildHouse(o: House): THREE.Group {
         t.add(cap);
         top.add(t);
     } else {
-        // A roof terrace: potted plants and a striped parasol.
+        // A roof terrace: potted plants and a parasol, and a low parapet round it.
         for (const [px, pz] of [[-.25, .2], [.25, .22], [-.2, -.2]]) {
             const pot = new THREE.Mesh(R.pot, M.bush); pot.position.set(px * rad * 1.6, .1, pz * rad * 1.6); top.add(pot);
         }
         const pole = new THREE.Mesh(PILLAR, M.base); pole.scale.set(.25, .35, .25); pole.position.set(.1, .22, 0); top.add(pole);
-        const para = new THREE.Mesh(R.parasol, th.walls[4]); para.position.set(.1, .42, 0); top.add(para);
+        const para = new THREE.Mesh(R.parasol, trim); para.position.set(.1, .42, 0); top.add(para);
     }
     if (r() < .45) {
         // Bougainvillea spilling down a corner.
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 6; i++) {
             const b = new THREE.Mesh(G.bloom, M.bloom);
             b.position.set(-o.w * .45 + r() * .1, .15 + r() * y * .8, o.d * .3 + r() * .2);
             b.scale.setScalar(.8 + r() * .6);
@@ -890,6 +981,8 @@ function buildHouse(o: House): THREE.Group {
         }
     }
     shadowy(merge(g));
+    const [lx, ly, lz] = g.userData.doorLamp as number[];
+    g.add(halo(HALO.door, lx, ly, lz));
     setFooting(g, o);
     return g;
 }
@@ -1020,7 +1113,7 @@ function buildSpecial(s: Special): THREE.Group {
             }
             const roof = new THREE.Mesh(G.dome, th.roof); roof.scale.set(stage >= 2 ? 2.1 : 2.7, 1.7, stage >= 2 ? 2.1 : 2.7); roof.position.y = top - .03; g.add(roof);
             const door = new THREE.Mesh(G.door, M.door); door.position.set(0, .17, .53); g.add(door);
-            for (const wx of [-.3, .3]) { const gl = new THREE.Mesh(G.glass, M.glass); gl.position.set(wx, .42, .46); gl.rotation.y = wx * 1.1; g.add(gl); }
+            for (const wx of [-.3, .3]) { const gl = new THREE.Mesh(G.glass, WINDOW.early); gl.position.set(wx, .42, .46); gl.rotation.y = wx * 1.1; g.add(gl); }
             if (stage >= 2) {
                 const pole = new THREE.Mesh(PILLAR, M.trunk); pole.scale.set(.3, .55, .3); pole.position.y = top + .55; g.add(pole);
                 const flag = new THREE.Mesh(new THREE.BoxGeometry(.26, .16, .015), W.patch[0]); flag.position.set(.14, top + .74, 0); g.add(flag);
@@ -1036,13 +1129,13 @@ function buildSpecial(s: Special): THREE.Group {
         // A swelling white tower with a red band and a lantern.
         g.add(new THREE.Mesh(lathe([[0, 0], [.5, 0], [.44, .6], [.34, 1.6], [.3, 2.4], [.38, 2.5], [0, 2.5]]), M.walls[0]));
         const band = new THREE.Mesh(new THREE.CylinderGeometry(.37, .4, .3, 24), M.walls[4]); band.position.y = 1.1; g.add(band);
-        const lamp = new THREE.Mesh(new THREE.CylinderGeometry(.2, .2, .3, 16), mat(0xffe08a, { emissive: 0xffc040, emissiveIntensity: .6 })); lamp.position.y = 2.65; g.add(lamp);
+        const lamp = new THREE.Mesh(new THREE.CylinderGeometry(.2, .2, .3, 16), LIGHTHOUSE); lamp.position.y = 2.65; g.add(lamp);
         const cap = new THREE.Mesh(G.dome, M.walls[4]); cap.position.y = 2.8; g.add(cap);
     } else if (s.kind === 'tower') {
         // A tall house-tower that leans and swells like something grown.
         g.add(new THREE.Mesh(lathe([[0, 0], [.6, 0], [.66, .5], [.55, 1.2], [.6, 1.9], [.46, 2.6], [.5, 3.1], [.2, 3.5], [0, 3.6]]), M.walls[3]));
         for (const h of [.8, 1.6, 2.4]) {
-            const w = new THREE.Mesh(G.glass, M.glass); w.position.set(0, h, .58 - (h > 2 ? .1 : 0)); g.add(w);
+            const w = new THREE.Mesh(G.glass, WINDOW.early); w.position.set(0, h, .58 - (h > 2 ? .1 : 0)); g.add(w);
         }
     } else {
         const body = new THREE.Mesh(floorGeo(1.2, .8, .9), M.walls[0]); body.position.y = .4; g.add(body);
@@ -1050,8 +1143,26 @@ function buildSpecial(s: Special): THREE.Group {
         const dome = new THREE.Mesh(G.dome, M.dome); dome.scale.setScalar(1.4); dome.position.set(-.15, .8, 0); g.add(dome);
         const top = new THREE.Mesh(G.dome, M.dome); top.position.set(.5, 1.3, -.2); g.add(top);
     }
-    return shadowy(merge(g));
+    shadowy(merge(g));
+    if (s.kind === 'lighthouse') {
+        // After dark the lantern sweeps a beam out over the sea.
+        const beam = new THREE.Mesh(BEAM_GEO, BEAM);
+        beam.name = 'beam';
+        beam.position.y = 2.65;
+        g.add(beam, halo(HALO.lamp, 0, 2.65, 0));
+    }
+    return g;
 }
+const LIGHTHOUSE = mat(0xffe08a, { emissive: 0xffc040, emissiveIntensity: .6 });
+// A long cone lying on its side, its tip at the lantern, brightest near it.
+const BEAM_GEO = (() => {
+    const geo = new THREE.ConeGeometry(1.1, 9, 20, 1, true).translate(0, -4.5, 0).rotateZ(Math.PI / 2);
+    const pos = geo.attributes.position, fade = new Float32Array(pos.count * 3);
+    for (let i = 0; i < pos.count; i++) { const k = Math.max(0, 1 - pos.getX(i) / 9); fade.fill(k * k, i * 3, i * 3 + 3); }
+    geo.setAttribute('color', new THREE.BufferAttribute(fade, 3));
+    return geo;
+})();
+const BEAM = new THREE.MeshBasicMaterial({ color: 0xfff0b8, vertexColors: true, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending, side: THREE.DoubleSide });
 
 function redrawSpecials() {
     for (const g of specialsGroup.children) release(g);
@@ -1156,6 +1267,7 @@ function settle() {
     target = shaped;
     paintGround();
     scatterMeadow();
+    placeGlimmers();
 }
 
 // Houses and trees on screen, by id. A thing that moves glides to its new
@@ -2011,28 +2123,137 @@ root.querySelector('#seed')!.addEventListener('click', () => {
     showSwatches();
     updateStat();
 });
-root.querySelector('#time')!.addEventListener('click', e => {
-    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-time]');
-    if (b) { time = b.dataset.time as Time; light(); }
-});
+const TIMES: Time[] = ['day', 'dusk', 'night'];
+const timeButton = root.querySelector<HTMLButtonElement>('#time')!;
+timeButton.addEventListener('click', () => { time = TIMES[(TIMES.indexOf(time) + 1) % 3]; light(); });
 root.querySelector<HTMLButtonElement>('[data-tool="stack"]')!.setAttribute('aria-pressed', 'true');
 root.querySelector<HTMLButtonElement>('[data-tool="road"]')!.hidden = !drawMode;
 root.querySelector('#tool')!.classList.toggle('three', drawMode);
 
+// ---------- sky and light ----------
+// The sky is a dome painted from the horizon up, with the sun or moon glowing
+// low in it; at night stars come out and the town's windows and lamps light.
+const SKY = {
+    top: { value: new THREE.Color() }, horizon: { value: new THREE.Color() },
+    glow: { value: new THREE.Color() }, toward: { value: new THREE.Vector3(0, 1, 0) },
+};
+const skyDome = new THREE.Mesh(new THREE.SphereGeometry(240, 32, 16), new THREE.ShaderMaterial({
+    uniforms: { uTop: SKY.top, uHorizon: SKY.horizon, uGlow: SKY.glow, uToward: SKY.toward },
+    vertexShader: 'varying vec3 vDir; void main() { vDir = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    fragmentShader: `varying vec3 vDir; uniform vec3 uTop; uniform vec3 uHorizon; uniform vec3 uGlow; uniform vec3 uToward;
+void main() {
+    float up = clamp(vDir.y, 0.0, 1.0);
+    vec3 c = mix(uHorizon, uTop, pow(up, 0.55));
+    float near = max(dot(vDir, normalize(uToward)), 0.0);
+    c += uGlow * (pow(near, 8.0) * 0.6 + pow(near, 600.0) * 1.2);
+    gl_FragColor = vec4(c, 1.0);
+}`,
+    side: THREE.BackSide, depthWrite: false, fog: false,
+}));
+skyDome.renderOrder = -1;
+scene.add(skyDome);
+const stars = (() => {
+    const r = rng(99), pos: number[] = [];
+    for (let i = 0; i < 420; i++) {
+        const a = r() * Math.PI * 2, up = .12 + Math.pow(r(), .7) * .88, flat = Math.sqrt(1 - up * up);
+        pos.push(Math.cos(a) * flat * 230, up * 230, Math.sin(a) * flat * 230);
+    }
+    const geo = new THREE.BufferGeometry().setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    return new THREE.Points(geo, new THREE.PointsMaterial({ size: 2.2, sizeAttenuation: false, map: GLOW_DOT, color: 0xfff6dc, transparent: true, depthWrite: false, fog: false }));
+})();
+scene.add(stars);
+/** At night small lights drift over the meadow, like fireflies. */
+const GLIMMERS = 50;
+const glimmers = (() => {
+    const geo = new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(new Float32Array(GLIMMERS * 3), 3));
+    const p = new THREE.Points(geo, new THREE.PointsMaterial({ size: .32, map: GLOW_DOT, color: 0xd8ff9a, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+    p.frustumCulled = false;
+    p.userData.home = Array.from({ length: GLIMMERS }, () => [0, 0, 0]);
+    scene.add(p);
+    return p;
+})();
+/** Glimmers keep to land that has no house or road, near the ground. */
+function placeGlimmers() {
+    const r = rng(5 + houses.length), home = glimmers.userData.home as number[][];
+    for (let i = 0, tries = 0; i < GLIMMERS && tries < 2000; tries++) {
+        const x = (r() - .5) * SIZE * .8, z = (r() - .5) * SIZE * .8, y = heightAt(shaped, x, z);
+        if (y < .4) continue;
+        home[i++] = [x, y + .3 + r() * .5, z];
+    }
+}
+function moveGlimmers(now: number) {
+    if (!glimmers.visible) return;
+    const pos = glimmers.geometry.attributes.position as THREE.BufferAttribute, home = glimmers.userData.home as number[][];
+    const t = now / 1000;
+    for (let i = 0; i < GLIMMERS; i++) {
+        const [x, y, z] = home[i];
+        pos.setXYZ(i, x + Math.sin(t * .4 + i) * .5, y + rise(x, z) + Math.sin(t * .9 + i * 2.1) * .15, z + Math.cos(t * .33 + i * 1.3) * .5);
+    }
+    pos.needsUpdate = true;
+    (glimmers.material as THREE.PointsMaterial).opacity = .75 + Math.sin(t * 2.3) * .2;
+}
+const moon = new THREE.Sprite(new THREE.SpriteMaterial({ map: canvasTexture((c, s) => {
+    const g = c.createRadialGradient(s / 2, s / 2, s * .12, s / 2, s / 2, s / 2);
+    g.addColorStop(0, '#fffbe8'); g.addColorStop(.25, '#fff6d088'); g.addColorStop(1, '#fff6d000');
+    c.fillStyle = g; c.fillRect(0, 0, s, s);
+    c.fillStyle = '#fffbea'; c.beginPath(); c.arc(s / 2, s / 2, s * .13, 0, Math.PI * 2); c.fill();
+    c.fillStyle = '#efe6c8'; for (const [x, y, r] of [[.47, .46, .025], [.54, .53, .018], [.5, .55, .012]]) { c.beginPath(); c.arc(s * x, s * y, s * r, 0, Math.PI * 2); c.fill(); }
+}), fog: false, depthWrite: false }));
+moon.scale.setScalar(42);
+scene.add(moon);
+/** Everything that changes with the time of day, in one table. */
+const LOOK: Record<Time, {
+    top: number; horizon: number; glow: number; fog: number; sun: number; sunAt: [number, number, number]; sunPower: number;
+    sky: number; groundBounce: number; skyPower: number; deep: number; shallow: number; foam: number;
+    early: number; late: number; lamps: number; halo: number; beam: number; exposure: number; clouds: number;
+}> = {
+    day: {
+        top: 0x4fa6e2, horizon: 0xcdeffa, glow: 0xfff3d0, fog: 0xc2e6f6, sun: 0xfff4e2, sunAt: [-9, 18, 12], sunPower: 2.5,
+        sky: 0xffffff, groundBounce: 0x6d7a5a, skyPower: 1.2, deep: 0x1a76b8, shallow: 0x46d0c8, foam: 0xffffff,
+        early: 0, late: 0, lamps: .5, halo: 0, beam: 0, exposure: 1, clouds: 0xffffff,
+    },
+    dusk: {
+        top: 0x5b5fa8, horizon: 0xffb48a, glow: 0xffa36a, fog: 0xf1b39b, sun: 0xffb98e, sunAt: [-16, 6, 10], sunPower: 2.1,
+        sky: 0xe8dcff, groundBounce: 0x6a5a6a, skyPower: 1.05, deep: 0x5d5fa6, shallow: 0xe0a39a, foam: 0xffe6d6,
+        early: 1.6, late: 0, lamps: 1.6, halo: .55, beam: .18, exposure: 1, clouds: 0xffd8c8,
+    },
+    night: {
+        top: 0x0a1433, horizon: 0x2a4378, glow: 0x6f86c8, fog: 0x22345e, sun: 0xb4c4ff, sunAt: [7, 15, 9], sunPower: 1,
+        sky: 0x9fb2ec, groundBounce: 0x26304a, skyPower: .95, deep: 0x10295a, shallow: 0x2a6f8f, foam: 0xb8caf0,
+        early: 2.6, late: 2.2, lamps: 3, halo: 1, beam: .32, exposure: 1.25, clouds: 0xc4cdec,
+    },
+};
 function light() {
-    const dusk = time === 'dusk';
-    const sky = dusk ? 0xf4b49a : 0xa8dcf4;
-    scene.background = new THREE.Color(sky);
-    scene.fog = new THREE.Fog(sky, 40, 110);
-    sun.color.set(dusk ? 0xffc2a0 : 0xffffff);
-    sun.intensity = dusk ? 2.2 : 2.5;
-    sun.position.set(dusk ? -16 : -9, dusk ? 7 : 18, dusk ? 10 : 12);
-    hemi.color.set(dusk ? 0xe8dcff : 0xffffff);
-    hemi.intensity = dusk ? 1.15 : 1.2;
-    SEA.deep.value.set(dusk ? 0x4f6aa8 : 0x1a76b8);
-    SEA.shallow.value.set(dusk ? 0x8fb8c8 : 0x46d0c8);
-    SEA.foam.value.set(dusk ? 0xffe2d0 : 0xffffff);
-    for (const b of root.querySelectorAll<HTMLButtonElement>('[data-time]')) b.setAttribute('aria-pressed', String(b.dataset.time === time));
+    const l = LOOK[time];
+    SKY.top.value.set(l.top); SKY.horizon.value.set(l.horizon); SKY.glow.value.set(l.glow);
+    SKY.toward.value.set(...l.sunAt).normalize();
+    scene.background = new THREE.Color(l.horizon);
+    scene.fog = new THREE.Fog(l.fog, 40, 110);
+    sun.color.set(l.sun);
+    sun.intensity = l.sunPower;
+    sun.position.set(...l.sunAt);
+    hemi.color.set(l.sky);
+    hemi.groundColor.set(l.groundBounce);
+    hemi.intensity = l.skyPower;
+    renderer.toneMappingExposure = l.exposure;
+    SEA.deep.value.set(l.deep);
+    SEA.shallow.value.set(l.shallow);
+    SEA.foam.value.set(l.foam);
+    WINDOW.early.emissiveIntensity = l.early;
+    WINDOW.late.emissiveIntensity = l.late;
+    LAMP_GLOW.emissiveIntensity = l.lamps;
+    LIGHTHOUSE.emissiveIntensity = l.lamps;
+    for (const h of [...Object.values(HALO), POOL]) { h.opacity = l.halo; h.visible = l.halo > 0; }
+    POOL.opacity = l.halo * .3;
+    glimmers.visible = time === 'night';
+    BEAM.opacity = l.beam;
+    BEAM.visible = l.beam > 0;
+    CLOUD.color.set(l.clouds);
+    stars.visible = time === 'night';
+    moon.visible = time === 'night';
+    moon.position.copy(SKY.toward.value).multiplyScalar(200);
+    timeButton.textContent = { day: '☀️', dusk: '🌅', night: '🌙' }[time];
+    timeButton.setAttribute('aria-label', { day: 'ひる', dusk: 'ゆうがた', night: 'よる' }[time]);
 }
 
 // ---------- loop ----------
@@ -2145,6 +2366,8 @@ renderer.setAnimationLoop(now => {
     moveTrippers(dt, now);
     moveSparks(dt);
     moveSky(dt, now);
+    moveGlimmers(now);
+    if (BEAM.visible) for (const g of specialsGroup.children) { const beam = g.getObjectByName('beam'); if (beam) beam.rotation.y = now / 1400; }
     partner.g.visible = !!home;
     if (home) {
         const x = home.x + .55, z = home.z + .75;
