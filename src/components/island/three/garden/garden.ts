@@ -4,6 +4,7 @@ import type { Cell, LifeState } from '../../../../domain/islandLife/model';
 import { GardenGeometry, variation, type V3 } from './geometry';
 import { FANTASY_CANDIDATE, type GardenTime } from './presentation';
 import { gardenGlow } from './glow';
+import { COAST_SEA_FRAGMENT, coastMask, coastSeaEnabled } from './coastSea';
 import { batch } from '../primitives';
 import { soilMoistureAt, soilWetness } from '../../../../domain/islandLife/soilMoisture';
 
@@ -63,15 +64,19 @@ export function buildGardenGround(ground: GardenGround, point: (cell: Cell) => T
             diffuseColor.rgb*=(.95+.055*meadow+.022*grain)*mix(vec3(1.),vec3(.76,.88,.90),damp);`);
     };
     grass.material.customProgramCacheKey=()=> 'fantasy-ground-v1';
+    const coast=coastSeaEnabled()?coastMask(ground,point):undefined;
     const seaMaterial=new T.ShaderMaterial({
-        uniforms:{at:{value:0},deep:{value:new T.Color('#39b9de')},shallow:{value:new T.Color('#9de7f0')},shoreSize:{value:new T.Vector2(width/2+1.15,depth/2+1.15)},magic:{value:.45}},
+        uniforms:{at:{value:0},deep:{value:new T.Color('#39b9de')},shallow:{value:new T.Color('#9de7f0')},shoreSize:{value:new T.Vector2(width/2+1.15,depth/2+1.15)},magic:{value:.45},
+            ...(coast?{coastLand:{value:coast.texture},coastFrame:{value:coast.frame},coastCenterZ:{value:centerZ}}:{})},
         vertexShader:'varying vec2 p; void main(){p=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
-        fragmentShader:`varying vec2 p; uniform float at; uniform vec3 deep; uniform vec3 shallow; uniform vec2 shoreSize; uniform float magic;
+        fragmentShader:`${coast?'uniform sampler2D coastLand; uniform vec4 coastFrame; uniform float coastCenterZ;':''}
+            varying vec2 p; uniform float at; uniform vec3 deep; uniform vec3 shallow; uniform vec2 shoreSize; uniform float magic;
             void main(){vec2 q=(p-.5)*40.;
             float waves=sin(q.x*2.7+q.y*1.4+at*.3)+sin(q.y*3.5-q.x*.7-at*.21);
             float shore=exp(-max(0.,length(q*vec2(.85,1.))-3.5)*.65);
             vec3 color=mix(deep,shallow,shore*.7+waves*.025);
             float glint=pow(max(0.,sin(q.x*4.1+sin(q.y*3.)+at*.24)*sin(q.y*4.8-at*.14)),18.);
+            ${coast?COAST_SEA_FRAGMENT:''}
             color+=vec3(.32,.34,.20)*glint*.21;
             // Two broad, soft water ribbons follow this island, even after expansion.
             float radius=length(q/shoreSize);
@@ -181,5 +186,5 @@ export function buildGardenGround(ground: GardenGround, point: (cell: Cell) => T
         const seconds=reduced?0:at/1000;seaMaterial.uniforms.at.value=seconds;
         canopyLeaves.rotation.z=reduced?0:Math.sin(seconds*.29)*.005;canopyLeaves.rotation.x=reduced?0:Math.sin(seconds*.24)*.004;
         dust.position.y=reduced?0:Math.sin(seconds*.12)*.04;
-    },dispose(){root.traverse(object=>{if(object instanceof T.Mesh||object instanceof T.Points)object.geometry.dispose();});g.dispose();glow.dispose();soil.dispose();seaMaterial.dispose();dustMaterial.dispose();}};
+    },dispose(){root.traverse(object=>{if(object instanceof T.Mesh||object instanceof T.Points)object.geometry.dispose();});g.dispose();glow.dispose();soil.dispose();seaMaterial.dispose();coast?.texture.dispose();dustMaterial.dispose();}};
 }
