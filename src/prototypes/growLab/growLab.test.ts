@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { houseSpot, moveHouse, rng, treeSpot, type House } from './growth';
 import { MAX_GRADE, cutRoads, findWay, network, node } from './roads';
-import { N, RES, brush, heightAt, sampleIsland, slopeAt } from './terrain';
+import { N, RES, brush, heightAt, sampleIsland } from './terrain';
 
 describe('grow lab terrain', () => {
     it('raises the middle of a brush stroke more than its edge', () => {
@@ -27,9 +27,13 @@ describe('grow lab roads', () => {
         expect(way.kinds.every(k => k === 'road')).toBe(true);
     });
 
-    it('still reaches the top of a hill too steep for any road, by steps or the funicular', () => {
+    it('still reaches the top of a cliff too steep for any road, by steps or the funicular', () => {
         const h = sampleIsland();
-        for (let i = 0; i < 14; i++) brush(h, 3, 4, 1.2, 1.2);
+        // A sheer pillar, set straight into the heights (a brush would let it slide into a hill).
+        for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+            const d = Math.hypot(-10 + i * RES - 3, -10 + j * RES - 4);
+            if (d < 1.2) h[i + j * N] = 7;
+        }
         const { roads, reached } = network(h, [0, 8], [[3, 4]]);
         expect(reached).toEqual([true]);
         expect(roads[0].parts.some(p => p.kind === 'stair' || p.kind === 'lift')).toBe(true);
@@ -37,7 +41,8 @@ describe('grow lab roads', () => {
 
     it('bridges a channel dug right across the island', () => {
         const h = sampleIsland();
-        for (let x = -9; x <= 9; x += .5) brush(h, x, 2, -3, 1.4);
+        // Wide enough that the banks, sliding in at their steepest, leave water in the middle.
+        for (let pass = 0; pass < 2; pass++) for (let x = -9; x <= 9; x += .5) brush(h, x, 2, -3, 2.4);
         expect(heightAt(h, 0, 2)).toBeLessThan(0);
         const { roads, reached } = network(h, [0, 8], [[-1, -1.5]]);
         expect(reached).toEqual([true]);
@@ -59,12 +64,12 @@ describe('grow lab roads', () => {
         expect(roads).toHaveLength(2);
     });
 
-    it('levels the ground under a road', () => {
+    it('cuts the ground to the road, so the road neither floats nor sinks', () => {
         const base = sampleIsland();
         const { roads } = network(base, [0, 8], [[-1, -1.5]]);
         const cut = cutRoads(base, roads);
-        const [x, , z] = roads[0].line[Math.floor(roads[0].line.length / 2)];
-        expect(slopeAt(cut, x, z)).toBeLessThan(slopeAt(base, x, z) + .05);
+        const gaps = roads[0].parts.filter(p => p.kind === 'road').flatMap(p => p.line.map(([x, y, z]) => Math.abs(heightAt(cut, x, z) - y)));
+        expect(Math.max(...gaps)).toBeLessThan(.15);
     });
 });
 
@@ -86,7 +91,7 @@ describe('grow lab growth', () => {
         expect(tree).toBeDefined();
     });
 
-    it('moves a house next door instead of losing it, keeping its colour', () => {
+    it('moves a house next door instead of losing it, keeping its size and colour', () => {
         const base = sampleIsland();
         const { roads } = network(base, [0, 8], [[-1, -1.5]]);
         const h = cutRoads(base, roads);
@@ -96,6 +101,7 @@ describe('grow lab growth', () => {
         expect(next).toBeDefined();
         expect(next.id).toBe(o.id);
         expect(next.tint).toBe(3);
+        expect([next.w, next.d]).toEqual([o.w, o.d]);
         expect(Math.hypot(next.x - o.x, next.z - o.z)).toBeLessThan(5);
     });
 });

@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { houseFits, houseSpot, moveHouse, padHouses, rng, treeFits, treeSpot, type House, type Tree } from './growth';
-import { cutRoads, network, type P3, type Road, type XZ } from './roads';
-import { N, RES, SIZE, brush, heightAt, sampleIsland, slopeAt, type Heights } from './terrain';
+import { ROAD_HALF, cutRoads, network, type P3, type Road, type XZ } from './roads';
+import { N, RES, SIZE, brush, heightAt, sampleIsland, settleSlopes, slopeAt, smallIsland, type Heights } from './terrain';
 import { IslandMaterials } from '../../components/island/three/primitives';
 import { makeResidentRig, type ResidentSpecies } from '../../components/island/three/residentRig';
 import './style.css';
@@ -18,12 +19,13 @@ type Tool = 'stack' | 'carve';
 type Time = 'day' | 'dusk';
 type SpecialKind = 'home' | 'chapel' | 'lighthouse' | 'tower';
 /** `stage` is how far a child's house has grown from its seed (0 seed … 3 full). */
-interface Special { x: number; z: number; kind: SpecialKind; stage?: number }
+interface Special { x: number; z: number; kind: SpecialKind; stage?: number; theme?: number }
 
 const root = document.querySelector<HTMLDivElement>('#app')!;
 root.innerHTML = `<div id="viewport"></div>
-<div class="top"><span>DEVELOPMENT · そだつ島 試作</span><div class="seg" id="time"><button data-time="day">ひる</button><button data-time="dusk">ゆうがた</button></div></div>
+<div class="top"><span>試作 · そだつ島</span><div class="right"><button id="learn" class="pill" hidden>📖 まなぶ</button><button id="sound" class="round" aria-label="おと">🔈</button><div class="seg" id="time"><button data-time="day">ひる</button><button data-time="dusk">ゆうがた</button></div></div></div>
 <p class="stat" id="stat" aria-live="polite"></p>
+<div class="swatches" id="swatches" hidden></div>
 <div class="tools"><button id="undo" aria-label="もどす">↶</button><div class="seg big" id="tool"><button data-tool="stack">つむ</button><button data-tool="carve">けずる</button></div><button id="seed" aria-label="おうちの たね">🌱</button><button id="special" aria-label="とくべつな たてもの">★</button></div>`;
 const viewport = root.querySelector<HTMLDivElement>('#viewport')!;
 const stat = root.querySelector<HTMLParagraphElement>('#stat')!;
@@ -31,12 +33,22 @@ const params = new URLSearchParams(location.search);
 let time: Time = params.get('time') === 'dusk' ? 'dusk' : 'day';
 let tool: Tool = 'stack';
 let placing: SpecialKind | null = null;
+/** The colour the next house seed will be. */
+let seedTheme = 0;
 const KINDS: SpecialKind[] = ['lighthouse', 'tower', 'chapel'];
 let given = 0;
 
-let base: Heights = sampleIsland();
-// The island starts from the child's own house on the hill; the roads come to it.
-let specials: Special[] = [{ x: -1, z: -1.5, kind: 'home', stage: 3 }];
+// ?start=blank begins as a child would: a small low island with nothing on it.
+const blank = params.get('start') === 'blank';
+// ?pace=learn (the default for a blank start): the island grows only when the
+// child finishes a learning session, as it would in the app, not by the clock.
+const byLearning = params.get('pace') === 'learn' || (blank && params.get('pace') !== 'time');
+/** Growth steps one learning session gives the island. */
+const PER_SESSION = 6;
+let sessions = 0;
+let base: Heights = blank ? smallIsland() : sampleIsland();
+// Otherwise the island starts from the child's own house on the hill; the roads come to it.
+let specials: Special[] = blank ? [] : [{ x: -1, z: -1.5, kind: 'home', stage: 3 }];
 /** The ground the island has settled on: roads cut in, plots levelled. */
 let shaped: Heights = base;
 /** Ground with the roads cut in, before the houses level their plots. */
@@ -85,11 +97,14 @@ const mat = (color: number, extra: THREE.MeshStandardMaterialParameters = {}) =>
 const M = {
     ground: mat(0xffffff, { vertexColors: true, flatShading: false }),
     sea: mat(0x2f8fc4, { roughness: .3 }),
-    road: mat(0x8f8a83, { polygonOffset: true, polygonOffsetFactor: -2 }),
-    stone: mat(0xd9cdb6, { polygonOffset: true, polygonOffsetFactor: -2 }),
+    // Two-sided, so a tight bend that folds the paving still shows paving.
+    road: mat(0xe2d6bb, { polygonOffset: true, polygonOffsetFactor: -3, side: THREE.DoubleSide }),
+    roadEdge: mat(0x9c8c70, { polygonOffset: true, polygonOffsetFactor: -2, side: THREE.DoubleSide }),
+    stone: mat(0xd9cdb6, { polygonOffset: true, polygonOffsetFactor: -2, side: THREE.DoubleSide }),
     rail: mat(0x5a4f48),
+    wood: mat(0xb08a62),
     car: mat(0xd2493a),
-    curb: mat(0xf4f0e8),
+    curb: mat(0xf4f0e8, { side: THREE.DoubleSide }),
     base: mat(0xefe8da),
     walls: [0xf6f1e7, 0xf2e3c2, 0xefc4b4, 0xf3d684, 0xdf9478].map(c => mat(c)),
     roof: mat(0xe9e2d4),
@@ -97,7 +112,7 @@ const M = {
     door: mat(0x3f6a4a),
     glass: mat(0x2c3a44),
     dome: mat(0x3a74c9),
-    pine: mat(0x456f34), cypress: mat(0x355f30), bush: mat(0x6a9e47), trunk: mat(0x7a5a44),
+    pine: mat(0x456f34), cypress: mat(0x355f30), bush: mat(0x6a9e47), trunk: mat(0x7a5a44), olive: mat(0x8fa67a), palm: mat(0x5f9a3e),
     bloom: mat(0xe0559a),
     bus: mat(0xef9a2a), busTop: mat(0xf7f3ea), wheel: mat(0x2b2b2b),
 };
@@ -168,6 +183,139 @@ const W = {
     crown: mat(0xffffff, { map: dotted('#a48fd0', ['#fff1b0', '#ffc7d9', '#c9f0dc'], 60, .04, 7) }),
 };
 
+// ---------- the child's colours ----------
+// When planting a house seed the child picks one of these. The house is
+// painted in it, and the town that grows nearest that house takes after it,
+// so two children's islands look different even with the same hills.
+interface Theme { name: string; swatch: string; walls: THREE.Material[]; dome: THREE.Material; dotDome: THREE.Material; roof: THREE.Material; body: THREE.Material[]; tower: THREE.Material; wonder: (id: number) => 'patch' | 'dots' | null }
+const usual = (id: number) => (id % 10 === 3 ? 'patch' : id % 10 === 7 ? 'dots' : null);
+const THEMES: Theme[] = [
+    { name: 'しろ', swatch: '#3a74c9', walls: M.walls, dome: M.dome, dotDome: W.dome, roof: W.poko, body: [M.walls[1], M.walls[2]], tower: M.walls[3], wonder: usual },
+    {
+        name: 'ゆうやけ', swatch: '#e0663f',
+        walls: [0xf3c9a0, 0xe8a07a, 0xd9785f, 0xf2d58c, 0xc96b5a].map(c => mat(c)),
+        dome: mat(0xe0663f), dotDome: mat(0xffffff, { map: dotted('#e0663f', ['#fff1d6'], 55, .035, 21) }),
+        roof: mat(0xffffff, { map: dotted('#7a2f3b', ['#f2c230', '#ffd9b0', '#e8578f'], 60, .05, 22) }),
+        body: [mat(0xf3c9a0), mat(0xe8a07a)], tower: mat(0xf2d58c), wonder: usual,
+    },
+    {
+        name: 'みずたま', swatch: '#f2c230',
+        walls: [0xfde2ef, 0xd9f0e3, 0xdfe7fb, 0xfff1b0, 0xf6d9c9].map(c => mat(c)),
+        dome: W.pumpkin, dotDome: W.pumpkin,
+        roof: mat(0xffffff, { map: dotted('#e8578f', ['#ffffff', '#fff1b0'], 70, .045, 23) }),
+        body: [mat(0xfde2ef), mat(0xdfe7fb)], tower: mat(0xfff1b0),
+        // The dotted town: about half the houses carry dots or patchwork.
+        wonder: id => (id % 4 === 1 ? 'dots' : id % 6 === 3 ? 'patch' : null),
+    },
+    {
+        name: 'もり', swatch: '#3f7a5a',
+        walls: [0xe9e4cf, 0xbfd8b8, 0x9cc5a1, 0xd8c3a0, 0x7fae9b].map(c => mat(c)),
+        dome: mat(0x3f7a5a), dotDome: mat(0xffffff, { map: dotted('#3f7a5a', ['#d8f0c0'], 55, .035, 24) }),
+        roof: mat(0xffffff, { map: dotted('#2f5a3f', ['#cfe8a9', '#f3d684', '#a8d5c7'], 60, .05, 25) }),
+        body: [mat(0xe9e4cf), mat(0xbfd8b8)], tower: mat(0xd8c3a0), wonder: usual,
+    },
+];
+
+// ---------- paving ----------
+// A road shows how much it is used: a worn path in the grass, then gravel,
+// then stones, and at its busiest patterned tiles with lamps and flowers.
+// Each colour the child chose paves in its own way.
+const tiled = (t: THREE.Texture) => { t.wrapS = t.wrapT = THREE.RepeatWrapping; return t; };
+const pave = (draw: (c: CanvasRenderingContext2D, s: number, r: () => number) => void, seed: number) =>
+    mat(0xffffff, { map: tiled(canvasTexture((c, s) => draw(c, s, rng(seed)))), polygonOffset: true, polygonOffsetFactor: -3, side: THREE.DoubleSide });
+const round = (c: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) => { c.beginPath(); c.roundRect(x, y, w, h, r); c.fill(); };
+/** Loose gravel: a sandy ground speckled with pebbles. */
+const gravel = (ground: string, pebbles: string[], seed: number) => pave((c, s, r) => {
+    c.fillStyle = ground; c.fillRect(0, 0, s, s);
+    for (let i = 0; i < 700; i++) { c.fillStyle = pebbles[i % pebbles.length]; c.beginPath(); c.arc(r() * s, r() * s, 1.5 + r() * 3, 0, Math.PI * 2); c.fill(); }
+}, seed);
+/** Stones laid in rows, every other row shifted half a stone, like a cobbled lane. */
+const setts = (stones: string[], grout: string, rows: number, cols: number, seed: number, corner = .3) => pave((c, s, r) => {
+    c.fillStyle = grout; c.fillRect(0, 0, s, s);
+    const w = s / cols, h = s / rows, gap = s * .012;
+    for (let j = 0; j < rows; j++) for (let i = -1; i <= cols; i++) {
+        c.fillStyle = stones[Math.floor(r() * stones.length)];
+        round(c, i * w + (j % 2) * w / 2 + gap, j * h + gap, w - gap * 2, h - gap * 2, Math.min(w, h) * corner);
+    }
+}, seed);
+/** Little squares of many colours, as on a mosaic floor, with white dots here and there. */
+const mosaic = (colors: string[], grout: string, n: number, seed: number, dots = false) => pave((c, s, r) => {
+    c.fillStyle = grout; c.fillRect(0, 0, s, s);
+    const w = s / n;
+    for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) { c.fillStyle = colors[Math.floor(r() * colors.length)]; c.fillRect(i * w + 1.5, j * w + 1.5, w - 3, w - 3); }
+    if (dots) for (let i = 0; i < 9; i++) { c.fillStyle = '#ffffff'; c.beginPath(); c.arc(r() * s, r() * s, s * .05, 0, Math.PI * 2); c.fill(); }
+}, seed);
+/** Boards laid across the path, with gaps and nail heads. */
+const boards = (woods: string[], gap: string, seed: number) => pave((c, s, r) => {
+    c.fillStyle = gap; c.fillRect(0, 0, s, s);
+    const h = s / 6;
+    for (let j = 0; j < 6; j++) {
+        c.fillStyle = woods[Math.floor(r() * woods.length)]; c.fillRect(0, j * h + 2, s, h - 4);
+        c.fillStyle = '#00000033'; for (const x of [s * .12, s * .88]) { c.beginPath(); c.arc(x, j * h + h / 2, 2.5, 0, Math.PI * 2); c.fill(); }
+    }
+}, seed);
+/** Square tiles in two colours, each with a ring or a dot in the middle. */
+const tiles = (a: string, b: string, mark: string, ring: boolean, seed: number) => pave(c => {
+    const s = c.canvas.width, w = s / 2;
+    for (let j = 0; j < 2; j++) for (let i = 0; i < 2; i++) {
+        c.fillStyle = (i + j) % 2 ? a : b; c.fillRect(i * w, j * w, w, w);
+        c.fillStyle = mark; c.strokeStyle = mark; c.lineWidth = w * .09;
+        c.beginPath(); c.arc(i * w + w / 2, j * w + w / 2, w * (ring ? .3 : .2), 0, Math.PI * 2);
+        if (ring) c.stroke(); else c.fill();
+        c.fillStyle = '#ffffff99'; c.fillRect(i * w, j * w, w, 2); c.fillRect(i * w, j * w, 2, w);
+    }
+}, seed);
+/** `plaza` is the ふしぎ floor of the little square in front of the child's house. */
+interface Paving { path: THREE.Material; stages: THREE.Material[]; edge: THREE.Material; step: THREE.Material; plaza: THREE.Material; lamp: THREE.Material }
+const PAVING: Paving[] = [
+    {
+        // しろ: pale limestone setts, then white and blue tiles.
+        path: mat(0xc8b48c, { polygonOffset: true, polygonOffsetFactor: -3, side: THREE.DoubleSide }),
+        stages: [
+            gravel('#d8cdb2', ['#b9ab8c', '#efe7d4', '#a39575'], 31),
+            setts(['#ece5d3', '#e0d6bf', '#f4efe2', '#d6cbb2'], '#b7aa8f', 6, 4, 32),
+            tiles('#f6f2e8', '#dfe8f4', '#3a74c9', true, 33),
+        ],
+        edge: mat(0x9c8c70, { polygonOffset: true, polygonOffsetFactor: -2, side: THREE.DoubleSide }),
+        step: mat(0xe6dcc6), plaza: W.patch[0], lamp: mat(0x3a74c9),
+    },
+    {
+        // ゆうやけ: terracotta bricks, then orange and yellow tiles.
+        path: mat(0xc39a6e, { polygonOffset: true, polygonOffsetFactor: -3, side: THREE.DoubleSide }),
+        stages: [
+            gravel('#d9b48a', ['#b98a5e', '#ecd0a8', '#a0704a'], 41),
+            setts(['#c8643c', '#d4774c', '#b85a36', '#dc8a5c'], '#e8cfae', 8, 3, 42, .08),
+            tiles('#f2c06a', '#e0663f', '#fff1d6', false, 43),
+        ],
+        edge: mat(0x8f4a32, { polygonOffset: true, polygonOffsetFactor: -2, side: THREE.DoubleSide }),
+        step: mat(0xd4774c), plaza: W.patch[1], lamp: mat(0xe0663f),
+    },
+    {
+        // みずたま: pastel mosaic, then big dotted tiles.
+        path: mat(0xd8c4a8, { polygonOffset: true, polygonOffsetFactor: -3, side: THREE.DoubleSide }),
+        stages: [
+            gravel('#efe2d6', ['#f4c6d9', '#c9ecdc', '#d7dcf7', '#fff1b0'], 51),
+            mosaic(['#fbd3e4', '#cdeedd', '#dbe3fb', '#fff1b0', '#f6d9c9'], '#ffffff', 8, 52),
+            mosaic(['#f49ac1', '#8fd6b6', '#a9b8f2', '#f7d65c'], '#ffffff', 4, 53, true),
+        ],
+        edge: mat(0xe8578f, { polygonOffset: true, polygonOffsetFactor: -2, side: THREE.DoubleSide }),
+        step: mat(0xfbd3e4), plaza: W.pumpkin, lamp: mat(0xf2c230),
+    },
+    {
+        // もり: a needle-strewn path, then boards across, then green and cream tiles.
+        path: mat(0xa98f68, { polygonOffset: true, polygonOffsetFactor: -3, side: THREE.DoubleSide }),
+        stages: [
+            gravel('#b7a27c', ['#8a7553', '#cdbb94', '#6f8a52'], 61),
+            boards(['#b08a5e', '#a07c52', '#bf9868'], '#6e5638', 62),
+            tiles('#e9e4cf', '#9cc5a1', '#3f7a5a', true, 63),
+        ],
+        edge: mat(0x5a4630, { polygonOffset: true, polygonOffsetFactor: -2, side: THREE.DoubleSide }),
+        step: mat(0xa07c52), plaza: W.patch[1], lamp: mat(0x3f7a5a),
+    },
+];
+/** How busy the roads look until residents' footsteps decide it (?road=0..3 to compare). */
+let roadStage = Math.max(0, Math.min(3, Number(params.get('road') ?? 2)));
+
 const sea = new THREE.Mesh(new THREE.CircleGeometry(90, 64), M.sea);
 sea.rotation.x = -Math.PI / 2;
 sea.position.y = .02;
@@ -183,6 +331,56 @@ scene.add(ground);
 const roadsGroup = new THREE.Group(), housesGroup = new THREE.Group(), treesGroup = new THREE.Group(), specialsGroup = new THREE.Group();
 scene.add(roadsGroup, housesGroup, treesGroup, specialsGroup);
 
+/** Every plain-coloured piece shares this one material, its colour baked into the vertices. */
+const PAINTED = new THREE.MeshStandardMaterial({ color: 0xffffff, vertexColors: true, roughness: .85 });
+/**
+ * One house or tree is drawn in one go: its plain pieces are merged into a
+ * single mesh coloured per vertex, and patterned pieces into one per pattern.
+ * The shared shapes the pieces were cut from are kept for the next one.
+ */
+function merge(group: THREE.Group): THREE.Group {
+    group.updateMatrixWorld(true);
+    const inverse = group.matrixWorld.clone().invert();
+    const buckets = new Map<THREE.Material, THREE.BufferGeometry[]>();
+    const pieces: THREE.Mesh[] = [];
+    group.traverse(o => {
+        const m = o as THREE.Mesh;
+        if (!m.isMesh || Array.isArray(m.material)) return;
+        const material = m.material as THREE.MeshStandardMaterial;
+        let geo = m.geometry.clone().applyMatrix4(inverse.clone().multiply(m.matrixWorld));
+        if (geo.index) { const flat = geo.toNonIndexed(); geo.dispose(); geo = flat; }
+        for (const name of Object.keys(geo.attributes)) if (name !== 'position' && name !== 'normal' && name !== 'uv') geo.deleteAttribute(name);
+        let target: THREE.Material = material;
+        if (material.map) {
+            if (!geo.attributes.uv) geo.setAttribute('uv', new THREE.Float32BufferAttribute(new Float32Array(geo.attributes.position.count * 2), 2));
+        } else if (!material.emissive || material.emissive.getHex() === 0) {
+            geo.deleteAttribute('uv');
+            const c = material.color, colors = new Float32Array(geo.attributes.position.count * 3);
+            for (let i = 0; i < colors.length; i += 3) { colors[i] = c.r; colors[i + 1] = c.g; colors[i + 2] = c.b; }
+            geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            target = PAINTED;
+        } else geo.deleteAttribute('uv');
+        const list = buckets.get(target) ?? [];
+        list.push(geo);
+        buckets.set(target, list);
+        pieces.push(m);
+    });
+    for (const m of pieces) m.removeFromParent();
+    for (const o of [...group.children]) if (!o.children.length && !(o as THREE.Mesh).isMesh) o.removeFromParent();
+    for (const [material, list] of buckets) {
+        const merged = mergeGeometries(list);
+        list.forEach(g => g.dispose());
+        if (merged) { merged.userData.own = true; group.add(new THREE.Mesh(merged, material)); }
+    }
+    return group;
+}
+/** Frees the shapes made for one thing alone; shared shapes stay for the next. */
+function release(o: THREE.Object3D) {
+    o.traverse(c => {
+        const geo = (c as THREE.Mesh).geometry;
+        if (geo && (geo.userData.own || geo.userData.ribbon)) geo.dispose();
+    });
+}
 const shadowy = <T extends THREE.Object3D>(o: T) => { o.traverse(c => { if ((c as THREE.Mesh).isMesh) c.castShadow = c.receiveShadow = true; }); return o; };
 
 // ---------- ground ----------
@@ -218,20 +416,32 @@ function easeGround(dt: number): boolean {
         most = Math.max(most, Math.abs(d));
     }
     if (!most) return false;
+    showGround();
+    return true;
+}
+/** Puts the shown heights into the ground mesh, which taps are aimed at. */
+function showGround() {
     const pos = groundGeo.attributes.position as THREE.BufferAttribute;
     for (let i = 0; i < N * N; i++) pos.setY(i, shown[i]);
     pos.needsUpdate = true;
     groundGeo.computeVertexNormals();
     groundGeo.computeBoundingSphere();
-    return true;
 }
 
 // ---------- roads ----------
 function ribbon(line: P3[], width: number, lift: number, wall = 0): THREE.BufferGeometry {
     const pos: number[] = [];
     const idx: number[] = [];
+    // Across the road u runs 0 to 1; along it v counts road widths, so a
+    // paving pattern keeps square stones however long the road is.
+    const uv: number[] = [];
+    let along = 0;
     line.forEach((p, i) => {
-        const a = line[Math.max(0, i - 1)], b = line[Math.min(line.length - 1, i + 1)];
+        if (i) along += Math.hypot(p[0] - line[i - 1][0], p[2] - line[i - 1][2]) / width;
+        uv.push(0, along, 1, along);
+        // The edge direction is taken over a few points, so a tight bend
+        // does not fold the ribbon over itself.
+        const a = line[Math.max(0, i - 2)], b = line[Math.min(line.length - 1, i + 2)];
         const len = Math.hypot(b[0] - a[0], b[2] - a[2]) || 1;
         const nx = -(b[2] - a[2]) / len, nz = (b[0] - a[0]) / len;
         if (wall) {
@@ -241,26 +451,64 @@ function ribbon(line: P3[], width: number, lift: number, wall = 0): THREE.Buffer
         } else {
             pos.push(p[0] + nx * width / 2, p[1] + lift, p[2] + nz * width / 2, p[0] - nx * width / 2, p[1] + lift, p[2] - nz * width / 2);
         }
-        if (i) { const q = i * 2; idx.push(q - 2, q - 1, q, q - 1, q + 1, q); }
+        // Wound to face up, so the paving is seen from above.
+        if (i) { const q = i * 2; idx.push(q - 2, q, q - 1, q - 1, q, q + 1); }
     });
     const g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
     g.setIndex(idx);
     g.computeVertexNormals();
     g.userData.ribbon = true;
     return g;
 }
 
+/**
+ * A low white wall only where the ground falls away beside the road, the way
+ * cliff roads are walled on their open side; on the hillside there is none.
+ */
+const parapets = (line: P3[], width: number, lift: number, height: number) => {
+    for (const side of [1, -1]) {
+        let run: P3[] = [];
+        const flush = () => {
+            if (run.length > 2) {
+                const w = new THREE.Mesh(ribbon(run, width, lift, side * height), M.curb);
+                w.castShadow = true;
+                roadsGroup.add(w);
+            }
+            run = [];
+        };
+        line.forEach((p, i) => {
+            const a = line[Math.max(0, i - 2)], b = line[Math.min(line.length - 1, i + 2)];
+            const len = Math.hypot(b[0] - a[0], b[2] - a[2]) || 1;
+            const nx = -(b[2] - a[2]) / len * side, nz = (b[0] - a[0]) / len * side;
+            const drop = p[1] - heightAt(base, p[0] + nx * (width / 2 + .5), p[2] + nz * (width / 2 + .5));
+            if (drop > .3) run.push(p); else flush();
+        });
+        flush();
+    }
+};
+/** Both edges walled, for steps and bridges. */
 const curbs = (line: P3[], width: number, lift: number, height: number) => {
-    // Low white walls on both edges, as on the island roads that inspired this.
     for (const side of [height, -height]) {
         const w = new THREE.Mesh(ribbon(line, width, lift, side), M.curb);
-        (w.material as THREE.Material).side = THREE.DoubleSide;
         w.castShadow = true;
         roadsGroup.add(w);
     }
 };
-const STEP = new THREE.BoxGeometry(.5, .06, .1), PILLAR = new THREE.CylinderGeometry(.07, .09, 1, 8), CAR = new RoundedBoxGeometry(.3, .26, .42, 2, .05);
+const STEP = new THREE.BoxGeometry(ROAD_HALF * 2 - .1, .06, .1), PILLAR = new THREE.CylinderGeometry(.07, .09, 1, 8), CAR = new RoundedBoxGeometry(.3, .26, .42, 2, .05);
+const PIER = new THREE.BoxGeometry(.7, .07, 1), CAR_GLASS = new THREE.BoxGeometry(.31, .08, .34);
+const boat = new THREE.Group();
+{
+    const hull = new THREE.Mesh(new THREE.SphereGeometry(.5, 16, 8, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), mat(0xdf9478, { side: THREE.DoubleSide }));
+    hull.scale.set(.55, .45, 1.2); hull.position.y = .26;
+    const rim = new THREE.Mesh(new THREE.TorusGeometry(.5, .04, 6, 20).rotateX(Math.PI / 2), M.curb); rim.scale.set(.55, 1, 1.2); rim.position.y = .26;
+    const mast = new THREE.Mesh(PILLAR, M.trunk); mast.scale.set(.4, 1.1, .4); mast.position.y = .8;
+    const sail = new THREE.Mesh(new THREE.ConeGeometry(.32, .8, 3).rotateY(Math.PI / 6), W.patch[0]); sail.scale.set(.15, 1, 1); sail.position.set(0, .85, .12);
+    const floor = new THREE.Mesh(new THREE.CircleGeometry(.5, 20).rotateX(-Math.PI / 2), M.wood); floor.scale.set(.55, 1, 1.2); floor.position.y = .2;
+    boat.add(hull, floor, rim, mast, sail);
+    scene.add(shadowy(boat));
+}
 /** Funicular cars, each running up and down its own track. */
 let lifts: { line: P3[]; car: THREE.Object3D; s: number; dir: number }[] = [];
 /** The ground the roads were drawn on; they ride the shown ground relative to it. */
@@ -277,38 +525,74 @@ function rideRoads() {
     }
     for (const p of pieces) p.o.position.y = p.y0 + rise(p.o.position.x, p.o.position.z);
 }
+const LAMP_HEAD = new THREE.SphereGeometry(.07, 10, 8), LAMP_GLOW = mat(0xffe6a0, { emissive: 0xffc860, emissiveIntensity: .7 });
+/** Along the busiest roads: lamps and flower pots in turn, on alternate sides. */
+function lamps(line: P3[], pv: Paving) {
+    let next = 1, side = 1, gone = 0;
+    line.forEach((p, i) => {
+        if (i) gone += Math.hypot(p[0] - line[i - 1][0], p[2] - line[i - 1][2]);
+        if (gone < next || i < 1 || i > line.length - 2) return;
+        next += 1.7; side = -side;
+        const a = line[i - 1], b = line[i + 1];
+        const len = Math.hypot(b[0] - a[0], b[2] - a[2]) || 1;
+        const off = (ROAD_HALF + .14) * side;
+        const g = new THREE.Group();
+        g.position.set(p[0] - (b[2] - a[2]) / len * off, p[1], p[2] + (b[0] - a[0]) / len * off);
+        if (side > 0) {
+            const post = new THREE.Mesh(PILLAR, pv.lamp); post.scale.set(.3, .62, .3); post.position.y = .31;
+            const head = new THREE.Mesh(LAMP_HEAD, LAMP_GLOW); head.position.y = .66;
+            g.add(post, head);
+        } else {
+            const pot = new THREE.Mesh(R.pot, pv.lamp); pot.scale.set(1.2, .9, 1.2); pot.position.y = .07;
+            const leaves = new THREE.Mesh(R.pot, M.bush); leaves.position.y = .18;
+            const bloom = new THREE.Mesh(G.bloom, M.bloom); bloom.scale.setScalar(.6); bloom.position.y = .26;
+            g.add(pot, leaves, bloom);
+        }
+        roadsGroup.add(shadowy(g));
+    });
+}
 function drawRoads() {
-    for (const o of roadsGroup.children) {
-        const geo = (o as THREE.Mesh).geometry;
-        if (geo?.userData.ribbon) geo.dispose();
-    }
+    for (const o of roadsGroup.children) release(o);
     roadsGroup.clear();
     lifts = [];
     roadGround = shaped;
     for (const r of roads) for (const part of r.parts) {
         const line = part.line;
         if (line.length < 2) continue;
+        const mid = line[line.length >> 1];
+        const pv = PAVING[themeOf({ x: mid[0], z: mid[2] })];
         if (part.kind === 'road') {
-            const road = new THREE.Mesh(ribbon(line, .5, .05), M.road);
-            road.receiveShadow = true;
-            roadsGroup.add(road);
-            curbs(line, .56, .03, .13);
+            if (roadStage === 0) {
+                // A worn path: narrower, the colour of earth, no kerb.
+                const path = new THREE.Mesh(ribbon(line, ROAD_HALF * 1.3, .05), pv.path);
+                path.receiveShadow = true;
+                roadsGroup.add(path);
+            } else {
+                // Paving with a darker kerb line, so the road reads against the grass.
+                const width = ROAD_HALF * 2 * (roadStage === 1 ? .85 : 1);
+                const edge = new THREE.Mesh(ribbon(line, width + .1, .02), pv.edge);
+                const road = new THREE.Mesh(ribbon(line, width, .07), pv.stages[roadStage - 1]);
+                edge.receiveShadow = road.receiveShadow = true;
+                roadsGroup.add(edge, road);
+                if (roadStage >= 2) parapets(line, width + .1, .03, .16);
+                if (roadStage === 3) lamps(line, pv);
+            }
         } else if (part.kind === 'stair') {
-            // Pale steps up the slope, a tread every quarter unit.
-            roadsGroup.add(shadowy(new THREE.Mesh(ribbon(line, .46, .04), M.stone)));
+            // Steps up the slope in the island's paving, a tread every quarter unit.
+            roadsGroup.add(shadowy(new THREE.Mesh(ribbon(line, ROAD_HALF * 2 - .1, .04), pv.stages[1])));
             line.forEach((p, i) => {
                 if (!i) return;
                 const q = line[i - 1];
-                const step = new THREE.Mesh(STEP, M.stone);
+                const step = new THREE.Mesh(STEP, pv.step);
                 step.position.set(p[0], Math.max(p[1], q[1]) + .04, p[2]);
                 step.rotation.y = Math.atan2(p[0] - q[0], p[2] - q[2]);
                 roadsGroup.add(shadowy(step));
             });
-            curbs(line, .52, .03, .1);
+            curbs(line, ROAD_HALF * 2, .03, .1);
         } else if (part.kind === 'bridge') {
             // A stone deck with parapets, on pillars down to the ground or the sea floor.
-            roadsGroup.add(shadowy(new THREE.Mesh(ribbon(line, .5, 0), M.stone)));
-            curbs(line, .52, 0, .16);
+            roadsGroup.add(shadowy(new THREE.Mesh(ribbon(line, ROAD_HALF * 2, 0), pv.stages[1])));
+            curbs(line, ROAD_HALF * 2 + .04, 0, .16);
             for (let i = 2; i < line.length - 2; i += 4) {
                 const [x, y, z] = line[i];
                 const foot = Math.min(0, heightAt(shaped, x, z));
@@ -330,11 +614,39 @@ function drawRoads() {
             roadsGroup.add(new THREE.Mesh(ribbon(line, .34, .04), M.stone));
             const car = new THREE.Group();
             const body = new THREE.Mesh(CAR, M.car); body.position.y = .18;
-            const glass = new THREE.Mesh(new THREE.BoxGeometry(.31, .08, .34), M.glass); glass.position.y = .24;
+            const glass = new THREE.Mesh(CAR_GLASS, M.glass); glass.position.y = .24;
             car.add(body, glass);
             roadsGroup.add(shadowy(car));
             lifts.push({ line, car, s: 0, dir: 1 });
         }
+    }
+    // The harbour where the road begins: a round quay, a wooden pier out to sea, a boat.
+    // Before there is any road, only the pier and the boat.
+    const [hx, hz] = harbour();
+    const quay = new THREE.Mesh(R.slab, PAVING[themeOf({ x: hx, z: hz })].stages[1]); quay.scale.set(1.1, 1, 1.1);
+    quay.position.set(hx, heightAt(shaped, hx, hz) + .04, hz);
+    if (roads.length) roadsGroup.add(quay);
+    let end = hz;
+    while (end < hz + 6 && heightAt(base, hx, end) > -.6) end += .25;
+    const length = end - hz + 1.2;
+    const deck = new THREE.Mesh(PIER, M.wood); deck.scale.z = length; deck.position.set(hx, .32, hz + length / 2 + .3);
+    roadsGroup.add(shadowy(deck));
+    for (let z = hz + 1; z < hz + length + .3; z += .7) for (const side of [-.3, .3]) {
+        const post = new THREE.Mesh(PILLAR, M.trunk); post.scale.set(.6, .9, .6); post.position.set(hx + side, -.1, z);
+        roadsGroup.add(post);
+    }
+    boat.position.set(hx + .75, 0, hz + length * .7);
+    // A little square where the road reaches each child's house, floored ふしぎ.
+    for (const home of specials) {
+        if (home.kind !== 'home') continue;
+        const road = roads.find(r => { const e = r.line[r.line.length - 1]; return Math.hypot(e[0] - home.x, e[2] - home.z) < 1.5; });
+        if (!road || road.line.length < 8) continue;
+        const [x, , z] = road.line[road.line.length - 6];
+        const square = new THREE.Mesh(R.slab, PAVING[home.theme ?? 0].plaza);
+        square.scale.set(.85, 1, .85);
+        square.position.set(x, heightAt(shaped, x, z) + .09, z);
+        square.receiveShadow = true;
+        roadsGroup.add(square);
     }
     const cars = new Set(lifts.map(l => l.car));
     ribbons = []; pieces = [];
@@ -357,9 +669,10 @@ const G = {
     dome: new THREE.SphereGeometry(.2, 18, 10, 0, Math.PI * 2, 0, Math.PI / 2),
     bloom: new THREE.IcosahedronGeometry(.1, 1),
 };
+const lathe = (pts: [number, number][], segments = 28) => new THREE.LatheGeometry(pts.map(([x, y]) => new THREE.Vector2(x, y)), segments);
 const floorGeo = (w: number, h: number, d: number) => {
     const k = `${w.toFixed(2)},${h},${d.toFixed(2)}`;
-    if (!G.floor.has(k)) G.floor.set(k, new RoundedBoxGeometry(w, h, d, 3, .08));
+    if (!G.floor.has(k)) G.floor.set(k, new RoundedBoxGeometry(w, h, d, 3, Math.min(.14, Math.min(w, h, d) * .3)));
     return G.floor.get(k)!;
 };
 
@@ -369,46 +682,95 @@ function footing(o: { x: number; z: number; w: number; d: number }) {
 }
 
 /** A house, built at the origin; `userData.lift` is how far its floor sits above the ground at its middle. */
-function buildHouse(o: House): THREE.Group {
-    const g = new THREE.Group();
-    const { low, high } = footing(o);
-    g.userData.lift = high - heightAt(shaped, o.x, o.z);
-    // A white base built down the slope, so the house stands level.
-    if (high - low > .05) {
-        const b = new THREE.Mesh(floorGeo(o.w, Math.ceil((high - low + .25) * 4) / 4, o.d), M.base);
-        b.position.y = -(high - low + .25) / 2 + .02;
-        g.add(b);
+const roundGeo = (rad: number) => {
+    const k = `round${rad.toFixed(2)}`;
+    if (!G.floor.has(k)) G.floor.set(k, lathe([[0, 0], [rad, 0], [rad * 1.05, .2], [rad * 1.02, .42], [rad * .95, .55], [0, .55]], 22));
+    return G.floor.get(k)!;
+};
+const R = {
+    slab: new THREE.CylinderGeometry(1, 1, .07, 22),
+    vault: new THREE.CylinderGeometry(1, 1, 1, 16, 1, false, 0, Math.PI).rotateZ(Math.PI / 2),
+    turret: lathe([[0, 0], [.14, 0], [.16, .3], [.12, .5], [0, .5]], 14),
+    pot: new THREE.IcosahedronGeometry(.08, 1),
+    parasol: new THREE.ConeGeometry(.26, .1, 12),
+};
+type Roof = 'terrace' | 'dome' | 'vault' | 'turret';
+/** A town house takes after the child's house nearest to it. */
+function themeOf(o: { x: number; z: number }): number {
+    let best = 0, bestD = Infinity;
+    for (const s of specials) if (s.kind === 'home') {
+        const d = Math.hypot(s.x - o.x, s.z - o.z);
+        if (d < bestD) { bestD = d; best = s.theme ?? 0; }
     }
+    return best;
+}
+
+/**
+ * A house, built at the origin; `userData.lift` is how far its floor sits above the ground at its middle.
+ * Houses are soft-cornered blocks or round like a grown tower, two or three
+ * storeys stepping back and leaning a little, each topped differently.
+ */
+function buildHouse(o: House): THREE.Group {
+    builds.house++;
+    const g = new THREE.Group();
     const r = rng(o.id * 31);
+    const round = o.id % 3 === 0;
+    const th = THEMES[themeOf(o)];
     // About one house in five is a ふしぎ house: a patchwork wall or a dotted dome.
-    const wonder = o.id % 10 === 3 ? 'patch' : o.id % 10 === 7 ? 'dots' : null;
-    let y = 0, w = o.w, d = o.d;
+    const wonder = th.wonder(o.id);
+    const roof: Roof = wonder === 'dots' ? 'dome' : (['terrace', 'dome', 'vault', 'turret', 'terrace'] as const)[Math.floor(r() * 5)];
+    let y = 0, w = o.w, d = o.d, dx = 0, dz = 0;
     for (let f = 0; f < o.floors; f++) {
-        const body = new THREE.Mesh(floorGeo(w, .55, d), wonder === 'patch' && f === 0 ? W.patch[o.id % 2] : M.walls[o.tint]);
-        const dx = f ? (r() - .5) * .15 : 0, dz = f ? (r() - .5) * .12 : 0;
-        body.position.set(dx, y + .275, dz);
+        const wall = wonder === 'patch' && f === 0 ? W.patch[o.id % 2] : th.walls[o.tint];
+        const rad = Math.min(w, d) / 2;
+        const body = new THREE.Mesh(round ? roundGeo(rad) : floorGeo(w, .55, d), wall);
+        body.position.set(dx, y + (round ? 0 : .275), dz);
         g.add(body);
         // Windows with green shutters on the front, the door on the ground floor.
-        const front = d / 2 + .01;
-        if (f === 0) { const door = new THREE.Mesh(G.door, M.door); door.position.set(w * .18 + dx, y + .17, front + dz); g.add(door); }
-        for (const wx of f === 0 ? [-w * .2] : [-w * .22, w * .22]) {
+        const front = (round ? rad : d / 2) + .01, span = round ? rad * .9 : w;
+        if (f === 0) { const door = new THREE.Mesh(G.door, M.door); door.position.set(span * .18 + dx, y + .17, front + dz); g.add(door); }
+        for (const wx of f === 0 ? [-span * .22] : [-span * .24, span * .24]) {
             const gl = new THREE.Mesh(G.glass, M.glass); gl.position.set(wx + dx, y + .32, front + dz);
             const l = new THREE.Mesh(G.shutter, M.shutter); l.position.set(wx - .1 + dx, y + .32, front + .01 + dz);
             const rr = new THREE.Mesh(G.shutter, M.shutter); rr.position.set(wx + .1 + dx, y + .32, front + .01 + dz);
             g.add(gl, l, rr);
         }
         y += .55;
-        // Upper floors step back, leaving a terrace in front.
-        w *= .8 + r() * .12; d *= .72 + r() * .12;
+        // Upper floors step back and sit a little off centre, as if grown.
+        w *= .86 + r() * .1; d *= .82 + r() * .1;
+        dx += (r() - .5) * .12; dz -= .04 + r() * .05;
     }
-    const roof = new THREE.Mesh(floorGeo(w / (.86) + .05, .07, d / .78 + .05), M.roof);
-    roof.position.y = y + .02;
-    g.add(roof);
-    if (wonder === 'dots' || r() < .22) {
-        const dome = new THREE.Mesh(G.dome, wonder === 'dots' ? (o.id % 20 === 7 ? W.pumpkin : W.dome) : M.dome);
-        dome.position.y = y + .05;
-        if (wonder === 'dots') dome.scale.setScalar(1.35);
-        g.add(dome);
+    const top = new THREE.Group();
+    top.position.set(dx, y, dz);
+    g.add(top);
+    const rad = Math.min(w, d) / 2 / .84;
+    const slab = round ? new THREE.Mesh(R.slab, M.roof) : new THREE.Mesh(floorGeo(w / .84 + .05, .07, d / .8 + .05), M.roof);
+    if (round) slab.scale.set(rad + .04, 1, rad + .04);
+    slab.position.y = .02;
+    top.add(slab);
+    if (roof === 'dome') {
+        const dome = new THREE.Mesh(G.dome, wonder === 'dots' ? (o.id % 20 === 7 ? W.pumpkin : th.dotDome) : th.dome);
+        dome.scale.setScalar(Math.min(1.6, rad * 3.2));
+        dome.position.y = .05;
+        top.add(dome);
+    } else if (roof === 'vault') {
+        const v = new THREE.Mesh(R.vault, M.base);
+        v.scale.set(round ? rad * 1.6 : w * .95 / .84, rad * .55, rad * .8);
+        v.position.y = .05;
+        top.add(v);
+    } else if (roof === 'turret') {
+        const t = new THREE.Mesh(R.turret, th.walls[(o.tint + 2) % 5]);
+        t.position.set(rad * .45, .05, -rad * .35);
+        const cap = new THREE.Mesh(G.dome, th.dome); cap.scale.setScalar(.8); cap.position.y = .5;
+        t.add(cap);
+        top.add(t);
+    } else {
+        // A roof terrace: potted plants and a striped parasol.
+        for (const [px, pz] of [[-.25, .2], [.25, .22], [-.2, -.2]]) {
+            const pot = new THREE.Mesh(R.pot, M.bush); pot.position.set(px * rad * 1.6, .1, pz * rad * 1.6); top.add(pot);
+        }
+        const pole = new THREE.Mesh(PILLAR, M.base); pole.scale.set(.25, .35, .25); pole.position.set(.1, .22, 0); top.add(pole);
+        const para = new THREE.Mesh(R.parasol, th.walls[4]); para.position.set(.1, .42, 0); top.add(para);
     }
     if (r() < .45) {
         // Bougainvillea spilling down a corner.
@@ -419,7 +781,30 @@ function buildHouse(o: House): THREE.Group {
             g.add(b);
         }
     }
-    return shadowy(g);
+    shadowy(merge(g));
+    setFooting(g, o);
+    return g;
+}
+
+/**
+ * The white base a house stands on down the slope, kept apart from the house
+ * itself: when the ground under it changes only the base is swapped, which is
+ * cheap, and the house is never rebuilt for it.
+ */
+function setFooting(g: THREE.Group, o: House) {
+    const { low, high } = footing(o);
+    g.userData.lift = high - heightAt(shaped, o.x, o.z);
+    const steps = high - low > .05 ? Math.ceil((high - low + .25) * 4) : 0;
+    if (g.userData.steps === steps) return;
+    g.userData.steps = steps;
+    const old = g.getObjectByName('base');
+    if (old) g.remove(old);
+    if (!steps) return;
+    const b = new THREE.Mesh(floorGeo(o.w, steps / 4, o.d), M.base);
+    b.name = 'base';
+    b.position.y = -steps / 8 + .02;
+    b.castShadow = b.receiveShadow = true;
+    g.add(b);
 }
 
 // ---------- trees ----------
@@ -428,8 +813,14 @@ const T = {
     umbrella: new THREE.SphereGeometry(.5, 14, 10),
     cone: new THREE.ConeGeometry(.22, 1, 10),
     bush: new THREE.IcosahedronGeometry(.3, 1),
+    olive: new THREE.IcosahedronGeometry(.32, 1),
+    frond: new THREE.ConeGeometry(.09, .62, 5).rotateX(Math.PI / 2).translate(0, 0, .31),
+    palmTrunk: new THREE.CylinderGeometry(.035, .055, 1, 6).translate(0, .5, 0),
 };
+/** Palms lean out to sea; other trees just face any way. */
+const treeTurn = (t: Tree) => (t.kind === 'palm' ? Math.atan2(t.z, -t.x) : t.id * 1.7);
 function buildTree(t: Tree): THREE.Group {
+    builds.tree++;
     const g = new THREE.Group();
     if (t.kind === 'pine') {
         // An umbrella pine: a bare leaning trunk and a flat crown.
@@ -440,6 +831,21 @@ function buildTree(t: Tree): THREE.Group {
     } else if (t.kind === 'cypress') {
         const c = new THREE.Mesh(T.cone, M.cypress); c.scale.set(1, 1.4, 1); c.position.y = .72;
         g.add(c);
+    } else if (t.kind === 'olive') {
+        // A small silvery olive: a short trunk and a round, loose crown.
+        const trunk = new THREE.Mesh(T.trunk, M.trunk); trunk.scale.y = .45; trunk.position.y = .22;
+        const crown = new THREE.Mesh(T.olive, M.olive); crown.scale.set(1.1, .8, 1); crown.position.y = .55;
+        g.add(trunk, crown);
+    } else if (t.kind === 'palm') {
+        // A palm leaning out towards the sea, with drooping fronds.
+        const trunk = new THREE.Mesh(T.palmTrunk, M.trunk); trunk.scale.y = 1.1; trunk.rotation.z = .25;
+        const top = new THREE.Group(); top.position.set(-.27, 1.06, 0);
+        for (let i = 0; i < 7; i++) {
+            const f = new THREE.Mesh(T.frond, t.id % 9 === 4 ? W.crown : M.palm);
+            f.rotation.set(.45, i / 7 * Math.PI * 2, 0, 'YXZ');
+            top.add(f);
+        }
+        g.add(trunk, top);
     } else {
         const b = new THREE.Mesh(T.bush, M.bush); b.scale.set(1, .75, 1); b.position.y = .18;
         g.add(b);
@@ -448,13 +854,12 @@ function buildTree(t: Tree): THREE.Group {
             f.position.set(Math.cos(i * 2.1) * .22, .3, Math.sin(i * 2.1) * .22); g.add(f);
         }
     }
-    g.rotation.y = t.id * 1.7;
+    g.rotation.y = treeTurn(t);
     g.userData.lift = -.03;
-    return shadowy(g);
+    return shadowy(merge(g));
 }
 
 // ---------- special buildings ----------
-const lathe = (pts: [number, number][]) => new THREE.LatheGeometry(pts.map(([x, y]) => new THREE.Vector2(x, y)), 28);
 function buildSpecial(s: Special): THREE.Group {
     const g = new THREE.Group();
     const ground = heightAt(shaped, s.x, s.z);
@@ -474,22 +879,23 @@ function buildSpecial(s: Special): THREE.Group {
         // The child's house grows from a dotted seed as the child learns:
         // a sprout, a round cottage, a second floor and a flag, then a tower.
         const stage = s.stage ?? 3;
+        const th = THEMES[s.theme ?? 0];
         if (stage === 0) {
-            const seed = new THREE.Mesh(G.dome, W.poko); seed.scale.set(1.6, 1.2, 1.6); g.add(seed);
+            const seed = new THREE.Mesh(G.dome, th.roof); seed.scale.set(1.6, 1.2, 1.6); g.add(seed);
             const stem = new THREE.Mesh(PILLAR, M.bush); stem.scale.set(.35, .3, .35); stem.position.y = .34; g.add(stem);
             for (const side of [-1, 1]) {
                 const leaf = new THREE.Mesh(T.bush, M.bush); leaf.scale.set(.34, .1, .2);
                 leaf.position.set(side * .11, .5, 0); leaf.rotation.z = side * .5; g.add(leaf);
             }
         } else {
-            g.add(new THREE.Mesh(lathe([[0, 0], [.5, 0], [.57, .3], [.52, .62], [0, .62]]), M.walls[1]));
+            g.add(new THREE.Mesh(lathe([[0, 0], [.5, 0], [.57, .3], [.52, .62], [0, .62]]), th.body[0]));
             const band = new THREE.Mesh(new THREE.CylinderGeometry(.555, .53, .16, 28, 1, true), W.patch[1]); band.position.y = .14; g.add(band);
             let top = .62;
             if (stage >= 2) {
-                const upper = new THREE.Mesh(lathe([[0, 0], [.42, 0], [.45, .24], [.37, .48], [0, .48]]), M.walls[2]);
+                const upper = new THREE.Mesh(lathe([[0, 0], [.42, 0], [.45, .24], [.37, .48], [0, .48]]), th.body[1]);
                 upper.position.y = top; g.add(upper); top += .48;
             }
-            const roof = new THREE.Mesh(G.dome, W.poko); roof.scale.set(stage >= 2 ? 2.1 : 2.7, 1.7, stage >= 2 ? 2.1 : 2.7); roof.position.y = top - .03; g.add(roof);
+            const roof = new THREE.Mesh(G.dome, th.roof); roof.scale.set(stage >= 2 ? 2.1 : 2.7, 1.7, stage >= 2 ? 2.1 : 2.7); roof.position.y = top - .03; g.add(roof);
             const door = new THREE.Mesh(G.door, M.door); door.position.set(0, .17, .53); g.add(door);
             for (const wx of [-.3, .3]) { const gl = new THREE.Mesh(G.glass, M.glass); gl.position.set(wx, .42, .46); gl.rotation.y = wx * 1.1; g.add(gl); }
             if (stage >= 2) {
@@ -498,7 +904,7 @@ function buildSpecial(s: Special): THREE.Group {
             }
             if (stage >= 3) {
                 const tower = new THREE.Group(); tower.position.set(.56, 0, -.28); tower.rotation.z = -.07;
-                tower.add(new THREE.Mesh(lathe([[0, 0], [.22, 0], [.26, .5], [.18, 1.1], [.21, 1.5], [0, 1.5]]), M.walls[3]));
+                tower.add(new THREE.Mesh(lathe([[0, 0], [.22, 0], [.26, .5], [.18, 1.1], [.21, 1.5], [0, 1.5]]), th.tower));
                 const cap = new THREE.Mesh(G.dome, W.pumpkin); cap.scale.setScalar(1.2); cap.position.y = 1.48; tower.add(cap);
                 g.add(tower);
             }
@@ -521,10 +927,28 @@ function buildSpecial(s: Special): THREE.Group {
         const dome = new THREE.Mesh(G.dome, M.dome); dome.scale.setScalar(1.4); dome.position.set(-.15, .8, 0); g.add(dome);
         const top = new THREE.Mesh(G.dome, M.dome); top.position.set(.5, 1.3, -.2); g.add(top);
     }
-    return shadowy(g);
+    return shadowy(merge(g));
+}
+
+function redrawSpecials() {
+    for (const g of specialsGroup.children) release(g);
+    specialsGroup.clear();
+    for (const s of specials) specialsGroup.add(buildSpecial(s));
 }
 
 // ---------- the island thinks ----------
+/**
+ * A road always climbs from the harbour to the island's highest point, so a
+ * town grows even before the child has placed anything. Not when a special
+ * building already stands near the top.
+ */
+function lookout(): XZ[] {
+    let best = -1;
+    for (let k = 0; k < N * N; k++) if (best < 0 || base[k] > base[best]) best = k;
+    const x = -SIZE / 2 + (best % N) * RES, z = -SIZE / 2 + Math.floor(best / N) * RES;
+    if (base[best] < 1.2 || specials.some(s => Math.hypot(s.x - x, s.z - z) < 2.5)) return [];
+    return [[x, z]];
+}
 function harbour(): XZ {
     // Walk in from the sea on grid points, so the harbour sits on a dry node.
     for (let z = 9.5; z > 0; z -= RES) if (heightAt(base, 0, z) > .25) return [0, z];
@@ -535,10 +959,38 @@ let main: P3[] = [];
 let lastMoved = 0;
 /** A special building levels its own plot like a house does. */
 const plot = (s: Special): House => ({ id: -1, x: s.x, z: s.z, rot: 0, w: 1.3, d: 1.3, floors: 1, tint: 0, born: 0 });
+/** Where the last stroke was, until the island has settled after it. */
+let stirred: XZ | null = null;
+/**
+ * The island never disappears, and what the child places makes room for
+ * itself. However much is carved away, a little island stays around each
+ * thing the child has placed (or in the middle, before there is any), with
+ * room for it, a strip of beach and a few houses.
+ */
+function keepSandbars(h: Heights) {
+    const centres: XZ[] = specials.length ? specials.map(s => [s.x, s.z]) : [[0, 0]];
+    for (const [cx, cz] of centres) for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+        const d = Math.hypot(-SIZE / 2 + i * RES - cx, -SIZE / 2 + j * RES - cz);
+        if (d > 3.2) continue;
+        const k = i + j * N;
+        h[k] = Math.max(h[k], d < 2 ? .55 : .55 - (d - 2) * .9);
+    }
+}
 function recompute() {
-    const net = network(base, harbour(), specials.map(s => [s.x, s.z] as XZ));
+    // Whatever the strokes left half-slid finishes sliding now, starting
+    // where the finger was and widening only as far as earth still moves.
+    const ts = performance.now();
+    if (stirred) { settleSlopes(base, stirred[0], stirred[1], 4.4, 80); stirred = null; }
+    keepSandbars(base);
+    (perf.parts.slide ??= []).push(performance.now() - ts);
+    const tn = performance.now();
+    const net = network(base, harbour(), [...specials.map(s => [s.x, s.z] as XZ), ...lookout()]);
+    perf.network.push(performance.now() - tn);
     roads = net.roads;
+    let tp = performance.now();
+    const lap = (name: string) => { const t = performance.now(); (perf.parts[name] ??= []).push(t - tp); tp = t; };
     cut = cutRoads(base, roads);
+    lap('cut');
     // The bus keeps to the longest stretch of plain road.
     main = roads.flatMap(r => r.parts).filter(p => p.kind === 'road').reduce<P3[]>((a, p) => (p.line.length > a.length ? p.line : a), []);
     // A house that no longer fits moves to the nearest roadside that does;
@@ -553,12 +1005,19 @@ function recompute() {
     }
     lastMoved = moved;
     houses = kept;
+    lap('houses');
     settle();
+    lap('settle');
     trees = trees.filter(t => treeFits(shaped, roads, houses, trees, t) && specials.every(s => Math.hypot(s.x - t.x, s.z - t.z) > .9));
+    lap('trees');
     drawRoads();
-    specialsGroup.clear();
-    for (const s of specials) specialsGroup.add(buildSpecial(s));
+    lap('drawRoads');
+    redrawSpecials();
+    lap('specials');
+    const b0 = { ...builds };
     sync(performance.now());
+    lap('sync');
+    (perf.parts.builtHouses ??= []).push(builds.house - b0.house); (perf.parts.builtTrees ??= []).push(builds.tree - b0.tree);
 }
 
 /** The island has decided its ground: ease the screen towards it. */
@@ -581,7 +1040,7 @@ function syncOne<T extends { id: number; x: number; z: number }>(list: T[], view
         const { rot, size, key } = look(o);
         const v = views.get(o.id);
         if (!v || v.leaving !== undefined) {
-            if (v) group.remove(v.g);
+            if (v) { group.remove(v.g); release(v.g); }
             const g = build(o); g.position.set(o.x, heightAt(shown, o.x, o.z), o.z); g.rotation.y = rot; g.scale.setScalar(.01);
             group.add(g);
             views.set(o.id, { g, x: o.x, z: o.z, rot, from: { x: o.x, z: o.z, rot }, t0: now, size, key });
@@ -590,7 +1049,7 @@ function syncOne<T extends { id: number; x: number; z: number }>(list: T[], view
         if (v.key !== key) {
             // Same house, new footing: rebuild its body in place.
             const g = build(o); g.position.copy(v.g.position); g.rotation.y = v.g.rotation.y; g.scale.copy(v.g.scale);
-            group.remove(v.g); group.add(g); v.g = g; v.key = key;
+            group.remove(v.g); release(v.g); group.add(g); v.g = g; v.key = key;
         }
         if (v.x !== o.x || v.z !== o.z || v.rot !== rot) {
             v.from = { x: v.g.position.x, z: v.g.position.z, rot: v.g.rotation.y };
@@ -599,11 +1058,11 @@ function syncOne<T extends { id: number; x: number; z: number }>(list: T[], view
     }
     for (const [id, v] of views) if (!alive.has(id) && v.leaving === undefined) v.leaving = now;
 }
-const houseKey = (o: House) => `${o.w.toFixed(3)},${o.d.toFixed(3)},${o.floors},${o.tint},${footingKey(o)}`;
-const footingKey = (o: House) => { const { low, high } = footing(o); return Math.round((high - low) * 8); };
+const houseKey = (o: House) => `${o.w.toFixed(3)},${o.d.toFixed(3)},${o.floors},${o.tint},${themeOf(o)}`;
 function sync(now: number) {
     syncOne(houses, houseViews, housesGroup, buildHouse, o => ({ rot: o.rot, size: 1, key: houseKey(o) }), now);
-    syncOne(trees, treeViews, treesGroup, buildTree, t => ({ rot: t.id * 1.7, size: t.size, key: t.kind }), now);
+    for (const o of houses) { const v = houseViews.get(o.id); if (v && v.leaving === undefined) setFooting(v.g, o); }
+    syncOne(trees, treeViews, treesGroup, buildTree, t => ({ rot: treeTurn(t), size: t.size, key: t.kind }), now);
     updateStat();
 }
 const smooth = (t: number) => t * t * (3 - 2 * t);
@@ -613,7 +1072,7 @@ function moveViews(views: Map<number, View>, group: THREE.Group, now: number) {
         if (v.leaving !== undefined) {
             const t = Math.min(1, (now - v.leaving) / 300);
             g.scale.setScalar(v.size * (1 - smooth(t)) + .001);
-            if (t >= 1) { group.remove(g); views.delete(id); }
+            if (t >= 1) { group.remove(g); release(g); views.delete(id); }
             continue;
         }
         const age = now - v.t0;
@@ -637,21 +1096,39 @@ function grow(now: number) {
     if (young && ++ticks % 5 === 0) {
         young.stage = (young.stage ?? 0) + 1;
         if (now > 0) chime(520 + young.stage * 130, .04, .35);
-        specialsGroup.clear();
-        for (const s of specials) specialsGroup.add(buildSpecial(s));
+        redrawSpecials();
     }
     const length = roads.reduce((s, r) => s + r.line.length * .25, 0);
+    let built = false;
     if (houses.length < Math.min(60, length * .9)) {
         const o = houseSpot(cut, roads, houses, rand, nextId++, now);
         if (o && specials.every(s => Math.hypot(s.x - o.x, s.z - o.z) > 1)) {
             houses.push(o);
+            built = true;
             if (now > 0) chime(780 + rand() * 240, .025, .22);
             // The new house levels its plot; trees in the way make room.
             settle();
             trees = trees.filter(t => treeFits(shaped, roads, houses, trees, t));
         }
     }
-    for (let i = 0; i < 2 && trees.length < 120; i++) {
+    // Once the roadsides are full the town keeps growing upwards: now and then
+    // a house gains a storey, so learning always changes something.
+    // Each house has its own height to grow to, two to four storeys, so the
+    // skyline stays uneven instead of every house becoming a tower.
+    if (!built && houses.length && rand() < .3) {
+        const low = houses.filter(o => o.floors < 2 + o.id % 3);
+        if (low.length) {
+            const i = houses.indexOf(low[Math.floor(rand() * low.length)]);
+            houses[i] = { ...houses[i], floors: houses[i].floors + 1 };
+            if (now > 0) chime(660 + rand() * 200, .02, .2);
+        }
+    }
+    // As many trees as the land has room for: a small island is not a jungle.
+    let land = 0;
+    for (let k = 0; k < N * N; k++) if (shaped[k] > .35) land++;
+    const room = Math.min(70, Math.round(land * RES * RES * .5));
+    if (trees.length > room) trees = trees.slice(0, room);
+    for (let i = 0; i < 2 && trees.length < room; i++) {
         const t = treeSpot(shaped, roads, houses, trees, rand, nextId++, now);
         if (t && specials.every(s => Math.hypot(s.x - t.x, s.z - t.z) > .9)) trees.push(t);
     }
@@ -661,7 +1138,7 @@ function grow(now: number) {
 function updateStat() {
     const kinds = new Set(roads.flatMap(r => r.parts.map(p => p.kind)));
     const extra = [kinds.has('stair') && 'かいだん', kinds.has('bridge') && 'はし', kinds.has('lift') && 'ケーブルカー'].filter(Boolean).join('・');
-    stat.textContent = `みち ${roads.length}${extra ? `（${extra}）` : ''} · いえ ${houses.length} · き ${trees.length} · すむ ${townsfolk()}${placing ? ` · ${placing === 'home' ? 'たね' : '★'}を おく ばしょを タップ` : ''}`;
+    stat.textContent = `${byLearning ? `まなんだ ${sessions}かい · ` : ''}みち ${roads.length}${extra ? `（${extra}）` : ''} · いえ ${houses.length} · き ${trees.length} · すむ ${townsfolk()}${placing ? ` · ${placing === 'home' ? 'たね' : '★'}を おく ばしょを タップ` : ''}`;
 }
 
 // ---------- bus and residents ----------
@@ -691,16 +1168,22 @@ function along(line: [number, number, number][], s: number, side: number): [THRE
 // The app's own pokomoko residents, at the island's scale. More come to live
 // as the town grows: about one for every three houses.
 const poko = new IslandMaterials();
-const FOLK_SCALE = .34;
+const FOLK_SCALE = .4;
 const SPECIES: ResidentSpecies[] = ['otter', 'rabbit', 'fox'];
 const townsfolk = () => Math.min(18, 3 + Math.floor(houses.length / 3));
 const folk = Array.from({ length: 18 }, (_, i) => {
     const g = new THREE.Group();
     const rig = makeResidentRig(SPECIES[i % 3], poko);
+    // Only the feet move on their own here, so the rest of each resident is drawn in one or two goes.
+    merge(rig.body);
     g.add(rig.pose);
     g.scale.setScalar(FOLK_SCALE);
     scene.add(g);
-    return { g, rig, feet: rig.feet.map(f => f.position.z), road: i, s: i * 7, dir: i % 2 ? 1 : -1, side: i % 2 ? .2 : -.2, speed: 1.1 + (i % 3) * .35 };
+    return {
+        g, rig, feet: rig.feet.map(f => f.position.z), road: i, s: i * 7 + 3, dir: i % 2 ? 1 : -1, side: i % 2 ? .25 : -.25, speed: 1.8 + (i % 3) * .5,
+        // Each resident has a house to go home to now and then.
+        home: -1, homeS: 0, mode: 'walk' as 'walk' | 'in' | 'out', t: 0, rest: 4 + i % 5, from: new THREE.Vector3(), door: new THREE.Vector3(),
+    };
 });
 // The child's partner waits by the door of the first house.
 const partner = (() => {
@@ -712,6 +1195,60 @@ const partner = (() => {
     return { g, rig };
 })();
 
+const ENTER = .9;
+/** A house's front door in the world: houses face their road. */
+const doorOf = (o: House, out: THREE.Vector3) => out.set(o.x + Math.sin(o.rot) * (o.d / 2 + .1), heightAt(shown, o.x, o.z), o.z + Math.cos(o.rot) * (o.d / 2 + .1));
+/**
+ * Residents stroll up and down their road. Passing their own house, they now
+ * and then step in at the door, stay a while, and come out again.
+ */
+function walk(f: typeof folk[number], road: Road, dt: number, now: number) {
+    const house = houses.find(o => o.id === f.home);
+    if (!house) {
+        // Choose a house by this road to live in.
+        const free = houses.filter(o => !folk.some(q => q !== f && q.home === o.id));
+        let best = -1, bestD = 2.4, bestS = 0;
+        for (const o of free) road.line.forEach((p, k) => {
+            const dd = Math.hypot(p[0] - o.x, p[2] - o.z);
+            if (dd < bestD) { bestD = dd; best = o.id; bestS = k; }
+        });
+        f.home = best; f.homeS = bestS;
+        // A newcomer starts a little way along the road, walking home.
+        if (best >= 0) f.s = Math.max(0, Math.min(road.line.length - 1.01, bestS - f.dir * (4 + f.road % 6)));
+        if (f.mode !== 'walk') { f.mode = 'walk'; f.g.scale.setScalar(FOLK_SCALE); }
+    }
+    f.rest -= dt;
+    if (f.mode === 'walk') {
+        // Time to go home: turn towards the house.
+        if (house && f.rest < 0 && Math.abs(f.s - f.homeS) > 1) f.dir = Math.sign(f.homeS - f.s);
+        f.s += f.dir * dt * f.speed;
+        if (f.s <= 0 || f.s >= road.line.length - 1.01) { f.dir *= -1; f.s = Math.max(0, Math.min(road.line.length - 1.01, f.s)); }
+        if (house && f.rest < 0 && Math.abs(f.s - f.homeS) < .5) { f.mode = 'in'; f.t = 0; f.from.copy(f.g.position); doorOf(house, f.door); }
+    }
+    if (f.mode === 'walk' || !house) {
+        const [p, heading] = along(road.line, Math.min(f.s, road.line.length - 1.01), f.side);
+        p.y += rise(p.x, p.z) - .05;
+        f.g.position.copy(p);
+        f.g.rotation.y = heading + (f.dir > 0 ? 0 : Math.PI);
+    } else {
+        // Walking to the door and shrinking into the house, or the other way out.
+        f.t += dt / ENTER;
+        const t = Math.min(1, f.t), going = f.mode === 'in';
+        const k = going ? t : 1 - t;
+        f.g.position.lerpVectors(f.from, f.door, Math.min(1, k * 1.3));
+        f.g.rotation.y = Math.atan2(f.door.x - f.from.x, f.door.z - f.from.z) + (going ? 0 : Math.PI);
+        f.g.scale.setScalar(FOLK_SCALE * (k > .75 ? 1 - (k - .75) * 4 : 1) + 1e-4);
+        if (going && f.t > 1 + 3 + (f.home % 4)) { f.mode = 'out'; f.t = 0; }
+        else if (!going && t >= 1) { f.mode = 'walk'; f.rest = 8 + (f.home % 7) * 2; f.g.scale.setScalar(FOLK_SCALE); }
+    }
+    // A waddle: feet take turns, the body rocks a little.
+    const step = now / 150 * f.speed;
+    f.rig.feet.forEach((foot, k) => { foot.position.z = f.feet[k] + Math.sin(step + k * Math.PI) * .12; });
+    f.rig.body.rotation.z = Math.sin(step) * .06;
+    f.g.position.y += Math.abs(Math.sin(step)) * .015;
+    f.g.visible = true;
+}
+
 function landNear(x: number, z: number): XZ {
     if (heightAt(base, x, z) > .3) return [x, z];
     for (let r = .25; r < 14; r += .25) for (let a = 0; a < 24; a++) {
@@ -721,17 +1258,23 @@ function landNear(x: number, z: number): XZ {
     return [0, 0];
 }
 function place(kind: SpecialKind, x: number, z: number) {
-    specials.push(kind === 'home' ? { x, z, kind, stage: 0 } : { x, z, kind });
+    specials.push(kind === 'home' ? { x, z, kind, stage: 0, theme: seedTheme } : { x, z, kind });
     placing = null;
+    showSwatches();
     recompute();
 }
 
 // ---------- feel ----------
 // A soft ring shows where the finger shapes; every stroke answers with a small
 // sound, higher as the hill grows, lower as it is carved.
+// Made at load, silent until the first touch resumes it, so the first stroke
+// does not wait for the sound system to start.
 let audio: AudioContext | undefined;
+try { audio = new AudioContext(); } catch { /* no sound here */ }
+let muted = false;
+try { muted = localStorage.getItem('growLab.muted') === '1'; } catch { /* sound stays on */ }
 function chime(freq: number, volume = .035, length = .09) {
-    if (!audio) return;
+    if (!audio || muted) return;
     const t = audio.currentTime, osc = audio.createOscillator(), gain = audio.createGain();
     osc.type = 'sine';
     osc.frequency.setValueAtTime(freq, t);
@@ -774,7 +1317,8 @@ function drawRing(dt: number) {
 const ray = new THREE.Raycaster();
 const ndc = new THREE.Vector2();
 let painting = false, lastPaint = 0, lastSound = 0, rethink = 0;
-const perf = { rethink: [] as number[], stroke: [] as number[] };
+const builds = { house: 0, tree: 0 };
+const perf = { rethink: [] as number[], stroke: [] as number[], folk: [] as number[], render: [] as number[], network: [] as number[], parts: {} as Record<string, number[]> };
 function hit(e: PointerEvent) {
     const r = renderer.domElement.getBoundingClientRect();
     ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
@@ -796,6 +1340,8 @@ function paint(p: THREE.Vector3, amount: number) {
     const t0 = performance.now();
     cursor.x = p.x; cursor.z = p.z;
     if (!brush(base, p.x, p.z, tool === 'stack' ? amount : -amount)) return;
+    stirred = [p.x, p.z];
+    keepSandbars(base);
     for (let k = 0; k < N * N; k++) live[k] = base[k] + offset[k];
     target = live;
     paintGround();
@@ -820,8 +1366,7 @@ renderer.domElement.addEventListener('pointerdown', e => {
     const p = hit(e);
     if (!p) { controls.enabled = true; return; }
     controls.enabled = false;
-    audio ??= new AudioContext();
-    void audio.resume();
+    if (audio?.state === 'suspended') void audio.resume();
     navigator.vibrate?.(6);
     remember();
     if (placing) {
@@ -871,10 +1416,45 @@ root.querySelector('#undo')!.addEventListener('click', () => {
 // In the app this would be earned by learning; here a button hands one over.
 root.querySelector('#special')!.addEventListener('click', () => {
     placing = KINDS[given++ % KINDS.length];
+    showSwatches();
     updateStat();
 });
+const soundButton = root.querySelector<HTMLButtonElement>('#sound')!;
+const showSound = () => { soundButton.textContent = muted ? '🔇' : '🔈'; soundButton.setAttribute('aria-pressed', String(!muted)); };
+soundButton.addEventListener('click', () => {
+    muted = !muted;
+    try { localStorage.setItem('growLab.muted', muted ? '1' : '0'); } catch { /* only for this visit */ }
+    showSound();
+});
+showSound();
+// 🌱 opens the four colours; the chosen one stays chosen for the next seed too.
+const swatches = root.querySelector<HTMLDivElement>('#swatches')!;
+swatches.innerHTML = THEMES.map((t, i) => `<button data-theme="${i}" aria-label="${t.name}" style="--c:${t.swatch}"></button>`).join('');
+function showSwatches() {
+    swatches.hidden = placing !== 'home';
+    for (const b of swatches.querySelectorAll<HTMLButtonElement>('[data-theme]')) b.setAttribute('aria-pressed', String(Number(b.dataset.theme) === seedTheme));
+}
+swatches.addEventListener('click', e => {
+    const b = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-theme]');
+    if (!b) return;
+    seedTheme = Number(b.dataset.theme);
+    showSwatches();
+});
+/**
+ * Stands in for finishing a learning session in the app: the island grows a
+ * few steps, one after another, so the child sees each new thing appear.
+ */
+function learn(spread = 450) {
+    sessions++;
+    for (let i = 0; i < PER_SESSION; i++) window.setTimeout(() => grow(performance.now()), spread * i);
+    updateStat();
+}
+const learnButton = root.querySelector<HTMLButtonElement>('#learn')!;
+learnButton.hidden = !byLearning;
+learnButton.addEventListener('click', () => learn());
 root.querySelector('#seed')!.addEventListener('click', () => {
     placing = 'home';
+    showSwatches();
     updateStat();
 });
 root.querySelector('#time')!.addEventListener('click', e => {
@@ -903,13 +1483,22 @@ function resize() {
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
-    const away = camera.position.clone().sub(controls.target).normalize();
-    camera.position.copy(controls.target).addScaledVector(away, 22 * Math.max(1, 1.25 / camera.aspect * .8));
+    // The camera looks down steeply, so on a tall phone the island fills the
+    // height instead of leaving sky above and sea below.
+    // On a wide screen the island's height is what must fit, so stand further back.
+    const away = new THREE.Vector3(.54, .95, .84).normalize();
+    camera.position.copy(controls.target).addScaledVector(away, camera.aspect < 1 ? 22 * Math.max(1, 1.25 / camera.aspect * .66) : 30);
 }
 addEventListener('resize', resize);
 resize();
 light();
 recompute();
+// The ground starts already settled, so nothing would ease it into place.
+showGround();
+// Prepare the finger ring's drawing now, not on the first stroke.
+ring.visible = true;
+renderer.compile(scene, camera);
+ring.visible = false;
 // Start from an island that has already grown for a while, already settled.
 for (let i = 0; i < 60; i++) grow(-1e6);
 easeGround(10);
@@ -929,12 +1518,14 @@ renderer.setAnimationLoop(now => {
         frames = 0; frameSum = 0;
     }
     // While a finger strokes, the island waits; it grows again once the hand is off.
-    if (!painting && now - lastGrow > 900) { grow(now); lastGrow = now; }
+    if (!byLearning && !painting && now - lastGrow > 900) { grow(now); lastGrow = now; }
     if (easeGround(dt)) rideRoads();
     moveViews(houseViews, housesGroup, now);
     moveViews(treeViews, treesGroup, now);
     for (const g of specialsGroup.children) g.position.y = (g.userData.y0 as number) + rise(g.position.x, g.position.z);
     drawRing(dt);
+    boat.position.y = Math.sin(now / 900) * .04;
+    boat.rotation.z = Math.sin(now / 1100) * .06;
     // The bus runs up and down the main road and waits at each end.
     if (main.length > 2) {
         if (busWait > 0) busWait -= dt;
@@ -942,7 +1533,7 @@ renderer.setAnimationLoop(now => {
             busAt += busDir * dt * 6;
             if (busAt <= 0 || busAt >= main.length - 1.01) { busAt = Math.max(0, Math.min(main.length - 1.01, busAt)); busDir *= -1; busWait = 1.6; }
         }
-        const [p, heading] = along(main, busAt, busDir > 0 ? -.11 : .11);
+        const [p, heading] = along(main, busAt, busDir > 0 ? -.2 : .2);
         p.y += rise(p.x, p.z);
         bus.position.copy(p);
         bus.rotation.y = heading + (busDir > 0 ? 0 : Math.PI);
@@ -957,22 +1548,13 @@ renderer.setAnimationLoop(now => {
         l.car.rotation.y = heading;
     }
     const living = townsfolk();
+    const tf = performance.now();
     folk.forEach((f, i) => {
         const road = roads[f.road % Math.max(1, roads.length)];
         if (i >= living || !road || road.line.length < 3) { f.g.visible = false; return; }
-        f.g.visible = true;
-        f.s += f.dir * dt * f.speed;
-        if (f.s <= 0 || f.s >= road.line.length - 1.01) { f.dir *= -1; f.s = Math.max(0, Math.min(road.line.length - 1.01, f.s)); }
-        const [p, heading] = along(road.line, f.s, f.side);
-        p.y += rise(p.x, p.z) - .05;
-        f.g.position.copy(p);
-        // A waddle: feet take turns, the body rocks a little.
-        const step = now / 150 * f.speed;
-        f.rig.feet.forEach((foot, k) => { foot.position.z = f.feet[k] + Math.sin(step + k * Math.PI) * .12; });
-        f.rig.body.rotation.z = Math.sin(step) * .06;
-        f.g.position.y += Math.abs(Math.sin(step)) * .015;
-        f.g.rotation.y = heading + (f.dir > 0 ? 0 : Math.PI);
+        walk(f, road, dt, now);
     });
+    perf.folk.push(performance.now() - tf);
     const home = specials.find(s => s.kind === 'home');
     partner.g.visible = !!home;
     if (home) {
@@ -982,7 +1564,9 @@ renderer.setAnimationLoop(now => {
         partner.rig.head.rotation.z = Math.sin(now / 700) * .12;
     }
     controls.update();
+    const tr = performance.now();
     renderer.render(scene, camera);
+    perf.render.push(performance.now() - tr);
 });
 
 // For checks from the outside: the same strokes and taps a finger makes.
@@ -991,17 +1575,51 @@ Object.assign(window, {
         get roads() { return roads; }, get houses() { return houses; }, get trees() { return trees; }, get specials() { return specials; },
         get moved() { return lastMoved; },
         get pixelRatio() { return pixelRatio; },
+        get drawCalls() { return renderer.info.render.calls; },
+        get memory() { return { ...renderer.info.memory }; },
+        /** Where a point on the ground shows on screen, in page pixels, to aim a real tap at it. */
+        screenOf(x: number, z: number) {
+            const v = new THREE.Vector3(x, heightAt(shown, x, z), z).project(camera);
+            const r = renderer.domElement.getBoundingClientRect();
+            return [r.left + (v.x + 1) / 2 * r.width, r.top + (1 - v.y) / 2 * r.height];
+        },
+        get muted() { return muted; },
+        shownAt: (x: number, z: number) => heightAt(shown, x, z),
+        get cameraAt() { return camera.position.toArray().map(v => +v.toFixed(2)); },
+        get folk() { return folk.filter(f => f.g.visible).map(f => f.mode); },
+        get folkDebug() { return folk.slice(0, townsfolk()).map(f => ({ m: f.mode, home: f.home, s: +f.s.toFixed(1), hs: f.homeS, rest: +f.rest.toFixed(1), road: f.road % Math.max(1, roads.length) })); },
+        get harbour() { return harbour(); },
+        folkMeshes() { let n = 0; folk[0].g.traverse(o => { if ((o as THREE.Mesh).isMesh) n++; }); return n; },
         perf,
+        /** One finger stroke along a path, as the pointer would make it: a press, then moves. */
+        drag(path: [number, number][], carve = false) {
+            remember();
+            path.forEach(([x, z], i) => brush(base, x, z, (carve ? -1 : 1) * (i ? .22 * 16 / 90 * 3 : .5)));
+            stirred = path[path.length - 1];
+            recompute();
+        },
+        get summary() {
+            let land = 0, top = -9;
+            for (let k = 0; k < N * N; k++) { if (base[k] > .3) land++; top = Math.max(top, base[k]); }
+            const kinds = [...new Set(roads.flatMap(r => r.parts.map(p => p.kind)))];
+            return { land: +(land * RES * RES).toFixed(0), top: +top.toFixed(1), roads: roads.length, kinds, houses: houses.length, trees: trees.length, folk: townsfolk(), specials: specials.map(s => `${s.kind}${s.stage ?? ''}`) };
+        },
         stroke(x: number, z: number, amount: number, times = 1, carve = false) {
             remember();
             const t0 = performance.now();
             for (let i = 0; i < times; i++) brush(base, x, z, carve ? -amount : amount);
+            stirred = [x, z];
             recompute();
             return performance.now() - t0;
         },
-        place(kind: SpecialKind, x: number, z: number) { remember(); const [px, pz] = landNear(x, z); place(kind, px, pz); },
+        place(kind: SpecialKind, x: number, z: number, theme?: number) { remember(); if (theme !== undefined) seedTheme = theme; const [px, pz] = landNear(x, z); place(kind, px, pz); },
         undo() { root.querySelector<HTMLButtonElement>('#undo')!.click(); },
         grow(n: number) { for (let i = 0; i < n; i++) grow(-1e6); },
+        /** n learning sessions, all at once. */
+        learn(n = 1) { for (let i = 0; i < n; i++) { sessions++; for (let k = 0; k < PER_SESSION; k++) grow(-1e6); } updateStat(); },
+        get sessions() { return sessions; },
+        /** Show every road at one stage of use (0 worn path … 3 tiles), to compare. */
+        roadStage(n: number) { roadStage = n; drawRoads(); },
         heightAt: (x: number, z: number) => heightAt(base, x, z),
         groundAt: (x: number, z: number) => heightAt(shaped, x, z),
         /** Look at a point from the sea side of it, from above. */

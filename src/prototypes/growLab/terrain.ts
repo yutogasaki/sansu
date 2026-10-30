@@ -26,6 +26,16 @@ export function sampleIsland(): Heights {
     return h;
 }
 
+/** What a child starts with: a small, low, round island and nothing on it. */
+export function smallIsland(): Heights {
+    const h = new Float32Array(N * N);
+    for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+        const r = Math.hypot(worldX(i), worldX(j));
+        h[i + j * N] = r < 3 ? .7 : r < 5 ? .7 - (r - 3) / 2 * 2.3 : -1.6;
+    }
+    return h;
+}
+
 export function heightAt(h: Heights, x: number, z: number): number {
     const fi = Math.max(0, Math.min(N - 1.001, indexOf(x)));
     const fj = Math.max(0, Math.min(N - 1.001, indexOf(z)));
@@ -60,33 +70,51 @@ export function brush(h: Heights, x: number, z: number, amount: number, radius =
     return changed;
 }
 
-/** Steepest rise per unit of run the ground keeps; earth piled steeper slides down. */
-export const TALUS = 1.8;
+/**
+ * Steepest rise per unit of run the ground keeps; earth piled steeper slides
+ * down. About as steep as the sample hill: piling on one spot makes the island
+ * wider, not a spike, and leaves slopes gentle enough for houses and roads.
+ */
+export const TALUS = 1.1;
 
 /**
  * Piled earth slides like sand until no slope is steeper than TALUS, so a hill
  * stacked on one spot spreads out at the foot instead of turning into a needle,
- * and its sides stay gentle enough to hold bushes. Only the area near the
- * stroke is touched, which keeps it quick.
+ * and its sides stay gentle enough to hold bushes. A stroke only takes a few
+ * passes, which keeps it quick; the island settles fully when the finger lifts.
  */
-export function settleSlopes(h: Heights, x: number, z: number, reach: number) {
-    const i0 = Math.max(0, Math.floor(indexOf(x - reach))), i1 = Math.min(N - 1, Math.ceil(indexOf(x + reach)));
-    const j0 = Math.max(0, Math.floor(indexOf(z - reach))), j1 = Math.min(N - 1, Math.ceil(indexOf(z + reach)));
-    const most = TALUS * RES;
-    for (let pass = 0; pass < 24; pass++) {
-        let moved = false;
+export function settleSlopes(h: Heights, x: number, z: number, reach: number, passes = 10) {
+    // Start near the stroke and widen the area whenever earth reaches its
+    // border, so a pile spreads as far as it needs to and never stops along a
+    // straight line.
+    let i0 = Math.max(0, Math.floor(indexOf(x - reach))), i1 = Math.min(N - 1, Math.ceil(indexOf(x + reach)));
+    let j0 = Math.max(0, Math.floor(indexOf(z - reach))), j1 = Math.min(N - 1, Math.ceil(indexOf(z + reach)));
+    // Diagonal neighbours too, so a pile spreads round rather than square.
+    const pairs = [[1, 0], [0, 1], [1, 1], [1, -1]] as const;
+    for (let pass = 0; pass < passes; pass++) {
+        let moved = false, edgeMoved = false;
         for (let j = j0; j <= j1; j++) for (let i = i0; i <= i1; i++) {
             const k = i + j * N;
-            for (const [di, dj] of [[1, 0], [0, 1]] as const) {
-                if (i + di > i1 || j + dj > j1) continue;
+            for (const [di, dj] of pairs) {
+                if (i + di > i1 || j + dj > j1 || j + dj < j0) continue;
                 const nk = k + di + dj * N;
+                const most = TALUS * RES * Math.hypot(di, dj);
                 const diff = h[k] - h[nk];
-                if (Math.abs(diff) <= most) continue;
+                // A hair over the limit is left alone, so the sliding comes to rest.
+                if (Math.abs(diff) <= most + .005) continue;
                 const shift = (Math.abs(diff) - most) / 2 * Math.sign(diff);
                 h[k] -= shift; h[nk] += shift;
                 moved = true;
+                if (i === i0 || i + di === i1 || j === j0 || j === j1 || j + dj === j0 || j + dj === j1) edgeMoved = true;
             }
         }
+        if (edgeMoved) { i0 = Math.max(0, i0 - 2); j0 = Math.max(0, j0 - 2); i1 = Math.min(N - 1, i1 + 2); j1 = Math.min(N - 1, j1 + 2); }
         if (!moved) break;
+    }
+    // Towards the edge of the world the ground slopes into the sea along a
+    // circle, so even an island piled up to fill everything keeps a round shore.
+    for (let j = j0; j <= j1; j++) for (let i = i0; i <= i1; i++) {
+        const left = SIZE / 2 - .5 - Math.hypot(worldX(i), worldX(j));
+        h[i + j * N] = Math.min(h[i + j * N], -1.6 + Math.max(0, left) * TALUS);
     }
 }
