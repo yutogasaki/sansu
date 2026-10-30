@@ -85,7 +85,7 @@ let pixelRatio = 1;
 let quality = 0;
 renderer.setPixelRatio(pixelRatio);
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.type = THREE.PCFShadowMap;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 viewport.append(renderer.domElement);
 const scene = new THREE.Scene();
@@ -272,8 +272,8 @@ const tiles = (a: string, b: string, mark: string, ring: boolean, seed: number) 
     const s = c.canvas.width, w = s / 2;
     for (let j = 0; j < 2; j++) for (let i = 0; i < 2; i++) {
         c.fillStyle = (i + j) % 2 ? a : b; c.fillRect(i * w, j * w, w, w);
-        c.fillStyle = mark; c.strokeStyle = mark; c.lineWidth = w * .09;
-        c.beginPath(); c.arc(i * w + w / 2, j * w + w / 2, w * (ring ? .3 : .2), 0, Math.PI * 2);
+        c.fillStyle = mark; c.strokeStyle = mark; c.lineWidth = w * .06;
+        c.beginPath(); c.arc(i * w + w / 2, j * w + w / 2, w * (ring ? .24 : .16), 0, Math.PI * 2);
         if (ring) c.stroke(); else c.fill();
         c.fillStyle = '#ffffff99'; c.fillRect(i * w, j * w, w, 2); c.fillRect(i * w, j * w, 2, w);
     }
@@ -298,7 +298,7 @@ const PAVING: Paving[] = [
         stages: [
             gravel('#d8cdb2', ['#b9ab8c', '#efe7d4', '#a39575'], 31),
             setts(['#ece5d3', '#e0d6bf', '#f4efe2', '#d6cbb2'], '#b7aa8f', 6, 4, 32),
-            tiles('#f6f2e8', '#dfe8f4', '#3a74c9', true, 33),
+            tiles('#f6f2e8', '#e6edf6', '#9db8dc', true, 33),
         ],
         edge: mat(0x9c8c70, { polygonOffset: true, polygonOffsetFactor: -2, side: THREE.DoubleSide }),
         step: mat(0xe6dcc6), plaza: W.patch[0], lamp: mat(0x3a74c9),
@@ -331,7 +331,7 @@ const PAVING: Paving[] = [
         stages: [
             gravel('#b7a27c', ['#8a7553', '#cdbb94', '#6f8a52'], 61),
             boards(['#b08a5e', '#a07c52', '#bf9868'], '#6e5638', 62),
-            tiles('#e9e4cf', '#9cc5a1', '#3f7a5a', true, 63),
+            tiles('#e9e4cf', '#b9d6bb', '#6f9d7c', true, 63),
         ],
         edge: mat(0x5a4630, { polygonOffset: true, polygonOffsetFactor: -2, side: THREE.DoubleSide }),
         step: mat(0xa07c52), plaza: W.patch[1], lamp: mat(0x3f7a5a),
@@ -353,6 +353,51 @@ function lookTowards() {
     });
 }
 
+// ---------- the sea ----------
+// The sea knows how deep it is over the island's ground: emerald in the
+// shallows, deep blue further out, a moving white edge where waves meet the
+// shore, and little glints of sun. The ground heights reach the sea as a
+// small texture that is refreshed whenever the ground changes.
+const depthData = new Uint8Array(N * N);
+const depthTex = new THREE.DataTexture(depthData, N, N, THREE.RedFormat, THREE.UnsignedByteType);
+depthTex.magFilter = depthTex.minFilter = THREE.LinearFilter;
+const SEA = {
+    time: { value: 0 },
+    deep: { value: new THREE.Color(0x1a76b8) },
+    shallow: { value: new THREE.Color(0x46d0c8) },
+    foam: { value: new THREE.Color(0xffffff) },
+};
+/** Heights from -2 to 2 into 0..255, enough to place the shore within about 2cm. */
+function seaKnowsGround(h: Heights) {
+    for (let k = 0; k < N * N; k++) depthData[k] = Math.max(0, Math.min(255, Math.round((h[k] + 2) / 4 * 255)));
+    depthTex.needsUpdate = true;
+}
+M.sea.onBeforeCompile = shader => {
+    Object.assign(shader.uniforms, { uTime: SEA.time, uDeep: SEA.deep, uShallow: SEA.shallow, uFoam: SEA.foam, uDepth: { value: depthTex } });
+    shader.vertexShader = 'varying vec3 vSeaWorld;\n' + shader.vertexShader.replace('#include <begin_vertex>', '#include <begin_vertex>\nvSeaWorld = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+    shader.fragmentShader = `varying vec3 vSeaWorld;
+uniform float uTime; uniform vec3 uDeep; uniform vec3 uShallow; uniform vec3 uFoam; uniform sampler2D uDepth;
+` + shader.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
+{
+    vec2 uv = (vSeaWorld.xz + ${(SIZE / 2).toFixed(1)}) / ${SIZE.toFixed(1)};
+    bool inside = all(greaterThan(uv, vec2(0.0))) && all(lessThan(uv, vec2(1.0)));
+    float ground = inside ? texture2D(uDepth, uv).r * 4.0 - 2.0 : -2.0;
+    float depth = clamp(-ground, 0.0, 2.0);
+    vec3 water = mix(uShallow, uDeep, smoothstep(0.05, 1.4, depth));
+    // Waves lap the shore: a white band that breathes in and out.
+    float wave = 0.5 + 0.5 * sin(uTime * 1.6 - depth * 22.0 + sin(vSeaWorld.x * 1.3 + vSeaWorld.z) * 1.5);
+    float edge = 1.0 - smoothstep(0.0, 0.16 + 0.08 * wave, depth);
+    water = mix(water, uFoam, edge * 0.85);
+    // Sun glints: tiny bright specks that come and go.
+    // A few at a time, gathered in drifting patches rather than everywhere.
+    float g = sin(vSeaWorld.x * 7.0 + uTime * 1.3) * sin(vSeaWorld.z * 6.0 - uTime * 1.1) * sin((vSeaWorld.x + vSeaWorld.z) * 3.3 + uTime * .7);
+    float cluster = smoothstep(0.55, 1.0, sin(vSeaWorld.x * 0.35 + uTime * 0.2) * sin(vSeaWorld.z * 0.31 - uTime * 0.17));
+    water += smoothstep(0.93, 0.995, g) * cluster * 0.45 * smoothstep(0.3, 1.0, depth);
+    // Gentle swell: broad lighter and darker bands moving across the sea.
+    water *= 0.94 + 0.06 * sin(vSeaWorld.x * 0.8 + vSeaWorld.z * 0.5 + uTime * 0.6);
+    diffuseColor.rgb = water;
+}`);
+};
 const sea = new THREE.Mesh(new THREE.CircleGeometry(90, 64), M.sea);
 sea.rotation.x = -Math.PI / 2;
 sea.position.y = .02;
@@ -424,6 +469,7 @@ const shadowy = <T extends THREE.Object3D>(o: T) => { o.traverse(c => { if ((c a
 const SAND = new THREE.Color(0xe4d3a8), ROCK = new THREE.Color(0xb7a993), MOSS = new THREE.Color(0x4f7a3c), GRASS = [new THREE.Color(0x7fae55), new THREE.Color(0x6d9e4a), new THREE.Color(0x93b862)];
 /** Colours follow where the ground is going, so they never lag behind a stroke. */
 function paintGround() {
+    seaKnowsGround(target);
     const pos = groundGeo.attributes.position as THREE.BufferAttribute;
     const col = groundGeo.attributes.color as THREE.BufferAttribute;
     const c = new THREE.Color();
@@ -806,8 +852,8 @@ function buildHouse(o: House): THREE.Group {
     top.rotation.y = turn;
     g.add(top);
     const rad = Math.min(w, d) / 2 / .84;
-    const slab = round ? new THREE.Mesh(R.slab, M.roof) : new THREE.Mesh(floorGeo(w / .84 + .05, .07, d / .8 + .05), M.roof);
-    if (round) slab.scale.set(rad + .04, 1, rad + .04);
+    const slab = round ? new THREE.Mesh(R.slab, M.roof) : new THREE.Mesh(floorGeo(w + .08, .07, d + .08), M.roof);
+    if (round) slab.scale.set(Math.min(w, d) / 2 + .05, 1, Math.min(w, d) / 2 + .05);
     slab.position.y = .02;
     top.add(slab);
     if (roof === 'dome') {
@@ -848,8 +894,23 @@ function buildHouse(o: House): THREE.Group {
     return g;
 }
 
+/** Dry-stone terrace walls, as hillside villages build them, instead of a plain white block. */
+const TERRACE = mat(0xffffff, { map: canvasTexture((c, s) => {
+    const r = rng(81);
+    c.fillStyle = '#b9a98c'; c.fillRect(0, 0, s, s);
+    const rows = 7;
+    for (let j = 0; j < rows; j++) {
+        let x = -r() * 30;
+        while (x < s) {
+            const w = 26 + r() * 30, h = s / rows;
+            c.fillStyle = ['#e4d8bf', '#d8c9aa', '#efe5cf', '#cdbd9c'][Math.floor(r() * 4)];
+            c.beginPath(); c.roundRect(x + 2, j * h + 2, w - 4, h - 4, 7); c.fill();
+            x += w;
+        }
+    }
+}) });
 /**
- * The white base a house stands on down the slope, kept apart from the house
+ * The stone base a house stands on down the slope, kept apart from the house
  * itself: when the ground under it changes only the base is swapped, which is
  * cheap, and the house is never rebuilt for it.
  */
@@ -862,7 +923,7 @@ function setFooting(g: THREE.Group, o: House) {
     const old = g.getObjectByName('base');
     if (old) g.remove(old);
     if (!steps) return;
-    const b = new THREE.Mesh(floorGeo(o.w, steps / 4, o.d), M.base);
+    const b = new THREE.Mesh(floorGeo(o.w, steps / 4, o.d), TERRACE);
     b.name = 'base';
     b.position.y = -steps / 8 + .02;
     b.castShadow = b.receiveShadow = true;
@@ -1094,6 +1155,7 @@ function settle() {
     for (let k = 0; k < N * N; k++) offset[k] = shaped[k] - base[k];
     target = shaped;
     paintGround();
+    scatterMeadow();
 }
 
 // Houses and trees on screen, by id. A thing that moves glides to its new
@@ -1289,6 +1351,91 @@ const partner = (() => {
     scene.add(g);
     return { g, rig };
 })();
+
+// ---------- meadow, rocks, clouds, birds ----------
+// Small things that make the island feel lived in: tufts of grass and wild
+// flowers on the open slopes, rocks along the waterline, a few slow clouds
+// whose shadows drift over the hills, and seabirds turning above.
+const TUFT = (() => {
+    const blades = [0, 1, 2].map(i => new THREE.ConeGeometry(.035, .22, 4).translate(Math.cos(i * 2.1) * .04, .11, Math.sin(i * 2.1) * .04).rotateZ((i - 1) * .25));
+    const g = mergeGeometries(blades); blades.forEach(b => b.dispose());
+    return g;
+})();
+const tufts = new THREE.InstancedMesh(TUFT, mat(0xffffff), 700);
+const flowers = new THREE.InstancedMesh(new THREE.IcosahedronGeometry(.055, 0), mat(0xffffff, { emissive: 0x221a22 }), 260);
+const rocks = new THREE.InstancedMesh(new THREE.DodecahedronGeometry(.22, 0), mat(0xb3aa98, { flatShading: true }), 70);
+for (const m of [tufts, flowers, rocks]) { m.castShadow = m === rocks; m.receiveShadow = true; scene.add(m); }
+const GRASS_TONES = ['#5f9a3f', '#76ad4b', '#4f8a38', '#8fbf5a'].map(c => new THREE.Color(c));
+const FLOWER_TONES = ['#ffd6e8', '#fff3a0', '#ffffff', '#d9c6ff', '#ff9fc4'].map(c => new THREE.Color(c));
+/** Scatter the meadow anew on the settled ground: clear of roads, houses and the shore. */
+function scatterMeadow() {
+    const r = rng(17), m = new THREE.Matrix4(), q = new THREE.Quaternion(), up = new THREE.Vector3(0, 1, 0);
+    // Ground the roads run over, marked once on the grid, so each try is a lookup.
+    const onRoad = new Uint8Array(N * N);
+    for (const rd of roads) for (const [px, , pz] of rd.line) {
+        const ci = Math.round((px + SIZE / 2) / RES), cj = Math.round((pz + SIZE / 2) / RES);
+        for (let dj = -2; dj <= 2; dj++) for (let di = -2; di <= 2; di++) {
+            const i = ci + di, j = cj + dj;
+            if (i >= 0 && j >= 0 && i < N && j < N) onRoad[i + j * N] = 1;
+        }
+    }
+    const clear = (x: number, z: number) => !onRoad[Math.round((x + SIZE / 2) / RES) + Math.round((z + SIZE / 2) / RES) * N] && !houses.some(o => Math.hypot(o.x - x, o.z - z) < Math.max(o.w, o.d) * .7) && specials.every(sp => Math.hypot(sp.x - x, sp.z - z) > 1);
+    const place = (mesh: THREE.InstancedMesh, want: (y: number, slope: number) => boolean, scale: () => number, tone: (i: number) => THREE.Color) => {
+        let n = 0;
+        for (let tries = 0; tries < mesh.count * 6 && n < mesh.count; tries++) {
+            const x = (r() - .5) * (SIZE - 1), z = (r() - .5) * (SIZE - 1), y = heightAt(shaped, x, z);
+            if (!want(y, slopeAt(shaped, x, z)) || !clear(x, z)) continue;
+            q.setFromAxisAngle(up, r() * Math.PI * 2);
+            const k = scale();
+            m.compose(new THREE.Vector3(x, y - .02, z), q, new THREE.Vector3(k, k, k));
+            mesh.setMatrixAt(n, m); mesh.setColorAt(n, tone(n)); n++;
+        }
+        // Unused ones are tucked away under the sea.
+        m.makeTranslation(0, -50, 0);
+        for (let i = n; i < mesh.count; i++) mesh.setMatrixAt(i, m);
+        mesh.instanceMatrix.needsUpdate = true;
+        if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+    };
+    place(tufts, (y, sl) => y > .45 && sl < 1.3, () => .8 + r() * .7, i => GRASS_TONES[i % GRASS_TONES.length]);
+    place(flowers, (y, sl) => y > .5 && sl < .9, () => .8 + r() * .6, i => FLOWER_TONES[i % FLOWER_TONES.length]);
+    place(rocks, y => y > -.25 && y < .22, () => .6 + r() * 1.1, () => new THREE.Color(0xffffff));
+}
+const CLOUD = mat(0xffffff, { roughness: 1, transparent: true, opacity: .92 });
+const clouds = Array.from({ length: 5 }, (_, i) => {
+    const r = rng(40 + i), g = new THREE.Group();
+    for (let k = 0; k < 4; k++) {
+        const puff = new THREE.Mesh(new THREE.IcosahedronGeometry(.9 + r() * .7, 2), CLOUD);
+        puff.position.set((k - 1.5) * .9, r() * .4, (r() - .5) * .8);
+        puff.scale.y = .6;
+        g.add(puff);
+    }
+    g.scale.setScalar(.55 + r() * .25);
+    shadowy(g);
+    scene.add(g);
+    // They sail round the island over the sea, below the camera, never across the view of the town.
+    return { g, angle: i / 5 * Math.PI * 2 + r(), radius: 14 + r() * 5, height: 4.5 + r() * 2, speed: .015 + r() * .01 };
+});
+const birds = Array.from({ length: 4 }, (_, i) => {
+    const g = new THREE.Group();
+    const wing = new THREE.BoxGeometry(.32, .02, .1);
+    for (const side of [-1, 1]) { const w = new THREE.Mesh(wing, mat(0xffffff)); w.position.x = side * .16; w.name = side < 0 ? 'left' : 'right'; g.add(w); }
+    scene.add(g);
+    return { g, radius: 6 + i * 1.6, height: 6.5 + i * .7, speed: .18 + i * .04, phase: i * 1.7 };
+});
+function moveSky(dt: number, now: number) {
+    for (const c of clouds) {
+        c.angle += c.speed * dt;
+        c.g.position.set(Math.cos(c.angle) * c.radius, c.height, Math.sin(c.angle) * c.radius);
+        c.g.visible = quality < 2;
+    }
+    for (const b of birds) {
+        const a = now / 1000 * b.speed + b.phase;
+        b.g.position.set(Math.cos(a) * b.radius, b.height + Math.sin(a * 3) * .4, Math.sin(a) * b.radius);
+        b.g.rotation.y = -a;
+        const flap = Math.sin(now / 140 + b.phase) * .5;
+        b.g.getObjectByName('left')!.rotation.z = flap; b.g.getObjectByName('right')!.rotation.z = -flap;
+    }
+}
 
 // ---------- きらきら ----------
 // A small pool of sparkles: they fly up from whatever just happened and fade.
@@ -1882,7 +2029,9 @@ function light() {
     sun.position.set(dusk ? -16 : -9, dusk ? 7 : 18, dusk ? 10 : 12);
     hemi.color.set(dusk ? 0xe8dcff : 0xffffff);
     hemi.intensity = dusk ? 1.15 : 1.2;
-    M.sea.color.set(dusk ? 0x6f8cc6 : 0x2f8fc4);
+    SEA.deep.value.set(dusk ? 0x4f6aa8 : 0x1a76b8);
+    SEA.shallow.value.set(dusk ? 0x8fb8c8 : 0x46d0c8);
+    SEA.foam.value.set(dusk ? 0xffe2d0 : 0xffffff);
     for (const b of root.querySelectorAll<HTMLButtonElement>('[data-time]')) b.setAttribute('aria-pressed', String(b.dataset.time === time));
 }
 
@@ -1915,6 +2064,7 @@ rideRoads();
 
 let last = performance.now(), lastGrow = 0, frames = 0, frameSum = 0, slowChecks = 0, checkedAt = performance.now();
 renderer.setAnimationLoop(now => {
+    SEA.time.value = now / 1000;
     const frame = now - last;
     const dt = Math.min(.05, frame / 1000);
     last = now;
@@ -1994,6 +2144,7 @@ renderer.setAnimationLoop(now => {
     moveOpening(now);
     moveTrippers(dt, now);
     moveSparks(dt);
+    moveSky(dt, now);
     partner.g.visible = !!home;
     if (home) {
         const x = home.x + .55, z = home.z + .75;
