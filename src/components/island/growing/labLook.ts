@@ -1,0 +1,221 @@
+import * as T from 'three';
+import type { GardenTime } from '../three/garden/presentation';
+import type { Cell, GrowingState } from '../../../domain/growingIsland';
+import type { SceneLayout } from './sceneLayout';
+import type { ObjectLayer } from './objectLayer';
+
+/** DEV comparison only (?island-look=lab): the grow-lab's look-only parts on the real island.
+ * Night glows, the lighthouse beam, beach things, boats and buoys, and fireworks when a
+ * session's buds are all open. It reads the island and writes nothing (grow-lab integration.md, stage 1). */
+export const labLookEnabled = () => import.meta.env.DEV && typeof location !== 'undefined'
+    && new URLSearchParams(location.search).get('island-look') === 'lab';
+
+const SEA_LEVEL = -.40;
+const dot = (stops: [number, string][]) => {
+    const canvas = document.createElement('canvas'); canvas.width = canvas.height = 64;
+    const c = canvas.getContext('2d')!, g = c.createRadialGradient(32, 32, 0, 32, 32, 32);
+    for (const [at, color] of stops) g.addColorStop(at, color);
+    c.fillStyle = g; c.fillRect(0, 0, 64, 64);
+    const texture = new T.CanvasTexture(canvas); texture.colorSpace = T.SRGBColorSpace; return texture;
+};
+// Seeded, so the same island dresses its beach the same way every time.
+const seeded = (text: string) => {
+    let h = 2166136261; for (const ch of text) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+    return () => { h = Math.imul(h ^ h >>> 15, 2246822507); h = Math.imul(h ^ h >>> 13, 3266489909); return ((h ^= h >>> 16) >>> 0) / 4294967296; };
+};
+const BRIGHT = ['#ff6b6b', '#ffb84d', '#ffe066', '#5ccf8f', '#4db3ff', '#c78bff'];
+const FIREWORK = ['#ffe066', '#ff8fc4', '#7ff0c0', '#ffffff', '#c7a6ff'].map(c => new T.Color(c));
+// How much each part shows at each time of day: window and lamp glow, the beam, fireflies.
+const LOOK: Record<GardenTime, { halo: number; beam: number; glimmer: number }> = {
+    morning: { halo: 0, beam: 0, glimmer: 0 }, day: { halo: 0, beam: 0, glimmer: 0 },
+    dusk: { halo: .55, beam: .18, glimmer: 0 }, night: { halo: 1, beam: .32, glimmer: 1 },
+};
+
+export function createLabLook(scene: T.Scene) {
+    const root = new T.Group(); root.name = 'lab-look'; scene.add(root);
+    const owned: { dispose(): void }[] = [];
+    const keep = <D extends { dispose(): void }>(d: D) => { owned.push(d); return d; };
+    const warm = keep(dot([[0, '#fff4d0'], [.2, '#ffd27acc'], [.55, '#ffb24a33'], [1, '#ffa03000']]));
+    const white = keep(dot([[0, '#ffffff'], [.35, '#ffffffcc'], [1, '#ffffff00']]));
+    const haloMaterial = keep(new T.SpriteMaterial({ map: warm, transparent: true, depthWrite: false, blending: T.AdditiveBlending }));
+    const beamGeometry = keep((() => {
+        const geo = new T.ConeGeometry(.55, 4.5, 20, 1, true).translate(0, -2.25, 0).rotateZ(Math.PI / 2);
+        const pos = geo.attributes.position, fade = new Float32Array(pos.count * 3);
+        for (let i = 0; i < pos.count; i++) { const k = Math.max(0, 1 - pos.getX(i) / 4.5); fade.fill(k * k, i * 3, i * 3 + 3); }
+        return geo.setAttribute('color', new T.BufferAttribute(fade, 3));
+    })());
+    const beamMaterial = keep(new T.MeshBasicMaterial({ color: '#fff0b8', vertexColors: true, transparent: true, opacity: 0, depthWrite: false, blending: T.AdditiveBlending, side: T.DoubleSide }));
+    const paint = (color: string) => keep(new T.MeshStandardMaterial({ color, roughness: .7 }));
+    const bright = BRIGHT.map(paint), sandy = paint('#e8d4a4'), pole = paint('#f6f1e6'), shells = ['#ffe4ec', '#fff8ee', '#ffd2b8'].map(paint);
+    const parts = {
+        pole: keep(new T.CylinderGeometry(.012, .012, .34, 6)), parasol: keep(new T.ConeGeometry(.2, .08, 10)), towel: keep(new T.BoxGeometry(.15, .008, .28)),
+        castle: keep(new T.CylinderGeometry(.045, .055, .06, 8)), shell: keep(new T.IcosahedronGeometry(.02, 0)), ball: keep(new T.SphereGeometry(.04, 12, 8)),
+        hull: keep(new T.BoxGeometry(.18, .08, .45)), sail: keep(new T.ShapeGeometry(new T.Shape([new T.Vector2(0, 0), new T.Vector2(0, .5), new T.Vector2(.28, 0)])).rotateY(Math.PI / 2)),
+        mast: keep(new T.CylinderGeometry(.008, .008, .55, 5)), buoy: keep(new T.SphereGeometry(.07, 12, 8)),
+    };
+    const sailMaterial = keep(new T.MeshStandardMaterial({ color: '#fff8ec', side: T.DoubleSide, roughness: .8 }));
+
+    // Fireflies over the meadow at night, and a small pool of firework sparks.
+    const GLIMMERS = 36, SPARKS = 360;
+    const glimmerGeometry = keep(new T.BufferGeometry().setAttribute('position', new T.BufferAttribute(new Float32Array(GLIMMERS * 3), 3)));
+    const glimmers = new T.Points(glimmerGeometry, keep(new T.PointsMaterial({ size: 7, sizeAttenuation: false, map: white, color: '#d8ff9a', transparent: true, depthWrite: false, blending: T.AdditiveBlending })));
+    glimmers.frustumCulled = false; root.add(glimmers);
+    const sparkPos = new Float32Array(SPARKS * 3).fill(-50), sparkCol = new Float32Array(SPARKS * 3), sparkVel = new Float32Array(SPARKS * 3), sparkLife = new Float32Array(SPARKS);
+    const sparkGeometry = keep(new T.BufferGeometry().setAttribute('position', new T.BufferAttribute(sparkPos, 3)).setAttribute('color', new T.BufferAttribute(sparkCol, 3)));
+    const sparks = new T.Points(sparkGeometry, keep(new T.PointsMaterial({ size: 9, sizeAttenuation: false, map: white, vertexColors: true, transparent: true, depthWrite: false, blending: T.AdditiveBlending })));
+    sparks.frustumCulled = false; root.add(sparks);
+    let nextSpark = 0, sparking = false;
+    const fling = (at: T.Vector3, count: number, speed: number, rise: number, colour: T.Color, life: number) => {
+        for (let i = 0; i < count; i++) {
+            const k = nextSpark++ % SPARKS, a = Math.random() * Math.PI * 2, up = Math.random() * 2 - 1, flat = Math.sqrt(1 - up * up), s = speed * (.85 + Math.random() * .3);
+            sparkPos.set([at.x, at.y, at.z], k * 3);
+            sparkVel.set([Math.cos(a) * flat * s, up * s + rise, Math.sin(a) * flat * s], k * 3);
+            sparkCol.set([colour.r, colour.g, colour.b], k * 3); sparkLife[k] = life;
+        }
+        sparking = true;
+    };
+
+    let dressed = new T.Group(); root.add(dressed);
+    let halos: { sprite: T.Sprite; at: T.Vector3; reach: number }[] = [], beams: T.Mesh[] = [];
+    let boats: { g: T.Group; angle: number; radius: number; speed: number }[] = [], buoys: { g: T.Group; phase: number; y: number }[] = [];
+    const center = new T.Vector3(), timers: number[] = [];
+    let glimmerHome: T.Vector3[] = [], reach = 6, look = LOOK.day, currentTime: GardenTime = 'day', parasols = 0;
+
+    const clear = () => {
+        dressed.removeFromParent(); dressed = new T.Group(); root.add(dressed);
+        halos = []; beams = []; boats = []; buoys = [];
+    };
+    const halo = (at: T.Vector3, size: number, spread: number) => {
+        const sprite = new T.Sprite(haloMaterial); sprite.scale.setScalar(size); sprite.position.copy(at); dressed.add(sprite);
+        halos.push({ sprite, at: at.clone(), reach: spread });
+    };
+
+    return {
+        root,
+        /** Dress the island from what is already on it: homes and lights glow, shores get beach things, boats sail round. */
+        build(state: GrowingState, layout: SceneLayout, layer: ObjectLayer) {
+            clear();
+            const { bounds } = layout, random = seeded(`${state.seed}:lab-look`);
+            const land = (cell: Cell) => cell.x >= bounds.minX && cell.x <= bounds.maxX && cell.z >= 0 && cell.z < bounds.depth && layout.heightAt(cell) > SEA_LEVEL;
+            const taken = new Set([...state.plots, ...state.landmarks].flatMap(o => o.cell ? [`${o.cell.x},${o.cell.z}`] : []));
+            const box = new T.Box3(), size = new T.Vector3(), mid = new T.Vector3();
+            for (const plot of state.plots) {
+                const object = layer.objects.get(plot.id);
+                if (!object || plot.kind !== 'home' || plot.stage < 2) continue;
+                box.setFromObject(object); box.getSize(size); box.getCenter(mid);
+                halo(new T.Vector3(mid.x, box.min.y + size.y * .45, mid.z), .9, Math.max(size.x, size.z) * .55);
+            }
+            for (const landmark of state.landmarks) {
+                const object = layer.objects.get(landmark.id);
+                if (!object || (landmark.kind !== 'lantern' && landmark.kind !== 'lighthouse')) continue;
+                const lantern = object.localToWorld(new T.Vector3(0, landmark.kind === 'lighthouse' ? 1.3 : .5, 0));
+                halo(lantern, landmark.kind === 'lighthouse' ? 1.3 : .8, 0);
+                if (landmark.kind === 'lighthouse') {
+                    const beam = new T.Mesh(beamGeometry, beamMaterial); beam.position.copy(lantern); beam.scale.setScalar(object.getWorldScale(new T.Vector3()).y);
+                    dressed.add(beam); beams.push(beam);
+                }
+            }
+            // Shore cells: land with sea beside it. Parasols go on free ones, shells along the edge.
+            const shore: { cell: Cell; out: Cell }[] = [], meadow: Cell[] = [];
+            for (let z = 0; z < bounds.depth; z++) for (let x = bounds.minX; x <= bounds.maxX; x++) {
+                const cell = { x, z }; if (!land(cell)) continue;
+                const out = [{ x: 0, z: 1 }, { x: 1, z: 0 }, { x: -1, z: 0 }, { x: 0, z: -1 }].find(d => !land({ x: x + d.x, z: z + d.z }));
+                if (out) shore.push({ cell, out }); else if (!taken.has(`${x},${z}`)) meadow.push(cell);
+            }
+            const free = shore.filter(s => !taken.has(`${s.cell.x},${s.cell.z}`) && layout.heightAt(s.cell) < .4).sort(() => random() - .5);
+            const spots: Cell[] = [];
+            for (const s of free) if (spots.length < Math.min(4, Math.ceil(shore.length / 8)) && spots.every(o => Math.abs(o.x - s.cell.x) + Math.abs(o.z - s.cell.z) > 3)) {
+                spots.push(s.cell);
+                const spot = new T.Group(), k = spots.length;
+                spot.position.copy(layout.point({ x: s.cell.x + s.out.x * .2, z: s.cell.z + s.out.z * .2 }, 0)); spot.rotation.y = Math.atan2(s.out.x, s.out.z); spot.scale.setScalar(1.6);
+                const stick = new T.Mesh(parts.pole, pole); stick.position.y = .17; stick.rotation.z = .12;
+                const top = new T.Mesh(parts.parasol, bright[k % 6]); top.position.set(.02, .33, 0); top.rotation.z = .12;
+                const towel = new T.Mesh(parts.towel, bright[(k + 2) % 6]); towel.position.set(.16, .006, .03); towel.rotation.y = .3;
+                spot.add(stick, top, towel);
+                if (k % 2) for (let c = 0; c < 3; c++) { const castle = new T.Mesh(parts.castle, sandy); castle.position.set(-.2 + c * .05, .03 + (c === 1 ? .05 : 0), .15); castle.scale.setScalar(c === 1 ? .8 : 1); spot.add(castle); }
+                else { const ball = new T.Mesh(parts.ball, bright[(k + 4) % 6]); ball.position.set(-.18, .04, .12); spot.add(ball); }
+                dressed.add(spot);
+            }
+            for (const [n, s] of shore.filter(() => random() < .45).slice(0, 18).entries()) {
+                const shell = new T.Mesh(parts.shell, shells[n % 3]), side = random() - .5;
+                shell.position.copy(layout.point({ x: s.cell.x + s.out.x * .38 + s.out.z * side * .7, z: s.cell.z + s.out.z * .38 + s.out.x * side * .7 }, .01));
+                shell.scale.set(1, .5, 1.3); shell.rotation.y = random() * 6; dressed.add(shell);
+            }
+            // Boats sail round beyond the shore, buoys bob a little closer in.
+            box.setFromObject(layer.root); box.getCenter(center); center.y = 0;
+            reach = Math.max(layout.width, layout.depth) / 2 + 1.6;
+            boats = [0, 1].map(i => {
+                const g = new T.Group(), hull = new T.Mesh(parts.hull, bright[(i * 2 + 4) % 6]); hull.position.y = .02;
+                const mast = new T.Mesh(parts.mast, pole); mast.position.y = .3;
+                const sail = new T.Mesh(parts.sail, sailMaterial); sail.position.set(0, .07, -.03);
+                g.add(hull, mast, sail); dressed.add(g);
+                return { g, angle: i * 2.8 + random() * 2, radius: reach + .8 + i * .9, speed: .05 - i * .012 };
+            });
+            buoys = [0, 1, 2].map(i => {
+                const g = new T.Group(), body = new T.Mesh(parts.buoy, bright[i % 2]); body.scale.set(1.4, 1.1, 1.4); g.add(body);
+                const a = i / 3 * Math.PI * 2 + .6; g.position.set(center.x + Math.cos(a) * reach, SEA_LEVEL, center.z + Math.sin(a) * reach);
+                dressed.add(g); return { g, phase: i * 1.3, y: SEA_LEVEL };
+            });
+            parasols = spots.length;
+            glimmerHome = Array.from({ length: GLIMMERS }, () => {
+                const cell = meadow.length ? meadow[Math.floor(random() * meadow.length)] : { x: 0, z: 0 };
+                return layout.point({ x: cell.x + random() - .5, z: cell.z + random() - .5 }, .25 + random() * .35);
+            });
+            this.setTime(currentTime);
+        },
+        setTime(time: GardenTime) {
+            currentTime = time; look = LOOK[time];
+            haloMaterial.opacity = look.halo; beamMaterial.opacity = look.beam;
+            for (const h of halos) h.sprite.visible = look.halo > 0;
+            for (const b of beams) b.visible = look.beam > 0;
+            glimmers.visible = look.glimmer > 0 && glimmerHome.length > 0;
+        },
+        /** Every bud of a session is open: three fireworks go up over the sea, beyond the island. */
+        celebrate(camera: T.Camera, reduced: boolean) {
+            if (reduced) return;
+            const away = center.clone().sub(camera.position).setY(0).normalize(), side = new T.Vector3(-away.z, 0, away.x);
+            for (let n = 0; n < 3; n++) {
+                // Out past the far shore and high, so from the front they open over the sea, not the town.
+                const at = center.clone().addScaledVector(away, reach + 1).addScaledVector(side, (n - 1) * reach * .4);
+                const top = 3 + reach * .35 + n % 2 * .8, colour = FIREWORK[(n * 2 + Math.floor(Math.random() * 5)) % FIREWORK.length];
+                for (let t = 0; t < 6; t++) timers.push(window.setTimeout(() => fling(at.clone().setY(t * top / 6), 2, .05, 1.1, FIREWORK[3], .35), 700 * n + t * 70));
+                timers.push(window.setTimeout(() => fling(at.clone().setY(top), 80, 1.5, .5, colour, 1.2), 700 * n + 450));
+            }
+        },
+        tick(now: number, delta: number, reduced: boolean, camera: T.Camera) {
+            const dt = delta / 1000, toward = new T.Vector3();
+            // Window glows sit on the side of each house that faces the camera.
+            if (look.halo > 0) for (const h of halos) {
+                toward.copy(camera.position).sub(h.at).setY(0).normalize();
+                h.sprite.position.copy(h.at).addScaledVector(toward, h.reach);
+            }
+            if (look.beam > 0 && !reduced) for (const b of beams) b.rotation.y = now / 1400;
+            for (const b of boats) {
+                if (!reduced) b.angle += b.speed * dt;
+                b.g.position.set(center.x + Math.cos(b.angle) * b.radius, SEA_LEVEL + (reduced ? 0 : Math.sin(now / 800 + b.angle * 9) * .02), center.z + Math.sin(b.angle) * b.radius);
+                b.g.rotation.set(0, -b.angle, reduced ? 0 : Math.sin(now / 1000 + b.radius) * .06);
+            }
+            if (!reduced) for (const b of buoys) { b.g.position.y = b.y + Math.sin(now / 700 + b.phase) * .025; b.g.rotation.z = Math.sin(now / 900 + b.phase) * .15; }
+            if (glimmers.visible) {
+                const pos = glimmerGeometry.attributes.position as T.BufferAttribute, t = now / 1000;
+                glimmerHome.forEach((home, i) => pos.setXYZ(i, home.x + (reduced ? 0 : Math.sin(t * .4 + i) * .3), home.y + (reduced ? 0 : Math.sin(t * .9 + i * 2.1) * .08), home.z + (reduced ? 0 : Math.cos(t * .33 + i * 1.3) * .3)));
+                pos.needsUpdate = true;
+                (glimmers.material as T.PointsMaterial).opacity = .75 + Math.sin(t * 2.3) * .2;
+            }
+            if (sparking) {
+                sparking = false;
+                for (let k = 0; k < SPARKS; k++) {
+                    if (sparkLife[k] <= 0) continue;
+                    sparking = true; sparkLife[k] -= dt * 1.1; sparkVel[k * 3 + 1] -= dt * 1.6;
+                    for (let a = 0; a < 3; a++) { sparkPos[k * 3 + a] += sparkVel[k * 3 + a] * dt; sparkCol[k * 3 + a] *= Math.max(0, 1 - dt * 1.4); }
+                    if (sparkLife[k] <= 0) sparkPos.set([0, -50, 0], k * 3);
+                }
+                sparkGeometry.attributes.position.needsUpdate = true; sparkGeometry.attributes.color.needsUpdate = true;
+            }
+        },
+        /** For checking in the browser: what the island was dressed with. */
+        summary: () => ({ halos: halos.length, beams: beams.length, parasols, boats: boats.length, buoys: buoys.length, glimmers: glimmers.visible }),
+        dispose() { timers.forEach(clearTimeout); root.removeFromParent(); owned.forEach(d => d.dispose()); },
+    };
+}
+export type LabLook = ReturnType<typeof createLabLook>;

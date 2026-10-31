@@ -1,10 +1,13 @@
 import * as T from 'three';
 import type { GardenGround } from './garden';
 
-/** DEV comparison only (?island-sea=coast): the sea learns the island's real coast,
- * from the grow-lab prototype. It reads ground heights and writes nothing. */
-export const coastSeaEnabled = () => import.meta.env.DEV && typeof location !== 'undefined'
-    && new URLSearchParams(location.search).get('island-sea') === 'coast';
+/** DEV comparison only (?island-sea=coast, or all of ?island-look=lab): the sea learns the island's
+ * real coast, from the grow-lab prototype. It reads ground heights and writes nothing. */
+export const coastSeaEnabled = () => {
+    if (!import.meta.env.DEV || typeof location === 'undefined') return false;
+    const params = new URLSearchParams(location.search);
+    return params.get('island-sea') === 'coast' || params.get('island-look') === 'lab';
+};
 
 const PER_CELL = 4, MARGIN = 7, SEA_LEVEL = -.40;
 
@@ -20,9 +23,9 @@ export function coastMask(ground: GardenGround, point: (cell: { x: number; z: nu
         const owned = x >= bounds.minX && x <= bounds.maxX && z >= 0 && z < bounds.depth;
         land[i + j * w] = owned && (ground.heightAt?.({ x, z }) ?? 0) > SEA_LEVEL ? 1 : 0;
     }
-    // The drawn shore stands about three quarters of a cell out from the owned cells,
-    // so the land grows by that much before three box blurs each way soften it.
-    const grow = new Float32Array(w * h), reach = 3;
+    // The drawn shore stands up to three quarters of a cell out from the owned cells.
+    // Growing the land by half a cell meets it without closing a two-cell inlet.
+    const grow = new Float32Array(w * h), reach = 2;
     for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
         let v = 0;
         for (let b = Math.max(0, j - reach); b <= Math.min(h - 1, j + reach) && !v; b++)
@@ -31,7 +34,7 @@ export function coastMask(ground: GardenGround, point: (cell: { x: number; z: nu
     }
     land = grow;
     const blur = (from: Float32Array, dx: number, dy: number) => {
-        const to = new Float32Array(w * h), r = 5;
+        const to = new Float32Array(w * h), r = 4;
         for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
             let sum = 0;
             for (let k = -r; k <= r; k++) {
@@ -59,7 +62,9 @@ export const COAST_SEA_FRAGMENT = `
             float near=all(greaterThan(coastUv,vec2(0.)))&&all(lessThan(coastUv,vec2(1.)))?texture2D(coastLand,coastUv).r:0.;
             color=mix(deep,shallow,smoothstep(.02,.32,near)*.9+waves*.025);
             float lap=.5+.5*sin(at*1.6-near*14.+sin(world.x*1.3+world.y)*1.5);
-            color=mix(color,vec3(1.),smoothstep(.27+.06*lap,.4,near)*.6);
+            // A thin lapping line: islands draw their shore at different distances out, so the
+            // foam stays a band and the water inside it returns to shallows rather than white.
+            color=mix(color,vec3(1.),smoothstep(.27+.06*lap,.38,near)*(1.-smoothstep(.46,.6,near))*.6);
             float roll=fract(at*.18+sin(world.x*.9+world.y*.6)*.08);
             float pieces=smoothstep(.1,.7,sin(world.x*1.7+world.y*1.1+at*.4)*sin(world.x*.9-world.y*1.4-at*.3)+.35);
             color=mix(color,vec3(1.),(1.-smoothstep(0.,.025,abs(near-(.12+roll*.13))))*pieces*(1.-roll)*.25);`;

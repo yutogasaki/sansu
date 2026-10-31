@@ -18,6 +18,7 @@ import { MomentEffects } from './momentEffects';
 import { buildObjectLayer, previewGrowingState, type Ghost, type ObjectLayer } from './objectLayer';
 import { frameCamera, framePlaceCamera, initialView, panFromDrag, panToFocus, revealPlaceCamera } from './growingCamera';
 import { createWorldScene } from './worldScene';
+import { createLabLook, labLookEnabled } from './labLook';
 import { WorldEffects } from './worldEffects';
 import type { SceneLayout } from './sceneLayout';
 import { menuPictureMaker, type MenuPictures } from './menuMiniatures';
@@ -239,13 +240,14 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
         const effects = new WorldEffects(world.scene); disposers.push(() => effects.dispose());
         let nextSplash = 0;
         const moments = new MomentEffects(world.scene); disposers.push(() => moments.dispose());
+        const look = labLookEnabled() ? createLabLook(world.scene) : undefined; if (look) disposers.push(() => look.dispose());
         const wonders = new WonderScenery(world.scene); disposers.push(() => wonders.dispose());
         const archipelago = new Archipelago(world.scene); disposers.push(() => archipelago.dispose());
         wonders.chime = () => { if (latest.current.active && document.visibilityState === 'visible') handlerRef.current.onPop?.(); };
         // A special island's own light over the time of day; setting the time resets the lights, so it is laid again after.
         let theme: GrowingState['theme'], untone: (() => void) | undefined;
         const tone = (time: typeof latest.current.time) => { untone = toneLight(theme, time, world.scene, world.hemi, world.sun); };
-        const setTime = (time: typeof latest.current.time) => { untone = undefined; world.setTime(time); tone(time); };
+        const setTime = (time: typeof latest.current.time) => { untone = undefined; world.setTime(time); tone(time); look?.setTime(time); };
         let species: T.Object3D[] = [];
         /** Each island species has its own small motion (island-journey.md §4). */
         let pickedSpecies: string | undefined;
@@ -546,6 +548,8 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             if (known) for (const [id, object] of layer.objects) if (!known.has(id) && (next.plots.some(p => p.id === id && p.origin === 'spread')
                 || next.landmarks.some(l => l.id === id && l.from))) effects.pop(object, now, true);
             known = new Set(layer.objects.keys());
+            if (look) { look.build(next, layout, layer); node.dataset.labLook = JSON.stringify(look.summary()); }
+            if (look && unopened.size && !next.unopened.length && [...unopened].some(id => layer!.objects.has(id))) look.celebrate(camera, reduced);
             unopened = new Set(next.unopened);
             world.life.sync(next, layout, layer);
             wonders.build(next, layout);
@@ -896,6 +900,7 @@ export default function GrowingWorld({ terrainEditing = false, terrainBrush = fa
             node.dataset.terrainEditing = String(editing);
             node.dataset.terrainSelection = selectedTerrain ? `${selectedTerrain.x},${selectedTerrain.z}` : '';
             world.animate(now, reduced);
+            look?.tick(now, delta, reduced, camera);
             try {
                 const ratio = quality?.sample(now, latest.current.active && width > 1 && height > 1 && document.visibilityState === 'visible');
                 if (ratio !== undefined && ratio !== renderer.getPixelRatio()) renderer.setPixelRatio(ratio);
