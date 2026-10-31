@@ -10,8 +10,8 @@ import { N, RES, heightAt, indexOf, worldX, type Heights } from './terrain';
 export const MAX_GRADE = .4;
 /** Half the width of a road: wide enough for the bus and a resident to pass. */
 export const ROAD_HALF = .45;
-/** Steeper than this, steps give way to the funicular. */
-export const STAIR_GRADE = 1.1;
+/** Steeper than this, steps give way to the funicular: steep enough to climb the wall of one step. */
+export const STAIR_GRADE = 2.6;
 // Shallow angles (1 across, 3 along) let a road climb a hillside at its
 // steepest gently, slanting across it, instead of only straight up or level.
 const MOVES: [number, number][] = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1],
@@ -48,8 +48,9 @@ const where = (k: number): XZ => [worldX(k % N), worldX(Math.floor(k / N))];
 
 /** How a step from k to nk would be built. */
 export function wayOf(h: Heights, k: number, nk: number, run: number): Way {
-    if (h[k] < LAND || h[nk] < LAND) return 'bridge';
     const grade = Math.abs(h[nk] - h[k]) / run;
+    // A bridge crosses water level; up from the water's edge is climbed like any slope.
+    if ((h[k] < LAND || h[nk] < LAND) && grade <= MAX_GRADE) return 'bridge';
     return grade <= MAX_GRADE ? 'road' : grade <= STAIR_GRADE ? 'stair' : 'lift';
 }
 

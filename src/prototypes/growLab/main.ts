@@ -5,7 +5,7 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { houseFits, houseSpot, moveHouse, padHouses, rng, treeFits, treeSpot, type House, type Tree } from './growth';
 import { ROAD_HALF, cutRoads, network, type P3, type Road, type XZ } from './roads';
 import { busySpot, graphOf, newFootfall, nodeNear, pathBetween, stagesAlong, walkTrips } from './traffic';
-import { N, RES, SIZE, STEP as LEVEL, TERRACE_R, brush, heightAt, levelAt, sampleIsland, settleSlopes, slopeAt, smallIsland, terrace, topNear, worldX, type Heights } from './terrain';
+import { N, RES, SIZE, STEP as LEVEL, TERRACE_R, TERRACE_SIDE, brush, heightAt, levelAt, sampleIsland, settleSlopes, slopeAt, smallIsland, terrace, topNear, worldX, type Heights } from './terrain';
 import { IslandMaterials } from '../../components/island/three/primitives';
 import { makeResidentRig, type ResidentSpecies } from '../../components/island/three/residentRig';
 import './style.css';
@@ -1283,8 +1283,9 @@ function keepSandbars(h: Heights) {
 function recompute() {
     // Whatever the strokes left half-slid finishes sliding now, starting
     // where the finger was and widening only as far as earth still moves.
+    // The walls of the steps stand; only sand at the water's edge slides.
     const ts = performance.now();
-    if (stirred) { settleSlopes(base, stirred[0], stirred[1], 4.4, 80); stirred = null; }
+    if (stirred) { settleSlopes(base, stirred[0], stirred[1], 4.4, 80, TERRACE_SIDE); stirred = null; }
     keepSandbars(base);
     (perf.parts.slide ??= []).push(performance.now() - ts);
     const tn = performance.now();

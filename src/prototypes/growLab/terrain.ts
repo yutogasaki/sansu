@@ -72,9 +72,13 @@ export function brush(h: Heights, x: number, z: number, amount: number, radius =
 
 /** One level of ground: what one tap of つむ adds or けずる takes away. */
 export const STEP = .6;
-/** The flat top a tap makes, and how steeply its side falls to the ground around. */
+/**
+ * The flat top a tap makes, and how steeply its side falls to the ground
+ * around: a short wall, like a terrace on Capri, so a tap changes the ground
+ * near the finger and nowhere else.
+ */
 export const TERRACE_R = 1.3;
-const TERRACE_SIDE = .9;
+export const TERRACE_SIDE = 2.4;
 
 /** The level of the ground at a point, in whole steps. */
 export const levelAt = (h: Heights, x: number, z: number) => Math.round(heightAt(h, x, z) / STEP);
@@ -113,7 +117,8 @@ export function terrace(h: Heights, x: number, z: number, level: number, up: boo
         const k = i + j * N;
         if (up ? h[k] < top - out - .001 : h[k] > top + out + .001) { h[k] = up ? top - out : top + out; changed = true; }
     }
-    if (changed) settleSlopes(h, x, z, TERRACE_R + 2);
+    // Walls stand: only sand at the water's edge slides.
+    if (changed) settleSlopes(h, x, z, TERRACE_R + 2, 10, TERRACE_SIDE);
     return changed;
 }
 
@@ -137,7 +142,7 @@ export const BEACH_LOW = -.8, BEACH_HIGH = .55;
  * and its sides stay gentle enough to hold bushes. A stroke only takes a few
  * passes, which keeps it quick; the island settles fully when the finger lifts.
  */
-export function settleSlopes(h: Heights, x: number, z: number, reach: number, passes = 10) {
+export function settleSlopes(h: Heights, x: number, z: number, reach: number, passes = 10, talus = TALUS) {
     // Start near the stroke and widen the area whenever earth reaches its
     // border, so a pile spreads as far as it needs to and never stops along a
     // straight line.
@@ -154,7 +159,7 @@ export function settleSlopes(h: Heights, x: number, z: number, reach: number, pa
                 const nk = k + di + dj * N;
                 const diff = h[k] - h[nk];
                 const sand = Math.max(h[k], h[nk]) < BEACH_HIGH && Math.min(h[k], h[nk]) > BEACH_LOW;
-                const most = (sand ? BEACH_TALUS : TALUS) * RES * Math.hypot(di, dj);
+                const most = (sand ? BEACH_TALUS : talus) * RES * Math.hypot(di, dj);
                 // A hair over the limit is left alone, so the sliding comes to rest.
                 if (Math.abs(diff) <= most + .005) continue;
                 const shift = (Math.abs(diff) - most) / 2 * Math.sign(diff);
