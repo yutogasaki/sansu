@@ -1,0 +1,180 @@
+// Grow lab terrain: a smooth height field the child shapes with a soft brush.
+// Roads, houses and trees are all decided from it by the other modules.
+
+export const SIZE = 20;
+export const RES = .5;
+export const N = SIZE / RES + 1;
+export const SEA = 0;
+
+export type Heights = Float32Array;
+
+export const worldX = (i: number) => -SIZE / 2 + i * RES;
+export const indexOf = (x: number) => (x + SIZE / 2) / RES;
+
+/** A green island: a high hill with a lower shoulder, falling off to the sea. */
+export function sampleIsland(): Heights {
+    const h = new Float32Array(N * N);
+    for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+        const x = worldX(i), z = worldX(j);
+        const hill = 5.4 * Math.exp(-((x + 1) ** 2 + (z + 1.5) ** 2) / 16);
+        const shoulder = 2.4 * Math.exp(-((x - 4.5) ** 2 + (z - 3) ** 2) / 7);
+        const ripple = .25 * Math.sin(x * 1.3 + z * .7) * Math.cos(z * 1.1 - x * .4);
+        const r = Math.hypot(x * 1.05, z);
+        const coast = r < 7 ? 0 : r > 9.5 ? 1 : (r - 7) / 2.5;
+        h[i + j * N] = (hill + shoulder + ripple + .7) * (1 - coast * coast) - coast * 1.6;
+    }
+    return h;
+}
+
+/** What a child starts with: a small, low, round island and nothing on it. */
+export function smallIsland(): Heights {
+    const h = new Float32Array(N * N);
+    for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+        const r = Math.hypot(worldX(i), worldX(j));
+        h[i + j * N] = r < 3 ? .7 : r < 5 ? .7 - (r - 3) / 2 * 2.3 : -1.6;
+    }
+    return h;
+}
+
+export function heightAt(h: Heights, x: number, z: number): number {
+    const fi = Math.max(0, Math.min(N - 1.001, indexOf(x)));
+    const fj = Math.max(0, Math.min(N - 1.001, indexOf(z)));
+    const i = Math.floor(fi), j = Math.floor(fj), u = fi - i, v = fj - j;
+    const a = h[i + j * N], b = h[i + 1 + j * N], c = h[i + (j + 1) * N], d = h[i + 1 + (j + 1) * N];
+    return a * (1 - u) * (1 - v) + b * u * (1 - v) + c * (1 - u) * v + d * u * v;
+}
+
+/** Rise per unit of run at a point. */
+export function slopeAt(h: Heights, x: number, z: number): number {
+    const e = RES * .5;
+    const dx = (heightAt(h, x + e, z) - heightAt(h, x - e, z)) / (2 * e);
+    const dz = (heightAt(h, x, z + e) - heightAt(h, x, z - e)) / (2 * e);
+    return Math.hypot(dx, dz);
+}
+
+/**
+ * A broad round bump (or dent): a smooth dome that fades to nothing at the
+ * radius, so stacking on one spot grows a hill, not a spike.
+ */
+export function brush(h: Heights, x: number, z: number, amount: number, radius = 2.4): boolean {
+    let changed = false;
+    for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+        const d2 = (worldX(i) - x) ** 2 + (worldX(j) - z) ** 2;
+        if (d2 >= radius * radius) continue;
+        const k = i + j * N;
+        const fall = 1 - d2 / (radius * radius);
+        const next = Math.max(-2, Math.min(9, h[k] + amount * fall * fall));
+        if (next !== h[k]) { h[k] = next; changed = true; }
+    }
+    if (changed) settleSlopes(h, x, z, radius + 2);
+    return changed;
+}
+
+/** One level of ground: what one tap of つむ adds or けずる takes away. */
+export const STEP = .6;
+/**
+ * The flat top a tap makes, and how steeply its side falls to the ground
+ * around: a short wall, like a terrace on Capri, so a tap changes the ground
+ * near the finger and nowhere else.
+ */
+export const TERRACE_R = 1.3;
+export const TERRACE_SIDE = 2.4;
+
+/** The level of the ground at a point, in whole steps. */
+export const levelAt = (h: Heights, x: number, z: number) => Math.round(heightAt(h, x, z) / STEP);
+
+/**
+ * Where a tap builds: the highest ground within its reach. A finger on a hill
+ * lands on its side as often as on its top, so a tap there builds on the top,
+ * centred on it: the hill keeps getting taller where it stands, instead of
+ * filling in a side or creeping towards the shore.
+ */
+export function topNear(h: Heights, x: number, z: number): { level: number; x: number; z: number } {
+    let best = { level: levelAt(h, x, z), x, z };
+    // On a hill's side the top can be a few steps away; on flat ground a tap
+    // builds where it is, so a new step can stand beside a hill.
+    const reach = slopeAt(h, x, z) > .3 ? [.5, 1, 1.5, 2, 2.5] : [.5, 1];
+    for (let a = 0; a < 12; a++) for (const r of reach.map(k => k * TERRACE_R)) {
+        const px = x + Math.cos(a / 12 * Math.PI * 2) * r, pz = z + Math.sin(a / 12 * Math.PI * 2) * r;
+        const level = levelAt(h, px, pz);
+        if (level > best.level) best = { level, x: px, z: pz };
+    }
+    return best;
+}
+
+/**
+ * Raise the ground round a point to a flat top at a whole level (or, going
+ * down, cut it to one), with sides falling gently to the ground around. The
+ * child never shapes a slope by hand: each tap is one clear step, flat on top
+ * for houses and roads, and taps beside it at the same level join into one
+ * wide terrace.
+ */
+export function terrace(h: Heights, x: number, z: number, level: number, up: boolean): boolean {
+    const top = Math.max(-2, Math.min(9, level * STEP));
+    let changed = false;
+    for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+        const out = Math.max(0, Math.hypot(worldX(i) - x, worldX(j) - z) - TERRACE_R) * TERRACE_SIDE;
+        const k = i + j * N;
+        if (up ? h[k] < top - out - .001 : h[k] > top + out + .001) { h[k] = up ? top - out : top + out; changed = true; }
+    }
+    // Walls stand: only sand at the water's edge slides.
+    if (changed) settleSlopes(h, x, z, TERRACE_R + 2, 10, TERRACE_SIDE);
+    return changed;
+}
+
+/**
+ * Steepest rise per unit of run the ground keeps; earth piled steeper slides
+ * down. About as steep as the sample hill: piling on one spot makes the island
+ * wider, not a spike, and leaves slopes gentle enough for houses and roads.
+ */
+export const TALUS = 1.1;
+/**
+ * Sand at the water's edge lies much flatter than earth on the hill, as real
+ * beaches do: between a little under the sea and a little above it, ground
+ * steeper than this slides, so shores open into wide beaches and shallows.
+ */
+export const BEACH_TALUS = .38;
+export const BEACH_LOW = -.8, BEACH_HIGH = .55;
+
+/**
+ * Piled earth slides like sand until no slope is steeper than TALUS, so a hill
+ * stacked on one spot spreads out at the foot instead of turning into a needle,
+ * and its sides stay gentle enough to hold bushes. A stroke only takes a few
+ * passes, which keeps it quick; the island settles fully when the finger lifts.
+ */
+export function settleSlopes(h: Heights, x: number, z: number, reach: number, passes = 10, talus = TALUS) {
+    // Start near the stroke and widen the area whenever earth reaches its
+    // border, so a pile spreads as far as it needs to and never stops along a
+    // straight line.
+    let i0 = Math.max(0, Math.floor(indexOf(x - reach))), i1 = Math.min(N - 1, Math.ceil(indexOf(x + reach)));
+    let j0 = Math.max(0, Math.floor(indexOf(z - reach))), j1 = Math.min(N - 1, Math.ceil(indexOf(z + reach)));
+    // Diagonal neighbours too, so a pile spreads round rather than square.
+    const pairs = [[1, 0], [0, 1], [1, 1], [1, -1]] as const;
+    for (let pass = 0; pass < passes; pass++) {
+        let moved = false, edgeMoved = false;
+        for (let j = j0; j <= j1; j++) for (let i = i0; i <= i1; i++) {
+            const k = i + j * N;
+            for (const [di, dj] of pairs) {
+                if (i + di > i1 || j + dj > j1 || j + dj < j0) continue;
+                const nk = k + di + dj * N;
+                const diff = h[k] - h[nk];
+                const sand = Math.max(h[k], h[nk]) < BEACH_HIGH && Math.min(h[k], h[nk]) > BEACH_LOW;
+                const most = (sand ? BEACH_TALUS : talus) * RES * Math.hypot(di, dj);
+                // A hair over the limit is left alone, so the sliding comes to rest.
+                if (Math.abs(diff) <= most + .005) continue;
+                const shift = (Math.abs(diff) - most) / 2 * Math.sign(diff);
+                h[k] -= shift; h[nk] += shift;
+                moved = true;
+                if (i === i0 || i + di === i1 || j === j0 || j === j1 || j + dj === j0 || j + dj === j1) edgeMoved = true;
+            }
+        }
+        if (edgeMoved) { i0 = Math.max(0, i0 - 2); j0 = Math.max(0, j0 - 2); i1 = Math.min(N - 1, i1 + 2); j1 = Math.min(N - 1, j1 + 2); }
+        if (!moved) break;
+    }
+    // Towards the edge of the world the ground slopes into the sea along a
+    // circle, so even an island piled up to fill everything keeps a round shore.
+    for (let j = j0; j <= j1; j++) for (let i = i0; i <= i1; i++) {
+        const left = SIZE / 2 - .5 - Math.hypot(worldX(i), worldX(j));
+        h[i + j * N] = Math.min(h[i + j * N], -1.6 + Math.max(0, left) * TALUS);
+    }
+}
