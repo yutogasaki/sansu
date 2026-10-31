@@ -5,7 +5,7 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { houseFits, houseSpot, moveHouse, padHouses, rng, treeFits, treeSpot, type House, type Tree } from './growth';
 import { ROAD_HALF, cutRoads, network, type P3, type Road, type XZ } from './roads';
 import { busySpot, graphOf, newFootfall, nodeNear, pathBetween, stagesAlong, walkTrips } from './traffic';
-import { N, RES, SIZE, brush, heightAt, sampleIsland, settleSlopes, slopeAt, smallIsland, worldX, type Heights } from './terrain';
+import { N, RES, SIZE, STEP as LEVEL, TERRACE_R, brush, heightAt, levelAt, sampleIsland, settleSlopes, slopeAt, smallIsland, terrace, worldX, type Heights } from './terrain';
 import { IslandMaterials } from '../../components/island/three/primitives';
 import { makeResidentRig, type ResidentSpecies } from '../../components/island/three/residentRig';
 import './style.css';
@@ -2156,7 +2156,7 @@ function chime(freq: number, volume = .035, length = .09) {
     osc.connect(gain).connect(audio.destination);
     osc.start(t); osc.stop(t + length + .02);
 }
-const RING = 64, RING_R = 1.6;
+const RING = 64, RING_R = TERRACE_R;
 const ringGeo = new THREE.BufferGeometry();
 ringGeo.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array((RING + 1) * 2 * 3), 3));
 ringGeo.setIndex(Array.from({ length: RING }, (_, i) => [i * 2, i * 2 + 1, i * 2 + 2, i * 2 + 1, i * 2 + 3, i * 2 + 2]).flat());
@@ -2187,7 +2187,9 @@ function drawRing(dt: number) {
 // ---------- input ----------
 const ray = new THREE.Raycaster();
 const ndc = new THREE.Vector2();
-let painting = false, lastPaint = 0, lastSound = 0, rethink = 0;
+let painting = false, lastSound = 0, rethink = 0;
+/** The level this stroke builds to, fixed at the touch: one step above (or below) the ground there. */
+let strokeLevel = 0;
 /** The みち stroke being drawn, as a dotted line on the ground. */
 let draft: XZ[] | null = null;
 const draftLine = new THREE.Points(new THREE.BufferGeometry(), new THREE.PointsMaterial({ color: 0xffffff, size: .18, depthTest: false }));
@@ -2212,15 +2214,21 @@ function remember() {
     if (history.length > 40) history.shift();
 }
 const live = new Float32Array(N * N);
+/** The level a touch here builds to. Tapping the sea makes new land at the first level. */
+const levelFor = (x: number, z: number, up: boolean) =>
+    up ? Math.max(1, levelAt(base, x, z) + 1) : Math.max(-1, levelAt(base, x, z) - 1);
 /**
  * A stroke shows at once: only the ground changes under the finger, and what
  * stands on it rides along. Roads, houses and trees are rethought when the
  * finger lifts or rests, so a stroke never waits for the island to think.
+ * A touch is one step: the ground there rises to the next level, flat on top,
+ * and sliding the finger spreads that same level, so a terrace is never a
+ * slope the child has to shape by feel.
  */
-function paint(p: THREE.Vector3, amount: number) {
+function paint(p: THREE.Vector3) {
     const t0 = performance.now();
     cursor.x = p.x; cursor.z = p.z;
-    if (!brush(base, p.x, p.z, tool === 'stack' ? amount : -amount)) return;
+    if (!terrace(base, p.x, p.z, strokeLevel, tool === 'stack')) return;
     stirred = [p.x, p.z];
     keepSandbars(base);
     for (let k = 0; k < N * N; k++) live[k] = base[k] + offset[k];
@@ -2228,7 +2236,7 @@ function paint(p: THREE.Vector3, amount: number) {
     paintGround();
     cursor.pulse = 1;
     if (t0 - lastSound > 110) {
-        const y = heightAt(base, p.x, p.z);
+        const y = strokeLevel * LEVEL;
         chime(tool === 'stack' ? 330 + y * 45 : 300 - Math.min(5, Math.max(-2, y)) * 25);
         lastSound = t0;
     }
@@ -2268,8 +2276,8 @@ renderer.domElement.addEventListener('pointerdown', e => {
     }
     painting = true;
     cursor.shown = 1;
-    paint(p, .5);
-    lastPaint = performance.now();
+    strokeLevel = levelFor(p.x, p.z, tool === 'stack');
+    paint(p);
     renderer.domElement.setPointerCapture(e.pointerId);
 }, { capture: true });
 renderer.domElement.addEventListener('pointermove', e => {
@@ -2279,12 +2287,10 @@ renderer.domElement.addEventListener('pointermove', e => {
         if (p && Math.hypot(p.x - last[0], p.z - last[1]) > .3) { draft.push([p.x, p.z]); showDraft(); }
         return;
     }
-    const now = performance.now();
-    if (!painting || now - lastPaint < 16) return;
+    if (!painting) return;
     const p = hit(e);
-    // Every move counts, in proportion to the time since the last one, so a
-    // slow stroke and a quick one pile up the same earth per second.
-    if (p) { paint(p, .22 * Math.min(1, (now - lastPaint) / 90)); lastPaint = now; }
+    // Resting in one place adds nothing more: only a new place spreads the level.
+    if (p && Math.hypot(p.x - cursor.x, p.z - cursor.z) > .35) paint(p);
 });
 const end = () => {
     if (draft) {
@@ -2750,10 +2756,11 @@ Object.assign(window, {
         get harbour() { return harbour(); },
         folkMeshes() { let n = 0; folk[0].g.traverse(o => { if ((o as THREE.Mesh).isMesh) n++; }); return n; },
         perf,
-        /** One finger stroke along a path, as the pointer would make it: a press, then moves. */
+        /** One finger stroke along a path, as the pointer would make it: a touch sets the level, moves spread it. */
         drag(path: [number, number][], carve = false) {
             remember();
-            path.forEach(([x, z], i) => brush(base, x, z, (carve ? -1 : 1) * (i ? .22 * 16 / 90 * 3 : .5)));
+            const level = levelFor(path[0][0], path[0][1], !carve);
+            path.forEach(([x, z]) => terrace(base, x, z, level, !carve));
             stirred = path[path.length - 1];
             recompute();
         },
@@ -2764,6 +2771,13 @@ Object.assign(window, {
             const paved = [0, 0, 0, 0];
             for (const r of roads) for (const st of stagesAlong(footfall, r)) paved[st]++;
             return { land: +(land * RES * RES).toFixed(0), top: +top.toFixed(1), roads: roads.length, kinds, houses: houses.length, trees: trees.length, folk: townsfolk(), specials: specials.map(s => `${s.kind}${s.stage ?? ''}`), paved };
+        },
+        /** n taps on one spot: each one step higher (or lower). */
+        tap(x: number, z: number, n = 1, carve = false) {
+            remember();
+            for (let i = 0; i < n; i++) terrace(base, x, z, levelFor(x, z, !carve), !carve);
+            stirred = [x, z];
+            recompute();
         },
         stroke(x: number, z: number, amount: number, times = 1, carve = false) {
             remember();

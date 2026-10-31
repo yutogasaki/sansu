@@ -70,6 +70,34 @@ export function brush(h: Heights, x: number, z: number, amount: number, radius =
     return changed;
 }
 
+/** One level of ground: what one tap of つむ adds or けずる takes away. */
+export const STEP = .6;
+/** The flat top a tap makes, and how steeply its side falls to the ground around. */
+export const TERRACE_R = 1.3;
+const TERRACE_SIDE = .9;
+
+/** The level of the ground at a point, in whole steps. */
+export const levelAt = (h: Heights, x: number, z: number) => Math.round(heightAt(h, x, z) / STEP);
+
+/**
+ * Raise the ground round a point to a flat top at a whole level (or, going
+ * down, cut it to one), with sides falling gently to the ground around. The
+ * child never shapes a slope by hand: each tap is one clear step, flat on top
+ * for houses and roads, and taps beside it at the same level join into one
+ * wide terrace.
+ */
+export function terrace(h: Heights, x: number, z: number, level: number, up: boolean): boolean {
+    const top = Math.max(-2, Math.min(9, level * STEP));
+    let changed = false;
+    for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+        const out = Math.max(0, Math.hypot(worldX(i) - x, worldX(j) - z) - TERRACE_R) * TERRACE_SIDE;
+        const k = i + j * N;
+        if (up ? h[k] < top - out - .001 : h[k] > top + out + .001) { h[k] = up ? top - out : top + out; changed = true; }
+    }
+    if (changed) settleSlopes(h, x, z, TERRACE_R + 2);
+    return changed;
+}
+
 /**
  * Steepest rise per unit of run the ground keeps; earth piled steeper slides
  * down. About as steep as the sample hill: piling on one spot makes the island

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { houseSpot, moveHouse, rng, treeSpot, type House } from './growth';
 import { MAX_GRADE, cutRoads, findWay, network, node } from './roads';
-import { N, RES, brush, heightAt, sampleIsland } from './terrain';
+import { N, RES, STEP, brush, heightAt, levelAt, sampleIsland, smallIsland, terrace } from './terrain';
 import { graphOf, newFootfall, nodeNear, pathBetween, stageFor, walkTrips } from './traffic';
 
 describe('grow lab terrain', () => {
@@ -10,6 +10,24 @@ describe('grow lab terrain', () => {
         const before = [heightAt(h, 2, 6), heightAt(h, 3.5, 6)];
         brush(h, 2, 6, 1);
         expect(heightAt(h, 2, 6) - before[0]).toBeGreaterThan(heightAt(h, 3.5, 6) - before[1]);
+    });
+
+    it('raises the ground one flat step per tap, and lowers it one step back', () => {
+        const h = smallIsland();
+        const tap = (up: boolean) => terrace(h, 0, 0, levelAt(h, 0, 0) + (up ? 1 : -1), up);
+        tap(true); tap(true);
+        expect(heightAt(h, 0, 0)).toBeCloseTo(3 * STEP);
+        // Flat on top, so a house or a road can stand on it.
+        expect(heightAt(h, .8, .3)).toBeCloseTo(3 * STEP);
+        tap(false);
+        expect(heightAt(h, 0, 0)).toBeCloseTo(2 * STEP);
+    });
+
+    it('makes new land where the sea is tapped', () => {
+        const h = smallIsland();
+        expect(heightAt(h, 7, 0)).toBeLessThan(0);
+        terrace(h, 7, 0, Math.max(1, levelAt(h, 7, 0) + 1), true);
+        expect(heightAt(h, 7, 0)).toBeGreaterThan(0);
     });
 });
 
