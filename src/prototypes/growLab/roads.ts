@@ -230,20 +230,31 @@ export function buildRoad(h: Heights, nodes: number[], rawKinds: Way[]): Road {
 export interface Network { roads: Road[]; reached: boolean[] }
 
 /** Roads from the harbour to each place in turn, each joining the network so far. */
-export function network(h: Heights, harbour: XZ, places: XZ[]): Network {
+export function network(h: Heights, harbour: XZ, places: XZ[], chains: XZ[][] = []): Network {
     const roads: Road[] = [];
     const on = new Set<number>([node(harbour)]);
-    const reached = places.map(p => {
-        const start = node(p);
-        if (on.has(start)) return true;
-        const way = findWay(h, start, on, on);
+    const join = (start: number, goals: Set<number>) => {
+        if (goals.has(start)) return true;
+        const way = findWay(h, start, goals, on);
         if (!way) return false;
         const nodes = way.nodes.reverse();
         const kinds: Way[] = ['road', ...way.kinds.slice(1).reverse()];
         roads.push(buildRoad(h, nodes, kinds));
         nodes.forEach(k => on.add(k));
         return true;
-    });
+    };
+    const reached = places.map(p => join(node(p), on));
+    // A drawn line is one road: the stop nearest the roads already there joins
+    // them, then the line grows stop by stop both ways from it, so the road
+    // follows the finger instead of every stop sprouting its own branch.
+    const gap = (p: XZ) => Math.min(...[...on].map(k => Math.hypot(worldX(k % N) - p[0], worldX(Math.floor(k / N)) - p[1])));
+    for (const chain of chains) {
+        if (!chain.length) continue;
+        const gaps = chain.map(gap), first = gaps.indexOf(Math.min(...gaps));
+        join(node(chain[first]), on);
+        for (let i = first + 1; i < chain.length; i++) join(node(chain[i]), new Set([node(chain[i - 1])]));
+        for (let i = first - 1; i >= 0; i--) join(node(chain[i]), new Set([node(chain[i + 1])]));
+    }
     return { roads, reached };
 }
 

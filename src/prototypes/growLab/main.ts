@@ -48,8 +48,8 @@ const byLearning = params.get('pace') === 'learn' || (blank && params.get('pace'
 // ?roads=draw: the child lays the roads with a みち stroke. The island still
 // runs one road from the harbour to each child's house, so nobody is stuck.
 const drawMode = params.get('roads') === 'draw';
-/** Points along the roads the child has drawn, in the order drawn. */
-let drawn: XZ[] = [];
+/** The roads the child has drawn: one list of stops per stroke, in the order drawn. */
+let drawn: XZ[][] = [];
 /** Growth steps one learning session gives the island. */
 const PER_SESSION = 6;
 let sessions = 0;
@@ -71,7 +71,7 @@ const offset = new Float32Array(N * N);
 let roads: Road[] = [];
 let houses: House[] = [];
 let trees: Tree[] = [];
-const history: { base: Heights; specials: Special[]; houses: House[]; trees: Tree[]; drawn: XZ[] }[] = [];
+const history: { base: Heights; specials: Special[]; houses: House[]; trees: Tree[]; drawn: XZ[][] }[] = [];
 const rand = rng(7);
 let nextId = 1;
 
@@ -1289,9 +1289,9 @@ function recompute() {
     (perf.parts.slide ??= []).push(performance.now() - ts);
     const tn = performance.now();
     const places: XZ[] = drawMode
-        ? [...specials.filter(s => s.kind === 'home').map(s => [s.x, s.z] as XZ), ...drawn]
+        ? specials.filter(s => s.kind === 'home').map(s => [s.x, s.z] as XZ)
         : [...specials.map(s => [s.x, s.z] as XZ), ...lookout()];
-    const net = network(base, harbour(), places);
+    const net = network(base, harbour(), places, drawMode ? drawn : []);
     perf.network.push(performance.now() - tn);
     roads = net.roads;
     let tp = performance.now();
@@ -2298,7 +2298,7 @@ const end = () => {
         });
         draft = null;
         showDraft();
-        drawn.push(...stops);
+        drawn.push(stops);
         chime(440, .03, .2);
         think();
     }
@@ -2790,7 +2790,7 @@ Object.assign(window, {
         /** Show every road at one stage of use (0 worn path … 3 tiles), to compare. */
         roadStage(n: number | null) { roadStage = n; drawRoads(); },
         /** A みち stroke through these points, as the finger would draw it. */
-        drawRoad(path: [number, number][]) { remember(); drawn.push(...path); recompute(); },
+        drawRoad(path: [number, number][]) { remember(); drawn.push(path); recompute(); },
         get gazing() { return gazing.length; },
         get footfall() { return Array.from(footfall).reduce((a, b) => a + b, 0); },
         heightAt: (x: number, z: number) => heightAt(base, x, z),
