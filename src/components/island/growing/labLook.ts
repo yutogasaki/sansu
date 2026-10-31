@@ -1,6 +1,7 @@
 import * as T from 'three';
 import type { GardenTime } from '../three/garden/presentation';
 import type { Cell, GrowingState } from '../../../domain/growingIsland';
+import { RULES } from '../../../domain/growingIsland/rules';
 import type { SceneLayout } from './sceneLayout';
 import type { ObjectLayer } from './objectLayer';
 
@@ -11,6 +12,15 @@ export const labLookEnabled = () => import.meta.env.DEV && typeof location !== '
     && new URLSearchParams(location.search).get('island-look') === 'lab';
 
 const SEA_LEVEL = -.40;
+/** Learning done on this island, from what is already saved: each completion adds the same town
+ * hours to the bank, and the town only moves hours from the bank to the clock (spec 52 §10). */
+export const learnedOnIsland = (state: Pick<GrowingState, 'town'>) =>
+    Math.max(0, Math.floor((state.town.clock + state.town.bank) / RULES.townHoursPerCompletion));
+const LANTERNS = 48, BOATS = 5;
+/** What learning shows: a paper lantern for each completion (up to 48), one more boat for each town day of learning (12), up to 5. */
+/** Lanterns last shown per island in this visit, so coming back from learning raises only the new ones. Never saved. */
+const shownBefore = new Map<string, number>();
+export const learningLook = (learned: number) => ({ lanterns: Math.min(LANTERNS, learned), boats: Math.min(BOATS, 1 + Math.floor(learned / 12)) });
 const dot = (stops: [number, string][]) => {
     const canvas = document.createElement('canvas'); canvas.width = canvas.height = 64;
     const c = canvas.getContext('2d')!, g = c.createRadialGradient(32, 32, 0, 32, 32, 32);
@@ -25,6 +35,8 @@ const seeded = (text: string) => {
 };
 // The island's own toy pastels (flowers, benches), not the lab's brighter set.
 const BRIGHT = ['#f19aae', '#f5c84a', '#8fd3c0', '#99bddf', '#c9a8ec', '#f08a3c'];
+const LANTERN_TONES = ['#ffd6e8', '#fff1b0', '#c9f0dc', '#d9c6ff', '#ffd9b0', '#c6e6ff'].map(c => new T.Color(c));
+const LANTERN_GLOWS = ['#ff6fa8', '#ffcf3a', '#4fe0a0', '#a07cff', '#ff9a4a', '#5ab8ff'].map(c => new T.Color(c));
 const FIREWORK = ['#ffe066', '#ff8fc4', '#7ff0c0', '#ffffff', '#c7a6ff'].map(c => new T.Color(c));
 // How much each part shows at each time of day: window and lamp glow, the beam, fireflies.
 const LOOK: Record<GardenTime, { halo: number; beam: number; glimmer: number }> = {
@@ -84,6 +96,20 @@ export function createLabLook(scene: T.Scene) {
         }
         sparking = true;
     };
+
+    // Paper lanterns floating over the island, one for each learning completion.
+    const lanternMesh = new T.InstancedMesh(keep(new T.LatheGeometry([[0, 0], [.05, 0], [.1, .05], [.115, .12], [.1, .19], [.05, .23], [0, .23]].map(([x, y]) => new T.Vector2(x, y)), 12)),
+        keep(new T.MeshBasicMaterial({ color: '#ffffff' })), LANTERNS);
+    lanternMesh.count = 0; lanternMesh.frustumCulled = false; root.add(lanternMesh);
+    const lanternGlowGeometry = keep(new T.BufferGeometry().setAttribute('position', new T.BufferAttribute(new Float32Array(LANTERNS * 3), 3)).setAttribute('color', new T.BufferAttribute(new Float32Array(LANTERNS * 3), 3)));
+    const lanternGlow = new T.Points(lanternGlowGeometry, keep(new T.PointsMaterial({ size: 22, sizeAttenuation: false, map: white, vertexColors: true, transparent: true, depthWrite: false, blending: T.AdditiveBlending })));
+    lanternGlow.frustumCulled = false; root.add(lanternGlow);
+    for (let i = 0; i < LANTERNS; i++) {
+        lanternMesh.setColorAt(i, LANTERN_TONES[i % LANTERN_TONES.length]);
+        const c = LANTERN_GLOWS[i % LANTERN_GLOWS.length]; lanternGlowGeometry.attributes.color.setXYZ(i, c.r * .8, c.g * .8, c.b * .8);
+    }
+    let lanterns: { at: T.Vector3; phase: number; born: number }[] = [], learned = 0;
+    const lanternAt = new T.Matrix4(), lanternPlace = new T.Vector3(), lanternScale = new T.Vector3(), lanternTurn = new T.Quaternion(), up = new T.Vector3(0, 1, 0);
 
     let dressed = new T.Group(); root.add(dressed);
     let halos: { sprite: T.Sprite; at: T.Vector3; reach: number }[] = [], beams: T.Mesh[] = [];
@@ -157,12 +183,12 @@ export function createLabLook(scene: T.Scene) {
             reach = Math.max(layout.width, layout.depth) / 2 + 1.6;
             // Boats and buoys follow an oval round the island's own width and depth, so a long island keeps them in frame.
             ring.set(layout.width / 2 + 1.1, layout.depth / 2 + 1.1);
-            boats = [0, 1].map(i => {
+            boats = Array.from({ length: BOATS }, (_, i) => {
                 const g = new T.Group(), hull = new T.Mesh(parts.hull, bright[(i * 2 + 4) % 6]); hull.position.y = .02;
                 const mast = new T.Mesh(parts.mast, pole); mast.position.y = .3;
                 const sail = new T.Mesh(parts.sail, sailMaterial); sail.position.set(0, .07, -.03);
                 g.add(hull, mast, sail); g.scale.setScalar(1.5); dressed.add(g);
-                return { g, angle: i * 2.8 + random() * 2, radius: .5 + i * .7, speed: .07 - i * .015 };
+                return { g, angle: i * 2.5 + random() * 1.5, radius: .5 + (i % 3) * .6, speed: .07 - (i % 3) * .015 };
             });
             buoys = [0, 1, 2].map(i => {
                 const g = new T.Group(), body = new T.Mesh(parts.buoy, bright[i % 2]); body.scale.set(1.4, 1.1, 1.4); g.add(body);
@@ -174,6 +200,23 @@ export function createLabLook(scene: T.Scene) {
                 const cell = meadow.length ? meadow[Math.floor(random() * meadow.length)] : { x: 0, z: 0 };
                 return layout.point({ x: cell.x + random() - .5, z: cell.z + random() - .5 }, .25 + random() * .35);
             });
+            // Lanterns ring the things the child has grown, a few round each, always in the same places.
+            learned = learnedOnIsland(state);
+            const show = learningLook(learned), anchors = [...state.plots, ...state.landmarks].flatMap(o => o.cell ? [{ id: o.id, cell: o.cell }] : [])
+                .sort((a, b) => a.id.localeCompare(b.id));
+            if (!anchors.length) anchors.push({ id: 'middle', cell: { x: Math.round((bounds.minX + bounds.maxX) / 2), z: Math.floor(bounds.depth / 2) } });
+            const now = performance.now(), before = Math.min(shownBefore.get(state.seed) ?? show.lanterns, show.lanterns);
+            lanterns = Array.from({ length: show.lanterns }, (_, i) => {
+                const { id, cell } = anchors[i % anchors.length], round = Math.floor(i / anchors.length), turn = seeded(`${state.seed}:${id}`)() * 6.3;
+                const a = turn + round * 2.4, r = .55 + (round % 2) * .25;
+                return { at: layout.point({ x: cell.x + Math.cos(a) * r, z: cell.z + Math.sin(a) * r }, 1.15 + (round % 3) * .18), phase: i * 1.7,
+                    // New ones (learning since the island was last drawn) rise in one after another.
+                    born: i < before ? -Infinity : now + (i - before) * 260 };
+            });
+            shownBefore.set(state.seed, show.lanterns); lanternMesh.count = show.lanterns; lanternGlowGeometry.setDrawRange(0, show.lanterns);
+            if (lanternMesh.instanceColor) lanternMesh.instanceColor.needsUpdate = true;
+            lanternGlowGeometry.attributes.color.needsUpdate = true;
+            boats.forEach((b, i) => { b.g.visible = i < show.boats; });
             this.setTime(currentTime);
         },
         setTime(time: GardenTime) {
@@ -182,6 +225,7 @@ export function createLabLook(scene: T.Scene) {
             for (const h of halos) h.sprite.visible = look.halo > 0;
             for (const b of beams) b.visible = look.beam > 0;
             glimmers.visible = look.glimmer > 0 && glimmerHome.length > 0;
+            lanternGlow.visible = look.halo > 0; (lanternGlow.material as T.PointsMaterial).opacity = look.halo;
         },
         /** Every bud of a session is open: three fireworks go up over the sea, beyond the island. */
         celebrate(camera: T.Camera, reduced: boolean) {
@@ -209,6 +253,17 @@ export function createLabLook(scene: T.Scene) {
                 b.g.rotation.set(0, Math.atan2(-Math.sin(b.angle) * (ring.x + b.radius), Math.cos(b.angle) * (ring.y + b.radius)), reduced ? 0 : Math.sin(now / 1000 + b.radius) * .06);
             }
             if (!reduced) for (const b of buoys) { b.g.position.y = b.y + Math.sin(now / 700 + b.phase) * .025; b.g.rotation.z = Math.sin(now / 900 + b.phase) * .15; }
+            if (lanterns.length) {
+                const glow = lanternGlowGeometry.attributes.position as T.BufferAttribute;
+                lanterns.forEach((l, i) => {
+                    const grown = reduced ? 1 : Math.max(0, Math.min(1, (now - l.born) / 700)), pop = grown < 1 ? grown * (1 + Math.sin(grown * Math.PI) * .4) : 1;
+                    const y = l.at.y + (reduced ? 0 : Math.sin(now / 900 + l.phase) * .08) - (1 - grown) * .6;
+                    lanternTurn.setFromAxisAngle(up, reduced ? l.phase : now / 3000 + l.phase);
+                    lanternAt.compose(lanternPlace.set(l.at.x, y, l.at.z), lanternTurn, lanternScale.setScalar(Math.max(pop * 1.5, 1e-4)));
+                    lanternMesh.setMatrixAt(i, lanternAt); glow.setXYZ(i, l.at.x, y + (grown > 0 ? .12 : -50), l.at.z);
+                });
+                lanternMesh.instanceMatrix.needsUpdate = true; glow.needsUpdate = true;
+            }
             if (glimmers.visible) {
                 const pos = glimmerGeometry.attributes.position as T.BufferAttribute, t = now / 1000;
                 glimmerHome.forEach((home, i) => pos.setXYZ(i, home.x + (reduced ? 0 : Math.sin(t * .4 + i) * .3), home.y + (reduced ? 0 : Math.sin(t * .9 + i * 2.1) * .08), home.z + (reduced ? 0 : Math.cos(t * .33 + i * 1.3) * .3)));
@@ -227,7 +282,7 @@ export function createLabLook(scene: T.Scene) {
             }
         },
         /** For checking in the browser: what the island was dressed with. */
-        summary: () => ({ halos: halos.length, beams: beams.length, parasols, boats: boats.length, buoys: buoys.length, glimmers: glimmers.visible }),
+        summary: () => ({ learned, lanterns: lanterns.length, rising: lanterns.filter(l => l.born > -Infinity).length, halos: halos.length, beams: beams.length, parasols, boats: boats.filter(b => b.g.visible).length, buoys: buoys.length, glimmers: glimmers.visible }),
         dispose() { timers.forEach(clearTimeout); root.removeFromParent(); owned.forEach(d => d.dispose()); },
     };
 }
