@@ -23,12 +23,13 @@ const seeded = (text: string) => {
     let h = 2166136261; for (const ch of text) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
     return () => { h = Math.imul(h ^ h >>> 15, 2246822507); h = Math.imul(h ^ h >>> 13, 3266489909); return ((h ^= h >>> 16) >>> 0) / 4294967296; };
 };
-const BRIGHT = ['#ff6b6b', '#ffb84d', '#ffe066', '#5ccf8f', '#4db3ff', '#c78bff'];
+// The island's own toy pastels (flowers, benches), not the lab's brighter set.
+const BRIGHT = ['#f19aae', '#f5c84a', '#8fd3c0', '#99bddf', '#c9a8ec', '#f08a3c'];
 const FIREWORK = ['#ffe066', '#ff8fc4', '#7ff0c0', '#ffffff', '#c7a6ff'].map(c => new T.Color(c));
 // How much each part shows at each time of day: window and lamp glow, the beam, fireflies.
 const LOOK: Record<GardenTime, { halo: number; beam: number; glimmer: number }> = {
     morning: { halo: 0, beam: 0, glimmer: 0 }, day: { halo: 0, beam: 0, glimmer: 0 },
-    dusk: { halo: .55, beam: .18, glimmer: 0 }, night: { halo: 1, beam: .32, glimmer: 1 },
+    dusk: { halo: .55, beam: .14, glimmer: 0 }, night: { halo: .85, beam: .24, glimmer: 1 },
 };
 
 export function createLabLook(scene: T.Scene) {
@@ -39,17 +40,26 @@ export function createLabLook(scene: T.Scene) {
     const white = keep(dot([[0, '#ffffff'], [.35, '#ffffffcc'], [1, '#ffffff00']]));
     const haloMaterial = keep(new T.SpriteMaterial({ map: warm, transparent: true, depthWrite: false, blending: T.AdditiveBlending }));
     const beamGeometry = keep((() => {
-        const geo = new T.ConeGeometry(.55, 4.5, 20, 1, true).translate(0, -2.25, 0).rotateZ(Math.PI / 2);
+        // Narrow and tipped a little up, so from the front camera it reads as a sweep, not a spotlight on the grass.
+        const geo = new T.ConeGeometry(.32, 3.4, 20, 1, true).translate(0, -1.7, 0).rotateZ(Math.PI / 2 + .1);
         const pos = geo.attributes.position, fade = new Float32Array(pos.count * 3);
-        for (let i = 0; i < pos.count; i++) { const k = Math.max(0, 1 - pos.getX(i) / 4.5); fade.fill(k * k, i * 3, i * 3 + 3); }
+        for (let i = 0; i < pos.count; i++) { const k = Math.max(0, 1 - pos.getX(i) / 3.4); fade.fill(k * k, i * 3, i * 3 + 3); }
         return geo.setAttribute('color', new T.BufferAttribute(fade, 3));
     })());
-    const beamMaterial = keep(new T.MeshBasicMaterial({ color: '#fff0b8', vertexColors: true, transparent: true, opacity: 0, depthWrite: false, blending: T.AdditiveBlending, side: T.DoubleSide }));
+    const beamMaterial = keep(new T.MeshBasicMaterial({ color: '#ffd98a', vertexColors: true, transparent: true, opacity: 0, depthWrite: false, blending: T.AdditiveBlending, side: T.DoubleSide }));
     const paint = (color: string) => keep(new T.MeshStandardMaterial({ color, roughness: .7 }));
     const bright = BRIGHT.map(paint), sandy = paint('#e8d4a4'), pole = paint('#f6f1e6'), shells = ['#ffe4ec', '#fff8ee', '#ffd2b8'].map(paint);
+    // A soft striped dome, chunky like the island's benches and pots rather than a flat disc.
+    const striped = keep(new T.MeshStandardMaterial({ vertexColors: true, roughness: .7 }));
+    const domes = BRIGHT.map(color => keep((() => {
+        const geo = new T.SphereGeometry(.21, 16, 5, 0, Math.PI * 2, 0, Math.PI * .36).scale(1, .62, 1);
+        const pos = geo.attributes.position, tint = new Float32Array(pos.count * 3), a = new T.Color(color), b = new T.Color('#fbf6ee');
+        for (let i = 0; i < pos.count; i++) (Math.floor((Math.atan2(pos.getZ(i), pos.getX(i)) + Math.PI) / (Math.PI / 4) + .001) % 2 ? b : a).toArray(tint, i * 3);
+        return geo.setAttribute('color', new T.BufferAttribute(tint, 3));
+    })()));
     const parts = {
-        pole: keep(new T.CylinderGeometry(.012, .012, .34, 6)), parasol: keep(new T.ConeGeometry(.2, .08, 10)), towel: keep(new T.BoxGeometry(.15, .008, .28)),
-        castle: keep(new T.CylinderGeometry(.045, .055, .06, 8)), shell: keep(new T.IcosahedronGeometry(.02, 0)), ball: keep(new T.SphereGeometry(.04, 12, 8)),
+        pole: keep(new T.CylinderGeometry(.02, .02, .34, 8)), knob: keep(new T.SphereGeometry(.025, 8, 6)), towel: keep(new T.BoxGeometry(.16, .022, .28)),
+        castle: keep(new T.CylinderGeometry(.045, .055, .06, 8)), shell: keep(new T.IcosahedronGeometry(.032, 0)), ball: keep(new T.SphereGeometry(.05, 12, 8)),
         hull: keep(new T.BoxGeometry(.18, .08, .45)), sail: keep(new T.ShapeGeometry(new T.Shape([new T.Vector2(0, 0), new T.Vector2(0, .5), new T.Vector2(.28, 0)])).rotateY(Math.PI / 2)),
         mast: keep(new T.CylinderGeometry(.008, .008, .55, 5)), buoy: keep(new T.SphereGeometry(.07, 12, 8)),
     };
@@ -78,7 +88,7 @@ export function createLabLook(scene: T.Scene) {
     let dressed = new T.Group(); root.add(dressed);
     let halos: { sprite: T.Sprite; at: T.Vector3; reach: number }[] = [], beams: T.Mesh[] = [];
     let boats: { g: T.Group; angle: number; radius: number; speed: number }[] = [], buoys: { g: T.Group; phase: number; y: number }[] = [];
-    const center = new T.Vector3(), timers: number[] = [];
+    const center = new T.Vector3(), ring = new T.Vector2(6, 6), timers: number[] = [];
     let glimmerHome: T.Vector3[] = [], reach = 6, look = LOOK.day, currentTime: GardenTime = 'day', parasols = 0;
 
     const clear = () => {
@@ -103,7 +113,7 @@ export function createLabLook(scene: T.Scene) {
                 const object = layer.objects.get(plot.id);
                 if (!object || plot.kind !== 'home' || plot.stage < 2) continue;
                 box.setFromObject(object); box.getSize(size); box.getCenter(mid);
-                halo(new T.Vector3(mid.x, box.min.y + size.y * .45, mid.z), .9, Math.max(size.x, size.z) * .55);
+                halo(new T.Vector3(mid.x, box.min.y + size.y * .4, mid.z), .75, Math.max(size.x, size.z) * .55);
             }
             for (const landmark of state.landmarks) {
                 const object = layer.objects.get(landmark.id);
@@ -129,9 +139,10 @@ export function createLabLook(scene: T.Scene) {
                 const spot = new T.Group(), k = spots.length;
                 spot.position.copy(layout.point({ x: s.cell.x + s.out.x * .2, z: s.cell.z + s.out.z * .2 }, 0)); spot.rotation.y = Math.atan2(s.out.x, s.out.z); spot.scale.setScalar(1.6);
                 const stick = new T.Mesh(parts.pole, pole); stick.position.y = .17; stick.rotation.z = .12;
-                const top = new T.Mesh(parts.parasol, bright[k % 6]); top.position.set(.02, .33, 0); top.rotation.z = .12;
-                const towel = new T.Mesh(parts.towel, bright[(k + 2) % 6]); towel.position.set(.16, .006, .03); towel.rotation.y = .3;
-                spot.add(stick, top, towel);
+                const top = new T.Mesh(domes[k % 6], striped); top.position.set(.03, .27, 0); top.rotation.z = .12;
+                const knob = new T.Mesh(parts.knob, pole); knob.position.set(.05, .41, 0);
+                const towel = new T.Mesh(parts.towel, bright[(k + 2) % 6]); towel.position.set(.17, .011, .03); towel.rotation.y = .3;
+                spot.add(stick, top, knob, towel);
                 if (k % 2) for (let c = 0; c < 3; c++) { const castle = new T.Mesh(parts.castle, sandy); castle.position.set(-.2 + c * .05, .03 + (c === 1 ? .05 : 0), .15); castle.scale.setScalar(c === 1 ? .8 : 1); spot.add(castle); }
                 else { const ball = new T.Mesh(parts.ball, bright[(k + 4) % 6]); ball.position.set(-.18, .04, .12); spot.add(ball); }
                 dressed.add(spot);
@@ -144,16 +155,18 @@ export function createLabLook(scene: T.Scene) {
             // Boats sail round beyond the shore, buoys bob a little closer in.
             box.setFromObject(layer.root); box.getCenter(center); center.y = 0;
             reach = Math.max(layout.width, layout.depth) / 2 + 1.6;
+            // Boats and buoys follow an oval round the island's own width and depth, so a long island keeps them in frame.
+            ring.set(layout.width / 2 + 1.1, layout.depth / 2 + 1.1);
             boats = [0, 1].map(i => {
                 const g = new T.Group(), hull = new T.Mesh(parts.hull, bright[(i * 2 + 4) % 6]); hull.position.y = .02;
                 const mast = new T.Mesh(parts.mast, pole); mast.position.y = .3;
                 const sail = new T.Mesh(parts.sail, sailMaterial); sail.position.set(0, .07, -.03);
-                g.add(hull, mast, sail); dressed.add(g);
-                return { g, angle: i * 2.8 + random() * 2, radius: reach + .8 + i * .9, speed: .05 - i * .012 };
+                g.add(hull, mast, sail); g.scale.setScalar(1.5); dressed.add(g);
+                return { g, angle: i * 2.8 + random() * 2, radius: .5 + i * .7, speed: .07 - i * .015 };
             });
             buoys = [0, 1, 2].map(i => {
                 const g = new T.Group(), body = new T.Mesh(parts.buoy, bright[i % 2]); body.scale.set(1.4, 1.1, 1.4); g.add(body);
-                const a = i / 3 * Math.PI * 2 + .6; g.position.set(center.x + Math.cos(a) * reach, SEA_LEVEL, center.z + Math.sin(a) * reach);
+                const a = i / 3 * Math.PI * 2 + .6; g.position.set(center.x + Math.cos(a) * ring.x, SEA_LEVEL, center.z + Math.sin(a) * ring.y);
                 dressed.add(g); return { g, phase: i * 1.3, y: SEA_LEVEL };
             });
             parasols = spots.length;
@@ -192,8 +205,8 @@ export function createLabLook(scene: T.Scene) {
             if (look.beam > 0 && !reduced) for (const b of beams) b.rotation.y = now / 1400;
             for (const b of boats) {
                 if (!reduced) b.angle += b.speed * dt;
-                b.g.position.set(center.x + Math.cos(b.angle) * b.radius, SEA_LEVEL + (reduced ? 0 : Math.sin(now / 800 + b.angle * 9) * .02), center.z + Math.sin(b.angle) * b.radius);
-                b.g.rotation.set(0, -b.angle, reduced ? 0 : Math.sin(now / 1000 + b.radius) * .06);
+                b.g.position.set(center.x + Math.cos(b.angle) * (ring.x + b.radius), SEA_LEVEL + (reduced ? 0 : Math.sin(now / 800 + b.angle * 9) * .02), center.z + Math.sin(b.angle) * (ring.y + b.radius));
+                b.g.rotation.set(0, Math.atan2(-Math.sin(b.angle) * (ring.x + b.radius), Math.cos(b.angle) * (ring.y + b.radius)), reduced ? 0 : Math.sin(now / 1000 + b.radius) * .06);
             }
             if (!reduced) for (const b of buoys) { b.g.position.y = b.y + Math.sin(now / 700 + b.phase) * .025; b.g.rotation.z = Math.sin(now / 900 + b.phase) * .15; }
             if (glimmers.visible) {
