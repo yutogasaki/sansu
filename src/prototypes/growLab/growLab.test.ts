@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { houseSpot, moveHouse, rng, treeSpot, type House } from './growth';
 import { MAX_GRADE, cutRoads, findWay, network, node } from './roads';
-import { N, RES, STEP, brush, heightAt, levelAt, sampleIsland, smallIsland, terrace } from './terrain';
+import { N, RES, STEP, brush, heightAt, levelAt, sampleIsland, smallIsland, terrace, topNear } from './terrain';
 import { graphOf, newFootfall, nodeNear, pathBetween, stageFor, walkTrips } from './traffic';
 
 describe('grow lab terrain', () => {
@@ -21,6 +21,17 @@ describe('grow lab terrain', () => {
         expect(heightAt(h, .8, .3)).toBeCloseTo(3 * STEP);
         tap(false);
         expect(heightAt(h, 0, 0)).toBeCloseTo(2 * STEP);
+    });
+
+    it('builds on the top of a hill when the side of it is tapped, so the hill keeps growing', () => {
+        const h = smallIsland();
+        for (let i = 0; i < 4; i++) terrace(h, 0, 0, levelAt(h, 0, 0) + 1, true);
+        const top = heightAt(h, 0, 0);
+        // A spot on the side, below the top.
+        const at = topNear(h, 2.6, 0);
+        expect(heightAt(h, 2.6, 0)).toBeLessThan(top - STEP);
+        terrace(h, at.x, at.z, at.level + 1, true);
+        expect(Math.max(heightAt(h, 0, 0), heightAt(h, at.x, at.z))).toBeCloseTo(top + STEP);
     });
 
     it('makes new land where the sea is tapped', () => {

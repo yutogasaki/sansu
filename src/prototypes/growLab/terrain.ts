@@ -80,6 +80,25 @@ const TERRACE_SIDE = .9;
 export const levelAt = (h: Heights, x: number, z: number) => Math.round(heightAt(h, x, z) / STEP);
 
 /**
+ * Where a tap builds: the highest ground within its reach. A finger on a hill
+ * lands on its side as often as on its top, so a tap there builds on the top,
+ * centred on it: the hill keeps getting taller where it stands, instead of
+ * filling in a side or creeping towards the shore.
+ */
+export function topNear(h: Heights, x: number, z: number): { level: number; x: number; z: number } {
+    let best = { level: levelAt(h, x, z), x, z };
+    // On a hill's side the top can be a few steps away; on flat ground a tap
+    // builds where it is, so a new step can stand beside a hill.
+    const reach = slopeAt(h, x, z) > .3 ? [.5, 1, 1.5, 2, 2.5] : [.5, 1];
+    for (let a = 0; a < 12; a++) for (const r of reach.map(k => k * TERRACE_R)) {
+        const px = x + Math.cos(a / 12 * Math.PI * 2) * r, pz = z + Math.sin(a / 12 * Math.PI * 2) * r;
+        const level = levelAt(h, px, pz);
+        if (level > best.level) best = { level, x: px, z: pz };
+    }
+    return best;
+}
+
+/**
  * Raise the ground round a point to a flat top at a whole level (or, going
  * down, cut it to one), with sides falling gently to the ground around. The
  * child never shapes a slope by hand: each tap is one clear step, flat on top

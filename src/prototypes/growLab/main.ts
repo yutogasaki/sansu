@@ -5,7 +5,7 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { houseFits, houseSpot, moveHouse, padHouses, rng, treeFits, treeSpot, type House, type Tree } from './growth';
 import { ROAD_HALF, cutRoads, network, type P3, type Road, type XZ } from './roads';
 import { busySpot, graphOf, newFootfall, nodeNear, pathBetween, stagesAlong, walkTrips } from './traffic';
-import { N, RES, SIZE, STEP as LEVEL, TERRACE_R, brush, heightAt, levelAt, sampleIsland, settleSlopes, slopeAt, smallIsland, terrace, worldX, type Heights } from './terrain';
+import { N, RES, SIZE, STEP as LEVEL, TERRACE_R, brush, heightAt, levelAt, sampleIsland, settleSlopes, slopeAt, smallIsland, terrace, topNear, worldX, type Heights } from './terrain';
 import { IslandMaterials } from '../../components/island/three/primitives';
 import { makeResidentRig, type ResidentSpecies } from '../../components/island/three/residentRig';
 import './style.css';
@@ -2214,9 +2214,16 @@ function remember() {
     if (history.length > 40) history.shift();
 }
 const live = new Float32Array(N * N);
-/** The level a touch here builds to. Tapping the sea makes new land at the first level. */
-const levelFor = (x: number, z: number, up: boolean) =>
-    up ? Math.max(1, levelAt(base, x, z) + 1) : Math.max(-1, levelAt(base, x, z) - 1);
+/**
+ * Where a touch here builds, and to what level: one step above the highest
+ * ground near it (tapping the sea makes new land at the first level), or one
+ * step below the ground under the finger.
+ */
+function stepFor(x: number, z: number, up: boolean) {
+    if (!up) return { level: Math.max(-1, levelAt(base, x, z) - 1), x, z };
+    const top = topNear(base, x, z);
+    return { ...top, level: Math.max(1, top.level + 1) };
+}
 /**
  * A stroke shows at once: only the ground changes under the finger, and what
  * stands on it rides along. Roads, houses and trees are rethought when the
@@ -2276,8 +2283,9 @@ renderer.domElement.addEventListener('pointerdown', e => {
     }
     painting = true;
     cursor.shown = 1;
-    strokeLevel = levelFor(p.x, p.z, tool === 'stack');
-    paint(p);
+    const at = stepFor(p.x, p.z, tool === 'stack');
+    strokeLevel = at.level;
+    paint(new THREE.Vector3(at.x, p.y, at.z));
     renderer.domElement.setPointerCapture(e.pointerId);
 }, { capture: true });
 renderer.domElement.addEventListener('pointermove', e => {
@@ -2759,8 +2767,8 @@ Object.assign(window, {
         /** One finger stroke along a path, as the pointer would make it: a touch sets the level, moves spread it. */
         drag(path: [number, number][], carve = false) {
             remember();
-            const level = levelFor(path[0][0], path[0][1], !carve);
-            path.forEach(([x, z]) => terrace(base, x, z, level, !carve));
+            const at = stepFor(path[0][0], path[0][1], !carve);
+            [[at.x, at.z], ...path.slice(1)].forEach(([x, z]) => terrace(base, x, z, at.level, !carve));
             stirred = path[path.length - 1];
             recompute();
         },
@@ -2775,7 +2783,7 @@ Object.assign(window, {
         /** n taps on one spot: each one step higher (or lower). */
         tap(x: number, z: number, n = 1, carve = false) {
             remember();
-            for (let i = 0; i < n; i++) terrace(base, x, z, levelFor(x, z, !carve), !carve);
+            for (let i = 0; i < n; i++) { const at = stepFor(x, z, !carve); terrace(base, at.x, at.z, at.level, !carve); }
             stirred = [x, z];
             recompute();
         },
@@ -2798,6 +2806,8 @@ Object.assign(window, {
         get traveller() { return { here: traveller.here, walking: !!traveller.path, movedIn, ready: !!emptyHome() }; },
         /** Where the traveller and each bud show on screen, in page pixels, to aim a real tap. */
         travellerOnScreen() { return onScreen(traveller.g.position.clone().add(new THREE.Vector3(0, .35, 0))); },
+        /** Where a point of the ground shows on screen, in page pixels, to aim a real tap. */
+        groundOnScreen(x: number, z: number) { return onScreen(new THREE.Vector3(x, heightAt(shown, x, z), z)); },
         budsOnScreen() { return buds.map(b => onScreen(b.g.position.clone().add(new THREE.Vector3(0, .8, 0)))); },
         learn(n = 1) { for (let i = 0; i < n; i++) { sessions++; for (let k = 0; k < PER_SESSION; k++) grow(-1e6); } updateStat(); },
         get sessions() { return sessions; },
