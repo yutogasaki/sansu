@@ -18,6 +18,8 @@ const MOVES: [number, number][] = [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1,
     [1, 2], [2, 1], [-1, 2], [-2, 1], [1, -2], [2, -1], [-1, -2], [-2, -1],
     [1, 3], [3, 1], [-1, 3], [-3, 1], [1, -3], [3, -1], [-1, -3], [-3, -1]];
 const LAND = .12;
+/** A drawn stop this close to a road it runs along is taken onto it: about a road's width. */
+const SNAP = .9;
 
 export type XZ = [number, number];
 export type P3 = [number, number, number];
@@ -247,13 +249,36 @@ export function network(h: Heights, harbour: XZ, places: XZ[], chains: XZ[][] = 
     // A drawn line is one road: the stop nearest the roads already there joins
     // them, then the line grows stop by stop both ways from it, so the road
     // follows the finger instead of every stop sprouting its own branch.
-    const gap = (p: XZ) => Math.min(...[...on].map(k => Math.hypot(worldX(k % N) - p[0], worldX(Math.floor(k / N)) - p[1])));
+    // Where the line runs along a road already there (the stop and the stops
+    // beside it are all close to it), the stop is taken onto that road, and a
+    // stretch between two stops on the roads is already joined, so going over a
+    // road again never lays a second road beside it. A line that only crosses a
+    // road keeps its own stops, so it is not pulled onto the road it crosses.
+    const nearest = (p: XZ) => {
+        let best = node(p), gap = Infinity;
+        for (const k of on) {
+            const d = Math.hypot(worldX(k % N) - p[0], worldX(Math.floor(k / N)) - p[1]);
+            if (d < gap) { gap = d; best = k; }
+        }
+        return { best, gap };
+    };
+    const near = (p: XZ | undefined) => !p || nearest(p).gap <= SNAP;
+    const stop = (chain: XZ[], i: number) => {
+        const { best, gap } = nearest(chain[i]);
+        return gap <= SNAP && near(chain[i - 1]) && near(chain[i + 1]) ? best : node(chain[i]);
+    };
+    const step = (chain: XZ[], i: number, prev: number) => {
+        const k = stop(chain, i);
+        if (!(on.has(k) && on.has(prev))) join(k, new Set([prev]));
+        return k;
+    };
     for (const chain of chains) {
         if (!chain.length) continue;
-        const gaps = chain.map(gap), first = gaps.indexOf(Math.min(...gaps));
-        join(node(chain[first]), on);
-        for (let i = first + 1; i < chain.length; i++) join(node(chain[i]), new Set([node(chain[i - 1])]));
-        for (let i = first - 1; i >= 0; i--) join(node(chain[i]), new Set([node(chain[i + 1])]));
+        const gaps = chain.map(p => nearest(p).gap), first = gaps.indexOf(Math.min(...gaps));
+        const start = stop(chain, first);
+        join(start, on);
+        for (let i = first + 1, prev = start; i < chain.length; i++) prev = step(chain, i, prev);
+        for (let i = first - 1, prev = start; i >= 0; i--) prev = step(chain, i, prev);
     }
     return { roads, reached };
 }
